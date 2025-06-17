@@ -1,94 +1,90 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from mx.denx.de (mx.denx.de [89.58.32.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E092EF9D4;
-	Tue, 17 Jun 2025 18:56:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA82423314B
+	for <patches@lists.linux.dev>; Tue, 17 Jun 2025 19:57:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750186574; cv=none; b=Et2u5pIDlpQ8ZNuHCJHoxRQ3qLR/Dp6irnK4v0pIXsHQ8ASr2HdGBWlHNhrO8dNGI5y3ch6IM4uOtS4aNtI5NDtDAfFKK7LCr2CkGJLaiSTV/yBlVCEqN4C8sYbA1M2PqruFp8o77GUA1Mn1tOuULnyX5qFaG83RVEajpHR7GvM=
+	t=1750190231; cv=none; b=XFhyQg7v+ddYv0bXoc9/hxQi32fRIYPmUFNwPiZlbl1nGEq5vy8X+P/Ee+ihBkOvTh/oo+9R5Yc0oBDXesaXUpeoQCGma7Olj2M9DDxhKh3dyKAmj3xly92sS1niK/yZ8J7FULZjINCvtZL5SHIiQHafvZhk2sGm8dpn7xGM7WA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750186574; c=relaxed/simple;
-	bh=I9zZeruq9Ljo+K9wZVMBqsvyT2j+dsgFXhEppnxCSe4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WaVg9sHHcTDUxNv+czY2xxJVhfbqTXgeqgQP0BdW8PQz3SPhVDn8Pau7Kkh76Sfy43rp13O6chROPq4bOSZwAqjXiOUyGEKOjjdfYNaju/q7QvS4yoBynBmtEWvuhw3akFgrBgDq6ipz5PKZ7rh1vq1aqrtsZOulH5aUjbtaCCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=etzspGAz; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1750190231; c=relaxed/simple;
+	bh=laByplv7B4Tr6BtcUrmYsW4xqoY1p+hJTT8masB+1eo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=isoVKtEPWd9JImMTQZGj54xgKolFDrD/15ZmmNHQVwNuLgvQgwtOI93m6RBwz6sCvp1UtCv7PztgBg4/65zuWIqXK7NfSJI6VueeeyIy3Ehl8/j1qE0/kvdZnqShzzaXz1QL+Hyog9bFN31p2zv+vTnXKI7nUMWnLpgfn8VH/Nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=eX2WmeYl; arc=none smtp.client-ip=89.58.32.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="etzspGAz"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=tIw2w8u4nYMztG5MgyDq77ZNr77yNCVZF5PqgMqfT/c=; b=etzspGAzIiggD7N2nPSW091Txt
-	eqVQG4e+2T5J7zHhK1idKeV0F5EKOLticNKRWy0d1wWROjKnDxDnKzoUkHeVqLf1dy0bJ+sguMRly
-	ymsUlyNvShhkqLAy5cwoupL6tjObWUN3AT+X1IvuuKHaF1NpCNdm1oH361Is1lK/EHU7xaIc30Map
-	7tlGJoMaQ9588y2i588Hom9elOLhVz7Kf4TMXK+xTL5UN6yCulacptSAKYRpzfLIpCGJQw+yDmSrD
-	AJhAO8T4OlOGviKqeUteKcDB9bSLRHkRehqhmW/8BaROjIKGmJyqlzZeSx24YxA+30codY8weqy2d
-	rUTIdSaA==;
-Received: from [50.53.25.54] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1uRbTg-00000008Bua-1yAx;
-	Tue, 17 Jun 2025 18:56:12 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: dri-devel@lists.freedesktop.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH] drm/msm/dp: add linux/io.h header to fix build errors
-Date: Tue, 17 Jun 2025 11:56:11 -0700
-Message-ID: <20250617185611.2965223-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.49.0
+	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="eX2WmeYl"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 0CF56103972B9;
+	Tue, 17 Jun 2025 21:56:59 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
+	t=1750190225; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=W1m6FIv1wviKqfFcxApYoIQ1e/q7lkScOPJLhsCl7Zc=;
+	b=eX2WmeYloaSsryC7ex47jjLMnmZQqwrFvv/FZXnZNJy6mi7u1Rwtq2o7wJkSWhtvWQtLcY
+	ndrUrwFsjrThFJrt5e1kEAio+aOKFtfIqp4mONcpO8QJ4nmoxWkI/0fddYh6OsvLtj096X
+	27BRJLpWYLxCpTcsdMQwY/pvW+ihubDeTz65XzPj9PHArSpmdRNnB48E9Jlfp3ZUgc8LbY
+	ZYKa3ml8Xq4nQqIPIlvyOoR/97rDBw6sq7U8jCVNxluwyzQhVbpcSJjm5/rOxePFi0Y8eT
+	YKj/YYbXccEGkTW9ZJfqpqd1PzxLXFlc0ljgt38OpxXn5J8SurgF2NWv6SJ+uA==
+Date: Tue, 17 Jun 2025 21:56:57 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.12 000/512] 6.12.34-rc1 review
+Message-ID: <aFHIie+MMif0HUKq@duo.ucw.cz>
+References: <20250617152419.512865572@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="3Grz4Hy2jcOM29P+"
+Content-Disposition: inline
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-Add <linux/io.h> header to pull in readl/writel and friends.
-This eliminates the following build errors:
 
-drivers/gpu/drm/msm/dp/dp_panel.c: In function 'msm_dp_read_link':
-drivers/gpu/drm/msm/dp/dp_panel.c:33:16: error: implicit declaration of function 'readl_relaxed' [-Wimplicit-function-declaration]
-   33 |         return readl_relaxed(panel->link_base + offset);
-drivers/gpu/drm/msm/dp/dp_panel.c: In function 'msm_dp_write_link':
-drivers/gpu/drm/msm/dp/dp_panel.c:43:9: error: implicit declaration of function 'writel' [-Wimplicit-function-declaration]
-   43 |         writel(data, panel->link_base + offset);
+--3Grz4Hy2jcOM29P+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Fixes: d7e3bee925bd ("drm/msm/dp: drop the msm_dp_catalog module")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <lumag@kernel.org>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/msm/dp/dp_panel.c |    2 ++
- 1 file changed, 2 insertions(+)
+Hi!
 
---- linux-next-20250617.orig/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ linux-next-20250617/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -12,6 +12,8 @@
- #include <drm/drm_of.h>
- #include <drm/drm_print.h>
- 
-+#include <linux/io.h>
-+
- #define DP_INTF_CONFIG_DATABUS_WIDEN     BIT(4)
- 
- #define DP_MAX_NUM_DP_LANES	4
+> This is the start of the stable review cycle for the 6.12.34 release.
+> There are 512 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+CIP testing did not find any problems here:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.12.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--3Grz4Hy2jcOM29P+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaFHIiQAKCRAw5/Bqldv6
+8pj6AJ9at5kpk8O/vg4SWobDlrl+0benSACfb0g9IQKGtVF1VMvpjYJuKXSCArg=
+=SVS8
+-----END PGP SIGNATURE-----
+
+--3Grz4Hy2jcOM29P+--
