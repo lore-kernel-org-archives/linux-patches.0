@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731A62FA631;
-	Tue, 17 Jun 2025 16:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8353F2FA622;
+	Tue, 17 Jun 2025 16:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179404; cv=none; b=rjWkcCl80hozI1W7fqKAjUcabbctzyqLLLt4ZlMLvSLYOsP2g12qc3RyxRAHyiwKvvScCS70wLqvQM+PKB9affT/ZjEYdj5o9eIRpDMajeua3UhB4YHZNkkPkgG1+V8dNjWZ+loWcrplUbkoIWPbXH7K8ByMYPU6xYevJTS3eOI=
+	t=1750179407; cv=none; b=M6ZCjOqadkUwJ5sUPbnePXaJ7z70yKHE8HWcQ9tk61mhEFsSYUOrSqGAhnKeTbI/Z7Uac1x+EbyQpgds5w6eIibZR2zZeofpnPMfa7fkYLRmdR3ix1FA61LYeKWATHcYiWUEyROoqH2xRIxhpYbf9Tjz1+rLFvxmR+B3skMZivU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179404; c=relaxed/simple;
-	bh=u32/Iu1jpuA2MzPgatz47TUqBkGryiCnss7x37vmX60=;
+	s=arc-20240116; t=1750179407; c=relaxed/simple;
+	bh=WnnYbY6CVBBagwaM45PrtOCjHQJxsqUfLg6P0eoeWnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9qo59mf0CbtxDY6jxUko4bZLM9qMU0hYtN0cM86zAXtLiO6L19wrnF2mk2juYbUGj29u1BcmppqGKehBPz6mHVl62LXwhYHgAII3wSVoasuiaODakDTc1Eh300QOstlyZsWplMhObv7DAZ1BICQKkApmiAXuJpgPZr0vCYCdz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nzz77YuR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QXbVE9qlyQbpmisBrM5gQBDzbk2cYOeOZFcNVmdKjE3onxOAKqLm05dp6jEt4H2Z/YEXr8zYAD22eHDZ+RbTblTVJqL2+pFWvmqIMRBcbRF4r7PzxInF2dBtYvQLYEGS+43eVP+ZyfwVov3FGaZdkKtiTrGGzY0+Sz6LZyR89S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/deF6kW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nzz77YuR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE32C4CEE7;
-	Tue, 17 Jun 2025 16:56:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/deF6kW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA73C4CEE3;
+	Tue, 17 Jun 2025 16:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179404;
-	bh=u32/Iu1jpuA2MzPgatz47TUqBkGryiCnss7x37vmX60=;
+	s=korg; t=1750179407;
+	bh=WnnYbY6CVBBagwaM45PrtOCjHQJxsqUfLg6P0eoeWnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nzz77YuRkDl8dLM6m01ZVee+dIFJJfdcWAvUodE5+Ia7MXFYFSRdAd/pfUC5Je9vf
-	 ExD8TmZTkv73uss2Xg/EG4LMYeKA4QKMbA992xb1UsvQUa7x5FTQj/+ZHUj3obnb+q
-	 +TomhC7UWtvZhxHmjHaQXHlCv8ui2rBu27YlkxNA=
+	b=c/deF6kWWoUl1IIgEu4PKnBZp4dhWXy7zBN3kxDO76mRpyKncKoNlNWrtn0ssRudg
+	 EsJ9mo/RoMPkK1mbesqtnA+MRgzLeNkHm1um688tts8+vldAcIFvP0trpy5bXkBooy
+	 AE5bglcmBQ2ND88RkjBblY5Ic5+Gx533aCzAshtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 705/780] Bluetooth: Fix NULL pointer deference on eir_get_service_data
-Date: Tue, 17 Jun 2025 17:26:53 +0200
-Message-ID: <20250617152520.206360844@linuxfoundation.org>
+Subject: [PATCH 6.15 706/780] Bluetooth: hci_sync: Fix broadcast/PA when using an existing instance
+Date: Tue, 17 Jun 2025 17:26:54 +0200
+Message-ID: <20250617152520.251472650@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -52,46 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 20a2aa01f5aeb6daad9aeaa7c33dd512c58d81eb ]
+[ Upstream commit 5725bc608252050ed8a4d47d59225b7dd73474c8 ]
 
-The len parameter is considered optional so it can be NULL so it cannot
-be used for skipping to next entry of EIR_SERVICE_DATA.
+When using and existing adv_info instance for broadcast source it
+needs to be updated to periodic first before it can be reused, also in
+case the existing instance already have data hci_set_adv_instance_data
+cannot be used directly since it would overwrite the existing data so
+this reappend the original data after the Broadcast ID, if one was
+generated.
 
-Fixes: 8f9ae5b3ae80 ("Bluetooth: eir: Add helpers for managing service data")
+Example:
+
+bluetoothctl># Add PBP to EA so it can be later referenced as the BIS ID
+bluetoothctl> advertise.service 0x1856 0x00 0x00
+bluetoothctl> advertise on
+...
+< HCI Command: LE Set Extended Advertising Data (0x08|0x0037) plen 13
+        Handle: 0x01
+        Operation: Complete extended advertising data (0x03)
+        Fragment preference: Minimize fragmentation (0x01)
+        Data length: 0x09
+        Service Data: Public Broadcast Announcement (0x1856)
+          Data[2]: 0000
+        Flags: 0x06
+          LE General Discoverable Mode
+          BR/EDR Not Supported
+...
+bluetoothctl># Attempt to acquire Broadcast Source transport
+bluetoothctl>transport.acquire /org/bluez/hci0/pac_bcast0/fd0
+...
+< HCI Command: LE Set Extended Advertising Data (0x08|0x0037) plen 255
+        Handle: 0x01
+        Operation: Complete extended advertising data (0x03)
+        Fragment preference: Minimize fragmentation (0x01)
+        Data length: 0x0e
+        Service Data: Broadcast Audio Announcement (0x1852)
+        Broadcast ID: 11371620 (0xad8464)
+        Service Data: Public Broadcast Announcement (0x1856)
+          Data[2]: 0000
+        Flags: 0x06
+          LE General Discoverable Mode
+          BR/EDR Not Supported
+
+Link: https://github.com/bluez/bluez/issues/1117
+Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/eir.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_sync.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/net/bluetooth/eir.c b/net/bluetooth/eir.c
-index 1bc51e2b05a34..3e1713673ecc9 100644
---- a/net/bluetooth/eir.c
-+++ b/net/bluetooth/eir.c
-@@ -366,17 +366,19 @@ u8 eir_create_scan_rsp(struct hci_dev *hdev, u8 instance, u8 *ptr)
- 
- void *eir_get_service_data(u8 *eir, size_t eir_len, u16 uuid, size_t *len)
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 62d1ff951ebe6..8ba1c3aa7801a 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1559,7 +1559,8 @@ static int hci_enable_per_advertising_sync(struct hci_dev *hdev, u8 instance)
+ static int hci_adv_bcast_annoucement(struct hci_dev *hdev, struct adv_info *adv)
  {
--	while ((eir = eir_get_data(eir, eir_len, EIR_SERVICE_DATA, len))) {
-+	size_t dlen;
-+
-+	while ((eir = eir_get_data(eir, eir_len, EIR_SERVICE_DATA, &dlen))) {
- 		u16 value = get_unaligned_le16(eir);
+ 	u8 bid[3];
+-	u8 ad[4 + 3];
++	u8 ad[HCI_MAX_EXT_AD_LENGTH];
++	u8 len;
  
- 		if (uuid == value) {
- 			if (len)
--				*len -= 2;
-+				*len = dlen - 2;
- 			return &eir[2];
- 		}
+ 	/* Skip if NULL adv as instance 0x00 is used for general purpose
+ 	 * advertising so it cannot used for the likes of Broadcast Announcement
+@@ -1585,8 +1586,10 @@ static int hci_adv_bcast_annoucement(struct hci_dev *hdev, struct adv_info *adv)
  
--		eir += *len;
--		eir_len -= *len;
-+		eir += dlen;
-+		eir_len -= dlen;
- 	}
+ 	/* Generate Broadcast ID */
+ 	get_random_bytes(bid, sizeof(bid));
+-	eir_append_service_data(ad, 0, 0x1852, bid, sizeof(bid));
+-	hci_set_adv_instance_data(hdev, adv->instance, sizeof(ad), ad, 0, NULL);
++	len = eir_append_service_data(ad, 0, 0x1852, bid, sizeof(bid));
++	memcpy(ad + len, adv->adv_data, adv->adv_data_len);
++	hci_set_adv_instance_data(hdev, adv->instance, len + adv->adv_data_len,
++				  ad, 0, NULL);
  
- 	return NULL;
+ 	return hci_update_adv_data_sync(hdev, adv->instance);
+ }
+@@ -1603,8 +1606,15 @@ int hci_start_per_adv_sync(struct hci_dev *hdev, u8 instance, u8 data_len,
+ 
+ 	if (instance) {
+ 		adv = hci_find_adv_instance(hdev, instance);
+-		/* Create an instance if that could not be found */
+-		if (!adv) {
++		if (adv) {
++			/* Turn it into periodic advertising */
++			adv->periodic = true;
++			adv->per_adv_data_len = data_len;
++			if (data)
++				memcpy(adv->per_adv_data, data, data_len);
++			adv->flags = flags;
++		} else if (!adv) {
++			/* Create an instance if that could not be found */
+ 			adv = hci_add_per_instance(hdev, instance, flags,
+ 						   data_len, data,
+ 						   sync_interval,
 -- 
 2.39.5
 
