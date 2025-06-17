@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310E02DFF17;
-	Tue, 17 Jun 2025 15:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E6C2DFF08;
+	Tue, 17 Jun 2025 15:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175917; cv=none; b=iTX/ngFT7tz171u3KQ9Izfvvqg9OTvIvVZxO/JsjpNzZ4pRp6mLsQqbtLasHxehU+xOvsJPoZTQhlG8puz6XdIInwPq6WNJwseRv1IEBBloagWBNVXUM72Mt2Z8K8R1BvQRrC7CEmbCxiqWtSJWGfRRX5vvVRv5YS/czM7JZtUM=
+	t=1750175920; cv=none; b=Lgncpul+QoPsFvRajGo67iYzwGFPTc4WVxCqhsrUltkbnzwVRMIcUjZtt91ZmyjBdXQUwGTbj657N3525Wcy7tPq0JMqOkfJ0KwtXdv4DXlPWSva3JrbrvxVxSvvuxCYdd0eeo2s9eeD1IdhHzpr3IwpyUTxat4oVBAyqV7LF9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175917; c=relaxed/simple;
-	bh=m3f1PIqV7ugsN1khVBQg2oT2wbjLxUwcOWSUf+u2eq4=;
+	s=arc-20240116; t=1750175920; c=relaxed/simple;
+	bh=eWNmAgSUz7oANR4QaRrXG/qqaREh2vwY9qkPQ0RjsS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/vdZ/mw343C1346z9bhVTQAc4yi+hcvmXLz/u40U18VNCW1RgsqVktHumfxB0mfgwvF8F7nVmilHGR3MOUwqA+AmD1OU9Ttefep4nXZfMe/jZbfDCiiaHPovwG5sMUOFuhP6VB2AwaZNtk9UENrn9lKLhTYcKUtRj8xLm3/EyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tk6nxq7N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RaIEtfvEbWBggCT5KCzEwslkAfsE1rTqaMKzcCb5IH5U2lFMNOrzFMUIx4D/PYP7RJmFVHnu7pIxm3uAWcacLoulLsVcHwqXMlop79XB9Y0SIlo4+ZnOZpm6FA0OeiAkl3X1tiQ5QFX6a5o6KsN3qpqhYYDuI+/qM9MMRmX02NM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KauITTA0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tk6nxq7N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BCAC4CEE3;
-	Tue, 17 Jun 2025 15:58:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KauITTA0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C2DC4CEE3;
+	Tue, 17 Jun 2025 15:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175917;
-	bh=m3f1PIqV7ugsN1khVBQg2oT2wbjLxUwcOWSUf+u2eq4=;
+	s=korg; t=1750175920;
+	bh=eWNmAgSUz7oANR4QaRrXG/qqaREh2vwY9qkPQ0RjsS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tk6nxq7NOAXH9D6OuMIvBqBWIezjew8nY6+iUqZso1yh2Bxyix6CE6H+rlPZ14cQS
-	 +jA3a+I+HEHBUhz8laEy//H+9gL8pD1YUR0khEDvtBpooR3UH0wOEKhgdIrb5jUmj5
-	 WwdhJCO3I0D/3CnrogzQigoltCV9QSmNDd4S8wrs=
+	b=KauITTA0TldYRkb4w2hMjebtxDpxM87CjNwfSaklqS+ZF134ydDx1pifJ1qP8Ew0c
+	 FSE4ZXxB6SdoTDIc/DtF9xB48RXKCeVPJFRAVAiU9Uro72T2o3GUFXXWJ/gpJCumgu
+	 ugrHZqq2iAHM9rz4AKXjyrldEXvRm8klLbrlxCME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 157/512] clk: bcm: rpi: Add NULL check in raspberrypi_clk_register()
-Date: Tue, 17 Jun 2025 17:22:03 +0200
-Message-ID: <20250617152425.978056068@linuxfoundation.org>
+Subject: [PATCH 6.15 117/780] drm/v3d: fix client obtained from axi_ids on V3D 4.1
+Date: Tue, 17 Jun 2025 17:17:05 +0200
+Message-ID: <20250617152456.266546205@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +45,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
 
-[ Upstream commit 73c46d9a93d071ca69858dea3f569111b03e549e ]
+[ Upstream commit d0e4c6537005dd106b101d4434a0c3dafd936d05 ]
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-raspberrypi_clk_register() does not check for this case, which results
-in a NULL pointer dereference.
+In the case of MMU errors caused by the TFU unit, the
+client that causes the MMU error is expected to be reported.
+But in the case of MMU TFU errors, a non existing client was
+being reported. This happened because the client calculation
+was taking into account more than the bits 0-7 from the
+axi_id that were representing the client.
 
-Add NULL check after devm_kasprintf() to prevent this issue.
+[   27.845132] v3d fec00000.v3d: MMU error from client ? (13) at 0x3bb1000, pte invalid
 
-Fixes: 93d2725affd6 ("clk: bcm: rpi: Discover the firmware clocks")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Link: https://lore.kernel.org/r/20250402020513.42628-1-bsdhenrymartin@gmail.com
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Masking the bits and using the correct axi_id ranges fixes the
+calculation to report the real guilty client on V3D 4.1 and 4.2.
+
+Make the MMU error print axi_id with hexadecimal as used in the
+ranges.
+
+Fixes: 38c2c7917adc ("drm/v3d: Fix and extend MMU error handling.")
+Signed-off-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Link: https://lore.kernel.org/r/20250425122522.18425-1-jmcasanova@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/bcm/clk-raspberrypi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/v3d/v3d_irq.c | 37 +++++++++++++++++++++++------------
+ 1 file changed, 24 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/clk/bcm/clk-raspberrypi.c b/drivers/clk/bcm/clk-raspberrypi.c
-index a18a8768feb40..6cb26b6e7347d 100644
---- a/drivers/clk/bcm/clk-raspberrypi.c
-+++ b/drivers/clk/bcm/clk-raspberrypi.c
-@@ -271,6 +271,8 @@ static struct clk_hw *raspberrypi_clk_register(struct raspberrypi_clk *rpi,
- 	init.name = devm_kasprintf(rpi->dev, GFP_KERNEL,
- 				   "fw-clk-%s",
- 				   rpi_firmware_clk_names[id]);
-+	if (!init.name)
-+		return ERR_PTR(-ENOMEM);
- 	init.ops = &raspberrypi_firmware_clk_ops;
- 	init.flags = CLK_GET_RATE_NOCACHE;
+diff --git a/drivers/gpu/drm/v3d/v3d_irq.c b/drivers/gpu/drm/v3d/v3d_irq.c
+index 29f63f572d35b..d6ce1324905df 100644
+--- a/drivers/gpu/drm/v3d/v3d_irq.c
++++ b/drivers/gpu/drm/v3d/v3d_irq.c
+@@ -186,27 +186,38 @@ v3d_hub_irq(int irq, void *arg)
+ 		u32 axi_id = V3D_READ(V3D_MMU_VIO_ID);
+ 		u64 vio_addr = ((u64)V3D_READ(V3D_MMU_VIO_ADDR) <<
+ 				(v3d->va_width - 32));
+-		static const char *const v3d41_axi_ids[] = {
+-			"L2T",
+-			"PTB",
+-			"PSE",
+-			"TLB",
+-			"CLE",
+-			"TFU",
+-			"MMU",
+-			"GMP",
++		static const struct {
++			u32 begin;
++			u32 end;
++			const char *client;
++		} v3d41_axi_ids[] = {
++			{0x00, 0x20, "L2T"},
++			{0x20, 0x21, "PTB"},
++			{0x40, 0x41, "PSE"},
++			{0x60, 0x80, "TLB"},
++			{0x80, 0x88, "CLE"},
++			{0xA0, 0xA1, "TFU"},
++			{0xC0, 0xE0, "MMU"},
++			{0xE0, 0xE1, "GMP"},
+ 		};
+ 		const char *client = "?";
  
+ 		V3D_WRITE(V3D_MMU_CTL, V3D_READ(V3D_MMU_CTL));
+ 
+ 		if (v3d->ver >= V3D_GEN_41) {
+-			axi_id = axi_id >> 5;
+-			if (axi_id < ARRAY_SIZE(v3d41_axi_ids))
+-				client = v3d41_axi_ids[axi_id];
++			size_t i;
++
++			axi_id = axi_id & 0xFF;
++			for (i = 0; i < ARRAY_SIZE(v3d41_axi_ids); i++) {
++				if (axi_id >= v3d41_axi_ids[i].begin &&
++				    axi_id < v3d41_axi_ids[i].end) {
++					client = v3d41_axi_ids[i].client;
++					break;
++				}
++			}
+ 		}
+ 
+-		dev_err(v3d->drm.dev, "MMU error from client %s (%d) at 0x%llx%s%s%s\n",
++		dev_err(v3d->drm.dev, "MMU error from client %s (0x%x) at 0x%llx%s%s%s\n",
+ 			client, axi_id, (long long)vio_addr,
+ 			((intsts & V3D_HUB_INT_MMU_WRV) ?
+ 			 ", write violation" : ""),
 -- 
 2.39.5
 
