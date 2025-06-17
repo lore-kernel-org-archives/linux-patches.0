@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFB02EF2AD;
-	Tue, 17 Jun 2025 16:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642E02EF2B0;
+	Tue, 17 Jun 2025 16:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177126; cv=none; b=Il0Ay0BEGdwY8VVyfa51nx0f1cvkhB7MutvkLlMp5NcsN5lbbnwY8zjVldTYKwBE689THAsKg9pNU0I7NKkKcSPEvCjIg2OSoEoO2Ly3broFIy9qQEG3OPvpvii0BvUYs0iqZ5uiSY2iauG+wOjKHc/mtsJOWfdcCcigDCyICt0=
+	t=1750177129; cv=none; b=Yhc3Fwc7ePZhhVtFhG7P8AnoxE55fvTs3Hk4UfHhc1I1eu7pF03oBFzPcmzpDwYb/Jh738GtawLt7h6WUsVRGTUqPzUqAWx69LFfOXPVPsDbzyaox+P5cMrPSfl7blMW4vCJO0B18/0Ili9dJur6zxyGnS7RZ7w28qc3J9RXvYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177126; c=relaxed/simple;
-	bh=LNqOb85gFdGh5yO++TLRkR0ZfMiw8f/i817NgVmlTlE=;
+	s=arc-20240116; t=1750177129; c=relaxed/simple;
+	bh=yv/kf/4U1RwoxFZpUvKXyArVINh9Ht1z7jcOisSn3Qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkLgayJqg+hfLXd+hWyMxNz7E6FuAI1hx4+7oiN2yQaLAimyDuGRUX00pcH/3AtyXot1LVqyPB6lmMojxEyuDNiZBlT8e1fh3CJRHazg9Gbi+wJ6GDsmJGvbYibqvZXBpg8zyXrACTUF38v1YaZBzcd7oSUb6aie//odMLmuz5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NoUkhRpI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VIIRUPqF0guvU9ts8LzUjwTkItKm+XnD5/nCjQIKytC0FEyPeslBlNc722LCs/6jHQleXc/6Bvic8mxAPSDAGgRnw7Bpd7srBnLW9aMDIkKf/EFdA0ER4oRRQXVYno8Mx8SNwLeQktSI+GxGGk7e0/m+09SEWVXhwsfpLZd3RF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqsRxLym; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NoUkhRpI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842EDC4CEE3;
-	Tue, 17 Jun 2025 16:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqsRxLym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9BD1C4CEF0;
+	Tue, 17 Jun 2025 16:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177126;
-	bh=LNqOb85gFdGh5yO++TLRkR0ZfMiw8f/i817NgVmlTlE=;
+	s=korg; t=1750177129;
+	bh=yv/kf/4U1RwoxFZpUvKXyArVINh9Ht1z7jcOisSn3Qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NoUkhRpI+WQuZgZw5s6+FEUKl01cxYP6tJUjul+3n1i2fqLCzibKmZeB1roFUdJBw
-	 eTrdBouthUvpPURlnd0B6LTmdUluOkyGB6UuT7RC9MnG7pR/18W1S7Kdo+b0cywcV7
-	 IsYXE9OiN3otewrd1VZdtUmnaw85qhfpgRkteg2g=
+	b=oqsRxLymAw1gVYXQ+VYJ8uvVgpgDy8n4SGm6lg/xpD7rDMZCIJuhkbUHQPVNY18f5
+	 pB4TXyAmdg72nuSszK1gc0xpZ9A2VXw3t9K4VrOuO1Ub2YLldeng618QOy3J4nmtN1
+	 PF6TzwuOzdEwOYkOKcrhpviBwKipAKqN6fJfskXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Kyle Tso <kyletso@google.com>,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.6 350/356] usb: typec: tcpm/tcpci_maxim: Fix bounds check in process_rx()
-Date: Tue, 17 Jun 2025 17:27:45 +0200
-Message-ID: <20250617152352.219722185@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 264/780] dt-bindings: soc: fsl,qman-fqd: Fix reserved-memory.yaml reference
+Date: Tue, 17 Jun 2025 17:19:32 +0200
+Message-ID: <20250617152502.204686231@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,48 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-commit 0736299d090f5c6a1032678705c4bc0a9511a3db upstream.
+[ Upstream commit 1090c38bbfd9ab7f22830c0e8a5c605e7d4ef084 ]
 
-Register read of TCPC_RX_BYTE_CNT returns the total size consisting of:
+The reserved-memory.yaml reference needs the full path. No warnings were
+generated because the example has the wrong compatible string, so fix
+that too.
 
-  PD message (pending read) size + 1 Byte for Frame Type (SOP*)
-
-This is validated against the max PD message (`struct pd_message`) size
-without accounting for the extra byte for the frame type. Note that the
-struct pd_message does not contain a field for the frame_type. This
-results in false negatives when the "PD message (pending read)" is equal
-to the max PD message size.
-
-Fixes: 6f413b559f86 ("usb: typec: tcpci_maxim: Chip level TCPC driver")
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
-Reviewed-by: Kyle Tso <kyletso@google.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/stable/20250502-b4-new-fix-pd-rx-count-v1-1-e5711ed09b3d%40google.com
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250502-b4-new-fix-pd-rx-count-v1-1-e5711ed09b3d@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 304a90c4f75d ("dt-bindings: soc: fsl: Convert q(b)man-* to yaml format")
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20250507154231.1590634-1-robh@kernel.org
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpci_maxim_core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/soc/fsl/fsl,qman-fqd.yaml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpci_maxim_core.c
-+++ b/drivers/usb/typec/tcpm/tcpci_maxim_core.c
-@@ -145,7 +145,8 @@ static void process_rx(struct max_tcpci_
- 		return;
- 	}
+diff --git a/Documentation/devicetree/bindings/soc/fsl/fsl,qman-fqd.yaml b/Documentation/devicetree/bindings/soc/fsl/fsl,qman-fqd.yaml
+index de0b4ae740ff2..a975bce599750 100644
+--- a/Documentation/devicetree/bindings/soc/fsl/fsl,qman-fqd.yaml
++++ b/Documentation/devicetree/bindings/soc/fsl/fsl,qman-fqd.yaml
+@@ -50,7 +50,7 @@ required:
+   - compatible
  
--	if (count > sizeof(struct pd_message) || count + 1 > TCPC_RECEIVE_BUFFER_LEN) {
-+	if (count > sizeof(struct pd_message) + 1 ||
-+	    count + 1 > TCPC_RECEIVE_BUFFER_LEN) {
- 		dev_err(chip->dev, "Invalid TCPC_RX_BYTE_CNT %d\n", count);
- 		return;
- 	}
+ allOf:
+-  - $ref: reserved-memory.yaml
++  - $ref: /schemas/reserved-memory/reserved-memory.yaml
+ 
+ unevaluatedProperties: false
+ 
+@@ -61,7 +61,7 @@ examples:
+         #size-cells = <2>;
+ 
+         qman-fqd {
+-            compatible = "shared-dma-pool";
++            compatible = "fsl,qman-fqd";
+             size = <0 0x400000>;
+             alignment = <0 0x400000>;
+             no-map;
+-- 
+2.39.5
+
 
 
