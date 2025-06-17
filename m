@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A764A2ED171;
-	Tue, 17 Jun 2025 15:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86B62ED870;
+	Tue, 17 Jun 2025 15:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175584; cv=none; b=FBEhLM1pG5DNNOyfYDO0sqTA+ICBwFOj+nv1umHGvidvP6kbm9bDUgdlz2rLcFlO4et4mZIyLPH13w3vBHiiksiojtKizTE3vLJ0xJWjfqbbZHHdALCcLVhj/Su+3Flr90pc9eJNBL87qhiyNRM5x22QOjyfTWaSt77R3r8jJpo=
+	t=1750175587; cv=none; b=HNda72GXVhmplZdAZ2sNl772WfBFomeRcMnZXCGsJ4iamTIDPYw3z18+YUBqs0BBimc5dlr2wo1r7JKL6+jaUYdOo89m5+qyV6MsMzx8i4eVrwM1C6BgECH31E++l1bTuVRV8maBH1WdHRyKO+VMWw9lX/Y3LYu90m6Wey2VfdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175584; c=relaxed/simple;
-	bh=Lb9wUdGJOWwO6l+rD3D9BvrPLGYBux4Bvmn6fibytEo=;
+	s=arc-20240116; t=1750175587; c=relaxed/simple;
+	bh=bFm647MVY5sPqUgFZZHAzqI0QPqezOmKEvrem7brkFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZZqFIyrDDteGc7J7s9SPOaxchx/fayDGhPN4A/A66lTR6dvG1+tT8H+/wEJpc8wIm0qsn1Q0Z/td3sVdx72c6VKM3v0tWkLa0MZbRS9OsOr0XMoO+/Oi9upFmE7/0Rwc/oAVSOHLASwFGSm+u8+fTtlUkVh1nCFOyTXRv6fVfeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7NWbiaV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l3Nej3OzMhjbFd/xYLWV5Agi5X4bkrsaiSt8bXgbbpCbqHkTZ0YrxEwjcB3+852h7JS73NSF6n8Fw3jiu2f6X/s3xOXVP2qyBW89bBsaHEjavPwkZ+/WZZXMhyYlwN/uw4wgi4hJaFhvJum7lOMsJUIpiD9ymAx5xSpG2XwbfPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mi1SG5fZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7NWbiaV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174C3C4CEE3;
-	Tue, 17 Jun 2025 15:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mi1SG5fZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296E6C4CEF0;
+	Tue, 17 Jun 2025 15:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175584;
-	bh=Lb9wUdGJOWwO6l+rD3D9BvrPLGYBux4Bvmn6fibytEo=;
+	s=korg; t=1750175587;
+	bh=bFm647MVY5sPqUgFZZHAzqI0QPqezOmKEvrem7brkFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7NWbiaVozJJzG/WOyDtReCv+oa7taZ00E3QSpTzNB7+RaYCE91GkhoqV4OJfd2iL
-	 KuF051IqYbpkdLVToQSa2ERaIu4Ymr0WFfYO9YmbdvdYdQWyHsHVRq1lBORwDb4H+w
-	 GqTCoBYN9t9AVkVDitrlW4mc2cD5/F0NwrZO42WY=
+	b=Mi1SG5fZgIJgJ6toth9llCCwKQ6EOB1y/Z1hCiHMUtbR7GfsEnby5uuagbCSthziR
+	 6yQ6lOkyl0bJjq9f+kRS2/QNvC+Kt9ekN2lshnkq2gEleHqz3TboBgJMaovkcM7zha
+	 6bf11sg8T1Zl9WI1l2SxNTdv4j88wDraMVXwOLqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Protopopov <a.s.protopopov@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Julien Massot <julien.massot@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 144/512] libbpf: Use proper errno value in linker
-Date: Tue, 17 Jun 2025 17:21:50 +0200
-Message-ID: <20250617152425.439885117@linuxfoundation.org>
+Subject: [PATCH 6.6 191/356] arm64: dts: mt6359: Rename RTC node to match binding expectations
+Date: Tue, 17 Jun 2025 17:25:06 +0200
+Message-ID: <20250617152345.898179993@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anton Protopopov <a.s.protopopov@gmail.com>
+From: Julien Massot <julien.massot@collabora.com>
 
-[ Upstream commit 358b1c0f56ebb6996fcec7dcdcf6bae5dcbc8b6c ]
+[ Upstream commit cfe035d8662cfbd6edff9bd89c4b516bbb34c350 ]
 
-Return values of the linker_append_sec_data() and the
-linker_append_elf_relos() functions are propagated all the
-way up to users of libbpf API. In some error cases these
-functions return -1 which will be seen as -EPERM from user's
-point of view. Instead, return a more reasonable -EINVAL.
+Rename the node 'mt6359rtc' to 'rtc', as required by the binding.
 
-Fixes: faf6ed321cf6 ("libbpf: Add BPF static linker APIs")
-Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250430120820.2262053-1-a.s.protopopov@gmail.com
+Fix the following dtb-check error:
+
+mediatek/mt8395-radxa-nio-12l.dtb: pmic: 'mt6359rtc' do not match
+any of the regexes: 'pinctrl-[0-9]+'
+
+Fixes: 3b7d143be4b7 ("arm64: dts: mt6359: add PMIC MT6359 related nodes")
+Signed-off-by: Julien Massot <julien.massot@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20250514-mt8395-dtb-errors-v2-3-d67b9077c59a@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/linker.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt6359.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
-index 179f6b31cbd6f..d4ab9315afe71 100644
---- a/tools/lib/bpf/linker.c
-+++ b/tools/lib/bpf/linker.c
-@@ -1220,7 +1220,7 @@ static int linker_append_sec_data(struct bpf_linker *linker, struct src_obj *obj
- 		} else {
- 			if (!secs_match(dst_sec, src_sec)) {
- 				pr_warn("ELF sections %s are incompatible\n", src_sec->sec_name);
--				return -1;
-+				return -EINVAL;
- 			}
+diff --git a/arch/arm64/boot/dts/mediatek/mt6359.dtsi b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
+index 57af3e7899841..779d6dfb55c00 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6359.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
+@@ -298,7 +298,7 @@
+ 			};
+ 		};
  
- 			/* "license" and "version" sections are deduped */
-@@ -2067,7 +2067,7 @@ static int linker_append_elf_relos(struct bpf_linker *linker, struct src_obj *ob
- 			}
- 		} else if (!secs_match(dst_sec, src_sec)) {
- 			pr_warn("sections %s are not compatible\n", src_sec->sec_name);
--			return -1;
-+			return -EINVAL;
- 		}
- 
- 		/* shdr->sh_link points to SYMTAB */
+-		mt6359rtc: mt6359rtc {
++		mt6359rtc: rtc {
+ 			compatible = "mediatek,mt6358-rtc";
+ 		};
+ 	};
 -- 
 2.39.5
 
