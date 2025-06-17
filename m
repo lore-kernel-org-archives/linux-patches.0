@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1BE2ECE94;
-	Tue, 17 Jun 2025 16:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C6E2EA143;
+	Tue, 17 Jun 2025 16:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176100; cv=none; b=jdxNs5pGJ4hi1Otm6CBqGJhme1xL5gAuPr4nhC99HV8jtgBIOHejj49Kl9b8kHaMFe0QA4w0aOpEIUpUdxBjBInDW99T/MuHzjh51z/TKV3Udtl+nq1G09uaJjVAGDj5bQgtXjUDq+LmxOsIwcB53LaUh8ViqNBpPwylnrXZBgs=
+	t=1750176103; cv=none; b=qjCqlT4w+XYh/6AP+B6uUfpMUoC/6j3bFSmnO4X5CXD2H+vkZVXP7rI/dYySncwbchy7Rm2xPDdnzYq4oPLJ1g15QUKMjUxqYmK5IN4ljH/p5ByBGFZI+tEwo7f7WaMFLP9uHd2+GtVxda4Q8M5Yr3wR40PJnz6e4E5VWcqZm7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176100; c=relaxed/simple;
-	bh=uIFV8YwIHJ/kDRMtmn4zI+ayBmurw3SvkfVU/7fh5ns=;
+	s=arc-20240116; t=1750176103; c=relaxed/simple;
+	bh=zZeN5Ko0eypIRjKN/M8uacwOmVrFvlGFgn6TVKSM5mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C3TDsJpEXi1mq5Q1Mt5wkHRrVCv93aG2xdnN+Ii+JfhxzrzvTASEzMHWWsxw2icKmlx1iEZfkvAue9b91oOYq+DhSkc/dIS8wEhvQz/5yu/Mhs/nLZzuna6LPzy8ueU1f0TcsqK4g/ChXumiH287h5065Br/mnzBBnS/RzCJS9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ui8dzTxl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VPYlboE3bWyQT77whnPY6YKYC7wVFPRQbP+IN2rvlrbudz7ZJvnIj37rOi/0L9yfhtQk18DqAq7yF2wiqo9FHvP5OvCZtxFd/DRLw2uT6vYkZsBNWpUhdIoDg/h4hnKd3GYQWhPt8g9AHOB6ePcd+F05dTl1j2Nc1iHOow88nH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFymzH9m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ui8dzTxl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A76C4CEE3;
-	Tue, 17 Jun 2025 16:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFymzH9m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A7EC4CEE3;
+	Tue, 17 Jun 2025 16:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176099;
-	bh=uIFV8YwIHJ/kDRMtmn4zI+ayBmurw3SvkfVU/7fh5ns=;
+	s=korg; t=1750176103;
+	bh=zZeN5Ko0eypIRjKN/M8uacwOmVrFvlGFgn6TVKSM5mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ui8dzTxlRlEv1V75rm3DZDgF/iNOKUlHe04tkl8lnYVDsXDbcSOaKZRnI0BfGUtd2
-	 ntY9QXCD8J/XJkFDQWku7DhHHo32L4lVUm1/AUokZ+mdlhu//GgXwr6INtHsLPySQR
-	 yCqcX0qCIceW4ye9rh7Vuj6y45d1i+CZ4O9dA3tk=
+	b=FFymzH9mcIR4GFUy3b0oyS109JCBkZtRfinP4wIs4hwnbfVSgG2ewngP4Lj2FJhs3
+	 w1ih1Lnn6KCClFqpZaIt1706G2jqp8J02kSbnTyLtvdln1QEDJDcgcn4A35w5o0JrM
+	 FxGnkBZ4HANeusi1Ttr54fZnZJRqh+t3EBYRlDfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 243/356] net: stmmac: platform: guarantee uniqueness of bus_id
-Date: Tue, 17 Jun 2025 17:25:58 +0200
-Message-ID: <20250617152347.992027672@linuxfoundation.org>
+Subject: [PATCH 6.12 196/512] bpf, sockmap: Avoid using sk_socket after free when sending
+Date: Tue, 17 Jun 2025 17:22:42 +0200
+Message-ID: <20250617152427.578392406@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +49,127 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quentin Schulz <quentin.schulz@cherry.de>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit eb7fd7aa35bfcc1e1fda4ecc42ccfcb526cdc780 ]
+[ Upstream commit 8259eb0e06d8f64c700f5fbdb28a5c18e10de291 ]
 
-bus_id is currently derived from the ethernetX alias. If one is missing
-for the device, 0 is used. If ethernet0 points to another stmmac device
-or if there are 2+ stmmac devices without an ethernet alias, then bus_id
-will be 0 for all of those.
+The sk->sk_socket is not locked or referenced in backlog thread, and
+during the call to skb_send_sock(), there is a race condition with
+the release of sk_socket. All types of sockets(tcp/udp/unix/vsock)
+will be affected.
 
-This is an issue because the bus_id is used to generate the mdio bus id
-(new_bus->id in drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-stmmac_mdio_register) and this needs to be unique.
+Race conditions:
+'''
+CPU0                               CPU1
 
-This allows to avoid needing to define ethernet aliases for devices with
-multiple stmmac controllers (such as the Rockchip RK3588) for multiple
-stmmac devices to probe properly.
+backlog::skb_send_sock
+  sendmsg_unlocked
+    sock_sendmsg
+      sock_sendmsg_nosec
+                                   close(fd):
+                                     ...
+                                     ops->release() -> sock_map_close()
+                                     sk_socket->ops = NULL
+                                     free(socket)
+      sock->ops->sendmsg
+            ^
+            panic here
+'''
 
-Obviously, the bus_id isn't guaranteed to be stable across reboots if no
-alias is set for the device but that is easily fixed by simply adding an
-alias if this is desired.
+The ref of psock become 0 after sock_map_close() executed.
+'''
+void sock_map_close()
+{
+    ...
+    if (likely(psock)) {
+    ...
+    // !! here we remove psock and the ref of psock become 0
+    sock_map_remove_links(sk, psock)
+    psock = sk_psock_get(sk);
+    if (unlikely(!psock))
+        goto no_psock; <=== Control jumps here via goto
+        ...
+        cancel_delayed_work_sync(&psock->work); <=== not executed
+        sk_psock_put(sk, psock);
+        ...
+}
+'''
 
-Fixes: 25c83b5c2e82 ("dt:net:stmmac: Add support to dwmac version 3.610 and 3.710")
-Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250527-stmmac-mdio-bus_id-v2-1-a5ca78454e3c@cherry.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Based on the fact that we already wait for the workqueue to finish in
+sock_map_close() if psock is held, we simply increase the psock
+reference count to avoid race conditions.
+
+With this patch, if the backlog thread is running, sock_map_close() will
+wait for the backlog thread to complete and cancel all pending work.
+
+If no backlog running, any pending work that hasn't started by then will
+fail when invoked by sk_psock_get(), as the psock reference count have
+been zeroed, and sk_psock_drop() will cancel all jobs via
+cancel_delayed_work_sync().
+
+In summary, we require synchronization to coordinate the backlog thread
+and close() thread.
+
+The panic I catched:
+'''
+Workqueue: events sk_psock_backlog
+RIP: 0010:sock_sendmsg+0x21d/0x440
+RAX: 0000000000000000 RBX: ffffc9000521fad8 RCX: 0000000000000001
+...
+Call Trace:
+ <TASK>
+ ? die_addr+0x40/0xa0
+ ? exc_general_protection+0x14c/0x230
+ ? asm_exc_general_protection+0x26/0x30
+ ? sock_sendmsg+0x21d/0x440
+ ? sock_sendmsg+0x3e0/0x440
+ ? __pfx_sock_sendmsg+0x10/0x10
+ __skb_send_sock+0x543/0xb70
+ sk_psock_backlog+0x247/0xb80
+...
+'''
+
+Fixes: 4b4647add7d3 ("sock_map: avoid race between sock_map_close and sk_psock_put")
+Reported-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20250516141713.291150-1-jiayuan.chen@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/core/skmsg.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index 4d570efd9d4bb..6c684f6ee84be 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -419,6 +419,7 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
- 	struct device_node *np = pdev->dev.of_node;
- 	struct plat_stmmacenet_data *plat;
- 	struct stmmac_dma_cfg *dma_cfg;
-+	static int bus_id = -ENODEV;
- 	int phy_mode;
- 	void *ret;
- 	int rc;
-@@ -454,8 +455,14 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
- 	of_property_read_u32(np, "max-speed", &plat->max_speed);
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 1219e0404def0..a8d238dd982af 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -655,6 +655,13 @@ static void sk_psock_backlog(struct work_struct *work)
+ 	bool ingress;
+ 	int ret;
  
- 	plat->bus_id = of_alias_get_id(np, "ethernet");
--	if (plat->bus_id < 0)
--		plat->bus_id = 0;
-+	if (plat->bus_id < 0) {
-+		if (bus_id < 0)
-+			bus_id = of_alias_get_highest_id("ethernet");
-+		/* No ethernet alias found, init at -1 so first bus_id is 0 */
-+		if (bus_id < 0)
-+			bus_id = -1;
-+		plat->bus_id = ++bus_id;
-+	}
++	/* Increment the psock refcnt to synchronize with close(fd) path in
++	 * sock_map_close(), ensuring we wait for backlog thread completion
++	 * before sk_socket freed. If refcnt increment fails, it indicates
++	 * sock_map_close() completed with sk_socket potentially already freed.
++	 */
++	if (!sk_psock_get(psock->sk))
++		return;
+ 	mutex_lock(&psock->work_mutex);
+ 	while ((skb = skb_peek(&psock->ingress_skb))) {
+ 		len = skb->len;
+@@ -706,6 +713,7 @@ static void sk_psock_backlog(struct work_struct *work)
+ 	}
+ end:
+ 	mutex_unlock(&psock->work_mutex);
++	sk_psock_put(psock->sk, psock);
+ }
  
- 	/* Default to phy auto-detection */
- 	plat->phy_addr = -1;
+ struct sk_psock *sk_psock_init(struct sock *sk, int node)
 -- 
 2.39.5
 
