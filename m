@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A57623B633;
-	Tue, 17 Jun 2025 15:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAA9293443;
+	Tue, 17 Jun 2025 15:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174434; cv=none; b=Hy1zXlb2mPdpenrtDshEmX6ZnXhRYt0ZqyJd6YgqMj1TXNOabfeX7qMk4zWghvwdxJCtt2jJhEMO2MrYEQ9IupUoK/AoMdxkfb+i0PY/8cMUWx9T00zWGBS9mCLroSLpeY3812EE1lABvKKQZnG6mOO421ohdDAHVsdundi9db4=
+	t=1750174437; cv=none; b=IO4puWSeQ2kIsunT0GG8vukjlagdPafylDJznsQDUcsF/pPiDRKsTy1Er7XdLKaJEC7jbjnyifJcXPfcK6qPafShW2YtyiJ1PHT8NV9oBa2kJKA1/9ofY33ll2vRs5s1IOAJTVjbVwGsVjeZrU8ey9ffE2Gw0x1y7OvA9Gh/wzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174434; c=relaxed/simple;
-	bh=gBStC8i7spQ9RNZt5szXonOXSJvsgg/EO+5h9gBl9Bo=;
+	s=arc-20240116; t=1750174437; c=relaxed/simple;
+	bh=qQlbvoeBR8XFL5vST9cHQG5ylSWppn2blaGQPV63ARg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mgIWconrw2HEAx2GnteWESlsw/ikzbjCr8XRFXrmvgn5O6rjUTc5KuXTMJvaunBg3HMdfgAVHx7rX996jCGnfkaoZXu+ga5qw1qIfXRB8lyPtmkSy+EqFPSGUJusn1Pinf7c1nj82x0A6BlmOY796AWbOJcoNykumECSVCU9N2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8cI16L8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lCIiLXc4vgT4Gn/KuDfyv1FEImyZXN0QDjsXviT49kpOgH4FDAkbJt45Ii5bqEapA+PZjhBGEDEPVEdj4mEpoJ2GPurqgPupV05lxYAqXMcbGS6chjzCi+nTX8za3GU0d4ZAo1DvTEc82+6VBuYOkkriqdncrDSo1kh/uAQOk6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UU7aKYLD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8cI16L8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19223C4CEE3;
-	Tue, 17 Jun 2025 15:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UU7aKYLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A79FC4CEE3;
+	Tue, 17 Jun 2025 15:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174433;
-	bh=gBStC8i7spQ9RNZt5szXonOXSJvsgg/EO+5h9gBl9Bo=;
+	s=korg; t=1750174436;
+	bh=qQlbvoeBR8XFL5vST9cHQG5ylSWppn2blaGQPV63ARg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E8cI16L8hEItpbVphyvhf0TKG6ivBjiT/p82XK4ct2XU1rgRxPqSTsQjO/40K4dYg
-	 RYYBtJ8yMyciSP4bSUpGb8papIIM0Vu5aOifyw4X/Kn7uFgFPgRsvnfZVRy6HheWNy
-	 d4BLhd5dRiHBgl4Um/2fJuWI/mTH5XtUaqejuPwU=
+	b=UU7aKYLDPUEwZN+oibiOUNKjtW1NPH/zA9W/iFtiYeCN9h9gT4U+ArUfTQWzt8ASr
+	 yO6V/6S8Uj7locUSbov70zVjQMv6xrSoEvX+iiLIs64lEp34E+K5dOi8uzA8JY360e
+	 QWGud0NOUiXyri82zOzNhgnjVPH8jaIR7njsCmVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neill Kapron <nkapron@google.com>,
-	Kees Cook <kees@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/356] selftests/seccomp: fix syscall_restart test for arm compat
-Date: Tue, 17 Jun 2025 17:23:03 +0200
-Message-ID: <20250617152340.965075968@linuxfoundation.org>
+Subject: [PATCH 6.12 019/512] brd: fix aligned_sector from brd_do_discard()
+Date: Tue, 17 Jun 2025 17:19:45 +0200
+Message-ID: <20250617152420.310729835@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neill Kapron <nkapron@google.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 797002deed03491215a352ace891749b39741b69 ]
+[ Upstream commit d4099f8893b057ad7e8d61df76bdeaf807ebd679 ]
 
-The inconsistencies in the systcall ABI between arm and arm-compat can
-can cause a failure in the syscall_restart test due to the logic
-attempting to work around the differences. The 'machine' field for an
-ARM64 device running in compat mode can report 'armv8l' or 'armv8b'
-which matches with the string 'arm' when only examining the first three
-characters of the string.
+The calculation is just wrong, fix it by round_up().
 
-This change adds additional validation to the workaround logic to make
-sure we only take the arm path when running natively, not in arm-compat.
-
-Fixes: 256d0afb11d6 ("selftests/seccomp: build and pass on arm64")
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://lore.kernel.org/r/20250427094103.3488304-2-nkapron@google.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: 9ead7efc6f3f ("brd: implement discard support")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250506061756.2970934-3-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/seccomp/seccomp_bpf.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/block/brd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
-index cacf6507f6905..15325ca35f1e2 100644
---- a/tools/testing/selftests/seccomp/seccomp_bpf.c
-+++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
-@@ -3154,12 +3154,15 @@ TEST(syscall_restart)
- 	ret = get_syscall(_metadata, child_pid);
- #if defined(__arm__)
- 	/*
--	 * FIXME:
- 	 * - native ARM registers do NOT expose true syscall.
- 	 * - compat ARM registers on ARM64 DO expose true syscall.
-+	 * - values of utsbuf.machine include 'armv8l' or 'armb8b'
-+	 *   for ARM64 running in compat mode.
- 	 */
- 	ASSERT_EQ(0, uname(&utsbuf));
--	if (strncmp(utsbuf.machine, "arm", 3) == 0) {
-+	if ((strncmp(utsbuf.machine, "arm", 3) == 0) &&
-+	    (strncmp(utsbuf.machine, "armv8l", 6) != 0) &&
-+	    (strncmp(utsbuf.machine, "armv8b", 6) != 0)) {
- 		EXPECT_EQ(__NR_nanosleep, ret);
- 	} else
- #endif
+diff --git a/drivers/block/brd.c b/drivers/block/brd.c
+index 292f127cae0ab..9549cd71e083b 100644
+--- a/drivers/block/brd.c
++++ b/drivers/block/brd.c
+@@ -224,7 +224,7 @@ static int brd_do_bvec(struct brd_device *brd, struct page *page,
+ 
+ static void brd_do_discard(struct brd_device *brd, sector_t sector, u32 size)
+ {
+-	sector_t aligned_sector = (sector + PAGE_SECTORS) & ~PAGE_SECTORS;
++	sector_t aligned_sector = round_up(sector, PAGE_SECTORS);
+ 	struct page *page;
+ 
+ 	size -= (aligned_sector - sector) * SECTOR_SIZE;
 -- 
 2.39.5
 
