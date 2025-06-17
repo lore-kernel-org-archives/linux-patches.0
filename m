@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929CB2ED17D;
-	Tue, 17 Jun 2025 15:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70CE2ECE8F;
+	Tue, 17 Jun 2025 15:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175384; cv=none; b=u28TkLgDdNSxqkTGUQnIsZef/zGWRnXdXQ2hd8pDPzZdQ2ysRiP0VKaniS17ImuVfUb1kOU+RRq3rYUC6jFjzcI5TURcP3Nh2quxuXHB46FzuT5frW8ZLcEW7cJMOssnoHTnqgjG07mNABgolWB6BV67nDqpsMfqcUlvzjJA69c=
+	t=1750175387; cv=none; b=QhTMmHoCzHWPCPVPL7BsJ4ba9q6infiznsQ4dwILRM8xbS5qp+15uO7O0oAKHsffqtWYryqCnp9XDIOjJJus/GNfAWbcT2fhhVJg13Y9R2HQjPfmCUgOpakDFBr7qvkgFr+Fsun8bNeyzTNAJqOBIBYheDIZWsfZ8RQ4uzrxIdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175384; c=relaxed/simple;
-	bh=vdb1cPsSNCxF4qrRG9LKZNeoVJq7Ur7sGM7erCB+/Pg=;
+	s=arc-20240116; t=1750175387; c=relaxed/simple;
+	bh=JlOWD9tP4i8tA6hzBziHIvJSKkqQ0KbfZPMFejpilNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z/0eRRibhTK59fFmteb6jB6LtNQQ9rj8s0Z45CmiiFTFlFDkGERBZXeZkW79N6AMDG/hGia4uHHz/TPmPEmOyZynkAD6HtlRqOliMLkkSMYvyZES3f9RG+WMVPtBxH9PE79fi3/YFIygR5pPqs71nNWh7J/FXYh9EclyCKHP/G0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o77as2L3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hh+q7RoaYIML2ytuZ6ooqvzlcXPo9+QEvoYLkpSp64KPc/TkXGqTotsJGiiyCGhNrsYqYf+9YCCqth8WPX1bNG98tF9CjiUP0bhZkQj6UgjOm2l2s7pD6ZmYsoDlMLFjIgGuvA9v6piWBNcenDKQbI4Fc4U6EByeFzfUdjmMrWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYetYoyZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o77as2L3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006D8C4CEE3;
-	Tue, 17 Jun 2025 15:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYetYoyZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445D3C4CEE7;
+	Tue, 17 Jun 2025 15:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175384;
-	bh=vdb1cPsSNCxF4qrRG9LKZNeoVJq7Ur7sGM7erCB+/Pg=;
+	s=korg; t=1750175387;
+	bh=JlOWD9tP4i8tA6hzBziHIvJSKkqQ0KbfZPMFejpilNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o77as2L3FZq3jbJy/GLsvNsvUmC7d34dz1En8MPFUAuC74y6XBYc7JMPrNPI1rrLA
-	 BcsnWrE023gC2hQdlXa6CiIEH3FMFjWrZfn5qkEg6IIvVAOGzpVgGUhGW+mDMPmfxg
-	 YRSjO3mNrHw89Kn43SRg6HgxPsx3vm75K3DIdu1M=
+	b=VYetYoyZgrYCAqAauSPkxsAaJMBcM0sJ+W6ubuNVSvsi6SbCGlSn2Q96GED9/9+dt
+	 QIAvPiYPSyhXX+Uq0t/iNgBtgFA1Szy6GdhDFqgxs/lzZrToK5yEeY/nX8OFWjCfCI
+	 B//vLd75IKDInuvBECQmnzFrEmFyj3XWhe6r+GL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
-	Yonglong Liu <liuyonglong@huawei.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 121/512] page_pool: Move pp_magic check into helper functions
-Date: Tue, 17 Jun 2025 17:21:27 +0200
-Message-ID: <20250617152424.498265986@linuxfoundation.org>
+Subject: [PATCH 6.15 083/780] spi: sh-msiof: Fix maximum DMA transfer size
+Date: Tue, 17 Jun 2025 17:16:31 +0200
+Message-ID: <20250617152454.900464929@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,181 +45,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit cd3c93167da0e760b5819246eae7a4ea30fd014b ]
+[ Upstream commit 0941d5166629cb766000530945e54b4e49680c68 ]
 
-Since we are about to stash some more information into the pp_magic
-field, let's move the magic signature checks into a pair of helper
-functions so it can be changed in one place.
+The maximum amount of data to transfer in a single DMA request is
+calculated from the FIFO sizes (which is technically not 100% correct,
+but a simplification, as it is limited by the maximum word count values
+in the Transmit and Control Data Registers).  However, in case there is
+both data to transmit and to receive, the transmit limit is overwritten
+by the receive limit.
 
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Tested-by: Yonglong Liu <liuyonglong@huawei.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20250409-page-pool-track-dma-v9-1-6a9ef2e0cba8@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by using the minimum applicable FIFO size instead.  Move the
+calculation outside the loop, so it is not repeated for each individual
+DMA transfer.
+
+As currently tx_fifo_size is always equal to rx_fifo_size, this bug had
+no real impact.
+
+Fixes: fe78d0b7691c0274 ("spi: sh-msiof: Fix FIFO size to 64 word from 256 word")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/d9961767a97758b2614f2ee8afe1bd56dc900a60.1747401908.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en/xdp.c  |  4 ++--
- include/linux/mm.h                            | 20 +++++++++++++++++++
- mm/page_alloc.c                               |  8 ++------
- net/core/netmem_priv.h                        |  5 +++++
- net/core/skbuff.c                             | 16 ++-------------
- net/core/xdp.c                                |  4 ++--
- 6 files changed, 33 insertions(+), 24 deletions(-)
+ drivers/spi/spi-sh-msiof.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-index 08ab0999f7b31..14192da4b8ed0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-@@ -706,8 +706,8 @@ static void mlx5e_free_xdpsq_desc(struct mlx5e_xdpsq *sq,
- 				xdpi = mlx5e_xdpi_fifo_pop(xdpi_fifo);
- 				page = xdpi.page.page;
+diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
+index 8a98c313548e3..7d8a7998f8ae7 100644
+--- a/drivers/spi/spi-sh-msiof.c
++++ b/drivers/spi/spi-sh-msiof.c
+@@ -918,6 +918,7 @@ static int sh_msiof_transfer_one(struct spi_controller *ctlr,
+ 	void *rx_buf = t->rx_buf;
+ 	unsigned int len = t->len;
+ 	unsigned int bits = t->bits_per_word;
++	unsigned int max_wdlen = 256;
+ 	unsigned int bytes_per_word;
+ 	unsigned int words;
+ 	int n;
+@@ -931,17 +932,17 @@ static int sh_msiof_transfer_one(struct spi_controller *ctlr,
+ 	if (!spi_controller_is_target(p->ctlr))
+ 		sh_msiof_spi_set_clk_regs(p, t);
  
--				/* No need to check ((page->pp_magic & ~0x3UL) == PP_SIGNATURE)
--				 * as we know this is a page_pool page.
-+				/* No need to check page_pool_page_is_pp() as we
-+				 * know this is a page_pool page.
- 				 */
- 				page_pool_recycle_direct(page->pp, page);
- 			} while (++n < num);
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 8617adc6becd1..412f5efe3ae79 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -4243,4 +4243,24 @@ static inline void pgalloc_tag_copy(struct folio *new, struct folio *old)
- }
- #endif /* CONFIG_MEM_ALLOC_PROFILING */
- 
-+/* Mask used for checking in page_pool_page_is_pp() below. page->pp_magic is
-+ * OR'ed with PP_SIGNATURE after the allocation in order to preserve bit 0 for
-+ * the head page of compound page and bit 1 for pfmemalloc page.
-+ * page_is_pfmemalloc() is checked in __page_pool_put_page() to avoid recycling
-+ * the pfmemalloc page.
-+ */
-+#define PP_MAGIC_MASK ~0x3UL
++	if (tx_buf)
++		max_wdlen = min(max_wdlen, p->tx_fifo_size);
++	if (rx_buf)
++		max_wdlen = min(max_wdlen, p->rx_fifo_size);
 +
-+#ifdef CONFIG_PAGE_POOL
-+static inline bool page_pool_page_is_pp(struct page *page)
-+{
-+	return (page->pp_magic & PP_MAGIC_MASK) == PP_SIGNATURE;
-+}
-+#else
-+static inline bool page_pool_page_is_pp(struct page *page)
-+{
-+	return false;
-+}
-+#endif
-+
- #endif /* _LINUX_MM_H */
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 882903f42300b..752576749db9d 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -872,9 +872,7 @@ static inline bool page_expected_state(struct page *page,
- #ifdef CONFIG_MEMCG
- 			page->memcg_data |
- #endif
--#ifdef CONFIG_PAGE_POOL
--			((page->pp_magic & ~0x3UL) == PP_SIGNATURE) |
--#endif
-+			page_pool_page_is_pp(page) |
- 			(page->flags & check_flags)))
- 		return false;
- 
-@@ -901,10 +899,8 @@ static const char *page_bad_reason(struct page *page, unsigned long flags)
- 	if (unlikely(page->memcg_data))
- 		bad_reason = "page still charged to cgroup";
- #endif
--#ifdef CONFIG_PAGE_POOL
--	if (unlikely((page->pp_magic & ~0x3UL) == PP_SIGNATURE))
-+	if (unlikely(page_pool_page_is_pp(page)))
- 		bad_reason = "page_pool leak";
--#endif
- 	return bad_reason;
- }
- 
-diff --git a/net/core/netmem_priv.h b/net/core/netmem_priv.h
-index 7eadb8393e002..f33162fd281c2 100644
---- a/net/core/netmem_priv.h
-+++ b/net/core/netmem_priv.h
-@@ -18,6 +18,11 @@ static inline void netmem_clear_pp_magic(netmem_ref netmem)
- 	__netmem_clear_lsb(netmem)->pp_magic = 0;
- }
- 
-+static inline bool netmem_is_pp(netmem_ref netmem)
-+{
-+	return (netmem_get_pp_magic(netmem) & PP_MAGIC_MASK) == PP_SIGNATURE;
-+}
-+
- static inline void netmem_set_pp(netmem_ref netmem, struct page_pool *pool)
- {
- 	__netmem_clear_lsb(netmem)->pp = pool;
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index f220306731dac..fdb36165c58f5 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -925,11 +925,6 @@ static void skb_clone_fraglist(struct sk_buff *skb)
- 		skb_get(list);
- }
- 
--static bool is_pp_netmem(netmem_ref netmem)
--{
--	return (netmem_get_pp_magic(netmem) & ~0x3UL) == PP_SIGNATURE;
--}
--
- int skb_pp_cow_data(struct page_pool *pool, struct sk_buff **pskb,
- 		    unsigned int headroom)
- {
-@@ -1027,14 +1022,7 @@ bool napi_pp_put_page(netmem_ref netmem)
- {
- 	netmem = netmem_compound_head(netmem);
- 
--	/* page->pp_magic is OR'ed with PP_SIGNATURE after the allocation
--	 * in order to preserve any existing bits, such as bit 0 for the
--	 * head page of compound page and bit 1 for pfmemalloc page, so
--	 * mask those bits for freeing side when doing below checking,
--	 * and page_is_pfmemalloc() is checked in __page_pool_put_page()
--	 * to avoid recycling the pfmemalloc page.
--	 */
--	if (unlikely(!is_pp_netmem(netmem)))
-+	if (unlikely(!netmem_is_pp(netmem)))
- 		return false;
- 
- 	page_pool_put_full_netmem(netmem_get_pp(netmem), netmem, false);
-@@ -1074,7 +1062,7 @@ static int skb_pp_frag_ref(struct sk_buff *skb)
- 
- 	for (i = 0; i < shinfo->nr_frags; i++) {
- 		head_netmem = netmem_compound_head(shinfo->frags[i].netmem);
--		if (likely(is_pp_netmem(head_netmem)))
-+		if (likely(netmem_is_pp(head_netmem)))
- 			page_pool_ref_netmem(head_netmem);
- 		else
- 			page_ref_inc(netmem_to_page(head_netmem));
-diff --git a/net/core/xdp.c b/net/core/xdp.c
-index bcc5551c6424b..23e7d736718b0 100644
---- a/net/core/xdp.c
-+++ b/net/core/xdp.c
-@@ -381,8 +381,8 @@ void __xdp_return(void *data, struct xdp_mem_info *mem, bool napi_direct,
- 		page = virt_to_head_page(data);
- 		if (napi_direct && xdp_return_frame_no_direct())
- 			napi_direct = false;
--		/* No need to check ((page->pp_magic & ~0x3UL) == PP_SIGNATURE)
--		 * as mem->type knows this a page_pool page
-+		/* No need to check netmem_is_pp() as mem->type knows this a
-+		 * page_pool page
+ 	while (ctlr->dma_tx && len > 15) {
+ 		/*
+ 		 *  DMA supports 32-bit words only, hence pack 8-bit and 16-bit
+ 		 *  words, with byte resp. word swapping.
  		 */
- 		page_pool_put_full_page(page->pp, page, napi_direct);
- 		break;
+-		unsigned int l = 0;
+-
+-		if (tx_buf)
+-			l = min(round_down(len, 4), p->tx_fifo_size * 4);
+-		if (rx_buf)
+-			l = min(round_down(len, 4), p->rx_fifo_size * 4);
++		unsigned int l = min(round_down(len, 4), max_wdlen * 4);
+ 
+ 		if (bits <= 8) {
+ 			copy32 = copy_bswap32;
 -- 
 2.39.5
 
