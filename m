@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F528285073;
-	Tue, 17 Jun 2025 16:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7212DFF17;
+	Tue, 17 Jun 2025 16:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177425; cv=none; b=NMAUAltmWptvErwJezF6SK3DlrQ9M3XpFqm35OaB9Nll8JcknAQVvbeM1Tqgfq3jsdyxnaX9dFCYrkGKjX7X6CeYi6fZn4gbbw7kP+Jpn1XaCIGe+0NrynqtTJuN38lGWQUDXKhFN2tXM7b18nT0vZolHegVJeHElkCYU9+zufk=
+	t=1750177428; cv=none; b=dcsJ1axRp9fdWoIVw6A4XZlEUoWJqOT1Czkc4tmdhiS12FgJgvc+KVTHS2x8yqjnxm9O5zZyzUEgfY212VP8okzK6gZdiZBbmX+D+uwPSKQNUOa9HU+Bv/vQzeXhs2RrPLtuSahOKDSERy43WSSfdqzg5u+/qogYDvA7pNdZdG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177425; c=relaxed/simple;
-	bh=MDzI1X5z5YOiz1vDhd+VabwpfWeAQmdGPtz8Jrc1I7E=;
+	s=arc-20240116; t=1750177428; c=relaxed/simple;
+	bh=oqR5ptHMG50fs/tiOkBIi5tuVQDkFyLwwlNpRR/+lFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJMTSl3vJBpSQXsFsSmGbHgD5GibBtITFHx9c6C5cH74iuXHNvp5o1bjlsv98f5vDDpusB6RHUCnVEOxRom8NjWmTeOcTDfyInWpA5DW0IfzkpHDXh2dEaCbZviLLeha130wCvfNgiegLgUfLJcmTaLUAosVDJMvO+o5I81Ues0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GS8zMiQc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mo+eRS6ab7lqJ/in6n18Kx0qcUCyYMqJ3d/D53pGGOuWtzCYcE8JEqVvaCZ36iS6x6i19Ri0JTv+vdFDM83lMG85l/2bwHmQroG+GPU7uH7WfWo9i1T0SIyS9a2rP6C/sWVUrZTgqRyZwEr+YKzmNf3Q1TUs733saDV2jRVi7gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBme1rZK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GS8zMiQc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DA4C4CEE3;
-	Tue, 17 Jun 2025 16:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBme1rZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B03C4CEE3;
+	Tue, 17 Jun 2025 16:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177425;
-	bh=MDzI1X5z5YOiz1vDhd+VabwpfWeAQmdGPtz8Jrc1I7E=;
+	s=korg; t=1750177428;
+	bh=oqR5ptHMG50fs/tiOkBIi5tuVQDkFyLwwlNpRR/+lFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GS8zMiQc9LOhOrx35v/g+PxIcJN2iwQAavc+yzJu+jpobXoJzjdhTQWQa0+u6JCLu
-	 QKxIY/hoFOlYBP+UiRWUd7xBo/AVHlqcSbuwVCLUGMh0RYE4/Kd/gg8e2v5I6H1P0H
-	 QQjFsSTUWxQMQhYhTRgO5TNJz4tBDXKjO2EhURCc=
+	b=QBme1rZKk6plSEfJVExXRQFsZxc+W86hLitEMaatEtpGD40lRf+K4aPL/cv+xvaRy
+	 wTilpCK3JcEy82ReKDt1Vux4t7rIJBgXN23+VYTm5Gwn+EFWvnvQ9UPEwNypJOoCP+
+	 u4gmAad/5y2QLgIQZtb48/FmeVvT7EHx1QnqWQYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Dalin <liudalin@kylinsec.com.cn>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	"ping.gao" <ping.gao@samsung.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 319/512] rtc: loongson: Add missing alarm notifications for ACPI RTC events
-Date: Tue, 17 Jun 2025 17:24:45 +0200
-Message-ID: <20250617152432.538196389@linuxfoundation.org>
+Subject: [PATCH 6.15 282/780] scsi: ufs: mcq: Delete ufshcd_release_scsi_cmd() in ufshcd_mcq_abort()
+Date: Tue, 17 Jun 2025 17:19:50 +0200
+Message-ID: <20250617152502.955551977@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +49,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liu Dalin <liudalin@kylinsec.com.cn>
+From: ping.gao <ping.gao@samsung.com>
 
-[ Upstream commit 5af9f1fa576874b24627d4c05e3a84672204c200 ]
+[ Upstream commit 53755903b9357e69b2dd6a02fafbb1e30c741895 ]
 
-When an application sets and enables an alarm on Loongson RTC devices,
-the alarm notification fails to propagate to userspace because the
-ACPI event handler omits calling rtc_update_irq().
+After UFS_ABORT_TASK has been processed successfully, the host will
+generate MCQ IRQ for ABORT TAG with response OCS_ABORTED. This results in
+ufshcd_compl_one_cqe() calling ufshcd_release_scsi_cmd().
 
-As a result, processes waiting via select() or poll() on RTC device
-files fail to receive alarm notifications.
+But ufshcd_mcq_abort() already calls ufshcd_release_scsi_cmd(), resulting
+in __ufshcd_release() being called twice. This means
+hba->clk_gating.active_reqs will be decreased twice, making it go
+negative.
 
-The ACPI interrupt is also triggered multiple times. In loongson_rtc_handler,
-we need to clear TOY_MATCH0_REG to resolve this issue.
+Delete ufshcd_release_scsi_cmd() in ufshcd_mcq_abort().
 
-Fixes: 09471d8f5b39 ("rtc: loongson: clear TOY_MATCH0_REG in loongson_rtc_isr()")
-Fixes: 1b733a9ebc3d ("rtc: Add rtc driver for the Loongson family chips")
-Signed-off-by: Liu Dalin <liudalin@kylinsec.com.cn>
-Reviewed-by: Binbin Zhou <zhoubinbin@loongson.cn>
-Link: https://lore.kernel.org/r/20250509084416.7979-1-liudalin@kylinsec.com.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: f1304d442077 ("scsi: ufs: mcq: Added ufshcd_mcq_abort()")
+Signed-off-by: ping.gao <ping.gao@samsung.com>
+Link: https://lore.kernel.org/r/20250516083812.3894396-1-ping.gao@samsung.com
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-loongson.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/ufs/core/ufs-mcq.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/rtc/rtc-loongson.c b/drivers/rtc/rtc-loongson.c
-index 90e9d97a86b48..c9d5b91a6544d 100644
---- a/drivers/rtc/rtc-loongson.c
-+++ b/drivers/rtc/rtc-loongson.c
-@@ -129,6 +129,14 @@ static u32 loongson_rtc_handler(void *id)
- {
- 	struct loongson_rtc_priv *priv = (struct loongson_rtc_priv *)id;
+diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
+index f1294c29f4849..1e50675772feb 100644
+--- a/drivers/ufs/core/ufs-mcq.c
++++ b/drivers/ufs/core/ufs-mcq.c
+@@ -674,7 +674,6 @@ int ufshcd_mcq_abort(struct scsi_cmnd *cmd)
+ 	int tag = scsi_cmd_to_rq(cmd)->tag;
+ 	struct ufshcd_lrb *lrbp = &hba->lrb[tag];
+ 	struct ufs_hw_queue *hwq;
+-	unsigned long flags;
+ 	int err;
  
-+	rtc_update_irq(priv->rtcdev, 1, RTC_AF | RTC_IRQF);
-+
-+	/*
-+	 * The TOY_MATCH0_REG should be cleared 0 here,
-+	 * otherwise the interrupt cannot be cleared.
-+	 */
-+	regmap_write(priv->regmap, TOY_MATCH0_REG, 0);
-+
- 	spin_lock(&priv->lock);
- 	/* Disable RTC alarm wakeup and interrupt */
- 	writel(readl(priv->pm_base + PM1_EN_REG) & ~RTC_EN,
+ 	/* Skip task abort in case previous aborts failed and report failure */
+@@ -713,10 +712,5 @@ int ufshcd_mcq_abort(struct scsi_cmnd *cmd)
+ 		return FAILED;
+ 	}
+ 
+-	spin_lock_irqsave(&hwq->cq_lock, flags);
+-	if (ufshcd_cmd_inflight(lrbp->cmd))
+-		ufshcd_release_scsi_cmd(hba, lrbp);
+-	spin_unlock_irqrestore(&hwq->cq_lock, flags);
+-
+ 	return SUCCESS;
+ }
 -- 
 2.39.5
 
