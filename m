@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF602E9737;
-	Tue, 17 Jun 2025 15:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4922DF3C9;
+	Tue, 17 Jun 2025 15:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174342; cv=none; b=Qs+XL2rzfyqPn3B4xbXEj/ZO+mhsTeUtJo21cXAnl1H8w1Ndfhb+FFNqseeviCu9vifmlPclBamaUlNG7ykKfFI0ny4IZOJatoTrG0Pv2WQq6zb/tzm6/mCN64p+wmeVOfPg6COXPz+rCTq3rxWG3bzQ40QRaKQbLGeRoDE20wA=
+	t=1750174345; cv=none; b=R/fDftjzNZkjHTQIv5d86mOKh00Xk2W7lh5sETmozv3FRCKdhKxXJDdcpoWuOkjfpBYFJ872cQ3UbQkVOQwleYQ2hmfCFQii3ofdSTH6Vnj7u/2htPlX9PLnexKVT99xKgMHSoo9mk6PqHaHNVqUCMT9VEOPtRuZYSiChFtVj/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174342; c=relaxed/simple;
-	bh=7wykokKsXkUvkjiAiYY3iHLgxNBeseTEKXSXExr5154=;
+	s=arc-20240116; t=1750174345; c=relaxed/simple;
+	bh=JJx/Mjz7AT7L4aIdZa2f5BA3hkTn46bGnf6why2TDtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ncbL0j8MvZ41/xxNuqjqlCbT2ceHgneqPf1bFXshyLU65nRp2LLXDUied9pAGeTJ1Lwiy2Z3gYpU2PbL38VwO20BNdCcHVAQRW5I8KLVMWuKsSs/zdhImdlPf5q36Bh0ATzz7wBCvYJe6giZxWxSYEkNVysPhglJ9jjuVOaGwIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzsNelTZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qI4vWmWi1iWAeIc58LQMQ0IzxYbM09CcFdNpzyzG0jw11Ahf1t7uGwr5HmJB3nfY+tHrzHE8cqGmmKU3O+ve206zc3+vJ5BUJ3oni1Za+7OIuamBAVonff3ZZFqnvFOkIem6ndI62VPzsL8CmuDvqetXzerCMIXX56w9M5Hb820=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NaHzYgi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzsNelTZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0DFC4CEE7;
-	Tue, 17 Jun 2025 15:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NaHzYgi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB87C4CEE3;
+	Tue, 17 Jun 2025 15:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174342;
-	bh=7wykokKsXkUvkjiAiYY3iHLgxNBeseTEKXSXExr5154=;
+	s=korg; t=1750174345;
+	bh=JJx/Mjz7AT7L4aIdZa2f5BA3hkTn46bGnf6why2TDtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SzsNelTZSBzSoJTwUHXmz6o9Hsro4okbrgRvRiMUIczMEsZNuMMcpc0/gBkT067jX
-	 oYrk37T30W6c1JaYbx+zbAGkrjScVZfqfDcQ/zFK+KkyqVjuwOwH/DORDysM7Hfr/q
-	 k7js6VzaopIr5gdV+5/4NbaLxeyMUjbjNWZ6YnWQ=
+	b=2NaHzYgijm/Ywa3yJtgWV/p79fKs1MW4beY6o+MMdCTebOzv9EMMkkWlIS5ngy/yx
+	 onAhCtjK9WKLxyuzZoGd32eDz2ZuTonH0y/jpTjjd66rn5yAFPTO/uHRz8FC/tWHhr
+	 2XnmVUJY1GJlRQ6oxlcd68c1bnTdfm8tIfbZNeIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
-	James Calligeros <jcalligeros99@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Valentin Schneider <vschneid@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/356] ASoC: apple: mca: Constrain channels according to TDM mask
-Date: Tue, 17 Jun 2025 17:22:49 +0200
-Message-ID: <20250617152340.408931992@linuxfoundation.org>
+Subject: [PATCH 6.12 004/512] sched: Fix trace_sched_switch(.prev_state)
+Date: Tue, 17 Jun 2025 17:19:30 +0200
+Message-ID: <20250617152419.703616071@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,72 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Povišer <povik+lin@cutebit.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit e717c661e2d1a660e96c40b0fe9933e23a1d7747 ]
+[ Upstream commit 8feb053d53194382fcfb68231296fdc220497ea6 ]
 
-We don't (and can't) configure the hardware correctly if the number of
-channels exceeds the weight of the TDM mask. Report that constraint in
-startup of FE.
+Gabriele noted that in case of signal_pending_state(), the tracepoint
+sees a stale task-state.
 
-Fixes: 3df5d0d97289 ("ASoC: apple: mca: Start new platform driver")
-Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
-Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20250518-mca-fixes-v1-1-ee1015a695f6@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: fa2c3254d7cf ("sched/tracing: Don't re-read p->state when emitting sched_switch event")
+Reported-by: Gabriele Monaco <gmonaco@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: Valentin Schneider <vschneid@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/apple/mca.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ kernel/sched/core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/apple/mca.c b/sound/soc/apple/mca.c
-index ce77934f3eef3..0e96caa607fb8 100644
---- a/sound/soc/apple/mca.c
-+++ b/sound/soc/apple/mca.c
-@@ -464,6 +464,28 @@ static int mca_configure_serdes(struct mca_cluster *cl, int serdes_unit,
- 	return -EINVAL;
- }
- 
-+static int mca_fe_startup(struct snd_pcm_substream *substream,
-+			  struct snd_soc_dai *dai)
-+{
-+	struct mca_cluster *cl = mca_dai_to_cluster(dai);
-+	unsigned int mask, nchannels;
-+
-+	if (cl->tdm_slots) {
-+		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+			mask = cl->tdm_tx_mask;
-+		else
-+			mask = cl->tdm_rx_mask;
-+
-+		nchannels = hweight32(mask);
-+	} else {
-+		nchannels = 2;
-+	}
-+
-+	return snd_pcm_hw_constraint_minmax(substream->runtime,
-+					    SNDRV_PCM_HW_PARAM_CHANNELS,
-+					    1, nchannels);
-+}
-+
- static int mca_fe_set_tdm_slot(struct snd_soc_dai *dai, unsigned int tx_mask,
- 			       unsigned int rx_mask, int slots, int slot_width)
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index e9bb1b4c58421..814abc7ad994a 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -6517,12 +6517,14 @@ pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
+  * Otherwise marks the task's __state as RUNNING
+  */
+ static bool try_to_block_task(struct rq *rq, struct task_struct *p,
+-			      unsigned long task_state)
++			      unsigned long *task_state_p)
  {
-@@ -680,6 +702,7 @@ static int mca_fe_hw_params(struct snd_pcm_substream *substream,
- }
++	unsigned long task_state = *task_state_p;
+ 	int flags = DEQUEUE_NOCLOCK;
  
- static const struct snd_soc_dai_ops mca_fe_ops = {
-+	.startup = mca_fe_startup,
- 	.set_fmt = mca_fe_set_fmt,
- 	.set_bclk_ratio = mca_set_bclk_ratio,
- 	.set_tdm_slot = mca_fe_set_tdm_slot,
+ 	if (signal_pending_state(task_state, p)) {
+ 		WRITE_ONCE(p->__state, TASK_RUNNING);
++		*task_state_p = TASK_RUNNING;
+ 		return false;
+ 	}
+ 
+@@ -6656,7 +6658,7 @@ static void __sched notrace __schedule(int sched_mode)
+ 			goto picked;
+ 		}
+ 	} else if (!preempt && prev_state) {
+-		try_to_block_task(rq, prev, prev_state);
++		try_to_block_task(rq, prev, &prev_state);
+ 		switch_count = &prev->nvcsw;
+ 	}
+ 
 -- 
 2.39.5
 
