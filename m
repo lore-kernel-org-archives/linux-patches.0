@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B2A2135A0;
-	Tue, 17 Jun 2025 16:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9812135A0;
+	Tue, 17 Jun 2025 16:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178598; cv=none; b=GPHZLd41xqSmU87hI7idzqFvqpMxTtmFdpVoLbGsiY9QqwtonNzhJ9tKO9Wbo8RyuXtb5+JwHTHQ0puxRouSoLM8nkJ/M3ZigYGxcYorQs74ykfDWERxH2G4jChQ3NUz7kVzW3dISAOlNEVNaChgyUjeX0DM+JxdiePn6HbcMxg=
+	t=1750178601; cv=none; b=a6g4b7J1cD920jxOO1Xh4zAWTe5YAHhRVY4OpH6KE9ggvnPDzj0Xq8r4OFOVKwXro3Edn4VuOtXiA2CewOTuZa0nIgQGzq0SvXYu/BslB5FUFUR2piweqlj4vIR4OCK0IDZ76+dWxlQUhCq1S9ZyhMgygUyXujOZhSUDQ1iFq/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178598; c=relaxed/simple;
-	bh=Oo80URvaSgBkFWSqPOHKy/Zw7o3SHoJv4yo65cgFkvY=;
+	s=arc-20240116; t=1750178601; c=relaxed/simple;
+	bh=LgIr7/SFoZj1DRDdzBp4lzmZszGc9ws7XHqhGXLwOPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JRMB+m4z1QQm+HtCzp5robiimWhUOCUIuQPCEH3fqdj4bM7kmISfwLRdB9KOLk1FCRQLgL/c8fTGqOTxuESmYjNUOY+vL4Ey8MhI1YQYOR8JSJ62yJQGZNJUdrXajjSKFCWjfOfTVEpVMnzK5TEuuygdH8w8vfCo2mUZc+B2aIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wi0ejpSd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QeT1T9av8/l3kYC9h3ox9hAZuqbYY06/jtucqBZJ8fVIjMpeAyVRexIOBqvx+oIjFQTXc0VzGxOQGtwkaNDmRIuPCeFw7lxbmlelUo9rm+7Yr0U3fBpktEfjpm4RVQTjrtQSLMUTutCHUbz7qJf9uUlBkFgvOmlrl7ESXWiShWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gx7q02sz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wi0ejpSd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4ECC4CEE3;
-	Tue, 17 Jun 2025 16:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gx7q02sz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1A9C4CEE3;
+	Tue, 17 Jun 2025 16:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178598;
-	bh=Oo80URvaSgBkFWSqPOHKy/Zw7o3SHoJv4yo65cgFkvY=;
+	s=korg; t=1750178601;
+	bh=LgIr7/SFoZj1DRDdzBp4lzmZszGc9ws7XHqhGXLwOPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wi0ejpSdRpbAsVpygA4ms0zBfWkl2pXNdxy3c/UhMAky3B+AXVpnW9iZVKhmrP0sN
-	 Mow5j7jXk4ak8mJfXqnvV8YH3lP/gCXO1MHdkZrBcqkBV4yv9AawZAL8/A/qBgGE1n
-	 +1QqupH48uQs8/xiVWATZSjju1EVJuOGYZ2OU2B8=
+	b=gx7q02szbZwDNdoDNo4xRbb3XkOU4JKVpD7nMEzJvWWtx4waACh3LaYAkON/kWzxe
+	 9H/6xK0pRAt7afBRc9Hbva+p9TUR9mZ4QhBOP/KRLLqlfgax9PWpS39sGtH0aDJZHO
+	 XCYBSzUVwQKjM2iJpG3yeLCHXdRd59/keIOxU2uU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jensen Huang <jensenhuang@friendlyarm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 495/780] PCI: Print the actual delay time in pci_bridge_wait_for_secondary_bus()
-Date: Tue, 17 Jun 2025 17:23:23 +0200
-Message-ID: <20250617152511.652788611@linuxfoundation.org>
+Subject: [PATCH 6.15 496/780] PCI: rockchip: Fix order of rockchip_pci_core_rsts
+Date: Tue, 17 Jun 2025 17:23:24 +0200
+Message-ID: <20250617152511.692058155@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -49,46 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+From: Jensen Huang <jensenhuang@friendlyarm.com>
 
-[ Upstream commit d24eba726aadf8778f2907dd42281c6380b0ccaa ]
+[ Upstream commit c7540e5423d7f588c7210a9941ceb6a836963ccc ]
 
-Print the delay amount that pcie_wait_for_link_delay() is invoked with
-instead of the hardcoded 1000ms value in the debug info print.
+The order of rockchip_pci_core_rsts introduced in the offending commit
+followed the previous comment that warned not to reorder them. But the
+commit failed to take into account that reset_control_bulk_deassert()
+deasserts the resets in reverse order. So this leads to the link getting
+downgraded to 2.5 GT/s.
 
-Fixes: 7b3ba09febf4 ("PCI/PM: Shorten pci_bridge_wait_for_secondary_bus() wait time for slow links")
-Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20250414001505.21243-2-wilfred.opensource@gmail.com
+Hence, restore the deassert order and also add back the comments for
+rockchip_pci_core_rsts.
+
+Tested on NanoPC-T4 with Samsung 970 Pro.
+
+Fixes: 18715931a5c0 ("PCI: rockchip: Simplify reset control handling by using reset_control_bulk*() function")
+Signed-off-by: Jensen Huang <jensenhuang@friendlyarm.com>
+[mani: reworded the commit message and the comment above rockchip_pci_core_rsts]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://patch.msgid.link/20250328105822.3946767-1-jensenhuang@friendlyarm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/pcie-rockchip.h | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index e77d5b53c0cec..4d84ed4124844 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -4954,7 +4954,7 @@ int pci_bridge_wait_for_secondary_bus(struct pci_dev *dev, char *reset_type)
- 		delay);
- 	if (!pcie_wait_for_link_delay(dev, true, delay)) {
- 		/* Did not train, no need to wait any further */
--		pci_info(dev, "Data Link Layer Link Active not set in 1000 msec\n");
-+		pci_info(dev, "Data Link Layer Link Active not set in %d msec\n", delay);
- 		return -ENOTTY;
- 	}
+diff --git a/drivers/pci/controller/pcie-rockchip.h b/drivers/pci/controller/pcie-rockchip.h
+index 14954f43e5e9a..5864a20323f21 100644
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -319,11 +319,12 @@ static const char * const rockchip_pci_pm_rsts[] = {
+ 	"aclk",
+ };
  
++/* NOTE: Do not reorder the deassert sequence of the following reset pins */
+ static const char * const rockchip_pci_core_rsts[] = {
+-	"mgmt-sticky",
+-	"core",
+-	"mgmt",
+ 	"pipe",
++	"mgmt",
++	"core",
++	"mgmt-sticky",
+ };
+ 
+ struct rockchip_pcie {
 -- 
 2.39.5
 
