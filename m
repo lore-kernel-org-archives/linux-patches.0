@@ -1,47 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9041A2ED868;
-	Tue, 17 Jun 2025 16:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFA42EE266;
+	Tue, 17 Jun 2025 16:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178275; cv=none; b=KJrF6MvNq/hDuLdPGmI0W0dp79SnOFbLi5DHbVt4I7OWjgeHmuqADJYB1NX1LYUaoUl1eV9VESd4dt/uk3D03hvvl31CRYydycsb/ebrncCJWUMUFWfSmBT0SZAr5EFK411TW3Ap7zgSu/+melVgFYHOiahtVFqnnYRX+yv/2xg=
+	t=1750178278; cv=none; b=Tk3RxTUdoUbFZHWspOLKGOhrG6jhepqmdLdBzkt6x9OQm3N3vjigJg7drArG4mPthkdHxwmYSiFYcbgAHoRvIuIy6t5luQjBBEpBjVO+ZLjih53PiQc6/d/zVgX+mZH4q+tWRL7xd6jGXmtF+EjOqVbn22uQ2/msxCQWTRkG8CA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178275; c=relaxed/simple;
-	bh=8zMtpQq+ygZonZaB7Or0iy+Gciy5EW68pZweEzfPI5M=;
+	s=arc-20240116; t=1750178278; c=relaxed/simple;
+	bh=BC+M0KMmaZL4t3GVPsZOtZIP6JpL3GeT2kzPHrCzkV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ihy1IUJckJGaVSoRp2Zf4uESg7t2OSms6aGAAx4AHMiGru89ZnDhYY9kVKRhp0xx5PbFlEK2gD7ZQJgE+15fJ5wQAQlEF+PG8hTZ0iVxNY9/kp+00Vqq6SeL87zxB6FBL043Y8o6vQv1WSOVDczK9+Uutaxf8AbmsmTgr/WuZvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=acbsBqX8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dwgxuhYLYMANGWWkInO0WU4s9AonvUS4UQbPpGONSw/fMXs/xYUdKICSwZPMaOxhz2wd5pX3vs4uvtO8HxIOyshW+Zz/+MxfneXiFx0WKyhMC3KiGpSjcfju1YoDaf24/ImPrryjL40/dkJ2XMHgkf/4+UPmKdSzaeOsXPE3aqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGlSGGX5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="acbsBqX8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2628C4CEE3;
-	Tue, 17 Jun 2025 16:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGlSGGX5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A389C4CEE3;
+	Tue, 17 Jun 2025 16:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178275;
-	bh=8zMtpQq+ygZonZaB7Or0iy+Gciy5EW68pZweEzfPI5M=;
+	s=korg; t=1750178278;
+	bh=BC+M0KMmaZL4t3GVPsZOtZIP6JpL3GeT2kzPHrCzkV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=acbsBqX8Vte1ZD2Hqg9ap/8WRPMXRhfcUInTT1PCA+nVoChEUbFFyJOj70OWlrbVg
-	 2y3ZCmZBRklIIlpwri82s2Op7xdfG9tZuyK7hptVvx8UX1QwuGzZPxgZ5Oa7JkSEJt
-	 kYmFTvIesCJD2lfmMqLT6MCxPFUrTaZoVi4yxzFc=
+	b=wGlSGGX54+1cLo/NB2UUPKDifURHarUOsE4KRpD3fHv7c1KIBIAnUZZbIMXIyj0uy
+	 m3virRy9MCHE2eZn2txd/+ma/pgnLr28/q0EBM0h71YFflqVRbpRWo4jMh38Ws81hY
+	 BidHfhDnDkYHZ4B1J/ctq/UAAn9LNQXAdKUNPWmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung.kim@lge.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	WangYuli <wangyuli@uniontech.com>,
+	Even Xu <even.xu@intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 437/780] perf symbol-minimal: Fix double free in filename__read_build_id
-Date: Tue, 17 Jun 2025 17:22:25 +0200
-Message-ID: <20250617152509.259678393@linuxfoundation.org>
+Subject: [PATCH 6.15 429/780] HID: intel-thc-hid: intel-quicki2c: pass correct arguments to acpi_evaluate_object
+Date: Tue, 17 Jun 2025 17:22:17 +0200
+Message-ID: <20250617152508.937057103@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -60,121 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-[ Upstream commit fa9c4977fbfbca182f9e410d57b3f98356a9d917 ]
+[ Upstream commit 37d66cf07871927ea682c491b9e9a12dd73e6b5b ]
 
-Running the "perf script task-analyzer tests" with address sanitizer
-showed a double free:
-```
-FAIL: "test_csv_extended_times" Error message: "Failed to find required string:'Out-Out;'."
-=================================================================
-==19190==ERROR: AddressSanitizer: attempting double-free on 0x50b000017b10 in thread T0:
-    #0 0x55da9601c78a in free (perf+0x26078a) (BuildId: e7ef50e08970f017a96fde6101c5e2491acc674a)
-    #1 0x55da96640c63 in filename__read_build_id tools/perf/util/symbol-minimal.c:221:2
+Delete unused argument, pass correct argument to acpi_evaluate_object.
 
-0x50b000017b10 is located 0 bytes inside of 112-byte region [0x50b000017b10,0x50b000017b80)
-freed by thread T0 here:
-    #0 0x55da9601ce40 in realloc (perf+0x260e40) (BuildId: e7ef50e08970f017a96fde6101c5e2491acc674a)
-    #1 0x55da96640ad6 in filename__read_build_id tools/perf/util/symbol-minimal.c:204:10
+Log:
+  intel_quicki2c 0000:00:10.0: enabling device (0000 -> 0002)
+  ACPI: \_SB.PC00.THC0.ICRS: 1 arguments were passed to a non-method ACPI object (Buffer) (20230628/nsarguments-211)
+  ACPI: \_SB.PC00.THC0.ISUB: 1 arguments were passed to a non-method ACPI object (Buffer) (20230628/nsarguments-211)
 
-previously allocated by thread T0 here:
-    #0 0x55da9601ca23 in malloc (perf+0x260a23) (BuildId: e7ef50e08970f017a96fde6101c5e2491acc674a)
-    #1 0x55da966407e7 in filename__read_build_id tools/perf/util/symbol-minimal.c:181:9
-
-SUMMARY: AddressSanitizer: double-free (perf+0x26078a) (BuildId: e7ef50e08970f017a96fde6101c5e2491acc674a) in free
-==19190==ABORTING
-FAIL: "invocation of perf script report task-analyzer --csv-summary csvsummary --summary-extended command failed" Error message: ""
-FAIL: "test_csvsummary_extended" Error message: "Failed to find required string:'Out-Out;'."
----- end(-1) ----
-132: perf script task-analyzer tests                                 : FAILED!
-```
-
-The buf_size if always set to phdr->p_filesz, but that may be 0
-causing a free and realloc to return NULL. This is treated in
-filename__read_build_id like a failure and the buffer is freed again.
-
-To avoid this problem only grow buf, meaning the buf_size will never
-be 0. This also reduces the number of memory (re)allocations.
-
-Fixes: b691f64360ecec49 ("perf symbols: Implement poor man's ELF parser")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung.kim@lge.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250501070003.22251-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 5282e45ccbfa ("HID: intel-thc-hid: intel-quicki2c: Add THC QuickI2C ACPI interfaces")
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Reviewed-by: Even Xu <even.xu@intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-minimal.c | 34 +++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 16 deletions(-)
+ drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/symbol-minimal.c b/tools/perf/util/symbol-minimal.c
-index c6f369b5d893f..d8da3da01fe6b 100644
---- a/tools/perf/util/symbol-minimal.c
-+++ b/tools/perf/util/symbol-minimal.c
-@@ -147,18 +147,19 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
- 			if (phdr->p_type != PT_NOTE)
- 				continue;
+diff --git a/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c b/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c
+index fa51155ebe393..8a8c4a46f9270 100644
+--- a/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c
++++ b/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c
+@@ -82,15 +82,10 @@ static int quicki2c_acpi_get_dsd_property(struct acpi_device *adev, acpi_string
+ {
+ 	acpi_handle handle = acpi_device_handle(adev);
+ 	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
+-	union acpi_object obj = { .type = type };
+-	struct acpi_object_list arg_list = {
+-		.count = 1,
+-		.pointer = &obj,
+-	};
+ 	union acpi_object *ret_obj;
+ 	acpi_status status;
  
--			buf_size = phdr->p_filesz;
- 			offset = phdr->p_offset;
--			tmp = realloc(buf, buf_size);
--			if (tmp == NULL)
--				goto out_free;
--
--			buf = tmp;
-+			if (phdr->p_filesz > buf_size) {
-+				buf_size = phdr->p_filesz;
-+				tmp = realloc(buf, buf_size);
-+				if (tmp == NULL)
-+					goto out_free;
-+				buf = tmp;
-+			}
- 			fseek(fp, offset, SEEK_SET);
--			if (fread(buf, buf_size, 1, fp) != 1)
-+			if (fread(buf, phdr->p_filesz, 1, fp) != 1)
- 				goto out_free;
- 
--			ret = read_build_id(buf, buf_size, bid, need_swap);
-+			ret = read_build_id(buf, phdr->p_filesz, bid, need_swap);
- 			if (ret == 0) {
- 				ret = bid->size;
- 				break;
-@@ -199,18 +200,19 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
- 			if (phdr->p_type != PT_NOTE)
- 				continue;
- 
--			buf_size = phdr->p_filesz;
- 			offset = phdr->p_offset;
--			tmp = realloc(buf, buf_size);
--			if (tmp == NULL)
--				goto out_free;
--
--			buf = tmp;
-+			if (phdr->p_filesz > buf_size) {
-+				buf_size = phdr->p_filesz;
-+				tmp = realloc(buf, buf_size);
-+				if (tmp == NULL)
-+					goto out_free;
-+				buf = tmp;
-+			}
- 			fseek(fp, offset, SEEK_SET);
--			if (fread(buf, buf_size, 1, fp) != 1)
-+			if (fread(buf, phdr->p_filesz, 1, fp) != 1)
- 				goto out_free;
- 
--			ret = read_build_id(buf, buf_size, bid, need_swap);
-+			ret = read_build_id(buf, phdr->p_filesz, bid, need_swap);
- 			if (ret == 0) {
- 				ret = bid->size;
- 				break;
+-	status = acpi_evaluate_object(handle, dsd_method_name, &arg_list, &buffer);
++	status = acpi_evaluate_object(handle, dsd_method_name, NULL, &buffer);
+ 	if (ACPI_FAILURE(status)) {
+ 		acpi_handle_err(handle,
+ 				"Can't evaluate %s method: %d\n", dsd_method_name, status);
 -- 
 2.39.5
 
