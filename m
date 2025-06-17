@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9952E7181;
-	Tue, 17 Jun 2025 16:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9697C2E8E05;
+	Tue, 17 Jun 2025 16:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178112; cv=none; b=IoshxZUHXpa6zgIL6Unu3dY0H2rPTgtiNPyIp+4XJfxElDiGX5oyil0/pAH29i/o36oxQT5kdt0QQiyQ1RVVzXP2ZsXASGOf/oKuZz5Jqyhr39IaPLO0zOxHbb2o+6KpjKCeAO+DoTbTl0N/4RtgFA9BcEtpyZnxbe3Agf+mO38=
+	t=1750178115; cv=none; b=Dhn424W33tijeoufn7N9B3hxZ34pryTvBI+2tdsQEh3vcMvrTi1DKQgweTr+lUe57iNKPM7BQ4cdj6Fe07aza+x5fC66sByFLkDvenG1OaeV6MbrClIRnEx/DL6c9xV8f96H37E2Di4wOjB/63Db6BEe6oM/bNjsqA+4LdE58LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178112; c=relaxed/simple;
-	bh=6RYYxsX97bYaeKtDddlUNXw7z6EP8Lk9eP2j6+rnHs8=;
+	s=arc-20240116; t=1750178115; c=relaxed/simple;
+	bh=icd3bLlFczpTNQ35MCFX0It+KhV+D6Rfrs9GvZEIkX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X5XMwoZiTxRIO4a47dMig5TxR44rh8HvWZmXk1Uf46/ms0LQovYnEObifOjZKtVCVISj5XEX2MNgtWn71D1cdQeJk0A+MFafupBhwFhM31uPRt18ARqun7UwVguYY/a6hQ6sWi0Xx1li6OyogHak4ldJ8tVQOkAUTJidiFhJf6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQeoq2kM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ELc1IFhTav/c98fPFMOGwDmhpZrzTJGWMpYORnOAl1z6KSt8Q4/uECOqNcK/n/FRZdy7QhTGk1E0VttPL4HvfkE4Q+ho3D6RZD6oicKX0ux7ZVVnvrx9VIdHWxAmM7YOaItmYmS3uZ8TOU+MvsTaRG6xYCzEARUOWV1v+RXvEaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdUut/fI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQeoq2kM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D99C4CEE3;
-	Tue, 17 Jun 2025 16:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdUut/fI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A2FC4CEE3;
+	Tue, 17 Jun 2025 16:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178111;
-	bh=6RYYxsX97bYaeKtDddlUNXw7z6EP8Lk9eP2j6+rnHs8=;
+	s=korg; t=1750178115;
+	bh=icd3bLlFczpTNQ35MCFX0It+KhV+D6Rfrs9GvZEIkX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQeoq2kMb/TQZhxikXhzcbP/ivM4wE6pzgx1BnUqD5CbQqkKjY161H1w10IyQyoPS
-	 x53FUaNohgxSF4Q3Jl0pJbqOMKfP+XKquLAJnnB1qHC7WsuG1vdVkGGzxLzY2Pc25f
-	 sdzbrB/9TG3nG/Tvl7Q3DRDf3xOxndI5Zu8cFqyg=
+	b=HdUut/fIzy8mvbK3SizuErBkVEUvyPum3xrS2m6THPgJIWLeXHafjnAF6lXDs+AxM
+	 aEeYjgjiDjzNbKKoyi41hq2lk0BldmzK3oQjqYpgxSqRBfAro3LcTUiIT0ddjZtMYe
+	 qHoNY/AFh3mP8TSQMJpMHZs83vUDLVEAebr28s7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 448/512] drm/meson: fix more rounding issues with 59.94Hz modes
-Date: Tue, 17 Jun 2025 17:26:54 +0200
-Message-ID: <20250617152437.717072252@linuxfoundation.org>
+Subject: [PATCH 6.15 412/780] ARM: aspeed: Dont select SRAM
+Date: Tue, 17 Jun 2025 17:22:00 +0200
+Message-ID: <20250617152508.242155950@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,136 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Joel Stanley <joel@jms.id.au>
 
-[ Upstream commit 0cee6c4d3518b2e757aedae78771f17149f57653 ]
+[ Upstream commit e4f59f873c3ffe2a0150e11115a83e2dfb671dbf ]
 
-Commit 1017560164b6 ("drm/meson: use unsigned long long / Hz for
-frequency types") attempts to resolve video playback using 59.94Hz.
- using YUV420 by changing the clock calculation to use
-Hz instead of kHz (thus yielding more precision).
+The ASPEED devices have SRAM, but don't require it for basic function
+(or any function; there's no known users of the driver).
 
-The basic calculation itself is correct, however the comparisions in
-meson_vclk_vic_supported_freq() and meson_vclk_setup() don't work
-anymore for 59.94Hz modes (using the freq * 1000 / 1001 logic). For
-example, drm/edid specifies a 593407kHz clock for 3840x2160@59.94Hz.
-With the mentioend commit we convert this to Hz. Then meson_vclk
-tries to find a matchig "params" entry (as the clock setup code
-currently only supports specific frequencies) by taking the venc_freq
-from the params and calculating the "alt frequency" (used for the
-59.94Hz modes) from it, which is:
-  (594000000Hz * 1000) / 1001 = 593406593Hz
-
-Similar calculation is applied to the phy_freq (TMDS clock), which is 10
-times the pixel clock.
-
-Implement a new meson_vclk_freqs_are_matching_param() function whose
-purpose is to compare if the requested and calculated frequencies. They
-may not match exactly (for the reasons mentioned above). Allow the
-clocks to deviate slightly to make the 59.94Hz modes again.
-
-Fixes: 1017560164b6 ("drm/meson: use unsigned long long / Hz for frequency types")
-Reported-by: Christian Hewitt <christianshewitt@gmail.com>
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250609202751.962208-1-martin.blumenstingl@googlemail.com
+Fixes: 8c2ed9bcfbeb ("arm: Add Aspeed machine")
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Link: https://patch.msgid.link/20250115103942.421429-1-joel@jms.id.au
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_vclk.c | 55 ++++++++++++++++++------------
- 1 file changed, 34 insertions(+), 21 deletions(-)
+ arch/arm/mach-aspeed/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
-index c4123bb958e4c..dfe0c28a0f054 100644
---- a/drivers/gpu/drm/meson/meson_vclk.c
-+++ b/drivers/gpu/drm/meson/meson_vclk.c
-@@ -110,10 +110,7 @@
- #define HDMI_PLL_LOCK		BIT(31)
- #define HDMI_PLL_LOCK_G12A	(3 << 30)
- 
--#define PIXEL_FREQ_1000_1001(_freq)	\
--	DIV_ROUND_CLOSEST_ULL((_freq) * 1000ULL, 1001ULL)
--#define PHY_FREQ_1000_1001(_freq)	\
--	(PIXEL_FREQ_1000_1001(DIV_ROUND_DOWN_ULL(_freq, 10ULL)) * 10)
-+#define FREQ_1000_1001(_freq)	DIV_ROUND_CLOSEST_ULL((_freq) * 1000ULL, 1001ULL)
- 
- /* VID PLL Dividers */
- enum {
-@@ -772,6 +769,36 @@ static void meson_hdmi_pll_generic_set(struct meson_drm *priv,
- 		  pll_freq);
- }
- 
-+static bool meson_vclk_freqs_are_matching_param(unsigned int idx,
-+						unsigned long long phy_freq,
-+						unsigned long long vclk_freq)
-+{
-+	DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
-+			 idx, params[idx].vclk_freq,
-+			 FREQ_1000_1001(params[idx].vclk_freq));
-+	DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
-+			 idx, params[idx].phy_freq,
-+			 FREQ_1000_1001(params[idx].phy_freq));
-+
-+	/* Match strict frequency */
-+	if (phy_freq == params[idx].phy_freq &&
-+	    vclk_freq == params[idx].vclk_freq)
-+		return true;
-+
-+	/* Match 1000/1001 variant: vclk deviation has to be less than 1kHz
-+	 * (drm EDID is defined in 1kHz steps, so everything smaller must be
-+	 * rounding error) and the PHY freq deviation has to be less than
-+	 * 10kHz (as the TMDS clock is 10 times the pixel clock, so anything
-+	 * smaller must be rounding error as well).
-+	 */
-+	if (abs(vclk_freq - FREQ_1000_1001(params[idx].vclk_freq)) < 1000 &&
-+	    abs(phy_freq - FREQ_1000_1001(params[idx].phy_freq)) < 10000)
-+		return true;
-+
-+	/* no match */
-+	return false;
-+}
-+
- enum drm_mode_status
- meson_vclk_vic_supported_freq(struct meson_drm *priv,
- 			      unsigned long long phy_freq,
-@@ -790,19 +817,7 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv,
- 	}
- 
- 	for (i = 0 ; params[i].pixel_freq ; ++i) {
--		DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
--				 i, params[i].vclk_freq,
--				 PIXEL_FREQ_1000_1001(params[i].vclk_freq));
--		DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
--				 i, params[i].phy_freq,
--				 PHY_FREQ_1000_1001(params[i].phy_freq));
--		/* Match strict frequency */
--		if (phy_freq == params[i].phy_freq &&
--		    vclk_freq == params[i].vclk_freq)
--			return MODE_OK;
--		/* Match 1000/1001 variant */
--		if (phy_freq == PHY_FREQ_1000_1001(params[i].phy_freq) &&
--		    vclk_freq == PIXEL_FREQ_1000_1001(params[i].vclk_freq))
-+		if (meson_vclk_freqs_are_matching_param(i, phy_freq, vclk_freq))
- 			return MODE_OK;
- 	}
- 
-@@ -1075,10 +1090,8 @@ void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
- 	}
- 
- 	for (freq = 0 ; params[freq].pixel_freq ; ++freq) {
--		if ((phy_freq == params[freq].phy_freq ||
--		     phy_freq == PHY_FREQ_1000_1001(params[freq].phy_freq)) &&
--		    (vclk_freq == params[freq].vclk_freq ||
--		     vclk_freq == PIXEL_FREQ_1000_1001(params[freq].vclk_freq))) {
-+		if (meson_vclk_freqs_are_matching_param(freq, phy_freq,
-+							vclk_freq)) {
- 			if (vclk_freq != params[freq].vclk_freq)
- 				vic_alternate_clock = true;
- 			else
+diff --git a/arch/arm/mach-aspeed/Kconfig b/arch/arm/mach-aspeed/Kconfig
+index 080019aa6fcd8..fcf287edd0e5e 100644
+--- a/arch/arm/mach-aspeed/Kconfig
++++ b/arch/arm/mach-aspeed/Kconfig
+@@ -2,7 +2,6 @@
+ menuconfig ARCH_ASPEED
+ 	bool "Aspeed BMC architectures"
+ 	depends on (CPU_LITTLE_ENDIAN && ARCH_MULTI_V5) || ARCH_MULTI_V6 || ARCH_MULTI_V7
+-	select SRAM
+ 	select WATCHDOG
+ 	select ASPEED_WATCHDOG
+ 	select MFD_SYSCON
 -- 
 2.39.5
 
