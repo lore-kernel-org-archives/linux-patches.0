@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9430E2FA645;
-	Tue, 17 Jun 2025 16:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EBE2FA638;
+	Tue, 17 Jun 2025 16:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178069; cv=none; b=Us5TGtC7zKadMhfJU60ftbmfCIJoT6XB5zwgiaj68qI+matlE/wRfzdd7+EZeh4lbNPvP23hxjocxeg3yssm8+5Yuexvf2RzYrH0NNVFZPDSDswdgineLWBXI9V/yZzxwWr7pQZn3tVf0qlTJ6GPqMCoaI/OX4lnsup9TpAtH+Y=
+	t=1750178072; cv=none; b=OpBAiVBdmZuTZiEXJZ2NWolnUQA9AFN25fetOZ5FGoxsdczXps43ynppSfWOzVRtrfQvfC6/Ix3bwaCT9ZZKNvWxcH3cTjPyfujApa9xczhuAnCnGhm25Qoi4lGW5aCKq8Hi1TADw/v93XFVRHz5e/RXuJ8dYi/X1KxpahId1ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178069; c=relaxed/simple;
-	bh=AJos5fd0734dbevzcQ4bYe5tZkSLHvP7iz0B0m9Ev34=;
+	s=arc-20240116; t=1750178072; c=relaxed/simple;
+	bh=woz5wZRqZC3wQoZqf+9EjI106chsKnhyg4PHVRBgmxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j63hPKhBXHi1pPf/eX87lrXHIlTKxwvCpZ1AOm7a+ABgk3CLZPO0YR3n8Gf+Uhqr/bCErPSqyOFbZvaQ+pxkiB52cdSeIEAsYKauKrxaSAuqNj7ZJAuEhxa2j3V07oA4bpwWMfnFFPjeYDW6Z32SXAfu6jdQMxtWVuFxhe0JaQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JcDqtmaD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j3NZTnDtKKX03aFnzM6T3dzjzUQR9Za75GkRuidhJqfFH5LA3tUEvz/TiwBf+SzYUZZnA25jVvpWONsUNENlHRaLZPyVx1pkvDJEHnWh9XovFZFxnPaRPtI6Dq3iiZtMLZiH3XG7IeOWXD7rUvgl4zNV+5lTi4CZkUY46kFpGQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7Lh1ZhO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JcDqtmaD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A100AC4CEE3;
-	Tue, 17 Jun 2025 16:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7Lh1ZhO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59BCC4CEE3;
+	Tue, 17 Jun 2025 16:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178069;
-	bh=AJos5fd0734dbevzcQ4bYe5tZkSLHvP7iz0B0m9Ev34=;
+	s=korg; t=1750178072;
+	bh=woz5wZRqZC3wQoZqf+9EjI106chsKnhyg4PHVRBgmxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JcDqtmaDL5ndUOIzNUijUMDSMq59WkqRgDwfNYe9ucTaUeFI1iRPULNlKnQVRZe2y
-	 P2cgg+lVS73dI2ZS5v9wu/+AeIRHg56Pb9ofohuwQ+ZTrfIJkQZPfQ7/A40z4fySYg
-	 ftmXmkoGas/iLMo0zMvkpcI6GuFpNIn00dlsHhVU=
+	b=F7Lh1ZhOOxCPWOk5BqtAUoZqqrAhJsDeX4Y2IPwAUX89sZPka2+aLGgMscbBV49ZW
+	 Y1vx/2VrmZelu8KdGtBTxbmU4JoGctmqn65Ez6zuiR7rqYyMi3rtdkRB3+arY7U7cv
+	 pciBEmNuZiIYL9e6Po3xQnOe15TEu+PVc1O8FTkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 417/512] serial: sh-sci: Move runtime PM enable to sci_probe_single()
-Date: Tue, 17 Jun 2025 17:26:23 +0200
-Message-ID: <20250617152436.474113766@linuxfoundation.org>
+Subject: [PATCH 6.15 382/780] arm64: dts: qcom: x1e001de-devkit: Describe USB retimers resets pin configs
+Date: Tue, 17 Jun 2025 17:21:30 +0200
+Message-ID: <20250617152507.016806540@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,91 +49,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit 239f11209e5f282e16f5241b99256e25dd0614b6 ]
+[ Upstream commit f76fdcd2550991c854a698a9f881b1579455fc0a ]
 
-Relocate the runtime PM enable operation to sci_probe_single(). This change
-prepares the codebase for upcoming fixes.
+Currently, on the X Elite Devkit, the pin configuration of the reset
+gpios for all three PS8830 USB retimers are left configured by the
+bootloader.
 
-While at it, replace the existing logic with a direct call to
-devm_pm_runtime_enable() and remove sci_cleanup_single(). The
-devm_pm_runtime_enable() function automatically handles disabling runtime
-PM during driver removal.
+Fix that by describing their pin configuration.
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250116182249.3828577-3-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 019e1ee32fec ("arm64: dts: qcom: x1e001de-devkit: Enable external DP support")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20250422-x1e001de-devkit-dts-fix-retimer-gpios-v2-1-0129c4f2b6d7@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sh-sci.c |   24 ++++++------------------
- 1 file changed, 6 insertions(+), 18 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e001de-devkit.dts | 32 ++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -3074,10 +3074,6 @@ static int sci_init_single(struct platfo
- 		ret = sci_init_clocks(sci_port, &dev->dev);
- 		if (ret < 0)
- 			return ret;
--
--		port->dev = &dev->dev;
--
--		pm_runtime_enable(&dev->dev);
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+index f5063a0df9fbf..8f4482ade0f98 100644
+--- a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
++++ b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+@@ -790,6 +790,9 @@
  
- 	port->type		= p->type;
-@@ -3104,11 +3100,6 @@ static int sci_init_single(struct platfo
- 	return 0;
- }
+ 		reset-gpios = <&tlmm 185 GPIO_ACTIVE_HIGH>;
  
--static void sci_cleanup_single(struct sci_port *port)
--{
--	pm_runtime_disable(port->port.dev);
--}
--
- #if defined(CONFIG_SERIAL_SH_SCI_CONSOLE) || \
-     defined(CONFIG_SERIAL_SH_SCI_EARLYCON)
- static void serial_console_putchar(struct uart_port *port, unsigned char ch)
-@@ -3278,8 +3269,6 @@ static void sci_remove(struct platform_d
- 	sci_ports_in_use &= ~BIT(port->port.line);
- 	uart_remove_one_port(&sci_uart_driver, &port->port);
- 
--	sci_cleanup_single(port);
--
- 	if (port->port.fifosize > 1)
- 		device_remove_file(&dev->dev, &dev_attr_rx_fifo_trigger);
- 	if (type == PORT_SCIFA || type == PORT_SCIFB || type == PORT_HSCIF)
-@@ -3444,6 +3433,11 @@ static int sci_probe_single(struct platf
- 	if (ret)
- 		return ret;
- 
-+	sciport->port.dev = &dev->dev;
-+	ret = devm_pm_runtime_enable(&dev->dev);
-+	if (ret)
-+		return ret;
++		pinctrl-0 = <&rtmr2_default>;
++		pinctrl-names = "default";
 +
- 	sciport->gpios = mctrl_gpio_init(&sciport->port, 0);
- 	if (IS_ERR(sciport->gpios))
- 		return PTR_ERR(sciport->gpios);
-@@ -3457,13 +3451,7 @@ static int sci_probe_single(struct platf
- 		sciport->port.flags |= UPF_HARD_FLOW;
- 	}
+ 		orientation-switch;
+ 		retimer-switch;
  
--	ret = uart_add_one_port(&sci_uart_driver, &sciport->port);
--	if (ret) {
--		sci_cleanup_single(sciport);
--		return ret;
--	}
--
--	return 0;
-+	return uart_add_one_port(&sci_uart_driver, &sciport->port);
- }
+@@ -845,6 +848,9 @@
  
- static int sci_probe(struct platform_device *dev)
+ 		reset-gpios = <&pm8550_gpios 10 GPIO_ACTIVE_HIGH>;
+ 
++		pinctrl-0 = <&rtmr0_default>;
++		pinctrl-names = "default";
++
+ 		retimer-switch;
+ 		orientation-switch;
+ 
+@@ -900,6 +906,9 @@
+ 
+ 		reset-gpios = <&tlmm 176 GPIO_ACTIVE_HIGH>;
+ 
++		pinctrl-0 = <&rtmr1_default>;
++		pinctrl-names = "default";
++
+ 		retimer-switch;
+ 		orientation-switch;
+ 
+@@ -1018,6 +1027,15 @@
+ };
+ 
+ &pm8550_gpios {
++	rtmr0_default: rtmr0-reset-n-active-state {
++		pins = "gpio10";
++		function = "normal";
++		power-source = <1>; /* 1.8 V */
++		bias-disable;
++		input-disable;
++		output-enable;
++	};
++
+ 	usb0_3p3_reg_en: usb0-3p3-reg-en-state {
+ 		pins = "gpio11";
+ 		function = "normal";
+@@ -1205,6 +1223,20 @@
+ 		};
+ 	};
+ 
++	rtmr1_default: rtmr1-reset-n-active-state {
++		pins = "gpio176";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	rtmr2_default: rtmr2-reset-n-active-state {
++		pins = "gpio185";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
+ 	rtmr1_1p15_reg_en: rtmr1-1p15-reg-en-state {
+ 		pins = "gpio188";
+ 		function = "gpio";
+-- 
+2.39.5
+
 
 
