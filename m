@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20562EA487;
-	Tue, 17 Jun 2025 15:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B8F1E8332;
+	Tue, 17 Jun 2025 15:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174983; cv=none; b=TSR6Q2QKfMyJ0DtOR9pl6PKovWJNTTBAUJeuHTzHRd/DYheUOXiN0i/wCSinx4BAkqplkBZq/vg7nbgPapEWCMPChxTrffNWpwOQ7b0cqee0XwmDiZ168Ctwkpk5Rd3tO6/nqUjhnC0bCpKWzN+gjpg52pwRpTy1DuW6NLXXwU8=
+	t=1750174990; cv=none; b=Y418C1HojLLtZm7e58MpQosivFUtDf3c92vFX1fUIasy3d9anT6tHVuqf/k1gABN+LaPBw8dle55L+oKBGGAm80nxUi2oZb3sp6eduMMrL7Y2tirzLeWb7Njq5lIkipBBH/MJRJ4vQuJPaAybAIt1zOwtAV20IY+K39uv4Bo/fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174983; c=relaxed/simple;
-	bh=5XxaZV6odZChrIbeJnfSrZVqaL9+jmeI4fDM12bKfUo=;
+	s=arc-20240116; t=1750174990; c=relaxed/simple;
+	bh=qF73YeAfV+iYpLTnLZgZzJOpelM3ZGDkJcCQhgm9RY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p4hdFDbayLBtX7s9J8S1jB05JnQOEAI2fo3587Psh242YRJW7TW0mJmN4tMmxdRLTVrpsDKkIatMdxfX1LmCiWdpuYAPeoqXHh4QaSmTSOlKBIBD6thq5qQnNrv1ddHhQMsvTpbSVcNPBhuC8PnIBHqd0gIwEilXvoE2nhVTBBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmtzqw5A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vpg24DLf270FGZAeDqQCyv/Ryrcw13L8AQOp1FZRlsAaqWY4XGlULQ2HlaFD9VqQr1jTbFjhA5olOno29Z584l4MFLzlmSJRoVIwfPhlcjyCraTDPxG7VUp8seVZdPdNAzso59ufAHZdML5yeebKz3TSTbg0f/bSeArdKv3v56M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uch4srJ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmtzqw5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC88C4CEE3;
-	Tue, 17 Jun 2025 15:43:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uch4srJ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F05C4CEE3;
+	Tue, 17 Jun 2025 15:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174983;
-	bh=5XxaZV6odZChrIbeJnfSrZVqaL9+jmeI4fDM12bKfUo=;
+	s=korg; t=1750174990;
+	bh=qF73YeAfV+iYpLTnLZgZzJOpelM3ZGDkJcCQhgm9RY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vmtzqw5AYcZEVZWAfE1ThMg6ilF/6NPlP3dU1K4HhmJvFMUvfW9R0I7BR0NRZEkTc
-	 OE2/Wov5+XvRxO3pyqZfTHkBRPc2hc9IaaQjMW1Dl/lhQc1iEwyt/+Io6YjmSHa+hh
-	 lnSm7QQ5EwVt5pYHISthiUF0G5byUSiUKgZ/aqy4=
+	b=uch4srJ31mJHx/CzphqfBo/xOIhaJHvJ4lhX/nOtPzfdLZ2UdqY188KwvD4wlI8a7
+	 uDevt+d48ly/d1J34FDVHIvnPbFKLOHiMMF9nW6WSq3cvHcxcz7WJzvvB0zZW6JjOU
+	 2iZDs6X/Jjksuh/iYCn69Ks4pWsmB3vo5+77cWH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Batra <gbatra@linux.ibm.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Joshua Thompson <funaho@jurai.org>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 039/780] powerpc/pseries/iommu: Fix kmemleak in TCE table userspace view
-Date: Tue, 17 Jun 2025 17:15:47 +0200
-Message-ID: <20250617152453.089683458@linuxfoundation.org>
+Subject: [PATCH 6.12 082/512] m68k: mac: Fix macintosh_config for Mac II
+Date: Tue, 17 Jun 2025 17:20:48 +0200
+Message-ID: <20250617152422.901120057@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,85 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gaurav Batra <gbatra@linux.ibm.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit d36e3f11fe8b55b801bdbe84ad51f612b1bd84da ]
+[ Upstream commit 52ae3f5da7e5adbe3d1319573b55dac470abb83c ]
 
-When a device is opened by a userspace driver, via VFIO interface, DMA
-window is created. This DMA window has TCE Table and a corresponding
-data for userview of TCE table.
+When booted on my Mac II, the kernel prints this:
 
-When the userspace driver closes the device, all the above infrastructure
-is free'ed and the device control given back to kernel. Both DMA window
-and TCE table is getting free'ed. But due to a code bug, userview of the
-TCE table is not getting free'ed. This is resulting in a memory leak.
+    Detected Macintosh model: 6
+    Apple Macintosh Unknown
 
-Befow is the information from KMEMLEAK
+The catch-all entry ("Unknown") is mac_data_table[0] which is only needed
+in the unlikely event that the bootinfo model ID can't be matched.
+When model ID is 6, the search should begin and end at mac_data_table[1].
+Fix the off-by-one error that causes this problem.
 
-unreferenced object 0xc008000022af0000 (size 16777216):
-  comm "senlib_unit_tes", pid 9346, jiffies 4294983174
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 0):
-    kmemleak_vmalloc+0xc8/0x1a0
-    __vmalloc_node_range+0x284/0x340
-    vzalloc+0x58/0x70
-    spapr_tce_create_table+0x4b0/0x8d0
-    tce_iommu_create_table+0xcc/0x170 [vfio_iommu_spapr_tce]
-    tce_iommu_create_window+0x144/0x2f0 [vfio_iommu_spapr_tce]
-    tce_iommu_ioctl.part.0+0x59c/0xc90 [vfio_iommu_spapr_tce]
-    vfio_fops_unl_ioctl+0x88/0x280 [vfio]
-    sys_ioctl+0xf4/0x160
-    system_call_exception+0x164/0x310
-    system_call_vectored_common+0xe8/0x278
-unreferenced object 0xc008000023b00000 (size 4194304):
-  comm "senlib_unit_tes", pid 9351, jiffies 4294984116
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 0):
-    kmemleak_vmalloc+0xc8/0x1a0
-    __vmalloc_node_range+0x284/0x340
-    vzalloc+0x58/0x70
-    spapr_tce_create_table+0x4b0/0x8d0
-    tce_iommu_create_table+0xcc/0x170 [vfio_iommu_spapr_tce]
-    tce_iommu_create_window+0x144/0x2f0 [vfio_iommu_spapr_tce]
-    tce_iommu_create_default_window+0x88/0x120 [vfio_iommu_spapr_tce]
-    tce_iommu_ioctl.part.0+0x57c/0xc90 [vfio_iommu_spapr_tce]
-    vfio_fops_unl_ioctl+0x88/0x280 [vfio]
-    sys_ioctl+0xf4/0x160
-    system_call_exception+0x164/0x310
-    system_call_vectored_common+0xe8/0x278
-
-Fixes: f431a8cde7f1 ("powerpc/iommu: Reimplement the iommu_table_group_ops for pSeries")
-Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250512224653.35697-1-gbatra@linux.ibm.com
+Cc: Joshua Thompson <funaho@jurai.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/d0f30a551064ca4810b1c48d5a90954be80634a9.1745453246.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/iommu.c | 2 +-
+ arch/m68k/mac/config.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
-index d6ebc19fb99c5..eec333dd2e598 100644
---- a/arch/powerpc/platforms/pseries/iommu.c
-+++ b/arch/powerpc/platforms/pseries/iommu.c
-@@ -197,7 +197,7 @@ static void tce_iommu_userspace_view_free(struct iommu_table *tbl)
+diff --git a/arch/m68k/mac/config.c b/arch/m68k/mac/config.c
+index e324410ef239c..d26c7f4f8c360 100644
+--- a/arch/m68k/mac/config.c
++++ b/arch/m68k/mac/config.c
+@@ -793,7 +793,7 @@ static void __init mac_identify(void)
+ 	}
  
- static void tce_free_pSeries(struct iommu_table *tbl)
- {
--	if (!tbl->it_userspace)
-+	if (tbl->it_userspace)
- 		tce_iommu_userspace_view_free(tbl);
- }
- 
+ 	macintosh_config = mac_data_table;
+-	for (m = macintosh_config; m->ident != -1; m++) {
++	for (m = &mac_data_table[1]; m->ident != -1; m++) {
+ 		if (m->ident == model) {
+ 			macintosh_config = m;
+ 			break;
 -- 
 2.39.5
 
