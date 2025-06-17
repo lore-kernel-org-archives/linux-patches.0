@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C4220F090;
-	Tue, 17 Jun 2025 15:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168832ECD2F;
+	Tue, 17 Jun 2025 15:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174750; cv=none; b=kWVEx/LgahEHQHrHwsNYPfsBNuGACXNlmoxKzfllOD2n4CS2Mxl5By6CCAVJ2QcTxritq2MLvuVlQcByyyRaSEPCi7d+1y3F4OYwRnhHsPnjJSBoN2RUIHN8wR3HG0r4qe0XlzQ8oSk3ZL0JLKpYNyFiHQDfJljTiX+MVNkFhw4=
+	t=1750174753; cv=none; b=qv4MTevTphO+8f6M4sH8s15xK788wGJeADQibcbuIrpacPKuJdjUXA0e/EUrIcTULSkGPOwiIJmGx+q6/XaK0wA0VLGxs4gR1QSc+gEWKg20/3HBUit1Z9ozgFVFGcB0BBnBEa8o1WhbTzlZBBrcIw3/0iVTfidskGmmBY+fe98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174750; c=relaxed/simple;
-	bh=IruC1aHYkPPDQLolQfawMohOKLm2kv/VuYfJ7C3Assw=;
+	s=arc-20240116; t=1750174753; c=relaxed/simple;
+	bh=9yK2za4+x3DfCaSwJE1lS2VAJ/L06Nu1X5H4PFoGbMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aucbmUDXtgfaRjamXrCHmxxvmxPLmclUrcQOnRyFq+DXMMaoUrShE5hwJABQQcAQcoR96i9M7q4bMDghaJzZhjmyfsPX4FcFLmM1graZmah2U9ixLqi3KsAMMJ61IftsPKSGn/f7LU76cv4Eb7RjWzGZ00bc/9JEOp1LPxMNW3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFceh+ks; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b4zaoHqUrGP7HvOz1z4R+cvLma4Uu4Gf8WI5kdeYmRQgkLOCxgXqv+RzuOtemluwDhWsst0LMiQ78dFbvd4Gks3V4eP8DrK/xpZn6v9zUc16PyBDMnRQtaeH3LOElUDvZFW1p7YWb1iMdoTb1tsv3vgrWkAW7dSH4dxv8IecmU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tk5LRV9P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFceh+ks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1E7C4CEE3;
-	Tue, 17 Jun 2025 15:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tk5LRV9P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78752C4CEE7;
+	Tue, 17 Jun 2025 15:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174749;
-	bh=IruC1aHYkPPDQLolQfawMohOKLm2kv/VuYfJ7C3Assw=;
+	s=korg; t=1750174753;
+	bh=9yK2za4+x3DfCaSwJE1lS2VAJ/L06Nu1X5H4PFoGbMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xFceh+ks451cd8XLqe8Js4Zb54z4rCA3DCOZTZILFiEJ7hXzGPO786rWsLjAzbPVV
-	 +5GbUBcgHaGQWyvjYxpRj3m6AGEjOhnaitOpwVN96E22M4P8AbeKBaJzw2sBg+PXcY
-	 N1c4vsZd3+BLw05DBY6ypV93LR2gVr7uDC82NoB8=
+	b=Tk5LRV9PkM/sHDWgDrXsNMYD4s2IialrbjubEF/RLj4qU7rd4l5yBJAklDIcs/Wij
+	 bgVjo4kW1oNr3eJb+DsHpQaLbqhx4j/nvWDgbMnC1gb7HX9AFQqD+JhovkLmrXgO5Z
+	 nAGKupqhbpB2T8LBo3ctPLNh8o8pYrbgCw/qHKQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Tom Zanussi <zanussi@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 017/780] gfs2: deallocate inodes in gfs2_create_inode
-Date: Tue, 17 Jun 2025 17:15:25 +0200
-Message-ID: <20250617152452.203029241@linuxfoundation.org>
+Subject: [PATCH 6.6 110/356] tracing: Move histogram trigger variables from stack to per CPU structure
+Date: Tue, 17 Jun 2025 17:23:45 +0200
+Message-ID: <20250617152342.644479982@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,145 +49,240 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 2c63986dd35fa9eb0d7d1530b5eb2244b7296e22 ]
+[ Upstream commit 7ab0fc61ce73040f89b12d76a8279995ec283541 ]
 
-When creating and destroying inodes, we are relying on the inode hash
-table to make sure that for a given inode number, only a single inode
-will exist.  We then link that inode to its inode and iopen glock and
-let those glocks point back at the inode.  However, when iget_failed()
-is called, the inode is removed from the inode hash table before
-gfs_evict_inode() is called, and uniqueness is no longer guaranteed.
+The histogram trigger has three somewhat large arrays on the kernel stack:
 
-Commit f1046a472b70 ("gfs2: gl_object races fix") was trying to work
-around that problem by detaching the inode glock from the inode before
-calling iget_failed(), but that broke the inode deallocation code in
-gfs_evict_inode().
+	unsigned long entries[HIST_STACKTRACE_DEPTH];
+	u64 var_ref_vals[TRACING_MAP_VARS_MAX];
+	char compound_key[HIST_KEY_SIZE_MAX];
 
-To fix that, deallocate partially created inodes in gfs2_create_inode()
-instead of relying on gfs_evict_inode() for doing that.
+Checking the function event_hist_trigger() stack frame size, it currently
+uses 816 bytes for its stack frame due to these variables!
 
-This means that gfs2_evict_inode() and its helper functions will no
-longer see partially created inodes, and so some simplifications are
-possible there.
+Instead, allocate a per CPU structure that holds these arrays for each
+context level (normal, softirq, irq and NMI). That is, each CPU will have
+4 of these structures. This will be allocated when the first histogram
+trigger is enabled and freed when the last is disabled. When the
+histogram callback triggers, it will request this structure. The request
+will disable preemption, get the per CPU structure at the index of the
+per CPU variable, and increment that variable.
 
-Fixes: 9ffa18884cce ("gfs2: gl_object races fix")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+The callback will use the arrays in this structure to perform its work and
+then release the structure. That in turn will simply decrement the per CPU
+index and enable preemption.
+
+Moving the variables from the kernel stack to the per CPU structure brings
+the stack frame of event_hist_trigger() down to just 112 bytes.
+
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Tom Zanussi <zanussi@kernel.org>
+Link: https://lore.kernel.org/20250407123851.74ea8d58@gandalf.local.home
+Fixes: 067fe038e70f6 ("tracing: Add variable reference handling to hist triggers")
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/inode.c | 27 +++++++++++++++++++--------
- fs/gfs2/super.c |  6 +-----
- 2 files changed, 20 insertions(+), 13 deletions(-)
+ kernel/trace/trace_events_hist.c | 120 +++++++++++++++++++++++++++----
+ 1 file changed, 105 insertions(+), 15 deletions(-)
 
-diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
-index b2d38d09af7e8..8fd81444ffea0 100644
---- a/fs/gfs2/inode.c
-+++ b/fs/gfs2/inode.c
-@@ -697,10 +697,11 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
- 	struct gfs2_inode *dip = GFS2_I(dir), *ip;
- 	struct gfs2_sbd *sdp = GFS2_SB(&dip->i_inode);
- 	struct gfs2_glock *io_gl;
--	int error;
-+	int error, dealloc_error;
- 	u32 aflags = 0;
- 	unsigned blocks = 1;
- 	struct gfs2_diradd da = { .bh = NULL, .save_loc = 1, };
-+	bool xattr_initialized = false;
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index e6f9cbc622c75..29fcd8787344f 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -5257,17 +5257,94 @@ hist_trigger_actions(struct hist_trigger_data *hist_data,
+ 	}
+ }
  
- 	if (!name->len || name->len > GFS2_FNAMESIZE)
- 		return -ENAMETOOLONG;
-@@ -813,11 +814,11 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
- 
- 	error = gfs2_glock_get(sdp, ip->i_no_addr, &gfs2_inode_glops, CREATE, &ip->i_gl);
- 	if (error)
--		goto fail_free_inode;
-+		goto fail_dealloc_inode;
- 
- 	error = gfs2_glock_get(sdp, ip->i_no_addr, &gfs2_iopen_glops, CREATE, &io_gl);
- 	if (error)
--		goto fail_free_inode;
-+		goto fail_dealloc_inode;
- 	gfs2_cancel_delete_work(io_gl);
- 	io_gl->gl_no_formal_ino = ip->i_no_formal_ino;
- 
-@@ -841,8 +842,10 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
- 	if (error)
- 		goto fail_gunlock3;
- 
--	if (blocks > 1)
-+	if (blocks > 1) {
- 		gfs2_init_xattr(ip);
-+		xattr_initialized = true;
++/*
++ * The hist_pad structure is used to save information to create
++ * a histogram from the histogram trigger. It's too big to store
++ * on the stack, so when the histogram trigger is initialized
++ * a percpu array of 4 hist_pad structures is allocated.
++ * This will cover every context from normal, softirq, irq and NMI
++ * in the very unlikely event that a tigger happens at each of
++ * these contexts and interrupts a currently active trigger.
++ */
++struct hist_pad {
++	unsigned long		entries[HIST_STACKTRACE_DEPTH];
++	u64			var_ref_vals[TRACING_MAP_VARS_MAX];
++	char			compound_key[HIST_KEY_SIZE_MAX];
++};
++
++static struct hist_pad __percpu *hist_pads;
++static DEFINE_PER_CPU(int, hist_pad_cnt);
++static refcount_t hist_pad_ref;
++
++/* One hist_pad for every context (normal, softirq, irq, NMI) */
++#define MAX_HIST_CNT 4
++
++static int alloc_hist_pad(void)
++{
++	lockdep_assert_held(&event_mutex);
++
++	if (refcount_read(&hist_pad_ref)) {
++		refcount_inc(&hist_pad_ref);
++		return 0;
 +	}
- 	init_dinode(dip, ip, symname);
- 	gfs2_trans_end(sdp);
++
++	hist_pads = __alloc_percpu(sizeof(struct hist_pad) * MAX_HIST_CNT,
++				   __alignof__(struct hist_pad));
++	if (!hist_pads)
++		return -ENOMEM;
++
++	refcount_set(&hist_pad_ref, 1);
++	return 0;
++}
++
++static void free_hist_pad(void)
++{
++	lockdep_assert_held(&event_mutex);
++
++	if (!refcount_dec_and_test(&hist_pad_ref))
++		return;
++
++	free_percpu(hist_pads);
++	hist_pads = NULL;
++}
++
++static struct hist_pad *get_hist_pad(void)
++{
++	struct hist_pad *hist_pad;
++	int cnt;
++
++	if (WARN_ON_ONCE(!hist_pads))
++		return NULL;
++
++	preempt_disable();
++
++	hist_pad = per_cpu_ptr(hist_pads, smp_processor_id());
++
++	if (this_cpu_read(hist_pad_cnt) == MAX_HIST_CNT) {
++		preempt_enable();
++		return NULL;
++	}
++
++	cnt = this_cpu_inc_return(hist_pad_cnt) - 1;
++
++	return &hist_pad[cnt];
++}
++
++static void put_hist_pad(void)
++{
++	this_cpu_dec(hist_pad_cnt);
++	preempt_enable();
++}
++
+ static void event_hist_trigger(struct event_trigger_data *data,
+ 			       struct trace_buffer *buffer, void *rec,
+ 			       struct ring_buffer_event *rbe)
+ {
+ 	struct hist_trigger_data *hist_data = data->private_data;
+ 	bool use_compound_key = (hist_data->n_keys > 1);
+-	unsigned long entries[HIST_STACKTRACE_DEPTH];
+-	u64 var_ref_vals[TRACING_MAP_VARS_MAX];
+-	char compound_key[HIST_KEY_SIZE_MAX];
+ 	struct tracing_map_elt *elt = NULL;
+ 	struct hist_field *key_field;
++	struct hist_pad *hist_pad;
+ 	u64 field_contents;
+ 	void *key = NULL;
+ 	unsigned int i;
+@@ -5275,12 +5352,18 @@ static void event_hist_trigger(struct event_trigger_data *data,
+ 	if (unlikely(!rbe))
+ 		return;
  
-@@ -897,6 +900,18 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
- 	gfs2_glock_dq_uninit(&ip->i_iopen_gh);
- fail_gunlock2:
- 	gfs2_glock_put(io_gl);
-+fail_dealloc_inode:
-+	set_bit(GIF_ALLOC_FAILED, &ip->i_flags);
-+	dealloc_error = 0;
-+	if (ip->i_eattr)
-+		dealloc_error = gfs2_ea_dealloc(ip, xattr_initialized);
-+	clear_nlink(inode);
-+	mark_inode_dirty(inode);
-+	if (!dealloc_error)
-+		dealloc_error = gfs2_dinode_dealloc(ip);
-+	if (dealloc_error)
-+		fs_warn(sdp, "%s: %d\n", __func__, dealloc_error);
-+	ip->i_no_addr = 0;
- fail_free_inode:
- 	if (ip->i_gl) {
- 		gfs2_glock_put(ip->i_gl);
-@@ -911,10 +926,6 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
- 	gfs2_dir_no_add(&da);
- 	gfs2_glock_dq_uninit(&d_gh);
- 	if (!IS_ERR_OR_NULL(inode)) {
--		set_bit(GIF_ALLOC_FAILED, &ip->i_flags);
--		clear_nlink(inode);
--		if (ip->i_no_addr)
--			mark_inode_dirty(inode);
- 		if (inode->i_state & I_NEW)
- 			iget_failed(inode);
- 		else
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index e25a24ae2197f..54f1efd47a3e5 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -1258,9 +1258,6 @@ static enum evict_behavior evict_should_delete(struct inode *inode,
- 	struct gfs2_sbd *sdp = sb->s_fs_info;
- 	int ret;
+-	memset(compound_key, 0, hist_data->key_size);
++	hist_pad = get_hist_pad();
++	if (!hist_pad)
++		return;
++
++	memset(hist_pad->compound_key, 0, hist_data->key_size);
  
--	if (unlikely(test_bit(GIF_ALLOC_FAILED, &ip->i_flags)))
--		goto should_delete;
+ 	for_each_hist_key_field(i, hist_data) {
+ 		key_field = hist_data->fields[i];
+ 
+ 		if (key_field->flags & HIST_FIELD_FL_STACKTRACE) {
++			unsigned long *entries = hist_pad->entries;
++
+ 			memset(entries, 0, HIST_STACKTRACE_SIZE);
+ 			if (key_field->field) {
+ 				unsigned long *stack, n_entries;
+@@ -5304,26 +5387,31 @@ static void event_hist_trigger(struct event_trigger_data *data,
+ 		}
+ 
+ 		if (use_compound_key)
+-			add_to_key(compound_key, key, key_field, rec);
++			add_to_key(hist_pad->compound_key, key, key_field, rec);
+ 	}
+ 
+ 	if (use_compound_key)
+-		key = compound_key;
++		key = hist_pad->compound_key;
+ 
+ 	if (hist_data->n_var_refs &&
+-	    !resolve_var_refs(hist_data, key, var_ref_vals, false))
+-		return;
++	    !resolve_var_refs(hist_data, key, hist_pad->var_ref_vals, false))
++		goto out;
+ 
+ 	elt = tracing_map_insert(hist_data->map, key);
+ 	if (!elt)
+-		return;
++		goto out;
+ 
+-	hist_trigger_elt_update(hist_data, elt, buffer, rec, rbe, var_ref_vals);
++	hist_trigger_elt_update(hist_data, elt, buffer, rec, rbe, hist_pad->var_ref_vals);
+ 
+-	if (resolve_var_refs(hist_data, key, var_ref_vals, true))
+-		hist_trigger_actions(hist_data, elt, buffer, rec, rbe, key, var_ref_vals);
++	if (resolve_var_refs(hist_data, key, hist_pad->var_ref_vals, true)) {
++		hist_trigger_actions(hist_data, elt, buffer, rec, rbe,
++				     key, hist_pad->var_ref_vals);
++	}
+ 
+ 	hist_poll_wakeup();
++
++ out:
++	put_hist_pad();
+ }
+ 
+ static void hist_trigger_stacktrace_print(struct seq_file *m,
+@@ -6168,6 +6256,9 @@ static int event_hist_trigger_init(struct event_trigger_data *data)
+ {
+ 	struct hist_trigger_data *hist_data = data->private_data;
+ 
++	if (alloc_hist_pad() < 0)
++		return -ENOMEM;
++
+ 	if (!data->ref && hist_data->attrs->name)
+ 		save_named_trigger(hist_data->attrs->name, data);
+ 
+@@ -6212,6 +6303,7 @@ static void event_hist_trigger_free(struct event_trigger_data *data)
+ 
+ 		destroy_hist_data(hist_data);
+ 	}
++	free_hist_pad();
+ }
+ 
+ static struct event_trigger_ops event_hist_trigger_ops = {
+@@ -6227,9 +6319,7 @@ static int event_hist_trigger_named_init(struct event_trigger_data *data)
+ 
+ 	save_named_trigger(data->named_data->name, data);
+ 
+-	event_hist_trigger_init(data->named_data);
 -
- 	if (gfs2_holder_initialized(&ip->i_iopen_gh) &&
- 	    test_bit(GLF_DEFER_DELETE, &ip->i_iopen_gh.gh_gl->gl_flags))
- 		return EVICT_SHOULD_DEFER_DELETE;
-@@ -1290,7 +1287,6 @@ static enum evict_behavior evict_should_delete(struct inode *inode,
- 	if (inode->i_nlink)
- 		return EVICT_SHOULD_SKIP_DELETE;
+-	return 0;
++	return event_hist_trigger_init(data->named_data);
+ }
  
--should_delete:
- 	if (gfs2_holder_initialized(&ip->i_iopen_gh) &&
- 	    test_bit(HIF_HOLDER, &ip->i_iopen_gh.gh_iflags))
- 		return gfs2_upgrade_iopen_glock(inode);
-@@ -1314,7 +1310,7 @@ static int evict_unlinked_inode(struct inode *inode)
- 	}
- 
- 	if (ip->i_eattr) {
--		ret = gfs2_ea_dealloc(ip, !test_bit(GIF_ALLOC_FAILED, &ip->i_flags));
-+		ret = gfs2_ea_dealloc(ip, true);
- 		if (ret)
- 			goto out;
- 	}
+ static void event_hist_trigger_named_free(struct event_trigger_data *data)
 -- 
 2.39.5
 
