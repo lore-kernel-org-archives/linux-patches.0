@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C6D2F547F;
-	Tue, 17 Jun 2025 16:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEF92DFF14;
+	Tue, 17 Jun 2025 16:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176591; cv=none; b=e8Go84jK+ioythmfiZP3jSJX2b4GLAhw8ad9bap2xGL8ifSNeMKv38BGLDuX1JDZ6DpAZkoU59ui5eb+qm4iQ6KApPggstKvTVhV12bGz6uavYof37fIfz3PaRIMO5K0EoCfuY+7ObXgNOGRNB/+gJxCVEnfPRqAPUHrJ7x0KIA=
+	t=1750176594; cv=none; b=V7RYG+SUv+ybH6gLPxsNM96k+7Y2kUgkAnP06jpqbelD4eK+XmMGK9S+GqhsTqW2q1H21rhxUPbv0lyVnovJokrWD9cjAyuErzUN1y6IRUJrijP7w5FPmICbua2aFmPRYyfIPdfVHp1rYdTbheRgNGEwIdMXTLofkp7E0I1DEIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176591; c=relaxed/simple;
-	bh=AOSefvfGhQQ1cMMqPXLrkNo6jRjjUT0XrAhoeqoWNBI=;
+	s=arc-20240116; t=1750176594; c=relaxed/simple;
+	bh=1MNmyECIROc45xNqedAi543IxXBxvcS2DLhQlPmTUZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=asqwFP7vfTpgSD3jYKBFg+qzRyB7LvJ1zeEjXJ6cwIwOyYvoOs9actXD7W61TN601m7HUPS9zrUdOyLeNSjqavlJo4Gtl2ELgAa4jwEIX8Z29SgssiGvD2FlQethXja56i1neKdUHp5jKaWETMMWQ9W1/CJZBcwwJyVBWXk98Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zIXWCP9c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDRvS8H2z1B6ICjT8Vg9E6CUMPJJC98cO7IYsQESAyNkQE+8S21H1ojLd/7zXX7EOjrjuogV9Gc3MbiKwYi1R8h98WXcQfSXShmfJVmmYL+AOm1lstk/uB/pqtTiCpT0Y5NxpxXfNTSyS8yNYoXTkmvchPRmzx086+YLGExizc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z91ayebM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zIXWCP9c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6075AC4CEE7;
-	Tue, 17 Jun 2025 16:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z91ayebM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4516C4CEE3;
+	Tue, 17 Jun 2025 16:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176590;
-	bh=AOSefvfGhQQ1cMMqPXLrkNo6jRjjUT0XrAhoeqoWNBI=;
+	s=korg; t=1750176594;
+	bh=1MNmyECIROc45xNqedAi543IxXBxvcS2DLhQlPmTUZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zIXWCP9crnOgwhVtON/KpRXIDjkXLIbQ54ELN5u5AkdEq+z9JPM4kucB0FW3WVQCh
-	 UQkGS6qoWAcW1LigSl+yW4q/18SeNCkcgzD2z8t2u9LOuA02qR9watGb2+dU54Y1Dg
-	 IZG+1fBlSICUP0eolE2L1q/7R/JkKU+CHNU8Df4U=
+	b=z91ayebM5f10fQ5Uz0vQbyLA6PP7iMutpgS7VrA3PH8qNSlbmaa5LT2TI2ZikFpkJ
+	 7vIncpMv6fa9JYePQr1MRgCj54ZcCDX3kz2jRU7RG347axTx4iPaFWEeNFQktwhXl/
+	 RmAiX63QUH5RQeB6JxEMW9ec0/omXN1ys1wf5JhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Robinson <pbrobinson@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 245/512] arm64: dts: rockchip: Add vcc-supply to SPI flash on rk3566-rock3c
-Date: Tue, 17 Jun 2025 17:23:31 +0200
-Message-ID: <20250617152429.538507612@linuxfoundation.org>
+Subject: [PATCH 6.6 287/356] serial: sh-sci: Check if TX data was written to device in .tx_empty()
+Date: Tue, 17 Jun 2025 17:26:42 +0200
+Message-ID: <20250617152349.736717256@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +46,157 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Robinson <pbrobinson@gmail.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit a706a593cb19796f31d3a888423ef1a71885ae72 ]
+commit 7cc0e0a43a91052477c2921f924a37d9c3891f0c upstream.
 
-As described in the radxa_rock_3c_v1400_schematic.pdf, the SPI Flash's
-VCC connector is connected to VCCIO_FLASH and according to the
-that same schematic, that belongs to the VCC_1V8 power source.
+On the Renesas RZ/G3S, when doing suspend to RAM, the uart_suspend_port()
+is called. The uart_suspend_port() calls 3 times the
+struct uart_port::ops::tx_empty() before shutting down the port.
 
-This fixes the following warning:
+According to the documentation, the struct uart_port::ops::tx_empty()
+API tests whether the transmitter FIFO and shifter for the port is
+empty.
 
-  spi-nor spi4.0: supply vcc not found, using dummy regulator
+The Renesas RZ/G3S SCIFA IP reports the number of data units stored in the
+transmit FIFO through the FDR (FIFO Data Count Register). The data units
+in the FIFOs are written in the shift register and transmitted from there.
+The TEND bit in the Serial Status Register reports if the data was
+transmitted from the shift register.
 
-Fixes: ee219017ddb5 ("arm64: dts: rockchip: Add Radxa ROCK 3C")
-Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
-Link: https://lore.kernel.org/r/20250506195702.593044-1-pbrobinson@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+In the previous code, in the tx_empty() API implemented by the sh-sci
+driver, it is considered that the TX is empty if the hardware reports the
+TEND bit set and the number of data units in the FIFO is zero.
+
+According to the HW manual, the TEND bit has the following meaning:
+
+0: Transmission is in the waiting state or in progress.
+1: Transmission is completed.
+
+It has been noticed that when opening the serial device w/o using it and
+then switch to a power saving mode, the tx_empty() call in the
+uart_port_suspend() function fails, leading to the "Unable to drain
+transmitter" message being printed on the console. This is because the
+TEND=0 if nothing has been transmitted and the FIFOs are empty. As the
+TEND=0 has double meaning (waiting state, in progress) we can't
+determined the scenario described above.
+
+Add a software workaround for this. This sets a variable if any data has
+been sent on the serial console (when using PIO) or if the DMA callback has
+been called (meaning something has been transmitted). In the tx_empty()
+API the status of the DMA transaction is also checked and if it is
+completed or in progress the code falls back in checking the hardware
+registers instead of relying on the software variable.
+
+Fixes: 73a19e4c0301 ("serial: sh-sci: Add DMA support.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20241125115856.513642-1-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[claudiu.beznea: fixed conflict by:
+ - keeping serial_port_out() instead of sci_port_out() in
+   sci_transmit_chars()
+ - keeping !uart_circ_empty(xmit) condition in sci_dma_tx_complete(),
+   after s->tx_occurred = true; assignement]
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/sh-sci.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts b/arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts
-index f2cc086e5001a..887c9be1b4100 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts
-@@ -636,6 +636,7 @@
- 		spi-max-frequency = <104000000>;
- 		spi-rx-bus-width = <4>;
- 		spi-tx-bus-width = <1>;
-+		vcc-supply = <&vcc_1v8>;
- 	};
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index 61d8f50676b1b..d57fa80b6f52a 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -174,6 +174,7 @@ struct sci_port {
+ 
+ 	bool has_rtscts;
+ 	bool autorts;
++	bool tx_occurred;
  };
  
+ #define SCI_NPORTS CONFIG_SERIAL_SH_SCI_NR_UARTS
+@@ -838,6 +839,7 @@ static void sci_transmit_chars(struct uart_port *port)
+ {
+ 	struct circ_buf *xmit = &port->state->xmit;
+ 	unsigned int stopped = uart_tx_stopped(port);
++	struct sci_port *s = to_sci_port(port);
+ 	unsigned short status;
+ 	unsigned short ctrl;
+ 	int count;
+@@ -874,6 +876,7 @@ static void sci_transmit_chars(struct uart_port *port)
+ 		}
+ 
+ 		serial_port_out(port, SCxTDR, c);
++		s->tx_occurred = true;
+ 
+ 		port->icount.tx++;
+ 	} while (--count > 0);
+@@ -1230,6 +1233,8 @@ static void sci_dma_tx_complete(void *arg)
+ 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
+ 		uart_write_wakeup(port);
+ 
++	s->tx_occurred = true;
++
+ 	if (!uart_circ_empty(xmit)) {
+ 		s->cookie_tx = 0;
+ 		schedule_work(&s->work_tx);
+@@ -1719,6 +1724,19 @@ static void sci_flush_buffer(struct uart_port *port)
+ 		s->cookie_tx = -EINVAL;
+ 	}
+ }
++
++static void sci_dma_check_tx_occurred(struct sci_port *s)
++{
++	struct dma_tx_state state;
++	enum dma_status status;
++
++	if (!s->chan_tx)
++		return;
++
++	status = dmaengine_tx_status(s->chan_tx, s->cookie_tx, &state);
++	if (status == DMA_COMPLETE || status == DMA_IN_PROGRESS)
++		s->tx_occurred = true;
++}
+ #else /* !CONFIG_SERIAL_SH_SCI_DMA */
+ static inline void sci_request_dma(struct uart_port *port)
+ {
+@@ -1728,6 +1746,10 @@ static inline void sci_free_dma(struct uart_port *port)
+ {
+ }
+ 
++static void sci_dma_check_tx_occurred(struct sci_port *s)
++{
++}
++
+ #define sci_flush_buffer	NULL
+ #endif /* !CONFIG_SERIAL_SH_SCI_DMA */
+ 
+@@ -2064,6 +2086,12 @@ static unsigned int sci_tx_empty(struct uart_port *port)
+ {
+ 	unsigned short status = serial_port_in(port, SCxSR);
+ 	unsigned short in_tx_fifo = sci_txfill(port);
++	struct sci_port *s = to_sci_port(port);
++
++	sci_dma_check_tx_occurred(s);
++
++	if (!s->tx_occurred)
++		return TIOCSER_TEMT;
+ 
+ 	return (status & SCxSR_TEND(port)) && !in_tx_fifo ? TIOCSER_TEMT : 0;
+ }
+@@ -2234,6 +2262,7 @@ static int sci_startup(struct uart_port *port)
+ 
+ 	dev_dbg(port->dev, "%s(%d)\n", __func__, port->line);
+ 
++	s->tx_occurred = false;
+ 	sci_request_dma(port);
+ 
+ 	ret = sci_request_irq(s);
 -- 
 2.39.5
 
