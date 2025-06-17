@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E15217F34;
-	Tue, 17 Jun 2025 15:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090552EBDC0;
+	Tue, 17 Jun 2025 15:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174672; cv=none; b=NUl9K26qfalsVLXGFnhSlz+PiEQs1nMnL0VvMEfyZR4/ytlkMCuDm2w9QpAdnWjan6mCVotClLVwvrxmsLcGs7rjyIXRpUeCfV5qC5wb6bP53eNKal86Q5e/JYVpHBUOV62I/qd4m4PTbKWo5SVTIzeXPMaG8825JfdScn2Q2zk=
+	t=1750174676; cv=none; b=g3we2O2lIsUthDdusFY6489LfX8g4nVO72WYcqg9/69rYrRV46KFzRGFP+z+rTYmqLMNptpKGtMisqhSKqKwvG0ZdqUwma9iQF+PigkHF5oTakNJ1Lojt0/hH8Z3aIQMZQfNHpmHhJvKGRH9I6iPezcDmkY7m/7L5k1MCeZUzx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174672; c=relaxed/simple;
-	bh=J0Bx9Gkq+I+PHBRuxt/7RBYCf3O7u6m/wckKGocDRQM=;
+	s=arc-20240116; t=1750174676; c=relaxed/simple;
+	bh=Ar8gDUKPOJI41ux1GqGh51ibXWob2ThQd2MBGXb+60Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=is11Ub954mWj4+K7H4QCSXMScbNRCCiv8RsMKCxxGx0Q94Kr5iJ+LrCKvpJhH3XZ5dfkn7iE3aTDh3ZmDisMcMqmLnmJj16Jz74EV2d57SHeQtPaJwLEAKwQLoSMx9rwSbhlZZSlSFgcDY4FQx3gYgVe0LA1HM8k+ZSvohlnl8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCiafVp/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bHaIMaudROHYxnOk5W95TmZLtq2yFMNsBTNemkKAblwx2LwEjFkGf7KxgTtfma6nBvRpjh2m++gAu73x3+ICQNSMJFM5OFN5FU4C2cP+RMgwp9zq9/mvwc2FhO8PBOSyhVa4hDKI/vTBySmq87uDxn/6Gy721pwDrAq0aCbBbcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/auMxbz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCiafVp/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC38DC4CEE3;
-	Tue, 17 Jun 2025 15:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/auMxbz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2CAC4CEE3;
+	Tue, 17 Jun 2025 15:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174672;
-	bh=J0Bx9Gkq+I+PHBRuxt/7RBYCf3O7u6m/wckKGocDRQM=;
+	s=korg; t=1750174675;
+	bh=Ar8gDUKPOJI41ux1GqGh51ibXWob2ThQd2MBGXb+60Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NCiafVp/55We3XFigs91BudMM8w3wqdx/arED5TbthV8PAkCFxy2dh2yVAQV8/j+M
-	 B5Sp9okSdm5rLn+HGoYMjRLtN/vGpHPGmmA4MR7LNQutFnnB4ILY01k6hCTg23keFL
-	 /WM+FoZT+aonP7qD9a1oFUuLbPMhNnLRlxKuO8QM=
+	b=a/auMxbzyuP62TzypqjL1hKR7yMQsXFt9ykGB7YTZa+5Dm4+xvy4cqRYReLxy5i11
+	 +s7HyX8x+Vt/2TIMgOigzVNnpUn93+PzRrWmpnUBvj5BkrQ76F0NRLS3H2MkEhKyMh
+	 Hf1TamVpVMibjeIZs7mXHfpYR1pFPZSkVpAd1Zrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Ignat Korchagin <ignat@cloudflare.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 049/512] ASoC: SOF: amd: add missing acp descriptor field
-Date: Tue, 17 Jun 2025 17:20:15 +0200
-Message-ID: <20250617152421.522562230@linuxfoundation.org>
+Subject: [PATCH 6.15 007/780] crypto: ecdsa - Fix NIST P521 key size reported by KEYCTL_PKEY_QUERY
+Date: Tue, 17 Jun 2025 17:15:15 +0200
+Message-ID: <20250617152451.796408810@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,40 +49,213 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 7c2bad7b95db5b4b978853cd4dd042ae3ec83e63 ]
+[ Upstream commit 6b7f9397c98c72902f9364056413c73fe6dee1d8 ]
 
-Add missing acp descriptor field acp_error_stat for ACP7.0 platform.
+When user space issues a KEYCTL_PKEY_QUERY system call for a NIST P521
+key, the key_size is incorrectly reported as 528 bits instead of 521.
 
-Fixes: 490be7ba2a01 ("ASoC: SOF: amd: add support for acp7.0 based platform")
+That's because the key size obtained through crypto_sig_keysize() is in
+bytes and software_key_query() multiplies by 8 to yield the size in bits.
+The underlying assumption is that the key size is always a multiple of 8.
+With the recent addition of NIST P521, that's no longer the case.
 
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20250502154445.3008598-3-Vijendar.Mukunda@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix by returning the key_size in bits from crypto_sig_keysize() and
+adjusting the calculations in software_key_query().
+
+The ->key_size() callbacks of sig_alg algorithms now return the size in
+bits, whereas the ->digest_size() and ->max_size() callbacks return the
+size in bytes.  This matches with the units in struct keyctl_pkey_query.
+
+Fixes: a7d45ba77d3d ("crypto: ecdsa - Register NIST P521 and extend test suite")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Ignat Korchagin <ignat@cloudflare.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/amd/pci-acp70.c | 1 +
- 1 file changed, 1 insertion(+)
+ crypto/asymmetric_keys/public_key.c | 8 ++++----
+ crypto/ecdsa-p1363.c                | 6 ++++--
+ crypto/ecdsa-x962.c                 | 5 +++--
+ crypto/ecdsa.c                      | 2 +-
+ crypto/ecrdsa.c                     | 2 +-
+ crypto/rsassa-pkcs1.c               | 2 +-
+ crypto/sig.c                        | 9 +++++++--
+ include/crypto/sig.h                | 2 +-
+ 8 files changed, 22 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/sof/amd/pci-acp70.c b/sound/soc/sof/amd/pci-acp70.c
-index a5d8b6a95a222..fe2ad0395f5d3 100644
---- a/sound/soc/sof/amd/pci-acp70.c
-+++ b/sound/soc/sof/amd/pci-acp70.c
-@@ -34,6 +34,7 @@ static const struct sof_amd_acp_desc acp70_chip_info = {
- 	.ext_intr_cntl = ACP70_EXTERNAL_INTR_CNTL,
- 	.ext_intr_stat	= ACP70_EXT_INTR_STAT,
- 	.ext_intr_stat1	= ACP70_EXT_INTR_STAT1,
-+	.acp_error_stat = ACP70_ERROR_STATUS,
- 	.dsp_intr_base	= ACP70_DSP_SW_INTR_BASE,
- 	.acp_sw0_i2s_err_reason = ACP7X_SW0_I2S_ERROR_REASON,
- 	.sram_pte_offset = ACP70_SRAM_PTE_OFFSET,
+diff --git a/crypto/asymmetric_keys/public_key.c b/crypto/asymmetric_keys/public_key.c
+index dd44a966947fb..89dc887d2c5c7 100644
+--- a/crypto/asymmetric_keys/public_key.c
++++ b/crypto/asymmetric_keys/public_key.c
+@@ -205,6 +205,7 @@ static int software_key_query(const struct kernel_pkey_params *params,
+ 			goto error_free_tfm;
+ 
+ 		len = crypto_sig_keysize(sig);
++		info->key_size = len;
+ 		info->max_sig_size = crypto_sig_maxsize(sig);
+ 		info->max_data_size = crypto_sig_digestsize(sig);
+ 
+@@ -213,8 +214,8 @@ static int software_key_query(const struct kernel_pkey_params *params,
+ 			info->supported_ops |= KEYCTL_SUPPORTS_SIGN;
+ 
+ 		if (strcmp(params->encoding, "pkcs1") == 0) {
+-			info->max_enc_size = len;
+-			info->max_dec_size = len;
++			info->max_enc_size = len / BITS_PER_BYTE;
++			info->max_dec_size = len / BITS_PER_BYTE;
+ 
+ 			info->supported_ops |= KEYCTL_SUPPORTS_ENCRYPT;
+ 			if (pkey->key_is_private)
+@@ -235,6 +236,7 @@ static int software_key_query(const struct kernel_pkey_params *params,
+ 			goto error_free_tfm;
+ 
+ 		len = crypto_akcipher_maxsize(tfm);
++		info->key_size = len * BITS_PER_BYTE;
+ 		info->max_sig_size = len;
+ 		info->max_data_size = len;
+ 		info->max_enc_size = len;
+@@ -245,8 +247,6 @@ static int software_key_query(const struct kernel_pkey_params *params,
+ 			info->supported_ops |= KEYCTL_SUPPORTS_DECRYPT;
+ 	}
+ 
+-	info->key_size = len * 8;
+-
+ 	ret = 0;
+ 
+ error_free_tfm:
+diff --git a/crypto/ecdsa-p1363.c b/crypto/ecdsa-p1363.c
+index 4454f1f8f33f5..e0c55c64711c8 100644
+--- a/crypto/ecdsa-p1363.c
++++ b/crypto/ecdsa-p1363.c
+@@ -21,7 +21,8 @@ static int ecdsa_p1363_verify(struct crypto_sig *tfm,
+ 			      const void *digest, unsigned int dlen)
+ {
+ 	struct ecdsa_p1363_ctx *ctx = crypto_sig_ctx(tfm);
+-	unsigned int keylen = crypto_sig_keysize(ctx->child);
++	unsigned int keylen = DIV_ROUND_UP_POW2(crypto_sig_keysize(ctx->child),
++						BITS_PER_BYTE);
+ 	unsigned int ndigits = DIV_ROUND_UP_POW2(keylen, sizeof(u64));
+ 	struct ecdsa_raw_sig sig;
+ 
+@@ -45,7 +46,8 @@ static unsigned int ecdsa_p1363_max_size(struct crypto_sig *tfm)
+ {
+ 	struct ecdsa_p1363_ctx *ctx = crypto_sig_ctx(tfm);
+ 
+-	return 2 * crypto_sig_keysize(ctx->child);
++	return 2 * DIV_ROUND_UP_POW2(crypto_sig_keysize(ctx->child),
++				     BITS_PER_BYTE);
+ }
+ 
+ static unsigned int ecdsa_p1363_digest_size(struct crypto_sig *tfm)
+diff --git a/crypto/ecdsa-x962.c b/crypto/ecdsa-x962.c
+index 90a04f4b9a2f5..ee71594d10a06 100644
+--- a/crypto/ecdsa-x962.c
++++ b/crypto/ecdsa-x962.c
+@@ -82,7 +82,7 @@ static int ecdsa_x962_verify(struct crypto_sig *tfm,
+ 	int err;
+ 
+ 	sig_ctx.ndigits = DIV_ROUND_UP_POW2(crypto_sig_keysize(ctx->child),
+-					    sizeof(u64));
++					    sizeof(u64) * BITS_PER_BYTE);
+ 
+ 	err = asn1_ber_decoder(&ecdsasignature_decoder, &sig_ctx, src, slen);
+ 	if (err < 0)
+@@ -103,7 +103,8 @@ static unsigned int ecdsa_x962_max_size(struct crypto_sig *tfm)
+ {
+ 	struct ecdsa_x962_ctx *ctx = crypto_sig_ctx(tfm);
+ 	struct sig_alg *alg = crypto_sig_alg(ctx->child);
+-	int slen = crypto_sig_keysize(ctx->child);
++	int slen = DIV_ROUND_UP_POW2(crypto_sig_keysize(ctx->child),
++				     BITS_PER_BYTE);
+ 
+ 	/*
+ 	 * Verify takes ECDSA-Sig-Value (described in RFC 5480) as input,
+diff --git a/crypto/ecdsa.c b/crypto/ecdsa.c
+index 117526d15ddeb..a70b60a90a3c7 100644
+--- a/crypto/ecdsa.c
++++ b/crypto/ecdsa.c
+@@ -167,7 +167,7 @@ static unsigned int ecdsa_key_size(struct crypto_sig *tfm)
+ {
+ 	struct ecc_ctx *ctx = crypto_sig_ctx(tfm);
+ 
+-	return DIV_ROUND_UP(ctx->curve->nbits, 8);
++	return ctx->curve->nbits;
+ }
+ 
+ static unsigned int ecdsa_digest_size(struct crypto_sig *tfm)
+diff --git a/crypto/ecrdsa.c b/crypto/ecrdsa.c
+index b3dd8a3ddeb79..2c0602f0cd406 100644
+--- a/crypto/ecrdsa.c
++++ b/crypto/ecrdsa.c
+@@ -249,7 +249,7 @@ static unsigned int ecrdsa_key_size(struct crypto_sig *tfm)
+ 	 * Verify doesn't need any output, so it's just informational
+ 	 * for keyctl to determine the key bit size.
+ 	 */
+-	return ctx->pub_key.ndigits * sizeof(u64);
++	return ctx->pub_key.ndigits * sizeof(u64) * BITS_PER_BYTE;
+ }
+ 
+ static unsigned int ecrdsa_max_size(struct crypto_sig *tfm)
+diff --git a/crypto/rsassa-pkcs1.c b/crypto/rsassa-pkcs1.c
+index d01ac75635e00..94fa5e9600e79 100644
+--- a/crypto/rsassa-pkcs1.c
++++ b/crypto/rsassa-pkcs1.c
+@@ -301,7 +301,7 @@ static unsigned int rsassa_pkcs1_key_size(struct crypto_sig *tfm)
+ {
+ 	struct rsassa_pkcs1_ctx *ctx = crypto_sig_ctx(tfm);
+ 
+-	return ctx->key_size;
++	return ctx->key_size * BITS_PER_BYTE;
+ }
+ 
+ static int rsassa_pkcs1_set_pub_key(struct crypto_sig *tfm,
+diff --git a/crypto/sig.c b/crypto/sig.c
+index dfc7cae908028..53a3dd6fbe3fe 100644
+--- a/crypto/sig.c
++++ b/crypto/sig.c
+@@ -102,6 +102,11 @@ static int sig_default_set_key(struct crypto_sig *tfm,
+ 	return -ENOSYS;
+ }
+ 
++static unsigned int sig_default_size(struct crypto_sig *tfm)
++{
++	return DIV_ROUND_UP_POW2(crypto_sig_keysize(tfm), BITS_PER_BYTE);
++}
++
+ static int sig_prepare_alg(struct sig_alg *alg)
+ {
+ 	struct crypto_alg *base = &alg->base;
+@@ -117,9 +122,9 @@ static int sig_prepare_alg(struct sig_alg *alg)
+ 	if (!alg->key_size)
+ 		return -EINVAL;
+ 	if (!alg->max_size)
+-		alg->max_size = alg->key_size;
++		alg->max_size = sig_default_size;
+ 	if (!alg->digest_size)
+-		alg->digest_size = alg->key_size;
++		alg->digest_size = sig_default_size;
+ 
+ 	base->cra_type = &crypto_sig_type;
+ 	base->cra_flags &= ~CRYPTO_ALG_TYPE_MASK;
+diff --git a/include/crypto/sig.h b/include/crypto/sig.h
+index 11024708c0692..fa6dafafab3f0 100644
+--- a/include/crypto/sig.h
++++ b/include/crypto/sig.h
+@@ -128,7 +128,7 @@ static inline void crypto_free_sig(struct crypto_sig *tfm)
+ /**
+  * crypto_sig_keysize() - Get key size
+  *
+- * Function returns the key size in bytes.
++ * Function returns the key size in bits.
+  * Function assumes that the key is already set in the transformation. If this
+  * function is called without a setkey or with a failed setkey, you may end up
+  * in a NULL dereference.
 -- 
 2.39.5
 
