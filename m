@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F23204F73;
-	Tue, 17 Jun 2025 16:29:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E78E204F73;
+	Tue, 17 Jun 2025 16:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177751; cv=none; b=KVLhAPseQanERs7MMhYTHqnkA7whlRijM+glVwj4dqa7JE/sBIXVqJv/GNpDzaEdiML5iC0RYvlVZ5Tvqmv7oR8bfEAYy7g5f1UKu8PRZl1A8vDRN3IFBSE7OQi76g6m6Q/mdlPN0Dk9QJQ32KMIg8ylWd5cyxlsctEruyqVPFY=
+	t=1750177754; cv=none; b=XxDBOk/VUjlG/K0px2uCLOlPMGTN4SSk61LFnIpZ2TNfjIhrYEOtWuioOnW9F5gnCIPjISLSqaIksmh0qIYF4SRky+LPlGUeCXnR0MMDI03DoL/i9G19I8IzwRaq2MauUJUMfGlybAYXD7GCM6+3UoWegxz75Lui26DT0zauIOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177751; c=relaxed/simple;
-	bh=Snj+CMoagZaf84idRkzYQlYwKaUqwZD3js74EyMUeRI=;
+	s=arc-20240116; t=1750177754; c=relaxed/simple;
+	bh=vm0+0x4oRmhmzc5p7qzOSmmQBb96y21v+brywTG+WPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHMPguNIW/ncfGlK8f6Xvtu67uQh1+SsZbEGTxGVT7KGXPXtx4O1kt3VGx6F3YOyHr/XaBGET7KptrILeR00ymYoKngoTEVRYOb1MYzQlk5qxGZQ23k/MfuFe6/JkZ5jUvITXFVU1ZPDkbNEZJ/FYwTfCmIqfaW9kIky79rQMuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DF4KdoPm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ehYSa526sHnmgWv/5rD6DrV/gf2nDfLFubmXiLviiBLC2oeuKz3YVlGIKPPAT10OxSnTOW3f3TuUQA4815nN/3e+gu4+j3CldreU4U3u+jCmw7lZmWSrqOG//XimCMVNSW8aMZnHZ7AaGphsXcIRHo2rl6nvd1jfMLZIuixZf8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tO764FtO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DF4KdoPm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED4AC4CEE3;
-	Tue, 17 Jun 2025 16:29:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tO764FtO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AF4C4CEF0;
+	Tue, 17 Jun 2025 16:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177750;
-	bh=Snj+CMoagZaf84idRkzYQlYwKaUqwZD3js74EyMUeRI=;
+	s=korg; t=1750177753;
+	bh=vm0+0x4oRmhmzc5p7qzOSmmQBb96y21v+brywTG+WPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DF4KdoPm9JyE3g8CpASlC5YVmal4YcqaBUqa1/T8Wq7dhtCwrjJW48Ur3486Awj/u
-	 CG50weWbLQH5Tjn8ASbPbEPkdab8HctFE21btxY4wV4tUjiW1iUARnIyJ/onlYVrSC
-	 7Hpyh1drHoSIVSDGHZ/12O48MWLIPEyJfd33GcK4=
+	b=tO764FtOg1uar0vqVaxoeRTbm95pL3/DEOmXrDZj/3djRfGhSCZ805HPlIgHDSkMU
+	 y9jOBP4gGjUpDxCKFSjMPH/ubQ2COevL4/iH+kGi4o3IJFhLJywUunfvaa0WSr4bvH
+	 XR37LWAHqJ/EOm6+XC+gsUFECOtWBXSu7uEEXwyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiming Cheng <shiming.cheng@mediatek.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 368/512] net: fix udp gso skb_segment after pull from frag_list
-Date: Tue, 17 Jun 2025 17:25:34 +0200
-Message-ID: <20250617152434.496295138@linuxfoundation.org>
+Subject: [PATCH 6.15 333/780] octeontx2-pf: QOS: Perform cache sync on send queue teardown
+Date: Tue, 17 Jun 2025 17:20:41 +0200
+Message-ID: <20250617152505.011468492@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,109 +48,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shiming Cheng <shiming.cheng@mediatek.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 3382a1ed7f778db841063f5d7e317ac55f9e7f72 ]
+[ Upstream commit 479c58016099d19686e36f6c50f912360839a7fa ]
 
-Commit a1e40ac5b5e9 ("net: gso: fix udp gso fraglist segmentation after
-pull from frag_list") detected invalid geometry in frag_list skbs and
-redirects them from skb_segment_list to more robust skb_segment. But some
-packets with modified geometry can also hit bugs in that code. We don't
-know how many such cases exist. Addressing each one by one also requires
-touching the complex skb_segment code, which risks introducing bugs for
-other types of skbs. Instead, linearize all these packets that fail the
-basic invariants on gso fraglist skbs. That is more robust.
+QOS is designed to create a new send queue whenever  a class
+is created, ensuring proper shaping and scheduling. However,
+when multiple send queues are created and deleted in a loop,
+SMMU errors are observed.
 
-If only part of the fraglist payload is pulled into head_skb, it will
-always cause exception when splitting skbs by skb_segment. For detailed
-call stack information, see below.
+This patch addresses the issue by performing an data cache sync
+during the teardown of QOS send queues.
 
-Valid SKB_GSO_FRAGLIST skbs
-- consist of two or more segments
-- the head_skb holds the protocol headers plus first gso_size
-- one or more frag_list skbs hold exactly one segment
-- all but the last must be gso_size
-
-Optional datapath hooks such as NAT and BPF (bpf_skb_pull_data) can
-modify fraglist skbs, breaking these invariants.
-
-In extreme cases they pull one part of data into skb linear. For UDP,
-this  causes three payloads with lengths of (11,11,10) bytes were
-pulled tail to become (12,10,10) bytes.
-
-The skbs no longer meets the above SKB_GSO_FRAGLIST conditions because
-payload was pulled into head_skb, it needs to be linearized before pass
-to regular skb_segment.
-
-    skb_segment+0xcd0/0xd14
-    __udp_gso_segment+0x334/0x5f4
-    udp4_ufo_fragment+0x118/0x15c
-    inet_gso_segment+0x164/0x338
-    skb_mac_gso_segment+0xc4/0x13c
-    __skb_gso_segment+0xc4/0x124
-    validate_xmit_skb+0x9c/0x2c0
-    validate_xmit_skb_list+0x4c/0x80
-    sch_direct_xmit+0x70/0x404
-    __dev_queue_xmit+0x64c/0xe5c
-    neigh_resolve_output+0x178/0x1c4
-    ip_finish_output2+0x37c/0x47c
-    __ip_finish_output+0x194/0x240
-    ip_finish_output+0x20/0xf4
-    ip_output+0x100/0x1a0
-    NF_HOOK+0xc4/0x16c
-    ip_forward+0x314/0x32c
-    ip_rcv+0x90/0x118
-    __netif_receive_skb+0x74/0x124
-    process_backlog+0xe8/0x1a4
-    __napi_poll+0x5c/0x1f8
-    net_rx_action+0x154/0x314
-    handle_softirqs+0x154/0x4b8
-
-    [118.376811] [C201134] rxq0_pus: [name:bug&]kernel BUG at net/core/skbuff.c:4278!
-    [118.376829] [C201134] rxq0_pus: [name:traps&]Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
-    [118.470774] [C201134] rxq0_pus: [name:mrdump&]Kernel Offset: 0x178cc00000 from 0xffffffc008000000
-    [118.470810] [C201134] rxq0_pus: [name:mrdump&]PHYS_OFFSET: 0x40000000
-    [118.470827] [C201134] rxq0_pus: [name:mrdump&]pstate: 60400005 (nZCv daif +PAN -UAO)
-    [118.470848] [C201134] rxq0_pus: [name:mrdump&]pc : [0xffffffd79598aefc] skb_segment+0xcd0/0xd14
-    [118.470900] [C201134] rxq0_pus: [name:mrdump&]lr : [0xffffffd79598a5e8] skb_segment+0x3bc/0xd14
-    [118.470928] [C201134] rxq0_pus: [name:mrdump&]sp : ffffffc008013770
-
-Fixes: a1e40ac5b5e9 ("gso: fix udp gso fraglist segmentation after pull from frag_list")
-Signed-off-by: Shiming Cheng <shiming.cheng@mediatek.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: ab6dddd2a669 ("octeontx2-pf: qos send queues management")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250522094742.1498295-1-hkelam@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_offload.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ .../ethernet/marvell/octeontx2/nic/qos_sq.c   | 22 +++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index da5d4aea1b591..845730184c5d3 100644
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -332,6 +332,7 @@ struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
- 	bool copy_dtor;
- 	__sum16 check;
- 	__be16 newlen;
-+	int ret = 0;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/qos_sq.c b/drivers/net/ethernet/marvell/octeontx2/nic/qos_sq.c
+index c5dbae0e513b6..58d572ce08eff 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/qos_sq.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/qos_sq.c
+@@ -256,6 +256,26 @@ int otx2_qos_enable_sq(struct otx2_nic *pfvf, int qidx)
+ 	return err;
+ }
  
- 	mss = skb_shinfo(gso_skb)->gso_size;
- 	if (gso_skb->len <= sizeof(*uh) + mss)
-@@ -360,6 +361,10 @@ struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
- 		if (skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size)
- 			return __udp_gso_segment_list(gso_skb, features, is_ipv6);
- 
-+		ret = __skb_linearize(gso_skb);
-+		if (ret)
-+			return ERR_PTR(ret);
++static int otx2_qos_nix_npa_ndc_sync(struct otx2_nic *pfvf)
++{
++	struct ndc_sync_op *req;
++	int rc;
 +
- 		 /* Setup csum, as fraglist skips this in udp4_gro_receive. */
- 		gso_skb->csum_start = skb_transport_header(gso_skb) - gso_skb->head;
- 		gso_skb->csum_offset = offsetof(struct udphdr, check);
++	mutex_lock(&pfvf->mbox.lock);
++
++	req = otx2_mbox_alloc_msg_ndc_sync_op(&pfvf->mbox);
++	if (!req) {
++		mutex_unlock(&pfvf->mbox.lock);
++		return -ENOMEM;
++	}
++
++	req->nix_lf_tx_sync = true;
++	req->npa_lf_sync = true;
++	rc = otx2_sync_mbox_msg(&pfvf->mbox);
++	mutex_unlock(&pfvf->mbox.lock);
++	return rc;
++}
++
+ void otx2_qos_disable_sq(struct otx2_nic *pfvf, int qidx)
+ {
+ 	struct otx2_qset *qset = &pfvf->qset;
+@@ -285,6 +305,8 @@ void otx2_qos_disable_sq(struct otx2_nic *pfvf, int qidx)
+ 
+ 	otx2_qos_sqb_flush(pfvf, sq_idx);
+ 	otx2_smq_flush(pfvf, otx2_get_smq_idx(pfvf, sq_idx));
++	/* NIX/NPA NDC sync */
++	otx2_qos_nix_npa_ndc_sync(pfvf);
+ 	otx2_cleanup_tx_cqes(pfvf, cq);
+ 
+ 	mutex_lock(&pfvf->mbox.lock);
 -- 
 2.39.5
 
