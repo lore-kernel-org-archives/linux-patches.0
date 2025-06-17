@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095872EF286;
-	Tue, 17 Jun 2025 15:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD952ECE8F;
+	Tue, 17 Jun 2025 15:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175591; cv=none; b=c9Q8nNrvc599oSQGq9VIXlmUZu6dnX7hhTNj+Q64EHISwQi5RZMv+eu60j4DRtAUt80buAQybFZDg43CUXQ0cDjdQ52bducSQXGNCV2de38i5NVUb+DFhon3gSD5muFsX5wNJy/nWsdzfFE+XZUaqVy47VGp7Xjqc6+jFOWzYIw=
+	t=1750175594; cv=none; b=llitInMsg6/Zc2IgnuVEUCMP9XF0WIAaS5Imms2ZUQJAQvaZ4p5hJDhDzIXSESO4kGsXSJZsDnwwHV9VfWzo5rxb+WFiHuB7Ds5gtAc1XDjmBX2panVG4zMqGmZ0GNKkk6q4W7lGQpomLtmVngT561iukmoVmZJoGLOGkAyE8Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175591; c=relaxed/simple;
-	bh=Lg44UIsWApHoNXq1A7Wm4IuD+tCT31NZ/5JpXk3OEcc=;
+	s=arc-20240116; t=1750175594; c=relaxed/simple;
+	bh=GdYcMi2QtoDDZq9tKzaLFc3YImBxRePpLb8N8bkOUYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rxhtpxc18xb4EKtbweETqFzccSnApcMn9Vo30FakKyVaTtaLqm/PKfzUdDiMDJMJJYtLs1uk+IsfRmEZDl1Pu6qeTxs+zDVDVWH69yLz+aJxhEGVc3ooZkwxzU06InUzn+cUTSnDnxttHW78o2zCGWY2lSuSAvJ/UVkFRhwHBZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaeuIQrp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kelEWH35Orw94VjqvlRqDnHkljNffSM7+JSy3g49FpGovPY4Zlt9ugTG+mWhJm3dNZJ0QOJYA4PNxalaMCcKNzXgj+D1J4nFWmhsR3kRsznAguYr5cAi55ctqqCCmlh47Cb9A2aZDJuwHcc6hC8WMEgHN6z9MXlvDO9/uQvxOM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=heg3T1ZC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaeuIQrp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB79C4CEE3;
-	Tue, 17 Jun 2025 15:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="heg3T1ZC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF4CC4CEE3;
+	Tue, 17 Jun 2025 15:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175590;
-	bh=Lg44UIsWApHoNXq1A7Wm4IuD+tCT31NZ/5JpXk3OEcc=;
+	s=korg; t=1750175594;
+	bh=GdYcMi2QtoDDZq9tKzaLFc3YImBxRePpLb8N8bkOUYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaeuIQrpXiUiEYpQKtIJmcdGBiKpt5Y+zGJ1M0l+/2ZAr6VQZqBaP7XMKa+/+T23W
-	 2aUP9+PGvMRy/eG9mmoy3ZLhzVtStPwT+BPLwzORuNpg5tUXCJylrW0RaZLVPmcMsQ
-	 zcu+6Qf6kdSiu09KjaWrxc30Far0JyC6TfufGqEY=
+	b=heg3T1ZCxOJVLAyDTxGF1LETG1EAZ//wcnlBf4F0wfVdxlr5CGiz/0D+/dNRv/NwE
+	 /hZSN6MhUxgOcdta+uHPPu9DkbR4fPeFwt58oIbQ/yZyBicAfoboMEFS/ZxI5FRbRc
+	 J9QFRC6UZCtZ+kxX6PhfnVM9LTK1Nd8CbwZQPpHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 104/780] arm64/fpsimd: Reset FPMR upon exec()
-Date: Tue, 17 Jun 2025 17:16:52 +0200
-Message-ID: <20250617152455.741113377@linuxfoundation.org>
+Subject: [PATCH 6.12 145/512] bpf: Allow XDP dev-bound programs to perform XDP_REDIRECT into maps
+Date: Tue, 17 Jun 2025 17:21:51 +0200
+Message-ID: <20250617152425.480746351@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,52 +48,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit a90878f297d3dba906a6261deccb1bd4a791ba52 ]
+[ Upstream commit 714070c4cb7a10ff57450a618a936775f3036245 ]
 
-An exec() is expected to reset all FPSIMD/SVE/SME state, and barring
-special handling of the vector lengths, the state is expected to reset
-to zero. This reset is handled in fpsimd_flush_thread(), which the core
-exec() code calls via flush_thread().
+In the current implementation if the program is dev-bound to a specific
+device, it will not be possible to perform XDP_REDIRECT into a DEVMAP
+or CPUMAP even if the program is running in the driver NAPI context and
+it is not attached to any map entry. This seems in contrast with the
+explanation available in bpf_prog_map_compatible routine.
+Fix the issue introducing __bpf_prog_map_compatible utility routine in
+order to avoid bpf_prog_is_dev_bound() check running bpf_check_tail_call()
+at program load time (bpf_prog_select_runtime()).
+Continue forbidding to attach a dev-bound program to XDP maps
+(BPF_MAP_TYPE_PROG_ARRAY, BPF_MAP_TYPE_DEVMAP and BPF_MAP_TYPE_CPUMAP).
 
-When support was added for FPMR, no logic was added to
-fpsimd_flush_thread() to reset the FPMR value, and thus it is
-erroneously inherited across an exec().
-
-Add the missing reset of FPMR.
-
-Fixes: 203f2b95a882 ("arm64/fpsimd: Support FEAT_FPMR")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20250409164010.3480271-9-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 3d76a4d3d4e59 ("bpf: XDP metadata RX kfuncs")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/fpsimd.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/bpf/core.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
-index 72ab9649c705b..7ae01f02e18b7 100644
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -1663,6 +1663,9 @@ void fpsimd_flush_thread(void)
- 		current->thread.svcr = 0;
- 	}
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index a60a6a2ce0d7f..a713cc7b00849 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -2303,8 +2303,8 @@ static unsigned int __bpf_prog_ret0_warn(const void *ctx,
+ 	return 0;
+ }
  
-+	if (system_supports_fpmr())
-+		current->thread.uw.fpmr = 0;
+-bool bpf_prog_map_compatible(struct bpf_map *map,
+-			     const struct bpf_prog *fp)
++static bool __bpf_prog_map_compatible(struct bpf_map *map,
++				      const struct bpf_prog *fp)
+ {
+ 	enum bpf_prog_type prog_type = resolve_prog_type(fp);
+ 	bool ret;
+@@ -2313,14 +2313,6 @@ bool bpf_prog_map_compatible(struct bpf_map *map,
+ 	if (fp->kprobe_override)
+ 		return false;
+ 
+-	/* XDP programs inserted into maps are not guaranteed to run on
+-	 * a particular netdev (and can run outside driver context entirely
+-	 * in the case of devmap and cpumap). Until device checks
+-	 * are implemented, prohibit adding dev-bound programs to program maps.
+-	 */
+-	if (bpf_prog_is_dev_bound(aux))
+-		return false;
+-
+ 	spin_lock(&map->owner.lock);
+ 	if (!map->owner.type) {
+ 		/* There's no owner yet where we could check for
+@@ -2354,6 +2346,19 @@ bool bpf_prog_map_compatible(struct bpf_map *map,
+ 	return ret;
+ }
+ 
++bool bpf_prog_map_compatible(struct bpf_map *map, const struct bpf_prog *fp)
++{
++	/* XDP programs inserted into maps are not guaranteed to run on
++	 * a particular netdev (and can run outside driver context entirely
++	 * in the case of devmap and cpumap). Until device checks
++	 * are implemented, prohibit adding dev-bound programs to program maps.
++	 */
++	if (bpf_prog_is_dev_bound(fp->aux))
++		return false;
 +
- 	current->thread.fp_type = FP_STATE_FPSIMD;
++	return __bpf_prog_map_compatible(map, fp);
++}
++
+ static int bpf_check_tail_call(const struct bpf_prog *fp)
+ {
+ 	struct bpf_prog_aux *aux = fp->aux;
+@@ -2366,7 +2371,7 @@ static int bpf_check_tail_call(const struct bpf_prog *fp)
+ 		if (!map_type_contains_progs(map))
+ 			continue;
  
- 	put_cpu_fpsimd_context();
+-		if (!bpf_prog_map_compatible(map, fp)) {
++		if (!__bpf_prog_map_compatible(map, fp)) {
+ 			ret = -EINVAL;
+ 			goto out;
+ 		}
 -- 
 2.39.5
 
