@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78562FA645;
-	Tue, 17 Jun 2025 16:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D8B2FA638;
+	Tue, 17 Jun 2025 16:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178062; cv=none; b=N6NDQ16ZTi1qZ0fGAJYHJz3JWsL1JoA+Jeu7r43Nl5utzzwZMWzi7iR9RGLDYhmpEnTQf+x+zvbYJaMgjglHWRjgSThVckmOdoKbjsfXwf5lH+SNPrcyoYVe6KCX9ZE5lMAm1SrQnJhPrV6X8pZm+qAl4zm4xzMNhIlwg4sWSbg=
+	t=1750178065; cv=none; b=BqjDW8QpAWTHKz/TLYPYrgKJGLmrYKNNbThBrQsUY1reZl2ljngS5Vcugay3SYkRJVG6Wr5cLLuVAYh2x4Q7KSkngESh3BaRqWM1OF73RmBvmSKQAqEhz0obVuRJJJ0abaQIn8CZiU8v+oX764fs1vG3z0lmg6U+sArqBZXkWRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178062; c=relaxed/simple;
-	bh=UE3OFZYJkNcyS38Y7uTEMAhB3Shab2mD4CClsCq+JiA=;
+	s=arc-20240116; t=1750178065; c=relaxed/simple;
+	bh=vAhx18E97u8es9oHibh+DRShnS4nTtZW27/f6+pkqvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DzOCG8vR1CGrXDXqBMLVyX326+7AfUC66/0eKCns6poRj3JpeWDSTn27XGWROLc3jLHEY2Z2iuvGUXiC7DeFsoS3mta21MdjqpseUG9kE2jo6K+3VSt3AOSm2PW40KlnR3Pw/1b1SgEgG7eP5mITbt+sniwyXdG13PEi0VzrTMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIGKP6/4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X6MsNh58Lo2OM4QJ3vMgXt/tZWWxHxolWgitu+JfOmLflg3newkWg7QNxh+O1afitUBZsCKkprcONISsaGJ5889E9TIEDrQ0hNtHjdAePWDOKVB8poi8q+kgSG4BD2YE8g7jtB1/Ifidk59Ktsbc5H+em91qSTY6fr1FX0IPGgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDUdrdb3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIGKP6/4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A17C4CEE3;
-	Tue, 17 Jun 2025 16:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDUdrdb3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F9AC4CEE3;
+	Tue, 17 Jun 2025 16:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178062;
-	bh=UE3OFZYJkNcyS38Y7uTEMAhB3Shab2mD4CClsCq+JiA=;
+	s=korg; t=1750178065;
+	bh=vAhx18E97u8es9oHibh+DRShnS4nTtZW27/f6+pkqvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tIGKP6/4aYM1omivQZnrpnKA9eF1J6Qa9mGtBWN4xOI5WGtllV2D0jOPSvF1fGBfb
-	 MulAlCNGqRdZrJNzIb0dhfwKABOS6Kx97lApbsE5gGrtdD9bZ2BLXaD08rwIWTsU1x
-	 VOtqe7Fd6dGmRWdIAKieO39vLAsooYTdE8/fFCvU=
+	b=EDUdrdb37eNxxgyLdpVaM6TjCoKAMV1dRC1qh3a9XUsOB4h+cPAEk6jptMjHgfZ31
+	 D7MHGJFocxGVZweRFF4a4xO8yl5vEX88ZwuDTpL7a2Pjql8KHhCIIP7RI0InQyvTaL
+	 Wtswz9Zq6qiphaBtPlMZxibGVDK7YHjZFM1CpSmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengyu Luo <mitltlatltl@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 403/780] arm64: dts: qcom: sm8650: add the missing l2 cache node
-Date: Tue, 17 Jun 2025 17:21:51 +0200
-Message-ID: <20250617152507.866493217@linuxfoundation.org>
+Subject: [PATCH 6.15 381/780] arm64: dts: qcom: sda660-ifc6560: Fix dt-validate warning
+Date: Tue, 17 Jun 2025 17:21:29 +0200
+Message-ID: <20250617152506.975037922@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -53,50 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengyu Luo <mitltlatltl@gmail.com>
+From: Alexey Minnekhanov <alexeymin@postmarketos.org>
 
-[ Upstream commit 4becd72352b6861de0c24074a8502ca85080fd63 ]
+[ Upstream commit f5110806b41eaa0eb0ab1bf2787876a580c6246c ]
 
-Only two little a520s share the same L2, every a720 has their own L2
-cache.
+If you remove clocks property, you should remove clock-names, too.
+Fixes warning with dtbs check:
 
-Fixes: d2350377997f ("arm64: dts: qcom: add initial SM8650 dtsi")
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250405105529.309711-1-mitltlatltl@gmail.com
+ 'clocks' is a dependency of 'clock-names'
+
+Fixes: 34279d6e3f32c ("arm64: dts: qcom: sdm660: Add initial Inforce IFC6560 board support")
+Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250504115120.1432282-4-alexeymin@postmarketos.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index bf6590e09a4c4..76acce6754986 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -159,13 +159,20 @@
- 			power-domain-names = "psci";
+diff --git a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+index d402f4c85b11d..ee696317f78cc 100644
+--- a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
++++ b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
+@@ -175,6 +175,7 @@
+ 	 * BAM DMA interconnects support is in place.
+ 	 */
+ 	/delete-property/ clocks;
++	/delete-property/ clock-names;
+ };
  
- 			enable-method = "psci";
--			next-level-cache = <&l2_200>;
-+			next-level-cache = <&l2_300>;
- 			capacity-dmips-mhz = <1792>;
- 			dynamic-power-coefficient = <238>;
+ &blsp1_uart2 {
+@@ -187,6 +188,7 @@
+ 	 * BAM DMA interconnects support is in place.
+ 	 */
+ 	/delete-property/ clocks;
++	/delete-property/ clock-names;
+ };
  
- 			qcom,freq-domain = <&cpufreq_hw 3>;
- 
- 			#cooling-cells = <2>;
-+
-+			l2_300: l2-cache {
-+				compatible = "cache";
-+				cache-level = <2>;
-+				cache-unified;
-+				next-level-cache = <&l3_0>;
-+			};
- 		};
- 
- 		cpu4: cpu@400 {
+ &blsp2_uart1 {
 -- 
 2.39.5
 
