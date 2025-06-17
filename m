@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365A220B807;
-	Tue, 17 Jun 2025 16:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B052EA161;
+	Tue, 17 Jun 2025 16:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177087; cv=none; b=fSM5VNhhV66Gt8/cNGAxt5AlypcI9AmZCGZGxKTd+MaM9XWdX7nm1a2kU6djgqUElYjQ1Seu0uT+1hQhxT7VXo8pAtr9k4lhu4IvzB+YA0v26LqNRa1cKCEnSUICY3t4krQJgdGEL7YkZl+LwWs5zODtstj01RlL87BuYcdp2aU=
+	t=1750177090; cv=none; b=m4tSrOr58F2fY9KqKH8yqzpkoha0g/06cVDx+Sa6zFSfwr+M0Z+MkSCnFPzMWN9pCfturpQKjF5NEaikq3u+hN2TiKmoI4VvorippmEnFXxliiTCnuIyohTIEYHUvzknWFtUB9GWDovBhl8xXQp7hp/8wx+UuKNUjPTmHsIWiGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177087; c=relaxed/simple;
-	bh=33tm+DYyXJJvtotchUNsw5+STpSUGpCRfaLqbmdWqsQ=;
+	s=arc-20240116; t=1750177090; c=relaxed/simple;
+	bh=k/DeqxEE9aETQbQgIig1HlNuQTm2CBQhP5MDIxM64N4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3KtKEVEWMwP/iFn6xNsCwIFJXxLcu7MjN4MDa7p+wx1uE1TfIatJAtqHOQlsdAPlutIdFNGeoWPssOhcbqxMbjJG0qkphEh+G6F2+M8mAsgX5qgxJ/1tifgbWgEy3OWpiUsIsSlu2aK+XBz6OYUuKoTC0vhz/6uE9X6uDr9SnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lob0M9U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ffdi34eRdYKgxRohTQPDKhXdou/E9bBhtx33Ts5WbXCWk6PVeRyAML+aD1LXb1PITGnP9CT2uCkLUIOmBOsDtkcu5LJhQKgmH0SCFJtBUGV8E2p7CXAcMku4fUpB8qzeFMWAf9PZvWzjQ1+vHdnkYVAohmjZqWILMzy5FaOf9iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mOwyF0F5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lob0M9U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B54C4CEE3;
-	Tue, 17 Jun 2025 16:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOwyF0F5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56BAC4CEE3;
+	Tue, 17 Jun 2025 16:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177087;
-	bh=33tm+DYyXJJvtotchUNsw5+STpSUGpCRfaLqbmdWqsQ=;
+	s=korg; t=1750177090;
+	bh=k/DeqxEE9aETQbQgIig1HlNuQTm2CBQhP5MDIxM64N4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2lob0M9U/i55OpqvU+vJyhJLHfzTcmFBcGvLzTf/o2q1cxd27SvOUGX8VdJn+xzNd
-	 F8oTZlQvg+Vd9Pf8IFSUMpSS3JBj9rJUCOy665VDh/vd8XacPclBHzFYJK/r+f3JmF
-	 au1AsGMzRueM+Vcd0vzTIzUNIHnOccjbWOx/HvBA=
+	b=mOwyF0F5Wd4yU4bXFi4hG356urkfDXcjgMV0NKtZGmmZNLVbLFGNC/xuCEm8KamQc
+	 mIR+TVmvQmNQChaX3EsPh1/f7OlbS/U19BDSjf9MV4Hj/JT4ztJy+lNBLCwHdYF7EI
+	 vELJriZu9+92pqniPO0oWPQE47UbfD0aloiR0rkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Wupeng Ma <mawupeng1@huawei.com>
-Subject: [PATCH 6.6 346/356] VMCI: fix race between vmci_host_setup_notify and vmci_ctx_unset_notify
-Date: Tue, 17 Jun 2025 17:27:41 +0200
-Message-ID: <20250617152352.065902957@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 237/780] netfilter: nft_set_pipapo: prevent overflow in lookup table allocation
+Date: Tue, 17 Jun 2025 17:19:05 +0200
+Message-ID: <20250617152501.110661635@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,99 +47,160 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wupeng Ma <mawupeng1@huawei.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 1bd6406fb5f36c2bb1e96e27d4c3e9f4d09edde4 upstream.
+[ Upstream commit 4c5c6aa9967dbe55bd017bb509885928d0f31206 ]
 
-During our test, it is found that a warning can be trigger in try_grab_folio
-as follow:
+When calculating the lookup table size, ensure the following
+multiplication does not overflow:
 
-  ------------[ cut here ]------------
-  WARNING: CPU: 0 PID: 1678 at mm/gup.c:147 try_grab_folio+0x106/0x130
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 1678 Comm: syz.3.31 Not tainted 6.15.0-rc5 #163 PREEMPT(undef)
-  RIP: 0010:try_grab_folio+0x106/0x130
-  Call Trace:
-   <TASK>
-   follow_huge_pmd+0x240/0x8e0
-   follow_pmd_mask.constprop.0.isra.0+0x40b/0x5c0
-   follow_pud_mask.constprop.0.isra.0+0x14a/0x170
-   follow_page_mask+0x1c2/0x1f0
-   __get_user_pages+0x176/0x950
-   __gup_longterm_locked+0x15b/0x1060
-   ? gup_fast+0x120/0x1f0
-   gup_fast_fallback+0x17e/0x230
-   get_user_pages_fast+0x5f/0x80
-   vmci_host_unlocked_ioctl+0x21c/0xf80
-  RIP: 0033:0x54d2cd
-  ---[ end trace 0000000000000000 ]---
+- desc->field_len[] maximum value is U8_MAX multiplied by
+  NFT_PIPAPO_GROUPS_PER_BYTE(f) that can be 2, worst case.
+- NFT_PIPAPO_BUCKETS(f->bb) is 2^8, worst case.
+- sizeof(unsigned long), from sizeof(*f->lt), lt in
+  struct nft_pipapo_field.
 
-Digging into the source, context->notify_page may init by get_user_pages_fast
-and can be seen in vmci_ctx_unset_notify which will try to put_page. However
-get_user_pages_fast is not finished here and lead to following
-try_grab_folio warning. The race condition is shown as follow:
+Then, use check_mul_overflow() to multiply by bucket size and then use
+check_add_overflow() to the alignment for avx2 (if needed). Finally, add
+lt_size_check_overflow() helper and use it to consolidate this.
 
-cpu0			cpu1
-vmci_host_do_set_notify
-vmci_host_setup_notify
-get_user_pages_fast(uva, 1, FOLL_WRITE, &context->notify_page);
-lockless_pages_from_mm
-gup_pgd_range
-gup_huge_pmd  // update &context->notify_page
-			vmci_host_do_set_notify
-			vmci_ctx_unset_notify
-			notify_page = context->notify_page;
-			if (notify_page)
-			put_page(notify_page);	// page is freed
-__gup_longterm_locked
-__get_user_pages
-follow_trans_huge_pmd
-try_grab_folio // warn here
+While at it, replace leftover allocation using the GFP_KERNEL to
+GFP_KERNEL_ACCOUNT for consistency, in pipapo_resize().
 
-To slove this, use local variable page to make notify_page can be seen
-after finish get_user_pages_fast.
-
-Fixes: a1d88436d53a ("VMCI: Fix two UVA mapping bugs")
-Cc: stable <stable@kernel.org>
-Closes: https://lore.kernel.org/all/e91da589-ad57-3969-d979-879bbd10dddd@huawei.com/
-Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
-Link: https://lore.kernel.org/r/20250510033040.901582-1-mawupeng1@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/vmw_vmci/vmci_host.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ net/netfilter/nft_set_pipapo.c | 58 ++++++++++++++++++++++++++--------
+ 1 file changed, 44 insertions(+), 14 deletions(-)
 
---- a/drivers/misc/vmw_vmci/vmci_host.c
-+++ b/drivers/misc/vmw_vmci/vmci_host.c
-@@ -227,6 +227,7 @@ static int drv_cp_harray_to_user(void __
- static int vmci_host_setup_notify(struct vmci_ctx *context,
- 				  unsigned long uva)
- {
-+	struct page *page;
- 	int retval;
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 7be342b495f5f..0529e4ef75207 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -683,6 +683,30 @@ static int pipapo_realloc_mt(struct nft_pipapo_field *f,
+ 	return 0;
+ }
  
- 	if (context->notify_page) {
-@@ -243,13 +244,11 @@ static int vmci_host_setup_notify(struct
- 	/*
- 	 * Lock physical page backing a given user VA.
- 	 */
--	retval = get_user_pages_fast(uva, 1, FOLL_WRITE, &context->notify_page);
--	if (retval != 1) {
--		context->notify_page = NULL;
-+	retval = get_user_pages_fast(uva, 1, FOLL_WRITE, &page);
-+	if (retval != 1)
- 		return VMCI_ERROR_GENERIC;
--	}
--	if (context->notify_page == NULL)
--		return VMCI_ERROR_UNAVAILABLE;
 +
-+	context->notify_page = page;
++/**
++ * lt_calculate_size() - Get storage size for lookup table with overflow check
++ * @groups:	Amount of bit groups
++ * @bb:		Number of bits grouped together in lookup table buckets
++ * @bsize:	Size of each bucket in lookup table, in longs
++ *
++ * Return: allocation size including alignment overhead, negative on overflow
++ */
++static ssize_t lt_calculate_size(unsigned int groups, unsigned int bb,
++				 unsigned int bsize)
++{
++	ssize_t ret = groups * NFT_PIPAPO_BUCKETS(bb) * sizeof(long);
++
++	if (check_mul_overflow(ret, bsize, &ret))
++		return -1;
++	if (check_add_overflow(ret, NFT_PIPAPO_ALIGN_HEADROOM, &ret))
++		return -1;
++	if (ret > INT_MAX)
++		return -1;
++
++	return ret;
++}
++
+ /**
+  * pipapo_resize() - Resize lookup or mapping table, or both
+  * @f:		Field containing lookup and mapping tables
+@@ -701,6 +725,7 @@ static int pipapo_resize(struct nft_pipapo_field *f,
+ 	long *new_lt = NULL, *new_p, *old_lt = f->lt, *old_p;
+ 	unsigned int new_bucket_size, copy;
+ 	int group, bucket, err;
++	ssize_t lt_size;
  
- 	/*
- 	 * Map the locked page and set up notify pointer.
+ 	if (rules >= NFT_PIPAPO_RULE0_MAX)
+ 		return -ENOSPC;
+@@ -719,10 +744,11 @@ static int pipapo_resize(struct nft_pipapo_field *f,
+ 	else
+ 		copy = new_bucket_size;
+ 
+-	new_lt = kvzalloc(f->groups * NFT_PIPAPO_BUCKETS(f->bb) *
+-			  new_bucket_size * sizeof(*new_lt) +
+-			  NFT_PIPAPO_ALIGN_HEADROOM,
+-			  GFP_KERNEL);
++	lt_size = lt_calculate_size(f->groups, f->bb, new_bucket_size);
++	if (lt_size < 0)
++		return -ENOMEM;
++
++	new_lt = kvzalloc(lt_size, GFP_KERNEL_ACCOUNT);
+ 	if (!new_lt)
+ 		return -ENOMEM;
+ 
+@@ -907,7 +933,7 @@ static void pipapo_lt_bits_adjust(struct nft_pipapo_field *f)
+ {
+ 	unsigned int groups, bb;
+ 	unsigned long *new_lt;
+-	size_t lt_size;
++	ssize_t lt_size;
+ 
+ 	lt_size = f->groups * NFT_PIPAPO_BUCKETS(f->bb) * f->bsize *
+ 		  sizeof(*f->lt);
+@@ -917,15 +943,17 @@ static void pipapo_lt_bits_adjust(struct nft_pipapo_field *f)
+ 		groups = f->groups * 2;
+ 		bb = NFT_PIPAPO_GROUP_BITS_LARGE_SET;
+ 
+-		lt_size = groups * NFT_PIPAPO_BUCKETS(bb) * f->bsize *
+-			  sizeof(*f->lt);
++		lt_size = lt_calculate_size(groups, bb, f->bsize);
++		if (lt_size < 0)
++			return;
+ 	} else if (f->bb == NFT_PIPAPO_GROUP_BITS_LARGE_SET &&
+ 		   lt_size < NFT_PIPAPO_LT_SIZE_LOW) {
+ 		groups = f->groups / 2;
+ 		bb = NFT_PIPAPO_GROUP_BITS_SMALL_SET;
+ 
+-		lt_size = groups * NFT_PIPAPO_BUCKETS(bb) * f->bsize *
+-			  sizeof(*f->lt);
++		lt_size = lt_calculate_size(groups, bb, f->bsize);
++		if (lt_size < 0)
++			return;
+ 
+ 		/* Don't increase group width if the resulting lookup table size
+ 		 * would exceed the upper size threshold for a "small" set.
+@@ -936,7 +964,7 @@ static void pipapo_lt_bits_adjust(struct nft_pipapo_field *f)
+ 		return;
+ 	}
+ 
+-	new_lt = kvzalloc(lt_size + NFT_PIPAPO_ALIGN_HEADROOM, GFP_KERNEL_ACCOUNT);
++	new_lt = kvzalloc(lt_size, GFP_KERNEL_ACCOUNT);
+ 	if (!new_lt)
+ 		return;
+ 
+@@ -1451,13 +1479,15 @@ static struct nft_pipapo_match *pipapo_clone(struct nft_pipapo_match *old)
+ 
+ 	for (i = 0; i < old->field_count; i++) {
+ 		unsigned long *new_lt;
++		ssize_t lt_size;
+ 
+ 		memcpy(dst, src, offsetof(struct nft_pipapo_field, lt));
+ 
+-		new_lt = kvzalloc(src->groups * NFT_PIPAPO_BUCKETS(src->bb) *
+-				  src->bsize * sizeof(*dst->lt) +
+-				  NFT_PIPAPO_ALIGN_HEADROOM,
+-				  GFP_KERNEL_ACCOUNT);
++		lt_size = lt_calculate_size(src->groups, src->bb, src->bsize);
++		if (lt_size < 0)
++			goto out_lt;
++
++		new_lt = kvzalloc(lt_size, GFP_KERNEL_ACCOUNT);
+ 		if (!new_lt)
+ 			goto out_lt;
+ 
+-- 
+2.39.5
+
 
 
