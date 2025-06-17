@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E44922DF80;
-	Tue, 17 Jun 2025 16:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42483236457;
+	Tue, 17 Jun 2025 16:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178507; cv=none; b=RNAU0YhHVC8eEuKEWbCd05jt4JEY42Wnn4oYLUg+EWVHSKbeCm7s4gFW6ESp+gUpljWxCfNixH45uFTHLtreiTWQoVoPwXt0kxEHcvkT5SceYQmEF6NcXlKqclb05b7HF7ZOZLi64inLrdKoocgD8SmkoLVB8SDYmG5+0yK4b4A=
+	t=1750178510; cv=none; b=DqF8MM4yewstKJqIAyANEVUm2hTkTee8Wc3SdPucBQ0Axz5xa67S60FXqneRwJAvuvQSlSiEKLL2u4U8S3fG89j/niJYeE9CwUdV1t/8KpRC2G6eaDQknYKxGwpqvOpltULIS/gAcjwEdkxk8Plmuyp0eHdQ4Eaei+Tg0J3Mwfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178507; c=relaxed/simple;
-	bh=yOyomGc2QEHR+Bcx77guj65/46dSSYDFXxv6fDL94Sw=;
+	s=arc-20240116; t=1750178510; c=relaxed/simple;
+	bh=8AJ6QxtIogRDap0XUqCspSRwLrlhqpPlyhoeVgWq9Dw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZyCg7xsGs+UDxC6G/XEbbcQjZy/fJnpfNQkD5TSMs1sIU2lqeBa0w55+pnFRrYzFhnNbGVBGkOxxvIb20hU9lwO//Vxc9HByYOEvXb8qcARtDl6GzkvvyAbZzxrLcyJ1tLKbNTgvFkLsPrHAW2ShVEw2NwCwQy04gNxYCsjec0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LN2NnnkE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iAvWCaD4NF2rfwPxPyJlXFwZhcKZ25OgMvMdOAh/MIWiq+f+DsIOlI7+naO7w/CHt5JAXGbXsmCZiG56rHMkeG/ZbCD1QHY/nlTWbB3wRQwl98FZlnwSCE05Bd2eO3Z0CYtaNromBfYL+WEVKWMlCsKMN4OYeb/9iqM8XB9Uto0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OHpDOGC0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LN2NnnkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D96C4CEE7;
-	Tue, 17 Jun 2025 16:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OHpDOGC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA16FC4CEE7;
+	Tue, 17 Jun 2025 16:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178507;
-	bh=yOyomGc2QEHR+Bcx77guj65/46dSSYDFXxv6fDL94Sw=;
+	s=korg; t=1750178510;
+	bh=8AJ6QxtIogRDap0XUqCspSRwLrlhqpPlyhoeVgWq9Dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LN2NnnkEmZmH3BZ3kRDcUb9IMTOEQtv2cIzl4D7L6mSretnSgQT31YYMgHRLnYZHy
-	 nFcCK9q2i2w0fIiyYlwFYWw3WtiOLeQhtjc47K4jASwnccCjA9Ub9Y8O6eHnOkfaoh
-	 7whMY/p2dC/mllQN4ogNDEV7tuRn51Q9uBxor1r4=
+	b=OHpDOGC0EaQuRvU30eFkB1Sh0H3Ftrh+/YGMYwalgnIeWFPxRYIuStWwS+UwbJ1bD
+	 Z3HwMWJVmK3pUmEgXadwGmTgOcBFn4VaqlXzz2E1ECjXkPadlvYsW4xPQW/17qrwQX
+	 u2pQovhp58BZNLq15r8WfXnBSQyI39D7wKL2ajiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.12 509/512] net: usb: aqc111: debug info before sanitation
-Date: Tue, 17 Jun 2025 17:27:55 +0200
-Message-ID: <20250617152440.239359738@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 470/780] s390/uv: Always return 0 from s390_wiggle_split_folio() if successful
+Date: Tue, 17 Jun 2025 17:22:58 +0200
+Message-ID: <20250617152510.629776263@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +47,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: David Hildenbrand <david@redhat.com>
 
-commit d3faab9b5a6a0477d69c38bd11c43aa5e936f929 upstream.
+[ Upstream commit bd428b8c79ed8e8658570e70c62c0092500e2eac ]
 
-If we sanitize error returns, the debug statements need
-to come before that so that we don't lose information.
+Let's consistently return 0 if the operation was successful, and just
+detect ourselves whether splitting is required -- folio_test_large() is
+a cheap operation.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Fixes: 405b0d610745 ("net: usb: aqc111: fix error handling of usbnet read calls")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Update the documentation.
+
+Should we simply always return -EAGAIN instead of 0, so we don't have
+to handle it in the caller? Not sure, staring at the documentation, this
+way looks a bit cleaner.
+
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/r/20250516123946.1648026-3-david@redhat.com
+Message-ID: <20250516123946.1648026-3-david@redhat.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Stable-dep-of: ab73b29efd36 ("s390/uv: Improve splitting of large folios that cannot be split while dirty")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/aqc111.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/s390/kernel/uv.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
---- a/drivers/net/usb/aqc111.c
-+++ b/drivers/net/usb/aqc111.c
-@@ -31,11 +31,11 @@ static int aqc111_read_cmd_nopm(struct u
- 				   USB_RECIP_DEVICE, value, index, data, size);
+diff --git a/arch/s390/kernel/uv.c b/arch/s390/kernel/uv.c
+index 2cc3b599c7fe3..f6ddb2b54032e 100644
+--- a/arch/s390/kernel/uv.c
++++ b/arch/s390/kernel/uv.c
+@@ -324,34 +324,36 @@ static int make_folio_secure(struct mm_struct *mm, struct folio *folio, struct u
+ }
  
- 	if (unlikely(ret < size)) {
--		ret = ret < 0 ? ret : -ENODATA;
--
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
+ /**
+- * s390_wiggle_split_folio() - try to drain extra references to a folio and optionally split.
++ * s390_wiggle_split_folio() - try to drain extra references to a folio and
++ *			       split the folio if it is large.
+  * @mm:    the mm containing the folio to work on
+  * @folio: the folio
+- * @split: whether to split a large folio
+  *
+  * Context: Must be called while holding an extra reference to the folio;
+  *          the mm lock should not be held.
+- * Return: 0 if the folio was split successfully;
+- *         -EAGAIN if the folio was not split successfully but another attempt
+- *                 can be made, or if @split was set to false;
+- *         -EINVAL in case of other errors. See split_folio().
++ * Return: 0 if the operation was successful;
++ *	   -EAGAIN if splitting the large folio was not successful,
++ *		   but another attempt can be made;
++ *	   -EINVAL in case of other folio splitting errors. See split_folio().
+  */
+-static int s390_wiggle_split_folio(struct mm_struct *mm, struct folio *folio, bool split)
++static int s390_wiggle_split_folio(struct mm_struct *mm, struct folio *folio)
+ {
+ 	int rc;
+ 
+ 	lockdep_assert_not_held(&mm->mmap_lock);
+ 	folio_wait_writeback(folio);
+ 	lru_add_drain_all();
+-	if (split) {
 +
-+		ret = ret < 0 ? ret : -ENODATA;
++	if (folio_test_large(folio)) {
+ 		folio_lock(folio);
+ 		rc = split_folio(folio);
+ 		folio_unlock(folio);
+ 
+ 		if (rc != -EBUSY)
+ 			return rc;
++		return -EAGAIN;
  	}
+-	return -EAGAIN;
++	return 0;
+ }
  
- 	return ret;
-@@ -50,11 +50,11 @@ static int aqc111_read_cmd(struct usbnet
- 			      USB_RECIP_DEVICE, value, index, data, size);
+ int make_hva_secure(struct mm_struct *mm, unsigned long hva, struct uv_cb_header *uvcb)
+@@ -394,7 +396,7 @@ int make_hva_secure(struct mm_struct *mm, unsigned long hva, struct uv_cb_header
+ 	mmap_read_unlock(mm);
  
- 	if (unlikely(ret < size)) {
--		ret = ret < 0 ? ret : -ENODATA;
--
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
-+
-+		ret = ret < 0 ? ret : -ENODATA;
+ 	if (rc == -E2BIG || rc == -EBUSY) {
+-		rc = s390_wiggle_split_folio(mm, folio, rc == -E2BIG);
++		rc = s390_wiggle_split_folio(mm, folio);
+ 		if (!rc)
+ 			rc = -EAGAIN;
  	}
- 
- 	return ret;
+-- 
+2.39.5
+
 
 
