@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C422E9753;
-	Tue, 17 Jun 2025 15:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D4C23B633;
+	Tue, 17 Jun 2025 15:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174420; cv=none; b=ASM/U/W43bSj3TtiAS4PMJij8vcVH0A8naInFNckxUarWP99UMBRNitEYP1KWwJ95zCiEWov5Um5QKb7j+L+BwwSvNIj9moASuIWX9bmYTNBB1ZnSJUBQav58teluMYAAYFz1/8uQ8DdnXZZ0vWCtc3rgynMPpb+kX6nlSlqeWk=
+	t=1750174423; cv=none; b=AlLMAAWm5SXPjt1lhkHU/GLl6vtsYdDJ1K/1+BtCYv/Z07SHXzVHE8hM5bi8BhmwmbQf0NnEwPDn2upj2DGKBMc8Xaa+VsRBzs0JoFJfO2TlRhGAeOeAJCTLefyaJmY3qy8zbkkCUynIG/FkmTF0GPM+XfIPMwMipBQ2NR/7xOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174420; c=relaxed/simple;
-	bh=LJiXHQY43mhKMl0Q57+S5j7cG4nVscbotSL2IjepqRg=;
+	s=arc-20240116; t=1750174423; c=relaxed/simple;
+	bh=gUtbaNbhTv2u8upUwdOot7nxejNcPZcT/EUlOixRb+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=II/NWdR9Ff4Hlq7AFO0len87ynym2HFEOWfNm5sp7BE/UDlK3dbNKpTHBs+BTzfr9BICK8gYmMV3rPv4CChOk+sJPfa7LDaUY1Cca9omxkRi+h4TIqn/6qOpvDN0mdzq6oIDrt/K/01bXeITupQyJAlj3aXUL8SLx6rwAOEJF9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQnOLIpC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nk0bGk7s8b/yF6H+6fwYDZDYN80iu8FHOP5oQPNG+jU0IcVKBcbHiFUO5ye/4W5z/LPpMH2Fdlqou2h2XrfZvvRjBi3unR237+j5Hf7dJeRGC0AcdW0WEWeVUfPy212ZwYQ/FXtqaRUsq9kQWD3+LwU2r9tsuUrTXYX1yN7R6D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSOZYRlH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQnOLIpC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3159CC4CEE3;
-	Tue, 17 Jun 2025 15:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSOZYRlH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4215AC4CEE3;
+	Tue, 17 Jun 2025 15:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174420;
-	bh=LJiXHQY43mhKMl0Q57+S5j7cG4nVscbotSL2IjepqRg=;
+	s=korg; t=1750174423;
+	bh=gUtbaNbhTv2u8upUwdOot7nxejNcPZcT/EUlOixRb+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RQnOLIpCiTLZGj3GrJ7HeuVA18pCogkyxnEJVuQ1/v95u0M3zbom17mOP8I/u88jZ
-	 k+MCQQnjHlS9X012odcQrDuv4XCaUaiTs1vqqhr797ptf/oHvcFz3NJIgbvr+2zOoP
-	 4Wy6EEIXy6g7k0quB3nYkwcgNtu7EWMbO6aiBEEQ=
+	b=dSOZYRlHxFpz8f6e9n87PKpAxRDmLe3YcLyZHgT8jpRqBrenMpUipIAeoCQv7PaAE
+	 kymtGdldfVPbK0XGJMBgtK8nGpbHPmBr/mysViugQseCdxRoudon8yqQO57QT99pNI
+	 QgdiUkyQsZLJI8/tL9nFHnFXJSw2cg+I5yWQHbME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Gavin Shan <gshan@redhat.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	x86-cpuid@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 066/356] firmware: psci: Fix refcount leak in psci_dt_init
-Date: Tue, 17 Jun 2025 17:23:01 +0200
-Message-ID: <20250617152340.886166982@linuxfoundation.org>
+Subject: [PATCH 6.12 017/512] x86/cpu: Sanitize CPUID(0x80000000) output
+Date: Tue, 17 Jun 2025 17:19:43 +0200
+Message-ID: <20250617152420.222948429@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,44 +51,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-[ Upstream commit 7ff37d29fd5c27617b9767e1b8946d115cf93a1e ]
+[ Upstream commit cc663ba3fe383a628a812f893cc98aafff39ab04 ]
 
-Fix a reference counter leak in psci_dt_init() where of_node_put(np) was
-missing after of_find_matching_node_and_match() when np is unavailable.
+CPUID(0x80000000).EAX returns the max extended CPUID leaf available.  On
+x86-32 machines without an extended CPUID range, a CPUID(0x80000000)
+query will just repeat the output of the last valid standard CPUID leaf
+on the CPU; i.e., a garbage values.  Current tip:x86/cpu code protects against
+this by doing:
 
-Fixes: d09a0011ec0d ("drivers: psci: Allow PSCI node to be disabled")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20250318151712.28763-1-linmq006@gmail.com
-Signed-off-by: Will Deacon <will@kernel.org>
+	eax = cpuid_eax(0x80000000);
+	c->extended_cpuid_level = eax;
+
+	if ((eax & 0xffff0000) == 0x80000000) {
+		// CPU has an extended CPUID range. Check for 0x80000001
+		if (eax >= 0x80000001) {
+			cpuid(0x80000001, ...);
+		}
+	}
+
+This is correct so far.  Afterwards though, the same possibly broken EAX
+value is used to check the availability of other extended CPUID leaves:
+
+	if (c->extended_cpuid_level >= 0x80000007)
+		...
+	if (c->extended_cpuid_level >= 0x80000008)
+		...
+	if (c->extended_cpuid_level >= 0x8000000a)
+		...
+	if (c->extended_cpuid_level >= 0x8000001f)
+		...
+
+which is invalid.  Fix this by immediately setting the CPU's max extended
+CPUID leaf to zero if CPUID(0x80000000).EAX doesn't indicate a valid
+CPUID extended range.
+
+While at it, add a comment, similar to kernel/head_32.S, clarifying the
+CPUID(0x80000000) sanity check.
+
+References: 8a50e5135af0 ("x86-32: Use symbolic constants, safer CPUID when enabling EFER.NX")
+Fixes: 3da99c977637 ("x86: make (early)_identify_cpu more the same between 32bit and 64 bit")
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: x86-cpuid@lists.linux.dev
+Link: https://lore.kernel.org/r/20250506050437.10264-3-darwi@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/psci/psci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/common.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-index 2328ca58bba61..d6701d81cf680 100644
---- a/drivers/firmware/psci/psci.c
-+++ b/drivers/firmware/psci/psci.c
-@@ -759,8 +759,10 @@ int __init psci_dt_init(void)
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index 39e9ec3dea985..b487754455236 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1007,17 +1007,18 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
+ 		c->x86_capability[CPUID_D_1_EAX] = eax;
+ 	}
  
- 	np = of_find_matching_node_and_match(NULL, psci_of_match, &matched_np);
+-	/* AMD-defined flags: level 0x80000001 */
++	/*
++	 * Check if extended CPUID leaves are implemented: Max extended
++	 * CPUID leaf must be in the 0x80000001-0x8000ffff range.
++	 */
+ 	eax = cpuid_eax(0x80000000);
+-	c->extended_cpuid_level = eax;
++	c->extended_cpuid_level = ((eax & 0xffff0000) == 0x80000000) ? eax : 0;
  
--	if (!np || !of_device_is_available(np))
-+	if (!np || !of_device_is_available(np)) {
-+		of_node_put(np);
- 		return -ENODEV;
-+	}
+-	if ((eax & 0xffff0000) == 0x80000000) {
+-		if (eax >= 0x80000001) {
+-			cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
++	if (c->extended_cpuid_level >= 0x80000001) {
++		cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
  
- 	init_fn = (psci_initcall_t)matched_np->data;
- 	ret = init_fn(np);
+-			c->x86_capability[CPUID_8000_0001_ECX] = ecx;
+-			c->x86_capability[CPUID_8000_0001_EDX] = edx;
+-		}
++		c->x86_capability[CPUID_8000_0001_ECX] = ecx;
++		c->x86_capability[CPUID_8000_0001_EDX] = edx;
+ 	}
+ 
+ 	if (c->extended_cpuid_level >= 0x80000007) {
 -- 
 2.39.5
 
