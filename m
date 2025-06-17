@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B121A2632;
-	Tue, 17 Jun 2025 16:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945DD2E8DFC;
+	Tue, 17 Jun 2025 16:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176985; cv=none; b=OAowvr/gid0awPniCpL9wCOur+BcYtJ/c8dYLmw6nEr2hO2hfDgofdcHfL400y5SQiNf1Jhi/DkUXOB74LquqKsVte3iFPktCiFXF8hpnng26tqpLj0R7kCLtXIRjjtC/JHGdT7Vxi0txfP2l9Pc2NWHzyFfzY7BPcZ276u2eDM=
+	t=1750176987; cv=none; b=hxs/gS5ETFlifzm1+qrM2YFdE9orRoYkNwy/JxyU+p+6PrXy6FZXhR6NQYY+sKMS4udk51q4NU4UmPyiqNFjJyXOew1adpYVIamK4S1ws36CvPgq39xKyje05G5ESXQ3Z2As/GepF9eVjL8xOKuQENL5SbUosWqh7ZGX3Lhbzy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176985; c=relaxed/simple;
-	bh=8+GVrzE0UzNKF4NIKaoGCkkgQRlsL1FzKu6j/Abhj/A=;
+	s=arc-20240116; t=1750176987; c=relaxed/simple;
+	bh=syJAWsSup3LWXZh7L3Avgbt7aqFoBAeaxMOFeZy4uQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n8kvI9Qz2gjnTDkFGwNdlZDM7bnBimLZVDSBwwzeI+D7Jsnb8gF6CS2k7TwWTF/orEv9tyuZCTTn+0OtewyLRfj9SOiylp70MlPLUhM+ZhhshCkpfsMWUjNhBJ52Yny6WFdSc7qnB9DVy54fBKU6vvmYVH5UQuNlVGQTCxUR2b0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHndvuvU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LUlKP1kW6rAfViHvlm+lN8kfKr+VEjYKtHZxpeimDaPPA+BSLTiVv5z89x9b1OjpNZelLkxMWFz2gmsFAbSgX0JrOgEAcJM5Jg3g/fULepzLjj3+hWrcs35Rmw87dp/b+UFOGXxvOigziFOwYO5J8+CNuS6gDUrZ+e+uPsu8JAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZ9/1T5X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHndvuvU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B09C4CEE3;
-	Tue, 17 Jun 2025 16:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZ9/1T5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1857FC4CEE7;
+	Tue, 17 Jun 2025 16:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176984;
-	bh=8+GVrzE0UzNKF4NIKaoGCkkgQRlsL1FzKu6j/Abhj/A=;
+	s=korg; t=1750176987;
+	bh=syJAWsSup3LWXZh7L3Avgbt7aqFoBAeaxMOFeZy4uQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHndvuvUInN6rzPw/O/iUWzzv1W+0RGnNTProHqrWiTGpvTZWw5zJJMFvpdC+N4TD
-	 mT/df2lgSadwemKZETVgIQFASUglmdVgh1AtNI4TCso23KSwVmMRHyG+RPgL0Ptqy8
-	 W1ldbSBoOlz+2EQS4q0xrdSZo2TYfne7q+EXzpDQ=
+	b=iZ9/1T5Xo0MxE7mfoTCKBZeX5opxKSyD6Dw2hjwOIgAD0A0MZpgUAxxfnRd6IUFYH
+	 MRf+I5cMiFNAjC0pPfyWi86wp3fszt2HXhzHorGl8VIOvdODHj63biRflYaAJlcnp0
+	 0rzAq7Sy0RSz5n+eq/+LxvrMhBSKzHv3P+x3KvUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Alex Lazar <alazar@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 326/356] net/mlx5e: Fix leak of Geneve TLV option object
-Date: Tue, 17 Jun 2025 17:27:21 +0200
-Message-ID: <20250617152351.271505451@linuxfoundation.org>
+Subject: [PATCH 6.15 246/780] clk: qcom: gpucc-sm6350: Add *_wait_val values for GDSCs
+Date: Tue, 17 Jun 2025 17:19:14 +0200
+Message-ID: <20250617152501.472159042@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,81 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit aa9c44b842096c553871bc68a8cebc7861fa192b ]
+[ Upstream commit d988b0b866c2aeb23aa74022b5bbd463165a7a33 ]
 
-Previously, a unique tunnel id was added for the matching on TC
-non-zero chains, to support inner header rewrite with goto action.
-Later, it was used to support VF tunnel offload for vxlan, then for
-Geneve and GRE. To support VF tunnel, a temporary mlx5_flow_spec is
-used to parse tunnel options. For Geneve, if there is TLV option, a
-object is created, or refcnt is added if already exists. But the
-temporary mlx5_flow_spec is directly freed after parsing, which causes
-the leak because no information regarding the object is saved in
-flow's mlx5_flow_spec, which is used to free the object when deleting
-the flow.
+Compared to the msm-4.19 driver the mainline GDSC driver always sets the
+bits for en_rest, en_few & clk_dis, and if those values are not set
+per-GDSC in the respective driver then the default value from the GDSC
+driver is used. The downstream driver only conditionally sets
+clk_dis_wait_val if qcom,clk-dis-wait-val is given in devicetree.
 
-To fix the leak, call mlx5_geneve_tlv_option_del() before free the
-temporary spec if it has TLV object.
+Correct this situation by explicitly setting those values. For all GDSCs
+the reset value of those bits are used, with the exception of
+gpu_cx_gdsc which has an explicit value (qcom,clk-dis-wait-val = <8>).
 
-Fixes: 521933cdc4aa ("net/mlx5e: Support Geneve and GRE with VF tunnel offload")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Alex Lazar <alazar@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250610151514.1094735-9-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 013804a727a0 ("clk: qcom: Add GPU clock controller driver for SM6350")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
+Link: https://lore.kernel.org/r/20250425-sm6350-gdsc-val-v1-4-1f252d9c5e4e@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/clk/qcom/gpucc-sm6350.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-index dc9b157a44993..2be9c69daad5f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -1915,9 +1915,8 @@ mlx5e_tc_add_fdb_flow(struct mlx5e_priv *priv,
- 	return err;
- }
- 
--static bool mlx5_flow_has_geneve_opt(struct mlx5e_tc_flow *flow)
-+static bool mlx5_flow_has_geneve_opt(struct mlx5_flow_spec *spec)
- {
--	struct mlx5_flow_spec *spec = &flow->attr->parse_attr->spec;
- 	void *headers_v = MLX5_ADDR_OF(fte_match_param,
- 				       spec->match_value,
- 				       misc_parameters_3);
-@@ -1956,7 +1955,7 @@ static void mlx5e_tc_del_fdb_flow(struct mlx5e_priv *priv,
- 	}
- 	complete_all(&flow->del_hw_done);
- 
--	if (mlx5_flow_has_geneve_opt(flow))
-+	if (mlx5_flow_has_geneve_opt(&attr->parse_attr->spec))
- 		mlx5_geneve_tlv_option_del(priv->mdev->geneve);
- 
- 	if (flow->decap_route)
-@@ -2456,12 +2455,13 @@ static int parse_tunnel_attr(struct mlx5e_priv *priv,
- 
- 		err = mlx5e_tc_tun_parse(filter_dev, priv, tmp_spec, f, match_level);
- 		if (err) {
--			kvfree(tmp_spec);
- 			NL_SET_ERR_MSG_MOD(extack, "Failed to parse tunnel attributes");
- 			netdev_warn(priv->netdev, "Failed to parse tunnel attributes");
--			return err;
-+		} else {
-+			err = mlx5e_tc_set_attr_rx_tun(flow, tmp_spec);
- 		}
--		err = mlx5e_tc_set_attr_rx_tun(flow, tmp_spec);
-+		if (mlx5_flow_has_geneve_opt(tmp_spec))
-+			mlx5_geneve_tlv_option_del(priv->mdev->geneve);
- 		kvfree(tmp_spec);
- 		if (err)
- 			return err;
+diff --git a/drivers/clk/qcom/gpucc-sm6350.c b/drivers/clk/qcom/gpucc-sm6350.c
+index 35ed0500bc593..ee89c42413f88 100644
+--- a/drivers/clk/qcom/gpucc-sm6350.c
++++ b/drivers/clk/qcom/gpucc-sm6350.c
+@@ -413,6 +413,9 @@ static struct clk_branch gpu_cc_gx_vsense_clk = {
+ static struct gdsc gpu_cx_gdsc = {
+ 	.gdscr = 0x106c,
+ 	.gds_hw_ctrl = 0x1540,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0x8,
+ 	.pd = {
+ 		.name = "gpu_cx_gdsc",
+ 	},
+@@ -423,6 +426,9 @@ static struct gdsc gpu_cx_gdsc = {
+ static struct gdsc gpu_gx_gdsc = {
+ 	.gdscr = 0x100c,
+ 	.clamp_io_ctrl = 0x1508,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0x2,
+ 	.pd = {
+ 		.name = "gpu_gx_gdsc",
+ 		.power_on = gdsc_gx_do_nothing_enable,
 -- 
 2.39.5
 
