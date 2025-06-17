@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C21D2FA622;
-	Tue, 17 Jun 2025 16:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98B12FA639;
+	Tue, 17 Jun 2025 16:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179316; cv=none; b=Bjd37Vzd4RuOCOH8+dBd8PtINQ6nUhG+k9zMulYt6Vs/eXDyovznYtcWo22DwIKxUUbW8n5Fte3BZiPd5ogmBxcAkQelAXjeSk+w9stZYIf1pwY+MgudqePpd3lpvciouCx1FXZWvVgz3fGTtyC2B/BlhyKQvbqhnB4GSrOK87A=
+	t=1750179320; cv=none; b=KE2S1q/auY3ykvFmqIZ3ZK1pyrWr/dKQRDx+4uwU7XGTtFG1Tyv3LYAYISiyAfxmDgKy5ca5/9YOH8MP9IIGmvLnZFi/UNcjtRJ2xU4MlLFfBEKd/ULzUP/KUzS733FfGm3pbCSX0havfI8+Rc8FbM7hlhufDtnA6eTlA36i2pU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179316; c=relaxed/simple;
-	bh=2hxKcACyslWzcxuMa1p/HTcPRBnsUONxB65zT7RhJ04=;
+	s=arc-20240116; t=1750179320; c=relaxed/simple;
+	bh=iEk6d0R9UI2eOj9MwuZa2KASe35i04XCNd9rZtKuCpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pF7RiLS/6phMEBvgBoA5kj8qU9idxnuS3pBcJ8e0qXNM8P+/3yUjuYMMDVPP2KLj2L4SN4BRvHxqvbQ8fgC3sKWY7ygOB7sE4VxK4gSEW3YoUnVy63R8EfAfWCtMvyRgaokjUiDj57JsqGffhChHAShtjMErS+5LR6zTIl91IHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cntQ7lBG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=suGc4fZvYuiAK000TQhai5zjGgEET6FEs90LIOT31g6yjzg+lMFEV0KOaPXzBkN4Dt2HDtlTNKaP8HA96mMM290IbojRqMi1dv4SMzdCTDcO6F2AaIE/y9qqR8GzVFsOnje83yf4GPfUPlrgtupFQhkyydYbj4PnFzMCphnBG4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UP91C8wE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cntQ7lBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E21C4CEE3;
-	Tue, 17 Jun 2025 16:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UP91C8wE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D730FC4CEE3;
+	Tue, 17 Jun 2025 16:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179316;
-	bh=2hxKcACyslWzcxuMa1p/HTcPRBnsUONxB65zT7RhJ04=;
+	s=korg; t=1750179319;
+	bh=iEk6d0R9UI2eOj9MwuZa2KASe35i04XCNd9rZtKuCpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cntQ7lBG0nTAVK53cddsJkyUGz8e1JbjZFDJ9Q2k/7efEO4SzIb09beqRJIYriKdo
-	 XLf7wR9LtelxjQAxee8yI+/EKSwIT07bTm68ijdBtTlLf8+YMrlaHsgIVizE5By8SV
-	 cKEjwqaRWGYVl1wYzriKr4o/Rw7TeYbPCPeNdpJQ=
+	b=UP91C8wEwzuEKjqCTlClOQ+pMkqLxmPkdOhhlHSMq5cOtUBzhGlrdluR9XU4gMcvR
+	 2+UxW2ldjdG+/WrUusaKDdKHAyqyT0JdYzj9cfp4Xkn6t4PXBI0YpTECYDvUgKfjJN
+	 lKx73XKh13FJWrTM/NcqK1LgfrVBoTor0ohbrGeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andreu Montiel <Andreu.Montiel@technica-engineering.de>,
+	Carlos Fernandez <carlos.fernandez@technica-engineering.de>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 669/780] net: dsa: b53: fix untagged traffic sent via cpu tagged with VID 0
-Date: Tue, 17 Jun 2025 17:26:17 +0200
-Message-ID: <20250617152518.710359273@linuxfoundation.org>
+Subject: [PATCH 6.15 702/780] macsec: MACsec SCI assignment for ES = 0
+Date: Tue, 17 Jun 2025 17:26:50 +0200
+Message-ID: <20250617152520.085553391@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -53,67 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Carlos Fernandez <carlos.fernandez@technica-engineering.de>
 
-[ Upstream commit 692eb9f8a5b71d852e873375d20cf5da7a046ea6 ]
+[ Upstream commit d9816ec74e6d6aa29219d010bba3f780ba1d9d75 ]
 
-When Linux sends out untagged traffic from a port, it will enter the CPU
-port without any VLAN tag, even if the port is a member of a vlan
-filtering bridge with a PVID egress untagged VLAN.
+According to 802.1AE standard, when ES and SC flags in TCI are zero,
+used SCI should be the current active SC_RX. Current code uses the
+header MAC address. Without this patch, when ES flag is 0 (using a
+bridge or switch), header MAC will not fit the SCI and MACSec frames
+will be discarted.
 
-This makes the CPU port's PVID take effect, and the PVID's VLAN
-table entry controls if the packet will be tagged on egress.
+In order to test this issue, MACsec link should be stablished between
+two interfaces, setting SC and ES flags to zero and a port identifier
+different than one. For example, using ip macsec tools:
 
-Since commit 45e9d59d3950 ("net: dsa: b53: do not allow to configure
-VLAN 0") we remove bridged ports from VLAN 0 when joining or leaving a
-VLAN aware bridge. But we also clear the untagged bit, causing untagged
-traffic from the controller to become tagged with VID 0 (and priority
-0).
+ip link add link $ETH0 macsec0 type macsec port 11 send_sci off
+end_station off
+ip macsec add macsec0 tx sa 0 pn 2 on key 01 $ETH1_KEY
+ip macsec add macsec0 rx port 11 address $ETH1_MAC
+ip macsec add macsec0 rx port 11 address $ETH1_MAC sa 0 pn 2 on key 02
+ip link set dev macsec0 up
 
-Fix this by not touching the untagged map of VLAN 0. Additionally,
-always keep the CPU port as a member, as the untag map is only effective
-as long as there is at least one member, and we would remove it when
-bridging all ports and leaving no standalone ports.
+ip link add link $ETH1 macsec1 type macsec port 11 send_sci off
+end_station off
+ip macsec add macsec1 tx sa 0 pn 2 on key 01 $ETH0_KEY
+ip macsec add macsec1 rx port 11 address $ETH0_MAC
+ip macsec add macsec1 rx port 11 address $ETH0_MAC sa 0 pn 2 on key 02
+ip link set dev macsec1 up
 
-Since Linux (and the switch) treats VLAN 0 tagged traffic like untagged,
-the actual impact of this is rather low, but this also prevented earlier
-detection of the issue.
-
-Fixes: 45e9d59d3950 ("net: dsa: b53: do not allow to configure VLAN 0")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20250602194914.1011890-1-jonas.gorski@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Co-developed-by: Andreu Montiel <Andreu.Montiel@technica-engineering.de>
+Signed-off-by: Andreu Montiel <Andreu.Montiel@technica-engineering.de>
+Signed-off-by: Carlos Fernandez <carlos.fernandez@technica-engineering.de>
+Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/macsec.c | 40 ++++++++++++++++++++++++++++++++++------
+ 1 file changed, 34 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 862bdccb74397..dc2f4adac9bc9 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -2034,9 +2034,6 @@ int b53_br_join(struct dsa_switch *ds, int port, struct dsa_bridge bridge,
- 
- 		b53_get_vlan_entry(dev, pvid, vl);
- 		vl->members &= ~BIT(port);
--		if (vl->members == BIT(cpu_port))
--			vl->members &= ~BIT(cpu_port);
--		vl->untag = vl->members;
- 		b53_set_vlan_entry(dev, pvid, vl);
- 	}
- 
-@@ -2115,8 +2112,7 @@ void b53_br_leave(struct dsa_switch *ds, int port, struct dsa_bridge bridge)
- 		}
- 
- 		b53_get_vlan_entry(dev, pvid, vl);
--		vl->members |= BIT(port) | BIT(cpu_port);
--		vl->untag |= BIT(port) | BIT(cpu_port);
-+		vl->members |= BIT(port);
- 		b53_set_vlan_entry(dev, pvid, vl);
- 	}
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 3d315e30ee472..7edbe76b5455a 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -247,15 +247,39 @@ static sci_t make_sci(const u8 *addr, __be16 port)
+ 	return sci;
  }
+ 
+-static sci_t macsec_frame_sci(struct macsec_eth_header *hdr, bool sci_present)
++static sci_t macsec_active_sci(struct macsec_secy *secy)
+ {
+-	sci_t sci;
++	struct macsec_rx_sc *rx_sc = rcu_dereference_bh(secy->rx_sc);
++
++	/* Case single RX SC */
++	if (rx_sc && !rcu_dereference_bh(rx_sc->next))
++		return (rx_sc->active) ? rx_sc->sci : 0;
++	/* Case no RX SC or multiple */
++	else
++		return 0;
++}
++
++static sci_t macsec_frame_sci(struct macsec_eth_header *hdr, bool sci_present,
++			      struct macsec_rxh_data *rxd)
++{
++	struct macsec_dev *macsec;
++	sci_t sci = 0;
+ 
+-	if (sci_present)
++	/* SC = 1 */
++	if (sci_present) {
+ 		memcpy(&sci, hdr->secure_channel_id,
+ 		       sizeof(hdr->secure_channel_id));
+-	else
++	/* SC = 0; ES = 0 */
++	} else if ((!(hdr->tci_an & (MACSEC_TCI_ES | MACSEC_TCI_SC))) &&
++		   (list_is_singular(&rxd->secys))) {
++		/* Only one SECY should exist on this scenario */
++		macsec = list_first_or_null_rcu(&rxd->secys, struct macsec_dev,
++						secys);
++		if (macsec)
++			return macsec_active_sci(&macsec->secy);
++	} else {
+ 		sci = make_sci(hdr->eth.h_source, MACSEC_PORT_ES);
++	}
+ 
+ 	return sci;
+ }
+@@ -1109,7 +1133,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 	struct macsec_rxh_data *rxd;
+ 	struct macsec_dev *macsec;
+ 	unsigned int len;
+-	sci_t sci;
++	sci_t sci = 0;
+ 	u32 hdr_pn;
+ 	bool cbit;
+ 	struct pcpu_rx_sc_stats *rxsc_stats;
+@@ -1156,11 +1180,14 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 
+ 	macsec_skb_cb(skb)->has_sci = !!(hdr->tci_an & MACSEC_TCI_SC);
+ 	macsec_skb_cb(skb)->assoc_num = hdr->tci_an & MACSEC_AN_MASK;
+-	sci = macsec_frame_sci(hdr, macsec_skb_cb(skb)->has_sci);
+ 
+ 	rcu_read_lock();
+ 	rxd = macsec_data_rcu(skb->dev);
+ 
++	sci = macsec_frame_sci(hdr, macsec_skb_cb(skb)->has_sci, rxd);
++	if (!sci)
++		goto drop_nosc;
++
+ 	list_for_each_entry_rcu(macsec, &rxd->secys, secys) {
+ 		struct macsec_rx_sc *sc = find_rx_sc(&macsec->secy, sci);
+ 
+@@ -1283,6 +1310,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 	macsec_rxsa_put(rx_sa);
+ drop_nosa:
+ 	macsec_rxsc_put(rx_sc);
++drop_nosc:
+ 	rcu_read_unlock();
+ drop_direct:
+ 	kfree_skb(skb);
 -- 
 2.39.5
 
