@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03612FA627;
-	Tue, 17 Jun 2025 16:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEEA2FA622;
+	Tue, 17 Jun 2025 16:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178721; cv=none; b=c4EDOtNHuZeDWe5O/tRrc0FfnsYrq0egveSAB9bbWPCTj3inljwRLbjBgC0D7ApZly26zjRpxSN7a85K6lU5WKCf/xKTuar1d5/trTSUVh6LYH7xrXkudyS41dj/LmJAVh71gC5D5YyuXKXmZdiQhlOYvYpVCOiSf/YI3o2k0Us=
+	t=1750178725; cv=none; b=bsSzID//qJPjeLPhr2wpt8R6ml5p1jA1UYdsaoV0GAG9PNO10IdhxvxUjnjnRDAowO3f0s5hTEJ8zpw2JXc6O7Aoqy+jC1zJQQyKyolWzzZOmje3yZADxT5QJihmRpFxH2ahM4r1+w11cxfq/PZPfrmLiOJeQUc//V4DXQ8C6V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178721; c=relaxed/simple;
-	bh=CyJIVFiPLIy4Y7xRP1suTtIccAzPSUjU/tuIZl3tMDg=;
+	s=arc-20240116; t=1750178725; c=relaxed/simple;
+	bh=O+Z3YJfqkFZBKG2bPBRFf/g3NcQPC+vp8pu5T2d1vFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bl7rSkGzNLrcFZZ3Gdp8UbjQI0cya6oMEEuzW8TfKTzmSVoYWIjVf7+s+aLQi8Gzg09xHIDaEHOn9my9dkvR6Y9bcj+yYJT6biT+NZNkWY9k3j+R8fzHyKs/v4I5CZU3L6rohd3qqW3ouaGMc0A/rtHRVcYVT7nvR09UJer3F84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0T4Wy0ts; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g5Mkfs0dA8UN/aoktqTUl/rxHvviQ/HyYPsd1zZzuPsxRLaeZw7mLukxLnJi4fdLdAIqgHgDv9d3o17qIPSlfiFo3BbOSbf8R8bgCnJrL63ji8gxaOYeNoAm+r5+W46naWM4ZahJtOxp0xczQuDpW7xZf7KRzYzcTz6ELlQrorE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPuuyoFR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0T4Wy0ts"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AFCC4CEE7;
-	Tue, 17 Jun 2025 16:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPuuyoFR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84250C4CEE3;
+	Tue, 17 Jun 2025 16:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178721;
-	bh=CyJIVFiPLIy4Y7xRP1suTtIccAzPSUjU/tuIZl3tMDg=;
+	s=korg; t=1750178725;
+	bh=O+Z3YJfqkFZBKG2bPBRFf/g3NcQPC+vp8pu5T2d1vFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0T4Wy0tsQXPYdQMDkX/Eo3U42JflvLTgdCVGbIiC0FQm2S7uSBcYI9xMDjIIJVjJH
-	 QqWS7/vmNSzU2cNGbu3uUl+OGZsYp2Ule4Do8RMn/Y2GWulXjYHAicTHxjfFzP8z00
-	 OjPM5JG6bvaolfz7gEoPnVrUSJ4G3r/vMVgmcx3k=
+	b=fPuuyoFRz0C8aQxx7VGH6w/Gg3is1A7GmoN13MgVQLwA2jkiDtBvULTeaL5UebyQF
+	 I+euEXtrWs9dRvS1xEXydidnWmnn20Zt5IntYM1to2a5AgLyiFaEVovNvbvSQHvFEL
+	 b6L7UmdWSxJ+RvHIjmB/AUc53k6GJux9tz+5GGi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamas Zsoldos <tamas.zsoldos@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
 	Leo Yan <leo.yan@arm.com>,
-	James Clark <james.clark@linaro.org>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 533/780] coresight: etm4x: Fix timestamp bit field handling
-Date: Tue, 17 Jun 2025 17:24:01 +0200
-Message-ID: <20250617152513.217361689@linuxfoundation.org>
+Subject: [PATCH 6.15 534/780] coresight/etm4: fix missing disable active config
+Date: Tue, 17 Jun 2025 17:24:02 +0200
+Message-ID: <20250617152513.256323496@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -53,63 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit ee811bc733be5c57a2bfecdf2f6f5d4db466200a ]
+[ Upstream commit 895b12b7d7b8c651f73f57a1ea040d35aa7048cb ]
 
-Timestamps in the trace data appear as all zeros on recent kernels,
-although the feature works correctly on old kernels (e.g., v6.12).
+When etm4 device is disabled via sysfs, it should disable its active
+count.
 
-Since commit c382ee674c8b ("arm64/sysreg/tools: Move TRFCR definitions
-to sysreg"), the TRFCR_ELx_TS_{VIRTUAL|GUEST_PHYSICAL|PHYSICAL} macros
-were updated to remove the bit shift. As a result, the driver no longer
-shifts bits when operates the timestamp field.
-
-Fix this by using the FIELD_PREP() and FIELD_GET() helpers.
-
-Reported-by: Tamas Zsoldos <tamas.zsoldos@arm.com>
-Fixes: c382ee674c8b ("arm64/sysreg/tools: Move TRFCR definitions to sysreg")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
+Fixes: 7ebd0ec6cf94 ("coresight: configfs: Allow configfs to activate configuration")
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Reviewed-by: Leo Yan <leo.yan@arm.com>
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250519174945.2245271-2-leo.yan@arm.com
+Link: https://lore.kernel.org/r/20250514161951.3427590-2-yeoreum.yun@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c  | 2 +-
- drivers/hwtracing/coresight/coresight-etm4x-sysfs.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 2b8f104638402..b42b03dba516d 100644
+index b42b03dba516d..88ef381ee6dd9 100644
 --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
 +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -1176,7 +1176,7 @@ static void cpu_detect_trace_filtering(struct etmv4_drvdata *drvdata)
- 	 * tracing at the kernel EL and EL0, forcing to use the
- 	 * virtual time as the timestamp.
- 	 */
--	trfcr = (TRFCR_EL1_TS_VIRTUAL |
-+	trfcr = (FIELD_PREP(TRFCR_EL1_TS_MASK, TRFCR_EL1_TS_VIRTUAL) |
- 		 TRFCR_EL1_ExTRE |
- 		 TRFCR_EL1_E0TRE);
+@@ -1020,6 +1020,9 @@ static void etm4_disable_sysfs(struct coresight_device *csdev)
+ 	smp_call_function_single(drvdata->cpu, etm4_disable_hw, drvdata, 1);
  
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-index fdd0956fecb36..c3ca904de584d 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-@@ -2320,11 +2320,11 @@ static ssize_t ts_source_show(struct device *dev,
- 		goto out;
- 	}
+ 	raw_spin_unlock(&drvdata->spinlock);
++
++	cscfg_csdev_disable_active_config(csdev);
++
+ 	cpus_read_unlock();
  
--	switch (drvdata->trfcr & TRFCR_EL1_TS_MASK) {
-+	val = FIELD_GET(TRFCR_EL1_TS_MASK, drvdata->trfcr);
-+	switch (val) {
- 	case TRFCR_EL1_TS_VIRTUAL:
- 	case TRFCR_EL1_TS_GUEST_PHYSICAL:
- 	case TRFCR_EL1_TS_PHYSICAL:
--		val = FIELD_GET(TRFCR_EL1_TS_MASK, drvdata->trfcr);
- 		break;
- 	default:
- 		val = -1;
+ 	/*
 -- 
 2.39.5
 
