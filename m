@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A2E23A9B3;
-	Tue, 17 Jun 2025 16:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D559238D49;
+	Tue, 17 Jun 2025 16:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177639; cv=none; b=CVo7xFMdYnC9kr+paCDTTV9afCZCn8LO8NWIygqeV8iV+Fs/bSIGfDGmIfsfvXMg40EmoB6HKJhxKja8vnXBUA0cRQe1GE0fj4b+45viekSk2qtBh3wgNu6OTrz/e4PmiZhJ1a14eyz4Lu/FxHOFjJpGvChOgccA2ffXsVb9TyY=
+	t=1750177642; cv=none; b=Xkg0CnmEG5tIA+tCzmmv11j7O7bui1qTTCn40oJUSvvzIHSox7v7Mum1Vbb2BbRvxkF+X1UT2WiPgfXXrRWR9a1YCwVqt3zQqNH1avMtUiFXNgQrgtPNcuI8+abiFyEl18paiTSwThRw3Nu0bZxiGzEmgR2WBOqP/76xeoEGfG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177639; c=relaxed/simple;
-	bh=9nP+Ozyg+4jwEV6eif+y+HPcY5rYdOzZmKvXSqkq4nQ=;
+	s=arc-20240116; t=1750177642; c=relaxed/simple;
+	bh=kC41xfiBHYrZiApes72HNeWPjchn8JJjzeCT7MPpob4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qka+4XPNhQEebImjGIuPzxb/yoD81V7y+3vp2tpc0DMxdr7t/FCYyRY2g/e+LJSc65IXELosGnZiBcpi6nPzNRh6AWqSW9Sj5HoFtiId3Xcv7OESj9IbVVZkaC35jsEpp9r/fJ27e9nRagygHKqNsGkOWDqDBJ1bWDfwb4l6/vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XTV3bnI9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WL1yQKDRQjbMwu5I6cFJaZUD95z87K3ofTS/eQO3eKWf8vLnxOCVgYMDEQvWbfPIJQu2NirEU6y/2t20pJz1jnUgxdGAEf6FPAmlMwNVdKjanrR5oYbCzr7iu1sxeJvpcTCo+Ec2JbQKZu0SQri7DlHCWpf2Nf6C2OPWoKVh8i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E76xZlvr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XTV3bnI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7334CC4CEE3;
-	Tue, 17 Jun 2025 16:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E76xZlvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0AEDC4CEE3;
+	Tue, 17 Jun 2025 16:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177639;
-	bh=9nP+Ozyg+4jwEV6eif+y+HPcY5rYdOzZmKvXSqkq4nQ=;
+	s=korg; t=1750177642;
+	bh=kC41xfiBHYrZiApes72HNeWPjchn8JJjzeCT7MPpob4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XTV3bnI9pdWZwqm1M4JDONmP3hsxP1oHFlyNJmJIvZm09dDpnw7VRIh1nmJTB3pdu
-	 5zyaEaQ2ZlYpwID4NuqIfGxlPMHXLRxJiofD2lzlya6xJv14PoBJphPuWKIzT+VfsS
-	 6HLaFZyACg9AClPsoD/nidiD3bq1zBXmCrilercA=
+	b=E76xZlvrEcMM5T/8EmtHg5/Rp5YPUoW4LNbKwvPeauei1QAeC1OZR3KIJZoNcNUTJ
+	 DKg3GCNvTeRU7/qTWG9rqmRh7cffb77uX4hh6lop/9rmdBZvaG0BCY0MdBUs04AgP1
+	 w6UdWWCQ24484oIb4yauzAKJewW0w/yD92c9a7zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Michael Walle <mwalle@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 339/780] f2fs: use d_inode(dentry) cleanup dentry->d_inode
-Date: Tue, 17 Jun 2025 17:20:47 +0200
-Message-ID: <20250617152505.257042622@linuxfoundation.org>
+Subject: [PATCH 6.12 375/512] drm/panel-simple: fix the warnings for the Evervision VGG644804
+Date: Tue, 17 Jun 2025 17:25:41 +0200
+Message-ID: <20250617152434.788676101@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,77 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit a6c397a31f58a1d577c2c8d04b624e9baa31951c ]
+[ Upstream commit 5dc1ea903588a73fb03b3a3e5a041a7c63a4bccd ]
 
-no logic changes.
+The panel lacked the connector type which causes a warning. Adding the
+connector type reveals wrong bus_flags and bits per pixel. Fix all of
+it.
 
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 9883494c45a1 ("f2fs: fix to correct check conditions in f2fs_cross_rename")
+Fixes: 1319f2178bdf ("drm/panel-simple: add Evervision VGG644804 panel entry")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250520074110.655114-1-mwalle@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/namei.c | 8 ++++----
- fs/f2fs/super.c | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
-index 8f8b9b843bdf4..faa5191cf4ca6 100644
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -414,7 +414,7 @@ static int f2fs_link(struct dentry *old_dentry, struct inode *dir,
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index d041ff542a4ee..82db3daf4f81a 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -2141,13 +2141,14 @@ static const struct display_timing evervision_vgg644804_timing = {
+ static const struct panel_desc evervision_vgg644804 = {
+ 	.timings = &evervision_vgg644804_timing,
+ 	.num_timings = 1,
+-	.bpc = 8,
++	.bpc = 6,
+ 	.size = {
+ 		.width = 115,
+ 		.height = 86,
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG,
+-	.bus_flags = DRM_BUS_FLAG_DE_HIGH | DRM_BUS_FLAG_PIXDATA_SAMPLE_NEGEDGE,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
++	.connector_type = DRM_MODE_CONNECTOR_LVDS,
+ };
  
- 	if (is_inode_flag_set(dir, FI_PROJ_INHERIT) &&
- 			(!projid_eq(F2FS_I(dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)))
-+			F2FS_I(inode)->i_projid)))
- 		return -EXDEV;
- 
- 	err = f2fs_dquot_initialize(dir);
-@@ -914,7 +914,7 @@ static int f2fs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 
- 	if (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			(!projid_eq(F2FS_I(new_dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)))
-+			F2FS_I(old_inode)->i_projid)))
- 		return -EXDEV;
- 
- 	/*
-@@ -1107,10 +1107,10 @@ static int f2fs_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
- 
- 	if ((is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			!projid_eq(F2FS_I(new_dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)) ||
-+			F2FS_I(old_inode)->i_projid)) ||
- 	    (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			!projid_eq(F2FS_I(old_dir)->i_projid,
--			F2FS_I(new_dentry->d_inode)->i_projid)))
-+			F2FS_I(new_inode)->i_projid)))
- 		return -EXDEV;
- 
- 	err = f2fs_dquot_initialize(old_dir);
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 7a3bc85df6a7a..386326f7a440e 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1882,9 +1882,9 @@ static int f2fs_statfs(struct dentry *dentry, struct kstatfs *buf)
- 	buf->f_fsid    = u64_to_fsid(id);
- 
- #ifdef CONFIG_QUOTA
--	if (is_inode_flag_set(dentry->d_inode, FI_PROJ_INHERIT) &&
-+	if (is_inode_flag_set(d_inode(dentry), FI_PROJ_INHERIT) &&
- 			sb_has_quota_limits_enabled(sb, PRJQUOTA)) {
--		f2fs_statfs_project(sb, F2FS_I(dentry->d_inode)->i_projid, buf);
-+		f2fs_statfs_project(sb, F2FS_I(d_inode(dentry))->i_projid, buf);
- 	}
- #endif
- 	return 0;
+ static const struct display_timing evervision_vgg804821_timing = {
 -- 
 2.39.5
 
