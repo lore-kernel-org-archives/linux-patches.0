@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4E31FBEA8;
-	Tue, 17 Jun 2025 16:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D35239E85;
+	Tue, 17 Jun 2025 16:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177730; cv=none; b=m2L/YhPNaFWyVWLJvZasV8vM4p3B40qXksPss4k9HXliNUjESY5A1eMNio8Fb7qySW4w3N2N1mJMeocuC4eEWI3sWO1dE5g3HKUDLan1zskdreca2KmkIgmkbsPKzAgvVk/ZRR1ECAazy4oE/R4eL1ccOrPZtNhywF18pIE27ik=
+	t=1750177733; cv=none; b=uwNi7K5sqvpH1bR8gIR1orHSXxvhmWquUcWDGQMoj5ohoL9sHJBat06WYhbeGEEkq2DhGd5mfVZMdI8EPaHKcEWhHInsCSTaxfnbUCxajhbl+ifMlOrO5Cx4ADOrv9xpeNYKmpnjMJ/i1xAY6WH+VLg6BJdDPBqQ3RKeL1V0aD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177730; c=relaxed/simple;
-	bh=P8I1eLoCjC200O2C3vTY9lfWN43iZIVarnmwd16DhTc=;
+	s=arc-20240116; t=1750177733; c=relaxed/simple;
+	bh=tBMVdGS8+QKkJv/gcZbcfAu3ekgAjhguwMCt8LJYJoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0Tt25qFTGRFpRVFPqNM+r73dbU8VxVomHHOYZxTbYkqbQBZ+mFwCt/nk15T0UHMXW9AgIcOkSHr+f/vja5IO9vKCdZz7ApY7Wmxio+SXv0ncrAa+TAVngqV+IAYsPtLV4633qERwVd8tNoE08RkmzK4onthqbxeVSSDGj2x9gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2R8g7g6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hX85flvitAAyfitxape3pGOaQno4ZjKj+3t1VkeMrxXG5Cw26kUW+HBzWJ3nSmCdvBP/+w8ZXWaIv9aZ/VNfQL6kUjUMnTt6Gi/bWM0+PzcNCoOSWxkZ4nTePxx8p2dDUlw7Aam1cgDTRFNDsDPQCfDyXKWCXp8pM99lr30O5RY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMQx8LM6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2R8g7g6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055C3C4CEE3;
-	Tue, 17 Jun 2025 16:28:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMQx8LM6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4894AC4CEF0;
+	Tue, 17 Jun 2025 16:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177730;
-	bh=P8I1eLoCjC200O2C3vTY9lfWN43iZIVarnmwd16DhTc=;
+	s=korg; t=1750177733;
+	bh=tBMVdGS8+QKkJv/gcZbcfAu3ekgAjhguwMCt8LJYJoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U2R8g7g6ArnWYT79B9ylouYFhutqw8JvKtTK1rfG1t02fMZ9i00iyi9fC1dRPCsH4
-	 ThajVwgjLuOFmXPfwhM8weVJABjiKIEgxA0SNAhOMFh1gCeU9T7YHYEJ4nI7CQkmKt
-	 Urs5dlRJVSJDON4SlCU433dLLnFH5llIcF1/XRpU=
+	b=XMQx8LM6kEaRWHxyYzY6u8Wvrs64ArdYB3JFdObqGvF4a9quJMXn7zvYNgObGxFW6
+	 PNaNWFUSD6icVjcpgsQzsQvY6AFQ0PWy4SprK8QG02Vck0jrfd0MEe3KRWb/XrP1RC
+	 xywkzL3DgkVCw4aai26EJkaI9y6ISPtTF0nZfZsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dzmitry Sankouski <dsankouski@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 352/780] arm64: dts: qcom: sdm845-starqltechn: remove excess reserved gpios
-Date: Tue, 17 Jun 2025 17:21:00 +0200
-Message-ID: <20250617152505.793861285@linuxfoundation.org>
+Subject: [PATCH 6.12 388/512] ASoC: codecs: hda: Fix RPM usage count underflow
+Date: Tue, 17 Jun 2025 17:25:54 +0200
+Message-ID: <20250617152435.306347971@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,46 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dzmitry Sankouski <dsankouski@gmail.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit fb5fce873b952f8b1c5f7edcabcc8611ef45ea7a ]
+[ Upstream commit ff0045de4ee0288dec683690f66f2f369b7d3466 ]
 
-Starqltechn has 2 reserved gpio ranges <27 4>, <85 4>.
-<27 4> is spi for eSE(embedded Secure Element).
-<85 4> is spi for fingerprint.
+RPM manipulation in hda_codec_probe_complete()'s error path is
+superfluous and leads to RPM usage count underflow if the
+build-controls operation fails.
 
-Remove excess reserved gpio regions.
+hda_codec_probe_complete() is called in:
 
-Fixes: d711b22eee55 ("arm64: dts: qcom: starqltechn: add initial device tree for starqltechn")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-Link: https://lore.kernel.org/r/20250225-starqltechn_integration_upstream-v9-5-a5d80375cb66@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+1) hda_codec_probe() for all non-HDMI codecs
+2) in card->late_probe() for HDMI codecs
+
+Error path for hda_codec_probe() takes care of bus' RPM already.
+For 2) if late_probe() fails, ASoC performs card cleanup what
+triggers hda_codec_remote() - same treatment is in 1).
+
+Fixes: b5df2a7dca1c ("ASoC: codecs: Add HD-Audio codec driver")
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250530141025.2942936-2-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/hda.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 8a0d63bd594b3..5948b401165ce 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -418,7 +418,8 @@
- };
+diff --git a/sound/soc/codecs/hda.c b/sound/soc/codecs/hda.c
+index ddc00927313cf..dc7794c9ac44c 100644
+--- a/sound/soc/codecs/hda.c
++++ b/sound/soc/codecs/hda.c
+@@ -152,7 +152,7 @@ int hda_codec_probe_complete(struct hda_codec *codec)
+ 	ret = snd_hda_codec_build_controls(codec);
+ 	if (ret < 0) {
+ 		dev_err(&hdev->dev, "unable to create controls %d\n", ret);
+-		goto out;
++		return ret;
+ 	}
  
- &tlmm {
--	gpio-reserved-ranges = <0 4>, <27 4>, <81 4>, <85 4>;
-+	gpio-reserved-ranges = <27 4>, /* SPI (eSE - embedded Secure Element) */
-+			       <85 4>; /* SPI (fingerprint reader) */
- 
- 	sdc2_clk_state: sdc2-clk-state {
- 		pins = "sdc2_clk";
+ 	/* Bus suspended codecs as it does not manage their pm */
+@@ -160,7 +160,7 @@ int hda_codec_probe_complete(struct hda_codec *codec)
+ 	/* rpm was forbidden in snd_hda_codec_device_new() */
+ 	snd_hda_codec_set_power_save(codec, 2000);
+ 	snd_hda_codec_register(codec);
+-out:
++
+ 	/* Complement pm_runtime_get_sync(bus) in probe */
+ 	pm_runtime_mark_last_busy(bus->dev);
+ 	pm_runtime_put_autosuspend(bus->dev);
 -- 
 2.39.5
 
