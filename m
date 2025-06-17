@@ -1,41 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D35E2EA14E;
-	Tue, 17 Jun 2025 16:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1B42EA14E;
+	Tue, 17 Jun 2025 16:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177152; cv=none; b=MEHnPUYtgc95FjorcocoEhVjzL4EWjsZ2IzOZuAMd0CxZn2GVOf04+huHM4OOw3WTkiFiGjabhaHuwlTjkwKW21ICZZWT94aIxRwspTe3XaIV4hjS/xzcan+zVVtE0FmKEzgffVZ6LcuaYVzrsqHYmRqz8vHbMpPL3MlrVFFVFE=
+	t=1750177155; cv=none; b=Fg1RqfPGWrLEupsEog9gBaPJhNPLF9/0tPlvNY7IN3lTBXKUYf1rZwIwDKJV5LI5kb0/aC7+MbVstN78gBgIOqhKiSDTldBjl+/r70Rb6c+sZjUSkI3gpYCBhhwMupaElkN+72WlFpdfTfj5GZ22C7uyX5z8Upfag+scyVNNBEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177152; c=relaxed/simple;
-	bh=ibntUliKNRPXs6uwzU0A1mLRqiaAvmFCxk6YKHA6Fyc=;
+	s=arc-20240116; t=1750177155; c=relaxed/simple;
+	bh=ghTo5pqkmKqRMHX6nvIBMg8eGWDBCiQUCr5FeBdsGLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H6qzEhhR33Sw6wBIqzZ9QNptl30aLbusyfoZNPNT0kWwoM8rLafOUjlDVbkyKwkTL7oSg1QQJJF2O8zk1TGQYM9l997UIWVwsJp6T6+knokGBrChLsZteEJElmCWs9n1vQzN/8MiXALDSMq5ba2cvgiwC4SIu6FmGOArhhedJuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybt7Viar; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KbprP3Ny5DBnMpGkTMhE6r4toatVznVbN7KnbCyGI3eLEfsqwvj3UTDNQi6BbtyhZ+nnJqYjAL6huhTaXoG3FLplomM+W5HiGyB/Bg6t/yHda0AAin0GAGkgsSqkoFqmbzi2ZKms68F56an6nWqmFRAa4Ln4pQwoiK+hlrKnreg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWiUMCtd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybt7Viar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F5DC4CEE3;
-	Tue, 17 Jun 2025 16:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWiUMCtd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B265FC4CEE3;
+	Tue, 17 Jun 2025 16:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177152;
-	bh=ibntUliKNRPXs6uwzU0A1mLRqiaAvmFCxk6YKHA6Fyc=;
+	s=korg; t=1750177155;
+	bh=ghTo5pqkmKqRMHX6nvIBMg8eGWDBCiQUCr5FeBdsGLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ybt7Viar56NlC9TL7nvCAKWdtyYdXGpsvkKKyvSsuYs98fFHahS+QASxoBNBwXDPn
-	 dgdY+A711F9XFGU7Do28NtKrgNONilEgcYANpnseT2BOCOHpVnXa/AIMRlRLafi+zi
-	 5cBEHlgXxpqat6/1yUqTGslEUi3Hi20fClJdgs5A=
+	b=KWiUMCtd7s7TmJpaHbfxayQVSKA5ZDTapQ2j/R/19HWCFgwn9na1zGIEoHkoPg9iE
+	 A73B50JkoikOyXz4P2kPkspuWnVteV0kV15Y+hP504xaItamFhreSFdX+o1dqwLini
+	 b+1p3zCvQgsVpiJtWQFour7ykSDNY9Hb6X2hcqCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Anubhav Shelat <ashelat@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 266/780] s390/bpf: Store backchain even for leaf progs
-Date: Tue, 17 Jun 2025 17:19:34 +0200
-Message-ID: <20250617152502.293146073@linuxfoundation.org>
+Subject: [PATCH 6.12 302/512] perf trace: Set errpid to false for rseq and set_robust_list
+Date: Tue, 17 Jun 2025 17:24:28 +0200
+Message-ID: <20250617152431.834506426@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +59,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Anubhav Shelat <ashelat@redhat.com>
 
-[ Upstream commit 5f55f2168432298f5a55294831ab6a76a10cb3c3 ]
+[ Upstream commit 8c56bfe53bd881c7b598c54a3a06216743c57bbc ]
 
-Currently a crash in a leaf prog (caused by a bug) produces the
-following call trace:
+The 'rseq' and 'set_robust_list' syscalls don't return a pid, so set
+errpid for both to false.
 
-     [<000003ff600ebf00>] bpf_prog_6df0139e1fbf2789_fentry+0x20/0x78
-     [<0000000000000000>] 0x0
-
-This is because leaf progs do not store backchain. Fix by making all
-progs do it. This is what GCC and Clang-generated code does as well.
-Now the call trace looks like this:
-
-     [<000003ff600eb0f2>] bpf_prog_6df0139e1fbf2789_fentry+0x2a/0x80
-     [<000003ff600ed096>] bpf_trampoline_201863462940+0x96/0xf4
-     [<000003ff600e3a40>] bpf_prog_05f379658fdd72f2_classifier_0+0x58/0xc0
-     [<000003ffe0aef070>] bpf_test_run+0x210/0x390
-     [<000003ffe0af0dc2>] bpf_prog_test_run_skb+0x25a/0x668
-     [<000003ffe038a90e>] __sys_bpf+0xa46/0xdb0
-     [<000003ffe038ad0c>] __s390x_sys_bpf+0x44/0x50
-     [<000003ffe0defea8>] __do_syscall+0x150/0x280
-     [<000003ffe0e01d5c>] system_call+0x74/0x98
-
-Fixes: 054623105728 ("s390/bpf: Add s390x eBPF JIT compiler backend")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250512122717.54878-1-iii@linux.ibm.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 0c1019e3463b263a ("perf trace: Mark the 'rseq' arg in the rseq syscall as coming from user space")
+Fixes: 1de5b5dcb8353f36 ("perf trace: Mark the 'head' arg in the set_robust_list syscall as coming from user space")
+Signed-off-by: Anubhav Shelat <ashelat@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Michael Petlan <mpetlan@redhat.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20250529143334.1469669-2-ashelat@redhat.com
+[ Remove explicit .errpid = false, omitting its initialization zeroes it, as noted by Namhyung ]
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/net/bpf_jit_comp.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ tools/perf/builtin-trace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
-index 0776dfde2dba9..945106b5562db 100644
---- a/arch/s390/net/bpf_jit_comp.c
-+++ b/arch/s390/net/bpf_jit_comp.c
-@@ -605,17 +605,15 @@ static void bpf_jit_prologue(struct bpf_jit *jit, struct bpf_prog *fp,
- 	}
- 	/* Setup stack and backchain */
- 	if (is_first_pass(jit) || (jit->seen & SEEN_STACK)) {
--		if (is_first_pass(jit) || (jit->seen & SEEN_FUNC))
--			/* lgr %w1,%r15 (backchain) */
--			EMIT4(0xb9040000, REG_W1, REG_15);
-+		/* lgr %w1,%r15 (backchain) */
-+		EMIT4(0xb9040000, REG_W1, REG_15);
- 		/* la %bfp,STK_160_UNUSED(%r15) (BPF frame pointer) */
- 		EMIT4_DISP(0x41000000, BPF_REG_FP, REG_15, STK_160_UNUSED);
- 		/* aghi %r15,-STK_OFF */
- 		EMIT4_IMM(0xa70b0000, REG_15, -(STK_OFF + stack_depth));
--		if (is_first_pass(jit) || (jit->seen & SEEN_FUNC))
--			/* stg %w1,152(%r15) (backchain) */
--			EMIT6_DISP_LH(0xe3000000, 0x0024, REG_W1, REG_0,
--				      REG_15, 152);
-+		/* stg %w1,152(%r15) (backchain) */
-+		EMIT6_DISP_LH(0xe3000000, 0x0024, REG_W1, REG_0,
-+			      REG_15, 152);
- 	}
- }
- 
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index ebe4fad0d4751..f77e4f4b6f03e 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1327,7 +1327,7 @@ static const struct syscall_fmt syscall_fmts[] = {
+ 	  .arg = { [0] = { .scnprintf = SCA_FDAT, /* olddirfd */ },
+ 		   [2] = { .scnprintf = SCA_FDAT, /* newdirfd */ },
+ 		   [4] = { .scnprintf = SCA_RENAMEAT2_FLAGS, /* flags */ }, }, },
+-	{ .name	    = "rseq",	    .errpid = true,
++	{ .name	    = "rseq",
+ 	  .arg = { [0] = { .from_user = true /* rseq */, }, }, },
+ 	{ .name	    = "rt_sigaction",
+ 	  .arg = { [0] = { .scnprintf = SCA_SIGNUM, /* sig */ }, }, },
+@@ -1351,7 +1351,7 @@ static const struct syscall_fmt syscall_fmts[] = {
+ 	{ .name	    = "sendto",
+ 	  .arg = { [3] = { .scnprintf = SCA_MSG_FLAGS, /* flags */ },
+ 		   [4] = SCA_SOCKADDR_FROM_USER(addr), }, },
+-	{ .name	    = "set_robust_list",	    .errpid = true,
++	{ .name	    = "set_robust_list",
+ 	  .arg = { [0] = { .from_user = true /* head */, }, }, },
+ 	{ .name	    = "set_tid_address", .errpid = true, },
+ 	{ .name	    = "setitimer",
 -- 
 2.39.5
 
