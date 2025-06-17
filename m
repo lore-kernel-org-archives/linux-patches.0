@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08B02FA621;
-	Tue, 17 Jun 2025 16:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF992FA621;
+	Tue, 17 Jun 2025 16:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178471; cv=none; b=G8qBbAvtP2EgLPUd1sTY8A8BsBrls+2BMYyzXlpgERRqcW0bE27n65PVxpnmpnDKnbHwCwjIyXSUAcTR4KkFGecq6Zpi5CH0EPvqTq8FYHkarGd8gAi3ficfdTlP7RfwCoObnAsCxXPRj/MZXxXb4E4n+jWz2xKMuX0xOAni4RE=
+	t=1750178475; cv=none; b=mh/dvC+5hidnJd5qfuWU4W42EO3q2GFvdOr+Vl/fDi7A7UlcBOEvPfvzOm9maG3u3kHJMn3/Oc7ZSH6ZoOPtU80FChS4G79OUzCiLzSmFpPtBZA4WrtjzcVP691LKHCPM/v/vVbEuWJi18dOATHS9AVlhoDDSx6DfRYwWWTRX2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178471; c=relaxed/simple;
-	bh=cEYPydIKroKlWN5Umquu6JZr+t/JVUd550ANyzBay2c=;
+	s=arc-20240116; t=1750178475; c=relaxed/simple;
+	bh=w5HdXiLLYzQX56g0eD6i3Y8KKhlk36X/aGU3JPUiT1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H7n3IUM6qk//vkZybyoddcDOoQRvNUkilAekaRTl8dePnyV8ECph1pB8EMwJv+vHSEVGv3ZhdVLBi9tFaq+wEjQ6FIK+zgxL8e5XZ5vUwwxuyQBClkcwDEJhr7qg2cpvMMkdd58a5xPQWIRAipqvyxYcT2Tfnl8FRZ+qTbGiQ8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VuMjIyq+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mtxTpXBmQdtu18X3qB5VSFOJzTynKVp7ehXH0aMxwS1CvDlexsni/pf48G1y7n96LrunuF5/YBx1NfbCAY5qbzypc3LSUwu+3/DzwALuf9GZQr/7y3HchIlL4QxltV4decr7ALte9/wZefkcIIsGSt+3JfrIxvm/XsggyMj5Zsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1ZmuT+m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuMjIyq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5FDC4CEE3;
-	Tue, 17 Jun 2025 16:41:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1ZmuT+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9B5C4CEE3;
+	Tue, 17 Jun 2025 16:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178471;
-	bh=cEYPydIKroKlWN5Umquu6JZr+t/JVUd550ANyzBay2c=;
+	s=korg; t=1750178474;
+	bh=w5HdXiLLYzQX56g0eD6i3Y8KKhlk36X/aGU3JPUiT1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VuMjIyq+hthj0+MYoFCoyHptN3vZFoUhOr/PPte54E4Ac0c87NGmTCgIdqNP1/jYM
-	 VjHyCUecsoDGZpMCgNMlMHudsYK5rZyfR5GzfeR8u3FDeKn+GLdmcenIdA89V+AvMa
-	 aMkzWcJo4+xLYsq/4ykvA8NnG2D5xPUiWohNKUv4=
+	b=c1ZmuT+mEpj78A55QRxIoxHDDZFjGn3lOP52aYl7R5gAgE0JfQy272ayPKZ9k4XzP
+	 PHMZB1l6PPo/eIUXou0vKn7fGYU7VFKjM36zQYLR0Kbno9diZzd3BHN2YUGirQeYpC
+	 JrQFVHhqxojt9uFCNiz+07jC4l1DRNxFGaInF5kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e2b1803445d236442e54@syzkaller.appspotmail.com,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.12 504/512] x86/iopl: Cure TIF_IO_BITMAP inconsistencies
-Date: Tue, 17 Jun 2025 17:27:50 +0200
-Message-ID: <20250617152440.042613039@linuxfoundation.org>
+	Jason-JH Lin <jason-jh.lin@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 465/780] mailbox: mtk-cmdq: Refine GCE_GCTL_VALUE setting
+Date: Tue, 17 Jun 2025 17:22:53 +0200
+Message-ID: <20250617152510.428420255@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,122 +48,148 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Jason-JH Lin <jason-jh.lin@mediatek.com>
 
-commit 8b68e978718f14fdcb080c2a7791c52a0d09bc6d upstream.
+[ Upstream commit 9fcebcb37c3e0a4b6eb40768cc5a5faebf166fbe ]
 
-io_bitmap_exit() is invoked from exit_thread() when a task exists or
-when a fork fails. In the latter case the exit_thread() cleans up
-resources which were allocated during fork().
+Add cmdq_gctl_value_toggle() to configure GCE_CTRL_BY_SW and GCE_DDR_EN
+together in the same GCE_GCTL_VALUE register.
 
-io_bitmap_exit() invokes task_update_io_bitmap(), which in turn ends up
-in tss_update_io_bitmap(). tss_update_io_bitmap() operates on the
-current task. If current has TIF_IO_BITMAP set, but no bitmap installed,
-tss_update_io_bitmap() crashes with a NULL pointer dereference.
+For the SoCs whose GCE is located in MMINFRA and uses MMINFRA_AO power,
+this allows it to be written without enabling the clocks. Otherwise, all
+GCE registers should be written after the GCE clocks are enabled.
+Move this function into cmdq_runtime_resume() and cmdq_runtime_suspend()
+to ensure it is called when the GCE clock is enabled.
 
-There are two issues, which lead to that problem:
-
-  1) io_bitmap_exit() should not invoke task_update_io_bitmap() when
-     the task, which is cleaned up, is not the current task. That's a
-     clear indicator for a cleanup after a failed fork().
-
-  2) A task should not have TIF_IO_BITMAP set and neither a bitmap
-     installed nor IOPL emulation level 3 activated.
-
-     This happens when a kernel thread is created in the context of
-     a user space thread, which has TIF_IO_BITMAP set as the thread
-     flags are copied and the IO bitmap pointer is cleared.
-
-     Other than in the failed fork() case this has no impact because
-     kernel threads including IO workers never return to user space and
-     therefore never invoke tss_update_io_bitmap().
-
-Cure this by adding the missing cleanups and checks:
-
-  1) Prevent io_bitmap_exit() to invoke task_update_io_bitmap() if
-     the to be cleaned up task is not the current task.
-
-  2) Clear TIF_IO_BITMAP in copy_thread() unconditionally. For user
-     space forks it is set later, when the IO bitmap is inherited in
-     io_bitmap_share().
-
-For paranoia sake, add a warning into tss_update_io_bitmap() to catch
-the case, when that code is invoked with inconsistent state.
-
-Fixes: ea5f1cd7ab49 ("x86/ioperm: Remove bitmap if all permissions dropped")
-Reported-by: syzbot+e2b1803445d236442e54@syzkaller.appspotmail.com
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/87wmdceom2.ffs@tglx
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7abd037aa581 ("mailbox: mtk-cmdq: add gce ddr enable support flow")
+Signed-off-by: Jason-JH Lin <jason-jh.lin@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/ioport.c  |   13 +++++++++----
- arch/x86/kernel/process.c |    6 ++++++
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/mailbox/mtk-cmdq-mailbox.c | 51 +++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 29 deletions(-)
 
---- a/arch/x86/kernel/ioport.c
-+++ b/arch/x86/kernel/ioport.c
-@@ -33,8 +33,9 @@ void io_bitmap_share(struct task_struct
- 	set_tsk_thread_flag(tsk, TIF_IO_BITMAP);
- }
+diff --git a/drivers/mailbox/mtk-cmdq-mailbox.c b/drivers/mailbox/mtk-cmdq-mailbox.c
+index d186865b8dce6..ab4e8d1954a16 100644
+--- a/drivers/mailbox/mtk-cmdq-mailbox.c
++++ b/drivers/mailbox/mtk-cmdq-mailbox.c
+@@ -92,18 +92,6 @@ struct gce_plat {
+ 	u32 gce_num;
+ };
  
--static void task_update_io_bitmap(struct task_struct *tsk)
-+static void task_update_io_bitmap(void)
- {
-+	struct task_struct *tsk = current;
- 	struct thread_struct *t = &tsk->thread;
- 
- 	if (t->iopl_emul == 3 || t->io_bitmap) {
-@@ -54,7 +55,12 @@ void io_bitmap_exit(struct task_struct *
- 	struct io_bitmap *iobm = tsk->thread.io_bitmap;
- 
- 	tsk->thread.io_bitmap = NULL;
--	task_update_io_bitmap(tsk);
-+	/*
-+	 * Don't touch the TSS when invoked on a failed fork(). TSS
-+	 * reflects the state of @current and not the state of @tsk.
-+	 */
-+	if (tsk == current)
-+		task_update_io_bitmap();
- 	if (iobm && refcount_dec_and_test(&iobm->refcnt))
- 		kfree(iobm);
- }
-@@ -192,8 +198,7 @@ SYSCALL_DEFINE1(iopl, unsigned int, leve
- 	}
- 
- 	t->iopl_emul = level;
--	task_update_io_bitmap(current);
+-static void cmdq_sw_ddr_enable(struct cmdq *cmdq, bool enable)
+-{
+-	WARN_ON(clk_bulk_enable(cmdq->pdata->gce_num, cmdq->clocks));
 -
-+	task_update_io_bitmap();
+-	if (enable)
+-		writel(GCE_DDR_EN | GCE_CTRL_BY_SW, cmdq->base + GCE_GCTL_VALUE);
+-	else
+-		writel(GCE_CTRL_BY_SW, cmdq->base + GCE_GCTL_VALUE);
+-
+-	clk_bulk_disable(cmdq->pdata->gce_num, cmdq->clocks);
+-}
+-
+ u8 cmdq_get_shift_pa(struct mbox_chan *chan)
+ {
+ 	struct cmdq *cmdq = container_of(chan->mbox, struct cmdq, mbox);
+@@ -112,6 +100,19 @@ u8 cmdq_get_shift_pa(struct mbox_chan *chan)
+ }
+ EXPORT_SYMBOL(cmdq_get_shift_pa);
+ 
++static void cmdq_gctl_value_toggle(struct cmdq *cmdq, bool ddr_enable)
++{
++	u32 val = cmdq->pdata->control_by_sw ? GCE_CTRL_BY_SW : 0;
++
++	if (!cmdq->pdata->control_by_sw && !cmdq->pdata->sw_ddr_en)
++		return;
++
++	if (cmdq->pdata->sw_ddr_en && ddr_enable)
++		val |= GCE_DDR_EN;
++
++	writel(val, cmdq->base + GCE_GCTL_VALUE);
++}
++
+ static int cmdq_thread_suspend(struct cmdq *cmdq, struct cmdq_thread *thread)
+ {
+ 	u32 status;
+@@ -140,16 +141,10 @@ static void cmdq_thread_resume(struct cmdq_thread *thread)
+ static void cmdq_init(struct cmdq *cmdq)
+ {
+ 	int i;
+-	u32 gctl_regval = 0;
+ 
+ 	WARN_ON(clk_bulk_enable(cmdq->pdata->gce_num, cmdq->clocks));
+-	if (cmdq->pdata->control_by_sw)
+-		gctl_regval = GCE_CTRL_BY_SW;
+-	if (cmdq->pdata->sw_ddr_en)
+-		gctl_regval |= GCE_DDR_EN;
+ 
+-	if (gctl_regval)
+-		writel(gctl_regval, cmdq->base + GCE_GCTL_VALUE);
++	cmdq_gctl_value_toggle(cmdq, true);
+ 
+ 	writel(CMDQ_THR_ACTIVE_SLOT_CYCLES, cmdq->base + CMDQ_THR_SLOT_CYCLES);
+ 	for (i = 0; i <= CMDQ_MAX_EVENT; i++)
+@@ -315,14 +310,21 @@ static irqreturn_t cmdq_irq_handler(int irq, void *dev)
+ static int cmdq_runtime_resume(struct device *dev)
+ {
+ 	struct cmdq *cmdq = dev_get_drvdata(dev);
++	int ret;
+ 
+-	return clk_bulk_enable(cmdq->pdata->gce_num, cmdq->clocks);
++	ret = clk_bulk_enable(cmdq->pdata->gce_num, cmdq->clocks);
++	if (ret)
++		return ret;
++
++	cmdq_gctl_value_toggle(cmdq, true);
++	return 0;
+ }
+ 
+ static int cmdq_runtime_suspend(struct device *dev)
+ {
+ 	struct cmdq *cmdq = dev_get_drvdata(dev);
+ 
++	cmdq_gctl_value_toggle(cmdq, false);
+ 	clk_bulk_disable(cmdq->pdata->gce_num, cmdq->clocks);
+ 	return 0;
+ }
+@@ -347,9 +349,6 @@ static int cmdq_suspend(struct device *dev)
+ 	if (task_running)
+ 		dev_warn(dev, "exist running task(s) in suspend\n");
+ 
+-	if (cmdq->pdata->sw_ddr_en)
+-		cmdq_sw_ddr_enable(cmdq, false);
+-
+ 	return pm_runtime_force_suspend(dev);
+ }
+ 
+@@ -360,9 +359,6 @@ static int cmdq_resume(struct device *dev)
+ 	WARN_ON(pm_runtime_force_resume(dev));
+ 	cmdq->suspended = false;
+ 
+-	if (cmdq->pdata->sw_ddr_en)
+-		cmdq_sw_ddr_enable(cmdq, true);
+-
  	return 0;
  }
  
---- a/arch/x86/kernel/process.c
-+++ b/arch/x86/kernel/process.c
-@@ -180,6 +180,7 @@ int copy_thread(struct task_struct *p, c
- 	frame->ret_addr = (unsigned long) ret_from_fork_asm;
- 	p->thread.sp = (unsigned long) fork_frame;
- 	p->thread.io_bitmap = NULL;
-+	clear_tsk_thread_flag(p, TIF_IO_BITMAP);
- 	p->thread.iopl_warn = 0;
- 	memset(p->thread.ptrace_bps, 0, sizeof(p->thread.ptrace_bps));
+@@ -370,9 +366,6 @@ static void cmdq_remove(struct platform_device *pdev)
+ {
+ 	struct cmdq *cmdq = platform_get_drvdata(pdev);
  
-@@ -468,6 +469,11 @@ void native_tss_update_io_bitmap(void)
- 	} else {
- 		struct io_bitmap *iobm = t->io_bitmap;
+-	if (cmdq->pdata->sw_ddr_en)
+-		cmdq_sw_ddr_enable(cmdq, false);
+-
+ 	if (!IS_ENABLED(CONFIG_PM))
+ 		cmdq_runtime_suspend(&pdev->dev);
  
-+		if (WARN_ON_ONCE(!iobm)) {
-+			clear_thread_flag(TIF_IO_BITMAP);
-+			native_tss_invalidate_io_bitmap();
-+		}
-+
- 		/*
- 		 * Only copy bitmap data when the sequence number differs. The
- 		 * update time is accounted to the incoming task.
+-- 
+2.39.5
+
 
 
