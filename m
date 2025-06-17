@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F9B2ECE9A;
-	Tue, 17 Jun 2025 15:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02D42ECEB1;
+	Tue, 17 Jun 2025 15:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174759; cv=none; b=qIunjQnvDn0hrcBGfmhd1wTHIqcZ8bEMaPi5DoFgDMVcgMbjS1+9h7EPqx8v7Y8mOMqW4ASkBwURqry+iT3DhR/tVBMzSZwmrV8uuYUbZBoHqFrghnJuStIwOT3S8QB4NvQdRezRVnEdfynvt+WCH6N0BRbfH6eR24bRqCnmB2k=
+	t=1750174763; cv=none; b=I79Pz4GIObR36ve3cPbQDAIe3keCO5W0RyVeW6UNHQdyC45T/QPldGKcDdgPUsRbiRwsnatNVs6dGgkkwSHoFW9bqZjgaunW2WF+H6U+cA7w2DlDyFgS/mK1aDouI0bBa8+66QXX9afOIrYeCRYxyB1SHQ3UuPaY0ahRAC2tlso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174759; c=relaxed/simple;
-	bh=s4ximPgTK536oVJgACUBm2S/ZBA/C8sQ/kVtMROLKG8=;
+	s=arc-20240116; t=1750174763; c=relaxed/simple;
+	bh=7Sr8tbk3122XzySa+KuiqWsMvtVLkdqnrzxdltmg7YE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uxBkjFmVODqgcVo4czezr1bShpcubYaRShi43iAAt9lYB8gnLrQ52CZ15cDl/w+c3pv+pV7acXqocvCrt7TSNBxmUi4dYb7cqmYMAMMDQwZ3i6tvpUmmkbNe12Xzb9QymeKZuL7FwRnWEUT9CRZhOg24qRpt/A7cU3qDLTFoUwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idT+jHda; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t2XoLydfpKWjlZKPL0wmV33BZ7G4/oOvChX2wA72cgRjjTkL0hIAxgspzWfsRH5+SMpX13tK3accXT0dCuI3imfzVRXMdT8cFYcy03G/q3BMxnyOe6qEQplxKU+1RuturnZfROk5vLXYDyWipnTe2lDSodbfSy+Kclb8O7ocJec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDXjuFyW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idT+jHda"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA43C4CEF0;
-	Tue, 17 Jun 2025 15:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDXjuFyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5114CC4CEF1;
+	Tue, 17 Jun 2025 15:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174759;
-	bh=s4ximPgTK536oVJgACUBm2S/ZBA/C8sQ/kVtMROLKG8=;
+	s=korg; t=1750174762;
+	bh=7Sr8tbk3122XzySa+KuiqWsMvtVLkdqnrzxdltmg7YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=idT+jHda+uRhCoptyCVG1DtRFquAh+n/q1VL/dhwwDrfK5GicuBzToWtRv/8U607I
-	 oMOnyEpkh/Z6JOy7hmvMtFH4vxNR6yqYiWIpKZPlm3BdQe0+o4vO28qIfx8lPJlJsm
-	 T5MrkzDXENrHXVnloh6RR6PhzlgryNjSnrsMljQ0=
+	b=GDXjuFyWNnO918L9mTjrEvcKUYDxaEY6JUCzZKIDEzs0Q0KVbBII2gzY3IiezUomn
+	 AEnPoD6H8JNiR8KqIIuFExh2qOaX2otswM7YbUvl/k01EjoLIPA4ci6rBWEcin/Ugz
+	 PWwY7NgLekY5m4j1+Pw/p6kfMNn20ZNVk2ETR2eI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Wang <wangqing7171@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 018/780] perf/core: Fix broken throttling when max_samples_per_tick=1
-Date: Tue, 17 Jun 2025 17:15:26 +0200
-Message-ID: <20250617152452.242035509@linuxfoundation.org>
+Subject: [PATCH 6.6 111/356] clk: qcom: camcc-sm6350: Add *_wait_val values for GDSCs
+Date: Tue, 17 Jun 2025 17:23:46 +0200
+Message-ID: <20250617152342.688749862@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,66 +48,97 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qing Wang <wangqing7171@gmail.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit f51972e6f8b9a737b2b3eb588069acb538fa72de ]
+[ Upstream commit e7b1c13280ad866f3b935f6c658713c41db61635 ]
 
-According to the throttling mechanism, the pmu interrupts number can not
-exceed the max_samples_per_tick in one tick. But this mechanism is
-ineffective when max_samples_per_tick=1, because the throttling check is
-skipped during the first interrupt and only performed when the second
-interrupt arrives.
+Compared to the msm-4.19 driver the mainline GDSC driver always sets the
+bits for en_rest, en_few & clk_dis, and if those values are not set
+per-GDSC in the respective driver then the default value from the GDSC
+driver is used. The downstream driver only conditionally sets
+clk_dis_wait_val if qcom,clk-dis-wait-val is given in devicetree.
 
-Perhaps this bug may cause little influence in one tick, but if in a
-larger time scale, the problem can not be underestimated.
+Correct this situation by explicitly setting those values. For all GDSCs
+the reset value of those bits are used.
 
-When max_samples_per_tick = 1:
-Allowed-interrupts-per-second max-samples-per-second  default-HZ  ARCH
-200                           100                     100         X86
-500                           250                     250         ARM64
-...
-Obviously, the pmu interrupt number far exceed the user's expect.
-
-Fixes: e050e3f0a71b ("perf: Fix broken interrupt rate throttling")
-Signed-off-by: Qing Wang <wangqing7171@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250405141635.243786-3-wangqing7171@gmail.com
+Fixes: 80f5451d9a7c ("clk: qcom: Add camera clock controller driver for SM6350")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
+Link: https://lore.kernel.org/r/20250425-sm6350-gdsc-val-v1-1-1f252d9c5e4e@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/clk/qcom/camcc-sm6350.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 95e703891b24f..881d768e45564 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -10029,14 +10029,14 @@ __perf_event_account_interrupt(struct perf_event *event, int throttle)
- 		hwc->interrupts = 1;
- 	} else {
- 		hwc->interrupts++;
--		if (unlikely(throttle &&
--			     hwc->interrupts > max_samples_per_tick)) {
--			__this_cpu_inc(perf_throttled_count);
--			tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
--			hwc->interrupts = MAX_INTERRUPTS;
--			perf_log_throttle(event, 0);
--			ret = 1;
--		}
-+	}
-+
-+	if (unlikely(throttle && hwc->interrupts >= max_samples_per_tick)) {
-+		__this_cpu_inc(perf_throttled_count);
-+		tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
-+		hwc->interrupts = MAX_INTERRUPTS;
-+		perf_log_throttle(event, 0);
-+		ret = 1;
- 	}
+diff --git a/drivers/clk/qcom/camcc-sm6350.c b/drivers/clk/qcom/camcc-sm6350.c
+index acba9f99d960c..eca36bd3ba5c9 100644
+--- a/drivers/clk/qcom/camcc-sm6350.c
++++ b/drivers/clk/qcom/camcc-sm6350.c
+@@ -1694,6 +1694,9 @@ static struct clk_branch camcc_sys_tmr_clk = {
  
- 	if (event->attr.freq) {
+ static struct gdsc bps_gdsc = {
+ 	.gdscr = 0x6004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "bps_gdsc",
+ 	},
+@@ -1703,6 +1706,9 @@ static struct gdsc bps_gdsc = {
+ 
+ static struct gdsc ipe_0_gdsc = {
+ 	.gdscr = 0x7004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "ipe_0_gdsc",
+ 	},
+@@ -1712,6 +1718,9 @@ static struct gdsc ipe_0_gdsc = {
+ 
+ static struct gdsc ife_0_gdsc = {
+ 	.gdscr = 0x9004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "ife_0_gdsc",
+ 	},
+@@ -1720,6 +1729,9 @@ static struct gdsc ife_0_gdsc = {
+ 
+ static struct gdsc ife_1_gdsc = {
+ 	.gdscr = 0xa004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "ife_1_gdsc",
+ 	},
+@@ -1728,6 +1740,9 @@ static struct gdsc ife_1_gdsc = {
+ 
+ static struct gdsc ife_2_gdsc = {
+ 	.gdscr = 0xb004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "ife_2_gdsc",
+ 	},
+@@ -1736,6 +1751,9 @@ static struct gdsc ife_2_gdsc = {
+ 
+ static struct gdsc titan_top_gdsc = {
+ 	.gdscr = 0x14004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "titan_top_gdsc",
+ 	},
 -- 
 2.39.5
 
