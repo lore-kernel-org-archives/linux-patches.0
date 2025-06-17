@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8972EA487;
-	Tue, 17 Jun 2025 15:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418352ECD3A;
+	Tue, 17 Jun 2025 15:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174766; cv=none; b=YWXsEak1TIbY5YhMrxszXZ3rkHT7POUeRb/S76S9RZh0X4jkYvZGaKAgEodNj62kc+V5B7PzLrf1l3Vszp23upSqhq2SVNyXjRum6L3IYGwOQQfnK2jpqRNP+5k2oChe+jE0X5yJECK+vN49YVBy7UhLVLPWNozssyxEcnUrSdk=
+	t=1750174769; cv=none; b=SvJOSPJhM6WHwnkhMWxqEV5tNoOc66hecud3JViGSW5XWc9xRR+ouWj9ae9iOl0oAnqOg+uNKhLMZRwTSU534vwmduSwLBxj1wwb3svZEYYnZQGvg1VA9dPg7IM96xYxYMQ53+iWahicC2GWYeXud7yc9/1NhiI0Ld8w+dO1/qY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174766; c=relaxed/simple;
-	bh=WNPdCjdWPn5SWLUYmbdx+kRaxlWW5+5umiwsd+0PJyo=;
+	s=arc-20240116; t=1750174769; c=relaxed/simple;
+	bh=r3YhsT6jGhqF1h+ZPsReHW0Ps/YIThVEbczVyQ7q5v0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O062OjWEd/fh8YUwFprbxHXJ3qpnGU0x87ifRUdfHT/UE8pPPlDWfK9LZNUH/Hv9oFfCwaAUxhMpKD8NY7u/Smu8NZTJbT1kKpzpvX5TC/6EzXVkCHJ3dzNXAIRO+TScskZoKUosZcG4fyjfrmEdN3jMAjM7cSPVIVgJA1wYvYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RB6E/ZOq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LewEHzOnb1OIj7odJeUSMmmlBFwcSD9viioSNGP4UtYS0JcYlI9lfOFAOg1waTMgalhgfPWDYCoLhDzLAjC9dOPKF2u3BkduOrkl/hAMtE6IbQGRsY6RF2v3Xveu5FPplKv4Y4wbSPyg4HI/UhlpWDv7DDNo6iq27K95r/IEVzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYYYMh2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RB6E/ZOq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9288DC4CEE3;
-	Tue, 17 Jun 2025 15:39:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYYYMh2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E82C4CEE3;
+	Tue, 17 Jun 2025 15:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174766;
-	bh=WNPdCjdWPn5SWLUYmbdx+kRaxlWW5+5umiwsd+0PJyo=;
+	s=korg; t=1750174769;
+	bh=r3YhsT6jGhqF1h+ZPsReHW0Ps/YIThVEbczVyQ7q5v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RB6E/ZOq5ojQAgVWd2qyZ/THuuqlPQVLSzUuH7AKwOkZ/XTYBOrBKWLYBkW3/4hVK
-	 MnGlipCYP5n4cVyzJ6zWQsvIPfyHti+IzyS9aC3RoEC2Esm+YmGozo6baewStsKa+G
-	 mVW1Jd6JfaAKlQmY2CLZ/1YTNE//RvxJXIRDD0CU=
+	b=FYYYMh2xZBqCBm0CQVSaTDGXehs2csaFkgNepORwLc6HGd45pXP1AHUKsGoFsFpbM
+	 UIwJzJpWA5saiDH2fYi/qT4V1weyslLYLSDe8J0Q/L2Q9xhSMeVSG8QB0OkArf9adp
+	 3ZzQ5ZKVQ2h26e8CXHNAt1pxl/MaA5bcON3pfPBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 058/512] ALSA: core: fix up bus match const issues.
-Date: Tue, 17 Jun 2025 17:20:24 +0200
-Message-ID: <20250617152421.897477594@linuxfoundation.org>
+Subject: [PATCH 6.15 019/780] crypto: sun8i-ce-cipher - fix error handling in sun8i_ce_cipher_prepare()
+Date: Tue, 17 Jun 2025 17:15:27 +0200
+Message-ID: <20250617152452.290007154@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,120 +47,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
 
-[ Upstream commit 62f134ab190c5fd5c9f68fe638ad8e13bb8a4cb4 ]
+[ Upstream commit f31adc3e356f7350d4a4d68c98d3f60f2f6e26b3 ]
 
-In commit d69d80484598 ("driver core: have match() callback in struct
-bus_type take a const *"), the match bus callback was changed to have
-the driver be a const pointer.  Unfortunately that const attribute was
-thrown away when container_of() is called, which is not correct and was
-not caught by the compiler due to how container_of() is implemented.
-Fix this up by correctly preserving the const attribute of the driver
-passed to the bus match function which requires the hdac_driver match
-function to also take a const pointer for the driver structure.
+Fix two DMA cleanup issues on the error path in sun8i_ce_cipher_prepare():
 
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Fixes: d69d80484598 ("driver core: have match() callback in struct bus_type take a const *")
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2025052204-hyphen-thermal-3e72@gregkh
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+1] If dma_map_sg() fails for areq->dst, the device driver would try to free
+   DMA memory it has not allocated in the first place. To fix this, on the
+   "theend_sgs" error path, call dma unmap only if the corresponding dma
+   map was successful.
+
+2] If the dma_map_single() call for the IV fails, the device driver would
+   try to free an invalid DMA memory address on the "theend_iv" path:
+   ------------[ cut here ]------------
+   DMA-API: sun8i-ce 1904000.crypto: device driver tries to free an invalid DMA memory address
+   WARNING: CPU: 2 PID: 69 at kernel/dma/debug.c:968 check_unmap+0x123c/0x1b90
+   Modules linked in: skcipher_example(O+)
+   CPU: 2 UID: 0 PID: 69 Comm: 1904000.crypto- Tainted: G           O        6.15.0-rc3+ #24 PREEMPT
+   Tainted: [O]=OOT_MODULE
+   Hardware name: OrangePi Zero2 (DT)
+   pc : check_unmap+0x123c/0x1b90
+   lr : check_unmap+0x123c/0x1b90
+   ...
+   Call trace:
+    check_unmap+0x123c/0x1b90 (P)
+    debug_dma_unmap_page+0xac/0xc0
+    dma_unmap_page_attrs+0x1f4/0x5fc
+    sun8i_ce_cipher_do_one+0x1bd4/0x1f40
+    crypto_pump_work+0x334/0x6e0
+    kthread_worker_fn+0x21c/0x438
+    kthread+0x374/0x664
+    ret_from_fork+0x10/0x20
+   ---[ end trace 0000000000000000 ]---
+
+To fix this, check for !dma_mapping_error() before calling
+dma_unmap_single() on the "theend_iv" path.
+
+Fixes: 06f751b61329 ("crypto: allwinner - Add sun8i-ce Crypto Engine")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/hdaudio.h  | 4 ++--
- sound/core/seq_device.c  | 2 +-
- sound/hda/hda_bus_type.c | 6 +++---
- sound/pci/hda/hda_bind.c | 4 ++--
- 4 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/sound/hdaudio.h b/include/sound/hdaudio.h
-index b098ceadbe74b..9a70048adbc06 100644
---- a/include/sound/hdaudio.h
-+++ b/include/sound/hdaudio.h
-@@ -223,7 +223,7 @@ struct hdac_driver {
- 	struct device_driver driver;
- 	int type;
- 	const struct hda_device_id *id_table;
--	int (*match)(struct hdac_device *dev, struct hdac_driver *drv);
-+	int (*match)(struct hdac_device *dev, const struct hdac_driver *drv);
- 	void (*unsol_event)(struct hdac_device *dev, unsigned int event);
+diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+index 19b7fb4a93e86..05f67661553c9 100644
+--- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
++++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+@@ -275,13 +275,16 @@ static int sun8i_ce_cipher_prepare(struct crypto_engine *engine, void *async_req
+ 	} else {
+ 		if (nr_sgs > 0)
+ 			dma_unmap_sg(ce->dev, areq->src, ns, DMA_TO_DEVICE);
+-		dma_unmap_sg(ce->dev, areq->dst, nd, DMA_FROM_DEVICE);
++
++		if (nr_sgd > 0)
++			dma_unmap_sg(ce->dev, areq->dst, nd, DMA_FROM_DEVICE);
+ 	}
  
- 	/* fields used by ext bus APIs */
-@@ -235,7 +235,7 @@ struct hdac_driver {
- #define drv_to_hdac_driver(_drv) container_of(_drv, struct hdac_driver, driver)
- 
- const struct hda_device_id *
--hdac_get_device_id(struct hdac_device *hdev, struct hdac_driver *drv);
-+hdac_get_device_id(struct hdac_device *hdev, const struct hdac_driver *drv);
- 
- /*
-  * Bus verb operators
-diff --git a/sound/core/seq_device.c b/sound/core/seq_device.c
-index 4492be5d2317c..bac9f86037342 100644
---- a/sound/core/seq_device.c
-+++ b/sound/core/seq_device.c
-@@ -43,7 +43,7 @@ MODULE_LICENSE("GPL");
- static int snd_seq_bus_match(struct device *dev, const struct device_driver *drv)
- {
- 	struct snd_seq_device *sdev = to_seq_dev(dev);
--	struct snd_seq_driver *sdrv = to_seq_drv(drv);
-+	const struct snd_seq_driver *sdrv = to_seq_drv(drv);
- 
- 	return strcmp(sdrv->id, sdev->id) == 0 &&
- 		sdrv->argsize == sdev->argsize;
-diff --git a/sound/hda/hda_bus_type.c b/sound/hda/hda_bus_type.c
-index 7545ace7b0ee4..eb72a7af2e56e 100644
---- a/sound/hda/hda_bus_type.c
-+++ b/sound/hda/hda_bus_type.c
-@@ -21,7 +21,7 @@ MODULE_LICENSE("GPL");
-  * driver id_table and returns the matching device id entry.
-  */
- const struct hda_device_id *
--hdac_get_device_id(struct hdac_device *hdev, struct hdac_driver *drv)
-+hdac_get_device_id(struct hdac_device *hdev, const struct hdac_driver *drv)
- {
- 	if (drv->id_table) {
- 		const struct hda_device_id *id  = drv->id_table;
-@@ -38,7 +38,7 @@ hdac_get_device_id(struct hdac_device *hdev, struct hdac_driver *drv)
- }
- EXPORT_SYMBOL_GPL(hdac_get_device_id);
- 
--static int hdac_codec_match(struct hdac_device *dev, struct hdac_driver *drv)
-+static int hdac_codec_match(struct hdac_device *dev, const struct hdac_driver *drv)
- {
- 	if (hdac_get_device_id(dev, drv))
- 		return 1;
-@@ -49,7 +49,7 @@ static int hdac_codec_match(struct hdac_device *dev, struct hdac_driver *drv)
- static int hda_bus_match(struct device *dev, const struct device_driver *drv)
- {
- 	struct hdac_device *hdev = dev_to_hdac_dev(dev);
--	struct hdac_driver *hdrv = drv_to_hdac_driver(drv);
-+	const struct hdac_driver *hdrv = drv_to_hdac_driver(drv);
- 
- 	if (hdev->type != hdrv->type)
- 		return 0;
-diff --git a/sound/pci/hda/hda_bind.c b/sound/pci/hda/hda_bind.c
-index b7ca2a83fbb08..90633970b59f7 100644
---- a/sound/pci/hda/hda_bind.c
-+++ b/sound/pci/hda/hda_bind.c
-@@ -18,10 +18,10 @@
- /*
-  * find a matching codec id
-  */
--static int hda_codec_match(struct hdac_device *dev, struct hdac_driver *drv)
-+static int hda_codec_match(struct hdac_device *dev, const struct hdac_driver *drv)
- {
- 	struct hda_codec *codec = container_of(dev, struct hda_codec, core);
--	struct hda_codec_driver *driver =
-+	const struct hda_codec_driver *driver =
- 		container_of(drv, struct hda_codec_driver, core);
- 	const struct hda_device_id *list;
- 	/* check probe_id instead of vendor_id if set */
+ theend_iv:
+ 	if (areq->iv && ivsize > 0) {
+-		if (rctx->addr_iv)
++		if (!dma_mapping_error(ce->dev, rctx->addr_iv))
+ 			dma_unmap_single(ce->dev, rctx->addr_iv, rctx->ivlen, DMA_TO_DEVICE);
++
+ 		offset = areq->cryptlen - ivsize;
+ 		if (rctx->op_dir & CE_DECRYPTION) {
+ 			memcpy(areq->iv, chan->backup_iv, ivsize);
 -- 
 2.39.5
 
