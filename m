@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3212EE60C;
-	Tue, 17 Jun 2025 16:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9412EE60C;
+	Tue, 17 Jun 2025 16:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176140; cv=none; b=gxN9O1Y2p0UoB6Ue8IAjUYpe6AaCPiCK/hRNCna5xLASWr5EQTR4FQX687IVFvy8C8a/i/kq5krMYWEKaKnUAVm4g9LbBC/if1i2xv2WQPrdoy5QTP6k+WaFyzQ/w7o82+2lAM2Z3imw1bL7mXyyElTxwqatEHOQMoNyVKQlnYw=
+	t=1750176144; cv=none; b=srJHLJn0UVrddTNZ9fCKzJQsMF3m1jFePWWejCN8FQeFNFl7qPInyMx1D5VMlt5mP1uK5a1K9r21rHT92PqNqljX39BnaUzvaa4Vh25vhVNsPCLxj+0TBc+xF9gV3WPow+KWljHwd0VJnvpPF8NBm/5tFvs8fCcvhKGDV5wkMpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176140; c=relaxed/simple;
-	bh=vUkz5R2O/inHOb7Qkqpz/cdfZZHxKb1R7n9qGnyr2B8=;
+	s=arc-20240116; t=1750176144; c=relaxed/simple;
+	bh=0GraZmJbY/y/3OtAK9Jf785+C1PDWUzjpuTT3QAIr5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCuitwFsDx+xoRDNY/7dW4IUHnlW4CnjNPtsOeChl+x0hU+D1/TJ+8k0LXi3AGG6AvjDWGq/dbqjHZYWvHDQfiTa336SpGGibmunM5LeG9uGn8GtXf7lcmQ7BK7Z2iDRG+2DCvdTgAjtzEtQCI9bv3jkZJbDxmGnRelnHrgqhvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jo1O0xMp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BrLWxd97iNdvm8uHsNliyFC3uO3NrBuRkoqS/kWwE1JS6IAxILDkkULAGcrfHHETZBUMUtINHXdpjJcJMO/OyiKqi9K6eSCUYidyYn2F3rOCbGo+175an3fkoqxnpJIsdhuOuSdddel8NjzUt2CtH5hEIgLbZz/JMbL8HlORpRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2CBjdVDw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jo1O0xMp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CCFC4CEE3;
-	Tue, 17 Jun 2025 16:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2CBjdVDw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D466C4CEE3;
+	Tue, 17 Jun 2025 16:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176140;
-	bh=vUkz5R2O/inHOb7Qkqpz/cdfZZHxKb1R7n9qGnyr2B8=;
+	s=korg; t=1750176144;
+	bh=0GraZmJbY/y/3OtAK9Jf785+C1PDWUzjpuTT3QAIr5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jo1O0xMpHl2/9qT9Roe8kEmT/86ElRFhvbjqprTVnlP121tXY4yn5Ik3QvQTnnk49
-	 SMD7QYZJURmkO1p+kRBZe1ULfrsrZanTM9KjOhwhBtECk8GYIW7uaxnKJY+ELwSXlV
-	 FD6elazu/z35JTjMdu5HdAGKsqgpf4NW42QK8C1Y=
+	b=2CBjdVDwVxQcmI8+//q7DKUiY7vkitcAA79OAoNcJ0g8aQ9GHmPf3vVl0FxtsatQb
+	 tewbzPx4kHNv6f0rAlZnN7Xp9ykyTPCzof0e7JRQO7cUPcf7eZ0K8ExMFhL14UD15x
+	 6E+U69AKVy5t0gVI1xEgqQy/Lapz56d3K/xXsIDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 200/512] net: usb: aqc111: fix error handling of usbnet read calls
-Date: Tue, 17 Jun 2025 17:22:46 +0200
-Message-ID: <20250617152427.736124740@linuxfoundation.org>
+Subject: [PATCH 6.6 249/356] spi: bcm63xx-spi: fix shared reset
+Date: Tue, 17 Jun 2025 17:26:04 +0200
+Message-ID: <20250617152348.227250921@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,110 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit 405b0d610745fb5e84fc2961d9b960abb9f3d107 ]
+[ Upstream commit 5ad20e3d8cfe3b2e42bbddc7e0ebaa74479bb589 ]
 
-Syzkaller, courtesy of syzbot, identified an error (see report [1]) in
-aqc111 driver, caused by incomplete sanitation of usb read calls'
-results. This problem is quite similar to the one fixed in commit
-920a9fa27e78 ("net: asix: add proper error handling of usb read errors").
+Some bmips SoCs (bcm6362, bcm63268) share the same SPI reset for both SPI
+and HSSPI controllers, so reset shouldn't be exclusive.
 
-For instance, usbnet_read_cmd() may read fewer than 'size' bytes,
-even if the caller expected the full amount, and aqc111_read_cmd()
-will not check its result properly. As [1] shows, this may lead
-to MAC address in aqc111_bind() being only partly initialized,
-triggering KMSAN warnings.
-
-Fix the issue by verifying that the number of bytes read is
-as expected and not less.
-
-[1] Partial syzbot report:
-BUG: KMSAN: uninit-value in is_valid_ether_addr include/linux/etherdevice.h:208 [inline]
-BUG: KMSAN: uninit-value in usbnet_probe+0x2e57/0x4390 drivers/net/usb/usbnet.c:1830
- is_valid_ether_addr include/linux/etherdevice.h:208 [inline]
- usbnet_probe+0x2e57/0x4390 drivers/net/usb/usbnet.c:1830
- usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
- call_driver_probe drivers/base/dd.c:-1 [inline]
- really_probe+0x4d1/0xd90 drivers/base/dd.c:658
- __driver_probe_device+0x268/0x380 drivers/base/dd.c:800
-...
-
-Uninit was stored to memory at:
- dev_addr_mod+0xb0/0x550 net/core/dev_addr_lists.c:582
- __dev_addr_set include/linux/netdevice.h:4874 [inline]
- eth_hw_addr_set include/linux/etherdevice.h:325 [inline]
- aqc111_bind+0x35f/0x1150 drivers/net/usb/aqc111.c:717
- usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
- usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
-...
-
-Uninit was stored to memory at:
- ether_addr_copy include/linux/etherdevice.h:305 [inline]
- aqc111_read_perm_mac drivers/net/usb/aqc111.c:663 [inline]
- aqc111_bind+0x794/0x1150 drivers/net/usb/aqc111.c:713
- usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
- usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
- call_driver_probe drivers/base/dd.c:-1 [inline]
-...
-
-Local variable buf.i created at:
- aqc111_read_perm_mac drivers/net/usb/aqc111.c:656 [inline]
- aqc111_bind+0x221/0x1150 drivers/net/usb/aqc111.c:713
- usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
-
-Reported-by: syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=3b6b9ff7b80430020c7b
-Tested-by: syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com
-Fixes: df2d59a2ab6c ("net: usb: aqc111: Add support for getting and setting of MAC address")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patch.msgid.link/20250520113240.2369438-1-n.zhandarovich@fintech.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 38807adeaf1e ("spi: bcm63xx-spi: add reset support")
+Reported-by: Jonas Gorski <jonas.gorski@gmail.com>
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20250529130915.2519590-2-noltari@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/aqc111.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/spi/spi-bcm63xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
-index ff5be2cbf17b9..453a2cf82753f 100644
---- a/drivers/net/usb/aqc111.c
-+++ b/drivers/net/usb/aqc111.c
-@@ -30,10 +30,13 @@ static int aqc111_read_cmd_nopm(struct usbnet *dev, u8 cmd, u16 value,
- 	ret = usbnet_read_cmd_nopm(dev, cmd, USB_DIR_IN | USB_TYPE_VENDOR |
- 				   USB_RECIP_DEVICE, value, index, data, size);
+diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
+index ef3a7226db125..a95badb7b7114 100644
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -523,7 +523,7 @@ static int bcm63xx_spi_probe(struct platform_device *pdev)
+ 		return PTR_ERR(clk);
+ 	}
  
--	if (unlikely(ret < 0))
-+	if (unlikely(ret < size)) {
-+		ret = ret < 0 ? ret : -ENODATA;
-+
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
-+	}
+-	reset = devm_reset_control_get_optional_exclusive(dev, NULL);
++	reset = devm_reset_control_get_optional_shared(dev, NULL);
+ 	if (IS_ERR(reset))
+ 		return PTR_ERR(reset);
  
- 	return ret;
- }
-@@ -46,10 +49,13 @@ static int aqc111_read_cmd(struct usbnet *dev, u8 cmd, u16 value,
- 	ret = usbnet_read_cmd(dev, cmd, USB_DIR_IN | USB_TYPE_VENDOR |
- 			      USB_RECIP_DEVICE, value, index, data, size);
- 
--	if (unlikely(ret < 0))
-+	if (unlikely(ret < size)) {
-+		ret = ret < 0 ? ret : -ENODATA;
-+
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
-+	}
- 
- 	return ret;
- }
 -- 
 2.39.5
 
