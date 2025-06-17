@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC172F2358;
-	Tue, 17 Jun 2025 15:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C68A2F2341;
+	Tue, 17 Jun 2025 15:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175530; cv=none; b=FOZplAoRP8wofHciIqjMkov+lj9Jm4BkIZS5VEFa/ZkhR+Grw+FNqA+vnFc/uTKsOp7ld4eLofVIKPuvKeaxT4Ja1FO7EVsIbXWU+VJqHwC+h6hGxSI0mcuOUwrJ0G9OktHd9NFwbPArSgTaNH33kuD4Lys4dm4fzfjoBdPlIWY=
+	t=1750175533; cv=none; b=gRN71HxbFdnbvcldmDUfMQ54iygzal9rIjs9oeT+QDszCprqsmSO7S75bgojWAdsqIxr6Vf72BrNJfwrKOFaNz6SnaHWlAFXMCZ0E9hPZuTUsOiSR++t9FqB7zK+8CUp+1CCLQCCwqPcZ9AovPuHAb3NBr3Lggq+aYhxpFgylZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175530; c=relaxed/simple;
-	bh=Ie3hSuRrrBycS1tA6TLT4ei7YYKRDbfV/sFHq0Yppk8=;
+	s=arc-20240116; t=1750175533; c=relaxed/simple;
+	bh=p+6YxpTf4zhQmU4Yr0UhCp5kpH42R/KPXfUnNzfdKpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EKrAfla4+oSVE92E/OZG5moeo9JjkzqEnQzpJXh3BUdcXpUGAw4CvzAhf6qbybH+PgJs0qxGkoNtVREFEpLDwsMqBsoZJf9JbixKob/sGDNUK1K/2kQPSQ4H1Ur8TaB4LboPpZEFP2op3qLjsUucY9rydF7yXM8ZunKw9ATyV00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWowq5Sh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YfOJsBOueakMLSH4IR697iQ8jVbs/8jljlwXtCuOkfDB3C4JMUSOpYVEP/d/XDase+VBy8QOiA7un7q9d0F1vWbMPAmyszMVeiTGcAzZbtcKLjAa2mpkxwfTBJfgaWBvCCjDjRxMG/EIqr1DnhOOFVLcFnNOIy6ZNu6oMyGouq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3kV91wu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWowq5Sh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656B1C4CEE3;
-	Tue, 17 Jun 2025 15:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3kV91wu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9B2C4CEE7;
+	Tue, 17 Jun 2025 15:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175529;
-	bh=Ie3hSuRrrBycS1tA6TLT4ei7YYKRDbfV/sFHq0Yppk8=;
+	s=korg; t=1750175533;
+	bh=p+6YxpTf4zhQmU4Yr0UhCp5kpH42R/KPXfUnNzfdKpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hWowq5ShAAqAVHL6V8Bmb69XBhaOcx6GP5WNjKLP6ox7lSug9BCPU4Hr/96n7cUB5
-	 WffnyoT1VYMkqoaxowdOWD5C6qKp0sZ/WvvWepLgSSFJF0CspCHjKy4aGLnYFnOnvB
-	 QAJoQTj/77TQLOqjywzM04DtPVUynP3LQwgjmCOU=
+	b=M3kV91wufinLgnwBp5x50uJAXJJpDYLkILylL5kUzWEvocfCkdKxY/XU1WN8ReI42
+	 KI7poAY17uziacecg4aMMmNhL1aosVPgFuGYCUO4PvnXkbsOYvfgEETsPAIjlodWcO
+	 oi3WPO3JpfMxDdLGgJESFJ35OmRJGzXMto9KThBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yihang Li <liyihang9@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 074/780] PM: runtime: Add new devm functions
-Date: Tue, 17 Jun 2025 17:16:22 +0200
-Message-ID: <20250617152454.526110139@linuxfoundation.org>
+Subject: [PATCH 6.12 135/512] scsi: hisi_sas: Call I_T_nexus after soft reset for SATA disk
+Date: Tue, 17 Jun 2025 17:21:41 +0200
+Message-ID: <20250617152425.068413830@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,117 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bence Csókás <csokas.bence@prolan.hu>
+From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit 73db799bf5efc5a04654bb3ff6c9bf63a0dfa473 ]
+[ Upstream commit e4d953ca557e02edd3aed7390043e1b8ad1c9723 ]
 
-Add `devm_pm_runtime_set_active_enabled()` and
-`devm_pm_runtime_get_noresume()` for simplifying
-common cases in drivers.
+In commit 21c7e972475e ("scsi: hisi_sas: Disable SATA disk phy for severe
+I_T nexus reset failure"), if the softreset fails upon certain
+conditions, the PHY connected to the disk is disabled directly. Manual
+recovery is required, which is inconvenient for users in actual use.
 
-Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
-Link: https://patch.msgid.link/20250327195928.680771-3-csokas.bence@prolan.hu
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 8856eafcc05e ("spi: atmel-quadspi: Fix unbalanced pm_runtime by using devm_ API")
+In addition, SATA disks do not support simultaneous connection of multiple
+hosts. Therefore, when multiple controllers are connected to a SATA disk
+at the same time, the controller which is connected later failed to issue
+an ATA softreset to the SATA disk. As a result, the PHY associated with
+the disk is disabled and cannot be automatically recovered.
+
+Now that, we will not focus on the execution result of softreset. No
+matter whether the execution is successful or not, we will directly carry
+out I_T_nexus_reset.
+
+Fixes: 21c7e972475e ("scsi: hisi_sas: Disable SATA disk phy for severe I_T nexus reset failure")
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Link: https://lore.kernel.org/r/20250414080845.1220997-4-liyihang9@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/runtime.c | 44 ++++++++++++++++++++++++++++++++++++
- include/linux/pm_runtime.h   |  4 ++++
- 2 files changed, 48 insertions(+)
+ drivers/scsi/hisi_sas/hisi_sas_main.c | 29 +++++----------------------
+ 1 file changed, 5 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index 0e127b0329c00..205a4f8828b0a 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1568,6 +1568,32 @@ void pm_runtime_enable(struct device *dev)
- }
- EXPORT_SYMBOL_GPL(pm_runtime_enable);
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index e98e6b2b9f570..d9500b7306905 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -1850,33 +1850,14 @@ static int hisi_sas_I_T_nexus_reset(struct domain_device *device)
+ 	}
+ 	hisi_sas_dereg_device(hisi_hba, device);
  
-+static void pm_runtime_set_suspended_action(void *data)
-+{
-+	pm_runtime_set_suspended(data);
-+}
-+
-+/**
-+ * devm_pm_runtime_set_active_enabled - set_active version of devm_pm_runtime_enable.
-+ *
-+ * @dev: Device to handle.
-+ */
-+int devm_pm_runtime_set_active_enabled(struct device *dev)
-+{
-+	int err;
-+
-+	err = pm_runtime_set_active(dev);
-+	if (err)
-+		return err;
-+
-+	err = devm_add_action_or_reset(dev, pm_runtime_set_suspended_action, dev);
-+	if (err)
-+		return err;
-+
-+	return devm_pm_runtime_enable(dev);
-+}
-+EXPORT_SYMBOL_GPL(devm_pm_runtime_set_active_enabled);
-+
- static void pm_runtime_disable_action(void *data)
- {
- 	pm_runtime_dont_use_autosuspend(data);
-@@ -1590,6 +1616,24 @@ int devm_pm_runtime_enable(struct device *dev)
- }
- EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
+-	rc = hisi_sas_debug_I_T_nexus_reset(device);
+-	if (rc == TMF_RESP_FUNC_COMPLETE && dev_is_sata(device)) {
+-		struct sas_phy *local_phy;
+-
++	if (dev_is_sata(device)) {
+ 		rc = hisi_sas_softreset_ata_disk(device);
+-		switch (rc) {
+-		case -ECOMM:
+-			rc = -ENODEV;
+-			break;
+-		case TMF_RESP_FUNC_FAILED:
+-		case -EMSGSIZE:
+-		case -EIO:
+-			local_phy = sas_get_local_phy(device);
+-			rc = sas_phy_enable(local_phy, 0);
+-			if (!rc) {
+-				local_phy->enabled = 0;
+-				dev_err(dev, "Disabled local phy of ATA disk %016llx due to softreset fail (%d)\n",
+-					SAS_ADDR(device->sas_addr), rc);
+-				rc = -ENODEV;
+-			}
+-			sas_put_local_phy(local_phy);
+-			break;
+-		default:
+-			break;
+-		}
++		if (rc == TMF_RESP_FUNC_FAILED)
++			dev_err(dev, "ata disk %016llx reset (%d)\n",
++				SAS_ADDR(device->sas_addr), rc);
+ 	}
  
-+static void pm_runtime_put_noidle_action(void *data)
-+{
-+	pm_runtime_put_noidle(data);
-+}
-+
-+/**
-+ * devm_pm_runtime_get_noresume - devres-enabled version of pm_runtime_get_noresume.
-+ *
-+ * @dev: Device to handle.
-+ */
-+int devm_pm_runtime_get_noresume(struct device *dev)
-+{
-+	pm_runtime_get_noresume(dev);
-+
-+	return devm_add_action_or_reset(dev, pm_runtime_put_noidle_action, dev);
-+}
-+EXPORT_SYMBOL_GPL(devm_pm_runtime_get_noresume);
-+
- /**
-  * pm_runtime_forbid - Block runtime PM of a device.
-  * @dev: Device to handle.
-diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
-index 7fb5a459847ef..756b842dcd309 100644
---- a/include/linux/pm_runtime.h
-+++ b/include/linux/pm_runtime.h
-@@ -96,7 +96,9 @@ extern void pm_runtime_new_link(struct device *dev);
- extern void pm_runtime_drop_link(struct device_link *link);
- extern void pm_runtime_release_supplier(struct device_link *link);
++	rc = hisi_sas_debug_I_T_nexus_reset(device);
+ 	if ((rc == TMF_RESP_FUNC_COMPLETE) || (rc == -ENODEV))
+ 		hisi_sas_release_task(hisi_hba, device);
  
-+int devm_pm_runtime_set_active_enabled(struct device *dev);
- extern int devm_pm_runtime_enable(struct device *dev);
-+int devm_pm_runtime_get_noresume(struct device *dev);
- 
- /**
-  * pm_suspend_ignore_children - Set runtime PM behavior regarding children.
-@@ -294,7 +296,9 @@ static inline bool pm_runtime_blocked(struct device *dev) { return true; }
- static inline void pm_runtime_allow(struct device *dev) {}
- static inline void pm_runtime_forbid(struct device *dev) {}
- 
-+static inline int devm_pm_runtime_set_active_enabled(struct device *dev) { return 0; }
- static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
-+static inline int devm_pm_runtime_get_noresume(struct device *dev) { return 0; }
- 
- static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
- static inline void pm_runtime_get_noresume(struct device *dev) {}
 -- 
 2.39.5
 
