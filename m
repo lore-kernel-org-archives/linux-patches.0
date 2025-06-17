@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F5F2EE60C;
-	Tue, 17 Jun 2025 16:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3212EE60C;
+	Tue, 17 Jun 2025 16:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176137; cv=none; b=GLw/Dm8/V6rhVNePpHIjIxbGpu+O6XHStB/PovU2ud4QoRFY7bwMKvdTkMYPuCVScohEmn/VSOs7kQcqfFrgrY41nZovn5Mcx1vbO+SlF3Bre30cF2DfE93ec2xAdHOKtPzNRPfZCibSEbuehP6/boJScEf75K7fSM8EhWZfP70=
+	t=1750176140; cv=none; b=gxN9O1Y2p0UoB6Ue8IAjUYpe6AaCPiCK/hRNCna5xLASWr5EQTR4FQX687IVFvy8C8a/i/kq5krMYWEKaKnUAVm4g9LbBC/if1i2xv2WQPrdoy5QTP6k+WaFyzQ/w7o82+2lAM2Z3imw1bL7mXyyElTxwqatEHOQMoNyVKQlnYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176137; c=relaxed/simple;
-	bh=PP1pQ4GXSfQEpapJORZHvF+b/DAZ0Ne5domX7G53UJQ=;
+	s=arc-20240116; t=1750176140; c=relaxed/simple;
+	bh=vUkz5R2O/inHOb7Qkqpz/cdfZZHxKb1R7n9qGnyr2B8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NxUmCbqxDEnNzUqBq2g2j1fKUw8w7NYI3au3LAm7VGRbO98pdGKy4wOH8j6F/3vrILS31yFehw3AFAAZuT4ysyN12bWilKophKFxSBojJPQp+wpKb43FYIOgDs/ErJklyUkGn6xRijmxHlfyUl8oMPwA2lik+ofRFvHtS4IlGog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=diKsvbSw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCuitwFsDx+xoRDNY/7dW4IUHnlW4CnjNPtsOeChl+x0hU+D1/TJ+8k0LXi3AGG6AvjDWGq/dbqjHZYWvHDQfiTa336SpGGibmunM5LeG9uGn8GtXf7lcmQ7BK7Z2iDRG+2DCvdTgAjtzEtQCI9bv3jkZJbDxmGnRelnHrgqhvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jo1O0xMp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="diKsvbSw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26A7C4CEE3;
-	Tue, 17 Jun 2025 16:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jo1O0xMp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CCFC4CEE3;
+	Tue, 17 Jun 2025 16:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176137;
-	bh=PP1pQ4GXSfQEpapJORZHvF+b/DAZ0Ne5domX7G53UJQ=;
+	s=korg; t=1750176140;
+	bh=vUkz5R2O/inHOb7Qkqpz/cdfZZHxKb1R7n9qGnyr2B8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=diKsvbSw10cRo8O0WWeBA/z97L7/xnQnbjpHhIKBSxjHR0TBRS1KasKb1Hm83vZmA
-	 sMKiPTQ5E9nCO7tqtF91wNOQMQv7q77emi/alyr3cTI3r33EES+bfZT2XmWRa/REXv
-	 SLkN+DjnPBH6D53mPvLj1A+F+cZ1XfNWlANFdOrQ=
+	b=jo1O0xMpHl2/9qT9Roe8kEmT/86ElRFhvbjqprTVnlP121tXY4yn5Ik3QvQTnnk49
+	 SMD7QYZJURmkO1p+kRBZe1ULfrsrZanTM9KjOhwhBtECk8GYIW7uaxnKJY+ELwSXlV
+	 FD6elazu/z35JTjMdu5HdAGKsqgpf4NW42QK8C1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
-	Aradhya Bhatia <aradhya.bhatia@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 158/780] drm/xe/guc: Make creation of SLPC debugfs files conditional
-Date: Tue, 17 Jun 2025 17:17:46 +0200
-Message-ID: <20250617152457.928718891@linuxfoundation.org>
+Subject: [PATCH 6.12 200/512] net: usb: aqc111: fix error handling of usbnet read calls
+Date: Tue, 17 Jun 2025 17:22:46 +0200
+Message-ID: <20250617152427.736124740@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,82 +46,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aradhya Bhatia <aradhya.bhatia@intel.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit e22d7acf9f47b01c9a538f3dac5c8e8d46fbca96 ]
+[ Upstream commit 405b0d610745fb5e84fc2961d9b960abb9f3d107 ]
 
-Platforms that do not support SLPC are exempted from the GuC PC support.
-The GuC PC does not get initialized, and neither do its BOs get created.
+Syzkaller, courtesy of syzbot, identified an error (see report [1]) in
+aqc111 driver, caused by incomplete sanitation of usb read calls'
+results. This problem is quite similar to the one fixed in commit
+920a9fa27e78 ("net: asix: add proper error handling of usb read errors").
 
-This causes a problem because the GuC PC debugfs file is still being
-created. Whenever the file is attempted to read, it causes a NULL
-pointer dereference on the supposed BO of the GuC PC.
+For instance, usbnet_read_cmd() may read fewer than 'size' bytes,
+even if the caller expected the full amount, and aqc111_read_cmd()
+will not check its result properly. As [1] shows, this may lead
+to MAC address in aqc111_bind() being only partly initialized,
+triggering KMSAN warnings.
 
-So, make the creation of SLPC debugfs files conditional to when SLPC
-features are supported.
+Fix the issue by verifying that the number of bytes read is
+as expected and not less.
 
-Fixes: aaab5404b16f ("drm/xe: Introduce GuC PC debugfs")
-Suggested-by: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Signed-off-by: Aradhya Bhatia <aradhya.bhatia@intel.com>
-Link: https://lore.kernel.org/r/20250516141902.5614-1-aradhya.bhatia@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit 17486cf3df5320752cc67ee8bcb2379d1b9de76c)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+[1] Partial syzbot report:
+BUG: KMSAN: uninit-value in is_valid_ether_addr include/linux/etherdevice.h:208 [inline]
+BUG: KMSAN: uninit-value in usbnet_probe+0x2e57/0x4390 drivers/net/usb/usbnet.c:1830
+ is_valid_ether_addr include/linux/etherdevice.h:208 [inline]
+ usbnet_probe+0x2e57/0x4390 drivers/net/usb/usbnet.c:1830
+ usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
+ call_driver_probe drivers/base/dd.c:-1 [inline]
+ really_probe+0x4d1/0xd90 drivers/base/dd.c:658
+ __driver_probe_device+0x268/0x380 drivers/base/dd.c:800
+...
+
+Uninit was stored to memory at:
+ dev_addr_mod+0xb0/0x550 net/core/dev_addr_lists.c:582
+ __dev_addr_set include/linux/netdevice.h:4874 [inline]
+ eth_hw_addr_set include/linux/etherdevice.h:325 [inline]
+ aqc111_bind+0x35f/0x1150 drivers/net/usb/aqc111.c:717
+ usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
+ usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
+...
+
+Uninit was stored to memory at:
+ ether_addr_copy include/linux/etherdevice.h:305 [inline]
+ aqc111_read_perm_mac drivers/net/usb/aqc111.c:663 [inline]
+ aqc111_bind+0x794/0x1150 drivers/net/usb/aqc111.c:713
+ usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
+ usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
+ call_driver_probe drivers/base/dd.c:-1 [inline]
+...
+
+Local variable buf.i created at:
+ aqc111_read_perm_mac drivers/net/usb/aqc111.c:656 [inline]
+ aqc111_bind+0x221/0x1150 drivers/net/usb/aqc111.c:713
+ usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
+
+Reported-by: syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3b6b9ff7b80430020c7b
+Tested-by: syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com
+Fixes: df2d59a2ab6c ("net: usb: aqc111: Add support for getting and setting of MAC address")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://patch.msgid.link/20250520113240.2369438-1-n.zhandarovich@fintech.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_debugfs.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/net/usb/aqc111.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_debugfs.c b/drivers/gpu/drm/xe/xe_guc_debugfs.c
-index f33013f8a0f38..0b102ab46c4df 100644
---- a/drivers/gpu/drm/xe/xe_guc_debugfs.c
-+++ b/drivers/gpu/drm/xe/xe_guc_debugfs.c
-@@ -113,23 +113,34 @@ static const struct drm_info_list vf_safe_debugfs_list[] = {
- 	{ "guc_ctb", .show = guc_debugfs_show, .data = guc_ctb },
- };
+diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
+index ff5be2cbf17b9..453a2cf82753f 100644
+--- a/drivers/net/usb/aqc111.c
++++ b/drivers/net/usb/aqc111.c
+@@ -30,10 +30,13 @@ static int aqc111_read_cmd_nopm(struct usbnet *dev, u8 cmd, u16 value,
+ 	ret = usbnet_read_cmd_nopm(dev, cmd, USB_DIR_IN | USB_TYPE_VENDOR |
+ 				   USB_RECIP_DEVICE, value, index, data, size);
  
-+/* For GuC debugfs files that require the SLPC support */
-+static const struct drm_info_list slpc_debugfs_list[] = {
-+	{ "guc_pc", .show = guc_debugfs_show, .data = guc_pc },
-+};
+-	if (unlikely(ret < 0))
++	if (unlikely(ret < size)) {
++		ret = ret < 0 ? ret : -ENODATA;
 +
- /* everything else should be added here */
- static const struct drm_info_list pf_only_debugfs_list[] = {
- 	{ "guc_log", .show = guc_debugfs_show, .data = guc_log },
- 	{ "guc_log_dmesg", .show = guc_debugfs_show, .data = guc_log_dmesg },
--	{ "guc_pc", .show = guc_debugfs_show, .data = guc_pc },
- };
- 
- void xe_guc_debugfs_register(struct xe_guc *guc, struct dentry *parent)
- {
--	struct drm_minor *minor = guc_to_xe(guc)->drm.primary;
-+	struct xe_device *xe =  guc_to_xe(guc);
-+	struct drm_minor *minor = xe->drm.primary;
- 
- 	drm_debugfs_create_files(vf_safe_debugfs_list,
- 				 ARRAY_SIZE(vf_safe_debugfs_list),
- 				 parent, minor);
- 
--	if (!IS_SRIOV_VF(guc_to_xe(guc)))
-+	if (!IS_SRIOV_VF(xe)) {
- 		drm_debugfs_create_files(pf_only_debugfs_list,
- 					 ARRAY_SIZE(pf_only_debugfs_list),
- 					 parent, minor);
-+
-+		if (!xe->info.skip_guc_pc)
-+			drm_debugfs_create_files(slpc_debugfs_list,
-+						 ARRAY_SIZE(slpc_debugfs_list),
-+						 parent, minor);
+ 		netdev_warn(dev->net,
+ 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
+ 			    cmd, index, ret);
 +	}
+ 
+ 	return ret;
+ }
+@@ -46,10 +49,13 @@ static int aqc111_read_cmd(struct usbnet *dev, u8 cmd, u16 value,
+ 	ret = usbnet_read_cmd(dev, cmd, USB_DIR_IN | USB_TYPE_VENDOR |
+ 			      USB_RECIP_DEVICE, value, index, data, size);
+ 
+-	if (unlikely(ret < 0))
++	if (unlikely(ret < size)) {
++		ret = ret < 0 ? ret : -ENODATA;
++
+ 		netdev_warn(dev->net,
+ 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
+ 			    cmd, index, ret);
++	}
+ 
+ 	return ret;
  }
 -- 
 2.39.5
