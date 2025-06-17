@@ -1,53 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1B42EA14E;
-	Tue, 17 Jun 2025 16:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB572F235C;
+	Tue, 17 Jun 2025 16:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177155; cv=none; b=Fg1RqfPGWrLEupsEog9gBaPJhNPLF9/0tPlvNY7IN3lTBXKUYf1rZwIwDKJV5LI5kb0/aC7+MbVstN78gBgIOqhKiSDTldBjl+/r70Rb6c+sZjUSkI3gpYCBhhwMupaElkN+72WlFpdfTfj5GZ22C7uyX5z8Upfag+scyVNNBEg=
+	t=1750177160; cv=none; b=FhifsYrypCEZu2+9F6nNIgx1aSMzCM2iPG5CZNOEp+Lgxj/MHhmh+dUa4Ww4SMWKdizQDyQZAX2BgxOryJ6b4OwMlj+CtBDKFvpobH+nZt6b19LCR4KCwuYzx4xUvggqas5Gxciv31ivfwyReFX5dKl1thRxUk7hPR7oNkUYGTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177155; c=relaxed/simple;
-	bh=ghTo5pqkmKqRMHX6nvIBMg8eGWDBCiQUCr5FeBdsGLM=;
+	s=arc-20240116; t=1750177160; c=relaxed/simple;
+	bh=yESWEhmf0Uawvd972r8fKzTDw8EgnsN9LZaEFGQXo/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KbprP3Ny5DBnMpGkTMhE6r4toatVznVbN7KnbCyGI3eLEfsqwvj3UTDNQi6BbtyhZ+nnJqYjAL6huhTaXoG3FLplomM+W5HiGyB/Bg6t/yHda0AAin0GAGkgsSqkoFqmbzi2ZKms68F56an6nWqmFRAa4Ln4pQwoiK+hlrKnreg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWiUMCtd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HZPMC5kkC0ijLOlx/UQym4HVAOvCAU9wSOiAseyIHdRJu0Cqvk0qTL27EFwz8E2KwOduzmWRVLy5eftxMPt1vJRe95CztqmAsT4jmzPtDoaH1dWGNaHjgJJEppzIq7EiySY8M8jxRjBoW67pgSnNAkJYc5D3A4Hwl17Z5zDOvPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h72R6FBH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWiUMCtd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B265FC4CEE3;
-	Tue, 17 Jun 2025 16:19:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h72R6FBH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33638C4CEE3;
+	Tue, 17 Jun 2025 16:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177155;
-	bh=ghTo5pqkmKqRMHX6nvIBMg8eGWDBCiQUCr5FeBdsGLM=;
+	s=korg; t=1750177158;
+	bh=yESWEhmf0Uawvd972r8fKzTDw8EgnsN9LZaEFGQXo/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KWiUMCtd7s7TmJpaHbfxayQVSKA5ZDTapQ2j/R/19HWCFgwn9na1zGIEoHkoPg9iE
-	 A73B50JkoikOyXz4P2kPkspuWnVteV0kV15Y+hP504xaItamFhreSFdX+o1dqwLini
-	 b+1p3zCvQgsVpiJtWQFour7ykSDNY9Hb6X2hcqCA=
+	b=h72R6FBH+4MvMjqx/tfexAYyXU7YC+gF0DfsQJny/IwnzKw5PT1EqXEYbtoNzRRwJ
+	 hvmv5thxOSr2iA/FaTxdXt4+zGQTZVf3uusTJfigR7RUu+GSB13IEN2Gng+M2OJMkz
+	 ViYJfuQ8QqpAyaBmbblN3vrl6S158tgr2VNtFEFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anubhav Shelat <ashelat@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Michael Petlan <mpetlan@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 302/512] perf trace: Set errpid to false for rseq and set_robust_list
-Date: Tue, 17 Jun 2025 17:24:28 +0200
-Message-ID: <20250617152431.834506426@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 353/356] calipso: unlock rcu before returning -EAFNOSUPPORT
+Date: Tue, 17 Jun 2025 17:27:48 +0200
+Message-ID: <20250617152352.345822501@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -59,64 +49,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anubhav Shelat <ashelat@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8c56bfe53bd881c7b598c54a3a06216743c57bbc ]
+commit 3cae906e1a6184cdc9e4d260e4dbdf9a118d94ad upstream.
 
-The 'rseq' and 'set_robust_list' syscalls don't return a pid, so set
-errpid for both to false.
+syzbot reported that a recent patch forgot to unlock rcu
+in the error path.
 
-Fixes: 0c1019e3463b263a ("perf trace: Mark the 'rseq' arg in the rseq syscall as coming from user space")
-Fixes: 1de5b5dcb8353f36 ("perf trace: Mark the 'head' arg in the set_robust_list syscall as coming from user space")
-Signed-off-by: Anubhav Shelat <ashelat@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Michael Petlan <mpetlan@redhat.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250529143334.1469669-2-ashelat@redhat.com
-[ Remove explicit .errpid = false, omitting its initialization zeroes it, as noted by Namhyung ]
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Adopt the convention that netlbl_conn_setattr() is already using.
+
+Fixes: 6e9f2df1c550 ("calipso: Don't call calipso functions for AF_INET sk.")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/20250604133826.1667664-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/builtin-trace.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netlabel/netlabel_kapi.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index ebe4fad0d4751..f77e4f4b6f03e 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -1327,7 +1327,7 @@ static const struct syscall_fmt syscall_fmts[] = {
- 	  .arg = { [0] = { .scnprintf = SCA_FDAT, /* olddirfd */ },
- 		   [2] = { .scnprintf = SCA_FDAT, /* newdirfd */ },
- 		   [4] = { .scnprintf = SCA_RENAMEAT2_FLAGS, /* flags */ }, }, },
--	{ .name	    = "rseq",	    .errpid = true,
-+	{ .name	    = "rseq",
- 	  .arg = { [0] = { .from_user = true /* rseq */, }, }, },
- 	{ .name	    = "rt_sigaction",
- 	  .arg = { [0] = { .scnprintf = SCA_SIGNUM, /* sig */ }, }, },
-@@ -1351,7 +1351,7 @@ static const struct syscall_fmt syscall_fmts[] = {
- 	{ .name	    = "sendto",
- 	  .arg = { [3] = { .scnprintf = SCA_MSG_FLAGS, /* flags */ },
- 		   [4] = SCA_SOCKADDR_FROM_USER(addr), }, },
--	{ .name	    = "set_robust_list",	    .errpid = true,
-+	{ .name	    = "set_robust_list",
- 	  .arg = { [0] = { .from_user = true /* head */, }, }, },
- 	{ .name	    = "set_tid_address", .errpid = true, },
- 	{ .name	    = "setitimer",
--- 
-2.39.5
-
+--- a/net/netlabel/netlabel_kapi.c
++++ b/net/netlabel/netlabel_kapi.c
+@@ -1140,8 +1140,10 @@ int netlbl_conn_setattr(struct sock *sk,
+ 		break;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	case AF_INET6:
+-		if (sk->sk_family != AF_INET6)
+-			return -EAFNOSUPPORT;
++		if (sk->sk_family != AF_INET6) {
++			ret_val = -EAFNOSUPPORT;
++			goto conn_setattr_return;
++		}
+ 
+ 		addr6 = (struct sockaddr_in6 *)addr;
+ 		entry = netlbl_domhsh_getentry_af6(secattr->domain,
 
 
