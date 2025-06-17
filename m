@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD53239E85;
-	Tue, 17 Jun 2025 16:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B5D221F14;
+	Tue, 17 Jun 2025 16:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177435; cv=none; b=RTvyjwoF0rvIXzPBr7KfFNdxE1NbdhK6fGyYfuE48d+zw/gW1pfA+SPj2Jqi4xeOcfGVqzNg2NxI9RbHTzSUTjC1Sk4POB5oXNN3ouP1bfRufi7INC9PKEcRnoMrVk3keTX08Cp6XBE0PafRtPP3d9yLK/1FJyOco+Etychb37I=
+	t=1750177438; cv=none; b=BExdj1M9HoLDahAlJ/hUUHyeTiP4G2LkjhPaxWNszYnxre5vv9CSLwXJRC6DlPFf/vMXxaGOTUgpYf/5I+lXoES6wUJ4Cfmi/mkSG+qBMNH7C2by7TRzU9/erdUFjio4rvJ1zULB3TPhVDwiqftKh6JQQA0+dHmVD7hZ4iLT2fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177435; c=relaxed/simple;
-	bh=4C9vBGGk+6Ot4jCSx/E/P2/5cmv6SE9TOfXmQa8Xrag=;
+	s=arc-20240116; t=1750177438; c=relaxed/simple;
+	bh=AQTdHGlY25lJX1rWElR3fuMSyYNBVAvzg54lwdEuWyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZgIEuE5nltj4XJAlP3R5Sd1hrVzOpJNjlRbHPFBxFgNk98lmg2S5TcbjLeUBZ/72tWZejaal51DP3+EYZL1psYpB+XPPG5vUbS6EQtCCawn+wxFKfS8IVXAHHnZsO9oQELyZ64dIZFeW6io/ITrwbBdBFLcxZ2a8QCdkHdr0bOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTzFLyuQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CSgpVebU3xwhEXHW1QMBnuA0y9ezXFikanj8zwxhBdbjTi8vaf+fNTH1lEk547ZF+W0M5B5cFIam6mGSN/JFrXTIcpw+HubMJA/9hVwmlbnq4Nf/pAw3xzN1PbM/+iKoo2v5qe3MzXLQE1Soi/+7Va0NDqfeT1YI68rsy+4H9EA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rckrtljH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTzFLyuQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783FCC4CEE3;
-	Tue, 17 Jun 2025 16:23:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rckrtljH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA04C4CEF0;
+	Tue, 17 Jun 2025 16:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177434;
-	bh=4C9vBGGk+6Ot4jCSx/E/P2/5cmv6SE9TOfXmQa8Xrag=;
+	s=korg; t=1750177438;
+	bh=AQTdHGlY25lJX1rWElR3fuMSyYNBVAvzg54lwdEuWyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BTzFLyuQDGn9xla2pEe2bGlQFHL1eM/CG2Aq9kYqmRuduXzOAreWz9j5DGbN5T60V
-	 Q+zTgatL3xPU9cqa0fNlgtwfLr3aciXqFU6zDxItlQE9Ep/nEDpvc0+dblM3weFXAg
-	 2XFuw8nNv8OV3h0LWj+E8CRC27FXAtvxjaeYGrzo=
+	b=rckrtljH/03HVuJFdE/LUT1rz+yfIx0+f28uIq8RO/nLO8S9FKRHMZIBYTX6qjD6B
+	 Ru4qawMaohctz/W+J5O5FSGWrYKhHTcAgeQcGEEai5UDft+ORidj8tjKLkJqevFRCq
+	 0MOylrIXP+kHXe0GO/GP3TjWu/jRSliJEFp/vxvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivasharan S <shivasharan.srikanteshwara@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Nathan Lynch <nathan.lynch@amd.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 283/780] scsi: mpt3sas: Fix _ctl_get_mpt_mctp_passthru_adapter() to return IOC pointer
-Date: Tue, 17 Jun 2025 17:19:51 +0200
-Message-ID: <20250617152502.999789587@linuxfoundation.org>
+Subject: [PATCH 6.12 315/512] dmaengine: ti: Add NULL check in udma_probe()
+Date: Tue, 17 Jun 2025 17:24:41 +0200
+Message-ID: <20250617152432.379124964@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +49,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 9ad5249b37b59baaf2da1014f397c2e23b605075 ]
+[ Upstream commit fd447415e74bccd7362f760d4ea727f8e1ebfe91 ]
 
-Fix _ctl_get_mpt_mctp_passthru_adapter() to return the correct IOC
-pointer to caller based on dev_index.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+udma_probe() does not check for this case, which results in a NULL
+pointer dereference.
 
-Signed-off-by: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
-Link: https://lore.kernel.org/r/1747213781-31545-1-git-send-email-shivasharan.srikanteshwara@broadcom.com
-Fixes: c72be4b5bb7c ("scsi: mpt3sas: Add support for MCTP Passthrough commands")
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Add NULL check after devm_kasprintf() to prevent this issue.
+
+Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Nathan Lynch <nathan.lynch@amd.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/20250402023900.43440-1-bsdhenrymartin@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_ctl.c | 3 ++-
+ drivers/dma/ti/k3-udma.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_ctl.c b/drivers/scsi/mpt3sas/mpt3sas_ctl.c
-index 063b10dd82514..02fc204b9bf7b 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_ctl.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_ctl.c
-@@ -2869,8 +2869,9 @@ _ctl_get_mpt_mctp_passthru_adapter(int dev_index)
- 		if (ioc->facts.IOCCapabilities & MPI26_IOCFACTS_CAPABILITY_MCTP_PASSTHRU) {
- 			if (count == dev_index) {
- 				spin_unlock(&gioc_lock);
--				return 0;
-+				return ioc;
- 			}
-+			count++;
- 		}
- 	}
- 	spin_unlock(&gioc_lock);
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index 7d89385c3c450..38b54719587cf 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -5572,7 +5572,8 @@ static int udma_probe(struct platform_device *pdev)
+ 		uc->config.dir = DMA_MEM_TO_MEM;
+ 		uc->name = devm_kasprintf(dev, GFP_KERNEL, "%s chan%d",
+ 					  dev_name(dev), i);
+-
++		if (!uc->name)
++			return -ENOMEM;
+ 		vchan_init(&uc->vc, &ud->ddev);
+ 		/* Use custom vchan completion handling */
+ 		tasklet_setup(&uc->vc.task, udma_vchan_complete);
 -- 
 2.39.5
 
