@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288722E9753;
-	Tue, 17 Jun 2025 15:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731962E9730;
+	Tue, 17 Jun 2025 15:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174549; cv=none; b=I+Vx7GVNoOCLhOxMVLBTi+ItlsHH0JV6W8+gEcAbI9rPL6AZo4/Vl3qD4LdltfRIEJ5lnJEd7eIW+SqcYuajL5D9m3qyQHbYtts/3Tahgou9kT4EOE/hoGapw6MnzBVXzMT/c/Aq9uCiSP3VR0ziwWLK/S7aKky9w8TaMtWYJpI=
+	t=1750174552; cv=none; b=S/aQ3y1tmRtkrzBg8rFgQ5SVZcSSqkc1IDQx+FC0vaHe4b4mtnX9oLRGiWdYX4Er44KFbo5WUrTxcCJeveI14+8vTQEEl7cn2Hn+P6e8fORF4r7uikUIpl8QUrnp7Kn3uc3BEdYxPIg2w2b0uLGbtRZBw1AuCK4qtccH/E5UK/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174549; c=relaxed/simple;
-	bh=32irv2qdhGbiHEmFIDBtgezIskKz9tQ39EwChdz2g2U=;
+	s=arc-20240116; t=1750174552; c=relaxed/simple;
+	bh=ne8jvOoQrhMPFoIWWO4Zoj/oJtoDRR6N+12LYJMLDNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJdvcqZ7zKEfkl/HBibEzerPwe9VWjffFhfi3oXHwPDIAhawOYA42U/k/wQEexyFgqS6q83ntLFuKctJwqULTM5mxYpOCWxcRl8Nk+Po/u1cleqC++UE+NGXCAeOuxYChj7UIKbWL7AD0IQtpKbTCqK1V2pqy6yC5lNDLSdRzuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWFiwRIe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EwqhivlYtHtcW9A8gGVsyBTCXOpJdoi3j4mVgZZfZpFoCk7o1iJip+aCfvtTjzGJ/oeENAw9o2DcRp36fRF4MS8T9IOA5Z32Hi0ATiy1o9oQZdL7zrP9A0gYP5wRdNxmpkns/fyaNMvhTmEB3d6scbH0j5Kp/DhqPpAPyfIec1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wN4olk9i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWFiwRIe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFC6C4CEE3;
-	Tue, 17 Jun 2025 15:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wN4olk9i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91E1C4CEE3;
+	Tue, 17 Jun 2025 15:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174549;
-	bh=32irv2qdhGbiHEmFIDBtgezIskKz9tQ39EwChdz2g2U=;
+	s=korg; t=1750174552;
+	bh=ne8jvOoQrhMPFoIWWO4Zoj/oJtoDRR6N+12LYJMLDNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kWFiwRIeVEtPb4CKkl99gbqC9j+Fio6+zdCG3b+pskmgSZSYUdpAiclHge1LOaHqq
-	 6dEZV1mU7ogqjYFt+4nYCcccYQ6Qiw80+bHbGt1rKNJUc+LjNgmSsxs39KN/692KSQ
-	 2O2BU2E00rWquQCrqWULyJOu1Qg95UEf24Q092KM=
+	b=wN4olk9ibW+xa7bn2W5hpkWsZa7JXeHyyc6mO4jNNv+IZM0ZU6iLRzKF/7pmodMad
+	 O/mPhwxsp6wFCU/5Dovtb8V5qEdluw9NEzNDwld1MMAkrM4QHQ6WB+GtBOLdq7XZWx
+	 xf8stBVYex3Phhrdt/afvzaFVhv0xrF5yqK/N4wY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 010/512] crypto: sun8i-ce-cipher - fix error handling in sun8i_ce_cipher_prepare()
-Date: Tue, 17 Jun 2025 17:19:36 +0200
-Message-ID: <20250617152419.940791827@linuxfoundation.org>
+Subject: [PATCH 6.6 060/356] arm64/fpsimd: Discard stale CPU state when handling SME traps
+Date: Tue, 17 Jun 2025 17:22:55 +0200
+Message-ID: <20250617152340.646428724@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,78 +50,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit f31adc3e356f7350d4a4d68c98d3f60f2f6e26b3 ]
+[ Upstream commit d3eaab3c70905c5467e5c4ea403053d67505adeb ]
 
-Fix two DMA cleanup issues on the error path in sun8i_ce_cipher_prepare():
+The logic for handling SME traps manipulates saved FPSIMD/SVE/SME state
+incorrectly, and a race with preemption can result in a task having
+TIF_SME set and TIF_FOREIGN_FPSTATE clear even though the live CPU state
+is stale (e.g. with SME traps enabled). This can result in warnings from
+do_sme_acc() where SME traps are not expected while TIF_SME is set:
 
-1] If dma_map_sg() fails for areq->dst, the device driver would try to free
-   DMA memory it has not allocated in the first place. To fix this, on the
-   "theend_sgs" error path, call dma unmap only if the corresponding dma
-   map was successful.
+|        /* With TIF_SME userspace shouldn't generate any traps */
+|        if (test_and_set_thread_flag(TIF_SME))
+|                WARN_ON(1);
 
-2] If the dma_map_single() call for the IV fails, the device driver would
-   try to free an invalid DMA memory address on the "theend_iv" path:
-   ------------[ cut here ]------------
-   DMA-API: sun8i-ce 1904000.crypto: device driver tries to free an invalid DMA memory address
-   WARNING: CPU: 2 PID: 69 at kernel/dma/debug.c:968 check_unmap+0x123c/0x1b90
-   Modules linked in: skcipher_example(O+)
-   CPU: 2 UID: 0 PID: 69 Comm: 1904000.crypto- Tainted: G           O        6.15.0-rc3+ #24 PREEMPT
-   Tainted: [O]=OOT_MODULE
-   Hardware name: OrangePi Zero2 (DT)
-   pc : check_unmap+0x123c/0x1b90
-   lr : check_unmap+0x123c/0x1b90
-   ...
-   Call trace:
-    check_unmap+0x123c/0x1b90 (P)
-    debug_dma_unmap_page+0xac/0xc0
-    dma_unmap_page_attrs+0x1f4/0x5fc
-    sun8i_ce_cipher_do_one+0x1bd4/0x1f40
-    crypto_pump_work+0x334/0x6e0
-    kthread_worker_fn+0x21c/0x438
-    kthread+0x374/0x664
-    ret_from_fork+0x10/0x20
-   ---[ end trace 0000000000000000 ]---
+This is very similar to the SVE issue we fixed in commit:
 
-To fix this, check for !dma_mapping_error() before calling
-dma_unmap_single() on the "theend_iv" path.
+  751ecf6afd6568ad ("arm64/sve: Discard stale CPU state when handling SVE traps")
 
-Fixes: 06f751b61329 ("crypto: allwinner - Add sun8i-ce Crypto Engine")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The race can occur when the SME trap handler is preempted before and
+after manipulating the saved FPSIMD/SVE/SME state, starting and ending on
+the same CPU, e.g.
+
+| void do_sme_acc(unsigned long esr, struct pt_regs *regs)
+| {
+|         // Trap on CPU 0 with TIF_SME clear, SME traps enabled
+|         // task->fpsimd_cpu is 0.
+|         // per_cpu_ptr(&fpsimd_last_state, 0) is task.
+|
+|         ...
+|
+|         // Preempted; migrated from CPU 0 to CPU 1.
+|         // TIF_FOREIGN_FPSTATE is set.
+|
+|         get_cpu_fpsimd_context();
+|
+|         /* With TIF_SME userspace shouldn't generate any traps */
+|         if (test_and_set_thread_flag(TIF_SME))
+|                 WARN_ON(1);
+|
+|         if (!test_thread_flag(TIF_FOREIGN_FPSTATE)) {
+|                 unsigned long vq_minus_one =
+|                         sve_vq_from_vl(task_get_sme_vl(current)) - 1;
+|                 sme_set_vq(vq_minus_one);
+|
+|                 fpsimd_bind_task_to_cpu();
+|         }
+|
+|         put_cpu_fpsimd_context();
+|
+|         // Preempted; migrated from CPU 1 to CPU 0.
+|         // task->fpsimd_cpu is still 0
+|         // If per_cpu_ptr(&fpsimd_last_state, 0) is still task then:
+|         // - Stale HW state is reused (with SME traps enabled)
+|         // - TIF_FOREIGN_FPSTATE is cleared
+|         // - A return to userspace skips HW state restore
+| }
+
+Fix the case where the state is not live and TIF_FOREIGN_FPSTATE is set
+by calling fpsimd_flush_task_state() to detach from the saved CPU
+state. This ensures that a subsequent context switch will not reuse the
+stale CPU state, and will instead set TIF_FOREIGN_FPSTATE, forcing the
+new state to be reloaded from memory prior to a return to userspace.
+
+Note: this was originallly posted as [1].
+
+Fixes: 8bd7f91c03d8 ("arm64/sme: Implement traps and syscall handling for SME")
+Reported-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/linux-arm-kernel/20241204-arm64-sme-reenable-v2-1-bae87728251d@kernel.org/
+[ Rutland: rewrite commit message ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20250409164010.3480271-6-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/fpsimd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
-index 19b7fb4a93e86..05f67661553c9 100644
---- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
-+++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
-@@ -275,13 +275,16 @@ static int sun8i_ce_cipher_prepare(struct crypto_engine *engine, void *async_req
- 	} else {
- 		if (nr_sgs > 0)
- 			dma_unmap_sg(ce->dev, areq->src, ns, DMA_TO_DEVICE);
--		dma_unmap_sg(ce->dev, areq->dst, nd, DMA_FROM_DEVICE);
-+
-+		if (nr_sgd > 0)
-+			dma_unmap_sg(ce->dev, areq->dst, nd, DMA_FROM_DEVICE);
+diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
+index 9f6ea38f5189f..3d482336c0662 100644
+--- a/arch/arm64/kernel/fpsimd.c
++++ b/arch/arm64/kernel/fpsimd.c
+@@ -1538,6 +1538,8 @@ void do_sme_acc(unsigned long esr, struct pt_regs *regs)
+ 		sme_set_vq(vq_minus_one);
+ 
+ 		fpsimd_bind_task_to_cpu();
++	} else {
++		fpsimd_flush_task_state(current);
  	}
  
- theend_iv:
- 	if (areq->iv && ivsize > 0) {
--		if (rctx->addr_iv)
-+		if (!dma_mapping_error(ce->dev, rctx->addr_iv))
- 			dma_unmap_single(ce->dev, rctx->addr_iv, rctx->ivlen, DMA_TO_DEVICE);
-+
- 		offset = areq->cryptlen - ivsize;
- 		if (rctx->op_dir & CE_DECRYPTION) {
- 			memcpy(areq->iv, chan->backup_iv, ivsize);
+ 	put_cpu_fpsimd_context();
 -- 
 2.39.5
 
