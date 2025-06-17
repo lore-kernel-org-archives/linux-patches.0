@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36182EA16C;
-	Tue, 17 Jun 2025 16:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326372FA64D;
+	Tue, 17 Jun 2025 16:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178256; cv=none; b=OElplyJ/cKF2fgnj4EKiZTflHVz61lERbhEwJp9QBkNM+sxL9OUAh92gsqfSP2F3lb6o54RpmZxPSv0ihKcik9aiZAq481gZ5bV/frG32Mj4mFKyM22L0jChz1aVINMu2R0Q+RB7momzq5rsdUhjr3eISqYTfKU7FmoKSKDLV/0=
+	t=1750178259; cv=none; b=qA4temZHB2i9ydAB3EjSAgD0kRiixaEBk2bbTLOuGxeI1rTsuG9fRbI8+ABMbCCPdu6ZOl80H5W5l0DU8COxA+B0bUM2gWeUZYhKERvH2w7ZoCi/Sou1Q/lZ4JT/NuGCQc3i7Jqr0z/cdgHjMq6fo8DrDXU3yvWZSIKnJwz/cv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178256; c=relaxed/simple;
-	bh=Spz3R8s92P/th2AglvQQTZNTZLxGzs9m5f+NugEQIfc=;
+	s=arc-20240116; t=1750178259; c=relaxed/simple;
+	bh=gPP1eS0uAn9vbH2GrJ4mpa09TxPvFrBcq9ZZjKOFzlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHDa7sJBkgm6ko9QFw87Ddm9iMLxHbKzW0SXhZEX7jqZqjMssilDmRweV0IVNgShRi4GM4I5ecGaWMB4D2up8xthNzO8sRS0cD+SBUMAds4e//I3fEFwXrtkHiW2Esg8xshI5Sht/DBqbRrlO8YUNuHUlnNVJxdiIJ6vNptEJD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TR7waNr6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qyEU3uYwc3BJZnDMzsrRde5SCbpyKphNAAiqV0Vl2XEUqPxFRFMttslGzLFwsRSk47iQqEYueiC70/SoZM2c6+mnmV3okF4IZ45JedJRBn72bY6Q9NtOY+Lzpkg/uB9mwxQV9ocLOCP0YOnZf/M6nEigC7z6kG3K/6Ti81+XOU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEXfpjMf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TR7waNr6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A29C4CEE3;
-	Tue, 17 Jun 2025 16:37:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEXfpjMf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9604CC4CEE3;
+	Tue, 17 Jun 2025 16:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178255;
-	bh=Spz3R8s92P/th2AglvQQTZNTZLxGzs9m5f+NugEQIfc=;
+	s=korg; t=1750178259;
+	bh=gPP1eS0uAn9vbH2GrJ4mpa09TxPvFrBcq9ZZjKOFzlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TR7waNr6lMCfXmMh0o5LJdbrk1ijnCTN+OLGlgBuNBOYtkmCIZe575j1CiWDNXPNQ
-	 L/XhhAlbBDzPd44gOssvn1yIb2ScJVK65Az+/RsFU56jQiCm+HA2rhpag5EliG4Q2n
-	 HmOHsFO9OClpu9rJQ0IzAgpnvNvvIwhEWQP+YoOY=
+	b=hEXfpjMfI0uDosfw1QgYaLuC2sUNKh3oLU2sYUawgxSl2jcFhxJUOy+P+kgEvJs3a
+	 IBVDcwVteLfGhewXLyO0m79BlrvpEncT2Aif8ZFZzxYAQ4B2BxR/VdEQyzejceAPcp
+	 5tj85caTHB2m3gtj4aLovelj3gBE/EZzVKTlu3T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 434/780] perf tests metric-only perf stat: Fix tests 84 and 86 s390
-Date: Tue, 17 Jun 2025 17:22:22 +0200
-Message-ID: <20250617152509.142653594@linuxfoundation.org>
+Subject: [PATCH 6.12 470/512] btrfs: exit after state insertion failure at btrfs_convert_extent_bit()
+Date: Tue, 17 Jun 2025 17:27:16 +0200
+Message-ID: <20250617152438.624049259@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,86 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit ccd4b5cdf00f358acae9f396d13029e7ae78522e ]
+[ Upstream commit 3bf179e36da917c5d9bec71c714573ed1649b7c1 ]
 
-On s390x KVM and z/VM machines the CPU Measurement Facility is not
-available. Events cycles and instructions do not exist.  Running above
-tests on s390 KVM and z/VM guests always fail with this error:
+If insert_state() state failed it returns an error pointer and we call
+extent_io_tree_panic() which will trigger a BUG() call. However if
+CONFIG_BUG is disabled, which is an uncommon and exotic scenario, then
+we fallthrough and call cache_state() which will dereference the error
+pointer, resulting in an invalid memory access.
 
-  # ./perf test 84 86
-  84: perf stat JSON output linter          : FAILED!
-  86: perf stat STD output linter           : FAILED!
-  #
+So jump to the 'out' label after calling extent_io_tree_panic(), it also
+makes the code more clear besides dealing with the exotic scenario where
+CONFIG_BUG is disabled.
 
-Root cause is command:
-
-  # perf stat -j --metric-only -e instructions,cycles -- true
-  {"metric-value" : "none"}
-  #
-
-Which fails due to unsupported events and returns "none".
-Do not execute this test case on s390 KVM and z/VM machines.
-
-Output after:
-  # ./perf test 84 86
-  84: perf stat JSON output linter          : Ok
-  86: perf stat STD output linter           : Ok
-  #
-
-Fixes: 45a86d017adf4d6c ("perf test: Add --metric-only to perf stat output tests")
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Suggested-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Reviewed-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250424133310.37452-1-tmricht@linux.ibm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/lib/stat_output.sh  | 5 +++++
- tools/perf/tests/shell/stat+json_output.sh | 5 +++++
- 2 files changed, 10 insertions(+)
+ fs/btrfs/extent-io-tree.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/tests/shell/lib/stat_output.sh b/tools/perf/tests/shell/lib/stat_output.sh
-index 4d4aac547f010..c2ec7881ec1de 100644
---- a/tools/perf/tests/shell/lib/stat_output.sh
-+++ b/tools/perf/tests/shell/lib/stat_output.sh
-@@ -151,6 +151,11 @@ check_per_socket()
- check_metric_only()
- {
- 	echo -n "Checking $1 output: metric only "
-+	if [ "$(uname -m)" = "s390x" ] && ! grep '^facilities' /proc/cpuinfo  | grep -qw 67
-+	then
-+		echo "[Skip] CPU-measurement counter facility not installed"
-+		return
-+	fi
- 	perf stat --metric-only $2 -e instructions,cycles true
- 	commachecker --metric-only
- 	echo "[Success]"
-diff --git a/tools/perf/tests/shell/stat+json_output.sh b/tools/perf/tests/shell/stat+json_output.sh
-index a4f257ea839e1..98fb65274ac4f 100755
---- a/tools/perf/tests/shell/stat+json_output.sh
-+++ b/tools/perf/tests/shell/stat+json_output.sh
-@@ -176,6 +176,11 @@ check_per_socket()
- check_metric_only()
- {
- 	echo -n "Checking json output: metric only "
-+	if [ "$(uname -m)" = "s390x" ] && ! grep '^facilities' /proc/cpuinfo  | grep -qw 67
-+	then
-+		echo "[Skip] CPU-measurement counter facility not installed"
-+		return
-+	fi
- 	perf stat -j --metric-only -e instructions,cycles -o "${stat_output}" true
- 	$PYTHON $pythonchecker --metric-only --file "${stat_output}"
- 	echo "[Success]"
+diff --git a/fs/btrfs/extent-io-tree.c b/fs/btrfs/extent-io-tree.c
+index 6d08c100b01de..bb3aaf610652a 100644
+--- a/fs/btrfs/extent-io-tree.c
++++ b/fs/btrfs/extent-io-tree.c
+@@ -1456,6 +1456,7 @@ int convert_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
+ 		if (IS_ERR(inserted_state)) {
+ 			ret = PTR_ERR(inserted_state);
+ 			extent_io_tree_panic(tree, prealloc, "insert", ret);
++			goto out;
+ 		}
+ 		cache_state(inserted_state, cached_state);
+ 		if (inserted_state == prealloc)
 -- 
 2.39.5
 
