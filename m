@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587E42EE617;
-	Tue, 17 Jun 2025 16:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEAA42ECEAE;
+	Tue, 17 Jun 2025 16:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176873; cv=none; b=UDdP86rT0rGtz0sKoarbnh92DWnGY6wT+nKCOdIU8VUEIVuguCym6QU3Kvy9roGeISnlTSg2w5MxW/uPt8wkzBxu2Aa9PPViITBHsK77F28kp5YsFrw39cxclRQzvbwzFTycnm8SkBiz93q9Q8h/t6ObfgBWUhYKn7OHKLvFzQw=
+	t=1750176875; cv=none; b=hRCvz8dbGam/bAKAWlo5rm/zwcwUCGaS4hvxngRDXZTeYbzRxjYrExZENmeIb5gkpt6Lrl5vxK4JQsQbqV+k4/7j/tR1d3CEeuXEwwbUc6rnYXAq3UP/C0jWNwwIz5jw20szn6kmvf8TdVje87KaKXwuJ6nRzt4SkeuNF73ko1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176873; c=relaxed/simple;
-	bh=7BhR446BluOPqOHuQFZiBVb420eSLxK/LVU4CTxR1FU=;
+	s=arc-20240116; t=1750176875; c=relaxed/simple;
+	bh=HL0Ldza2hJxnD2sBm9IaxsEX/WBNaAmyBEaEkBf+KM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LJkJ/qTsilKSbwooZKzH/R2y7CJmb1G4+EFVZEAhTnKxp8DVQVa+o7BMGLq9ZlGndC4oHRylZc9VQWIdpNsgk/jbv8Y2bAqCj/LCYOb0THMmCifTtzk1OkiCa5Ad+SLM7Ot+uBjV57n7TwsH0Wegi0ViEl1iF2Nf5Dpt9ZYDcNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2DdPnAI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R+jHhDqHGhYSMbZDOYB7FCuYrosuk/4zNahl8aZGobj3FtHHqxWLwBYQr7vYjDvrL30FB8PBMQEWVeGUTCcUZdDQPbbQe9/xGynRJD7q1YW+7xHJv2NdDMPPuLXgvD/IllEfdKv3cPcnoN8S2HFIqHnCQppqVxtJO1gN15Nzio4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAMc/QI3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2DdPnAI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8382C4CEE3;
-	Tue, 17 Jun 2025 16:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAMc/QI3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32BEC4CEE3;
+	Tue, 17 Jun 2025 16:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176872;
-	bh=7BhR446BluOPqOHuQFZiBVb420eSLxK/LVU4CTxR1FU=;
+	s=korg; t=1750176875;
+	bh=HL0Ldza2hJxnD2sBm9IaxsEX/WBNaAmyBEaEkBf+KM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p2DdPnAIDl3/Sc+GwnICJZvut2TMODD2BejNEYaiO2aQxf7cZ/LBPdpUN2lLNxc0M
-	 z/KdxKCyxaFfAyPHewULUaFKK1kM1x2IRybyqZFmrTnImGrkgpWcPkdESjINL4KeLb
-	 zpBp7OgqT0/0GyZQy5ZzH+e9ffimjr5lWeH7O6Hc=
+	b=SAMc/QI3U72lSJuZJpCxDyXdyczV7oWUq6ruyUUNgkC9+lTWBsRbYtzGPvtN9voQN
+	 EUsG2wXFgEgwxPU9Qwn1vbpfoL3x7Qxp3Ao0hqPcbWGgacZM0pfFhQv4DSBHwCLZKp
+	 AP/7KyvJ7Z9aOhMRBS+RG4JuvHzYli09WRt4BAGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 321/356] Bluetooth: hci_sync: Fix broadcast/PA when using an existing instance
-Date: Tue, 17 Jun 2025 17:27:16 +0200
-Message-ID: <20250617152351.077450224@linuxfoundation.org>
+Subject: [PATCH 6.15 234/780] bpf: Allow XDP dev-bound programs to perform XDP_REDIRECT into maps
+Date: Tue, 17 Jun 2025 17:19:02 +0200
+Message-ID: <20250617152500.988078634@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,107 +48,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 5725bc608252050ed8a4d47d59225b7dd73474c8 ]
+[ Upstream commit 714070c4cb7a10ff57450a618a936775f3036245 ]
 
-When using and existing adv_info instance for broadcast source it
-needs to be updated to periodic first before it can be reused, also in
-case the existing instance already have data hci_set_adv_instance_data
-cannot be used directly since it would overwrite the existing data so
-this reappend the original data after the Broadcast ID, if one was
-generated.
+In the current implementation if the program is dev-bound to a specific
+device, it will not be possible to perform XDP_REDIRECT into a DEVMAP
+or CPUMAP even if the program is running in the driver NAPI context and
+it is not attached to any map entry. This seems in contrast with the
+explanation available in bpf_prog_map_compatible routine.
+Fix the issue introducing __bpf_prog_map_compatible utility routine in
+order to avoid bpf_prog_is_dev_bound() check running bpf_check_tail_call()
+at program load time (bpf_prog_select_runtime()).
+Continue forbidding to attach a dev-bound program to XDP maps
+(BPF_MAP_TYPE_PROG_ARRAY, BPF_MAP_TYPE_DEVMAP and BPF_MAP_TYPE_CPUMAP).
 
-Example:
-
-bluetoothctl># Add PBP to EA so it can be later referenced as the BIS ID
-bluetoothctl> advertise.service 0x1856 0x00 0x00
-bluetoothctl> advertise on
-...
-< HCI Command: LE Set Extended Advertising Data (0x08|0x0037) plen 13
-        Handle: 0x01
-        Operation: Complete extended advertising data (0x03)
-        Fragment preference: Minimize fragmentation (0x01)
-        Data length: 0x09
-        Service Data: Public Broadcast Announcement (0x1856)
-          Data[2]: 0000
-        Flags: 0x06
-          LE General Discoverable Mode
-          BR/EDR Not Supported
-...
-bluetoothctl># Attempt to acquire Broadcast Source transport
-bluetoothctl>transport.acquire /org/bluez/hci0/pac_bcast0/fd0
-...
-< HCI Command: LE Set Extended Advertising Data (0x08|0x0037) plen 255
-        Handle: 0x01
-        Operation: Complete extended advertising data (0x03)
-        Fragment preference: Minimize fragmentation (0x01)
-        Data length: 0x0e
-        Service Data: Broadcast Audio Announcement (0x1852)
-        Broadcast ID: 11371620 (0xad8464)
-        Service Data: Public Broadcast Announcement (0x1856)
-          Data[2]: 0000
-        Flags: 0x06
-          LE General Discoverable Mode
-          BR/EDR Not Supported
-
-Link: https://github.com/bluez/bluez/issues/1117
-Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 3d76a4d3d4e59 ("bpf: XDP metadata RX kfuncs")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ kernel/bpf/core.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index d6f40806ee512..e92bc4ceb5add 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1586,7 +1586,8 @@ static int hci_enable_per_advertising_sync(struct hci_dev *hdev, u8 instance)
- static int hci_adv_bcast_annoucement(struct hci_dev *hdev, struct adv_info *adv)
- {
- 	u8 bid[3];
--	u8 ad[4 + 3];
-+	u8 ad[HCI_MAX_EXT_AD_LENGTH];
-+	u8 len;
- 
- 	/* Skip if NULL adv as instance 0x00 is used for general purpose
- 	 * advertising so it cannot used for the likes of Broadcast Announcement
-@@ -1612,8 +1613,10 @@ static int hci_adv_bcast_annoucement(struct hci_dev *hdev, struct adv_info *adv)
- 
- 	/* Generate Broadcast ID */
- 	get_random_bytes(bid, sizeof(bid));
--	eir_append_service_data(ad, 0, 0x1852, bid, sizeof(bid));
--	hci_set_adv_instance_data(hdev, adv->instance, sizeof(ad), ad, 0, NULL);
-+	len = eir_append_service_data(ad, 0, 0x1852, bid, sizeof(bid));
-+	memcpy(ad + len, adv->adv_data, adv->adv_data_len);
-+	hci_set_adv_instance_data(hdev, adv->instance, len + adv->adv_data_len,
-+				  ad, 0, NULL);
- 
- 	return hci_update_adv_data_sync(hdev, adv->instance);
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index ba6b6118cf504..a3e5716884211 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -2358,8 +2358,8 @@ static unsigned int __bpf_prog_ret0_warn(const void *ctx,
+ 	return 0;
  }
-@@ -1630,8 +1633,15 @@ int hci_start_per_adv_sync(struct hci_dev *hdev, u8 instance, u8 data_len,
  
- 	if (instance) {
- 		adv = hci_find_adv_instance(hdev, instance);
--		/* Create an instance if that could not be found */
--		if (!adv) {
-+		if (adv) {
-+			/* Turn it into periodic advertising */
-+			adv->periodic = true;
-+			adv->per_adv_data_len = data_len;
-+			if (data)
-+				memcpy(adv->per_adv_data, data, data_len);
-+			adv->flags = flags;
-+		} else if (!adv) {
-+			/* Create an instance if that could not be found */
- 			adv = hci_add_per_instance(hdev, instance, flags,
- 						   data_len, data,
- 						   sync_interval,
+-bool bpf_prog_map_compatible(struct bpf_map *map,
+-			     const struct bpf_prog *fp)
++static bool __bpf_prog_map_compatible(struct bpf_map *map,
++				      const struct bpf_prog *fp)
+ {
+ 	enum bpf_prog_type prog_type = resolve_prog_type(fp);
+ 	bool ret;
+@@ -2368,14 +2368,6 @@ bool bpf_prog_map_compatible(struct bpf_map *map,
+ 	if (fp->kprobe_override)
+ 		return false;
+ 
+-	/* XDP programs inserted into maps are not guaranteed to run on
+-	 * a particular netdev (and can run outside driver context entirely
+-	 * in the case of devmap and cpumap). Until device checks
+-	 * are implemented, prohibit adding dev-bound programs to program maps.
+-	 */
+-	if (bpf_prog_is_dev_bound(aux))
+-		return false;
+-
+ 	spin_lock(&map->owner.lock);
+ 	if (!map->owner.type) {
+ 		/* There's no owner yet where we could check for
+@@ -2409,6 +2401,19 @@ bool bpf_prog_map_compatible(struct bpf_map *map,
+ 	return ret;
+ }
+ 
++bool bpf_prog_map_compatible(struct bpf_map *map, const struct bpf_prog *fp)
++{
++	/* XDP programs inserted into maps are not guaranteed to run on
++	 * a particular netdev (and can run outside driver context entirely
++	 * in the case of devmap and cpumap). Until device checks
++	 * are implemented, prohibit adding dev-bound programs to program maps.
++	 */
++	if (bpf_prog_is_dev_bound(fp->aux))
++		return false;
++
++	return __bpf_prog_map_compatible(map, fp);
++}
++
+ static int bpf_check_tail_call(const struct bpf_prog *fp)
+ {
+ 	struct bpf_prog_aux *aux = fp->aux;
+@@ -2421,7 +2426,7 @@ static int bpf_check_tail_call(const struct bpf_prog *fp)
+ 		if (!map_type_contains_progs(map))
+ 			continue;
+ 
+-		if (!bpf_prog_map_compatible(map, fp)) {
++		if (!__bpf_prog_map_compatible(map, fp)) {
+ 			ret = -EINVAL;
+ 			goto out;
+ 		}
 -- 
 2.39.5
 
