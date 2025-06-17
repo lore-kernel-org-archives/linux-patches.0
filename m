@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEECE2FA623;
-	Tue, 17 Jun 2025 16:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3035A2FA624;
+	Tue, 17 Jun 2025 16:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179462; cv=none; b=QUpGuEOeYiicvkcwo3SWaxdg7//AkmU5lONBILbyETu3kU8lNXdC3qcuBeuepKZOByfvy0aL9kk03XTCyoMhu53DZRVZXxbQKimb5zEVukDpsfXgJSJPTG/+Blo3E8lJMj62cyBDHkYDpUUNc8cJpxTjcRVQLJrkM7XQGhOM2eM=
+	t=1750179465; cv=none; b=Hj2AoJzjK+vcr0h5UxeX+1RzotnBNaPcrCLZ7XLKAQqrQRszYLhey+mGPlOBUjRvRCNNLLl9zWguxD/H5AF3xmgq/RnJt1Zpleab3marYDVNyXcTTSpcRq78muvbX6kmHlnnCeRZ1SY06t5Pd2a5V6pBtG2BDWmF0FFNMofUX6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179462; c=relaxed/simple;
-	bh=bGYgiib5zEydSqkIG2vIolAB/0l3a8WfRK4BTT7E5yo=;
+	s=arc-20240116; t=1750179465; c=relaxed/simple;
+	bh=pxtTVTkDbG76SjiJMbbLlmKg2Z/+h7gUFYFrJH8w3ZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFO3mzZlEGkWHU3qTqZH4OpjHXKjZ23si2QJf3euivTM27NAOHw1RjQb0/Vs1KFH7tPlWrAjeXYgMCaEdAEd+uJT8zQTWMjro6xNlwKy2/EAlcwOSvL/ZCI7dOVCyrdBzQi0jOo+1qjwbElEOg0o5RiWedbcd7rGK6ren9lZP8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSM6OW75; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=un3inrRMgCo/n9YyVj/Fv7bycOm6j22d5yOVJQJ4WA1xVF0RdflOYjpWhB42L/bSSXC9wVCADzBbb38XpTbFc37Izx2wYVMOBbTbAIVL6YR7ViEvH32xXVBefVv2CMoPBzQLWQZYuGRBqRvhl7Yz650vEQNPBinVM4wfwxe64gE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfoQ3X7q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSM6OW75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7E9C4CEE3;
-	Tue, 17 Jun 2025 16:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfoQ3X7q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CF7C4CEE7;
+	Tue, 17 Jun 2025 16:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179461;
-	bh=bGYgiib5zEydSqkIG2vIolAB/0l3a8WfRK4BTT7E5yo=;
+	s=korg; t=1750179465;
+	bh=pxtTVTkDbG76SjiJMbbLlmKg2Z/+h7gUFYFrJH8w3ZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YSM6OW75c2c3ZWX5qCULJIuuFz1DYoDQ17biV3JYnv6soaDUxUZTpj/3ctrb2FDv7
-	 oQBMpiRfWx1+rwmjgmMaZ9OfLMTBJpQc6NhYrdhMzVDgHkMPDGSWyypQFaLq5hVpIt
-	 teBieYwZgJC6uvMWpT/myIZMVr68CNUk6ErZqjg8=
+	b=hfoQ3X7qu54N2D7WOfJzf1Tfxyzez3pcjh1e9ZD4/LSQ5Oiu2WslXVPDLrX8HVQZo
+	 R5js8EQqFHvJAJyKbPW6rdBYr7sUXXTjDeV+zBoCzmdFN5v1fP8H2NRqBC/pCojje3
+	 s4rD8FtqcvxjC1X/3MAox0MMss6zhptPS5VW/nZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-cifs@vger.kernel.org,
-	David Howells <dhowells@redhat.com>,
-	Jay Shin <jaeshin@redhat.com>,
-	Pierguido Lambri <plambri@redhat.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 736/780] smb: client: fix perf regression with deferred closes
-Date: Tue, 17 Jun 2025 17:27:24 +0200
-Message-ID: <20250617152521.476104026@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Wupeng Ma <mawupeng1@huawei.com>
+Subject: [PATCH 6.15 754/780] VMCI: fix race between vmci_host_setup_notify and vmci_ctx_unset_notify
+Date: Tue, 17 Jun 2025 17:27:42 +0200
+Message-ID: <20250617152522.217645735@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -56,123 +50,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Wupeng Ma <mawupeng1@huawei.com>
 
-[ Upstream commit b64af6bcd3b0f3fc633d6a70adb0991737abfef4 ]
+commit 1bd6406fb5f36c2bb1e96e27d4c3e9f4d09edde4 upstream.
 
-Customer reported that one of their applications started failing to
-open files with STATUS_INSUFFICIENT_RESOURCES due to NetApp server
-hitting the maximum number of opens to same file that it would allow
-for a single client connection.
+During our test, it is found that a warning can be trigger in try_grab_folio
+as follow:
 
-It turned out the client was failing to reuse open handles with
-deferred closes because matching ->f_flags directly without masking
-off O_CREAT|O_EXCL|O_TRUNC bits first broke the comparision and then
-client ended up with thousands of deferred closes to same file.  Those
-bits are already satisfied on the original open, so no need to check
-them against existing open handles.
+  ------------[ cut here ]------------
+  WARNING: CPU: 0 PID: 1678 at mm/gup.c:147 try_grab_folio+0x106/0x130
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 1678 Comm: syz.3.31 Not tainted 6.15.0-rc5 #163 PREEMPT(undef)
+  RIP: 0010:try_grab_folio+0x106/0x130
+  Call Trace:
+   <TASK>
+   follow_huge_pmd+0x240/0x8e0
+   follow_pmd_mask.constprop.0.isra.0+0x40b/0x5c0
+   follow_pud_mask.constprop.0.isra.0+0x14a/0x170
+   follow_page_mask+0x1c2/0x1f0
+   __get_user_pages+0x176/0x950
+   __gup_longterm_locked+0x15b/0x1060
+   ? gup_fast+0x120/0x1f0
+   gup_fast_fallback+0x17e/0x230
+   get_user_pages_fast+0x5f/0x80
+   vmci_host_unlocked_ioctl+0x21c/0xf80
+  RIP: 0033:0x54d2cd
+  ---[ end trace 0000000000000000 ]---
 
-Reproducer:
+Digging into the source, context->notify_page may init by get_user_pages_fast
+and can be seen in vmci_ctx_unset_notify which will try to put_page. However
+get_user_pages_fast is not finished here and lead to following
+try_grab_folio warning. The race condition is shown as follow:
 
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
- #include <unistd.h>
- #include <fcntl.h>
- #include <pthread.h>
+cpu0			cpu1
+vmci_host_do_set_notify
+vmci_host_setup_notify
+get_user_pages_fast(uva, 1, FOLL_WRITE, &context->notify_page);
+lockless_pages_from_mm
+gup_pgd_range
+gup_huge_pmd  // update &context->notify_page
+			vmci_host_do_set_notify
+			vmci_ctx_unset_notify
+			notify_page = context->notify_page;
+			if (notify_page)
+			put_page(notify_page);	// page is freed
+__gup_longterm_locked
+__get_user_pages
+follow_trans_huge_pmd
+try_grab_folio // warn here
 
- #define NR_THREADS      4
- #define NR_ITERATIONS   2500
- #define TEST_FILE       "/mnt/1/test/dir/foo"
+To slove this, use local variable page to make notify_page can be seen
+after finish get_user_pages_fast.
 
- static char buf[64];
-
- static void *worker(void *arg)
- {
-         int i, j;
-         int fd;
-
-         for (i = 0; i < NR_ITERATIONS; i++) {
-                 fd = open(TEST_FILE, O_WRONLY|O_CREAT|O_APPEND, 0666);
-                 for (j = 0; j < 16; j++)
-                         write(fd, buf, sizeof(buf));
-                 close(fd);
-         }
- }
-
- int main(int argc, char *argv[])
- {
-         pthread_t t[NR_THREADS];
-         int fd;
-         int i;
-
-         fd = open(TEST_FILE, O_WRONLY|O_CREAT|O_TRUNC, 0666);
-         close(fd);
-         memset(buf, 'a', sizeof(buf));
-         for (i = 0; i < NR_THREADS; i++)
-                 pthread_create(&t[i], NULL, worker, NULL);
-         for (i = 0; i < NR_THREADS; i++)
-                 pthread_join(t[i], NULL);
-         return 0;
- }
-
-Before patch:
-
-$ mount.cifs //srv/share /mnt/1 -o ...
-$ mkdir -p /mnt/1/test/dir
-$ gcc repro.c && ./a.out
-...
-number of opens: 1391
-
-After patch:
-
-$ mount.cifs //srv/share /mnt/1 -o ...
-$ mkdir -p /mnt/1/test/dir
-$ gcc repro.c && ./a.out
-...
-number of opens: 1
-
-Cc: linux-cifs@vger.kernel.org
-Cc: David Howells <dhowells@redhat.com>
-Cc: Jay Shin <jaeshin@redhat.com>
-Cc: Pierguido Lambri <plambri@redhat.com>
-Fixes: b8ea3b1ff544 ("smb: enable reuse of deferred file handles for write operations")
-Acked-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a1d88436d53a ("VMCI: Fix two UVA mapping bugs")
+Cc: stable <stable@kernel.org>
+Closes: https://lore.kernel.org/all/e91da589-ad57-3969-d979-879bbd10dddd@huawei.com/
+Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
+Link: https://lore.kernel.org/r/20250510033040.901582-1-mawupeng1@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/misc/vmw_vmci/vmci_host.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index d2df10b8e6fd8..9835672267d27 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -999,15 +999,18 @@ int cifs_open(struct inode *inode, struct file *file)
- 		rc = cifs_get_readable_path(tcon, full_path, &cfile);
- 	}
- 	if (rc == 0) {
--		if (file->f_flags == cfile->f_flags) {
-+		unsigned int oflags = file->f_flags & ~(O_CREAT|O_EXCL|O_TRUNC);
-+		unsigned int cflags = cfile->f_flags & ~(O_CREAT|O_EXCL|O_TRUNC);
+--- a/drivers/misc/vmw_vmci/vmci_host.c
++++ b/drivers/misc/vmw_vmci/vmci_host.c
+@@ -227,6 +227,7 @@ static int drv_cp_harray_to_user(void __
+ static int vmci_host_setup_notify(struct vmci_ctx *context,
+ 				  unsigned long uva)
+ {
++	struct page *page;
+ 	int retval;
+ 
+ 	if (context->notify_page) {
+@@ -243,13 +244,11 @@ static int vmci_host_setup_notify(struct
+ 	/*
+ 	 * Lock physical page backing a given user VA.
+ 	 */
+-	retval = get_user_pages_fast(uva, 1, FOLL_WRITE, &context->notify_page);
+-	if (retval != 1) {
+-		context->notify_page = NULL;
++	retval = get_user_pages_fast(uva, 1, FOLL_WRITE, &page);
++	if (retval != 1)
+ 		return VMCI_ERROR_GENERIC;
+-	}
+-	if (context->notify_page == NULL)
+-		return VMCI_ERROR_UNAVAILABLE;
 +
-+		if (cifs_convert_flags(oflags, 0) == cifs_convert_flags(cflags, 0) &&
-+		    (oflags & (O_SYNC|O_DIRECT)) == (cflags & (O_SYNC|O_DIRECT))) {
- 			file->private_data = cfile;
- 			spin_lock(&CIFS_I(inode)->deferred_lock);
- 			cifs_del_deferred_close(cfile);
- 			spin_unlock(&CIFS_I(inode)->deferred_lock);
- 			goto use_cache;
--		} else {
--			_cifsFileInfo_put(cfile, true, false);
- 		}
-+		_cifsFileInfo_put(cfile, true, false);
- 	} else {
- 		/* hard link on the defeered close file */
- 		rc = cifs_get_hardlink_path(tcon, inode, file);
--- 
-2.39.5
-
++	context->notify_page = page;
+ 
+ 	/*
+ 	 * Map the locked page and set up notify pointer.
 
 
