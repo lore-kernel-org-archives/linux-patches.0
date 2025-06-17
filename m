@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B1B2EA14C;
-	Tue, 17 Jun 2025 15:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B002ECEBF;
+	Tue, 17 Jun 2025 15:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175734; cv=none; b=B6tyIGy86u/RPq1QpFPWwk+EqbnsnfV5Yic5symON1N+ykGiLWzLiyWc2i6uvK0ux2c/MafO6B8eRRT7oEsX2jSwSA0ZhTcgygYBgrS7zQUyQTn3ceBRB/CCSE628R/myA5SekC6uQOkrI7Z4FFTmRGZr/vTVhN60lERyYJVius=
+	t=1750175737; cv=none; b=Vc58Hm0jZfvV+E8yCjKWQwrUONgpyNtwR0/cQoT+6G/jFIvBVPkb4RunyagElKNija2xcT750nYdF15WNcOSnHxnqHwNsnQYqPWySBFo9WXuYRzKX1uFREpCfYwjDm3QuuebgR3vCJk2Ngf+RrwD0pNykixDXNI0OAqULjI13AI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175734; c=relaxed/simple;
-	bh=t0tmb5aQzr+tvhFR5AgtlVx4btlbGaLO3FELUMGxwqQ=;
+	s=arc-20240116; t=1750175737; c=relaxed/simple;
+	bh=o+USO4IWPRoXVyY0fyraN5W4TG2Uz0AVCcXWdPa/phc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HvKfjmeH/kkNk5jgCguYStyklDlXUvLQmjiRpAUUpgvYi/BftGb/nef4Ps3YNQYtbmu0QR51eswlRr++7bFb65cRVoX36LSL3cx2DSnPAL7cpkjToeQDKNhZ+ZJvL8/5MgIGfQoquMAMQ7+F82ewnwHWVMLBHqC/5jAr2f7M/UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5ZfFLzx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bwHuh/a3K7+1+1fE3Gl+IvJGjWVF1O62Yp4a0r9n2xtrrYMHtx7PRDv1uP2j2xl+ihwUHJ7gAO67E5eg/jxXbPMYid438fZKSN1BLXuxn/XyHWlSTzRVa2FDXdRIk/4LmpX/f5JYlbwaHdtsBz5laBsgzqCqakQJx59GVIa66/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dW0yL7cI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5ZfFLzx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE55C4CEF0;
-	Tue, 17 Jun 2025 15:55:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dW0yL7cI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44D3C4CEE3;
+	Tue, 17 Jun 2025 15:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175734;
-	bh=t0tmb5aQzr+tvhFR5AgtlVx4btlbGaLO3FELUMGxwqQ=;
+	s=korg; t=1750175737;
+	bh=o+USO4IWPRoXVyY0fyraN5W4TG2Uz0AVCcXWdPa/phc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5ZfFLzxOfxSIMKqI1hKTvo8jHjEcG2iYk57nz28o32aNWEvUYgmX6D5XXXktswS2
-	 M+UIZk869idlCf+zUmx9H5m+WEHbcWKy2HyqGmHKopyIRyzc/3F+JH8hjNmwfbqACu
-	 gEq1MJ0n2fNX56ed7IocMTkaXR8SH8y7QL2Dc++g=
+	b=dW0yL7cI2BHjsOiL4PKFO7sURsneHlYCz7YYbQlURKUGRxsTvtlePgETTden1cMHg
+	 qHzaYCS5vUt591TGCkW97Dptnkg64k2yyj2IwWJ+J9esRbCYRfBC/i/T6sLx1Qw4jg
+	 lrzSZVeb+mosQbGdSB6hioVbVwGzZgp4O7+m1ORs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Safin <a.safin@rosa.ru>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 204/356] hwmon: (asus-ec-sensors) check sensor index in read_string()
-Date: Tue, 17 Jun 2025 17:25:19 +0200
-Message-ID: <20250617152346.422649603@linuxfoundation.org>
+Subject: [PATCH 6.15 118/780] drm/v3d: client ranges from axi_ids are different with V3D 7.1
+Date: Tue, 17 Jun 2025 17:17:06 +0200
+Message-ID: <20250617152456.306286506@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,52 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexei Safin <a.safin@rosa.ru>
+From: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
 
-[ Upstream commit 25be318324563c63cbd9cb53186203a08d2f83a1 ]
+[ Upstream commit a22e0051f9eb2281b181218d97f77cebc299310d ]
 
-Prevent a potential invalid memory access when the requested sensor
-is not found.
+The client mask has been reduced from 8 bits on V3D 4.1 to 7 bits
+on V3D 7.1, so the ranges for each client are not compatible.
 
-find_ec_sensor_index() may return a negative value (e.g. -ENOENT),
-but its result was used without checking, which could lead to
-undefined behavior when passed to get_sensor_info().
+On V3D 7.1, the CSD client can also report MMU errors.
+Therefore, add its AXI ID to the IDs list.
 
-Add a proper check to return -EINVAL if sensor_index is negative.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: d0ddfd241e57 ("hwmon: (asus-ec-sensors) add driver for ASUS EC")
-Signed-off-by: Alexei Safin <a.safin@rosa.ru>
-Link: https://lore.kernel.org/r/20250424202654.5902-1-a.safin@rosa.ru
-[groeck: Return error code returned from find_ec_sensor_index]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 0ad5bc1ce463 ("drm/v3d: fix up register addresses for V3D 7.x")
+Signed-off-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Link: https://lore.kernel.org/r/20250425122522.18425-2-jmcasanova@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/asus-ec-sensors.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/v3d/v3d_irq.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
-index f20b864c1bb20..ce2f14a62754e 100644
---- a/drivers/hwmon/asus-ec-sensors.c
-+++ b/drivers/hwmon/asus-ec-sensors.c
-@@ -888,6 +888,10 @@ static int asus_ec_hwmon_read_string(struct device *dev,
- {
- 	struct ec_sensors_data *state = dev_get_drvdata(dev);
- 	int sensor_index = find_ec_sensor_index(state, type, channel);
-+
-+	if (sensor_index < 0)
-+		return sensor_index;
-+
- 	*str = get_sensor_info(state, sensor_index)->label;
+diff --git a/drivers/gpu/drm/v3d/v3d_irq.c b/drivers/gpu/drm/v3d/v3d_irq.c
+index d6ce1324905df..2cca5d3a26a22 100644
+--- a/drivers/gpu/drm/v3d/v3d_irq.c
++++ b/drivers/gpu/drm/v3d/v3d_irq.c
+@@ -199,12 +199,33 @@ v3d_hub_irq(int irq, void *arg)
+ 			{0xA0, 0xA1, "TFU"},
+ 			{0xC0, 0xE0, "MMU"},
+ 			{0xE0, 0xE1, "GMP"},
++		}, v3d71_axi_ids[] = {
++			{0x00, 0x30, "L2T"},
++			{0x30, 0x38, "CLE"},
++			{0x38, 0x39, "PTB"},
++			{0x39, 0x3A, "PSE"},
++			{0x3A, 0x3B, "CSD"},
++			{0x40, 0x60, "TLB"},
++			{0x60, 0x70, "MMU"},
++			{0x7C, 0x7E, "TFU"},
++			{0x7F, 0x80, "GMP"},
+ 		};
+ 		const char *client = "?";
  
- 	return 0;
+ 		V3D_WRITE(V3D_MMU_CTL, V3D_READ(V3D_MMU_CTL));
+ 
+-		if (v3d->ver >= V3D_GEN_41) {
++		if (v3d->ver >= V3D_GEN_71) {
++			size_t i;
++
++			axi_id = axi_id & 0x7F;
++			for (i = 0; i < ARRAY_SIZE(v3d71_axi_ids); i++) {
++				if (axi_id >= v3d71_axi_ids[i].begin &&
++				    axi_id < v3d71_axi_ids[i].end) {
++					client = v3d71_axi_ids[i].client;
++					break;
++				}
++			}
++		} else if (v3d->ver >= V3D_GEN_41) {
+ 			size_t i;
+ 
+ 			axi_id = axi_id & 0xFF;
 -- 
 2.39.5
 
