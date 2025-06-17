@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BE4217F40;
-	Tue, 17 Jun 2025 16:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF71E188006;
+	Tue, 17 Jun 2025 16:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178646; cv=none; b=u0tTPgTM+nGppriQw0j/hf+gxWkh1/TB0JmLJmdHAao2AB1WV0/6DVzhw3QWMcCOnxTNXBx51xy7MlAT5yb4FQObQoAyiq1UfzkTghEkiRY/qrtp2tYg9f0tqOSIkudWlaCEr/9npkhAShFs7CpY2UvGNdCmJEXQROL2+elfm4w=
+	t=1750178651; cv=none; b=LMCpu9RvR1BhSg7r01Q8uJoR/f9seFmN/wMdtZ29xEPPuEHNMEdaVI4p+ZywQBFl1ASOX8TojJ7dmahfxgzF9NSSGoHa/kICqWBiUv6voMwg2BXwQG9k4VM1PwkAddzuaRu36K2GzdVmo7LntXg/uPi2SFUaQD1WK3NGaaH2w9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178646; c=relaxed/simple;
-	bh=tggA+N1IEt2j1JxTXF4q/11EPAqeNsB30Jn4AUlt5Rg=;
+	s=arc-20240116; t=1750178651; c=relaxed/simple;
+	bh=ajJxX4YxZ7UXonvg/HWDqTJkfAZgV4NiEg9RNvS68Jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZCjlD+OoZH5Lsvfxr+J3mDhOs2rkmSSh/KJhaPqf+dDyh4nr1t1i871528IdwORigFDg1JwWRH7b99RJWS/DQhGnB77KW4maAHW2oCmlidAQ2Sd8+L6WekhoSw7/g2d8Y1u+0vKRwOa5kMOChhSmFROdjDLvfuYrG6UcmmqbAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gfy32jXY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mcUxNmRIns2ochkU/fs073pGYn72l5QvkKI9WyE9PHTf6533mBjG5gW759+wiAy08RGyWUaxlxc3InjjFW0FXSRUi/DFD3hT/lW9yUvpabt69+Mub9WYJuoHolIy3v0FWUToL25hTZQfMDsgQ61F1zeKoLIVcBwgrekIr8v/6nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhmOgI1P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gfy32jXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E5BC4CEF0;
-	Tue, 17 Jun 2025 16:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhmOgI1P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFCAC4CEE3;
+	Tue, 17 Jun 2025 16:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178646;
-	bh=tggA+N1IEt2j1JxTXF4q/11EPAqeNsB30Jn4AUlt5Rg=;
+	s=korg; t=1750178649;
+	bh=ajJxX4YxZ7UXonvg/HWDqTJkfAZgV4NiEg9RNvS68Jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gfy32jXYELUCqrQvymX7ECXMOLBbkdDWcP64022hApPXza6xamlbJSAP0+W50qPrI
-	 TTsqM607rW8yUmnrtfjqEbdaRHibTBODe6/yxztpK0IZWzL6axXqP68Ru3WY1LdoOn
-	 F+Qp7qjuyj7eDhW0gN4L5KXCFB4X9Hf0FdkbAKDc=
+	b=uhmOgI1PgWVDTzIVpkxAXTC12MerPSoQDoUDCatquL8RX0euegKbJUA3eacICN31U
+	 iwO6eMa0F3jlbXBbD5JLq6tcAG4iRhpJvl1EQzvdaVsiyV7JXxVxfhLRu5gvCVLu4Q
+	 mSZnxS9nV75uQVna1Q2/EmgG+iT1MdG5hyhv09yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	NeilBrown <neil@brown.name>,
 	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 481/780] nfs_localio: protect race between nfs_uuid_put() and nfs_close_local_fh()
-Date: Tue, 17 Jun 2025 17:23:09 +0200
-Message-ID: <20250617152511.076667085@linuxfoundation.org>
+Subject: [PATCH 6.15 482/780] nfs_localio: change nfsd_file_put_local() to take a pointer to __rcu pointer
+Date: Tue, 17 Jun 2025 17:23:10 +0200
+Message-ID: <20250617152511.115939579@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -45,6 +47,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
@@ -53,188 +56,219 @@ Content-Transfer-Encoding: 8bit
 
 From: NeilBrown <neil@brown.name>
 
-[ Upstream commit 21fb44034695185f1dcbcb37354c842cabfe83c1 ]
+[ Upstream commit c25a89770d1f216dcedfc2d25d56b604f62ce0bd ]
 
-nfs_uuid_put() and nfs_close_local_fh() can race if a "struct
-nfs_file_localio" is released at the same time that nfsd calls
-nfs_localio_invalidate_clients().
+Instead of calling xchg() and unrcu_pointer() before
+nfsd_file_put_local(), we now pass pointer to the __rcu pointer and call
+xchg() and unrcu_pointer() inside that function.
 
-It is important that neither of these functions completes after the
-other has started looking at a given nfs_file_localio and before it
-finishes.
+Where unrcu_pointer() is currently called the internals of "struct
+nfsd_file" are not known and that causes older compilers such as gcc-8
+to complain.
 
-If nfs_uuid_put() exits while nfs_close_local_fh() is closing ro_file
-and rw_file it could return to __nfd_file_cache_purge() while some files
-are still referenced so the purge may not succeed.
+In some cases we have a __kernel (aka normal) pointer not an __rcu
+pointer so we need to cast it to __rcu first.  This is strictly a
+weakening so no information is lost.  Somewhat surprisingly, this cast
+is accepted by gcc-8.
 
-If nfs_close_local_fh() exits while nfsd_uuid_put() is still closing the
-files then the "struct nfs_file_localio" could be freed while
-nfsd_uuid_put() is still looking at it.  This side is currently handled
-by copying the pointers out of ro_file and rw_file before deleting from
-the list in nfsd_uuid.  We need to preserve this while ensuring that
-nfsd_uuid_put() does wait for nfs_close_local_fh().
+This has the pleasing result that the cmpxchg() which sets ro_file and
+rw_file, and also the xchg() which clears them, are both now in the nfsd
+code.
 
-This patch use nfl->uuid and nfl->list to provide the required
-interlock.
-
-nfs_uuid_put() removes the nfs_file_localio from the list, then drops
-locks and puts the two files, then reclaims the spinlock and sets
-->nfs_uuid to NULL.
-
-nfs_close_local_fh() operates in the reverse order, setting ->nfs_uuid
-to NULL, then closing the files, then unlinking from the list.
-
-If nfs_uuid_put() finds that ->nfs_uuid is already NULL, it waits for
-the nfs_file_localio to be removed from the list.  If
-nfs_close_local_fh() find that it has already been unlinked it waits for
-->nfs_uuid to become NULL.  This ensure that one of the two tries to
-close the files, but they each waits for the other.
-
-As nfs_uuid_put() is making the list empty, change from a
-list_for_each_safe loop to a while that always takes the first entry.
-This makes the intent more clear.
-Also don't move the list to a temporary local list as this would defeat
-the guarantees required for the interlock.
-
+Reported-by: Pali Rohár <pali@kernel.org>
+Reported-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 Fixes: 86e00412254a ("nfs: cache all open LOCALIO nfsd_file(s) in client")
 Signed-off-by: NeilBrown <neil@brown.name>
 Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs_common/nfslocalio.c | 81 ++++++++++++++++++++++++++------------
- 1 file changed, 56 insertions(+), 25 deletions(-)
+ fs/nfs/localio.c           | 11 +++++++++--
+ fs/nfs_common/nfslocalio.c | 24 ++++++------------------
+ fs/nfsd/filecache.c        | 11 ++++++++---
+ fs/nfsd/filecache.h        |  2 +-
+ include/linux/nfslocalio.h | 23 ++++++++++++-----------
+ 5 files changed, 36 insertions(+), 35 deletions(-)
 
+diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
+index 030a54c8c9d8b..e6d36b3d3fc05 100644
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -207,9 +207,16 @@ void nfs_local_probe_async(struct nfs_client *clp)
+ }
+ EXPORT_SYMBOL_GPL(nfs_local_probe_async);
+ 
+-static inline void nfs_local_file_put(struct nfsd_file *nf)
++static inline void nfs_local_file_put(struct nfsd_file *localio)
+ {
+-	nfs_to_nfsd_file_put_local(nf);
++	/* nfs_to_nfsd_file_put_local() expects an __rcu pointer
++	 * but we have a __kernel pointer.  It is always safe
++	 * to cast a __kernel pointer to an __rcu pointer
++	 * because the cast only weakens what is known about the pointer.
++	 */
++	struct nfsd_file __rcu *nf = (struct nfsd_file __rcu*) localio;
++
++	nfs_to_nfsd_file_put_local(&nf);
+ }
+ 
+ /*
 diff --git a/fs/nfs_common/nfslocalio.c b/fs/nfs_common/nfslocalio.c
-index 49c59f0c78c62..1dd5a8cca064d 100644
+index 1dd5a8cca064d..05c7c16e37ab4 100644
 --- a/fs/nfs_common/nfslocalio.c
 +++ b/fs/nfs_common/nfslocalio.c
-@@ -151,8 +151,7 @@ EXPORT_SYMBOL_GPL(nfs_localio_enable_client);
-  */
- static bool nfs_uuid_put(nfs_uuid_t *nfs_uuid)
- {
--	LIST_HEAD(local_files);
--	struct nfs_file_localio *nfl, *tmp;
-+	struct nfs_file_localio *nfl;
- 
- 	spin_lock(&nfs_uuid->lock);
- 	if (unlikely(!rcu_access_pointer(nfs_uuid->net))) {
-@@ -166,37 +165,49 @@ static bool nfs_uuid_put(nfs_uuid_t *nfs_uuid)
- 		nfs_uuid->dom = NULL;
- 	}
- 
--	list_splice_init(&nfs_uuid->files, &local_files);
--	spin_unlock(&nfs_uuid->lock);
+@@ -170,9 +170,6 @@ static bool nfs_uuid_put(nfs_uuid_t *nfs_uuid)
+ 	while ((nfl = list_first_entry_or_null(&nfs_uuid->files,
+ 					       struct nfs_file_localio,
+ 					       list)) != NULL) {
+-		struct nfsd_file *ro_nf;
+-		struct nfsd_file *rw_nf;
 -
- 	/* Walk list of files and ensure their last references dropped */
--	list_for_each_entry_safe(nfl, tmp, &local_files, list) {
-+
-+	while ((nfl = list_first_entry_or_null(&nfs_uuid->files,
-+					       struct nfs_file_localio,
-+					       list)) != NULL) {
- 		struct nfsd_file *ro_nf;
- 		struct nfsd_file *rw_nf;
+ 		/* If nfs_uuid is already NULL, nfs_close_local_fh is
+ 		 * closing and we must wait, else we unlink and close.
+ 		 */
+@@ -189,17 +186,14 @@ static bool nfs_uuid_put(nfs_uuid_t *nfs_uuid)
+ 			continue;
+ 		}
  
-+		/* If nfs_uuid is already NULL, nfs_close_local_fh is
-+		 * closing and we must wait, else we unlink and close.
-+		 */
-+		if (rcu_access_pointer(nfl->nfs_uuid) == NULL) {
-+			/* nfs_close_local_fh() is doing the
-+			 * close and we must wait. until it unlinks
-+			 */
-+			wait_var_event_spinlock(nfl,
-+						list_first_entry_or_null(
-+							&nfs_uuid->files,
-+							struct nfs_file_localio,
-+							list) != nfl,
-+						&nfs_uuid->lock);
-+			continue;
-+		}
-+
- 		ro_nf = unrcu_pointer(xchg(&nfl->ro_file, NULL));
- 		rw_nf = unrcu_pointer(xchg(&nfl->rw_file, NULL));
- 
--		spin_lock(&nfs_uuid->lock);
+-		ro_nf = unrcu_pointer(xchg(&nfl->ro_file, NULL));
+-		rw_nf = unrcu_pointer(xchg(&nfl->rw_file, NULL));
+-
  		/* Remove nfl from nfs_uuid->files list */
  		list_del_init(&nfl->list);
  		spin_unlock(&nfs_uuid->lock);
--		/* Now we can allow racing nfs_close_local_fh() to
--		 * skip the locking.
--		 */
--		RCU_INIT_POINTER(nfl->nfs_uuid, NULL);
--
- 		if (ro_nf)
- 			nfs_to_nfsd_file_put_local(ro_nf);
- 		if (rw_nf)
- 			nfs_to_nfsd_file_put_local(rw_nf);
--
+-		if (ro_nf)
+-			nfs_to_nfsd_file_put_local(ro_nf);
+-		if (rw_nf)
+-			nfs_to_nfsd_file_put_local(rw_nf);
++
++		nfs_to_nfsd_file_put_local(&nfl->ro_file);
++		nfs_to_nfsd_file_put_local(&nfl->rw_file);
  		cond_resched();
-+		spin_lock(&nfs_uuid->lock);
-+		/* Now we can allow racing nfs_close_local_fh() to
-+		 * skip the locking.
-+		 */
-+		RCU_INIT_POINTER(nfl->nfs_uuid, NULL);
-+		wake_up_var_locked(&nfl->nfs_uuid, &nfs_uuid->lock);
- 	}
++
+ 		spin_lock(&nfs_uuid->lock);
+ 		/* Now we can allow racing nfs_close_local_fh() to
+ 		 * skip the locking.
+@@ -303,8 +297,6 @@ EXPORT_SYMBOL_GPL(nfs_open_local_fh);
  
--	spin_lock(&nfs_uuid->lock);
--	BUG_ON(!list_empty(&nfs_uuid->files));
--
- 	/* Remove client from nn->local_clients */
- 	if (nfs_uuid->list_lock) {
- 		spin_lock(nfs_uuid->list_lock);
-@@ -304,23 +315,43 @@ void nfs_close_local_fh(struct nfs_file_localio *nfl)
- 		return;
- 	}
+ void nfs_close_local_fh(struct nfs_file_localio *nfl)
+ {
+-	struct nfsd_file *ro_nf;
+-	struct nfsd_file *rw_nf;
+ 	nfs_uuid_t *nfs_uuid;
+ 
+ 	rcu_read_lock();
+@@ -337,12 +329,8 @@ void nfs_close_local_fh(struct nfs_file_localio *nfl)
+ 	spin_unlock(&nfs_uuid->lock);
+ 	rcu_read_unlock();
  
 -	ro_nf = unrcu_pointer(xchg(&nfl->ro_file, NULL));
 -	rw_nf = unrcu_pointer(xchg(&nfl->rw_file, NULL));
--
- 	spin_lock(&nfs_uuid->lock);
--	/* Remove nfl from nfs_uuid->files list */
--	list_del_init(&nfl->list);
-+	if (!rcu_access_pointer(nfl->nfs_uuid)) {
-+		/* nfs_uuid_put has finished here */
-+		spin_unlock(&nfs_uuid->lock);
-+		rcu_read_unlock();
-+		return;
-+	}
-+	if (list_empty(&nfs_uuid->files)) {
-+		/* nfs_uuid_put() has started closing files, wait for it
-+		 * to finished
-+		 */
-+		spin_unlock(&nfs_uuid->lock);
-+		rcu_read_unlock();
-+		wait_var_event(&nfl->nfs_uuid,
-+			       rcu_access_pointer(nfl->nfs_uuid) == NULL);
-+		return;
-+	}
-+	/* tell nfs_uuid_put() to wait for us */
-+	RCU_INIT_POINTER(nfl->nfs_uuid, NULL);
- 	spin_unlock(&nfs_uuid->lock);
- 	rcu_read_unlock();
--	/* Now we can allow racing nfs_close_local_fh() to
--	 * skip the locking.
--	 */
--	RCU_INIT_POINTER(nfl->nfs_uuid, NULL);
+-	if (ro_nf)
+-		nfs_to_nfsd_file_put_local(ro_nf);
+-	if (rw_nf)
+-		nfs_to_nfsd_file_put_local(rw_nf);
++	nfs_to_nfsd_file_put_local(&nfl->ro_file);
++	nfs_to_nfsd_file_put_local(&nfl->rw_file);
  
-+	ro_nf = unrcu_pointer(xchg(&nfl->ro_file, NULL));
-+	rw_nf = unrcu_pointer(xchg(&nfl->rw_file, NULL));
- 	if (ro_nf)
- 		nfs_to_nfsd_file_put_local(ro_nf);
- 	if (rw_nf)
- 		nfs_to_nfsd_file_put_local(rw_nf);
-+
-+	/* Remove nfl from nfs_uuid->files list and signal nfs_uuid_put()
-+	 * that we are done.  The moment we drop the spinlock the
-+	 * nfs_uuid could be freed.
-+	 */
-+	spin_lock(&nfs_uuid->lock);
-+	list_del_init(&nfl->list);
-+	wake_up_var_locked(&nfl->nfs_uuid, &nfs_uuid->lock);
-+	spin_unlock(&nfs_uuid->lock);
+ 	/* Remove nfl from nfs_uuid->files list and signal nfs_uuid_put()
+ 	 * that we are done.  The moment we drop the spinlock the
+diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+index eedf2af8ee6ec..e108b6c705b45 100644
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -378,11 +378,16 @@ nfsd_file_put(struct nfsd_file *nf)
+  * the reference of the nfsd_file.
+  */
+ struct net *
+-nfsd_file_put_local(struct nfsd_file *nf)
++nfsd_file_put_local(struct nfsd_file __rcu **pnf)
+ {
+-	struct net *net = nf->nf_net;
++	struct nfsd_file *nf;
++	struct net *net = NULL;
+ 
+-	nfsd_file_put(nf);
++	nf = unrcu_pointer(xchg(pnf, NULL));
++	if (nf) {
++		net = nf->nf_net;
++		nfsd_file_put(nf);
++	}
+ 	return net;
  }
- EXPORT_SYMBOL_GPL(nfs_close_local_fh);
  
+diff --git a/fs/nfsd/filecache.h b/fs/nfsd/filecache.h
+index cd02f91aaef13..722b26c71e454 100644
+--- a/fs/nfsd/filecache.h
++++ b/fs/nfsd/filecache.h
+@@ -62,7 +62,7 @@ void nfsd_file_cache_shutdown(void);
+ int nfsd_file_cache_start_net(struct net *net);
+ void nfsd_file_cache_shutdown_net(struct net *net);
+ void nfsd_file_put(struct nfsd_file *nf);
+-struct net *nfsd_file_put_local(struct nfsd_file *nf);
++struct net *nfsd_file_put_local(struct nfsd_file __rcu **nf);
+ struct nfsd_file *nfsd_file_get_local(struct nfsd_file *nf);
+ struct nfsd_file *nfsd_file_get(struct nfsd_file *nf);
+ struct file *nfsd_file_file(struct nfsd_file *nf);
+diff --git a/include/linux/nfslocalio.h b/include/linux/nfslocalio.h
+index c3f34bae60e13..5c7c92659e736 100644
+--- a/include/linux/nfslocalio.h
++++ b/include/linux/nfslocalio.h
+@@ -50,10 +50,6 @@ void nfs_localio_invalidate_clients(struct list_head *nn_local_clients,
+ 				    spinlock_t *nn_local_clients_lock);
+ 
+ /* localio needs to map filehandle -> struct nfsd_file */
+-extern struct nfsd_file *
+-nfsd_open_local_fh(struct net *, struct auth_domain *, struct rpc_clnt *,
+-		   const struct cred *, const struct nfs_fh *,
+-		   const fmode_t) __must_hold(rcu);
+ void nfs_close_local_fh(struct nfs_file_localio *);
+ 
+ struct nfsd_localio_operations {
+@@ -64,8 +60,9 @@ struct nfsd_localio_operations {
+ 						struct rpc_clnt *,
+ 						const struct cred *,
+ 						const struct nfs_fh *,
++						struct nfsd_file __rcu **pnf,
+ 						const fmode_t);
+-	struct net *(*nfsd_file_put_local)(struct nfsd_file *);
++	struct net *(*nfsd_file_put_local)(struct nfsd_file __rcu **);
+ 	struct nfsd_file *(*nfsd_file_get_local)(struct nfsd_file *);
+ 	struct file *(*nfsd_file_file)(struct nfsd_file *);
+ } ____cacheline_aligned;
+@@ -76,6 +73,7 @@ extern const struct nfsd_localio_operations *nfs_to;
+ struct nfsd_file *nfs_open_local_fh(nfs_uuid_t *,
+ 		   struct rpc_clnt *, const struct cred *,
+ 		   const struct nfs_fh *, struct nfs_file_localio *,
++		   struct nfsd_file __rcu **pnf,
+ 		   const fmode_t);
+ 
+ static inline void nfs_to_nfsd_net_put(struct net *net)
+@@ -90,16 +88,19 @@ static inline void nfs_to_nfsd_net_put(struct net *net)
+ 	rcu_read_unlock();
+ }
+ 
+-static inline void nfs_to_nfsd_file_put_local(struct nfsd_file *localio)
++static inline void nfs_to_nfsd_file_put_local(struct nfsd_file __rcu **localio)
+ {
+ 	/*
+-	 * Must not hold RCU otherwise nfsd_file_put() can easily trigger:
+-	 * "Voluntary context switch within RCU read-side critical section!"
+-	 * by scheduling deep in underlying filesystem (e.g. XFS).
++	 * Either *localio must be guaranteed to be non-NULL, or caller
++	 * must prevent nfsd shutdown from completing as nfs_close_local_fh()
++	 * does by blocking the nfs_uuid from being finally put.
+ 	 */
+-	struct net *net = nfs_to->nfsd_file_put_local(localio);
++	struct net *net;
+ 
+-	nfs_to_nfsd_net_put(net);
++	net = nfs_to->nfsd_file_put_local(localio);
++
++	if (net)
++		nfs_to_nfsd_net_put(net);
+ }
+ 
+ #else   /* CONFIG_NFS_LOCALIO */
 -- 
 2.39.5
 
