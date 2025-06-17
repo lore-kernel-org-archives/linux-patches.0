@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D7B1FBEA8;
-	Tue, 17 Jun 2025 16:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA621FBEA8;
+	Tue, 17 Jun 2025 16:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177718; cv=none; b=QPYHJV++hWBBEbtiNpm/NuFLZD/BQZT88jbpXPgvWFm/QuMBXcwAjXkDzrCeWH3+d5qKQhERtHjVHJ7F7uD7Gf5DCNm874YsEbFLr4ueHxbd/LoFYb0vKkZ6V+94ZZWYUFWlAOEl+12MJ6wki+wjxfZ8OX2SXxAbBeAwrgXq754=
+	t=1750177721; cv=none; b=HEskkLxeEn22xuHhofR1Z7bNLHyaUZNd7L9JgYeb43hDMkIpl0f84/ixIJYQPz/50a1SRQ1Fv55Oy3zMOHs+rxwVoOkhoKZowd2irv3yXDlU1JFeghHQyhY2AC4SvuQp45LE2INCXMRnfRxpsH/igJ8d+7dNilZXQ93ZxMVw9p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177718; c=relaxed/simple;
-	bh=pZ41FbTikQJ76kJwHgabu/aa4FOZwBqOHabK+4pEfUc=;
+	s=arc-20240116; t=1750177721; c=relaxed/simple;
+	bh=OnDUgxiFEQfFubsLjUcPsb+HHO53l0/cZYEfVESxaFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qt2ORNGSiF05aImugsntdYMyCUdJnQi0RIxA4bCRjP1d53X3hRuZpENBMg9FQ/lPaLhkn8RnAigPLBWyZdtxvzy9NMRxiF0Fl1Opb6e5VdcFQ1l+GminevW40N4mTpRMv+NItMyoHY+y73E1EQZ5xWzs2ZB5RuugTt7K7PlMETQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYXwM0mw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qr8o66qIUtxLSoq2FPGQ1L1hKfU79eYh+cvJ3ZyPd+Su8UD7Ks3dGZxw+d+clXrdOIegoyyGMCb9lFwOBEQprumJYA8vuZnWFYhfP/GWehWXrjf2QT2puGT1JtyArQeh6RRyEFvbU2kOuYV+4HuwkYUOeOZFIp3FGiTw5f4g0mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EbiUJ81i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYXwM0mw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC4DC4CEE3;
-	Tue, 17 Jun 2025 16:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EbiUJ81i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3CEC4CEE3;
+	Tue, 17 Jun 2025 16:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177717;
-	bh=pZ41FbTikQJ76kJwHgabu/aa4FOZwBqOHabK+4pEfUc=;
+	s=korg; t=1750177720;
+	bh=OnDUgxiFEQfFubsLjUcPsb+HHO53l0/cZYEfVESxaFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYXwM0mwGdngIzZWjoIwQFluD9XkdYZe5RBYr+RP9dd2/3ZkElxC2xb7KEKYOe84c
-	 xkVn0hxx6NCe6xzjw7xd4V39TwI5fb/89uex1sBU1l6dlhSVkTAR4k2mW9Zhr0Dc7h
-	 a5rY4b2rlZ/r+vcLSsRA7nauTDNKKWQA+3rXFs/8=
+	b=EbiUJ81i1d4oCLfdU9zoySdMKHkJeEKi9g/jSZ7xnILPq2h6HX521JsOo5AyzzAiP
+	 bOieDPR+6Hnf9FKWLmPZNpcne10wpYRfGpJHk154zqaU2TqrMI7eumRrMcx3QsSOHb
+	 ZjVYVBUTW6tmazOtBxSi4RdD/kiqgVRPTUbM1tYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dzmitry Sankouski <dsankouski@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zong Li <zong.li@sifive.com>,
+	Nylon Chen <nylon.chen@sifive.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 350/780] arm64: dts: qcom: sdm845-starqltechn: fix usb regulator mistake
-Date: Tue, 17 Jun 2025 17:20:58 +0200
-Message-ID: <20250617152505.708580841@linuxfoundation.org>
+Subject: [PATCH 6.12 386/512] riscv: misaligned: fix sleeping function called during misaligned access handling
+Date: Tue, 17 Jun 2025 17:25:52 +0200
+Message-ID: <20250617152435.223676120@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +48,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dzmitry Sankouski <dsankouski@gmail.com>
+From: Nylon Chen <nylon.chen@sifive.com>
 
-[ Upstream commit 242e4126ee007b95765c21a9d74651fdcf221f2b ]
+[ Upstream commit 61a74ad254628ccd9e88838c3c622885dfb6c588 ]
 
-Usb regulator was wrongly pointed to vreg_l1a_0p875.
-However, on starqltechn it's powered from vreg_l5a_0p8.
+Use copy_from_user_nofault() and copy_to_user_nofault() instead of
+copy_from/to_user functions in the misaligned access trap handlers.
 
-Fixes: d711b22eee55 ("arm64: dts: qcom: starqltechn: add initial device tree for starqltechn")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-Link: https://lore.kernel.org/r/20250225-starqltechn_integration_upstream-v9-3-a5d80375cb66@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The following bug report was found when executing misaligned memory
+accesses:
+
+BUG: sleeping function called from invalid context at ./include/linux/uaccess.h:162
+in_atomic(): 0, irqs_disabled(): 1, non_block: 0, pid: 115, name: two
+preempt_count: 0, expected: 0
+CPU: 0 UID: 0 PID: 115 Comm: two Not tainted 6.14.0-rc5 #24
+Hardware name: riscv-virtio,qemu (DT)
+Call Trace:
+ [<ffffffff800160ea>] dump_backtrace+0x1c/0x24
+ [<ffffffff80002304>] show_stack+0x28/0x34
+ [<ffffffff80010fae>] dump_stack_lvl+0x4a/0x68
+ [<ffffffff80010fe0>] dump_stack+0x14/0x1c
+ [<ffffffff8004e44e>] __might_resched+0xfa/0x104
+ [<ffffffff8004e496>] __might_sleep+0x3e/0x62
+ [<ffffffff801963c4>] __might_fault+0x1c/0x24
+ [<ffffffff80425352>] _copy_from_user+0x28/0xaa
+ [<ffffffff8000296c>] handle_misaligned_store+0x204/0x254
+ [<ffffffff809eae82>] do_trap_store_misaligned+0x24/0xee
+ [<ffffffff809f4f1a>] handle_exception+0x146/0x152
+
+Fixes: b686ecdeacf6 ("riscv: misaligned: Restrict user access to kernel memory")
+Fixes: 441381506ba7 ("riscv: misaligned: remove CONFIG_RISCV_M_MODE specific code")
+
+Signed-off-by: Zong Li <zong.li@sifive.com>
+Signed-off-by: Nylon Chen <nylon.chen@sifive.com>
+Link: https://lore.kernel.org/r/20250411073850.3699180-3-nylon.chen@sifive.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/riscv/kernel/traps_misaligned.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 6fc30fd1262b8..f3f2b25883d81 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -135,8 +135,6 @@
- 		vdda_sp_sensor:
- 		vdda_ufs1_core:
- 		vdda_ufs2_core:
--		vdda_usb1_ss_core:
--		vdda_usb2_ss_core:
- 		vreg_l1a_0p875: ldo1 {
- 			regulator-min-microvolt = <880000>;
- 			regulator-max-microvolt = <880000>;
-@@ -157,6 +155,7 @@
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
+diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
+index d14bfc23e315b..36ac96eac9c9e 100644
+--- a/arch/riscv/kernel/traps_misaligned.c
++++ b/arch/riscv/kernel/traps_misaligned.c
+@@ -429,7 +429,7 @@ int handle_misaligned_load(struct pt_regs *regs)
  
-+		vdda_usb1_ss_core:
- 		vdd_wcss_cx:
- 		vdd_wcss_mx:
- 		vdda_wcss_pll:
+ 	val.data_u64 = 0;
+ 	if (user_mode(regs)) {
+-		if (copy_from_user(&val, (u8 __user *)addr, len))
++		if (copy_from_user_nofault(&val, (u8 __user *)addr, len))
+ 			return -1;
+ 	} else {
+ 		memcpy(&val, (u8 *)addr, len);
+@@ -530,7 +530,7 @@ int handle_misaligned_store(struct pt_regs *regs)
+ 		return -EOPNOTSUPP;
+ 
+ 	if (user_mode(regs)) {
+-		if (copy_to_user((u8 __user *)addr, &val, len))
++		if (copy_to_user_nofault((u8 __user *)addr, &val, len))
+ 			return -1;
+ 	} else {
+ 		memcpy((u8 *)addr, &val, len);
 -- 
 2.39.5
 
