@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC992FA622;
-	Tue, 17 Jun 2025 16:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707842FA631;
+	Tue, 17 Jun 2025 16:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179222; cv=none; b=tO+pkui51zMWxZROtscbofbDodXm9WffgKGqxx78oz81bAYj3FfRKyTlxa/d1F0NY4TGj+cnex1rqCbLmgIigkItFqoINHND1UtKnDnaqjMzBdkEyq7q7VNapWVltWyE07V0DtxD9gWwkou6TjvzcQSw4AaUzEm/1QDVrNFJqkM=
+	t=1750179225; cv=none; b=dGU8Walw1zfwjNJFyOA/5wFpuGYP5R+Z0PhUSNIF+Pni2Mhb2EAv+p/0X3pJalgOOkHhL8OmYg2XGBVN43Zm/h39k6mV7SMrCNQF9WItyReSzeHJhGgikEJ1hdrD39j8iUewKTIQ24ZMP7Ld4Lwu69zLGreh1fPUlwhDqkfl4Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179222; c=relaxed/simple;
-	bh=xJ0BwSxFxdUsUIlNJQDdcHSxKk+TgsZ56eVGY9d/bRk=;
+	s=arc-20240116; t=1750179225; c=relaxed/simple;
+	bh=a4oxds3GucSYMb9BrZ5lvf9APJfMhlca6HlRJYYo25M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FeonUVDEef7K3WCVLuATGod3AT3ua8nD1PBxHodyf9SPJ0dO8tIaQOO3PGR5mb4eKbFJkQ4X6ekcmycizimhfyE6VPWdES2B5ZLVLtdwSgfvd/XUjQsm3V+pzzi0r1okJ29sJ8V5P2ikpwmTplpHwX7DSsj1sX1eHE1RNKkVYiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10VKi0cZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LxAoaSQOz6zsbekxqAFjbwVYWJRncMEh3XNiunZTcINV+Y1MubAI7tbpWTD6kkA+OEW4KO0hvKIt43+n4/2l6mPN+fSayg0Usj6CtlvOhNv0aDEtRrE2xzQPh3PDxk7Ys8ytQBq9CWrfWiEvnycMwlScounK0Xh4VpeU/vZJ6/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKTnvXtj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10VKi0cZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9262CC4CEE3;
-	Tue, 17 Jun 2025 16:53:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKTnvXtj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A91C4CEE3;
+	Tue, 17 Jun 2025 16:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179222;
-	bh=xJ0BwSxFxdUsUIlNJQDdcHSxKk+TgsZ56eVGY9d/bRk=;
+	s=korg; t=1750179225;
+	bh=a4oxds3GucSYMb9BrZ5lvf9APJfMhlca6HlRJYYo25M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10VKi0cZuqQ1Xb9QybAd/fzTwcR+QhlVUk34pHxLnucvJ++Y0/Yw6JWwZDIrCH1+H
-	 BX8CACiQidCQvwGkp4zJGU6RQdmOC8KK6WXN6rYVJDgarJqdh/5dKhV9p2DnfpyaE1
-	 UK+MN6ia1o0EqbjRuxKGHyikcuueL8w37QjS9nvE=
+	b=iKTnvXtjV7dprMotlhss5WV3jv1wF0s1ZEJgPo9jPgu1kTw52r4o78aKyEnUXk66H
+	 qpf6vy8R7HbGMd+vGBIgHqQKzJUxWAHFiKFN/0r2MjQTDmTzuTTOGZtFIp1kjWPqU2
+	 ejbPH5oRaek4+OpxMAtq15OIo1P1KEePK5xeLJ1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jonathan Greental <yonatan02greental@gmail.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 686/780] net_sched: sch_sfq: fix a potential crash on gso_skb handling
-Date: Tue, 17 Jun 2025 17:26:34 +0200
-Message-ID: <20250617152519.428177953@linuxfoundation.org>
+Subject: [PATCH 6.15 687/780] powerpc/powernv/memtrace: Fix out of bounds issue in memtrace mmap
+Date: Tue, 17 Jun 2025 17:26:35 +0200
+Message-ID: <20250617152519.468065293@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -47,72 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-[ Upstream commit 82ffbe7776d0ac084031f114167712269bf3d832 ]
+[ Upstream commit cd097df4596f3a1e9d75eb8520162de1eb8485b2 ]
 
-SFQ has an assumption of always being able to queue at least one packet.
+memtrace mmap issue has an out of bounds issue. This patch fixes the by
+checking that the requested mapping region size should stay within the
+allocated region size.
 
-However, after the blamed commit, sch->q.len can be inflated by packets
-in sch->gso_skb, and an enqueue() on an empty SFQ qdisc can be followed
-by an immediate drop.
-
-Fix sfq_drop() to properly clear q->tail in this situation.
-
-Tested:
-
-ip netns add lb
-ip link add dev to-lb type veth peer name in-lb netns lb
-ethtool -K to-lb tso off                 # force qdisc to requeue gso_skb
-ip netns exec lb ethtool -K in-lb gro on # enable NAPI
-ip link set dev to-lb up
-ip -netns lb link set dev in-lb up
-ip addr add dev to-lb 192.168.20.1/24
-ip -netns lb addr add dev in-lb 192.168.20.2/24
-tc qdisc replace dev to-lb root sfq limit 100
-
-ip netns exec lb netserver
-
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-
-Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
-Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
-Closes: https://lore.kernel.org/netdev/9da42688-bfaa-4364-8797-e9271f3bdaef@hetzner-cloud.de/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20250606165127.3629486-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Jonathan Greental <yonatan02greental@gmail.com>
+Fixes: 08a022ad3dfa ("powerpc/powernv/memtrace: Allow mmaping trace buffers")
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250610021227.361980-1-maddy@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/powernv/memtrace.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index b912ad99aa15d..77fa02f2bfcd5 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -310,7 +310,10 @@ static unsigned int sfq_drop(struct Qdisc *sch, struct sk_buff **to_free)
- 		/* It is difficult to believe, but ALL THE SLOTS HAVE LENGTH 1. */
- 		x = q->tail->next;
- 		slot = &q->slots[x];
--		q->tail->next = slot->next;
-+		if (slot->next == x)
-+			q->tail = NULL; /* no more active slots */
-+		else
-+			q->tail->next = slot->next;
- 		q->ht[slot->hash] = SFQ_EMPTY_SLOT;
- 		goto drop;
- 	}
+diff --git a/arch/powerpc/platforms/powernv/memtrace.c b/arch/powerpc/platforms/powernv/memtrace.c
+index 4ac9808e55a44..2ea30b3433541 100644
+--- a/arch/powerpc/platforms/powernv/memtrace.c
++++ b/arch/powerpc/platforms/powernv/memtrace.c
+@@ -48,11 +48,15 @@ static ssize_t memtrace_read(struct file *filp, char __user *ubuf,
+ static int memtrace_mmap(struct file *filp, struct vm_area_struct *vma)
+ {
+ 	struct memtrace_entry *ent = filp->private_data;
++	unsigned long ent_nrpages = ent->size >> PAGE_SHIFT;
++	unsigned long vma_nrpages = vma_pages(vma);
+ 
+-	if (ent->size < vma->vm_end - vma->vm_start)
++	/* The requested page offset should be within object's page count */
++	if (vma->vm_pgoff >= ent_nrpages)
+ 		return -EINVAL;
+ 
+-	if (vma->vm_pgoff << PAGE_SHIFT >= ent->size)
++	/* The requested mapping range should remain within the bounds */
++	if (vma_nrpages > ent_nrpages - vma->vm_pgoff)
+ 		return -EINVAL;
+ 
+ 	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
 -- 
 2.39.5
 
