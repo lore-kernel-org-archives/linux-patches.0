@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F1E16A95B;
-	Wed, 18 Jun 2025 15:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7D92EE981;
+	Wed, 18 Jun 2025 15:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750259513; cv=none; b=KSmpi3xmTVZvLyhVJSLyD9ZR74tabGKyGvnA1ry/C22lWXU8ibo10hgjMShbwFFU3DG9uc88SvKBY8IOFo23sh7J+vG5cYHHDDrHKhzLUHcgSiTGXpI9IZB6l2VsCDJdcgh9V+fVuYPxA+iGNgO+/ZCDjNSgp113J2nsXUpbdZk=
+	t=1750259571; cv=none; b=aO/1UU5Y9enzqJ9L3pCcHN0MsHOGPc0N2LxruF2rZd72PneYfyHwp+6PLOHJ6yNkNfZECwBR7/AOV9RUirzGb4yW7bivHXtM01RvyhZd5DP7Y2WEKNc0YgkaR7h61iKVntFuYdslCIBHBfkVFST1KPYWsLhMkFsd6tX9CyoQ/aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750259513; c=relaxed/simple;
-	bh=Wzjwsii8yfmolxkQkAgPYhRM7Z6/qgUkeAnXTcoCpI8=;
+	s=arc-20240116; t=1750259571; c=relaxed/simple;
+	bh=ZwBQMyQEJS/RXHKpxFJsZskhbkcyOpp55zZF15F1NGA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ggNCdubnmBuviq1elUQcBv6lPdOiGo8Qd3mOJhmYpdY05Aea/DIULvqzZJK/rxE9EqlVXRx8xSnHFvAiP2lbRVFTYRn+CtAMOHbXCa6DnMKJkxGq/JGSTtFSg084SZWflnQTzpoU02FE7EujhhnMIDFcNA+vF6LxhKpUHYf2o50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lt1GhWFd; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=RxTDoV8x9PmbvvUfBnxPmexcBB8xdgdtI+H7215uYtvKr9hy2YNkMgIjXYz7BmFIxbhKM/+B7XeAXYzmFjyvCJaIqgcFrHtbof9RM2ton3MmBPAugYmdjHZvBk4dyucdCyuj80jrbxUDb3UXMzlRK6KRRe7ra7mJ2vYNeadGR6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IVowrAVH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lt1GhWFd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B024C4CEF0;
-	Wed, 18 Jun 2025 15:11:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IVowrAVH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEB8C4CEE7;
+	Wed, 18 Jun 2025 15:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750259513;
-	bh=Wzjwsii8yfmolxkQkAgPYhRM7Z6/qgUkeAnXTcoCpI8=;
+	s=k20201202; t=1750259570;
+	bh=ZwBQMyQEJS/RXHKpxFJsZskhbkcyOpp55zZF15F1NGA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lt1GhWFdXGvw/76cv1ejyxtlWvo27KOCHf7dFV6dHavnMPdRL4A/VL1rB5aOiplVh
-	 dLY7uNPH/1/fdcngFvNd8+pdFr6c9+mKgxsvKjJ8rvjJeMkcUe49vyEQ9EP5KAv7gW
-	 sCtbdbiPHGCdMRnb9TLNI5n94cjLq9YSD64VZYnF4tK/lr2VjwBCPJ4wVBl/vF3Xph
-	 oOktN++khB2MAHlHz2BMV9LPHJOSHPOYgVfrk14Hj7APsG3qzBh8MTKpx7xRXkDIYk
-	 SwAhiSwGAGRccJtMIoRPKEjzJ0kpuvi128kKL9YlpASiEFmZjNz6VycDMJvrmcV5Fs
-	 qxrJr5FvyHVdw==
-Date: Wed, 18 Jun 2025 11:11:51 -0400
+	b=IVowrAVHzk2g4J4LtkAn2aPxALuxfaKumyjdR3NhjEob/iI21g3LhnFszAr7i12DM
+	 MdSrIguJLpUkfUxbvcQaKFsUHuDWJk6B36iPvi8cgq85bVADl5AGX0hOvDLV9lnJAy
+	 xAi4CXM0QkL87Kmo5qjsDS+vUssy27RU39Ivsh7G8Z++YDpNmYjMCndMos8M8NKvxZ
+	 3/cK9XheizwZwu10ZbWeH+4Daj4/vQDC1/+1NlvLhi11UqyItI2AyhsZeZTpC4i22Q
+	 GtnZpGYwE0v7Hy5sFETYHOBehWrcNfIl7QfpWN2znWBDckCNr3JhOPbezRYNHn2SCf
+	 JvgArh0dLWiCg==
+Date: Wed, 18 Jun 2025 11:12:49 -0400
 From: Sasha Levin <sashal@kernel.org>
-To: Johan Hovold <johan@kernel.org>
+To: "Dr. David Alan Gilbert" <linux@treblig.org>
 Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Brian Norris <briannorris@chromium.org>,
-	Thomas Gleixner <tglx@linutronix.de>, matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Subject: Re: [PATCH AUTOSEL 6.15 092/110] genirq: Retain disable depth for
- managed interrupts across CPU hotplug
-Message-ID: <aFLXN5Rbx_egQBeB@lappy>
+	Takashi Iwai <tiwai@suse.de>, perex@perex.cz, tiwai@suse.com,
+	yuehaibing@huawei.com, linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.15 101/110] ALSA: seq: Remove unused
+ snd_seq_queue_client_leave_cells
+Message-ID: <aFLXcQc6Wg41gPSJ@lappy>
 References: <20250601232435.3507697-1-sashal@kernel.org>
- <20250601232435.3507697-92-sashal@kernel.org>
- <aELf3QmuEJOlR7Dv@hovoldconsulting.com>
+ <20250601232435.3507697-101-sashal@kernel.org>
+ <aDznZgej_QbaalP0@gallifrey>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,57 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <aELf3QmuEJOlR7Dv@hovoldconsulting.com>
+In-Reply-To: <aDznZgej_QbaalP0@gallifrey>
 
-On Fri, Jun 06, 2025 at 02:32:29PM +0200, Johan Hovold wrote:
->On Sun, Jun 01, 2025 at 07:24:14PM -0400, Sasha Levin wrote:
->> From: Brian Norris <briannorris@chromium.org>
+On Sun, Jun 01, 2025 at 11:51:02PM +0000, Dr. David Alan Gilbert wrote:
+>* Sasha Levin (sashal@kernel.org) wrote:
+>
+>Hi Sasha,
+>
+>> From: "Dr. David Alan Gilbert" <linux@treblig.org>
 >>
->> [ Upstream commit 788019eb559fd0b365f501467ceafce540e377cc ]
+>> [ Upstream commit 81ea9e92941091bb3178d49e63b13bf4df2ee46b ]
 >>
->> Affinity-managed interrupts can be shut down and restarted during CPU
->> hotunplug/plug. Thereby the interrupt may be left in an unexpected state.
->> Specifically:
+>> The last use of snd_seq_queue_client_leave_cells() was removed in 2018
+>> by
+>> commit 85d59b57be59 ("ALSA: seq: Remove superfluous
+>> snd_seq_queue_client_leave_cells() call")
 >>
->>  1. Interrupt is affine to CPU N
->>  2. disable_irq() -> depth is 1
->>  3. CPU N goes offline
->>  4. irq_shutdown() -> depth is set to 1 (again)
->>  5. CPU N goes online
->>  6. irq_startup() -> depth is set to 0 (BUG! driver expects that the interrupt
->>     		     	      	        still disabled)
->>  7. enable_irq() -> depth underflow / unbalanced enable_irq() warning
+>> Remove it.
 >>
->> This is only a problem for managed interrupts and CPU hotplug, all other
->> cases like request()/free()/request() truly needs to reset a possibly stale
->> disable depth value.
->>
->> Provide a startup function, which takes the disable depth into account, and
->> invoked it for the managed interrupts in the CPU hotplug path.
->>
->> This requires to change irq_shutdown() to do a depth increment instead of
->> setting it to 1, which allows to retain the disable depth, but is harmless
->> for the other code paths using irq_startup(), which will still reset the
->> disable depth unconditionally to keep the original correct behaviour.
->>
->> A kunit tests will be added separately to cover some of these aspects.
->>
->> [ tglx: Massaged changelog ]
->>
->> Suggested-by: Thomas Gleixner <tglx@linutronix.de>
->> Signed-off-by: Brian Norris <briannorris@chromium.org>
->> Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
->> Link: https://lore.kernel.org/all/20250514201353.3481400-2-briannorris@chromium.org
+>> Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+>> Signed-off-by: Takashi Iwai <tiwai@suse.de>
+>> Link: https://patch.msgid.link/20250502235219.1000429-4-linux@treblig.org
 >> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
+>>
+>> NO This commit should not be backported to stable kernel trees for
+>> several reasons:
 >
->This one breaks suspend of laptops like the Lenovo ThinkPad T14s. Issue
->was just reported here by Alex:
->
->	https://lore.kernel.org/lkml/24ec4adc-7c80-49e9-93ee-19908a97ab84@gmail.com/
->
->Please drop from all stable queues for now.
+>I'd agree with that big fat NO - unless it makes your life easier backporting
+>a big pile of other stuff.
+>I'm a bit curious about:
+>  a) How it got picked up by autosel - I'm quite careful not to include
+>     'fixes' tags to avoid them getting picked up.
 
-Will do, thanks!
+autosel does it's analysis based on LLMs rather than just commit tags.
+
+>  b) Given it's got a big fat no, why is it posted here?
+
+I was trying to be too smart :)
+
+My scripts got confused by the "YES" later on in the explanation.
+
+Now dropped!
 
 -- 
 Thanks,
