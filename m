@@ -1,75 +1,74 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF3422F3C3D
-	for <patches@lists.linux.dev>; Wed, 18 Jun 2025 18:07:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from 0.smtp.remotehost.it (0.smtp.remotehost.it [213.190.28.75])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD95204F93
+	for <patches@lists.linux.dev>; Wed, 18 Jun 2025 19:58:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.190.28.75
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750270062; cv=none; b=P+3U/ZSod8jqlsWElHA0S9Pq8gPpIGhulFZJqEymgpKya6t5IwxDPA6wlYynM2cHSEMrHdbbKlgmgSzp6n1ZSEUWAXTxFN9EqfXW86J3GgYpAepgNmB1QJ1Q2Pwp5x5nL1aoNVQnULCHGXf32Jl6OR4pghNP5eIFJDmlpUFUDTk=
+	t=1750276688; cv=none; b=cSbf+UNMlQtNQDEO7FLFu3Rp9Dznabr0b7/fgu1LcHHli0YerEudRpSW3KIJc2Mrfmt2EFohmsQ2RHeNz5fwjyfzLk59bBdFaG89ggTAQeYUe/4xcMeLUu3jYsVdAenlpPHnB0hqth6BMQRiCBZyd5wk8ucscrjhdne1TI/K47U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750270062; c=relaxed/simple;
-	bh=woULyHaUBk5zuuRaY2CQ2JQCVQW5NVgM6t6CJOPuINI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=jF8dXtj3ZM1F79jnI9MfZ8befdzwr3PzIZJX9qpFU7THAIBrJP0zpK7jvn4knAJYqadM4zz+XFlez3ed6fvu4rjXb7hknuDnzCpOxBuvNqbKDDytjjeYy7Zlj2sWZ59A+W9WtGcl2gA0UdklHUwRo32qXirLvfhcEuV67GqYw5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=GssJRV0i; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1750276688; c=relaxed/simple;
+	bh=KCfl1yGZ+YWjR7WYFfMcSvOnjdzSUv5Mu2Dn+EX1aYo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:In-Reply-To:
+	 From:Content-Type; b=b6iHuz2jg+0kXlEJY5oeCYYw+hd+Rz7h9H1M9nvuoLcMI5kXlunILdpMLV8UrI/Qa3ULN5zRav8Lyb5H9O5o9U7HMSQ3CYpjtwvcDM+fiT71IZCf4ieqDew/S+X2+U0ZFNCevRWy58crEhMI0G02tTPtREJxKsAcdzpuirzqDec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net; spf=pass smtp.mailfrom=hardfalcon.net; dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b=2tXG/aiP; arc=none smtp.client-ip=213.190.28.75
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hardfalcon.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="GssJRV0i"
-Received: by linux.microsoft.com (Postfix, from userid 1158)
-	id 6CDD5211518E; Wed, 18 Jun 2025 11:07:40 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6CDD5211518E
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1750270060;
-	bh=JpOtiov0jWkZ4Ezie/yIIYnf/xBCV9YHpokW0wLWHR4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GssJRV0ipsTYxJZOD41cXvU2NfTdHc8LR5ua5qRUGq3YHu6wVaEUmSPDaOHr38o1G
-	 XQl4eysvoeRqm6I4yvDhHes2gfw32eSx01ZcOWeAEnpMOqYE43Ih0FsPNZb09ayPW5
-	 iFpD0pKUQgLwhHu39BITJMbFdu1liV3tCOrThhmA=
-From: Hardik Garg <hargar@linux.microsoft.com>
-To: gregkh@linuxfoundation.org
-Cc: akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	srw@sladewatkins.net,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org
-Subject: Re: [PATCH 6.15 000/780] 6.15.3-rc1 review
-Date: Wed, 18 Jun 2025 11:07:40 -0700
-Message-Id: <1750270060-30222-1-git-send-email-hargar@linux.microsoft.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+	dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b="2tXG/aiP"
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=hardfalcon.net;
+	s=dkim_2024-02-03; t=1750276682;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xkoriids/m8rGzR8uFY8ZuA19oDLArMkTcWLOUXzZRM=;
+	b=2tXG/aiPPSyL6UFpWhlw8V1aol3XSJDeB2nuLBPtnzfRiClbVavB2qUKFpOBig/PRS8BHk
+	13ga5klLBnzfMEDg==
+Message-ID: <7db8c196-cba0-40b8-89df-3856348a12fe@hardfalcon.net>
+Date: Wed, 18 Jun 2025 21:58:01 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Subject: Re: [PATCH 6.15 000/780] 6.15.3-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Ronald Warsow <rwarsow@gmx.de>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, conor@kernel.org, hargar@microsoft.com,
+ broonie@kernel.org, "Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+ "Peter Zijlstra (Intel)" <peterz@infradead.org>
+References: <20250617152451.485330293@linuxfoundation.org>
+ <f2b87714-0ef6-4210-9b30-86b4c79d1ed8@gmx.de>
+ <2025061848-clinic-revered-e216@gregkh>
+ <c8e4e868-aafb-4df1-8d07-62126bfe2982@hardfalcon.net>
+Content-Language: en-US, de-DE, en-US-large
+In-Reply-To: <20250617152521.879529420@linuxfoundation.org>
+ <04b7faf5-2f69-4d02-9eca-916e4bffcf00@gmx.de>
+From: Pascal Ernster <git@hardfalcon.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The kernel, bpf tool, and perf tool builds fine for v6.15.3-rc1 on x86 and arm64 Azure VM.
-
-Kernel binary size for x86 build:
-text      data      bss      dec       hex      filename
-31998596  14275846  6250496  52524938  321778a  vmlinux
-
-Kernel binary size for arm64 build:
-text      data      bss      dec       hex      filename
-37335273  15435305  1038736  53809314  33510a2  vmlinux
+Hello again,
 
 
-Tested-by: Hardik Garg <hargar@linux.microsoft.com>
+I've bisected this and found that the issue is caused by commit 
+f46262bbc05af38565c560fd960b86a0e195fd4b:
+
+'Revert "mm/execmem: Unify early execmem_cache behaviour"'
+
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/commit/?id=f46262bbc05af38565c560fd960b86a0e195fd4b
+
+https://lore.kernel.org/stable/20250617152521.879529420@linuxfoundation.org/
+
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/tree/queue-6.15/revert-mm-execmem-unify-early-execmem_cache-behaviour.patch?id=344d39fc8d8b7515b45a3bf568c115da12517b22
 
 
-
-
-Thanks,
-Hardik
+Regards
+Pascal
