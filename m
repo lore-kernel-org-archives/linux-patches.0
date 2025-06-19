@@ -1,120 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1121F3085D7;
-	Thu, 19 Jun 2025 08:20:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F283727877F
+	for <patches@lists.linux.dev>; Thu, 19 Jun 2025 09:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750321224; cv=none; b=T30xI9gQeGkutR5+hH9+VJK2ylW7fp/ah7Pq196aOTRBHzdGxTSfCyUndHsixxMLwCHce0fXsieZPlYFcq5hvaO9suEdex1u9t6kFYr1aEQJWkFzCyV3HcPfUjcyMbbpWMMxImN2mw2Mdw85m0xXy4MHT4Z+Xd7gA35q6PNm7vk=
+	t=1750324484; cv=none; b=u/r3xwqXK1EITdLW0/AdArasX65QNbKkemyhH0MMTwhNFZfQrt6RHIJelSB5y/WXoLfd/3DGO26KpJTuxcJhYIWZCvcO4bGVXNOTfZ0V2w308T1ICSnYGjPMPfqsAOpzs8zKNm+QD6+tba1Gf8F40+WY7PbjUE48YSH2iZruP/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750321224; c=relaxed/simple;
-	bh=rs1SQZAjM42eP1OdPF5cxc7T68ok0Dt9YGM0X0I/GSI=;
+	s=arc-20240116; t=1750324484; c=relaxed/simple;
+	bh=oskZaqewOdI9Q2vgMTv3V9kHOUv/J7lvDhpMHUc35DM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ShzOdD6pzM9OPAFFhi+Xj1B/DwhBJpu0LsJ3cWPHdISGW3u1tqfwIy1aOm6+P4hKVrEc/+06ARQguG/j2SGtwnEJdw2ZASd80XX3PZeOxNtddF0KgOmDCEKPdJUy4Bhxhbr3L0UIxMA5a8fiwOMr/baPPnpMMBPk7pLSXRnv73Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iM39Y27l; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=epM7mkUoFSF57O084OhZ0CHdmx6O0aYsgXImAntK3p+1e5d/x0q3SwvMWHibpr63CN1Rhfy+5I7+YmCupM9Kr2PL9ESIYaMCiBsB8scbOjrWmdRFqvYD8IMkbUufpu90AOspxLhPJ3oadLn+1b9uFKbZnfqHjdlcV7ya/msLVL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=AIXcItZy; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iM39Y27l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF376C4CEEA;
-	Thu, 19 Jun 2025 08:20:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750321223;
-	bh=rs1SQZAjM42eP1OdPF5cxc7T68ok0Dt9YGM0X0I/GSI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iM39Y27luLaflYHgryXb8/VAbHnzQmHzyVsZrnjWmLzWdooBDAeiGqi+GgHNjJxvm
-	 00nQywoISyVUd/nEX3+lO3HlQJ7YLrDDdi4PN/K0odYO1fi1ny/pSvD8J7sLfxes8M
-	 h8QYlQjosPQ6KZ2wGEJImAcu7eks3bxDYzqGtWQA=
-Date: Thu, 19 Jun 2025 10:20:20 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>
-Cc: Mark Brown <broonie@kernel.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, Willy Tarreau <w@1wt.eu>
-Subject: Re: [PATCH 6.15 000/780] 6.15.3-rc1 review
-Message-ID: <2025061907-finance-dodgy-b0ae@gregkh>
-References: <20250617152451.485330293@linuxfoundation.org>
- <cc048abb-fbc0-4a79-b78a-90bfa3f8446d@sirena.org.uk>
- <2025061858-reproduce-revolving-cae0@gregkh>
- <1081af30-1273-4a9a-a864-f59f1cb54fd1@t-8ch.de>
- <2025061949-epilepsy-punk-fb4e@gregkh>
- <a757c5d9-06f4-4ed0-9de9-08edbd16134a@t-8ch.de>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AIXcItZy"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2357c61cda7so88135ad.1
+        for <patches@lists.linux.dev>; Thu, 19 Jun 2025 02:14:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1750324482; x=1750929282; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=oWamqH4Qzt1P4RdD6HP7YstMpMkIZRoPsNcDiTnzqKM=;
+        b=AIXcItZyYE5jgG534hw/VerbkKKHE3M2iTxPWhG6XZlI8lysLXpr5w0N22aAzXDJ/E
+         KRKdgLI2kHthuFySeTMX9f3Znh+TZ1rqM706eldgatVuPmGVLyIxb7bQH8J7IX0xrgmZ
+         zxriAymZYspOuoLeay9IWAR41MCZNjWpa3klCu2EMppRBqlyQomMe3+DSHJ+hfPhA08n
+         oDGbM5zBJQ1Sb9x6KA4v1UK0q7+UYBkWqStCMzYfMT0tn29/eBlP78rq1alnqhM7Ntj0
+         OjSqNnOlk0IxeHkJkPlaCqk52tI4wpqmDGfYwlmi+gPswUCkfSSlYQBol2eRwl24IqB8
+         /l5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750324482; x=1750929282;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oWamqH4Qzt1P4RdD6HP7YstMpMkIZRoPsNcDiTnzqKM=;
+        b=L3mpyLCo9vLdHTHE2QiHylGvRdshiIja+hyRpPCJzEs48e2BsEz/UxLh45vCXbfh2H
+         6VO/4Z12o9VZgepRShuvXo99qDNqAlnsaMAySsIZ5cW8D2MU5xSXNIhIU4JL+lIIwQW4
+         +iNdLhVDc3U2G3iKVGpGCi9GmIqJZEzfW+msk6k4MfiYMM9eb9+g2GxOi1HciOxqDDgi
+         4OVRQyHTg9bIYsl+tPR33JSs+dirYvilWomYs2yKupw6Ahghna7ayh/KS+yC8EKNxzz4
+         RwXmx/IWxQRZDH3wUb3ZY0Ekg5IAUJO5CjdQpV5JOPM1jGBqgqu1sZSry+Bf7cfsUv+k
+         GqIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX32M2I4M/XL+eY1Xi3W3dG1JUE0esRljVz+q8ghuQOqdw6gcVAoI/QOMCM3/mFbO4gkOnm7jmW@lists.linux.dev
+X-Gm-Message-State: AOJu0YyGoDXWmoqcz0jtKsevOB3Wt/LB3tH0NaexZDU3hF6+JLcgqWVf
+	0pP3IMp4IAPUcvv8vdDZDlWstefBZ4KcSTjv1mcRKC9lwlEPcwXa2XKjh4IP8NeN1g==
+X-Gm-Gg: ASbGncuSNFOgEKmqmeRUfYjCBvJas0akvT4ybQLL+D6OoSYbvxVrMuEYZm2RlX0j4cx
+	eHaZm2AstI8Tz5h4yWEYKwvWS8++R+LmONWE1xPjG4gVHTf9VBkOJRrS0PERbhh8LkAYEmhR7j0
+	b05KA1WaUAKwprZRE6q2WtbGGp7HIfo5f+Bcghv5Sp4y6rXVtzp/QwIf4Vho2h3Xo6cxrbcfc76
+	Iyb9z+ci+K/E0n8Xi/sD6tiEkc786TCqQFsZwHE31E0A+ZrTfWvOSE4ZoR3AGU6FEGbZFSEOvI6
+	cAGwdCxWD+Y2zy8UzjLSxwSaQSlZFwDjBiIuRdhYfvukswX9A0oIQI5NZ6OyE7vuLO2FAvXQlBk
+	3O07DLJ92VkreBLTqd7bb
+X-Google-Smtp-Source: AGHT+IEvh8ntAaeawSzvvAW9v54xfOai3SDk6b1VSkUWtSTdDIzpJHZdPCeE04W9I0TDOLd777OhYA==
+X-Received: by 2002:a17:902:da48:b0:234:13ad:7f9f with SMTP id d9443c01a7336-237ccb4af65mr2441805ad.22.1750324481903;
+        Thu, 19 Jun 2025 02:14:41 -0700 (PDT)
+Received: from google.com (232.98.126.34.bc.googleusercontent.com. [34.126.98.232])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2365d88c029sm114860565ad.26.2025.06.19.02.14.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Jun 2025 02:14:41 -0700 (PDT)
+Date: Thu, 19 Jun 2025 09:14:29 +0000
+From: Pranjal Shrivastava <praan@google.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>, kevin.tian@intel.com, corbet@lwn.net,
+	will@kernel.org, bagasdotme@gmail.com, robin.murphy@arm.com,
+	joro@8bytes.org, thierry.reding@gmail.com, vdumpa@nvidia.com,
+	jonathanh@nvidia.com, shuah@kernel.org, jsnitsel@redhat.com,
+	nathan@kernel.org, peterz@infradead.org, yi.l.liu@intel.com,
+	mshavit@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
+	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com,
+	dwmw2@infradead.org, baolu.lu@linux.intel.com
+Subject: Re: [PATCH v6 06/25] iommufd/access: Allow access->ops to be NULL
+ for internal use
+Message-ID: <aFPU9TKgU0Lofl-O@google.com>
+References: <cover.1749884998.git.nicolinc@nvidia.com>
+ <e6a989c4dd9cb94aa4a98d46ed56a2afcb41b70d.1749884998.git.nicolinc@nvidia.com>
+ <20250616133305.GB1174925@nvidia.com>
+ <aFDRKEsdVZc2XQ91@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a757c5d9-06f4-4ed0-9de9-08edbd16134a@t-8ch.de>
+In-Reply-To: <aFDRKEsdVZc2XQ91@nvidia.com>
 
-On Thu, Jun 19, 2025 at 07:50:43AM +0200, Thomas Weißschuh wrote:
-> On 2025-06-19 06:19:52+0200, Greg Kroah-Hartman wrote:
-> > On Wed, Jun 18, 2025 at 04:15:09PM +0200, Thomas Weißschuh wrote:
-> > > On 2025-06-18 15:19:11+0200, Greg Kroah-Hartman wrote:
-> > > > On Wed, Jun 18, 2025 at 12:58:00PM +0100, Mark Brown wrote:
-> > > > > On Tue, Jun 17, 2025 at 05:15:08PM +0200, Greg Kroah-Hartman wrote:
-> > > > > > This is the start of the stable review cycle for the 6.15.3 release.
-> > > > > > There are 780 patches in this series, all will be posted as a response
-> > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > let me know.
-> > > > > 
-> > > > > This breaks the build of the arm64 selftests due to a change in nolibc,
-> > > > > it appears that "tools/nolibc: properly align dirent buffer" is missing
-> > > > > some dependency:
-> > > > > 
-> > > > > aarch64-linux-gnu-gcc -fno-asynchronous-unwind-tables -fno-ident -s -Os -nostdlib \
-> > > > > 	-include ../../../../include/nolibc/nolibc.h -I../..\
-> > > > > 	-static -ffreestanding -Wall za-fork.c /build/stage/build-work/kselftest/arm64/fp/za-fork-asm.o -o /build/stage/build-work/kselftest/arm64/fp/za-fork
-> > > > > In file included from ./../../../../include/nolibc/nolibc.h:107,
-> > > > >                  from <command-line>:
-> > > > > ./../../../../include/nolibc/dirent.h: In function ‘readdir_r’:
-> > > > > ./../../../../include/nolibc/dirent.h:62:64: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__nolibc_aligned_as’
-> > > > >    62 |         char buf[sizeof(struct linux_dirent64) + NAME_MAX + 1] __nolibc_aligned_as(struct linux_dirent64);
-> > > > >       |                                                                ^~~~~~~~~~~~~~~~~~~
-> > > > > ./../../../../include/nolibc/dirent.h:62:64: error: implicit declaration of function ‘__nolibc_aligned_as’ [-Wimplicit-function-declaration]
-> > > > > ./../../../../include/nolibc/dirent.h:62:84: error: expected expression before ‘struct’
-> > > > >    62 |         char buf[sizeof(struct linux_dirent64) + NAME_MAX + 1] __nolibc_aligned_as(struct linux_dirent64);
-> > > > >       |                                                                                    ^~~~~~
-> > > > > ./../../../../include/nolibc/dirent.h:63:47: error: ‘buf’ undeclared (first use in this function)
-> > > > >    63 |         struct linux_dirent64 *ldir = (void *)buf;
-> > > > >       |                                               ^~~
-> > > > > ./../../../../include/nolibc/dirent.h:63:47: note: each undeclared identifier is reported only once for each function it appears in
-> > > > 
-> > > > Thanks for the report, I'll go drop all nolibc patches from the queues
-> > > > for now.
-> > > 
-> > > Thanks.
-> > > 
-> > > Shouldn't the bots apply prerequisite patches from the series automatically?
+On Mon, Jun 16, 2025 at 07:21:28PM -0700, Nicolin Chen wrote:
+> On Mon, Jun 16, 2025 at 10:33:05AM -0300, Jason Gunthorpe wrote:
+> > On Sat, Jun 14, 2025 at 12:14:31AM -0700, Nicolin Chen wrote:
+> > > @@ -1321,7 +1328,7 @@ int iommufd_access_pin_pages(struct iommufd_access *access, unsigned long iova,
+> > >  
+> > >  	/* Driver's ops don't support pin_pages */
+> > >  	if (IS_ENABLED(CONFIG_IOMMUFD_TEST) &&
+> > > -	    WARN_ON(access->iova_alignment != PAGE_SIZE || !access->ops->unmap))
+> > > +	    WARN_ON(access->iova_alignment != PAGE_SIZE))
+> > >  		return -EINVAL;
 > > 
-> > Hopefully yes, obviously it doesn't always work :)
+> > I don't want to loose this check, continuing blocking mdevs is still
+> > important. Only the internal access should be able to use this
+> > mechanism.
 > 
-> Is there something we can do to help the tools?
-
-That's up to Sasha, he has the tools that do this.
-
-> > > This patch comes from [0] and the prerequisite is in there.
-> > > 
-> > > Also all nolibc patches which should go to stable are tagged as such.
-> > > Can you configure the bots not to pick up any nolibc patches automatically?
-> > 
-> > Yes we can!  I will add the needed regex to the file:
-> > 	https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/tree/ignore_list
-> > should it be:
-> > 	tools/include/nolibc/*
-> > 	tools/testing/selftests/nolibc/*
-> > ?
+> OK. So, it probably should be 
+> 	if (IS_ENABLED(CONFIG_IOMMUFD_TEST) &&
+> 	    WARN_ON(access->iova_alignment != PAGE_SIZE ||
+> 		    (access->ictx && !access->ops->unmap))
 > 
-> Looks good, thanks.
 
-Great, I'll go make that change now.
+Nit: Probably worth mentioning in a comment that access->ops shouldn't
+be NULL during selftests and hence we avoid checking for !access->ops?
 
-thanks,
+If you feel it's too verbose, you can let be as well.
 
-greg k-h
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+
+> Thanks
+> Nicolin
