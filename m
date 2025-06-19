@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B2121B9CD;
-	Thu, 19 Jun 2025 04:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA7278F4C;
+	Thu, 19 Jun 2025 04:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750306016; cv=none; b=PCFmiTVXCbnCeAy1VYOm+2Ymh60PUsnlCcsrePtvEEgwFbI6XItt+CcdATt1cEq0MmwKy115rRKgLU/w8Je9R49+utDWsZ/69Nm5xQ1sEScX8Sa0zquSmFnklYj9ZmeosfCEKFUm6Cn8NYDnXsLo12zXfZp0kkWLIeYwPn/vfVM=
+	t=1750306632; cv=none; b=YOHA6qs6kSB3G2xR7pjHfu/SK5rSipdIWUgg7XH6u5Qn8cMbYPXivo90CeAOOc2u61yUDbvWOS2+kVDT0c60rH1k2JEkY+SiQ8sE0qeKmGGSZAXuEF7zMKRIXzDoqM2tfQZnxKroD+qOCY6tbU6HLg9/Q/Bup9lTccFJsSn/COw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750306016; c=relaxed/simple;
-	bh=b6bc0zXKnZojzEphzM6HI2U0YpO6B8F6FFI2NxadMHs=;
+	s=arc-20240116; t=1750306632; c=relaxed/simple;
+	bh=VPKaoyzxrux1zV8zzzKWYGkZSbtqoWK89RAQveuq4KI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AlXUXLQP/UHx5S3vbeN1wIx80FyMbkfYjsPuvVIILcq7U3/Tm0n11eE7kpw4wT0MK2kC5rxr/7d+wPqPYTtNac/y77nE+fjUN3wOCrfCHiX1f6paG/oZP6WGe1/u5oWPoF5H/ThzDk8pOlaEtEoV+zBDnTJPU1Q48913lcZf1gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSuN1J0x; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=hYaE+asYYSx+OBOJFp/RiLtO+t0WhocAQQm4KYRCOiXyzJi80sSelVJ8XNVDj4boyBbM8H+u9clb12ynZoQ20czIhUyLh+PXEr7CtDHWOgO9URipPOxFbpEnfELPcTmWwzUlAVYl61Xaa7z2dnafM/fnfE0OY/wjvhCirWUK47w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pF47xPRx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSuN1J0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA99C4CEEA;
-	Thu, 19 Jun 2025 04:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pF47xPRx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D5BC4CEEA;
+	Thu, 19 Jun 2025 04:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750306016;
-	bh=b6bc0zXKnZojzEphzM6HI2U0YpO6B8F6FFI2NxadMHs=;
+	s=korg; t=1750306631;
+	bh=VPKaoyzxrux1zV8zzzKWYGkZSbtqoWK89RAQveuq4KI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sSuN1J0x8jQRv19z7S/gk7RwR+q5fbOg/9+PfQxV/Hu5YFx1lMM7KCVzKtc9aNLnP
-	 UkQpq1lr32ga9nNtdjFhRweBRbiEE2TFcdWjhr+peMPZT0a2Ql+p0hGkYhrKwfwr01
-	 qKCiWi/CbTlsOrCf6gokPS1Ng/k23HaWhNCArH04=
-Date: Thu, 19 Jun 2025 06:06:52 +0200
+	b=pF47xPRxxODA2Y/wjrk7wxkNL2X0ngP5cstysOVwDzOpWUyBIU5iWqZ3jfzmEaic/
+	 9eDN4ltJqFS7TC0mJXngclD+H3ZNH07nEuAhYroXkx/0YOr0RBLBTQc0Z2gg70nvl0
+	 9lzOt8lyT++g8WopAYEE4co5e6h6wtt3G6Cism3c=
+Date: Thu, 19 Jun 2025 06:17:08 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Justin Forbes <jforbes@fedoraproject.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+To: Pascal Ernster <git@hardfalcon.net>
+Cc: Ronald Warsow <rwarsow@gmx.de>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, conor@kernel.org, hargar@microsoft.com,
+	broonie@kernel.org, "Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
 Subject: Re: [PATCH 6.15 000/780] 6.15.3-rc1 review
-Message-ID: <2025061921-trousers-moustache-ee5b@gregkh>
+Message-ID: <2025061930-jumbo-bobsled-521a@gregkh>
 References: <20250617152451.485330293@linuxfoundation.org>
- <aFNphCnmG57JMriZ@fedora64.linuxtx.org>
- <2025061924-shaky-reunite-7847@gregkh>
+ <f2b87714-0ef6-4210-9b30-86b4c79d1ed8@gmx.de>
+ <2025061848-clinic-revered-e216@gregkh>
+ <c8e4e868-aafb-4df1-8d07-62126bfe2982@hardfalcon.net>
+ <097ef8cc-5304-4a7d-abc0-fd011d1235d5@hardfalcon.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,37 +50,33 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2025061924-shaky-reunite-7847@gregkh>
+In-Reply-To: <097ef8cc-5304-4a7d-abc0-fd011d1235d5@hardfalcon.net>
 
-On Thu, Jun 19, 2025 at 06:05:18AM +0200, Greg Kroah-Hartman wrote:
-> On Wed, Jun 18, 2025 at 07:36:04PM -0600, Justin Forbes wrote:
-> > On Tue, Jun 17, 2025 at 05:15:08PM +0200, Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 6.15.3 release.
-> > > There are 780 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > > 
-> > > Responses should be made by Thu, 19 Jun 2025 15:22:30 +0000.
-> > > Anything received after that time might be too late.
-> > > 
-> > > The whole patch series can be found in one patch at:
-> > > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.3-rc1.gz
-> > > or in the git tree and branch at:
-> > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
-> > > and the diffstat can be found below.
-> > > 
-> > > thanks,
-> > > 
-> > > greg k-h
-> > 
-> > After dropping
-> > revert-mm-execmem-unify-early-execmem_cache-behaviour.patch:
+On Wed, Jun 18, 2025 at 10:31:43PM +0200, Pascal Ernster wrote:
+> Hello again,
 > 
-> So does that mean that Linus's tree is also broken as it has this change
-> in it?
+> 
+> I've sent this email a few minutes ago but mixed up one of the In-Reply-To
+> message IDs, so I'm resending it now with (hopefully) the correct
+> In-Reply-To message IDs.
+> 
+> 
+> I've bisected this and found that the issue is caused by commit
+> f46262bbc05af38565c560fd960b86a0e195fd4b:
+> 
+> 'Revert "mm/execmem: Unify early execmem_cache behaviour"'
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/commit/?id=f46262bbc05af38565c560fd960b86a0e195fd4b
+> 
+> https://lore.kernel.org/stable/20250617152521.879529420@linuxfoundation.org/
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/tree/queue-6.15/revert-mm-execmem-unify-early-execmem_cache-behaviour.patch?id=344d39fc8d8b7515b45a3bf568c115da12517b22
 
-Ah, I see what I did, I took only the revert, but not the patches
-pervious to this change.  Ugh, my fault, I'll drop this now and add it
-back after the next -rc release is out, thanks.
+Thank you for digging into this.  Looks like I took the last patch in a
+patch series and not the previous ones, which caused this problem.  I've
+dropped this one now and will add it back next week after I also add all
+the other ones in the series.
+
+thanks,
 
 greg k-h
