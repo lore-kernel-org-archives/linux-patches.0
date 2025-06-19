@@ -1,90 +1,120 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C95218596
-	for <patches@lists.linux.dev>; Thu, 19 Jun 2025 07:53:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1121F3085D7;
+	Thu, 19 Jun 2025 08:20:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750319627; cv=none; b=c3qAz/bsCZ5qBbRVTiFa0PhiQMcZPbhpemHZVoA6Z9tEu4Go9EJ+5618ebhqGYzTBS99EylrA13IiDi+BJCwfUiP23Q9DgeSyhrkLment4nAFZGI0A8+GJfYPWx1eT9zeaoHm2ZqS4teoharUDbGu3RgdmrM7G0GtEkECciQ1r0=
+	t=1750321224; cv=none; b=T30xI9gQeGkutR5+hH9+VJK2ylW7fp/ah7Pq196aOTRBHzdGxTSfCyUndHsixxMLwCHce0fXsieZPlYFcq5hvaO9suEdex1u9t6kFYr1aEQJWkFzCyV3HcPfUjcyMbbpWMMxImN2mw2Mdw85m0xXy4MHT4Z+Xd7gA35q6PNm7vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750319627; c=relaxed/simple;
-	bh=o4exH4E8+qqhEgqJNfi41hAjOFkspOgxrwQT8MJJ7ak=;
+	s=arc-20240116; t=1750321224; c=relaxed/simple;
+	bh=rs1SQZAjM42eP1OdPF5cxc7T68ok0Dt9YGM0X0I/GSI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NmwmtHp2cdhNPX2wmsi/tNsjt+ieIEzfe25Twl9LllKWMAmfjuwpdJtolv9UcV3q3XMkdDToeagJRyZwYNN1PgVhG8dSJ9SuXjKJc7q28Pdz51zMNr5mVb43XcmPU9xEhsDWMyZm1qBkOPRdIjvwjDV/fcBLxX0xpIg+3gaNdBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=iML+QxZQ; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=ShzOdD6pzM9OPAFFhi+Xj1B/DwhBJpu0LsJ3cWPHdISGW3u1tqfwIy1aOm6+P4hKVrEc/+06ARQguG/j2SGtwnEJdw2ZASd80XX3PZeOxNtddF0KgOmDCEKPdJUy4Bhxhbr3L0UIxMA5a8fiwOMr/baPPnpMMBPk7pLSXRnv73Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iM39Y27l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="iML+QxZQ"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 06D2210244BE6;
-	Thu, 19 Jun 2025 09:53:35 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1750319623; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=z2cL7tSpa9FWCMqEbSAlMhSH8wnWreVFxWb6XHnKWUI=;
-	b=iML+QxZQEHrDuPW9TgVLWJL8YxDgR31LulD2riSFCe+y2M6BGtdgb/LtfjBauQ2AySyzLJ
-	rYr5I6MBwtAX8IDxzB2cSazMb00LaQaOvPhGcvdf8sbXeOA6fFyBi3n1y4bMjg5VtXgeSM
-	4jVD7C+kybNB2WB8emo+xeuSQibRUtv7+3UULHoUGleIx/CbhPjYbzn9iDTFk0AQphmxN7
-	n+uNAsaySc6rYOl8tdMsj9HJ8hpGaxpZUiCQfP21yCeiehQal4oh3fxxK0/TS7Pt2dYGGL
-	wx0ySIrzRwkAwlliYFcivOOK9VZQYN16RlDwuG7V1dSRU52lw+XzYeoVuviggg==
-Date: Thu, 19 Jun 2025 09:53:32 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.6 000/356] 6.6.94-rc1 review
-Message-ID: <aFPB/MIgbcZGzw6R@duo.ucw.cz>
-References: <20250617152338.212798615@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iM39Y27l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF376C4CEEA;
+	Thu, 19 Jun 2025 08:20:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1750321223;
+	bh=rs1SQZAjM42eP1OdPF5cxc7T68ok0Dt9YGM0X0I/GSI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iM39Y27luLaflYHgryXb8/VAbHnzQmHzyVsZrnjWmLzWdooBDAeiGqi+GgHNjJxvm
+	 00nQywoISyVUd/nEX3+lO3HlQJ7YLrDDdi4PN/K0odYO1fi1ny/pSvD8J7sLfxes8M
+	 h8QYlQjosPQ6KZ2wGEJImAcu7eks3bxDYzqGtWQA=
+Date: Thu, 19 Jun 2025 10:20:20 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>
+Cc: Mark Brown <broonie@kernel.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, Willy Tarreau <w@1wt.eu>
+Subject: Re: [PATCH 6.15 000/780] 6.15.3-rc1 review
+Message-ID: <2025061907-finance-dodgy-b0ae@gregkh>
+References: <20250617152451.485330293@linuxfoundation.org>
+ <cc048abb-fbc0-4a79-b78a-90bfa3f8446d@sirena.org.uk>
+ <2025061858-reproduce-revolving-cae0@gregkh>
+ <1081af30-1273-4a9a-a864-f59f1cb54fd1@t-8ch.de>
+ <2025061949-epilepsy-punk-fb4e@gregkh>
+ <a757c5d9-06f4-4ed0-9de9-08edbd16134a@t-8ch.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Jk/3YVTjEdKtuW4i"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a757c5d9-06f4-4ed0-9de9-08edbd16134a@t-8ch.de>
 
+On Thu, Jun 19, 2025 at 07:50:43AM +0200, Thomas Weißschuh wrote:
+> On 2025-06-19 06:19:52+0200, Greg Kroah-Hartman wrote:
+> > On Wed, Jun 18, 2025 at 04:15:09PM +0200, Thomas Weißschuh wrote:
+> > > On 2025-06-18 15:19:11+0200, Greg Kroah-Hartman wrote:
+> > > > On Wed, Jun 18, 2025 at 12:58:00PM +0100, Mark Brown wrote:
+> > > > > On Tue, Jun 17, 2025 at 05:15:08PM +0200, Greg Kroah-Hartman wrote:
+> > > > > > This is the start of the stable review cycle for the 6.15.3 release.
+> > > > > > There are 780 patches in this series, all will be posted as a response
+> > > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > > let me know.
+> > > > > 
+> > > > > This breaks the build of the arm64 selftests due to a change in nolibc,
+> > > > > it appears that "tools/nolibc: properly align dirent buffer" is missing
+> > > > > some dependency:
+> > > > > 
+> > > > > aarch64-linux-gnu-gcc -fno-asynchronous-unwind-tables -fno-ident -s -Os -nostdlib \
+> > > > > 	-include ../../../../include/nolibc/nolibc.h -I../..\
+> > > > > 	-static -ffreestanding -Wall za-fork.c /build/stage/build-work/kselftest/arm64/fp/za-fork-asm.o -o /build/stage/build-work/kselftest/arm64/fp/za-fork
+> > > > > In file included from ./../../../../include/nolibc/nolibc.h:107,
+> > > > >                  from <command-line>:
+> > > > > ./../../../../include/nolibc/dirent.h: In function ‘readdir_r’:
+> > > > > ./../../../../include/nolibc/dirent.h:62:64: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__nolibc_aligned_as’
+> > > > >    62 |         char buf[sizeof(struct linux_dirent64) + NAME_MAX + 1] __nolibc_aligned_as(struct linux_dirent64);
+> > > > >       |                                                                ^~~~~~~~~~~~~~~~~~~
+> > > > > ./../../../../include/nolibc/dirent.h:62:64: error: implicit declaration of function ‘__nolibc_aligned_as’ [-Wimplicit-function-declaration]
+> > > > > ./../../../../include/nolibc/dirent.h:62:84: error: expected expression before ‘struct’
+> > > > >    62 |         char buf[sizeof(struct linux_dirent64) + NAME_MAX + 1] __nolibc_aligned_as(struct linux_dirent64);
+> > > > >       |                                                                                    ^~~~~~
+> > > > > ./../../../../include/nolibc/dirent.h:63:47: error: ‘buf’ undeclared (first use in this function)
+> > > > >    63 |         struct linux_dirent64 *ldir = (void *)buf;
+> > > > >       |                                               ^~~
+> > > > > ./../../../../include/nolibc/dirent.h:63:47: note: each undeclared identifier is reported only once for each function it appears in
+> > > > 
+> > > > Thanks for the report, I'll go drop all nolibc patches from the queues
+> > > > for now.
+> > > 
+> > > Thanks.
+> > > 
+> > > Shouldn't the bots apply prerequisite patches from the series automatically?
+> > 
+> > Hopefully yes, obviously it doesn't always work :)
+> 
+> Is there something we can do to help the tools?
 
---Jk/3YVTjEdKtuW4i
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That's up to Sasha, he has the tools that do this.
 
-Hi!
+> > > This patch comes from [0] and the prerequisite is in there.
+> > > 
+> > > Also all nolibc patches which should go to stable are tagged as such.
+> > > Can you configure the bots not to pick up any nolibc patches automatically?
+> > 
+> > Yes we can!  I will add the needed regex to the file:
+> > 	https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/tree/ignore_list
+> > should it be:
+> > 	tools/include/nolibc/*
+> > 	tools/testing/selftests/nolibc/*
+> > ?
+> 
+> Looks good, thanks.
 
-> This is the start of the stable review cycle for the 6.6.94 release.
-> There are 356 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Great, I'll go make that change now.
 
-CIP testing did not find any problems here:
+thanks,
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.6.y
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---Jk/3YVTjEdKtuW4i
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaFPB/AAKCRAw5/Bqldv6
-8nnNAJ4hooTeyCok6rsXhIgwBxYX6UiLfwCfWTGGMuN+JxC8hRjyyKExI1C40rs=
-=SDrq
------END PGP SIGNATURE-----
-
---Jk/3YVTjEdKtuW4i--
+greg k-h
