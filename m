@@ -1,143 +1,145 @@
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazolkn19010009.outbound.protection.outlook.com [52.103.43.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE32E30E82C
-	for <patches@lists.linux.dev>; Fri, 20 Jun 2025 01:50:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.43.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750384235; cv=fail; b=KB0ANpHqz6MTYeaa+aUSrP3qitaCXMpw2x8vWG9iBfqRzZ/LwRDK7dWLmFXKaOMSVqHD3Bavq1neZsUwdAG+w5QVj6SnONTj7p6C28zQTk3tQ2w++ga69umKnIx8GUPCZZqFyM7T9SfIt+PPcuL5Mtj1x/GPUTW/VJBnWe08jXM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750384235; c=relaxed/simple;
-	bh=K9MUYYxL+KO+7kxTS+kjM3GWEQosaIX7H2/UW/gRxpw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=QHyOpGukfRHGRO+QAgkEUWFkNPb5sbyFsiTeLPmhykUu+kn4tX/Olq1oX87WRP1Pq0ThldC6hCnASoLiF5XnS5q/jtn6z7XQNXYv3uTi9HJbyNJn/bjy5H8NX9I/W3EzpwqVvAUNaEqSIF87wC+Agc2I0ui+awc6ttqljHwGLlA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=boKDiNSE; arc=fail smtp.client-ip=52.103.43.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150E31C245C
+	for <patches@lists.linux.dev>; Fri, 20 Jun 2025 03:32:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1750390354; cv=none; b=PIrhMQXe20WsTwMD9L/VWQlvbpWoL4M+ZKc7EnGn3QvozyVKPx8ybOVQJ3fV5cqm9IBysFTmkm58HKz3UXVEcSxjg2y9u9x25Jzufdwh3Djqspg5VoaDDxL1+WaTDVEWujGJxULVr+qHYHOKnEoAzIXaSWEpAlGPzGLXqb8mOX8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1750390354; c=relaxed/simple;
+	bh=9Hg5pobEE7M3tPGS8XdU/oGbneOqIPiRWFR/3Cld4kE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cRObwhVv+Yjcf4PVpWcWtXzqNsp0LU02nZe4IMVze9/gYXanNJR2VwIfmTU1BU3jYSItiripEqkHcVTQpiEcJd9z3fIsIcvu0IsxiwuEnrihuF9s/XPJJ79KOSki2Mh0cNysv+ZSIPojR0F1qWEMa4FmZA5s1q4mLd8yQIVmH3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MxbS3juN; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="boKDiNSE"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=v57dDDKSEva7374fiE3y/EpSWU/HYU6MlbE/BdOX8TRJbKDBdu887mJ1jGI31GAmYd1UaUDbTJjT4Jt3S3p81YHryGzbWEtZOs71cU9gqIUHPnmMH7SOIbEkwWGZIy+CcfWhsQjjPJpqyt0Z5uHE+ecx3nSRqH5OUf0M1c5bcDng5H7L1DEjf8YoGbCIow2fDD2bs9zKKF3jxvUUqsMDhk3//B/OjxEvopV5SH5pFtCrA/pK1v8LiPEdHsUtx5fmz5Nl/rFHKuxrhGhW7xW/j3+/RcC/AyPwANyUaQsVt7mLDGvdQwh4na0Y0Vy9Yu2fxIWVUAWJkP7ZEaNjJPeoVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=K9MUYYxL+KO+7kxTS+kjM3GWEQosaIX7H2/UW/gRxpw=;
- b=uYPvgde0j4SbCrNeYsp4BPWJp8TRA2TJrgsbBLgukV6M9bxIFnOZ0XAn7SC/0tCmeMXAOQGx3/NrDwIJoQ4jrsP06iAGw3Q9GW3E1mc/XbcIVrRAmDdWRZ1h5pQacrgFOKPJc0RCY6RgBzV5hAi+sy4Gs0fkKm6UrDMY8eYYa6sHAADoetcmEJSalpTtU3EI8h5R/C7xaqiL6t7NIddQQ4dcqQGd1DU9xUEHZWkRSmQWdyU88OhAPLR3V205lL1fitXzbHKDnx2+ryDERApfeTmjwEMS1Y/QUVS1NTlC0Q1uoM1iuH9Opu2Ji9ya1eMxh1tiDyS0SOlBGYciyXpzXg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=K9MUYYxL+KO+7kxTS+kjM3GWEQosaIX7H2/UW/gRxpw=;
- b=boKDiNSEB/KQdDsJQgbCKXci1oJzPCIQXP4BXOWe/MLLFfb/QkkR5rKpjPmSMsAxamNM15r/WP2V0Ge/tiber115DsYrRqCo1jQQv/tQdfSTZfUltSs4DEz3P5Sisf3omDWFYdEgPbU5o9QahMc5rHwnb7YP//zemq9vJfag+wuZERr4KPHFeC1UmTM2qnY7lMhd3rlZcY2YTXOm8r1sYqErrZiKsSpJmSncC2nUHaVNHigCNZRut2gRa03Z4S44JzDFOFOdwf9QfU0nz0F+l50Y7/BK3LlvSuN3tf7lLFVVRmEf7RmiLk4qcAAlrJ/DRdQkYaTLmszUeLz7GpjL7w==
-Received: from OSBPR01MB1670.jpnprd01.prod.outlook.com (2603:1096:603:2::18)
- by TYRPR01MB13770.jpnprd01.prod.outlook.com (2603:1096:405:216::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.25; Fri, 20 Jun
- 2025 01:50:29 +0000
-Received: from OSBPR01MB1670.jpnprd01.prod.outlook.com
- ([fe80::c00:ec4e:ee7e:9b7f]) by OSBPR01MB1670.jpnprd01.prod.outlook.com
- ([fe80::c00:ec4e:ee7e:9b7f%7]) with mapi id 15.20.8857.016; Fri, 20 Jun 2025
- 01:50:29 +0000
-From: Shiji Yang <yangshiji66@outlook.com>
-To: gregkh@linuxfoundation.org
-Cc: jirislaby@kernel.org,
-	maddy@linux.ibm.com,
-	patches@lists.linux.dev,
-	sashal@kernel.org,
-	sfr@canb.auug.org.au,
-	stable@vger.kernel.org,
-	Shiji Yang <yangshiji66@outlook.com>
-Subject: Re: [PATCH 6.6 025/356] powerpc: do not build ppc_save_regs.o always
-Date: Fri, 20 Jun 2025 09:50:06 +0800
-Message-ID:
- <OSBPR01MB167040F844BD2B7FC20686BEBC7CA@OSBPR01MB1670.jpnprd01.prod.outlook.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250617152339.250901739@linuxfoundation.org>
-References: <20250617152339.250901739@linuxfoundation.org>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SG3P274CA0010.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:be::22)
- To OSBPR01MB1670.jpnprd01.prod.outlook.com (2603:1096:603:2::18)
-X-Microsoft-Original-Message-ID:
- <20250620015006.20879-1-yangshiji66@outlook.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MxbS3juN"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2348ac8e0b4so228755ad.1
+        for <patches@lists.linux.dev>; Thu, 19 Jun 2025 20:32:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1750390352; x=1750995152; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=qa/VDd/mSdDHpuvSCZ3/ODd1JXeFiiam1MgWlPeSiGs=;
+        b=MxbS3juNazFI5is62dE1QGwkxbnh1/mTssw8Zt2VwoJ1UMaM17CpAQH+9awzNOPr4V
+         9EfDJ8RMeHNvLhq0+tb39Xa7iKQK2971LrlciLuJQXthl2FwXbj0nHLMCuqkRLfG2eED
+         pfTVV/qqJAT02CqdQBJqQYE2h8vuRuNC7SZlDYQYOX1bkYCg79wcATGO374WVKG1Pge8
+         9Q7o3vOHI5iGV4v04FoLoHrTv5S5/h+TeFvzZexmE4ZOyK9kF1DMW0Si1RAtnSMpEQPl
+         7dWreDngW5+AAaBCDtWtLR1g5/CV9bV1HvEzBK5WuueK5qGKa65TGW4ad08d/b2eJx0V
+         /NPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750390352; x=1750995152;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qa/VDd/mSdDHpuvSCZ3/ODd1JXeFiiam1MgWlPeSiGs=;
+        b=g+2I8KxJGOqgbQ4/6bwjkml7JUY9+dbIjP8G3iZmFB6W48Xao969Hh+hDz5jBrgGcJ
+         48xKmHg9BQYDAo4rkwYBi3HlTttujha6/aop+iaW5q0IgdcRKJxfWoyluz8ydYoy7jwI
+         VQf8iQYNYTL6HyMvCYLfDhzg/8ayfPsTp2BldzANFv1roJVvxZX4RZeKdoDt3ZMGhNSm
+         7hHKrJY5k755HdmqaR645C2mXpVQhCDdIqpdce4Idp3SkZCqgh2oITFIs/fgWaHV6FZs
+         mDlFt33t6epABKKyFam1NtjMRb37R1yI2GdVkKXlusDs9k3Y3tNsed774pA3fkiijXsF
+         bitA==
+X-Forwarded-Encrypted: i=1; AJvYcCVXoIpe2S1lMDxPno8XAhs53vWdCU0oDbtqCYW4fD/bZT09c175yrOjVUC3mEpfLeTD2nXBj/uB@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzy1uyVyjY3n0ZKGtI7GNjHj/QLQ/HNHZG0Nvk2cZsqGbbC5mzv
+	g7j9CLamu62O8Ytuw4jppNTHIL/DaLu3C9m5mpW8fpvakNePZAHhMYSDp0OE3V366w==
+X-Gm-Gg: ASbGncsH7msOW3L53NWsYO3n3QU4kwIUbbc/OOBfYj30nfB1kqTJUi/L3AcyjxZ5V4x
+	AH/d2HLEaUQQvN2bONWIrC0miHtR4qq/ueTIQUl+Z5x79sjeTMkOU9z9Vg97XVdem69S+gCrAkV
+	jLVuZK5TsYxrxdNbGV8fvp7mCbrJnH17OfA5RrtlSAVJ4DyZ6uN2KMEgfuXQtUeM/hDYYF0c1JU
+	/8bBOti0mznmBCjOWeQV3OWvr98lvDtRUsCixwiXn3eL5Gd9oZKSxgYj7crbz4UHfwugVOCIug1
+	8dC35OJmwbR5x4mbHo199gFlcSfIyQ3dI56dFfDEiE3/xVB+ZNW+okMBdPLgAvmMGOyT+xSSRbu
+	2z/90rfbmlswg6DW8Ph9KWJ3zHny1JgE=
+X-Google-Smtp-Source: AGHT+IERsl+HTUr1rqxITuYHKylDMvSd/CxPtRuNjbrAMl+KyO4xPzytclG3wi1xtC95QCov1vt9OA==
+X-Received: by 2002:a17:903:1667:b0:215:f0c6:4dbf with SMTP id d9443c01a7336-237cc9fd3d7mr4672645ad.14.1750390351828;
+        Thu, 19 Jun 2025 20:32:31 -0700 (PDT)
+Received: from google.com (232.98.126.34.bc.googleusercontent.com. [34.126.98.232])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d83ce860sm6966175ad.65.2025.06.19.20.32.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Jun 2025 20:32:31 -0700 (PDT)
+Date: Fri, 20 Jun 2025 03:32:19 +0000
+From: Pranjal Shrivastava <praan@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Nicolin Chen <nicolinc@nvidia.com>, kevin.tian@intel.com,
+	corbet@lwn.net, will@kernel.org, bagasdotme@gmail.com,
+	robin.murphy@arm.com, joro@8bytes.org, thierry.reding@gmail.com,
+	vdumpa@nvidia.com, jonathanh@nvidia.com, shuah@kernel.org,
+	jsnitsel@redhat.com, nathan@kernel.org, peterz@infradead.org,
+	yi.l.liu@intel.com, mshavit@google.com, zhangzekun11@huawei.com,
+	iommu@lists.linux.dev, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-tegra@vger.kernel.org, linux-kselftest@vger.kernel.org,
+	patches@lists.linux.dev, mochs@nvidia.com, alok.a.tiwari@oracle.com,
+	vasant.hegde@amd.com, dwmw2@infradead.org, baolu.lu@linux.intel.com
+Subject: Re: [PATCH v6 20/25] iommu/arm-smmu-v3-iommufd: Add hw_info to
+ impl_ops
+Message-ID: <aFTWQ4v6aZABpzeV@google.com>
+References: <cover.1749884998.git.nicolinc@nvidia.com>
+ <f36b5e42bac83d0cdf5773cad1c3a44c3eaed396.1749884998.git.nicolinc@nvidia.com>
+ <aFP4zHIVT6epJeLb@google.com>
+ <20250619185325.GB17127@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: OSBPR01MB1670:EE_|TYRPR01MB13770:EE_
-X-MS-Office365-Filtering-Correlation-Id: 15c804a1-cc39-4984-28df-08ddaf9cd56a
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5072599009|7092599006|461199028|19110799006|15080799009|8060799009|440099028|39105399003|40105399003|3412199025|10035399007|12091999003|11031999003|1710799026;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?Rav3AVE6EUYINawVEbQBmRr2o1pYfPX71pvzbyY+4ptCsm9ixih04bjI2+J/?=
- =?us-ascii?Q?ll286M4b9TjD748FNAWasrAiu6WSessikgmxi32/YiRqU9f1SXFLNieJdrw6?=
- =?us-ascii?Q?9gMqoSnCpK1G71AMCRhUBZ6pxxqF82TwXSl4r/jmlcPSiVjV7OVAR4DJdxim?=
- =?us-ascii?Q?lmTrOwTEDHDhT8s+bdI6UTaGAHVa++oYnT1d/QUY8TvarSV1BrhOOajsmLjX?=
- =?us-ascii?Q?MiBrJGFKNVkeRQOou7GuuRb4rqVIQSZdJ+Qb5bMOPOZNgFA7uqrsB0AfgLnB?=
- =?us-ascii?Q?yzdlBoa5AXNs1qS5xs8QmyOFJtagqRM0+AlVoyab6R3AXcde4TG8GOGhjWk6?=
- =?us-ascii?Q?6wHyUCd4GtFggWzz/0SvBY4GkmwJ9bOdC9Lw3Vw8y6ejnBuhxafN4KUlVGtr?=
- =?us-ascii?Q?UlwWnQnD+5wLvbbCGsCcNLFBxThnzCacuWXhNWEfN+FR98i2ZHCOZzpgjJ+0?=
- =?us-ascii?Q?a8nEqmibv12PvnvLkKRJr3gY+cT6DLAK7/uCKkImC7ju7zROwBrkdfbvW+2V?=
- =?us-ascii?Q?/BmOHFd3RaUxfHimkPtqzculEDBL9i8fhqFKnVni4m5sNOZ4xg3FDrgQndKk?=
- =?us-ascii?Q?TAHz/U8FIfbM9xDrQ7bpAMbpzM/hIEocxAj8BgCNFH2wBRGA9T/Uadg7A1Zf?=
- =?us-ascii?Q?N+xan23Ke4ij8g+Hut3s/QPHvpK07onkehdYILggim/fPbkHxGSiW3wR6pUi?=
- =?us-ascii?Q?93lHlUUv2OqfuMeOvqp6WDFmn7s2BTGvhyEGmmkscZeOr7p2W33vimaOLrZb?=
- =?us-ascii?Q?Bx8AlFzHk6ZaUonen3YzUaQl+yx1XWibhN3MdfUZCUMZGbCL3XVyLcbO0ulb?=
- =?us-ascii?Q?/VAcS655yCt2+tByVXxHKCTb3DkHy3li1qIVTG6WUA/l/XPt3yp2A9MMVhQj?=
- =?us-ascii?Q?49aPEF6a3bYYTGBJScfMvxeDSl7bCbBn2KnnJVQR7o61o+Kd9bLcszyqZWeG?=
- =?us-ascii?Q?UjJcJ6srBZbaL9RmFbftH6Jt8Wr4leCIRdJ4Ba/OwvVC0RdjF/GrxHyYJICZ?=
- =?us-ascii?Q?cumIbEIx7VfEMl/JmGUpBjZTAgDmSvNfex3FTb8E5Qg7ebJAqea0DKy9Krm5?=
- =?us-ascii?Q?FQJrNmJLnF6kz4eWD7wumbDtkRwBR9vm5cd1J9SYGMUHhp79p1fibd4xLNHt?=
- =?us-ascii?Q?DqXajtpIgCPDW2Ux7iL1zoQZOkKCGsZUPLljyd9M77RB70qcpwsXT9M4C9sj?=
- =?us-ascii?Q?smMVbOEn4wS1OpxCEhJk+bWPDdPIzk2v5KkjDr3kGIb4pcAOrav1hLebLVLS?=
- =?us-ascii?Q?MSgUuBJFmK8JYJPeiVnFtkdcNg9TZm6ur2aX1wgQHfe8t9sx2spo/vbAqcko?=
- =?us-ascii?Q?H49PsWxPmwWLXN3TWJKseMhd7wGnPv1/VQdqLvrxzHsx7rdsDt/QphjMGZjB?=
- =?us-ascii?Q?sqOu8snoT756wXeVxjpc/JXvXAjZ?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?EWC8W9xj32nGi64/dhetWU9m7aER7eATq02GXf7fiMnFxUz4CxqBoK6HaHz0?=
- =?us-ascii?Q?JfyxvzXjyL1W8323eW+tlEhC3ndhyEII/DOb8mUwYLvGsllLRZh8QGFKZfNj?=
- =?us-ascii?Q?zb9U/+cFW/iW2juwOJbxftcx93uF7yqKAXXOJ5m9AVZQfK0dv5bvgM6OvlD/?=
- =?us-ascii?Q?uRjU3rsZwpRFGqs4AA4K29Xjn37snMYMG5OIZl2ORxY4/uDejj95K6OWVjZ1?=
- =?us-ascii?Q?Wrlb+dULgAbQYGQ02BPkR/3B3gVL108bhHfZm1LJZKe/HGqjnL8QRy5YHeqn?=
- =?us-ascii?Q?FnP+AOD5qsXPT+WVJOZw2I6pw5ZzmdHTI/ppno3b6DV+71O0wpVTI4SenSc8?=
- =?us-ascii?Q?u8yZ/MtVGBsUulR95xJnYhU7IL53yqCY5x75O+3Xq46QthT+mZX8b/HZ8CuL?=
- =?us-ascii?Q?W7Ob7Y0kbWi5v1bSLL+dVOO2iP6cLon/0jfXZSlzyCGiNN2BojTfjQwIpEup?=
- =?us-ascii?Q?AV5kBPerhTzeDWSXWO4DQJmIhTL9uxMgJsmSQ+pILDwVSvvivPYqP74Puh0L?=
- =?us-ascii?Q?KA+ysfXvPxSrEYFkUMXgb5oWUZSUjcxLMLhS2CPRDAFOnyCSSKpy9FT1NOSd?=
- =?us-ascii?Q?S8Db+H3qdWf47HnByexHAs7A3q/3cJ3YiS/wqJl1b2OXO41Fr0Bgc9YEDG98?=
- =?us-ascii?Q?5yJPBrPZvYsitIliWpbW5diQFG10SEjuWGXZJUSWfj4YnIv0wwaysukr+icj?=
- =?us-ascii?Q?BZFT1SlR5+8n2l4mrmTNJplhdR3TgEwotmZatQ8NpyR87pMw5TEPRZPa6MiU?=
- =?us-ascii?Q?Vqw1Bj/rytMi5SolWA3eFPIEH98ebtctIXjtA36oDMns5eyb2Qlk7lIu5mD1?=
- =?us-ascii?Q?KGWgxDseh15j8vHoEL4ka2BaQy0kSG3YZQ3kOO5yXTSYuvxAXFkzKjeNPaTY?=
- =?us-ascii?Q?dVVxrlDANrhZRG48OyNZfdommdyy03ucyUG3DKkl3DVni4/1JYh1hV++DzBX?=
- =?us-ascii?Q?yvTdjJtZVj2hpB075ndGT8pqdUVmkERSgHTlVXwhPLjQ1OV5uTq5YvzBU2j8?=
- =?us-ascii?Q?+c2yJFP7A1uA/Q3qiNTs1r13zitFJw2rKm+4VojFwK0ZY7BHVjLc0u/Sb331?=
- =?us-ascii?Q?K78ubyY1QMfe8cU4NBPJgvX6Rr4SGBWGwBjdoyx6GzLwkIbmO4cJTuILV/YW?=
- =?us-ascii?Q?YgrzYX+M080yu2QWXRQyqpL1ZPXAaI+qzUNAruLCHPmtQCqcm3uP5UbIyYzU?=
- =?us-ascii?Q?TOx7o6vU/BT9l+ESvP/zEQUl/uAt0CQ20VrIHIFQGipTvkfQzeiBMhzu+6Nx?=
- =?us-ascii?Q?smaiPUztjVvGa+m3rxDj?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 15c804a1-cc39-4984-28df-08ddaf9cd56a
-X-MS-Exchange-CrossTenant-AuthSource: OSBPR01MB1670.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2025 01:50:29.0511
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYRPR01MB13770
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250619185325.GB17127@nvidia.com>
 
-Hi! This patch seems to have broken the build on powerpc. I guess
-we also need to backport:
-93bd4a80efeb ("powerpc/kernel: Fix ppc_save_regs inclusion in build")
+On Thu, Jun 19, 2025 at 03:53:25PM -0300, Jason Gunthorpe wrote:
+> On Thu, Jun 19, 2025 at 11:47:24AM +0000, Pranjal Shrivastava wrote:
+> > I'm not sure if I get this right.. if the user (while porting a VMM or
+> > something) mistakenly passes *type == IOMMU_HW_INFO_TYPE_INTEL_VTD here,
+> > they'll get impl-specific info?
+> 
+> It should call the impl hw_info which should fail?
+> 
+> +static void *tegra241_cmdqv_hw_info(struct arm_smmu_device *smmu, u32 *length,
+> +				    u32 *type)
+> +{
+> +	if (*type != IOMMU_HW_INFO_TYPE_TEGRA241_CMDQV)
+> +		return ERR_PTR(-EOPNOTSUPP);
+> 
+> If impl ops is null/etc then it fails:
+> 
+> +             if (!impl_ops || !impl_ops->hw_info)
+> +                     return ERR_PTR(-EOPNOTSUPP);
+> 
+> Where does IOMMU_HW_INFO_TYPE_INTEL_VTD return something?
+> 
 
-Perhaps other stable versions need this patch, too.
+I mean, the check in the driver (for e.g. arm-smmu-v3) is:
 
-Ref: https://github.com/openwrt/openwrt/actions/runs/15760870446/job/44427245071?pr=19183
+ if (*type != IOMMU_HW_INFO_TYPE_DEFAULT &&
+     *type != IOMMU_HW_INFO_TYPE_ARM_SMMUV3)
+
+     // call impl_ops
+
+My point is that in-case someone passed INTEL_VTD type, we would end up
+calling impl_ops->hw_info and then the impl_ops->hw_info shall check for
+the type to return -EOPNOTSUPP. Either we should clearly mention that
+each impl_op implementing hw_info *must* add another type and check for
+it OR we could have sub-types for implementations extending a main type
+somehow?
+
+
+> > I agree in that case the impl-specific
+> > driver needs to check the type, but shouldn't we simply return from here
+> > itself if the type isn't arm-smmu-v3?
+> 
+> Then how do you return IOMMU_HW_INFO_TYPE_TEGRA241_CMDQV?
+> 
+
+The current version is just fine with a doc string mentioning type
+checks within impl_ops->hw_info OR we could have sub-types for
+implementations extending some architectural IOMMU. 
+
+I'm just trying to avoid weird bug reports in the future because some
+impl didn't check for their type.
+
+> Jason
+
+Thanks
+Praan
