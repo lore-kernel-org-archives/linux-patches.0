@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2AD2566D3;
-	Mon, 23 Jun 2025 13:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E1D253B52;
+	Mon, 23 Jun 2025 13:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685382; cv=none; b=i1TKAZYHHo5oSMxLKscX5VwljtqXq9bw/RN8lQk9zTVeOKHrbtQGx+ZyEf8DXO34aVsrXTsxdOAG+DzKbtyJuqdsP25BW/E1jjGfatRvQMsw+Ge4gTF9gaZaxNqilXew9c+RMfJE8a2JWYYU1NFX9QcJeC0mSMzXPuCAqSgC5oo=
+	t=1750685384; cv=none; b=VjJcql+InIVIvJTK8sfMRf1U3v9gNCc5ffMjijF9iS69+SvUTXx7mUfntrcVUNqnr8TiBV7EWfDfN9BpOOEAOxbI50XmF1M6YHeZCNOvpbzfJU77/vJwzUHE5ylhqc+ftW8m8LPtOFg/F+f6BwaspsCS+TU0T4tlc1BjLtQdHJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685382; c=relaxed/simple;
-	bh=yazUFsYRUGzmUuV5Xmwn0djRbxhdpVOwcxkDNQY7wAo=;
+	s=arc-20240116; t=1750685384; c=relaxed/simple;
+	bh=gU0TkA8EVvbzdWp4R3lan/BDO+F3ZRX/Yz8cb7hQJtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iFS1ugEWpxX/w1f9TLlDYmqvE4kGB/nPzvBYyU1Y7to60nKboI/6uzhvf417UUquZhhzQNGe3CXtEfRM+6C0YjCdO9+7bdk2Ygig7yLTbBuP/guqQCJ1x5vqWPhQoGvu8c7lm/k+1Haf6wObrAeX1/ZrgnWWkGqN1FHO6ppDiRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgNe3vtr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jyhpd6VEaJwl6VReqc8dBlwI0p2ajUtpaFzy0IfD9trR6jjLRGvoCW2dhF1kMF5atqtG6bu6S7J+6FWgjzN8riA9hRLjOXgxXjhYFbg9F90qdXBQR9ezPhewqqDWigFEtishw5eNWCGSsbl1a1ucmUvVOni/I6bPRGKVmDrS4ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIT21R0U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgNe3vtr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79162C4CEF0;
-	Mon, 23 Jun 2025 13:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIT21R0U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B9FC4CEEA;
+	Mon, 23 Jun 2025 13:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685381;
-	bh=yazUFsYRUGzmUuV5Xmwn0djRbxhdpVOwcxkDNQY7wAo=;
+	s=korg; t=1750685384;
+	bh=gU0TkA8EVvbzdWp4R3lan/BDO+F3ZRX/Yz8cb7hQJtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EgNe3vtrpAz5sk5TFBmvoban67u2Kd81Vom3ghzkjUQyHpILfPf8d7fTRm36qV3pT
-	 zdQl1SpSbacFdzpc5jjrwRlA8f/4LQq+iRTKG6cku8FuBuuhdCMlcYJPu8hM3YUbAV
-	 ww9F7oF5ezC9EzOP11noOgRTUbdumMwY8DX6cUUM=
+	b=GIT21R0UsciGJYfmEYhNZehl+jeVFf3I+GMxg3B7nt34qQeQ1CEwp2a8SbrY4jx/H
+	 DDAjhYEEN5zGArI8PcirS+OPvX1Z/EFJXu7F+i5e/xtF1yW16oV7v3A6lIIqP3zQsG
+	 Ohjd7DbxPZAzw7rEbG2q7ySJCeu69/HG8p7HfnWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 004/290] ASoC: qcom: sdm845: Add error handling in sdm845_slim_snd_hw_params()
-Date: Mon, 23 Jun 2025 15:04:25 +0200
-Message-ID: <20250623130627.071327261@linuxfoundation.org>
+	Alex Hung <alex.hung@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Mark Broadworth <mark.broadworth@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 257/592] drm/amd/display: Avoid divide by zero by initializing dummy pitch to 1
+Date: Mon, 23 Jun 2025 15:03:35 +0200
+Message-ID: <20250623130706.411871165@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +50,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 688abe2860fd9c644705b9e11cb9649eb891b879 upstream.
+[ Upstream commit 7e40f64896e8e3dca471e287672db5ace12ea0be ]
 
-The function sdm845_slim_snd_hw_params() calls the functuion
-snd_soc_dai_set_channel_map() but does not check its return
-value. A proper implementation can be found in msm_snd_hw_params().
+[Why]
+If the dummy values in `populate_dummy_dml_surface_cfg()` aren't updated
+then they can lead to a divide by zero in downstream callers like
+CalculateVMAndRowBytes()
 
-Add error handling for snd_soc_dai_set_channel_map(). If the
-function fails and it is not a unsupported error, return the
-error code immediately.
+[How]
+Initialize dummy value to a value to avoid divide by zero.
 
-Fixes: 5caf64c633a3 ("ASoC: qcom: sdm845: add support to DB845c and Lenovo Yoga")
-Cc: stable@vger.kernel.org # v5.6
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250519075739.1458-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Mark Broadworth <mark.broadworth@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/sdm845.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/qcom/sdm845.c
-+++ b/sound/soc/qcom/sdm845.c
-@@ -90,6 +90,10 @@ static int sdm845_slim_snd_hw_params(str
- 		else
- 			ret = snd_soc_dai_set_channel_map(cpu_dai, tx_ch_cnt,
- 							  tx_ch, 0, NULL);
-+		if (ret != 0 && ret != -ENOTSUPP) {
-+			dev_err(rtd->dev, "failed to set cpu chan map, err:%d\n", ret);
-+			return ret;
-+		}
- 	}
- 
- 	return 0;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
+index ab6baf2698012..5de775fd8fcee 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
+@@ -896,7 +896,7 @@ static void populate_dummy_dml_surface_cfg(struct dml_surface_cfg_st *out, unsig
+ 	out->SurfaceWidthC[location] = in->timing.h_addressable;
+ 	out->SurfaceHeightC[location] = in->timing.v_addressable;
+ 	out->PitchY[location] = ((out->SurfaceWidthY[location] + 127) / 128) * 128;
+-	out->PitchC[location] = 0;
++	out->PitchC[location] = 1;
+ 	out->DCCEnable[location] = false;
+ 	out->DCCMetaPitchY[location] = 0;
+ 	out->DCCMetaPitchC[location] = 0;
+-- 
+2.39.5
+
 
 
