@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D561B1EEA5D;
-	Mon, 23 Jun 2025 21:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFF61EEA5D;
+	Mon, 23 Jun 2025 21:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714526; cv=none; b=DDCR3JGCrAXnqC9BW1scgIBhamrVklJpn2pjl4p5tBYxjdhYPP+d7GbLm8aRU7Tnq2XJWBCDRVoWBqxBR2Qz2lzeh+lmWyop3iX9PEZZ9ZYD4YGGIHzwoGVonpCiwLZyVPnk0N7MI44eCZdHuVpRa0OQg2nDfrGy6dJvcKkKEgc=
+	t=1750714529; cv=none; b=NTf34OjFiJpSoedgLTG5udrWSbRNuHvupCv3MjrqXMKUjK6RXJX7It5pbPAxJ8oEQ8mBhRowvyqvv+xSuDR5fCwqLTyeL92srInJ7Yu6bY901s4rgVuLR8SjgFwy2p+WdWbCKTcszVWzoVTNbKz+H7Zi4ZkuyIxnm9lCqKkdjwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714526; c=relaxed/simple;
-	bh=UNRSnROeyyOFF79lABnsfxb3QUAiFvnkmcd13d5y13g=;
+	s=arc-20240116; t=1750714529; c=relaxed/simple;
+	bh=slHLJjBvS+F5bApbRmeuzzy8Z+FdAxQTOCI3V+jWxoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bF2bCy3pShBlfp8ZGzpAxkOqmN6fJuVr7OfQgxphWhxTqf1+v7YISTxAjqoA65Fkhc6hhhIkQY/rYkAyZyyI0ASFiTWtGmYuUa2P82azsKkZ8lkkonDHQDyl4014d/X/KAFjSIIpXfU8qKgvZqOCMKTenCpRh5uF9BE54ErbHr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mgwg+tNQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sRCUOh973e3eWdyF7eTp3kCc6I98W/Z+L5W+3geR8atcP4Uf+HHyIxKHE4TozPZd7x7lKSe39wAKtfMDOGpr0UMNrnoT4f/kE5BRGqbYrUhJWn++Bjf3Jn+KGAgwYFbMI+RnYW2j8iTnoopr5yZdtboE0l87ndt0zhQRn6qPJkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uyig23uE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mgwg+tNQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E112C4CEEA;
-	Mon, 23 Jun 2025 21:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uyig23uE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5288C4CEEA;
+	Mon, 23 Jun 2025 21:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714526;
-	bh=UNRSnROeyyOFF79lABnsfxb3QUAiFvnkmcd13d5y13g=;
+	s=korg; t=1750714529;
+	bh=slHLJjBvS+F5bApbRmeuzzy8Z+FdAxQTOCI3V+jWxoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mgwg+tNQl8Kf0Y1rLMxDrPTXFrMcMLDi1Ps9V+zOJDoxGcASzBv/DAFsQtBDSyMtD
-	 9tD/0icpNEhVd7vIRKUleP5g3cYB8mXLrlFWZitbdbFvVTbp8YlEUfw8HG15GZH0MH
-	 rBb5m2KeSdc+4MgPM34H5e6CqI+l9+4+0xKavGY4=
+	b=Uyig23uEeUv1FkE1FfWjENTblLra+NZWl34kmBI4CDhimAJElGfhCKbmUmM4lEhtg
+	 mf63eYWqyXzoGp8nmeK1jrzzwRrND0UJEuD5ljvgYBZRt/OEI+p9GmMEH18zw8vYeg
+	 15OEUvLL+9SmU1JaPOnMYz1JJD7WojyNY6rSQgTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Salem <x0rw3ll@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Leah Rumancik <leah.rumancik@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 214/355] ACPICA: Avoid sequence overread in call to strncmp()
-Date: Mon, 23 Jun 2025 15:06:55 +0200
-Message-ID: <20250623130633.179238447@linuxfoundation.org>
+Subject: [PATCH 6.1 200/508] xfs: verify buffer, inode, and dquot items every tx commit
+Date: Mon, 23 Jun 2025 15:04:05 +0200
+Message-ID: <20250623130650.190366420@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +48,287 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed Salem <x0rw3ll@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 64b9dfd0776e9c38d733094859a09f13282ce6f8 ]
+[ Upstream commit 150bb10a28b9c8709ae227fc898d9cf6136faa1e ]
 
-ACPICA commit 8b83a8d88dfec59ea147fad35fc6deea8859c58c
+generic/388 has an annoying tendency to fail like this during log
+recovery:
 
-ap_get_table_length() checks if tables are valid by
-calling ap_is_valid_header(). The latter then calls
-ACPI_VALIDATE_RSDP_SIG(Table->Signature).
+XFS (sda4): Unmounting Filesystem 435fe39b-82b6-46ef-be56-819499585130
+XFS (sda4): Mounting V5 Filesystem 435fe39b-82b6-46ef-be56-819499585130
+XFS (sda4): Starting recovery (logdev: internal)
+00000000: 49 4e 81 b6 03 02 00 00 00 00 00 07 00 00 00 07  IN..............
+00000010: 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 10  ................
+00000020: 35 9a 8b c1 3e 6e 81 00 35 9a 8b c1 3f dc b7 00  5...>n..5...?...
+00000030: 35 9a 8b c1 3f dc b7 00 00 00 00 00 00 3c 86 4f  5...?........<.O
+00000040: 00 00 00 00 00 00 02 f3 00 00 00 00 00 00 00 00  ................
+00000050: 00 00 1f 01 00 00 00 00 00 00 00 02 b2 74 c9 0b  .............t..
+00000060: ff ff ff ff d7 45 73 10 00 00 00 00 00 00 00 2d  .....Es........-
+00000070: 00 00 07 92 00 01 fe 30 00 00 00 00 00 00 00 1a  .......0........
+00000080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+00000090: 35 9a 8b c1 3b 55 0c 00 00 00 00 00 04 27 b2 d1  5...;U.......'..
+000000a0: 43 5f e3 9b 82 b6 46 ef be 56 81 94 99 58 51 30  C_....F..V...XQ0
+XFS (sda4): Internal error Bad dinode after recovery at line 539 of file fs/xfs/xfs_inode_item_recover.c.  Caller xlog_recover_items_pass2+0x4e/0xc0 [xfs]
+CPU: 0 PID: 2189311 Comm: mount Not tainted 6.9.0-rc4-djwx #rc4
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS ?-20171121_152543-x86-ol7-builder-01.us.oracle.com-4.el7.1 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x4f/0x60
+ xfs_corruption_error+0x90/0xa0
+ xlog_recover_inode_commit_pass2+0x5f1/0xb00
+ xlog_recover_items_pass2+0x4e/0xc0
+ xlog_recover_commit_trans+0x2db/0x350
+ xlog_recovery_process_trans+0xab/0xe0
+ xlog_recover_process_data+0xa7/0x130
+ xlog_do_recovery_pass+0x398/0x840
+ xlog_do_log_recovery+0x62/0xc0
+ xlog_do_recover+0x34/0x1d0
+ xlog_recover+0xe9/0x1a0
+ xfs_log_mount+0xff/0x260
+ xfs_mountfs+0x5d9/0xb60
+ xfs_fs_fill_super+0x76b/0xa30
+ get_tree_bdev+0x124/0x1d0
+ vfs_get_tree+0x17/0xa0
+ path_mount+0x72b/0xa90
+ __x64_sys_mount+0x112/0x150
+ do_syscall_64+0x49/0x100
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ </TASK>
+XFS (sda4): Corruption detected. Unmount and run xfs_repair
+XFS (sda4): Metadata corruption detected at xfs_dinode_verify.part.0+0x739/0x920 [xfs], inode 0x427b2d1
+XFS (sda4): Filesystem has been shut down due to log error (0x2).
+XFS (sda4): Please unmount the filesystem and rectify the problem(s).
+XFS (sda4): log mount/recovery failed: error -117
+XFS (sda4): log mount failed
 
-ap_is_valid_header() accepts struct acpi_table_header as an argument, so
-the signature size is always fixed to 4 bytes.
+This inode log item recovery failing the dinode verifier after
+replaying the contents of the inode log item into the ondisk inode.
+Looking back into what the kernel was doing at the time of the fs
+shutdown, a thread was in the middle of running a series of
+transactions, each of which committed changes to the inode.
 
-The problem is when the string comparison is between ACPI-defined table
-signature and ACPI_SIG_RSDP. Common ACPI table header specifies the
-Signature field to be 4 bytes long[1], with the exception of the RSDP
-structure whose signature is 8 bytes long "RSD PTR " (including the
-trailing blank character)[2]. Calling strncmp(sig, rsdp_sig, 8) would
-then result in a sequence overread[3] as sig would be smaller (4 bytes)
-than the specified bound (8 bytes).
+At some point in the middle of that chain, an invalid (at least
+according to the verifier) change was committed.  Had the filesystem not
+shut down in the middle of the chain, a subsequent transaction would
+have corrected the invalid state and nobody would have noticed.  But
+that's not what happened here.  Instead, the invalid inode state was
+committed to the ondisk log, so log recovery tripped over it.
 
-As a workaround, pass the bound conditionally based on the size of the
-signature being passed.
+The actual defect here was an overzealous inode verifier, which was
+fixed in a separate patch.  This patch adds some transaction precommit
+functions for CONFIG_XFS_DEBUG=y mode so that we can detect these kinds
+of transient errors at transaction commit time, where it's much easier
+to find the root cause.
 
-Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#system-description-table-header [1]
-Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#root-system-description-pointer-rsdp-structure [2]
-Link: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overread [3]
-Link: https://github.com/acpica/acpica/commit/8b83a8d8
-Signed-off-by: Ahmed Salem <x0rw3ll@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2248233.Mh6RI2rZIc@rjwysocki.net
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/acpi/actypes.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/Kconfig          | 12 ++++++++++++
+ fs/xfs/xfs.h            |  4 ++++
+ fs/xfs/xfs_buf_item.c   | 32 ++++++++++++++++++++++++++++++++
+ fs/xfs/xfs_dquot_item.c | 31 +++++++++++++++++++++++++++++++
+ fs/xfs/xfs_inode_item.c | 32 ++++++++++++++++++++++++++++++++
+ 5 files changed, 111 insertions(+)
 
-diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h
-index 7334037624c5c..a2bf54fb946a0 100644
---- a/include/acpi/actypes.h
-+++ b/include/acpi/actypes.h
-@@ -524,7 +524,7 @@ typedef u64 acpi_integer;
+diff --git a/fs/xfs/Kconfig b/fs/xfs/Kconfig
+index 9fac5ea8d0e48..dff90db507e35 100644
+--- a/fs/xfs/Kconfig
++++ b/fs/xfs/Kconfig
+@@ -154,6 +154,18 @@ config XFS_DEBUG
  
- /* Support for the special RSDP signature (8 characters) */
+ 	  Say N unless you are an XFS developer, or you play one on TV.
  
--#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, 8))
-+#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ? ACPI_NAMESEG_SIZE : 8))
- #define ACPI_MAKE_RSDP_SIG(dest)        (memcpy (ACPI_CAST_PTR (char, (dest)), ACPI_SIG_RSDP, 8))
++config XFS_DEBUG_EXPENSIVE
++	bool "XFS expensive debugging checks"
++	depends on XFS_FS && XFS_DEBUG
++	help
++	  Say Y here to get an XFS build with expensive debugging checks
++	  enabled.  These checks may affect performance significantly.
++
++	  Note that the resulting code will be HUGER and SLOWER, and probably
++	  not useful unless you are debugging a particular problem.
++
++	  Say N unless you are an XFS developer, or you play one on TV.
++
+ config XFS_ASSERT_FATAL
+ 	bool "XFS fatal asserts"
+ 	default y
+diff --git a/fs/xfs/xfs.h b/fs/xfs/xfs.h
+index f6ffb4f248f78..9355ccad9503b 100644
+--- a/fs/xfs/xfs.h
++++ b/fs/xfs/xfs.h
+@@ -10,6 +10,10 @@
+ #define DEBUG 1
+ #endif
  
- /* Support for OEMx signature (x can be any character) */
++#ifdef CONFIG_XFS_DEBUG_EXPENSIVE
++#define DEBUG_EXPENSIVE 1
++#endif
++
+ #ifdef CONFIG_XFS_ASSERT_FATAL
+ #define XFS_ASSERT_FATAL 1
+ #endif
+diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
+index 023d4e0385dd0..b02ce568de0c4 100644
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -22,6 +22,7 @@
+ #include "xfs_trace.h"
+ #include "xfs_log.h"
+ #include "xfs_log_priv.h"
++#include "xfs_error.h"
+ 
+ 
+ struct kmem_cache	*xfs_buf_item_cache;
+@@ -781,8 +782,39 @@ xfs_buf_item_committed(
+ 	return lsn;
+ }
+ 
++#ifdef DEBUG_EXPENSIVE
++static int
++xfs_buf_item_precommit(
++	struct xfs_trans	*tp,
++	struct xfs_log_item	*lip)
++{
++	struct xfs_buf_log_item	*bip = BUF_ITEM(lip);
++	struct xfs_buf		*bp = bip->bli_buf;
++	struct xfs_mount	*mp = bp->b_mount;
++	xfs_failaddr_t		fa;
++
++	if (!bp->b_ops || !bp->b_ops->verify_struct)
++		return 0;
++	if (bip->bli_flags & XFS_BLI_STALE)
++		return 0;
++
++	fa = bp->b_ops->verify_struct(bp);
++	if (fa) {
++		xfs_buf_verifier_error(bp, -EFSCORRUPTED, bp->b_ops->name,
++				bp->b_addr, BBTOB(bp->b_length), fa);
++		xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
++		ASSERT(fa == NULL);
++	}
++
++	return 0;
++}
++#else
++# define xfs_buf_item_precommit	NULL
++#endif
++
+ static const struct xfs_item_ops xfs_buf_item_ops = {
+ 	.iop_size	= xfs_buf_item_size,
++	.iop_precommit	= xfs_buf_item_precommit,
+ 	.iop_format	= xfs_buf_item_format,
+ 	.iop_pin	= xfs_buf_item_pin,
+ 	.iop_unpin	= xfs_buf_item_unpin,
+diff --git a/fs/xfs/xfs_dquot_item.c b/fs/xfs/xfs_dquot_item.c
+index 6a1aae799cf16..7d19091215b08 100644
+--- a/fs/xfs/xfs_dquot_item.c
++++ b/fs/xfs/xfs_dquot_item.c
+@@ -17,6 +17,7 @@
+ #include "xfs_trans_priv.h"
+ #include "xfs_qm.h"
+ #include "xfs_log.h"
++#include "xfs_error.h"
+ 
+ static inline struct xfs_dq_logitem *DQUOT_ITEM(struct xfs_log_item *lip)
+ {
+@@ -193,8 +194,38 @@ xfs_qm_dquot_logitem_committing(
+ 	return xfs_qm_dquot_logitem_release(lip);
+ }
+ 
++#ifdef DEBUG_EXPENSIVE
++static int
++xfs_qm_dquot_logitem_precommit(
++	struct xfs_trans	*tp,
++	struct xfs_log_item	*lip)
++{
++	struct xfs_dquot	*dqp = DQUOT_ITEM(lip)->qli_dquot;
++	struct xfs_mount	*mp = dqp->q_mount;
++	struct xfs_disk_dquot	ddq = { };
++	xfs_failaddr_t		fa;
++
++	xfs_dquot_to_disk(&ddq, dqp);
++	fa = xfs_dquot_verify(mp, &ddq, dqp->q_id);
++	if (fa) {
++		XFS_CORRUPTION_ERROR("Bad dquot during logging",
++				XFS_ERRLEVEL_LOW, mp, &ddq, sizeof(ddq));
++		xfs_alert(mp,
++ "Metadata corruption detected at %pS, dquot 0x%x",
++				fa, dqp->q_id);
++		xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
++		ASSERT(fa == NULL);
++	}
++
++	return 0;
++}
++#else
++# define xfs_qm_dquot_logitem_precommit	NULL
++#endif
++
+ static const struct xfs_item_ops xfs_dquot_item_ops = {
+ 	.iop_size	= xfs_qm_dquot_logitem_size,
++	.iop_precommit	= xfs_qm_dquot_logitem_precommit,
+ 	.iop_format	= xfs_qm_dquot_logitem_format,
+ 	.iop_pin	= xfs_qm_dquot_logitem_pin,
+ 	.iop_unpin	= xfs_qm_dquot_logitem_unpin,
+diff --git a/fs/xfs/xfs_inode_item.c b/fs/xfs/xfs_inode_item.c
+index 2ec23c9af760c..a734ca8d8f03c 100644
+--- a/fs/xfs/xfs_inode_item.c
++++ b/fs/xfs/xfs_inode_item.c
+@@ -36,6 +36,36 @@ xfs_inode_item_sort(
+ 	return INODE_ITEM(lip)->ili_inode->i_ino;
+ }
+ 
++#ifdef DEBUG_EXPENSIVE
++static void
++xfs_inode_item_precommit_check(
++	struct xfs_inode	*ip)
++{
++	struct xfs_mount	*mp = ip->i_mount;
++	struct xfs_dinode	*dip;
++	xfs_failaddr_t		fa;
++
++	dip = kzalloc(mp->m_sb.sb_inodesize, GFP_KERNEL | GFP_NOFS);
++	if (!dip) {
++		ASSERT(dip != NULL);
++		return;
++	}
++
++	xfs_inode_to_disk(ip, dip, 0);
++	xfs_dinode_calc_crc(mp, dip);
++	fa = xfs_dinode_verify(mp, ip->i_ino, dip);
++	if (fa) {
++		xfs_inode_verifier_error(ip, -EFSCORRUPTED, __func__, dip,
++				sizeof(*dip), fa);
++		xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
++		ASSERT(fa == NULL);
++	}
++	kfree(dip);
++}
++#else
++# define xfs_inode_item_precommit_check(ip)	((void)0)
++#endif
++
+ /*
+  * Prior to finally logging the inode, we have to ensure that all the
+  * per-modification inode state changes are applied. This includes VFS inode
+@@ -168,6 +198,8 @@ xfs_inode_item_precommit(
+ 	iip->ili_fields |= (flags | iip->ili_last_fields);
+ 	spin_unlock(&iip->ili_lock);
+ 
++	xfs_inode_item_precommit_check(ip);
++
+ 	/*
+ 	 * We are done with the log item transaction dirty state, so clear it so
+ 	 * that it doesn't pollute future transactions.
 -- 
 2.39.5
 
