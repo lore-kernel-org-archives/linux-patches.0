@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B99239E63;
-	Mon, 23 Jun 2025 13:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3D4239E63;
+	Mon, 23 Jun 2025 13:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684882; cv=none; b=R2SwNqEahUr0HZepVKAOOe+8CKp0yV0vGwaBnm3b6oD9hw4mwTf7OXVn/ItHuLPThC0M/5BIRPuSk8yCEfFowV6LreQLpgX2EFD4sxxLGfyXVQYR1GV+0GfhQRNnocoZq/Ez2N7tJTRFdFQyvZhVIGR8NW3MexiUNG8S09ieem4=
+	t=1750684884; cv=none; b=GqcUL+bFZJDXj/8JET6BY3GHBgadBCdb9f4PXxZqVKUUDnZL8+qclpDq+lz6YaB/HqmjIE5Vq8NynIX88j/3ap2mCQZnrAXBB05NPC+F0/Zt+7uP0Zhvq/hrqdETVfQNwAbmn7lf2ktsJX8y1hWAFuPg+9JDGv4+zlDheKc4eeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684882; c=relaxed/simple;
-	bh=cjJIpmXlCK/xtythgxRb8h4AnfHFnXbCFyXyWt1ZQyE=;
+	s=arc-20240116; t=1750684884; c=relaxed/simple;
+	bh=4YVZxTyqutW+SoM7gN3/Fut+dKNJk/JvIVn1zbg5Fbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MF7bpfJJPAe0jDCif8QNx+GWQ800LZ09MeauOdkdfHuD92m2yxzN0Uc6QWxFIFy0QTfjodc95g9OvH88DazAfAyMqIPeBgsAUs2lSVCxfrC9iDF51FyDZedUBPADfebIcHOknkEUxBrvzMXhymWeXVtFTCRgS5A3nYnOBm0mB04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEdJBBgs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mqVCyd3vhpij4Y3M9ZJWrtQoHFBfZZoi5Gif3nfkdm6K8Ll1yFwgpG5N/mrFSB2hN+E3XqYVRmzw8qP8YHsuSHEwLRxh9z4ajdqqToe1ENZxpmAQhYYzbt0CC6JwXck0M2un2ATIImNjHh6h2mbnVx9Heoa822LCdeQmYfUUvRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kS65OSY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEdJBBgs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E6EC4CEEA;
-	Mon, 23 Jun 2025 13:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kS65OSY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6512EC4CEEA;
+	Mon, 23 Jun 2025 13:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684882;
-	bh=cjJIpmXlCK/xtythgxRb8h4AnfHFnXbCFyXyWt1ZQyE=;
+	s=korg; t=1750684884;
+	bh=4YVZxTyqutW+SoM7gN3/Fut+dKNJk/JvIVn1zbg5Fbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nEdJBBgsc5QpsNUGyhc162bZHh4dgws3oavP29Y7PT2GQXyAOsZblPmZ7qukShW4B
-	 L2HZAgAtQ3P/1sGHJwuJB2JLswfhjN3aKPys6hHBEZYKsQLmehc52BZdSrsTP+ploy
-	 NngPe1ev0GUWxsDXEH9dNGuiDT64KmZrXKSrWGX8=
+	b=2kS65OSYBnlYrvc1K2xU6vaoNY036GQz8ZSJ1l5MogiSa7046eGgu7N7Oot/T8FXb
+	 UhBI8kNklB6Y6059kwbpF67EYg51cEjpmO1fufgsA3Zb1w3kLbGshUiAxB6Lxzi8fF
+	 xSJ0iI56lr8I4SGZrLHbo8B2Gpp6BFaMxd1Tbe7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diederik de Haas <didi.debian@cknow.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Shawn Lin <shawn.lin@rock-chips.com>
-Subject: [PATCH 6.15 186/592] PCI: dw-rockchip: Fix PHY function call sequence in rockchip_pcie_phy_deinit()
-Date: Mon, 23 Jun 2025 15:02:24 +0200
-Message-ID: <20250623130704.705687261@linuxfoundation.org>
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 5.10 007/355] usb: usbtmc: Fix timeout value in get_stb
+Date: Mon, 23 Jun 2025 15:03:28 +0200
+Message-ID: <20250623130626.956145842@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,44 +45,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Diederik de Haas <didi.debian@cknow.org>
+From: Dave Penkler <dpenkler@gmail.com>
 
-commit 286ed198b899739862456f451eda884558526a9d upstream.
+commit 342e4955a1f1ce28c70a589999b76365082dbf10 upstream.
 
-The documentation for the phy_power_off() function explicitly says that it
-must be called before phy_exit().
+wait_event_interruptible_timeout requires a timeout argument
+in units of jiffies. It was being called in usbtmc_get_stb
+with the usb timeout value which is in units of milliseconds.
 
-Hence, follow the same rule in rockchip_pcie_phy_deinit().
+Pass the timeout argument converted to jiffies.
 
-Fixes: 0e898eb8df4e ("PCI: rockchip-dwc: Add Rockchip RK356X host controller driver")
-Signed-off-by: Diederik de Haas <didi.debian@cknow.org>
-[mani: commit message change]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
-Cc: stable@vger.kernel.org	# v5.15+
-Link: https://patch.msgid.link/20250417142138.1377451-1-didi.debian@cknow.org
+Fixes: 048c6d88a021 ("usb: usbtmc: Add ioctls to set/get usb timeout")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250521121656.18174-4-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-dw-rockchip.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/class/usbtmc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-+++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-@@ -408,8 +408,8 @@ static int rockchip_pcie_phy_init(struct
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -486,6 +486,7 @@ static int usbtmc488_ioctl_read_stb(stru
+ 	__u8 stb;
+ 	int rv;
+ 	long wait_rv;
++	unsigned long expire;
  
- static void rockchip_pcie_phy_deinit(struct rockchip_pcie *rockchip)
- {
--	phy_exit(rockchip->phy);
- 	phy_power_off(rockchip->phy);
-+	phy_exit(rockchip->phy);
- }
+ 	dev_dbg(dev, "Enter ioctl_read_stb iin_ep_present: %d\n",
+ 		data->iin_ep_present);
+@@ -528,10 +529,11 @@ static int usbtmc488_ioctl_read_stb(stru
+ 	}
  
- static const struct dw_pcie_ops dw_pcie_ops = {
+ 	if (data->iin_ep_present) {
++		expire = msecs_to_jiffies(file_data->timeout);
+ 		wait_rv = wait_event_interruptible_timeout(
+ 			data->waitq,
+ 			atomic_read(&data->iin_data_valid) != 0,
+-			file_data->timeout);
++			expire);
+ 		if (wait_rv < 0) {
+ 			dev_dbg(dev, "wait interrupted %ld\n", wait_rv);
+ 			rv = wait_rv;
 
 
