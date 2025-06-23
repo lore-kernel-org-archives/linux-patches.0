@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975752940B;
-	Mon, 23 Jun 2025 22:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101486136;
+	Mon, 23 Jun 2025 22:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716019; cv=none; b=ol5Ekiijunk5DNn7p0j7PkoYK4i3bslJ9DKj0Vk3CTlzS9XChSl9aGSlIDr6ag6kIwpieFw87VulC2x2yC+CLtAOSWWOW2YEmN2w0fTaSjJvWnD+VRumrNRlOci0II3WppDcrnGrACyJyHQkSvTgXXJaHIqfg1wLF56WvUS0RlQ=
+	t=1750716022; cv=none; b=ctZZYInmMxnNLxA9aSfkUP3nQYuuP0LtV2vPLqSZ3E1ZHISz3G0GKzcOmZR4UF6zavyI/30Hhn1S8gnPzBlQcwCNu/52bQXx4nMpG9ClfScRMj/FFXMv9phEFyXUtnMSZiZSgztMdUB2U/OXyr4VLha0ddpbH2qfnF08TP6poAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716019; c=relaxed/simple;
-	bh=e92JNlxMuk8SOG7kOY7Xv7d7Fn4X13eo1YZbUpnSaVo=;
+	s=arc-20240116; t=1750716022; c=relaxed/simple;
+	bh=ZiBURmDAdIvI9ImGBQhhk3U4J/gfaFI20z5jU34vRGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g0j6UKwByFFeC6Z8tr2Ly0XNGYn+iyZ1bnWqiiqu0btW4W7grTYK7WHCWORCKyLmNu3HdQ1aEFE5iRmSIHeuf8Ob8y9teRKGZF697SpzhbnEMl1XH4LD8Fu3FXqWJi90Z6fH4qUEqJFu6OjniwNu0DSP0iXcBSnNrUw45Jz6P9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DvDrpmR2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TwaeX7t6r9vjvmxSlWgB/WmH/vHa+kOUdPtzcYm4/Ob5NttLf2X4knL0xh8h0E6y0UWFyuacmfPDrmnVodJtMU7dLObCFglRlYEiqa6UWIJOZgCVVtdjRgJbwIRLqi+fUen8UxRtp9FngYZMcMCcEScTuFEQAmUjSdLYpjmx08k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNgT2/xA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DvDrpmR2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F483C4CEED;
-	Mon, 23 Jun 2025 22:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNgT2/xA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB18C4CEEA;
+	Mon, 23 Jun 2025 22:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716019;
-	bh=e92JNlxMuk8SOG7kOY7Xv7d7Fn4X13eo1YZbUpnSaVo=;
+	s=korg; t=1750716021;
+	bh=ZiBURmDAdIvI9ImGBQhhk3U4J/gfaFI20z5jU34vRGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DvDrpmR2F/eANVk1fuYnmQ59mXVftSeHt3TT+e5XI0Hs9IFiK6mnJZSLr+Tfxtz9r
-	 m1UeJe5vQMgZPKME/oT3qQ6eeSIH2qv2FBK8/XXL/TYol4TKopH3i9pFytTvdzS2Gp
-	 Jig4WwbvsiLZG4BbNf0jhlnLbnIVlOyldYgkkwPw=
+	b=wNgT2/xAjWrKlH15ANjouzcCuUomAHR8FAnq3hsKArERe2/zZy3CZkAAJywAfXJIo
+	 us2whHPoqpqfAMEbcK3uK2iqH3OD+SR1oVOVcqI0UnLldJXt18TAT4XznCk3YqYxpo
+	 cVDahBQT5BN6bYn5PvsvqcnNggKjYeAck+6DEYdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 222/414] ipv4/route: Use this_cpu_inc() for stats on PREEMPT_RT
-Date: Mon, 23 Jun 2025 15:05:59 +0200
-Message-ID: <20250623130647.575665176@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Barry Song <21cnbao@gmail.com>,
+	Jann Horn <jannh@google.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	David Hildenbrand <david@redhat.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.15 497/592] mm/madvise: handle madvise_lock() failure during race unwinding
+Date: Mon, 23 Jun 2025 15:07:35 +0200
+Message-ID: <20250623130712.254231443@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +54,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit 1c0829788a6e6e165846b9bedd0b908ef16260b6 ]
+commit 9c49e5d09f076001e05537734d7df002162eb2b5 upstream.
 
-The statistics are incremented with raw_cpu_inc() assuming it always
-happens with bottom half disabled. Without per-CPU locking in
-local_bh_disable() on PREEMPT_RT this is no longer true.
+When unwinding race on -ERESTARTNOINTR handling of process_madvise(),
+madvise_lock() failure is ignored.  Check the failure and abort remaining
+works in the case.
 
-Use this_cpu_inc() on PREEMPT_RT for the increment to not worry about
-preemption.
-
-Cc: David Ahern <dsahern@kernel.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20250512092736.229935-4-bigeasy@linutronix.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250602174926.1074-1-sj@kernel.org
+Fixes: 4000e3d0a367 ("mm/madvise: remove redundant mmap_lock operations from process_madvise()")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Reported-by: Barry Song <21cnbao@gmail.com>
+Closes: https://lore.kernel.org/CAGsJ_4xJXXO0G+4BizhohSZ4yDteziPw43_uF8nPXPWxUVChzw@mail.gmail.com
+Reviewed-by: Jann Horn <jannh@google.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/route.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ mm/madvise.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 41b320f0c20eb..88d7c96bfac06 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -189,7 +189,11 @@ const __u8 ip_tos2prio[16] = {
- EXPORT_SYMBOL(ip_tos2prio);
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -1832,7 +1832,9 @@ static ssize_t vector_madvise(struct mm_
  
- static DEFINE_PER_CPU(struct rt_cache_stat, rt_cache_stat);
-+#ifndef CONFIG_PREEMPT_RT
- #define RT_CACHE_STAT_INC(field) raw_cpu_inc(rt_cache_stat.field)
-+#else
-+#define RT_CACHE_STAT_INC(field) this_cpu_inc(rt_cache_stat.field)
-+#endif
+ 			/* Drop and reacquire lock to unwind race. */
+ 			madvise_unlock(mm, behavior);
+-			madvise_lock(mm, behavior);
++			ret = madvise_lock(mm, behavior);
++			if (ret)
++				goto out;
+ 			continue;
+ 		}
+ 		if (ret < 0)
+@@ -1841,6 +1843,7 @@ static ssize_t vector_madvise(struct mm_
+ 	}
+ 	madvise_unlock(mm, behavior);
  
- #ifdef CONFIG_PROC_FS
- static void *rt_cache_seq_start(struct seq_file *seq, loff_t *pos)
--- 
-2.39.5
-
++out:
+ 	ret = (total_len - iov_iter_count(iter)) ? : ret;
+ 
+ 	return ret;
 
 
