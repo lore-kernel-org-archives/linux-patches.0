@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51406221734;
-	Mon, 23 Jun 2025 21:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9A07482;
+	Mon, 23 Jun 2025 21:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713702; cv=none; b=EzmNoslUabw3YNlHmXiAbxhao17E4So773hJypVQcrSH4H61UgvIh2U8KbO+wb0a1ICyuLAVdpwpBLiXpFBH6Ts8YB71kdWr7uDYvtmRJVJxMqir4HEGYCfehkZlERoor/yiLPUVxPtQ8NYNp/VQVTIyy8kusaYEx2MKTfW3jYY=
+	t=1750713704; cv=none; b=sPyOwPnjRtfhqdiePH/dyzm5AGOzHpf7TTCJ/7DtW4CpnyrAwMAFJf1NrmFHq1dyuEX09KN+Tfv3XvcQgBTH5ViZfXyg6WDeAJRyXNM71MDC/S5o0cqYXYipRiiUA+wffYEeb/m84f9idxPG22TVS3oSpE9br2KYhIi9Sl/AtzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713702; c=relaxed/simple;
-	bh=m2+d8bYtr91j+uxOWuHSTXzM5uJepDBj+WkTVxPSeXg=;
+	s=arc-20240116; t=1750713704; c=relaxed/simple;
+	bh=dEGsmv5WZmUdNTTZLKSjx2hOysYoAq/vqJRwp5Fg4gY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PFbsbKHB+mn6RCTgAcp/4Z20Nhmuo5HN/3e86ggzB9vJL6CiNfsHk+eXvG2FrVuVtg5fpnY5sFVhpVdjfd/67EKkrOudROzO1uLy8R4N8pSLmWW5nr4VMoaNgmpoidkavUYbMDCt13Q0Gu/IqcUi1V3Yn3Ab0rT1/65mE+iw5oM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBOrjKk5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GF4AAy6cRxGQNq191Zk5XObDWRmvk5vIl9L1NZU21k6lac7VfSd8mp+jRN0L9WSV/cKYT7wyUdwVdUN1uC8FAnie/D7qCpRB8u6EKwq6YCGxXKdnFwk6m+Y3hRAlSbHO6Cz1tm8FAqNmHnUeKKGn5IADha/mp2OUBQIng0IIG68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9hiBU/U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBOrjKk5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD5CC4CEED;
-	Mon, 23 Jun 2025 21:21:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9hiBU/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51590C4CEEA;
+	Mon, 23 Jun 2025 21:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713702;
-	bh=m2+d8bYtr91j+uxOWuHSTXzM5uJepDBj+WkTVxPSeXg=;
+	s=korg; t=1750713704;
+	bh=dEGsmv5WZmUdNTTZLKSjx2hOysYoAq/vqJRwp5Fg4gY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBOrjKk58T9ks5aIb1pCl86CuKjOkiE/voE6RdzKlXquiDtWZuI2ef/sgItlmA641
-	 1hjcITP4G/I5BRuiHra3KcNADz68BN0V6TgHZauEh/OUp8HaLwf5LFWlwd4knk8dOU
-	 rai6mrUSWsMwBkMze5205qr3W/ZRvKW57/qXX6Vw=
+	b=y9hiBU/Ut5JqRg8lubbIi1ms03Hx8iEBwQze+viIez36bQxZhZhMo/goCybbWjJ/Q
+	 20QfiqVZ8SgNAmUdndVVALjZo1vAyZduC3FKTxJECio+OwOXF/+zyQQvbk8MH4ckMT
+	 IXW8yRMGrsustqcaPrBpBqSMXjy/kBaWSoUgFESk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xilin Wu <wuxilin123@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/508] arm64: dts: qcom: sm8250: Fix CPU7 opp table
-Date: Mon, 23 Jun 2025 15:02:31 +0200
-Message-ID: <20250623130647.889565325@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.6 085/290] mtd: rawnand: sunxi: Add randomizer configuration in sunxi_nfc_hw_ecc_write_chunk
+Date: Mon, 23 Jun 2025 15:05:46 +0200
+Message-ID: <20250623130629.541787391@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xilin Wu <wuxilin123@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 28f997b89967afdc0855d8aa7538b251fb44f654 ]
+commit 44ed1f5ff73e9e115b6f5411744d5a22ea1c855b upstream.
 
-There is a typo in cpu7_opp9. Fix it to get rid of the following
-errors.
+The function sunxi_nfc_hw_ecc_write_chunk() calls the
+sunxi_nfc_hw_ecc_write_chunk(), but does not call the configuration
+function sunxi_nfc_randomizer_config(). Consequently, the randomization
+might not conduct correctly, which will affect the lifespan of NAND flash.
+A proper implementation can be found in sunxi_nfc_hw_ecc_write_page_dma().
 
-[    0.198043] cpu cpu7: Voltage update failed freq=1747200
-[    0.198052] cpu cpu7: failed to update OPP for freq=1747200
+Add the sunxi_nfc_randomizer_config() to config randomizer.
 
-Fixes: 8e0e8016cb79 ("arm64: dts: qcom: sm8250: Add CPU opp tables")
-Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250308-fix-sm8250-cpufreq-v1-1-8a0226721399@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4be4e03efc7f ("mtd: nand: sunxi: add randomizer support")
+Cc: stable@vger.kernel.org # v4.6
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/sunxi_nand.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index eb500cb67c86c..72ab4ca129459 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -569,7 +569,7 @@
- 		};
+--- a/drivers/mtd/nand/raw/sunxi_nand.c
++++ b/drivers/mtd/nand/raw/sunxi_nand.c
+@@ -1049,6 +1049,7 @@ static int sunxi_nfc_hw_ecc_write_chunk(
+ 	if (ret)
+ 		return ret;
  
- 		cpu7_opp9: opp-1747200000 {
--			opp-hz = /bits/ 64 <1708800000>;
-+			opp-hz = /bits/ 64 <1747200000>;
- 			opp-peak-kBps = <5412000 42393600>;
- 		};
++	sunxi_nfc_randomizer_config(nand, page, false);
+ 	sunxi_nfc_randomizer_enable(nand);
+ 	sunxi_nfc_hw_ecc_set_prot_oob_bytes(nand, oob, 0, bbm, page);
  
--- 
-2.39.5
-
 
 
