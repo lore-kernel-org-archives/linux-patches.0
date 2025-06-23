@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205AC2528F3;
-	Mon, 23 Jun 2025 13:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D349253B66;
+	Mon, 23 Jun 2025 13:23:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685006; cv=none; b=O+rHGBTi4fqg3xDFlhL7DSjmVOo7D+v2vYraScvP4SJte1YDa/cLKdlPAXWBjITUS6q7BhEYJfRUdF6CopcmAuMSuf1U6uOBLqmw/2WJXHx3Z1W32zhtCa/2e1liLExziRb1w3UWvM1ud2ZG5kj2PwQ9Ip1JHKUj2sx4M+xADSo=
+	t=1750685009; cv=none; b=kW3mphEeUKa374OzrlOoMRqvqPhj3rvS42F+MQVn5ba49i4kgNAHTiKpETXLFeK2n8LHJ4qpFyDds0DgB77JjX73yTYBrrHSfi6uIi0UMQ8BHzr8065bxIcNBDP8TMr3CMmjDUf/VOAifUy7L/ec/iXOcrz8pBVVn82FxMe9A7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685006; c=relaxed/simple;
-	bh=zpgVYh3K7PxcNgmpNm77YjyDoEkFWichbOfbu+GQ6lk=;
+	s=arc-20240116; t=1750685009; c=relaxed/simple;
+	bh=m5gTLrsJI1CWmHysaVqdiUnqVQt03M78TGVh/0ewZYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JcJpxkKFyGieiAlfFlVtIuU/3HS+qk5FI8DW1mG2Hgchgak4bU9OXwUYWmbdDG9gPtDpgAX7/4yHXLy1B1O3pYhz0ddXj64F89Vkmg4Frqr/86pTlntJU4XpPC9UfXmqEC8AYj78dMLfbI1OiNUGESGx7ykNIMifrwvfRDAC9TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPro/KLG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oTspJaS+rG15l+qgZG9lSBP5PVw/wOSNs9r42SiIBmWsjwrTINS5JmzQKEbjeAVnG0jK2GKKsiQ3+p2Pr76vGdeOJ9ARH+UzccZ3ysGRgsDJWGsTvDOp/5KFE98082hx8ET9gcNCt5DR6vV6TOo6c7NEtlSFQUc68DjwevO3jxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5DrZR+z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPro/KLG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8ECBC4CEEA;
-	Mon, 23 Jun 2025 13:23:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5DrZR+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407F5C4CEEA;
+	Mon, 23 Jun 2025 13:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685006;
-	bh=zpgVYh3K7PxcNgmpNm77YjyDoEkFWichbOfbu+GQ6lk=;
+	s=korg; t=1750685008;
+	bh=m5gTLrsJI1CWmHysaVqdiUnqVQt03M78TGVh/0ewZYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gPro/KLGNH9Jy0D9+2cYfaI+BcvisiEqgtEMSA/HZ55vmbpNc8XyqPqrlBdv0nu2q
-	 Rc98p/SryI2rTXRNiKqkzBnhvaDx8o5psnd5KmKe7bNFT8rstQjAoA8gUfVgUyFtIK
-	 xYK/IqsA/+mH3fEAAf5nNlie8RY3rOn/bPv5wPBM=
+	b=T5DrZR+zgyM5UqrW3f3AZP0GY7pITZkgx7XzCu5sjEvbCDCKeuhl5xFInCw55ePcw
+	 H2xXJeoTBcN+lkBlwf+TROMZknoBsMs7/k7BDZmNgvbLPGvhQ8evjN/YueF3hPO+Zd
+	 FStD1KkZIkMNvpFhAs1/1ldTn8chIHk1xnQPrLHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Nyekjaer <sean@geanix.com>,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.15 200/592] iio: imu: inv_icm42600: Fix temperature calculation
-Date: Mon, 23 Jun 2025 15:02:38 +0200
-Message-ID: <20250623130705.047194495@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 057/222] rpmsg: qcom_smd: Fix uninitialized return variable in __qcom_smd_send()
+Date: Mon, 23 Jun 2025 15:06:32 +0200
+Message-ID: <20250623130613.826045330@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,56 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit e2f820014239df9360064079ae93f838ff3b7f8c upstream.
+[ Upstream commit 5de775df3362090a6e90046d1f2d83fe62489aa0 ]
 
->From the documentation:
-"offset to be added to <type>[Y]_raw prior toscaling by <type>[Y]_scale"
-Offset should be applied before multiplying scale, so divide offset by
-scale to make this correct.
+The "ret" variable isn't initialized if we don't enter the loop.  For
+example,  if "channel->state" is not SMD_CHANNEL_OPENED.
 
-Fixes: bc3eb0207fb5 ("iio: imu: inv_icm42600: add temperature sensor support")
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Acked-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Link: https://patch.msgid.link/20250502-imu-v1-1-129b8391a4e3@geanix.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 33e3820dda88 ("rpmsg: smd: Use spinlock in tx path")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/aAkhvV0nSbrsef1P@stanley.mountain
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_temp.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/rpmsg/qcom_smd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_temp.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_temp.c
-@@ -67,16 +67,18 @@ int inv_icm42600_temp_read_raw(struct ii
- 		return IIO_VAL_INT;
- 	/*
- 	 * T°C = (temp / 132.48) + 25
--	 * Tm°C = 1000 * ((temp * 100 / 13248) + 25)
-+	 * Tm°C = 1000 * ((temp / 132.48) + 25)
-+	 * Tm°C = 7.548309 * temp + 25000
-+	 * Tm°C = (temp + 3312) * 7.548309
- 	 * scale: 100000 / 13248 ~= 7.548309
--	 * offset: 25000
-+	 * offset: 3312
- 	 */
- 	case IIO_CHAN_INFO_SCALE:
- 		*val = 7;
- 		*val2 = 548309;
- 		return IIO_VAL_INT_PLUS_MICRO;
- 	case IIO_CHAN_INFO_OFFSET:
--		*val = 25000;
-+		*val = 3312;
- 		return IIO_VAL_INT;
- 	default:
- 		return -EINVAL;
+diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
+index b5167ef93abf9..6facf1b31d463 100644
+--- a/drivers/rpmsg/qcom_smd.c
++++ b/drivers/rpmsg/qcom_smd.c
+@@ -746,7 +746,7 @@ static int __qcom_smd_send(struct qcom_smd_channel *channel, const void *data,
+ 	__le32 hdr[5] = { cpu_to_le32(len), };
+ 	int tlen = sizeof(hdr) + len;
+ 	unsigned long flags;
+-	int ret;
++	int ret = 0;
+ 
+ 	/* Word aligned channels only accept word size aligned data */
+ 	if (channel->info_word && len % 4)
+-- 
+2.39.5
+
 
 
