@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7634C6E;
-	Mon, 23 Jun 2025 13:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC985255E26;
+	Mon, 23 Jun 2025 13:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685506; cv=none; b=JrNSy9F5r7GqjmzX4Yp3U3suhxMIEgN/0/GZbNpPpKQP3OBPwYADCokIA3eulHf6CU6FvbHbASXjJzzL5oKUcrtDRXb6c3iK/jPHqAcp10AjZ5f3jHAEaJbScj0JzimyQUiSKcNyLV4CngHp6pogaj0Xu1YnrVbADh5nsXd5kTg=
+	t=1750685509; cv=none; b=V8JDXTzTh3nKsaDk+39buZoMRuugROCnaVCbaPtJeStwzJP2600wQk4NQMXnfW1h1DISVT6MraucikIyajeClSWWzOH53A5a7P9mOi/en/9de0nnHbrjyQK7hDJJhwwt1SO4ArXCkg+cF/RI48IDwjX5vQ4ej9arzVFAHt1amTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685506; c=relaxed/simple;
-	bh=whkuWnHhng1PHEIgW51OiCMk8TEg1xkAEMP39MZGMDE=;
+	s=arc-20240116; t=1750685509; c=relaxed/simple;
+	bh=ZO/QK1a9EvOT5zkinLRjXWeEpGFVcs/lDTMqfO+Rab4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZyuCMyANXsudK3/xN2bSyCp66f3AAxk6m4HetcftvGP8a2ONkGAWLQQ932a5FElANK3DFaQOd/XZ8Ssz8p6JQwmJ1UcFR/mQccrAVQbin7k9AhrOHP2DazLaK0/zPpUh0WLkQz89Qb1OvQsljoXFfpgCV22/x6wJBEVVgjDLxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RYsmsBuM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UiqKnJd6UEJMDJXeBn++OB7GdBstD+B1/zd+KNWwgIAYmEnPIH/Emrw1SdIfhAcN0GVaLAoueLBsSS/vryDtDcci3STrUCDjL9b09Nhc1X7ze85/2BS7N7dxlJ0GTWRCnKjlkE7atB46N4ttCyT/gj0Sszy5iGzD/NII0yTm77s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zk69TqMP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RYsmsBuM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21E9C4CEF2;
-	Mon, 23 Jun 2025 13:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zk69TqMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA09C4CEEA;
+	Mon, 23 Jun 2025 13:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685506;
-	bh=whkuWnHhng1PHEIgW51OiCMk8TEg1xkAEMP39MZGMDE=;
+	s=korg; t=1750685508;
+	bh=ZO/QK1a9EvOT5zkinLRjXWeEpGFVcs/lDTMqfO+Rab4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RYsmsBuMDIpzO95BOaHJJNmJ7J3Y56EOLXiOdUaU7Ma+ZsDPnlEKhhXBFf/x4DrhQ
-	 YEcc3rg9QN19zkDSEQFmlAqgBtlxsFrIqrL8RFZlGuxkt4tild5sNaBEV+lP9RHbPu
-	 GH+i2iKXn82UyzCvWaMqMo9rXVsV1eEX4ipLOs5c=
+	b=Zk69TqMPBRDHB+4HxcgdJtaDsX+ci3XZZIujnrkLNd68pfpyVaT/qLsDepKfGDipD
+	 xQl78mYi1R5cL9/h+Sqzx9NExZz2EL9dVpI64VcuxIqRfE381hzZYczn6S3isu4Ewe
+	 8ptM9EpNCxCCJxAhpd7U6kJwP4S6Fyz1GN/tUR1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 240/592] sunrpc: update nextcheck time when adding new cache entries
-Date: Mon, 23 Jun 2025 15:03:18 +0200
-Message-ID: <20250623130705.999524487@linuxfoundation.org>
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.4 094/222] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
+Date: Mon, 23 Jun 2025 15:07:09 +0200
+Message-ID: <20250623130614.933728715@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 5ca00634c8bbb2979c73465588f486b9632f5ed5 ]
+commit 43fc0a99906e04792786edf8534d8d58d1e9de0c upstream.
 
-The cache_detail structure uses a "nextcheck" field to control hash table
-scanning intervals. When a table scan begins, nextcheck is set to current
-time plus 1800 seconds. During scanning, if cache_detail is not empty and
-a cache entry's expiry time is earlier than the current nextcheck, the
-nextcheck is updated to that expiry time.
+After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
+KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
+assembly files with clang:
 
-This mechanism ensures that:
-1) Empty cache_details are scanned every 1800 seconds to avoid unnecessary
-   scans
-2) Non-empty cache_details are scanned based on the earliest expiry time
-   found
+  arch/powerpc/lib/copypage_power7.S: Assembler messages:
+  arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b01000'
+  arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b01010'
+  arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b01000'
+  arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b01010'
+  arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b01010'
+  clang: error: assembler command failed with exit code 1 (use -v to see invocation)
 
-However, when adding a new cache entry to an empty cache_detail, the
-nextcheck time was not being updated, remaining at 1800 seconds. This
-could delay cache cleanup for up to 1800 seconds, potentially blocking
-threads(such as nfsd) that are waiting for cache cleanup.
+as-option only uses KBUILD_AFLAGS, so after removing CLANG_FLAGS from
+KBUILD_AFLAGS, there is no more '--target=' or '--prefix=' flags. As a
+result of those missing flags, the host target
+will be tested during as-option calls and likely fail, meaning necessary
+flags may not get added when building assembly files, resulting in
+errors like seen above.
 
-Fix this by updating the nextcheck time whenever a new cache entry is
-added.
+Add KBUILD_CPPFLAGS to as-option invocations to clear up the errors.
+This should have been done in commit d5c8d6e0fa61 ("kbuild: Update
+assembler calls to use proper flags and language target"), which
+switched from using the assembler target to the assembler-with-cpp
+target, so flags that affect preprocessing are passed along in all
+relevant tests. as-option now mirrors cc-option.
 
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5Mxag@mail.gmail.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/cache.c | 2 ++
- 1 file changed, 2 insertions(+)
+ scripts/Kbuild.include |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/cache.c b/net/sunrpc/cache.c
-index 7ce5e28a6c031..bbaa77d7bbc81 100644
---- a/net/sunrpc/cache.c
-+++ b/net/sunrpc/cache.c
-@@ -135,6 +135,8 @@ static struct cache_head *sunrpc_cache_add_entry(struct cache_detail *detail,
+--- a/scripts/Kbuild.include
++++ b/scripts/Kbuild.include
+@@ -102,7 +102,7 @@ try-run = $(shell set -e;		\
+ # Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
  
- 	hlist_add_head_rcu(&new->cache_list, head);
- 	detail->entries++;
-+	if (detail->nextcheck > new->expiry_time)
-+		detail->nextcheck = new->expiry_time + 1;
- 	cache_get(new);
- 	spin_unlock(&detail->hash_lock);
+ as-option = $(call try-run,\
+-	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
++	$(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
  
--- 
-2.39.5
-
+ # as-instr
+ # Usage: aflags-y += $(call as-instr,instr,option1,option2)
 
 
