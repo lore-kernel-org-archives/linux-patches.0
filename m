@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2F21E22E6;
-	Mon, 23 Jun 2025 21:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401CC19D084;
+	Mon, 23 Jun 2025 21:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714816; cv=none; b=OekGzmUfAL0jujpVDppjWODRDCHNiC6nH0cN09ZrzRUzDAjMNv6/FiaLQmRXFZpIqr9eSWA/QWxr4PYCQ4BpQmAwYYrIia0qtkGb0v2XoDC7oS83PugvWyua2ujUsViDC0lDIPO1K2b/vGY7s8ABbYytLaqg/1hLRO/jHTGeyYw=
+	t=1750714819; cv=none; b=FSv0yXYLjfFM8hG3PSy84gf5isQwd3IaNV9tI+FqwXQp+DS2Nj+goB54VFMgsdAy+JdUgk8vmPh0/0CB8nHL9i63AtwS6Us8Z/PVHARqCnH9S5RuDHygpEbLaSUgUjakwVw2Mhw3MG//diR7He8yZrl/+/Y29KxSsU0YgXWS9Lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714816; c=relaxed/simple;
-	bh=JAbzIA7wQNmmszRxiVM+VUV7fLYrje2MUTNHxbNgGc8=;
+	s=arc-20240116; t=1750714819; c=relaxed/simple;
+	bh=/8GWeppzmrf6rOlIRUiAbMjRJnpXocrN0bYwqLkgxsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pgZURgAchsrhnzJwJxZZP6oulIScsOiSTg6spj1G4B0p1dHslpm2ciFMbGHNqOo4ZBXwVjCdSfFTZBxu9vxugwutSlAynmLzAM1XIT7Krhw0NXUrfAZhFPkBj4ei/Gp0wLMnkWj45EwWkop4S6EuuuZ22u8+jwsfuy4IVNG36tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiCWW3ny; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sS5Gv2V3bzh7iGTbjvEQBJ62SjEXJfkFhp+8Ls6lrs7dfMZ/2IgMZ6F72vH6jI/vBUy6+dWWLFXgKGOqAlDBzi392rCRUUy6CjuPGBJP2uo4qtLcHP92fScNr1jtFP26IsqFhClK6isDb5KtZJS5p+ZSJ7RPdsymnWKniRxOuGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOv6ZR3e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiCWW3ny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F106C4CEEA;
-	Mon, 23 Jun 2025 21:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOv6ZR3e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B18C4CEEA;
+	Mon, 23 Jun 2025 21:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714816;
-	bh=JAbzIA7wQNmmszRxiVM+VUV7fLYrje2MUTNHxbNgGc8=;
+	s=korg; t=1750714819;
+	bh=/8GWeppzmrf6rOlIRUiAbMjRJnpXocrN0bYwqLkgxsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qiCWW3ny2WV28SW2SAsDnIGP/hpuCO1JbQnhu9Fm595Y6ikNIlJMUqwJNqep3lafX
-	 wngW8EjyH2exIB1ANd6Y3LyBAXR7GHb72zTqD7Uf7whIJgm7kql4ETbjPk+DY6miDb
-	 4AHcYqH4LRMZNHjNcbqYUXW108XKiRpK+0o5LmRQ=
+	b=jOv6ZR3eeyLu3LsECyWDLairpquaYR5UbaMmLpzcrVkDZfH0IgeCyVjnOVvIBLpeD
+	 A7qT+25yp/4mp+BcqjGyz/kOlNlpJEPPP6YWdjkf9/0+va0jI3xVYTji+OxSXVGaq1
+	 Co8f1x7WolKxqrdq6/xdK3HcPlvB/s81ooopfpNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moon Yeounsu <yyyynoom@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 255/355] net: dlink: add synchronization for stats update
-Date: Mon, 23 Jun 2025 15:07:36 +0200
-Message-ID: <20250623130634.421980527@linuxfoundation.org>
+Subject: [PATCH 6.15 440/592] ovl: fix debug print in case of mkdir error
+Date: Mon, 23 Jun 2025 15:06:38 +0200
+Message-ID: <20250623130710.898976083@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,104 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Moon Yeounsu <yyyynoom@gmail.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 12889ce926e9a9baf6b83d809ba316af539b89e2 ]
+[ Upstream commit 527c88d8390d6c0358dea4d71696795c05328925 ]
 
-This patch synchronizes code that accesses from both user-space
-and IRQ contexts. The `get_stats()` function can be called from both
-context.
+We want to print the name in case of mkdir failure and now we will
+get a cryptic (efault) as name.
 
-`dev->stats.tx_errors` and `dev->stats.collisions` are also updated
-in the `tx_errors()` function. Therefore, these fields must also be
-protected by synchronized.
-
-There is no code that accessses `dev->stats.tx_errors` between the
-previous and updated lines, so the updating point can be moved.
-
-Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
-Link: https://patch.msgid.link/20250515075333.48290-1-yyyynoom@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c54b386969a5 ("VFS: Change vfs_mkdir() to return the dentry.")
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://lore.kernel.org/20250612072245.2825938-1-amir73il@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/dlink/dl2k.c | 14 +++++++++++++-
- drivers/net/ethernet/dlink/dl2k.h |  2 ++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ fs/overlayfs/overlayfs.h | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
-index 66e0fbdcef220..b7f992103da3c 100644
---- a/drivers/net/ethernet/dlink/dl2k.c
-+++ b/drivers/net/ethernet/dlink/dl2k.c
-@@ -146,6 +146,8 @@ rio_probe1 (struct pci_dev *pdev, const struct pci_device_id *ent)
- 	np->ioaddr = ioaddr;
- 	np->chip_id = chip_idx;
- 	np->pdev = pdev;
+diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
+index aef942a758cea..c69c34e11c74d 100644
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -246,9 +246,11 @@ static inline struct dentry *ovl_do_mkdir(struct ovl_fs *ofs,
+ 					  struct dentry *dentry,
+ 					  umode_t mode)
+ {
+-	dentry = vfs_mkdir(ovl_upper_mnt_idmap(ofs), dir, dentry, mode);
+-	pr_debug("mkdir(%pd2, 0%o) = %i\n", dentry, mode, PTR_ERR_OR_ZERO(dentry));
+-	return dentry;
++	struct dentry *ret;
 +
-+	spin_lock_init(&np->stats_lock);
- 	spin_lock_init (&np->tx_lock);
- 	spin_lock_init (&np->rx_lock);
- 
-@@ -869,7 +871,6 @@ tx_error (struct net_device *dev, int tx_status)
- 	frame_id = (tx_status & 0xffff0000);
- 	printk (KERN_ERR "%s: Transmit error, TxStatus %4.4x, FrameId %d.\n",
- 		dev->name, tx_status, frame_id);
--	dev->stats.tx_errors++;
- 	/* Ttransmit Underrun */
- 	if (tx_status & 0x10) {
- 		dev->stats.tx_fifo_errors++;
-@@ -906,9 +907,15 @@ tx_error (struct net_device *dev, int tx_status)
- 		rio_set_led_mode(dev);
- 		/* Let TxStartThresh stay default value */
- 	}
-+
-+	spin_lock(&np->stats_lock);
- 	/* Maximum Collisions */
- 	if (tx_status & 0x08)
- 		dev->stats.collisions++;
-+
-+	dev->stats.tx_errors++;
-+	spin_unlock(&np->stats_lock);
-+
- 	/* Restart the Tx */
- 	dw32(MACCtrl, dr16(MACCtrl) | TxEnable);
- }
-@@ -1077,7 +1084,9 @@ get_stats (struct net_device *dev)
- 	int i;
- #endif
- 	unsigned int stat_reg;
-+	unsigned long flags;
- 
-+	spin_lock_irqsave(&np->stats_lock, flags);
- 	/* All statistics registers need to be acknowledged,
- 	   else statistic overflow could cause problems */
- 
-@@ -1127,6 +1136,9 @@ get_stats (struct net_device *dev)
- 	dr16(TCPCheckSumErrors);
- 	dr16(UDPCheckSumErrors);
- 	dr16(IPCheckSumErrors);
-+
-+	spin_unlock_irqrestore(&np->stats_lock, flags);
-+
- 	return &dev->stats;
++	ret = vfs_mkdir(ovl_upper_mnt_idmap(ofs), dir, dentry, mode);
++	pr_debug("mkdir(%pd2, 0%o) = %i\n", dentry, mode, PTR_ERR_OR_ZERO(ret));
++	return ret;
  }
  
-diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
-index 0e33e2eaae960..56aff2f0bdbfa 100644
---- a/drivers/net/ethernet/dlink/dl2k.h
-+++ b/drivers/net/ethernet/dlink/dl2k.h
-@@ -372,6 +372,8 @@ struct netdev_private {
- 	struct pci_dev *pdev;
- 	void __iomem *ioaddr;
- 	void __iomem *eeprom_addr;
-+	// To ensure synchronization when stats are updated.
-+	spinlock_t stats_lock;
- 	spinlock_t tx_lock;
- 	spinlock_t rx_lock;
- 	unsigned int rx_buf_sz;		/* Based on MTU+slack. */
+ static inline int ovl_do_mknod(struct ovl_fs *ofs,
 -- 
 2.39.5
 
