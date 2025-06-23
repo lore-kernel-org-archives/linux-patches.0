@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B73AC2E0;
-	Mon, 23 Jun 2025 21:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A732AC2E0;
+	Mon, 23 Jun 2025 21:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714326; cv=none; b=kqS2Pfx50aunktQI+j1V5kF9GA2bEUdPQDIYcgpz7+yqQKTJ9cwTx2mOzv1w6jfMSXMntcUiDA/LYREVxkhEX8OQ+qa1mHhQx3UE5YLimn6weFQvDPdlwZ7uC/SxHJcOSdXWTUDIzU88UyHe0AewHYfsrOZP1C280Gl2xHYnOos=
+	t=1750714328; cv=none; b=Osw/5mt6Ry+2smWls0WMEUsIXjY35aCgP5TYCxjuKwIbQIZQQA7zG392VpVbJT2qe+rojM6qcwxNvIpgudaaum9IItMwwSfvrO+SVjAy/76dR8qBzg+wSRAzb1utkhwInr1LsBRWjf8se1uz6SY5gy5VVzqCI4suPN+4S/hSsno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714326; c=relaxed/simple;
-	bh=t6nG/YLeJOoYcVxWwMKvEcxfjMiTT3ddKdCZHT4J1h8=;
+	s=arc-20240116; t=1750714328; c=relaxed/simple;
+	bh=2Gm3mJeyeHv3LY9C7ktLgJ/2qOtIt1ZL4XhbACQiWhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VT41sYQebm1Y2m48UqIv6ajBnW+Z7imehAOVdJg/KNYD8wAi56NVdGzLtBz+z7FBm7xZ9QRtbsImYxLtiNVNYjdM1yt4y3zT9C2oUe7m3QzUTQhmn+qMXveurS7twV/FIqJ2u9/7y6VivJFYzX0rRHXQQfHTf2zujSRj+lFsf8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejapOw3s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DGzqTu3o+8qx2DrSlSH+jUlu82SDuc8rp6EQlt96ysVrwZZiYa202uBoILQtm2ZhmwyofeEtNxQI0o3XfUeSxuej+z41iCqm6AKXkzUqCjksVOZdujH8OxMHHegDPFq9tOoNSM6UL0J/bcMIxg9NW92HttVIZwHWnSNZoRpB5UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5TTtq76; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejapOw3s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B24C4CEEA;
-	Mon, 23 Jun 2025 21:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5TTtq76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D03BC4CEEA;
+	Mon, 23 Jun 2025 21:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714326;
-	bh=t6nG/YLeJOoYcVxWwMKvEcxfjMiTT3ddKdCZHT4J1h8=;
+	s=korg; t=1750714328;
+	bh=2Gm3mJeyeHv3LY9C7ktLgJ/2qOtIt1ZL4XhbACQiWhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ejapOw3sNxeK5Sa2RePKbD2dFtxqv2XszPEwRC0zLsYoNC8t2KTq7oBZ9vSwfV2TZ
-	 7j1DTMrmey5qN7vAEaGt94NmMLri0sMuQ7L9E8lbHOvURPZcq31DvnHZqGQGQ6O2Dd
-	 zErqMIjwU5dTDVBY7Zqa3aIIm+5/DH0gK1m8BjQY=
+	b=a5TTtq76daVO8eoL58sBzkxHZo8Vgf/moYLdhrt7VKWMA6rwT1DlIWx7hmSyncgJj
+	 KgYBKMsTieJX4oSNKTr9Th6OpeuPw24C90/884WgbKSBqOFW2LRbbdJQOZ9TmhbUWe
+	 fUP2RMTlZ0QA4ZLmz5WtamiRod1z7p/mEeh2/T/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 130/290] gpiolib: of: Add polarity quirk for s5m8767
-Date: Mon, 23 Jun 2025 15:06:31 +0200
-Message-ID: <20250623130630.833125740@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 5.15 181/411] usb: cdnsp: Fix issue with detecting USB 3.2 speed
+Date: Mon, 23 Jun 2025 15:05:25 +0200
+Message-ID: <20250623130638.240772594@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,50 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-[ Upstream commit 4e310626eb4df52a31a142c1360fead0fcbd3793 ]
+commit 2852788cfbe9ca1ab68509d65804413871f741f9 upstream.
 
-This is prepare patch for switching s5m8767 regulator driver to
-use GPIO descriptor. DTS for exynos5250 spring incorrectly specifies
-"active low" polarity for the DVS and DS line. But per datasheet,
-they are actually active high. So add polarity quirk for it.
+Patch adds support for detecting SuperSpeedPlus Gen1 x2 and
+SuperSpeedPlus Gen2 x2 speed.
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20250327004945.563765-1-peng.fan@oss.nxp.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/PH7PR07MB95387AD98EDCA695FECE52BADD96A@PH7PR07MB9538.namprd07.prod.outlook.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-of.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/cdns3/cdnsp-gadget.c |    3 ++-
+ drivers/usb/cdns3/cdnsp-gadget.h |    4 ++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
-index a0a2a0f75bba4..c1e83b2926ae4 100644
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -203,6 +203,15 @@ static void of_gpio_try_fixup_polarity(const struct device_node *np,
- 		 */
- 		{ "lantiq,pci-xway",	"gpio-reset",	false },
- #endif
-+#if IS_ENABLED(CONFIG_REGULATOR_S5M8767)
-+		/*
-+		 * According to S5M8767, the DVS and DS pin are
-+		 * active-high signals. However, exynos5250-spring.dts use
-+		 * active-low setting.
-+		 */
-+		{ "samsung,s5m8767-pmic", "s5m8767,pmic-buck-dvs-gpios", true },
-+		{ "samsung,s5m8767-pmic", "s5m8767,pmic-buck-ds-gpios", true },
-+#endif
- #if IS_ENABLED(CONFIG_TOUCHSCREEN_TSC2005)
- 		/*
- 		 * DTS for Nokia N900 incorrectly specified "active high"
--- 
-2.39.5
-
+--- a/drivers/usb/cdns3/cdnsp-gadget.c
++++ b/drivers/usb/cdns3/cdnsp-gadget.c
+@@ -28,7 +28,8 @@
+ unsigned int cdnsp_port_speed(unsigned int port_status)
+ {
+ 	/*Detect gadget speed based on PORTSC register*/
+-	if (DEV_SUPERSPEEDPLUS(port_status))
++	if (DEV_SUPERSPEEDPLUS(port_status) ||
++	    DEV_SSP_GEN1x2(port_status) || DEV_SSP_GEN2x2(port_status))
+ 		return USB_SPEED_SUPER_PLUS;
+ 	else if (DEV_SUPERSPEED(port_status))
+ 		return USB_SPEED_SUPER;
+--- a/drivers/usb/cdns3/cdnsp-gadget.h
++++ b/drivers/usb/cdns3/cdnsp-gadget.h
+@@ -285,11 +285,15 @@ struct cdnsp_port_regs {
+ #define XDEV_HS			(0x3 << 10)
+ #define XDEV_SS			(0x4 << 10)
+ #define XDEV_SSP		(0x5 << 10)
++#define XDEV_SSP1x2		(0x6 << 10)
++#define XDEV_SSP2x2		(0x7 << 10)
+ #define DEV_UNDEFSPEED(p)	(((p) & DEV_SPEED_MASK) == (0x0 << 10))
+ #define DEV_FULLSPEED(p)	(((p) & DEV_SPEED_MASK) == XDEV_FS)
+ #define DEV_HIGHSPEED(p)	(((p) & DEV_SPEED_MASK) == XDEV_HS)
+ #define DEV_SUPERSPEED(p)	(((p) & DEV_SPEED_MASK) == XDEV_SS)
+ #define DEV_SUPERSPEEDPLUS(p)	(((p) & DEV_SPEED_MASK) == XDEV_SSP)
++#define DEV_SSP_GEN1x2(p)	(((p) & DEV_SPEED_MASK) == XDEV_SSP1x2)
++#define DEV_SSP_GEN2x2(p)	(((p) & DEV_SPEED_MASK) == XDEV_SSP2x2)
+ #define DEV_SUPERSPEED_ANY(p)	(((p) & DEV_SPEED_MASK) >= XDEV_SS)
+ #define DEV_PORT_SPEED(p)	(((p) >> 10) & 0x0f)
+ /* Port Link State Write Strobe - set this when changing link state */
 
 
