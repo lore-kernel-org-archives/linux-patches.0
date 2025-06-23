@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CE84C6E;
-	Mon, 23 Jun 2025 13:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074E24C6E;
+	Mon, 23 Jun 2025 13:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685636; cv=none; b=b90vjP/gJ5stlSEf9c1EcEq9/E+MBW9P08xIeXDeLh2/kNyLhEJNxCZz385WzrmL1Wephk/xHHb6l8N5DeZlmD6DN1dLRod61CiRLqK0Pf4RhmJEz903K6CGqnbKoVst06BCz36P2V1FL7WUllrUQxzjtIvrIMp7toA6kBlNWvE=
+	t=1750685639; cv=none; b=KuY3Z95Nj0uYfzHwReJPyj2JNeldFc3LHew/sO6TX7dJRx8mupIkkapsYDO7b9sGhuhNe5B3Gp+/IhVAKn/Tm3EzOEWNvG9ueYm+3reDeRdiL1owGtVLVaG2NXRxq2hCbCXY50eLqCaECyJ/0CrQd0dQGT/0LR6AlV4kGYDV1+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685636; c=relaxed/simple;
-	bh=VoWXVAJ9FGaAT/N1hBIjFxTXVmxj9Ssk7U5r7jN42Nc=;
+	s=arc-20240116; t=1750685639; c=relaxed/simple;
+	bh=aKhRvcCin2B7rdpY+S3UGfMp8sbczUXmta9QyxSZWGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAa3FOhklNIuRM3kFh4I7TwiUePKtM0mG4+9F/EZjPlVjLjI2DxDSRq5HPaautKt6VkYWbDz6jcXjMjoBe7o7X6kR1xnapnIGnDsl0zZ8cUuWvnSBRMNekOCw7lYh/cb70xlEoQ1/ABEkdCrNZhdm8MY5arAqREsDPrKG466ajY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJ0pEzaH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N+yZjHqUG/OKb1HFmQTyaUZ7Aet6S8eBOxePh4ZMacPEDPPFQVS9QZQiKMDgQ2DvCSGXRe6UUqVDo0SdJ50qDHFeDF7shIjG/lnyvq7yxsikbqjB12eXAVuYa231zOlc52w/RbGfUq1M9zCYkcZ8upZ/WOEVNMnwgZw99pn5CnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJ9l/1BC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJ0pEzaH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079EAC4CEEA;
-	Mon, 23 Jun 2025 13:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJ9l/1BC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908ADC4CEEA;
+	Mon, 23 Jun 2025 13:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685636;
-	bh=VoWXVAJ9FGaAT/N1hBIjFxTXVmxj9Ssk7U5r7jN42Nc=;
+	s=korg; t=1750685638;
+	bh=aKhRvcCin2B7rdpY+S3UGfMp8sbczUXmta9QyxSZWGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EJ0pEzaHgvlI9GnwiA3H05t/iOzeac8b7oWc04OLzL4khJe2rLCCS3dcnn/JLt/OI
-	 cMNb71hB95if+EpBC70yd/dzq49lyQB+jySj0jve1+GH4a1mEwVjjTwqkK6V+Tyyto
-	 414cn+iirU17nmBMxdEKoe35e1luuB/ctDpPH5uw=
+	b=dJ9l/1BC8FUR41n7qupXRfcZ4mX5davBp18REuWxu1zO0ue2GCYqmKOG16miFAm9A
+	 YMPXf0Q7+Wpmm+z+Pf88qYiMzJKuzNfqlPKCgecaNwnm67rWOK1dF6aiMHf1o+1bEl
+	 8Tv6xEnrOXBiANYClHEAst3KRs5LtigXCRuvm1Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 249/592] drm/panthor: Dont update MMU_INT_MASK in panthor_mmu_irq_handler()
-Date: Mon, 23 Jun 2025 15:03:27 +0200
-Message-ID: <20250623130706.217313052@linuxfoundation.org>
+	Ross Stutterheim <ross.stutterheim@garmin.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 5.4 109/222] ARM: 9447/1: arm/memremap: fix arch_memremap_can_ram_remap()
+Date: Mon, 23 Jun 2025 15:07:24 +0200
+Message-ID: <20250623130615.390266422@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Ross Stutterheim <ross.stutterheim@garmin.com>
 
-[ Upstream commit 6c4a3fa26799785c1873aacabcfd9b2d27e8dc97 ]
+commit 96e0b355883006554a0bee3697da475971d6bba8 upstream.
 
-Interrupts are automatically unmasked in
-panthor_mmu_irq_threaded_handler() when the handler returns. Unmasking
-prematurely might generate spurious interrupts if the IRQ line is
-shared.
+arm/memremap: fix arch_memremap_can_ram_remap()
 
-Changes in v2:
-- New patch
+commit 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure
+presence of linear map") added the definition of
+arch_memremap_can_ram_remap() for arm[64] specific filtering of what pages
+can be used from the linear mapping. memblock_is_map_memory() was called
+with the pfn of the address given to arch_memremap_can_ram_remap();
+however, memblock_is_map_memory() expects to be given an address for arm,
+not a pfn.
 
-Changes in v3:
-- Add R-bs
+This results in calls to memremap() returning a newly mapped area when
+it should return an address in the existing linear mapping.
 
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://lore.kernel.org/r/20250404080933.2912674-6-boris.brezillon@collabora.com
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by removing the address to pfn translation and pass the
+address directly.
+
+Fixes: 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure presence of linear map")
+Signed-off-by: Ross Stutterheim <ross.stutterheim@garmin.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_mmu.c | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm/mm/ioremap.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
-index 7cca97d298ea1..cc838bfc82e00 100644
---- a/drivers/gpu/drm/panthor/panthor_mmu.c
-+++ b/drivers/gpu/drm/panthor/panthor_mmu.c
-@@ -1714,7 +1714,6 @@ static void panthor_mmu_irq_handler(struct panthor_device *ptdev, u32 status)
- 		 * re-enabled.
- 		 */
- 		ptdev->mmu->irq.mask = new_int_mask;
--		gpu_write(ptdev, MMU_INT_MASK, new_int_mask);
- 
- 		if (ptdev->mmu->as.slots[as].vm)
- 			ptdev->mmu->as.slots[as].vm->unhandled_fault = true;
--- 
-2.39.5
-
+--- a/arch/arm/mm/ioremap.c
++++ b/arch/arm/mm/ioremap.c
+@@ -504,7 +504,5 @@ void __init early_ioremap_init(void)
+ bool arch_memremap_can_ram_remap(resource_size_t offset, size_t size,
+ 				 unsigned long flags)
+ {
+-	unsigned long pfn = PHYS_PFN(offset);
+-
+-	return memblock_is_map_memory(pfn);
++	return memblock_is_map_memory(offset);
+ }
 
 
