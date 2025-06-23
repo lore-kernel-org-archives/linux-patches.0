@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFD8136348;
-	Mon, 23 Jun 2025 21:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4E12222C2;
+	Mon, 23 Jun 2025 21:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715431; cv=none; b=h/XEv/fXL4WCCIygnvfUmaqRqIlOZGVraO1IQGROHL1YnuawuURzKNWrTumhS1Mk8wOaC7LvDlgmDTxa45T6klfiGXGGfaf58xYETp1/fn4aytELr+xNDFcbwzp395e4rfFVgWKfWYHYOa/zuTrouQuFm0DIF4QaxY5DVvHlNUQ=
+	t=1750715433; cv=none; b=L5cfIUgT9rahV55LiAojPTXmv1UgAOLGiN+7BQ1wLVmVSkpFiOKJqZL1SUNxdPXFxgCZkZ/lfTJAmhUlmEYyiqpCVRt05FVPCjGa9aCyJ3jUTPaEqdTkRsDVNmTnDHzoP0gOtQDUENjlgE+UxWzBzwkThRP1TORdnme1rljD6BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715431; c=relaxed/simple;
-	bh=QTf218cIuBT2e56hyG6871TI20aRvLIWNCWfOkoYSss=;
+	s=arc-20240116; t=1750715433; c=relaxed/simple;
+	bh=vAFQenjUZJCWXEUuQv6y2Zrf2sjClweuoQEKrBUxXY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZHJujuKtU3uEuC9OjrbJOn+oEcPs9Z2RSJmMKRxsFlqstCxYnWxV3pNgSnEmgnpZpxPrOdupWKf9BXCuyfAurjplZPZtalEBWi4+jAHiF3BSw83qT3L/RMYYjKW2ZiqOMJ+HUHSMnyNlggF4uz/EdED8gKjWr/2g2jC/ZiqRZ+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWOPajfB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=edM3G6NssAYYTDpTvIYGZnWxpkAYDESKS9/BxkeMtZTVFGaCXVSa8ie2hEruUu7ErpO9dRHC4+18sYWTyabx8wsZCUAZUVwGw5PA9lbz16sW+cwmZULxUcFkvUhJN54ahp0eRqfMsCcRQVmFYokFgDppof/HrUATFUsHSAFcdL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCbjw7M7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWOPajfB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EDC0C4CEEA;
-	Mon, 23 Jun 2025 21:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCbjw7M7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A203C4CEEA;
+	Mon, 23 Jun 2025 21:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715430;
-	bh=QTf218cIuBT2e56hyG6871TI20aRvLIWNCWfOkoYSss=;
+	s=korg; t=1750715433;
+	bh=vAFQenjUZJCWXEUuQv6y2Zrf2sjClweuoQEKrBUxXY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MWOPajfBwfJqwKbCTuZVktro3Dil9tdj6hiMVtXhZ9kROX3lVZYiaV925lhQAeoXT
-	 WrnDq+gHIUdqb/PL7kHsSUSj5EpO5wK3H+BPVvxbSkZ8uQhwxrc5glJzWzfzhTGEgI
-	 wM1+N5ZWKlQGbghXeAw5zKMy9LYXok/bZTndpwns=
+	b=XCbjw7M7s3Vq7X7KY/djo4ScG2pGGTI7PHlu9F3MUTjEfN6/gNzkMEEMhn6eG3yhM
+	 QhxPWFJIYZ+95Mk6RNABZA6yjvyjoGXD35gf3LvdtSbJ0ujUOCLCxTsZ8rIpQiPZOS
+	 6pqpWbRX08TKQYCyD97wwmf91gkpWQVj2PMaT0rU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 5.15 252/411] remoteproc: core: Release rproc->clean_table after rproc_attach() fails
-Date: Mon, 23 Jun 2025 15:06:36 +0200
-Message-ID: <20250623130639.991439976@linuxfoundation.org>
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Dhruva Gole <d-gole@ti.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 182/414] pmdomain: core: Reset genpd->states to avoid freeing invalid data
+Date: Mon, 23 Jun 2025 15:05:19 +0200
+Message-ID: <20250623130646.573672453@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,63 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-commit bcd241230fdbc6005230f80a4f8646ff5a84f15b upstream.
+[ Upstream commit 99012014c902cd9ad85fd288d8a107f33a69855e ]
 
-When rproc->state = RPROC_DETACHED is attached to remote processor
-through rproc_attach(), if rproc_handle_resources() returns failure,
-then the clean table should be released, otherwise the following
-memory leak will occur.
+If genpd_alloc_data() allocates data for the default power-states for the
+genpd, let's make sure to also reset the pointer in the error path. This
+makes sure a genpd provider driver doesn't end up trying to free the data
+again, but using an invalid pointer.
 
-unreferenced object 0xffff000086a99800 (size 1024):
-comm "kworker/u12:3", pid 59, jiffies 4294893670 (age 121.140s)
-hex dump (first 32 bytes):
-00 00 00 00 00 80 00 00 00 00 00 00 00 00 10 00 ............
-00 00 00 00 00 00 08 00 00 00 00 00 00 00 00 00 ............
-backtrace:
- [<000000008bbe4ca8>] slab_post_alloc_hook+0x98/0x3fc
- [<000000003b8a272b>] __kmem_cache_alloc_node+0x13c/0x230
- [<000000007a507c51>] __kmalloc_node_track_caller+0x5c/0x260
- [<0000000037818dae>] kmemdup+0x34/0x60
- [<00000000610f7f57>] rproc_boot+0x35c/0x56c
- [<0000000065f8871a>] rproc_add+0x124/0x17c
- [<00000000497416ee>] imx_rproc_probe+0x4ec/0x5d4
- [<000000003bcaa37d>] platform_probe+0x68/0xd8
- [<00000000771577f9>] really_probe+0x110/0x27c
- [<00000000531fea59>] __driver_probe_device+0x78/0x12c
- [<0000000080036a04>] driver_probe_device+0x3c/0x118
- [<000000007e0bddcb>] __device_attach_driver+0xb8/0xf8
- [<000000000cf1fa33>] bus_for_each_drv+0x84/0xe4
- [<000000001a53b53e>] __device_attach+0xfc/0x18c
- [<00000000d1a2a32c>] device_initial_probe+0x14/0x20
- [<00000000d8f8b7ae>] bus_probe_device+0xb0/0xb4
- unreferenced object 0xffff0000864c9690 (size 16):
-
-Fixes: 9dc9507f1880 ("remoteproc: Properly deal with the resource table when detaching")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250430092043.1819308-3-xiaolei.wang@windriver.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Link: https://lore.kernel.org/r/20250402120613.1116711-1-ulf.hansson@linaro.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/pmdomain/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1764,6 +1764,7 @@ clean_up_resources:
- 	rproc_resource_cleanup(rproc);
- 	/* release HW resources if needed */
- 	rproc_unprepare_device(rproc);
-+	kfree(rproc->clean_table);
- disable_iommu:
- 	rproc_disable_iommu(rproc);
- 	return ret;
+diff --git a/drivers/pmdomain/core.c b/drivers/pmdomain/core.c
+index 8b1f894f5e790..2643525a572bb 100644
+--- a/drivers/pmdomain/core.c
++++ b/drivers/pmdomain/core.c
+@@ -2228,8 +2228,10 @@ static int genpd_alloc_data(struct generic_pm_domain *genpd)
+ 	return 0;
+ put:
+ 	put_device(&genpd->dev);
+-	if (genpd->free_states == genpd_free_default_power_state)
++	if (genpd->free_states == genpd_free_default_power_state) {
+ 		kfree(genpd->states);
++		genpd->states = NULL;
++	}
+ free:
+ 	if (genpd_is_cpu_domain(genpd))
+ 		free_cpumask_var(genpd->cpus);
+-- 
+2.39.5
+
 
 
