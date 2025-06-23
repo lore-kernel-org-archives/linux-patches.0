@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D596D23A9BE;
-	Mon, 23 Jun 2025 13:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D5A23A9BE;
+	Mon, 23 Jun 2025 13:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684957; cv=none; b=VQzNY6To8+wCij6ZhZxQ5xO0N+E9KGQPQ6D57+AGmNNJYx+QK6u8rcM9KFJdf+tvZIiaMhG/LwzjOZUrz9XFGk7+s5j0M8mHOiI8Fl72KflI/Ep+WJBBfXkzN6FHpxhDGRnKGwP5lhfCSALGvwoYc6TGRXZ3J8oYSD0mOmxmGmE=
+	t=1750684960; cv=none; b=cvjYHeuWtvv8W+zfJ3eAUy/5QSVl3o16O/Ap9G59Z5kV60cSYq/d3VoEjttAPN/deKxCODMmsI5o/Fcoa3ZsoOZwFKBk9GSs0g+XgylHpfXhVBcIt5xVRa+UJHIkfc9tRUX8lLLEBNJioQTAwwnROVAjZI/JvfUW3qrrJwBZgpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684957; c=relaxed/simple;
-	bh=arV5++ewlBMfbhOGToIvyeyx/QMojJD0/4+XAghDIq0=;
+	s=arc-20240116; t=1750684960; c=relaxed/simple;
+	bh=BwwFDHWdEaPN+CuFuKA4Z6GdLx+lrbltHzQ9iH3Yk34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UxxJ0/WmZgWcqpZXmfp/1flXPLw+lC48nuPtewk+3uZbIOxjWM/G5i3j2eu2yehdL5vXJc0sUCH/YkOyOYJBZzthWbbRuMSkpS93Vmpm9ydI1lnCl0rhmZMyFfMhyrs2GVGf3aANRr2Q7UutXlhpq6etdxWGqzs+7gxRONcpWBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hELL3Lcf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bfUdeHiuffj2rU1fwZ28FAfvvyeyqQxyGgc/3ZgSPfpzAdtw0GeywNPg13NZvnAdIKcIPcg+fQ759+1eCjA3RLf+gJgz6kmN5Y/254s+OC2sAcoCNOqT+UbIhoptfP7tWjv7vw4cjvQGSnTwt0meVVDKKRdt6ZKnHQKj7fnznHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULhsGxjj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hELL3Lcf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD56C4CEEA;
-	Mon, 23 Jun 2025 13:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULhsGxjj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB7EC4CEEA;
+	Mon, 23 Jun 2025 13:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684957;
-	bh=arV5++ewlBMfbhOGToIvyeyx/QMojJD0/4+XAghDIq0=;
+	s=korg; t=1750684960;
+	bh=BwwFDHWdEaPN+CuFuKA4Z6GdLx+lrbltHzQ9iH3Yk34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hELL3LcfOBIT+ax74PRS/beDAObYJAsGaDJvdGvY/HFE9/s9oYXyBvWpQJZsXPdyJ
-	 pMIcT3bxoWkT87ugTCcy2GzTP7Be+rVDi7EmaJ1xm7gSA4+1VMxQrkkPI+E7XoLOQT
-	 lH1KBQoNYGH0T/1/4bg2+XTABpzP5lOw9+zT0Fss=
+	b=ULhsGxjjD70J1yYmBbCHj/g+NiFtnvoKd9WQWLK3Yzko67sa7wYbxrS4sOqejok95
+	 PCK8yikh6nK/b/RIrLx2s/CZqlpLjt1ea126VXsczU1UYNT+28YKr9oOPqtiRDv9S3
+	 ZMhMoHhTWln2uxTEHn+ggU/x6stchGd5BfklQ4ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 051/222] soc: aspeed: Add NULL check in aspeed_lpc_enable_snoop()
-Date: Mon, 23 Jun 2025 15:06:26 +0200
-Message-ID: <20250623130613.626717085@linuxfoundation.org>
+	Christian Mazakas <christian.mazakas@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.15 195/592] io_uring/net: only consider msg_inq if larger than 1
+Date: Mon, 23 Jun 2025 15:02:33 +0200
+Message-ID: <20250623130704.928707695@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,77 +46,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit f1706e0e1a74b095cbc60375b9b1e6205f5f4c98 ]
+commit 2c7f023219966777be0687e15b57689894304cd3 upstream.
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-aspeed_lpc_enable_snoop() does not check for this case, which results in a
-NULL pointer dereference.
+Currently retry and general validity of msg_inq is gated on it being
+larger than zero, but it's entirely possible for this to be slightly
+inaccurate. In particular, if FIN is received, it'll return 1.
 
-Add NULL check after devm_kasprintf() to prevent this issue.
+Just use larger than 1 as the check. This covers both the FIN case, and
+at the same time, it doesn't make much sense to retry a recv immediately
+if there's even just a single 1 byte of valid data in the socket.
 
-Fixes: 3772e5da4454 ("drivers/misc: Aspeed LPC snoop output using misc chardev")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Link: https://patch.msgid.link/20250401074647.21300-1-bsdhenrymartin@gmail.com
-[arj: Fix Fixes: tag to use subject from 3772e5da4454]
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Leave the SOCK_NONEMPTY flagging when larger than 0 still, as an app may
+use that for the final receive.
+
+Cc: stable@vger.kernel.org
+Reported-by: Christian Mazakas <christian.mazakas@gmail.com>
+Fixes: 7c71a0af81ba ("io_uring/net: improve recv bundles")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/aspeed/aspeed-lpc-snoop.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ io_uring/net.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-index 8a2a22c40ef53..43e30937fc9da 100644
---- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-@@ -202,11 +202,15 @@ static int aspeed_lpc_enable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
- 	lpc_snoop->chan[channel].miscdev.minor = MISC_DYNAMIC_MINOR;
- 	lpc_snoop->chan[channel].miscdev.name =
- 		devm_kasprintf(dev, GFP_KERNEL, "%s%d", DEVICE_NAME, channel);
-+	if (!lpc_snoop->chan[channel].miscdev.name) {
-+		rc = -ENOMEM;
-+		goto err_free_fifo;
-+	}
- 	lpc_snoop->chan[channel].miscdev.fops = &snoop_fops;
- 	lpc_snoop->chan[channel].miscdev.parent = dev;
- 	rc = misc_register(&lpc_snoop->chan[channel].miscdev);
- 	if (rc)
--		return rc;
-+		goto err_free_fifo;
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -840,7 +840,7 @@ static inline bool io_recv_finish(struct
+ 		 * If more is available AND it was a full transfer, retry and
+ 		 * append to this one
+ 		 */
+-		if (!sr->retry && kmsg->msg.msg_inq > 0 && this_ret > 0 &&
++		if (!sr->retry && kmsg->msg.msg_inq > 1 && this_ret > 0 &&
+ 		    !iov_iter_count(&kmsg->msg.msg_iter)) {
+ 			req->cqe.flags = cflags & ~CQE_F_MASK;
+ 			sr->len = kmsg->msg.msg_inq;
+@@ -1077,7 +1077,7 @@ static int io_recv_buf_select(struct io_
+ 			arg.mode |= KBUF_MODE_FREE;
+ 		}
  
- 	/* Enable LPC snoop channel at requested port */
- 	switch (channel) {
-@@ -223,7 +227,8 @@ static int aspeed_lpc_enable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
- 		hicrb_en = HICRB_ENSNP1D;
- 		break;
- 	default:
--		return -EINVAL;
-+		rc = -EINVAL;
-+		goto err_misc_deregister;
- 	}
+-		if (kmsg->msg.msg_inq > 0)
++		if (kmsg->msg.msg_inq > 1)
+ 			arg.max_len = min_not_zero(sr->len, kmsg->msg.msg_inq);
  
- 	regmap_update_bits(lpc_snoop->regmap, HICR5, hicr5_en, hicr5_en);
-@@ -233,6 +238,12 @@ static int aspeed_lpc_enable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
- 		regmap_update_bits(lpc_snoop->regmap, HICRB,
- 				hicrb_en, hicrb_en);
- 
-+	return 0;
-+
-+err_misc_deregister:
-+	misc_deregister(&lpc_snoop->chan[channel].miscdev);
-+err_free_fifo:
-+	kfifo_free(&lpc_snoop->chan[channel].fifo);
- 	return rc;
- }
- 
--- 
-2.39.5
-
+ 		ret = io_buffers_peek(req, &arg);
 
 
