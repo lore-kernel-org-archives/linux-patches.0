@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E29225417;
-	Mon, 23 Jun 2025 22:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20929226888;
+	Mon, 23 Jun 2025 22:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716742; cv=none; b=AWgBLqz9RQ1w5runzdEIv+RzJZx4mQmfXN490CGpEcczEtq4+H9CGA7SCSN0q8HYZsvrchZjgfb2EC9yiC+gJBSge+hKDLQcZsRbj0DUS/5SogoR0CFbh0gZE0e4KXx8B6RcVFeufUxeNLqIQ9jAvDsUlVcS83ncbKDtU33zsmc=
+	t=1750716745; cv=none; b=oWg6Vk5VyBcpPj8T52NLt30ncyv6azYoWLi8hgM9LRDdQL+ZcU8E+wvtzJUjzD0IZETZj6AZ0VahtNl2+qTfL0jpXbKgG6Bksp3jEIyk0ausKaXAMlw0W97cmA5/X7Z0oDrcZ1d4hl0GUv8N8qrU0ufUfdoHcLlo2Yjf/sETav4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716742; c=relaxed/simple;
-	bh=52dUdCstX4jy4hkmPgLN3zzBGC/h+1oT7xQCyaNj8aA=;
+	s=arc-20240116; t=1750716745; c=relaxed/simple;
+	bh=D6m7ggV1cgeXqjaos+fclKsK3T74yq+Q3u2gNyx4DYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iib9MxFD7A39WOUY9VNfxiEpbogbG3n7kDJCh/BtCuWaGy+6UYRRCADIN2uNF6VhXtzad739yfT/33fKWscl/6YjSnQIBbfGuu30oJ2V45BoKeQglvLAGAs1cs6YjZVAtnOpf4eb3bGmjeY0DrBc2nz2dc40tKENpaIelNZFp9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMRVPIOH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uOqvNRaytH0fMKagkY7ABFoZqUSi5qMCoHG8wmN461YKMCwCrpqNKfeeKF9ic/6lmuzHxB8rVSJrmDHhED3eTZoCIiEnsV6UfxVSRvMVjUkh9gWcDJwcme8oazMcBoQnODzgynmXtCyNba8UfYc/5ELvsOg38rxmOJiW7NkgTyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAb4+EBD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMRVPIOH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E865C4CEEA;
-	Mon, 23 Jun 2025 22:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAb4+EBD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6C0C4CEEA;
+	Mon, 23 Jun 2025 22:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716742;
-	bh=52dUdCstX4jy4hkmPgLN3zzBGC/h+1oT7xQCyaNj8aA=;
+	s=korg; t=1750716745;
+	bh=D6m7ggV1cgeXqjaos+fclKsK3T74yq+Q3u2gNyx4DYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMRVPIOHaKDA5xPQJZAV8+vcxU5u+U/H+19n+3qxpbz7DtWiSCBHxHkzWB1IFJgL+
-	 RpX8qI0H2tkWS8YRALDylXJovG2PC+ZZAJ90zxZyYoqSDLx20Q30MLNydi48Rfo5YW
-	 WAgyCyhI4WcSwd2vnfmUW61SUepRBZ5FswJRmnIk=
+	b=kAb4+EBDBQjcxtLVEMnbvRABNJJR91lhahnbYd5+6FrByYX+7Gx3eGimTwEHqiTuI
+	 OQmkiQpdf0AeWjoKuClcA20goHfm7/BVPfvGF2FQVx/GRPQKBtRVQan+189EItiAex
+	 OK3GWv8pg44qGyl91CuVTYCg6F84QiRh6qMS6ry0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atish Patra <atishp@rivosinc.com>,
-	Anup Patel <apatel@ventanamicro.com>,
-	Anup Patel <anup@brainfault.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 286/290] RISC-V: KVM: Fix the size parameter check in SBI SFENCE calls
-Date: Mon, 23 Jun 2025 15:09:07 +0200
-Message-ID: <20250623130635.523432709@linuxfoundation.org>
+	Ross Stutterheim <ross.stutterheim@garmin.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 6.1 325/508] ARM: 9447/1: arm/memremap: fix arch_memremap_can_ram_remap()
+Date: Mon, 23 Jun 2025 15:06:10 +0200
+Message-ID: <20250623130653.323474224@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,56 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Ross Stutterheim <ross.stutterheim@garmin.com>
 
-[ Upstream commit 6aba0cb5bba6141158d5449f2cf53187b7f755f9 ]
+commit 96e0b355883006554a0bee3697da475971d6bba8 upstream.
 
-As-per the SBI specification, an SBI remote fence operation applies
-to the entire address space if either:
-1) start_addr and size are both 0
-2) size is equal to 2^XLEN-1
+arm/memremap: fix arch_memremap_can_ram_remap()
 
->From the above, only #1 is checked by SBI SFENCE calls so fix the
-size parameter check in SBI SFENCE calls to cover #2 as well.
+commit 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure
+presence of linear map") added the definition of
+arch_memremap_can_ram_remap() for arm[64] specific filtering of what pages
+can be used from the linear mapping. memblock_is_map_memory() was called
+with the pfn of the address given to arch_memremap_can_ram_remap();
+however, memblock_is_map_memory() expects to be given an address for arm,
+not a pfn.
 
-Fixes: 13acfec2dbcc ("RISC-V: KVM: Add remote HFENCE functions based on VCPU requests")
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Link: https://lore.kernel.org/r/20250605061458.196003-2-apatel@ventanamicro.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This results in calls to memremap() returning a newly mapped area when
+it should return an address in the existing linear mapping.
+
+Fix this by removing the address to pfn translation and pass the
+address directly.
+
+Fixes: 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure presence of linear map")
+Signed-off-by: Ross Stutterheim <ross.stutterheim@garmin.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kvm/vcpu_sbi_replace.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/mm/ioremap.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kvm/vcpu_sbi_replace.c b/arch/riscv/kvm/vcpu_sbi_replace.c
-index 87ec68ed52d76..960836e0cac74 100644
---- a/arch/riscv/kvm/vcpu_sbi_replace.c
-+++ b/arch/riscv/kvm/vcpu_sbi_replace.c
-@@ -103,7 +103,7 @@ static int kvm_sbi_ext_rfence_handler(struct kvm_vcpu *vcpu, struct kvm_run *run
- 		kvm_riscv_vcpu_pmu_incr_fw(vcpu, SBI_PMU_FW_FENCE_I_SENT);
- 		break;
- 	case SBI_EXT_RFENCE_REMOTE_SFENCE_VMA:
--		if (cp->a2 == 0 && cp->a3 == 0)
-+		if ((cp->a2 == 0 && cp->a3 == 0) || cp->a3 == -1UL)
- 			kvm_riscv_hfence_vvma_all(vcpu->kvm, hbase, hmask);
- 		else
- 			kvm_riscv_hfence_vvma_gva(vcpu->kvm, hbase, hmask,
-@@ -111,7 +111,7 @@ static int kvm_sbi_ext_rfence_handler(struct kvm_vcpu *vcpu, struct kvm_run *run
- 		kvm_riscv_vcpu_pmu_incr_fw(vcpu, SBI_PMU_FW_HFENCE_VVMA_SENT);
- 		break;
- 	case SBI_EXT_RFENCE_REMOTE_SFENCE_VMA_ASID:
--		if (cp->a2 == 0 && cp->a3 == 0)
-+		if ((cp->a2 == 0 && cp->a3 == 0) || cp->a3 == -1UL)
- 			kvm_riscv_hfence_vvma_asid_all(vcpu->kvm,
- 						       hbase, hmask, cp->a4);
- 		else
--- 
-2.39.5
-
+--- a/arch/arm/mm/ioremap.c
++++ b/arch/arm/mm/ioremap.c
+@@ -515,7 +515,5 @@ void __init early_ioremap_init(void)
+ bool arch_memremap_can_ram_remap(resource_size_t offset, size_t size,
+ 				 unsigned long flags)
+ {
+-	unsigned long pfn = PHYS_PFN(offset);
+-
+-	return memblock_is_map_memory(pfn);
++	return memblock_is_map_memory(offset);
+ }
 
 
