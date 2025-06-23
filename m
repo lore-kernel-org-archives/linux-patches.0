@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5162222C2;
-	Mon, 23 Jun 2025 21:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712446136;
+	Mon, 23 Jun 2025 21:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714618; cv=none; b=jppoFMR7cnRobnplX198sJiyxqY5Wa53b/oecXySLNvwzTc3TXjZx19Y3EaDBB8k4y1J2UBU7yTl7/3CClh4Gq194yAlbjHkNItXxRFIoOrklV6MfrAWrC2O8b8cgIaobiRVDVdCBFsXpOZiRMCjT+JVZow8d6hOc0SghTcGiQQ=
+	t=1750714620; cv=none; b=fUa1JUysHxRYpAdV9rZOrP0I4Vg2OqqoOJF3N4AN3pJGkWXpQLZ7IGcRKZvuKgo/tQeGjIBJ2iM9xppYYR5fg6kK8KmXRYVlpdNXGda1TiMntQrmAcJlmI3P6gdGCn3nZCt0ZjEPgVpPuBx2ZHdqHVGjG9GtUxG9WjM7usk4DKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714618; c=relaxed/simple;
-	bh=XariNoynrmYluLPmQQHNWFNZjnNUXCrokIlZJk0oD7A=;
+	s=arc-20240116; t=1750714620; c=relaxed/simple;
+	bh=AI87afpOE3k6NF9EdDO868TCooyUiFBF6/9qnVD27DQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XpWIlzeDWROWqL94afUa8WzUG2tNQj6ABsDDPAJaP8hg4PqNzwoqixdWYB9jjnkOtW03qZeaIzJOZd3QJTEKMcKH2FxYDXF8+b0tR4dgTIE/rDvWI9VaB9UdGQEe+s1TRchKGiYKii9efqQxousfaeTR+j/+b6htQ06xjSNIJlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwYv6u0g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L0DXgMZeuuV9hFOF5EvTe711wqV8UJMSmGVWh4l/XGfhBW7vM6rYTtwCG5W1iwnN/vVKiPQeAtlehFyV9yO9EUsM3HKioPiuAAyhK2FTXVy1bJyQV0kysVs1T1ooa+BIPXySn/cg8/XhyuQEprj0ykHBawJGEtELD6D3KPat6FY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=my3R+AQt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwYv6u0g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F15BC4CEF0;
-	Mon, 23 Jun 2025 21:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="my3R+AQt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09EE4C4CEEA;
+	Mon, 23 Jun 2025 21:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714617;
-	bh=XariNoynrmYluLPmQQHNWFNZjnNUXCrokIlZJk0oD7A=;
+	s=korg; t=1750714620;
+	bh=AI87afpOE3k6NF9EdDO868TCooyUiFBF6/9qnVD27DQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OwYv6u0g/hvXzVWvTb0whRwB6/ogPvQYEQkxXMnsL0M/QALEY5+mJkYZYH4M1/JCk
-	 r0VEe1gSmihe0wPB/Nbq+3icQWAKhKKmRYS+8Bz3oBlMQ7es19rTuaQmRWNPXPU3Bn
-	 UKLh63XRycRASDN1OqmfQOlvvZw8qGrHn3525lc8=
+	b=my3R+AQtBDyLSnVNnIRRHTPrruSoPrd2V6ARQaXynsJGZnzNQN6dmr1zxwuS1Vgp5
+	 DSwQuJiS/7O/rJP7bsIOGQbk3/Y+Ac3vmUbUjvwRowcjIFvXJXN/gE9gXGo2NjRHBz
+	 s24PXqYOwtrxUmU62q9A/px/hWtql0gi9nBiioTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <kang.yang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 148/290] wifi: ath12k: fix macro definition HAL_RX_MSDU_PKT_LENGTH_GET
-Date: Mon, 23 Jun 2025 15:06:49 +0200
-Message-ID: <20250623130631.347831387@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 112/414] parisc: fix building with gcc-15
+Date: Mon, 23 Jun 2025 15:04:09 +0200
+Message-ID: <20250623130644.890402284@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +46,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kang Yang <kang.yang@oss.qualcomm.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a69bbf89d751ba2d6da21d773c4e29c91c5e53c4 ]
+commit 7cbb015e2d3d6f180256cde0c908eab21268e7b9 upstream.
 
-Currently, HAL_RX_MSDU_PKT_LENGTH_GET uses u32_get_bits to obtain the
-MSDU length from the MSDU description.
+The decompressor is built with the default C dialect, which is now gnu23
+on gcc-15, and this clashes with the kernel's bool type definition:
 
-This is not right. Because all halphy descriptions are little endian.
+In file included from include/uapi/linux/posix_types.h:5,
+                 from arch/parisc/boot/compressed/misc.c:7:
+include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
+   11 |         false   = 0,
 
-So use le32_get_bits for HAL_RX_MSDU_PKT_LENGTH_GET.
+Add the -std=gnu11 argument here, as we do for all other architectures.
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250421023444.1778-9-kang.yang@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/hal_desc.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/parisc/boot/compressed/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/hal_desc.h b/drivers/net/wireless/ath/ath12k/hal_desc.h
-index 1bb840c2bef57..5fd9232ad101e 100644
---- a/drivers/net/wireless/ath/ath12k/hal_desc.h
-+++ b/drivers/net/wireless/ath/ath12k/hal_desc.h
-@@ -683,7 +683,7 @@ enum hal_rx_msdu_desc_reo_dest_ind {
- #define RX_MSDU_DESC_INFO0_DECAP_FORMAT		GENMASK(30, 29)
+--- a/arch/parisc/boot/compressed/Makefile
++++ b/arch/parisc/boot/compressed/Makefile
+@@ -18,6 +18,7 @@ KBUILD_CFLAGS += -fno-PIE -mno-space-reg
+ ifndef CONFIG_64BIT
+ KBUILD_CFLAGS += -mfast-indirect-calls
+ endif
++KBUILD_CFLAGS += -std=gnu11
  
- #define HAL_RX_MSDU_PKT_LENGTH_GET(val)		\
--	(u32_get_bits((val), RX_MSDU_DESC_INFO0_MSDU_LENGTH))
-+	(le32_get_bits((val), RX_MSDU_DESC_INFO0_MSDU_LENGTH))
- 
- struct rx_msdu_desc {
- 	__le32 info0;
--- 
-2.39.5
-
+ LDFLAGS_vmlinux := -X -e startup --as-needed -T
+ $(obj)/vmlinux: $(obj)/vmlinux.lds $(addprefix $(obj)/, $(OBJECTS)) $(LIBGCC) FORCE
 
 
