@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E1430E84D;
-	Mon, 23 Jun 2025 13:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880622367B0;
+	Mon, 23 Jun 2025 13:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684924; cv=none; b=HmtSWXKhWr3ER31pZf+fSu88wkiAYoLoFhN21fHwU3NpsICx2FImajBfLuBF/cZMxz4lE4BYR0+YLNHlia8uBJ4KxwRbNWEKM717G7dLncS+42c/65Ve4SRs0bCc0ikR9O2UiQp5HiPYCXg8MpseD1CEn1tqmWdIaOfummN4rEM=
+	t=1750684927; cv=none; b=J+68v+8JxjnJGT3GHQiA0Z09bE5PCWjFCj549z1Xiwnpyj2ZypvGDHcCGk7gWiWC1HsWwUzy9SKLytQJUUEZ4NnETlBdwo0SW8qOkl2yerVa0P82h3kApeY4LFrucJ296R/wuPEsah8klAspfTk9SIdir97FqXkNtTUqVinEv4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684924; c=relaxed/simple;
-	bh=Z41g77yUFbcgHtzjHrv6p8kHyWm3B4W+MeLgvTTyua8=;
+	s=arc-20240116; t=1750684927; c=relaxed/simple;
+	bh=Bwr+bU+p+WwJVRjrN2WAdbC+Y5d4Ty2X77qBBkM8sDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PCAHiDsicJDernK+mIr2ZOubTV7J6gB8PTnkufu4zhUPKmt98FnqdSdMA37vbvx0XvCenY4LLP2OI/TilJRyZc187xfwZRfBdesHwL+rTZyeI7lCuxsq8HjQ9CUc4wPEqljK7bVzzaP4gcljEns7/A2tmRgDh73o0XWhyO+SYnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LV3sL2TX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IK/+s7Owbh7THErZzW3fOYmwt+TCEVHGUb+KbdBdhoyPYDcx/0ienj45IpHwbO1cjBJLO0xgQD54pk/9zvguR6ZYrGiENITwUVuWHRo4e3FkSyz/8WaUzrl0zCl/GF0knUmm8SnRmujxMzrYX/336kXb5WSvN5+f5/LIWW10z2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vot51BdD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LV3sL2TX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E70C4CEEA;
-	Mon, 23 Jun 2025 13:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vot51BdD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89D7C4CEEA;
+	Mon, 23 Jun 2025 13:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684924;
-	bh=Z41g77yUFbcgHtzjHrv6p8kHyWm3B4W+MeLgvTTyua8=;
+	s=korg; t=1750684927;
+	bh=Bwr+bU+p+WwJVRjrN2WAdbC+Y5d4Ty2X77qBBkM8sDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LV3sL2TXTFmV+fqT06wMOB/cKBlK9HHuq3T3F7lT8DwuedUNbUtRyTHTv+UfFBxk9
-	 W1eF4DJFQKeOXC7Ln2y2mdD1AFTKmkti/BkhnVCrqaaKXqJXAh/2ZgpGI8GwWIDYwI
-	 pUndxMR0CM2uvdOwb9RP0U3f2ASA5Vn6MyLjdPZU=
+	b=Vot51BdDymxmPWSTqvn2HqlNtlDRhRbUQkFn9/H6oHFlvjNZA1gfOyVZIlCMEIKBx
+	 VPR+/W6s0/a2bHLOxonbrKbwhxlmI4V0xoOa1Bl3r9mLiuicl+CuT1YDmUC/F2khrd
+	 s6biwbhlRlnb/qJIepJo+2KEbhqiiAa135+Vp4QM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 047/222] bus: fsl-mc: fix double-free on mc_dev
-Date: Mon, 23 Jun 2025 15:06:22 +0200
-Message-ID: <20250623130613.391026979@linuxfoundation.org>
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Subject: [PATCH 6.15 191/592] accel/ivpu: Use firmware names from upstream repo
+Date: Mon, 23 Jun 2025 15:02:29 +0200
+Message-ID: <20250623130704.829403024@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 
-[ Upstream commit d694bf8a9acdbd061596f3e7549bc8cb70750a60 ]
+commit 1c2c0e29f24360b3130c005a3c261cb8c7b363c6 upstream.
 
-The blamed commit tried to simplify how the deallocations are done but,
-in the process, introduced a double-free on the mc_dev variable.
+Use FW names from linux-firmware repo instead of deprecated ones.
+The vpu_37xx.bin style names were never released and were only used for
+internal testing, so it is safe to remove them.
 
-In case the MC device is a DPRC, a new mc_bus is allocated and the
-mc_dev variable is just a reference to one of its fields. In this
-circumstance, on the error path only the mc_bus should be freed.
-
-This commit introduces back the following checkpatch warning which is a
-false-positive.
-
-WARNING: kfree(NULL) is safe and this check is probably not required
-+       if (mc_bus)
-+               kfree(mc_bus);
-
-Fixes: a042fbed0290 ("staging: fsl-mc: simplify couple of deallocations")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20250408105814.2837951-2-ioana.ciornei@nxp.com
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c140244f0cfb ("accel/ivpu: Add initial Panther Lake support")
+Cc: stable@vger.kernel.org # v6.13+
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Link: https://lore.kernel.org/r/20250506092030.280276-1-jacek.lawrynowicz@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/fsl-mc/fsl-mc-bus.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/accel/ivpu/ivpu_fw.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
-index 5c9bf2e065520..3a2107d1c5394 100644
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -679,8 +679,10 @@ int fsl_mc_device_add(struct fsl_mc_obj_desc *obj_desc,
+--- a/drivers/accel/ivpu/ivpu_fw.c
++++ b/drivers/accel/ivpu/ivpu_fw.c
+@@ -55,18 +55,18 @@ static struct {
+ 	int gen;
+ 	const char *name;
+ } fw_names[] = {
+-	{ IVPU_HW_IP_37XX, "vpu_37xx.bin" },
++	{ IVPU_HW_IP_37XX, "intel/vpu/vpu_37xx_v1.bin" },
+ 	{ IVPU_HW_IP_37XX, "intel/vpu/vpu_37xx_v0.0.bin" },
+-	{ IVPU_HW_IP_40XX, "vpu_40xx.bin" },
++	{ IVPU_HW_IP_40XX, "intel/vpu/vpu_40xx_v1.bin" },
+ 	{ IVPU_HW_IP_40XX, "intel/vpu/vpu_40xx_v0.0.bin" },
+-	{ IVPU_HW_IP_50XX, "vpu_50xx.bin" },
++	{ IVPU_HW_IP_50XX, "intel/vpu/vpu_50xx_v1.bin" },
+ 	{ IVPU_HW_IP_50XX, "intel/vpu/vpu_50xx_v0.0.bin" },
+ };
  
- error_cleanup_dev:
- 	kfree(mc_dev->regions);
--	kfree(mc_bus);
--	kfree(mc_dev);
-+	if (mc_bus)
-+		kfree(mc_bus);
-+	else
-+		kfree(mc_dev);
+ /* Production fw_names from the table above */
+-MODULE_FIRMWARE("intel/vpu/vpu_37xx_v0.0.bin");
+-MODULE_FIRMWARE("intel/vpu/vpu_40xx_v0.0.bin");
+-MODULE_FIRMWARE("intel/vpu/vpu_50xx_v0.0.bin");
++MODULE_FIRMWARE("intel/vpu/vpu_37xx_v1.bin");
++MODULE_FIRMWARE("intel/vpu/vpu_40xx_v1.bin");
++MODULE_FIRMWARE("intel/vpu/vpu_50xx_v1.bin");
  
- 	return error;
- }
--- 
-2.39.5
-
+ static int ivpu_fw_request(struct ivpu_device *vdev)
+ {
 
 
