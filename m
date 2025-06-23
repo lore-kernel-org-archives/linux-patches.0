@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869771EEA3C;
-	Mon, 23 Jun 2025 21:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004831EDA0F;
+	Mon, 23 Jun 2025 21:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714140; cv=none; b=RlsXdTbVDykpeAGG95N7fJZFcD0ueO7iYabnrL2nbxN5W/DGxe45HT1mrg47bx67f/8+hPMr0E0gl/ZBY5cW+A0Mt77Oj5SGPe5+EvLo+3T19NF/WbVKW/Ry8I4ZHL2DDg/HuSirifWoVhtko73ouUXOIQ4BJREL3MYjW2WhWRE=
+	t=1750714143; cv=none; b=Lw7yKIJt+VDRcDPM1ab1lAo8my8mp33KeYatFQRYyk5Lw6dMwm1WbovU4Y4IjzC5NONPPFi2gR9ed69Z5B19GWUFMWsqP08MgdEFOCbRjmECJliSxHS9F9qcawJpMaVIkUM/sSsgytrF8/NPRw6CvhLRnT0n3n68VtXIIV78Raw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714140; c=relaxed/simple;
-	bh=xF7hS/LfST8Hs1SLqcDd7sttmSLpb109vNrv8HvW/5k=;
+	s=arc-20240116; t=1750714143; c=relaxed/simple;
+	bh=tVCH850FGDG+orM3fqlfvoeGPw8nDYJEXcskEby89IY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6OnjU83APo/gdwwXLLobi1wAalxpui9fIkB5Qw2tsTMHXAV+ZL1xmHvVVHKwYYLPhlRQY4qlMVgYPSn7xjKzT1CeHDmWsendgFcdulVzhb2i7pa+mHXqBUyX9/KIbzWYgVjALoryisMcmCmiK+Vr3a2Tm/neAGVZdvdxq6UVqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xz8eFaIL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gp+NPZLZdrwbQwfapnUELdiCC/jSu+x5MOvLyqvFYGAmktCo6wtVN6544HWCjSg6jrugPudQqcsZWrU3J04xUTxXZIJkM1D4vEHPlool9fCziDce2yf3YN417MdOl6kXsZl8xHbwUAHMJ0t+gcKsixIMDDPEvFQFNJLBT4sNWng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=unwiIhPF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xz8eFaIL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F49C4CEEA;
-	Mon, 23 Jun 2025 21:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="unwiIhPF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D03C4CEEA;
+	Mon, 23 Jun 2025 21:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714140;
-	bh=xF7hS/LfST8Hs1SLqcDd7sttmSLpb109vNrv8HvW/5k=;
+	s=korg; t=1750714142;
+	bh=tVCH850FGDG+orM3fqlfvoeGPw8nDYJEXcskEby89IY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xz8eFaILfrmymosMCWTK0nC8HR3Q9txNQZluqNcy6m1cnSw852G8jVqZYfytWGSrd
-	 fWUEN9B96T52nVWnl6rExDTrgeGL5hjrQBMrS9vAXvN2zwEeZdw8WDgfp1epEDvd+G
-	 XlcA57gS66uR0aROkUvzWMERxHDe4DEGcUaK61EQ=
+	b=unwiIhPFTndchg3gZNii5KFAvpvUicguoTu+6qP3hFXrnXet72l46qEhn8uJT+OTu
+	 4bbrQjDLxrLZgabZ2hnaKFQ6HD08eNVdnN9rP69T6paT7AgYY6zosjskfbEHoLusWD
+	 lhWTrpC9K+Ny/TGJhTq7pWNqm+kzxKEwLNfsMX6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xianglai Li <lixianglai@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 5.10 208/355] PCI: Add ACS quirk for Loongson PCIe
-Date: Mon, 23 Jun 2025 15:06:49 +0200
-Message-ID: <20250623130632.999958836@linuxfoundation.org>
+	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 139/290] wifi: mt76: mt7996: drop fragments with multicast or broadcast RA
+Date: Mon, 23 Jun 2025 15:06:40 +0200
+Message-ID: <20250623130631.085263973@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,66 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
 
-commit 1f3303aa92e15fa273779acac2d0023609de30f1 upstream.
+[ Upstream commit 80fda1cd7b0a1edd0849dc71403a070d0922118d ]
 
-Loongson PCIe Root Ports don't advertise an ACS capability, but they do not
-allow peer-to-peer transactions between Root Ports. Add an ACS quirk so
-each Root Port can be in a separate IOMMU group.
+IEEE 802.11 fragmentation can only be applied to unicast frames.
+Therefore, drop fragments with multicast or broadcast RA. This patch
+addresses vulnerabilities such as CVE-2020-26145.
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250403040756.720409-1-chenhuacai@loongson.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20250515032952.1653494-4-shayne.chen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c |   23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -4828,6 +4828,18 @@ static int pci_quirk_brcm_acs(struct pci
- 		PCI_ACS_SV | PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_UF);
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 35d9673ec0d8f..8fa16f95e6a7b 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -650,6 +650,14 @@ mt7996_mac_fill_rx(struct mt7996_dev *dev, struct sk_buff *skb)
+ 		status->last_amsdu = amsdu_info == MT_RXD4_LAST_AMSDU_FRAME;
+ 	}
  
-+static int pci_quirk_loongson_acs(struct pci_dev *dev, u16 acs_flags)
-+{
-+	/*
-+	 * Loongson PCIe Root Ports don't advertise an ACS capability, but
-+	 * they do not allow peer-to-peer transactions between Root Ports.
-+	 * Allow each Root Port to be in a separate IOMMU group by masking
-+	 * SV/RR/CR/UF bits.
++	/* IEEE 802.11 fragmentation can only be applied to unicast frames.
++	 * Hence, drop fragments with multicast/broadcast RA.
++	 * This check fixes vulnerabilities, like CVE-2020-26145.
 +	 */
-+	return pci_acs_ctrl_enabled(acs_flags,
-+		PCI_ACS_SV | PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_UF);
-+}
++	if ((ieee80211_has_morefrags(fc) || seq_ctrl & IEEE80211_SCTL_FRAG) &&
++	    FIELD_GET(MT_RXD3_NORMAL_ADDR_TYPE, rxd3) != MT_RXD3_NORMAL_U2M)
++		return -EINVAL;
 +
- /*
-  * Wangxun 40G/25G/10G/1G NICs have no ACS capability, but on
-  * multi-function devices, the hardware isolates the functions by
-@@ -4961,6 +4973,17 @@ static const struct pci_dev_acs_enabled
- 	{ PCI_VENDOR_ID_BROADCOM, 0x1762, pci_quirk_mf_endpoint_acs },
- 	{ PCI_VENDOR_ID_BROADCOM, 0x1763, pci_quirk_mf_endpoint_acs },
- 	{ PCI_VENDOR_ID_BROADCOM, 0xD714, pci_quirk_brcm_acs },
-+	/* Loongson PCIe Root Ports */
-+	{ PCI_VENDOR_ID_LOONGSON, 0x3C09, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x3C19, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x3C29, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A09, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A19, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A29, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A39, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A49, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A59, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A69, pci_quirk_loongson_acs },
- 	/* Amazon Annapurna Labs */
- 	{ PCI_VENDOR_ID_AMAZON_ANNAPURNA_LABS, 0x0031, pci_quirk_al_acs },
- 	/* Zhaoxin multi-function devices */
+ 	hdr_gap = (u8 *)rxd - skb->data + 2 * remove_pad;
+ 	if (hdr_trans && ieee80211_has_morefrags(fc)) {
+ 		if (mt7996_reverse_frag0_hdr_trans(skb, hdr_gap))
+-- 
+2.39.5
+
 
 
