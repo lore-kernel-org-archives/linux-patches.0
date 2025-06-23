@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832EE19E7F9;
-	Mon, 23 Jun 2025 22:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A8D19E7F9;
+	Mon, 23 Jun 2025 22:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716960; cv=none; b=ebY6Hw7D+OJneIju4SwuUFnPDYhCAhVRJgHYII78T9FTOOvjziNWpGk2skzH8iGIiW6Zchz9L+Cq9n4cL/8Xhjpmoof7f+r7N/Vdij6980dSlKoZYBOp1cg4XNME8NOHLldaE8HSTRHcAJCulKexlRziao6Uc0fNGChhcGB2tkc=
+	t=1750716962; cv=none; b=kUGLrFyTYmEPq1iizuqQeikuJJ9iwlxfcvifjd6kz+7cD8p6PHMHPV0y3hCXZs+mkU+7DVLF6VotU68fKuBzgaUs3VJTO3VxVokgN2TUIShQzyhyeCG/s6QP5A1wqCPWmVEYMANUeCgRyxUrKCuMC/n/WeNbcuxNDzt6DbWlVY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716960; c=relaxed/simple;
-	bh=dGEeLG0raJhVZVOGOnGiY1eAmJZj1/fbOQZ+tZhivNA=;
+	s=arc-20240116; t=1750716962; c=relaxed/simple;
+	bh=KmttV/bXLL+nB6sEkXZBWZIqJOaLR7X5oBA2eK0jmmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ez6ZTJFzGSmSntpoYiH6tHx9LSby6Rh2o160eU48i0jPq6AiG/KzMEp6YGRDa8QR2TzDB7xgJN7msMp8btOp412qlTWkq4fIN62oEuDTf+kCFS2mTHKfDZwvy7+tEG/POoXmOuP8NOtKwXtW51Da/ZbvPI3Rk2ptk8ekRX4drZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAcYSDkN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AwqHUymLI21vZuspuiiYFPKUmXLV7SkTY6kjTBnMJPQ3hz89fqNsUbCDXFbVFcprQ7gukQ3D/pujLHbYJRK/8jT+2F10YOKZzzlKBlfP/lrkBeWudgPiF2KsLhePc2rFbJ9XVJZ5ezPDgC33ZMf35Ejr6N0s/4l9dK+MqbkDbZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qI7uDSPM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAcYSDkN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20EDC4CEEA;
-	Mon, 23 Jun 2025 22:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qI7uDSPM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B7BC4CEEA;
+	Mon, 23 Jun 2025 22:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716960;
-	bh=dGEeLG0raJhVZVOGOnGiY1eAmJZj1/fbOQZ+tZhivNA=;
+	s=korg; t=1750716962;
+	bh=KmttV/bXLL+nB6sEkXZBWZIqJOaLR7X5oBA2eK0jmmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zAcYSDkN6CSVvHzWcdHIkstuZ16KtRsv/bXTFU8IF4hGcN1GWuF+Dw7cmry+aQhoV
-	 TVWA07JvPSDdZklaprX/UB/ma0IzenqK3O0Aeb/jPJx+D/uYGNHTEKLnrF8YQLvjtZ
-	 llVpri3eOPS7ojx1gYm9lsK4J1ULuJjiqaJSUvtg=
+	b=qI7uDSPMDwErtK2I7tPS0xoFQvbtnaNd6Pmjb9D/lvXXLWCwRJVlxc3Zx74DjCcFK
+	 YQOYhYQNP6fT4nQ8ubLu66cDjXMR9gnp8wlnfXSaoy9enc4ftVlExF/FjNegyYmoNv
+	 FUNnX/X0zInMo1UOSga9h7pmZDgvxHwss7Y4AA+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Francois Romieu <romieu@fr.zoreil.com>
-Subject: [PATCH 5.15 382/411] net: atm: fix /proc/net/atm/lec handling
-Date: Mon, 23 Jun 2025 15:08:46 +0200
-Message-ID: <20250623130643.264009250@linuxfoundation.org>
+	Da Xue <da@libre.computer>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>
+Subject: [PATCH 6.1 349/508] clk: meson-g12a: add missing fclk_div2 to spicc
+Date: Mon, 23 Jun 2025 15:06:34 +0200
+Message-ID: <20250623130653.937300543@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Da Xue <da@libre.computer>
 
-[ Upstream commit d03b79f459c7935cff830d98373474f440bd03ae ]
+commit daf004f87c3520c414992893e2eadd5db5f86a5a upstream.
 
-/proc/net/atm/lec must ensure safety against dev_lec[] changes.
+SPICC is missing fclk_div2, which means fclk_div5 and fclk_div7 indexes
+are wrong on this clock. This causes the spicc module to output sclk at
+2.5x the expected rate when clock index 3 is picked.
 
-It appears it had dev_put() calls without prior dev_hold(),
-leading to imbalance and UAF.
+Adding the missing fclk_div2 resolves this.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Francois Romieu <romieu@fr.zoreil.com> # Minor atm contributor
-Link: https://patch.msgid.link/20250618140844.1686882-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[jbrunet: amended commit description]
+Fixes: a18c8e0b7697 ("clk: meson: g12a: add support for the SPICC SCLK Source clocks")
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Da Xue <da@libre.computer>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20250512142617.2175291-1-da@libre.computer
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/atm/lec.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/clk/meson/g12a.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/atm/lec.c b/net/atm/lec.c
-index 3f67b84c8f1c9..73078306504c0 100644
---- a/net/atm/lec.c
-+++ b/net/atm/lec.c
-@@ -911,7 +911,6 @@ static void *lec_itf_walk(struct lec_state *state, loff_t *l)
- 	v = (dev && netdev_priv(dev)) ?
- 		lec_priv_walk(state, l, netdev_priv(dev)) : NULL;
- 	if (!v && dev) {
--		dev_put(dev);
- 		/* Partial state reset for the next time we get called */
- 		dev = NULL;
- 	}
-@@ -935,6 +934,7 @@ static void *lec_seq_start(struct seq_file *seq, loff_t *pos)
- {
- 	struct lec_state *state = seq->private;
- 
-+	mutex_lock(&lec_mutex);
- 	state->itf = 0;
- 	state->dev = NULL;
- 	state->locked = NULL;
-@@ -952,8 +952,9 @@ static void lec_seq_stop(struct seq_file *seq, void *v)
- 	if (state->dev) {
- 		spin_unlock_irqrestore(&state->locked->lec_arp_lock,
- 				       state->flags);
--		dev_put(state->dev);
-+		state->dev = NULL;
- 	}
-+	mutex_unlock(&lec_mutex);
- }
- 
- static void *lec_seq_next(struct seq_file *seq, void *v, loff_t *pos)
--- 
-2.39.5
-
+--- a/drivers/clk/meson/g12a.c
++++ b/drivers/clk/meson/g12a.c
+@@ -3969,6 +3969,7 @@ static const struct clk_parent_data spic
+ 	{ .hw = &g12a_clk81.hw },
+ 	{ .hw = &g12a_fclk_div4.hw },
+ 	{ .hw = &g12a_fclk_div3.hw },
++	{ .hw = &g12a_fclk_div2.hw },
+ 	{ .hw = &g12a_fclk_div5.hw },
+ 	{ .hw = &g12a_fclk_div7.hw },
+ };
 
 
