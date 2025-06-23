@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132543597E;
-	Mon, 23 Jun 2025 22:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779343597E;
+	Mon, 23 Jun 2025 22:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716422; cv=none; b=L3aFky65Ru4RiW2DIpSqhHHF7JOf/FnHnAGp8KoNvSsYYbYJRCeyD62CFfnhcyGYowFCgL0URXp2e4vkxcMEbqSbNqWqsvt/x63GVW6or7MJGrN8GOCiUz592C8MV1WLCvVTMhkgyIdtVIjQnFKXI4+aa4wf1vCCh7mQvjCE4JM=
+	t=1750716424; cv=none; b=MRmychyBYP4yhW18FO1VMZ98yVaIVCFwH3QpSR37I5pliQZmJ1/7GvG/ujbHHMiG5SWNgpvKEXEHDcJZ9jEKz3kvzbIIzGP0fyQt1jX2EnYHMd6qJ8N7r901nWi3IqM8jzSVwsD+Jt3Tn9vdJxuDAAWHWfcNp+EzvtdaIJ9SO5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716422; c=relaxed/simple;
-	bh=SycDFfXPKHM9cGmAO6QBdra9BCA7CNJSeTD6TVRSRDg=;
+	s=arc-20240116; t=1750716424; c=relaxed/simple;
+	bh=ykX1wcOSssNcYiOcppAlaYOX1FPdOLNmJvIc/OJkioc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+TgbZyI0vOr/r0QieDncFdzzP7tCgRhHLmuNLOkl314p/lRYUhl8QkNVsXdzey8uKgA53gO+zaVL8CAmBBeqZ56PBqJdveCgX+m6TNepA+hZbW4BLdLJFhnjVK/12pjVEouSVzMYKyx6wjcjwfS+uj3tnvXimmNj5afBmh3yyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mk6EKgeT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cePmYC+zBxXWu2uEgN9Lfk5yUAShzMVbM5v8KZZK4IKiyFAmrvoAoIm7xsC+Fi9GxF5S9mHv1s2f4Lg4qsXH6jid/MjwZJoQiMto/Oyv+lSZhr5f5iZ/YX+SSsuDRy/Wkhn1QccFS6kmdO/SlNJMxeDthQ79MSbrSLUr4WoiGsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jiUKttEb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mk6EKgeT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9776AC4CEEA;
-	Mon, 23 Jun 2025 22:07:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jiUKttEb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E193C4CEEA;
+	Mon, 23 Jun 2025 22:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716421;
-	bh=SycDFfXPKHM9cGmAO6QBdra9BCA7CNJSeTD6TVRSRDg=;
+	s=korg; t=1750716424;
+	bh=ykX1wcOSssNcYiOcppAlaYOX1FPdOLNmJvIc/OJkioc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mk6EKgeTm8tJS5PSPczMFlERUzJaK1XOtr5OGvMpPSnNf9mlLxt/ju8+YrdP6t/Oc
-	 tpjDz5GWcz4/Lnh7wLhwX7BQ0FRfRUdUB1bySINhrintxPnDuCXoLK+Q8gkumChgX6
-	 bUN/m/g87az+JJ4sYqh6b+3L3UrnpZqpKZwQivJw=
+	b=jiUKttEbJKnOoCYKYO1Cj49smoHXGTT0KVOoCUOXqe3xk1VuZy4I8eLLI+SK9lBW/
+	 T2UXrCabTqmigXfQHPmJb+7PlzIVe5FGhvKl7562qs8hOMwyrsJimUe65u09Q7QTDU
+	 QZaf66VyJLXGh2r4M867MFKhGzv324Ft3mLxaurI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Joe Damato <jdamato@fastly.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 522/592] pldmfw: Select CRC32 when PLDMFW is selected
-Date: Mon, 23 Jun 2025 15:08:00 +0200
-Message-ID: <20250623130712.852739223@linuxfoundation.org>
+Subject: [PATCH 6.12 250/414] netdevsim: Mark NAPI ID on skb in nsim_rcv
+Date: Mon, 23 Jun 2025 15:06:27 +0200
+Message-ID: <20250623130648.297488095@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Joe Damato <jdamato@fastly.com>
 
-[ Upstream commit 1224b218a4b9203656ecc932152f4c81a97b4fcc ]
+[ Upstream commit f71c549b26a33fd62f1e9c7deeba738bfc73fbfc ]
 
-pldmfw calls crc32 code and depends on it being enabled, else
-there is a link error as follows. So PLDMFW should select CRC32.
+Previously, nsim_rcv was not marking the NAPI ID on the skb, leading to
+applications seeing a napi ID of 0 when using SO_INCOMING_NAPI_ID.
 
-  lib/pldmfw/pldmfw.o: In function `pldmfw_flash_image':
-  pldmfw.c:(.text+0x70f): undefined reference to `crc32_le_base'
+To add to the userland confusion, netlink appears to correctly report
+the NAPI IDs for netdevsim queues but the resulting file descriptor from
+a call to accept() was reporting a NAPI ID of 0.
 
-This problem was introduced by commit b8265621f488 ("Add pldmfw library
-for PLDM firmware update").
-
-It manifests as of commit d69ea414c9b4 ("ice: implement device flash
-update via devlink").
-
-And is more likely to occur as of commit 9ad19171b6d6 ("lib/crc: remove
-unnecessary prompt for CONFIG_CRC32 and drop 'default y'").
-
-Found by chance while exercising builds based on tinyconfig.
-
-Fixes: b8265621f488 ("Add pldmfw library for PLDM firmware update")
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250613-pldmfw-crc32-v1-1-f3fad109eee6@kernel.org
+Signed-off-by: Joe Damato <jdamato@fastly.com>
+Link: https://patch.msgid.link/20250424002746.16891-2-jdamato@fastly.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/netdevsim/netdev.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/lib/Kconfig b/lib/Kconfig
-index 6c1b8f1842678..37db228f70a99 100644
---- a/lib/Kconfig
-+++ b/lib/Kconfig
-@@ -716,6 +716,7 @@ config GENERIC_LIB_DEVMEM_IS_ALLOWED
+diff --git a/drivers/net/netdevsim/netdev.c b/drivers/net/netdevsim/netdev.c
+index 79b898311819d..ee2a7b2f6268d 100644
+--- a/drivers/net/netdevsim/netdev.c
++++ b/drivers/net/netdevsim/netdev.c
+@@ -25,6 +25,7 @@
+ #include <net/pkt_cls.h>
+ #include <net/rtnetlink.h>
+ #include <net/udp_tunnel.h>
++#include <net/busy_poll.h>
  
- config PLDMFW
- 	bool
-+	select CRC32
- 	default n
+ #include "netdevsim.h"
  
- config ASN1_ENCODER
+@@ -341,6 +342,7 @@ static int nsim_rcv(struct nsim_rq *rq, int budget)
+ 			break;
+ 
+ 		skb = skb_dequeue(&rq->skb_queue);
++		skb_mark_napi_id(skb, &rq->napi);
+ 		netif_receive_skb(skb);
+ 	}
+ 
 -- 
 2.39.5
 
