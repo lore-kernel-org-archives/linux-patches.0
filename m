@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD5970838;
-	Mon, 23 Jun 2025 21:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094531F582A;
+	Mon, 23 Jun 2025 21:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712866; cv=none; b=eXW3EV/4lSPhSH2DnsS+/1uKZOP9sObZCOWTKBp/qy8hTCQo1KemPZ4kVWWPaTaD/7c5XDW+br1VHpWFyUNPBCm0XbM72y/IAetQNE+BLsZfJxyLiH5G2wTZqhi/SnWED+u5/VC7dlLCoZAZJTtq5xswttaCKmdFWzq7bT5rUdw=
+	t=1750712869; cv=none; b=dBiITCoZwGHDagzXJOlQ9WIXXyHl9OOiSAXrnJNuEJnLHrMRxk++qSyam04iFumxJ+9q7GdcPGsTFDkzi/r+M/vAFSjgb089oE5OU6rSMsKAAodnQNfPsmLtZFsu1tP386puMc3qWOs4eS4uR5cn1gmKPoTmYhsAdPOmRQY1LPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712866; c=relaxed/simple;
-	bh=/rxYUFcOvPqxRRlW04/Z9nAitDtxEoHuyBDMSFOd/DE=;
+	s=arc-20240116; t=1750712869; c=relaxed/simple;
+	bh=rV+m/MQ9EPTFIzgTWf9oNd1N1djQxNRb7QHeA4T+lQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=npELrbjBHAsQJcjLvfOdaXwF0I8dmlcsWdmga8fUJoiBm0QH5NcuiK5uEuHkAAIqPKSrzs0bw3M0CXEv+gBMqBbaQOi7QbunqWvxt4s1PvWxLNY+IvazVryjQR6Am9z48SyqqLtVW4OAlMa5wZLHb5A6eMdyq9II8ct3HU9uIG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z78g4u6F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qhE0NO6iOB0s/Ppg+SFFXEiEJF4pr63ALrqVnaj9LcmssFN4q8GQ2fcp6AMh6+y5HCl02C1V/4zRxuygyyFhi1IQYTO29MgoOzAPaKD5oEZ19THb5F090JUT0mNsqReubLDqvgahytxudz0d4oHP8sH/gNBwTRJRUCkFTXGBXuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppo+WBEj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z78g4u6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B63C4CEEA;
-	Mon, 23 Jun 2025 21:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppo+WBEj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B86C4CEEA;
+	Mon, 23 Jun 2025 21:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712866;
-	bh=/rxYUFcOvPqxRRlW04/Z9nAitDtxEoHuyBDMSFOd/DE=;
+	s=korg; t=1750712868;
+	bh=rV+m/MQ9EPTFIzgTWf9oNd1N1djQxNRb7QHeA4T+lQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z78g4u6F3DDWGsSug3oeZRtwnkgr3cF7Z9+jhpMBMGWV3cAaziZmK+CEqiFjjeGnS
-	 2D0N3AZPygA4vhDHY7BMWDE+VxzMpqQKguO60RqRX5bHu02AscKoriOv9/9IrjdtIn
-	 4zX+WhlIWCJD8SU6cyFZp+hsMPs6uRfGadgWFi70=
+	b=ppo+WBEj2tJnyCxE0/Qu0i+mJvIrvDlmJDkvFtUoGm7498rcZfD6pwFQ3ZEEYHbrv
+	 Pdc40hLd0gnS9ULgMqwq2QRvwETLv/UZRY906PQMlcEP1ozw4rUI5N5xRFyPb2AX97
+	 KLdFBLkn5FEkJgDEqdo508ae5hVwECUvKAx7UuNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fei Shao <fshao@chromium.org>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 035/290] media: mediatek: vcodec: Correct vsi_core framebuffer size
-Date: Mon, 23 Jun 2025 15:04:56 +0200
-Message-ID: <20250623130628.052308224@linuxfoundation.org>
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 093/411] backlight: pm8941: Add NULL check in wled_configure()
+Date: Mon, 23 Jun 2025 15:03:57 +0200
+Message-ID: <20250623130635.804525727@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +49,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fei Shao <fshao@chromium.org>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-commit f19035b86382f635a0d13d177b601babaf263a12 upstream.
+[ Upstream commit e12d3e1624a02706cdd3628bbf5668827214fa33 ]
 
-The framebuffer size for decoder instances was being incorrectly set -
-inst->vsi_core->fb.y.size was assigned twice consecutively.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+wled_configure() does not check for this case, which results in a NULL
+pointer dereference.
 
-Assign the second picinfo framebuffer size to the C framebuffer instead,
-which appears to be the intended target based on the surrounding code.
+Add NULL check after devm_kasprintf() to prevent this issue.
 
-Fixes: 2674486aac7d ("media: mediatek: vcodec: support stateless hevc decoder")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fei Shao <fshao@chromium.org>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f86b77583d88 ("backlight: pm8941: Convert to using %pOFn instead of device_node.name")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: "Daniel Thompson (RISCstar)" <danielt@kernel.org>
+Link: https://lore.kernel.org/r/20250401091647.22784-1-bsdhenrymartin@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_hevc_req_multi_if.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/backlight/qcom-wled.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_hevc_req_multi_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_hevc_req_multi_if.c
-@@ -821,7 +821,7 @@ static int vdec_hevc_slice_setup_core_bu
- 	inst->vsi_core->fb.y.dma_addr = y_fb_dma;
- 	inst->vsi_core->fb.y.size = ctx->picinfo.fb_sz[0];
- 	inst->vsi_core->fb.c.dma_addr = c_fb_dma;
--	inst->vsi_core->fb.y.size = ctx->picinfo.fb_sz[1];
-+	inst->vsi_core->fb.c.size = ctx->picinfo.fb_sz[1];
+diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+index f12c76d6e61de..21c1fba64ad5d 100644
+--- a/drivers/video/backlight/qcom-wled.c
++++ b/drivers/video/backlight/qcom-wled.c
+@@ -1404,9 +1404,11 @@ static int wled_configure(struct wled *wled)
+ 	wled->ctrl_addr = be32_to_cpu(*prop_addr);
  
- 	inst->vsi_core->dec.vdec_fb_va = (unsigned long)fb;
- 
+ 	rc = of_property_read_string(dev->of_node, "label", &wled->name);
+-	if (rc)
++	if (rc) {
+ 		wled->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFn", dev->of_node);
+-
++		if (!wled->name)
++			return -ENOMEM;
++	}
+ 	switch (wled->version) {
+ 	case 3:
+ 		u32_opts = wled3_opts;
+-- 
+2.39.5
+
 
 
