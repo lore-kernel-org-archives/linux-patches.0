@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B471E22E6;
-	Mon, 23 Jun 2025 21:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCE3223DD0;
+	Mon, 23 Jun 2025 21:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715729; cv=none; b=sBhWF/aw7Liqb3LRqkGZO5+06Le3dF6OeTK1/XpbE/tOgYM7jfQ6E4ZQeh03/EkU8k7A7kVs09DtB4/gK1HU36hb/Sogjnv2k/1rGJMxH96fRXfVaQzPrBhWW2O/+i2ShsRb0FnSWMtQXMZTp4gYdPfcf+KiQJbhbYtM91/ebRg=
+	t=1750715732; cv=none; b=PbclVBsF+LofT98sGgFNA51BWSjdHcVCICbRHpfpQ5rlZq5dFhEIoEPG+5tsw5ihN6cjpTdmzaIkml0WWDNvt7xfSg5mwDO1VgCUY2Afpb6NRTOiey1bnqFO7OF9cvbQP9I4351srLKnX1BAOLWE4aeHDTFU/NJ66NabFih9Otg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715729; c=relaxed/simple;
-	bh=LtwW+5GRnQzfM9SBa/5kAARD5A3BbOWuPrrKOW/NLAY=;
+	s=arc-20240116; t=1750715732; c=relaxed/simple;
+	bh=yE4n12fgpu23GFbEv8Sgg+yc6rdJ8ZTOjTKfnKj0ItA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qz5VJOgrprMlMo1R4sahW8mKvmooAE8BaNtHKvHDWxZbUuPJNuvZPLnfK7Dpp7nmgm535CijjkoIUa+parKPBfcXPX10BYTLpeeD+MDZ5foN2M5nTi3mPPiU6PdHIM/eSaHNKUqDI2cEh9kTeoGOByst7sHcq1Wo/FIAOr0IdOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMlSLdGj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EE6OXXen6miJeAVxmMXxoXtnwsXrija5TfrKvfWrmeaI8QsebSIq8X+BbspQj8SFmj+b0bSPnpocp6el4FaZuIB7NM0v9C6re5ER8mR1TTKzuI4IRTK5R4UoWtnmyLvv2H40OlE7YwG2np8QxEgxgQf9KNxr9OKRdeDNfs4pYts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3CRJDU3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMlSLdGj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA140C4CEED;
-	Mon, 23 Jun 2025 21:55:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3CRJDU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E02C4CEEA;
+	Mon, 23 Jun 2025 21:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715729;
-	bh=LtwW+5GRnQzfM9SBa/5kAARD5A3BbOWuPrrKOW/NLAY=;
+	s=korg; t=1750715731;
+	bh=yE4n12fgpu23GFbEv8Sgg+yc6rdJ8ZTOjTKfnKj0ItA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DMlSLdGjSsfx9vcGTEqs5vesHzB5/XSJtFPgT5+ZqVUoVYqwFStSxEIanPSJtytXM
-	 biPReQmypSRfP86SBaP3M37YKEIgZNFX0XCuopRsoHEa0Sv3c0C/IeyaoYOl2J6uUu
-	 xIRuWu/UirJyc6+fdGuQD6IvvI8Y1SNiGUd4ycvY=
+	b=G3CRJDU3BHGEmUbF3QhuW23EU/ZJBPvFGuWylSh4ot3I3KYeI+mRx+sru0f7p6k6n
+	 ai9I3IpDJJaeNRbsKqjJy5IfIvMo51GCZVY1nuI4thsjR3HJOix2jzGaHVbrTHnYBa
+	 7xZLY4FZRkx9lG0hnUlONsLHAgfVZtxYus5VhGbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerrard Tai <gerrard.tai@starlabs.sg>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 258/508] net_sched: prio: fix a race in prio_tune()
-Date: Mon, 23 Jun 2025 15:05:03 +0200
-Message-ID: <20250623130651.598400832@linuxfoundation.org>
+	WangYuli <wangyuli@uniontech.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 293/355] Input: sparcspkr - avoid unannotated fall-through
+Date: Mon, 23 Jun 2025 15:08:14 +0200
+Message-ID: <20250623130635.584698528@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +46,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit d35acc1be3480505b5931f17e4ea9b7617fea4d3 ]
+commit 8b1d858cbd4e1800e9336404ba7892b5a721230d upstream.
 
-Gerrard Tai reported a race condition in PRIO, whenever SFQ perturb timer
-fires at the wrong time.
+Fix follow warnings with clang-21i (and reformat for clarity):
+  drivers/input/misc/sparcspkr.c:78:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+     78 |                 case SND_TONE: break;
+        |                 ^
+  drivers/input/misc/sparcspkr.c:78:3: note: insert 'break;' to avoid fall-through
+     78 |                 case SND_TONE: break;
+        |                 ^
+        |                 break;
+  drivers/input/misc/sparcspkr.c:113:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+    113 |                 case SND_TONE: break;
+        |                 ^
+  drivers/input/misc/sparcspkr.c:113:3: note: insert 'break;' to avoid fall-through
+    113 |                 case SND_TONE: break;
+        |                 ^
+        |                 break;
+  2 warnings generated.
 
-The race is as follows:
-
-CPU 0                                 CPU 1
-[1]: lock root
-[2]: qdisc_tree_flush_backlog()
-[3]: unlock root
- |
- |                                    [5]: lock root
- |                                    [6]: rehash
- |                                    [7]: qdisc_tree_reduce_backlog()
- |
-[4]: qdisc_put()
-
-This can be abused to underflow a parent's qlen.
-
-Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
-should fix the race, because all packets will be purged from the qdisc
-before releasing the lock.
-
-Fixes: 7b8e0b6e6599 ("net: sched: prio: delay destroying child qdiscs on change")
-Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250611111515.1983366-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Link: https://lore.kernel.org/r/6730E40353C76908+20250415052439.155051-1-wangyuli@uniontech.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_prio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/misc/sparcspkr.c |   22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/sch_prio.c b/net/sched/sch_prio.c
-index fdc5ef52c3ee9..fdd9caa41e80f 100644
---- a/net/sched/sch_prio.c
-+++ b/net/sched/sch_prio.c
-@@ -211,7 +211,7 @@ static int prio_tune(struct Qdisc *sch, struct nlattr *opt,
- 	memcpy(q->prio2band, qopt->priomap, TC_PRIO_MAX+1);
+--- a/drivers/input/misc/sparcspkr.c
++++ b/drivers/input/misc/sparcspkr.c
+@@ -74,9 +74,14 @@ static int bbc_spkr_event(struct input_d
+ 		return -1;
  
- 	for (i = q->bands; i < oldbands; i++)
--		qdisc_tree_flush_backlog(q->queues[i]);
-+		qdisc_purge_queue(q->queues[i]);
+ 	switch (code) {
+-		case SND_BELL: if (value) value = 1000;
+-		case SND_TONE: break;
+-		default: return -1;
++	case SND_BELL:
++		if (value)
++			value = 1000;
++		break;
++	case SND_TONE:
++		break;
++	default:
++		return -1;
+ 	}
  
- 	for (i = oldbands; i < q->bands; i++) {
- 		q->queues[i] = queues[i];
--- 
-2.39.5
-
+ 	if (value > 20 && value < 32767)
+@@ -112,9 +117,14 @@ static int grover_spkr_event(struct inpu
+ 		return -1;
+ 
+ 	switch (code) {
+-		case SND_BELL: if (value) value = 1000;
+-		case SND_TONE: break;
+-		default: return -1;
++	case SND_BELL:
++		if (value)
++			value = 1000;
++		break;
++	case SND_TONE:
++		break;
++	default:
++		return -1;
+ 	}
+ 
+ 	if (value > 20 && value < 32767)
 
 
