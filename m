@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A683A2222B2;
-	Mon, 23 Jun 2025 22:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214392222B2;
+	Mon, 23 Jun 2025 22:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717636; cv=none; b=f0ZEyaG57JHU4zhVJBlrYAtMkBJBOB2anGOPM89r7IQNsu5rmVhFmUZQfgopkXyqYHaD88uzHvXBtoccZZZy0Ln4HVrmVSId0bv1vdCdOGaGrX+VZMNfROC0W8FF+b5X2sScsyQEnIIFEwhBB50/kIec+DA4372PZcjEGjbLRmc=
+	t=1750717639; cv=none; b=DYEfpHBLUt8oKfUzL+sz2QfP9WzVAap+oTgI+8HuCNfDqvFOLJEv4gnrBQvlA2DuAtyYY+n1aDeOdWNrEx8rU5XQlaShP8UE1rNV6l85X3Hh/aLHDdAsYGIcrQPXfGE6cCZKv1bn2EIEgrE0ZaoINeYxdCheBeJfORq6+IydnDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717636; c=relaxed/simple;
-	bh=wowtVx74Pc8+xhTjDlOxzIiua8uWoYhKn8H+9lASWX8=;
+	s=arc-20240116; t=1750717639; c=relaxed/simple;
+	bh=ykPFD3Wj3gAdVcA1X1l/X0AMtr74pmDWbbRDprma2GY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RrkdqwQoRpH4pzXCP/f9EoxLe/76xXUKUO8XOb4kaqQaFbWjvgvWM7AqS7jiOdaQiPPQbhJbzoI6xIUR90A8XGTp03EiMsn6KIfLNq3M8tIDZLtVF1iEW6GWzKCWmDpVev731bzDAuGQo8xUr5UGvR+qmAShkUDLfDAO9YqLvnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGaNc957; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KaoIBbfAP/c8W8wLX3/O0Ow994jBW2/uhZPkZa+PZVnkFf07JW32z61+t6JaH714uHkpVuyXxKV2UdPxp0t7lnm5olKYq8ngC5ecE8rSfKCZUu1GMnJk4LjbQB3kPKNyHacxPCN1rJIXw/upi8jhEUHZkYKHw7itQ1w6/sZssos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5f3sHJh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGaNc957"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350A9C4CEF2;
-	Mon, 23 Jun 2025 22:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5f3sHJh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD58C4CEEA;
+	Mon, 23 Jun 2025 22:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717636;
-	bh=wowtVx74Pc8+xhTjDlOxzIiua8uWoYhKn8H+9lASWX8=;
+	s=korg; t=1750717639;
+	bh=ykPFD3Wj3gAdVcA1X1l/X0AMtr74pmDWbbRDprma2GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dGaNc9571096LOOXYY5ys7U8De7//fP/NOeRL+moNCk8FZtRHraABX6QJB4W9cxIe
-	 x7Wdn72lm6Vztyx0KuQIZ/V23H4odtFqbxvPvrH+iIBrXdwCC+jM/SZoIIsQJ5/C/v
-	 Q+nZUpNRoSMybFX+pDAU9HAo+0WDcBU91AqhvWUM=
+	b=C5f3sHJhckJH77ygR29vhtgsYs9vHTtijqAsOWOHv1CnwskPqufcFUtIaNq5NK1fW
+	 FR7cjJfpB4ON8SXqZCTFNSwitXcPc/zKYf7grVWkLunDSqboJGTabze8KO5EEgn4SU
+	 62TOupSfJ436Y5SmrTOGVTvq/8MTMpNaTY99u09s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Haixia Qu <hxqu@hillstonenet.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 476/508] pldmfw: Select CRC32 when PLDMFW is selected
-Date: Mon, 23 Jun 2025 15:08:41 +0200
-Message-ID: <20250623130656.792802910@linuxfoundation.org>
+Subject: [PATCH 6.1 485/508] tipc: fix null-ptr-deref when acquiring remote ip of ethernet bearer
+Date: Mon, 23 Jun 2025 15:08:50 +0200
+Message-ID: <20250623130656.989031119@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -52,49 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Haixia Qu <hxqu@hillstonenet.com>
 
-[ Upstream commit 1224b218a4b9203656ecc932152f4c81a97b4fcc ]
+[ Upstream commit f82727adcf2992822e12198792af450a76ebd5ef ]
 
-pldmfw calls crc32 code and depends on it being enabled, else
-there is a link error as follows. So PLDMFW should select CRC32.
+The reproduction steps:
+1. create a tun interface
+2. enable l2 bearer
+3. TIPC_NL_UDP_GET_REMOTEIP with media name set to tun
 
-  lib/pldmfw/pldmfw.o: In function `pldmfw_flash_image':
-  pldmfw.c:(.text+0x70f): undefined reference to `crc32_le_base'
+tipc: Started in network mode
+tipc: Node identity 8af312d38a21, cluster identity 4711
+tipc: Enabled bearer <eth:syz_tun>, priority 1
+Oops: general protection fault
+KASAN: null-ptr-deref in range
+CPU: 1 UID: 1000 PID: 559 Comm: poc Not tainted 6.16.0-rc1+ #117 PREEMPT
+Hardware name: QEMU Ubuntu 24.04 PC
+RIP: 0010:tipc_udp_nl_dump_remoteip+0x4a4/0x8f0
 
-This problem was introduced by commit b8265621f488 ("Add pldmfw library
-for PLDM firmware update").
+the ub was in fact a struct dev.
 
-It manifests as of commit d69ea414c9b4 ("ice: implement device flash
-update via devlink").
+when bid != 0 && skip_cnt != 0, bearer_list[bid] may be NULL or
+other media when other thread changes it.
 
-And is more likely to occur as of commit 9ad19171b6d6 ("lib/crc: remove
-unnecessary prompt for CONFIG_CRC32 and drop 'default y'").
+fix this by checking media_id.
 
-Found by chance while exercising builds based on tinyconfig.
-
-Fixes: b8265621f488 ("Add pldmfw library for PLDM firmware update")
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250613-pldmfw-crc32-v1-1-f3fad109eee6@kernel.org
+Fixes: 832629ca5c313 ("tipc: add UDP remoteip dump to netlink API")
+Signed-off-by: Haixia Qu <hxqu@hillstonenet.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250617055624.2680-1-hxqu@hillstonenet.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ net/tipc/udp_media.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/lib/Kconfig b/lib/Kconfig
-index 9bbf8a4b2108e..0610fad65a366 100644
---- a/lib/Kconfig
-+++ b/lib/Kconfig
-@@ -744,6 +744,7 @@ config GENERIC_LIB_DEVMEM_IS_ALLOWED
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index f5bd75d931c1b..e1305d159834b 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -489,7 +489,7 @@ int tipc_udp_nl_dump_remoteip(struct sk_buff *skb, struct netlink_callback *cb)
  
- config PLDMFW
- 	bool
-+	select CRC32
- 	default n
+ 		rtnl_lock();
+ 		b = tipc_bearer_find(net, bname);
+-		if (!b) {
++		if (!b || b->bcast_addr.media_id != TIPC_MEDIA_TYPE_UDP) {
+ 			rtnl_unlock();
+ 			return -EINVAL;
+ 		}
+@@ -500,7 +500,7 @@ int tipc_udp_nl_dump_remoteip(struct sk_buff *skb, struct netlink_callback *cb)
  
- config ASN1_ENCODER
+ 		rtnl_lock();
+ 		b = rtnl_dereference(tn->bearer_list[bid]);
+-		if (!b) {
++		if (!b || b->bcast_addr.media_id != TIPC_MEDIA_TYPE_UDP) {
+ 			rtnl_unlock();
+ 			return -EINVAL;
+ 		}
 -- 
 2.39.5
 
