@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BCC25A337;
-	Mon, 23 Jun 2025 13:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4E02505A9;
+	Mon, 23 Jun 2025 13:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685658; cv=none; b=rX39e7OKcFlI7lF3G7wiICT4dTMCeIMHyUlGww7j5SoLF9vI61SKN7DCidZbBAqDJ8HdbCmJW0ZWvnk8RsuAaOFsT6FpS89DaSrcGQAG2AvZfAkWruHzLWbOBzg3yZqsOFkkZJRrVfbh4IsHGs9ivUJNLv3lh5B+VGP/JYZXvy0=
+	t=1750685659; cv=none; b=XnYjIqQP5Pfr76nEdT4lJnz6rbsf9MLm+w3sdTF3qtcqAal0kbfKJj0cSXE5goN8OquUsXeYQee9DcIjW+h28zaAsbY2R0bTo+J+70JIcRxnxJACmj+hV6mT5118alFzC7CSxVvbvJewMxP5w/S8dcKlZnZvh4yZfsP1VIXTE2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685658; c=relaxed/simple;
-	bh=J9IIJtkGllz5g5vYTfsbRA3GDMTGLGOWizqkW69RGlw=;
+	s=arc-20240116; t=1750685659; c=relaxed/simple;
+	bh=5vyrZdVMDQsy04zO2iLUaZx52pVuFNgZ9NHkJVmKMPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g33Kf9Xoei4qhbYHtfQWAKjK/howHHcM+c421GmsVD+HJtWh1lb26l01yncSZoI2GkAhOfxvbv/OmGB16f8sLO93sHVhmzUqODON2BVUgjEKqQIxm7db4IncWfIExSrHOpBo1dg9BqwLPVIfiGPUTyNIclLxPX64l0CJUarigKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Phq64kDC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fabWzuyW4q36Z+cSeQ6A3M+43ALciwfDtxmtR0lTySIfD7IO+QjWdt6lB1IAJ7Hywz5B2tkRC5BsLnm5sSIXPgWJzm5wbZNBcdyq2ViC7rgZM12kCNGRmZM2GA0/OlJB//v40pjUyWjR6IaAtX6ghVWHmtPBJ8cZPGe/lUuHVyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkIgQ7Ub; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Phq64kDC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73ABDC4CEF0;
-	Mon, 23 Jun 2025 13:34:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkIgQ7Ub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F04B6C4CEEA;
+	Mon, 23 Jun 2025 13:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685656;
-	bh=J9IIJtkGllz5g5vYTfsbRA3GDMTGLGOWizqkW69RGlw=;
+	s=korg; t=1750685659;
+	bh=5vyrZdVMDQsy04zO2iLUaZx52pVuFNgZ9NHkJVmKMPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Phq64kDCfev+Fo0mKnRknwysyowFcx2DQRFIfMzO3ld20z/XgLNOZ3grzpeUixQu/
-	 9lxpxXm6oIe7DcBH6Sfvu0ZaBxR/ePhStO8KI1CPZ5cHx757Il9/lr1vQuIBrSUUHf
-	 ikuGcp6osJKVzTyhWPBblzS55TjTT3Ml3dWCleFc=
+	b=wkIgQ7Ub0j3W+884Wb22wc3o8bNCIgE1eU2pv/5MS1xI4DyK7h7LyoY7amVDu9wNo
+	 a95W+JmfQO5JBb8PapkO8XubYsEMHZobw7Vgin9KXnqvoTUUG29pv/+XbzlOV7Glbb
+	 Ttk5OJW6Pdx8/tps0QUPa0Y8Ey/AfCVWRd+pYnKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/508] crypto: lrw - Only add ecb if it is not already there
-Date: Mon, 23 Jun 2025 15:01:07 +0200
-Message-ID: <20250623130645.796650060@linuxfoundation.org>
+Subject: [PATCH 5.10 066/355] bus: fsl-mc: fix double-free on mc_dev
+Date: Mon, 23 Jun 2025 15:04:27 +0200
+Message-ID: <20250623130628.812089038@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 3d73909bddc2ebb3224a8bc2e5ce00e9df70c15d ]
+[ Upstream commit d694bf8a9acdbd061596f3e7549bc8cb70750a60 ]
 
-Only add ecb to the cipher name if it isn't already ecb.
+The blamed commit tried to simplify how the deallocations are done but,
+in the process, introduced a double-free on the mc_dev variable.
 
-Also use memcmp instead of strncmp since these strings are all
-stored in an array of length CRYPTO_MAX_ALG_NAME.
+In case the MC device is a DPRC, a new mc_bus is allocated and the
+mc_dev variable is just a reference to one of its fields. In this
+circumstance, on the error path only the mc_bus should be freed.
 
-Fixes: 700cb3f5fe75 ("crypto: lrw - Convert to skcipher")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202505151503.d8a6cf10-lkp@intel.com
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+This commit introduces back the following checkpatch warning which is a
+false-positive.
+
+WARNING: kfree(NULL) is safe and this check is probably not required
++       if (mc_bus)
++               kfree(mc_bus);
+
+Fixes: a042fbed0290 ("staging: fsl-mc: simplify couple of deallocations")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20250408105814.2837951-2-ioana.ciornei@nxp.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/lrw.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bus/fsl-mc/fsl-mc-bus.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/lrw.c b/crypto/lrw.c
-index fb8892ed179f5..99d9eb67e1827 100644
---- a/crypto/lrw.c
-+++ b/crypto/lrw.c
-@@ -322,7 +322,7 @@ static int lrw_create(struct crypto_template *tmpl, struct rtattr **tb)
+diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
+index e329cdd7156c9..9c207f1c19fbd 100644
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -800,8 +800,10 @@ int fsl_mc_device_add(struct fsl_mc_obj_desc *obj_desc,
  
- 	err = crypto_grab_skcipher(spawn, skcipher_crypto_instance(inst),
- 				   cipher_name, 0, mask);
--	if (err == -ENOENT) {
-+	if (err == -ENOENT && memcmp(cipher_name, "ecb(", 4)) {
- 		err = -ENAMETOOLONG;
- 		if (snprintf(ecb_name, CRYPTO_MAX_ALG_NAME, "ecb(%s)",
- 			     cipher_name) >= CRYPTO_MAX_ALG_NAME)
-@@ -356,7 +356,7 @@ static int lrw_create(struct crypto_template *tmpl, struct rtattr **tb)
- 	/* Alas we screwed up the naming so we have to mangle the
- 	 * cipher name.
- 	 */
--	if (!strncmp(cipher_name, "ecb(", 4)) {
-+	if (!memcmp(cipher_name, "ecb(", 4)) {
- 		int len;
+ error_cleanup_dev:
+ 	kfree(mc_dev->regions);
+-	kfree(mc_bus);
+-	kfree(mc_dev);
++	if (mc_bus)
++		kfree(mc_bus);
++	else
++		kfree(mc_dev);
  
- 		len = strscpy(ecb_name, cipher_name + 4, sizeof(ecb_name));
+ 	return error;
+ }
 -- 
 2.39.5
 
