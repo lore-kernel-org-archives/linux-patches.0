@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686BB2248B5;
-	Mon, 23 Jun 2025 22:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D97B676;
+	Mon, 23 Jun 2025 22:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716701; cv=none; b=AoVPrBXYgnUPITCiNucNVl63J8KiU6ldDRHIgd4UwQucUeBwksdvIldPy3IABR6tZB/S9/3/uufBvAyFzkCKxi9sIOr4Dcxwbnk5SunZScniqANWYW0L3W0tbRX+AYsOXYImqVON3h92ycR4WB8dLzwc7kehKmuyIVDVGo6tZtY=
+	t=1750716703; cv=none; b=XSpqR272l5cwZbrijfSgUpzzAvqzP+I8HkUAOrDBnB0H93Q5pBNr6Z/iAC2DS19QO7MHjAUV7uJs/9BtlE1zxUmXU0BmzpkytEJZBXhSbLtkUiW68qh4v3/cYTs/inSL+NcWoatMdsKxNIG3f2t/DBS5EByvTQhr7ApFsWznq8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716701; c=relaxed/simple;
-	bh=R5IsFHtTKyBpg5g1Yf640heol9+h3xl1ZiHstqDpSAI=;
+	s=arc-20240116; t=1750716703; c=relaxed/simple;
+	bh=0D7EofhzRGGxv9TWn48E5Tud+4HCjvQrwBBcoLb6/SA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvZT0fr1hvZ+FFUNFnbYZv9KejUgL0N2hR4lsnwsKfXlRNz0gpVnADpA1C2j2uY+UvxqBeVYSTr3WCKpIaSLzVHE/+3PY3G1FSMJgRUb6k6NDs82LkBM1GZd9c6hAXM/mRPddLVFNg/vmNQFwie64HDllHPvNu4kIyDq2XtcZmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dM4JltMa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p1NQIr1mrqzW1MsXjv23/JEC4nVc70XgEu8C0Ko4hJ7GkCdtGFQaUZhA52isYLYecuWn9Z36HAqgbQeHCHGlE9+SixuXOxQ5P3AN+BuRlirI9IkbdwGxbe518LvmqK50wLgQK6Uir33UOVRmoCfx1kILiFNf3Wp2r+GGRUl24Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ekmFG+LE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dM4JltMa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFCCC4CEEA;
-	Mon, 23 Jun 2025 22:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekmFG+LE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D17DC4CEEA;
+	Mon, 23 Jun 2025 22:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716700;
-	bh=R5IsFHtTKyBpg5g1Yf640heol9+h3xl1ZiHstqDpSAI=;
+	s=korg; t=1750716703;
+	bh=0D7EofhzRGGxv9TWn48E5Tud+4HCjvQrwBBcoLb6/SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dM4JltMai+dnUcgc/ywJkzGAArsZqFzUaq8o9F/U2TS1kedasWqsb5H5JsE2DLmkx
-	 t8JmkgqHaa/2ls7OYIXxzLtQNxdGmqF6gfh7lz3Zmb4g3bMwfKEpLgpAhT6d4fuYDo
-	 9Q1TmYS7Wyvrp/4aaYfznUWqYJmzWyT7BAIXH+X4=
+	b=ekmFG+LEwbaTpWKGmKrbv0D7O5d40RtS6wRPi/2FOrU/1kh9hC2mwxHHvpE5O3C9m
+	 gXBIHWb9DZZ9MhC1zV1MOSkV6xJHlKAl5YfayavDr8LBhrLgWQccmoI9GRh/saArpL
+	 EzurVPTzW6TIgaqfpib4WMap7RbYeYbxw+8g0wdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Gengkun <luogengkun@huaweicloud.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 283/290] perf/core: Fix WARN in perf_cgroup_switch()
-Date: Mon, 23 Jun 2025 15:09:04 +0200
-Message-ID: <20250623130635.432438537@linuxfoundation.org>
+	stable@kernel.org,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.1 322/508] media: uvcvideo: Return the number of processed controls
+Date: Mon, 23 Jun 2025 15:06:07 +0200
+Message-ID: <20250623130653.249731216@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,108 +49,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luo Gengkun <luogengkun@huaweicloud.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 3172fb986666dfb71bf483b6d3539e1e587fa197 ]
+commit ba4fafb02ad6a4eb2e00f861893b5db42ba54369 upstream.
 
-There may be concurrency between perf_cgroup_switch and
-perf_cgroup_event_disable. Consider the following scenario: after a new
-perf cgroup event is created on CPU0, the new event may not trigger
-a reprogramming, causing ctx->is_active to be 0. In this case, when CPU1
-disables this perf event, it executes __perf_remove_from_context->
-list _del_event->perf_cgroup_event_disable on CPU1, which causes a race
-with perf_cgroup_switch running on CPU0.
+If we let know our callers that we have not done anything, they will be
+able to optimize their decisions.
 
-The following describes the details of this concurrency scenario:
-
-CPU0						CPU1
-
-perf_cgroup_switch:
-   ...
-   # cpuctx->cgrp is not NULL here
-   if (READ_ONCE(cpuctx->cgrp) == NULL)
-   	return;
-
-						perf_remove_from_context:
-						   ...
-						   raw_spin_lock_irq(&ctx->lock);
-						   ...
-						   # ctx->is_active == 0 because reprogramm is not
-						   # tigger, so CPU1 can do __perf_remove_from_context
-						   # for CPU0
-						   __perf_remove_from_context:
-						         perf_cgroup_event_disable:
-							    ...
-							    if (--ctx->nr_cgroups)
-							    ...
-
-   # this warning will happened because CPU1 changed
-   # ctx.nr_cgroups to 0.
-   WARN_ON_ONCE(cpuctx->ctx.nr_cgroups == 0);
-
-[peterz: use guard instead of goto unlock]
-Fixes: db4a835601b7 ("perf/core: Set cgroup in CPU contexts for new cgroup events")
-Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250604033924.3914647-3-luogengkun@huaweicloud.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Message-ID: <20250224-uvc-data-backup-v2-1-de993ed9823b@chromium.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index e9e785542b9f4..873b17545717c 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -171,6 +171,19 @@ static void perf_ctx_unlock(struct perf_cpu_context *cpuctx,
- 	raw_spin_unlock(&cpuctx->ctx.lock);
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1734,12 +1734,17 @@ int uvc_ctrl_begin(struct uvc_video_chai
+ 	return mutex_lock_interruptible(&chain->ctrl_mutex) ? -ERESTARTSYS : 0;
  }
  
-+typedef struct {
-+	struct perf_cpu_context *cpuctx;
-+	struct perf_event_context *ctx;
-+} class_perf_ctx_lock_t;
-+
-+static inline void class_perf_ctx_lock_destructor(class_perf_ctx_lock_t *_T)
-+{ perf_ctx_unlock(_T->cpuctx, _T->ctx); }
-+
-+static inline class_perf_ctx_lock_t
-+class_perf_ctx_lock_constructor(struct perf_cpu_context *cpuctx,
-+				struct perf_event_context *ctx)
-+{ perf_ctx_lock(cpuctx, ctx); return (class_perf_ctx_lock_t){ cpuctx, ctx }; }
-+
- #define TASK_TOMBSTONE ((void *)-1L)
++/*
++ * Returns the number of uvc controls that have been correctly set, or a
++ * negative number if there has been an error.
++ */
+ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
+ 				  struct uvc_fh *handle,
+ 				  struct uvc_entity *entity,
+ 				  int rollback,
+ 				  struct uvc_control **err_ctrl)
+ {
++	unsigned int processed_ctrls = 0;
+ 	struct uvc_control *ctrl;
+ 	unsigned int i;
+ 	int ret;
+@@ -1774,6 +1779,9 @@ static int uvc_ctrl_commit_entity(struct
+ 		else
+ 			ret = 0;
  
- static bool is_kernel_event(struct perf_event *event)
-@@ -866,7 +879,13 @@ static void perf_cgroup_switch(struct task_struct *task)
- 	if (READ_ONCE(cpuctx->cgrp) == cgrp)
- 		return;
- 
--	perf_ctx_lock(cpuctx, cpuctx->task_ctx);
-+	guard(perf_ctx_lock)(cpuctx, cpuctx->task_ctx);
-+	/*
-+	 * Re-check, could've raced vs perf_remove_from_context().
-+	 */
-+	if (READ_ONCE(cpuctx->cgrp) == NULL)
-+		return;
++		if (!ret)
++			processed_ctrls++;
 +
- 	perf_ctx_disable(&cpuctx->ctx, true);
+ 		if (rollback || ret < 0)
+ 			memcpy(uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
+ 			       uvc_ctrl_data(ctrl, UVC_CTRL_DATA_BACKUP),
+@@ -1792,7 +1800,7 @@ static int uvc_ctrl_commit_entity(struct
+ 			uvc_ctrl_set_handle(handle, ctrl, handle);
+ 	}
  
- 	ctx_sched_out(&cpuctx->ctx, EVENT_ALL|EVENT_CGROUP);
-@@ -884,7 +903,6 @@ static void perf_cgroup_switch(struct task_struct *task)
- 	ctx_sched_in(&cpuctx->ctx, EVENT_ALL|EVENT_CGROUP);
- 
- 	perf_ctx_enable(&cpuctx->ctx, true);
--	perf_ctx_unlock(cpuctx, cpuctx->task_ctx);
+-	return 0;
++	return processed_ctrls;
  }
  
- static int perf_cgroup_ensure_storage(struct perf_event *event,
--- 
-2.39.5
-
+ static int uvc_ctrl_find_ctrl_idx(struct uvc_entity *entity,
+@@ -1839,6 +1847,7 @@ int __uvc_ctrl_commit(struct uvc_fh *han
+ 
+ 	if (!rollback)
+ 		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
++	ret = 0;
+ done:
+ 	mutex_unlock(&chain->ctrl_mutex);
+ 	return ret;
 
 
