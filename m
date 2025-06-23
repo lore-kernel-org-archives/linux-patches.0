@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CA52550D7;
-	Mon, 23 Jun 2025 13:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655612550D7;
+	Mon, 23 Jun 2025 13:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685846; cv=none; b=jX7h3ENzEa2y5cOD7nNEAmyEjwAmZrc9ICnmpJPE5xXYtdDScD62Vz1MEmrFjJHbhtn5K1woOarT197ZznU8CluxUXbRWgXixtMBic2RwSkXwn1HzT2qGPvwK2n4UCErnNZAOSGLYgF39frD+U72KZugO14wrBzoDj4AHmUwmLc=
+	t=1750685849; cv=none; b=eOrE0+8vJgn6aLG+PtafKFAbQmPkkf2SsTXK/UXi6FDxg7VNzZZRS2pr+TRILUo31KGoSZctfyLesfot30RB7Mal3e1zW8RgtRRo31DwPwyy0JL9LHtywxE6PzkXt/9ciwdXMfcxnJ2INne0/RrQPUFsO+kYPw0VNXHclPAKNl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685846; c=relaxed/simple;
-	bh=DJy/NLrHGfd9BJx9i/rDXjsP4r3qMrU+MtNxYC1TmPw=;
+	s=arc-20240116; t=1750685849; c=relaxed/simple;
+	bh=Whim5WcmjeUinMqtTsm9t9A9YrrqJBXDa8LZ7uK6y1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eOgwuz3KhwrrF2JXAbLC2uTjAGnnRod29K9tKAUC/9X4bEekgRrednuwdbdAlpuVTdEbJJZFCnMX7uM4zC97MVr1JSzWsGb5AarNYL0gmjrXITF+XpsMlTaWju0xENZ6h/KupZBJ21rwd7aDBtCU8M/gxkvy0cMceECMPo4yA+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQv6oPV4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mDMR480fnsNJm9fFBVUwdo1lYtUjbq8/5sxf3/yXRwhLLKwFimpfFDWYFFRvrTJChaUQ3aPqLNfpN80tqVUpc6F3nQku7PcCkX6idLVf6IYf/y2NUTVBd1xCkQY+TymcLk3h0EThtO3d3SLqU0Ff03MVC7NUN+OGvDDPVnmF6Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6ABrRM+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQv6oPV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469D1C4CEEA;
-	Mon, 23 Jun 2025 13:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6ABrRM+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF05BC4CEEA;
+	Mon, 23 Jun 2025 13:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685846;
-	bh=DJy/NLrHGfd9BJx9i/rDXjsP4r3qMrU+MtNxYC1TmPw=;
+	s=korg; t=1750685849;
+	bh=Whim5WcmjeUinMqtTsm9t9A9YrrqJBXDa8LZ7uK6y1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MQv6oPV4i8elamJ9qEGVTM61JOgtCh8jH7BfGAj+G4vdsw6exOW498A+/DL7TBlJ7
-	 ez+4rCqXycCX+ENiRbqR/WE85Hf1EYuzi2mjAU9xlijooHeTQXg0Eoaj6oDQm+A+YC
-	 EQgpG4CnpYmraAcpAvTyz6mUu8s3DgNc9xCLNJGg=
+	b=z6ABrRM+bExIhc2NWLaHzwdLGSrnclp2qnpsFT5KD9Z7SGs/Hdet9icRxqykSq5dX
+	 znMWduwS+jmsdAm3d0RMvEVmgaZZpbtpn7tL+acvsRZ0Ux+AbFqUgujZf46CLq7yk6
+	 OZR0u56EmZKA8xyHDFxGEGzP3Wg9JYuzGfYPOzhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 029/290] media: ccs-pll: Start OP pre-PLL multiplier search from correct value
-Date: Mon, 23 Jun 2025 15:04:50 +0200
-Message-ID: <20250623130627.862029716@linuxfoundation.org>
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 010/414] ASoC: meson: meson-card-utils: use of_property_present() for DT parsing
+Date: Mon, 23 Jun 2025 15:02:27 +0200
+Message-ID: <20250623130642.284595471@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-commit 660e613d05e449766784c549faf5927ffaf281f1 upstream.
+commit 171eb6f71e9e3ba6a7410a1d93f3ac213f39dae2 upstream.
 
-The ccs_pll_calculate() function does a search over possible PLL
-configurations to find the "best" one. If the sensor does not support odd
-pre-PLL divisors and the minimum value (with constraints) isn't 1, other
-odd values could be errorneously searched (and selected) for the pre-PLL
-divisor. Fix this.
+Commit c141ecc3cecd ("of: Warn when of_property_read_bool() is used on
+non-boolean properties") added a warning when trying to parse a property
+with a value (boolean properties are defined as: absent = false, present
+without any value = true). This causes a warning from meson-card-utils.
 
-Fixes: 415ddd993978 ("media: ccs-pll: Split limits and PLL configuration into front and back parts")
+meson-card-utils needs to know about the existence of the
+"audio-routing" and/or "audio-widgets" properties in order to properly
+parse them. Switch to of_property_present() in order to silence the
+following warning messages during boot:
+  OF: /sound: Read of boolean property 'audio-routing' with a value.
+  OF: /sound: Read of boolean property 'audio-widgets' with a value.
+
+Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
+Tested-by: Christian Hewitt <christianshewitt@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20250419213448.59647-1-martin.blumenstingl@googlemail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ccs-pll.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/meson/meson-card-utils.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/i2c/ccs-pll.c
-+++ b/drivers/media/i2c/ccs-pll.c
-@@ -817,6 +817,8 @@ int ccs_pll_calculate(struct device *dev
- 			      one_or_more(
- 				      DIV_ROUND_UP(op_lim_fr->max_pll_op_clk_freq_hz,
- 						   pll->ext_clk_freq_hz))));
-+	if (!(pll->flags & CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER))
-+		min_op_pre_pll_clk_div = clk_div_even(min_op_pre_pll_clk_div);
- 	dev_dbg(dev, "pll_op check: min / max op_pre_pll_clk_div: %u / %u\n",
- 		min_op_pre_pll_clk_div, max_op_pre_pll_clk_div);
+--- a/sound/soc/meson/meson-card-utils.c
++++ b/sound/soc/meson/meson-card-utils.c
+@@ -231,7 +231,7 @@ static int meson_card_parse_of_optional(
+ 						    const char *p))
+ {
+ 	/* If property is not provided, don't fail ... */
+-	if (!of_property_read_bool(card->dev->of_node, propname))
++	if (!of_property_present(card->dev->of_node, propname))
+ 		return 0;
  
+ 	/* ... but do fail if it is provided and the parsing fails */
 
 
