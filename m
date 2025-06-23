@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A14136348;
-	Mon, 23 Jun 2025 21:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49991EEA3C;
+	Mon, 23 Jun 2025 21:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715396; cv=none; b=fl4uC2oWUMBk/Hem7Y69PN0FY1ueo5iCCVNFEkqJPvKdzKKVoRrjJxSI60iHq2dajm+rhPeSmcZjvLCd5g+YvRjrBzgELj3VmSSjsDGvz8TPPDZaOsRcVK8/tFgdxieps2UFM7kJrdZk/x/Adw+Z0so2Qr3ZAft0RZJc9/6f8/M=
+	t=1750715400; cv=none; b=eTYtlra/dimW9wlJPFQaXZOCOG29Uj0/tZl61TgZ37xlZ/HzhtmI3z5FASah0yEi5urJfjJCVr2drm6trawO4CwkR/nCDNJKbqnZPx4fhm9oeawJ/vAuR4DYtT75ukTL0oUJEWC7b1VBCXMr9IVZVmJaaYdy2RSMtXJVTsqe3vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715396; c=relaxed/simple;
-	bh=35FtUB0krecciMLb0Kd5lccHSdqaSPj+CNE4khSq5uY=;
+	s=arc-20240116; t=1750715400; c=relaxed/simple;
+	bh=BCQ79AzOfs3Nq9LVzCOVTcGDChuKE4u/1fHC0XEmrZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dos6xuAXUjOmh74n5VYO0OulEX0uy8oFHBI9iTLESgOfnE4L/yXTNPEeRoeCBkGDQzuTyrxfSZXipmHGN8G6tDm806LV/ToKjR/WVye7shII1yvWwQhy+vYTeDouYWEKxgD2lrZZhrDkCv8VUkjylGQ25zjibq7AFm7ySrZhBU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zz3ozGGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gp0KrOq8VU1bLx65Y94errS+lL6lMtamvuUg0kwpOhXKiWT6Z7B9v9x1rN6sAkHWd2iQehmckUcXVLFMyqvWvOkpdlvu9QokljXOp3Lf7Ay0iuHx9CvRCBa5o1XfzOPgenaY4kIn5LIG2D40xcLoci6dHRvtnmYI/elk9Ct2PYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GlHcztL3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zz3ozGGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB76DC4CEEA;
-	Mon, 23 Jun 2025 21:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GlHcztL3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71907C4CEEA;
+	Mon, 23 Jun 2025 21:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715396;
-	bh=35FtUB0krecciMLb0Kd5lccHSdqaSPj+CNE4khSq5uY=;
+	s=korg; t=1750715398;
+	bh=BCQ79AzOfs3Nq9LVzCOVTcGDChuKE4u/1fHC0XEmrZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zz3ozGGMsPUD5p4UBlZR2QNrDc5ZtSZ+hFIiUs8byZfdSobvZD09TRMQ7Yb0JBuD2
-	 USZv5dPbrh7bWCv2qaRWBsT70VhQd1mXJ/m2rXcfWJ+0reBU9gV5dsw3CJbAUaqVhN
-	 BwQqTrJWEV/JG/a9hV6V8yEMN5AALpc3WOGTPz/A=
+	b=GlHcztL3DdT6u6kmvQdxbHk2QFrUEZ6TEwx9Jd33UJ2lhFeZvTeUvCRUlU96xghcz
+	 T82FDmdoxbundoi+QPXpplmAKt7Kf2DqiQNEd7o/QcplcuV6MqCugUZ4mbyz56vNhd
+	 fe9kgdJJohUdgLBdaCMAy+SPB0OZdCR7gFbwQKgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 232/508] wifi: ath11k: dont use static variables in ath11k_debugfs_fw_stats_process()
-Date: Mon, 23 Jun 2025 15:04:37 +0200
-Message-ID: <20250623130650.967656957@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 250/411] regulator: max14577: Add error check for max14577_read_reg()
+Date: Mon, 23 Jun 2025 15:06:34 +0200
+Message-ID: <20250623130639.942140059@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,132 +46,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 2bcf73b2612dda7432f2c2eaad6679bd291791f2 ]
+commit 65271f868cb1dca709ff69e45939bbef8d6d0b70 upstream.
 
-Currently ath11k_debugfs_fw_stats_process() is using static variables to count
-firmware stat events. Taking num_vdev as an example, if for whatever reason (
-say ar->num_started_vdevs is 0 or firmware bug etc.) the following condition
+The function max14577_reg_get_current_limit() calls the function
+max14577_read_reg(), but does not check its return value. A proper
+implementation can be found in max14577_get_online().
 
-	(++num_vdev) == total_vdevs_started
+Add a error check for the max14577_read_reg() and return error code
+if the function fails.
 
-is not met, is_end is not set thus num_vdev won't be cleared. Next time when
-firmware stats is requested again, even if everything is working fine, we will
-fail due to the condition above will never be satisfied.
-
-The same applies to num_bcn as well.
-
-Change to use non-static counters so that we have a chance to clear them each
-time firmware stats is requested. Currently only ath11k_fw_stats_request() and
-ath11k_debugfs_fw_stats_request() are requesting firmware stats, so clear
-counters there.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.37
-
-Fixes: da3a9d3c1576 ("ath11k: refactor debugfs code into debugfs.c")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250220082448.31039-3-quic_bqiang@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b0902bbeb768 ("regulator: max14577: Add regulator driver for Maxim 14577")
+Cc: stable@vger.kernel.org # v3.14
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20250526025627.407-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/core.h    |  2 ++
- drivers/net/wireless/ath/ath11k/debugfs.c | 16 +++++++---------
- drivers/net/wireless/ath/ath11k/mac.c     |  2 ++
- 3 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/regulator/max14577-regulator.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/core.h b/drivers/net/wireless/ath/ath11k/core.h
-index 69feef410b359..a46fe85e592d8 100644
---- a/drivers/net/wireless/ath/ath11k/core.h
-+++ b/drivers/net/wireless/ath/ath11k/core.h
-@@ -538,6 +538,8 @@ struct ath11k_fw_stats {
- 	struct list_head pdevs;
- 	struct list_head vdevs;
- 	struct list_head bcn;
-+	u32 num_vdev_recvd;
-+	u32 num_bcn_recvd;
- };
+--- a/drivers/regulator/max14577-regulator.c
++++ b/drivers/regulator/max14577-regulator.c
+@@ -40,11 +40,14 @@ static int max14577_reg_get_current_limi
+ 	struct max14577 *max14577 = rdev_get_drvdata(rdev);
+ 	const struct maxim_charger_current *limits =
+ 		&maxim_charger_currents[max14577->dev_type];
++	int ret;
  
- struct ath11k_dbg_htt_stats {
-diff --git a/drivers/net/wireless/ath/ath11k/debugfs.c b/drivers/net/wireless/ath/ath11k/debugfs.c
-index a5791155fe065..5a375d6680594 100644
---- a/drivers/net/wireless/ath/ath11k/debugfs.c
-+++ b/drivers/net/wireless/ath/ath11k/debugfs.c
-@@ -98,6 +98,8 @@ static void ath11k_debugfs_fw_stats_reset(struct ath11k *ar)
- 	spin_lock_bh(&ar->data_lock);
- 	ath11k_fw_stats_pdevs_free(&ar->fw_stats.pdevs);
- 	ath11k_fw_stats_vdevs_free(&ar->fw_stats.vdevs);
-+	ar->fw_stats.num_vdev_recvd = 0;
-+	ar->fw_stats.num_bcn_recvd = 0;
- 	spin_unlock_bh(&ar->data_lock);
- }
+ 	if (rdev_get_id(rdev) != MAX14577_CHARGER)
+ 		return -EINVAL;
  
-@@ -106,7 +108,6 @@ void ath11k_debugfs_fw_stats_process(struct ath11k *ar, struct ath11k_fw_stats *
- 	struct ath11k_base *ab = ar->ab;
- 	struct ath11k_pdev *pdev;
- 	bool is_end;
--	static unsigned int num_vdev, num_bcn;
- 	size_t total_vdevs_started = 0;
- 	int i;
+-	max14577_read_reg(rmap, MAX14577_CHG_REG_CHG_CTRL4, &reg_data);
++	ret = max14577_read_reg(rmap, MAX14577_CHG_REG_CHG_CTRL4, &reg_data);
++	if (ret < 0)
++		return ret;
  
-@@ -131,15 +132,14 @@ void ath11k_debugfs_fw_stats_process(struct ath11k *ar, struct ath11k_fw_stats *
- 				total_vdevs_started += ar->num_started_vdevs;
- 		}
- 
--		is_end = ((++num_vdev) == total_vdevs_started);
-+		is_end = ((++ar->fw_stats.num_vdev_recvd) == total_vdevs_started);
- 
- 		list_splice_tail_init(&stats->vdevs,
- 				      &ar->fw_stats.vdevs);
- 
--		if (is_end) {
-+		if (is_end)
- 			complete(&ar->fw_stats_done);
--			num_vdev = 0;
--		}
-+
- 		return;
- 	}
- 
-@@ -151,15 +151,13 @@ void ath11k_debugfs_fw_stats_process(struct ath11k *ar, struct ath11k_fw_stats *
- 		/* Mark end until we reached the count of all started VDEVs
- 		 * within the PDEV
- 		 */
--		is_end = ((++num_bcn) == ar->num_started_vdevs);
-+		is_end = ((++ar->fw_stats.num_bcn_recvd) == ar->num_started_vdevs);
- 
- 		list_splice_tail_init(&stats->bcn,
- 				      &ar->fw_stats.bcn);
- 
--		if (is_end) {
-+		if (is_end)
- 			complete(&ar->fw_stats_done);
--			num_bcn = 0;
--		}
- 	}
- }
- 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index e5b4cc2486833..8be42227dd943 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -8511,6 +8511,8 @@ static int ath11k_fw_stats_request(struct ath11k *ar,
- 
- 	spin_lock_bh(&ar->data_lock);
- 	ath11k_fw_stats_pdevs_free(&ar->fw_stats.pdevs);
-+	ar->fw_stats.num_vdev_recvd = 0;
-+	ar->fw_stats.num_bcn_recvd = 0;
- 	spin_unlock_bh(&ar->data_lock);
- 
- 	reinit_completion(&ar->fw_stats_complete);
--- 
-2.39.5
-
+ 	if ((reg_data & CHGCTRL4_MBCICHWRCL_MASK) == 0)
+ 		return limits->min;
 
 
