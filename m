@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF5C224244;
-	Mon, 23 Jun 2025 21:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882A42248B5;
+	Mon, 23 Jun 2025 21:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713413; cv=none; b=GdWMaHm2IcLtI+fQVzeSeHuYnGQQ+Hd2nmHP+cDbFm9ir57vVyI5+i3KPg/FaO4CDANoLo+Tl/dnhihlt9Xccv1WZTaQwm6jbDte5BAJi1ylSCD+2qNtliML+QPCyX/pCBxu5THGFyMTetxwf6Ff0a9lUvo4kc/Ta5E1ZXYkai4=
+	t=1750713414; cv=none; b=bOT6y0nCrxxK4yFqXhWcpPhhdNjX/OpkmMksaw9gEiJYTm0dEIwKQ64DRP/z8SDrBj4UH+6PZJ4QAV1Dzxz52gCHLaHAAxrdivpNbEukYUMjKjgtqt5IccPoHH+sL/u1SBDjJewRl/p6gXX9hzx9enmXt5hu3BmrSCsNzti0VQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713413; c=relaxed/simple;
-	bh=eplStVWqseqt8kme4nJCi/Oks70DFYSO25Rzg2e9RVQ=;
+	s=arc-20240116; t=1750713414; c=relaxed/simple;
+	bh=o36r7+0CyjjffX+Q68pCVAECiBXLa6sxm7S1atlZqoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pJnZor1YQrpOGGWlzFHwGYawiqR+gWSMsDK4RMFSS/anL2xZg5xXH+VCCEq+oPZwcB38mH3uB7vrd/GGY8xMpj2nxayaeu9RxvIeFMJaVnG6NYSnWTmBlzgaIJo6x7QKuD7YLUTIcFa54BLgQL8evefWxeTBRiyXr19/zzyyTqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJ/A//U2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VROSS2wQJJraQGYoLnX6AUs/RUZ9GR/v2X9Jq+q9+XNDcldz+Wbz6tKrdwYinaEGKMzNgFqjTKF6+CBOHvBbklKZhsovR76teSUV1GgqYhbARRJb6l/F/PsG1nBLH70+v9rMTw+bw25amIVmgnCU780SryzV2rBgbToxtmAnSIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xgsgf0pP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJ/A//U2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE01C4CEED;
-	Mon, 23 Jun 2025 21:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xgsgf0pP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F199C4CEEA;
+	Mon, 23 Jun 2025 21:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713412;
-	bh=eplStVWqseqt8kme4nJCi/Oks70DFYSO25Rzg2e9RVQ=;
+	s=korg; t=1750713414;
+	bh=o36r7+0CyjjffX+Q68pCVAECiBXLa6sxm7S1atlZqoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJ/A//U27UQapylMlBhPUfTF8bVLaHsWv/dE9fKyTgRrqAfkrmHawWKl8WDv2QTMp
-	 EwT+F8igAuEbJw0WfTLXnFWbmK7f3qL+d4hKvZqtvz5nu5C4uHfaJF2Ne2PXyTx4aI
-	 EBda/lD3VlbBG1cXVYIIVPXinppFqlN1HdeOzrYw=
+	b=Xgsgf0pPoIhoW2gZbDAxgmixB9ACXSrA1oMOWtK8P5vH0dLMkhvOSuAHbdY2zU+Ih
+	 Hw+lGNsLMGKZq3zWqEcw/DfchHMmIAvvTaCPbrKwNGSP37dHVbG1/NhRLpDpGxMXcB
+	 E4GvPikyEk4hn/cmMNu6ZJ1+HkIY6lLEJzUtNczo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Tomasz Figa <tfiga@chromium.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 062/414] media: videobuf2: use sgtable-based scatterlist wrappers
-Date: Mon, 23 Jun 2025 15:03:19 +0200
-Message-ID: <20250623130643.623309916@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Wei Wang <weiwan@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 346/592] tcp: fix initial tp->rcvq_space.space value for passive TS enabled flows
+Date: Mon, 23 Jun 2025 15:05:04 +0200
+Message-ID: <20250623130708.678600663@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,49 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit a704a3c503ae1cfd9de8a2e2d16a0c9430e98162 upstream.
+[ Upstream commit cd171461b90a2d2cf230943df60d580174633718 ]
 
-Use common wrappers operating directly on the struct sg_table objects to
-fix incorrect use of scatterlists sync calls. dma_sync_sg_for_*()
-functions have to be called with the number of elements originally passed
-to dma_map_sg_*() function, not the one returned in sgt->nents.
+tcp_rcv_state_process() must tweak tp->advmss for TS enabled flows
+before the call to tcp_init_transfer() / tcp_init_buffer_space().
 
-Fixes: d4db5eb57cab ("media: videobuf2: add begin/end cpu_access callbacks to dma-sg")
-CC: stable@vger.kernel.org
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Acked-by: Tomasz Figa <tfiga@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Otherwise tp->rcvq_space.space is off by 120 bytes
+(TCP_INIT_CWND * TCPOLEN_TSTAMP_ALIGNED).
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Wei Wang <weiwan@google.com>
+Link: https://patch.msgid.link/20250513193919.1089692-7-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/common/videobuf2/videobuf2-dma-sg.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_input.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/media/common/videobuf2/videobuf2-dma-sg.c
-+++ b/drivers/media/common/videobuf2/videobuf2-dma-sg.c
-@@ -469,7 +469,7 @@ vb2_dma_sg_dmabuf_ops_begin_cpu_access(s
- 	struct vb2_dma_sg_buf *buf = dbuf->priv;
- 	struct sg_table *sgt = buf->dma_sgt;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 4dfdde48ab503..ed5f0ffab60dc 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -6867,6 +6867,9 @@ tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
+ 		if (!tp->srtt_us)
+ 			tcp_synack_rtt_meas(sk, req);
  
--	dma_sync_sg_for_cpu(buf->dev, sgt->sgl, sgt->nents, buf->dma_dir);
-+	dma_sync_sgtable_for_cpu(buf->dev, sgt, buf->dma_dir);
- 	return 0;
- }
++		if (tp->rx_opt.tstamp_ok)
++			tp->advmss -= TCPOLEN_TSTAMP_ALIGNED;
++
+ 		if (req) {
+ 			tcp_rcv_synrecv_state_fastopen(sk);
+ 		} else {
+@@ -6892,9 +6895,6 @@ tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
+ 		tp->snd_wnd = ntohs(th->window) << tp->rx_opt.snd_wscale;
+ 		tcp_init_wl(tp, TCP_SKB_CB(skb)->seq);
  
-@@ -480,7 +480,7 @@ vb2_dma_sg_dmabuf_ops_end_cpu_access(str
- 	struct vb2_dma_sg_buf *buf = dbuf->priv;
- 	struct sg_table *sgt = buf->dma_sgt;
+-		if (tp->rx_opt.tstamp_ok)
+-			tp->advmss -= TCPOLEN_TSTAMP_ALIGNED;
+-
+ 		if (!inet_csk(sk)->icsk_ca_ops->cong_control)
+ 			tcp_update_pacing_rate(sk);
  
--	dma_sync_sg_for_device(buf->dev, sgt->sgl, sgt->nents, buf->dma_dir);
-+	dma_sync_sgtable_for_device(buf->dev, sgt, buf->dma_dir);
- 	return 0;
- }
- 
+-- 
+2.39.5
+
 
 
