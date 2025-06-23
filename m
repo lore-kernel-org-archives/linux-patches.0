@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589FB226888;
-	Mon, 23 Jun 2025 22:08:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67442288C6;
+	Mon, 23 Jun 2025 22:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716505; cv=none; b=X5HXkRCeA5/rOts6NufVoeoCQsPRpdh4V6qCF3APd3DM2pAlUdnQ2AsOAYy3eAHwH6axWOGyfbIEynHn2WWX4WNFtVBbr3vJNE0Ouaf+qQ3Gft7UGipLmXj2giUh/jJivWl1GGASr80LkEam9oFWFVkx2NUts17Wva5dYzUfiM4=
+	t=1750716507; cv=none; b=HXRsMeRz4U+wu+dqPSn9nnLJfL/wuYBfcB2DhrofzbQhEe6XnEh5I6h3sXPbYMhjS0ov2Hbs6Ri3qx+6vaF3SJlNWHtBABnv12LkR3ZJxTDSsOGzS4DCFLiG5lPfMnDRad81XQ3bvA5Kro/WqRSCM0sI4vYAPd8PYOV47U3SXKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716505; c=relaxed/simple;
-	bh=E7gdCf5ui8AxWDX87PVCiMab+sy5vaaf8jv3z5rPN8c=;
+	s=arc-20240116; t=1750716507; c=relaxed/simple;
+	bh=Id7/eOIruyOCiRoIMpIpz/pLa+0gAm29hNIc9iK9zOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lno8uEIJnNoDc60scEqKkiqrs6PQDy2AnUNI0sjky4bLjFCUYSVOJ6U6AWDvune9T6DExB8svGHoXO8aLAPRQVFm4UD/H1nBtFaFawgME2Qrw+TF2Jj0Y1V4O6Pm7JVUrSimVLu0JZ5tsTh2AMWW0WyUOJBJcVzHDgLm5xqc0fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/G6CKIl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GSgbinHMtyqUEePGWXteLHGOxowPIQrnV60rNKQdZ3kB9Wi/BboyAwRjhm4Ai0tMty5tcKcjBbZErd9ZEXm0nNdniKavh96Oq01g8Mwwf3v6+RMTBp59b9mFBu0b/OP6JlyOTJjMuP5Z/NEAD2oJKaUywWay9Exw1jdhc3x4XOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iafTT2P+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/G6CKIl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F18C4CEED;
-	Mon, 23 Jun 2025 22:08:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iafTT2P+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66679C4CEEA;
+	Mon, 23 Jun 2025 22:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716505;
-	bh=E7gdCf5ui8AxWDX87PVCiMab+sy5vaaf8jv3z5rPN8c=;
+	s=korg; t=1750716507;
+	bh=Id7/eOIruyOCiRoIMpIpz/pLa+0gAm29hNIc9iK9zOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B/G6CKIlyG2OyplXx7/YVmoCoEvmcxedxT3+6tGt4+JHNrQszovYyb4PXcIhsQZrE
-	 fc95R0iEkj0IMSapbf2chnmOYU3UIEHXbx0ds7IKqVn0lIw2npRHVwkiPXVmcg0Sg1
-	 mvBCASSR0gRjKyVLMs2HuEgNa2fA55Y82+ukN7Qs=
+	b=iafTT2P+hsBlfhOFV4fWgMxUa14j0TTriyXWCoJZ6lQI+YaEPfzMtWyFGyRWClAw0
+	 ywqb6p98m+mQNRazjxmOex5o3SXPKvQljE98WvjopIotKaCOFjyBqAnMNqH3I2vvQG
+	 wWjnSI8aCljiD1ak4OXuVPyrQ33QLmaRmqSX7pGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhong Jiawei <zhongjiawei1@huawei.com>,
-	Chen Ridong <chenridong@huawei.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.1 330/508] cgroup,freezer: fix incomplete freezing when attaching tasks
-Date: Mon, 23 Jun 2025 15:06:15 +0200
-Message-ID: <20250623130653.445925333@linuxfoundation.org>
+	Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 284/414] bus: fsl-mc: increase MC_CMD_COMPLETION_TIMEOUT_MS value
+Date: Mon, 23 Jun 2025 15:07:01 +0200
+Message-ID: <20250623130649.118760562@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,68 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Laurentiu Tudor <laurentiu.tudor@nxp.com>
 
-commit 37fb58a7273726e59f9429c89ade5116083a213d upstream.
+[ Upstream commit 23d060136841c58c2f9ee8c08ad945d1879ead4b ]
 
-An issue was found:
+In case the MC firmware runs in debug mode with extensive prints pushed
+to the console, the current timeout of 500ms is not enough.
+Increase the timeout value so that we don't have any chance of wrongly
+assuming that the firmware is not responding when it's just taking more
+time.
 
-	# cd /sys/fs/cgroup/freezer/
-	# mkdir test
-	# echo FROZEN > test/freezer.state
-	# cat test/freezer.state
-	FROZEN
-	# sleep 1000 &
-	[1] 863
-	# echo 863 > test/cgroup.procs
-	# cat test/freezer.state
-	FREEZING
-
-When tasks are migrated to a frozen cgroup, the freezer fails to
-immediately freeze the tasks, causing the cgroup to remain in the
-"FREEZING".
-
-The freeze_task() function is called before clearing the CGROUP_FROZEN
-flag. This causes the freezing() check to incorrectly return false,
-preventing __freeze_task() from being invoked for the migrated task.
-
-To fix this issue, clear the CGROUP_FROZEN state before calling
-freeze_task().
-
-Fixes: f5d39b020809 ("freezer,sched: Rewrite core freezer logic")
-Cc: stable@vger.kernel.org # v6.1+
-Reported-by: Zhong Jiawei <zhongjiawei1@huawei.com>
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Acked-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20250408105814.2837951-7-ioana.ciornei@nxp.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/legacy_freezer.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/bus/fsl-mc/mc-sys.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/cgroup/legacy_freezer.c
-+++ b/kernel/cgroup/legacy_freezer.c
-@@ -189,13 +189,12 @@ static void freezer_attach(struct cgroup
- 		if (!(freezer->state & CGROUP_FREEZING)) {
- 			__thaw_task(task);
- 		} else {
--			freeze_task(task);
--
- 			/* clear FROZEN and propagate upwards */
- 			while (freezer && (freezer->state & CGROUP_FROZEN)) {
- 				freezer->state &= ~CGROUP_FROZEN;
- 				freezer = parent_freezer(freezer);
- 			}
-+			freeze_task(task);
- 		}
- 	}
+diff --git a/drivers/bus/fsl-mc/mc-sys.c b/drivers/bus/fsl-mc/mc-sys.c
+index f2052cd0a0517..b22c59d57c8f0 100644
+--- a/drivers/bus/fsl-mc/mc-sys.c
++++ b/drivers/bus/fsl-mc/mc-sys.c
+@@ -19,7 +19,7 @@
+ /*
+  * Timeout in milliseconds to wait for the completion of an MC command
+  */
+-#define MC_CMD_COMPLETION_TIMEOUT_MS	500
++#define MC_CMD_COMPLETION_TIMEOUT_MS	15000
  
+ /*
+  * usleep_range() min and max values used to throttle down polling
+-- 
+2.39.5
+
 
 
