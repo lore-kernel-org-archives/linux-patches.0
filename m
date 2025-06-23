@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E9625334B;
-	Mon, 23 Jun 2025 13:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67352472AF;
+	Mon, 23 Jun 2025 13:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685870; cv=none; b=FJ2p7KqsGo7raTgTzo6jG0ZzqVFTgDGcjtDzfmLYRF970YShdJSknFj0I7RHefUe8c0mX5b7iOAb7pozdZlmlWAjnUiANoemzeQe6y8IXuCSpBS1lVjv4RK8xTWSa82+gTHAdjGeRp615hDOKhEz0nHWLYqmRWg53t/e500OZbM=
+	t=1750685872; cv=none; b=Sly3FqDtcQ6I4etaCWV9nPjWDtKGyCkEvZjGVBOSEFYe+VZXh4e/nJSjd7zi1cyHxjdyiClM+muFVBKs6I2szoUzCbV0LsJD6kqs1anGdoNm6xceiv8S7FXybAJEii38YDNiUFNjhVLe86opHF0aR23NbddyAXjtHVXXMeLz21U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685870; c=relaxed/simple;
-	bh=tjRpYGGlByNtz4OPfINBltHbscSTGG/Uzgmy3T7xjbc=;
+	s=arc-20240116; t=1750685872; c=relaxed/simple;
+	bh=BX/Z2C5+KZz71ECZcgeMzUxTdyQ27r0KYBXYhWAOsNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGUZrX/7aAtW3VE1Us88atb3NPAKVcvGzecKAQj6PXhO+0kJl3nH0JO7lvaDY3jLM0V4rP2hojXZZywd76vn01cCniyo6mdgcb+B3a++nu7rehPin7HwlqY1bUO4slgtCP8FnV9UdZcXafeu0StMcCjmLvO9BwQm/Y/GQKRLiYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZB4ZgxY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X8tk20n9DoGWKqUr+e8aubNFzdkG/0H9Cr510f4MBh7zbI97Z/mtAtlGUjY0ln1+A5B/RguTjzJ6hnfOLOp521qS25iYMm72LM7CtR4wZK7+nXi+nfchgv1bcE/mVC3NWIoJIlF/TBphzSbId9GjPYOldzWxgWGoCvbgYMntWjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxZ4PDRA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZB4ZgxY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAF0C4CEEA;
-	Mon, 23 Jun 2025 13:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxZ4PDRA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6D9C4CEEA;
+	Mon, 23 Jun 2025 13:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685870;
-	bh=tjRpYGGlByNtz4OPfINBltHbscSTGG/Uzgmy3T7xjbc=;
+	s=korg; t=1750685872;
+	bh=BX/Z2C5+KZz71ECZcgeMzUxTdyQ27r0KYBXYhWAOsNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZB4ZgxYeWuaEgiwuq7tSNZ+96Md0HOB4hZuEV/UheATXEXWSRb96z04rt3sJ9Eb+
-	 PNz5EYGtZ9ttFzozhKaFWlSlFFNYrZzaqIVwpdatC/E9X9N1lbs3TgFHGhCiRP/fK+
-	 E/8/gwSu5RANGY3d9lMI0O9P4Z0xfVaes72icnWY=
+	b=NxZ4PDRAmu6xTMKj0eBejpgMrLzM13iKZprSrrO3FWSzh2pLDtphIUU3GeWVCv5la
+	 p93g/oMLwK/6bE5rFCXUVFm1EWMjF+rbxTiGDCgvmY0UvtQ8CPAIN0B88kpTDKQEG0
+	 oxkW1wmqCqJKBqLU5QCWkHnhqmZ8kzMPSVMpUdgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 011/414] ASoC: amd: sof_amd_sdw: Fix unlikely uninitialized variable use in create_sdw_dailinks()
-Date: Mon, 23 Jun 2025 15:02:28 +0200
-Message-ID: <20250623130642.309835484@linuxfoundation.org>
+	Yanqing Wang <ot_yanqing.wang@mediatek.com>,
+	Macpaul Lin <macpaul.lin@mediatek.com>,
+	Biao Huang <biao.huang@mediatek.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 098/355] driver: net: ethernet: mtk_star_emac: fix suspend/resume issue
+Date: Mon, 23 Jun 2025 15:04:59 +0200
+Message-ID: <20250623130629.734695693@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,42 +49,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Yanqing Wang <ot_yanqing.wang@mediatek.com>
 
-commit 6b83ba4bc3ecb915476d688c9f00f3be57b49a0c upstream.
+[ Upstream commit ba99c627aac85bc746fb4a6e2d79edb3ad100326 ]
 
-Initialize current_be_id to 0 in SOF based AMD generic SoundWire machine
-driver to handle the unlikely case when there are no devices connected to
-a DAI.
-In this case create_sdw_dailink() would return without touching the passed
-pointer to current_be_id.
+Identify the cause of the suspend/resume hang: netif_carrier_off()
+is called during link state changes and becomes stuck while
+executing linkwatch_work().
 
-Found by gcc -fanalyzer
+To resolve this issue, call netif_device_detach() during the Ethernet
+suspend process to temporarily detach the network device from the
+kernel and prevent the suspend/resume hang.
 
-Cc: stable@vger.kernel.org
-Fixes: 6d8348ddc56ed ("ASoC: amd: acp: refactor SoundWire machine driver code")
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20250506120823.3621604-2-Vijendar.Mukunda@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8c7bd5a454ff ("net: ethernet: mtk-star-emac: new driver")
+Signed-off-by: Yanqing Wang <ot_yanqing.wang@mediatek.com>
+Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
+Signed-off-by: Biao Huang <biao.huang@mediatek.com>
+Link: https://patch.msgid.link/20250528075351.593068-1-macpaul.lin@mediatek.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-sdw-sof-mach.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mediatek/mtk_star_emac.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/soc/amd/acp/acp-sdw-sof-mach.c
-+++ b/sound/soc/amd/acp/acp-sdw-sof-mach.c
-@@ -267,7 +267,7 @@ static int create_sdw_dailinks(struct sn
+diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+index 96d2891f1675a..9d884699ed9cc 100644
+--- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
++++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+@@ -1409,6 +1409,8 @@ static __maybe_unused int mtk_star_suspend(struct device *dev)
+ 	if (netif_running(ndev))
+ 		mtk_star_disable(ndev);
  
- 	/* generate DAI links by each sdw link */
- 	while (sof_dais->initialised) {
--		int current_be_id;
-+		int current_be_id = 0;
++	netif_device_detach(ndev);
++
+ 	clk_bulk_disable_unprepare(MTK_STAR_NCLKS, priv->clks);
  
- 		ret = create_sdw_dailink(card, sof_dais, dai_links,
- 					 &current_be_id, codec_conf);
+ 	return 0;
+@@ -1433,6 +1435,8 @@ static __maybe_unused int mtk_star_resume(struct device *dev)
+ 			clk_bulk_disable_unprepare(MTK_STAR_NCLKS, priv->clks);
+ 	}
+ 
++	netif_device_attach(ndev);
++
+ 	return ret;
+ }
+ 
+-- 
+2.39.5
+
 
 
