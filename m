@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90332628C;
-	Mon, 23 Jun 2025 21:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6374E2628C;
+	Mon, 23 Jun 2025 21:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713786; cv=none; b=jet0cSGYA5FRo81FiCzqF1Z/1FVYGWaIphgkTQkvBZOIpFVHcT8XPtnF29UszxYybJeCSbSAGKL5h52HWn+r3t5k9if1W7T2GsMgjyN6PVJNhkMjYxJ60jvwWyugG8CSBCaAW66seUR2rme9qhpkC4Ab+Qs8YyovgRK2L+kEXDI=
+	t=1750713788; cv=none; b=ABHiibss7sN0UjeHr9sLNsxalfIzlnROwcYDJNJ+YkT2x9uSeZKuZtc9jP5LgZU8X1y6e4wte0zAQAptyCtvy00QkQdD6ZJzZOHKL8JMlgnp3fpEN2Z6BXQt4sK1LzSDv3PnFXsQ5R4ebIq5RTesMWuPxD8AHyYeSwc6VvMTVJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713786; c=relaxed/simple;
-	bh=3+LyTIazs+IAXHqa62FDDfOvyJiohsGNjPGnc7vwTEY=;
+	s=arc-20240116; t=1750713788; c=relaxed/simple;
+	bh=k52gCpLRBufST6ha7VgjAFovtCOD2kkszE9wMQX9GoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r96hsdCJ39xZea3IeK7JW1bOCw57S/CJRzORMiAr2iJbAvXskZR5s3iYrOisbstAjf2uOUxNTavUCQKyOldZ72EkaJX9q32YRkZ9d6xhj964LX468HdTqyKCIV+WapcSWiTmbRyDUEaojyZeephgkm/zDBp2GBfopgl3cYy3jfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=doGSkFkG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u70MEeEs1mQTuSL6KM2veVnsZed+tCowMq3potjU7IiIbR8MN0F/fmqMYWYHSuK+YX6bF6g73fvVD5KEu3ht8uYwHh+pSFlTMDXJjesqPiVYmSIYcDmBDek1dDTVrA9vkuSzUQsOlgWjKi2acBrc6vbFDTMhIcjIsQUXvPAOT5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDNHFQvC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="doGSkFkG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B64C4CEEA;
-	Mon, 23 Jun 2025 21:23:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDNHFQvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73C1C4CEEA;
+	Mon, 23 Jun 2025 21:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713785;
-	bh=3+LyTIazs+IAXHqa62FDDfOvyJiohsGNjPGnc7vwTEY=;
+	s=korg; t=1750713788;
+	bh=k52gCpLRBufST6ha7VgjAFovtCOD2kkszE9wMQX9GoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=doGSkFkGPmCJnkyxj+T/m76ws87gT5I0A5+kIhTkvM4lrriYTbBX21jeAUEEQQwLH
-	 CCLKP/NK9RJtAD5yRVRLpKVeqfW8QHa9QdnKVU/nDNqvykGiIy6e7AMiSpvLVVWkAl
-	 M0ooufFTDjSsvNZ/bw3C1ZAQ2KZJ4dRfhX64yHU8=
+	b=pDNHFQvCoDfrMy05LfpjGraU2lSYyCiWOWFp1YRGwkvFkkisALsWmMoBg93OzDsjI
+	 loyMNUXxARz68ePecIWBatdn83qe6WRcdew6serY2PxCqzwqdGH0SEQa0GqXKNTw79
+	 m6FXBJ0gMMZRmOg4G0nPFu1e8ACA16ZDenuT65Uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
 	Oleg Nesterov <oleg@redhat.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 167/411] posix-cpu-timers: fix race between handle_posix_cpu_timers() and posix_cpu_timer_del()
-Date: Mon, 23 Jun 2025 15:05:11 +0200
-Message-ID: <20250623130637.897534446@linuxfoundation.org>
+Subject: [PATCH 5.4 213/222] posix-cpu-timers: fix race between handle_posix_cpu_timers() and posix_cpu_timer_del()
+Date: Mon, 23 Jun 2025 15:09:08 +0200
+Message-ID: <20250623130618.704753063@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,7 +48,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -83,7 +83,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/kernel/time/posix-cpu-timers.c
 +++ b/kernel/time/posix-cpu-timers.c
-@@ -1432,6 +1432,15 @@ void run_posix_cpu_timers(void)
+@@ -1120,6 +1120,15 @@ void run_posix_cpu_timers(void)
  	lockdep_assert_irqs_disabled();
  
  	/*
@@ -96,8 +96,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +		return;
 +
 +	/*
- 	 * If the actual expiry is deferred to task work context and the
- 	 * work is already scheduled there is no point to do anything here.
+ 	 * The fast path checks that there are no expired thread or thread
+ 	 * group timers.  If that's so, just return.
  	 */
 
 
