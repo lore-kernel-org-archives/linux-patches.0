@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5229B1E8324;
-	Mon, 23 Jun 2025 21:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3660202983;
+	Mon, 23 Jun 2025 21:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713219; cv=none; b=DmIb5gVUp3as+gjI4pGyOZAYvt3X9Xf49zFRnnyI+hEr/orHBlLMbHjFM2w58fyGUtx9wg6XjbaMQsutlQj+nDw08yOmMVzOG79Zw2YwC/bqAc3C1rp+QfDxDdq2EOxsX+4fBFvMj0/dLFD+WfC4lcz7i5ni72Ha9vEbYKk4Izk=
+	t=1750713221; cv=none; b=KCj3vQGKiIjsRuRVW3yQm3SGsuyn7grOwc0aKXc4eg1QyAzBWzWppa8rgq0FA2BsCBK9xmeeFUehzNx7kRRoQVQ1JiJlaJFquoL8wWTQvTdh4cVwRH3mT2IEpCGTYaY814vSjDSgvweUxB2CIdN1W34kqSE2hKel6GaUj2dXedM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713219; c=relaxed/simple;
-	bh=TAdRQj+HISuBpCLf3cuKLEt5yoXkGvss6XCumPeEkz4=;
+	s=arc-20240116; t=1750713221; c=relaxed/simple;
+	bh=PC3CuU6ga4b/qPC+GyYUc6hrXBYVmnFGGt+mnpuw6EQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LaRyRYsf87RiipEwo7kSUFq7xevj7iLrSvOssRpQVa/OCPH0ebfYwDjA9e0YcbgU7h2UInN6weWI6O1BjLB5WYF/D6R+QF4T2NzaXxVRQMjatIogb9SyQSanC8KG72b33XnkQqNhWADj3C+AiFAaUcA5JU8+duNNZXBlAoACffA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dNNkcvY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MUXPVrbyKtxBEx3tfHpVD+63MbBngRNjGX/Ksh5zXERPEctRLEB6roTEOQFFm10RoqhVVhkKqj6rzPevfSoWLbp0vNA+MZf/g9fc8152jyhnur5ta0SN9juJBmWkZEpH2JUuIDcjx1Hva5+ZnWAed4dyNwlUp1MZLVv67ZWP7DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9np1Elu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dNNkcvY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCE1C4CEEA;
-	Mon, 23 Jun 2025 21:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9np1Elu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7BFC4CEEA;
+	Mon, 23 Jun 2025 21:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713219;
-	bh=TAdRQj+HISuBpCLf3cuKLEt5yoXkGvss6XCumPeEkz4=;
+	s=korg; t=1750713221;
+	bh=PC3CuU6ga4b/qPC+GyYUc6hrXBYVmnFGGt+mnpuw6EQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1dNNkcvYfoSfZ+DpbR/LUsC9H+PRTOj8NnOsEgP171KXGxNleX3HtkGvncJBO0oG9
-	 m1uma4TjuEr0cz5bCwWnrCK2quKQjyD5WJI8deXH5Z5tqBQta7PaxoHubNB46xVsiU
-	 PynikrrZq6ASC8hGfF7mvYnBgqnB2rFtYd944rSo=
+	b=p9np1Elu17IcSO8+TOIopBxBDCpBT1SCP2tO/v+BhkepaQA77i0Xmpw30TQdbS3RV
+	 sTe8oQcxSipXJ9PSQMpAaMHldpazQa5L+LPWFqDyKNpvgKj35gBHNKmAOHv6fU1K8a
+	 ZcTeho2jet+SAJ5X4UrZHOa/jcbsQ9bGvfFJ8gxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 132/355] net/mlx5: Ensure fw pages are always allocated on same NUMA
-Date: Mon, 23 Jun 2025 15:05:33 +0200
-Message-ID: <20250623130630.704462119@linuxfoundation.org>
+Subject: [PATCH 6.15 315/592] bpf: Check rcu_read_lock_trace_held() in bpf_map_lookup_percpu_elem()
+Date: Mon, 23 Jun 2025 15:04:33 +0200
+Message-ID: <20250623130707.915806376@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit f37258133c1e95e61db532e14067e28b4881bf24 ]
+[ Upstream commit d4965578267e2e81f67c86e2608481e77e9c8569 ]
 
-When firmware asks the driver to allocate more pages, using event of
-give_pages, the driver should always allocate it from same NUMA, the
-original device NUMA. Current code uses dev_to_node() which can result
-in different NUMA as it is changed by other driver flows, such as
-mlx5_dma_zalloc_coherent_node(). Instead, use saved numa node for
-allocating firmware pages.
+bpf_map_lookup_percpu_elem() helper is also available for sleepable bpf
+program. When BPF JIT is disabled or under 32-bit host,
+bpf_map_lookup_percpu_elem() will not be inlined. Using it in a
+sleepable bpf program will trigger the warning in
+bpf_map_lookup_percpu_elem(), because the bpf program only holds
+rcu_read_lock_trace lock. Therefore, add the missed check.
 
-Fixes: 311c7c71c9bb ("net/mlx5e: Allocate DMA coherent memory on reader NUMA node")
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250610151514.1094735-2-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/bpf/000000000000176a130617420310@google.com/
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20250526062534.1105938-1-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/helpers.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-index 1ea71f06fdb1c..b7ccdef697fd0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
-@@ -272,7 +272,7 @@ static void free_4k(struct mlx5_core_dev *dev, u64 addr, u32 function)
- static int alloc_system_page(struct mlx5_core_dev *dev, u32 function)
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index e3a2662f4e336..a71aa4cb85fae 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -129,7 +129,8 @@ const struct bpf_func_proto bpf_map_peek_elem_proto = {
+ 
+ BPF_CALL_3(bpf_map_lookup_percpu_elem, struct bpf_map *, map, void *, key, u32, cpu)
  {
- 	struct device *device = mlx5_core_dma_dev(dev);
--	int nid = dev_to_node(device);
-+	int nid = dev->priv.numa_node;
- 	struct page *page;
- 	u64 zero_addr = 1;
- 	u64 addr;
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
++		     !rcu_read_lock_bh_held());
+ 	return (unsigned long) map->ops->map_lookup_percpu_elem(map, key, cpu);
+ }
+ 
 -- 
 2.39.5
 
