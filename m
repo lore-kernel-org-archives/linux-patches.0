@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0367F6136;
-	Mon, 23 Jun 2025 21:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B737221DA8;
+	Mon, 23 Jun 2025 21:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715988; cv=none; b=QtD2NjK//PqaiDVNbTmnJT2VGke9+Iv44tXsU2E3rHavD8twGKBZXnAUMdQEUx5TldPLUmgKOFp84aKlScopJEO9qi5BDu8XWSz/xHsswaqvm/PZtcKBVoYpObknAWBHmefk+idmq2wkwIQtUYmTpEHYGHzibzUDDo8vsILejbs=
+	t=1750715990; cv=none; b=NmCNbFECE0zMOlDDtiRCAw99TQMukszzFQLzMGGicjd+nNyGIqTgvPDu+VDa/l3Up8k57/M2WxY9ZlVZ/qkJLGiSPwGxtHVMzXh9yrP3AiaftoN7nAWpWY74vWpaCD2K3S9wxO/zJCaeq2BjiWayGISzoao5y2HwvJyvmeqVlMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715988; c=relaxed/simple;
-	bh=LFxYaxx5eHpzj0KUixUlgm+MHT+6mn3RQeTI9bkJsO4=;
+	s=arc-20240116; t=1750715990; c=relaxed/simple;
+	bh=2blfCXFKmwFtE8hXEHOSf6n7CF9mnJ0IxUuWZxLaI1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cnN4p4YZ1Ga9mF7fsFuAaklCo1nPzIxyuGJFVuRrb2nupG9pElMAO4kQwQXspdXFut6QPQ/BLe1OnFdEAc/g3FK6Nzhyw/J2vY5sxc+HQW1zAMitshfeW1vGgRQu1gvgyi1eZ8Ds7QmBkvTgzbJWcAnEz3siWlovTtZ41vdKxjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQW2TRq/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GMlWjaMLTxAc65MHGGRill+6RcTeQuUilAZtRAx4e1J3xsJJ0K/kozRhr+7c2dTZuQSZHUS5nIUDxkWDbBkbUspl2HYAGzSqL7Pzxy49UN2vupcm9gS4YRWcLTGkw/bCN42iK6J4pzt0glNpjtoMzRl4AD8JVkT4l1jblHnq7/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/8QKf+S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQW2TRq/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8768CC4CEEA;
-	Mon, 23 Jun 2025 21:59:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/8QKf+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5ADDC4CEEA;
+	Mon, 23 Jun 2025 21:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715987;
-	bh=LFxYaxx5eHpzj0KUixUlgm+MHT+6mn3RQeTI9bkJsO4=;
+	s=korg; t=1750715990;
+	bh=2blfCXFKmwFtE8hXEHOSf6n7CF9mnJ0IxUuWZxLaI1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQW2TRq/gLHQ17o77jcbbktavbfQJpEitTQXuZqAwLYDrIdime2SRZdyQquYLSqCs
-	 uVKvID5FjRv39XMQf4Ohgfhm9J4e7Arnu0Q9Idtc/bZU2zjb1qDE2OegK8rQgDx7z2
-	 VL5Ot0pBye6DycVgNJPKh9+d1E+H5Cx5782aANTY=
+	b=I/8QKf+S7fZKWm6uIMYm4zU541boKm3EbvruVHgjdMroI04cbjNG26dLDBWvfCrPn
+	 sKuf+RxkfNVEzZroIDqjqAJdvW14hH78CjXVe90ba+iw3YPvHZfsAZf7M5YZjTPX8w
+	 2hXwwve6Atd9Z+TmwNgWFeJSH1xKvsxE/zak3mhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangdicheng <wangdicheng@kylinos.cn>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Nick Karaolidis <nick@karaolidis.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 233/290] ALSA: usb-audio: Rename ALSA kcontrol PCM and PCM1 for the KTMicro sound card
-Date: Mon, 23 Jun 2025 15:08:14 +0200
-Message-ID: <20250623130633.936279347@linuxfoundation.org>
+Subject: [PATCH 6.15 495/592] ALSA: hda/realtek: Add quirk for Asus GU605C
+Date: Mon, 23 Jun 2025 15:07:33 +0200
+Message-ID: <20250623130712.206040397@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: wangdicheng <wangdicheng@kylinos.cn>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-commit 93adf20ff4d6e865e0b974110d3cf2f07c057177 upstream.
+commit 7b23887a0c70d15459f02c51651a111e9e5cab86 upstream.
 
-PCM1 not in Pulseaudio's control list; standardize control to
-"Speaker" and "Headphone".
+The GU605C has similar audio hardware to the GU605M so apply the
+same quirk.
 
-Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
+Note that in the linked bugzilla there are two separate problems
+with the GU605C. This patch fixes one of the problems, so I haven't
+added a Closes: tag.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Reported-by: Nick Karaolidis <nick@karaolidis.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220152
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250613063636.239683-1-wangdich9700@163.com
+Link: https://patch.msgid.link/20250609102125.63196-1-rf@opensource.cirrus.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_maps.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -383,6 +383,13 @@ static const struct usbmix_name_map ms_u
- 	{ 0 }   /* terminator */
- };
- 
-+/* KTMicro USB */
-+static struct usbmix_name_map s31b2_0022_map[] = {
-+	{ 23, "Speaker Playback" },
-+	{ 18, "Headphone Playback" },
-+	{ 0 }
-+};
-+
- /* ASUS ROG Zenith II with Realtek ALC1220-VB */
- static const struct usbmix_name_map asus_zenith_ii_map[] = {
- 	{ 19, NULL, 12 }, /* FU, Input Gain Pad - broken response, disabled */
-@@ -692,6 +699,11 @@ static const struct usbmix_ctl_map usbmi
- 		.id = USB_ID(0x045e, 0x083c),
- 		.map = ms_usb_link_map,
- 	},
-+	{
-+		/* KTMicro USB */
-+		.id = USB_ID(0X31b2, 0x0022),
-+		.map = s31b2_0022_map,
-+	},
- 	{ 0 } /* terminator */
- };
- 
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10908,6 +10908,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8e61, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e62, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1032, "ASUS VivoBook X513EA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1043, 0x1034, "ASUS GU605C", ALC285_FIXUP_ASUS_GU605_SPI_SPEAKER2_TO_DAC1),
+ 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
+ 	SND_PCI_QUIRK(0x1043, 0x1054, "ASUS G614FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
 
 
