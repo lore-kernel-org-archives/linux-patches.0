@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EB9222576;
-	Mon, 23 Jun 2025 22:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4874F21B8F6;
+	Mon, 23 Jun 2025 22:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716857; cv=none; b=pJT3a6a/oAoZLjU4BxArllAViwLbLR+xACBmNjbYY5b0svS2E8MH+EpEd3xCZC353eyrn+rS/kMbGp0kPWZqePinTSbE0kTGcj/78xx06ocf6oqT+UToCn9kFxRmHaGYpvuFQqB9IgEtZZVBATozileEba/iiF4UfptLpFA/yno=
+	t=1750716860; cv=none; b=pogTAiaeMbdZGkVT4gLDSYYpM5EXUex85ejohjaSn+lZLTKm/WgzUj9rZh7a7qyrH3rjYhJ7MCacxKXbaWKvL1h+Xh8X5bADdoHMuu81Bf5Gt7n9ydUTfYfYUBLm8K1LFU13mNNDiqKzp8tR/6tTuebie9sFH2NRIgyBlD98b90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716857; c=relaxed/simple;
-	bh=401bkhnEdqCZBTUgD4GpZT9o6NbNWqQWxQNg/28yCD0=;
+	s=arc-20240116; t=1750716860; c=relaxed/simple;
+	bh=PCsHjhSSbUY/grINkEo112OKh7rFVQQyEU8Lffu/J1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u1XUWPUyOQI1nsMtxX0QlRZVVOaEATvTQWvK8qRV9wJE0jUuexNtB1UCB9eWqpvgbp/hBwTpagKg7CiljE4MZWCQ5Kear1vmU7Fj81+jyQ065EtAExMdPf+g288WOA9huXuYWA7nfn3K2uR7DTvzi82V1PRUdUu8xQCYZ0rnDN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RN9Z4qb9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z9e4m27lFuxm2UjNtRynlK196BGZ1/U6VdnvuW+qhUy0XJK9gAZ1ubntsTyOr0YRoE1EAGwhOpdr4oFfgEfto5xKhhzngoSLFuRUa2ps+s79sLO4G7buy15XwFDWjpyi+awvmdDX+jdHJcFjWtIqL733yPritgdar0IQ1EknBis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZqGcdgt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RN9Z4qb9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7B0C4CEEA;
-	Mon, 23 Jun 2025 22:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZqGcdgt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E488C4CEEA;
+	Mon, 23 Jun 2025 22:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716857;
-	bh=401bkhnEdqCZBTUgD4GpZT9o6NbNWqQWxQNg/28yCD0=;
+	s=korg; t=1750716859;
+	bh=PCsHjhSSbUY/grINkEo112OKh7rFVQQyEU8Lffu/J1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RN9Z4qb9bnJRrM+r7qHdHzfUCUOCfnzP0mmOtJhszS2n5eL954EUYAQtAcMjsRWNm
-	 AY6/27K64f5oKl2cv5blKSUiGdwhDFYBWnwMpd5lYwzJuil5eN/ZkOHEGGos+HJLPw
-	 YmS7KlnmEEebGeobtRafUmaqHIpMAmku3aFJcut4=
+	b=EZqGcdgtZFH/+fzdESvpF94CwwOXOFJvWsRBee8kgrNK/omC7FBRa2CoW/Igd5ycT
+	 FdHyv2Z99y54GVuqcSDXr+G/cG62WfKEyT0dRrcSoWpminmRvSqRJHTRFFWo9W82q5
+	 52VPbsBrkDJcx4yMYCUpxEZTFQKm75JA94PyMvfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Meetakshi Setiya <msetiya@microsoft.com>,
-	zhangjian <zhangjian496@huawei.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.15 563/592] smb: client: fix first command failure during re-negotiation
-Date: Mon, 23 Jun 2025 15:08:41 +0200
-Message-ID: <20250623130713.833420593@linuxfoundation.org>
+	Stuart Hayes <stuart.w.hayes@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 292/414] platform/x86: dell_rbu: Stop overwriting data buffer
+Date: Mon, 23 Jun 2025 15:07:09 +0200
+Message-ID: <20250623130649.311829444@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,77 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: zhangjian <zhangjian496@huawei.com>
+From: Stuart Hayes <stuart.w.hayes@gmail.com>
 
-commit 34331d7beed7576acfc98e991c39738b96162499 upstream.
+[ Upstream commit f4b0fa38d5fefe9aed6ed831f3bd3538c168ee19 ]
 
-after fabc4ed200f9, server_unresponsive add a condition to check whether client
-need to reconnect depending on server->lstrp. When client failed to reconnect
-for some time and abort connection, server->lstrp is updated for the last time.
-In the following scene, server->lstrp is too old. This cause next command
-failure in re-negotiation rather than waiting for re-negotiation done.
+The dell_rbu driver will use memset() to clear the data held by each
+packet when it is no longer needed (when the driver is unloaded, the
+packet size is changed, etc).
 
-1. mount -t cifs -o username=Everyone,echo_internal=10 //$server_ip/export /mnt
-2. ssh $server_ip "echo b > /proc/sysrq-trigger &"
-3. ls /mnt
-4. sleep 21s
-5. ssh $server_ip "service firewalld stop"
-6. ls # return EHOSTDOWN
+The amount of memory that is cleared (before this patch) is the normal
+packet size. However, the last packet in the list may be smaller.
 
-If the interval between 5 and 6 is too small, 6 may trigger sending negotiation
-request. Before backgrounding cifsd thread try to receive negotiation response
-from server in cifs_readv_from_socket, server_unresponsive may trigger
-cifs_reconnect which cause 6 to be failed:
+Fix this to only clear the memory actually used by each packet, to prevent
+it from writing past the end of data buffer.
 
-ls thread
-----------------
-  smb2_negotiate
-    server->tcpStatus = CifsInNegotiate
-    compound_send_recv
-      wait_for_compound_request
+Because the packet data buffers are allocated with __get_free_pages() (in
+page-sized increments), this bug could only result in a buffer being
+overwritten when a packet size larger than one page is used. The only user
+of the dell_rbu module should be the Dell BIOS update program, which uses
+a packet size of 4096, so no issues should be seen without the patch, it
+just blocks the possiblity.
 
-cifsd thread
-----------------
-  cifs_readv_from_socket
-    server_unresponsive
-      server->tcpStatus == CifsInNegotiate && jiffies > server->lstrp + 20s
-        cifs_reconnect
-          cifs_abort_connection: mid_state = MID_RETRY_NEEDED
-
-ls thread
-----------------
-      cifs_sync_mid_result return EAGAIN
-  smb2_negotiate return EHOSTDOWN
-
-Though server->lstrp means last server response time, it is updated in
-cifs_abort_connection and cifs_get_tcp_session. We can also update server->lstrp
-before switching into CifsInNegotiate state to avoid failure in 6.
-
-Fixes: 7ccc1465465d ("smb: client: fix hang in wait_for_response() for negproto")
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Acked-by: Meetakshi Setiya <msetiya@microsoft.com>
-Signed-off-by: zhangjian <zhangjian496@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6c54c28e69f2 ("[PATCH] dell_rbu: new Dell BIOS update driver")
+Signed-off-by: Stuart Hayes <stuart.w.hayes@gmail.com>
+Link: https://lore.kernel.org/r/20250609184659.7210-5-stuart.w.hayes@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/dell/dell_rbu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -4193,6 +4193,7 @@ retry:
- 		return 0;
- 	}
- 
-+	server->lstrp = jiffies;
- 	server->tcpStatus = CifsInNegotiate;
- 	spin_unlock(&server->srv_lock);
- 
+diff --git a/drivers/platform/x86/dell/dell_rbu.c b/drivers/platform/x86/dell/dell_rbu.c
+index 4d2b5f6dd513f..fee20866b41e4 100644
+--- a/drivers/platform/x86/dell/dell_rbu.c
++++ b/drivers/platform/x86/dell/dell_rbu.c
+@@ -322,7 +322,7 @@ static void packet_empty_list(void)
+ 		 * zero out the RBU packet memory before freeing
+ 		 * to make sure there are no stale RBU packets left in memory
+ 		 */
+-		memset(newpacket->data, 0, rbu_data.packetsize);
++		memset(newpacket->data, 0, newpacket->length);
+ 		set_memory_wb((unsigned long)newpacket->data,
+ 			1 << newpacket->ordernum);
+ 		free_pages((unsigned long) newpacket->data,
+-- 
+2.39.5
+
 
 
