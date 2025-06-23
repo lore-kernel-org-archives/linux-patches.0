@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA2B44C77;
-	Mon, 23 Jun 2025 21:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F0E7080C;
+	Mon, 23 Jun 2025 21:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714247; cv=none; b=GYUR/N6YMihphGEClaxLb3EAEmLYKvxAD17AAb29RGaQIvJoHrIDKVzi9TKv+fxAapHoNN4nplwq+cdqQsFgSoniHNzLL985Day9Oa1Ltme7yv9V/SVGRntJyocknGyhfddBtCcaV0hwCJpDvBJ/ypPrSwHYT9K3DZFW6eajAIg=
+	t=1750714250; cv=none; b=rLheA547ruU2igixumYTRawV0/JxaTc9rD1cW2pONlYDiFlFqMOHTUa/js0gorc+Y5lJa3omXD19Z7I5xJjQuDAUh62Jy6dYnu6xweoB+3QOn7PBURT8xIAM0E6uQgjgT3fod7AlLvSSVF158JIwi62ocJSZL/DTkRBs2JQ0BoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714247; c=relaxed/simple;
-	bh=nnIbA4wBeN8GCTGZN8KsAqfXLGfkT4WQGq2QRsblePI=;
+	s=arc-20240116; t=1750714250; c=relaxed/simple;
+	bh=OYF6JEeYmTovcQ2W+skiwZ8w8ggeh2HS49b6ixZmZDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqGHpnH+az/VnEqZPPZLGH0CYTXJko4DYBMZVTp66h5HB+8TgwsiEhXpcp+q7pX2R4B376kTp05UdTZvBBvYlAV5or0e9KbetZ9usHqUBYhuXnFC3PpE6tV1VoHXEGRxbrdYAfb6YZiy+IHuYteAX0XJyd3bkKJwbFw9rfV3biM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QSfkbdYc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l3O9oTe8I7HwartXXQxb+LgKhc847foOgnxc37DhPg5yoIhsD7VJ9SiIujJvnkR0uCLqnq+aJltahtugicJ6LUGulIq4SJoogff5cvu05NZo75h7dNo2JaB7T2nNlIol8qwHpaUrJ2Q8r0xLkBn+kAIf4w0ThK8ePbgNT8cRfak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lV4iYRlG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSfkbdYc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A04C4CEEA;
-	Mon, 23 Jun 2025 21:30:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lV4iYRlG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5159C4CEEA;
+	Mon, 23 Jun 2025 21:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714247;
-	bh=nnIbA4wBeN8GCTGZN8KsAqfXLGfkT4WQGq2QRsblePI=;
+	s=korg; t=1750714250;
+	bh=OYF6JEeYmTovcQ2W+skiwZ8w8ggeh2HS49b6ixZmZDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QSfkbdYcZYCHKppoOyRVJGr+vtzBUyi1eK0+OAtfnNM7LFB8UXae7ptLcl1r/3l0a
-	 YCrl2KNKwQHdn06sbmn8T0XWrWg2wMc4DNEPmedZeLT/RNqVbDhvRqPp3DcLiREP+J
-	 VwVO5WznMYeNiBu52qUpRqorh8jfIRuHbeAvjpe8=
+	b=lV4iYRlG3nZVtwpfpdjpzXc2o3rHOD1fQL9MTCfE72tz/7/28FNFan8Fb+YCX6Nps
+	 zN+xS7rKL1bN/qE4PYRDU4EdV+nyeu+Wxky0EW/qSOR0+qgX5sFuoIOFPdFwFxacvj
+	 25uaC2/PutfKLTD3/UnccVRyO6wNGH33l1Wd6wXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.15 176/411] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
-Date: Mon, 23 Jun 2025 15:05:20 +0200
-Message-ID: <20250623130638.118981099@linuxfoundation.org>
+	Wan Junjie <junjie.wan@inceptio.ai>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 6.12 091/414] bus: fsl-mc: fix GET/SET_TAILDROP command ids
+Date: Mon, 23 Jun 2025 15:03:48 +0200
+Message-ID: <20250623130644.366649886@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Wan Junjie <junjie.wan@inceptio.ai>
 
-commit 43fc0a99906e04792786edf8534d8d58d1e9de0c upstream.
+commit c78230ad34f82c6c0e0e986865073aeeef1f5d30 upstream.
 
-After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
-KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
-assembly files with clang:
+Command ids for taildrop get/set can not pass the check when they are
+using from the restool user space utility. Correct them according to the
+user manual.
 
-  arch/powerpc/lib/copypage_power7.S: Assembler messages:
-  arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b01000'
-  arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b01010'
-  arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b01000'
-  arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b01010'
-  arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b01010'
-  clang: error: assembler command failed with exit code 1 (use -v to see invocation)
-
-as-option only uses KBUILD_AFLAGS, so after removing CLANG_FLAGS from
-KBUILD_AFLAGS, there is no more '--target=' or '--prefix=' flags. As a
-result of those missing flags, the host target
-will be tested during as-option calls and likely fail, meaning necessary
-flags may not get added when building assembly files, resulting in
-errors like seen above.
-
-Add KBUILD_CPPFLAGS to as-option invocations to clear up the errors.
-This should have been done in commit d5c8d6e0fa61 ("kbuild: Update
-assembler calls to use proper flags and language target"), which
-switched from using the assembler target to the assembler-with-cpp
-target, so flags that affect preprocessing are passed along in all
-relevant tests. as-option now mirrors cc-option.
-
-Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5Mxag@mail.gmail.com/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: d67cc29e6d1f ("bus: fsl-mc: list more commands as accepted through the ioctl")
+Signed-off-by: Wan Junjie <junjie.wan@inceptio.ai>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20250408105814.2837951-4-ioana.ciornei@nxp.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/Makefile.compiler |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bus/fsl-mc/fsl-mc-uapi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/scripts/Makefile.compiler
-+++ b/scripts/Makefile.compiler
-@@ -32,7 +32,7 @@ try-run = $(shell set -e;		\
- # Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
- 
- as-option = $(call try-run,\
--	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
-+	$(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
- 
- # as-instr
- # Usage: aflags-y += $(call as-instr,instr,option1,option2)
+--- a/drivers/bus/fsl-mc/fsl-mc-uapi.c
++++ b/drivers/bus/fsl-mc/fsl-mc-uapi.c
+@@ -275,13 +275,13 @@ static struct fsl_mc_cmd_desc fsl_mc_acc
+ 		.size = 8,
+ 	},
+ 	[DPSW_GET_TAILDROP] = {
+-		.cmdid_value = 0x0A80,
++		.cmdid_value = 0x0A90,
+ 		.cmdid_mask = 0xFFF0,
+ 		.token = true,
+ 		.size = 14,
+ 	},
+ 	[DPSW_SET_TAILDROP] = {
+-		.cmdid_value = 0x0A90,
++		.cmdid_value = 0x0A80,
+ 		.cmdid_mask = 0xFFF0,
+ 		.token = true,
+ 		.size = 24,
 
 
