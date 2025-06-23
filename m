@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F973597E;
-	Mon, 23 Jun 2025 22:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6153597E;
+	Mon, 23 Jun 2025 22:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716490; cv=none; b=M1kpJRBbZKKiW5LY4w88sk30YbrbxpPpkZorg/9/zWkLSKUH255NMXZ6VDaDkg9Yo34hMbK283jt253dcL/1ldKNFxFSyyMDDwjSAWJfnv18oDiqQmkJi3wsii1GW7PPcyyTZDQc38qS+z3D042GrJt1jddKP61uESSau/WBF1o=
+	t=1750716493; cv=none; b=nIoN+Pn54buKn+UR2l0gCeMFTFMjEicwCtNOV0Rw0tSH9s/yc1Kqz4y3YjZCiL4qFGkx68q63E99ywm5z1v1O22Hc6m9iBlBGcaKVcR8yBXeByk/Qwn4kN/tINm/bXFHw2nEC39gEXnYXBxvp7eK34CbgPuhsZ93N4l9WmfIkh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716490; c=relaxed/simple;
-	bh=8nCinSH5IiN5C3DlRmG5qEIvSpcdkXd/EHsHV6zDfKc=;
+	s=arc-20240116; t=1750716493; c=relaxed/simple;
+	bh=OwCnhvXAAkEoXjXhl5Skqq/3C6raom7Fo+1WFD+cV98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YCn16pprV15kznt2CQCnAtipecuwD2U7kUsTfRVjmyfIvvix0uKvluI0nopKjmrFEJlEF8/NmmFSeYkdVbOqIVPxxmdKr+Sz36xu4BFIxBbiEv6yehdHnuzrYSCM47qpoRL3JE7icp3cDH9FjoaQ+OfFZzEvRa0QpPOp7QauTd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOzl+8lo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=J2PBQ+TQn2LTszvFX2mPSxj0PNSqhN87ClLrXO5XFS3V9jKphgbirH3ZJCKE9GII8plcuu3XrkX3NdOCz1caXZoo03LLhiAmhjGl/TbR+cWObgMhF2llkWhl1b2tIGpa92uKrexWt5DDqLSsKCfLeCw6VZlejWyX+eQKGsz+jUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6kOhtcn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOzl+8lo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F2FC4CEEA;
-	Mon, 23 Jun 2025 22:08:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6kOhtcn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A3CC4CEEA;
+	Mon, 23 Jun 2025 22:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716490;
-	bh=8nCinSH5IiN5C3DlRmG5qEIvSpcdkXd/EHsHV6zDfKc=;
+	s=korg; t=1750716493;
+	bh=OwCnhvXAAkEoXjXhl5Skqq/3C6raom7Fo+1WFD+cV98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sOzl+8loUn2Q6m//oGgB8XZOPhmPzqp2Q4Pnc6nrOv+3JUN9dprNB08dhnAANjos9
-	 LEuXanDN2D/Q8R8pAx/7cqJEk9vgzTQB3NIX2CUPI1xOsufYIRgDdhHzsCy4C4W0gX
-	 UNAmlKXQ3skseMapve4Ugd8OJ+JWxg6L47Q8D31E=
+	b=X6kOhtcnZ/saFX49pDBJ7DOXnruBQ4w4ornVxcu5ly5o70o1fNXsWTfEi+gTtpNs3
+	 9Ia+pb3j2zeQYE3KeW6y7Sm5OIxtoK5BeZ9HVkduwIJhe4Bpcs+pmGgHijHOegVUAa
+	 /FmSY35XMMsoj+e6mwglAAHOxoCZB+qzDYnfw+Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangdicheng <wangdicheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 358/411] ALSA: usb-audio: Rename ALSA kcontrol PCM and PCM1 for the KTMicro sound card
-Date: Mon, 23 Jun 2025 15:08:22 +0200
-Message-ID: <20250623130642.655329258@linuxfoundation.org>
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 290/290] cifs: Remove duplicate fattr->cf_dtype assignment from wsl_to_fattr() function
+Date: Mon, 23 Jun 2025 15:09:11 +0200
+Message-ID: <20250623130635.645683449@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,54 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: wangdicheng <wangdicheng@kylinos.cn>
+From: Pali Rohár <pali@kernel.org>
 
-commit 93adf20ff4d6e865e0b974110d3cf2f07c057177 upstream.
+[ Upstream commit 840738eae94864993a735ab677b9795bb8f3b961 ]
 
-PCM1 not in Pulseaudio's control list; standardize control to
-"Speaker" and "Headphone".
+Commit 8bd25b61c5a5 ("smb: client: set correct d_type for reparse DFS/DFSR
+and mount point") deduplicated assignment of fattr->cf_dtype member from
+all places to end of the function cifs_reparse_point_to_fattr(). The only
+one missing place which was not deduplicated is wsl_to_fattr(). Fix it.
 
-Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250613063636.239683-1-wangdich9700@163.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8bd25b61c5a5 ("smb: client: set correct d_type for reparse DFS/DFSR and mount point")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_maps.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/smb/client/reparse.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -366,6 +366,13 @@ static const struct usbmix_name_map cors
- 	{ 0 }
- };
+diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
+index b6556fe3dfa11..4d45c31336df1 100644
+--- a/fs/smb/client/reparse.c
++++ b/fs/smb/client/reparse.c
+@@ -738,7 +738,6 @@ static bool wsl_to_fattr(struct cifs_open_info_data *data,
+ 	if (!have_xattr_dev && (tag == IO_REPARSE_TAG_LX_CHR || tag == IO_REPARSE_TAG_LX_BLK))
+ 		return false;
  
-+/* KTMicro USB */
-+static struct usbmix_name_map s31b2_0022_map[] = {
-+	{ 23, "Speaker Playback" },
-+	{ 18, "Headphone Playback" },
-+	{ 0 }
-+};
-+
- /* ASUS ROG Zenith II with Realtek ALC1220-VB */
- static const struct usbmix_name_map asus_zenith_ii_map[] = {
- 	{ 19, NULL, 12 }, /* FU, Input Gain Pad - broken response, disabled */
-@@ -701,5 +708,10 @@ static const struct usbmix_ctl_map uac3_
- 		.id = UAC3_FUNCTION_SUBCLASS_SPEAKERPHONE,
- 		.map = uac3_badd_speakerphone_map,
- 	},
-+	{
-+		/* KTMicro USB */
-+		.id = USB_ID(0X31b2, 0x0022),
-+		.map = s31b2_0022_map,
-+	},
- 	{ 0 } /* terminator */
- };
+-	fattr->cf_dtype = S_DT(fattr->cf_mode);
+ 	return true;
+ }
+ 
+-- 
+2.39.5
+
 
 
