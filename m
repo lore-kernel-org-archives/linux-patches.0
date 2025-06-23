@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6427B256C83;
-	Mon, 23 Jun 2025 13:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14ED253924;
+	Mon, 23 Jun 2025 13:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684741; cv=none; b=VnsGMPSWeccJlqUWS+DRPLVZtvXyMBYGmoxmNgHDnM2N0qtgn2DpLFdfWi8JxTeBvxaRt9Vt7rA2p6GeRZWxUlVkoAkDBC2sa3CkCLMmucyyr3rIBJ1mTx7kr4bSG+aKBnapfq9loSlSXJt1ApdHgg3tyva+pf5NFqKZ6XKA+mc=
+	t=1750684743; cv=none; b=M8vDI1faYFZvVT75BYZa8yiHALgNDnl+RB2fgjNaORPpW33KL4BC7SbPIlV3T1snIlNys+tbO87CSqjj+ChtKOxmuW/FfVBJSzvIATajpOJ/dSGiYoXxooGNY4Uvhhx0ohT9N07/jgTYScVGJaGRlD+ErjcWydJSejzC0Cy0rOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684741; c=relaxed/simple;
-	bh=S6Dcn9H08jcUBFFAHQLyVnjUjaUtNQTBz9ov5WLSNAQ=;
+	s=arc-20240116; t=1750684743; c=relaxed/simple;
+	bh=bbXdAdImmPT+Te8fye4PpdTBbR6TfFSjSznkhex9ySU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DP9UmpW4U+o1d5nmGsIgY1DpYrsfZOij90OvVLEAn8N/UaHVE2rHiuwPUswdL4ycvwGHfjWAer0fzvA/fmzEy7LedKac5tnEWN2XFFeI3FBsiQK8fTY8OYispV/P5rk79lX9rk8LQdEScxtCzVzuHz9lmDhjk8PJhRqA+IWEFiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5yNI46K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o2ILvZXCOpQZj2JC+BCucC86k4J05KxRRttUHQymZTN2ra+7zOFmH8CUB6sPeBO/L6NPVEIUarTbJqjdH2pmj8vNtZK7ZiSFdMRrolGi9wHfKt5e4moR4hDsx+5EgYU8hnsQA4TlcUPAHqGVlUmBKI7AhgLbeuPTQ782JHPUkKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsL4Ef/8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5yNI46K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6E2C4CEF1;
-	Mon, 23 Jun 2025 13:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsL4Ef/8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21091C4CEEA;
+	Mon, 23 Jun 2025 13:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684740;
-	bh=S6Dcn9H08jcUBFFAHQLyVnjUjaUtNQTBz9ov5WLSNAQ=;
+	s=korg; t=1750684743;
+	bh=bbXdAdImmPT+Te8fye4PpdTBbR6TfFSjSznkhex9ySU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z5yNI46K38mjvFOPWAdD2AC4gX1P1xNBoZrJPOSBg+TvuqUOmAjiS7++RLz2jBJM1
-	 DD658vUMhu2DVDRxQwwrVlrH9cmmZJtbV3vCWumlUx5mIIuKg73nDBWS01rfkjQpRe
-	 3vzFHh5NJlRJsewCwtNTJOpeKqSZa0annGnt6Kp4=
+	b=qsL4Ef/8Mb6NhO0wWownKjd5ASXYbZOzTxHrrA7Ajq+F9XUwIQP0GQj1sPx3109SB
+	 uvt2SdTffIkYdUoRaD4cpdm2OYh2R7uhPw+1C47HgI2gfaxOqJnJ9w4db9pPCx2pg3
+	 n7+mHIaQpQ6XnPGr007JYeeHO2ce53O1NbyACxug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	"Ivan T. Ivanov" <iivanov@suse.de>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.15 163/592] video: screen_info: Relocate framebuffers behind PCI bridges
-Date: Mon, 23 Jun 2025 15:02:01 +0200
-Message-ID: <20250623130704.156261310@linuxfoundation.org>
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 019/222] drm/vmwgfx: Add seqno waiter for sync_files
+Date: Mon, 23 Jun 2025 15:05:54 +0200
+Message-ID: <20250623130612.482312429@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,173 +47,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-commit 2f29b5c231011b94007d2c8a6d793992f2275db1 upstream.
+[ Upstream commit 0039a3b35b10d9c15d3d26320532ab56cc566750 ]
 
-Apply PCI host-bridge window offsets to screen_info framebuffers. Fixes
-invalid access to I/O memory.
+Because sync_files are passive waiters they do not participate in
+the processing of fences like the traditional vmw_fence_wait IOCTL.
+If userspace exclusively uses sync_files for synchronization then
+nothing in the kernel actually processes fence updates as interrupts
+for fences are masked and ignored if the kernel does not indicate to the
+SVGA device that there are active waiters.
 
-Resources behind a PCI host bridge can be relocated by a certain offset
-in the kernel's CPU address range used for I/O. The framebuffer memory
-range stored in screen_info refers to the CPU addresses as seen during
-boot (where the offset is 0). During boot up, firmware may assign a
-different memory offset to the PCI host bridge and thereby relocating
-the framebuffer address of the PCI graphics device as seen by the kernel.
-The information in screen_info must be updated as well.
+This oversight results in a bug where the entire GUI can freeze waiting
+on a sync_file that will never be signalled as we've masked the interrupts
+to signal its completion. This bug is incredibly racy as any process which
+interacts with the fencing code via the 3D stack can process the stuck
+fences on behalf of the stuck process causing it to run again. Even a
+simple app like eglinfo is enough to resume the stuck process. Usually
+this bug is seen at a login screen like GDM because there are no other
+3D apps running.
 
-The helper pcibios_bus_to_resource() performs the relocation of the
-screen_info's framebuffer resource (given in PCI bus addresses). The
-result matches the I/O-memory resource of the PCI graphics device (given
-in CPU addresses). As before, we store away the information necessary to
-later update the information in screen_info itself.
+By adding a seqno waiter we re-enable interrupt based processing of the
+dma_fences associated with the sync_file which is signalled as part of a
+dma_fence_callback.
 
-Commit 78aa89d1dfba ("firmware/sysfb: Update screen_info for relocated
-EFI framebuffers") added the code for updating screen_info. It is based
-on similar functionality that pre-existed in efifb. Efifb uses a pointer
-to the PCI resource, while the newer code does a memcpy of the region.
-Hence efifb sees any updates to the PCI resource and avoids the issue.
+This has likely been broken since it was initially added to the kernel in
+2017 but has gone unnoticed until mutter recently started using sync_files
+heavily over the course of 2024 as part of their explicit sync support.
 
-v3:
-- Only use struct pci_bus_region for PCI bus addresses (Bjorn)
-- Clarify address semantics in commit messages and comments (Bjorn)
-v2:
-- Fixed tags (Takashi, Ivan)
-- Updated information on efifb
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reported-by: "Ivan T. Ivanov" <iivanov@suse.de>
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1240696
-Tested-by: "Ivan T. Ivanov" <iivanov@suse.de>
-Fixes: 78aa89d1dfba ("firmware/sysfb: Update screen_info for relocated EFI framebuffers")
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.9+
-Link: https://lore.kernel.org/r/20250528080234.7380-1-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c906965dee22 ("drm/vmwgfx: Add export fence to file descriptor support")
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250228200633.642417-1-ian.forbes@broadcom.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/screen_info_pci.c |   79 +++++++++++++++++++++++++---------------
- 1 file changed, 50 insertions(+), 29 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 26 +++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
---- a/drivers/video/screen_info_pci.c
-+++ b/drivers/video/screen_info_pci.c
-@@ -7,8 +7,8 @@
- 
- static struct pci_dev *screen_info_lfb_pdev;
- static size_t screen_info_lfb_bar;
--static resource_size_t screen_info_lfb_offset;
--static struct resource screen_info_lfb_res = DEFINE_RES_MEM(0, 0);
-+static resource_size_t screen_info_lfb_res_start; // original start of resource
-+static resource_size_t screen_info_lfb_offset; // framebuffer offset within resource
- 
- static bool __screen_info_relocation_is_valid(const struct screen_info *si, struct resource *pr)
- {
-@@ -31,7 +31,7 @@ void screen_info_apply_fixups(void)
- 	if (screen_info_lfb_pdev) {
- 		struct resource *pr = &screen_info_lfb_pdev->resource[screen_info_lfb_bar];
- 
--		if (pr->start != screen_info_lfb_res.start) {
-+		if (pr->start != screen_info_lfb_res_start) {
- 			if (__screen_info_relocation_is_valid(si, pr)) {
- 				/*
- 				 * Only update base if we have an actual
-@@ -47,46 +47,67 @@ void screen_info_apply_fixups(void)
- 	}
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index 8db3b3ddbb644..0d29fe6f60358 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -3621,6 +3621,23 @@ static int vmw_execbuf_tie_context(struct vmw_private *dev_priv,
+ 	return 0;
  }
  
-+static int __screen_info_lfb_pci_bus_region(const struct screen_info *si, unsigned int type,
-+					    struct pci_bus_region *r)
++/*
++ * DMA fence callback to remove a seqno_waiter
++ */
++struct seqno_waiter_rm_context {
++	struct dma_fence_cb base;
++	struct vmw_private *dev_priv;
++};
++
++static void seqno_waiter_rm_cb(struct dma_fence *f, struct dma_fence_cb *cb)
 +{
-+	u64 base, size;
++	struct seqno_waiter_rm_context *ctx =
++		container_of(cb, struct seqno_waiter_rm_context, base);
 +
-+	base = __screen_info_lfb_base(si);
-+	if (!base)
-+		return -EINVAL;
-+
-+	size = __screen_info_lfb_size(si, type);
-+	if (!size)
-+		return -EINVAL;
-+
-+	r->start = base;
-+	r->end = base + size - 1;
-+
-+	return 0;
++	vmw_seqno_waiter_remove(ctx->dev_priv);
++	kfree(ctx);
 +}
 +
- static void screen_info_fixup_lfb(struct pci_dev *pdev)
- {
- 	unsigned int type;
--	struct resource res[SCREEN_INFO_MAX_RESOURCES];
--	size_t i, numres;
-+	struct pci_bus_region bus_region;
- 	int ret;
-+	struct resource r = {
-+		.flags = IORESOURCE_MEM,
-+	};
-+	const struct resource *pr;
- 	const struct screen_info *si = &screen_info;
+ int vmw_execbuf_process(struct drm_file *file_priv,
+ 			struct vmw_private *dev_priv,
+ 			void __user *user_commands, void *kernel_commands,
+@@ -3814,6 +3831,15 @@ int vmw_execbuf_process(struct drm_file *file_priv,
+ 		} else {
+ 			/* Link the fence with the FD created earlier */
+ 			fd_install(out_fence_fd, sync_file->file);
++			struct seqno_waiter_rm_context *ctx =
++				kmalloc(sizeof(*ctx), GFP_KERNEL);
++			ctx->dev_priv = dev_priv;
++			vmw_seqno_waiter_add(dev_priv);
++			if (dma_fence_add_callback(&fence->base, &ctx->base,
++						   seqno_waiter_rm_cb) < 0) {
++				vmw_seqno_waiter_remove(dev_priv);
++				kfree(ctx);
++			}
+ 		}
+ 	}
  
- 	if (screen_info_lfb_pdev)
- 		return; // already found
- 
- 	type = screen_info_video_type(si);
--	if (type != VIDEO_TYPE_EFI)
--		return; // only applies to EFI
-+	if (!__screen_info_has_lfb(type))
-+		return; // only applies to EFI; maybe VESA
- 
--	ret = screen_info_resources(si, res, ARRAY_SIZE(res));
-+	ret = __screen_info_lfb_pci_bus_region(si, type, &bus_region);
- 	if (ret < 0)
- 		return;
--	numres = ret;
- 
--	for (i = 0; i < numres; ++i) {
--		struct resource *r = &res[i];
--		const struct resource *pr;
--
--		if (!(r->flags & IORESOURCE_MEM))
--			continue;
--		pr = pci_find_resource(pdev, r);
--		if (!pr)
--			continue;
--
--		/*
--		 * We've found a PCI device with the framebuffer
--		 * resource. Store away the parameters to track
--		 * relocation of the framebuffer aperture.
--		 */
--		screen_info_lfb_pdev = pdev;
--		screen_info_lfb_bar = pr - pdev->resource;
--		screen_info_lfb_offset = r->start - pr->start;
--		memcpy(&screen_info_lfb_res, r, sizeof(screen_info_lfb_res));
--	}
-+	/*
-+	 * Translate the PCI bus address to resource. Account
-+	 * for an offset if the framebuffer is behind a PCI host
-+	 * bridge.
-+	 */
-+	pcibios_bus_to_resource(pdev->bus, &r, &bus_region);
-+
-+	pr = pci_find_resource(pdev, &r);
-+	if (!pr)
-+		return;
-+
-+	/*
-+	 * We've found a PCI device with the framebuffer
-+	 * resource. Store away the parameters to track
-+	 * relocation of the framebuffer aperture.
-+	 */
-+	screen_info_lfb_pdev = pdev;
-+	screen_info_lfb_bar = pr - pdev->resource;
-+	screen_info_lfb_offset = r.start - pr->start;
-+	screen_info_lfb_res_start = bus_region.start;
- }
- DECLARE_PCI_FIXUP_CLASS_HEADER(PCI_ANY_ID, PCI_ANY_ID, PCI_BASE_CLASS_DISPLAY, 16,
- 			       screen_info_fixup_lfb);
+-- 
+2.39.5
+
 
 
