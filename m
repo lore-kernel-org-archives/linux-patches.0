@@ -1,142 +1,88 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3871222422F
-	for <patches@lists.linux.dev>; Mon, 23 Jun 2025 22:21:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AEA225A47;
+	Mon, 23 Jun 2025 22:21:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717279; cv=none; b=pbCF7+3InsiJE1bhchni40Ofz42ggY0fwyL7J60mV+79ItgAKSOOEe00RHMhAy50VQht+WaMTR0dsDVLFDvX9Vd0ubthaiA2klF3w+ZGq2kGpm7gr2+yqfGKicqnYoYAvDxKbKVYeFRv6rh9Gq5HQ18AckXNpAO5+9JQt9GU1uk=
+	t=1750717280; cv=none; b=FW89XtM+w2eoxaIt0xdHjqifnYIZB4hnN4yw/gRe5lEUruQpcazr5dZqYoug75Iwc9nAulO+2RsREDRc4i5wwCmUB2qtrylkHn/BC22sAfHrxzsjOzD2tz2Y+VZHHJZyGcT/O1lZ3lk+1DXfQd/R57TCx7501mnspOOequcyQ+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717279; c=relaxed/simple;
-	bh=yIlAvRsgijXTH3oVxeZJ0I9VIfkkLUzhzk6JrA+Phs4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gz6XbRCNOpUF0Jqb1M+VlCshNsoAr66DGwk0L32hcadmN3T0uOaOF07Ir/B5Muh7RKvWrD4STbbNo/k8X2byx4efGEKr+Vo6ip+JXgj7ZJoZrH9hFnLE9iYKndWseiS8mWhNqYkrB+ahykTBDiY6ttjbnDJ1t6pjZ0VJtHxlGBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I6hjlZsZ; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750717280; c=relaxed/simple;
+	bh=X52zl2bdaQ4UjnDohsNoaxxUJokEWXa2GXPCjfHuaiA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Mc9EaA66U0UgZoOxY4SR0p5xxz2a9SDkOn45bzpbmnJ8kXNjpQh0YKj+Uz/omtI0RSw4j/sV8GUsjoCNaFyAJ3OLvbcg7qfRa0rvNyOyuOEAHA6Syzx5I8RT1JUvdItm7N+rXboU9H4JTK5P3W9vOJPyDWjueMrBz5bWMvVCWmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxWvGLTA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I6hjlZsZ"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2360ff7ac1bso33611865ad.3
-        for <patches@lists.linux.dev>; Mon, 23 Jun 2025 15:21:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750717276; x=1751322076; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=XiS6dENs8Ta5fbquyxweL8AOiocCYE0d6u4W3pkICBc=;
-        b=I6hjlZsZKbX+uUi5lXO5WmzUOkVF+OUXj4AE23wEE389y/B81ACrHjwc2s4jeH6LHP
-         zXymEbTPe0NRuBKFt8wsi0DdI9xlmX4IDykBXndfGnWXxm3bsNf2UOa0xRrtqKGRFCZa
-         tSa+8iVh8cx/4Ir0DtChEP66xGch5YWPMZfhGQTG9wgo9xN1gdKJffILHpEn0oeewjJ+
-         W7SuhOp4oNesNEH7DMENQIwQFSU5dtSIMDM1giAmMEUkALFHgtkWcwG5l57eUQBqTaza
-         xumn8YwpqPgnp2Afir3+N29C1tzzETCTtpB3PjIdvPvJNlKjUSJcK1kcaseFWgvSfY5n
-         aTjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750717276; x=1751322076;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XiS6dENs8Ta5fbquyxweL8AOiocCYE0d6u4W3pkICBc=;
-        b=WNCK+JGeV6bIsybHMMIKP5U/N2czD3uMbKqoA525JEbMCqDRvwN9UyzV5BTE4DbGs1
-         cIA4CEUS5vTbTFzKyIlN2RpF27Qh9S/bGjyWoKjGjOJg96lUzZETVV3OX3AeyEigrgNe
-         cUBlOZWHnty4mXXoZNModdA+91lfsOBfoIHPdNkEsZNvMxaVMQhyuOx4Rbm3gItFneWL
-         drFosOTC2vV9Qs4sJhkmH8LLB4tfFNakR1yCErOhVuY01jhBiTA/jP1fCiSRjseZVJ3z
-         O03bekWvLLjr8ettjj7OCZXAsXozx+p7R49W4FGgnFQlTtVIqxT0Y7M4WqIMo/EVveRj
-         ZmXQ==
-X-Gm-Message-State: AOJu0YxCMiztdKofjZQxyoDqL0HXDwsOQ5V3QWsaBsVucHsFI0u5WTlh
-	6+E2rUN/rTyzIpowZU+5sCbqXH2bOKoodLAKRz1pbG9cnATkMuUUFcio
-X-Gm-Gg: ASbGncvhAtOP5tfGnfIeUIDRcQwyYlEXd7WafGT1MuXop1ZAu5EyliQVVKpXHYXHKCd
-	Dqe+pAJlbSQ0GGY1dQkGQ4iqMcEEy9O5WIVvGhIqVUDdOgmoj5vJ/tZtvCuEeH2CYcxz1I8qK3g
-	hp/aBSG7I8maVQCxkPyhP2ByjNJzcek/jwMUA5pidxMa/BTPUysryN9FMBgZNcGzEIatMcn6s6a
-	L0Io/dt1KxdpdlqHoq0qVxNED1uy3mLo3H+lqoMqpHXRQxyLpissL28shf666BcOum9OLqOeeol
-	+03dwjalbGiDvV5ceWcc50KYS49NMbca0/eRePoQQ7nrJ/zfpddIFaRDArfUoZyjb3ql1Gonrsd
-	V8rmRexcrjgqCoKKopSacC0Ko
-X-Google-Smtp-Source: AGHT+IGr2AcmdyY2sfeGodl5CTvBNL0fJLMbZp0mo00ae2s6ff+c4zwxl6fyTs+rSOHIraRfHmozMw==
-X-Received: by 2002:a17:902:ce0b:b0:236:6f7b:bf33 with SMTP id d9443c01a7336-237d99984e3mr269189725ad.24.1750717276533;
-        Mon, 23 Jun 2025 15:21:16 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d86633cesm90570795ad.154.2025.06.23.15.21.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jun 2025 15:21:15 -0700 (PDT)
-Message-ID: <2161be3b-1223-40bb-93fd-5cf3a2f86f89@gmail.com>
-Date: Mon, 23 Jun 2025 15:21:13 -0700
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxWvGLTA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82065C4CEF6;
+	Mon, 23 Jun 2025 22:21:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1750717279;
+	bh=X52zl2bdaQ4UjnDohsNoaxxUJokEWXa2GXPCjfHuaiA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=JxWvGLTAU1jXI2jZW/dxpYnOjiZrRA2NkpDB5XQa3q0dNB1s1RbWOqGs2CptLdVjS
+	 0lIhRej4xbleqfYE6DK4znVKV4oFVw30Ev6GRn8brrNzOzIVmh7t6DOmi4D7i3UK2L
+	 V2nMlFis7KHomcZsDMO87gxYexYhI9SSoPjQG8y0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Samuel Williams <sam8641@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 394/508] wifi: mt76: mt7921: add 160 MHz AP for mt7922 device
+Date: Mon, 23 Jun 2025 15:07:19 +0200
+Message-ID: <20250623130654.961901436@linuxfoundation.org>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/290] 6.6.95-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250623130626.910356556@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- WlfRzlpjIPmdjgoicA==
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 6/23/25 06:04, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.95 release.
-> There are 290 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 25 Jun 2025 13:05:53 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.95-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+------------------
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Samuel Williams <sam8641@gmail.com>
+
+[ Upstream commit 7011faebe543f8f094fdb3281d0ec9e1eab81309 ]
+
+This allows mt7922 in hostapd mode to transmit up to 1.4 Gbps.
+
+Signed-off-by: Samuel Williams <sam8641@gmail.com>
+Link: https://patch.msgid.link/20250511005316.1118961-1-sam8641@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index 5070cc23917bd..7adda1718d6ac 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -104,6 +104,11 @@ mt7921_init_he_caps(struct mt7921_phy *phy, enum nl80211_band band,
+ 			he_cap_elem->phy_cap_info[9] |=
+ 				IEEE80211_HE_PHY_CAP9_TX_1024_QAM_LESS_THAN_242_TONE_RU |
+ 				IEEE80211_HE_PHY_CAP9_RX_1024_QAM_LESS_THAN_242_TONE_RU;
++
++			if (is_mt7922(phy->mt76->dev)) {
++				he_cap_elem->phy_cap_info[0] |=
++					IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_160MHZ_IN_5G;
++			}
+ 			break;
+ 		case NL80211_IFTYPE_STATION:
+ 			he_cap_elem->mac_cap_info[1] |=
 -- 
-Florian
+2.39.5
+
+
+
