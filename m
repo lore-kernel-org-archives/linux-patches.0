@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613F84C74;
-	Mon, 23 Jun 2025 22:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301624C74;
+	Mon, 23 Jun 2025 22:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716115; cv=none; b=mzBC2kw8FCbReObs6bZm7ijPN3ai6/9u+IKLqfWLes9ZAYTvFmB1FNs63HNYiMFay3My4s/lswdk3HqY2WaTLlMtmZilpUyX99T87PNlzj2034nHijYEY/qls2FqnhAmTyLRUqxMwP7OtIdxOHq0pmmFCIJZynaKvUl4JQD9aLI=
+	t=1750716118; cv=none; b=a2tCFjYvsBh+3rV2Z3E1UD7SqWcbIZ058fk7kf66fkqeq/4IPkpG1pkKlCigGLUPHWQi2hg+sYBCnJmhs6Yp6aNQ6SdJgh6AjvwHYSmV9yHrlicoqqJ+HMXtcrViAYsglq7Cauto7n16mGbUbpJ5Zc+NyVJMN3SRaIg0aZzuZPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716115; c=relaxed/simple;
-	bh=nWn96qChYQi06BGy8JuRdCRmPnHT5lUbnTnYIIOJeps=;
+	s=arc-20240116; t=1750716118; c=relaxed/simple;
+	bh=Bk9hNytm/BpNueayOVSOtcIHL1/YEV/KXf3fS/ixxjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=INbdmfzeXZcUUudtsdO7HtH6A44CngX+ZpeYg4lNst0Z4LDR3H9zh8PL2tNLn1Y5IG6es27LE2/4rJFTyxiqmJbgHpmjQfIIdZHSUmE+woxBWYvHhHjD4Ud/K9DsSUYQAz/P8O3pJFXsYIkZi3cHKqstWBqT+3oKepOGMjQO+1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1QAJ5Og; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jF/wjVz5mDTtZPv+4nMldseqF2eyxccbMlnlECoQOz8kp8uqOd+IH/wFyxwcN5edpAfeW9+lO4QHZXXgeG/2Qaqxs4JfYqZPkDyjeJAN8OoPLHIrBqJP/Zj1iFUM6Obuw789U9A94IFWQeT+Q31b5uowCuWPHmpxBE9nBsechMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmJnO+Fv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1QAJ5Og"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2A2C4CEEA;
-	Mon, 23 Jun 2025 22:01:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmJnO+Fv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AADC4CEEA;
+	Mon, 23 Jun 2025 22:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716115;
-	bh=nWn96qChYQi06BGy8JuRdCRmPnHT5lUbnTnYIIOJeps=;
+	s=korg; t=1750716117;
+	bh=Bk9hNytm/BpNueayOVSOtcIHL1/YEV/KXf3fS/ixxjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K1QAJ5OgzxObIWDTseDOQ3cGOKp6E5wRfBTyzsfdmCyzQUCm7qiMXVNud9J0K2Ly8
-	 4dfuOd+0/6ITL6V6NKVC40Q9/i2Y+NUdqW25DDRHoBmRPYTszO8t/FwkuuVEVVQ//s
-	 ap+SzISuePDmEEUn7srArCrIQSHc/MEba+xrWmB8=
+	b=qmJnO+FvcW0wrHOIwv2XqG2RZVo/mZlocHzwabIsGdlk2bFGRvBB8yZ3tIp20zcx7
+	 ZjYj0v3Yw2YcLtJGgsKZIpF5J4Pebv7O1gPiuNjq2luSsoQkAKeGTVFZbOXmvxp+rt
+	 0c3Akv2xa/xrI7doU7V0sWi1zEAtfdmnl8PhuLBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Hongbo Li <lihongbo22@huawei.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.6 241/290] erofs: remove unused trace event erofs_destroy_inode
-Date: Mon, 23 Jun 2025 15:08:22 +0200
-Message-ID: <20250623130634.177232343@linuxfoundation.org>
+	Amit Sunil Dhamne <amitsd@google.com>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Kyle Tso <kyletso@google.com>,
+	stable <stable@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 281/508] usb: typec: tcpm/tcpci_maxim: Fix bounds check in process_rx()
+Date: Mon, 23 Jun 2025 15:05:26 +0200
+Message-ID: <20250623130652.172995072@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +49,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Amit Sunil Dhamne <amitsd@google.com>
 
-commit 30b58444807c93bffeaba7d776110f2a909d2f9a upstream.
+commit 0736299d090f5c6a1032678705c4bc0a9511a3db upstream.
 
-The trace event `erofs_destroy_inode` was added but remains unused. This
-unused event contributes approximately 5KB to the kernel module size.
+Register read of TCPC_RX_BYTE_CNT returns the total size consisting of:
 
-Reported-by: Steven Rostedt <rostedt@goodmis.org>
-Closes: https://lore.kernel.org/r/20250612224906.15000244@batman.local.home
-Fixes: 13f06f48f7bf ("staging: erofs: support tracepoint")
-Cc: stable@vger.kernel.org
-Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250617054056.3232365-1-hsiangkao@linux.alibaba.com
+  PD message (pending read) size + 1 Byte for Frame Type (SOP*)
+
+This is validated against the max PD message (`struct pd_message`) size
+without accounting for the extra byte for the frame type. Note that the
+struct pd_message does not contain a field for the frame_type. This
+results in false negatives when the "PD message (pending read)" is equal
+to the max PD message size.
+
+Fixes: 6f413b559f86 ("usb: typec: tcpci_maxim: Chip level TCPC driver")
+Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Reviewed-by: Kyle Tso <kyletso@google.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/stable/20250502-b4-new-fix-pd-rx-count-v1-1-e5711ed09b3d%40google.com
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250502-b4-new-fix-pd-rx-count-v1-1-e5711ed09b3d@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/erofs.h |   18 ------------------
- 1 file changed, 18 deletions(-)
+ drivers/usb/typec/tcpm/tcpci_maxim.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/trace/events/erofs.h
-+++ b/include/trace/events/erofs.h
-@@ -237,24 +237,6 @@ DEFINE_EVENT(erofs__map_blocks_exit, z_e
- 	TP_ARGS(inode, map, flags, ret)
- );
+--- a/drivers/usb/typec/tcpm/tcpci_maxim.c
++++ b/drivers/usb/typec/tcpm/tcpci_maxim.c
+@@ -171,7 +171,8 @@ static void process_rx(struct max_tcpci_
+ 		return;
+ 	}
  
--TRACE_EVENT(erofs_destroy_inode,
--	TP_PROTO(struct inode *inode),
--
--	TP_ARGS(inode),
--
--	TP_STRUCT__entry(
--		__field(	dev_t,		dev		)
--		__field(	erofs_nid_t,	nid		)
--	),
--
--	TP_fast_assign(
--		__entry->dev	= inode->i_sb->s_dev;
--		__entry->nid	= EROFS_I(inode)->nid;
--	),
--
--	TP_printk("dev = (%d,%d), nid = %llu", show_dev_nid(__entry))
--);
--
- #endif /* _TRACE_EROFS_H */
- 
-  /* This part must be outside protection */
+-	if (count > sizeof(struct pd_message) || count + 1 > TCPC_RECEIVE_BUFFER_LEN) {
++	if (count > sizeof(struct pd_message) + 1 ||
++	    count + 1 > TCPC_RECEIVE_BUFFER_LEN) {
+ 		dev_err(chip->dev, "Invalid TCPC_RX_BYTE_CNT %d\n", count);
+ 		return;
+ 	}
 
 
