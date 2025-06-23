@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BCB22257E;
-	Mon, 23 Jun 2025 21:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96E4223335;
+	Mon, 23 Jun 2025 21:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713504; cv=none; b=P7x4kde4SAgNizZWP1dWWIq1G6uGCwhHolYl/NJTOdB/tpJiT67wOFVnNqXGaz3gV/fjEtftclDjGpzt19iLMgxzRfsdnASudU5Tii2YYemVnsXvUoSv48Z2i9QaBZcZGxdYzKihL5RLUJ3O9+kpqYNo+BxOrUhDFuBfQ4XqDgo=
+	t=1750713506; cv=none; b=J+U4rvB9bjoClEXqKDVwXG0IkKoxDuIvXXP5mdSKYBV4WpmMV5H0wbv0qs3QVoc0PIRRjMLNFeZyR358zmsompvqfgZ64rMdyPOOFCuR6PSqkv566D/kyGwTsd3e5ajl95U9lCEqNQ+RZt1eXH4AHjHcwFLbSBxSTEX1CoSIBVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713504; c=relaxed/simple;
-	bh=zs0f2cevaVHNV0z9+hvP0+BrXBt7EerfeBZc9MUVYW8=;
+	s=arc-20240116; t=1750713506; c=relaxed/simple;
+	bh=6pEoo+EYYSNyMZJD0iLVfOtbQJf2KucKIaTSsK/gXg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oc1PO1Hxlot8qgu1d+DHhsj33FAnv2KsyE4IayAHSOrGCIz1kjifo6TOVwKHH8mqyZ6h8BOvEP5CmAd+rFwbwnzpFJjjt7CoYqmM1IDWRfqVP1ZEEKButdYj8fApu7u/OnfFYewJ4byIQJDDr2aPRxO9bchR3YaApgYl+yfGao0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBW/BK3Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BiJU6k4KTwoF0uScvBXgP72enTGIvK0h7l4rP5DCAYrW5nqmNAhUrH8vwUDoJ1Z3DBT2liQ+ei8cPMzmY+XpsybF6PomDjHsbjiGfjseGvsQAS4QxJ06AXNzNQmAygzBD0UmCREJ7qsJrlQzDFky1I7QIvMvBK0DEjToTdMlSXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdaSZct4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBW/BK3Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25F4C4CEED;
-	Mon, 23 Jun 2025 21:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdaSZct4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C3AC4CEEA;
+	Mon, 23 Jun 2025 21:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713504;
-	bh=zs0f2cevaVHNV0z9+hvP0+BrXBt7EerfeBZc9MUVYW8=;
+	s=korg; t=1750713506;
+	bh=6pEoo+EYYSNyMZJD0iLVfOtbQJf2KucKIaTSsK/gXg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBW/BK3ZELJ/qHFcWQvcxzeQelpy9/0sKVPTctoH1fpMPbNi44A9enan7cgPfKtEN
-	 NtyFgJ1NyriqSgwVty8LxQRykeV4x1/IXF+GTCYmJqB+vJmiTSZ5ypguSwggqwT3K8
-	 B2nGklbUwjzXZgskgicLiTPnWXJ2Sdt2Hl14cCYc=
+	b=KdaSZct4YZDUDlx5OyDCQXPcFOGP8T7o0aqjCixSWQvx1teVwgqZdsfAw0gU21nPb
+	 sXHFxuEyelIRgKlmvZ+CS52lrib/Ab/OXPnXYPCSH65MRyyxiYqK3QxUMAT2zyxVaZ
+	 xVrJEG0nW66VPa+FKyX5ykdb3/QIWNa2R4Txf3NY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 067/414] media: imx-jpeg: Reset slot data pointers when freed
-Date: Mon, 23 Jun 2025 15:03:24 +0200
-Message-ID: <20250623130643.746926380@linuxfoundation.org>
+	Zeal Robot <zealci@zte.com.cn>,
+	zhang songyi <zhang.songyi@zte.com.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 131/411] Input: synaptics-rmi4 - convert to use sysfs_emit() APIs
+Date: Mon, 23 Jun 2025 15:04:35 +0200
+Message-ID: <20250623130636.868999039@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +48,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: zhang songyi <zhang.songyi@zte.com.cn>
 
-commit faa8051b128f4b34277ea8a026d02d83826f8122 upstream.
+[ Upstream commit 9dedc915937c33302df7fcab01c45e7936d6195a ]
 
-Ensure that the slot data pointers are reset to NULL and handles are
-set to 0 after freeing the coherent memory. This makes he function
-mxc_jpeg_alloc_slot_data() and mxc_jpeg_free_slot_data() safe to be
-called multiple times.
+Follow the advice of the Documentation/filesystems/sysfs.rst and show()
+should only use sysfs_emit() or sysfs_emit_at() when formatting the value
+to be returned to user space.
 
-Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: zhang songyi <zhang.songyi@zte.com.cn>
+Link: https://lore.kernel.org/r/20220927070936.258300-1-zhang.songyi@zte.com.cn
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Stable-dep-of: ca39500f6af9 ("Input: synaptics-rmi - fix crash with unsupported versions of F34")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/input/rmi4/rmi_f34.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -758,16 +758,22 @@ static void mxc_jpeg_free_slot_data(stru
- 	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
- 			  jpeg->slot_data.desc,
- 			  jpeg->slot_data.desc_handle);
-+	jpeg->slot_data.desc = NULL;
-+	jpeg->slot_data.desc_handle = 0;
+diff --git a/drivers/input/rmi4/rmi_f34.c b/drivers/input/rmi4/rmi_f34.c
+index e5dca9868f87f..c26808f10827a 100644
+--- a/drivers/input/rmi4/rmi_f34.c
++++ b/drivers/input/rmi4/rmi_f34.c
+@@ -321,13 +321,13 @@ static ssize_t rmi_driver_bootloader_id_show(struct device *dev,
+ 		f34 = dev_get_drvdata(&fn->dev);
  
- 	/* free descriptor for encoder configuration phase / decoder DHT */
- 	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
- 			  jpeg->slot_data.cfg_desc,
- 			  jpeg->slot_data.cfg_desc_handle);
-+	jpeg->slot_data.cfg_desc_handle = 0;
-+	jpeg->slot_data.cfg_desc = NULL;
+ 		if (f34->bl_version == 5)
+-			return scnprintf(buf, PAGE_SIZE, "%c%c\n",
+-					 f34->bootloader_id[0],
+-					 f34->bootloader_id[1]);
++			return sysfs_emit(buf, "%c%c\n",
++					  f34->bootloader_id[0],
++					  f34->bootloader_id[1]);
+ 		else
+-			return scnprintf(buf, PAGE_SIZE, "V%d.%d\n",
+-					 f34->bootloader_id[1],
+-					 f34->bootloader_id[0]);
++			return sysfs_emit(buf, "V%d.%d\n",
++					  f34->bootloader_id[1],
++					  f34->bootloader_id[0]);
+ 	}
  
- 	/* free configuration stream */
- 	dma_free_coherent(jpeg->dev, MXC_JPEG_MAX_CFG_STREAM,
- 			  jpeg->slot_data.cfg_stream_vaddr,
- 			  jpeg->slot_data.cfg_stream_handle);
-+	jpeg->slot_data.cfg_stream_vaddr = NULL;
-+	jpeg->slot_data.cfg_stream_handle = 0;
+ 	return 0;
+@@ -346,7 +346,7 @@ static ssize_t rmi_driver_configuration_id_show(struct device *dev,
+ 	if (fn) {
+ 		f34 = dev_get_drvdata(&fn->dev);
  
- 	jpeg->slot_data.used = false;
+-		return scnprintf(buf, PAGE_SIZE, "%s\n", f34->configuration_id);
++		return sysfs_emit(buf, "%s\n", f34->configuration_id);
+ 	}
+ 
+ 	return 0;
+@@ -499,7 +499,7 @@ static ssize_t rmi_driver_update_fw_status_show(struct device *dev,
+ 	if (data->f34_container)
+ 		update_status = rmi_f34_status(data->f34_container);
+ 
+-	return scnprintf(buf, PAGE_SIZE, "%d\n", update_status);
++	return sysfs_emit(buf, "%d\n", update_status);
  }
+ 
+ static DEVICE_ATTR(update_fw_status, 0444,
+-- 
+2.39.5
+
 
 
