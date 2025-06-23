@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77D9C2E0;
-	Mon, 23 Jun 2025 21:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B73AC2E0;
+	Mon, 23 Jun 2025 21:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714323; cv=none; b=jD3mScUKQeE2+Ej9YyoSeUbIWX781vvUY9XNoGLqRo969uodotABzgWKYy7cOZTSzZbrU6dJtmntIphLPnK4up6Rl4GCnO+grBoIMde4D2w6WMgEeyg/GjzyHP41VK+X+CWbLavJcZQuQjCl0B3KJ7WOtVHAa7wM1dujL/Vv+60=
+	t=1750714326; cv=none; b=kqS2Pfx50aunktQI+j1V5kF9GA2bEUdPQDIYcgpz7+yqQKTJ9cwTx2mOzv1w6jfMSXMntcUiDA/LYREVxkhEX8OQ+qa1mHhQx3UE5YLimn6weFQvDPdlwZ7uC/SxHJcOSdXWTUDIzU88UyHe0AewHYfsrOZP1C280Gl2xHYnOos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714323; c=relaxed/simple;
-	bh=nF+fcyq9WU773IWa0Awgs21XXQqMij/bkFq9Vbwad1o=;
+	s=arc-20240116; t=1750714326; c=relaxed/simple;
+	bh=t6nG/YLeJOoYcVxWwMKvEcxfjMiTT3ddKdCZHT4J1h8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ihDX33g/qrq0+0WrWvlS2ljDinYreEn2W7rMnMkGLijDbhC/ZwpdzxYV+wSfi0YfjckAPUDiBi85hWhzrLpIiybsKTpf8QBIrz/BuhE9pMU0KKm/i7tPkJbWK0TsVdHuGsILZd67vN4IKAYZ44IqZ1lkjJaYj8Z5HS+4IlMinpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfk4jhn8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VT41sYQebm1Y2m48UqIv6ajBnW+Z7imehAOVdJg/KNYD8wAi56NVdGzLtBz+z7FBm7xZ9QRtbsImYxLtiNVNYjdM1yt4y3zT9C2oUe7m3QzUTQhmn+qMXveurS7twV/FIqJ2u9/7y6VivJFYzX0rRHXQQfHTf2zujSRj+lFsf8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejapOw3s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfk4jhn8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FB2FC4CEEA;
-	Mon, 23 Jun 2025 21:32:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejapOw3s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B24C4CEEA;
+	Mon, 23 Jun 2025 21:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714323;
-	bh=nF+fcyq9WU773IWa0Awgs21XXQqMij/bkFq9Vbwad1o=;
+	s=korg; t=1750714326;
+	bh=t6nG/YLeJOoYcVxWwMKvEcxfjMiTT3ddKdCZHT4J1h8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zfk4jhn878lhjPR4s0SwL9f1oMTsOqSeMeJRAAOjF5BNiIMiKaDRa5uLcRrscu0Fh
-	 70UGAkp89N16ZBoEoEL6S8eE52AFtWa7FEwy9y1jxrMoIuv6rlrvMMKItWU/Nd0935
-	 6/1M6Hcmw3eTKh9/f6Dvdnt7OKZt+aP9rY7E+sug=
+	b=ejapOw3sNxeK5Sa2RePKbD2dFtxqv2XszPEwRC0zLsYoNC8t2KTq7oBZ9vSwfV2TZ
+	 7j1DTMrmey5qN7vAEaGt94NmMLri0sMuQ7L9E8lbHOvURPZcq31DvnHZqGQGQ6O2Dd
+	 zErqMIjwU5dTDVBY7Zqa3aIIm+5/DH0gK1m8BjQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.10 199/355] mtd: rawnand: sunxi: Add randomizer configuration in sunxi_nfc_hw_ecc_write_chunk
-Date: Mon, 23 Jun 2025 15:06:40 +0200
-Message-ID: <20250623130632.647567560@linuxfoundation.org>
+	Peng Fan <peng.fan@nxp.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 130/290] gpiolib: of: Add polarity quirk for s5m8767
+Date: Mon, 23 Jun 2025 15:06:31 +0200
+Message-ID: <20250623130630.833125740@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,40 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Peng Fan <peng.fan@nxp.com>
 
-commit 44ed1f5ff73e9e115b6f5411744d5a22ea1c855b upstream.
+[ Upstream commit 4e310626eb4df52a31a142c1360fead0fcbd3793 ]
 
-The function sunxi_nfc_hw_ecc_write_chunk() calls the
-sunxi_nfc_hw_ecc_write_chunk(), but does not call the configuration
-function sunxi_nfc_randomizer_config(). Consequently, the randomization
-might not conduct correctly, which will affect the lifespan of NAND flash.
-A proper implementation can be found in sunxi_nfc_hw_ecc_write_page_dma().
+This is prepare patch for switching s5m8767 regulator driver to
+use GPIO descriptor. DTS for exynos5250 spring incorrectly specifies
+"active low" polarity for the DVS and DS line. But per datasheet,
+they are actually active high. So add polarity quirk for it.
 
-Add the sunxi_nfc_randomizer_config() to config randomizer.
-
-Fixes: 4be4e03efc7f ("mtd: nand: sunxi: add randomizer support")
-Cc: stable@vger.kernel.org # v4.6
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20250327004945.563765-1-peng.fan@oss.nxp.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/sunxi_nand.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpio/gpiolib-of.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/mtd/nand/raw/sunxi_nand.c
-+++ b/drivers/mtd/nand/raw/sunxi_nand.c
-@@ -1045,6 +1045,7 @@ static int sunxi_nfc_hw_ecc_write_chunk(
- 	if (ret)
- 		return ret;
- 
-+	sunxi_nfc_randomizer_config(nand, page, false);
- 	sunxi_nfc_randomizer_enable(nand);
- 	sunxi_nfc_hw_ecc_set_prot_oob_bytes(nand, oob, 0, bbm, page);
- 
+diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
+index a0a2a0f75bba4..c1e83b2926ae4 100644
+--- a/drivers/gpio/gpiolib-of.c
++++ b/drivers/gpio/gpiolib-of.c
+@@ -203,6 +203,15 @@ static void of_gpio_try_fixup_polarity(const struct device_node *np,
+ 		 */
+ 		{ "lantiq,pci-xway",	"gpio-reset",	false },
+ #endif
++#if IS_ENABLED(CONFIG_REGULATOR_S5M8767)
++		/*
++		 * According to S5M8767, the DVS and DS pin are
++		 * active-high signals. However, exynos5250-spring.dts use
++		 * active-low setting.
++		 */
++		{ "samsung,s5m8767-pmic", "s5m8767,pmic-buck-dvs-gpios", true },
++		{ "samsung,s5m8767-pmic", "s5m8767,pmic-buck-ds-gpios", true },
++#endif
+ #if IS_ENABLED(CONFIG_TOUCHSCREEN_TSC2005)
+ 		/*
+ 		 * DTS for Nokia N900 incorrectly specified "active high"
+-- 
+2.39.5
+
 
 
