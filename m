@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEC32517A0;
-	Mon, 23 Jun 2025 13:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A55239E63;
+	Mon, 23 Jun 2025 13:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685044; cv=none; b=rIMMsfC9F8lIMbzmNrUQ13IgRYb2T3OXWYHgF2eDe3i3zjUkt8zAP+5AHNNcVJ0mRMi1gxoiazeRibZYeg/rEzyQ72ZMb9YKzO6YNo3w2a0P4BKL3dQ6lTpdFqL66KjwqzZE1Lx6n+rvxqMsBHw1nluZMgqhRwoMDwphUuLel5c=
+	t=1750685047; cv=none; b=WgwcU5tKPAF5TqzQTrbrbEus5tqqbgBy4nqW+XX56+80n36rjMzKoO0MZH+zbFAWvJEF0DbKZda3Tr2icqlVouqc6yWG6brMtKDhQiy6OpMp5CNltOLBdnzu2eTSGYa2gDavoxLith3HEutPC81/MjE0UycOPEmrwR1E74xxocA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685044; c=relaxed/simple;
-	bh=/jS8Wd+Jk+DX27th5xnmNB4wLZgH9D/AcQKNK8yae4Y=;
+	s=arc-20240116; t=1750685047; c=relaxed/simple;
+	bh=HeeYRwpJ/rF03VnGb6+Jcu1MR7xtCNkAlJwXoDIdtb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TlBZCNdDNGulq5/+e3c/zek5Kgv6Ra97eLWiT9r/RABGP4Q9WwlvIyAHwg5Az5ZCDlxLB197dhkQME6Yl2G/5hREkasr1U3K+UPTHes1KHPiD29JocSxZFtOPbx78xMyfrHu+vZZgMAAMZ9CQmUvdgt0cczol5YGRZSRBcTTJrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCtriK/A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IXTt1JNyx49KzrYHKls5BcRHRzP24ykwN4HiWqm7FaxC+z2dtsGffRPwpOqd/In1nDEKqbVDMpK9mNwBrp/9RhoNZIq/1ELV1hAtLZlABCm4XmpLMxiKa2i5D/M9sWufRQxuuA2so7BDo6id03stj+ZSXgphOqttTndAPl9Qykw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlYUiOA7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCtriK/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CBFC4CEEA;
-	Mon, 23 Jun 2025 13:24:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlYUiOA7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8910CC4CEEA;
+	Mon, 23 Jun 2025 13:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685044;
-	bh=/jS8Wd+Jk+DX27th5xnmNB4wLZgH9D/AcQKNK8yae4Y=;
+	s=korg; t=1750685046;
+	bh=HeeYRwpJ/rF03VnGb6+Jcu1MR7xtCNkAlJwXoDIdtb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DCtriK/ANHSqsSat6+9L5r7fl8ozb528VauSRsCH3DTmf8w7JiG5pilQO3HYt6efk
-	 YKg6YC6yHghzKl/uNl7yNaL0jvx+NaX8q5r1T2ZK1gcIk4gmyqGNm7Loe/x9qcs5q+
-	 0UzRFhzkB3qFZYf5uWDNrRbSMbu6/lYzikv3tEaQ=
+	b=mlYUiOA7m3sLxu/xdASuwOPUoU3xDaqr6FWeJjCb4iW6HzB0Ip9hgCImZAtvlNuTh
+	 vKka/haTw/deev3pi5raK7qzqCmhENW9ebTwYph0RyBIecDt4NNrLUMLg4uv1juOAd
+	 qmYcmzfJscidgNh4nflWIJj1WgMIiqAr8AwxNv0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH 5.4 089/222] kbuild: Update assembler calls to use proper flags and language target
-Date: Mon, 23 Jun 2025 15:07:04 +0200
-Message-ID: <20250623130614.778190219@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 031/411] firmware: psci: Fix refcount leak in psci_dt_init
+Date: Mon, 23 Jun 2025 15:02:55 +0200
+Message-ID: <20250623130633.936976699@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,71 +49,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nick Desaulniers <ndesaulniers@google.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit d5c8d6e0fa61401a729e9eb6a9c7077b2d3aebb0 upstream.
+[ Upstream commit 7ff37d29fd5c27617b9767e1b8946d115cf93a1e ]
 
-as-instr uses KBUILD_AFLAGS, but as-option uses KBUILD_CFLAGS. This can
-cause as-option to fail unexpectedly when CONFIG_WERROR is set, because
-clang will emit -Werror,-Wunused-command-line-argument for various -m
-and -f flags in KBUILD_CFLAGS for assembler sources.
+Fix a reference counter leak in psci_dt_init() where of_node_put(np) was
+missing after of_find_matching_node_and_match() when np is unavailable.
 
-Callers of as-option and as-instr should be adding flags to
-KBUILD_AFLAGS / aflags-y, not KBUILD_CFLAGS / cflags-y. Use
-KBUILD_AFLAGS in all macros to clear up the initial problem.
-
-Unfortunately, -Wunused-command-line-argument can still be triggered
-with clang by the presence of warning flags or macro definitions because
-'-x assembler' is used, instead of '-x assembler-with-cpp', which will
-consume these flags. Switch to '-x assembler-with-cpp' in places where
-'-x assembler' is used, as the compiler is always used as the driver for
-out of line assembler sources in the kernel.
-
-Finally, add -Werror to these macros so that they behave consistently
-whether or not CONFIG_WERROR is set.
-
-[nathan: Reworded and expanded on problems in commit message
-         Use '-x assembler-with-cpp' in a couple more places]
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1699
-Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d09a0011ec0d ("drivers: psci: Allow PSCI node to be disabled")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20250318151712.28763-1-linmq006@gmail.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Kbuild.include |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/firmware/psci/psci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/scripts/Kbuild.include
-+++ b/scripts/Kbuild.include
-@@ -99,16 +99,16 @@ try-run = $(shell set -e;		\
- 	fi)
+diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+index cfb448eabdaa2..ec888aba57ffd 100644
+--- a/drivers/firmware/psci/psci.c
++++ b/drivers/firmware/psci/psci.c
+@@ -619,8 +619,10 @@ int __init psci_dt_init(void)
  
- # as-option
--# Usage: cflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
-+# Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
+ 	np = of_find_matching_node_and_match(NULL, psci_of_match, &matched_np);
  
- as-option = $(call try-run,\
--	$(CC) $(KBUILD_CFLAGS) $(1) -c -x assembler /dev/null -o "$$TMP",$(1),$(2))
-+	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
+-	if (!np || !of_device_is_available(np))
++	if (!np || !of_device_is_available(np)) {
++		of_node_put(np);
+ 		return -ENODEV;
++	}
  
- # as-instr
--# Usage: cflags-y += $(call as-instr,instr,option1,option2)
-+# Usage: aflags-y += $(call as-instr,instr,option1,option2)
- 
- as-instr = $(call try-run,\
--	printf "%b\n" "$(1)" | $(CC) $(KBUILD_AFLAGS) -c -x assembler -o "$$TMP" -,$(2),$(3))
-+	printf "%b\n" "$(1)" | $(CC) -Werror $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
- 
- # __cc-option
- # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
+ 	init_fn = (psci_initcall_t)matched_np->data;
+ 	ret = init_fn(np);
+-- 
+2.39.5
+
 
 
