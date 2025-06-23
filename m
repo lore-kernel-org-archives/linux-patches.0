@@ -1,40 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5FD221723;
-	Mon, 23 Jun 2025 21:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5990F22172C;
+	Mon, 23 Jun 2025 21:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714103; cv=none; b=GWTBPwhiBiLrK4P8RtHEL0ZIDlL7U7/4tuk3ShAepS12mPP4ziACptF7ieKJGTJhsSoMs55qtdNXLKu4poEmt5mJsdunt0S7X6s3mciJiGDrUJzQiaOOfKOikvSIgcrg/r9SO5SxGyFGbUrIJ0AG3O1iGlSxrpLrbO8hI5qfHHA=
+	t=1750714106; cv=none; b=Yqy88R6ziyVE5OMihEgrehjN/iQXTGBUBe7T/Zx6gcc5Ub53a27RnC/8E5wPL0yF/oty+3IBfhCRL6BcnJ43K+7bCIOnWz6g3otOYrsHxF6rJS32gDDMrABkamcmcIv8htRCsRpll9Ng0+W1DjgAF13GtdDk/lDo1mA9uIo9EBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714103; c=relaxed/simple;
-	bh=96r9Qg84fJDPhXJTDS9Snb0Q11QUGOSw0aLGxubq4wI=;
+	s=arc-20240116; t=1750714106; c=relaxed/simple;
+	bh=hwQN4wTpJkibGQqFCM5m9FoVZIDj9I2jR0hpQmyhww8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUuC+yR2Ma5WPBVeApppzwQfUA7NN7NsaFJIXIbcKl8isjd0M2MfcX0feLh1Wax/mNtdyjhMt9fU3wGO7cKkKn+MP6g/qDeAqgy+CCbRqYsDeSiS4dKZdzgzsZps/OL165tP+kr8UpShZXUL+DUqBJ7NDT+/HJr4X0vOQ0hV8H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0c45g1F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OFNPhDFwVARBU5rgfrGYWZPbGii1xaAEMmg5O4hnsAPQ6wyOwrAyqTkup/d8eHkr0VR2eDo1eSsYYggZc+F5xu7dYVDsMAr7a+Y4f+L95tM6tnq6rdhf2QJwTmTt6Tve4Fi2FovMtYWWgL4NbfjmFd4xSChTGRR9SSYDaJ5DMRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fYiranEz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0c45g1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 730BEC4CEEA;
-	Mon, 23 Jun 2025 21:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fYiranEz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E90C4CEEA;
+	Mon, 23 Jun 2025 21:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714103;
-	bh=96r9Qg84fJDPhXJTDS9Snb0Q11QUGOSw0aLGxubq4wI=;
+	s=korg; t=1750714106;
+	bh=hwQN4wTpJkibGQqFCM5m9FoVZIDj9I2jR0hpQmyhww8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T0c45g1Fq2IsDmopvF3FhZUfXZwbk8w2lgwpU5W4fbNiruq4HpNc2D9LugM/ody4P
-	 qEI2GqCUjuLDDnOI3nQJQ4zv6NRlnLPtDtWgfBwj8vtziNV8rq+AawynkPA/ZgHNLh
-	 5UiZ9Z+XbR1I47vWJGtBfS2DH9gvlP2kzZenfIpE=
+	b=fYiranEzi3wFyxiEyq5OCXekwdr3lnSR2whEHjyxAkiY5e0ixefMWfZWO6sxHlcwx
+	 MkSFEFNOZSy2hHkiu106mwd+i8YbMPzFzEKmiXsZL+0g22ZKiJFvApSKbg7Vi6nq+i
+	 ahsY1mZNpFNUU0TaTwDEaeu5vf+3UJ6fZ4ia6k4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.12 081/414] can: kvaser_pciefd: refine error prone echo_skb_max handling logic
-Date: Mon, 23 Jun 2025 15:03:38 +0200
-Message-ID: <20250623130644.106725203@linuxfoundation.org>
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Ignacio Moreno Gonzalez <Ignacio.MorenoGonzalez@kuka.com>,
+	kernel test robot <lkp@intel.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Yang Shi <yang@os.amperecomputing.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	James Houghton <jthoughton@google.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 095/290] KVM: s390: rename PROT_NONE to PROT_TYPE_DUMMY
+Date: Mon, 23 Jun 2025 15:05:56 +0200
+Message-ID: <20250623130629.826816867@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,91 +62,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit 54ec8b08216f3be2cc98b33633d3c8ea79749895 upstream.
+commit 15ac613f124e51a6623975efad9657b1f3ee47e7 upstream.
 
-echo_skb_max should define the supported upper limit of echo_skb[]
-allocated inside the netdevice's priv. The corresponding size value
-provided by this driver to alloc_candev() is KVASER_PCIEFD_CAN_TX_MAX_COUNT
-which is 17.
+The enum type prot_type declared in arch/s390/kvm/gaccess.c declares an
+unfortunate identifier within it - PROT_NONE.
 
-But later echo_skb_max is rounded up to the nearest power of two (for the
-max case, that would be 32) and the tx/ack indices calculated further
-during tx/rx may exceed the upper array boundary. Kasan reported this for
-the ack case inside kvaser_pciefd_handle_ack_packet(), though the xmit
-function has actually caught the same thing earlier.
+This clashes with the protection bit define from the uapi for mmap()
+declared in include/uapi/asm-generic/mman-common.h, which is indeed what
+those casually reading this code would assume this to refer to.
 
- BUG: KASAN: slab-out-of-bounds in kvaser_pciefd_handle_ack_packet+0x2d7/0x92a drivers/net/can/kvaser_pciefd.c:1528
- Read of size 8 at addr ffff888105e4f078 by task swapper/4/0
+This means that any changes which subsequently alter headers in any way
+which results in the uapi header being imported here will cause build
+errors.
 
- CPU: 4 UID: 0 PID: 0 Comm: swapper/4 Not tainted 6.15.0 #12 PREEMPT(voluntary)
- Call Trace:
-  <IRQ>
- dump_stack_lvl lib/dump_stack.c:122
- print_report mm/kasan/report.c:521
- kasan_report mm/kasan/report.c:634
- kvaser_pciefd_handle_ack_packet drivers/net/can/kvaser_pciefd.c:1528
- kvaser_pciefd_read_packet drivers/net/can/kvaser_pciefd.c:1605
- kvaser_pciefd_read_buffer drivers/net/can/kvaser_pciefd.c:1656
- kvaser_pciefd_receive_irq drivers/net/can/kvaser_pciefd.c:1684
- kvaser_pciefd_irq_handler drivers/net/can/kvaser_pciefd.c:1733
- __handle_irq_event_percpu kernel/irq/handle.c:158
- handle_irq_event kernel/irq/handle.c:210
- handle_edge_irq kernel/irq/chip.c:833
- __common_interrupt arch/x86/kernel/irq.c:296
- common_interrupt arch/x86/kernel/irq.c:286
-  </IRQ>
+Resolve the issue by renaming PROT_NONE to PROT_TYPE_DUMMY.
 
-Tx max count definitely matters for kvaser_pciefd_tx_avail(), but for seq
-numbers' generation that's not the case - we're free to calculate them as
-would be more convenient, not taking tx max count into account. The only
-downside is that the size of echo_skb[] should correspond to the max seq
-number (not tx max count), so in some situations a bit more memory would
-be consumed than could be.
-
-Thus make the size of the underlying echo_skb[] sufficient for the rounded
-max tx value.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 8256e0ca6010 ("can: kvaser_pciefd: Fix echo_skb race")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20250528192713.63894-1-pchelkin@ispras.ru
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://lkml.kernel.org/r/20250519145657.178365-1-lorenzo.stoakes@oracle.com
+Fixes: b3cefd6bf16e ("KVM: s390: Pass initialized arg even if unused")
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Suggested-by: Ignacio Moreno Gonzalez <Ignacio.MorenoGonzalez@kuka.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202505140943.IgHDa9s7-lkp@intel.com/
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Acked-by: Ignacio Moreno Gonzalez <Ignacio.MorenoGonzalez@kuka.com>
+Acked-by: Yang Shi <yang@os.amperecomputing.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Acked-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Janosch Frank <frankja@linux.ibm.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/kvaser_pciefd.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/s390/kvm/gaccess.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/can/kvaser_pciefd.c b/drivers/net/can/kvaser_pciefd.c
-index 7d3066691d5d..52301511ed1b 100644
---- a/drivers/net/can/kvaser_pciefd.c
-+++ b/drivers/net/can/kvaser_pciefd.c
-@@ -966,7 +966,7 @@ static int kvaser_pciefd_setup_can_ctrls(struct kvaser_pciefd *pcie)
- 		u32 status, tx_nr_packets_max;
+--- a/arch/s390/kvm/gaccess.c
++++ b/arch/s390/kvm/gaccess.c
+@@ -490,7 +490,7 @@ enum prot_type {
+ 	PROT_TYPE_DAT  = 3,
+ 	PROT_TYPE_IEP  = 4,
+ 	/* Dummy value for passing an initialized value when code != PGM_PROTECTION */
+-	PROT_NONE,
++	PROT_TYPE_DUMMY,
+ };
  
- 		netdev = alloc_candev(sizeof(struct kvaser_pciefd_can),
--				      KVASER_PCIEFD_CAN_TX_MAX_COUNT);
-+				      roundup_pow_of_two(KVASER_PCIEFD_CAN_TX_MAX_COUNT));
- 		if (!netdev)
- 			return -ENOMEM;
- 
-@@ -995,7 +995,6 @@ static int kvaser_pciefd_setup_can_ctrls(struct kvaser_pciefd *pcie)
- 		can->tx_max_count = min(KVASER_PCIEFD_CAN_TX_MAX_COUNT, tx_nr_packets_max - 1);
- 
- 		can->can.clock.freq = pcie->freq;
--		can->can.echo_skb_max = roundup_pow_of_two(can->tx_max_count);
- 		spin_lock_init(&can->lock);
- 
- 		can->can.bittiming_const = &kvaser_pciefd_bittiming_const;
--- 
-2.50.0
-
+ static int trans_exc_ending(struct kvm_vcpu *vcpu, int code, unsigned long gva, u8 ar,
+@@ -506,7 +506,7 @@ static int trans_exc_ending(struct kvm_v
+ 	switch (code) {
+ 	case PGM_PROTECTION:
+ 		switch (prot) {
+-		case PROT_NONE:
++		case PROT_TYPE_DUMMY:
+ 			/* We should never get here, acts like termination */
+ 			WARN_ON_ONCE(1);
+ 			break;
+@@ -976,7 +976,7 @@ static int guest_range_to_gpas(struct kv
+ 			gpa = kvm_s390_real_to_abs(vcpu, ga);
+ 			if (kvm_is_error_gpa(vcpu->kvm, gpa)) {
+ 				rc = PGM_ADDRESSING;
+-				prot = PROT_NONE;
++				prot = PROT_TYPE_DUMMY;
+ 			}
+ 		}
+ 		if (rc)
+@@ -1134,7 +1134,7 @@ int access_guest_with_key(struct kvm_vcp
+ 		if (rc == PGM_PROTECTION)
+ 			prot = PROT_TYPE_KEYC;
+ 		else
+-			prot = PROT_NONE;
++			prot = PROT_TYPE_DUMMY;
+ 		rc = trans_exc_ending(vcpu, rc, ga, ar, mode, prot, terminate);
+ 	}
+ out_unlock:
 
 
