@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E981DF98B;
-	Mon, 23 Jun 2025 21:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1AF221F34;
+	Mon, 23 Jun 2025 21:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713207; cv=none; b=rKPNXoSRiUqPD7UZad53ukJ6aGil6lheff1Sn5ohGQW7ohcafVc+So8jEZU9gzAyyBmxJkFWUd9RzT/4ga5fadW36a3x1mbUfBECuzZcPpDqb1yNSZtfKa9DEumCVZ0d1odimD77srZe4ZiipOnEB3NJ7psp6Wlw6N6eNIFZ9cg=
+	t=1750713209; cv=none; b=juh6fgYmfDzKrdS2MG2AA34ZzNTmAQH6oC6CeCV+keMqs9pvzplurSOVjoL5DPJUxgP2EyhI+fbNEecZWnfcMK1zzF8E+83YAgEy3HaWLuhGEnwLIwHuDh31LI5fim8I80uVQR569BZgi8FPZHUGw3ls8Tk4JWmjV3XJCJyrDLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713207; c=relaxed/simple;
-	bh=HoC+8hN6TgMbZUbXW5Gd/xud+W3TaDuoOVshO1ZRF60=;
+	s=arc-20240116; t=1750713209; c=relaxed/simple;
+	bh=pCSuUchl7TkKHEy25ai5t6KZ+wpmSks7wF8YXm/v8r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKyF8iM+NYwZ1x2BSidP9duRjGKnB/eJnhgUaI+4n3csuf+eWHsGC4zenZHdMQoOS2Bw3kx4QYY1JN0iTfA9dTVsKdXeSpUpZeTzX5hXAE+vVp6/yjUGSI4DvGpHeZ9tJNq9i6C2el1WAdOhRC/tFBi5lBGAH0Tf06Fb3ZqPEJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Urrn5ksW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=InJRHnGni8sSwkw8x7nndXlscUcmuZc5DwTBkhkCkeMdne1YESjOBRebgA9Y55szoeZg5bbp+LU9Uf8bwnGMh3T6LnMrZyoAvFczwXKcYy9YLe8DRGeN0gSxMeUBtkHlBWRsP5RiIkj4nxGNMj9Zuk9LFycNlTuaDj/HsCJrfdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6QhyzYp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Urrn5ksW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01D7C4CEEA;
-	Mon, 23 Jun 2025 21:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6QhyzYp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CD4C4CEEA;
+	Mon, 23 Jun 2025 21:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713207;
-	bh=HoC+8hN6TgMbZUbXW5Gd/xud+W3TaDuoOVshO1ZRF60=;
+	s=korg; t=1750713209;
+	bh=pCSuUchl7TkKHEy25ai5t6KZ+wpmSks7wF8YXm/v8r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Urrn5ksWUXn7R4Zt99dj+Lyof+9kK2n1Dc9gpM8/R4HSg5iYDM67i5l6ZxBhvmBtU
-	 xWki0HsKtNLrPT7m14rqLr9Ct8tL65ikR5FQKXji1JgCsgBS+pkFawe/2D/8YPKmLo
-	 HvTe/QN3FIR/9JJ+XiNlImOjYd5zHQpfPuhRopmE=
+	b=D6QhyzYppftl3R2gSGJFmw8siSoH+l0tohNxVxQju1ABhqDoMf1qJGk+DiHZ9FouS
+	 W6NG46F2dNO41EdvqFhuWtkIxoxP2N/pa2iMcu0FhQPwWLB8a7HobLzrqNz6jNQGH4
+	 lpYzzmt5Rm+L5MxGqJBZe1vU+pNQ1mtZNBiIZneI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 174/222] vxlan: Do not treat dst cache initialization errors as fatal
-Date: Mon, 23 Jun 2025 15:08:29 +0200
-Message-ID: <20250623130617.301708346@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 032/414] nfsd: Initialize ssc before laundromat_work to prevent NULL dereference
+Date: Mon, 23 Jun 2025 15:02:49 +0200
+Message-ID: <20250623130642.829629561@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,79 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-[ Upstream commit 20c76dadc783759fd3819d289c72be590660cc8b ]
+commit b31da62889e6d610114d81dc7a6edbcaa503fcf8 upstream.
 
-FDB entries are allocated in an atomic context as they can be added from
-the data path when learning is enabled.
+In nfs4_state_start_net(), laundromat_work may access nfsd_ssc through
+nfs4_laundromat -> nfsd4_ssc_expire_umount. If nfsd_ssc isn't initialized,
+this can cause NULL pointer dereference.
 
-After converting the FDB hash table to rhashtable, the insertion rate
-will be much higher (*) which will entail a much higher rate of per-CPU
-allocations via dst_cache_init().
+Normally the delayed start of laundromat_work allows sufficient time for
+nfsd_ssc initialization to complete. However, when the kernel waits too
+long for userspace responses (e.g. in nfs4_state_start_net ->
+nfsd4_end_grace -> nfsd4_record_grace_done -> nfsd4_cld_grace_done ->
+cld_pipe_upcall -> __cld_pipe_upcall -> wait_for_completion path), the
+delayed work may start before nfsd_ssc initialization finishes.
 
-When adding a large number of entries (e.g., 256k) in a batch, a small
-percentage (< 0.02%) of these per-CPU allocations will fail [1]. This
-does not happen with the current code since the insertion rate is low
-enough to give the per-CPU allocator a chance to asynchronously create
-new chunks of per-CPU memory.
+Fix this by moving nfsd_ssc initialization before starting laundromat_work.
 
-Given that:
-
-a. Only a small percentage of these per-CPU allocations fail.
-
-b. The scenario where this happens might not be the most realistic one.
-
-c. The driver can work correctly without dst caches. The dst_cache_*()
-APIs first check that the dst cache was properly initialized.
-
-d. The dst caches are not always used (e.g., 'tos inherit').
-
-It seems reasonable to not treat these allocation failures as fatal.
-
-Therefore, do not bail when dst_cache_init() fails and suppress warnings
-by specifying '__GFP_NOWARN'.
-
-[1] percpu: allocation failed, size=40 align=8 atomic=1, atomic alloc failed, no space left
-
-(*) 97% reduction in average latency of vxlan_fdb_update() when adding
-256k entries in a batch.
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250415121143.345227-14-idosch@nvidia.com
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f4e44b393389 ("NFSD: delay unmount source's export after inter-server copy completed.")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/nfsd/nfssvc.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/vxlan.c b/drivers/net/vxlan.c
-index 7105ac37f341e..18844bac9375e 100644
---- a/drivers/net/vxlan.c
-+++ b/drivers/net/vxlan.c
-@@ -681,10 +681,10 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
- 	if (rd == NULL)
- 		return -ENOMEM;
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -406,13 +406,13 @@ static int nfsd_startup_net(struct net *
+ 	if (ret)
+ 		goto out_filecache;
  
--	if (dst_cache_init(&rd->dst_cache, GFP_ATOMIC)) {
--		kfree(rd);
--		return -ENOMEM;
--	}
-+	/* The driver can work correctly without a dst cache, so do not treat
-+	 * dst cache initialization errors as fatal.
-+	 */
-+	dst_cache_init(&rd->dst_cache, GFP_ATOMIC | __GFP_NOWARN);
++#ifdef CONFIG_NFSD_V4_2_INTER_SSC
++	nfsd4_ssc_init_umount_work(nn);
++#endif
+ 	ret = nfs4_state_start_net(net);
+ 	if (ret)
+ 		goto out_reply_cache;
  
- 	rd->remote_ip = *ip;
- 	rd->remote_port = port;
--- 
-2.39.5
-
+-#ifdef CONFIG_NFSD_V4_2_INTER_SSC
+-	nfsd4_ssc_init_umount_work(nn);
+-#endif
+ 	nn->nfsd_net_up = true;
+ 	return 0;
+ 
 
 
