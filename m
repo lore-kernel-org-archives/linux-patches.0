@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C9A227574;
-	Mon, 23 Jun 2025 22:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F131F7580;
+	Mon, 23 Jun 2025 22:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717231; cv=none; b=fkYaWGFnTbi7jKi6PDWJXAElcMaQc56V2IR6TkiRd7+h57CnMo1uBhADBpT50TinuCYGBKgPhKIhsTMVJHrZULyYIRBqCxDGxLk32n/XAyVTGLyXJrlyEINsU/iSPU7k+PKOpTFpnUVK3UDmzzITeLQjJVLkfKSbikDxsX0MngA=
+	t=1750717234; cv=none; b=FO+qgAUY0uu6FqI45RBHGkCR9kdp/l+nhzXhAEyyVfUBqi2T2WEUnjmJZMm89UYUk1Yl3yklvkWYJvWilHbjyLgUhh/4wVnmkVlXrgvpQu0fcUVOZtpY/k0PmKEgmpIf+NKaKBxms52dDcVUZRQ7VfTmjpXphGf+HGxs1LS85A4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717231; c=relaxed/simple;
-	bh=Phq8EuJp1d0m7Zngdb0O74joz8Tjd2u/mTOuJwVbuEM=;
+	s=arc-20240116; t=1750717234; c=relaxed/simple;
+	bh=UW6jRvtt/mJIHo/ogEwQSgc8oZxzTIQ3gkgeQnmOLqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XKvHuAD3uuGbfuXNn5/i4i7cC+t20DE98Bup/xXGVEvsIXa7aLkbqXo82M+8G52MfsoycTE52wPKwEIk0smpYenmVEphLA05FSiKLAH4Z1QZMMUsD/pAl/CNNaPYmaE8S35RYssz0ybgd3VQ7HV7aFpW6Bs8W0I8VhBPLD4+T5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhfN6mjr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JNO1Tbsntlqtb+lwU08M7f2tlKQG50IRGgMf6tRBIIrrOKpJnOsgxzgup+IRYZjmYP1sQNw4uwwBLemTRY+oLX7A3jDERibwowyhqQWG9RMpSafSQUQbdPnQhCFUeKaUDjRLnudmpbR8M0qez7L5I226KjlZvXMP5rMXi1tJmso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ggcaAK9j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhfN6mjr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBF4C4CEEA;
-	Mon, 23 Jun 2025 22:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ggcaAK9j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F3FC4CEEA;
+	Mon, 23 Jun 2025 22:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717231;
-	bh=Phq8EuJp1d0m7Zngdb0O74joz8Tjd2u/mTOuJwVbuEM=;
+	s=korg; t=1750717234;
+	bh=UW6jRvtt/mJIHo/ogEwQSgc8oZxzTIQ3gkgeQnmOLqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RhfN6mjrJnE/eVy6N4Z6s+bfq6cOvwSR838m+N96mxoBHsMS5s7H6+GBNXw1fqWBQ
-	 TDLDC57IOSUgHpimjiewRYk4LeEjKKGcLHfsNTun1RHxGOHuyO5MvwFO4nOTVuWxl1
-	 JukdfwtqJ9joBF15EMzHcCkNf0yW24FjA5WqOfuE=
+	b=ggcaAK9jaTw9rdmoVhZEj8ikRxeG6bj46XQo0x2CXhOc073PTGUYJSZddjAqPnOKi
+	 EY9UUC5Td2dh3/W282YxcRijAeHtIdrWdTfbiu1tKqJxZ7kCmEClAj4g/4t/JGvU7A
+	 farJ4Gku9QbJUrWhtBHUYSQw1hEn1m3g5Fn85vS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 343/414] bpf: Fix L4 csum update on IPv6 in CHECKSUM_COMPLETE
-Date: Mon, 23 Jun 2025 15:08:00 +0200
-Message-ID: <20250623130650.553774903@linuxfoundation.org>
+	Peter Marheine <pmarheine@chromium.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 386/508] ACPI: battery: negate current when discharging
+Date: Mon, 23 Jun 2025 15:07:11 +0200
+Message-ID: <20250623130654.786923906@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,133 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Peter Marheine <pmarheine@chromium.org>
 
-commit ead7f9b8de65632ef8060b84b0c55049a33cfea1 upstream.
+[ Upstream commit 234f71555019d308c6bc6f98c78c5551cb8cd56a ]
 
-In Cilium, we use bpf_csum_diff + bpf_l4_csum_replace to, among other
-things, update the L4 checksum after reverse SNATing IPv6 packets. That
-use case is however not currently supported and leads to invalid
-skb->csum values in some cases. This patch adds support for IPv6 address
-changes in bpf_l4_csum_update via a new flag.
+The ACPI specification requires that battery rate is always positive,
+but the kernel ABI for POWER_SUPPLY_PROP_CURRENT_NOW
+(Documentation/ABI/testing/sysfs-class-power) specifies that it should
+be negative when a battery is discharging. When reporting CURRENT_NOW,
+massage the value to match the documented ABI.
 
-When calling bpf_l4_csum_replace in Cilium, it ends up calling
-inet_proto_csum_replace_by_diff:
+This only changes the sign of `current_now` and not `power_now` because
+documentation doesn't describe any particular meaning for `power_now` so
+leaving `power_now` unchanged is less likely to confuse userspace
+unnecessarily, whereas becoming consistent with the documented ABI is
+worth potentially confusing clients that read `current_now`.
 
-    1:  void inet_proto_csum_replace_by_diff(__sum16 *sum, struct sk_buff *skb,
-    2:                                       __wsum diff, bool pseudohdr)
-    3:  {
-    4:      if (skb->ip_summed != CHECKSUM_PARTIAL) {
-    5:          csum_replace_by_diff(sum, diff);
-    6:          if (skb->ip_summed == CHECKSUM_COMPLETE && pseudohdr)
-    7:              skb->csum = ~csum_sub(diff, skb->csum);
-    8:      } else if (pseudohdr) {
-    9:          *sum = ~csum_fold(csum_add(diff, csum_unfold(*sum)));
-    10:     }
-    11: }
-
-The bug happens when we're in the CHECKSUM_COMPLETE state. We've just
-updated one of the IPv6 addresses. The helper now updates the L4 header
-checksum on line 5. Next, it updates skb->csum on line 7. It shouldn't.
-
-For an IPv6 packet, the updates of the IPv6 address and of the L4
-checksum will cancel each other. The checksums are set such that
-computing a checksum over the packet including its checksum will result
-in a sum of 0. So the same is true here when we update the L4 checksum
-on line 5. We'll update it as to cancel the previous IPv6 address
-update. Hence skb->csum should remain untouched in this case.
-
-The same bug doesn't affect IPv4 packets because, in that case, three
-fields are updated: the IPv4 address, the IP checksum, and the L4
-checksum. The change to the IPv4 address and one of the checksums still
-cancel each other in skb->csum, but we're left with one checksum update
-and should therefore update skb->csum accordingly. That's exactly what
-inet_proto_csum_replace_by_diff does.
-
-This special case for IPv6 L4 checksums is also described atop
-inet_proto_csum_replace16, the function we should be using in this case.
-
-This patch introduces a new bpf_l4_csum_replace flag, BPF_F_IPV6,
-to indicate that we're updating the L4 checksum of an IPv6 packet. When
-the flag is set, inet_proto_csum_replace_by_diff will skip the
-skb->csum update.
-
-Fixes: 7d672345ed295 ("bpf: add generic bpf_csum_diff helper")
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://patch.msgid.link/96a6bc3a443e6f0b21ff7b7834000e17fb549e05.1748509484.git.paul.chaignon@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Peter Marheine <pmarheine@chromium.org>
+Link: https://patch.msgid.link/20250508024146.1436129-1-pmarheine@chromium.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/bpf.h       |    2 ++
- net/core/filter.c              |    5 +++--
- tools/include/uapi/linux/bpf.h |    2 ++
- 3 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/acpi/battery.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/include/uapi/linux/bpf.h
-+++ b/include/uapi/linux/bpf.h
-@@ -2035,6 +2035,7 @@ union bpf_attr {
-  * 		for updates resulting in a null checksum the value is set to
-  * 		**CSUM_MANGLED_0** instead. Flag **BPF_F_PSEUDO_HDR** indicates
-  * 		the checksum is to be computed against a pseudo-header.
-+ * 		Flag **BPF_F_IPV6** should be set for IPv6 packets.
-  *
-  * 		This helper works in combination with **bpf_csum_diff**\ (),
-  * 		which does not update the checksum in-place, but offers more
-@@ -6049,6 +6050,7 @@ enum {
- 	BPF_F_PSEUDO_HDR		= (1ULL << 4),
- 	BPF_F_MARK_MANGLED_0		= (1ULL << 5),
- 	BPF_F_MARK_ENFORCE		= (1ULL << 6),
-+	BPF_F_IPV6			= (1ULL << 7),
- };
- 
- /* BPF_FUNC_skb_set_tunnel_key and BPF_FUNC_skb_get_tunnel_key flags. */
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -1980,10 +1980,11 @@ BPF_CALL_5(bpf_l4_csum_replace, struct s
- 	bool is_pseudo = flags & BPF_F_PSEUDO_HDR;
- 	bool is_mmzero = flags & BPF_F_MARK_MANGLED_0;
- 	bool do_mforce = flags & BPF_F_MARK_ENFORCE;
-+	bool is_ipv6   = flags & BPF_F_IPV6;
- 	__sum16 *ptr;
- 
- 	if (unlikely(flags & ~(BPF_F_MARK_MANGLED_0 | BPF_F_MARK_ENFORCE |
--			       BPF_F_PSEUDO_HDR | BPF_F_HDR_FIELD_MASK)))
-+			       BPF_F_PSEUDO_HDR | BPF_F_HDR_FIELD_MASK | BPF_F_IPV6)))
- 		return -EINVAL;
- 	if (unlikely(offset > 0xffff || offset & 1))
- 		return -EFAULT;
-@@ -1999,7 +2000,7 @@ BPF_CALL_5(bpf_l4_csum_replace, struct s
- 		if (unlikely(from != 0))
- 			return -EINVAL;
- 
--		inet_proto_csum_replace_by_diff(ptr, skb, to, is_pseudo, false);
-+		inet_proto_csum_replace_by_diff(ptr, skb, to, is_pseudo, is_ipv6);
+diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
+index 5a4e022662417..2f188a734a0c5 100644
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -241,10 +241,23 @@ static int acpi_battery_get_property(struct power_supply *psy,
  		break;
- 	case 2:
- 		inet_proto_csum_replace2(ptr, skb, from, to, is_pseudo);
---- a/tools/include/uapi/linux/bpf.h
-+++ b/tools/include/uapi/linux/bpf.h
-@@ -2035,6 +2035,7 @@ union bpf_attr {
-  * 		for updates resulting in a null checksum the value is set to
-  * 		**CSUM_MANGLED_0** instead. Flag **BPF_F_PSEUDO_HDR** indicates
-  * 		the checksum is to be computed against a pseudo-header.
-+ * 		Flag **BPF_F_IPV6** should be set for IPv6 packets.
-  *
-  * 		This helper works in combination with **bpf_csum_diff**\ (),
-  * 		which does not update the checksum in-place, but offers more
-@@ -6049,6 +6050,7 @@ enum {
- 	BPF_F_PSEUDO_HDR		= (1ULL << 4),
- 	BPF_F_MARK_MANGLED_0		= (1ULL << 5),
- 	BPF_F_MARK_ENFORCE		= (1ULL << 6),
-+	BPF_F_IPV6			= (1ULL << 7),
- };
- 
- /* BPF_FUNC_skb_set_tunnel_key and BPF_FUNC_skb_get_tunnel_key flags. */
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+ 	case POWER_SUPPLY_PROP_POWER_NOW:
+-		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
++		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
+ 			ret = -ENODEV;
+-		else
+-			val->intval = battery->rate_now * 1000;
++			break;
++		}
++
++		val->intval = battery->rate_now * 1000;
++		/*
++		 * When discharging, the current should be reported as a
++		 * negative number as per the power supply class interface
++		 * definition.
++		 */
++		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
++		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
++		    acpi_battery_handle_discharging(battery)
++				== POWER_SUPPLY_STATUS_DISCHARGING)
++			val->intval = -val->intval;
++
+ 		break;
+ 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
+ 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
+-- 
+2.39.5
+
 
 
