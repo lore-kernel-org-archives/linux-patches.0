@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA21615ADB4;
-	Mon, 23 Jun 2025 22:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511DC15ADB4;
+	Mon, 23 Jun 2025 22:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717367; cv=none; b=GNDb7JYn7eYMUwZ7vvQunqvrtcj9XkGau7Il2/XfLOr4pCJ+9Bbfb+VRYpaIws6B8YL2kAQAn8OKex1gBnLx7hk9ae+3xZ8nPbDN69GTO6GtZ5NJSRV/3C9o0p/6uxu2xzHQXh9gzkpba8DQPq8AxYuBFIxu0Wwp2wbXH/GJwAE=
+	t=1750717370; cv=none; b=WNe1qqkBxChW84RRd1V3pM8yP6NQbDE0E8vpjA8KKjHHMnwhwqJJej9ohW3WRCLAfqjfbFV4GVHRaoIAVvlDO+uN5cVClIOTLgqJR/+owSe4ypNJ6oxDkSFujql7RgQlubwQquv6LeP4Z7OdsE1Wq5bJAmqeBDdV8mX2uVQFKBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717367; c=relaxed/simple;
-	bh=mO6iaNC+PP80godl9+ptRwBH8g4hzmnkRAsTez5uo/w=;
+	s=arc-20240116; t=1750717370; c=relaxed/simple;
+	bh=S9oOW2YVc1pIkZ6lnf5NJGLYQv8Z4SIKFhp+mjvGadE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLng/0RtXVh7JvpDRm+OgC5VfZY7bX54gwzbpERP0vQhXrdmHZ0E46rqM4yhQRCyVFdWqBPC9AaOR7cDhim6bOjUmEpXJpTe+lwxs+lYpZVv1w8x9Xygq0vW8Heobsn46CHAzEkbmudGLTI2RVsEU87b87CzEYBS58BR0ZfXdow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zM6iICLM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qgK/+TqPKWZYkdWTkJPNYXsIQq6YumW+8HoXY9KaFGK9GwnbHsn3CkwK8FtRfErY7uc82CEZ2PGFuLXGg8xDR+US/sdWKKN63J/8L+dfNCz+4vX0y9ZX2U1UvolP208WL4nx2wktDn9JNFHw6KOVzNxXk0dG1z5pJAuKLpESbdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICNB1nD1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zM6iICLM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6772DC4CEED;
-	Mon, 23 Jun 2025 22:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICNB1nD1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16F6C4CEEA;
+	Mon, 23 Jun 2025 22:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717367;
-	bh=mO6iaNC+PP80godl9+ptRwBH8g4hzmnkRAsTez5uo/w=;
+	s=korg; t=1750717370;
+	bh=S9oOW2YVc1pIkZ6lnf5NJGLYQv8Z4SIKFhp+mjvGadE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zM6iICLM624Q4duJwYZh7h2xHHCwJGKDSS0Yn/eIUOdhBS0IWfr182ILqtXLC9+pS
-	 j62HjAAHjhD9s0YOQlnTUeTotZEji6aVKOrqlARbXLYjqAqGNC+Z5lMSl/H4q4Bbn+
-	 A1I5Z3tOKRWoOfLG9nzTa8TjDcwTGy00I7zjzalU=
+	b=ICNB1nD1iDE31pN9EQe02eANIy1yHodSSk5ShLWQM9+VK6PUW/m/XNUihTGyz0XvX
+	 UQpMxZB8AF4uRfUKBj2Z0fP3ehM+GQqbAKF4Otems3zipxnIDuyCANRXjX0qBq+Qdq
+	 ukBlR/Pl3Q1Ba4VAKPexP+QFHXEjaWLC/QZT0ez8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taehee Yoo <ap420073@gmail.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Benjamin Berg <benjamin@sipsolutions.net>,
+	Rouven Czerwinski <rouven@czerwinskis.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 374/414] eth: bnxt: fix out-of-range access of vnic_info array
-Date: Mon, 23 Jun 2025 15:08:31 +0200
-Message-ID: <20250623130651.305771335@linuxfoundation.org>
+Subject: [PATCH 6.1 413/508] wifi: mac80211: do not offer a mesh path if forwarding is disabled
+Date: Mon, 23 Jun 2025 15:07:38 +0200
+Message-ID: <20250623130655.376398661@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +48,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Taehee Yoo <ap420073@gmail.com>
+From: Benjamin Berg <benjamin@sipsolutions.net>
 
-[ Upstream commit 919f9f497dbcee75d487400e8f9815b74a6a37df ]
+[ Upstream commit cf1b684a06170d253b47d6a5287821de976435bd ]
 
-The bnxt_queue_{start | stop}() access vnic_info as much as allocated,
-which indicates bp->nr_vnics.
-So, it should not reach bp->vnic_info[bp->nr_vnics].
+When processing a PREQ the code would always check whether we have a
+mesh path locally and reply accordingly. However, when forwarding is
+disabled then we should not reply with this information as we will not
+forward data packets down that path.
 
-Fixes: 661958552eda ("eth: bnxt: do not use BNXT_VNIC_NTUPLE unconditionally in queue restart logic")
-Signed-off-by: Taehee Yoo <ap420073@gmail.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20250316025837.939527-1-ap420073@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 5dacc94c6fe6 ("bnxt_en: Update MRU and RSS table of RSS contexts on queue reset")
+Move the check for dot11MeshForwarding up in the function and skip the
+mesh path lookup in that case. In the else block, set forward to false
+so that the rest of the function becomes a no-op and the
+dot11MeshForwarding check does not need to be duplicated.
+
+This explains an effect observed in the Freifunk community where mesh
+forwarding is disabled. In that case a mesh with three STAs and only bad
+links in between them, individual STAs would occionally have indirect
+mpath entries. This should not have happened.
+
+Signed-off-by: Benjamin Berg <benjamin@sipsolutions.net>
+Reviewed-by: Rouven Czerwinski <rouven@czerwinskis.de>
+Link: https://patch.msgid.link/20250430191042.3287004-1-benjamin@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/mesh_hwmp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 2bb1fce350dbb..d0a87424c74ed 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -15356,7 +15356,7 @@ static int bnxt_queue_start(struct net_device *dev, void *qmem, int idx)
- 	cpr = &rxr->bnapi->cp_ring;
- 	cpr->sw_stats->rx.rx_resets++;
+diff --git a/net/mac80211/mesh_hwmp.c b/net/mac80211/mesh_hwmp.c
+index 47eb67dc11cfe..da9e152a7aaba 100644
+--- a/net/mac80211/mesh_hwmp.c
++++ b/net/mac80211/mesh_hwmp.c
+@@ -625,7 +625,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 				mesh_path_add_gate(mpath);
+ 		}
+ 		rcu_read_unlock();
+-	} else {
++	} else if (ifmsh->mshcfg.dot11MeshForwarding) {
+ 		rcu_read_lock();
+ 		mpath = mesh_path_lookup(sdata, target_addr);
+ 		if (mpath) {
+@@ -643,6 +643,8 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 			}
+ 		}
+ 		rcu_read_unlock();
++	} else {
++		forward = false;
+ 	}
  
--	for (i = 0; i <= bp->nr_vnics; i++) {
-+	for (i = 0; i < bp->nr_vnics; i++) {
- 		vnic = &bp->vnic_info[i];
+ 	if (reply) {
+@@ -660,7 +662,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 		}
+ 	}
  
- 		rc = bnxt_hwrm_vnic_set_rss_p5(bp, vnic, true);
-@@ -15384,7 +15384,7 @@ static int bnxt_queue_stop(struct net_device *dev, void *qmem, int idx)
- 	struct bnxt_vnic_info *vnic;
- 	int i;
+-	if (forward && ifmsh->mshcfg.dot11MeshForwarding) {
++	if (forward) {
+ 		u32 preq_id;
+ 		u8 hopcount;
  
--	for (i = 0; i <= bp->nr_vnics; i++) {
-+	for (i = 0; i < bp->nr_vnics; i++) {
- 		vnic = &bp->vnic_info[i];
- 		vnic->mru = 0;
- 		bnxt_hwrm_vnic_update(bp, vnic,
 -- 
 2.39.5
 
