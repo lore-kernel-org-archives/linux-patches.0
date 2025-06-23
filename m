@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9656E225413;
-	Mon, 23 Jun 2025 21:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE1B22425B;
+	Mon, 23 Jun 2025 21:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715097; cv=none; b=GexW+An7CviE68wJd2joonhIGPJgeOhOAGFv0w/F3ZWyJwloc5vdoHIh3GzHnTF0mKJDqcWg8Wd7pk9l7tMTRktsHRhxuXMEbU/553tGh/ZYtsGxoviBfdcFE+riDBefnRFCsqTNK4SSHptvKgkUbzdsyQcszD0j+CUVflE6PYM=
+	t=1750715100; cv=none; b=DGvBfCRnwRwFSgJb6MIYw0oBG4LfevSiHhPfqrYJJmcm/Xk9eOteh7+5QegYMPPaUxRBx1THi6Qu0rXwfSsMUx/X2C3IvhrAzKoo2v/rXNYnfFB93tiE1duG3pram0OxRIkJ7ddAkPBehLPx/DycX+R+Sh1AUXp5Txb2ggaz6cE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715097; c=relaxed/simple;
-	bh=8Rm+gGjZKJ6P5/ZmnSdXs32pRpqB55BnYBs9KchHZuk=;
+	s=arc-20240116; t=1750715100; c=relaxed/simple;
+	bh=JNvtFg66EfA4e3UpUcuDPtP8m8yAluQRDg8c3AbBx7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p1fhlkKwRlrL9End3ChE0zAiLAhlrpA5g8TZ47sHMzRQEfMXP8ak3LpYt2GYuZCp01vc6LIeirr/HOgyb1C9ZEiKfD/iLqwgh5f2yrxmiZFz6cO2+UjoHdWF9SZRJJwRIfdt2XCGUKbO1n0sYIINmdiAACVh+4J5bOd3m5MaVFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTI36FWv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I7y6XyHwo+b13slL2O9ysWOh8UXHInQfGm4mcLRPBG0iLajWsaXt8UOEIVyWi1AQPWss7XDW9JuLZ/Z0HFFBuvRlGKYUn6/6CfUeX3xvsBoUp/ts/8ApHIH8C1cQcdicqTDpSiYL8VP/1Fw6yMrBBFqFPkAzmT8ogU7TpDsV0pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhASAQt9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTI36FWv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AF7C4CEED;
-	Mon, 23 Jun 2025 21:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhASAQt9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD6BC4CEF2;
+	Mon, 23 Jun 2025 21:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715097;
-	bh=8Rm+gGjZKJ6P5/ZmnSdXs32pRpqB55BnYBs9KchHZuk=;
+	s=korg; t=1750715100;
+	bh=JNvtFg66EfA4e3UpUcuDPtP8m8yAluQRDg8c3AbBx7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTI36FWvj8IXFrgUNyVzvF19Jg+1qwsZtat26RvLfu53ekh6Swmv2L/vjcm8LKxZz
-	 ar7hhQp2o2UkpPPLdlRkfFJbj8RPGkXqdnOs9FBZvLzkAYuFX/Pv1C7ZobCaVX80At
-	 1KKjDdhQe/OHvr5m6EIL0pVMOYWBLppmH4J9cmMc=
+	b=ZhASAQt9Q3svH3Q4+oSDfYmwpliblw1DM66lAyIiT4l7COjHaX5HmGAk6q0NHaVVo
+	 hXVbUjZX6ILjayL8eF/NRT2F+eih6cKFXmchZ+EKCFR0spPzJIWXqu6GA1Fn40haQb
+	 PX8Q+ZmkMtt1JsEkP/BnaJWRgYejhb4enQ9TZ10E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	kdevops@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.15 228/411] ext4: fix calculation of credits for extent tree modification
-Date: Mon, 23 Jun 2025 15:06:12 +0200
-Message-ID: <20250623130639.401665649@linuxfoundation.org>
+	Henk Vergonet <henk.vergonet@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 252/355] wifi: mt76: mt76x2: Add support for LiteOn WN4516R,WN4519R
+Date: Mon, 23 Jun 2025 15:07:33 +0200
+Message-ID: <20250623130634.325795904@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,69 +48,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Henk Vergonet <henk.vergonet@gmail.com>
 
-commit 32a93f5bc9b9812fc710f43a4d8a6830f91e4988 upstream.
+[ Upstream commit 3c0e4f606d8693795a2c965d6f4987b1bfc31097 ]
 
-Luis and David are reporting that after running generic/750 test for 90+
-hours on 2k ext4 filesystem, they are able to trigger a warning in
-jbd2_journal_dirty_metadata() complaining that there are not enough
-credits in the running transaction started in ext4_do_writepages().
+Adds support for:
+ - LiteOn WN4516R
+ - LiteOn WN4519R
+ Both use:
+ - A nonstandard USB connector
+ - Mediatek chipset MT7600U
+ - ASIC revision: 76320044
 
-Indeed the code in ext4_do_writepages() is racy and the extent tree can
-change between the time we compute credits necessary for extent tree
-computation and the time we actually modify the extent tree. Thus it may
-happen that the number of credits actually needed is higher. Modify
-ext4_ext_index_trans_blocks() to count with the worst case of maximum
-tree depth. This can reduce the possible number of writers that can
-operate in the system in parallel (because the credit estimates now won't
-fit in one transaction) but for reasonably sized journals this shouldn't
-really be an issue. So just go with a safe and simple fix.
+Disabled VHT support on ASIC revision 76320044:
 
-Link: https://lore.kernel.org/all/20250415013641.f2ppw6wov4kn4wq2@offworld
-Reported-by: Davidlohr Bueso <dave@stgolabs.net>
-Reported-by: Luis Chamberlain <mcgrof@kernel.org>
-Tested-by: kdevops@lists.linux.dev
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250429175535.23125-2-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ This fixes the 5G connectibity issue on LiteOn WN4519R module
+ see https://github.com/openwrt/mt76/issues/971
+
+ And may also fix the 5G issues on the XBox One Wireless Adapter
+ see https://github.com/openwrt/mt76/issues/200
+
+ I have looked at the FCC info related to the MT7632U chip as mentioned in here:
+ https://github.com/openwrt/mt76/issues/459
+ These confirm the chipset does not support 'ac' mode and hence VHT should be turned of.
+
+Signed-off-by: Henk Vergonet <henk.vergonet@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20250418143914.31384-1-henk.vergonet@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76x2/usb.c     |  2 ++
+ .../net/wireless/mediatek/mt76/mt76x2/usb_init.c    | 13 ++++++++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -2372,18 +2372,19 @@ int ext4_ext_calc_credits_for_single_ext
- int ext4_ext_index_trans_blocks(struct inode *inode, int extents)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
+index 82a193aac09d7..95c548f45bdf8 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
+@@ -17,6 +17,8 @@ static const struct usb_device_id mt76x2u_device_table[] = {
+ 	{ USB_DEVICE(0x057c, 0x8503) },	/* Avm FRITZ!WLAN AC860 */
+ 	{ USB_DEVICE(0x7392, 0xb711) },	/* Edimax EW 7722 UAC */
+ 	{ USB_DEVICE(0x0e8d, 0x7632) },	/* HC-M7662BU1 */
++	{ USB_DEVICE(0x0471, 0x2126) }, /* LiteOn WN4516R module, nonstandard USB connector */
++	{ USB_DEVICE(0x0471, 0x7600) }, /* LiteOn WN4519R module, nonstandard USB connector */
+ 	{ USB_DEVICE(0x2c4e, 0x0103) },	/* Mercury UD13 */
+ 	{ USB_DEVICE(0x0846, 0x9053) },	/* Netgear A6210 */
+ 	{ USB_DEVICE(0x045e, 0x02e6) },	/* XBox One Wireless Adapter */
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
+index ffc2deba29ac6..c845e83897659 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
+@@ -191,6 +191,7 @@ int mt76x2u_register_device(struct mt76x02_dev *dev)
  {
- 	int index;
--	int depth;
+ 	struct ieee80211_hw *hw = mt76_hw(dev);
+ 	struct mt76_usb *usb = &dev->mt76.usb;
++	bool vht;
+ 	int err;
  
- 	/* If we are converting the inline data, only one is needed here. */
- 	if (ext4_has_inline_data(inode))
- 		return 1;
+ 	INIT_DELAYED_WORK(&dev->cal_work, mt76x2u_phy_calibrate);
+@@ -215,7 +216,17 @@ int mt76x2u_register_device(struct mt76x02_dev *dev)
  
--	depth = ext_depth(inode);
--
-+	/*
-+	 * Extent tree can change between the time we estimate credits and
-+	 * the time we actually modify the tree. Assume the worst case.
-+	 */
- 	if (extents <= 1)
--		index = depth * 2;
-+		index = EXT4_MAX_EXTENT_DEPTH * 2;
- 	else
--		index = depth * 3;
-+		index = EXT4_MAX_EXTENT_DEPTH * 3;
- 
- 	return index;
- }
+ 	/* check hw sg support in order to enable AMSDU */
+ 	hw->max_tx_fragments = dev->mt76.usb.sg_en ? MT_TX_SG_MAX_SIZE : 1;
+-	err = mt76_register_device(&dev->mt76, true, mt76x02_rates,
++	switch (dev->mt76.rev) {
++	case 0x76320044:
++		/* these ASIC revisions do not support VHT */
++		vht = false;
++		break;
++	default:
++		vht = true;
++		break;
++	}
++
++	err = mt76_register_device(&dev->mt76, vht, mt76x02_rates,
+ 				   ARRAY_SIZE(mt76x02_rates));
+ 	if (err)
+ 		goto fail;
+-- 
+2.39.5
+
 
 
