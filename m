@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75580221543;
-	Mon, 23 Jun 2025 22:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23AB21FF2B;
+	Mon, 23 Jun 2025 22:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716169; cv=none; b=T2RUy7EtnzI+aa0ebiM7AxkpGN06EHxoyfFFYU0GSmBZK7eB15OUsjr6hviy2hqUHkfMyWofkiy3MDNiEMweB3azdSduzhcUX2O8BzNXq6s8BWk5SY9tVe5c1P8duUIzf019ghl6/H2/8uyLSqYoK2rxNXEqyDbefDWcb//pfnI=
+	t=1750716171; cv=none; b=u+jM5IJwjz25lPgKMuUiR7aZArzTs7iupgRMjbZsQBPj/sqHUTlec0TQ6fGcD6TvKbQngE4HoBYumVnAhrTF6y5KBhUMDHXpxw7P8MdhIHBHP/Stdp2gmTIRzFm0Pn1OgYXj1rGOpYvpdJ/ag8B+k69ASYMe/ElLAWkkbXb7tEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716169; c=relaxed/simple;
-	bh=tVEXTag3F4+1AZ2ANmd2r3FlxXc95s0+kk0AgF9PBYk=;
+	s=arc-20240116; t=1750716171; c=relaxed/simple;
+	bh=nvYjcQbW3ECYyoKt1DvWUly9gRI1+R9H7umetynyqJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qJEP7QUWuAkdPLybJxsQXvO1K1IWqFg7XEcyATij6dILxUfdLWFOjxOcheawW7h5/+7rol/7iT4P5g9sbmXW3g7yVGsHOgWeEfLPMMEHw1lb3j3AtP+QpFxfD3KHFbyLiiolnTKuUCqV8xvuTLhmxNhWjE3Cg1mIwbmkins6bP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1cr/SfC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jMXQJ5vglnkNctHuVPM8435f3R6oIkkGsQc6NSr/xU3KMhwePwNNue+QWDSi1sxxqs3Qj6QBG1dea7p4YJbQ7MrqW1o0cZZMdbRHncn5Ssgx3sT0+OKO25tMy2r+rmsJI+63WcA2NCUngKfhrUzF0egqxmI078y1DhRaFSp9YVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alsblGCH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1cr/SfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F74C4CEEA;
-	Mon, 23 Jun 2025 22:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alsblGCH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC3CC4CEED;
+	Mon, 23 Jun 2025 22:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716169;
-	bh=tVEXTag3F4+1AZ2ANmd2r3FlxXc95s0+kk0AgF9PBYk=;
+	s=korg; t=1750716171;
+	bh=nvYjcQbW3ECYyoKt1DvWUly9gRI1+R9H7umetynyqJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H1cr/SfCkSbeG940P3OHg102X5wmYWxQldPgTimQia/j22RE4xUmOddZNnbOqBOIK
-	 BuGTLSJqjnaAlb1R/zn6UAxlL09xecSxWYPVenTHb2LVZRBKhttyKZTV2dcr+oc0xq
-	 GQe2PsYxO/+zLIXOQAYrzov0D03BBaeJKns/O4eM=
+	b=alsblGCHQG9TbzoniUS/hwqDnPpG9AVoFq5oUX95wXduBiDoX0dR6luJKoVBbwVTj
+	 e4381tNTCMQLN9e7ZLDcGwnbcWD9FRCndcxrwQFOfqWCFwbpkwZInaQmC7y2kb6itA
+	 8PxjX4XKFwXSaBxW2rsNjuwiIc3ZiPj03AX5RELg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8b64dec3affaed7b3af5@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 267/290] net: atm: add lec_mutex
-Date: Mon, 23 Jun 2025 15:08:48 +0200
-Message-ID: <20250623130634.949538307@linuxfoundation.org>
+	Liangliang Zou <rawdiamondmc@outlook.com>,
+	Mingcong Bai <jeffbai@aosc.io>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.1 306/508] wifi: rtlwifi: disable ASPM for RTL8723BE with subsystem ID 11ad:1723
+Date: Mon, 23 Jun 2025 15:05:51 +0200
+Message-ID: <20250623130652.840558551@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,165 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Mingcong Bai <jeffbai@aosc.io>
 
-[ Upstream commit d13a3824bfd2b4774b671a75cf766a16637a0e67 ]
+commit 77a6407c6ab240527166fb19ee96e95f5be4d3cd upstream.
 
-syzbot found its way in net/atm/lec.c, and found an error path
-in lecd_attach() could leave a dangling pointer in dev_lec[].
+RTL8723BE found on some ASUSTek laptops, such as F441U and X555UQ with
+subsystem ID 11ad:1723 are known to output large amounts of PCIe AER
+errors during and after boot up, causing heavy lags and at times lock-ups:
 
-Add a mutex to protect dev_lecp[] uses from lecd_attach(),
-lec_vcc_attach() and lec_mcast_attach().
+  pcieport 0000:00:1c.5: AER: Correctable error message received from 0000:00:1c.5
+  pcieport 0000:00:1c.5: PCIe Bus Error: severity=Correctable, type=Physical Layer, (Receiver ID)
+  pcieport 0000:00:1c.5:   device [8086:9d15] error status/mask=00000001/00002000
+  pcieport 0000:00:1c.5:    [ 0] RxErr
 
-Following patch will use this mutex for /proc/net/atm/lec.
+Disable ASPM on this combo as a quirk.
 
-BUG: KASAN: slab-use-after-free in lecd_attach net/atm/lec.c:751 [inline]
-BUG: KASAN: slab-use-after-free in lane_ioctl+0x2224/0x23e0 net/atm/lec.c:1008
-Read of size 8 at addr ffff88807c7b8e68 by task syz.1.17/6142
+This patch is a revision of a previous patch (linked below) which
+attempted to disable ASPM for RTL8723BE on all Intel Skylake and Kaby Lake
+PCIe bridges. I take a more conservative approach as all known reports
+point to ASUSTek laptops of these two generations with this particular
+wireless card.
 
-CPU: 1 UID: 0 PID: 6142 Comm: syz.1.17 Not tainted 6.16.0-rc1-syzkaller-00239-g08215f5486ec #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:94 [inline]
-  dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
-  print_address_description mm/kasan/report.c:408 [inline]
-  print_report+0xcd/0x680 mm/kasan/report.c:521
-  kasan_report+0xe0/0x110 mm/kasan/report.c:634
-  lecd_attach net/atm/lec.c:751 [inline]
-  lane_ioctl+0x2224/0x23e0 net/atm/lec.c:1008
-  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
-  sock_do_ioctl+0x118/0x280 net/socket.c:1190
-  sock_ioctl+0x227/0x6b0 net/socket.c:1311
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:907 [inline]
-  __se_sys_ioctl fs/ioctl.c:893 [inline]
-  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
+Please note, however, before the rtl8723be finishes probing, the AER
+errors remained. After the module finishes probing, all AER errors would
+indeed be eliminated, along with heavy lags, poor network throughput,
+and/or occasional lock-ups.
 
-Allocated by task 6132:
-  kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
-  kasan_save_track+0x14/0x30 mm/kasan/common.c:68
-  poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
-  __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:394
-  kasan_kmalloc include/linux/kasan.h:260 [inline]
-  __do_kmalloc_node mm/slub.c:4328 [inline]
-  __kvmalloc_node_noprof+0x27b/0x620 mm/slub.c:5015
-  alloc_netdev_mqs+0xd2/0x1570 net/core/dev.c:11711
-  lecd_attach net/atm/lec.c:737 [inline]
-  lane_ioctl+0x17db/0x23e0 net/atm/lec.c:1008
-  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
-  sock_do_ioctl+0x118/0x280 net/socket.c:1190
-  sock_ioctl+0x227/0x6b0 net/socket.c:1311
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:907 [inline]
-  __se_sys_ioctl fs/ioctl.c:893 [inline]
-  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 6132:
-  kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
-  kasan_save_track+0x14/0x30 mm/kasan/common.c:68
-  kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:576
-  poison_slab_object mm/kasan/common.c:247 [inline]
-  __kasan_slab_free+0x51/0x70 mm/kasan/common.c:264
-  kasan_slab_free include/linux/kasan.h:233 [inline]
-  slab_free_hook mm/slub.c:2381 [inline]
-  slab_free mm/slub.c:4643 [inline]
-  kfree+0x2b4/0x4d0 mm/slub.c:4842
-  free_netdev+0x6c5/0x910 net/core/dev.c:11892
-  lecd_attach net/atm/lec.c:744 [inline]
-  lane_ioctl+0x1ce8/0x23e0 net/atm/lec.c:1008
-  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
-  sock_do_ioctl+0x118/0x280 net/socket.c:1190
-  sock_ioctl+0x227/0x6b0 net/socket.c:1311
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:907 [inline]
-  __se_sys_ioctl fs/ioctl.c:893 [inline]
-  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+8b64dec3affaed7b3af5@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6852c6f6.050a0220.216029.0018.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250618140844.1686882-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org>
+Fixes: a619d1abe20c ("rtlwifi: rtl8723be: Add new driver")
+Reported-by: Liangliang Zou <rawdiamondmc@outlook.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218127
+Link: https://lore.kernel.org/lkml/05390e0b-27fd-4190-971e-e70a498c8221@lwfinger.net/T/
+Tested-by: Liangliang Zou <rawdiamondmc@outlook.com>
+Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250422061755.356535-1-jeffbai@aosc.io
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/atm/lec.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/realtek/rtlwifi/pci.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/atm/lec.c b/net/atm/lec.c
-index ac3cfc1ae5102..d4ac1488eca6f 100644
---- a/net/atm/lec.c
-+++ b/net/atm/lec.c
-@@ -124,6 +124,7 @@ static unsigned char bus_mac[ETH_ALEN] = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
- 
- /* Device structures */
- static struct net_device *dev_lec[MAX_LEC_ITF];
-+static DEFINE_MUTEX(lec_mutex);
- 
- #if IS_ENABLED(CONFIG_BRIDGE)
- static void lec_handle_bridge(struct sk_buff *skb, struct net_device *dev)
-@@ -685,6 +686,7 @@ static int lec_vcc_attach(struct atm_vcc *vcc, void __user *arg)
- 	int bytes_left;
- 	struct atmlec_ioc ioc_data;
- 
-+	lockdep_assert_held(&lec_mutex);
- 	/* Lecd must be up in this case */
- 	bytes_left = copy_from_user(&ioc_data, arg, sizeof(struct atmlec_ioc));
- 	if (bytes_left != 0)
-@@ -710,6 +712,7 @@ static int lec_vcc_attach(struct atm_vcc *vcc, void __user *arg)
- 
- static int lec_mcast_attach(struct atm_vcc *vcc, int arg)
- {
-+	lockdep_assert_held(&lec_mutex);
- 	if (arg < 0 || arg >= MAX_LEC_ITF)
- 		return -EINVAL;
- 	arg = array_index_nospec(arg, MAX_LEC_ITF);
-@@ -725,6 +728,7 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
- 	int i;
- 	struct lec_priv *priv;
- 
-+	lockdep_assert_held(&lec_mutex);
- 	if (arg < 0)
- 		arg = 0;
- 	if (arg >= MAX_LEC_ITF)
-@@ -742,6 +746,7 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
- 		snprintf(dev_lec[i]->name, IFNAMSIZ, "lec%d", i);
- 		if (register_netdev(dev_lec[i])) {
- 			free_netdev(dev_lec[i]);
-+			dev_lec[i] = NULL;
- 			return -EINVAL;
- 		}
- 
-@@ -1003,6 +1008,7 @@ static int lane_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 		return -ENOIOCTLCMD;
- 	}
- 
-+	mutex_lock(&lec_mutex);
- 	switch (cmd) {
- 	case ATMLEC_CTRL:
- 		err = lecd_attach(vcc, (int)arg);
-@@ -1017,6 +1023,7 @@ static int lane_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 		break;
- 	}
- 
-+	mutex_unlock(&lec_mutex);
- 	return err;
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -155,6 +155,16 @@ static void _rtl_pci_update_default_sett
+ 	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8192SE &&
+ 	    init_aspm == 0x43)
+ 		ppsc->support_aspm = false;
++
++	/* RTL8723BE found on some ASUSTek laptops, such as F441U and
++	 * X555UQ with subsystem ID 11ad:1723 are known to output large
++	 * amounts of PCIe AER errors during and after boot up, causing
++	 * heavy lags, poor network throughput, and occasional lock-ups.
++	 */
++	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
++	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
++	     rtlpci->pdev->subsystem_device == 0x1723))
++		ppsc->support_aspm = false;
  }
  
--- 
-2.39.5
-
+ static bool _rtl_pci_platform_switch_device_pci_aspm(
 
 
