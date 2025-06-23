@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721C824FBFF;
-	Mon, 23 Jun 2025 13:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F51253F20;
+	Mon, 23 Jun 2025 13:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685744; cv=none; b=V4DVqQfTmEQqdJMRGJ5ZPsx/N0mwv1R2bBDhWSXwnQey8QPnnCNmkRcaChy7SOrQx2UAQ9uEXNgenSMby2I+JpFGqruUbG8yq8SOpocjfE0WIvc4B/VWccoR/znxeBSXZfG2aLNkP+qi2Y7GnBppOMQgH2CLN8+LMHpsW7VECdQ=
+	t=1750685747; cv=none; b=DGPXwlGlFE672Md9Smtpizx+0V+f+ADNV8jFxoUJROW975t4mao8C+cNDOtQCL70aZpPq+rMfrDzJkBGqnlopgB4iZzAl/w83xWQHQgKKM0ygBuh0hGs4dEO1Kg0BVh91QxJ0fBHMZhtsOVkFI9MHqDuWfR22a4udZdr586rNsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685744; c=relaxed/simple;
-	bh=J0Xj7Az+Rm1aVjIk8uLNS0XOjmflbKCcWaP+jpx2AZ4=;
+	s=arc-20240116; t=1750685747; c=relaxed/simple;
+	bh=RRCXfEprhEVtcpATvkLNC2zN7MM/jznvAmeCaX10BsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sm1dYQH82lbnjqqkQxm/a72KQIHWBJyFOBpenAtRpWzxhsc4lE+LeGY8oQSDZhjXk/UTcCRKw/6UHPumuRInq/wxuzW+wdO1UrucqSaq3WWDrEzIngHYSLu5MXEYstf+R1KzFjkMN1VEkuNs0NJ8AcxsodvWglq8GSvPalNUqRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUeZcwVd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ek0N19s8SlxxkzS3zVJOUsl67cpWFC/cYoryFP1h8uhRdNrBSV2cxVCFL0q7rWxXZ2ideAe4sXBVCpqeEKPgUsFebFFm/lPNiNhd6BoJS6695yns5SWUpxsqfHPjm53WOBiBDbW8kbhXpUML5CCHLS+Qx5OoleA2y/ijFc/p4Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlaG3zzz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUeZcwVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05717C4CEEA;
-	Mon, 23 Jun 2025 13:35:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlaG3zzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED60C4CEEA;
+	Mon, 23 Jun 2025 13:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685744;
-	bh=J0Xj7Az+Rm1aVjIk8uLNS0XOjmflbKCcWaP+jpx2AZ4=;
+	s=korg; t=1750685746;
+	bh=RRCXfEprhEVtcpATvkLNC2zN7MM/jznvAmeCaX10BsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CUeZcwVd+gN/vN1iJS8XzEv+tfGB1E8Z/6DM0utJU1ZnXD0F9bTWv5oM8+dURwJl5
-	 tNAcNYyfnK0/cF2OcgCF3K0BuNMf7d3eZbsOocufdgdyr6mqmaMFZONOn1+bKFeov/
-	 QQjsV4gdPrGBmVcoT03fz9HN2/lZvpK2rRNCfbZE=
+	b=OlaG3zzzIJjc/9ta8ezEGXHujZYhIuGkcQYZ90QVprcXTHgZrwsQ1XDJoslcqOxp4
+	 FSKpISHsEDE5jOKvcc6p1lxmPaROpKs21F+0a8jB1+NgzX/InDacH58GgUUMU2KR6z
+	 Qb5z2oAghonFz2Zocnl8FkInVKBrdPZzYcHiYquw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 005/414] crypto: qat - add shutdown handler to qat_420xx
-Date: Mon, 23 Jun 2025 15:02:22 +0200
-Message-ID: <20250623130642.157866664@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Marcelo Schmitt <marcelo.schmitt@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 092/355] iio: adc: ad7124: Fix 3dB filter frequency reading
+Date: Mon, 23 Jun 2025 15:04:53 +0200
+Message-ID: <20250623130629.563496455@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,64 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-commit 097143f23a1164bfd1b6f70279d229be44da2e30 upstream.
+[ Upstream commit 8712e4986e7ce42a14c762c4c350f290989986a5 ]
 
-During a warm reset via kexec, the system bypasses the driver removal
-sequence, meaning that the remove() callback is not invoked.
-If a QAT device is not shutdown properly, the device driver will fail to
-load in a newly rebooted kernel.
+The sinc4 filter has a factor 0.23 between Output Data Rate and f_{3dB}
+and for sinc3 the factor is 0.272 according to the data sheets for
+ad7124-4 (Rev. E.) and ad7124-8 (Rev. F).
 
-This might result in output like the following after the kexec reboot:
-
-    420xx 0000:01:00.0: Failed to power up the device
-    420xx 0000:01:00.0: Failed to initialize device
-    420xx 0000:01:00.0: Resetting device qat_dev0
-    420xx 0000:01:00.0: probe with driver 420xx failed with error -14
-
-Implement the shutdown() handler that hooks into the reboot notifier
-list. This brings down the QAT device and ensures it is shut down
-properly.
-
-Cc: <stable@vger.kernel.org>
-Fixes: fcf60f4bcf54 ("crypto: qat - add support for 420xx devices")
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cef2760954cf ("iio: adc: ad7124: add 3db filter")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
+Link: https://patch.msgid.link/20250317115247.3735016-6-u.kleine-koenig@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_420xx/adf_drv.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/iio/adc/ad7124.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/intel/qat/qat_420xx/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_420xx/adf_drv.c
-@@ -181,11 +181,19 @@ static void adf_remove(struct pci_dev *p
- 	adf_cleanup_accel(accel_dev);
- }
+diff --git a/drivers/iio/adc/ad7124.c b/drivers/iio/adc/ad7124.c
+index 99d1288e66828..503814fca4dc0 100644
+--- a/drivers/iio/adc/ad7124.c
++++ b/drivers/iio/adc/ad7124.c
+@@ -320,9 +320,9 @@ static int ad7124_get_3db_filter_freq(struct ad7124_state *st,
  
-+static void adf_shutdown(struct pci_dev *pdev)
-+{
-+	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
-+
-+	adf_dev_down(accel_dev);
-+}
-+
- static struct pci_driver adf_driver = {
- 	.id_table = adf_pci_tbl,
- 	.name = ADF_420XX_DEVICE_NAME,
- 	.probe = adf_probe,
- 	.remove = adf_remove,
-+	.shutdown = adf_shutdown,
- 	.sriov_configure = adf_sriov_configure,
- 	.err_handler = &adf_err_handler,
- };
+ 	switch (st->channel_config[channel].filter_type) {
+ 	case AD7124_SINC3_FILTER:
+-		return DIV_ROUND_CLOSEST(fadc * 230, 1000);
++		return DIV_ROUND_CLOSEST(fadc * 272, 1000);
+ 	case AD7124_SINC4_FILTER:
+-		return DIV_ROUND_CLOSEST(fadc * 262, 1000);
++		return DIV_ROUND_CLOSEST(fadc * 230, 1000);
+ 	default:
+ 		return -EINVAL;
+ 	}
+-- 
+2.39.5
+
 
 
