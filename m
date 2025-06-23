@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501432192EC;
-	Mon, 23 Jun 2025 22:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73F02192EC;
+	Mon, 23 Jun 2025 22:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717448; cv=none; b=cLHZDcOoG5vp1z0GbsOjsdKcPLeUGbmsmJiHa94C0E3f5Nj8+9fzg6Vrbp8OtyPzW9t2sJQEsKv9ORHbBhs26XyxA2HmQM3eW7xBNXugcMup75kmIP/vvMQZ6T6kQUcsZakzdmI8uJ9HIgurcDmYJhwx3khlSTh6rziGeE1M6Jk=
+	t=1750717450; cv=none; b=rZAMZMP/mthvva96n3urS1LPRZBBm2ohGFUVVoukKMHxIPmrTaao+cwPRmQoZj49wtQJi3KxWRfzagg0J62VFYYukfOKS68AOCuQr3gpiJ5nytzauDvN7IV3zfwn8Hm9qos9m86uRMur6aRXkP1FG6r96kOGEgrl5hE2u6MORQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717448; c=relaxed/simple;
-	bh=S2tgGUy4GGNMobf3Pp8sGwtEWqLGnRXC7hlvh83QQxI=;
+	s=arc-20240116; t=1750717450; c=relaxed/simple;
+	bh=sGZyw89uT7Y/BehjPnTXfNIkCgIoKW2YyVXkHyB334A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UnPjn1AQVBItc087F0WbD6dWZSdrbzan98zUXBFLYg/z4YmGJSUhlxqk48LimuB4bP7Mlbv6dH+Hi4f1WERX0U9ZB8Fhy41G21UVnlwN4MKtWTRt8LjH6IdxZxO4hKhnod4C7OX1nDfGB/l/k1w1UkRwH1KrfabMCXY1afpzI2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avhhtUFf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G8JfqggafWN1/RCCcWip+mqPWToreXrcwpszSrIv7rv3bV+UU3EAvWf75Ubfdav6zCZeUBPegpkMpwwhqORP3lsocCWVhs3KobZOW2h7Ghh+7JkWdytI7j++H6LlP3En8IYRDoymHTIX5pzb+JrqPO7drQ2UD/Zyaw+//XZKxgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYtnJC9S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avhhtUFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB981C4CEEA;
-	Mon, 23 Jun 2025 22:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYtnJC9S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF9AC4CEEA;
+	Mon, 23 Jun 2025 22:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717448;
-	bh=S2tgGUy4GGNMobf3Pp8sGwtEWqLGnRXC7hlvh83QQxI=;
+	s=korg; t=1750717450;
+	bh=sGZyw89uT7Y/BehjPnTXfNIkCgIoKW2YyVXkHyB334A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avhhtUFfEBwi0tGFE+RJE9Em42GbaHAXuGc85ySiZIq49J4J4WNLqhVQAmJ16RfKC
-	 oWzxa7kiMIalL89QWavV8aEXKBSPtHRHus/7BjBLB3emzE39mC0zoc5v/oKlkhp5z+
-	 cFKRWGu+pMrK0pqaNwtNFDXo+n/07Vv7En/Lv/KU=
+	b=xYtnJC9SkfLzLGY0K4Kzrs6K75vBcrsZ7GP4c5Cw2gWK+MhkFxuZD/lg4BKewXxEu
+	 SgHWBXXwRTB/ntUTfZTRbsX4HjxE88adcpr3rCEW8s9H1feImBcbyYHwKg8J4jE0yS
+	 aBtK/t3MtfLdRmhRZsSeIKH1fUKsZokTwppgWKwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badal Nilawar <badal.nilawar@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 389/414] drm/xe/gt: Update handling of xe_force_wake_get return
-Date: Mon, 23 Jun 2025 15:08:46 +0200
-Message-ID: <20250623130651.670160460@linuxfoundation.org>
+Subject: [PATCH 6.1 429/508] bpf, sockmap: Fix data lost during EAGAIN retries
+Date: Mon, 23 Jun 2025 15:07:54 +0200
+Message-ID: <20250623130655.733394219@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,350 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 30d105577a3319094f8ae5ff1ceea670f1931487 ]
+[ Upstream commit 7683167196bd727ad5f3c3fc6a9ca70f54520a81 ]
 
-xe_force_wake_get() now returns the reference count-incremented domain
-mask. If it fails for individual domains, the return value will always
-be 0. However, for XE_FORCEWAKE_ALL, it may return a non-zero value even
-in the event of failure. Use helper xe_force_wake_ref_has_domain to verify
-all domains are initialized or not. Update the return handling of
-xe_force_wake_get() to reflect this behavior, and ensure that the return
-value is passed as input to xe_force_wake_put().
+We call skb_bpf_redirect_clear() to clean _sk_redir before handling skb in
+backlog, but when sk_psock_handle_skb() return EAGAIN due to sk_rcvbuf
+limit, the redirect info in _sk_redir is not recovered.
 
-v3
-- return xe_wakeref_t instead of int in xe_force_wake_get()
-- xe_force_wake_put() error doesn't need to be checked. It internally
-WARNS on domain ack failure.
+Fix skb redir loss during EAGAIN retries by restoring _sk_redir
+information using skb_bpf_set_redir().
 
-v4
-- Rebase fix
+Before this patch:
+'''
+./bench sockmap -c 2 -p 1 -a --rx-verdict-ingress
+Setting up benchmark 'sockmap'...
+create socket fd c1:13 p1:14 c2:15 p2:16
+Benchmark 'sockmap' started.
+Send Speed 1343.172 MB/s, BPF Speed 1343.238 MB/s, Rcv Speed   65.271 MB/s
+Send Speed 1352.022 MB/s, BPF Speed 1352.088 MB/s, Rcv Speed   0 MB/s
+Send Speed 1354.105 MB/s, BPF Speed 1354.105 MB/s, Rcv Speed   0 MB/s
+Send Speed 1355.018 MB/s, BPF Speed 1354.887 MB/s, Rcv Speed   0 MB/s
+'''
+Due to the high send rate, the RX processing path may frequently hit the
+sk_rcvbuf limit. Once triggered, incorrect _sk_redir will cause the flow
+to mistakenly enter the "!ingress" path, leading to send failures.
+(The Rcv speed depends on tcp_rmem).
 
-v5
-- return unsigned int for xe_force_wake_get()
-- remove redundant XE_WARN_ON()
+After this patch:
+'''
+./bench sockmap -c 2 -p 1 -a --rx-verdict-ingress
+Setting up benchmark 'sockmap'...
+create socket fd c1:13 p1:14 c2:15 p2:16
+Benchmark 'sockmap' started.
+Send Speed 1347.236 MB/s, BPF Speed 1347.367 MB/s, Rcv Speed   65.402 MB/s
+Send Speed 1353.320 MB/s, BPF Speed 1353.320 MB/s, Rcv Speed   65.536 MB/s
+Send Speed 1353.186 MB/s, BPF Speed 1353.121 MB/s, Rcv Speed   65.536 MB/s
+'''
 
-v6
-- use helper for checking all initialized domains are awake or not.
-
-v7
-- Fix commit message
-
-v9
-- Remove redundant WARN_ON (Badal)
-
-Cc: Badal Nilawar <badal.nilawar@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Badal Nilawar <badal.nilawar@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241014075601.2324382-10-himal.prasad.ghimiray@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Stable-dep-of: 16c1241b0875 ("drm/xe/bmg: Update Wa_16023588340")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/r/20250407142234.47591-2-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt.c | 105 ++++++++++++++++++++-----------------
- 1 file changed, 58 insertions(+), 47 deletions(-)
+ net/core/skmsg.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
-index 258a6d6715679..335548e3b6b9c 100644
---- a/drivers/gpu/drm/xe/xe_gt.c
-+++ b/drivers/gpu/drm/xe/xe_gt.c
-@@ -98,14 +98,14 @@ void xe_gt_sanitize(struct xe_gt *gt)
- 
- static void xe_gt_enable_host_l2_vram(struct xe_gt *gt)
- {
-+	unsigned int fw_ref;
- 	u32 reg;
--	int err;
- 
- 	if (!XE_WA(gt, 16023588340))
- 		return;
- 
--	err = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
--	if (WARN_ON(err))
-+	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
-+	if (!fw_ref)
- 		return;
- 
- 	if (!xe_gt_is_media_type(gt)) {
-@@ -115,13 +115,13 @@ static void xe_gt_enable_host_l2_vram(struct xe_gt *gt)
- 	}
- 
- 	xe_gt_mcr_multicast_write(gt, XEHPC_L3CLOS_MASK(3), 0x3);
--	xe_force_wake_put(gt_to_fw(gt), XE_FW_GT);
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- }
- 
- static void xe_gt_disable_host_l2_vram(struct xe_gt *gt)
- {
-+	unsigned int fw_ref;
- 	u32 reg;
--	int err;
- 
- 	if (!XE_WA(gt, 16023588340))
- 		return;
-@@ -129,15 +129,15 @@ static void xe_gt_disable_host_l2_vram(struct xe_gt *gt)
- 	if (xe_gt_is_media_type(gt))
- 		return;
- 
--	err = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
--	if (WARN_ON(err))
-+	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
-+	if (!fw_ref)
- 		return;
- 
- 	reg = xe_gt_mcr_unicast_read_any(gt, XE2_GAMREQSTRM_CTRL);
- 	reg &= ~CG_DIS_CNTLBUS;
- 	xe_gt_mcr_multicast_write(gt, XE2_GAMREQSTRM_CTRL, reg);
- 
--	xe_force_wake_put(gt_to_fw(gt), XE_FW_GT);
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- }
- 
- /**
-@@ -405,11 +405,14 @@ static void dump_pat_on_error(struct xe_gt *gt)
- 
- static int gt_fw_domain_init(struct xe_gt *gt)
- {
-+	unsigned int fw_ref;
- 	int err, i;
- 
--	err = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
--	if (err)
-+	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
-+	if (!fw_ref) {
-+		err = -ETIMEDOUT;
- 		goto err_hw_fence_irq;
-+	}
- 
- 	if (!xe_gt_is_media_type(gt)) {
- 		err = xe_ggtt_init(gt_to_tile(gt)->mem.ggtt);
-@@ -444,14 +447,12 @@ static int gt_fw_domain_init(struct xe_gt *gt)
- 	 */
- 	gt->info.gmdid = xe_mmio_read32(gt, GMD_ID);
- 
--	err = xe_force_wake_put(gt_to_fw(gt), XE_FW_GT);
--	XE_WARN_ON(err);
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index e5ba57a5db126..2aa6262f19e84 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -688,7 +688,8 @@ static void sk_psock_backlog(struct work_struct *work)
+ 			if (ret <= 0) {
+ 				if (ret == -EAGAIN) {
+ 					sk_psock_skb_state(psock, state, len, off);
 -
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 	return 0;
- 
- err_force_wake:
- 	dump_pat_on_error(gt);
--	xe_force_wake_put(gt_to_fw(gt), XE_FW_GT);
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- err_hw_fence_irq:
- 	for (i = 0; i < XE_ENGINE_CLASS_MAX; ++i)
- 		xe_hw_fence_irq_finish(&gt->fence_irq[i]);
-@@ -461,11 +462,14 @@ static int gt_fw_domain_init(struct xe_gt *gt)
- 
- static int all_fw_domain_init(struct xe_gt *gt)
- {
-+	unsigned int fw_ref;
- 	int err, i;
- 
--	err = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
--	if (err)
--		goto err_hw_fence_irq;
-+	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
-+	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL)) {
-+		err = -ETIMEDOUT;
-+		goto err_force_wake;
-+	}
- 
- 	xe_gt_mcr_set_implicit_defaults(gt);
- 	xe_wa_process_gt(gt);
-@@ -531,14 +535,12 @@ static int all_fw_domain_init(struct xe_gt *gt)
- 	if (IS_SRIOV_PF(gt_to_xe(gt)))
- 		xe_gt_sriov_pf_init_hw(gt);
- 
--	err = xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL);
--	XE_WARN_ON(err);
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 
- 	return 0;
- 
- err_force_wake:
--	xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL);
--err_hw_fence_irq:
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 	for (i = 0; i < XE_ENGINE_CLASS_MAX; ++i)
- 		xe_hw_fence_irq_finish(&gt->fence_irq[i]);
- 
-@@ -551,11 +553,12 @@ static int all_fw_domain_init(struct xe_gt *gt)
-  */
- int xe_gt_init_hwconfig(struct xe_gt *gt)
- {
-+	unsigned int fw_ref;
- 	int err;
- 
--	err = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
--	if (err)
--		goto out;
-+	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
-+	if (!fw_ref)
-+		return -ETIMEDOUT;
- 
- 	xe_gt_mcr_init_early(gt);
- 	xe_pat_init(gt);
-@@ -573,8 +576,7 @@ int xe_gt_init_hwconfig(struct xe_gt *gt)
- 	xe_gt_enable_host_l2_vram(gt);
- 
- out_fw:
--	xe_force_wake_put(gt_to_fw(gt), XE_FW_GT);
--out:
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 	return err;
- }
- 
-@@ -744,6 +746,7 @@ static int do_gt_restart(struct xe_gt *gt)
- 
- static int gt_reset(struct xe_gt *gt)
- {
-+	unsigned int fw_ref;
- 	int err;
- 
- 	if (xe_device_wedged(gt_to_xe(gt)))
-@@ -764,9 +767,11 @@ static int gt_reset(struct xe_gt *gt)
- 
- 	xe_gt_sanitize(gt);
- 
--	err = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
--	if (err)
--		goto err_msg;
-+	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
-+	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL)) {
-+		err = -ETIMEDOUT;
-+		goto err_out;
-+	}
- 
- 	xe_uc_gucrc_disable(&gt->uc);
- 	xe_uc_stop_prepare(&gt->uc);
-@@ -784,8 +789,7 @@ static int gt_reset(struct xe_gt *gt)
- 	if (err)
- 		goto err_out;
- 
--	err = xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL);
--	XE_WARN_ON(err);
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 	xe_pm_runtime_put(gt_to_xe(gt));
- 
- 	xe_gt_info(gt, "reset done\n");
-@@ -793,8 +797,7 @@ static int gt_reset(struct xe_gt *gt)
- 	return 0;
- 
- err_out:
--	XE_WARN_ON(xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL));
--err_msg:
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 	XE_WARN_ON(xe_uc_start(&gt->uc));
- err_fail:
- 	xe_gt_err(gt, "reset failed (%pe)\n", ERR_PTR(err));
-@@ -826,22 +829,25 @@ void xe_gt_reset_async(struct xe_gt *gt)
- 
- void xe_gt_suspend_prepare(struct xe_gt *gt)
- {
--	XE_WARN_ON(xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL));
-+	unsigned int fw_ref;
-+
-+	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
- 
- 	xe_uc_suspend_prepare(&gt->uc);
- 
--	XE_WARN_ON(xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL));
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- }
- 
- int xe_gt_suspend(struct xe_gt *gt)
- {
-+	unsigned int fw_ref;
- 	int err;
- 
- 	xe_gt_dbg(gt, "suspending\n");
- 	xe_gt_sanitize(gt);
- 
--	err = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
--	if (err)
-+	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
-+	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL))
- 		goto err_msg;
- 
- 	err = xe_uc_suspend(&gt->uc);
-@@ -852,14 +858,15 @@ int xe_gt_suspend(struct xe_gt *gt)
- 
- 	xe_gt_disable_host_l2_vram(gt);
- 
--	XE_WARN_ON(xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL));
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 	xe_gt_dbg(gt, "suspended\n");
- 
- 	return 0;
- 
--err_force_wake:
--	XE_WARN_ON(xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL));
- err_msg:
-+	err = -ETIMEDOUT;
-+err_force_wake:
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 	xe_gt_err(gt, "suspend failed (%pe)\n", ERR_PTR(err));
- 
- 	return err;
-@@ -867,9 +874,11 @@ int xe_gt_suspend(struct xe_gt *gt)
- 
- void xe_gt_shutdown(struct xe_gt *gt)
- {
--	xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
-+	unsigned int fw_ref;
-+
-+	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
- 	do_gt_reset(gt);
--	xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL);
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- }
- 
- /**
-@@ -894,11 +903,12 @@ int xe_gt_sanitize_freq(struct xe_gt *gt)
- 
- int xe_gt_resume(struct xe_gt *gt)
- {
-+	unsigned int fw_ref;
- 	int err;
- 
- 	xe_gt_dbg(gt, "resuming\n");
--	err = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
--	if (err)
-+	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
-+	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL))
- 		goto err_msg;
- 
- 	err = do_gt_restart(gt);
-@@ -907,14 +917,15 @@ int xe_gt_resume(struct xe_gt *gt)
- 
- 	xe_gt_idle_enable_pg(gt);
- 
--	XE_WARN_ON(xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL));
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 	xe_gt_dbg(gt, "resumed\n");
- 
- 	return 0;
- 
--err_force_wake:
--	XE_WARN_ON(xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL));
- err_msg:
-+	err = -ETIMEDOUT;
-+err_force_wake:
-+	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 	xe_gt_err(gt, "resume failed (%pe)\n", ERR_PTR(err));
- 
- 	return err;
++					/* Restore redir info we cleared before */
++					skb_bpf_set_redir(skb, psock->sk, ingress);
+ 					/* Delay slightly to prioritize any
+ 					 * other work that might be here.
+ 					 */
 -- 
 2.39.5
 
