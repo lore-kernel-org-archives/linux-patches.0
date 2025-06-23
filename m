@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386DC2628C;
-	Mon, 23 Jun 2025 21:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23A57482;
+	Mon, 23 Jun 2025 21:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713597; cv=none; b=a13DQwc6Hgm2TZxrkcjfW/6IbN2qsKlzzd9AsS+bKVa9zN7oOYvZtUW8KupOM0fti09EeQ63SRVHvsSEMHMfxEMfvjt3Lnb+0nf+eZw8AEl0dGKxpiFiAvcYFhMIag6KgS0Bj+aQDhNZanYndEbEIKWJk/aKXMvPWwk8X8LWqU8=
+	t=1750713600; cv=none; b=WMP61LD0OfdnEG7R68VGZujFhq0HXvcYJiKb28HEstv9TahoM4m2N5HgX1Bn/nfKcpMyCofDuOWtRznJrvAnFVE+YVUIZLOKlW4q3ZeEHeaHOcdaUUpI7BpqJppCkAs/Viqga5G/e9wiCmeSxmUlu6rowdBO+dDzOMBtJcIkl7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713597; c=relaxed/simple;
-	bh=EWOOqxPZRcfJISl/hHmmbhmXRA8sdFEw03/510R7sQY=;
+	s=arc-20240116; t=1750713600; c=relaxed/simple;
+	bh=k3tk2kV5pw81kwJkZRoPMGRVoYvWmK1NobW9Oy/RPZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ntb8ja1+A88GaMGozuc87jvTzgKAdhYgEmyZ8TlcDUu3ri20VBsjN8zR4NzgJPlT8Kj2DXLy+fHS7X/05qvbeUIA9lX+lWjt4Avir3RfgRwzqhjUdpwWgDbfa2Obndgbe34JEoZRkCDbvny5OrUlrYWiGT8vfyOrB0xByNy5gA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2pVzP/1p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Czf+VxVW5mHKJrhT3X2bFkyH+Ep3R7tG1N4RcHy12jL5oVLOsmuf/APtLA4XS8l8BQqC6+Yfx8WFojUh8WctuJhgk0REKFWUEtHwV6/8mdgP9/kwSwXHooOkiuk+HvaYY1QQNpEWR2fIJfxBOGp0r5flp+P4g0IQxuagEhSLHFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1lkR62N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pVzP/1p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EDBC4CEEA;
-	Mon, 23 Jun 2025 21:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1lkR62N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A855C4CEEA;
+	Mon, 23 Jun 2025 21:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713597;
-	bh=EWOOqxPZRcfJISl/hHmmbhmXRA8sdFEw03/510R7sQY=;
+	s=korg; t=1750713599;
+	bh=k3tk2kV5pw81kwJkZRoPMGRVoYvWmK1NobW9Oy/RPZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2pVzP/1pdtVzQM09CpyiURU8YOq4LhjmMijt5N80U0IkNy7jpEUZJ77wo128xL1/l
-	 yr+FQjHngnpdIcRSDG7H/EWzgrtCV2BtcXjq6aWAPfkv3EzUPjk84mDNSjpkuRZUqn
-	 HQ7nEWAPeIjteGluOd2M495OL8mmiEtqMyk7QxRU=
+	b=P1lkR62NbXuQ8ZHhyAsceRJzy87ZORGUsHXXpj90Eb/KZ9QVKnjUEOkQGBGpVEwU0
+	 dWUetHb23XG/gQ8oNQ+d7YVYVdLmj2qVCc8zP07c85wP4NEHECFq2t5JdbIeMUF1fk
+	 GQf6XJXCy+X+16vdxgRQxTQIaJprGLP/yVjdmGWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 112/508] arm64: dts: imx8mn-beacon: Fix RTC capacitive load
-Date: Mon, 23 Jun 2025 15:02:37 +0200
-Message-ID: <20250623130648.051904062@linuxfoundation.org>
+	WangYuli <wangyuli@uniontech.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.4 195/222] Input: sparcspkr - avoid unannotated fall-through
+Date: Mon, 23 Jun 2025 15:08:50 +0200
+Message-ID: <20250623130618.094956393@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +46,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit c3f03bec30efd5082b55876846d57b5d17dae7b9 ]
+commit 8b1d858cbd4e1800e9336404ba7892b5a721230d upstream.
 
-Although not noticeable when used every day, the RTC appears to drift when
-left to sit over time.  This is due to the capacitive load not being
-properly set. Fix RTC drift by correcting the capacitive load setting
-from 7000 to 12500, which matches the actual hardware configuration.
+Fix follow warnings with clang-21i (and reformat for clarity):
+  drivers/input/misc/sparcspkr.c:78:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+     78 |                 case SND_TONE: break;
+        |                 ^
+  drivers/input/misc/sparcspkr.c:78:3: note: insert 'break;' to avoid fall-through
+     78 |                 case SND_TONE: break;
+        |                 ^
+        |                 break;
+  drivers/input/misc/sparcspkr.c:113:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+    113 |                 case SND_TONE: break;
+        |                 ^
+  drivers/input/misc/sparcspkr.c:113:3: note: insert 'break;' to avoid fall-through
+    113 |                 case SND_TONE: break;
+        |                 ^
+        |                 break;
+  2 warnings generated.
 
-Fixes: 36ca3c8ccb53 ("arm64: dts: imx: Add Beacon i.MX8M Nano development kit")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Link: https://lore.kernel.org/r/6730E40353C76908+20250415052439.155051-1-wangyuli@uniontech.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/misc/sparcspkr.c |   22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
-index 1133cded9be2f..c4b1c6029c9a9 100644
---- a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
-@@ -240,6 +240,7 @@
- 	rtc: rtc@51 {
- 		compatible = "nxp,pcf85263";
- 		reg = <0x51>;
-+		quartz-load-femtofarads = <12500>;
- 	};
- };
+--- a/drivers/input/misc/sparcspkr.c
++++ b/drivers/input/misc/sparcspkr.c
+@@ -74,9 +74,14 @@ static int bbc_spkr_event(struct input_d
+ 		return -1;
  
--- 
-2.39.5
-
+ 	switch (code) {
+-		case SND_BELL: if (value) value = 1000;
+-		case SND_TONE: break;
+-		default: return -1;
++	case SND_BELL:
++		if (value)
++			value = 1000;
++		break;
++	case SND_TONE:
++		break;
++	default:
++		return -1;
+ 	}
+ 
+ 	if (value > 20 && value < 32767)
+@@ -112,9 +117,14 @@ static int grover_spkr_event(struct inpu
+ 		return -1;
+ 
+ 	switch (code) {
+-		case SND_BELL: if (value) value = 1000;
+-		case SND_TONE: break;
+-		default: return -1;
++	case SND_BELL:
++		if (value)
++			value = 1000;
++		break;
++	case SND_TONE:
++		break;
++	default:
++		return -1;
+ 	}
+ 
+ 	if (value > 20 && value < 32767)
 
 
