@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBAD347DD;
-	Mon, 23 Jun 2025 13:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173CA24DCFD;
+	Mon, 23 Jun 2025 13:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685938; cv=none; b=VfYeJfHaaMH2rFhRLIHCXUipA7IK0G9idlI5aRo2CDzEf8acC7QJMIZBFIUECVH+nyxPCkGN6/2DViAo/hSqaptUCKobbiGGJao9uznux5iSugoOJTHcSo3C+hZWK5eSMbLE+z+CJI4wgSHePP4ER2gkdmAhEhFKM5dzpSVMRCY=
+	t=1750685941; cv=none; b=mwdqFlqgFDBqvfhR6+0ZqLTn3AG1FP+2WlXOY9YOcBGS+LwXeDnRyvnxmVY8YGQDVby9EUfVQ0tRnF4MhaNEKbCXWEHxu05ZcAvaeOmGw7cJA7Kiu1RzCsNgHYRIdgCRz6UZ49cViSpb7s5+2l+kVower4dR3Gy4taR5LtffYyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685938; c=relaxed/simple;
-	bh=yD/hOhY2zjhmB6g+FEZkB/otTa2/HakNQZgaZi2+bCU=;
+	s=arc-20240116; t=1750685941; c=relaxed/simple;
+	bh=CG5Dz6HYwuQh+9pVqNHMJTOng9Pt2g6Kpo3AkjDgZmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LMwOl8UsmsPyGM2zTEDOZhdNoPsl8YSoQ3/77YWmQ+tH6f3TBGUIpbRsQ6MuLFTd0NYScObjwdzJL6bm44/tGSW99HgnZYoaZLKegWH9LZwwK+D1zG6vjvV6Mn9arLwYR+XBvWYcea6ZnrxXauGBX+v/byOQhiZHJ2BcTJ4OE0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUcIah7K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ufkdeVk4NaAnLhS/3YaTipFn0OkN2xEeqgmZfeUL5QCEWHcmmdSSU5nm9/BdEBPz8r7aM/dQXVS94FHEZo3kzdwR23dU7pw4HhE0Ed27MFl7FGK7io13zthted5J/yeiHSAX+ac2+n7zKLAh8h9yYOd6OKrHH019SdOzxVnww9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+QPFd/B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUcIah7K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251F7C4CEEA;
-	Mon, 23 Jun 2025 13:38:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+QPFd/B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC7AC4CEEA;
+	Mon, 23 Jun 2025 13:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685938;
-	bh=yD/hOhY2zjhmB6g+FEZkB/otTa2/HakNQZgaZi2+bCU=;
+	s=korg; t=1750685941;
+	bh=CG5Dz6HYwuQh+9pVqNHMJTOng9Pt2g6Kpo3AkjDgZmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gUcIah7KJnJzsSdONOvYRjZ5FOgxQJnFjvCSuRGtUJIcx93cW3L2KUZSXu1NPxpqq
-	 ALo8RRMx2BOi+3I78Esp39UECB0YQ8wbjn6UrfkpSnjeTI/fUWMY2T2Ipei+HZsYAx
-	 yrWwpZGJ2AO4I0DHRI4HJfXt7cg3+zGkIp7JZR9g=
+	b=t+QPFd/BZo/wA9urpJ/3Lv69kBWP6N1qborXILSfw+N+aSLHHM8SKAyFExyoJ8MGN
+	 JcZGJFqDA/oCeyoMHNa3VZ3dOD8jpnf1cH594gSPz1X4WCF6ozlIaRqHATYtcOJ9yC
+	 dBl6kBWzbC+fndmwjqUwTAA2X/IRjOggfLRwQSqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Robert Morris <rtm@mit.edu>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 013/290] wifi: p54: prevent buffer-overflow in p54_rx_eeprom_readback()
-Date: Mon, 23 Jun 2025 15:04:34 +0200
-Message-ID: <20250623130627.381063139@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	James Clark <james.clark@linaro.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 081/355] perf tests switch-tracking: Fix timestamp comparison
+Date: Mon, 23 Jun 2025 15:04:42 +0200
+Message-ID: <20250623130629.248667020@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,118 +52,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Lamparter <chunkeey@gmail.com>
+From: Leo Yan <leo.yan@arm.com>
 
-commit da1b9a55ff116cb040528ef664c70a4eec03ae99 upstream.
+[ Upstream commit 628e124404b3db5e10e17228e680a2999018ab33 ]
 
-Robert Morris reported:
+The test might fail on the Arm64 platform with the error:
 
-|If a malicious USB device pretends to be an Intersil p54 wifi
-|interface and generates an eeprom_readback message with a large
-|eeprom->v1.len, p54_rx_eeprom_readback() will copy data from the
-|message beyond the end of priv->eeprom.
-|
-|static void p54_rx_eeprom_readback(struct p54_common *priv,
-|                                   struct sk_buff *skb)
-|{
-|        struct p54_hdr *hdr = (struct p54_hdr *) skb->data;
-|        struct p54_eeprom_lm86 *eeprom = (struct p54_eeprom_lm86 *) hdr->data;
-|
-|        if (priv->fw_var >= 0x509) {
-|                memcpy(priv->eeprom, eeprom->v2.data,
-|                       le16_to_cpu(eeprom->v2.len));
-|        } else {
-|                memcpy(priv->eeprom, eeprom->v1.data,
-|                       le16_to_cpu(eeprom->v1.len));
-|        }
-| [...]
+  # perf test -vvv "Track with sched_switch"
+  Missing sched_switch events
+  #
 
-The eeprom->v{1,2}.len is set by the driver in p54_download_eeprom().
-The device is supposed to provide the same length back to the driver.
-But yes, it's possible (like shown in the report) to alter the value
-to something that causes a crash/panic due to overrun.
+The issue is caused by incorrect handling of timestamp comparisons. The
+comparison result, a signed 64-bit value, was being directly cast to an
+int, leading to incorrect sorting for sched events.
 
-This patch addresses the issue by adding the size to the common device
-context, so p54_rx_eeprom_readback no longer relies on possibly tampered
-values... That said, it also checks if the "firmware" altered the value
-and no longer copies them.
+The case does not fail everytime, usually I can trigger the failure
+after run 20 ~ 30 times:
 
-The one, small saving grace is: Before the driver tries to read the eeprom,
-it needs to upload >a< firmware. the vendor firmware has a proprietary
-license and as a reason, it is not present on most distributions by
-default.
+  # while true; do perf test "Track with sched_switch"; done
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : FAILED!
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : FAILED!
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
 
-Cc: <stable@kernel.org>
-Reported-by: Robert Morris <rtm@mit.edu>
-Closes: https://lore.kernel.org/linux-wireless/28782.1747258414@localhost/
-Fixes: 7cb770729ba8 ("p54: move eeprom code into common library")
-Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
-Link: https://patch.msgid.link/20250516184107.47794-1-chunkeey@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+I used cross compiler to build Perf tool on my host machine and tested on
+Debian / Juno board.  Generally, I think this issue is not very specific
+to GCC versions.  As both internal CI and my local env can reproduce the
+issue.
+
+My Host Build compiler:
+
+  # aarch64-linux-gnu-gcc --version
+  aarch64-linux-gnu-gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+
+Juno Board:
+
+  # lsb_release -a
+  No LSB modules are available.
+  Distributor ID: Debian
+  Description:    Debian GNU/Linux 12 (bookworm)
+  Release:        12
+  Codename:       bookworm
+
+Fix this by explicitly returning 0, 1, or -1 based on whether the result
+is zero, positive, or negative.
+
+Fixes: d44bc558297222d9 ("perf tests: Add a test for tracking with sched_switch")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20250331172759.115604-1-leo.yan@arm.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intersil/p54/fwio.c |    2 ++
- drivers/net/wireless/intersil/p54/p54.h  |    1 +
- drivers/net/wireless/intersil/p54/txrx.c |   13 +++++++++----
- 3 files changed, 12 insertions(+), 4 deletions(-)
+ tools/perf/tests/switch-tracking.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/intersil/p54/fwio.c
-+++ b/drivers/net/wireless/intersil/p54/fwio.c
-@@ -231,6 +231,7 @@ int p54_download_eeprom(struct p54_commo
+diff --git a/tools/perf/tests/switch-tracking.c b/tools/perf/tests/switch-tracking.c
+index db5e1f70053a8..7b28d468fc6e8 100644
+--- a/tools/perf/tests/switch-tracking.c
++++ b/tools/perf/tests/switch-tracking.c
+@@ -255,7 +255,7 @@ static int compar(const void *a, const void *b)
+ 	const struct event_node *nodeb = b;
+ 	s64 cmp = nodea->event_time - nodeb->event_time;
  
- 	mutex_lock(&priv->eeprom_mutex);
- 	priv->eeprom = buf;
-+	priv->eeprom_slice_size = len;
- 	eeprom_hdr = skb_put(skb, eeprom_hdr_size + len);
- 
- 	if (priv->fw_var < 0x509) {
-@@ -253,6 +254,7 @@ int p54_download_eeprom(struct p54_commo
- 		ret = -EBUSY;
- 	}
- 	priv->eeprom = NULL;
-+	priv->eeprom_slice_size = 0;
- 	mutex_unlock(&priv->eeprom_mutex);
- 	return ret;
+-	return cmp;
++	return cmp < 0 ? -1 : (cmp > 0 ? 1 : 0);
  }
---- a/drivers/net/wireless/intersil/p54/p54.h
-+++ b/drivers/net/wireless/intersil/p54/p54.h
-@@ -258,6 +258,7 @@ struct p54_common {
  
- 	/* eeprom handling */
- 	void *eeprom;
-+	size_t eeprom_slice_size;
- 	struct completion eeprom_comp;
- 	struct mutex eeprom_mutex;
- };
---- a/drivers/net/wireless/intersil/p54/txrx.c
-+++ b/drivers/net/wireless/intersil/p54/txrx.c
-@@ -496,14 +496,19 @@ static void p54_rx_eeprom_readback(struc
- 		return ;
- 
- 	if (priv->fw_var >= 0x509) {
--		memcpy(priv->eeprom, eeprom->v2.data,
--		       le16_to_cpu(eeprom->v2.len));
-+		if (le16_to_cpu(eeprom->v2.len) != priv->eeprom_slice_size)
-+			return;
-+
-+		memcpy(priv->eeprom, eeprom->v2.data, priv->eeprom_slice_size);
- 	} else {
--		memcpy(priv->eeprom, eeprom->v1.data,
--		       le16_to_cpu(eeprom->v1.len));
-+		if (le16_to_cpu(eeprom->v1.len) != priv->eeprom_slice_size)
-+			return;
-+
-+		memcpy(priv->eeprom, eeprom->v1.data, priv->eeprom_slice_size);
- 	}
- 
- 	priv->eeprom = NULL;
-+	priv->eeprom_slice_size = 0;
- 	tmp = p54_find_and_unlink_skb(priv, hdr->req_id);
- 	dev_kfree_skb_any(tmp);
- 	complete(&priv->eeprom_comp);
+ static int process_events(struct evlist *evlist,
+-- 
+2.39.5
+
 
 
