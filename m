@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146161E5206;
-	Mon, 23 Jun 2025 22:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB772248B0;
+	Mon, 23 Jun 2025 22:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716000; cv=none; b=Z+3Oxd734P5HtpdTY6KOzI0KikBPjNEWwyK6G5Id6PSPboqPDm7HjaAotZnoLysvUfdsgEazF61CfI3CW0cm9VBG7bs86Xkn1E+NR1Z0KIiNxFT25DPICjrnAXFnhn6lu6odkYeHDfIOI/N4WiAIgreWVuao8Nt/LN7YNgJdq0Q=
+	t=1750716002; cv=none; b=b4PUEKQ6eq4r3dUx2qiOP+9zRJl459PIDDEKjAbdkOy9+VfK9KrLH3+67gZo4BKCfp3JBzolC9xGGTQLrWRP/EOVFvsfVI6A5OjDTCkEbMXi4FCFiJdhNScLoX+YMeYnAw0IdsZKg3k6Mzl1sgxRcUwGLkwalAIk1hgsKnlCvww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716000; c=relaxed/simple;
-	bh=hBatiPfj5xX6DU9xlcEstGk3MI/PyXc/LZGsXZWDFkk=;
+	s=arc-20240116; t=1750716002; c=relaxed/simple;
+	bh=viv5bcUKbw8aXpcuR2/qoZIaTJLKcpznot3xBQ0lQ5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RAuYtgSyuGEZIFwtV3Mgi6wMrNN7QRNeTSOSR47tiYbWAPBAtsYPaaGahVbcQjJGcIOkL5EUNGyNRU6T0bVtg+xfm4EPZklmqg+NnLjpDNGesLVppAeQo5eMpW2694iqy1phBPKk6pANkJIKJUARaGNFaJ9c5XjjaJxuBv5vAWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqAtTL41; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=De6YZoWuZ5aNuZ5VwdmQLznFrk/+4b9U7oLJHfAjJvugZ9rGlQCDV0AYkOj0JLMt/vsKTFj1vHbV3/OJLTA8DxQp0USLjJ2zm/vIHzTaGaQBFLOs3h4IfCfMBqO3E0hYzwgONHD7XctHLyBsQE3ncOozttpMUYPCSiXGNQnKBJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WIHPIcWA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqAtTL41"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00EFC4CEEA;
-	Mon, 23 Jun 2025 21:59:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WIHPIcWA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 144ABC4CEEA;
+	Mon, 23 Jun 2025 22:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715999;
-	bh=hBatiPfj5xX6DU9xlcEstGk3MI/PyXc/LZGsXZWDFkk=;
+	s=korg; t=1750716002;
+	bh=viv5bcUKbw8aXpcuR2/qoZIaTJLKcpznot3xBQ0lQ5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FqAtTL41zDaRzGiXlcIVRyijM5k0OMe9Ckz4xNyx3CWsz5gEKZ4SLQFZEH70D5HkU
-	 PnzMieLRkPm2VhKtm65s/cehfVGq4gkVrQlvZaREV4EyL0DUYZlTAsvBnJPWhpLVY4
-	 tifjIjQrwxG34TNSfgtsD7J3pkdVHL7eqNSSkxL8=
+	b=WIHPIcWASftw8bADzeZJzKtPpFk69NxV2PXnAdDhQsdsoIFPuRE2qm0CqEk3IgANG
+	 CkYOLXK9TRTGdPWs+3O+Gh1tnDIlrhpv0pN1dQn5zy5UDH2NC/WrSx/TZ8Kc3ohdSc
+	 dbdYyL5x8dcTxf9IevF+2rb9h4T0wFChIMEeER3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 234/290] ALSA: hda/intel: Add Thinkpad E15 to PM deny list
-Date: Mon, 23 Jun 2025 15:08:15 +0200
-Message-ID: <20250623130633.964485639@linuxfoundation.org>
+	Andrew Zaborowski <andrew.zaborowski@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Tony Luck <tony.luck@intel.com>,
+	balrogg@gmail.com,
+	linux-sgx@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 221/414] x86/sgx: Prevent attempts to reclaim poisoned pages
+Date: Mon, 23 Jun 2025 15:05:58 +0200
+Message-ID: <20250623130647.548702755@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,37 +53,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Andrew Zaborowski <andrew.zaborowski@intel.com>
 
-commit c987a390f1b3b8bdac11031d7004e3410fe259bd upstream.
+[ Upstream commit ed16618c380c32c68c06186d0ccbb0d5e0586e59 ]
 
-Lenovo Thinkpad E15 with Conexant CX8070 codec seems causing ugly
-noises after runtime-PM suspend.  Disable the codec runtime PM as a
-workaround.
+TL;DR: SGX page reclaim touches the page to copy its contents to
+secondary storage. SGX instructions do not gracefully handle machine
+checks. Despite this, the existing SGX code will try to reclaim pages
+that it _knows_ are poisoned. Avoid even trying to reclaim poisoned pages.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220210
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250608091415.21170-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The longer story:
+
+Pages used by an enclave only get epc_page->poison set in
+arch_memory_failure() but they currently stay on sgx_active_page_list until
+sgx_encl_release(), with the SGX_EPC_PAGE_RECLAIMER_TRACKED flag untouched.
+
+epc_page->poison is not checked in the reclaimer logic meaning that, if other
+conditions are met, an attempt will be made to reclaim an EPC page that was
+poisoned.  This is bad because 1. we don't want that page to end up added
+to another enclave and 2. it is likely to cause one core to shut down
+and the kernel to panic.
+
+Specifically, reclaiming uses microcode operations including "EWB" which
+accesses the EPC page contents to encrypt and write them out to non-SGX
+memory.  Those operations cannot handle MCEs in their accesses other than
+by putting the executing core into a special shutdown state (affecting
+both threads with HT.)  The kernel will subsequently panic on the
+remaining cores seeing the core didn't enter MCE handler(s) in time.
+
+Call sgx_unmark_page_reclaimable() to remove the affected EPC page from
+sgx_active_page_list on memory error to stop it being considered for
+reclaiming.
+
+Testing epc_page->poison in sgx_reclaim_pages() would also work but I assume
+it's better to add code in the less likely paths.
+
+The affected EPC page is not added to &node->sgx_poison_page_list until
+later in sgx_encl_release()->sgx_free_epc_page() when it is EREMOVEd.
+Membership on other lists doesn't change to avoid changing any of the
+lists' semantics except for sgx_active_page_list.  There's a "TBD" comment
+in arch_memory_failure() about pre-emptive actions, the goal here is not
+to address everything that it may imply.
+
+This also doesn't completely close the time window when a memory error
+notification will be fatal (for a not previously poisoned EPC page) --
+the MCE can happen after sgx_reclaim_pages() has selected its candidates
+or even *inside* a microcode operation (actually easy to trigger due to
+the amount of time spent in them.)
+
+The spinlock in sgx_unmark_page_reclaimable() is safe because
+memory_failure() runs in process context and no spinlocks are held,
+explicitly noted in a mm/memory-failure.c comment.
+
+Signed-off-by: Andrew Zaborowski <andrew.zaborowski@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: balrogg@gmail.com
+Cc: linux-sgx@vger.kernel.org
+Link: https://lore.kernel.org/r/20250508230429.456271-1-andrew.zaborowski@intel.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c |    2 ++
+ arch/x86/kernel/cpu/sgx/main.c | 2 ++
  1 file changed, 2 insertions(+)
 
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2266,6 +2266,8 @@ static const struct snd_pci_quirk power_
- 	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
- 	/* Dell ALC3271 */
- 	SND_PCI_QUIRK(0x1028, 0x0962, "Dell ALC3271", 0),
-+	/* https://bugzilla.kernel.org/show_bug.cgi?id=220210 */
-+	SND_PCI_QUIRK(0x17aa, 0x5079, "Lenovo Thinkpad E15", 0),
- 	{}
- };
- #endif /* CONFIG_PM */
+diff --git a/arch/x86/kernel/cpu/sgx/main.c b/arch/x86/kernel/cpu/sgx/main.c
+index 9ace84486499b..147ea26dfdad6 100644
+--- a/arch/x86/kernel/cpu/sgx/main.c
++++ b/arch/x86/kernel/cpu/sgx/main.c
+@@ -719,6 +719,8 @@ int arch_memory_failure(unsigned long pfn, int flags)
+ 		goto out;
+ 	}
+ 
++	sgx_unmark_page_reclaimable(page);
++
+ 	/*
+ 	 * TBD: Add additional plumbing to enable pre-emptive
+ 	 * action for asynchronous poison notification. Until
+-- 
+2.39.5
+
 
 
