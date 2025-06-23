@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A15223DE8;
-	Mon, 23 Jun 2025 22:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B418223DE8;
+	Mon, 23 Jun 2025 22:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717284; cv=none; b=PzAZ5hpNj0MmcaT2jz0zGpFzX53fGEFJvg1IxgpJ2vvVM8b70ZMJa05T+ow6f3gf8BmNgYoL9PkwAwEja5mhh2Rb5Lzo+VwGn6+2jE2IxadJ8C9Tnjw0AM8gAr+jXzE9vhw15OiMH54lhnarn+2ZU8skTAyLT9tPuEGAXhlWa/I=
+	t=1750717287; cv=none; b=XOIkBMyYRFRQCk77l4BxxgetoBSUeXyJLF4hSlL9mvW/htECjarKOc2+5ZhlmjKqC4sGHCKevDdZlD4c+yZ6m5G25gM6g0WugJCZtRlLxvEjApvXwy5eDklHntb+TzrELoloyOAxTMaIxo5YZb3OYbYXcNH9A7k4eGVUSZm2Q5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717284; c=relaxed/simple;
-	bh=9IQ3ZQ/lUwzOsa1XJezwXL35drh9RoPaho2A12z+2OA=;
+	s=arc-20240116; t=1750717287; c=relaxed/simple;
+	bh=uNdxtHlNipq62m2W0srn7Blq6fSS4OgsJvmv/XIxJ4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZkOpR7H1TEBddDraIqmtCrcNKaArbBYWrZhwrkHUfzJBTRGls03NRbM/HehM1jwDECO2V7tOuhlKCV24dH6y4U2ocG2zN4RaEqzDh4IN8w7oxHCEOjb6+xD97ziKk/sVucwJUVP9lGQU6obGkivnqPulx2rwi8o3hFOvxLI0VCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZlhZdF9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u6GxfFd4FiOOui9nporgiltOFK50WEWhB2a71dIjtS3PYb7BvRoysDGZ1PaaOa0jSF7sst8DWD/xMQDagf8/S0ex2nliBfdSLhNKFaY/ZQo67qToHJulAQ+gwtdrt3eWUKvdNU8Ps5JtGF9Rn4wqR2E4Fky72DWDvkTr3MorsDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=slf4+Ud1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZlhZdF9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C605C4CEEA;
-	Mon, 23 Jun 2025 22:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="slf4+Ud1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A84C4CEEA;
+	Mon, 23 Jun 2025 22:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717284;
-	bh=9IQ3ZQ/lUwzOsa1XJezwXL35drh9RoPaho2A12z+2OA=;
+	s=korg; t=1750717287;
+	bh=uNdxtHlNipq62m2W0srn7Blq6fSS4OgsJvmv/XIxJ4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZlhZdF9VcNi5URI8+YPId3EfFyzpZLFU2Hue7v+p4w3NbEq4h/r1TNY2Pt+RIBSX
-	 iY/V+PlqfdWwhBhFsUhgGdjuT+9vsHL7MEbz8qHdKARLLK/GDJgOk0SroV6vohfwAe
-	 izxY9fjgEsfDS+Xy4XcBlsIvLWGAbVVTSzTZNBR0=
+	b=slf4+Ud1FPej2q+tTej1Wd6B+HM0amPJuKmsSoIvCPFOmd9dID6EpN5Ua7oqhSFKh
+	 WCDTWpXHo9Zu2TASA3CKqnWEu+hxUYtt1QspiGAkCmb4TSpd/r+4WyZQttVPSvw41H
+	 OOe9PbT60ZjrjE45hDoZ1PNySU84WL4m/foSERkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Malat <oss@malat.biz>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"James A. MacInnes" <james.a.macinnes@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 395/508] sctp: Do not wake readers in __sctp_write_space()
-Date: Mon, 23 Jun 2025 15:07:20 +0200
-Message-ID: <20250623130654.983405122@linuxfoundation.org>
+Subject: [PATCH 6.12 353/414] drm/msm/disp: Correct porch timing for SDM845
+Date: Mon, 23 Jun 2025 15:08:10 +0200
+Message-ID: <20250623130650.798828979@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Malat <oss@malat.biz>
+From: James A. MacInnes <james.a.macinnes@gmail.com>
 
-[ Upstream commit af295892a7abbf05a3c2ba7abc4d81bb448623d6 ]
+[ Upstream commit 146e87f3e11de0dfa091ff87e34b4bc6eec761a4 ]
 
-Function __sctp_write_space() doesn't set poll key, which leads to
-ep_poll_callback() waking up all waiters, not only these waiting
-for the socket being writable. Set the key properly using
-wake_up_interruptible_poll(), which is preferred over the sync
-variant, as writers are not woken up before at least half of the
-queue is available. Also, TCP does the same.
+Type-C DisplayPort inoperable due to incorrect porch settings.
+- Re-used wide_bus_en as flag to prevent porch shifting
 
-Signed-off-by: Petr Malat <oss@malat.biz>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250516081727.1361451-1-oss@malat.biz
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Signed-off-by: James A. MacInnes <james.a.macinnes@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/636945/
+Link: https://lore.kernel.org/r/20250212-sdm845_dp-v2-2-4954e51458f4@gmail.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 65162d67c3a3c..8a8a5cf8d8e65 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -9089,7 +9089,8 @@ static void __sctp_write_space(struct sctp_association *asoc)
- 		wq = rcu_dereference(sk->sk_wq);
- 		if (wq) {
- 			if (waitqueue_active(&wq->wait))
--				wake_up_interruptible(&wq->wait);
-+				wake_up_interruptible_poll(&wq->wait, EPOLLOUT |
-+						EPOLLWRNORM | EPOLLWRBAND);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index d8a2edebfe8c3..b7699ca89dcc5 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -94,17 +94,21 @@ static void drm_mode_to_intf_timing_params(
+ 		timing->vsync_polarity = 0;
+ 	}
  
- 			/* Note that we try to include the Async I/O support
- 			 * here by modeling from the current TCP/UDP code.
+-	/* for DP/EDP, Shift timings to align it to bottom right */
+-	if (phys_enc->hw_intf->cap->type == INTF_DP) {
++	timing->wide_bus_en = dpu_encoder_is_widebus_enabled(phys_enc->parent);
++	timing->compression_en = dpu_encoder_is_dsc_enabled(phys_enc->parent);
++
++	/*
++	 *  For DP/EDP, Shift timings to align it to bottom right.
++	 *  wide_bus_en is set for everything excluding SDM845 &
++	 *  porch changes cause DisplayPort failure and HDMI tearing.
++	 */
++	if (phys_enc->hw_intf->cap->type == INTF_DP && timing->wide_bus_en) {
+ 		timing->h_back_porch += timing->h_front_porch;
+ 		timing->h_front_porch = 0;
+ 		timing->v_back_porch += timing->v_front_porch;
+ 		timing->v_front_porch = 0;
+ 	}
+ 
+-	timing->wide_bus_en = dpu_encoder_is_widebus_enabled(phys_enc->parent);
+-	timing->compression_en = dpu_encoder_is_dsc_enabled(phys_enc->parent);
+-
+ 	/*
+ 	 * for DP, divide the horizonal parameters by 2 when
+ 	 * widebus is enabled
 -- 
 2.39.5
 
