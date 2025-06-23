@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACDC4C6E;
-	Mon, 23 Jun 2025 13:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323372F24;
+	Mon, 23 Jun 2025 13:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685499; cv=none; b=pjgvoSzBNvuVxr3gwpTU1hH/IA24B7CVk1qC4CMKm8e7b2+WPIEO3zWtAG2EWFDQEEb2NaS04pEmFulb2MRFEFHzRtNN2ULwPCQUEqLm/ixC1YAEMc2Pin0s9pawNvE3CnVC5esJW+DbQbjC9+xgNvNKltMuLju4I8174j6zrfI=
+	t=1750685501; cv=none; b=i3CALjyzItq+hypKMEQe9BMuVo4Dy6LakODtTL8jhTy4IC2coMIFLW5MXKGP7DIfFJA0Qp/A8qhx3pfnxWlOSnW/ZCzgphjpnpGMlS/DdCFWTw95pe5lmQMRqrkBysUgKUJ8Ud7a4vLAwSnKAsBbz/7YUKCNe1RInouR9ECTgbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685499; c=relaxed/simple;
-	bh=8XwaaIDzQF7K68/pboADPyLnQX++tQ69Zf2MN36JiJI=;
+	s=arc-20240116; t=1750685501; c=relaxed/simple;
+	bh=w/45TxTkQdOUlso5FL5tlDmL3NPZUkVz5lYGxP+TxIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CY0EOcpzeJ7LPjdvjnUGrtRxWgsiLLwmit9b3Nibd/odel1HH11AtWutJ6oq3cwyRVSJeM+OosTa5RTuQhYdO7yHfHQN9XU6kW6wzvTfIZvKBVghojd/5pwVAcpTzYXYJubmqPBqyC939jEYDeC6XjFu+SiN20g8BBY/XKCNBNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpGvYSKZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W7HaPb+Ef+r1A8YMRzXAFsxbbPOW/HQv+HZCd2/onKpS/iq4wW0qzuSjiGUDe+aA8jGIOc4CaWie016Aw7vxWTaap8jjwsIZTezGVa321afEbia4A5OtpGJrkJZUF9ZhhG9b/sdr64KDlzT3ftPRiRUjHGROFnaEBwV8fQJ6QnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qay82Dmd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpGvYSKZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35306C4CEEA;
-	Mon, 23 Jun 2025 13:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qay82Dmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9AE5C4CEF0;
+	Mon, 23 Jun 2025 13:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685498;
-	bh=8XwaaIDzQF7K68/pboADPyLnQX++tQ69Zf2MN36JiJI=;
+	s=korg; t=1750685501;
+	bh=w/45TxTkQdOUlso5FL5tlDmL3NPZUkVz5lYGxP+TxIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wpGvYSKZdkf28mTe9sWFoxxOSghiSRos46SHRXv2jbipqQriEy7Lk0Wm8mPvh/izf
-	 DDReC70nYgJt6RRYvuIlb2Ngh7SkwfP6UmnqXcp7LUcSGQ277BA5P8yZRz4KloqIFf
-	 I3ps7cz0bCUaP/OoHrNyXVSRTG8KuEPUxS2orOcg=
+	b=Qay82DmdDsCXoL+McRS8yyxyerpFNukVMSpoJ1EY6N/jqOcKmpLRAoAUB1ZONJ6Kb
+	 UFUanKY2r55zD2qA/wQu+jR9diZ28Sxftbax8/nPzPbRRya6WjOsNjqv/NjmdX6M17
+	 HdqYTUV+xT1Xl3oc+kvbobSG1jLqRLebygQjxSCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/411] IB/cm: use rwlock for MAD agent lock
-Date: Mon, 23 Jun 2025 15:03:02 +0200
-Message-ID: <20250623130634.150041202@linuxfoundation.org>
+	stable@kernel.org,
+	Stefano Stabellini <stefano.stabellini@amd.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 5.4 099/222] xen/arm: call uaccess_ttbr0_enable for dm_op hypercall
+Date: Mon, 23 Jun 2025 15:07:14 +0200
+Message-ID: <20250623130615.092758527@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,121 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Stefano Stabellini <stefano.stabellini@amd.com>
 
-[ Upstream commit 4dab26bed543584577b64b36aadb8b5b165bf44f ]
+commit 7f9bbc1140ff8796230bc2634055763e271fd692 upstream.
 
-In workloads where there are many processes establishing connections using
-RDMA CM in parallel (large scale MPI), there can be heavy contention for
-mad_agent_lock in cm_alloc_msg.
+dm_op hypercalls might come from userspace and pass memory addresses as
+parameters. The memory addresses typically correspond to buffers
+allocated in userspace to hold extra hypercall parameters.
 
-This contention can occur while inside of a spin_lock_irq region, leading
-to interrupts being disabled for extended durations on many
-cores. Furthermore, it leads to the serialization of rdma_create_ah calls,
-which has negative performance impacts for NICs which are capable of
-processing multiple address handle creations in parallel.
+On ARM, when CONFIG_ARM64_SW_TTBR0_PAN is enabled, they might not be
+accessible by Xen, as a result ioreq hypercalls might fail. See the
+existing comment in arch/arm64/xen/hypercall.S regarding privcmd_call
+for reference.
 
-The end result is the machine becoming unresponsive, hung task warnings,
-netdev TX timeouts, etc.
+For privcmd_call, Linux calls uaccess_ttbr0_enable before issuing the
+hypercall thanks to commit 9cf09d68b89a. We need to do the same for
+dm_op. This resolves the problem.
 
-Since the lock appears to be only for protection from cm_remove_one, it
-can be changed to a rwlock to resolve these issues.
-
-Reproducer:
-
-Server:
-  for i in $(seq 1 512); do
-    ucmatose -c 32 -p $((i + 5000)) &
-  done
-
-Client:
-  for i in $(seq 1 512); do
-    ucmatose -c 32 -p $((i + 5000)) -s 10.2.0.52 &
-  done
-
-Fixes: 76039ac9095f ("IB/cm: Protect cm_dev, cm_ports and mad_agent with kref and lock")
-Link: https://patch.msgid.link/r/20250220175612.2763122-1-jmoroni@google.com
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Acked-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Fixes: 9cf09d68b89a ("arm64: xen: Enable user access before a privcmd hvc call")
+Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <alpine.DEB.2.22.394.2505121446370.8380@ubuntu-linux-20-04-desktop>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/cm.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/xen/hypercall.S |   21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
-index c8a7fe5fbc233..96e00e86ebbf6 100644
---- a/drivers/infiniband/core/cm.c
-+++ b/drivers/infiniband/core/cm.c
-@@ -166,7 +166,7 @@ struct cm_port {
- struct cm_device {
- 	struct kref kref;
- 	struct list_head list;
--	spinlock_t mad_agent_lock;
-+	rwlock_t mad_agent_lock;
- 	struct ib_device *ib_device;
- 	u8 ack_delay;
- 	int going_down;
-@@ -283,7 +283,7 @@ static struct ib_mad_send_buf *cm_alloc_msg(struct cm_id_private *cm_id_priv)
- 	if (!cm_id_priv->av.port)
- 		return ERR_PTR(-EINVAL);
+--- a/arch/arm64/xen/hypercall.S
++++ b/arch/arm64/xen/hypercall.S
+@@ -84,7 +84,26 @@ HYPERCALL1(tmem_op);
+ HYPERCALL1(platform_op_raw);
+ HYPERCALL2(multicall);
+ HYPERCALL2(vm_assist);
+-HYPERCALL3(dm_op);
++
++SYM_FUNC_START(HYPERVISOR_dm_op)
++	mov x16, #__HYPERVISOR_dm_op;	\
++	/*
++	 * dm_op hypercalls are issued by the userspace. The kernel needs to
++	 * enable access to TTBR0_EL1 as the hypervisor would issue stage 1
++	 * translations to user memory via AT instructions. Since AT
++	 * instructions are not affected by the PAN bit (ARMv8.1), we only
++	 * need the explicit uaccess_enable/disable if the TTBR0 PAN emulation
++	 * is enabled (it implies that hardware UAO and PAN disabled).
++	 */
++	uaccess_ttbr0_enable x6, x7, x8
++	hvc XEN_IMM
++
++	/*
++	 * Disable userspace access from kernel once the hyp call completed.
++	 */
++	uaccess_ttbr0_disable x6, x7
++	ret
++SYM_FUNC_END(HYPERVISOR_dm_op);
  
--	spin_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
-+	read_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
- 	mad_agent = cm_id_priv->av.port->mad_agent;
- 	if (!mad_agent) {
- 		m = ERR_PTR(-EINVAL);
-@@ -314,7 +314,7 @@ static struct ib_mad_send_buf *cm_alloc_msg(struct cm_id_private *cm_id_priv)
- 	m->context[0] = cm_id_priv;
- 
- out:
--	spin_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
-+	read_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
- 	return m;
- }
- 
-@@ -1310,10 +1310,10 @@ static __be64 cm_form_tid(struct cm_id_private *cm_id_priv)
- 	if (!cm_id_priv->av.port)
- 		return cpu_to_be64(low_tid);
- 
--	spin_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
-+	read_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
- 	if (cm_id_priv->av.port->mad_agent)
- 		hi_tid = ((u64)cm_id_priv->av.port->mad_agent->hi_tid) << 32;
--	spin_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
-+	read_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
- 	return cpu_to_be64(hi_tid | low_tid);
- }
- 
-@@ -4365,7 +4365,7 @@ static int cm_add_one(struct ib_device *ib_device)
- 		return -ENOMEM;
- 
- 	kref_init(&cm_dev->kref);
--	spin_lock_init(&cm_dev->mad_agent_lock);
-+	rwlock_init(&cm_dev->mad_agent_lock);
- 	cm_dev->ib_device = ib_device;
- 	cm_dev->ack_delay = ib_device->attrs.local_ca_ack_delay;
- 	cm_dev->going_down = 0;
-@@ -4481,9 +4481,9 @@ static void cm_remove_one(struct ib_device *ib_device, void *client_data)
- 		 * The above ensures no call paths from the work are running,
- 		 * the remaining paths all take the mad_agent_lock.
- 		 */
--		spin_lock(&cm_dev->mad_agent_lock);
-+		write_lock(&cm_dev->mad_agent_lock);
- 		port->mad_agent = NULL;
--		spin_unlock(&cm_dev->mad_agent_lock);
-+		write_unlock(&cm_dev->mad_agent_lock);
- 		ib_unregister_mad_agent(mad_agent);
- 		ib_port_unregister_client_groups(ib_device, i,
- 						 cm_counter_groups);
--- 
-2.39.5
-
+ ENTRY(privcmd_call)
+ 	mov x16, x0
 
 
