@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5E5248191;
-	Mon, 23 Jun 2025 13:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F25D24678E;
+	Mon, 23 Jun 2025 13:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685059; cv=none; b=Bw2x7eOYNhLtK80/JfH/js497ju8cwp58Ho0cl3uw1CDYsXmUoj4/jyFXmJxO5nNqsnOkZROLyepXnRygfDuieEB3q+XcMhtbgipe0OHYCA5E6qCxik3kaZ4ZNjBNPIXL4QrQDphDWbH1ktB2gCDdtIL0LIrvOv5MxTXey1RCp8=
+	t=1750685062; cv=none; b=XR8RmMN2Gt/yy73mIWGVPl4ibwh5CdPRja0D/zYlKhRpRrXCFV/25kKKxrnm5IvKuldNF5+oyQSGmnH9EhcV51ge4JVXdKG7tHAJ67QUWB9owjEhb3PpsUiCC0joRe3o/ZHf5GIzNlGH6oeBSbyc6hf3WVnqfcYtWByl6iH5WWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685059; c=relaxed/simple;
-	bh=7/RQ46W1USMvNb+sDImB9teg1F9sKYXKA2Fv/RsR12o=;
+	s=arc-20240116; t=1750685062; c=relaxed/simple;
+	bh=ZhzDCO9BzBY53WxSI7w4CQFeI6tD8fdb8HVE1cTIxkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=faxUQZ8BxXd6mEC9oQ5eAcCI8D5JrTBqDEI99ahI2PzqvZtukj8D2vxS9kotysMQNwdRI+kF/3c7hpWb2mKAqiFW76I4gsDHmdjGfq26ADlc7FeB9Uk9OKXkrs1jDI5AwdQqNazrw0Xi68pd92MIpdX5c9w1je4AcrMVoTFuo1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFBHu+bu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gKgkVMBPSkSSxG0b8rSWZqeueGr6ZlsR0fswOZOScS+DHX42QUiNDshaUGSu7oOiJtTHD1rax2UbWoehbvdnErZ22pPSS8GInpGebfoxmsFepsw3uQSLKSFJ5DwapAnf+4bi7mUrIPZf0xFmNCFKfS8rjhbwrp97gkb/z88DEHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNe+yZrk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFBHu+bu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A58C4CEEA;
-	Mon, 23 Jun 2025 13:24:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNe+yZrk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF90C4CEEA;
+	Mon, 23 Jun 2025 13:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685059;
-	bh=7/RQ46W1USMvNb+sDImB9teg1F9sKYXKA2Fv/RsR12o=;
+	s=korg; t=1750685062;
+	bh=ZhzDCO9BzBY53WxSI7w4CQFeI6tD8fdb8HVE1cTIxkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFBHu+buVoBGL5Fh6GJ43ltjsDYL8PcKw+pJNXp9D/3onMO+rEeJT/p8iSbVIXTPs
-	 LvPRgAO9k16UD8hhjDXZa/EZ2WcYj1EnsgP/Gwb4LIgN2C1QovQt6DncsZLw/k48X7
-	 +nTLYvh9ZtWmTG36dE8Qsovnr1L2AxWmR2zv/txA=
+	b=GNe+yZrk5M4zuCJOJhYYtsz0xTuWMdSyuQJ1Kopr/+r+wcgAjtZlgJwDLbcSilT9k
+	 6uh2hlTTKlVa+MUJkxeHNuccAVLMZbXt+aRtZpye6S2RGm7pzW5cv6y54zB8+YRorm
+	 glOj1C7SlIbifbK4muCWXAdv4OdWlMv988kD6dAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neill Kapron <nkapron@google.com>,
-	Kees Cook <kees@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/411] selftests/seccomp: fix syscall_restart test for arm compat
-Date: Mon, 23 Jun 2025 15:02:56 +0200
-Message-ID: <20250623130633.971316764@linuxfoundation.org>
+	Manu Bretelle <chantr4@gmail.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 005/508] acpi-cpufreq: Fix nominal_freq units to KHz in get_max_boost_ratio()
+Date: Mon, 23 Jun 2025 15:00:50 +0200
+Message-ID: <20250623130645.389055752@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neill Kapron <nkapron@google.com>
+From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-[ Upstream commit 797002deed03491215a352ace891749b39741b69 ]
+commit cb6a85f38f456b086c366e346ebb67ffa70c7243 upstream.
 
-The inconsistencies in the systcall ABI between arm and arm-compat can
-can cause a failure in the syscall_restart test due to the logic
-attempting to work around the differences. The 'machine' field for an
-ARM64 device running in compat mode can report 'armv8l' or 'armv8b'
-which matches with the string 'arm' when only examining the first three
-characters of the string.
+commit 083466754596 ("cpufreq: ACPI: Fix max-frequency computation")
+modified get_max_boost_ratio() to return the nominal_freq advertised
+in the _CPC object. This was for the purposes of computing the maximum
+frequency. The frequencies advertised in _CPC objects are in
+MHz. However, cpufreq expects the frequency to be in KHz. Since the
+nominal_freq returned by get_max_boost_ratio() was not in KHz but
+instead in MHz,the cpuinfo_max_frequency that was computed using this
+nominal_freq was incorrect and an invalid value which resulted in
+cpufreq reporting the P0 frequency as the cpuinfo_max_freq.
 
-This change adds additional validation to the workaround logic to make
-sure we only take the arm path when running natively, not in arm-compat.
+Fix this by converting the nominal_freq to KHz before returning the
+same from get_max_boost_ratio().
 
-Fixes: 256d0afb11d6 ("selftests/seccomp: build and pass on arm64")
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://lore.kernel.org/r/20250427094103.3488304-2-nkapron@google.com
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Manu Bretelle <chantr4@gmail.com>
+Closes: https://lore.kernel.org/lkml/aDaB63tDvbdcV0cg@HQ-GR2X1W2P57/
+Fixes: 083466754596 ("cpufreq: ACPI: Fix max-frequency computation")
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Cc: 6.14+ <stable@vger.kernel.org> # 6.14+
+Link: https://patch.msgid.link/20250529085143.709-1-gautham.shenoy@amd.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/seccomp/seccomp_bpf.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/cpufreq/acpi-cpufreq.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
-index ac340a9c09187..c1da445ab4db9 100644
---- a/tools/testing/selftests/seccomp/seccomp_bpf.c
-+++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
-@@ -3085,12 +3085,15 @@ TEST(syscall_restart)
- 	ret = get_syscall(_metadata, child_pid);
- #if defined(__arm__)
- 	/*
--	 * FIXME:
- 	 * - native ARM registers do NOT expose true syscall.
- 	 * - compat ARM registers on ARM64 DO expose true syscall.
-+	 * - values of utsbuf.machine include 'armv8l' or 'armb8b'
-+	 *   for ARM64 running in compat mode.
- 	 */
- 	ASSERT_EQ(0, uname(&utsbuf));
--	if (strncmp(utsbuf.machine, "arm", 3) == 0) {
-+	if ((strncmp(utsbuf.machine, "arm", 3) == 0) &&
-+	    (strncmp(utsbuf.machine, "armv8l", 6) != 0) &&
-+	    (strncmp(utsbuf.machine, "armv8b", 6) != 0)) {
- 		EXPECT_EQ(__NR_nanosleep, ret);
- 	} else
- #endif
--- 
-2.39.5
-
+--- a/drivers/cpufreq/acpi-cpufreq.c
++++ b/drivers/cpufreq/acpi-cpufreq.c
+@@ -666,7 +666,7 @@ static u64 get_max_boost_ratio(unsigned
+ 	nominal_perf = perf_caps.nominal_perf;
+ 
+ 	if (nominal_freq)
+-		*nominal_freq = perf_caps.nominal_freq;
++		*nominal_freq = perf_caps.nominal_freq * 1000;
+ 
+ 	if (!highest_perf || !nominal_perf) {
+ 		pr_debug("CPU%d: highest or nominal performance missing\n", cpu);
 
 
