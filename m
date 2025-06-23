@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DA8248F63;
-	Mon, 23 Jun 2025 13:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C9924EA85;
+	Mon, 23 Jun 2025 13:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684312; cv=none; b=OFT9dp9Ahvxq4hXBTg187i3h40ba9P+NOAXcdtv8kky26PK13puboZt/5/5/BsVzocJo/HeUXbfrmVTGyC4ZkwH+XTxeBhZnTLrQg2eWqj2fHr+wDnEOfzjLHe1/tIYPXz2Pq5L17sA59o3iQq8vMhdba33P7E5YtvPmlG8rM/g=
+	t=1750684315; cv=none; b=OZV2cNa3mhUxibqXpCH0lG6leSereVkRhOBSqFvGqzmhzd/QepmTgbomD2BTal+scpJnPSiS9hwvQEKOy7TGgvkWLF+oIBX0NtC3M8bTIT4DGQ0YbvcYVff4si71VuOxxfftQe8FYLeIitqIaiNfa8q9Q11UA7yh9Oon65C6mMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684312; c=relaxed/simple;
-	bh=R32W1ekFtb4k2HMbEiNLQY2xXJTkA1UuRUnpiLrqSvE=;
+	s=arc-20240116; t=1750684315; c=relaxed/simple;
+	bh=vAKumDoo0Uf7Yw6FMslsM5nNzVlsfFjnG4bHuSHngIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e6BjPxwIevstvRKi3TnoMAh95nZdAzRPvuULfQ20LzQ3eI9Xek3Nvledl0tIFnt2CBnxogfKlr8kucXlMbCETLba89IX08cHV1MrqrDSQwMflifm7UxQXJmZaCn54VHxWU6PLTOpcSYaFlyBwBd9WQE1Tq0oVaVYn9SSXbJF1pE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhSUo2Js; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rNRkgSpsp+Sp+E631pJPKtpemDNJiaUJFZZPGagc3txJKl6bJq8/jV0tVOiyLB47qRKOzEaQsjxS+M42gSRcPT18lgNl7enpf4U03m4lP7t6qHdranoRX29hS08GBmTAcp04MxIcQQn8NDaswh/0rmvor4RWKA5kTHN5a1KJspU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYywxUot; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhSUo2Js"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59AD2C4CEEA;
-	Mon, 23 Jun 2025 13:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYywxUot"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E07BEC4CEEA;
+	Mon, 23 Jun 2025 13:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684312;
-	bh=R32W1ekFtb4k2HMbEiNLQY2xXJTkA1UuRUnpiLrqSvE=;
+	s=korg; t=1750684315;
+	bh=vAKumDoo0Uf7Yw6FMslsM5nNzVlsfFjnG4bHuSHngIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vhSUo2JsWcvWN0cxI6adho5/WkTlD6Rv5tzIO9vP1M1S0ugMRfxeJdkC5gdVTnu/6
-	 hmi4l2P1u1p2AMN81WSkqh1OW/i4dFvQ9rwJUUJb0eKJvQrzx0VSRYHktvlXJcv5BT
-	 tdITjpxMm33csoL3ZqGBz+fLEIe0IT+NYbHj46SY=
+	b=IYywxUot0fxSS5g/3uuNwCursveKT2BAJHhx7dTjhv+y9ZI5+agObU1DvlEke37am
+	 ZHn9+xqc8osIg5f1NWqAFC8XXnr669thKn2NFo+bKgyGt1/YARTkm5VPpZagWi21oR
+	 oYaQHZlh63m8x/OhjIheQrAa37ve740o+Zs5X3lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.15 021/592] powerpc/bpf: fix JIT code size calculation of bpf trampoline
-Date: Mon, 23 Jun 2025 14:59:39 +0200
-Message-ID: <20250623130700.735543009@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.15 022/592] s390/pci: Fix __pcilg_mio_inuser() inline assembly
+Date: Mon, 23 Jun 2025 14:59:40 +0200
+Message-ID: <20250623130700.760199513@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -52,223 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Bathini <hbathini@linux.ibm.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 59ba025948be2a92e8bc9ae1cbdaf197660bd508 upstream.
+commit c4abe6234246c75cdc43326415d9cff88b7cf06c upstream.
 
-arch_bpf_trampoline_size() provides JIT size of the BPF trampoline
-before the buffer for JIT'ing it is allocated. The total number of
-instructions emitted for BPF trampoline JIT code depends on where
-the final image is located. So, the size arrived at with the dummy
-pass in arch_bpf_trampoline_size() can vary from the actual size
-needed in  arch_prepare_bpf_trampoline().  When the instructions
-accounted in  arch_bpf_trampoline_size() is less than the number of
-instructions emitted during the actual JIT compile of the trampoline,
-the below warning is produced:
+Use "a" constraint for the shift operand of the __pcilg_mio_inuser() inline
+assembly. The used "d" constraint allows the compiler to use any general
+purpose register for the shift operand, including register zero.
 
-  WARNING: CPU: 8 PID: 204190 at arch/powerpc/net/bpf_jit_comp.c:981 __arch_prepare_bpf_trampoline.isra.0+0xd2c/0xdcc
+If register zero is used this my result in incorrect code generation:
 
-which is:
+ 8f6:   a7 0a ff f8             ahi     %r0,-8
+ 8fa:   eb 32 00 00 00 0c       srlg    %r3,%r2,0  <----
 
-  /* Make sure the trampoline generation logic doesn't overflow */
-  if (image && WARN_ON_ONCE(&image[ctx->idx] >
-  			(u32 *)rw_image_end - BPF_INSN_SAFETY)) {
+If register zero is selected to contain the shift value, the srlg
+instruction ignores the contents of the register and always shifts zero
+bits. Therefore use the "a" constraint which does not permit to select
+register zero.
 
-So, during the dummy pass, instead of providing some arbitrary image
-location, account for maximum possible instructions if and when there
-is a dependency with image location for JIT'ing.
-
-Fixes: d243b62b7bd3 ("powerpc64/bpf: Add support for bpf trampolines")
-Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Closes: https://lore.kernel.org/all/6168bfc8-659f-4b5a-a6fb-90a916dde3b3@linux.ibm.com/
-Cc: stable@vger.kernel.org # v6.13+
-Acked-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250422082609.949301-1-hbathini@linux.ibm.com
+Fixes: f058599e22d5 ("s390/pci: Fix s390_mmio_read/write with MIO")
+Cc: stable@vger.kernel.org
+Reported-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/net/bpf_jit.h        |   20 +++++++++++++++++---
- arch/powerpc/net/bpf_jit_comp.c   |   33 ++++++++++-----------------------
- arch/powerpc/net/bpf_jit_comp32.c |    6 ------
- arch/powerpc/net/bpf_jit_comp64.c |   15 ++++++++-------
- 4 files changed, 35 insertions(+), 39 deletions(-)
+ arch/s390/pci/pci_mmio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/net/bpf_jit.h
-+++ b/arch/powerpc/net/bpf_jit.h
-@@ -51,8 +51,16 @@
- 		EMIT(PPC_INST_BRANCH_COND | (((cond) & 0x3ff) << 16) | (offset & 0xfffc));					\
- 	} while (0)
+--- a/arch/s390/pci/pci_mmio.c
++++ b/arch/s390/pci/pci_mmio.c
+@@ -236,7 +236,7 @@ static inline int __pcilg_mio_inuser(
+ 		: [ioaddr_len] "+&d" (ioaddr_len.pair), [exc] "+d" (exception),
+ 		  CC_OUT(cc, cc), [val] "=d" (val),
+ 		  [dst] "+a" (dst), [cnt] "+d" (cnt), [tmp] "=d" (tmp),
+-		  [shift] "+d" (shift)
++		  [shift] "+a" (shift)
+ 		:
+ 		: CC_CLOBBER_LIST("memory"));
  
--/* Sign-extended 32-bit immediate load */
-+/*
-+ * Sign-extended 32-bit immediate load
-+ *
-+ * If this is a dummy pass (!image), account for
-+ * maximum possible instructions.
-+ */
- #define PPC_LI32(d, i)		do {					      \
-+	if (!image)							      \
-+		ctx->idx += 2;						      \
-+	else {								      \
- 		if ((int)(uintptr_t)(i) >= -32768 &&			      \
- 				(int)(uintptr_t)(i) < 32768)		      \
- 			EMIT(PPC_RAW_LI(d, i));				      \
-@@ -60,10 +68,15 @@
- 			EMIT(PPC_RAW_LIS(d, IMM_H(i)));			      \
- 			if (IMM_L(i))					      \
- 				EMIT(PPC_RAW_ORI(d, d, IMM_L(i)));	      \
--		} } while(0)
-+		}							      \
-+	} } while (0)
- 
- #ifdef CONFIG_PPC64
-+/* If dummy pass (!image), account for maximum possible instructions */
- #define PPC_LI64(d, i)		do {					      \
-+	if (!image)							      \
-+		ctx->idx += 5;						      \
-+	else {								      \
- 		if ((long)(i) >= -2147483648 &&				      \
- 				(long)(i) < 2147483648)			      \
- 			PPC_LI32(d, i);					      \
-@@ -84,7 +97,8 @@
- 			if ((uintptr_t)(i) & 0x000000000000ffffULL)	      \
- 				EMIT(PPC_RAW_ORI(d, d, (uintptr_t)(i) &       \
- 							0xffff));             \
--		} } while (0)
-+		}							      \
-+	} } while (0)
- #define PPC_LI_ADDR	PPC_LI64
- 
- #ifndef CONFIG_PPC_KERNEL_PCREL
---- a/arch/powerpc/net/bpf_jit_comp.c
-+++ b/arch/powerpc/net/bpf_jit_comp.c
-@@ -504,10 +504,11 @@ static int invoke_bpf_prog(u32 *image, u
- 	EMIT(PPC_RAW_ADDI(_R3, _R1, regs_off));
- 	if (!p->jited)
- 		PPC_LI_ADDR(_R4, (unsigned long)p->insnsi);
--	if (!create_branch(&branch_insn, (u32 *)&ro_image[ctx->idx], (unsigned long)p->bpf_func,
--			   BRANCH_SET_LINK)) {
--		if (image)
--			image[ctx->idx] = ppc_inst_val(branch_insn);
-+	/* Account for max possible instructions during dummy pass for size calculation */
-+	if (image && !create_branch(&branch_insn, (u32 *)&ro_image[ctx->idx],
-+				    (unsigned long)p->bpf_func,
-+				    BRANCH_SET_LINK)) {
-+		image[ctx->idx] = ppc_inst_val(branch_insn);
- 		ctx->idx++;
- 	} else {
- 		EMIT(PPC_RAW_LL(_R12, _R25, offsetof(struct bpf_prog, bpf_func)));
-@@ -889,7 +890,8 @@ static int __arch_prepare_bpf_trampoline
- 			bpf_trampoline_restore_tail_call_cnt(image, ctx, func_frame_offset, r4_off);
- 
- 		/* Reserve space to patch branch instruction to skip fexit progs */
--		im->ip_after_call = &((u32 *)ro_image)[ctx->idx];
-+		if (ro_image) /* image is NULL for dummy pass */
-+			im->ip_after_call = &((u32 *)ro_image)[ctx->idx];
- 		EMIT(PPC_RAW_NOP());
- 	}
- 
-@@ -912,7 +914,8 @@ static int __arch_prepare_bpf_trampoline
- 		}
- 
- 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
--		im->ip_epilogue = &((u32 *)ro_image)[ctx->idx];
-+		if (ro_image) /* image is NULL for dummy pass */
-+			im->ip_epilogue = &((u32 *)ro_image)[ctx->idx];
- 		PPC_LI_ADDR(_R3, im);
- 		ret = bpf_jit_emit_func_call_rel(image, ro_image, ctx,
- 						 (unsigned long)__bpf_tramp_exit);
-@@ -973,25 +976,9 @@ int arch_bpf_trampoline_size(const struc
- 			     struct bpf_tramp_links *tlinks, void *func_addr)
- {
- 	struct bpf_tramp_image im;
--	void *image;
- 	int ret;
- 
--	/*
--	 * Allocate a temporary buffer for __arch_prepare_bpf_trampoline().
--	 * This will NOT cause fragmentation in direct map, as we do not
--	 * call set_memory_*() on this buffer.
--	 *
--	 * We cannot use kvmalloc here, because we need image to be in
--	 * module memory range.
--	 */
--	image = bpf_jit_alloc_exec(PAGE_SIZE);
--	if (!image)
--		return -ENOMEM;
--
--	ret = __arch_prepare_bpf_trampoline(&im, image, image + PAGE_SIZE, image,
--					    m, flags, tlinks, func_addr);
--	bpf_jit_free_exec(image);
--
-+	ret = __arch_prepare_bpf_trampoline(&im, NULL, NULL, NULL, m, flags, tlinks, func_addr);
- 	return ret;
- }
- 
---- a/arch/powerpc/net/bpf_jit_comp32.c
-+++ b/arch/powerpc/net/bpf_jit_comp32.c
-@@ -313,7 +313,6 @@ int bpf_jit_build_body(struct bpf_prog *
- 		u64 func_addr;
- 		u32 true_cond;
- 		u32 tmp_idx;
--		int j;
- 
- 		if (i && (BPF_CLASS(code) == BPF_ALU64 || BPF_CLASS(code) == BPF_ALU) &&
- 		    (BPF_CLASS(prevcode) == BPF_ALU64 || BPF_CLASS(prevcode) == BPF_ALU) &&
-@@ -1099,13 +1098,8 @@ int bpf_jit_build_body(struct bpf_prog *
- 		 * 16 byte instruction that uses two 'struct bpf_insn'
- 		 */
- 		case BPF_LD | BPF_IMM | BPF_DW: /* dst = (u64) imm */
--			tmp_idx = ctx->idx;
- 			PPC_LI32(dst_reg_h, (u32)insn[i + 1].imm);
- 			PPC_LI32(dst_reg, (u32)insn[i].imm);
--			/* padding to allow full 4 instructions for later patching */
--			if (!image)
--				for (j = ctx->idx - tmp_idx; j < 4; j++)
--					EMIT(PPC_RAW_NOP());
- 			/* Adjust for two bpf instructions */
- 			addrs[++i] = ctx->idx * 4;
- 			break;
---- a/arch/powerpc/net/bpf_jit_comp64.c
-+++ b/arch/powerpc/net/bpf_jit_comp64.c
-@@ -227,7 +227,14 @@ int bpf_jit_emit_func_call_rel(u32 *imag
- #ifdef CONFIG_PPC_KERNEL_PCREL
- 	reladdr = func_addr - local_paca->kernelbase;
- 
--	if (reladdr < (long)SZ_8G && reladdr >= -(long)SZ_8G) {
-+	/*
-+	 * If fimage is NULL (the initial pass to find image size),
-+	 * account for the maximum no. of instructions possible.
-+	 */
-+	if (!fimage) {
-+		ctx->idx += 7;
-+		return 0;
-+	} else if (reladdr < (long)SZ_8G && reladdr >= -(long)SZ_8G) {
- 		EMIT(PPC_RAW_LD(_R12, _R13, offsetof(struct paca_struct, kernelbase)));
- 		/* Align for subsequent prefix instruction */
- 		if (!IS_ALIGNED((unsigned long)fimage + CTX_NIA(ctx), 8))
-@@ -412,7 +419,6 @@ int bpf_jit_build_body(struct bpf_prog *
- 		u64 imm64;
- 		u32 true_cond;
- 		u32 tmp_idx;
--		int j;
- 
- 		/*
- 		 * addrs[] maps a BPF bytecode address into a real offset from
-@@ -1046,12 +1052,7 @@ emit_clear:
- 		case BPF_LD | BPF_IMM | BPF_DW: /* dst = (u64) imm */
- 			imm64 = ((u64)(u32) insn[i].imm) |
- 				    (((u64)(u32) insn[i+1].imm) << 32);
--			tmp_idx = ctx->idx;
- 			PPC_LI64(dst_reg, imm64);
--			/* padding to allow full 5 instructions for later patching */
--			if (!image)
--				for (j = ctx->idx - tmp_idx; j < 5; j++)
--					EMIT(PPC_RAW_NOP());
- 			/* Adjust for two bpf instructions */
- 			addrs[++i] = ctx->idx * 4;
- 			break;
 
 
