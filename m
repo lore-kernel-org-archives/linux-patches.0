@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3304323BF9F;
-	Mon, 23 Jun 2025 13:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15790253B67;
+	Mon, 23 Jun 2025 13:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684983; cv=none; b=pWvcw+OE4xwBQfpJm8+9dKbvdxO0zmVXlpGku14U3aJfXJIiwZQAGGDUVAJGnDH6XOj7DwgMwnBiVhgBTk2JerZbCf31sjFIwaaNIaEjMBx9VugJLtilu/4Q4v05rvHAFWfQwOWVEU7OnoKqlLyUghYu+V2F41e5qzDQFhpcyuI=
+	t=1750684986; cv=none; b=RX1q6xBY/BiJS7p2ZSrxXmiFd2kHEdA1OnU0s+rLG3/r9+MsA0eAirsnO1B8jEi+YLV8YNs6YXRe9OP6pP0U56QLolkfZ76WlGVdozmKkopHhtxA96UXb8zbvh9p3zP4VIWFZ6IQd0gUM5qAwmiSiFH0cQWrNglg7/Ll9VzqaiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684983; c=relaxed/simple;
-	bh=d/95gODfWirA1JUXIS71Omcn3IOiNYiEFDLGTzXKVIU=;
+	s=arc-20240116; t=1750684986; c=relaxed/simple;
+	bh=bmhSucPEHx344BICdeAEWG4mt250O1wafPRVe0xVouw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GbOTwKnECHvCM3pvXUt3XUCpSFs22lAecUGUE2vu79EkEZ6v0EtGBF/32HtYzo3ow9Vt/R5LTolaZmGNBW/5Q/DwHpeiVC6cDvOM+5cQO9xfjGV5fYAJ92KQIEFBfPHos0FoShoMaaiDc3/jQPsK2wO2s3RyFDSVP7jhwEnqrOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=018sbvNL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sysddsQEYXWl/sVvcXCizbjxGxC14qFqHWzmwUpknrmCWS9qlp5oYp6a2BVY316MwkoR9wZJzMs3pNvSl6MCH4aVuIfVgoyQBeXD/hFI3Asi0Y9hHOW6pA05zGkKa9xMNMDbCx2tI4LfBtwh8Bd0/M6sxNu7lMQowXJot3lB6Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xNVkKGGc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="018sbvNL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBBB0C4CEEA;
-	Mon, 23 Jun 2025 13:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNVkKGGc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 529E3C4CEEA;
+	Mon, 23 Jun 2025 13:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684983;
-	bh=d/95gODfWirA1JUXIS71Omcn3IOiNYiEFDLGTzXKVIU=;
+	s=korg; t=1750684985;
+	bh=bmhSucPEHx344BICdeAEWG4mt250O1wafPRVe0xVouw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=018sbvNLANRtlyIH4x8y/2vuSLwHuetk7dSVTEDzGkcdl3fK79zGLkvvQvd/IuPNW
-	 bLCwp00/acnNnRC+z24NXfRnm63cjEoktno1Jva3gjCL8ln2YKQ+9gATKTu6dOOLQl
-	 3VJ6BW5DpXRt7U6p4KQyMPbr8ckVkB3G17PsSUlo=
+	b=xNVkKGGcHe8KDnmNtStM/F9513f/5G4PDAb4Q0/5L4Rw0KLU8T4fD7OiOsaRjDOYq
+	 HOPNSpfRpEt5y9lEb3VA6c8cvHxafJMIfMXW5ZEGZdAjQgHze18z1E3b/XqZVqxSyO
+	 BuqPTYtTUehEo8hoUpPMIf0mxSfNK+bTYdKUQviQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
-	Ingo Saitz <ingo@hannover.ccc.de>,
-	Kees Cook <kees@kernel.org>,
+	Feng Xu <feng.f.xu@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 054/222] randstruct: gcc-plugin: Fix attribute addition
-Date: Mon, 23 Jun 2025 15:06:29 +0200
-Message-ID: <20250623130613.722055603@linuxfoundation.org>
+Subject: [PATCH 5.10 019/355] EDAC/skx_common: Fix general protection fault
+Date: Mon, 23 Jun 2025 15:03:40 +0200
+Message-ID: <20250623130627.375258293@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,136 +48,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit f39f18f3c3531aa802b58a20d39d96e82eb96c14 ]
+[ Upstream commit 20d2d476b3ae18041be423671a8637ed5ffd6958 ]
 
-Based on changes in the 2021 public version of the randstruct
-out-of-tree GCC plugin[1], more carefully update the attributes on
-resulting decls, to avoid tripping checks in GCC 15's
-comptypes_check_enum_int() when it has been configured with
-"--enable-checking=misc":
+After loading i10nm_edac (which automatically loads skx_edac_common), if
+unload only i10nm_edac, then reload it and perform error injection testing,
+a general protection fault may occur:
 
-arch/arm64/kernel/kexec_image.c:132:14: internal compiler error: in comptypes_check_enum_int, at c/c-typeck.cc:1519
-  132 | const struct kexec_file_ops kexec_image_ops = {
-      |              ^~~~~~~~~~~~~~
- internal_error(char const*, ...), at gcc/gcc/diagnostic-global-context.cc:517
- fancy_abort(char const*, int, char const*), at gcc/gcc/diagnostic.cc:1803
- comptypes_check_enum_int(tree_node*, tree_node*, bool*), at gcc/gcc/c/c-typeck.cc:1519
- ...
+  mce: [Hardware Error]: Machine check events logged
+  Oops: general protection fault ...
+  ...
+  Workqueue: events mce_gen_pool_process
+  RIP: 0010:string+0x53/0xe0
+  ...
+  Call Trace:
+  <TASK>
+  ? die_addr+0x37/0x90
+  ? exc_general_protection+0x1e7/0x3f0
+  ? asm_exc_general_protection+0x26/0x30
+  ? string+0x53/0xe0
+  vsnprintf+0x23e/0x4c0
+  snprintf+0x4d/0x70
+  skx_adxl_decode+0x16a/0x330 [skx_edac_common]
+  skx_mce_check_error.part.0+0xf8/0x220 [skx_edac_common]
+  skx_mce_check_error+0x17/0x20 [skx_edac_common]
+  ...
 
-Link: https://archive.org/download/grsecurity/grsecurity-3.1-5.10.41-202105280954.patch.gz [1]
-Reported-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
-Closes: https://github.com/KSPP/linux/issues/367
-Closes: https://lore.kernel.org/lkml/20250530000646.104457-1-thiago.bauermann@linaro.org/
-Reported-by: Ingo Saitz <ingo@hannover.ccc.de>
-Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1104745
-Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
-Tested-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
-Link: https://lore.kernel.org/r/20250530221824.work.623-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+The issue arose was because the variable 'adxl_component_count' (inside
+skx_edac_common), which counts the ADXL components, was not reset. During
+the reloading of i10nm_edac, the count was incremented by the actual number
+of ADXL components again, resulting in a count that was double the real
+number of ADXL components. This led to an out-of-bounds reference to the
+ADXL component array, causing the general protection fault above.
+
+Fix this issue by resetting the 'adxl_component_count' in adxl_put(),
+which is called during the unloading of {skx,i10nm}_edac.
+
+Fixes: 123b15863550 ("EDAC, i10nm: make skx_common.o a separate module")
+Reported-by: Feng Xu <feng.f.xu@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Tested-by: Feng Xu <feng.f.xu@intel.com>
+Link: https://lore.kernel.org/r/20250417150724.1170168-2-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gcc-plugins/gcc-common.h              | 32 +++++++++++++++++++
- scripts/gcc-plugins/randomize_layout_plugin.c | 22 ++++++-------
- 2 files changed, 43 insertions(+), 11 deletions(-)
+ drivers/edac/skx_common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/scripts/gcc-plugins/gcc-common.h b/scripts/gcc-plugins/gcc-common.h
-index 0907ab19202a1..6ec887ae71b64 100644
---- a/scripts/gcc-plugins/gcc-common.h
-+++ b/scripts/gcc-plugins/gcc-common.h
-@@ -182,6 +182,38 @@ static inline tree build_const_char_string(int len, const char *str)
- 	return cstr;
+diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
+index b585cbe3eff94..1c408e665f7c9 100644
+--- a/drivers/edac/skx_common.c
++++ b/drivers/edac/skx_common.c
+@@ -112,6 +112,7 @@ EXPORT_SYMBOL_GPL(skx_adxl_get);
+ 
+ void skx_adxl_put(void)
+ {
++	adxl_component_count = 0;
+ 	kfree(adxl_values);
+ 	kfree(adxl_msg);
  }
- 
-+static inline void __add_type_attr(tree type, const char *attr, tree args)
-+{
-+	tree oldattr;
-+
-+	if (type == NULL_TREE)
-+		return;
-+	oldattr = lookup_attribute(attr, TYPE_ATTRIBUTES(type));
-+	if (oldattr != NULL_TREE) {
-+		gcc_assert(TREE_VALUE(oldattr) == args || TREE_VALUE(TREE_VALUE(oldattr)) == TREE_VALUE(args));
-+		return;
-+	}
-+
-+	TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
-+	TYPE_ATTRIBUTES(type) = tree_cons(get_identifier(attr), args, TYPE_ATTRIBUTES(type));
-+}
-+
-+static inline void add_type_attr(tree type, const char *attr, tree args)
-+{
-+	tree main_variant = TYPE_MAIN_VARIANT(type);
-+
-+	__add_type_attr(TYPE_CANONICAL(type), attr, args);
-+	__add_type_attr(TYPE_CANONICAL(main_variant), attr, args);
-+	__add_type_attr(main_variant, attr, args);
-+
-+	for (type = TYPE_NEXT_VARIANT(main_variant); type; type = TYPE_NEXT_VARIANT(type)) {
-+		if (!lookup_attribute(attr, TYPE_ATTRIBUTES(type)))
-+			TYPE_ATTRIBUTES(type) = TYPE_ATTRIBUTES(main_variant);
-+
-+		__add_type_attr(TYPE_CANONICAL(type), attr, args);
-+	}
-+}
-+
- #define PASS_INFO(NAME, REF, ID, POS)		\
- struct register_pass_info NAME##_pass_info = {	\
- 	.pass = make_##NAME##_pass(),		\
-diff --git a/scripts/gcc-plugins/randomize_layout_plugin.c b/scripts/gcc-plugins/randomize_layout_plugin.c
-index a5aea51ecca99..472427f169a4a 100644
---- a/scripts/gcc-plugins/randomize_layout_plugin.c
-+++ b/scripts/gcc-plugins/randomize_layout_plugin.c
-@@ -95,6 +95,9 @@ static tree handle_randomize_layout_attr(tree *node, tree name, tree args, int f
- 
- 	if (TYPE_P(*node)) {
- 		type = *node;
-+	} else if (TREE_CODE(*node) == FIELD_DECL) {
-+		*no_add_attrs = false;
-+		return NULL_TREE;
- 	} else {
- 		gcc_assert(TREE_CODE(*node) == TYPE_DECL);
- 		type = TREE_TYPE(*node);
-@@ -381,15 +384,14 @@ static int relayout_struct(tree type)
- 		TREE_CHAIN(newtree[i]) = newtree[i+1];
- 	TREE_CHAIN(newtree[num_fields - 1]) = NULL_TREE;
- 
-+	add_type_attr(type, "randomize_performed", NULL_TREE);
-+	add_type_attr(type, "designated_init", NULL_TREE);
-+	if (has_flexarray)
-+		add_type_attr(type, "has_flexarray", NULL_TREE);
-+
- 	main_variant = TYPE_MAIN_VARIANT(type);
--	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant)) {
-+	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant))
- 		TYPE_FIELDS(variant) = newtree[0];
--		TYPE_ATTRIBUTES(variant) = copy_list(TYPE_ATTRIBUTES(variant));
--		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("randomize_performed"), NULL_TREE, TYPE_ATTRIBUTES(variant));
--		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("designated_init"), NULL_TREE, TYPE_ATTRIBUTES(variant));
--		if (has_flexarray)
--			TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("has_flexarray"), NULL_TREE, TYPE_ATTRIBUTES(type));
--	}
- 
- 	/*
- 	 * force a re-layout of the main variant
-@@ -457,10 +459,8 @@ static void randomize_type(tree type)
- 	if (lookup_attribute("randomize_layout", TYPE_ATTRIBUTES(TYPE_MAIN_VARIANT(type))) || is_pure_ops_struct(type))
- 		relayout_struct(type);
- 
--	for (variant = TYPE_MAIN_VARIANT(type); variant; variant = TYPE_NEXT_VARIANT(variant)) {
--		TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
--		TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("randomize_considered"), NULL_TREE, TYPE_ATTRIBUTES(type));
--	}
-+	add_type_attr(type, "randomize_considered", NULL_TREE);
-+
- #ifdef __DEBUG_PLUGIN
- 	fprintf(stderr, "Marking randomize_considered on struct %s\n", ORIG_TYPE_NAME(type));
- #ifdef __DEBUG_VERBOSE
 -- 
 2.39.5
 
