@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B254254873;
-	Mon, 23 Jun 2025 13:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE0525393A;
+	Mon, 23 Jun 2025 13:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684844; cv=none; b=LwAPBdmLsox3WgodkW5eIrOshJ7BFd8W8/g044Oes8qhAaN+MKjUTf1FrjHmTRJ/TZozUynGdEZwFN6pqZ19NZt0dv+/BPLz8eYQul+HGBLW7TE4FAFfAX+/k9ENms/hVpEhLnVqBapj9snKX4GUkok/X8v4xwAUawrs7K4tNfI=
+	t=1750684846; cv=none; b=HDireLpeEdNZ6FILwZ33fTPS/ZlQ2jpEBOIaoToWWBsfIBnBhVBBFfr+s/D3XK7Qp6ezv0q8PW2yKgw1k3asD+U5/V5+QUR+sY/R1AbDad5rK5vM/+MVbdjbKk4iYR5/m7OFhc1+lfNZX3uidNEU+B3QeO8VIhwuFaLTatbNKz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684844; c=relaxed/simple;
-	bh=vLWFBitYx2i9Q5j3BiOAAScSADfrEQm+jRTSwUQalMU=;
+	s=arc-20240116; t=1750684846; c=relaxed/simple;
+	bh=X4pVduWutHn7imbZ1skNqvLn5N3cP9nnEy+z2Hw0ces=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QtiTPOMkgv2bzHd27Xg4skAUV0hBs20g5HjFKmcZ/j81nRa9TN66DRarpLejpr3hKJyeIH4oBiYNxMnMYD3KXA9hmgFseFUE6tJGxTElmzLE4s0qxBjtI0m2/NpC9Le3aCLBT3X2nL8/6vkPBjboi82WP/5pRTDvXfEHC7X6jfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vO7UwcmH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B6Ah16MEGV/vSKvv8wJpLyNVgGkXGCcuk3T0ocBqlNXUCRKDfPUwEuo+i7wTx8+jUbg8xZCNIG1Quj3bqFCyPKJFKaCioQy3dAr8tQuLkPYTJvdC8xKy3P5OKA2JFu1osuyWieXg7+xnHgWvurJqUi9sWA8aR0JzLwthmXs6N2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeFK7iJ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vO7UwcmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD57C4CEEA;
-	Mon, 23 Jun 2025 13:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeFK7iJ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C62C4CEEA;
+	Mon, 23 Jun 2025 13:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684843;
-	bh=vLWFBitYx2i9Q5j3BiOAAScSADfrEQm+jRTSwUQalMU=;
+	s=korg; t=1750684846;
+	bh=X4pVduWutHn7imbZ1skNqvLn5N3cP9nnEy+z2Hw0ces=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vO7UwcmHb4Uoux77s7tyzc3Xgew/xpDEUVYyG3MQJpneLMDC1C+Hn0w7KBa+zacx7
-	 18kq7dlgEF/nt+q/2Rxiy8kpE+IrdS5hrqb4ryBuIX2x9/iRNOrGRwG598rtp+BUEc
-	 awPUwIGE1OSZjTTv3ilB/x/GVr76URgHmZ6OLBxM=
+	b=yeFK7iJ51ruIOkm1qhZnyzGG+G7ilqswxHeMEo4KAgvsOV961vDT7MwZm0/fepYkN
+	 oG0roc4WuivAN+yigP0r/INInqqSbSdftGn76g66zTYi/7Gmt6Ol2vzwKZ5/0ypStv
+	 Uq5vvNxFkFEjBR2IaWQRNAcEiRoXPPEl6o0BsSk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xianglai Li <lixianglai@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.15 182/592] PCI: Add ACS quirk for Loongson PCIe
-Date: Mon, 23 Jun 2025 15:02:20 +0200
-Message-ID: <20250623130704.610511584@linuxfoundation.org>
+	syzkaller <syzkaller@googlegroups.com>,
+	John Cheung <john.cs.hey@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 039/222] calipso: Dont call calipso functions for AF_INET sk.
+Date: Mon, 23 Jun 2025 15:06:14 +0200
+Message-ID: <20250623130613.076971533@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,66 +50,112 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 1f3303aa92e15fa273779acac2d0023609de30f1 upstream.
+[ Upstream commit 6e9f2df1c550ead7cecb3e450af1105735020c92 ]
 
-Loongson PCIe Root Ports don't advertise an ACS capability, but they do not
-allow peer-to-peer transactions between Root Ports. Add an ACS quirk so
-each Root Port can be in a separate IOMMU group.
+syzkaller reported a null-ptr-deref in txopt_get(). [0]
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250403040756.720409-1-chenhuacai@loongson.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The offset 0x70 was of struct ipv6_txoptions in struct ipv6_pinfo,
+so struct ipv6_pinfo was NULL there.
+
+However, this never happens for IPv6 sockets as inet_sk(sk)->pinet6
+is always set in inet6_create(), meaning the socket was not IPv6 one.
+
+The root cause is missing validation in netlbl_conn_setattr().
+
+netlbl_conn_setattr() switches branches based on struct
+sockaddr.sa_family, which is passed from userspace.  However,
+netlbl_conn_setattr() does not check if the address family matches
+the socket.
+
+The syzkaller must have called connect() for an IPv6 address on
+an IPv4 socket.
+
+We have a proper validation in tcp_v[46]_connect(), but
+security_socket_connect() is called in the earlier stage.
+
+Let's copy the validation to netlbl_conn_setattr().
+
+[0]:
+Oops: general protection fault, probably for non-canonical address 0xdffffc000000000e: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
+CPU: 2 UID: 0 PID: 12928 Comm: syz.9.1677 Not tainted 6.12.0 #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:txopt_get include/net/ipv6.h:390 [inline]
+RIP: 0010:
+Code: 02 00 00 49 8b ac 24 f8 02 00 00 e8 84 69 2a fd e8 ff 00 16 fd 48 8d 7d 70 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 53 02 00 00 48 8b 6d 70 48 85 ed 0f 84 ab 01 00
+RSP: 0018:ffff88811b8afc48 EFLAGS: 00010212
+RAX: dffffc0000000000 RBX: 1ffff11023715f8a RCX: ffffffff841ab00c
+RDX: 000000000000000e RSI: ffffc90007d9e000 RDI: 0000000000000070
+RBP: 0000000000000000 R08: ffffed1023715f9d R09: ffffed1023715f9e
+R10: ffffed1023715f9d R11: 0000000000000003 R12: ffff888123075f00
+R13: ffff88810245bd80 R14: ffff888113646780 R15: ffff888100578a80
+FS:  00007f9019bd7640(0000) GS:ffff8882d2d00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f901b927bac CR3: 0000000104788003 CR4: 0000000000770ef0
+PKRU: 80000000
+Call Trace:
+ <TASK>
+ calipso_sock_setattr+0x56/0x80 net/netlabel/netlabel_calipso.c:557
+ netlbl_conn_setattr+0x10c/0x280 net/netlabel/netlabel_kapi.c:1177
+ selinux_netlbl_socket_connect_helper+0xd3/0x1b0 security/selinux/netlabel.c:569
+ selinux_netlbl_socket_connect_locked security/selinux/netlabel.c:597 [inline]
+ selinux_netlbl_socket_connect+0xb6/0x100 security/selinux/netlabel.c:615
+ selinux_socket_connect+0x5f/0x80 security/selinux/hooks.c:4931
+ security_socket_connect+0x50/0xa0 security/security.c:4598
+ __sys_connect_file+0xa4/0x190 net/socket.c:2067
+ __sys_connect+0x12c/0x170 net/socket.c:2088
+ __do_sys_connect net/socket.c:2098 [inline]
+ __se_sys_connect net/socket.c:2095 [inline]
+ __x64_sys_connect+0x73/0xb0 net/socket.c:2095
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xaa/0x1b0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f901b61a12d
+Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f9019bd6fa8 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
+RAX: ffffffffffffffda RBX: 00007f901b925fa0 RCX: 00007f901b61a12d
+RDX: 000000000000001c RSI: 0000200000000140 RDI: 0000000000000003
+RBP: 00007f901b701505 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007f901b5b62a0 R15: 00007f9019bb7000
+ </TASK>
+Modules linked in:
+
+Fixes: ceba1832b1b2 ("calipso: Set the calipso socket label to match the secattr.")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Reported-by: John Cheung <john.cs.hey@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAP=Rh=M1LzunrcQB1fSGauMrJrhL6GGps5cPAKzHJXj6GQV+-g@mail.gmail.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/20250522221858.91240-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c |   23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ net/netlabel/netlabel_kapi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -4995,6 +4995,18 @@ static int pci_quirk_brcm_acs(struct pci
- 		PCI_ACS_SV | PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_UF);
- }
- 
-+static int pci_quirk_loongson_acs(struct pci_dev *dev, u16 acs_flags)
-+{
-+	/*
-+	 * Loongson PCIe Root Ports don't advertise an ACS capability, but
-+	 * they do not allow peer-to-peer transactions between Root Ports.
-+	 * Allow each Root Port to be in a separate IOMMU group by masking
-+	 * SV/RR/CR/UF bits.
-+	 */
-+	return pci_acs_ctrl_enabled(acs_flags,
-+		PCI_ACS_SV | PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_UF);
-+}
+diff --git a/net/netlabel/netlabel_kapi.c b/net/netlabel/netlabel_kapi.c
+index 96059c99b915e..2e9344b3c657c 100644
+--- a/net/netlabel/netlabel_kapi.c
++++ b/net/netlabel/netlabel_kapi.c
+@@ -1140,6 +1140,9 @@ int netlbl_conn_setattr(struct sock *sk,
+ 		break;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	case AF_INET6:
++		if (sk->sk_family != AF_INET6)
++			return -EAFNOSUPPORT;
 +
- /*
-  * Wangxun 40G/25G/10G/1G NICs have no ACS capability, but on
-  * multi-function devices, the hardware isolates the functions by
-@@ -5128,6 +5140,17 @@ static const struct pci_dev_acs_enabled
- 	{ PCI_VENDOR_ID_BROADCOM, 0x1762, pci_quirk_mf_endpoint_acs },
- 	{ PCI_VENDOR_ID_BROADCOM, 0x1763, pci_quirk_mf_endpoint_acs },
- 	{ PCI_VENDOR_ID_BROADCOM, 0xD714, pci_quirk_brcm_acs },
-+	/* Loongson PCIe Root Ports */
-+	{ PCI_VENDOR_ID_LOONGSON, 0x3C09, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x3C19, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x3C29, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A09, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A19, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A29, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A39, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A49, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A59, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A69, pci_quirk_loongson_acs },
- 	/* Amazon Annapurna Labs */
- 	{ PCI_VENDOR_ID_AMAZON_ANNAPURNA_LABS, 0x0031, pci_quirk_al_acs },
- 	/* Zhaoxin multi-function devices */
+ 		addr6 = (struct sockaddr_in6 *)addr;
+ 		entry = netlbl_domhsh_getentry_af6(secattr->domain,
+ 						   &addr6->sin6_addr);
+-- 
+2.39.5
+
 
 
