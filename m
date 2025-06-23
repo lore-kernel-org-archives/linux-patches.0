@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6013D1E87B;
-	Mon, 23 Jun 2025 22:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC7D1A4F12;
+	Mon, 23 Jun 2025 22:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716350; cv=none; b=cze1mMutqGAZlqv0zfdCHvcbw1w8DYS4jIafF6z5Shdnq69Qe/8clzUKU10xe4wCVTkdWoOOR2Qs7LZpBPnmcgLnzU+AKc7X//2gKBTOvQv0bZvf1GMEWY+L0SHzzjpHUld97goGAlX9lDMveml9X8B+ptkLcqQgGq0unlCka00=
+	t=1750716353; cv=none; b=a8b/0ILQk1Nmy/lTrHbuXUbZaW+rhT6NdLNsDaGtjTDhx/meXkwnZEkF3eGIhPaDT1MWBueThn+C6VlQrAFb5l8JG0G7Vw4QzojO7a90Dspi48oPG4lo0zN3qR4oVlmstRuRtr0rEALGXMG2a7njKob5epfGxldTpyau8j3a+pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716350; c=relaxed/simple;
-	bh=ogRKshTWkBKACzdoRwjN6nv94+Q/TMVzChVeIi8Tqks=;
+	s=arc-20240116; t=1750716353; c=relaxed/simple;
+	bh=Yh5LwzlJWiunBWLqVAx6FXBrpyFRR1HIGDswIXr/M38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NWW00BsBI6JEuGSmlSPhrNOth5vXl08lSDd8u8Zha256JoQI92FQXFD/89/BbLvuG2UHRdN01rO45K2K+PfCjlaKRKFfm16orBHX7iCBG3hUg9yu7TXhwPgnbdsVnjcyjM8TAmWIdjiZh7hwzh+jMDA/s6gfdhQrCoOtbui1qfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGEeLY9k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VNamcrIUlgnZ/iQuCCY9Kjy9Pkm/OFngJuczaO+REFdaFuwC97yWNOpjrWFbiGL6NwTy7mVHcuICKUcCkmJd2sywp0vzJe4JDbyxSl6N9QsuRfukiGdxAB1PhRRw+EIYg+0tkUPotX7xGbg/+MyKTbESrjlhab9AZfEl3wmyHwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxLEG6oM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGEeLY9k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA6CC4CEEA;
-	Mon, 23 Jun 2025 22:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxLEG6oM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B03CC4CEEA;
+	Mon, 23 Jun 2025 22:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716350;
-	bh=ogRKshTWkBKACzdoRwjN6nv94+Q/TMVzChVeIi8Tqks=;
+	s=korg; t=1750716352;
+	bh=Yh5LwzlJWiunBWLqVAx6FXBrpyFRR1HIGDswIXr/M38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CGEeLY9k9n4KP55caoZ7/7M+lkgEUayu91hVE0ZDdDP+0UMT+RtxLYRgo1W5vg1GB
-	 5vsPIkdCVwXjjlRlMNHKeEBVTTHiVTGOc2s8eTUHCqK2jqztavchgAyVFasxRGsuuM
-	 QYOMu6LVPsOvsorRXi5kkLUzpfXWKuciFVAk30lQ=
+	b=fxLEG6oM4ZYcr3a2Ikh/x5gpMLP0CcWN6pXdhO0d4K62bn8aZP7dBAqP/4wezzTNP
+	 JBeq7ccDukWV67GJy11O+89h62jWFoUMWGggik/k7HSOqwOKnJBQN27a//dfdnBPsS
+	 o7khGVjcFpPe11Tn6VZGVA6NNfZegU1bZ67hPnG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Octavian Purdila <tavip@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	syzbot+8a583bdd1a5cc0b0e068@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 5.10 343/355] net_sched: sch_sfq: dont allow 1 packet limit
-Date: Mon, 23 Jun 2025 15:09:04 +0200
-Message-ID: <20250623130637.035961647@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 258/290] mpls: Use rcu_dereference_rtnl() in mpls_route_input_rcu().
+Date: Mon, 23 Jun 2025 15:08:39 +0200
+Message-ID: <20250623130634.677138565@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,116 +48,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Octavian Purdila <tavip@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 10685681bafce6febb39770f3387621bf5d67d0b ]
+[ Upstream commit 6dbb0d97c5096072c78a6abffe393584e57ae945 ]
 
-The current implementation does not work correctly with a limit of
-1. iproute2 actually checks for this and this patch adds the check in
-kernel as well.
+As syzbot reported [0], mpls_route_input_rcu() can be called
+from mpls_getroute(), where is under RTNL.
 
-This fixes the following syzkaller reported crash:
+net->mpls.platform_label is only updated under RTNL.
 
-UBSAN: array-index-out-of-bounds in net/sched/sch_sfq.c:210:6
-index 65535 is out of range for type 'struct sfq_head[128]'
-CPU: 0 PID: 2569 Comm: syz-executor101 Not tainted 5.10.0-smp-DEV #1
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Let's use rcu_dereference_rtnl() in mpls_route_input_rcu() to
+silence the splat.
+
+[0]:
+WARNING: suspicious RCU usage
+6.15.0-rc7-syzkaller-00082-g5cdb2c77c4c3 #0 Not tainted
+ ----------------------------
+net/mpls/af_mpls.c:84 suspicious rcu_dereference_check() usage!
+
+other info that might help us debug this:
+
+rcu_scheduler_active = 2, debug_locks = 1
+1 lock held by syz.2.4451/17730:
+ #0: ffffffff9012a3e8 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_lock net/core/rtnetlink.c:80 [inline]
+ #0: ffffffff9012a3e8 (rtnl_mutex){+.+.}-{4:4}, at: rtnetlink_rcv_msg+0x371/0xe90 net/core/rtnetlink.c:6961
+
+stack backtrace:
+CPU: 1 UID: 0 PID: 17730 Comm: syz.2.4451 Not tainted 6.15.0-rc7-syzkaller-00082-g5cdb2c77c4c3 #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
 Call Trace:
-  __dump_stack lib/dump_stack.c:79 [inline]
-  dump_stack+0x125/0x19f lib/dump_stack.c:120
-  ubsan_epilogue lib/ubsan.c:148 [inline]
-  __ubsan_handle_out_of_bounds+0xed/0x120 lib/ubsan.c:347
-  sfq_link net/sched/sch_sfq.c:210 [inline]
-  sfq_dec+0x528/0x600 net/sched/sch_sfq.c:238
-  sfq_dequeue+0x39b/0x9d0 net/sched/sch_sfq.c:500
-  sfq_reset+0x13/0x50 net/sched/sch_sfq.c:525
-  qdisc_reset+0xfe/0x510 net/sched/sch_generic.c:1026
-  tbf_reset+0x3d/0x100 net/sched/sch_tbf.c:319
-  qdisc_reset+0xfe/0x510 net/sched/sch_generic.c:1026
-  dev_reset_queue+0x8c/0x140 net/sched/sch_generic.c:1296
-  netdev_for_each_tx_queue include/linux/netdevice.h:2350 [inline]
-  dev_deactivate_many+0x6dc/0xc20 net/sched/sch_generic.c:1362
-  __dev_close_many+0x214/0x350 net/core/dev.c:1468
-  dev_close_many+0x207/0x510 net/core/dev.c:1506
-  unregister_netdevice_many+0x40f/0x16b0 net/core/dev.c:10738
-  unregister_netdevice_queue+0x2be/0x310 net/core/dev.c:10695
-  unregister_netdevice include/linux/netdevice.h:2893 [inline]
-  __tun_detach+0x6b6/0x1600 drivers/net/tun.c:689
-  tun_detach drivers/net/tun.c:705 [inline]
-  tun_chr_close+0x104/0x1b0 drivers/net/tun.c:3640
-  __fput+0x203/0x840 fs/file_table.c:280
-  task_work_run+0x129/0x1b0 kernel/task_work.c:185
-  exit_task_work include/linux/task_work.h:33 [inline]
-  do_exit+0x5ce/0x2200 kernel/exit.c:931
-  do_group_exit+0x144/0x310 kernel/exit.c:1046
-  __do_sys_exit_group kernel/exit.c:1057 [inline]
-  __se_sys_exit_group kernel/exit.c:1055 [inline]
-  __x64_sys_exit_group+0x3b/0x40 kernel/exit.c:1055
- do_syscall_64+0x6c/0xd0
- entry_SYSCALL_64_after_hwframe+0x61/0xcb
-RIP: 0033:0x7fe5e7b52479
-Code: Unable to access opcode bytes at RIP 0x7fe5e7b5244f.
-RSP: 002b:00007ffd3c800398 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fe5e7b52479
-RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000000
-RBP: 00007fe5e7bcd2d0 R08: ffffffffffffffb8 R09: 0000000000000014
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007fe5e7bcd2d0
-R13: 0000000000000000 R14: 00007fe5e7bcdd20 R15: 00007fe5e7b24270
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
+ lockdep_rcu_suspicious+0x166/0x260 kernel/locking/lockdep.c:6865
+ mpls_route_input_rcu+0x1d4/0x200 net/mpls/af_mpls.c:84
+ mpls_getroute+0x621/0x1ea0 net/mpls/af_mpls.c:2381
+ rtnetlink_rcv_msg+0x3c9/0xe90 net/core/rtnetlink.c:6964
+ netlink_rcv_skb+0x16d/0x440 net/netlink/af_netlink.c:2534
+ netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
+ netlink_unicast+0x53a/0x7f0 net/netlink/af_netlink.c:1339
+ netlink_sendmsg+0x8d1/0xdd0 net/netlink/af_netlink.c:1883
+ sock_sendmsg_nosec net/socket.c:712 [inline]
+ __sock_sendmsg net/socket.c:727 [inline]
+ ____sys_sendmsg+0xa98/0xc70 net/socket.c:2566
+ ___sys_sendmsg+0x134/0x1d0 net/socket.c:2620
+ __sys_sendmmsg+0x200/0x420 net/socket.c:2709
+ __do_sys_sendmmsg net/socket.c:2736 [inline]
+ __se_sys_sendmmsg net/socket.c:2733 [inline]
+ __x64_sys_sendmmsg+0x9c/0x100 net/socket.c:2733
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcd/0x230 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f0a2818e969
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f0a28f52038 EFLAGS: 00000246 ORIG_RAX: 0000000000000133
+RAX: ffffffffffffffda RBX: 00007f0a283b5fa0 RCX: 00007f0a2818e969
+RDX: 0000000000000003 RSI: 0000200000000080 RDI: 0000000000000003
+RBP: 00007f0a28210ab1 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007f0a283b5fa0 R15: 00007ffce5e9f268
+ </TASK>
 
-The crash can be also be reproduced with the following (with a tc
-recompiled to allow for sfq limits of 1):
-
-tc qdisc add dev dummy0 handle 1: root tbf rate 1Kbit burst 100b lat 1s
-../iproute2-6.9.0/tc/tc qdisc add dev dummy0 handle 2: parent 1:10 sfq limit 1
-ifconfig dummy0 up
-ping -I dummy0 -f -c2 -W0.1 8.8.8.8
-sleep 1
-
-Scenario that triggers the crash:
-
-* the first packet is sent and queued in TBF and SFQ; qdisc qlen is 1
-
-* TBF dequeues: it peeks from SFQ which moves the packet to the
-  gso_skb list and keeps qdisc qlen set to 1. TBF is out of tokens so
-  it schedules itself for later.
-
-* the second packet is sent and TBF tries to queues it to SFQ. qdisc
-  qlen is now 2 and because the SFQ limit is 1 the packet is dropped
-  by SFQ. At this point qlen is 1, and all of the SFQ slots are empty,
-  however q->tail is not NULL.
-
-At this point, assuming no more packets are queued, when sch_dequeue
-runs again it will decrement the qlen for the current empty slot
-causing an underflow and the subsequent out of bounds access.
-
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Octavian Purdila <tavip@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241204030520.2084663-2-tavip@google.com
+Fixes: 0189197f4416 ("mpls: Basic routing support")
+Reported-by: syzbot+8a583bdd1a5cc0b0e068@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68507981.a70a0220.395abc.01ef.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250616201532.1036568-1-kuni1840@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/mpls/af_mpls.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -652,6 +652,10 @@ static int sfq_change(struct Qdisc *sch,
- 		if (!p)
- 			return -ENOMEM;
+diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
+index 43e8343df0db7..5a4b175b78c8c 100644
+--- a/net/mpls/af_mpls.c
++++ b/net/mpls/af_mpls.c
+@@ -81,8 +81,8 @@ static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned index)
+ 
+ 	if (index < net->mpls.platform_labels) {
+ 		struct mpls_route __rcu **platform_label =
+-			rcu_dereference(net->mpls.platform_label);
+-		rt = rcu_dereference(platform_label[index]);
++			rcu_dereference_rtnl(net->mpls.platform_label);
++		rt = rcu_dereference_rtnl(platform_label[index]);
  	}
-+	if (ctl->limit == 1) {
-+		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
-+		return -EINVAL;
-+	}
- 	sch_tree_lock(sch);
- 	if (ctl->quantum)
- 		q->quantum = ctl->quantum;
+ 	return rt;
+ }
+-- 
+2.39.5
+
 
 
