@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C777770838;
-	Mon, 23 Jun 2025 21:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29897220686;
+	Mon, 23 Jun 2025 21:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715919; cv=none; b=KnNjqS96qK2tH1rnoRxozD4sgz6c9J6JmlFjdTNNx2ki77iZbO+/aZasa5Td2cAJUc+MAzreCDxioGRxR9PFHW7Z5tKnTXc4QIxLksBOMA1wfLDxvANWA1hxJjIAjrDU7Rlw8samWat1/PDZkg/Hq/yvgCH9aXhc6Y/mJc3Siao=
+	t=1750715920; cv=none; b=YovkIV2n+vf76xOwHr02uwZRY5Y7aTGPw3rUZvEyfrMn1u+TbhFWQHzFCaUGVSR6TgJIrHKUBnZXvgqdFpF5K2yfgkVTrociTTp3vigGZeZsHRqk6rceHf+uRsg8fJ4owr9G8TjjkElKXpIPa3BlHPQ0e3ZE1nJqONvAXllDMpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715919; c=relaxed/simple;
-	bh=VTFOE6qqWsxf6glJ2dldK/ir8FckXw1fZwGYSBNfkMM=;
+	s=arc-20240116; t=1750715920; c=relaxed/simple;
+	bh=OZjRjBDvH5XRxa2QOtf+dxkTpbGBLSZz8KCMO78Gzgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snNtWwDIlHo+EJyF/HB3lD1bV+Vjo/4oiRji28ixr1OE3/aJ5YaRexcZN4iKGTpNrAEGBARq/wkC3uo44J/tR9BtqEuNlHVYBNpyAXAG1kHJihyW2tegvA+WjzZoMzlVbIDLIaxIfsvJ2keL2Mww0pRh9I7X+2UgrTklEotAZso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+PIlkqk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bPQpZLvz1dE0LvvZEWP54fLTcRdigvi7NZuB5jhVEsdA4smW69p4vfYyCG7IIw5l6Mr2hRV/3o6DImoyrchA5TkKCbb741pW4cRjtaen2XJBH8Dq1p83SX0IURrEYME1UtqY7KzDyTJ09lwWbI3H+wCXBqU0i8IofgMd4u2QAFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5JQVEjf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+PIlkqk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA280C4CEEA;
-	Mon, 23 Jun 2025 21:58:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5JQVEjf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61CDBC4CEED;
+	Mon, 23 Jun 2025 21:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715917;
-	bh=VTFOE6qqWsxf6glJ2dldK/ir8FckXw1fZwGYSBNfkMM=;
+	s=korg; t=1750715919;
+	bh=OZjRjBDvH5XRxa2QOtf+dxkTpbGBLSZz8KCMO78Gzgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z+PIlkqkD6SUlGovj20F9B9fbdbkSeBFy8QwRRk2VTIHYHz1zkI1Otvw/N1ndaACc
-	 xX9zVDyqj78cGbu7pwIDTQaGUinIjZFf5bxwmrEaqP6NOtdr02MPvAZoToooeaQU36
-	 lcMqY1Eq7zLu3/Ke1kwkI/eV8hirttcDuPUwRIUY=
+	b=b5JQVEjf/YYHfEo2TTIXcEKFSmOQ0lAjoPHkHB+H5pgk9r30skGNcq5v+ekVg46HG
+	 kI6OyVGUlMMGv+HkY45LpsxWJNwgtgy0+tU/O1lmuRqTn8M64gpV4zs1Tfxn11FhA7
+	 hKB94aIei+FyIQZ+8iCpr2OuZ8f50f8tSOxhb5Ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Dian-Syuan Yang <dian_syuan0116@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 291/411] sunrpc: fix race in cache cleanup causing stale nextcheck time
-Date: Mon, 23 Jun 2025 15:07:15 +0200
-Message-ID: <20250623130640.978088296@linuxfoundation.org>
+Subject: [PATCH 6.12 216/414] wifi: rtw89: leave idle mode when setting WEP encryption for AP mode
+Date: Mon, 23 Jun 2025 15:05:53 +0200
+Message-ID: <20250623130647.415260776@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,83 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
 
-[ Upstream commit 2298abcbe11e9b553d03c0f1d084da786f7eff88 ]
+[ Upstream commit d105652b33245162867ac769bea336976e67efb8 ]
 
-When cache cleanup runs concurrently with cache entry removal, a race
-condition can occur that leads to incorrect nextcheck times. This can
-delay cache cleanup for the cache_detail by up to 1800 seconds:
+Due to mac80211 triggering the hardware to enter idle mode, it fails
+to install WEP key causing connected station can't ping successfully.
+Currently, it forces the hardware to leave idle mode before driver
+adding WEP keys.
 
-1. cache_clean() sets nextcheck to current time plus 1800 seconds
-2. While scanning a non-empty bucket, concurrent cache entry removal can
-   empty that bucket
-3. cache_clean() finds no cache entries in the now-empty bucket to update
-   the nextcheck time
-4. This maybe delays the next scan of the cache_detail by up to 1800
-   seconds even when it should be scanned earlier based on remaining
-   entries
-
-Fix this by moving the hash_lock acquisition earlier in cache_clean().
-This ensures bucket emptiness checks and nextcheck updates happen
-atomically, preventing the race between cleanup and entry removal.
-
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250507031203.8256-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/cache.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/net/wireless/realtek/rtw89/cam.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sunrpc/cache.c b/net/sunrpc/cache.c
-index e8448e9e03d59..715f7d080f7a2 100644
---- a/net/sunrpc/cache.c
-+++ b/net/sunrpc/cache.c
-@@ -451,24 +451,21 @@ static int cache_clean(void)
- 		}
- 	}
+diff --git a/drivers/net/wireless/realtek/rtw89/cam.c b/drivers/net/wireless/realtek/rtw89/cam.c
+index 8d140b94cb440..0c8ea5e629e6a 100644
+--- a/drivers/net/wireless/realtek/rtw89/cam.c
++++ b/drivers/net/wireless/realtek/rtw89/cam.c
+@@ -6,6 +6,7 @@
+ #include "debug.h"
+ #include "fw.h"
+ #include "mac.h"
++#include "ps.h"
  
-+	spin_lock(&current_detail->hash_lock);
-+
- 	/* find a non-empty bucket in the table */
--	while (current_detail &&
--	       current_index < current_detail->hash_size &&
-+	while (current_index < current_detail->hash_size &&
- 	       hlist_empty(&current_detail->hash_table[current_index]))
- 		current_index++;
+ static struct sk_buff *
+ rtw89_cam_get_sec_key_cmd(struct rtw89_dev *rtwdev,
+@@ -447,9 +448,11 @@ int rtw89_cam_sec_key_add(struct rtw89_dev *rtwdev,
  
- 	/* find a cleanable entry in the bucket and clean it, or set to next bucket */
--
--	if (current_detail && current_index < current_detail->hash_size) {
-+	if (current_index < current_detail->hash_size) {
- 		struct cache_head *ch = NULL;
- 		struct cache_detail *d;
- 		struct hlist_head *head;
- 		struct hlist_node *tmp;
- 
--		spin_lock(&current_detail->hash_lock);
--
- 		/* Ok, now to clean this strand */
--
- 		head = &current_detail->hash_table[current_index];
- 		hlist_for_each_entry_safe(ch, tmp, head, cache_list) {
- 			if (current_detail->nextcheck > ch->expiry_time)
-@@ -489,8 +486,10 @@ static int cache_clean(void)
- 		spin_unlock(&cache_list_lock);
- 		if (ch)
- 			sunrpc_end_cache_remove_entry(ch, d);
--	} else
-+	} else {
-+		spin_unlock(&current_detail->hash_lock);
- 		spin_unlock(&cache_list_lock);
-+	}
- 
- 	return rv;
- }
+ 	switch (key->cipher) {
+ 	case WLAN_CIPHER_SUITE_WEP40:
++		rtw89_leave_ips_by_hwflags(rtwdev);
+ 		hw_key_type = RTW89_SEC_KEY_TYPE_WEP40;
+ 		break;
+ 	case WLAN_CIPHER_SUITE_WEP104:
++		rtw89_leave_ips_by_hwflags(rtwdev);
+ 		hw_key_type = RTW89_SEC_KEY_TYPE_WEP104;
+ 		break;
+ 	case WLAN_CIPHER_SUITE_CCMP:
 -- 
 2.39.5
 
