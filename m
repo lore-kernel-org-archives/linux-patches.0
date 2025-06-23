@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9ED1E87B;
-	Mon, 23 Jun 2025 22:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61951E87B;
+	Mon, 23 Jun 2025 22:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716392; cv=none; b=cS1kziN/v9eEm3mO4unSYztgF6zYvH7TxiriU8+FPbjIizHxjrxY1XSXkmi39oahuL0SGw0wOkALReOuC7S+TesNnk63IasJATVgG85+PKtmPd0WN9A0Lc3cRGKqD1/TPpnoXcSeDX1eQ3SwDQzLTb6fgiyET3byXqyIbTG5RpI=
+	t=1750716394; cv=none; b=J27Wfb0lCSYTiEbn4OdSo6LiW9A4r9PP15pjUWS/G3XUmpktLCna1Kxje6jEpXSHCvLg0flnb7bvDnviJ/8kZHtzqR/6f4ae1ztZKaYHZTxxKD/ImM7TZ7EZqpdTdAqFGK5WYeDPR1gdBaJY5BfIfbA2V4+hF6sGns5zVvgy/r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716392; c=relaxed/simple;
-	bh=xLQU4+nzo/hV3WNdfTQCaz/Jgv66LEkro7RU9bR+8ck=;
+	s=arc-20240116; t=1750716394; c=relaxed/simple;
+	bh=sskoEcqTswoU5sD39TnbgB/AUoFDMg+h7UPN17Bk6Og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z881cY38oIabVxucgO2mDM9C37veIi3YzhXJhUL08SXK4GdiWztN1Sfb+M2newKugY31MDr+FvWq1mmYabppvHmJ8Swh+3KnUfqULlVujPOgoVT4HzeZ7vrgpsahM0H/DqNGl1hrfWkBVYwEK3Q8B8jxub/QTWT1996WyBZNcpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=douem0nW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tGU0W8S+W7TPN+e6UAk0ZghAPtljQRJWVDvQXP6bOe/AJsR72UQrhFXyZH7Vfcn9Z+rgkBAVbfn/12gdfiMlSGx4S5gz8H5MrQWOEDm11g9RkyfeZwMNEhYUk0uL4kXh6+GCdT38xXG48OVcH9BaNEheW/LwJlSjFYZmxES56+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=js7FHl5P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="douem0nW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D630CC4CEEA;
-	Mon, 23 Jun 2025 22:06:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="js7FHl5P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF42C4CEEA;
+	Mon, 23 Jun 2025 22:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716392;
-	bh=xLQU4+nzo/hV3WNdfTQCaz/Jgv66LEkro7RU9bR+8ck=;
+	s=korg; t=1750716394;
+	bh=sskoEcqTswoU5sD39TnbgB/AUoFDMg+h7UPN17Bk6Og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=douem0nWYdJL0OSvtdPG2U3pLbKsV3bWUJUk9nZOWfGxy/fUjS8VUS5IWT0a2NnvA
-	 2AVPmfOVf1nPPkiEeGd5i7qflaFV61LaliPN6GSdTUmYgK7GyvQisv3ljIDq3MWSMG
-	 AP8IgixCuf3IZf2SryMByQ6g0fuZ7/l1DeyWS8nE=
+	b=js7FHl5P0Fc8l0fi375NrZYS/Ewn4wkothRfK7PUQuLJ4r4Njyj+7g19Ey1Pr5gH1
+	 GffRLf1s7UORDd68LgxrzHkfSuKAtqE0VhRsDD1Bzr3YLjS4LcwWQygWXXJiFFlr7J
+	 CtP1etHvqAkmox2lEFjHJCZN1TvjPhtA0fhD2G7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Chung Chen <damon.chen@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 248/414] wifi: rtw89: 8922a: fix TX fail with wrong VCO setting
-Date: Mon, 23 Jun 2025 15:06:25 +0200
-Message-ID: <20250623130648.248785835@linuxfoundation.org>
+Subject: [PATCH 5.15 326/411] scsi: lpfc: Fix lpfc_check_sli_ndlp() handling for GEN_REQUEST64 commands
+Date: Mon, 23 Jun 2025 15:07:50 +0200
+Message-ID: <20250623130641.847550048@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuan-Chung Chen <damon.chen@realtek.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 20aac091a15dc7229ef1a268253fe36bb6b2be39 ]
+[ Upstream commit 05ae6c9c7315d844fbc15afe393f5ba5e5771126 ]
 
-An incorrect Voltage Controlled Oscillator (VCO) setting
-may cause Synthesizer (SYN) unlock, which may lead to a
-failure in the TX authentication request.
+In lpfc_check_sli_ndlp(), the get_job_els_rsp64_did remote_id assignment
+does not apply for GEN_REQUEST64 commands as it only has meaning for a
+ELS_REQUEST64 command.  So, if (iocb->ndlp == ndlp) is false, we could
+erroneously return the wrong value.  Fix by replacing the fallthrough
+statement with a break statement before the remote_id check.
 
-Signed-off-by: Kuan-Chung Chen <damon.chen@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250416081241.36138-3-pkshih@realtek.com
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20250425194806.3585-2-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/rtw8922a_rfk.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/scsi/lpfc/lpfc_hbadisc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8922a_rfk.c b/drivers/net/wireless/realtek/rtw89/rtw8922a_rfk.c
-index 28907df7407d5..c958d6ab24d32 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8922a_rfk.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8922a_rfk.c
-@@ -77,11 +77,6 @@ void rtw8922a_ctl_band_ch_bw(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy,
- 					     RR_CFGCH_BAND0 | RR_CFGCH_CH);
- 			rf_reg[path][i] |= u32_encode_bits(central_ch, RR_CFGCH_CH);
- 
--			if (band == RTW89_BAND_2G)
--				rtw89_write_rf(rtwdev, path, RR_SMD, RR_VCO2, 0x0);
--			else
--				rtw89_write_rf(rtwdev, path, RR_SMD, RR_VCO2, 0x1);
--
- 			switch (band) {
- 			case RTW89_BAND_2G:
- 			default:
+diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
+index d04669ae878bd..413b7adca0211 100644
+--- a/drivers/scsi/lpfc/lpfc_hbadisc.c
++++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
+@@ -5086,7 +5086,7 @@ lpfc_check_sli_ndlp(struct lpfc_hba *phba,
+ 		case CMD_GEN_REQUEST64_CR:
+ 			if (iocb->context_un.ndlp == ndlp)
+ 				return 1;
+-			fallthrough;
++			break;
+ 		case CMD_ELS_REQUEST64_CR:
+ 			if (icmd->un.elsreq64.remoteID == ndlp->nlp_DID)
+ 				return 1;
 -- 
 2.39.5
 
