@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F266070838;
-	Mon, 23 Jun 2025 21:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A76970838;
+	Mon, 23 Jun 2025 21:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713042; cv=none; b=pAZuLyUWaBPjhi4c0PY3S+sGQYqnRxqeFXnQNKR2X43wulpiZsvCSaSLDx4NA5SSVBQKpLujl1/9zd/DK21QF1YuXEp13T7ey7JIlD6T7vcWCT1W6tZdsByzOjwzkq4tLCQFWMcW6Pvhdcp33vgml/tY8bseVfDVO1hE0OLNE0w=
+	t=1750713044; cv=none; b=ukNpy+HsvxPICnnHrJU+08Sku04i2IQTGi6KuO2GBLkrpEQ54n67jVQDhi/DHTj6qhvcC6dvYkqam6lyGCmESnQSH4KsR0wqdaxbARue241NMwCHD8p6rDmnPCPwb6fuugyVsp34qKCtHzy+pD/Mxr62CKPDhYgoZtrQDo+OCH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713042; c=relaxed/simple;
-	bh=2iKerRQWW30x0EAvpuTYI+zmwyXGI3eOOpDYcK3XFRc=;
+	s=arc-20240116; t=1750713044; c=relaxed/simple;
+	bh=4wSwkZOmX/7Uhsx0ILooL2ozLEZllBMBOM8T9VGk9gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6IujoiGpvBNlsje4FyexgBZiCnbieAqssq7mHDhSAGwV2Wx0yAkjOOATqpn+8uYcYJovw2pOy/oHVNKxREUEWMwmV+TUUzK3skOKLcfPFhGvsAOTL/71Oo2PQRdvXAOrqGOk9OfDOTtnwntUkp2GlSbqcYQlk+jSnRD+aIC/gE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d38SFk51; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lv8vDWWy8LoKr7bYS+qi93CkAwp1K1Gv+2AWE82+ZiNoGFFnRQJQicpSunFTIBtu4yISVFQtphThWNiIjPDBMfnBx2Q5fbAaYOk0zsQWd4lLElXO9SzSdgjaGO+Y5fWCf7YtNiE7iZV48Vh6sVOPVSc3BUGbyEwUy4ZgtVVNF8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3lgaOnh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d38SFk51"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC57C4CEEA;
-	Mon, 23 Jun 2025 21:10:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3lgaOnh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1300CC4CEEA;
+	Mon, 23 Jun 2025 21:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713041;
-	bh=2iKerRQWW30x0EAvpuTYI+zmwyXGI3eOOpDYcK3XFRc=;
+	s=korg; t=1750713044;
+	bh=4wSwkZOmX/7Uhsx0ILooL2ozLEZllBMBOM8T9VGk9gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d38SFk51+F4i/811ysPLdZnxz2/xz/XssG4moLr27K2oLVxKs+9Yvr/S6QSptbgoe
-	 2mWb9pmMBfie0v5IaolZjGc7dXdgd8ihhfnozpiN4cTFmZSffSDfPjV8f6Tiy0N0Zx
-	 nZw0CBWHS/odEXP8h4cDEf2zVqVtNcZ5XMcx3+nE=
+	b=X3lgaOnhiVoGzZ/cpUvIJ7AoKaZklZ9gMlceDc3Meh9IhZa/Sb/xlHqFjD/w6cT43
+	 vGxSWvcm2QGDvP0DEzIapZR87YFShCrGjVDpwdSZZjA2MCGHwUZ1GW6QjLgNlsOM/R
+	 +pG1BDdR50wewGQbyLmql3bc/MmvqnjI5/XJ0sWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 5.10 142/355] MIPS: Move -Wa,-msoft-float check from as-option to cc-option
-Date: Mon, 23 Jun 2025 15:05:43 +0200
-Message-ID: <20250623130630.985165219@linuxfoundation.org>
+	Henk Vergonet <henk.vergonet@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 325/592] wifi: mt76: mt76x2: Add support for LiteOn WN4516R,WN4519R
+Date: Mon, 23 Jun 2025 15:04:43 +0200
+Message-ID: <20250623130708.181263154@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,46 +48,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Henk Vergonet <henk.vergonet@gmail.com>
 
-This patch is for linux-6.1.y and earlier, it has no direct mainline
-equivalent.
+[ Upstream commit 3c0e4f606d8693795a2c965d6f4987b1bfc31097 ]
 
-In order to backport commit d5c8d6e0fa61 ("kbuild: Update assembler
-calls to use proper flags and language target") to resolve a separate
-issue regarding PowerPC, the problem noticed and fixed by
-commit 80a20d2f8288 ("MIPS: Always use -Wa,-msoft-float and eliminate
-GAS_HAS_SET_HARDFLOAT") needs to be addressed. Unfortunately, 6.1 and
-earlier do not contain commit e4412739472b ("Documentation: raise
-minimum supported version of binutils to 2.25"), so it cannot be assumed
-that all supported versions of GNU as have support for -msoft-float.
+Adds support for:
+ - LiteOn WN4516R
+ - LiteOn WN4519R
+ Both use:
+ - A nonstandard USB connector
+ - Mediatek chipset MT7600U
+ - ASIC revision: 76320044
 
-In order to switch from KBUILD_CFLAGS to KBUILD_AFLAGS in as-option
-without consequence, move the '-Wa,-msoft-float' check to cc-option,
-including '$(cflags-y)' directly to avoid the issue mentioned in
-commit 80a20d2f8288 ("MIPS: Always use -Wa,-msoft-float and eliminate
-GAS_HAS_SET_HARDFLOAT").
+Disabled VHT support on ASIC revision 76320044:
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ This fixes the 5G connectibity issue on LiteOn WN4519R module
+ see https://github.com/openwrt/mt76/issues/971
+
+ And may also fix the 5G issues on the XBox One Wireless Adapter
+ see https://github.com/openwrt/mt76/issues/200
+
+ I have looked at the FCC info related to the MT7632U chip as mentioned in here:
+ https://github.com/openwrt/mt76/issues/459
+ These confirm the chipset does not support 'ac' mode and hence VHT should be turned of.
+
+Signed-off-by: Henk Vergonet <henk.vergonet@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20250418143914.31384-1-henk.vergonet@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt76x2/usb.c     |  2 ++
+ .../net/wireless/mediatek/mt76/mt76x2/usb_init.c    | 13 ++++++++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/arch/mips/Makefile
-+++ b/arch/mips/Makefile
-@@ -110,7 +110,7 @@ endif
- # (specifically newer than 2.24.51.20140728) we then also need to explicitly
- # set ".set hardfloat" in all files which manipulate floating point registers.
- #
--ifneq ($(call as-option,-Wa$(comma)-msoft-float,),)
-+ifneq ($(call cc-option,$(cflags-y) -Wa$(comma)-msoft-float,),)
- 	cflags-y		+= -DGAS_HAS_SET_HARDFLOAT -Wa,-msoft-float
- endif
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
+index 84ef80ab4afbf..96cecc576a986 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
+@@ -17,6 +17,8 @@ static const struct usb_device_id mt76x2u_device_table[] = {
+ 	{ USB_DEVICE(0x057c, 0x8503) },	/* Avm FRITZ!WLAN AC860 */
+ 	{ USB_DEVICE(0x7392, 0xb711) },	/* Edimax EW 7722 UAC */
+ 	{ USB_DEVICE(0x0e8d, 0x7632) },	/* HC-M7662BU1 */
++	{ USB_DEVICE(0x0471, 0x2126) }, /* LiteOn WN4516R module, nonstandard USB connector */
++	{ USB_DEVICE(0x0471, 0x7600) }, /* LiteOn WN4519R module, nonstandard USB connector */
+ 	{ USB_DEVICE(0x2c4e, 0x0103) },	/* Mercury UD13 */
+ 	{ USB_DEVICE(0x0846, 0x9014) },	/* Netgear WNDA3100v3 */
+ 	{ USB_DEVICE(0x0846, 0x9053) },	/* Netgear A6210 */
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
+index 33a14365ec9b9..3b55628115115 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
+@@ -191,6 +191,7 @@ int mt76x2u_register_device(struct mt76x02_dev *dev)
+ {
+ 	struct ieee80211_hw *hw = mt76_hw(dev);
+ 	struct mt76_usb *usb = &dev->mt76.usb;
++	bool vht;
+ 	int err;
  
+ 	INIT_DELAYED_WORK(&dev->cal_work, mt76x2u_phy_calibrate);
+@@ -217,7 +218,17 @@ int mt76x2u_register_device(struct mt76x02_dev *dev)
+ 
+ 	/* check hw sg support in order to enable AMSDU */
+ 	hw->max_tx_fragments = dev->mt76.usb.sg_en ? MT_TX_SG_MAX_SIZE : 1;
+-	err = mt76_register_device(&dev->mt76, true, mt76x02_rates,
++	switch (dev->mt76.rev) {
++	case 0x76320044:
++		/* these ASIC revisions do not support VHT */
++		vht = false;
++		break;
++	default:
++		vht = true;
++		break;
++	}
++
++	err = mt76_register_device(&dev->mt76, vht, mt76x02_rates,
+ 				   ARRAY_SIZE(mt76x02_rates));
+ 	if (err)
+ 		goto fail;
+-- 
+2.39.5
+
 
 
