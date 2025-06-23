@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911CE1AD3FA;
-	Mon, 23 Jun 2025 21:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0303219049B;
+	Mon, 23 Jun 2025 21:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715675; cv=none; b=TPDir5S5xnigFh8nXaCjNue8SmXkzTBRQEfZr2FvSvwlHVhsB95Z3Hpa1uCcEitfEW4kJ6BGqG2cqtywFws97S3xRayZFG6raLQ2oNiMzdCHQOmDgVlBjJGsjtpq3H7clbyUnMKCIImsyCCVF3EIBF7bgr73S73wcti2tKhac6g=
+	t=1750715678; cv=none; b=VSL1IJVfaBw4iaEvaPvD2br7DKL4Z9mU59sGVKW9xaFtg0Q+hDpM+juN0kPMuN7SsolnuJ3fvSZQmkWl+IKl96CuHfiDa2iR32VY9nIEx2jMN8T+5gsPe//p8A7iIAIybxfOvKV1I+0IqBVIpO5FHlCXTyzTW7Zbu6mEfHED9H8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715675; c=relaxed/simple;
-	bh=sAAUj0wLp41iQjpBw3gMV9ZDHcZAvGkAzKtgcYLdBkg=;
+	s=arc-20240116; t=1750715678; c=relaxed/simple;
+	bh=kwJ38WAGzrtUtUkZQrWdJHN0SjX7UHGw500ozZyzNw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+040Mo0/YOSKVeXHLnLtqAkmpafdDRd/TNQ8brDjICTsbPLkaDxp0c+/gaDK9hF+0tCjQ4cKSp2HZM8cJ4XQSJzoia90S9uB8ATr7709NUg5yuiznPrCQ5WQoEnCSsltiff7qOeGUTRBnNz+whslt3YDvCFLLxRgoBDd7HVBnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eeic+6q1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B4nxh35s+585UFh7jmn/HcYs8hW9sr61Y35nrKOYRDgxUWZiPJwVNeFeVyJarPQqfpNDzUmIabdMoDVcSlwkF8QJefyAeMgoNoDUvw3YrG0CGLmunhHB+JQWQEVhX/S+vAYtObfU5HX9DLLJQFL5JD5rfgDANaXNvss16HBNLhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kjernp2y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eeic+6q1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B56CC4CEEA;
-	Mon, 23 Jun 2025 21:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kjernp2y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8B0C4CEEA;
+	Mon, 23 Jun 2025 21:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715675;
-	bh=sAAUj0wLp41iQjpBw3gMV9ZDHcZAvGkAzKtgcYLdBkg=;
+	s=korg; t=1750715677;
+	bh=kwJ38WAGzrtUtUkZQrWdJHN0SjX7UHGw500ozZyzNw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eeic+6q1OTd0YhoUbiKQZLqCMu39xlsWboHhBXHTbbHRD/xric5toLOECn7xwHLv4
-	 Nk42ohbwRRqNJZMRnRfJEdiDJNxuMToR4ScPBTpU62FBkihtC/80UJh26sV7Y8EVwP
-	 jEetAs0UDONfw92R6s6PBLwsV9V4n+x9+xXIiW1s=
+	b=Kjernp2y7BAeLsx+syAyVVEgQ4OpP++us3idA42hG91x4waIlQHXyUlbmsI02FIK4
+	 Uf1Q9MBZihBnhBMorRdMyagfaox8lHvjq0A4j2rzGmi/yIBWqOTRJfocx1reGcm5wo
+	 m0CUHqV3Z/4vHA/6sdu68GZ3rOUX7F3CRufpripo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiande Lu <jiande.lu@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 200/414] Bluetooth: btusb: Add new VID/PID 13d3/3630 for MT7925
-Date: Mon, 23 Jun 2025 15:05:37 +0200
-Message-ID: <20250623130647.008897877@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 6.6 214/290] jffs2: check jffs2_prealloc_raw_node_refs() result in few other places
+Date: Mon, 23 Jun 2025 15:07:55 +0200
+Message-ID: <20250623130633.369409650@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,81 +47,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiande Lu <jiande.lu@mediatek.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 5bd5c716f7ec3e25d8d3b8a7566e192a26f9c7ce ]
+commit 2b6d96503255a3ed676cd70f8368870c6d6a25c6 upstream.
 
-Add VID 13d3 & PID 3630 for MediaTek MT7925 USB Bluetooth chip.
+Fuzzing hit another invalid pointer dereference due to the lack of
+checking whether jffs2_prealloc_raw_node_refs() completed successfully.
+Subsequent logic implies that the node refs have been allocated.
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below.
+Handle that. The code is ready for propagating the error upwards.
 
-T:  Bus=07 Lev=01 Prnt=01 Port=10 Cnt=02 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=13d3 ProdID=3630 Rev= 1.00
-S:  Manufacturer=MediaTek Inc.
-S:  Product=Wireless_Device
-S:  SerialNumber=000000000
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 1 PID: 5835 Comm: syz-executor145 Not tainted 5.10.234-syzkaller #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+RIP: 0010:jffs2_link_node_ref+0xac/0x690 fs/jffs2/nodelist.c:600
+Call Trace:
+ jffs2_mark_erased_block fs/jffs2/erase.c:460 [inline]
+ jffs2_erase_pending_blocks+0x688/0x1860 fs/jffs2/erase.c:118
+ jffs2_garbage_collect_pass+0x638/0x1a00 fs/jffs2/gc.c:253
+ jffs2_reserve_space+0x3f4/0xad0 fs/jffs2/nodemgmt.c:167
+ jffs2_write_inode_range+0x246/0xb50 fs/jffs2/write.c:362
+ jffs2_write_end+0x712/0x1110 fs/jffs2/file.c:302
+ generic_perform_write+0x2c2/0x500 mm/filemap.c:3347
+ __generic_file_write_iter+0x252/0x610 mm/filemap.c:3465
+ generic_file_write_iter+0xdb/0x230 mm/filemap.c:3497
+ call_write_iter include/linux/fs.h:2039 [inline]
+ do_iter_readv_writev+0x46d/0x750 fs/read_write.c:740
+ do_iter_write+0x18c/0x710 fs/read_write.c:866
+ vfs_writev+0x1db/0x6a0 fs/read_write.c:939
+ do_pwritev fs/read_write.c:1036 [inline]
+ __do_sys_pwritev fs/read_write.c:1083 [inline]
+ __se_sys_pwritev fs/read_write.c:1078 [inline]
+ __x64_sys_pwritev+0x235/0x310 fs/read_write.c:1078
+ do_syscall_64+0x30/0x40 arch/x86/entry/common.c:46
+ entry_SYSCALL_64_after_hwframe+0x67/0xd1
 
-Signed-off-by: Jiande Lu <jiande.lu@mediatek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 2f785402f39b ("[JFFS2] Reduce visibility of raw_node_ref to upper layers of JFFS2 code.")
+Fixes: f560928baa60 ("[JFFS2] Allocate node_ref for wasted space when skipping to page boundary")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/jffs2/erase.c |    4 +++-
+ fs/jffs2/scan.c  |    4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 7be13d3c82bcd..aa63852060500 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -714,6 +714,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3628), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3630), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+--- a/fs/jffs2/erase.c
++++ b/fs/jffs2/erase.c
+@@ -425,7 +425,9 @@ static void jffs2_mark_erased_block(stru
+ 			.totlen =	cpu_to_je32(c->cleanmarker_size)
+ 		};
  
- 	/* Additional Realtek 8723AE Bluetooth devices */
- 	{ USB_DEVICE(0x0930, 0x021d), .driver_info = BTUSB_REALTEK },
--- 
-2.39.5
-
+-		jffs2_prealloc_raw_node_refs(c, jeb, 1);
++		ret = jffs2_prealloc_raw_node_refs(c, jeb, 1);
++		if (ret)
++			goto filebad;
+ 
+ 		marker.hdr_crc = cpu_to_je32(crc32(0, &marker, sizeof(struct jffs2_unknown_node)-4));
+ 
+--- a/fs/jffs2/scan.c
++++ b/fs/jffs2/scan.c
+@@ -256,7 +256,9 @@ int jffs2_scan_medium(struct jffs2_sb_in
+ 
+ 		jffs2_dbg(1, "%s(): Skipping %d bytes in nextblock to ensure page alignment\n",
+ 			  __func__, skip);
+-		jffs2_prealloc_raw_node_refs(c, c->nextblock, 1);
++		ret = jffs2_prealloc_raw_node_refs(c, c->nextblock, 1);
++		if (ret)
++			goto out;
+ 		jffs2_scan_dirty_space(c, c->nextblock, skip);
+ 	}
+ #endif
 
 
