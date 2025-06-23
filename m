@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AC921B9C9;
-	Mon, 23 Jun 2025 21:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874F321B9C9;
+	Mon, 23 Jun 2025 21:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714094; cv=none; b=I3Ds38ZqYgcKEJnWgKrl//QqjEISZJKcue4KC8c/N0MHbSjRfzWsKsPJWIDHEdCYUB1oiO1ak3YppGDSTufvTAlMgmRHs1EJjopgg3D6gqTA4WbXoUh3g7CRkWt2gvHomBbhWWVSQ3QRiHfHqCPphar99BiHJjmFlukWLIX6RrE=
+	t=1750714096; cv=none; b=jxfOkxQxCCS5UAEJoclCboCa2tqXieSmLL8inCV1jBYgWAQW/cqGNbvxoTG8zwDSqKxPFGZ0ilKZZMkQZpZSPHdmiX9zhUykeXCyKvrOsPWk2nanlACWTVWCdi+xj8Yc40/0Clzgk1QkD7+wrahuRrTKE9Dka/xfl9qwRxL1fL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714094; c=relaxed/simple;
-	bh=Ehi01Hri5nfR8qca0PI9J2pbObGKmkyShDWPJ+E0XQ4=;
+	s=arc-20240116; t=1750714096; c=relaxed/simple;
+	bh=6pqwFCdFNySOoKfaFloaBmZ8YPp04dwWPmy7j8n757E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxfgIGpQFn4cBKcmcAamjiMORzJAXU11S+/7hhVDNq4tG2QCT+CNViK6ClOwkRZahSSij41/6EnTgpUFSZ2JStbtv4InymHYrXtQhpr7QG9k58FVgUgri4nzFxU0aeDrdkx/Xo31f+njVcjr7PdTj33MkUzKyxkq997Uo5T8K6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJZKE+FG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q+iM/pMYKk3RZIN95WLajjuQsxPSBwLucJC/V+bvGtYWXWBpz47JNBaV4F3rDOXECQoHyKjAMmrdYJhbA7WavR9P4zP2/zp4hALAdp9YFArSuJzlq/RO9q6AjTSYDebJb0NRx7qYDY0TVT0qnuCgCkE42fRvy+2YnWP3s31eTDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8QYs+Gn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJZKE+FG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7ADC4CEEA;
-	Mon, 23 Jun 2025 21:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8QYs+Gn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21045C4CEEA;
+	Mon, 23 Jun 2025 21:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714094;
-	bh=Ehi01Hri5nfR8qca0PI9J2pbObGKmkyShDWPJ+E0XQ4=;
+	s=korg; t=1750714096;
+	bh=6pqwFCdFNySOoKfaFloaBmZ8YPp04dwWPmy7j8n757E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vJZKE+FG+zFupW4//nVhEU5JZP2R5tx8XHKVx5bRIxBFzMBTTckLKmNgXHP1RICDm
-	 eUA+RKfsTiMmjxeSKdg4ba0uzvxO2+GSv00NzsrVBZcKjM9c0HXG8HnwyYwAVo+S9b
-	 oGe0ZtFrYexyg/HpL5tejXwVu986gsFwuu8pQNi4=
+	b=K8QYs+GnnZQ9Rrh1ssaZ9tD6rTpccOogEAoeVkqpoEJgknCeonFHFHtLyMKj55X2g
+	 qs9CEtSBTikHg/mzbTW0kNMkj990UNjqMb9OFOtn/a+yGZnBiJkdaZG+4H1nuGi0nZ
+	 ZVKL5u598PG1Fl0P7o0Yc9Tr4MxmNC60Se8wN6PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 363/592] net: vertexcom: mse102x: Return code for mse102x_rx_pkt_spi
-Date: Mon, 23 Jun 2025 15:05:21 +0200
-Message-ID: <20250623130709.078525499@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 113/290] mm/hugetlb: fix huge_pmd_unshare() vs GUP-fast race
+Date: Mon, 23 Jun 2025 15:06:14 +0200
+Message-ID: <20250623130630.349590788@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,96 +51,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 4ecf56f4b66011b583644bf9a62188d05dfcd78c ]
+commit 1013af4f585fccc4d3e5c5824d174de2257f7d6d upstream.
 
-The MSE102x doesn't provide any interrupt register, so the only way
-to handle the level interrupt is to fetch the whole packet from
-the MSE102x internal buffer via SPI. So in cases the interrupt
-handler fails to do this, it should return IRQ_NONE. This allows
-the core to disable the interrupt in case the issue persists
-and prevent an interrupt storm.
+huge_pmd_unshare() drops a reference on a page table that may have
+previously been shared across processes, potentially turning it into a
+normal page table used in another process in which unrelated VMAs can
+afterwards be installed.
 
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://patch.msgid.link/20250509120435.43646-6-wahrenst@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If this happens in the middle of a concurrent gup_fast(), gup_fast() could
+end up walking the page tables of another process.  While I don't see any
+way in which that immediately leads to kernel memory corruption, it is
+really weird and unexpected.
+
+Fix it with an explicit broadcast IPI through tlb_remove_table_sync_one(),
+just like we do in khugepaged when removing page tables for a THP
+collapse.
+
+Link: https://lkml.kernel.org/r/20250528-hugetlb-fixes-splitrace-v2-2-1329349bad1a@google.com
+Link: https://lkml.kernel.org/r/20250527-hugetlb-fixes-splitrace-v1-2-f4136f5ec58a@google.com
+Fixes: 39dde65c9940 ("[PATCH] shared page table for hugetlb page")
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/vertexcom/mse102x.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ mm/hugetlb.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/vertexcom/mse102x.c b/drivers/net/ethernet/vertexcom/mse102x.c
-index e4d993f313740..545177e84c0eb 100644
---- a/drivers/net/ethernet/vertexcom/mse102x.c
-+++ b/drivers/net/ethernet/vertexcom/mse102x.c
-@@ -306,7 +306,7 @@ static void mse102x_dump_packet(const char *msg, int len, const char *data)
- 		       data, len, true);
- }
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -7062,6 +7062,13 @@ int huge_pmd_unshare(struct mm_struct *m
+ 		return 0;
  
--static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
-+static irqreturn_t mse102x_rx_pkt_spi(struct mse102x_net *mse)
- {
- 	struct sk_buff *skb;
- 	unsigned int rxalign;
-@@ -327,7 +327,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
- 		mse102x_tx_cmd_spi(mse, CMD_CTR);
- 		ret = mse102x_rx_cmd_spi(mse, (u8 *)&rx);
- 		if (ret)
--			return;
-+			return IRQ_NONE;
- 
- 		cmd_resp = be16_to_cpu(rx);
- 		if ((cmd_resp & CMD_MASK) != CMD_RTS) {
-@@ -360,7 +360,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
- 	rxalign = ALIGN(rxlen + DET_SOF_LEN + DET_DFT_LEN, 4);
- 	skb = netdev_alloc_skb_ip_align(mse->ndev, rxalign);
- 	if (!skb)
--		return;
-+		return IRQ_NONE;
- 
- 	/* 2 bytes Start of frame (before ethernet header)
- 	 * 2 bytes Data frame tail (after ethernet frame)
-@@ -370,7 +370,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
- 	if (mse102x_rx_frame_spi(mse, rxpkt, rxlen, drop)) {
- 		mse->ndev->stats.rx_errors++;
- 		dev_kfree_skb(skb);
--		return;
-+		return IRQ_HANDLED;
- 	}
- 
- 	if (netif_msg_pktdata(mse))
-@@ -381,6 +381,8 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
- 
- 	mse->ndev->stats.rx_packets++;
- 	mse->ndev->stats.rx_bytes += rxlen;
-+
-+	return IRQ_HANDLED;
- }
- 
- static int mse102x_tx_pkt_spi(struct mse102x_net *mse, struct sk_buff *txb,
-@@ -512,12 +514,13 @@ static irqreturn_t mse102x_irq(int irq, void *_mse)
- {
- 	struct mse102x_net *mse = _mse;
- 	struct mse102x_net_spi *mses = to_mse102x_spi(mse);
-+	irqreturn_t ret;
- 
- 	mutex_lock(&mses->lock);
--	mse102x_rx_pkt_spi(mse);
-+	ret = mse102x_rx_pkt_spi(mse);
- 	mutex_unlock(&mses->lock);
- 
--	return IRQ_HANDLED;
-+	return ret;
- }
- 
- static int mse102x_net_open(struct net_device *ndev)
--- 
-2.39.5
-
+ 	pud_clear(pud);
++	/*
++	 * Once our caller drops the rmap lock, some other process might be
++	 * using this page table as a normal, non-hugetlb page table.
++	 * Wait for pending gup_fast() in other threads to finish before letting
++	 * that happen.
++	 */
++	tlb_remove_table_sync_one();
+ 	ptdesc_pmd_pts_dec(virt_to_ptdesc(ptep));
+ 	mm_dec_nr_pmds(mm);
+ 	return 1;
 
 
