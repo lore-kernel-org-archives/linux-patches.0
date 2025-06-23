@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB52921D3DD;
-	Mon, 23 Jun 2025 21:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D73F21D3DD;
+	Mon, 23 Jun 2025 21:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714713; cv=none; b=ayTdoM+Benh8x6i5jPOEH9ZsYmYaN17ZKAUASsceggUJhLyaL3JY1qVXOLJe1mOI8jSxaCUQP09zA0vmFLZuhaO5YJizVjW9WNDvlDTWjtvMHm7Kb4DMrmhqUGrgFwHZ1+aCL3HcxVTlgm6wDOF4JyDmMiJxWtpKimct1ZKfFZo=
+	t=1750714716; cv=none; b=E9fnGqGw+buWexFfLsysoqzQCPnXvEYasWMTQN/lky3G+M3JwWKFCf3UJXH0AuYAds24dHUfry/aj9PTeWh4uxs1Q+MP8A6pgSFcxBgmkxvjStK1vzq6Qq7r5ZHYEEzO3XvfrV1UKLZVCNCEFWRr9sdhgh8xn+MPH2ZKkXFjlPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714713; c=relaxed/simple;
-	bh=kcysHUUHXJyhMBvYUBaX4klffLC4Sv41bxqLxYpEugo=;
+	s=arc-20240116; t=1750714716; c=relaxed/simple;
+	bh=qSHkR1Q1CN6aB70ZnU+deOJK7evF6wa+KToqM5rLv+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gk675OtgixP3rlLzAntB6AMo86k3CLauqQaczsDjuRnxSYd8/W679m5L7p67rjUjM5tZsl0IOa/LPbAvXA32D3mFVE3vIemESIM7CPjE7/khEY8A9hjIVN/FvGI0yVCpOXCIVOB63XGpeXHLb+L9Y8k4wNh8kQI6Rq11506n0yE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0r3bXSb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TmfNptEMaGpSL9bH+zwfNQsxmMg2iq5tzEaOYNpq6JFBwb0u+x4NgpYrluxOw4GetovsKwPzvzXpSL5HkC/cINZWC9j92p9uRBJyXHMw1EDbl7kGi+489BJpVS/dprxTcvCZH18fMc97gp/6uFgl3Dpm/Ese59XSvm93pSd8oDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUTKP4Pl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0r3bXSb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3512EC4CEEA;
-	Mon, 23 Jun 2025 21:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUTKP4Pl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A47C4CEEA;
+	Mon, 23 Jun 2025 21:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714713;
-	bh=kcysHUUHXJyhMBvYUBaX4klffLC4Sv41bxqLxYpEugo=;
+	s=korg; t=1750714716;
+	bh=qSHkR1Q1CN6aB70ZnU+deOJK7evF6wa+KToqM5rLv+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L0r3bXSb7dppsAKmId0k7AeGbiGqyGGwFkSkGXdZSXaUTkLDwaoyuiwROBIzOhTd0
-	 Z69ve//jbdzWDiXCnRJguj49/xaL0+FlHmJvpBcfTlkpG9cA/bsGVEuVn1f7FcKDfU
-	 3rPCIlJk1dMIlFl7Whr2BU6p9zoBXCrPPCNgC1lc=
+	b=xUTKP4Plipoc1CH5LiUM8/r+64HWthSe3AsTtwICsrG1RjgB4gZpzC/W4qCb/VMoL
+	 Sa8Zd/Jx0HJtQnWnIZ+6Vxs4tJNUt4BUZpvFjseLUVLFzG+AaCF4cKKhJzhGhT15Nk
+	 20pRgMt5QMhFZa+gy0oSbkNorfubJwH3EvpcFS5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrew Zaborowski <andrew.zaborowski@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Tony Luck <tony.luck@intel.com>,
+	balrogg@gmail.com,
+	linux-sgx@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 411/592] usbnet: asix AX88772: leave the carrier control to phylink
-Date: Mon, 23 Jun 2025 15:06:09 +0200
-Message-ID: <20250623130710.212571432@linuxfoundation.org>
+Subject: [PATCH 6.6 154/290] x86/sgx: Prevent attempts to reclaim poisoned pages
+Date: Mon, 23 Jun 2025 15:06:55 +0200
+Message-ID: <20250623130631.526388501@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,158 +51,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Hałasa <khalasa@piap.pl>
+From: Andrew Zaborowski <andrew.zaborowski@intel.com>
 
-[ Upstream commit 4145f00227ee80f21ab274e9cd9c09758e9bcf3d ]
+[ Upstream commit ed16618c380c32c68c06186d0ccbb0d5e0586e59 ]
 
-ASIX AX88772B based USB 10/100 Ethernet adapter doesn't come
-up ("carrier off"), despite the built-in 100BASE-FX PHY positive link
-indication. The internal PHY is configured (using EEPROM) in fixed
-100 Mbps full duplex mode.
+TL;DR: SGX page reclaim touches the page to copy its contents to
+secondary storage. SGX instructions do not gracefully handle machine
+checks. Despite this, the existing SGX code will try to reclaim pages
+that it _knows_ are poisoned. Avoid even trying to reclaim poisoned pages.
 
-The primary problem appears to be using carrier_netif_{on,off}() while,
-at the same time, delegating carrier management to phylink. Use only the
-latter and remove "manual control" in the asix driver.
+The longer story:
 
-I don't have any other AX88772 board here, but the problem doesn't seem
-specific to a particular board or settings - it's probably
-timing-dependent.
+Pages used by an enclave only get epc_page->poison set in
+arch_memory_failure() but they currently stay on sgx_active_page_list until
+sgx_encl_release(), with the SGX_EPC_PAGE_RECLAIMER_TRACKED flag untouched.
 
-Remove unused asix_adjust_link() as well.
+epc_page->poison is not checked in the reclaimer logic meaning that, if other
+conditions are met, an attempt will be made to reclaim an EPC page that was
+poisoned.  This is bad because 1. we don't want that page to end up added
+to another enclave and 2. it is likely to cause one core to shut down
+and the kernel to panic.
 
-Signed-off-by: Krzysztof Hałasa <khalasa@piap.pl>
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/m3plhmdfte.fsf_-_@t19.piap.pl
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Specifically, reclaiming uses microcode operations including "EWB" which
+accesses the EPC page contents to encrypt and write them out to non-SGX
+memory.  Those operations cannot handle MCEs in their accesses other than
+by putting the executing core into a special shutdown state (affecting
+both threads with HT.)  The kernel will subsequently panic on the
+remaining cores seeing the core didn't enter MCE handler(s) in time.
+
+Call sgx_unmark_page_reclaimable() to remove the affected EPC page from
+sgx_active_page_list on memory error to stop it being considered for
+reclaiming.
+
+Testing epc_page->poison in sgx_reclaim_pages() would also work but I assume
+it's better to add code in the less likely paths.
+
+The affected EPC page is not added to &node->sgx_poison_page_list until
+later in sgx_encl_release()->sgx_free_epc_page() when it is EREMOVEd.
+Membership on other lists doesn't change to avoid changing any of the
+lists' semantics except for sgx_active_page_list.  There's a "TBD" comment
+in arch_memory_failure() about pre-emptive actions, the goal here is not
+to address everything that it may imply.
+
+This also doesn't completely close the time window when a memory error
+notification will be fatal (for a not previously poisoned EPC page) --
+the MCE can happen after sgx_reclaim_pages() has selected its candidates
+or even *inside* a microcode operation (actually easy to trigger due to
+the amount of time spent in them.)
+
+The spinlock in sgx_unmark_page_reclaimable() is safe because
+memory_failure() runs in process context and no spinlocks are held,
+explicitly noted in a mm/memory-failure.c comment.
+
+Signed-off-by: Andrew Zaborowski <andrew.zaborowski@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: balrogg@gmail.com
+Cc: linux-sgx@vger.kernel.org
+Link: https://lore.kernel.org/r/20250508230429.456271-1-andrew.zaborowski@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/asix.h         |  1 -
- drivers/net/usb/asix_common.c  | 22 ----------------------
- drivers/net/usb/asix_devices.c | 17 ++++-------------
- 3 files changed, 4 insertions(+), 36 deletions(-)
+ arch/x86/kernel/cpu/sgx/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/usb/asix.h b/drivers/net/usb/asix.h
-index 74162190bccc1..8531b804021aa 100644
---- a/drivers/net/usb/asix.h
-+++ b/drivers/net/usb/asix.h
-@@ -224,7 +224,6 @@ int asix_write_rx_ctl(struct usbnet *dev, u16 mode, int in_pm);
+diff --git a/arch/x86/kernel/cpu/sgx/main.c b/arch/x86/kernel/cpu/sgx/main.c
+index c7f8c3200e8d7..0db6eeeeb6720 100644
+--- a/arch/x86/kernel/cpu/sgx/main.c
++++ b/arch/x86/kernel/cpu/sgx/main.c
+@@ -718,6 +718,8 @@ int arch_memory_failure(unsigned long pfn, int flags)
+ 		goto out;
+ 	}
  
- u16 asix_read_medium_status(struct usbnet *dev, int in_pm);
- int asix_write_medium_mode(struct usbnet *dev, u16 mode, int in_pm);
--void asix_adjust_link(struct net_device *netdev);
- 
- int asix_write_gpio(struct usbnet *dev, u16 value, int sleep, int in_pm);
- 
-diff --git a/drivers/net/usb/asix_common.c b/drivers/net/usb/asix_common.c
-index 72ffc89b477ad..7fd763917ae2c 100644
---- a/drivers/net/usb/asix_common.c
-+++ b/drivers/net/usb/asix_common.c
-@@ -414,28 +414,6 @@ int asix_write_medium_mode(struct usbnet *dev, u16 mode, int in_pm)
- 	return ret;
- }
- 
--/* set MAC link settings according to information from phylib */
--void asix_adjust_link(struct net_device *netdev)
--{
--	struct phy_device *phydev = netdev->phydev;
--	struct usbnet *dev = netdev_priv(netdev);
--	u16 mode = 0;
--
--	if (phydev->link) {
--		mode = AX88772_MEDIUM_DEFAULT;
--
--		if (phydev->duplex == DUPLEX_HALF)
--			mode &= ~AX_MEDIUM_FD;
--
--		if (phydev->speed != SPEED_100)
--			mode &= ~AX_MEDIUM_PS;
--	}
--
--	asix_write_medium_mode(dev, mode, 0);
--	phy_print_status(phydev);
--	usbnet_link_change(dev, phydev->link, 0);
--}
--
- int asix_write_gpio(struct usbnet *dev, u16 value, int sleep, int in_pm)
- {
- 	int ret;
-diff --git a/drivers/net/usb/asix_devices.c b/drivers/net/usb/asix_devices.c
-index da24941a6e444..9b0318fb50b55 100644
---- a/drivers/net/usb/asix_devices.c
-+++ b/drivers/net/usb/asix_devices.c
-@@ -752,7 +752,6 @@ static void ax88772_mac_link_down(struct phylink_config *config,
- 	struct usbnet *dev = netdev_priv(to_net_dev(config->dev));
- 
- 	asix_write_medium_mode(dev, 0, 0);
--	usbnet_link_change(dev, false, false);
- }
- 
- static void ax88772_mac_link_up(struct phylink_config *config,
-@@ -783,7 +782,6 @@ static void ax88772_mac_link_up(struct phylink_config *config,
- 		m |= AX_MEDIUM_RFC;
- 
- 	asix_write_medium_mode(dev, m, 0);
--	usbnet_link_change(dev, true, false);
- }
- 
- static const struct phylink_mac_ops ax88772_phylink_mac_ops = {
-@@ -1350,10 +1348,9 @@ static const struct driver_info ax88772_info = {
- 	.description = "ASIX AX88772 USB 2.0 Ethernet",
- 	.bind = ax88772_bind,
- 	.unbind = ax88772_unbind,
--	.status = asix_status,
- 	.reset = ax88772_reset,
- 	.stop = ax88772_stop,
--	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR | FLAG_MULTI_PACKET,
-+	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
- 	.rx_fixup = asix_rx_fixup_common,
- 	.tx_fixup = asix_tx_fixup,
- };
-@@ -1362,11 +1359,9 @@ static const struct driver_info ax88772b_info = {
- 	.description = "ASIX AX88772B USB 2.0 Ethernet",
- 	.bind = ax88772_bind,
- 	.unbind = ax88772_unbind,
--	.status = asix_status,
- 	.reset = ax88772_reset,
- 	.stop = ax88772_stop,
--	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
--	         FLAG_MULTI_PACKET,
-+	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
- 	.rx_fixup = asix_rx_fixup_common,
- 	.tx_fixup = asix_tx_fixup,
- 	.data = FLAG_EEPROM_MAC,
-@@ -1376,11 +1371,9 @@ static const struct driver_info lxausb_t1l_info = {
- 	.description = "Linux Automation GmbH USB 10Base-T1L",
- 	.bind = ax88772_bind,
- 	.unbind = ax88772_unbind,
--	.status = asix_status,
- 	.reset = ax88772_reset,
- 	.stop = ax88772_stop,
--	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
--		 FLAG_MULTI_PACKET,
-+	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
- 	.rx_fixup = asix_rx_fixup_common,
- 	.tx_fixup = asix_tx_fixup,
- 	.data = FLAG_EEPROM_MAC,
-@@ -1412,10 +1405,8 @@ static const struct driver_info hg20f9_info = {
- 	.description = "HG20F9 USB 2.0 Ethernet",
- 	.bind = ax88772_bind,
- 	.unbind = ax88772_unbind,
--	.status = asix_status,
- 	.reset = ax88772_reset,
--	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
--	         FLAG_MULTI_PACKET,
-+	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
- 	.rx_fixup = asix_rx_fixup_common,
- 	.tx_fixup = asix_tx_fixup,
- 	.data = FLAG_EEPROM_MAC,
++	sgx_unmark_page_reclaimable(page);
++
+ 	/*
+ 	 * TBD: Add additional plumbing to enable pre-emptive
+ 	 * action for asynchronous poison notification. Until
 -- 
 2.39.5
 
