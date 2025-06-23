@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E044C1E5B71;
-	Mon, 23 Jun 2025 21:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9171EFFA6;
+	Mon, 23 Jun 2025 21:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714165; cv=none; b=Tnoipi8oRb/jpL91asjtXFh74mQxpgCebnlGA1LDVFXjfusSozcpoGCrzEyQI3ymE4TPtwzA3yajYMSfNJXzRoHquakugTfZTcMXaGCqS//wiCOvksMRNl5L2RmRavrma5OTvKj2qCE2Q4XlrXS+4tYLZF8Bs+01lMsu2AovaJ4=
+	t=1750714167; cv=none; b=K9LETmTna/c2dJN8K8wxlYMdG30RxgXTS35F2V3hPeH0XK+PI+PMV6vT/CStu337PwBqrUe1odK3D8av4L1+OW2hIY0sn5+h/8ZN1nEzLeBk/1Jhg5flHuNl1DhOe6iavVBw3ZN0iyNzScrngPFijUzvpDQJpIOpobgTD8Vutms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714165; c=relaxed/simple;
-	bh=LtCeVzFILe97aJZ9WouchTg2C/4otRrWoBcvhUaAnOs=;
+	s=arc-20240116; t=1750714167; c=relaxed/simple;
+	bh=5A9gLUUI6oT34TIW/a7InOgx1uNzHwBdEtF2Rt2i+AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHVE46Ikk68s7UN+Oyw3WZfaJLNO1t4Of0/9UeOnhSzCSRApvtbD2ASlMbve6B96zEEUbHUu8OvxnAm0Ux56xTcj8D1ep/mMLeZi0V4TC8j8SUrzRyeSFA8KD4iC7wHKx9FMQxrq/jq8eR/kRb+7oeTa8IQTiE/vH027j0rzo4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmlQISLz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cPxXg6y6zDzKjtecUk1OtAHq05CS84Rfn76VHq9DF+G9StCTrW5ubm6ks9erlHVg0Kr86YfFztif36gUsP7R98mKMi/ztGdxiPVFpTVPy88G02Ds6r7jBJNQsay+0M/HjWTor4NzRDc1qL694i0e9RW+9VZKfXSuhzgKkaT+RiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+edq7Tk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmlQISLz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7965BC4CEEA;
-	Mon, 23 Jun 2025 21:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+edq7Tk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA487C4CEEA;
+	Mon, 23 Jun 2025 21:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714164;
-	bh=LtCeVzFILe97aJZ9WouchTg2C/4otRrWoBcvhUaAnOs=;
+	s=korg; t=1750714167;
+	bh=5A9gLUUI6oT34TIW/a7InOgx1uNzHwBdEtF2Rt2i+AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UmlQISLz+/EWmU83DVwtKXAjDjdHLYJ/+QCw32kFhiGO863uh2yFb+rR4XcXgRCwr
-	 dxQLcNCzmFVboWXyfacr3XZ3XBwfOLz78DpM42KUx0d+rJQfNGrRjqVm3HKbx6l4aA
-	 hsWMK187Xbdqmd/Zwnnudbc/XzOS92HTZ2XOUjHo=
+	b=o+edq7TkooZUxY15MvDRfE93q0oOigS7jf7hMXHtIuRsLt2jn7G7PrQmWwYd4WXYZ
+	 yD/lUQWrji22xrosz42V6WWpalHdg7gUowwlBKwuYI0XRddWxCfgZAhssWLrAK72rW
+	 PetZDcVKnQD3BjbEfGzLJOX5QBQ4a6ltRSeZRYwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luke Wang <ziniu.wang_1@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 122/290] mmc: sdhci-esdhc-imx: Save tuning value when card stays powered in suspend
-Date: Mon, 23 Jun 2025 15:06:23 +0200
-Message-ID: <20250623130630.603626108@linuxfoundation.org>
+Subject: [PATCH 6.15 394/592] vxlan: Do not treat dst cache initialization errors as fatal
+Date: Mon, 23 Jun 2025 15:05:52 +0200
+Message-ID: <20250623130709.816401277@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,192 +49,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luke Wang <ziniu.wang_1@nxp.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit c63d25cdc59ae2891b39ba2da950910291d9bcbf ]
+[ Upstream commit 20c76dadc783759fd3819d289c72be590660cc8b ]
 
-For SoCs like i.MX6UL(L/Z) and i.MX7D, USDHC powers off completely during
-system power management (PM), causing the internal tuning status to be
-lost. To address this, save the tuning value when system suspend and
-restore it for any command issued after system resume when re-tuning is
-held.
+FDB entries are allocated in an atomic context as they can be added from
+the data path when learning is enabled.
 
-A typical case involves SDIO WiFi devices with the MMC_PM_KEEP_POWER and
-MMC_PM_WAKE_SDIO_IRQ flag, which retain power during system PM. To
-conserve power, WiFi switches to 1-bit mode and restores 4-bit mode upon
-resume. As per the specification, tuning commands are not supported in
-1-bit mode. When sending CMD52 to restore 4-bit mode, re-tuning must be
-held. However, CMD52 still requires a correct sample point to avoid CRC
-errors, necessitating preservation of the previous tuning value.
+After converting the FDB hash table to rhashtable, the insertion rate
+will be much higher (*) which will entail a much higher rate of per-CPU
+allocations via dst_cache_init().
 
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250328112517.2624806-1-ziniu.wang_1@nxp.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+When adding a large number of entries (e.g., 256k) in a batch, a small
+percentage (< 0.02%) of these per-CPU allocations will fail [1]. This
+does not happen with the current code since the insertion rate is low
+enough to give the per-CPU allocator a chance to asynchronously create
+new chunks of per-CPU memory.
+
+Given that:
+
+a. Only a small percentage of these per-CPU allocations fail.
+
+b. The scenario where this happens might not be the most realistic one.
+
+c. The driver can work correctly without dst caches. The dst_cache_*()
+APIs first check that the dst cache was properly initialized.
+
+d. The dst caches are not always used (e.g., 'tos inherit').
+
+It seems reasonable to not treat these allocation failures as fatal.
+
+Therefore, do not bail when dst_cache_init() fails and suppress warnings
+by specifying '__GFP_NOWARN'.
+
+[1] percpu: allocation failed, size=40 align=8 atomic=1, atomic alloc failed, no space left
+
+(*) 97% reduction in average latency of vxlan_fdb_update() when adding
+256k entries in a batch.
+
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250415121143.345227-14-idosch@nvidia.com
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c | 88 +++++++++++++++++++++++++++++-
- 1 file changed, 86 insertions(+), 2 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
-index e4e9b84f210b2..28ece6839aead 100644
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -80,6 +80,8 @@
- #define  ESDHC_TUNE_CTRL_STEP		1
- #define  ESDHC_TUNE_CTRL_MIN		0
- #define  ESDHC_TUNE_CTRL_MAX		((1 << 7) - 1)
-+#define  ESDHC_TUNE_CTRL_STATUS_TAP_SEL_PRE_MASK	GENMASK(30, 24)
-+#define  ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK	GENMASK(14, 8)
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 9ccc3f09f71b8..e83197fac1e0f 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -610,10 +610,10 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
+ 	if (rd == NULL)
+ 		return -ENOMEM;
  
- /* strobe dll register */
- #define ESDHC_STROBE_DLL_CTRL		0x70
-@@ -231,6 +233,7 @@ struct esdhc_platform_data {
- 	unsigned int tuning_step;       /* The delay cell steps in tuning procedure */
- 	unsigned int tuning_start_tap;	/* The start delay cell point in tuning procedure */
- 	unsigned int strobe_dll_delay_target;	/* The delay cell for strobe pad (read clock) */
-+	unsigned int saved_tuning_delay_cell;	/* save the value of tuning delay cell */
- };
- 
- struct esdhc_soc_data {
-@@ -1052,7 +1055,7 @@ static void esdhc_reset_tuning(struct sdhci_host *host)
- {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
--	u32 ctrl;
-+	u32 ctrl, tuning_ctrl;
- 	int ret;
- 
- 	/* Reset the tuning circuit */
-@@ -1066,6 +1069,16 @@ static void esdhc_reset_tuning(struct sdhci_host *host)
- 			writel(0, host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
- 		} else if (imx_data->socdata->flags & ESDHC_FLAG_STD_TUNING) {
- 			writel(ctrl, host->ioaddr + ESDHC_MIX_CTRL);
-+			/*
-+			 * enable the std tuning just in case it cleared in
-+			 * sdhc_esdhc_tuning_restore.
-+			 */
-+			tuning_ctrl = readl(host->ioaddr + ESDHC_TUNING_CTRL);
-+			if (!(tuning_ctrl & ESDHC_STD_TUNING_EN)) {
-+				tuning_ctrl |= ESDHC_STD_TUNING_EN;
-+				writel(tuning_ctrl, host->ioaddr + ESDHC_TUNING_CTRL);
-+			}
-+
- 			ctrl = readl(host->ioaddr + SDHCI_AUTO_CMD_STATUS);
- 			ctrl &= ~ESDHC_MIX_CTRL_SMPCLK_SEL;
- 			ctrl &= ~ESDHC_MIX_CTRL_EXE_TUNE;
-@@ -1144,7 +1157,8 @@ static void esdhc_prepare_tuning(struct sdhci_host *host, u32 val)
- 	reg |= ESDHC_MIX_CTRL_EXE_TUNE | ESDHC_MIX_CTRL_SMPCLK_SEL |
- 			ESDHC_MIX_CTRL_FBCLK_SEL;
- 	writel(reg, host->ioaddr + ESDHC_MIX_CTRL);
--	writel(val << 8, host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
-+	writel(FIELD_PREP(ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK, val),
-+	       host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
- 	dev_dbg(mmc_dev(host->mmc),
- 		"tuning with delay 0x%x ESDHC_TUNE_CTRL_STATUS 0x%x\n",
- 			val, readl(host->ioaddr + ESDHC_TUNE_CTRL_STATUS));
-@@ -1532,6 +1546,57 @@ static void sdhci_esdhc_imx_hwinit(struct sdhci_host *host)
- 	}
- }
- 
-+static void sdhc_esdhc_tuning_save(struct sdhci_host *host)
-+{
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
-+	u32 reg;
-+
-+	/*
-+	 * SD/eMMC do not need this tuning save because it will re-init
-+	 * after system resume back.
-+	 * Here save the tuning delay value for SDIO device since it may
-+	 * keep power during system PM. And for usdhc, only SDR50 and
-+	 * SDR104 mode for SDIO device need to do tuning, and need to
-+	 * save/restore.
+-	if (dst_cache_init(&rd->dst_cache, GFP_ATOMIC)) {
+-		kfree(rd);
+-		return -ENOMEM;
+-	}
++	/* The driver can work correctly without a dst cache, so do not treat
++	 * dst cache initialization errors as fatal.
 +	 */
-+	if (host->timing == MMC_TIMING_UHS_SDR50 ||
-+	    host->timing == MMC_TIMING_UHS_SDR104) {
-+		reg = readl(host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
-+		reg = FIELD_GET(ESDHC_TUNE_CTRL_STATUS_TAP_SEL_PRE_MASK, reg);
-+		imx_data->boarddata.saved_tuning_delay_cell = reg;
-+	}
-+}
-+
-+static void sdhc_esdhc_tuning_restore(struct sdhci_host *host)
-+{
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
-+	u32 reg;
-+
-+	if (host->timing == MMC_TIMING_UHS_SDR50 ||
-+	    host->timing == MMC_TIMING_UHS_SDR104) {
-+		/*
-+		 * restore the tuning delay value actually is a
-+		 * manual tuning method, so clear the standard
-+		 * tuning enable bit here. Will set back this
-+		 * ESDHC_STD_TUNING_EN in esdhc_reset_tuning()
-+		 * when trigger re-tuning.
-+		 */
-+		reg = readl(host->ioaddr + ESDHC_TUNING_CTRL);
-+		reg &= ~ESDHC_STD_TUNING_EN;
-+		writel(reg, host->ioaddr + ESDHC_TUNING_CTRL);
-+
-+		reg = readl(host->ioaddr + ESDHC_MIX_CTRL);
-+		reg |= ESDHC_MIX_CTRL_SMPCLK_SEL | ESDHC_MIX_CTRL_FBCLK_SEL;
-+		writel(reg, host->ioaddr + ESDHC_MIX_CTRL);
-+
-+		writel(FIELD_PREP(ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK,
-+				  imx_data->boarddata.saved_tuning_delay_cell),
-+		       host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
-+	}
-+}
-+
- static void esdhc_cqe_enable(struct mmc_host *mmc)
- {
- 	struct sdhci_host *host = mmc_priv(mmc);
-@@ -1856,6 +1921,15 @@ static int sdhci_esdhc_suspend(struct device *dev)
- 	if (host->tuning_mode != SDHCI_TUNING_MODE_3)
- 		mmc_retune_needed(host->mmc);
++	dst_cache_init(&rd->dst_cache, GFP_ATOMIC | __GFP_NOWARN);
  
-+	/*
-+	 * For the device need to keep power during system PM, need
-+	 * to save the tuning delay value just in case the usdhc
-+	 * lost power during system PM.
-+	 */
-+	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
-+	    esdhc_is_usdhc(imx_data))
-+		sdhc_esdhc_tuning_save(host);
-+
- 	ret = sdhci_suspend_host(host);
- 	if (ret)
- 		return ret;
-@@ -1872,6 +1946,8 @@ static int sdhci_esdhc_suspend(struct device *dev)
- static int sdhci_esdhc_resume(struct device *dev)
- {
- 	struct sdhci_host *host = dev_get_drvdata(dev);
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
- 	int ret;
- 
- 	ret = pinctrl_pm_select_default_state(dev);
-@@ -1885,6 +1961,14 @@ static int sdhci_esdhc_resume(struct device *dev)
- 	if (ret)
- 		return ret;
- 
-+	/*
-+	 * restore the saved tuning delay value for the device which keep
-+	 * power during system PM.
-+	 */
-+	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
-+	    esdhc_is_usdhc(imx_data))
-+		sdhc_esdhc_tuning_restore(host);
-+
- 	if (host->mmc->caps2 & MMC_CAP2_CQE)
- 		ret = cqhci_resume(host->mmc);
- 
+ 	rd->remote_ip = *ip;
+ 	rd->remote_port = port;
 -- 
 2.39.5
 
