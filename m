@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE55E228CB5;
-	Mon, 23 Jun 2025 22:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A907B676;
+	Mon, 23 Jun 2025 22:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716711; cv=none; b=pcrHFM0tvT+H3X+qK5NnGjWL+czUFGiQBfmZlz6283/lBm073oxuNTwLiNq07sltoPtTvn7fjSD9NNn4HwQBIs9qqztdUfQ+FrgM0hYHOhLDXWAx3JSO6iCYyLBrlvOTpuAEsC4l247+33moPlm2QsUgC1bzzFOg6C494JkhN7w=
+	t=1750716713; cv=none; b=gTFQ5dr5JvWFBU/dQ/iE4SLDpl8GxeDaF5OqPcJj8w9AYGw9N7sSlcFSFZgxFkiTfMyDFQ2gsP0nLv7//GOV4Ux6f8DpXL6M+lLBebArKqZOD/vBUiT4LHgPLyCE6m/hTkuEd9QQ468tLzoVaXLefb9y6IcTNLgl/VKHg4VNlHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716711; c=relaxed/simple;
-	bh=ltL6AN9XZC2RfwcCmt0zh0sPqWzk5G0QWQ0IasuIeLg=;
+	s=arc-20240116; t=1750716713; c=relaxed/simple;
+	bh=XGmgBrySy82Ub6N+ZYyGMnH2XqazRGVTyAJEetRsTg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=biqL+nYiyPx+O9Wz5HzrMJbyWxyGKdIuFgoASgoqqcluNYCIy6Oc1J35/kCfj1JUTfomG0qYIYdzThTZPdLHK9NKRhGfGxjet6WBmIQTHYZdlnCOv0hyl+Se/rtGxqGcguU8yTV8QlTBL2qvKbkQgLo/zImFmf1VsnDnHMRQWpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwOiVc2x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s6wCCv0bhnV+4gHtMRI4MeYiXF+ay9oPGH1kCEGQJZrPrNGcTShP3UIycwrv8Jo++Pc4RV00EoQl/Gf38axHksCiNelej1S/TLa7NE76IBFT1TVlyfVz4jn8zkZuxw9ZiNeeQdO35Y02iaqRV6BeQaki0VG3ziq31uGrxoyhiwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAZcQBkF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwOiVc2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74815C4CEF1;
-	Mon, 23 Jun 2025 22:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAZcQBkF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE171C4CEEA;
+	Mon, 23 Jun 2025 22:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716710;
-	bh=ltL6AN9XZC2RfwcCmt0zh0sPqWzk5G0QWQ0IasuIeLg=;
+	s=korg; t=1750716713;
+	bh=XGmgBrySy82Ub6N+ZYyGMnH2XqazRGVTyAJEetRsTg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AwOiVc2x5AlBw6azP0wIMLkvCjbGlm12dQtJCZuQ5ilg1Lfs2Ss5rtQFtASeyoXrD
-	 MXarwWheBuT7igNlwrdu+qYrsWN6PFxzrEsr5+455o9Dx2r7YBz613rFDO76uJA/s+
-	 h2PrB3ZRYMFhtAADfYBZ2FB338E4MBH923e+bJYQ=
+	b=XAZcQBkF+GwhSHhLR/Un7ea4K+1RgosB9P0QVSvSe4El1sVcnKT6eNWwop1dI/cSR
+	 fyQ9CJcXJEAxE/pJbzpAZ2RHtfXAAZYLHlCsbpan6P1DmBkLFT8zI9Vd5mL5JWPD7E
+	 YD65WUlpQrw43vHKUOKHSH/ZG425UIXtQMjH2e18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 549/592] drm/xe/bmg: Update Wa_16023588340
-Date: Mon, 23 Jun 2025 15:08:27 +0200
-Message-ID: <20250623130713.502230217@linuxfoundation.org>
+	"Xin Li (Intel)" <xin@zytor.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Sohil Mehta <sohil.mehta@intel.com>
+Subject: [PATCH 5.15 352/411] selftests/x86: Add a test to detect infinite SIGTRAP handler loop
+Date: Mon, 23 Jun 2025 15:08:16 +0200
+Message-ID: <20250623130642.509572419@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,44 +48,153 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+From: Xin Li (Intel) <xin@zytor.com>
 
-[ Upstream commit 16c1241b08751a67cd7a0221ea9f82b0b02806f4 ]
+commit f287822688eeb44ae1cf6ac45701d965efc33218 upstream.
 
-This allows for additional L2 caching modes.
+When FRED is enabled, if the Trap Flag (TF) is set without an external
+debugger attached, it can lead to an infinite loop in the SIGTRAP
+handler.  To avoid this, the software event flag in the augmented SS
+must be cleared, ensuring that no single-step trap remains pending when
+ERETU completes.
 
-Fixes: 01570b446939 ("drm/xe/bmg: implement Wa_16023588340")
-Cc: Matthew Auld <matthew.auld@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Link: https://lore.kernel.org/r/20250612-wa-14022085890-v4-2-94ba5dcc1e30@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 6ab42fa03d4c88a0ddf5e56e62794853b198e7bf)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This test checks for that specific scenario—verifying whether the kernel
+correctly prevents an infinite SIGTRAP loop in this edge case when FRED
+is enabled.
+
+The test should _always_ pass with IDT event delivery, thus no need to
+disable the test even when FRED is not enabled.
+
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Sohil Mehta <sohil.mehta@intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250609084054.2083189-3-xin%40zytor.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_gt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/x86/Makefile       |    2 
+ tools/testing/selftests/x86/sigtrap_loop.c |  101 +++++++++++++++++++++++++++++
+ 2 files changed, 102 insertions(+), 1 deletion(-)
+ create mode 100644 tools/testing/selftests/x86/sigtrap_loop.c
 
-diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
-index 66198cf2662c5..4bad8894fa12c 100644
---- a/drivers/gpu/drm/xe/xe_gt.c
-+++ b/drivers/gpu/drm/xe/xe_gt.c
-@@ -116,7 +116,7 @@ static void xe_gt_enable_host_l2_vram(struct xe_gt *gt)
- 		xe_gt_mcr_multicast_write(gt, XE2_GAMREQSTRM_CTRL, reg);
- 	}
+--- a/tools/testing/selftests/x86/Makefile
++++ b/tools/testing/selftests/x86/Makefile
+@@ -12,7 +12,7 @@ CAN_BUILD_WITH_NOPIE := $(shell ./check_
  
--	xe_gt_mcr_multicast_write(gt, XEHPC_L3CLOS_MASK(3), 0x3);
-+	xe_gt_mcr_multicast_write(gt, XEHPC_L3CLOS_MASK(3), 0xF);
- 	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- }
- 
--- 
-2.39.5
-
+ TARGETS_C_BOTHBITS := single_step_syscall sysret_ss_attrs syscall_nt test_mremap_vdso \
+ 			check_initial_reg_state sigreturn iopl ioperm \
+-			test_vsyscall mov_ss_trap \
++			test_vsyscall mov_ss_trap sigtrap_loop \
+ 			syscall_arg_fault fsgsbase_restore sigaltstack
+ TARGETS_C_32BIT_ONLY := entry_from_vm86 test_syscall_vdso unwind_vdso \
+ 			test_FCMOV test_FCOMI test_FISTTP \
+--- /dev/null
++++ b/tools/testing/selftests/x86/sigtrap_loop.c
+@@ -0,0 +1,101 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (C) 2025 Intel Corporation
++ */
++#define _GNU_SOURCE
++
++#include <err.h>
++#include <signal.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <sys/ucontext.h>
++
++#ifdef __x86_64__
++# define REG_IP REG_RIP
++#else
++# define REG_IP REG_EIP
++#endif
++
++static void sethandler(int sig, void (*handler)(int, siginfo_t *, void *), int flags)
++{
++	struct sigaction sa;
++
++	memset(&sa, 0, sizeof(sa));
++	sa.sa_sigaction = handler;
++	sa.sa_flags = SA_SIGINFO | flags;
++	sigemptyset(&sa.sa_mask);
++
++	if (sigaction(sig, &sa, 0))
++		err(1, "sigaction");
++
++	return;
++}
++
++static void sigtrap(int sig, siginfo_t *info, void *ctx_void)
++{
++	ucontext_t *ctx = (ucontext_t *)ctx_void;
++	static unsigned int loop_count_on_same_ip;
++	static unsigned long last_trap_ip;
++
++	if (last_trap_ip == ctx->uc_mcontext.gregs[REG_IP]) {
++		printf("\tTrapped at %016lx\n", last_trap_ip);
++
++		/*
++		 * If the same IP is hit more than 10 times in a row, it is
++		 * _considered_ an infinite loop.
++		 */
++		if (++loop_count_on_same_ip > 10) {
++			printf("[FAIL]\tDetected SIGTRAP infinite loop\n");
++			exit(1);
++		}
++
++		return;
++	}
++
++	loop_count_on_same_ip = 0;
++	last_trap_ip = ctx->uc_mcontext.gregs[REG_IP];
++	printf("\tTrapped at %016lx\n", last_trap_ip);
++}
++
++int main(int argc, char *argv[])
++{
++	sethandler(SIGTRAP, sigtrap, 0);
++
++	/*
++	 * Set the Trap Flag (TF) to single-step the test code, therefore to
++	 * trigger a SIGTRAP signal after each instruction until the TF is
++	 * cleared.
++	 *
++	 * Because the arithmetic flags are not significant here, the TF is
++	 * set by pushing 0x302 onto the stack and then popping it into the
++	 * flags register.
++	 *
++	 * Four instructions in the following asm code are executed with the
++	 * TF set, thus the SIGTRAP handler is expected to run four times.
++	 */
++	printf("[RUN]\tSIGTRAP infinite loop detection\n");
++	asm volatile(
++#ifdef __x86_64__
++		/*
++		 * Avoid clobbering the redzone
++		 *
++		 * Equivalent to "sub $128, %rsp", however -128 can be encoded
++		 * in a single byte immediate while 128 uses 4 bytes.
++		 */
++		"add $-128, %rsp\n\t"
++#endif
++		"push $0x302\n\t"
++		"popf\n\t"
++		"nop\n\t"
++		"nop\n\t"
++		"push $0x202\n\t"
++		"popf\n\t"
++#ifdef __x86_64__
++		"sub $-128, %rsp\n\t"
++#endif
++	);
++
++	printf("[OK]\tNo SIGTRAP infinite loop detected\n");
++	return 0;
++}
 
 
