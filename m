@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DC21F6667;
-	Mon, 23 Jun 2025 22:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6A8B676;
+	Mon, 23 Jun 2025 22:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716984; cv=none; b=R5WCv3veL2j58Rdku1PKOLVHx1iZmVXykBvdL3/SmgAyHZWUOE1UsUWujM2Xp9ATBnsuzDIZfIWahSa1Gfj+aSB88Y1bJdOp1l7RJIXMxe+YepkR+DYG1sRRHPYkR6URniOKxhiN77lf0xzmFE0nR9Bk6C+r2FUTLbWsXtH5LUM=
+	t=1750716987; cv=none; b=VkUKR/zNfwJSUMBqPLQZsAYbeh+D1RbpqQqJ/LnEeHmaJ4JZazCHsOLoe0BofbuYQj5pVqLd1cq/YNbgCOjaaM09AD8ycRXi5/0UH343+czagresrOhyLcl+fg2yWDtwWfXrAgfOpeWztTbDIRsdtoijIPdngLr4NNo7l/gX9ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716984; c=relaxed/simple;
-	bh=+paqczogQmYphWai0NRWCvWFevnceY8oO4u9YSB9gTw=;
+	s=arc-20240116; t=1750716987; c=relaxed/simple;
+	bh=S/i6QmrPlLmupkKbsWs1iEGiKnDmjBVTL3byZiEKttQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B0YjCQntL0F8tEN9m+3WkfW+YDtlMWXQoRW50TU7L1K/FmzumVUF24hJy4+M1oeygKClndscCO9iaBjLb6KLA30ZSmJ4oS6GHHuYb8OzQ6VPHug5/HQIydwiwFdf3KP4wYfm+sK+ZQt6eIRpbvrs0fLUT1E5y+vfLa6Xqf/rhqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fufzrGCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EeuOEev/7/PFndWJfN+lUxCsMaxHAIQApw9OXyofRkSE8iEi37p5z2EgCm3LE2N1cVmGErA9ux6sfs9PMIBls93M7QOSYz/8QYXKsrfUlTBiuAyzNHDzlu3sJ9EbrEr74fNx7ylDTLj9PuMsEeJZNMgpTumBbOV/boxb/QuJ34c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERsKoJqo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fufzrGCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7C1C4CEEA;
-	Mon, 23 Jun 2025 22:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERsKoJqo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E66C4CEEA;
+	Mon, 23 Jun 2025 22:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716984;
-	bh=+paqczogQmYphWai0NRWCvWFevnceY8oO4u9YSB9gTw=;
+	s=korg; t=1750716986;
+	bh=S/i6QmrPlLmupkKbsWs1iEGiKnDmjBVTL3byZiEKttQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fufzrGCciJMLBB9G9jUCKVRca4+yTVM1Yhq/QjKmUiVHHxvXv4wjj9GUaUuGy8L/l
-	 IIuKNZRnwnCxiV9MY70+eQjviCgdTh505zsTE46FSza5nhko2I3r0g8AOkBNOfIJGP
-	 jP4IMi4Y/3cvW/j/h+AI0SkTAHyBLU5hHD0yFKLc=
+	b=ERsKoJqo7ErexBmWT7LAH1RcGdiGV3K5fLm//2fB0oJaTocxLEl9JGVi1tlH3l4Tx
+	 e4aU7lIB83Y8jR2JssJm220QUmTLE9pd4a5/C9ZFUd6CeWzlWqTY+S1YEeLEUi7vXt
+	 8mfMuaXf8gTGkxUlXn5vnPL5rMh/sAknBxmxm7B8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.1 351/508] RDMA/iwcm: Fix use-after-free of work objects after cm_id destruction
-Date: Mon, 23 Jun 2025 15:06:36 +0200
-Message-ID: <20250623130653.990597293@linuxfoundation.org>
+	Artem Sadovnikov <a.sadovnikov@ispras.ru>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 6.12 304/414] jffs2: check that raw node were preallocated before writing summary
+Date: Mon, 23 Jun 2025 15:07:21 +0200
+Message-ID: <20250623130649.604893370@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,195 +47,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Artem Sadovnikov <a.sadovnikov@ispras.ru>
 
-commit 6883b680e703c6b2efddb4e7a8d891ce1803d06b upstream.
+commit ec9e6f22bce433b260ea226de127ec68042849b0 upstream.
 
-The commit 59c68ac31e15 ("iw_cm: free cm_id resources on the last
-deref") simplified cm_id resource management by freeing cm_id once all
-references to the cm_id were removed. The references are removed either
-upon completion of iw_cm event handlers or when the application destroys
-the cm_id. This commit introduced the use-after-free condition where
-cm_id_private object could still be in use by event handler works during
-the destruction of cm_id. The commit aee2424246f9 ("RDMA/iwcm: Fix a
-use-after-free related to destroying CM IDs") addressed this use-after-
-free by flushing all pending works at the cm_id destruction.
+Syzkaller detected a kernel bug in jffs2_link_node_ref, caused by fault
+injection in jffs2_prealloc_raw_node_refs. jffs2_sum_write_sumnode doesn't
+check return value of jffs2_prealloc_raw_node_refs and simply lets any
+error propagate into jffs2_sum_write_data, which eventually calls
+jffs2_link_node_ref in order to link the summary to an expectedly allocated
+node.
 
-However, still another use-after-free possibility remained. It happens
-with the work objects allocated for each cm_id_priv within
-alloc_work_entries() during cm_id creation, and subsequently freed in
-dealloc_work_entries() once all references to the cm_id are removed.
-If the cm_id's last reference is decremented in the event handler work,
-the work object for the work itself gets removed, and causes the use-
-after-free BUG below:
+kernel BUG at fs/jffs2/nodelist.c:592!
+invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 1 PID: 31277 Comm: syz-executor.7 Not tainted 6.1.128-syzkaller-00139-ge10f83ca10a1 #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+RIP: 0010:jffs2_link_node_ref+0x570/0x690 fs/jffs2/nodelist.c:592
+Call Trace:
+ <TASK>
+ jffs2_sum_write_data fs/jffs2/summary.c:841 [inline]
+ jffs2_sum_write_sumnode+0xd1a/0x1da0 fs/jffs2/summary.c:874
+ jffs2_do_reserve_space+0xa18/0xd60 fs/jffs2/nodemgmt.c:388
+ jffs2_reserve_space+0x55f/0xaa0 fs/jffs2/nodemgmt.c:197
+ jffs2_write_inode_range+0x246/0xb50 fs/jffs2/write.c:362
+ jffs2_write_end+0x726/0x15d0 fs/jffs2/file.c:301
+ generic_perform_write+0x314/0x5d0 mm/filemap.c:3856
+ __generic_file_write_iter+0x2ae/0x4d0 mm/filemap.c:3973
+ generic_file_write_iter+0xe3/0x350 mm/filemap.c:4005
+ call_write_iter include/linux/fs.h:2265 [inline]
+ do_iter_readv_writev+0x20f/0x3c0 fs/read_write.c:735
+ do_iter_write+0x186/0x710 fs/read_write.c:861
+ vfs_iter_write+0x70/0xa0 fs/read_write.c:902
+ iter_file_splice_write+0x73b/0xc90 fs/splice.c:685
+ do_splice_from fs/splice.c:763 [inline]
+ direct_splice_actor+0x10c/0x170 fs/splice.c:950
+ splice_direct_to_actor+0x337/0xa10 fs/splice.c:896
+ do_splice_direct+0x1a9/0x280 fs/splice.c:1002
+ do_sendfile+0xb13/0x12c0 fs/read_write.c:1255
+ __do_sys_sendfile64 fs/read_write.c:1323 [inline]
+ __se_sys_sendfile64 fs/read_write.c:1309 [inline]
+ __x64_sys_sendfile64+0x1cf/0x210 fs/read_write.c:1309
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-  BUG: KASAN: slab-use-after-free in __pwq_activate_work+0x1ff/0x250
-  Read of size 8 at addr ffff88811f9cf800 by task kworker/u16:1/147091
+Fix this issue by checking return value of jffs2_prealloc_raw_node_refs
+before calling jffs2_sum_write_data.
 
-  CPU: 2 UID: 0 PID: 147091 Comm: kworker/u16:1 Not tainted 6.15.0-rc2+ #27 PREEMPT(voluntary)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
-  Workqueue:  0x0 (iw_cm_wq)
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x6a/0x90
-   print_report+0x174/0x554
-   ? __virt_addr_valid+0x208/0x430
-   ? __pwq_activate_work+0x1ff/0x250
-   kasan_report+0xae/0x170
-   ? __pwq_activate_work+0x1ff/0x250
-   __pwq_activate_work+0x1ff/0x250
-   pwq_dec_nr_in_flight+0x8c5/0xfb0
-   process_one_work+0xc11/0x1460
-   ? __pfx_process_one_work+0x10/0x10
-   ? assign_work+0x16c/0x240
-   worker_thread+0x5ef/0xfd0
-   ? __pfx_worker_thread+0x10/0x10
-   kthread+0x3b0/0x770
-   ? __pfx_kthread+0x10/0x10
-   ? rcu_is_watching+0x11/0xb0
-   ? _raw_spin_unlock_irq+0x24/0x50
-   ? rcu_is_watching+0x11/0xb0
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x30/0x70
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-  Allocated by task 147416:
-   kasan_save_stack+0x2c/0x50
-   kasan_save_track+0x10/0x30
-   __kasan_kmalloc+0xa6/0xb0
-   alloc_work_entries+0xa9/0x260 [iw_cm]
-   iw_cm_connect+0x23/0x4a0 [iw_cm]
-   rdma_connect_locked+0xbfd/0x1920 [rdma_cm]
-   nvme_rdma_cm_handler+0x8e5/0x1b60 [nvme_rdma]
-   cma_cm_event_handler+0xae/0x320 [rdma_cm]
-   cma_work_handler+0x106/0x1b0 [rdma_cm]
-   process_one_work+0x84f/0x1460
-   worker_thread+0x5ef/0xfd0
-   kthread+0x3b0/0x770
-   ret_from_fork+0x30/0x70
-   ret_from_fork_asm+0x1a/0x30
-
-  Freed by task 147091:
-   kasan_save_stack+0x2c/0x50
-   kasan_save_track+0x10/0x30
-   kasan_save_free_info+0x37/0x60
-   __kasan_slab_free+0x4b/0x70
-   kfree+0x13a/0x4b0
-   dealloc_work_entries+0x125/0x1f0 [iw_cm]
-   iwcm_deref_id+0x6f/0xa0 [iw_cm]
-   cm_work_handler+0x136/0x1ba0 [iw_cm]
-   process_one_work+0x84f/0x1460
-   worker_thread+0x5ef/0xfd0
-   kthread+0x3b0/0x770
-   ret_from_fork+0x30/0x70
-   ret_from_fork_asm+0x1a/0x30
-
-  Last potentially related work creation:
-   kasan_save_stack+0x2c/0x50
-   kasan_record_aux_stack+0xa3/0xb0
-   __queue_work+0x2ff/0x1390
-   queue_work_on+0x67/0xc0
-   cm_event_handler+0x46a/0x820 [iw_cm]
-   siw_cm_upcall+0x330/0x650 [siw]
-   siw_cm_work_handler+0x6b9/0x2b20 [siw]
-   process_one_work+0x84f/0x1460
-   worker_thread+0x5ef/0xfd0
-   kthread+0x3b0/0x770
-   ret_from_fork+0x30/0x70
-   ret_from_fork_asm+0x1a/0x30
-
-This BUG is reproducible by repeating the blktests test case nvme/061
-for the rdma transport and the siw driver.
-
-To avoid the use-after-free of cm_id_private work objects, ensure that
-the last reference to the cm_id is decremented not in the event handler
-works, but in the cm_id destruction context. For that purpose, move
-iwcm_deref_id() call from destroy_cm_id() to the callers of
-destroy_cm_id(). In iw_destroy_cm_id(), call iwcm_deref_id() after
-flushing the pending works.
-
-During the fix work, I noticed that iw_destroy_cm_id() is called from
-cm_work_handler() and process_event() context. However, the comment of
-iw_destroy_cm_id() notes that the function "cannot be called by the
-event thread". Drop the false comment.
-
-Closes: https://lore.kernel.org/linux-rdma/r5676e754sv35aq7cdsqrlnvyhiq5zktteaurl7vmfih35efko@z6lay7uypy3c/
-Fixes: 59c68ac31e15 ("iw_cm: free cm_id resources on the last deref")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Link: https://patch.msgid.link/20250510101036.1756439-1-shinichiro.kawasaki@wdc.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 2f785402f39b ("[JFFS2] Reduce visibility of raw_node_ref to upper layers of JFFS2 code.")
+Signed-off-by: Artem Sadovnikov <a.sadovnikov@ispras.ru>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/iwcm.c |   29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ fs/jffs2/summary.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/core/iwcm.c
-+++ b/drivers/infiniband/core/iwcm.c
-@@ -367,12 +367,9 @@ EXPORT_SYMBOL(iw_cm_disconnect);
- /*
-  * CM_ID <-- DESTROYING
-  *
-- * Clean up all resources associated with the connection and release
-- * the initial reference taken by iw_create_cm_id.
-- *
-- * Returns true if and only if the last cm_id_priv reference has been dropped.
-+ * Clean up all resources associated with the connection.
-  */
--static bool destroy_cm_id(struct iw_cm_id *cm_id)
-+static void destroy_cm_id(struct iw_cm_id *cm_id)
- {
- 	struct iwcm_id_private *cm_id_priv;
- 	struct ib_qp *qp;
-@@ -441,20 +438,22 @@ static bool destroy_cm_id(struct iw_cm_i
- 		iwpm_remove_mapinfo(&cm_id->local_addr, &cm_id->m_local_addr);
- 		iwpm_remove_mapping(&cm_id->local_addr, RDMA_NL_IWCM);
- 	}
--
--	return iwcm_deref_id(cm_id_priv);
- }
+--- a/fs/jffs2/summary.c
++++ b/fs/jffs2/summary.c
+@@ -858,7 +858,10 @@ int jffs2_sum_write_sumnode(struct jffs2
+ 	spin_unlock(&c->erase_completion_lock);
  
- /*
-- * This function is only called by the application thread and cannot
-- * be called by the event thread. The function will wait for all
-- * references to be released on the cm_id and then kfree the cm_id
-- * object.
-+ * Destroy cm_id. If the cm_id still has other references, wait for all
-+ * references to be released on the cm_id and then release the initial
-+ * reference taken by iw_create_cm_id.
-  */
- void iw_destroy_cm_id(struct iw_cm_id *cm_id)
- {
--	if (!destroy_cm_id(cm_id))
-+	struct iwcm_id_private *cm_id_priv;
+ 	jeb = c->nextblock;
+-	jffs2_prealloc_raw_node_refs(c, jeb, 1);
++	ret = jffs2_prealloc_raw_node_refs(c, jeb, 1);
 +
-+	cm_id_priv = container_of(cm_id, struct iwcm_id_private, id);
-+	destroy_cm_id(cm_id);
-+	if (refcount_read(&cm_id_priv->refcount) > 1)
- 		flush_workqueue(iwcm_wq);
-+	iwcm_deref_id(cm_id_priv);
++	if (ret)
++		goto out;
+ 
+ 	if (!c->summary->sum_num || !c->summary->sum_list_head) {
+ 		JFFS2_WARNING("Empty summary info!!!\n");
+@@ -872,6 +875,8 @@ int jffs2_sum_write_sumnode(struct jffs2
+ 	datasize += padsize;
+ 
+ 	ret = jffs2_sum_write_data(c, jeb, infosize, datasize, padsize);
++
++out:
+ 	spin_lock(&c->erase_completion_lock);
+ 	return ret;
  }
- EXPORT_SYMBOL(iw_destroy_cm_id);
- 
-@@ -1037,8 +1036,10 @@ static void cm_work_handler(struct work_
- 
- 		if (!test_bit(IWCM_F_DROP_EVENTS, &cm_id_priv->flags)) {
- 			ret = process_event(cm_id_priv, &levent);
--			if (ret)
--				WARN_ON_ONCE(destroy_cm_id(&cm_id_priv->id));
-+			if (ret) {
-+				destroy_cm_id(&cm_id_priv->id);
-+				WARN_ON_ONCE(iwcm_deref_id(cm_id_priv));
-+			}
- 		} else
- 			pr_debug("dropping event %d\n", levent.event);
- 		if (iwcm_deref_id(cm_id_priv))
 
 
