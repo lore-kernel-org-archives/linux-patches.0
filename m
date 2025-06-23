@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BDE3FB1B;
-	Mon, 23 Jun 2025 22:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD0619049B;
+	Mon, 23 Jun 2025 22:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716294; cv=none; b=dNQ8IAye1Lqez7rDDW2noLrwesg07h9ol3MrrhygspdWbL0XzIrQZ9eM0gToS9HyiTLlSeufqymd9cwDxUK4EEVikE5Yx2qwdHayRf2cnTOilLQmspGbHI2B3uyBailzgyouJvm1nWpAGv0GxULJKL8JZubf7kYZVQNJ8UUux3I=
+	t=1750716297; cv=none; b=Fjpg948UyweEgyhJLRtYi/+rAXqSVpDNl3+V7Q7u/1at44oQAr1D/3DAKiMwjSPAjMIBKZeye4FxAKM83zT70ch9Blita9Daz1llZT0ZoSnAqQe6MZLMoHywmve4hp8+BqxtvvFQ6zZ/TDWWDXnbk8z2QfOPmLC4fEWbhqzs7eM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716294; c=relaxed/simple;
-	bh=ioFG+NfGpGSMNl88S/VkEkRX5wAdlUsV76C3KowqE9k=;
+	s=arc-20240116; t=1750716297; c=relaxed/simple;
+	bh=2PVV+jyeqPSxqEBNhXozarcpaz4Kuin24TJ6u7vRToo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plgbuxgy7BwgMSe9/qn7x/J/SDcRSOMnmw17eL23MXazcDRUPG0TkggcVrzcERWKIBKMQ71gxvZ40G65bUBtNSUBJjxlE9PZ4YsvcsXXrSrcyr/TZ9kFTAL7MvMOVVqPiGp20scTmCe07bEYeh5kGm/7jKKDbL+pCB8rUyThEwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B7l4ji/U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KVzJJHPNJjL9bP4kfWCnONxAgv7z7JB6jXKcJLvITUmT4PN76h7OgcwFZGQ9c46+c/2M0L5hmgQZufQuCFMYigjRLrtUzdRMR4ssbS2WSmRtuAEplxpSdaBbdoM8C3jqseTO0RsuNNkBuuobzJR/FCA25w5wzVK5LgmhiawZKW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbRfPAa0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B7l4ji/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02161C4CEEA;
-	Mon, 23 Jun 2025 22:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbRfPAa0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C50C4CEEA;
+	Mon, 23 Jun 2025 22:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716294;
-	bh=ioFG+NfGpGSMNl88S/VkEkRX5wAdlUsV76C3KowqE9k=;
+	s=korg; t=1750716296;
+	bh=2PVV+jyeqPSxqEBNhXozarcpaz4Kuin24TJ6u7vRToo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B7l4ji/Uu78eoxhKy68ym00qpee5Eilm47T3zGKtjSATOd+HgOmkhhi+jQyEHjONU
-	 kP1RELdKmqvUi53yjSOeJGukkvPpfY2GDgSIlds470UtvkqY4ygZ76Fv9poCRXbbVj
-	 xIXolE1/3Pc6SPEsmU29asnqv5+anjP/U4FGemhk=
+	b=nbRfPAa0rNU3mU8YAZfaU7pwtcpynYdaDH5Ptan7XW9r3eAFElay5b0QuB3hqbEDn
+	 I2VaQN0m1+hrqqDtQKiAGwuS8VsDnBTvouSVKq09LyiJn6xHnS8iPEqOn6Z+o2f/u5
+	 FhjiwLHtwpY2Ja7wE7rauiSXAi7FZBP+NGcKONRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Gil Fine <gil.fine@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 254/290] e1000e: set fixed clock frequency indication for Nahum 11 and Nahum 13
-Date: Mon, 23 Jun 2025 15:08:35 +0200
-Message-ID: <20250623130634.565741466@linuxfoundation.org>
+Subject: [PATCH 6.15 514/592] drm/nouveau/bl: increase buffer size to avoid truncate warning
+Date: Mon, 23 Jun 2025 15:07:52 +0200
+Message-ID: <20250623130712.662159995@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,93 +47,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 688a0d61b2d7427189c4eb036ce485d8fc957cbb ]
+[ Upstream commit 61b2b3737499f1fb361a54a16828db24a8345e85 ]
 
-On some systems with Nahum 11 and Nahum 13 the value of the XTAL clock in
-the software STRAP is incorrect. This causes the PTP timer to run at the
-wrong rate and can lead to synchronization issues.
+The nouveau_get_backlight_name() function generates a unique name for the
+backlight interface, appending an id from 1 to 99 for all backlight devices
+after the first.
 
-The STRAP value is configured by the system firmware, and a firmware
-update is not always possible. Since the XTAL clock on these systems
-always runs at 38.4MHz, the driver may ignore the STRAP and just set
-the correct value.
+GCC 15 (and likely other compilers) produce the following
+-Wformat-truncation warning:
 
-Fixes: cc23f4f0b6b9 ("e1000e: Add support for Meteor Lake")
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Reviewed-by: Gil Fine <gil.fine@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+nouveau_backlight.c: In function ‘nouveau_backlight_init’:
+nouveau_backlight.c:56:69: error: ‘%d’ directive output may be truncated writing between 1 and 10 bytes into a region of size 3 [-Werror=format-truncation=]
+   56 |                 snprintf(backlight_name, BL_NAME_SIZE, "nv_backlight%d", nb);
+      |                                                                     ^~
+In function ‘nouveau_get_backlight_name’,
+    inlined from ‘nouveau_backlight_init’ at nouveau_backlight.c:351:7:
+nouveau_backlight.c:56:56: note: directive argument in the range [1, 2147483647]
+   56 |                 snprintf(backlight_name, BL_NAME_SIZE, "nv_backlight%d", nb);
+      |                                                        ^~~~~~~~~~~~~~~~
+nouveau_backlight.c:56:17: note: ‘snprintf’ output between 14 and 23 bytes into a destination of size 15
+   56 |                 snprintf(backlight_name, BL_NAME_SIZE, "nv_backlight%d", nb);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The warning started appearing after commit ab244be47a8f ("drm/nouveau:
+Fix a potential theorical leak in nouveau_get_backlight_name()") This fix
+for the ida usage removed the explicit value check for ids larger than 99.
+The compiler is unable to intuit that the ida_alloc_max() limits the
+returned value range between 0 and 99.
+
+Because the compiler can no longer infer that the number ranges from 0 to
+99, it thinks that it could use as many as 11 digits (10 + the potential -
+sign for negative numbers).
+
+The warning has gone unfixed for some time, with at least one kernel test
+robot report. The code breaks W=1 builds, which is especially frustrating
+with the introduction of CONFIG_WERROR.
+
+The string is stored temporarily on the stack and then copied into the
+device name. Its not a big deal to use 11 more bytes of stack rounding out
+to an even 24 bytes. Increase BL_NAME_SIZE to 24 to avoid the truncation
+warning. This fixes the W=1 builds that include this driver.
+
+Compile tested only.
+
+Fixes: ab244be47a8f ("drm/nouveau: Fix a potential theorical leak in nouveau_get_backlight_name()")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202312050324.0kv4PnfZ-lkp@intel.com/
+Suggested-by: Timur Tabi <ttabi@nvidia.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20250610-jk-nouveua-drm-bl-snprintf-fix-v2-1-7fdd4b84b48e@intel.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/netdev.c | 14 +++++++++++---
- drivers/net/ethernet/intel/e1000e/ptp.c    |  8 +++++---
- 2 files changed, 16 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_backlight.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 721c098f2bb1b..7e4fea0e186b6 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -3540,9 +3540,6 @@ s32 e1000e_get_base_timinca(struct e1000_adapter *adapter, u32 *timinca)
- 	case e1000_pch_cnp:
- 	case e1000_pch_tgp:
- 	case e1000_pch_adp:
--	case e1000_pch_mtp:
--	case e1000_pch_lnp:
--	case e1000_pch_ptp:
- 	case e1000_pch_nvp:
- 		if (er32(TSYNCRXCTL) & E1000_TSYNCRXCTL_SYSCFI) {
- 			/* Stable 24MHz frequency */
-@@ -3558,6 +3555,17 @@ s32 e1000e_get_base_timinca(struct e1000_adapter *adapter, u32 *timinca)
- 			adapter->cc.shift = shift;
- 		}
- 		break;
-+	case e1000_pch_mtp:
-+	case e1000_pch_lnp:
-+	case e1000_pch_ptp:
-+		/* System firmware can misreport this value, so set it to a
-+		 * stable 38400KHz frequency.
-+		 */
-+		incperiod = INCPERIOD_38400KHZ;
-+		incvalue = INCVALUE_38400KHZ;
-+		shift = INCVALUE_SHIFT_38400KHZ;
-+		adapter->cc.shift = shift;
-+		break;
- 	case e1000_82574:
- 	case e1000_82583:
- 		/* Stable 25MHz frequency */
-diff --git a/drivers/net/ethernet/intel/e1000e/ptp.c b/drivers/net/ethernet/intel/e1000e/ptp.c
-index bbcfd529399b0..d039dea48ca32 100644
---- a/drivers/net/ethernet/intel/e1000e/ptp.c
-+++ b/drivers/net/ethernet/intel/e1000e/ptp.c
-@@ -294,15 +294,17 @@ void e1000e_ptp_init(struct e1000_adapter *adapter)
- 	case e1000_pch_cnp:
- 	case e1000_pch_tgp:
- 	case e1000_pch_adp:
--	case e1000_pch_mtp:
--	case e1000_pch_lnp:
--	case e1000_pch_ptp:
- 	case e1000_pch_nvp:
- 		if (er32(TSYNCRXCTL) & E1000_TSYNCRXCTL_SYSCFI)
- 			adapter->ptp_clock_info.max_adj = MAX_PPB_24MHZ;
- 		else
- 			adapter->ptp_clock_info.max_adj = MAX_PPB_38400KHZ;
- 		break;
-+	case e1000_pch_mtp:
-+	case e1000_pch_lnp:
-+	case e1000_pch_ptp:
-+		adapter->ptp_clock_info.max_adj = MAX_PPB_38400KHZ;
-+		break;
- 	case e1000_82574:
- 	case e1000_82583:
- 		adapter->ptp_clock_info.max_adj = MAX_PPB_25MHZ;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_backlight.c b/drivers/gpu/drm/nouveau/nouveau_backlight.c
+index d47442125fa18..9aae26eb7d8fb 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_backlight.c
++++ b/drivers/gpu/drm/nouveau/nouveau_backlight.c
+@@ -42,7 +42,7 @@
+ #include "nouveau_acpi.h"
+ 
+ static struct ida bl_ida;
+-#define BL_NAME_SIZE 15 // 12 for name + 2 for digits + 1 for '\0'
++#define BL_NAME_SIZE 24 // 12 for name + 11 for digits + 1 for '\0'
+ 
+ static bool
+ nouveau_get_backlight_name(char backlight_name[BL_NAME_SIZE],
 -- 
 2.39.5
 
