@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAC1222576;
-	Mon, 23 Jun 2025 22:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE2E221DAE;
+	Mon, 23 Jun 2025 22:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716446; cv=none; b=WHbh3dKr9lPM4nHXLyQ5Rx92TPlT4P3nm0oOUgF8ZRYMrnvGGqPmj0mHaN3FcmekUVrVpWoA97H5qaI3aL6vXJguEeOXxpRbN++/YhtPw5ZdvjE2qOHylH9Y2ttcTb5Qksoz11XUTU3pKe8U/NV2AyUDTqrC2z21VZzmYmGSZFc=
+	t=1750716449; cv=none; b=ez2tat7E9dlfDT5+H1ZQmQkTK9V5zY0Rq1OCBwMXpgrtXUGn+kMrVroQLBql/gEOqaHVU+Q/ORnk+EF2pglfNimHvzIRvFRJBS7xA51YPIJ7+vh4FVpnbKAilHKIWjC3Y3Y6AwzF/ehCvDh0rmX+Avk1R0L1dgmF0dp6y3g0qH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716446; c=relaxed/simple;
-	bh=uTF4iwJkVLnP5uv2TGQBGH7UI5gIk5+WoqEQxqD0Reg=;
+	s=arc-20240116; t=1750716449; c=relaxed/simple;
+	bh=bxQlS+Mmr6ZcP93dG9k2UAM/8hF26b97k6MHP9F0Csc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BLkgK25gcCuJKHwpomSh/qIuyfteOoQ6M1xhHCUgx2n9sAsSFg3lXdVneslaQgkh9XCPRt0vuLCCAO0zZwGfKrWDRRkZHDLhe9UkIugQ02BkU0pbl+dQooX81DHQJMTJx7RUPrLS+a7PIlJPnhGY0OBya1Y8u743r2l/txh7ETY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H79UsE8r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C2MbLpt1exscUhgkAGJmwIRkYF/c+W/IkT0oE6MKQbQLpq1MniGJwL3h92Tufytkh/uI2QxyG0rMomp4WmfHoHF+LsGm3ocLsLTVWVCrtAQnMDS6MP0y+8AIfKCvZ3ESnS0ldVstvSgUdOyOqb/4C/Uu1dDqED3BqAooovnneYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAtqEvtQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H79UsE8r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325CBC4CEEA;
-	Mon, 23 Jun 2025 22:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAtqEvtQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD69C4CEEA;
+	Mon, 23 Jun 2025 22:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716446;
-	bh=uTF4iwJkVLnP5uv2TGQBGH7UI5gIk5+WoqEQxqD0Reg=;
+	s=korg; t=1750716448;
+	bh=bxQlS+Mmr6ZcP93dG9k2UAM/8hF26b97k6MHP9F0Csc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H79UsE8rC7Vets/VjFvftI2agsQ06Y92bsWavfXxZsiFkwtug4itN3q8MkxQmAntV
-	 u54qo+SXq3800McCDKH7KNTZIfeEmrNd9eWR+rY3glD1l/7DHMMLK1+STdeaLCfKdb
-	 DY3lzuf+76SXNVso5DyPplGNkY2YgiCfvOLK25qQ=
+	b=NAtqEvtQZuCRKk+nfB5Kd/FbWNlDfCS3EvTOlZirGgeokw2IWcr/dwkIOljMwDCoe
+	 /BlNwChzeUHO340Wa0fLIguy9zj4BZ2pC7tj8pIfaUZwEoFOV0TaHCighLMdmTyFqq
+	 C/c3zg5ndGYN1yvZ57SV3z2oAqL3cTSWJ82gyVW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 5.10 349/355] s390/pci: Fix __pcilg_mio_inuser() inline assembly
-Date: Mon, 23 Jun 2025 15:09:10 +0200
-Message-ID: <20250623130637.216863166@linuxfoundation.org>
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Rengarajan S <rengarajan.s@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 264/290] net: lan743x: fix potential out-of-bounds write in lan743x_ptp_io_event_clock_get()
+Date: Mon, 23 Jun 2025 15:08:45 +0200
+Message-ID: <20250623130634.850468899@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,49 +49,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-commit c4abe6234246c75cdc43326415d9cff88b7cf06c upstream.
+[ Upstream commit e353b0854d3a1a31cb061df8d022fbfea53a0f24 ]
 
-Use "a" constraint for the shift operand of the __pcilg_mio_inuser() inline
-assembly. The used "d" constraint allows the compiler to use any general
-purpose register for the shift operand, including register zero.
+Before calling lan743x_ptp_io_event_clock_get(), the 'channel' value
+is checked against the maximum value of PCI11X1X_PTP_IO_MAX_CHANNELS(8).
+This seems correct and aligns with the PTP interrupt status register
+(PTP_INT_STS) specifications.
 
-If register zero is used this my result in incorrect code generation:
+However, lan743x_ptp_io_event_clock_get() writes to ptp->extts[] with
+only LAN743X_PTP_N_EXTTS(4) elements, using channel as an index:
 
- 8f6:   a7 0a ff f8             ahi     %r0,-8
- 8fa:   eb 32 00 00 00 0c       srlg    %r3,%r2,0  <----
+    lan743x_ptp_io_event_clock_get(..., u8 channel,...)
+    {
+        ...
+        /* Update Local timestamp */
+        extts = &ptp->extts[channel];
+        extts->ts.tv_sec = sec;
+        ...
+    }
 
-If register zero is selected to contain the shift value, the srlg
-instruction ignores the contents of the register and always shifts zero
-bits. Therefore use the "a" constraint which does not permit to select
-register zero.
+To avoid an out-of-bounds write and utilize all the supported GPIO
+inputs, set LAN743X_PTP_N_EXTTS to 8.
 
-Fixes: f058599e22d5 ("s390/pci: Fix s390_mmio_read/write with MIO")
-Cc: stable@vger.kernel.org
-Reported-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Detected using the static analysis tool - Svace.
+Fixes: 60942c397af6 ("net: lan743x: Add support for PTP-IO Event Input External Timestamp (extts)")
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Acked-by: Rengarajan S <rengarajan.s@microchip.com>
+Link: https://patch.msgid.link/20250616113743.36284-1-aleksei.kodanev@bell-sw.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci_mmio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/lan743x_ptp.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/s390/pci/pci_mmio.c
-+++ b/arch/s390/pci/pci_mmio.c
-@@ -229,7 +229,7 @@ static inline int __pcilg_mio_inuser(
- 		:
- 		[cc] "+d" (cc), [val] "=d" (val), [len] "+d" (len),
- 		[dst] "+a" (dst), [cnt] "+d" (cnt), [tmp] "=d" (tmp),
--		[shift] "+d" (shift)
-+		[shift] "+a" (shift)
- 		:
- 		[ioaddr] "a" (addr)
- 		: "cc", "memory");
+diff --git a/drivers/net/ethernet/microchip/lan743x_ptp.h b/drivers/net/ethernet/microchip/lan743x_ptp.h
+index 0d29914cd4606..225e8232474d7 100644
+--- a/drivers/net/ethernet/microchip/lan743x_ptp.h
++++ b/drivers/net/ethernet/microchip/lan743x_ptp.h
+@@ -18,9 +18,9 @@
+  */
+ #define LAN743X_PTP_N_EVENT_CHAN	2
+ #define LAN743X_PTP_N_PEROUT		LAN743X_PTP_N_EVENT_CHAN
+-#define LAN743X_PTP_N_EXTTS		4
+-#define LAN743X_PTP_N_PPS		0
+ #define PCI11X1X_PTP_IO_MAX_CHANNELS	8
++#define LAN743X_PTP_N_EXTTS		PCI11X1X_PTP_IO_MAX_CHANNELS
++#define LAN743X_PTP_N_PPS		0
+ #define PTP_CMD_CTL_TIMEOUT_CNT		50
+ 
+ struct lan743x_adapter;
+-- 
+2.39.5
+
 
 
