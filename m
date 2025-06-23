@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F2B21FF50;
-	Mon, 23 Jun 2025 22:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAC121FF50;
+	Mon, 23 Jun 2025 22:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716156; cv=none; b=CTHi2sWrcYz35KftB8iLyWl1DD4Jvh+p94ECt9PaQ6NZR8m03sAyHf/2JOthd6gFxJbuzY89jSgfi9GCEN8cKFtRIULbbNbvZmZaSi54uSZcKNeiMXba8/TwlrUtC3MhgxfezDuSItpLbFDgNmBe9xR4bAFpTngMHr+D61cZusk=
+	t=1750716159; cv=none; b=ObZZ5Z0kmSambplSB0RoqafcTNILCdjcycpMk8lDRF1AmNpyyRiFmkXVDNrbOh20UoSRWqeT+HCQm1B4d955x4bSRrW0DhTm2TJJ1JQnDDY6l4246xHFQoYOytyTAx07kG5U7bHcU5OM7LmXEx9RxbOAY2lcmU0rSgpWzTQQ/ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716156; c=relaxed/simple;
-	bh=06j5iUQKFClkoJp9GdvWa61URj8aNCoDw4F2LwZp6Yg=;
+	s=arc-20240116; t=1750716159; c=relaxed/simple;
+	bh=wuLUvzTOAsAZa9ryNZUDecKatgtdtrKOkeJTbQjuzVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TgvU6v/B9SuQlV0JMa2wC67I9VNGNtTdxyr3FlyPDnXbyGwGrNqnCbKIfLrxeLMNrYQI7mMfeZcnFkYndXBMLzUaufEGXo49hdaTtus2LPayLRRNv3h0pE0zbocRYi6DkWY1NUVPIiuZqZeh0trE6g3yAr+MFqQE4fjASQOVbdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9jjYFkD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iPcvcujLOtZaIelkR7D/mBSWop2GXizFX60LqgauqbnbexpbZ0MmzuWl53By/myAxxOnu16/VAdqC3056aQMXbyEWMpijqwa4vLjxlGRbqYNRTobLs+ncBeMc40qUqXxNzRBfnl6dwLGCqcBGpuVwzMuacOGuZVjZSJDLGXZx64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GH484LrU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9jjYFkD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695F8C4CEEA;
-	Mon, 23 Jun 2025 22:02:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GH484LrU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6FE6C4CEEA;
+	Mon, 23 Jun 2025 22:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716156;
-	bh=06j5iUQKFClkoJp9GdvWa61URj8aNCoDw4F2LwZp6Yg=;
+	s=korg; t=1750716159;
+	bh=wuLUvzTOAsAZa9ryNZUDecKatgtdtrKOkeJTbQjuzVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9jjYFkD175q6+zY8b81O2rSbx/LwIEgMz1/kZJdtCmdIcS2cNKi1FroF/sIEpPfz
-	 vWNRejW9UBaEo4XqKrEap2np4IEAU3yUnD3J08AC8gfWlvAtZA54Iep8/iUnILX1NX
-	 O1+6VMdHyrr8XTIi4eIMRzI0aNrH3VgzTBzrBjTw=
+	b=GH484LrUdWxFmVXlRnfOn/LAMp2dnI9KvTl3kQvcXYjecE4/N39UDJB/5WJ45f5IE
+	 TeGrFA490VpA1vIzz1dxSWqanPEXQIYsRCM8HAzM24tyAB19ynbcx167X19VDb1Fq4
+	 8La+wXpueZZ4DWKl3WmFZRNGAvS+72+nEIp1lLRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+de24c3fe3c4091051710@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.1 305/508] jbd2: fix data-race and null-ptr-deref in jbd2_journal_dirty_metadata()
-Date: Mon, 23 Jun 2025 15:05:50 +0200
-Message-ID: <20250623130652.812329298@linuxfoundation.org>
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.15 526/592] ice: fix eswitch code memory leak in reset scenario
+Date: Mon, 23 Jun 2025 15:08:04 +0200
+Message-ID: <20250623130712.945517169@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,86 +50,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-commit af98b0157adf6504fade79b3e6cb260c4ff68e37 upstream.
+[ Upstream commit 48c8b214974dc55283bd5f12e3a483b27c403bbc ]
 
-Since handle->h_transaction may be a NULL pointer, so we should change it
-to call is_handle_aborted(handle) first before dereferencing it.
+Add simple eswitch mode checker in attaching VF procedure and allocate
+required port representor memory structures only in switchdev mode.
+The reset flows triggers VF (if present) detach/attach procedure.
+It might involve VF port representor(s) re-creation if the device is
+configured is switchdev mode (not legacy one).
+The memory was blindly allocated in current implementation,
+regardless of the mode and not freed if in legacy mode.
 
-And the following data-race was reported in my fuzzer:
+Kmemeleak trace:
+unreferenced object (percpu) 0x7e3bce5b888458 (size 40):
+  comm "bash", pid 1784, jiffies 4295743894
+  hex dump (first 32 bytes on cpu 45):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc 0):
+    pcpu_alloc_noprof+0x4c4/0x7c0
+    ice_repr_create+0x66/0x130 [ice]
+    ice_repr_create_vf+0x22/0x70 [ice]
+    ice_eswitch_attach_vf+0x1b/0xa0 [ice]
+    ice_reset_all_vfs+0x1dd/0x2f0 [ice]
+    ice_pci_err_resume+0x3b/0xb0 [ice]
+    pci_reset_function+0x8f/0x120
+    reset_store+0x56/0xa0
+    kernfs_fop_write_iter+0x120/0x1b0
+    vfs_write+0x31c/0x430
+    ksys_write+0x61/0xd0
+    do_syscall_64+0x5b/0x180
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-==================================================================
-BUG: KCSAN: data-race in jbd2_journal_dirty_metadata / jbd2_journal_dirty_metadata
+Testing hints (ethX is PF netdev):
+- create at least one VF
+    echo 1 > /sys/class/net/ethX/device/sriov_numvfs
+- trigger the reset
+    echo 1 > /sys/class/net/ethX/device/reset
 
-write to 0xffff888011024104 of 4 bytes by task 10881 on cpu 1:
- jbd2_journal_dirty_metadata+0x2a5/0x770 fs/jbd2/transaction.c:1556
- __ext4_handle_dirty_metadata+0xe7/0x4b0 fs/ext4/ext4_jbd2.c:358
- ext4_do_update_inode fs/ext4/inode.c:5220 [inline]
- ext4_mark_iloc_dirty+0x32c/0xd50 fs/ext4/inode.c:5869
- __ext4_mark_inode_dirty+0xe1/0x450 fs/ext4/inode.c:6074
- ext4_dirty_inode+0x98/0xc0 fs/ext4/inode.c:6103
-....
-
-read to 0xffff888011024104 of 4 bytes by task 10880 on cpu 0:
- jbd2_journal_dirty_metadata+0xf2/0x770 fs/jbd2/transaction.c:1512
- __ext4_handle_dirty_metadata+0xe7/0x4b0 fs/ext4/ext4_jbd2.c:358
- ext4_do_update_inode fs/ext4/inode.c:5220 [inline]
- ext4_mark_iloc_dirty+0x32c/0xd50 fs/ext4/inode.c:5869
- __ext4_mark_inode_dirty+0xe1/0x450 fs/ext4/inode.c:6074
- ext4_dirty_inode+0x98/0xc0 fs/ext4/inode.c:6103
-....
-
-value changed: 0x00000000 -> 0x00000001
-==================================================================
-
-This issue is caused by missing data-race annotation for jh->b_modified.
-Therefore, the missing annotation needs to be added.
-
-Reported-by: syzbot+de24c3fe3c4091051710@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=de24c3fe3c4091051710
-Fixes: 6e06ae88edae ("jbd2: speedup jbd2_journal_dirty_metadata()")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250514130855.99010-1-aha310510@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 415db8399d06 ("ice: make representor code generic")
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/transaction.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_eswitch.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -1518,7 +1518,7 @@ int jbd2_journal_dirty_metadata(handle_t
- 				jh->b_next_transaction == transaction);
- 		spin_unlock(&jh->b_state_lock);
- 	}
--	if (jh->b_modified == 1) {
-+	if (data_race(jh->b_modified == 1)) {
- 		/* If it's in our transaction it must be in BJ_Metadata list. */
- 		if (data_race(jh->b_transaction == transaction &&
- 		    jh->b_jlist != BJ_Metadata)) {
-@@ -1537,7 +1537,6 @@ int jbd2_journal_dirty_metadata(handle_t
- 		goto out;
- 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_eswitch.c b/drivers/net/ethernet/intel/ice/ice_eswitch.c
+index ed21d7f55ac11..5b9a7ee278f17 100644
+--- a/drivers/net/ethernet/intel/ice/ice_eswitch.c
++++ b/drivers/net/ethernet/intel/ice/ice_eswitch.c
+@@ -502,10 +502,14 @@ ice_eswitch_attach(struct ice_pf *pf, struct ice_repr *repr, unsigned long *id)
+  */
+ int ice_eswitch_attach_vf(struct ice_pf *pf, struct ice_vf *vf)
+ {
+-	struct ice_repr *repr = ice_repr_create_vf(vf);
+ 	struct devlink *devlink = priv_to_devlink(pf);
++	struct ice_repr *repr;
+ 	int err;
  
--	journal = transaction->t_journal;
- 	spin_lock(&jh->b_state_lock);
- 
- 	if (is_handle_aborted(handle)) {
-@@ -1552,6 +1551,8 @@ int jbd2_journal_dirty_metadata(handle_t
- 		goto out_unlock_bh;
- 	}
- 
-+	journal = transaction->t_journal;
++	if (!ice_is_eswitch_mode_switchdev(pf))
++		return 0;
 +
- 	if (jh->b_modified == 0) {
- 		/*
- 		 * This buffer's got modified and becoming part
++	repr = ice_repr_create_vf(vf);
+ 	if (IS_ERR(repr))
+ 		return PTR_ERR(repr);
+ 
+-- 
+2.39.5
+
 
 
