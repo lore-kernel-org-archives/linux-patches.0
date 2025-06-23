@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B484C6E;
-	Mon, 23 Jun 2025 13:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D97024728E;
+	Mon, 23 Jun 2025 13:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686119; cv=none; b=B8Sv3OSad9Yndp21lOU6fHk4NuXiBIKfoch4wHDjMUNRtq9Doyr28xAqxRH8+A7q1ifhpH8QSF3n9fE6xbASjWf8pycvCtxUA6SiIdAv2BVnsl4r9hrmC8l3+j5yKRlQ1oJ4tik5R2sJiwZO4BSW5Pa3CIgo/JSrrRtu1EHPIHw=
+	t=1750686122; cv=none; b=eJDQyinoZ/jEAW9kg3LxUKCxiOpinS9cxyxGKIzVOufsIj7gvo5WQ3XASVD5qftC4UogoNnm3oGiQUIijVRXu0eS/GrKpUuKjOZxFa1pVh4H/VKLOGzJ0JtQ5swKo6Lite12mJ1iMSVTxZq3T02Ccyc/3nT9Z0zNlHgs+fmjMuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686119; c=relaxed/simple;
-	bh=lV057AfxB5MjaWua03nJFT/TWCyOtVpvW/OyFS6/Xws=;
+	s=arc-20240116; t=1750686122; c=relaxed/simple;
+	bh=CetJhIo5BjeSlZYuo43LBbI7mGUwdU3bcnMmzfrOD6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jg0MoylGwItB22AkNddUvKfVfmqLFxoPoFJphyhKb4Tna+meJ1EmE95wrkLRKoIEai3oxhmgwUTC/P7YmZ2EwN8XCtST7izxfeIY3CCDsQ93cV/g/HMgW5OpOOMbr3Hg3zsfT4Vc9q9wxKxA8SOd7ndbVj+ypXKP1MSLHFVxxw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhRCVemh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZjvDamqeKRQCQSP9QRft7QSW9JXIE1SH3TSYvBIK4RfEjgsAqw00S2PbilBel8Qaj1xbjdFuHxtM4ehghtw8eqiQEmuIsjNG0wY8D16eB/pVIzfZfSUNdiZ4OJ79jNngdAvQ5G9rfjao5COFLMR5BwQ8lHgttKAShW3Byt1nd3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hqDxPqEp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhRCVemh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBDFC4CEEA;
-	Mon, 23 Jun 2025 13:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hqDxPqEp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEDD4C4CEEA;
+	Mon, 23 Jun 2025 13:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686119;
-	bh=lV057AfxB5MjaWua03nJFT/TWCyOtVpvW/OyFS6/Xws=;
+	s=korg; t=1750686122;
+	bh=CetJhIo5BjeSlZYuo43LBbI7mGUwdU3bcnMmzfrOD6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhRCVemhcRvRo85X4SCtokR/JnlEZ7FEJxBdkJI7FXBn3HmGQsF0q1Maz+jYPlAgB
-	 BzfP3HGX4WsvkG3IM9+vKbYidJ3w31oMcoIpkEpDHe7JA1F2FkFPerw3cDBEqURmIC
-	 lg5ido9DBPjIc3zZciunOskEwnyAGaGPyOuGP07w=
+	b=hqDxPqEpWW0DkfEHnDqIL052BmAtqPmsZlvLDee6Gs7MQIgL6gVpoB8RfX7kpZT3g
+	 XKQtJtb17s1PhfRhAW0m8/lG4WVNJZJ6GKjLz3twNXycxFpI0Beun3fkbnVwv38+ln
+	 IR2npq0wbEPy/itbmYXHQwA0/JZebYq22MIC8/1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liangliang Zou <rawdiamondmc@outlook.com>,
-	Mingcong Bai <jeffbai@aosc.io>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.6 023/290] wifi: rtlwifi: disable ASPM for RTL8723BE with subsystem ID 11ad:1723
-Date: Mon, 23 Jun 2025 15:04:44 +0200
-Message-ID: <20250623130627.680957029@linuxfoundation.org>
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.12 004/414] crypto: qat - add shutdown handler to qat_c3xxx
+Date: Mon, 23 Jun 2025 15:02:21 +0200
+Message-ID: <20250623130642.131764390@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,68 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingcong Bai <jeffbai@aosc.io>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-commit 77a6407c6ab240527166fb19ee96e95f5be4d3cd upstream.
+commit 71e0cc1eab584d6f95526a5e8c69ec666ca33e1b upstream.
 
-RTL8723BE found on some ASUSTek laptops, such as F441U and X555UQ with
-subsystem ID 11ad:1723 are known to output large amounts of PCIe AER
-errors during and after boot up, causing heavy lags and at times lock-ups:
+During a warm reset via kexec, the system bypasses the driver removal
+sequence, meaning that the remove() callback is not invoked.
+If a QAT device is not shutdown properly, the device driver will fail to
+load in a newly rebooted kernel.
 
-  pcieport 0000:00:1c.5: AER: Correctable error message received from 0000:00:1c.5
-  pcieport 0000:00:1c.5: PCIe Bus Error: severity=Correctable, type=Physical Layer, (Receiver ID)
-  pcieport 0000:00:1c.5:   device [8086:9d15] error status/mask=00000001/00002000
-  pcieport 0000:00:1c.5:    [ 0] RxErr
+This might result in output like the following after the kexec reboot:
 
-Disable ASPM on this combo as a quirk.
+    QAT: AE0 is inactive!!
+    QAT: failed to get device out of reset
+    c3xxx 0000:3f:00.0: qat_hal_clr_reset error
+    c3xxx 0000:3f:00.0: Failed to init the AEs
+    c3xxx 0000:3f:00.0: Failed to initialise Acceleration Engine
+    c3xxx 0000:3f:00.0: Resetting device qat_dev0
+    c3xxx 0000:3f:00.0: probe with driver c3xxx failed with error -14
 
-This patch is a revision of a previous patch (linked below) which
-attempted to disable ASPM for RTL8723BE on all Intel Skylake and Kaby Lake
-PCIe bridges. I take a more conservative approach as all known reports
-point to ASUSTek laptops of these two generations with this particular
-wireless card.
-
-Please note, however, before the rtl8723be finishes probing, the AER
-errors remained. After the module finishes probing, all AER errors would
-indeed be eliminated, along with heavy lags, poor network throughput,
-and/or occasional lock-ups.
+Implement the shutdown() handler that hooks into the reboot notifier
+list. This brings down the QAT device and ensures it is shut down
+properly.
 
 Cc: <stable@vger.kernel.org>
-Fixes: a619d1abe20c ("rtlwifi: rtl8723be: Add new driver")
-Reported-by: Liangliang Zou <rawdiamondmc@outlook.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218127
-Link: https://lore.kernel.org/lkml/05390e0b-27fd-4190-971e-e70a498c8221@lwfinger.net/T/
-Tested-by: Liangliang Zou <rawdiamondmc@outlook.com>
-Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250422061755.356535-1-jeffbai@aosc.io
+Fixes: 890c55f4dc0e ("crypto: qat - add support for c3xxx accel type")
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/crypto/intel/qat/qat_c3xxx/adf_drv.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -155,6 +155,16 @@ static void _rtl_pci_update_default_sett
- 	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8192SE &&
- 	    init_aspm == 0x43)
- 		ppsc->support_aspm = false;
-+
-+	/* RTL8723BE found on some ASUSTek laptops, such as F441U and
-+	 * X555UQ with subsystem ID 11ad:1723 are known to output large
-+	 * amounts of PCIe AER errors during and after boot up, causing
-+	 * heavy lags, poor network throughput, and occasional lock-ups.
-+	 */
-+	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
-+	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
-+	     rtlpci->pdev->subsystem_device == 0x1723))
-+		ppsc->support_aspm = false;
- }
+--- a/drivers/crypto/intel/qat/qat_c3xxx/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_c3xxx/adf_drv.c
+@@ -19,6 +19,13 @@
+ #include <adf_dbgfs.h>
+ #include "adf_c3xxx_hw_data.h"
  
- static bool _rtl_pci_platform_switch_device_pci_aspm(
++static void adf_shutdown(struct pci_dev *pdev)
++{
++	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
++
++	adf_dev_down(accel_dev);
++}
++
+ static const struct pci_device_id adf_pci_tbl[] = {
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_QAT_C3XXX), },
+ 	{ }
+@@ -33,6 +40,7 @@ static struct pci_driver adf_driver = {
+ 	.name = ADF_C3XXX_DEVICE_NAME,
+ 	.probe = adf_probe,
+ 	.remove = adf_remove,
++	.shutdown = adf_shutdown,
+ 	.sriov_configure = adf_sriov_configure,
+ 	.err_handler = &adf_err_handler,
+ };
 
 
