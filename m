@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8CC2C9D;
-	Mon, 23 Jun 2025 21:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7C52C9D;
+	Mon, 23 Jun 2025 21:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713609; cv=none; b=JXp1x+8LybEO/HAKKRDXs8IYaeig40E1ypkFI4nk6k+55uTmOabvyJjjNC380LV9K00LmxJynpN6byYzfN3UjlDoDLDQ6yVAkS4dsC1YGguJ4nAudC/j51r68BheBUMHUr6CXH0FDC0fmj7v4S8DgsRnyRKNmneApzsyYBRL7gQ=
+	t=1750713612; cv=none; b=Tp+JhCfxN1csbuoDnyNVviGfREzYf8BK4iMW7YXwD+cUPq/iYWGummdTkEnj8IU2jbd5u/uAeQvcX1BjkjlQWLs8U7lTCay68Qb6929p6H0d7Et4plTYYpQ96iCQZz8gmuqRwnbynSOY1Z5T74/rB2yy5Rr3oUFqUZkB8kWVaUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713609; c=relaxed/simple;
-	bh=0nxZMud13ZLQqi/GKh8Abk47OrXSMh3CD2pnU4TCOl0=;
+	s=arc-20240116; t=1750713612; c=relaxed/simple;
+	bh=pfkHc/bMy1um2h8nWy7aYiuhrKmeke8IbLuhXti0bU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOVqjO18ITMOWUb1Hmv8yhyFcl2XNYOcEOdVUnDACUDNo1qBJ54apburAwF0iUjYGQWm5qyyaYR2h4VXyzg9iCfA0VdMn/AvjJw/wDB1WzGDPNiM+n56qpzv4XOoZzof1kctQugMFA2LHEij4K/fmy85bnG0FfD4pQYb1F+Hj4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJ3lw+Wh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fgjt3uTHQtEpaEFuBBRL6/2fRkDuDV4+aTHW9cnMcyEzp5RZEYKYuCRODP7kxcNE9d2m6YqOhAof3CzJC9W86OSypMp7MiRuiZ5E6qryeZgWvxSbiynzxj3ejFyOpMaYVgMSEP9Q6Gw7zIxOTRxSkl2tQA1kMKA3QPY4e6GPfi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inhVrqvV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJ3lw+Wh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D95C4CEEA;
-	Mon, 23 Jun 2025 21:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inhVrqvV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CCBC4CEEA;
+	Mon, 23 Jun 2025 21:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713609;
-	bh=0nxZMud13ZLQqi/GKh8Abk47OrXSMh3CD2pnU4TCOl0=;
+	s=korg; t=1750713611;
+	bh=pfkHc/bMy1um2h8nWy7aYiuhrKmeke8IbLuhXti0bU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJ3lw+Who/rUu2QPWiLdDH1G5Qoc7yUkXrL3hfY5mJrgA+uRTWBNp16dHdhJWKM3f
-	 hnXU6RkvBzfbCEciJNawR4ldLWSkJHu6qvTl755l9EnsE00tjATXJ6KmiCPeZKp81x
-	 4nignZrQBYQUxjjKyb6p81hDQD89x1JQBcEWKtVc=
+	b=inhVrqvVIWgqwY+xArxyTdOqnPjKBc9PX9WASdu+Uc5tgtZ5yYUREs3RW+H4JgG2n
+	 coZPHLUlC/B916QnsO9VOyVvLfQAaK4l+kMCZfrWkpkcHTDLWLoY59y9QXq/kLjyfg
+	 7IypQ7fbwDD3iF2us7Yfkq6cHL2cgVPEujM3iwvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moon Yeounsu <yyyynoom@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 337/592] net: dlink: add synchronization for stats update
-Date: Mon, 23 Jun 2025 15:04:55 +0200
-Message-ID: <20250623130708.468975059@linuxfoundation.org>
+	Da Xue <da@libre.computer>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>
+Subject: [PATCH 6.6 080/290] clk: meson-g12a: add missing fclk_div2 to spicc
+Date: Mon, 23 Jun 2025 15:05:41 +0200
+Message-ID: <20250623130629.391592541@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,106 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Moon Yeounsu <yyyynoom@gmail.com>
+From: Da Xue <da@libre.computer>
 
-[ Upstream commit 12889ce926e9a9baf6b83d809ba316af539b89e2 ]
+commit daf004f87c3520c414992893e2eadd5db5f86a5a upstream.
 
-This patch synchronizes code that accesses from both user-space
-and IRQ contexts. The `get_stats()` function can be called from both
-context.
+SPICC is missing fclk_div2, which means fclk_div5 and fclk_div7 indexes
+are wrong on this clock. This causes the spicc module to output sclk at
+2.5x the expected rate when clock index 3 is picked.
 
-`dev->stats.tx_errors` and `dev->stats.collisions` are also updated
-in the `tx_errors()` function. Therefore, these fields must also be
-protected by synchronized.
+Adding the missing fclk_div2 resolves this.
 
-There is no code that accessses `dev->stats.tx_errors` between the
-previous and updated lines, so the updating point can be moved.
-
-Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
-Link: https://patch.msgid.link/20250515075333.48290-1-yyyynoom@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[jbrunet: amended commit description]
+Fixes: a18c8e0b7697 ("clk: meson: g12a: add support for the SPICC SCLK Source clocks")
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Da Xue <da@libre.computer>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20250512142617.2175291-1-da@libre.computer
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/dlink/dl2k.c | 14 +++++++++++++-
- drivers/net/ethernet/dlink/dl2k.h |  2 ++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/clk/meson/g12a.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
-index 232e839a9d071..038a0400c1f95 100644
---- a/drivers/net/ethernet/dlink/dl2k.c
-+++ b/drivers/net/ethernet/dlink/dl2k.c
-@@ -146,6 +146,8 @@ rio_probe1 (struct pci_dev *pdev, const struct pci_device_id *ent)
- 	np->ioaddr = ioaddr;
- 	np->chip_id = chip_idx;
- 	np->pdev = pdev;
-+
-+	spin_lock_init(&np->stats_lock);
- 	spin_lock_init (&np->tx_lock);
- 	spin_lock_init (&np->rx_lock);
- 
-@@ -865,7 +867,6 @@ tx_error (struct net_device *dev, int tx_status)
- 	frame_id = (tx_status & 0xffff0000);
- 	printk (KERN_ERR "%s: Transmit error, TxStatus %4.4x, FrameId %d.\n",
- 		dev->name, tx_status, frame_id);
--	dev->stats.tx_errors++;
- 	/* Ttransmit Underrun */
- 	if (tx_status & 0x10) {
- 		dev->stats.tx_fifo_errors++;
-@@ -902,9 +903,15 @@ tx_error (struct net_device *dev, int tx_status)
- 		rio_set_led_mode(dev);
- 		/* Let TxStartThresh stay default value */
- 	}
-+
-+	spin_lock(&np->stats_lock);
- 	/* Maximum Collisions */
- 	if (tx_status & 0x08)
- 		dev->stats.collisions++;
-+
-+	dev->stats.tx_errors++;
-+	spin_unlock(&np->stats_lock);
-+
- 	/* Restart the Tx */
- 	dw32(MACCtrl, dr16(MACCtrl) | TxEnable);
- }
-@@ -1073,7 +1080,9 @@ get_stats (struct net_device *dev)
- 	int i;
- #endif
- 	unsigned int stat_reg;
-+	unsigned long flags;
- 
-+	spin_lock_irqsave(&np->stats_lock, flags);
- 	/* All statistics registers need to be acknowledged,
- 	   else statistic overflow could cause problems */
- 
-@@ -1123,6 +1132,9 @@ get_stats (struct net_device *dev)
- 	dr16(TCPCheckSumErrors);
- 	dr16(UDPCheckSumErrors);
- 	dr16(IPCheckSumErrors);
-+
-+	spin_unlock_irqrestore(&np->stats_lock, flags);
-+
- 	return &dev->stats;
- }
- 
-diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
-index 0e33e2eaae960..56aff2f0bdbfa 100644
---- a/drivers/net/ethernet/dlink/dl2k.h
-+++ b/drivers/net/ethernet/dlink/dl2k.h
-@@ -372,6 +372,8 @@ struct netdev_private {
- 	struct pci_dev *pdev;
- 	void __iomem *ioaddr;
- 	void __iomem *eeprom_addr;
-+	// To ensure synchronization when stats are updated.
-+	spinlock_t stats_lock;
- 	spinlock_t tx_lock;
- 	spinlock_t rx_lock;
- 	unsigned int rx_buf_sz;		/* Based on MTU+slack. */
--- 
-2.39.5
-
+--- a/drivers/clk/meson/g12a.c
++++ b/drivers/clk/meson/g12a.c
+@@ -3971,6 +3971,7 @@ static const struct clk_parent_data spic
+ 	{ .hw = &g12a_clk81.hw },
+ 	{ .hw = &g12a_fclk_div4.hw },
+ 	{ .hw = &g12a_fclk_div3.hw },
++	{ .hw = &g12a_fclk_div2.hw },
+ 	{ .hw = &g12a_fclk_div5.hw },
+ 	{ .hw = &g12a_fclk_div7.hw },
+ };
 
 
