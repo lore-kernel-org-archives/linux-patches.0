@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE1B22425B;
-	Mon, 23 Jun 2025 21:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A61A229B13;
+	Mon, 23 Jun 2025 21:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715100; cv=none; b=DGvBfCRnwRwFSgJb6MIYw0oBG4LfevSiHhPfqrYJJmcm/Xk9eOteh7+5QegYMPPaUxRBx1THi6Qu0rXwfSsMUx/X2C3IvhrAzKoo2v/rXNYnfFB93tiE1duG3pram0OxRIkJ7ddAkPBehLPx/DycX+R+Sh1AUXp5Txb2ggaz6cE=
+	t=1750715103; cv=none; b=PPTP6K6Vh+DCyfpG2WS9fa+NYXKMVxFU8AE6HaEg5jwz60h5dJ7FoRCGXHpwizus6f5Ml102slv3YL90R9uoKrJQ6qL1AAgXvV45ogM5Rt+2cfG1KbZV5YbNsRD5OR4aXUS6pzLbWsR58G/VBsPCkWIxoyRHQOB/uDbKQQbCVlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715100; c=relaxed/simple;
-	bh=JNvtFg66EfA4e3UpUcuDPtP8m8yAluQRDg8c3AbBx7g=;
+	s=arc-20240116; t=1750715103; c=relaxed/simple;
+	bh=M2The7Cf/qXkO6kcWxAflhhRAivz0/zG4C/gc8IRe7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I7y6XyHwo+b13slL2O9ysWOh8UXHInQfGm4mcLRPBG0iLajWsaXt8UOEIVyWi1AQPWss7XDW9JuLZ/Z0HFFBuvRlGKYUn6/6CfUeX3xvsBoUp/ts/8ApHIH8C1cQcdicqTDpSiYL8VP/1Fw6yMrBBFqFPkAzmT8ogU7TpDsV0pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhASAQt9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mfiufYYPcOP0UJTWGJCGCrFE759PbtbDz4jQ6fRTdU35kWUGsLk0GLyCQcg6u4z/iiikQXPyxLjYgT5JQddjmFe5rV4Y+LrLxga5FLvE8EajdG5pnI2m5Ochr/0XGpN9oVhvbh8banvhnHyVofhmdjul7nHx2GKDyXJx3zXcVSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4C66KwL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhASAQt9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD6BC4CEF2;
-	Mon, 23 Jun 2025 21:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4C66KwL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868DEC4CEF4;
+	Mon, 23 Jun 2025 21:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715100;
-	bh=JNvtFg66EfA4e3UpUcuDPtP8m8yAluQRDg8c3AbBx7g=;
+	s=korg; t=1750715103;
+	bh=M2The7Cf/qXkO6kcWxAflhhRAivz0/zG4C/gc8IRe7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhASAQt9Q3svH3Q4+oSDfYmwpliblw1DM66lAyIiT4l7COjHaX5HmGAk6q0NHaVVo
-	 hXVbUjZX6ILjayL8eF/NRT2F+eih6cKFXmchZ+EKCFR0spPzJIWXqu6GA1Fn40haQb
-	 PX8Q+ZmkMtt1JsEkP/BnaJWRgYejhb4enQ9TZ10E=
+	b=J4C66KwLqYhcKWZXEL/Uf8hp3q7QrAoYufILm212QyvzvTRiGBRNxrCehYhSKttn7
+	 UPHRAI1naczGDSkrwxU7KyKOS1X4+xK5d124OD203qLfEIwXmyJ01TS7yH30oM6MTE
+	 +1kyZdzNRm+ZsMXL8UsuMIqqArdhbo99jV5YJZm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henk Vergonet <henk.vergonet@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 252/355] wifi: mt76: mt76x2: Add support for LiteOn WN4516R,WN4519R
-Date: Mon, 23 Jun 2025 15:07:33 +0200
-Message-ID: <20250623130634.325795904@linuxfoundation.org>
+Subject: [PATCH 6.15 437/592] platform/x86/amd: pmf: Prevent amd_pmf_tee_deinit() from running twice
+Date: Mon, 23 Jun 2025 15:06:35 +0200
+Message-ID: <20250623130710.828652229@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,90 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henk Vergonet <henk.vergonet@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 3c0e4f606d8693795a2c965d6f4987b1bfc31097 ]
+[ Upstream commit 93103d56650d7a38ed37ba4041578310f82776ae ]
 
-Adds support for:
- - LiteOn WN4516R
- - LiteOn WN4519R
- Both use:
- - A nonstandard USB connector
- - Mediatek chipset MT7600U
- - ASIC revision: 76320044
+If any of the tee init fails, pass up the errors and clear the tee_ctx
+pointer. This will prevent cleaning up multiple times.
 
-Disabled VHT support on ASIC revision 76320044:
-
- This fixes the 5G connectibity issue on LiteOn WN4519R module
- see https://github.com/openwrt/mt76/issues/971
-
- And may also fix the 5G issues on the XBox One Wireless Adapter
- see https://github.com/openwrt/mt76/issues/200
-
- I have looked at the FCC info related to the MT7632U chip as mentioned in here:
- https://github.com/openwrt/mt76/issues/459
- These confirm the chipset does not support 'ac' mode and hence VHT should be turned of.
-
-Signed-off-by: Henk Vergonet <henk.vergonet@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250418143914.31384-1-henk.vergonet@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: ac052d8c08f9d ("platform/x86/amd/pmf: Add PMF TEE interface")
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20250512211154.2510397-3-superm1@kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20250522003457.1516679-3-superm1@kernel.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x2/usb.c     |  2 ++
- .../net/wireless/mediatek/mt76/mt76x2/usb_init.c    | 13 ++++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmf/tee-if.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-index 82a193aac09d7..95c548f45bdf8 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-@@ -17,6 +17,8 @@ static const struct usb_device_id mt76x2u_device_table[] = {
- 	{ USB_DEVICE(0x057c, 0x8503) },	/* Avm FRITZ!WLAN AC860 */
- 	{ USB_DEVICE(0x7392, 0xb711) },	/* Edimax EW 7722 UAC */
- 	{ USB_DEVICE(0x0e8d, 0x7632) },	/* HC-M7662BU1 */
-+	{ USB_DEVICE(0x0471, 0x2126) }, /* LiteOn WN4516R module, nonstandard USB connector */
-+	{ USB_DEVICE(0x0471, 0x7600) }, /* LiteOn WN4519R module, nonstandard USB connector */
- 	{ USB_DEVICE(0x2c4e, 0x0103) },	/* Mercury UD13 */
- 	{ USB_DEVICE(0x0846, 0x9053) },	/* Netgear A6210 */
- 	{ USB_DEVICE(0x045e, 0x02e6) },	/* XBox One Wireless Adapter */
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
-index ffc2deba29ac6..c845e83897659 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
-@@ -191,6 +191,7 @@ int mt76x2u_register_device(struct mt76x02_dev *dev)
+diff --git a/drivers/platform/x86/amd/pmf/tee-if.c b/drivers/platform/x86/amd/pmf/tee-if.c
+index 027e992b71472..76efce48a45ce 100644
+--- a/drivers/platform/x86/amd/pmf/tee-if.c
++++ b/drivers/platform/x86/amd/pmf/tee-if.c
+@@ -420,12 +420,12 @@ static int amd_pmf_ta_open_session(struct tee_context *ctx, u32 *id, const uuid_
+ 	rc = tee_client_open_session(ctx, &sess_arg, NULL);
+ 	if (rc < 0 || sess_arg.ret != 0) {
+ 		pr_err("Failed to open TEE session err:%#x, rc:%d\n", sess_arg.ret, rc);
+-		return rc;
++		return rc ?: -EINVAL;
+ 	}
+ 
+ 	*id = sess_arg.session;
+ 
+-	return rc;
++	return 0;
+ }
+ 
+ static int amd_pmf_register_input_device(struct amd_pmf_dev *dev)
+@@ -460,7 +460,9 @@ static int amd_pmf_tee_init(struct amd_pmf_dev *dev, const uuid_t *uuid)
+ 	dev->tee_ctx = tee_client_open_context(NULL, amd_pmf_amdtee_ta_match, NULL, NULL);
+ 	if (IS_ERR(dev->tee_ctx)) {
+ 		dev_err(dev->dev, "Failed to open TEE context\n");
+-		return PTR_ERR(dev->tee_ctx);
++		ret = PTR_ERR(dev->tee_ctx);
++		dev->tee_ctx = NULL;
++		return ret;
+ 	}
+ 
+ 	ret = amd_pmf_ta_open_session(dev->tee_ctx, &dev->session_id, uuid);
+@@ -500,9 +502,12 @@ static int amd_pmf_tee_init(struct amd_pmf_dev *dev, const uuid_t *uuid)
+ 
+ static void amd_pmf_tee_deinit(struct amd_pmf_dev *dev)
  {
- 	struct ieee80211_hw *hw = mt76_hw(dev);
- 	struct mt76_usb *usb = &dev->mt76.usb;
-+	bool vht;
- 	int err;
++	if (!dev->tee_ctx)
++		return;
+ 	tee_shm_free(dev->fw_shm_pool);
+ 	tee_client_close_session(dev->tee_ctx, dev->session_id);
+ 	tee_client_close_context(dev->tee_ctx);
++	dev->tee_ctx = NULL;
+ }
  
- 	INIT_DELAYED_WORK(&dev->cal_work, mt76x2u_phy_calibrate);
-@@ -215,7 +216,17 @@ int mt76x2u_register_device(struct mt76x02_dev *dev)
- 
- 	/* check hw sg support in order to enable AMSDU */
- 	hw->max_tx_fragments = dev->mt76.usb.sg_en ? MT_TX_SG_MAX_SIZE : 1;
--	err = mt76_register_device(&dev->mt76, true, mt76x02_rates,
-+	switch (dev->mt76.rev) {
-+	case 0x76320044:
-+		/* these ASIC revisions do not support VHT */
-+		vht = false;
-+		break;
-+	default:
-+		vht = true;
-+		break;
-+	}
-+
-+	err = mt76_register_device(&dev->mt76, vht, mt76x02_rates,
- 				   ARRAY_SIZE(mt76x02_rates));
- 	if (err)
- 		goto fail;
+ int amd_pmf_init_smart_pc(struct amd_pmf_dev *dev)
 -- 
 2.39.5
 
