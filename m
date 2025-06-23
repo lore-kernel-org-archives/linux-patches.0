@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153A0233D8E;
-	Mon, 23 Jun 2025 13:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8421F2505CE;
+	Mon, 23 Jun 2025 13:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684300; cv=none; b=pqGfBSFmYdRQ3nx8Kfuc0VGCgwofQttd4cmP3TVyYsYYa4e4Ur6hTqFjQ8fO9fc0mSG53ACngpDuKElVyYFGhlOymPlzRbU9vSklaLTF8apy3uR6LiZK3F5VnK4m8IIDpFUAtiRGlWr7oYhhW6sc2kTWf+Em4zV+IBcgu4FiFc8=
+	t=1750684302; cv=none; b=Tr1B0xrZxOLcOA8MLbKUEi0VFaFEAem1h7aGMOnFi0nURLKjuI1xXS3iMlf+fYrCHc7GXbqJkG6LjOajL4LDFHKn8ApH5EdZNGIk3aFuYrhjyc4jciVpgUM0P8J7wiHMocy3eGX1Lyi8SYai4Kzxt84sMFLoQulGj2xQFqo+YZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684300; c=relaxed/simple;
-	bh=QtMHegsboKGGL++XH8NPI/Fy25JC4a6ReWVv1EbZ3wY=;
+	s=arc-20240116; t=1750684302; c=relaxed/simple;
+	bh=sxU3OmJPwBBAJR8zd1RPoEbyapsOnWVZ2uGxbERTltA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9HMpEMf4cXDt2lTLy0SPChJv9ipnhwgQCwKJoBOtjhVuK5vRA7Jh33vcmD5aVGVBStVhzGjAHo2cR3dcVt4z6HYUCifg1QIFqni8cwbFJNjmksZ+bHnkDJIja2iMs4EigC498DXwrYJsnQwhYwVpx+HOzY+PZ5myw97m717lnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9Nb7Z/J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bvFPVAHvscDkrQsjRJVB5drBNbXKVEvNh+wa1L+mbVjR+t2Wh6fnu58Bn6hKN2x/qA8uQYcg2+Uv9iSXqxNDzURzLDWEsp9YTKzlJ+NLQu2b3gGdAa3a9yGouUCxplh9ScZoOEeG1bbswJQBhvRxcR8LvrOoWZ/1sWP94FXgU/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQ5aEnBz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9Nb7Z/J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87247C4CEEA;
-	Mon, 23 Jun 2025 13:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQ5aEnBz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DCBC4CEEA;
+	Mon, 23 Jun 2025 13:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684299;
-	bh=QtMHegsboKGGL++XH8NPI/Fy25JC4a6ReWVv1EbZ3wY=;
+	s=korg; t=1750684302;
+	bh=sxU3OmJPwBBAJR8zd1RPoEbyapsOnWVZ2uGxbERTltA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D9Nb7Z/JLKkyKbbBaRaq7R/N5pHWgMQ+AKUZHXvx0WuOHgAN4nCyYwJVc7M6fD3K9
-	 9/dWYA/K+OcN3eKtj/uzU4Q/n/3dgKyENKYxIXCUOB1MqIvYNXsKmV9iucV/jtFpJl
-	 YxFOfmXj2R5eiXKToMJ090TGPFvy4nwdt4XQA4js=
+	b=NQ5aEnBzaG3Pa37vLXcIj58JpnvIcCho8RBkz97TlP0hGJNV0EE5XHgwvNgHRBrOX
+	 wcwT80Z2v8Egrm0ZxiUMKE/YqKoiuUQ5HyODWQc78fh81WIc8og64HKS44QXhGt/ay
+	 4KDZ281IfML873O1X/vT/zn31Riv5gwA5iibbEkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.15 016/592] ASoC: amd: sof_amd_sdw: Fix unlikely uninitialized variable use in create_sdw_dailinks()
-Date: Mon, 23 Jun 2025 14:59:34 +0200
-Message-ID: <20250623130700.610085800@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.15 017/592] io_uring: account drain memory to cgroup
+Date: Mon, 23 Jun 2025 14:59:35 +0200
+Message-ID: <20250623130700.634696878@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -50,38 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 6b83ba4bc3ecb915476d688c9f00f3be57b49a0c upstream.
+commit f979c20547e72568e3c793bc92c7522bc3166246 upstream.
 
-Initialize current_be_id to 0 in SOF based AMD generic SoundWire machine
-driver to handle the unlikely case when there are no devices connected to
-a DAI.
-In this case create_sdw_dailink() would return without touching the passed
-pointer to current_be_id.
+Account drain allocations against memcg. It's not a big problem as each
+such allocation is paired with a request, which is accounted, but it's
+nicer to follow the limits more closely.
 
-Found by gcc -fanalyzer
-
-Cc: stable@vger.kernel.org
-Fixes: 6d8348ddc56ed ("ASoC: amd: acp: refactor SoundWire machine driver code")
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20250506120823.3621604-2-Vijendar.Mukunda@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/f8dfdbd755c41fd9c75d12b858af07dfba5bbb68.1746788718.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/acp/acp-sdw-sof-mach.c |    2 +-
+ io_uring/io_uring.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/amd/acp/acp-sdw-sof-mach.c
-+++ b/sound/soc/amd/acp/acp-sdw-sof-mach.c
-@@ -219,7 +219,7 @@ static int create_sdw_dailinks(struct sn
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1689,7 +1689,7 @@ queue:
+ 	spin_unlock(&ctx->completion_lock);
  
- 	/* generate DAI links by each sdw link */
- 	while (sof_dais->initialised) {
--		int current_be_id;
-+		int current_be_id = 0;
- 
- 		ret = create_sdw_dailink(card, sof_dais, dai_links,
- 					 &current_be_id, codec_conf);
+ 	io_prep_async_link(req);
+-	de = kmalloc(sizeof(*de), GFP_KERNEL);
++	de = kmalloc(sizeof(*de), GFP_KERNEL_ACCOUNT);
+ 	if (!de) {
+ 		ret = -ENOMEM;
+ 		io_req_defer_failed(req, ret);
 
 
