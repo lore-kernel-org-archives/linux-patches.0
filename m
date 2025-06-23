@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0533A1C5D46;
-	Mon, 23 Jun 2025 21:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BCB4409;
+	Mon, 23 Jun 2025 21:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714444; cv=none; b=kUl59J0hcU9Es7FORfAmPXtZzoPb0hHLmupW7lAQJ50rKFENwBDQOQgkT+EIhSyqfVRmoT/0LdYEJNsiYzOGfPvO9dzVHlyDl6WsHxPFsScHu2/G2zOSvBMTF3pF9i2wdEhfljE+Pyd0FbK/dGs1zs0xv836BtCii8SlBBJRCwM=
+	t=1750714446; cv=none; b=i4RiDe38QHTD7CoDts+8TL72TAeFQxhTyfrs0dohnhT+nbfEc0CX4KMTFJRRfhqyYXbXWfrnS0e96l2SHXoeC5k9V4ZPczbWlQEmyUyEkeh+xPBwnIY5+O5WuiTknYs8JyOn2Obl6TYyGpXKVnHFOm6EvxO0dQ64AXXpVjoAc9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714444; c=relaxed/simple;
-	bh=j9iZBoo7Lq6DZ2wVGFmN9poIaiyEHTjJkWjZzlCLu6I=;
+	s=arc-20240116; t=1750714446; c=relaxed/simple;
+	bh=J/5K9t3agVva8ue1HDUklup5OjALSproTpzKCT2SIgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n78iKMuy/TwyJM6a9P5AWesJLc7+GeFN0U5rdRiWKlUYTycCcs+f72zZI8qmsncQbhIH0+5YzRnbstDl5u2T/gV6iZRwkaBsZa3mRaqunyUvanDPljP62YO/eTmYAGAMK1tA6cxa3GsWBRjiLDdg0t24vFgK7FVXkyiKeusNig0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdbJyssG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j2Bjma2aRtjD6lJJFS8CLh15mu/ubYdw/EPLJZMMpqCGG4UWVT0HEuoNLSBfU9YnxkgcF/mR6L8cVBzxh5pzYBOvZQ1v+peOj91IVTY4ldpXR66D5KLOrVlxUxHMmXfCZYMgr57umq3Re6QoXb02wrVZaLxvi52w34MPR/zgh3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6t2L9rB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdbJyssG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354AEC4CEEA;
-	Mon, 23 Jun 2025 21:34:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6t2L9rB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FB2C4CEEA;
+	Mon, 23 Jun 2025 21:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714443;
-	bh=j9iZBoo7Lq6DZ2wVGFmN9poIaiyEHTjJkWjZzlCLu6I=;
+	s=korg; t=1750714446;
+	bh=J/5K9t3agVva8ue1HDUklup5OjALSproTpzKCT2SIgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JdbJyssG8XpAxmPLKFO0hk4ykc10T+q98Z3B+5eg9iVI/6B5FPDyedtI70BNQvqDO
-	 CP0DguiEP35RWeCGChJmR6RYnHwgZ8oK3faLbzyv775jLLJURYVCy8trutnMBvCyiB
-	 an6nbgsTPO43thEW/CvcXGhuIn7hIkF8BT/0IriA=
+	b=p6t2L9rBwv8ojVt5ZFy7XAqVMfE1mRX6UYpU5x1cOZDeOkdCQMhwYpQKTv5sS4VtU
+	 dnpcte/cYeLcGJmvHghBZHCyroML0oLuTqQh5SlZpmd7P/P+IRhgkcmYRVCOCqeAEX
+	 Eq7arBqeid+vd04t16PuOOPsSNPU/yjtk+7cXIDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 110/414] parisc/unaligned: Fix hex output to show 8 hex chars
-Date: Mon, 23 Jun 2025 15:04:07 +0200
-Message-ID: <20250623130644.841866705@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 400/592] software node: Correct a OOB check in software_node_get_reference_args()
+Date: Mon, 23 Jun 2025 15:05:58 +0200
+Message-ID: <20250623130709.957164354@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,35 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit 213205889d5ffc19cb8df06aa6778b2d4724c887 upstream.
+[ Upstream commit 31e4e12e0e9609850cefd4b2e1adf782f56337d6 ]
 
-Change back printk format to 0x%08lx instead of %#08lx, since the latter
-does not seem to reliably format the value to 8 hex chars.
+software_node_get_reference_args() wants to get @index-th element, so
+the property value requires at least '(index + 1) * sizeof(*ref)' bytes
+but that can not be guaranteed by current OOB check, and may cause OOB
+for malformed property.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v5.18+
-Fixes: e5e9e7f222e5b ("parisc/unaligned: Enhance user-space visible output")
+Fix by using as OOB check '((index + 1) * sizeof(*ref) > prop->length)'.
+
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20250414-fix_swnode-v2-1-9c9e6ae11eab@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/unaligned.c |    2 +-
+ drivers/base/swnode.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/parisc/kernel/unaligned.c
-+++ b/arch/parisc/kernel/unaligned.c
-@@ -25,7 +25,7 @@
- #define DPRINTF(fmt, args...)
- #endif
+diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
+index 5c78fa6ae7725..deda7f35a0598 100644
+--- a/drivers/base/swnode.c
++++ b/drivers/base/swnode.c
+@@ -529,7 +529,7 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
+ 	if (prop->is_inline)
+ 		return -EINVAL;
  
--#define RFMT "%#08lx"
-+#define RFMT "0x%08lx"
+-	if (index * sizeof(*ref) >= prop->length)
++	if ((index + 1) * sizeof(*ref) > prop->length)
+ 		return -ENOENT;
  
- /* 1111 1100 0000 0000 0001 0011 1100 0000 */
- #define OPCODE1(a,b,c)	((a)<<26|(b)<<12|(c)<<6) 
+ 	ref_array = prop->pointer;
+-- 
+2.39.5
+
 
 
