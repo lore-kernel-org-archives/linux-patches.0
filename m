@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E69D4C7F;
-	Mon, 23 Jun 2025 13:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3FA248191;
+	Mon, 23 Jun 2025 13:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685131; cv=none; b=RXJ+JRoavQ9Gn4JWuYOL70ffLOPLJGb8G8gzBQLCuHMd+8kRnw4l3Xln48fM65B2r+YUMdRPxLEjLXjPkAmWGGxyQ3sTA7qWyE58DfsxK6FrqlSBHGWOKurqzOwUZT9TXqVFxdVgutH8iLT6kFvcPEZraBV0wGhLEJCnt53kcCQ=
+	t=1750685134; cv=none; b=pdIzSKJDXwXxXHCNagImZxOTLSw27zjV89afoqfgChgMge9cmdp4s4Gh7GRJiZp6lSZ4AjPLxoM7jY4D2kbQhiB2vlad2/QCjSQSYWqTQCYpAvH3J7uQBxp91oZfN6Vcx3qbA5v/fT/fcIfFeXBDX9rwBHy5Om4fUD0sa1xxE2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685131; c=relaxed/simple;
-	bh=RlAJpMo0A+UE442BaxHNezXSie+Bf3Eyid1LmPb1JQk=;
+	s=arc-20240116; t=1750685134; c=relaxed/simple;
+	bh=uPN8tdRrD7xRxFISUhcKlvFcd2MCBRMjlC/pywCMmII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AmJ8xBbdYFR6Zk2EK5JAc/UBWFgZG51L9S9DWIhQGOXzMcgbikK36hZTxt2Z4zTnLEWvGvL8j6bDr8HUrU+xpyjx9UBJFGdlDQjqHYm4Ji++9aXHDAfMWEY9IRmoNu3Yz4LZlmavq5lE/vUOBCDIb7W0r9cGGmkR7F3FUGadR9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cexON60Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bHqNiFw3ddhCPe0cU0ZXtLXHrsmpEixAt+jfBMm9Z/scy+PLSzscgN9yrQbOQ3rC7TfqrW1ws5Isc4116igwdL+nHb8hLwnqtzojHf802yVfamf2XfsN8axepIAow44h4INl6JWFWEw9M7Wq5G+1LfgI4VSHbBMjbVgSwQosq/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIihihsv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cexON60Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02916C4CEEA;
-	Mon, 23 Jun 2025 13:25:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIihihsv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7BDC4CEEA;
+	Mon, 23 Jun 2025 13:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685131;
-	bh=RlAJpMo0A+UE442BaxHNezXSie+Bf3Eyid1LmPb1JQk=;
+	s=korg; t=1750685133;
+	bh=uPN8tdRrD7xRxFISUhcKlvFcd2MCBRMjlC/pywCMmII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cexON60YOxTmMV/67Myw61+EEyFOHFanlnWNivpsd7K2HKNvPJ/BSV3bwl2Jh2lF6
-	 Ii+nTLLXbsb7wnyTx9DEdKqYBWx9qcPraituPvX2jr100yPZsBzRXhhytK0mMYmBFl
-	 LvJufSecRf/j/XFE/+lgvg4Xxc+bv+uKMe+uVNYM=
+	b=lIihihsvNGQrhCZNI3YEDZVw145haRXFzDJMMd2t0RCUCpIawbrI6eheP0gYlqQBf
+	 jO1qld81fhG7N9jSLpnv1w6NC+rtpf3bw/rnS5gu3Y4s8aFJxl/4G5dxYJM6Abr8lG
+	 z8sOg36XiBeQxDmEVLTvwnIgyt8BGmFPoA+br8v4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>
-Subject: [PATCH 5.15 010/411] usb: usbtmc: Fix timeout value in get_stb
-Date: Mon, 23 Jun 2025 15:02:34 +0200
-Message-ID: <20250623130633.298070929@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 208/592] clocksource: Fix the CPUs choice in the watchdog per CPU verification
+Date: Mon, 23 Jun 2025 15:02:46 +0200
+Message-ID: <20250623130705.237139745@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,51 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-commit 342e4955a1f1ce28c70a589999b76365082dbf10 upstream.
+[ Upstream commit 08d7becc1a6b8c936e25d827becabfe3bff72a36 ]
 
-wait_event_interruptible_timeout requires a timeout argument
-in units of jiffies. It was being called in usbtmc_get_stb
-with the usb timeout value which is in units of milliseconds.
+Right now, if the clocksource watchdog detects a clocksource skew, it might
+perform a per CPU check, for example in the TSC case on x86.  In other
+words: supposing TSC is detected as unstable by the clocksource watchdog
+running at CPU1, as part of marking TSC unstable the kernel will also run a
+check of TSC readings on some CPUs to be sure it is synced between them
+all.
 
-Pass the timeout argument converted to jiffies.
+But that check happens only on some CPUs, not all of them; this choice is
+based on the parameter "verify_n_cpus" and in some random cpumask
+calculation. So, the watchdog runs such per CPU checks on up to
+"verify_n_cpus" random CPUs among all online CPUs, with the risk of
+repeating CPUs (that aren't double checked) in the cpumask random
+calculation.
 
-Fixes: 048c6d88a021 ("usb: usbtmc: Add ioctls to set/get usb timeout")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://lore.kernel.org/r/20250521121656.18174-4-dpenkler@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+But if "verify_n_cpus" > num_online_cpus(), it should skip the random
+calculation and just go ahead and check the clocksource sync between
+all online CPUs, without the risk of skipping some CPUs due to
+duplicity in the random cpumask calculation.
+
+Tests in a 4 CPU laptop with TSC skew detected led to some cases of the per
+CPU verification skipping some CPU even with verify_n_cpus=8, due to the
+duplicity on random cpumask generation. Skipping the randomization when the
+number of online CPUs is smaller than verify_n_cpus, solves that.
+
+Suggested-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/all/20250323173857.372390-1-gpiccoli@igalia.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/usbtmc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/time/clocksource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -483,6 +483,7 @@ static int usbtmc_get_stb(struct usbtmc_
- 	u8 tag;
- 	int rv;
- 	long wait_rv;
-+	unsigned long expire;
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index bb48498ebb5a8..6a8bc7da90626 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -310,7 +310,7 @@ static void clocksource_verify_choose_cpus(void)
+ {
+ 	int cpu, i, n = verify_n_cpus;
  
- 	dev_dbg(dev, "Enter ioctl_read_stb iin_ep_present: %d\n",
- 		data->iin_ep_present);
-@@ -512,10 +513,11 @@ static int usbtmc_get_stb(struct usbtmc_
- 	}
- 
- 	if (data->iin_ep_present) {
-+		expire = msecs_to_jiffies(file_data->timeout);
- 		wait_rv = wait_event_interruptible_timeout(
- 			data->waitq,
- 			atomic_read(&data->iin_data_valid) != 0,
--			file_data->timeout);
-+			expire);
- 		if (wait_rv < 0) {
- 			dev_dbg(dev, "wait interrupted %ld\n", wait_rv);
- 			rv = wait_rv;
+-	if (n < 0) {
++	if (n < 0 || n >= num_online_cpus()) {
+ 		/* Check all of the CPUs. */
+ 		cpumask_copy(&cpus_chosen, cpu_online_mask);
+ 		cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
+-- 
+2.39.5
+
 
 
