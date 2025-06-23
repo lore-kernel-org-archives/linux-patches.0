@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B737221DA8;
-	Mon, 23 Jun 2025 21:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EEB22422F;
+	Mon, 23 Jun 2025 21:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715990; cv=none; b=NmCNbFECE0zMOlDDtiRCAw99TQMukszzFQLzMGGicjd+nNyGIqTgvPDu+VDa/l3Up8k57/M2WxY9ZlVZ/qkJLGiSPwGxtHVMzXh9yrP3AiaftoN7nAWpWY74vWpaCD2K3S9wxO/zJCaeq2BjiWayGISzoao5y2HwvJyvmeqVlMw=
+	t=1750715992; cv=none; b=VKfJxmE6qOlk/fkBxvXClm/XLL9P8TdUDkroh4bUpTUl2jKC9G1ffpU3far7+330ZnbRne/pFelR+YyyYdjlaZ0xliW3byZJrOZW1l6bqNUzYYh5+jpyIciBN20zCDSJjGcGClApcT04cEJ4S0c1cP0/O2sZZmDdaZjaii5sgXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715990; c=relaxed/simple;
-	bh=2blfCXFKmwFtE8hXEHOSf6n7CF9mnJ0IxUuWZxLaI1I=;
+	s=arc-20240116; t=1750715992; c=relaxed/simple;
+	bh=EOfnMxlX+VkAyE69i3fsKv+2HRxIWZrlShMAf+LNvCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMlWjaMLTxAc65MHGGRill+6RcTeQuUilAZtRAx4e1J3xsJJ0K/kozRhr+7c2dTZuQSZHUS5nIUDxkWDbBkbUspl2HYAGzSqL7Pzxy49UN2vupcm9gS4YRWcLTGkw/bCN42iK6J4pzt0glNpjtoMzRl4AD8JVkT4l1jblHnq7/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/8QKf+S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ifMJdb1D+iKN8VhsF5wFfi0qyoz6TShFefZY8qLwInyQGgAuXJB/oe734IfdI6dfE7uj7AFCPJ/DAoj44fjjgarSKyA0NGvurqsMrgEvt7cEIh+ps6jZfJznUeghEiRXqSofbaQgjfwqMeBjGcj6BbBCfJyfgr7DLowGfXwrhlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRCLm3w2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/8QKf+S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5ADDC4CEEA;
-	Mon, 23 Jun 2025 21:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRCLm3w2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C4DC4CEEA;
+	Mon, 23 Jun 2025 21:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715990;
-	bh=2blfCXFKmwFtE8hXEHOSf6n7CF9mnJ0IxUuWZxLaI1I=;
+	s=korg; t=1750715992;
+	bh=EOfnMxlX+VkAyE69i3fsKv+2HRxIWZrlShMAf+LNvCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/8QKf+S7fZKWm6uIMYm4zU541boKm3EbvruVHgjdMroI04cbjNG26dLDBWvfCrPn
-	 sKuf+RxkfNVEzZroIDqjqAJdvW14hH78CjXVe90ba+iw3YPvHZfsAZf7M5YZjTPX8w
-	 2hXwwve6Atd9Z+TmwNgWFeJSH1xKvsxE/zak3mhY=
+	b=GRCLm3w2OKLcTsSo2uuUmxgPEuuGMK6D6J7ZoxK1SYyyYv62opWsPdbL3iQk+5Dmo
+	 MdJ6lkz5VpGUMXYHtAWvVZZHrwz3fewi5QMKUyXBTg3iHmsIRHQnLWHZRiBocPNwIg
+	 lb0mYSCPQsv4rUhgobIU2DxtjnMYq7csUwNNt0jE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Nick Karaolidis <nick@karaolidis.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.15 495/592] ALSA: hda/realtek: Add quirk for Asus GU605C
-Date: Mon, 23 Jun 2025 15:07:33 +0200
-Message-ID: <20250623130712.206040397@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.1 273/508] kbuild: Add CLANG_FLAGS to as-instr
+Date: Mon, 23 Jun 2025 15:05:18 +0200
+Message-ID: <20250623130651.964286943@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +46,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 7b23887a0c70d15459f02c51651a111e9e5cab86 upstream.
+commit cff6e7f50bd315e5b39c4e46c704ac587ceb965f upstream.
 
-The GU605C has similar audio hardware to the GU605M so apply the
-same quirk.
+A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
+KBUILD_CPPFLAGS so that '--target' is available while preprocessing.
+When that occurs, the following errors appear multiple times when
+building ARCH=powerpc powernv_defconfig:
 
-Note that in the linked bugzilla there are two separate problems
-with the GU605C. This patch fixes one of the problems, so I haven't
-added a Closes: tag.
+  ld.lld: error: vmlinux.a(arch/powerpc/kernel/head_64.o):(.text+0x12d4): relocation R_PPC64_ADDR16_HI out of range: -4611686018409717520 is not in [-2147483648, 2147483647]; references '__start___soft_mask_table'
+  ld.lld: error: vmlinux.a(arch/powerpc/kernel/head_64.o):(.text+0x12e8): relocation R_PPC64_ADDR16_HI out of range: -4611686018409717392 is not in [-2147483648, 2147483647]; references '__stop___soft_mask_table'
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Reported-by: Nick Karaolidis <nick@karaolidis.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220152
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250609102125.63196-1-rf@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Diffing the .o.cmd files reveals that -DHAVE_AS_ATHIGH=1 is not present
+anymore, because as-instr only uses KBUILD_AFLAGS, which will no longer
+contain '--target'.
+
+Mirror Kconfig's as-instr and add CLANG_FLAGS explicitly to the
+invocation to ensure the target information is always present.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ scripts/Makefile.compiler |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10908,6 +10908,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x103c, 0x8e61, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8e62, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1032, "ASUS VivoBook X513EA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1043, 0x1034, "ASUS GU605C", ALC285_FIXUP_ASUS_GU605_SPI_SPEAKER2_TO_DAC1),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
- 	SND_PCI_QUIRK(0x1043, 0x1054, "ASUS G614FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
+--- a/scripts/Makefile.compiler
++++ b/scripts/Makefile.compiler
+@@ -38,7 +38,7 @@ as-option = $(call try-run,\
+ # Usage: aflags-y += $(call as-instr,instr,option1,option2)
+ 
+ as-instr = $(call try-run,\
+-	printf "%b\n" "$(1)" | $(CC) -Werror $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
++	printf "%b\n" "$(1)" | $(CC) -Werror $(CLANG_FLAGS) $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
+ 
+ # __cc-option
+ # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
 
 
