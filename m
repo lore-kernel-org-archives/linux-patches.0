@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC6D3FB1B;
-	Mon, 23 Jun 2025 21:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7F31AD3FA;
+	Mon, 23 Jun 2025 21:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715846; cv=none; b=QF/HrVXQ3XwTgAuZcw3ybo3F0sEcHR7VMnxd+VWW4EMfK3MmKFCtTTi1uoUu3kSjwjLTrYh2ZoMVhd8yht028dmvW3l7iDnBX/gI2JAvYKIa2GbncCsa8desCbILckF7U8wgSTcovP+l5BS5ifv145l8OMP7MPJkB2SMJMS9ukI=
+	t=1750715849; cv=none; b=keNDGaFRLAC+8scOvIuqylsnU6TjUDiLM/AjgQf/mElQutglU946160YQUyJro7umBajdLDCVMfjZF/9eGy+BLGEWZjXnF0453KDhijxKDOG+qHITh7VeUi1Sx4GLP5waivXIKE+xqveWK8acaeeMZX5AWVXIXJsqZGweGhcCFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715846; c=relaxed/simple;
-	bh=mjaYp0+snr7S4g/eBOWaY7qgBTmSgzCCXLC3S+0VIDI=;
+	s=arc-20240116; t=1750715849; c=relaxed/simple;
+	bh=u4qgDotxFsY4XMMUGrIS5tY+hh/NZpxtqZWxbECgknw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tNxwqNkcIaUp4th7318GOx4TkstxWd96vtThiYDtoAz3Msu7IjY0gBLW32ka8COMrYnjCO4yF/drXuPWXpjkCdDAfIu7Jaq5uezrVEtMFiWKd5kbCVdnaifCQrUpKuilm5K2grj24EYXFfHu0eS96g2P72sb75XFI4eSn7JUz+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJfoZXjf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=COj83hWYF1jm+BRHZiVb2ZBDAmiCumBDGrbuYLgjpcU4t8bm50Q6KiOeeoZCwh4zB7Ssud1GqEriFtXYuSc4p5GtAWJEXtL9KP7Y0v5LZ0eqgsXQpSOZgcgTERKnEHYnlQ/yoq8tpbxdeRqgNOtIY9MbHDoSLvat3QZwc8crkfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VixAsAVg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJfoZXjf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C92BC4CEEA;
-	Mon, 23 Jun 2025 21:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VixAsAVg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 881C3C4CEEA;
+	Mon, 23 Jun 2025 21:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715846;
-	bh=mjaYp0+snr7S4g/eBOWaY7qgBTmSgzCCXLC3S+0VIDI=;
+	s=korg; t=1750715848;
+	bh=u4qgDotxFsY4XMMUGrIS5tY+hh/NZpxtqZWxbECgknw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJfoZXjfEH5I9gBz7rsnv+L/zC1ZQPlaUaDr0xSFZnY8TgW10t9aQ+9kHdoAMDYUN
-	 kWjloD3Lj4AU7yQOH0nt/tZNH6iFIXryaGA3U0OTTyHd0l1cgE1bOLsl9SBByFCWPD
-	 mQF0xV519i39jrP6Ovbf1DOETACFtrtho4IoYdyM=
+	b=VixAsAVgv/7sCD3bfpRPDPMxVqEx3jg6ht6iK+rdr6PgjfaJiokDbP9Lqj43v0NIm
+	 I/lu6v9HCh7QuZnYFuaIduLBvTr19t4bswwjwB75Kdzb28BL50k6ILX6VMYewsmpiK
+	 VMImOZ2nYD8s6r+Nx+oyFjyULKixItl9m3MSR6j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 285/508] net: usb: aqc111: debug info before sanitation
-Date: Mon, 23 Jun 2025 15:05:30 +0200
-Message-ID: <20250623130652.279563415@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 507/592] drm/msm/dsi/dsi_phy_10nm: Fix missing initial VCO rate
+Date: Mon, 23 Jun 2025 15:07:45 +0200
+Message-ID: <20250623130712.496166368@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +47,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit d3faab9b5a6a0477d69c38bd11c43aa5e936f929 upstream.
+[ Upstream commit 8a48e35becb214743214f5504e726c3ec131cd6d ]
 
-If we sanitize error returns, the debug statements need
-to come before that so that we don't lose information.
+Driver unconditionally saves current state on first init in
+dsi_pll_10nm_init(), but does not save the VCO rate, only some of the
+divider registers.  The state is then restored during probe/enable via
+msm_dsi_phy_enable() -> msm_dsi_phy_pll_restore_state() ->
+dsi_10nm_pll_restore_state().
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Fixes: 405b0d610745 ("net: usb: aqc111: fix error handling of usbnet read calls")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Restoring calls dsi_pll_10nm_vco_set_rate() with
+pll_10nm->vco_current_rate=0, which basically overwrites existing rate of
+VCO and messes with clock hierarchy, by setting frequency to 0 to clock
+tree.  This makes anyway little sense - VCO rate was not saved, so
+should not be restored.
+
+If PLL was not configured configure it to minimum rate to avoid glitches
+and configuring entire in clock hierarchy to 0 Hz.
+
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/sz4kbwy5nwsebgf64ia7uq4ee7wbsa5uy3xmlqwcstsbntzcov@ew3dcyjdzmi2/
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: a4ccc37693a2 ("drm/msm/dsi_pll_10nm: restore VCO rate during
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/654796/
+Link: https://lore.kernel.org/r/20250520111325.92352-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/aqc111.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/net/usb/aqc111.c
-+++ b/drivers/net/usb/aqc111.c
-@@ -31,11 +31,11 @@ static int aqc111_read_cmd_nopm(struct u
- 				   USB_RECIP_DEVICE, value, index, data, size);
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+index 9812b4d691979..af2e30f3f842a 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+@@ -704,6 +704,13 @@ static int dsi_pll_10nm_init(struct msm_dsi_phy *phy)
+ 	/* TODO: Remove this when we have proper display handover support */
+ 	msm_dsi_phy_pll_save_state(phy);
  
- 	if (unlikely(ret < size)) {
--		ret = ret < 0 ? ret : -ENODATA;
--
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
++	/*
++	 * Store also proper vco_current_rate, because its value will be used in
++	 * dsi_10nm_pll_restore_state().
++	 */
++	if (!dsi_pll_10nm_vco_recalc_rate(&pll_10nm->clk_hw, VCO_REF_CLK_RATE))
++		pll_10nm->vco_current_rate = pll_10nm->phy->cfg->min_pll_rate;
 +
-+		ret = ret < 0 ? ret : -ENODATA;
- 	}
+ 	return 0;
+ }
  
- 	return ret;
-@@ -50,11 +50,11 @@ static int aqc111_read_cmd(struct usbnet
- 			      USB_RECIP_DEVICE, value, index, data, size);
- 
- 	if (unlikely(ret < size)) {
--		ret = ret < 0 ? ret : -ENODATA;
--
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
-+
-+		ret = ret < 0 ? ret : -ENODATA;
- 	}
- 
- 	return ret;
+-- 
+2.39.5
+
 
 
