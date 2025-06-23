@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377AF21D3DD;
-	Mon, 23 Jun 2025 21:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A438D21D3DD;
+	Mon, 23 Jun 2025 21:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714897; cv=none; b=qsV9P/kY/bqn5oG4s3xyqoYVUn4fUxP1qGxeWKnLcOo4VLBblvvDDvHGJ7C2xGjBq3lFEKnAFpjYSQ6jG9MOSDj4WbaZX7FsbY34y/3k875YWyHUo170HJ7tOVZGeGgLpT9rMEgZPSwpuWb7NNhlYMPKkYdc7JN+ISabbRt6hsM=
+	t=1750714899; cv=none; b=cVqtGZHhDg0xv3EGFSGKO6bLd2vNSI10kli5A5FimgnXF9ZAKDtt8LHpYAolH9ViiDrGEZvOb9Pre4d2YwBaqq5j9/s0OQfv/kgVU/xEtTHEKVw0d3SFPV94kvL782+jGd0MMqph4djSmuHPytfpxXl/t/GGfz+dJ4JckNX466A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714897; c=relaxed/simple;
-	bh=+2bsT03t3rymu/lmI1KySaAYHC1OQ/9vl7CgFBCoShQ=;
+	s=arc-20240116; t=1750714899; c=relaxed/simple;
+	bh=nflgTGHayodM3S76F3G7dDw9DDRbOOjiIPfJdplUi+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RjXFaEi/zfeeYmsEOy+JOk7GoaeDXg9KeFtRdbhJBQ/wqYFSpz1bvt8hTZ0lOtZBlKd/JM/+c0Bnwy32ehtvA8TxIIuOpHkaesFRNDOncc6TbfuovEuriQkXDOQI3DRATGzOqQqLKZ1DW7H0jl6SQTFybmeILsqtOs27twkHuUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WiJXSFGy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qp7Y68WVj+qSYJc2X/Pxx6fi4mW0yltfn+Jp5tNKAruD0CQcGj6Uhdgv3LhpECCYWlxz/8XpQoHZp4Es8QOjPwfVBKAqQqFTzKxRVjy0Ig8n8hzwgpaO7VjKvTSB1ZUSm0YsyrSYmAvtNSxxYHLMPA37i6gkunAt17n8O+9NPRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1V7p/tra; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WiJXSFGy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2D08C4CEEA;
-	Mon, 23 Jun 2025 21:41:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1V7p/tra"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC37C4CEED;
+	Mon, 23 Jun 2025 21:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714897;
-	bh=+2bsT03t3rymu/lmI1KySaAYHC1OQ/9vl7CgFBCoShQ=;
+	s=korg; t=1750714899;
+	bh=nflgTGHayodM3S76F3G7dDw9DDRbOOjiIPfJdplUi+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WiJXSFGyPqkeyzNQgZeNZ5+BSeu9LlzdvSPsqqrHFgnTr+IwMmgBy696cpx1qCZvo
-	 7yAKC3sqzs+huDd8nmuD2VdySZSqRzFHHahCvqRHcSHtTolZ08PlrCnE5u/JXaKUeq
-	 adBBXimJiSEK/Amp8gHCuCStP6DKYyYpCV9pmneI=
+	b=1V7p/tracVUEd6QHQ2emIZhlZCIrxSQk7SqWFswai+jo0iy1IWiNey91wtFC/PbAE
+	 M9HhpfPMhX/IbJmjGd6SQkECk0EhlWo3va6hQJl83z5f1Qc+hA0BMPl2h6kNNde1Vl
+	 CRA6X+Bp8YIGlx3+UUTMDV5rGKB8Kckg2zq2WFtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 167/290] libbpf: Add identical pointer detection to btf_dedup_is_equiv()
-Date: Mon, 23 Jun 2025 15:07:08 +0200
-Message-ID: <20250623130631.916181050@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 143/414] cifs: reset connections for all channels when reconnect requested
+Date: Mon, 23 Jun 2025 15:04:40 +0200
+Message-ID: <20250623130645.630229846@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,75 +46,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 8e64c387c942229c551d0f23de4d9993d3a2acb6 ]
+commit 1f396b9bfe39aaf55ea74a7005806164b236653d upstream.
 
-Recently as a side-effect of
+cifs_reconnect can be called with a flag to mark the session as needing
+reconnect too. When this is done, we expect the connections of all
+channels to be reconnected too, which is not happening today.
 
-commit ac053946f5c4 ("compiler.h: introduce TYPEOF_UNQUAL() macro")
+Without doing this, we have seen bad things happen when primary and
+secondary channels are connected to different servers (in case of cloud
+services like Azure Files SMB).
 
-issues were observed in deduplication between modules and kernel BTF
-such that a large number of kernel types were not deduplicated so
-were found in module BTF (task_struct, bpf_prog etc).  The root cause
-appeared to be a failure to dedup struct types, specifically those
-with members that were pointers with __percpu annotations.
+This change would force all connections to reconnect as well, not just
+the sessions and tcons.
 
-The issue in dedup is at the point that we are deduplicating structures,
-we have not yet deduplicated reference types like pointers.  If multiple
-copies of a pointer point at the same (deduplicated) integer as in this
-case, we do not see them as identical.  Special handling already exists
-to deal with structures and arrays, so add pointer handling here too.
-
-Reported-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250429161042.2069678-1-alan.maguire@oracle.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/bpf/btf.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/smb/client/connect.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 8484b563b53d0..2e9f28cece3ff 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -3922,6 +3922,19 @@ static bool btf_dedup_identical_structs(struct btf_dedup *d, __u32 id1, __u32 id
- 	return true;
- }
- 
-+static bool btf_dedup_identical_ptrs(struct btf_dedup *d, __u32 id1, __u32 id2)
-+{
-+	struct btf_type *t1, *t2;
-+
-+	t1 = btf_type_by_id(d->btf, id1);
-+	t2 = btf_type_by_id(d->btf, id2);
-+
-+	if (!btf_is_ptr(t1) || !btf_is_ptr(t2))
-+		return false;
-+
-+	return t1->type == t2->type;
-+}
-+
- /*
-  * Check equivalence of BTF type graph formed by candidate struct/union (we'll
-  * call it "candidate graph" in this description for brevity) to a type graph
-@@ -4054,6 +4067,9 @@ static int btf_dedup_is_equiv(struct btf_dedup *d, __u32 cand_id,
- 		 */
- 		if (btf_dedup_identical_structs(d, hypot_type_id, cand_id))
- 			return 1;
-+		/* A similar case is again observed for PTRs. */
-+		if (btf_dedup_identical_ptrs(d, hypot_type_id, cand_id))
-+			return 1;
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -393,6 +393,13 @@ static int __cifs_reconnect(struct TCP_S
+ 	if (!cifs_tcp_ses_needs_reconnect(server, 1))
  		return 0;
- 	}
  
--- 
-2.39.5
-
++	/*
++	 * if smb session has been marked for reconnect, also reconnect all
++	 * connections. This way, the other connections do not end up bad.
++	 */
++	if (mark_smb_session)
++		cifs_signal_cifsd_for_reconnect(server, mark_smb_session);
++
+ 	cifs_mark_tcp_ses_conns_for_reconnect(server, mark_smb_session);
+ 
+ 	cifs_abort_connection(server);
 
 
