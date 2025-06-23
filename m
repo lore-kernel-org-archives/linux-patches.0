@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9D9219E0;
-	Mon, 23 Jun 2025 21:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF5B219E0;
+	Mon, 23 Jun 2025 21:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713759; cv=none; b=SWAgfzzlTX8xk/n0lBKEelndrhiEfMjrmBWSve2OApfm2w0lL0wx6gZZJGP+R9zin19WugjHbKJyzU/f+cuqNsj88KUfwVWclBvu2uElYVYFAe/5Oxwf38QO93/wsJtRXnSALj4QvDp/zAQ8sitLVl7fptb7VS/tBBT1baS0mDw=
+	t=1750713762; cv=none; b=R+d3Y8ocrzuMflgOi44S9FZH4/9dFjHpBcwPYiRBLg+qc2s89dg6SELxMGmHTIylv98nvoevvENFmmmOfu/DtYps7xEtEdtwWSEEnpLs+TxDZxKE1KgNEQ8SZEt8gAbJvSjSZ3GMFZtreG1vP6IxaESh//d/1/UiCH/rP2K5M5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713759; c=relaxed/simple;
-	bh=Sp7R7WB3e1YMlgAC65pkrsKf1KJn28vNPLFQAlBNhdw=;
+	s=arc-20240116; t=1750713762; c=relaxed/simple;
+	bh=LFVsr262+4O031anlMYLvzUKCm2NLtaeAixyGZAheTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S1JWAC8b5OxjNNIEliPbg51gH0IaHxCKF/xb0/G/JZAzlGliTqqsyHREnfA+5zOWtQgi5JoO+kPMnIQlX0uEyYVtHXN0LFGdhVc7q9NTO1LNlbDTHrfBdJEX08Om2/JkQ1fhn/xvWecOU1hPtl8XQHIgrE5zaoNdvHhZqZE0QFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R2ZiZPrm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iPFV/C7Vigi3HfK+xByLUsudBmleo6ZfLC39o7ON8kQgmJm7RXECDqOX5tPM7HHyawGXPxz2mdxMIV4HQIp+3ZL41c2WqA+nqsFgJd6Al/rYKgLSdkRrsfiZxS9kJ3NlvQGeREzkAWG6x02G4zIYbWXnXEZs/5RuWUjMo9CGyfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zbX9DlTp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R2ZiZPrm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F96C4CEEA;
-	Mon, 23 Jun 2025 21:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbX9DlTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2677BC4CEEA;
+	Mon, 23 Jun 2025 21:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713759;
-	bh=Sp7R7WB3e1YMlgAC65pkrsKf1KJn28vNPLFQAlBNhdw=;
+	s=korg; t=1750713761;
+	bh=LFVsr262+4O031anlMYLvzUKCm2NLtaeAixyGZAheTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R2ZiZPrmkaCVsMtiIAQFR27R85gyajvgAbQb/CXaVbFYCPHzcDYo2kT4RZQZB+MMM
-	 IcuZL6X6HOvdfJK/nijUpj56JKB+oJiSKbrlmJGsmgzSaKr30aP/NXj+VJpBYccD4t
-	 LCtMJGpJ67VPKmorWNT0LvAQu4n8T4vtcKOi2Yrk=
+	b=zbX9DlTpuX3CsgZufSKC7aT7VKjS0tepUKEhk90siyvsfvnWb1bnw0Lm8NoIpexoe
+	 DBGeKxj9RK4pZZbwbWD6dr+iAubu3zbOnf8EEVaReV4C8yTLo2CWNXa3AfZcc87KHr
+	 M3ALDOoZY6FuKrpEetH3A24tw8laaepVHpoI6bZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	"Ivan T. Ivanov" <iivanov@suse.de>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.6 096/290] video: screen_info: Relocate framebuffers behind PCI bridges
-Date: Mon, 23 Jun 2025 15:05:57 +0200
-Message-ID: <20250623130629.857711915@linuxfoundation.org>
+	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
+	Ingo Saitz <ingo@hannover.ccc.de>,
+	Kees Cook <kees@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 131/508] randstruct: gcc-plugin: Fix attribute addition
+Date: Mon, 23 Jun 2025 15:02:56 +0200
+Message-ID: <20250623130648.514262906@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,176 +48,138 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Kees Cook <kees@kernel.org>
 
-commit 2f29b5c231011b94007d2c8a6d793992f2275db1 upstream.
+[ Upstream commit f39f18f3c3531aa802b58a20d39d96e82eb96c14 ]
 
-Apply PCI host-bridge window offsets to screen_info framebuffers. Fixes
-invalid access to I/O memory.
+Based on changes in the 2021 public version of the randstruct
+out-of-tree GCC plugin[1], more carefully update the attributes on
+resulting decls, to avoid tripping checks in GCC 15's
+comptypes_check_enum_int() when it has been configured with
+"--enable-checking=misc":
 
-Resources behind a PCI host bridge can be relocated by a certain offset
-in the kernel's CPU address range used for I/O. The framebuffer memory
-range stored in screen_info refers to the CPU addresses as seen during
-boot (where the offset is 0). During boot up, firmware may assign a
-different memory offset to the PCI host bridge and thereby relocating
-the framebuffer address of the PCI graphics device as seen by the kernel.
-The information in screen_info must be updated as well.
+arch/arm64/kernel/kexec_image.c:132:14: internal compiler error: in comptypes_check_enum_int, at c/c-typeck.cc:1519
+  132 | const struct kexec_file_ops kexec_image_ops = {
+      |              ^~~~~~~~~~~~~~
+ internal_error(char const*, ...), at gcc/gcc/diagnostic-global-context.cc:517
+ fancy_abort(char const*, int, char const*), at gcc/gcc/diagnostic.cc:1803
+ comptypes_check_enum_int(tree_node*, tree_node*, bool*), at gcc/gcc/c/c-typeck.cc:1519
+ ...
 
-The helper pcibios_bus_to_resource() performs the relocation of the
-screen_info's framebuffer resource (given in PCI bus addresses). The
-result matches the I/O-memory resource of the PCI graphics device (given
-in CPU addresses). As before, we store away the information necessary to
-later update the information in screen_info itself.
-
-Commit 78aa89d1dfba ("firmware/sysfb: Update screen_info for relocated
-EFI framebuffers") added the code for updating screen_info. It is based
-on similar functionality that pre-existed in efifb. Efifb uses a pointer
-to the PCI resource, while the newer code does a memcpy of the region.
-Hence efifb sees any updates to the PCI resource and avoids the issue.
-
-v3:
-- Only use struct pci_bus_region for PCI bus addresses (Bjorn)
-- Clarify address semantics in commit messages and comments (Bjorn)
-v2:
-- Fixed tags (Takashi, Ivan)
-- Updated information on efifb
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reported-by: "Ivan T. Ivanov" <iivanov@suse.de>
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1240696
-Tested-by: "Ivan T. Ivanov" <iivanov@suse.de>
-Fixes: 78aa89d1dfba ("firmware/sysfb: Update screen_info for relocated EFI framebuffers")
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.9+
-Link: https://lore.kernel.org/r/20250528080234.7380-1-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://archive.org/download/grsecurity/grsecurity-3.1-5.10.41-202105280954.patch.gz [1]
+Reported-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Closes: https://github.com/KSPP/linux/issues/367
+Closes: https://lore.kernel.org/lkml/20250530000646.104457-1-thiago.bauermann@linaro.org/
+Reported-by: Ingo Saitz <ingo@hannover.ccc.de>
+Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1104745
+Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
+Tested-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Link: https://lore.kernel.org/r/20250530221824.work.623-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/screen_info_pci.c | 75 +++++++++++++++++++++------------
- 1 file changed, 48 insertions(+), 27 deletions(-)
+ scripts/gcc-plugins/gcc-common.h              | 32 +++++++++++++++++++
+ scripts/gcc-plugins/randomize_layout_plugin.c | 22 ++++++-------
+ 2 files changed, 43 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/video/screen_info_pci.c b/drivers/video/screen_info_pci.c
-index 6c5833517141..66bfc1d0a6dc 100644
---- a/drivers/video/screen_info_pci.c
-+++ b/drivers/video/screen_info_pci.c
-@@ -7,8 +7,8 @@
- 
- static struct pci_dev *screen_info_lfb_pdev;
- static size_t screen_info_lfb_bar;
--static resource_size_t screen_info_lfb_offset;
--static struct resource screen_info_lfb_res = DEFINE_RES_MEM(0, 0);
-+static resource_size_t screen_info_lfb_res_start; // original start of resource
-+static resource_size_t screen_info_lfb_offset; // framebuffer offset within resource
- 
- static bool __screen_info_relocation_is_valid(const struct screen_info *si, struct resource *pr)
- {
-@@ -31,7 +31,7 @@ void screen_info_apply_fixups(void)
- 	if (screen_info_lfb_pdev) {
- 		struct resource *pr = &screen_info_lfb_pdev->resource[screen_info_lfb_bar];
- 
--		if (pr->start != screen_info_lfb_res.start) {
-+		if (pr->start != screen_info_lfb_res_start) {
- 			if (__screen_info_relocation_is_valid(si, pr)) {
- 				/*
- 				 * Only update base if we have an actual
-@@ -47,46 +47,67 @@ void screen_info_apply_fixups(void)
- 	}
+diff --git a/scripts/gcc-plugins/gcc-common.h b/scripts/gcc-plugins/gcc-common.h
+index 1ae39b9f4a95e..90e83d62adb54 100644
+--- a/scripts/gcc-plugins/gcc-common.h
++++ b/scripts/gcc-plugins/gcc-common.h
+@@ -128,6 +128,38 @@ static inline tree build_const_char_string(int len, const char *str)
+ 	return cstr;
  }
  
-+static int __screen_info_lfb_pci_bus_region(const struct screen_info *si, unsigned int type,
-+					    struct pci_bus_region *r)
++static inline void __add_type_attr(tree type, const char *attr, tree args)
 +{
-+	u64 base, size;
++	tree oldattr;
 +
-+	base = __screen_info_lfb_base(si);
-+	if (!base)
-+		return -EINVAL;
++	if (type == NULL_TREE)
++		return;
++	oldattr = lookup_attribute(attr, TYPE_ATTRIBUTES(type));
++	if (oldattr != NULL_TREE) {
++		gcc_assert(TREE_VALUE(oldattr) == args || TREE_VALUE(TREE_VALUE(oldattr)) == TREE_VALUE(args));
++		return;
++	}
 +
-+	size = __screen_info_lfb_size(si, type);
-+	if (!size)
-+		return -EINVAL;
-+
-+	r->start = base;
-+	r->end = base + size - 1;
-+
-+	return 0;
++	TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
++	TYPE_ATTRIBUTES(type) = tree_cons(get_identifier(attr), args, TYPE_ATTRIBUTES(type));
 +}
 +
- static void screen_info_fixup_lfb(struct pci_dev *pdev)
- {
- 	unsigned int type;
--	struct resource res[SCREEN_INFO_MAX_RESOURCES];
--	size_t i, numres;
-+	struct pci_bus_region bus_region;
- 	int ret;
-+	struct resource r = {
-+		.flags = IORESOURCE_MEM,
-+	};
-+	const struct resource *pr;
- 	const struct screen_info *si = &screen_info;
++static inline void add_type_attr(tree type, const char *attr, tree args)
++{
++	tree main_variant = TYPE_MAIN_VARIANT(type);
++
++	__add_type_attr(TYPE_CANONICAL(type), attr, args);
++	__add_type_attr(TYPE_CANONICAL(main_variant), attr, args);
++	__add_type_attr(main_variant, attr, args);
++
++	for (type = TYPE_NEXT_VARIANT(main_variant); type; type = TYPE_NEXT_VARIANT(type)) {
++		if (!lookup_attribute(attr, TYPE_ATTRIBUTES(type)))
++			TYPE_ATTRIBUTES(type) = TYPE_ATTRIBUTES(main_variant);
++
++		__add_type_attr(TYPE_CANONICAL(type), attr, args);
++	}
++}
++
+ #define PASS_INFO(NAME, REF, ID, POS)		\
+ struct register_pass_info NAME##_pass_info = {	\
+ 	.pass = make_##NAME##_pass(),		\
+diff --git a/scripts/gcc-plugins/randomize_layout_plugin.c b/scripts/gcc-plugins/randomize_layout_plugin.c
+index 2b93dd14bd7b6..b00681ad3e383 100644
+--- a/scripts/gcc-plugins/randomize_layout_plugin.c
++++ b/scripts/gcc-plugins/randomize_layout_plugin.c
+@@ -77,6 +77,9 @@ static tree handle_randomize_layout_attr(tree *node, tree name, tree args, int f
  
- 	if (screen_info_lfb_pdev)
- 		return; // already found
+ 	if (TYPE_P(*node)) {
+ 		type = *node;
++	} else if (TREE_CODE(*node) == FIELD_DECL) {
++		*no_add_attrs = false;
++		return NULL_TREE;
+ 	} else {
+ 		gcc_assert(TREE_CODE(*node) == TYPE_DECL);
+ 		type = TREE_TYPE(*node);
+@@ -363,15 +366,14 @@ static int relayout_struct(tree type)
+ 		TREE_CHAIN(newtree[i]) = newtree[i+1];
+ 	TREE_CHAIN(newtree[num_fields - 1]) = NULL_TREE;
  
- 	type = screen_info_video_type(si);
--	if (type != VIDEO_TYPE_EFI)
--		return; // only applies to EFI
-+	if (!__screen_info_has_lfb(type))
-+		return; // only applies to EFI; maybe VESA
- 
--	ret = screen_info_resources(si, res, ARRAY_SIZE(res));
-+	ret = __screen_info_lfb_pci_bus_region(si, type, &bus_region);
- 	if (ret < 0)
- 		return;
--	numres = ret;
- 
--	for (i = 0; i < numres; ++i) {
--		struct resource *r = &res[i];
--		const struct resource *pr;
-+	/*
-+	 * Translate the PCI bus address to resource. Account
-+	 * for an offset if the framebuffer is behind a PCI host
-+	 * bridge.
-+	 */
-+	pcibios_bus_to_resource(pdev->bus, &r, &bus_region);
- 
--		if (!(r->flags & IORESOURCE_MEM))
--			continue;
--		pr = pci_find_resource(pdev, r);
--		if (!pr)
--			continue;
-+	pr = pci_find_resource(pdev, &r);
-+	if (!pr)
-+		return;
- 
--		/*
--		 * We've found a PCI device with the framebuffer
--		 * resource. Store away the parameters to track
--		 * relocation of the framebuffer aperture.
--		 */
--		screen_info_lfb_pdev = pdev;
--		screen_info_lfb_bar = pr - pdev->resource;
--		screen_info_lfb_offset = r->start - pr->start;
--		memcpy(&screen_info_lfb_res, r, sizeof(screen_info_lfb_res));
++	add_type_attr(type, "randomize_performed", NULL_TREE);
++	add_type_attr(type, "designated_init", NULL_TREE);
++	if (has_flexarray)
++		add_type_attr(type, "has_flexarray", NULL_TREE);
++
+ 	main_variant = TYPE_MAIN_VARIANT(type);
+-	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant)) {
++	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant))
+ 		TYPE_FIELDS(variant) = newtree[0];
+-		TYPE_ATTRIBUTES(variant) = copy_list(TYPE_ATTRIBUTES(variant));
+-		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("randomize_performed"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+-		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("designated_init"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+-		if (has_flexarray)
+-			TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("has_flexarray"), NULL_TREE, TYPE_ATTRIBUTES(type));
 -	}
-+	/*
-+	 * We've found a PCI device with the framebuffer
-+	 * resource. Store away the parameters to track
-+	 * relocation of the framebuffer aperture.
-+	 */
-+	screen_info_lfb_pdev = pdev;
-+	screen_info_lfb_bar = pr - pdev->resource;
-+	screen_info_lfb_offset = r.start - pr->start;
-+	screen_info_lfb_res_start = bus_region.start;
- }
- DECLARE_PCI_FIXUP_CLASS_HEADER(PCI_ANY_ID, PCI_ANY_ID, PCI_BASE_CLASS_DISPLAY, 16,
- 			       screen_info_fixup_lfb);
+ 
+ 	/*
+ 	 * force a re-layout of the main variant
+@@ -439,10 +441,8 @@ static void randomize_type(tree type)
+ 	if (lookup_attribute("randomize_layout", TYPE_ATTRIBUTES(TYPE_MAIN_VARIANT(type))) || is_pure_ops_struct(type))
+ 		relayout_struct(type);
+ 
+-	for (variant = TYPE_MAIN_VARIANT(type); variant; variant = TYPE_NEXT_VARIANT(variant)) {
+-		TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
+-		TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("randomize_considered"), NULL_TREE, TYPE_ATTRIBUTES(type));
+-	}
++	add_type_attr(type, "randomize_considered", NULL_TREE);
++
+ #ifdef __DEBUG_PLUGIN
+ 	fprintf(stderr, "Marking randomize_considered on struct %s\n", ORIG_TYPE_NAME(type));
+ #ifdef __DEBUG_VERBOSE
 -- 
-2.50.0
+2.39.5
 
 
 
