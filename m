@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1899524A06B;
-	Mon, 23 Jun 2025 13:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2472417C3;
+	Mon, 23 Jun 2025 13:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684461; cv=none; b=irFL3qJYCqiXbKE+NIuemNMCC0rLSVvHq86A/XiD8m5mMwvwDjcPmiB97K+UrBxUmvkYRe/ahKOBUdOIxu9LlFxqDLaJnZP/VRtPQKwbPWipLmSTDHaS6AsfjcIU5QMlyJ43tS2YbgnYZOIYXs1JUCQWkP9nLzBJ+PdtNKQxRgc=
+	t=1750684463; cv=none; b=Uz62yM44J3Q0vEbtnjCtYlEiM3QK1d4QXz+NGuMmSd67S0MXXhc5Ce7jeI4HqnR0p9gvGziUY1Q6kLQd+xU5u3is/sfN/Ku63BxgKfdfAKGlM0paCaVbU2Ai7sHP95CoSBxRjafTVIhVd30bnBEJPdWQ//H4k9Z5lMmBF2JHseI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684461; c=relaxed/simple;
-	bh=6H4NkMzMhmR7ne3liX6xB40xq8sT6wrck+xmCXMK4wI=;
+	s=arc-20240116; t=1750684463; c=relaxed/simple;
+	bh=gQzYglmSwaUjRAZmVKn9M2SACrM6QX1ogC97w9Lk4a4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xw52RBSt8IXwXsmow96haCMd3K20UpQGqrMyAbJ6La+aZ8aKxcJQE0O0Nv3Jnj5JOgP+ZP6TBpovoNH0rBbOXRLiXwDGnxGzyTDhVLvNzAT8oJRLnZ4FB0A67f0Vlmu0Y+G5C68SpN9bsZdzOgx8TSk7cH+nX3Nhyq9ty2Lm2Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZ+K1Qml; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O5Bd8waTi2oUk4MP3iUuzgkBcS4RGHlrpsPibUzLyDv6RnMT7waVMJp8pO56H6uxrf3N87at/fCuJlO6Fax1w9/WOR55vfaYs1SSOKHWl85Y+dJankLZ3m8hfOiTExUY2N1TGJhE5i3UFp5EAoaVjoBH5pABX0lqNC2x08//jGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6zBCHW5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZ+K1Qml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07EFC4CEEA;
-	Mon, 23 Jun 2025 13:14:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6zBCHW5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F97DC4CEEA;
+	Mon, 23 Jun 2025 13:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684461;
-	bh=6H4NkMzMhmR7ne3liX6xB40xq8sT6wrck+xmCXMK4wI=;
+	s=korg; t=1750684463;
+	bh=gQzYglmSwaUjRAZmVKn9M2SACrM6QX1ogC97w9Lk4a4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mZ+K1QmlIe2N3zbKlkd0oDTINlfFMGPfECb7FL0LDReywfeTZAo9nXMWm3UQ+SLrM
-	 JpDX9Pwudh7A69zL68mHxrA9qFdkiZMB4rS7Q+C63blRd+RwPDsn/CM5G9QFBW5FoD
-	 mTATGc3g/Bd8cbyr688o8dy6FEJ+lVlV/civxHAM=
+	b=w6zBCHW5XQ7FfnhMfq/xxkM7F1lBiWSGxxCJx5fTmt5QS4zsc5zoA9ntCbM6D8yz0
+	 UPz0ywmeRutGuXDkMIbU6BXiGMqAEPoOEBM1v0JEBzpgdoDVUaR5lUmdkG7m+C93uc
+	 B2iHwEow/BmCrQKoP7/KbvxDY498LXd6TGK1Csqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Lo <michael.lo@mediatek.com>,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.15 032/592] wifi: mt76: mt7925: fix host interrupt register initialization
-Date: Mon, 23 Jun 2025 14:59:50 +0200
-Message-ID: <20250623130701.003086216@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	syzbot+5d8e79d323a13aa0b248@syzkaller.appspotmail.com,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.15 033/592] anon_inode: use a proper mode internally
+Date: Mon, 23 Jun 2025 14:59:51 +0200
+Message-ID: <20250623130701.030028909@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -51,47 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Lo <michael.lo@mediatek.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit ca872e0ad97159375da8f3d05cac1f48239e01d7 upstream.
+commit cfd86ef7e8e7b9e015707e46479a6b1de141eed0 upstream.
 
-ensure proper interrupt handling and aligns with the hardware spec by
-updating the register offset for MT_WFDMA0_HOST_INT_ENA.
+This allows the VFS to not trip over anonymous inodes and we can add
+asserts based on the mode into the vfs. When we report it to userspace
+we can simply hide the mode to avoid regressions. I've audited all
+direct callers of alloc_anon_inode() and only secretmen overrides i_mode
+and i_op inode operations but it already uses a regular file.
 
-Cc: stable@vger.kernel.org
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Michael Lo <michael.lo@mediatek.com>
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250509083512.455095-1-mingyen.hsieh@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/20250407-work-anon_inode-v1-1-53a44c20d44e@kernel.org
+Fixes: af153bb63a336 ("vfs: catch invalid modes in may_open()")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Cc: stable@vger.kernel.org # all LTS kernels
+Reported-by: syzbot+5d8e79d323a13aa0b248@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/67ed3fb3.050a0220.14623d.0009.GAE@google.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/pci.c  |    3 ---
- drivers/net/wireless/mediatek/mt76/mt7925/regs.h |    2 +-
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ fs/anon_inodes.c |   36 ++++++++++++++++++++++++++++++++++++
+ fs/internal.h    |    3 +++
+ fs/libfs.c       |    8 +++++++-
+ 3 files changed, 46 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-@@ -490,9 +490,6 @@ static int mt7925_pci_suspend(struct dev
+--- a/fs/anon_inodes.c
++++ b/fs/anon_inodes.c
+@@ -24,10 +24,44 @@
  
- 	/* disable interrupt */
- 	mt76_wr(dev, dev->irq_map->host_irq_enable, 0);
--	mt76_wr(dev, MT_WFDMA0_HOST_INT_DIS,
--		dev->irq_map->tx.all_complete_mask |
--		MT_INT_RX_DONE_ALL | MT_INT_MCU_CMD);
+ #include <linux/uaccess.h>
  
- 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0x0);
++#include "internal.h"
++
+ static struct vfsmount *anon_inode_mnt __ro_after_init;
+ static struct inode *anon_inode_inode __ro_after_init;
  
---- a/drivers/net/wireless/mediatek/mt76/mt7925/regs.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/regs.h
-@@ -28,7 +28,7 @@
- #define MT_MDP_TO_HIF			0
- #define MT_MDP_TO_WM			1
+ /*
++ * User space expects anonymous inodes to have no file type in st_mode.
++ *
++ * In particular, 'lsof' has this legacy logic:
++ *
++ *	type = s->st_mode & S_IFMT;
++ *	switch (type) {
++ *	  ...
++ *	case 0:
++ *		if (!strcmp(p, "anon_inode"))
++ *			Lf->ntype = Ntype = N_ANON_INODE;
++ *
++ * to detect our old anon_inode logic.
++ *
++ * Rather than mess with our internal sane inode data, just fix it
++ * up here in getattr() by masking off the format bits.
++ */
++int anon_inode_getattr(struct mnt_idmap *idmap, const struct path *path,
++		       struct kstat *stat, u32 request_mask,
++		       unsigned int query_flags)
++{
++	struct inode *inode = d_inode(path->dentry);
++
++	generic_fillattr(&nop_mnt_idmap, request_mask, inode, stat);
++	stat->mode &= ~S_IFMT;
++	return 0;
++}
++
++static const struct inode_operations anon_inode_operations = {
++	.getattr = anon_inode_getattr,
++};
++
++/*
+  * anon_inodefs_dname() is called from d_path().
+  */
+ static char *anon_inodefs_dname(struct dentry *dentry, char *buffer, int buflen)
+@@ -66,6 +100,7 @@ static struct inode *anon_inode_make_sec
+ 	if (IS_ERR(inode))
+ 		return inode;
+ 	inode->i_flags &= ~S_PRIVATE;
++	inode->i_op = &anon_inode_operations;
+ 	error =	security_inode_init_security_anon(inode, &QSTR(name),
+ 						  context_inode);
+ 	if (error) {
+@@ -313,6 +348,7 @@ static int __init anon_inode_init(void)
+ 	anon_inode_inode = alloc_anon_inode(anon_inode_mnt->mnt_sb);
+ 	if (IS_ERR(anon_inode_inode))
+ 		panic("anon_inode_init() inode allocation failed (%ld)\n", PTR_ERR(anon_inode_inode));
++	anon_inode_inode->i_op = &anon_inode_operations;
  
--#define MT_WFDMA0_HOST_INT_ENA		MT_WFDMA0(0x228)
-+#define MT_WFDMA0_HOST_INT_ENA		MT_WFDMA0(0x204)
- #define MT_WFDMA0_HOST_INT_DIS		MT_WFDMA0(0x22c)
- #define HOST_RX_DONE_INT_ENA4		BIT(12)
- #define HOST_RX_DONE_INT_ENA5		BIT(13)
+ 	return 0;
+ }
+--- a/fs/internal.h
++++ b/fs/internal.h
+@@ -343,3 +343,6 @@ static inline bool path_mounted(const st
+ void file_f_owner_release(struct file *file);
+ bool file_seek_cur_needs_f_lock(struct file *file);
+ int statmount_mnt_idmap(struct mnt_idmap *idmap, struct seq_file *seq, bool uid_map);
++int anon_inode_getattr(struct mnt_idmap *idmap, const struct path *path,
++		       struct kstat *stat, u32 request_mask,
++		       unsigned int query_flags);
+--- a/fs/libfs.c
++++ b/fs/libfs.c
+@@ -1647,7 +1647,13 @@ struct inode *alloc_anon_inode(struct su
+ 	 * that it already _is_ on the dirty list.
+ 	 */
+ 	inode->i_state = I_DIRTY;
+-	inode->i_mode = S_IRUSR | S_IWUSR;
++	/*
++	 * Historically anonymous inodes didn't have a type at all and
++	 * userspace has come to rely on this. Internally they're just
++	 * regular files but S_IFREG is masked off when reporting
++	 * information to userspace.
++	 */
++	inode->i_mode = S_IFREG | S_IRUSR | S_IWUSR;
+ 	inode->i_uid = current_fsuid();
+ 	inode->i_gid = current_fsgid();
+ 	inode->i_flags |= S_PRIVATE;
 
 
