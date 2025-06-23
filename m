@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74F0253359;
-	Mon, 23 Jun 2025 13:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6430024EF8C;
+	Mon, 23 Jun 2025 13:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684712; cv=none; b=dE0s6eTW8nIxdo45gZuQsHWleQe7931wfjXtwBdOKRp13hkiJEgrsJrUMJ5iv1gDctM0cDQhpJknvkogrrcG5luDloTddoFRQmkaUYl3A7Z6zqbLBe01my9AEKgTrKzNQ315SkAB5rfzExPYOeBvens0iypn6jEDCVLMj++c6+M=
+	t=1750684715; cv=none; b=K955ZxLtnntlmGK1NS1BdFTBQeJV7N6jKJL6639i4bmAdkBMBwFKSuioviveo/YSbT2vT9zXtV4ZnlQon58mlfZf+UQ7H12MUdtk/gjwfWMjjIUc0ICcPlcpZgD9s64oRAUy4ime6D7dZS+d81I4t1h6UDZp4E5yVu9rfBwMs7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684712; c=relaxed/simple;
-	bh=z816RUjwpWza+i4tMAkBFlQZv2ZBMigTUTjrlEyIhH4=;
+	s=arc-20240116; t=1750684715; c=relaxed/simple;
+	bh=ZjcE3OcaTvEe4SejCWBRGp/4qxPpv1vLJ/W0bNU7nXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T09LG8lMkzlCxvR4C47Sd+/gUyTz/shWF/oCpBMwBT2VOvenDiDaD4E0T7NQQYjrokEBAdyrw2ZYH/BAQdvQjJhG5EI4Pfp8cLzBI3lGK+dksZNEfrpGsd4RpSTRkRGityyVYHPqaVWE42eXoZM5X24PYpzI6RUQ2htDtXWInZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ts7Pi9TP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gbcTA+s/fGFq2LmXjUHl5dRbBksYz2RrOK+YcRaQst/4BCqfTdcufEOQEiEZlaPU7/iqScbNwRZNB8CiQ3poDVDg3B0zM576wt6rnXdQ/BQ0qS1JkFEub8g4i4NtA0eA4HTA40YJ3ldbcc0PPi6mpEy1CP5vZFR4Ww3i9nkTMf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gl53lkY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ts7Pi9TP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE8BC4CEEA;
-	Mon, 23 Jun 2025 13:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gl53lkY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE552C4CEEA;
+	Mon, 23 Jun 2025 13:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684712;
-	bh=z816RUjwpWza+i4tMAkBFlQZv2ZBMigTUTjrlEyIhH4=;
+	s=korg; t=1750684715;
+	bh=ZjcE3OcaTvEe4SejCWBRGp/4qxPpv1vLJ/W0bNU7nXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ts7Pi9TP9yUf76tvwtBtKPJ4KK/R7L3HV5qKSvBPywSuf5y73gcSAMYuL7dJg8mzX
-	 DpMboXBtGTwThLAxBgraszRh4RxfuCp+ZludfPs+p331nh0GZi9ep2DL6WsvoOZXSm
-	 UowKyiUi6zMWH+aKCMnRUYCeJLPaFcmRCHCzix4Q=
+	b=0gl53lkYOyXwfsi2wG1Wk8ovwTUx0G8JKK7OFQalUTHrfy31Y2TEL71n+MmC/fIQ0
+	 Da+umVdd5mXPQUh8+eqVrd7X3rpfjHYi4Xvh2y3dvwr4L+DAzvTFPMoOz/Run8Ojce
+	 zTs9TbAUr5dOuWwkl52bLjG2od99jAeevqIhArYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.15 158/592] dm-table: Set BLK_FEAT_ATOMIC_WRITES for target queue limits
-Date: Mon, 23 Jun 2025 15:01:56 +0200
-Message-ID: <20250623130704.036613877@linuxfoundation.org>
+	Feng Xu <feng.f.xu@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 014/222] EDAC/skx_common: Fix general protection fault
+Date: Mon, 23 Jun 2025 15:05:49 +0200
+Message-ID: <20250623130612.328321121@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,54 +48,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-commit b7c18b17a173087ce97e809cefd55e581121f19e upstream.
+[ Upstream commit 20d2d476b3ae18041be423671a8637ed5ffd6958 ]
 
-Feature flag BLK_FEAT_ATOMIC_WRITES is not being properly set for the
-target queue limits, and this means that atomic writes are not being
-enabled for any dm personalities.
+After loading i10nm_edac (which automatically loads skx_edac_common), if
+unload only i10nm_edac, then reload it and perform error injection testing,
+a general protection fault may occur:
 
-When calling dm_set_device_limits() -> blk_stack_limits() ->
-... -> blk_stack_atomic_writes_limits(), the bottom device limits
-(which corresponds to intermediate target queue limits) does not have
-BLK_FEAT_ATOMIC_WRITES set, and so atomic writes can never be enabled.
+  mce: [Hardware Error]: Machine check events logged
+  Oops: general protection fault ...
+  ...
+  Workqueue: events mce_gen_pool_process
+  RIP: 0010:string+0x53/0xe0
+  ...
+  Call Trace:
+  <TASK>
+  ? die_addr+0x37/0x90
+  ? exc_general_protection+0x1e7/0x3f0
+  ? asm_exc_general_protection+0x26/0x30
+  ? string+0x53/0xe0
+  vsnprintf+0x23e/0x4c0
+  snprintf+0x4d/0x70
+  skx_adxl_decode+0x16a/0x330 [skx_edac_common]
+  skx_mce_check_error.part.0+0xf8/0x220 [skx_edac_common]
+  skx_mce_check_error+0x17/0x20 [skx_edac_common]
+  ...
 
-Typically such a flag would be inherited from the stacked device in
-dm_set_device_limits() -> blk_stack_limits() via BLK_FEAT_INHERIT_MASK,
-but BLK_FEAT_ATOMIC_WRITES is not inherited as it's preferred to manually
-enable on a per-personality basis.
+The issue arose was because the variable 'adxl_component_count' (inside
+skx_edac_common), which counts the ADXL components, was not reset. During
+the reloading of i10nm_edac, the count was incremented by the actual number
+of ADXL components again, resulting in a count that was double the real
+number of ADXL components. This led to an out-of-bounds reference to the
+ADXL component array, causing the general protection fault above.
 
-Set BLK_FEAT_ATOMIC_WRITES manually for the intermediate target queue
-limits from the stacked device to get atomic writes working.
+Fix this issue by resetting the 'adxl_component_count' in adxl_put(),
+which is called during the unloading of {skx,i10nm}_edac.
 
-Fixes: 3194e36488e2 ("dm-table: atomic writes support")
-Cc: stable@vger.kernel.org	# v6.14
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 123b15863550 ("EDAC, i10nm: make skx_common.o a separate module")
+Reported-by: Feng Xu <feng.f.xu@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Tested-by: Feng Xu <feng.f.xu@intel.com>
+Link: https://lore.kernel.org/r/20250417150724.1170168-2-qiuxu.zhuo@intel.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-table.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/edac/skx_common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-table.c
-+++ b/drivers/md/dm-table.c
-@@ -431,6 +431,12 @@ static int dm_set_device_limits(struct d
- 		return 0;
- 	}
+diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
+index b298b189bdf35..37d76d591745c 100644
+--- a/drivers/edac/skx_common.c
++++ b/drivers/edac/skx_common.c
+@@ -112,6 +112,7 @@ EXPORT_SYMBOL_GPL(skx_adxl_get);
  
-+	/*
-+	 * BLK_FEAT_ATOMIC_WRITES is not inherited from the bottom device in
-+	 * blk_stack_limits(), so do it manually.
-+	 */
-+	limits->features |= (q->limits.features & BLK_FEAT_ATOMIC_WRITES);
-+
- 	mutex_lock(&q->limits_lock);
- 	if (blk_stack_limits(limits, &q->limits,
- 			get_start_sect(bdev) + start) < 0)
+ void skx_adxl_put(void)
+ {
++	adxl_component_count = 0;
+ 	kfree(adxl_values);
+ 	kfree(adxl_msg);
+ }
+-- 
+2.39.5
+
 
 
