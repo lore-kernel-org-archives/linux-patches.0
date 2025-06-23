@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D8EC2E0;
-	Mon, 23 Jun 2025 21:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAB92AD04;
+	Mon, 23 Jun 2025 21:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714272; cv=none; b=OusAT7m3nDa1iNBvIg9cbL4gDnlL0v8mC/Wg1kqtVamVsy2Hgl4hwCwjBULcFLHVVYGybNncqSWVAnYhbNW9Mn41XgQ+OE4F+Mon6OpNKnZRAEF0zgtfBY/8jLCZ1WYMGPAayZHSZa7b900p6HYVh5gZ4LzGRDp2OvqaUpciicE=
+	t=1750714274; cv=none; b=nBXEG/OKkmi8RjrmwMLVdlrJEwNt2kIpgZH0INH46Qz/jR3IWa6kpxxqlf9OcQ8aD8mE/euQwojUUUmCC3ud5/zWW2J+bCAKP4R0qloxQmtBmvzyXazvnopypUR2V5r+6VAZBpRWKzsbvHra2Tu1FC/J0FFNO463hgdsCmI44gI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714272; c=relaxed/simple;
-	bh=DJnBrbLInMZN9z4rT+cprh+xDwGaHLnGrM1zGUj+Y/8=;
+	s=arc-20240116; t=1750714274; c=relaxed/simple;
+	bh=zM/FZ5clxAmeDtVvZnmwh9zu/mn51fMehkDOg3kQPL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Gv/yhsGQ67eVWdWPaXIBjrUkt/2YnHw2mUlsFTXMOStjT2xqA+jHzSZCR5OCmV1e9E5jXoP/r5LinXKIzFQPx5xdzswdsjLevfTWdznpcOYATYRKFIkzoIIK0E8GWFKiJ/VPp9Hu5YrMM9Do8U8ZGuaO18YKF6yizgI2YrJwUGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PMsCFvn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYGI7RzBms5BRqE7QctEO5r8Ce/tVy5Xks+nPsQgcLU/DCGouIGEzKnVnX2JHQyUoTrJhZdIKehm02lxEgWIG5PdaDP4EGDwwr3Tinr6AGe3Fa0F7jKm19B9yX1tr2wspdtgshJwRKr2TainioFYvXPJOsDwHM5WDWyitqrvCvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9iwDhiV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PMsCFvn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD18C4CEEA;
-	Mon, 23 Jun 2025 21:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9iwDhiV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FF1C4CEEA;
+	Mon, 23 Jun 2025 21:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714272;
-	bh=DJnBrbLInMZN9z4rT+cprh+xDwGaHLnGrM1zGUj+Y/8=;
+	s=korg; t=1750714274;
+	bh=zM/FZ5clxAmeDtVvZnmwh9zu/mn51fMehkDOg3kQPL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1PMsCFvn22+Ei0zSfMBxoz1NtpRJyhmO5SuAi7ptg5r2PcT7C3niYUnXl5Uax6NjP
-	 go8zBIe8Unk7tq1qTnY/7MgS2NRHM9NNayVwI4eUmx8GsAaUw8WEgnqd4u6FooMwID
-	 btKA2xZe+kUladUwGHz0j5p5cXqnEaqrS7j7RxlY=
+	b=w9iwDhiVelKUugk45Pp5kmbJcaDsrR7oYfpIv8R58sXNP8jb/PQdfd2m376CoQiO/
+	 oYig1+1/5MxFEaEP8vD98pXSuxAH6TTg2gFYqgVK3Rp9Rww7LBvaARcqXxaUHO+bF1
+	 6E3ngp2EgjHVHhP3ieT5tLwgKqEPszo9V93u7SM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Marcelo Schmitt <marcelo.schmitt@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 162/508] iio: adc: ad7124: Fix 3dB filter frequency reading
-Date: Mon, 23 Jun 2025 15:03:27 +0200
-Message-ID: <20250623130649.263151419@linuxfoundation.org>
+	Da Xue <da@libre.computer>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>
+Subject: [PATCH 5.10 196/355] clk: meson-g12a: add missing fclk_div2 to spicc
+Date: Mon, 23 Jun 2025 15:06:37 +0200
+Message-ID: <20250623130632.564080254@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,49 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Da Xue <da@libre.computer>
 
-[ Upstream commit 8712e4986e7ce42a14c762c4c350f290989986a5 ]
+commit daf004f87c3520c414992893e2eadd5db5f86a5a upstream.
 
-The sinc4 filter has a factor 0.23 between Output Data Rate and f_{3dB}
-and for sinc3 the factor is 0.272 according to the data sheets for
-ad7124-4 (Rev. E.) and ad7124-8 (Rev. F).
+SPICC is missing fclk_div2, which means fclk_div5 and fclk_div7 indexes
+are wrong on this clock. This causes the spicc module to output sclk at
+2.5x the expected rate when clock index 3 is picked.
 
-Fixes: cef2760954cf ("iio: adc: ad7124: add 3db filter")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
-Link: https://patch.msgid.link/20250317115247.3735016-6-u.kleine-koenig@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Adding the missing fclk_div2 resolves this.
+
+[jbrunet: amended commit description]
+Fixes: a18c8e0b7697 ("clk: meson: g12a: add support for the SPICC SCLK Source clocks")
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Da Xue <da@libre.computer>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20250512142617.2175291-1-da@libre.computer
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7124.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/meson/g12a.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/adc/ad7124.c b/drivers/iio/adc/ad7124.c
-index 307a607bf56c7..1e0af424f34f6 100644
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -299,9 +299,9 @@ static int ad7124_get_3db_filter_freq(struct ad7124_state *st,
- 
- 	switch (st->channels[channel].cfg.filter_type) {
- 	case AD7124_SINC3_FILTER:
--		return DIV_ROUND_CLOSEST(fadc * 230, 1000);
-+		return DIV_ROUND_CLOSEST(fadc * 272, 1000);
- 	case AD7124_SINC4_FILTER:
--		return DIV_ROUND_CLOSEST(fadc * 262, 1000);
-+		return DIV_ROUND_CLOSEST(fadc * 230, 1000);
- 	default:
- 		return -EINVAL;
- 	}
--- 
-2.39.5
-
+--- a/drivers/clk/meson/g12a.c
++++ b/drivers/clk/meson/g12a.c
+@@ -3906,6 +3906,7 @@ static const struct clk_parent_data spic
+ 	{ .hw = &g12a_clk81.hw },
+ 	{ .hw = &g12a_fclk_div4.hw },
+ 	{ .hw = &g12a_fclk_div3.hw },
++	{ .hw = &g12a_fclk_div2.hw },
+ 	{ .hw = &g12a_fclk_div5.hw },
+ 	{ .hw = &g12a_fclk_div7.hw },
+ };
 
 
