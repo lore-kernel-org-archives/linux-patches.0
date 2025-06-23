@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36082192EC;
-	Mon, 23 Jun 2025 22:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA3C2192EC;
+	Mon, 23 Jun 2025 22:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717463; cv=none; b=HWarVKpx32lr2QLAIMOKGAzkLmecngUgLP1Kn/YhuLxbdmCoY/VtMGXeloeVd/R71JK2v0rXmVhSxH7MyxaQKaOea7g2cXzMoUll+KeEa4BoNzAgT83HEKTmuaWFt8lT34u0CvVfMvC0It/CLrOxamCCe/IRMjRIgwrJO9f0Q5I=
+	t=1750717465; cv=none; b=C6S4Pa16FPm+wMLuKYct/JbxGH92NRzgWwi8plq8Xirw4r0JdL5HH5SzZQeDFFio8HWJcDbD7pv8Hgj86Ctc+DEIk+HNRE2+xGDzsHFSlnN+cYspPQQiRHQh0GMTw6EoZU9KZIziXejOqYa4qmhyBW/FPFZEYOOmz7l9b/YhCTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717463; c=relaxed/simple;
-	bh=PwgU+Q/Yn4UJiafBT4ffcVksqJ31Nl3BVGdq7+eGIU8=;
+	s=arc-20240116; t=1750717465; c=relaxed/simple;
+	bh=2RZr4mdnD2x7eRsQjz9Vb0OjynUPiyyVYnIxk/oEkJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MNhslWoQIWZKUoCf0jIyBc4BeD78+hQmCeacLwHynynod6S5eD4dsOPgOVmL4Rf9SKLI0JdXLckp2/4dEYApZwU7ZKFTAHqbwEtGfFFQ5w2Gh0Dhclmi7QGtgXZiBFCogB7P60cBB91gL6irI6G/YzuUlhmp3o0BQygP4P/q2Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maCvrJg9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gALgC0LWPh/7X9INySNcM+Z27IQN+fQIrWBlBWwGF7Nb+poYPiH8C6Nf1i3rDSM/qaUb7Z8BtpKfZNAyxF5YI4vkGcWOOLaXUXQHpqY0W5fhpCfUBxN38byCmKL8Y28fQDuZNRcDjH5M4dW9N71OWYEx5kLfSJDDlenYmKvqDRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaZCSndL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maCvrJg9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F60C4CEEA;
-	Mon, 23 Jun 2025 22:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaZCSndL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBB5C4CEEA;
+	Mon, 23 Jun 2025 22:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717462;
-	bh=PwgU+Q/Yn4UJiafBT4ffcVksqJ31Nl3BVGdq7+eGIU8=;
+	s=korg; t=1750717465;
+	bh=2RZr4mdnD2x7eRsQjz9Vb0OjynUPiyyVYnIxk/oEkJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=maCvrJg922T1IaIeZc+fXr9zASzCoaMiXdelHEnvZKZytQBMDDDPDa0KRJLDRaL5g
-	 ZPpfO/364h27IFvaTODsIygGAKdtpT02rif/nbQn3JidfPy+EAky1AUG6Oj0pKIUNr
-	 BPGKD1NAarr+uCcJLYM7ZzM+dLfCReGAW+S2rWmw=
+	b=yaZCSndLei1lJDwqxuMCAK8flGqorrfcthKwafet29y+ZePNqS+3lojdXoM8vvl0z
+	 rckoz4SSh6IGTIqEEQFIOcePAYIFZDxKazKJOI0XpuPhOSGSc7oISa9bomSjsqJ8cB
+	 qXEPaSj0Nit9MGUNe+I8rOXyhWZxcImUPCXI+pdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	David Thompson <davthompson@nvidia.com>,
+	Asmaa Mnebhi <asmaa@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 431/508] octeontx2-pf: Add error log forcn10k_map_unmap_rq_policer()
-Date: Mon, 23 Jun 2025 15:07:56 +0200
-Message-ID: <20250623130655.778623008@linuxfoundation.org>
+Subject: [PATCH 6.12 392/414] mlxbf_gige: return EPROBE_DEFER if PHY IRQ is not available
+Date: Mon, 23 Jun 2025 15:08:49 +0200
+Message-ID: <20250623130651.742126096@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +49,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: David Thompson <davthompson@nvidia.com>
 
-[ Upstream commit 9c056ec6dd1654b1420dafbbe2a69718850e6ff2 ]
+[ Upstream commit e7ea5f5b1858ddb96b152584d5fe06e6fc623e89 ]
 
-The cn10k_free_matchall_ipolicer() calls the cn10k_map_unmap_rq_policer()
-for each queue in a for loop without checking for any errors.
+The message "Error getting PHY irq. Use polling instead"
+is emitted when the mlxbf_gige driver is loaded by the
+kernel before the associated gpio-mlxbf driver, and thus
+the call to get the PHY IRQ fails since it is not yet
+available. The driver probe() must return -EPROBE_DEFER
+if acpi_dev_gpio_irq_get_by() returns the same.
 
-Check the return value of the cn10k_map_unmap_rq_policer() function during
-each loop, and report a warning if the function fails.
-
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Fixes: 6c2a6ddca763 ("net: mellanox: mlxbf_gige: Replace non-standard interrupt handling")
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Reviewed-by: Asmaa Mnebhi <asmaa@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250408032602.2909-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20250618135902.346-1-davthompson@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c
-index 7417087b6db59..a2807a1e4f4a6 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c
-@@ -352,9 +352,12 @@ int cn10k_free_matchall_ipolicer(struct otx2_nic *pfvf)
- 	mutex_lock(&pfvf->mbox.lock);
+diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
+index 385a56ac73481..c82254a8ae661 100644
+--- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
++++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
+@@ -447,8 +447,10 @@ static int mlxbf_gige_probe(struct platform_device *pdev)
+ 	priv->llu_plu_irq = platform_get_irq(pdev, MLXBF_GIGE_LLU_PLU_INTR_IDX);
  
- 	/* Remove RQ's policer mapping */
--	for (qidx = 0; qidx < hw->rx_queues; qidx++)
--		cn10k_map_unmap_rq_policer(pfvf, qidx,
--					   hw->matchall_ipolicer, false);
-+	for (qidx = 0; qidx < hw->rx_queues; qidx++) {
-+		rc = cn10k_map_unmap_rq_policer(pfvf, qidx, hw->matchall_ipolicer, false);
-+		if (rc)
-+			dev_warn(pfvf->dev, "Failed to unmap RQ %d's policer (error %d).",
-+				 qidx, rc);
-+	}
- 
- 	rc = cn10k_free_leaf_profile(pfvf, hw->matchall_ipolicer);
+ 	phy_irq = acpi_dev_gpio_irq_get_by(ACPI_COMPANION(&pdev->dev), "phy", 0);
+-	if (phy_irq < 0) {
+-		dev_err(&pdev->dev, "Error getting PHY irq. Use polling instead");
++	if (phy_irq == -EPROBE_DEFER) {
++		err = -EPROBE_DEFER;
++		goto out;
++	} else if (phy_irq < 0) {
+ 		phy_irq = PHY_POLL;
+ 	}
  
 -- 
 2.39.5
