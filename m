@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE0525393A;
-	Mon, 23 Jun 2025 13:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F23A242D90;
+	Mon, 23 Jun 2025 13:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684846; cv=none; b=HDireLpeEdNZ6FILwZ33fTPS/ZlQ2jpEBOIaoToWWBsfIBnBhVBBFfr+s/D3XK7Qp6ezv0q8PW2yKgw1k3asD+U5/V5+QUR+sY/R1AbDad5rK5vM/+MVbdjbKk4iYR5/m7OFhc1+lfNZX3uidNEU+B3QeO8VIhwuFaLTatbNKz4=
+	t=1750684849; cv=none; b=tU4kGj7s2hE/j5WkPiGwpWz+6/s4JccuAf9I5zzZVBylzgv2MKI9Ef+ci48s6wOnaFDHqFQDDCGcVT/TTiLsIesnNptrdb8ADbEk4hAyyQuS5k9H1LnrnIq8Mo5qf0odUUeYILaW2qtLYWVOr6KiU8CkSNIjALEVfqx10U0an1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684846; c=relaxed/simple;
-	bh=X4pVduWutHn7imbZ1skNqvLn5N3cP9nnEy+z2Hw0ces=;
+	s=arc-20240116; t=1750684849; c=relaxed/simple;
+	bh=4Ot9r9fih76jgoQoh2NBJ3I26n9PJiq4lhev3JQk+RQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B6Ah16MEGV/vSKvv8wJpLyNVgGkXGCcuk3T0ocBqlNXUCRKDfPUwEuo+i7wTx8+jUbg8xZCNIG1Quj3bqFCyPKJFKaCioQy3dAr8tQuLkPYTJvdC8xKy3P5OKA2JFu1osuyWieXg7+xnHgWvurJqUi9sWA8aR0JzLwthmXs6N2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeFK7iJ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hb/TsNGhD+je4dNZSa5ob8AnNmQ2vQob/zOKtSpltGTv+oT6oSzHSyRxhRMGSnJymyKCmqfL0rmtT3+bLuVE5lvyVBDgoKPAolGQ0wzvpTnDLXX7cPdxVmqN2xJP7qO8dsPArCf+Tr2ZRcz9qtYVFOI+K2+Fa3OZwxWYM2Xy/9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WHrUY1G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeFK7iJ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C62C4CEEA;
-	Mon, 23 Jun 2025 13:20:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WHrUY1G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EA4C4CEEA;
+	Mon, 23 Jun 2025 13:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684846;
-	bh=X4pVduWutHn7imbZ1skNqvLn5N3cP9nnEy+z2Hw0ces=;
+	s=korg; t=1750684849;
+	bh=4Ot9r9fih76jgoQoh2NBJ3I26n9PJiq4lhev3JQk+RQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yeFK7iJ51ruIOkm1qhZnyzGG+G7ilqswxHeMEo4KAgvsOV961vDT7MwZm0/fepYkN
-	 oG0roc4WuivAN+yigP0r/INInqqSbSdftGn76g66zTYi/7Gmt6Ol2vzwKZ5/0ypStv
-	 Uq5vvNxFkFEjBR2IaWQRNAcEiRoXPPEl6o0BsSk4=
+	b=1WHrUY1GiaO9gGKLLim2tdUBFS3NGFL4VIS58FCFKiGiZQ6Wxu8Xh9jz8mYmoVw0v
+	 bCroGcEMfXPav+2vzH2pwUrb2r5TwOUOMsQS7SV6gW3HurqJQT4LUA2IwcK9XhfmQk
+	 ci5The9eRFm8oGBHLnvRb731Ww2699kkxjnBUYSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	John Cheung <john.cs.hey@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 039/222] calipso: Dont call calipso functions for AF_INET sk.
-Date: Mon, 23 Jun 2025 15:06:14 +0200
-Message-ID: <20250623130613.076971533@linuxfoundation.org>
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.10 003/355] pinctrl: armada-37xx: set GPIO output value before setting direction
+Date: Mon, 23 Jun 2025 15:03:24 +0200
+Message-ID: <20250623130626.824818631@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,112 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 6e9f2df1c550ead7cecb3e450af1105735020c92 ]
+commit e6ebd4942981f8ad37189bbb36a3c8495e21ef4c upstream.
 
-syzkaller reported a null-ptr-deref in txopt_get(). [0]
+Changing the direction before updating the output value in the
+OUTPUT_VAL register may result in a glitch on the output line
+if the previous value in the OUTPUT_VAL register is different
+from the one we want to set.
 
-The offset 0x70 was of struct ipv6_txoptions in struct ipv6_pinfo,
-so struct ipv6_pinfo was NULL there.
+In order to avoid that, update the output value before changing
+the direction.
 
-However, this never happens for IPv6 sockets as inet_sk(sk)->pinet6
-is always set in inet6_create(), meaning the socket was not IPv6 one.
-
-The root cause is missing validation in netlbl_conn_setattr().
-
-netlbl_conn_setattr() switches branches based on struct
-sockaddr.sa_family, which is passed from userspace.  However,
-netlbl_conn_setattr() does not check if the address family matches
-the socket.
-
-The syzkaller must have called connect() for an IPv6 address on
-an IPv4 socket.
-
-We have a proper validation in tcp_v[46]_connect(), but
-security_socket_connect() is called in the earlier stage.
-
-Let's copy the validation to netlbl_conn_setattr().
-
-[0]:
-Oops: general protection fault, probably for non-canonical address 0xdffffc000000000e: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
-CPU: 2 UID: 0 PID: 12928 Comm: syz.9.1677 Not tainted 6.12.0 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:txopt_get include/net/ipv6.h:390 [inline]
-RIP: 0010:
-Code: 02 00 00 49 8b ac 24 f8 02 00 00 e8 84 69 2a fd e8 ff 00 16 fd 48 8d 7d 70 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 53 02 00 00 48 8b 6d 70 48 85 ed 0f 84 ab 01 00
-RSP: 0018:ffff88811b8afc48 EFLAGS: 00010212
-RAX: dffffc0000000000 RBX: 1ffff11023715f8a RCX: ffffffff841ab00c
-RDX: 000000000000000e RSI: ffffc90007d9e000 RDI: 0000000000000070
-RBP: 0000000000000000 R08: ffffed1023715f9d R09: ffffed1023715f9e
-R10: ffffed1023715f9d R11: 0000000000000003 R12: ffff888123075f00
-R13: ffff88810245bd80 R14: ffff888113646780 R15: ffff888100578a80
-FS:  00007f9019bd7640(0000) GS:ffff8882d2d00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f901b927bac CR3: 0000000104788003 CR4: 0000000000770ef0
-PKRU: 80000000
-Call Trace:
- <TASK>
- calipso_sock_setattr+0x56/0x80 net/netlabel/netlabel_calipso.c:557
- netlbl_conn_setattr+0x10c/0x280 net/netlabel/netlabel_kapi.c:1177
- selinux_netlbl_socket_connect_helper+0xd3/0x1b0 security/selinux/netlabel.c:569
- selinux_netlbl_socket_connect_locked security/selinux/netlabel.c:597 [inline]
- selinux_netlbl_socket_connect+0xb6/0x100 security/selinux/netlabel.c:615
- selinux_socket_connect+0x5f/0x80 security/selinux/hooks.c:4931
- security_socket_connect+0x50/0xa0 security/security.c:4598
- __sys_connect_file+0xa4/0x190 net/socket.c:2067
- __sys_connect+0x12c/0x170 net/socket.c:2088
- __do_sys_connect net/socket.c:2098 [inline]
- __se_sys_connect net/socket.c:2095 [inline]
- __x64_sys_connect+0x73/0xb0 net/socket.c:2095
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xaa/0x1b0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f901b61a12d
-Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f9019bd6fa8 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
-RAX: ffffffffffffffda RBX: 00007f901b925fa0 RCX: 00007f901b61a12d
-RDX: 000000000000001c RSI: 0000200000000140 RDI: 0000000000000003
-RBP: 00007f901b701505 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000000 R14: 00007f901b5b62a0 R15: 00007f9019bb7000
- </TASK>
-Modules linked in:
-
-Fixes: ceba1832b1b2 ("calipso: Set the calipso socket label to match the secattr.")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Reported-by: John Cheung <john.cs.hey@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAP=Rh=M1LzunrcQB1fSGauMrJrhL6GGps5cPAKzHJXj6GQV+-g@mail.gmail.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20250522221858.91240-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6702abb3bf23 ("pinctrl: armada-37xx: Fix direction_output() callback behavior")
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-2-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netlabel/netlabel_kapi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/net/netlabel/netlabel_kapi.c b/net/netlabel/netlabel_kapi.c
-index 96059c99b915e..2e9344b3c657c 100644
---- a/net/netlabel/netlabel_kapi.c
-+++ b/net/netlabel/netlabel_kapi.c
-@@ -1140,6 +1140,9 @@ int netlbl_conn_setattr(struct sock *sk,
- 		break;
- #if IS_ENABLED(CONFIG_IPV6)
- 	case AF_INET6:
-+		if (sk->sk_family != AF_INET6)
-+			return -EAFNOSUPPORT;
-+
- 		addr6 = (struct sockaddr_in6 *)addr;
- 		entry = netlbl_domhsh_getentry_af6(secattr->domain,
- 						   &addr6->sin6_addr);
--- 
-2.39.5
-
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -413,23 +413,22 @@ static int armada_37xx_gpio_direction_ou
+ 					     unsigned int offset, int value)
+ {
+ 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
+-	unsigned int val_offset = offset;
+-	unsigned int reg = OUTPUT_EN;
++	unsigned int en_offset = offset;
++	unsigned int reg = OUTPUT_VAL;
+ 	unsigned int mask, val, ret;
+ 
+ 	armada_37xx_update_reg(&reg, &offset);
+ 	mask = BIT(offset);
++	val = value ? mask : 0;
+ 
+-	ret = regmap_update_bits(info->regmap, reg, mask, mask);
+-
++	ret = regmap_update_bits(info->regmap, reg, mask, val);
+ 	if (ret)
+ 		return ret;
+ 
+-	reg = OUTPUT_VAL;
+-	armada_37xx_update_reg(&reg, &val_offset);
++	reg = OUTPUT_EN;
++	armada_37xx_update_reg(&reg, &en_offset);
+ 
+-	val = value ? mask : 0;
+-	regmap_update_bits(info->regmap, reg, mask, val);
++	regmap_update_bits(info->regmap, reg, mask, mask);
+ 
+ 	return 0;
+ }
 
 
