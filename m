@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BB21E51FA;
-	Mon, 23 Jun 2025 21:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9353B1F4628;
+	Mon, 23 Jun 2025 21:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714050; cv=none; b=ERMyKUE2QS24Qw210FrX2mZIhwQkyYu0Ym13/syOQ+9Jpiyt+mBHpJ2ejaUeQKmcoLvEHEYmSbkTIz0e8exZdfcdFSZ5sExIJPlVllRUqYaJ6Vw4fh4mG5Jv7pXjmKnpA865zkcZUvlZJcwUp1u6oaC7l1vuOlgj5Et7oDiEftA=
+	t=1750714052; cv=none; b=SjAH7tgltG4eL3zPIVtswCHO3cm6JYuCN/mkV2WNQn3KzTb+SggvvHIvwtZXTr6+TjbNsYVMLNj5/W3OiVqZ/r2wamPXT+Y2r288XnKXCl3YYQubHJYgfA1vXbRPQlpFQXcLMANuB3THuOVS+vvbuxm66SE0a1JSeaWsN9xMupU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714050; c=relaxed/simple;
-	bh=NmcXHfJHKz4CH0mvhJdI/D8IBE5cqimV2TvEOeezJMk=;
+	s=arc-20240116; t=1750714052; c=relaxed/simple;
+	bh=9zYpmrn2Q0fUjyDmlz+aVZtZHAuhgVXOt6790vGaZVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X7gbPJ0duHfaZSOJnTzVNRHbgD1XRjga54adKEQL5yVweWdm8Fqi8ISgOt4VdfINLTloijtPQ0bQ1T0G7cHWAQDwEi9VsGPHF2stkY9xIGlK0r2ZyJkyCOjW/fr4O6u28/pC28wQHW22DngEb/D4AAyrVnE1oBj9o2Zu0/FEU+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gL/uUnpV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=C3aobaABofZWJxY9MmkI6n8qiSPu6xGn0ilpvO9kXtlDwEm5QDXz7RXUI9V2/QXtlzeGWWHexNGz6XGcU512OltYDCdr91/AG5wQs4xQ9mxI1oxlfQtA/nPcxfxGdhjYFCfHEv+jIGF+TXlE8RVijJT3TU0xayddBpfJ6xPQ0xA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zs514Kup; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gL/uUnpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9F3C4CEEA;
-	Mon, 23 Jun 2025 21:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zs514Kup"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C4EC4CEEA;
+	Mon, 23 Jun 2025 21:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714050;
-	bh=NmcXHfJHKz4CH0mvhJdI/D8IBE5cqimV2TvEOeezJMk=;
+	s=korg; t=1750714052;
+	bh=9zYpmrn2Q0fUjyDmlz+aVZtZHAuhgVXOt6790vGaZVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gL/uUnpVLniZK+jDyUzqRPG0X4NxjGeCGQFTILFe8kylPRY5uou/dzVtCBabHAv1N
-	 7QLaB5IAFn1U0Ps8UKyXmHVLo1SP8Ont0yOlRc8HAM4GVkw2YHTpbxme6+Mys6JGf1
-	 CU6//4+qSNkbBM7Gc58RegjCrvOXXaxnQPabC98s=
+	b=zs514KupZEPmO55fF14y8w3J0BkoITvrjAC7BH5XhSyR20QE1wumASnxDTYhjA79f
+	 0Ki5Y8cGYGC8KzNTASEwZdN2Ffl5+D03rmmynt8+3QWIfwYtcbENsi9dCqRPuzH3ZI
+	 0Odl7qANypk+FXbM1sZxb4dR0WaKFt31dPr2bI2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerrard Tai <gerrard.tai@starlabs.sg>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 162/411] net_sched: ets: fix a race in ets_qdisc_change()
-Date: Mon, 23 Jun 2025 15:05:06 +0200
-Message-ID: <20250623130637.731511765@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Roger Quadros <rogerq@kernel.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	"Nobuhiro Iwamatsu (CIP)" <nobuhiro1.iwamatsu@toshiba.co.jp>
+Subject: [PATCH 5.4 212/222] ARM: dts: am335x-bone-common: Increase MDIO reset deassert delay to 50ms
+Date: Mon, 23 Jun 2025 15:09:07 +0200
+Message-ID: <20250623130618.674785058@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,64 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit d92adacdd8c2960be856e0b82acc5b7c5395fddb ]
+commit 929d8490f8790164f5f63671c1c58d6c50411cb2 upstream.
 
-Gerrard Tai reported a race condition in ETS, whenever SFQ perturb timer
-fires at the wrong time.
+Commit b9bf5612610aa7e3 ("ARM: dts: am335x-bone-common: Increase MDIO
+reset deassert time") already increased the MDIO reset deassert delay
+from 6.5 to 13 ms, but this may still cause Ethernet PHY probe failures:
 
-The race is as follows:
+    SMSC LAN8710/LAN8720 4a101000.mdio:00: probe with driver SMSC LAN8710/LAN8720 failed with error -5
 
-CPU 0                                 CPU 1
-[1]: lock root
-[2]: qdisc_tree_flush_backlog()
-[3]: unlock root
- |
- |                                    [5]: lock root
- |                                    [6]: rehash
- |                                    [7]: qdisc_tree_reduce_backlog()
- |
-[4]: qdisc_put()
+On BeagleBone Black Rev. C3, ETH_RESETn is controlled by an open-drain
+AND gate.  It is pulled high by a 10K resistor, and has a 4.7µF
+capacitor to ground, giving an RC time constant of 47ms.  As it takes
+0.7RC to charge the capacitor above the threshold voltage of a CMOS
+input (VDD/2), the delay should be at least 33ms.  Considering the
+typical tolerance of 20% on capacitors, 40ms would be safer.  Add an
+additional safety margin and settle for 50ms.
 
-This can be abused to underflow a parent's qlen.
-
-Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
-should fix the race, because all packets will be purged from the qdisc
-before releasing the lock.
-
-Fixes: b05972f01e7d ("net: sched: tbf: don't call qdisc_put() while holding tree lock")
-Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250611111515.1983366-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/9002a58daa1b2983f39815b748ee9d2f8dcc4829.1730366936.git.geert+renesas@glider.be
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro1.iwamatsu@toshiba.co.jp>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_ets.c | 2 +-
+ arch/arm/boot/dts/am335x-bone-common.dtsi |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
-index a37979ec78f88..b49e1a9775865 100644
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -675,7 +675,7 @@ static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
- 	for (i = q->nbands; i < oldbands; i++) {
- 		if (i >= q->nstrict && q->classes[i].qdisc->q.qlen)
- 			list_del_init(&q->classes[i].alist);
--		qdisc_tree_flush_backlog(q->classes[i].qdisc);
-+		qdisc_purge_queue(q->classes[i].qdisc);
- 	}
- 	q->nstrict = nstrict;
- 	memcpy(q->prio2band, priomap, sizeof(priomap));
--- 
-2.39.5
-
+--- a/arch/arm/boot/dts/am335x-bone-common.dtsi
++++ b/arch/arm/boot/dts/am335x-bone-common.dtsi
+@@ -403,7 +403,7 @@
+ 		/* Support GPIO reset on revision C3 boards */
+ 		reset-gpios = <&gpio1 8 GPIO_ACTIVE_LOW>;
+ 		reset-assert-us = <300>;
+-		reset-deassert-us = <13000>;
++		reset-deassert-us = <50000>;
+ 	};
+ };
+ 
 
 
