@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7761E19CC11;
-	Mon, 23 Jun 2025 21:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19043221FD2;
+	Mon, 23 Jun 2025 21:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714590; cv=none; b=QFXObJhPVqjvcPuZFlra1TW4Zg12mBpcxWg4/d5qVgrRcz2r+8D0xgIqW8A9Q5XguLnO/dILH358mmqkbU1vTXQu6doJ/7vUwMUVkeiKE7YzC8FYjbQ9TDqsZrwG1JL/hzYyRVEZxF9WNnBkw7QYyAa2vl2xOGuks9w7bEjTzdo=
+	t=1750714593; cv=none; b=BmfWSlgeNNRej7wEOSh7XhBEVQd1QJJLxTVY4XXQcPyhqCu6Cv5uaWyG3ftcjU4e1UdFbbT3s5OmQ0KelMg0VMspo9O4uuAb2s37flkHd8ruJ02xrjHVnJSSFSm3oTuzKPEq/9srKiAkpAP0X8EE2CQ3rNXRUUcUaX00V2SJxyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714590; c=relaxed/simple;
-	bh=KphNYeSZebmpBUZn8zbdhwDaNTT/Gd1rZz4VmlMfpQc=;
+	s=arc-20240116; t=1750714593; c=relaxed/simple;
+	bh=0ps3XK0ngR+zaytkzJYNDf2gzaO1p77mpXBMArA513w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EU8Bwn2cgJap4Mpou685IKBrW92uj+66f4WiJOy1XJodyAI3nO2r9BhxiwHX1tFOyaffG1uG9g8iKjsaxBiJb6PVfIpKBYzXniXjTwYLKJ5ihe5ZgRVWsHPUWgl4SuP6RSImLubXqcQ/NbFoe7QnYHNPYyZj5JoQQTTAjP6h6NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwrXqR8A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k/5MC1H/WpLmL7LfEBPk+k4f4bs9OW6paDRnKODPXy8VxsAP9AXsk/LIz8hlKw3u3SBjfR3fUMNsSvHyxGGu7lZS3v1ph/xlQzmrqM2y3lDRLNFTr56Su/aF4Spy3Otjk9dx5nwoStcnVOTMtGniO6TptIgnB597JWzWG5i0WH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aeyjs/j3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwrXqR8A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A6BC4CEEA;
-	Mon, 23 Jun 2025 21:36:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aeyjs/j3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A467FC4CEEA;
+	Mon, 23 Jun 2025 21:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714590;
-	bh=KphNYeSZebmpBUZn8zbdhwDaNTT/Gd1rZz4VmlMfpQc=;
+	s=korg; t=1750714593;
+	bh=0ps3XK0ngR+zaytkzJYNDf2gzaO1p77mpXBMArA513w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xwrXqR8Al2VtIG2Mdoh3uisAMRmmSxWvfhjCRnntlu6RGGkOMv/ELnR+LMH9PVGjx
-	 Lh8izQqUNhCfN6OKHN5FCzL9YVENoq23NSoQXEVMkuVw2A9OXz6b6n7RcjXvmbd/Pi
-	 oCwMolBO67haESTWLAKmmSTfcu4Tr29kslkICHmc=
+	b=Aeyjs/j3UyDDwVcywxg3n/tG56b2THwBaHb4ph6Nwbg0KStVqhZfnrl1pPJ+P0Gct
+	 swxL6q7Z2sxG6sxmrvQWGErUyK26ebgmff55wU0wUUGY9y1p7PVryZPIV6hrdP9e0F
+	 TRq6yrTyxxsunUTSR7GM0atptoD3kSKYzbPBQ55Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gautam Menghani <gautam@linux.ibm.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Vaibhav Jain <vaibhav@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 5.15 197/411] powerpc/pseries/msi: Avoid reading PCI device registers in reduced power states
-Date: Mon, 23 Jun 2025 15:05:41 +0200
-Message-ID: <20250623130638.636072951@linuxfoundation.org>
+	Sarika Sharma <quic_sarishar@quicinc.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 397/592] wifi: ath12k: correctly handle mcast packets for clients
+Date: Mon, 23 Jun 2025 15:05:55 +0200
+Message-ID: <20250623130709.886277139@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,61 +48,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gautam Menghani <gautam@linux.ibm.com>
+From: Sarika Sharma <quic_sarishar@quicinc.com>
 
-commit 9cc0eafd28c7faef300822992bb08d79cab2a36c upstream.
+[ Upstream commit 4541b0c8c3c1b85564971d497224e57cf8076a02 ]
 
-When a system is being suspended to RAM, the PCI devices are also
-suspended and the PPC code ends up calling pseries_msi_compose_msg() and
-this triggers the BUG_ON() in __pci_read_msi_msg() because the device at
-this point is in reduced power state. In reduced power state, the memory
-mapped registers of the PCI device are not accessible.
+Currently, RX is_mcbc bit is set for packets sent from client as
+destination address (DA) is multicast/broadcast address, but packets
+are actually unicast as receiver address (RA) is not multicast address.
+Hence, packets are not handled properly due to this is_mcbc bit.
 
-To replicate the bug:
-1. Make sure deep sleep is selected
-	# cat /sys/power/mem_sleep
-	s2idle [deep]
+Therefore, reset the is_mcbc bit if interface type is AP.
 
-2. Make sure console is not suspended (so that dmesg logs are visible)
-	echo N > /sys/module/printk/parameters/console_suspend
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
 
-3. Suspend the system
-	echo mem > /sys/power/state
-
-To fix this behaviour, read the cached msi message of the device when the
-device is not in PCI_D0 power state instead of touching the hardware.
-
-Fixes: a5f3d2c17b07 ("powerpc/pseries/pci: Add MSI domains")
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250305090237.294633-1-gautam@linux.ibm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250411061523.859387-3-quic_sarishar@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/msi.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 5 +++++
+ drivers/net/wireless/ath/ath12k/peer.c  | 5 ++++-
+ drivers/net/wireless/ath/ath12k/peer.h  | 3 ++-
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/platforms/pseries/msi.c
-+++ b/arch/powerpc/platforms/pseries/msi.c
-@@ -539,7 +539,12 @@ static struct msi_domain_info pseries_ms
- 
- static void pseries_msi_compose_msg(struct irq_data *data, struct msi_msg *msg)
- {
--	__pci_read_msi_msg(irq_data_get_msi_desc(data), msg);
-+	struct pci_dev *dev = msi_desc_to_pci_dev(irq_data_get_msi_desc(data));
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index 7fadd366ec13d..8b1b038d67667 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -2259,6 +2259,11 @@ static void ath12k_dp_rx_h_mpdu(struct ath12k *ar,
+ 	spin_lock_bh(&ar->ab->base_lock);
+ 	peer = ath12k_dp_rx_h_find_peer(ar->ab, msdu, rx_info);
+ 	if (peer) {
++		/* resetting mcbc bit because mcbc packets are unicast
++		 * packets only for AP as STA sends unicast packets.
++		 */
++		rxcb->is_mcbc = rxcb->is_mcbc && !peer->ucast_ra_only;
 +
-+	if (dev->current_state == PCI_D0)
-+		__pci_read_msi_msg(irq_data_get_msi_desc(data), msg);
-+	else
-+		get_cached_msi_msg(data->irq, msg);
- }
+ 		if (rxcb->is_mcbc)
+ 			enctype = peer->sec_type_grp;
+ 		else
+diff --git a/drivers/net/wireless/ath/ath12k/peer.c b/drivers/net/wireless/ath/ath12k/peer.c
+index 792cca8a3fb1b..ec7236bbccc0f 100644
+--- a/drivers/net/wireless/ath/ath12k/peer.c
++++ b/drivers/net/wireless/ath/ath12k/peer.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2022, 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
  
- static struct irq_chip pseries_msi_irq_chip = {
+ #include "core.h"
+@@ -383,6 +383,9 @@ int ath12k_peer_create(struct ath12k *ar, struct ath12k_link_vif *arvif,
+ 		arvif->ast_idx = peer->hw_peer_id;
+ 	}
+ 
++	if (vif->type == NL80211_IFTYPE_AP)
++		peer->ucast_ra_only = true;
++
+ 	if (sta) {
+ 		ahsta = ath12k_sta_to_ahsta(sta);
+ 		arsta = wiphy_dereference(ath12k_ar_to_hw(ar)->wiphy,
+diff --git a/drivers/net/wireless/ath/ath12k/peer.h b/drivers/net/wireless/ath/ath12k/peer.h
+index 5870ee11a8c7e..f3a5e054d2b55 100644
+--- a/drivers/net/wireless/ath/ath12k/peer.h
++++ b/drivers/net/wireless/ath/ath12k/peer.h
+@@ -1,7 +1,7 @@
+ /* SPDX-License-Identifier: BSD-3-Clause-Clear */
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #ifndef ATH12K_PEER_H
+@@ -62,6 +62,7 @@ struct ath12k_peer {
+ 
+ 	/* for reference to ath12k_link_sta */
+ 	u8 link_id;
++	bool ucast_ra_only;
+ };
+ 
+ struct ath12k_ml_peer {
+-- 
+2.39.5
+
 
 
