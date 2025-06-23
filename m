@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AAF1F7580;
-	Mon, 23 Jun 2025 22:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FE0223316;
+	Mon, 23 Jun 2025 22:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716527; cv=none; b=PGoN8Ey/8GbfHhpUVWvrFq07KD6dsZNFgjXpy7JImGK66yVFM7wHhlPMe+DyqcrhgBkyiyP445EaVsAo9QaBRvo5aEpuPtVqa8HuG8ll5CA3YmkQGplZ1N5Wa9Zdq2Xk6DyM7IAdEUcxfjucIQxKa9uAMKsPa6VBmjRC74B0RYw=
+	t=1750716530; cv=none; b=q+inXewkDCuCGT4tLkQ2N+LnyNUNg9UEZ+ucWZotL6rgWAeVe3f/ksFyvdmXFtvKQJLOMMKuXYPJTfxMHzivjlAx4E5ZWlunEL2fenLibcyyjXzbHRT+QYpFBboic4WRXd7oxJxPSg1FriJvJkX/oarmjyi7jsQfnb7+yaFWYlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716527; c=relaxed/simple;
-	bh=pvY6GJnN71gHbPhpNMsdVDlEVpyfWiw8qxBQr3LCdEc=;
+	s=arc-20240116; t=1750716530; c=relaxed/simple;
+	bh=8bnccDJNxtxuQGcfmh/74rZwbBu1NNu/1drhb4Qcaig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hqflscHXRMPRRrq/iLCazV6nFwDbsQg0zneSKLlwIvbAffJV7QldJzb8W8FhguaFZJ9hQSzN1KevyLxrsx0Sl/h0FS8zoV+qzs+37Zru6McK98mc4JpjEl5uBOe3y+EGa3ZOifCf8TqyOiu6IAGvvatNsAef1SvW2OM0SdG/dP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULXbYU/A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kd2viHsqWa/Fhdv/OF2jRfL832e38hdtU1YgqTT+nOs+4KzsPWDBMM8JEXBPl0rXlSOrtYdn9rGAD1uE7dom2zvGL58egzh5FegmaJczjXIQiToynqRljYeAL6VhUqMSBlyLUzSAR2xDwmiTcI2++elWp0K4AtsN691EyTYz1gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCG1fE4j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULXbYU/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0104CC4CEEA;
-	Mon, 23 Jun 2025 22:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCG1fE4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE9DC4CEEA;
+	Mon, 23 Jun 2025 22:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716527;
-	bh=pvY6GJnN71gHbPhpNMsdVDlEVpyfWiw8qxBQr3LCdEc=;
+	s=korg; t=1750716529;
+	bh=8bnccDJNxtxuQGcfmh/74rZwbBu1NNu/1drhb4Qcaig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULXbYU/Api2ChoNL7q/w+YExBZWmS52VvQfOWHsoSECsbyiRdMu1VwK5yxPvFNybv
-	 5zfMwuBg6cMyi03hfqDFo4Bg110KmQ356P2k6iGi+u3CMz/pfUV3O5aqdtnR+nXdAx
-	 +SHECR0ewlkRorxLHd73o9A2BF31/wQBf5Y3VUyY=
+	b=mCG1fE4j9EDsISoGm/2QMdyhnLjwz3icbpfQoIx231bDUBP6152c2zJUTxQa7PZcv
+	 0In865XzPANcq+9hbxA1lN/oC3hFX8tMUPAH1xHFlBsHGbT8obIs7/qlbcFzQCinqt
+	 IC4leIjxVmxq+pR8mQ+8/45QWzvMLf+6dou7PKnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 6.1 332/508] bus: fsl-mc: do not add a device-link for the UAPI used DPMCP device
-Date: Mon, 23 Jun 2025 15:06:17 +0200
-Message-ID: <20250623130653.497542905@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	Rouven Czerwinski <rouven.czerwinski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 286/414] tee: Prevent size calculation wraparound on 32-bit kernels
+Date: Mon, 23 Jun 2025 15:07:03 +0200
+Message-ID: <20250623130649.166297662@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,64 +48,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Jann Horn <jannh@google.com>
 
-commit dd7d8e012b23de158ca0188239c7a1f2a83b4484 upstream.
+[ Upstream commit 39bb67edcc582b3b386a9ec983da67fa8a10ec03 ]
 
-The fsl-mc bus associated to the root DPRC in a DPAA2 system exports a
-device file for userspace access to the MC firmware. In case the DPRC's
-local MC portal (DPMCP) is currently in use, a new DPMCP device is
-allocated through the fsl_mc_portal_allocate() function.
+The current code around TEE_IOCTL_PARAM_SIZE() is a bit wrong on
+32-bit kernels: Multiplying a user-provided 32-bit value with the
+size of a structure can wrap around on such platforms.
 
-In this case, the call to fsl_mc_portal_allocate() will fail with -EINVAL
-when trying to add a device link between the root DPRC (consumer) and
-the newly allocated DPMCP device (supplier). This is because the DPMCP
-is a dependent of the DPRC device (the bus).
+Fix it by using saturating arithmetic for the size calculation.
 
-Fix this by not adding a device link in case the DPMCP is allocated for
-the root DPRC's usage.
+This has no security consequences because, in all users of
+TEE_IOCTL_PARAM_SIZE(), the subsequent kcalloc() implicitly checks
+for wrapping.
 
-Fixes: afb77422819f ("bus: fsl-mc: automatically add a device_link on fsl_mc_[portal,object]_allocate")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250408105814.2837951-3-ioana.ciornei@nxp.com
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Tested-by: Rouven Czerwinski <rouven.czerwinski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/fsl-mc/mc-io.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/tee/tee_core.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/bus/fsl-mc/mc-io.c
-+++ b/drivers/bus/fsl-mc/mc-io.c
-@@ -214,12 +214,19 @@ int __must_check fsl_mc_portal_allocate(
- 	if (error < 0)
- 		goto error_cleanup_resource;
+diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
+index d113679b1e2d7..acc7998758ad8 100644
+--- a/drivers/tee/tee_core.c
++++ b/drivers/tee/tee_core.c
+@@ -10,6 +10,7 @@
+ #include <linux/fs.h>
+ #include <linux/idr.h>
+ #include <linux/module.h>
++#include <linux/overflow.h>
+ #include <linux/slab.h>
+ #include <linux/tee_core.h>
+ #include <linux/uaccess.h>
+@@ -19,7 +20,7 @@
  
--	dpmcp_dev->consumer_link = device_link_add(&mc_dev->dev,
--						   &dpmcp_dev->dev,
--						   DL_FLAG_AUTOREMOVE_CONSUMER);
--	if (!dpmcp_dev->consumer_link) {
--		error = -EINVAL;
--		goto error_cleanup_mc_io;
-+	/* If the DPRC device itself tries to allocate a portal (usually for
-+	 * UAPI interaction), don't add a device link between them since the
-+	 * DPMCP device is an actual child device of the DPRC and a reverse
-+	 * dependency is not allowed.
-+	 */
-+	if (mc_dev != mc_bus_dev) {
-+		dpmcp_dev->consumer_link = device_link_add(&mc_dev->dev,
-+							   &dpmcp_dev->dev,
-+							   DL_FLAG_AUTOREMOVE_CONSUMER);
-+		if (!dpmcp_dev->consumer_link) {
-+			error = -EINVAL;
-+			goto error_cleanup_mc_io;
-+		}
- 	}
+ #define TEE_NUM_DEVICES	32
  
- 	*new_mc_io = mc_io;
+-#define TEE_IOCTL_PARAM_SIZE(x) (sizeof(struct tee_param) * (x))
++#define TEE_IOCTL_PARAM_SIZE(x) (size_mul(sizeof(struct tee_param), (x)))
+ 
+ #define TEE_UUID_NS_NAME_SIZE	128
+ 
+@@ -487,7 +488,7 @@ static int tee_ioctl_open_session(struct tee_context *ctx,
+ 	if (copy_from_user(&arg, uarg, sizeof(arg)))
+ 		return -EFAULT;
+ 
+-	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
++	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	if (arg.num_params) {
+@@ -565,7 +566,7 @@ static int tee_ioctl_invoke(struct tee_context *ctx,
+ 	if (copy_from_user(&arg, uarg, sizeof(arg)))
+ 		return -EFAULT;
+ 
+-	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
++	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	if (arg.num_params) {
+@@ -699,7 +700,7 @@ static int tee_ioctl_supp_recv(struct tee_context *ctx,
+ 	if (get_user(num_params, &uarg->num_params))
+ 		return -EFAULT;
+ 
+-	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) != buf.buf_len)
++	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) != buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
+@@ -798,7 +799,7 @@ static int tee_ioctl_supp_send(struct tee_context *ctx,
+ 	    get_user(num_params, &uarg->num_params))
+ 		return -EFAULT;
+ 
+-	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) > buf.buf_len)
++	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) > buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
+-- 
+2.39.5
+
 
 
