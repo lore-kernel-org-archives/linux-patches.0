@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A7221B9C9;
-	Mon, 23 Jun 2025 21:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5FD221723;
+	Mon, 23 Jun 2025 21:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714101; cv=none; b=P89S7mpc0GHwtJEqoyS8MNFShUg5uEJjVNFQdi02M7oDuL5qaHp73N1DiW9Zgwvdb3xHgud64CeZk4WQ/lL4CfVv8J5kIbSgQogTRDTDfHT703W26vdnyZroTcn07zg1zowkwbXYfCNFCkLCuyl/Lo0JiR7izbOUtwv74W60MfY=
+	t=1750714103; cv=none; b=GWTBPwhiBiLrK4P8RtHEL0ZIDlL7U7/4tuk3ShAepS12mPP4ziACptF7ieKJGTJhsSoMs55qtdNXLKu4poEmt5mJsdunt0S7X6s3mciJiGDrUJzQiaOOfKOikvSIgcrg/r9SO5SxGyFGbUrIJ0AG3O1iGlSxrpLrbO8hI5qfHHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714101; c=relaxed/simple;
-	bh=1Uq/uFPISpe1UYhHEgHXTPfoMo+c8Odcgy9E5wAHNLI=;
+	s=arc-20240116; t=1750714103; c=relaxed/simple;
+	bh=96r9Qg84fJDPhXJTDS9Snb0Q11QUGOSw0aLGxubq4wI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AJBp+JA3IT0MAP22Ti+EYR941RHJhFDe9qiK1RtUvlbZNTg1yRIYIUsM3CCUnQRqemw86ce62450COKO9xdDUui7ix3abxDZQnYRpCK3b48pOz1Oar/HDp2f1kD/QxYodvVxdkpUbQbK/Ovo86fXc2S2KMXxp7SvNsDLB5NxTqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrWR05Ir; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MUuC+yR2Ma5WPBVeApppzwQfUA7NN7NsaFJIXIbcKl8isjd0M2MfcX0feLh1Wax/mNtdyjhMt9fU3wGO7cKkKn+MP6g/qDeAqgy+CCbRqYsDeSiS4dKZdzgzsZps/OL165tP+kr8UpShZXUL+DUqBJ7NDT+/HJr4X0vOQ0hV8H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0c45g1F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrWR05Ir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDE3C4CEEA;
-	Mon, 23 Jun 2025 21:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0c45g1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 730BEC4CEEA;
+	Mon, 23 Jun 2025 21:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714101;
-	bh=1Uq/uFPISpe1UYhHEgHXTPfoMo+c8Odcgy9E5wAHNLI=;
+	s=korg; t=1750714103;
+	bh=96r9Qg84fJDPhXJTDS9Snb0Q11QUGOSw0aLGxubq4wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WrWR05Ir9JW0CxPKTA8HTZr49KRx4vcyE3d1S4M8zdIOP1EhrMgwO6fmbMRsX3MBK
-	 H+YSSCA3Ur4CtFW4HwY1a9IIsr6p8Ele1tomFOdUuzeAUqUz0UYeG8LNl5ywnSpxml
-	 m2MuwUyUlmiyZ0k4o7v3dF1m5MQ4kPtXeLvRmoF0=
+	b=T0c45g1Fq2IsDmopvF3FhZUfXZwbk8w2lgwpU5W4fbNiruq4HpNc2D9LugM/ody4P
+	 qEI2GqCUjuLDDnOI3nQJQ4zv6NRlnLPtDtWgfBwj8vtziNV8rq+AawynkPA/ZgHNLh
+	 5UiZ9Z+XbR1I47vWJGtBfS2DH9gvlP2kzZenfIpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fe2a25dae02a207717a0@syzkaller.appspotmail.com,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Jan Kara <jack@suse.cz>,
-	Andreas Dilger <adilger@dilger.ca>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 184/355] ext4: inline: fix len overflow in ext4_prepare_inline_data
-Date: Mon, 23 Jun 2025 15:06:25 +0200
-Message-ID: <20250623130632.218951054@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.12 081/414] can: kvaser_pciefd: refine error prone echo_skb_max handling logic
+Date: Mon, 23 Jun 2025 15:03:38 +0200
+Message-ID: <20250623130644.106725203@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,125 +46,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 227cb4ca5a6502164f850d22aec3104d7888b270 upstream.
+commit 54ec8b08216f3be2cc98b33633d3c8ea79749895 upstream.
 
-When running the following code on an ext4 filesystem with inline_data
-feature enabled, it will lead to the bug below.
+echo_skb_max should define the supported upper limit of echo_skb[]
+allocated inside the netdevice's priv. The corresponding size value
+provided by this driver to alloc_candev() is KVASER_PCIEFD_CAN_TX_MAX_COUNT
+which is 17.
 
-        fd = open("file1", O_RDWR | O_CREAT | O_TRUNC, 0666);
-        ftruncate(fd, 30);
-        pwrite(fd, "a", 1, (1UL << 40) + 5UL);
+But later echo_skb_max is rounded up to the nearest power of two (for the
+max case, that would be 32) and the tx/ack indices calculated further
+during tx/rx may exceed the upper array boundary. Kasan reported this for
+the ack case inside kvaser_pciefd_handle_ack_packet(), though the xmit
+function has actually caught the same thing earlier.
 
-That happens because write_begin will succeed as when
-ext4_generic_write_inline_data calls ext4_prepare_inline_data, pos + len
-will be truncated, leading to ext4_prepare_inline_data parameter to be 6
-instead of 0x10000000006.
+ BUG: KASAN: slab-out-of-bounds in kvaser_pciefd_handle_ack_packet+0x2d7/0x92a drivers/net/can/kvaser_pciefd.c:1528
+ Read of size 8 at addr ffff888105e4f078 by task swapper/4/0
 
-Then, later when write_end is called, we hit:
+ CPU: 4 UID: 0 PID: 0 Comm: swapper/4 Not tainted 6.15.0 #12 PREEMPT(voluntary)
+ Call Trace:
+  <IRQ>
+ dump_stack_lvl lib/dump_stack.c:122
+ print_report mm/kasan/report.c:521
+ kasan_report mm/kasan/report.c:634
+ kvaser_pciefd_handle_ack_packet drivers/net/can/kvaser_pciefd.c:1528
+ kvaser_pciefd_read_packet drivers/net/can/kvaser_pciefd.c:1605
+ kvaser_pciefd_read_buffer drivers/net/can/kvaser_pciefd.c:1656
+ kvaser_pciefd_receive_irq drivers/net/can/kvaser_pciefd.c:1684
+ kvaser_pciefd_irq_handler drivers/net/can/kvaser_pciefd.c:1733
+ __handle_irq_event_percpu kernel/irq/handle.c:158
+ handle_irq_event kernel/irq/handle.c:210
+ handle_edge_irq kernel/irq/chip.c:833
+ __common_interrupt arch/x86/kernel/irq.c:296
+ common_interrupt arch/x86/kernel/irq.c:286
+  </IRQ>
 
-        BUG_ON(pos + len > EXT4_I(inode)->i_inline_size);
+Tx max count definitely matters for kvaser_pciefd_tx_avail(), but for seq
+numbers' generation that's not the case - we're free to calculate them as
+would be more convenient, not taking tx max count into account. The only
+downside is that the size of echo_skb[] should correspond to the max seq
+number (not tx max count), so in some situations a bit more memory would
+be consumed than could be.
 
-at ext4_write_inline_data.
+Thus make the size of the underlying echo_skb[] sufficient for the rounded
+max tx value.
 
-Fix it by using a loff_t type for the len parameter in
-ext4_prepare_inline_data instead of an unsigned int.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-[   44.545164] ------------[ cut here ]------------
-[   44.545530] kernel BUG at fs/ext4/inline.c:240!
-[   44.545834] Oops: invalid opcode: 0000 [#1] SMP NOPTI
-[   44.546172] CPU: 3 UID: 0 PID: 343 Comm: test Not tainted 6.15.0-rc2-00003-g9080916f4863 #45 PREEMPT(full)  112853fcebfdb93254270a7959841d2c6aa2c8bb
-[   44.546523] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[   44.546523] RIP: 0010:ext4_write_inline_data+0xfe/0x100
-[   44.546523] Code: 3c 0e 48 83 c7 48 48 89 de 5b 41 5c 41 5d 41 5e 41 5f 5d e9 e4 fa 43 01 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc 0f 0b <0f> 0b 0f 1f 44 00 00 55 41 57 41 56 41 55 41 54 53 48 83 ec 20 49
-[   44.546523] RSP: 0018:ffffb342008b79a8 EFLAGS: 00010216
-[   44.546523] RAX: 0000000000000001 RBX: ffff9329c579c000 RCX: 0000010000000006
-[   44.546523] RDX: 000000000000003c RSI: ffffb342008b79f0 RDI: ffff9329c158e738
-[   44.546523] RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000000
-[   44.546523] R10: 00007ffffffff000 R11: ffffffff9bd0d910 R12: 0000006210000000
-[   44.546523] R13: fffffc7e4015e700 R14: 0000010000000005 R15: ffff9329c158e738
-[   44.546523] FS:  00007f4299934740(0000) GS:ffff932a60179000(0000) knlGS:0000000000000000
-[   44.546523] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   44.546523] CR2: 00007f4299a1ec90 CR3: 0000000002886002 CR4: 0000000000770eb0
-[   44.546523] PKRU: 55555554
-[   44.546523] Call Trace:
-[   44.546523]  <TASK>
-[   44.546523]  ext4_write_inline_data_end+0x126/0x2d0
-[   44.546523]  generic_perform_write+0x17e/0x270
-[   44.546523]  ext4_buffered_write_iter+0xc8/0x170
-[   44.546523]  vfs_write+0x2be/0x3e0
-[   44.546523]  __x64_sys_pwrite64+0x6d/0xc0
-[   44.546523]  do_syscall_64+0x6a/0xf0
-[   44.546523]  ? __wake_up+0x89/0xb0
-[   44.546523]  ? xas_find+0x72/0x1c0
-[   44.546523]  ? next_uptodate_folio+0x317/0x330
-[   44.546523]  ? set_pte_range+0x1a6/0x270
-[   44.546523]  ? filemap_map_pages+0x6ee/0x840
-[   44.546523]  ? ext4_setattr+0x2fa/0x750
-[   44.546523]  ? do_pte_missing+0x128/0xf70
-[   44.546523]  ? security_inode_post_setattr+0x3e/0xd0
-[   44.546523]  ? ___pte_offset_map+0x19/0x100
-[   44.546523]  ? handle_mm_fault+0x721/0xa10
-[   44.546523]  ? do_user_addr_fault+0x197/0x730
-[   44.546523]  ? do_syscall_64+0x76/0xf0
-[   44.546523]  ? arch_exit_to_user_mode_prepare+0x1e/0x60
-[   44.546523]  ? irqentry_exit_to_user_mode+0x79/0x90
-[   44.546523]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
-[   44.546523] RIP: 0033:0x7f42999c6687
-[   44.546523] Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
-[   44.546523] RSP: 002b:00007ffeae4a7930 EFLAGS: 00000202 ORIG_RAX: 0000000000000012
-[   44.546523] RAX: ffffffffffffffda RBX: 00007f4299934740 RCX: 00007f42999c6687
-[   44.546523] RDX: 0000000000000001 RSI: 000055ea6149200f RDI: 0000000000000003
-[   44.546523] RBP: 00007ffeae4a79a0 R08: 0000000000000000 R09: 0000000000000000
-[   44.546523] R10: 0000010000000005 R11: 0000000000000202 R12: 0000000000000000
-[   44.546523] R13: 00007ffeae4a7ac8 R14: 00007f4299b86000 R15: 000055ea61493dd8
-[   44.546523]  </TASK>
-[   44.546523] Modules linked in:
-[   44.568501] ---[ end trace 0000000000000000 ]---
-[   44.568889] RIP: 0010:ext4_write_inline_data+0xfe/0x100
-[   44.569328] Code: 3c 0e 48 83 c7 48 48 89 de 5b 41 5c 41 5d 41 5e 41 5f 5d e9 e4 fa 43 01 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc 0f 0b <0f> 0b 0f 1f 44 00 00 55 41 57 41 56 41 55 41 54 53 48 83 ec 20 49
-[   44.570931] RSP: 0018:ffffb342008b79a8 EFLAGS: 00010216
-[   44.571356] RAX: 0000000000000001 RBX: ffff9329c579c000 RCX: 0000010000000006
-[   44.571959] RDX: 000000000000003c RSI: ffffb342008b79f0 RDI: ffff9329c158e738
-[   44.572571] RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000000
-[   44.573148] R10: 00007ffffffff000 R11: ffffffff9bd0d910 R12: 0000006210000000
-[   44.573748] R13: fffffc7e4015e700 R14: 0000010000000005 R15: ffff9329c158e738
-[   44.574335] FS:  00007f4299934740(0000) GS:ffff932a60179000(0000) knlGS:0000000000000000
-[   44.575027] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   44.575520] CR2: 00007f4299a1ec90 CR3: 0000000002886002 CR4: 0000000000770eb0
-[   44.576112] PKRU: 55555554
-[   44.576338] Kernel panic - not syncing: Fatal exception
-[   44.576517] Kernel Offset: 0x1a600000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
-
-Reported-by: syzbot+fe2a25dae02a207717a0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fe2a25dae02a207717a0
-Fixes: f19d5870cbf7 ("ext4: add normal write support for inline data")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Fixes: 8256e0ca6010 ("can: kvaser_pciefd: Fix echo_skb race")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Link: https://patch.msgid.link/20250415-ext4-prepare-inline-overflow-v1-1-f4c13d900967@igalia.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20250528192713.63894-1-pchelkin@ispras.ru
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inline.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/kvaser_pciefd.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -389,7 +389,7 @@ out:
- }
+diff --git a/drivers/net/can/kvaser_pciefd.c b/drivers/net/can/kvaser_pciefd.c
+index 7d3066691d5d..52301511ed1b 100644
+--- a/drivers/net/can/kvaser_pciefd.c
++++ b/drivers/net/can/kvaser_pciefd.c
+@@ -966,7 +966,7 @@ static int kvaser_pciefd_setup_can_ctrls(struct kvaser_pciefd *pcie)
+ 		u32 status, tx_nr_packets_max;
  
- static int ext4_prepare_inline_data(handle_t *handle, struct inode *inode,
--				    unsigned int len)
-+				    loff_t len)
- {
- 	int ret, size, no_expand;
- 	struct ext4_inode_info *ei = EXT4_I(inode);
+ 		netdev = alloc_candev(sizeof(struct kvaser_pciefd_can),
+-				      KVASER_PCIEFD_CAN_TX_MAX_COUNT);
++				      roundup_pow_of_two(KVASER_PCIEFD_CAN_TX_MAX_COUNT));
+ 		if (!netdev)
+ 			return -ENOMEM;
+ 
+@@ -995,7 +995,6 @@ static int kvaser_pciefd_setup_can_ctrls(struct kvaser_pciefd *pcie)
+ 		can->tx_max_count = min(KVASER_PCIEFD_CAN_TX_MAX_COUNT, tx_nr_packets_max - 1);
+ 
+ 		can->can.clock.freq = pcie->freq;
+-		can->can.echo_skb_max = roundup_pow_of_two(can->tx_max_count);
+ 		spin_lock_init(&can->lock);
+ 
+ 		can->can.bittiming_const = &kvaser_pciefd_bittiming_const;
+-- 
+2.50.0
+
 
 
