@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BC43FB1B;
-	Mon, 23 Jun 2025 21:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B951AD3FA;
+	Mon, 23 Jun 2025 21:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715827; cv=none; b=Up64l5B/bSj0FQaxT1hCAyzJYUZtimVgmArKxEa8vFwMahOul+QrnzUs5/NUIeMmWCwXELV7JuP3Zdbn4i5x5kLbcQjKQHT1Mc/CKrjUpxUEacEQ1/DtLaMMLF/Iwzlwtw1ynSK9aq2k9QtIM9LGeOk3cRXbOxRhP/1g0b9Jyx4=
+	t=1750715829; cv=none; b=QD4YGKaycGX/4zn6MkSIN20qysQ4PX3Xfery1lzPw12I3jghKOiAjz3fs78aHNQXR/1rHoCWx/PdDOaNksvyClES4N1jdAoXUeSCnLmBJ7R6SNU9j7C0RbE5bNSY4wtc/oNHO9aYSQ2HSACpOtBwrqaThyU+G09o8jnWV4EnMv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715827; c=relaxed/simple;
-	bh=am+gENgPEoAH2gHsqG1n7jGrb6VDEFw6W4u4Gb5ZAWg=;
+	s=arc-20240116; t=1750715829; c=relaxed/simple;
+	bh=HS7TSJbP6bNxLQTFw6qaXx2mIC0NOQ74Z4uC3ki1MHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R6ZV6MtR6imlD/Cg5BgT3t3GEdw3IIFDmkxlDXXyWbYwI3euWRGXuojqRHmNbp6D7FJXMiZ4PyF42gdn6xRnaRA+1HgpD9p7M+PhuD/GqcjcLUb1bVgUbXVIpZO0rxwRSve5Y8BvLizVORcjTTZ0+8yrGjEvbKK6cPMnWvCTsw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ka9OfhaL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JkkBmEnIzQfq0czh7MBxX1COwubXoQYfIhD7KE7qQRATc6BHTKD9n1sAb4ppXh9UJDdSrBcqDEhdFyJyHlEgIY6qWiQfwOJ0hyq7tsfNcSbkAOm7Gah55essCVxG3AkxEyTJAnSaedXC2ZyyTURTy0Qo1Q6O4opREawwgoCnRE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SltVMFSG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ka9OfhaL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0618C4CEEA;
-	Mon, 23 Jun 2025 21:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SltVMFSG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C9EC4CEEA;
+	Mon, 23 Jun 2025 21:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715827;
-	bh=am+gENgPEoAH2gHsqG1n7jGrb6VDEFw6W4u4Gb5ZAWg=;
+	s=korg; t=1750715829;
+	bh=HS7TSJbP6bNxLQTFw6qaXx2mIC0NOQ74Z4uC3ki1MHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ka9OfhaLczQn2e/xw/07zN7k9TrKwfj4yF2RxK/FkA158eR+YAU8Imi5T/aVp6S7o
-	 Ghbf/MP0MSzpA8yxvW052YWu57Dpf6xu0AMq73lEuI6RdK8B5bhSTXIUyrEe5u4IRR
-	 dSx7oAnL98MsQYkzqpQi1dDZUWu2hyuVWd/torAE=
+	b=SltVMFSGJnOn0T1tZnJch2V+TvlQCJQYtRoV7CZQ6N8eAlgC9VsviRPVd8XHLaLA/
+	 sESv1RE+1DlDOcLgCpQnENeFgZ8Njl85qxdtzjhEDhvUy+VyCMxScsk/EOE7rN7hFr
+	 J+enj6k/H+C+gAH8yL6u10xao+Vtwl9UzcdUboMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"James A. MacInnes" <james.a.macinnes@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 244/290] drm/msm/disp: Correct porch timing for SDM845
-Date: Mon, 23 Jun 2025 15:08:25 +0200
-Message-ID: <20250623130634.266574600@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 284/508] calipso: unlock rcu before returning -EAFNOSUPPORT
+Date: Mon, 23 Jun 2025 15:05:29 +0200
+Message-ID: <20250623130652.251122834@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +49,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James A. MacInnes <james.a.macinnes@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 146e87f3e11de0dfa091ff87e34b4bc6eec761a4 ]
+commit 3cae906e1a6184cdc9e4d260e4dbdf9a118d94ad upstream.
 
-Type-C DisplayPort inoperable due to incorrect porch settings.
-- Re-used wide_bus_en as flag to prevent porch shifting
+syzbot reported that a recent patch forgot to unlock rcu
+in the error path.
 
-Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-Signed-off-by: James A. MacInnes <james.a.macinnes@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/636945/
-Link: https://lore.kernel.org/r/20250212-sdm845_dp-v2-2-4954e51458f4@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Adopt the convention that netlbl_conn_setattr() is already using.
+
+Fixes: 6e9f2df1c550 ("calipso: Don't call calipso functions for AF_INET sk.")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/20250604133826.1667664-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ net/netlabel/netlabel_kapi.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index 20c8b9af7a219..2cda9bbf68f96 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -93,17 +93,21 @@ static void drm_mode_to_intf_timing_params(
- 		timing->vsync_polarity = 0;
- 	}
+--- a/net/netlabel/netlabel_kapi.c
++++ b/net/netlabel/netlabel_kapi.c
+@@ -1140,8 +1140,10 @@ int netlbl_conn_setattr(struct sock *sk,
+ 		break;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	case AF_INET6:
+-		if (sk->sk_family != AF_INET6)
+-			return -EAFNOSUPPORT;
++		if (sk->sk_family != AF_INET6) {
++			ret_val = -EAFNOSUPPORT;
++			goto conn_setattr_return;
++		}
  
--	/* for DP/EDP, Shift timings to align it to bottom right */
--	if (phys_enc->hw_intf->cap->type == INTF_DP) {
-+	timing->wide_bus_en = dpu_encoder_is_widebus_enabled(phys_enc->parent);
-+	timing->compression_en = dpu_encoder_is_dsc_enabled(phys_enc->parent);
-+
-+	/*
-+	 *  For DP/EDP, Shift timings to align it to bottom right.
-+	 *  wide_bus_en is set for everything excluding SDM845 &
-+	 *  porch changes cause DisplayPort failure and HDMI tearing.
-+	 */
-+	if (phys_enc->hw_intf->cap->type == INTF_DP && timing->wide_bus_en) {
- 		timing->h_back_porch += timing->h_front_porch;
- 		timing->h_front_porch = 0;
- 		timing->v_back_porch += timing->v_front_porch;
- 		timing->v_front_porch = 0;
- 	}
- 
--	timing->wide_bus_en = dpu_encoder_is_widebus_enabled(phys_enc->parent);
--	timing->compression_en = dpu_encoder_is_dsc_enabled(phys_enc->parent);
--
- 	/*
- 	 * for DP, divide the horizonal parameters by 2 when
- 	 * widebus is enabled
--- 
-2.39.5
-
+ 		addr6 = (struct sockaddr_in6 *)addr;
+ 		entry = netlbl_domhsh_getentry_af6(secattr->domain,
 
 
