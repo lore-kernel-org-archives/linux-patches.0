@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36DA1E51FA;
-	Mon, 23 Jun 2025 21:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FAC1E51FA;
+	Mon, 23 Jun 2025 21:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713932; cv=none; b=nfMV+XdBRDcHmy/jKqUl8tOoyWn/cB6BtC3Zi5PDuuR2h3dl348gjqUkw77SChIU61xSa29PeHbm2hhjuwxzI/VpokfymLMGPQ/XUX64++8EmODqYQMWeemWFsfXwYCK8XVy434RtdUm90rOfgByq0qpkuET5SGnJ1a9Z0+39fU=
+	t=1750713935; cv=none; b=j6Oa/VDmWUBIsPiTBUsdqFyDZ5N1LlzFB0l5rLpGGhllst/zzAI7ViJgCL8FjRsr2/3S7CldFh0ughywUR8ho0cbUm5A3DFxVfs0lBocQan8DG1hLuXQCBPyaH1pL7R1bkh8pUNZ4g3I0N0Gsk8CuFWhPfQJb8LLvfYLv6lOFHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713932; c=relaxed/simple;
-	bh=GVBk0gmIVweuYEnQxWbmnex+9zqnl7RXNLFoPtEgEHc=;
+	s=arc-20240116; t=1750713935; c=relaxed/simple;
+	bh=8exWpqsetsb2xCz1BQvwx/ZdGNiFGVusP0tZgZeJGNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWRRbeTh05mdEfeDpBBVjZJmjCdFBv6rbcQbWnM0lngv698DUFmIppilZRfHR8pKc+NNV1vJayAhfpb5DzcG9JmaA4nbBp7worH6nn3Npm/BWrT+S2AMCL8fopAhsXHGu2GdcNAFusWTGsTz/Ne4MYodZZ08dGmOFj6a21KSbgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/I/Tt96; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OrB2ZY4x8viT5P0sw1JXNpjAWR8VCg2QEfxtGxfnyFYnQ286beagzWD/5MddoQpgv/aKK/OOk6LFPdA3bJNj1oHjHV4qQuHb3+sbMWpFmFHmtoKY2UitvfBv+0cPnSPAMU7lzUpGpTN27mVIuDcExIk+cLYaDbxRVIEqqXrc2xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axOqgK1P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/I/Tt96"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C118C4CEEA;
-	Mon, 23 Jun 2025 21:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axOqgK1P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE9B6C4CEEA;
+	Mon, 23 Jun 2025 21:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713932;
-	bh=GVBk0gmIVweuYEnQxWbmnex+9zqnl7RXNLFoPtEgEHc=;
+	s=korg; t=1750713935;
+	bh=8exWpqsetsb2xCz1BQvwx/ZdGNiFGVusP0tZgZeJGNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/I/Tt96agdf47kjW6OQLrre4SR/8pONKdN++luXBkHmzQ2T4qXqC+5AF0ANByG78
-	 hvSXukJGFydD+kCwyf6yvap93WsifllwaUTnkMEoUO3+sMrVH7z9ThNwdXbMbNrgAe
-	 z4dw+7wGrqbpxiTan9/m/igVNXAeN0i6kv24vox4=
+	b=axOqgK1PrEVnO0wsxAHqB7rT9Kv8WIeFlGVHkoInK7DzndqZ4fLAGPh7+mh0YmIuD
+	 HPINxvdesHU9iLZKXaOfQ7jRlRpogt25oCCAhKVeq5s1kYduV257ZFA/JFn4VZnWRq
+	 3+X9geNze/bp/MrkY7Tivdt2Q+3EMDjjerjmLH2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 354/592] pinctrl: armada-37xx: propagate error from armada_37xx_pmx_set_by_name()
-Date: Mon, 23 Jun 2025 15:05:12 +0200
-Message-ID: <20250623130708.862994001@linuxfoundation.org>
+	Gavin Guo <gavinguo@igalia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Florent Revest <revest@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 217/222] mm/huge_memory: fix dereferencing invalid pmd migration entry
+Date: Mon, 23 Jun 2025 15:09:12 +0200
+Message-ID: <20250623130618.823493688@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,44 +53,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Gavin Guo <gavinguo@igalia.com>
 
-[ Upstream commit 4229c28323db141eda69cb99427be75d3edba071 ]
+commit be6e843fc51a584672dfd9c4a6a24c8cb81d5fb7 upstream.
 
-The regmap_update_bits() function can fail, so propagate its error
-up to the stack instead of silently ignoring that.
+When migrating a THP, concurrent access to the PMD migration entry during
+a deferred split scan can lead to an invalid address access, as
+illustrated below.  To prevent this invalid access, it is necessary to
+check the PMD migration entry and return early.  In this context, there is
+no need to use pmd_to_swp_entry and pfn_swap_entry_to_page to verify the
+equality of the target folio.  Since the PMD migration entry is locked, it
+cannot be served as the target.
 
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-7-07e9ac1ab737@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Mailing list discussion and explanation from Hugh Dickins: "An anon_vma
+lookup points to a location which may contain the folio of interest, but
+might instead contain another folio: and weeding out those other folios is
+precisely what the "folio != pmd_folio((*pmd)" check (and the "risk of
+replacing the wrong folio" comment a few lines above it) is for."
+
+BUG: unable to handle page fault for address: ffffea60001db008
+CPU: 0 UID: 0 PID: 2199114 Comm: tee Not tainted 6.14.0+ #4 NONE
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:split_huge_pmd_locked+0x3b5/0x2b60
+Call Trace:
+<TASK>
+try_to_migrate_one+0x28c/0x3730
+rmap_walk_anon+0x4f6/0x770
+unmap_folio+0x196/0x1f0
+split_huge_page_to_list_to_order+0x9f6/0x1560
+deferred_split_scan+0xac5/0x12a0
+shrinker_debugfs_scan_write+0x376/0x470
+full_proxy_write+0x15c/0x220
+vfs_write+0x2fc/0xcb0
+ksys_write+0x146/0x250
+do_syscall_64+0x6a/0x120
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The bug is found by syzkaller on an internal kernel, then confirmed on
+upstream.
+
+Link: https://lkml.kernel.org/r/20250421113536.3682201-1-gavinguo@igalia.com
+Link: https://lore.kernel.org/all/20250414072737.1698513-1-gavinguo@igalia.com/
+Link: https://lore.kernel.org/all/20250418085802.2973519-1-gavinguo@igalia.com/
+Fixes: 84c3fc4e9c56 ("mm: thp: check pmd migration entry in common path")
+Signed-off-by: Gavin Guo <gavinguo@igalia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Hugh Dickins <hughd@google.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Cc: Florent Revest <revest@google.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[gavin: backport the migration checking logic to __split_huge_pmd]
+Signed-off-by: Gavin Guo <gavinguo@igalia.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ mm/huge_memory.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-index 79f9c08e5039c..072bdd0d153ed 100644
---- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-+++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -358,9 +358,7 @@ static int armada_37xx_pmx_set_by_name(struct pinctrl_dev *pctldev,
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2334,7 +2334,7 @@ void __split_huge_pmd(struct vm_area_str
+ 	VM_BUG_ON(freeze && !page);
+ 	if (page) {
+ 		VM_WARN_ON_ONCE(!PageLocked(page));
+-		if (page != pmd_page(*pmd))
++		if (is_pmd_migration_entry(*pmd) || page != pmd_page(*pmd))
+ 			goto out;
+ 	}
  
- 	val = grp->val[func];
- 
--	regmap_update_bits(info->regmap, reg, mask, val);
--
--	return 0;
-+	return regmap_update_bits(info->regmap, reg, mask, val);
- }
- 
- static int armada_37xx_pmx_set(struct pinctrl_dev *pctldev,
--- 
-2.39.5
-
 
 
