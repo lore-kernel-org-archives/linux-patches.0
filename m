@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A81253F2D;
-	Mon, 23 Jun 2025 13:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62051253F2D;
+	Mon, 23 Jun 2025 13:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685013; cv=none; b=JBBVeQzkzdulkPYd54vHtrrRS+EOm0lyZPAGGbTXnWEXdcKHaMhdBbaX4D5NOqxmtiXff6pVyEy+bQO20BxT1mN9E1iuigrx0TeEYX/qm62vj9GHgjRjEqYP1I5OWDb8FnXdbwwHBUunKXwNfmMrAIL7LREYesZtS3Pqsdm36uY=
+	t=1750685016; cv=none; b=cEMjd1RbVSfvGgwSoTaj2gVhft0sDmU6wZ5NYv8DaZow5J6T+Ntm/mp7f70uzRbT7k81RCCMEYmy9ectOQUPbBKV1fRA32wrsrS0z9Lc1GwHaDxzEDfoDcP83na9K7ahnqW57Srx+IOobP7ZBV27TweZpLW4Oi3bb5UtHoPQkSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685013; c=relaxed/simple;
-	bh=99WlCNPA5r2f6EJSsqUmEzwYyPmoHMYj5QQcWJv8QWY=;
+	s=arc-20240116; t=1750685016; c=relaxed/simple;
+	bh=zsNAi8/jHhbvscy6HbldMBiWUUnLtMQbx+ntGUTB3QM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d8xJVUcRhBnDHDVJ0345HsqL9lErCYycPVJN0Jvec6/eoPkfFP93swWDmhUTlvUb9VwBJCGODlakAs8B/6gbH+k+SQkPXDxYlQBX+dh5CC7sMJ8t28xX2YZcNtbDg7iW2sQ5DnhWzUrd2P1jd/MAJmfexqmWzkEL+VF7FpIz5OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5+3pEmH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G4iIQBuwJmeRha0dCFhh1Qrf4b5ufhzwLhDQNZeD7fP+rxmqgfR4zKC9d/416T4dyqmFzf3XLRNNP6+QjxiToS0PnYVpnF8n93lYWX+NzfkblEuchDeUYtKMvcUcMzwCEyGhKXOh4WtkUCSBAGdjPzD29bLqwP2UtW0C8JRncnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SP+2Xqgo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5+3pEmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA0AC4CEEA;
-	Mon, 23 Jun 2025 13:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SP+2Xqgo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6CC3C4CEEA;
+	Mon, 23 Jun 2025 13:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685013;
-	bh=99WlCNPA5r2f6EJSsqUmEzwYyPmoHMYj5QQcWJv8QWY=;
+	s=korg; t=1750685016;
+	bh=zsNAi8/jHhbvscy6HbldMBiWUUnLtMQbx+ntGUTB3QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T5+3pEmH4iJhw2UDlX2HOBF6x0zMPWKBWQyJDSwZn91yXRyfYmzV+xKCaUSYztHiI
-	 RGEpHaOp/Ea923cw5LBr+fYsElg8ZfI04M7ZTglB59qZnAJUO4vd0MyGceqRk7cowJ
-	 KJnHw05bLbIkc1wPALYOMPEwS4Vv8Mo+FsLpZBM4=
+	b=SP+2XqgoCdFVz19P3sv0L5R3q+lmSxb+IODE9SvoJl2isCJMDaYdP7jLQmBDBT4J9
+	 loRaclu5LgGAuROH8AhmxRB/SnSasNSVlIYPhePJDyrUNdQlMMUytrfE8WNldyzpuM
+	 l7YcFAQ1xgPHQMRgLwIqBjcQRbTE0D6F/PoKKCFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.15 201/592] iio: adc: ad7944: mask high bits on direct read
-Date: Mon, 23 Jun 2025 15:02:39 +0200
-Message-ID: <20250623130705.070217678@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 058/222] mfd: exynos-lpass: Avoid calling exynos_lpass_disable() twice in exynos_lpass_remove()
+Date: Mon, 23 Jun 2025 15:06:33 +0200
+Message-ID: <20250623130613.857672777@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 7cdfbc0113d087348b8e65dd79276d0f57b89a10 upstream.
+[ Upstream commit b70b84556eeca5262d290e8619fe0af5b7664a52 ]
 
-Apply a mask to the raw value received over the SPI bus for unsigned
-direct reads. As we found recently, SPI controllers may not set unused
-bits to 0 when reading with bits_per_word != {8,16,32}. The ad7944 uses
-bits_per_word of 14 and 18, so we need to mask the value to be sure we
-returning the correct value to userspace during a direct read.
+exynos_lpass_disable() is called twice in the remove function. Remove
+one of these calls.
 
-Fixes: d1efcf8871db ("iio: adc: ad7944: add driver for AD7944/AD7985/AD7986")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20250505-iio-adc-ad7944-max-high-bits-on-direct-read-v1-1-b173facceefe@baylibre.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 90f447170c6f ("mfd: exynos-lpass: Add runtime PM support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/74d69e8de10308c9855db6d54155a3de4b11abfd.1745247209.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7944.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mfd/exynos-lpass.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/iio/adc/ad7944.c
-+++ b/drivers/iio/adc/ad7944.c
-@@ -377,6 +377,8 @@ static int ad7944_single_conversion(stru
+diff --git a/drivers/mfd/exynos-lpass.c b/drivers/mfd/exynos-lpass.c
+index 99bd0e73c19c3..ffda3445d1c0f 100644
+--- a/drivers/mfd/exynos-lpass.c
++++ b/drivers/mfd/exynos-lpass.c
+@@ -144,7 +144,6 @@ static int exynos_lpass_remove(struct platform_device *pdev)
+ {
+ 	struct exynos_lpass *lpass = platform_get_drvdata(pdev);
  
- 	if (chan->scan_type.sign == 's')
- 		*val = sign_extend32(*val, chan->scan_type.realbits - 1);
-+	else
-+		*val &= GENMASK(chan->scan_type.realbits - 1, 0);
- 
- 	return IIO_VAL_INT;
- }
+-	exynos_lpass_disable(lpass);
+ 	pm_runtime_disable(&pdev->dev);
+ 	if (!pm_runtime_status_suspended(&pdev->dev))
+ 		exynos_lpass_disable(lpass);
+-- 
+2.39.5
+
 
 
