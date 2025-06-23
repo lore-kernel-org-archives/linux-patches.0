@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677A7222576;
-	Mon, 23 Jun 2025 22:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27CB222576;
+	Mon, 23 Jun 2025 22:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716664; cv=none; b=ri+SBmA5kRBVWvvMyGix3te79DDJc8OhUyDMlkBQFnkY3LY2MYY9i4+1rEwIfxyVNQeJm96+pXnYO9sUgEPISHGxULkoWfhPQZeSbRPOpxpBxTG5yJkuMvzZawosPxybX6qQlvJWn10VgdLNr5ROQ90DhkWXQpdjXXEGhuKo5NA=
+	t=1750716666; cv=none; b=Ojw99t58Bv7GxJ1+kZPDE6488/c8X2E99lQZOFYqFUlT1hLlFM8ABUxPhyM6PDFkFDP5ALvmjf26PcQgzlY3YDSfIaS8jMCsCS07ShnaHY+fjWjltQt60r17LQmminFR52tw9my8TAnEpUklRdRPtL+UXZcQF9E0Z8DmofduK5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716664; c=relaxed/simple;
-	bh=hxHv8F5YBXeOwEXOq2t37Oc3EZcUZdlOYJ584WFsH/8=;
+	s=arc-20240116; t=1750716666; c=relaxed/simple;
+	bh=owMcGrlpM5c08BRisT8hWbqyOgCvIULgLE9i+Z4Ww1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mw3MDiml8PRrGgFObjThQN//9fvKPivP/pUGjne0zIYyQEPWiWPzhLrz797TbHn6Fpy2fZSsbULOTT/IdK5BMsK7ogGS8h9If/o2VvqmyRzDP6T5NvzH2By7TaA+yrQR8wStcdQKTXFI2APr1SLG2wjCmEfxsCipG1u8edfOjVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMYjXuEE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nRZGFaBlws6sGsTPQpkFygrg2US1eciOACilhMBsCqkoy/swDR+E2bPl2WcLafkskMETynNOJjixo1jqZEBF+tGWjHXOM4VA5W8hy3laX4+YbvHW5pGD0uXH7QPXrbbvL3XQ4zNLto7Q8kKnuVIzXh+F5Gzg5iT9GhmjgQsEJHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBmrhI5m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMYjXuEE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4115C4CEEA;
-	Mon, 23 Jun 2025 22:11:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBmrhI5m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE39C4CEEA;
+	Mon, 23 Jun 2025 22:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716664;
-	bh=hxHv8F5YBXeOwEXOq2t37Oc3EZcUZdlOYJ584WFsH/8=;
+	s=korg; t=1750716666;
+	bh=owMcGrlpM5c08BRisT8hWbqyOgCvIULgLE9i+Z4Ww1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tMYjXuEE9kDA26fH9zdt/sLOCQbNyxrGzKf7lHj8STDlV1wEjko22qTz2/SUdYPFB
-	 J7ZFe6vtwAV1ZHJRrIPmwaOXiFkFZh54/sYRNXPcuAphgtpGB6fbkxj7qJmSh25L0v
-	 8jO6sjp0PLRQDWx6qQg8RQydaz0v4ndjBwt/WVC8=
+	b=aBmrhI5mIXHMohVDGDpH19dYmHJ24JT6B/u1ILcXQlE9xmzluU9zV63+JUWkP93NI
+	 e1JDZWgi2zopLX27PKyMEfjANQE96lP7YR8nRmen2GD+byGf3qE02jRSuvJdUHAK1o
+	 umNgtKtK7ETEL1YhjrMbee57/Uw/C2noY6+ttkx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0d33ab192bd50b6c91e6@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 319/508] media: vidtv: Terminating the subsequent process of initialization failure
-Date: Mon, 23 Jun 2025 15:06:04 +0200
-Message-ID: <20250623130653.173968511@linuxfoundation.org>
+	Daeho Jeong <daehojeong@google.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 273/414] f2fs: fix to set atomic write status more clear
+Date: Mon, 23 Jun 2025 15:06:50 +0200
+Message-ID: <20250623130648.852434575@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,152 +49,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 1d5f88f053480326873115092bc116b7d14916ba upstream.
+[ Upstream commit db03c20c0850dc8d2bcabfa54b9438f7d666c863 ]
 
-syzbot reported a slab-use-after-free Read in vidtv_mux_init. [1]
+1. After we start atomic write in a database file, before committing
+all data, we'd better not set inode w/ vfs dirty status to avoid
+redundant updates, instead, we only set inode w/ atomic dirty status.
 
-After PSI initialization fails, the si member is accessed again, resulting
-in this uaf.
+2. After we commit all data, before committing metadata, we need to
+clear atomic dirty status, and set vfs dirty status to allow vfs flush
+dirty inode.
 
-After si initialization fails, the subsequent process needs to be exited.
-
-[1]
-BUG: KASAN: slab-use-after-free in vidtv_mux_pid_ctx_init drivers/media/test-drivers/vidtv/vidtv_mux.c:78 [inline]
-BUG: KASAN: slab-use-after-free in vidtv_mux_init+0xac2/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:524
-Read of size 8 at addr ffff88802fa42acc by task syz.2.37/6059
-
-CPU: 0 UID: 0 PID: 6059 Comm: syz.2.37 Not tainted 6.14.0-rc5-syzkaller #0
-Hardware name: Google Compute Engine, BIOS Google 02/12/2025
-Call Trace:
-<TASK>
-__dump_stack lib/dump_stack.c:94 [inline]
-dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
-print_address_description mm/kasan/report.c:408 [inline]
-print_report+0xc3/0x670 mm/kasan/report.c:521
-kasan_report+0xd9/0x110 mm/kasan/report.c:634
-vidtv_mux_pid_ctx_init drivers/media/test-drivers/vidtv/vidtv_mux.c:78
-vidtv_mux_init+0xac2/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:524
-vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194
-vidtv_start_feed drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
-dmx_section_feed_start_filtering drivers/media/dvb-core/dvb_demux.c:973
-dvb_dmxdev_feed_start drivers/media/dvb-core/dmxdev.c:508 [inline]
-dvb_dmxdev_feed_restart.isra.0 drivers/media/dvb-core/dmxdev.c:537
-dvb_dmxdev_filter_stop+0x2b4/0x3a0 drivers/media/dvb-core/dmxdev.c:564
-dvb_dmxdev_filter_free drivers/media/dvb-core/dmxdev.c:840 [inline]
-dvb_demux_release+0x92/0x550 drivers/media/dvb-core/dmxdev.c:1246
-__fput+0x3ff/0xb70 fs/file_table.c:464
-task_work_run+0x14e/0x250 kernel/task_work.c:227
-exit_task_work include/linux/task_work.h:40 [inline]
-do_exit+0xad8/0x2d70 kernel/exit.c:938
-do_group_exit+0xd3/0x2a0 kernel/exit.c:1087
-__do_sys_exit_group kernel/exit.c:1098 [inline]
-__se_sys_exit_group kernel/exit.c:1096 [inline]
-__x64_sys_exit_group+0x3e/0x50 kernel/exit.c:1096
-x64_sys_call+0x151f/0x1720 arch/x86/include/generated/asm/syscalls_64.h:232
-do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
-entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f871d58d169
-Code: Unable to access opcode bytes at 0x7f871d58d13f.
-RSP: 002b:00007fff4b19a788 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f871d58d169
-RDX: 0000000000000064 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: 00007fff4b19a7ec R08: 0000000b4b19a87f R09: 00000000000927c0
-R10: 0000000000000001 R11: 0000000000000246 R12: 0000000000000003
-R13: 00000000000927c0 R14: 000000000001d553 R15: 00007fff4b19a840
- </TASK>
-
-Allocated by task 6059:
- kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
- kasan_save_track+0x14/0x30 mm/kasan/common.c:68
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:394
- kmalloc_noprof include/linux/slab.h:901 [inline]
- kzalloc_noprof include/linux/slab.h:1037 [inline]
- vidtv_psi_pat_table_init drivers/media/test-drivers/vidtv/vidtv_psi.c:970
- vidtv_channel_si_init drivers/media/test-drivers/vidtv/vidtv_channel.c:423
- vidtv_mux_init drivers/media/test-drivers/vidtv/vidtv_mux.c:519
- vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194
- vidtv_start_feed drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
- dmx_section_feed_start_filtering drivers/media/dvb-core/dvb_demux.c:973
- dvb_dmxdev_feed_start drivers/media/dvb-core/dmxdev.c:508 [inline]
- dvb_dmxdev_feed_restart.isra.0 drivers/media/dvb-core/dmxdev.c:537
- dvb_dmxdev_filter_stop+0x2b4/0x3a0 drivers/media/dvb-core/dmxdev.c:564
- dvb_dmxdev_filter_free drivers/media/dvb-core/dmxdev.c:840 [inline]
- dvb_demux_release+0x92/0x550 drivers/media/dvb-core/dmxdev.c:1246
- __fput+0x3ff/0xb70 fs/file_table.c:464
- task_work_run+0x14e/0x250 kernel/task_work.c:227
- exit_task_work include/linux/task_work.h:40 [inline]
- do_exit+0xad8/0x2d70 kernel/exit.c:938
- do_group_exit+0xd3/0x2a0 kernel/exit.c:1087
- __do_sys_exit_group kernel/exit.c:1098 [inline]
- __se_sys_exit_group kernel/exit.c:1096 [inline]
- __x64_sys_exit_group+0x3e/0x50 kernel/exit.c:1096
- x64_sys_call arch/x86/include/generated/asm/syscalls_64.h:232
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 6059:
- kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
- kasan_save_track+0x14/0x30 mm/kasan/common.c:68
- kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:576
- poison_slab_object mm/kasan/common.c:247 [inline]
- __kasan_slab_free+0x51/0x70 mm/kasan/common.c:264
- kasan_slab_free include/linux/kasan.h:233 [inline]
- slab_free_hook mm/slub.c:2353 [inline]
- slab_free mm/slub.c:4609 [inline]
- kfree+0x2c4/0x4d0 mm/slub.c:4757
- vidtv_channel_si_init drivers/media/test-drivers/vidtv/vidtv_channel.c:499
- vidtv_mux_init drivers/media/test-drivers/vidtv/vidtv_mux.c:519
- vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194
- vidtv_start_feed drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
- dmx_section_feed_start_filtering drivers/media/dvb-core/dvb_demux.c:973
- dvb_dmxdev_feed_start drivers/media/dvb-core/dmxdev.c:508 [inline]
- dvb_dmxdev_feed_restart.isra.0 drivers/media/dvb-core/dmxdev.c:537
- dvb_dmxdev_filter_stop+0x2b4/0x3a0 drivers/media/dvb-core/dmxdev.c:564
- dvb_dmxdev_filter_free drivers/media/dvb-core/dmxdev.c:840 [inline]
- dvb_demux_release+0x92/0x550 drivers/media/dvb-core/dmxdev.c:1246
- __fput+0x3ff/0xb70 fs/file_table.c:464
- task_work_run+0x14e/0x250 kernel/task_work.c:227
- exit_task_work include/linux/task_work.h:40 [inline]
- do_exit+0xad8/0x2d70 kernel/exit.c:938
- do_group_exit+0xd3/0x2a0 kernel/exit.c:1087
- __do_sys_exit_group kernel/exit.c:1098 [inline]
- __se_sys_exit_group kernel/exit.c:1096 [inline]
- __x64_sys_exit_group+0x3e/0x50 kernel/exit.c:1096
- x64_sys_call arch/x86/include/generated/asm/syscalls_64.h:232
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 3be8037960bc ("media: vidtv: add error checks")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+0d33ab192bd50b6c91e6@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0d33ab192bd50b6c91e6
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Daeho Jeong <daehojeong@google.com>
+Reported-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_channel.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/inode.c   | 4 +++-
+ fs/f2fs/segment.c | 6 ++++++
+ fs/f2fs/super.c   | 4 +++-
+ 3 files changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/media/test-drivers/vidtv/vidtv_channel.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_channel.c
-@@ -497,7 +497,7 @@ free_sdt:
- 	vidtv_psi_sdt_table_destroy(m->si.sdt);
- free_pat:
- 	vidtv_psi_pat_table_destroy(m->si.pat);
--	return 0;
-+	return -EINVAL;
- }
+diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
+index 50e64b7b016dc..06688b9957c81 100644
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -34,7 +34,9 @@ void f2fs_mark_inode_dirty_sync(struct inode *inode, bool sync)
+ 	if (f2fs_inode_dirtied(inode, sync))
+ 		return;
  
- void vidtv_channel_si_destroy(struct vidtv_mux *m)
+-	if (f2fs_is_atomic_file(inode))
++	/* only atomic file w/ FI_ATOMIC_COMMITTED can be set vfs dirty */
++	if (f2fs_is_atomic_file(inode) &&
++			!is_inode_flag_set(inode, FI_ATOMIC_COMMITTED))
+ 		return;
+ 
+ 	mark_inode_dirty_sync(inode);
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 769a90b609e2c..449c0acbfabc0 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -370,7 +370,13 @@ static int __f2fs_commit_atomic_write(struct inode *inode)
+ 	} else {
+ 		sbi->committed_atomic_block += fi->atomic_write_cnt;
+ 		set_inode_flag(inode, FI_ATOMIC_COMMITTED);
++
++		/*
++		 * inode may has no FI_ATOMIC_DIRTIED flag due to no write
++		 * before commit.
++		 */
+ 		if (is_inode_flag_set(inode, FI_ATOMIC_DIRTIED)) {
++			/* clear atomic dirty status and set vfs dirty status */
+ 			clear_inode_flag(inode, FI_ATOMIC_DIRTIED);
+ 			f2fs_mark_inode_dirty_sync(inode, true);
+ 		}
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index b1ab7ee2adf9c..330f89ddb5c8f 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1516,7 +1516,9 @@ int f2fs_inode_dirtied(struct inode *inode, bool sync)
+ 	}
+ 	spin_unlock(&sbi->inode_lock[DIRTY_META]);
+ 
+-	if (!ret && f2fs_is_atomic_file(inode))
++	/* if atomic write is not committed, set inode w/ atomic dirty */
++	if (!ret && f2fs_is_atomic_file(inode) &&
++			!is_inode_flag_set(inode, FI_ATOMIC_COMMITTED))
+ 		set_inode_flag(inode, FI_ATOMIC_DIRTIED);
+ 
+ 	return ret;
+-- 
+2.39.5
+
 
 
