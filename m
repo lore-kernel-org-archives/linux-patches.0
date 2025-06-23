@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE07253F03;
-	Mon, 23 Jun 2025 13:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDEA242D90;
+	Mon, 23 Jun 2025 13:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685387; cv=none; b=tq6xihuzSSnUMlrqEkVVLu0HVfFzGgcYYX7Lj/Va7ppD6FVDOJKKCsI3SMTqKsZkddYAnRxzErP8d1JMBq/do8O5m7r829nm2Y6rvctrOgFONtvB34f4yzBItcXdO5rveTrSlQmAQ3Pe++c2ZFKBlf++f1jjv6dozzlqIjhIcS4=
+	t=1750685389; cv=none; b=Nva8J50aW+PHv9JZ0xnpJ10tyE7rGRcH3F1oW5SZ9+XtQBXemp6LNLyFWWBqWWoQwX9wxpqyYUIXYQx/aYFor/G4XdWCDiDoAQxKNeThDgMpFgZqU+GQqpOmi9fSAfeOj1Il7jOIeFLqhyo6ULbdAuNT4SNa8cvnXbQlO0m4XaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685387; c=relaxed/simple;
-	bh=pLoRtMrRIefdovnOXptf1hVdoIuNWKcYzFq5eNWoNIo=;
+	s=arc-20240116; t=1750685389; c=relaxed/simple;
+	bh=TeRlFUizq9Zkgc/4mxpBLnpczT9y+eMFPpgYWVqp924=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OU3B/yZCx9gPAPyY2MCFybgIBh3SGWsfwqeD5Z3p/r34kEx1pIVJXdWLgPMPGBWruBHBq2aFJpoEIHG3+CvA7LRpFAYcRYXhOq+vKxU5Nnlv8lM69zNP7rvlW3BwQvnUT/9b99CmNpUeZZz5lHPZCgF8KVY2UMObGuguWZ6hVJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pqn7EX1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fpGLinnQj41qqHaSWEdsged2c4p9D3GF+Xhmx1EKzj3eFV0me0HNIoAu3IIZnvACYTq+ma3VHtChNvPACqY3qcpoYpt1WcKNC7wsD+wbke6rqjlLLdVYUKWXY+dFqkgPTllrVYKwBIzk42bMmt57jIWUyPGh+Y1gF3//D9mk3lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tcf62aJQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pqn7EX1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857AEC4CEEA;
-	Mon, 23 Jun 2025 13:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tcf62aJQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E21CC4CEF1;
+	Mon, 23 Jun 2025 13:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685386;
-	bh=pLoRtMrRIefdovnOXptf1hVdoIuNWKcYzFq5eNWoNIo=;
+	s=korg; t=1750685389;
+	bh=TeRlFUizq9Zkgc/4mxpBLnpczT9y+eMFPpgYWVqp924=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1pqn7EX1hUmOxtWFhwL22KsTIfpYTHl2ubWDKDUSw2ctH7jE+CX8W8K4VCqKHvyoX
-	 oaj8QRjJL4qR7FXRmc+3gWGEwX0jgxXZKV25QG54yMf2ucmEJsj4M51CFVBttMaBqe
-	 RKdWxJnQrJCBPysZJQIVRS8T+evDGUSOYVl5UmVs=
+	b=Tcf62aJQBja1XALMrGAbqMif3rf7ZvFHYbRUlGbmt0zgvMhmVCAbJrdh341Uk99AS
+	 qsVkhX0ZzEaDYX2xCadna0GYfTTOwRkJJCjwoiNqwXfcFVvPk8F0udggVFAAONO+C/
+	 XJVB4vBWwui2zu8+EAVyAwFLb4+fSSAMGfgikhlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Anton Protopopov <a.s.protopopov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/411] libbpf: Use proper errno value in nlattr
-Date: Mon, 23 Jun 2025 15:03:20 +0200
-Message-ID: <20250623130634.674081146@linuxfoundation.org>
+	Niravkumar L Rabara <niravkumar.l.rabara@intel.com>,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 5.4 117/222] EDAC/altera: Use correct write width with the INTTEST register
+Date: Mon, 23 Jun 2025 15:07:32 +0200
+Message-ID: <20250623130615.618351444@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anton Protopopov <a.s.protopopov@gmail.com>
+From: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
 
-[ Upstream commit fd5fd538a1f4b34cee6823ba0ddda2f7a55aca96 ]
+commit e5ef4cd2a47f27c0c9d8ff6c0f63a18937c071a3 upstream.
 
-Return value of the validate_nla() function can be propagated all the
-way up to users of libbpf API. In case of error this libbpf version
-of validate_nla returns -1 which will be seen as -EPERM from user's
-point of view. Instead, return a more reasonable -EINVAL.
+On the SoCFPGA platform, the INTTEST register supports only 16-bit writes.
+A 32-bit write triggers an SError to the CPU so do 16-bit accesses only.
 
-Fixes: bbf48c18ee0c ("libbpf: add error reporting in XDP")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250510182011.2246631-1-a.s.protopopov@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  [ bp: AI-massage the commit message. ]
+
+Fixes: c7b4be8db8bc ("EDAC, altera: Add Arria10 OCRAM ECC support")
+Signed-off-by: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
+Signed-off-by: Matthew Gerlach <matthew.gerlach@altera.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Dinh Nguyen <dinguyen@kernel.org>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/20250527145707.25458-1-matthew.gerlach@altera.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/bpf/nlattr.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/edac/altera_edac.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/lib/bpf/nlattr.c b/tools/lib/bpf/nlattr.c
-index 2dbe7b99f28f1..0e6df58fedae3 100644
---- a/tools/lib/bpf/nlattr.c
-+++ b/tools/lib/bpf/nlattr.c
-@@ -63,16 +63,16 @@ static int validate_nla(struct nlattr *nla, int maxtype,
- 		minlen = nla_attr_minlen[pt->type];
+--- a/drivers/edac/altera_edac.c
++++ b/drivers/edac/altera_edac.c
+@@ -1804,9 +1804,9 @@ static ssize_t altr_edac_a10_device_trig
  
- 	if (libbpf_nla_len(nla) < minlen)
--		return -1;
-+		return -EINVAL;
+ 	local_irq_save(flags);
+ 	if (trig_type == ALTR_UE_TRIGGER_CHAR)
+-		writel(priv->ue_set_mask, set_addr);
++		writew(priv->ue_set_mask, set_addr);
+ 	else
+-		writel(priv->ce_set_mask, set_addr);
++		writew(priv->ce_set_mask, set_addr);
  
- 	if (pt->maxlen && libbpf_nla_len(nla) > pt->maxlen)
--		return -1;
-+		return -EINVAL;
+ 	/* Ensure the interrupt test bits are set */
+ 	wmb();
+@@ -1836,7 +1836,7 @@ static ssize_t altr_edac_a10_device_trig
  
- 	if (pt->type == LIBBPF_NLA_STRING) {
- 		char *data = libbpf_nla_data(nla);
- 
- 		if (data[libbpf_nla_len(nla) - 1] != '\0')
--			return -1;
-+			return -EINVAL;
- 	}
- 
- 	return 0;
-@@ -118,19 +118,18 @@ int libbpf_nla_parse(struct nlattr *tb[], int maxtype, struct nlattr *head,
- 		if (policy) {
- 			err = validate_nla(nla, maxtype, policy);
- 			if (err < 0)
--				goto errout;
-+				return err;
- 		}
- 
--		if (tb[type])
-+		if (tb[type]) {
- 			pr_warn("Attribute of type %#x found multiple times in message, "
- 				"previous attribute is being ignored.\n", type);
-+		}
- 
- 		tb[type] = nla;
- 	}
- 
--	err = 0;
--errout:
--	return err;
-+	return 0;
- }
- 
- /**
--- 
-2.39.5
-
+ 	local_irq_save(flags);
+ 	if (trig_type == ALTR_UE_TRIGGER_CHAR) {
+-		writel(priv->ue_set_mask, set_addr);
++		writew(priv->ue_set_mask, set_addr);
+ 	} else {
+ 		/* Setup read/write of 4 bytes */
+ 		writel(ECC_WORD_WRITE, drvdata->base + ECC_BLK_DBYTECTRL_OFST);
 
 
