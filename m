@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BCC223DE5;
-	Mon, 23 Jun 2025 21:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0CF223DE5;
+	Mon, 23 Jun 2025 21:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715147; cv=none; b=j8tpDVXTi/IlPcF9ToS59iHrY9cEYuiPtBTbcSuWujxIGNAeuxHt0r948fUQJznHgAI4CMrsQ1nsRzY+YXg9WypP9wJICVyPK3H/5K47pvgWSgx/o/COhTVrQ+Fs3hFFFsAqe3Ar/FU6v3Xe1r0g+KAIpDbmRzQ5lbKrdXErobI=
+	t=1750715149; cv=none; b=svjSztVisGHQhq3o8W6fLb7buUF8xM+2ctIlKJF8Sgxgti6ht0hdhfmMEhWbXlUdm8lMR8xfpihwHAcDXdL7UpokcmDEykt6tAqvG/Imr2Pd648Jxzv5DPGwH1+WoDBEzUMAkR/GzGTipcqCDXsNVosuGfMBapqpAns++4EfgyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715147; c=relaxed/simple;
-	bh=FDQICdolJtT/3eRNjvzhUz7+OMLQNPl6MfxyZ4apQzs=;
+	s=arc-20240116; t=1750715149; c=relaxed/simple;
+	bh=6ws1oohkuaUoUAzjkpaw1eryJxpgGeWQ1kAMD9fOyFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvtOz0QXtURNEtTYlhKSGTITc8j8m2x+S9kVC988ZsWB7GdUc96du39Hgqb6gbN5LtPBdJS0BMlfO7+DJM1tWGMIUNArX0dqI6l/U3nIXssxMnjNv/GGJC9zRycb6t+JD1BimykE3uvxxB//GQRrnwKnyXDtsja+nK1mFipYb40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1qWGh5A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=icrXzrSVsugYVB790FeLXjfD4NlqQDC6fgodpPF+nqac0vjR0V37yDJ/K9j2L63GhAMxUnrFNOsjeL4Q2y8JJjrB6FM7RxvI63PtgKtIdt6qaPUIxu4bKEDMuvECsbAwIkGmiYAeb80kvRkOr7b3WgX2NGHt2u/s+8OXgKG5PMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBt1LAJn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1qWGh5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3999C4CEEA;
-	Mon, 23 Jun 2025 21:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBt1LAJn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A87C4CEEA;
+	Mon, 23 Jun 2025 21:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715147;
-	bh=FDQICdolJtT/3eRNjvzhUz7+OMLQNPl6MfxyZ4apQzs=;
+	s=korg; t=1750715149;
+	bh=6ws1oohkuaUoUAzjkpaw1eryJxpgGeWQ1kAMD9fOyFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u1qWGh5AYKyyKQHks1XUqHMeMUJtA3VRcIze0S+FyHw9U4zEpg5Zl0kHEtD9q1rKX
-	 lz7eHjVHTkgMsa36iZXouO3cT1t9n0BuJpVmku+Mad1ngIuIpflHvLa4AQReG16SZy
-	 nq8J0pBP1+3qOzYKRil5SpaT0GltCPzluJZW834c=
+	b=SBt1LAJnYtHVKJJP1mRo6alY4NvaVCrWCqCGnQSDfFlgIK/UAB+oGeUdUWepDtvZ/
+	 M92wGQYnDrfR30sYPfek+O7I0D2mq5kcee+lN8u29j/ASU6IVbMPxS3AKx5SJ1BKQT
+	 v6mKeTJj+RaoIYJwnXX07wkeR2qc61rZtHEUo0j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Lindgren <tony@atomide.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Andreas Kemnade <andreas@kemnade.info>
-Subject: [PATCH 5.10 278/355] Revert "bus: ti-sysc: Probe for l4_wkup and l4_cfg interconnect devices first"
-Date: Mon, 23 Jun 2025 15:07:59 +0200
-Message-ID: <20250623130635.132509950@linuxfoundation.org>
+	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
+	Eric Dumazet <edumazet@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 238/508] net_sched: sch_sfq: fix a potential crash on gso_skb handling
+Date: Mon, 23 Jun 2025 15:04:43 +0200
+Message-ID: <20250623130651.111785109@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,115 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 36305857b1ead8f6ca033a913162ebc09bee0b43 ]
+[ Upstream commit 82ffbe7776d0ac084031f114167712269bf3d832 ]
 
-This reverts commit 4700a00755fb5a4bb5109128297d6fd2d1272ee6.
+SFQ has an assumption of always being able to queue at least one packet.
 
-It breaks target-module@2b300050 ("ti,sysc-omap2") probe on AM62x in a case
-when minimally-configured system tries to network-boot:
+However, after the blamed commit, sch->q.len can be inflated by packets
+in sch->gso_skb, and an enqueue() on an empty SFQ qdisc can be followed
+by an immediate drop.
 
-[    6.888776] probe of 2b300050.target-module returned 517 after 258 usecs
-[   17.129637] probe of 2b300050.target-module returned 517 after 708 usecs
-[   17.137397] platform 2b300050.target-module: deferred probe pending: (reason unknown)
-[   26.878471] Waiting up to 100 more seconds for network.
+Fix sfq_drop() to properly clear q->tail in this situation.
 
-There are minimal configurations possible when the deferred device is not
-being probed any more (because everything else has been successfully
-probed) and deferral lists are not processed any more.
+Tested:
 
-Stable mmc enumeration can be achieved by filling /aliases node properly
-(4700a00755fb commit's rationale).
+ip netns add lb
+ip link add dev to-lb type veth peer name in-lb netns lb
+ethtool -K to-lb tso off                 # force qdisc to requeue gso_skb
+ip netns exec lb ethtool -K in-lb gro on # enable NAPI
+ip link set dev to-lb up
+ip -netns lb link set dev in-lb up
+ip addr add dev to-lb 192.168.20.1/24
+ip -netns lb addr add dev in-lb 192.168.20.2/24
+tc qdisc replace dev to-lb root sfq limit 100
 
-After revert:
+ip netns exec lb netserver
 
-[    9.006816] IP-Config: Complete:
-[    9.010058]      device=lan0, ...
+netperf -H 192.168.20.2 -l 100 &
+netperf -H 192.168.20.2 -l 100 &
+netperf -H 192.168.20.2 -l 100 &
+netperf -H 192.168.20.2 -l 100 &
 
-Tested-by: Andreas Kemnade <andreas@kemnade.info> # GTA04, Panda, BT200
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://lore.kernel.org/r/20250401090643.2776793-1-alexander.sverdlin@siemens.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
+Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
+Closes: https://lore.kernel.org/netdev/9da42688-bfaa-4364-8797-e9271f3bdaef@hetzner-cloud.de/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://patch.msgid.link/20250606165127.3629486-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/ti-sysc.c | 49 -------------------------------------------
- 1 file changed, 49 deletions(-)
+ net/sched/sch_sfq.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
-index b1aa793b9eeda..ed38c25fb0c5e 100644
---- a/drivers/bus/ti-sysc.c
-+++ b/drivers/bus/ti-sysc.c
-@@ -687,51 +687,6 @@ static int sysc_parse_and_check_child_range(struct sysc *ddata)
- 	return 0;
- }
- 
--/* Interconnect instances to probe before l4_per instances */
--static struct resource early_bus_ranges[] = {
--	/* am3/4 l4_wkup */
--	{ .start = 0x44c00000, .end = 0x44c00000 + 0x300000, },
--	/* omap4/5 and dra7 l4_cfg */
--	{ .start = 0x4a000000, .end = 0x4a000000 + 0x300000, },
--	/* omap4 l4_wkup */
--	{ .start = 0x4a300000, .end = 0x4a300000 + 0x30000,  },
--	/* omap5 and dra7 l4_wkup without dra7 dcan segment */
--	{ .start = 0x4ae00000, .end = 0x4ae00000 + 0x30000,  },
--};
--
--static atomic_t sysc_defer = ATOMIC_INIT(10);
--
--/**
-- * sysc_defer_non_critical - defer non_critical interconnect probing
-- * @ddata: device driver data
-- *
-- * We want to probe l4_cfg and l4_wkup interconnect instances before any
-- * l4_per instances as l4_per instances depend on resources on l4_cfg and
-- * l4_wkup interconnects.
-- */
--static int sysc_defer_non_critical(struct sysc *ddata)
--{
--	struct resource *res;
--	int i;
--
--	if (!atomic_read(&sysc_defer))
--		return 0;
--
--	for (i = 0; i < ARRAY_SIZE(early_bus_ranges); i++) {
--		res = &early_bus_ranges[i];
--		if (ddata->module_pa >= res->start &&
--		    ddata->module_pa <= res->end) {
--			atomic_set(&sysc_defer, 0);
--
--			return 0;
--		}
--	}
--
--	atomic_dec_if_positive(&sysc_defer);
--
--	return -EPROBE_DEFER;
--}
--
- static struct device_node *stdout_path;
- 
- static void sysc_init_stdout_path(struct sysc *ddata)
-@@ -956,10 +911,6 @@ static int sysc_map_and_check_registers(struct sysc *ddata)
- 	if (error)
- 		return error;
- 
--	error = sysc_defer_non_critical(ddata);
--	if (error)
--		return error;
--
- 	sysc_check_children(ddata);
- 
- 	error = sysc_parse_registers(ddata);
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index 002941d35b643..d564675a8be4d 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -310,7 +310,10 @@ static unsigned int sfq_drop(struct Qdisc *sch, struct sk_buff **to_free)
+ 		/* It is difficult to believe, but ALL THE SLOTS HAVE LENGTH 1. */
+ 		x = q->tail->next;
+ 		slot = &q->slots[x];
+-		q->tail->next = slot->next;
++		if (slot->next == x)
++			q->tail = NULL; /* no more active slots */
++		else
++			q->tail->next = slot->next;
+ 		q->ht[slot->hash] = SFQ_EMPTY_SLOT;
+ 		goto drop;
+ 	}
 -- 
 2.39.5
 
