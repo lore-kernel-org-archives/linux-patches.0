@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B254409;
-	Mon, 23 Jun 2025 22:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D53A4C74;
+	Mon, 23 Jun 2025 22:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716031; cv=none; b=XwUXBbtzBQsfb1CxnuA8KaDZ72rQqn9qqlQKV6E/VvzWX1q7Yer9x7hMtMj/nrWKOK7mfwWJQQ4fsm99nEj9f9JTFE1QrtM3OeiELdBF9N2MTHDb4A9ThTEsYy4bz4BJ9zM7LyVH24/hcNqV4kHK6+NY6jGFqmhSPMMu+QXlSlw=
+	t=1750716034; cv=none; b=tX+EMFiqKIA1ESy5ol1HPzFnZK+g9gkitusBO4AFCdtYlYGEBy08R1tbh85AOas5lZtUtwFv4sUKeDWyOv1WH/+5Df9xPkKgloDQDbxryCsz3ObMAPPu9buT7IVdK60DJ9h/HxuvoPE4KD6ROVrt6l42Yq2Rs4QqO03XQ5l2588=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716031; c=relaxed/simple;
-	bh=aViqm8Bg6phnR6jWEbuP7Ah1z/LJm3YHOp7YuxrSJoM=;
+	s=arc-20240116; t=1750716034; c=relaxed/simple;
+	bh=N293jCppDIKTE6EW8HLA2gO9tnZ7lALoaDnfErZ5l2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m8/fXicCEnGf7Pzb86oMJV1il8TuB0F4xfXeGp5GgskAFiHx7LHo9zcacKelu4ymHLTk4FUzlmZaSXPTM7m3G49VnHh4Lqq3Y1T5l7f4Dmfr6oZAa3Nps+kvcFq/nZauFGePuKp0BaL9z0eHJiXgECVt8Q+SNdVN7qWQMC1xZGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W33Sw0aO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CEHsrQIR0PucQ/tbR9h4OaFhKqynISUfv9gZp0leSmcPUSvZj9ZTSaBqVQsiadGM72PljlOlxQCIxwyMUv4fb7VQGWuzmB////coL/uSIOlkxFhrZShJvbEHKITkZY3dcHWUrSTv/6qr51q6ptR6qt3WLZ2OuZfC9WNgSEgpodU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ff7R7K08; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W33Sw0aO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7B5C4CEEA;
-	Mon, 23 Jun 2025 22:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ff7R7K08"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA3EC4CEEA;
+	Mon, 23 Jun 2025 22:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716031;
-	bh=aViqm8Bg6phnR6jWEbuP7Ah1z/LJm3YHOp7YuxrSJoM=;
+	s=korg; t=1750716034;
+	bh=N293jCppDIKTE6EW8HLA2gO9tnZ7lALoaDnfErZ5l2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W33Sw0aO0YC4NVhiSjW44OtRtIvbmdAffE0LzOr4WzJDG6YXhANYvHbcHER8SGaM2
-	 XNO5f+e1+9fqdNeF7ByOsZLKi6I3YFQq8edWy8kdCGeKZfx7ULcKd+qIcuVMkNo6uA
-	 uDHE/nj7NwozrYyPtsSxUsgdkyGpbDtazejnr+i4=
+	b=Ff7R7K08MFnW9tYs1sXphP9cALFWUByRlKtpkt0gv9aJJcksjGetxpcHsWaV6oZTt
+	 YrBcGufOXMO26UK3eLGbjO6Dpy1QCq1yXeinPzFMEKYGQ728ve3DnPP2TT8J/8aZ+h
+	 UMPSKWRiefKVVG2T+ub+x4mcvpDXJ7Rsw+NihFTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
-	Sean Nyekjaer <sean@geanix.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 236/290] iio: accel: fxls8962af: Fix temperature calculation
-Date: Mon, 23 Jun 2025 15:08:17 +0200
-Message-ID: <20250623130634.024605994@linuxfoundation.org>
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 223/414] net: page_pool: Dont recycle into cache on PREEMPT_RT
+Date: Mon, 23 Jun 2025 15:06:00 +0200
+Message-ID: <20250623130647.602002171@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +49,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 16038474e3a0263572f36326ef85057aaf341814 upstream.
+[ Upstream commit 32471b2f481dea8624f27669d36ffd131d24b732 ]
 
-According to spec temperature should be returned in milli degrees Celsius.
-Add in_temp_scale to calculate from Celsius to milli Celsius.
+With preemptible softirq and no per-CPU locking in local_bh_disable() on
+PREEMPT_RT the consumer can be preempted while a skb is returned.
 
-Fixes: a3e0b51884ee ("iio: accel: add support for FXLS8962AF/FXLS8964AF accelerometers")
-Cc: stable@vger.kernel.org
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Link: https://patch.msgid.link/20250505-fxls-v4-1-a38652e21738@geanix.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Avoid the race by disabling the recycle into the cache on PREEMPT_RT.
+
+Cc: Jesper Dangaard Brouer <hawk@kernel.org>
+Cc: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20250512092736.229935-2-bigeasy@linutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/fxls8962af-core.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/core/page_pool.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/iio/accel/fxls8962af-core.c
-+++ b/drivers/iio/accel/fxls8962af-core.c
-@@ -20,6 +20,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/regulator/consumer.h>
- #include <linux/regmap.h>
-+#include <linux/units.h>
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index 0f23b3126bdaf..b1c3e0ad6dbf4 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -829,6 +829,10 @@ static bool page_pool_napi_local(const struct page_pool *pool)
+ 	const struct napi_struct *napi;
+ 	u32 cpuid;
  
- #include <linux/iio/buffer.h>
- #include <linux/iio/events.h>
-@@ -434,8 +435,16 @@ static int fxls8962af_read_raw(struct ii
- 		*val = FXLS8962AF_TEMP_CENTER_VAL;
- 		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_SCALE:
--		*val = 0;
--		return fxls8962af_read_full_scale(data, val2);
-+		switch (chan->type) {
-+		case IIO_TEMP:
-+			*val = MILLIDEGREE_PER_DEGREE;
-+			return IIO_VAL_INT;
-+		case IIO_ACCEL:
-+			*val = 0;
-+			return fxls8962af_read_full_scale(data, val2);
-+		default:
-+			return -EINVAL;
-+		}
- 	case IIO_CHAN_INFO_SAMP_FREQ:
- 		return fxls8962af_read_samp_freq(data, val, val2);
- 	default:
-@@ -734,6 +743,7 @@ static const struct iio_event_spec fxls8
- 	.type = IIO_TEMP, \
- 	.address = FXLS8962AF_TEMP_OUT, \
- 	.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) | \
-+			      BIT(IIO_CHAN_INFO_SCALE) | \
- 			      BIT(IIO_CHAN_INFO_OFFSET),\
- 	.scan_index = -1, \
- 	.scan_type = { \
++	/* On PREEMPT_RT the softirq can be preempted by the consumer */
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))
++		return false;
++
+ 	if (unlikely(!in_softirq()))
+ 		return false;
+ 
+-- 
+2.39.5
+
 
 
