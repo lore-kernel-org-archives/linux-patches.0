@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DD4224B07;
-	Mon, 23 Jun 2025 22:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFB919E7F9;
+	Mon, 23 Jun 2025 22:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716926; cv=none; b=dBx8EpcoakqqCakpNtd91iG7YX1lPsOah8dmXsEeQAtuBm5w4RsuWOO8AcnECHQlGtLsXeKirogx1xGrsj5+FrrtrjlvxMrbjh3teZuDNE3G4xy38psT7V6Kj8aMYVMcSgqB3QdhR3vSyG68lziTIkmmCqA2GrmBZjcoakCa4r8=
+	t=1750716928; cv=none; b=Hl9dQY+7bB6cFO365+iw+Xh22TFI2yUkZljIkqaeCoZ3C7UH/iqqQ1nct7ud7OdLyI8PwnynZ/cbFwFMiuwmf4sRCMJ++QLUh4aAc0MO5nkeHa2P38az5SpoRiC79ng/KvqnLyVGXuFmQ1tgMO6sOyCNmLZZy50E27PEfVL8nkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716926; c=relaxed/simple;
-	bh=gY0gfT6qWDb7GR8/cxmRFvmd7zoOhZV8QzIcmWD00wc=;
+	s=arc-20240116; t=1750716928; c=relaxed/simple;
+	bh=0yFeCD5KQ9uVcO5QY7ejuIA3uufVrQiSGyBId9NCYaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GyKDs6TZEFogkK9IDjjAFMn+Us62fNCwawalDWarw8+WC3X2WBTtbkPYQ3sVKEFSLzdpdSSYhzU1pWvZJawmtUITHFGpmN1HSRuX6Zx9b68bWMsMQaiygZmdtHgaO5V6tQTylsuQ75QfCQbwyEN5LNdxVAKbM/4W20O991pON1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8xF/j4Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hzeCLxlpD7fGc3G0euGP5jPQ0NdmeT8p+X3dKuvy8qmc4/1kP/qHM1yearxRoDndiFda2o4yzc7D4508h7BZQ9CiFhjiLuXMH19WUB0iGUf0acfvbCCi9Vq/svdGphVO3p247ymrBHvSp7M5/uhMR4dXl8iXabSV5da0tvth5i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7M2Pa/Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8xF/j4Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904D3C4CEEA;
-	Mon, 23 Jun 2025 22:15:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7M2Pa/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055D6C4CEEA;
+	Mon, 23 Jun 2025 22:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716925;
-	bh=gY0gfT6qWDb7GR8/cxmRFvmd7zoOhZV8QzIcmWD00wc=;
+	s=korg; t=1750716928;
+	bh=0yFeCD5KQ9uVcO5QY7ejuIA3uufVrQiSGyBId9NCYaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8xF/j4Qh2SdCHep0LtwtTHvteQ1ebiaY9zkxuZQCnzIGSsgtDoOV7NpKB83SReLN
-	 h72PzMF0aarI2L7zT9UPoFDw4xvMEGt5N24YPTsDvt7ChQTLYmhxC9piyDvnbz2sjJ
-	 wgxXdScTxdAF5YDOBt3EBdFbZgdfVpHItoXo9on0=
+	b=H7M2Pa/Z8PoI+1Vw7t6puNc5EZHSiMqndocQiztGbJLyrbegzektLAXBxHK9kPMGu
+	 fEaxH1cJDsYaEkKYaRpn6KTLBVJeMr357tjs9XCtlzwhZSPE5mFiSaMNyoyWH8W6iy
+	 M2fDPkjSCmy1HXGQ/gqSB8ak7I8wCIxzGlrD7g7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.15 569/592] tracing: Do not free "head" on error path of filter_free_subsystem_filters()
-Date: Mon, 23 Jun 2025 15:08:47 +0200
-Message-ID: <20250623130713.976149735@linuxfoundation.org>
+	Haixia Qu <hxqu@hillstonenet.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 379/411] tipc: fix null-ptr-deref when acquiring remote ip of ethernet bearer
+Date: Mon, 23 Jun 2025 15:08:43 +0200
+Message-ID: <20250623130643.184096979@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,48 +48,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Haixia Qu <hxqu@hillstonenet.com>
 
-commit 8a157d8a00e815cab4432653cb50c9cedbbb4931 upstream.
+[ Upstream commit f82727adcf2992822e12198792af450a76ebd5ef ]
 
-The variable "head" is allocated and initialized as a list before
-allocating the first "item" for the list. If the allocation of "item"
-fails, it frees "head" and then jumps to the label "free_now" which will
-process head and free it.
+The reproduction steps:
+1. create a tun interface
+2. enable l2 bearer
+3. TIPC_NL_UDP_GET_REMOTEIP with media name set to tun
 
-This will cause a UAF of "head", and it doesn't need to free it before
-jumping to the "free_now" label as that code will free it.
+tipc: Started in network mode
+tipc: Node identity 8af312d38a21, cluster identity 4711
+tipc: Enabled bearer <eth:syz_tun>, priority 1
+Oops: general protection fault
+KASAN: null-ptr-deref in range
+CPU: 1 UID: 1000 PID: 559 Comm: poc Not tainted 6.16.0-rc1+ #117 PREEMPT
+Hardware name: QEMU Ubuntu 24.04 PC
+RIP: 0010:tipc_udp_nl_dump_remoteip+0x4a4/0x8f0
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20250610093348.33c5643a@gandalf.local.home
-Fixes: a9d0aab5eb33 ("tracing: Fix regression of filter waiting a long time on RCU synchronization")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202506070424.lCiNreTI-lkp@intel.com/
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+the ub was in fact a struct dev.
+
+when bid != 0 && skip_cnt != 0, bearer_list[bid] may be NULL or
+other media when other thread changes it.
+
+fix this by checking media_id.
+
+Fixes: 832629ca5c313 ("tipc: add UDP remoteip dump to netlink API")
+Signed-off-by: Haixia Qu <hxqu@hillstonenet.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250617055624.2680-1-hxqu@hillstonenet.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_filter.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/tipc/udp_media.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events_filter.c
-+++ b/kernel/trace/trace_events_filter.c
-@@ -1435,10 +1435,8 @@ static void filter_free_subsystem_filter
- 	INIT_LIST_HEAD(&head->list);
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index f5bd75d931c1b..e1305d159834b 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -489,7 +489,7 @@ int tipc_udp_nl_dump_remoteip(struct sk_buff *skb, struct netlink_callback *cb)
  
- 	item = kmalloc(sizeof(*item), GFP_KERNEL);
--	if (!item) {
--		kfree(head);
-+	if (!item)
- 		goto free_now;
--	}
+ 		rtnl_lock();
+ 		b = tipc_bearer_find(net, bname);
+-		if (!b) {
++		if (!b || b->bcast_addr.media_id != TIPC_MEDIA_TYPE_UDP) {
+ 			rtnl_unlock();
+ 			return -EINVAL;
+ 		}
+@@ -500,7 +500,7 @@ int tipc_udp_nl_dump_remoteip(struct sk_buff *skb, struct netlink_callback *cb)
  
- 	item->filter = filter;
- 	list_add_tail(&item->list, &head->list);
+ 		rtnl_lock();
+ 		b = rtnl_dereference(tn->bearer_list[bid]);
+-		if (!b) {
++		if (!b || b->bcast_addr.media_id != TIPC_MEDIA_TYPE_UDP) {
+ 			rtnl_unlock();
+ 			return -EINVAL;
+ 		}
+-- 
+2.39.5
+
 
 
