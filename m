@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C606F25334B;
-	Mon, 23 Jun 2025 13:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE75248895;
+	Mon, 23 Jun 2025 13:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684799; cv=none; b=nOPLzna6+ZVKu4BFl8ExbN4URmqv1xQ1KaycH/jCHruGJUjqwWC4Ii6PrxA1fKnwVC8RN1z34oULdy71geso1MC8pG1DlEpfa+hmZWUxzQ6BFi5B8Qr3vXPt+eui5/tTpqXB/yDq7gZYrnTH/Cf1reiNwW7pbC0t414es/sN3c4=
+	t=1750684802; cv=none; b=EHona8dU9SQY4snOyqIXHrsImya+iv22rlnPrXQCsAkDJkmtVY/cpV8Q+uGuXoaw4/5i4GBwyci9Gvca+SBJWuQkXKJ3bXJBhjElgyp5Qbh9mBvwVDwO+OlvVOscSEodpOGdHdxkcpRH1aMEX2peVJuJA86wqn9sFDqgniVfxrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684799; c=relaxed/simple;
-	bh=4xyccKdeQ60tslIC2PfRYpRWoxDdIlzfoYDCK3LDylM=;
+	s=arc-20240116; t=1750684802; c=relaxed/simple;
+	bh=YHO95B7Qo0gy1xc/b5Vz8JaiVuYJ9UfiO/zp4RqBWXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ROFlzD63V+mEuyfR+MWXYnaBEBwXWuhnIScQFYVC9WGBBWaxEgJJ0nt5Kv1xdme8FSQuEx+WOhoBZZ+MW84FaMnQoj0r1fHs20IOx5xZ0wZZOTJ1sfEY1D0IqDDz9+htRlX4jVyFev+olHiA3LHHaf09p/rNR3iWjktZJE+It60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peHlP/o9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qAkeGLh4M92pz8N1y3OIIB/NKd+tqQinlFVo1Le4U9bsVc6S91SZ9kg9NhrtE8ambHHpza33U93miOfFa+2vAr1Aiq5XEzbssbjcbTmXu3Z9dlIbNRSR3BlHsgzDFCpfeo+qYjCjLWRQeMg10sO05zytX9hF6vjsqwlFSIrqR4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yl3gnytb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peHlP/o9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FF6C4CEEA;
-	Mon, 23 Jun 2025 13:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yl3gnytb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D8BC4CEEA;
+	Mon, 23 Jun 2025 13:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684799;
-	bh=4xyccKdeQ60tslIC2PfRYpRWoxDdIlzfoYDCK3LDylM=;
+	s=korg; t=1750684802;
+	bh=YHO95B7Qo0gy1xc/b5Vz8JaiVuYJ9UfiO/zp4RqBWXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=peHlP/o9SciGWwrN8FqyWxoOxLqxdnq3nD56eKU+hfcLs5SLhkVES360W+Ju+YFN5
-	 HafNC+egoDsFn6ryHq5YBIQ+jdAp+i/AvMYbHuqrm7lC9P/cTTvBLk2vk3MIPKHYWC
-	 698wGT1MT9WnEI8L2O0I0aAwpderMpDdoefhcJ4o=
+	b=yl3gnytbJEMSO9xHwSq7EoOpPT6pioBOPh3HNKmgaCWT9UFM6v/ztub60g2av0C5z
+	 MlFQdY3V80xLaB/xBlHvUEllvEo4u7oao/7rkpcYZleO5+CUtnIFY+2jCPRs0nb7IK
+	 bp9BiyKNVYGAl2J/71jM53/eqiVoEle+7Y5zTxeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huajian Yang <huajianyang@asrmicro.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 031/222] netfilter: bridge: Move specific fragmented packet to slow_path instead of dropping it
-Date: Mon, 23 Jun 2025 15:06:06 +0200
-Message-ID: <20250623130612.831243620@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.15 175/592] cifs: dns resolution is needed only for primary channel
+Date: Mon, 23 Jun 2025 15:02:13 +0200
+Message-ID: <20250623130704.440168464@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,99 +46,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huajian Yang <huajianyang@asrmicro.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit aa04c6f45b9224b949aa35d4fa5f8d0ba07b23d4 ]
+commit b4f60a053a2534c3e510ba0c1f8727566adf8317 upstream.
 
-The config NF_CONNTRACK_BRIDGE will change the bridge forwarding for
-fragmented packets.
+When calling cifs_reconnect, before the connection to the
+server is reestablished, the code today does a DNS resolution and
+updates server->dstaddr.
 
-The original bridge does not know that it is a fragmented packet and
-forwards it directly, after NF_CONNTRACK_BRIDGE is enabled, function
-nf_br_ip_fragment and br_ip6_fragment will check the headroom.
+However, this is not necessary for secondary channels. Secondary
+channels use the interface list returned by the server to decide
+which address to connect to. And that happens after tcon is reconnected
+and server interfaces are requested.
 
-In original br_forward, insufficient headroom of skb may indeed exist,
-but there's still a way to save the skb in the device driver after
-dev_queue_xmit.So droping the skb will change the original bridge
-forwarding in some cases.
-
-Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
-Signed-off-by: Huajian Yang <huajianyang@asrmicro.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/nf_conntrack_bridge.c | 12 ++++++------
- net/ipv6/netfilter.c                       | 12 ++++++------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ fs/smb/client/connect.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
-index d14b2dbbd1dfb..abf0c9460ddf3 100644
---- a/net/bridge/netfilter/nf_conntrack_bridge.c
-+++ b/net/bridge/netfilter/nf_conntrack_bridge.c
-@@ -59,19 +59,19 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
- 		struct ip_fraglist_iter iter;
- 		struct sk_buff *frag;
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -392,7 +392,8 @@ static int __cifs_reconnect(struct TCP_S
+ 		try_to_freeze();
+ 		cifs_server_lock(server);
  
--		if (first_len - hlen > mtu ||
--		    skb_headroom(skb) < ll_rs)
-+		if (first_len - hlen > mtu)
- 			goto blackhole;
- 
--		if (skb_cloned(skb))
-+		if (skb_cloned(skb) ||
-+		    skb_headroom(skb) < ll_rs)
- 			goto slow_path;
- 
- 		skb_walk_frags(skb, frag) {
--			if (frag->len > mtu ||
--			    skb_headroom(frag) < hlen + ll_rs)
-+			if (frag->len > mtu)
- 				goto blackhole;
- 
--			if (skb_shared(frag))
-+			if (skb_shared(frag) ||
-+			    skb_headroom(frag) < hlen + ll_rs)
- 				goto slow_path;
- 		}
- 
-diff --git a/net/ipv6/netfilter.c b/net/ipv6/netfilter.c
-index ab9a279dd6d47..93e1af6c2dfb2 100644
---- a/net/ipv6/netfilter.c
-+++ b/net/ipv6/netfilter.c
-@@ -155,20 +155,20 @@ int br_ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
- 		struct ip6_fraglist_iter iter;
- 		struct sk_buff *frag2;
- 
--		if (first_len - hlen > mtu ||
--		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
-+		if (first_len - hlen > mtu)
- 			goto blackhole;
- 
--		if (skb_cloned(skb))
-+		if (skb_cloned(skb) ||
-+		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
- 			goto slow_path;
- 
- 		skb_walk_frags(skb, frag2) {
--			if (frag2->len > mtu ||
--			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
-+			if (frag2->len > mtu)
- 				goto blackhole;
- 
- 			/* Partially cloned skb? */
--			if (skb_shared(frag2))
-+			if (skb_shared(frag2) ||
-+			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
- 				goto slow_path;
- 		}
- 
--- 
-2.39.5
-
+-		if (!cifs_swn_set_server_dstaddr(server)) {
++		if (!cifs_swn_set_server_dstaddr(server) &&
++		    !SERVER_IS_CHAN(server)) {
+ 			/* resolve the hostname again to make sure that IP address is up-to-date */
+ 			rc = reconn_set_ipaddr_from_hostname(server);
+ 			cifs_dbg(FYI, "%s: reconn_set_ipaddr_from_hostname: rc=%d\n", __func__, rc);
 
 
