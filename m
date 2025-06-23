@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE5170838;
-	Mon, 23 Jun 2025 21:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D448670838;
+	Mon, 23 Jun 2025 21:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712970; cv=none; b=iVSUTu8EmxUarvqQ6oU3hP7EXedmkLSx1gBB6M9rwOJvz515e07Gx5v6PLcmSW8yITLd/6QTT1zEUaaa323cau3QVNWF3KZJLoT3CYD+xpCQtso+t+ye2WqlxRPriw4QwVjYBBXSQxLf9DV7fTThgyV6a/0eH+wrLp9ajCeiCGM=
+	t=1750712972; cv=none; b=ewXsUeJwbNxpRzs20q7SYwYK3iSpTfWLcUhY2KxAg3nRE4NiAdp3xsDzaMcxoiTAH9XpoMpiECqoV04A1VjkO+5Y1qdwFs6uawpOu8vULFD0zbAL/Z0efkcbo6oBLyFE/JsVFVxwq/eHqwLFyDNQsW64fvj0fODO6QZBHv1Nz98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712970; c=relaxed/simple;
-	bh=E5AXWAWLerNpqnzexy9TYICWvrtRksoJd0MLE1QpXK8=;
+	s=arc-20240116; t=1750712972; c=relaxed/simple;
+	bh=AMf5fMA9UcUIBFwsdAkZzaxv7dyM3AjXJ3sAFZDK9Eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cofveo/aE+uS0EmVFJw2pAK0u+esvuvQtdisclT8gTXpXZ3NUrIBq51z2n+WVRcL45xppk/++7DAYzd7Fadbiu7xHLiaNzzARuHB4KmulFqE6CKnzIUUXOwLkrbJNPO+OXZAVHrwwcjSa3WD1ntuDbkh7xHlUJ2e7OR6x4yW/Gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGJ4Ii6T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KMp4ecSi4qpldt5y9u84WOTqVtJx2pV60ZGqAAb+cc7LTeVdjssD8tkiPeEuekrvoJxD9W/A87LCDm/OJZL2oC5suMTrDLKiFhKbVz95tK2yvSulFxwu/SsUSsLNO1P6dYjkIFxBUu/NwHINQQfsmXMMIbTulRLCN1NRR64W8n8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqvItfU8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGJ4Ii6T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A8DC4CEEA;
-	Mon, 23 Jun 2025 21:09:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqvItfU8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB95C4CEEA;
+	Mon, 23 Jun 2025 21:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712970;
-	bh=E5AXWAWLerNpqnzexy9TYICWvrtRksoJd0MLE1QpXK8=;
+	s=korg; t=1750712972;
+	bh=AMf5fMA9UcUIBFwsdAkZzaxv7dyM3AjXJ3sAFZDK9Eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pGJ4Ii6TFEirfawCon5tLWWgiG/DQre5/fSJ1O8HQS6PVzASM2p+fiHnlp2Xrll37
-	 V7+2jg3bguTnjPOdOGy3y3E0itVAayTB0UWmxyl/jx2kJy8YvQPwIdVd0wudkqr6GU
-	 ZqzPu8lR5gs67WitVCZAC6LMsiNE3EyIpWow0sNk=
+	b=aqvItfU8X8FPh8ms2EaCkCuoTYOKkLBEZMJshEfSzt9uA0RUEstmXFH8YhbSPEdq+
+	 vTJqjpEKqCieHYUJ/+uq0ceWg81qqRlzckkZyR9g5lmzdRviPqgxxFxU/R4x/KjDBt
+	 EvnoekHXdrG/FkS0hwy+lv4RZAcMPH+UU9Xffa5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 021/414] net/mlx5_core: Add error handling inmlx5_query_nic_vport_qkey_viol_cntr()
-Date: Mon, 23 Jun 2025 15:02:38 +0200
-Message-ID: <20250623130642.556024941@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 115/355] serial: sh-sci: Clean sci_ports[0] after at earlycon exit
+Date: Mon, 23 Jun 2025 15:05:16 +0200
+Message-ID: <20250623130630.216733391@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +46,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit f0b50730bdd8f2734e548de541e845c0d40dceb6 upstream.
+commit 5f1017069933489add0c08659673443c9905659e upstream.
 
-The function mlx5_query_nic_vport_qkey_viol_cntr() calls the function
-mlx5_query_nic_vport_context() but does not check its return value. This
-could lead to undefined behavior if the query fails. A proper
-implementation can be found in mlx5_nic_vport_query_local_lb().
+The early_console_setup() function initializes sci_ports[0].port with an
+object of type struct uart_port obtained from the struct earlycon_device
+passed as an argument to early_console_setup().
 
-Add error handling for mlx5_query_nic_vport_context(). If it fails, free
-the out buffer via kvfree() and return error code.
+Later, during serial port probing, the serial port used as earlycon
+(e.g., port A) might be remapped to a different position in the sci_ports[]
+array, and a different serial port (e.g., port B) might be assigned to slot
+0. For example:
 
-Fixes: 9efa75254593 ("net/mlx5_core: Introduce access functions to query vport RoCE fields")
-Cc: stable@vger.kernel.org # v4.5
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250521133620.912-1-vulab@iscas.ac.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+sci_ports[0] = port B
+sci_ports[X] = port A
+
+In this scenario, the new port mapped at index zero (port B) retains the
+data associated with the earlycon configuration. Consequently, after the
+Linux boot process, any access to the serial port now mapped to
+sci_ports[0] (port B) will block the original earlycon port (port A).
+
+To address this, introduce an early_console_exit() function to clean up
+sci_ports[0] when earlycon is exited.
+
+To prevent the cleanup of sci_ports[0] while the serial device is still
+being used by earlycon, introduce the struct sci_port::probing flag and
+account for it in early_console_exit().
+
+Fixes: 0b0cced19ab1 ("serial: sh-sci: Add CONFIG_SERIAL_EARLYCON support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250116182249.3828577-5-claudiu.beznea.uj@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/vport.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/tty/serial/sh-sci.c | 32 ++++++++++++++++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-@@ -519,19 +519,22 @@ int mlx5_query_nic_vport_qkey_viol_cntr(
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index 4ce6dd7c40928..7c574901ad1c5 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -166,6 +166,7 @@ static struct sci_port sci_ports[SCI_NPORTS];
+ static unsigned long sci_ports_in_use;
+ static struct uart_driver sci_uart_driver;
+ static bool sci_uart_earlycon;
++static bool sci_uart_earlycon_dev_probing;
+ 
+ static inline struct sci_port *
+ to_sci_port(struct uart_port *uart)
+@@ -3308,7 +3309,8 @@ static struct plat_sci_port *sci_parse_dt(struct platform_device *pdev,
+ static int sci_probe_single(struct platform_device *dev,
+ 				      unsigned int index,
+ 				      struct plat_sci_port *p,
+-				      struct sci_port *sciport)
++				      struct sci_port *sciport,
++				      struct resource *sci_res)
  {
- 	u32 *out;
- 	int outlen = MLX5_ST_SZ_BYTES(query_nic_vport_context_out);
-+	int err;
+ 	int ret;
  
- 	out = kvzalloc(outlen, GFP_KERNEL);
- 	if (!out)
- 		return -ENOMEM;
+@@ -3355,6 +3357,14 @@ static int sci_probe_single(struct platform_device *dev,
+ 		sciport->port.flags |= UPF_HARD_FLOW;
+ 	}
  
--	mlx5_query_nic_vport_context(mdev, 0, out);
-+	err = mlx5_query_nic_vport_context(mdev, 0, out);
-+	if (err)
-+		goto out;
- 
- 	*qkey_viol_cntr = MLX5_GET(query_nic_vport_context_out, out,
- 				   nic_vport_context.qkey_violation_counter);
--
-+out:
- 	kvfree(out);
- 
--	return 0;
-+	return err;
++	if (sci_uart_earlycon && sci_ports[0].port.mapbase == sci_res->start) {
++		/*
++		 * Skip cleanup the sci_port[0] in early_console_exit(), this
++		 * port is the same as the earlycon one.
++		 */
++		sci_uart_earlycon_dev_probing = true;
++	}
++
+ 	return uart_add_one_port(&sci_uart_driver, &sciport->port);
  }
- EXPORT_SYMBOL_GPL(mlx5_query_nic_vport_qkey_viol_cntr);
  
+@@ -3413,7 +3423,7 @@ static int sci_probe(struct platform_device *dev)
+ 
+ 	platform_set_drvdata(dev, sp);
+ 
+-	ret = sci_probe_single(dev, dev_id, p, sp);
++	ret = sci_probe_single(dev, dev_id, p, sp, res);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -3496,6 +3506,22 @@ sh_early_platform_init_buffer("earlyprintk", &sci_driver,
+ #ifdef CONFIG_SERIAL_SH_SCI_EARLYCON
+ static struct plat_sci_port port_cfg;
+ 
++static int early_console_exit(struct console *co)
++{
++	struct sci_port *sci_port = &sci_ports[0];
++
++	/*
++	 * Clean the slot used by earlycon. A new SCI device might
++	 * map to this slot.
++	 */
++	if (!sci_uart_earlycon_dev_probing) {
++		memset(sci_port, 0, sizeof(*sci_port));
++		sci_uart_earlycon = false;
++	}
++
++	return 0;
++}
++
+ static int __init early_console_setup(struct earlycon_device *device,
+ 				      int type)
+ {
+@@ -3515,6 +3541,8 @@ static int __init early_console_setup(struct earlycon_device *device,
+ 		       SCSCR_RE | SCSCR_TE | port_cfg.scscr);
+ 
+ 	device->con->write = serial_console_write;
++	device->con->exit = early_console_exit;
++
+ 	return 0;
+ }
+ static int __init sci_early_console_setup(struct earlycon_device *device,
+-- 
+2.39.5
+
 
 
