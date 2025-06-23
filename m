@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA664315A;
-	Mon, 23 Jun 2025 21:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F10D1DDC04;
+	Mon, 23 Jun 2025 21:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715055; cv=none; b=n6TAvBVJeRMmPhfGfHPA8a0kA6DyGbPZ7xlFGuYKSEYteqhqA6QMTU9c9dOPymJT6GaujQMPcGFYoaSmq+TMI3QnYhgxOJ26VDIr42E0FG+L6SN9BT9IcPlgx2cDO6Q+ndEFLGGfJbd1AkS8T/1YiNPpeR9sEY7mrK4dM0QPdak=
+	t=1750715059; cv=none; b=s+1JwOBkuYwKs7uKWfMGDygyv+Lt10w/p8sJ7Xs2NUNUE7YCq1hryJtaLVfQ2P0hL3tzmElGlu87g9NsA4hj6oUZmtPQNONFkAGYo6TyJFwfM/ypio+BrgwBZo44OD0bx68b/ZTvoncSfYnbmu2BpzWhtVNRIzY63OhPKMRh4Lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715055; c=relaxed/simple;
-	bh=DbEFIL4uTrOUZMsOL9a8bzLV3DVpmWMNB6zzJLg69oc=;
+	s=arc-20240116; t=1750715059; c=relaxed/simple;
+	bh=Gs9Vfmzvce1MQQS1poJq+DMqPOHTrir2rzMLcHLQt3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ndhfTb1mVdFnayxbkbjHoupLBls2M55ARcL1EumN/PSHH+TVLWnyy7HvsQmdmeYH/uX4Em993CqS+eZ78LU2eC2LhJRAzNumOJlfttqViqK5CsliOVcm/4GXT+bsTwIjUrtOl9I3klXZxOVx/sSPeq4+21O4TsaQb4li1NsHU5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q27A927N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vky5OQM+V/OR5/mhjXKBwfNY7c/2xkp+KgMXSg0M8PimMCgnWRJF7qj+JzpJf2Xx3HWtf98ci2Lx+4tnJIbSoUxH6xB3k2Gt13JGg1WQzRqeIadhB3ABBtNDPENxQcYbha5bHgVaUoMe19pEjGDExq7Y01Ur6GnpY7efBHzr/U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fB03Un5k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q27A927N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459ABC4CEEA;
-	Mon, 23 Jun 2025 21:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fB03Un5k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3535C4CEED;
+	Mon, 23 Jun 2025 21:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715055;
-	bh=DbEFIL4uTrOUZMsOL9a8bzLV3DVpmWMNB6zzJLg69oc=;
+	s=korg; t=1750715058;
+	bh=Gs9Vfmzvce1MQQS1poJq+DMqPOHTrir2rzMLcHLQt3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q27A927N2QuwPPW7rpVpwzVoQ+Z6eMshXXW+GjKkBeKzTfhFDh2S7Pq1wiFkdlPVz
-	 PMyirC5otVTQcIwNbx6TI9AbQBn5V17dhZwPJ51zrgPZZy3Wgh7980HhBw6HrV9xt2
-	 XJNaSJFtkZ5gmJtv4ZQoMkteGu/FnmDi0k1hBMV8=
+	b=fB03Un5kEQ6gT7rBVFuBzLvHX/o2EfX17yLXdIdYkVeq2Qm3XAcPkBMTI80f8ydeL
+	 OXbECkpCusxasaP/jiVA2uHB8t+oONbQtEIEnAdKYhL8jEFep+zqbWfYdetalRjKZw
+	 sJ1Bl1HbgxH3fXyif3W43AKbUklMJxfJijZZznPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 212/508] xfs: take m_growlock when running growfsrt
-Date: Mon, 23 Jun 2025 15:04:17 +0200
-Message-ID: <20250623130650.480634658@linuxfoundation.org>
+Subject: [PATCH 6.6 177/290] net: ethernet: ti: am65-cpsw: handle -EPROBE_DEFER
+Date: Mon, 23 Jun 2025 15:07:18 +0200
+Message-ID: <20250623130632.204197430@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,135 +48,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit 16e1fbdce9c8d084863fd63cdaff8fb2a54e2f88 ]
+[ Upstream commit 09737cb80b8686ffca4ed1805fee745d5c85604d ]
 
-Take the grow lock when we're expanding the realtime volume, like we do
-for the other growfs calls.
+of_get_mac_address() might fetch the MAC address from NVMEM and that
+driver might not have been loaded. In that case, -EPROBE_DEFER is
+returned. Right now, this will trigger an immediate fallback to
+am65_cpsw_am654_get_efuse_macid() possibly resulting in a random MAC
+address although the MAC address is stored in the referenced NVMEM.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: "Darrick J. Wong" <djwong@kernel.org>
+Fix it by handling the -EPROBE_DEFER return code correctly. This also
+means that the creation of the MDIO device has to be moved to a later
+stage as -EPROBE_DEFER must not be returned after child devices are
+created.
+
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250414084336.4017237-3-mwalle@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_rtalloc.c | 38 +++++++++++++++++++++++++-------------
- 1 file changed, 25 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/fs/xfs/xfs_rtalloc.c b/fs/xfs/xfs_rtalloc.c
-index 5cf1e91f4c205..149fcfc485d89 100644
---- a/fs/xfs/xfs_rtalloc.c
-+++ b/fs/xfs/xfs_rtalloc.c
-@@ -953,34 +953,39 @@ xfs_growfs_rt(
- 	/* Needs to have been mounted with an rt device. */
- 	if (!XFS_IS_REALTIME_MOUNT(mp))
- 		return -EINVAL;
-+
-+	if (!mutex_trylock(&mp->m_growlock))
-+		return -EWOULDBLOCK;
- 	/*
- 	 * Mount should fail if the rt bitmap/summary files don't load, but
- 	 * we'll check anyway.
- 	 */
-+	error = -EINVAL;
- 	if (!mp->m_rbmip || !mp->m_rsumip)
--		return -EINVAL;
-+		goto out_unlock;
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index c379a958380ce..28cc23736a69b 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2089,7 +2089,9 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 			goto of_node_put;
  
- 	/* Shrink not supported. */
- 	if (in->newblocks <= sbp->sb_rblocks)
--		return -EINVAL;
-+		goto out_unlock;
- 
- 	/* Can only change rt extent size when adding rt volume. */
- 	if (sbp->sb_rblocks > 0 && in->extsize != sbp->sb_rextsize)
--		return -EINVAL;
-+		goto out_unlock;
- 
- 	/* Range check the extent size. */
- 	if (XFS_FSB_TO_B(mp, in->extsize) > XFS_MAX_RTEXTSIZE ||
- 	    XFS_FSB_TO_B(mp, in->extsize) < XFS_MIN_RTEXTSIZE)
--		return -EINVAL;
-+		goto out_unlock;
- 
- 	/* Unsupported realtime features. */
-+	error = -EOPNOTSUPP;
- 	if (xfs_has_rmapbt(mp) || xfs_has_reflink(mp) || xfs_has_quota(mp))
--		return -EOPNOTSUPP;
-+		goto out_unlock;
- 
- 	nrblocks = in->newblocks;
- 	error = xfs_sb_validate_fsb_count(sbp, nrblocks);
- 	if (error)
--		return error;
-+		goto out_unlock;
- 	/*
- 	 * Read in the last block of the device, make sure it exists.
- 	 */
-@@ -988,7 +993,7 @@ xfs_growfs_rt(
- 				XFS_FSB_TO_BB(mp, nrblocks - 1),
- 				XFS_FSB_TO_BB(mp, 1), 0, &bp, NULL);
- 	if (error)
--		return error;
-+		goto out_unlock;
- 	xfs_buf_relse(bp);
- 
- 	/*
-@@ -996,8 +1001,10 @@ xfs_growfs_rt(
- 	 */
- 	nrextents = nrblocks;
- 	do_div(nrextents, in->extsize);
--	if (!xfs_validate_rtextents(nrextents))
--		return -EINVAL;
-+	if (!xfs_validate_rtextents(nrextents)) {
-+		error = -EINVAL;
-+		goto out_unlock;
-+	}
- 	nrbmblocks = howmany_64(nrextents, NBBY * sbp->sb_blocksize);
- 	nrextslog = xfs_compute_rextslog(nrextents);
- 	nrsumlevels = nrextslog + 1;
-@@ -1009,8 +1016,11 @@ xfs_growfs_rt(
- 	 * the log.  This prevents us from getting a log overflow,
- 	 * since we'll log basically the whole summary file at once.
- 	 */
--	if (nrsumblocks > (mp->m_sb.sb_logblocks >> 1))
--		return -EINVAL;
-+	if (nrsumblocks > (mp->m_sb.sb_logblocks >> 1)) {
-+		error = -EINVAL;
-+		goto out_unlock;
-+	}
-+
- 	/*
- 	 * Get the old block counts for bitmap and summary inodes.
- 	 * These can't change since other growfs callers are locked out.
-@@ -1022,10 +1032,10 @@ xfs_growfs_rt(
- 	 */
- 	error = xfs_growfs_rt_alloc(mp, rbmblocks, nrbmblocks, mp->m_rbmip);
- 	if (error)
--		return error;
-+		goto out_unlock;
- 	error = xfs_growfs_rt_alloc(mp, rsumblocks, nrsumblocks, mp->m_rsumip);
- 	if (error)
--		return error;
-+		goto out_unlock;
- 
- 	rsum_cache = mp->m_rsum_cache;
- 	if (nrbmblocks != sbp->sb_rbmblocks)
-@@ -1190,6 +1200,8 @@ xfs_growfs_rt(
- 		}
+ 		ret = of_get_mac_address(port_np, port->slave.mac_addr);
+-		if (ret) {
++		if (ret == -EPROBE_DEFER) {
++			goto of_node_put;
++		} else if (ret) {
+ 			am65_cpsw_am654_get_efuse_macid(port_np,
+ 							port->port_id,
+ 							port->slave.mac_addr);
+@@ -2949,6 +2951,16 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
+ 		return ret;
  	}
  
-+out_unlock:
-+	mutex_unlock(&mp->m_growlock);
- 	return error;
- }
++	am65_cpsw_nuss_get_ver(common);
++
++	ret = am65_cpsw_nuss_init_host_p(common);
++	if (ret)
++		goto err_pm_clear;
++
++	ret = am65_cpsw_nuss_init_slave_ports(common);
++	if (ret)
++		goto err_pm_clear;
++
+ 	node = of_get_child_by_name(dev->of_node, "mdio");
+ 	if (!node) {
+ 		dev_warn(dev, "MDIO node not found\n");
+@@ -2965,16 +2977,6 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
+ 	}
+ 	of_node_put(node);
  
+-	am65_cpsw_nuss_get_ver(common);
+-
+-	ret = am65_cpsw_nuss_init_host_p(common);
+-	if (ret)
+-		goto err_of_clear;
+-
+-	ret = am65_cpsw_nuss_init_slave_ports(common);
+-	if (ret)
+-		goto err_of_clear;
+-
+ 	/* init common data */
+ 	ale_params.dev = dev;
+ 	ale_params.ale_ageout = AM65_CPSW_ALE_AGEOUT_DEFAULT;
 -- 
 2.39.5
 
