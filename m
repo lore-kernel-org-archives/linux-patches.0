@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF7A1C5D46;
-	Mon, 23 Jun 2025 21:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA8B218580;
+	Mon, 23 Jun 2025 21:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714411; cv=none; b=CJxI+gET7PlFVoZo6AD2YfSF7AgFzhWawSz1/sEBsiL1D40lNpL6e0QUInav+xH4reBeXCUBevBT87nYPFzasR13TI7zYVIwTk3Ztd58ZY9RKBykZaEb19eSYlQrZBtdMhE3XvBInwWUftOJwMdAa1eTsu89LMiTe3MuOwRLZ94=
+	t=1750714414; cv=none; b=iNSB33Lg5e1HaZDT/VYVDuJAOGuaRjx16dKvHqAtiX7f8eMDobhTY7ZBsW+goo0FTpbrGq1e1Y6qsBtHnV7oKNo8c9tgITGq0Egd3PA0LzVOU8qCyhgqRq3MVuXJDp1bPLLRFiC/fz+WRxoLK7LyH9ImM4OzdK/rUMVkLTxvJFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714411; c=relaxed/simple;
-	bh=4Vrt+Oeepny8lbnTY03u2bSf/XR27rbqwr17zAD1jXA=;
+	s=arc-20240116; t=1750714414; c=relaxed/simple;
+	bh=qGba+cP7sXO2cSWkO6OBQqF4vmaIRoiw7lFtd8EC6QM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eq/6U1LjX/Yet1fRpumtjw344GB9XZ2TrEI5uGI8ZLFGCsPV06N5cAfgMSXOA1SiTqWKxVgImnvGctb4j4GFfKC2PHcvxf0KpUrwJO+jUavP0mT8hC7tiQMSuzSSGglZkbTT4qY3Dl+kjsDb/C6HFxLIM9XhBbG/UzoL0AzytF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFuuTYe7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SUkUFVmgpPLIRhkd1ulMcxTdqIFwaZt9Cp8MmMcm6+/4XBoIKu/xQnwMzcai6Xz7rAU3OZaByzX3ivBv0OSUGN3t4kyQdrUWuYV3ccClBftq12oe3+2IB7zAVZn59lVfjybm6I5PCVdg0iglL4fJrNLO2oRe9cqtGLz1LUFEAP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDnbN9q/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFuuTYe7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48280C4CEEA;
-	Mon, 23 Jun 2025 21:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDnbN9q/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC90AC4CEEA;
+	Mon, 23 Jun 2025 21:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714411;
-	bh=4Vrt+Oeepny8lbnTY03u2bSf/XR27rbqwr17zAD1jXA=;
+	s=korg; t=1750714414;
+	bh=qGba+cP7sXO2cSWkO6OBQqF4vmaIRoiw7lFtd8EC6QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FFuuTYe7Hu/uPdrzQKUKGDbienglStjse+Qn8pbF5mID3Rzls1lVngVPSZY2Qckr0
-	 KqvCF1kdPjyGEn9T90hHAm5ytdXpqNVayLfN6ieK18o5f2Db6dkmNWGe186OB0BmGW
-	 nbjLEJoGfm8/FR+/w+Q7xJeazjbC1v4SYqpIpwWw=
+	b=zDnbN9q/ba8esQsuocpr7GEhVjp+DdWj/C5i8skalfnHyG+1cuFJ6AontvthiXFNi
+	 qbCGe0CA7cKOtWkOw313k8PLFaxXQx+Et5CSQQQgrtnAbvmyNfMxFekKpKuCUpVmXP
+	 AniEjgDO3iNPctPg7e787i8qLBu7pdnmszOa/6iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 101/414] f2fs: fix to do sanity check on sit_bitmap_size
-Date: Mon, 23 Jun 2025 15:03:58 +0200
-Message-ID: <20250623130644.629218482@linuxfoundation.org>
+	Ahmed Salem <x0rw3ll@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 121/290] ACPICA: Avoid sequence overread in call to strncmp()
+Date: Mon, 23 Jun 2025 15:06:22 +0200
+Message-ID: <20250623130630.575934414@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,84 +47,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Ahmed Salem <x0rw3ll@gmail.com>
 
-commit 5db0d252c64e91ba1929c70112352e85dc5751e7 upstream.
+[ Upstream commit 64b9dfd0776e9c38d733094859a09f13282ce6f8 ]
 
-w/ below testcase, resize will generate a corrupted image which
-contains inconsistent metadata, so when mounting such image, it
-will trigger kernel panic:
+ACPICA commit 8b83a8d88dfec59ea147fad35fc6deea8859c58c
 
-touch img
-truncate -s $((512*1024*1024*1024)) img
-mkfs.f2fs -f img $((256*1024*1024))
-resize.f2fs -s -i img -t $((1024*1024*1024))
-mount img /mnt/f2fs
+ap_get_table_length() checks if tables are valid by
+calling ap_is_valid_header(). The latter then calls
+ACPI_VALIDATE_RSDP_SIG(Table->Signature).
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/segment.h:863!
-Oops: invalid opcode: 0000 [#1] SMP PTI
-CPU: 11 UID: 0 PID: 3922 Comm: mount Not tainted 6.15.0-rc1+ #191 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:f2fs_ra_meta_pages+0x47c/0x490
+ap_is_valid_header() accepts struct acpi_table_header as an argument, so
+the signature size is always fixed to 4 bytes.
 
-Call Trace:
- f2fs_build_segment_manager+0x11c3/0x2600
- f2fs_fill_super+0xe97/0x2840
- mount_bdev+0xf4/0x140
- legacy_get_tree+0x2b/0x50
- vfs_get_tree+0x29/0xd0
- path_mount+0x487/0xaf0
- __x64_sys_mount+0x116/0x150
- do_syscall_64+0x82/0x190
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7fdbfde1bcfe
+The problem is when the string comparison is between ACPI-defined table
+signature and ACPI_SIG_RSDP. Common ACPI table header specifies the
+Signature field to be 4 bytes long[1], with the exception of the RSDP
+structure whose signature is 8 bytes long "RSD PTR " (including the
+trailing blank character)[2]. Calling strncmp(sig, rsdp_sig, 8) would
+then result in a sequence overread[3] as sig would be smaller (4 bytes)
+than the specified bound (8 bytes).
 
-The reaseon is:
+As a workaround, pass the bound conditionally based on the size of the
+signature being passed.
 
-sit_i->bitmap_size is 192, so size of sit bitmap is 192*8=1536, at maximum
-there are 1536 sit blocks, however MAIN_SEGS is 261893, so that sit_blk_cnt
-is 4762, build_sit_entries() -> current_sit_addr() tries to access
-out-of-boundary in sit_bitmap at offset from [1536, 4762), once sit_bitmap
-and sit_bitmap_mirror is not the same, it will trigger f2fs_bug_on().
-
-Let's add sanity check in f2fs_sanity_check_ckpt() to avoid panic.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#system-description-table-header [1]
+Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#root-system-description-pointer-rsdp-structure [2]
+Link: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overread [3]
+Link: https://github.com/acpica/acpica/commit/8b83a8d8
+Signed-off-by: Ahmed Salem <x0rw3ll@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2248233.Mh6RI2rZIc@rjwysocki.net
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/acpi/actypes.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3659,6 +3659,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_s
- 	block_t user_block_count, valid_user_blocks;
- 	block_t avail_node_count, valid_node_count;
- 	unsigned int nat_blocks, nat_bits_bytes, nat_bits_blocks;
-+	unsigned int sit_blk_cnt;
- 	int i, j;
+diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h
+index 85c2dcf2b7048..0a24200852415 100644
+--- a/include/acpi/actypes.h
++++ b/include/acpi/actypes.h
+@@ -527,7 +527,7 @@ typedef u64 acpi_integer;
  
- 	total = le32_to_cpu(raw_super->segment_count);
-@@ -3770,6 +3771,13 @@ skip_cross:
- 		return 1;
- 	}
+ /* Support for the special RSDP signature (8 characters) */
  
-+	sit_blk_cnt = DIV_ROUND_UP(main_segs, SIT_ENTRY_PER_BLOCK);
-+	if (sit_bitmap_size * 8 < sit_blk_cnt) {
-+		f2fs_err(sbi, "Wrong bitmap size: sit: %u, sit_blk_cnt:%u",
-+			 sit_bitmap_size, sit_blk_cnt);
-+		return 1;
-+	}
-+
- 	cp_pack_start_sum = __start_sum_addr(sbi);
- 	cp_payload = __cp_payload(sbi);
- 	if (cp_pack_start_sum < cp_payload + 1 ||
+-#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, 8))
++#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ? ACPI_NAMESEG_SIZE : 8))
+ #define ACPI_MAKE_RSDP_SIG(dest)        (memcpy (ACPI_CAST_PTR (char, (dest)), ACPI_SIG_RSDP, 8))
+ 
+ /* Support for OEMx signature (x can be any character) */
+-- 
+2.39.5
+
 
 
