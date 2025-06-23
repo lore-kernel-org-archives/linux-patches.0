@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F39E347DD;
-	Mon, 23 Jun 2025 13:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E854B347DD;
+	Mon, 23 Jun 2025 13:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686040; cv=none; b=lFBCzwVJZZDk5okvyVnDmVczZAztYGBywKg1fgVwBAfV+uIlGq6DhObRvCxyxleYAM69tg5doB4nw3n36SxA9SvbBJTL+ZK+NzmN2SU4jlLKe1HbYVFRnLof7sh0dZcqboqARpOSfUL5gho17p2xaidjvPddGvD1vZslDqYGNPM=
+	t=1750686043; cv=none; b=HCH4Fhdm+kTff6+JL5EPiiFxtZI8iqZ4s5KM+M+qYCV8BXLI7uG2myKQYo7YP8TCqH442kOG5C+6X6VTa1rOqOpvqAlb/WYgS16j0D3PInl+mtiCQ5lly1yM59+Rl6tIWSSxidklrC669EsypKAC4FLdncoVxpAKHSmdu5NpCc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686040; c=relaxed/simple;
-	bh=2IeKjg8l+4NPVIkkIVvAgkMbYjeVqn/9Y6fdnpoTy0o=;
+	s=arc-20240116; t=1750686043; c=relaxed/simple;
+	bh=WknJks64u5+257tj33r3kuT8C6tnansvb0WCtqEM3SM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lux6DT6geMCpttemo6/b4qS0ZueeqS1crspgtzEKWDsw8Qwi/WF0h41+Bz4SKk1otykq72O1DTfAqtLpX4wtQSghz+/XseTj8nk5CT3tD82iu8D5cTzf35lAUplkhnOI6zUy9qidBrfMkA7w0xZQMcyIGuU+SpY7wrpJXYOd+pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bi5D2mUr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b433+gMxs7l10dB5Ckyg/Ya0ZliB9Oezd3Iccv9uLn/U+xje8ZROCh+pyOl5Ubnc+uUsQ9mvDGrI/EOBX+86TfOc0Epx63a2aNf+0mCiMl3KQo58MAm/UrIdpXnRfaz7CKi39Fnje//HujRkQYZYkloweRy77dDFMf6bE0a5fgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgCAGLFP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bi5D2mUr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E5FC4CEEA;
-	Mon, 23 Jun 2025 13:40:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgCAGLFP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3FAC4CEF0;
+	Mon, 23 Jun 2025 13:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686040;
-	bh=2IeKjg8l+4NPVIkkIVvAgkMbYjeVqn/9Y6fdnpoTy0o=;
+	s=korg; t=1750686042;
+	bh=WknJks64u5+257tj33r3kuT8C6tnansvb0WCtqEM3SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bi5D2mUr4kI3WBlVhM9iXfHYRQCNjWT83efSoKRnA7UbEkJzmsSONX/z86BYJevCC
-	 GHF2T8XxYixf5jvzG5C17Xgad2s8bpR6vcFWRXcDkp5tgzhCEl4tcrHDzMOr+YbJJA
-	 dD4NI7jABM5gCFFdLO2Ojxn09CoPZvHlgGlsGnbk=
+	b=wgCAGLFPG7ULwkVZEOd+5IBX2MCBOQC4l88W3yDDNrKacBPwXLqhQI9nJ69y+2Ezc
+	 TXEYJqHgjpkHusY4Aj9U8vwH89hBFwOYN3sFoRGklX9KekqC9nQqa1iK47wpkEZNFr
+	 uE4Yw1AEJxEAQ84I19qa0q9YA8kQ1wPH94Maf8Yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Nathan Lynch <nathan.lynch@amd.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Michal Luczaj <mhal@rbox.co>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 087/355] dmaengine: ti: Add NULL check in udma_probe()
-Date: Mon, 23 Jun 2025 15:04:48 +0200
-Message-ID: <20250623130629.420543363@linuxfoundation.org>
+Subject: [PATCH 5.15 065/411] bpf, sockmap: Avoid using sk_socket after free when sending
+Date: Mon, 23 Jun 2025 15:03:29 +0200
+Message-ID: <20250623130634.952378026@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +49,127 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit fd447415e74bccd7362f760d4ea727f8e1ebfe91 ]
+[ Upstream commit 8259eb0e06d8f64c700f5fbdb28a5c18e10de291 ]
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-udma_probe() does not check for this case, which results in a NULL
-pointer dereference.
+The sk->sk_socket is not locked or referenced in backlog thread, and
+during the call to skb_send_sock(), there is a race condition with
+the release of sk_socket. All types of sockets(tcp/udp/unix/vsock)
+will be affected.
 
-Add NULL check after devm_kasprintf() to prevent this issue.
+Race conditions:
+'''
+CPU0                               CPU1
 
-Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Nathan Lynch <nathan.lynch@amd.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/20250402023900.43440-1-bsdhenrymartin@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+backlog::skb_send_sock
+  sendmsg_unlocked
+    sock_sendmsg
+      sock_sendmsg_nosec
+                                   close(fd):
+                                     ...
+                                     ops->release() -> sock_map_close()
+                                     sk_socket->ops = NULL
+                                     free(socket)
+      sock->ops->sendmsg
+            ^
+            panic here
+'''
+
+The ref of psock become 0 after sock_map_close() executed.
+'''
+void sock_map_close()
+{
+    ...
+    if (likely(psock)) {
+    ...
+    // !! here we remove psock and the ref of psock become 0
+    sock_map_remove_links(sk, psock)
+    psock = sk_psock_get(sk);
+    if (unlikely(!psock))
+        goto no_psock; <=== Control jumps here via goto
+        ...
+        cancel_delayed_work_sync(&psock->work); <=== not executed
+        sk_psock_put(sk, psock);
+        ...
+}
+'''
+
+Based on the fact that we already wait for the workqueue to finish in
+sock_map_close() if psock is held, we simply increase the psock
+reference count to avoid race conditions.
+
+With this patch, if the backlog thread is running, sock_map_close() will
+wait for the backlog thread to complete and cancel all pending work.
+
+If no backlog running, any pending work that hasn't started by then will
+fail when invoked by sk_psock_get(), as the psock reference count have
+been zeroed, and sk_psock_drop() will cancel all jobs via
+cancel_delayed_work_sync().
+
+In summary, we require synchronization to coordinate the backlog thread
+and close() thread.
+
+The panic I catched:
+'''
+Workqueue: events sk_psock_backlog
+RIP: 0010:sock_sendmsg+0x21d/0x440
+RAX: 0000000000000000 RBX: ffffc9000521fad8 RCX: 0000000000000001
+...
+Call Trace:
+ <TASK>
+ ? die_addr+0x40/0xa0
+ ? exc_general_protection+0x14c/0x230
+ ? asm_exc_general_protection+0x26/0x30
+ ? sock_sendmsg+0x21d/0x440
+ ? sock_sendmsg+0x3e0/0x440
+ ? __pfx_sock_sendmsg+0x10/0x10
+ __skb_send_sock+0x543/0xb70
+ sk_psock_backlog+0x247/0xb80
+...
+'''
+
+Fixes: 4b4647add7d3 ("sock_map: avoid race between sock_map_close and sk_psock_put")
+Reported-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20250516141713.291150-1-jiayuan.chen@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/k3-udma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/skmsg.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index 1f01bd483c6ba..cade321095d20 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -3672,7 +3672,8 @@ static int udma_probe(struct platform_device *pdev)
- 		uc->config.dir = DMA_MEM_TO_MEM;
- 		uc->name = devm_kasprintf(dev, GFP_KERNEL, "%s chan%d",
- 					  dev_name(dev), i);
--
-+		if (!uc->name)
-+			return -ENOMEM;
- 		vchan_init(&uc->vc, &ud->ddev);
- 		/* Use custom vchan completion handling */
- 		tasklet_setup(&uc->vc.task, udma_vchan_complete);
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index f4186d4980b92..8a0a23079d902 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -638,6 +638,13 @@ static void sk_psock_backlog(struct work_struct *work)
+ 	bool ingress;
+ 	int ret;
+ 
++	/* Increment the psock refcnt to synchronize with close(fd) path in
++	 * sock_map_close(), ensuring we wait for backlog thread completion
++	 * before sk_socket freed. If refcnt increment fails, it indicates
++	 * sock_map_close() completed with sk_socket potentially already freed.
++	 */
++	if (!sk_psock_get(psock->sk))
++		return;
+ 	mutex_lock(&psock->work_mutex);
+ 	while ((skb = skb_peek(&psock->ingress_skb))) {
+ 		len = skb->len;
+@@ -691,6 +698,7 @@ static void sk_psock_backlog(struct work_struct *work)
+ 	}
+ end:
+ 	mutex_unlock(&psock->work_mutex);
++	sk_psock_put(psock->sk, psock);
+ }
+ 
+ struct sk_psock *sk_psock_init(struct sock *sk, int node)
 -- 
 2.39.5
 
