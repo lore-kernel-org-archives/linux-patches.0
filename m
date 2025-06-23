@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B13D21FF2B;
-	Mon, 23 Jun 2025 21:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA5B70838;
+	Mon, 23 Jun 2025 21:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715934; cv=none; b=MB+dy4v9hQU2uMQ9m0MLRDWTRlJ1RKgW7fqp5gysoBA3KAmvQuyV3iM/6dZAAgmUcSKUeEKxIR13w+RoLg/emfEYWYZmi8+dMotx7+jPBvtRbnGVb82cIMV2wseDWVR4g3Y3Nky1wrP1ThO9L3owJlQq51yHT3FsZseS4Fr9GY4=
+	t=1750715937; cv=none; b=rORlo3pqKpNaqnW4eB54dgzzpVwoLiRoD9V36NvMjdkDCFdWXbVgGDcMTAvW8VMep7ijIT9TamKquBu2d5F9WpHaJKZvlKnEbWl7yk8GQ9OjK91MQJEYjpjkUY88dqzKLO2tqlMEojoS+tZs9bG/3boZTbhxGQ17mnHYIAXe2GQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715934; c=relaxed/simple;
-	bh=6d9nqRmmeLYcB2IeuOhhPghpWSZVOWGHtoSZmL+xDBY=;
+	s=arc-20240116; t=1750715937; c=relaxed/simple;
+	bh=WNcmRlUC/+x2ELohiQRKAK/UEn7Z7lXAykhDXLLHg1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d8GVyeTOHDqimYRfm/BhtGnvhGvjM0JsEDtTsPOezLUXqpgXh/x1Eja0sKzBCe1WMC36QL6W4t+J1sTJ21Dcu1YxIGejhVaG1eaqCQpZ0nq4RbxNMpjdoroe152TUNOEL1Q31Kt8W+GmXON8LY8vLJfrQdvLcRwjYEB6PKSE/rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rzGW70A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXoyAEkQlV+WB2Wh96TXeYHJyJsb+KNeJSknk0+j7+F0u2PQzxbjHHHMFExTUr7zon8lgAmvLE+PGdUG0OadYMlGBnmPdeLDJHr8G0Oy0lkN5KnGEwnNVCsaVEa08WYsWD6PJaTWz3Z6/5T+uWOubEMkq/VekHIi2Si+/uHzR6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDqLeP7X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rzGW70A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12525C4CEEA;
-	Mon, 23 Jun 2025 21:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDqLeP7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C17C4CEEA;
+	Mon, 23 Jun 2025 21:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715934;
-	bh=6d9nqRmmeLYcB2IeuOhhPghpWSZVOWGHtoSZmL+xDBY=;
+	s=korg; t=1750715936;
+	bh=WNcmRlUC/+x2ELohiQRKAK/UEn7Z7lXAykhDXLLHg1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0rzGW70Ad/3e1GZyd1sRLBWwPof0EL8i94uq/EHBddtZRrSJz8hJ+tWtc/YjSb9Ec
-	 TOa0DbIKAb4kuje39RAW8yEMqPoKknOl7cbf9hNkHXmNmQaJvSovazAdEho+F+0YB6
-	 sILIjQdrkeapqmLWBdrbqvl5l8H17+cJqCksqsPo=
+	b=zDqLeP7XLkcM0zFy+DgL/daN2r7KvG0lI6tvBI2zXi4alw34zGpeHdFXHPI36LRF/
+	 37tqcwKnhnIHYcgjfjByFxRHPM9ijcfB7D/wPcr2jkax1hZXR57QpbsRyq0rJk+i23
+	 qwjEf/La3P8vec0d/atF3T7oE2FYgZMCrRy4yM1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 217/414] tcp: always seek for minimal rtt in tcp_rcv_rtt_update()
-Date: Mon, 23 Jun 2025 15:05:54 +0200
-Message-ID: <20250623130647.441060691@linuxfoundation.org>
+	syzbot+aaf0488c83d1d5f4f029@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	WangYuli <wangyuli@uniontech.com>
+Subject: [PATCH 6.6 230/290] wifi: cfg80211: init wiphy_work before allocating rfkill fails
+Date: Mon, 23 Jun 2025 15:08:11 +0200
+Message-ID: <20250623130633.845729710@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +48,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit b879dcb1aeeca278eacaac0b1e2425b1c7599f9f ]
+commit fc88dee89d7b63eeb17699393eb659aadf9d9b7c upstream.
 
-tcp_rcv_rtt_update() goal is to maintain an estimation of the RTT
-in tp->rcv_rtt_est.rtt_us, used by tcp_rcv_space_adjust()
+syzbort reported a uninitialize wiphy_work_lock in cfg80211_dev_free. [1]
 
-When TCP TS are enabled, tcp_rcv_rtt_update() is using
-EWMA to smooth the samples.
+After rfkill allocation fails, the wiphy release process will be performed,
+which will cause cfg80211_dev_free to access the uninitialized wiphy_work
+related data.
 
-Change this to immediately latch the incoming value if it
-is lower than tp->rcv_rtt_est.rtt_us, so that tcp_rcv_space_adjust()
-does not overshoot tp->rcvq_space.space and sk->sk_rcvbuf.
+Move the initialization of wiphy_work to before rfkill initialization to
+avoid this issue.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250513193919.1089692-8-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[1]
+INFO: trying to register non-static key.
+The code is fine but needs lockdep annotation, or maybe
+you didn't initialize this object before use?
+turning off the locking correctness validator.
+CPU: 0 UID: 0 PID: 5935 Comm: syz-executor550 Not tainted 6.14.0-rc6-syzkaller-00103-g4003c9e78778 #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+ assign_lock_key kernel/locking/lockdep.c:983 [inline]
+ register_lock_class+0xc39/0x1240 kernel/locking/lockdep.c:1297
+ __lock_acquire+0x135/0x3c40 kernel/locking/lockdep.c:5103
+ lock_acquire.part.0+0x11b/0x380 kernel/locking/lockdep.c:5851
+ __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
+ _raw_spin_lock_irqsave+0x3a/0x60 kernel/locking/spinlock.c:162
+ cfg80211_dev_free+0x30/0x3d0 net/wireless/core.c:1196
+ device_release+0xa1/0x240 drivers/base/core.c:2568
+ kobject_cleanup lib/kobject.c:689 [inline]
+ kobject_release lib/kobject.c:720 [inline]
+ kref_put include/linux/kref.h:65 [inline]
+ kobject_put+0x1e4/0x5a0 lib/kobject.c:737
+ put_device+0x1f/0x30 drivers/base/core.c:3774
+ wiphy_free net/wireless/core.c:1224 [inline]
+ wiphy_new_nm+0x1c1f/0x2160 net/wireless/core.c:562
+ ieee80211_alloc_hw_nm+0x1b7a/0x2260 net/mac80211/main.c:835
+ mac80211_hwsim_new_radio+0x1d6/0x54e0 drivers/net/wireless/virtual/mac80211_hwsim.c:5185
+ hwsim_new_radio_nl+0xb42/0x12b0 drivers/net/wireless/virtual/mac80211_hwsim.c:6242
+ genl_family_rcv_msg_doit+0x202/0x2f0 net/netlink/genetlink.c:1115
+ genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
+ genl_rcv_msg+0x565/0x800 net/netlink/genetlink.c:1210
+ netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2533
+ genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
+ netlink_unicast_kernel net/netlink/af_netlink.c:1312 [inline]
+ netlink_unicast+0x53c/0x7f0 net/netlink/af_netlink.c:1338
+ netlink_sendmsg+0x8b8/0xd70 net/netlink/af_netlink.c:1882
+ sock_sendmsg_nosec net/socket.c:718 [inline]
+ __sock_sendmsg net/socket.c:733 [inline]
+ ____sys_sendmsg+0xaaf/0xc90 net/socket.c:2573
+ ___sys_sendmsg+0x135/0x1e0 net/socket.c:2627
+ __sys_sendmsg+0x16e/0x220 net/socket.c:2659
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+
+Fixes: 72d520476a2f ("wifi: cfg80211: cancel wiphy_work before freeing wiphy")
+Reported-by: syzbot+aaf0488c83d1d5f4f029@syzkaller.appspotmail.com
+Close: https://syzkaller.appspot.com/bug?extid=aaf0488c83d1d5f4f029
+Tested-by: syzbot+aaf0488c83d1d5f4f029@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://patch.msgid.link/tencent_258DD9121DDDB9DD9A1939CFAA0D8625B107@qq.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_input.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ net/wireless/core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index d29219e067b7f..cf4fef18a9cad 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -665,10 +665,12 @@ EXPORT_SYMBOL(tcp_initialize_rcv_mss);
-  */
- static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
- {
--	u32 new_sample = tp->rcv_rtt_est.rtt_us;
--	long m = sample;
-+	u32 new_sample, old_sample = tp->rcv_rtt_est.rtt_us;
-+	long m = sample << 3;
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -550,6 +550,9 @@ use_default_name:
+ 	INIT_WORK(&rdev->mgmt_registrations_update_wk,
+ 		  cfg80211_mgmt_registrations_update_wk);
+ 	spin_lock_init(&rdev->mgmt_registrations_lock);
++	INIT_WORK(&rdev->wiphy_work, cfg80211_wiphy_work);
++	INIT_LIST_HEAD(&rdev->wiphy_work_list);
++	spin_lock_init(&rdev->wiphy_work_lock);
  
--	if (new_sample != 0) {
-+	if (old_sample == 0 || m < old_sample) {
-+		new_sample = m;
-+	} else {
- 		/* If we sample in larger samples in the non-timestamp
- 		 * case, we could grossly overestimate the RTT especially
- 		 * with chatty applications or bulk transfer apps which
-@@ -679,17 +681,9 @@ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
- 		 * else with timestamps disabled convergence takes too
- 		 * long.
- 		 */
--		if (!win_dep) {
--			m -= (new_sample >> 3);
--			new_sample += m;
--		} else {
--			m <<= 3;
--			if (m < new_sample)
--				new_sample = m;
--		}
--	} else {
--		/* No previous measure. */
--		new_sample = m << 3;
-+		if (win_dep)
-+			return;
-+		new_sample = old_sample - (old_sample >> 3) + sample;
+ #ifdef CONFIG_CFG80211_DEFAULT_PS
+ 	rdev->wiphy.flags |= WIPHY_FLAG_PS_ON_BY_DEFAULT;
+@@ -567,9 +570,6 @@ use_default_name:
+ 		return NULL;
  	}
  
- 	tp->rcv_rtt_est.rtt_us = new_sample;
--- 
-2.39.5
-
+-	INIT_WORK(&rdev->wiphy_work, cfg80211_wiphy_work);
+-	INIT_LIST_HEAD(&rdev->wiphy_work_list);
+-	spin_lock_init(&rdev->wiphy_work_lock);
+ 	INIT_WORK(&rdev->rfkill_block, cfg80211_rfkill_block_work);
+ 	INIT_WORK(&rdev->conn_work, cfg80211_conn_work);
+ 	INIT_WORK(&rdev->event_work, cfg80211_event_work);
 
 
