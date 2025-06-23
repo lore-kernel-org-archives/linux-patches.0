@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60BA4409;
-	Mon, 23 Jun 2025 21:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255054409;
+	Mon, 23 Jun 2025 21:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714691; cv=none; b=K5Ivha1/JIeBo1qx2g0Xo97YoqaE75msbJaSRIKYIQWJ9o3zWZ3gaIyCpPJFsRQRCstavVaLBKMSNUrIFuR7zeYJ2yjvcXsJf+UWZh8s1UB3xvwpqWsSt8zoBQrO0ZC9aS0DcCdu0dLGJv2IOC9cASvwM9czhkSf9KXgpFbH7VY=
+	t=1750714694; cv=none; b=OFIx7IPBE1z4AhdY+nj4CeL1RE9DSAUe4UwfNpxyBG3LOnr5jzAWYqXTlrGmUCKWzCEkRkORIlfTy+h3yDz2Fzh3JHrpqFggvL7GEJK5BovbDqEnuKT3qNZ/ymJivcsbGfF0DT4dh+4xd+OLak2lokqaHNR3z0D+Nuo6evZylFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714691; c=relaxed/simple;
-	bh=hKn+ZZ2NKpoBlWjBVjTULORrWNq/gBV8IZF5A8C1P3I=;
+	s=arc-20240116; t=1750714694; c=relaxed/simple;
+	bh=J1taC+dlnXLbay+iOthXHJTJCHl4uqv4UjEa6Z/GOq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dKlw/qkXQakCoghI94Lv48iz9Uk3nqwB49RhGGbecqQ+T4UqBs89E2c65sLe2okB9msEBQuO+R7SLp0BIyhh3xdHJk4w1iZIaYpMsBOt3EhQ7K4ZysCW3mtlYy8kClR3NCUWGC3P3KzykfYOWJ+kK/9r/5lRVvamdV5qcO/IXC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOd7dLOg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOvnUxhCaVCuLTtrZxZI0pXtqZGLLZW6fQAmlbRpZDPNeBikxMdgKxpNDUnAOT2WRBikUcd25G9ZLV5CbFiH5E20TwqX0nwHdkExjFdXmn49byYG1JoFrasFoBhkHQTQXsR7UPZE+tJ1c2CPFm9sQIQRJS2c29wYPUyBzVJbSQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGXMDREQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOd7dLOg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC8CC4CEED;
-	Mon, 23 Jun 2025 21:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGXMDREQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3769C4CEEA;
+	Mon, 23 Jun 2025 21:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714691;
-	bh=hKn+ZZ2NKpoBlWjBVjTULORrWNq/gBV8IZF5A8C1P3I=;
+	s=korg; t=1750714694;
+	bh=J1taC+dlnXLbay+iOthXHJTJCHl4uqv4UjEa6Z/GOq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EOd7dLOgQ5Dsu9fJ8Ta7naPQu8pcC1KtESPV0JIgQ97h/acqu1QARUtdyRnjQ+yEC
-	 pO4wSUzdj9iJzobV2B84fcynqNG3ih4iRAQ4ek0+TWLWqE4rkAFgCdKurdoMFRerRY
-	 qyrbpyW1rSbu/uQgB0emQZoT2g3k2kVMbqEsXR24=
+	b=sGXMDREQK0MPesyxo8wALVyLRXfeqNOTxBuFdDSWY4Xv5A6ZIu3GRIyQxStQaZJxb
+	 mw81foI6U1TQGDftmHFcnHwG5lToLwF+8tKCR2CjXmIXwo1yXrsw9FpXf43G95pTMi
+	 fejccGPLmmTNoxoQpp0cwc63Cz8Ti2f8YGw6M/V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Gao <chao.gao@intel.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 124/414] KVM: VMX: Flush shadow VMCS on emergency reboot
-Date: Mon, 23 Jun 2025 15:04:21 +0200
-Message-ID: <20250623130645.166397817@linuxfoundation.org>
+	Long Li <leo.lilong@huawei.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 223/355] sunrpc: update nextcheck time when adding new cache entries
+Date: Mon, 23 Jun 2025 15:07:04 +0200
+Message-ID: <20250623130633.444061962@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Gao <chao.gao@intel.com>
+From: Long Li <leo.lilong@huawei.com>
 
-commit a0ee1d5faff135e28810f29e0f06328c66f89852 upstream.
+[ Upstream commit 5ca00634c8bbb2979c73465588f486b9632f5ed5 ]
 
-Ensure the shadow VMCS cache is evicted during an emergency reboot to
-prevent potential memory corruption if the cache is evicted after reboot.
+The cache_detail structure uses a "nextcheck" field to control hash table
+scanning intervals. When a table scan begins, nextcheck is set to current
+time plus 1800 seconds. During scanning, if cache_detail is not empty and
+a cache entry's expiry time is earlier than the current nextcheck, the
+nextcheck is updated to that expiry time.
 
-This issue was identified through code inspection, as __loaded_vmcs_clear()
-flushes both the normal VMCS and the shadow VMCS.
+This mechanism ensures that:
+1) Empty cache_details are scanned every 1800 seconds to avoid unnecessary
+   scans
+2) Non-empty cache_details are scanned based on the earliest expiry time
+   found
 
-Avoid checking the "launched" state during an emergency reboot, unlike the
-behavior in __loaded_vmcs_clear(). This is important because reboot NMIs
-can interfere with operations like copy_shadow_to_vmcs12(), where shadow
-VMCSes are loaded directly using VMPTRLD. In such cases, if NMIs occur
-right after the VMCS load, the shadow VMCSes will be active but the
-"launched" state may not be set.
+However, when adding a new cache entry to an empty cache_detail, the
+nextcheck time was not being updated, remaining at 1800 seconds. This
+could delay cache cleanup for up to 1800 seconds, potentially blocking
+threads(such as nfsd) that are waiting for cache cleanup.
 
-Fixes: 16f5b9034b69 ("KVM: nVMX: Copy processor-specific shadow-vmcs to VMCS12")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chao Gao <chao.gao@intel.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://lore.kernel.org/r/20250324140849.2099723-1-chao.gao@intel.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by updating the nextcheck time whenever a new cache entry is
+added.
+
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/vmx.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/sunrpc/cache.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -770,8 +770,11 @@ void vmx_emergency_disable_virtualizatio
- 		return;
+diff --git a/net/sunrpc/cache.c b/net/sunrpc/cache.c
+index 486c466ab4668..0a91945db88fe 100644
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -133,6 +133,8 @@ static struct cache_head *sunrpc_cache_add_entry(struct cache_detail *detail,
  
- 	list_for_each_entry(v, &per_cpu(loaded_vmcss_on_cpu, cpu),
--			    loaded_vmcss_on_cpu_link)
-+			    loaded_vmcss_on_cpu_link) {
- 		vmcs_clear(v->vmcs);
-+		if (v->shadow_vmcs)
-+			vmcs_clear(v->shadow_vmcs);
-+	}
+ 	hlist_add_head_rcu(&new->cache_list, head);
+ 	detail->entries++;
++	if (detail->nextcheck > new->expiry_time)
++		detail->nextcheck = new->expiry_time + 1;
+ 	cache_get(new);
+ 	spin_unlock(&detail->hash_lock);
  
- 	kvm_cpu_vmxoff();
- }
+-- 
+2.39.5
+
 
 
