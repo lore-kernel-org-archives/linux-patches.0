@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86770246BC9;
-	Mon, 23 Jun 2025 13:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC04246BC9;
+	Mon, 23 Jun 2025 13:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685544; cv=none; b=VqQ9RDrBQ7Jp8UesL518/uhpp9FY1oqHgGnqHEgsCquMxHgv5VUNp5CPe+BsdzPXEoWKQQRE9UlVfvP1dwDSX9JZptqgHPLWEeBILT1e2I2Y0HceF4C+Lrl0GjRbeqpo1obG8P2VNCxjEZTRx143dyYrnazuIVJ306vbXTKB2ec=
+	t=1750685547; cv=none; b=QaF253d3SDPO88We4OLTcDADY+J0DrsmpHqRzH/78awI3lO4/j/SdLBBzqv0AgMGhztpO1/I0vbtCLgI/I7VEClHrDPYwP87C6/91AROLc5I6O5ZD0a89JcmzP5a4gvY/Ibx9SEhhQ4LMlHgylf2ehpL7c6yLB6IfcSXzERVO/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685544; c=relaxed/simple;
-	bh=e1gSudKc45POidW6q/BKG5eAIPrD1KUJj1Jyk9YliOM=;
+	s=arc-20240116; t=1750685547; c=relaxed/simple;
+	bh=T/fY7EtBzNMxf7Xwjd2fDU2JwwYuybfukW/OKMqxeOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfBJSku2RGD+/eyIMMcxkBup7yQE6mPAM5msMM6A0+vqmWgoU6TfKKjoqtCXM1uKxdAmG3S6UU4DpV3a6RCCsQ3z1XuIdKFoD3kzaxYyqKbCXvVHSV6zqrysjiCe1mfEOT+TOf0NMUZ8mINClHxRfQRCSS9ZwnkIL/hlCperhKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxWDmpCQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KOkZHQeOlTrU4IUyiVh5wZXMyyMltOFKK8g0zTOmbfTLi5eiK0VYajPMUUcBtxQkPgSgGZGsoxslkYbJhyTMeRTOaY0ufwDJ41qB+TxtngvYU+D/zeGl++3n2xvByAfziF3kbeVcnHUcpAgLeAFxJCGfNzlJHMrHbIbxFYNElz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urD6ZwFr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxWDmpCQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A30C4CEEA;
-	Mon, 23 Jun 2025 13:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urD6ZwFr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93EC9C4CEEA;
+	Mon, 23 Jun 2025 13:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685544;
-	bh=e1gSudKc45POidW6q/BKG5eAIPrD1KUJj1Jyk9YliOM=;
+	s=korg; t=1750685546;
+	bh=T/fY7EtBzNMxf7Xwjd2fDU2JwwYuybfukW/OKMqxeOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oxWDmpCQ2nwJcaDXw8e0TZJsVp8Rk3YDJWkmYmwH//gDr+tvCiebH1RTsZkx/5FAe
-	 Wwg4DhhAOhqXYh/IRu6yIFdp3miIeteX2hwlskIuwlcFPHe4rgolopwDD3HAMzmMUl
-	 GyCvKEPRvpNl1oCvdeSO4CA5O7MjivcKhxP5wdf4=
+	b=urD6ZwFrNij5ZrSOGQkZFz+KkV//yFiNnnUEuOEI6fKym6/bSBE4EEI6uHUnUu0U1
+	 MZn6fQHlo0bS1T2R5SGDfS1N1kl4sGY8UcxE7aRLVbAjUIv7d+6pPDrQxJGGe0dqMh
+	 x/GQZKi1bjWRxLYLnmGJlPVD9/XK2yC8HfMzKvg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Becker <jlbec@evilplan.org>,
-	Breno Leitao <leitao@debian.org>,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>
-Subject: [PATCH 5.4 102/222] configfs: Do not override creating attribute file failure in populate_attrs()
-Date: Mon, 23 Jun 2025 15:07:17 +0200
-Message-ID: <20250623130615.183047038@linuxfoundation.org>
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 014/508] gfs2: gfs2_create_inode error handling fix
+Date: Mon, 23 Jun 2025 15:00:59 +0200
+Message-ID: <20250623130645.605393162@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-commit f830edbae247b89228c3e09294151b21e0dc849c upstream.
+[ Upstream commit af4044fd0b77e915736527dd83011e46e6415f01 ]
 
-populate_attrs() may override failure for creating attribute files
-by success for creating subsequent bin attribute files, and have
-wrong return value.
+When gfs2_create_inode() finds a directory, make sure to return -EISDIR.
 
-Fix by creating bin attribute files under successfully creating
-attribute files.
-
-Fixes: 03607ace807b ("configfs: implement binary attributes")
-Cc: stable@vger.kernel.org
-Reviewed-by: Joel Becker <jlbec@evilplan.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250507-fix_configfs-v3-2-fe2d96de8dc4@quicinc.com
-Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 571a4b57975a ("GFS2: bugger off early if O_CREAT open finds a directory")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/configfs/dir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/gfs2/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/configfs/dir.c
-+++ b/fs/configfs/dir.c
-@@ -619,7 +619,7 @@ static int populate_attrs(struct config_
- 				break;
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 04fc3e72a96e4..06629aeefbe6f 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -631,7 +631,8 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
+ 	if (!IS_ERR(inode)) {
+ 		if (S_ISDIR(inode->i_mode)) {
+ 			iput(inode);
+-			inode = ERR_PTR(-EISDIR);
++			inode = NULL;
++			error = -EISDIR;
+ 			goto fail_gunlock;
  		}
- 	}
--	if (t->ct_bin_attrs) {
-+	if (!error && t->ct_bin_attrs) {
- 		for (i = 0; (bin_attr = t->ct_bin_attrs[i]) != NULL; i++) {
- 			error = configfs_create_bin_file(item, bin_attr);
- 			if (error)
+ 		d_instantiate(dentry, inode);
+-- 
+2.39.5
+
 
 
