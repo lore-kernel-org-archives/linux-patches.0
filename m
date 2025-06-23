@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60181F7580;
-	Mon, 23 Jun 2025 22:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B691F7580;
+	Mon, 23 Jun 2025 22:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716545; cv=none; b=SoscdxeJFf3Ov32je3pfqo07B6Eh4JaNN5IYtvm2/Eexse6SBlziD1BSGfW4Qr05jdr89u4IqnZlPRWbjGm6haAQcVRnI7DZ70b+hNOyW29aqyX/V305DdwprEGcTwiTwO+NFl8RGmqdNOl2FmkFdMnrtQ8lD6A3kb8Lc/Fy0E0=
+	t=1750716547; cv=none; b=PYWs3QrBYAjanaWjrPERnQik2Y33X3s2cbIr1DXpqgB70YLC81AFOQqC9zAn2WnCYz1koxAytIsUUbFesY5sMV0PSJQu199t59dgMojjCrcTdsjBEazuslErPyZLVSBw3s/RyvEhCgBlGdWc15fzMNJK2BgNETXDBwfjFufNj+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716545; c=relaxed/simple;
-	bh=hssEem2guCdLqEmgpj0YDRQHeHQ9WAqfmL4NzcpUdmI=;
+	s=arc-20240116; t=1750716547; c=relaxed/simple;
+	bh=jjpi61QiMuyDQXqZFVMxw1XvnemgenGUhavP+a+0Qd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dcg4gSCJ0uArH3Jswz0rECHGTQv34x7FWTdhmpMJJlsqB/OhQa2m4BfMX962LiQw/oWnnYF7ZJ3TtGhyZTvglKXin8HSRUbvUBJ40bOeGi1m1GpQqpx++hfMUll1r9uY36VE6sVSi7Y2GWIHGOIoDqST4HFEG++m7Nw41AQhxCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZhI9v1f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tX/7QmYoe7qIEM7HOFN3T0g/C1nNs0e4xcR/RWJLnvyjLjnMM5YENorX2NYgeClByor0hKIeNqe6SiTpFOr4GYlLV/Fw1xAYrEq/QbSh/BGYSd17HMB7wFFKhYWC41c2J9I1LupzN3p+g5dBs3a7PTYCBKIVk/zPuuVRF0ld0QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkzbUGIq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZhI9v1f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21609C4CEEA;
-	Mon, 23 Jun 2025 22:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkzbUGIq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B428C4CEEA;
+	Mon, 23 Jun 2025 22:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716544;
-	bh=hssEem2guCdLqEmgpj0YDRQHeHQ9WAqfmL4NzcpUdmI=;
+	s=korg; t=1750716546;
+	bh=jjpi61QiMuyDQXqZFVMxw1XvnemgenGUhavP+a+0Qd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZhI9v1fnEb8zCAJ7T2879ctFPMSYfyiLKpvyprCLWgcD/0kPW6tDCbphQ6yfbuuw
-	 TDfV0znOJI6nKvl3mdALXv6ej4kFpNrjcGHKrVX68wEgsmDNUHxPqNyp6aLNrE8Fa2
-	 OhV0AY44ceEqc7e7erkxyKdQyYcJ2hl8ASiFMbKE=
+	b=XkzbUGIqcszdUT4CJcVAZKD3vU8Ir9O7iVwgDAgV7Fh4D18zKw9Du19TQZ7pSos7D
+	 DV3fN1gDZiSiexJOITjYvcfJtcjdq5jMC/yQjhStODLrlMmEyuJW4VhHy8eLKfql4B
+	 EoCdyDSTNq3WlV+CSczD8R2Vc+oI9WxdRIkdoi+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vince Weaver <vincent.weaver@maine.edu>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.15 560/592] perf/x86/intel: Fix crash in icl_update_topdown_event()
-Date: Mon, 23 Jun 2025 15:08:38 +0200
-Message-ID: <20250623130713.762462406@linuxfoundation.org>
+	Liu Shixin <liushixin2@huawei.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Ken Chen <kenneth.w.chen@intel.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 5.15 363/411] mm: hugetlb: independent PMD page table shared count
+Date: Mon, 23 Jun 2025 15:08:27 +0200
+Message-ID: <20250623130642.779623727@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +52,166 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-commit b0823d5fbacb1c551d793cbfe7af24e0d1fa45ed upstream.
+commit 59d9094df3d79443937add8700b2ef1a866b1081 upstream.
 
-The perf_fuzzer found a hard-lockup crash on a RaptorLake machine:
+The folio refcount may be increased unexpectly through try_get_folio() by
+caller such as split_huge_pages.  In huge_pmd_unshare(), we use refcount
+to check whether a pmd page table is shared.  The check is incorrect if
+the refcount is increased by the above caller, and this can cause the page
+table leaked:
 
-  Oops: general protection fault, maybe for address 0xffff89aeceab400: 0000
-  CPU: 23 UID: 0 PID: 0 Comm: swapper/23
-  Tainted: [W]=WARN
-  Hardware name: Dell Inc. Precision 9660/0VJ762
-  RIP: 0010:native_read_pmc+0x7/0x40
-  Code: cc e8 8d a9 01 00 48 89 03 5b cd cc cc cc cc 0f 1f ...
-  RSP: 000:fffb03100273de8 EFLAGS: 00010046
-  ....
-  Call Trace:
-    <TASK>
-    icl_update_topdown_event+0x165/0x190
-    ? ktime_get+0x38/0xd0
-    intel_pmu_read_event+0xf9/0x210
-    __perf_event_read+0xf9/0x210
+ BUG: Bad page state in process sh  pfn:109324
+ page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x66 pfn:0x109324
+ flags: 0x17ffff800000000(node=0|zone=2|lastcpupid=0xfffff)
+ page_type: f2(table)
+ raw: 017ffff800000000 0000000000000000 0000000000000000 0000000000000000
+ raw: 0000000000000066 0000000000000000 00000000f2000000 0000000000000000
+ page dumped because: nonzero mapcount
+ ...
+ CPU: 31 UID: 0 PID: 7515 Comm: sh Kdump: loaded Tainted: G    B              6.13.0-rc2master+ #7
+ Tainted: [B]=BAD_PAGE
+ Hardware name: QEMU KVM Virtual Machine, BIOS 0.0.0 02/06/2015
+ Call trace:
+  show_stack+0x20/0x38 (C)
+  dump_stack_lvl+0x80/0xf8
+  dump_stack+0x18/0x28
+  bad_page+0x8c/0x130
+  free_page_is_bad_report+0xa4/0xb0
+  free_unref_page+0x3cc/0x620
+  __folio_put+0xf4/0x158
+  split_huge_pages_all+0x1e0/0x3e8
+  split_huge_pages_write+0x25c/0x2d8
+  full_proxy_write+0x64/0xd8
+  vfs_write+0xcc/0x280
+  ksys_write+0x70/0x110
+  __arm64_sys_write+0x24/0x38
+  invoke_syscall+0x50/0x120
+  el0_svc_common.constprop.0+0xc8/0xf0
+  do_el0_svc+0x24/0x38
+  el0_svc+0x34/0x128
+  el0t_64_sync_handler+0xc8/0xd0
+  el0t_64_sync+0x190/0x198
 
-CPUs 16-23 are E-core CPUs that don't support the perf metrics feature.
-The icl_update_topdown_event() should not be invoked on these CPUs.
+The issue may be triggered by damon, offline_page, page_idle, etc, which
+will increase the refcount of page table.
 
-It's a regression of commit:
+1. The page table itself will be discarded after reporting the
+   "nonzero mapcount".
 
-  f9bdf1f95339 ("perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read")
+2. The HugeTLB page mapped by the page table miss freeing since we
+   treat the page table as shared and a shared page table will not be
+   unmapped.
 
-The bug introduced by that commit is that the is_topdown_event() function
-is mistakenly used to replace the is_topdown_count() call to check if the
-topdown functions for the perf metrics feature should be invoked.
+Fix it by introducing independent PMD page table shared count.  As
+described by comment, pt_index/pt_mm/pt_frag_refcount are used for s390
+gmap, x86 pgds and powerpc, pt_share_count is used for x86/arm64/riscv
+pmds, so we can reuse the field as pt_share_count.
 
-Fix it.
-
-Fixes: f9bdf1f95339 ("perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read")
-Closes: https://lore.kernel.org/lkml/352f0709-f026-cd45-e60c-60dfd97f73f3@maine.edu/
-Reported-by: Vince Weaver <vincent.weaver@maine.edu>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Vince Weaver <vincent.weaver@maine.edu>
-Cc: stable@vger.kernel.org # v6.15+
-Link: https://lore.kernel.org/r/20250612143818.2889040-1-kan.liang@linux.intel.com
+Link: https://lkml.kernel.org/r/20241216071147.3984217-1-liushixin2@huawei.com
+Fixes: 39dde65c9940 ("[PATCH] shared page table for hugetlb page")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Ken Chen <kenneth.w.chen@intel.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[backport note: struct ptdesc did not exist yet, stuff it equivalently
+into struct page instead]
+Signed-off-by: Jann Horn <jannh@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/mm.h       |    3 +++
+ include/linux/mm_types.h |    3 +++
+ mm/hugetlb.c             |   18 ++++++++----------
+ 3 files changed, 14 insertions(+), 10 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -2810,7 +2810,7 @@ static void intel_pmu_read_event(struct
- 		 * If the PEBS counters snapshotting is enabled,
- 		 * the topdown event is available in PEBS records.
- 		 */
--		if (is_topdown_event(event) && !is_pebs_counter_event_group(event))
-+		if (is_topdown_count(event) && !is_pebs_counter_event_group(event))
- 			static_call(intel_pmu_update_topdown_event)(event, NULL);
- 		else
- 			intel_pmu_drain_pebs_buffer();
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -2352,6 +2352,9 @@ static inline bool pgtable_pmd_page_ctor
+ 	if (!pmd_ptlock_init(page))
+ 		return false;
+ 	__SetPageTable(page);
++#ifdef CONFIG_ARCH_WANT_HUGE_PMD_SHARE
++	atomic_set(&page->pt_share_count, 0);
++#endif
+ 	inc_lruvec_page_state(page, NR_PAGETABLE);
+ 	return true;
+ }
+--- a/include/linux/mm_types.h
++++ b/include/linux/mm_types.h
+@@ -166,6 +166,9 @@ struct page {
+ 			union {
+ 				struct mm_struct *pt_mm; /* x86 pgds only */
+ 				atomic_t pt_frag_refcount; /* powerpc */
++#ifdef CONFIG_ARCH_WANT_HUGE_PMD_SHARE
++				atomic_t pt_share_count;
++#endif
+ 			};
+ #if ALLOC_SPLIT_PTLOCKS
+ 			spinlock_t *ptl;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6046,7 +6046,7 @@ pte_t *huge_pmd_share(struct mm_struct *
+ 			spte = huge_pte_offset(svma->vm_mm, saddr,
+ 					       vma_mmu_pagesize(svma));
+ 			if (spte) {
+-				get_page(virt_to_page(spte));
++				atomic_inc(&virt_to_page(spte)->pt_share_count);
+ 				break;
+ 			}
+ 		}
+@@ -6061,7 +6061,7 @@ pte_t *huge_pmd_share(struct mm_struct *
+ 				(pmd_t *)((unsigned long)spte & PAGE_MASK));
+ 		mm_inc_nr_pmds(mm);
+ 	} else {
+-		put_page(virt_to_page(spte));
++		atomic_dec(&virt_to_page(spte)->pt_share_count);
+ 	}
+ 	spin_unlock(ptl);
+ out:
+@@ -6072,11 +6072,7 @@ out:
+ /*
+  * unmap huge page backed by shared pte.
+  *
+- * Hugetlb pte page is ref counted at the time of mapping.  If pte is shared
+- * indicated by page_count > 1, unmap is achieved by clearing pud and
+- * decrementing the ref count. If count == 1, the pte page is not shared.
+- *
+- * Called with page table lock held and i_mmap_rwsem held in write mode.
++ * Called with page table lock held.
+  *
+  * returns: 1 successfully unmapped a shared pte page
+  *	    0 the underlying pte page is not shared, or it is the last user
+@@ -6084,17 +6080,19 @@ out:
+ int huge_pmd_unshare(struct mm_struct *mm, struct vm_area_struct *vma,
+ 					unsigned long *addr, pte_t *ptep)
+ {
++	unsigned long sz = huge_page_size(hstate_vma(vma));
+ 	pgd_t *pgd = pgd_offset(mm, *addr);
+ 	p4d_t *p4d = p4d_offset(pgd, *addr);
+ 	pud_t *pud = pud_offset(p4d, *addr);
+ 
+ 	i_mmap_assert_write_locked(vma->vm_file->f_mapping);
+-	BUG_ON(page_count(virt_to_page(ptep)) == 0);
+-	if (page_count(virt_to_page(ptep)) == 1)
++	if (sz != PMD_SIZE)
++		return 0;
++	if (!atomic_read(&virt_to_page(ptep)->pt_share_count))
+ 		return 0;
+ 
+ 	pud_clear(pud);
+-	put_page(virt_to_page(ptep));
++	atomic_dec(&virt_to_page(ptep)->pt_share_count);
+ 	mm_dec_nr_pmds(mm);
+ 	/*
+ 	 * This update of passed address optimizes loops sequentially
 
 
