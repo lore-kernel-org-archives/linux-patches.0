@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBCC1EF397;
-	Mon, 23 Jun 2025 21:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C189A1F582A;
+	Mon, 23 Jun 2025 21:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713744; cv=none; b=qaEBlkC0UCAlwov77/C+YTt4DozOO3EAYtAEDqFPhM92IuR4x755mGi/riJexObwj+0ncMkz4Ru7pirl7+cz6afAlvMIUvwfHwKIo3AJv2pZI8OoZoqFzwB3EPP0tcyIjI45tw39XaVQVYOU0QoFPOaX5DVCDwVYrOyzRm0K5Ro=
+	t=1750713746; cv=none; b=ocfQHujvrWriLCO54REDIsgp6tFFbHK/Q9eDUpK9Y0oyHNB2XssDVp9shPZ5Yk+XJPr32VD65hmfaaNJC+8e+PH0IFbImLRQjFPiE1rlWjAF2tiuWF1fsDdLzAGRvpXmpTbXJJ03z4VxDIEpVqEOCNIZLjOy1aGI7Fnvd92Yj38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713744; c=relaxed/simple;
-	bh=23208ErY8arvCRSQcXbwI+C0a49BX/3cuuTU8AOwme8=;
+	s=arc-20240116; t=1750713746; c=relaxed/simple;
+	bh=6q6lo7o18JX45nQE+WGh/ElLP1/u15FNNv1OmGGVfH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jWZpAq7rf0NUmELqS3Em1FpxCZHmj3PoM59HRQXWOw0Z/kPvFxDMpkkU52KVeR997feqViZeH4RmLduxvooqCNJfQ7qGL/QOfJuhPHbLQVxj8elzllpUSXMrxAhCOSUow2lw87zojqlT6B+KEt8gpxS7fEcjIhN+hOtZJAarnA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOdjglYe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qZJ4QISwToYitwBQkEg+B0Tsj8gaUw0PPwcMYMEtuhNP9JBkjzZjQss55XtjlYy7kNiJSED+cCvBo4cdADig4AaW7Uxl4XH79A/7TB+Tq8RS81eiCrbjWVXOxLnE6p3Xqeql8TN29+gIlIzLg1ctEnHkpjSROrPVb/Fml++JSIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPmO/aSL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOdjglYe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2415C4CEEA;
-	Mon, 23 Jun 2025 21:22:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPmO/aSL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B45C4CEEA;
+	Mon, 23 Jun 2025 21:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713744;
-	bh=23208ErY8arvCRSQcXbwI+C0a49BX/3cuuTU8AOwme8=;
+	s=korg; t=1750713746;
+	bh=6q6lo7o18JX45nQE+WGh/ElLP1/u15FNNv1OmGGVfH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bOdjglYeOM9qt+mAROPBRmLoYNrX5kljJ+5tG5I9tSEKu4EPedcFN8ipugmmxQBNb
-	 yEfDs2NhCz8pmQAcpJy+4/64rGctzdZ43CRVKlVVNd6FLL+50Ufo1NO0R7qg/uPgby
-	 Rc/fEwlF/WzYWhnOJoxT5WMD6CIHbPJ1dlyaxHq0=
+	b=dPmO/aSLM77FN2RqSts5OCo07r67bOJbnCnebfmPef9hgpR/Vv7xemdNtTqqrnZ2h
+	 nhgJtIhh3zZFBFeX8a8+9PevOaCd1Lgb51BeFVrXCQqkyLfnRqzpLQrrs8xBSBOvBB
+	 SXUJs+XAqWnLmh/vx/iWwbEpD7L/JVDfaRlzTkhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8a583bdd1a5cc0b0e068@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 203/222] mpls: Use rcu_dereference_rtnl() in mpls_route_input_rcu().
-Date: Mon, 23 Jun 2025 15:08:58 +0200
-Message-ID: <20250623130618.413316268@linuxfoundation.org>
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 163/355] ASoC: meson: meson-card-utils: use of_property_present() for DT parsing
+Date: Mon, 23 Jun 2025 15:06:04 +0200
+Message-ID: <20250623130631.599669695@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,99 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit 6dbb0d97c5096072c78a6abffe393584e57ae945 ]
+commit 171eb6f71e9e3ba6a7410a1d93f3ac213f39dae2 upstream.
 
-As syzbot reported [0], mpls_route_input_rcu() can be called
-from mpls_getroute(), where is under RTNL.
+Commit c141ecc3cecd ("of: Warn when of_property_read_bool() is used on
+non-boolean properties") added a warning when trying to parse a property
+with a value (boolean properties are defined as: absent = false, present
+without any value = true). This causes a warning from meson-card-utils.
 
-net->mpls.platform_label is only updated under RTNL.
+meson-card-utils needs to know about the existence of the
+"audio-routing" and/or "audio-widgets" properties in order to properly
+parse them. Switch to of_property_present() in order to silence the
+following warning messages during boot:
+  OF: /sound: Read of boolean property 'audio-routing' with a value.
+  OF: /sound: Read of boolean property 'audio-widgets' with a value.
 
-Let's use rcu_dereference_rtnl() in mpls_route_input_rcu() to
-silence the splat.
-
-[0]:
-WARNING: suspicious RCU usage
-6.15.0-rc7-syzkaller-00082-g5cdb2c77c4c3 #0 Not tainted
- ----------------------------
-net/mpls/af_mpls.c:84 suspicious rcu_dereference_check() usage!
-
-other info that might help us debug this:
-
-rcu_scheduler_active = 2, debug_locks = 1
-1 lock held by syz.2.4451/17730:
- #0: ffffffff9012a3e8 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_lock net/core/rtnetlink.c:80 [inline]
- #0: ffffffff9012a3e8 (rtnl_mutex){+.+.}-{4:4}, at: rtnetlink_rcv_msg+0x371/0xe90 net/core/rtnetlink.c:6961
-
-stack backtrace:
-CPU: 1 UID: 0 PID: 17730 Comm: syz.2.4451 Not tainted 6.15.0-rc7-syzkaller-00082-g5cdb2c77c4c3 #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
- lockdep_rcu_suspicious+0x166/0x260 kernel/locking/lockdep.c:6865
- mpls_route_input_rcu+0x1d4/0x200 net/mpls/af_mpls.c:84
- mpls_getroute+0x621/0x1ea0 net/mpls/af_mpls.c:2381
- rtnetlink_rcv_msg+0x3c9/0xe90 net/core/rtnetlink.c:6964
- netlink_rcv_skb+0x16d/0x440 net/netlink/af_netlink.c:2534
- netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
- netlink_unicast+0x53a/0x7f0 net/netlink/af_netlink.c:1339
- netlink_sendmsg+0x8d1/0xdd0 net/netlink/af_netlink.c:1883
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg net/socket.c:727 [inline]
- ____sys_sendmsg+0xa98/0xc70 net/socket.c:2566
- ___sys_sendmsg+0x134/0x1d0 net/socket.c:2620
- __sys_sendmmsg+0x200/0x420 net/socket.c:2709
- __do_sys_sendmmsg net/socket.c:2736 [inline]
- __se_sys_sendmmsg net/socket.c:2733 [inline]
- __x64_sys_sendmmsg+0x9c/0x100 net/socket.c:2733
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x230 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f0a2818e969
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f0a28f52038 EFLAGS: 00000246 ORIG_RAX: 0000000000000133
-RAX: ffffffffffffffda RBX: 00007f0a283b5fa0 RCX: 00007f0a2818e969
-RDX: 0000000000000003 RSI: 0000200000000080 RDI: 0000000000000003
-RBP: 00007f0a28210ab1 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000000 R14: 00007f0a283b5fa0 R15: 00007ffce5e9f268
- </TASK>
-
-Fixes: 0189197f4416 ("mpls: Basic routing support")
-Reported-by: syzbot+8a583bdd1a5cc0b0e068@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68507981.a70a0220.395abc.01ef.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250616201532.1036568-1-kuni1840@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
+Tested-by: Christian Hewitt <christianshewitt@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20250419213448.59647-1-martin.blumenstingl@googlemail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mpls/af_mpls.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/meson/meson-card-utils.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index 3a55a392e0218..bac87a6b7e5b9 100644
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -80,8 +80,8 @@ static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned index)
+--- a/sound/soc/meson/meson-card-utils.c
++++ b/sound/soc/meson/meson-card-utils.c
+@@ -245,7 +245,7 @@ static int meson_card_parse_of_optional(
+ 						    const char *p))
+ {
+ 	/* If property is not provided, don't fail ... */
+-	if (!of_property_read_bool(card->dev->of_node, propname))
++	if (!of_property_present(card->dev->of_node, propname))
+ 		return 0;
  
- 	if (index < net->mpls.platform_labels) {
- 		struct mpls_route __rcu **platform_label =
--			rcu_dereference(net->mpls.platform_label);
--		rt = rcu_dereference(platform_label[index]);
-+			rcu_dereference_rtnl(net->mpls.platform_label);
-+		rt = rcu_dereference_rtnl(platform_label[index]);
- 	}
- 	return rt;
- }
--- 
-2.39.5
-
+ 	/* ... but do fail if it is provided and the parsing fails */
 
 
