@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7253C1C5D46;
-	Mon, 23 Jun 2025 21:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB900223708;
+	Mon, 23 Jun 2025 21:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714382; cv=none; b=KVTVbSSE78ELTfOgO8x4SABf0LPtNPhl5dDRs64gvI/UtwGiE/P1ITXY4CANw9dRVrruXereuRTEc4f/gyjZQWUVmdRtpvYe/M5VmRY9HS6khp5F/rgdGFHFwEFVKFB9d9oyHt1yiOXrNXV+w1j8P+cwb2PdSb+VHw5H59piLTs=
+	t=1750714384; cv=none; b=AZc9euqnTDaspzyZ1NnEKDhhZwA15w4wElbgUXO7QoDq6Q225YJ6dEMYIij51ml7ShWdVqmKTuhD2CN1aSw2LSp0vttmBFhomHmUWTQslE1RGSvQgdkPLAeKTuVJVRb/ACTkksDj4vF6hc59AdQZzLVsovjLn0kBpVFWJ8Wi04g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714382; c=relaxed/simple;
-	bh=4ZVryBueCgyqIErQP+8hTO29/IA7aO9OHUFyB6WGwmE=;
+	s=arc-20240116; t=1750714384; c=relaxed/simple;
+	bh=dljJvUXa4aC1LRyHwjCVcKc+KCk74oj1znmZcgUKyU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2aeSlpjwc8iuU05hxGE7+vcOsWXWuzLLfVC3c8+vIKWx07mqQJbSbmZl9tZ8judC59DjzuQZQgl4oB7DHdU97u2IePOgaSdMyO2+eNvQRdZkzHwU0FrGULFMqp6/y1G44nAMw66ylQjeAeCrVU2/v6p6ZpudnSqpU0ZtSUpUno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yEGev9V6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s93sTDSDuleQ6DN7CU9LtaU08h7ZehzupgVxFYUYiYgFbNjQ6tEp3O1sYp/VQ5iwmO4Xh8wPmMiJJSChIH1+wues0hF0ILi9jTo/KOQJuRY48gc54UMMEGmCZ9CM899C+9ey5Q+nP7p2wqjl8COd5km3MeyI4j9eSoW0gBshAjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzDEjNJ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yEGev9V6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09646C4CEEA;
-	Mon, 23 Jun 2025 21:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzDEjNJ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F2BC4CEEA;
+	Mon, 23 Jun 2025 21:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714382;
-	bh=4ZVryBueCgyqIErQP+8hTO29/IA7aO9OHUFyB6WGwmE=;
+	s=korg; t=1750714384;
+	bh=dljJvUXa4aC1LRyHwjCVcKc+KCk74oj1znmZcgUKyU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yEGev9V6GMUNzQHEME6I5m1TQPy0U6Xcifc0E4eKY/TlS4bHVFYqQgoN8+LSVLIGn
-	 W50j+r60pTr7fwEsiwUf9QNiDW5en/VbQp3Jc5zLUJAsbkpnbUJJS9/2jBWnQ11jiV
-	 Q8P64bZHrxK78zfVnVbK/ehZhSDHtUr+mPnlyapU=
+	b=VzDEjNJ9WNv0Ji9Wk857kgo22uAOiIGjWr8HATBUXjAM+JDNx9Q8EsGaYb5Bvvem+
+	 Y9325oCpBxpwRizFkwoacjOl19HnMswKQ48BAdYV8ZwiTPXyTKnAAqLvacNJFOFo3H
+	 fX2AHMwRiR3r5R3GoIGER8/VukItHSLMpQB+R/AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Dogaru <vdogaru@nvidia.com>,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com,
+	Charalampos Mitrodimas <charmitro@posteo.net>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 387/592] net/mlx5: HWS, Fix IP version decision
-Date: Mon, 23 Jun 2025 15:05:45 +0200
-Message-ID: <20250623130709.646898390@linuxfoundation.org>
+Subject: [PATCH 6.1 169/508] net: tipc: fix refcount warning in tipc_aead_encrypt
+Date: Mon, 23 Jun 2025 15:03:34 +0200
+Message-ID: <20250623130649.434738005@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,136 +49,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vlad Dogaru <vdogaru@nvidia.com>
+From: Charalampos Mitrodimas <charmitro@posteo.net>
 
-[ Upstream commit 5f2f8d8b6800e4fc760c2eccec9b2bd2cacf80cf ]
+[ Upstream commit f29ccaa07cf3d35990f4d25028cc55470d29372b ]
 
-Unify the check for IP version when creating a definer. A given matcher
-is deemed to match on IPv6 if any of the higher order (>31) bits of
-source or destination address mask are set.
+syzbot reported a refcount warning [1] caused by calling get_net() on
+a network namespace that is being destroyed (refcount=0). This happens
+when a TIPC discovery timer fires during network namespace cleanup.
 
-A single packet cannot mix IP versions between source and destination
-addresses, so it makes no sense that they would be decided on
-independently.
+The recently added get_net() call in commit e279024617134 ("net/tipc:
+fix slab-use-after-free Read in tipc_aead_encrypt_done") attempts to
+hold a reference to the network namespace. However, if the namespace
+is already being destroyed, its refcount might be zero, leading to the
+use-after-free warning.
 
-Signed-off-by: Vlad Dogaru <vdogaru@nvidia.com>
-Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250422092540.182091-2-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Replace get_net() with maybe_get_net(), which safely checks if the
+refcount is non-zero before incrementing it. If the namespace is being
+destroyed, return -ENODEV early, after releasing the bearer reference.
+
+[1]: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
+
+Reported-by: syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
+Fixes: e27902461713 ("net/tipc: fix slab-use-after-free Read in tipc_aead_encrypt_done")
+Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250527-net-tipc-warning-v2-1-df3dc398a047@posteo.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/steering/hws/definer.c | 38 ++++++++-----------
- 1 file changed, 16 insertions(+), 22 deletions(-)
+ net/tipc/crypto.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/definer.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/definer.c
-index 293459458cc5f..7dc6d8cd744e1 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/definer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/definer.c
-@@ -509,9 +509,9 @@ static int
- hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 		       u32 *match_param)
- {
--	bool is_s_ipv6, is_d_ipv6, smac_set, dmac_set;
- 	struct mlx5hws_definer_fc *fc = cd->fc;
- 	struct mlx5hws_definer_fc *curr_fc;
-+	bool is_ipv6, smac_set, dmac_set;
- 	u32 *s_ipv6, *d_ipv6;
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index a9c02fac039b5..17e2b09002853 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -818,7 +818,11 @@ static int tipc_aead_encrypt(struct tipc_aead *aead, struct sk_buff *skb,
+ 	}
  
- 	if (HWS_IS_FLD_SET_SZ(match_param, outer_headers.l4_type, 0x2) ||
-@@ -573,10 +573,10 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 			      outer_headers.dst_ipv4_dst_ipv6.ipv6_layout);
+ 	/* Get net to avoid freed tipc_crypto when delete namespace */
+-	get_net(aead->crypto->net);
++	if (!maybe_get_net(aead->crypto->net)) {
++		tipc_bearer_put(b);
++		rc = -ENODEV;
++		goto exit;
++	}
  
- 	/* Assume IPv6 is used if ipv6 bits are set */
--	is_s_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2];
--	is_d_ipv6 = d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
-+	is_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2] ||
-+		  d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
- 
--	if (is_s_ipv6) {
-+	if (is_ipv6) {
- 		/* Handle IPv6 source address */
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_127_96_O,
- 			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_127_96,
-@@ -590,13 +590,6 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_31_0_O,
- 			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
- 			    ipv6_src_outer.ipv6_address_31_0);
--	} else {
--		/* Handle IPv4 source address */
--		HWS_SET_HDR(fc, match_param, IPV4_SRC_O,
--			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
--			    ipv4_src_dest_outer.source_address);
--	}
--	if (is_d_ipv6) {
- 		/* Handle IPv6 destination address */
- 		HWS_SET_HDR(fc, match_param, IPV6_DST_127_96_O,
- 			    outer_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_127_96,
-@@ -611,6 +604,10 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 			    outer_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
- 			    ipv6_dst_outer.ipv6_address_31_0);
- 	} else {
-+		/* Handle IPv4 source address */
-+		HWS_SET_HDR(fc, match_param, IPV4_SRC_O,
-+			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
-+			    ipv4_src_dest_outer.source_address);
- 		/* Handle IPv4 destination address */
- 		HWS_SET_HDR(fc, match_param, IPV4_DST_O,
- 			    outer_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
-@@ -668,9 +665,9 @@ static int
- hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 		       u32 *match_param)
- {
--	bool is_s_ipv6, is_d_ipv6, smac_set, dmac_set;
- 	struct mlx5hws_definer_fc *fc = cd->fc;
- 	struct mlx5hws_definer_fc *curr_fc;
-+	bool is_ipv6, smac_set, dmac_set;
- 	u32 *s_ipv6, *d_ipv6;
- 
- 	if (HWS_IS_FLD_SET_SZ(match_param, inner_headers.l4_type, 0x2) ||
-@@ -731,10 +728,10 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 			      inner_headers.dst_ipv4_dst_ipv6.ipv6_layout);
- 
- 	/* Assume IPv6 is used if ipv6 bits are set */
--	is_s_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2];
--	is_d_ipv6 = d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
-+	is_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2] ||
-+		  d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
- 
--	if (is_s_ipv6) {
-+	if (is_ipv6) {
- 		/* Handle IPv6 source address */
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_127_96_I,
- 			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_127_96,
-@@ -748,13 +745,6 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_31_0_I,
- 			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
- 			    ipv6_src_inner.ipv6_address_31_0);
--	} else {
--		/* Handle IPv4 source address */
--		HWS_SET_HDR(fc, match_param, IPV4_SRC_I,
--			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
--			    ipv4_src_dest_inner.source_address);
--	}
--	if (is_d_ipv6) {
- 		/* Handle IPv6 destination address */
- 		HWS_SET_HDR(fc, match_param, IPV6_DST_127_96_I,
- 			    inner_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_127_96,
-@@ -769,6 +759,10 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 			    inner_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
- 			    ipv6_dst_inner.ipv6_address_31_0);
- 	} else {
-+		/* Handle IPv4 source address */
-+		HWS_SET_HDR(fc, match_param, IPV4_SRC_I,
-+			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
-+			    ipv4_src_dest_inner.source_address);
- 		/* Handle IPv4 destination address */
- 		HWS_SET_HDR(fc, match_param, IPV4_DST_I,
- 			    inner_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
+ 	/* Now, do encrypt */
+ 	rc = crypto_aead_encrypt(req);
 -- 
 2.39.5
 
