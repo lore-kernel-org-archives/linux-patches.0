@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0493D7482;
-	Mon, 23 Jun 2025 21:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2EA2C9D;
+	Mon, 23 Jun 2025 21:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713683; cv=none; b=UnmwMK/aGiP7eK4jkKQcmsqbrZVyy9DmzX9Z5nTifh3Nvf2kxf+nWI3WXdDKrOIfGzJS5S+QokdI3JG+/b/Jz/RBdv7O4yDalwCkBh1arJj1scrlEVC9hNfg/kEuDeqzU3Ks8DYcsxStE5IzDvjciqFG3KG5wg4Gz0JBo5JEt0I=
+	t=1750713685; cv=none; b=b4XZHH5MvUKnC81p+nIY8rfwR6ikHwhtc8l+5DL4lh6PmbQVqUZiwsWCXQpAeaDK5RjmnGMvdPupqGsQcek79UWy1mBdeb+weDNOanozXI/2aOy2WJIW0ycKX2ndOGs6xVXEtz1RR/ZbdAl9iUfOkLosETP7R847j30Y7KNdFmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713683; c=relaxed/simple;
-	bh=tHzp4xf/oWaiFpo1MxFGUdFhIwKmsLr+yefY1iM2gNQ=;
+	s=arc-20240116; t=1750713685; c=relaxed/simple;
+	bh=MwYcWaREeongA1RsS/wbkzS1EfB+n57a0vrNm1LQgt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uI+M/nbwnFR8+vt/wCGrsScdzz91RWmympks/j6OTw6zMLZVgHuzsMHz+WT4p6+jDOSNn/7M7nKgip9aH32PyeKGIL1RMGqr7jcaE6VfuYpMnynVGiuFIs4E8fHdmcuRP1e1wyt4FS5d/C+JbvqJKIdaeDRIpTxMPds9F0ZyS2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ES+17UbT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mAITBxEU7KWG8EFYQ8RJoe1KlkioGKKWFt8wtxbos1F9htiQ8OfCog5dGvE/s8oWJ3h1vTwh+KcBRR5TiG12ADiaQu8PkM19KHDyLqE/WkYiiyJsmdHqCES108pliC6nsvUaEavNP0iSVK7uPba8NFrcsXC/ve0H5qc4zvSfHs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qK4WAB0f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ES+17UbT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C04C4CEEA;
-	Mon, 23 Jun 2025 21:21:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qK4WAB0f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF758C4CEEA;
+	Mon, 23 Jun 2025 21:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713682;
-	bh=tHzp4xf/oWaiFpo1MxFGUdFhIwKmsLr+yefY1iM2gNQ=;
+	s=korg; t=1750713685;
+	bh=MwYcWaREeongA1RsS/wbkzS1EfB+n57a0vrNm1LQgt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ES+17UbTVMswxuONoOOnff6AwzzCS5bYnoTg9hEGexAtKH0pIWtoMiE/fAJk7M5BZ
-	 WIqZiEoaNz/ncRKhjkIcbDmgQmuUERW5V8WgM/Apjus+PvoMbEJzOKj0mMevuVTesi
-	 s4g7rzTUeJRNjvPM5Kw+WwCpzj/IT/qPJY1+ZGww=
+	b=qK4WAB0fqqh/izzH6e5eiccd/fJTYoWsEaA8YO32H7w3soAUCnTI1CNrMriKHXoiQ
+	 pW2wHnFCC08r8xisGUZTKaB0djYq1HtOyoKZFlPDcBebAqEyFlxqjb9u85gQJAiFn/
+	 +cwMsbYRzsKEiZ0hTqirJ+MMl3q2t5CEttrTdCPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 341/592] wifi: ath11k: Fix QMI memory reuse logic
-Date: Mon, 23 Jun 2025 15:04:59 +0200
-Message-ID: <20250623130708.562716337@linuxfoundation.org>
+	Jinliang Zheng <alexjlzheng@tencent.com>,
+	MengEn Sun <mengensun@tencent.com>,
+	Andrea Righi <andrea@betterlinux.com>,
+	Fenggaung Wu <fengguang.wu@intel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 084/290] mm: fix ratelimit_pages update error in dirty_ratio_handler()
+Date: Mon, 23 Jun 2025 15:05:45 +0200
+Message-ID: <20250623130629.513585337@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,74 +50,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Jinliang Zheng <alexjlzheng@tencent.com>
 
-[ Upstream commit cd2e7bae92bd7e65063ab8d04721d2b711ba4cbe ]
+commit f83f362d40ccceb647f7d80eb92206733d76a36b upstream.
 
-Firmware requests 2 segments at first. The first segment is of 6799360
-whose allocation fails due to dma remapping not available. The success
-is returned to firmware. Then firmware asks for 22 smaller segments
-instead of 2 big ones. Those get allocated successfully. At suspend/
-hibernation time, these segments aren't freed as they will be reused
-by firmware after resuming.
+In dirty_ratio_handler(), vm_dirty_bytes must be set to zero before
+calling writeback_set_ratelimit(), as global_dirty_limits() always
+prioritizes the value of vm_dirty_bytes.
 
-After resuming, the firmware asks for the 2 segments again with the
-first segment of 6799360 size. Since chunk->vaddr is not NULL, the
-type and size are compared with the previous type and size to know if
-it can be reused or not. Unfortunately, it is detected that it cannot
-be reused and this first smaller segment is freed. Then we continue to
-allocate 6799360 size memory which fails and ath11k_qmi_free_target_mem_chunk()
-is called which frees the second smaller segment as well. Later success
-is returned to firmware which asks for 22 smaller segments again. But
-as we had freed 2 segments already, we'll allocate the first 2 new
-smaller segments again and reuse the remaining 20. Hence 20 small
-segments are being reused instead of 22.
+It's domain_dirty_limits() that's relevant here, not node_dirty_ok:
 
-Add skip logic when vaddr is set, but size/type don't match. Use the
-same skip and success logic as used when dma_alloc_coherent() fails.
-By skipping, the possibility of resume failure due to kernel failing to
-allocate memory for QMI can be avoided.
+  dirty_ratio_handler
+    writeback_set_ratelimit
+      global_dirty_limits(&dirty_thresh)           <- ratelimit_pages based on dirty_thresh
+        domain_dirty_limits
+          if (bytes)                               <- bytes = vm_dirty_bytes <--------+
+            thresh = f1(bytes)                     <- prioritizes vm_dirty_bytes      |
+          else                                                                        |
+            thresh = f2(ratio)                                                        |
+      ratelimit_pages = f3(dirty_thresh)                                              |
+    vm_dirty_bytes = 0                             <- it's late! ---------------------+
 
-	kernel: ath11k_pci 0000:03:00.0: failed to allocate dma memory for qmi (524288 B type 1)
-	ath11k_pci 0000:03:00.0: failed to allocate qmi target memory: -22
+This causes ratelimit_pages to still use the value calculated based on
+vm_dirty_bytes, which is wrong now.
 
-Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
 
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20250428080242.466901-1-usama.anjum@collabora.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The impact visible to userspace is difficult to capture directly because
+there is no procfs/sysfs interface exported to user space.  However, it
+will have a real impact on the balance of dirty pages.
+
+For example:
+
+1. On default, we have vm_dirty_ratio=40, vm_dirty_bytes=0
+
+2. echo 8192 > dirty_bytes, then vm_dirty_bytes=8192,
+   vm_dirty_ratio=0, and ratelimit_pages is calculated based on
+   vm_dirty_bytes now.
+
+3. echo 20 > dirty_ratio, then since vm_dirty_bytes is not reset to
+   zero when writeback_set_ratelimit() -> global_dirty_limits() ->
+   domain_dirty_limits() is called, reallimit_pages is still calculated
+   based on vm_dirty_bytes instead of vm_dirty_ratio.  This does not
+   conform to the actual intent of the user.
+
+Link: https://lkml.kernel.org/r/20250415090232.7544-1-alexjlzheng@tencent.com
+Fixes: 9d823e8f6b1b ("writeback: per task dirty rate limit")
+Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
+Reviewed-by: MengEn Sun <mengensun@tencent.com>
+Cc: Andrea Righi <andrea@betterlinux.com>
+Cc: Fenggaung Wu <fengguang.wu@intel.com>
+Cc: Jinliang Zheng <alexjlzheng@tencent.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/qmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ mm/page-writeback.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
-index 4f8b08ed1bbc6..83a48a77c53ee 100644
---- a/drivers/net/wireless/ath/ath11k/qmi.c
-+++ b/drivers/net/wireless/ath/ath11k/qmi.c
-@@ -1993,6 +1993,15 @@ static int ath11k_qmi_alloc_target_mem_chunk(struct ath11k_base *ab)
- 			    chunk->prev_size == chunk->size)
- 				continue;
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -541,8 +541,8 @@ static int dirty_ratio_handler(struct ct
  
-+			if (ab->qmi.mem_seg_count <= ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT) {
-+				ath11k_dbg(ab, ATH11K_DBG_QMI,
-+					   "size/type mismatch (current %d %u) (prev %d %u), try later with small size\n",
-+					    chunk->size, chunk->type,
-+					    chunk->prev_size, chunk->prev_type);
-+				ab->qmi.target_mem_delayed = true;
-+				return 0;
-+			}
-+
- 			/* cannot reuse the existing chunk */
- 			dma_free_coherent(ab->dev, chunk->prev_size,
- 					  chunk->vaddr, chunk->paddr);
--- 
-2.39.5
-
+ 	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
+ 	if (ret == 0 && write && vm_dirty_ratio != old_ratio) {
+-		writeback_set_ratelimit();
+ 		vm_dirty_bytes = 0;
++		writeback_set_ratelimit();
+ 	}
+ 	return ret;
+ }
 
 
