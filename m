@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6551C253949;
-	Mon, 23 Jun 2025 13:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDB4253B47;
+	Mon, 23 Jun 2025 13:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684894; cv=none; b=fL4iW2r6+958D2PUkvCnPxt48drbCATDpEnagrL2Mb8jQYIyGjTs7IdbD6KZlYIQx+3a1Zl/Zc3/bUmhwtOsLrnJRuVNYJc2+4VKH9a53F43RFFxlcaNJpFxEfwEy9ic9JMWvvcOkp8mZPXK+nYqcb+SJhjehVrgalN1xfUOdGo=
+	t=1750684897; cv=none; b=pr+/nFWkMx9eB5juiTbNbtXHtNvTEaLfOQkCDphLoFtmtvmQX45g18RSa/FzWASUYUBjm77qC0fPNY8pFlU/m4ICtu8ANt6PJNX2gIa7UyaSSaa8Dih1UFpkTJDledAxiFjvkaMK+cNnNLurLcwuXQmf5HM/hlwSKFbeTIeD5QU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684894; c=relaxed/simple;
-	bh=zh3POx0tiL6/0q3OLoAod3+m7HlauKMMbQ1/vDJYWj8=;
+	s=arc-20240116; t=1750684897; c=relaxed/simple;
+	bh=ukGayRdj0enmx+UFFXdsd/JY5w6/uVfZf8veEDx+3mU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXkVA5z0/N2pibk8304bSPwts5d+cma16ZECXNPngrQCd/U5KbB/RpnVo2C4IWCeoxGBGi8X5m8I7LKpWk6Kz7k7BPsr+d//USw7GdH5PJ0zOfTD+he/g53t8zEMJzjQUcOFzdWy5XS7mwyvG7NNbBJnTAyHI/lxiW9eK3MMUlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqeaVPXY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OCH+pZChj0MD06itxHSgNDmLg+hOxY5LvEkms90tE7ctrn42rZpyBP6M78p559B0kRCoNI9gStZ42ZP/j6J9P8etGqKGp309pksnSKkLTrbOLVqQtTHP80AxRkrc/cJn+A8LpOCPrfYOM4zfZuUDwneU9K179RMx8bi3O2EniDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nexKXbhB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqeaVPXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2C7C4CEEA;
-	Mon, 23 Jun 2025 13:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nexKXbhB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757D7C4CEEA;
+	Mon, 23 Jun 2025 13:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684894;
-	bh=zh3POx0tiL6/0q3OLoAod3+m7HlauKMMbQ1/vDJYWj8=;
+	s=korg; t=1750684896;
+	bh=ukGayRdj0enmx+UFFXdsd/JY5w6/uVfZf8veEDx+3mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tqeaVPXYjQqa1eTGkNsSUEks7ju5GMsi1Xglq6VP5ZseEKRy0Zhb+C2j1znpALqry
-	 +RECczEDb3M1BKO2X+lcRTSSsZdGcEJ5caSCGLQY9ezivwScUFvGZ26d3s0WmKafdX
-	 hADyMzFa2gRFeBGLDVC0OjjAaAy55RM5ffqVnVE0=
+	b=nexKXbhBOMGw5ONCczOqkeTrNJ47oHjV0x+wMIe4dtowkDKCwjvOefnX5iEOnbvwM
+	 Hhxsi5yO3Bmf2rMEnSwCocrxtsR2RSJKL6phXd8RlxBme0528Fd9k1XSIeKL1ry/A4
+	 ITTUEOD8iHfUydvKzZlc6JjKyQAl+Ig7VkGqOCKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.15 187/592] hv_netvsc: fix potential deadlock in netvsc_vf_setxdp()
-Date: Mon, 23 Jun 2025 15:02:25 +0200
-Message-ID: <20250623130704.730125655@linuxfoundation.org>
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 5.10 008/355] thunderbolt: Do not double dequeue a configuration request
+Date: Mon, 23 Jun 2025 15:03:29 +0200
+Message-ID: <20250623130626.990118838@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,98 +46,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saurabh Sengar <ssengar@linux.microsoft.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-commit 3ec523304976648b45a3eef045e97d17122ff1b2 upstream.
+commit 0f73628e9da1ee39daf5f188190cdbaee5e0c98c upstream.
 
-The MANA driver's probe registers netdevice via the following call chain:
+Some of our devices crash in tb_cfg_request_dequeue():
 
-mana_probe()
-  register_netdev()
-    register_netdevice()
+ general protection fault, probably for non-canonical address 0xdead000000000122
 
-register_netdevice() calls notifier callback for netvsc driver,
-holding the netdev mutex via netdev_lock_ops().
+ CPU: 6 PID: 91007 Comm: kworker/6:2 Tainted: G U W 6.6.65
+ RIP: 0010:tb_cfg_request_dequeue+0x2d/0xa0
+ Call Trace:
+ <TASK>
+ ? tb_cfg_request_dequeue+0x2d/0xa0
+ tb_cfg_request_work+0x33/0x80
+ worker_thread+0x386/0x8f0
+ kthread+0xed/0x110
+ ret_from_fork+0x38/0x50
+ ret_from_fork_asm+0x1b/0x30
 
-Further this netvsc notifier callback end up attempting to acquire the
-same lock again in dev_xdp_propagate() leading to deadlock.
+The circumstances are unclear, however, the theory is that
+tb_cfg_request_work() can be scheduled twice for a request:
+first time via frame.callback from ring_work() and second
+time from tb_cfg_request().  Both times kworkers will execute
+tb_cfg_request_dequeue(), which results in double list_del()
+from the ctl->request_queue (the list poison deference hints
+at it: 0xdead000000000122).
 
-netvsc_netdev_event()
-  netvsc_vf_setxdp()
-    dev_xdp_propagate()
+Do not dequeue requests that don't have TB_CFG_REQUEST_ACTIVE
+bit set.
 
-This deadlock was not observed so far because net_shaper_ops was never set,
-and thus the lock was effectively a no-op in this case. Fix this by using
-netif_xdp_propagate() instead of dev_xdp_propagate() to avoid recursive
-locking in this path.
-
-And, since no deadlock is observed on the other path which is via
-netvsc_probe, add the lock exclusivly for that path.
-
-Also, clean up the unregistration path by removing the unnecessary call to
-netvsc_vf_setxdp(), since unregister_netdevice_many_notify() already
-performs this cleanup via dev_xdp_uninstall().
-
-Fixes: 97246d6d21c2 ("net: hold netdev instance lock during ndo_bpf")
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Tested-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Link: https://patch.msgid.link/1748513910-23963-1-git-send-email-ssengar@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hyperv/netvsc_bpf.c |    2 +-
- drivers/net/hyperv/netvsc_drv.c |    4 ++--
- net/core/dev.c                  |    1 +
- 3 files changed, 4 insertions(+), 3 deletions(-)
+ drivers/thunderbolt/ctl.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/hyperv/netvsc_bpf.c
-+++ b/drivers/net/hyperv/netvsc_bpf.c
-@@ -183,7 +183,7 @@ int netvsc_vf_setxdp(struct net_device *
- 	xdp.command = XDP_SETUP_PROG;
- 	xdp.prog = prog;
+--- a/drivers/thunderbolt/ctl.c
++++ b/drivers/thunderbolt/ctl.c
+@@ -131,6 +131,11 @@ static void tb_cfg_request_dequeue(struc
+ 	struct tb_ctl *ctl = req->ctl;
  
--	ret = dev_xdp_propagate(vf_netdev, &xdp);
-+	ret = netif_xdp_propagate(vf_netdev, &xdp);
- 
- 	if (ret && prog)
- 		bpf_prog_put(prog);
---- a/drivers/net/hyperv/netvsc_drv.c
-+++ b/drivers/net/hyperv/netvsc_drv.c
-@@ -2462,8 +2462,6 @@ static int netvsc_unregister_vf(struct n
- 
- 	netdev_info(ndev, "VF unregistering: %s\n", vf_netdev->name);
- 
--	netvsc_vf_setxdp(vf_netdev, NULL);
--
- 	reinit_completion(&net_device_ctx->vf_add);
- 	netdev_rx_handler_unregister(vf_netdev);
- 	netdev_upper_dev_unlink(vf_netdev, ndev);
-@@ -2631,7 +2629,9 @@ static int netvsc_probe(struct hv_device
- 			continue;
- 
- 		netvsc_prepare_bonding(vf_netdev);
-+		netdev_lock_ops(vf_netdev);
- 		netvsc_register_vf(vf_netdev, VF_REG_IN_PROBE);
-+		netdev_unlock_ops(vf_netdev);
- 		__netvsc_vf_setup(net, vf_netdev);
- 		break;
- 	}
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -9863,6 +9863,7 @@ int netif_xdp_propagate(struct net_devic
- 
- 	return dev->netdev_ops->ndo_bpf(dev, bpf);
- }
-+EXPORT_SYMBOL_GPL(netif_xdp_propagate);
- 
- u32 dev_xdp_prog_id(struct net_device *dev, enum bpf_xdp_mode mode)
- {
+ 	mutex_lock(&ctl->request_queue_lock);
++	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
++		mutex_unlock(&ctl->request_queue_lock);
++		return;
++	}
++
+ 	list_del(&req->list);
+ 	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
+ 	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
 
 
