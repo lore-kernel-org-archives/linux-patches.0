@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B417222571;
-	Mon, 23 Jun 2025 21:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1B32628C;
+	Mon, 23 Jun 2025 21:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713842; cv=none; b=C48OOXaditXKr0d13Yw0ee+ID0NxrCF88ceeVnoZSZPf7hiH2QSKz9nrQ/Mhv0PjpTFbTG8gBf0x1hL2w87Qu4Hu3t8o0JFxuIM4W1IKb9+b9+2E64xbX5RKPJiag8EZDXRrXU2fxVvqmHZbjZu8xbpYstL7UXjCuwbSlLTCEIQ=
+	t=1750713845; cv=none; b=uNiQfKDdbkhfcFSTHR6EpOnEgkMV1JS79yM5gxIZdEkbGJzLwXNNdDCHAcg5Jo+JDBRWb3MSpyUkQP6+iCxKjccr33ei/MJ9RZktppLli/wWAszY7GfRkGS6P8E51E+ONYA8Oowkvi71FjA013y+7K8yeCEEj2bgG8JJ3NrgQMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713842; c=relaxed/simple;
-	bh=UghdCmTu+Ne2QTDKV3sR7QW2FZcqlr9UktV0qVzJEso=;
+	s=arc-20240116; t=1750713845; c=relaxed/simple;
+	bh=KPnpjJphfUVIqvRRyOsV1aAg1p2r099oEeyt/z3EnCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTzlLQ2KIuy7fWBZLi1AHjBfAIDkFh/WRFYSepKidPHxMFNV0NGEFVE0AJ/fc6wgyrrLRgiZs04hZRXg2ylOEB76CbT9qdasajTRajlwR14cTdEFZZspZBc8kDU7BuTpIgvv+bfWE2JcqVH4RAdOEWwOyNXnkQD2KiUoMnZZQEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVRScM0Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pijDWGr3R8eAwld43eZ6OshiEhoXKtnJ51JqurABbslGZ/J7wEOOiL09aLvSVCrHMXjiZI6dolleWerrQUrG4wenTQIZOsqXWaYd/BlftbenmolVAL7wdnW/TH4Se0M0fFTYXpJ2khDEFIjkOh+z2aB6uOigMPx4Udz/ihE1JNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHtduYUb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVRScM0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23956C4CEED;
-	Mon, 23 Jun 2025 21:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHtduYUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9916FC4CEEA;
+	Mon, 23 Jun 2025 21:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713842;
-	bh=UghdCmTu+Ne2QTDKV3sR7QW2FZcqlr9UktV0qVzJEso=;
+	s=korg; t=1750713844;
+	bh=KPnpjJphfUVIqvRRyOsV1aAg1p2r099oEeyt/z3EnCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xVRScM0YnVA2yq5JxWhV9/QBTbRtGRrjjC4ypua45oXQKZLOj0CiP0Ekd3CgiPrNk
-	 MAPMOcbYgH/4n0kJugrKNWaMQ6A7f4CVMvMfq1jJWgC8B7dALv4UXUf8R8M8KgsZu4
-	 Ux+XdNg6T6tJGw4o3PvJs00UJTMCqe0FJaQM+s3A=
+	b=VHtduYUbJxn4nqCEolix3AofiMwWehLDlQRIeMYn/yq8Ko+J0xl9aSSX4LQsY/tXh
+	 pcurBYGx2+tELw82gyTCk4v4OrAxLDSXuCB2aeX0sDX7DlLWmPh0YuHFnphJSsYpTF
+	 e4WQjRp/fLNZ4qBnhHfNn+N+Qt+40eFcZk8y9d1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 152/411] net: Fix TOCTOU issue in sk_is_readable()
-Date: Mon, 23 Jun 2025 15:04:56 +0200
-Message-ID: <20250623130637.457376343@linuxfoundation.org>
+Subject: [PATCH 6.1 150/508] rtc: sh: assign correct interrupts with DT
+Date: Mon, 23 Jun 2025 15:03:15 +0200
+Message-ID: <20250623130648.972893089@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,54 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 2660a544fdc0940bba15f70508a46cf9a6491230 ]
+[ Upstream commit 8f2efdbc303fe7baa83843d3290dd6ea5ba3276c ]
 
-sk->sk_prot->sock_is_readable is a valid function pointer when sk resides
-in a sockmap. After the last sk_psock_put() (which usually happens when
-socket is removed from sockmap), sk->sk_prot gets restored and
-sk->sk_prot->sock_is_readable becomes NULL.
+The DT bindings for this driver define the interrupts in the order as
+they are numbered in the interrupt controller. The old platform_data,
+however, listed them in a different order. So, for DT based platforms,
+they are mixed up. Assign them specifically for DT, so we can keep the
+bindings stable. After the fix, 'rtctest' passes again on the Renesas
+Genmai board (RZ-A1 / R7S72100).
 
-This makes sk_is_readable() racy, if the value of sk->sk_prot is reloaded
-after the initial check. Which in turn may lead to a null pointer
-dereference.
-
-Ensure the function pointer does not turn NULL after the check.
-
-Fixes: 8934ce2fd081 ("bpf: sockmap redirect ingress support")
-Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250609-skisreadable-toctou-v1-1-d0dfb2d62c37@rbox.co
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: dab5aec64bf5 ("rtc: sh: add support for rza series")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20250227134256.9167-11-wsa+renesas@sang-engineering.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-sh.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 0461890f10ae7..fd68fd0adae7f 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2935,8 +2935,11 @@ int sock_bind_add(struct sock *sk, struct sockaddr *addr, int addr_len);
+diff --git a/drivers/rtc/rtc-sh.c b/drivers/rtc/rtc-sh.c
+index cd146b5741431..341b1b776e1a3 100644
+--- a/drivers/rtc/rtc-sh.c
++++ b/drivers/rtc/rtc-sh.c
+@@ -485,9 +485,15 @@ static int __init sh_rtc_probe(struct platform_device *pdev)
+ 		return -ENOENT;
+ 	}
  
- static inline bool sk_is_readable(struct sock *sk)
- {
--	if (sk->sk_prot->sock_is_readable)
--		return sk->sk_prot->sock_is_readable(sk);
-+	const struct proto *prot = READ_ONCE(sk->sk_prot);
-+
-+	if (prot->sock_is_readable)
-+		return prot->sock_is_readable(sk);
-+
- 	return false;
- }
- #endif	/* _SOCK_H */
+-	rtc->periodic_irq = ret;
+-	rtc->carry_irq = platform_get_irq(pdev, 1);
+-	rtc->alarm_irq = platform_get_irq(pdev, 2);
++	if (!pdev->dev.of_node) {
++		rtc->periodic_irq = ret;
++		rtc->carry_irq = platform_get_irq(pdev, 1);
++		rtc->alarm_irq = platform_get_irq(pdev, 2);
++	} else {
++		rtc->alarm_irq = ret;
++		rtc->periodic_irq = platform_get_irq(pdev, 1);
++		rtc->carry_irq = platform_get_irq(pdev, 2);
++	}
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_IO, 0);
+ 	if (!res)
 -- 
 2.39.5
 
