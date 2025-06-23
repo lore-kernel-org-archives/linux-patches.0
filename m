@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007412417C3;
-	Mon, 23 Jun 2025 13:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA4124FC09;
+	Mon, 23 Jun 2025 13:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684387; cv=none; b=n3wiaRBkGQwpkUwkILEAAAhByVjO4N1pPFDhZjIurWmtWccitrUKtM4PAjzCNOugknP59aRea07jzY9ETJuV5HuB4P8sORGONF4NXV3ewbrTlxu1FSQKcLtupPcKdaWR7eMl7A9BCR24OzLjzSpf0YRqAACopw1v/XtEbOXFPH4=
+	t=1750684389; cv=none; b=s0SEVTkwcg12iiwesVdD8/VIlSxCIAawzlB0SXErJhMQ1IvqXxgWDLOjF3eQNofklErx5O+xq9A7qb0tBOEStJmOq1gHm59+q0Sg+FZyvWoaix5H132xh1NHoM2yL0htdB6fmXMs41e7jC2FEoX0xtA2SBcR4oPmglcN2Yc1sLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684387; c=relaxed/simple;
-	bh=NE7i7V6WfdJxReti5v52Axj6NUekTWLB3eFLTzP0g+w=;
+	s=arc-20240116; t=1750684389; c=relaxed/simple;
+	bh=KHuF/E7bDK4vsMjK/bnxKBRtM9A9RwBYidUBsC41gzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1nNnBb8+YU4R7OLJ7WcCSLgdXLrVg59goySkFP+3tAuuOY0CtMdJT8mrkzvDFCozUw0iHzqpwXfiKkSGyF+5Dalw6rTVgjnirNh5lG2mp/Z7hDW7SLuGWxycDg5LiwwJa3yDFCMADIVzls6L5oou3wD/yEeObE+cqS+kFA2PCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0IC5Ve+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=od1nSc2DDBY78+KdUMPi+IEGOQrU9hAqKNiF0Y305eFbq29hxPL1YPAbcS6eru2gX/DsKtbCVP3v2LQoWwlhxmN919ZrVcwYh4Ho6Cd0ycEAGRRkCh/fw27lKdus8jeBh9Oy2zv2913iarU0o4OMRLkvUPqSQ2yApXkt3E1BLj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpM0FVwN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0IC5Ve+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87ECBC4CEEA;
-	Mon, 23 Jun 2025 13:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpM0FVwN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D99C4CEEA;
+	Mon, 23 Jun 2025 13:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684386;
-	bh=NE7i7V6WfdJxReti5v52Axj6NUekTWLB3eFLTzP0g+w=;
+	s=korg; t=1750684389;
+	bh=KHuF/E7bDK4vsMjK/bnxKBRtM9A9RwBYidUBsC41gzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W0IC5Ve+TWCzIN6KDJ2mh81BNbDUA+kzcGTbGXI+GfEMOm+iaII0Hr2YPInZa5HxI
-	 SFqNLcc6B6mdbioBQb02DkRAlkqTCwWf0owU34xSvpit9Ak/RkN3xM7fp0g/slMvY/
-	 m789Zcv2+H0Haphg2k03kGeVo/HWT5P+KeIMRD44=
+	b=FpM0FVwNNzEn3XiyKFTz9EpyfZWBwJ9YYdhe3CmSFJviyIFvOKG3apWA4i1sm6Gz0
+	 t6f7H7DMqgofyInJT7Oxvf19B0e1sXiQwRqVFzRLz8TN3bbd13EnRtWDgIq9MgHyUB
+	 qoOdAyMkVuofu8V2jwY4WUI6ps9LCjOqEZzzDL0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqing Pan <quic_miaoqing@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.15 049/592] wifi: ath12k: fix ring-buffer corruption
-Date: Mon, 23 Jun 2025 15:00:07 +0200
-Message-ID: <20250623130701.413660095@linuxfoundation.org>
+	syzbot+de24c3fe3c4091051710@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.15 050/592] jbd2: fix data-race and null-ptr-deref in jbd2_journal_dirty_metadata()
+Date: Mon, 23 Jun 2025 15:00:08 +0200
+Message-ID: <20250623130701.439725218@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -51,99 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 6b67d2cf14ea997061f61e9c8afd4e1c0f22acb9 upstream.
+commit af98b0157adf6504fade79b3e6cb260c4ff68e37 upstream.
 
-Users of the Lenovo ThinkPad X13s have reported that Wi-Fi sometimes
-breaks and the log fills up with errors like:
+Since handle->h_transaction may be a NULL pointer, so we should change it
+to call is_handle_aborted(handle) first before dereferencing it.
 
-    ath11k_pci 0006:01:00.0: HTC Rx: insufficient length, got 1484, expected 1492
-    ath11k_pci 0006:01:00.0: HTC Rx: insufficient length, got 1460, expected 1484
+And the following data-race was reported in my fuzzer:
 
-which based on a quick look at the ath11k driver seemed to indicate some
-kind of ring-buffer corruption.
+==================================================================
+BUG: KCSAN: data-race in jbd2_journal_dirty_metadata / jbd2_journal_dirty_metadata
 
-Miaoqing Pan tracked it down to the host seeing the updated destination
-ring head pointer before the updated descriptor, and the error handling
-for that in turn leaves the ring buffer in an inconsistent state.
+write to 0xffff888011024104 of 4 bytes by task 10881 on cpu 1:
+ jbd2_journal_dirty_metadata+0x2a5/0x770 fs/jbd2/transaction.c:1556
+ __ext4_handle_dirty_metadata+0xe7/0x4b0 fs/ext4/ext4_jbd2.c:358
+ ext4_do_update_inode fs/ext4/inode.c:5220 [inline]
+ ext4_mark_iloc_dirty+0x32c/0xd50 fs/ext4/inode.c:5869
+ __ext4_mark_inode_dirty+0xe1/0x450 fs/ext4/inode.c:6074
+ ext4_dirty_inode+0x98/0xc0 fs/ext4/inode.c:6103
+....
 
-While this has not yet been observed with ath12k, the ring-buffer
-implementation is very similar to the ath11k one and it suffers from the
-same bugs.
+read to 0xffff888011024104 of 4 bytes by task 10880 on cpu 0:
+ jbd2_journal_dirty_metadata+0xf2/0x770 fs/jbd2/transaction.c:1512
+ __ext4_handle_dirty_metadata+0xe7/0x4b0 fs/ext4/ext4_jbd2.c:358
+ ext4_do_update_inode fs/ext4/inode.c:5220 [inline]
+ ext4_mark_iloc_dirty+0x32c/0xd50 fs/ext4/inode.c:5869
+ __ext4_mark_inode_dirty+0xe1/0x450 fs/ext4/inode.c:6074
+ ext4_dirty_inode+0x98/0xc0 fs/ext4/inode.c:6103
+....
 
-Add the missing memory barrier to make sure that the descriptor is read
-after the head pointer to address the root cause of the corruption while
-fixing up the error handling in case there are ever any (ordering) bugs
-on the device side.
+value changed: 0x00000000 -> 0x00000001
+==================================================================
 
-Note that the READ_ONCE() are only needed to avoid compiler mischief in
-case the ring-buffer helpers are ever inlined.
+This issue is caused by missing data-race annotation for jh->b_modified.
+Therefore, the missing annotation needs to be added.
 
-Tested-on: WCN7850 hw2.0 WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Cc: stable@vger.kernel.org	# 6.3
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218623
-Link: https://lore.kernel.org/20250310010217.3845141-3-quic_miaoqing@quicinc.com
-Cc: Miaoqing Pan <quic_miaoqing@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
-Link: https://patch.msgid.link/20250321095219.19369-1-johan+linaro@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reported-by: syzbot+de24c3fe3c4091051710@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=de24c3fe3c4091051710
+Fixes: 6e06ae88edae ("jbd2: speedup jbd2_journal_dirty_metadata()")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20250514130855.99010-1-aha310510@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/ce.c  |   11 +++++------
- drivers/net/wireless/ath/ath12k/hal.c |    4 ++--
- 2 files changed, 7 insertions(+), 8 deletions(-)
+ fs/jbd2/transaction.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/ath/ath12k/ce.c
-+++ b/drivers/net/wireless/ath/ath12k/ce.c
-@@ -343,11 +343,10 @@ static int ath12k_ce_completed_recv_next
- 		goto err;
+--- a/fs/jbd2/transaction.c
++++ b/fs/jbd2/transaction.c
+@@ -1509,7 +1509,7 @@ int jbd2_journal_dirty_metadata(handle_t
+ 				jh->b_next_transaction == transaction);
+ 		spin_unlock(&jh->b_state_lock);
+ 	}
+-	if (jh->b_modified == 1) {
++	if (data_race(jh->b_modified == 1)) {
+ 		/* If it's in our transaction it must be in BJ_Metadata list. */
+ 		if (data_race(jh->b_transaction == transaction &&
+ 		    jh->b_jlist != BJ_Metadata)) {
+@@ -1528,7 +1528,6 @@ int jbd2_journal_dirty_metadata(handle_t
+ 		goto out;
  	}
  
-+	/* Make sure descriptor is read after the head pointer. */
-+	dma_rmb();
+-	journal = transaction->t_journal;
+ 	spin_lock(&jh->b_state_lock);
+ 
+ 	if (is_handle_aborted(handle)) {
+@@ -1543,6 +1542,8 @@ int jbd2_journal_dirty_metadata(handle_t
+ 		goto out_unlock_bh;
+ 	}
+ 
++	journal = transaction->t_journal;
 +
- 	*nbytes = ath12k_hal_ce_dst_status_get_length(desc);
--	if (*nbytes == 0) {
--		ret = -EIO;
--		goto err;
--	}
- 
- 	*skb = pipe->dest_ring->skb[sw_index];
- 	pipe->dest_ring->skb[sw_index] = NULL;
-@@ -380,8 +379,8 @@ static void ath12k_ce_recv_process_cb(st
- 		dma_unmap_single(ab->dev, ATH12K_SKB_RXCB(skb)->paddr,
- 				 max_nbytes, DMA_FROM_DEVICE);
- 
--		if (unlikely(max_nbytes < nbytes)) {
--			ath12k_warn(ab, "rxed more than expected (nbytes %d, max %d)",
-+		if (unlikely(max_nbytes < nbytes || nbytes == 0)) {
-+			ath12k_warn(ab, "unexpected rx length (nbytes %d, max %d)",
- 				    nbytes, max_nbytes);
- 			dev_kfree_skb_any(skb);
- 			continue;
---- a/drivers/net/wireless/ath/ath12k/hal.c
-+++ b/drivers/net/wireless/ath/ath12k/hal.c
-@@ -1943,7 +1943,7 @@ u32 ath12k_hal_ce_dst_status_get_length(
- {
- 	u32 len;
- 
--	len = le32_get_bits(desc->flags, HAL_CE_DST_STATUS_DESC_FLAGS_LEN);
-+	len = le32_get_bits(READ_ONCE(desc->flags), HAL_CE_DST_STATUS_DESC_FLAGS_LEN);
- 	desc->flags &= ~cpu_to_le32(HAL_CE_DST_STATUS_DESC_FLAGS_LEN);
- 
- 	return len;
-@@ -2113,7 +2113,7 @@ void ath12k_hal_srng_access_begin(struct
- 		srng->u.src_ring.cached_tp =
- 			*(volatile u32 *)srng->u.src_ring.tp_addr;
- 	else
--		srng->u.dst_ring.cached_hp = *srng->u.dst_ring.hp_addr;
-+		srng->u.dst_ring.cached_hp = READ_ONCE(*srng->u.dst_ring.hp_addr);
- }
- 
- /* Update cached ring head/tail pointers to HW. ath12k_hal_srng_access_begin()
+ 	if (jh->b_modified == 0) {
+ 		/*
+ 		 * This buffer's got modified and becoming part
 
 
