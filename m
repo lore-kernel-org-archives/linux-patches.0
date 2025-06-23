@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E5A2192EC;
-	Mon, 23 Jun 2025 22:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A6915ADB4;
+	Mon, 23 Jun 2025 22:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717319; cv=none; b=rH21vD6W9tF4MQLaUT9x++U4pzP8IvhKPvslAnHzEGbnmHcoJUMDi0i96yXGozZKlfw45Yk1p6jTroWgnJK0UoLY1OkS9zJxp6tyjgpeDDZOVSQn16UbCV2TPkueVdKwSHxQLKGL3AeduAm4lW+5bESNd9ZxmiQ6K1DfC803Z2M=
+	t=1750717321; cv=none; b=lsCH61YI+UKoY9kmU1og3LQzndGucYPUWS6LhnrYJVnqqRKqpwF4/e6K+8xkjI91k15opgjo7GtZ/wcPh07NbROrYhNPgjXoSD1zPs2BThO/Gi480tAT6UgsyzAKJsadBZzzUB6Vbwm1unGT5qgRjvJJFFMhPGKWX8GMxe3BKnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717319; c=relaxed/simple;
-	bh=uVTuyiQuPwe9etGrICXKt4zXdgKTK3MJsHKnRxwqJzw=;
+	s=arc-20240116; t=1750717321; c=relaxed/simple;
+	bh=HeItyzJhSukG4FuwIbyofLOOjRtwRtTyNlfVktW2fgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/m5520NgJbZaz3pTOuzWHuFRqSbyKNmXNNiq8hURvRtc5kAjNQ6u1eZZb8t7EHOMrnQn8IzVR6JARD/8eMHiRGf/zv3w/ejzZ8Clf9Sk3BNReou9A6jEA1J55u7l9j5Bbe8cCuVVJ88CDzNCc0EgUpo2ZLKcP1wDmS5cHjDjyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s626Xl35; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lm4IpIBef9uJprLr+HdfQ8kA002Sf79dt4PxnwNsnYufsctaQ4XyfQPkZ1y20DKoU2dnZs9Psprf5UdijLVeHwad+VwgUsl1xhuZ7YH2Aclqw5AHgEzWSbzxEa4cyAVhT6IOSOqpRfMCeym5pH7TzxkGcYMS3WHD7mvAoSHFCsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyVACwLZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s626Xl35"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D057C4CEEA;
-	Mon, 23 Jun 2025 22:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyVACwLZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1772C4CEEA;
+	Mon, 23 Jun 2025 22:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717318;
-	bh=uVTuyiQuPwe9etGrICXKt4zXdgKTK3MJsHKnRxwqJzw=;
+	s=korg; t=1750717321;
+	bh=HeItyzJhSukG4FuwIbyofLOOjRtwRtTyNlfVktW2fgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s626Xl35KDW3SPWaLiSdRkmo4DdE0EVKcwaQWHuhwKM5YXsq43YBlMY0uUOUv9y9Q
-	 MmcKsLUsAT31JVmvGLG93UOZcPFCN7tk503uGgzNRhrIpw2k7zQct/DDpaY4bKtdjF
-	 bEXYS6/6bl83BQceyz5X+WRIWMGnZOa6T6dpIF+Q=
+	b=JyVACwLZofPb/eeZhosqii4IQVjH6qS5cEwdqOxcm43XbU1GDNZ5t/sPZNtseHhV3
+	 taii6mNwJhBdwE3k2IVoR/Mr3ICOfbySzU44zdXK4/RfsMsowFdo0dpYE+BPxwdkbH
+	 QV8eCpfqDQGm6roV9nPM6XXv+31xKkDPnqe1nQbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Sanders <jsanders.devel@gmail.com>,
-	Valentin Kleibel <valentin@vrvis.at>,
-	Jens Axboe <axboe@kernel.dk>,
+	David Ahern <dsahern@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 365/414] aoe: clean device rq_list in aoedev_downdev()
-Date: Mon, 23 Jun 2025 15:08:22 +0200
-Message-ID: <20250623130651.088647050@linuxfoundation.org>
+Subject: [PATCH 6.1 404/508] ipv4/route: Use this_cpu_inc() for stats on PREEMPT_RT
+Date: Mon, 23 Jun 2025 15:07:29 +0200
+Message-ID: <20250623130655.179822277@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Sanders <jsanders.devel@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 7f90d45e57cb2ef1f0adcaf925ddffdfc5e680ca ]
+[ Upstream commit 1c0829788a6e6e165846b9bedd0b908ef16260b6 ]
 
-An aoe device's rq_list contains accepted block requests that are
-waiting to be transmitted to the aoe target. This queue was added as
-part of the conversion to blk_mq. However, the queue was not cleaned out
-when an aoe device is downed which caused blk_mq_freeze_queue() to sleep
-indefinitely waiting for those requests to complete, causing a hang. This
-fix cleans out the queue before calling blk_mq_freeze_queue().
+The statistics are incremented with raw_cpu_inc() assuming it always
+happens with bottom half disabled. Without per-CPU locking in
+local_bh_disable() on PREEMPT_RT this is no longer true.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=212665
-Fixes: 3582dd291788 ("aoe: convert aoeblk to blk-mq")
-Signed-off-by: Justin Sanders <jsanders.devel@gmail.com>
-Link: https://lore.kernel.org/r/20250610170600.869-1-jsanders.devel@gmail.com
-Tested-By: Valentin Kleibel <valentin@vrvis.at>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Use this_cpu_inc() on PREEMPT_RT for the increment to not worry about
+preemption.
+
+Cc: David Ahern <dsahern@kernel.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20250512092736.229935-4-bigeasy@linutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/aoe/aoedev.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/ipv4/route.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/block/aoe/aoedev.c b/drivers/block/aoe/aoedev.c
-index 3523dd82d7a00..280679bde3a50 100644
---- a/drivers/block/aoe/aoedev.c
-+++ b/drivers/block/aoe/aoedev.c
-@@ -198,6 +198,7 @@ aoedev_downdev(struct aoedev *d)
- {
- 	struct aoetgt *t, **tt, **te;
- 	struct list_head *head, *pos, *nx;
-+	struct request *rq, *rqnext;
- 	int i;
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 4574dcba9f193..8701081010173 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -192,7 +192,11 @@ const __u8 ip_tos2prio[16] = {
+ EXPORT_SYMBOL(ip_tos2prio);
  
- 	d->flags &= ~DEVFL_UP;
-@@ -223,6 +224,13 @@ aoedev_downdev(struct aoedev *d)
- 	/* clean out the in-process request (if any) */
- 	aoe_failip(d);
+ static DEFINE_PER_CPU(struct rt_cache_stat, rt_cache_stat);
++#ifndef CONFIG_PREEMPT_RT
+ #define RT_CACHE_STAT_INC(field) raw_cpu_inc(rt_cache_stat.field)
++#else
++#define RT_CACHE_STAT_INC(field) this_cpu_inc(rt_cache_stat.field)
++#endif
  
-+	/* clean out any queued block requests */
-+	list_for_each_entry_safe(rq, rqnext, &d->rq_list, queuelist) {
-+		list_del_init(&rq->queuelist);
-+		blk_mq_start_request(rq);
-+		blk_mq_end_request(rq, BLK_STS_IOERR);
-+	}
-+
- 	/* fast fail all pending I/O */
- 	if (d->blkq) {
- 		/* UP is cleared, freeze+quiesce to insure all are errored */
+ #ifdef CONFIG_PROC_FS
+ static void *rt_cache_seq_start(struct seq_file *seq, loff_t *pos)
 -- 
 2.39.5
 
