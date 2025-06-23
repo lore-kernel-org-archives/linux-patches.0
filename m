@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1AF221F34;
-	Mon, 23 Jun 2025 21:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE401E8324;
+	Mon, 23 Jun 2025 21:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713209; cv=none; b=juh6fgYmfDzKrdS2MG2AA34ZzNTmAQH6oC6CeCV+keMqs9pvzplurSOVjoL5DPJUxgP2EyhI+fbNEecZWnfcMK1zzF8E+83YAgEy3HaWLuhGEnwLIwHuDh31LI5fim8I80uVQR569BZgi8FPZHUGw3ls8Tk4JWmjV3XJCJyrDLQ=
+	t=1750713212; cv=none; b=NHtdTw4F6rAmmiqJHCTGJn7ej+Cv+fuV/o+TIr+FzwndoFgFca4wk3bjDlYpFdOOQCcJtdJBz1tLV2qauMSj+OYtoC5mOjhjwsJ53Mv5MkspQk9K6NfuFJMwwDzAEWNU9Bi5lTDxNUH/IcOX3cyjhTJt81t1qsQ4H6CgxjJRCkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713209; c=relaxed/simple;
-	bh=pCSuUchl7TkKHEy25ai5t6KZ+wpmSks7wF8YXm/v8r8=;
+	s=arc-20240116; t=1750713212; c=relaxed/simple;
+	bh=EuFRsvYhstIgU8hp7+PQGXiyIcwXcD0wLjfAWtmOHz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=InJRHnGni8sSwkw8x7nndXlscUcmuZc5DwTBkhkCkeMdne1YESjOBRebgA9Y55szoeZg5bbp+LU9Uf8bwnGMh3T6LnMrZyoAvFczwXKcYy9YLe8DRGeN0gSxMeUBtkHlBWRsP5RiIkj4nxGNMj9Zuk9LFycNlTuaDj/HsCJrfdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6QhyzYp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R6ZsDEyo1AdA+oqbhJ9C1abWABk/IXkVUzQHSlQ5VU/5jCp8VaZDPpLHSr8i/nXEqGH6FQ4xQ94Y59/zf1e+wDOH6eDY1IOlnjr/7BvODG2RVR6Au6LoiIdZILoVrFepKyqx4CTN/IXCMz6HBeAaXwNBHkU2B2IP1wHlja1EOVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgD/pLQz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6QhyzYp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CD4C4CEEA;
-	Mon, 23 Jun 2025 21:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgD/pLQz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94DCAC4CEED;
+	Mon, 23 Jun 2025 21:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713209;
-	bh=pCSuUchl7TkKHEy25ai5t6KZ+wpmSks7wF8YXm/v8r8=;
+	s=korg; t=1750713211;
+	bh=EuFRsvYhstIgU8hp7+PQGXiyIcwXcD0wLjfAWtmOHz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6QhyzYppftl3R2gSGJFmw8siSoH+l0tohNxVxQju1ABhqDoMf1qJGk+DiHZ9FouS
-	 W6NG46F2dNO41EdvqFhuWtkIxoxP2N/pa2iMcu0FhQPwWLB8a7HobLzrqNz6jNQGH4
-	 lpYzzmt5Rm+L5MxGqJBZe1vU+pNQ1mtZNBiIZneI=
+	b=fgD/pLQzs3NM+xWF28dijbPyBK2cBISrkthH7qbCAah85lj9mQTJQHD469R5Kui2k
+	 j6ing0qugSJeytCMXeMoItlU2Ao3o4n8kzkOddQjwiD0ImXHQVGuSf8xX5sTg0naCW
+	 Pka3LcDYMYc5a5KuU2bF5mai97ZXMHqS6WaA1zjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 032/414] nfsd: Initialize ssc before laundromat_work to prevent NULL dereference
-Date: Mon, 23 Jun 2025 15:02:49 +0200
-Message-ID: <20250623130642.829629561@linuxfoundation.org>
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 084/508] s390/bpf: Store backchain even for leaf progs
+Date: Mon, 23 Jun 2025 15:02:09 +0200
+Message-ID: <20250623130647.308999558@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +47,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-commit b31da62889e6d610114d81dc7a6edbcaa503fcf8 upstream.
+[ Upstream commit 5f55f2168432298f5a55294831ab6a76a10cb3c3 ]
 
-In nfs4_state_start_net(), laundromat_work may access nfsd_ssc through
-nfs4_laundromat -> nfsd4_ssc_expire_umount. If nfsd_ssc isn't initialized,
-this can cause NULL pointer dereference.
+Currently a crash in a leaf prog (caused by a bug) produces the
+following call trace:
 
-Normally the delayed start of laundromat_work allows sufficient time for
-nfsd_ssc initialization to complete. However, when the kernel waits too
-long for userspace responses (e.g. in nfs4_state_start_net ->
-nfsd4_end_grace -> nfsd4_record_grace_done -> nfsd4_cld_grace_done ->
-cld_pipe_upcall -> __cld_pipe_upcall -> wait_for_completion path), the
-delayed work may start before nfsd_ssc initialization finishes.
+     [<000003ff600ebf00>] bpf_prog_6df0139e1fbf2789_fentry+0x20/0x78
+     [<0000000000000000>] 0x0
 
-Fix this by moving nfsd_ssc initialization before starting laundromat_work.
+This is because leaf progs do not store backchain. Fix by making all
+progs do it. This is what GCC and Clang-generated code does as well.
+Now the call trace looks like this:
 
-Fixes: f4e44b393389 ("NFSD: delay unmount source's export after inter-server copy completed.")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+     [<000003ff600eb0f2>] bpf_prog_6df0139e1fbf2789_fentry+0x2a/0x80
+     [<000003ff600ed096>] bpf_trampoline_201863462940+0x96/0xf4
+     [<000003ff600e3a40>] bpf_prog_05f379658fdd72f2_classifier_0+0x58/0xc0
+     [<000003ffe0aef070>] bpf_test_run+0x210/0x390
+     [<000003ffe0af0dc2>] bpf_prog_test_run_skb+0x25a/0x668
+     [<000003ffe038a90e>] __sys_bpf+0xa46/0xdb0
+     [<000003ffe038ad0c>] __s390x_sys_bpf+0x44/0x50
+     [<000003ffe0defea8>] __do_syscall+0x150/0x280
+     [<000003ffe0e01d5c>] system_call+0x74/0x98
+
+Fixes: 054623105728 ("s390/bpf: Add s390x eBPF JIT compiler backend")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250512122717.54878-1-iii@linux.ibm.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/s390/net/bpf_jit_comp.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -406,13 +406,13 @@ static int nfsd_startup_net(struct net *
- 	if (ret)
- 		goto out_filecache;
+diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
+index 8623863935576..a9dbf74752586 100644
+--- a/arch/s390/net/bpf_jit_comp.c
++++ b/arch/s390/net/bpf_jit_comp.c
+@@ -543,17 +543,15 @@ static void bpf_jit_prologue(struct bpf_jit *jit, u32 stack_depth)
+ 	}
+ 	/* Setup stack and backchain */
+ 	if (is_first_pass(jit) || (jit->seen & SEEN_STACK)) {
+-		if (is_first_pass(jit) || (jit->seen & SEEN_FUNC))
+-			/* lgr %w1,%r15 (backchain) */
+-			EMIT4(0xb9040000, REG_W1, REG_15);
++		/* lgr %w1,%r15 (backchain) */
++		EMIT4(0xb9040000, REG_W1, REG_15);
+ 		/* la %bfp,STK_160_UNUSED(%r15) (BPF frame pointer) */
+ 		EMIT4_DISP(0x41000000, BPF_REG_FP, REG_15, STK_160_UNUSED);
+ 		/* aghi %r15,-STK_OFF */
+ 		EMIT4_IMM(0xa70b0000, REG_15, -(STK_OFF + stack_depth));
+-		if (is_first_pass(jit) || (jit->seen & SEEN_FUNC))
+-			/* stg %w1,152(%r15) (backchain) */
+-			EMIT6_DISP_LH(0xe3000000, 0x0024, REG_W1, REG_0,
+-				      REG_15, 152);
++		/* stg %w1,152(%r15) (backchain) */
++		EMIT6_DISP_LH(0xe3000000, 0x0024, REG_W1, REG_0,
++			      REG_15, 152);
+ 	}
+ }
  
-+#ifdef CONFIG_NFSD_V4_2_INTER_SSC
-+	nfsd4_ssc_init_umount_work(nn);
-+#endif
- 	ret = nfs4_state_start_net(net);
- 	if (ret)
- 		goto out_reply_cache;
- 
--#ifdef CONFIG_NFSD_V4_2_INTER_SSC
--	nfsd4_ssc_init_umount_work(nn);
--#endif
- 	nn->nfsd_net_up = true;
- 	return 0;
- 
+-- 
+2.39.5
+
 
 
