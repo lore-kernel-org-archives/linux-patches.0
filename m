@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C440239E63;
-	Mon, 23 Jun 2025 13:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24660239E63;
+	Mon, 23 Jun 2025 13:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685136; cv=none; b=b4fWmRVZm/hdzzU71EuL/85A0YLkFj+pNfcuFYL7qjQZUZm869VFEG8oj5rVsX1RGHszrmZPLs5Wsn2PCPcrxwnKXC4deIomGbBzoK555m9xm7njINZWKJKZWHZSHM8DjyyVD3m0V2SqMR1GERjP/VqEImb1Hfjgwknd6pmGg08=
+	t=1750685139; cv=none; b=OfwviuYaKV9O12F5KXLE6VVmXCvB46G3RkTkA8sOzMHmW9soVYhcjfgNswo3p8VUcjyUGRculctcz39fHG2wPlxCEpCro4p2d9Fc/hIMOrR44s+JoY7fPUpIHSM1FUaYWtw92TcuEWPcb89WrNSv96RaBAqHCkq0yJjrSM6ARf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685136; c=relaxed/simple;
-	bh=eFE8Anr/pr3H1FSDwGMYDEo6+A09bDUpSmJYZ9C72pA=;
+	s=arc-20240116; t=1750685139; c=relaxed/simple;
+	bh=uhxdBek+0/MFSg4xrMnunS0vXSmNTbAClezkwt1vCzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qXfkYhbaPX7tTWQdzfvgg0fVvLfOwO3rNblyDsnXO4Q6WSp3RS2Jx0QNIhei7DR4HAQEmZcUCxiNGP2/D0ZkTFKcNlEnUdlzJenn/KjJ25EgGMFwJlfxYtOcxmz5o7ZrPwRrkiN5z0jrMVcybsKZckCZGaLNr7S48KJGpzwj3Rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bD5RweAr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HtehEWHZqSHdgXnJyahrO3jJZMi+WRwFvfnKgyT29R5TCwdFc1644nY2Vc6yYeuXVlyhp6g3acJvwTYo88cKgPZy0EIGs7MQxpMNM73YqSvx4nDH0+w5IWexpW62bLfsC/yE2YU+3uTlBOczLMfZlqPC3+uZzYop1j33UWC4VsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t37a2IcL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bD5RweAr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEB6C4CEEA;
-	Mon, 23 Jun 2025 13:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t37a2IcL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828A9C4CEEA;
+	Mon, 23 Jun 2025 13:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685136;
-	bh=eFE8Anr/pr3H1FSDwGMYDEo6+A09bDUpSmJYZ9C72pA=;
+	s=korg; t=1750685139;
+	bh=uhxdBek+0/MFSg4xrMnunS0vXSmNTbAClezkwt1vCzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bD5RweArE6v+0443kMFSokVY4266P0M3rMYyFz+31E6BSTjP5tQN2QtJFGid5z4MQ
-	 l8ivsNPqmCOAhN1/UmSkdm4vdjYB28F1HFd5uPkj+v7VngCfWQwtr289Vkxw0QNPbp
-	 hXIDCjUo2ffHLrbtiYhErpMdia1BEmFVXeViug14=
+	b=t37a2IcLxofv4gOgrQmAvEQFXI846t+XUlm23kY41h0fN86nOB257xb0B6Ea8Vo9Z
+	 /HTusNMNlNx31TtrSQBw7vqgvJ7QmXx51lu3WSktbyoZ+r3Y0F1GcdcN6yK/9uViTe
+	 jckGv8D8Mo8UavBIxRabP0xFPUP15wrbO584UcN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neill Kapron <nkapron@google.com>,
-	Kees Cook <kees@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/355] selftests/seccomp: fix syscall_restart test for arm compat
-Date: Mon, 23 Jun 2025 15:03:50 +0200
-Message-ID: <20250623130627.686681694@linuxfoundation.org>
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jesse Brandeburg <jbrandeburg@cloudflare.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Saritha Sanigani <sarithax.sanigani@intel.com>
+Subject: [PATCH 5.4 069/222] ice: create new Tx scheduler nodes for new queues only
+Date: Mon, 23 Jun 2025 15:06:44 +0200
+Message-ID: <20250623130614.179252792@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +53,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neill Kapron <nkapron@google.com>
+From: Michal Kubiak <michal.kubiak@intel.com>
 
-[ Upstream commit 797002deed03491215a352ace891749b39741b69 ]
+[ Upstream commit 6fa2942578472c9cab13a8fc1dae0d830193e0a1 ]
 
-The inconsistencies in the systcall ABI between arm and arm-compat can
-can cause a failure in the syscall_restart test due to the logic
-attempting to work around the differences. The 'machine' field for an
-ARM64 device running in compat mode can report 'armv8l' or 'armv8b'
-which matches with the string 'arm' when only examining the first three
-characters of the string.
+The current implementation of the Tx scheduler tree attempts
+to create nodes for all Tx queues, ignoring the fact that some
+queues may already exist in the tree. For example, if the VSI
+already has 128 Tx queues and the user requests for 16 new queues,
+the Tx scheduler will compute the tree for 272 queues (128 existing
+queues + 144 new queues), instead of 144 queues (128 existing queues
+and 16 new queues).
+Fix that by modifying the node count calculation algorithm to skip
+the queues that already exist in the tree.
 
-This change adds additional validation to the workaround logic to make
-sure we only take the arm path when running natively, not in arm-compat.
-
-Fixes: 256d0afb11d6 ("selftests/seccomp: build and pass on arm64")
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://lore.kernel.org/r/20250427094103.3488304-2-nkapron@google.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: 5513b920a4f7 ("ice: Update Tx scheduler tree for VSI multi-Tx queue support")
+Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Jesse Brandeburg <jbrandeburg@cloudflare.com>
+Tested-by: Saritha Sanigani <sarithax.sanigani@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/seccomp/seccomp_bpf.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_sched.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
-index 413a7b9f3c4d3..7f62635226fd3 100644
---- a/tools/testing/selftests/seccomp/seccomp_bpf.c
-+++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
-@@ -3081,12 +3081,15 @@ TEST(syscall_restart)
- 	ret = get_syscall(_metadata, child_pid);
- #if defined(__arm__)
- 	/*
--	 * FIXME:
- 	 * - native ARM registers do NOT expose true syscall.
- 	 * - compat ARM registers on ARM64 DO expose true syscall.
-+	 * - values of utsbuf.machine include 'armv8l' or 'armb8b'
-+	 *   for ARM64 running in compat mode.
- 	 */
- 	ASSERT_EQ(0, uname(&utsbuf));
--	if (strncmp(utsbuf.machine, "arm", 3) == 0) {
-+	if ((strncmp(utsbuf.machine, "arm", 3) == 0) &&
-+	    (strncmp(utsbuf.machine, "armv8l", 6) != 0) &&
-+	    (strncmp(utsbuf.machine, "armv8b", 6) != 0)) {
- 		EXPECT_EQ(__NR_nanosleep, ret);
- 	} else
- #endif
+diff --git a/drivers/net/ethernet/intel/ice/ice_sched.c b/drivers/net/ethernet/intel/ice/ice_sched.c
+index d1c0ccee879bc..c6c96d3ee9cce 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sched.c
++++ b/drivers/net/ethernet/intel/ice/ice_sched.c
+@@ -1188,16 +1188,16 @@ ice_sched_get_vsi_node(struct ice_hw *hw, struct ice_sched_node *tc_node,
+ /**
+  * ice_sched_calc_vsi_child_nodes - calculate number of VSI child nodes
+  * @hw: pointer to the HW struct
+- * @num_qs: number of queues
++ * @num_new_qs: number of new queues that will be added to the tree
+  * @num_nodes: num nodes array
+  *
+  * This function calculates the number of VSI child nodes based on the
+  * number of queues.
+  */
+ static void
+-ice_sched_calc_vsi_child_nodes(struct ice_hw *hw, u16 num_qs, u16 *num_nodes)
++ice_sched_calc_vsi_child_nodes(struct ice_hw *hw, u16 num_new_qs, u16 *num_nodes)
+ {
+-	u16 num = num_qs;
++	u16 num = num_new_qs;
+ 	u8 i, qgl, vsil;
+ 
+ 	qgl = ice_sched_get_qgrp_layer(hw);
+@@ -1438,8 +1438,9 @@ ice_sched_update_vsi_child_nodes(struct ice_port_info *pi, u16 vsi_handle,
+ 	if (status)
+ 		return status;
+ 
+-	if (new_numqs)
+-		ice_sched_calc_vsi_child_nodes(hw, new_numqs, new_num_nodes);
++	ice_sched_calc_vsi_child_nodes(hw, new_numqs - prev_numqs,
++				       new_num_nodes);
++
+ 	/* Keep the max number of queue configuration all the time. Update the
+ 	 * tree only if number of queues > previous number of queues. This may
+ 	 * leave some extra nodes in the tree if number of queues < previous
 -- 
 2.39.5
 
