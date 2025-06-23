@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93B3B676;
-	Mon, 23 Jun 2025 22:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6BBB676;
+	Mon, 23 Jun 2025 22:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716948; cv=none; b=h9UqNtDw4vJtZalnbG9hTezGklp0NkSdIV4m/pzM+zHH6E/KxFGgtU39IkCikGyjTnqHXd1cscEnYrQpYaW8L4YYjVf/AVm8cfZOX9H91XVq0kANBF3Hd2c8Bb8WB2Gy778AjH/yvGHfUV3XC+g4bqJnChpbmKcDGNVdfIWxj98=
+	t=1750716950; cv=none; b=gjpakA3sWy8JPZJfWP1noRyqNEmuX5VScO9x2H/GeaYv9K/icpfKTneL64nOLpqMQz/sHRhG7AEy47dAVW7tBrYuxdYcmuM+pV/JN+gcFcfjjsKLv3rJrXisbzeXF5GtJq2/zyFwCAeDz3kPY80cWBu2Pqr14+np1dCtPR8p3y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716948; c=relaxed/simple;
-	bh=68TG0JlPYAzZQ9ZaIFw6vnIvNKgsqqm6zFOwlq0L+W0=;
+	s=arc-20240116; t=1750716950; c=relaxed/simple;
+	bh=fzUuhfOL4gFuzirkjEiHvHn02oKsDjUwTX449t5caRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jnfpl2AlmAS71pq+ej5RhbZirkV5Ej8inAZvx3s5mfe9gbna1rdor5dU7LtcRDgM2CYLPywQGNf2Xh1dC9BcSiu9lGxK2MU2W7METpOyuxgLFIxCxvZitjyvieCSF/U7+acVBHTjo46D2SY+PShV2Ge0O8idM14iSYr1Us6Z7KA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5dIvLDp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RoK39f3pyb8uBVstDhiVWJaW+PMUHpkwxkLYfaxEBCdzQz1iy9bXnoTm/4iI5wO5Wd8i+mxxxachLKbrjz3w2cZNrA6xH0SfNZBZKLetz5rbslfJwAzGRK3CUDIEodBgKIvyIfZOkiexxinSZ6tgPX09kc3vsmButoV4Ol1PbFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EB4UyQzV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5dIvLDp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A48C4CEEA;
-	Mon, 23 Jun 2025 22:15:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EB4UyQzV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92EEC4CEEA;
+	Mon, 23 Jun 2025 22:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716947;
-	bh=68TG0JlPYAzZQ9ZaIFw6vnIvNKgsqqm6zFOwlq0L+W0=;
+	s=korg; t=1750716950;
+	bh=fzUuhfOL4gFuzirkjEiHvHn02oKsDjUwTX449t5caRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D5dIvLDpniqUONPtcHT5yeXwzvFs+9gxC60/q/bWD9mo7wdKDjs6x3mNvn6EnBiVh
-	 S3FevYGhAyfex+/dXFjJtUfpr/37Mqr20mlVHs1m4IhUpNiwyhv/Ns0Seea48+Bstl
-	 Nn3JuKGAH2mcJWnNt99zIWjzs4H9uUepPGTyIME0=
+	b=EB4UyQzVS2F0f7jGAPdd4iX5nY7KfX5uSX6avL4Kln6fkHFjbv+I+oE3gP4a3w6Vn
+	 RewUxcdcgfm58U9ynWUViVYeypB0wCsmyFXsDLvoTjcBEXu3ax4heuWboJKjNDEAhq
+	 gywSdFepP6FjjLqHssfc9JnL+O8ucx6N65PAapV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baisheng Gao <baisheng.gao@unisoc.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	syzbot+8b64dec3affaed7b3af5@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 571/592] perf: Fix sample vs do_exit()
-Date: Mon, 23 Jun 2025 15:08:49 +0200
-Message-ID: <20250623130714.022935989@linuxfoundation.org>
+Subject: [PATCH 5.15 381/411] net: atm: add lec_mutex
+Date: Mon, 23 Jun 2025 15:08:45 +0200
+Message-ID: <20250623130643.237512404@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,103 +48,162 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4f6fc782128355931527cefe3eb45338abd8ab39 ]
+[ Upstream commit d13a3824bfd2b4774b671a75cf766a16637a0e67 ]
 
-Baisheng Gao reported an ARM64 crash, which Mark decoded as being a
-synchronous external abort -- most likely due to trying to access
-MMIO in bad ways.
+syzbot found its way in net/atm/lec.c, and found an error path
+in lecd_attach() could leave a dangling pointer in dev_lec[].
 
-The crash further shows perf trying to do a user stack sample while in
-exit_mmap()'s tlb_finish_mmu() -- i.e. while tearing down the address
-space it is trying to access.
+Add a mutex to protect dev_lecp[] uses from lecd_attach(),
+lec_vcc_attach() and lec_mcast_attach().
 
-It turns out that we stop perf after we tear down the userspace mm; a
-receipie for disaster, since perf likes to access userspace for
-various reasons.
+Following patch will use this mutex for /proc/net/atm/lec.
 
-Flip this order by moving up where we stop perf in do_exit().
+BUG: KASAN: slab-use-after-free in lecd_attach net/atm/lec.c:751 [inline]
+BUG: KASAN: slab-use-after-free in lane_ioctl+0x2224/0x23e0 net/atm/lec.c:1008
+Read of size 8 at addr ffff88807c7b8e68 by task syz.1.17/6142
 
-Additionally, harden PERF_SAMPLE_CALLCHAIN and PERF_SAMPLE_STACK_USER
-to abort when the current task does not have an mm (exit_mm() makes
-sure to set current->mm = NULL; before commencing with the actual
-teardown). Such that CPU wide events don't trip on this same problem.
+CPU: 1 UID: 0 PID: 6142 Comm: syz.1.17 Not tainted 6.16.0-rc1-syzkaller-00239-g08215f5486ec #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:94 [inline]
+  dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+  print_address_description mm/kasan/report.c:408 [inline]
+  print_report+0xcd/0x680 mm/kasan/report.c:521
+  kasan_report+0xe0/0x110 mm/kasan/report.c:634
+  lecd_attach net/atm/lec.c:751 [inline]
+  lane_ioctl+0x2224/0x23e0 net/atm/lec.c:1008
+  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
+  sock_do_ioctl+0x118/0x280 net/socket.c:1190
+  sock_ioctl+0x227/0x6b0 net/socket.c:1311
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:907 [inline]
+  __se_sys_ioctl fs/ioctl.c:893 [inline]
+  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
+  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+  do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
-Fixes: c5ebcedb566e ("perf: Add ability to attach user stack dump to sample")
-Reported-by: Baisheng Gao <baisheng.gao@unisoc.com>
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250605110815.GQ39944@noisy.programming.kicks-ass.net
+Allocated by task 6132:
+  kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
+  kasan_save_track+0x14/0x30 mm/kasan/common.c:68
+  poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+  __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:394
+  kasan_kmalloc include/linux/kasan.h:260 [inline]
+  __do_kmalloc_node mm/slub.c:4328 [inline]
+  __kvmalloc_node_noprof+0x27b/0x620 mm/slub.c:5015
+  alloc_netdev_mqs+0xd2/0x1570 net/core/dev.c:11711
+  lecd_attach net/atm/lec.c:737 [inline]
+  lane_ioctl+0x17db/0x23e0 net/atm/lec.c:1008
+  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
+  sock_do_ioctl+0x118/0x280 net/socket.c:1190
+  sock_ioctl+0x227/0x6b0 net/socket.c:1311
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:907 [inline]
+  __se_sys_ioctl fs/ioctl.c:893 [inline]
+  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
+  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+  do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 6132:
+  kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
+  kasan_save_track+0x14/0x30 mm/kasan/common.c:68
+  kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:576
+  poison_slab_object mm/kasan/common.c:247 [inline]
+  __kasan_slab_free+0x51/0x70 mm/kasan/common.c:264
+  kasan_slab_free include/linux/kasan.h:233 [inline]
+  slab_free_hook mm/slub.c:2381 [inline]
+  slab_free mm/slub.c:4643 [inline]
+  kfree+0x2b4/0x4d0 mm/slub.c:4842
+  free_netdev+0x6c5/0x910 net/core/dev.c:11892
+  lecd_attach net/atm/lec.c:744 [inline]
+  lane_ioctl+0x1ce8/0x23e0 net/atm/lec.c:1008
+  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
+  sock_do_ioctl+0x118/0x280 net/socket.c:1190
+  sock_ioctl+0x227/0x6b0 net/socket.c:1311
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:907 [inline]
+  __se_sys_ioctl fs/ioctl.c:893 [inline]
+  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+8b64dec3affaed7b3af5@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6852c6f6.050a0220.216029.0018.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250618140844.1686882-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c |  7 +++++++
- kernel/exit.c        | 17 +++++++++--------
- 2 files changed, 16 insertions(+), 8 deletions(-)
+ net/atm/lec.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index e97bc9220fd1a..ec77f641089a2 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -7363,6 +7363,10 @@ perf_sample_ustack_size(u16 stack_size, u16 header_size,
- 	if (!regs)
- 		return 0;
+diff --git a/net/atm/lec.c b/net/atm/lec.c
+index ca9952c52fb5c..3f67b84c8f1c9 100644
+--- a/net/atm/lec.c
++++ b/net/atm/lec.c
+@@ -124,6 +124,7 @@ static unsigned char bus_mac[ETH_ALEN] = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
  
-+	/* No mm, no stack, no dump. */
-+	if (!current->mm)
-+		return 0;
-+
- 	/*
- 	 * Check if we fit in with the requested stack size into the:
- 	 * - TASK_SIZE
-@@ -8074,6 +8078,9 @@ perf_callchain(struct perf_event *event, struct pt_regs *regs)
- 	const u32 max_stack = event->attr.sample_max_stack;
- 	struct perf_callchain_entry *callchain;
+ /* Device structures */
+ static struct net_device *dev_lec[MAX_LEC_ITF];
++static DEFINE_MUTEX(lec_mutex);
  
-+	if (!current->mm)
-+		user = false;
-+
- 	if (!kernel && !user)
- 		return &__empty_callchain;
+ #if IS_ENABLED(CONFIG_BRIDGE)
+ static void lec_handle_bridge(struct sk_buff *skb, struct net_device *dev)
+@@ -687,6 +688,7 @@ static int lec_vcc_attach(struct atm_vcc *vcc, void __user *arg)
+ 	int bytes_left;
+ 	struct atmlec_ioc ioc_data;
  
-diff --git a/kernel/exit.c b/kernel/exit.c
-index 1b51dc099f1e0..771dd7b226c18 100644
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -937,6 +937,15 @@ void __noreturn do_exit(long code)
- 	tsk->exit_code = code;
- 	taskstats_exit(tsk, group_dead);
++	lockdep_assert_held(&lec_mutex);
+ 	/* Lecd must be up in this case */
+ 	bytes_left = copy_from_user(&ioc_data, arg, sizeof(struct atmlec_ioc));
+ 	if (bytes_left != 0)
+@@ -712,6 +714,7 @@ static int lec_vcc_attach(struct atm_vcc *vcc, void __user *arg)
  
-+	/*
-+	 * Since sampling can touch ->mm, make sure to stop everything before we
-+	 * tear it down.
-+	 *
-+	 * Also flushes inherited counters to the parent - before the parent
-+	 * gets woken up by child-exit notifications.
-+	 */
-+	perf_event_exit_task(tsk);
-+
- 	exit_mm();
+ static int lec_mcast_attach(struct atm_vcc *vcc, int arg)
+ {
++	lockdep_assert_held(&lec_mutex);
+ 	if (arg < 0 || arg >= MAX_LEC_ITF)
+ 		return -EINVAL;
+ 	arg = array_index_nospec(arg, MAX_LEC_ITF);
+@@ -727,6 +730,7 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
+ 	int i;
+ 	struct lec_priv *priv;
  
- 	if (group_dead)
-@@ -953,14 +962,6 @@ void __noreturn do_exit(long code)
- 	exit_task_work(tsk);
- 	exit_thread(tsk);
++	lockdep_assert_held(&lec_mutex);
+ 	if (arg < 0)
+ 		arg = 0;
+ 	if (arg >= MAX_LEC_ITF)
+@@ -744,6 +748,7 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
+ 		snprintf(dev_lec[i]->name, IFNAMSIZ, "lec%d", i);
+ 		if (register_netdev(dev_lec[i])) {
+ 			free_netdev(dev_lec[i]);
++			dev_lec[i] = NULL;
+ 			return -EINVAL;
+ 		}
  
--	/*
--	 * Flush inherited counters to the parent - before the parent
--	 * gets woken up by child-exit notifications.
--	 *
--	 * because of cgroup mode, must be called before cgroup_exit()
--	 */
--	perf_event_exit_task(tsk);
--
- 	sched_autogroup_exit_task(tsk);
- 	cgroup_exit(tsk);
+@@ -1005,6 +1010,7 @@ static int lane_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 		return -ENOIOCTLCMD;
+ 	}
+ 
++	mutex_lock(&lec_mutex);
+ 	switch (cmd) {
+ 	case ATMLEC_CTRL:
+ 		err = lecd_attach(vcc, (int)arg);
+@@ -1019,6 +1025,7 @@ static int lane_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 		break;
+ 	}
+ 
++	mutex_unlock(&lec_mutex);
+ 	return err;
+ }
  
 -- 
 2.39.5
