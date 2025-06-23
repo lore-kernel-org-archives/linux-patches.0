@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3481ACEDA;
-	Mon, 23 Jun 2025 21:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DC93FB1B;
+	Mon, 23 Jun 2025 21:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713099; cv=none; b=AGTPbkpXGhyiq78yOWRzkJAGhGbL+9ccy9YfJRGBK9dHatrrNPvBdfPRpdri3Oyv2bKkp6+3l3Akkb6pO6YPYV2BRhvijaj1fZfScRu5j47AYV/X6COEYxeLUub7Gxv9+4nmPRmytuUwrwSUJmilqy3+ojsKpedMUcP2k9QirrI=
+	t=1750713102; cv=none; b=JadYWqf55IMFK4QYaFHsWSeO68/3O/F3WCzxLe/h81kzVd+P7HOKV9OkKdP7lnVvU6WPNwpXJnZ4ZLWjDf/Fh+y7nQ8R9rpxT8+dYgDsZMuJQ/gOSJKLumY3w7HEnB8UicndlZS5yoz5unZNNpyO312VnPWmGWNnMVNKIrfDVug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713099; c=relaxed/simple;
-	bh=q1NAvCfxOMHaE1mPFmcG3nOu05BvI7CWNysTNqYzXp0=;
+	s=arc-20240116; t=1750713102; c=relaxed/simple;
+	bh=3uAXvAgQKAqGN3s6BzAQZLr3PS8Kl1o+0RdognG9RcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L319/fC8MUN2qP4+kIiGOPtwC0t93rhUr3PxEfE2PgXefykQ7atUtzvD8W7cT66xp/ngsU86TJRo9hIv/8w/X6jJ8Hl/CFehGAo69xo4JEXWVSYNqYeZWYyWQCulK2qiKDjoaXugjGBDatn3Ldje590MyYttPwhn5h+VFiE/yVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzNYonly; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lQFffcof/DBZwECoITH0KiJYz8HBPdsiuWCVvwTl8mTDjbPgFLAhbpfOdi9teFQTNCXaBKmWiNU+1GrGWrof+99Vs3HXsdqKThS9C/OPy+m4DGL12pa2mahANp6tZFkrIf/F1od63r5Uf/g/5pvYzBGHiBnNyhDzbmFA6crMib0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azp1Iogt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzNYonly"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE2CC4CEEA;
-	Mon, 23 Jun 2025 21:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azp1Iogt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE12FC4CEEA;
+	Mon, 23 Jun 2025 21:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713098;
-	bh=q1NAvCfxOMHaE1mPFmcG3nOu05BvI7CWNysTNqYzXp0=;
+	s=korg; t=1750713101;
+	bh=3uAXvAgQKAqGN3s6BzAQZLr3PS8Kl1o+0RdognG9RcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MzNYonlyXW21RErTvt8zfM4JbI13N7XyERwmOd5FW0RwjGzQMPi6V0CaIa1/A2WGP
-	 /t4zSjSrdE2cfrzmzYAdMoi8XjkQ8lsPm/dZNWK3cnyw/hTC9JpTqA1pkP5mGdHjoH
-	 bPZff0r+62m6GFzbwB6CXqj9soPHRbu7wOTPHQAI=
+	b=azp1Iogtyn36vm5MKsUNQrRYE2BO1u8CsIWXtQaevssbc94feR6kEFTLrrwg58ac9
+	 D32eJoN05lTg7bL348t7boMMfVodl0eZNZzEnaIuhrlzm4I4rUUUhgWPFtEklaiQBz
+	 JAsBYtoSdETwdfI17YRSd76zxcRFnf5SpNqnFgiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.10 145/355] drm/amd/display: Do not add -mhard-float to dml_ccflags for clang
-Date: Mon, 23 Jun 2025 15:05:46 +0200
-Message-ID: <20250623130631.068243045@linuxfoundation.org>
+	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 328/592] wifi: mac80211: validate SCAN_FLAG_AP in scan request during MLO
+Date: Mon, 23 Jun 2025 15:04:46 +0200
+Message-ID: <20250623130708.257826972@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,47 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
 
-commit 7db038d9790eda558dd6c1dde4cdd58b64789c47 upstream.
+[ Upstream commit 78a7a126dc5b8e3c5a3d4da9f513e0236d2dc1a3 ]
 
-When clang's -Qunused-arguments is dropped from KBUILD_CPPFLAGS, it
-warns:
+When an AP interface is already beaconing, a subsequent scan is not allowed
+unless the user space explicitly sets the flag NL80211_SCAN_FLAG_AP in the
+scan request. If this flag is not set, the scan request will be returned
+with the error code -EOPNOTSUPP. However, this restriction currently
+applies only to non-ML interfaces. For ML interfaces, scans are allowed
+without this flag being explicitly set by the user space which is wrong.
+This is because the beaconing check currently uses only the deflink, which
+does not get set during MLO.
 
-  clang-16: error: argument unused during compilation: '-mhard-float' [-Werror,-Wunused-command-line-argument]
+Hence to fix this, during MLO, use the existing helper
+ieee80211_num_beaconing_links() to know if any of the link is beaconing.
 
-Similar to commit 84edc2eff827 ("selftest/fpu: avoid clang warning"),
-just add this flag to GCC builds. Commit 0f0727d971f6 ("drm/amd/display:
-readd -msse2 to prevent Clang from emitting libcalls to undefined SW FP
-routines") added '-msse2' to prevent clang from emitting software
-floating point routines.
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250516-bug_fix_mlo_scan-v2-1-12e59d9110ac@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/Makefile |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/cfg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-@@ -26,7 +26,8 @@
- # subcomponents.
- 
- ifdef CONFIG_X86
--dml_ccflags := -mhard-float -msse
-+dml_ccflags-$(CONFIG_CC_IS_GCC) := -mhard-float
-+dml_ccflags := $(dml_ccflags-y) -msse
- endif
- 
- ifdef CONFIG_PPC64
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index 9f683f838431d..acfde525fad2f 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -2904,7 +2904,7 @@ static int ieee80211_scan(struct wiphy *wiphy,
+ 		 * the frames sent while scanning on other channel will be
+ 		 * lost)
+ 		 */
+-		if (sdata->deflink.u.ap.beacon &&
++		if (ieee80211_num_beaconing_links(sdata) &&
+ 		    (!(wiphy->features & NL80211_FEATURE_AP_SCAN) ||
+ 		     !(req->flags & NL80211_SCAN_FLAG_AP)))
+ 			return -EOPNOTSUPP;
+-- 
+2.39.5
+
 
 
