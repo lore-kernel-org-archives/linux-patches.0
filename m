@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1C7223714;
-	Mon, 23 Jun 2025 21:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347E3220686;
+	Mon, 23 Jun 2025 21:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715975; cv=none; b=IJQ7wP/qO3C2kW5SXsq/5mkoqbTUVWJIVpomNIQj1hK1B3BcNgeD0z8FurBr3+z4gNlaW54djbWFO3qVv29IfZNCL2RCRlwuze35nh1iaKf3PS65qJ0BFbZRcpzhzBYkQPu1d+cyCMNdrMbpuTrdJgdwYhESEHYccp8NcBI0XAU=
+	t=1750715978; cv=none; b=S8nHY2VEIdwxn6ucEbYAKHg4SQvBmFzXijl7iJEvW84CgbbD6acNsaIvqrtC5sINii78oZ/kpvRw/+m3HmJF+dSpOO27Lyqy9poRywhgrWejJib5fpJgu3AY5yHvrXqPlGZkD+RalDHgjHdodoLg0mEI+WSdWTWQ3NkujPG/sHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715975; c=relaxed/simple;
-	bh=MD/LjQ84VL3D1nPs9Wr37la3eDONWpxxLT2eChVn5bQ=;
+	s=arc-20240116; t=1750715978; c=relaxed/simple;
+	bh=wx1kkJlcF261bJmLFQInyPtLVzby/8nOr6D2FuH9Y7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTT3dToPiZdf9Z38qwT6vP2p1hYXeG62L+xrB5i0haJJG4NFvmxWZMG0+sgBugsQqeWnx/gpyU1zaAvkiyGR6NB3XWq3UrgumkKVr9ezlCSSz//nemare+CY8xT7UpxFKnyPPrc5/hOFXZSC/q+DsN4bi9LN2FpfyfOyvVlf1xM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSBqmVvQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MBnA58BJBU4ScTi3NMJ4n8PmYmuMwEVV2GaEYmZuTlO7Q/GAD98poCUJQyKVLVwyGG77ifeCX1VvW3o/xdTbxFJ3V+nJNT7qB4Sv4/wUC1GLUSxblDjCWA87paXpurLL9magx/jJEXlBrpwP4kMrHoYU0ziMBPwQ0YSBaba5lbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZuTtjXW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSBqmVvQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D32C4CEEA;
-	Mon, 23 Jun 2025 21:59:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZuTtjXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2541C4CEEA;
+	Mon, 23 Jun 2025 21:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715975;
-	bh=MD/LjQ84VL3D1nPs9Wr37la3eDONWpxxLT2eChVn5bQ=;
+	s=korg; t=1750715978;
+	bh=wx1kkJlcF261bJmLFQInyPtLVzby/8nOr6D2FuH9Y7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WSBqmVvQIXBSdMcPoYRWXPA9+uyUsw4slDZvMqOcbpMgVF2FhhjUAjniWTcLhV32y
-	 8ZQsbeopB4pyLmri3vKYN1Gp80CxmM3Pg5ZEVQtQWg7GTPUiQoUbpePvxiki77qVj7
-	 bOhyhRdZFijwHxJT69D6ZAHpzR3o3XRuKhiZRO5I=
+	b=YZuTtjXWV2iyiVXu/r1n2XR+r/Qg9XK8S4Eudy4ARg9X9mWOoN95hjhn3dKF6v89J
+	 r4Jj88JjVOE/xSL5ZcU1NsQoXLB5cTqZfB3dLVIjoNEWAlyueVbHTBj62lfkLc09WJ
+	 z0cGLQNXcEwslBmv8RPuS08bV1yABkYP330nRBgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.1 272/508] mips: Include KBUILD_CPPFLAGS in CHECKFLAGS invocation
-Date: Mon, 23 Jun 2025 15:05:17 +0200
-Message-ID: <20250623130651.940039287@linuxfoundation.org>
+	Eric Wheeler <netdev@lists.ewheeler.net>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 313/355] tcp: fix tcp_packet_delayed() for tcp_is_non_sack_preventing_reopen() behavior
+Date: Mon, 23 Jun 2025 15:08:34 +0200
+Message-ID: <20250623130636.191672326@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,42 +50,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Neal Cardwell <ncardwell@google.com>
 
-commit 08f6554ff90ef189e6b8f0303e57005bddfdd6a7 upstream.
+[ Upstream commit d0fa59897e049e84432600e86df82aab3dce7aa5 ]
 
-A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
-KBUILD_CPPFLAGS so that '--target' is available while preprocessing.
-When that occurs, the following error appears when building ARCH=mips
-with clang (tip of tree error shown):
+After the following commit from 2024:
 
-  clang: error: unsupported option '-mabi=' for target 'x86_64-pc-linux-gnu'
+commit e37ab7373696 ("tcp: fix to allow timestamp undo if no retransmits were sent")
 
-Add KBUILD_CPPFLAGS in the CHECKFLAGS invocation to keep everything
-working after the move.
+...there was buggy behavior where TCP connections without SACK support
+could easily see erroneous undo events at the end of fast recovery or
+RTO recovery episodes. The erroneous undo events could cause those
+connections to suffer repeated loss recovery episodes and high
+retransmit rates.
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The problem was an interaction between the non-SACK behavior on these
+connections and the undo logic. The problem is that, for non-SACK
+connections at the end of a loss recovery episode, if snd_una ==
+high_seq, then tcp_is_non_sack_preventing_reopen() holds steady in
+CA_Recovery or CA_Loss, but clears tp->retrans_stamp to 0. Then upon
+the next ACK the "tcp: fix to allow timestamp undo if no retransmits
+were sent" logic saw the tp->retrans_stamp at 0 and erroneously
+concluded that no data was retransmitted, and erroneously performed an
+undo of the cwnd reduction, restoring cwnd immediately to the value it
+had before loss recovery.  This caused an immediate burst of traffic
+and build-up of queues and likely another immediate loss recovery
+episode.
+
+This commit fixes tcp_packet_delayed() to ignore zero retrans_stamp
+values for non-SACK connections when snd_una is at or above high_seq,
+because tcp_is_non_sack_preventing_reopen() clears retrans_stamp in
+this case, so it's not a valid signal that we can undo.
+
+Note that the commit named in the Fixes footer restored long-present
+behavior from roughly 2005-2019, so apparently this bug was present
+for a while during that era, and this was simply not caught.
+
+Fixes: e37ab7373696 ("tcp: fix to allow timestamp undo if no retransmits were sent")
+Reported-by: Eric Wheeler <netdev@lists.ewheeler.net>
+Closes: https://lore.kernel.org/netdev/64ea9333-e7f9-0df-b0f2-8d566143acab@ewheeler.net/
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Co-developed-by: Yuchung Cheng <ycheng@google.com>
+Signed-off-by: Yuchung Cheng <ycheng@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 37 +++++++++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
 
---- a/arch/mips/Makefile
-+++ b/arch/mips/Makefile
-@@ -351,7 +351,7 @@ KBUILD_CFLAGS += -fno-asynchronous-unwin
- KBUILD_LDFLAGS		+= -m $(ld-emul)
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index f239310e91590..82382ac1514f9 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -2424,20 +2424,33 @@ static inline bool tcp_packet_delayed(const struct tcp_sock *tp)
+ {
+ 	const struct sock *sk = (const struct sock *)tp;
  
- ifdef need-compiler
--CHECKFLAGS += $(shell $(CC) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
-+CHECKFLAGS += $(shell $(CC) $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
- 	grep -E -vw '__GNUC_(MINOR_|PATCHLEVEL_)?_' | \
- 	sed -e "s/^\#define /-D'/" -e "s/ /'='/" -e "s/$$/'/" -e 's/\$$/&&/g')
- endif
+-	if (tp->retrans_stamp &&
+-	    tcp_tsopt_ecr_before(tp, tp->retrans_stamp))
+-		return true;  /* got echoed TS before first retransmission */
+-
+-	/* Check if nothing was retransmitted (retrans_stamp==0), which may
+-	 * happen in fast recovery due to TSQ. But we ignore zero retrans_stamp
+-	 * in TCP_SYN_SENT, since when we set FLAG_SYN_ACKED we also clear
+-	 * retrans_stamp even if we had retransmitted the SYN.
++	/* Received an echoed timestamp before the first retransmission? */
++	if (tp->retrans_stamp)
++		return tcp_tsopt_ecr_before(tp, tp->retrans_stamp);
++
++	/* We set tp->retrans_stamp upon the first retransmission of a loss
++	 * recovery episode, so normally if tp->retrans_stamp is 0 then no
++	 * retransmission has happened yet (likely due to TSQ, which can cause
++	 * fast retransmits to be delayed). So if snd_una advanced while
++	 * (tp->retrans_stamp is 0 then apparently a packet was merely delayed,
++	 * not lost. But there are exceptions where we retransmit but then
++	 * clear tp->retrans_stamp, so we check for those exceptions.
+ 	 */
+-	if (!tp->retrans_stamp &&	   /* no record of a retransmit/SYN? */
+-	    sk->sk_state != TCP_SYN_SENT)  /* not the FLAG_SYN_ACKED case? */
+-		return true;  /* nothing was retransmitted */
+ 
+-	return false;
++	/* (1) For non-SACK connections, tcp_is_non_sack_preventing_reopen()
++	 * clears tp->retrans_stamp when snd_una == high_seq.
++	 */
++	if (!tcp_is_sack(tp) && !before(tp->snd_una, tp->high_seq))
++		return false;
++
++	/* (2) In TCP_SYN_SENT tcp_clean_rtx_queue() clears tp->retrans_stamp
++	 * when setting FLAG_SYN_ACKED is set, even if the SYN was
++	 * retransmitted.
++	 */
++	if (sk->sk_state == TCP_SYN_SENT)
++		return false;
++
++	return true;	/* tp->retrans_stamp is zero; no retransmit yet */
+ }
+ 
+ /* Undo procedures. */
+-- 
+2.39.5
+
 
 
