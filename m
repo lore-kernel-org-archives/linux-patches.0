@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA48229B16;
-	Mon, 23 Jun 2025 22:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744ED22A4EE;
+	Mon, 23 Jun 2025 22:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716680; cv=none; b=rPBMiszKOphPqAWG2mbD+8qzXPuYwRfzadUEfQ/GvzW0+9p12/XslnB6mSJJ1Q1Yuw7J/QlZpHWQX1M/+jQzBzTnj7/ThGAlwqhEXCRcHR7pmIjlUMBgCSDMqzcAPMF1ucIUQTt2FWHTTy/7MjtLD57cUzfiBtfJ0f6F9tzWP6E=
+	t=1750716681; cv=none; b=IASNbxRwXeIICOp3J6+vuyU7lXQ8IWhViBAB03YXXF6e50DicMPXr9IixtiyFUtEGReoQ8zNPH/pz4BFHPp/uXOAZEECfrXPZUNf0QNxWoFq2Yys58yT0Sn7dmUD8p5PRZg6q2JYLzdeCMrksMEc2zLoKI28lkNKBm0gz24gAWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716680; c=relaxed/simple;
-	bh=2celsTrBJb+YiZ/ur1JSJXMSgaola/dCv5loiiBKGzc=;
+	s=arc-20240116; t=1750716681; c=relaxed/simple;
+	bh=qY5yqCvqsmLpo9PMZ8Ae47dJVdFIqB4KZmup2tfNLIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UC8wnwJN57bgRoEgKy1o21Hrrzn7Fm82phQFmeRMzU58lkDspZB4dyMIqsfAV4LJm3mA6xJLML20CxI81EEA7ohrISTl3MuttRiNNDF2yWjtH0AnHMsW4qSWgTUrn2+DN0yMyRNWbHUQ/iN6RgwMpP7tEPoJJUFXoCe/xwa1TIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ytwoc6WL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NsDdBgsHc3xajnl8pMkcuSDrolVlFqMUUr3nyir/XzjuX69w3HEJv3xPTpjXonUhBlz60R11L+JOTm2l8WsSjgXMjqatpG/NV0Kccksuonrht8aSeUTv3e9f0v0GRn/hfCtVjrChltl9aIOcNgdGw+GcolgHTY48uzmByfWXJyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEcg4onK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ytwoc6WL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97929C4CEF2;
-	Mon, 23 Jun 2025 22:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEcg4onK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B88CC4CEED;
+	Mon, 23 Jun 2025 22:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716678;
-	bh=2celsTrBJb+YiZ/ur1JSJXMSgaola/dCv5loiiBKGzc=;
+	s=korg; t=1750716681;
+	bh=qY5yqCvqsmLpo9PMZ8Ae47dJVdFIqB4KZmup2tfNLIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ytwoc6WLLRd1eWshBAhRvHHrR0xtOzcEASwuEvshi1PWNeubIs2yw6VqSc3nxCekt
-	 6It1sWc77lYJmMAV1+eeB1xIEfQWfC+x+qnRHBUd5KJi6tN+20/Kmjtc4+VQeJMyOT
-	 blRaF8lQL8uo1kPTQMJs3iEr1x4938GzsWCnYgNI=
+	b=WEcg4onK/P2W9yPanQNOE4PZkpwhFTNwko8vEaT23HiRHST4eTBWOtP+wt5yKY6Dp
+	 y6xl7WtXLQAynXK6nV5vo3e0+WO8D2b0wAATP1g6YJkOJKRG56OAf0zokirYBQ6V67
+	 RY4DZo8t9dqYQYtB7vM30sOThz8ewqKJ2odMpCMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 274/414] bpf, sockmap: Fix data lost during EAGAIN retries
-Date: Mon, 23 Jun 2025 15:06:51 +0200
-Message-ID: <20250623130648.875954833@linuxfoundation.org>
+Subject: [PATCH 6.15 535/592] ptp: fix breakage after ptp_vclock_in_use() rework
+Date: Mon, 23 Jun 2025 15:08:13 +0200
+Message-ID: <20250623130713.160403191@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +47,166 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 7683167196bd727ad5f3c3fc6a9ca70f54520a81 ]
+[ Upstream commit 5ab73b010cad294851e558f1d4714a85c6f206c7 ]
 
-We call skb_bpf_redirect_clear() to clean _sk_redir before handling skb in
-backlog, but when sk_psock_handle_skb() return EAGAIN due to sk_rcvbuf
-limit, the redirect info in _sk_redir is not recovered.
+What is broken
+--------------
 
-Fix skb redir loss during EAGAIN retries by restoring _sk_redir
-information using skb_bpf_set_redir().
+ptp4l, and any other application which calls clock_adjtime() on a
+physical clock, is greeted with error -EBUSY after commit 87f7ce260a3c
+("ptp: remove ptp->n_vclocks check logic in ptp_vclock_in_use()").
 
-Before this patch:
-'''
-./bench sockmap -c 2 -p 1 -a --rx-verdict-ingress
-Setting up benchmark 'sockmap'...
-create socket fd c1:13 p1:14 c2:15 p2:16
-Benchmark 'sockmap' started.
-Send Speed 1343.172 MB/s, BPF Speed 1343.238 MB/s, Rcv Speed   65.271 MB/s
-Send Speed 1352.022 MB/s, BPF Speed 1352.088 MB/s, Rcv Speed   0 MB/s
-Send Speed 1354.105 MB/s, BPF Speed 1354.105 MB/s, Rcv Speed   0 MB/s
-Send Speed 1355.018 MB/s, BPF Speed 1354.887 MB/s, Rcv Speed   0 MB/s
-'''
-Due to the high send rate, the RX processing path may frequently hit the
-sk_rcvbuf limit. Once triggered, incorrect _sk_redir will cause the flow
-to mistakenly enter the "!ingress" path, leading to send failures.
-(The Rcv speed depends on tcp_rmem).
+Explanation for the breakage
+----------------------------
 
-After this patch:
-'''
-./bench sockmap -c 2 -p 1 -a --rx-verdict-ingress
-Setting up benchmark 'sockmap'...
-create socket fd c1:13 p1:14 c2:15 p2:16
-Benchmark 'sockmap' started.
-Send Speed 1347.236 MB/s, BPF Speed 1347.367 MB/s, Rcv Speed   65.402 MB/s
-Send Speed 1353.320 MB/s, BPF Speed 1353.320 MB/s, Rcv Speed   65.536 MB/s
-Send Speed 1353.186 MB/s, BPF Speed 1353.121 MB/s, Rcv Speed   65.536 MB/s
-'''
+The blamed commit was based on the false assumption that
+ptp_vclock_in_use() callers already test for n_vclocks prior to calling
+this function.
 
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20250407142234.47591-2-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+This is notably incorrect for the code path below, in which there is, in
+fact, no n_vclocks test:
+
+ptp_clock_adjtime()
+-> ptp_clock_freerun()
+   -> ptp_vclock_in_use()
+
+The result is that any clock adjustment on any physical clock is now
+impossible. This is _despite_ there not being any vclock over this
+physical clock.
+
+$ ptp4l -i eno0 -2 -P -m
+ptp4l[58.425]: selected /dev/ptp0 as PTP clock
+[   58.429749] ptp: physical clock is free running
+ptp4l[58.431]: Failed to open /dev/ptp0: Device or resource busy
+failed to create a clock
+$ cat /sys/class/ptp/ptp0/n_vclocks
+0
+
+The patch makes the ptp_vclock_in_use() function say "if it's not a
+virtual clock, then this physical clock does have virtual clocks on
+top".
+
+Then ptp_clock_freerun() uses this information to say "this physical
+clock has virtual clocks on top, so it must stay free-running".
+
+Then ptp_clock_adjtime() uses this information to say "well, if this
+physical clock has to be free-running, I can't do it, return -EBUSY".
+
+Simply put, ptp_vclock_in_use() cannot be simplified so as to remove the
+test whether vclocks are in use.
+
+What did the blamed commit intend to fix
+----------------------------------------
+
+The blamed commit presents a lockdep warning stating "possible recursive
+locking detected", with the n_vclocks_store() and ptp_clock_unregister()
+functions involved.
+
+The recursive locking seems this:
+n_vclocks_store()
+-> mutex_lock_interruptible(&ptp->n_vclocks_mux) // 1
+-> device_for_each_child_reverse(..., unregister_vclock)
+   -> unregister_vclock()
+      -> ptp_vclock_unregister()
+         -> ptp_clock_unregister()
+            -> ptp_vclock_in_use()
+               -> mutex_lock_interruptible(&ptp->n_vclocks_mux) // 2
+
+The issue can be triggered by creating and then deleting vclocks:
+$ echo 2 > /sys/class/ptp/ptp0/n_vclocks
+$ echo 0 > /sys/class/ptp/ptp0/n_vclocks
+
+But note that in the original stack trace, the address of the first lock
+is different from the address of the second lock. This is because at
+step 1 marked above, &ptp->n_vclocks_mux is the lock of the parent
+(physical) PTP clock, and at step 2, the lock is of the child (virtual)
+PTP clock. They are different locks of different devices.
+
+In this situation there is no real deadlock, the lockdep warning is
+caused by the fact that the mutexes have the same lock class on both the
+parent and the child. Functionally it is fine.
+
+Proposed alternative solution
+-----------------------------
+
+We must reintroduce the body of ptp_vclock_in_use() mostly as it was
+structured prior to the blamed commit, but avoid the lockdep warning.
+
+Based on the fact that vclocks cannot be nested on top of one another
+(ptp_is_attribute_visible() hides n_vclocks for virtual clocks), we
+already know that ptp->n_vclocks is zero for a virtual clock. And
+ptp->is_virtual_clock is a runtime invariant, established at
+ptp_clock_register() time and never changed. There is no need to
+serialize on any mutex in order to read ptp->is_virtual_clock, and we
+take advantage of that by moving it outside the lock.
+
+Thus, virtual clocks do not need to acquire &ptp->n_vclocks_mux at
+all, and step 2 in the code walkthrough above can simply go away.
+We can simply return false to the question "ptp_vclock_in_use(a virtual
+clock)".
+
+Other notes
+-----------
+
+Releasing &ptp->n_vclocks_mux before ptp_vclock_in_use() returns
+execution seems racy, because the returned value can become stale as
+soon as the function returns and before the return value is used (i.e.
+n_vclocks_store() can run any time). The locking requirement should
+somehow be transferred to the caller, to ensure a longer life time for
+the returned value, but this seems out of scope for this severe bug fix.
+
+Because we are also fixing up the logic from the original commit, there
+is another Fixes: tag for that.
+
+Fixes: 87f7ce260a3c ("ptp: remove ptp->n_vclocks check logic in ptp_vclock_in_use()")
+Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250613174749.406826-2-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ptp/ptp_private.h | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index a8d238dd982af..97f52394d1eb1 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -689,7 +689,8 @@ static void sk_psock_backlog(struct work_struct *work)
- 			if (ret <= 0) {
- 				if (ret == -EAGAIN) {
- 					sk_psock_skb_state(psock, state, len, off);
--
-+					/* Restore redir info we cleared before */
-+					skb_bpf_set_redir(skb, psock->sk, ingress);
- 					/* Delay slightly to prioritize any
- 					 * other work that might be here.
- 					 */
+diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
+index 528d86a33f37d..a6aad743c282f 100644
+--- a/drivers/ptp/ptp_private.h
++++ b/drivers/ptp/ptp_private.h
+@@ -98,7 +98,27 @@ static inline int queue_cnt(const struct timestamp_event_queue *q)
+ /* Check if ptp virtual clock is in use */
+ static inline bool ptp_vclock_in_use(struct ptp_clock *ptp)
+ {
+-	return !ptp->is_virtual_clock;
++	bool in_use = false;
++
++	/* Virtual clocks can't be stacked on top of virtual clocks.
++	 * Avoid acquiring the n_vclocks_mux on virtual clocks, to allow this
++	 * function to be called from code paths where the n_vclocks_mux of the
++	 * parent physical clock is already held. Functionally that's not an
++	 * issue, but lockdep would complain, because they have the same lock
++	 * class.
++	 */
++	if (ptp->is_virtual_clock)
++		return false;
++
++	if (mutex_lock_interruptible(&ptp->n_vclocks_mux))
++		return true;
++
++	if (ptp->n_vclocks)
++		in_use = true;
++
++	mutex_unlock(&ptp->n_vclocks_mux);
++
++	return in_use;
+ }
+ 
+ /* Check if ptp clock shall be free running */
 -- 
 2.39.5
 
