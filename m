@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2DE2192EC;
-	Mon, 23 Jun 2025 22:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1035C221543;
+	Mon, 23 Jun 2025 22:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717477; cv=none; b=tzgpOVbW/b8qXzYgsHP9Lj88jIjbvortDV+6UANlHDe2UqFjT3NAoSeNPp6VFG5fXYVtjoky32ZpuDzBdOHGUu9RZuwuXfMCNh1vpCZEpmnz3tc+n1UJ5WS31oY1onNnQOZOgYJCqI1sql6UTAHT9tc3J2ncbYZAo8PpQXco48s=
+	t=1750717480; cv=none; b=NW1gBOunEmJSq5WIQNNI6lpYcPUXSKG7gfOd4EuUj2xsm4Q0iRwaVEnza/my4xg4TX4Vc0uk1xq8ul/1MbAkjll76A42h+TG+glQGfVq1th5GgQPHamc/0e7K+Dut/nx2j8buw0ywpxbhkMvs1DPe0WAk2r9wGFj8SvjtvuKwI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717477; c=relaxed/simple;
-	bh=DvJYFpKKg3K/x7UTimirTh5wQoKGfQf6R91+4fGqxDU=;
+	s=arc-20240116; t=1750717480; c=relaxed/simple;
+	bh=rMCJDU+2oQiNZsPMClqs/CNIB64Rl7Wlr6jGTsJRTP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kf/eoyUycxii1ZhF7kVm21MA2vVxK1iYRVs2KsafXd3x7Mx1hlML2LLUJRtjBi3htUDPuyBNlmNkO7EJhISvEHRBw0idiG0GiF3v12C4GdludTMT8gW4xdA85mP0oE4XsBy3xaycNRUsxJQ+NLCwQamhNzoH0Nq3HztNUP++eHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FuKItXPG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rfI6O/Bs5fvF1qigOlocel30BX1GMipJ7N0xMKT1fygyzjOfXzy06IhDUwripbZMnKoaJN9aVxCR71C06w+vXLUGhR7oAHKEhNvAeXGve8zxO90l5BAOeHYPQ2HMOwZf5AZBF/aIRPLyB4c4sGKBU9HsG7i1JQNO+EY9OIRZCMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mI1lVlO0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FuKItXPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3579DC4CEEA;
-	Mon, 23 Jun 2025 22:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mI1lVlO0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D965C4CEEA;
+	Mon, 23 Jun 2025 22:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717477;
-	bh=DvJYFpKKg3K/x7UTimirTh5wQoKGfQf6R91+4fGqxDU=;
+	s=korg; t=1750717479;
+	bh=rMCJDU+2oQiNZsPMClqs/CNIB64Rl7Wlr6jGTsJRTP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FuKItXPG+Xz623EOssimaTfaL4tU5kvVzzqBDpWoUVeElwUTIoQol6MCDkO8BT/we
-	 Gn5KSFBYgrHWBdR2WSxDgaZc4vkBzY314sHFOMDSOW3yIzO6J28JeVT9Fbwvrt+3Qt
-	 82kKUmWv/WX77P4jPjlftxuekyyR+6YwU2oi40ro=
+	b=mI1lVlO0t9ywUutzRVF1Vi11EAFDYAEwwiHrd24UyxoCpSzqMRHNPs0/dvje2sSWe
+	 eBM/J8zUF8ZB02M97K7ICRKhN0o6wJwET52nebX4S7fdwIZnZJCpjNIJIOlbm8lwoz
+	 G3BSw0soOnvq75BtLsn9gvVfyQgkZjtaYMVmQ7DA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 434/508] bus: fsl-mc: increase MC_CMD_COMPLETION_TIMEOUT_MS value
-Date: Mon, 23 Jun 2025 15:07:59 +0200
-Message-ID: <20250623130655.846679643@linuxfoundation.org>
+	reox <mailinglist@reox.at>,
+	Avadhut Naik <avadhut.naik@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.12 395/414] EDAC/amd64: Correct number of UMCs for family 19h models 70h-7fh
+Date: Mon, 23 Jun 2025 15:08:52 +0200
+Message-ID: <20250623130651.815323108@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+From: Avadhut Naik <avadhut.naik@amd.com>
 
-[ Upstream commit 23d060136841c58c2f9ee8c08ad945d1879ead4b ]
+commit b2e673ae53ef4b943f68585207a5f21cfc9a0714 upstream.
 
-In case the MC firmware runs in debug mode with extensive prints pushed
-to the console, the current timeout of 500ms is not enough.
-Increase the timeout value so that we don't have any chance of wrongly
-assuming that the firmware is not responding when it's just taking more
-time.
+AMD's Family 19h-based Models 70h-7fh support 4 unified memory controllers
+(UMC) per processor die.
 
-Signed-off-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20250408105814.2837951-7-ioana.ciornei@nxp.com
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The amd64_edac driver, however, assumes only 2 UMCs are supported since
+max_mcs variable for the models has not been explicitly set to 4. The same
+results in incomplete or incorrect memory information being logged to dmesg by
+the module during initialization in some instances.
+
+Fixes: 6c79e42169fe ("EDAC/amd64: Add support for ECC on family 19h model 60h-7Fh")
+Closes: https://lore.kernel.org/all/27dc093f-ce27-4c71-9e81-786150a040b6@reox.at/
+Reported-by: reox <mailinglist@reox.at>
+Signed-off-by: Avadhut Naik <avadhut.naik@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/20250613005233.2330627-1-avadhut.naik@amd.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/fsl-mc/mc-sys.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/edac/amd64_edac.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bus/fsl-mc/mc-sys.c b/drivers/bus/fsl-mc/mc-sys.c
-index f2052cd0a0517..b22c59d57c8f0 100644
---- a/drivers/bus/fsl-mc/mc-sys.c
-+++ b/drivers/bus/fsl-mc/mc-sys.c
-@@ -19,7 +19,7 @@
- /*
-  * Timeout in milliseconds to wait for the completion of an MC command
-  */
--#define MC_CMD_COMPLETION_TIMEOUT_MS	500
-+#define MC_CMD_COMPLETION_TIMEOUT_MS	15000
- 
- /*
-  * usleep_range() min and max values used to throttle down polling
--- 
-2.39.5
-
+--- a/drivers/edac/amd64_edac.c
++++ b/drivers/edac/amd64_edac.c
+@@ -3882,6 +3882,7 @@ static int per_family_init(struct amd64_
+ 			break;
+ 		case 0x70 ... 0x7f:
+ 			pvt->ctl_name			= "F19h_M70h";
++			pvt->max_mcs			= 4;
+ 			pvt->flags.zn_regs_v2		= 1;
+ 			break;
+ 		case 0x90 ... 0x9f:
 
 
