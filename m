@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA201DDC04;
-	Mon, 23 Jun 2025 21:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B947223DE5;
+	Mon, 23 Jun 2025 21:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714397; cv=none; b=lPTbMX3/QoI1Urz39c9iGU+JkZVdXl0eEa6FoN3ORlaVossEbifWd4ZkapY4GdvAqzbdVqAzri3yd6P5Jrg4kt85viaWULN7+wOxgmwgRyIKxYO6zNysGaGwLBFpSLvdo/LeIInVHU34NfZViwH0m0KnWreFF8RW8gDAAD+zIIM=
+	t=1750714399; cv=none; b=OKHxKyFPlWBvaiZgrEKUdyx97LIuO6wrqDy9MQZhu0Q56k/Hts6t+WY3LLku0JxoqNTmOmgYkYok8dzOWvz675F+jl0DYZdVmoBuaa9uT2AK3YuZjOD2DpDF0gL1p5mtNQC95TjyKE7F72M5QzoBG2sQma50IcdKhINuKCsrrxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714397; c=relaxed/simple;
-	bh=03dSJbTlFbF2loXrbpdePQmukLIVcYmR5BoF+7Zv2t8=;
+	s=arc-20240116; t=1750714399; c=relaxed/simple;
+	bh=ukJdL4S3hZ1QhniTjFZALP930kdsiAuyeM/FQNvy9L4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9RCUaQtH4i6fhGT4FaDgAzQN8WF+cG/8P8NFoa8PAImZV1Ty9VRPTEMuRIh+wezs0EVHqGypEEZjCjnNTL6L4l3hwRd0RoD/BhjUGfXbbrYVNf/p4QK2/JkGkx7bpKz29/vUCuCioIaOn9B9Mgc/cfo9S5z0jzUg/+yG0E5Zew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HF0UG/PF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PpDRc6ihxgsSxz2GUqDQs5yUURXewGH/wUYJK8LAoUWm64V/u6AFCu35jIlY0VIrgt6MEUYryIy6sQXqeCDoqRUWslaBbMuo9cEKluD50NTB1AdjcMEC/WWazXJP9NBWHAmWuiUlRXpJH6jV9GVqKX7qUScfBL7TH1CX0UOQYr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJaR7ki+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HF0UG/PF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AACABC4CEEA;
-	Mon, 23 Jun 2025 21:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJaR7ki+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EDA8C4CEEA;
+	Mon, 23 Jun 2025 21:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714397;
-	bh=03dSJbTlFbF2loXrbpdePQmukLIVcYmR5BoF+7Zv2t8=;
+	s=korg; t=1750714399;
+	bh=ukJdL4S3hZ1QhniTjFZALP930kdsiAuyeM/FQNvy9L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HF0UG/PF6BSn7Fny/w+y/P7qeWeM4igC3/8+HnVOE31ZjeJhVyNTjtnxHE/LeKvjz
-	 blXfvXcCqeI0NF7vMNia5AZsohL23ExPiPE5GVfTTe7hCjF0kYAcYRITOTHkLBkPAd
-	 UKJwSowiwF4L6PGcwrj90QWjM7gtBwJa9RUqnbbY=
+	b=pJaR7ki+yg02MOQV34umj5KCKO2JmGFIN7C9cFaaZIR6Qf2myq8i9tnaRO5vFm7c7
+	 yujt9FIh7HyezaPjkoiXd7NpCZZ/tzsdtelXMdEkTry3B6lYqacvlo9I4VfhWiB98x
+	 pPtdLXrXxjUUjGSIRg0H1x0mVp34aOLbPCqDyfs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 100/414] f2fs: prevent kernel warning due to negative i_nlink from corrupted image
-Date: Mon, 23 Jun 2025 15:03:57 +0200
-Message-ID: <20250623130644.603396485@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 388/592] bpf: Use proper type to calculate bpf_raw_tp_null_args.mask index
+Date: Mon, 23 Jun 2025 15:05:46 +0200
+Message-ID: <20250623130709.671459333@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,87 +49,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 
-commit 42cb74a92adaf88061039601ddf7c874f58b554e upstream.
+[ Upstream commit 53ebef53a657d7957d35dc2b953db64f1bb28065 ]
 
-WARNING: CPU: 1 PID: 9426 at fs/inode.c:417 drop_nlink+0xac/0xd0
-home/cc/linux/fs/inode.c:417
-Modules linked in:
-CPU: 1 UID: 0 PID: 9426 Comm: syz-executor568 Not tainted
-6.14.0-12627-g94d471a4f428 #2 PREEMPT(full)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.13.0-1ubuntu1.1 04/01/2014
-RIP: 0010:drop_nlink+0xac/0xd0 home/cc/linux/fs/inode.c:417
-Code: 48 8b 5d 28 be 08 00 00 00 48 8d bb 70 07 00 00 e8 f9 67 e6 ff
-f0 48 ff 83 70 07 00 00 5b 5d e9 9a 12 82 ff e8 95 12 82 ff 90
-&lt;0f&gt; 0b 90 c7 45 48 ff ff ff ff 5b 5d e9 83 12 82 ff e8 fe 5f e6
-ff
-RSP: 0018:ffffc900026b7c28 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff8239710f
-RDX: ffff888041345a00 RSI: ffffffff8239717b RDI: 0000000000000005
-RBP: ffff888054509ad0 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000000000000 R11: ffffffff9ab36f08 R12: ffff88804bb40000
-R13: ffff8880545091e0 R14: 0000000000008000 R15: ffff8880545091e0
-FS:  000055555d0c5880(0000) GS:ffff8880eb3e3000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f915c55b178 CR3: 0000000050d20000 CR4: 0000000000352ef0
-Call Trace:
- <task>
- f2fs_i_links_write home/cc/linux/fs/f2fs/f2fs.h:3194 [inline]
- f2fs_drop_nlink+0xd1/0x3c0 home/cc/linux/fs/f2fs/dir.c:845
- f2fs_delete_entry+0x542/0x1450 home/cc/linux/fs/f2fs/dir.c:909
- f2fs_unlink+0x45c/0x890 home/cc/linux/fs/f2fs/namei.c:581
- vfs_unlink+0x2fb/0x9b0 home/cc/linux/fs/namei.c:4544
- do_unlinkat+0x4c5/0x6a0 home/cc/linux/fs/namei.c:4608
- __do_sys_unlink home/cc/linux/fs/namei.c:4654 [inline]
- __se_sys_unlink home/cc/linux/fs/namei.c:4652 [inline]
- __x64_sys_unlink+0xc5/0x110 home/cc/linux/fs/namei.c:4652
- do_syscall_x64 home/cc/linux/arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xc7/0x250 home/cc/linux/arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fb3d092324b
-Code: 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48 83 c8 ff c3 66
-2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa b8 57 00 00 00 0f 05
-&lt;48&gt; 3d 01 f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01
-48
-RSP: 002b:00007ffdc232d938 EFLAGS: 00000206 ORIG_RAX: 0000000000000057
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fb3d092324b
-RDX: 00007ffdc232d960 RSI: 00007ffdc232d960 RDI: 00007ffdc232d9f0
-RBP: 00007ffdc232d9f0 R08: 0000000000000001 R09: 00007ffdc232d7c0
-R10: 00000000fffffffd R11: 0000000000000206 R12: 00007ffdc232eaf0
-R13: 000055555d0cebb0 R14: 00007ffdc232d958 R15: 0000000000000001
- </task>
+The calculation of the index used to access the mask field in 'struct
+bpf_raw_tp_null_args' is done with 'int' type, which could overflow when
+the tracepoint being attached has more than 8 arguments.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+While none of the tracepoints mentioned in raw_tp_null_args[] currently
+have more than 8 arguments, there do exist tracepoints that had more
+than 8 arguments (e.g. iocost_iocg_forgive_debt), so use the correct
+type for calculation and avoid Smatch static checker warning.
+
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/bpf/20250418074946.35569-1-shung-hsi.yu@suse.com
+
+Closes: https://lore.kernel.org/r/843a3b94-d53d-42db-93d4-be10a4090146@stanley.mountain/
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/namei.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ kernel/bpf/btf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -560,6 +560,15 @@ static int f2fs_unlink(struct inode *dir
- 		goto fail;
- 	}
- 
-+	if (unlikely(inode->i_nlink == 0)) {
-+		f2fs_warn(F2FS_I_SB(inode), "%s: inode (ino=%lx) has zero i_nlink",
-+			  __func__, inode->i_ino);
-+		err = -EFSCORRUPTED;
-+		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
-+		f2fs_put_page(page, 0);
-+		goto fail;
-+	}
-+
- 	f2fs_balance_fs(sbi, true);
- 
- 	f2fs_lock_op(sbi);
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 16ba36f34dfab..656ee11aff676 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -6829,10 +6829,10 @@ bool btf_ctx_access(int off, int size, enum bpf_access_type type,
+ 			/* Is this a func with potential NULL args? */
+ 			if (strcmp(tname, raw_tp_null_args[i].func))
+ 				continue;
+-			if (raw_tp_null_args[i].mask & (0x1 << (arg * 4)))
++			if (raw_tp_null_args[i].mask & (0x1ULL << (arg * 4)))
+ 				info->reg_type |= PTR_MAYBE_NULL;
+ 			/* Is the current arg IS_ERR? */
+-			if (raw_tp_null_args[i].mask & (0x2 << (arg * 4)))
++			if (raw_tp_null_args[i].mask & (0x2ULL << (arg * 4)))
+ 				ptr_err_raw_tp = true;
+ 			break;
+ 		}
+-- 
+2.39.5
+
 
 
