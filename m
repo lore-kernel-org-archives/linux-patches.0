@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8522015ADB4;
-	Mon, 23 Jun 2025 22:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CB822370A;
+	Mon, 23 Jun 2025 22:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717409; cv=none; b=EuOx/ZAziaMxk9mdnTt6i3jWyeMmfDPwZXTrSlDAWV1/QpaRRrByeUDN4PN4cSPwW7nQ8TOFwoPqgivuYZLDJgAVWyXF//OZSGDO24oHSIC2BiZy5xig15c866jVKYR74zjxggMA3GzU+2OLaNM2GJ29tDgVA7U9ttXpIvJuK1s=
+	t=1750717411; cv=none; b=uitBLNs4+QwsSQ7YntmGpk4+pQdS+O0mBpbauWyDfdWvaULCWZJ9PdvY80Fu9D0IA6LtELeu1cEXoS0foMt2mf/db+tMjw4aXnnvc0NRgL755IhqjBQFjayI+Xs3QQFFTs+7b9Es5mOjJ/uPkhvj/z7Gen1va7rj96kJYjQ7v8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717409; c=relaxed/simple;
-	bh=jx7SYcTu3VaSYMfMyv8VX/A12+jsB5qqxdu9mncJC4Y=;
+	s=arc-20240116; t=1750717411; c=relaxed/simple;
+	bh=+6aD/RvU6l2ub3CrRgfUnaXdsss5CMomOCVS+jRSPow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pqdyyGBQgYFcfPHhl6VzScUKeO+WFLs1IcY+JSV62bIm57Yz0+HkALGfWbiHyMkQA1ShMtcCbFk4HSymiFcmNruhrpHmUbVtJmj+2Imh8tkypaWANTu2fEBsV013BN37sR/o3TKt6WbADPFu7KXlRCfPdATTphfipvgQojKwMJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASzt0lH2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ku0BohbDK3Pzj4eVSecdAYM4lWgubgDC9yZwKvq8WtTQ+FcFtyQ5s3MeMw9aev8ymsnpUBMsn/UWxvzJcxl816A+GxX6IU0DUf7QotWMEVH+sugdsUX8DVamBxP1CHFLisbRrNwylEsdiZuykTzFHGdkZWSly+HljRVJBTUdnRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdoobVXn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASzt0lH2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79B1C4CEEA;
-	Mon, 23 Jun 2025 22:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdoobVXn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D526C4CEEA;
+	Mon, 23 Jun 2025 22:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717409;
-	bh=jx7SYcTu3VaSYMfMyv8VX/A12+jsB5qqxdu9mncJC4Y=;
+	s=korg; t=1750717411;
+	bh=+6aD/RvU6l2ub3CrRgfUnaXdsss5CMomOCVS+jRSPow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ASzt0lH2KZ5/CSCvuk0D2SzbDK0BljWPDUce4P8d1hkFHP1wks4aPTSiTDC2yaMEg
-	 z3LYfY+HdWZs6ZvWKwbP3k+LEHWJz/fJwcjq8S3nDYIoqmdNG0BBwD/ZHYfyPb2Q7f
-	 JlxfkZxe1FqeKgv+NTQI2jQSwO1df5JoqDlg6mQE=
+	b=VdoobVXn63c4d4PVVjD6S8NMRc59+OeRi1GYK3it9jNGEG+ny+W4dycv+WvSs+/iD
+	 gdtGQOio1Hqo2hsFEU3it1wPXBlwF5KwRQg4NAyWW4etOeq/LA+bnc7vJwhjX/uSYc
+	 4JWH5BwDCy3QYDUArHQEDQNUzsfgw3ytKQ/HiJFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Wheeler <netdev@lists.ewheeler.net>,
-	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Yong Wang <yongwang@nvidia.com>,
+	Andy Roulin <aroulin@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 382/414] tcp: fix tcp_packet_delayed() for tcp_is_non_sack_preventing_reopen() behavior
-Date: Mon, 23 Jun 2025 15:08:39 +0200
-Message-ID: <20250623130651.503281969@linuxfoundation.org>
+Subject: [PATCH 6.1 421/508] net: bridge: mcast: re-implement br_multicast_{enable, disable}_port functions
+Date: Mon, 23 Jun 2025 15:07:46 +0200
+Message-ID: <20250623130655.552766726@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,109 +51,174 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Yong Wang <yongwang@nvidia.com>
 
-[ Upstream commit d0fa59897e049e84432600e86df82aab3dce7aa5 ]
+[ Upstream commit 4b30ae9adb047dd0a7982975ec3933c529537026 ]
 
-After the following commit from 2024:
+When a bridge port STP state is changed from BLOCKING/DISABLED to
+FORWARDING, the port's igmp query timer will NOT re-arm itself if the
+bridge has been configured as per-VLAN multicast snooping.
 
-commit e37ab7373696 ("tcp: fix to allow timestamp undo if no retransmits were sent")
+Solve this by choosing the correct multicast context(s) to enable/disable
+port multicast based on whether per-VLAN multicast snooping is enabled or
+not, i.e. using per-{port, VLAN} context in case of per-VLAN multicast
+snooping by re-implementing br_multicast_enable_port() and
+br_multicast_disable_port() functions.
 
-...there was buggy behavior where TCP connections without SACK support
-could easily see erroneous undo events at the end of fast recovery or
-RTO recovery episodes. The erroneous undo events could cause those
-connections to suffer repeated loss recovery episodes and high
-retransmit rates.
+Before the patch, the IGMP query does not happen in the last step of the
+following test sequence, i.e. no growth for tx counter:
+ # ip link add name br1 up type bridge vlan_filtering 1 mcast_snooping 1 mcast_vlan_snooping 1 mcast_querier 1 mcast_stats_enabled 1
+ # bridge vlan global set vid 1 dev br1 mcast_snooping 1 mcast_querier 1 mcast_query_interval 100 mcast_startup_query_count 0
+ # ip link add name swp1 up master br1 type dummy
+ # bridge link set dev swp1 state 0
+ # ip -j -p stats show dev swp1 group xstats_slave subgroup bridge suite mcast | jq '.[]["multicast"]["igmp_queries"]["tx_v2"]'
+1
+ # sleep 1
+ # ip -j -p stats show dev swp1 group xstats_slave subgroup bridge suite mcast | jq '.[]["multicast"]["igmp_queries"]["tx_v2"]'
+1
+ # bridge link set dev swp1 state 3
+ # sleep 2
+ # ip -j -p stats show dev swp1 group xstats_slave subgroup bridge suite mcast | jq '.[]["multicast"]["igmp_queries"]["tx_v2"]'
+1
 
-The problem was an interaction between the non-SACK behavior on these
-connections and the undo logic. The problem is that, for non-SACK
-connections at the end of a loss recovery episode, if snd_una ==
-high_seq, then tcp_is_non_sack_preventing_reopen() holds steady in
-CA_Recovery or CA_Loss, but clears tp->retrans_stamp to 0. Then upon
-the next ACK the "tcp: fix to allow timestamp undo if no retransmits
-were sent" logic saw the tp->retrans_stamp at 0 and erroneously
-concluded that no data was retransmitted, and erroneously performed an
-undo of the cwnd reduction, restoring cwnd immediately to the value it
-had before loss recovery.  This caused an immediate burst of traffic
-and build-up of queues and likely another immediate loss recovery
-episode.
+After the patch, the IGMP query happens in the last step of the test:
+ # ip link add name br1 up type bridge vlan_filtering 1 mcast_snooping 1 mcast_vlan_snooping 1 mcast_querier 1 mcast_stats_enabled 1
+ # bridge vlan global set vid 1 dev br1 mcast_snooping 1 mcast_querier 1 mcast_query_interval 100 mcast_startup_query_count 0
+ # ip link add name swp1 up master br1 type dummy
+ # bridge link set dev swp1 state 0
+ # ip -j -p stats show dev swp1 group xstats_slave subgroup bridge suite mcast | jq '.[]["multicast"]["igmp_queries"]["tx_v2"]'
+1
+ # sleep 1
+ # ip -j -p stats show dev swp1 group xstats_slave subgroup bridge suite mcast | jq '.[]["multicast"]["igmp_queries"]["tx_v2"]'
+1
+ # bridge link set dev swp1 state 3
+ # sleep 2
+ # ip -j -p stats show dev swp1 group xstats_slave subgroup bridge suite mcast | jq '.[]["multicast"]["igmp_queries"]["tx_v2"]'
+3
 
-This commit fixes tcp_packet_delayed() to ignore zero retrans_stamp
-values for non-SACK connections when snd_una is at or above high_seq,
-because tcp_is_non_sack_preventing_reopen() clears retrans_stamp in
-this case, so it's not a valid signal that we can undo.
-
-Note that the commit named in the Fixes footer restored long-present
-behavior from roughly 2005-2019, so apparently this bug was present
-for a while during that era, and this was simply not caught.
-
-Fixes: e37ab7373696 ("tcp: fix to allow timestamp undo if no retransmits were sent")
-Reported-by: Eric Wheeler <netdev@lists.ewheeler.net>
-Closes: https://lore.kernel.org/netdev/64ea9333-e7f9-0df-b0f2-8d566143acab@ewheeler.net/
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Co-developed-by: Yuchung Cheng <ycheng@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Yong Wang <yongwang@nvidia.com>
+Reviewed-by: Andy Roulin <aroulin@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 37 +++++++++++++++++++++++++------------
- 1 file changed, 25 insertions(+), 12 deletions(-)
+ net/bridge/br_multicast.c | 77 +++++++++++++++++++++++++++++++++++----
+ 1 file changed, 69 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index c59c1cc1a8fed..d176e7888a203 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -2482,20 +2482,33 @@ static inline bool tcp_packet_delayed(const struct tcp_sock *tp)
- {
- 	const struct sock *sk = (const struct sock *)tp;
- 
--	if (tp->retrans_stamp &&
--	    tcp_tsopt_ecr_before(tp, tp->retrans_stamp))
--		return true;  /* got echoed TS before first retransmission */
--
--	/* Check if nothing was retransmitted (retrans_stamp==0), which may
--	 * happen in fast recovery due to TSQ. But we ignore zero retrans_stamp
--	 * in TCP_SYN_SENT, since when we set FLAG_SYN_ACKED we also clear
--	 * retrans_stamp even if we had retransmitted the SYN.
-+	/* Received an echoed timestamp before the first retransmission? */
-+	if (tp->retrans_stamp)
-+		return tcp_tsopt_ecr_before(tp, tp->retrans_stamp);
-+
-+	/* We set tp->retrans_stamp upon the first retransmission of a loss
-+	 * recovery episode, so normally if tp->retrans_stamp is 0 then no
-+	 * retransmission has happened yet (likely due to TSQ, which can cause
-+	 * fast retransmits to be delayed). So if snd_una advanced while
-+	 * (tp->retrans_stamp is 0 then apparently a packet was merely delayed,
-+	 * not lost. But there are exceptions where we retransmit but then
-+	 * clear tp->retrans_stamp, so we check for those exceptions.
- 	 */
--	if (!tp->retrans_stamp &&	   /* no record of a retransmit/SYN? */
--	    sk->sk_state != TCP_SYN_SENT)  /* not the FLAG_SYN_ACKED case? */
--		return true;  /* nothing was retransmitted */
- 
--	return false;
-+	/* (1) For non-SACK connections, tcp_is_non_sack_preventing_reopen()
-+	 * clears tp->retrans_stamp when snd_una == high_seq.
-+	 */
-+	if (!tcp_is_sack(tp) && !before(tp->snd_una, tp->high_seq))
-+		return false;
-+
-+	/* (2) In TCP_SYN_SENT tcp_clean_rtx_queue() clears tp->retrans_stamp
-+	 * when setting FLAG_SYN_ACKED is set, even if the SYN was
-+	 * retransmitted.
-+	 */
-+	if (sk->sk_state == TCP_SYN_SENT)
-+		return false;
-+
-+	return true;	/* tp->retrans_stamp is zero; no retransmit yet */
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index 5972821ce1950..e28c9db0c4db2 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -1931,12 +1931,17 @@ static void __br_multicast_enable_port_ctx(struct net_bridge_mcast_port *pmctx)
+ 	}
  }
  
- /* Undo procedures. */
+-void br_multicast_enable_port(struct net_bridge_port *port)
++static void br_multicast_enable_port_ctx(struct net_bridge_mcast_port *pmctx)
+ {
+-	struct net_bridge *br = port->br;
++	struct net_bridge *br = pmctx->port->br;
+ 
+ 	spin_lock_bh(&br->multicast_lock);
+-	__br_multicast_enable_port_ctx(&port->multicast_ctx);
++	if (br_multicast_port_ctx_is_vlan(pmctx) &&
++	    !(pmctx->vlan->priv_flags & BR_VLFLAG_MCAST_ENABLED)) {
++		spin_unlock_bh(&br->multicast_lock);
++		return;
++	}
++	__br_multicast_enable_port_ctx(pmctx);
+ 	spin_unlock_bh(&br->multicast_lock);
+ }
+ 
+@@ -1963,11 +1968,67 @@ static void __br_multicast_disable_port_ctx(struct net_bridge_mcast_port *pmctx)
+ 	br_multicast_rport_del_notify(pmctx, del);
+ }
+ 
++static void br_multicast_disable_port_ctx(struct net_bridge_mcast_port *pmctx)
++{
++	struct net_bridge *br = pmctx->port->br;
++
++	spin_lock_bh(&br->multicast_lock);
++	if (br_multicast_port_ctx_is_vlan(pmctx) &&
++	    !(pmctx->vlan->priv_flags & BR_VLFLAG_MCAST_ENABLED)) {
++		spin_unlock_bh(&br->multicast_lock);
++		return;
++	}
++
++	__br_multicast_disable_port_ctx(pmctx);
++	spin_unlock_bh(&br->multicast_lock);
++}
++
++static void br_multicast_toggle_port(struct net_bridge_port *port, bool on)
++{
++#if IS_ENABLED(CONFIG_BRIDGE_VLAN_FILTERING)
++	if (br_opt_get(port->br, BROPT_MCAST_VLAN_SNOOPING_ENABLED)) {
++		struct net_bridge_vlan_group *vg;
++		struct net_bridge_vlan *vlan;
++
++		rcu_read_lock();
++		vg = nbp_vlan_group_rcu(port);
++		if (!vg) {
++			rcu_read_unlock();
++			return;
++		}
++
++		/* iterate each vlan, toggle vlan multicast context */
++		list_for_each_entry_rcu(vlan, &vg->vlan_list, vlist) {
++			struct net_bridge_mcast_port *pmctx =
++						&vlan->port_mcast_ctx;
++			u8 state = br_vlan_get_state(vlan);
++			/* enable vlan multicast context when state is
++			 * LEARNING or FORWARDING
++			 */
++			if (on && br_vlan_state_allowed(state, true))
++				br_multicast_enable_port_ctx(pmctx);
++			else
++				br_multicast_disable_port_ctx(pmctx);
++		}
++		rcu_read_unlock();
++		return;
++	}
++#endif
++	/* toggle port multicast context when vlan snooping is disabled */
++	if (on)
++		br_multicast_enable_port_ctx(&port->multicast_ctx);
++	else
++		br_multicast_disable_port_ctx(&port->multicast_ctx);
++}
++
++void br_multicast_enable_port(struct net_bridge_port *port)
++{
++	br_multicast_toggle_port(port, true);
++}
++
+ void br_multicast_disable_port(struct net_bridge_port *port)
+ {
+-	spin_lock_bh(&port->br->multicast_lock);
+-	__br_multicast_disable_port_ctx(&port->multicast_ctx);
+-	spin_unlock_bh(&port->br->multicast_lock);
++	br_multicast_toggle_port(port, false);
+ }
+ 
+ static int __grp_src_delete_marked(struct net_bridge_port_group *pg)
+@@ -4156,9 +4217,9 @@ int br_multicast_toggle_vlan_snooping(struct net_bridge *br, bool on,
+ 		__br_multicast_open(&br->multicast_ctx);
+ 	list_for_each_entry(p, &br->port_list, list) {
+ 		if (on)
+-			br_multicast_disable_port(p);
++			br_multicast_disable_port_ctx(&p->multicast_ctx);
+ 		else
+-			br_multicast_enable_port(p);
++			br_multicast_enable_port_ctx(&p->multicast_ctx);
+ 	}
+ 
+ 	list_for_each_entry(vlan, &vg->vlan_list, vlist)
 -- 
 2.39.5
 
