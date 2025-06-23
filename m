@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86E0219E0;
-	Mon, 23 Jun 2025 21:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DD5219E0;
+	Mon, 23 Jun 2025 21:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712789; cv=none; b=VzqDhJTyrD6LnMG16tDrfPsvIWTPO/xrAwhScJuurM7iq6wVFPRzSH8XYvvtMqG8avV8JUe3T8aJChMlaryyy1kHg9wN3eA+9JO84FIvhJ0rw+32nbeDcPUqhKVxcYKctuOZD5/WLtsVLi6csjDcj9N/dVvNhg7RjmJtQohameI=
+	t=1750712793; cv=none; b=eYQtgjnpgyBuBX0CO08vR0rzsH7J8AjzaNS8zmQ8sAnCjLdLEtuMcgkEMSeKwrXmkNGKnQ5mHV60o96UStvtH1dvpKUCirkW/cjsJhNZG8k0FvTb9gPyMMiJSqYmD7PRatcdFSCfWao9kUS/3DzCGEfndfWT3VfHP4/HMhSh/P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712789; c=relaxed/simple;
-	bh=KezYU8KfxV5DkZ7q5c1FEVook/Luk9CbDKYQfLlt7Mc=;
+	s=arc-20240116; t=1750712793; c=relaxed/simple;
+	bh=RxZwN8jQMyRSU7cS3if0USNroHHaGPtFZMEbhbup0AA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AdpJPspzU6IfosihXwU8Phw/HgNBogfWsj72YCM1hrrBBITlEGRIgVmmnrD/X7cC/kOFOOVkiyYQiulAj7IcwNz34+Evy0BTJ+AxrTPZ9iw4mIz70bu0kUDhdpXRTHa9OIxLeBg6InHGTyhiB/XBJMuJIwthu2aKCzVqQhR1ivQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H77g6QCt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cSUYnqR4rYVvb8d/kj8U6cfW/m8sNKJgkR66EzBHPdgXW4IAM0ueBclfTtmki7pTiDsfCvSgrsxEt0pqL/s6Xwr2neURfOOna1WMXPm2RfO75trPQADL5X3x9T2dLY4Be999NyjAY9Pp0hlWWf4OVujzFRL6OfGGmu9r677Rjn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YI5heMho; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H77g6QCt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA98C4CEEA;
-	Mon, 23 Jun 2025 21:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YI5heMho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F61C4CEEA;
+	Mon, 23 Jun 2025 21:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712789;
-	bh=KezYU8KfxV5DkZ7q5c1FEVook/Luk9CbDKYQfLlt7Mc=;
+	s=korg; t=1750712792;
+	bh=RxZwN8jQMyRSU7cS3if0USNroHHaGPtFZMEbhbup0AA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H77g6QCtRYJa6Rk6895hZmEcurO+/51rszyaE5JRWxx0xEi+1xMe8mPPaa2QNsutG
-	 RuTNKK6vUHoBSWavfMqRMzZrPVWfOiTFjItkXnh0KG4Bab5ZfeDr/xJu4s1z5QOT3f
-	 KUlkfV1hY3zUfvwfTBi5J6Mxoc9dmLbV4tPnshfA=
+	b=YI5heMhooD2Dkg+l25nXLBVH2TkUAfWTkUKark6cPJrx2W8S+uiwI6zBxuy9Eib4J
+	 vSajt3NteXL1P98FexWaOATAcBaC8WBfV4ucNmwhVxobbHNNs3vFA9MZhi2NQdujSj
+	 lZMhJg/Nfr+j2mB1mM4OBqbaiD99f/1x/vITQOU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Mark Brown <broonie@kernel.org>,
-	WangYuli <wangyuli@uniontech.com>,
-	Kees Cook <kees@kernel.org>,
+	"Dylan J. Wolff" <wolffd@comp.nus.edu.sg>,
+	Jiacheng Xu <stitch@zju.edu.cn>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 089/411] randstruct: gcc-plugin: Remove bogus void member
-Date: Mon, 23 Jun 2025 15:03:53 +0200
-Message-ID: <20250623130635.680529085@linuxfoundation.org>
+Subject: [PATCH 6.15 294/592] jfs: Fix null-ptr-deref in jfs_ioc_trim
+Date: Mon, 23 Jun 2025 15:04:12 +0200
+Message-ID: <20250623130707.370091759@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,121 +46,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Dylan Wolff <wolffd@comp.nus.edu.sg>
 
-[ Upstream commit e136a4062174a9a8d1c1447ca040ea81accfa6a8 ]
+[ Upstream commit a4685408ff6c3e2af366ad9a7274f45ff3f394ee ]
 
-When building the randomized replacement tree of struct members, the
-randstruct GCC plugin would insert, as the first member, a 0-sized void
-member. This appears as though it was done to catch non-designated
-("unnamed") static initializers, which wouldn't be stable since they
-depend on the original struct layout order.
+[ Syzkaller Report ]
 
-This was accomplished by having the side-effect of the "void member"
-tripping an assert in GCC internals (count_type_elements) if the member
-list ever needed to be counted (e.g. for figuring out the order of members
-during a non-designated initialization), which would catch impossible type
-(void) in the struct:
+Oops: general protection fault, probably for non-canonical address
+0xdffffc0000000087: 0000 [#1
+KASAN: null-ptr-deref in range [0x0000000000000438-0x000000000000043f]
+CPU: 2 UID: 0 PID: 10614 Comm: syz-executor.0 Not tainted
+6.13.0-rc6-gfbfd64d25c7a-dirty #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Sched_ext: serialise (enabled+all), task: runnable_at=-30ms
+RIP: 0010:jfs_ioc_trim+0x34b/0x8f0
+Code: e7 e8 59 a4 87 fe 4d 8b 24 24 4d 8d bc 24 38 04 00 00 48 8d 93
+90 82 fe ff 4c 89 ff 31 f6
+RSP: 0018:ffffc900055f7cd0 EFLAGS: 00010206
+RAX: 0000000000000087 RBX: 00005866a9e67ff8 RCX: 000000000000000a
+RDX: 0000000000000001 RSI: 0000000000000004 RDI: 0000000000000001
+RBP: dffffc0000000000 R08: ffff88807c180003 R09: 1ffff1100f830000
+R10: dffffc0000000000 R11: ffffed100f830001 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000438
+FS:  00007fe520225640(0000) GS:ffff8880b7e80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005593c91b2c88 CR3: 000000014927c000 CR4: 00000000000006f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+? __die_body+0x61/0xb0
+? die_addr+0xb1/0xe0
+? exc_general_protection+0x333/0x510
+? asm_exc_general_protection+0x26/0x30
+? jfs_ioc_trim+0x34b/0x8f0
+jfs_ioctl+0x3c8/0x4f0
+? __pfx_jfs_ioctl+0x10/0x10
+? __pfx_jfs_ioctl+0x10/0x10
+__se_sys_ioctl+0x269/0x350
+? __pfx___se_sys_ioctl+0x10/0x10
+? do_syscall_64+0xfb/0x210
+do_syscall_64+0xee/0x210
+? syscall_exit_to_user_mode+0x1e0/0x330
+entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fe51f4903ad
+Code: c3 e8 a7 2b 00 00 0f 1f 80 00 00 00 00 f3 0f 1e fa 48 89 f8 48
+89 f7 48 89 d6 48 89 ca 4d
+RSP: 002b:00007fe5202250c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 00007fe51f5cbf80 RCX: 00007fe51f4903ad
+RDX: 0000000020000680 RSI: 00000000c0185879 RDI: 0000000000000005
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fe520225640
+R13: 000000000000000e R14: 00007fe51f44fca0 R15: 00007fe52021d000
+</TASK>
+Modules linked in:
+---[ end trace 0000000000000000 ]---
+RIP: 0010:jfs_ioc_trim+0x34b/0x8f0
+Code: e7 e8 59 a4 87 fe 4d 8b 24 24 4d 8d bc 24 38 04 00 00 48 8d 93
+90 82 fe ff 4c 89 ff 31 f6
+RSP: 0018:ffffc900055f7cd0 EFLAGS: 00010206
+RAX: 0000000000000087 RBX: 00005866a9e67ff8 RCX: 000000000000000a
+RDX: 0000000000000001 RSI: 0000000000000004 RDI: 0000000000000001
+RBP: dffffc0000000000 R08: ffff88807c180003 R09: 1ffff1100f830000
+R10: dffffc0000000000 R11: ffffed100f830001 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000438
+FS:  00007fe520225640(0000) GS:ffff8880b7e80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005593c91b2c88 CR3: 000000014927c000 CR4: 00000000000006f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Kernel panic - not syncing: Fatal exception
 
-security/landlock/fs.c: In function ‘hook_file_ioctl_common’:
-security/landlock/fs.c:1745:61: internal compiler error: in count_type_elements, at expr.cc:7075
- 1745 |                         .u.op = &(struct lsm_ioctlop_audit) {
-      |                                                             ^
+[ Analysis ]
 
-static HOST_WIDE_INT
-count_type_elements (const_tree type, bool for_ctor_p)
-{
-  switch (TREE_CODE (type))
-...
-    case VOID_TYPE:
-    default:
-      gcc_unreachable ();
-    }
-}
+We believe that we have found a concurrency bug in the `fs/jfs` module
+that results in a null pointer dereference. There is a closely related
+issue which has been fixed:
 
-However this is a redundant safety measure since randstruct uses the
-__designated_initializer attribute both internally and within the
-__randomized_layout attribute macro so that this would be enforced
-by the compiler directly even when randstruct was not enabled (via
--Wdesignated-init).
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d6c1b3599b2feb5c7291f5ac3a36e5fa7cedb234
 
-A recent change in Landlock ended up tripping the same member counting
-routine when using a full-struct copy initializer as part of an anonymous
-initializer. This, however, is a false positive as the initializer is
-copying between identical structs (and hence identical layouts). The
-"path" member is "struct path", a randomized struct, and is being copied
-to from another "struct path", the "f_path" member:
+... but, unfortunately, the accepted patch appears to still be
+susceptible to a null pointer dereference under some interleavings.
 
-        landlock_log_denial(landlock_cred(file->f_cred), &(struct landlock_request) {
-                .type = LANDLOCK_REQUEST_FS_ACCESS,
-                .audit = {
-                        .type = LSM_AUDIT_DATA_IOCTL_OP,
-                        .u.op = &(struct lsm_ioctlop_audit) {
-                                .path = file->f_path,
-                                .cmd = cmd,
-                        },
-                },
-	...
+To trigger the bug, we think that `JFS_SBI(ipbmap->i_sb)->bmap` is set
+to NULL in `dbFreeBits` and then dereferenced in `jfs_ioc_trim`. This
+bug manifests quite rarely under normal circumstances, but is
+triggereable from a syz-program.
 
-As can be seen with the coming randstruct KUnit test, there appears to
-be no behavioral problems with this kind of initialization when the void
-member is removed from the randstruct GCC plugin, so remove it.
-
-Reported-by: "Dr. David Alan Gilbert" <linux@treblig.org>
-Closes: https://lore.kernel.org/lkml/Z_PRaKx7q70MKgCA@gallifrey/
-Reported-by: Mark Brown <broonie@kernel.org>
-Closes: https://lore.kernel.org/lkml/20250407-kbuild-disable-gcc-plugins-v1-1-5d46ae583f5e@kernel.org/
-Reported-by: WangYuli <wangyuli@uniontech.com>
-Closes: https://lore.kernel.org/lkml/337D5D4887277B27+3c677db3-a8b9-47f0-93a4-7809355f1381@uniontech.com/
-Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
-Signed-off-by: Kees Cook <kees@kernel.org>
+Reported-and-tested-by: Dylan J. Wolff<wolffd@comp.nus.edu.sg>
+Reported-and-tested-by: Jiacheng Xu <stitch@zju.edu.cn>
+Signed-off-by: Dylan J. Wolff<wolffd@comp.nus.edu.sg>
+Signed-off-by: Jiacheng Xu <stitch@zju.edu.cn>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gcc-plugins/randomize_layout_plugin.c | 18 +-----------------
- 1 file changed, 1 insertion(+), 17 deletions(-)
+ fs/jfs/jfs_discard.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/gcc-plugins/randomize_layout_plugin.c b/scripts/gcc-plugins/randomize_layout_plugin.c
-index 60e9359a71a50..a8595df5fb6e8 100644
---- a/scripts/gcc-plugins/randomize_layout_plugin.c
-+++ b/scripts/gcc-plugins/randomize_layout_plugin.c
-@@ -377,29 +377,13 @@ static int relayout_struct(tree type)
+diff --git a/fs/jfs/jfs_discard.c b/fs/jfs/jfs_discard.c
+index 5f4b305030ad5..4b660296caf39 100644
+--- a/fs/jfs/jfs_discard.c
++++ b/fs/jfs/jfs_discard.c
+@@ -86,7 +86,8 @@ int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
+ 	down_read(&sb->s_umount);
+ 	bmp = JFS_SBI(ip->i_sb)->bmap;
  
- 	shuffle(type, (tree *)newtree, shuffle_length);
- 
--	/*
--	 * set up a bogus anonymous struct field designed to error out on unnamed struct initializers
--	 * as gcc provides no other way to detect such code
--	 */
--	list = make_node(FIELD_DECL);
--	TREE_CHAIN(list) = newtree[0];
--	TREE_TYPE(list) = void_type_node;
--	DECL_SIZE(list) = bitsize_zero_node;
--	DECL_NONADDRESSABLE_P(list) = 1;
--	DECL_FIELD_BIT_OFFSET(list) = bitsize_zero_node;
--	DECL_SIZE_UNIT(list) = size_zero_node;
--	DECL_FIELD_OFFSET(list) = size_zero_node;
--	DECL_CONTEXT(list) = type;
--	// to satisfy the constify plugin
--	TREE_READONLY(list) = 1;
--
- 	for (i = 0; i < num_fields - 1; i++)
- 		TREE_CHAIN(newtree[i]) = newtree[i+1];
- 	TREE_CHAIN(newtree[num_fields - 1]) = NULL_TREE;
- 
- 	main_variant = TYPE_MAIN_VARIANT(type);
- 	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant)) {
--		TYPE_FIELDS(variant) = list;
-+		TYPE_FIELDS(variant) = newtree[0];
- 		TYPE_ATTRIBUTES(variant) = copy_list(TYPE_ATTRIBUTES(variant));
- 		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("randomize_performed"), NULL_TREE, TYPE_ATTRIBUTES(variant));
- 		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("designated_init"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+-	if (minlen > bmp->db_agsize ||
++	if (bmp == NULL ||
++	    minlen > bmp->db_agsize ||
+ 	    start >= bmp->db_mapsize ||
+ 	    range->len < sb->s_blocksize) {
+ 		up_read(&sb->s_umount);
 -- 
 2.39.5
 
