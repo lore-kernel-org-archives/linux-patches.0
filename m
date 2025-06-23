@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6658F2253F9;
-	Mon, 23 Jun 2025 21:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A34E221FDC;
+	Mon, 23 Jun 2025 21:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713380; cv=none; b=bu4hGcugrqhWVJaXQOs1krs4IBf0uGkRA3avRepYAHVLlVitf9Jf3gJSxTNhRIynIBC8E1MOpwK+rczX3MeJ7xu9QPjp2D48awEpIxfpqbuw1iNDtHE/vdKMD4jn+vuyFdQVt1vZypdPdsaDDfag3jw1dD85V26LFywirDUGJKQ=
+	t=1750713381; cv=none; b=L05oQvJKRpk0i95TaApZEJj9dyS6l0Nmlp23Tt7OCgH9w9349ntrTczdBzyuboCkB3ydmcD3fUVG1+yb5DuKkuIuJFE4BwB7aqdXeu7ZJFCXFuTz16h+wGgmnPZRBvEoAZ6aMCKVyM2Yx1Jth++M9ZhPdpt78h0Q+NNMKatbQXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713380; c=relaxed/simple;
-	bh=0zRISVZC7UW13erzri1ijaqVfF34qzjw7+YI+si78/M=;
+	s=arc-20240116; t=1750713381; c=relaxed/simple;
+	bh=8E4qmek7ywOqqb9t/HRUs8fxndbYJsU0d+qBnnx34F0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NpcoicC4QokC7zdPQbaiw5LVaKxBZs/0fWfM9Y4LOcFoIYzInJvoCk3jWEORJIAQnr7EvLKa0T75n1eVLAcbuziitx6RWVFSxkm/gvZCB3ppb1t4e0jPAImAv6x7T4whDP9AI6Xj/R6llsafB1lmC+7ItqkNWu31tbz72mR8E9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XxDHcG6r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jQlfM1Ny05LYnXGtuo4NkYgtDfbpbp9QR0Au70E2Tagb0uPpEURXg2c5FHip6x3Th/cMM5ulLlVAOrsyKF/lRAYP4TaS0Wl/8xg3a1OFFENCZo92C8idbSATBERC/b92EXNc2GG197gqpbQH/twsyr6STn+cTCJzilEGaPcKbgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7Z9IcNL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XxDHcG6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1852C4CEED;
-	Mon, 23 Jun 2025 21:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7Z9IcNL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF5CC4CEF0;
+	Mon, 23 Jun 2025 21:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713380;
-	bh=0zRISVZC7UW13erzri1ijaqVfF34qzjw7+YI+si78/M=;
+	s=korg; t=1750713377;
+	bh=8E4qmek7ywOqqb9t/HRUs8fxndbYJsU0d+qBnnx34F0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XxDHcG6rpq8qpeXPeljkMfYlUL0NI6oWpMh57WjanANCoc9LGUPPyNVO1zYZ43YOT
-	 MYc+6fQPIhxfA0I/Er8/fk4norbF4lP6ym/SH7n5ouLIXpbJg/CbMNRz70bNWiUO2A
-	 KcZ4MPxQ0Au4Sr8YgFtuuZTZlb0n0sNyysOGGCJo=
+	b=w7Z9IcNLl3c/j6oO08m99GtKC4JDRzsYo8dYYt+QqHOH7M96SQN6D1URB3UlMfuri
+	 1gKGzKZSy0sTo0JcLkOdrgH6B5S9mwerXaemriSwGtGuUqExZKnVM1ZHkDS6F35feO
+	 APRZxM490wn07Bhsnm/KSffPgFWdDVK6NXYbJKVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/508] Bluetooth: MGMT: iterate over mesh commands in mgmt_mesh_foreach()
-Date: Mon, 23 Jun 2025 15:02:18 +0200
-Message-ID: <20250623130647.545094329@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.12 041/414] media: ov8856: suppress probe deferral errors
+Date: Mon, 23 Jun 2025 15:02:58 +0200
+Message-ID: <20250623130643.062667687@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 3bb88524b7d030160bb3c9b35f928b2778092111 ]
+commit e3d86847fba58cf71f66e81b6a2515e07039ae17 upstream.
 
-In 'mgmt_mesh_foreach()', iterate over mesh commands
-rather than generic mgmt ones. Compile tested only.
+Probe deferral should not be logged as an error:
 
-Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	ov8856 24-0010: failed to get HW configuration: -517
+
+Use dev_err_probe() for the clock lookup and drop the (mostly) redundant
+dev_err() from sensor probe() to suppress it.
+
+Note that errors during regulator lookup is already correctly logged
+using dev_err_probe().
+
+Fixes: 0c2c7a1e0d69 ("media: ov8856: Add devicetree support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/mgmt_util.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/ov8856.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/mgmt_util.c b/net/bluetooth/mgmt_util.c
-index 0115f783bde80..17e32605d9b00 100644
---- a/net/bluetooth/mgmt_util.c
-+++ b/net/bluetooth/mgmt_util.c
-@@ -321,7 +321,7 @@ void mgmt_mesh_foreach(struct hci_dev *hdev,
- {
- 	struct mgmt_mesh_tx *mesh_tx, *tmp;
+--- a/drivers/media/i2c/ov8856.c
++++ b/drivers/media/i2c/ov8856.c
+@@ -2276,8 +2276,8 @@ static int ov8856_get_hwcfg(struct ov885
+ 	if (!is_acpi_node(fwnode)) {
+ 		ov8856->xvclk = devm_clk_get(dev, "xvclk");
+ 		if (IS_ERR(ov8856->xvclk)) {
+-			dev_err(dev, "could not get xvclk clock (%pe)\n",
+-				ov8856->xvclk);
++			dev_err_probe(dev, PTR_ERR(ov8856->xvclk),
++				      "could not get xvclk clock\n");
+ 			return PTR_ERR(ov8856->xvclk);
+ 		}
  
--	list_for_each_entry_safe(mesh_tx, tmp, &hdev->mgmt_pending, list) {
-+	list_for_each_entry_safe(mesh_tx, tmp, &hdev->mesh_pending, list) {
- 		if (!sk || mesh_tx->sk == sk)
- 			cb(mesh_tx, data);
- 	}
--- 
-2.39.5
-
+@@ -2382,11 +2382,8 @@ static int ov8856_probe(struct i2c_clien
+ 		return -ENOMEM;
+ 
+ 	ret = ov8856_get_hwcfg(ov8856, &client->dev);
+-	if (ret) {
+-		dev_err(&client->dev, "failed to get HW configuration: %d",
+-			ret);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	v4l2_i2c_subdev_init(&ov8856->sd, client, &ov8856_subdev_ops);
+ 
 
 
