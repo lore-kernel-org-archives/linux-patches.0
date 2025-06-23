@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D905916419;
-	Mon, 23 Jun 2025 13:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836C7347DD;
+	Mon, 23 Jun 2025 13:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685799; cv=none; b=Isl350gyyzt0xKVuDmuULtq5WehPLmi17gHXSUEswIXj7GIsB8j5Ap1GDgPe/liKsAKpaVcjyBhCFeZK2w6leshl9zY1fHCjdDJzOGyKPM9s6DAWZ/uqZwsQY1egPLLOqIO1pXuWvI8WvllZs2QW5CGevtzV0/qirHQ9FEJN3M0=
+	t=1750685802; cv=none; b=atDHsh1RoXqmuwbUPAys0ReZG+MYcQjGDuBTzvrtIF0LQt5ApZYbMTc0S0miwqS28Gh55zBqA9sSPKXNnWpnQ6pHRBEM2ROIHmrPvFoS2Cc/v/dy0fAS6PA9VCdu/ERpTX1d7CDq0oq7lKjQ0uLy1mT4Ukm7kELImVwG0ZJAg1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685799; c=relaxed/simple;
-	bh=rjwNsbE/iED57gMiTj/eMO9bdb8RwUbQuyUmoSPfkrg=;
+	s=arc-20240116; t=1750685802; c=relaxed/simple;
+	bh=Vkz45OexMB28NveXkSAs6zn3OmPcn2SweWwZqJ2CoCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=piXWWsLzE57/98Uwz9eycW5RxKJ8b4qrEg5msyBfSOoD3W2lL5C7kgP2t5Hm1huGpXfnEfgzn6BujG859ShAwLFX8KZADSy3hwsX9mmwThIUwHuLkIZQdlJ5DrOkhvJIn3IUgPTpDVab2R5IhWhxyai288gk6wLW8VzcHiUJEcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEvWEYQf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sm/nmOEMUiqvstanRzJlZZeo4o+zw4ZI7SsrSYiUX6lIYf0FxokFpVNK14N5ywAPG/KSQZVZMH5UDHij7VrPzAek16PNxObgmEna7nLyHpnUztGq94Qv9vFJwr5PFZza2Q0U2be+qiFd4B96yDOAT7iAAyuaUrUJ6x/m4WNTq2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHbD9SSq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEvWEYQf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F459C4CEEA;
-	Mon, 23 Jun 2025 13:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHbD9SSq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16390C4CEEA;
+	Mon, 23 Jun 2025 13:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685799;
-	bh=rjwNsbE/iED57gMiTj/eMO9bdb8RwUbQuyUmoSPfkrg=;
+	s=korg; t=1750685802;
+	bh=Vkz45OexMB28NveXkSAs6zn3OmPcn2SweWwZqJ2CoCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kEvWEYQf2efSUxzX+qbslVds0lZYHNOOwpXWC2RVw6Lggx7yKmqUjsjYHhoFxgybN
-	 N6uhxQXyfG4niIS5FZBwSOGpB1VpCaxe9fsl2vxPVGQn4E1Sm1BJydoahfPn8J5fe6
-	 dnS+Lgj+Q6xfAVP6tsiP8B9JncpMf+6dw06tyVVc=
+	b=SHbD9SSq3pjcpIE5YhbyYcQDOZr64zPI4ZgD2+7drkre7/FzLQSIaE9WgtD4gJ2PG
+	 Ue+2M1WcXGEbLpXqheIB1+IIUzhAYsQ6co4/YtjBz7qpyOQucR2uBOhX0EHgvzZ5eQ
+	 lCVbzN5KLCO8/cXPv95b8Hhaau/kmxoAD0746Bxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tarang Raval <tarang.raval@siliconsignals.io>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 268/592] media: i2c: imx334: Fix runtime PM handling in remove function
-Date: Mon, 23 Jun 2025 15:03:46 +0200
-Message-ID: <20250623130706.694171195@linuxfoundation.org>
+Subject: [PATCH 5.15 084/411] ARM: dts: qcom: apq8064 merge hw splinlock into corresponding syscon device
+Date: Mon, 23 Jun 2025 15:03:48 +0200
+Message-ID: <20250623130635.526139269@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tarang Raval <tarang.raval@siliconsignals.io>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit b493cd3c03641f9bbaa9787e43ca92163cb50051 ]
+[ Upstream commit 325c6a441ae1f8fcb1db9bb945b8bdbd3142141e ]
 
-pm_runtime_suspended() only checks the current runtime PM status and does
-not modify it, making it ineffective in this context. This could result in
-improper power management if the device remains active when removed.
+Follow up the expected way of describing the SFPB hwspinlock and merge
+hwspinlock node into corresponding syscon node, fixing several dt-schema
+warnings.
 
-This patch fixes the issue by introducing a check with
-pm_runtime_status_suspended() to determine if the device is already
-suspended. If it is not, it calls imx334_power_off() to power down the
-device and then uses pm_runtime_set_suspended() to correctly update the
-runtime PM status to suspended.
-
-Signed-off-by: Tarang Raval <tarang.raval@siliconsignals.io>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: 24a9baf933dc ("ARM: dts: qcom: apq8064: Add hwmutex and SMEM nodes")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250318-fix-nexus-4-v2-7-bcedd1406790@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/imx334.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/media/i2c/imx334.c b/drivers/media/i2c/imx334.c
-index b51721c01e1d6..63d812a41542f 100644
---- a/drivers/media/i2c/imx334.c
-+++ b/drivers/media/i2c/imx334.c
-@@ -1435,7 +1435,10 @@ static void imx334_remove(struct i2c_client *client)
- 	v4l2_ctrl_handler_free(sd->ctrl_handler);
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index d70f071fd8304..50436197fff4a 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -211,12 +211,6 @@
+ 		};
+ 	};
  
- 	pm_runtime_disable(&client->dev);
--	pm_runtime_suspended(&client->dev);
-+	if (!pm_runtime_status_suspended(&client->dev)) {
-+		imx334_power_off(&client->dev);
-+		pm_runtime_set_suspended(&client->dev);
-+	}
+-	sfpb_mutex: hwmutex {
+-		compatible = "qcom,sfpb-mutex";
+-		syscon = <&sfpb_wrapper_mutex 0x604 0x4>;
+-		#hwlock-cells = <1>;
+-	};
+-
+ 	smem {
+ 		compatible = "qcom,smem";
+ 		memory-region = <&smem_region>;
+@@ -360,9 +354,10 @@
+ 			pinctrl-0 = <&ps_hold>;
+ 		};
  
- 	mutex_destroy(&imx334->mutex);
- }
+-		sfpb_wrapper_mutex: syscon@1200000 {
+-			compatible = "syscon";
+-			reg = <0x01200000 0x8000>;
++		sfpb_mutex: hwmutex@1200600 {
++			compatible = "qcom,sfpb-mutex";
++			reg = <0x01200600 0x100>;
++			#hwlock-cells = <1>;
+ 		};
+ 
+ 		intc: interrupt-controller@2000000 {
 -- 
 2.39.5
 
