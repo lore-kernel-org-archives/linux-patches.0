@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2472417C3;
-	Mon, 23 Jun 2025 13:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5B81F1522;
+	Mon, 23 Jun 2025 13:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684463; cv=none; b=Uz62yM44J3Q0vEbtnjCtYlEiM3QK1d4QXz+NGuMmSd67S0MXXhc5Ce7jeI4HqnR0p9gvGziUY1Q6kLQd+xU5u3is/sfN/Ku63BxgKfdfAKGlM0paCaVbU2Ai7sHP95CoSBxRjafTVIhVd30bnBEJPdWQ//H4k9Z5lMmBF2JHseI=
+	t=1750684466; cv=none; b=fCJuCmiaShupWACNGZwnEJ4XZKXOPcVHLqDMjTZhJss2snLR0XguYefNU2yiF7oTdmD+jlpUxRLbx/YJK2ihN/BMYRq9f8mw+YBrzzkZED12CFUC5mfU2DaRBDEzLtN2thx9sgHcr6JqqkX0/jH8xuSTimWepqouJOT1N3fBhUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684463; c=relaxed/simple;
-	bh=gQzYglmSwaUjRAZmVKn9M2SACrM6QX1ogC97w9Lk4a4=;
+	s=arc-20240116; t=1750684466; c=relaxed/simple;
+	bh=U5WYrlJPlkAZnLyFhwzh20EV6jqB44qBGpWaI2giGVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O5Bd8waTi2oUk4MP3iUuzgkBcS4RGHlrpsPibUzLyDv6RnMT7waVMJp8pO56H6uxrf3N87at/fCuJlO6Fax1w9/WOR55vfaYs1SSOKHWl85Y+dJankLZ3m8hfOiTExUY2N1TGJhE5i3UFp5EAoaVjoBH5pABX0lqNC2x08//jGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6zBCHW5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a/sk0G2sLzlZqM4NbuB502UFk+eUbVFmEmknHgA9GrqJ14TDhEV4ZeiOJd/OXXUvTtjI7vpuyXL4aae24fyXNmtSfs6sZGNyY79hwG2b7ggsfz56lytjEl1AI01Ynk44u2LGk0v1OLQXI4JlnQS4U6J/cBXi222srUdDinyScsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEJzdk4C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6zBCHW5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F97DC4CEEA;
-	Mon, 23 Jun 2025 13:14:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEJzdk4C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDBCC4CEEA;
+	Mon, 23 Jun 2025 13:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684463;
-	bh=gQzYglmSwaUjRAZmVKn9M2SACrM6QX1ogC97w9Lk4a4=;
+	s=korg; t=1750684466;
+	bh=U5WYrlJPlkAZnLyFhwzh20EV6jqB44qBGpWaI2giGVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w6zBCHW5XQ7FfnhMfq/xxkM7F1lBiWSGxxCJx5fTmt5QS4zsc5zoA9ntCbM6D8yz0
-	 UPz0ywmeRutGuXDkMIbU6BXiGMqAEPoOEBM1v0JEBzpgdoDVUaR5lUmdkG7m+C93uc
-	 B2iHwEow/BmCrQKoP7/KbvxDY498LXd6TGK1Csqk=
+	b=nEJzdk4CUYkma+anMoy7lKmqwkUUb0IkCngyO55azA3Rr7LbeS2XQA0BXfJbanm7q
+	 WBMax7MD/t8S/fHV4brD/k1IE3qYYWUxPQnAqmVroE5V0t5zw9XhTJXvPIc6aCQnp7
+	 mVXoH5SfRVdQ0/WCo9TF6H36RDPeGc440APEFph0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	syzbot+5d8e79d323a13aa0b248@syzkaller.appspotmail.com,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.15 033/592] anon_inode: use a proper mode internally
-Date: Mon, 23 Jun 2025 14:59:51 +0200
-Message-ID: <20250623130701.030028909@linuxfoundation.org>
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.15 024/592] s390/pci: Prevent self deletion in disable_slot()
+Date: Mon, 23 Jun 2025 14:59:42 +0200
+Message-ID: <20250623130700.809083454@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -51,118 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit cfd86ef7e8e7b9e015707e46479a6b1de141eed0 upstream.
+commit 47c397844869ad0e6738afb5879c7492f4691122 upstream.
 
-This allows the VFS to not trip over anonymous inodes and we can add
-asserts based on the mode into the vfs. When we report it to userspace
-we can simply hide the mode to avoid regressions. I've audited all
-direct callers of alloc_anon_inode() and only secretmen overrides i_mode
-and i_op inode operations but it already uses a regular file.
+As disable_slot() takes a struct zpci_dev from the Configured to the
+Standby state. In Standby there is still a hotplug slot so this is not
+usually a case of sysfs self deletion. This is important because self
+deletion gets very hairy in terms of locking (see for example
+recover_store() in arch/s390/pci/pci_sysfs.c).
 
-Link: https://lore.kernel.org/20250407-work-anon_inode-v1-1-53a44c20d44e@kernel.org
-Fixes: af153bb63a336 ("vfs: catch invalid modes in may_open()")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Cc: stable@vger.kernel.org # all LTS kernels
-Reported-by: syzbot+5d8e79d323a13aa0b248@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67ed3fb3.050a0220.14623d.0009.GAE@google.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Because the pci_dev_put() is not within the critical section of the
+zdev->state_lock however, disable_slot() can turn into a case of self
+deletion if zPCI device event handling slips between the mutex_unlock()
+and the pci_dev_put(). If the latter is the last put and
+zpci_release_device() is called this then tries to remove the hotplug
+slot via zpci_exit_slot() which will try to remove the hotplug slot
+directory the disable_slot() is part of i.e. self deletion.
+
+Prevent this by widening the zdev->state_lock critical section to
+include the pci_dev_put() which is then guaranteed to happen with the
+struct zpci_dev still in Standby state ensuring it will not lead to
+a zpci_release_device() call as at least the zPCI event handling code
+still holds a reference.
+
+Cc: stable@vger.kernel.org
+Fixes: a46044a92add ("s390/pci: fix zpci_zdev_put() on reserve")
+Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+Tested-by: Gerd Bayer <gbayer@linux.ibm.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/anon_inodes.c |   36 ++++++++++++++++++++++++++++++++++++
- fs/internal.h    |    3 +++
- fs/libfs.c       |    8 +++++++-
- 3 files changed, 46 insertions(+), 1 deletion(-)
+ drivers/pci/hotplug/s390_pci_hpc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/anon_inodes.c
-+++ b/fs/anon_inodes.c
-@@ -24,10 +24,44 @@
+--- a/drivers/pci/hotplug/s390_pci_hpc.c
++++ b/drivers/pci/hotplug/s390_pci_hpc.c
+@@ -65,9 +65,9 @@ static int disable_slot(struct hotplug_s
  
- #include <linux/uaccess.h>
- 
-+#include "internal.h"
-+
- static struct vfsmount *anon_inode_mnt __ro_after_init;
- static struct inode *anon_inode_inode __ro_after_init;
- 
- /*
-+ * User space expects anonymous inodes to have no file type in st_mode.
-+ *
-+ * In particular, 'lsof' has this legacy logic:
-+ *
-+ *	type = s->st_mode & S_IFMT;
-+ *	switch (type) {
-+ *	  ...
-+ *	case 0:
-+ *		if (!strcmp(p, "anon_inode"))
-+ *			Lf->ntype = Ntype = N_ANON_INODE;
-+ *
-+ * to detect our old anon_inode logic.
-+ *
-+ * Rather than mess with our internal sane inode data, just fix it
-+ * up here in getattr() by masking off the format bits.
-+ */
-+int anon_inode_getattr(struct mnt_idmap *idmap, const struct path *path,
-+		       struct kstat *stat, u32 request_mask,
-+		       unsigned int query_flags)
-+{
-+	struct inode *inode = d_inode(path->dentry);
-+
-+	generic_fillattr(&nop_mnt_idmap, request_mask, inode, stat);
-+	stat->mode &= ~S_IFMT;
-+	return 0;
-+}
-+
-+static const struct inode_operations anon_inode_operations = {
-+	.getattr = anon_inode_getattr,
-+};
-+
-+/*
-  * anon_inodefs_dname() is called from d_path().
-  */
- static char *anon_inodefs_dname(struct dentry *dentry, char *buffer, int buflen)
-@@ -66,6 +100,7 @@ static struct inode *anon_inode_make_sec
- 	if (IS_ERR(inode))
- 		return inode;
- 	inode->i_flags &= ~S_PRIVATE;
-+	inode->i_op = &anon_inode_operations;
- 	error =	security_inode_init_security_anon(inode, &QSTR(name),
- 						  context_inode);
- 	if (error) {
-@@ -313,6 +348,7 @@ static int __init anon_inode_init(void)
- 	anon_inode_inode = alloc_anon_inode(anon_inode_mnt->mnt_sb);
- 	if (IS_ERR(anon_inode_inode))
- 		panic("anon_inode_init() inode allocation failed (%ld)\n", PTR_ERR(anon_inode_inode));
-+	anon_inode_inode->i_op = &anon_inode_operations;
- 
- 	return 0;
+ 	rc = zpci_deconfigure_device(zdev);
+ out:
+-	mutex_unlock(&zdev->state_lock);
+ 	if (pdev)
+ 		pci_dev_put(pdev);
++	mutex_unlock(&zdev->state_lock);
+ 	return rc;
  }
---- a/fs/internal.h
-+++ b/fs/internal.h
-@@ -343,3 +343,6 @@ static inline bool path_mounted(const st
- void file_f_owner_release(struct file *file);
- bool file_seek_cur_needs_f_lock(struct file *file);
- int statmount_mnt_idmap(struct mnt_idmap *idmap, struct seq_file *seq, bool uid_map);
-+int anon_inode_getattr(struct mnt_idmap *idmap, const struct path *path,
-+		       struct kstat *stat, u32 request_mask,
-+		       unsigned int query_flags);
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -1647,7 +1647,13 @@ struct inode *alloc_anon_inode(struct su
- 	 * that it already _is_ on the dirty list.
- 	 */
- 	inode->i_state = I_DIRTY;
--	inode->i_mode = S_IRUSR | S_IWUSR;
-+	/*
-+	 * Historically anonymous inodes didn't have a type at all and
-+	 * userspace has come to rely on this. Internally they're just
-+	 * regular files but S_IFREG is masked off when reporting
-+	 * information to userspace.
-+	 */
-+	inode->i_mode = S_IFREG | S_IRUSR | S_IWUSR;
- 	inode->i_uid = current_fsuid();
- 	inode->i_gid = current_fsgid();
- 	inode->i_flags |= S_PRIVATE;
+ 
 
 
