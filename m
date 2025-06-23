@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA53222581;
-	Mon, 23 Jun 2025 22:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E9122370A;
+	Mon, 23 Jun 2025 22:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717676; cv=none; b=lDKK6ViDEyrWSIVoA9QP1098xIhpIMyKrtQpiMvcO4P3qPCN5BpP/i1IwgfeBTVBNT7iL6LiI2sggGmlaVx/zhN6aQgxySofSG05/ugZWLXP8rOmRAr++mh4r/Y61f78EUOSBPZp3Us4EWZHpXl99NzwgKmLpuuU9nlBBZghWKs=
+	t=1750717678; cv=none; b=NgmILE9Bbw5qrL+VxYSFU01pGdLPE3G7fOn0r9lUkLB5T4OdHdTtOT62jm3Yr4BOzbhv4gvh0EZaxyLaoepXy/+I/+t5SI+5YHEL7nWI1kcD0a0lHhmowWev6+3CHyljsrjWnEtMtPz22h1P9QcmmUN3c5OQtPguN6/3Tz0KdGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717676; c=relaxed/simple;
-	bh=EQ+WChWP7gVf2t+xRNXis5Z2yQ5kLRBMNsQoZBrP5Xw=;
+	s=arc-20240116; t=1750717678; c=relaxed/simple;
+	bh=omfFhS7QX1lR7+bORn1tVTkEVB/TaS7nj3PnJaW8/Ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=If+I+sj0kEQUcTgT+90e4BDZCNV3zGRaU6HkU4EKuOrgEBf7nDBoukxUEDEsEDBkNKbqoF0vo8CPeTSbcOxdrDvZqwfUC9wbOAMBsAsKQCQLSIeVvVR2WVEIA0oAQuFgGDK9kBnzTWsZ5W/f3HEP0uc6ZhF0vFjamecDJUkRDVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAjgrjx3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BpwPIA/oPoPH+pAI/kE2zHUyjcfLJfIEo9QbRNf1enyzFblL9cioJGmlvFGZrvyff/JRttzHh6zNnZ9YvX8JSFEiJLGFShS+fLNvOTy+eu05mnh53C+GC9b4srzkteQxngUOdrqHutERmNNMKase0g87d9qjf5ETOgX8qcLUUUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZ1TiU7x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAjgrjx3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7D6C4CEEA;
-	Mon, 23 Jun 2025 22:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZ1TiU7x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44137C4CEEA;
+	Mon, 23 Jun 2025 22:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717676;
-	bh=EQ+WChWP7gVf2t+xRNXis5Z2yQ5kLRBMNsQoZBrP5Xw=;
+	s=korg; t=1750717678;
+	bh=omfFhS7QX1lR7+bORn1tVTkEVB/TaS7nj3PnJaW8/Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TAjgrjx3eBqjlt2HGQzr+eNWRFPnoTZ1WKPtJJcQ65bLeQGRzkx8MK7txkGqOBsQ8
-	 YAtmi7HLO+pgP8xrMbNnHcS/coAuBvuNvp3a/M22B9VgPn2aKcyM2DOxZf8QOEn3ss
-	 wVgN57Ki41z7CheTnrsjyxTKkfS7ctwqPeyuJwOY=
+	b=sZ1TiU7xaDyfhqd5Zduri2ZwlVYNJkQ8Uv07fuewPv84Ajda8GyIvYldhQJELvH/o
+	 f8Kgmdhv3QrYpI+FEJ4rm+SenJTbdCsTCxYATSqLiu311a4sPMsh0T1zNQ7MDo8BgD
+	 e12bNVzzgsEatNmw1NPq74fwlZqwDh7/3Uy272F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: [PATCH 6.1 499/508] serial: sh-sci: Increment the runtime usage counter for the earlycon device
-Date: Mon, 23 Jun 2025 15:09:04 +0200
-Message-ID: <20250623130657.294934721@linuxfoundation.org>
+	Jon Hunter <jonathanh@nvidia.com>
+Subject: [PATCH 6.1 500/508] Revert "cpufreq: tegra186: Share policy per cluster"
+Date: Mon, 23 Jun 2025 15:09:05 +0200
+Message-ID: <20250623130657.316779217@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -49,85 +49,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-commit 651dee03696e1dfde6d9a7e8664bbdcd9a10ea7f upstream.
+This reverts commit 89172666228de1cefcacf5bc6f61c6281751d2ed which is
+upstream commit be4ae8c19492cd6d5de61ccb34ffb3f5ede5eec8.
 
-In the sh-sci driver, serial ports are mapped to the sci_ports[] array,
-with earlycon mapped at index zero.
+This commit is causing a suspend regression on Tegra186 Jetson TX2 with
+Linux v6.12.y kernels. This is not seen with Linux v6.15 that includes
+this change but indicates that there are there changes missing.
+Therefore, revert this change.
 
-The uart_add_one_port() function eventually calls __device_attach(),
-which, in turn, calls pm_request_idle(). The identified code path is as
-follows:
-
-uart_add_one_port() ->
-  serial_ctrl_register_port() ->
-    serial_core_register_port() ->
-      serial_core_port_device_add() ->
-        serial_base_port_add() ->
-          device_add() ->
-            bus_probe_device() ->
-              device_initial_probe() ->
-                __device_attach() ->
-                  // ...
-                  if (dev->p->dead) {
-                    // ...
-                  } else if (dev->driver) {
-                    // ...
-                  } else {
-                    // ...
-                    pm_request_idle(dev);
-                    // ...
-                  }
-
-The earlycon device clocks are enabled by the bootloader. However, the
-pm_request_idle() call in __device_attach() disables the SCI port clocks
-while earlycon is still active.
-
-The earlycon write function, serial_console_write(), calls
-sci_poll_put_char() via serial_console_putchar(). If the SCI port clocks
-are disabled, writing to earlycon may sometimes cause the SR.TDFE bit to
-remain unset indefinitely, causing the while loop in sci_poll_put_char()
-to never exit. On single-core SoCs, this can result in the system being
-blocked during boot when this issue occurs.
-
-To resolve this, increment the runtime PM usage counter for the earlycon
-SCI device before registering the UART port.
-
-Fixes: 0b0cced19ab1 ("serial: sh-sci: Add CONFIG_SERIAL_EARLYCON support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250116182249.3828577-6-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/linux-tegra/bf1dabf7-0337-40e9-8b8e-4e93a0ffd4cc@nvidia.com/
+Fixes: 89172666228d ("cpufreq: tegra186: Share policy per cluster")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sh-sci.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/cpufreq/tegra186-cpufreq.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -3352,6 +3352,22 @@ static int sci_probe_single(struct platf
+--- a/drivers/cpufreq/tegra186-cpufreq.c
++++ b/drivers/cpufreq/tegra186-cpufreq.c
+@@ -73,18 +73,11 @@ static int tegra186_cpufreq_init(struct
+ {
+ 	struct tegra186_cpufreq_data *data = cpufreq_get_driver_data();
+ 	unsigned int cluster = data->cpus[policy->cpu].bpmp_cluster_id;
+-	u32 cpu;
  
- 	if (sci_uart_earlycon && sci_ports[0].port.mapbase == sci_res->start) {
- 		/*
-+		 * In case:
-+		 * - this is the earlycon port (mapped on index 0 in sci_ports[]) and
-+		 * - it now maps to an alias other than zero and
-+		 * - the earlycon is still alive (e.g., "earlycon keep_bootcon" is
-+		 *   available in bootargs)
-+		 *
-+		 * we need to avoid disabling clocks and PM domains through the runtime
-+		 * PM APIs called in __device_attach(). For this, increment the runtime
-+		 * PM reference counter (the clocks and PM domains were already enabled
-+		 * by the bootloader). Otherwise the earlycon may access the HW when it
-+		 * has no clocks enabled leading to failures (infinite loop in
-+		 * sci_poll_put_char()).
-+		 */
-+		pm_runtime_get_noresume(&dev->dev);
-+
-+		/*
- 		 * Skip cleanup the sci_port[0] in early_console_exit(), this
- 		 * port is the same as the earlycon one.
- 		 */
+ 	policy->freq_table = data->clusters[cluster].table;
+ 	policy->cpuinfo.transition_latency = 300 * 1000;
+ 	policy->driver_data = NULL;
+ 
+-	/* set same policy for all cpus in a cluster */
+-	for (cpu = 0; cpu < ARRAY_SIZE(tegra186_cpus); cpu++) {
+-		if (data->cpus[cpu].bpmp_cluster_id == cluster)
+-			cpumask_set_cpu(cpu, policy->cpus);
+-	}
+-
+ 	return 0;
+ }
+ 
 
 
