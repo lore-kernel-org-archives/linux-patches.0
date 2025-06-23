@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E602517AF;
-	Mon, 23 Jun 2025 13:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205AC2528F3;
+	Mon, 23 Jun 2025 13:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685004; cv=none; b=esmnKX5iavyCEkRmw8/C0Iy3q0XWOAqliW1SqBzPikIrPmNbbQFD+qLj48Qg09yyL4ucN+hKXjRwGVggk1EmUBMbA8HzP8N5/lMa2fwfRlCA146wL7ySR5fqZMNoYSuSIOWuPoNqmdXVUGfJjzrAcfUZw+rPeEOjtuinFpWnSz4=
+	t=1750685006; cv=none; b=O+rHGBTi4fqg3xDFlhL7DSjmVOo7D+v2vYraScvP4SJte1YDa/cLKdlPAXWBjITUS6q7BhEYJfRUdF6CopcmAuMSuf1U6uOBLqmw/2WJXHx3Z1W32zhtCa/2e1liLExziRb1w3UWvM1ud2ZG5kj2PwQ9Ip1JHKUj2sx4M+xADSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685004; c=relaxed/simple;
-	bh=U2Bbx8UB5UKB65zPsQtfMC1Jz+OcO317cTB6whwlcIE=;
+	s=arc-20240116; t=1750685006; c=relaxed/simple;
+	bh=zpgVYh3K7PxcNgmpNm77YjyDoEkFWichbOfbu+GQ6lk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZMw0ePbqHCyprztiNXqEYZj4RcYWIV283ALDLY/fn/a258G8vBA9xW7mR5czCcPfsHcEhIBssWsvxDRbSsbeSOwCKvzVVrAEGo4CW9BRBmp+L6Qc7DArR8dz7f1/W7PaJHhf4stMpEOsYxxCZyIuw2F7tyc/fct2mJDj75vIRwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OzWaz1n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JcJpxkKFyGieiAlfFlVtIuU/3HS+qk5FI8DW1mG2Hgchgak4bU9OXwUYWmbdDG9gPtDpgAX7/4yHXLy1B1O3pYhz0ddXj64F89Vkmg4Frqr/86pTlntJU4XpPC9UfXmqEC8AYj78dMLfbI1OiNUGESGx7ykNIMifrwvfRDAC9TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPro/KLG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OzWaz1n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29917C4CEF0;
-	Mon, 23 Jun 2025 13:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPro/KLG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8ECBC4CEEA;
+	Mon, 23 Jun 2025 13:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685003;
-	bh=U2Bbx8UB5UKB65zPsQtfMC1Jz+OcO317cTB6whwlcIE=;
+	s=korg; t=1750685006;
+	bh=zpgVYh3K7PxcNgmpNm77YjyDoEkFWichbOfbu+GQ6lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0OzWaz1nmnMTzrYU09gTGRk6rVECnFNoz6H2tqLc7B+N3q2l22pVSQIVRXyOliVPu
-	 HYNPGnExTtAZa1A6M7UHvIzdELJQlvVf1PR+KvkGFYjMPBAUamIw3xZOJh4+dUsVKs
-	 u8ydyB32RqqHFQ7qElcKxCKHPLmMVEVyMo4CsGc8=
+	b=gPro/KLGNH9Jy0D9+2cYfaI+BcvisiEqgtEMSA/HZ55vmbpNc8XyqPqrlBdv0nu2q
+	 Rc98p/SryI2rTXRNiKqkzBnhvaDx8o5psnd5KmKe7bNFT8rstQjAoA8gUfVgUyFtIK
+	 xYK/IqsA/+mH3fEAAf5nNlie8RY3rOn/bPv5wPBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Schoenick <johns@valvesoftware.com>,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.15 168/592] ovl: Fix nested backing file paths
-Date: Mon, 23 Jun 2025 15:02:06 +0200
-Message-ID: <20250623130704.275055519@linuxfoundation.org>
+	Sean Nyekjaer <sean@geanix.com>,
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.15 200/592] iio: imu: inv_icm42600: Fix temperature calculation
+Date: Mon, 23 Jun 2025 15:02:38 +0200
+Message-ID: <20250623130705.047194495@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -52,63 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: André Almeida <andrealmeid@igalia.com>
+From: Sean Nyekjaer <sean@geanix.com>
 
-commit 924577e4f6ca473de1528953a0e13505fae61d7b upstream.
+commit e2f820014239df9360064079ae93f838ff3b7f8c upstream.
 
-When the lowerdir of an overlayfs is a merged directory of another
-overlayfs, ovl_open_realfile() will fail to open the real file and point
-to a lower dentry copy, without the proper parent path. After this,
-d_path() will then display the path incorrectly as if the file is placed
-in the root directory.
+>From the documentation:
+"offset to be added to <type>[Y]_raw prior toscaling by <type>[Y]_scale"
+Offset should be applied before multiplying scale, so divide offset by
+scale to make this correct.
 
-This bug can be triggered with the following setup:
-
- mkdir -p ovl-A/lower ovl-A/upper ovl-A/merge ovl-A/work
- mkdir -p ovl-B/upper ovl-B/merge ovl-B/work
-
- cp /bin/cat ovl-A/lower/
-
- mount -t overlay overlay -o \
- lowerdir=ovl-A/lower,upperdir=ovl-A/upper,workdir=ovl-A/work \
- ovl-A/merge
-
- mount -t overlay overlay -o \
- lowerdir=ovl-A/merge,upperdir=ovl-B/upper,workdir=ovl-B/work \
- ovl-B/merge
-
- ovl-A/merge/cat /proc/self/maps | grep --color cat
- ovl-B/merge/cat /proc/self/maps | grep --color cat
-
-The first cat will correctly show `/ovl-A/merge/cat`, while the second
-one shows just `/cat`.
-
-To fix that, uses file_user_path() inside of backing_file_open() to get
-the correct file path for the dentry.
-
-Co-developed-by: John Schoenick <johns@valvesoftware.com>
-Signed-off-by: John Schoenick <johns@valvesoftware.com>
-Signed-off-by: André Almeida <andrealmeid@igalia.com>
-Fixes: def3ae83da02 ("fs: store real path instead of fake path in backing file f_path")
-Cc: <stable@vger.kernel.org> # v6.7
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Fixes: bc3eb0207fb5 ("iio: imu: inv_icm42600: add temperature sensor support")
+Signed-off-by: Sean Nyekjaer <sean@geanix.com>
+Acked-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Link: https://patch.msgid.link/20250502-imu-v1-1-129b8391a4e3@geanix.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/file.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_temp.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/fs/overlayfs/file.c
-+++ b/fs/overlayfs/file.c
-@@ -48,8 +48,8 @@ static struct file *ovl_open_realfile(co
- 		if (!inode_owner_or_capable(real_idmap, realinode))
- 			flags &= ~O_NOATIME;
- 
--		realfile = backing_file_open(&file->f_path, flags, realpath,
--					     current_cred());
-+		realfile = backing_file_open(file_user_path((struct file *) file),
-+					     flags, realpath, current_cred());
- 	}
- 	ovl_revert_creds(old_cred);
- 
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_temp.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_temp.c
+@@ -67,16 +67,18 @@ int inv_icm42600_temp_read_raw(struct ii
+ 		return IIO_VAL_INT;
+ 	/*
+ 	 * T°C = (temp / 132.48) + 25
+-	 * Tm°C = 1000 * ((temp * 100 / 13248) + 25)
++	 * Tm°C = 1000 * ((temp / 132.48) + 25)
++	 * Tm°C = 7.548309 * temp + 25000
++	 * Tm°C = (temp + 3312) * 7.548309
+ 	 * scale: 100000 / 13248 ~= 7.548309
+-	 * offset: 25000
++	 * offset: 3312
+ 	 */
+ 	case IIO_CHAN_INFO_SCALE:
+ 		*val = 7;
+ 		*val2 = 548309;
+ 		return IIO_VAL_INT_PLUS_MICRO;
+ 	case IIO_CHAN_INFO_OFFSET:
+-		*val = 25000;
++		*val = 3312;
+ 		return IIO_VAL_INT;
+ 	default:
+ 		return -EINVAL;
 
 
