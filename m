@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D73F21D3DD;
-	Mon, 23 Jun 2025 21:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58F7221FCC;
+	Mon, 23 Jun 2025 21:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714716; cv=none; b=E9fnGqGw+buWexFfLsysoqzQCPnXvEYasWMTQN/lky3G+M3JwWKFCf3UJXH0AuYAds24dHUfry/aj9PTeWh4uxs1Q+MP8A6pgSFcxBgmkxvjStK1vzq6Qq7r5ZHYEEzO3XvfrV1UKLZVCNCEFWRr9sdhgh8xn+MPH2ZKkXFjlPI=
+	t=1750714718; cv=none; b=fpEjNzQF0Ked/iN9a6PGOUTpPlJwvflcVqN0HfPd1K4bdZckifHVWeVXqc73QZWeeGP/cjfsM/pVsDcyl9scBoPXULOW9OMjH7OMdogo5l1ZZkhOBUUwBYME+ESKHWPPFAb2tItnXCmZBoSD8e8ciNZHULArkRWoCKfvc1n7nGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714716; c=relaxed/simple;
-	bh=qSHkR1Q1CN6aB70ZnU+deOJK7evF6wa+KToqM5rLv+M=;
+	s=arc-20240116; t=1750714718; c=relaxed/simple;
+	bh=WAor2sqyToqZHdt4YfMvox0L6krzIhfo32Lf08w0ngg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TmfNptEMaGpSL9bH+zwfNQsxmMg2iq5tzEaOYNpq6JFBwb0u+x4NgpYrluxOw4GetovsKwPzvzXpSL5HkC/cINZWC9j92p9uRBJyXHMw1EDbl7kGi+489BJpVS/dprxTcvCZH18fMc97gp/6uFgl3Dpm/Ese59XSvm93pSd8oDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUTKP4Pl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h66hjAIMig0gIBqLwsr96Dx/5/Qujx0gEqhYxggA1j38KyVVH760UDHEAjDorZOVO16vWq0m9pUvRvllJ/12dDa5mjAgzXdNmLJACPL1UYhRQgMSs6y8MLnK9zO9KDivC+QWr9hylv4n0UbeROkGUGrgcpUGXjqgmjuRmisE5IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnDjZFtK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUTKP4Pl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A47C4CEEA;
-	Mon, 23 Jun 2025 21:38:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnDjZFtK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35767C4CEEA;
+	Mon, 23 Jun 2025 21:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714716;
-	bh=qSHkR1Q1CN6aB70ZnU+deOJK7evF6wa+KToqM5rLv+M=;
+	s=korg; t=1750714718;
+	bh=WAor2sqyToqZHdt4YfMvox0L6krzIhfo32Lf08w0ngg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xUTKP4Plipoc1CH5LiUM8/r+64HWthSe3AsTtwICsrG1RjgB4gZpzC/W4qCb/VMoL
-	 Sa8Zd/Jx0HJtQnWnIZ+6Vxs4tJNUt4BUZpvFjseLUVLFzG+AaCF4cKKhJzhGhT15Nk
-	 20pRgMt5QMhFZa+gy0oSbkNorfubJwH3EvpcFS5Y=
+	b=VnDjZFtKjgzUFT/pklaMym0e9d1ITwWDv/yzMSBET8jr7R6/YPHdHyNKwKiJ2lMAP
+	 Vu0FtxkMkCDiaeNsi2ojSa0Z7WQCZfDvWMzXvKlwLM9Lj9QJRCCEhJIF9hXrEPRwph
+	 88M+7fOrrnF1A+oMr0DCI3R+dz9+6wtZzSba2oCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Zaborowski <andrew.zaborowski@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Tony Luck <tony.luck@intel.com>,
-	balrogg@gmail.com,
-	linux-sgx@vger.kernel.org,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <dchinner@redhat.com>,
+	Leah Rumancik <leah.rumancik@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 154/290] x86/sgx: Prevent attempts to reclaim poisoned pages
-Date: Mon, 23 Jun 2025 15:06:55 +0200
-Message-ID: <20250623130631.526388501@linuxfoundation.org>
+Subject: [PATCH 6.1 191/508] xfs: fix interval filtering in multi-step fsmap queries
+Date: Mon, 23 Jun 2025 15:03:56 +0200
+Message-ID: <20250623130649.970894479@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,89 +48,191 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Zaborowski <andrew.zaborowski@intel.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit ed16618c380c32c68c06186d0ccbb0d5e0586e59 ]
+[ Upstream commit 63ef7a35912dd743cabd65d5bb95891625c0dd46 ]
 
-TL;DR: SGX page reclaim touches the page to copy its contents to
-secondary storage. SGX instructions do not gracefully handle machine
-checks. Despite this, the existing SGX code will try to reclaim pages
-that it _knows_ are poisoned. Avoid even trying to reclaim poisoned pages.
+I noticed a bug in ranged GETFSMAP queries:
 
-The longer story:
+# xfs_io -c 'fsmap -vvvv' /opt
+ EXT: DEV  BLOCK-RANGE           OWNER              FILE-OFFSET      AG AG-OFFSET           TOTAL
+   0: 8:80 [0..7]:               static fs metadata                  0  (0..7)                  8
+<snip>
+   9: 8:80 [192..223]:           137                0..31            0  (192..223)             32
+# xfs_io -c 'fsmap -vvvv -d 208 208' /opt
+#
 
-Pages used by an enclave only get epc_page->poison set in
-arch_memory_failure() but they currently stay on sgx_active_page_list until
-sgx_encl_release(), with the SGX_EPC_PAGE_RECLAIMER_TRACKED flag untouched.
+That's not right -- we asked what block maps block 208, and we should've
+received a mapping for inode 137 offset 16.  Instead, we get nothing.
 
-epc_page->poison is not checked in the reclaimer logic meaning that, if other
-conditions are met, an attempt will be made to reclaim an EPC page that was
-poisoned.  This is bad because 1. we don't want that page to end up added
-to another enclave and 2. it is likely to cause one core to shut down
-and the kernel to panic.
+The root cause of this problem is a mis-interaction between the fsmap
+code and how btree ranged queries work.  xfs_btree_query_range returns
+any btree record that overlaps with the query interval, even if the
+record starts before or ends after the interval.  Similarly, GETFSMAP is
+supposed to return a recordset containing all records that overlap the
+range queried.
 
-Specifically, reclaiming uses microcode operations including "EWB" which
-accesses the EPC page contents to encrypt and write them out to non-SGX
-memory.  Those operations cannot handle MCEs in their accesses other than
-by putting the executing core into a special shutdown state (affecting
-both threads with HT.)  The kernel will subsequently panic on the
-remaining cores seeing the core didn't enter MCE handler(s) in time.
+However, it's possible that the recordset is larger than the buffer that
+the caller provided to convey mappings to userspace.  In /that/ case,
+userspace is supposed to copy the last record returned to fmh_keys[0]
+and call GETFSMAP again.  In this case, we do not want to return
+mappings that we have already supplied to the caller.  The call to
+xfs_btree_query_range is the same, but now we ignore any records that
+start before fmh_keys[0].
 
-Call sgx_unmark_page_reclaimable() to remove the affected EPC page from
-sgx_active_page_list on memory error to stop it being considered for
-reclaiming.
+Unfortunately, we didn't implement the filtering predicate correctly.
+The predicate should only be called when we're calling back for more
+records.  Accomplish this by setting info->low.rm_blockcount to a
+nonzero value and ensuring that it is cleared as necessary.  As a
+result, we no longer want to adjust dkeys[0] in the main setup function
+because that's confusing.
 
-Testing epc_page->poison in sgx_reclaim_pages() would also work but I assume
-it's better to add code in the less likely paths.
+This patch doesn't touch the logdev/rtbitmap backends because they have
+bigger problems that will be addressed by subsequent patches.
 
-The affected EPC page is not added to &node->sgx_poison_page_list until
-later in sgx_encl_release()->sgx_free_epc_page() when it is EREMOVEd.
-Membership on other lists doesn't change to avoid changing any of the
-lists' semantics except for sgx_active_page_list.  There's a "TBD" comment
-in arch_memory_failure() about pre-emptive actions, the goal here is not
-to address everything that it may imply.
+Found via xfs/556 with parent pointers enabled.
 
-This also doesn't completely close the time window when a memory error
-notification will be fatal (for a not previously poisoned EPC page) --
-the MCE can happen after sgx_reclaim_pages() has selected its candidates
-or even *inside* a microcode operation (actually easy to trigger due to
-the amount of time spent in them.)
-
-The spinlock in sgx_unmark_page_reclaimable() is safe because
-memory_failure() runs in process context and no spinlocks are held,
-explicitly noted in a mm/memory-failure.c comment.
-
-Signed-off-by: Andrew Zaborowski <andrew.zaborowski@intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: balrogg@gmail.com
-Cc: linux-sgx@vger.kernel.org
-Link: https://lore.kernel.org/r/20250508230429.456271-1-andrew.zaborowski@intel.com
+Fixes: e89c041338ed ("xfs: implement the GETFSMAP ioctl")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/sgx/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/xfs/xfs_fsmap.c | 67 +++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 48 insertions(+), 19 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/sgx/main.c b/arch/x86/kernel/cpu/sgx/main.c
-index c7f8c3200e8d7..0db6eeeeb6720 100644
---- a/arch/x86/kernel/cpu/sgx/main.c
-+++ b/arch/x86/kernel/cpu/sgx/main.c
-@@ -718,6 +718,8 @@ int arch_memory_failure(unsigned long pfn, int flags)
- 		goto out;
- 	}
+diff --git a/fs/xfs/xfs_fsmap.c b/fs/xfs/xfs_fsmap.c
+index a5b9754c62d1c..2011f1bf7ce0f 100644
+--- a/fs/xfs/xfs_fsmap.c
++++ b/fs/xfs/xfs_fsmap.c
+@@ -162,7 +162,14 @@ struct xfs_getfsmap_info {
+ 	xfs_daddr_t		next_daddr;	/* next daddr we expect */
+ 	u64			missing_owner;	/* owner of holes */
+ 	u32			dev;		/* device id */
+-	struct xfs_rmap_irec	low;		/* low rmap key */
++	/*
++	 * Low rmap key for the query.  If low.rm_blockcount is nonzero, this
++	 * is the second (or later) call to retrieve the recordset in pieces.
++	 * xfs_getfsmap_rec_before_start will compare all records retrieved
++	 * by the rmapbt query to filter out any records that start before
++	 * the last record.
++	 */
++	struct xfs_rmap_irec	low;
+ 	struct xfs_rmap_irec	high;		/* high rmap key */
+ 	bool			last;		/* last extent? */
+ };
+@@ -237,6 +244,17 @@ xfs_getfsmap_format(
+ 	xfs_fsmap_from_internal(rec, xfm);
+ }
  
-+	sgx_unmark_page_reclaimable(page);
++static inline bool
++xfs_getfsmap_rec_before_start(
++	struct xfs_getfsmap_info	*info,
++	const struct xfs_rmap_irec	*rec,
++	xfs_daddr_t			rec_daddr)
++{
++	if (info->low.rm_blockcount)
++		return xfs_rmap_compare(rec, &info->low) < 0;
++	return false;
++}
 +
- 	/*
- 	 * TBD: Add additional plumbing to enable pre-emptive
- 	 * action for asynchronous poison notification. Until
+ /*
+  * Format a reverse mapping for getfsmap, having translated rm_startblock
+  * into the appropriate daddr units.
+@@ -260,7 +278,7 @@ xfs_getfsmap_helper(
+ 	 * Filter out records that start before our startpoint, if the
+ 	 * caller requested that.
+ 	 */
+-	if (xfs_rmap_compare(rec, &info->low) < 0) {
++	if (xfs_getfsmap_rec_before_start(info, rec, rec_daddr)) {
+ 		rec_daddr += XFS_FSB_TO_BB(mp, rec->rm_blockcount);
+ 		if (info->next_daddr < rec_daddr)
+ 			info->next_daddr = rec_daddr;
+@@ -606,9 +624,27 @@ __xfs_getfsmap_datadev(
+ 	error = xfs_fsmap_owner_to_rmap(&info->low, &keys[0]);
+ 	if (error)
+ 		return error;
+-	info->low.rm_blockcount = 0;
++	info->low.rm_blockcount = XFS_BB_TO_FSBT(mp, keys[0].fmr_length);
+ 	xfs_getfsmap_set_irec_flags(&info->low, &keys[0]);
+ 
++	/* Adjust the low key if we are continuing from where we left off. */
++	if (info->low.rm_blockcount == 0) {
++		/* empty */
++	} else if (XFS_RMAP_NON_INODE_OWNER(info->low.rm_owner) ||
++		   (info->low.rm_flags & (XFS_RMAP_ATTR_FORK |
++					  XFS_RMAP_BMBT_BLOCK |
++					  XFS_RMAP_UNWRITTEN))) {
++		info->low.rm_startblock += info->low.rm_blockcount;
++		info->low.rm_owner = 0;
++		info->low.rm_offset = 0;
++
++		start_fsb += info->low.rm_blockcount;
++		if (XFS_FSB_TO_DADDR(mp, start_fsb) >= eofs)
++			return 0;
++	} else {
++		info->low.rm_offset += info->low.rm_blockcount;
++	}
++
+ 	info->high.rm_startblock = -1U;
+ 	info->high.rm_owner = ULLONG_MAX;
+ 	info->high.rm_offset = ULLONG_MAX;
+@@ -659,12 +695,8 @@ __xfs_getfsmap_datadev(
+ 		 * Set the AG low key to the start of the AG prior to
+ 		 * moving on to the next AG.
+ 		 */
+-		if (pag->pag_agno == start_ag) {
+-			info->low.rm_startblock = 0;
+-			info->low.rm_owner = 0;
+-			info->low.rm_offset = 0;
+-			info->low.rm_flags = 0;
+-		}
++		if (pag->pag_agno == start_ag)
++			memset(&info->low, 0, sizeof(info->low));
+ 
+ 		/*
+ 		 * If this is the last AG, report any gap at the end of it
+@@ -901,21 +933,17 @@ xfs_getfsmap(
+ 	 * blocks could be mapped to several other files/offsets.
+ 	 * According to rmapbt record ordering, the minimal next
+ 	 * possible record for the block range is the next starting
+-	 * offset in the same inode. Therefore, bump the file offset to
+-	 * continue the search appropriately.  For all other low key
+-	 * mapping types (attr blocks, metadata), bump the physical
+-	 * offset as there can be no other mapping for the same physical
+-	 * block range.
++	 * offset in the same inode. Therefore, each fsmap backend bumps
++	 * the file offset to continue the search appropriately.  For
++	 * all other low key mapping types (attr blocks, metadata), each
++	 * fsmap backend bumps the physical offset as there can be no
++	 * other mapping for the same physical block range.
+ 	 */
+ 	dkeys[0] = head->fmh_keys[0];
+ 	if (dkeys[0].fmr_flags & (FMR_OF_SPECIAL_OWNER | FMR_OF_EXTENT_MAP)) {
+-		dkeys[0].fmr_physical += dkeys[0].fmr_length;
+-		dkeys[0].fmr_owner = 0;
+ 		if (dkeys[0].fmr_offset)
+ 			return -EINVAL;
+-	} else
+-		dkeys[0].fmr_offset += dkeys[0].fmr_length;
+-	dkeys[0].fmr_length = 0;
++	}
+ 	memset(&dkeys[1], 0xFF, sizeof(struct xfs_fsmap));
+ 
+ 	if (!xfs_getfsmap_check_keys(dkeys, &head->fmh_keys[1]))
+@@ -960,6 +988,7 @@ xfs_getfsmap(
+ 		info.dev = handlers[i].dev;
+ 		info.last = false;
+ 		info.pag = NULL;
++		info.low.rm_blockcount = 0;
+ 		error = handlers[i].fn(tp, dkeys, &info);
+ 		if (error)
+ 			break;
 -- 
 2.39.5
 
