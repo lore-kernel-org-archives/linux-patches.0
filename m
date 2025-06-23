@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76858222576;
-	Mon, 23 Jun 2025 22:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72D3222599;
+	Mon, 23 Jun 2025 22:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716637; cv=none; b=Z+v0Il3OjLypt30C+z/KNQ7qXHmy4ksdTQXdUR1Jlnz/BovSJp227DAJmfZdctdQt0wMTA3ZA6DBUL/nzjP+Rg5ybhtX6sajx3n3jPQC3MejEzUaapQq7VFZvLqwWwoy15d67uQ4ADkxxzivAClp7UjBB7RgB0h5Gi07P5wLNfU=
+	t=1750716640; cv=none; b=dT0QZqqAs6VgHFmT581qAYrFuSSayhJAP3Y/RdvPQsWEbK4qicJJvySdE8tPDGt89sMpHWh1JLykMynOW+Wn6tGJ8NfteVFmCGGX0kyfke/ogBDJHfA63/2xoXrzMfkMtd+xs8smeQ5b4zZQQlboK7F8SyzXeFnIhtzPRZEO7I4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716637; c=relaxed/simple;
-	bh=i7xKvO0wS9BxLxu+APil/D3ln1b3GkVUG5z2PlTR188=;
+	s=arc-20240116; t=1750716640; c=relaxed/simple;
+	bh=BU7lsCfvhD+CU1qh0OGVLVG4UsSpZ1nYqxKdML7QMeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZMjwalexDjGTPxFmJgmQRQrYO5my3xflbD55kVwln76lAGpxuacUS6t4VcepjjD0H6HcfU5M7Qmqi7ZDF7tMrcoQxMCnQ+TCbSDZ/qG1cDvqwHKT0rJQJbjiqulcKHiFWTUYOmAT8oivJznHVp2+zxzRmxYjWmlJBhKpKAan5DI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4tsV+HM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LCuTCDMc/v0A+wi6KkhfO4zLoRbqfwmgdAzTCMeWJcVGLykJU10eP/hrCgvr3THGBPItEQsC4RGs7viep743mvGkI3P+svy1pr8MN0nQXhDPs619z2CRIx7nGwW95O5tPPMYDysShL4uabGOaz/yhdL/OryR46EQFc3M6FiRlmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8FRhi7t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4tsV+HM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA83C4CEEA;
-	Mon, 23 Jun 2025 22:10:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8FRhi7t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9C3C4CEEA;
+	Mon, 23 Jun 2025 22:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716637;
-	bh=i7xKvO0wS9BxLxu+APil/D3ln1b3GkVUG5z2PlTR188=;
+	s=korg; t=1750716639;
+	bh=BU7lsCfvhD+CU1qh0OGVLVG4UsSpZ1nYqxKdML7QMeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u4tsV+HMXipP6WTJgNBZ0fcnZK4PXyz9uFkYfi/kESAnvBATS6i+WLZ/OMGsp88E3
-	 rZPdOpQvz0EWko97ZhL04gEtk3GuJ890i7sjhTmb/COP7ClEU3c4XmHRj6YMPsxDj9
-	 eQzb+aIOIQNOQj9GRDUs40AnIoq0oa6x8xk9jYoU=
+	b=d8FRhi7tyued0Zu4JI/lZr1/MFzVRupT7BAI2ifsX37PJj9v1h1EtfrGqCPPDAQFb
+	 KarNBqtHtK3VCxatjCaOCmroui8vo0O2GUoUTsxMT44SCI8DwnQ6Z/zJayvj3q3afx
+	 KN11uJtAZF1FYdnkz4S9iak92FLCtM5gVD18wH74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 317/508] media: venus: Fix probe error handling
-Date: Mon, 23 Jun 2025 15:06:02 +0200
-Message-ID: <20250623130653.123130314@linuxfoundation.org>
+	Mateusz Pacuszka <mateuszx.pacuszka@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 271/414] ice: fix check for existing switch rule
+Date: Mon, 23 Jun 2025 15:06:48 +0200
+Message-ID: <20250623130648.806414517@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,83 +52,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Mateusz Pacuszka <mateuszx.pacuszka@intel.com>
 
-commit 523cea3a19f0b3b020a4745344c136a636e6ffd7 upstream.
+[ Upstream commit a808691df39b52cd9db861b118e88e18b63e2299 ]
 
-Video device registering has been moved earlier in the probe function,
-but the new order has not been propagated to error handling. This means
-we can end with unreleased resources on error (e.g dangling video device
-on missing firmware probe aborting).
+In case the rule already exists and another VSI wants to subscribe to it
+new VSI list is being created and both VSIs are moved to it.
+Currently, the check for already existing VSI with the same rule is done
+based on fdw_id.hw_vsi_id, which applies only to LOOKUP_RX flag.
+Change it to vsi_handle. This is software VSI ID, but it can be applied
+here, because vsi_map itself is also based on it.
 
-Fixes: 08b1cf474b7f7 ("media: venus: core, venc, vdec: Fix probe dependency error")
-Cc: stable@vger.kernel.org
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Reviewed-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Additionally change return status in case the VSI already exists in the
+VSI map to "Already exists". Such case should be handled by the caller.
+
+Signed-off-by: Mateusz Pacuszka <mateuszx.pacuszka@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/core.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_switch.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -347,7 +347,7 @@ static int venus_probe(struct platform_d
+diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
+index 0e740342e2947..c5430363e7081 100644
+--- a/drivers/net/ethernet/intel/ice/ice_switch.c
++++ b/drivers/net/ethernet/intel/ice/ice_switch.c
+@@ -3146,7 +3146,7 @@ ice_add_update_vsi_list(struct ice_hw *hw,
+ 		u16 vsi_handle_arr[2];
  
- 	ret = v4l2_device_register(dev, &core->v4l2_dev);
- 	if (ret)
--		goto err_core_deinit;
-+		goto err_hfi_destroy;
+ 		/* A rule already exists with the new VSI being added */
+-		if (cur_fltr->fwd_id.hw_vsi_id == new_fltr->fwd_id.hw_vsi_id)
++		if (cur_fltr->vsi_handle == new_fltr->vsi_handle)
+ 			return -EEXIST;
  
- 	platform_set_drvdata(pdev, core);
+ 		vsi_handle_arr[0] = cur_fltr->vsi_handle;
+@@ -5977,7 +5977,7 @@ ice_adv_add_update_vsi_list(struct ice_hw *hw,
  
-@@ -379,24 +379,24 @@ static int venus_probe(struct platform_d
+ 		/* A rule already exists with the new VSI being added */
+ 		if (test_bit(vsi_handle, m_entry->vsi_list_info->vsi_map))
+-			return 0;
++			return -EEXIST;
  
- 	ret = venus_enumerate_codecs(core, VIDC_SESSION_TYPE_DEC);
- 	if (ret)
--		goto err_venus_shutdown;
-+		goto err_core_deinit;
- 
- 	ret = venus_enumerate_codecs(core, VIDC_SESSION_TYPE_ENC);
- 	if (ret)
--		goto err_venus_shutdown;
-+		goto err_core_deinit;
- 
- 	ret = pm_runtime_put_sync(dev);
- 	if (ret) {
- 		pm_runtime_get_noresume(dev);
--		goto err_dev_unregister;
-+		goto err_core_deinit;
- 	}
- 
- 	venus_dbgfs_init(core);
- 
- 	return 0;
- 
--err_dev_unregister:
--	v4l2_device_unregister(&core->v4l2_dev);
-+err_core_deinit:
-+	hfi_core_deinit(core, false);
- err_venus_shutdown:
- 	venus_shutdown(core);
- err_firmware_deinit:
-@@ -407,9 +407,9 @@ err_runtime_disable:
- 	pm_runtime_put_noidle(dev);
- 	pm_runtime_disable(dev);
- 	pm_runtime_set_suspended(dev);
-+	v4l2_device_unregister(&core->v4l2_dev);
-+err_hfi_destroy:
- 	hfi_destroy(core);
--err_core_deinit:
--	hfi_core_deinit(core, false);
- err_core_put:
- 	if (core->pm_ops->core_put)
- 		core->pm_ops->core_put(core);
+ 		/* Update the previously created VSI list set with
+ 		 * the new VSI ID passed in
+-- 
+2.39.5
+
 
 
