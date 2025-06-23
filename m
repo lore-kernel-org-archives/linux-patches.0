@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4274B2512FC;
-	Mon, 23 Jun 2025 13:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DA8248F63;
+	Mon, 23 Jun 2025 13:11:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684310; cv=none; b=OdgoEdGObumlrMmR8z0MHHwXd9BaKousMVOs/Zf6+wepb8NX850Au3Bu8yJu5C6vjRIcyZit/9KxvvReLGPWG9RdO/kaD6QRZox0DHM+cBjf45VxSDQkxnm/gdKi5sDiffw2gcqU/l1qjNfckstBz3tvUb+quAZSNHDSggf8pv8=
+	t=1750684312; cv=none; b=OFT9dp9Ahvxq4hXBTg187i3h40ba9P+NOAXcdtv8kky26PK13puboZt/5/5/BsVzocJo/HeUXbfrmVTGyC4ZkwH+XTxeBhZnTLrQg2eWqj2fHr+wDnEOfzjLHe1/tIYPXz2Pq5L17sA59o3iQq8vMhdba33P7E5YtvPmlG8rM/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684310; c=relaxed/simple;
-	bh=lYqawUaMkkjxYi7VvEq+m24b4mPxhtdlFIsdJOmGQNI=;
+	s=arc-20240116; t=1750684312; c=relaxed/simple;
+	bh=R32W1ekFtb4k2HMbEiNLQY2xXJTkA1UuRUnpiLrqSvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XShZOHy5a2w4dP9r58UCwfXDRiRT11TaMZ1c2k2vCdq6444bitWIMfCr+lgvlwyVKEMvo6BKpQdYZ3PvL0AFosiVMDfJwZos69xlLgKcZpkXTM1KGryvPA2VU34l+TlEfO5ZByRAvEVlXa8Gog3lymORsKg73KkuFcUVe9HM6sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVHTfMjK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e6BjPxwIevstvRKi3TnoMAh95nZdAzRPvuULfQ20LzQ3eI9Xek3Nvledl0tIFnt2CBnxogfKlr8kucXlMbCETLba89IX08cHV1MrqrDSQwMflifm7UxQXJmZaCn54VHxWU6PLTOpcSYaFlyBwBd9WQE1Tq0oVaVYn9SSXbJF1pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhSUo2Js; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVHTfMjK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EE5C4CEEA;
-	Mon, 23 Jun 2025 13:11:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhSUo2Js"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59AD2C4CEEA;
+	Mon, 23 Jun 2025 13:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684310;
-	bh=lYqawUaMkkjxYi7VvEq+m24b4mPxhtdlFIsdJOmGQNI=;
+	s=korg; t=1750684312;
+	bh=R32W1ekFtb4k2HMbEiNLQY2xXJTkA1UuRUnpiLrqSvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVHTfMjK6D0BsxGtcRLcEoLaWHrDIon87WstLobqp65yt7M6OkoLLjTGZD9hLYRoS
-	 NlcI+xChBBGlurlxt70WrQsjpKgUvOQRbkAkji2ELVO7nwK4WfZbVoEWVFk70rEsO5
-	 MSLlc+JHOhNUUCmXLaZZnXLv3sNlggV4epYTOkzY=
+	b=vhSUo2JsWcvWN0cxI6adho5/WkTlD6Rv5tzIO9vP1M1S0ugMRfxeJdkC5gdVTnu/6
+	 hmi4l2P1u1p2AMN81WSkqh1OW/i4dFvQ9rwJUUJb0eKJvQrzx0VSRYHktvlXJcv5BT
+	 tdITjpxMm33csoL3ZqGBz+fLEIe0IT+NYbHj46SY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viktor Malik <vmalik@redhat.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
 	"Naveen N Rao (AMD)" <naveen@kernel.org>,
+	Hari Bathini <hbathini@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.15 020/592] powerpc64/ftrace: fix clobbered r15 during livepatching
-Date: Mon, 23 Jun 2025 14:59:38 +0200
-Message-ID: <20250623130700.709297527@linuxfoundation.org>
+Subject: [PATCH 6.15 021/592] powerpc/bpf: fix JIT code size calculation of bpf trampoline
+Date: Mon, 23 Jun 2025 14:59:39 +0200
+Message-ID: <20250623130700.735543009@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -54,68 +54,221 @@ Content-Transfer-Encoding: 8bit
 
 From: Hari Bathini <hbathini@linux.ibm.com>
 
-commit cb5b691f8273432297611863ac142e17119279e0 upstream.
+commit 59ba025948be2a92e8bc9ae1cbdaf197660bd508 upstream.
 
-While r15 is clobbered always with PPC_FTRACE_OUT_OF_LINE, it is
-not restored in livepatch sequence leading to not so obvious fails
-like below:
+arch_bpf_trampoline_size() provides JIT size of the BPF trampoline
+before the buffer for JIT'ing it is allocated. The total number of
+instructions emitted for BPF trampoline JIT code depends on where
+the final image is located. So, the size arrived at with the dummy
+pass in arch_bpf_trampoline_size() can vary from the actual size
+needed in  arch_prepare_bpf_trampoline().  When the instructions
+accounted in  arch_bpf_trampoline_size() is less than the number of
+instructions emitted during the actual JIT compile of the trampoline,
+the below warning is produced:
 
-  BUG: Unable to handle kernel data access on write at 0xc0000000000f9078
-  Faulting instruction address: 0xc0000000018ff958
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  ...
-  NIP:  c0000000018ff958 LR: c0000000018ff930 CTR: c0000000009c0790
-  REGS: c00000005f2e7790 TRAP: 0300   Tainted: G              K      (6.14.0+)
-  MSR:  8000000000009033 <SF,EE,ME,IR,DR,RI,LE>  CR: 2822880b  XER: 20040000
-  CFAR: c0000000008addc0 DAR: c0000000000f9078 DSISR: 0a000000 IRQMASK: 1
-  GPR00: c0000000018f2584 c00000005f2e7a30 c00000000280a900 c000000017ffa488
-  GPR04: 0000000000000008 0000000000000000 c0000000018f24fc 000000000000000d
-  GPR08: fffffffffffe0000 000000000000000d 0000000000000000 0000000000008000
-  GPR12: c0000000009c0790 c000000017ffa480 c00000005f2e7c78 c0000000000f9070
-  GPR16: c00000005f2e7c90 0000000000000000 0000000000000000 0000000000000000
-  GPR20: 0000000000000000 c00000005f3efa80 c00000005f2e7c60 c00000005f2e7c88
-  GPR24: c00000005f2e7c60 0000000000000001 c0000000000f9078 0000000000000000
-  GPR28: 00007fff97960000 c000000017ffa480 0000000000000000 c0000000000f9078
-  ...
-  Call Trace:
-    check_heap_object+0x34/0x390 (unreliable)
-  __mutex_unlock_slowpath.isra.0+0xe4/0x230
-  seq_read_iter+0x430/0xa90
-  proc_reg_read_iter+0xa4/0x200
-  vfs_read+0x41c/0x510
-  ksys_read+0xa4/0x190
-  system_call_exception+0x1d0/0x440
-  system_call_vectored_common+0x15c/0x2ec
+  WARNING: CPU: 8 PID: 204190 at arch/powerpc/net/bpf_jit_comp.c:981 __arch_prepare_bpf_trampoline.isra.0+0xd2c/0xdcc
 
-Fix it by restoring r15 always.
+which is:
 
-Fixes: eec37961a56a ("powerpc64/ftrace: Move ftrace sequence out of line")
-Reported-by: Viktor Malik <vmalik@redhat.com>
-Closes: https://lore.kernel.org/lkml/1aec4a9a-a30b-43fd-b303-7a351caeccb7@redhat.com
+  /* Make sure the trampoline generation logic doesn't overflow */
+  if (image && WARN_ON_ONCE(&image[ctx->idx] >
+  			(u32 *)rw_image_end - BPF_INSN_SAFETY)) {
+
+So, during the dummy pass, instead of providing some arbitrary image
+location, account for maximum possible instructions if and when there
+is a dependency with image location for JIT'ing.
+
+Fixes: d243b62b7bd3 ("powerpc64/bpf: Add support for bpf trampolines")
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Closes: https://lore.kernel.org/all/6168bfc8-659f-4b5a-a6fb-90a916dde3b3@linux.ibm.com/
 Cc: stable@vger.kernel.org # v6.13+
-Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
-Tested-by: Viktor Malik <vmalik@redhat.com>
 Acked-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250416191227.201146-1-hbathini@linux.ibm.com
+Link: https://patch.msgid.link/20250422082609.949301-1-hbathini@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/trace/ftrace_entry.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/net/bpf_jit.h        |   20 +++++++++++++++++---
+ arch/powerpc/net/bpf_jit_comp.c   |   33 ++++++++++-----------------------
+ arch/powerpc/net/bpf_jit_comp32.c |    6 ------
+ arch/powerpc/net/bpf_jit_comp64.c |   15 ++++++++-------
+ 4 files changed, 35 insertions(+), 39 deletions(-)
 
---- a/arch/powerpc/kernel/trace/ftrace_entry.S
-+++ b/arch/powerpc/kernel/trace/ftrace_entry.S
-@@ -212,10 +212,10 @@
- 	bne-	1f
+--- a/arch/powerpc/net/bpf_jit.h
++++ b/arch/powerpc/net/bpf_jit.h
+@@ -51,8 +51,16 @@
+ 		EMIT(PPC_INST_BRANCH_COND | (((cond) & 0x3ff) << 16) | (offset & 0xfffc));					\
+ 	} while (0)
  
- 	mr	r3, r15
-+1:	mtlr	r3
- 	.if \allregs == 0
- 	REST_GPR(15, r1)
- 	.endif
--1:	mtlr	r3
- #endif
+-/* Sign-extended 32-bit immediate load */
++/*
++ * Sign-extended 32-bit immediate load
++ *
++ * If this is a dummy pass (!image), account for
++ * maximum possible instructions.
++ */
+ #define PPC_LI32(d, i)		do {					      \
++	if (!image)							      \
++		ctx->idx += 2;						      \
++	else {								      \
+ 		if ((int)(uintptr_t)(i) >= -32768 &&			      \
+ 				(int)(uintptr_t)(i) < 32768)		      \
+ 			EMIT(PPC_RAW_LI(d, i));				      \
+@@ -60,10 +68,15 @@
+ 			EMIT(PPC_RAW_LIS(d, IMM_H(i)));			      \
+ 			if (IMM_L(i))					      \
+ 				EMIT(PPC_RAW_ORI(d, d, IMM_L(i)));	      \
+-		} } while(0)
++		}							      \
++	} } while (0)
  
- 	/* Restore gprs */
+ #ifdef CONFIG_PPC64
++/* If dummy pass (!image), account for maximum possible instructions */
+ #define PPC_LI64(d, i)		do {					      \
++	if (!image)							      \
++		ctx->idx += 5;						      \
++	else {								      \
+ 		if ((long)(i) >= -2147483648 &&				      \
+ 				(long)(i) < 2147483648)			      \
+ 			PPC_LI32(d, i);					      \
+@@ -84,7 +97,8 @@
+ 			if ((uintptr_t)(i) & 0x000000000000ffffULL)	      \
+ 				EMIT(PPC_RAW_ORI(d, d, (uintptr_t)(i) &       \
+ 							0xffff));             \
+-		} } while (0)
++		}							      \
++	} } while (0)
+ #define PPC_LI_ADDR	PPC_LI64
+ 
+ #ifndef CONFIG_PPC_KERNEL_PCREL
+--- a/arch/powerpc/net/bpf_jit_comp.c
++++ b/arch/powerpc/net/bpf_jit_comp.c
+@@ -504,10 +504,11 @@ static int invoke_bpf_prog(u32 *image, u
+ 	EMIT(PPC_RAW_ADDI(_R3, _R1, regs_off));
+ 	if (!p->jited)
+ 		PPC_LI_ADDR(_R4, (unsigned long)p->insnsi);
+-	if (!create_branch(&branch_insn, (u32 *)&ro_image[ctx->idx], (unsigned long)p->bpf_func,
+-			   BRANCH_SET_LINK)) {
+-		if (image)
+-			image[ctx->idx] = ppc_inst_val(branch_insn);
++	/* Account for max possible instructions during dummy pass for size calculation */
++	if (image && !create_branch(&branch_insn, (u32 *)&ro_image[ctx->idx],
++				    (unsigned long)p->bpf_func,
++				    BRANCH_SET_LINK)) {
++		image[ctx->idx] = ppc_inst_val(branch_insn);
+ 		ctx->idx++;
+ 	} else {
+ 		EMIT(PPC_RAW_LL(_R12, _R25, offsetof(struct bpf_prog, bpf_func)));
+@@ -889,7 +890,8 @@ static int __arch_prepare_bpf_trampoline
+ 			bpf_trampoline_restore_tail_call_cnt(image, ctx, func_frame_offset, r4_off);
+ 
+ 		/* Reserve space to patch branch instruction to skip fexit progs */
+-		im->ip_after_call = &((u32 *)ro_image)[ctx->idx];
++		if (ro_image) /* image is NULL for dummy pass */
++			im->ip_after_call = &((u32 *)ro_image)[ctx->idx];
+ 		EMIT(PPC_RAW_NOP());
+ 	}
+ 
+@@ -912,7 +914,8 @@ static int __arch_prepare_bpf_trampoline
+ 		}
+ 
+ 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
+-		im->ip_epilogue = &((u32 *)ro_image)[ctx->idx];
++		if (ro_image) /* image is NULL for dummy pass */
++			im->ip_epilogue = &((u32 *)ro_image)[ctx->idx];
+ 		PPC_LI_ADDR(_R3, im);
+ 		ret = bpf_jit_emit_func_call_rel(image, ro_image, ctx,
+ 						 (unsigned long)__bpf_tramp_exit);
+@@ -973,25 +976,9 @@ int arch_bpf_trampoline_size(const struc
+ 			     struct bpf_tramp_links *tlinks, void *func_addr)
+ {
+ 	struct bpf_tramp_image im;
+-	void *image;
+ 	int ret;
+ 
+-	/*
+-	 * Allocate a temporary buffer for __arch_prepare_bpf_trampoline().
+-	 * This will NOT cause fragmentation in direct map, as we do not
+-	 * call set_memory_*() on this buffer.
+-	 *
+-	 * We cannot use kvmalloc here, because we need image to be in
+-	 * module memory range.
+-	 */
+-	image = bpf_jit_alloc_exec(PAGE_SIZE);
+-	if (!image)
+-		return -ENOMEM;
+-
+-	ret = __arch_prepare_bpf_trampoline(&im, image, image + PAGE_SIZE, image,
+-					    m, flags, tlinks, func_addr);
+-	bpf_jit_free_exec(image);
+-
++	ret = __arch_prepare_bpf_trampoline(&im, NULL, NULL, NULL, m, flags, tlinks, func_addr);
+ 	return ret;
+ }
+ 
+--- a/arch/powerpc/net/bpf_jit_comp32.c
++++ b/arch/powerpc/net/bpf_jit_comp32.c
+@@ -313,7 +313,6 @@ int bpf_jit_build_body(struct bpf_prog *
+ 		u64 func_addr;
+ 		u32 true_cond;
+ 		u32 tmp_idx;
+-		int j;
+ 
+ 		if (i && (BPF_CLASS(code) == BPF_ALU64 || BPF_CLASS(code) == BPF_ALU) &&
+ 		    (BPF_CLASS(prevcode) == BPF_ALU64 || BPF_CLASS(prevcode) == BPF_ALU) &&
+@@ -1099,13 +1098,8 @@ int bpf_jit_build_body(struct bpf_prog *
+ 		 * 16 byte instruction that uses two 'struct bpf_insn'
+ 		 */
+ 		case BPF_LD | BPF_IMM | BPF_DW: /* dst = (u64) imm */
+-			tmp_idx = ctx->idx;
+ 			PPC_LI32(dst_reg_h, (u32)insn[i + 1].imm);
+ 			PPC_LI32(dst_reg, (u32)insn[i].imm);
+-			/* padding to allow full 4 instructions for later patching */
+-			if (!image)
+-				for (j = ctx->idx - tmp_idx; j < 4; j++)
+-					EMIT(PPC_RAW_NOP());
+ 			/* Adjust for two bpf instructions */
+ 			addrs[++i] = ctx->idx * 4;
+ 			break;
+--- a/arch/powerpc/net/bpf_jit_comp64.c
++++ b/arch/powerpc/net/bpf_jit_comp64.c
+@@ -227,7 +227,14 @@ int bpf_jit_emit_func_call_rel(u32 *imag
+ #ifdef CONFIG_PPC_KERNEL_PCREL
+ 	reladdr = func_addr - local_paca->kernelbase;
+ 
+-	if (reladdr < (long)SZ_8G && reladdr >= -(long)SZ_8G) {
++	/*
++	 * If fimage is NULL (the initial pass to find image size),
++	 * account for the maximum no. of instructions possible.
++	 */
++	if (!fimage) {
++		ctx->idx += 7;
++		return 0;
++	} else if (reladdr < (long)SZ_8G && reladdr >= -(long)SZ_8G) {
+ 		EMIT(PPC_RAW_LD(_R12, _R13, offsetof(struct paca_struct, kernelbase)));
+ 		/* Align for subsequent prefix instruction */
+ 		if (!IS_ALIGNED((unsigned long)fimage + CTX_NIA(ctx), 8))
+@@ -412,7 +419,6 @@ int bpf_jit_build_body(struct bpf_prog *
+ 		u64 imm64;
+ 		u32 true_cond;
+ 		u32 tmp_idx;
+-		int j;
+ 
+ 		/*
+ 		 * addrs[] maps a BPF bytecode address into a real offset from
+@@ -1046,12 +1052,7 @@ emit_clear:
+ 		case BPF_LD | BPF_IMM | BPF_DW: /* dst = (u64) imm */
+ 			imm64 = ((u64)(u32) insn[i].imm) |
+ 				    (((u64)(u32) insn[i+1].imm) << 32);
+-			tmp_idx = ctx->idx;
+ 			PPC_LI64(dst_reg, imm64);
+-			/* padding to allow full 5 instructions for later patching */
+-			if (!image)
+-				for (j = ctx->idx - tmp_idx; j < 5; j++)
+-					EMIT(PPC_RAW_NOP());
+ 			/* Adjust for two bpf instructions */
+ 			addrs[++i] = ctx->idx * 4;
+ 			break;
 
 
