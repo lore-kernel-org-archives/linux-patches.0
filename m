@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BE119F120;
-	Mon, 23 Jun 2025 22:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636E4218EBF;
+	Mon, 23 Jun 2025 22:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717178; cv=none; b=nMFo/Eoai8+1fKyRI5O5whWvNSEIeRf3/D5gmdGxGMYJenql6ha9i7PiTHOE6KmbfnOZPlSyjwQZoM9f1DAFAP0/k2dpD5y24S4smQLKFcG37k6KX67Awef0hXZu0x7W5dBMgv6CwnAvnVOBJW0FASQoOyalIXW5yx38Q08b4CE=
+	t=1750717180; cv=none; b=dWy818Bp8lK8Quh3GpXEgjKgYNQPJ13LtDXcQjxkqaoiKRfK4qtCJqWcaLiMQ74jkT53H1YzXXRcNTivjrzv7lorbMV9c66HgEALGRewfTrojNraUQHy356ZQ3kj2cY1+4sPGp7GMkKpN1AdOAcMq5XFTLS9NDFVUQw+ucY23A8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717178; c=relaxed/simple;
-	bh=uVwhkhsaX5eFnWuYTMapDzOjRGlWDX9oFK78SDeso88=;
+	s=arc-20240116; t=1750717180; c=relaxed/simple;
+	bh=V/qMPKHgljwQ6/Qviu79aGt6FgbT5YGBK8H94RnU9xY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CCavexSh5sG0PlodQVGVMgb59bpB2b+DAHsCGF8LNImzK94DyHXTRPN4NaRUv5Bm/HVeP1AEmwQo1tfCPUm+FuF8WoLhxr29k6ywfM745mC/y9WA58I2nqxhZTR8whF1XADHz0FzMdrQKmW8cZ6qzJJMzbOPszx0PnBu8Hi1b24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGPo8o8r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bsa3ddL7AfmRlW9EaPO3EQVjDDPU1T6R679zuWYHh9WKW4TWHr9do3pcOfPWvzgffqffjgtvWJdsPN+mKUYdaBg1Ddc7ANltrXgLeFrYygOX9FGY5jxVnitUGg2x/4ADDMR5fb6u3oUeNhCE3rCxhtU6EthEXmFSJz51dc41VnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXmMPd16; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGPo8o8r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86CD3C4CEEA;
-	Mon, 23 Jun 2025 22:19:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXmMPd16"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09B9C4CEEA;
+	Mon, 23 Jun 2025 22:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717177;
-	bh=uVwhkhsaX5eFnWuYTMapDzOjRGlWDX9oFK78SDeso88=;
+	s=korg; t=1750717180;
+	bh=V/qMPKHgljwQ6/Qviu79aGt6FgbT5YGBK8H94RnU9xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGPo8o8r0p5PJ/RfBEqjogQSwJN1pvd6Non0KYyPp8w6jSbxYlELcMkz2qCe4tYZY
-	 QQlyN5wlTc18sjWf52t12WBw8z2L3GG8ILgYmMzGavQ5NU45AZrnFd/jXF3V9UVF+N
-	 YKLP0WXq8ZBa8aJZ16QOt9Ui6+ITl1Hgpy2MWIr0=
+	b=VXmMPd16/WqWzoZ0H47PXX4cEvYttK1QIQUt0yIdaaJyiFCfIxDVD5Jj3ZXqikq94
+	 DZLQ9ZQONbEDpZb7Fw8JByQ+crlCrlh9dnYZU0MqJa0fnMau2x9eb2aIOTOzrfMlwq
+	 Rc9rEEt5Ljpr5TTjXV71hRcaontj0I67HfYnCHsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
-	Daniel Wagner <dwagner@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 411/411] scsi: elx: efct: Fix memory leak in efct_hw_parse_filter()
-Date: Mon, 23 Jun 2025 15:09:15 +0200
-Message-ID: <20250623130644.033046103@linuxfoundation.org>
+Subject: [PATCH 6.1 376/508] clocksource: Fix the CPUs choice in the watchdog per CPU verification
+Date: Mon, 23 Jun 2025 15:07:01 +0200
+Message-ID: <20250623130654.575195660@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,63 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-[ Upstream commit 2a8a5a5dd06eef580f9818567773fd75057cb875 ]
+[ Upstream commit 08d7becc1a6b8c936e25d827becabfe3bff72a36 ]
 
-strsep() modifies the address of the pointer passed to it so that it no
-longer points to the original address. This means kfree() gets the wrong
-pointer.
+Right now, if the clocksource watchdog detects a clocksource skew, it might
+perform a per CPU check, for example in the TSC case on x86.  In other
+words: supposing TSC is detected as unstable by the clocksource watchdog
+running at CPU1, as part of marking TSC unstable the kernel will also run a
+check of TSC readings on some CPUs to be sure it is synced between them
+all.
 
-Fix this by passing unmodified pointer returned from kstrdup() to
-kfree().
+But that check happens only on some CPUs, not all of them; this choice is
+based on the parameter "verify_n_cpus" and in some random cpumask
+calculation. So, the watchdog runs such per CPU checks on up to
+"verify_n_cpus" random CPUs among all online CPUs, with the risk of
+repeating CPUs (that aren't double checked) in the cpumask random
+calculation.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
+But if "verify_n_cpus" > num_online_cpus(), it should skip the random
+calculation and just go ahead and check the clocksource sync between
+all online CPUs, without the risk of skipping some CPUs due to
+duplicity in the random cpumask calculation.
 
-Fixes: 4df84e846624 ("scsi: elx: efct: Driver initialization routines")
-Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
-Link: https://lore.kernel.org/r/20250612163616.24298-1-v.shevtsov@mt-integration.ru
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Tests in a 4 CPU laptop with TSC skew detected led to some cases of the per
+CPU verification skipping some CPU even with verify_n_cpus=8, due to the
+duplicity on random cpumask generation. Skipping the randomization when the
+number of online CPUs is smaller than verify_n_cpus, solves that.
+
+Suggested-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/all/20250323173857.372390-1-gpiccoli@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/elx/efct/efct_hw.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/time/clocksource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/elx/efct/efct_hw.c b/drivers/scsi/elx/efct/efct_hw.c
-index ba8256b4c7824..6385c6c730fea 100644
---- a/drivers/scsi/elx/efct/efct_hw.c
-+++ b/drivers/scsi/elx/efct/efct_hw.c
-@@ -1120,7 +1120,7 @@ int
- efct_hw_parse_filter(struct efct_hw *hw, void *value)
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index 9e221a97d2274..e89fd0bbc3b35 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -285,7 +285,7 @@ static void clocksource_verify_choose_cpus(void)
  {
- 	int rc = 0;
--	char *p = NULL;
-+	char *p = NULL, *pp = NULL;
- 	char *token;
- 	u32 idx = 0;
+ 	int cpu, i, n = verify_n_cpus;
  
-@@ -1132,6 +1132,7 @@ efct_hw_parse_filter(struct efct_hw *hw, void *value)
- 		efc_log_err(hw->os, "p is NULL\n");
- 		return -ENOMEM;
- 	}
-+	pp = p;
- 
- 	idx = 0;
- 	while ((token = strsep(&p, ",")) && *token) {
-@@ -1144,7 +1145,7 @@ efct_hw_parse_filter(struct efct_hw *hw, void *value)
- 		if (idx == ARRAY_SIZE(hw->config.filter_def))
- 			break;
- 	}
--	kfree(p);
-+	kfree(pp);
- 
- 	return rc;
- }
+-	if (n < 0) {
++	if (n < 0 || n >= num_online_cpus()) {
+ 		/* Check all of the CPUs. */
+ 		cpumask_copy(&cpus_chosen, cpu_online_mask);
+ 		cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
 -- 
 2.39.5
 
