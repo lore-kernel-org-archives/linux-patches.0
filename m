@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99ECEB676;
-	Mon, 23 Jun 2025 22:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C456B676;
+	Mon, 23 Jun 2025 22:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717705; cv=none; b=IjW+36MMt8SZC9mV+tGzwgHk1tCa1mSJY6x3v2SDE3qXTakDAHcnt6ynoL6jCM/3bwdqi0LOTQ0aHgwt+oPBgz2uE8RKn3a7RrFJ/wIKLYCrIeHSPQt20j2KB4qjV4bnHdyAJgP50jHbnoP34oRE7xuMstcCaBMhaWZVLpk0FnU=
+	t=1750717708; cv=none; b=bP7RoTMiKf6AtOwp+w5NpqWQ5VDTAveTXLVK3afP/LdC8TBE+W/4Yjdr1zjAmRUHoCEH9lcF3l3OQMsGVgfZifSyh4ZiMgEx1d154l+MPteJShpy+tNUNt14q2plEuPZhp2a3qUr9k4KCoDPsi4vcauojRosc5o5tbFTfrOfx58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717705; c=relaxed/simple;
-	bh=1bm3qEBb9uBxwFBIYJGg1eM0KKbXf8/t/KjYS4+FSfA=;
+	s=arc-20240116; t=1750717708; c=relaxed/simple;
+	bh=C9Qy9upGbWEAtHBZV3IB493fLcPi4eRMqMIk4RB1vB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bnck9H/mvz0H/SACmgj5N+W/4vNL3/VCUrpThsuM4adf1Ma9lVsq+i7TGtUgJ8Af+YUya2laulMMnbvP4s80hbU8sV7cCcp38ZnExeLtemRFlH99iTzbcai8IvZvXK/UjXGACD7EaVYDq0+Q8/ZFSkGDfpwznD89r0VnI3WDxmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xB4uDijp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZcmUbDlot6Rku7r76nWLS6L1BY2CeimdmFrNdqAZs+aa/pAyl0cgNc9VWrCYwloDQ4faFtrFFURFYQiLbQC+LYGuUCqxm1g1gSsZh5V5JGtakfHGiAP9FAUr7pwSx9ojQ4jb1cW9B4HP/mg2Zr9Ri5c4az/5X/bUcx/Q4aQbrfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hc6k1r2O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xB4uDijp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31105C4CEEA;
-	Mon, 23 Jun 2025 22:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hc6k1r2O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99145C4CEEA;
+	Mon, 23 Jun 2025 22:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717705;
-	bh=1bm3qEBb9uBxwFBIYJGg1eM0KKbXf8/t/KjYS4+FSfA=;
+	s=korg; t=1750717707;
+	bh=C9Qy9upGbWEAtHBZV3IB493fLcPi4eRMqMIk4RB1vB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xB4uDijp1v/slsJVFhVL9l2YbsX9b3XycmYIPMncPeH+x35+IEOVrcEjiFcii+n4x
-	 n72dgDyUss1k50GZgZw/azZXHK7lgGoMcvwU1leo9OYoLq7TNW35nQZaVvs42l1Qu1
-	 hSpx3AzMBW7Y9ck/pYeGEwoXqgWw6VPAjco+p7S0=
+	b=hc6k1r2OaOuq7S3aUFDQx9TlqsmfQD6UhvKIatqlUQ4hqy46KI44gvVpSbHCaoKtA
+	 G5W7vdviZeXU7tfvUfaLfRVX9+8BLH+hqGw8K3N2k1r0QmKvNR1zYKBEqNdt9/tXhU
+	 o/KG/B5yB7ixfdb4cnN0WVlDxayhb0cQG0W+l3vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 480/508] ptp: allow reading of currently dialed frequency to succeed on free-running clocks
-Date: Mon, 23 Jun 2025 15:08:45 +0200
-Message-ID: <20250623130656.881806302@linuxfoundation.org>
+Subject: [PATCH 6.1 481/508] wifi: carl9170: do not ping device which has failed to load firmware
+Date: Mon, 23 Jun 2025 15:08:46 +0200
+Message-ID: <20250623130656.903228855@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -51,48 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit aa112cbc5f0ac6f3b44d829005bf34005d9fe9bb ]
+[ Upstream commit 15d25307692312cec4b57052da73387f91a2e870 ]
 
-There is a bug in ptp_clock_adjtime() which makes it refuse the
-operation even if we just want to read the current clock dialed
-frequency, not modify anything (tx->modes == 0). That should be possible
-even if the clock is free-running. For context, the kernel UAPI is the
-same for getting and setting the frequency of a POSIX clock.
+Syzkaller reports [1, 2] crashes caused by an attempts to ping
+the device which has failed to load firmware. Since such a device
+doesn't pass 'ieee80211_register_hw()', an internal workqueue
+managed by 'ieee80211_queue_work()' is not yet created and an
+attempt to queue work on it causes null-ptr-deref.
 
-For example, ptp4l errors out at clock_create() -> clockadj_get_freq()
--> clock_adjtime() time, when it should logically only have failed on
-actual adjustments to the clock, aka if the clock was configured as
-slave. But in master mode it should work.
+[1] https://syzkaller.appspot.com/bug?extid=9a4aec827829942045ff
+[2] https://syzkaller.appspot.com/bug?extid=0d8afba53e8fb2633217
 
-This was discovered when examining the issue described in the previous
-commit, where ptp_clock_freerun() returned true despite n_vclocks being
-zero.
-
-Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250613174749.406826-3-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e4a668c59080 ("carl9170: fix spurious restart due to high latency")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Christian Lamparter <chunkeey@gmail.com>
+Link: https://patch.msgid.link/20250616181205.38883-1-dmantipov@yandex.ru
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_clock.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/carl9170/usb.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
-index af66ed48dc006..642c939d4523c 100644
---- a/drivers/ptp/ptp_clock.c
-+++ b/drivers/ptp/ptp_clock.c
-@@ -104,7 +104,8 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
- 	struct ptp_clock_info *ops;
- 	int err = -EOPNOTSUPP;
+diff --git a/drivers/net/wireless/ath/carl9170/usb.c b/drivers/net/wireless/ath/carl9170/usb.c
+index a5265997b5767..debac4699687e 100644
+--- a/drivers/net/wireless/ath/carl9170/usb.c
++++ b/drivers/net/wireless/ath/carl9170/usb.c
+@@ -438,14 +438,21 @@ static void carl9170_usb_rx_complete(struct urb *urb)
  
--	if (ptp_clock_freerun(ptp)) {
-+	if (tx->modes & (ADJ_SETOFFSET | ADJ_FREQUENCY | ADJ_OFFSET) &&
-+	    ptp_clock_freerun(ptp)) {
- 		pr_err("ptp: physical clock is free running\n");
- 		return -EBUSY;
- 	}
+ 		if (atomic_read(&ar->rx_anch_urbs) == 0) {
+ 			/*
+-			 * The system is too slow to cope with
+-			 * the enormous workload. We have simply
+-			 * run out of active rx urbs and this
+-			 * unfortunately leads to an unpredictable
+-			 * device.
++			 * At this point, either the system is too slow to
++			 * cope with the enormous workload (so we have simply
++			 * run out of active rx urbs and this unfortunately
++			 * leads to an unpredictable device), or the device
++			 * is not fully functional after an unsuccessful
++			 * firmware loading attempts (so it doesn't pass
++			 * ieee80211_register_hw() and there is no internal
++			 * workqueue at all).
+ 			 */
+ 
+-			ieee80211_queue_work(ar->hw, &ar->ping_work);
++			if (ar->registered)
++				ieee80211_queue_work(ar->hw, &ar->ping_work);
++			else
++				pr_warn_once("device %s is not registered\n",
++					     dev_name(&ar->udev->dev));
+ 		}
+ 	} else {
+ 		/*
 -- 
 2.39.5
 
