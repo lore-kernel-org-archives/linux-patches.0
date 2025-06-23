@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2051E5B71;
-	Mon, 23 Jun 2025 21:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518FE1E5B71;
+	Mon, 23 Jun 2025 21:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714126; cv=none; b=CSaqjudVCvMti+tkoztqx5cNP3rN6kuj4TIbceJ912bR1bQAKEb0nx7ntJUk5ciCC6H9gVFCDJ95cmqVKOehxReVx0iUIHhJgnLa0upeWNE0LxQ+J/or9GBCVJH80pdS6tN2qBJNpam/xI0q68VJbqM4PN+cBKjMcEiUjum0F2Y=
+	t=1750714128; cv=none; b=lK4oT7d7n78cndMO4kMMSbhQX8R49yZk8E4PZN6owm3JkRROeDyJe/X1U48Ce/LvBUNZkSBjxf8KzV8GleaQY8CJeFzskXghjR7ok7LCJipCIa4Cmr+Z5CWblqwXAgGLZ3of36u1tFHv/Ph+eeHo6as/fRf9FQRSbG509N6FTTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714126; c=relaxed/simple;
-	bh=vprkshYoG2XWcuEgeRJ9UtnQB6/Sr9fjjLipL9+VU1Q=;
+	s=arc-20240116; t=1750714128; c=relaxed/simple;
+	bh=0ZS06SFxjmXDVuMfsClmXcgNEEcXcaMvC1Q9+7woO1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A8iS/NACFPRAoSr3FRBytG39OotuJGifcbJubM30JadMCWhzyUsI0klaXOChPzousvuL2Lh5dT8BOttEr09lLPhiEH53TDEYp9oVSvnf1/W3yoGS9GuzFAKxzH2SOzOeNrJrbsYEue4DHw9uabK+zjAXmdufusYQt2C9Wc9hERk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hG0Chgov; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TL566wKZQAFHFQ15zYDY/5+b9v2IB0+6tW7Gmsy6Bj1GL1ds+Q/f/mb1AaGPXiZ34wM1sIPIMmFS121sp0idIXnBIMjJvwISkwsqpQOj23UDA/ljda3uHsZB5uWwDbev6grtA9EkNgxWCC6CWNDpuIfl7ScF/boS2eYIkCpW7kI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qe9ENvLf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hG0Chgov"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74598C4CEEA;
-	Mon, 23 Jun 2025 21:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qe9ENvLf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0338C4CEEA;
+	Mon, 23 Jun 2025 21:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714125;
-	bh=vprkshYoG2XWcuEgeRJ9UtnQB6/Sr9fjjLipL9+VU1Q=;
+	s=korg; t=1750714128;
+	bh=0ZS06SFxjmXDVuMfsClmXcgNEEcXcaMvC1Q9+7woO1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hG0Chgov/YGl1NbRWg5jKi3Q3IVcOR/7NIAUeoe1jC+jTRzW/QmnfweY/u2AWI/ii
-	 LEtXEPxBvvfsQr4TVtB7ELw/bHQx2Q9G8ZsnFMGwRxaKdsT0Qywkwk3TbH1dr3eULa
-	 ZUvNGF3Sk2QB7kWiQnrf7VbQZkCMwPKoDndBPdLU=
+	b=Qe9ENvLf2gsDZQ80+Uh0A3DSIFoRbYS06bwJygj8xSTkygvgw7AYco0LLLlQa0s7/
+	 PX8v1kc6i4VCcyoUyQBe9VhrPdqoCWQTJttRt8IoHQSjSN1FKVQ58hHgKEx0oEMdAg
+	 GAPeGxfS70/Hp60EXuwcGUWFYOpisap05Obk++Yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tan En De <ende.tan@starfivetech.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 138/290] i2c: designware: Invoke runtime suspend on quick slave re-registration
-Date: Mon, 23 Jun 2025 15:06:39 +0200
-Message-ID: <20250623130631.055834371@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.15 189/411] kbuild: userprogs: fix bitsize and target detection on clang
+Date: Mon, 23 Jun 2025 15:05:33 +0200
+Message-ID: <20250623130638.438265181@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,84 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tan En De <ende.tan@starfivetech.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 2fe2b969d911a09abcd6a47401a3c66c38a310e6 ]
+commit 1b71c2fb04e7a713abc6edde4a412416ff3158f2 upstream.
 
-Replaced pm_runtime_put() with pm_runtime_put_sync_suspend() to ensure
-the runtime suspend is invoked immediately when unregistering a slave.
-This prevents a race condition where suspend was skipped when
-unregistering and registering slave in quick succession.
+scripts/Makefile.clang was changed in the linked commit to move --target from
+KBUILD_CFLAGS to KBUILD_CPPFLAGS, as that generally has a broader scope.
+However that variable is not inspected by the userprogs logic,
+breaking cross compilation on clang.
 
-For example, consider the rapid sequence of
-`delete_device -> new_device -> delete_device -> new_device`.
-In this sequence, it is observed that the dw_i2c_plat_runtime_suspend()
-might not be invoked after `delete_device` operation.
+Use both variables to detect bitsize and target arguments for userprogs.
 
-This is because after `delete_device` operation, when the
-pm_runtime_put() is about to trigger suspend, the following `new_device`
-operation might race and cancel the suspend.
-
-If that happens, during the `new_device` operation,
-dw_i2c_plat_runtime_resume() is skipped (since there was no suspend), which
-means `i_dev->init()`, i.e. i2c_dw_init_slave(), is skipped.
-Since i2c_dw_init_slave() is skipped, i2c_dw_configure_fifo_slave() is
-skipped too, which leaves `DW_IC_INTR_MASK` unconfigured. If we inspect
-the interrupt mask register using devmem, it will show as zero.
-
-Example shell script to reproduce the issue:
-```
-  #!/bin/sh
-
-  SLAVE_LADDR=0x1010
-  SLAVE_BUS=13
-  NEW_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/new_device
-  DELETE_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/delete_device
-
-  # Create initial device
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-  sleep 2
-
-  # Rapid sequence of
-  # delete_device -> new_device -> delete_device -> new_device
-  echo $SLAVE_LADDR > $DELETE_DEVICE
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-  echo $SLAVE_LADDR > $DELETE_DEVICE
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-
-  # Using devmem to inspect IC_INTR_MASK will show as zero
-```
-
-Signed-off-by: Tan En De <ende.tan@starfivetech.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20250412023303.378600-1-ende.tan@starfivetech.com
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-designware-slave.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-designware-slave.c b/drivers/i2c/busses/i2c-designware-slave.c
-index 345b532a2b455..ea4c4955fe264 100644
---- a/drivers/i2c/busses/i2c-designware-slave.c
-+++ b/drivers/i2c/busses/i2c-designware-slave.c
-@@ -91,7 +91,7 @@ static int i2c_dw_unreg_slave(struct i2c_client *slave)
- 	i2c_dw_disable(dev);
- 	synchronize_irq(dev->irq);
- 	dev->slave = NULL;
--	pm_runtime_put(dev->dev);
-+	pm_runtime_put_sync_suspend(dev->dev);
+--- a/Makefile
++++ b/Makefile
+@@ -1126,8 +1126,8 @@ LDFLAGS_vmlinux += --orphan-handling=war
+ endif
  
- 	return 0;
- }
--- 
-2.39.5
-
+ # Align the bit size of userspace programs with the kernel
+-KBUILD_USERCFLAGS  += $(filter -m32 -m64 --target=%, $(KBUILD_CFLAGS))
+-KBUILD_USERLDFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CFLAGS))
++KBUILD_USERCFLAGS  += $(filter -m32 -m64 --target=%, $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS))
++KBUILD_USERLDFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS))
+ 
+ # userspace programs are linked via the compiler, use the correct linker
+ ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_LD_IS_LLD),yy)
 
 
