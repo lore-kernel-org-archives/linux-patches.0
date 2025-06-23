@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FA93FD4;
-	Mon, 23 Jun 2025 21:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919103FD4;
+	Mon, 23 Jun 2025 21:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715292; cv=none; b=uaChvof+AseM+ucnnAMCSlWgJiAWSbCpEFrjs7KkonUYrVjhqvijtoX3S84zpXDdSkttEUPf1sUuJ4HqqUEvNq+qH3MAGGYZBfE20oG/fYdrI1Xxm3TMI6mZysmi0v8TLntoZCrVX9gYYbK/vIMJLKCelkWPbNCzAC4DcWYJz9I=
+	t=1750715294; cv=none; b=QHs0cD922nQUX02u5sUVgr4uEIw7a7fMfA4k9jHDUEkiLtFPnxi0q1ZRbCbxAHXpi5MzyW3KT5UeB4xvYdYBDPA/q4aIDgSjauMpYOc4K+/+QkSbvEju0x0tQP7VnnMzO1eaFu9c8cFFZuaaHdfMwBcZ/cLpcy9v9sZFyqXeCyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715292; c=relaxed/simple;
-	bh=J96NFk5Mk7Koh/1mFm87XvblCvyGNL16CyMUTwU+m5w=;
+	s=arc-20240116; t=1750715294; c=relaxed/simple;
+	bh=vxTG93/JxqrfO8hIodKpnM/p8JxJfULyJKSrVZOFpr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z1zdzI1lZYDj5Qgv1RCN9JdL/tW8Vs9BMdF1gLIDXPZyB7mkUaMYrBPuRPx1UfdWLM6JJr4CPylagk4K5Ye7+E4Bo377S6jBrMVTYiqoHaX1Tn345HIBfHCncW6Qwv9hxbXcIVdQsxjoXMC+fv/OJcS/CxgHb9Mv3OcfAQO12/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fH/0FGys; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SPYG26vM1xu9UG1sLoc1eZC314D8jv6/DGnybTBm1xNfvHXqRLtCU8zSRJ7wxVKUe+57GEiakWmCZiHOsm0VxZ6ghnIMN/M1OVuYL/7KBh/oiwA3ael0OeI5DWGKJ2M9UA0eFvv+467YtBtczKi03+eUZAgmyvFhGR4wXvgb7BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dbzo6oNG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fH/0FGys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A78C4CEEA;
-	Mon, 23 Jun 2025 21:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dbzo6oNG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F082C4CEEA;
+	Mon, 23 Jun 2025 21:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715292;
-	bh=J96NFk5Mk7Koh/1mFm87XvblCvyGNL16CyMUTwU+m5w=;
+	s=korg; t=1750715294;
+	bh=vxTG93/JxqrfO8hIodKpnM/p8JxJfULyJKSrVZOFpr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fH/0FGys8l7B9lAt/HuuwLSZ4ZX4w5NofuYtgMhQPvqC07XQCaAnxXNljJ/GkbX7l
-	 Rh30Vm6Vg3rzOCSw/hUvMUoxLx0hiWG6FPtR2ckGzSm8pWwQ5Vr/DK5BvgbOAdwgqp
-	 L5UdQ08Ch3TwYSLp9v3pfwjavnutNbYu2bz++eHc=
+	b=Dbzo6oNG4+l/l7+7kS6E/TOBBB7Oc/P3qRNcux0DOmfvHCgJ1/8gOJqj4bBkc9dr0
+	 2hrnce9wFCU0dn0YsS7Fg8JtOweude6iuq5CsTO0LV14Dd6BS5VlSvGUk0eF++pWtA
+	 a2NqQQu5PcsJSfYUtG5qfGNtE/icA+tXfJ0sspa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 190/290] wifi: ath11k: determine PM policy based on machine model
-Date: Mon, 23 Jun 2025 15:07:31 +0200
-Message-ID: <20250623130632.578545666@linuxfoundation.org>
+Subject: [PATCH 5.10 266/355] clk: rockchip: rk3036: mark ddrphy as critical
+Date: Mon, 23 Jun 2025 15:07:47 +0200
+Message-ID: <20250623130634.751430900@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,142 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit ce8669a27016354dfa8bf3c954255cb9f3583bae ]
+[ Upstream commit 596a977b34a722c00245801a5774aa79cec4e81d ]
 
-To handle the Lenovo unexpected wakeup issue [1], previously we revert
-commit 166a490f59ac ("wifi: ath11k: support hibernation"). So currently
-WLAN target is put into WoWLAN mode during suspend. This is a temporary
-solution as it does not work on machines where WLAN power is cut off.
+The ddrphy is supplied by the dpll, but due to the limited number of PLLs
+on the rk3036, the dpll also is used for other periperhals, like the GPU.
 
-The thought here is that we do WoWLAN suspend on Lenovo machines while
-do non-WoWLAN suspend (which is done in the reverted commit) on other
-machines. This requires us to identify Lenovo machines from others.
-For that purpose, read board vendor and product name from DMI interface,
-match it against all known affected machines. If there is a match, choose
-WoWLAN suspend mode, else choose non-WoWLAN mode. Save the mode in ab
-for later reference.
+So it happened, when the Lima driver turned off the gpu clock, this in
+turn also disabled the dpll and thus the ram.
 
-[1] https://bugzilla.kernel.org/show_bug.cgi?id=219196
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-
-Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Tested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20250328-ath11k-bring-hibernation-back-v3-1-23405ae23431@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250503202532.992033-4-heiko@sntech.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/core.c | 55 ++++++++++++++++++++++++++
- drivers/net/wireless/ath/ath11k/core.h |  7 ++++
- 2 files changed, 62 insertions(+)
+ drivers/clk/rockchip/clk-rk3036.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
-index 609d8387c41f3..0e8ff839cae23 100644
---- a/drivers/net/wireless/ath/ath11k/core.c
-+++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -704,6 +704,52 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
- 	},
+diff --git a/drivers/clk/rockchip/clk-rk3036.c b/drivers/clk/rockchip/clk-rk3036.c
+index 6a46f85ad8372..4a8c72d995735 100644
+--- a/drivers/clk/rockchip/clk-rk3036.c
++++ b/drivers/clk/rockchip/clk-rk3036.c
+@@ -429,6 +429,7 @@ static const char *const rk3036_critical_clocks[] __initconst = {
+ 	"hclk_peri",
+ 	"pclk_peri",
+ 	"pclk_ddrupctl",
++	"ddrphy",
  };
  
-+static const struct dmi_system_id ath11k_pm_quirk_table[] = {
-+	{
-+		.driver_data = (void *)ATH11K_PM_WOW,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21J4"),
-+		},
-+	},
-+	{
-+		.driver_data = (void *)ATH11K_PM_WOW,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21K4"),
-+		},
-+	},
-+	{
-+		.driver_data = (void *)ATH11K_PM_WOW,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21K6"),
-+		},
-+	},
-+	{
-+		.driver_data = (void *)ATH11K_PM_WOW,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21K8"),
-+		},
-+	},
-+	{
-+		.driver_data = (void *)ATH11K_PM_WOW,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21KA"),
-+		},
-+	},
-+	{
-+		.driver_data = (void *)ATH11K_PM_WOW,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21F9"),
-+		},
-+	},
-+	{}
-+};
-+
- static inline struct ath11k_pdev *ath11k_core_get_single_pdev(struct ath11k_base *ab)
- {
- 	WARN_ON(!ab->hw_params.single_pdev_only);
-@@ -2018,8 +2064,17 @@ EXPORT_SYMBOL(ath11k_core_pre_init);
- 
- int ath11k_core_init(struct ath11k_base *ab)
- {
-+	const struct dmi_system_id *dmi_id;
- 	int ret;
- 
-+	dmi_id = dmi_first_match(ath11k_pm_quirk_table);
-+	if (dmi_id)
-+		ab->pm_policy = (kernel_ulong_t)dmi_id->driver_data;
-+	else
-+		ab->pm_policy = ATH11K_PM_DEFAULT;
-+
-+	ath11k_dbg(ab, ATH11K_DBG_BOOT, "pm policy %u\n", ab->pm_policy);
-+
- 	ret = ath11k_core_soc_create(ab);
- 	if (ret) {
- 		ath11k_err(ab, "failed to create soc core: %d\n", ret);
-diff --git a/drivers/net/wireless/ath/ath11k/core.h b/drivers/net/wireless/ath/ath11k/core.h
-index 555deafd8399a..812a174f74c0b 100644
---- a/drivers/net/wireless/ath/ath11k/core.h
-+++ b/drivers/net/wireless/ath/ath11k/core.h
-@@ -842,6 +842,11 @@ struct ath11k_msi_config {
- 	u16 hw_rev;
- };
- 
-+enum ath11k_pm_policy {
-+	ATH11K_PM_DEFAULT,
-+	ATH11K_PM_WOW,
-+};
-+
- /* Master structure to hold the hw data which may be used in core module */
- struct ath11k_base {
- 	enum ath11k_hw_rev hw_rev;
-@@ -994,6 +999,8 @@ struct ath11k_base {
- 	} testmode;
- #endif
- 
-+	enum ath11k_pm_policy pm_policy;
-+
- 	/* must be last */
- 	u8 drv_priv[] __aligned(sizeof(void *));
- };
+ static void __init rk3036_clk_init(struct device_node *np)
 -- 
 2.39.5
 
