@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907F71E1A05;
-	Mon, 23 Jun 2025 21:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1203F21B8F6;
+	Mon, 23 Jun 2025 21:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714377; cv=none; b=G3dGDOGi5uWq4T8JPSljbzYG6mQWfHtBdG5NNmjVdYm4wNg6JMr22uAsZpITFjDQDMFUCaC9P86oLJKt9i3PVZkKb72DDdB491Xr985jck63HGI2dJEB/icjkAp+OEH/N4iEtpurf8jTq5BrwroPmyEPbR/aFg4Qb4Gq58y8J0k=
+	t=1750714380; cv=none; b=FhBFg4BSYuFFn/rRA3+n6PnPGt4fUcFl7DCqRMphPoxThRrfgtIEau+6gZc4/P0AQzpMyFCL+B5YqoOwFnBZgr3nfRt3y0R7K2dl/pWG0g/CByndMjMg87m6K/vH0aHx2RLSWUT6RB1B159jvbE9quDZywLufBW8CJXs/JI/dJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714377; c=relaxed/simple;
-	bh=ERpaKlRmDsfnJRKu2fjrQwC4ZnhA3sLlJieP4IAlda0=;
+	s=arc-20240116; t=1750714380; c=relaxed/simple;
+	bh=xMax8O3s9QTpBMClX9PlJCX8FF0NAejH+7XgveIKxJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=scuLXRhMP9iservaggIxYPjIbA2OTSInPXVSigNzv8gMBeS4vD27CI8/HzT0LT7rG8o2Bgh8Euv4WU3UH3Il2ykgi7UJdqPM2aAyVYYtwR8BT2p3msKiFnEAS+F965Z7j/Yh4S0bM5EInI2/S+TyZh0JsEnYryoPyJry7iNoRvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzMrVkI0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dMJp1CxNpiqgs2xFyx+YqmIYQ0jzN2TMWt87RQsAEDe3+xVs7ghtQBPD2Hrt41TxwsaskK0QiWZTXcx7pHqHIsQwcUdg4GMs3pVTLr5gFUa/QLcrwNBCsW8skXZ0awFRY6fOXdPXwNUzgukaq9M9VZuQf3zq1EUdcDysvMuMEOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maYut4ok; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzMrVkI0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29699C4CEEA;
-	Mon, 23 Jun 2025 21:32:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maYut4ok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A97C4CEEA;
+	Mon, 23 Jun 2025 21:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714377;
-	bh=ERpaKlRmDsfnJRKu2fjrQwC4ZnhA3sLlJieP4IAlda0=;
+	s=korg; t=1750714379;
+	bh=xMax8O3s9QTpBMClX9PlJCX8FF0NAejH+7XgveIKxJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzMrVkI0TahnjVBaBtgxY8Z0h2Ag3UdG6UIlq4ifZ12WWkPs6sPGeFHEMJjfR6Bl1
-	 YWQXFtmEsnQQs4JHdKjA0KNJ8OOgOaAQZqdzMJIX0as9ZI6A4W5as0L2Ol/4SQKeL1
-	 BcUJMxFzutNGkx/RtGarGMUhwlcPf7jd9MpUeTgA=
+	b=maYut4okOk6JifOdwSpsu0LSd5V3c3x3ss9uGRurAyede16KDFX5mKMxsAt3cXkLL
+	 L4AZCT6rYWujrnxvSX4fjiZ8VsNXFDwzVkNeYHs1UggYBdPp0p9DZkg041BKrMuB+Q
+	 b8SL9IF80s8Iaajv3ErwR4uRldW6Y16M4V2C5P+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Stefano Stabellini <stefano.stabellini@amd.com>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.15 184/411] xen/arm: call uaccess_ttbr0_enable for dm_op hypercall
-Date: Mon, 23 Jun 2025 15:05:28 +0200
-Message-ID: <20250623130638.314626262@linuxfoundation.org>
+	syzbot+cc448dcdc7ae0b4e4ffa@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.12 099/414] f2fs: fix to do sanity check on ino and xnid
+Date: Mon, 23 Jun 2025 15:03:56 +0200
+Message-ID: <20250623130644.573053687@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +47,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefano Stabellini <stefano.stabellini@amd.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 7f9bbc1140ff8796230bc2634055763e271fd692 upstream.
+commit 061cf3a84bde038708eb0f1d065b31b7c2456533 upstream.
 
-dm_op hypercalls might come from userspace and pass memory addresses as
-parameters. The memory addresses typically correspond to buffers
-allocated in userspace to hold extra hypercall parameters.
+syzbot reported a f2fs bug as below:
 
-On ARM, when CONFIG_ARM64_SW_TTBR0_PAN is enabled, they might not be
-accessible by Xen, as a result ioreq hypercalls might fail. See the
-existing comment in arch/arm64/xen/hypercall.S regarding privcmd_call
-for reference.
+INFO: task syz-executor140:5308 blocked for more than 143 seconds.
+      Not tainted 6.14.0-rc7-syzkaller-00069-g81e4f8d68c66 #0
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:syz-executor140 state:D stack:24016 pid:5308  tgid:5308  ppid:5306   task_flags:0x400140 flags:0x00000006
+Call Trace:
+ <TASK>
+ context_switch kernel/sched/core.c:5378 [inline]
+ __schedule+0x190e/0x4c90 kernel/sched/core.c:6765
+ __schedule_loop kernel/sched/core.c:6842 [inline]
+ schedule+0x14b/0x320 kernel/sched/core.c:6857
+ io_schedule+0x8d/0x110 kernel/sched/core.c:7690
+ folio_wait_bit_common+0x839/0xee0 mm/filemap.c:1317
+ __folio_lock mm/filemap.c:1664 [inline]
+ folio_lock include/linux/pagemap.h:1163 [inline]
+ __filemap_get_folio+0x147/0xb40 mm/filemap.c:1917
+ pagecache_get_page+0x2c/0x130 mm/folio-compat.c:87
+ find_get_page_flags include/linux/pagemap.h:842 [inline]
+ f2fs_grab_cache_page+0x2b/0x320 fs/f2fs/f2fs.h:2776
+ __get_node_page+0x131/0x11b0 fs/f2fs/node.c:1463
+ read_xattr_block+0xfb/0x190 fs/f2fs/xattr.c:306
+ lookup_all_xattrs fs/f2fs/xattr.c:355 [inline]
+ f2fs_getxattr+0x676/0xf70 fs/f2fs/xattr.c:533
+ __f2fs_get_acl+0x52/0x870 fs/f2fs/acl.c:179
+ f2fs_acl_create fs/f2fs/acl.c:375 [inline]
+ f2fs_init_acl+0xd7/0x9b0 fs/f2fs/acl.c:418
+ f2fs_init_inode_metadata+0xa0f/0x1050 fs/f2fs/dir.c:539
+ f2fs_add_inline_entry+0x448/0x860 fs/f2fs/inline.c:666
+ f2fs_add_dentry+0xba/0x1e0 fs/f2fs/dir.c:765
+ f2fs_do_add_link+0x28c/0x3a0 fs/f2fs/dir.c:808
+ f2fs_add_link fs/f2fs/f2fs.h:3616 [inline]
+ f2fs_mknod+0x2e8/0x5b0 fs/f2fs/namei.c:766
+ vfs_mknod+0x36d/0x3b0 fs/namei.c:4191
+ unix_bind_bsd net/unix/af_unix.c:1286 [inline]
+ unix_bind+0x563/0xe30 net/unix/af_unix.c:1379
+ __sys_bind_socket net/socket.c:1817 [inline]
+ __sys_bind+0x1e4/0x290 net/socket.c:1848
+ __do_sys_bind net/socket.c:1853 [inline]
+ __se_sys_bind net/socket.c:1851 [inline]
+ __x64_sys_bind+0x7a/0x90 net/socket.c:1851
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-For privcmd_call, Linux calls uaccess_ttbr0_enable before issuing the
-hypercall thanks to commit 9cf09d68b89a. We need to do the same for
-dm_op. This resolves the problem.
+Let's dump and check metadata of corrupted inode, it shows its xattr_nid
+is the same to its i_ino.
 
-Cc: stable@kernel.org
-Fixes: 9cf09d68b89a ("arm64: xen: Enable user access before a privcmd hvc call")
-Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Message-ID: <alpine.DEB.2.22.394.2505121446370.8380@ubuntu-linux-20-04-desktop>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+dump.f2fs -i 3 chaseyu.img.raw
+i_xattr_nid                             [0x       3 : 3]
+
+So that, during mknod in the corrupted directory, it tries to get and
+lock inode page twice, result in deadlock.
+
+- f2fs_mknod
+ - f2fs_add_inline_entry
+  - f2fs_get_inode_page --- lock dir's inode page
+   - f2fs_init_acl
+    - f2fs_acl_create(dir,..)
+     - __f2fs_get_acl
+      - f2fs_getxattr
+       - lookup_all_xattrs
+        - __get_node_page --- try to lock dir's inode page
+
+In order to fix this, let's add sanity check on ino and xnid.
+
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+cc448dcdc7ae0b4e4ffa@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/67e06150.050a0220.21942d.0005.GAE@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/xen/hypercall.S |   21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ fs/f2fs/inode.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/arm64/xen/hypercall.S
-+++ b/arch/arm64/xen/hypercall.S
-@@ -84,7 +84,26 @@ HYPERCALL1(tmem_op);
- HYPERCALL1(platform_op_raw);
- HYPERCALL2(multicall);
- HYPERCALL2(vm_assist);
--HYPERCALL3(dm_op);
-+
-+SYM_FUNC_START(HYPERVISOR_dm_op)
-+	mov x16, #__HYPERVISOR_dm_op;	\
-+	/*
-+	 * dm_op hypercalls are issued by the userspace. The kernel needs to
-+	 * enable access to TTBR0_EL1 as the hypervisor would issue stage 1
-+	 * translations to user memory via AT instructions. Since AT
-+	 * instructions are not affected by the PAN bit (ARMv8.1), we only
-+	 * need the explicit uaccess_enable/disable if the TTBR0 PAN emulation
-+	 * is enabled (it implies that hardware UAO and PAN disabled).
-+	 */
-+	uaccess_ttbr0_enable x6, x7, x8
-+	hvc XEN_IMM
-+
-+	/*
-+	 * Disable userspace access from kernel once the hyp call completed.
-+	 */
-+	uaccess_ttbr0_disable x6, x7
-+	ret
-+SYM_FUNC_END(HYPERVISOR_dm_op);
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -286,6 +286,12 @@ static bool sanity_check_inode(struct in
+ 		return false;
+ 	}
  
- SYM_FUNC_START(privcmd_call)
- 	mov x16, x0
++	if (ino_of_node(node_page) == fi->i_xattr_nid) {
++		f2fs_warn(sbi, "%s: corrupted inode i_ino=%lx, xnid=%x, run fsck to fix.",
++			  __func__, inode->i_ino, fi->i_xattr_nid);
++		return false;
++	}
++
+ 	if (f2fs_has_extra_attr(inode)) {
+ 		if (!f2fs_sb_has_extra_attr(sbi)) {
+ 			f2fs_warn(sbi, "%s: inode (ino=%lx) is with extra_attr, but extra_attr feature is off",
 
 
