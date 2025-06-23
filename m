@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999DC1E521E;
-	Mon, 23 Jun 2025 21:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147C01E51FA;
+	Mon, 23 Jun 2025 21:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713925; cv=none; b=cYBa35Uo3FzjkRbOqEHqDPtu5L59xdbMm2Bl3YkugiUG+JVtkeTvBDHqXnomuMX6W9M78na3MZN8P8lbzzdCE8HR8J/WBv8VabpxMwdGPFTjHEXOFeC6V5anmpKU5PZltkNO8glC5xS/j0PYsbvQbhgSuHGvMGSGhVxDyYgiKO0=
+	t=1750713928; cv=none; b=gmVf3IQN+yhXyY7cexl+bWbJkOKFDjE20mjrPq1vxCNHp5Iu08Ts0z8ayW1A9DFSyi4PtvN23tdQaWhzlxWV9TS5S///lxwWztPS4hxAtZlHjjS850rnkT21jjljMhmdFCQN0hVu2BrXy75oc4XhnFwUumgSPl0PzBtqrjypX74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713925; c=relaxed/simple;
-	bh=eaeM/VRFVun/gKEs+SUc1gC9qQku+nqY5CHwFfGXxTg=;
+	s=arc-20240116; t=1750713928; c=relaxed/simple;
+	bh=f+HNSjQFLpV7GVzVMIbtmhMQey6j5d+h6l+jzzJO1C8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ei6hsjGGOTc2BhB8o+YChetBIzyChVuT9x4I5/RhBjciwbOMvetWYvw0xgeu0zuRa6jhGzsafYMoFg3XZkV9geHThmfM+MAHpvgQfxkf53kJEGHq0Ro5Wi0EN1EuOqgePUfGvRdP4grmmc84YmdDf83TzQEBQrjoEMM6y4564Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHmmYrdk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rgaSDxIlPWi+c0oNkxp7JQQ+l9P1S+3EbKeQt2vj+3p2vIwuNkgEbC4lBpi+vqYRqAo1dersJrnWfstxnyGkG/6udrjWLa9ToagZ1dpfzrvjo8emJCLhW5sPdjyeGEZ2/bLC1xuVG1OhoroJSVUZ1yQuCffligCFaoYbTdvlmU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbZYFGpV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHmmYrdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D912BC4CEEA;
-	Mon, 23 Jun 2025 21:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbZYFGpV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55195C4CEEA;
+	Mon, 23 Jun 2025 21:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713925;
-	bh=eaeM/VRFVun/gKEs+SUc1gC9qQku+nqY5CHwFfGXxTg=;
+	s=korg; t=1750713927;
+	bh=f+HNSjQFLpV7GVzVMIbtmhMQey6j5d+h6l+jzzJO1C8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BHmmYrdkc1jhv+6zqNHruuDTHz69wNLYTJbXLfzgdoIoGKqIpbOhVVme8Tk6xRRfS
-	 nQkIlDyWNvlhkljA1lRMsKloA5bv8Ejhp8W1D19/oMygmMgFnRPwhjvpXAXganRcEK
-	 Jl9lo0xQvsZ5l6bZgjvpI8Y+xzH17ybzQ/JC6K5c=
+	b=MbZYFGpVDXeDoV96wXo4fA+oLTJO5qvcgnTJfO80LBV5VWZzPUlUfwb9dOjBQYghA
+	 tZy6i8W5YGIT/Ad2lBINYd7c2Zr8uk0xutEdA1GqrnCRIHyKjWhq+J+MNt4m8MCuPD
+	 7hifPuzelmT1tpPwW1x3cqeJjj8D187GujFwr0D0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.10 174/355] media: v4l2-dev: fix error handling in __video_register_device()
-Date: Mon, 23 Jun 2025 15:06:15 +0200
-Message-ID: <20250623130631.937941891@linuxfoundation.org>
+Subject: [PATCH 6.12 071/414] media: uvcvideo: Fix deferred probing error
+Date: Mon, 23 Jun 2025 15:03:28 +0200
+Message-ID: <20250623130643.848362365@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +48,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 2a934fdb01db6458288fc9386d3d8ceba6dd551a upstream.
+commit 387e8939307192d5a852a2afeeb83427fa477151 upstream.
 
-Once device_register() failed, we should call put_device() to
-decrement reference count for cleanup. Or it could cause memory leak.
-And move callback function v4l2_device_release() and v4l2_device_get()
-before put_device().
+uvc_gpio_parse() can return -EPROBE_DEFER when the GPIOs it depends on
+have not yet been probed. This return code should be propagated to the
+caller of uvc_probe() to ensure that probing is retried when the required
+GPIOs become available.
 
-As comment of device_register() says, 'NOTE: _Never_ directly free
-@dev after calling this function, even if it returned an error! Always
-use put_device() to give up the reference initialized in this function
-instead.'
+Currently, this error code is incorrectly converted to -ENODEV,
+causing some internal cameras to be ignored.
 
-Found by code review.
+This commit fixes this issue by propagating the -EPROBE_DEFER error.
 
 Cc: stable@vger.kernel.org
-Fixes: dc93a70cc7f9 ("V4L/DVB (9973): v4l2-dev: use the release callback from device instead of cdev")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: 2886477ff987 ("media: uvcvideo: Implement UVC_EXT_GPIO_UNIT")
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Message-ID: <20250313-uvc-eprobedefer-v3-1-a1d312708eef@chromium.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-dev.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c |   27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-dev.c
-+++ b/drivers/media/v4l2-core/v4l2-dev.c
-@@ -1029,25 +1029,25 @@ int __video_register_device(struct video
- 	vdev->dev.class = &video_class;
- 	vdev->dev.devt = MKDEV(VIDEO_MAJOR, vdev->minor);
- 	vdev->dev.parent = vdev->dev_parent;
-+	vdev->dev.release = v4l2_device_release;
- 	dev_set_name(&vdev->dev, "%s%d", name_base, vdev->num);
-+
-+	/* Increase v4l2_device refcount */
-+	v4l2_device_get(vdev->v4l2_dev);
-+
- 	mutex_lock(&videodev_lock);
- 	ret = device_register(&vdev->dev);
- 	if (ret < 0) {
- 		mutex_unlock(&videodev_lock);
- 		pr_err("%s: device_register failed\n", __func__);
--		goto cleanup;
-+		put_device(&vdev->dev);
-+		return ret;
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -2217,13 +2217,16 @@ static int uvc_probe(struct usb_interfac
+ #endif
+ 
+ 	/* Parse the Video Class control descriptor. */
+-	if (uvc_parse_control(dev) < 0) {
++	ret = uvc_parse_control(dev);
++	if (ret < 0) {
++		ret = -ENODEV;
+ 		uvc_dbg(dev, PROBE, "Unable to parse UVC descriptors\n");
+ 		goto error;
  	}
--	/* Register the release callback that will be called when the last
--	   reference to the device goes away. */
--	vdev->dev.release = v4l2_device_release;
  
- 	if (nr != -1 && nr != vdev->num && warn_if_nr_in_use)
- 		pr_warn("%s: requested %s%d, got %s\n", __func__,
- 			name_base, nr, video_device_node_name(vdev));
+ 	/* Parse the associated GPIOs. */
+-	if (uvc_gpio_parse(dev) < 0) {
++	ret = uvc_gpio_parse(dev);
++	if (ret < 0) {
+ 		uvc_dbg(dev, PROBE, "Unable to parse UVC GPIOs\n");
+ 		goto error;
+ 	}
+@@ -2249,24 +2252,32 @@ static int uvc_probe(struct usb_interfac
+ 	}
  
--	/* Increase v4l2_device refcount */
--	v4l2_device_get(vdev->v4l2_dev);
--
- 	/* Part 5: Register the entity. */
- 	ret = video_register_media_controller(vdev);
+ 	/* Register the V4L2 device. */
+-	if (v4l2_device_register(&intf->dev, &dev->vdev) < 0)
++	ret = v4l2_device_register(&intf->dev, &dev->vdev);
++	if (ret < 0)
+ 		goto error;
  
+ 	/* Scan the device for video chains. */
+-	if (uvc_scan_device(dev) < 0)
++	if (uvc_scan_device(dev) < 0) {
++		ret = -ENODEV;
+ 		goto error;
++	}
+ 
+ 	/* Initialize controls. */
+-	if (uvc_ctrl_init_device(dev) < 0)
++	if (uvc_ctrl_init_device(dev) < 0) {
++		ret = -ENODEV;
+ 		goto error;
++	}
+ 
+ 	/* Register video device nodes. */
+-	if (uvc_register_chains(dev) < 0)
++	if (uvc_register_chains(dev) < 0) {
++		ret = -ENODEV;
+ 		goto error;
++	}
+ 
+ #ifdef CONFIG_MEDIA_CONTROLLER
+ 	/* Register the media device node */
+-	if (media_device_register(&dev->mdev) < 0)
++	ret = media_device_register(&dev->mdev);
++	if (ret < 0)
+ 		goto error;
+ #endif
+ 	/* Save our data pointer in the interface data. */
+@@ -2300,7 +2311,7 @@ static int uvc_probe(struct usb_interfac
+ error:
+ 	uvc_unregister_video(dev);
+ 	kref_put(&dev->ref, uvc_delete);
+-	return -ENODEV;
++	return ret;
+ }
+ 
+ static void uvc_disconnect(struct usb_interface *intf)
 
 
