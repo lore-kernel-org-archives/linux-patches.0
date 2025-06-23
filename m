@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211C52F24;
-	Mon, 23 Jun 2025 13:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FA04C6E;
+	Mon, 23 Jun 2025 13:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686020; cv=none; b=jWhLyH72/hc8a+a25RErQKPZIvFNEAUsBOW5EgGSAewqcS5pQG5GSDAJPCm750ifxt0DalVDChpHMHYO+iBm9mDpMp9sYxWcS4uRPDRQ60KrxfG3BaW88ksF7wOBE879CdGvg19F6L/Ic1cfXB2+0tlHvuJEi9idnVC8G/TaT3s=
+	t=1750686022; cv=none; b=tKnlGn3x42Xu7gsfZP3p+xBQRo47Uzo3SaccIg86SsOjElsA1ZXwNdxHZhhW3aSBb4C8ofqtZMOATWah79cuvFw42pOvK6haDSaH8B+1DytmhOO/xjifpN37Mj6XH5OEJe+AX8kYX1zzg2GwVvix7BT3SQSKhGlMwzl/3W7+2L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686020; c=relaxed/simple;
-	bh=KbxM3hJkyjpn1JNZuxjD3OxPKorwoE6WgXSmNZUGWtY=;
+	s=arc-20240116; t=1750686022; c=relaxed/simple;
+	bh=HK03IS5nRIz2NAxuwJ+5FCIHuMoozhcXnlcCsENU+Xs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L4e6x1N4WNq+4PdO97uZFW7BkUK1VDQvx2L4aecSm61Xxmd/im4fRg6NNf6B5rCrwrdme71hOrnCOlgjqw6jIsqdd6LYmD7vwjEpS7XyFjB0GW9CDlPD5VTn8iVraE0C3rl77ntmAtIRGZ9k9KKwnGBsOrv+7HDFxWKZzrNgFas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6wpZ+kE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Epol5ezc/3SpG4HN/EG19EE+SO6YsZ3WzEZmpU+/1OCzKRhDdKl0jobVUXY/cllp+sC63n6IZjU+08mGi8MNLbTYiNsy7ZHOSdUwCLHl8HXPKuIuvfHjMuEczH/tPZldU0VsXC2eFwzce9sdZRg0ZsQXlhtrJynFyV34R2RYWxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7TShvdD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6wpZ+kE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D03C4CEF0;
-	Mon, 23 Jun 2025 13:40:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7TShvdD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39827C4CEF1;
+	Mon, 23 Jun 2025 13:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686020;
-	bh=KbxM3hJkyjpn1JNZuxjD3OxPKorwoE6WgXSmNZUGWtY=;
+	s=korg; t=1750686022;
+	bh=HK03IS5nRIz2NAxuwJ+5FCIHuMoozhcXnlcCsENU+Xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I6wpZ+kEcIapZEkHbieg9r/7YyK5MBKCNEJgle+ir8rVT4oYriCcS0BEkzr2ewiKU
-	 GiTZp0PVnxNow4gx0AOrdS31F+VvSZNeC1NUCagnj0RLwwzHiuYH9Ob+T7ugJla3UH
-	 Lk1LtbH2BRevRO6HgGR/KYeDPia0bSjKFyIc2Bpc=
+	b=N7TShvdD5u5ElKNq6pbV1ssO/czWVf86ddQGcsXokzLnEJjEg0w7B85q8ZaZh2C9t
+	 ee68/y7t1gCaceVy1ITiikILfcA2e18GbuOn1jQBsD71qrD+nnbkYFpu55iYVVn2dw
+	 Jmv1q3PWq3WVxAWwGJpoWhtOzrxQ089d6EXAwdB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 075/411] ARM: dts: at91: usb_a9263: fix GPIO for Dataflash chip select
-Date: Mon, 23 Jun 2025 15:03:39 +0200
-Message-ID: <20250623130635.256424718@linuxfoundation.org>
+	Steve Sears <sjs@hammerspace.com>,
+	Jakub Kacinski <kuba@kernel.org>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>
+Subject: [PATCH 6.6 018/290] SUNRPC: Prevent hang on NFS mount with xprtsec=[m]tls
+Date: Mon, 23 Jun 2025 15:04:39 +0200
+Message-ID: <20250623130627.532697286@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +49,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 67ba341e57ab158423818ed33bfa1c40eb0e5e7e ]
+commit 0bd2f6b8996d4f1ca4573652454987826730a04a upstream.
 
-Dataflash did not work on my board. After checking schematics and using
-the proper GPIO, it works now. Also, make it active low to avoid:
+Engineers at Hammerspace noticed that sometimes mounting with
+"xprtsec=tls" hangs for a minute or so, and then times out, even
+when the NFS server is reachable and responsive.
 
-flash@0 enforce active low on GPIO handle
+kTLS shuts off data_ready callbacks if strp->msg_ready is set to
+mitigate data_ready callbacks when a full TLS record is not yet
+ready to be read from the socket.
 
-Fixes: 2432d201468d ("ARM: at91: dt: usb-a9263: add dataflash support")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/20250404112742.67416-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Normally msg_ready is clear when the first TLS record arrives on
+a socket. However, I observed that sometimes tls_setsockopt() sets
+strp->msg_ready, and that prevents forward progress because
+tls_data_ready() becomes a no-op.
+
+Moreover, Jakub says: "If there's a full record queued at the time
+when [tlshd] passes the socket back to the kernel, it's up to the
+reader to read the already queued data out." So SunRPC cannot
+expect a data_ready call when ingress data is already waiting.
+
+Add an explicit poll after SunRPC's upper transport is set up to
+pick up any data that arrived after the TLS handshake but before
+transport set-up is complete.
+
+Reported-by: Steve Sears <sjs@hammerspace.com>
+Suggested-by: Jakub Kacinski <kuba@kernel.org>
+Fixes: 75eb6af7acdf ("SUNRPC: Add a TCP-with-TLS RPC transport class")
+Tested-by: Mike Snitzer <snitzer@kernel.org>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/usb_a9263.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sunrpc/xprtsock.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm/boot/dts/usb_a9263.dts b/arch/arm/boot/dts/usb_a9263.dts
-index 8a0cfbfd0c452..d1c07503ff76f 100644
---- a/arch/arm/boot/dts/usb_a9263.dts
-+++ b/arch/arm/boot/dts/usb_a9263.dts
-@@ -58,7 +58,7 @@
- 			};
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -2724,6 +2724,11 @@ static void xs_tcp_tls_setup_socket(stru
+ 	}
+ 	rpc_shutdown_client(lower_clnt);
  
- 			spi0: spi@fffa4000 {
--				cs-gpios = <&pioB 15 GPIO_ACTIVE_HIGH>;
-+				cs-gpios = <&pioA 5 GPIO_ACTIVE_LOW>;
- 				status = "okay";
- 				mtd_dataflash@0 {
- 					compatible = "atmel,at45", "atmel,dataflash";
--- 
-2.39.5
-
++	/* Check for ingress data that arrived before the socket's
++	 * ->data_ready callback was set up.
++	 */
++	xs_poll_check_readable(upper_transport);
++
+ out_unlock:
+ 	current_restore_flags(pflags, PF_MEMALLOC);
+ 	upper_transport->clnt = NULL;
 
 
