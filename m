@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C45A255222;
-	Mon, 23 Jun 2025 13:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0672561A8;
+	Mon, 23 Jun 2025 13:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684792; cv=none; b=uTkJ/DbgCpG51NWhBjHkTW7zpJohKJqWNb9G9pv8LO9O2nBVroORZwbXUHKpU7qZ1jPVRSid6jggpZChcOsHslUJqdFVntYzkZy5TZ2w9+zfoS5thBzrxI7TtDfg82rnK1MHV8IdVF4SzVvpRvXVxQpJuj+wUux/7ubdSeA9Xmc=
+	t=1750684795; cv=none; b=InltHysyxpZ+rA3iIc2ZsimUt0E/jjtMEoxRVmFZ2R7aXUZVIDw+cGeIQAKo8grfo+aNOfmCXR8DZOjudXkoIBlJyvSa1kYKUQ4/xmuSOLP1QDQWbu/fqjCXe1c++HdzUSjPefqpcTMBj+GoZk36xckY/l1MkZUvcudVMGZrOC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684792; c=relaxed/simple;
-	bh=W/M3JQAPDEBDNgkgDvaCR+4QOLZu48dST1qfte/NK44=;
+	s=arc-20240116; t=1750684795; c=relaxed/simple;
+	bh=hwLN4D+uW4NowzYsVOY0gpugnUTfLzDb6+zxNyPy0ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Df74jNPXjABmsP3WtwZEhcHWa2ME8KxRwqFHXeGpAZnHc2kGnCwtaFmMEk0ALQ+xYHV5BKrzDjhUlZ+Moho//jkxnEAu+/jtnnMVTUWVzNMsa0KAjKJvBlL9FdSiETs3Trv1CXZs5R9iuCTdF2zJJmTa43IZfC6SdC7Han+yr6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYkcamr4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KncZL9s96zolk0CdgQC8unp8NN/XSOt/4hVMt8K8ZAMUUwUxqm1c4BO3Cex5WO5fJ8VMcN3DkjQDRtu+0L4loXtc8XFEOU7uQEwQ5p7yz7hoancbroMsy6JDLwJwzYvH6EbQoDBYNvI9wreGru/8deISjCrrLPfZ51FAD4KZOck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qu1Z21xT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYkcamr4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE728C4CEF0;
-	Mon, 23 Jun 2025 13:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qu1Z21xT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4837AC4CEF0;
+	Mon, 23 Jun 2025 13:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684792;
-	bh=W/M3JQAPDEBDNgkgDvaCR+4QOLZu48dST1qfte/NK44=;
+	s=korg; t=1750684794;
+	bh=hwLN4D+uW4NowzYsVOY0gpugnUTfLzDb6+zxNyPy0ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WYkcamr4SyMdxmk2jTUC/t8eHUDyjSxMuuroy2N81FvXEX+I0kwFZegHZHGUu9tcg
-	 L1i5nFyvLd0Cf7LhHEgCqwACKgKyGAs5gdLMQ8k6YG21Ee267cKbAavbhIXuAsS1m+
-	 w/jIyF4CIMix3OrzVKvypaZV41+4tBvA4e/jliNw=
+	b=qu1Z21xTbK0oWh9FqPNZdg2UjykiSTC9gdcT41RIzL6IV0xOOE/93OTNjsm0bfz5R
+	 eBtZdgCgJP/6QF0CT0/tVLhBc2q+RMFsFPQGRfU6i4X0Q4BRq0otNXFGfZTConcxwu
+	 3CBcYuMkm/lMNXxM0SoYD3nQa0rPXC1Ib0W0gi8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 030/222] f2fs: clean up w/ fscrypt_is_bounce_page()
-Date: Mon, 23 Jun 2025 15:06:05 +0200
-Message-ID: <20250623130612.801594344@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.15 174/592] cifs: update dstaddr whenever channel iface is updated
+Date: Mon, 23 Jun 2025 15:02:12 +0200
+Message-ID: <20250623130704.417460926@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,38 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 0c708e35cf26449ca317fcbfc274704660b6d269 ]
+commit c1846893991f3b4ec8a0cc12219ada153f0814d6 upstream.
 
-Just cleanup, no logic changes.
+When the server interface info changes (more common in clustered
+servers like Azure Files), the per-channel iface gets updated.
+However, this did not update the corresponding dstaddr. As a result
+these channels will still connect (or try connecting) to older addresses.
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b54034a73baf ("cifs: during reconnect, update interface if necessary")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/sess.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 8f78050c935d7..e7aa23f098470 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -37,7 +37,7 @@ static bool __is_cp_guaranteed(struct page *page)
- 	struct inode *inode;
- 	struct f2fs_sb_info *sbi;
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -445,6 +445,10 @@ cifs_chan_update_iface(struct cifs_ses *
  
--	if (!mapping)
-+	if (fscrypt_is_bounce_page(page))
- 		return false;
+ 	ses->chans[chan_index].iface = iface;
+ 	spin_unlock(&ses->chan_lock);
++
++	spin_lock(&server->srv_lock);
++	memcpy(&server->dstaddr, &iface->sockaddr, sizeof(server->dstaddr));
++	spin_unlock(&server->srv_lock);
+ }
  
- 	inode = mapping->host;
--- 
-2.39.5
-
+ static int
 
 
