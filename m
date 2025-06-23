@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAB61F5820;
-	Mon, 23 Jun 2025 21:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08B31EEA5D;
+	Mon, 23 Jun 2025 21:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714392; cv=none; b=G9HNlp16CY2LUv7Kvk6GthJBmw6J37HYNCo2BII155v9vwCMm53vphIGLdjrbE3Jx5E9XBZJhTFDNY6aQ9hgoE3wN7cew/brLUdohfU0b4mRIy5Byhn3Z7bp4dqWrNGxgSpENCeEMr6Nitwi2/Q216ZHq8wl5NZFEw+eFWNNqe4=
+	t=1750714394; cv=none; b=AN2FXZnGYCBgkV0RsPpi+EWjmQSPFe76tlqB6TAFVBhI/mCFTsCQOxswNO96t7YdhW+FGwRXHqzEw96f+0jW9JS0/8IGaVsK6w8wDgGd4rwnK08ohh8QHuFPXxyY2HX6yP2ioDaE8Ol0KLJAyvM1knyw1XnQfksOKOtTTc5C+20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714392; c=relaxed/simple;
-	bh=wNuQs3lZfWKjHhD/lEfGSYIKV2w6br707vfXKws+rDQ=;
+	s=arc-20240116; t=1750714394; c=relaxed/simple;
+	bh=v3P4UaOhU0+S3IduPMQHAWkXtpXjqdtUZZbxfCVqOcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lTjt9LtZJ6ViRIelnTxMHSPwqwJ+GWM+sKtGVwckaK7Lg08a8kCXSHIUOPtXTl3JJsEzY3Kn2vNKDbBJvedKtwC1tJsf733YB8lcdU9KbAAfJcoShCTYsOVS+XNQe7vRTvN2immz27AeuEVDDdAkBWSSHPYUuuZNfHDzfsL64Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyOW6Hiu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nHsKg9a/L2unmtV1d8eMivYoBe+uCB+xjs26FVWYQ2X7Pm7iH0FEMbVL5qhpFW+SpFJnIuNxMloAKsfobNicvlqs7+AtaL4Ajl+Bz/1KVJWIhG3IXVsVIC/PBNYhh549XFYzRmyIZIIIEL3n57CbwwZSmUVsBZi6TW55nqdw6qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNi1N9pL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyOW6Hiu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0BDC4CEEA;
-	Mon, 23 Jun 2025 21:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNi1N9pL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BC0C4CEEA;
+	Mon, 23 Jun 2025 21:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714392;
-	bh=wNuQs3lZfWKjHhD/lEfGSYIKV2w6br707vfXKws+rDQ=;
+	s=korg; t=1750714394;
+	bh=v3P4UaOhU0+S3IduPMQHAWkXtpXjqdtUZZbxfCVqOcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pyOW6HiuCVT7aVGMNlwYI9bV9id+yf790SO1L/N/xPRRqTH3EIcD3pooAguweI2uo
-	 Xc/iJ7Gi5IoBLdhJqQnYorzZTbGh91WDa+ps1uuC24wdxI7FfQb4sRQEvJ743jpNmr
-	 KWilBhiwmKwE7CDQ1A8ayEXCy0Hl/CcDJU6D+GSg=
+	b=rNi1N9pL0WFyXJOzo0Z/ySi+t+t2D3cC7AzIrQcJG2xSfr303YOiNsx2On8ppE90f
+	 6Ug0qCKd74S4JIfRDyXvRk1DJYT2FSqaUmr744c/mml7VOnd8J3IcgLMSTh5qkI2Up
+	 T7uZNFUq2Janmk17m9KWXQzDhBKdhMnpoa07D4bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rengarajan S <rengarajan.s@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 134/290] net: lan743x: Modify the EEPROM and OTP size for PCI1xxxx devices
-Date: Mon, 23 Jun 2025 15:06:35 +0200
-Message-ID: <20250623130630.943845166@linuxfoundation.org>
+	syzbot+e2b1803445d236442e54@syzkaller.appspotmail.com,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.15 185/411] x86/iopl: Cure TIF_IO_BITMAP inconsistencies
+Date: Mon, 23 Jun 2025 15:05:29 +0200
+Message-ID: <20250623130638.338991981@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,93 +47,122 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rengarajan S <rengarajan.s@microchip.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 3b9935586a9b54d2da27901b830d3cf46ad66a1e ]
+commit 8b68e978718f14fdcb080c2a7791c52a0d09bc6d upstream.
 
-Maximum OTP and EEPROM size for hearthstone PCI1xxxx devices are 8 Kb
-and 64 Kb respectively. Adjust max size definitions and return correct
-EEPROM length based on device. Also prevent out-of-bound read/write.
+io_bitmap_exit() is invoked from exit_thread() when a task exists or
+when a fork fails. In the latter case the exit_thread() cleans up
+resources which were allocated during fork().
 
-Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
-Link: https://patch.msgid.link/20250523173326.18509-1-rengarajan.s@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+io_bitmap_exit() invokes task_update_io_bitmap(), which in turn ends up
+in tss_update_io_bitmap(). tss_update_io_bitmap() operates on the
+current task. If current has TIF_IO_BITMAP set, but no bitmap installed,
+tss_update_io_bitmap() crashes with a NULL pointer dereference.
+
+There are two issues, which lead to that problem:
+
+  1) io_bitmap_exit() should not invoke task_update_io_bitmap() when
+     the task, which is cleaned up, is not the current task. That's a
+     clear indicator for a cleanup after a failed fork().
+
+  2) A task should not have TIF_IO_BITMAP set and neither a bitmap
+     installed nor IOPL emulation level 3 activated.
+
+     This happens when a kernel thread is created in the context of
+     a user space thread, which has TIF_IO_BITMAP set as the thread
+     flags are copied and the IO bitmap pointer is cleared.
+
+     Other than in the failed fork() case this has no impact because
+     kernel threads including IO workers never return to user space and
+     therefore never invoke tss_update_io_bitmap().
+
+Cure this by adding the missing cleanups and checks:
+
+  1) Prevent io_bitmap_exit() to invoke task_update_io_bitmap() if
+     the to be cleaned up task is not the current task.
+
+  2) Clear TIF_IO_BITMAP in copy_thread() unconditionally. For user
+     space forks it is set later, when the IO bitmap is inherited in
+     io_bitmap_share().
+
+For paranoia sake, add a warning into tss_update_io_bitmap() to catch
+the case, when that code is invoked with inconsistent state.
+
+Fixes: ea5f1cd7ab49 ("x86/ioperm: Remove bitmap if all permissions dropped")
+Reported-by: syzbot+e2b1803445d236442e54@syzkaller.appspotmail.com
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/87wmdceom2.ffs@tglx
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/microchip/lan743x_ethtool.c   | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ arch/x86/kernel/ioport.c  |   13 +++++++++----
+ arch/x86/kernel/process.c |    6 ++++++
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_ethtool.c b/drivers/net/ethernet/microchip/lan743x_ethtool.c
-index 72b3092d35f71..39a58c3578a02 100644
---- a/drivers/net/ethernet/microchip/lan743x_ethtool.c
-+++ b/drivers/net/ethernet/microchip/lan743x_ethtool.c
-@@ -18,6 +18,8 @@
- #define EEPROM_MAC_OFFSET		    (0x01)
- #define MAX_EEPROM_SIZE			    (512)
- #define MAX_OTP_SIZE			    (1024)
-+#define MAX_HS_OTP_SIZE			    (8 * 1024)
-+#define MAX_HS_EEPROM_SIZE		    (64 * 1024)
- #define OTP_INDICATOR_1			    (0xF3)
- #define OTP_INDICATOR_2			    (0xF7)
- 
-@@ -272,6 +274,9 @@ static int lan743x_hs_otp_read(struct lan743x_adapter *adapter, u32 offset,
- 	int ret;
- 	int i;
- 
-+	if (offset + length > MAX_HS_OTP_SIZE)
-+		return -EINVAL;
-+
- 	ret = lan743x_hs_syslock_acquire(adapter, LOCK_TIMEOUT_MAX_CNT);
- 	if (ret < 0)
- 		return ret;
-@@ -320,6 +325,9 @@ static int lan743x_hs_otp_write(struct lan743x_adapter *adapter, u32 offset,
- 	int ret;
- 	int i;
- 
-+	if (offset + length > MAX_HS_OTP_SIZE)
-+		return -EINVAL;
-+
- 	ret = lan743x_hs_syslock_acquire(adapter, LOCK_TIMEOUT_MAX_CNT);
- 	if (ret < 0)
- 		return ret;
-@@ -497,6 +505,9 @@ static int lan743x_hs_eeprom_read(struct lan743x_adapter *adapter,
- 	u32 val;
- 	int i;
- 
-+	if (offset + length > MAX_HS_EEPROM_SIZE)
-+		return -EINVAL;
-+
- 	retval = lan743x_hs_syslock_acquire(adapter, LOCK_TIMEOUT_MAX_CNT);
- 	if (retval < 0)
- 		return retval;
-@@ -539,6 +550,9 @@ static int lan743x_hs_eeprom_write(struct lan743x_adapter *adapter,
- 	u32 val;
- 	int i;
- 
-+	if (offset + length > MAX_HS_EEPROM_SIZE)
-+		return -EINVAL;
-+
- 	retval = lan743x_hs_syslock_acquire(adapter, LOCK_TIMEOUT_MAX_CNT);
- 	if (retval < 0)
- 		return retval;
-@@ -604,9 +618,9 @@ static int lan743x_ethtool_get_eeprom_len(struct net_device *netdev)
- 	struct lan743x_adapter *adapter = netdev_priv(netdev);
- 
- 	if (adapter->flags & LAN743X_ADAPTER_FLAG_OTP)
--		return MAX_OTP_SIZE;
-+		return adapter->is_pci11x1x ? MAX_HS_OTP_SIZE : MAX_OTP_SIZE;
- 
--	return MAX_EEPROM_SIZE;
-+	return adapter->is_pci11x1x ? MAX_HS_EEPROM_SIZE : MAX_EEPROM_SIZE;
+--- a/arch/x86/kernel/ioport.c
++++ b/arch/x86/kernel/ioport.c
+@@ -33,8 +33,9 @@ void io_bitmap_share(struct task_struct
+ 	set_tsk_thread_flag(tsk, TIF_IO_BITMAP);
  }
  
- static int lan743x_ethtool_get_eeprom(struct net_device *netdev,
--- 
-2.39.5
-
+-static void task_update_io_bitmap(struct task_struct *tsk)
++static void task_update_io_bitmap(void)
+ {
++	struct task_struct *tsk = current;
+ 	struct thread_struct *t = &tsk->thread;
+ 
+ 	if (t->iopl_emul == 3 || t->io_bitmap) {
+@@ -54,7 +55,12 @@ void io_bitmap_exit(struct task_struct *
+ 	struct io_bitmap *iobm = tsk->thread.io_bitmap;
+ 
+ 	tsk->thread.io_bitmap = NULL;
+-	task_update_io_bitmap(tsk);
++	/*
++	 * Don't touch the TSS when invoked on a failed fork(). TSS
++	 * reflects the state of @current and not the state of @tsk.
++	 */
++	if (tsk == current)
++		task_update_io_bitmap();
+ 	if (iobm && refcount_dec_and_test(&iobm->refcnt))
+ 		kfree(iobm);
+ }
+@@ -192,8 +198,7 @@ SYSCALL_DEFINE1(iopl, unsigned int, leve
+ 	}
+ 
+ 	t->iopl_emul = level;
+-	task_update_io_bitmap(current);
+-
++	task_update_io_bitmap();
+ 	return 0;
+ }
+ 
+--- a/arch/x86/kernel/process.c
++++ b/arch/x86/kernel/process.c
+@@ -137,6 +137,7 @@ int copy_thread(unsigned long clone_flag
+ 	frame->ret_addr = (unsigned long) ret_from_fork;
+ 	p->thread.sp = (unsigned long) fork_frame;
+ 	p->thread.io_bitmap = NULL;
++	clear_tsk_thread_flag(p, TIF_IO_BITMAP);
+ 	p->thread.iopl_warn = 0;
+ 	memset(p->thread.ptrace_bps, 0, sizeof(p->thread.ptrace_bps));
+ 
+@@ -412,6 +413,11 @@ void native_tss_update_io_bitmap(void)
+ 	} else {
+ 		struct io_bitmap *iobm = t->io_bitmap;
+ 
++		if (WARN_ON_ONCE(!iobm)) {
++			clear_thread_flag(TIF_IO_BITMAP);
++			native_tss_invalidate_io_bitmap();
++		}
++
+ 		/*
+ 		 * Only copy bitmap data when the sequence number differs. The
+ 		 * update time is accounted to the incoming task.
 
 
