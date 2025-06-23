@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4506616D9BF;
-	Mon, 23 Jun 2025 22:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C9A227574;
+	Mon, 23 Jun 2025 22:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717229; cv=none; b=BCmsGdS6Ut3xkDp19lSFTbl6gMWqAejphOoj/wH0ZEysj6P0awmav4CRHZ3obw2rri9SRReZvChOZXlfjbmXzMgQ5dXKvCFVchJiaE48M81ca9R8LnmqefhXLODLSyji/nSlJVvbDeI9GL3GTlQArlQAli7qcwYio5DPpTiv+yI=
+	t=1750717231; cv=none; b=fkYaWGFnTbi7jKi6PDWJXAElcMaQc56V2IR6TkiRd7+h57CnMo1uBhADBpT50TinuCYGBKgPhKIhsTMVJHrZULyYIRBqCxDGxLk32n/XAyVTGLyXJrlyEINsU/iSPU7k+PKOpTFpnUVK3UDmzzITeLQjJVLkfKSbikDxsX0MngA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717229; c=relaxed/simple;
-	bh=xEcvWVW17WxsVpMqUYV5Y2I2HiYCUULTcYWVb+iftiY=;
+	s=arc-20240116; t=1750717231; c=relaxed/simple;
+	bh=Phq8EuJp1d0m7Zngdb0O74joz8Tjd2u/mTOuJwVbuEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CamvWVoqeie06kfWNAdsaWj4AokHoYiSVD4VY7Uu7IEAYLd/b5KzUODo0VsULjWrsE7nlfZFYvSt0WLRy5/Pq7E9NaeeVIHYZP81WF00DNoJJ7trg1iSQeER/vz4uWx/YV+2dU3CCZGwTg7d94BTuP8J2oupCAmyyMopCGg1g7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7l9i3ZW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XKvHuAD3uuGbfuXNn5/i4i7cC+t20DE98Bup/xXGVEvsIXa7aLkbqXo82M+8G52MfsoycTE52wPKwEIk0smpYenmVEphLA05FSiKLAH4Z1QZMMUsD/pAl/CNNaPYmaE8S35RYssz0ybgd3VQ7HV7aFpW6Bs8W0I8VhBPLD4+T5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhfN6mjr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7l9i3ZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01FAC4CEED;
-	Mon, 23 Jun 2025 22:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhfN6mjr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBF4C4CEEA;
+	Mon, 23 Jun 2025 22:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717229;
-	bh=xEcvWVW17WxsVpMqUYV5Y2I2HiYCUULTcYWVb+iftiY=;
+	s=korg; t=1750717231;
+	bh=Phq8EuJp1d0m7Zngdb0O74joz8Tjd2u/mTOuJwVbuEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D7l9i3ZW3qwBSfwygWGFtqZ5B60mNsCPg1/zURfNUstVJjszhOWkEDl+0gE1twZTR
-	 GZn/RgHkUzddKd1qZhfTTqac0cgHIkhjVPyT9zrhnONwnpUIY5Htr3FRDRl23erwEU
-	 ZP/18ns+6yx72yZa5UhQtT8eWO+yX+XBJ12mQJ+U=
+	b=RhfN6mjrJnE/eVy6N4Z6s+bfq6cOvwSR838m+N96mxoBHsMS5s7H6+GBNXw1fqWBQ
+	 TDLDC57IOSUgHpimjiewRYk4LeEjKKGcLHfsNTun1RHxGOHuyO5MvwFO4nOTVuWxl1
+	 JukdfwtqJ9joBF15EMzHcCkNf0yW24FjA5WqOfuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Daly <quic_pdaly@quicinc.com>,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 385/508] PM: runtime: fix denying of auto suspend in pm_suspend_timer_fn()
-Date: Mon, 23 Jun 2025 15:07:10 +0200
-Message-ID: <20250623130654.766064351@linuxfoundation.org>
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 343/414] bpf: Fix L4 csum update on IPv6 in CHECKSUM_COMPLETE
+Date: Mon, 23 Jun 2025 15:08:00 +0200
+Message-ID: <20250623130650.553774903@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +47,133 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charan Teja Kalla <quic_charante@quicinc.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit 40d3b40dce375d6f1c1dbf08d79eed3aed6c691d ]
+commit ead7f9b8de65632ef8060b84b0c55049a33cfea1 upstream.
 
-pm_runtime_put_autosuspend() schedules a hrtimer to expire
-at "dev->power.timer_expires". If the hrtimer's callback,
-pm_suspend_timer_fn(), observes that the current time equals
-"dev->power.timer_expires", it unexpectedly bails out instead of
-proceeding with runtime suspend.
+In Cilium, we use bpf_csum_diff + bpf_l4_csum_replace to, among other
+things, update the L4 checksum after reverse SNATing IPv6 packets. That
+use case is however not currently supported and leads to invalid
+skb->csum values in some cases. This patch adds support for IPv6 address
+changes in bpf_l4_csum_update via a new flag.
 
-pm_suspend_timer_fn():
+When calling bpf_l4_csum_replace in Cilium, it ends up calling
+inet_proto_csum_replace_by_diff:
 
- if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
- 	dev->power.timer_expires = 0;
- 	rpm_suspend(..)
- }
+    1:  void inet_proto_csum_replace_by_diff(__sum16 *sum, struct sk_buff *skb,
+    2:                                       __wsum diff, bool pseudohdr)
+    3:  {
+    4:      if (skb->ip_summed != CHECKSUM_PARTIAL) {
+    5:          csum_replace_by_diff(sum, diff);
+    6:          if (skb->ip_summed == CHECKSUM_COMPLETE && pseudohdr)
+    7:              skb->csum = ~csum_sub(diff, skb->csum);
+    8:      } else if (pseudohdr) {
+    9:          *sum = ~csum_fold(csum_add(diff, csum_unfold(*sum)));
+    10:     }
+    11: }
 
-Additionally, as ->timer_expires is not cleared, all the future auto
-suspend requests will not schedule hrtimer to perform auto suspend.
+The bug happens when we're in the CHECKSUM_COMPLETE state. We've just
+updated one of the IPv6 addresses. The helper now updates the L4 header
+checksum on line 5. Next, it updates skb->csum on line 7. It shouldn't.
 
-rpm_suspend():
+For an IPv6 packet, the updates of the IPv6 address and of the L4
+checksum will cancel each other. The checksums are set such that
+computing a checksum over the packet including its checksum will result
+in a sum of 0. So the same is true here when we update the L4 checksum
+on line 5. We'll update it as to cancel the previous IPv6 address
+update. Hence skb->csum should remain untouched in this case.
 
- if ((rpmflags & RPM_AUTO) &&...) {
- 	if (!(dev->power.timer_expires && ...) { <-- this will fail.
- 		hrtimer_start_range_ns(&dev->power.suspend_timer,...);
- 	}
- }
+The same bug doesn't affect IPv4 packets because, in that case, three
+fields are updated: the IPv4 address, the IP checksum, and the L4
+checksum. The change to the IPv4 address and one of the checksums still
+cancel each other in skb->csum, but we're left with one checksum update
+and should therefore update skb->csum accordingly. That's exactly what
+inet_proto_csum_replace_by_diff does.
 
-Fix this by as well checking if current time reaches the set expiration.
+This special case for IPv6 L4 checksums is also described atop
+inet_proto_csum_replace16, the function we should be using in this case.
 
-Co-developed-by: Patrick Daly <quic_pdaly@quicinc.com>
-Signed-off-by: Patrick Daly <quic_pdaly@quicinc.com>
-Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Link: https://patch.msgid.link/20250515064125.1211561-1-quic_charante@quicinc.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch introduces a new bpf_l4_csum_replace flag, BPF_F_IPV6,
+to indicate that we're updating the L4 checksum of an IPv6 packet. When
+the flag is set, inet_proto_csum_replace_by_diff will skip the
+skb->csum update.
+
+Fixes: 7d672345ed295 ("bpf: add generic bpf_csum_diff helper")
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/96a6bc3a443e6f0b21ff7b7834000e17fb549e05.1748509484.git.paul.chaignon@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/runtime.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/uapi/linux/bpf.h       |    2 ++
+ net/core/filter.c              |    5 +++--
+ tools/include/uapi/linux/bpf.h |    2 ++
+ 3 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index bb68cba4d85a9..313ccb7e77646 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1001,7 +1001,7 @@ static enum hrtimer_restart  pm_suspend_timer_fn(struct hrtimer *timer)
- 	 * If 'expires' is after the current time, we've been called
- 	 * too early.
- 	 */
--	if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
-+	if (expires > 0 && expires <= ktime_get_mono_fast_ns()) {
- 		dev->power.timer_expires = 0;
- 		rpm_suspend(dev, dev->power.timer_autosuspends ?
- 		    (RPM_ASYNC | RPM_AUTO) : RPM_ASYNC);
--- 
-2.39.5
-
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -2035,6 +2035,7 @@ union bpf_attr {
+  * 		for updates resulting in a null checksum the value is set to
+  * 		**CSUM_MANGLED_0** instead. Flag **BPF_F_PSEUDO_HDR** indicates
+  * 		the checksum is to be computed against a pseudo-header.
++ * 		Flag **BPF_F_IPV6** should be set for IPv6 packets.
+  *
+  * 		This helper works in combination with **bpf_csum_diff**\ (),
+  * 		which does not update the checksum in-place, but offers more
+@@ -6049,6 +6050,7 @@ enum {
+ 	BPF_F_PSEUDO_HDR		= (1ULL << 4),
+ 	BPF_F_MARK_MANGLED_0		= (1ULL << 5),
+ 	BPF_F_MARK_ENFORCE		= (1ULL << 6),
++	BPF_F_IPV6			= (1ULL << 7),
+ };
+ 
+ /* BPF_FUNC_skb_set_tunnel_key and BPF_FUNC_skb_get_tunnel_key flags. */
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -1980,10 +1980,11 @@ BPF_CALL_5(bpf_l4_csum_replace, struct s
+ 	bool is_pseudo = flags & BPF_F_PSEUDO_HDR;
+ 	bool is_mmzero = flags & BPF_F_MARK_MANGLED_0;
+ 	bool do_mforce = flags & BPF_F_MARK_ENFORCE;
++	bool is_ipv6   = flags & BPF_F_IPV6;
+ 	__sum16 *ptr;
+ 
+ 	if (unlikely(flags & ~(BPF_F_MARK_MANGLED_0 | BPF_F_MARK_ENFORCE |
+-			       BPF_F_PSEUDO_HDR | BPF_F_HDR_FIELD_MASK)))
++			       BPF_F_PSEUDO_HDR | BPF_F_HDR_FIELD_MASK | BPF_F_IPV6)))
+ 		return -EINVAL;
+ 	if (unlikely(offset > 0xffff || offset & 1))
+ 		return -EFAULT;
+@@ -1999,7 +2000,7 @@ BPF_CALL_5(bpf_l4_csum_replace, struct s
+ 		if (unlikely(from != 0))
+ 			return -EINVAL;
+ 
+-		inet_proto_csum_replace_by_diff(ptr, skb, to, is_pseudo, false);
++		inet_proto_csum_replace_by_diff(ptr, skb, to, is_pseudo, is_ipv6);
+ 		break;
+ 	case 2:
+ 		inet_proto_csum_replace2(ptr, skb, from, to, is_pseudo);
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -2035,6 +2035,7 @@ union bpf_attr {
+  * 		for updates resulting in a null checksum the value is set to
+  * 		**CSUM_MANGLED_0** instead. Flag **BPF_F_PSEUDO_HDR** indicates
+  * 		the checksum is to be computed against a pseudo-header.
++ * 		Flag **BPF_F_IPV6** should be set for IPv6 packets.
+  *
+  * 		This helper works in combination with **bpf_csum_diff**\ (),
+  * 		which does not update the checksum in-place, but offers more
+@@ -6049,6 +6050,7 @@ enum {
+ 	BPF_F_PSEUDO_HDR		= (1ULL << 4),
+ 	BPF_F_MARK_MANGLED_0		= (1ULL << 5),
+ 	BPF_F_MARK_ENFORCE		= (1ULL << 6),
++	BPF_F_IPV6			= (1ULL << 7),
+ };
+ 
+ /* BPF_FUNC_skb_set_tunnel_key and BPF_FUNC_skb_get_tunnel_key flags. */
 
 
