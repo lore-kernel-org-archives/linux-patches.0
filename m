@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03845242D90;
-	Mon, 23 Jun 2025 13:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9EA219E0;
+	Mon, 23 Jun 2025 13:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684862; cv=none; b=sqIaF7jg+TWFKCmcc/s/2HC+cVUzPesxiURozI0Vm+uA2S0INyLkgXQwKjDXACF9k7Gxkz1GUtcM4KptlWTaB3CGcsF9+EOKbbJhPDVfCOlaEiLQcfaDcdyxJlU0kevPZkMc4OHK3i2bGdD7WjTgJdNuuyG87jrxe414Hz/ucJk=
+	t=1750684864; cv=none; b=fGpBJ0WnZAE1wpxoeohHBheZWIUYdQaOhfjHIUnp9idzlOolUtt+W+2hUPJp43CjS93l92QOaFd24vTRiL81TovgLADVP8U6es6JhojP3R7eGCudUiuRQiTGY/BaXU2iClzZli53hRMQMDOxN4NkaS9KoXX98q1W8MoPxUjt96k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684862; c=relaxed/simple;
-	bh=8MhrdeEa8kXjyOHOovfZE0kqXudXsloUCcSbzEpd0Po=;
+	s=arc-20240116; t=1750684864; c=relaxed/simple;
+	bh=c+Dw1K52bfjReJ2MMmIvBvxQvSXyosKfOtlOYJVdobk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J1RvCnyHTt9v64eLQw+evWXp7e9qZe7ZHl5F3DWY6ZfT24PLitZPEpLY0z+cWVjnayghfXOb/KY5sorNF3jI/b68sJDr+Z+I1fBUUetgA434DdboHN0/SMEzNOssf2pt2Q3YxF9SZqeha9xnVjnTKtnuC/cFHWSqVGe/LaSaO1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHnCx/c+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mNZNVd95jjizT3REdYH/RdpXjkaSDUTH2l6L0HKSEP981KUuLSflTBisC7pz0KujFsOGlf+VxJch2F/EdxBUe2ntmvKjhGoa3CcXPylgXD5cA52Twc8n2IO1StChcf8dwO9Lcb1jLgXHdHiNTLcshEqU/+SiCHGcrll4mykiBgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l67cLaNT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHnCx/c+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A115C4CEEA;
-	Mon, 23 Jun 2025 13:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l67cLaNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119B6C4CEF0;
+	Mon, 23 Jun 2025 13:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684861;
-	bh=8MhrdeEa8kXjyOHOovfZE0kqXudXsloUCcSbzEpd0Po=;
+	s=korg; t=1750684864;
+	bh=c+Dw1K52bfjReJ2MMmIvBvxQvSXyosKfOtlOYJVdobk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jHnCx/c+7j7i7A20tkix4LFz3nwNMkLXhF2D3SXT3WjBTWxzaSqqV1cSRzSPJC6O5
-	 cFDiIAKq2iB7QETs6xxYnztGXBQ62uBTRXMUfAoIuTddm2BweQaZVPR7Q9LatmlbHr
-	 vSFXfh4DX7MiSym1f8YYBnshFsVn5FowgSn4w6TM=
+	b=l67cLaNTlgqljUciZMqpWKvgJ24wcWprYb98bE+Sb4i7ncvVhFoFZ69z25SO88RYm
+	 rG745JsNRx7/G5YoBIINRM+7stSPS5S/hzw11uaF6PGCivIs00DIhSOqWK2fyx7xlF
+	 WhHUhvh2Z7ybQMRcM2ZqMEL4X1AmBlVdVSvUiQPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.15 184/592] PCI: dw-rockchip: Remove PCIE_L0S_ENTRY check from rockchip_pcie_link_up()
-Date: Mon, 23 Jun 2025 15:02:22 +0200
-Message-ID: <20250623130704.660102244@linuxfoundation.org>
+	Jiayi Li <lijiayi@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 005/355] usb: quirks: Add NO_LPM quirk for SanDisk Extreme 55AE
+Date: Mon, 23 Jun 2025 15:03:26 +0200
+Message-ID: <20250623130626.889468776@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +46,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Jiayi Li <lijiayi@kylinos.cn>
 
-commit 7d9b5d6115532cf90a789ed6afd3f4c70ebbd827 upstream.
+commit 19f795591947596b5b9efa86fd4b9058e45786e9 upstream.
 
-rockchip_pcie_link_up() currently has two issues:
-1. Value 0x11 of PCIE_L0S_ENTRY corresponds to L0 state, not L0S. So the
-naming is wrong from the very beginning.
-2. Checking for value 0x11 treats other states like L0S and L1 as link
-down, which is wrong.
+This device exhibits I/O errors during file transfers due to unstable
+link power management (LPM) behavior. The kernel logs show repeated
+warm resets and eventual disconnection when LPM is enabled:
 
-Hence, remove the PCIE_L0S_ENTRY check and also its definition. This allows
-adding ASPM support in the successive commits.
+[ 3467.810740] hub 2-0:1.0: state 7 ports 6 chg 0000 evt 0020
+[ 3467.810740] usb usb2-port5: do warm reset
+[ 3467.866444] usb usb2-port5: not warm reset yet, waiting 50ms
+[ 3467.907407] sd 0:0:0:0: [sda] tag#12 sense submit err -19
+[ 3467.994423] usb usb2-port5: status 02c0, change 0001, 10.0 Gb/s
+[ 3467.994453] usb 2-5: USB disconnect, device number 4
 
-Fixes: 0e898eb8df4e ("PCI: rockchip-dwc: Add Rockchip RK356X host controller driver")
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-[mani: commit message rewording]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/1744850111-236269-1-git-send-email-shawn.lin@rock-chips.com
+The error -19 (ENODEV) occurs when the device disappears during write
+operations. Adding USB_QUIRK_NO_LPM disables link power management
+for this specific device, resolving the stability issues.
+
+Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20250508055947.764538-1-lijiayi@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-dw-rockchip.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-+++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-@@ -44,7 +44,6 @@
- #define PCIE_LINKUP			(PCIE_SMLH_LINKUP | PCIE_RDLH_LINKUP)
- #define PCIE_RDLH_LINK_UP_CHGED		BIT(1)
- #define PCIE_LINK_REQ_RST_NOT_INT	BIT(2)
--#define PCIE_L0S_ENTRY			0x11
- #define PCIE_CLIENT_GENERAL_CONTROL	0x0
- #define PCIE_CLIENT_INTR_STATUS_LEGACY	0x8
- #define PCIE_CLIENT_INTR_MASK_LEGACY	0x1c
-@@ -177,8 +176,7 @@ static int rockchip_pcie_link_up(struct
- 	struct rockchip_pcie *rockchip = to_rockchip_pcie(pci);
- 	u32 val = rockchip_pcie_get_ltssm(rockchip);
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -369,6 +369,9 @@ static const struct usb_device_id usb_qu
+ 	/* SanDisk Corp. SanDisk 3.2Gen1 */
+ 	{ USB_DEVICE(0x0781, 0x55a3), .driver_info = USB_QUIRK_DELAY_INIT },
  
--	if ((val & PCIE_LINKUP) == PCIE_LINKUP &&
--	    (val & PCIE_LTSSM_STATUS_MASK) == PCIE_L0S_ENTRY)
-+	if ((val & PCIE_LINKUP) == PCIE_LINKUP)
- 		return 1;
++	/* SanDisk Extreme 55AE */
++	{ USB_DEVICE(0x0781, 0x55ae), .driver_info = USB_QUIRK_NO_LPM },
++
+ 	/* Realforce 87U Keyboard */
+ 	{ USB_DEVICE(0x0853, 0x011b), .driver_info = USB_QUIRK_NO_LPM },
  
- 	return 0;
 
 
