@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B906C2E0;
-	Mon, 23 Jun 2025 22:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E29225417;
+	Mon, 23 Jun 2025 22:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716740; cv=none; b=dtpetFUXOARkajjYSWbCtd3hJAnWhWRtBZtzcXT2UyZu/OCDA2lnutobknEz+YzkbGA0V8Q6Va6eykn2ZWVN63T4BN36ft4TH5r3T1hZhOKyCNpLh3q+37JL1JEsKn4/83AVlp6dvu/1LXCP4MySNJ3MAZZeB3OlMG1UxLGc//E=
+	t=1750716742; cv=none; b=AWgBLqz9RQ1w5runzdEIv+RzJZx4mQmfXN490CGpEcczEtq4+H9CGA7SCSN0q8HYZsvrchZjgfb2EC9yiC+gJBSge+hKDLQcZsRbj0DUS/5SogoR0CFbh0gZE0e4KXx8B6RcVFeufUxeNLqIQ9jAvDsUlVcS83ncbKDtU33zsmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716740; c=relaxed/simple;
-	bh=o8KsvT93/Eh4UbGNK0m7o59/O1nAeC2w1HoPBaq0260=;
+	s=arc-20240116; t=1750716742; c=relaxed/simple;
+	bh=52dUdCstX4jy4hkmPgLN3zzBGC/h+1oT7xQCyaNj8aA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sVW20zUcKZ/g//qwQsf8qSwzsrUXYaSpY4C5Vxo9CEUKcct98QwTTq6IgdGSuji0Ml0NDLAsuZeWnpeG9GcSRNIIZ6GZeO/r7cBF3GM1YWddtB/0RoowwGdy3S5viqdO5cvI4Cw1RL7tXHFaTpq8WYj+XrRcd9Vj7uwSsdZl9q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1W47Q/V3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iib9MxFD7A39WOUY9VNfxiEpbogbG3n7kDJCh/BtCuWaGy+6UYRRCADIN2uNF6VhXtzad739yfT/33fKWscl/6YjSnQIBbfGuu30oJ2V45BoKeQglvLAGAs1cs6YjZVAtnOpf4eb3bGmjeY0DrBc2nz2dc40tKENpaIelNZFp9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMRVPIOH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1W47Q/V3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7186C4CEEA;
-	Mon, 23 Jun 2025 22:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMRVPIOH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E865C4CEEA;
+	Mon, 23 Jun 2025 22:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716740;
-	bh=o8KsvT93/Eh4UbGNK0m7o59/O1nAeC2w1HoPBaq0260=;
+	s=korg; t=1750716742;
+	bh=52dUdCstX4jy4hkmPgLN3zzBGC/h+1oT7xQCyaNj8aA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1W47Q/V3MH5jCWoIfMM4h+bkstYloQ+1hucuJvOfnWYHUX+d1cfNrLAPqgyW85+jy
-	 en7APMJ1Iia4e7Sxb8b9Iq/Vkpc6/0TtLr/aGTmdU8GGHok1fDmuARYLMhPQA75ix3
-	 ax3pkew+XyRQJLUHZs0LwdLzbj1MrKJ/Bv64jtx4=
+	b=pMRVPIOHaKDA5xPQJZAV8+vcxU5u+U/H+19n+3qxpbz7DtWiSCBHxHkzWB1IFJgL+
+	 RpX8qI0H2tkWS8YRALDylXJovG2PC+ZZAJ90zxZyYoqSDLx20Q30MLNydi48Rfo5YW
+	 WAgyCyhI4WcSwd2vnfmUW61SUepRBZ5FswJRmnIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 354/411] atm: Revert atm_account_tx() if copy_from_iter_full() fails.
-Date: Mon, 23 Jun 2025 15:08:18 +0200
-Message-ID: <20250623130642.558054988@linuxfoundation.org>
+	Atish Patra <atishp@rivosinc.com>,
+	Anup Patel <apatel@ventanamicro.com>,
+	Anup Patel <anup@brainfault.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 286/290] RISC-V: KVM: Fix the size parameter check in SBI SFENCE calls
+Date: Mon, 23 Jun 2025 15:09:07 +0200
+Message-ID: <20250623130635.523432709@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +48,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Anup Patel <apatel@ventanamicro.com>
 
-commit 7851263998d4269125fd6cb3fdbfc7c6db853859 upstream.
+[ Upstream commit 6aba0cb5bba6141158d5449f2cf53187b7f755f9 ]
 
-In vcc_sendmsg(), we account skb->truesize to sk->sk_wmem_alloc by
-atm_account_tx().
+As-per the SBI specification, an SBI remote fence operation applies
+to the entire address space if either:
+1) start_addr and size are both 0
+2) size is equal to 2^XLEN-1
 
-It is expected to be reverted by atm_pop_raw() later called by
-vcc->dev->ops->send(vcc, skb).
+>From the above, only #1 is checked by SBI SFENCE calls so fix the
+size parameter check in SBI SFENCE calls to cover #2 as well.
 
-However, vcc_sendmsg() misses the same revert when copy_from_iter_full()
-fails, and then we will leak a socket.
-
-Let's factorise the revert part as atm_return_tx() and call it in
-the failure path.
-
-Note that the corresponding sk_wmem_alloc operation can be found in
-alloc_tx() as of the blamed commit.
-
-  $ git blame -L:alloc_tx net/atm/common.c c55fa3cccbc2c~
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Simon Horman <horms@kernel.org>
-Closes: https://lore.kernel.org/netdev/20250614161959.GR414686@horms.kernel.org/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250616182147.963333-3-kuni1840@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 13acfec2dbcc ("RISC-V: KVM: Add remote HFENCE functions based on VCPU requests")
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Link: https://lore.kernel.org/r/20250605061458.196003-2-apatel@ventanamicro.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/atmdev.h |    6 ++++++
- net/atm/common.c       |    1 +
- net/atm/raw.c          |    2 +-
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ arch/riscv/kvm/vcpu_sbi_replace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/linux/atmdev.h
-+++ b/include/linux/atmdev.h
-@@ -249,6 +249,12 @@ static inline void atm_account_tx(struct
- 	ATM_SKB(skb)->atm_options = vcc->atm_options;
- }
- 
-+static inline void atm_return_tx(struct atm_vcc *vcc, struct sk_buff *skb)
-+{
-+	WARN_ON_ONCE(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize,
-+					   &sk_atm(vcc)->sk_wmem_alloc));
-+}
-+
- static inline void atm_force_charge(struct atm_vcc *vcc,int truesize)
- {
- 	atomic_add(truesize, &sk_atm(vcc)->sk_rmem_alloc);
---- a/net/atm/common.c
-+++ b/net/atm/common.c
-@@ -635,6 +635,7 @@ int vcc_sendmsg(struct socket *sock, str
- 
- 	skb->dev = NULL; /* for paths shared with net_device interfaces */
- 	if (!copy_from_iter_full(skb_put(skb, size), size, &m->msg_iter)) {
-+		atm_return_tx(vcc, skb);
- 		kfree_skb(skb);
- 		error = -EFAULT;
- 		goto out;
---- a/net/atm/raw.c
-+++ b/net/atm/raw.c
-@@ -36,7 +36,7 @@ static void atm_pop_raw(struct atm_vcc *
- 
- 	pr_debug("(%d) %d -= %d\n",
- 		 vcc->vci, sk_wmem_alloc_get(sk), ATM_SKB(skb)->acct_truesize);
--	WARN_ON(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize, &sk->sk_wmem_alloc));
-+	atm_return_tx(vcc, skb);
- 	dev_kfree_skb_any(skb);
- 	sk->sk_write_space(sk);
- }
+diff --git a/arch/riscv/kvm/vcpu_sbi_replace.c b/arch/riscv/kvm/vcpu_sbi_replace.c
+index 87ec68ed52d76..960836e0cac74 100644
+--- a/arch/riscv/kvm/vcpu_sbi_replace.c
++++ b/arch/riscv/kvm/vcpu_sbi_replace.c
+@@ -103,7 +103,7 @@ static int kvm_sbi_ext_rfence_handler(struct kvm_vcpu *vcpu, struct kvm_run *run
+ 		kvm_riscv_vcpu_pmu_incr_fw(vcpu, SBI_PMU_FW_FENCE_I_SENT);
+ 		break;
+ 	case SBI_EXT_RFENCE_REMOTE_SFENCE_VMA:
+-		if (cp->a2 == 0 && cp->a3 == 0)
++		if ((cp->a2 == 0 && cp->a3 == 0) || cp->a3 == -1UL)
+ 			kvm_riscv_hfence_vvma_all(vcpu->kvm, hbase, hmask);
+ 		else
+ 			kvm_riscv_hfence_vvma_gva(vcpu->kvm, hbase, hmask,
+@@ -111,7 +111,7 @@ static int kvm_sbi_ext_rfence_handler(struct kvm_vcpu *vcpu, struct kvm_run *run
+ 		kvm_riscv_vcpu_pmu_incr_fw(vcpu, SBI_PMU_FW_HFENCE_VVMA_SENT);
+ 		break;
+ 	case SBI_EXT_RFENCE_REMOTE_SFENCE_VMA_ASID:
+-		if (cp->a2 == 0 && cp->a3 == 0)
++		if ((cp->a2 == 0 && cp->a3 == 0) || cp->a3 == -1UL)
+ 			kvm_riscv_hfence_vvma_asid_all(vcpu->kvm,
+ 						       hbase, hmask, cp->a4);
+ 		else
+-- 
+2.39.5
+
 
 
