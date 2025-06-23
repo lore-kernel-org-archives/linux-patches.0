@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85EFC2E0;
-	Mon, 23 Jun 2025 21:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6941AC2E0;
+	Mon, 23 Jun 2025 21:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714292; cv=none; b=alaD0FVbvd48fk7tt5vd40nW348/BpoePPZ98wYUXpNnXPY/32nhwqECYsL63L7vkvSAdTnCrpLr5MX9lDADxbimOPROC/guiGB400B00oFafIyxVlgn5ZbXGS/EG9SsIEGCMx8iHx6cKMc/2a3eRyYOK+eWscQ0SLs+pbWJA3E=
+	t=1750714294; cv=none; b=dkx5maFO1GhS1UFNsh/cmVtsTLhFq73MXuZcqEmzoSes49t2RQaOfCSQTqkhOVHrJ/Jfprv4ckmkCSbM9WAuYI0qFGjy/4VtFv5eTU90YVHXeU8MtQUJXmvBu185OLpGyrQTnFuSNCSnTNRB1mz6JjbD/bx0vvRRJak3BkgIV8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714292; c=relaxed/simple;
-	bh=9NGdw5DeSX20CyUdUJtBdSYycmxhpWS6LEjkWn786OU=;
+	s=arc-20240116; t=1750714294; c=relaxed/simple;
+	bh=Ub8PjA/HF98iFhbpZHsCQTNRvGqDDUMdODXkxtYAn9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGLNqyBtJHawCVAm9UUDwHsB2OJbCQkSFw9ybLytxqk1TA9K8dhanbRKcxbKvGjqwZqtTgb9QoI8sEFH1v2UghhHtddtl9JIzV2RPjxmX8hMVOB2O1si/f8Sc75G0fzakf3lQIWfjo+aU436tm/F66daKAAra6Gf6Eggl31tWH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFVQFI/S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aSZWOKA9/gNwBtrdPFrO990SH5/ZcGS2P5K8L8mWeR6IflHLAwYAlSx8Pan+UIoOhGKNctL/5XCEuFpTOPTEGp1HfZeCPT4qgJQZONzqxVEeikH7K/OzUwzrIdZ7Eh5yj1L2w8MVh34jZr9NQn4EFDNh79ZGQSZpXrvRo4pd1Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEXhy291; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFVQFI/S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C14CC4CEEA;
-	Mon, 23 Jun 2025 21:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEXhy291"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC91FC4CEEA;
+	Mon, 23 Jun 2025 21:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714291;
-	bh=9NGdw5DeSX20CyUdUJtBdSYycmxhpWS6LEjkWn786OU=;
+	s=korg; t=1750714294;
+	bh=Ub8PjA/HF98iFhbpZHsCQTNRvGqDDUMdODXkxtYAn9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nFVQFI/SiqaKo3OvIdFoBEt5veFjHwkBZ7KcfYvXH2Mxe4iM7b4YnvLpq8ANp1bhD
-	 N+/BqDi8nU96607BZtzngAuBpeIUfiB/o9WlCBswp7xRIsb5KJD31RPowy1I5jZASn
-	 cw00MwkaKpIaCIrT8xgkQJtdw83N1Bju4cbGsnoM=
+	b=BEXhy2917sDqKGzSGGwqHraTWpVYaDtxz0QJnrwej/qCfMErjulzVyS2SINYXZFSG
+	 +bOiusbS0QhJNf7sqykHIHbOIEqmEyoMTJ+ZNcOGyTQgEckNif7fSibQOpDxAsPd79
+	 vhlPWuI7n1gYjyY68Y1zHWDXL60tPZkFgntXV46w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	syzbot+a2b84e569d06ca3a949c@syzkaller.appspotmail.com,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Vasiliy Kulikov <segoon@openwall.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 197/355] ipc: fix to protect IPCS lookups using RCU
-Date: Mon, 23 Jun 2025 15:06:38 +0200
-Message-ID: <20250623130632.592209791@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	gldrk <me@rarity.fan>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 128/290] ACPICA: utilities: Fix overflow check in vsnprintf()
+Date: Mon, 23 Jun 2025 15:06:29 +0200
+Message-ID: <20250623130630.775583833@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,58 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: gldrk <me@rarity.fan>
 
-commit d66adabe91803ef34a8b90613c81267b5ded1472 upstream.
+[ Upstream commit 12b660251007e00a3e4d47ec62dbe3a7ace7023e ]
 
-syzbot reported that it discovered a use-after-free vulnerability, [0]
+ACPICA commit d9d59b7918514ae55063b93f3ec041b1a569bf49
 
-[0]: https://lore.kernel.org/all/67af13f8.050a0220.21dd3.0038.GAE@google.com/
+The old version breaks sprintf on 64-bit systems for buffers
+outside [0..UINT32_MAX].
 
-idr_for_each() is protected by rwsem, but this is not enough.  If it is
-not protected by RCU read-critical region, when idr_for_each() calls
-radix_tree_node_free() through call_rcu() to free the radix_tree_node
-structure, the node will be freed immediately, and when reading the next
-node in radix_tree_for_each_slot(), the already freed memory may be read.
-
-Therefore, we need to add code to make sure that idr_for_each() is
-protected within the RCU read-critical region when we call it in
-shm_destroy_orphaned().
-
-Link: https://lkml.kernel.org/r/20250424143322.18830-1-aha310510@gmail.com
-Fixes: b34a6b1da371 ("ipc: introduce shm_rmid_forced sysctl")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Reported-by: syzbot+a2b84e569d06ca3a949c@syzkaller.appspotmail.com
-Cc: Jeongjun Park <aha310510@gmail.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Vasiliy Kulikov <segoon@openwall.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://github.com/acpica/acpica/commit/d9d59b79
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/4994935.GXAFRqVoOG@rjwysocki.net
+Signed-off-by: gldrk <me@rarity.fan>
+[ rjw: Added the tag from gldrk ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- ipc/shm.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/acpi/acpica/utprint.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/ipc/shm.c
-+++ b/ipc/shm.c
-@@ -417,8 +417,11 @@ static int shm_try_destroy_orphaned(int
- void shm_destroy_orphaned(struct ipc_namespace *ns)
- {
- 	down_write(&shm_ids(ns).rwsem);
--	if (shm_ids(ns).in_use)
-+	if (shm_ids(ns).in_use) {
-+		rcu_read_lock();
- 		idr_for_each(&shm_ids(ns).ipcs_idr, &shm_try_destroy_orphaned, ns);
-+		rcu_read_unlock();
-+	}
- 	up_write(&shm_ids(ns).rwsem);
- }
+diff --git a/drivers/acpi/acpica/utprint.c b/drivers/acpi/acpica/utprint.c
+index 42b30b9f93128..7fad03c5252c3 100644
+--- a/drivers/acpi/acpica/utprint.c
++++ b/drivers/acpi/acpica/utprint.c
+@@ -333,11 +333,8 @@ int vsnprintf(char *string, acpi_size size, const char *format, va_list args)
  
+ 	pos = string;
+ 
+-	if (size != ACPI_UINT32_MAX) {
+-		end = string + size;
+-	} else {
+-		end = ACPI_CAST_PTR(char, ACPI_UINT32_MAX);
+-	}
++	size = ACPI_MIN(size, ACPI_PTR_DIFF(ACPI_MAX_PTR, string));
++	end = string + size;
+ 
+ 	for (; *format; ++format) {
+ 		if (*format != '%') {
+-- 
+2.39.5
+
 
 
