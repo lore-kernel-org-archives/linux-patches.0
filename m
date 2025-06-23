@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8326B223316;
-	Mon, 23 Jun 2025 21:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10BC2222C2;
+	Mon, 23 Jun 2025 21:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715763; cv=none; b=Q00Xv0CmdTTYYy6Csorh3bFsSF6c2+dgxDRbAxkisrjpVVZuMxJUoyy+/75vQ3B8Um8rSXRfNmpOoWgY6oLx2WpwXphpA6b74eEDyFsz1XmVVJfZ8YEL+YyX4Hwxg/Vm/ja9EuO1w/PUkEZ4GB1U4A3RzLVBJM4478aclf+WdkY=
+	t=1750715766; cv=none; b=l9Rtc9+lc2iLgxfIA7mfrz76XAruhClxlmGEMNwdq7qcuz0mHk+tZYNTTHpqldCvFm61+4j1/vBox+YZ9IyXvaC8GRXyT8jJrR/OnmlHKyzYfIlOKmduZzCyU+wcN0KLTxk2dMwmmFe7/9bcK05LLeRwgPP3+u3HHMvtO8p2US8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715763; c=relaxed/simple;
-	bh=wTerhwoUCUbwz7qaGl5ACG3z3A0iBMoZH53LEtSEn2M=;
+	s=arc-20240116; t=1750715766; c=relaxed/simple;
+	bh=/MiIW3GAaxtvI+Gh74cBLukQQo+Xs2weFXTLxWmBBuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pMTQXcdGZl6uSN/dgmZwxCZHE97YrKeZEvS8a65W6OIW03f8CMpoz0XImKMQhPsQF7D8Pbj/DrpuASSGT1YJZmBMRO0NXpUkqMi0njlde6LJxXHIsYolH8QTV4iNt9kQxq/wFGWBwrvqpRMAKwND3fo9vmjrtZJQ4NK2kIzyOcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoSexVac; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fpHiufn4ajXqC2EgYSrBF1CKiFq7KGsOZ0Y8GFCDN6K2uCwDTV7KALRG4O/dJWvvcOYrW0295orCGia8u/tuXlgk5nMIEEPoBp55TO+Ul0NNaDfSL2ujzVO1iwJM1I5Ril90gYww76omMbTKedQ5pAVnZV3mMpneRybo2qXRa/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6vaq/E3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoSexVac"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B168C4CEEA;
-	Mon, 23 Jun 2025 21:56:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6vaq/E3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C63C4CEEA;
+	Mon, 23 Jun 2025 21:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715763;
-	bh=wTerhwoUCUbwz7qaGl5ACG3z3A0iBMoZH53LEtSEn2M=;
+	s=korg; t=1750715765;
+	bh=/MiIW3GAaxtvI+Gh74cBLukQQo+Xs2weFXTLxWmBBuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AoSexVacZj6NwbB+1ZS2mChgsAro/xVqxQgPRhbICRgmvUH+7+T8To3tldpEkjGXF
-	 wn1EyhBRcGN4pNdoJc22XCa6SIoI+ozl6cQ2fj2Ku4DdrAiExfIt0G4sYrq3OIFMFx
-	 LAHZJAJoksvvy8yQC7KuNMQtJtjWEeXxWYdEF424=
+	b=r6vaq/E3BcdcwrWtc/LcS45qDWNeT541KbMfQWGDNC4JXydpqjCyCSTuxCpw14sxp
+	 YvHWEyB59T0ZzU5EOmwQefqyCf7KLZZZqiTIidNRVYDjc7qevQdcDJdxXbmiusClYv
+	 3bzS0Lt8tuRbm+loGGx16CcvRwlMhIwWuZsfOxpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 295/355] ALSA: hda/intel: Add Thinkpad E15 to PM deny list
-Date: Mon, 23 Jun 2025 15:08:16 +0200
-Message-ID: <20250623130635.644679921@linuxfoundation.org>
+	Tarang Raval <tarang.raval@siliconsignals.io>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 277/411] media: i2c: imx334: Enable runtime PM before sub-device registration
+Date: Mon, 23 Jun 2025 15:07:01 +0200
+Message-ID: <20250623130640.625255679@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,37 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Tarang Raval <tarang.raval@siliconsignals.io>
 
-commit c987a390f1b3b8bdac11031d7004e3410fe259bd upstream.
+[ Upstream commit 01dfdf6a80c57151af0589af0db7adbbdd1361c7 ]
 
-Lenovo Thinkpad E15 with Conexant CX8070 codec seems causing ugly
-noises after runtime-PM suspend.  Disable the codec runtime PM as a
-workaround.
+Runtime PM is fully initialized before calling
+v4l2_async_register_subdev_sensor(). Moving the runtime PM initialization
+earlier prevents potential access to an uninitialized or powered-down
+device.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220210
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250608091415.21170-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Tarang Raval <tarang.raval@siliconsignals.io>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/i2c/imx334.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2295,6 +2295,8 @@ static const struct snd_pci_quirk power_
- 	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
- 	/* Dell ALC3271 */
- 	SND_PCI_QUIRK(0x1028, 0x0962, "Dell ALC3271", 0),
-+	/* https://bugzilla.kernel.org/show_bug.cgi?id=220210 */
-+	SND_PCI_QUIRK(0x17aa, 0x5079, "Lenovo Thinkpad E15", 0),
- 	{}
- };
- #endif /* CONFIG_PM */
+diff --git a/drivers/media/i2c/imx334.c b/drivers/media/i2c/imx334.c
+index 062125501788a..57b7416bbfab3 100644
+--- a/drivers/media/i2c/imx334.c
++++ b/drivers/media/i2c/imx334.c
+@@ -1058,6 +1058,9 @@ static int imx334_probe(struct i2c_client *client)
+ 		goto error_handler_free;
+ 	}
+ 
++	pm_runtime_set_active(imx334->dev);
++	pm_runtime_enable(imx334->dev);
++
+ 	ret = v4l2_async_register_subdev_sensor(&imx334->sd);
+ 	if (ret < 0) {
+ 		dev_err(imx334->dev,
+@@ -1065,13 +1068,13 @@ static int imx334_probe(struct i2c_client *client)
+ 		goto error_media_entity;
+ 	}
+ 
+-	pm_runtime_set_active(imx334->dev);
+-	pm_runtime_enable(imx334->dev);
+ 	pm_runtime_idle(imx334->dev);
+ 
+ 	return 0;
+ 
+ error_media_entity:
++	pm_runtime_disable(imx334->dev);
++	pm_runtime_set_suspended(imx334->dev);
+ 	media_entity_cleanup(&imx334->sd.entity);
+ error_handler_free:
+ 	v4l2_ctrl_handler_free(imx334->sd.ctrl_handler);
+-- 
+2.39.5
+
 
 
