@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1D63FD4;
-	Mon, 23 Jun 2025 21:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE1F3FD4;
+	Mon, 23 Jun 2025 21:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715262; cv=none; b=heDPlb/o+3TU5uJxg+om76UcfOlchK02hJsNcjtTXKEKwwzVudcWG4jcqHeCy1Xs4zDHbX/Kt8OV4bpUEbIZ6j1lxEDxXQmvO1yVOuVlnb4Ge0apRx2MsdWrixYnVPp0Kad/L7qHdNUd37DttgGPwIw1VaHsCMVv09QIYWKVvE4=
+	t=1750715265; cv=none; b=pUnN5b7n+TPFdlkeEIP61Jdr35ZKc1MYNfbg6dVqRWbqd7sKO2M3X1k8IQ60l4SlpksnAow4YIXjX8C9ziyabKCf+Qjr2IIA19NrRMXciEcCs4zz1fFMO3NYL+7jyAVkpa60VYKwTtTOPNnp/LDaO8BB8E1KUsS3wN9XZLEksag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715262; c=relaxed/simple;
-	bh=JJ4TN8onF338IM3Zpo/BQLnsysvJgcn8JGkfBxJKz8k=;
+	s=arc-20240116; t=1750715265; c=relaxed/simple;
+	bh=DqfDL0V2KYXxoE1XCkWGM0EjWDYeYvfFHjTT6XjOtVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5kdnLDr7ifuZ7QhiGHkIVHB6R5miEywYJnsszafVSTkbS0bj8VSdWkGjjU+DgfdD42zJ1C7hsWk2wBYlb0qqf0Q77tabpfJsU0OMLIRl/Dpeil/+vWXFshvEDXFq2u9hqAVjm7971NEMYpfNb7wYdF5mc3TJOEZowRukFuwOmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6f8v/Ge; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cCgJ+/3roSZC1sb7nSNrdN7Hp/zBSvsqrbFxnHzlVXL+m1gZFxXlD7KlJwzPB2KfhIERuOI0YbncI400lVmi6GrvxhbMEqLIM17vbrCISBZ1HUEqd/3XqvWs/bpFmqBTTUX+LCIedgmuJBwNZehlTRHQMRIZcJYkfM4hz3IgebE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLJRDqVA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6f8v/Ge"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9008C4CEEA;
-	Mon, 23 Jun 2025 21:47:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLJRDqVA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1E7C4CEEA;
+	Mon, 23 Jun 2025 21:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715262;
-	bh=JJ4TN8onF338IM3Zpo/BQLnsysvJgcn8JGkfBxJKz8k=;
+	s=korg; t=1750715264;
+	bh=DqfDL0V2KYXxoE1XCkWGM0EjWDYeYvfFHjTT6XjOtVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e6f8v/GewdDgoSB37bwqg75WxKG5C5M/SOxc6n5VRbHQ8jQLjgvB0aXUBu0WkXoDZ
-	 uHNtnPPOQ8zhWzbehwRFgpg1oO18aLM+fSudjsgPNVYoVEE8VzI/8CIOzNQ3UuLX5w
-	 cpTWj8HctkjvJBGU8Q6baCfdkWHGpMDiKFz5WiQw=
+	b=vLJRDqVA5KbGp4mJc6GLscRLdIqTxyiHX/uTd0iRdVptnHnRP6IfhIklDkgXX1xj+
+	 6PHh5ry40E6N2D4es4jTkGXc35Ivg7T84Ht/grZNBgNviVPlNVDUyZ4Yc1LVoDSQ2Q
+	 hWBLSrkpMvDMYBdxYxfxqBIIfN0Bn/jN0EyfctPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jason Xing <kernelxing@tencent.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 224/508] Bluetooth: hci_core: fix list_for_each_entry_rcu usage
-Date: Mon, 23 Jun 2025 15:04:29 +0200
-Message-ID: <20250623130650.775679958@linuxfoundation.org>
+Subject: [PATCH 5.10 264/355] net: mlx4: add SOF_TIMESTAMPING_TX_SOFTWARE flag when getting ts info
+Date: Mon, 23 Jun 2025 15:07:45 +0200
+Message-ID: <20250623130634.690026401@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 308a3a8ce8ea41b26c46169f3263e50f5997c28e ]
+[ Upstream commit b86bcfee30576b752302c55693fff97242b35dfd ]
 
-Releasing + re-acquiring RCU lock inside list_for_each_entry_rcu() loop
-body is not correct.
+As mlx4 has implemented skb_tx_timestamp() in mlx4_en_xmit(), the
+SOFTWARE flag is surely needed when users are trying to get timestamp
+information.
 
-Fix by taking the update-side hdev->lock instead.
-
-Fixes: c7eaf80bfb0c ("Bluetooth: Fix hci_link_tx_to RCU lock usage")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250510093442.79711-1-kerneljasonxing@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/mellanox/mlx4/en_ethtool.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 3cd7c212375fc..dc53e3078ba79 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3402,23 +3402,18 @@ static void hci_link_tx_to(struct hci_dev *hdev, __u8 type)
+diff --git a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
+index 962851000ace4..7cb4dde12b926 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
+@@ -1905,6 +1905,7 @@ static int mlx4_en_get_ts_info(struct net_device *dev,
+ 	if (mdev->dev->caps.flags2 & MLX4_DEV_CAP_FLAG2_TS) {
+ 		info->so_timestamping |=
+ 			SOF_TIMESTAMPING_TX_HARDWARE |
++			SOF_TIMESTAMPING_TX_SOFTWARE |
+ 			SOF_TIMESTAMPING_RX_HARDWARE |
+ 			SOF_TIMESTAMPING_RAW_HARDWARE;
  
- 	bt_dev_err(hdev, "link tx timeout");
- 
--	rcu_read_lock();
-+	hci_dev_lock(hdev);
- 
- 	/* Kill stalled connections */
--	list_for_each_entry_rcu(c, &h->list, list) {
-+	list_for_each_entry(c, &h->list, list) {
- 		if (c->type == type && c->sent) {
- 			bt_dev_err(hdev, "killing stalled connection %pMR",
- 				   &c->dst);
--			/* hci_disconnect might sleep, so, we have to release
--			 * the RCU read lock before calling it.
--			 */
--			rcu_read_unlock();
- 			hci_disconnect(c, HCI_ERROR_REMOTE_USER_TERM);
--			rcu_read_lock();
- 		}
- 	}
- 
--	rcu_read_unlock();
-+	hci_dev_unlock(hdev);
- }
- 
- static struct hci_chan *hci_chan_sent(struct hci_dev *hdev, __u8 type,
 -- 
 2.39.5
 
