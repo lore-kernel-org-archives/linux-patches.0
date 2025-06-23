@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C5A1F582A;
-	Mon, 23 Jun 2025 21:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9431ACEDA;
+	Mon, 23 Jun 2025 21:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712886; cv=none; b=CanB7WCEwapuCPd2URCOONcvyBblKzEEDul2Vvpy/VH/MXWN+Vlg8A3YfuBQn7WEfG+hikjh/g+WwLYeGooXHpV7xlKB/mJmOe76ZKhSwSV/D02HdaVIGKY0rNfELozNnIvmXuETaUlU+oXVHBkHK90uZb+qXpoZmLM/SFMcbIw=
+	t=1750712889; cv=none; b=J0esm5EvsluOgB/9anAoHwvAj8jx0VLAa1O+LGSt70ViEJMxw+xKCNv9KDVD7KMCKE421a3QpzrwLTNksi9zPHdN+o9Cas+FPr/ClwWjDoQRpuVmBdogGAPNfvyzZmvWeATAKGAAJiwMzXbO9sPwJHhJnZjs/jFRIaQjNFnN0d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712886; c=relaxed/simple;
-	bh=tobbKLm9EnzWHTg1cK4xnW3rWXlS6qOwzGsP/PxK5ao=;
+	s=arc-20240116; t=1750712889; c=relaxed/simple;
+	bh=0R/rGtOUOLw60ntKXIcdHRg9qQT2/q58xHcjVyikjrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FDYwE9sS+YrZZmJEXndHAbIlhYpZZ899bfzBZPKwaZ4GhoTiJflkMcXfzudcHZDLQsITXxTpFVnyOdJjESsVjf7fvLuMaNtGboGzK8nmasjb1ezPViqC+QJ8Pp8yg/ZbpcOekz8E6GuPVlaXu0DNaeeptt5Q1t7xt2wOSQclhqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mL/H10+M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oJBNoPQeCwShFMkCo/6cwJ7RTgHo7RD1eJSmu29FXI2AOq0lgOsMKKjSj36olOQBfcUfD5lm5zwJzMbkLNavYrBBjDiAhjBhwX0Kz3DYFfwKVPKhMGuF+7Hdb8e247I9vVspsvom2LzUP6YQfa+tO352/yuXW8NM8R5XTDs5uzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y473fBmE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mL/H10+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB19FC4CEED;
-	Mon, 23 Jun 2025 21:08:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y473fBmE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E752C4CEED;
+	Mon, 23 Jun 2025 21:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712886;
-	bh=tobbKLm9EnzWHTg1cK4xnW3rWXlS6qOwzGsP/PxK5ao=;
+	s=korg; t=1750712888;
+	bh=0R/rGtOUOLw60ntKXIcdHRg9qQT2/q58xHcjVyikjrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mL/H10+M2Wu8LP6rERyONiuZ8yclo+sOBSeROi7ilxKkQbiE07p/PyMKJDRvb48/F
-	 oC8W6aMiYZSrKEZ9/ze9ou/X8JTv0tP9GbmSvybGBqf9TmRy786prXg/h3ohG3m6Xt
-	 egS1PQNHcmjJGE3vFuncHdGrtv9LDuDpvj5cnmwE=
+	b=y473fBmEpeszXUI3nEwltrHsmbFQsDzfLpJx4XAvqdksjh2oURNNLGarIFKJox7wL
+	 LAbT8SJwSS/AFzTG11V5tByfTLdaUJnAe3m30SQy6zpL/hxThk3m7DFNnyTsgOU0mX
+	 saoiuC02l+Zw+OUm0m4h1IZUv0BHJg3W9jfZ+N1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 036/290] media: omap3isp: use sgtable-based scatterlist wrappers
-Date: Mon, 23 Jun 2025 15:04:57 +0200
-Message-ID: <20250623130628.081340098@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Tony Jones <tonyj@suse.de>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 094/411] perf scripts python: exported-sql-viewer.py: Fix pattern matching with Python 3
+Date: Mon, 23 Jun 2025 15:03:58 +0200
+Message-ID: <20250623130635.832167216@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,76 +53,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 3de572fe2189a4a0bd80295e1f478401e739498e upstream.
+[ Upstream commit 17e548405a81665fd14cee960db7d093d1396400 ]
 
-Use common wrappers operating directly on the struct sg_table objects to
-fix incorrect use of scatterlists sync calls. dma_sync_sg_for_*()
-functions have to be called with the number of elements originally passed
-to dma_map_sg_*() function, not the one returned in sgtable's nents.
+The script allows the user to enter patterns to find symbols.
 
-Fixes: d33186d0be18 ("[media] omap3isp: ccdc: Use the DMA API for LSC")
-Fixes: 0e24e90f2ca7 ("[media] omap3isp: stat: Use the DMA API")
-CC: stable@vger.kernel.org
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The pattern matching characters are converted for use in SQL.
+
+For PostgreSQL the conversion involves using the Python maketrans()
+method which is slightly different in Python 3 compared with Python 2.
+
+Fix to work in Python 3.
+
+Fixes: beda0e725e5f06ac ("perf script python: Add Python3 support to exported-sql-viewer.py")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Tony Jones <tonyj@suse.de>
+Link: https://lore.kernel.org/r/20250512093932.79854-4-adrian.hunter@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/ti/omap3isp/ispccdc.c |    8 ++++----
- drivers/media/platform/ti/omap3isp/ispstat.c |    6 ++----
- 2 files changed, 6 insertions(+), 8 deletions(-)
+ tools/perf/scripts/python/exported-sql-viewer.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/ti/omap3isp/ispccdc.c
-+++ b/drivers/media/platform/ti/omap3isp/ispccdc.c
-@@ -446,8 +446,8 @@ static int ccdc_lsc_config(struct isp_cc
- 		if (ret < 0)
- 			goto done;
- 
--		dma_sync_sg_for_cpu(isp->dev, req->table.sgt.sgl,
--				    req->table.sgt.nents, DMA_TO_DEVICE);
-+		dma_sync_sgtable_for_cpu(isp->dev, &req->table.sgt,
-+					 DMA_TO_DEVICE);
- 
- 		if (copy_from_user(req->table.addr, config->lsc,
- 				   req->config.size)) {
-@@ -455,8 +455,8 @@ static int ccdc_lsc_config(struct isp_cc
- 			goto done;
- 		}
- 
--		dma_sync_sg_for_device(isp->dev, req->table.sgt.sgl,
--				       req->table.sgt.nents, DMA_TO_DEVICE);
-+		dma_sync_sgtable_for_device(isp->dev, &req->table.sgt,
-+					    DMA_TO_DEVICE);
- 	}
- 
- 	spin_lock_irqsave(&ccdc->lsc.req_lock, flags);
---- a/drivers/media/platform/ti/omap3isp/ispstat.c
-+++ b/drivers/media/platform/ti/omap3isp/ispstat.c
-@@ -161,8 +161,7 @@ static void isp_stat_buf_sync_for_device
- 	if (ISP_STAT_USES_DMAENGINE(stat))
- 		return;
- 
--	dma_sync_sg_for_device(stat->isp->dev, buf->sgt.sgl,
--			       buf->sgt.nents, DMA_FROM_DEVICE);
-+	dma_sync_sgtable_for_device(stat->isp->dev, &buf->sgt, DMA_FROM_DEVICE);
- }
- 
- static void isp_stat_buf_sync_for_cpu(struct ispstat *stat,
-@@ -171,8 +170,7 @@ static void isp_stat_buf_sync_for_cpu(st
- 	if (ISP_STAT_USES_DMAENGINE(stat))
- 		return;
- 
--	dma_sync_sg_for_cpu(stat->isp->dev, buf->sgt.sgl,
--			    buf->sgt.nents, DMA_FROM_DEVICE);
-+	dma_sync_sgtable_for_cpu(stat->isp->dev, &buf->sgt, DMA_FROM_DEVICE);
- }
- 
- static void isp_stat_buf_clear(struct ispstat *stat)
+diff --git a/tools/perf/scripts/python/exported-sql-viewer.py b/tools/perf/scripts/python/exported-sql-viewer.py
+index 13f2d8a816109..99742013676b3 100755
+--- a/tools/perf/scripts/python/exported-sql-viewer.py
++++ b/tools/perf/scripts/python/exported-sql-viewer.py
+@@ -680,7 +680,10 @@ class CallGraphModelBase(TreeModel):
+ 				s = value.replace("%", "\%")
+ 				s = s.replace("_", "\_")
+ 				# Translate * and ? into SQL LIKE pattern characters % and _
+-				trans = string.maketrans("*?", "%_")
++				if sys.version_info[0] == 3:
++					trans = str.maketrans("*?", "%_")
++				else:
++					trans = string.maketrans("*?", "%_")
+ 				match = " LIKE '" + str(s).translate(trans) + "'"
+ 			else:
+ 				match = " GLOB '" + str(value) + "'"
+-- 
+2.39.5
+
 
 
