@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72DD37482;
-	Mon, 23 Jun 2025 21:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32947482;
+	Mon, 23 Jun 2025 21:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713653; cv=none; b=uC++CvlhQQf7dZNSvfZSP/zjsgJbgelDq5f/dkptf9CDgg2d/RApx/fY3K9J+oXCeqKqyG4s1KPbjW0hLSI+WSRkGWm4Tq7r5k5Q9+A3YjJnv8J9W+y7o930gD3XSMt9+PLtKF/f7SEav0/387rGdYCSAkIQcj+Fgbz00hVOUIQ=
+	t=1750713656; cv=none; b=Tyf8sFDUAJBAx4wNQ3lI/tvUzkwtT5EnU/X+3c/Y/hGorAmt5dNGOlflWTmYFatrxuJCxjYGg7luvYeP+Igw8Q9r+emQq7BqzSCKcjfk9OEsIY+LLUU7BfZMLBqIXzo6C1ZHsASzs9gyStRyDaLEmIVdnHtnHJdJGhV2M/uyMHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713653; c=relaxed/simple;
-	bh=HOa43t17o11a2EEgwMcCBplLZlfKhvdRppoICNu8EV0=;
+	s=arc-20240116; t=1750713656; c=relaxed/simple;
+	bh=ZTlgaRRjSoL9UzXJ17XtpdBXA7tzJYVtDh8EtMR0OIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nA9AkyfI4/l7yyV0k/k3xooxHBtrOw+D7SLiwEwCuCVndpmqt+RFPIY2X+HLur9wj+/fFYx06vQ2ZAHeNy9aN2DMLc95EjgSloBMv3Ax0RebpGjRSo08pe2xAn2cl/He5cJ8oEYAQCh856maAWpPnbsqo6aphIG+zULA4ztDxws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9cZzZxR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GMP7tN2V7V3l0nqfme1ty9qg98CkoSSQz9GsSZv8j9ixne/bR4gRnbDgLm+f1m8JGCscaRh3Hh3yW+ChQqoE40LE+sAn+sklr64rJlSIN8DvjUC9m3dVFrpp6JiaexXhmIZ4rB0zYXod3B8GX2z7X94P7hG/AcJNX/QRBQbA4E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDFmqJnQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9cZzZxR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A87FC4CEEA;
-	Mon, 23 Jun 2025 21:20:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDFmqJnQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73036C4CEEA;
+	Mon, 23 Jun 2025 21:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713653;
-	bh=HOa43t17o11a2EEgwMcCBplLZlfKhvdRppoICNu8EV0=;
+	s=korg; t=1750713655;
+	bh=ZTlgaRRjSoL9UzXJ17XtpdBXA7tzJYVtDh8EtMR0OIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x9cZzZxRD4Nl/Q3l/EWmRCRibfQYBOkTst6bChOPXD1Gc1NpAV0c1OjJTXk0oS15d
-	 Yg0tKGATH2zKUONEy2dDBgnaXwFUwAsILo0Bcp9V0LVqXlKHLNvSIDk9Pmu2myhyjR
-	 iY34YtsJMyE1GslnS3CA+2pwilCZhSdJLDEwohFc=
+	b=vDFmqJnQqgKuFK7tBkI/MRYFB/dZiVBYc6ICg63relLjXyo7uTif6Feff2KRoB/YP
+	 mfKMlmd98xHHisHI3H+Go59wx9oP2NLLjzW3CFTLXsxCCa9lsJ72N35bL7o6wZouON
+	 Ea/vlXRJkG/ePFROGwMam0lxuXmvicB2108/7uOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/508] arm64: dts: qcom: sda660-ifc6560: Fix dt-validate warning
-Date: Mon, 23 Jun 2025 15:02:40 +0200
-Message-ID: <20250623130648.124623135@linuxfoundation.org>
+	Steven Rostedt <rostedt@goodmis.org>,
+	Hongbo Li <lihongbo22@huawei.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 5.4 198/222] erofs: remove unused trace event erofs_destroy_inode
+Date: Mon, 23 Jun 2025 15:08:53 +0200
+Message-ID: <20250623130618.183092035@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Minnekhanov <alexeymin@postmarketos.org>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit f5110806b41eaa0eb0ab1bf2787876a580c6246c ]
+commit 30b58444807c93bffeaba7d776110f2a909d2f9a upstream.
 
-If you remove clocks property, you should remove clock-names, too.
-Fixes warning with dtbs check:
+The trace event `erofs_destroy_inode` was added but remains unused. This
+unused event contributes approximately 5KB to the kernel module size.
 
- 'clocks' is a dependency of 'clock-names'
-
-Fixes: 34279d6e3f32c ("arm64: dts: qcom: sdm660: Add initial Inforce IFC6560 board support")
-Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250504115120.1432282-4-alexeymin@postmarketos.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Steven Rostedt <rostedt@goodmis.org>
+Closes: https://lore.kernel.org/r/20250612224906.15000244@batman.local.home
+Fixes: 13f06f48f7bf ("staging: erofs: support tracepoint")
+Cc: stable@vger.kernel.org
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250617054056.3232365-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ include/trace/events/erofs.h |   18 ------------------
+ 1 file changed, 18 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-index 28050bc5f0813..502a3481ba284 100644
---- a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-+++ b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-@@ -155,6 +155,7 @@
- 	 * BAM DMA interconnects support is in place.
- 	 */
- 	/delete-property/ clocks;
-+	/delete-property/ clock-names;
- };
+--- a/include/trace/events/erofs.h
++++ b/include/trace/events/erofs.h
+@@ -235,24 +235,6 @@ DEFINE_EVENT(erofs__map_blocks_exit, z_e
+ 	TP_ARGS(inode, map, flags, ret)
+ );
  
- &blsp1_uart2 {
-@@ -167,6 +168,7 @@
- 	 * BAM DMA interconnects support is in place.
- 	 */
- 	/delete-property/ clocks;
-+	/delete-property/ clock-names;
- };
+-TRACE_EVENT(erofs_destroy_inode,
+-	TP_PROTO(struct inode *inode),
+-
+-	TP_ARGS(inode),
+-
+-	TP_STRUCT__entry(
+-		__field(	dev_t,		dev		)
+-		__field(	erofs_nid_t,	nid		)
+-	),
+-
+-	TP_fast_assign(
+-		__entry->dev	= inode->i_sb->s_dev;
+-		__entry->nid	= EROFS_I(inode)->nid;
+-	),
+-
+-	TP_printk("dev = (%d,%d), nid = %llu", show_dev_nid(__entry))
+-);
+-
+ #endif /* _TRACE_EROFS_H */
  
- &blsp2_uart1 {
--- 
-2.39.5
-
+  /* This part must be outside protection */
 
 
