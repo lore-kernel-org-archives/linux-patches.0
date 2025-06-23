@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074E24C6E;
-	Mon, 23 Jun 2025 13:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1CF4C6E;
+	Mon, 23 Jun 2025 13:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685639; cv=none; b=KuY3Z95Nj0uYfzHwReJPyj2JNeldFc3LHew/sO6TX7dJRx8mupIkkapsYDO7b9sGhuhNe5B3Gp+/IhVAKn/Tm3EzOEWNvG9ueYm+3reDeRdiL1owGtVLVaG2NXRxq2hCbCXY50eLqCaECyJ/0CrQd0dQGT/0LR6AlV4kGYDV1+o=
+	t=1750685641; cv=none; b=lyDljd/qi3u1fODgXfkQKoo6/bR/NrL40zAmeqg2WhBExY21Ey7OInC0GZgS/BBGaWRAUU2R2dljo2kMFOuMh8hfIi1bo/2biUIfNCoO+E2/Kq+JV6063+iYTfMr8xsO0csmnrWmVJ4zwanto/zs/LOg0XFA/Uy3xMZX1zdjdZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685639; c=relaxed/simple;
-	bh=aKhRvcCin2B7rdpY+S3UGfMp8sbczUXmta9QyxSZWGg=;
+	s=arc-20240116; t=1750685641; c=relaxed/simple;
+	bh=FQ6TIVdnJzKxThFi6WdyYOSfh23/tSGGL71k0i65op4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+yZjHqUG/OKb1HFmQTyaUZ7Aet6S8eBOxePh4ZMacPEDPPFQVS9QZQiKMDgQ2DvCSGXRe6UUqVDo0SdJ50qDHFeDF7shIjG/lnyvq7yxsikbqjB12eXAVuYa231zOlc52w/RbGfUq1M9zCYkcZ8upZ/WOEVNMnwgZw99pn5CnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJ9l/1BC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y+eRhzmrivDjxSzHHPcBc8W9rO6rVU+HmRBzJMkCZrLNdLycnXKze/kIVPTnreDahJ91VV0llDMl17Qst7U6GWLQX4GZ8NKyW0MpwtTZHysFVzEQ0ogVtz2/21pOyTKIzIR6fzPah7XcvBHhDw0Ibk6wm2AEzxL5s22F9XF1JIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z50EqDdg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJ9l/1BC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908ADC4CEEA;
-	Mon, 23 Jun 2025 13:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z50EqDdg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F00AC4CEEA;
+	Mon, 23 Jun 2025 13:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685638;
-	bh=aKhRvcCin2B7rdpY+S3UGfMp8sbczUXmta9QyxSZWGg=;
+	s=korg; t=1750685641;
+	bh=FQ6TIVdnJzKxThFi6WdyYOSfh23/tSGGL71k0i65op4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJ9l/1BC8FUR41n7qupXRfcZ4mX5davBp18REuWxu1zO0ue2GCYqmKOG16miFAm9A
-	 YMPXf0Q7+Wpmm+z+Pf88qYiMzJKuzNfqlPKCgecaNwnm67rWOK1dF6aiMHf1o+1bEl
-	 8Tv6xEnrOXBiANYClHEAst3KRs5LtigXCRuvm1Do=
+	b=Z50EqDdg0/mlxSER7SAgZn2LxE3DRvc2YiwpXjEUDDGxENvaJtMluDVaWOI6Ladmw
+	 oJYAF+XXRolIhGuqTZLCf+FdzvqCkN/nVrlz/NlbW3peMvXRM4IJ0b9i8UhSyYggTB
+	 SfmDgSGkeI/+5UusW0MwFIdFLax01Bt5G1p8awTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Stutterheim <ross.stutterheim@garmin.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 5.4 109/222] ARM: 9447/1: arm/memremap: fix arch_memremap_can_ram_remap()
-Date: Mon, 23 Jun 2025 15:07:24 +0200
-Message-ID: <20250623130615.390266422@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 021/508] crypto: marvell/cesa - Avoid empty transfer descriptor
+Date: Mon, 23 Jun 2025 15:01:06 +0200
+Message-ID: <20250623130645.773269414@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,52 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ross Stutterheim <ross.stutterheim@garmin.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 96e0b355883006554a0bee3697da475971d6bba8 upstream.
+[ Upstream commit 1bafd82d9a40cf09c6c40f1c09cc35b7050b1a9f ]
 
-arm/memremap: fix arch_memremap_can_ram_remap()
+The user may set req->src even if req->nbytes == 0.  If there
+is no data to hash from req->src, do not generate an empty TDMA
+descriptor.
 
-commit 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure
-presence of linear map") added the definition of
-arch_memremap_can_ram_remap() for arm[64] specific filtering of what pages
-can be used from the linear mapping. memblock_is_map_memory() was called
-with the pfn of the address given to arch_memremap_can_ram_remap();
-however, memblock_is_map_memory() expects to be given an address for arm,
-not a pfn.
-
-This results in calls to memremap() returning a newly mapped area when
-it should return an address in the existing linear mapping.
-
-Fix this by removing the address to pfn translation and pass the
-address directly.
-
-Fixes: 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure presence of linear map")
-Signed-off-by: Ross Stutterheim <ross.stutterheim@garmin.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: db509a45339f ("crypto: marvell/cesa - add TDMA support")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/ioremap.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/crypto/marvell/cesa/hash.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm/mm/ioremap.c
-+++ b/arch/arm/mm/ioremap.c
-@@ -504,7 +504,5 @@ void __init early_ioremap_init(void)
- bool arch_memremap_can_ram_remap(resource_size_t offset, size_t size,
- 				 unsigned long flags)
- {
--	unsigned long pfn = PHYS_PFN(offset);
--
--	return memblock_is_map_memory(pfn);
-+	return memblock_is_map_memory(offset);
- }
+diff --git a/drivers/crypto/marvell/cesa/hash.c b/drivers/crypto/marvell/cesa/hash.c
+index 84c1065092796..72b0f863dee07 100644
+--- a/drivers/crypto/marvell/cesa/hash.c
++++ b/drivers/crypto/marvell/cesa/hash.c
+@@ -663,7 +663,7 @@ static int mv_cesa_ahash_dma_req_init(struct ahash_request *req)
+ 	if (ret)
+ 		goto err_free_tdma;
+ 
+-	if (iter.src.sg) {
++	if (iter.base.len > iter.src.op_offset) {
+ 		/*
+ 		 * Add all the new data, inserting an operation block and
+ 		 * launch command between each full SRAM block-worth of
+-- 
+2.39.5
+
 
 
