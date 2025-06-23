@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB22715ADB4;
-	Mon, 23 Jun 2025 22:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5E215ADB4;
+	Mon, 23 Jun 2025 22:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717389; cv=none; b=WbXpZ3sQJbbXOJ6dyjWPP4P4nKPX0S91an1VVAvEvy327h389CPi5zxEtNC4NlI11mwmRxAN7UsklPNW+W/UDuxUlGVya5B2URl5vfRQkREg0O8aXlbcF/JaXb7GtgqNzYAqjdKeM7iiPVr71Ctg0OiFB6fVZcEY3ciKRJLC3tk=
+	t=1750717392; cv=none; b=ho769FFObBzy0hOGfBq5N4lVWDr0cAXkz6OjMoSCAyzlBMISC0f7Riy3KcpAz1O6fpaXxYCGEVoRT1k8j5vPUz9BIhWuRVRme0JMbsIwK+UIie26PHoyBrQ8ft+/roHHF2/20TqPVerId8sg0yI1cucVq9zJw5oIvasSUvUJxoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717389; c=relaxed/simple;
-	bh=vMVyqZFm6bxusQa5hzK80BJs0TAKgZanO4d+4Rx4Dy0=;
+	s=arc-20240116; t=1750717392; c=relaxed/simple;
+	bh=Mzbmyd1qtuh1N5imv1wTPy4eYg1r0sMKRASWH5A/enM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pEvyq0Ar3ZdVHuhssKAS/vPV4udJpUr6lu7nWTXMSe6cblq4TKIR5eJ5qoDrhfrZNDDZbOnEjaoXF5fKagT5jBpyOwuQuritgM6aJlPxVO1cqART+5mUbdMJcEdBEK5lACohJkMA8FPXGaRD6JMqO2hd1DNvNevGDpnZ2rDtoCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kRzRMcr2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FtQ3kuBptRie0AZ69clOTOKfmPIgHGPTtz68+zSUJiO4PJi23KLOpXwPEL+jBvau6p/NpkWMOo7wTsXr9omIIFPNo0wolFuYKYuqw3dWeElcuzcT7LpiQavKANIyZ1Q8iKUPP2bfG5ci3VzymuzhDqP5y4PoSX17Ix53/MwB/4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyBNsElc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRzRMcr2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2CBC4CEEA;
-	Mon, 23 Jun 2025 22:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyBNsElc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A81C4CEEA;
+	Mon, 23 Jun 2025 22:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717389;
-	bh=vMVyqZFm6bxusQa5hzK80BJs0TAKgZanO4d+4Rx4Dy0=;
+	s=korg; t=1750717392;
+	bh=Mzbmyd1qtuh1N5imv1wTPy4eYg1r0sMKRASWH5A/enM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kRzRMcr2s/NhWHqHCVsMkLNcZnvmipH7VGSCkmREYIW2xn+y2Rnb7h3Wxigp4ew7b
-	 4122FG6jpT2GHDvFAru5jMREWm4tBiaMKfNTIrtz7u/7o084pfgONQgC78QRzRga8g
-	 sL/CJFDMtsozZ1+dEXunPVrCJvveoiDagQi+z7to=
+	b=WyBNsElcPl3QW7CjphfWTSF2yJQ0gvpBftOuNRrnaEFSYrqUwMD6YSHhm50zzw3Cz
+	 +Kptt3Nyz3V/Zp1r3u5BvMIOoYuLRMldwg1M+hp5suFJq+VIhaPn55nmKipuoCEIiU
+	 Fs5hTtAC5ccDfjYuwfGtRFmYB98Z6qmZZ2FPge9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 417/508] scsi: lpfc: Fix lpfc_check_sli_ndlp() handling for GEN_REQUEST64 commands
-Date: Mon, 23 Jun 2025 15:07:42 +0200
-Message-ID: <20250623130655.464414096@linuxfoundation.org>
+Subject: [PATCH 6.12 378/414] ptp: allow reading of currently dialed frequency to succeed on free-running clocks
+Date: Mon, 23 Jun 2025 15:08:35 +0200
+Message-ID: <20250623130651.401978325@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 05ae6c9c7315d844fbc15afe393f5ba5e5771126 ]
+[ Upstream commit aa112cbc5f0ac6f3b44d829005bf34005d9fe9bb ]
 
-In lpfc_check_sli_ndlp(), the get_job_els_rsp64_did remote_id assignment
-does not apply for GEN_REQUEST64 commands as it only has meaning for a
-ELS_REQUEST64 command.  So, if (iocb->ndlp == ndlp) is false, we could
-erroneously return the wrong value.  Fix by replacing the fallthrough
-statement with a break statement before the remote_id check.
+There is a bug in ptp_clock_adjtime() which makes it refuse the
+operation even if we just want to read the current clock dialed
+frequency, not modify anything (tx->modes == 0). That should be possible
+even if the clock is free-running. For context, the kernel UAPI is the
+same for getting and setting the frequency of a POSIX clock.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20250425194806.3585-2-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+For example, ptp4l errors out at clock_create() -> clockadj_get_freq()
+-> clock_adjtime() time, when it should logically only have failed on
+actual adjustments to the clock, aka if the clock was configured as
+slave. But in master mode it should work.
+
+This was discovered when examining the issue described in the previous
+commit, where ptp_clock_freerun() returned true despite n_vclocks being
+zero.
+
+Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250613174749.406826-3-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_hbadisc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ptp/ptp_clock.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index b04112c77fcd1..3a55e410235c0 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -5074,7 +5074,7 @@ lpfc_check_sli_ndlp(struct lpfc_hba *phba,
- 		case CMD_GEN_REQUEST64_CR:
- 			if (iocb->ndlp == ndlp)
- 				return 1;
--			fallthrough;
-+			break;
- 		case CMD_ELS_REQUEST64_CR:
- 			if (remote_id == ndlp->nlp_DID)
- 				return 1;
+diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
+index 1a1edd87122d3..b892a7323084d 100644
+--- a/drivers/ptp/ptp_clock.c
++++ b/drivers/ptp/ptp_clock.c
+@@ -121,7 +121,8 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
+ 	struct ptp_clock_info *ops;
+ 	int err = -EOPNOTSUPP;
+ 
+-	if (ptp_clock_freerun(ptp)) {
++	if (tx->modes & (ADJ_SETOFFSET | ADJ_FREQUENCY | ADJ_OFFSET) &&
++	    ptp_clock_freerun(ptp)) {
+ 		pr_err("ptp: physical clock is free running\n");
+ 		return -EBUSY;
+ 	}
 -- 
 2.39.5
 
