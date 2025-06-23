@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C6B2AEE4;
-	Mon, 23 Jun 2025 21:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7E92AEE4;
+	Mon, 23 Jun 2025 21:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715063; cv=none; b=d/eAuDT5BR/GxQjvoLbl94eX/bj+omt/61ySsuay0ga1qvsJ/prfXzYzgR7qM1ewcLLN/6zQFj0ZHv/r4ygphJsmAFHoLoKLfakHg46gy5epVBtznFe+UTA6JrFU+/Zu8RR0k9F+bWU39+XuDQGwBXHUSn6X3jIIuNXK94HH90E=
+	t=1750715065; cv=none; b=i8QZpyjyTIXxWwBz8m0lTEPAFggzSoDsdcYGgF6foc8pOuc1byNBblErxv59TJizNC0O2F5gv0POmS1CleyLGNjp3GunklkfIznR4TIWU6tymcGKz+Z3TBOT8r4oBTUQUUdiY6bkOGaiaUPbge0ht260fmCQ4qkmSirY/Zi1fts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715063; c=relaxed/simple;
-	bh=I0eMfIul1OCqhIlmPv/SRFxi46PiDEbWzYs2P6CqoRU=;
+	s=arc-20240116; t=1750715065; c=relaxed/simple;
+	bh=UPe+qJRMNv3TrbWMwq77WBVSQrnaFxfRofdMtqYWRS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ruGLiW869epkiWHCZ4ght7GuXhiRauN0lcleIV0osB34y6v2iwHlw3kfJ051eBg5Rpf4dkQ2lxTKc/jAhnGlFLgLAtE5V8arhI2V/DteXSBFz3OrAXqvpfRtsKqdwnBhXdK9F4+9+WwEUsvh/ggT4esv5IYhYYwF92rUZ1MVocs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UU7f94zb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gm5ocZ7AgHSeCHBYGk52es2Qg60PCF/qoE9LtCIOSDisaH93iKRfKuXBdCLR+/llD12M6unl3l1V3KaEh8CBA6Z2mDUDPH199AiWd8nMaU+4N1Wab9/NNcnMERXMYQZ7h6BaQxPBmB8dzRm30tokkvpGlReppG7aS3th+1yHxw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5zktDvo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UU7f94zb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2744C4CEEA;
-	Mon, 23 Jun 2025 21:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5zktDvo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307CFC4CEEA;
+	Mon, 23 Jun 2025 21:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715063;
-	bh=I0eMfIul1OCqhIlmPv/SRFxi46PiDEbWzYs2P6CqoRU=;
+	s=korg; t=1750715065;
+	bh=UPe+qJRMNv3TrbWMwq77WBVSQrnaFxfRofdMtqYWRS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UU7f94zb89BeimONnq350FSmKJhL/217m6r59Gi0XW2fEnQ4MR2Z/00BU8IJUHf3p
-	 Zfm5KUPVFobbDHw8KSIh1AmQaAxjl6cYPG4Y9Sxcp8qa2cL2xygC3bR4bPQDWdGw7b
-	 8REq8G4aA3dBLmGjj0BQiOEHb/3VmBdzII93rY+Y=
+	b=L5zktDvoJdBWwVT2JgOJxni9WItUK8PuobJ7fcqXVaBS8KIW8BWVHzkMUUMJlYeKE
+	 d0Lz9Gxs2x+MB25466PepIYux06EULc+j99a1wueZeQ1iSOMQLoD5hN2v9+Ir6L6Nl
+	 XyG4i5sDv01c+8FjHqDZ6FkRqO1LGd4RquRBMa5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wan Junjie <junjie.wan@inceptio.ai>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 5.15 226/411] bus: fsl-mc: fix GET/SET_TAILDROP command ids
-Date: Mon, 23 Jun 2025 15:06:10 +0200
-Message-ID: <20250623130639.351196023@linuxfoundation.org>
+	Balamurugan S <quic_bselvara@quicinc.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 422/592] wifi: ath12k: fix incorrect CE addresses
+Date: Mon, 23 Jun 2025 15:06:20 +0200
+Message-ID: <20250623130710.473461080@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wan Junjie <junjie.wan@inceptio.ai>
+From: Balamurugan S <quic_bselvara@quicinc.com>
 
-commit c78230ad34f82c6c0e0e986865073aeeef1f5d30 upstream.
+[ Upstream commit 60031d9c3589c7983fd1deb4a4c0bebf0929890e ]
 
-Command ids for taildrop get/set can not pass the check when they are
-using from the restool user space utility. Correct them according to the
-user manual.
+In the current ath12k implementation, the CE addresses
+CE_HOST_IE_ADDRESS and CE_HOST_IE_2_ADDRESS are incorrect. These
+values were inherited from ath11k, but ath12k does not currently use
+them.
 
-Fixes: d67cc29e6d1f ("bus: fsl-mc: list more commands as accepted through the ioctl")
-Signed-off-by: Wan Junjie <junjie.wan@inceptio.ai>
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20250408105814.2837951-4-ioana.ciornei@nxp.com
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+However, the Ath12k AHB support relies on these addresses. Therefore,
+correct the CE addresses for ath12k.
+
+Tested-on: IPQ5332 hw1.0 AHB WLAN.WBE.1.3.1-00130-QCAHKSWPL_SILICONZ-1
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00210-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Balamurugan S <quic_bselvara@quicinc.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+Link: https://patch.msgid.link/20250321-ath12k-ahb-v12-2-bb389ed76ae5@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/fsl-mc/fsl-mc-uapi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/ce.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/bus/fsl-mc/fsl-mc-uapi.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-uapi.c
-@@ -275,13 +275,13 @@ static struct fsl_mc_cmd_desc fsl_mc_acc
- 		.size = 8,
- 	},
- 	[DPSW_GET_TAILDROP] = {
--		.cmdid_value = 0x0A80,
-+		.cmdid_value = 0x0A90,
- 		.cmdid_mask = 0xFFF0,
- 		.token = true,
- 		.size = 14,
- 	},
- 	[DPSW_SET_TAILDROP] = {
--		.cmdid_value = 0x0A90,
-+		.cmdid_value = 0x0A80,
- 		.cmdid_mask = 0xFFF0,
- 		.token = true,
- 		.size = 24,
+diff --git a/drivers/net/wireless/ath/ath12k/ce.h b/drivers/net/wireless/ath/ath12k/ce.h
+index 1a14b9fb86b88..f85188af5de2f 100644
+--- a/drivers/net/wireless/ath/ath12k/ce.h
++++ b/drivers/net/wireless/ath/ath12k/ce.h
+@@ -1,7 +1,7 @@
+ /* SPDX-License-Identifier: BSD-3-Clause-Clear */
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2022, 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #ifndef ATH12K_CE_H
+@@ -39,8 +39,8 @@
+ #define PIPEDIR_INOUT_H2H	4 /* bidirectional, host to host */
+ 
+ /* CE address/mask */
+-#define CE_HOST_IE_ADDRESS	0x00A1803C
+-#define CE_HOST_IE_2_ADDRESS	0x00A18040
++#define CE_HOST_IE_ADDRESS	0x75804C
++#define CE_HOST_IE_2_ADDRESS	0x758050
+ #define CE_HOST_IE_3_ADDRESS	CE_HOST_IE_ADDRESS
+ 
+ #define CE_HOST_IE_3_SHIFT	0xC
+-- 
+2.39.5
+
 
 
