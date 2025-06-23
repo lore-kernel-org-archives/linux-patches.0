@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1BC2367B0;
-	Mon, 23 Jun 2025 13:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9646224EF8C;
+	Mon, 23 Jun 2025 13:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685221; cv=none; b=PJmoHfWTlayi85tF+vqQNfvSB7HIVZfVqTrXRo8LVO334DcoUID25vGtbFR3sG+gNGCVkkgyw+kf0z6UcmaD67DciQn68z1+10zpLlulPAkzJZPw+89b72OiB9XiQkqwkci56SLOC6SdsRazuRGYT+NGIIwGtj52uBEQMiPgwj8=
+	t=1750685224; cv=none; b=CI/fCWqqJuEhkMzw1uLFG1ClnNCQngIso2YokzRvAmuQhrAHz8Boyh/V5pi6W3v/20QJAoL/FF8s6OCQRKiMIkxRKajnicBezVP8pGrloS8uw632qE06/6MkVikU65Es3gMCJ+zUumLPJXOYe2wKenL9Fe4caQPk1e8oprKdMhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685221; c=relaxed/simple;
-	bh=TS1JMtn6rXwkVvYTXk2Cdvr5PTxoovF7YSVdt7iEbO8=;
+	s=arc-20240116; t=1750685224; c=relaxed/simple;
+	bh=btC39s/Ti4qBPIXclIWI8st6iWLJXyyUIiK7lufI1mg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCF7DxlbDPR3pU10E0mpBGdaPNTLbybnhB6yTHbIuvF87d5JIj8iJrD0sbMVdwrLj25kXI/wJiWRk7GWihvugBh/NuzJ6cBqT9jwqL9fekNqSB5oAR/36s7gGSzrX1lYyu/OTfrfuj5QBffh6qV17m8p/aqYWM7rO6B1azVUf0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aD7o4RlS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UAaLnip2eBc7/A7N2T6Fm0LmCUm4BMkUf9StGnf5345xroF6Vgaq/leaG4Cbios7m7NSpPKPwma8rTVCt5vT+eZKLjjUGfI+LlX5WtUcxygmQddMDTq8Fm9ZMKjSSDGE7nMbYmz9tFpSqO8/hqGaRoOyvOdCfZ+ckrgvR7xJH/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4/oY3A9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aD7o4RlS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4DDC4CEF1;
-	Mon, 23 Jun 2025 13:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4/oY3A9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7C4C4CEEA;
+	Mon, 23 Jun 2025 13:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685221;
-	bh=TS1JMtn6rXwkVvYTXk2Cdvr5PTxoovF7YSVdt7iEbO8=;
+	s=korg; t=1750685224;
+	bh=btC39s/Ti4qBPIXclIWI8st6iWLJXyyUIiK7lufI1mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aD7o4RlStH1F1z1FuDLmlCwaJq5YvAJTKumhupp2rBHtOmvneOV0JSdt+lPI9g+hv
-	 mWN3mD8ZdZUzXYgZXsNaQSNsIUmo/P9HjW7Ozj1E8ya8jtasCihuv4QRQKU+PWyfB7
-	 uLWxl6hRwPEUM5VBQnX9/v6KJ4SoW0f487BoFiUg=
+	b=f4/oY3A9K1qL/Uobi63PTYGRGri5t//1BgBZgNlXlSAWVPw4p9t8X53eDMgPU2Ikl
+	 ii9J2pIG7Iy2qxF63HUB4K/hrLDp5rxHHyFaSLLRp+V2X12FqHrFWuJ8svvpokasxZ
+	 aAEvySQLTYY9hu/uJ8mJk0O1mPIMasN7v7beFFBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>,
+	Paul Fertser <fercerpav@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 064/222] usb: renesas_usbhs: Reorder clock handling and power management in probe
-Date: Mon, 23 Jun 2025 15:06:39 +0200
-Message-ID: <20250623130614.035128741@linuxfoundation.org>
+Subject: [PATCH 5.10 036/355] net: ncsi: Fix GCPS 64-bit member variables
+Date: Mon, 23 Jun 2025 15:03:57 +0200
+Message-ID: <20250623130627.906277954@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,192 +48,162 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
 
-[ Upstream commit ffb34a60ce86656ba12d46e91f1ccc71dd221251 ]
+[ Upstream commit e8a1bd8344054ce27bebf59f48e3f6bc10bc419b ]
 
-Reorder the initialization sequence in `usbhs_probe()` to enable runtime
-PM before accessing registers, preventing potential crashes due to
-uninitialized clocks.
+Correct Get Controller Packet Statistics (GCPS) 64-bit wide member
+variables, as per DSP0222 v1.0.0 and forward specs. The Driver currently
+collects these stats, but they are yet to be exposed to the user.
+Therefore, no user impact.
 
-Currently, in the probe path, registers are accessed before enabling the
-clocks, leading to a synchronous external abort on the RZ/V2H SoC.
-The problematic call flow is as follows:
+Statistics fixes:
+Total Bytes Received (byte range 28..35)
+Total Bytes Transmitted (byte range 36..43)
+Total Unicast Packets Received (byte range 44..51)
+Total Multicast Packets Received (byte range 52..59)
+Total Broadcast Packets Received (byte range 60..67)
+Total Unicast Packets Transmitted (byte range 68..75)
+Total Multicast Packets Transmitted (byte range 76..83)
+Total Broadcast Packets Transmitted (byte range 84..91)
+Valid Bytes Received (byte range 204..11)
 
-    usbhs_probe()
-        usbhs_sys_clock_ctrl()
-            usbhs_bset()
-                usbhs_write()
-                    iowrite16()  <-- Register access before enabling clocks
-
-Since `iowrite16()` is performed without ensuring the required clocks are
-enabled, this can lead to access errors. To fix this, enable PM runtime
-early in the probe function and ensure clocks are acquired before register
-access, preventing crashes like the following on RZ/V2H:
-
-[13.272640] Internal error: synchronous external abort: 0000000096000010 [#1] PREEMPT SMP
-[13.280814] Modules linked in: cec renesas_usbhs(+) drm_kms_helper fuse drm backlight ipv6
-[13.289088] CPU: 1 UID: 0 PID: 195 Comm: (udev-worker) Not tainted 6.14.0-rc7+ #98
-[13.296640] Hardware name: Renesas RZ/V2H EVK Board based on r9a09g057h44 (DT)
-[13.303834] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[13.310770] pc : usbhs_bset+0x14/0x4c [renesas_usbhs]
-[13.315831] lr : usbhs_probe+0x2e4/0x5ac [renesas_usbhs]
-[13.321138] sp : ffff8000827e3850
-[13.324438] x29: ffff8000827e3860 x28: 0000000000000000 x27: ffff8000827e3ca0
-[13.331554] x26: ffff8000827e3ba0 x25: ffff800081729668 x24: 0000000000000025
-[13.338670] x23: ffff0000c0f08000 x22: 0000000000000000 x21: ffff0000c0f08010
-[13.345783] x20: 0000000000000000 x19: ffff0000c3b52080 x18: 00000000ffffffff
-[13.352895] x17: 0000000000000000 x16: 0000000000000000 x15: ffff8000827e36ce
-[13.360009] x14: 00000000000003d7 x13: 00000000000003d7 x12: 0000000000000000
-[13.367122] x11: 0000000000000000 x10: 0000000000000aa0 x9 : ffff8000827e3750
-[13.374235] x8 : ffff0000c1850b00 x7 : 0000000003826060 x6 : 000000000000001c
-[13.381347] x5 : 000000030d5fcc00 x4 : ffff8000825c0000 x3 : 0000000000000000
-[13.388459] x2 : 0000000000000400 x1 : 0000000000000000 x0 : ffff0000c3b52080
-[13.395574] Call trace:
-[13.398013]  usbhs_bset+0x14/0x4c [renesas_usbhs] (P)
-[13.403076]  platform_probe+0x68/0xdc
-[13.406738]  really_probe+0xbc/0x2c0
-[13.410306]  __driver_probe_device+0x78/0x120
-[13.414653]  driver_probe_device+0x3c/0x154
-[13.418825]  __driver_attach+0x90/0x1a0
-[13.422647]  bus_for_each_dev+0x7c/0xe0
-[13.426470]  driver_attach+0x24/0x30
-[13.430032]  bus_add_driver+0xe4/0x208
-[13.433766]  driver_register+0x68/0x130
-[13.437587]  __platform_driver_register+0x24/0x30
-[13.442273]  renesas_usbhs_driver_init+0x20/0x1000 [renesas_usbhs]
-[13.448450]  do_one_initcall+0x60/0x1d4
-[13.452276]  do_init_module+0x54/0x1f8
-[13.456014]  load_module+0x1754/0x1c98
-[13.459750]  init_module_from_file+0x88/0xcc
-[13.464004]  __arm64_sys_finit_module+0x1c4/0x328
-[13.468689]  invoke_syscall+0x48/0x104
-[13.472426]  el0_svc_common.constprop.0+0xc0/0xe0
-[13.477113]  do_el0_svc+0x1c/0x28
-[13.480415]  el0_svc+0x30/0xcc
-[13.483460]  el0t_64_sync_handler+0x10c/0x138
-[13.487800]  el0t_64_sync+0x198/0x19c
-[13.491453] Code: 2a0103e1 12003c42 12003c63 8b010084 (79400084)
-[13.497522] ---[ end trace 0000000000000000 ]---
-
-Fixes: f1407d5c66240 ("usb: renesas_usbhs: Add Renesas USBHS common code")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://lore.kernel.org/r/20250407105002.107181-4-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
+Reviewed-by: Paul Fertser <fercerpav@gmail.com>
+Link: https://patch.msgid.link/20250410012309.1343-1-kalavakunta.hari.prasad@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/renesas_usbhs/common.c | 50 +++++++++++++++++++++++-------
- 1 file changed, 38 insertions(+), 12 deletions(-)
+ net/ncsi/internal.h | 21 ++++++++++-----------
+ net/ncsi/ncsi-pkt.h | 23 +++++++++++------------
+ net/ncsi/ncsi-rsp.c | 21 ++++++++++-----------
+ 3 files changed, 31 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/usb/renesas_usbhs/common.c b/drivers/usb/renesas_usbhs/common.c
-index ab33320028723..c395f5e23f8b5 100644
---- a/drivers/usb/renesas_usbhs/common.c
-+++ b/drivers/usb/renesas_usbhs/common.c
-@@ -680,10 +680,29 @@ static int usbhs_probe(struct platform_device *pdev)
- 	INIT_DELAYED_WORK(&priv->notify_hotplug_work, usbhsc_notify_hotplug);
- 	spin_lock_init(usbhs_priv_to_lock(priv));
+diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
+index dea60e25e8607..c61d2e2e93adc 100644
+--- a/net/ncsi/internal.h
++++ b/net/ncsi/internal.h
+@@ -140,16 +140,15 @@ struct ncsi_channel_vlan_filter {
+ };
  
-+	/*
-+	 * Acquire clocks and enable power management (PM) early in the
-+	 * probe process, as the driver accesses registers during
-+	 * initialization. Ensure the device is active before proceeding.
-+	 */
-+	pm_runtime_enable(dev);
-+
-+	ret = usbhsc_clk_get(dev, priv);
-+	if (ret)
-+		goto probe_pm_disable;
-+
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret)
-+		goto probe_clk_put;
-+
-+	ret = usbhsc_clk_prepare_enable(priv);
-+	if (ret)
-+		goto probe_pm_put;
-+
- 	/* call pipe and module init */
- 	ret = usbhs_pipe_probe(priv);
- 	if (ret < 0)
--		return ret;
-+		goto probe_clk_dis_unprepare;
+ struct ncsi_channel_stats {
+-	u32 hnc_cnt_hi;		/* Counter cleared            */
+-	u32 hnc_cnt_lo;		/* Counter cleared            */
+-	u32 hnc_rx_bytes;	/* Rx bytes                   */
+-	u32 hnc_tx_bytes;	/* Tx bytes                   */
+-	u32 hnc_rx_uc_pkts;	/* Rx UC packets              */
+-	u32 hnc_rx_mc_pkts;     /* Rx MC packets              */
+-	u32 hnc_rx_bc_pkts;	/* Rx BC packets              */
+-	u32 hnc_tx_uc_pkts;	/* Tx UC packets              */
+-	u32 hnc_tx_mc_pkts;	/* Tx MC packets              */
+-	u32 hnc_tx_bc_pkts;	/* Tx BC packets              */
++	u64 hnc_cnt;		/* Counter cleared            */
++	u64 hnc_rx_bytes;	/* Rx bytes                   */
++	u64 hnc_tx_bytes;	/* Tx bytes                   */
++	u64 hnc_rx_uc_pkts;	/* Rx UC packets              */
++	u64 hnc_rx_mc_pkts;     /* Rx MC packets              */
++	u64 hnc_rx_bc_pkts;	/* Rx BC packets              */
++	u64 hnc_tx_uc_pkts;	/* Tx UC packets              */
++	u64 hnc_tx_mc_pkts;	/* Tx MC packets              */
++	u64 hnc_tx_bc_pkts;	/* Tx BC packets              */
+ 	u32 hnc_fcs_err;	/* FCS errors                 */
+ 	u32 hnc_align_err;	/* Alignment errors           */
+ 	u32 hnc_false_carrier;	/* False carrier detection    */
+@@ -178,7 +177,7 @@ struct ncsi_channel_stats {
+ 	u32 hnc_tx_1023_frames;	/* Tx 512-1023 bytes frames   */
+ 	u32 hnc_tx_1522_frames;	/* Tx 1024-1522 bytes frames  */
+ 	u32 hnc_tx_9022_frames;	/* Tx 1523-9022 bytes frames  */
+-	u32 hnc_rx_valid_bytes;	/* Rx valid bytes             */
++	u64 hnc_rx_valid_bytes;	/* Rx valid bytes             */
+ 	u32 hnc_rx_runt_pkts;	/* Rx error runt packets      */
+ 	u32 hnc_rx_jabber_pkts;	/* Rx error jabber packets    */
+ 	u32 ncsi_rx_cmds;	/* Rx NCSI commands           */
+diff --git a/net/ncsi/ncsi-pkt.h b/net/ncsi/ncsi-pkt.h
+index 3fbea7e74fb1c..2729581360ec9 100644
+--- a/net/ncsi/ncsi-pkt.h
++++ b/net/ncsi/ncsi-pkt.h
+@@ -246,16 +246,15 @@ struct ncsi_rsp_gp_pkt {
+ /* Get Controller Packet Statistics */
+ struct ncsi_rsp_gcps_pkt {
+ 	struct ncsi_rsp_pkt_hdr rsp;            /* Response header            */
+-	__be32                  cnt_hi;         /* Counter cleared            */
+-	__be32                  cnt_lo;         /* Counter cleared            */
+-	__be32                  rx_bytes;       /* Rx bytes                   */
+-	__be32                  tx_bytes;       /* Tx bytes                   */
+-	__be32                  rx_uc_pkts;     /* Rx UC packets              */
+-	__be32                  rx_mc_pkts;     /* Rx MC packets              */
+-	__be32                  rx_bc_pkts;     /* Rx BC packets              */
+-	__be32                  tx_uc_pkts;     /* Tx UC packets              */
+-	__be32                  tx_mc_pkts;     /* Tx MC packets              */
+-	__be32                  tx_bc_pkts;     /* Tx BC packets              */
++	__be64                  cnt;            /* Counter cleared            */
++	__be64                  rx_bytes;       /* Rx bytes                   */
++	__be64                  tx_bytes;       /* Tx bytes                   */
++	__be64                  rx_uc_pkts;     /* Rx UC packets              */
++	__be64                  rx_mc_pkts;     /* Rx MC packets              */
++	__be64                  rx_bc_pkts;     /* Rx BC packets              */
++	__be64                  tx_uc_pkts;     /* Tx UC packets              */
++	__be64                  tx_mc_pkts;     /* Tx MC packets              */
++	__be64                  tx_bc_pkts;     /* Tx BC packets              */
+ 	__be32                  fcs_err;        /* FCS errors                 */
+ 	__be32                  align_err;      /* Alignment errors           */
+ 	__be32                  false_carrier;  /* False carrier detection    */
+@@ -284,11 +283,11 @@ struct ncsi_rsp_gcps_pkt {
+ 	__be32                  tx_1023_frames; /* Tx 512-1023 bytes frames   */
+ 	__be32                  tx_1522_frames; /* Tx 1024-1522 bytes frames  */
+ 	__be32                  tx_9022_frames; /* Tx 1523-9022 bytes frames  */
+-	__be32                  rx_valid_bytes; /* Rx valid bytes             */
++	__be64                  rx_valid_bytes; /* Rx valid bytes             */
+ 	__be32                  rx_runt_pkts;   /* Rx error runt packets      */
+ 	__be32                  rx_jabber_pkts; /* Rx error jabber packets    */
+ 	__be32                  checksum;       /* Checksum                   */
+-};
++}  __packed __aligned(4);
  
- 	ret = usbhs_fifo_probe(priv);
- 	if (ret < 0)
-@@ -700,10 +719,6 @@ static int usbhs_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto probe_fail_rst;
+ /* Get NCSI Statistics */
+ struct ncsi_rsp_gns_pkt {
+diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
+index 960e2cfc1fd2a..88fb86cf7b208 100644
+--- a/net/ncsi/ncsi-rsp.c
++++ b/net/ncsi/ncsi-rsp.c
+@@ -933,16 +933,15 @@ static int ncsi_rsp_handler_gcps(struct ncsi_request *nr)
  
--	ret = usbhsc_clk_get(dev, priv);
--	if (ret)
--		goto probe_fail_clks;
--
- 	/*
- 	 * deviece reset here because
- 	 * USB device might be used in boot loader.
-@@ -719,7 +734,7 @@ static int usbhs_probe(struct platform_device *pdev)
- 			dev_warn(dev, "USB function not selected (GPIO %d)\n",
- 				 priv->dparam.enable_gpio);
- 			ret = -ENOTSUPP;
--			goto probe_end_mod_exit;
-+			goto probe_assert_rest;
- 		}
- 	}
- 
-@@ -733,14 +748,19 @@ static int usbhs_probe(struct platform_device *pdev)
- 	ret = usbhs_platform_call(priv, hardware_init, pdev);
- 	if (ret < 0) {
- 		dev_err(dev, "platform init failed.\n");
--		goto probe_end_mod_exit;
-+		goto probe_assert_rest;
- 	}
- 
- 	/* reset phy for connection */
- 	usbhs_platform_call(priv, phy_reset, pdev);
- 
--	/* power control */
--	pm_runtime_enable(dev);
-+	/*
-+	 * Disable the clocks that were enabled earlier in the probe path,
-+	 * and let the driver handle the clocks beyond this point.
-+	 */
-+	usbhsc_clk_disable_unprepare(priv);
-+	pm_runtime_put(dev);
-+
- 	if (!usbhs_get_dparam(priv, runtime_pwctrl)) {
- 		usbhsc_power_ctrl(priv, 1);
- 		usbhs_mod_autonomy_mode(priv);
-@@ -757,9 +777,7 @@ static int usbhs_probe(struct platform_device *pdev)
- 
- 	return ret;
- 
--probe_end_mod_exit:
--	usbhsc_clk_put(priv);
--probe_fail_clks:
-+probe_assert_rest:
- 	reset_control_assert(priv->rsts);
- probe_fail_rst:
- 	usbhs_mod_remove(priv);
-@@ -767,6 +785,14 @@ static int usbhs_probe(struct platform_device *pdev)
- 	usbhs_fifo_remove(priv);
- probe_end_pipe_exit:
- 	usbhs_pipe_remove(priv);
-+probe_clk_dis_unprepare:
-+	usbhsc_clk_disable_unprepare(priv);
-+probe_pm_put:
-+	pm_runtime_put(dev);
-+probe_clk_put:
-+	usbhsc_clk_put(priv);
-+probe_pm_disable:
-+	pm_runtime_disable(dev);
- 
- 	dev_info(dev, "probe failed (%d)\n", ret);
+ 	/* Update HNC's statistics */
+ 	ncs = &nc->stats;
+-	ncs->hnc_cnt_hi         = ntohl(rsp->cnt_hi);
+-	ncs->hnc_cnt_lo         = ntohl(rsp->cnt_lo);
+-	ncs->hnc_rx_bytes       = ntohl(rsp->rx_bytes);
+-	ncs->hnc_tx_bytes       = ntohl(rsp->tx_bytes);
+-	ncs->hnc_rx_uc_pkts     = ntohl(rsp->rx_uc_pkts);
+-	ncs->hnc_rx_mc_pkts     = ntohl(rsp->rx_mc_pkts);
+-	ncs->hnc_rx_bc_pkts     = ntohl(rsp->rx_bc_pkts);
+-	ncs->hnc_tx_uc_pkts     = ntohl(rsp->tx_uc_pkts);
+-	ncs->hnc_tx_mc_pkts     = ntohl(rsp->tx_mc_pkts);
+-	ncs->hnc_tx_bc_pkts     = ntohl(rsp->tx_bc_pkts);
++	ncs->hnc_cnt            = be64_to_cpu(rsp->cnt);
++	ncs->hnc_rx_bytes       = be64_to_cpu(rsp->rx_bytes);
++	ncs->hnc_tx_bytes       = be64_to_cpu(rsp->tx_bytes);
++	ncs->hnc_rx_uc_pkts     = be64_to_cpu(rsp->rx_uc_pkts);
++	ncs->hnc_rx_mc_pkts     = be64_to_cpu(rsp->rx_mc_pkts);
++	ncs->hnc_rx_bc_pkts     = be64_to_cpu(rsp->rx_bc_pkts);
++	ncs->hnc_tx_uc_pkts     = be64_to_cpu(rsp->tx_uc_pkts);
++	ncs->hnc_tx_mc_pkts     = be64_to_cpu(rsp->tx_mc_pkts);
++	ncs->hnc_tx_bc_pkts     = be64_to_cpu(rsp->tx_bc_pkts);
+ 	ncs->hnc_fcs_err        = ntohl(rsp->fcs_err);
+ 	ncs->hnc_align_err      = ntohl(rsp->align_err);
+ 	ncs->hnc_false_carrier  = ntohl(rsp->false_carrier);
+@@ -971,7 +970,7 @@ static int ncsi_rsp_handler_gcps(struct ncsi_request *nr)
+ 	ncs->hnc_tx_1023_frames = ntohl(rsp->tx_1023_frames);
+ 	ncs->hnc_tx_1522_frames = ntohl(rsp->tx_1522_frames);
+ 	ncs->hnc_tx_9022_frames = ntohl(rsp->tx_9022_frames);
+-	ncs->hnc_rx_valid_bytes = ntohl(rsp->rx_valid_bytes);
++	ncs->hnc_rx_valid_bytes = be64_to_cpu(rsp->rx_valid_bytes);
+ 	ncs->hnc_rx_runt_pkts   = ntohl(rsp->rx_runt_pkts);
+ 	ncs->hnc_rx_jabber_pkts = ntohl(rsp->rx_jabber_pkts);
  
 -- 
 2.39.5
