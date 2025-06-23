@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF3C1DF98B;
-	Mon, 23 Jun 2025 21:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5131E1DF98B;
+	Mon, 23 Jun 2025 21:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713268; cv=none; b=MwXR9ZImxMddysiluWPGOUXUOIh2LmE+XaHzzadJAAC8RkouuKPODdIVmgrUyXc1LZcE89G9pfuDt6oyAn1CpAyQOKtXANfDPIiP4TNpiT2Iw+nYev5jVi538ZkeARY5icnJ91r2MoRpBL/7uOmwZtYTgw0bJUas1ucDrcMax50=
+	t=1750713270; cv=none; b=BJuwyqCn8GPLJH6J8SS2SsfTiBhgWJUNtGj0CoDWGigpsOmZ4mTELZtGucyLe4mVk3AVu6Z40Vbk+8tIr/Yt4Y3cbT3moYKRjr+iXAMGpnUAqIsj9gsL/qO9ApSYRdPiyzxz6tvet4gay0UMD6ptlhh+/u46XXf3nSCaMyULppY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713268; c=relaxed/simple;
-	bh=dgxfUZGkceJSdX8zFo9+HMyQfF4Fi5HVQfjmODcMpkI=;
+	s=arc-20240116; t=1750713270; c=relaxed/simple;
+	bh=6CiU48ADmwyxK4eg55PH+lTzHzUdSPSc/4H00gDeKWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I4k2VLytyVmY690QkZI7+UB1Ld2AIwFhvkXruOuxENe7z/M/id8H5apLEH/ZqH6DtDiz/cQJ9Eg3aF33ZX79O9E0NL8JiQ4FS3tQBciLGCKHwOBnHijRVt9E68piIjIDRTsqw+drnR1ZQJhEri3/gtT2KM+IzS0NoG81UxwougM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSdiYGuN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nx7dHPjtacILUXeD+t0GaoTfwAgxHrUOS1YZXMcNicTIuQi6LTwenmXUEL8OXN6z/tzkNx3LRhZpgo1V+cGVJQH1ZQQtV0THs7Bbwx9wFX4S+BMI2/IrkVIsRU8pEwJ6w7Ifl/4JDvb+K7+dbHM3j8X8uhHeANsO/Oo9FAyyqKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXBmIzcI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSdiYGuN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75273C4CEEA;
-	Mon, 23 Jun 2025 21:14:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXBmIzcI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF97CC4CEEA;
+	Mon, 23 Jun 2025 21:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713267;
-	bh=dgxfUZGkceJSdX8zFo9+HMyQfF4Fi5HVQfjmODcMpkI=;
+	s=korg; t=1750713270;
+	bh=6CiU48ADmwyxK4eg55PH+lTzHzUdSPSc/4H00gDeKWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SSdiYGuNDvjP3d5u+YssoRhET7inUKBUc8rgOvF3lIWqdhZvLlGV2eLNmMdMpZHeN
-	 QuXe4SHUmR9lgDeEiaLoqdWOTJnCAlpgNlbPGb4lez0la6ml7SXEJfIZphwAzx0i3f
-	 +tPd6zPi5EIoBfHRTb3i3rt2rOFGMLcTusV+IPCI=
+	b=nXBmIzcI2vzL7ZufG0Sck7K7dvTYwwX4uuuWBNCCAcbo3RfQNx0z3DtzLuIiqslx0
+	 zSwaJKTFFRRh+NQxqxmX+yteDvVOKldP3jZyp8YDPclcuY+oNEgiJTeOHXK8sxfeBU
+	 XsleVralV6lZWNQym7Za3KFHa55ew2W5TQtI4bRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longfang Liu <liulongfang@huawei.com>,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/508] hisi_acc_vfio_pci: fix XQE dma address error
-Date: Mon, 23 Jun 2025 15:02:12 +0200
-Message-ID: <20250623130647.387332999@linuxfoundation.org>
+	Tasos Sahanidis <tasos@tasossah.com>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.6 057/290] ata: pata_via: Force PIO for ATAPI devices on VT6415/VT6330
+Date: Mon, 23 Jun 2025 15:05:18 +0200
+Message-ID: <20250623130628.724742744@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,159 +46,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Longfang Liu <liulongfang@huawei.com>
+From: Tasos Sahanidis <tasos@tasossah.com>
 
-[ Upstream commit 8bb7170c5a055ea17c6857c256ee73c10ff872eb ]
+commit d29fc02caad7f94b62d56ee1b01c954f9c961ba7 upstream.
 
-The dma addresses of EQE and AEQE are wrong after migration and
-results in guest kernel-mode encryption services  failure.
-Comparing the definition of hardware registers, we found that
-there was an error when the data read from the register was
-combined into an address. Therefore, the address combination
-sequence needs to be corrected.
+The controller has a hardware bug that can hard hang the system when
+doing ATAPI DMAs without any trace of what happened. Depending on the
+device attached, it can also prevent the system from booting.
 
-Even after fixing the above problem, we still have an issue
-where the Guest from an old kernel can get migrated to
-new kernel and may result in wrong data.
+In this case, the system hangs when reading the ATIP from optical media
+with cdrecord -vvv -atip on an _NEC DVD_RW ND-4571A 1-01 and an
+Optiarc DVD RW AD-7200A 1.06 attached to an ASRock 990FX Extreme 4,
+running at UDMA/33.
 
-In order to ensure that the address is correct after migration,
-if an old magic number is detected, the dma address needs to be
-updated.
+The issue can be reproduced by running the same command with a cygwin
+build of cdrecord on WinXP, although it requires more attempts to cause
+it. The hang in that case is also resolved by forcing PIO. It doesn't
+appear that VIA has produced any drivers for that OS, thus no known
+workaround exists.
 
-Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
-Signed-off-by: Longfang Liu <liulongfang@huawei.com>
-Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Link: https://lore.kernel.org/r/20250510081155.55840-2-liulongfang@huawei.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+HDDs attached to the controller do not suffer from any DMA issues.
+
+Cc: stable@vger.kernel.org
+Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/916677
+Signed-off-by: Tasos Sahanidis <tasos@tasossah.com>
+Link: https://lore.kernel.org/r/20250519085508.1398701-1-tasos@tasossah.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../vfio/pci/hisilicon/hisi_acc_vfio_pci.c    | 41 ++++++++++++++++---
- .../vfio/pci/hisilicon/hisi_acc_vfio_pci.h    | 14 ++++++-
- 2 files changed, 47 insertions(+), 8 deletions(-)
+ drivers/ata/pata_via.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-index 39eeca18a0f7c..b5efb37712d5e 100644
---- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-+++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-@@ -350,6 +350,32 @@ static int vf_qm_func_stop(struct hisi_qm *qm)
- 	return hisi_qm_mb(qm, QM_MB_CMD_PAUSE_QM, 0, 0, 0);
- }
- 
-+static int vf_qm_version_check(struct acc_vf_data *vf_data, struct device *dev)
-+{
-+	switch (vf_data->acc_magic) {
-+	case ACC_DEV_MAGIC_V2:
-+		if (vf_data->major_ver != ACC_DRV_MAJOR_VER) {
-+			dev_info(dev, "migration driver version<%u.%u> not match!\n",
-+				 vf_data->major_ver, vf_data->minor_ver);
-+			return -EINVAL;
-+		}
-+		break;
-+	case ACC_DEV_MAGIC_V1:
-+		/* Correct dma address */
-+		vf_data->eqe_dma = vf_data->qm_eqc_dw[QM_XQC_ADDR_HIGH];
-+		vf_data->eqe_dma <<= QM_XQC_ADDR_OFFSET;
-+		vf_data->eqe_dma |= vf_data->qm_eqc_dw[QM_XQC_ADDR_LOW];
-+		vf_data->aeqe_dma = vf_data->qm_aeqc_dw[QM_XQC_ADDR_HIGH];
-+		vf_data->aeqe_dma <<= QM_XQC_ADDR_OFFSET;
-+		vf_data->aeqe_dma |= vf_data->qm_aeqc_dw[QM_XQC_ADDR_LOW];
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static int vf_qm_check_match(struct hisi_acc_vf_core_device *hisi_acc_vdev,
- 			     struct hisi_acc_vf_migration_file *migf)
- {
-@@ -363,7 +389,8 @@ static int vf_qm_check_match(struct hisi_acc_vf_core_device *hisi_acc_vdev,
- 	if (migf->total_length < QM_MATCH_SIZE)
- 		return -EINVAL;
- 
--	if (vf_data->acc_magic != ACC_DEV_MAGIC) {
-+	ret = vf_qm_version_check(vf_data, dev);
-+	if (ret) {
- 		dev_err(dev, "failed to match ACC_DEV_MAGIC\n");
- 		return -EINVAL;
+--- a/drivers/ata/pata_via.c
++++ b/drivers/ata/pata_via.c
+@@ -368,7 +368,8 @@ static unsigned int via_mode_filter(stru
  	}
-@@ -417,7 +444,9 @@ static int vf_qm_get_match_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
- 	int vf_id = hisi_acc_vdev->vf_id;
- 	int ret;
  
--	vf_data->acc_magic = ACC_DEV_MAGIC;
-+	vf_data->acc_magic = ACC_DEV_MAGIC_V2;
-+	vf_data->major_ver = ACC_DRV_MAJOR_VER;
-+	vf_data->minor_ver = ACC_DRV_MINOR_VER;
- 	/* Save device id */
- 	vf_data->dev_id = hisi_acc_vdev->vf_dev->device;
- 
-@@ -519,12 +548,12 @@ static int vf_qm_state_save(struct hisi_acc_vf_core_device *hisi_acc_vdev,
- 		return -EINVAL;
- 
- 	/* Every reg is 32 bit, the dma address is 64 bit. */
--	vf_data->eqe_dma = vf_data->qm_eqc_dw[1];
-+	vf_data->eqe_dma = vf_data->qm_eqc_dw[QM_XQC_ADDR_HIGH];
- 	vf_data->eqe_dma <<= QM_XQC_ADDR_OFFSET;
--	vf_data->eqe_dma |= vf_data->qm_eqc_dw[0];
--	vf_data->aeqe_dma = vf_data->qm_aeqc_dw[1];
-+	vf_data->eqe_dma |= vf_data->qm_eqc_dw[QM_XQC_ADDR_LOW];
-+	vf_data->aeqe_dma = vf_data->qm_aeqc_dw[QM_XQC_ADDR_HIGH];
- 	vf_data->aeqe_dma <<= QM_XQC_ADDR_OFFSET;
--	vf_data->aeqe_dma |= vf_data->qm_aeqc_dw[0];
-+	vf_data->aeqe_dma |= vf_data->qm_aeqc_dw[QM_XQC_ADDR_LOW];
- 
- 	/* Through SQC_BT/CQC_BT to get sqc and cqc address */
- 	ret = qm_get_sqc(vf_qm, &vf_data->sqc_dma);
-diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.h b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.h
-index 67343325b3201..f62247d0adf9a 100644
---- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.h
-+++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.h
-@@ -38,6 +38,9 @@
- #define QM_REG_ADDR_OFFSET	0x0004
- 
- #define QM_XQC_ADDR_OFFSET	32U
-+#define QM_XQC_ADDR_LOW	0x1
-+#define QM_XQC_ADDR_HIGH	0x2
-+
- #define QM_VF_AEQ_INT_MASK	0x0004
- #define QM_VF_EQ_INT_MASK	0x000c
- #define QM_IFC_INT_SOURCE_V	0x0020
-@@ -49,10 +52,15 @@
- #define QM_EQC_DW0		0X8000
- #define QM_AEQC_DW0		0X8020
- 
-+#define ACC_DRV_MAJOR_VER 1
-+#define ACC_DRV_MINOR_VER 0
-+
-+#define ACC_DEV_MAGIC_V1	0XCDCDCDCDFEEDAACC
-+#define ACC_DEV_MAGIC_V2	0xAACCFEEDDECADEDE
-+
- struct acc_vf_data {
- #define QM_MATCH_SIZE offsetofend(struct acc_vf_data, qm_rsv_state)
- 	/* QM match information */
--#define ACC_DEV_MAGIC	0XCDCDCDCDFEEDAACC
- 	u64 acc_magic;
- 	u32 qp_num;
- 	u32 dev_id;
-@@ -60,7 +68,9 @@ struct acc_vf_data {
- 	u32 qp_base;
- 	u32 vf_qm_state;
- 	/* QM reserved match information */
--	u32 qm_rsv_state[3];
-+	u16 major_ver;
-+	u16 minor_ver;
-+	u32 qm_rsv_state[2];
- 
- 	/* QM RW regs */
- 	u32 aeq_int_mask;
--- 
-2.39.5
-
+ 	if (dev->class == ATA_DEV_ATAPI &&
+-	    dmi_check_system(no_atapi_dma_dmi_table)) {
++	    (dmi_check_system(no_atapi_dma_dmi_table) ||
++	     config->id == PCI_DEVICE_ID_VIA_6415)) {
+ 		ata_dev_warn(dev, "controller locks up on ATAPI DMA, forcing PIO\n");
+ 		mask &= ATA_MASK_PIO;
+ 	}
 
 
