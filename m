@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42473FD4;
-	Mon, 23 Jun 2025 21:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495CB3FD4;
+	Mon, 23 Jun 2025 21:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715242; cv=none; b=YoChlvdxwv8VI41GWYdtTy+cNdS7pcHS1JGn1412D/Pl88WNKv2/s3/7v5iENgttnXaiydSNH7cEceiRDEQN5JmLpP4sO/JdRf5DJk5Fs2/RlZfJ47CC0C3Sq4R18b3HaQwEeZ87kO/uxIBRvhy1KAc7V8F3q0WuzfqNi44oSjM=
+	t=1750715245; cv=none; b=oeFDWhGHnz4dGkS0zWMHCnKDzH6m4znHwBg40HSRhhsbPEw0bLaqwh9McAodJdbQOwqW6RIpyNYixBU90bCOW+nnmHNVAY5ozSLkyZDPRjsftW0tXvg+9T8b9MguYSshZvLYAaxDEOdks/askn9jJK2ltPV3kWaVBgxAGlecy+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715242; c=relaxed/simple;
-	bh=M34Q3sf/1UvGivuftYlyONL+8lkdNux1WPBej4JzE1U=;
+	s=arc-20240116; t=1750715245; c=relaxed/simple;
+	bh=whAjewjC93nTo5LEIN6tQwxuuW/fERu55YU9Af7iKYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q/bHbuyCTY+oghtPZoxGEUQ8sSACrVKTgxwFwCLlWLqd5RKPSqpBO+blV9Jp6ouSWZzSUQ0SKJ1HXPrZfcGADHMqfxGeRwN9pHl1MDCJ4JTBPyqdmfr0AMVeYewamGGRv3Uwxmr3DRr5efp6jLQCvjcmhr71ugbetQxbmZlzkfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QC989zQ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j8e4qzCdSf4qmcp3CAwismjZsEBgZ0MXsLqB+acVqSmzoB3cwFPGNj6L6EDdpH3wsRKdOE3a20RIpq1KTysEZawOyr1D0Z+Cl6XmhJM74SEIuzujpbpUz0CA7Pc+Fc6/m7KG4/68KPt6G+LFuCFnkewpa18CqeA6Ki3/IcEItSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ieabmg9q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QC989zQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C861C4CEEA;
-	Mon, 23 Jun 2025 21:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ieabmg9q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D526DC4CEEA;
+	Mon, 23 Jun 2025 21:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715242;
-	bh=M34Q3sf/1UvGivuftYlyONL+8lkdNux1WPBej4JzE1U=;
+	s=korg; t=1750715245;
+	bh=whAjewjC93nTo5LEIN6tQwxuuW/fERu55YU9Af7iKYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QC989zQ1xtnDcpm2ec7gAZrSneIAMYg97bwWcQzsrUkGgT361BnMQ0xfm42I4/Ddi
-	 FXcOFfcrz+1UhIb8AZQWC37rj1PyItgYZMuQUjLvCnpZOYf19N7LLl3GnWSOdMwMJ1
-	 1mPw1vDbWjD6SVRT/bvW6tL9pRnLgP8fLqqKHFBk=
+	b=Ieabmg9qDz1iQFhmZpTboP9UZ90HWAIBwHqpGkwnsf+6eGJ/vMo7hobKDK0V3fGaK
+	 Sk8y5sT3cNnDubK9/4Lk5QKawxlaaQjUmpe+SlI7hLJcUj4Z0C+G9V38aF1sBVp2K9
+	 9CjSRWt8UrRuFY8z/gcBeWHd0V9dhQtAwLRHBZZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjeev Yadav <sanjeev.y@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 223/508] scsi: core: ufs: Fix a hang in the error handler
-Date: Mon, 23 Jun 2025 15:04:28 +0200
-Message-ID: <20250623130650.750490372@linuxfoundation.org>
+Subject: [PATCH 5.10 263/355] pinctrl: armada-37xx: propagate error from armada_37xx_gpio_get()
+Date: Mon, 23 Jun 2025 15:07:44 +0200
+Message-ID: <20250623130634.659924635@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,75 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanjeev Yadav <sanjeev.y@mediatek.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 8a3514d348de87a9d5e2ac00fbac4faae0b97996 ]
+[ Upstream commit 57273ff8bb16f3842c2597b5bbcd49e7fa12edf7 ]
 
-ufshcd_err_handling_prepare() calls ufshcd_rpm_get_sync(). The latter
-function can only succeed if UFSHCD_EH_IN_PROGRESS is not set because
-resuming involves submitting a SCSI command and ufshcd_queuecommand()
-returns SCSI_MLQUEUE_HOST_BUSY if UFSHCD_EH_IN_PROGRESS is set. Fix this
-hang by setting UFSHCD_EH_IN_PROGRESS after ufshcd_rpm_get_sync() has
-been called instead of before.
+The regmap_read() function can fail, so propagate its error up to
+the stack instead of silently ignoring that.
 
-Backtrace:
-__switch_to+0x174/0x338
-__schedule+0x600/0x9e4
-schedule+0x7c/0xe8
-schedule_timeout+0xa4/0x1c8
-io_schedule_timeout+0x48/0x70
-wait_for_common_io+0xa8/0x160 //waiting on START_STOP
-wait_for_completion_io_timeout+0x10/0x20
-blk_execute_rq+0xe4/0x1e4
-scsi_execute_cmd+0x108/0x244
-ufshcd_set_dev_pwr_mode+0xe8/0x250
-__ufshcd_wl_resume+0x94/0x354
-ufshcd_wl_runtime_resume+0x3c/0x174
-scsi_runtime_resume+0x64/0xa4
-rpm_resume+0x15c/0xa1c
-__pm_runtime_resume+0x4c/0x90 // Runtime resume ongoing
-ufshcd_err_handler+0x1a0/0xd08
-process_one_work+0x174/0x808
-worker_thread+0x15c/0x490
-kthread+0xf4/0x1ec
-ret_from_fork+0x10/0x20
-
-Signed-off-by: Sanjeev Yadav <sanjeev.y@mediatek.com>
-[ bvanassche: rewrote patch description ]
-Fixes: 62694735ca95 ("[SCSI] ufs: Add runtime PM support for UFS host controller driver")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20250523201409.1676055-1-bvanassche@acm.org
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-4-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index c5115f6adbdc2..dc17ae1dfe260 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -6285,9 +6285,14 @@ static void ufshcd_err_handler(struct work_struct *work)
- 		up(&hba->host_sem);
- 		return;
- 	}
--	ufshcd_set_eh_in_progress(hba);
- 	spin_unlock_irqrestore(hba->host->host_lock, flags);
-+
- 	ufshcd_err_handling_prepare(hba);
-+
-+	spin_lock_irqsave(hba->host->host_lock, flags);
-+	ufshcd_set_eh_in_progress(hba);
-+	spin_unlock_irqrestore(hba->host->host_lock, flags);
-+
- 	/* Complete requests that have door-bell cleared by h/w */
- 	ufshcd_complete_requests(hba);
- 	spin_lock_irqsave(hba->host->host_lock, flags);
+diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+index bd3eebf564236..ee4457832ccd3 100644
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -439,11 +439,14 @@ static int armada_37xx_gpio_get(struct gpio_chip *chip, unsigned int offset)
+ 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
+ 	unsigned int reg = INPUT_VAL;
+ 	unsigned int val, mask;
++	int ret;
+ 
+ 	armada_37xx_update_reg(&reg, &offset);
+ 	mask = BIT(offset);
+ 
+-	regmap_read(info->regmap, reg, &val);
++	ret = regmap_read(info->regmap, reg, &val);
++	if (ret)
++		return ret;
+ 
+ 	return (val & mask) != 0;
+ }
 -- 
 2.39.5
 
