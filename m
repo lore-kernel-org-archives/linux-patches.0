@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC56B218580;
-	Mon, 23 Jun 2025 22:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F886218580;
+	Mon, 23 Jun 2025 22:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716409; cv=none; b=E6B7I43rJVgH3UI8Nqv6c5X9rq/hHbQpX0JsI9OrJmgVbIFu0MybWQnPwixpstyufFy3P8Ro5oTJvHjZvwxeHIImmh2PZ0TsI7LZCpckusTed+2V14Z6/xG3jJrZG5PaSZx0Pz14fwv8NpVqUnjW3xaGbrF9GGUfUJf0xAOL2cU=
+	t=1750716412; cv=none; b=cLqj2fkVbsdl9Bt+BgJPFAH4cXkQ68ZivGO1jZaGfOGcMC2dGq7MRlmRa9+quMRcMVgt7pQZg+DRVK/egYkJE7c7Vy2llmMbJ6wxUYRMHpokqofs6nmhHfw2u6uOpgJMLm7hOoFiO5C3/zezRhYa1O2lUgvx5Mr7eSGwVcmLhSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716409; c=relaxed/simple;
-	bh=4MxAW4MeKyKWlPTpyfJR4hKfpQqcofEev8TME8YUE4g=;
+	s=arc-20240116; t=1750716412; c=relaxed/simple;
+	bh=gY9n7KAw6PvB1DtNHWQ9VeIlJEb5lpLl0UGegSmE+H0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IiOYhEov6LT76aQJT874xX8DPk06evx/G8vz2eZHMG80W1IpwHtQhLyoS9anCSPQvr4LXqHzdkJBTkjoijQB1LFUpv0jh9RetOODsivCwDaoD/WeiPPOwM1TliGHw50C4ba9/zZ24LKVpIFzOv9rpYmuGlYXj0CcW1uf1E5wL4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fqpthWWx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KMTghoquaf+svGlO/jby/RAAza5klyBead7nn0eDxaP/PN3BdJya42nSmPM41c3fXxaTrt5LykXT3l3NUThErdYtH0p/LPo/aT+LZXUP23MxA2ll2NZmls6Zg1HcH+MrgMP3gRIzbDUnq10TbRyV5ui6TcvkYd2rgitfkECYYBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6hzksoz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqpthWWx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455E9C4CEEA;
-	Mon, 23 Jun 2025 22:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6hzksoz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB31AC4CEEA;
+	Mon, 23 Jun 2025 22:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716409;
-	bh=4MxAW4MeKyKWlPTpyfJR4hKfpQqcofEev8TME8YUE4g=;
+	s=korg; t=1750716412;
+	bh=gY9n7KAw6PvB1DtNHWQ9VeIlJEb5lpLl0UGegSmE+H0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fqpthWWxIxBzdJ2pnDIwwZKIBSjGA68460HL6rUBKSVvWGjyZ9NPnIh1eIr5ocwO6
-	 HHAh4LH9pTA+QCqTprDig3NktkuBKmPoC714qAb8Ye28846F8hkJ+D2p5BzWL2KzOO
-	 fQ3gmUbw3AhpcoRKg3Mf1yyPyrpfsvRHgA+9yfJE=
+	b=H6hzksozvWqdnV0lPqvh9d45v4CLMtr+Cky+g6lCBpjPz4Af5n4oAhtT7C87+//25
+	 xEWnOkcnO/qZst0vjKIW06uIPpz4AehMxnAehGpjbZUE/bc/l2FYw0PUTFeex6+0yj
+	 rQWq28jIIe7dKcNypaQCMjji1yX9WWRTIEsCjc9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 249/414] wifi: mac80211_hwsim: Prevent tsf from setting if beacon is disabled
-Date: Mon, 23 Jun 2025 15:06:26 +0200
-Message-ID: <20250623130648.272700955@linuxfoundation.org>
+Subject: [PATCH 5.15 327/411] iommu/amd: Ensure GA log notifier callbacks finish running before module unload
+Date: Mon, 23 Jun 2025 15:07:51 +0200
+Message-ID: <20250623130641.874225490@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit c575f5374be7a5c4be4acb9fe6be3a4669d94674 ]
+[ Upstream commit 94c721ea03c7078163f41dbaa101ac721ddac329 ]
 
-Setting tsf is meaningless if beacon is disabled, so check that beacon
-is enabled before setting tsf.
+Synchronize RCU when unregistering KVM's GA log notifier to ensure all
+in-flight interrupt handlers complete before KVM-the module is unloaded.
 
-Reported-by: syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=064815c6cd721082a52a
-Tested-by: syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Link: https://patch.msgid.link/tencent_3609AC2EFAAED68CA5A7E3C6D212D1C67806@qq.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20250315031048.2374109-1-seanjc@google.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virtual/mac80211_hwsim.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iommu/amd/iommu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index 4a2b7c9921bc6..6fcc21f596ea7 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -1229,6 +1229,11 @@ static void mac80211_hwsim_set_tsf(struct ieee80211_hw *hw,
- 	/* MLD not supported here */
- 	u32 bcn_int = data->link_data[0].beacon_int;
- 	u64 delta = abs(tsf - now);
-+	struct ieee80211_bss_conf *conf;
-+
-+	conf = link_conf_dereference_protected(vif, data->link_data[0].link_id);
-+	if (conf && !conf->enable_beacon)
-+		return;
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 7d38cc5c04e68..714c78bf69db0 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -679,6 +679,14 @@ int amd_iommu_register_ga_log_notifier(int (*notifier)(u32))
+ {
+ 	iommu_ga_log_notifier = notifier;
  
- 	/* adjust after beaconing with new timestamp at old TBTT */
- 	if (tsf > now) {
++	/*
++	 * Ensure all in-flight IRQ handlers run to completion before returning
++	 * to the caller, e.g. to ensure module code isn't unloaded while it's
++	 * being executed in the IRQ handler.
++	 */
++	if (!notifier)
++		synchronize_rcu();
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL(amd_iommu_register_ga_log_notifier);
 -- 
 2.39.5
 
