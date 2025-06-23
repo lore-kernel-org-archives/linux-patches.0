@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58178219E0;
-	Mon, 23 Jun 2025 21:22:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFEAF219E0;
+	Mon, 23 Jun 2025 21:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713771; cv=none; b=Ce65DZq987tnUdJPa6BY5ONMamaIRr3i+DWnsSrXWDZ1mjeu1IaaIk7pR5XzS1pg57wT+dgerjYYY7OY9vpGcc/8WckXi1JSktcIqfUZbSwJDSGpWvbjSdEhSKm2Oa0gN+m0bhm98pRpdcJRrsEbiSd4n93S7CQE5ocERz4HdUA=
+	t=1750713773; cv=none; b=o0wiGCvyHzwUkazedkMq+HwbEpZ1jqm0IDCqctk+tkywtlEvaiLxLTCFm617eSBGrcuYvvvGOre+GB9EVgvU3+9dm8anzuRGvp2KmrpCOpru0XlwhcU3RL95ijSxv/k7R0gEzrqysu6PFNbnZr4haw9mmHcARW1QIp7SGJ34Cc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713771; c=relaxed/simple;
-	bh=L3SciUFHFghTX/sZwwCXwJfG09FUF6WOhfHWlzFBbuk=;
+	s=arc-20240116; t=1750713773; c=relaxed/simple;
+	bh=1G+GRYsZ3X5d3a0E1zyl6iH0+rmhNY6Qxs7oc30iI48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IfSimRH2khhcRHfHy1AUlpkzPaQ2UsUCK4XcGvLN0KCOv6VeEMOTDUvtpH6AtyBx/Bnnz/y8vYahrDSJ4as5emuK3QPINM5hnpzpVJDZR1gQ/fn7EdV/kypZcsGohIV8xO6fonGTyqgxxSy7wbELQgKoCmm15hu/EHMJG0xIC7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DtDirrNA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KN+txZHW3sxYPNfi1hbgWEs0u8sjHH6EsHL79jwUau4xFLGmfSVeXlGqMNgzNhhCEWemgnPGBQhkTMSujeAmKvS2snB+0CNzbwsr0yMTRSJDGuTb/sFpfPWlGjk/wqVkegR4dkynrJ+8LbA5gL1gc/c94WP6PSXTx1QQcus9A7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ANWsQjg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DtDirrNA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EA0C4CEEA;
-	Mon, 23 Jun 2025 21:22:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ANWsQjg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57313C4CEEA;
+	Mon, 23 Jun 2025 21:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713771;
-	bh=L3SciUFHFghTX/sZwwCXwJfG09FUF6WOhfHWlzFBbuk=;
+	s=korg; t=1750713773;
+	bh=1G+GRYsZ3X5d3a0E1zyl6iH0+rmhNY6Qxs7oc30iI48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DtDirrNAsZ6CQq9egmLzf165++ISAn5/58eMyGYm8bowXfDmG1zN0CLYDix0RWpaM
-	 Z5ttLDhcg6syo5LUIvMrjROfYAgUXAfobYo04yEyzE5xlAmgGpk7xztudT5nOSQMLq
-	 rUdXRxlwMuSLP2eMsYQMhNyVjTgDYkLxZv8ZiqPk=
+	b=1ANWsQjgV1tcKX2KRNLTECrjqu1c+fw7FdzR4LzSHlaCk157KWx2XWxEul5CV9ybb
+	 xeXS15exyzNJkt3sD9o4dKCqXSyTGJ/PdwP7awVL0Z0E4G9DrMqVNEBK7qIEkJPJvt
+	 tXvpMXjI1bwMtIcEgF9ueKmhcVqVOihHHMUDkUxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heimann <d@dmeh.net>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 166/411] ALSA: usb-audio: Add implicit feedback quirk for RODE AI-1
-Date: Mon, 23 Jun 2025 15:05:10 +0200
-Message-ID: <20250623130637.872987747@linuxfoundation.org>
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	kdevops@lists.linux.dev,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.10 185/355] ext4: fix calculation of credits for extent tree modification
+Date: Mon, 23 Jun 2025 15:06:26 +0200
+Message-ID: <20250623130632.246468701@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +51,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Heimann <d@dmeh.net>
+From: Jan Kara <jack@suse.cz>
 
-commit 6a3439a417b910e662c666993798e0691bc81147 upstream.
+commit 32a93f5bc9b9812fc710f43a4d8a6830f91e4988 upstream.
 
-The RODE AI-1 audio interface requires implicit feedback sync between
-playback endpoint 0x03 and feedback endpoint 0x84 on interface 3, but
-doesn't advertise this in its USB descriptors.
+Luis and David are reporting that after running generic/750 test for 90+
+hours on 2k ext4 filesystem, they are able to trigger a warning in
+jbd2_journal_dirty_metadata() complaining that there are not enough
+credits in the running transaction started in ext4_do_writepages().
 
-Without this quirk, the device receives audio data but produces no output.
+Indeed the code in ext4_do_writepages() is racy and the extent tree can
+change between the time we compute credits necessary for extent tree
+computation and the time we actually modify the extent tree. Thus it may
+happen that the number of credits actually needed is higher. Modify
+ext4_ext_index_trans_blocks() to count with the worst case of maximum
+tree depth. This can reduce the possible number of writers that can
+operate in the system in parallel (because the credit estimates now won't
+fit in one transaction) but for reasonably sized journals this shouldn't
+really be an issue. So just go with a safe and simple fix.
 
-Signed-off-by: David Heimann <d@dmeh.net>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/084dc88c-1193-4a94-a002-5599adff936c@app.fastmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/all/20250415013641.f2ppw6wov4kn4wq2@offworld
+Reported-by: Davidlohr Bueso <dave@stgolabs.net>
+Reported-by: Luis Chamberlain <mcgrof@kernel.org>
+Tested-by: kdevops@lists.linux.dev
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250429175535.23125-2-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/implicit.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/extents.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/sound/usb/implicit.c
-+++ b/sound/usb/implicit.c
-@@ -57,6 +57,7 @@ static const struct snd_usb_implicit_fb_
- 	IMPLICIT_FB_FIXED_DEV(0x31e9, 0x0002, 0x81, 2), /* Solid State Logic SSL2+ */
- 	IMPLICIT_FB_FIXED_DEV(0x0499, 0x172f, 0x81, 2), /* Steinberg UR22C */
- 	IMPLICIT_FB_FIXED_DEV(0x0d9a, 0x00df, 0x81, 2), /* RTX6001 */
-+	IMPLICIT_FB_FIXED_DEV(0x19f7, 0x000a, 0x84, 3), /* RODE AI-1 */
- 	IMPLICIT_FB_FIXED_DEV(0x22f0, 0x0006, 0x81, 3), /* Allen&Heath Qu-16 */
- 	IMPLICIT_FB_FIXED_DEV(0x1686, 0xf029, 0x82, 2), /* Zoom UAC-2 */
- 	IMPLICIT_FB_FIXED_DEV(0x2466, 0x8003, 0x86, 2), /* Fractal Audio Axe-Fx II */
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -2367,18 +2367,19 @@ int ext4_ext_calc_credits_for_single_ext
+ int ext4_ext_index_trans_blocks(struct inode *inode, int extents)
+ {
+ 	int index;
+-	int depth;
+ 
+ 	/* If we are converting the inline data, only one is needed here. */
+ 	if (ext4_has_inline_data(inode))
+ 		return 1;
+ 
+-	depth = ext_depth(inode);
+-
++	/*
++	 * Extent tree can change between the time we estimate credits and
++	 * the time we actually modify the tree. Assume the worst case.
++	 */
+ 	if (extents <= 1)
+-		index = depth * 2;
++		index = EXT4_MAX_EXTENT_DEPTH * 2;
+ 	else
+-		index = depth * 3;
++		index = EXT4_MAX_EXTENT_DEPTH * 3;
+ 
+ 	return index;
+ }
 
 
