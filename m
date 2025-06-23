@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FEF24DCF8;
-	Mon, 23 Jun 2025 13:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB61D24EA85;
+	Mon, 23 Jun 2025 13:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684225; cv=none; b=HvzSE/gx9MMO6wT2LZFtWWOlODh6CDsfsl4cf8Mm2f6Z1bzbpS8ytsb7ptm1EMk+VA24VtcBLVBpmmT+LmNfUxWl7T1bwU4vZAP2hUUX8XifaU/R1wAKeZEiPFjOgL01LB2RMWTIBlk7rt1dkuC23wy+X+V4C8tV5hjrt7NyKvo=
+	t=1750684289; cv=none; b=X+Xpyz7nFyuvq8smLrpSnTZR50wq97YyOIt4K2SfXH/UEfltreF2wpK7kH4gno0kF5seSZLemM9QQnzmsWAeoLxsTfabxSL5nwghbzPUpjSXgRIERHz17UHUMlCB3Ijm/lekcpNE/P++6YQg0ozwM97wq9kNtOR2+d7n5N6qjSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684225; c=relaxed/simple;
-	bh=x9LF2UGngbEuRUMjfZNVqN9CD33xUGK+MUN6p8tz8nw=;
+	s=arc-20240116; t=1750684289; c=relaxed/simple;
+	bh=LI5dq8veMhtKHaAl4w9eTzv+uWiO2Ds3/PWNV6XP6AY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rExy7qZcT3iv3yAvzeTa8tqc1yED1qxrEHkiOJH3u1jm8VEJhsscLrVw4DCycXaM9g85BnW/lAJEs/aTl3HRxInpyZ49ZtGCjxveMBbHR2WonfB16/wgN6t2dO8Ol4QZbYY1ydMbuWdKlegQ+DPFNAKnY0DGDe1YjHI6zsJEz3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbP2OgM6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ooIgyFLdFBc+ivDNvLaryjK9xa8wpTUJ0ncFN5WQ0FD5yNllxdvGFr+sMcWeR4rWRPoQkxPtdoVlLY9OPN4+s5upZfXaZ4ZRaQsxoPam6HrJHZpzFE2MmuL0qp9HJ9AgwyAkZ5fkharJSJyK5by2Wn1oOa6Y+3Xh6+BBFsHZNNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1fPIETS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbP2OgM6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6673C4CEEA;
-	Mon, 23 Jun 2025 13:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1fPIETS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A2DC4CEEA;
+	Mon, 23 Jun 2025 13:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684225;
-	bh=x9LF2UGngbEuRUMjfZNVqN9CD33xUGK+MUN6p8tz8nw=;
+	s=korg; t=1750684289;
+	bh=LI5dq8veMhtKHaAl4w9eTzv+uWiO2Ds3/PWNV6XP6AY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GbP2OgM6p2Hz6CzWECKRgTrZV3nlvhSPRIqZmJ1cIjbY5OAYJD4QKuJmDPC/Yy+pI
-	 kbD1rpIYBv3ryBsANV67gkmD9Vm8SPpraImv3pjb6KkwlXz6+BxlRSZ5y+9eIWgCZa
-	 8EPSxKsGVr9PbuPQ7MH/rFnOsbGapNf+QLhuOtWU=
+	b=c1fPIETSLHLWJxbRJJiUVkzCNwwYfk9w2HG+K2Q+cOLWJB4rr3hX2bZciVVWEJ1fr
+	 6RBLdBkvUgBQUkde0p4pkMmb52MCPYmD03xW1vw9z1MfGzPLFnHabzndmp6Czx6/f2
+	 XH59DYyNRe0UJBLbps/ylFAEu15PRDFFlGpVWHwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaus Kudielka <klaus.kudielka@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 002/414] crypto: marvell/cesa - Do not chain submitted requests
-Date: Mon, 23 Jun 2025 15:02:19 +0200
-Message-ID: <20250623130642.081914770@linuxfoundation.org>
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Alexander Aring <aahringo@redhat.com>
+Subject: [PATCH 6.15 004/592] gfs2: move msleep to sleepable context
+Date: Mon, 23 Jun 2025 14:59:22 +0200
+Message-ID: <20250623130700.324300470@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,160 +46,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit 0413bcf0fc460a68a2a7a8354aee833293d7d693 upstream.
+commit ac5ee087d31ed93b6e45d2968a66828c6f621d8c upstream.
 
-This driver tries to chain requests together before submitting them
-to hardware in order to reduce completion interrupts.
+This patch moves the msleep_interruptible() out of the non-sleepable
+context by moving the ls->ls_recover_spin spinlock around so
+msleep_interruptible() will be called in a sleepable context.
 
-However, it even extends chains that have already been submitted
-to hardware.  This is dangerous because there is no way of knowing
-whether the hardware has already read the DMA memory in question
-or not.
-
-Fix this by splitting the chain list into two.  One for submitted
-requests and one for requests that have not yet been submitted.
-Only extend the latter.
-
-Reported-by: Klaus Kudielka <klaus.kudielka@gmail.com>
-Fixes: 85030c5168f1 ("crypto: marvell - Add support for chaining crypto requests in TDMA mode")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: stable@vger.kernel.org
+Fixes: 4a7727725dc7 ("GFS2: Fix recovery issues for spectators")
+Suggested-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/marvell/cesa/cesa.c |    2 -
- drivers/crypto/marvell/cesa/cesa.h |    9 ++++--
- drivers/crypto/marvell/cesa/tdma.c |   53 ++++++++++++++++++++++---------------
- 3 files changed, 39 insertions(+), 25 deletions(-)
+ fs/gfs2/lock_dlm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/crypto/marvell/cesa/cesa.c
-+++ b/drivers/crypto/marvell/cesa/cesa.c
-@@ -94,7 +94,7 @@ static int mv_cesa_std_process(struct mv
- 
- static int mv_cesa_int_process(struct mv_cesa_engine *engine, u32 status)
- {
--	if (engine->chain.first && engine->chain.last)
-+	if (engine->chain_hw.first && engine->chain_hw.last)
- 		return mv_cesa_tdma_process(engine, status);
- 
- 	return mv_cesa_std_process(engine, status);
---- a/drivers/crypto/marvell/cesa/cesa.h
-+++ b/drivers/crypto/marvell/cesa/cesa.h
-@@ -440,8 +440,10 @@ struct mv_cesa_dev {
-  *			SRAM
-  * @queue:		fifo of the pending crypto requests
-  * @load:		engine load counter, useful for load balancing
-- * @chain:		list of the current tdma descriptors being processed
-- *			by this engine.
-+ * @chain_hw:		list of the current tdma descriptors being processed
-+ *			by the hardware.
-+ * @chain_sw:		list of the current tdma descriptors that will be
-+ *			submitted to the hardware.
-  * @complete_queue:	fifo of the processed requests by the engine
-  *
-  * Structure storing CESA engine information.
-@@ -463,7 +465,8 @@ struct mv_cesa_engine {
- 	struct gen_pool *pool;
- 	struct crypto_queue queue;
- 	atomic_t load;
--	struct mv_cesa_tdma_chain chain;
-+	struct mv_cesa_tdma_chain chain_hw;
-+	struct mv_cesa_tdma_chain chain_sw;
- 	struct list_head complete_queue;
- 	int irq;
- };
---- a/drivers/crypto/marvell/cesa/tdma.c
-+++ b/drivers/crypto/marvell/cesa/tdma.c
-@@ -38,6 +38,15 @@ void mv_cesa_dma_step(struct mv_cesa_req
- {
- 	struct mv_cesa_engine *engine = dreq->engine;
- 
-+	spin_lock_bh(&engine->lock);
-+	if (engine->chain_sw.first == dreq->chain.first) {
-+		engine->chain_sw.first = NULL;
-+		engine->chain_sw.last = NULL;
-+	}
-+	engine->chain_hw.first = dreq->chain.first;
-+	engine->chain_hw.last = dreq->chain.last;
-+	spin_unlock_bh(&engine->lock);
-+
- 	writel_relaxed(0, engine->regs + CESA_SA_CFG);
- 
- 	mv_cesa_set_int_mask(engine, CESA_SA_INT_ACC0_IDMA_DONE);
-@@ -96,25 +105,27 @@ void mv_cesa_dma_prepare(struct mv_cesa_
- void mv_cesa_tdma_chain(struct mv_cesa_engine *engine,
- 			struct mv_cesa_req *dreq)
- {
--	if (engine->chain.first == NULL && engine->chain.last == NULL) {
--		engine->chain.first = dreq->chain.first;
--		engine->chain.last  = dreq->chain.last;
--	} else {
--		struct mv_cesa_tdma_desc *last;
-+	struct mv_cesa_tdma_desc *last = engine->chain_sw.last;
- 
--		last = engine->chain.last;
-+	/*
-+	 * Break the DMA chain if the request being queued needs the IV
-+	 * regs to be set before lauching the request.
-+	 */
-+	if (!last || dreq->chain.first->flags & CESA_TDMA_SET_STATE)
-+		engine->chain_sw.first = dreq->chain.first;
-+	else {
- 		last->next = dreq->chain.first;
--		engine->chain.last = dreq->chain.last;
--
--		/*
--		 * Break the DMA chain if the CESA_TDMA_BREAK_CHAIN is set on
--		 * the last element of the current chain, or if the request
--		 * being queued needs the IV regs to be set before lauching
--		 * the request.
--		 */
--		if (!(last->flags & CESA_TDMA_BREAK_CHAIN) &&
--		    !(dreq->chain.first->flags & CESA_TDMA_SET_STATE))
--			last->next_dma = cpu_to_le32(dreq->chain.first->cur_dma);
-+		last->next_dma = cpu_to_le32(dreq->chain.first->cur_dma);
-+	}
-+	last = dreq->chain.last;
-+	engine->chain_sw.last = last;
-+	/*
-+	 * Break the DMA chain if the CESA_TDMA_BREAK_CHAIN is set on
-+	 * the last element of the current chain.
-+	 */
-+	if (last->flags & CESA_TDMA_BREAK_CHAIN) {
-+		engine->chain_sw.first = NULL;
-+		engine->chain_sw.last = NULL;
+--- a/fs/gfs2/lock_dlm.c
++++ b/fs/gfs2/lock_dlm.c
+@@ -996,14 +996,15 @@ locks_done:
+ 		if (sdp->sd_args.ar_spectator) {
+ 			fs_info(sdp, "Recovery is required. Waiting for a "
+ 				"non-spectator to mount.\n");
++			spin_unlock(&ls->ls_recover_spin);
+ 			msleep_interruptible(1000);
+ 		} else {
+ 			fs_info(sdp, "control_mount wait1 block %u start %u "
+ 				"mount %u lvb %u flags %lx\n", block_gen,
+ 				start_gen, mount_gen, lvb_gen,
+ 				ls->ls_recover_flags);
++			spin_unlock(&ls->ls_recover_spin);
+ 		}
+-		spin_unlock(&ls->ls_recover_spin);
+ 		goto restart;
  	}
- }
  
-@@ -127,7 +138,7 @@ int mv_cesa_tdma_process(struct mv_cesa_
- 
- 	tdma_cur = readl(engine->regs + CESA_TDMA_CUR);
- 
--	for (tdma = engine->chain.first; tdma; tdma = next) {
-+	for (tdma = engine->chain_hw.first; tdma; tdma = next) {
- 		spin_lock_bh(&engine->lock);
- 		next = tdma->next;
- 		spin_unlock_bh(&engine->lock);
-@@ -149,12 +160,12 @@ int mv_cesa_tdma_process(struct mv_cesa_
- 								 &backlog);
- 
- 			/* Re-chaining to the next request */
--			engine->chain.first = tdma->next;
-+			engine->chain_hw.first = tdma->next;
- 			tdma->next = NULL;
- 
- 			/* If this is the last request, clear the chain */
--			if (engine->chain.first == NULL)
--				engine->chain.last  = NULL;
-+			if (engine->chain_hw.first == NULL)
-+				engine->chain_hw.last  = NULL;
- 			spin_unlock_bh(&engine->lock);
- 
- 			ctx = crypto_tfm_ctx(req->tfm);
 
 
