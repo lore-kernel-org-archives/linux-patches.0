@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3A6B676;
-	Mon, 23 Jun 2025 22:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04698219A7A;
+	Mon, 23 Jun 2025 22:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717089; cv=none; b=a0lGpUzt3Q7meo1TvqoftXN+BgBH2YrCDX8HFbpgqBvLMVwhVxn+PaUIIFaQ8unbPtNcq6eu4FbQjPIkEZ3VednRJoQ2coW8FNbTu3b//6HsTX0xv9HYT7EKrIEOwHunF/eb3u+NNb+Yqw8Q9jo7+fizkf+qCxKBKyKpK0JSep0=
+	t=1750717092; cv=none; b=rIhTKZ5rb4bjZdTI37bMCdVHZrdMrcIHIFxE+WWcBgPMiRXQWKbFUQwA0crga7sa4yR7CXotFWBuxbX2Dthb0nCBrfkUgtTG3NuY4XK7WQkft4TGcpsRkFdCZiCN3L231F4pXSRqCsnGqZLOTxT/kPJNzU/Aj/HiLgtIRg3OX7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717089; c=relaxed/simple;
-	bh=o580l8T7lFNvRe++amhizN7BGUKSFg66vM7rvxgtF70=;
+	s=arc-20240116; t=1750717092; c=relaxed/simple;
+	bh=OD95Ek5XtsoXt/OwTwAcpDjSwxWGmy7soAVetVmJn2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JYEwcXavC4reblLlEZDSfE3RIX7i6YLHq56KbhMSNTZLtK3HKmGZ+5NCUN5Qd4qXHFeoZDYXK3mXCin2oKCHMGDWAYabuveN0OGNEQ0IXcShNq2FWr38n5iBYPYDl/VIT6eTBazmrPo8Um8jEexvrlFBdtbM0H+mwS1Q88Ay4v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5CLPhNJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sumc0aLcZOYgdI5EA5tguwgh+ruyQRo8PTs3i/EtmQHE3pdu5ZXhmSpKgMm/527LDAwqLxNf4NOFm9+IDjpHtAKnoRK7x+0CNshrITORC/ylmkhKN0cay/YZCOZKtvPxOCith7LbRf0xQCSFcSMYZ5ATzmh93thIHMbXsTtZioU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAszIsIh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5CLPhNJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CE3C4CEEA;
-	Mon, 23 Jun 2025 22:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAszIsIh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DAEC4CEEA;
+	Mon, 23 Jun 2025 22:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717089;
-	bh=o580l8T7lFNvRe++amhizN7BGUKSFg66vM7rvxgtF70=;
+	s=korg; t=1750717091;
+	bh=OD95Ek5XtsoXt/OwTwAcpDjSwxWGmy7soAVetVmJn2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t5CLPhNJxw2Lv/7EukHleHzG8Zc5VArdXliCppEx/aFfhL30o0+qKdPsNcxLb9XYJ
-	 03jsXN+pzbqq1TikIavWVFvHjq4t2KFxlSqyijMC5O/xgqIYTib8pAqfNqIsnan/Cb
-	 gjETJ/fwR8maOwE/DRdOCRcZW1v7/TwL/drytCds=
+	b=bAszIsIheZQF2UYyELsfP9EA6gETFHmYFIWyTkDXt6LH512MVVIlqQkcoy7x7jHih
+	 Ql3uOQopRZzYJiKsjTzREX/71DiyLtJ5SMWJCvAhpgNgYRrjOFrI7xxB8lmhz3KoPz
+	 ibp+bkMU/eUdEueuEnLFPZRjUCN738abnk9in3xQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 365/508] cifs: reset connections for all channels when reconnect requested
-Date: Mon, 23 Jun 2025 15:06:50 +0200
-Message-ID: <20250623130654.339885860@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.12 323/414] sched_ext, sched/core: Dont call scx_group_set_weight() prematurely from sched_create_group()
+Date: Mon, 23 Jun 2025 15:07:40 +0200
+Message-ID: <20250623130650.069669098@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +45,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Tejun Heo <tj@kernel.org>
 
-commit 1f396b9bfe39aaf55ea74a7005806164b236653d upstream.
+commit 33796b91871ad4010c8188372dd1faf97cf0f1c0 upstream.
 
-cifs_reconnect can be called with a flag to mark the session as needing
-reconnect too. When this is done, we expect the connections of all
-channels to be reconnected too, which is not happening today.
+During task_group creation, sched_create_group() calls
+scx_group_set_weight() with CGROUP_WEIGHT_DFL to initialize the sched_ext
+portion. This is premature and ends up calling ops.cgroup_set_weight() with
+an incorrect @cgrp before ops.cgroup_init() is called.
 
-Without doing this, we have seen bad things happen when primary and
-secondary channels are connected to different servers (in case of cloud
-services like Azure Files SMB).
+sched_create_group() should just initialize SCX related fields in the new
+task_group. Fix it by factoring out scx_tg_init() from sched_init() and
+making sched_create_group() call that function instead of
+scx_group_set_weight().
 
-This change would force all connections to reconnect as well, not just
-the sessions and tcons.
+v2: Retain CONFIG_EXT_GROUP_SCHED ifdef in sched_init() as removing it leads
+    to build failures on !CONFIG_GROUP_SCHED configs.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 819513666966 ("sched_ext: Add cgroup support")
+Cc: stable@vger.kernel.org # v6.12+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/sched/core.c |    4 ++--
+ kernel/sched/ext.c  |    5 +++++
+ kernel/sched/ext.h  |    2 ++
+ 3 files changed, 9 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -410,6 +410,13 @@ static int __cifs_reconnect(struct TCP_S
- 	if (!cifs_tcp_ses_needs_reconnect(server, 1))
- 		return 0;
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -8423,7 +8423,7 @@ void __init sched_init(void)
+ 		init_cfs_bandwidth(&root_task_group.cfs_bandwidth, NULL);
+ #endif /* CONFIG_FAIR_GROUP_SCHED */
+ #ifdef CONFIG_EXT_GROUP_SCHED
+-		root_task_group.scx_weight = CGROUP_WEIGHT_DFL;
++		scx_tg_init(&root_task_group);
+ #endif /* CONFIG_EXT_GROUP_SCHED */
+ #ifdef CONFIG_RT_GROUP_SCHED
+ 		root_task_group.rt_se = (struct sched_rt_entity **)ptr;
+@@ -8863,7 +8863,7 @@ struct task_group *sched_create_group(st
+ 	if (!alloc_rt_sched_group(tg, parent))
+ 		goto err;
  
-+	/*
-+	 * if smb session has been marked for reconnect, also reconnect all
-+	 * connections. This way, the other connections do not end up bad.
-+	 */
-+	if (mark_smb_session)
-+		cifs_signal_cifsd_for_reconnect(server, mark_smb_session);
+-	scx_group_set_weight(tg, CGROUP_WEIGHT_DFL);
++	scx_tg_init(tg);
+ 	alloc_uclamp_sched_group(tg, parent);
+ 
+ 	return tg;
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -3918,6 +3918,11 @@ static void scx_cgroup_warn_missing_idle
+ 	cgroup_warned_missing_idle = true;
+ }
+ 
++void scx_tg_init(struct task_group *tg)
++{
++	tg->scx_weight = CGROUP_WEIGHT_DFL;
++}
 +
- 	cifs_mark_tcp_ses_conns_for_reconnect(server, mark_smb_session);
+ int scx_tg_online(struct task_group *tg)
+ {
+ 	int ret = 0;
+--- a/kernel/sched/ext.h
++++ b/kernel/sched/ext.h
+@@ -70,6 +70,7 @@ static inline void scx_update_idle(struc
  
- 	cifs_abort_connection(server);
+ #ifdef CONFIG_CGROUP_SCHED
+ #ifdef CONFIG_EXT_GROUP_SCHED
++void scx_tg_init(struct task_group *tg);
+ int scx_tg_online(struct task_group *tg);
+ void scx_tg_offline(struct task_group *tg);
+ int scx_cgroup_can_attach(struct cgroup_taskset *tset);
+@@ -79,6 +80,7 @@ void scx_cgroup_cancel_attach(struct cgr
+ void scx_group_set_weight(struct task_group *tg, unsigned long cgrp_weight);
+ void scx_group_set_idle(struct task_group *tg, bool idle);
+ #else	/* CONFIG_EXT_GROUP_SCHED */
++static inline void scx_tg_init(struct task_group *tg) {}
+ static inline int scx_tg_online(struct task_group *tg) { return 0; }
+ static inline void scx_tg_offline(struct task_group *tg) {}
+ static inline int scx_cgroup_can_attach(struct cgroup_taskset *tset) { return 0; }
 
 
