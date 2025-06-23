@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B50252912;
-	Mon, 23 Jun 2025 13:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F27347DD;
+	Mon, 23 Jun 2025 13:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685813; cv=none; b=eNMiWOuPEkT4s9/KpbpmCXb+Fj4moC64v5ycgQkXqnBt7Q+xoG2NQQngLjIXu8KVIeEXR4xt/mkYdlfsXfh0TD3OGw6wl2a59zw5qAwamtvXL2LMBPe0fcSCk6nm48hxqeUKA40tdjwR2U40Rrsisiks37kfBRzuOdehgSpls8s=
+	t=1750685815; cv=none; b=do35SHudypJBrOpVk4K6NjcMvZFm+LlEbuJrvYn82ukAX9PFi+uxo5daBlrd9qDBn88CYcPAtOBQmQ3rmP5w6DpzDlqaD3lxj94Gw/WxyQAnQvb968r6WO3DZ9tOG+bSJQtMHIER+5DJLj43RgNAGJ6gAjskq0CPMhImcPEscmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685813; c=relaxed/simple;
-	bh=WF+wQxVwYxf0ZvZBFIP1BC9oVu1cUr9fU/xu2924X2Y=;
+	s=arc-20240116; t=1750685815; c=relaxed/simple;
+	bh=oWrM8XoJCxVm2pT2GVkwzy/enFRaiBryTSdr0+pZAEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uqv5hpjMpKae2BHW5N/XPE4BJWDHEK6Cx9DMdzVVMUg0ZWunYlu50GzoO5P+BeC6wrau1Yeiv+XDZmhtm6hegyojljfEFOtAhdKIaquWlt9bEze1qOOlx/4xGzz1lq9t/E3kd2iM2jm5l3+bwIK+9lpcekxM7LBnxe7p9mlL7n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l56Cbjw1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YggyvBN61JEHQAsqghGe2KrpteuliF1A6DlwRsnMDaoF80hhJyuz3NLLFtUVtmpVeJSTzClOqVnCXRoptTg8+T46JPknJmkBaDgMBgPQiZSHPVQ6H/ohFwCZKEkS4OGfHLyLrb50RWYvWvF2SYFbOpKxrqcuc00gzad1BMubrOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uteMBFRn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l56Cbjw1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826F9C4CEEA;
-	Mon, 23 Jun 2025 13:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uteMBFRn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1345FC4CEEA;
+	Mon, 23 Jun 2025 13:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685812;
-	bh=WF+wQxVwYxf0ZvZBFIP1BC9oVu1cUr9fU/xu2924X2Y=;
+	s=korg; t=1750685815;
+	bh=oWrM8XoJCxVm2pT2GVkwzy/enFRaiBryTSdr0+pZAEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l56Cbjw1KGGcr6mBdAB5AnMOabed/ClxZXQt5q/oOcCbv8eWhPcDGeJ3IRfx2Doij
-	 FpdKNXG3iOhWmHfN8Z3pLrVUefRGgAdhinI17OfddiKxHl5O9wBCzYgnAbubAfk5ue
-	 mPmYFgExclWsBvNM8Z4yu3emXk+xpqct3g1vThbA=
+	b=uteMBFRnkdxnHXCI8e0NH4xc62DpNvNJDRg6bH3kz7f2dGD8vqOeot1cHt1AaXxDt
+	 5K34XtnTUSEInoVoyrYq144cxaeNdARZbjFQGMBcZwjOp6WX2NWMTMH4qCJL0984JX
+	 WQWqilEYK7fqZ7TfiJZhCyeAL1dH8uxp4ejgI+0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <Christian.Koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Shashank Sharma <shashank.sharma@amd.com>,
-	Arvind Yadav <arvind.yadav@amd.com>,
+	Stone Zhang <quic_stonez@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 286/592] drm/amdgpu: fix MES GFX mask
-Date: Mon, 23 Jun 2025 15:04:04 +0200
-Message-ID: <20250623130707.160010828@linuxfoundation.org>
+Subject: [PATCH 6.1 053/508] wifi: ath11k: fix node corruption in ar->arvifs list
+Date: Mon, 23 Jun 2025 15:01:38 +0200
+Message-ID: <20250623130646.550473369@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,133 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arvind Yadav <Arvind.Yadav@amd.com>
+From: Stone Zhang <quic_stonez@quicinc.com>
 
-[ Upstream commit 9d3afcb7b9f950b9b7c58ceeeb9e71f3476e69ed ]
+[ Upstream commit 31e98e277ae47f56632e4d663b1d4fd12ba33ea8 ]
 
-Current MES GFX mask prevents FW to enable oversubscription. This patch
-does the following:
-- Fixes the mask values and adds a description for the same
-- Removes the central mask setup and makes it IP specific, as it would
-  be different when the number of pipes and queues are different.
+In current WLAN recovery code flow, ath11k_core_halt() only
+reinitializes the "arvifs" list head. This will cause the
+list node immediately following the list head to become an
+invalid list node. Because the prev of that node still points
+to the list head "arvifs", but the next of the list head "arvifs"
+no longer points to that list node.
 
-v2: squash in fix from Shashank
+When a WLAN recovery occurs during the execution of a vif
+removal, and it happens before the spin_lock_bh(&ar->data_lock)
+in ath11k_mac_op_remove_interface(), list_del() will detect the
+previously mentioned situation, thereby triggering a kernel panic.
 
-Cc: Christian König <Christian.Koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Shashank Sharma <shashank.sharma@amd.com>
-Signed-off-by: Arvind Yadav <arvind.yadav@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The fix is to remove and reinitialize all vif list nodes from the
+list head "arvifs" during WLAN halt. The reinitialization is to make
+the list nodes valid, ensuring that the list_del() in
+ath11k_mac_op_remove_interface() can execute normally.
+
+Call trace:
+__list_del_entry_valid_or_report+0xb8/0xd0
+ath11k_mac_op_remove_interface+0xb0/0x27c [ath11k]
+drv_remove_interface+0x48/0x194 [mac80211]
+ieee80211_do_stop+0x6e0/0x844 [mac80211]
+ieee80211_stop+0x44/0x17c [mac80211]
+__dev_close_many+0xac/0x150
+__dev_change_flags+0x194/0x234
+dev_change_flags+0x24/0x6c
+devinet_ioctl+0x3a0/0x670
+inet_ioctl+0x200/0x248
+sock_do_ioctl+0x60/0x118
+sock_ioctl+0x274/0x35c
+__arm64_sys_ioctl+0xac/0xf0
+invoke_syscall+0x48/0x114
+...
+
+Tested-on: QCA6698AQ hw2.1 PCI WLAN.HSP.1.1-04591-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Stone Zhang <quic_stonez@quicinc.com>
+Link: https://patch.msgid.link/20250320053145.3445187-1-quic_stonez@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c |  3 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h |  2 +-
- drivers/gpu/drm/amd/amdgpu/mes_v11_0.c  | 15 +++++++++++++--
- drivers/gpu/drm/amd/amdgpu/mes_v12_0.c  | 15 ++++++++++++---
- 4 files changed, 26 insertions(+), 9 deletions(-)
+ drivers/net/wireless/ath/ath11k/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-index fb212f0a1136a..5590ad5e8cd76 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-@@ -150,9 +150,6 @@ int amdgpu_mes_init(struct amdgpu_device *adev)
- 		adev->mes.compute_hqd_mask[i] = 0xc;
- 	}
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index 893fefadbba96..ef269244fe495 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -1621,6 +1621,7 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
+ void ath11k_core_halt(struct ath11k *ar)
+ {
+ 	struct ath11k_base *ab = ar->ab;
++	struct list_head *pos, *n;
  
--	for (i = 0; i < AMDGPU_MES_MAX_GFX_PIPES; i++)
--		adev->mes.gfx_hqd_mask[i] = i ? 0 : 0xfffffffe;
--
- 	for (i = 0; i < AMDGPU_MES_MAX_SDMA_PIPES; i++) {
- 		if (i >= adev->sdma.num_instances)
- 			break;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
-index da2c9a8cb3e01..52dd54a32fb47 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
-@@ -111,8 +111,8 @@ struct amdgpu_mes {
+ 	lockdep_assert_held(&ar->conf_mutex);
  
- 	uint32_t                        vmid_mask_gfxhub;
- 	uint32_t                        vmid_mask_mmhub;
--	uint32_t                        compute_hqd_mask[AMDGPU_MES_MAX_COMPUTE_PIPES];
- 	uint32_t                        gfx_hqd_mask[AMDGPU_MES_MAX_GFX_PIPES];
-+	uint32_t                        compute_hqd_mask[AMDGPU_MES_MAX_COMPUTE_PIPES];
- 	uint32_t                        sdma_hqd_mask[AMDGPU_MES_MAX_SDMA_PIPES];
- 	uint32_t                        aggregated_doorbells[AMDGPU_MES_PRIORITY_NUM_LEVELS];
- 	uint32_t                        sch_ctx_offs[AMDGPU_MAX_MES_PIPES];
-diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-index 480283da18454..821c9baf5baa6 100644
---- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-@@ -669,6 +669,18 @@ static int mes_v11_0_misc_op(struct amdgpu_mes *mes,
- 			offsetof(union MESAPI__MISC, api_status));
+@@ -1635,7 +1636,12 @@ void ath11k_core_halt(struct ath11k *ar)
+ 
+ 	rcu_assign_pointer(ab->pdevs_active[ar->pdev_idx], NULL);
+ 	synchronize_rcu();
+-	INIT_LIST_HEAD(&ar->arvifs);
++
++	spin_lock_bh(&ar->data_lock);
++	list_for_each_safe(pos, n, &ar->arvifs)
++		list_del_init(pos);
++	spin_unlock_bh(&ar->data_lock);
++
+ 	idr_init(&ar->txmgmt_idr);
  }
  
-+static void mes_v11_0_set_gfx_hqd_mask(union MESAPI_SET_HW_RESOURCES *pkt)
-+{
-+	/*
-+	 * GFX pipe 0 queue 0 is being used by Kernel queue.
-+	 * Set GFX pipe 0 queue 1 for MES scheduling
-+	 * mask = 10b
-+	 * GFX pipe 1 can't be used for MES due to HW limitation.
-+	 */
-+	pkt->gfx_hqd_mask[0] = 0x2;
-+	pkt->gfx_hqd_mask[1] = 0;
-+}
-+
- static int mes_v11_0_set_hw_resources(struct amdgpu_mes *mes)
- {
- 	int i;
-@@ -693,8 +705,7 @@ static int mes_v11_0_set_hw_resources(struct amdgpu_mes *mes)
- 		mes_set_hw_res_pkt.compute_hqd_mask[i] =
- 			mes->compute_hqd_mask[i];
- 
--	for (i = 0; i < MAX_GFX_PIPES; i++)
--		mes_set_hw_res_pkt.gfx_hqd_mask[i] = mes->gfx_hqd_mask[i];
-+	mes_v11_0_set_gfx_hqd_mask(&mes_set_hw_res_pkt);
- 
- 	for (i = 0; i < MAX_SDMA_PIPES; i++)
- 		mes_set_hw_res_pkt.sdma_hqd_mask[i] = mes->sdma_hqd_mask[i];
-diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-index 624c6b4e452c8..7984ebda5b8bf 100644
---- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-@@ -694,6 +694,17 @@ static int mes_v12_0_set_hw_resources_1(struct amdgpu_mes *mes, int pipe)
- 			offsetof(union MESAPI_SET_HW_RESOURCES_1, api_status));
- }
- 
-+static void mes_v12_0_set_gfx_hqd_mask(union MESAPI_SET_HW_RESOURCES *pkt)
-+{
-+	/*
-+	 * GFX V12 has only one GFX pipe, but 8 queues in it.
-+	 * GFX pipe 0 queue 0 is being used by Kernel queue.
-+	 * Set GFX pipe 0 queue 1-7 for MES scheduling
-+	 * mask = 1111 1110b
-+	 */
-+	pkt->gfx_hqd_mask[0] = 0xFE;
-+}
-+
- static int mes_v12_0_set_hw_resources(struct amdgpu_mes *mes, int pipe)
- {
- 	int i;
-@@ -716,9 +727,7 @@ static int mes_v12_0_set_hw_resources(struct amdgpu_mes *mes, int pipe)
- 			mes_set_hw_res_pkt.compute_hqd_mask[i] =
- 				mes->compute_hqd_mask[i];
- 
--		for (i = 0; i < MAX_GFX_PIPES; i++)
--			mes_set_hw_res_pkt.gfx_hqd_mask[i] =
--				mes->gfx_hqd_mask[i];
-+		mes_v12_0_set_gfx_hqd_mask(&mes_set_hw_res_pkt);
- 
- 		for (i = 0; i < MAX_SDMA_PIPES; i++)
- 			mes_set_hw_res_pkt.sdma_hqd_mask[i] =
 -- 
 2.39.5
 
