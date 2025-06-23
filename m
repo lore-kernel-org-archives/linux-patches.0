@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5355219E0;
-	Mon, 23 Jun 2025 21:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D862628C;
+	Mon, 23 Jun 2025 21:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713779; cv=none; b=b9h8U8rJoUt4VD+YuQFCDBnOEjH+dHnZQugCp1BiaGjY3yBSX7asRL+783WFs8a/Uwa7th5MYS41H3lZ3CXnJLYowUoCgaDW23XJZvI8pUMvQZrq9fC1syX8yK82LfWlNr0Un8AsxJSzwVTEJALRtzyxV6Kij5r4eooVzarluEo=
+	t=1750713781; cv=none; b=hWs0m6nW6fifOT+GgS3zyjgY00V/b/gmx8DJ2BDq0Bmrvk6OVaW3MI1MaIxkFAfuMOCVLUl0AU9LO4MwjV35TlSA5omcR5eTeZztV0rFYfUaCuiNMgx8fhGykxjuFMUChBv8laWXxQtfD9dvXbLMGBob/bpL3cj+F0m73eUZQHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713779; c=relaxed/simple;
-	bh=FIxI+W29N8/A/MWDBcJecy8Y6mRSR+3MQ4Kvfxcy8JI=;
+	s=arc-20240116; t=1750713781; c=relaxed/simple;
+	bh=bNo6Q/Kl+EZgRz5zFiov81yNQUFscwuY8+BExovazMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pr7ToTOAn007Ur22qS8awdGy5q78dR+htfWdsfR9ElJreu7CEfiWC+ZKz8iR9ajYPbOgj4PX7jzn3ZVX5F0mENdEQWr//9Jp7ruYZRlaQWTPSI+4LMGmk7H7ITXd/brZNJCQoT5eEVopfnsHrvGNIUB2l872gilPSoMYs5+l5d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHggzuQw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y4mRBhFAmmRUHkFVlsb05EQaNuJ6ZGD1+8Y+j90jqEPweuS1QiYV5UWvAXF4pFQxSEuuGr1BNyCIyn0jkN+mJnygqif7/b+9ai7cf17S9pYLbrrQw3t1D9uLOjZmObUonr6lKV/+ZnlDwRO2GXT/dIqg35HIIepXTaSVD3snVec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6diXQf9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHggzuQw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3625DC4CEEA;
-	Mon, 23 Jun 2025 21:22:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6diXQf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5787C4CEF0;
+	Mon, 23 Jun 2025 21:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713778;
-	bh=FIxI+W29N8/A/MWDBcJecy8Y6mRSR+3MQ4Kvfxcy8JI=;
+	s=korg; t=1750713781;
+	bh=bNo6Q/Kl+EZgRz5zFiov81yNQUFscwuY8+BExovazMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHggzuQwBYwotcC0wa0zKk61zk6YIp+c7JGHTO+AiIOKKhFR2eqv9wh+imunpFpJz
-	 o4IBtpS4I4wizmWZAahS54+SyUAsbvGqpQK4qjCK2b7suBKWf2YVQdDt4URl1LlYP5
-	 BfvXRx3XZJB+YkPcyWlUURTgiFpUDeVZf+8kf8U0=
+	b=w6diXQf906kaeWDPAZM2clST8BXs3Z/9EKS/yRFJ5H7ePYGXf8U6M9a2xP880IUQo
+	 q1FQBxJEsfck/G7ymL4LMBReQDCi/uP9uaayIE3EPekngbJHCPYuE4sIhgOOGbIClN
+	 fi60g8rogPdgU1H8OVu+RoU673dRZvAKfFENJCf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@linaro.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 146/508] perf tests switch-tracking: Fix timestamp comparison
-Date: Mon, 23 Jun 2025 15:03:11 +0200
-Message-ID: <20250623130648.876740360@linuxfoundation.org>
+Subject: [PATCH 6.15 365/592] wifi: iwlwifi: mld: call thermal exit without wiphy lock held
+Date: Mon, 23 Jun 2025 15:05:23 +0200
+Message-ID: <20250623130709.124320241@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,104 +48,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 628e124404b3db5e10e17228e680a2999018ab33 ]
+[ Upstream commit 83128399f3b4926ab73ce8e5081ce6595e9230e9 ]
 
-The test might fail on the Arm64 platform with the error:
+The driver must not hold the wiphy mutex when unregistering the thermal
+devices. Do not hold the lock for the call to iwl_mld_thermal_exit and
+only do a lock/unlock to cancel the ct_kill_exit_wk work.
 
-  # perf test -vvv "Track with sched_switch"
-  Missing sched_switch events
-  #
+The problem is that iwl_mld_tzone_get_temp needs to take the wiphy lock
+while the thermal code is holding its own locks already. When
+unregistering the device, the reverse would happen as the driver was
+calling thermal_cooling_device_unregister with the wiphy mutex already
+held.
 
-The issue is caused by incorrect handling of timestamp comparisons. The
-comparison result, a signed 64-bit value, was being directly cast to an
-int, leading to incorrect sorting for sched events.
+It is not likely to trigger this deadlock as it can only happen if the
+thermal code is polling the temperature while the driver is being
+unloaded. However, lockdep reported it so fix it.
 
-The case does not fail everytime, usually I can trigger the failure
-after run 20 ~ 30 times:
-
-  # while true; do perf test "Track with sched_switch"; done
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : FAILED!
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : FAILED!
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-
-I used cross compiler to build Perf tool on my host machine and tested on
-Debian / Juno board.  Generally, I think this issue is not very specific
-to GCC versions.  As both internal CI and my local env can reproduce the
-issue.
-
-My Host Build compiler:
-
-  # aarch64-linux-gnu-gcc --version
-  aarch64-linux-gnu-gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-
-Juno Board:
-
-  # lsb_release -a
-  No LSB modules are available.
-  Distributor ID: Debian
-  Description:    Debian GNU/Linux 12 (bookworm)
-  Release:        12
-  Codename:       bookworm
-
-Fix this by explicitly returning 0, 1, or -1 based on whether the result
-is zero, positive, or negative.
-
-Fixes: d44bc558297222d9 ("perf tests: Add a test for tracking with sched_switch")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20250331172759.115604-1-leo.yan@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20250506194102.3407967-12-miriam.rachel.korenblit@intel.com
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/switch-tracking.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mld/mld.c     | 3 ++-
+ drivers/net/wireless/intel/iwlwifi/mld/thermal.c | 4 ++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/tests/switch-tracking.c b/tools/perf/tests/switch-tracking.c
-index 87f565c7f650d..db6c61424badf 100644
---- a/tools/perf/tests/switch-tracking.c
-+++ b/tools/perf/tests/switch-tracking.c
-@@ -257,7 +257,7 @@ static int compar(const void *a, const void *b)
- 	const struct event_node *nodeb = b;
- 	s64 cmp = nodea->event_time - nodeb->event_time;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mld.c b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+index 7a098942dc802..21f65442638dd 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mld.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+@@ -475,8 +475,9 @@ iwl_op_mode_mld_stop(struct iwl_op_mode *op_mode)
+ 	iwl_mld_ptp_remove(mld);
+ 	iwl_mld_leds_exit(mld);
  
--	return cmp;
-+	return cmp < 0 ? -1 : (cmp > 0 ? 1 : 0);
- }
+-	wiphy_lock(mld->wiphy);
+ 	iwl_mld_thermal_exit(mld);
++
++	wiphy_lock(mld->wiphy);
+ 	iwl_mld_low_latency_stop(mld);
+ 	iwl_mld_deinit_time_sync(mld);
+ 	wiphy_unlock(mld->wiphy);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/thermal.c b/drivers/net/wireless/intel/iwlwifi/mld/thermal.c
+index 1909953a9be98..670ac43528006 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/thermal.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/thermal.c
+@@ -419,6 +419,8 @@ static void iwl_mld_cooling_device_unregister(struct iwl_mld *mld)
  
- static int process_events(struct evlist *evlist,
+ void iwl_mld_thermal_initialize(struct iwl_mld *mld)
+ {
++	lockdep_assert_not_held(&mld->wiphy->mtx);
++
+ 	wiphy_delayed_work_init(&mld->ct_kill_exit_wk, iwl_mld_exit_ctkill);
+ 
+ #ifdef CONFIG_THERMAL
+@@ -429,7 +431,9 @@ void iwl_mld_thermal_initialize(struct iwl_mld *mld)
+ 
+ void iwl_mld_thermal_exit(struct iwl_mld *mld)
+ {
++	wiphy_lock(mld->wiphy);
+ 	wiphy_delayed_work_cancel(mld->wiphy, &mld->ct_kill_exit_wk);
++	wiphy_unlock(mld->wiphy);
+ 
+ #ifdef CONFIG_THERMAL
+ 	iwl_mld_cooling_device_unregister(mld);
 -- 
 2.39.5
 
