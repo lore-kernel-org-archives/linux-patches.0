@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EDCC2E0;
-	Mon, 23 Jun 2025 21:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACA4C2E0;
+	Mon, 23 Jun 2025 21:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714343; cv=none; b=Yq06wNPj8mjRkeGob/bNrbdL91JyjNHmHxap1w9alX2Sv5nHwm/wXL0AgMjsEivA2ArD1m1/XmGG1pC1/fcYP+BJ2LOAXkK1Ot5Cgg76OAMYPw2WEyJ8tI5YcCzzcoi0g/kbbLHDXVO/c1g0A7l7O2dfYbVmeXboFchfcvvzezo=
+	t=1750714345; cv=none; b=ZLG62W0TBQwQCxyt8JJ4fWCxCjuk9xMpYX2++Tb1WJVwag+5Xp5m58iLtPqiua7VFOdGgV2pwO1XdmlJAFLnR0ZV68Q2Sdsz/2S5K1TPXR7wVmCsRt6Hwj9j9mNBv4g/X1QGu5gfeOzRYhTTQQMHQxig7bNmft32lLzi3Zrajf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714343; c=relaxed/simple;
-	bh=tlF2eB5lqLWZJUUU33fJXY2J4b2ivL2axKfSXt+JMv0=;
+	s=arc-20240116; t=1750714345; c=relaxed/simple;
+	bh=4lDldMA6EB+42rLwEo6jqLwiu8gjZVyQ1iiVUcL8Ex4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9VlQi6RVKiyw0nO1O/Wzj23mTe+WG3Qcf9q7yBQncZhjiyEaoojqKlw5AlGi+qhvtKRsLmBXC9w1tttBGFdUfKk09y3VwjbvkoMltFKIXsBMafXz3Cs5BimZleoGGHPBUDJBC5/134UmAEaUx69fvGHc/EZHKFMlE1Cnz6MjTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ru372Qel; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o6D20x+6FpFvImoQDbycb2+WXayMuOBMcM/TCmbKhjlwi9gtz2PqnuHwJBGOHlpTBU87kcs2AqycQkPM2R+Dym0TCNjz2aiHGIly99O8yz6pmrtZ4krSmgjAAkPFje4HRVEy9iEMNMkDBloFpBSzImr+pltjRuKbbVcZw5g8KG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMzah6m+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ru372Qel"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B7BC4CEEA;
-	Mon, 23 Jun 2025 21:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMzah6m+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC8DC4CEEA;
+	Mon, 23 Jun 2025 21:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714343;
-	bh=tlF2eB5lqLWZJUUU33fJXY2J4b2ivL2axKfSXt+JMv0=;
+	s=korg; t=1750714345;
+	bh=4lDldMA6EB+42rLwEo6jqLwiu8gjZVyQ1iiVUcL8Ex4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ru372QelzUgVaqlK+oBGlv3y8YVOe4etcZgbXwJd3Zh7Ggxdxx40nC8OZ05V6t0ja
-	 66oRmyBabw6m+8K2JqGiHTwIhbwgShrWAQbAdY7Y23rssjTzulQIn2Cej1vFgXe1j5
-	 ODb7IRZOoXCAh123Bm1Xw2eCkYbGwglxothuXVbQ=
+	b=hMzah6m+P9gN1XzrxR2JGGOyMgOdU/5jy82cynyOrDveXxK9Qde3RrjhRSYbiud7q
+	 TKulOVa79rTwCIjZVt3X/B/BaU8SsTvlDWoFJOzXLLZeDOFHswIJFr09dWt/3TwcAn
+	 LP6m5ukpvsrSjgnKngkk54Prew+YhRv5cySgci9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Daly <quic_pdaly@quicinc.com>,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 131/290] PM: runtime: fix denying of auto suspend in pm_suspend_timer_fn()
-Date: Mon, 23 Jun 2025 15:06:32 +0200
-Message-ID: <20250623130630.860443420@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 182/411] usb: Flush altsetting 0 endpoints before reinitializating them after reset.
+Date: Mon, 23 Jun 2025 15:05:26 +0200
+Message-ID: <20250623130638.265199417@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +46,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charan Teja Kalla <quic_charante@quicinc.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 40d3b40dce375d6f1c1dbf08d79eed3aed6c691d ]
+commit 89bb3dc13ac29a563f4e4c555e422882f64742bd upstream.
 
-pm_runtime_put_autosuspend() schedules a hrtimer to expire
-at "dev->power.timer_expires". If the hrtimer's callback,
-pm_suspend_timer_fn(), observes that the current time equals
-"dev->power.timer_expires", it unexpectedly bails out instead of
-proceeding with runtime suspend.
+usb core avoids sending a Set-Interface altsetting 0 request after device
+reset, and instead relies on calling usb_disable_interface() and
+usb_enable_interface() to flush and reset host-side of those endpoints.
 
-pm_suspend_timer_fn():
+xHCI hosts allocate and set up endpoint ring buffers and host_ep->hcpriv
+during usb_hcd_alloc_bandwidth() callback, which in this case is called
+before flushing the endpoint in usb_disable_interface().
 
- if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
- 	dev->power.timer_expires = 0;
- 	rpm_suspend(..)
- }
+Call usb_disable_interface() before usb_hcd_alloc_bandwidth() to ensure
+URBs are flushed before new ring buffers for the endpoints are allocated.
 
-Additionally, as ->timer_expires is not cleared, all the future auto
-suspend requests will not schedule hrtimer to perform auto suspend.
+Otherwise host driver will attempt to find and remove old stale URBs
+from a freshly allocated new ringbuffer.
 
-rpm_suspend():
-
- if ((rpmflags & RPM_AUTO) &&...) {
- 	if (!(dev->power.timer_expires && ...) { <-- this will fail.
- 		hrtimer_start_range_ns(&dev->power.suspend_timer,...);
- 	}
- }
-
-Fix this by as well checking if current time reaches the set expiration.
-
-Co-developed-by: Patrick Daly <quic_pdaly@quicinc.com>
-Signed-off-by: Patrick Daly <quic_pdaly@quicinc.com>
-Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Link: https://patch.msgid.link/20250515064125.1211561-1-quic_charante@quicinc.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: 4fe0387afa89 ("USB: don't send Set-Interface after reset")
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250514132520.225345-1-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/runtime.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/core/hub.c |   16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index 0af26cf8c0059..0d43bf5b6cecb 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1001,7 +1001,7 @@ static enum hrtimer_restart  pm_suspend_timer_fn(struct hrtimer *timer)
- 	 * If 'expires' is after the current time, we've been called
- 	 * too early.
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -6040,6 +6040,7 @@ static int usb_reset_and_verify_device(s
+ 	struct usb_hub			*parent_hub;
+ 	struct usb_hcd			*hcd = bus_to_hcd(udev->bus);
+ 	struct usb_device_descriptor	descriptor;
++	struct usb_interface		*intf;
+ 	struct usb_host_bos		*bos;
+ 	int				i, j, ret = 0;
+ 	int				port1 = udev->portnum;
+@@ -6103,6 +6104,18 @@ static int usb_reset_and_verify_device(s
+ 	if (!udev->actconfig)
+ 		goto done;
+ 
++	/*
++	 * Some devices can't handle setting default altsetting 0 with a
++	 * Set-Interface request. Disable host-side endpoints of those
++	 * interfaces here. Enable and reset them back after host has set
++	 * its internal endpoint structures during usb_hcd_alloc_bandwith()
++	 */
++	for (i = 0; i < udev->actconfig->desc.bNumInterfaces; i++) {
++		intf = udev->actconfig->interface[i];
++		if (intf->cur_altsetting->desc.bAlternateSetting == 0)
++			usb_disable_interface(udev, intf, true);
++	}
++
+ 	mutex_lock(hcd->bandwidth_mutex);
+ 	ret = usb_hcd_alloc_bandwidth(udev, udev->actconfig, NULL, NULL);
+ 	if (ret < 0) {
+@@ -6134,12 +6147,11 @@ static int usb_reset_and_verify_device(s
  	 */
--	if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
-+	if (expires > 0 && expires <= ktime_get_mono_fast_ns()) {
- 		dev->power.timer_expires = 0;
- 		rpm_suspend(dev, dev->power.timer_autosuspends ?
- 		    (RPM_ASYNC | RPM_AUTO) : RPM_ASYNC);
--- 
-2.39.5
-
+ 	for (i = 0; i < udev->actconfig->desc.bNumInterfaces; i++) {
+ 		struct usb_host_config *config = udev->actconfig;
+-		struct usb_interface *intf = config->interface[i];
+ 		struct usb_interface_descriptor *desc;
+ 
++		intf = config->interface[i];
+ 		desc = &intf->cur_altsetting->desc;
+ 		if (desc->bAlternateSetting == 0) {
+-			usb_disable_interface(udev, intf, true);
+ 			usb_enable_interface(udev, intf, true);
+ 			ret = 0;
+ 		} else {
 
 
