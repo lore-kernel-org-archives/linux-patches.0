@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE981DF98B;
-	Mon, 23 Jun 2025 21:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337191DF98B;
+	Mon, 23 Jun 2025 21:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713272; cv=none; b=PV5Fwg7Of5fYq6IHsv1ooc7Wuv/uM7JfDw87Q5AQWvkhDxFBpTsu2b14YRNUoQ9itZQHoY39ON4HgyZi+xnH2ew9m2OTVSnQdMwXwoi/f86e1cuoNltk3QCEBmQWsZxet7gYDxpdwOfcwD6Aox0Bq7upVjZ/HncI1BTg62Zr8h4=
+	t=1750713275; cv=none; b=YW/sVdZMmkCaVABvfl6x4rIdM7O/6R86H7RbtRIz6Qym2oq0tTfbbrMUYxNhSBnLOGq7FzL0mRc6vnWvorlGhWD2rY70UhnGodU/9Dp8585iaZT8pGNw0AYhRBqUlMM0KceuzJwJpik2yqKwMoeOMK36DLc8L1i9Kqj9fuogjfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713272; c=relaxed/simple;
-	bh=vgsja0pqPyTp0x0s0/cSlezVo6Nbd23SNWs3O1hAzPM=;
+	s=arc-20240116; t=1750713275; c=relaxed/simple;
+	bh=6r100YmSMt1Q27+zkDoq660nq/UCGBiTc+kg97Nc0QQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d7cXXhyghx+FsD6EF/1aKb4xq1hg/bL6/KGX//5MTiLiI5p/NpaPz9Yx1YHsFPrqx0ZkDOohlRDMUdxts9MNaE3bqIW2v/ZzWSd/9+u4lHPVThcY0/+cokQ4n8dKZDC0BYvYKMcND9V4LNw9n2GDqtmOVwtOp9MNJf9iWOCT+p4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wlz53oHJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fH5sSOCzPqFfKquAAEFLSStjVdcrRKYn6wWX9F6WfnTkL6hpjK9J87US6BUONpu/+6/Ya73+c2CSAB8yXT6EG+bBMeDyqI63r98ZQ7uCIZ9ynqeXNDZjmU/ceZjDobPgOX7o9IrDThS7LLMa2mCxCHPRK6wIkzjplmFR7D5gV6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JU4QCXVo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wlz53oHJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5535FC4CEEA;
-	Mon, 23 Jun 2025 21:14:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JU4QCXVo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2300C4CEEA;
+	Mon, 23 Jun 2025 21:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713272;
-	bh=vgsja0pqPyTp0x0s0/cSlezVo6Nbd23SNWs3O1hAzPM=;
+	s=korg; t=1750713275;
+	bh=6r100YmSMt1Q27+zkDoq660nq/UCGBiTc+kg97Nc0QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wlz53oHJyZtK5PF14zRfyci7lrlQ+/TodXyQnsh2fQ6QCubWMyO7jIPMS7Tl8GrU8
-	 pVkUJ7oa8rSjyntScalmHXX3PtKp3Y6zNCOF9OnLF0xDHYahU9nA48q21HiutteKmn
-	 vRTAMz7C4h50rr6x+Whsyry9jPnsiw6aR0RrxcP0=
+	b=JU4QCXVo/KkN3HTs/aJF7ohZYKVfqhuhno2lP2h0XYF5R9T2AqFCZpbV4g7Tq9GW5
+	 2NXesmeDFelZlQ04J3Le/vEda4KMhZBja2CUGbA2gx9pIVmytJptip/69jTTtzAKKm
+	 Jivo3szOLxc3fDa/Q0rlMeat+ZLghpULMb4aCNfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com,
-	Charalampos Mitrodimas <charmitro@posteo.net>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 114/411] net: tipc: fix refcount warning in tipc_aead_encrypt
-Date: Mon, 23 Jun 2025 15:04:18 +0200
-Message-ID: <20250623130636.402005532@linuxfoundation.org>
+Subject: [PATCH 5.10 135/355] net_sched: red: fix a race in __red_change()
+Date: Mon, 23 Jun 2025 15:05:36 +0200
+Message-ID: <20250623130630.787386678@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,59 +48,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charalampos Mitrodimas <charmitro@posteo.net>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f29ccaa07cf3d35990f4d25028cc55470d29372b ]
+[ Upstream commit 85a3e0ede38450ea3053b8c45d28cf55208409b8 ]
 
-syzbot reported a refcount warning [1] caused by calling get_net() on
-a network namespace that is being destroyed (refcount=0). This happens
-when a TIPC discovery timer fires during network namespace cleanup.
+Gerrard Tai reported a race condition in RED, whenever SFQ perturb timer
+fires at the wrong time.
 
-The recently added get_net() call in commit e279024617134 ("net/tipc:
-fix slab-use-after-free Read in tipc_aead_encrypt_done") attempts to
-hold a reference to the network namespace. However, if the namespace
-is already being destroyed, its refcount might be zero, leading to the
-use-after-free warning.
+The race is as follows:
 
-Replace get_net() with maybe_get_net(), which safely checks if the
-refcount is non-zero before incrementing it. If the namespace is being
-destroyed, return -ENODEV early, after releasing the bearer reference.
+CPU 0                                 CPU 1
+[1]: lock root
+[2]: qdisc_tree_flush_backlog()
+[3]: unlock root
+ |
+ |                                    [5]: lock root
+ |                                    [6]: rehash
+ |                                    [7]: qdisc_tree_reduce_backlog()
+ |
+[4]: qdisc_put()
 
-[1]: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
+This can be abused to underflow a parent's qlen.
 
-Reported-by: syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
-Fixes: e27902461713 ("net/tipc: fix slab-use-after-free Read in tipc_aead_encrypt_done")
-Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20250527-net-tipc-warning-v2-1-df3dc398a047@posteo.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
+should fix the race, because all packets will be purged from the qdisc
+before releasing the lock.
+
+Fixes: 0c8d13ac9607 ("net: sched: red: delay destroying child qdisc on replace")
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250611111515.1983366-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/crypto.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/sched/sch_red.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
-index 35e0ffa1bd84b..07f35c48bd3a2 100644
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -829,7 +829,11 @@ static int tipc_aead_encrypt(struct tipc_aead *aead, struct sk_buff *skb,
+diff --git a/net/sched/sch_red.c b/net/sched/sch_red.c
+index 935d90874b1b7..1b69b7b90d858 100644
+--- a/net/sched/sch_red.c
++++ b/net/sched/sch_red.c
+@@ -283,7 +283,7 @@ static int __red_change(struct Qdisc *sch, struct nlattr **tb,
+ 	q->userbits = userbits;
+ 	q->limit = ctl->limit;
+ 	if (child) {
+-		qdisc_tree_flush_backlog(q->qdisc);
++		qdisc_purge_queue(q->qdisc);
+ 		old_child = q->qdisc;
+ 		q->qdisc = child;
  	}
- 
- 	/* Get net to avoid freed tipc_crypto when delete namespace */
--	get_net(aead->crypto->net);
-+	if (!maybe_get_net(aead->crypto->net)) {
-+		tipc_bearer_put(b);
-+		rc = -ENODEV;
-+		goto exit;
-+	}
- 
- 	/* Now, do encrypt */
- 	rc = crypto_aead_encrypt(req);
 -- 
 2.39.5
 
