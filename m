@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DE570838;
-	Mon, 23 Jun 2025 21:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BFD70838;
+	Mon, 23 Jun 2025 21:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713034; cv=none; b=TkvIvGU9nWDrPzzSWbzuiu+CI8vYAy0TwsjdZYRRB/Ho6M8CNGLnt8fI90pndGhmxU9aIcqngPc3YMwM1zy8Rrf3lcLH/XQDWHZV5doGGW/g16tJV5ocOrumGcsvM1Uv3AFSPrfq8qDx/vXk7hYf7K1pmoQHKeodW9u0Xbq7OsI=
+	t=1750713037; cv=none; b=KS/pZQhZMGQzrXcYFCiK5xUgUTMDqY7h2VWl1hZwvUCtJzfuSZrv8VZ/pIpXYR2jGwQIX9gL/9rFhvSxWsas9M4OoW6T7DSI+jdznCXtaYwb8LphCPF+OAPgU5ixAFRIQ4jBzSoAncRSlnQ9eMQBzs998AVtyOQR5E+i1oCpm/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713034; c=relaxed/simple;
-	bh=7MJYK6nR+STF7NhJhFBiImhH/xH+dtYFiLwfvklo6BM=;
+	s=arc-20240116; t=1750713037; c=relaxed/simple;
+	bh=FGY5uwtZcrB4tJgkQVZakrJ6Ijbb2gXQgX76s7j6lMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0qVgoh/ZUej+B2zOwLylsVx7o1zVAsZQ0xN10w/SdBq4cYbCzMZy4LpK1EJFrMc/PNMgQMTyjoKT7x3Xg09FXXftT15jShvLTOk7yaNiMQzV+yU007FVZXYjH2HR/KFahsCrMHEkEy4wqJEYk51J/c43YYbbg1R4N27SedcJl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLe8Saio; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nR3sRCUiMehQ0cDxxynVXJOpiG7tE92On+fEnQv2cMJX7Q6bh4khIBOGF9PRoK41XxWyidbwZ75h7RABJFVdJnEeXSaN4VFzCVxjECjr11ZNuiY/+v/nPhWPgPTX4BnP0eOuC3fwP3Y/Zvl//aeZB0YDo1Z1vH5MWkRz3B2DfOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FT4ay2D7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLe8Saio"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39FC4C4CEEA;
-	Mon, 23 Jun 2025 21:10:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FT4ay2D7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11CDC4CEEA;
+	Mon, 23 Jun 2025 21:10:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713034;
-	bh=7MJYK6nR+STF7NhJhFBiImhH/xH+dtYFiLwfvklo6BM=;
+	s=korg; t=1750713037;
+	bh=FGY5uwtZcrB4tJgkQVZakrJ6Ijbb2gXQgX76s7j6lMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gLe8SaiorGnf83AgzN2/ZAJV7jtpbndzzdgZkxxrQeFVFDFpuK3TAgPx6ujFr6O64
-	 d6EnOEI9eStprL3rhYut0kGkW7M1WQoMh0GMSk1ZL36FPUxevWU6orEtbVn2s3192r
-	 B3/QkrPTBrsiCLipJOVDB5DgQYtytFVnTDlj6cFs=
+	b=FT4ay2D7Ix6FWPzvBxcY6l7yUkw9gzjM73gx4vAjNXvsflTdUu8zJw6NFN5bUvi+5
+	 0Iker8qJvzkzW3szMybdMEhFqiY1/enss6zGAOre2wA6I/4sXjpLVxFqkcUJlqPkNe
+	 dNq0SVPX9ys2FGvAYiHgHKb5DK+ydnCA4mGhB9Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/508] bpf, sockmap: Avoid using sk_socket after free when sending
-Date: Mon, 23 Jun 2025 15:02:19 +0200
-Message-ID: <20250623130647.571005433@linuxfoundation.org>
+	Brian Foster <bfoster@redhat.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Jan Kara <jack@suse.cz>,
+	stable@kernel.org
+Subject: [PATCH 6.6 064/290] ext4: only dirty folios when data journaling regular files
+Date: Mon, 23 Jun 2025 15:05:25 +0200
+Message-ID: <20250623130628.928485621@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,129 +48,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Brian Foster <bfoster@redhat.com>
 
-[ Upstream commit 8259eb0e06d8f64c700f5fbdb28a5c18e10de291 ]
+commit e26268ff1dcae5662c1b96c35f18cfa6ab73d9de upstream.
 
-The sk->sk_socket is not locked or referenced in backlog thread, and
-during the call to skb_send_sock(), there is a race condition with
-the release of sk_socket. All types of sockets(tcp/udp/unix/vsock)
-will be affected.
+fstest generic/388 occasionally reproduces a crash that looks as
+follows:
 
-Race conditions:
-'''
-CPU0                               CPU1
-
-backlog::skb_send_sock
-  sendmsg_unlocked
-    sock_sendmsg
-      sock_sendmsg_nosec
-                                   close(fd):
-                                     ...
-                                     ops->release() -> sock_map_close()
-                                     sk_socket->ops = NULL
-                                     free(socket)
-      sock->ops->sendmsg
-            ^
-            panic here
-'''
-
-The ref of psock become 0 after sock_map_close() executed.
-'''
-void sock_map_close()
-{
-    ...
-    if (likely(psock)) {
-    ...
-    // !! here we remove psock and the ref of psock become 0
-    sock_map_remove_links(sk, psock)
-    psock = sk_psock_get(sk);
-    if (unlikely(!psock))
-        goto no_psock; <=== Control jumps here via goto
-        ...
-        cancel_delayed_work_sync(&psock->work); <=== not executed
-        sk_psock_put(sk, psock);
-        ...
-}
-'''
-
-Based on the fact that we already wait for the workqueue to finish in
-sock_map_close() if psock is held, we simply increase the psock
-reference count to avoid race conditions.
-
-With this patch, if the backlog thread is running, sock_map_close() will
-wait for the backlog thread to complete and cancel all pending work.
-
-If no backlog running, any pending work that hasn't started by then will
-fail when invoked by sk_psock_get(), as the psock reference count have
-been zeroed, and sk_psock_drop() will cancel all jobs via
-cancel_delayed_work_sync().
-
-In summary, we require synchronization to coordinate the backlog thread
-and close() thread.
-
-The panic I catched:
-'''
-Workqueue: events sk_psock_backlog
-RIP: 0010:sock_sendmsg+0x21d/0x440
-RAX: 0000000000000000 RBX: ffffc9000521fad8 RCX: 0000000000000001
+BUG: kernel NULL pointer dereference, address: 0000000000000000
 ...
 Call Trace:
  <TASK>
- ? die_addr+0x40/0xa0
- ? exc_general_protection+0x14c/0x230
- ? asm_exc_general_protection+0x26/0x30
- ? sock_sendmsg+0x21d/0x440
- ? sock_sendmsg+0x3e0/0x440
- ? __pfx_sock_sendmsg+0x10/0x10
- __skb_send_sock+0x543/0xb70
- sk_psock_backlog+0x247/0xb80
-...
-'''
+ ext4_block_zero_page_range+0x30c/0x380 [ext4]
+ ext4_truncate+0x436/0x440 [ext4]
+ ext4_process_orphan+0x5d/0x110 [ext4]
+ ext4_orphan_cleanup+0x124/0x4f0 [ext4]
+ ext4_fill_super+0x262d/0x3110 [ext4]
+ get_tree_bdev_flags+0x132/0x1d0
+ vfs_get_tree+0x26/0xd0
+ vfs_cmd_create+0x59/0xe0
+ __do_sys_fsconfig+0x4ed/0x6b0
+ do_syscall_64+0x82/0x170
+ ...
 
-Fixes: 4b4647add7d3 ("sock_map: avoid race between sock_map_close and sk_psock_put")
-Reported-by: Michal Luczaj <mhal@rbox.co>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20250516141713.291150-1-jiayuan.chen@linux.dev
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This occurs when processing a symlink inode from the orphan list. The
+partial block zeroing code in the truncate path calls
+ext4_dirty_journalled_data() -> folio_mark_dirty(). The latter calls
+mapping->a_ops->dirty_folio(), but symlink inodes are not assigned an
+a_ops vector in ext4, hence the crash.
+
+To avoid this problem, update the ext4_dirty_journalled_data() helper to
+only mark the folio dirty on regular files (for which a_ops is
+assigned). This also matches the journaling logic in the ext4_symlink()
+creation path, where ext4_handle_dirty_metadata() is called directly.
+
+Fixes: d84c9ebdac1e ("ext4: Mark pages with journalled data dirty")
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Link: https://patch.msgid.link/20250516173800.175577-1-bfoster@redhat.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Cc: stable@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skmsg.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/ext4/inode.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 0613f9a2543bb..e5ba57a5db126 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -654,6 +654,13 @@ static void sk_psock_backlog(struct work_struct *work)
- 	bool ingress;
- 	int ret;
- 
-+	/* Increment the psock refcnt to synchronize with close(fd) path in
-+	 * sock_map_close(), ensuring we wait for backlog thread completion
-+	 * before sk_socket freed. If refcnt increment fails, it indicates
-+	 * sock_map_close() completed with sk_socket potentially already freed.
-+	 */
-+	if (!sk_psock_get(psock->sk))
-+		return;
- 	mutex_lock(&psock->work_mutex);
- 	while ((skb = skb_peek(&psock->ingress_skb))) {
- 		len = skb->len;
-@@ -705,6 +712,7 @@ static void sk_psock_backlog(struct work_struct *work)
- 	}
- end:
- 	mutex_unlock(&psock->work_mutex);
-+	sk_psock_put(psock->sk, psock);
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -1011,7 +1011,12 @@ int ext4_walk_page_buffers(handle_t *han
+  */
+ static int ext4_dirty_journalled_data(handle_t *handle, struct buffer_head *bh)
+ {
+-	folio_mark_dirty(bh->b_folio);
++	struct folio *folio = bh->b_folio;
++	struct inode *inode = folio->mapping->host;
++
++	/* only regular files have a_ops */
++	if (S_ISREG(inode->i_mode))
++		folio_mark_dirty(folio);
+ 	return ext4_handle_dirty_metadata(handle, NULL, bh);
  }
  
- struct sk_psock *sk_psock_init(struct sock *sk, int node)
--- 
-2.39.5
-
 
 
