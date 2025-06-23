@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7E44409;
-	Mon, 23 Jun 2025 22:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B254409;
+	Mon, 23 Jun 2025 22:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716029; cv=none; b=B+XbUsIPCH5unIU2czoT0EFReXVRiK0Z83bV78u7PucLmkmde1JrSsxEJWgkYZiX7VOWXnn6b+ziQISjWwuo5ImTXkpVg+bdYYQKJq+6JtX8NK0oJjaZioyYNibSbWSsmw+Ms4+RZpdEKJ9cmpht23N1V3n8QvlDnfvWu3rwets=
+	t=1750716031; cv=none; b=XwUXBbtzBQsfb1CxnuA8KaDZ72rQqn9qqlQKV6E/VvzWX1q7Yer9x7hMtMj/nrWKOK7mfwWJQQ4fsm99nEj9f9JTFE1QrtM3OeiELdBF9N2MTHDb4A9ThTEsYy4bz4BJ9zM7LyVH24/hcNqV4kHK6+NY6jGFqmhSPMMu+QXlSlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716029; c=relaxed/simple;
-	bh=wuTb0BveLSa3xwhDWy+dcGdgj2vz61HHPaAGhNGAFMo=;
+	s=arc-20240116; t=1750716031; c=relaxed/simple;
+	bh=aViqm8Bg6phnR6jWEbuP7Ah1z/LJm3YHOp7YuxrSJoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=seUiodaaQU4Pu8t2fEc09fyawWMtk9TNbwK1uU+qwX0uScv4bThFdUw2NEjMTX44BtH2xJhNDSMNmVz2PeHDE7ZWMIrjI6zTGHPEzFsAcqyQmSDKwT4NLa361GoXVY89L6LXppe0uVdbULXFQFDYHf60n+nLRy32ONNtIq+KGe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxxwMJfH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m8/fXicCEnGf7Pzb86oMJV1il8TuB0F4xfXeGp5GgskAFiHx7LHo9zcacKelu4ymHLTk4FUzlmZaSXPTM7m3G49VnHh4Lqq3Y1T5l7f4Dmfr6oZAa3Nps+kvcFq/nZauFGePuKp0BaL9z0eHJiXgECVt8Q+SNdVN7qWQMC1xZGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W33Sw0aO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxxwMJfH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014DFC4CEEA;
-	Mon, 23 Jun 2025 22:00:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W33Sw0aO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7B5C4CEEA;
+	Mon, 23 Jun 2025 22:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716029;
-	bh=wuTb0BveLSa3xwhDWy+dcGdgj2vz61HHPaAGhNGAFMo=;
+	s=korg; t=1750716031;
+	bh=aViqm8Bg6phnR6jWEbuP7Ah1z/LJm3YHOp7YuxrSJoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MxxwMJfHMLierCVTXnZznmUgoPekOOyprs9HmckcW53Mc7QaFhB0xLWQLeVb6boUu
-	 xD/IzLAe16HzBF0JCj2EhtYsK2FB9QDdp3rxMGu33zhzhXrEoiUROHh/v6TWNI8T3V
-	 FmfTgdUkMxSUw+/jT9rj04PvKmafNNC2YqxwanP0=
+	b=W33Sw0aO0YC4NVhiSjW44OtRtIvbmdAffE0LzOr4WzJDG6YXhANYvHbcHER8SGaM2
+	 XNO5f+e1+9fqdNeF7ByOsZLKi6I3YFQq8edWy8kdCGeKZfx7ULcKd+qIcuVMkNo6uA
+	 uDHE/nj7NwozrYyPtsSxUsgdkyGpbDtazejnr+i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Maxime Ripard <mripard@kernel.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 298/411] media: tc358743: ignore video while HPD is low
-Date: Mon, 23 Jun 2025 15:07:22 +0200
-Message-ID: <20250623130641.149130422@linuxfoundation.org>
+	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
+	Sean Nyekjaer <sean@geanix.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 236/290] iio: accel: fxls8962af: Fix temperature calculation
+Date: Mon, 23 Jun 2025 15:08:17 +0200
+Message-ID: <20250623130634.024605994@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +47,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans Verkuil <hverkuil@xs4all.nl>
+From: Sean Nyekjaer <sean@geanix.com>
 
-[ Upstream commit 6829c5b5d26b1be31880d74ec24cb32d2d75f1ae ]
+commit 16038474e3a0263572f36326ef85057aaf341814 upstream.
 
-If the HPD is low (happens if there is no EDID or the
-EDID is being updated), then return -ENOLINK in
-tc358743_get_detected_timings() instead of detecting video.
+According to spec temperature should be returned in milli degrees Celsius.
+Add in_temp_scale to calculate from Celsius to milli Celsius.
 
-This avoids userspace thinking that it can start streaming when
-the HPD is low.
-
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Tested-by: Maxime Ripard <mripard@kernel.org>
-Link: https://lore.kernel.org/linux-media/20240628-stoic-bettong-of-fortitude-e25611@houat/
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a3e0b51884ee ("iio: accel: add support for FXLS8962AF/FXLS8964AF accelerometers")
+Cc: stable@vger.kernel.org
+Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
+Signed-off-by: Sean Nyekjaer <sean@geanix.com>
+Link: https://patch.msgid.link/20250505-fxls-v4-1-a38652e21738@geanix.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/tc358743.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/accel/fxls8962af-core.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
-index 6f5ca3d63dbdb..87feada1f6020 100644
---- a/drivers/media/i2c/tc358743.c
-+++ b/drivers/media/i2c/tc358743.c
-@@ -309,6 +309,10 @@ static int tc358743_get_detected_timings(struct v4l2_subdev *sd,
+--- a/drivers/iio/accel/fxls8962af-core.c
++++ b/drivers/iio/accel/fxls8962af-core.c
+@@ -20,6 +20,7 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/regmap.h>
++#include <linux/units.h>
  
- 	memset(timings, 0, sizeof(struct v4l2_dv_timings));
- 
-+	/* if HPD is low, ignore any video */
-+	if (!(i2c_rd8(sd, HPD_CTL) & MASK_HPD_OUT0))
-+		return -ENOLINK;
-+
- 	if (no_signal(sd)) {
- 		v4l2_dbg(1, debug, sd, "%s: no valid signal\n", __func__);
- 		return -ENOLINK;
--- 
-2.39.5
-
+ #include <linux/iio/buffer.h>
+ #include <linux/iio/events.h>
+@@ -434,8 +435,16 @@ static int fxls8962af_read_raw(struct ii
+ 		*val = FXLS8962AF_TEMP_CENTER_VAL;
+ 		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_SCALE:
+-		*val = 0;
+-		return fxls8962af_read_full_scale(data, val2);
++		switch (chan->type) {
++		case IIO_TEMP:
++			*val = MILLIDEGREE_PER_DEGREE;
++			return IIO_VAL_INT;
++		case IIO_ACCEL:
++			*val = 0;
++			return fxls8962af_read_full_scale(data, val2);
++		default:
++			return -EINVAL;
++		}
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
+ 		return fxls8962af_read_samp_freq(data, val, val2);
+ 	default:
+@@ -734,6 +743,7 @@ static const struct iio_event_spec fxls8
+ 	.type = IIO_TEMP, \
+ 	.address = FXLS8962AF_TEMP_OUT, \
+ 	.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) | \
++			      BIT(IIO_CHAN_INFO_SCALE) | \
+ 			      BIT(IIO_CHAN_INFO_OFFSET),\
+ 	.scan_index = -1, \
+ 	.scan_type = { \
 
 
