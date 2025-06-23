@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477811DD0C7;
-	Mon, 23 Jun 2025 21:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18AB1EEA3C;
+	Mon, 23 Jun 2025 21:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715411; cv=none; b=BnNZjr/1ECmLpwakafVf4AGFvzoNDiE1Ey07G9sVGxxBPFTG+23iYCShB7wuyCeK1hKZ0KBOTL5JJScSXBFLeglkSmr5PsG2OaTrPuqpsZ5uJdS6vnjX4gGyMs/GA0dQqnvDjhXhvTwKibUwK7nKK3+sc2Z0BOKdwF6wZEZofBU=
+	t=1750715413; cv=none; b=NCGBkw1b7vOhnEPGQCKWCni7PM0HV5gzrsR+6Dl1lnwfq1WwX+mSg+0DQVlefIUIvLyX4UsGFJO9DiRoE2m5y7wQt7LRD8sLOlP/z+0bSwxP4aV+d+4Ixkueon/qtU8s3wKjMyYSnPmE3KoIfufzbjL3iCnR/6loM985HL1dzh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715411; c=relaxed/simple;
-	bh=MpQ37CqWkfaq36vHdanqwj6e0W15mh2JM1nhiGPcRGQ=;
+	s=arc-20240116; t=1750715413; c=relaxed/simple;
+	bh=ksCGz9QU9kp0h1Mx6Tkp7unx907jtpq2QfQiDvlFiX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNkf27atg/zOa3hFjxBacu8MNAqlC8tfGyMa8qGLDKz2x5UZ/CUKl+lTNjkrcdy9zKDTludPosgDZvurgOJ2bXmzMZqx+44HQM/C48Q+8hbUrD/bLS36pd4b427cbWVGAm+VIQPRGmaoQqxtqQ5CLq+8jEAa4eduRi1OsNxhLl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+U4yxVZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mf22svO9VR6JOFv3MKi64cqXB6lwf2Ls3X1deNmS4zv9om+baINQeOjzhOW4yvqmp/cahrkBFmNG01L5JwdPjlNKPZFLd3N1JBHL3KSTzvSHj3kzslQPubTCWLvVC4fswWsGHewELn+mxg2vP52/Nw2nag/Hn68QPFfM22gH9MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhbAOaO2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+U4yxVZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4204C4CEEA;
-	Mon, 23 Jun 2025 21:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhbAOaO2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D96C4CEEA;
+	Mon, 23 Jun 2025 21:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715411;
-	bh=MpQ37CqWkfaq36vHdanqwj6e0W15mh2JM1nhiGPcRGQ=;
+	s=korg; t=1750715413;
+	bh=ksCGz9QU9kp0h1Mx6Tkp7unx907jtpq2QfQiDvlFiX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+U4yxVZ9u+ohdF0pVqZr42jSrlaf4bpPn45jNLuvcHP+Sg/OodFeCBdBzz/pcQCV
-	 tG5gKyvqKjHyVvLpSpckAhu/6Qws64dP+2NO/EZ5+Kvp1GpN8EHAleR0XOOpxXcaMv
-	 R28pHVKBuU8Uv8qVQZ9l3boNB5ieMLtFvuFfeYc0=
+	b=HhbAOaO2oHxRYApu2uBj0/6v1rxBXa08ZrH3w1oZwoQmKM/28cNi3rOiM/1tqKjrN
+	 VQscWg5ndJdKxYaHsZphF7MPiQWIlHsyULRrm9MX9EFb/J9jZeZitO+kl5qQl9Cy2G
+	 VTKAmYVZvDdYC4jeVcTwrmiQGpF1T806e1b9hgd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 233/508] wifi: ath11k: dont wait when there is no vdev started
-Date: Mon, 23 Jun 2025 15:04:38 +0200
-Message-ID: <20250623130650.992196682@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.15 238/411] parisc: fix building with gcc-15
+Date: Mon, 23 Jun 2025 15:06:22 +0200
+Message-ID: <20250623130639.647484091@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,80 +46,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 3b6d00fa883075dcaf49221538230e038a9c0b43 ]
+commit 7cbb015e2d3d6f180256cde0c908eab21268e7b9 upstream.
 
-For WMI_REQUEST_VDEV_STAT request, firmware might split response into
-multiple events dut to buffer limit, hence currently in
-ath11k_debugfs_fw_stats_process() we wait until all events received.
-In case there is no vdev started, this results in that below condition
-would never get satisfied
+The decompressor is built with the default C dialect, which is now gnu23
+on gcc-15, and this clashes with the kernel's bool type definition:
 
-	((++ar->fw_stats.num_vdev_recvd) == total_vdevs_started)
+In file included from include/uapi/linux/posix_types.h:5,
+                 from arch/parisc/boot/compressed/misc.c:7:
+include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
+   11 |         false   = 0,
 
-finally the requestor would be blocked until wait time out.
+Add the -std=gnu11 argument here, as we do for all other architectures.
 
-The same applies to WMI_REQUEST_BCN_STAT request as well due to:
-
-	((++ar->fw_stats.num_bcn_recvd) == ar->num_started_vdevs)
-
-Change to check the number of started vdev first: if it is zero, finish
-wait directly; if not, follow the old way.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.37
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250220082448.31039-4-quic_bqiang@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/debugfs.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ arch/parisc/boot/compressed/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/debugfs.c b/drivers/net/wireless/ath/ath11k/debugfs.c
-index 5a375d6680594..50bc17127e68a 100644
---- a/drivers/net/wireless/ath/ath11k/debugfs.c
-+++ b/drivers/net/wireless/ath/ath11k/debugfs.c
-@@ -107,7 +107,7 @@ void ath11k_debugfs_fw_stats_process(struct ath11k *ar, struct ath11k_fw_stats *
- {
- 	struct ath11k_base *ab = ar->ab;
- 	struct ath11k_pdev *pdev;
--	bool is_end;
-+	bool is_end = true;
- 	size_t total_vdevs_started = 0;
- 	int i;
+--- a/arch/parisc/boot/compressed/Makefile
++++ b/arch/parisc/boot/compressed/Makefile
+@@ -22,6 +22,7 @@ KBUILD_CFLAGS += -fno-PIE -mno-space-reg
+ ifndef CONFIG_64BIT
+ KBUILD_CFLAGS += -mfast-indirect-calls
+ endif
++KBUILD_CFLAGS += -std=gnu11
  
-@@ -132,7 +132,9 @@ void ath11k_debugfs_fw_stats_process(struct ath11k *ar, struct ath11k_fw_stats *
- 				total_vdevs_started += ar->num_started_vdevs;
- 		}
+ OBJECTS += $(obj)/head.o $(obj)/real2.o $(obj)/firmware.o $(obj)/misc.o $(obj)/piggy.o
  
--		is_end = ((++ar->fw_stats.num_vdev_recvd) == total_vdevs_started);
-+		if (total_vdevs_started)
-+			is_end = ((++ar->fw_stats.num_vdev_recvd) ==
-+				  total_vdevs_started);
- 
- 		list_splice_tail_init(&stats->vdevs,
- 				      &ar->fw_stats.vdevs);
-@@ -151,7 +153,9 @@ void ath11k_debugfs_fw_stats_process(struct ath11k *ar, struct ath11k_fw_stats *
- 		/* Mark end until we reached the count of all started VDEVs
- 		 * within the PDEV
- 		 */
--		is_end = ((++ar->fw_stats.num_bcn_recvd) == ar->num_started_vdevs);
-+		if (ar->num_started_vdevs)
-+			is_end = ((++ar->fw_stats.num_bcn_recvd) ==
-+				  ar->num_started_vdevs);
- 
- 		list_splice_tail_init(&stats->bcn,
- 				      &ar->fw_stats.bcn);
--- 
-2.39.5
-
 
 
