@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8E54C6E;
-	Mon, 23 Jun 2025 13:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9633A4C6E;
+	Mon, 23 Jun 2025 13:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685646; cv=none; b=sJu2mpw0aurFhhFgSCAdOYzRh9Ise+Xc134Zufv+PtGD89Had/Z7JF3J/caaocXXHBkq91XG0nf1dCmwdYlsW9oQ1ljAsnsdVlDnFRRE5fJdTNFhQfSAQ/slmKmXmrVvh3C4mR9+nNFomGhyULX5A/F+A5mp8rooCjc8X5R1lMU=
+	t=1750685650; cv=none; b=qKT5Qf3wIW7ir3yEs/3HR8peCDVHZHC5bzYzbCUp5TnNuSoKf1iCfrnKnUTf+fPkSGSLzrPHSN6sUGeIwFjnsiNp1f46CI5cYQFfiCwA0gUGHcIP9H/n7H/8YqfY5roMAgf7ezzuUFI/qmxwxNL/as2iLc7yE58Db1/vNVyoSIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685646; c=relaxed/simple;
-	bh=3KgiS3tnbDiiZR3oCCyMIbcXUhTBr31Ms1505/kZEPk=;
+	s=arc-20240116; t=1750685650; c=relaxed/simple;
+	bh=iPGjLDKdYSiAHWrhgoJNpnJhfKTX3NMOzdnWRXygHMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FhA2FpHQ10hhBDRQxma12Af01KOKfNsFnsNyyUffy5o8gULpX6iqhBip4GLqVXrK6b1KNJlN0cuCmZsW3awjcfaNrD3D4jp8fH3mZDslP0ziyWh2z8QrLypdyzmjodF2iiw9T/PLi99f3YsraOhU+1kwPdSnBjtELgm98NS2guU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cV2zJaks; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hD5Xp6/YvJlMN1ecuv+zEzmCVrvoPTzLMdkCOgTM23mGQxuM6OcYY3ZOhuDbsEIYOwLdpP4iEEaTaJGNnEUh1vglpm/FpRuCdi+C3Ih9Y+2TNur5K5zs7TMYJYZh+9ZZuZdYjWE7BhKcecLlZFGVZIF/1TNBNV8moz7QvfobGvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ar1a4WIE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cV2zJaks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60EEAC4CEEA;
-	Mon, 23 Jun 2025 13:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ar1a4WIE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E031DC4CEEA;
+	Mon, 23 Jun 2025 13:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685646;
-	bh=3KgiS3tnbDiiZR3oCCyMIbcXUhTBr31Ms1505/kZEPk=;
+	s=korg; t=1750685649;
+	bh=iPGjLDKdYSiAHWrhgoJNpnJhfKTX3NMOzdnWRXygHMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cV2zJaksCoapjfgqGHKdG0lWkJiomUhycW+UJ3SsjT/ckDhYf6H14rgYTBmi+Hn5B
-	 HFNoPM2zqHFExiz9OVcZTJm8bkFXGxVvQ62djZRI46LjR+y6IsBZfGe/3nUn+kP1kw
-	 OShagBWVDlvQY7YTzBUkURcc2iICQ2+BNLIw+2mI=
+	b=ar1a4WIEM6kSb4paTMVjF5O0ZKrWO2FVJi90MfWDqyzZgCxvfLVX4seKVgr+EMTjm
+	 cwqAJ+o2d+JufhzGBx8XVJ3cxuViMW2RIczFeD9sNATI372aIgaU0AjLkgnlUU5ja8
+	 /wX3QMH+bY3xdGYmml4fGykYNJV5Ja94PN0ch+s4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huajian Yang <huajianyang@asrmicro.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 049/411] netfilter: bridge: Move specific fragmented packet to slow_path instead of dropping it
-Date: Mon, 23 Jun 2025 15:03:13 +0200
-Message-ID: <20250623130634.468714278@linuxfoundation.org>
+Subject: [PATCH 6.15 237/592] media: imx-jpeg: Check decoding is ongoing for motion-jpeg
+Date: Mon, 23 Jun 2025 15:03:15 +0200
+Message-ID: <20250623130705.925575094@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,97 +49,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huajian Yang <huajianyang@asrmicro.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-[ Upstream commit aa04c6f45b9224b949aa35d4fa5f8d0ba07b23d4 ]
+[ Upstream commit fd5b6cd730676940df63b0970bb1ba30bca1aac3 ]
 
-The config NF_CONNTRACK_BRIDGE will change the bridge forwarding for
-fragmented packets.
+As the first frame in "repeat-mode" is the pattern, the pattern done
+interrupt is ignored by the driver. With small resolution bitstreams,
+the interrupts might fire too quickly and hardware combine two irqs to
+once because irq handle have latency. Thus the driver might miss the
+frame decode done interrupt from the first actual frame.
 
-The original bridge does not know that it is a fragmented packet and
-forwards it directly, after NF_CONNTRACK_BRIDGE is enabled, function
-nf_br_ip_fragment and br_ip6_fragment will check the headroom.
+In order to avoid the driver wait for the frame done interrupt that has
+been combined to the pattern done interrupt and been ignored, driver
+will check the curr_desc and slot_status registers to figure out if the
+decoding of actual frame is finished or not.
 
-In original br_forward, insufficient headroom of skb may indeed exist,
-but there's still a way to save the skb in the device driver after
-dev_queue_xmit.So droping the skb will change the original bridge
-forwarding in some cases.
+Firstly we check the curr_desc register,
+- if it is still pointing to the pattern descriptor, the second actual
+frame is not started, we can wait for its frame-done interrupt.
+- if the curr_desc has pointed to the frame descriptor, then we check the
+ongoing bit of slot_status register.
+- if the ongoing bit is set to 1, the decoding of the actual frame is not
+finished, we can wait for its frame-done interrupt.
+- if the ongoing bit is set to 0, the decoding of the actual frame is
+finished, we can't wait for the second interrupt, but mark it as done.
 
-Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
-Signed-off-by: Huajian Yang <huajianyang@asrmicro.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+But there is still a small problem, that the curr_desc and slot_status
+registers are not synchronous. curr_desc is updated when the
+next_descpt_ptr is loaded, but the ongoing bit of slot_status is set
+after the 32 bytes descriptor is loaded, there will be a short time
+interval in between, which may cause fake false. Consider read register
+is quite slow compared with IP read 32byte from memory, read twice
+slot_status can avoid this situation.
+
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/nf_conntrack_bridge.c | 12 ++++++------
- net/ipv6/netfilter.c                       | 12 ++++++------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ .../media/platform/nxp/imx-jpeg/mxc-jpeg-hw.h |  1 +
+ .../media/platform/nxp/imx-jpeg/mxc-jpeg.c    | 31 ++++++++++++++++++-
+ 2 files changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
-index fbdb1ad448c3a..c63ad63db25ed 100644
---- a/net/bridge/netfilter/nf_conntrack_bridge.c
-+++ b/net/bridge/netfilter/nf_conntrack_bridge.c
-@@ -59,19 +59,19 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
- 		struct ip_fraglist_iter iter;
- 		struct sk_buff *frag;
+diff --git a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.h b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.h
+index d579c804b0479..adb93e977be91 100644
+--- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.h
++++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.h
+@@ -89,6 +89,7 @@
+ /* SLOT_STATUS fields for slots 0..3 */
+ #define SLOT_STATUS_FRMDONE			(0x1 << 3)
+ #define SLOT_STATUS_ENC_CONFIG_ERR		(0x1 << 8)
++#define SLOT_STATUS_ONGOING			(0x1 << 31)
  
--		if (first_len - hlen > mtu ||
--		    skb_headroom(skb) < ll_rs)
-+		if (first_len - hlen > mtu)
- 			goto blackhole;
+ /* SLOT_IRQ_EN fields TBD */
  
--		if (skb_cloned(skb))
-+		if (skb_cloned(skb) ||
-+		    skb_headroom(skb) < ll_rs)
- 			goto slow_path;
+diff --git a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
+index 8a25ea8905ae0..dce5620d29e47 100644
+--- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
++++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
+@@ -884,6 +884,34 @@ static u32 mxc_jpeg_get_plane_size(struct mxc_jpeg_q_data *q_data, u32 plane_no)
+ 	return size;
+ }
  
- 		skb_walk_frags(skb, frag) {
--			if (frag->len > mtu ||
--			    skb_headroom(frag) < hlen + ll_rs)
-+			if (frag->len > mtu)
- 				goto blackhole;
- 
--			if (skb_shared(frag))
-+			if (skb_shared(frag) ||
-+			    skb_headroom(frag) < hlen + ll_rs)
- 				goto slow_path;
- 		}
- 
-diff --git a/net/ipv6/netfilter.c b/net/ipv6/netfilter.c
-index 118e834e91902..064163b41cbf6 100644
---- a/net/ipv6/netfilter.c
-+++ b/net/ipv6/netfilter.c
-@@ -163,20 +163,20 @@ int br_ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
- 		struct ip6_fraglist_iter iter;
- 		struct sk_buff *frag2;
- 
--		if (first_len - hlen > mtu ||
--		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
-+		if (first_len - hlen > mtu)
- 			goto blackhole;
- 
--		if (skb_cloned(skb))
-+		if (skb_cloned(skb) ||
-+		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
- 			goto slow_path;
- 
- 		skb_walk_frags(skb, frag2) {
--			if (frag2->len > mtu ||
--			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
-+			if (frag2->len > mtu)
- 				goto blackhole;
- 
- 			/* Partially cloned skb? */
--			if (skb_shared(frag2))
-+			if (skb_shared(frag2) ||
-+			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
- 				goto slow_path;
- 		}
- 
++static bool mxc_dec_is_ongoing(struct mxc_jpeg_ctx *ctx)
++{
++	struct mxc_jpeg_dev *jpeg = ctx->mxc_jpeg;
++	u32 curr_desc;
++	u32 slot_status;
++
++	curr_desc = readl(jpeg->base_reg + MXC_SLOT_OFFSET(ctx->slot, SLOT_CUR_DESCPT_PTR));
++	if (curr_desc == jpeg->slot_data.cfg_desc_handle)
++		return true;
++
++	slot_status = readl(jpeg->base_reg + MXC_SLOT_OFFSET(ctx->slot, SLOT_STATUS));
++	if (slot_status & SLOT_STATUS_ONGOING)
++		return true;
++
++	/*
++	 * The curr_desc register is updated when next_descpt_ptr is loaded,
++	 * the ongoing bit of slot_status is set when the 32 bytes descriptor is loaded.
++	 * So there will be a short time interval in between, which may cause fake false.
++	 * Consider read register is quite slow compared with IP read 32byte from memory,
++	 * read twice slot_status can avoid this situation.
++	 */
++	slot_status = readl(jpeg->base_reg + MXC_SLOT_OFFSET(ctx->slot, SLOT_STATUS));
++	if (slot_status & SLOT_STATUS_ONGOING)
++		return true;
++
++	return false;
++}
++
+ static irqreturn_t mxc_jpeg_dec_irq(int irq, void *priv)
+ {
+ 	struct mxc_jpeg_dev *jpeg = priv;
+@@ -953,7 +981,8 @@ static irqreturn_t mxc_jpeg_dec_irq(int irq, void *priv)
+ 		mxc_jpeg_enc_mode_go(dev, reg, mxc_jpeg_is_extended_sequential(q_data->fmt));
+ 		goto job_unlock;
+ 	}
+-	if (jpeg->mode == MXC_JPEG_DECODE && jpeg_src_buf->dht_needed) {
++	if (jpeg->mode == MXC_JPEG_DECODE && jpeg_src_buf->dht_needed &&
++	    mxc_dec_is_ongoing(ctx)) {
+ 		jpeg_src_buf->dht_needed = false;
+ 		dev_dbg(dev, "Decoder DHT cfg finished. Start decoding...\n");
+ 		goto job_unlock;
 -- 
 2.39.5
 
