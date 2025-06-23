@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6B73FB1B;
-	Mon, 23 Jun 2025 21:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F047B1AD3FA;
+	Mon, 23 Jun 2025 21:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715756; cv=none; b=spO2X0m1An+TWqKm/5uKwSiYTQyZ0TxoYqAh/cHNU4v87+g3f3/JWA03ysjymW+A5TVTmNSTTK8dV55h4EIEjIiy07XwX5KlylAU86S8yRraI0gH6iVF4pmJjtbB+BrbAdzwSU/9qnMs/dhS9rpY/I0vwEzu/YUU2QWY1C0Zj64=
+	t=1750715759; cv=none; b=rtkpxmQTxhT44i6kG6xeYRAzRExzd8RLRTMEMb0X6KlWiUuk3XK1qS7bce76rCLjlMcaNlfrepfMELrK+h23SF+7CkDUmnvX5FItEiDo0yoG2s0HUv8fDha7IGUHFT4f3yOkV77g0v66kTIGv0+HVsr29K97OpJHwzOMPK7Zbj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715756; c=relaxed/simple;
-	bh=qtbesaYpnjHqh1An9KtbgwI6h8dKoS4DyGuP/upngXo=;
+	s=arc-20240116; t=1750715759; c=relaxed/simple;
+	bh=c8auwU4uCyW4j1csV2dEiOXyrb1E59ujc3Jqx+ZZ88M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QN6yZ8Lejnf0QuQKcyTjiXMIh7At0qrUja87t5U114kyVRE8wZ3L8//3gzaba1iddlO6q10A4kykBL75QnN6jQlplmoIJ/UR5RbQXV+OIedRYPjOlOyM9R3zoqGOIyYo4xHtJ53HHWBis7etrhiNlO5jnqg9sb5Ub5CXv6QSMzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONUMpYJR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hJyj7zWz6JN0ZWWO2KUdnbnRlG/95qQPEBDK8e+d5N4fEfmVF/nlA645PRpucYpmLkMNOW4hMZWGYO7hFywzVPl059BXxlYOUsyi1H5dOXMH5Cz76HlZkMz96PUS1MJQiGFTxkjmgv0u0Z1Uvk7aP60dJywYywBC9lRIRNUjOQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/aRIYtq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONUMpYJR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C6AC4CEEA;
-	Mon, 23 Jun 2025 21:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/aRIYtq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F7AC4CEED;
+	Mon, 23 Jun 2025 21:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715756;
-	bh=qtbesaYpnjHqh1An9KtbgwI6h8dKoS4DyGuP/upngXo=;
+	s=korg; t=1750715758;
+	bh=c8auwU4uCyW4j1csV2dEiOXyrb1E59ujc3Jqx+ZZ88M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ONUMpYJRnU7ygmPGtlgSY3DQe/PMDDYnP3UPkD+HmEdGO6c7vnO0astEndwUC/z4u
-	 tTOed/ZeIePURwHbDv+LGwooo4vYDGIB544u9Lrh7foYK6ay/Ybo3V5jf/gNvdDTwh
-	 Lho2az5cluE6eh1EfOLF0k6Tf1zv0pyCw8MRbkaE=
+	b=f/aRIYtqzQ4wYJsNRQlhBLmAlrKTOATEqQx17Xa4AqnNgRQmpkyhIaHXi9KWJ/AGi
+	 GZE5iLhXuRNlE4WHe4OmBeSnqTNeAyxCJPnGI+wMti6xvLzdGguPS4b9OYvV4f51l2
+	 h6KoeKgzjfgLBYZeknapHOqprTteOGl3vg+vOi4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Malat <oss@malat.biz>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 205/414] sctp: Do not wake readers in __sctp_write_space()
-Date: Mon, 23 Jun 2025 15:05:42 +0200
-Message-ID: <20250623130647.131360971@linuxfoundation.org>
+	stable@kernel.org,
+	Dexuan Cui <decui@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 219/290] scsi: storvsc: Increase the timeouts to storvsc_timeout
+Date: Mon, 23 Jun 2025 15:08:00 +0200
+Message-ID: <20250623130633.517678126@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +48,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Malat <oss@malat.biz>
+From: Dexuan Cui <decui@microsoft.com>
 
-[ Upstream commit af295892a7abbf05a3c2ba7abc4d81bb448623d6 ]
+commit b2f966568faaad326de97481096d0f3dc0971c43 upstream.
 
-Function __sctp_write_space() doesn't set poll key, which leads to
-ep_poll_callback() waking up all waiters, not only these waiting
-for the socket being writable. Set the key properly using
-wake_up_interruptible_poll(), which is preferred over the sync
-variant, as writers are not woken up before at least half of the
-queue is available. Also, TCP does the same.
+Currently storvsc_timeout is only used in storvsc_sdev_configure(), and
+5s and 10s are used elsewhere. It turns out that rarely the 5s is not
+enough on Azure, so let's use storvsc_timeout everywhere.
 
-Signed-off-by: Petr Malat <oss@malat.biz>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250516081727.1361451-1-oss@malat.biz
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In case a timeout happens and storvsc_channel_init() returns an error,
+close the VMBus channel so that any host-to-guest messages in the
+channel's ringbuffer, which might come late, can be safely ignored.
+
+Add a "const" to storvsc_timeout.
+
+Cc: stable@kernel.org
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Link: https://lore.kernel.org/r/1749243459-10419-1-git-send-email-decui@microsoft.com
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/socket.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/storvsc_drv.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 53725ee7ba06d..b301d64d9d80f 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -9100,7 +9100,8 @@ static void __sctp_write_space(struct sctp_association *asoc)
- 		wq = rcu_dereference(sk->sk_wq);
- 		if (wq) {
- 			if (waitqueue_active(&wq->wait))
--				wake_up_interruptible(&wq->wait);
-+				wake_up_interruptible_poll(&wq->wait, EPOLLOUT |
-+						EPOLLWRNORM | EPOLLWRBAND);
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -362,7 +362,7 @@ MODULE_PARM_DESC(ring_avail_percent_lowa
+ /*
+  * Timeout in seconds for all devices managed by this driver.
+  */
+-static int storvsc_timeout = 180;
++static const int storvsc_timeout = 180;
  
- 			/* Note that we try to include the Async I/O support
- 			 * here by modeling from the current TCP/UDP code.
--- 
-2.39.5
-
+ #if IS_ENABLED(CONFIG_SCSI_FC_ATTRS)
+ static struct scsi_transport_template *fc_transport_template;
+@@ -768,7 +768,7 @@ static void  handle_multichannel_storage
+ 		return;
+ 	}
+ 
+-	t = wait_for_completion_timeout(&request->wait_event, 10*HZ);
++	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
+ 	if (t == 0) {
+ 		dev_err(dev, "Failed to create sub-channel: timed out\n");
+ 		return;
+@@ -833,7 +833,7 @@ static int storvsc_execute_vstor_op(stru
+ 	if (ret != 0)
+ 		return ret;
+ 
+-	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
++	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
+ 	if (t == 0)
+ 		return -ETIMEDOUT;
+ 
+@@ -1351,6 +1351,8 @@ static int storvsc_connect_to_vsp(struct
+ 		return ret;
+ 
+ 	ret = storvsc_channel_init(device, is_fc);
++	if (ret)
++		vmbus_close(device->channel);
+ 
+ 	return ret;
+ }
+@@ -1668,7 +1670,7 @@ static int storvsc_host_reset_handler(st
+ 	if (ret != 0)
+ 		return FAILED;
+ 
+-	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
++	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
+ 	if (t == 0)
+ 		return TIMEOUT_ERROR;
+ 
 
 
