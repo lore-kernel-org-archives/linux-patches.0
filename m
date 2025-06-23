@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972F5221DBD;
-	Mon, 23 Jun 2025 21:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B9E221DBD;
+	Mon, 23 Jun 2025 21:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712898; cv=none; b=ZeVCONwgyYQykBTfgFjnETFBP92Scp5P4fvWZx0WVXWyWhz4vdoYhIqeLdN2um2pOygdxDsv0R3dP/l9IV9sdenYKIXTYc1HmwX0Fu87eTpW+8OhoA1zsiFIxtVyurg66vJkvvmEksmd2zfxCSkVDexI6gUzdHXCiCGMOp5GtNQ=
+	t=1750712901; cv=none; b=HfnsnUyGNFXOgppoqiD18dh+5h5Nry4UtFRzPJ5qhdKrSquQ1GO/UkZk10Z3A/I9lF9IoAwF8ON1wrOi7Ee4uMkbkB0FBZK4xQnrH4b3kKd8wAI28CLUWSZYd5mmAZzU77cNREoVTQobIYKXVymrXgL+hX4zAYmHOrsEh8b/FdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712898; c=relaxed/simple;
-	bh=/1ff1EVy0sv4rkVGRoMzZXKaas1x2bXZn7EDZr959ys=;
+	s=arc-20240116; t=1750712901; c=relaxed/simple;
+	bh=1eaTVA4lRtswM8m9Pz+iahLRHgGhO2L/pWGdcB8seas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b9TI8VE1ZFQrZ0nQuJlDMmTXOoNWImrayPu7ob8FZ+3mlFyg7r79kVFgicrJDXAPvlS4Xym9RmXqiLKI13fpTmZVE27zBmT9cIuH/36iI4T05x1U0Q1kJdaHNlDreCFlx0KfHwrKZ8Ik5q/EgIPvCHUc0vNs2snQWAoE+nypNSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTikezPr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K4E+fbLkyptQ+gl6D/eGVvAFBqwoqmaROfQHcjvOxWRTPUJWhUf1Znn0EfP02+Lg5fkEjarS+MlGIhl2XltxFAi3HQdcVct/X1kgi0IpJyoPRBswVV8S4mUS010iB0fYGBWnMCDPEQyBL3vHwOlmB19Z4HQfnDD5dwePfcztZMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TsOS9mu7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTikezPr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323AAC4CEEA;
-	Mon, 23 Jun 2025 21:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TsOS9mu7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9A9C4CEEA;
+	Mon, 23 Jun 2025 21:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712898;
-	bh=/1ff1EVy0sv4rkVGRoMzZXKaas1x2bXZn7EDZr959ys=;
+	s=korg; t=1750712900;
+	bh=1eaTVA4lRtswM8m9Pz+iahLRHgGhO2L/pWGdcB8seas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QTikezPrxfKaHzJsod7m+U5NjxH7wLWjPUyyGBelOBm1DqK26u30u+smgLvpizlUm
-	 5x5FRCA2jkFhP+7WXtd81iRpbsnN8JV5/vy8uaBdr+pJ7v7kOXOJqGDl9XHXgW1nN8
-	 voG2eSu84SjjZoJPQApC18EJK7ODVPDn+HYoMj4o=
+	b=TsOS9mu7hIuXjRi9Xo2CXmhfWD3PNTyVNS04bGWns9JszRGOSLyoemZAij+g5mhLD
+	 q0l6tIeiKQISgseoiU6w2Lj7iKOQJVjfmuzPKWZc9av/6nfBMmok21YVChADoxYty7
+	 nvtfPIMqOWFFJRX+4/OQiqoxRZmi9VigJg/bFKEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amber Lin <Amber.Lin@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jan Prusakowski <jprusakowski@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 154/222] drm/amdkfd: Set SDMA_RLCx_IB_CNTL/SWITCH_INSIDE_IB
-Date: Mon, 23 Jun 2025 15:08:09 +0200
-Message-ID: <20250623130616.715009259@linuxfoundation.org>
+Subject: [PATCH 6.1 066/508] f2fs: fix to detect gcing page in f2fs_is_cp_guaranteed()
+Date: Mon, 23 Jun 2025 15:01:51 +0200
+Message-ID: <20250623130646.866817854@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +48,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amber Lin <Amber.Lin@amd.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit ab9fcc6362e0699fc1150aa1d8503c40fce2c1e1 ]
+[ Upstream commit aa1be8dd64163eca4dde7fd2557eb19927a06a47 ]
 
-When submitting MQD to CP, set SDMA_RLCx_IB_CNTL/SWITCH_INSIDE_IB bit so
-it'll allow SDMA preemption if there is a massive command buffer of
-long-running SDMA commands.
+Jan Prusakowski reported a f2fs bug as below:
 
-Signed-off-by: Amber Lin <Amber.Lin@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+f2fs/007 will hang kernel during testing w/ below configs:
+
+kernel 6.12.18 (from pixel-kernel/android16-6.12)
+export MKFS_OPTIONS="-O encrypt -O extra_attr -O project_quota -O quota"
+export F2FS_MOUNT_OPTIONS="test_dummy_encryption,discard,fsync_mode=nobarrier,reserve_root=32768,checkpoint_merge,atgc"
+
+cat /proc/<umount_proc_id>/stack
+f2fs_wait_on_all_pages+0xa3/0x130
+do_checkpoint+0x40c/0x5d0
+f2fs_write_checkpoint+0x258/0x550
+kill_f2fs_super+0x14f/0x190
+deactivate_locked_super+0x30/0xb0
+cleanup_mnt+0xba/0x150
+task_work_run+0x59/0xa0
+syscall_exit_to_user_mode+0x12d/0x130
+do_syscall_64+0x57/0x110
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+cat /sys/kernel/debug/f2fs/status
+
+  - IO_W (CP: -256, Data:  256, Flush: (   0    0    1), Discard: (   0    0)) cmd:    0 undiscard:   0
+
+CP IOs reference count becomes negative.
+
+The root cause is:
+
+After 4961acdd65c9 ("f2fs: fix to tag gcing flag on page during block
+migration"), we will tag page w/ gcing flag for raw page of cluster
+during its migration.
+
+However, if the inode is both encrypted and compressed, during
+ioc_decompress(), it will tag page w/ gcing flag, and it increase
+F2FS_WB_DATA reference count:
+- f2fs_write_multi_page
+ - f2fs_write_raw_page
+  - f2fs_write_single_page
+   - do_write_page
+    - f2fs_submit_page_write
+     - WB_DATA_TYPE(bio_page, fio->compressed_page)
+     : bio_page is encrypted, so mapping is NULL, and fio->compressed_page
+       is NULL, it returns F2FS_WB_DATA
+     - inc_page_count(.., F2FS_WB_DATA)
+
+Then, during end_io(), it decrease F2FS_WB_CP_DATA reference count:
+- f2fs_write_end_io
+ - f2fs_compress_write_end_io
+  - fscrypt_pagecache_folio
+  : get raw page from encrypted page
+  - WB_DATA_TYPE(&folio->page, false)
+  : raw page has gcing flag, it returns F2FS_WB_CP_DATA
+  - dec_page_count(.., F2FS_WB_CP_DATA)
+
+In order to fix this issue, we need to detect gcing flag in raw page
+in f2fs_is_cp_guaranteed().
+
+Fixes: 4961acdd65c9 ("f2fs: fix to tag gcing flag on page during block migration")
+Reported-by: Jan Prusakowski <jprusakowski@google.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/f2fs/data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-index d978fcac26651..4110cdc71f045 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -387,6 +387,10 @@ static void update_mqd_sdma(struct mqd_manager *mm, void *mqd,
- 	m->sdma_engine_id = q->sdma_engine_id;
- 	m->sdma_queue_id = q->sdma_queue_id;
- 	m->sdmax_rlcx_dummy_reg = SDMA_RLC_DUMMY_DEFAULT;
-+	/* Allow context switch so we don't cross-process starve with a massive
-+	 * command buffer of long-running SDMA commands
-+	 */
-+	m->sdmax_rlcx_ib_cntl |= SDMA0_GFX_IB_CNTL__SWITCH_INSIDE_IB_MASK;
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 2ae682f8d0c8e..7b65766d365f1 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -57,7 +57,7 @@ bool f2fs_is_cp_guaranteed(struct page *page)
+ 	struct f2fs_sb_info *sbi;
  
- 	q->is_active = QUEUE_IS_ACTIVE(*q);
- }
+ 	if (fscrypt_is_bounce_page(page))
+-		return false;
++		return page_private_gcing(fscrypt_pagecache_page(page));
+ 
+ 	inode = mapping->host;
+ 	sbi = F2FS_I_SB(inode);
 -- 
 2.39.5
 
