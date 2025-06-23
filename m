@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FAB1E5B71;
-	Mon, 23 Jun 2025 21:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0BD1ACEDA;
+	Mon, 23 Jun 2025 21:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713726; cv=none; b=piMFA/pDAAVRNHKw+nFSGk4T6lrWEYh5PlRrDg026im767Bb/O/00Ur43+7u3AJPWTFcMRa56KnK9nIkPwjK6v6aUTNuudcudxFLJHebYoxuN/daENfY8wYDVMfaiVyhr1pA6hBdZIC8bvuCGPFwN/zREVQwxRzhhnd+Phv3SBY=
+	t=1750713729; cv=none; b=OFSzLrDpXaMaHj6FIMRUYymHYYuBEXHMx6LH3tVI7IBViW707M324m13iaml0TC4AzvFjCnX6paGk0foIp5Q9NRm5miB3b8SmKl848WhT3pX5qsoYBOuk1OPYJ2zUmTqggsIKjxY8pwswmN7Dgw5hOeZJbf5hBvNT5A0L2o65Vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713726; c=relaxed/simple;
-	bh=wN8L8tc+daTOMVwxcL0jZZNVA/Tpf3pRbrHL8Ny3J7k=;
+	s=arc-20240116; t=1750713729; c=relaxed/simple;
+	bh=OgYjDORQxV1llXdfrZ4ofmli5S5njiTSYl05idCJrtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CjKjIkiC3ylP/VCaSFQyCIT/KvsiUD2VrtihoGPO3Snl4MViT/CP42VjUBY/nkttsGud1/azFFlTVvl0gqluy57whTcHFqzlD8JShRCOgNNuaVUfMBva/SQdqMSmy5X5rYJH2Eha4WnmiBcupUpRKr+NZ+5Lr+MKXqvDVYXsHQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDResPVc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P6siMvlmmiqMIhHfeyFCoAt4Hz/WcC1wtNPubEJBegqgTmyelp6cGxepV+C8PZ/ZF6dt8eWKOKVYE85lomUHTU4wTiW3Nnt/fgfSG4UNjMGF6ypIkOmrjLSfmKjGOl2P+Cus7Dc4ZYGV3NdJS21T0ghmaQV/ef3M20eBJhHr8Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIqPn+nZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDResPVc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59EC4C4CEEA;
-	Mon, 23 Jun 2025 21:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIqPn+nZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C57C4CEEA;
+	Mon, 23 Jun 2025 21:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713726;
-	bh=wN8L8tc+daTOMVwxcL0jZZNVA/Tpf3pRbrHL8Ny3J7k=;
+	s=korg; t=1750713729;
+	bh=OgYjDORQxV1llXdfrZ4ofmli5S5njiTSYl05idCJrtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDResPVc8yJAK+zksHx3z9k1u+Qu0qcE3nLaOk/IicGfxfU+tBCKpbhk4yyURtMxr
-	 kfqIyEV8QHgC2A8CtUWMXQ1QQvhpI5WyvBaNLll1I3ppf/ME33b/sFn135TVlYsN43
-	 jO6PZsfZY3tWu+2qStFnWtHlhfLhjbx0tbwL+2F4=
+	b=vIqPn+nZ769LFkoIS7IT8WyqkdlYxaSEup43Ew8fEgF5uig7JJlaRH6xHKHdF9Tls
+	 CUcjPACFBkGVCtpsj7umNV+heMaNBW7GaCyNTm+7auAazpqhFnKctE/kHYuVvoW+bV
+	 BziraUdOMBZdOgumr3nR9ttRYWqhiSyrGIH/rncA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 202/222] wifi: carl9170: do not ping device which has failed to load firmware
-Date: Mon, 23 Jun 2025 15:08:57 +0200
-Message-ID: <20250623130618.348486975@linuxfoundation.org>
+Subject: [PATCH 5.15 130/411] pmdomain: core: Fix error checking in genpd_dev_pm_attach_by_id()
+Date: Mon, 23 Jun 2025 15:04:34 +0200
+Message-ID: <20250623130636.842468519@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 15d25307692312cec4b57052da73387f91a2e870 ]
+[ Upstream commit 0f5757667ec0aaf2456c3b76fcf0c6c3ea3591fe ]
 
-Syzkaller reports [1, 2] crashes caused by an attempts to ping
-the device which has failed to load firmware. Since such a device
-doesn't pass 'ieee80211_register_hw()', an internal workqueue
-managed by 'ieee80211_queue_work()' is not yet created and an
-attempt to queue work on it causes null-ptr-deref.
+The error checking for of_count_phandle_with_args() does not handle
+negative error codes correctly.  The problem is that "index" is a u32 so
+in the condition "if (index >= num_domains)" negative error codes stored
+in "num_domains" are type promoted to very high positive values and
+"index" is always going to be valid.
 
-[1] https://syzkaller.appspot.com/bug?extid=9a4aec827829942045ff
-[2] https://syzkaller.appspot.com/bug?extid=0d8afba53e8fb2633217
+Test for negative error codes first and then test if "index" is valid.
 
-Fixes: e4a668c59080 ("carl9170: fix spurious restart due to high latency")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Christian Lamparter <chunkeey@gmail.com>
-Link: https://patch.msgid.link/20250616181205.38883-1-dmantipov@yandex.ru
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 3ccf3f0cd197 ("PM / Domains: Enable genpd_dev_pm_attach_by_id|name() for single PM domain")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/aBxPQ8AI8N5v-7rL@stanley.mountain
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/carl9170/usb.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/base/power/domain.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/carl9170/usb.c b/drivers/net/wireless/ath/carl9170/usb.c
-index 98fdfa84b0a9a..d5d23b297fd94 100644
---- a/drivers/net/wireless/ath/carl9170/usb.c
-+++ b/drivers/net/wireless/ath/carl9170/usb.c
-@@ -438,14 +438,21 @@ static void carl9170_usb_rx_complete(struct urb *urb)
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index fda0a5e50a2d9..005ece1a658e5 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -2773,7 +2773,7 @@ struct device *genpd_dev_pm_attach_by_id(struct device *dev,
+ 	/* Verify that the index is within a valid range. */
+ 	num_domains = of_count_phandle_with_args(dev->of_node, "power-domains",
+ 						 "#power-domain-cells");
+-	if (index >= num_domains)
++	if (num_domains < 0 || index >= num_domains)
+ 		return NULL;
  
- 		if (atomic_read(&ar->rx_anch_urbs) == 0) {
- 			/*
--			 * The system is too slow to cope with
--			 * the enormous workload. We have simply
--			 * run out of active rx urbs and this
--			 * unfortunately leads to an unpredictable
--			 * device.
-+			 * At this point, either the system is too slow to
-+			 * cope with the enormous workload (so we have simply
-+			 * run out of active rx urbs and this unfortunately
-+			 * leads to an unpredictable device), or the device
-+			 * is not fully functional after an unsuccessful
-+			 * firmware loading attempts (so it doesn't pass
-+			 * ieee80211_register_hw() and there is no internal
-+			 * workqueue at all).
- 			 */
- 
--			ieee80211_queue_work(ar->hw, &ar->ping_work);
-+			if (ar->registered)
-+				ieee80211_queue_work(ar->hw, &ar->ping_work);
-+			else
-+				pr_warn_once("device %s is not registered\n",
-+					     dev_name(&ar->udev->dev));
- 		}
- 	} else {
- 		/*
+ 	/* Allocate and register device on the genpd bus. */
 -- 
 2.39.5
 
