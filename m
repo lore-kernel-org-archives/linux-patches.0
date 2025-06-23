@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9D33FB1B;
-	Mon, 23 Jun 2025 22:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE7E3FB1B;
+	Mon, 23 Jun 2025 22:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716208; cv=none; b=acT8r7LJNwKD1OFCQultBTj+8un4w7vaI2ClByRf8zx9RqpfnrFbAFvK6Pz8fbdW2Z0y/CgIGvUA9n8uli+sGCBdYy36r6Hq6mcaTsDKEzie8AQwQYm+dwJbBVco5sVBDrcti+EJ0142N+/sA0dcGo40Mrwq649Xe/je5YF2LqA=
+	t=1750716211; cv=none; b=s8pc3CVmzVEGKkB0aLC4RgO0BLMKojANLGjVDL74HyOYZym199KEr+H/QOfvGRYxKpyR3wXyv9B/MIiRIts/eGP2LJoBmBDwLmrZwjmw7vwzvJrOTQCXmU9LKEDK7jwr79dMfe2f8kNQDfdMMSnbNboFO4U/Fto+xnHKGx3iCPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716208; c=relaxed/simple;
-	bh=mqr4XFbkZ1tBbr0vy+9WPDwaxLRoXbGDltspGDtLpAk=;
+	s=arc-20240116; t=1750716211; c=relaxed/simple;
+	bh=JDERcSYk3lvqCErd6sKVVzXZjcgRzeR3v5rJ0FAaU+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X/0zmT7PycZkhqXhZhQ1F4dKwVG3bpDy+oZ6X8ppQJPsrCtUuyEYsZrxnYOAl3K4IAq//LY5zePpvXZSFc4PqpTTYHPHhuQN4+PvyT0K009sroOOVNRJfeVKvbxx3qljKVj02eRtuZcOUoeRVMl/NREm5PpAEXFPpL+tPfO2rZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkJ4Bbub; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VVvgA8lR49hLSJs0fEOFx8q88ITL5s44PnSZN1+rbazQueGq4YE2n5Bb6U9UVELmsbtS5/zUMP/5r48CQtHMf269a+Vw2LV9uzxvED1xC2OM/HcOTe07z7Wu5XwFQnQ/I/OyA41cUzqY2r5rpOXM60qmvEfq6QBfeW6LAB5JEH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vahki/B5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkJ4Bbub"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1313FC4CEEA;
-	Mon, 23 Jun 2025 22:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vahki/B5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECACBC4CEEA;
+	Mon, 23 Jun 2025 22:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716208;
-	bh=mqr4XFbkZ1tBbr0vy+9WPDwaxLRoXbGDltspGDtLpAk=;
+	s=korg; t=1750716211;
+	bh=JDERcSYk3lvqCErd6sKVVzXZjcgRzeR3v5rJ0FAaU+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mkJ4BbubmnW3mZN65+QnAuto773h3kte1Z6Bql4w0VhgzzAx1kMO4gmF8Ljgqh5Kb
-	 kzLBS/zcs9d2SCexjdy/7L8PAaqmFX5Lbg2QdvOWO6yemi/RnCFu9IAAwTuT63QTAp
-	 imb6XAGd0mfE4EjekE2LuqsbuphK2aQBPaOoEaz4=
+	b=vahki/B50CoMSEXCTqs/eanABxmTzXKL7Hg1fbuFAnYrcf5hwOn9Be/nf1Y+a7XT1
+	 F6XTbwDI1fD9j9vLHrMNV/ysNSFPRW48XA3D+XXtTVZ2rS0+ljfGer9WU+P+kQX1gZ
+	 zkjXLZzxoNBUVSr7JHsvNTG+sZwDoutFQ9uo+Vj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Metzmacher <metze@samba.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Yong Wang <yongwang@nvidia.com>,
+	Andy Roulin <aroulin@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 529/592] ksmbd: add free_transport ops in ksmbd connection
-Date: Mon, 23 Jun 2025 15:08:07 +0200
-Message-ID: <20250623130713.017800817@linuxfoundation.org>
+Subject: [PATCH 6.12 257/414] net: bridge: mcast: re-implement br_multicast_{enable, disable}_port functions
+Date: Mon, 23 Jun 2025 15:06:34 +0200
+Message-ID: <20250623130648.466210427@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,114 +51,174 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Yong Wang <yongwang@nvidia.com>
 
-[ Upstream commit a89f5fae998bdc4d0505306f93844c9ae059d50c ]
+[ Upstream commit 4b30ae9adb047dd0a7982975ec3933c529537026 ]
 
-free_transport function for tcp connection can be called from smbdirect.
-It will cause kernel oops. This patch add free_transport ops in ksmbd
-connection, and add each free_transports for tcp and smbdirect.
+When a bridge port STP state is changed from BLOCKING/DISABLED to
+FORWARDING, the port's igmp query timer will NOT re-arm itself if the
+bridge has been configured as per-VLAN multicast snooping.
 
-Fixes: 21a4e47578d4 ("ksmbd: fix use-after-free in __smb2_lease_break_noti()")
-Reviewed-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Solve this by choosing the correct multicast context(s) to enable/disable
+port multicast based on whether per-VLAN multicast snooping is enabled or
+not, i.e. using per-{port, VLAN} context in case of per-VLAN multicast
+snooping by re-implementing br_multicast_enable_port() and
+br_multicast_disable_port() functions.
+
+Before the patch, the IGMP query does not happen in the last step of the
+following test sequence, i.e. no growth for tx counter:
+ # ip link add name br1 up type bridge vlan_filtering 1 mcast_snooping 1 mcast_vlan_snooping 1 mcast_querier 1 mcast_stats_enabled 1
+ # bridge vlan global set vid 1 dev br1 mcast_snooping 1 mcast_querier 1 mcast_query_interval 100 mcast_startup_query_count 0
+ # ip link add name swp1 up master br1 type dummy
+ # bridge link set dev swp1 state 0
+ # ip -j -p stats show dev swp1 group xstats_slave subgroup bridge suite mcast | jq '.[]["multicast"]["igmp_queries"]["tx_v2"]'
+1
+ # sleep 1
+ # ip -j -p stats show dev swp1 group xstats_slave subgroup bridge suite mcast | jq '.[]["multicast"]["igmp_queries"]["tx_v2"]'
+1
+ # bridge link set dev swp1 state 3
+ # sleep 2
+ # ip -j -p stats show dev swp1 group xstats_slave subgroup bridge suite mcast | jq '.[]["multicast"]["igmp_queries"]["tx_v2"]'
+1
+
+After the patch, the IGMP query happens in the last step of the test:
+ # ip link add name br1 up type bridge vlan_filtering 1 mcast_snooping 1 mcast_vlan_snooping 1 mcast_querier 1 mcast_stats_enabled 1
+ # bridge vlan global set vid 1 dev br1 mcast_snooping 1 mcast_querier 1 mcast_query_interval 100 mcast_startup_query_count 0
+ # ip link add name swp1 up master br1 type dummy
+ # bridge link set dev swp1 state 0
+ # ip -j -p stats show dev swp1 group xstats_slave subgroup bridge suite mcast | jq '.[]["multicast"]["igmp_queries"]["tx_v2"]'
+1
+ # sleep 1
+ # ip -j -p stats show dev swp1 group xstats_slave subgroup bridge suite mcast | jq '.[]["multicast"]["igmp_queries"]["tx_v2"]'
+1
+ # bridge link set dev swp1 state 3
+ # sleep 2
+ # ip -j -p stats show dev swp1 group xstats_slave subgroup bridge suite mcast | jq '.[]["multicast"]["igmp_queries"]["tx_v2"]'
+3
+
+Signed-off-by: Yong Wang <yongwang@nvidia.com>
+Reviewed-by: Andy Roulin <aroulin@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c     |  2 +-
- fs/smb/server/connection.h     |  1 +
- fs/smb/server/transport_rdma.c | 10 ++++++++--
- fs/smb/server/transport_tcp.c  |  3 ++-
- 4 files changed, 12 insertions(+), 4 deletions(-)
+ net/bridge/br_multicast.c | 77 +++++++++++++++++++++++++++++++++++----
+ 1 file changed, 69 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index 83764c230e9d4..3f04a2977ba86 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -40,7 +40,7 @@ void ksmbd_conn_free(struct ksmbd_conn *conn)
- 	kvfree(conn->request_buf);
- 	kfree(conn->preauth_info);
- 	if (atomic_dec_and_test(&conn->refcnt)) {
--		ksmbd_free_transport(conn->transport);
-+		conn->transport->ops->free_transport(conn->transport);
- 		kfree(conn);
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index 7a91897ac6e87..733ff6b758f69 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -2105,12 +2105,17 @@ static void __br_multicast_enable_port_ctx(struct net_bridge_mcast_port *pmctx)
  	}
  }
-diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
-index 14620e147dda5..572102098c108 100644
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -132,6 +132,7 @@ struct ksmbd_transport_ops {
- 			  void *buf, unsigned int len,
- 			  struct smb2_buffer_desc_v1 *desc,
- 			  unsigned int desc_len);
-+	void (*free_transport)(struct ksmbd_transport *kt);
- };
  
- struct ksmbd_transport {
-diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
-index 4998df04ab95a..64a428a06ace0 100644
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -159,7 +159,8 @@ struct smb_direct_transport {
- };
+-void br_multicast_enable_port(struct net_bridge_port *port)
++static void br_multicast_enable_port_ctx(struct net_bridge_mcast_port *pmctx)
+ {
+-	struct net_bridge *br = port->br;
++	struct net_bridge *br = pmctx->port->br;
  
- #define KSMBD_TRANS(t) ((struct ksmbd_transport *)&((t)->transport))
--
-+#define SMBD_TRANS(t)	((struct smb_direct_transport *)container_of(t, \
-+				struct smb_direct_transport, transport))
- enum {
- 	SMB_DIRECT_MSG_NEGOTIATE_REQ = 0,
- 	SMB_DIRECT_MSG_DATA_TRANSFER
-@@ -410,6 +411,11 @@ static struct smb_direct_transport *alloc_transport(struct rdma_cm_id *cm_id)
- 	return NULL;
+ 	spin_lock_bh(&br->multicast_lock);
+-	__br_multicast_enable_port_ctx(&port->multicast_ctx);
++	if (br_multicast_port_ctx_is_vlan(pmctx) &&
++	    !(pmctx->vlan->priv_flags & BR_VLFLAG_MCAST_ENABLED)) {
++		spin_unlock_bh(&br->multicast_lock);
++		return;
++	}
++	__br_multicast_enable_port_ctx(pmctx);
+ 	spin_unlock_bh(&br->multicast_lock);
  }
  
-+static void smb_direct_free_transport(struct ksmbd_transport *kt)
+@@ -2137,11 +2142,67 @@ static void __br_multicast_disable_port_ctx(struct net_bridge_mcast_port *pmctx)
+ 	br_multicast_rport_del_notify(pmctx, del);
+ }
+ 
++static void br_multicast_disable_port_ctx(struct net_bridge_mcast_port *pmctx)
 +{
-+	kfree(SMBD_TRANS(kt));
++	struct net_bridge *br = pmctx->port->br;
++
++	spin_lock_bh(&br->multicast_lock);
++	if (br_multicast_port_ctx_is_vlan(pmctx) &&
++	    !(pmctx->vlan->priv_flags & BR_VLFLAG_MCAST_ENABLED)) {
++		spin_unlock_bh(&br->multicast_lock);
++		return;
++	}
++
++	__br_multicast_disable_port_ctx(pmctx);
++	spin_unlock_bh(&br->multicast_lock);
 +}
 +
- static void free_transport(struct smb_direct_transport *t)
++static void br_multicast_toggle_port(struct net_bridge_port *port, bool on)
++{
++#if IS_ENABLED(CONFIG_BRIDGE_VLAN_FILTERING)
++	if (br_opt_get(port->br, BROPT_MCAST_VLAN_SNOOPING_ENABLED)) {
++		struct net_bridge_vlan_group *vg;
++		struct net_bridge_vlan *vlan;
++
++		rcu_read_lock();
++		vg = nbp_vlan_group_rcu(port);
++		if (!vg) {
++			rcu_read_unlock();
++			return;
++		}
++
++		/* iterate each vlan, toggle vlan multicast context */
++		list_for_each_entry_rcu(vlan, &vg->vlan_list, vlist) {
++			struct net_bridge_mcast_port *pmctx =
++						&vlan->port_mcast_ctx;
++			u8 state = br_vlan_get_state(vlan);
++			/* enable vlan multicast context when state is
++			 * LEARNING or FORWARDING
++			 */
++			if (on && br_vlan_state_allowed(state, true))
++				br_multicast_enable_port_ctx(pmctx);
++			else
++				br_multicast_disable_port_ctx(pmctx);
++		}
++		rcu_read_unlock();
++		return;
++	}
++#endif
++	/* toggle port multicast context when vlan snooping is disabled */
++	if (on)
++		br_multicast_enable_port_ctx(&port->multicast_ctx);
++	else
++		br_multicast_disable_port_ctx(&port->multicast_ctx);
++}
++
++void br_multicast_enable_port(struct net_bridge_port *port)
++{
++	br_multicast_toggle_port(port, true);
++}
++
+ void br_multicast_disable_port(struct net_bridge_port *port)
  {
- 	struct smb_direct_recvmsg *recvmsg;
-@@ -455,7 +461,6 @@ static void free_transport(struct smb_direct_transport *t)
- 
- 	smb_direct_destroy_pools(t);
- 	ksmbd_conn_free(KSMBD_TRANS(t)->conn);
--	kfree(t);
+-	spin_lock_bh(&port->br->multicast_lock);
+-	__br_multicast_disable_port_ctx(&port->multicast_ctx);
+-	spin_unlock_bh(&port->br->multicast_lock);
++	br_multicast_toggle_port(port, false);
  }
  
- static struct smb_direct_sendmsg
-@@ -2281,4 +2286,5 @@ static const struct ksmbd_transport_ops ksmbd_smb_direct_transport_ops = {
- 	.read		= smb_direct_read,
- 	.rdma_read	= smb_direct_rdma_read,
- 	.rdma_write	= smb_direct_rdma_write,
-+	.free_transport = smb_direct_free_transport,
- };
-diff --git a/fs/smb/server/transport_tcp.c b/fs/smb/server/transport_tcp.c
-index abedf510899a7..4e9f98db9ff40 100644
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -93,7 +93,7 @@ static struct tcp_transport *alloc_transport(struct socket *client_sk)
- 	return t;
- }
+ static int __grp_src_delete_marked(struct net_bridge_port_group *pg)
+@@ -4330,9 +4391,9 @@ int br_multicast_toggle_vlan_snooping(struct net_bridge *br, bool on,
+ 		__br_multicast_open(&br->multicast_ctx);
+ 	list_for_each_entry(p, &br->port_list, list) {
+ 		if (on)
+-			br_multicast_disable_port(p);
++			br_multicast_disable_port_ctx(&p->multicast_ctx);
+ 		else
+-			br_multicast_enable_port(p);
++			br_multicast_enable_port_ctx(&p->multicast_ctx);
+ 	}
  
--void ksmbd_free_transport(struct ksmbd_transport *kt)
-+static void ksmbd_tcp_free_transport(struct ksmbd_transport *kt)
- {
- 	struct tcp_transport *t = TCP_TRANS(kt);
- 
-@@ -656,4 +656,5 @@ static const struct ksmbd_transport_ops ksmbd_tcp_transport_ops = {
- 	.read		= ksmbd_tcp_read,
- 	.writev		= ksmbd_tcp_writev,
- 	.disconnect	= ksmbd_tcp_disconnect,
-+	.free_transport = ksmbd_tcp_free_transport,
- };
+ 	list_for_each_entry(vlan, &vg->vlan_list, vlist)
 -- 
 2.39.5
 
