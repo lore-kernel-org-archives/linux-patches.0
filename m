@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFCF221FBE;
-	Mon, 23 Jun 2025 21:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BCC223DE5;
+	Mon, 23 Jun 2025 21:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715145; cv=none; b=kzxTTUM0RaosrSOn8X2AC5YgEj/5RR+kx/CcxurSeyDXSjq9DHC4yx5KZMPf7Td5D+6GpCfa2Pz4XZkvIhPkGLOEi8EOHob/aKf07E8fmBQPe+DWtOBykH0RQqhfdGTLz1izwZgd+6vuyjfK5yayM8fW+PTTPz4TJ+1Dg6aDu1A=
+	t=1750715147; cv=none; b=j8tpDVXTi/IlPcF9ToS59iHrY9cEYuiPtBTbcSuWujxIGNAeuxHt0r948fUQJznHgAI4CMrsQ1nsRzY+YXg9WypP9wJICVyPK3H/5K47pvgWSgx/o/COhTVrQ+Fs3hFFFsAqe3Ar/FU6v3Xe1r0g+KAIpDbmRzQ5lbKrdXErobI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715145; c=relaxed/simple;
-	bh=TAXIn/xfzdeGVPS55ow9w2WxgRESXuSqYMWLGC5gamQ=;
+	s=arc-20240116; t=1750715147; c=relaxed/simple;
+	bh=FDQICdolJtT/3eRNjvzhUz7+OMLQNPl6MfxyZ4apQzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MXPYJ4GmM/euvHsIJK6ztcOR76F+JSV3W0/ZtiYvI7uAAfpbmU2lTxnITjUwNLRoe42BeZM+SkMJ0/wBMSKvKqfw0nmuqUwdOpa6MvtoREb+1R1Nlg3U8T3IA7P8NlDrSwYAusuYUucKRowToW8LJzSTzri1H4WtmKszm4/uwY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhIWH9nK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IvtOz0QXtURNEtTYlhKSGTITc8j8m2x+S9kVC988ZsWB7GdUc96du39Hgqb6gbN5LtPBdJS0BMlfO7+DJM1tWGMIUNArX0dqI6l/U3nIXssxMnjNv/GGJC9zRycb6t+JD1BimykE3uvxxB//GQRrnwKnyXDtsja+nK1mFipYb40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1qWGh5A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhIWH9nK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A97C4CEEA;
-	Mon, 23 Jun 2025 21:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1qWGh5A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3999C4CEEA;
+	Mon, 23 Jun 2025 21:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715144;
-	bh=TAXIn/xfzdeGVPS55ow9w2WxgRESXuSqYMWLGC5gamQ=;
+	s=korg; t=1750715147;
+	bh=FDQICdolJtT/3eRNjvzhUz7+OMLQNPl6MfxyZ4apQzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MhIWH9nK7BIqQ2kbmZ5fCpmQywArdOpN+4uQrHRhiWVyUw7t1JyCm161dF570rpDk
-	 TdvJc+4EDTgYqh/+dKCzDXM550qLtGJO1tF+rYcypr0l/gBo+JKdLHOPwFnvcxX6bf
-	 s/qXN17erKcZgH79hmob1kUgWHvy9MiRCARtliyw=
+	b=u1qWGh5AYKyyKQHks1XUqHMeMUJtA3VRcIze0S+FyHw9U4zEpg5Zl0kHEtD9q1rKX
+	 lz7eHjVHTkgMsa36iZXouO3cT1t9n0BuJpVmku+Mad1ngIuIpflHvLa4AQReG16SZy
+	 nq8J0pBP1+3qOzYKRil5SpaT0GltCPzluJZW834c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stuart Hayes <stuart.w.hayes@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 202/290] platform/x86: dell_rbu: Fix list usage
-Date: Mon, 23 Jun 2025 15:07:43 +0200
-Message-ID: <20250623130633.009912944@linuxfoundation.org>
+	Tony Lindgren <tony@atomide.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Andreas Kemnade <andreas@kemnade.info>
+Subject: [PATCH 5.10 278/355] Revert "bus: ti-sysc: Probe for l4_wkup and l4_cfg interconnect devices first"
+Date: Mon, 23 Jun 2025 15:07:59 +0200
+Message-ID: <20250623130635.132509950@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,56 +47,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stuart Hayes <stuart.w.hayes@gmail.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit 61ce04601e0d8265ec6d2ffa6df5a7e1bce64854 ]
+[ Upstream commit 36305857b1ead8f6ca033a913162ebc09bee0b43 ]
 
-Pass the correct list head to list_for_each_entry*() when looping through
-the packet list.
+This reverts commit 4700a00755fb5a4bb5109128297d6fd2d1272ee6.
 
-Without this patch, reading the packet data via sysfs will show the data
-incorrectly (because it starts at the wrong packet), and clearing the
-packet list will result in a NULL pointer dereference.
+It breaks target-module@2b300050 ("ti,sysc-omap2") probe on AM62x in a case
+when minimally-configured system tries to network-boot:
 
-Fixes: d19f359fbdc6 ("platform/x86: dell_rbu: don't open code list_for_each_entry*()")
-Signed-off-by: Stuart Hayes <stuart.w.hayes@gmail.com>
-Link: https://lore.kernel.org/r/20250609184659.7210-3-stuart.w.hayes@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+[    6.888776] probe of 2b300050.target-module returned 517 after 258 usecs
+[   17.129637] probe of 2b300050.target-module returned 517 after 708 usecs
+[   17.137397] platform 2b300050.target-module: deferred probe pending: (reason unknown)
+[   26.878471] Waiting up to 100 more seconds for network.
+
+There are minimal configurations possible when the deferred device is not
+being probed any more (because everything else has been successfully
+probed) and deferral lists are not processed any more.
+
+Stable mmc enumeration can be achieved by filling /aliases node properly
+(4700a00755fb commit's rationale).
+
+After revert:
+
+[    9.006816] IP-Config: Complete:
+[    9.010058]      device=lan0, ...
+
+Tested-by: Andreas Kemnade <andreas@kemnade.info> # GTA04, Panda, BT200
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20250401090643.2776793-1-alexander.sverdlin@siemens.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell_rbu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bus/ti-sysc.c | 49 -------------------------------------------
+ 1 file changed, 49 deletions(-)
 
-diff --git a/drivers/platform/x86/dell/dell_rbu.c b/drivers/platform/x86/dell/dell_rbu.c
-index 9f51e0fcab04e..4d2b5f6dd513f 100644
---- a/drivers/platform/x86/dell/dell_rbu.c
-+++ b/drivers/platform/x86/dell/dell_rbu.c
-@@ -292,7 +292,7 @@ static int packet_read_list(char *data, size_t * pread_length)
- 	remaining_bytes = *pread_length;
- 	bytes_read = rbu_data.packet_read_count;
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index b1aa793b9eeda..ed38c25fb0c5e 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -687,51 +687,6 @@ static int sysc_parse_and_check_child_range(struct sysc *ddata)
+ 	return 0;
+ }
  
--	list_for_each_entry(newpacket, (&packet_data_head.list)->next, list) {
-+	list_for_each_entry(newpacket, &packet_data_head.list, list) {
- 		bytes_copied = do_packet_read(pdest, newpacket,
- 			remaining_bytes, bytes_read, &temp_count);
- 		remaining_bytes -= bytes_copied;
-@@ -315,7 +315,7 @@ static void packet_empty_list(void)
- {
- 	struct packet_data *newpacket, *tmp;
+-/* Interconnect instances to probe before l4_per instances */
+-static struct resource early_bus_ranges[] = {
+-	/* am3/4 l4_wkup */
+-	{ .start = 0x44c00000, .end = 0x44c00000 + 0x300000, },
+-	/* omap4/5 and dra7 l4_cfg */
+-	{ .start = 0x4a000000, .end = 0x4a000000 + 0x300000, },
+-	/* omap4 l4_wkup */
+-	{ .start = 0x4a300000, .end = 0x4a300000 + 0x30000,  },
+-	/* omap5 and dra7 l4_wkup without dra7 dcan segment */
+-	{ .start = 0x4ae00000, .end = 0x4ae00000 + 0x30000,  },
+-};
+-
+-static atomic_t sysc_defer = ATOMIC_INIT(10);
+-
+-/**
+- * sysc_defer_non_critical - defer non_critical interconnect probing
+- * @ddata: device driver data
+- *
+- * We want to probe l4_cfg and l4_wkup interconnect instances before any
+- * l4_per instances as l4_per instances depend on resources on l4_cfg and
+- * l4_wkup interconnects.
+- */
+-static int sysc_defer_non_critical(struct sysc *ddata)
+-{
+-	struct resource *res;
+-	int i;
+-
+-	if (!atomic_read(&sysc_defer))
+-		return 0;
+-
+-	for (i = 0; i < ARRAY_SIZE(early_bus_ranges); i++) {
+-		res = &early_bus_ranges[i];
+-		if (ddata->module_pa >= res->start &&
+-		    ddata->module_pa <= res->end) {
+-			atomic_set(&sysc_defer, 0);
+-
+-			return 0;
+-		}
+-	}
+-
+-	atomic_dec_if_positive(&sysc_defer);
+-
+-	return -EPROBE_DEFER;
+-}
+-
+ static struct device_node *stdout_path;
  
--	list_for_each_entry_safe(newpacket, tmp, (&packet_data_head.list)->next, list) {
-+	list_for_each_entry_safe(newpacket, tmp, &packet_data_head.list, list) {
- 		list_del(&newpacket->list);
+ static void sysc_init_stdout_path(struct sysc *ddata)
+@@ -956,10 +911,6 @@ static int sysc_map_and_check_registers(struct sysc *ddata)
+ 	if (error)
+ 		return error;
  
- 		/*
+-	error = sysc_defer_non_critical(ddata);
+-	if (error)
+-		return error;
+-
+ 	sysc_check_children(ddata);
+ 
+ 	error = sysc_parse_registers(ddata);
 -- 
 2.39.5
 
