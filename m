@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981CC4C62;
-	Mon, 23 Jun 2025 21:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131D74C62;
+	Mon, 23 Jun 2025 21:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713336; cv=none; b=jQmRqL6GWl2Uv2WadksywmJaKnjOPy7+OGl3X5Z2xTQ5M60utYXrZxyxdw1vbw/xSD9VFfj2AhIIr1D30U7hUfltB97JLPVIGSnk1A1eGwN4iBpUx3oK269YYogxQJeoJOuHTdOTbf7to4JS9nJyKGavaIpu1lX8SFqTOSuCkm8=
+	t=1750713339; cv=none; b=YtW5JSkWnD2Wf0ucz4wAIy2WTfWBkf/cMkSSm2cB3jl791anQe1Yg6AWF1vqap08i7XV7AKsoJlTD+MOOOZFsPAULP4rhEdNNKWCn2KV3IMytN6B4VstN2M/X4JVjc+wuBwDH6QzJwZRF7HpFK9NhV828gFGOWofG28jCNH0FAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713336; c=relaxed/simple;
-	bh=v4E2duMZtlCs/YzcUt4gZ+bMgL6Quf1CV7oYHVSxooI=;
+	s=arc-20240116; t=1750713339; c=relaxed/simple;
+	bh=Vur2IcnS41a1tdoZZJ4D4yT9iw8xfITamPST31lBDOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JHVEkwOEHfYkfN7HPQFM6iMePoONAuNQDhdFQpIc8jbqu4PSVfQ2Z8Srz4hHgMLAE1FIoQ/jv3InX5G2WpvMMp4CVLWsHdNa3TDGlQXJdNCq5Q5tSibogiBwY2hT8AbE3mLSgLNo+2XBBHGpZPniD8SNEx4Si0SaJzAG1ktHolw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbCFx+Xk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LPcQ5yhJ9EKzIXk4fPaX2bJQDX4QMJmJn3I3w1bYdGkO7YUKa/H7XIpWoS8CnjGsbovfwMezwHgXGIuRS450XVbpZY6QBFPvMiq2Rzhgjmv1ZLmx2MQP+ZLlcd/C4StkGdO1YNsKQo4N3T1DWzxmNCeYgKobu5cQZoTiJ+uf/ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PP5wDpX7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbCFx+Xk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E84CC4CEEA;
-	Mon, 23 Jun 2025 21:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PP5wDpX7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97593C4CEEA;
+	Mon, 23 Jun 2025 21:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713336;
-	bh=v4E2duMZtlCs/YzcUt4gZ+bMgL6Quf1CV7oYHVSxooI=;
+	s=korg; t=1750713338;
+	bh=Vur2IcnS41a1tdoZZJ4D4yT9iw8xfITamPST31lBDOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbCFx+XkI3J7h5rYsxcuss4PHXzPjZHV6whmcYvghcyTQmcGKjoFRPM2B5E2P4xbK
-	 AHhNgw+RTP03s72wJm7Ew6x1jc1jJIxoDoa1e50p3Wt4HnqQ4/SJB7CoW7ssztQwoJ
-	 bm8iawpwn/pkr+4fnaeFFzxj+d19y8BMM2IyYPfM=
+	b=PP5wDpX7h1ExYWf2h8ztqfqj2rEmH5xSw1Snunn78wUwvs+IIZ8tqVunknp8zmhsR
+	 PvdJcngYZmEsVyPEFY+IH/HChXtEgcV1qqj2SrFN0IooGkX32UVsC6PR9nxpNNXYfl
+	 l+u0Vj8nzvxrmhCy1mQ8WKvAdiBLoOfZqk4e+e/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Rouven Czerwinski <rouven.czerwinski@linaro.org>,
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 181/222] tee: Prevent size calculation wraparound on 32-bit kernels
-Date: Mon, 23 Jun 2025 15:08:36 +0200
-Message-ID: <20250623130617.612346601@linuxfoundation.org>
+Subject: [PATCH 5.4 170/222] pinctrl: armada-37xx: propagate error from armada_37xx_gpio_get()
+Date: Mon, 23 Jun 2025 15:08:25 +0200
+Message-ID: <20250623130617.186242318@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
 References: <20250623130611.896514667@linuxfoundation.org>
@@ -52,85 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 39bb67edcc582b3b386a9ec983da67fa8a10ec03 ]
+[ Upstream commit 57273ff8bb16f3842c2597b5bbcd49e7fa12edf7 ]
 
-The current code around TEE_IOCTL_PARAM_SIZE() is a bit wrong on
-32-bit kernels: Multiplying a user-provided 32-bit value with the
-size of a structure can wrap around on such platforms.
+The regmap_read() function can fail, so propagate its error up to
+the stack instead of silently ignoring that.
 
-Fix it by using saturating arithmetic for the size calculation.
-
-This has no security consequences because, in all users of
-TEE_IOCTL_PARAM_SIZE(), the subsequent kcalloc() implicitly checks
-for wrapping.
-
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
-Tested-by: Rouven Czerwinski <rouven.czerwinski@linaro.org>
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-4-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/tee_core.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
-index 2db144d2d26f3..357944bc73b19 100644
---- a/drivers/tee/tee_core.c
-+++ b/drivers/tee/tee_core.c
-@@ -9,6 +9,7 @@
- #include <linux/fs.h>
- #include <linux/idr.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- #include <linux/tee_drv.h>
- #include <linux/uaccess.h>
-@@ -16,7 +17,7 @@
+diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+index 4df9dbad0e977..46e7e78d37632 100644
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -435,11 +435,14 @@ static int armada_37xx_gpio_get(struct gpio_chip *chip, unsigned int offset)
+ 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
+ 	unsigned int reg = INPUT_VAL;
+ 	unsigned int val, mask;
++	int ret;
  
- #define TEE_NUM_DEVICES	32
+ 	armada_37xx_update_reg(&reg, &offset);
+ 	mask = BIT(offset);
  
--#define TEE_IOCTL_PARAM_SIZE(x) (sizeof(struct tee_param) * (x))
-+#define TEE_IOCTL_PARAM_SIZE(x) (size_mul(sizeof(struct tee_param), (x)))
+-	regmap_read(info->regmap, reg, &val);
++	ret = regmap_read(info->regmap, reg, &val);
++	if (ret)
++		return ret;
  
- /*
-  * Unprivileged devices in the lower half range and privileged devices in
-@@ -327,7 +328,7 @@ static int tee_ioctl_open_session(struct tee_context *ctx,
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
- 
--	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
-+	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	if (arg.num_params) {
-@@ -398,7 +399,7 @@ static int tee_ioctl_invoke(struct tee_context *ctx,
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
- 
--	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
-+	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	if (arg.num_params) {
-@@ -532,7 +533,7 @@ static int tee_ioctl_supp_recv(struct tee_context *ctx,
- 	if (get_user(num_params, &uarg->num_params))
- 		return -EFAULT;
- 
--	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) != buf.buf_len)
-+	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
-@@ -631,7 +632,7 @@ static int tee_ioctl_supp_send(struct tee_context *ctx,
- 	    get_user(num_params, &uarg->num_params))
- 		return -EFAULT;
- 
--	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) > buf.buf_len)
-+	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) > buf.buf_len)
- 		return -EINVAL;
- 
- 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
+ 	return (val & mask) != 0;
+ }
 -- 
 2.39.5
 
