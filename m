@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C275F1EE019;
-	Mon, 23 Jun 2025 21:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B1F1EE019;
+	Mon, 23 Jun 2025 21:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712807; cv=none; b=D4Sfw6vInR9Y14OpUZkJRytvt7PZdxSMi0UmNggRHn0RD3YKfb8NJh0K7lPG32HwXQLdccYAbAanaiuD74zJ0Qbq+axiY9BUvk3+/nQxM500w/8+ELq3bckEgqqM40j35gNEQ2AYBnSSJHk50GCYDx/LBmDsgvF/hpxg92goYsE=
+	t=1750712810; cv=none; b=Q4/f7xvXDEZ53cRte1qp42wyCStqoKM5XdhixIOJt2bRtletaoKT0HrI3R+kMQ0CG8rzFHwA7OqbHB0XrtMU+RTlSuXuu3J6YDd0mvTpvK9SHwKsLuWiZiTm7oHwvOSh1W83Pj2TaEYlPK5fgWp3lcQCM6tLduA4X8OK/xuBmz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712807; c=relaxed/simple;
-	bh=HyN59UinQvZSEG6xkZ9NcJfA1zvoDpFADlg/K7h93ng=;
+	s=arc-20240116; t=1750712810; c=relaxed/simple;
+	bh=GdSAqOEmf+jUHTmFonVqiUIM4N9rqxzEeK/+tV3Kslk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XSzkvsMTbGsJKfFzZktoImj8vzkBaAKo0LNYB42xLhQMVQ5X3bVYsBnK2muDd8AxuBSbllNlNmgG/thlST6pvxyeCJJTINRDWIQyGg7fNpVhweuJ24nDL3JcGPmicwSnRYdlpKwQ9+pQ8JFv+1xr7Tj9xK9wprkOd9fih5wnq7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWEFPp7+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BhEWwlRArOO6pzIJ2aB148c6zefLZwhQodNiOr/QklIGKxkAN6r+KMs4bbMkjmSs1CgYIcMEofgr99MDH//l/bwbXtcBKEWkXR9Y9Kg1rqoImaPC/bA2zIIRkBhtfc2ZbcFHpbrUAv0XdfVf5gDFi5T2U3g96oVVy71JmBXygLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iINBepvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWEFPp7+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF48C4CEEA;
-	Mon, 23 Jun 2025 21:06:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iINBepvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61A2C4CEEA;
+	Mon, 23 Jun 2025 21:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712807;
-	bh=HyN59UinQvZSEG6xkZ9NcJfA1zvoDpFADlg/K7h93ng=;
+	s=korg; t=1750712810;
+	bh=GdSAqOEmf+jUHTmFonVqiUIM4N9rqxzEeK/+tV3Kslk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EWEFPp7+vGAM/uENac/CfB/bKYM5Ky4QBnLdZqSGljmrbQXa8IBq4s6Djkk6OC/M9
-	 ylo2P8GOVTrou1zaFgklj28zDJbwEikTf5pknYon2X8F1EBNDrLTQCNsVdMxKGYnih
-	 iR53CHLUUh1seGg8Z0rmM9A/8m9W7nPLDpbyHlY4=
+	b=iINBepvqUCiZjUFLaSOdK774QOxq3uVIIrhfn2ik9Y3YXezFhQcvyedrAfM5B8fCb
+	 qcUqXBZHgQyK7O9XpR2TAbqlEEa/37tPie8ot/A72y24l6BdaueT9YXbSZROJF+S66
+	 R5p01rzBFzM/jtV7DcCaPMxa2dSFWSjl6WjbIn+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
+	Ingo Saitz <ingo@hannover.ccc.de>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/508] wifi: rtw88: do not ignore hardware read error during DPK
-Date: Mon, 23 Jun 2025 15:01:46 +0200
-Message-ID: <20250623130646.743626961@linuxfoundation.org>
+Subject: [PATCH 5.15 090/411] randstruct: gcc-plugin: Fix attribute addition
+Date: Mon, 23 Jun 2025 15:03:54 +0200
+Message-ID: <20250623130635.711268680@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +48,136 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 20d3c19bd8f9b498173c198eadf54580c8caa336 ]
+[ Upstream commit f39f18f3c3531aa802b58a20d39d96e82eb96c14 ]
 
-In 'rtw8822c_dpk_cal_coef1()', do not ignore error returned
-by 'check_hw_ready()' but issue a warning to denote possible
-DPK issue. Compile tested only.
+Based on changes in the 2021 public version of the randstruct
+out-of-tree GCC plugin[1], more carefully update the attributes on
+resulting decls, to avoid tripping checks in GCC 15's
+comptypes_check_enum_int() when it has been configured with
+"--enable-checking=misc":
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+arch/arm64/kernel/kexec_image.c:132:14: internal compiler error: in comptypes_check_enum_int, at c/c-typeck.cc:1519
+  132 | const struct kexec_file_ops kexec_image_ops = {
+      |              ^~~~~~~~~~~~~~
+ internal_error(char const*, ...), at gcc/gcc/diagnostic-global-context.cc:517
+ fancy_abort(char const*, int, char const*), at gcc/gcc/diagnostic.cc:1803
+ comptypes_check_enum_int(tree_node*, tree_node*, bool*), at gcc/gcc/c/c-typeck.cc:1519
+ ...
 
-Fixes: 5227c2ee453d ("rtw88: 8822c: add SW DPK support")
-Suggested-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250415090720.194048-1-dmantipov@yandex.ru
+Link: https://archive.org/download/grsecurity/grsecurity-3.1-5.10.41-202105280954.patch.gz [1]
+Reported-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Closes: https://github.com/KSPP/linux/issues/367
+Closes: https://lore.kernel.org/lkml/20250530000646.104457-1-thiago.bauermann@linaro.org/
+Reported-by: Ingo Saitz <ingo@hannover.ccc.de>
+Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1104745
+Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
+Tested-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Link: https://lore.kernel.org/r/20250530221824.work.623-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/rtw8822c.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ scripts/gcc-plugins/gcc-common.h              | 32 +++++++++++++++++++
+ scripts/gcc-plugins/randomize_layout_plugin.c | 22 ++++++-------
+ 2 files changed, 43 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822c.c b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-index c6dacfde92005..d1b9031536496 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-@@ -3973,7 +3973,8 @@ static void rtw8822c_dpk_cal_coef1(struct rtw_dev *rtwdev)
- 	rtw_write32(rtwdev, REG_NCTL0, 0x00001148);
- 	rtw_write32(rtwdev, REG_NCTL0, 0x00001149);
+diff --git a/scripts/gcc-plugins/gcc-common.h b/scripts/gcc-plugins/gcc-common.h
+index cba1440993450..8658e9d220b69 100644
+--- a/scripts/gcc-plugins/gcc-common.h
++++ b/scripts/gcc-plugins/gcc-common.h
+@@ -137,6 +137,38 @@ static inline tree build_const_char_string(int len, const char *str)
+ 	return cstr;
+ }
  
--	check_hw_ready(rtwdev, 0x2d9c, MASKBYTE0, 0x55);
-+	if (!check_hw_ready(rtwdev, 0x2d9c, MASKBYTE0, 0x55))
-+		rtw_warn(rtwdev, "DPK stuck, performance may be suboptimal");
++static inline void __add_type_attr(tree type, const char *attr, tree args)
++{
++	tree oldattr;
++
++	if (type == NULL_TREE)
++		return;
++	oldattr = lookup_attribute(attr, TYPE_ATTRIBUTES(type));
++	if (oldattr != NULL_TREE) {
++		gcc_assert(TREE_VALUE(oldattr) == args || TREE_VALUE(TREE_VALUE(oldattr)) == TREE_VALUE(args));
++		return;
++	}
++
++	TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
++	TYPE_ATTRIBUTES(type) = tree_cons(get_identifier(attr), args, TYPE_ATTRIBUTES(type));
++}
++
++static inline void add_type_attr(tree type, const char *attr, tree args)
++{
++	tree main_variant = TYPE_MAIN_VARIANT(type);
++
++	__add_type_attr(TYPE_CANONICAL(type), attr, args);
++	__add_type_attr(TYPE_CANONICAL(main_variant), attr, args);
++	__add_type_attr(main_variant, attr, args);
++
++	for (type = TYPE_NEXT_VARIANT(main_variant); type; type = TYPE_NEXT_VARIANT(type)) {
++		if (!lookup_attribute(attr, TYPE_ATTRIBUTES(type)))
++			TYPE_ATTRIBUTES(type) = TYPE_ATTRIBUTES(main_variant);
++
++		__add_type_attr(TYPE_CANONICAL(type), attr, args);
++	}
++}
++
+ #define PASS_INFO(NAME, REF, ID, POS)		\
+ struct register_pass_info NAME##_pass_info = {	\
+ 	.pass = make_##NAME##_pass(),		\
+diff --git a/scripts/gcc-plugins/randomize_layout_plugin.c b/scripts/gcc-plugins/randomize_layout_plugin.c
+index a8595df5fb6e8..24155ce812664 100644
+--- a/scripts/gcc-plugins/randomize_layout_plugin.c
++++ b/scripts/gcc-plugins/randomize_layout_plugin.c
+@@ -95,6 +95,9 @@ static tree handle_randomize_layout_attr(tree *node, tree name, tree args, int f
  
- 	rtw_write8(rtwdev, 0x1b10, 0x0);
- 	rtw_write32_mask(rtwdev, REG_NCTL0, BIT_SUBPAGE, 0x0000000c);
+ 	if (TYPE_P(*node)) {
+ 		type = *node;
++	} else if (TREE_CODE(*node) == FIELD_DECL) {
++		*no_add_attrs = false;
++		return NULL_TREE;
+ 	} else {
+ 		gcc_assert(TREE_CODE(*node) == TYPE_DECL);
+ 		type = TREE_TYPE(*node);
+@@ -381,15 +384,14 @@ static int relayout_struct(tree type)
+ 		TREE_CHAIN(newtree[i]) = newtree[i+1];
+ 	TREE_CHAIN(newtree[num_fields - 1]) = NULL_TREE;
+ 
++	add_type_attr(type, "randomize_performed", NULL_TREE);
++	add_type_attr(type, "designated_init", NULL_TREE);
++	if (has_flexarray)
++		add_type_attr(type, "has_flexarray", NULL_TREE);
++
+ 	main_variant = TYPE_MAIN_VARIANT(type);
+-	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant)) {
++	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant))
+ 		TYPE_FIELDS(variant) = newtree[0];
+-		TYPE_ATTRIBUTES(variant) = copy_list(TYPE_ATTRIBUTES(variant));
+-		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("randomize_performed"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+-		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("designated_init"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+-		if (has_flexarray)
+-			TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("has_flexarray"), NULL_TREE, TYPE_ATTRIBUTES(type));
+-	}
+ 
+ 	/*
+ 	 * force a re-layout of the main variant
+@@ -457,10 +459,8 @@ static void randomize_type(tree type)
+ 	if (lookup_attribute("randomize_layout", TYPE_ATTRIBUTES(TYPE_MAIN_VARIANT(type))) || is_pure_ops_struct(type))
+ 		relayout_struct(type);
+ 
+-	for (variant = TYPE_MAIN_VARIANT(type); variant; variant = TYPE_NEXT_VARIANT(variant)) {
+-		TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
+-		TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("randomize_considered"), NULL_TREE, TYPE_ATTRIBUTES(type));
+-	}
++	add_type_attr(type, "randomize_considered", NULL_TREE);
++
+ #ifdef __DEBUG_PLUGIN
+ 	fprintf(stderr, "Marking randomize_considered on struct %s\n", ORIG_TYPE_NAME(type));
+ #ifdef __DEBUG_VERBOSE
 -- 
 2.39.5
 
