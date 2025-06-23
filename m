@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA2C136348;
-	Mon, 23 Jun 2025 21:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C12A19049B;
+	Mon, 23 Jun 2025 21:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715474; cv=none; b=aSo7oJBcJKA1HVIDiSx4cRhXCIaheSlbwkNZ87gUthcMxZeiIK/nbmhBdaVYn1nmcxvn2/FyF5YaFGoVo7/zs9/Ml+LRkxzyA8uWsTnRPmeFBrLzvkBg45Y9v4vXd36cFQibdWyCha0wVRPDXcHeZZ27dUZayZ+/yYpyBpVx6SY=
+	t=1750715477; cv=none; b=W8RM/yeZAq58J7xSSPyEzsiCCQY27Vm2D4fXNvR4ITE68grtd0G7KP2G6H62fFB5NDMhyWuSWidI0rbMLjWDRYbe+Wi78+9sc4gajkoi2IlVXy6xeJwodyyWiLvThI9eNXPQBsI90poIiGPxW0mP9zeMG2BNa1KkvLWDmBVFOEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715474; c=relaxed/simple;
-	bh=te/ZfzvNsx18SMN2N7DSpYGFQi8PkvVd8QXsQmd91IU=;
+	s=arc-20240116; t=1750715477; c=relaxed/simple;
+	bh=XhIrbpUoksmRlnWo5tsAoscKSh2Mqw9a+w0LsweCK9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pBphkl1TuPHWYXeE+cQI6lHP4NdvimYiak4KI71o3IN+cEIf7+AlF/R412IC0lNqDENF6DG0KFCbPTNtUPZAfu48YmtzL5f2dcFp+uvH5btqoUGCtFvTtaJ5IMrLLgsIBIpf7E9EpYOtajuplUuMB+w6fj1U2dueZn3MEoM5sfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJrQvBX7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZHDD1yxxgEi/IdK5zwwFc/xYplET22yoFY9FLhRUV2r300x4QKGOwWQ2j2gmCTyl+6Swy5RebFnLjeGi18sm2dU9ELv2mge4ysh7vMqNTXxXNdS7LS69NSi3l4aORsJZ6gAUSCzV4KnT2tEFT7SYXeZIcBi5AmdoO2cGgCbJa7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amZkpWs/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJrQvBX7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9D7C4CEEA;
-	Mon, 23 Jun 2025 21:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amZkpWs/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8016C4CEEA;
+	Mon, 23 Jun 2025 21:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715474;
-	bh=te/ZfzvNsx18SMN2N7DSpYGFQi8PkvVd8QXsQmd91IU=;
+	s=korg; t=1750715477;
+	bh=XhIrbpUoksmRlnWo5tsAoscKSh2Mqw9a+w0LsweCK9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cJrQvBX7iyHdDLloF3iE/ZDI79kuVO357OFWk85oaEuEd/mdvxRM1YZi1IXlEt7Oy
-	 WCnBlDW+imquXSpWIHar1X/xNwWp9kDCJGwpA23OvRI1UD3/9KS2OJ1R8fK2Emcvi8
-	 aTlLK8iNmqvcw6yFU7aATMzqTkb3hjjbArs6TZFA=
+	b=amZkpWs/CIqh3BsrNVPcGCko2RUvOml1EmIajAhamATDi6Vm/amJdoiojf7yZ6gDt
+	 zZzgizwbACfV7kQyIKO120fHSfiR33RY8dUGuuqkIV+JlM1/xGzgszpRb47faP08Uy
+	 bUuJb/+mSRL5RMaCkye1bI7SZmUEobBISJXYQW+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 222/290] net: clear the dst when changing skb protocol
-Date: Mon, 23 Jun 2025 15:08:03 +0200
-Message-ID: <20250623130633.604307701@linuxfoundation.org>
+	Daniel Wagner <wagi@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 263/508] nvmet-fcloop: access fcpreq only when holding reqlock
+Date: Mon, 23 Jun 2025 15:05:08 +0200
+Message-ID: <20250623130651.717531128@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,122 +45,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Daniel Wagner <wagi@kernel.org>
 
-commit ba9db6f907ac02215e30128770f85fbd7db2fcf9 upstream.
+[ Upstream commit 47a827cd7929d0550c3496d70b417fcb5649b27b ]
 
-A not-so-careful NAT46 BPF program can crash the kernel
-if it indiscriminately flips ingress packets from v4 to v6:
+The abort handling logic expects that the state and the fcpreq are only
+accessed when holding the reqlock lock.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-    ip6_rcv_core (net/ipv6/ip6_input.c:190:20)
-    ipv6_rcv (net/ipv6/ip6_input.c:306:8)
-    process_backlog (net/core/dev.c:6186:4)
-    napi_poll (net/core/dev.c:6906:9)
-    net_rx_action (net/core/dev.c:7028:13)
-    do_softirq (kernel/softirq.c:462:3)
-    netif_rx (net/core/dev.c:5326:3)
-    dev_loopback_xmit (net/core/dev.c:4015:2)
-    ip_mc_finish_output (net/ipv4/ip_output.c:363:8)
-    NF_HOOK (./include/linux/netfilter.h:314:9)
-    ip_mc_output (net/ipv4/ip_output.c:400:5)
-    dst_output (./include/net/dst.h:459:9)
-    ip_local_out (net/ipv4/ip_output.c:130:9)
-    ip_send_skb (net/ipv4/ip_output.c:1496:8)
-    udp_send_skb (net/ipv4/udp.c:1040:8)
-    udp_sendmsg (net/ipv4/udp.c:1328:10)
+While at it, only handle the aborts in the abort handler.
 
-The output interface has a 4->6 program attached at ingress.
-We try to loop the multicast skb back to the sending socket.
-Ingress BPF runs as part of netif_rx(), pushes a valid v6 hdr
-and changes skb->protocol to v6. We enter ip6_rcv_core which
-tries to use skb_dst(). But the dst is still an IPv4 one left
-after IPv4 mcast output.
-
-Clear the dst in all BPF helpers which change the protocol.
-Try to preserve metadata dsts, those may carry non-routing
-metadata.
-
-Cc: stable@vger.kernel.org
-Reviewed-by: Maciej Żenczykowski <maze@google.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Fixes: d219df60a70e ("bpf: Add ipip6 and ip6ip decap support for bpf_skb_adjust_room()")
-Fixes: 1b00e0dfe7d0 ("bpf: update skb->protocol in bpf_skb_net_grow")
-Fixes: 6578171a7ff0 ("bpf: add bpf_skb_change_proto helper")
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250610001245.1981782-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/nvme/target/fcloop.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -3229,6 +3229,13 @@ static const struct bpf_func_proto bpf_s
- 	.arg1_type      = ARG_PTR_TO_CTX,
- };
- 
-+static void bpf_skb_change_protocol(struct sk_buff *skb, u16 proto)
-+{
-+	skb->protocol = htons(proto);
-+	if (skb_valid_dst(skb))
-+		skb_dst_drop(skb);
-+}
-+
- static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
+diff --git a/drivers/nvme/target/fcloop.c b/drivers/nvme/target/fcloop.c
+index 787dfb3859a0d..74fffcab88155 100644
+--- a/drivers/nvme/target/fcloop.c
++++ b/drivers/nvme/target/fcloop.c
+@@ -613,12 +613,13 @@ fcloop_fcp_recv_work(struct work_struct *work)
  {
- 	/* Caller already did skb_cow() with len as headroom,
-@@ -3325,7 +3332,7 @@ static int bpf_skb_proto_4_to_6(struct s
- 		}
+ 	struct fcloop_fcpreq *tfcp_req =
+ 		container_of(work, struct fcloop_fcpreq, fcp_rcv_work);
+-	struct nvmefc_fcp_req *fcpreq = tfcp_req->fcpreq;
++	struct nvmefc_fcp_req *fcpreq;
+ 	unsigned long flags;
+ 	int ret = 0;
+ 	bool aborted = false;
+ 
+ 	spin_lock_irqsave(&tfcp_req->reqlock, flags);
++	fcpreq = tfcp_req->fcpreq;
+ 	switch (tfcp_req->inistate) {
+ 	case INI_IO_START:
+ 		tfcp_req->inistate = INI_IO_ACTIVE;
+@@ -633,16 +634,19 @@ fcloop_fcp_recv_work(struct work_struct *work)
  	}
+ 	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
  
--	skb->protocol = htons(ETH_P_IPV6);
-+	bpf_skb_change_protocol(skb, ETH_P_IPV6);
- 	skb_clear_hash(skb);
- 
- 	return 0;
-@@ -3355,7 +3362,7 @@ static int bpf_skb_proto_6_to_4(struct s
- 		}
+-	if (unlikely(aborted))
+-		ret = -ECANCELED;
+-	else {
+-		if (likely(!check_for_drop(tfcp_req)))
+-			ret = nvmet_fc_rcv_fcp_req(tfcp_req->tport->targetport,
+-				&tfcp_req->tgt_fcp_req,
+-				fcpreq->cmdaddr, fcpreq->cmdlen);
+-		else
+-			pr_info("%s: dropped command ********\n", __func__);
++	if (unlikely(aborted)) {
++		/* the abort handler will call fcloop_call_host_done */
++		return;
++	}
++
++	if (unlikely(check_for_drop(tfcp_req))) {
++		pr_info("%s: dropped command ********\n", __func__);
++		return;
  	}
++
++	ret = nvmet_fc_rcv_fcp_req(tfcp_req->tport->targetport,
++				   &tfcp_req->tgt_fcp_req,
++				   fcpreq->cmdaddr, fcpreq->cmdlen);
+ 	if (ret)
+ 		fcloop_call_host_done(fcpreq, tfcp_req, ret);
  
--	skb->protocol = htons(ETH_P_IP);
-+	bpf_skb_change_protocol(skb, ETH_P_IP);
- 	skb_clear_hash(skb);
+@@ -659,9 +663,10 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
+ 	unsigned long flags;
  
- 	return 0;
-@@ -3546,10 +3553,10 @@ static int bpf_skb_net_grow(struct sk_bu
- 		/* Match skb->protocol to new outer l3 protocol */
- 		if (skb->protocol == htons(ETH_P_IP) &&
- 		    flags & BPF_F_ADJ_ROOM_ENCAP_L3_IPV6)
--			skb->protocol = htons(ETH_P_IPV6);
-+			bpf_skb_change_protocol(skb, ETH_P_IPV6);
- 		else if (skb->protocol == htons(ETH_P_IPV6) &&
- 			 flags & BPF_F_ADJ_ROOM_ENCAP_L3_IPV4)
--			skb->protocol = htons(ETH_P_IP);
-+			bpf_skb_change_protocol(skb, ETH_P_IP);
- 	}
+ 	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+-	fcpreq = tfcp_req->fcpreq;
+ 	switch (tfcp_req->inistate) {
+ 	case INI_IO_ABORTED:
++		fcpreq = tfcp_req->fcpreq;
++		tfcp_req->fcpreq = NULL;
+ 		break;
+ 	case INI_IO_COMPLETED:
+ 		completed = true;
+@@ -683,10 +688,6 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
+ 		nvmet_fc_rcv_fcp_abort(tfcp_req->tport->targetport,
+ 					&tfcp_req->tgt_fcp_req);
  
- 	if (skb_is_gso(skb)) {
-@@ -3602,10 +3609,10 @@ static int bpf_skb_net_shrink(struct sk_
- 	/* Match skb->protocol to new outer l3 protocol */
- 	if (skb->protocol == htons(ETH_P_IP) &&
- 	    flags & BPF_F_ADJ_ROOM_DECAP_L3_IPV6)
--		skb->protocol = htons(ETH_P_IPV6);
-+		bpf_skb_change_protocol(skb, ETH_P_IPV6);
- 	else if (skb->protocol == htons(ETH_P_IPV6) &&
- 		 flags & BPF_F_ADJ_ROOM_DECAP_L3_IPV4)
--		skb->protocol = htons(ETH_P_IP);
-+		bpf_skb_change_protocol(skb, ETH_P_IP);
- 
- 	if (skb_is_gso(skb)) {
- 		struct skb_shared_info *shinfo = skb_shinfo(skb);
+-	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+-	tfcp_req->fcpreq = NULL;
+-	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+-
+ 	fcloop_call_host_done(fcpreq, tfcp_req, -ECANCELED);
+ 	/* call_host_done releases reference for abort downcall */
+ }
+-- 
+2.39.5
+
 
 
