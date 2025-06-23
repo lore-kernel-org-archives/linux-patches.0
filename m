@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F779199FBA;
-	Mon, 23 Jun 2025 22:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7991016D9BF;
+	Mon, 23 Jun 2025 22:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717239; cv=none; b=JpOhrz+TPIFNfS61uVY3kyU8E6b92xDqWvvSVIglZowYNNkAOrfsH1zNKC7W9aoneBQE+VdznMub+daIO7nBZCvLhkbBVsr5ngIJR4S5os4TkPD6fg/DnbJYeKsi+AoHIcUMJe+h9sXhFqlP2fHzT3E+7rqt0GXsqBhvvbdKc5Y=
+	t=1750717241; cv=none; b=KbAYW0yUt8jKiR1LPmbj64mRSkBLjjJPIkoUi9DfMsDaUTo8sBTmle+RERialixiCTC6XwxBfQVBbKHFA5fpdM5HegaIo5bj2YVpS41ET0Aa9qzfKqEt29j4kZlyr/DVu4e7zsyVKhvy19G7w7fRjqEHZze2Uvs/an8tVtsd1y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717239; c=relaxed/simple;
-	bh=aze5XG6hZRpSwVHiixqU/W6c63BVjrG9FAV4Mqg1amM=;
+	s=arc-20240116; t=1750717241; c=relaxed/simple;
+	bh=J4tlI1bxdpAVE5lnY85MIZ0bQES8xQ0pJbBwRSIi7s8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n8nSZJrhOpyqbT+GeTynd3RgO7UvZBb3F/Yg0kPTCDoIkgJlGtd0C01e3UL5U8050BH9oOodY/cQKfOhQ3MEJ4lBSHx4rHPrGIqEjU9m3zsbPqk8H5sXyeIOdSAsplBl18efL4TTlTwrmFimR0Ofk6FqcR3edS7DT0kWlGtJWf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13fgesIR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bh0nY1b6Nwi9HkEy7Im3JGQQ/XxJMa3u0cHQnxjECnarf19MIRxDLaPKCGWcrBMvNip9vkbATEoUiPRjAb823XZhKf+eEuvO1+XQjIQkMuQwqquyOpuKScJZlKRkl01uU2/KvUdpxnuLO1SIGHaAfZHYECFLeBjkw2lEULoTh9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gA66YJn+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13fgesIR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94179C4CEEA;
-	Mon, 23 Jun 2025 22:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gA66YJn+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B6CC4CEEA;
+	Mon, 23 Jun 2025 22:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717238;
-	bh=aze5XG6hZRpSwVHiixqU/W6c63BVjrG9FAV4Mqg1amM=;
+	s=korg; t=1750717241;
+	bh=J4tlI1bxdpAVE5lnY85MIZ0bQES8xQ0pJbBwRSIi7s8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13fgesIRWnF0mL9FW8F26ydrjhJfg0BpR47sGuIVu+UYO2uRVsLfrUdPAAi/6Zl24
-	 lAIAkIaTKciYSMvEhtH36O9rptQhqswhFug2DsfVBTvTjazHWbY+5xPRuTWPVN8n09
-	 uZplv58vKSjGiVyCpAoBkzD7y8NXZBgzrZGukVog=
+	b=gA66YJn+opucuGkI2fxuDJsUgRAJrA1TPhg9mwOaWBX/MLCSKubz4PTHG2tuA7kGd
+	 wwkm4cDjY7zh0iztFzVxJvh7hCsHn3zuQVm06+bc9y1AKws2j1w45jN2P7s7Z81STu
+	 PSiiSNWZezuyVtogMIVV5ly01S5TaRSqqL5kUqR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergio Perez Gonzalez <sperezglz@gmail.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 387/508] net: macb: Check return value of dma_set_mask_and_coherent()
-Date: Mon, 23 Jun 2025 15:07:12 +0200
-Message-ID: <20250623130654.808712237@linuxfoundation.org>
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.12 321/414] selinux: fix selinux_xfrm_alloc_user() to set correct ctx_len
+Date: Mon, 23 Jun 2025 15:07:38 +0200
+Message-ID: <20250623130650.019961055@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergio Perez Gonzalez <sperezglz@gmail.com>
+From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-[ Upstream commit 3920a758800762917177a6b5ab39707d8e376fe6 ]
+commit 86c8db86af43f52f682e53a0f2f0828683be1e52 upstream.
 
-Issue flagged by coverity. Add a safety check for the return value
-of dma_set_mask_and_coherent, go to a safe exit if it returns error.
+We should count the terminating NUL byte as part of the ctx_len.
+Otherwise, UBSAN logs a warning:
+  UBSAN: array-index-out-of-bounds in security/selinux/xfrm.c:99:14
+  index 60 is out of range for type 'char [*]'
 
-Link: https://scan7.scan.coverity.com/#/project-view/53936/11354?selectedIssue=1643754
-Signed-off-by: Sergio Perez Gonzalez <sperezglz@gmail.com>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Link: https://patch.msgid.link/20250526032034.84900-1-sperezglz@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The allocation itself is correct so there is no actual out of bounds
+indexing, just a warning.
+
+Cc: stable@vger.kernel.org
+Suggested-by: Christian Göttsche <cgzones@googlemail.com>
+Link: https://lore.kernel.org/selinux/CAEjxPJ6tA5+LxsGfOJokzdPeRomBHjKLBVR6zbrg+_w3ZZbM3A@mail.gmail.com/
+Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ security/selinux/xfrm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index d2f4709dee0de..495a1cb0bc183 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -4956,7 +4956,11 @@ static int macb_probe(struct platform_device *pdev)
+--- a/security/selinux/xfrm.c
++++ b/security/selinux/xfrm.c
+@@ -94,7 +94,7 @@ static int selinux_xfrm_alloc_user(struc
  
- #ifdef CONFIG_ARCH_DMA_ADDR_T_64BIT
- 	if (GEM_BFEXT(DAW64, gem_readl(bp, DCFG6))) {
--		dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44));
-+		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44));
-+		if (err) {
-+			dev_err(&pdev->dev, "failed to set DMA mask\n");
-+			goto err_out_free_netdev;
-+		}
- 		bp->hw_dma_cap |= HW_DMA_CAP_64B;
- 	}
- #endif
--- 
-2.39.5
-
+ 	ctx->ctx_doi = XFRM_SC_DOI_LSM;
+ 	ctx->ctx_alg = XFRM_SC_ALG_SELINUX;
+-	ctx->ctx_len = str_len;
++	ctx->ctx_len = str_len + 1;
+ 	memcpy(ctx->ctx_str, &uctx[1], str_len);
+ 	ctx->ctx_str[str_len] = '\0';
+ 	rc = security_context_to_sid(ctx->ctx_str, str_len,
 
 
