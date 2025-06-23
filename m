@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F421E5206;
-	Mon, 23 Jun 2025 21:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB7E1E5206;
+	Mon, 23 Jun 2025 21:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715339; cv=none; b=sVZ5YNDOGjc1ppYN4k/LwpQbv1Jomvkvlc4bzphIoFNk2VpPJTJY3Ip2y7zQw+29XrOwycQEpDtHSJi0GkBScFNjPEs55RLKAJ4N66staaiCHdmzeJ5kLAGFfpbTY0ugLyVR7vBmVjdUS+ZN9xbg8LqARdLx+1zcimSxhbFW7qA=
+	t=1750715341; cv=none; b=KKxVyKxfr2nxfQUgC9JQggUo15POm4uLiEyVWNQDAbDWXqrgAnRGpaSr8tkPtJ3nciFeU0htDoUkaE33DZi9eP19kJcA5ThGaN023jIUR9gULn1r2mseaWdmaBMHbLbVLlVJiSzyZDMmPBXoafiZ+UEDuGt6VvdsQpe3FWiQJOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715339; c=relaxed/simple;
-	bh=bXxqvV/lcPiktTBWE8bZ9qDFnF2yS3hoFXlTRAJqMI0=;
+	s=arc-20240116; t=1750715341; c=relaxed/simple;
+	bh=jVo35ozL7J+SSPglZkDvFBiBwtCtrqqLQ/R6GaMSUAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ox/EOevNiZ8eRZuQ6Z/wE1hXNriadU3OEWL4cUOpEnmCqKnttPY46scytK358qZ2cRDFkoo3c0CfLgao7kZiRa8H675qyoEHQBoaHIxU81WMJ2XHcwOYTnHoV1PW3SPYfuR6dZOThAVYkv6XkAV/NV/vqpA24A+tQFPs8EYBgdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqmUvtjR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mQ9WYqF2V2B/TPHmQyAJ0+xivLPGk9BTvhLXA897rpiuRtAsdYmJAlxuWyVw35btNtiednWc/5v7dLXE3uJ+lkvSRjjp0RNa8vlTtgN6LiFrVCsiqxqpQX+2Pklvd6D1bQQFkDkJ2BBZE6GQBUggpH651LJMgoRl9Au0VdnDeyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mfzQjJZ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqmUvtjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38C9C4CEEA;
-	Mon, 23 Jun 2025 21:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mfzQjJZ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A48CC4CEEA;
+	Mon, 23 Jun 2025 21:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715339;
-	bh=bXxqvV/lcPiktTBWE8bZ9qDFnF2yS3hoFXlTRAJqMI0=;
+	s=korg; t=1750715341;
+	bh=jVo35ozL7J+SSPglZkDvFBiBwtCtrqqLQ/R6GaMSUAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QqmUvtjRK2fpKU/4tG5tT8idH8OkSckhhndSP45j2Q4kniNBQKBnajNextnkZYqVl
-	 9LMpaIpDClkIr0kEm+gSLbtcZDItWH8IpHI92T45NbcQu5gBEDlhJ1OUHHSPOQByZo
-	 U5XerCZlc41nFYY+vy7TP1Br422rQOvsRWsEHsFA=
+	b=mfzQjJZ76MMkDvzIkWNaj7OVX2gr5PfGex37s0Vj2DMp0+/t5Tqs9z+t2qq26MRhx
+	 PxTfFCBLNaN/XbzArek1bcYAr29NixiNwWukemNLrDEwy+67QN9OAafw0TvkRxpgPG
+	 8c0mQIh7Ccn2k+QJ4eu6uoqyuHZRTAErCb/G2sRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanteng Si <si.yanteng@linux.dev>,
-	WANG Rui <wangrui@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.15 452/592] LoongArch: Avoid using $r0/$r1 as "mask" for csrxchg
-Date: Mon, 23 Jun 2025 15:06:50 +0200
-Message-ID: <20250623130711.181150043@linuxfoundation.org>
+	Suraj P Kizhakkethil <quic_surapk@quicinc.com>,
+	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 193/290] wifi: ath12k: Pass correct values of center freq1 and center freq2 for 160 MHz
+Date: Mon, 23 Jun 2025 15:07:34 +0200
+Message-ID: <20250623130632.662528414@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,94 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Suraj P Kizhakkethil <quic_surapk@quicinc.com>
 
-commit 52c22661c79a7b6af7fad9f77200738fc6c51878 upstream.
+[ Upstream commit b1b01e46a3db5ad44d1e4691ba37c1e0832cd5cf ]
 
-When building kernel with LLVM there are occasionally such errors:
+Currently, for 160 MHz bandwidth, center frequency1 and
+center frequency2 are not passed correctly to the firmware.
+Set center frequency1 as the center frequency
+of the primary 80 MHz channel segment and center frequency2 as
+the center frequency of the 160 MHz channel and pass the values
+to the firmware.
 
-In file included from ./include/linux/spinlock.h:59:
-In file included from ./include/linux/irqflags.h:17:
-arch/loongarch/include/asm/irqflags.h:38:3: error: must not be $r0 or $r1
-   38 |                 "csrxchg %[val], %[mask], %[reg]\n\t"
-      |                 ^
-<inline asm>:1:16: note: instantiated into assembly here
-    1 |         csrxchg $a1, $ra, 0
-      |                       ^
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
 
-To prevent the compiler from allocating $r0 or $r1 for the "mask" of the
-csrxchg instruction, the 'q' constraint must be used but Clang < 21 does
-not support it. So force to use $t0 in the inline asm, in order to avoid
-using $r0/$r1 while keeping the backward compatibility.
-
-Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/pull/141037
-Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
-Suggested-by: WANG Rui <wangrui@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Suraj P Kizhakkethil <quic_surapk@quicinc.com>
+Reviewed-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250304095315.3050325-2-quic_surapk@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/irqflags.h |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/arch/loongarch/include/asm/irqflags.h
-+++ b/arch/loongarch/include/asm/irqflags.h
-@@ -14,40 +14,48 @@
- static inline void arch_local_irq_enable(void)
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index 31af940bc5722..958ac4ed5c349 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -951,14 +951,24 @@ int ath12k_wmi_vdev_down(struct ath12k *ar, u8 vdev_id)
+ static void ath12k_wmi_put_wmi_channel(struct ath12k_wmi_channel_params *chan,
+ 				       struct wmi_vdev_start_req_arg *arg)
  {
- 	u32 flags = CSR_CRMD_IE;
-+	register u32 mask asm("t0") = CSR_CRMD_IE;
++	u32 center_freq1 = arg->band_center_freq1;
 +
- 	__asm__ __volatile__(
- 		"csrxchg %[val], %[mask], %[reg]\n\t"
- 		: [val] "+r" (flags)
--		: [mask] "r" (CSR_CRMD_IE), [reg] "i" (LOONGARCH_CSR_CRMD)
-+		: [mask] "r" (mask), [reg] "i" (LOONGARCH_CSR_CRMD)
- 		: "memory");
- }
+ 	memset(chan, 0, sizeof(*chan));
  
- static inline void arch_local_irq_disable(void)
- {
- 	u32 flags = 0;
-+	register u32 mask asm("t0") = CSR_CRMD_IE;
+ 	chan->mhz = cpu_to_le32(arg->freq);
+-	chan->band_center_freq1 = cpu_to_le32(arg->band_center_freq1);
+-	if (arg->mode == MODE_11AC_VHT80_80)
++	chan->band_center_freq1 = cpu_to_le32(center_freq1);
++	if (arg->mode == MODE_11BE_EHT160) {
++		if (arg->freq > center_freq1)
++			chan->band_center_freq1 = cpu_to_le32(center_freq1 + 40);
++		else
++			chan->band_center_freq1 = cpu_to_le32(center_freq1 - 40);
 +
- 	__asm__ __volatile__(
- 		"csrxchg %[val], %[mask], %[reg]\n\t"
- 		: [val] "+r" (flags)
--		: [mask] "r" (CSR_CRMD_IE), [reg] "i" (LOONGARCH_CSR_CRMD)
-+		: [mask] "r" (mask), [reg] "i" (LOONGARCH_CSR_CRMD)
- 		: "memory");
- }
++		chan->band_center_freq2 = cpu_to_le32(center_freq1);
++	} else if (arg->mode == MODE_11BE_EHT80_80) {
+ 		chan->band_center_freq2 = cpu_to_le32(arg->band_center_freq2);
+-	else
++	} else {
+ 		chan->band_center_freq2 = 0;
++	}
  
- static inline unsigned long arch_local_irq_save(void)
- {
- 	u32 flags = 0;
-+	register u32 mask asm("t0") = CSR_CRMD_IE;
-+
- 	__asm__ __volatile__(
- 		"csrxchg %[val], %[mask], %[reg]\n\t"
- 		: [val] "+r" (flags)
--		: [mask] "r" (CSR_CRMD_IE), [reg] "i" (LOONGARCH_CSR_CRMD)
-+		: [mask] "r" (mask), [reg] "i" (LOONGARCH_CSR_CRMD)
- 		: "memory");
- 	return flags;
- }
- 
- static inline void arch_local_irq_restore(unsigned long flags)
- {
-+	register u32 mask asm("t0") = CSR_CRMD_IE;
-+
- 	__asm__ __volatile__(
- 		"csrxchg %[val], %[mask], %[reg]\n\t"
- 		: [val] "+r" (flags)
--		: [mask] "r" (CSR_CRMD_IE), [reg] "i" (LOONGARCH_CSR_CRMD)
-+		: [mask] "r" (mask), [reg] "i" (LOONGARCH_CSR_CRMD)
- 		: "memory");
- }
- 
+ 	chan->info |= le32_encode_bits(arg->mode, WMI_CHAN_INFO_MODE);
+ 	if (arg->passive)
+-- 
+2.39.5
+
 
 
