@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E68270838;
-	Mon, 23 Jun 2025 21:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932A770838;
+	Mon, 23 Jun 2025 21:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713000; cv=none; b=l67Z0mOiyX4SFhUh6vea9h5iqLqH63drfuqIrPp2gikAj2v9phRObykSIe/hzmvbKqEkgXdAbLoV3x1ozMI9vKwCQnw665zDszSv3RncYyhG/S8B97DrcwLyVQGnEDfA/eOmfjsdYC2JiPXBC9+i95WaJNv1m13oMPVnE9U0E2k=
+	t=1750713002; cv=none; b=E74FykG34MMkHF89kppLHIdLNLm/WZCbUuJK/zeRYT7i/JMUBEDCqS6FJ2yA8pp1tT9vW7g5cy/Mj8OReIAuUUTpucIxoEzKsydHEbgXGY6CdbrNB71Fixjd+FSgFMFDTD0/cRJmbP0heIunTb1KKNcQMQ5aHpUQm905cCqI/LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713000; c=relaxed/simple;
-	bh=CyQWrnJTnvcPujBALS34ww529fjpzIlfr5l8VFaKI/A=;
+	s=arc-20240116; t=1750713002; c=relaxed/simple;
+	bh=yKOZEguaj330kMOYROtUNSaRPJJxPJmJtRgFl4K2SPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W6iIjAxssu9wLkG4sW8vgPbOHYrHcHnVZxd0X97sLFiZTsdyQIBLVumcptHeaMSmIoqGlFHGsrAVFlLpAZ7RYqeY+s0z4wZsFkvCueLe28LmSTMqJOr5nQt7FUBLx8A2DH/moj/DOE1ap/s+u1ZI0BKuU2OcRsYUqgegag3kx3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8osv2gL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sPhM84VjckN5ib62sQjVaaky2NgFeS7KGEIzXyBUx5YGTomtutl828HYxoSCV0b40Di2+tfoliLTTj5N9HczWWD+LaNJW/X5oYDOiieCZyEr+uPz41auSC0QEBB/EcCfT6J+IvgHJHmjxcdP79/bX/ROUweX0U46WsGGeGECFHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tfLKnOgb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8osv2gL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB60FC4CEEA;
-	Mon, 23 Jun 2025 21:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tfLKnOgb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5ECC4CEEA;
+	Mon, 23 Jun 2025 21:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713000;
-	bh=CyQWrnJTnvcPujBALS34ww529fjpzIlfr5l8VFaKI/A=;
+	s=korg; t=1750713002;
+	bh=yKOZEguaj330kMOYROtUNSaRPJJxPJmJtRgFl4K2SPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z8osv2gL2E8OWkwV90wc+BPoS38pXTqj9fNPDBV08y85fyO+wrijhN0BUNaIu7Eo2
-	 SeQKCEbUjZej2vXnPILBRZH2jSx9cXyu6E2DwlTLwHJcKpKlXo/3N7JeNmoXQ/u+Xa
-	 37c1+16jmyOGscZ1S1in0RITCuT+OCgHYllVnW1c=
+	b=tfLKnOgbzAT8XJUkcy1FRA5srkdEPHimrjPnpCF7bbgoDQQ5uZHCwjYoI5cuUGERL
+	 KaCSvWMASiMdlNtKaSe8cqY07V7JinrKNNaqFeMAkO1M23JDn7iqe0rz20mFbmakjA
+	 171uI2QtdV077/szVfnZGi/RV+uQgkQQD4gIakBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Protopopov <a.s.protopopov@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/508] bpf: Fix uninitialized values in BPF_{CORE,PROBE}_READ
-Date: Mon, 23 Jun 2025 15:01:56 +0200
-Message-ID: <20250623130646.985334488@linuxfoundation.org>
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.6 042/290] media: imx-jpeg: Drop the first error frames
+Date: Mon, 23 Jun 2025 15:05:03 +0200
+Message-ID: <20250623130628.273979125@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,62 +47,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anton Protopopov <a.s.protopopov@gmail.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-[ Upstream commit 41d4ce6df3f4945341ec509a840cc002a413b6cc ]
+commit d52b9b7e2f10d22a49468128540533e8d76910cd upstream.
 
-With the latest LLVM bpf selftests build will fail with
-the following error message:
+When an output buffer contains error frame header,
+v4l2_jpeg_parse_header() will return error, then driver will mark this
+buffer and a capture buffer done with error flag in device_run().
 
-    progs/profiler.inc.h:710:31: error: default initialization of an object of type 'typeof ((parent_task)->real_cred->uid.val)' (aka 'const unsigned int') leaves the object uninitialized and is incompatible with C++ [-Werror,-Wdefault-const-init-unsafe]
-      710 |         proc_exec_data->parent_uid = BPF_CORE_READ(parent_task, real_cred, uid.val);
-          |                                      ^
-    tools/testing/selftests/bpf/tools/include/bpf/bpf_core_read.h:520:35: note: expanded from macro 'BPF_CORE_READ'
-      520 |         ___type((src), a, ##__VA_ARGS__) __r;                               \
-          |                                          ^
+But if the error occurs in the first frames, before setup the capture
+queue, there is no chance to schedule device_run(), and there may be no
+capture to mark error.
 
-This happens because BPF_CORE_READ (and other macro) declare the
-variable __r using the ___type macro which can inherit const modifier
-from intermediate types.
+So we need to drop this buffer with error flag, and make the decoding
+can continue.
 
-Fix this by using __typeof_unqual__, when supported. (And when it
-is not supported, the problem shouldn't appear, as older compilers
-haven't complained.)
-
-Fixes: 792001f4f7aa ("libbpf: Add user-space variants of BPF_CORE_READ() family of macros")
-Fixes: a4b09a9ef945 ("libbpf: Add non-CO-RE variants of BPF_CORE_READ() macro family")
-Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250502193031.3522715-1-a.s.protopopov@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/bpf/bpf_core_read.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/bpf_core_read.h b/tools/lib/bpf/bpf_core_read.h
-index 41740ae8aad73..18c2ab57a9bff 100644
---- a/tools/lib/bpf/bpf_core_read.h
-+++ b/tools/lib/bpf/bpf_core_read.h
-@@ -312,7 +312,13 @@ enum bpf_enum_value_kind {
- #define ___arrow10(a, b, c, d, e, f, g, h, i, j) a->b->c->d->e->f->g->h->i->j
- #define ___arrow(...) ___apply(___arrow, ___narg(__VA_ARGS__))(__VA_ARGS__)
+--- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
++++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
+@@ -1913,9 +1913,19 @@ static void mxc_jpeg_buf_queue(struct vb
+ 	jpeg_src_buf = vb2_to_mxc_buf(vb);
+ 	jpeg_src_buf->jpeg_parse_error = false;
+ 	ret = mxc_jpeg_parse(ctx, vb);
+-	if (ret)
++	if (ret) {
+ 		jpeg_src_buf->jpeg_parse_error = true;
  
-+#if defined(__clang__) && (__clang_major__ >= 19)
-+#define ___type(...) __typeof_unqual__(___arrow(__VA_ARGS__))
-+#elif defined(__GNUC__) && (__GNUC__ >= 14)
-+#define ___type(...) __typeof_unqual__(___arrow(__VA_ARGS__))
-+#else
- #define ___type(...) typeof(___arrow(__VA_ARGS__))
-+#endif
- 
- #define ___read(read_fn, dst, src_type, src, accessor)			    \
- 	read_fn((void *)(dst), sizeof(*(dst)), &((src_type)(src))->accessor)
--- 
-2.39.5
-
++		/*
++		 * if the capture queue is not setup, the device_run() won't be scheduled,
++		 * need to drop the error buffer, so that the decoding can continue
++		 */
++		if (!vb2_is_streaming(v4l2_m2m_get_dst_vq(ctx->fh.m2m_ctx))) {
++			v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
++			return;
++		}
++	}
++
+ end:
+ 	v4l2_m2m_buf_queue(ctx->fh.m2m_ctx, vbuf);
+ }
 
 
