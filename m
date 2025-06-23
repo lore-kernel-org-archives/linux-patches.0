@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B1713A265;
-	Mon, 23 Jun 2025 13:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B70B13A265;
+	Mon, 23 Jun 2025 13:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684591; cv=none; b=DG4XyMIfHzp9jAHABPiripp3Hs53A5sieHq64eep23cKSDK3LXlQwd0n2hZbIdF9IsGTQeh05GVJ1f83ooVlXgC9WaHUPt7ePMYtWYAtdmzH7wDe3PQSNdV8yTKfCO21l4biH3SBDlXgzZ9SWaYiz33kjPnptj8cOibKEJPsi9E=
+	t=1750684594; cv=none; b=OSX2JFFE34dO0gKrr3SueQZgxFsIqY8UeftzFeF9KUW8DCkg+wM8BfbBS6bkMRe76jQAHPNhQ84WzjowKUappNcspl3bxzJ2SNdl9N5YpUhDIyyf1dKcJk3fUgVYK7fuslfUvPrE4kHzg6uVxqcIyDhNqKZBsarp9ecitAQBvQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684591; c=relaxed/simple;
-	bh=wZM9khl4+d8grb+6lzvXY2TjINUBNXpYaVaMX1kPtqw=;
+	s=arc-20240116; t=1750684594; c=relaxed/simple;
+	bh=heszwoDvolpQlNdvcdmp2j/3Kv6AiXvrFcMcIExW86o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hd+/KRuXzO4aLcj/+PSsfdxY7tXdKJp+aZtkjcr8odqv4X4lCfe/X/rWgiq7GW8k6s/kgxsWsKeYIsMnKCBxXCRzeMtQSD4YSO6ouh0oNVhhRrXH9VRnH3cnMsM8AMLsW6j9q3vMKfrjaWT6NLAWIj2GjJ5wF9DyxzxYXhad6uA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RODjbewG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LMrBLjm4oJBfcKwQioxZ4+VJv17Yb2UcGRDVkyyEsppXUR4228dZCeQ+Btv8aOBIKphADtSzq7BKTpAhECms7DkJknaNS+irl/qVFuoKN4CF3mrwEdWvT+DcaYmq3zTki53SVQTD9Acb3ecdIYHcKQenmp8VKJpqS/gZOKHG1o4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWuJ5s4z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RODjbewG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C29C4CEEA;
-	Mon, 23 Jun 2025 13:16:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWuJ5s4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A5CDC4CEEA;
+	Mon, 23 Jun 2025 13:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684591;
-	bh=wZM9khl4+d8grb+6lzvXY2TjINUBNXpYaVaMX1kPtqw=;
+	s=korg; t=1750684593;
+	bh=heszwoDvolpQlNdvcdmp2j/3Kv6AiXvrFcMcIExW86o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RODjbewGXf/FjJ7tDwwsRGotOlI3CRWPOwzwfiR9QvYz5ZaJFBWpL7UpkeGp4/KzK
-	 /O66do7Kmm6eUlJeEgBAfxxw2ZZixm2IUDzbRgsVrTBenX4Oz4zC9bJxe3TnRADIxI
-	 9PfkQsK98jvMHtPkFMs0jzqwrJQW36R7ifnwoZ9w=
+	b=hWuJ5s4zP6yyEA3+O+OXpYGPvzIjg7blyaUzdliAD7IbmgiBPufk9CCEJr8GsIGyC
+	 eqp5ekZxPqAWYf6/a6A65ZegQ9uENdBtcdMXEA/Lb8tbe9M7HWAvLdA728nvwffDgv
+	 oG68tf7eaSg2prKrpLBdZfFXR8Nb/uM1CAOPS540=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Jan Kara <jack@suse.cz>,
-	stable@kernel.org
-Subject: [PATCH 6.15 118/592] ext4: only dirty folios when data journaling regular files
-Date: Mon, 23 Jun 2025 15:01:16 +0200
-Message-ID: <20250623130703.077671956@linuxfoundation.org>
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.15 127/592] NFC: nci: uart: Set tty->disc_data only in success path
+Date: Mon, 23 Jun 2025 15:01:25 +0200
+Message-ID: <20250623130703.291468596@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -52,66 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Foster <bfoster@redhat.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit e26268ff1dcae5662c1b96c35f18cfa6ab73d9de upstream.
+commit fc27ab48904ceb7e4792f0c400f1ef175edf16fe upstream.
 
-fstest generic/388 occasionally reproduces a crash that looks as
-follows:
+Setting tty->disc_data before opening the NCI device means we need to
+clean it up on error paths.  This also opens some short window if device
+starts sending data, even before NCIUARTSETDRIVER IOCTL succeeded
+(broken hardware?).  Close the window by exposing tty->disc_data only on
+the success path, when opening of the NCI device and try_module_get()
+succeeds.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-...
-Call Trace:
- <TASK>
- ext4_block_zero_page_range+0x30c/0x380 [ext4]
- ext4_truncate+0x436/0x440 [ext4]
- ext4_process_orphan+0x5d/0x110 [ext4]
- ext4_orphan_cleanup+0x124/0x4f0 [ext4]
- ext4_fill_super+0x262d/0x3110 [ext4]
- get_tree_bdev_flags+0x132/0x1d0
- vfs_get_tree+0x26/0xd0
- vfs_cmd_create+0x59/0xe0
- __do_sys_fsconfig+0x4ed/0x6b0
- do_syscall_64+0x82/0x170
- ...
+The code differs in error path in one aspect: tty->disc_data won't be
+ever assigned thus NULL-ified.  This however should not be relevant
+difference, because of "tty->disc_data=NULL" in nci_uart_tty_open().
 
-This occurs when processing a symlink inode from the orphan list. The
-partial block zeroing code in the truncate path calls
-ext4_dirty_journalled_data() -> folio_mark_dirty(). The latter calls
-mapping->a_ops->dirty_folio(), but symlink inodes are not assigned an
-a_ops vector in ext4, hence the crash.
-
-To avoid this problem, update the ext4_dirty_journalled_data() helper to
-only mark the folio dirty on regular files (for which a_ops is
-assigned). This also matches the journaling logic in the ext4_symlink()
-creation path, where ext4_handle_dirty_metadata() is called directly.
-
-Fixes: d84c9ebdac1e ("ext4: Mark pages with journalled data dirty")
-Signed-off-by: Brian Foster <bfoster@redhat.com>
-Link: https://patch.msgid.link/20250516173800.175577-1-bfoster@redhat.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Cc: stable@kernel.org
+Cc: Linus Torvalds <torvalds@linuxfoundation.org>
+Fixes: 9961127d4bce ("NFC: nci: add generic uart support")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20250618073649.25049-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/nfc/nci/uart.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1009,7 +1009,12 @@ int ext4_walk_page_buffers(handle_t *han
-  */
- static int ext4_dirty_journalled_data(handle_t *handle, struct buffer_head *bh)
- {
--	folio_mark_dirty(bh->b_folio);
-+	struct folio *folio = bh->b_folio;
-+	struct inode *inode = folio->mapping->host;
+--- a/net/nfc/nci/uart.c
++++ b/net/nfc/nci/uart.c
+@@ -119,22 +119,22 @@ static int nci_uart_set_driver(struct tt
+ 
+ 	memcpy(nu, nci_uart_drivers[driver], sizeof(struct nci_uart));
+ 	nu->tty = tty;
+-	tty->disc_data = nu;
+ 	skb_queue_head_init(&nu->tx_q);
+ 	INIT_WORK(&nu->write_work, nci_uart_write_work);
+ 	spin_lock_init(&nu->rx_lock);
+ 
+ 	ret = nu->ops.open(nu);
+ 	if (ret) {
+-		tty->disc_data = NULL;
+ 		kfree(nu);
++		return ret;
+ 	} else if (!try_module_get(nu->owner)) {
+ 		nu->ops.close(nu);
+-		tty->disc_data = NULL;
+ 		kfree(nu);
+ 		return -ENOENT;
+ 	}
+-	return ret;
++	tty->disc_data = nu;
 +
-+	/* only regular files have a_ops */
-+	if (S_ISREG(inode->i_mode))
-+		folio_mark_dirty(folio);
- 	return ext4_handle_dirty_metadata(handle, NULL, bh);
++	return 0;
  }
  
+ /* ------ LDISC part ------ */
 
 
