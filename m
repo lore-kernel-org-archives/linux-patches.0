@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F047B1AD3FA;
-	Mon, 23 Jun 2025 21:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682BF2222C2;
+	Mon, 23 Jun 2025 21:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715759; cv=none; b=rtkpxmQTxhT44i6kG6xeYRAzRExzd8RLRTMEMb0X6KlWiUuk3XK1qS7bce76rCLjlMcaNlfrepfMELrK+h23SF+7CkDUmnvX5FItEiDo0yoG2s0HUv8fDha7IGUHFT4f3yOkV77g0v66kTIGv0+HVsr29K97OpJHwzOMPK7Zbj4=
+	t=1750715761; cv=none; b=Yv21/phlfKSW8q39ddTctg/UsU9dNxY9OFRhGc2Vd2vOkP7pP+8MDa4XcMbtIUue9IBuPZSm3fVGuGdJh4FfFvc4VJL/09yYTK9wC5vhDPq/8QRuUGXMMfND8ElFOlum3syJZ6BUA0Zp96zlwxFC2wPYss1yZq8aZe5Y7XWPuv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715759; c=relaxed/simple;
-	bh=c8auwU4uCyW4j1csV2dEiOXyrb1E59ujc3Jqx+ZZ88M=;
+	s=arc-20240116; t=1750715761; c=relaxed/simple;
+	bh=pfi5UjFsOm717DFAR5WjZ26k5A9quYCnbj5WBfp2WBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJyj7zWz6JN0ZWWO2KUdnbnRlG/95qQPEBDK8e+d5N4fEfmVF/nlA645PRpucYpmLkMNOW4hMZWGYO7hFywzVPl059BXxlYOUsyi1H5dOXMH5Cz76HlZkMz96PUS1MJQiGFTxkjmgv0u0Z1Uvk7aP60dJywYywBC9lRIRNUjOQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/aRIYtq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rGlDwkZ04RUv5fkeZtDruwCnTGkj7jlqMRbZJ+mCTjUMT4MJPXXcAGdjcedB+rId30lnIWVHp2Ij7gNx7jj2wb0RDOwVHN4jSHRBkd1eNyH9z4EIA1wkHznyt+wijYoDri6jBQcnvUQnC2awLlsedVPxKks0kvcIk3I4ZkzvJYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6jnRv1v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/aRIYtq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F7AC4CEED;
-	Mon, 23 Jun 2025 21:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6jnRv1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DE7C4CEEA;
+	Mon, 23 Jun 2025 21:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715758;
-	bh=c8auwU4uCyW4j1csV2dEiOXyrb1E59ujc3Jqx+ZZ88M=;
+	s=korg; t=1750715761;
+	bh=pfi5UjFsOm717DFAR5WjZ26k5A9quYCnbj5WBfp2WBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f/aRIYtqzQ4wYJsNRQlhBLmAlrKTOATEqQx17Xa4AqnNgRQmpkyhIaHXi9KWJ/AGi
-	 GZE5iLhXuRNlE4WHe4OmBeSnqTNeAyxCJPnGI+wMti6xvLzdGguPS4b9OYvV4f51l2
-	 h6KoeKgzjfgLBYZeknapHOqprTteOGl3vg+vOi4w=
+	b=u6jnRv1vtX4c2yUKLUOoCuPt63cM9ayLrQubwGSEDAt7Ww+oCJQv76b84Q4Gl6O4K
+	 fWunAfEe1UEizf7TgWqRI/+q3ie27yCZH9JlJ0NpvO/Vaazb0m3SNHpa5PIscyh1P7
+	 S6rYJnAQI3k8ycvAd3DhGXIh5Wqo3FC0rl2yfaeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Dexuan Cui <decui@microsoft.com>,
-	Long Li <longli@microsoft.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 219/290] scsi: storvsc: Increase the timeouts to storvsc_timeout
-Date: Mon, 23 Jun 2025 15:08:00 +0200
-Message-ID: <20250623130633.517678126@linuxfoundation.org>
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Eric Dumazet <edumazet@google.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 260/508] net_sched: tbf: fix a race in tbf_change()
+Date: Mon, 23 Jun 2025 15:05:05 +0200
+Message-ID: <20250623130651.645147055@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,80 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dexuan Cui <decui@microsoft.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit b2f966568faaad326de97481096d0f3dc0971c43 upstream.
+[ Upstream commit 43eb466041216d25dedaef1c383ad7bd89929cbc ]
 
-Currently storvsc_timeout is only used in storvsc_sdev_configure(), and
-5s and 10s are used elsewhere. It turns out that rarely the 5s is not
-enough on Azure, so let's use storvsc_timeout everywhere.
+Gerrard Tai reported a race condition in TBF, whenever SFQ perturb timer
+fires at the wrong time.
 
-In case a timeout happens and storvsc_channel_init() returns an error,
-close the VMBus channel so that any host-to-guest messages in the
-channel's ringbuffer, which might come late, can be safely ignored.
+The race is as follows:
 
-Add a "const" to storvsc_timeout.
+CPU 0                                 CPU 1
+[1]: lock root
+[2]: qdisc_tree_flush_backlog()
+[3]: unlock root
+ |
+ |                                    [5]: lock root
+ |                                    [6]: rehash
+ |                                    [7]: qdisc_tree_reduce_backlog()
+ |
+[4]: qdisc_put()
 
-Cc: stable@kernel.org
-Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Link: https://lore.kernel.org/r/1749243459-10419-1-git-send-email-decui@microsoft.com
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This can be abused to underflow a parent's qlen.
+
+Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
+should fix the race, because all packets will be purged from the qdisc
+before releasing the lock.
+
+Fixes: b05972f01e7d ("net: sched: tbf: don't call qdisc_put() while holding tree lock")
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://patch.msgid.link/20250611111515.1983366-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/storvsc_drv.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/sched/sch_tbf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -362,7 +362,7 @@ MODULE_PARM_DESC(ring_avail_percent_lowa
- /*
-  * Timeout in seconds for all devices managed by this driver.
-  */
--static int storvsc_timeout = 180;
-+static const int storvsc_timeout = 180;
+diff --git a/net/sched/sch_tbf.c b/net/sched/sch_tbf.c
+index c4c91b55e98b0..ebf67b8a6ee79 100644
+--- a/net/sched/sch_tbf.c
++++ b/net/sched/sch_tbf.c
+@@ -451,7 +451,7 @@ static int tbf_change(struct Qdisc *sch, struct nlattr *opt,
  
- #if IS_ENABLED(CONFIG_SCSI_FC_ATTRS)
- static struct scsi_transport_template *fc_transport_template;
-@@ -768,7 +768,7 @@ static void  handle_multichannel_storage
- 		return;
+ 	sch_tree_lock(sch);
+ 	if (child) {
+-		qdisc_tree_flush_backlog(q->qdisc);
++		qdisc_purge_queue(q->qdisc);
+ 		old = q->qdisc;
+ 		q->qdisc = child;
  	}
- 
--	t = wait_for_completion_timeout(&request->wait_event, 10*HZ);
-+	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
- 	if (t == 0) {
- 		dev_err(dev, "Failed to create sub-channel: timed out\n");
- 		return;
-@@ -833,7 +833,7 @@ static int storvsc_execute_vstor_op(stru
- 	if (ret != 0)
- 		return ret;
- 
--	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
-+	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
- 	if (t == 0)
- 		return -ETIMEDOUT;
- 
-@@ -1351,6 +1351,8 @@ static int storvsc_connect_to_vsp(struct
- 		return ret;
- 
- 	ret = storvsc_channel_init(device, is_fc);
-+	if (ret)
-+		vmbus_close(device->channel);
- 
- 	return ret;
- }
-@@ -1668,7 +1670,7 @@ static int storvsc_host_reset_handler(st
- 	if (ret != 0)
- 		return FAILED;
- 
--	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
-+	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
- 	if (t == 0)
- 		return TIMEOUT_ERROR;
- 
+-- 
+2.39.5
+
 
 
