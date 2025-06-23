@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E341F4628;
-	Mon, 23 Jun 2025 21:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240E819049B;
+	Mon, 23 Jun 2025 21:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715457; cv=none; b=tT3/ysXRvJqd+BKc0qEbo5rqzGqZamydETFlZfNypr4yU1lyHLwE3pw9QsDrZa7Fkmd4gcDHDn209aoK1xZ+iD1GPS2JkXElhne5K2ztDz2a5HYf9LIdvgTVkHFuWaGmQ8YvX1JlzpYHhTZLiW4hcxWatJGWeDzi9imVV3pKhK0=
+	t=1750715460; cv=none; b=gbK8pgOsnkdetWqRJMZaDX4m1qcNvHQzdekLMnQs7wawBwMAe9iXmCvrx9L23OB2lCj0ni5JCCek6j7b4YhlnZRvtdSsnjgDD+d9eWNRFLAicSb4B4Hm+yowV/0QGy3BrS4nDEnO/PAf0UnDzP3u43+QkR2Yt+KIlJ8qCeSAtTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715457; c=relaxed/simple;
-	bh=H0pdb09Pr1KauIxf6kggPe2uqV++eI4keTuQIU6rdbk=;
+	s=arc-20240116; t=1750715460; c=relaxed/simple;
+	bh=omoRU4XsPZchUy8cN9S/5ninhSrbKlSCO6zRQGVWbBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OGvI/MpvdOEaTa693LLoQ9zMi8ocILuaF0intj7cdgNhjoqEQS727Y4lJACBiszTuiRJ8d/wI4QJALKjRg30TnUa6W7ZOHE55pUy/GuPXwtiLdSswoF90DFAx8+5D6xyJYrNn9gJ4Ib+h85lX4QuhqE2Q6Op+kLbJx5E+k7zaWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4CzA8EG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cBp9G7uvBm4sH0v/D3rVVrc4XSEGZSBh1wN5JLlt6DLbRmCA4gDQFwr2dOZkx6cPIDyRczxDUIs5ctzsXV+vX69pRBuwWSbAuBH689L4atGqJ2oziZHNaYNzjtGA8a2MHrKzr3YLS0bcBTrVO1mMV2Sn53k2JUQGm+JLRfk34Ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQpmbBqm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4CzA8EG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DFDC4CEEA;
-	Mon, 23 Jun 2025 21:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQpmbBqm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC1BC4CEEA;
+	Mon, 23 Jun 2025 21:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715457;
-	bh=H0pdb09Pr1KauIxf6kggPe2uqV++eI4keTuQIU6rdbk=;
+	s=korg; t=1750715460;
+	bh=omoRU4XsPZchUy8cN9S/5ninhSrbKlSCO6zRQGVWbBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W4CzA8EGz/5qb9wr724luaMHnfyO/lCGTZI+dUEBqFnKRSQI6tY4RB7rQvug5Ku+a
-	 CStax/La2s9ChV3g8WdPYD76KtwCrX+qf42EzqCWzF8OAtewBXTh8g18OzerND/5qj
-	 7aAwd/gOtIkfufuuX01A7zz8vCVFSpMOM9fAnWH0=
+	b=oQpmbBqmOrE/V8Exu8JmygxwroYGVOsLcTj61VGRePC+WalkK0meHUy1XCoEvowHO
+	 ZDKeYfXKYGWVWIQCihwMjpbNxi1DQYCM+BYvWZCwW1dfuWeONrz4DYjM8NF6ZWgskj
+	 jzJT/kPdoDGS+SENhPJNtYRQO4wrN4MZn7jQBUAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sukrut Bellary <sbellary@baylibre.com>,
-	Judith Mendez <jm@ti.com>,
-	Kevin Hilman <khilman@baylibre.com>,
+	Wojciech Slenska <wojciech.slenska@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 276/355] ARM: OMAP2+: Fix l4ls clk domain handling in STANDBY
-Date: Mon, 23 Jun 2025 15:07:57 +0200
-Message-ID: <20250623130635.071650024@linuxfoundation.org>
+Subject: [PATCH 6.1 236/508] pinctrl: qcom: pinctrl-qcm2290: Add missing pins
+Date: Mon, 23 Jun 2025 15:04:41 +0200
+Message-ID: <20250623130651.064056509@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,89 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sukrut Bellary <sbellary@baylibre.com>
+From: Wojciech Slenska <wojciech.slenska@gmail.com>
 
-[ Upstream commit 47fe74098f3dadba2f9cc1e507d813a4aa93f5f3 ]
+[ Upstream commit 315345610faee8a0568b522dba9e35067d1732ab ]
 
-Don't put the l4ls clk domain to sleep in case of standby.
-Since CM3 PM FW[1](ti-v4.1.y) doesn't wake-up/enable the l4ls clk domain
-upon wake-up, CM3 PM FW fails to wake-up the MPU.
+Added the missing pins to the qcm2290_pins table.
 
-[1] https://git.ti.com/cgit/processor-firmware/ti-amx3-cm3-pm-firmware/
-
-Signed-off-by: Sukrut Bellary <sbellary@baylibre.com>
-Tested-by: Judith Mendez <jm@ti.com>
-Link: https://lore.kernel.org/r/20250318230042.3138542-2-sbellary@baylibre.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Signed-off-by: Wojciech Slenska <wojciech.slenska@gmail.com>
+Fixes: 48e049ef1238 ("pinctrl: qcom: Add QCM2290 pinctrl driver")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/20250523101437.59092-1-wojciech.slenska@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/clockdomain.h           |  1 +
- arch/arm/mach-omap2/clockdomains33xx_data.c |  2 +-
- arch/arm/mach-omap2/cm33xx.c                | 14 +++++++++++++-
- 3 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-qcm2290.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/arm/mach-omap2/clockdomain.h b/arch/arm/mach-omap2/clockdomain.h
-index 68550b23c938d..eb6ca2ea80679 100644
---- a/arch/arm/mach-omap2/clockdomain.h
-+++ b/arch/arm/mach-omap2/clockdomain.h
-@@ -48,6 +48,7 @@
- #define CLKDM_NO_AUTODEPS			(1 << 4)
- #define CLKDM_ACTIVE_WITH_MPU			(1 << 5)
- #define CLKDM_MISSING_IDLE_REPORTING		(1 << 6)
-+#define CLKDM_STANDBY_FORCE_WAKEUP		BIT(7)
- 
- #define CLKDM_CAN_HWSUP		(CLKDM_CAN_ENABLE_AUTO | CLKDM_CAN_DISABLE_AUTO)
- #define CLKDM_CAN_SWSUP		(CLKDM_CAN_FORCE_SLEEP | CLKDM_CAN_FORCE_WAKEUP)
-diff --git a/arch/arm/mach-omap2/clockdomains33xx_data.c b/arch/arm/mach-omap2/clockdomains33xx_data.c
-index b4d5144df4454..c53df9d42ecf8 100644
---- a/arch/arm/mach-omap2/clockdomains33xx_data.c
-+++ b/arch/arm/mach-omap2/clockdomains33xx_data.c
-@@ -27,7 +27,7 @@ static struct clockdomain l4ls_am33xx_clkdm = {
- 	.pwrdm		= { .name = "per_pwrdm" },
- 	.cm_inst	= AM33XX_CM_PER_MOD,
- 	.clkdm_offs	= AM33XX_CM_PER_L4LS_CLKSTCTRL_OFFSET,
--	.flags		= CLKDM_CAN_SWSUP,
-+	.flags		= CLKDM_CAN_SWSUP | CLKDM_STANDBY_FORCE_WAKEUP,
- };
- 
- static struct clockdomain l3s_am33xx_clkdm = {
-diff --git a/arch/arm/mach-omap2/cm33xx.c b/arch/arm/mach-omap2/cm33xx.c
-index ac4882ebdca33..be84c6750026e 100644
---- a/arch/arm/mach-omap2/cm33xx.c
-+++ b/arch/arm/mach-omap2/cm33xx.c
-@@ -28,6 +28,9 @@
- #include "cm-regbits-34xx.h"
- #include "cm-regbits-33xx.h"
- #include "prm33xx.h"
-+#if IS_ENABLED(CONFIG_SUSPEND)
-+#include <linux/suspend.h>
-+#endif
- 
- /*
-  * CLKCTRL_IDLEST_*: possible values for the CM_*_CLKCTRL.IDLEST bitfield:
-@@ -336,8 +339,17 @@ static int am33xx_clkdm_clk_disable(struct clockdomain *clkdm)
- {
- 	bool hwsup = false;
- 
-+#if IS_ENABLED(CONFIG_SUSPEND)
-+	/*
-+	 * In case of standby, Don't put the l4ls clk domain to sleep.
-+	 * Since CM3 PM FW doesn't wake-up/enable the l4ls clk domain
-+	 * upon wake-up, CM3 PM FW fails to wake-up th MPU.
-+	 */
-+	if (pm_suspend_target_state == PM_SUSPEND_STANDBY &&
-+	    (clkdm->flags & CLKDM_STANDBY_FORCE_WAKEUP))
-+		return 0;
-+#endif
- 	hwsup = am33xx_cm_is_clkdm_in_hwsup(clkdm->cm_inst, clkdm->clkdm_offs);
--
- 	if (!hwsup && (clkdm->flags & CLKDM_CAN_FORCE_SLEEP))
- 		am33xx_clkdm_sleep(clkdm);
- 
+diff --git a/drivers/pinctrl/qcom/pinctrl-qcm2290.c b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
+index aa9325f333fba..fa4575a9396ae 100644
+--- a/drivers/pinctrl/qcom/pinctrl-qcm2290.c
++++ b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
+@@ -173,6 +173,10 @@ static const struct pinctrl_pin_desc qcm2290_pins[] = {
+ 	PINCTRL_PIN(62, "GPIO_62"),
+ 	PINCTRL_PIN(63, "GPIO_63"),
+ 	PINCTRL_PIN(64, "GPIO_64"),
++	PINCTRL_PIN(65, "GPIO_65"),
++	PINCTRL_PIN(66, "GPIO_66"),
++	PINCTRL_PIN(67, "GPIO_67"),
++	PINCTRL_PIN(68, "GPIO_68"),
+ 	PINCTRL_PIN(69, "GPIO_69"),
+ 	PINCTRL_PIN(70, "GPIO_70"),
+ 	PINCTRL_PIN(71, "GPIO_71"),
+@@ -187,12 +191,17 @@ static const struct pinctrl_pin_desc qcm2290_pins[] = {
+ 	PINCTRL_PIN(80, "GPIO_80"),
+ 	PINCTRL_PIN(81, "GPIO_81"),
+ 	PINCTRL_PIN(82, "GPIO_82"),
++	PINCTRL_PIN(83, "GPIO_83"),
++	PINCTRL_PIN(84, "GPIO_84"),
++	PINCTRL_PIN(85, "GPIO_85"),
+ 	PINCTRL_PIN(86, "GPIO_86"),
+ 	PINCTRL_PIN(87, "GPIO_87"),
+ 	PINCTRL_PIN(88, "GPIO_88"),
+ 	PINCTRL_PIN(89, "GPIO_89"),
+ 	PINCTRL_PIN(90, "GPIO_90"),
+ 	PINCTRL_PIN(91, "GPIO_91"),
++	PINCTRL_PIN(92, "GPIO_92"),
++	PINCTRL_PIN(93, "GPIO_93"),
+ 	PINCTRL_PIN(94, "GPIO_94"),
+ 	PINCTRL_PIN(95, "GPIO_95"),
+ 	PINCTRL_PIN(96, "GPIO_96"),
 -- 
 2.39.5
 
