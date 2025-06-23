@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F147F239E63;
-	Mon, 23 Jun 2025 13:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16432367B0;
+	Mon, 23 Jun 2025 13:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685093; cv=none; b=fOg0T7JSXPVBN8VcEjs0s0p8GrHwIx8W9bBzKlTK+H/EN4mvrrN+oTVAn8adkKNFEn9p7MNIZifwvNGvK+Z4gVsn1kY6Na2r62VydmJmi428V2sd12adKakiFFQo47+xX0eJrCSApkVKt3sD/Pu6/bfFtvugYEMrjg/SJIcgfGg=
+	t=1750685096; cv=none; b=gGsk9aSfiUN3DNeFjCwKekNY6q3kNSIwY710/HVIVr/kjvdNcwADaZfSRGNwGvhQF+BTDB0ZH6QY7EpPFfqQnwYuXEOeH/KalKHubIEK0MUhHEQ4yF1jdncTFVsFyuG0fTWMDTF8E3E9WT6YtkOwW35IeM0lrz9i/U6wLbbvwfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685093; c=relaxed/simple;
-	bh=DaQiNJqEq6rAWguZiA0v4XRFp2dC0iBIMspybrvBFIQ=;
+	s=arc-20240116; t=1750685096; c=relaxed/simple;
+	bh=/O7QIg1eajrq9zkwPeoL6c4wCktg7bvAdi+Uj21HdgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aCwJ0BoxUSloVIi4uK2+XJzjT4I9r5PaRfxFuGv31R5wVfZphmph4Mw/aqOahxRhPZuxvKlhq/LktBTtY+l630Klhtwc+GCjNoApLalKU5cg6uI5P4efx54Q0s0az9BngfaWgJeX7DnHMHzLzdsu+4xg2W/C5GAW3CxkrWksJTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBqLfb0+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ismA9KTz2TFQNtQ+b0OXAD4U0cakFLta0KFLNn1/GHLajAafYdzK+1R3HnKygfjRVDo/tre+EoUk7KTcuK5qlYHmR2ot90JTyjmmrXrejDdNBimBReEJYo20tGFkKvRTARrfMZ1IfdM39UFGDwaCG70jJdqcI4Y5rjar15cRC2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p10Rq7BS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBqLfb0+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C13C4CEEA;
-	Mon, 23 Jun 2025 13:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p10Rq7BS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C453C4CEEA;
+	Mon, 23 Jun 2025 13:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685092;
-	bh=DaQiNJqEq6rAWguZiA0v4XRFp2dC0iBIMspybrvBFIQ=;
+	s=korg; t=1750685095;
+	bh=/O7QIg1eajrq9zkwPeoL6c4wCktg7bvAdi+Uj21HdgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBqLfb0+HS2fp+wVHTPnwJrGuDE7OWxQe2yfbFNLZGCmDIvjfnlzLCX7LwAVHR4Ek
-	 lBlrOr0NDABvMJxzTaPrghA3RtvaCBKu1VZDYOEwCGAZCPBiDLTfXcy2c56xXwH8yU
-	 zm5HBgYtK9tm/Ak5y0i6ZAvM3EUMWfwkEYTWL9LY=
+	b=p10Rq7BSgBKPFaPN9E66OZYmz/LvTq8ZAV2e+vM1agtwxKzwKTR8h56EvScxGJy+E
+	 ywCM30waRGj/lZrR9tQXxZuX+Ew/Qs2Fk0f9mbIPiUCm+xnk7+rZPJOFBSNrgkKyfS
+	 JjBlwHzcLmLLPnDgbO0xE/NdHFp7QLBa2LqX4H48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyu Xie <xiehongyu1@kylinos.cn>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 008/411] usb: storage: Ignore UAS driver for SanDisk 3.2 Gen2 storage device
-Date: Mon, 23 Jun 2025 15:02:32 +0200
-Message-ID: <20250623130633.239880644@linuxfoundation.org>
+	syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 053/355] net: usb: aqc111: fix error handling of usbnet read calls
+Date: Mon, 23 Jun 2025 15:04:14 +0200
+Message-ID: <20250623130628.423992164@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,242 +48,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongyu Xie <xiehongyu1@kylinos.cn>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit a541acceedf4f639f928f41fbb676b75946dc295 upstream.
+[ Upstream commit 405b0d610745fb5e84fc2961d9b960abb9f3d107 ]
 
-SanDisk 3.2 Gen2 storage device(0781:55e8) doesn't work well with UAS.
-Log says,
-[    6.507865][ 3] [  T159] usb 2-1.4: new SuperSpeed Gen 1 USB device number 4 using xhci_hcd
-[    6.540314][ 3] [  T159] usb 2-1.4: New USB device found, idVendor=0781, idProduct=55e8, bcdDevice= 0.01
-[    6.576304][ 3] [  T159] usb 2-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[    6.584727][ 3] [  T159] usb 2-1.4: Product: SanDisk 3.2 Gen2
-[    6.590459][ 3] [  T159] usb 2-1.4: Manufacturer: SanDisk
-[    6.595845][ 3] [  T159] usb 2-1.4: SerialNumber: 03021707022525140940
-[    7.230852][ 0] [  T265] usbcore: registered new interface driver usb-storage
-[    7.251247][ 0] [  T265] scsi host3: uas
-[    7.255280][ 0] [  T265] usbcore: registered new interface driver uas
-[    7.270498][ 1] [  T192] scsi 3:0:0:0: Direct-Access     SanDisk  Extreme Pro DDE1 0110 PQ: 0 ANSI: 6
-[    7.299588][ 3] [  T192] scsi 3:0:0:1: Enclosure         SanDisk  SES Device       0110 PQ: 0 ANSI: 6
-[    7.321681][ 3] [  T192] sd 3:0:0:0: Attached scsi generic sg1 type 0
-[    7.328185][ 3] [  T192] scsi 3:0:0:1: Attached scsi generic sg2 type 13
-[    7.328804][ 0] [  T191] sd 3:0:0:0: [sda] 976773168 512-byte logical blocks: (500 GB/466 GiB)
-[    7.343486][ 0] [  T191] sd 3:0:0:0: [sda] 4096-byte physical blocks
-[    7.364611][ 0] [  T191] sd 3:0:0:0: [sda] Write Protect is off
-[    7.370524][ 0] [  T191] sd 3:0:0:0: [sda] Mode Sense: 3d 00 10 00
-[    7.390655][ 0] [  T191] sd 3:0:0:0: [sda] Write cache: enabled, read cache: enabled, supports DPO and FUA
-[    7.401363][ 0] [  T191] sd 3:0:0:0: [sda] Optimal transfer size 1048576 bytes
-[    7.436010][ 0] [  T191]  sda: sda1
-[    7.450850][ 0] [  T191] sd 3:0:0:0: [sda] Attached SCSI disk
-[    7.470218][ 4] [  T262] scsi 3:0:0:1: Failed to get diagnostic page 0x1
-[    7.474869][ 0] [    C0] sd 3:0:0:0: [sda] tag#0 data cmplt err -75 uas-tag 2 inflight: CMD
-[    7.476911][ 4] [  T262] scsi 3:0:0:1: Failed to bind enclosure -19
-[    7.485330][ 0] [    C0] sd 3:0:0:0: [sda] tag#0 CDB: Read(10) 28 00 00 00 00 28 00 00 10 00
-[    7.491593][ 4] [  T262] ses 3:0:0:1: Attached Enclosure device
-[   38.066980][ 4] [  T192] sd 3:0:0:0: [sda] tag#4 uas_eh_abort_handler 0 uas-tag 5 inflight: CMD IN
-[   38.076012][ 4] [  T192] sd 3:0:0:0: [sda] tag#4 CDB: Read(10) 28 00 00 00 01 08 00 00 f8 00
-[   38.086485][ 4] [  T192] sd 3:0:0:0: [sda] tag#3 uas_eh_abort_handler 0 uas-tag 1 inflight: CMD IN
-[   38.095515][ 4] [  T192] sd 3:0:0:0: [sda] tag#3 CDB: Read(10) 28 00 00 00 00 10 00 00 08 00
-[   38.104122][ 4] [  T192] sd 3:0:0:0: [sda] tag#2 uas_eh_abort_handler 0 uas-tag 4 inflight: CMD IN
-[   38.113152][ 4] [  T192] sd 3:0:0:0: [sda] tag#2 CDB: Read(10) 28 00 00 00 00 88 00 00 78 00
-[   38.121761][ 4] [  T192] sd 3:0:0:0: [sda] tag#1 uas_eh_abort_handler 0 uas-tag 3 inflight: CMD IN
-[   38.130791][ 4] [  T192] sd 3:0:0:0: [sda] tag#1 CDB: Read(10) 28 00 00 00 00 48 00 00 30 00
-[   38.139401][ 4] [  T192] sd 3:0:0:0: [sda] tag#0 uas_eh_abort_handler 0 uas-tag 2 inflight: CMD
-[   38.148170][ 4] [  T192] sd 3:0:0:0: [sda] tag#0 CDB: Read(10) 28 00 00 00 00 28 00 00 10 00
-[   38.178980][ 2] [  T304] scsi host3: uas_eh_device_reset_handler start
-[   38.901540][ 2] [  T304] usb 2-1.4: reset SuperSpeed Gen 1 USB device number 4 using xhci_hcd
-[   38.936791][ 2] [  T304] scsi host3: uas_eh_device_reset_handler success
+Syzkaller, courtesy of syzbot, identified an error (see report [1]) in
+aqc111 driver, caused by incomplete sanitation of usb read calls'
+results. This problem is quite similar to the one fixed in commit
+920a9fa27e78 ("net: asix: add proper error handling of usb read errors").
 
-Device decriptor is below,
-Bus 002 Device 006: ID 0781:55e8 SanDisk Corp. SanDisk 3.2 Gen2
-Device Descriptor:
-  bLength                18
-  bDescriptorType         1
-  bcdUSB               3.20
-  bDeviceClass            0
-  bDeviceSubClass         0
-  bDeviceProtocol         0
-  bMaxPacketSize0         9
-  idVendor           0x0781 SanDisk Corp.
-  idProduct          0x55e8
-  bcdDevice            0.01
-  iManufacturer           1 SanDisk
-  iProduct                2 SanDisk 3.2 Gen2
-  iSerial                 3 03021707022525140940
-  bNumConfigurations      1
-  Configuration Descriptor:
-    bLength                 9
-    bDescriptorType         2
-    wTotalLength       0x0079
-    bNumInterfaces          1
-    bConfigurationValue     1
-    iConfiguration          0
-    bmAttributes         0x80
-      (Bus Powered)
-    MaxPower              896mA
-    Interface Descriptor:
-      bLength                 9
-      bDescriptorType         4
-      bInterfaceNumber        0
-      bAlternateSetting       0
-      bNumEndpoints           2
-      bInterfaceClass         8 Mass Storage
-      bInterfaceSubClass      6 SCSI
-      bInterfaceProtocol     80 Bulk-Only
-      iInterface              0
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x82  EP 2 IN
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0400  1x 1024 bytes
-        bInterval               0
-        bMaxBurst              15
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x01  EP 1 OUT
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0400  1x 1024 bytes
-        bInterval               0
-        bMaxBurst              15
-    Interface Descriptor:
-      bLength                 9
-      bDescriptorType         4
-      bInterfaceNumber        0
-      bAlternateSetting       1
-      bNumEndpoints           4
-      bInterfaceClass         8 Mass Storage
-      bInterfaceSubClass      6 SCSI
-      bInterfaceProtocol     98
-      iInterface              0
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x01  EP 1 OUT
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0400  1x 1024 bytes
-        bInterval               0
-        bMaxBurst               0
-        Command pipe (0x01)
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x84  EP 4 IN
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0400  1x 1024 bytes
-        bInterval               0
-        bMaxBurst              15
-        MaxStreams             32
-        Status pipe (0x02)
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x82  EP 2 IN
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0400  1x 1024 bytes
-        bInterval               0
-        bMaxBurst              15
-        MaxStreams             32
-        Data-in pipe (0x03)
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x03  EP 3 OUT
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0400  1x 1024 bytes
-        bInterval               0
-        bMaxBurst              15
-        MaxStreams             32
-        Data-out pipe (0x04)
-Binary Object Store Descriptor:
-  bLength                 5
-  bDescriptorType        15
-  wTotalLength       0x002a
-  bNumDeviceCaps          3
-  USB 2.0 Extension Device Capability:
-    bLength                 7
-    bDescriptorType        16
-    bDevCapabilityType      2
-    bmAttributes   0x0000f41e
-      BESL Link Power Management (LPM) Supported
-    BESL value     1024 us
-    Deep BESL value    61440 us
-  SuperSpeed USB Device Capability:
-    bLength                10
-    bDescriptorType        16
-    bDevCapabilityType      3
-    bmAttributes         0x00
-    wSpeedsSupported   0x000e
-      Device can operate at Full Speed (12Mbps)
-      Device can operate at High Speed (480Mbps)
-      Device can operate at SuperSpeed (5Gbps)
-    bFunctionalitySupport   1
-      Lowest fully-functional device speed is Full Speed (12Mbps)
-    bU1DevExitLat          10 micro seconds
-    bU2DevExitLat        2047 micro seconds
-  SuperSpeedPlus USB Device Capability:
-    bLength                20
-    bDescriptorType        16
-    bDevCapabilityType     10
-    bmAttributes         0x00000001
-      Sublink Speed Attribute count 1
-      Sublink Speed ID count 0
-    wFunctionalitySupport   0x1100
-    bmSublinkSpeedAttr[0]   0x000a4030
-      Speed Attribute ID: 0 10Gb/s Symmetric RX SuperSpeedPlus
-    bmSublinkSpeedAttr[1]   0x000a40b0
-      Speed Attribute ID: 0 10Gb/s Symmetric TX SuperSpeedPlus
-Device Status:     0x0000
-  (Bus Powered)
+For instance, usbnet_read_cmd() may read fewer than 'size' bytes,
+even if the caller expected the full amount, and aqc111_read_cmd()
+will not check its result properly. As [1] shows, this may lead
+to MAC address in aqc111_bind() being only partly initialized,
+triggering KMSAN warnings.
 
-So ignore UAS driver for this device.
+Fix the issue by verifying that the number of bytes read is
+as expected and not less.
 
-Signed-off-by: Hongyu Xie <xiehongyu1@kylinos.cn>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250519023328.1498856-1-xiehongyu1@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1] Partial syzbot report:
+BUG: KMSAN: uninit-value in is_valid_ether_addr include/linux/etherdevice.h:208 [inline]
+BUG: KMSAN: uninit-value in usbnet_probe+0x2e57/0x4390 drivers/net/usb/usbnet.c:1830
+ is_valid_ether_addr include/linux/etherdevice.h:208 [inline]
+ usbnet_probe+0x2e57/0x4390 drivers/net/usb/usbnet.c:1830
+ usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
+ call_driver_probe drivers/base/dd.c:-1 [inline]
+ really_probe+0x4d1/0xd90 drivers/base/dd.c:658
+ __driver_probe_device+0x268/0x380 drivers/base/dd.c:800
+...
+
+Uninit was stored to memory at:
+ dev_addr_mod+0xb0/0x550 net/core/dev_addr_lists.c:582
+ __dev_addr_set include/linux/netdevice.h:4874 [inline]
+ eth_hw_addr_set include/linux/etherdevice.h:325 [inline]
+ aqc111_bind+0x35f/0x1150 drivers/net/usb/aqc111.c:717
+ usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
+ usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
+...
+
+Uninit was stored to memory at:
+ ether_addr_copy include/linux/etherdevice.h:305 [inline]
+ aqc111_read_perm_mac drivers/net/usb/aqc111.c:663 [inline]
+ aqc111_bind+0x794/0x1150 drivers/net/usb/aqc111.c:713
+ usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
+ usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
+ call_driver_probe drivers/base/dd.c:-1 [inline]
+...
+
+Local variable buf.i created at:
+ aqc111_read_perm_mac drivers/net/usb/aqc111.c:656 [inline]
+ aqc111_bind+0x221/0x1150 drivers/net/usb/aqc111.c:713
+ usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
+
+Reported-by: syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3b6b9ff7b80430020c7b
+Tested-by: syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com
+Fixes: df2d59a2ab6c ("net: usb: aqc111: Add support for getting and setting of MAC address")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://patch.msgid.link/20250520113240.2369438-1-n.zhandarovich@fintech.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/unusual_uas.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/usb/aqc111.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/storage/unusual_uas.h
-+++ b/drivers/usb/storage/unusual_uas.h
-@@ -52,6 +52,13 @@ UNUSUAL_DEV(0x059f, 0x1061, 0x0000, 0x99
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_NO_REPORT_OPCODES | US_FL_NO_SAME),
+diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
+index 895d4f5166f99..279fcb9bf3be6 100644
+--- a/drivers/net/usb/aqc111.c
++++ b/drivers/net/usb/aqc111.c
+@@ -30,10 +30,13 @@ static int aqc111_read_cmd_nopm(struct usbnet *dev, u8 cmd, u16 value,
+ 	ret = usbnet_read_cmd_nopm(dev, cmd, USB_DIR_IN | USB_TYPE_VENDOR |
+ 				   USB_RECIP_DEVICE, value, index, data, size);
  
-+/* Reported-by: Zhihong Zhou <zhouzhihong@greatwall.com.cn> */
-+UNUSUAL_DEV(0x0781, 0x55e8, 0x0000, 0x9999,
-+		"SanDisk",
-+		"",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_IGNORE_UAS),
+-	if (unlikely(ret < 0))
++	if (unlikely(ret < size)) {
++		ret = ret < 0 ? ret : -ENODATA;
 +
- /* Reported-by: Hongling Zeng <zenghongling@kylinos.cn> */
- UNUSUAL_DEV(0x090c, 0x2000, 0x0000, 0x9999,
- 		"Hiksemi",
+ 		netdev_warn(dev->net,
+ 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
+ 			    cmd, index, ret);
++	}
+ 
+ 	return ret;
+ }
+@@ -46,10 +49,13 @@ static int aqc111_read_cmd(struct usbnet *dev, u8 cmd, u16 value,
+ 	ret = usbnet_read_cmd(dev, cmd, USB_DIR_IN | USB_TYPE_VENDOR |
+ 			      USB_RECIP_DEVICE, value, index, data, size);
+ 
+-	if (unlikely(ret < 0))
++	if (unlikely(ret < size)) {
++		ret = ret < 0 ? ret : -ENODATA;
++
+ 		netdev_warn(dev->net,
+ 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
+ 			    cmd, index, ret);
++	}
+ 
+ 	return ret;
+ }
+-- 
+2.39.5
+
 
 
