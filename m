@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76629C2E0;
-	Mon, 23 Jun 2025 21:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF910C2E0;
+	Mon, 23 Jun 2025 21:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714316; cv=none; b=Kso43NIUTg2Qq1dCxqKVmRt6Ys0HG4DN78y9IwkkH7JUv+15nO8//QcS01HnmI+vNJQh2UTm7KiOr4A6vmyNj/pqZ0vFBLvD3Pv3HBX2t5ZVokrrdNAHmmziAiwtkz+gCwOn7BsCz7ySXDwazDI51HqYax2o1Gf1wcm3mVhM220=
+	t=1750714319; cv=none; b=Ee2uLZFWVnbq+WkCpxQz6WDcK1OTlydgiM39RVo+LfSNl19cj12j9ENkXJ3YPr3maFAOpak6YqE6MZikCun0/+INh+5X55UjmkNubi9XI3FPyvM5tW0g9aLc7vG4GLLBAl3pKPfCbAkTzfVDUjqc25n1yHvQHwc1xg3Uh+1bgWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714316; c=relaxed/simple;
-	bh=Na1C4K6MP38UGtChRgsaIFfOnJxWG5rMyAuy0thpn2c=;
+	s=arc-20240116; t=1750714319; c=relaxed/simple;
+	bh=13SSKrJr0/9GxJu0hnA0x8qWxF/x5uvejsM5bWmLGQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eeRqf8v04UU6fMJbXBfgwDMD8ECSmUFQDCX+r2CfyJlA+eWoO5eRd/TZTDmVzufGm2JcoxuIamThoWQ4Zb2cN9Ez0exrkSaYuhDZRf9m44IOD9kjj9KhK6nPFiwpFDzAoAo1ks3zlmxTtdW3TcDoSdjCtTmD1PCBhgiw/haalHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tvy51gZU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jst7qPSEoLq35jHzKf9WD6AjjPotfbPfJluChZjJncVXaBwbE9fvPqfx4mPwMZfc1+Jizcb/s4KbS6AJcyQU88ELp4cDzg5Z3V3F51uR/mlHmdAnyg/yo9GEbfCIw6+r5faOP7YBOURPlMy4nnzah0wj/LeaN2afXmnkzKFPJ5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVvQRX8B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tvy51gZU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C34BC4CEEA;
-	Mon, 23 Jun 2025 21:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVvQRX8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CC4C4CEEA;
+	Mon, 23 Jun 2025 21:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714316;
-	bh=Na1C4K6MP38UGtChRgsaIFfOnJxWG5rMyAuy0thpn2c=;
+	s=korg; t=1750714318;
+	bh=13SSKrJr0/9GxJu0hnA0x8qWxF/x5uvejsM5bWmLGQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tvy51gZUVMJH/Atwrj9JqB2Dv6C/sh9CmQAdpoasQZUtPJ6Xol5gql+E0MHgxOaps
-	 tmKap5itPFD2J+BlCrRW0VuLGyESLYkIv15VAYAgVS1VVrEFjXyq1UmY0Bz3WbS1is
-	 3EZUb4OE7Wm0MYQAfmKMgVidv2zd4WRwCoh7npbI=
+	b=tVvQRX8BtFFltb8zku1e4V52nF4CRxUXkAAN6FmvqxT/X/lJ1QtT4FGkpk9U/YY3Z
+	 tFX8Jx262TTrJi9u7KJ/utW770g3pnKnJtNf6via0zX/F/jnWZucneM+YQ8AAhbQfW
+	 ggKKvZShVfJRqYQiJSVRiLOnEvutycsLQzDeXk58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.12 095/414] ext4: ensure i_size is smaller than maxbytes
-Date: Mon, 23 Jun 2025 15:03:52 +0200
-Message-ID: <20250623130644.468288773@linuxfoundation.org>
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 383/592] wifi: iwlwifi: pcie: make sure to lock rxq->read
+Date: Mon, 23 Jun 2025 15:05:41 +0200
+Message-ID: <20250623130709.552320909@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,39 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-commit 1a77a028a392fab66dd637cdfac3f888450d00af upstream.
+[ Upstream commit 1cc2c48c4af81bed5ddbe9f2c9d6e20fa163acf9 ]
 
-The inode i_size cannot be larger than maxbytes, check it while loading
-inode from the disk.
+rxq->read is accessed without the rxq->lock in a few places,
+Make sure to have the lock there.
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Link: https://patch.msgid.link/20250506012009.3896990-4-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Tested-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20250424153620.73725f207aaa.I1a3e4b6c5fd370e029fdacfcdc9ee335788afa98@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/trans.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4928,7 +4928,8 @@ struct inode *__ext4_iget(struct super_b
- 		ei->i_file_acl |=
- 			((__u64)le16_to_cpu(raw_inode->i_file_acl_high)) << 32;
- 	inode->i_size = ext4_isize(sb, raw_inode);
--	if ((size = i_size_read(inode)) < 0) {
-+	size = i_size_read(inode);
-+	if (size < 0 || size > ext4_get_maxbytes(inode)) {
- 		ext4_error_inode(inode, function, line, 0,
- 				 "iget: bad i_size value: %lld", size);
- 		ret = -EFSCORRUPTED;
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+index 102a6123bba0e..4cc7a2e5746d2 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+@@ -2942,6 +2942,8 @@ static ssize_t iwl_dbgfs_rx_queue_read(struct file *file,
+ 	for (i = 0; i < trans->num_rx_queues && pos < bufsz; i++) {
+ 		struct iwl_rxq *rxq = &trans_pcie->rxq[i];
+ 
++		spin_lock_bh(&rxq->lock);
++
+ 		pos += scnprintf(buf + pos, bufsz - pos, "queue#: %2d\n",
+ 				 i);
+ 		pos += scnprintf(buf + pos, bufsz - pos, "\tread: %u\n",
+@@ -2962,6 +2964,7 @@ static ssize_t iwl_dbgfs_rx_queue_read(struct file *file,
+ 			pos += scnprintf(buf + pos, bufsz - pos,
+ 					 "\tclosed_rb_num: Not Allocated\n");
+ 		}
++		spin_unlock_bh(&rxq->lock);
+ 	}
+ 	ret = simple_read_from_buffer(user_buf, count, ppos, buf, pos);
+ 	kfree(buf);
+@@ -3662,8 +3665,11 @@ iwl_trans_pcie_dump_data(struct iwl_trans *trans, u32 dump_mask,
+ 		/* Dump RBs is supported only for pre-9000 devices (1 queue) */
+ 		struct iwl_rxq *rxq = &trans_pcie->rxq[0];
+ 		/* RBs */
++		spin_lock_bh(&rxq->lock);
+ 		num_rbs = iwl_get_closed_rb_stts(trans, rxq);
+ 		num_rbs = (num_rbs - rxq->read) & RX_QUEUE_MASK;
++		spin_unlock_bh(&rxq->lock);
++
+ 		len += num_rbs * (sizeof(*data) +
+ 				  sizeof(struct iwl_fw_error_dump_rb) +
+ 				  (PAGE_SIZE << trans_pcie->rx_page_order));
+-- 
+2.39.5
+
 
 
