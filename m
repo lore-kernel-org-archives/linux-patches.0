@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE242472A2;
-	Mon, 23 Jun 2025 13:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CCC254B09;
+	Mon, 23 Jun 2025 13:30:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685420; cv=none; b=MKXKdza2HPxpGynSB8hFGvp7NNRXk45W7YE6iaDZycBp2L5I9okL/3pn12GpK2ysvPJIbF8b0BkhQVTVk32QbHCU9jObpmPfb27v/J/zEWZ2nZJmXXgVSQH70WecekhHqn+WSsa9S/4AI8f6fkUd/JJDOEoiZ9Q4zR1KAkoBBF8=
+	t=1750685423; cv=none; b=jL/tTJXVJiEaF8Y46Y9WyYjw7zRW3CVOzl5a2o1OAaMVsnmx5xpfQ44u7Pi5JWLfteyqXpESSHtVU9KfVo0YIz7un+WTz3gmdATKQZLm0F7XOOB/bjr5DhM5hposnsjM0VAdJ9AVdFz/ly0ZTIpIvJUyWzWmPSyOte2EftGJMlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685420; c=relaxed/simple;
-	bh=NpIDkXqD3f9FL04xKfTGVdgEYFZfJV0hkl6iUt3AMnY=;
+	s=arc-20240116; t=1750685423; c=relaxed/simple;
+	bh=g0U+tGD+JPZ0LHpNGbRSAXbMSZONrFk/7BFBdhzqLZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PhlAe/EERtWxTjAYkIeVeTLc4+9poh6ZQM+WZhWzdXSj6oIsgHWg2y0xfXzNfAjwui8VGBjd8LRuOWe8nX812dK1IJG4TDzCNvP2Wlj1r9w3cpXy4jfbIIa7xu27dL7h5AtwfzRNkNgINGpwVNFaBxO9GlenSsFyjlAsRSEjMqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egk71HbE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MOZBBMpsF/JgU0tZjN4bVv7fB+fBqNsSjDArlmMVEc5vaCm753k3U7+kN1y0cl9FtvavehbUdO35/j1vky7z/JNquHV/IIiOWY5AKwIkEBeTTR09CYLCnTnv0G6SESKR3V/4xOC4C6hdGEva0NY/M0epemPR00zg0LuJHH2VdQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBs8DTHe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egk71HbE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02801C4CEEA;
-	Mon, 23 Jun 2025 13:30:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBs8DTHe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804C3C4CEF1;
+	Mon, 23 Jun 2025 13:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685420;
-	bh=NpIDkXqD3f9FL04xKfTGVdgEYFZfJV0hkl6iUt3AMnY=;
+	s=korg; t=1750685422;
+	bh=g0U+tGD+JPZ0LHpNGbRSAXbMSZONrFk/7BFBdhzqLZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=egk71HbEU7oUHZQKq/5hfEK1R4NLxAREzisFC/2I07lrrYgzPH08BPXlOD3BgnQAk
-	 ecZvm8FTLOw8Gqr4rbDJNp2BSWuhrxvG4yDYg/yBhnVkB8KmHqsQxLfRQ/yj3Z1O5+
-	 UezrakM35D8DOCSPIi/J8C9rCazaLhtZezifF5YQ=
+	b=YBs8DTHeDjtTPFFJQuF49GF6UfZ0ZcopbXUuEPrcXO5WOTBX5zZc6STVuTHlq4gCl
+	 nc8gRXdm9mzQJTpLM8UYmg5uHgHUesaYBxN4plVtvpftJlKwAQcrU0teWSCIVANNY6
+	 Rz9x7I/lW0JABcLEXIa4eZEhMAux52yNzwp1gHI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+45b0c89a0fc7ae8dbadc@syzkaller.appspotmail.com,
-	Alexei Starovoitov <ast@kernel.org>,
-	Tao Chen <chen.dylane@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Stone Zhang <quic_stonez@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/411] bpf: Fix WARN() in get_bpf_raw_tp_regs
-Date: Mon, 23 Jun 2025 15:03:22 +0200
-Message-ID: <20250623130634.732225896@linuxfoundation.org>
+Subject: [PATCH 5.15 037/411] wifi: ath11k: fix node corruption in ar->arvifs list
+Date: Mon, 23 Jun 2025 15:03:01 +0200
+Message-ID: <20250623130634.119462288@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
 References: <20250623130632.993849527@linuxfoundation.org>
@@ -53,84 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Chen <chen.dylane@linux.dev>
+From: Stone Zhang <quic_stonez@quicinc.com>
 
-[ Upstream commit 3880cdbed1c4607e378f58fa924c5d6df900d1d3 ]
+[ Upstream commit 31e98e277ae47f56632e4d663b1d4fd12ba33ea8 ]
 
-syzkaller reported an issue:
+In current WLAN recovery code flow, ath11k_core_halt() only
+reinitializes the "arvifs" list head. This will cause the
+list node immediately following the list head to become an
+invalid list node. Because the prev of that node still points
+to the list head "arvifs", but the next of the list head "arvifs"
+no longer points to that list node.
 
-WARNING: CPU: 3 PID: 5971 at kernel/trace/bpf_trace.c:1861 get_bpf_raw_tp_regs+0xa4/0x100 kernel/trace/bpf_trace.c:1861
-Modules linked in:
-CPU: 3 UID: 0 PID: 5971 Comm: syz-executor205 Not tainted 6.15.0-rc5-syzkaller-00038-g707df3375124 #0 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-RIP: 0010:get_bpf_raw_tp_regs+0xa4/0x100 kernel/trace/bpf_trace.c:1861
-RSP: 0018:ffffc90003636fa8 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000003 RCX: ffffffff81c6bc4c
-RDX: ffff888032efc880 RSI: ffffffff81c6bc83 RDI: 0000000000000005
-RBP: ffff88806a730860 R08: 0000000000000005 R09: 0000000000000003
-R10: 0000000000000004 R11: 0000000000000000 R12: 0000000000000004
-R13: 0000000000000001 R14: ffffc90003637008 R15: 0000000000000900
-FS:  0000000000000000(0000) GS:ffff8880d6cdf000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f7baee09130 CR3: 0000000029f5a000 CR4: 0000000000352ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ____bpf_get_stack_raw_tp kernel/trace/bpf_trace.c:1934 [inline]
- bpf_get_stack_raw_tp+0x24/0x160 kernel/trace/bpf_trace.c:1931
- bpf_prog_ec3b2eefa702d8d3+0x43/0x47
- bpf_dispatcher_nop_func include/linux/bpf.h:1316 [inline]
- __bpf_prog_run include/linux/filter.h:718 [inline]
- bpf_prog_run include/linux/filter.h:725 [inline]
- __bpf_trace_run kernel/trace/bpf_trace.c:2363 [inline]
- bpf_trace_run3+0x23f/0x5a0 kernel/trace/bpf_trace.c:2405
- __bpf_trace_mmap_lock_acquire_returned+0xfc/0x140 include/trace/events/mmap_lock.h:47
- __traceiter_mmap_lock_acquire_returned+0x79/0xc0 include/trace/events/mmap_lock.h:47
- __do_trace_mmap_lock_acquire_returned include/trace/events/mmap_lock.h:47 [inline]
- trace_mmap_lock_acquire_returned include/trace/events/mmap_lock.h:47 [inline]
- __mmap_lock_do_trace_acquire_returned+0x138/0x1f0 mm/mmap_lock.c:35
- __mmap_lock_trace_acquire_returned include/linux/mmap_lock.h:36 [inline]
- mmap_read_trylock include/linux/mmap_lock.h:204 [inline]
- stack_map_get_build_id_offset+0x535/0x6f0 kernel/bpf/stackmap.c:157
- __bpf_get_stack+0x307/0xa10 kernel/bpf/stackmap.c:483
- ____bpf_get_stack kernel/bpf/stackmap.c:499 [inline]
- bpf_get_stack+0x32/0x40 kernel/bpf/stackmap.c:496
- ____bpf_get_stack_raw_tp kernel/trace/bpf_trace.c:1941 [inline]
- bpf_get_stack_raw_tp+0x124/0x160 kernel/trace/bpf_trace.c:1931
- bpf_prog_ec3b2eefa702d8d3+0x43/0x47
+When a WLAN recovery occurs during the execution of a vif
+removal, and it happens before the spin_lock_bh(&ar->data_lock)
+in ath11k_mac_op_remove_interface(), list_del() will detect the
+previously mentioned situation, thereby triggering a kernel panic.
 
-Tracepoint like trace_mmap_lock_acquire_returned may cause nested call
-as the corner case show above, which will be resolved with more general
-method in the future. As a result, WARN_ON_ONCE will be triggered. As
-Alexei suggested, remove the WARN_ON_ONCE first.
+The fix is to remove and reinitialize all vif list nodes from the
+list head "arvifs" during WLAN halt. The reinitialization is to make
+the list nodes valid, ensuring that the list_del() in
+ath11k_mac_op_remove_interface() can execute normally.
 
-Fixes: 9594dc3c7e71 ("bpf: fix nested bpf tracepoints with per-cpu data")
-Reported-by: syzbot+45b0c89a0fc7ae8dbadc@syzkaller.appspotmail.com
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Tao Chen <chen.dylane@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250513042747.757042-1-chen.dylane@linux.dev
+Call trace:
+__list_del_entry_valid_or_report+0xb8/0xd0
+ath11k_mac_op_remove_interface+0xb0/0x27c [ath11k]
+drv_remove_interface+0x48/0x194 [mac80211]
+ieee80211_do_stop+0x6e0/0x844 [mac80211]
+ieee80211_stop+0x44/0x17c [mac80211]
+__dev_close_many+0xac/0x150
+__dev_change_flags+0x194/0x234
+dev_change_flags+0x24/0x6c
+devinet_ioctl+0x3a0/0x670
+inet_ioctl+0x200/0x248
+sock_do_ioctl+0x60/0x118
+sock_ioctl+0x274/0x35c
+__arm64_sys_ioctl+0xac/0xf0
+invoke_syscall+0x48/0x114
+...
 
-Closes: https://lore.kernel.org/bpf/8bc2554d-1052-4922-8832-e0078a033e1d@gmail.com
+Tested-on: QCA6698AQ hw2.1 PCI WLAN.HSP.1.1-04591-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Stone Zhang <quic_stonez@quicinc.com>
+Link: https://patch.msgid.link/20250320053145.3445187-1-quic_stonez@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index dba736defdfec..e08928f4a862f 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -1408,7 +1408,7 @@ static struct pt_regs *get_bpf_raw_tp_regs(void)
- 	struct bpf_raw_tp_regs *tp_regs = this_cpu_ptr(&bpf_raw_tp_regs);
- 	int nest_level = this_cpu_inc_return(bpf_raw_tp_nest_level);
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index 48a449fbd2bcc..e86ecdf433de5 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -968,6 +968,7 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
+ void ath11k_core_halt(struct ath11k *ar)
+ {
+ 	struct ath11k_base *ab = ar->ab;
++	struct list_head *pos, *n;
  
--	if (WARN_ON_ONCE(nest_level > ARRAY_SIZE(tp_regs->regs))) {
-+	if (nest_level > ARRAY_SIZE(tp_regs->regs)) {
- 		this_cpu_dec(bpf_raw_tp_nest_level);
- 		return ERR_PTR(-EBUSY);
- 	}
+ 	lockdep_assert_held(&ar->conf_mutex);
+ 
+@@ -981,7 +982,12 @@ void ath11k_core_halt(struct ath11k *ar)
+ 
+ 	rcu_assign_pointer(ab->pdevs_active[ar->pdev_idx], NULL);
+ 	synchronize_rcu();
+-	INIT_LIST_HEAD(&ar->arvifs);
++
++	spin_lock_bh(&ar->data_lock);
++	list_for_each_safe(pos, n, &ar->arvifs)
++		list_del_init(pos);
++	spin_unlock_bh(&ar->data_lock);
++
+ 	idr_init(&ar->txmgmt_idr);
+ }
+ 
 -- 
 2.39.5
 
