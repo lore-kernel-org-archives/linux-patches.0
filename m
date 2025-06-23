@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20929226888;
-	Mon, 23 Jun 2025 22:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A22C226888;
+	Mon, 23 Jun 2025 22:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716745; cv=none; b=oWg6Vk5VyBcpPj8T52NLt30ncyv6azYoWLi8hgM9LRDdQL+ZcU8E+wvtzJUjzD0IZETZj6AZ0VahtNl2+qTfL0jpXbKgG6Bksp3jEIyk0ausKaXAMlw0W97cmA5/X7Z0oDrcZ1d4hl0GUv8N8qrU0ufUfdoHcLlo2Yjf/sETav4=
+	t=1750716747; cv=none; b=mDHp3Tr+6kzy7nN69DaBU9B0g7g1BHwgP86DjLj7mHYWpiK/fvHnTtBAu+Sw8H+LUXl+vutiqmWIhuvMgSjoI3K0ljyEFLN6GJ0oMCkMV37+Xn8TGTDptaV4m8RglhBYNdM8/JCZ321/pvye/mUzbiAgrYjlnNTu1XpOutouJ7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716745; c=relaxed/simple;
-	bh=D6m7ggV1cgeXqjaos+fclKsK3T74yq+Q3u2gNyx4DYk=;
+	s=arc-20240116; t=1750716747; c=relaxed/simple;
+	bh=ar7KltM6C/PH5/oxY7pkvLSprtr0wOYbJg8H9Jl+OwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uOqvNRaytH0fMKagkY7ABFoZqUSi5qMCoHG8wmN461YKMCwCrpqNKfeeKF9ic/6lmuzHxB8rVSJrmDHhED3eTZoCIiEnsV6UfxVSRvMVjUkh9gWcDJwcme8oazMcBoQnODzgynmXtCyNba8UfYc/5ELvsOg38rxmOJiW7NkgTyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAb4+EBD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NdfQxocoyWrBPTuzQQHpI4jPNx1CZNRWwc47bNE8DHEiQkj4n9GLNXnMyHuwtTvsTnhGxuM3j6R2MUeIOSS/+T7dbcbZAZZsPdWkQY3JCi8FVCkMX7mgj09Ep/JQVGmq0hjRkNx5FVIJp7pJSUr0+iYdUxkWl2YKQapZQGazwFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4LZWcuC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAb4+EBD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6C0C4CEEA;
-	Mon, 23 Jun 2025 22:12:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4LZWcuC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21081C4CEEA;
+	Mon, 23 Jun 2025 22:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716745;
-	bh=D6m7ggV1cgeXqjaos+fclKsK3T74yq+Q3u2gNyx4DYk=;
+	s=korg; t=1750716747;
+	bh=ar7KltM6C/PH5/oxY7pkvLSprtr0wOYbJg8H9Jl+OwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kAb4+EBDBQjcxtLVEMnbvRABNJJR91lhahnbYd5+6FrByYX+7Gx3eGimTwEHqiTuI
-	 OQmkiQpdf0AeWjoKuClcA20goHfm7/BVPfvGF2FQVx/GRPQKBtRVQan+189EItiAex
-	 OK3GWv8pg44qGyl91CuVTYCg6F84QiRh6qMS6ry0=
+	b=m4LZWcuCLW833nUaMxdye56B8QmSRJNPQ9hnHt8J+KpGt1JINAu99mGdz0NYw2aVN
+	 6bxAbhTVsgGaX5CveITo++veSHmBQSXQLSgzJPrCEm0UJ7ivxnCOqk0oOsoHi9xzJG
+	 JPo85z2nEm2VOMmTFJHqq9SwxTD5sPLVZnZDto1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Stutterheim <ross.stutterheim@garmin.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 6.1 325/508] ARM: 9447/1: arm/memremap: fix arch_memremap_can_ram_remap()
-Date: Mon, 23 Jun 2025 15:06:10 +0200
-Message-ID: <20250623130653.323474224@linuxfoundation.org>
+	Balamurugan S <quic_bselvara@quicinc.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 279/414] wifi: ath12k: fix incorrect CE addresses
+Date: Mon, 23 Jun 2025 15:06:56 +0200
+Message-ID: <20250623130648.995332334@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,52 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ross Stutterheim <ross.stutterheim@garmin.com>
+From: Balamurugan S <quic_bselvara@quicinc.com>
 
-commit 96e0b355883006554a0bee3697da475971d6bba8 upstream.
+[ Upstream commit 60031d9c3589c7983fd1deb4a4c0bebf0929890e ]
 
-arm/memremap: fix arch_memremap_can_ram_remap()
+In the current ath12k implementation, the CE addresses
+CE_HOST_IE_ADDRESS and CE_HOST_IE_2_ADDRESS are incorrect. These
+values were inherited from ath11k, but ath12k does not currently use
+them.
 
-commit 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure
-presence of linear map") added the definition of
-arch_memremap_can_ram_remap() for arm[64] specific filtering of what pages
-can be used from the linear mapping. memblock_is_map_memory() was called
-with the pfn of the address given to arch_memremap_can_ram_remap();
-however, memblock_is_map_memory() expects to be given an address for arm,
-not a pfn.
+However, the Ath12k AHB support relies on these addresses. Therefore,
+correct the CE addresses for ath12k.
 
-This results in calls to memremap() returning a newly mapped area when
-it should return an address in the existing linear mapping.
+Tested-on: IPQ5332 hw1.0 AHB WLAN.WBE.1.3.1-00130-QCAHKSWPL_SILICONZ-1
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00210-QCAHKSWPL_SILICONZ-1
 
-Fix this by removing the address to pfn translation and pass the
-address directly.
-
-Fixes: 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure presence of linear map")
-Signed-off-by: Ross Stutterheim <ross.stutterheim@garmin.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Balamurugan S <quic_bselvara@quicinc.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+Link: https://patch.msgid.link/20250321-ath12k-ahb-v12-2-bb389ed76ae5@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/ioremap.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath12k/ce.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/arm/mm/ioremap.c
-+++ b/arch/arm/mm/ioremap.c
-@@ -515,7 +515,5 @@ void __init early_ioremap_init(void)
- bool arch_memremap_can_ram_remap(resource_size_t offset, size_t size,
- 				 unsigned long flags)
- {
--	unsigned long pfn = PHYS_PFN(offset);
--
--	return memblock_is_map_memory(pfn);
-+	return memblock_is_map_memory(offset);
- }
+diff --git a/drivers/net/wireless/ath/ath12k/ce.h b/drivers/net/wireless/ath/ath12k/ce.h
+index 857bc5f9e946a..f9547a3945e44 100644
+--- a/drivers/net/wireless/ath/ath12k/ce.h
++++ b/drivers/net/wireless/ath/ath12k/ce.h
+@@ -1,7 +1,7 @@
+ /* SPDX-License-Identifier: BSD-3-Clause-Clear */
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2022, 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #ifndef ATH12K_CE_H
+@@ -39,8 +39,8 @@
+ #define PIPEDIR_INOUT_H2H	4 /* bidirectional, host to host */
+ 
+ /* CE address/mask */
+-#define CE_HOST_IE_ADDRESS	0x00A1803C
+-#define CE_HOST_IE_2_ADDRESS	0x00A18040
++#define CE_HOST_IE_ADDRESS	0x75804C
++#define CE_HOST_IE_2_ADDRESS	0x758050
+ #define CE_HOST_IE_3_ADDRESS	CE_HOST_IE_ADDRESS
+ 
+ #define CE_HOST_IE_3_SHIFT	0xC
+-- 
+2.39.5
+
 
 
