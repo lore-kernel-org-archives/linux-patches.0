@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4E12222C2;
-	Mon, 23 Jun 2025 21:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74A32222C2;
+	Mon, 23 Jun 2025 21:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715433; cv=none; b=L5cfIUgT9rahV55LiAojPTXmv1UgAOLGiN+7BQ1wLVmVSkpFiOKJqZL1SUNxdPXFxgCZkZ/lfTJAmhUlmEYyiqpCVRt05FVPCjGa9aCyJ3jUTPaEqdTkRsDVNmTnDHzoP0gOtQDUENjlgE+UxWzBzwkThRP1TORdnme1rljD6BE=
+	t=1750715436; cv=none; b=czZ8m8sm8hczQNUtxMXCi0tMRm+DENYzPONRI8bKs1BNAHbSkf/3WtrN1uXtgH7n0vorkuau0E4rA7KcR7Yoi/WK6Kcuh+vPrhHbX7GGsyiPuuWI8GVbn5gJId/32RobwqenQ/rtOU1PVP9alyAKri80RIUROlAgWRtE8dSlKQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715433; c=relaxed/simple;
-	bh=vAFQenjUZJCWXEUuQv6y2Zrf2sjClweuoQEKrBUxXY8=;
+	s=arc-20240116; t=1750715436; c=relaxed/simple;
+	bh=GkxsvDIq5AtESo7A4XNveNWGHtV0gH1y7bBx5Bd7o7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edM3G6NssAYYTDpTvIYGZnWxpkAYDESKS9/BxkeMtZTVFGaCXVSa8ie2hEruUu7ErpO9dRHC4+18sYWTyabx8wsZCUAZUVwGw5PA9lbz16sW+cwmZULxUcFkvUhJN54ahp0eRqfMsCcRQVmFYokFgDppof/HrUATFUsHSAFcdL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCbjw7M7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=juzx9Xfu4V9KzYFSPYgmmekP3erZDpTFfq63lSRGyLqnbTGok2MIH1aTIw7TUlAp+XBvRVojSIEHvElaIVd7bxigbmadxfaj+Ge0EIImffOuIkyzvW6R5Cycg7sOBXuAPWgsDnlc6I8IIb5nqdjKBnkcJRctFgvH0sR0LLI9RM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=es6dYSXa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCbjw7M7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A203C4CEEA;
-	Mon, 23 Jun 2025 21:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="es6dYSXa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA36C4CEF1;
+	Mon, 23 Jun 2025 21:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715433;
-	bh=vAFQenjUZJCWXEUuQv6y2Zrf2sjClweuoQEKrBUxXY8=;
+	s=korg; t=1750715435;
+	bh=GkxsvDIq5AtESo7A4XNveNWGHtV0gH1y7bBx5Bd7o7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XCbjw7M7s3Vq7X7KY/djo4ScG2pGGTI7PHlu9F3MUTjEfN6/gNzkMEEMhn6eG3yhM
-	 QhxPWFJIYZ+95Mk6RNABZA6yjvyjoGXD35gf3LvdtSbJ0ujUOCLCxTsZ8rIpQiPZOS
-	 6pqpWbRX08TKQYCyD97wwmf91gkpWQVj2PMaT0rU=
+	b=es6dYSXamSTGywSS/fusqenqcpE1euEMPaVsNqsHCl3UD62IQ0mn58O1Fo4TawtHY
+	 ETvuutNe42fAtvclM1a8UhXFVi6X97akKV3l5TgIV7wK2+yJ+ANL41KI34BJXx5RL8
+	 yXRgFfuoxmUsduzDVotwIj6hPXIW+YuTAGMrQ7sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Dhruva Gole <d-gole@ti.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 182/414] pmdomain: core: Reset genpd->states to avoid freeing invalid data
-Date: Mon, 23 Jun 2025 15:05:19 +0200
-Message-ID: <20250623130646.573672453@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.15 458/592] cifs: deal with the channel loading lag while picking channels
+Date: Mon, 23 Jun 2025 15:06:56 +0200
+Message-ID: <20250623130711.323524488@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +46,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 99012014c902cd9ad85fd288d8a107f33a69855e ]
+commit 66d590b828b1fd9fa337047ae58fe1c4c6f43609 upstream.
 
-If genpd_alloc_data() allocates data for the default power-states for the
-genpd, let's make sure to also reset the pointer in the error path. This
-makes sure a genpd provider driver doesn't end up trying to free the data
-again, but using an invalid pointer.
+Our current approach to select a channel for sending requests is this:
+1. iterate all channels to find the min and max queue depth
+2. if min and max are not the same, pick the channel with min depth
+3. if min and max are same, round robin, as all channels are equally loaded
 
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
-Link: https://lore.kernel.org/r/20250402120613.1116711-1-ulf.hansson@linaro.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The problem with this approach is that there's a lag between selecting
+a channel and sending the request (that increases the queue depth on the channel).
+While these numbers will eventually catch up, there could be a skew in the
+channel usage, depending on the application's I/O parallelism and the server's
+speed of handling requests.
+
+With sufficient parallelism, this lag can artificially increase the queue depth,
+thereby impacting the performance negatively.
+
+This change will change the step 1 above to start the iteration from the last
+selected channel. This is to reduce the skew in channel usage even in the presence
+of this lag.
+
+Fixes: ea90708d3cf3 ("cifs: use the least loaded channel for sending requests")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/client/transport.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pmdomain/core.c b/drivers/pmdomain/core.c
-index 8b1f894f5e790..2643525a572bb 100644
---- a/drivers/pmdomain/core.c
-+++ b/drivers/pmdomain/core.c
-@@ -2228,8 +2228,10 @@ static int genpd_alloc_data(struct generic_pm_domain *genpd)
- 	return 0;
- put:
- 	put_device(&genpd->dev);
--	if (genpd->free_states == genpd_free_default_power_state)
-+	if (genpd->free_states == genpd_free_default_power_state) {
- 		kfree(genpd->states);
-+		genpd->states = NULL;
-+	}
- free:
- 	if (genpd_is_cpu_domain(genpd))
- 		free_cpumask_var(genpd->cpus);
--- 
-2.39.5
-
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -1018,14 +1018,16 @@ struct TCP_Server_Info *cifs_pick_channe
+ 	uint index = 0;
+ 	unsigned int min_in_flight = UINT_MAX, max_in_flight = 0;
+ 	struct TCP_Server_Info *server = NULL;
+-	int i;
++	int i, start, cur;
+ 
+ 	if (!ses)
+ 		return NULL;
+ 
+ 	spin_lock(&ses->chan_lock);
++	start = atomic_inc_return(&ses->chan_seq);
+ 	for (i = 0; i < ses->chan_count; i++) {
+-		server = ses->chans[i].server;
++		cur = (start + i) % ses->chan_count;
++		server = ses->chans[cur].server;
+ 		if (!server || server->terminate)
+ 			continue;
+ 
+@@ -1042,17 +1044,15 @@ struct TCP_Server_Info *cifs_pick_channe
+ 		 */
+ 		if (server->in_flight < min_in_flight) {
+ 			min_in_flight = server->in_flight;
+-			index = i;
++			index = cur;
+ 		}
+ 		if (server->in_flight > max_in_flight)
+ 			max_in_flight = server->in_flight;
+ 	}
+ 
+ 	/* if all channels are equally loaded, fall back to round-robin */
+-	if (min_in_flight == max_in_flight) {
+-		index = (uint)atomic_inc_return(&ses->chan_seq);
+-		index %= ses->chan_count;
+-	}
++	if (min_in_flight == max_in_flight)
++		index = (uint)start % ses->chan_count;
+ 
+ 	server = ses->chans[index].server;
+ 	spin_unlock(&ses->chan_lock);
 
 
