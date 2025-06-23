@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA1F16D9BF;
-	Mon, 23 Jun 2025 21:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9906D223316;
+	Mon, 23 Jun 2025 21:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715218; cv=none; b=W2O9iEFT/RATFk+NjXH/0nC1am1Vkp4VSWEjF8Qi9yez8ktZGAyb3uMFT/GQIROiA0dpwaVXAY6D0Qj4ZGnV+/nHAJqnhxXIvdPGySeoySFLdUORm3Mas4m3/U72PGmEdfQk05eCy+YTPA//ztExJrQElLUOE4+HqtiF0weYSTI=
+	t=1750715220; cv=none; b=LoS86tZOk7foLCXcKEajLqhTVPV51VwGkVfoPf5wxGzVnU7+qqaDybMMKUrSk1f7/5hXNo9HqdihH6CSQrxT4gB/ljT8n0IS9ZJ0Ua9eLzcU4HfG/ePU8r5bFjS5TLcAEWh/JF3+cS517Nsjd6znRwvzWRVdYJ9zluLOdL2B6fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715218; c=relaxed/simple;
-	bh=9DYfyOEKnUaXPDCjBQewdLnj1g7+/DZeEx2wcNfyhSs=;
+	s=arc-20240116; t=1750715220; c=relaxed/simple;
+	bh=+XGYlp2sUxJJYwSho3yuWEkWdiPy+/AI9Hj93wARIYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WGuW5RwjxEUn2TH3x+jHd26eMyvn3ykjcCUhyLvrNZMkX+lroiw3ZGy65AdPRtQTCndHM/99MLwLCu6sYbxf8WXTtIF+zxeyWTGHrO9xbV0z9zx7UzBVxcuBZx5WDeXJrmQASPZMMlkoR1eO0qSSWux46AYRIvxxSK6VpyOaQAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCPnGVlm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bSmdsKYfwGerUV9aGN0jrcbh94jfavNs0eDCZbmaoKdzdjlQE6DzCXR+71CIU+msENIgDhELK7GEHz/NaB9JWn7AszO5m5btyYwdJNBUzvToJcbKLXOk0nEy86p0C6vyB5acGctgLC9YLHS6+LWnZk6E8LWvgqHFln4niP9/HCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZ5fhfEf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCPnGVlm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7EA5C4CEEA;
-	Mon, 23 Jun 2025 21:46:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZ5fhfEf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBABC4CEEA;
+	Mon, 23 Jun 2025 21:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715218;
-	bh=9DYfyOEKnUaXPDCjBQewdLnj1g7+/DZeEx2wcNfyhSs=;
+	s=korg; t=1750715220;
+	bh=+XGYlp2sUxJJYwSho3yuWEkWdiPy+/AI9Hj93wARIYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCPnGVlmB9Ms5XAGsLONO23/nIaRnueq2yqoXgYOqS1M2v6gbzJNZGKpJTntS+sXd
-	 RibjmB0e34TeR1H+g1XFiExAbv7wFe4TR8QHMqjtsbzTl8Ui+judHohsQZHKKANch/
-	 B4/sUhoIu0G+nGn/IN4KJLrKTeD63N8/UbNGqppM=
+	b=GZ5fhfEftJ2XLv5SH9rLQao88FeCJKfvisqNXlpiAobxOcVJFVtXiKQ0EH4fhfTzm
+	 m7UP6eEAM2EWbvxROwFAKYlQP/WXXFYXbt0bTY8+xsEPHrtA+Z98FsjrNkceUFREB9
+	 3o6gvXZaUx4cJ3TiHElOA6xJid0eJM6p7OWRQ/0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 242/508] drm/meson: fix debug log statement when setting the HDMI clocks
-Date: Mon, 23 Jun 2025 15:04:47 +0200
-Message-ID: <20250623130651.208240015@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Angelo Dureghello <adureghello@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 260/411] iio: adc: ad7606_spi: fix reg write value mask
+Date: Mon, 23 Jun 2025 15:06:44 +0200
+Message-ID: <20250623130640.196524118@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit d17e61ab63fb7747b340d6a66bf1408cd5c6562b ]
+commit 89944d88f8795c6c89b9514cb365998145511cd4 upstream.
 
-The "phy" and "vclk" frequency labels were swapped, making it more
-difficult to debug driver errors. Swap the label order to make them
-match with the actual frequencies printed to correct this.
+Fix incorrect value mask for register write. Register values are 8-bit,
+not 9. If this function was called with a value > 0xFF and an even addr,
+it would cause writing to the next register.
 
-Fixes: e5fab2ec9ca4 ("drm/meson: vclk: add support for YUV420 setup")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250606203729.3311592-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f2a22e1e172f ("iio: adc: ad7606: Add support for software mode for ad7616")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Angelo Dureghello <adureghello@baylibre.com>
+Link: https://patch.msgid.link/20250428-iio-adc-ad7606_spi-fix-write-value-mask-v1-1-a2d5e85a809f@baylibre.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/meson/meson_encoder_hdmi.c | 2 +-
+ drivers/iio/adc/ad7606_spi.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_encoder_hdmi.c b/drivers/gpu/drm/meson/meson_encoder_hdmi.c
-index c1401ec1354d1..e34dc1e405882 100644
---- a/drivers/gpu/drm/meson/meson_encoder_hdmi.c
-+++ b/drivers/gpu/drm/meson/meson_encoder_hdmi.c
-@@ -106,7 +106,7 @@ static void meson_encoder_hdmi_set_vclk(struct meson_encoder_hdmi *encoder_hdmi,
- 		venc_freq /= 2;
+--- a/drivers/iio/adc/ad7606_spi.c
++++ b/drivers/iio/adc/ad7606_spi.c
+@@ -151,7 +151,7 @@ static int ad7606_spi_reg_write(struct a
+ 	struct spi_device *spi = to_spi_device(st->dev);
  
- 	dev_dbg(priv->dev,
--		"vclk:%lluHz phy=%lluHz venc=%lluHz hdmi=%lluHz enci=%d\n",
-+		"phy:%lluHz vclk=%lluHz venc=%lluHz hdmi=%lluHz enci=%d\n",
- 		phy_freq, vclk_freq, venc_freq, hdmi_freq,
- 		priv->venc.hdmi_use_enci);
+ 	st->d16[0] = cpu_to_be16((st->bops->rd_wr_cmd(addr, 1) << 8) |
+-				  (val & 0x1FF));
++				  (val & 0xFF));
  
--- 
-2.39.5
-
+ 	return spi_write(spi, &st->d16[0], sizeof(st->d16[0]));
+ }
 
 
