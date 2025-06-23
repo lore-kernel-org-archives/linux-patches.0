@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871CA1E487;
-	Mon, 23 Jun 2025 13:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B484C6E;
+	Mon, 23 Jun 2025 13:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686117; cv=none; b=vBIFwnozbVdG3VwbxRP5Ybrw89wd4dTXr800T9Uk4bLh9hqzFbWLdYTFgMbcogWYStEiiA7Vf3IjGt8+knrN1KVp4U8i+DLiL6jalefZNvKp8F6ZCJxhYPBSjVjc0OfB7wNO98K7eW2kEwK2dLY+122E5E5aTLe/sOfZ5s0/qZw=
+	t=1750686119; cv=none; b=B8Sv3OSad9Yndp21lOU6fHk4NuXiBIKfoch4wHDjMUNRtq9Doyr28xAqxRH8+A7q1ifhpH8QSF3n9fE6xbASjWf8pycvCtxUA6SiIdAv2BVnsl4r9hrmC8l3+j5yKRlQ1oJ4tik5R2sJiwZO4BSW5Pa3CIgo/JSrrRtu1EHPIHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686117; c=relaxed/simple;
-	bh=/HztbWDonsroAdqlsszZvmlJnYxAtEAaxtHsf3bvSUY=;
+	s=arc-20240116; t=1750686119; c=relaxed/simple;
+	bh=lV057AfxB5MjaWua03nJFT/TWCyOtVpvW/OyFS6/Xws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eu+LDGnSylcC8IMrGZPkHvvioW1FYbjWjQWF2qRWKNDQkaX6kAJCsWztA5L3bfj9Drp1vtbLqQad7hv3iQ+K7lnF6ygsMLl4NCoU1gkO3pL0d3zato0KyUC430oTAjfSctAgXfmXR8CiroKKWEthkopIZMK2GxDkhEtDL3bKjes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxr7IPR9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jg0MoylGwItB22AkNddUvKfVfmqLFxoPoFJphyhKb4Tna+meJ1EmE95wrkLRKoIEai3oxhmgwUTC/P7YmZ2EwN8XCtST7izxfeIY3CCDsQ93cV/g/HMgW5OpOOMbr3Hg3zsfT4Vc9q9wxKxA8SOd7ndbVj+ypXKP1MSLHFVxxw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhRCVemh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxr7IPR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3C0C4CEEA;
-	Mon, 23 Jun 2025 13:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhRCVemh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBDFC4CEEA;
+	Mon, 23 Jun 2025 13:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686117;
-	bh=/HztbWDonsroAdqlsszZvmlJnYxAtEAaxtHsf3bvSUY=;
+	s=korg; t=1750686119;
+	bh=lV057AfxB5MjaWua03nJFT/TWCyOtVpvW/OyFS6/Xws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxr7IPR9EJu9ZLLGEcoEpXTKGPyUv95/j+061OY0TRLqZam/6wZvjMNOc1bY4C6Yp
-	 mhFslGaL480kbE8K4SOKWGNzhJ0U+uZvTJYNi2lPCxBDYLA93JsFI+sz3RO5AdVlBa
-	 rm3Wz8s6cc0zjVk5CHDSbA0yAmua+IdtbSVmXbKg=
+	b=zhRCVemhcRvRo85X4SCtokR/JnlEZ7FEJxBdkJI7FXBn3HmGQsF0q1Maz+jYPlAgB
+	 BzfP3HGX4WsvkG3IM9+vKbYidJ3w31oMcoIpkEpDHe7JA1F2FkFPerw3cDBEqURmIC
+	 lg5ido9DBPjIc3zZciunOskEwnyAGaGPyOuGP07w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Jan Kara <jack@suse.cz>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 080/411] ocfs2: fix possible memory leak in ocfs2_finish_quota_recovery
-Date: Mon, 23 Jun 2025 15:03:44 +0200
-Message-ID: <20250623130635.406144402@linuxfoundation.org>
+	Liangliang Zou <rawdiamondmc@outlook.com>,
+	Mingcong Bai <jeffbai@aosc.io>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.6 023/290] wifi: rtlwifi: disable ASPM for RTL8723BE with subsystem ID 11ad:1723
+Date: Mon, 23 Jun 2025 15:04:44 +0200
+Message-ID: <20250623130627.680957029@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,54 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Mingcong Bai <jeffbai@aosc.io>
 
-[ Upstream commit cdc3ed3035d0fe934aa1d9b78ce256752fd3bb7d ]
+commit 77a6407c6ab240527166fb19ee96e95f5be4d3cd upstream.
 
-If ocfs2_finish_quota_recovery() exits due to an error before passing all
-rc_list elements to ocfs2_recover_local_quota_file() then it can lead to a
-memory leak as rc_list may still contain elements that have to be freed.
+RTL8723BE found on some ASUSTek laptops, such as F441U and X555UQ with
+subsystem ID 11ad:1723 are known to output large amounts of PCIe AER
+errors during and after boot up, causing heavy lags and at times lock-ups:
 
-Release all memory allocated by ocfs2_add_recovery_chunk() using
-ocfs2_free_quota_recovery() instead of kfree().
+  pcieport 0000:00:1c.5: AER: Correctable error message received from 0000:00:1c.5
+  pcieport 0000:00:1c.5: PCIe Bus Error: severity=Correctable, type=Physical Layer, (Receiver ID)
+  pcieport 0000:00:1c.5:   device [8086:9d15] error status/mask=00000001/00002000
+  pcieport 0000:00:1c.5:    [ 0] RxErr
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+Disable ASPM on this combo as a quirk.
 
-Link: https://lkml.kernel.org/r/20250402065628.706359-2-m.masimov@mt-integration.ru
-Fixes: 2205363dce74 ("ocfs2: Implement quota recovery")
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch is a revision of a previous patch (linked below) which
+attempted to disable ASPM for RTL8723BE on all Intel Skylake and Kaby Lake
+PCIe bridges. I take a more conservative approach as all known reports
+point to ASUSTek laptops of these two generations with this particular
+wireless card.
+
+Please note, however, before the rtl8723be finishes probing, the AER
+errors remained. After the module finishes probing, all AER errors would
+indeed be eliminated, along with heavy lags, poor network throughput,
+and/or occasional lock-ups.
+
+Cc: <stable@vger.kernel.org>
+Fixes: a619d1abe20c ("rtlwifi: rtl8723be: Add new driver")
+Reported-by: Liangliang Zou <rawdiamondmc@outlook.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218127
+Link: https://lore.kernel.org/lkml/05390e0b-27fd-4190-971e-e70a498c8221@lwfinger.net/T/
+Tested-by: Liangliang Zou <rawdiamondmc@outlook.com>
+Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250422061755.356535-1-jeffbai@aosc.io
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/quota_local.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/pci.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/ocfs2/quota_local.c b/fs/ocfs2/quota_local.c
-index 1baa68c01c671..e199c54aeb0bc 100644
---- a/fs/ocfs2/quota_local.c
-+++ b/fs/ocfs2/quota_local.c
-@@ -671,7 +671,7 @@ int ocfs2_finish_quota_recovery(struct ocfs2_super *osb,
- 			break;
- 	}
- out:
--	kfree(rec);
-+	ocfs2_free_quota_recovery(rec);
- 	return status;
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -155,6 +155,16 @@ static void _rtl_pci_update_default_sett
+ 	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8192SE &&
+ 	    init_aspm == 0x43)
+ 		ppsc->support_aspm = false;
++
++	/* RTL8723BE found on some ASUSTek laptops, such as F441U and
++	 * X555UQ with subsystem ID 11ad:1723 are known to output large
++	 * amounts of PCIe AER errors during and after boot up, causing
++	 * heavy lags, poor network throughput, and occasional lock-ups.
++	 */
++	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
++	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
++	     rtlpci->pdev->subsystem_device == 0x1723))
++		ppsc->support_aspm = false;
  }
  
--- 
-2.39.5
-
+ static bool _rtl_pci_platform_switch_device_pci_aspm(
 
 
