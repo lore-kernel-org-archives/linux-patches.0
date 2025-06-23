@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A907B676;
-	Mon, 23 Jun 2025 22:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19937229B21;
+	Mon, 23 Jun 2025 22:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716713; cv=none; b=gTFQ5dr5JvWFBU/dQ/iE4SLDpl8GxeDaF5OqPcJj8w9AYGw9N7sSlcFSFZgxFkiTfMyDFQ2gsP0nLv7//GOV4Ux6f8DpXL6M+lLBebArKqZOD/vBUiT4LHgPLyCE6m/hTkuEd9QQ468tLzoVaXLefb9y6IcTNLgl/VKHg4VNlHs=
+	t=1750716716; cv=none; b=Av06MpmYj08QCXOBMl3KdtWfYHZ/1NT1qrbHIvZq0+gL349Yx80IvhAadTW1WGkryPbNhkzucuXprp+nWvJoCIhv3e/6qconyG7ysTO3+SZ+JV+i+D6ITNtT1Nr2QlU1l6rzle/Eu6c6myByngsuyNon1Umnku3X5bBTFyzojNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716713; c=relaxed/simple;
-	bh=XGmgBrySy82Ub6N+ZYyGMnH2XqazRGVTyAJEetRsTg4=;
+	s=arc-20240116; t=1750716716; c=relaxed/simple;
+	bh=xGE7oH3TXcFtyJuz+pZpbBk5OqcXZY2XlNoutgMxTo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s6wCCv0bhnV+4gHtMRI4MeYiXF+ay9oPGH1kCEGQJZrPrNGcTShP3UIycwrv8Jo++Pc4RV00EoQl/Gf38axHksCiNelej1S/TLa7NE76IBFT1TVlyfVz4jn8zkZuxw9ZiNeeQdO35Y02iaqRV6BeQaki0VG3ziq31uGrxoyhiwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAZcQBkF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e8LrFinZ6d27THfs5bajGyfsxzF0juGJOrtNeisF2TTUJEPDsmHVQwXWba+r5cA0XRNK/NrY4Mleof0CcqBcu8wydN/9jYLxyBSiXipEmZV2zG6bOHHzmD7JZVeOFieGymVDI1wkssUaZQIbOA59jD1B+sLuJLOBrJ9XcK1kmew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQWcuMqy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAZcQBkF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE171C4CEEA;
-	Mon, 23 Jun 2025 22:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQWcuMqy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D89C4CEEA;
+	Mon, 23 Jun 2025 22:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716713;
-	bh=XGmgBrySy82Ub6N+ZYyGMnH2XqazRGVTyAJEetRsTg4=;
+	s=korg; t=1750716715;
+	bh=xGE7oH3TXcFtyJuz+pZpbBk5OqcXZY2XlNoutgMxTo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XAZcQBkF+GwhSHhLR/Un7ea4K+1RgosB9P0QVSvSe4El1sVcnKT6eNWwop1dI/cSR
-	 fyQ9CJcXJEAxE/pJbzpAZ2RHtfXAAZYLHlCsbpan6P1DmBkLFT8zI9Vd5mL5JWPD7E
-	 YD65WUlpQrw43vHKUOKHSH/ZG425UIXtQMjH2e18=
+	b=mQWcuMqyu31Y8KqgXn0zjqvTpOxOd2bxm3gEhX0eEXWoPnxKqX2AuS/vaLLl3vy4Y
+	 QiCVEsqvWsSZ8FvoMhIKL7JfNe7wXhQ9nEsiFzLDmD+N74ElpyKZEUisxonBLZ0rJB
+	 WGAzE5XWe7O4JEK9E7bouGj9MlHoPl9osdWNtvNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Xin Li (Intel)" <xin@zytor.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sohil Mehta <sohil.mehta@intel.com>
-Subject: [PATCH 5.15 352/411] selftests/x86: Add a test to detect infinite SIGTRAP handler loop
-Date: Mon, 23 Jun 2025 15:08:16 +0200
-Message-ID: <20250623130642.509572419@linuxfoundation.org>
+	Tengda Wu <wutengda@huaweicloud.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 284/290] arm64/ptrace: Fix stack-out-of-bounds read in regs_get_kernel_stack_nth()
+Date: Mon, 23 Jun 2025 15:09:05 +0200
+Message-ID: <20250623130635.462426068@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,156 +45,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xin Li (Intel) <xin@zytor.com>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-commit f287822688eeb44ae1cf6ac45701d965efc33218 upstream.
+[ Upstream commit 39dfc971e42d886e7df01371cd1bef505076d84c ]
 
-When FRED is enabled, if the Trap Flag (TF) is set without an external
-debugger attached, it can lead to an infinite loop in the SIGTRAP
-handler.  To avoid this, the software event flag in the augmented SS
-must be cleared, ensuring that no single-step trap remains pending when
-ERETU completes.
+KASAN reports a stack-out-of-bounds read in regs_get_kernel_stack_nth().
 
-This test checks for that specific scenario—verifying whether the kernel
-correctly prevents an infinite SIGTRAP loop in this edge case when FRED
-is enabled.
+Call Trace:
+[   97.283505] BUG: KASAN: stack-out-of-bounds in regs_get_kernel_stack_nth+0xa8/0xc8
+[   97.284677] Read of size 8 at addr ffff800089277c10 by task 1.sh/2550
+[   97.285732]
+[   97.286067] CPU: 7 PID: 2550 Comm: 1.sh Not tainted 6.6.0+ #11
+[   97.287032] Hardware name: linux,dummy-virt (DT)
+[   97.287815] Call trace:
+[   97.288279]  dump_backtrace+0xa0/0x128
+[   97.288946]  show_stack+0x20/0x38
+[   97.289551]  dump_stack_lvl+0x78/0xc8
+[   97.290203]  print_address_description.constprop.0+0x84/0x3c8
+[   97.291159]  print_report+0xb0/0x280
+[   97.291792]  kasan_report+0x84/0xd0
+[   97.292421]  __asan_load8+0x9c/0xc0
+[   97.293042]  regs_get_kernel_stack_nth+0xa8/0xc8
+[   97.293835]  process_fetch_insn+0x770/0xa30
+[   97.294562]  kprobe_trace_func+0x254/0x3b0
+[   97.295271]  kprobe_dispatcher+0x98/0xe0
+[   97.295955]  kprobe_breakpoint_handler+0x1b0/0x210
+[   97.296774]  call_break_hook+0xc4/0x100
+[   97.297451]  brk_handler+0x24/0x78
+[   97.298073]  do_debug_exception+0xac/0x178
+[   97.298785]  el1_dbg+0x70/0x90
+[   97.299344]  el1h_64_sync_handler+0xcc/0xe8
+[   97.300066]  el1h_64_sync+0x78/0x80
+[   97.300699]  kernel_clone+0x0/0x500
+[   97.301331]  __arm64_sys_clone+0x70/0x90
+[   97.302084]  invoke_syscall+0x68/0x198
+[   97.302746]  el0_svc_common.constprop.0+0x11c/0x150
+[   97.303569]  do_el0_svc+0x38/0x50
+[   97.304164]  el0_svc+0x44/0x1d8
+[   97.304749]  el0t_64_sync_handler+0x100/0x130
+[   97.305500]  el0t_64_sync+0x188/0x190
+[   97.306151]
+[   97.306475] The buggy address belongs to stack of task 1.sh/2550
+[   97.307461]  and is located at offset 0 in frame:
+[   97.308257]  __se_sys_clone+0x0/0x138
+[   97.308910]
+[   97.309241] This frame has 1 object:
+[   97.309873]  [48, 184) 'args'
+[   97.309876]
+[   97.310749] The buggy address belongs to the virtual mapping at
+[   97.310749]  [ffff800089270000, ffff800089279000) created by:
+[   97.310749]  dup_task_struct+0xc0/0x2e8
+[   97.313347]
+[   97.313674] The buggy address belongs to the physical page:
+[   97.314604] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x14f69a
+[   97.315885] flags: 0x15ffffe00000000(node=1|zone=2|lastcpupid=0xfffff)
+[   97.316957] raw: 015ffffe00000000 0000000000000000 dead000000000122 0000000000000000
+[   97.318207] raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
+[   97.319445] page dumped because: kasan: bad access detected
+[   97.320371]
+[   97.320694] Memory state around the buggy address:
+[   97.321511]  ffff800089277b00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   97.322681]  ffff800089277b80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   97.323846] >ffff800089277c00: 00 00 f1 f1 f1 f1 f1 f1 00 00 00 00 00 00 00 00
+[   97.325023]                          ^
+[   97.325683]  ffff800089277c80: 00 00 00 00 00 00 00 00 00 f3 f3 f3 f3 f3 f3 f3
+[   97.326856]  ffff800089277d00: f3 f3 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 
-The test should _always_ pass with IDT event delivery, thus no need to
-disable the test even when FRED is not enabled.
+This issue seems to be related to the behavior of some gcc compilers and
+was also fixed on the s390 architecture before:
 
-Signed-off-by: Xin Li (Intel) <xin@zytor.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Sohil Mehta <sohil.mehta@intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250609084054.2083189-3-xin%40zytor.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ commit d93a855c31b7 ("s390/ptrace: Avoid KASAN false positives in regs_get_kernel_stack_nth()")
+
+As described in that commit, regs_get_kernel_stack_nth() has confirmed that
+`addr` is on the stack, so reading the value at `*addr` should be allowed.
+Use READ_ONCE_NOCHECK() helper to silence the KASAN check for this case.
+
+Fixes: 0a8ea52c3eb1 ("arm64: Add HAVE_REGS_AND_STACK_ACCESS_API feature")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Link: https://lore.kernel.org/r/20250604005533.1278992-1-wutengda@huaweicloud.com
+[will: Use '*addr' as the argument to READ_ONCE_NOCHECK()]
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/x86/Makefile       |    2 
- tools/testing/selftests/x86/sigtrap_loop.c |  101 +++++++++++++++++++++++++++++
- 2 files changed, 102 insertions(+), 1 deletion(-)
- create mode 100644 tools/testing/selftests/x86/sigtrap_loop.c
+ arch/arm64/kernel/ptrace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/x86/Makefile
-+++ b/tools/testing/selftests/x86/Makefile
-@@ -12,7 +12,7 @@ CAN_BUILD_WITH_NOPIE := $(shell ./check_
+diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
+index a26293e0cc555..c30f5a70bd18f 100644
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -139,7 +139,7 @@ unsigned long regs_get_kernel_stack_nth(struct pt_regs *regs, unsigned int n)
  
- TARGETS_C_BOTHBITS := single_step_syscall sysret_ss_attrs syscall_nt test_mremap_vdso \
- 			check_initial_reg_state sigreturn iopl ioperm \
--			test_vsyscall mov_ss_trap \
-+			test_vsyscall mov_ss_trap sigtrap_loop \
- 			syscall_arg_fault fsgsbase_restore sigaltstack
- TARGETS_C_32BIT_ONLY := entry_from_vm86 test_syscall_vdso unwind_vdso \
- 			test_FCMOV test_FCOMI test_FISTTP \
---- /dev/null
-+++ b/tools/testing/selftests/x86/sigtrap_loop.c
-@@ -0,0 +1,101 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2025 Intel Corporation
-+ */
-+#define _GNU_SOURCE
-+
-+#include <err.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/ucontext.h>
-+
-+#ifdef __x86_64__
-+# define REG_IP REG_RIP
-+#else
-+# define REG_IP REG_EIP
-+#endif
-+
-+static void sethandler(int sig, void (*handler)(int, siginfo_t *, void *), int flags)
-+{
-+	struct sigaction sa;
-+
-+	memset(&sa, 0, sizeof(sa));
-+	sa.sa_sigaction = handler;
-+	sa.sa_flags = SA_SIGINFO | flags;
-+	sigemptyset(&sa.sa_mask);
-+
-+	if (sigaction(sig, &sa, 0))
-+		err(1, "sigaction");
-+
-+	return;
-+}
-+
-+static void sigtrap(int sig, siginfo_t *info, void *ctx_void)
-+{
-+	ucontext_t *ctx = (ucontext_t *)ctx_void;
-+	static unsigned int loop_count_on_same_ip;
-+	static unsigned long last_trap_ip;
-+
-+	if (last_trap_ip == ctx->uc_mcontext.gregs[REG_IP]) {
-+		printf("\tTrapped at %016lx\n", last_trap_ip);
-+
-+		/*
-+		 * If the same IP is hit more than 10 times in a row, it is
-+		 * _considered_ an infinite loop.
-+		 */
-+		if (++loop_count_on_same_ip > 10) {
-+			printf("[FAIL]\tDetected SIGTRAP infinite loop\n");
-+			exit(1);
-+		}
-+
-+		return;
-+	}
-+
-+	loop_count_on_same_ip = 0;
-+	last_trap_ip = ctx->uc_mcontext.gregs[REG_IP];
-+	printf("\tTrapped at %016lx\n", last_trap_ip);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+	sethandler(SIGTRAP, sigtrap, 0);
-+
-+	/*
-+	 * Set the Trap Flag (TF) to single-step the test code, therefore to
-+	 * trigger a SIGTRAP signal after each instruction until the TF is
-+	 * cleared.
-+	 *
-+	 * Because the arithmetic flags are not significant here, the TF is
-+	 * set by pushing 0x302 onto the stack and then popping it into the
-+	 * flags register.
-+	 *
-+	 * Four instructions in the following asm code are executed with the
-+	 * TF set, thus the SIGTRAP handler is expected to run four times.
-+	 */
-+	printf("[RUN]\tSIGTRAP infinite loop detection\n");
-+	asm volatile(
-+#ifdef __x86_64__
-+		/*
-+		 * Avoid clobbering the redzone
-+		 *
-+		 * Equivalent to "sub $128, %rsp", however -128 can be encoded
-+		 * in a single byte immediate while 128 uses 4 bytes.
-+		 */
-+		"add $-128, %rsp\n\t"
-+#endif
-+		"push $0x302\n\t"
-+		"popf\n\t"
-+		"nop\n\t"
-+		"nop\n\t"
-+		"push $0x202\n\t"
-+		"popf\n\t"
-+#ifdef __x86_64__
-+		"sub $-128, %rsp\n\t"
-+#endif
-+	);
-+
-+	printf("[OK]\tNo SIGTRAP infinite loop detected\n");
-+	return 0;
-+}
+ 	addr += n;
+ 	if (regs_within_kernel_stack(regs, (unsigned long)addr))
+-		return *addr;
++		return READ_ONCE_NOCHECK(*addr);
+ 	else
+ 		return 0;
+ }
+-- 
+2.39.5
+
 
 
