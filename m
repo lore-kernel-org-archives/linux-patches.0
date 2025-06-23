@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585F41E1A05;
-	Mon, 23 Jun 2025 21:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81AF4315A;
+	Mon, 23 Jun 2025 21:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715075; cv=none; b=s496jgoGHQC9NtCjKWa3IKFvjUdWSUvBR3gyFlPtgrDXxtZhhLsqVGT7zKnGC7BlJfZYlmB1f4kxbwI0XGiFn1uWKJ2HTBVv7IGYBp3NsY3ArKI2YKVqmv/BgdYI6dFFsQXGc3yOEOZ5MSv57KLXl2Nho8ccj7+JHo0LQQzGvmg=
+	t=1750715077; cv=none; b=a9Qr/f3sAB5akLBBuEAXhW7vyYQhAURqhgULvle2CxSLnfRF6XP4+yGjDytAlXILeQXPVx16oB0tCTWAbB3B3CVD1Lt50ArUI1S3WUkx9bWcFbWN8eKXrdAqn/tzQwT9rKzCBcm1Y8Jb0nSPvo2j6djL86okDAilx4AG6e4PNiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715075; c=relaxed/simple;
-	bh=vQpEAsV+SHEVNdOhjk+0X5i7tRMpPGRNTEu4SaptXlE=;
+	s=arc-20240116; t=1750715077; c=relaxed/simple;
+	bh=gpFAzxP0YDpn8bou5VPEkMpzGXArcmtw6Qj+RW4/HhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gzWAsD5Y9DaqbP2dLveeTIs0S/eFFBEl53zRS6CTUkgMEXDXNL5veoHHE14zzheS6cf1Dvhf4boBDUSNXP8M2LISK7tnR8BgtLkd68HUR+nI5i6bFE1ejOmwrrLfz7JEOO/b/c2ztSUw6Up121Oo/TaGm531vJGFkgE/Jdpl7oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ck3JzLto; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CGZePfb3Uk043N6cFRlx+01oG9K758dTlXlxr2WidmheXEuE6o832nttSwAco0/KZ2ZyjnQaEfvxqbQU8ZYddyzGcWn66oinLxjoS75Lnuf5zv4PxSShPrDJiViQF9u8QFn2MWZtzGtsd3ujkJo1fSzSV7cUC3ne/fUO0bSTwMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6EFzVcW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ck3JzLto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6981C4CEEA;
-	Mon, 23 Jun 2025 21:44:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6EFzVcW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD82C4CEEA;
+	Mon, 23 Jun 2025 21:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715075;
-	bh=vQpEAsV+SHEVNdOhjk+0X5i7tRMpPGRNTEu4SaptXlE=;
+	s=korg; t=1750715077;
+	bh=gpFAzxP0YDpn8bou5VPEkMpzGXArcmtw6Qj+RW4/HhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ck3JzLtoBk/G+51dnWljmkmg7HvMcNSYI/M+rSKB2XX+xfF25R3yZ9I+Er0Nm9VBk
-	 49HkfTMKkV/wlxavHG9paNs8jLVOlixXlDz8My+gOhNUhLwFv2HkA913yVuaTet1xU
-	 lfC08AQFQnSiPmspgk1sNnsTiLIiEldq3J1pCuj0=
+	b=F6EFzVcWyq/kYhcNtc7zdrI4Wx4ZQMGUNlookp9RurDqt/YSZ4U71x+2rhSbugzCf
+	 c5o6XCuy9idxjTMPVFgR8i0bmH0eYNP2Rwg+UkzzVvXFD/qqg2uorOm+nH8eFSSe24
+	 iTjzkb/SfOv/OOPbzokiKaSuMZtpNCCNfZJw6XMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 178/290] software node: Correct a OOB check in software_node_get_reference_args()
-Date: Mon, 23 Jun 2025 15:07:19 +0200
-Message-ID: <20250623130632.233087368@linuxfoundation.org>
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.12 154/414] PCI: dw-rockchip: Remove PCIE_L0S_ENTRY check from rockchip_pcie_link_up()
+Date: Mon, 23 Jun 2025 15:04:51 +0200
+Message-ID: <20250623130645.892738138@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit 31e4e12e0e9609850cefd4b2e1adf782f56337d6 ]
+commit 7d9b5d6115532cf90a789ed6afd3f4c70ebbd827 upstream.
 
-software_node_get_reference_args() wants to get @index-th element, so
-the property value requires at least '(index + 1) * sizeof(*ref)' bytes
-but that can not be guaranteed by current OOB check, and may cause OOB
-for malformed property.
+rockchip_pcie_link_up() currently has two issues:
+1. Value 0x11 of PCIE_L0S_ENTRY corresponds to L0 state, not L0S. So the
+naming is wrong from the very beginning.
+2. Checking for value 0x11 treats other states like L0S and L1 as link
+down, which is wrong.
 
-Fix by using as OOB check '((index + 1) * sizeof(*ref) > prop->length)'.
+Hence, remove the PCIE_L0S_ENTRY check and also its definition. This allows
+adding ASPM support in the successive commits.
 
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250414-fix_swnode-v2-1-9c9e6ae11eab@quicinc.com
+Fixes: 0e898eb8df4e ("PCI: rockchip-dwc: Add Rockchip RK356X host controller driver")
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+[mani: commit message rewording]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/1744850111-236269-1-git-send-email-shawn.lin@rock-chips.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/swnode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
-index 079bd14bdedc7..a7a3e3b66bb5e 100644
---- a/drivers/base/swnode.c
-+++ b/drivers/base/swnode.c
-@@ -518,7 +518,7 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
- 	if (prop->is_inline)
- 		return -EINVAL;
+--- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
++++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+@@ -44,7 +44,6 @@
+ #define PCIE_LINKUP			(PCIE_SMLH_LINKUP | PCIE_RDLH_LINKUP)
+ #define PCIE_RDLH_LINK_UP_CHGED		BIT(1)
+ #define PCIE_LINK_REQ_RST_NOT_INT	BIT(2)
+-#define PCIE_L0S_ENTRY			0x11
+ #define PCIE_CLIENT_GENERAL_CONTROL	0x0
+ #define PCIE_CLIENT_INTR_STATUS_LEGACY	0x8
+ #define PCIE_CLIENT_INTR_MASK_LEGACY	0x1c
+@@ -177,8 +176,7 @@ static int rockchip_pcie_link_up(struct
+ 	struct rockchip_pcie *rockchip = to_rockchip_pcie(pci);
+ 	u32 val = rockchip_pcie_get_ltssm(rockchip);
  
--	if (index * sizeof(*ref) >= prop->length)
-+	if ((index + 1) * sizeof(*ref) > prop->length)
- 		return -ENOENT;
+-	if ((val & PCIE_LINKUP) == PCIE_LINKUP &&
+-	    (val & PCIE_LTSSM_STATUS_MASK) == PCIE_L0S_ENTRY)
++	if ((val & PCIE_LINKUP) == PCIE_LINKUP)
+ 		return 1;
  
- 	ref_array = prop->pointer;
--- 
-2.39.5
-
+ 	return 0;
 
 
