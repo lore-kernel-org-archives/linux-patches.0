@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE54A3FB1B;
-	Mon, 23 Jun 2025 21:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4C73FB1B;
+	Mon, 23 Jun 2025 21:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715871; cv=none; b=Yu9yhXDMzKo2JGt/woOlPTR0UAmJ8YuYhWgdUWCq8FrDErYEiAUg6be9S8GFqxg9fcOOr3XgEVGE1uC//8WqdMSjQIiPgG71zWD0PDvFe5owiFE+di4Tyemko9XRkOtKn9lz3VdxV0oGH1JDj4UJVGeNQss0VChEw6ZIs0xIWBg=
+	t=1750715873; cv=none; b=OQSrfVsyzvYBxRyyIE5XxoAoop8BlFK2jYovW0B1+i7cHxsfYRjt9VBzh/AWMtzJ7OXQWXbC0txSmne1l4MHRxSUe1Z+WaeAW7lQYL4YGqc+smT/rOozQURfs/xixMhX4kXFPWPJsrCH62k0Q0eJhgLRcAm7eFTZXiX6GUnNiZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715871; c=relaxed/simple;
-	bh=lztnMSGzO4bQqP1xAptBfSSMUWSYRY8skCTDIZ+s3jw=;
+	s=arc-20240116; t=1750715873; c=relaxed/simple;
+	bh=cVIchX/Jp3hdIZQozA+wZ+uckRepVVULBteYueKqTwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nP7pHwqpUdL7HND5j7HL6ahciCrpPPlbLUq9IaQNjpd8B6OnyygMxG2VAfdCA3lSpOcghPG1Rtc7EALCYaeuvQnloo2jHZjS4qaoIYtA/9pAF28VX1v0KN4pUMuwyR/yUFPLbNPt6LLjXmxx53e7Mzs8twCu1IHEYvFmQxOLFE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UpNXbBs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oKntss5ksntHoYN4ZpNgB+PON9OxiIuoFdhLRNYDUvGyjARPg9e48tHbauFiJgQyW8MgghRjkPpGyjEYsoGr0jg1gJaYviR6PO6nnXxOm+rBBaBuIl71ylbhrHJ2FcDWBEjHIKL21MiZSkmwRpg+XlOHckWMafndi+H9k+CfYD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ls2Zym9d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UpNXbBs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70262C4CEEA;
-	Mon, 23 Jun 2025 21:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ls2Zym9d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC64C4CEEA;
+	Mon, 23 Jun 2025 21:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715870;
-	bh=lztnMSGzO4bQqP1xAptBfSSMUWSYRY8skCTDIZ+s3jw=;
+	s=korg; t=1750715873;
+	bh=cVIchX/Jp3hdIZQozA+wZ+uckRepVVULBteYueKqTwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2UpNXbBsEb45PRcn6WTRIDagKWvwnPsUwEwzgPDPkRdrh+cwC7M0gJE+mlesi8YMq
-	 3f5NqqZ9qQr14Ij1fRepNljTihGwNkxbW7Az40gE6mMuS9SSbil34L+jS2qJP4oash
-	 oX22uUQitjaVsRZMGc3W1Sv3zAmikahVSIVSucBE=
+	b=ls2Zym9d/gFtl+N6MBmUHRfihe/kiExaVWo2pDRoTdL/B5lBN9x9wiMNLqt+OQI4N
+	 Uy7GJAFiKL9mB636OSGIvSuAthnRWSR+3g/ZlocgWFF8y+mdDB3Gf/9Pe+wz7Wij4V
+	 2gJkBC0z1cUpurlz9fExHeEiepbLaTuOOlT0WpYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henk Vergonet <henk.vergonet@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 309/411] wifi: mt76: mt76x2: Add support for LiteOn WN4516R,WN4519R
-Date: Mon, 23 Jun 2025 15:07:33 +0200
-Message-ID: <20250623130641.421834760@linuxfoundation.org>
+Subject: [PATCH 6.12 234/414] net: vertexcom: mse102x: Return code for mse102x_rx_pkt_spi
+Date: Mon, 23 Jun 2025 15:06:11 +0200
+Message-ID: <20250623130647.890143422@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,88 +47,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henk Vergonet <henk.vergonet@gmail.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 3c0e4f606d8693795a2c965d6f4987b1bfc31097 ]
+[ Upstream commit 4ecf56f4b66011b583644bf9a62188d05dfcd78c ]
 
-Adds support for:
- - LiteOn WN4516R
- - LiteOn WN4519R
- Both use:
- - A nonstandard USB connector
- - Mediatek chipset MT7600U
- - ASIC revision: 76320044
+The MSE102x doesn't provide any interrupt register, so the only way
+to handle the level interrupt is to fetch the whole packet from
+the MSE102x internal buffer via SPI. So in cases the interrupt
+handler fails to do this, it should return IRQ_NONE. This allows
+the core to disable the interrupt in case the issue persists
+and prevent an interrupt storm.
 
-Disabled VHT support on ASIC revision 76320044:
-
- This fixes the 5G connectibity issue on LiteOn WN4519R module
- see https://github.com/openwrt/mt76/issues/971
-
- And may also fix the 5G issues on the XBox One Wireless Adapter
- see https://github.com/openwrt/mt76/issues/200
-
- I have looked at the FCC info related to the MT7632U chip as mentioned in here:
- https://github.com/openwrt/mt76/issues/459
- These confirm the chipset does not support 'ac' mode and hence VHT should be turned of.
-
-Signed-off-by: Henk Vergonet <henk.vergonet@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250418143914.31384-1-henk.vergonet@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://patch.msgid.link/20250509120435.43646-6-wahrenst@gmx.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x2/usb.c     |  2 ++
- .../net/wireless/mediatek/mt76/mt76x2/usb_init.c    | 13 ++++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/vertexcom/mse102x.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-index 09b01e09bcfe0..1f2990d45d9e3 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-@@ -17,6 +17,8 @@ static const struct usb_device_id mt76x2u_device_table[] = {
- 	{ USB_DEVICE(0x057c, 0x8503) },	/* Avm FRITZ!WLAN AC860 */
- 	{ USB_DEVICE(0x7392, 0xb711) },	/* Edimax EW 7722 UAC */
- 	{ USB_DEVICE(0x0e8d, 0x7632) },	/* HC-M7662BU1 */
-+	{ USB_DEVICE(0x0471, 0x2126) }, /* LiteOn WN4516R module, nonstandard USB connector */
-+	{ USB_DEVICE(0x0471, 0x7600) }, /* LiteOn WN4519R module, nonstandard USB connector */
- 	{ USB_DEVICE(0x2c4e, 0x0103) },	/* Mercury UD13 */
- 	{ USB_DEVICE(0x0846, 0x9053) },	/* Netgear A6210 */
- 	{ USB_DEVICE(0x045e, 0x02e6) },	/* XBox One Wireless Adapter */
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
-index 85dcdc22fbebf..41b9a99665822 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
-@@ -191,6 +191,7 @@ int mt76x2u_register_device(struct mt76x02_dev *dev)
+diff --git a/drivers/net/ethernet/vertexcom/mse102x.c b/drivers/net/ethernet/vertexcom/mse102x.c
+index e4d993f313740..545177e84c0eb 100644
+--- a/drivers/net/ethernet/vertexcom/mse102x.c
++++ b/drivers/net/ethernet/vertexcom/mse102x.c
+@@ -306,7 +306,7 @@ static void mse102x_dump_packet(const char *msg, int len, const char *data)
+ 		       data, len, true);
+ }
+ 
+-static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
++static irqreturn_t mse102x_rx_pkt_spi(struct mse102x_net *mse)
  {
- 	struct ieee80211_hw *hw = mt76_hw(dev);
- 	struct mt76_usb *usb = &dev->mt76.usb;
-+	bool vht;
- 	int err;
+ 	struct sk_buff *skb;
+ 	unsigned int rxalign;
+@@ -327,7 +327,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 		mse102x_tx_cmd_spi(mse, CMD_CTR);
+ 		ret = mse102x_rx_cmd_spi(mse, (u8 *)&rx);
+ 		if (ret)
+-			return;
++			return IRQ_NONE;
  
- 	INIT_DELAYED_WORK(&dev->cal_work, mt76x2u_phy_calibrate);
-@@ -215,7 +216,17 @@ int mt76x2u_register_device(struct mt76x02_dev *dev)
+ 		cmd_resp = be16_to_cpu(rx);
+ 		if ((cmd_resp & CMD_MASK) != CMD_RTS) {
+@@ -360,7 +360,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 	rxalign = ALIGN(rxlen + DET_SOF_LEN + DET_DFT_LEN, 4);
+ 	skb = netdev_alloc_skb_ip_align(mse->ndev, rxalign);
+ 	if (!skb)
+-		return;
++		return IRQ_NONE;
  
- 	/* check hw sg support in order to enable AMSDU */
- 	hw->max_tx_fragments = dev->mt76.usb.sg_en ? MT_TX_SG_MAX_SIZE : 1;
--	err = mt76_register_device(&dev->mt76, true, mt76x02_rates,
-+	switch (dev->mt76.rev) {
-+	case 0x76320044:
-+		/* these ASIC revisions do not support VHT */
-+		vht = false;
-+		break;
-+	default:
-+		vht = true;
-+		break;
-+	}
+ 	/* 2 bytes Start of frame (before ethernet header)
+ 	 * 2 bytes Data frame tail (after ethernet frame)
+@@ -370,7 +370,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 	if (mse102x_rx_frame_spi(mse, rxpkt, rxlen, drop)) {
+ 		mse->ndev->stats.rx_errors++;
+ 		dev_kfree_skb(skb);
+-		return;
++		return IRQ_HANDLED;
+ 	}
+ 
+ 	if (netif_msg_pktdata(mse))
+@@ -381,6 +381,8 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 
+ 	mse->ndev->stats.rx_packets++;
+ 	mse->ndev->stats.rx_bytes += rxlen;
 +
-+	err = mt76_register_device(&dev->mt76, vht, mt76x02_rates,
- 				   ARRAY_SIZE(mt76x02_rates));
- 	if (err)
- 		goto fail;
++	return IRQ_HANDLED;
+ }
+ 
+ static int mse102x_tx_pkt_spi(struct mse102x_net *mse, struct sk_buff *txb,
+@@ -512,12 +514,13 @@ static irqreturn_t mse102x_irq(int irq, void *_mse)
+ {
+ 	struct mse102x_net *mse = _mse;
+ 	struct mse102x_net_spi *mses = to_mse102x_spi(mse);
++	irqreturn_t ret;
+ 
+ 	mutex_lock(&mses->lock);
+-	mse102x_rx_pkt_spi(mse);
++	ret = mse102x_rx_pkt_spi(mse);
+ 	mutex_unlock(&mses->lock);
+ 
+-	return IRQ_HANDLED;
++	return ret;
+ }
+ 
+ static int mse102x_net_open(struct net_device *ndev)
 -- 
 2.39.5
 
