@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5867080E;
-	Mon, 23 Jun 2025 22:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C3C221DA8;
+	Mon, 23 Jun 2025 22:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716558; cv=none; b=L8fehX1EHxObsGjfnHNYwSsm9xrv8wBpRLOE4yQXOMfyY8sYc8VxU8fR75XwGmxXKyh3HD8gC5QP/1R6qrcrCLDmgupPGB7g3YZtPUwYPXvqSscdaTzgvnXVr0XTQVwYpnsuTWMxZK8jOwwY3+JaOAHAvZ2RW8SLZ7RkYeJ8q7Q=
+	t=1750716559; cv=none; b=rtaPGv8HmoSKcMZ97NhbS/dEZdPcTr2bwXYa3hzw12sSS8RfmtZxpug2RGfqTXW6T0xuPx0sAlAZU2kD5iNc7lcqW4Cj52HpMzVAPDUOmaufK5Rs5ElWO60bNvFTEqUdNzclB6/dak2fFY2IuyG+d6vOXrHyTFUnflNVWAh4l6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716558; c=relaxed/simple;
-	bh=tOIRgtGpFvakrWpjOZ/AOTb57AmaloQyOITaPweo57E=;
+	s=arc-20240116; t=1750716559; c=relaxed/simple;
+	bh=atdH6019UCOyaw8BrWUNJClg5QAGldflq7/4QcT+w5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ycw0bFzy/0D/IAMe7Ko0JftwnzPic/zoMsb36AyE6c5nQVqwnpEsxT7+h6YZ/bxPP2ImZ4Z5tSTo+snqlwUeR0JRXk3mQDszvMhXtm73ULvhtxaaCCT3yfg3kAic5Xy8qjv09LeEq+YttT3rbr7AYaBbo2neqr0Iv/mhnGlLfpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfNzQvnX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rJCfIBMPZdXT6QXlR3zoPDmlZ49d9PX3sWIIErBOZmo9yJGRXcSkdr+m4kAFrpPG3kx22FGddESKGiaIns2NczwT1z9Kd9iProt4LlEpY3s8iHd2f+N4sJAF1Bo82fvmj2ATqgwbdd+ma9Zl+ksrIXaED6LuubGa/FSiLFldoHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJH6CQWw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfNzQvnX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5357EC4CEEA;
-	Mon, 23 Jun 2025 22:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJH6CQWw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C272FC4CEEA;
+	Mon, 23 Jun 2025 22:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716556;
-	bh=tOIRgtGpFvakrWpjOZ/AOTb57AmaloQyOITaPweo57E=;
+	s=korg; t=1750716559;
+	bh=atdH6019UCOyaw8BrWUNJClg5QAGldflq7/4QcT+w5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cfNzQvnXEbUbX0Mw8JbxIQOKtd3v4bxY9+Y9BiPw7IJICazy9V0syYb8CDGPbQZFg
-	 IbPU59hNP5iYPjLkwdOG1AiK/pLOjyHty0NXDqSZpWGavuuxOce6NQ96RqI63NPd5G
-	 pfJnRIedEWV/SBuR1BObHhPeNHSdPNiuanLg486E=
+	b=UJH6CQWwdMLFvfPdtI69LwLATNOJ78pHxNjzsu1TKsBM+g50hLI8z1lVFtDzind8Q
+	 iivf7mbqmhmv1dA4BzXFajutn0yeCO96mwWgtJzJPPJ8MwWbZMZCDnBdiSjFl6pUSY
+	 olvfe2geJgtUXZxZQJb9NjV/SMpSHv/g9MytLIOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Rouven Czerwinski <rouven.czerwinski@linaro.org>,
+	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 340/411] tee: Prevent size calculation wraparound on 32-bit kernels
-Date: Mon, 23 Jun 2025 15:08:04 +0200
-Message-ID: <20250623130642.208523682@linuxfoundation.org>
+Subject: [PATCH 6.12 265/414] wifi: ath12k: fix failed to set mhi state error during reboot with hardware grouping
+Date: Mon, 23 Jun 2025 15:06:42 +0200
+Message-ID: <20250623130648.659856305@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,89 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
 
-[ Upstream commit 39bb67edcc582b3b386a9ec983da67fa8a10ec03 ]
+[ Upstream commit dce7aec6b1f74b0a46b901ab8de1f7bd0515f733 ]
 
-The current code around TEE_IOCTL_PARAM_SIZE() is a bit wrong on
-32-bit kernels: Multiplying a user-provided 32-bit value with the
-size of a structure can wrap around on such platforms.
+With hardware grouping, during reboot, whenever a device is removed, it
+powers down itself and all its partner devices in the same group. Now this
+is done by all devices and hence there is multiple power down for devices
+and hence the following error messages can be seen:
 
-Fix it by using saturating arithmetic for the size calculation.
+ath12k_pci 0002:01:00.0: failed to set mhi state POWER_OFF(3) in current mhi state (0x0)
+ath12k_pci 0002:01:00.0: failed to set mhi state: POWER_OFF(3)
+ath12k_pci 0002:01:00.0: failed to set mhi state DEINIT(1) in current mhi state (0x0)
+ath12k_pci 0002:01:00.0: failed to set mhi state: DEINIT(1)
+ath12k_pci 0003:01:00.0: failed to set mhi state POWER_OFF(3) in current mhi state (0x0)
+ath12k_pci 0003:01:00.0: failed to set mhi state: POWER_OFF(3)
+ath12k_pci 0003:01:00.0: failed to set mhi state DEINIT(1) in current mhi state (0x0)
+ath12k_pci 0003:01:00.0: failed to set mhi state: DEINIT(1)
+ath12k_pci 0004:01:00.0: failed to set mhi state POWER_OFF(3) in current mhi state (0x0)
+ath12k_pci 0004:01:00.0: failed to set mhi state: POWER_OFF(3)
 
-This has no security consequences because, in all users of
-TEE_IOCTL_PARAM_SIZE(), the subsequent kcalloc() implicitly checks
-for wrapping.
+To prevent this, check if the ATH12K_PCI_FLAG_INIT_DONE flag is already
+set before powering down. If it is set, it indicates that another partner
+device has already performed the power down, and this device can skip this
+step.
 
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
-Tested-by: Rouven Czerwinski <rouven.czerwinski@linaro.org>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+
+Signed-off-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250408-fix_reboot_issues_with_hw_grouping-v4-3-95e7bf048595@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/tee_core.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath12k/pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
-index a44e5b53e7a91..a7e89c229fc51 100644
---- a/drivers/tee/tee_core.c
-+++ b/drivers/tee/tee_core.c
-@@ -10,6 +10,7 @@
- #include <linux/fs.h>
- #include <linux/idr.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- #include <linux/tee_drv.h>
- #include <linux/uaccess.h>
-@@ -19,7 +20,7 @@
+diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
+index 26f4b440c26d2..0f0e13c3dd463 100644
+--- a/drivers/net/wireless/ath/ath12k/pci.c
++++ b/drivers/net/wireless/ath/ath12k/pci.c
+@@ -1301,6 +1301,9 @@ void ath12k_pci_power_down(struct ath12k_base *ab, bool is_suspend)
+ {
+ 	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
  
- #define TEE_NUM_DEVICES	32
++	if (!test_bit(ATH12K_PCI_FLAG_INIT_DONE, &ab_pci->flags))
++		return;
++
+ 	/* restore aspm in case firmware bootup fails */
+ 	ath12k_pci_aspm_restore(ab_pci);
  
--#define TEE_IOCTL_PARAM_SIZE(x) (sizeof(struct tee_param) * (x))
-+#define TEE_IOCTL_PARAM_SIZE(x) (size_mul(sizeof(struct tee_param), (x)))
- 
- #define TEE_UUID_NS_NAME_SIZE	128
- 
-@@ -493,7 +494,7 @@ static int tee_ioctl_open_session(struct tee_context *ctx,
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
- 
--	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
-+	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	if (arg.num_params) {
-@@ -571,7 +572,7 @@ static int tee_ioctl_invoke(struct tee_context *ctx,
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
- 
--	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
-+	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	if (arg.num_params) {
-@@ -705,7 +706,7 @@ static int tee_ioctl_supp_recv(struct tee_context *ctx,
- 	if (get_user(num_params, &uarg->num_params))
- 		return -EFAULT;
- 
--	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) != buf.buf_len)
-+	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
-@@ -804,7 +805,7 @@ static int tee_ioctl_supp_send(struct tee_context *ctx,
- 	    get_user(num_params, &uarg->num_params))
- 		return -EFAULT;
- 
--	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) > buf.buf_len)
-+	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) > buf.buf_len)
- 		return -EINVAL;
- 
- 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
 -- 
 2.39.5
 
