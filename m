@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853541F1522;
-	Mon, 23 Jun 2025 13:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1899524A06B;
+	Mon, 23 Jun 2025 13:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684456; cv=none; b=oLYSIdJXgYwciwXlG5IqQZEo2jKMZSJw4gwmSt4I8WCrsZGJ40SD3ipQjMxQdnpTINRkZ986/KTa3/eVoQVA7kmEM/jvAcVrKfIZxL9KDw1CXPrx9wefmcDqfiJ+HBaABnVeWefGR4Z51jWGIz2A6CqFM3tvK3Bou7qwO7M+K5c=
+	t=1750684461; cv=none; b=irFL3qJYCqiXbKE+NIuemNMCC0rLSVvHq86A/XiD8m5mMwvwDjcPmiB97K+UrBxUmvkYRe/ahKOBUdOIxu9LlFxqDLaJnZP/VRtPQKwbPWipLmSTDHaS6AsfjcIU5QMlyJ43tS2YbgnYZOIYXs1JUCQWkP9nLzBJ+PdtNKQxRgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684456; c=relaxed/simple;
-	bh=ZcS9H8JHJKzq1UNmvmulh4r/AXXSFZZSXAjTcLEeEmQ=;
+	s=arc-20240116; t=1750684461; c=relaxed/simple;
+	bh=6H4NkMzMhmR7ne3liX6xB40xq8sT6wrck+xmCXMK4wI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HSOWiGgMyYgo0QcutpSOk+D4d/SrT61YCN+KbSAKWani2oY6iCkEf+V7BoG1g/XSVY9E0G5tQ7iBb9f+nUINWeHd7WEAfbT4OX6hKtNVu6+dSlXQsc+DMs9IWIBHRXaKfasE7DSMHdiEpCos3q4fRxfgII+I0MWv9nfigeDbh4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EbY5U/6o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xw52RBSt8IXwXsmow96haCMd3K20UpQGqrMyAbJ6La+aZ8aKxcJQE0O0Nv3Jnj5JOgP+ZP6TBpovoNH0rBbOXRLiXwDGnxGzyTDhVLvNzAT8oJRLnZ4FB0A67f0Vlmu0Y+G5C68SpN9bsZdzOgx8TSk7cH+nX3Nhyq9ty2Lm2Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZ+K1Qml; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EbY5U/6o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEFC0C4CEEA;
-	Mon, 23 Jun 2025 13:14:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZ+K1Qml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07EFC4CEEA;
+	Mon, 23 Jun 2025 13:14:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684456;
-	bh=ZcS9H8JHJKzq1UNmvmulh4r/AXXSFZZSXAjTcLEeEmQ=;
+	s=korg; t=1750684461;
+	bh=6H4NkMzMhmR7ne3liX6xB40xq8sT6wrck+xmCXMK4wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EbY5U/6o31SMHOqREWXWFHNPZ6NCopQvXGJtYAyb5CwAeAF39IrpEV5kfq9LhRSe6
-	 FgB4cpix2RYDVp9CTWGdYr3ZmDqXqY6ocjCuGhhJD+ul86cHQrKp5rOoNxveHZ0Dig
-	 0Y1nWdtgKnTeuj249gkhB70jvpA3PX70L49JK0Zc=
+	b=mZ+K1QmlIe2N3zbKlkd0oDTINlfFMGPfECb7FL0LDReywfeTZAo9nXMWm3UQ+SLrM
+	 JpDX9Pwudh7A69zL68mHxrA9qFdkiZMB4rS7Q+C63blRd+RwPDsn/CM5G9QFBW5FoD
+	 mTATGc3g/Bd8cbyr688o8dy6FEJ+lVlV/civxHAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Robert Morris <rtm@mit.edu>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.15 031/592] wifi: p54: prevent buffer-overflow in p54_rx_eeprom_readback()
-Date: Mon, 23 Jun 2025 14:59:49 +0200
-Message-ID: <20250623130700.978966231@linuxfoundation.org>
+	Michael Lo <michael.lo@mediatek.com>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.15 032/592] wifi: mt76: mt7925: fix host interrupt register initialization
+Date: Mon, 23 Jun 2025 14:59:50 +0200
+Message-ID: <20250623130701.003086216@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -52,114 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Lamparter <chunkeey@gmail.com>
+From: Michael Lo <michael.lo@mediatek.com>
 
-commit da1b9a55ff116cb040528ef664c70a4eec03ae99 upstream.
+commit ca872e0ad97159375da8f3d05cac1f48239e01d7 upstream.
 
-Robert Morris reported:
+ensure proper interrupt handling and aligns with the hardware spec by
+updating the register offset for MT_WFDMA0_HOST_INT_ENA.
 
-|If a malicious USB device pretends to be an Intersil p54 wifi
-|interface and generates an eeprom_readback message with a large
-|eeprom->v1.len, p54_rx_eeprom_readback() will copy data from the
-|message beyond the end of priv->eeprom.
-|
-|static void p54_rx_eeprom_readback(struct p54_common *priv,
-|                                   struct sk_buff *skb)
-|{
-|        struct p54_hdr *hdr = (struct p54_hdr *) skb->data;
-|        struct p54_eeprom_lm86 *eeprom = (struct p54_eeprom_lm86 *) hdr->data;
-|
-|        if (priv->fw_var >= 0x509) {
-|                memcpy(priv->eeprom, eeprom->v2.data,
-|                       le16_to_cpu(eeprom->v2.len));
-|        } else {
-|                memcpy(priv->eeprom, eeprom->v1.data,
-|                       le16_to_cpu(eeprom->v1.len));
-|        }
-| [...]
-
-The eeprom->v{1,2}.len is set by the driver in p54_download_eeprom().
-The device is supposed to provide the same length back to the driver.
-But yes, it's possible (like shown in the report) to alter the value
-to something that causes a crash/panic due to overrun.
-
-This patch addresses the issue by adding the size to the common device
-context, so p54_rx_eeprom_readback no longer relies on possibly tampered
-values... That said, it also checks if the "firmware" altered the value
-and no longer copies them.
-
-The one, small saving grace is: Before the driver tries to read the eeprom,
-it needs to upload >a< firmware. the vendor firmware has a proprietary
-license and as a reason, it is not present on most distributions by
-default.
-
-Cc: <stable@kernel.org>
-Reported-by: Robert Morris <rtm@mit.edu>
-Closes: https://lore.kernel.org/linux-wireless/28782.1747258414@localhost/
-Fixes: 7cb770729ba8 ("p54: move eeprom code into common library")
-Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
-Link: https://patch.msgid.link/20250516184107.47794-1-chunkeey@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Signed-off-by: Michael Lo <michael.lo@mediatek.com>
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Link: https://patch.msgid.link/20250509083512.455095-1-mingyen.hsieh@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intersil/p54/fwio.c |    2 ++
- drivers/net/wireless/intersil/p54/p54.h  |    1 +
- drivers/net/wireless/intersil/p54/txrx.c |   13 +++++++++----
- 3 files changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/pci.c  |    3 ---
+ drivers/net/wireless/mediatek/mt76/mt7925/regs.h |    2 +-
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/net/wireless/intersil/p54/fwio.c
-+++ b/drivers/net/wireless/intersil/p54/fwio.c
-@@ -231,6 +231,7 @@ int p54_download_eeprom(struct p54_commo
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
+@@ -490,9 +490,6 @@ static int mt7925_pci_suspend(struct dev
  
- 	mutex_lock(&priv->eeprom_mutex);
- 	priv->eeprom = buf;
-+	priv->eeprom_slice_size = len;
- 	eeprom_hdr = skb_put(skb, eeprom_hdr_size + len);
+ 	/* disable interrupt */
+ 	mt76_wr(dev, dev->irq_map->host_irq_enable, 0);
+-	mt76_wr(dev, MT_WFDMA0_HOST_INT_DIS,
+-		dev->irq_map->tx.all_complete_mask |
+-		MT_INT_RX_DONE_ALL | MT_INT_MCU_CMD);
  
- 	if (priv->fw_var < 0x509) {
-@@ -253,6 +254,7 @@ int p54_download_eeprom(struct p54_commo
- 		ret = -EBUSY;
- 	}
- 	priv->eeprom = NULL;
-+	priv->eeprom_slice_size = 0;
- 	mutex_unlock(&priv->eeprom_mutex);
- 	return ret;
- }
---- a/drivers/net/wireless/intersil/p54/p54.h
-+++ b/drivers/net/wireless/intersil/p54/p54.h
-@@ -258,6 +258,7 @@ struct p54_common {
+ 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0x0);
  
- 	/* eeprom handling */
- 	void *eeprom;
-+	size_t eeprom_slice_size;
- 	struct completion eeprom_comp;
- 	struct mutex eeprom_mutex;
- };
---- a/drivers/net/wireless/intersil/p54/txrx.c
-+++ b/drivers/net/wireless/intersil/p54/txrx.c
-@@ -496,14 +496,19 @@ static void p54_rx_eeprom_readback(struc
- 		return ;
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/regs.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/regs.h
+@@ -28,7 +28,7 @@
+ #define MT_MDP_TO_HIF			0
+ #define MT_MDP_TO_WM			1
  
- 	if (priv->fw_var >= 0x509) {
--		memcpy(priv->eeprom, eeprom->v2.data,
--		       le16_to_cpu(eeprom->v2.len));
-+		if (le16_to_cpu(eeprom->v2.len) != priv->eeprom_slice_size)
-+			return;
-+
-+		memcpy(priv->eeprom, eeprom->v2.data, priv->eeprom_slice_size);
- 	} else {
--		memcpy(priv->eeprom, eeprom->v1.data,
--		       le16_to_cpu(eeprom->v1.len));
-+		if (le16_to_cpu(eeprom->v1.len) != priv->eeprom_slice_size)
-+			return;
-+
-+		memcpy(priv->eeprom, eeprom->v1.data, priv->eeprom_slice_size);
- 	}
- 
- 	priv->eeprom = NULL;
-+	priv->eeprom_slice_size = 0;
- 	tmp = p54_find_and_unlink_skb(priv, hdr->req_id);
- 	dev_kfree_skb_any(tmp);
- 	complete(&priv->eeprom_comp);
+-#define MT_WFDMA0_HOST_INT_ENA		MT_WFDMA0(0x228)
++#define MT_WFDMA0_HOST_INT_ENA		MT_WFDMA0(0x204)
+ #define MT_WFDMA0_HOST_INT_DIS		MT_WFDMA0(0x22c)
+ #define HOST_RX_DONE_INT_ENA4		BIT(12)
+ #define HOST_RX_DONE_INT_ENA5		BIT(13)
 
 
