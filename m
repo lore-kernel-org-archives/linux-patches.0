@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5602222C2;
-	Mon, 23 Jun 2025 21:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7D9219E0;
+	Mon, 23 Jun 2025 21:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713541; cv=none; b=TtGmIIJD3SslamU3GnQ3QFeZqGmzych/uUr9jFUhu1Sg1Q06XISUs06QiXWM8f535+DwqzJXW0n8Ef9GjCHXoxsZGDekvSGs0hJ6pDo6ctFQHQTHAh+/9tgtPhlF4EeQIdSCw/jMM7xFCD+p+rnyGQopoP65omh8Jx1BI3bQcCc=
+	t=1750713543; cv=none; b=Uhoiq1Ss2O05DZuE/lyXfaNw7VzeMknwEJDutj6bnkhYFkvPJ/FYiVyXmkHoeWKPdy3t0VJLnnUZRby3HQoKRmY0GGQoLQGfsMQZ9rilsQO/tXad85eo2tcCbKRIu7aaSdxQQr8Xi9bkNtKlG3yKX832bhErHHrnYxz6xj83bzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713541; c=relaxed/simple;
-	bh=CxoxpfhH3TPDLu+qGojBTUCNmJ3uGDAhE/ywUAy/Ydw=;
+	s=arc-20240116; t=1750713543; c=relaxed/simple;
+	bh=iNQtKNkD2Lxblk9OhBTv6Unk2GNXXeygOoPPPPrlx2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PuJMm8QzI1Zy2TKiCqpq12GiP4xV8lSbdjGN+TqWq0lWYG8EYPXjymDU5XvDslyW5Nzkr/HCy1PpOCARhIH0LEaDQKMjX/1GubcIe03J9QnQdEOP+SUCib00DPA1oJwcZzPqs2y3FxBcD//i9ak/ZIeOSmq2yS4B6UEXBHtXRkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8QZAeSy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ERGlKakn64E/dDM8gfaCJciHMRWUc3kvCIBk7SwZvEHOCiTPziQbazLA5TR5E8oKQM5G/6Uh9p8DtExjcCI+C8RPi70Sb0xERO4aFJS2kZoWC3cG2h+xALLT3I5FBhblCWqngd+kF3E2XVpYWc1j5GKba2qoiXnFdMVHBC8yrX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/x0zeHv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8QZAeSy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52EAC4CEEA;
-	Mon, 23 Jun 2025 21:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/x0zeHv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D17C4CEEA;
+	Mon, 23 Jun 2025 21:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713541;
-	bh=CxoxpfhH3TPDLu+qGojBTUCNmJ3uGDAhE/ywUAy/Ydw=;
+	s=korg; t=1750713543;
+	bh=iNQtKNkD2Lxblk9OhBTv6Unk2GNXXeygOoPPPPrlx2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V8QZAeSycyz1EnyOZk/Tull9cajVyz7Pd+lrq+btp6RLAKQV0M04CU+WkT5ccpuTo
-	 eTwh4SZfdGYWozdaUcH1vOLZSG2kTPweeZi/UvDvJGObn4j/aYd/Cn31topgniUhNw
-	 wDZitzycNQsIzJMzc8wcH4U+JLOWxDZVpNjTCJJY=
+	b=t/x0zeHvnl3VryiRgCHC2NLdqpV64ccAENnu3qKQQbiRgaZk2qqWYdhWjkEP5wsky
+	 fx/eh0R+/wSf73QUoBXnTqolIsPoA5WZ9BxzlnJAc+EeDUZStpmokf39MWyuZjPF1c
+	 galZ4IaTfVWb2gvZUqGtf4q4dUSaGPC8py4KpBO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Hector Martin <marcan@marcan.st>,
+	Neal Gompa <neal@gompa.dev>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Sven Peter <sven@svenpeter.dev>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 103/508] net: phy: mscc: Stop clearing the the UDPv4 checksum for L2 frames
-Date: Mon, 23 Jun 2025 15:02:28 +0200
-Message-ID: <20250623130647.813189455@linuxfoundation.org>
+Subject: [PATCH 6.15 333/592] i2c: pasemi: Enable the unjam machine
+Date: Mon, 23 Jun 2025 15:04:51 +0200
+Message-ID: <20250623130708.375756594@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +50,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit 57a92d14659df3e7e7e0052358c8cc68bbbc3b5e ]
+[ Upstream commit 88fe3078b54c9efaea7d1adfcf295e37dfb0274f ]
 
-We have noticed that when PHY timestamping is enabled, L2 frames seems
-to be modified by changing two 2 bytes with a value of 0. The place were
-these 2 bytes seems to be random(or I couldn't find a pattern).  In most
-of the cases the userspace can ignore these frames but if for example
-those 2 bytes are in the correction field there is nothing to do.  This
-seems to happen when configuring the HW for IPv4 even that the flow is
-not enabled.
-These 2 bytes correspond to the UDPv4 checksum and once we don't enable
-clearing the checksum when using L2 frames then the frame doesn't seem
-to be changed anymore.
+The I2C bus can get stuck under some conditions (desync between
+controller and device). The pasemi controllers include an unjam feature
+that is enabled on reset, but was being disabled by the driver. Keep it
+enabled by explicitly setting the UJM bit in the CTL register. This
+should help recover the bus from certain conditions, which would
+otherwise remain stuck forever.
 
-Fixes: 7d272e63e0979d ("net: phy: mscc: timestamping and PHC support")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://patch.msgid.link/20250523082716.2935895-1-horatiu.vultur@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Reviewed-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
+Link: https://lore.kernel.org/r/20250427-pasemi-fixes-v3-1-af28568296c0@svenpeter.dev
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mscc/mscc_ptp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-pasemi-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
-index af44b01f3d383..7e7ce79eadffb 100644
---- a/drivers/net/phy/mscc/mscc_ptp.c
-+++ b/drivers/net/phy/mscc/mscc_ptp.c
-@@ -943,7 +943,9 @@ static int vsc85xx_ip1_conf(struct phy_device *phydev, enum ts_blk blk,
- 	/* UDP checksum offset in IPv4 packet
- 	 * according to: https://tools.ietf.org/html/rfc768
- 	 */
--	val |= IP1_NXT_PROT_UDP_CHKSUM_OFF(26) | IP1_NXT_PROT_UDP_CHKSUM_CLEAR;
-+	val |= IP1_NXT_PROT_UDP_CHKSUM_OFF(26);
-+	if (enable)
-+		val |= IP1_NXT_PROT_UDP_CHKSUM_CLEAR;
- 	vsc85xx_ts_write_csr(phydev, blk, MSCC_ANA_IP1_NXT_PROT_UDP_CHKSUM,
- 			     val);
+diff --git a/drivers/i2c/busses/i2c-pasemi-core.c b/drivers/i2c/busses/i2c-pasemi-core.c
+index bd128ab2e2ebb..27ab09854c927 100644
+--- a/drivers/i2c/busses/i2c-pasemi-core.c
++++ b/drivers/i2c/busses/i2c-pasemi-core.c
+@@ -71,7 +71,7 @@ static inline int reg_read(struct pasemi_smbus *smbus, int reg)
  
+ static void pasemi_reset(struct pasemi_smbus *smbus)
+ {
+-	u32 val = (CTL_MTR | CTL_MRR | (smbus->clk_div & CTL_CLK_M));
++	u32 val = (CTL_MTR | CTL_MRR | CTL_UJM | (smbus->clk_div & CTL_CLK_M));
+ 
+ 	if (smbus->hw_rev >= 6)
+ 		val |= CTL_EN;
 -- 
 2.39.5
 
