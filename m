@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E901FE46D;
-	Mon, 23 Jun 2025 21:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6AC1F3B96;
+	Mon, 23 Jun 2025 21:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713395; cv=none; b=pgdLQgzrgRkqDsoYM6GpAdFoKhWy6MmSDoP5RIZ7R2GZJoce4cKE09T7LxzWZowB1X/hW9XrT21VeAe5v6V1tR8TFSfaJLbnvsVLztiPNU23s6kI0dYi8fCWpvNdAMmBEazrlK0NekQ3jJd6std2+GA2tetG8H9Nt+wLGqS1sxo=
+	t=1750713397; cv=none; b=DcWApNTMofKPlMS9p8jAtwg85SiVq0kaCVvbfhKQd+9rJ7Os8I1C7W3dpSAqxbjEtGl32l6R61dnUEwUGhzYLw5zQ9Uy3KPfuyk2cuvRv4y0r+IqpDYYGP0EM6FEJqFbfARv7tJlS2uaGYXIkXatzYzwoB9vY0x5UmMcJI0I/qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713395; c=relaxed/simple;
-	bh=J1E6vRtBgDjvWdibvFACgBDjpiyYu/yJMtyAZqeSfYA=;
+	s=arc-20240116; t=1750713397; c=relaxed/simple;
+	bh=xkRPF2hHPUOdhxVAW3gBbsw+y8DmadkSZM9Oni0rr34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qRQBm6l/y1b/ALSegnJrRTV+DIlukarClilnx0hUfGn4zp0Azc22U/Rk1KVIp/D9HaOSkFQjVdGnUuNZtmYuHRzT1TNrmH1kRKYQWvEpDrSppF73axhiHP9zZirahLhHNJTfJIaPsB95udhJWoTh0uXMLWnMK7LD77F39OEY6UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfYsT1qg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ctViG90ygKaxvBvrZJWPwjOv9X+nCQIGMBQrAAYtkQ8OOhu0Ij7BGoHGdpdf5S6GJPApb5TGJPwsV6z7Gu9wHO9yMuy0+VTMGNcQrOaDd6vge2XscD+gyCUDyrS5Fx0RJxRsgRqS3nkkE/hP9W7XjyBlAj+KzJGEtJDae46PqRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HisIMs5B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfYsT1qg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A7DC4CEEA;
-	Mon, 23 Jun 2025 21:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HisIMs5B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03789C4CEEA;
+	Mon, 23 Jun 2025 21:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713394;
-	bh=J1E6vRtBgDjvWdibvFACgBDjpiyYu/yJMtyAZqeSfYA=;
+	s=korg; t=1750713397;
+	bh=xkRPF2hHPUOdhxVAW3gBbsw+y8DmadkSZM9Oni0rr34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qfYsT1qgQR+iAhchi9l+thuTJeDwFlDJm5Ci4tp8N7PQaP5ZSJEnUbLqitPtzrkLR
-	 vG8CGsKsx2G4OS/sr+SbqJ1yI+V6qD0SfaMT2uUo3bmgvrW1MUgQjwI8wGBA+MhohO
-	 kasJz/3pfS10WcyZY6/l/KCxw6aqqSs+Q/khzwt0=
+	b=HisIMs5BCLTUyKsFO5+Q72x7f2c9rLxl7ncMFvdcJ+eMZCuk7tp1US2K8TodDS0dd
+	 KyEuOLUgGTEqwlsuXG1GE7CdIIgfuoG9T3ce9PA3rgVZ/rbvuuQOsCHO5hlxRCrd+u
+	 sRgrNyIa2Sw6Rd1HUbwPXUDluekLBvML1UJduh9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faicker Mo <faicker.mo@zenlayer.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/508] net: openvswitch: Fix the dead loop of MPLS parse
-Date: Mon, 23 Jun 2025 15:02:27 +0200
-Message-ID: <20250623130647.787866597@linuxfoundation.org>
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.10 149/355] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
+Date: Mon, 23 Jun 2025 15:05:50 +0200
+Message-ID: <20250623130631.187651791@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,79 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Faicker Mo <faicker.mo@zenlayer.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 0bdc924bfb319fb10d1113cbf091fc26fb7b1f99 ]
+commit 43fc0a99906e04792786edf8534d8d58d1e9de0c upstream.
 
-The unexpected MPLS packet may not end with the bottom label stack.
-When there are many stacks, The label count value has wrapped around.
-A dead loop occurs, soft lockup/CPU stuck finally.
+After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
+KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
+assembly files with clang:
 
-stack backtrace:
-UBSAN: array-index-out-of-bounds in /build/linux-0Pa0xK/linux-5.15.0/net/openvswitch/flow.c:662:26
-index -1 is out of range for type '__be32 [3]'
-CPU: 34 PID: 0 Comm: swapper/34 Kdump: loaded Tainted: G           OE   5.15.0-121-generic #131-Ubuntu
-Hardware name: Dell Inc. PowerEdge C6420/0JP9TF, BIOS 2.12.2 07/14/2021
-Call Trace:
- <IRQ>
- show_stack+0x52/0x5c
- dump_stack_lvl+0x4a/0x63
- dump_stack+0x10/0x16
- ubsan_epilogue+0x9/0x36
- __ubsan_handle_out_of_bounds.cold+0x44/0x49
- key_extract_l3l4+0x82a/0x840 [openvswitch]
- ? kfree_skbmem+0x52/0xa0
- key_extract+0x9c/0x2b0 [openvswitch]
- ovs_flow_key_extract+0x124/0x350 [openvswitch]
- ovs_vport_receive+0x61/0xd0 [openvswitch]
- ? kernel_init_free_pages.part.0+0x4a/0x70
- ? get_page_from_freelist+0x353/0x540
- netdev_port_receive+0xc4/0x180 [openvswitch]
- ? netdev_port_receive+0x180/0x180 [openvswitch]
- netdev_frame_hook+0x1f/0x40 [openvswitch]
- __netif_receive_skb_core.constprop.0+0x23a/0xf00
- __netif_receive_skb_list_core+0xfa/0x240
- netif_receive_skb_list_internal+0x18e/0x2a0
- napi_complete_done+0x7a/0x1c0
- bnxt_poll+0x155/0x1c0 [bnxt_en]
- __napi_poll+0x30/0x180
- net_rx_action+0x126/0x280
- ? bnxt_msix+0x67/0x80 [bnxt_en]
- handle_softirqs+0xda/0x2d0
- irq_exit_rcu+0x96/0xc0
- common_interrupt+0x8e/0xa0
- </IRQ>
+  arch/powerpc/lib/copypage_power7.S: Assembler messages:
+  arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b01000'
+  arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b01010'
+  arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b01000'
+  arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b01010'
+  arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b01010'
+  clang: error: assembler command failed with exit code 1 (use -v to see invocation)
 
-Fixes: fbdcdd78da7c ("Change in Openvswitch to support MPLS label depth of 3 in ingress direction")
-Signed-off-by: Faicker Mo <faicker.mo@zenlayer.com>
-Acked-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/259D3404-575D-4A6D-B263-1DF59A67CF89@zenlayer.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+as-option only uses KBUILD_AFLAGS, so after removing CLANG_FLAGS from
+KBUILD_AFLAGS, there is no more '--target=' or '--prefix=' flags. As a
+result of those missing flags, the host target
+will be tested during as-option calls and likely fail, meaning necessary
+flags may not get added when building assembly files, resulting in
+errors like seen above.
+
+Add KBUILD_CPPFLAGS to as-option invocations to clear up the errors.
+This should have been done in commit d5c8d6e0fa61 ("kbuild: Update
+assembler calls to use proper flags and language target"), which
+switched from using the assembler target to the assembler-with-cpp
+target, so flags that affect preprocessing are passed along in all
+relevant tests. as-option now mirrors cc-option.
+
+Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5Mxag@mail.gmail.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/flow.c | 2 +-
+ scripts/Kbuild.include |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
-index 78960a8a38925..60ebc42a20e7e 100644
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -785,7 +785,7 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
- 			memset(&key->ipv4, 0, sizeof(key->ipv4));
- 		}
- 	} else if (eth_p_mpls(key->eth.type)) {
--		u8 label_count = 1;
-+		size_t label_count = 1;
+--- a/scripts/Kbuild.include
++++ b/scripts/Kbuild.include
+@@ -104,7 +104,7 @@ try-run = $(shell set -e;		\
+ # Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
  
- 		memset(&key->mpls, 0, sizeof(key->mpls));
- 		skb_set_inner_network_header(skb, skb->mac_len);
--- 
-2.39.5
-
+ as-option = $(call try-run,\
+-	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
++	$(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
+ 
+ # as-instr
+ # Usage: aflags-y += $(call as-instr,instr,option1,option2)
 
 
