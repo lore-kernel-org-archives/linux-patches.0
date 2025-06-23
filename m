@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CBC223708;
-	Mon, 23 Jun 2025 22:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F779199FBA;
+	Mon, 23 Jun 2025 22:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717238; cv=none; b=Mtlt+r4BAQ5xJO9eiqDgTQ2f2qW7rxzw+UfFPx7kPSoZ7dv/QnlXf+fbnzTAKYh1gopdf2C3PH/LdLbNA0ZXa8WjFgVfrM181ugDTBzNzIasiiU5WYYcDQu6WYH/qx+bmis33Sus/THSibMTNjwEe4j2V56MlLcAks1FrPFp708=
+	t=1750717239; cv=none; b=JpOhrz+TPIFNfS61uVY3kyU8E6b92xDqWvvSVIglZowYNNkAOrfsH1zNKC7W9aoneBQE+VdznMub+daIO7nBZCvLhkbBVsr5ngIJR4S5os4TkPD6fg/DnbJYeKsi+AoHIcUMJe+h9sXhFqlP2fHzT3E+7rqt0GXsqBhvvbdKc5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717238; c=relaxed/simple;
-	bh=bmK6KHONtCRoFqoinSfKAM9HVhT18ruEjeEJmgpfIRI=;
+	s=arc-20240116; t=1750717239; c=relaxed/simple;
+	bh=aze5XG6hZRpSwVHiixqU/W6c63BVjrG9FAV4Mqg1amM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpFbPPwyuh2rnrX0PDotBNGdlPh34mNSSDkQTcqdTaCfaS+RbnwJD/0OC1e6iPYkCjPCE1hw8e1UFm0sBBln6fQZC4cJzOWjCnKAL50A8mYyBpxDbNpdlwV69c4fBKKJDK7BKQBOrMAjuEZ91DuhbwabQidgpTh3daIZZ43k57w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NtliFvW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n8nSZJrhOpyqbT+GeTynd3RgO7UvZBb3F/Yg0kPTCDoIkgJlGtd0C01e3UL5U8050BH9oOodY/cQKfOhQ3MEJ4lBSHx4rHPrGIqEjU9m3zsbPqk8H5sXyeIOdSAsplBl18efL4TTlTwrmFimR0Ofk6FqcR3edS7DT0kWlGtJWf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13fgesIR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NtliFvW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232D1C4CEEA;
-	Mon, 23 Jun 2025 22:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13fgesIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94179C4CEEA;
+	Mon, 23 Jun 2025 22:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717236;
-	bh=bmK6KHONtCRoFqoinSfKAM9HVhT18ruEjeEJmgpfIRI=;
+	s=korg; t=1750717238;
+	bh=aze5XG6hZRpSwVHiixqU/W6c63BVjrG9FAV4Mqg1amM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0NtliFvW8QRuC/DkvidZb95lQPx0E1eZinzrjGfKPI76xoS6WnHN1umSpRG3g7WMO
-	 JLutB96mD5BeuhtBgiZQzSKiew6xAD5QFbmStYiBbtIXpLOPd4cWOG4ceDy4yGhG73
-	 QH2IPLkHIuW9ygUVPaApvFxPW17yKoyOT15Dl3Nw=
+	b=13fgesIRWnF0mL9FW8F26ydrjhJfg0BpR47sGuIVu+UYO2uRVsLfrUdPAAi/6Zl24
+	 lAIAkIaTKciYSMvEhtH36O9rptQhqswhFug2DsfVBTvTjazHWbY+5xPRuTWPVN8n09
+	 uZplv58vKSjGiVyCpAoBkzD7y8NXZBgzrZGukVog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Hongbo Li <lihongbo22@huawei.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.12 344/414] erofs: remove unused trace event erofs_destroy_inode
-Date: Mon, 23 Jun 2025 15:08:01 +0200
-Message-ID: <20250623130650.578029882@linuxfoundation.org>
+	Sergio Perez Gonzalez <sperezglz@gmail.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 387/508] net: macb: Check return value of dma_set_mask_and_coherent()
+Date: Mon, 23 Jun 2025 15:07:12 +0200
+Message-ID: <20250623130654.808712237@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Sergio Perez Gonzalez <sperezglz@gmail.com>
 
-commit 30b58444807c93bffeaba7d776110f2a909d2f9a upstream.
+[ Upstream commit 3920a758800762917177a6b5ab39707d8e376fe6 ]
 
-The trace event `erofs_destroy_inode` was added but remains unused. This
-unused event contributes approximately 5KB to the kernel module size.
+Issue flagged by coverity. Add a safety check for the return value
+of dma_set_mask_and_coherent, go to a safe exit if it returns error.
 
-Reported-by: Steven Rostedt <rostedt@goodmis.org>
-Closes: https://lore.kernel.org/r/20250612224906.15000244@batman.local.home
-Fixes: 13f06f48f7bf ("staging: erofs: support tracepoint")
-Cc: stable@vger.kernel.org
-Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250617054056.3232365-1-hsiangkao@linux.alibaba.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://scan7.scan.coverity.com/#/project-view/53936/11354?selectedIssue=1643754
+Signed-off-by: Sergio Perez Gonzalez <sperezglz@gmail.com>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Link: https://patch.msgid.link/20250526032034.84900-1-sperezglz@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/erofs.h |   18 ------------------
- 1 file changed, 18 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/include/trace/events/erofs.h
-+++ b/include/trace/events/erofs.h
-@@ -211,24 +211,6 @@ TRACE_EVENT(erofs_map_blocks_exit,
- 		  show_mflags(__entry->mflags), __entry->ret)
- );
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index d2f4709dee0de..495a1cb0bc183 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -4956,7 +4956,11 @@ static int macb_probe(struct platform_device *pdev)
  
--TRACE_EVENT(erofs_destroy_inode,
--	TP_PROTO(struct inode *inode),
--
--	TP_ARGS(inode),
--
--	TP_STRUCT__entry(
--		__field(	dev_t,		dev		)
--		__field(	erofs_nid_t,	nid		)
--	),
--
--	TP_fast_assign(
--		__entry->dev	= inode->i_sb->s_dev;
--		__entry->nid	= EROFS_I(inode)->nid;
--	),
--
--	TP_printk("dev = (%d,%d), nid = %llu", show_dev_nid(__entry))
--);
--
- #endif /* _TRACE_EROFS_H */
- 
-  /* This part must be outside protection */
+ #ifdef CONFIG_ARCH_DMA_ADDR_T_64BIT
+ 	if (GEM_BFEXT(DAW64, gem_readl(bp, DCFG6))) {
+-		dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44));
++		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44));
++		if (err) {
++			dev_err(&pdev->dev, "failed to set DMA mask\n");
++			goto err_out_free_netdev;
++		}
+ 		bp->hw_dma_cap |= HW_DMA_CAP_64B;
+ 	}
+ #endif
+-- 
+2.39.5
+
 
 
