@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3835670838;
-	Mon, 23 Jun 2025 21:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E8870838;
+	Mon, 23 Jun 2025 21:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713027; cv=none; b=s3OAsY7qKJFSP8Y2xvS/A/FR4sgMgrkT/LWQ/SiWM4oFMsHJtvCX8pItSIlKh0oh7F/nLk/s1WivXLOwEcMgWfMSHTFSEtccHGPnN2qv+hbXFSM9Cc5Ng5NYsGvKeg1tEexFsJzthZIfdgE+2oW7VAO5NRcy/+Y/WSXSMT3wW7w=
+	t=1750713029; cv=none; b=BhlQvZ+fE24nX/s7e60DNKyhOQwMxWk+bOyqgOQg2kH7M95Zi3UVnOyQFdzwiS//LVzV7cwDw/taj9qs4e0oiF1ChPPVYFyXgG1inh9u/uTOu/iUYfKFh8KE/W3PiYhrdFDzQ7q4JKtTtkYzzqWDoDe0/RIPN0gsiSesnPDyNGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713027; c=relaxed/simple;
-	bh=P363qgG7nFwhCZE6+PGeKzSkF5isArCC43Hm7vzBH8g=;
+	s=arc-20240116; t=1750713029; c=relaxed/simple;
+	bh=IhuCOwyjFcwVRj1sg6TM84wAU/3euGhUOK55GhhLSrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Apdundrk7OsKthxVKZ1870Zl4U+fZBw2H7PlMwrS2fy1pbGU20RlAT24lCWlF4uWzoQxx4Ldb1X4PCt/xTHXy2/bxSEiiF5+E7CPMJrcm2remgsfgLnpzFwxo6PiLECfd/6+vB3KRZEigpB8JLJ9e0XnMgtdJfud/pk5FWfxBYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hT3e+ZTj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eXG1AQXBuQScofHQe+hLjcJmTvOj4l3YyOWkgcEmMR+1//KPOpl5i1SFeRnIF/HQSceLiDJ0ojtdCP+ENR+VivVi/PDGJxw5i9eZBglPA+qK4NQM0ffmoepw5WCZbib12gqPhFBNhWWseZhuCnoxF5amJnuskP7PprjywArvW+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w94YJD8J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hT3e+ZTj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62C2C4CEEA;
-	Mon, 23 Jun 2025 21:10:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w94YJD8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6AFC4CEEA;
+	Mon, 23 Jun 2025 21:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713027;
-	bh=P363qgG7nFwhCZE6+PGeKzSkF5isArCC43Hm7vzBH8g=;
+	s=korg; t=1750713029;
+	bh=IhuCOwyjFcwVRj1sg6TM84wAU/3euGhUOK55GhhLSrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hT3e+ZTj/JvELPp+AiXcdbTVAl+DH4Wh4WPYGCjV+NPtxIFk9mdqKGrnaogBDZ3Sc
-	 9qOS4TAVFwGZx4dMrZlm1sKX5pNgZZhkCO6StQqDanqqOwTKnK3BD9M6MqRmVJ9Bv+
-	 LlXt4lnOkhkvGKvThf9utILLchDmvcOcUm1ZOoWc=
+	b=w94YJD8JE4IVRjONp733djFSSsQ6ang8mCjywv/N2AzG9QO4s9o094OEky4ZEgMWe
+	 kwQs/u8/56Quc4SDF3dR5w4SBX9qSSs5s3s5TdwqsGWwhwVZVjHLl+s+bBmMwgXg55
+	 XjnRPHbcZ0LIq3W1z+eL1ZSMCGJDHqyHTYuXp/TE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Stutterheim <ross.stutterheim@garmin.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 6.6 050/290] ARM: 9447/1: arm/memremap: fix arch_memremap_can_ram_remap()
-Date: Mon, 23 Jun 2025 15:05:11 +0200
-Message-ID: <20250623130628.509139343@linuxfoundation.org>
+	Stuart Hayes <stuart.w.hayes@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 184/222] platform/x86: dell_rbu: Stop overwriting data buffer
+Date: Mon, 23 Jun 2025 15:08:39 +0200
+Message-ID: <20250623130617.702715923@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ross Stutterheim <ross.stutterheim@garmin.com>
+From: Stuart Hayes <stuart.w.hayes@gmail.com>
 
-commit 96e0b355883006554a0bee3697da475971d6bba8 upstream.
+[ Upstream commit f4b0fa38d5fefe9aed6ed831f3bd3538c168ee19 ]
 
-arm/memremap: fix arch_memremap_can_ram_remap()
+The dell_rbu driver will use memset() to clear the data held by each
+packet when it is no longer needed (when the driver is unloaded, the
+packet size is changed, etc).
 
-commit 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure
-presence of linear map") added the definition of
-arch_memremap_can_ram_remap() for arm[64] specific filtering of what pages
-can be used from the linear mapping. memblock_is_map_memory() was called
-with the pfn of the address given to arch_memremap_can_ram_remap();
-however, memblock_is_map_memory() expects to be given an address for arm,
-not a pfn.
+The amount of memory that is cleared (before this patch) is the normal
+packet size. However, the last packet in the list may be smaller.
 
-This results in calls to memremap() returning a newly mapped area when
-it should return an address in the existing linear mapping.
+Fix this to only clear the memory actually used by each packet, to prevent
+it from writing past the end of data buffer.
 
-Fix this by removing the address to pfn translation and pass the
-address directly.
+Because the packet data buffers are allocated with __get_free_pages() (in
+page-sized increments), this bug could only result in a buffer being
+overwritten when a packet size larger than one page is used. The only user
+of the dell_rbu module should be the Dell BIOS update program, which uses
+a packet size of 4096, so no issues should be seen without the patch, it
+just blocks the possiblity.
 
-Fixes: 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure presence of linear map")
-Signed-off-by: Ross Stutterheim <ross.stutterheim@garmin.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6c54c28e69f2 ("[PATCH] dell_rbu: new Dell BIOS update driver")
+Signed-off-by: Stuart Hayes <stuart.w.hayes@gmail.com>
+Link: https://lore.kernel.org/r/20250609184659.7210-5-stuart.w.hayes@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/ioremap.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/platform/x86/dell_rbu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm/mm/ioremap.c
-+++ b/arch/arm/mm/ioremap.c
-@@ -515,7 +515,5 @@ void __init early_ioremap_init(void)
- bool arch_memremap_can_ram_remap(resource_size_t offset, size_t size,
- 				 unsigned long flags)
- {
--	unsigned long pfn = PHYS_PFN(offset);
--
--	return memblock_is_map_memory(pfn);
-+	return memblock_is_map_memory(offset);
- }
+diff --git a/drivers/platform/x86/dell_rbu.c b/drivers/platform/x86/dell_rbu.c
+index 3691391fea6b1..16e4614ad3e47 100644
+--- a/drivers/platform/x86/dell_rbu.c
++++ b/drivers/platform/x86/dell_rbu.c
+@@ -344,7 +344,7 @@ static void packet_empty_list(void)
+ 		 * zero out the RBU packet memory before freeing
+ 		 * to make sure there are no stale RBU packets left in memory
+ 		 */
+-		memset(newpacket->data, 0, rbu_data.packetsize);
++		memset(newpacket->data, 0, newpacket->length);
+ 		set_memory_wb((unsigned long)newpacket->data,
+ 			1 << newpacket->ordernum);
+ 		free_pages((unsigned long) newpacket->data,
+-- 
+2.39.5
+
 
 
