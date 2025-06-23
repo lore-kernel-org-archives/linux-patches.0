@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D554D221734;
-	Mon, 23 Jun 2025 21:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB7E221734;
+	Mon, 23 Jun 2025 21:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714728; cv=none; b=GlAasMK5VbZgJa06FlobGXRub3PjqnqtrmToXNaqhd3gkG54x5Ct4GaDF0lLsI53Iifx/EKarkOttgJROHyS/65cGbj/MBlxLGrmEtdGFCVWKPvAF9eeGmu0rQJJzT4roYfuKfU/weWvpdhV+8gFtHDniN6EH3gooaUBwzRlHqg=
+	t=1750714731; cv=none; b=DL5IcgBlMTrY7Eu1KZBpbao1P0RZpAsYlOivkNux7cekR90rhzYou2/sb0uxM3NSXJH8J5r2dYC7gTi/5bFJzDTEP4B18x/tGhk1ylJuYwzik1GsVmZL8Wzwcp5+QQ75O2neKsewW4tq5s6VFNFNg8zUZIq04/Ss/iM3f0t8SaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714728; c=relaxed/simple;
-	bh=z7vQ4CxOkTYpuQrIzIpzCVj96ASGO7XkEX3uPzX0nRE=;
+	s=arc-20240116; t=1750714731; c=relaxed/simple;
+	bh=YHwyWGE6AYUwEwpIE5mM6RU05a6hUWmLC1dBFqIDopw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eL0BbVbQflvjfB3y5ebahAdwkpAmYB6qcnjtSrGSAUGStTHydmxJPYNTtmvvEgxI87x8BYFZR3UdAw9qdw0hp9dwiLxEovg4WUwP8VkxOi2ldCCRZ5e5V8yyWx7bEV15jzGRzJ5OPF+pAblNLYTpMqw0cKkekwcwum9v2CeJ9sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTnX/slk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cDBO0O/OwZ9uHqVWyuumL2/alSK9mcx6ZJxaFX1It0Z5fb6LWjhTAVdx2yHeXVMrJoyxnOGvnLB/qNuROsfpnXwcMf77TpczacnG1hx8mORFABN1cEXVokabp1nI5V4ebWa3p+ZIFrXHYKuQTXHo5qNFKqGN4ja5OMpZYpFil9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOZBl0Mm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTnX/slk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E97C4CEF0;
-	Mon, 23 Jun 2025 21:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOZBl0Mm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CE8C4CEEA;
+	Mon, 23 Jun 2025 21:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714728;
-	bh=z7vQ4CxOkTYpuQrIzIpzCVj96ASGO7XkEX3uPzX0nRE=;
+	s=korg; t=1750714730;
+	bh=YHwyWGE6AYUwEwpIE5mM6RU05a6hUWmLC1dBFqIDopw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTnX/slkHWQFb2Kd9Lup/CE2G9iyx6xBPpCxHKjPU668qw490bgBDqmxZOocHFwUu
-	 Iz4GQ4/0CyK5OtyU3jQ00UG0VUBGOIX3BHeBcwewWkj8N+BFdcYsOgH4Ux3po1j1tf
-	 4WnP0kx1N7aCU28L0llmfcb65sFcSYocvmCTgUm4=
+	b=jOZBl0Mmmu/VFvYYaki0nfI62BVxhjhKAeqzzMkD20tw42gGbZHNwKm6UmYriiOYS
+	 QuXqVwTUGX1jdqsBg2ne3Rti1DuQjZWuTIDmqaHnVAWiKXv/7NkmV8edqNzHGY9aDM
+	 9P0a7gSgBPYbIbPcZdfTA07tS9A1bXNFxYaNtDuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Yanteng Si <si.yanteng@linux.dev>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daeho Jeong <daehojeong@google.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 179/508] net: stmmac: make sure that ptp_rate is not 0 before configuring timestamping
-Date: Mon, 23 Jun 2025 15:03:44 +0200
-Message-ID: <20250623130649.678127322@linuxfoundation.org>
+Subject: [PATCH 6.15 412/592] f2fs: fix to set atomic write status more clear
+Date: Mon, 23 Jun 2025 15:06:10 +0200
+Message-ID: <20250623130710.235647453@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,89 +47,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré <alexis.lothore@bootlin.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 030ce919e114a111e83b7976ecb3597cefd33f26 ]
+[ Upstream commit db03c20c0850dc8d2bcabfa54b9438f7d666c863 ]
 
-The stmmac platform drivers that do not open-code the clk_ptp_rate value
-after having retrieved the default one from the device-tree can end up
-with 0 in clk_ptp_rate (as clk_get_rate can return 0). It will
-eventually propagate up to PTP initialization when bringing up the
-interface, leading to a divide by 0:
+1. After we start atomic write in a database file, before committing
+all data, we'd better not set inode w/ vfs dirty status to avoid
+redundant updates, instead, we only set inode w/ atomic dirty status.
 
- Division by zero in kernel.
- CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.30-00001-g48313bd5768a #22
- Hardware name: STM32 (Device Tree Support)
- Call trace:
-  unwind_backtrace from show_stack+0x18/0x1c
-  show_stack from dump_stack_lvl+0x6c/0x8c
-  dump_stack_lvl from Ldiv0_64+0x8/0x18
-  Ldiv0_64 from stmmac_init_tstamp_counter+0x190/0x1a4
-  stmmac_init_tstamp_counter from stmmac_hw_setup+0xc1c/0x111c
-  stmmac_hw_setup from __stmmac_open+0x18c/0x434
-  __stmmac_open from stmmac_open+0x3c/0xbc
-  stmmac_open from __dev_open+0xf4/0x1ac
-  __dev_open from __dev_change_flags+0x1cc/0x224
-  __dev_change_flags from dev_change_flags+0x24/0x60
-  dev_change_flags from ip_auto_config+0x2e8/0x11a0
-  ip_auto_config from do_one_initcall+0x84/0x33c
-  do_one_initcall from kernel_init_freeable+0x1b8/0x214
-  kernel_init_freeable from kernel_init+0x24/0x140
-  kernel_init from ret_from_fork+0x14/0x28
- Exception stack(0xe0815fb0 to 0xe0815ff8)
+2. After we commit all data, before committing metadata, we need to
+clear atomic dirty status, and set vfs dirty status to allow vfs flush
+dirty inode.
 
-Prevent this division by 0 by adding an explicit check and error log
-about the actual issue. While at it, remove the same check from
-stmmac_ptp_register, which then becomes duplicate
-
-Fixes: 19d857c9038e ("stmmac: Fix calculations for ptp counters when clock input = 50Mhz.")
-Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250529-stmmac_tstamp_div-v4-1-d73340a794d5@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Daeho Jeong <daehojeong@google.com>
+Reported-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 5 +++++
- drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 2 +-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ fs/f2fs/inode.c   | 4 +++-
+ fs/f2fs/segment.c | 6 ++++++
+ fs/f2fs/super.c   | 4 +++-
+ 3 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 14e5b94b0b5ab..948e35c405a84 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -841,6 +841,11 @@ int stmmac_init_tstamp_counter(struct stmmac_priv *priv, u32 systime_flags)
- 	if (!(priv->dma_cap.time_stamp || priv->dma_cap.atime_stamp))
- 		return -EOPNOTSUPP;
+diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
+index 5c8634eaef7be..f5991e8751b9b 100644
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -34,7 +34,9 @@ void f2fs_mark_inode_dirty_sync(struct inode *inode, bool sync)
+ 	if (f2fs_inode_dirtied(inode, sync))
+ 		return;
  
-+	if (!priv->plat->clk_ptp_rate) {
-+		netdev_err(priv->dev, "Invalid PTP clock rate");
-+		return -EINVAL;
-+	}
+-	if (f2fs_is_atomic_file(inode))
++	/* only atomic file w/ FI_ATOMIC_COMMITTED can be set vfs dirty */
++	if (f2fs_is_atomic_file(inode) &&
++			!is_inode_flag_set(inode, FI_ATOMIC_COMMITTED))
+ 		return;
+ 
+ 	mark_inode_dirty_sync(inode);
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index c5d29c58f3d3e..876e97ec5f570 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -376,7 +376,13 @@ static int __f2fs_commit_atomic_write(struct inode *inode)
+ 	} else {
+ 		sbi->committed_atomic_block += fi->atomic_write_cnt;
+ 		set_inode_flag(inode, FI_ATOMIC_COMMITTED);
 +
- 	stmmac_config_hw_tstamping(priv, priv->ptpaddr, systime_flags);
- 	priv->systime_flags = systime_flags;
++		/*
++		 * inode may has no FI_ATOMIC_DIRTIED flag due to no write
++		 * before commit.
++		 */
+ 		if (is_inode_flag_set(inode, FI_ATOMIC_DIRTIED)) {
++			/* clear atomic dirty status and set vfs dirty status */
+ 			clear_inode_flag(inode, FI_ATOMIC_DIRTIED);
+ 			f2fs_mark_inode_dirty_sync(inode, true);
+ 		}
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index ee039bf02c148..bc510c91f3eba 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1531,7 +1531,9 @@ int f2fs_inode_dirtied(struct inode *inode, bool sync)
+ 	}
+ 	spin_unlock(&sbi->inode_lock[DIRTY_META]);
  
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-index 9c91a3dc8e385..cc223fe086484 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-@@ -301,7 +301,7 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
+-	if (!ret && f2fs_is_atomic_file(inode))
++	/* if atomic write is not committed, set inode w/ atomic dirty */
++	if (!ret && f2fs_is_atomic_file(inode) &&
++			!is_inode_flag_set(inode, FI_ATOMIC_COMMITTED))
+ 		set_inode_flag(inode, FI_ATOMIC_DIRTIED);
  
- 	/* Calculate the clock domain crossing (CDC) error if necessary */
- 	priv->plat->cdc_error_adj = 0;
--	if (priv->plat->has_gmac4 && priv->plat->clk_ptp_rate)
-+	if (priv->plat->has_gmac4)
- 		priv->plat->cdc_error_adj = (2 * NSEC_PER_SEC) / priv->plat->clk_ptp_rate;
- 
- 	stmmac_ptp_clock_ops.n_per_out = priv->dma_cap.pps_out_num;
+ 	return ret;
 -- 
 2.39.5
 
