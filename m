@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FCF72624;
-	Mon, 23 Jun 2025 21:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B751D218AC1;
+	Mon, 23 Jun 2025 21:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715575; cv=none; b=RRMs0KUWrRRTv7Pusxz9WtOQTW4YPxV7l+fuqOAiag/fwiQy65cq4pawRm/WRVzGXgSF/uWfH6Ql0kBJfrc+xFUnB8gyBCiB8YTNPjs1bN87pk6nGScxbDrl6Zjpj/tmi3zZj0zjOaKRymaGNLDBRNMycOT2O9Lr8hJYRVNrU14=
+	t=1750715577; cv=none; b=JXURazY/OKjRZ0WyiITB8RxBzE1jYyDrTFvW7WbkoMio7lqlFXUFxUQTc9ldBRAOZCfF4LMRDyWmDLWS0VQ+Oxv20ij7+uWHCUCW3e39WDtSdH9KhvLQHiEoF4VF6prsXAH1FKBKLe6sJykQNO24k0xzUPPKCzJTatlSomdE/dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715575; c=relaxed/simple;
-	bh=JmFqn0LcSslupBG5kjHKdw+b50Gp7n7lg0uiPP+/W6k=;
+	s=arc-20240116; t=1750715577; c=relaxed/simple;
+	bh=jXD3k/S0RmvrAB1dLO6Y/jFjJbwOIPzPWhDDzy9u9GA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Nqnxs/jb89T8BvEhRnKk77tBQ5d+NCVhK7UECGar8s4r2yWNSwJVFyTVi2UC9u7x55CDX8H044QZSpXCrioYZlw0LoqdiW9RwthCKADvxEZohW0fkDnSJt4cBYARaZSZ8auVZjuaRVKbDT8AH2JIV6Rj+/OGqfcLxu0RB2VJeOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7AOXyFR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QqqMcYc8NqAC3dKgApPtG50cLkzugOd5rGGebkfwsHVkQ62v64mTxbf9yP18Y6YM6KdaXsCtTE3Mij6ZQka2a8yt/NbMo7HCGULByWHhCFf91DWwY/63GrUIQYvEMe9xd6dnO8fqRIesu2Oh+spMVNz2IHsFe6X871KPBkKewZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJJ0vAaz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7AOXyFR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0F4C4CEEA;
-	Mon, 23 Jun 2025 21:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJJ0vAaz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0075DC4CEEA;
+	Mon, 23 Jun 2025 21:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715574;
-	bh=JmFqn0LcSslupBG5kjHKdw+b50Gp7n7lg0uiPP+/W6k=;
+	s=korg; t=1750715577;
+	bh=jXD3k/S0RmvrAB1dLO6Y/jFjJbwOIPzPWhDDzy9u9GA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7AOXyFRDGVLjdHC2MXRn2XNTBSMTU+6Pk/1HoM7S64XaoL6rwE3ooLHKFfdzOrIb
-	 GfiO86Ru//DJHsV6txnI4ZHGdVBBqDBhVQV5ApR4Sz1XgttT66mCAwYwYfB71jGJKd
-	 7XQSy1qAGEYMExnrhIWUfooXKxW81M6n6411ZsIw=
+	b=JJJ0vAazjfkx0ZN3Seh/OGN/mONPVnh25wEj65fnLwv1HurFduMh83lEJTVMKo83U
+	 r4GukE00EQ94GJfisCU68aw9qjKJuTu+m2Xo/Dtcnun9f6k8mAZCHZYiPtZXbSQIj6
+	 7Ez+w9Mrw1N3MUIks8/JDksfxYWW5eo8XoJw4Okc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.15 467/592] net: clear the dst when changing skb protocol
-Date: Mon, 23 Jun 2025 15:07:05 +0200
-Message-ID: <20250623130711.538590230@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 194/414] f2fs: use vmalloc instead of kvmalloc in .init_{,de}compress_ctx
+Date: Mon, 23 Jun 2025 15:05:31 +0200
+Message-ID: <20250623130646.864925015@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,122 +45,161 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-commit ba9db6f907ac02215e30128770f85fbd7db2fcf9 upstream.
+[ Upstream commit 70dd07c888451503c3e93b6821e10d1ea1ec9930 ]
 
-A not-so-careful NAT46 BPF program can crash the kernel
-if it indiscriminately flips ingress packets from v4 to v6:
+.init_{,de}compress_ctx uses kvmalloc() to alloc memory, it will try
+to allocate physically continuous page first, it may cause more memory
+allocation pressure, let's use vmalloc instead to mitigate it.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-    ip6_rcv_core (net/ipv6/ip6_input.c:190:20)
-    ipv6_rcv (net/ipv6/ip6_input.c:306:8)
-    process_backlog (net/core/dev.c:6186:4)
-    napi_poll (net/core/dev.c:6906:9)
-    net_rx_action (net/core/dev.c:7028:13)
-    do_softirq (kernel/softirq.c:462:3)
-    netif_rx (net/core/dev.c:5326:3)
-    dev_loopback_xmit (net/core/dev.c:4015:2)
-    ip_mc_finish_output (net/ipv4/ip_output.c:363:8)
-    NF_HOOK (./include/linux/netfilter.h:314:9)
-    ip_mc_output (net/ipv4/ip_output.c:400:5)
-    dst_output (./include/net/dst.h:459:9)
-    ip_local_out (net/ipv4/ip_output.c:130:9)
-    ip_send_skb (net/ipv4/ip_output.c:1496:8)
-    udp_send_skb (net/ipv4/udp.c:1040:8)
-    udp_sendmsg (net/ipv4/udp.c:1328:10)
+[Test]
+cd /data/local/tmp
+touch file
+f2fs_io setflags compression file
+f2fs_io getflags file
+for i in $(seq 1 10); do sync; echo 3 > /proc/sys/vm/drop_caches;\
+time f2fs_io write 512 0 4096 zero osync file; truncate -s 0 file;\
+done
 
-The output interface has a 4->6 program attached at ingress.
-We try to loop the multicast skb back to the sending socket.
-Ingress BPF runs as part of netif_rx(), pushes a valid v6 hdr
-and changes skb->protocol to v6. We enter ip6_rcv_core which
-tries to use skb_dst(). But the dst is still an IPv4 one left
-after IPv4 mcast output.
+[Result]
+Before		After		Delta
+21.243		21.694		-2.12%
 
-Clear the dst in all BPF helpers which change the protocol.
-Try to preserve metadata dsts, those may carry non-routing
-metadata.
+For compression, we recommend to use ioctl to compress file data in
+background for workaround.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Maciej Żenczykowski <maze@google.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Fixes: d219df60a70e ("bpf: Add ipip6 and ip6ip decap support for bpf_skb_adjust_room()")
-Fixes: 1b00e0dfe7d0 ("bpf: update skb->protocol in bpf_skb_net_grow")
-Fixes: 6578171a7ff0 ("bpf: add bpf_skb_change_proto helper")
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250610001245.1981782-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+For decompression, only zstd will be affected.
+
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ fs/f2fs/compress.c | 23 ++++++++++-------------
+ fs/f2fs/f2fs.h     |  5 +++++
+ 2 files changed, 15 insertions(+), 13 deletions(-)
 
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -3233,6 +3233,13 @@ static const struct bpf_func_proto bpf_s
- 	.arg1_type      = ARG_PTR_TO_CTX,
- };
+diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
+index 7f26440e8595a..b05bb7bfa14c5 100644
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -178,8 +178,7 @@ void f2fs_compress_ctx_add_page(struct compress_ctx *cc, struct folio *folio)
+ #ifdef CONFIG_F2FS_FS_LZO
+ static int lzo_init_compress_ctx(struct compress_ctx *cc)
+ {
+-	cc->private = f2fs_kvmalloc(F2FS_I_SB(cc->inode),
+-				LZO1X_MEM_COMPRESS, GFP_NOFS);
++	cc->private = f2fs_vmalloc(LZO1X_MEM_COMPRESS);
+ 	if (!cc->private)
+ 		return -ENOMEM;
  
-+static void bpf_skb_change_protocol(struct sk_buff *skb, u16 proto)
+@@ -189,7 +188,7 @@ static int lzo_init_compress_ctx(struct compress_ctx *cc)
+ 
+ static void lzo_destroy_compress_ctx(struct compress_ctx *cc)
+ {
+-	kvfree(cc->private);
++	vfree(cc->private);
+ 	cc->private = NULL;
+ }
+ 
+@@ -246,7 +245,7 @@ static int lz4_init_compress_ctx(struct compress_ctx *cc)
+ 		size = LZ4HC_MEM_COMPRESS;
+ #endif
+ 
+-	cc->private = f2fs_kvmalloc(F2FS_I_SB(cc->inode), size, GFP_NOFS);
++	cc->private = f2fs_vmalloc(size);
+ 	if (!cc->private)
+ 		return -ENOMEM;
+ 
+@@ -261,7 +260,7 @@ static int lz4_init_compress_ctx(struct compress_ctx *cc)
+ 
+ static void lz4_destroy_compress_ctx(struct compress_ctx *cc)
+ {
+-	kvfree(cc->private);
++	vfree(cc->private);
+ 	cc->private = NULL;
+ }
+ 
+@@ -342,8 +341,7 @@ static int zstd_init_compress_ctx(struct compress_ctx *cc)
+ 	params = zstd_get_params(level, cc->rlen);
+ 	workspace_size = zstd_cstream_workspace_bound(&params.cParams);
+ 
+-	workspace = f2fs_kvmalloc(F2FS_I_SB(cc->inode),
+-					workspace_size, GFP_NOFS);
++	workspace = f2fs_vmalloc(workspace_size);
+ 	if (!workspace)
+ 		return -ENOMEM;
+ 
+@@ -351,7 +349,7 @@ static int zstd_init_compress_ctx(struct compress_ctx *cc)
+ 	if (!stream) {
+ 		f2fs_err_ratelimited(F2FS_I_SB(cc->inode),
+ 				"%s zstd_init_cstream failed", __func__);
+-		kvfree(workspace);
++		vfree(workspace);
+ 		return -EIO;
+ 	}
+ 
+@@ -364,7 +362,7 @@ static int zstd_init_compress_ctx(struct compress_ctx *cc)
+ 
+ static void zstd_destroy_compress_ctx(struct compress_ctx *cc)
+ {
+-	kvfree(cc->private);
++	vfree(cc->private);
+ 	cc->private = NULL;
+ 	cc->private2 = NULL;
+ }
+@@ -423,8 +421,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
+ 
+ 	workspace_size = zstd_dstream_workspace_bound(max_window_size);
+ 
+-	workspace = f2fs_kvmalloc(F2FS_I_SB(dic->inode),
+-					workspace_size, GFP_NOFS);
++	workspace = f2fs_vmalloc(workspace_size);
+ 	if (!workspace)
+ 		return -ENOMEM;
+ 
+@@ -432,7 +429,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
+ 	if (!stream) {
+ 		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
+ 				"%s zstd_init_dstream failed", __func__);
+-		kvfree(workspace);
++		vfree(workspace);
+ 		return -EIO;
+ 	}
+ 
+@@ -444,7 +441,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
+ 
+ static void zstd_destroy_decompress_ctx(struct decompress_io_ctx *dic)
+ {
+-	kvfree(dic->private);
++	vfree(dic->private);
+ 	dic->private = NULL;
+ 	dic->private2 = NULL;
+ }
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index 1219e37fa7ad3..61b715cc2e231 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3494,6 +3494,11 @@ static inline void *f2fs_kvzalloc(struct f2fs_sb_info *sbi,
+ 	return f2fs_kvmalloc(sbi, size, flags | __GFP_ZERO);
+ }
+ 
++static inline void *f2fs_vmalloc(size_t size)
 +{
-+	skb->protocol = htons(proto);
-+	if (skb_valid_dst(skb))
-+		skb_dst_drop(skb);
++	return vmalloc(size);
 +}
 +
- static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
+ static inline int get_extra_isize(struct inode *inode)
  {
- 	/* Caller already did skb_cow() with len as headroom,
-@@ -3329,7 +3336,7 @@ static int bpf_skb_proto_4_to_6(struct s
- 		}
- 	}
- 
--	skb->protocol = htons(ETH_P_IPV6);
-+	bpf_skb_change_protocol(skb, ETH_P_IPV6);
- 	skb_clear_hash(skb);
- 
- 	return 0;
-@@ -3359,7 +3366,7 @@ static int bpf_skb_proto_6_to_4(struct s
- 		}
- 	}
- 
--	skb->protocol = htons(ETH_P_IP);
-+	bpf_skb_change_protocol(skb, ETH_P_IP);
- 	skb_clear_hash(skb);
- 
- 	return 0;
-@@ -3550,10 +3557,10 @@ static int bpf_skb_net_grow(struct sk_bu
- 		/* Match skb->protocol to new outer l3 protocol */
- 		if (skb->protocol == htons(ETH_P_IP) &&
- 		    flags & BPF_F_ADJ_ROOM_ENCAP_L3_IPV6)
--			skb->protocol = htons(ETH_P_IPV6);
-+			bpf_skb_change_protocol(skb, ETH_P_IPV6);
- 		else if (skb->protocol == htons(ETH_P_IPV6) &&
- 			 flags & BPF_F_ADJ_ROOM_ENCAP_L3_IPV4)
--			skb->protocol = htons(ETH_P_IP);
-+			bpf_skb_change_protocol(skb, ETH_P_IP);
- 	}
- 
- 	if (skb_is_gso(skb)) {
-@@ -3606,10 +3613,10 @@ static int bpf_skb_net_shrink(struct sk_
- 	/* Match skb->protocol to new outer l3 protocol */
- 	if (skb->protocol == htons(ETH_P_IP) &&
- 	    flags & BPF_F_ADJ_ROOM_DECAP_L3_IPV6)
--		skb->protocol = htons(ETH_P_IPV6);
-+		bpf_skb_change_protocol(skb, ETH_P_IPV6);
- 	else if (skb->protocol == htons(ETH_P_IPV6) &&
- 		 flags & BPF_F_ADJ_ROOM_DECAP_L3_IPV4)
--		skb->protocol = htons(ETH_P_IP);
-+		bpf_skb_change_protocol(skb, ETH_P_IP);
- 
- 	if (skb_is_gso(skb)) {
- 		struct skb_shared_info *shinfo = skb_shinfo(skb);
+ 	return F2FS_I(inode)->i_extra_isize / sizeof(__le32);
+-- 
+2.39.5
+
 
 
