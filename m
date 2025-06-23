@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F6916419;
-	Mon, 23 Jun 2025 13:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A87A16419;
+	Mon, 23 Jun 2025 13:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685921; cv=none; b=ps9SA7hWUgHdSR5tNJ6XcDNTLTht7O9AIHx4xLrCQKtwxnK0DMZRAaWh4B0kHvSYa1505p2pPsg42s+qYOKiS2milSF8O3XZWkzNIyfOy4zI00trgzp2RnP9m5NOgg3b72YV8YBG46wzZotnoMIoVhXJO2JhONNTDwCyw+XFuwI=
+	t=1750685923; cv=none; b=pFPggENTDFqPGalpWiMk2CW0hu+sUH01R9zbsb7xmxjXJ+QE+/pIXGjonOTV7EBK8VIe4JGW4WA/kcDI8OofFwnFf99hvwHYogJfE+/cYqSKG3BxZpMPcH233YlMSj8fhwJLFGYbctYWaHSA4CUss5WNXrObyWwyqmGAF27HaOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685921; c=relaxed/simple;
-	bh=ckEtMiAk/Az2DAKAX+QzZGyW26KRIbIKRbwMF9xuQWg=;
+	s=arc-20240116; t=1750685923; c=relaxed/simple;
+	bh=1Fh+Pfmu82ZOI2IF8WaPLhLUC+chv+EddooA5cd6Np8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DBUJHSZKxI0uD0k4SQ8KYcUNfB9uVFXnPWpfkP0F5tACt1SwhRwhHev8qGQQFxa489mS2fi4R71TCIi60rHkLbOoM8Q+CuAbiFd08t4ry4DSHKQBYpbiNP2TWVlxZ2YWgeu6v4aFZvsQvgUWwtJWv2l/Ky3tYUOut+f1KeMzhAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYV/1YjL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQXSosJvofHFyRyQTWFDp3D98s01F2GaiZz2qYRTIxXChkA9doHwIvUkSJ4FycN2jBAyYbFcK2zKljEv10j3My1cO1y92EY3anKxoHnhCmIPr2TDu5nRGf7yWS5Cz4lihw1O+ENs25me39aHhP1IjkpQ8cIa8+Da41COt/3sRKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/8mVxuP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYV/1YjL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84AF8C4CEEA;
-	Mon, 23 Jun 2025 13:38:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/8mVxuP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C280C4CEEA;
+	Mon, 23 Jun 2025 13:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685920;
-	bh=ckEtMiAk/Az2DAKAX+QzZGyW26KRIbIKRbwMF9xuQWg=;
+	s=korg; t=1750685923;
+	bh=1Fh+Pfmu82ZOI2IF8WaPLhLUC+chv+EddooA5cd6Np8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KYV/1YjLvLaBK8KjHwV5TghLx7TDtyOPMk+Hw8/8k3Fk1zu0WQxN9Bkm7vsr8ehIJ
-	 lLClXJyxgFq1Yac6MaRtMlEzAGhpjlKiSHBPj+uvv7sR+Gdj2dz5EtS+UCQfLsakKo
-	 pbqbrABA6MHd6/GXIb1zAhkinx/UHFkVNsx4eIGE=
+	b=r/8mVxuPcGuPJ6dilwpYkqSxa4KL1sNuveTuagKClZf3lBUCPuSJNBn2De4mhdpCz
+	 6p8CXcLm/pnFt0cC5gVXN5POMCj8i8OslsmJwDsCz0WTJ2MlR3knD95gKPBxqaWgnt
+	 87UJMrluCdToG+kIVIYm0anr896pwBCSvQLUO7Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 012/290] net/mlx5: Add error handling in mlx5_query_nic_vport_node_guid()
-Date: Mon, 23 Jun 2025 15:04:33 +0200
-Message-ID: <20250623130627.344935100@linuxfoundation.org>
+	Alexey Gladkov <legion@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 080/355] mfd: stmpe-spi: Correct the name used in MODULE_DEVICE_TABLE
+Date: Mon, 23 Jun 2025 15:04:41 +0200
+Message-ID: <20250623130629.221826086@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Alexey Gladkov <legion@kernel.org>
 
-commit c6bb8a21cdad8c975a3a646b9e5c8df01ad29783 upstream.
+[ Upstream commit 59d60c16ed41475f3b5f7b605e75fbf8e3628720 ]
 
-The function mlx5_query_nic_vport_node_guid() calls the function
-mlx5_query_nic_vport_context() but does not check its return value.
-A proper implementation can be found in mlx5_nic_vport_query_local_lb().
+The name used in the macro does not exist.
 
-Add error handling for mlx5_query_nic_vport_context(). If it fails, free
-the out buffer via kvfree() and return error code.
+drivers/mfd/stmpe-spi.c:132:26: error: use of undeclared identifier 'stmpe_id'
+  132 | MODULE_DEVICE_TABLE(spi, stmpe_id);
 
-Fixes: 9efa75254593 ("net/mlx5_core: Introduce access functions to query vport RoCE fields")
-Cc: stable@vger.kernel.org # v4.5
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250524163425.1695-1-vulab@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e789995d5c61 ("mfd: Add support for STMPE SPI interface")
+Signed-off-by: Alexey Gladkov <legion@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/79d5a847303e45a46098f2d827d3d8a249a32be3.1745591072.git.legion@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/vport.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/mfd/stmpe-spi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-@@ -444,19 +444,22 @@ int mlx5_query_nic_vport_node_guid(struc
- {
- 	u32 *out;
- 	int outlen = MLX5_ST_SZ_BYTES(query_nic_vport_context_out);
-+	int err;
+diff --git a/drivers/mfd/stmpe-spi.c b/drivers/mfd/stmpe-spi.c
+index 7351734f75938..07fa56e5337d1 100644
+--- a/drivers/mfd/stmpe-spi.c
++++ b/drivers/mfd/stmpe-spi.c
+@@ -129,7 +129,7 @@ static const struct spi_device_id stmpe_spi_id[] = {
+ 	{ "stmpe2403", STMPE2403 },
+ 	{ }
+ };
+-MODULE_DEVICE_TABLE(spi, stmpe_id);
++MODULE_DEVICE_TABLE(spi, stmpe_spi_id);
  
- 	out = kvzalloc(outlen, GFP_KERNEL);
- 	if (!out)
- 		return -ENOMEM;
- 
--	mlx5_query_nic_vport_context(mdev, 0, out);
-+	err = mlx5_query_nic_vport_context(mdev, 0, out);
-+	if (err)
-+		goto out;
- 
- 	*node_guid = MLX5_GET64(query_nic_vport_context_out, out,
- 				nic_vport_context.node_guid);
--
-+out:
- 	kvfree(out);
- 
--	return 0;
-+	return err;
- }
- EXPORT_SYMBOL_GPL(mlx5_query_nic_vport_node_guid);
- 
+ static struct spi_driver stmpe_spi_driver = {
+ 	.driver = {
+-- 
+2.39.5
+
 
 
