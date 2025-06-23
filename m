@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BBFA1EDA0F;
-	Mon, 23 Jun 2025 21:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7652A7482;
+	Mon, 23 Jun 2025 21:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713439; cv=none; b=NnE12VimLkCUkyDYxNFzYoSy2QFhd9QFOrjP68JNreb/m+GWPIq64eHQoWofkHeDDJo+M1tMBsvbx7qABuT2gEJVv+QrFykJuSatc6i49aR/yAWN3DfRUuwBIfzvq4JF3nCRJEte8FbyYCsZcCdeHsax5Ggz08CgnEFR9tEQ418=
+	t=1750713441; cv=none; b=lDjP3e/VUqfRFYajSUsP3O8R8ALsD7RA4YYCU6M+5hFt3HByhkIYV0llEYN9YXMVJhWVtMvWGaWiht92vftJ8plFaprBU5/D3+g0jJW2HsAlwXOw1F0rp+wjbgZns4jsg9VAOfL/JQj8enlH2CGmocrIM0cZLYd4kMbDrLuOE+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713439; c=relaxed/simple;
-	bh=fO2qcASyEXtm0u3ir/qxoUPZ6zsl658aWwz8gPWG6fQ=;
+	s=arc-20240116; t=1750713441; c=relaxed/simple;
+	bh=Ht1iRFPkFeujFPHrAq6ki8kH1nb+MZvBCO0AnkT/1qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=od54/ulcSLQdEGSJiC+T3wtWLtIXEGFYgzXlEe+gE4InF3BS6cZ+qj9aGxzMIs+IjfJv+GO6SuZeOgE9N0lkbo0ddVA2b9CZM/Q3ZVJ2mLr6cZKwNiaUooWwgpemYOLcOj9aSw+N2QNF+uMpJ87mmJJYh4BymDOVlJHk0KrEIw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvpRRGoj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IN6rWCY9z7nPyFgIdSyT1VCtEB8wjkNUsaDI5tBXIPKjRosOlzw/6JUyqDp0I6d1wBou7vZzyOLLHH3Bw9zlumuIaZJ2YOU80iJVu8rztjF5ALdSvZkMqiNh11BAL4yIef9nUArnb0+akjwIOZIfroXqq7F3VoLT8joQ8WsqCE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZZRYzcC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvpRRGoj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97755C4CEEA;
-	Mon, 23 Jun 2025 21:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZZRYzcC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F046C4CEEA;
+	Mon, 23 Jun 2025 21:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713438;
-	bh=fO2qcASyEXtm0u3ir/qxoUPZ6zsl658aWwz8gPWG6fQ=;
+	s=korg; t=1750713441;
+	bh=Ht1iRFPkFeujFPHrAq6ki8kH1nb+MZvBCO0AnkT/1qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XvpRRGojm779VBC+je8ofvzLU591JdQMtOhpeqktPFP8k7noM7q2Re6LThX0JOxqw
-	 PHh/qSH7nccEUpIKYHbilbxnkaY+Z40E26w2OWizL3491kxRe2sLBt5U+wUqgjpjnZ
-	 RKUM983QKmGPTzYyadfBdysr3cHBMp+s3d76Qeqo=
+	b=vZZRYzcCgqAJTXtg6Xs7m8Z3sgU277fYLOdClmz1ZlsAIdeeJlBmmAf5MHSJoU2lG
+	 AdQBJqxTdaV3w8sDcXUJ1uWC0TREZ24FReP4pa5YjrH76wp5sBcBe847MwJaTWuzq5
+	 64AcUIv4AQqsSFrGOflozxugtbJrFfQKLnPtNz4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Vignesh Raman <vignesh.raman@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Haixia Qu <hxqu@hillstonenet.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/508] arm64: defconfig: mediatek: enable PHY drivers
-Date: Mon, 23 Jun 2025 15:02:48 +0200
-Message-ID: <20250623130648.322277931@linuxfoundation.org>
+Subject: [PATCH 5.4 206/222] tipc: fix null-ptr-deref when acquiring remote ip of ethernet bearer
+Date: Mon, 23 Jun 2025 15:09:01 +0200
+Message-ID: <20250623130618.499168526@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,54 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vignesh Raman <vignesh.raman@collabora.com>
+From: Haixia Qu <hxqu@hillstonenet.com>
 
-[ Upstream commit f52cd248d844f9451858992f924988ac413fdc7e ]
+[ Upstream commit f82727adcf2992822e12198792af450a76ebd5ef ]
 
-The mediatek display driver fails to probe on mt8173-elm-hana and
-mt8183-kukui-jacuzzi-juniper-sku16 in v6.14-rc4 due to missing PHY
-configurations.
+The reproduction steps:
+1. create a tun interface
+2. enable l2 bearer
+3. TIPC_NL_UDP_GET_REMOTEIP with media name set to tun
 
-Commit 924d66011f24 ("drm/mediatek: stop selecting foreign drivers")
-stopped selecting the MediaTek PHY drivers, requiring them to be
-explicitly enabled in defconfig.
+tipc: Started in network mode
+tipc: Node identity 8af312d38a21, cluster identity 4711
+tipc: Enabled bearer <eth:syz_tun>, priority 1
+Oops: general protection fault
+KASAN: null-ptr-deref in range
+CPU: 1 UID: 1000 PID: 559 Comm: poc Not tainted 6.16.0-rc1+ #117 PREEMPT
+Hardware name: QEMU Ubuntu 24.04 PC
+RIP: 0010:tipc_udp_nl_dump_remoteip+0x4a4/0x8f0
 
-Enable the following PHY drivers for MediaTek platforms:
-CONFIG_PHY_MTK_HDMI=m for HDMI display
-CONFIG_PHY_MTK_MIPI_DSI=m for DSI display
-CONFIG_PHY_MTK_DP=m for DP display
+the ub was in fact a struct dev.
 
-Fixes: 924d66011f24 ("drm/mediatek: stop selecting foreign drivers")
-Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
-Link: https://lore.kernel.org/r/20250512131933.1247830-1-vignesh.raman@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+when bid != 0 && skip_cnt != 0, bearer_list[bid] may be NULL or
+other media when other thread changes it.
+
+fix this by checking media_id.
+
+Fixes: 832629ca5c313 ("tipc: add UDP remoteip dump to netlink API")
+Signed-off-by: Haixia Qu <hxqu@hillstonenet.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250617055624.2680-1-hxqu@hillstonenet.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/configs/defconfig | 3 +++
- 1 file changed, 3 insertions(+)
+ net/tipc/udp_media.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 623e9f308f38a..4543b292b50b4 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1230,6 +1230,9 @@ CONFIG_PHY_HISTB_COMBPHY=y
- CONFIG_PHY_HISI_INNO_USB2=y
- CONFIG_PHY_MVEBU_CP110_COMPHY=y
- CONFIG_PHY_MTK_TPHY=y
-+CONFIG_PHY_MTK_HDMI=m
-+CONFIG_PHY_MTK_MIPI_DSI=m
-+CONFIG_PHY_MTK_DP=m
- CONFIG_PHY_QCOM_EDP=m
- CONFIG_PHY_QCOM_PCIE2=m
- CONFIG_PHY_QCOM_QMP=m
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index 5f278c25462e2..1cdc9a9103e09 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -483,7 +483,7 @@ int tipc_udp_nl_dump_remoteip(struct sk_buff *skb, struct netlink_callback *cb)
+ 
+ 		rtnl_lock();
+ 		b = tipc_bearer_find(net, bname);
+-		if (!b) {
++		if (!b || b->bcast_addr.media_id != TIPC_MEDIA_TYPE_UDP) {
+ 			rtnl_unlock();
+ 			return -EINVAL;
+ 		}
+@@ -494,7 +494,7 @@ int tipc_udp_nl_dump_remoteip(struct sk_buff *skb, struct netlink_callback *cb)
+ 
+ 		rtnl_lock();
+ 		b = rtnl_dereference(tn->bearer_list[bid]);
+-		if (!b) {
++		if (!b || b->bcast_addr.media_id != TIPC_MEDIA_TYPE_UDP) {
+ 			rtnl_unlock();
+ 			return -EINVAL;
+ 		}
 -- 
 2.39.5
 
