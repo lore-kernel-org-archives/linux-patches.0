@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F612192EC;
-	Mon, 23 Jun 2025 22:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56F52192EC;
+	Mon, 23 Jun 2025 22:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717494; cv=none; b=ikl62HW/5mO7XBGSmOd9B1uPuKudmKWsT4Wm4U7eHsrH16TYS5Y/JPV4lbbzfZQFaOaIPZTtdar3aHMGn2L81zjASzAtQeH8xVarFMKEtome/5TEK1gh3FZMXkE+la8iDOh4+8bR1fx9u2yUMWcsY2cXBUy9Sh4q2nqW2dqRSbM=
+	t=1750717496; cv=none; b=sYH/fvm9/JmAI0O5r7yfnHagBL5tIbW0gnSxO+I59qqVq/8Qv6sqsNGf3c0E0QgnKByn0ldK+FYL83T3E9E4i6DjU714eo2GmR4245629TQC6SwInaUEdXTvPnu6XRlyVoSxM+EpsZ8Ey7TrSECRG//MqogHwHt8wJJgQkSQgZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717494; c=relaxed/simple;
-	bh=NAdYHWS/Tt9F5h7kqL/IYOWPIasEcj3PzORRB6cEyeY=;
+	s=arc-20240116; t=1750717496; c=relaxed/simple;
+	bh=dwK/xSTVu+zxu4hBCXGAEAJ9yXSAdSZc2Nyp5QjIXfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rgh9w0TtYsU/NBQzkGc57NjHdnKR1ad36q2iYnrtDWZ8CywGm+W8FldcDiG19PmLhwZKAYlsJ79ssikzM7WeqHvJEcjs2t04jSbSOfFIeOGLie5F5rCpjheAeLXvdEeLg3DKiEamdy7VkrL5zJtt+Qp8u3bIiExnEQVnPQMcUyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFOKPxzP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UoZo+S7mzw7l8qlj0ouSoGwuZ+IgHNRGx75STPjWeNxk+XDfYBRml6gwSY4fGsCdfd53OaiOWCa/dpH/LCO0Dzjki2bQrmmqY8Y4BOPhaEEQc+/OQx7g+m3tM1AfDx97uZMfdPzaPYIzxMmOP41NQzPC/4iItyT4TPkhTc6TyJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6GwxQSp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFOKPxzP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D2BC4CEEA;
-	Mon, 23 Jun 2025 22:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6GwxQSp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB51C4CEEA;
+	Mon, 23 Jun 2025 22:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717494;
-	bh=NAdYHWS/Tt9F5h7kqL/IYOWPIasEcj3PzORRB6cEyeY=;
+	s=korg; t=1750717496;
+	bh=dwK/xSTVu+zxu4hBCXGAEAJ9yXSAdSZc2Nyp5QjIXfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cFOKPxzPnQLw8M9VwV99eiOuacrbBjsGGMSR6GO7WF8v9BTNDXc1l7odkr0Q1aJ87
-	 UB1N72rV5qBlNG8R45h3E2jgdJCjd2kVYKF9gGSB+dlhQ7obst80z+hj4S3cmQ+ElR
-	 Bke0ZK+sRCJsJrS7OdCphygGCgX5vJIr3rBbFkDc=
+	b=n6GwxQSp4NjfEB9eAhWZVRSzJx3ww6NhXVuV9IRuFjdRnb89Kjee1FRdM1Tu7/ohF
+	 j2ySSlH1qvHJg71+g8ZaJohRdmau0wzHUaQIwtQ0J2IBBHVEgwxiV1KKhuFdykzfZz
+	 KdyYAtkeq4YCoo/foXs6/PAaizAB7UXfrxHi0j3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 354/414] drm/msm/dsi/dsi_phy_10nm: Fix missing initial VCO rate
-Date: Mon, 23 Jun 2025 15:08:11 +0200
-Message-ID: <20250623130650.823022313@linuxfoundation.org>
+	Paul Aurich <paul@darkrain42.org>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Ruben Devos <rdevos@oxya.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 397/414] smb: Log an error when close_all_cached_dirs fails
+Date: Mon, 23 Jun 2025 15:08:54 +0200
+Message-ID: <20250623130651.865202733@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
 References: <20250623130642.015559452@linuxfoundation.org>
@@ -51,58 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Paul Aurich <paul@darkrain42.org>
 
-[ Upstream commit 8a48e35becb214743214f5504e726c3ec131cd6d ]
+commit a2182743a8b4969481f64aec4908ff162e8a206c upstream.
 
-Driver unconditionally saves current state on first init in
-dsi_pll_10nm_init(), but does not save the VCO rate, only some of the
-divider registers.  The state is then restored during probe/enable via
-msm_dsi_phy_enable() -> msm_dsi_phy_pll_restore_state() ->
-dsi_10nm_pll_restore_state().
+Under low-memory conditions, close_all_cached_dirs() can't move the
+dentries to a separate list to dput() them once the locks are dropped.
+This will result in a "Dentry still in use" error, so add an error
+message that makes it clear this is what happened:
 
-Restoring calls dsi_pll_10nm_vco_set_rate() with
-pll_10nm->vco_current_rate=0, which basically overwrites existing rate of
-VCO and messes with clock hierarchy, by setting frequency to 0 to clock
-tree.  This makes anyway little sense - VCO rate was not saved, so
-should not be restored.
+[  495.281119] CIFS: VFS: \\otters.example.com\share Out of memory while dropping dentries
+[  495.281595] ------------[ cut here ]------------
+[  495.281887] BUG: Dentry ffff888115531138{i=78,n=/}  still in use (2) [unmount of cifs cifs]
+[  495.282391] WARNING: CPU: 1 PID: 2329 at fs/dcache.c:1536 umount_check+0xc8/0xf0
 
-If PLL was not configured configure it to minimum rate to avoid glitches
-and configuring entire in clock hierarchy to 0 Hz.
+Also, bail out of looping through all tcons as soon as a single
+allocation fails, since we're already in trouble, and kmalloc() attempts
+for subseqeuent tcons are likely to fail just like the first one did.
 
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/sz4kbwy5nwsebgf64ia7uq4ee7wbsa5uy3xmlqwcstsbntzcov@ew3dcyjdzmi2/
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Fixes: a4ccc37693a2 ("drm/msm/dsi_pll_10nm: restore VCO rate during
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/654796/
-Link: https://lore.kernel.org/r/20250520111325.92352-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Paul Aurich <paul@darkrain42.org>
+Acked-by: Bharath SM <bharathsm@microsoft.com>
+Suggested-by: Ruben Devos <rdevos@oxya.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/smb/client/cached_dir.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-index 677c625718119..28cc550e22a88 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-@@ -703,6 +703,13 @@ static int dsi_pll_10nm_init(struct msm_dsi_phy *phy)
- 	/* TODO: Remove this when we have proper display handover support */
- 	msm_dsi_phy_pll_save_state(phy);
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -484,8 +484,17 @@ void close_all_cached_dirs(struct cifs_s
+ 		spin_lock(&cfids->cfid_list_lock);
+ 		list_for_each_entry(cfid, &cfids->entries, entry) {
+ 			tmp_list = kmalloc(sizeof(*tmp_list), GFP_ATOMIC);
+-			if (tmp_list == NULL)
+-				break;
++			if (tmp_list == NULL) {
++				/*
++				 * If the malloc() fails, we won't drop all
++				 * dentries, and unmounting is likely to trigger
++				 * a 'Dentry still in use' error.
++				 */
++				cifs_tcon_dbg(VFS, "Out of memory while dropping dentries\n");
++				spin_unlock(&cfids->cfid_list_lock);
++				spin_unlock(&cifs_sb->tlink_tree_lock);
++				goto done;
++			}
+ 			spin_lock(&cfid->fid_lock);
+ 			tmp_list->dentry = cfid->dentry;
+ 			cfid->dentry = NULL;
+@@ -497,6 +506,7 @@ void close_all_cached_dirs(struct cifs_s
+ 	}
+ 	spin_unlock(&cifs_sb->tlink_tree_lock);
  
-+	/*
-+	 * Store also proper vco_current_rate, because its value will be used in
-+	 * dsi_10nm_pll_restore_state().
-+	 */
-+	if (!dsi_pll_10nm_vco_recalc_rate(&pll_10nm->clk_hw, VCO_REF_CLK_RATE))
-+		pll_10nm->vco_current_rate = pll_10nm->phy->cfg->min_pll_rate;
-+
- 	return 0;
- }
- 
--- 
-2.39.5
-
++done:
+ 	list_for_each_entry_safe(tmp_list, q, &entry, entry) {
+ 		list_del(&tmp_list->entry);
+ 		dput(tmp_list->dentry);
 
 
