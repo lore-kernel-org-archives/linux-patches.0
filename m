@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C561F3B96;
-	Mon, 23 Jun 2025 21:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0A7223DE5;
+	Mon, 23 Jun 2025 21:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713463; cv=none; b=uJkalobPN6HBG4xGkpyIGp6UWslGTmwZ8tEHaQKnQEL0a6gbs2yUV/8Dt3X7a/JGa/1SBtMDtN/X0lZ+9JRGMuizCTUdDMfG3znokjTdUlN8QhBNKYiPtOi4jPSpe//pLHVe9tnX8JO3UZhiI5BtF2y+E3flj1azeSY3gD0eMLI=
+	t=1750713465; cv=none; b=cHNMVbiug/CEL5+JtAXVld6l+YA0odHrclo54Tww4ZY2xiRpaVDq1RPvroZBCgGeFJc+TXhSiJWRSB6leDJ+mR8FUsvZ9VzWA1WJPaccXfx8dy8WznGkfDLVLDI+l8w9/PSKf+27tDzf84masemFByOsrrNhN419T5rbOH2IX7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713463; c=relaxed/simple;
-	bh=GljUwZqF+99DJmZGgYQ9bFi8fmPE1vbLgugBcj5HF9I=;
+	s=arc-20240116; t=1750713465; c=relaxed/simple;
+	bh=mt7B4K+gcv/9qIujptitBaEZl6SKqBDFabLLy53olOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kR3ARZhZd0rDl4Th2xnWM3aMhq6yOz/rmd3O/XI+4BIG9eQQPQB8tTrxv9xORBdFuZlIWh9SJOcc/1Y3PtMclyGLdrSVJsSDirUJWucbrrdDARGYsuppx8hxvwjGKPjSR4gTX886wjv+aNgMoRfHliVl1oSnzK/8FrNo73GcSvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=naeyzlEw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T7hEr2xo+7Kyn54hxS/NJmcOTA03n2KJ6ZXAg3hMufQ8L7gQfxeFqMFo05zdcM9NIzZrlOKKM+Ewd6cqhyaC3dpRcRPVp882EEoMcHpqfY/267zHeC/wMWA1Ac2ET5YXdBaY86THB7TgnSQe46ApsxGO15gOKfAaSbqSWjXYzGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBgVVbQl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="naeyzlEw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E04C4CEEA;
-	Mon, 23 Jun 2025 21:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBgVVbQl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3F1C4CEEA;
+	Mon, 23 Jun 2025 21:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713463;
-	bh=GljUwZqF+99DJmZGgYQ9bFi8fmPE1vbLgugBcj5HF9I=;
+	s=korg; t=1750713465;
+	bh=mt7B4K+gcv/9qIujptitBaEZl6SKqBDFabLLy53olOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=naeyzlEwHdQifB/jwlfJ8BS1pV/hMRHutFR1kKEo9lwfL9rzJY7Y6uwOgoFBA11o0
-	 gWLjzN1B+fB23FnSOg2UTAmgrDF4ZeRv6sLwHIy14XG7tYiDex9aLuaFCH/NWyszJY
-	 7AeuDsIJd5IyO/BqQxb9KQtSH8XlR6Wy2lC8Gea4=
+	b=vBgVVbQlb7lmQWYoJGYsK7VhTHP5k9CWPGX4y7XBraCfI39FQ+wmXw3hPeUHGa32s
+	 32fP+ytrf7Yx3NMYoe8455XkgNGMuJI9CVhsjFfjYzULgrwOTAntxfhsBfUCBUf66r
+	 tVtrdQ/IQk2hVUb+8YB66HyarC551B7dJO0VbIn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 148/411] drm/meson: use vclk_freq instead of pixel_freq in debug print
-Date: Mon, 23 Jun 2025 15:04:52 +0200
-Message-ID: <20250623130637.347173601@linuxfoundation.org>
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.12 065/414] media: imx-jpeg: Drop the first error frames
+Date: Mon, 23 Jun 2025 15:03:22 +0200
+Message-ID: <20250623130643.696252420@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +47,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-[ Upstream commit faf2f8382088e8c74bd6eeb236c8c9190e61615e ]
+commit d52b9b7e2f10d22a49468128540533e8d76910cd upstream.
 
-meson_vclk_vic_supported_freq() has a debug print which includes the
-pixel freq. However, within the whole function the pixel freq is
-irrelevant, other than checking the end of the params array. Switch to
-printing the vclk_freq which is being compared / matched against the
-inputs to the function to avoid confusion when analyzing error reports
-from users.
+When an output buffer contains error frame header,
+v4l2_jpeg_parse_header() will return error, then driver will mark this
+buffer and a capture buffer done with error flag in device_run().
 
-Fixes: e5fab2ec9ca4 ("drm/meson: vclk: add support for YUV420 setup")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250606221031.3419353-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+But if the error occurs in the first frames, before setup the capture
+queue, there is no chance to schedule device_run(), and there may be no
+capture to mark error.
+
+So we need to drop this buffer with error flag, and make the decoding
+can continue.
+
+Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/meson/meson_vclk.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
-index 3325580d885d0..c4123bb958e4c 100644
---- a/drivers/gpu/drm/meson/meson_vclk.c
-+++ b/drivers/gpu/drm/meson/meson_vclk.c
-@@ -790,9 +790,9 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv,
- 	}
+--- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
++++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
+@@ -1918,9 +1918,19 @@ static void mxc_jpeg_buf_queue(struct vb
+ 	jpeg_src_buf = vb2_to_mxc_buf(vb);
+ 	jpeg_src_buf->jpeg_parse_error = false;
+ 	ret = mxc_jpeg_parse(ctx, vb);
+-	if (ret)
++	if (ret) {
+ 		jpeg_src_buf->jpeg_parse_error = true;
  
- 	for (i = 0 ; params[i].pixel_freq ; ++i) {
--		DRM_DEBUG_DRIVER("i = %d pixel_freq = %lluHz alt = %lluHz\n",
--				 i, params[i].pixel_freq,
--				 PIXEL_FREQ_1000_1001(params[i].pixel_freq));
-+		DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
-+				 i, params[i].vclk_freq,
-+				 PIXEL_FREQ_1000_1001(params[i].vclk_freq));
- 		DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
- 				 i, params[i].phy_freq,
- 				 PHY_FREQ_1000_1001(params[i].phy_freq));
--- 
-2.39.5
-
++		/*
++		 * if the capture queue is not setup, the device_run() won't be scheduled,
++		 * need to drop the error buffer, so that the decoding can continue
++		 */
++		if (!vb2_is_streaming(v4l2_m2m_get_dst_vq(ctx->fh.m2m_ctx))) {
++			v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
++			return;
++		}
++	}
++
+ end:
+ 	v4l2_m2m_buf_queue(ctx->fh.m2m_ctx, vbuf);
+ }
 
 
