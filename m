@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC07223DE1;
-	Mon, 23 Jun 2025 21:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494BF223DE5;
+	Mon, 23 Jun 2025 21:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715140; cv=none; b=OyHMywKXADJ8vdgL7ozrXzaKL+G093EiXpiNcmsWJJNbIMqisFuc/rI4H0Rpl/MzSSeC+jmhlkiZW3627QjwfWtUFjlrWMFgmAfS7AmPELb2RtN0UVsj0FK3vvjtqE1dUL52bsxv8ozM2WaHciUxDLuVrv4lyDJ+rpJ5232v2jU=
+	t=1750715142; cv=none; b=Y8SVjA22ANbmo5wbN1drrb890O03Te0Sz87s6iqnkBzpKgQOwfVLk2iPSokxdi2RfB4kUuqRL2Gw47H4w3YQnJeZ8ypv7GMFPsb6iXZrwHrA8xa4uwvdehYh1Xs6gv8DSZPPCS3twtcls9C/LK03pmjOsgXPhEUSwGIS1xkDMPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715140; c=relaxed/simple;
-	bh=axdPMSmhPDtRkxOxUKleyiJfe0gSalpg7n/kJ4HfP5A=;
+	s=arc-20240116; t=1750715142; c=relaxed/simple;
+	bh=MK/hNU4z4TcIbcdGbaJr3c4eWT2qdrIF/JWAJ1walkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rAM657G/ialRIhQDSmwVle6XXbl69JmLN/g0BP7jxthCnpKaFrphQtDIBXKG2yVhY7Mwx6Fcq6aDr1P4b4i8sclz0YnOkUPeeLrLgld/JrNhPsdWdf8cETBkFcC4WMH6k5Flp0UYgns1AtizQh3SD2aB64Nk6v5QJ8xzOG0OTAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6TIrfF8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Evjxc4rUBYWB0q10UGQI35I1p8v7yZJnWW+HlY9XvyJf5MxZ4iqsqiQLF3ke/oEIvyHeycWVPztLkxry52BBLeCuniah7m9KHrel6o5oqONv7E0vcU+VBJWTM5ABFzh24aO9nL9GElb0KEFfKbhMBqdV/iY5DIOB+khYR1KAvcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZUEW8eE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6TIrfF8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A505C4CEEA;
-	Mon, 23 Jun 2025 21:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZUEW8eE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C70C4CEEA;
+	Mon, 23 Jun 2025 21:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715139;
-	bh=axdPMSmhPDtRkxOxUKleyiJfe0gSalpg7n/kJ4HfP5A=;
+	s=korg; t=1750715142;
+	bh=MK/hNU4z4TcIbcdGbaJr3c4eWT2qdrIF/JWAJ1walkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q6TIrfF89If6KyjEeL4XR6xvXMc0gV877J8YlENlXn2XVpwnPpo565aM4na8t35Sd
-	 +divSDIgJ1cmsPboD46+daXdKkJZgCqpr6oNm2C/yKd/WmgFe+cYInKauj7o75PCa4
-	 azk+zXAldSoHgx/SUWY2zC7w9gaufO1gfuXze94g=
+	b=WZUEW8eE1J+VbfEf31fRoTNbAoDFZ0VVMoccbcu1O+nTCcWfn2D4TZZjKtuoo2+kK
+	 mGeMQyAYoJ6NXTPVhZyio22IfvIbxV7XnauNZqNdVI1kXjZGMFB3gxnQ97jKbVa6Sn
+	 Jk4wdKdUi0XwdLcYWELQC94wMztkLcD7MMpFMrxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 185/414] ASoC: tegra210_ahub: Add check to of_device_get_match_data()
-Date: Mon, 23 Jun 2025 15:05:22 +0200
-Message-ID: <20250623130646.646634784@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Andreas Ziegler <ziegler.andreas@siemens.com>,
+	Felix MOESSBAUER <felix.moessbauer@siemens.com>,
+	"Flot, Julien" <julien.flot@siemens.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.15 461/592] tracing: Fix regression of filter waiting a long time on RCU synchronization
+Date: Mon, 23 Jun 2025 15:06:59 +0200
+Message-ID: <20250623130711.392604854@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +52,409 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 04cb269c204398763a620d426cbee43064854000 ]
+commit a9d0aab5eb33a44792a66b7af13ff50d7b3e7022 upstream.
 
-In tegra_ahub_probe(), check the result of function
-of_device_get_match_data(), return an error code in case it fails.
+When faultable trace events were added, a trace event may no longer use
+normal RCU to synchronize but instead used synchronize_rcu_tasks_trace().
+This synchronization takes a much longer time to synchronize.
 
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Link: https://patch.msgid.link/20250513123744.3041724-1-ruc_gongyuanjun@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The filter logic would free the filters by calling
+tracepoint_synchronize_unregister() after it unhooked the filter strings
+and before freeing them. With this function now calling
+synchronize_rcu_tasks_trace() this increased the time to free a filter
+tremendously. On a PREEMPT_RT system, it was even more noticeable.
+
+ # time trace-cmd record -p function sleep 1
+ [..]
+ real	2m29.052s
+ user	0m0.244s
+ sys	0m20.136s
+
+As trace-cmd would clear out all the filters before recording, it could
+take up to 2 minutes to do a recording of "sleep 1".
+
+To find out where the issues was:
+
+ ~# trace-cmd sqlhist -e -n sched_stack  select start.prev_state as state, end.next_comm as comm, TIMESTAMP_DELTA_USECS as delta,  start.STACKTRACE as stack from sched_switch as start join sched_switch as end on start.prev_pid = end.next_pid
+
+Which will produce the following commands (and -e will also execute them):
+
+ echo 's:sched_stack s64 state; char comm[16]; u64 delta; unsigned long stack[];' >> /sys/kernel/tracing/dynamic_events
+ echo 'hist:keys=prev_pid:__arg_18057_2=prev_state,__arg_18057_4=common_timestamp.usecs,__arg_18057_7=common_stacktrace' >> /sys/kernel/tracing/events/sched/sched_switch/trigger
+ echo 'hist:keys=next_pid:__state_18057_1=$__arg_18057_2,__comm_18057_3=next_comm,__delta_18057_5=common_timestamp.usecs-$__arg_18057_4,__stack_18057_6=$__arg_18057_7:onmatch(sched.sched_switch).trace(sched_stack,$__state_18057_1,$__comm_18057_3,$__delta_18057_5,$__stack_18057_6)' >> /sys/kernel/tracing/events/sched/sched_switch/trigger
+
+The above creates a synthetic event that creates a stack trace when a task
+schedules out and records it with the time it scheduled back in. Basically
+the time a task is off the CPU. It also records the state of the task when
+it left the CPU (running, blocked, sleeping, etc). It also saves the comm
+of the task as "comm" (needed for the next command).
+
+~# echo 'hist:keys=state,stack.stacktrace:vals=delta:sort=state,delta if comm == "trace-cmd" &&  state & 3' > /sys/kernel/tracing/events/synthetic/sched_stack/trigger
+
+The above creates a histogram with buckets per state, per stack, and the
+value of the total time it was off the CPU for that stack trace. It filters
+on tasks with "comm == trace-cmd" and only the sleeping and blocked states
+(1 - sleeping, 2 - blocked).
+
+~# trace-cmd record -p function sleep 1
+
+~# cat /sys/kernel/tracing/events/synthetic/sched_stack/hist | tail -18
+{ state:          2, stack.stacktrace         __schedule+0x1545/0x3700
+         schedule+0xe2/0x390
+         schedule_timeout+0x175/0x200
+         wait_for_completion_state+0x294/0x440
+         __wait_rcu_gp+0x247/0x4f0
+         synchronize_rcu_tasks_generic+0x151/0x230
+         apply_subsystem_event_filter+0xa2b/0x1300
+         subsystem_filter_write+0x67/0xc0
+         vfs_write+0x1e2/0xeb0
+         ksys_write+0xff/0x1d0
+         do_syscall_64+0x7b/0x420
+         entry_SYSCALL_64_after_hwframe+0x76/0x7e
+} hitcount:        237  delta:   99756288  <<--------------- Delta is 99 seconds!
+
+Totals:
+    Hits: 525
+    Entries: 21
+    Dropped: 0
+
+This shows that this particular trace waited for 99 seconds on
+synchronize_rcu_tasks() in apply_subsystem_event_filter().
+
+In fact, there's a lot of places in the filter code that spends a lot of
+time waiting for synchronize_rcu_tasks_trace() in order to free the
+filters.
+
+Add helper functions that will use call_rcu*() variants to asynchronously
+free the filters. This brings the timings back to normal:
+
+ # time trace-cmd record -p function sleep 1
+ [..]
+ real	0m14.681s
+ user	0m0.335s
+ sys	0m28.616s
+
+And the histogram also shows this:
+
+~# cat /sys/kernel/tracing/events/synthetic/sched_stack/hist | tail -21
+{ state:          2, stack.stacktrace         __schedule+0x1545/0x3700
+         schedule+0xe2/0x390
+         schedule_timeout+0x175/0x200
+         wait_for_completion_state+0x294/0x440
+         __wait_rcu_gp+0x247/0x4f0
+         synchronize_rcu_normal+0x3db/0x5c0
+         tracing_reset_online_cpus+0x8f/0x1e0
+         tracing_open+0x335/0x440
+         do_dentry_open+0x4c6/0x17a0
+         vfs_open+0x82/0x360
+         path_openat+0x1a36/0x2990
+         do_filp_open+0x1c5/0x420
+         do_sys_openat2+0xed/0x180
+         __x64_sys_openat+0x108/0x1d0
+         do_syscall_64+0x7b/0x420
+} hitcount:          2  delta:      77044
+
+Totals:
+    Hits: 55
+    Entries: 28
+    Dropped: 0
+
+Where the total waiting time of synchronize_rcu_tasks_trace() is 77
+milliseconds.
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Andreas Ziegler <ziegler.andreas@siemens.com>
+Cc: Felix MOESSBAUER <felix.moessbauer@siemens.com>
+Link: https://lore.kernel.org/20250606201936.1e3d09a9@batman.local.home
+Reported-by: "Flot, Julien" <julien.flot@siemens.com>
+Tested-by: Julien Flot <julien.flot@siemens.com>
+Fixes: a363d27cdbc2 ("tracing: Allow system call tracepoints to handle page faults")
+Closes: https://lore.kernel.org/all/240017f656631c7dd4017aa93d91f41f653788ea.camel@siemens.com/
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/tegra/tegra210_ahub.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/trace_events_filter.c |  186 +++++++++++++++++++++++++++----------
+ 1 file changed, 138 insertions(+), 48 deletions(-)
 
-diff --git a/sound/soc/tegra/tegra210_ahub.c b/sound/soc/tegra/tegra210_ahub.c
-index 1920b996e9aad..51043e556b3e9 100644
---- a/sound/soc/tegra/tegra210_ahub.c
-+++ b/sound/soc/tegra/tegra210_ahub.c
-@@ -1359,6 +1359,8 @@ static int tegra_ahub_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -1335,22 +1335,139 @@ static void filter_free_subsystem_preds(
+ 	}
+ }
  
- 	ahub->soc_data = of_device_get_match_data(&pdev->dev);
-+	if (!ahub->soc_data)
-+		return -ENODEV;
++struct filter_list {
++	struct list_head	list;
++	struct event_filter	*filter;
++};
++
++struct filter_head {
++	struct list_head	list;
++	struct rcu_head		rcu;
++};
++
++
++static void free_filter_list(struct rcu_head *rhp)
++{
++	struct filter_head *filter_list = container_of(rhp, struct filter_head, rcu);
++	struct filter_list *filter_item, *tmp;
++
++	list_for_each_entry_safe(filter_item, tmp, &filter_list->list, list) {
++		__free_filter(filter_item->filter);
++		list_del(&filter_item->list);
++		kfree(filter_item);
++	}
++	kfree(filter_list);
++}
++
++static void free_filter_list_tasks(struct rcu_head *rhp)
++{
++	call_rcu(rhp, free_filter_list);
++}
++
++/*
++ * The tracepoint_synchronize_unregister() is a double rcu call.
++ * It calls synchronize_rcu_tasks_trace() followed by synchronize_rcu().
++ * Instead of waiting for it, simply call these via the call_rcu*()
++ * variants.
++ */
++static void delay_free_filter(struct filter_head *head)
++{
++	call_rcu_tasks_trace(&head->rcu, free_filter_list_tasks);
++}
++
++static void try_delay_free_filter(struct event_filter *filter)
++{
++	struct filter_head *head;
++	struct filter_list *item;
++
++	head = kmalloc(sizeof(*head), GFP_KERNEL);
++	if (!head)
++		goto free_now;
++
++	INIT_LIST_HEAD(&head->list);
++
++	item = kmalloc(sizeof(*item), GFP_KERNEL);
++	if (!item) {
++		kfree(head);
++		goto free_now;
++	}
++
++	item->filter = filter;
++	list_add_tail(&item->list, &head->list);
++	delay_free_filter(head);
++	return;
++
++ free_now:
++	/* Make sure the filter is not being used */
++	tracepoint_synchronize_unregister();
++	__free_filter(filter);
++}
++
+ static inline void __free_subsystem_filter(struct trace_event_file *file)
+ {
+ 	__free_filter(file->filter);
+ 	file->filter = NULL;
+ }
  
- 	platform_set_drvdata(pdev, ahub);
++static inline void event_set_filter(struct trace_event_file *file,
++				    struct event_filter *filter)
++{
++	rcu_assign_pointer(file->filter, filter);
++}
++
++static inline void event_clear_filter(struct trace_event_file *file)
++{
++	RCU_INIT_POINTER(file->filter, NULL);
++}
++
+ static void filter_free_subsystem_filters(struct trace_subsystem_dir *dir,
+-					  struct trace_array *tr)
++					  struct trace_array *tr,
++					  struct event_filter *filter)
+ {
+ 	struct trace_event_file *file;
++	struct filter_head *head;
++	struct filter_list *item;
++
++	head = kmalloc(sizeof(*head), GFP_KERNEL);
++	if (!head)
++		goto free_now;
++
++	INIT_LIST_HEAD(&head->list);
++
++	item = kmalloc(sizeof(*item), GFP_KERNEL);
++	if (!item) {
++		kfree(head);
++		goto free_now;
++	}
++
++	item->filter = filter;
++	list_add_tail(&item->list, &head->list);
  
--- 
-2.39.5
-
+ 	list_for_each_entry(file, &tr->events, list) {
+ 		if (file->system != dir)
+ 			continue;
+-		__free_subsystem_filter(file);
++		item = kmalloc(sizeof(*item), GFP_KERNEL);
++		if (!item)
++			goto free_now;
++		item->filter = event_filter(file);
++		list_add_tail(&item->list, &head->list);
++		event_clear_filter(file);
++	}
++
++	delay_free_filter(head);
++	return;
++ free_now:
++	tracepoint_synchronize_unregister();
++
++	if (head)
++		free_filter_list(&head->rcu);
++
++	list_for_each_entry(file, &tr->events, list) {
++		if (file->system != dir || !file->filter)
++			continue;
++		__free_filter(file->filter);
+ 	}
++	__free_filter(filter);
+ }
+ 
+ int filter_assign_type(const char *type)
+@@ -2120,22 +2237,6 @@ static inline void event_set_filtered_fl
+ 		trace_buffered_event_enable();
+ }
+ 
+-static inline void event_set_filter(struct trace_event_file *file,
+-				    struct event_filter *filter)
+-{
+-	rcu_assign_pointer(file->filter, filter);
+-}
+-
+-static inline void event_clear_filter(struct trace_event_file *file)
+-{
+-	RCU_INIT_POINTER(file->filter, NULL);
+-}
+-
+-struct filter_list {
+-	struct list_head	list;
+-	struct event_filter	*filter;
+-};
+-
+ static int process_system_preds(struct trace_subsystem_dir *dir,
+ 				struct trace_array *tr,
+ 				struct filter_parse_error *pe,
+@@ -2144,11 +2245,16 @@ static int process_system_preds(struct t
+ 	struct trace_event_file *file;
+ 	struct filter_list *filter_item;
+ 	struct event_filter *filter = NULL;
+-	struct filter_list *tmp;
+-	LIST_HEAD(filter_list);
++	struct filter_head *filter_list;
+ 	bool fail = true;
+ 	int err;
+ 
++	filter_list = kmalloc(sizeof(*filter_list), GFP_KERNEL);
++	if (!filter_list)
++		return -ENOMEM;
++
++	INIT_LIST_HEAD(&filter_list->list);
++
+ 	list_for_each_entry(file, &tr->events, list) {
+ 
+ 		if (file->system != dir)
+@@ -2175,7 +2281,7 @@ static int process_system_preds(struct t
+ 		if (!filter_item)
+ 			goto fail_mem;
+ 
+-		list_add_tail(&filter_item->list, &filter_list);
++		list_add_tail(&filter_item->list, &filter_list->list);
+ 		/*
+ 		 * Regardless of if this returned an error, we still
+ 		 * replace the filter for the call.
+@@ -2195,31 +2301,22 @@ static int process_system_preds(struct t
+ 	 * Do a synchronize_rcu() and to ensure all calls are
+ 	 * done with them before we free them.
+ 	 */
+-	tracepoint_synchronize_unregister();
+-	list_for_each_entry_safe(filter_item, tmp, &filter_list, list) {
+-		__free_filter(filter_item->filter);
+-		list_del(&filter_item->list);
+-		kfree(filter_item);
+-	}
++	delay_free_filter(filter_list);
+ 	return 0;
+  fail:
+ 	/* No call succeeded */
+-	list_for_each_entry_safe(filter_item, tmp, &filter_list, list) {
+-		list_del(&filter_item->list);
+-		kfree(filter_item);
+-	}
++	free_filter_list(&filter_list->rcu);
+ 	parse_error(pe, FILT_ERR_BAD_SUBSYS_FILTER, 0);
+ 	return -EINVAL;
+  fail_mem:
+ 	__free_filter(filter);
++
+ 	/* If any call succeeded, we still need to sync */
+ 	if (!fail)
+-		tracepoint_synchronize_unregister();
+-	list_for_each_entry_safe(filter_item, tmp, &filter_list, list) {
+-		__free_filter(filter_item->filter);
+-		list_del(&filter_item->list);
+-		kfree(filter_item);
+-	}
++		delay_free_filter(filter_list);
++	else
++		free_filter_list(&filter_list->rcu);
++
+ 	return -ENOMEM;
+ }
+ 
+@@ -2361,9 +2458,7 @@ int apply_event_filter(struct trace_even
+ 
+ 		event_clear_filter(file);
+ 
+-		/* Make sure the filter is not being used */
+-		tracepoint_synchronize_unregister();
+-		__free_filter(filter);
++		try_delay_free_filter(filter);
+ 
+ 		return 0;
+ 	}
+@@ -2387,11 +2482,8 @@ int apply_event_filter(struct trace_even
+ 
+ 		event_set_filter(file, filter);
+ 
+-		if (tmp) {
+-			/* Make sure the call is done with the filter */
+-			tracepoint_synchronize_unregister();
+-			__free_filter(tmp);
+-		}
++		if (tmp)
++			try_delay_free_filter(tmp);
+ 	}
+ 
+ 	return err;
+@@ -2417,9 +2509,7 @@ int apply_subsystem_event_filter(struct
+ 		filter = system->filter;
+ 		system->filter = NULL;
+ 		/* Ensure all filters are no longer used */
+-		tracepoint_synchronize_unregister();
+-		filter_free_subsystem_filters(dir, tr);
+-		__free_filter(filter);
++		filter_free_subsystem_filters(dir, tr, filter);
+ 		return 0;
+ 	}
+ 
 
 
