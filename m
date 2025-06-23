@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F041F7580;
-	Mon, 23 Jun 2025 22:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18EF11FC0E3;
+	Mon, 23 Jun 2025 22:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716563; cv=none; b=U6cf/8vyeL5Ej+rWR/JCLrX2itLAYW0Wco/GJSr6jLd4P7TLl/HMjzZQk1RzvO9iXtAxitb5nwRot4DVv9HSsGA8QIHp2yTDNzmSF2PjTgONO4+QHgbO/2BC+lK22fmbHdYb7wZ2DzT7YvvIgpOKoQXOWeb5VRO1IA5EAG8Hc8M=
+	t=1750716564; cv=none; b=eo/Ydw8vOUZDd2FRjfPxNfeRmy+lwnucpItAJJKeNId2CVMMFCTRBUnkA4vahsZhCNz06FgOFgsYDhu/HBXJ73hi76+K2z/hRgNfhmuAdn8HuHCPDH5Sys3diUb2vXGgw02pSRRR6QvS7a1JzyMDrzZ01lRAUCYdWm0B2ofvsHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716563; c=relaxed/simple;
-	bh=oGPFw4EiPXTdvdB1XN/8FvIh+QczlHy59gMnjihVoDg=;
+	s=arc-20240116; t=1750716564; c=relaxed/simple;
+	bh=8ciigWhWOj8bz3bpQBAicJ6slVOjzhHYE8Q+qMwO9R8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rt5Ndl80MaPCk+4bbIaGsir6n1M845clN9Ly99Vy54dg090/aMWosCKDeFmDjpptV5WSKufU471m0XBzr+lKorSGq1ZujEuG0ltNgPK1w2Mk3voLLn203RtCcOilLu1L8Mh+29imvWiwgX51CuHBWul4V0oNRCaKxKJt4LdAIl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1X2TqRa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pmevC83+S+DCPIC0++Y6M7wwZN3UChLrh4FfdYv17W4pFCe2AsYhhGHI++Po7v+iSGsSjfLml6Haka5WHQnHH12dV9xZ1cnYi57j+Bbv6dS6++Mc+0I4NiQLtnmYhPPTb3ylSYrGPS9F0hR6dP7q4twkRQ0nIRbVd/3pOfq/SKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQ3681j5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1X2TqRa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE3EC4CEEA;
-	Mon, 23 Jun 2025 22:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQ3681j5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7AA6C4CEF1;
+	Mon, 23 Jun 2025 22:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716561;
-	bh=oGPFw4EiPXTdvdB1XN/8FvIh+QczlHy59gMnjihVoDg=;
+	s=korg; t=1750716564;
+	bh=8ciigWhWOj8bz3bpQBAicJ6slVOjzhHYE8Q+qMwO9R8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1X2TqRaKDMxRRDeGdoALMQi3UqPUnrfoKJNXK8U8vdG/birjYxUGr/rlvcNXiwru
-	 3vQzx5s9moZ/l9mh0/c5PEKD2q4cAIk9NlrB5tRhosr3X/tMf2wxBe0YstQqiTWKFL
-	 xhtB4yrgTRGMybN7cLfZu5+WEP3F02pd1SlreHlc=
+	b=JQ3681j5uP5AKQIsj4oBed8TKDdc3vJO5zfQnL9hk7JuNAnj6Mf4uhu2fngXmvB2j
+	 GZKdmSYrKl9WLrPCTGf8OQGERpQ551H9Wh66GAESJREhT5LnyfY5Ng0pM5Y4neu+i0
+	 nhKH+Js6dPBgv6UWY5GPGDZFigphJrY3uJlZZyJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8a583bdd1a5cc0b0e068@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 538/592] mpls: Use rcu_dereference_rtnl() in mpls_route_input_rcu().
-Date: Mon, 23 Jun 2025 15:08:16 +0200
-Message-ID: <20250623130713.233401694@linuxfoundation.org>
+	Tony Lindgren <tony@atomide.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Andreas Kemnade <andreas@kemnade.info>
+Subject: [PATCH 5.15 341/411] Revert "bus: ti-sysc: Probe for l4_wkup and l4_cfg interconnect devices first"
+Date: Mon, 23 Jun 2025 15:08:05 +0200
+Message-ID: <20250623130642.233966566@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,97 +49,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit 6dbb0d97c5096072c78a6abffe393584e57ae945 ]
+[ Upstream commit 36305857b1ead8f6ca033a913162ebc09bee0b43 ]
 
-As syzbot reported [0], mpls_route_input_rcu() can be called
-from mpls_getroute(), where is under RTNL.
+This reverts commit 4700a00755fb5a4bb5109128297d6fd2d1272ee6.
 
-net->mpls.platform_label is only updated under RTNL.
+It breaks target-module@2b300050 ("ti,sysc-omap2") probe on AM62x in a case
+when minimally-configured system tries to network-boot:
 
-Let's use rcu_dereference_rtnl() in mpls_route_input_rcu() to
-silence the splat.
+[    6.888776] probe of 2b300050.target-module returned 517 after 258 usecs
+[   17.129637] probe of 2b300050.target-module returned 517 after 708 usecs
+[   17.137397] platform 2b300050.target-module: deferred probe pending: (reason unknown)
+[   26.878471] Waiting up to 100 more seconds for network.
 
-[0]:
-WARNING: suspicious RCU usage
-6.15.0-rc7-syzkaller-00082-g5cdb2c77c4c3 #0 Not tainted
- ----------------------------
-net/mpls/af_mpls.c:84 suspicious rcu_dereference_check() usage!
+There are minimal configurations possible when the deferred device is not
+being probed any more (because everything else has been successfully
+probed) and deferral lists are not processed any more.
 
-other info that might help us debug this:
+Stable mmc enumeration can be achieved by filling /aliases node properly
+(4700a00755fb commit's rationale).
 
-rcu_scheduler_active = 2, debug_locks = 1
-1 lock held by syz.2.4451/17730:
- #0: ffffffff9012a3e8 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_lock net/core/rtnetlink.c:80 [inline]
- #0: ffffffff9012a3e8 (rtnl_mutex){+.+.}-{4:4}, at: rtnetlink_rcv_msg+0x371/0xe90 net/core/rtnetlink.c:6961
+After revert:
 
-stack backtrace:
-CPU: 1 UID: 0 PID: 17730 Comm: syz.2.4451 Not tainted 6.15.0-rc7-syzkaller-00082-g5cdb2c77c4c3 #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
- lockdep_rcu_suspicious+0x166/0x260 kernel/locking/lockdep.c:6865
- mpls_route_input_rcu+0x1d4/0x200 net/mpls/af_mpls.c:84
- mpls_getroute+0x621/0x1ea0 net/mpls/af_mpls.c:2381
- rtnetlink_rcv_msg+0x3c9/0xe90 net/core/rtnetlink.c:6964
- netlink_rcv_skb+0x16d/0x440 net/netlink/af_netlink.c:2534
- netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
- netlink_unicast+0x53a/0x7f0 net/netlink/af_netlink.c:1339
- netlink_sendmsg+0x8d1/0xdd0 net/netlink/af_netlink.c:1883
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg net/socket.c:727 [inline]
- ____sys_sendmsg+0xa98/0xc70 net/socket.c:2566
- ___sys_sendmsg+0x134/0x1d0 net/socket.c:2620
- __sys_sendmmsg+0x200/0x420 net/socket.c:2709
- __do_sys_sendmmsg net/socket.c:2736 [inline]
- __se_sys_sendmmsg net/socket.c:2733 [inline]
- __x64_sys_sendmmsg+0x9c/0x100 net/socket.c:2733
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x230 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f0a2818e969
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f0a28f52038 EFLAGS: 00000246 ORIG_RAX: 0000000000000133
-RAX: ffffffffffffffda RBX: 00007f0a283b5fa0 RCX: 00007f0a2818e969
-RDX: 0000000000000003 RSI: 0000200000000080 RDI: 0000000000000003
-RBP: 00007f0a28210ab1 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000000 R14: 00007f0a283b5fa0 R15: 00007ffce5e9f268
- </TASK>
+[    9.006816] IP-Config: Complete:
+[    9.010058]      device=lan0, ...
 
-Fixes: 0189197f4416 ("mpls: Basic routing support")
-Reported-by: syzbot+8a583bdd1a5cc0b0e068@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68507981.a70a0220.395abc.01ef.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250616201532.1036568-1-kuni1840@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Andreas Kemnade <andreas@kemnade.info> # GTA04, Panda, BT200
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20250401090643.2776793-1-alexander.sverdlin@siemens.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mpls/af_mpls.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bus/ti-sysc.c | 49 -------------------------------------------
+ 1 file changed, 49 deletions(-)
 
-diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index 1f63b32d76d67..aab2e79fcff04 100644
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -81,8 +81,8 @@ static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned index)
- 
- 	if (index < net->mpls.platform_labels) {
- 		struct mpls_route __rcu **platform_label =
--			rcu_dereference(net->mpls.platform_label);
--		rt = rcu_dereference(platform_label[index]);
-+			rcu_dereference_rtnl(net->mpls.platform_label);
-+		rt = rcu_dereference_rtnl(platform_label[index]);
- 	}
- 	return rt;
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 05ae577758539..20e0907234855 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -687,51 +687,6 @@ static int sysc_parse_and_check_child_range(struct sysc *ddata)
+ 	return 0;
  }
+ 
+-/* Interconnect instances to probe before l4_per instances */
+-static struct resource early_bus_ranges[] = {
+-	/* am3/4 l4_wkup */
+-	{ .start = 0x44c00000, .end = 0x44c00000 + 0x300000, },
+-	/* omap4/5 and dra7 l4_cfg */
+-	{ .start = 0x4a000000, .end = 0x4a000000 + 0x300000, },
+-	/* omap4 l4_wkup */
+-	{ .start = 0x4a300000, .end = 0x4a300000 + 0x30000,  },
+-	/* omap5 and dra7 l4_wkup without dra7 dcan segment */
+-	{ .start = 0x4ae00000, .end = 0x4ae00000 + 0x30000,  },
+-};
+-
+-static atomic_t sysc_defer = ATOMIC_INIT(10);
+-
+-/**
+- * sysc_defer_non_critical - defer non_critical interconnect probing
+- * @ddata: device driver data
+- *
+- * We want to probe l4_cfg and l4_wkup interconnect instances before any
+- * l4_per instances as l4_per instances depend on resources on l4_cfg and
+- * l4_wkup interconnects.
+- */
+-static int sysc_defer_non_critical(struct sysc *ddata)
+-{
+-	struct resource *res;
+-	int i;
+-
+-	if (!atomic_read(&sysc_defer))
+-		return 0;
+-
+-	for (i = 0; i < ARRAY_SIZE(early_bus_ranges); i++) {
+-		res = &early_bus_ranges[i];
+-		if (ddata->module_pa >= res->start &&
+-		    ddata->module_pa <= res->end) {
+-			atomic_set(&sysc_defer, 0);
+-
+-			return 0;
+-		}
+-	}
+-
+-	atomic_dec_if_positive(&sysc_defer);
+-
+-	return -EPROBE_DEFER;
+-}
+-
+ static struct device_node *stdout_path;
+ 
+ static void sysc_init_stdout_path(struct sysc *ddata)
+@@ -957,10 +912,6 @@ static int sysc_map_and_check_registers(struct sysc *ddata)
+ 	if (error)
+ 		return error;
+ 
+-	error = sysc_defer_non_critical(ddata);
+-	if (error)
+-		return error;
+-
+ 	sysc_check_children(ddata);
+ 
+ 	if (!of_get_property(np, "reg", NULL))
 -- 
 2.39.5
 
