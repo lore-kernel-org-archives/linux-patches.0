@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFF41E8324;
-	Mon, 23 Jun 2025 21:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8D01DF98B;
+	Mon, 23 Jun 2025 21:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713292; cv=none; b=YuIINQCc63xXlJgmgMDzMeFCDKPV0XeG3LpdgzpxV+kW+yyHG/fD/TGswcTfZLtd4+TIu2DHTCEXvtsB4yLaGfH+9Usx+R0smS4aE98rs7t8oQuGZ5JVrs5QIdshgBk37WKhV6UEBfhgcsz2iOtIsoW/qV9v01UukosoLMsVwVc=
+	t=1750713295; cv=none; b=dRBaYyBhyKCpOjsxkWGo4TAf0ntd+nXpLRVOMQ6L04wS9dMStFr7XLlG1i61sy7IgX1gVhnTwSVqYuAu3donM61AP35pA3HXzJndCNPSIsmMl8nE5A6rlEt9C/vjVGtd63K7OI007iIcQcf87ZIFEextGRQLNgVLt2I1NVZqOnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713292; c=relaxed/simple;
-	bh=mTnX5VS75AeswuduYWYCWoiv/suq0mPi83EJX75w9a8=;
+	s=arc-20240116; t=1750713295; c=relaxed/simple;
+	bh=W2IMrvAhIw6PRIU1quIoLnScn17fgYrMqiSTILdMRd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RLKV/BW4IQtf2Q9a/FcuOXPv738Ykhn3swWVVx6lXCoh9yGNlpyCglt+mlysiEbRqvGjc0yDuJGn8RVIPBOVajwzjdqQ/OkCu/YmJ2743xcI3e5HZDeWEGroZ4LMmseCQSwIlBCFodcKcRpF9C5Po4mB+Kw2ik/fW1Qc+vDMQR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wThWyH8V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TK4q8JQW9PTClOSPO8yfpXPPlCKZQiAwx/gmm2T1Ji76lUCmPAu9r0MR/ZMBMrPgsMbyi9pMIPFj6OOuDZr8fvEreLi+hEkfx1NA4ST/NLm12PNGfD8R4U0dOubKbXTQY0+vsrcKqmkeoTe9PUxUOFa6TFN+yu3yFsEpvrkOEWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYUOUYTo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wThWyH8V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4558DC4CEEA;
-	Mon, 23 Jun 2025 21:14:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYUOUYTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1E3C4CEEA;
+	Mon, 23 Jun 2025 21:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713292;
-	bh=mTnX5VS75AeswuduYWYCWoiv/suq0mPi83EJX75w9a8=;
+	s=korg; t=1750713295;
+	bh=W2IMrvAhIw6PRIU1quIoLnScn17fgYrMqiSTILdMRd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wThWyH8VjpfCH8QN/ninN51dxZfsD2dSQvdkC0YuKNHGTObFeHbS9woJ0nG90Jw/P
-	 HKeXLRM4BlCEMWKs0Jh/qtsHvS5p+IYbPv9AGtLX1Y1uWgO6Q7cGcv6lxTY53BpVO8
-	 EgvqNG2IoMtYogZvHJdKz9+RCvcA2frAWY23gxWM=
+	b=BYUOUYToqnezMWlaGvT14EbSRNnHW7CT3iJYpKvw6WY9wN+I0zD3HXlgBP1PoEadx
+	 WVjVtla+7MgaEhGfjwybKB1WYBpRCKC4k7yBGb1YRu+lpe2X0iVUyqpYb538r5hTWZ
+	 JLPk5NZvDTWuSoumsPF03IBn2jFJToRH7cqZF1s4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanqing Wang <ot_yanqing.wang@mediatek.com>,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	Biao Huang <biao.huang@mediatek.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Eric Dumazet <edumazet@google.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 115/411] driver: net: ethernet: mtk_star_emac: fix suspend/resume issue
-Date: Mon, 23 Jun 2025 15:04:19 +0200
-Message-ID: <20250623130636.430368097@linuxfoundation.org>
+Subject: [PATCH 5.10 136/355] net_sched: tbf: fix a race in tbf_change()
+Date: Mon, 23 Jun 2025 15:05:37 +0200
+Message-ID: <20250623130630.817107728@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,55 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yanqing Wang <ot_yanqing.wang@mediatek.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ba99c627aac85bc746fb4a6e2d79edb3ad100326 ]
+[ Upstream commit 43eb466041216d25dedaef1c383ad7bd89929cbc ]
 
-Identify the cause of the suspend/resume hang: netif_carrier_off()
-is called during link state changes and becomes stuck while
-executing linkwatch_work().
+Gerrard Tai reported a race condition in TBF, whenever SFQ perturb timer
+fires at the wrong time.
 
-To resolve this issue, call netif_device_detach() during the Ethernet
-suspend process to temporarily detach the network device from the
-kernel and prevent the suspend/resume hang.
+The race is as follows:
 
-Fixes: 8c7bd5a454ff ("net: ethernet: mtk-star-emac: new driver")
-Signed-off-by: Yanqing Wang <ot_yanqing.wang@mediatek.com>
-Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Signed-off-by: Biao Huang <biao.huang@mediatek.com>
-Link: https://patch.msgid.link/20250528075351.593068-1-macpaul.lin@mediatek.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+CPU 0                                 CPU 1
+[1]: lock root
+[2]: qdisc_tree_flush_backlog()
+[3]: unlock root
+ |
+ |                                    [5]: lock root
+ |                                    [6]: rehash
+ |                                    [7]: qdisc_tree_reduce_backlog()
+ |
+[4]: qdisc_put()
+
+This can be abused to underflow a parent's qlen.
+
+Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
+should fix the race, because all packets will be purged from the qdisc
+before releasing the lock.
+
+Fixes: b05972f01e7d ("net: sched: tbf: don't call qdisc_put() while holding tree lock")
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://patch.msgid.link/20250611111515.1983366-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_star_emac.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/sched/sch_tbf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
-index 639cf1c27dbd4..e336730ba1257 100644
---- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
-+++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
-@@ -1464,6 +1464,8 @@ static __maybe_unused int mtk_star_suspend(struct device *dev)
- 	if (netif_running(ndev))
- 		mtk_star_disable(ndev);
+diff --git a/net/sched/sch_tbf.c b/net/sched/sch_tbf.c
+index 5f50fdeaafa8d..411970dc07f74 100644
+--- a/net/sched/sch_tbf.c
++++ b/net/sched/sch_tbf.c
+@@ -437,7 +437,7 @@ static int tbf_change(struct Qdisc *sch, struct nlattr *opt,
  
-+	netif_device_detach(ndev);
-+
- 	clk_bulk_disable_unprepare(MTK_STAR_NCLKS, priv->clks);
- 
- 	return 0;
-@@ -1488,6 +1490,8 @@ static __maybe_unused int mtk_star_resume(struct device *dev)
- 			clk_bulk_disable_unprepare(MTK_STAR_NCLKS, priv->clks);
+ 	sch_tree_lock(sch);
+ 	if (child) {
+-		qdisc_tree_flush_backlog(q->qdisc);
++		qdisc_purge_queue(q->qdisc);
+ 		old = q->qdisc;
+ 		q->qdisc = child;
  	}
- 
-+	netif_device_attach(ndev);
-+
- 	return ret;
- }
- 
 -- 
 2.39.5
 
