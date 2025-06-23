@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392FF248191;
-	Mon, 23 Jun 2025 13:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85E72517AF;
+	Mon, 23 Jun 2025 13:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685178; cv=none; b=gN9coa7D8LwXi+nl8hRka9NtaeO4hKGNE79Sw1WPuAGrdxtGk5xd78l10S/gE4Mt9WANHuNYDw3jm7EzrEaPJt8J3XqaVyaDR3YalZn8OFUJ/w/tjxF6ccEEASM+4Wzx++JLoPqZKU1gBpVD0aVswBmQtVEVeE4SGBPSXewChWs=
+	t=1750685180; cv=none; b=oS35ym4xPxzYqzR5xVPEICGoW4lpmNUqef3lRlPCfdZr6JA5XEhaWiEbjSTAcJRs6hzEcnScQ2sKcQkl1oqtghg2qGuauuiOV8a6kA7Y0ORPSBfPuCaXa2UTntdgk8ukCAv2+35+HMThM8gOrDuZFSrU5wsHhzgThn+rxXVXG3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685178; c=relaxed/simple;
-	bh=lH1Q7cB1jUoGVUP47LP/eO1zC988DzIQoXHeDscEy1M=;
+	s=arc-20240116; t=1750685180; c=relaxed/simple;
+	bh=ut+yHLwr/F+Tv6jgujG2AZj3UYok27ElMkJ1qkSbkEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DDIJF9cyYqpgP5QerODLCnPkViXcu4Bh7zDjQuNz+XJi7BQYPYJWXKsjr4UHJZrdvQZUUtAKencNAnA9XtIVfnptaHlMQrbWnUBVy+zRE7pRMD3Ct5fa2fHIKJZ2ThgnVOYRO9raID3+mMZ/RH/oZVYXa7uA4eoHCtiytnzuskc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuvuOwLq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uOS2ZtoUsA0RsPKK/4cPh0yopLkt2xEBc3Egb+It9AdI5a9upHg5lUG5IVDs4bG822qqyTiGltyf3x0/yYuMZ1nm50kpohpDqdnvsKN/lGGdLnAJbnpQib8SV9ezg7/KsFn8L/vmTpsBFSWfbolXykl3MJHsnmE2mEy24ib8nu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKEGtVw+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuvuOwLq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F38C4CEF0;
-	Mon, 23 Jun 2025 13:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKEGtVw+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7BFC4CEEA;
+	Mon, 23 Jun 2025 13:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685178;
-	bh=lH1Q7cB1jUoGVUP47LP/eO1zC988DzIQoXHeDscEy1M=;
+	s=korg; t=1750685180;
+	bh=ut+yHLwr/F+Tv6jgujG2AZj3UYok27ElMkJ1qkSbkEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZuvuOwLq56S9df7AuPQ0UsFKYmstHeqySxEdXsZH/RP3dhVIC/GGa86sEuMNJbsmc
-	 clBaA+vo03faQ4xedhY9QPVdZlgOBF875OnsRg7weE1UTe+SjeJg/PQMJDjJwlcFYe
-	 tPzI/cLhAsIWIDsxS3ya4pumwk03Pgc9mhyIEGKQ=
+	b=WKEGtVw+7QgktMpyN5VCXkojigFrA+qqLP4yiuRIZSBhgiAGQuUg8K+EtipS5TRle
+	 QRNuDnuIBkKGRWRQQOt7+lVMJxAERNjVFlIvymjZ4+ZoE9GEuo+3wj7ML4ewdbo/Lt
+	 ktAGYDMvnSKeBwPQNRQxqR2Dz4bFtRw/9D00JNgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 032/355] drm/tegra: rgb: Fix the unbound reference count
-Date: Mon, 23 Jun 2025 15:03:53 +0200
-Message-ID: <20250623130627.776519244@linuxfoundation.org>
+Subject: [PATCH 5.4 072/222] pmdomain: core: Fix error checking in genpd_dev_pm_attach_by_id()
+Date: Mon, 23 Jun 2025 15:06:47 +0200
+Message-ID: <20250623130614.268710150@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 3c3642335065c3bde0742b0edc505b6ea8fdc2b3 ]
+[ Upstream commit 0f5757667ec0aaf2456c3b76fcf0c6c3ea3591fe ]
 
-The of_get_child_by_name() increments the refcount in tegra_dc_rgb_probe,
-but the driver does not decrement the refcount during unbind. Fix the
-unbound reference count using devm_add_action_or_reset() helper.
+The error checking for of_count_phandle_with_args() does not handle
+negative error codes correctly.  The problem is that "index" is a u32 so
+in the condition "if (index >= num_domains)" negative error codes stored
+in "num_domains" are type promoted to very high positive values and
+"index" is always going to be valid.
 
-Fixes: d8f4a9eda006 ("drm: Add NVIDIA Tegra20 support")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20250205112137.36055-1-biju.das.jz@bp.renesas.com
+Test for negative error codes first and then test if "index" is valid.
+
+Fixes: 3ccf3f0cd197 ("PM / Domains: Enable genpd_dev_pm_attach_by_id|name() for single PM domain")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/aBxPQ8AI8N5v-7rL@stanley.mountain
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/rgb.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/base/power/domain.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/tegra/rgb.c b/drivers/gpu/drm/tegra/rgb.c
-index 4142a56ca7644..a3052f645c473 100644
---- a/drivers/gpu/drm/tegra/rgb.c
-+++ b/drivers/gpu/drm/tegra/rgb.c
-@@ -170,6 +170,11 @@ static const struct drm_encoder_helper_funcs tegra_rgb_encoder_helper_funcs = {
- 	.atomic_check = tegra_rgb_encoder_atomic_check,
- };
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index eed4c865a4bf8..2ccd0c8003e24 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -2509,7 +2509,7 @@ struct device *genpd_dev_pm_attach_by_id(struct device *dev,
+ 	/* Verify that the index is within a valid range. */
+ 	num_domains = of_count_phandle_with_args(dev->of_node, "power-domains",
+ 						 "#power-domain-cells");
+-	if (index >= num_domains)
++	if (num_domains < 0 || index >= num_domains)
+ 		return NULL;
  
-+static void tegra_dc_of_node_put(void *data)
-+{
-+	of_node_put(data);
-+}
-+
- int tegra_dc_rgb_probe(struct tegra_dc *dc)
- {
- 	struct device_node *np;
-@@ -177,7 +182,14 @@ int tegra_dc_rgb_probe(struct tegra_dc *dc)
- 	int err;
- 
- 	np = of_get_child_by_name(dc->dev->of_node, "rgb");
--	if (!np || !of_device_is_available(np))
-+	if (!np)
-+		return -ENODEV;
-+
-+	err = devm_add_action_or_reset(dc->dev, tegra_dc_of_node_put, np);
-+	if (err < 0)
-+		return err;
-+
-+	if (!of_device_is_available(np))
- 		return -ENODEV;
- 
- 	rgb = devm_kzalloc(dc->dev, sizeof(*rgb), GFP_KERNEL);
+ 	/* Allocate and register device on the genpd bus. */
 -- 
 2.39.5
 
