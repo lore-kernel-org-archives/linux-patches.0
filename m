@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED88221DBD;
-	Mon, 23 Jun 2025 21:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0C52222DA;
+	Mon, 23 Jun 2025 21:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713121; cv=none; b=HPq8H95NHeYkDaf7OQs7QxUgiY8KNUJE9NL+8gYIV2hc9H3rqxsepmSyf1b64pbfcHl8QCduFet/WrksXb8AJGBH6x6zNG6sAfYiPSp8Fnq3Vd+TPWwLkHP48DCFymoeUOl2MxLS/PX6uFrCCk6UvlPDwkH7nUJcug2HNdo6Tis=
+	t=1750713123; cv=none; b=RGVNezCbX134lJZJomaF8y+GEte6Qgbs/WgroD6Mv6Cv6eosVy/JUVHIzKhNeUOanpvPcwt4gAVBbpRvNsDQi1QDAfdyRguMQnwEW92giqzD9RF0uQrEwqXYwYLkbqwRVV87kJ5xe46XUaGkhvzsWJ/tBszinKCFZJufOoYjGLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713121; c=relaxed/simple;
-	bh=IUweiyndjZKi56cDYhwCMtgEtoBujf4njWWugTxl+do=;
+	s=arc-20240116; t=1750713123; c=relaxed/simple;
+	bh=zDo9SkfoNGF03dC2mtxqiEhfsei2HhH9S6ylTIAHa1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o89tufNJk1RT0Gd1hGYSLr9lY+N9W2etkSvpus8QAXZ+8neU82aYNXdWKkzThyKpW66jlqjmrvBLa8wGUj/wVB7iszHYElXmeaHuCbizMTy+ODlCZPeFGtZZ13hfVODDwYKfSz5kJBsxdAZXzQH9y2Y1xhRG0Vtnhmse6ILILLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAizX2hD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pi3G9SeOUFmIoX+0ibaWmOlVrPRxZrIYNqfGYDRL3rDDe6RiVsB1+p0SwFKxqsTlSgirekBwQbh3khGhUbrVnDZlIi3/rkRb8mvjNbZyJvxLirTY9ZoiwdWtxniAUTlYJbuhOzLdzVTUbLQd1GE+NmgBgHmXe+tPpUl30wvNyso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppr6+smm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAizX2hD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910D8C4CEEA;
-	Mon, 23 Jun 2025 21:12:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppr6+smm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0964EC4CEEA;
+	Mon, 23 Jun 2025 21:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713120;
-	bh=IUweiyndjZKi56cDYhwCMtgEtoBujf4njWWugTxl+do=;
+	s=korg; t=1750713123;
+	bh=zDo9SkfoNGF03dC2mtxqiEhfsei2HhH9S6ylTIAHa1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAizX2hDVp9bz1NkJOwEg1w6rL/OzFM0F34aoEjWXl5xx1outtznvOaPpMfpeCI0m
-	 Ir5MFnyV0ikGEjchl5z0G3gJjZ+au0IZbqLEoVhkX98V2/SkeMysimCGKJlq7rCRtr
-	 aHWtQyMP3QASdGAEFInP+7LzyHchtY/WwGfkcjj4=
+	b=ppr6+smmOJcZmu6og2w6PXjCjooDLD4zltH43qLPQXOVmL+g9rxUfj6GjKOmcDFAM
+	 N+jz2L99QDRzSrFm+nlovP5GGcmhuRbQeTR3yYa9yEydInTPQPEVCIgVTC4S+eEFwy
+	 Fdh8BLq4Rzy9m9JiTvcvP319xC4loh0OxscPINE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Malat <oss@malat.biz>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 329/592] sctp: Do not wake readers in __sctp_write_space()
-Date: Mon, 23 Jun 2025 15:04:47 +0200
-Message-ID: <20250623130708.282928653@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 5.4 189/222] jffs2: check jffs2_prealloc_raw_node_refs() result in few other places
+Date: Mon, 23 Jun 2025 15:08:44 +0200
+Message-ID: <20250623130617.916207420@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +47,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Malat <oss@malat.biz>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit af295892a7abbf05a3c2ba7abc4d81bb448623d6 ]
+commit 2b6d96503255a3ed676cd70f8368870c6d6a25c6 upstream.
 
-Function __sctp_write_space() doesn't set poll key, which leads to
-ep_poll_callback() waking up all waiters, not only these waiting
-for the socket being writable. Set the key properly using
-wake_up_interruptible_poll(), which is preferred over the sync
-variant, as writers are not woken up before at least half of the
-queue is available. Also, TCP does the same.
+Fuzzing hit another invalid pointer dereference due to the lack of
+checking whether jffs2_prealloc_raw_node_refs() completed successfully.
+Subsequent logic implies that the node refs have been allocated.
 
-Signed-off-by: Petr Malat <oss@malat.biz>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250516081727.1361451-1-oss@malat.biz
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Handle that. The code is ready for propagating the error upwards.
+
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 1 PID: 5835 Comm: syz-executor145 Not tainted 5.10.234-syzkaller #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+RIP: 0010:jffs2_link_node_ref+0xac/0x690 fs/jffs2/nodelist.c:600
+Call Trace:
+ jffs2_mark_erased_block fs/jffs2/erase.c:460 [inline]
+ jffs2_erase_pending_blocks+0x688/0x1860 fs/jffs2/erase.c:118
+ jffs2_garbage_collect_pass+0x638/0x1a00 fs/jffs2/gc.c:253
+ jffs2_reserve_space+0x3f4/0xad0 fs/jffs2/nodemgmt.c:167
+ jffs2_write_inode_range+0x246/0xb50 fs/jffs2/write.c:362
+ jffs2_write_end+0x712/0x1110 fs/jffs2/file.c:302
+ generic_perform_write+0x2c2/0x500 mm/filemap.c:3347
+ __generic_file_write_iter+0x252/0x610 mm/filemap.c:3465
+ generic_file_write_iter+0xdb/0x230 mm/filemap.c:3497
+ call_write_iter include/linux/fs.h:2039 [inline]
+ do_iter_readv_writev+0x46d/0x750 fs/read_write.c:740
+ do_iter_write+0x18c/0x710 fs/read_write.c:866
+ vfs_writev+0x1db/0x6a0 fs/read_write.c:939
+ do_pwritev fs/read_write.c:1036 [inline]
+ __do_sys_pwritev fs/read_write.c:1083 [inline]
+ __se_sys_pwritev fs/read_write.c:1078 [inline]
+ __x64_sys_pwritev+0x235/0x310 fs/read_write.c:1078
+ do_syscall_64+0x30/0x40 arch/x86/entry/common.c:46
+ entry_SYSCALL_64_after_hwframe+0x67/0xd1
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 2f785402f39b ("[JFFS2] Reduce visibility of raw_node_ref to upper layers of JFFS2 code.")
+Fixes: f560928baa60 ("[JFFS2] Allocate node_ref for wasted space when skipping to page boundary")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/socket.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/jffs2/erase.c |    4 +++-
+ fs/jffs2/scan.c  |    4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 53725ee7ba06d..b301d64d9d80f 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -9100,7 +9100,8 @@ static void __sctp_write_space(struct sctp_association *asoc)
- 		wq = rcu_dereference(sk->sk_wq);
- 		if (wq) {
- 			if (waitqueue_active(&wq->wait))
--				wake_up_interruptible(&wq->wait);
-+				wake_up_interruptible_poll(&wq->wait, EPOLLOUT |
-+						EPOLLWRNORM | EPOLLWRBAND);
+--- a/fs/jffs2/erase.c
++++ b/fs/jffs2/erase.c
+@@ -427,7 +427,9 @@ static void jffs2_mark_erased_block(stru
+ 			.totlen =	cpu_to_je32(c->cleanmarker_size)
+ 		};
  
- 			/* Note that we try to include the Async I/O support
- 			 * here by modeling from the current TCP/UDP code.
--- 
-2.39.5
-
+-		jffs2_prealloc_raw_node_refs(c, jeb, 1);
++		ret = jffs2_prealloc_raw_node_refs(c, jeb, 1);
++		if (ret)
++			goto filebad;
+ 
+ 		marker.hdr_crc = cpu_to_je32(crc32(0, &marker, sizeof(struct jffs2_unknown_node)-4));
+ 
+--- a/fs/jffs2/scan.c
++++ b/fs/jffs2/scan.c
+@@ -256,7 +256,9 @@ int jffs2_scan_medium(struct jffs2_sb_in
+ 
+ 		jffs2_dbg(1, "%s(): Skipping %d bytes in nextblock to ensure page alignment\n",
+ 			  __func__, skip);
+-		jffs2_prealloc_raw_node_refs(c, c->nextblock, 1);
++		ret = jffs2_prealloc_raw_node_refs(c, c->nextblock, 1);
++		if (ret)
++			goto out;
+ 		jffs2_scan_dirty_space(c, c->nextblock, skip);
+ 	}
+ #endif
 
 
