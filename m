@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15EB25291F;
-	Mon, 23 Jun 2025 13:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857ED16419;
+	Mon, 23 Jun 2025 13:38:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685898; cv=none; b=P6NCoX3w05vxMllASEigiLoAISxQSihdVuvDZb+Dh4mpXP/vTf9ZTJbqg6L13xj5Buggqff5x7IKUq2jT/8oGJq2yT0AC9WCJ6EsNBryYxykf/OxESNSeLoexa9M6952RpBL7RebSI+bXN0NVM87pFBq0MXN2eiEv2KzsK43b+k=
+	t=1750685900; cv=none; b=nbJddKlwVwjRND+lESKkeYOeGf6vUZMDDuJX5G7Rb+ZWmLgVA+NWQ5kCu6bZRCjgyBCSpqKw9azoCfFfZQKrFsoFxrDgbo6xAGW0Kf3/NvlrCNXLi90GtGuKX58GUHjYGim+AQosjn+PTu2sNjntHCRSLg/eFB4a+Tpw45PuhyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685898; c=relaxed/simple;
-	bh=c/lAOfKo3YMUOoO6oe4aeeDJsPe2Eb5k2tQoTjNquSA=;
+	s=arc-20240116; t=1750685900; c=relaxed/simple;
+	bh=IWkGBORHTGRh2LB3BIwEHZIOdUHR4/ih0iMQq4Hhr34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oy4BbPt87zFMbRBuDdijY6UZCL8oVPAjqlTfTmdRtezWo9xxs2It21hNjNeaNlCm5g5Z53wRovfh1ovvoIUgP2FxlnhOJyNCtYy2coK4cMKv2YBlyrUHzSZCA1Cm8KhLmBkyo15oZ+7rdEB5tV0A1JvzD0iFkFoErVEtoONRB5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJkz66+M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rJnGTIfIcmaAVR5Exo//kbO00pmIlTrjX3QeocV5FSj92xvvmGLXodbGgJejZXJYf1xk0Q2MFbFOrfnqddOMlHwT/A5x9weJZ6jf1BJad/L7R3LIJYd7c+/tDKV2kCzISJQ4DUZDslCi9UslKMN0Lj0Utcu6TEPVi/6Fy/brXkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlxIIVg8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJkz66+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85556C4CEEA;
-	Mon, 23 Jun 2025 13:38:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlxIIVg8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F64C4CEEA;
+	Mon, 23 Jun 2025 13:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685897;
-	bh=c/lAOfKo3YMUOoO6oe4aeeDJsPe2Eb5k2tQoTjNquSA=;
+	s=korg; t=1750685900;
+	bh=IWkGBORHTGRh2LB3BIwEHZIOdUHR4/ih0iMQq4Hhr34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJkz66+MOz2LsHHW4m5HIg+qC1u4SFVk0etDancUr4FPfRP6T85dUZEBcyD1vEF6v
-	 4BLYwRKoSb5ATReKWpCMWXjc3njz0jKE10PwR0ugB2TN6JQu8uQlqJfpDCSIwffQVF
-	 P6CzZei8yzZ02dwLmaoUf4EApJ6q2iClbd8uXGkM=
+	b=zlxIIVg8i3GtRtdD0nrq4bNichXCWSXOZ7ItLBjd3XSaZOVJ3pcoW25dk4XSC0qmm
+	 qVcEY3jnwL0WNOVB8BqjZBP2roA/Cd4ufYFdozC2GRpoq1XzTk52VDuPe0lzKJFu8w
+	 N+Vo7Y0zjWxQLVr9GJgpdanjn2CPIkCRCJX59+Bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.4 126/222] ftrace: Fix UAF when lookup kallsym after ftrace disabled
-Date: Mon, 23 Jun 2025 15:07:41 +0200
-Message-ID: <20250623130615.889640514@linuxfoundation.org>
+	syzbot+0903f6d7f285e41cdf10@syzkaller.appspotmail.com,
+	KaFai Wan <mannkafai@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 068/411] bpf: Avoid __bpf_prog_ret0_warn when jit fails
+Date: Mon, 23 Jun 2025 15:03:32 +0200
+Message-ID: <20250623130635.040647825@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,116 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: KaFai Wan <mannkafai@gmail.com>
 
-commit f914b52c379c12288b7623bb814d0508dbe7481d upstream.
+[ Upstream commit 86bc9c742426a16b52a10ef61f5b721aecca2344 ]
 
-The following issue happens with a buggy module:
+syzkaller reported an issue:
 
-BUG: unable to handle page fault for address: ffffffffc05d0218
-PGD 1bd66f067 P4D 1bd66f067 PUD 1bd671067 PMD 101808067 PTE 0
-Oops: Oops: 0000 [#1] SMP KASAN PTI
-Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-RIP: 0010:sized_strscpy+0x81/0x2f0
-RSP: 0018:ffff88812d76fa08 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffffffffc0601010 RCX: dffffc0000000000
-RDX: 0000000000000038 RSI: dffffc0000000000 RDI: ffff88812608da2d
-RBP: 8080808080808080 R08: ffff88812608da2d R09: ffff88812608da68
-R10: ffff88812608d82d R11: ffff88812608d810 R12: 0000000000000038
-R13: ffff88812608da2d R14: ffffffffc05d0218 R15: fefefefefefefeff
-FS:  00007fef552de740(0000) GS:ffff8884251c7000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffffffc05d0218 CR3: 00000001146f0000 CR4: 00000000000006f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+WARNING: CPU: 3 PID: 217 at kernel/bpf/core.c:2357 __bpf_prog_ret0_warn+0xa/0x20 kernel/bpf/core.c:2357
+Modules linked in:
+CPU: 3 UID: 0 PID: 217 Comm: kworker/u32:6 Not tainted 6.15.0-rc4-syzkaller-00040-g8bac8898fe39
+RIP: 0010:__bpf_prog_ret0_warn+0xa/0x20 kernel/bpf/core.c:2357
 Call Trace:
  <TASK>
- ftrace_mod_get_kallsym+0x1ac/0x590
- update_iter_mod+0x239/0x5b0
- s_next+0x5b/0xa0
- seq_read_iter+0x8c9/0x1070
- seq_read+0x249/0x3b0
- proc_reg_read+0x1b0/0x280
- vfs_read+0x17f/0x920
- ksys_read+0xf3/0x1c0
- do_syscall_64+0x5f/0x2e0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ bpf_dispatcher_nop_func include/linux/bpf.h:1316 [inline]
+ __bpf_prog_run include/linux/filter.h:718 [inline]
+ bpf_prog_run include/linux/filter.h:725 [inline]
+ cls_bpf_classify+0x74a/0x1110 net/sched/cls_bpf.c:105
+ ...
 
-The above issue may happen as follows:
-(1) Add kprobe tracepoint;
-(2) insmod test.ko;
-(3)  Module triggers ftrace disabled;
-(4) rmmod test.ko;
-(5) cat /proc/kallsyms; --> Will trigger UAF as test.ko already removed;
-ftrace_mod_get_kallsym()
-...
-strscpy(module_name, mod_map->mod->name, MODULE_NAME_LEN);
-...
+When creating bpf program, 'fp->jit_requested' depends on bpf_jit_enable.
+This issue is triggered because of CONFIG_BPF_JIT_ALWAYS_ON is not set
+and bpf_jit_enable is set to 1, causing the arch to attempt JIT the prog,
+but jit failed due to FAULT_INJECTION. As a result, incorrectly
+treats the program as valid, when the program runs it calls
+`__bpf_prog_ret0_warn` and triggers the WARN_ON_ONCE(1).
 
-The problem is when a module triggers an issue with ftrace and
-sets ftrace_disable. The ftrace_disable is set when an anomaly is
-discovered and to prevent any more damage, ftrace stops all text
-modification. The issue that happened was that the ftrace_disable stops
-more than just the text modification.
-
-When a module is loaded, its init functions can also be traced. Because
-kallsyms deletes the init functions after a module has loaded, ftrace
-saves them when the module is loaded and function tracing is enabled. This
-allows the output of the function trace to show the init function names
-instead of just their raw memory addresses.
-
-When a module is removed, ftrace_release_mod() is called, and if
-ftrace_disable is set, it just returns without doing anything more. The
-problem here is that it leaves the mod_list still around and if kallsyms
-is called, it will call into this code and access the module memory that
-has already been freed as it will return:
-
-  strscpy(module_name, mod_map->mod->name, MODULE_NAME_LEN);
-
-Where the "mod" no longer exists and triggers a UAF bug.
-
-Link: https://lore.kernel.org/all/20250523135452.626d8dcd@gandalf.local.home/
-
-Cc: stable@vger.kernel.org
-Fixes: aba4b5c22cba ("ftrace: Save module init functions kallsyms symbols for tracing")
-Link: https://lore.kernel.org/20250529111955.2349189-2-yebin@huaweicloud.com
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+0903f6d7f285e41cdf10@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/bpf/6816e34e.a70a0220.254cdc.002c.GAE@google.com
+Fixes: fa9dd599b4da ("bpf: get rid of pure_initcall dependency to enable jits")
+Signed-off-by: KaFai Wan <mannkafai@gmail.com>
+Link: https://lore.kernel.org/r/20250526133358.2594176-1-mannkafai@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ftrace.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ kernel/bpf/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -5855,9 +5855,10 @@ void ftrace_release_mod(struct module *m
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index d7dbca573df31..1ded3eb492b8e 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -1909,7 +1909,7 @@ struct bpf_prog *bpf_prog_select_runtime(struct bpf_prog *fp, int *err)
+ 	/* In case of BPF to BPF calls, verifier did all the prep
+ 	 * work with regards to JITing, etc.
+ 	 */
+-	bool jit_needed = false;
++	bool jit_needed = fp->jit_requested;
  
- 	mutex_lock(&ftrace_lock);
- 
--	if (ftrace_disabled)
--		goto out_unlock;
--
-+	/*
-+	 * To avoid the UAF problem after the module is unloaded, the
-+	 * 'mod_map' resource needs to be released unconditionally.
-+	 */
- 	list_for_each_entry_safe(mod_map, n, &ftrace_mod_maps, list) {
- 		if (mod_map->mod == mod) {
- 			list_del_rcu(&mod_map->list);
-@@ -5866,6 +5867,9 @@ void ftrace_release_mod(struct module *m
- 		}
- 	}
- 
-+	if (ftrace_disabled)
-+		goto out_unlock;
-+
- 	/*
- 	 * Each module has its own ftrace_pages, remove
- 	 * them from the list.
+ 	if (fp->bpf_func)
+ 		goto finalize;
+-- 
+2.39.5
+
 
 
