@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BA024FBFF;
-	Mon, 23 Jun 2025 13:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BD8255F3C;
+	Mon, 23 Jun 2025 13:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685739; cv=none; b=G+rthca5zv+Cc9EJ9UwvcwP8wGOXsd/SP+z279suxsBww+r1J3suWlWyJjCgNFBhxhEdrAqkKN9fcb65vSzbX28GpKI4iDNS7BNs2lwJB1dVG1Qp8yOaWBnNR1BVq4JlUKDh/geACIJSOjrER4YJ83ML7LPGQJnAFgcCy9HkFl0=
+	t=1750685741; cv=none; b=qc9gLMCuwOLyfYVQOJ8wnDiXdc1eaCHlrJgtrrpRbtAdthliH1a4xV4M3ipKhCgIxtxqgghRyrXKC0E4SVieaWBXFildb1+mUSqhDk84qNkoaZWa91b+eqpHVbdtfAnbblNJgcXreTrHlIulnpCmTWch3L+w2gQfbxZy1F/bt2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685739; c=relaxed/simple;
-	bh=5JPIv6tSroJhsU0ovUNj6wpG1cWS6F0wL5KAGVyinXU=;
+	s=arc-20240116; t=1750685741; c=relaxed/simple;
+	bh=Jxh5mhMQDVDY+R44pe92eaACobz20ITMDksEko7IEgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=poJWuZ3KY/aCwHsAD3oZWKV8NO+PpRnlqtJphcORzm7WUBfch9YctCCiUAMu9eet/098zek7i5NEqNiDXLGKY1+zdfymieOIe2dn9fq2efaByJ7rxVT0iYWtZk9N4+e4HfeCLg0EXWfuc8y6VXLR9xtq6clGmR2HNKI0a2TYQ9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEPdPSKi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oSs15kr7z4VHi6gK/uqkd84F6Y5wK/n/XiGuAhqymmE9Bg/WLbKBmvBkF5oH4F7397Y7PZ/rWiiPmYN/rmusDEHT1pgg890Nwq3Ly05bHcwncUfRZ+6oUyZhIbjeUXl/YP/mU0db6xTB9PXGNDahdfUc2ggU6n5A/AS75p6E/hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUUCaFAR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEPdPSKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F4FC4CEEA;
-	Mon, 23 Jun 2025 13:35:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUUCaFAR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59522C4CEEA;
+	Mon, 23 Jun 2025 13:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685739;
-	bh=5JPIv6tSroJhsU0ovUNj6wpG1cWS6F0wL5KAGVyinXU=;
+	s=korg; t=1750685741;
+	bh=Jxh5mhMQDVDY+R44pe92eaACobz20ITMDksEko7IEgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tEPdPSKi4ySKrq1PsYBCh60ftQOMo05k+edq2T/HT0lLKtLD/kpWfwVVAiw1Pew1O
-	 53/vnVRv9jVSdP8xm+fnYlSzL7KQ+rblZ6+Ns8iRfmK50jX+D+8A/2xdd0zApFgzN3
-	 xLv81wdBxIsMlMe0Y8W0IVgCBTpQMAStn4w/1ADA=
+	b=bUUCaFARCsnOE3QxZf9Jz2YUyeOFBBr+hU8r0TE5hWW5lt1vC38uW8DNmbo0hPAru
+	 P1k0lJe1PC7ajLnG290sFVvpQJFl+4iX7TWCVGAoTILGoQU3vzGHe0TidRSR4ek2R6
+	 4S5xu9H/v5EXJiffGSwB8f95y8oiGnOxhRQ/vvso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/411] netfilter: nft_tunnel: fix geneve_opt dump
-Date: Mon, 23 Jun 2025 15:03:30 +0200
-Message-ID: <20250623130634.982094167@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.6 024/290] media: ov8856: suppress probe deferral errors
+Date: Mon, 23 Jun 2025 15:04:45 +0200
+Message-ID: <20250623130627.710131321@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 22a9613de4c29d7d0770bfb8a5a9d73eb8df7dad ]
+commit e3d86847fba58cf71f66e81b6a2515e07039ae17 upstream.
 
-When dumping a nft_tunnel with more than one geneve_opt configured the
-netlink attribute hierarchy should be as follow:
+Probe deferral should not be logged as an error:
 
- NFTA_TUNNEL_KEY_OPTS
- |
- |--NFTA_TUNNEL_KEY_OPTS_GENEVE
- |  |
- |  |--NFTA_TUNNEL_KEY_GENEVE_CLASS
- |  |--NFTA_TUNNEL_KEY_GENEVE_TYPE
- |  |--NFTA_TUNNEL_KEY_GENEVE_DATA
- |
- |--NFTA_TUNNEL_KEY_OPTS_GENEVE
- |  |
- |  |--NFTA_TUNNEL_KEY_GENEVE_CLASS
- |  |--NFTA_TUNNEL_KEY_GENEVE_TYPE
- |  |--NFTA_TUNNEL_KEY_GENEVE_DATA
- |
- |--NFTA_TUNNEL_KEY_OPTS_GENEVE
- ...
+	ov8856 24-0010: failed to get HW configuration: -517
 
-Otherwise, userspace tools won't be able to fetch the geneve options
-configured correctly.
+Use dev_err_probe() for the clock lookup and drop the (mostly) redundant
+dev_err() from sensor probe() to suppress it.
 
-Fixes: 925d844696d9 ("netfilter: nft_tunnel: add support for geneve opts")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note that errors during regulator lookup is already correctly logged
+using dev_err_probe().
+
+Fixes: 0c2c7a1e0d69 ("media: ov8856: Add devicetree support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_tunnel.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/i2c/ov8856.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
-index cfe6cf1be4217..95f8230322289 100644
---- a/net/netfilter/nft_tunnel.c
-+++ b/net/netfilter/nft_tunnel.c
-@@ -588,10 +588,10 @@ static int nft_tunnel_opts_dump(struct sk_buff *skb,
- 		struct geneve_opt *opt;
- 		int offset = 0;
- 
--		inner = nla_nest_start_noflag(skb, NFTA_TUNNEL_KEY_OPTS_GENEVE);
--		if (!inner)
--			goto failure;
- 		while (opts->len > offset) {
-+			inner = nla_nest_start_noflag(skb, NFTA_TUNNEL_KEY_OPTS_GENEVE);
-+			if (!inner)
-+				goto failure;
- 			opt = (struct geneve_opt *)(opts->u.data + offset);
- 			if (nla_put_be16(skb, NFTA_TUNNEL_KEY_GENEVE_CLASS,
- 					 opt->opt_class) ||
-@@ -601,8 +601,8 @@ static int nft_tunnel_opts_dump(struct sk_buff *skb,
- 				    opt->length * 4, opt->opt_data))
- 				goto inner_failure;
- 			offset += sizeof(*opt) + opt->length * 4;
-+			nla_nest_end(skb, inner);
+--- a/drivers/media/i2c/ov8856.c
++++ b/drivers/media/i2c/ov8856.c
+@@ -2323,8 +2323,8 @@ static int ov8856_get_hwcfg(struct ov885
+ 	if (!is_acpi_node(fwnode)) {
+ 		ov8856->xvclk = devm_clk_get(dev, "xvclk");
+ 		if (IS_ERR(ov8856->xvclk)) {
+-			dev_err(dev, "could not get xvclk clock (%pe)\n",
+-				ov8856->xvclk);
++			dev_err_probe(dev, PTR_ERR(ov8856->xvclk),
++				      "could not get xvclk clock\n");
+ 			return PTR_ERR(ov8856->xvclk);
  		}
--		nla_nest_end(skb, inner);
- 	}
- 	nla_nest_end(skb, nest);
- 	return 0;
--- 
-2.39.5
-
+ 
+@@ -2429,11 +2429,8 @@ static int ov8856_probe(struct i2c_clien
+ 		return -ENOMEM;
+ 
+ 	ret = ov8856_get_hwcfg(ov8856, &client->dev);
+-	if (ret) {
+-		dev_err(&client->dev, "failed to get HW configuration: %d",
+-			ret);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	v4l2_i2c_subdev_init(&ov8856->sd, client, &ov8856_subdev_ops);
+ 
 
 
