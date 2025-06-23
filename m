@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641D01ACEDA;
-	Mon, 23 Jun 2025 21:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9BC1E521E;
+	Mon, 23 Jun 2025 21:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713830; cv=none; b=ltSr9RaZ9R/fIKqcTX6q4uB6uU8OYCcuJYPR7EHGkNjJrIVWikxdc0LHgIMEosqBLHBFv82KzeE57t+Nykdi9dZAx9SSbN+r5mmCO5cVjslS+TjfpcFqIu2+1b6eFQHICckSwulmWVNPv0DRzQTPnU+/wnUaHKBkzpnCSSmdASw=
+	t=1750713832; cv=none; b=KiyF/n0oy/n36q/JQNsT627CSO/rCx3cYJJCvJGLGyqetXKsqWtLm0n+Fq0gNHEdtDglANeYS2AaZRbUSL4SX4LOXrPuwPJ76WPhu8kaL1+vv0EfMTiF8RxdVH5KcyE22V3PBdiHJX5Smj3RvteZ32eGPS2R5oSZKp3gTi2wVgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713830; c=relaxed/simple;
-	bh=PX2bOr8+ZfiujT415gswOusWDW44C10Epp/Wz1Avh4o=;
+	s=arc-20240116; t=1750713832; c=relaxed/simple;
+	bh=uGZ1q6xRh54ESqRWtUCLbTXaTfkAjX0USp1Zs9RQ8c8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GsKxHQpfLOdJGVPeHlAVIHn2WTJ8Y7Ufaqg+RO+xXjMGMThb4pczg8ZZsPR4kaGsoaNgKjzlrm21FSC3Ho+GNOb0/NhulNKZFiw4bxgmkHgv1FNdIEvP+JnD+CHJstfOyhz5R0G1J+pJeaHxmSbAo5VEJeLfp48PORm4LMi6I/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oNgbz+Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tgyF9VtI9jbyuQ+QRo77aAZHaU9fHTdayBQ+GUqvQFjd8DaX91V2Zm9dvyxBJKXXF+t13+7FsXEVVWobuPkjDV83u5pvd0CJCJZxaQJ8rAumaEV+6IV6/xoK2GVQfaE755OIYtrFXCRmBX8AlTEsTdswB8tFDf3kks+kFWDKyjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptZ/L+Ad; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oNgbz+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1828C4CEEA;
-	Mon, 23 Jun 2025 21:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptZ/L+Ad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F5AC4CEEA;
+	Mon, 23 Jun 2025 21:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713830;
-	bh=PX2bOr8+ZfiujT415gswOusWDW44C10Epp/Wz1Avh4o=;
+	s=korg; t=1750713832;
+	bh=uGZ1q6xRh54ESqRWtUCLbTXaTfkAjX0USp1Zs9RQ8c8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0oNgbz+QGdqy2VgAU8ZmH0RIBwtH6gWUxnaPv7RgF43UM9iWuS4p5kU9Cfk98ZrrU
-	 RWecHYeaoVoVDsz2Wel+EMaCW1XFtRR/f9jSAz7y0O8CvTsZcWnb5hyXXBpUEO8iYr
-	 DhHoLP6cCbFwALdexdwzitUjFYkxJSD3jeZ5Aygg=
+	b=ptZ/L+Ad7OxGefnMnOnL505nSat0eNJOQ/OXRwVlomKXNWezTaUNtfEFKDGrrckmn
+	 dbpHB0IvaovTnlbHMLXu9Dsit0XduayPdD7y/OswHyjtBB4zZhCakAj5cLRx3lXnBO
+	 zrMipVHv8pbQMhzfvuguiCQnHSws0LTIxr3rB5s8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Monnet <qmo@kernel.org>,
-	Takshak Chahande <ctakshak@meta.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 368/592] bpftool: Fix cgroup command to only show cgroup bpf programs
-Date: Mon, 23 Jun 2025 15:05:26 +0200
-Message-ID: <20250623130709.195256086@linuxfoundation.org>
+Subject: [PATCH 6.6 118/290] clocksource: Fix the CPUs choice in the watchdog per CPU verification
+Date: Mon, 23 Jun 2025 15:06:19 +0200
+Message-ID: <20250623130630.489994315@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,114 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-[ Upstream commit b69d4413aa1961930fbf9ffad8376d577378daf9 ]
+[ Upstream commit 08d7becc1a6b8c936e25d827becabfe3bff72a36 ]
 
-The netkit program is not a cgroup bpf program and should not be shown
-in the output of the "bpftool cgroup show" command.
+Right now, if the clocksource watchdog detects a clocksource skew, it might
+perform a per CPU check, for example in the TSC case on x86.  In other
+words: supposing TSC is detected as unstable by the clocksource watchdog
+running at CPU1, as part of marking TSC unstable the kernel will also run a
+check of TSC readings on some CPUs to be sure it is synced between them
+all.
 
-However, if the netkit device happens to have ifindex 3,
-the "bpftool cgroup show" command will output the netkit
-bpf program as well:
+But that check happens only on some CPUs, not all of them; this choice is
+based on the parameter "verify_n_cpus" and in some random cpumask
+calculation. So, the watchdog runs such per CPU checks on up to
+"verify_n_cpus" random CPUs among all online CPUs, with the risk of
+repeating CPUs (that aren't double checked) in the cpumask random
+calculation.
 
-> ip -d link show dev nk1
-3: nk1@if2: ...
-    link/ether ...
-    netkit mode ...
+But if "verify_n_cpus" > num_online_cpus(), it should skip the random
+calculation and just go ahead and check the clocksource sync between
+all online CPUs, without the risk of skipping some CPUs due to
+duplicity in the random cpumask calculation.
 
-> bpftool net show
-tc:
-nk1(3) netkit/peer tw_ns_nk2phy prog_id 469447
+Tests in a 4 CPU laptop with TSC skew detected led to some cases of the per
+CPU verification skipping some CPU even with verify_n_cpus=8, due to the
+duplicity on random cpumask generation. Skipping the randomization when the
+number of online CPUs is smaller than verify_n_cpus, solves that.
 
-> bpftool cgroup show /sys/fs/cgroup/...
-ID       AttachType      AttachFlags     Name
-...      ...                             ...
-469447   netkit_peer                     tw_ns_nk2phy
-
-The reason is that the target_fd (which is the cgroup_fd here) and
-the target_ifindex are in a union in the uapi/linux/bpf.h. The bpftool
-iterates all values in "enum bpf_attach_type" which includes
-non cgroup attach types like netkit. The cgroup_fd is usually 3 here,
-so the bug is triggered when the netkit ifindex just happens
-to be 3 as well.
-
-The bpftool's cgroup.c already has a list of cgroup-only attach type
-defined in "cgroup_attach_types[]". This patch fixes it by iterating
-over "cgroup_attach_types[]" instead of "__MAX_BPF_ATTACH_TYPE".
-
-Cc: Quentin Monnet <qmo@kernel.org>
-Reported-by: Takshak Chahande <ctakshak@meta.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/r/20250507203232.1420762-1-martin.lau@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Suggested-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/all/20250323173857.372390-1-gpiccoli@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/cgroup.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/time/clocksource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/cgroup.c b/tools/bpf/bpftool/cgroup.c
-index 3f1d6be512151..944ebe21a2169 100644
---- a/tools/bpf/bpftool/cgroup.c
-+++ b/tools/bpf/bpftool/cgroup.c
-@@ -318,11 +318,11 @@ static int show_bpf_progs(int cgroup_fd, enum bpf_attach_type type,
- 
- static int do_show(int argc, char **argv)
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index 3130f24daf597..353829883e66d 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -288,7 +288,7 @@ static void clocksource_verify_choose_cpus(void)
  {
--	enum bpf_attach_type type;
- 	int has_attached_progs;
- 	const char *path;
- 	int cgroup_fd;
- 	int ret = -1;
-+	unsigned int i;
+ 	int cpu, i, n = verify_n_cpus;
  
- 	query_flags = 0;
- 
-@@ -370,14 +370,14 @@ static int do_show(int argc, char **argv)
- 		       "AttachFlags", "Name");
- 
- 	btf_vmlinux = libbpf_find_kernel_btf();
--	for (type = 0; type < __MAX_BPF_ATTACH_TYPE; type++) {
-+	for (i = 0; i < ARRAY_SIZE(cgroup_attach_types); i++) {
- 		/*
- 		 * Not all attach types may be supported, so it's expected,
- 		 * that some requests will fail.
- 		 * If we were able to get the show for at least one
- 		 * attach type, let's return 0.
- 		 */
--		if (show_bpf_progs(cgroup_fd, type, 0) == 0)
-+		if (show_bpf_progs(cgroup_fd, cgroup_attach_types[i], 0) == 0)
- 			ret = 0;
- 	}
- 
-@@ -400,9 +400,9 @@ static int do_show(int argc, char **argv)
- static int do_show_tree_fn(const char *fpath, const struct stat *sb,
- 			   int typeflag, struct FTW *ftw)
- {
--	enum bpf_attach_type type;
- 	int has_attached_progs;
- 	int cgroup_fd;
-+	unsigned int i;
- 
- 	if (typeflag != FTW_D)
- 		return 0;
-@@ -434,8 +434,8 @@ static int do_show_tree_fn(const char *fpath, const struct stat *sb,
- 	}
- 
- 	btf_vmlinux = libbpf_find_kernel_btf();
--	for (type = 0; type < __MAX_BPF_ATTACH_TYPE; type++)
--		show_bpf_progs(cgroup_fd, type, ftw->level);
-+	for (i = 0; i < ARRAY_SIZE(cgroup_attach_types); i++)
-+		show_bpf_progs(cgroup_fd, cgroup_attach_types[i], ftw->level);
- 
- 	if (errno == EINVAL)
- 		/* Last attach type does not support query.
+-	if (n < 0) {
++	if (n < 0 || n >= num_online_cpus()) {
+ 		/* Check all of the CPUs. */
+ 		cpumask_copy(&cpus_chosen, cpu_online_mask);
+ 		cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
 -- 
 2.39.5
 
