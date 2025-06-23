@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C521E51FA;
-	Mon, 23 Jun 2025 21:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8BA221FBE;
+	Mon, 23 Jun 2025 21:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713952; cv=none; b=l3+g9PJKjxFGAdHG/zYf3yj5Zd6NRutPXkKWpUbp1k5/B9daVenDiuenX5E49CUmcaf76qPbQ+ueo38m8HZ1iu4emWlfCx0K0auR5jNogFOpaITxav+vT7YUvQ9jdVbnGw/eX+rQZ5BvvGnIYXY3uff58JqxAriG9WRb/EsukfY=
+	t=1750713955; cv=none; b=gYdovP0ex0/xRr8JCYQ3WKc+PzabqXL8WtnKrbPsqojbaaSCPu/ib6ZF1ifM9I22b6RQseog06Y+jM/hyjT2w3RjfaPEhbjARJkWR+KLT2yqT01bZgLde8bftLCqTrmTkgiE5XGeGbVqCT03PF2hHTFu8uGVBnoZTmrp7jrd9H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713952; c=relaxed/simple;
-	bh=TtG+AvkbL8DZ+J38Wj2YoVCC3NaNUzXvmo6CTwZh9c0=;
+	s=arc-20240116; t=1750713955; c=relaxed/simple;
+	bh=OJKEXIiqV4WhkahEXLVFLOODgMDP661l8XwlK5s0XvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mowyLeV+2G+ukbfBc4oflBmPjNNGBeQHCWS4HMHOJ0encoKJqUXubc5YNS+1qtQzvrS2yliisgylvNbc5eoFE5fqAEL+2CyunVhssYRUBj/b6GV/Z1EeSFyjvGvkzkEDfDLUMkJdtOmZAM59fmkGQPzs0S/4RC3/SojlTbDfH6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvS2J9ib; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u0knevwZWiDXuWcjF+QtBYHfDS5fyNNG8hgUUlZ2F+x+npGG9xNXw0TBhRpEK1RrC4Qx2nJLRHyVoWYhQ7z5gjNg6wxHuQ6IsbFZ/b14ePW+X6I6X+BbnfC2zJ1sqq5hcqTXZ2MpO/fgVc9ZkiHn4x0ngB9bqcnoFKTiqp4GTd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rD6NONJU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvS2J9ib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF93C4CEEA;
-	Mon, 23 Jun 2025 21:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rD6NONJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7680AC4CEEA;
+	Mon, 23 Jun 2025 21:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713952;
-	bh=TtG+AvkbL8DZ+J38Wj2YoVCC3NaNUzXvmo6CTwZh9c0=;
+	s=korg; t=1750713954;
+	bh=OJKEXIiqV4WhkahEXLVFLOODgMDP661l8XwlK5s0XvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvS2J9ib1Hph7Zh/+WWuBZ7YQWvNUBwb2/w6Ej/Vrx9LaF8ywAbvIc2U3ALykGPi5
-	 G0iz8NMbvtF9OSkGu7wAWkxlBp2FEIJLFs/V04UFXusF0TwzVguVCsGiZa9pRqblSW
-	 xVgCL2hb+E3GymIqQcQqTgx/bRkQMy6njmlrC86Q=
+	b=rD6NONJUkpoePme0+wWuewIFoE7wlaVlA1yx9Yda7HXQuhW9fAKUg3soCPh4QxmWh
+	 SteCyRfPd9gfs8gDF6c4RVZSSR4ck4m/WRp23GgSoouJO+RFdAFBOn14xKHDC6Txch
+	 ASqfJI8E80JJ9slKyHu54byXUHYma3/p2dsEjnpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 355/592] pinctrl: armada-37xx: propagate error from armada_37xx_gpio_get_direction()
-Date: Mon, 23 Jun 2025 15:05:13 +0200
-Message-ID: <20250623130708.886240783@linuxfoundation.org>
+	syzbot+de24c3fe3c4091051710@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.4 218/222] jbd2: fix data-race and null-ptr-deref in jbd2_journal_dirty_metadata()
+Date: Mon, 23 Jun 2025 15:09:13 +0200
+Message-ID: <20250623130618.852137804@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,48 +49,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit 6481c0a83367b0672951ccc876fbae7ee37b594b ]
+commit af98b0157adf6504fade79b3e6cb260c4ff68e37 upstream.
 
-The regmap_read() function can fail, so propagate its error up to
-the stack instead of silently ignoring that.
+Since handle->h_transaction may be a NULL pointer, so we should change it
+to call is_handle_aborted(handle) first before dereferencing it.
 
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-6-07e9ac1ab737@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+And the following data-race was reported in my fuzzer:
+
+==================================================================
+BUG: KCSAN: data-race in jbd2_journal_dirty_metadata / jbd2_journal_dirty_metadata
+
+write to 0xffff888011024104 of 4 bytes by task 10881 on cpu 1:
+ jbd2_journal_dirty_metadata+0x2a5/0x770 fs/jbd2/transaction.c:1556
+ __ext4_handle_dirty_metadata+0xe7/0x4b0 fs/ext4/ext4_jbd2.c:358
+ ext4_do_update_inode fs/ext4/inode.c:5220 [inline]
+ ext4_mark_iloc_dirty+0x32c/0xd50 fs/ext4/inode.c:5869
+ __ext4_mark_inode_dirty+0xe1/0x450 fs/ext4/inode.c:6074
+ ext4_dirty_inode+0x98/0xc0 fs/ext4/inode.c:6103
+....
+
+read to 0xffff888011024104 of 4 bytes by task 10880 on cpu 0:
+ jbd2_journal_dirty_metadata+0xf2/0x770 fs/jbd2/transaction.c:1512
+ __ext4_handle_dirty_metadata+0xe7/0x4b0 fs/ext4/ext4_jbd2.c:358
+ ext4_do_update_inode fs/ext4/inode.c:5220 [inline]
+ ext4_mark_iloc_dirty+0x32c/0xd50 fs/ext4/inode.c:5869
+ __ext4_mark_inode_dirty+0xe1/0x450 fs/ext4/inode.c:6074
+ ext4_dirty_inode+0x98/0xc0 fs/ext4/inode.c:6103
+....
+
+value changed: 0x00000000 -> 0x00000001
+==================================================================
+
+This issue is caused by missing data-race annotation for jh->b_modified.
+Therefore, the missing annotation needs to be added.
+
+Reported-by: syzbot+de24c3fe3c4091051710@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=de24c3fe3c4091051710
+Fixes: 6e06ae88edae ("jbd2: speedup jbd2_journal_dirty_metadata()")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20250514130855.99010-1-aha310510@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/jbd2/transaction.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-index 072bdd0d153ed..4ac514cfd8884 100644
---- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-+++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -400,10 +400,13 @@ static int armada_37xx_gpio_get_direction(struct gpio_chip *chip,
- 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
- 	unsigned int reg = OUTPUT_EN;
- 	unsigned int val, mask;
-+	int ret;
+--- a/fs/jbd2/transaction.c
++++ b/fs/jbd2/transaction.c
+@@ -1419,7 +1419,6 @@ int jbd2_journal_dirty_metadata(handle_t
+ 		goto out;
+ 	}
  
- 	armada_37xx_update_reg(&reg, &offset);
- 	mask = BIT(offset);
--	regmap_read(info->regmap, reg, &val);
-+	ret = regmap_read(info->regmap, reg, &val);
-+	if (ret)
-+		return ret;
+-	journal = transaction->t_journal;
+ 	jbd_lock_bh_state(bh);
  
- 	if (val & mask)
- 		return GPIO_LINE_DIRECTION_OUT;
--- 
-2.39.5
-
+ 	if (is_handle_aborted(handle)) {
+@@ -1434,6 +1433,8 @@ int jbd2_journal_dirty_metadata(handle_t
+ 		goto out_unlock_bh;
+ 	}
+ 
++	journal = transaction->t_journal;
++
+ 	if (jh->b_modified == 0) {
+ 		/*
+ 		 * This buffer's got modified and becoming part
 
 
