@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C633B1E5B71;
-	Mon, 23 Jun 2025 21:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA4C1E5B71;
+	Mon, 23 Jun 2025 21:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714191; cv=none; b=jXExAOKQnZ2Q9NMGISgZtJSoBd/AMbPtt0IBBr4IGuXuTkT2d6g9mQYQVvYqnJz7YB2EGWDivJJ4B/zD9j9FfU7JwRqmgKu+ni/QjMNQo9pNaPl6Lx8OGRPp8qXMOTxKgGIIfh1OESVGUC2KiKK3KFZmIABvKNR4h2XNjnYzEzs=
+	t=1750714194; cv=none; b=j4whh8ujAthetkjaxSCAxOaNkw7I9GBO1b/DWMFCGhvYD3AuSgnIta71qH9pgicU90mc55jz7Q14CegZha0rKtBm75mOOwrai2lNCzYHP6XmY/C5KMOZ4FBkJoRc7ZLMuOnmIQ5wPlLzkjmsIFP5DwGkmJ9S5o0hE6l8M+RSPlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714191; c=relaxed/simple;
-	bh=Ly/oH3BoDVWmBR3znof1FS6Q+792LOdzErVvCxMZutE=;
+	s=arc-20240116; t=1750714194; c=relaxed/simple;
+	bh=crufa6D+ZuWOJ+Cizcrv1Ccpl0YFXwTuyh+6DPiBEMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qYcndt+WC9eVfBbiAAGrBRRHb9qnCwxLmLwh/wxBzALahw2KOaB5+98hrFPxL4EOa2j6AbasQBWVZ3gqcDSQHIJBp8SwRB1HuYnDIsEs1suDSea4Mp2w2mZz1oUpH2oKcGxfHzPfd3B2A/jHwdVAqrgi4HBkt9T8J50TZQoeSTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tu+SBoWd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rnC7wR1u56VIV9rdXd26nTGtueTGjmo46uqOnUxcRR2Mp5B0KL1lfDRXOJaRO5ySoe0S8P4v4Blzfq/chZztCQzvmotGM3DhHFmlBucZzaWsr4N5cvs95GJv62xCY9cMJmNHEIo60xGOjOt2ij0YNPaZ36JKXIulvyfdmdCMR38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Drrpylbw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tu+SBoWd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CA0C4CEEA;
-	Mon, 23 Jun 2025 21:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Drrpylbw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C9EC4CEF0;
+	Mon, 23 Jun 2025 21:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714191;
-	bh=Ly/oH3BoDVWmBR3znof1FS6Q+792LOdzErVvCxMZutE=;
+	s=korg; t=1750714194;
+	bh=crufa6D+ZuWOJ+Cizcrv1Ccpl0YFXwTuyh+6DPiBEMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tu+SBoWd2Xn9RiC11ni4BDnIYX3FVsneXKYmLlhQfr1ANrzXwYEZtNC2TbAL6+Z2O
-	 bQmnme9pFE60VDkQYnHFiHIpTdDY4md5i7m1qphvfiE5RTjdXyn6Ko/k/rGz4okOHg
-	 ktUYPRns7IxEtQ2gXv3b7yvqfshJSCekRq3ZBRq8=
+	b=DrrpylbwCHvurzz+zJTeZRfTJ66lRy4eRgJla4v6AkedF0Yjr0SXZMof68s1goI9A
+	 p3Vlx1hewYqFu6cTw/03mHG7Da0CQQGvwvP4bZWRPVYEbbt/JgSyXfvnJgCJwyAMv5
+	 v4RzmJ1lze6hxaxkl3CsWClWGsSWUF+va3n5lfEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.15 173/411] mips: Include KBUILD_CPPFLAGS in CHECKFLAGS invocation
-Date: Mon, 23 Jun 2025 15:05:17 +0200
-Message-ID: <20250623130638.046097364@linuxfoundation.org>
+	Klaus Kudielka <klaus.kudielka@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.15 193/411] crypto: marvell/cesa - Do not chain submitted requests
+Date: Mon, 23 Jun 2025 15:05:37 +0200
+Message-ID: <20250623130638.536068747@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
 References: <20250623130632.993849527@linuxfoundation.org>
@@ -50,38 +50,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 08f6554ff90ef189e6b8f0303e57005bddfdd6a7 upstream.
+commit 0413bcf0fc460a68a2a7a8354aee833293d7d693 upstream.
 
-A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
-KBUILD_CPPFLAGS so that '--target' is available while preprocessing.
-When that occurs, the following error appears when building ARCH=mips
-with clang (tip of tree error shown):
+This driver tries to chain requests together before submitting them
+to hardware in order to reduce completion interrupts.
 
-  clang: error: unsupported option '-mabi=' for target 'x86_64-pc-linux-gnu'
+However, it even extends chains that have already been submitted
+to hardware.  This is dangerous because there is no way of knowing
+whether the hardware has already read the DMA memory in question
+or not.
 
-Add KBUILD_CPPFLAGS in the CHECKFLAGS invocation to keep everything
-working after the move.
+Fix this by splitting the chain list into two.  One for submitted
+requests and one for requests that have not yet been submitted.
+Only extend the latter.
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: Klaus Kudielka <klaus.kudielka@gmail.com>
+Fixes: 85030c5168f1 ("crypto: marvell - Add support for chaining crypto requests in TDMA mode")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/marvell/cesa/cesa.c |    2 -
+ drivers/crypto/marvell/cesa/cesa.h |    9 ++++--
+ drivers/crypto/marvell/cesa/tdma.c |   53 ++++++++++++++++++++++---------------
+ 3 files changed, 39 insertions(+), 25 deletions(-)
 
---- a/arch/mips/Makefile
-+++ b/arch/mips/Makefile
-@@ -322,7 +322,7 @@ KBUILD_CFLAGS += -fno-asynchronous-unwin
- KBUILD_LDFLAGS		+= -m $(ld-emul)
+--- a/drivers/crypto/marvell/cesa/cesa.c
++++ b/drivers/crypto/marvell/cesa/cesa.c
+@@ -94,7 +94,7 @@ static int mv_cesa_std_process(struct mv
  
- ifdef need-compiler
--CHECKFLAGS += $(shell $(CC) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
-+CHECKFLAGS += $(shell $(CC) $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
- 	grep -E -vw '__GNUC_(MINOR_|PATCHLEVEL_)?_' | \
- 	sed -e "s/^\#define /-D'/" -e "s/ /'='/" -e "s/$$/'/" -e 's/\$$/&&/g')
- endif
+ static int mv_cesa_int_process(struct mv_cesa_engine *engine, u32 status)
+ {
+-	if (engine->chain.first && engine->chain.last)
++	if (engine->chain_hw.first && engine->chain_hw.last)
+ 		return mv_cesa_tdma_process(engine, status);
+ 
+ 	return mv_cesa_std_process(engine, status);
+--- a/drivers/crypto/marvell/cesa/cesa.h
++++ b/drivers/crypto/marvell/cesa/cesa.h
+@@ -440,8 +440,10 @@ struct mv_cesa_dev {
+  *			SRAM
+  * @queue:		fifo of the pending crypto requests
+  * @load:		engine load counter, useful for load balancing
+- * @chain:		list of the current tdma descriptors being processed
+- *			by this engine.
++ * @chain_hw:		list of the current tdma descriptors being processed
++ *			by the hardware.
++ * @chain_sw:		list of the current tdma descriptors that will be
++ *			submitted to the hardware.
+  * @complete_queue:	fifo of the processed requests by the engine
+  *
+  * Structure storing CESA engine information.
+@@ -463,7 +465,8 @@ struct mv_cesa_engine {
+ 	struct gen_pool *pool;
+ 	struct crypto_queue queue;
+ 	atomic_t load;
+-	struct mv_cesa_tdma_chain chain;
++	struct mv_cesa_tdma_chain chain_hw;
++	struct mv_cesa_tdma_chain chain_sw;
+ 	struct list_head complete_queue;
+ 	int irq;
+ };
+--- a/drivers/crypto/marvell/cesa/tdma.c
++++ b/drivers/crypto/marvell/cesa/tdma.c
+@@ -38,6 +38,15 @@ void mv_cesa_dma_step(struct mv_cesa_req
+ {
+ 	struct mv_cesa_engine *engine = dreq->engine;
+ 
++	spin_lock_bh(&engine->lock);
++	if (engine->chain_sw.first == dreq->chain.first) {
++		engine->chain_sw.first = NULL;
++		engine->chain_sw.last = NULL;
++	}
++	engine->chain_hw.first = dreq->chain.first;
++	engine->chain_hw.last = dreq->chain.last;
++	spin_unlock_bh(&engine->lock);
++
+ 	writel_relaxed(0, engine->regs + CESA_SA_CFG);
+ 
+ 	mv_cesa_set_int_mask(engine, CESA_SA_INT_ACC0_IDMA_DONE);
+@@ -96,25 +105,27 @@ void mv_cesa_dma_prepare(struct mv_cesa_
+ void mv_cesa_tdma_chain(struct mv_cesa_engine *engine,
+ 			struct mv_cesa_req *dreq)
+ {
+-	if (engine->chain.first == NULL && engine->chain.last == NULL) {
+-		engine->chain.first = dreq->chain.first;
+-		engine->chain.last  = dreq->chain.last;
+-	} else {
+-		struct mv_cesa_tdma_desc *last;
++	struct mv_cesa_tdma_desc *last = engine->chain_sw.last;
+ 
+-		last = engine->chain.last;
++	/*
++	 * Break the DMA chain if the request being queued needs the IV
++	 * regs to be set before lauching the request.
++	 */
++	if (!last || dreq->chain.first->flags & CESA_TDMA_SET_STATE)
++		engine->chain_sw.first = dreq->chain.first;
++	else {
+ 		last->next = dreq->chain.first;
+-		engine->chain.last = dreq->chain.last;
+-
+-		/*
+-		 * Break the DMA chain if the CESA_TDMA_BREAK_CHAIN is set on
+-		 * the last element of the current chain, or if the request
+-		 * being queued needs the IV regs to be set before lauching
+-		 * the request.
+-		 */
+-		if (!(last->flags & CESA_TDMA_BREAK_CHAIN) &&
+-		    !(dreq->chain.first->flags & CESA_TDMA_SET_STATE))
+-			last->next_dma = cpu_to_le32(dreq->chain.first->cur_dma);
++		last->next_dma = cpu_to_le32(dreq->chain.first->cur_dma);
++	}
++	last = dreq->chain.last;
++	engine->chain_sw.last = last;
++	/*
++	 * Break the DMA chain if the CESA_TDMA_BREAK_CHAIN is set on
++	 * the last element of the current chain.
++	 */
++	if (last->flags & CESA_TDMA_BREAK_CHAIN) {
++		engine->chain_sw.first = NULL;
++		engine->chain_sw.last = NULL;
+ 	}
+ }
+ 
+@@ -127,7 +138,7 @@ int mv_cesa_tdma_process(struct mv_cesa_
+ 
+ 	tdma_cur = readl(engine->regs + CESA_TDMA_CUR);
+ 
+-	for (tdma = engine->chain.first; tdma; tdma = next) {
++	for (tdma = engine->chain_hw.first; tdma; tdma = next) {
+ 		spin_lock_bh(&engine->lock);
+ 		next = tdma->next;
+ 		spin_unlock_bh(&engine->lock);
+@@ -149,12 +160,12 @@ int mv_cesa_tdma_process(struct mv_cesa_
+ 								 &backlog);
+ 
+ 			/* Re-chaining to the next request */
+-			engine->chain.first = tdma->next;
++			engine->chain_hw.first = tdma->next;
+ 			tdma->next = NULL;
+ 
+ 			/* If this is the last request, clear the chain */
+-			if (engine->chain.first == NULL)
+-				engine->chain.last  = NULL;
++			if (engine->chain_hw.first == NULL)
++				engine->chain_hw.last  = NULL;
+ 			spin_unlock_bh(&engine->lock);
+ 
+ 			ctx = crypto_tfm_ctx(req->tfm);
 
 
