@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DB6238C19;
-	Mon, 23 Jun 2025 13:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3348824FBFF;
+	Mon, 23 Jun 2025 13:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685731; cv=none; b=WkJS0pb+ZvdxWOBz7ME8h7+SsQ+nqQbIp4RdpkD+3u5PiYkXa4dJPj73NNfqnJt80YHUMm7yrDY/rXZCcyrpGk3HY+7HYoi2RXA9RWgHKZRNFd4q0pnsEEHBXteUTJVRNb2WF9pLzZlyp2OScGpA+EOKaS8jEn9fNaonfTTJJAI=
+	t=1750685734; cv=none; b=arQShDSUPyv1CHAwTU7QX9beW7RvYFWG31mx+W5/H1jM/zjukPK6KHUhQ0yT6FmjzlDFgEynaPneRTjS79YCTKuu8SSLZQU2nDC8s9aR3jQZJ4Npemvattk4e9zPGuEvUdp0hzO7rzCd2+bUaQpj5LXU7ZtW093U30kzaJ8pgHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685731; c=relaxed/simple;
-	bh=DNExwQD1UFb40vufDKMr7KvfXSo9GHlXFppAOCbuaU8=;
+	s=arc-20240116; t=1750685734; c=relaxed/simple;
+	bh=34dNVMtLXGlQljIbSiNLr1zymEz06oXqS7ARNtuik5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xgv+FEx8TDE/uZsJ42Q46zE3PJ9xiKYr/QjVHEYbk1b1e/cQRmueWL6jCtw7bNNoiW4mpqIpgvswswaWUbmtYnJjXz5FKhqVUKx4R+F9HMJKUncC4V/tpy7IYJqsYGsOOggwTSmGIBSF5d5nygRRy7q/lNX8BWVY3sl7FKWvwjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nmy038qp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=olGKygIXyeWEjy1nt+8fEnb9pLL4N+J47VCVRANALEkXC9wXa4JLkz5IJGSY0BQm/78aH8SyYyUvUd+pklAJvTsOh9jBtK5eQUUgEgxcGWdDpzInCK3fQY8I/y+zBYNRm8lCGHP46QSEyakztlJeHhuiLUcUv09Sj9k1V5EpJGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwcEC3hf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nmy038qp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4E6C4CEEA;
-	Mon, 23 Jun 2025 13:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwcEC3hf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7287C4CEEA;
+	Mon, 23 Jun 2025 13:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685731;
-	bh=DNExwQD1UFb40vufDKMr7KvfXSo9GHlXFppAOCbuaU8=;
+	s=korg; t=1750685734;
+	bh=34dNVMtLXGlQljIbSiNLr1zymEz06oXqS7ARNtuik5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nmy038qp8rx/OXlel0GjCJWHVIg+mPKLjyiTPJPvURCu5vkk1JRvljxet+aHTcAi8
-	 z4R8XhtmIf21V4shC4tPiEV/u5IXaqpBns0PJt7t8Ix4H1FhHtj6rCdYkjfR9+IkRY
-	 mD0q5Bm4ANu8FvAs2CnGyCWXH42Hx+m43xM3E9QA=
+	b=wwcEC3hfzmewbj8Kmd6VyeEabnHGtAayG1kGRo2YX3fNv+3IarcHCTNt4QIsWzrft
+	 eztghMB0g8/vuc5aHeLhVYSNTSsuTTP3ecxrKZE1FDqGCFIzGsbgp2z+4tgr+pKQ/g
+	 CULH5uzw2ZatwI+Bnv+asfFmb7AtcejzIlKsLxGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Alexander Aring <aahringo@redhat.com>
-Subject: [PATCH 6.6 003/290] gfs2: move msleep to sleepable context
-Date: Mon, 23 Jun 2025 15:04:24 +0200
-Message-ID: <20250623130627.034981863@linuxfoundation.org>
+	Peter Marheine <pmarheine@chromium.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 233/592] ACPI: battery: negate current when discharging
+Date: Mon, 23 Jun 2025 15:03:11 +0200
+Message-ID: <20250623130705.833933504@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,46 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Peter Marheine <pmarheine@chromium.org>
 
-commit ac5ee087d31ed93b6e45d2968a66828c6f621d8c upstream.
+[ Upstream commit 234f71555019d308c6bc6f98c78c5551cb8cd56a ]
 
-This patch moves the msleep_interruptible() out of the non-sleepable
-context by moving the ls->ls_recover_spin spinlock around so
-msleep_interruptible() will be called in a sleepable context.
+The ACPI specification requires that battery rate is always positive,
+but the kernel ABI for POWER_SUPPLY_PROP_CURRENT_NOW
+(Documentation/ABI/testing/sysfs-class-power) specifies that it should
+be negative when a battery is discharging. When reporting CURRENT_NOW,
+massage the value to match the documented ABI.
 
-Cc: stable@vger.kernel.org
-Fixes: 4a7727725dc7 ("GFS2: Fix recovery issues for spectators")
-Suggested-by: Andreas Gruenbacher <agruenba@redhat.com>
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This only changes the sign of `current_now` and not `power_now` because
+documentation doesn't describe any particular meaning for `power_now` so
+leaving `power_now` unchanged is less likely to confuse userspace
+unnecessarily, whereas becoming consistent with the documented ABI is
+worth potentially confusing clients that read `current_now`.
+
+Signed-off-by: Peter Marheine <pmarheine@chromium.org>
+Link: https://patch.msgid.link/20250508024146.1436129-1-pmarheine@chromium.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/lock_dlm.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/battery.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/fs/gfs2/lock_dlm.c
-+++ b/fs/gfs2/lock_dlm.c
-@@ -959,14 +959,15 @@ locks_done:
- 		if (sdp->sd_args.ar_spectator) {
- 			fs_info(sdp, "Recovery is required. Waiting for a "
- 				"non-spectator to mount.\n");
-+			spin_unlock(&ls->ls_recover_spin);
- 			msleep_interruptible(1000);
- 		} else {
- 			fs_info(sdp, "control_mount wait1 block %u start %u "
- 				"mount %u lvb %u flags %lx\n", block_gen,
- 				start_gen, mount_gen, lvb_gen,
- 				ls->ls_recover_flags);
-+			spin_unlock(&ls->ls_recover_spin);
- 		}
--		spin_unlock(&ls->ls_recover_spin);
- 		goto restart;
- 	}
- 
+diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
+index 6760330a8af55..93bb1f7d90986 100644
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -243,10 +243,23 @@ static int acpi_battery_get_property(struct power_supply *psy,
+ 		break;
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+ 	case POWER_SUPPLY_PROP_POWER_NOW:
+-		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
++		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
+ 			ret = -ENODEV;
+-		else
+-			val->intval = battery->rate_now * 1000;
++			break;
++		}
++
++		val->intval = battery->rate_now * 1000;
++		/*
++		 * When discharging, the current should be reported as a
++		 * negative number as per the power supply class interface
++		 * definition.
++		 */
++		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
++		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
++		    acpi_battery_handle_discharging(battery)
++				== POWER_SUPPLY_STATUS_DISCHARGING)
++			val->intval = -val->intval;
++
+ 		break;
+ 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
+ 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
+-- 
+2.39.5
+
 
 
