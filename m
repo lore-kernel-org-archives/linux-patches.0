@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744ED22A4EE;
-	Mon, 23 Jun 2025 22:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71C7225417;
+	Mon, 23 Jun 2025 22:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716681; cv=none; b=IASNbxRwXeIICOp3J6+vuyU7lXQ8IWhViBAB03YXXF6e50DicMPXr9IixtiyFUtEGReoQ8zNPH/pz4BFHPp/uXOAZEECfrXPZUNf0QNxWoFq2Yys58yT0Sn7dmUD8p5PRZg6q2JYLzdeCMrksMEc2zLoKI28lkNKBm0gz24gAWY=
+	t=1750716683; cv=none; b=qZi2Q61ru6cxqS+FcpyVPWvuPP1s7704GbSFNsPfQ27BdyY4sqT5sA80tfx18CiEzB4NxNplrB4FzvLaAxQeG9Ov3NPd5E2eF/vKpSNPjWiOn768mbr/bAJxX//2UQXk4HiHXk5u3OHkDmebs8Lfv0C+pITGFu8fwh5HoPrTSLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716681; c=relaxed/simple;
-	bh=qY5yqCvqsmLpo9PMZ8Ae47dJVdFIqB4KZmup2tfNLIQ=;
+	s=arc-20240116; t=1750716683; c=relaxed/simple;
+	bh=Ep6RQpVeg8C26Fvv/3TCbG4OURvcxiEFjCjBRLbi6Ok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NsDdBgsHc3xajnl8pMkcuSDrolVlFqMUUr3nyir/XzjuX69w3HEJv3xPTpjXonUhBlz60R11L+JOTm2l8WsSjgXMjqatpG/NV0Kccksuonrht8aSeUTv3e9f0v0GRn/hfCtVjrChltl9aIOcNgdGw+GcolgHTY48uzmByfWXJyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEcg4onK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lh1E2fTf3KZsjimQXWLw/HzmO3xVI7mPOsnvs9PqIfYiH/+CrQW5z2TZ4WmnEfdn3kQ66ZvvOB8q/9ydbRQ8FHQL1azTIUQdsgruiuyNnqx/o1M6RLc8XaqRiFP16zemtahUhyxpxkkiKPyXsr89bHvib77r0OKrEoB6yY6V7IA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7nmP0sG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEcg4onK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B88CC4CEED;
-	Mon, 23 Jun 2025 22:11:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7nmP0sG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7071DC4CEEA;
+	Mon, 23 Jun 2025 22:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716681;
-	bh=qY5yqCvqsmLpo9PMZ8Ae47dJVdFIqB4KZmup2tfNLIQ=;
+	s=korg; t=1750716683;
+	bh=Ep6RQpVeg8C26Fvv/3TCbG4OURvcxiEFjCjBRLbi6Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WEcg4onK/P2W9yPanQNOE4PZkpwhFTNwko8vEaT23HiRHST4eTBWOtP+wt5yKY6Dp
-	 y6xl7WtXLQAynXK6nV5vo3e0+WO8D2b0wAATP1g6YJkOJKRG56OAf0zokirYBQ6V67
-	 RY4DZo8t9dqYQYtB7vM30sOThz8ewqKJ2odMpCMI=
+	b=Q7nmP0sGljqb+8sWtjGGYAUMi6uk9f5eKCs+x8HSm0oIv8633V6A3rPxUTDFWi9o+
+	 hvUPSestuNrNWFMe60Kbb1/q0WjY0Z5QGCyZRs75CdlkJEahPbyF5pnfgJeIyjKMrr
+	 Zk7fi4bgz/cc4d+zN3Js9j4FxDdSF85cCIExIccM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Rengarajan S <rengarajan.s@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 535/592] ptp: fix breakage after ptp_vclock_in_use() rework
-Date: Mon, 23 Jun 2025 15:08:13 +0200
-Message-ID: <20250623130713.160403191@linuxfoundation.org>
+Subject: [PATCH 6.15 547/592] net: lan743x: fix potential out-of-bounds write in lan743x_ptp_io_event_clock_get()
+Date: Mon, 23 Jun 2025 15:08:25 +0200
+Message-ID: <20250623130713.452918674@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -51,162 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-[ Upstream commit 5ab73b010cad294851e558f1d4714a85c6f206c7 ]
+[ Upstream commit e353b0854d3a1a31cb061df8d022fbfea53a0f24 ]
 
-What is broken
---------------
+Before calling lan743x_ptp_io_event_clock_get(), the 'channel' value
+is checked against the maximum value of PCI11X1X_PTP_IO_MAX_CHANNELS(8).
+This seems correct and aligns with the PTP interrupt status register
+(PTP_INT_STS) specifications.
 
-ptp4l, and any other application which calls clock_adjtime() on a
-physical clock, is greeted with error -EBUSY after commit 87f7ce260a3c
-("ptp: remove ptp->n_vclocks check logic in ptp_vclock_in_use()").
+However, lan743x_ptp_io_event_clock_get() writes to ptp->extts[] with
+only LAN743X_PTP_N_EXTTS(4) elements, using channel as an index:
 
-Explanation for the breakage
-----------------------------
+    lan743x_ptp_io_event_clock_get(..., u8 channel,...)
+    {
+        ...
+        /* Update Local timestamp */
+        extts = &ptp->extts[channel];
+        extts->ts.tv_sec = sec;
+        ...
+    }
 
-The blamed commit was based on the false assumption that
-ptp_vclock_in_use() callers already test for n_vclocks prior to calling
-this function.
+To avoid an out-of-bounds write and utilize all the supported GPIO
+inputs, set LAN743X_PTP_N_EXTTS to 8.
 
-This is notably incorrect for the code path below, in which there is, in
-fact, no n_vclocks test:
-
-ptp_clock_adjtime()
--> ptp_clock_freerun()
-   -> ptp_vclock_in_use()
-
-The result is that any clock adjustment on any physical clock is now
-impossible. This is _despite_ there not being any vclock over this
-physical clock.
-
-$ ptp4l -i eno0 -2 -P -m
-ptp4l[58.425]: selected /dev/ptp0 as PTP clock
-[   58.429749] ptp: physical clock is free running
-ptp4l[58.431]: Failed to open /dev/ptp0: Device or resource busy
-failed to create a clock
-$ cat /sys/class/ptp/ptp0/n_vclocks
-0
-
-The patch makes the ptp_vclock_in_use() function say "if it's not a
-virtual clock, then this physical clock does have virtual clocks on
-top".
-
-Then ptp_clock_freerun() uses this information to say "this physical
-clock has virtual clocks on top, so it must stay free-running".
-
-Then ptp_clock_adjtime() uses this information to say "well, if this
-physical clock has to be free-running, I can't do it, return -EBUSY".
-
-Simply put, ptp_vclock_in_use() cannot be simplified so as to remove the
-test whether vclocks are in use.
-
-What did the blamed commit intend to fix
-----------------------------------------
-
-The blamed commit presents a lockdep warning stating "possible recursive
-locking detected", with the n_vclocks_store() and ptp_clock_unregister()
-functions involved.
-
-The recursive locking seems this:
-n_vclocks_store()
--> mutex_lock_interruptible(&ptp->n_vclocks_mux) // 1
--> device_for_each_child_reverse(..., unregister_vclock)
-   -> unregister_vclock()
-      -> ptp_vclock_unregister()
-         -> ptp_clock_unregister()
-            -> ptp_vclock_in_use()
-               -> mutex_lock_interruptible(&ptp->n_vclocks_mux) // 2
-
-The issue can be triggered by creating and then deleting vclocks:
-$ echo 2 > /sys/class/ptp/ptp0/n_vclocks
-$ echo 0 > /sys/class/ptp/ptp0/n_vclocks
-
-But note that in the original stack trace, the address of the first lock
-is different from the address of the second lock. This is because at
-step 1 marked above, &ptp->n_vclocks_mux is the lock of the parent
-(physical) PTP clock, and at step 2, the lock is of the child (virtual)
-PTP clock. They are different locks of different devices.
-
-In this situation there is no real deadlock, the lockdep warning is
-caused by the fact that the mutexes have the same lock class on both the
-parent and the child. Functionally it is fine.
-
-Proposed alternative solution
------------------------------
-
-We must reintroduce the body of ptp_vclock_in_use() mostly as it was
-structured prior to the blamed commit, but avoid the lockdep warning.
-
-Based on the fact that vclocks cannot be nested on top of one another
-(ptp_is_attribute_visible() hides n_vclocks for virtual clocks), we
-already know that ptp->n_vclocks is zero for a virtual clock. And
-ptp->is_virtual_clock is a runtime invariant, established at
-ptp_clock_register() time and never changed. There is no need to
-serialize on any mutex in order to read ptp->is_virtual_clock, and we
-take advantage of that by moving it outside the lock.
-
-Thus, virtual clocks do not need to acquire &ptp->n_vclocks_mux at
-all, and step 2 in the code walkthrough above can simply go away.
-We can simply return false to the question "ptp_vclock_in_use(a virtual
-clock)".
-
-Other notes
------------
-
-Releasing &ptp->n_vclocks_mux before ptp_vclock_in_use() returns
-execution seems racy, because the returned value can become stale as
-soon as the function returns and before the return value is used (i.e.
-n_vclocks_store() can run any time). The locking requirement should
-somehow be transferred to the caller, to ensure a longer life time for
-the returned value, but this seems out of scope for this severe bug fix.
-
-Because we are also fixing up the logic from the original commit, there
-is another Fixes: tag for that.
-
-Fixes: 87f7ce260a3c ("ptp: remove ptp->n_vclocks check logic in ptp_vclock_in_use()")
-Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250613174749.406826-2-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Detected using the static analysis tool - Svace.
+Fixes: 60942c397af6 ("net: lan743x: Add support for PTP-IO Event Input External Timestamp (extts)")
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Acked-by: Rengarajan S <rengarajan.s@microchip.com>
+Link: https://patch.msgid.link/20250616113743.36284-1-aleksei.kodanev@bell-sw.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_private.h | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/lan743x_ptp.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
-index 528d86a33f37d..a6aad743c282f 100644
---- a/drivers/ptp/ptp_private.h
-+++ b/drivers/ptp/ptp_private.h
-@@ -98,7 +98,27 @@ static inline int queue_cnt(const struct timestamp_event_queue *q)
- /* Check if ptp virtual clock is in use */
- static inline bool ptp_vclock_in_use(struct ptp_clock *ptp)
- {
--	return !ptp->is_virtual_clock;
-+	bool in_use = false;
-+
-+	/* Virtual clocks can't be stacked on top of virtual clocks.
-+	 * Avoid acquiring the n_vclocks_mux on virtual clocks, to allow this
-+	 * function to be called from code paths where the n_vclocks_mux of the
-+	 * parent physical clock is already held. Functionally that's not an
-+	 * issue, but lockdep would complain, because they have the same lock
-+	 * class.
-+	 */
-+	if (ptp->is_virtual_clock)
-+		return false;
-+
-+	if (mutex_lock_interruptible(&ptp->n_vclocks_mux))
-+		return true;
-+
-+	if (ptp->n_vclocks)
-+		in_use = true;
-+
-+	mutex_unlock(&ptp->n_vclocks_mux);
-+
-+	return in_use;
- }
+diff --git a/drivers/net/ethernet/microchip/lan743x_ptp.h b/drivers/net/ethernet/microchip/lan743x_ptp.h
+index 0d29914cd4606..225e8232474d7 100644
+--- a/drivers/net/ethernet/microchip/lan743x_ptp.h
++++ b/drivers/net/ethernet/microchip/lan743x_ptp.h
+@@ -18,9 +18,9 @@
+  */
+ #define LAN743X_PTP_N_EVENT_CHAN	2
+ #define LAN743X_PTP_N_PEROUT		LAN743X_PTP_N_EVENT_CHAN
+-#define LAN743X_PTP_N_EXTTS		4
+-#define LAN743X_PTP_N_PPS		0
+ #define PCI11X1X_PTP_IO_MAX_CHANNELS	8
++#define LAN743X_PTP_N_EXTTS		PCI11X1X_PTP_IO_MAX_CHANNELS
++#define LAN743X_PTP_N_PPS		0
+ #define PTP_CMD_CTL_TIMEOUT_CNT		50
  
- /* Check if ptp clock shall be free running */
+ struct lan743x_adapter;
 -- 
 2.39.5
 
