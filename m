@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7A21F1522;
-	Mon, 23 Jun 2025 13:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CED24E019;
+	Mon, 23 Jun 2025 13:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684489; cv=none; b=cLqd3wuCLEF2GeUL3oPS0NEPCoUrETUocYyvHdQQb8Rp8+ngsviLPB7xtaSKqwYWZ822idFPllUHGMgGr6DwwVAdY5rxEaO4Kqx/sU8aEGMDSvU+YrH+gdXEEPGsa53UZLOGGbpi17fHO6cjP35xd/AA4xHcz6+Rq5FvvIKbOcY=
+	t=1750684492; cv=none; b=SaLc6FXIDzaIYw025fV8KzK3jjellYbCgKWXPpKmPEY0Auw/whV8Rnc529LEqoUKjoBUEOwXbRtq5qBnoLFXvc3jnB47QBgntcpbI34CLgKLtZ8joGwlqkmRHc3WVmV468QeazK+6+2K3Xgu8lmEzqr9DSQ6m13ePmynM0np9cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684489; c=relaxed/simple;
-	bh=4GK9ZQdrtrBsGh8r18dhQv55/A4cCullNfA9QqgrBeU=;
+	s=arc-20240116; t=1750684492; c=relaxed/simple;
+	bh=uA0Rb6wLROCmO0/p0xhg1w9rQPTGkAODQEU5i2CqtfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKTnxSR2an0Fk1AVwSmH9DpESctBiLq+41QTmCWVlitGpV6Nhx85/iRGwrCxB8rUzMqJNFrMkxRs7/ZjAEu91/P8ki2nI0qhUbwH93UbhPA8/+U7WGmlKgBvZak9/SUc4VgKBQ05B/esh4QfXC1EZ3gwL1FJAxqYwSeP0OmlCYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjvCJGO5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IT3b8Reup2t8qXu3AwHhk4RJKb9FbMwPiYsvAevwDc5N22ppIqmsFJEHIUn2dCLbr+E8/lt5zO9sCVwiGY+x1OaPgi1Cx++GgdovUVqAr2LccNc937cyjUCQIPO4zci29cZ1MCpmfCSYDoW6vzA/h2jBKqyFkfagptn36ZZHEmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WH+8ILsp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjvCJGO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1671AC4CEEA;
-	Mon, 23 Jun 2025 13:14:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WH+8ILsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2A4C4CEF1;
+	Mon, 23 Jun 2025 13:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684489;
-	bh=4GK9ZQdrtrBsGh8r18dhQv55/A4cCullNfA9QqgrBeU=;
+	s=korg; t=1750684492;
+	bh=uA0Rb6wLROCmO0/p0xhg1w9rQPTGkAODQEU5i2CqtfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GjvCJGO5nS2AnTDjMMB1QiGf8/PjCCvl2292TpsrXL2k6GUdVOW4wEyrafB4wqq0H
-	 RbfxDNpnK7jAZfGB/3yF+9i/buKDXYwSA+Cg5H90lHkeTFywK7YOC/KLg9K7iZIlX5
-	 bAF4v5pd0NmCSXN5uYoVvSbYYh6acrBAxAmZuA1k=
+	b=WH+8ILsplhq7519esVvN0zBeOSzMFuUJKloYV3/UiA/Y24VZM81Df6l5bSsw77nYq
+	 yngvmAgsKn6h/i8habTuh5N1QCChrHUt02chfyTQ2NI9Rj84AdzU7Vp4YwuYCajCrG
+	 oCmBfkjNNi/vXPnKnplsv+weilq5/8KbsYRKEEOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Ricardo Ribalda <ribalda@chromium.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.15 089/592] media: uvcvideo: Return the number of processed controls
-Date: Mon, 23 Jun 2025 15:00:47 +0200
-Message-ID: <20250623130702.395580229@linuxfoundation.org>
+Subject: [PATCH 6.15 090/592] media: uvcvideo: Send control events for partial succeeds
+Date: Mon, 23 Jun 2025 15:00:48 +0200
+Message-ID: <20250623130702.421572324@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -55,69 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit ba4fafb02ad6a4eb2e00f861893b5db42ba54369 upstream.
+commit 5c791467aea6277430da5f089b9b6c2a9d8a4af7 upstream.
 
-If we let know our callers that we have not done anything, they will be
-able to optimize their decisions.
+Today, when we are applying a change to entities A, B. If A succeeds and B
+fails the events for A are not sent.
+
+This change changes the code so the events for A are send right after
+they happen.
 
 Cc: stable@kernel.org
 Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Message-ID: <20250224-uvc-data-backup-v2-1-de993ed9823b@chromium.org>
+Message-ID: <20250224-uvc-data-backup-v2-2-de993ed9823b@chromium.org>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_ctrl.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 --- a/drivers/media/usb/uvc/uvc_ctrl.c
 +++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -2090,12 +2090,17 @@ int uvc_ctrl_begin(struct uvc_video_chai
- 	return mutex_lock_interruptible(&chain->ctrl_mutex) ? -ERESTARTSYS : 0;
+@@ -1943,7 +1943,9 @@ static bool uvc_ctrl_xctrls_has_control(
  }
  
-+/*
-+ * Returns the number of uvc controls that have been correctly set, or a
-+ * negative number if there has been an error.
-+ */
- static int uvc_ctrl_commit_entity(struct uvc_device *dev,
- 				  struct uvc_fh *handle,
- 				  struct uvc_entity *entity,
- 				  int rollback,
- 				  struct uvc_control **err_ctrl)
+ static void uvc_ctrl_send_events(struct uvc_fh *handle,
+-	const struct v4l2_ext_control *xctrls, unsigned int xctrls_count)
++				 struct uvc_entity *entity,
++				 const struct v4l2_ext_control *xctrls,
++				 unsigned int xctrls_count)
  {
-+	unsigned int processed_ctrls = 0;
+ 	struct uvc_control_mapping *mapping;
  	struct uvc_control *ctrl;
- 	unsigned int i;
- 	int ret;
-@@ -2130,6 +2135,9 @@ static int uvc_ctrl_commit_entity(struct
- 		else
- 			ret = 0;
+@@ -1955,6 +1957,9 @@ static void uvc_ctrl_send_events(struct
+ 		s32 value;
  
-+		if (!ret)
-+			processed_ctrls++;
+ 		ctrl = uvc_find_control(handle->chain, xctrls[i].id, &mapping);
++		if (ctrl->entity != entity)
++			continue;
 +
- 		if (rollback || ret < 0)
- 			memcpy(uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
- 			       uvc_ctrl_data(ctrl, UVC_CTRL_DATA_BACKUP),
-@@ -2148,7 +2156,7 @@ static int uvc_ctrl_commit_entity(struct
- 			uvc_ctrl_set_handle(handle, ctrl, handle);
+ 		if (ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
+ 			/* Notification will be sent from an Interrupt event. */
+ 			continue;
+@@ -2198,11 +2203,12 @@ int __uvc_ctrl_commit(struct uvc_fh *han
+ 					uvc_ctrl_find_ctrl_idx(entity, ctrls,
+ 							       err_ctrl);
+ 			goto done;
++		} else if (ret > 0 && !rollback) {
++			uvc_ctrl_send_events(handle, entity,
++					     ctrls->controls, ctrls->count);
+ 		}
  	}
  
--	return 0;
-+	return processed_ctrls;
- }
- 
- static int uvc_ctrl_find_ctrl_idx(struct uvc_entity *entity,
-@@ -2195,6 +2203,7 @@ int __uvc_ctrl_commit(struct uvc_fh *han
- 
- 	if (!rollback)
- 		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
-+	ret = 0;
+-	if (!rollback)
+-		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
+ 	ret = 0;
  done:
  	mutex_unlock(&chain->ctrl_mutex);
- 	return ret;
 
 
