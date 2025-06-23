@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F2230E84D;
-	Mon, 23 Jun 2025 13:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC1030E84D;
+	Mon, 23 Jun 2025 13:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685703; cv=none; b=gVZkjdJ9dBJpMvx6SZ3zff5u+i8BRws2ZtKN+9Gxy9Ntu/BkLplHEJDOrjp0SRW3leFiRR8ew+SJrEoUdshaza3C+zRC4Yz/HGA/6bN4wjJ9byzL+fnWcP1E/2mLfOi7xKz9hV6BtvpFSf0cYByj3QfWFrOzRYFjEg0gT9cdLUw=
+	t=1750685706; cv=none; b=PCs2Fp0mQpOkp0FiEw6tXV2aFwbcUe8q+90kNwdpuUQfyZSNslHhKP2jwGvAJHwG7SHoAPzBzV8Jk0Ho24v+IyDe7q4A0C0UPNjVnmn5dBgAjtq+EE4+YptmZB/lHvewBsaqZOJ7xM2uwhGfCUuKRXJICa3D4AZ7qPWlVFL0MQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685703; c=relaxed/simple;
-	bh=K9WQDYTGVPi04TEAFu2sYmuhPRDF9xdWHQnKjGpP7DU=;
+	s=arc-20240116; t=1750685706; c=relaxed/simple;
+	bh=jBU4ObT3cerIaka4g4gJgz59uaOkSOEiNyRHxDbj9fA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qIWQ7mRSHoTe0QF1ZwjVT6W3PcjJTlK0nu7qL9jYgIC5OsLArup540rE7JTBFT7MdVn3Bq8yawTpCReD3cPOA9GX0Y0NzKXS136hTfrLRxFFC4NhuqOe5APcSJeiPBLAC0v0oKwpI/BJ9d3SlwOjA6mCIWFofSa8GnbzpjX03/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPB5viDZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LW3taUXP0yhfgL9XBtaQXAERa7MG8yb6H1EB0V8cRuaEu1Qwni0VZyEXSzSJr5zqF2Aahuiyrx2dt83s+P901OjnhmhOoUqLQUFrIkG6Cwk9Egng1VzcDaYBxWPNS+YJOEILNqIH/XT9SK5iX0XwwSDnGIc0rDcfLUh+jSSzvHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcuFsGIl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPB5viDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D7DC4CEEA;
-	Mon, 23 Jun 2025 13:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcuFsGIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9226DC4CEEA;
+	Mon, 23 Jun 2025 13:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685703;
-	bh=K9WQDYTGVPi04TEAFu2sYmuhPRDF9xdWHQnKjGpP7DU=;
+	s=korg; t=1750685705;
+	bh=jBU4ObT3cerIaka4g4gJgz59uaOkSOEiNyRHxDbj9fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPB5viDZ05KykD5w0qFkuE8vBEFQ1WrDFaBVVyt3yE1a/NMPG+I3TGMNtgBlHb2af
-	 bnSYGQiuX/3pluzktWdatbOZmScQjHKzSgLGOsHl7kilWHYLz/hrEZiljZJQmxDOZr
-	 DOp7xFuiFEpfYqIeWdTICFrNGAD8Ym+ljKFuQuyk=
+	b=RcuFsGIlVBBvQ4BakA9S8WgETGAikOEoZ1zUWDyYMVJMmOJZ69mu49CNude/PwnhK
+	 w1J0pcnmVFt+Xwxngq4wW1c0lbs7bR622crvqaYNMuTKgWMExHMW/KfkC8k789cm+j
+	 MHbtA8lWgSkNBQH9QZ+B1VlWRV4C2yz5kPtCE8RQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 053/411] clk: qcom: gcc-sm6350: Add *_wait_val values for GDSCs
-Date: Mon, 23 Jun 2025 15:03:17 +0200
-Message-ID: <20250623130634.588012596@linuxfoundation.org>
+Subject: [PATCH 5.4 097/222] fs/filesystems: Fix potential unsigned integer underflow in fs_name()
+Date: Mon, 23 Jun 2025 15:07:12 +0200
+Message-ID: <20250623130615.025290070@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit afdfd829a99e467869e3ca1955fb6c6e337c340a ]
+[ Upstream commit 1363c134ade81e425873b410566e957fecebb261 ]
 
-Compared to the msm-4.19 driver the mainline GDSC driver always sets the
-bits for en_rest, en_few & clk_dis, and if those values are not set
-per-GDSC in the respective driver then the default value from the GDSC
-driver is used. The downstream driver only conditionally sets
-clk_dis_wait_val if qcom,clk-dis-wait-val is given in devicetree.
+fs_name() has @index as unsigned int, so there is underflow risk for
+operation '@index--'.
 
-Correct this situation by explicitly setting those values. For all GDSCs
-the reset value of those bits are used.
+Fix by breaking the for loop when '@index == 0' which is also more proper
+than '@index <= 0' for unsigned integer comparison.
 
-Fixes: 131abae905df ("clk: qcom: Add SM6350 GCC driver")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
-Link: https://lore.kernel.org/r/20250425-sm6350-gdsc-val-v1-3-1f252d9c5e4e@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/20250410-fix_fs-v1-1-7c14ccc8ebaa@quicinc.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm6350.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/filesystems.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm6350.c b/drivers/clk/qcom/gcc-sm6350.c
-index 0860c6178b4d3..e31a25084b0a3 100644
---- a/drivers/clk/qcom/gcc-sm6350.c
-+++ b/drivers/clk/qcom/gcc-sm6350.c
-@@ -2319,6 +2319,9 @@ static struct clk_branch gcc_video_xo_clk = {
+--- a/fs/filesystems.c
++++ b/fs/filesystems.c
+@@ -155,15 +155,19 @@ static int fs_index(const char __user *
+ static int fs_name(unsigned int index, char __user * buf)
+ {
+ 	struct file_system_type * tmp;
+-	int len, res;
++	int len, res = -EINVAL;
  
- static struct gdsc usb30_prim_gdsc = {
- 	.gdscr = 0x1a004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "usb30_prim_gdsc",
- 	},
-@@ -2327,6 +2330,9 @@ static struct gdsc usb30_prim_gdsc = {
+ 	read_lock(&file_systems_lock);
+-	for (tmp = file_systems; tmp; tmp = tmp->next, index--)
+-		if (index <= 0 && try_module_get(tmp->owner))
++	for (tmp = file_systems; tmp; tmp = tmp->next, index--) {
++		if (index == 0) {
++			if (try_module_get(tmp->owner))
++				res = 0;
+ 			break;
++		}
++	}
+ 	read_unlock(&file_systems_lock);
+-	if (!tmp)
+-		return -EINVAL;
++	if (res)
++		return res;
  
- static struct gdsc ufs_phy_gdsc = {
- 	.gdscr = 0x3a004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "ufs_phy_gdsc",
- 	},
--- 
-2.39.5
-
+ 	/* OK, we got the reference, so we can safely block */
+ 	len = strlen(tmp->name) + 1;
 
 
