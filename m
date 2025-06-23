@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BD8255F3C;
-	Mon, 23 Jun 2025 13:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721C824FBFF;
+	Mon, 23 Jun 2025 13:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685741; cv=none; b=qc9gLMCuwOLyfYVQOJ8wnDiXdc1eaCHlrJgtrrpRbtAdthliH1a4xV4M3ipKhCgIxtxqgghRyrXKC0E4SVieaWBXFildb1+mUSqhDk84qNkoaZWa91b+eqpHVbdtfAnbblNJgcXreTrHlIulnpCmTWch3L+w2gQfbxZy1F/bt2M=
+	t=1750685744; cv=none; b=V4DVqQfTmEQqdJMRGJ5ZPsx/N0mwv1R2bBDhWSXwnQey8QPnnCNmkRcaChy7SOrQx2UAQ9uEXNgenSMby2I+JpFGqruUbG8yq8SOpocjfE0WIvc4B/VWccoR/znxeBSXZfG2aLNkP+qi2Y7GnBppOMQgH2CLN8+LMHpsW7VECdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685741; c=relaxed/simple;
-	bh=Jxh5mhMQDVDY+R44pe92eaACobz20ITMDksEko7IEgw=;
+	s=arc-20240116; t=1750685744; c=relaxed/simple;
+	bh=J0Xj7Az+Rm1aVjIk8uLNS0XOjmflbKCcWaP+jpx2AZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oSs15kr7z4VHi6gK/uqkd84F6Y5wK/n/XiGuAhqymmE9Bg/WLbKBmvBkF5oH4F7397Y7PZ/rWiiPmYN/rmusDEHT1pgg890Nwq3Ly05bHcwncUfRZ+6oUyZhIbjeUXl/YP/mU0db6xTB9PXGNDahdfUc2ggU6n5A/AS75p6E/hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUUCaFAR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sm1dYQH82lbnjqqkQxm/a72KQIHWBJyFOBpenAtRpWzxhsc4lE+LeGY8oQSDZhjXk/UTcCRKw/6UHPumuRInq/wxuzW+wdO1UrucqSaq3WWDrEzIngHYSLu5MXEYstf+R1KzFjkMN1VEkuNs0NJ8AcxsodvWglq8GSvPalNUqRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUeZcwVd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUUCaFAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59522C4CEEA;
-	Mon, 23 Jun 2025 13:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUeZcwVd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05717C4CEEA;
+	Mon, 23 Jun 2025 13:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685741;
-	bh=Jxh5mhMQDVDY+R44pe92eaACobz20ITMDksEko7IEgw=;
+	s=korg; t=1750685744;
+	bh=J0Xj7Az+Rm1aVjIk8uLNS0XOjmflbKCcWaP+jpx2AZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bUUCaFARCsnOE3QxZf9Jz2YUyeOFBBr+hU8r0TE5hWW5lt1vC38uW8DNmbo0hPAru
-	 P1k0lJe1PC7ajLnG290sFVvpQJFl+4iX7TWCVGAoTILGoQU3vzGHe0TidRSR4ek2R6
-	 4S5xu9H/v5EXJiffGSwB8f95y8oiGnOxhRQ/vvso=
+	b=CUeZcwVd+gN/vN1iJS8XzEv+tfGB1E8Z/6DM0utJU1ZnXD0F9bTWv5oM8+dURwJl5
+	 tNAcNYyfnK0/cF2OcgCF3K0BuNMf7d3eZbsOocufdgdyr6mqmaMFZONOn1+bKFeov/
+	 QQjsV4gdPrGBmVcoT03fz9HN2/lZvpK2rRNCfbZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 024/290] media: ov8856: suppress probe deferral errors
-Date: Mon, 23 Jun 2025 15:04:45 +0200
-Message-ID: <20250623130627.710131321@linuxfoundation.org>
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.12 005/414] crypto: qat - add shutdown handler to qat_420xx
+Date: Mon, 23 Jun 2025 15:02:22 +0200
+Message-ID: <20250623130642.157866664@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-commit e3d86847fba58cf71f66e81b6a2515e07039ae17 upstream.
+commit 097143f23a1164bfd1b6f70279d229be44da2e30 upstream.
 
-Probe deferral should not be logged as an error:
+During a warm reset via kexec, the system bypasses the driver removal
+sequence, meaning that the remove() callback is not invoked.
+If a QAT device is not shutdown properly, the device driver will fail to
+load in a newly rebooted kernel.
 
-	ov8856 24-0010: failed to get HW configuration: -517
+This might result in output like the following after the kexec reboot:
 
-Use dev_err_probe() for the clock lookup and drop the (mostly) redundant
-dev_err() from sensor probe() to suppress it.
+    420xx 0000:01:00.0: Failed to power up the device
+    420xx 0000:01:00.0: Failed to initialize device
+    420xx 0000:01:00.0: Resetting device qat_dev0
+    420xx 0000:01:00.0: probe with driver 420xx failed with error -14
 
-Note that errors during regulator lookup is already correctly logged
-using dev_err_probe().
+Implement the shutdown() handler that hooks into the reboot notifier
+list. This brings down the QAT device and ensures it is shut down
+properly.
 
-Fixes: 0c2c7a1e0d69 ("media: ov8856: Add devicetree support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Cc: <stable@vger.kernel.org>
+Fixes: fcf60f4bcf54 ("crypto: qat - add support for 420xx devices")
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov8856.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/crypto/intel/qat/qat_420xx/adf_drv.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/media/i2c/ov8856.c
-+++ b/drivers/media/i2c/ov8856.c
-@@ -2323,8 +2323,8 @@ static int ov8856_get_hwcfg(struct ov885
- 	if (!is_acpi_node(fwnode)) {
- 		ov8856->xvclk = devm_clk_get(dev, "xvclk");
- 		if (IS_ERR(ov8856->xvclk)) {
--			dev_err(dev, "could not get xvclk clock (%pe)\n",
--				ov8856->xvclk);
-+			dev_err_probe(dev, PTR_ERR(ov8856->xvclk),
-+				      "could not get xvclk clock\n");
- 			return PTR_ERR(ov8856->xvclk);
- 		}
+--- a/drivers/crypto/intel/qat/qat_420xx/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_420xx/adf_drv.c
+@@ -181,11 +181,19 @@ static void adf_remove(struct pci_dev *p
+ 	adf_cleanup_accel(accel_dev);
+ }
  
-@@ -2429,11 +2429,8 @@ static int ov8856_probe(struct i2c_clien
- 		return -ENOMEM;
- 
- 	ret = ov8856_get_hwcfg(ov8856, &client->dev);
--	if (ret) {
--		dev_err(&client->dev, "failed to get HW configuration: %d",
--			ret);
-+	if (ret)
- 		return ret;
--	}
- 
- 	v4l2_i2c_subdev_init(&ov8856->sd, client, &ov8856_subdev_ops);
- 
++static void adf_shutdown(struct pci_dev *pdev)
++{
++	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
++
++	adf_dev_down(accel_dev);
++}
++
+ static struct pci_driver adf_driver = {
+ 	.id_table = adf_pci_tbl,
+ 	.name = ADF_420XX_DEVICE_NAME,
+ 	.probe = adf_probe,
+ 	.remove = adf_remove,
++	.shutdown = adf_shutdown,
+ 	.sriov_configure = adf_sriov_configure,
+ 	.err_handler = &adf_err_handler,
+ };
 
 
