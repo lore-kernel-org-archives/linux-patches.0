@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D7C30E84D;
-	Mon, 23 Jun 2025 13:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A055830E84D;
+	Mon, 23 Jun 2025 13:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685693; cv=none; b=XSIumo3JQTY29G+gRj8MGc1lkBiFfdIa6K4CCQ76md40n+VZHXhGFT0rh3mcDY9yfUSYO7gDcuWg0R3ZrVrAgF2Sb7UXkvCWL6t9LjfDU3ZEjUnk4OyVPepYgTsKKgCkqrEJ9DGdK6Zd8zH/4BvMoI6ogEJpJv8SvaHfXZGhz1Q=
+	t=1750685695; cv=none; b=nUGsPfrysFkaSzCiGp8CT8Aq+4vIdZQmU2OM25cHQ4UY+at5/yTBOehTmEA4lY0eHcfky22S5fX1R4/WUc8ill9a7Bmop7974Zgzq5TpJtXvXHJGNBrERBFmWabq3iCaUMdM5rPJXgYb+D9qt1BUhdDEx10dSJ2aT7JvxABc+R0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685693; c=relaxed/simple;
-	bh=f5EPCf15JFrzC0M26dDpyY2vNVp07lJKu3c44nTeamc=;
+	s=arc-20240116; t=1750685695; c=relaxed/simple;
+	bh=wFQGiS8+FSF1RgJhb1rRH+sktIFP/s4pT35/J2WOyvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qinUndzaaVdSpy/9JhFS2blViWZBBHm4GdcrZTmuW9MM9M5Dh7C/EvR8SFfNPqof41NaLG5fPkVkFr7HBAaDr7xZs1upSeIJ21OF+tPz/GpS20/I+XvP9k0eBlwf3vIDN5f1dbmnHi79i36+UyLPQ0+dc3VBpJHuOpX1FOqeimA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03OaZYa/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WGMeqCjpscQXBrJAcOomzZFlXq/hpkXNsDfQghFOEOIpi4TAfhiXRwJ0N+AeMruKbDC5gSvVd6ltFQXVkThjhY8Sezzdfg6vBPLRaEI+YYyZ/S0EgfHrVRbbxehMqQc1VwaI55bx0N+9ZGifiAdcjmDh5NGotDHBJQdfqQgUBOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OztuwpI0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03OaZYa/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41C7C4CEEA;
-	Mon, 23 Jun 2025 13:34:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OztuwpI0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A1EC4CEEA;
+	Mon, 23 Jun 2025 13:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685693;
-	bh=f5EPCf15JFrzC0M26dDpyY2vNVp07lJKu3c44nTeamc=;
+	s=korg; t=1750685695;
+	bh=wFQGiS8+FSF1RgJhb1rRH+sktIFP/s4pT35/J2WOyvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03OaZYa/TpZqsJ/+/PxM+3Om8CmH/2bocVCB2jpN3PzO9STLQG3VtOnSSUqIglY4f
-	 cKrfsQsIO4y0LJjpzxC4KIWXZ/QcUGxeOJirFRgHUzyOF7sz1susYg0zRPxxCcapTf
-	 oEf9ALkbJJqaevw6Sn89tnJ8KdM5IGjTGKDbp8Eg=
+	b=OztuwpI0PAzOl5Aj29LCRuQ2LB4gp/qXvtvt+66WQwNpI3gxwrGClPdBCfIbWLiFs
+	 qmyzJPz8k0t4ZYZphq9tu7Sg7UZhcQBil/022+xtBNUiazi/iQd5o/5Zp9+pEBSBiI
+	 wxDTqunRGZ29VBoV1id5HIZo16rkgpJ5BqKuCnow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 253/592] drm/amdgpu/gfx11: fix CSIB handling
-Date: Mon, 23 Jun 2025 15:03:31 +0200
-Message-ID: <20250623130706.315012143@linuxfoundation.org>
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	kdevops@lists.linux.dev,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.4 113/222] ext4: fix calculation of credits for extent tree modification
+Date: Mon, 23 Jun 2025 15:07:28 +0200
+Message-ID: <20250623130615.504300357@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +51,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit a9a8bccaa3ba64d509cf7df387cf0b5e1cd06499 ]
+commit 32a93f5bc9b9812fc710f43a4d8a6830f91e4988 upstream.
 
-We shouldn't return after the last section.
-We need to update the rest of the CSIB.
+Luis and David are reporting that after running generic/750 test for 90+
+hours on 2k ext4 filesystem, they are able to trigger a warning in
+jbd2_journal_dirty_metadata() complaining that there are not enough
+credits in the running transaction started in ext4_do_writepages().
 
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Indeed the code in ext4_do_writepages() is racy and the extent tree can
+change between the time we compute credits necessary for extent tree
+computation and the time we actually modify the extent tree. Thus it may
+happen that the number of credits actually needed is higher. Modify
+ext4_ext_index_trans_blocks() to count with the worst case of maximum
+tree depth. This can reduce the possible number of writers that can
+operate in the system in parallel (because the credit estimates now won't
+fit in one transaction) but for reasonably sized journals this shouldn't
+really be an issue. So just go with a safe and simple fix.
+
+Link: https://lore.kernel.org/all/20250415013641.f2ppw6wov4kn4wq2@offworld
+Reported-by: Davidlohr Bueso <dave@stgolabs.net>
+Reported-by: Luis Chamberlain <mcgrof@kernel.org>
+Tested-by: kdevops@lists.linux.dev
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250429175535.23125-2-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/ext4/extents.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-index 2a5c2a1ae3c74..914c18f48e8e1 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -859,8 +859,6 @@ static void gfx_v11_0_get_csb_buffer(struct amdgpu_device *adev,
- 						PACKET3_SET_CONTEXT_REG_START);
- 				for (i = 0; i < ext->reg_count; i++)
- 					buffer[count++] = cpu_to_le32(ext->extent[i]);
--			} else {
--				return;
- 			}
- 		}
- 	}
--- 
-2.39.5
-
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -2592,18 +2592,19 @@ int ext4_ext_calc_credits_for_single_ext
+ int ext4_ext_index_trans_blocks(struct inode *inode, int extents)
+ {
+ 	int index;
+-	int depth;
+ 
+ 	/* If we are converting the inline data, only one is needed here. */
+ 	if (ext4_has_inline_data(inode))
+ 		return 1;
+ 
+-	depth = ext_depth(inode);
+-
++	/*
++	 * Extent tree can change between the time we estimate credits and
++	 * the time we actually modify the tree. Assume the worst case.
++	 */
+ 	if (extents <= 1)
+-		index = depth * 2;
++		index = EXT4_MAX_EXTENT_DEPTH * 2;
+ 	else
+-		index = depth * 3;
++		index = EXT4_MAX_EXTENT_DEPTH * 3;
+ 
+ 	return index;
+ }
 
 
