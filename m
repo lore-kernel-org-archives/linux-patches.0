@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04698219A7A;
-	Mon, 23 Jun 2025 22:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16DE19E7F9;
+	Mon, 23 Jun 2025 22:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717092; cv=none; b=rIhTKZ5rb4bjZdTI37bMCdVHZrdMrcIHIFxE+WWcBgPMiRXQWKbFUQwA0crga7sa4yR7CXotFWBuxbX2Dthb0nCBrfkUgtTG3NuY4XK7WQkft4TGcpsRkFdCZiCN3L231F4pXSRqCsnGqZLOTxT/kPJNzU/Aj/HiLgtIRg3OX7g=
+	t=1750717095; cv=none; b=i//qjIngeWjnUYNR2c3JyqZRlWGx/4hZP1l3oQhYeT306DXWx3wBfKMfav3i/yQfLWOVRac+UqfA4zUdrbvW2Z1x1vGEzBRe005qInCBKMPrLeeVueVLG94DmFztS2j6R7jXGJa8IXDqcPknPq3TNExre9pIt8EDhRyjHR6jmKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717092; c=relaxed/simple;
-	bh=OD95Ek5XtsoXt/OwTwAcpDjSwxWGmy7soAVetVmJn2A=;
+	s=arc-20240116; t=1750717095; c=relaxed/simple;
+	bh=kNB2OjORJixXfLkCjQ1S5T+51+mPJN1SaskpeV4ejTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sumc0aLcZOYgdI5EA5tguwgh+ruyQRo8PTs3i/EtmQHE3pdu5ZXhmSpKgMm/527LDAwqLxNf4NOFm9+IDjpHtAKnoRK7x+0CNshrITORC/ylmkhKN0cay/YZCOZKtvPxOCith7LbRf0xQCSFcSMYZ5ATzmh93thIHMbXsTtZioU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAszIsIh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W8GozTH2FXNPBErLVsD7eq6SBuue7K7Zwbo3y/j9tx5htDfznVIMyS9Z07VCNmPk1FFo+Ej+SUGrgz7YdFLm2Nxs1ZgGgm3Uv8x0tGgonSdp3GaPpBMDcMRf1GyOUfEkRDjEHReq6AHw+cA+aCwbII5gpUa/BA9XKwhpwFDC1Oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtBmID5U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAszIsIh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DAEC4CEEA;
-	Mon, 23 Jun 2025 22:18:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtBmID5U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020FEC4CEEA;
+	Mon, 23 Jun 2025 22:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717091;
-	bh=OD95Ek5XtsoXt/OwTwAcpDjSwxWGmy7soAVetVmJn2A=;
+	s=korg; t=1750717094;
+	bh=kNB2OjORJixXfLkCjQ1S5T+51+mPJN1SaskpeV4ejTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bAszIsIheZQF2UYyELsfP9EA6gETFHmYFIWyTkDXt6LH512MVVIlqQkcoy7x7jHih
-	 Ql3uOQopRZzYJiKsjTzREX/71DiyLtJ5SMWJCvAhpgNgYRrjOFrI7xxB8lmhz3KoPz
-	 ibp+bkMU/eUdEueuEnLFPZRjUCN738abnk9in3xQ=
+	b=TtBmID5UIKAAKtxNZSCTPG18HdUKAWtzXJmF0ei5nV1/7oIx/whoUEes7nv8+z/p5
+	 u9ZVgHJI9jP+Pn1PDQMmibmrbQnQA+B87cRjh9t1KU1dzW07Fj5Q6KPEsunE8CdwPN
+	 R6tYZoRj3DHrkacR/yhk2p9qnhwdTxhXOWUBOTo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.12 323/414] sched_ext, sched/core: Dont call scx_group_set_weight() prematurely from sched_create_group()
-Date: Mon, 23 Jun 2025 15:07:40 +0200
-Message-ID: <20250623130650.069669098@linuxfoundation.org>
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 592/592] erofs: remove a superfluous check for encoded extents
+Date: Mon, 23 Jun 2025 15:09:10 +0200
+Message-ID: <20250623130714.514048875@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,88 +46,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit 33796b91871ad4010c8188372dd1faf97cf0f1c0 upstream.
+[ Upstream commit 417b8af2e30d7f131682a893ad79c506fd39c624 ]
 
-During task_group creation, sched_create_group() calls
-scx_group_set_weight() with CGROUP_WEIGHT_DFL to initialize the sched_ext
-portion. This is premature and ends up calling ops.cgroup_set_weight() with
-an incorrect @cgrp before ops.cgroup_init() is called.
+It is possible when an inode is split into segments for multi-threaded
+compression, and the tail extent of a segment could also be small.
 
-sched_create_group() should just initialize SCX related fields in the new
-task_group. Fix it by factoring out scx_tg_init() from sched_init() and
-making sched_create_group() call that function instead of
-scx_group_set_weight().
-
-v2: Retain CONFIG_EXT_GROUP_SCHED ifdef in sched_init() as removing it leads
-    to build failures on !CONFIG_GROUP_SCHED configs.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Fixes: 819513666966 ("sched_ext: Add cgroup support")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1d191b4ca51d ("erofs: implement encoded extent metadata")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250620153108.1368029-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c |    4 ++--
- kernel/sched/ext.c  |    5 +++++
- kernel/sched/ext.h  |    2 ++
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ fs/erofs/zmap.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8423,7 +8423,7 @@ void __init sched_init(void)
- 		init_cfs_bandwidth(&root_task_group.cfs_bandwidth, NULL);
- #endif /* CONFIG_FAIR_GROUP_SCHED */
- #ifdef CONFIG_EXT_GROUP_SCHED
--		root_task_group.scx_weight = CGROUP_WEIGHT_DFL;
-+		scx_tg_init(&root_task_group);
- #endif /* CONFIG_EXT_GROUP_SCHED */
- #ifdef CONFIG_RT_GROUP_SCHED
- 		root_task_group.rt_se = (struct sched_rt_entity **)ptr;
-@@ -8863,7 +8863,7 @@ struct task_group *sched_create_group(st
- 	if (!alloc_rt_sched_group(tg, parent))
- 		goto err;
- 
--	scx_group_set_weight(tg, CGROUP_WEIGHT_DFL);
-+	scx_tg_init(tg);
- 	alloc_uclamp_sched_group(tg, parent);
- 
- 	return tg;
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3918,6 +3918,11 @@ static void scx_cgroup_warn_missing_idle
- 	cgroup_warned_missing_idle = true;
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index 6afcb054780d4..0bebc6e3a4d7d 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -639,12 +639,6 @@ static int z_erofs_map_blocks_ext(struct inode *inode,
+ 		}
+ 	}
+ 	map->m_llen = lend - map->m_la;
+-	if (!last && map->m_llen < sb->s_blocksize) {
+-		erofs_err(sb, "extent too small %llu @ offset %llu of nid %llu",
+-			  map->m_llen, map->m_la, vi->nid);
+-		DBG_BUGON(1);
+-		return -EFSCORRUPTED;
+-	}
+ 	return 0;
  }
  
-+void scx_tg_init(struct task_group *tg)
-+{
-+	tg->scx_weight = CGROUP_WEIGHT_DFL;
-+}
-+
- int scx_tg_online(struct task_group *tg)
- {
- 	int ret = 0;
---- a/kernel/sched/ext.h
-+++ b/kernel/sched/ext.h
-@@ -70,6 +70,7 @@ static inline void scx_update_idle(struc
- 
- #ifdef CONFIG_CGROUP_SCHED
- #ifdef CONFIG_EXT_GROUP_SCHED
-+void scx_tg_init(struct task_group *tg);
- int scx_tg_online(struct task_group *tg);
- void scx_tg_offline(struct task_group *tg);
- int scx_cgroup_can_attach(struct cgroup_taskset *tset);
-@@ -79,6 +80,7 @@ void scx_cgroup_cancel_attach(struct cgr
- void scx_group_set_weight(struct task_group *tg, unsigned long cgrp_weight);
- void scx_group_set_idle(struct task_group *tg, bool idle);
- #else	/* CONFIG_EXT_GROUP_SCHED */
-+static inline void scx_tg_init(struct task_group *tg) {}
- static inline int scx_tg_online(struct task_group *tg) { return 0; }
- static inline void scx_tg_offline(struct task_group *tg) {}
- static inline int scx_cgroup_can_attach(struct cgroup_taskset *tset) { return 0; }
+-- 
+2.39.5
+
 
 
