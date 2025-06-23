@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C99519D084;
-	Mon, 23 Jun 2025 21:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E661A19D084;
+	Mon, 23 Jun 2025 21:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714853; cv=none; b=NKfYXc5INQFSLhjVlepLWgi0RcCFXKWkKGsaBqPxRXbF0v+egU7fVaWcGjuvmweGHJRmwHpuRcO6VYWDxyzUYMLERnx1y86kCPiN62LyOj1Ahpu87rxCsGd/qMgAiA34nBYIaIE+zCvdgEAl9TUSv90IcKbH7HXC//fBfvEk5ao=
+	t=1750714856; cv=none; b=Rz3jFnUBbPJxGNMUiWBwpyKSAbbwJ/4GB3U/EnPz41YJqn1rPdKTIRVpQG1sKnh9q4rzkE3nwhcYFTkgHkp4O9hj+QrPqN3DBDlks33YFNfrZ8E+vYYGzVz0lIez8zNyTydRJlcD8PmCX0Ptkz3qqA0Fiqq+YjKx1LSMBNh1PwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714853; c=relaxed/simple;
-	bh=8HdFSrtkt7nfxVr04OWKaaEAxjiX2W7XuPlXXRwI4Gw=;
+	s=arc-20240116; t=1750714856; c=relaxed/simple;
+	bh=QYOt5t+haK5FiPTa7IA+5jRHjnN5mxZUaFERbJZMfiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D9LJLPhhuWalt7ZwZ6aWRHb04XWuzuR64M6aFqVgvWHBlQwmba47HRwzVgyptYRgUKUFQ21CFQH7N6/X0t4Y2X0Fa0WQqpRvgNMQQ9oF9VNK83O4ZP33ZBxX5Cck7biGcinyfCb1AQtOVvJqaV970Qt67xY1Rb/9MpvMausCWho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGV8D1PS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b4YUqdHzMnLsXU8c7jdPuxuepFiJZPEbafoq7iYMiu/hphbf0CMn4AEbJoqLmEnlIVj49TF+82EiHDGKZlmbB+cHXHiF+vTTAJk9JuaOdXHLSgLOT0yzbNIMwowT/DHcbfkuADgRIFZS+niLe1hCUH5M4KT/4Ee6iYwdhmILz8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZfCF3uRX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGV8D1PS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1292BC4CEEA;
-	Mon, 23 Jun 2025 21:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfCF3uRX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6F5C4CEEA;
+	Mon, 23 Jun 2025 21:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714853;
-	bh=8HdFSrtkt7nfxVr04OWKaaEAxjiX2W7XuPlXXRwI4Gw=;
+	s=korg; t=1750714855;
+	bh=QYOt5t+haK5FiPTa7IA+5jRHjnN5mxZUaFERbJZMfiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RGV8D1PSfYdNtFzYaP/ZxXd4L/jSwsksbeQMq6MKIpw5tgWdwaWBD4aHvSmwE6mng
-	 iWzVQiKZ+gG6yZC2xMy2Q6R7bNx64h+XSj9cdTYzB1BC+bkHU6a96vxica9jOjVNe1
-	 3XpMF08z/gJcycWMINrTbgRgKIkhLvOF/tbyUhMQ=
+	b=ZfCF3uRXt2y2qdgBzhwFBj2VgI7VbSJwRHAgcZa+HxrdDpocJL5fYgv92W+zuZ3ir
+	 FoDzrdhnrtMVLrbBdJ5SlJs0QgO5jwhpwbXj9ZCuTIb85UGJ231N+zT/zTB8V7HHUn
+	 O+3o2gpaVbIcS31paEr7XH2K0sLU8MQKwg2HIgGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	=?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 220/508] serial: sh-sci: Check if TX data was written to device in .tx_empty()
-Date: Mon, 23 Jun 2025 15:04:25 +0200
-Message-ID: <20250623130650.676281137@linuxfoundation.org>
+Subject: [PATCH 6.6 185/290] usbnet: asix AX88772: leave the carrier control to phylink
+Date: Mon, 23 Jun 2025 15:07:26 +0200
+Message-ID: <20250623130632.437171464@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,159 +46,158 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Krzysztof Hałasa <khalasa@piap.pl>
 
-commit 7cc0e0a43a91052477c2921f924a37d9c3891f0c upstream.
+[ Upstream commit 4145f00227ee80f21ab274e9cd9c09758e9bcf3d ]
 
-On the Renesas RZ/G3S, when doing suspend to RAM, the uart_suspend_port()
-is called. The uart_suspend_port() calls 3 times the
-struct uart_port::ops::tx_empty() before shutting down the port.
+ASIX AX88772B based USB 10/100 Ethernet adapter doesn't come
+up ("carrier off"), despite the built-in 100BASE-FX PHY positive link
+indication. The internal PHY is configured (using EEPROM) in fixed
+100 Mbps full duplex mode.
 
-According to the documentation, the struct uart_port::ops::tx_empty()
-API tests whether the transmitter FIFO and shifter for the port is
-empty.
+The primary problem appears to be using carrier_netif_{on,off}() while,
+at the same time, delegating carrier management to phylink. Use only the
+latter and remove "manual control" in the asix driver.
 
-The Renesas RZ/G3S SCIFA IP reports the number of data units stored in the
-transmit FIFO through the FDR (FIFO Data Count Register). The data units
-in the FIFOs are written in the shift register and transmitted from there.
-The TEND bit in the Serial Status Register reports if the data was
-transmitted from the shift register.
+I don't have any other AX88772 board here, but the problem doesn't seem
+specific to a particular board or settings - it's probably
+timing-dependent.
 
-In the previous code, in the tx_empty() API implemented by the sh-sci
-driver, it is considered that the TX is empty if the hardware reports the
-TEND bit set and the number of data units in the FIFO is zero.
+Remove unused asix_adjust_link() as well.
 
-According to the HW manual, the TEND bit has the following meaning:
-
-0: Transmission is in the waiting state or in progress.
-1: Transmission is completed.
-
-It has been noticed that when opening the serial device w/o using it and
-then switch to a power saving mode, the tx_empty() call in the
-uart_port_suspend() function fails, leading to the "Unable to drain
-transmitter" message being printed on the console. This is because the
-TEND=0 if nothing has been transmitted and the FIFOs are empty. As the
-TEND=0 has double meaning (waiting state, in progress) we can't
-determined the scenario described above.
-
-Add a software workaround for this. This sets a variable if any data has
-been sent on the serial console (when using PIO) or if the DMA callback has
-been called (meaning something has been transmitted). In the tx_empty()
-API the status of the DMA transaction is also checked and if it is
-completed or in progress the code falls back in checking the hardware
-registers instead of relying on the software variable.
-
-Fixes: 73a19e4c0301 ("serial: sh-sci: Add DMA support.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20241125115856.513642-1-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[claudiu.beznea: fixed conflict by:
- - keeping serial_port_out() instead of sci_port_out() in
-   sci_transmit_chars()
- - keeping !uart_circ_empty(xmit) condition in sci_dma_tx_complete(),
-   after s->tx_occurred = true; assignement]
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Signed-off-by: Krzysztof Hałasa <khalasa@piap.pl>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/m3plhmdfte.fsf_-_@t19.piap.pl
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sh-sci.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/net/usb/asix.h         |  1 -
+ drivers/net/usb/asix_common.c  | 22 ----------------------
+ drivers/net/usb/asix_devices.c | 17 ++++-------------
+ 3 files changed, 4 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index ed468b676f0b9..f8f301db84339 100644
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -175,6 +175,7 @@ struct sci_port {
+diff --git a/drivers/net/usb/asix.h b/drivers/net/usb/asix.h
+index 74162190bccc1..8531b804021aa 100644
+--- a/drivers/net/usb/asix.h
++++ b/drivers/net/usb/asix.h
+@@ -224,7 +224,6 @@ int asix_write_rx_ctl(struct usbnet *dev, u16 mode, int in_pm);
  
- 	bool has_rtscts;
- 	bool autorts;
-+	bool tx_occurred;
+ u16 asix_read_medium_status(struct usbnet *dev, int in_pm);
+ int asix_write_medium_mode(struct usbnet *dev, u16 mode, int in_pm);
+-void asix_adjust_link(struct net_device *netdev);
+ 
+ int asix_write_gpio(struct usbnet *dev, u16 value, int sleep, int in_pm);
+ 
+diff --git a/drivers/net/usb/asix_common.c b/drivers/net/usb/asix_common.c
+index 72ffc89b477ad..7fd763917ae2c 100644
+--- a/drivers/net/usb/asix_common.c
++++ b/drivers/net/usb/asix_common.c
+@@ -414,28 +414,6 @@ int asix_write_medium_mode(struct usbnet *dev, u16 mode, int in_pm)
+ 	return ret;
+ }
+ 
+-/* set MAC link settings according to information from phylib */
+-void asix_adjust_link(struct net_device *netdev)
+-{
+-	struct phy_device *phydev = netdev->phydev;
+-	struct usbnet *dev = netdev_priv(netdev);
+-	u16 mode = 0;
+-
+-	if (phydev->link) {
+-		mode = AX88772_MEDIUM_DEFAULT;
+-
+-		if (phydev->duplex == DUPLEX_HALF)
+-			mode &= ~AX_MEDIUM_FD;
+-
+-		if (phydev->speed != SPEED_100)
+-			mode &= ~AX_MEDIUM_PS;
+-	}
+-
+-	asix_write_medium_mode(dev, mode, 0);
+-	phy_print_status(phydev);
+-	usbnet_link_change(dev, phydev->link, 0);
+-}
+-
+ int asix_write_gpio(struct usbnet *dev, u16 value, int sleep, int in_pm)
+ {
+ 	int ret;
+diff --git a/drivers/net/usb/asix_devices.c b/drivers/net/usb/asix_devices.c
+index ec4dcf89cbedd..119295f5f3b35 100644
+--- a/drivers/net/usb/asix_devices.c
++++ b/drivers/net/usb/asix_devices.c
+@@ -752,7 +752,6 @@ static void ax88772_mac_link_down(struct phylink_config *config,
+ 	struct usbnet *dev = netdev_priv(to_net_dev(config->dev));
+ 
+ 	asix_write_medium_mode(dev, 0, 0);
+-	usbnet_link_change(dev, false, false);
+ }
+ 
+ static void ax88772_mac_link_up(struct phylink_config *config,
+@@ -783,7 +782,6 @@ static void ax88772_mac_link_up(struct phylink_config *config,
+ 		m |= AX_MEDIUM_RFC;
+ 
+ 	asix_write_medium_mode(dev, m, 0);
+-	usbnet_link_change(dev, true, false);
+ }
+ 
+ static const struct phylink_mac_ops ax88772_phylink_mac_ops = {
+@@ -1350,10 +1348,9 @@ static const struct driver_info ax88772_info = {
+ 	.description = "ASIX AX88772 USB 2.0 Ethernet",
+ 	.bind = ax88772_bind,
+ 	.unbind = ax88772_unbind,
+-	.status = asix_status,
+ 	.reset = ax88772_reset,
+ 	.stop = ax88772_stop,
+-	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR | FLAG_MULTI_PACKET,
++	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
+ 	.rx_fixup = asix_rx_fixup_common,
+ 	.tx_fixup = asix_tx_fixup,
  };
- 
- #define SCI_NPORTS CONFIG_SERIAL_SH_SCI_NR_UARTS
-@@ -825,6 +826,7 @@ static void sci_transmit_chars(struct uart_port *port)
- {
- 	struct circ_buf *xmit = &port->state->xmit;
- 	unsigned int stopped = uart_tx_stopped(port);
-+	struct sci_port *s = to_sci_port(port);
- 	unsigned short status;
- 	unsigned short ctrl;
- 	int count;
-@@ -856,6 +858,7 @@ static void sci_transmit_chars(struct uart_port *port)
- 		}
- 
- 		serial_port_out(port, SCxTDR, c);
-+		s->tx_occurred = true;
- 
- 		port->icount.tx++;
- 	} while (--count > 0);
-@@ -1208,6 +1211,8 @@ static void sci_dma_tx_complete(void *arg)
- 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
- 		uart_write_wakeup(port);
- 
-+	s->tx_occurred = true;
-+
- 	if (!uart_circ_empty(xmit)) {
- 		s->cookie_tx = 0;
- 		schedule_work(&s->work_tx);
-@@ -1688,6 +1693,19 @@ static void sci_flush_buffer(struct uart_port *port)
- 		s->cookie_tx = -EINVAL;
- 	}
- }
-+
-+static void sci_dma_check_tx_occurred(struct sci_port *s)
-+{
-+	struct dma_tx_state state;
-+	enum dma_status status;
-+
-+	if (!s->chan_tx)
-+		return;
-+
-+	status = dmaengine_tx_status(s->chan_tx, s->cookie_tx, &state);
-+	if (status == DMA_COMPLETE || status == DMA_IN_PROGRESS)
-+		s->tx_occurred = true;
-+}
- #else /* !CONFIG_SERIAL_SH_SCI_DMA */
- static inline void sci_request_dma(struct uart_port *port)
- {
-@@ -1697,6 +1715,10 @@ static inline void sci_free_dma(struct uart_port *port)
- {
- }
- 
-+static void sci_dma_check_tx_occurred(struct sci_port *s)
-+{
-+}
-+
- #define sci_flush_buffer	NULL
- #endif /* !CONFIG_SERIAL_SH_SCI_DMA */
- 
-@@ -2009,6 +2031,12 @@ static unsigned int sci_tx_empty(struct uart_port *port)
- {
- 	unsigned short status = serial_port_in(port, SCxSR);
- 	unsigned short in_tx_fifo = sci_txfill(port);
-+	struct sci_port *s = to_sci_port(port);
-+
-+	sci_dma_check_tx_occurred(s);
-+
-+	if (!s->tx_occurred)
-+		return TIOCSER_TEMT;
- 
- 	return (status & SCxSR_TEND(port)) && !in_tx_fifo ? TIOCSER_TEMT : 0;
- }
-@@ -2179,6 +2207,7 @@ static int sci_startup(struct uart_port *port)
- 
- 	dev_dbg(port->dev, "%s(%d)\n", __func__, port->line);
- 
-+	s->tx_occurred = false;
- 	sci_request_dma(port);
- 
- 	ret = sci_request_irq(s);
+@@ -1362,11 +1359,9 @@ static const struct driver_info ax88772b_info = {
+ 	.description = "ASIX AX88772B USB 2.0 Ethernet",
+ 	.bind = ax88772_bind,
+ 	.unbind = ax88772_unbind,
+-	.status = asix_status,
+ 	.reset = ax88772_reset,
+ 	.stop = ax88772_stop,
+-	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
+-	         FLAG_MULTI_PACKET,
++	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
+ 	.rx_fixup = asix_rx_fixup_common,
+ 	.tx_fixup = asix_tx_fixup,
+ 	.data = FLAG_EEPROM_MAC,
+@@ -1376,11 +1371,9 @@ static const struct driver_info lxausb_t1l_info = {
+ 	.description = "Linux Automation GmbH USB 10Base-T1L",
+ 	.bind = ax88772_bind,
+ 	.unbind = ax88772_unbind,
+-	.status = asix_status,
+ 	.reset = ax88772_reset,
+ 	.stop = ax88772_stop,
+-	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
+-		 FLAG_MULTI_PACKET,
++	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
+ 	.rx_fixup = asix_rx_fixup_common,
+ 	.tx_fixup = asix_tx_fixup,
+ 	.data = FLAG_EEPROM_MAC,
+@@ -1412,10 +1405,8 @@ static const struct driver_info hg20f9_info = {
+ 	.description = "HG20F9 USB 2.0 Ethernet",
+ 	.bind = ax88772_bind,
+ 	.unbind = ax88772_unbind,
+-	.status = asix_status,
+ 	.reset = ax88772_reset,
+-	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
+-	         FLAG_MULTI_PACKET,
++	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
+ 	.rx_fixup = asix_rx_fixup_common,
+ 	.tx_fixup = asix_tx_fixup,
+ 	.data = FLAG_EEPROM_MAC,
 -- 
 2.39.5
 
