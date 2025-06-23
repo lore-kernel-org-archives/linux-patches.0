@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB0D1AD3FA;
-	Mon, 23 Jun 2025 21:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911CE1AD3FA;
+	Mon, 23 Jun 2025 21:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715673; cv=none; b=KelUeHwl9RWVByrCG+fi7UF4pekEscqMEBS4glLcT4ONB1demDIgsuj6igiDItFjYn9fN2k3hmUI0sfCIxseG7XSb4X0SKogc2wNyllfMuYcCQT84YJZ0hfhl8ZYcQ2jZWt91Z0i6KrR8anz5Z440OGKYS7yz/pdkMSUITOv5mM=
+	t=1750715675; cv=none; b=TPDir5S5xnigFh8nXaCjNue8SmXkzTBRQEfZr2FvSvwlHVhsB95Z3Hpa1uCcEitfEW4kJ6BGqG2cqtywFws97S3xRayZFG6raLQ2oNiMzdCHQOmDgVlBjJGsjtpq3H7clbyUnMKCIImsyCCVF3EIBF7bgr73S73wcti2tKhac6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715673; c=relaxed/simple;
-	bh=FoAQvr+K6bPAdSGHG+CNvx/B06temFLtgTeZ+RQfvKw=;
+	s=arc-20240116; t=1750715675; c=relaxed/simple;
+	bh=sAAUj0wLp41iQjpBw3gMV9ZDHcZAvGkAzKtgcYLdBkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F+K0/9HS6OZC0BBCbsMGbWmBjEut0oJAMuBbSwjEou928igxppRR1WKjSafLJUof5s63kP/RMokDY42uf6j/lz9tiABFwCtvNc3KGpUqA6GnXKyDUZXji3EF0FM95Xr3Rs/ZLWGUNMB4PC58PVTXrRLSfKj2W3e4cKEUqescBtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVi2BCWa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d+040Mo0/YOSKVeXHLnLtqAkmpafdDRd/TNQ8brDjICTsbPLkaDxp0c+/gaDK9hF+0tCjQ4cKSp2HZM8cJ4XQSJzoia90S9uB8ATr7709NUg5yuiznPrCQ5WQoEnCSsltiff7qOeGUTRBnNz+whslt3YDvCFLLxRgoBDd7HVBnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eeic+6q1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVi2BCWa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB35AC4CEEA;
-	Mon, 23 Jun 2025 21:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eeic+6q1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B56CC4CEEA;
+	Mon, 23 Jun 2025 21:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715673;
-	bh=FoAQvr+K6bPAdSGHG+CNvx/B06temFLtgTeZ+RQfvKw=;
+	s=korg; t=1750715675;
+	bh=sAAUj0wLp41iQjpBw3gMV9ZDHcZAvGkAzKtgcYLdBkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVi2BCWazfdEbMdWeRfF5eGoVCgVRp1UtBZN1vzKA4grO/1BEifWObQf4bECNTClq
-	 J8QuG58i10wSvqYxDndGowabvYmkyJfCFGFx7cNBXxKvalvvPFhBqJ9/pVuam2J50u
-	 IHVLJ92nzy3fF0nkgNbCHdG1NoIg4Bbsy5RQgK1U=
+	b=Eeic+6q1OTd0YhoUbiKQZLqCMu39xlsWboHhBXHTbbHRD/xric5toLOECn7xwHLv4
+	 Nk42ohbwRRqNJZMRnRfJEdiDJNxuMToR4ScPBTpU62FBkihtC/80UJh26sV7Y8EVwP
+	 jEetAs0UDONfw92R6s6PBLwsV9V4n+x9+xXIiW1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>
-Subject: [PATCH 6.15 473/592] x86/its: move its_pages array to struct mod_arch_specific
-Date: Mon, 23 Jun 2025 15:07:11 +0200
-Message-ID: <20250623130711.683046009@linuxfoundation.org>
+	Jiande Lu <jiande.lu@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 200/414] Bluetooth: btusb: Add new VID/PID 13d3/3630 for MT7925
+Date: Mon, 23 Jun 2025 15:05:37 +0200
+Message-ID: <20250623130647.008897877@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,119 +47,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Jiande Lu <jiande.lu@mediatek.com>
 
-commit 0b0cae7119a0ec9449d7261b5e672a5fed765068 upstream.
+[ Upstream commit 5bd5c716f7ec3e25d8d3b8a7566e192a26f9c7ce ]
 
-The of pages with ITS thunks allocated for modules are tracked by an
-array in 'struct module'.
+Add VID 13d3 & PID 3630 for MediaTek MT7925 USB Bluetooth chip.
 
-Since this is very architecture specific data structure, move it to
-'struct mod_arch_specific'.
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
 
-No functional changes.
+T:  Bus=07 Lev=01 Prnt=01 Port=10 Cnt=02 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3630 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
-Fixes: 872df34d7c51 ("x86/its: Use dynamic thunks for indirect branches")
-Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20250603111446.2609381-4-rppt@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jiande Lu <jiande.lu@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/module.h |    8 ++++++++
- arch/x86/kernel/alternative.c |   19 ++++++++++---------
- include/linux/module.h        |    5 -----
- 3 files changed, 18 insertions(+), 14 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/include/asm/module.h
-+++ b/arch/x86/include/asm/module.h
-@@ -5,12 +5,20 @@
- #include <asm-generic/module.h>
- #include <asm/orc_types.h>
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 7be13d3c82bcd..aa63852060500 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -714,6 +714,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3628), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3630), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
-+struct its_array {
-+#ifdef CONFIG_MITIGATION_ITS
-+	void **pages;
-+	int num;
-+#endif
-+};
-+
- struct mod_arch_specific {
- #ifdef CONFIG_UNWINDER_ORC
- 	unsigned int num_orcs;
- 	int *orc_unwind_ip;
- 	struct orc_entry *orc_unwind;
- #endif
-+	struct its_array its_pages;
- };
- 
- #endif /* _ASM_X86_MODULE_H */
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -195,8 +195,8 @@ void its_fini_mod(struct module *mod)
- 	its_page = NULL;
- 	mutex_unlock(&text_mutex);
- 
--	for (int i = 0; i < mod->its_num_pages; i++) {
--		void *page = mod->its_page_array[i];
-+	for (int i = 0; i < mod->arch.its_pages.num; i++) {
-+		void *page = mod->arch.its_pages.pages[i];
- 		execmem_restore_rox(page, PAGE_SIZE);
- 	}
- }
-@@ -206,11 +206,11 @@ void its_free_mod(struct module *mod)
- 	if (!cpu_feature_enabled(X86_FEATURE_INDIRECT_THUNK_ITS))
- 		return;
- 
--	for (int i = 0; i < mod->its_num_pages; i++) {
--		void *page = mod->its_page_array[i];
-+	for (int i = 0; i < mod->arch.its_pages.num; i++) {
-+		void *page = mod->arch.its_pages.pages[i];
- 		execmem_free(page);
- 	}
--	kfree(mod->its_page_array);
-+	kfree(mod->arch.its_pages.pages);
- }
- #endif /* CONFIG_MODULES */
- 
-@@ -223,14 +223,15 @@ static void *its_alloc(void)
- 
- #ifdef CONFIG_MODULES
- 	if (its_mod) {
--		void *tmp = krealloc(its_mod->its_page_array,
--				     (its_mod->its_num_pages+1) * sizeof(void *),
-+		struct its_array *pages = &its_mod->arch.its_pages;
-+		void *tmp = krealloc(pages->pages,
-+				     (pages->num+1) * sizeof(void *),
- 				     GFP_KERNEL);
- 		if (!tmp)
- 			return NULL;
- 
--		its_mod->its_page_array = tmp;
--		its_mod->its_page_array[its_mod->its_num_pages++] = page;
-+		pages->pages = tmp;
-+		pages->pages[pages->num++] = page;
- 
- 		execmem_make_temp_rw(page, PAGE_SIZE);
- 	}
---- a/include/linux/module.h
-+++ b/include/linux/module.h
-@@ -586,11 +586,6 @@ struct module {
- 	atomic_t refcnt;
- #endif
- 
--#ifdef CONFIG_MITIGATION_ITS
--	int its_num_pages;
--	void **its_page_array;
--#endif
--
- #ifdef CONFIG_CONSTRUCTORS
- 	/* Constructor functions. */
- 	ctor_fn_t *ctors;
+ 	/* Additional Realtek 8723AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0930, 0x021d), .driver_info = BTUSB_REALTEK },
+-- 
+2.39.5
+
 
 
