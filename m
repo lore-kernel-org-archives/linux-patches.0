@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8768226CF8;
-	Mon, 23 Jun 2025 21:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B67226D1D;
+	Mon, 23 Jun 2025 21:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715132; cv=none; b=XiDJYypIY8UAgbcGBD30xEBmy4Wwspz0AGxhJ4fh2cAhrXighlf/BbUsuvFPwbQ8pXU4X7Ae/wrWQItrdKQ+m3TmhXXAOgIiwAXMDvOkk9MYCI3RnOYU/yYndGiDq5zTrOX/aO4qlEMlx0EWE3VVVeFy9QsZBCaHk+27JfYc02o=
+	t=1750715135; cv=none; b=RCv5eaKFbYtf/uOinxbvSHR5qASwl7tTrQ/z/zJJKC1V8kUBhVk7EZbHogDatKosy8M3uBiB3+3yfuAw3MGT8d14GmN3/T6s4wlRIAmm6cWNlAjcgWOor7yXtVw/QhHgLGYfThQlqUoDVt99nlm2Blp9Es0Rxv/06lQnyORywUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715132; c=relaxed/simple;
-	bh=/DY4sYPvdMCE94NM93uGY38tmoPmZpStEeXuw92qS9k=;
+	s=arc-20240116; t=1750715135; c=relaxed/simple;
+	bh=AOUeiQomid05wZAfbQGTtDrTkEVAqUc6WuaWC2bDX78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VTsteZaLzNxsT28BW0jp8czslCGhs0syS11KMKyQSycsg5uY+egTiIKagt/R1uReCileeBCco+WLwXJ/yyfunnDLmtTEI2e/yyuVvqAmBM17W6k2x71lcN7LyzbyzRiap67zRhbhB+hAFlBgnYz/3kO1ZpeBqwNDqH/fF3rLk6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AdOxqGV7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fo3MjoHHS1yzqiPfA1l+bbhfeaLlJTMpQ2myGCkxhe2Cx/mqBod0Tq6J2kHYElBSUkKRL7BuvgNWDENQtTEB/3eTTKPc7SSL8f5o7cRYuvy818QfSHU2hD2g+Kq+8wzhPVL1Rxscp27zXydFj1SZ0hNTgXtvHmaYOWAKxsk/ONI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PgxRPPZu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AdOxqGV7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12390C4CEEA;
-	Mon, 23 Jun 2025 21:45:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PgxRPPZu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85CB7C4CEED;
+	Mon, 23 Jun 2025 21:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715132;
-	bh=/DY4sYPvdMCE94NM93uGY38tmoPmZpStEeXuw92qS9k=;
+	s=korg; t=1750715134;
+	bh=AOUeiQomid05wZAfbQGTtDrTkEVAqUc6WuaWC2bDX78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AdOxqGV7w9NOHgkvxeNO0tt7SucI+WypGjzcV207E5tCWnR7MaRInydsgwLgKVmTB
-	 NXIT7YtfHS/41p3+ucctV0cDtYiDVQGXoirIbb+MSF+s2/WQBLbCS11MiLNQHSe/ua
-	 wk6IZotA73DZrOifGW0H2SNHCFFJpr7i6Qfv8Iww=
+	b=PgxRPPZui6qU1RuRS7aFm6eqQ8uTPMWRcWVsbw1YMb/UIlmcSW9VbvUAp5+CeEhQx
+	 40kfJZ7laiCPJgMIgFvQSxK6CiHRAZLzaOo62kd0+GgjjtglHLpnCBu6ekzAzTt7HF
+	 0KvSk1C9+iiprsdfKBdJjESPMjPzvtoF8e3iIbyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Rouven Czerwinski <rouven.czerwinski@linaro.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 277/355] tee: Prevent size calculation wraparound on 32-bit kernels
-Date: Mon, 23 Jun 2025 15:07:58 +0200
-Message-ID: <20250623130635.101910078@linuxfoundation.org>
+Subject: [PATCH 6.1 237/508] scsi: iscsi: Fix incorrect error path labels for flashnode operations
+Date: Mon, 23 Jun 2025 15:04:42 +0200
+Message-ID: <20250623130651.087882442@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,89 +48,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 39bb67edcc582b3b386a9ec983da67fa8a10ec03 ]
+[ Upstream commit 9b17621366d210ffee83262a8754086ebbde5e55 ]
 
-The current code around TEE_IOCTL_PARAM_SIZE() is a bit wrong on
-32-bit kernels: Multiplying a user-provided 32-bit value with the
-size of a structure can wrap around on such platforms.
+Correct the error handling goto labels used when host lookup fails in
+various flashnode-related event handlers:
 
-Fix it by using saturating arithmetic for the size calculation.
+ - iscsi_new_flashnode()
+ - iscsi_del_flashnode()
+ - iscsi_login_flashnode()
+ - iscsi_logout_flashnode()
+ - iscsi_logout_flashnode_sid()
 
-This has no security consequences because, in all users of
-TEE_IOCTL_PARAM_SIZE(), the subsequent kcalloc() implicitly checks
-for wrapping.
+scsi_host_put() is not required when shost is NULL, so jumping to the
+correct label avoids unnecessary operations. These functions previously
+jumped to the wrong goto label (put_host), which did not match the
+intended cleanup logic.
 
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
-Tested-by: Rouven Czerwinski <rouven.czerwinski@linaro.org>
+Use the correct exit labels (exit_new_fnode, exit_del_fnode, etc.) to
+ensure proper error handling.  Also remove the unused put_host label
+under iscsi_new_flashnode() as it is no longer needed.
+
+No functional changes beyond accurate error path correction.
+
+Fixes: c6a4bb2ef596 ("[SCSI] scsi_transport_iscsi: Add flash node mgmt support")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://lore.kernel.org/r/20250530193012.3312911-1-alok.a.tiwari@oracle.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/tee_core.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/scsi/scsi_transport_iscsi.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
-index 9cc4a7b63b0d6..e6de0e80b793e 100644
---- a/drivers/tee/tee_core.c
-+++ b/drivers/tee/tee_core.c
-@@ -10,6 +10,7 @@
- #include <linux/fs.h>
- #include <linux/idr.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- #include <linux/tee_drv.h>
- #include <linux/uaccess.h>
-@@ -19,7 +20,7 @@
+diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
+index 7f0fd03dd03bc..c44103752b699 100644
+--- a/drivers/scsi/scsi_transport_iscsi.c
++++ b/drivers/scsi/scsi_transport_iscsi.c
+@@ -3524,7 +3524,7 @@ static int iscsi_new_flashnode(struct iscsi_transport *transport,
+ 		pr_err("%s could not find host no %u\n",
+ 		       __func__, ev->u.new_flashnode.host_no);
+ 		err = -ENODEV;
+-		goto put_host;
++		goto exit_new_fnode;
+ 	}
  
- #define TEE_NUM_DEVICES	32
+ 	index = transport->new_flashnode(shost, data, len);
+@@ -3534,7 +3534,6 @@ static int iscsi_new_flashnode(struct iscsi_transport *transport,
+ 	else
+ 		err = -EIO;
  
--#define TEE_IOCTL_PARAM_SIZE(x) (sizeof(struct tee_param) * (x))
-+#define TEE_IOCTL_PARAM_SIZE(x) (size_mul(sizeof(struct tee_param), (x)))
+-put_host:
+ 	scsi_host_put(shost);
  
- #define TEE_UUID_NS_NAME_SIZE	128
+ exit_new_fnode:
+@@ -3559,7 +3558,7 @@ static int iscsi_del_flashnode(struct iscsi_transport *transport,
+ 		pr_err("%s could not find host no %u\n",
+ 		       __func__, ev->u.del_flashnode.host_no);
+ 		err = -ENODEV;
+-		goto put_host;
++		goto exit_del_fnode;
+ 	}
  
-@@ -492,7 +493,7 @@ static int tee_ioctl_open_session(struct tee_context *ctx,
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
+ 	idx = ev->u.del_flashnode.flashnode_idx;
+@@ -3601,7 +3600,7 @@ static int iscsi_login_flashnode(struct iscsi_transport *transport,
+ 		pr_err("%s could not find host no %u\n",
+ 		       __func__, ev->u.login_flashnode.host_no);
+ 		err = -ENODEV;
+-		goto put_host;
++		goto exit_login_fnode;
+ 	}
  
--	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
-+	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
- 		return -EINVAL;
+ 	idx = ev->u.login_flashnode.flashnode_idx;
+@@ -3653,7 +3652,7 @@ static int iscsi_logout_flashnode(struct iscsi_transport *transport,
+ 		pr_err("%s could not find host no %u\n",
+ 		       __func__, ev->u.logout_flashnode.host_no);
+ 		err = -ENODEV;
+-		goto put_host;
++		goto exit_logout_fnode;
+ 	}
  
- 	if (arg.num_params) {
-@@ -570,7 +571,7 @@ static int tee_ioctl_invoke(struct tee_context *ctx,
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
+ 	idx = ev->u.logout_flashnode.flashnode_idx;
+@@ -3703,7 +3702,7 @@ static int iscsi_logout_flashnode_sid(struct iscsi_transport *transport,
+ 		pr_err("%s could not find host no %u\n",
+ 		       __func__, ev->u.logout_flashnode.host_no);
+ 		err = -ENODEV;
+-		goto put_host;
++		goto exit_logout_sid;
+ 	}
  
--	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
-+	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	if (arg.num_params) {
-@@ -704,7 +705,7 @@ static int tee_ioctl_supp_recv(struct tee_context *ctx,
- 	if (get_user(num_params, &uarg->num_params))
- 		return -EFAULT;
- 
--	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) != buf.buf_len)
-+	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
-@@ -803,7 +804,7 @@ static int tee_ioctl_supp_send(struct tee_context *ctx,
- 	    get_user(num_params, &uarg->num_params))
- 		return -EFAULT;
- 
--	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) > buf.buf_len)
-+	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) > buf.buf_len)
- 		return -EINVAL;
- 
- 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
+ 	session = iscsi_session_lookup(ev->u.logout_flashnode_sid.sid);
 -- 
 2.39.5
 
