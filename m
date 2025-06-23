@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A4C2472AF;
-	Mon, 23 Jun 2025 13:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406564C6E;
+	Mon, 23 Jun 2025 13:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686045; cv=none; b=W/yrBlN6qMKWY8+MLevY+XwlHfibLWXsLgoH+JguHaw8JInq1YdF6Q70KH+PejkSqddHPDkBCL2ZvMF2IzVqk6fHFQy0kL1XVE3VKOcM9d3erlhN+Lr/QjyrmkBonEZ44B/unLhrTHaDB5xzxJ6zFvI2kbRB+XtXk6vsk216dYU=
+	t=1750686048; cv=none; b=dp5VQsyNu3WXU0nLCC2fdfsAdOZI19ffXxPV+g5cSJ/Iu0ZTRqU+E+E5Ddoc9PkpevNa2dOL5+Kml6tpn1JRGUKPwQYgZclsUway8tZo/iSgFsMLyP/ztoSaxkX6bHgxuhhnsDO/f/rurYF3hkyPOXzHUH4sf5HZ1wfY4c4m8zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686045; c=relaxed/simple;
-	bh=Pi77n1zypkNh8gdmom/pSHnuFelK8ITmXAdTnEL+3B0=;
+	s=arc-20240116; t=1750686048; c=relaxed/simple;
+	bh=N70bXol/GmgBcgBYXLN2DIU3tb0ya+kz5KmpMiZs0dI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xnq0RSKmDM4M0jlZj2Mok4Ky3Re/FTLgbOCLvhjleZFx++2oc0QbCgwqDKZpxqLXocAgtLeo2d3eHxDhTFQtCfn96uf0qlZB15Bher7DdeTf8zkI+V9tbwGuBGBUdgGRmtKNvYZOBLzG2rQDH4KtBNubEVSDM/uPXvwKXzMGCTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOhrbpUy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LMvz7v0BxB89VzC4KPsRcTuJGbvBiZHPmBmzyH090N6EAk8fAIZ7kltZg2cTSZbDEcIeWV3gWU86gEyMXRFiTeI5fy5sKQMC4Fhn0bRRlOc6y1J4kt9VFbPHs4XqN/cfGvBZqQfmH6rvLC7nMI4dFrsIXe5AnUlgrlmjcOGGl4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NczMbubP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOhrbpUy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED14FC4CEEA;
-	Mon, 23 Jun 2025 13:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NczMbubP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7664BC4CEEA;
+	Mon, 23 Jun 2025 13:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686045;
-	bh=Pi77n1zypkNh8gdmom/pSHnuFelK8ITmXAdTnEL+3B0=;
+	s=korg; t=1750686047;
+	bh=N70bXol/GmgBcgBYXLN2DIU3tb0ya+kz5KmpMiZs0dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOhrbpUyYILK5U2CbT/lPeTrZsq9nTbAYQtXIqKYZU5M1gOVHZqtMNXqp4po3dwMx
-	 TBhoXqkyLZW/9XoNcdEtrdqaw3KykoVe6gwdFfkgcYhpY9/yUf6zE+1b62Vi60n196
-	 AnzvuSqRSPHpPtnqpIyhBjHcFuhN5iWHmhTvJzdA=
+	b=NczMbubP2m1EV6rgfTbJWkK8hr+eueWGYJjs72BBgEl26ZUgtMjOjeSGpQ9ZeNoQa
+	 2JPiaPtG/xt7I6sWp075Iad5ke4iMP/d93HHmtBOg1keFspESZSFBGyE4sGO3pujZE
+	 7CIdFL/Awk2lsxfln10lZdVHaZSOvRCipfYEIMFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b974bd41515f770c608b@syzkaller.appspotmail.com,
-	Aditya Dutt <duttaditya18@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 278/592] jfs: fix array-index-out-of-bounds read in add_missing_indices
-Date: Mon, 23 Jun 2025 15:03:56 +0200
-Message-ID: <20250623130706.950073107@linuxfoundation.org>
+Subject: [PATCH 6.1 045/508] firmware: psci: Fix refcount leak in psci_dt_init
+Date: Mon, 23 Jun 2025 15:01:30 +0200
+Message-ID: <20250623130646.351198995@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,87 +49,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aditya Dutt <duttaditya18@gmail.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 5dff41a86377563f7a2b968aae00d25b4ceb37c9 ]
+[ Upstream commit 7ff37d29fd5c27617b9767e1b8946d115cf93a1e ]
 
-stbl is s8 but it must contain offsets into slot which can go from 0 to
-127.
+Fix a reference counter leak in psci_dt_init() where of_node_put(np) was
+missing after of_find_matching_node_and_match() when np is unavailable.
 
-Added a bound check for that error and return -EIO if the check fails.
-Also make jfs_readdir return with error if add_missing_indices returns
-with an error.
-
-Reported-by: syzbot+b974bd41515f770c608b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com./bug?extid=b974bd41515f770c608b
-Signed-off-by: Aditya Dutt <duttaditya18@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Fixes: d09a0011ec0d ("drivers: psci: Allow PSCI node to be disabled")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20250318151712.28763-1-linmq006@gmail.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dtree.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/firmware/psci/psci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_dtree.c b/fs/jfs/jfs_dtree.c
-index 93db6eec44655..ab11849cf9cc3 100644
---- a/fs/jfs/jfs_dtree.c
-+++ b/fs/jfs/jfs_dtree.c
-@@ -2613,7 +2613,7 @@ void dtInitRoot(tid_t tid, struct inode *ip, u32 idotdot)
-  *	     fsck.jfs should really fix this, but it currently does not.
-  *	     Called from jfs_readdir when bad index is detected.
-  */
--static void add_missing_indices(struct inode *inode, s64 bn)
-+static int add_missing_indices(struct inode *inode, s64 bn)
- {
- 	struct ldtentry *d;
- 	struct dt_lock *dtlck;
-@@ -2622,7 +2622,7 @@ static void add_missing_indices(struct inode *inode, s64 bn)
- 	struct lv *lv;
- 	struct metapage *mp;
- 	dtpage_t *p;
--	int rc;
-+	int rc = 0;
- 	s8 *stbl;
- 	tid_t tid;
- 	struct tlock *tlck;
-@@ -2647,6 +2647,16 @@ static void add_missing_indices(struct inode *inode, s64 bn)
+diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+index a44ba09e49d9c..7eddf0912f96c 100644
+--- a/drivers/firmware/psci/psci.c
++++ b/drivers/firmware/psci/psci.c
+@@ -747,8 +747,10 @@ int __init psci_dt_init(void)
  
- 	stbl = DT_GETSTBL(p);
- 	for (i = 0; i < p->header.nextindex; i++) {
-+		if (stbl[i] < 0) {
-+			jfs_err("jfs: add_missing_indices: Invalid stbl[%d] = %d for inode %ld, block = %lld",
-+				i, stbl[i], (long)inode->i_ino, (long long)bn);
-+			rc = -EIO;
-+
-+			DT_PUTPAGE(mp);
-+			txAbort(tid, 0);
-+			goto end;
-+		}
-+
- 		d = (struct ldtentry *) &p->slot[stbl[i]];
- 		index = le32_to_cpu(d->index);
- 		if ((index < 2) || (index >= JFS_IP(inode)->next_index)) {
-@@ -2664,6 +2674,7 @@ static void add_missing_indices(struct inode *inode, s64 bn)
- 	(void) txCommit(tid, 1, &inode, 0);
- end:
- 	txEnd(tid);
-+	return rc;
- }
+ 	np = of_find_matching_node_and_match(NULL, psci_of_match, &matched_np);
  
- /*
-@@ -3017,7 +3028,8 @@ int jfs_readdir(struct file *file, struct dir_context *ctx)
- 		}
+-	if (!np || !of_device_is_available(np))
++	if (!np || !of_device_is_available(np)) {
++		of_node_put(np);
+ 		return -ENODEV;
++	}
  
- 		if (fix_page) {
--			add_missing_indices(ip, bn);
-+			if ((rc = add_missing_indices(ip, bn)))
-+				goto out;
- 			page_fixed = 1;
- 		}
- 
+ 	init_fn = (psci_initcall_t)matched_np->data;
+ 	ret = init_fn(np);
 -- 
 2.39.5
 
