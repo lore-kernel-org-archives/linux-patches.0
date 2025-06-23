@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0CB1E22E6;
-	Mon, 23 Jun 2025 21:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C99519D084;
+	Mon, 23 Jun 2025 21:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714851; cv=none; b=DSr+3HFuSNq0AareoBdnCv5zjwJ0VfYhwoecZLOWPO8YBsZL6vQGALHRR9BPRSmcMs3yztOeSIehL8gWzMR28zbUOe9prE/aOnlMzi+86mDi4fMeP/QNIZTS0KWEAoL4AcWH/1FXVWV+st1Tb9AGfTbxi8LZaHQ8DHlue+YCVds=
+	t=1750714853; cv=none; b=NKfYXc5INQFSLhjVlepLWgi0RcCFXKWkKGsaBqPxRXbF0v+egU7fVaWcGjuvmweGHJRmwHpuRcO6VYWDxyzUYMLERnx1y86kCPiN62LyOj1Ahpu87rxCsGd/qMgAiA34nBYIaIE+zCvdgEAl9TUSv90IcKbH7HXC//fBfvEk5ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714851; c=relaxed/simple;
-	bh=f/YJcTwYwKd3L0GCahixosbEpJBdEUwTAczERwXPGpM=;
+	s=arc-20240116; t=1750714853; c=relaxed/simple;
+	bh=8HdFSrtkt7nfxVr04OWKaaEAxjiX2W7XuPlXXRwI4Gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVuIN96xcm7i36RW8fDLnwXci4CuOEtc91pu6t7DnONQCrcLpwm02j8NtCqRFFSbK82sDIkKE7N3w5X2Zdu7Lnf52Fi31Visae7yaB0JguJb6VhbnRn0fCzEhC+GOaOxTg9+MZ7+++yq7ANUaUS3bj9UMD5n2RNSwc+jOwTcDVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcQWVF2M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D9LJLPhhuWalt7ZwZ6aWRHb04XWuzuR64M6aFqVgvWHBlQwmba47HRwzVgyptYRgUKUFQ21CFQH7N6/X0t4Y2X0Fa0WQqpRvgNMQQ9oF9VNK83O4ZP33ZBxX5Cck7biGcinyfCb1AQtOVvJqaV970Qt67xY1Rb/9MpvMausCWho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGV8D1PS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcQWVF2M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE14C4CEEA;
-	Mon, 23 Jun 2025 21:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGV8D1PS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1292BC4CEEA;
+	Mon, 23 Jun 2025 21:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714850;
-	bh=f/YJcTwYwKd3L0GCahixosbEpJBdEUwTAczERwXPGpM=;
+	s=korg; t=1750714853;
+	bh=8HdFSrtkt7nfxVr04OWKaaEAxjiX2W7XuPlXXRwI4Gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DcQWVF2M51TxSD2Yd6hFjpkSc/zDxmGrEgw5W2ur5DdqKIvXspn4LhDUH/dsY46nr
-	 WnMu02ONrar1glfXtTGNpRON7DnkYfgWpRpcgukooTYOnr30LYWgzPJ8+phKPLZQXJ
-	 R7awKm/tMkFGyOrQHDgk9Gkn4EbBJDMH9rAbWwtY=
+	b=RGV8D1PSfYdNtFzYaP/ZxXd4L/jSwsksbeQMq6MKIpw5tgWdwaWBD4aHvSmwE6mng
+	 iWzVQiKZ+gG6yZC2xMy2Q6R7bNx64h+XSj9cdTYzB1BC+bkHU6a96vxica9jOjVNe1
+	 3XpMF08z/gJcycWMINrTbgRgKIkhLvOF/tbyUhMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Narayana Murty N <nnmlinux@linux.ibm.com>,
-	Vaibhav Jain <vaibhav@linux.ibm.com>,
-	Ganesh Goudar <ganeshgr@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 442/592] powerpc/eeh: Fix missing PE bridge reconfiguration during VFIO EEH recovery
-Date: Mon, 23 Jun 2025 15:06:40 +0200
-Message-ID: <20250623130710.946082240@linuxfoundation.org>
+Subject: [PATCH 6.1 220/508] serial: sh-sci: Check if TX data was written to device in .tx_empty()
+Date: Mon, 23 Jun 2025 15:04:25 +0200
+Message-ID: <20250623130650.676281137@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,68 +46,157 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Narayana Murty N <nnmlinux@linux.ibm.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 33bc69cf6655cf60829a803a45275f11a74899e5 ]
+commit 7cc0e0a43a91052477c2921f924a37d9c3891f0c upstream.
 
-VFIO EEH recovery for PCI passthrough devices fails on PowerNV and pseries
-platforms due to missing host-side PE bridge reconfiguration. In the
-current implementation, eeh_pe_configure() only performs RTAS or OPAL-based
-bridge reconfiguration for native host devices, but skips it entirely for
-PEs managed through VFIO in guest passthrough scenarios.
+On the Renesas RZ/G3S, when doing suspend to RAM, the uart_suspend_port()
+is called. The uart_suspend_port() calls 3 times the
+struct uart_port::ops::tx_empty() before shutting down the port.
 
-This leads to incomplete EEH recovery when a PCI error affects a
-passthrough device assigned to a QEMU/KVM guest. Although VFIO triggers the
-EEH recovery flow through VFIO_EEH_PE_ENABLE ioctl, the platform-specific
-bridge reconfiguration step is silently bypassed. As a result, the PE's
-config space is not fully restored, causing subsequent config space access
-failures or EEH freeze-on-access errors inside the guest.
+According to the documentation, the struct uart_port::ops::tx_empty()
+API tests whether the transmitter FIFO and shifter for the port is
+empty.
 
-This patch fixes the issue by ensuring that eeh_pe_configure() always
-invokes the platform's configure_bridge() callback (e.g.,
-pseries_eeh_phb_configure_bridge) even for VFIO-managed PEs. This ensures
-that RTAS or OPAL calls to reconfigure the PE bridge are correctly issued
-on the host side, restoring the PE's configuration space after an EEH
-event.
+The Renesas RZ/G3S SCIFA IP reports the number of data units stored in the
+transmit FIFO through the FDR (FIFO Data Count Register). The data units
+in the FIFOs are written in the shift register and transmitted from there.
+The TEND bit in the Serial Status Register reports if the data was
+transmitted from the shift register.
 
-This fix is essential for reliable EEH recovery in QEMU/KVM guests using
-VFIO PCI passthrough on PowerNV and pseries systems.
+In the previous code, in the tx_empty() API implemented by the sh-sci
+driver, it is considered that the TX is empty if the hardware reports the
+TEND bit set and the number of data units in the FIFO is zero.
 
-Tested with:
-- QEMU/KVM guest using VFIO passthrough (IBM Power9,(lpar)Power11 host)
-- Injected EEH errors with pseries EEH errinjct tool on host, recovery
-  verified on qemu guest.
-- Verified successful config space access and CAP_EXP DevCtl restoration
-  after recovery
+According to the HW manual, the TEND bit has the following meaning:
 
-Fixes: 212d16cdca2d ("powerpc/eeh: EEH support for VFIO PCI device")
-Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
-Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
-Reviewed-by: Ganesh Goudar <ganeshgr@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250508062928.146043-1-nnmlinux@linux.ibm.com
+0: Transmission is in the waiting state or in progress.
+1: Transmission is completed.
+
+It has been noticed that when opening the serial device w/o using it and
+then switch to a power saving mode, the tx_empty() call in the
+uart_port_suspend() function fails, leading to the "Unable to drain
+transmitter" message being printed on the console. This is because the
+TEND=0 if nothing has been transmitted and the FIFOs are empty. As the
+TEND=0 has double meaning (waiting state, in progress) we can't
+determined the scenario described above.
+
+Add a software workaround for this. This sets a variable if any data has
+been sent on the serial console (when using PIO) or if the DMA callback has
+been called (meaning something has been transmitted). In the tx_empty()
+API the status of the DMA transaction is also checked and if it is
+completed or in progress the code falls back in checking the hardware
+registers instead of relying on the software variable.
+
+Fixes: 73a19e4c0301 ("serial: sh-sci: Add DMA support.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20241125115856.513642-1-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[claudiu.beznea: fixed conflict by:
+ - keeping serial_port_out() instead of sci_port_out() in
+   sci_transmit_chars()
+ - keeping !uart_circ_empty(xmit) condition in sci_dma_tx_complete(),
+   after s->tx_occurred = true; assignement]
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/eeh.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/sh-sci.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/arch/powerpc/kernel/eeh.c b/arch/powerpc/kernel/eeh.c
-index 83fe99861eb17..ca7f7bb2b4786 100644
---- a/arch/powerpc/kernel/eeh.c
-+++ b/arch/powerpc/kernel/eeh.c
-@@ -1509,6 +1509,8 @@ int eeh_pe_configure(struct eeh_pe *pe)
- 	/* Invalid PE ? */
- 	if (!pe)
- 		return -ENODEV;
-+	else
-+		ret = eeh_ops->configure_bridge(pe);
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index ed468b676f0b9..f8f301db84339 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -175,6 +175,7 @@ struct sci_port {
  
- 	return ret;
+ 	bool has_rtscts;
+ 	bool autorts;
++	bool tx_occurred;
+ };
+ 
+ #define SCI_NPORTS CONFIG_SERIAL_SH_SCI_NR_UARTS
+@@ -825,6 +826,7 @@ static void sci_transmit_chars(struct uart_port *port)
+ {
+ 	struct circ_buf *xmit = &port->state->xmit;
+ 	unsigned int stopped = uart_tx_stopped(port);
++	struct sci_port *s = to_sci_port(port);
+ 	unsigned short status;
+ 	unsigned short ctrl;
+ 	int count;
+@@ -856,6 +858,7 @@ static void sci_transmit_chars(struct uart_port *port)
+ 		}
+ 
+ 		serial_port_out(port, SCxTDR, c);
++		s->tx_occurred = true;
+ 
+ 		port->icount.tx++;
+ 	} while (--count > 0);
+@@ -1208,6 +1211,8 @@ static void sci_dma_tx_complete(void *arg)
+ 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
+ 		uart_write_wakeup(port);
+ 
++	s->tx_occurred = true;
++
+ 	if (!uart_circ_empty(xmit)) {
+ 		s->cookie_tx = 0;
+ 		schedule_work(&s->work_tx);
+@@ -1688,6 +1693,19 @@ static void sci_flush_buffer(struct uart_port *port)
+ 		s->cookie_tx = -EINVAL;
+ 	}
  }
++
++static void sci_dma_check_tx_occurred(struct sci_port *s)
++{
++	struct dma_tx_state state;
++	enum dma_status status;
++
++	if (!s->chan_tx)
++		return;
++
++	status = dmaengine_tx_status(s->chan_tx, s->cookie_tx, &state);
++	if (status == DMA_COMPLETE || status == DMA_IN_PROGRESS)
++		s->tx_occurred = true;
++}
+ #else /* !CONFIG_SERIAL_SH_SCI_DMA */
+ static inline void sci_request_dma(struct uart_port *port)
+ {
+@@ -1697,6 +1715,10 @@ static inline void sci_free_dma(struct uart_port *port)
+ {
+ }
+ 
++static void sci_dma_check_tx_occurred(struct sci_port *s)
++{
++}
++
+ #define sci_flush_buffer	NULL
+ #endif /* !CONFIG_SERIAL_SH_SCI_DMA */
+ 
+@@ -2009,6 +2031,12 @@ static unsigned int sci_tx_empty(struct uart_port *port)
+ {
+ 	unsigned short status = serial_port_in(port, SCxSR);
+ 	unsigned short in_tx_fifo = sci_txfill(port);
++	struct sci_port *s = to_sci_port(port);
++
++	sci_dma_check_tx_occurred(s);
++
++	if (!s->tx_occurred)
++		return TIOCSER_TEMT;
+ 
+ 	return (status & SCxSR_TEND(port)) && !in_tx_fifo ? TIOCSER_TEMT : 0;
+ }
+@@ -2179,6 +2207,7 @@ static int sci_startup(struct uart_port *port)
+ 
+ 	dev_dbg(port->dev, "%s(%d)\n", __func__, port->line);
+ 
++	s->tx_occurred = false;
+ 	sci_request_dma(port);
+ 
+ 	ret = sci_request_irq(s);
 -- 
 2.39.5
 
