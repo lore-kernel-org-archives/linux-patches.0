@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9130B2192EC;
-	Mon, 23 Jun 2025 22:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E5A2192EC;
+	Mon, 23 Jun 2025 22:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717316; cv=none; b=ip3IHJsdWvO+pS5gPpOrBRBgM0C5v6xKaWJOTOc9gX+B6GAp4z1QMULYpO2VHwDn1SH0DkBce/LwCcmBQWKLTY8BiSjHj3nEKV0KCvPgxy9DBuf3cZ7Nn+gKIOJW+z8SthjrYXUxXsy7gzt7cW9L4WReQcHbN/HVqpEoqzN9Dt4=
+	t=1750717319; cv=none; b=rH21vD6W9tF4MQLaUT9x++U4pzP8IvhKPvslAnHzEGbnmHcoJUMDi0i96yXGozZKlfw45Yk1p6jTroWgnJK0UoLY1OkS9zJxp6tyjgpeDDZOVSQn16UbCV2TPkueVdKwSHxQLKGL3AeduAm4lW+5bESNd9ZxmiQ6K1DfC803Z2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717316; c=relaxed/simple;
-	bh=bBJpub/p+VNGWmO9D66R8B9LvMhSDGtJLnn0Phky+dk=;
+	s=arc-20240116; t=1750717319; c=relaxed/simple;
+	bh=uVTuyiQuPwe9etGrICXKt4zXdgKTK3MJsHKnRxwqJzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ifFeF31RWyPd8m9z+WhtqkgLMRmvv/f9fJNJ+BLpxgVME98ShDonvkA8Z1hsqe6+sLxOjNoMK5FzezY7WOuS2rERRJMfNCYKD7Qrk4gZ2ZHRfb+vE8ig+vtAlZiNfiX1qrrK5cuMtk085hyST7905PURphKV9As11FO3UC8YQA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DanirPtX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p/m5520NgJbZaz3pTOuzWHuFRqSbyKNmXNNiq8hURvRtc5kAjNQ6u1eZZb8t7EHOMrnQn8IzVR6JARD/8eMHiRGf/zv3w/ejzZ8Clf9Sk3BNReou9A6jEA1J55u7l9j5Bbe8cCuVVJ88CDzNCc0EgUpo2ZLKcP1wDmS5cHjDjyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s626Xl35; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DanirPtX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D2FC4CEEA;
-	Mon, 23 Jun 2025 22:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s626Xl35"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D057C4CEEA;
+	Mon, 23 Jun 2025 22:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717316;
-	bh=bBJpub/p+VNGWmO9D66R8B9LvMhSDGtJLnn0Phky+dk=;
+	s=korg; t=1750717318;
+	bh=uVTuyiQuPwe9etGrICXKt4zXdgKTK3MJsHKnRxwqJzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DanirPtXw9IRxakwameky7AJFRBGRJGaN/Yc59+ahHn6SHRD+J2OMIlJzwBjrlRC9
-	 veKinrgxw6vztX1NaEgCvS6Oo9d6ZbAVs2dZk/3pqGEn2yFCW1N1z9HgVHSq5WtDR1
-	 TW7pbVxra0oJYqiHkiqWGbWL5qEhqTZMVT7kR8PE=
+	b=s626Xl35KDW3SPWaLiSdRkmo4DdE0EVKcwaQWHuhwKM5YXsq43YBlMY0uUOUv9y9Q
+	 MmcKsLUsAT31JVmvGLG93UOZcPFCN7tk503uGgzNRhrIpw2k7zQct/DDpaY4bKtdjF
+	 bEXYS6/6bl83BQceyz5X+WRIWMGnZOa6T6dpIF+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Zaborowski <andrew.zaborowski@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Tony Luck <tony.luck@intel.com>,
-	balrogg@gmail.com,
-	linux-sgx@vger.kernel.org,
+	Justin Sanders <jsanders.devel@gmail.com>,
+	Valentin Kleibel <valentin@vrvis.at>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 403/508] x86/sgx: Prevent attempts to reclaim poisoned pages
-Date: Mon, 23 Jun 2025 15:07:28 +0200
-Message-ID: <20250623130655.157954116@linuxfoundation.org>
+Subject: [PATCH 6.12 365/414] aoe: clean device rq_list in aoedev_downdev()
+Date: Mon, 23 Jun 2025 15:08:22 +0200
+Message-ID: <20250623130651.088647050@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,89 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Zaborowski <andrew.zaborowski@intel.com>
+From: Justin Sanders <jsanders.devel@gmail.com>
 
-[ Upstream commit ed16618c380c32c68c06186d0ccbb0d5e0586e59 ]
+[ Upstream commit 7f90d45e57cb2ef1f0adcaf925ddffdfc5e680ca ]
 
-TL;DR: SGX page reclaim touches the page to copy its contents to
-secondary storage. SGX instructions do not gracefully handle machine
-checks. Despite this, the existing SGX code will try to reclaim pages
-that it _knows_ are poisoned. Avoid even trying to reclaim poisoned pages.
+An aoe device's rq_list contains accepted block requests that are
+waiting to be transmitted to the aoe target. This queue was added as
+part of the conversion to blk_mq. However, the queue was not cleaned out
+when an aoe device is downed which caused blk_mq_freeze_queue() to sleep
+indefinitely waiting for those requests to complete, causing a hang. This
+fix cleans out the queue before calling blk_mq_freeze_queue().
 
-The longer story:
-
-Pages used by an enclave only get epc_page->poison set in
-arch_memory_failure() but they currently stay on sgx_active_page_list until
-sgx_encl_release(), with the SGX_EPC_PAGE_RECLAIMER_TRACKED flag untouched.
-
-epc_page->poison is not checked in the reclaimer logic meaning that, if other
-conditions are met, an attempt will be made to reclaim an EPC page that was
-poisoned.  This is bad because 1. we don't want that page to end up added
-to another enclave and 2. it is likely to cause one core to shut down
-and the kernel to panic.
-
-Specifically, reclaiming uses microcode operations including "EWB" which
-accesses the EPC page contents to encrypt and write them out to non-SGX
-memory.  Those operations cannot handle MCEs in their accesses other than
-by putting the executing core into a special shutdown state (affecting
-both threads with HT.)  The kernel will subsequently panic on the
-remaining cores seeing the core didn't enter MCE handler(s) in time.
-
-Call sgx_unmark_page_reclaimable() to remove the affected EPC page from
-sgx_active_page_list on memory error to stop it being considered for
-reclaiming.
-
-Testing epc_page->poison in sgx_reclaim_pages() would also work but I assume
-it's better to add code in the less likely paths.
-
-The affected EPC page is not added to &node->sgx_poison_page_list until
-later in sgx_encl_release()->sgx_free_epc_page() when it is EREMOVEd.
-Membership on other lists doesn't change to avoid changing any of the
-lists' semantics except for sgx_active_page_list.  There's a "TBD" comment
-in arch_memory_failure() about pre-emptive actions, the goal here is not
-to address everything that it may imply.
-
-This also doesn't completely close the time window when a memory error
-notification will be fatal (for a not previously poisoned EPC page) --
-the MCE can happen after sgx_reclaim_pages() has selected its candidates
-or even *inside* a microcode operation (actually easy to trigger due to
-the amount of time spent in them.)
-
-The spinlock in sgx_unmark_page_reclaimable() is safe because
-memory_failure() runs in process context and no spinlocks are held,
-explicitly noted in a mm/memory-failure.c comment.
-
-Signed-off-by: Andrew Zaborowski <andrew.zaborowski@intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: balrogg@gmail.com
-Cc: linux-sgx@vger.kernel.org
-Link: https://lore.kernel.org/r/20250508230429.456271-1-andrew.zaborowski@intel.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=212665
+Fixes: 3582dd291788 ("aoe: convert aoeblk to blk-mq")
+Signed-off-by: Justin Sanders <jsanders.devel@gmail.com>
+Link: https://lore.kernel.org/r/20250610170600.869-1-jsanders.devel@gmail.com
+Tested-By: Valentin Kleibel <valentin@vrvis.at>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/sgx/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/aoe/aoedev.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/sgx/main.c b/arch/x86/kernel/cpu/sgx/main.c
-index c4960b8e5195f..b86eb601827bf 100644
---- a/arch/x86/kernel/cpu/sgx/main.c
-+++ b/arch/x86/kernel/cpu/sgx/main.c
-@@ -718,6 +718,8 @@ int arch_memory_failure(unsigned long pfn, int flags)
- 		goto out;
- 	}
+diff --git a/drivers/block/aoe/aoedev.c b/drivers/block/aoe/aoedev.c
+index 3523dd82d7a00..280679bde3a50 100644
+--- a/drivers/block/aoe/aoedev.c
++++ b/drivers/block/aoe/aoedev.c
+@@ -198,6 +198,7 @@ aoedev_downdev(struct aoedev *d)
+ {
+ 	struct aoetgt *t, **tt, **te;
+ 	struct list_head *head, *pos, *nx;
++	struct request *rq, *rqnext;
+ 	int i;
  
-+	sgx_unmark_page_reclaimable(page);
+ 	d->flags &= ~DEVFL_UP;
+@@ -223,6 +224,13 @@ aoedev_downdev(struct aoedev *d)
+ 	/* clean out the in-process request (if any) */
+ 	aoe_failip(d);
+ 
++	/* clean out any queued block requests */
++	list_for_each_entry_safe(rq, rqnext, &d->rq_list, queuelist) {
++		list_del_init(&rq->queuelist);
++		blk_mq_start_request(rq);
++		blk_mq_end_request(rq, BLK_STS_IOERR);
++	}
 +
- 	/*
- 	 * TBD: Add additional plumbing to enable pre-emptive
- 	 * action for asynchronous poison notification. Until
+ 	/* fast fail all pending I/O */
+ 	if (d->blkq) {
+ 		/* UP is cleared, freeze+quiesce to insure all are errored */
 -- 
 2.39.5
 
