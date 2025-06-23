@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD60B676;
-	Mon, 23 Jun 2025 22:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA53222581;
+	Mon, 23 Jun 2025 22:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717673; cv=none; b=ChH5EMb9sMRSm765bycqTIRrz47SUkIy6SDGcOBVxPHGJJPw+T7lWK4l8lPsm72KzPxYC/LVQ0IoqkOBoYanXM5g4eEUav1inKmRbnQ94M97ytKTQqza29eEe9oIxt/fXwYSgu9fHSYCFPff7VNIjISv8mUeiBy/y8Vk8rT3qDA=
+	t=1750717676; cv=none; b=lDKK6ViDEyrWSIVoA9QP1098xIhpIMyKrtQpiMvcO4P3qPCN5BpP/i1IwgfeBTVBNT7iL6LiI2sggGmlaVx/zhN6aQgxySofSG05/ugZWLXP8rOmRAr++mh4r/Y61f78EUOSBPZp3Us4EWZHpXl99NzwgKmLpuuU9nlBBZghWKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717673; c=relaxed/simple;
-	bh=MoZ0CATRzXeQAqvavfl7BDstpEEfKcxfDdUif2251SU=;
+	s=arc-20240116; t=1750717676; c=relaxed/simple;
+	bh=EQ+WChWP7gVf2t+xRNXis5Z2yQ5kLRBMNsQoZBrP5Xw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KeyWaxVUB0EpSOPM9keT+v8fQKef6UH3eC4NZ4ZGSqLxk+2/lrt062JLq5R6tyraNa8Ndo/6zwhYCI89d+uWYyjr4Mz1yV/sJ1b2DpcmMbxbeGCkh2jdinxuCpzSKnZcsNbGVh+BXE9kpMqjBeVwz7Vhks0/vvdZi1MQOB8rv34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wk3Or4z1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=If+I+sj0kEQUcTgT+90e4BDZCNV3zGRaU6HkU4EKuOrgEBf7nDBoukxUEDEsEDBkNKbqoF0vo8CPeTSbcOxdrDvZqwfUC9wbOAMBsAsKQCQLSIeVvVR2WVEIA0oAQuFgGDK9kBnzTWsZ5W/f3HEP0uc6ZhF0vFjamecDJUkRDVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAjgrjx3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wk3Or4z1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA28C4CEEA;
-	Mon, 23 Jun 2025 22:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAjgrjx3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7D6C4CEEA;
+	Mon, 23 Jun 2025 22:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717673;
-	bh=MoZ0CATRzXeQAqvavfl7BDstpEEfKcxfDdUif2251SU=;
+	s=korg; t=1750717676;
+	bh=EQ+WChWP7gVf2t+xRNXis5Z2yQ5kLRBMNsQoZBrP5Xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wk3Or4z1Iv4LU/amfbj8iARBNsLvx8YzJE209g4Uowhnqrc5wkVfixDWJ7DM152oL
-	 otf0HXEJJ5sq3zkawn5ewujB0WUxwhrCjq3hmyTe2Y8gL9w5pMjKYbnuwc+VzPdqog
-	 C60wGs8y+7ocn5nVPoPBMrLa14sT4cOEYkERgOrk=
+	b=TAjgrjx3eBqjlt2HGQzr+eNWRFPnoTZ1WKPtJJcQ65bLeQGRzkx8MK7txkGqOBsQ8
+	 YAtmi7HLO+pgP8xrMbNnHcS/coAuBvuNvp3a/M22B9VgPn2aKcyM2DOxZf8QOEn3ss
+	 wVgN57Ki41z7CheTnrsjyxTKkfS7ctwqPeyuJwOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>
-Subject: [PATCH 6.1 498/508] arm64: dts: imx8mm: Drop sd-vsel-gpios from i.MX8M Mini Verdin SoM
-Date: Mon, 23 Jun 2025 15:09:03 +0200
-Message-ID: <20250623130657.272318403@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH 6.1 499/508] serial: sh-sci: Increment the runtime usage counter for the earlycon device
+Date: Mon, 23 Jun 2025 15:09:04 +0200
+Message-ID: <20250623130657.294934721@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -52,32 +49,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit 8bad8c923f217d238ba4f1a6d19d761e53bfbd26 upstream.
+commit 651dee03696e1dfde6d9a7e8664bbdcd9a10ea7f upstream.
 
-The VSELECT pin is configured as MX8MM_IOMUXC_GPIO1_IO04_USDHC2_VSELECT
-and not as a GPIO, drop the bogus sd-vsel-gpios property as the eSDHC
-block handles the VSELECT pin on its own.
+In the sh-sci driver, serial ports are mapped to the sci_ports[] array,
+with earlycon mapped at index zero.
 
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+The uart_add_one_port() function eventually calls __device_attach(),
+which, in turn, calls pm_request_idle(). The identified code path is as
+follows:
+
+uart_add_one_port() ->
+  serial_ctrl_register_port() ->
+    serial_core_register_port() ->
+      serial_core_port_device_add() ->
+        serial_base_port_add() ->
+          device_add() ->
+            bus_probe_device() ->
+              device_initial_probe() ->
+                __device_attach() ->
+                  // ...
+                  if (dev->p->dead) {
+                    // ...
+                  } else if (dev->driver) {
+                    // ...
+                  } else {
+                    // ...
+                    pm_request_idle(dev);
+                    // ...
+                  }
+
+The earlycon device clocks are enabled by the bootloader. However, the
+pm_request_idle() call in __device_attach() disables the SCI port clocks
+while earlycon is still active.
+
+The earlycon write function, serial_console_write(), calls
+sci_poll_put_char() via serial_console_putchar(). If the SCI port clocks
+are disabled, writing to earlycon may sometimes cause the SR.TDFE bit to
+remain unset indefinitely, causing the while loop in sci_poll_put_char()
+to never exit. On single-core SoCs, this can result in the system being
+blocked during boot when this issue occurs.
+
+To resolve this, increment the runtime PM usage counter for the earlycon
+SCI device before registering the UART port.
+
+Fixes: 0b0cced19ab1 ("serial: sh-sci: Add CONFIG_SERIAL_EARLYCON support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250116182249.3828577-6-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/tty/serial/sh-sci.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi
-@@ -372,7 +372,6 @@
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_pmic>;
- 		reg = <0x25>;
--		sd-vsel-gpios = <&gpio1 4 GPIO_ACTIVE_HIGH>;
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -3352,6 +3352,22 @@ static int sci_probe_single(struct platf
  
+ 	if (sci_uart_earlycon && sci_ports[0].port.mapbase == sci_res->start) {
  		/*
- 		 * The bootloader is expected to switch on the I2C level shifter for the TLA2024 ADC
++		 * In case:
++		 * - this is the earlycon port (mapped on index 0 in sci_ports[]) and
++		 * - it now maps to an alias other than zero and
++		 * - the earlycon is still alive (e.g., "earlycon keep_bootcon" is
++		 *   available in bootargs)
++		 *
++		 * we need to avoid disabling clocks and PM domains through the runtime
++		 * PM APIs called in __device_attach(). For this, increment the runtime
++		 * PM reference counter (the clocks and PM domains were already enabled
++		 * by the bootloader). Otherwise the earlycon may access the HW when it
++		 * has no clocks enabled leading to failures (infinite loop in
++		 * sci_poll_put_char()).
++		 */
++		pm_runtime_get_noresume(&dev->dev);
++
++		/*
+ 		 * Skip cleanup the sci_port[0] in early_console_exit(), this
+ 		 * port is the same as the earlycon one.
+ 		 */
 
 
