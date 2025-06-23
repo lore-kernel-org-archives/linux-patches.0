@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F6E19D084;
-	Mon, 23 Jun 2025 21:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E9019D084;
+	Mon, 23 Jun 2025 21:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714831; cv=none; b=Amo7OV7PfH0gE0ZiRgN+AWLKDYKuhe7fx3VwTQW6efSN2fM6HzymrWUK1w+i7gkSdwBZmx9HTZzNLx6vSG2pnFHbxnsrKcZ22Y8YFrOyYVJnTSt+bLUhf5pRl45bCk46lt/bp5qQ9QnUzGL3UMqxMFK1X3502Fom1Sdt9U0pfVE=
+	t=1750714834; cv=none; b=ZfwEcfPOfEdpW3Z/JwA4pE+pcacOoa0LBoFmr2uAESt7EtXYco11bl8BGr57LrJLhkf3OIYXcfZplZJzFwTztvAliSMNhrKfTxrlySSdBYjbVvzJ1cs9QoEY1qZ4lk/8m9IzxRWnRoLFgDi4iySJP80NqIrqfPb7ncHgGYClhWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714831; c=relaxed/simple;
-	bh=XzNHHIwWUdHzvKTa/dM8Bxl1YdYQ9XCMwF8clhfGvuE=;
+	s=arc-20240116; t=1750714834; c=relaxed/simple;
+	bh=MQcY3de9OhbTzJ/aIhAxEs2ezpaQZEQj9qy6IAIabUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZGftYTg/AMOl7vfIPhbL5G3PZ6+6Lgn7GVZdA7O5qvLnhKWRLB9T+VqDwVQ+7vMe75ElMzqKttgGtsmEYwM1AVgH1wv8XqnfYuY+IF7NBALA1axA4F3L1whFFUV7Zu+VYgTlWLsqdPXywrJXjf3ByiPS/Nvjz5ot7ivvbbEPxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbwrfvN6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rTgdOMD3kFU/HvHaa7Uy3pt0CGrPjHg/CVhr+lO3Rc1lsNwlnYjJyLI4epR8M4y5apzJ0oRjiDtJvUHjQ6dYQ17QExs+axTRreuRr6QTzFhgCj/Z9LlrowFfFvPhliZ+HBH4k4muV/lJp+wcSWjQ+SfXi5ya4YTx3N5PadyUtpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUSRtOWw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbwrfvN6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106D1C4CEEA;
-	Mon, 23 Jun 2025 21:40:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUSRtOWw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D8BC4CEF0;
+	Mon, 23 Jun 2025 21:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714831;
-	bh=XzNHHIwWUdHzvKTa/dM8Bxl1YdYQ9XCMwF8clhfGvuE=;
+	s=korg; t=1750714833;
+	bh=MQcY3de9OhbTzJ/aIhAxEs2ezpaQZEQj9qy6IAIabUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rbwrfvN6tuaTx7sEfTosyW/JZ/KryVmreTV1DqGNogBpV0egj140jMcIz81vCgevU
-	 vZeArmCZCntg/uLxEJtjvlCTdWBkpZPbkQj1SWhgxt/JD4soyQxxpGXIdr3usy4vzG
-	 Wq5Y9imkaznkQqG4Z1g/8cpMsaSIrgWip3Frk0kg=
+	b=PUSRtOWwNMbRYb791kB6wEfX4moiQjZR8STfw2iK3fQ19ecuMqAETqdPYbQ3ZIp+w
+	 km6guEbIJNJQ+QLXOwFbBxu3Tym9IE9uWTvh3SQoN7rBGjYOf1m8UQdYr9FT/0kz9t
+	 2YdML3TLGgIiB0Up0jd2OHNRqYzPKsTxHtcD9AV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 256/355] tcp: always seek for minimal rtt in tcp_rcv_rtt_update()
-Date: Mon, 23 Jun 2025 15:07:37 +0200
-Message-ID: <20250623130634.453126857@linuxfoundation.org>
+Subject: [PATCH 6.15 441/592] powerpc/vdso: Fix build of VDSO32 with pcrel
+Date: Mon, 23 Jun 2025 15:06:39 +0200
+Message-ID: <20250623130710.922864372@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit b879dcb1aeeca278eacaac0b1e2425b1c7599f9f ]
+[ Upstream commit b93755f408325170edb2156c6a894ed1cae5f4f6 ]
 
-tcp_rcv_rtt_update() goal is to maintain an estimation of the RTT
-in tp->rcv_rtt_est.rtt_us, used by tcp_rcv_space_adjust()
+Building vdso32 on power10 with pcrel leads to following errors:
 
-When TCP TS are enabled, tcp_rcv_rtt_update() is using
-EWMA to smooth the samples.
+	  VDSO32A arch/powerpc/kernel/vdso/gettimeofday-32.o
+	arch/powerpc/kernel/vdso/gettimeofday.S: Assembler messages:
+	arch/powerpc/kernel/vdso/gettimeofday.S:40: Error: syntax error; found `@', expected `,'
+	arch/powerpc/kernel/vdso/gettimeofday.S:71:  Info: macro invoked from here
+	arch/powerpc/kernel/vdso/gettimeofday.S:40: Error: junk at end of line: `@notoc'
+	arch/powerpc/kernel/vdso/gettimeofday.S:71:  Info: macro invoked from here
+	 ...
+	make[2]: *** [arch/powerpc/kernel/vdso/Makefile:85: arch/powerpc/kernel/vdso/gettimeofday-32.o] Error 1
+	make[1]: *** [arch/powerpc/Makefile:388: vdso_prepare] Error 2
 
-Change this to immediately latch the incoming value if it
-is lower than tp->rcv_rtt_est.rtt_us, so that tcp_rcv_space_adjust()
-does not overshoot tp->rcvq_space.space and sk->sk_rcvbuf.
+Once the above is fixed, the following happens:
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250513193919.1089692-8-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	  VDSO32C arch/powerpc/kernel/vdso/vgettimeofday-32.o
+	cc1: error: '-mpcrel' requires '-mcmodel=medium'
+	make[2]: *** [arch/powerpc/kernel/vdso/Makefile:89: arch/powerpc/kernel/vdso/vgettimeofday-32.o] Error 1
+	make[1]: *** [arch/powerpc/Makefile:388: vdso_prepare] Error 2
+	make: *** [Makefile:251: __sub-make] Error 2
+
+Make sure pcrel version of CFUNC() macro is used only for powerpc64
+builds and remove -mpcrel for powerpc32 builds.
+
+Fixes: 7e3a68be42e1 ("powerpc/64: vmlinux support building with PCREL addresing")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/1fa3453f07d42a50a70114da9905bf7b73304fca.1747073669.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ arch/powerpc/include/asm/ppc_asm.h | 2 +-
+ arch/powerpc/kernel/vdso/Makefile  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index c874ed9484b54..ad91377f6cfae 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -640,10 +640,12 @@ EXPORT_SYMBOL(tcp_initialize_rcv_mss);
+diff --git a/arch/powerpc/include/asm/ppc_asm.h b/arch/powerpc/include/asm/ppc_asm.h
+index 02897f4b0dbf8..b891910fce8a6 100644
+--- a/arch/powerpc/include/asm/ppc_asm.h
++++ b/arch/powerpc/include/asm/ppc_asm.h
+@@ -183,7 +183,7 @@
+ /*
+  * Used to name C functions called from asm
   */
- static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
- {
--	u32 new_sample = tp->rcv_rtt_est.rtt_us;
--	long m = sample;
-+	u32 new_sample, old_sample = tp->rcv_rtt_est.rtt_us;
-+	long m = sample << 3;
+-#ifdef CONFIG_PPC_KERNEL_PCREL
++#if defined(__powerpc64__) && defined(CONFIG_PPC_KERNEL_PCREL)
+ #define CFUNC(name) name@notoc
+ #else
+ #define CFUNC(name) name
+diff --git a/arch/powerpc/kernel/vdso/Makefile b/arch/powerpc/kernel/vdso/Makefile
+index e8824f9333261..8834dfe9d7279 100644
+--- a/arch/powerpc/kernel/vdso/Makefile
++++ b/arch/powerpc/kernel/vdso/Makefile
+@@ -53,7 +53,7 @@ ldflags-$(CONFIG_LD_ORPHAN_WARN) += -Wl,--orphan-handling=$(CONFIG_LD_ORPHAN_WAR
+ ldflags-y += $(filter-out $(CC_AUTO_VAR_INIT_ZERO_ENABLER) $(CC_FLAGS_FTRACE) -Wa$(comma)%, $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS))
  
--	if (new_sample != 0) {
-+	if (old_sample == 0 || m < old_sample) {
-+		new_sample = m;
-+	} else {
- 		/* If we sample in larger samples in the non-timestamp
- 		 * case, we could grossly overestimate the RTT especially
- 		 * with chatty applications or bulk transfer apps which
-@@ -654,17 +656,9 @@ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
- 		 * else with timestamps disabled convergence takes too
- 		 * long.
- 		 */
--		if (!win_dep) {
--			m -= (new_sample >> 3);
--			new_sample += m;
--		} else {
--			m <<= 3;
--			if (m < new_sample)
--				new_sample = m;
--		}
--	} else {
--		/* No previous measure. */
--		new_sample = m << 3;
-+		if (win_dep)
-+			return;
-+		new_sample = old_sample - (old_sample >> 3) + sample;
- 	}
- 
- 	tp->rcv_rtt_est.rtt_us = new_sample;
+ CC32FLAGS := -m32
+-CC32FLAGSREMOVE := -mcmodel=medium -mabi=elfv1 -mabi=elfv2 -mcall-aixdesc
++CC32FLAGSREMOVE := -mcmodel=medium -mabi=elfv1 -mabi=elfv2 -mcall-aixdesc -mpcrel
+ ifdef CONFIG_CC_IS_CLANG
+ # This flag is supported by clang for 64-bit but not 32-bit so it will cause
+ # an unused command line flag warning for this file.
 -- 
 2.39.5
 
