@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E6F19E7F9;
-	Mon, 23 Jun 2025 22:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DD4224B07;
+	Mon, 23 Jun 2025 22:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716923; cv=none; b=l16TbzVmWNqBlgNFETRlUuPdRtkoRAL0V2iT0aSk+LFCQpnTHZj6fxxBDxNAVt8VGYhn76GLXA4ZBFJTtdOIVKExpWTXvVJpkoIfFq+66g15xtULmoUhi5p+z7IT12MYposACs1iX8GS09Mmm7OkWTCJ1evNenzYj3Mb94i7tp4=
+	t=1750716926; cv=none; b=dBx8EpcoakqqCakpNtd91iG7YX1lPsOah8dmXsEeQAtuBm5w4RsuWOO8AcnECHQlGtLsXeKirogx1xGrsj5+FrrtrjlvxMrbjh3teZuDNE3G4xy38psT7V6Kj8aMYVMcSgqB3QdhR3vSyG68lziTIkmmCqA2GrmBZjcoakCa4r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716923; c=relaxed/simple;
-	bh=FNA9rsWXSMdEIhLUB6VL8MZgxX/akA5FaVTz6aAC07w=;
+	s=arc-20240116; t=1750716926; c=relaxed/simple;
+	bh=gY0gfT6qWDb7GR8/cxmRFvmd7zoOhZV8QzIcmWD00wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D0fUW1YKHKLkSjZUAEuxkFxg8lPnh76/OBQNbGQauXhUwvbjWtFu1JBEHXCAPdZ/WeVv5YJCWViehRGG61+aqFeXodV+5I2NlXncVKGUnvkjuqoskXNiU+bBQ8gbF+3e4r/Jz4T0La/f2hA7lGJdXgQUCN/FKSzMmF7p3VkbeJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q7FX7Vu3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GyKDs6TZEFogkK9IDjjAFMn+Us62fNCwawalDWarw8+WC3X2WBTtbkPYQ3sVKEFSLzdpdSSYhzU1pWvZJawmtUITHFGpmN1HSRuX6Zx9b68bWMsMQaiygZmdtHgaO5V6tQTylsuQ75QfCQbwyEN5LNdxVAKbM/4W20O991pON1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8xF/j4Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7FX7Vu3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA8AC4CEEA;
-	Mon, 23 Jun 2025 22:15:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8xF/j4Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904D3C4CEEA;
+	Mon, 23 Jun 2025 22:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716923;
-	bh=FNA9rsWXSMdEIhLUB6VL8MZgxX/akA5FaVTz6aAC07w=;
+	s=korg; t=1750716925;
+	bh=gY0gfT6qWDb7GR8/cxmRFvmd7zoOhZV8QzIcmWD00wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q7FX7Vu3Nl8Gk+JsOZWklh1HBcUKNgAYqj0+lJS68sn96QrM+cQzyuizQYKlS7+mB
-	 rmfIFSu/jWCqUiesVT0yS1PA1fh1mgFA2QxTwpwcZDbSSM+qLJjUggdlEG/Jff1uc1
-	 x0WXj/smVS6FGOpku6YMzz6nfJhV0mJFCSCludEo=
+	b=d8xF/j4Qh2SdCHep0LtwtTHvteQ1ebiaY9zkxuZQCnzIGSsgtDoOV7NpKB83SReLN
+	 h72PzMF0aarI2L7zT9UPoFDw4xvMEGt5N24YPTsDvt7ChQTLYmhxC9piyDvnbz2sjJ
+	 wgxXdScTxdAF5YDOBt3EBdFbZgdfVpHItoXo9on0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <ziyao@disroot.org>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 298/414] platform/loongarch: laptop: Get brightness setting from EC on probe
-Date: Mon, 23 Jun 2025 15:07:15 +0200
-Message-ID: <20250623130649.458444624@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.15 569/592] tracing: Do not free "head" on error path of filter_free_subsystem_filters()
+Date: Mon, 23 Jun 2025 15:08:47 +0200
+Message-ID: <20250623130713.976149735@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,45 +49,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yao Zi <ziyao@disroot.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 1205088fd0393bd9eae96b62bf1e4b9eb1b73edf upstream.
+commit 8a157d8a00e815cab4432653cb50c9cedbbb4931 upstream.
 
-Previously during driver probe, 1 is unconditionally taken as current
-brightness value and set to props.brightness, which will be considered
-as the brightness before suspend and restored to EC on resume. Since a
-brightness value of 1 almost never matches EC's state on coldboot (my
-laptop's EC defaults to 80), this causes surprising changes of screen
-brightness on the first time of resume after coldboot.
+The variable "head" is allocated and initialized as a list before
+allocating the first "item" for the list. If the allocation of "item"
+fails, it frees "head" and then jumps to the label "free_now" which will
+process head and free it.
 
-Let's get brightness from EC and take it as the current brightness on
-probe of the laptop driver to avoid the surprising behavior. Tested on
-TongFang L860-T2 Loongson-3A5000 laptop.
+This will cause a UAF of "head", and it doesn't need to free it before
+jumping to the "free_now" label as that code will free it.
 
-Cc: stable@vger.kernel.org
-Fixes: 6246ed09111f ("LoongArch: Add ACPI-based generic laptop driver")
-Signed-off-by: Yao Zi <ziyao@disroot.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20250610093348.33c5643a@gandalf.local.home
+Fixes: a9d0aab5eb33 ("tracing: Fix regression of filter waiting a long time on RCU synchronization")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202506070424.lCiNreTI-lkp@intel.com/
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/loongarch/loongson-laptop.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_events_filter.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/platform/loongarch/loongson-laptop.c
-+++ b/drivers/platform/loongarch/loongson-laptop.c
-@@ -392,8 +392,8 @@ static int laptop_backlight_register(voi
- 	if (!acpi_evalf(hotkey_handle, &status, "ECLL", "d"))
- 		return -EIO;
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -1435,10 +1435,8 @@ static void filter_free_subsystem_filter
+ 	INIT_LIST_HEAD(&head->list);
  
--	props.brightness = 1;
- 	props.max_brightness = status;
-+	props.brightness = ec_get_brightness();
- 	props.type = BACKLIGHT_PLATFORM;
+ 	item = kmalloc(sizeof(*item), GFP_KERNEL);
+-	if (!item) {
+-		kfree(head);
++	if (!item)
+ 		goto free_now;
+-	}
  
- 	backlight_device_register("loongson_laptop",
+ 	item->filter = filter;
+ 	list_add_tail(&item->list, &head->list);
 
 
