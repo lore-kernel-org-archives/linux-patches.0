@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340011E1A05;
-	Mon, 23 Jun 2025 21:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007B92AEE4;
+	Mon, 23 Jun 2025 21:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715019; cv=none; b=SXVsCU4+tTA3m7NuOs5kxRAKWKhqHWugWNWK8+ebV+veRqoZpL3b5oND2Zot8EOTGE7q7BiXFwu4Hcz7v93NdoCf7lrr1NZi8jxTLfPdV9ev17BA64BOmgDASZGPEg49Vxr1Tvbc0q5Wkc3glgQePSKto+7Lh7Wt8+1BU/d7tPk=
+	t=1750715023; cv=none; b=tmbtY4Sdap1odX3gRZJB8dNh+HqcR6ewArTpFtZOXF8dy9jyoO0J7Ks79hBEvCl3ghp1nxQQRWL7lWQ3BdEEjs/0xeJKSiC/6uF2pXZt5Ho469PX7+KvWTx+DeoQqfbi7H6bNjPxglamVnib0VORDrmpH4G+g/42Y4WeBzlL+F4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715019; c=relaxed/simple;
-	bh=YXPkIjaKo18GCwllx+9+n5VzIh9ZiU6PrzNHSXndLJ8=;
+	s=arc-20240116; t=1750715023; c=relaxed/simple;
+	bh=FXPJlX9Nj0TCpRvi9CnxYOsehD9BQIxqnh8YT5TFOYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GYCA7O5aLq8PRqwSUsw/9BdaUmhMQirC0az+NSWlXGqUhAC2OFnqjwwIOE0VP+4YDDkMA4HVWFx6MlVMbKysXsxBEkGZu+ayukov84+JYulnXTk9SxGRQwDgfsGSBNwy3nW2mdUMxL2iYGPTR14p32SiCfZymQJYNvgmOkLB7VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvto9Fd8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hCr1uYkvtBM/PVXIHcaTKqyqcWaBcGh0F4708arT6kMvATOpfwf9Mq3En9Flu/QIX/NgnXFSe1VqjrvMjQfALxMwy2pMatp367fCT9mS2N8KCXOA7p1mpaqdXV1R6ogG5+hu9XhQ7G2bWzC0oTcBQbPze1tM/y3RXMUuVFydgjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+ZZaPov; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvto9Fd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE91C4CEEA;
-	Mon, 23 Jun 2025 21:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+ZZaPov"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B82C4CEEA;
+	Mon, 23 Jun 2025 21:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715019;
-	bh=YXPkIjaKo18GCwllx+9+n5VzIh9ZiU6PrzNHSXndLJ8=;
+	s=korg; t=1750715021;
+	bh=FXPJlX9Nj0TCpRvi9CnxYOsehD9BQIxqnh8YT5TFOYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kvto9Fd8IZQneXzqcZFHE8WHaRorhaZrz75/Ph+fKt3jW86cwXyd1PKkDVU4Z0brJ
-	 /oi3VHKIv2EFL6jx4rxMOfTLGyvSS5NQ7IZL90RK4bj480PRTx7Sypo+lLX109ZXlZ
-	 cZZ7s7D43gjATvf8/wtHNNZgIB67GvsJtm2fR9aA=
+	b=i+ZZaPovLJ2UkllRCSYoTmpaZhMNIk7/p6L/6NWIoPSnbwlLCp88b5KX84teUnh0q
+	 lJi2QI+I9MrWydeSSaBquMY8rChmpqayngWVfHxg1xFA9PGqBp0zaItv5zqFPbQtYi
+	 WWLGV/r2j/LVS68HRzoDJD48iFtbKOixpn/3HtxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jann Horn <jannh@google.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	Rouven Czerwinski <rouven.czerwinski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 247/355] cpufreq: Force sync policy boost with global boost on sysfs update
-Date: Mon, 23 Jun 2025 15:07:28 +0200
-Message-ID: <20250623130634.177670277@linuxfoundation.org>
+Subject: [PATCH 6.15 432/592] tee: Prevent size calculation wraparound on 32-bit kernels
+Date: Mon, 23 Jun 2025 15:06:30 +0200
+Message-ID: <20250623130710.713181392@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +48,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 121baab7b88ed865532dadb7ef1aee6e2bea86f5 ]
+[ Upstream commit 39bb67edcc582b3b386a9ec983da67fa8a10ec03 ]
 
-If the global boost flag is enabled and policy boost flag is disabled, a
-call to `cpufreq_boost_trigger_state(true)` must enable the policy's
-boost state.
+The current code around TEE_IOCTL_PARAM_SIZE() is a bit wrong on
+32-bit kernels: Multiplying a user-provided 32-bit value with the
+size of a structure can wrap around on such platforms.
 
-The current code misses that because of an optimization. Fix it.
+Fix it by using saturating arithmetic for the size calculation.
 
-Suggested-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Reviewed-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://patch.msgid.link/852ff11c589e6300730d207baac195b2d9d8b95f.1745511526.git.viresh.kumar@linaro.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This has no security consequences because, in all users of
+TEE_IOCTL_PARAM_SIZE(), the subsequent kcalloc() implicitly checks
+for wrapping.
+
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Tested-by: Rouven Czerwinski <rouven.czerwinski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/tee/tee_core.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index d13139497da44..6294e10657b46 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -2637,8 +2637,10 @@ int cpufreq_boost_trigger_state(int state)
- 	unsigned long flags;
- 	int ret = 0;
+diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
+index d113679b1e2d7..acc7998758ad8 100644
+--- a/drivers/tee/tee_core.c
++++ b/drivers/tee/tee_core.c
+@@ -10,6 +10,7 @@
+ #include <linux/fs.h>
+ #include <linux/idr.h>
+ #include <linux/module.h>
++#include <linux/overflow.h>
+ #include <linux/slab.h>
+ #include <linux/tee_core.h>
+ #include <linux/uaccess.h>
+@@ -19,7 +20,7 @@
  
--	if (cpufreq_driver->boost_enabled == state)
--		return 0;
-+	/*
-+	 * Don't compare 'cpufreq_driver->boost_enabled' with 'state' here to
-+	 * make sure all policies are in sync with global boost flag.
-+	 */
+ #define TEE_NUM_DEVICES	32
  
- 	write_lock_irqsave(&cpufreq_driver_lock, flags);
- 	cpufreq_driver->boost_enabled = state;
+-#define TEE_IOCTL_PARAM_SIZE(x) (sizeof(struct tee_param) * (x))
++#define TEE_IOCTL_PARAM_SIZE(x) (size_mul(sizeof(struct tee_param), (x)))
+ 
+ #define TEE_UUID_NS_NAME_SIZE	128
+ 
+@@ -487,7 +488,7 @@ static int tee_ioctl_open_session(struct tee_context *ctx,
+ 	if (copy_from_user(&arg, uarg, sizeof(arg)))
+ 		return -EFAULT;
+ 
+-	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
++	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	if (arg.num_params) {
+@@ -565,7 +566,7 @@ static int tee_ioctl_invoke(struct tee_context *ctx,
+ 	if (copy_from_user(&arg, uarg, sizeof(arg)))
+ 		return -EFAULT;
+ 
+-	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
++	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	if (arg.num_params) {
+@@ -699,7 +700,7 @@ static int tee_ioctl_supp_recv(struct tee_context *ctx,
+ 	if (get_user(num_params, &uarg->num_params))
+ 		return -EFAULT;
+ 
+-	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) != buf.buf_len)
++	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) != buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
+@@ -798,7 +799,7 @@ static int tee_ioctl_supp_send(struct tee_context *ctx,
+ 	    get_user(num_params, &uarg->num_params))
+ 		return -EFAULT;
+ 
+-	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) > buf.buf_len)
++	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) > buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
 -- 
 2.39.5
 
