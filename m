@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0103A3FD4;
-	Mon, 23 Jun 2025 21:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0144315A;
+	Mon, 23 Jun 2025 21:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715312; cv=none; b=W1gRVU7UTbMP57UsF5jLu+rRvya/K9M9GGGC1s9LlDDuNsFLGT3w6DNPVXRBamsJwYSZh3FbDspPJjU55JiU7LN1oAsIMM/DDQzVpcR0Zn+MqaET0TE0/n4H/70Yl9SBZuT9cttAG8ORhSjJJbZzF0vkM42nrq0n4NgbgB8u+IE=
+	t=1750715314; cv=none; b=WADmUCq0olwrYS+A2GxN5AgUO+p4yigc9yH6xIEqhTksO13Usjz0YDItXXoQTEoxQ+FpohMJ4IhNhQYE5Rc5k8l90GppdPTY0xR83hDeuSdWrlu0YIyroaAQ9WpAdPJQ4Pv45N5SQuP28CuAPDB5GyTIR8nvGactDAh0fxxewmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715312; c=relaxed/simple;
-	bh=NKirTGx0w979S6YcN4TUr+G0zo9I+Wgk29of+wTYNSk=;
+	s=arc-20240116; t=1750715314; c=relaxed/simple;
+	bh=qa2yeibhODCCbiZXjqxOwIC3vJ1krdzEqQ+/IQzhmIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n3UUvr6eDg9+uPt5hvxP5+gjhb900zRYVVZjRVygq1vkDLXAsmAiYcESFi3qkym3DD0QQguHeGdWHpewWokGUTZdWfQbfkQnjHn3JD0CE77mM8FyZ+a0RwMpV8JzZn3RKIYGbusFrwYk4suaL/ux6izCBZqEzsgiomJnYOsV/gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f12gcmmk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fhgwj9d/Ezu80fjXhmdfSKrbmucO4tcPeBurFdYILwUG4vZHwDLyE3fXMyOK+KKRh86nk6w6fnR8ijIw48IrPilIepmxPKjLY9Ba/sDuRq+rNJgDRHUdrOVDrd2m+0/evOPMJWug8XT+MsCgCsQsraEnMVOdaS+FTtCM4s/FY+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOI8j+8g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f12gcmmk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834D2C4CEEA;
-	Mon, 23 Jun 2025 21:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOI8j+8g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01974C4CEEA;
+	Mon, 23 Jun 2025 21:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715311;
-	bh=NKirTGx0w979S6YcN4TUr+G0zo9I+Wgk29of+wTYNSk=;
+	s=korg; t=1750715314;
+	bh=qa2yeibhODCCbiZXjqxOwIC3vJ1krdzEqQ+/IQzhmIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f12gcmmk2ZlZpuOf4WYIMVI4Ov/uKgjjgcwHIfFxD1e+nssNdRPSlgPqcWxl8zspN
-	 GT+MzVLFUtSdXE7g5AdMV8fvncJbqO7t1LnElqTQH38rWPYRaQSYaVA59hYdJTgkXn
-	 vwGh1fvvFwWZ21A0HiTDiPu6O+N4p7A7pJartIW4=
+	b=wOI8j+8gV9ufGbVEAtHWTWtqh3l8u9W05JYJWtVSlGjld2DbZGLKgBLvm+c+ZYL7G
+	 fERoP0g4aj1Lsoutay/ESWQ9ujdTm3dTgGAEOHFZMicHd7YpREJ1/6g3yp3NsIC4xh
+	 gI8dMA1WepQEK9Ppx4FkRe2APSrf5oQKkNJ8lJ78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 267/355] scsi: lpfc: Fix lpfc_check_sli_ndlp() handling for GEN_REQUEST64 commands
-Date: Mon, 23 Jun 2025 15:07:48 +0200
-Message-ID: <20250623130634.782842709@linuxfoundation.org>
+Subject: [PATCH 6.1 227/508] ath10k: snoc: fix unbalanced IRQ enable in crash recovery
+Date: Mon, 23 Jun 2025 15:04:32 +0200
+Message-ID: <20250623130650.847043212@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Caleb Connolly <caleb.connolly@linaro.org>
 
-[ Upstream commit 05ae6c9c7315d844fbc15afe393f5ba5e5771126 ]
+[ Upstream commit 1650d32b92b01db03a1a95d69ee74fcbc34d4b00 ]
 
-In lpfc_check_sli_ndlp(), the get_job_els_rsp64_did remote_id assignment
-does not apply for GEN_REQUEST64 commands as it only has meaning for a
-ELS_REQUEST64 command.  So, if (iocb->ndlp == ndlp) is false, we could
-erroneously return the wrong value.  Fix by replacing the fallthrough
-statement with a break statement before the remote_id check.
+In ath10k_snoc_hif_stop() we skip disabling the IRQs in the crash
+recovery flow, but we still unconditionally call enable again in
+ath10k_snoc_hif_start().
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20250425194806.3585-2-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+We can't check the ATH10K_FLAG_CRASH_FLUSH bit since it is cleared
+before hif_start() is called, so instead check the
+ATH10K_SNOC_FLAG_RECOVERY flag and skip enabling the IRQs during crash
+recovery.
+
+This fixes unbalanced IRQ enable splats that happen after recovering from
+a crash.
+
+Fixes: 0e622f67e041 ("ath10k: add support for WCN3990 firmware crash recovery")
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+Tested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250318205043.1043148-1-caleb.connolly@linaro.org
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_hbadisc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/snoc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index 353c360b0c6ab..ca91527a18070 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -4772,7 +4772,7 @@ lpfc_check_sli_ndlp(struct lpfc_hba *phba,
- 		case CMD_GEN_REQUEST64_CR:
- 			if (iocb->context_un.ndlp == ndlp)
- 				return 1;
--			fallthrough;
-+			break;
- 		case CMD_ELS_REQUEST64_CR:
- 			if (icmd->un.elsreq64.remoteID == ndlp->nlp_DID)
- 				return 1;
+diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+index 4b7266d928470..b43658b016844 100644
+--- a/drivers/net/wireless/ath/ath10k/snoc.c
++++ b/drivers/net/wireless/ath/ath10k/snoc.c
+@@ -936,7 +936,9 @@ static int ath10k_snoc_hif_start(struct ath10k *ar)
+ 	bitmap_clear(ar_snoc->pending_ce_irqs, 0, CE_COUNT_MAX);
+ 
+ 	ath10k_core_napi_enable(ar);
+-	ath10k_snoc_irq_enable(ar);
++	/* IRQs are left enabled when we restart due to a firmware crash */
++	if (!test_bit(ATH10K_SNOC_FLAG_RECOVERY, &ar_snoc->flags))
++		ath10k_snoc_irq_enable(ar);
+ 	ath10k_snoc_rx_post(ar);
+ 
+ 	clear_bit(ATH10K_SNOC_FLAG_RECOVERY, &ar_snoc->flags);
 -- 
 2.39.5
 
