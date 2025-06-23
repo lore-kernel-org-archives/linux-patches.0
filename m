@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606EE19D084;
-	Mon, 23 Jun 2025 21:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DC64315A;
+	Mon, 23 Jun 2025 21:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714858; cv=none; b=UVYNT3hAaC2po1VzdVrhAv0v0Fnf/gb5Cz/kFzrdEgWxPAKknZz+NswVIcDByQY3m22baQQiPEV+YWCaBvn52XUhktKFPTUmGR1F0DQ+v/IPQJjA/zZ0r6v7dYWW84TRIhS5XXfadEQVUSD3bM5nnZmI/hNz37ZtNyowAoOC8Rk=
+	t=1750714860; cv=none; b=M5QGznJeoXYQNLRcj8rdP8L2qmn58U0D0CXIs86mZZ2uIfEKLUvNO+xabGl1E+0bqOJf0j9u6eMcYRO4ZfQowGmqdYLTcMZBbbLBrh6ah1jp5vQk2U8pUXl1i67LvBskkU+CRevzmvKHNWu9gvTAptz59sU0+1TQI/qGH1aZQ7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714858; c=relaxed/simple;
-	bh=Dq24zDfWLohZ6hgIspsgeDMoMs+glEKu3dq1e/7JGbs=;
+	s=arc-20240116; t=1750714860; c=relaxed/simple;
+	bh=FRxTu3fHfYEum/TFb2S78o6VxtHCtIm9X4jkiAxPZQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=toe/wgWvuIVzm4lO9MX3I7fmytOId5kngZ123WEpExE35qYOIb3cTi63eSgjk1AQ0Lvwx5DqF0ytrRjMW71xJXAOqirJ5lDPsLKNrwbLvAwnvlwFme9Wxrn2jdFmAfQZ+sxcowpnY2bV9IN0EalQrfgaLXHstEglyGBW1AuWhwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fI+V90Zv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KwALObCcUI48H37ttwHLnLM1uaqmeXGUeAvYSDrhJiQ06NUmcKzZtKU1fZ+jD3XzASI7D6TLQ8dPpZ62LsIvLI3NntJtdMIZEiNV7vFJfGakIpPmwCzf0ztThiVysSS6iTo4E3RsxEUcaL6kYRaw+RogxBsbIDbvQibP8bncjLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgp5trTV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fI+V90Zv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAEA2C4CEEA;
-	Mon, 23 Jun 2025 21:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgp5trTV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E730C4CEEA;
+	Mon, 23 Jun 2025 21:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714858;
-	bh=Dq24zDfWLohZ6hgIspsgeDMoMs+glEKu3dq1e/7JGbs=;
+	s=korg; t=1750714860;
+	bh=FRxTu3fHfYEum/TFb2S78o6VxtHCtIm9X4jkiAxPZQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fI+V90Zv84wEawc9geSS10xq7poccAgMfwfMxY0AdNKpMKJx2HeIE1OWkJBBqJREz
-	 1NIjtHxEdlQWf3TxdIRxf6Ze+vSnqsEk7W1s9o+tb6rI6nYk94gZ0IgTuu5eLnAUJj
-	 ZaDRvrdRfQS1LhZiZDo/HwmTcuRyNJfyMAO5Yf24=
+	b=hgp5trTVYukxYtM0pJA5Ts+ULd1i0cUhK+OAKT8ZG5Zhs6HmfeBq/fTf6gSpBFpLP
+	 5wtulOQmXHpU+ZHCaaydNq/o84KOcxS0eHZB3IZLd0QAnWKVG3NHJo+BkO1r7R1st9
+	 fWSldPTzjSlvaviG+2viFu5oyKNus+7wzE8kLcog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Andrei Borzenkov <arvidjaar@gmail.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.12 161/414] dummycon: Trigger redraw when switching consoles with deferred takeover
-Date: Mon, 23 Jun 2025 15:04:58 +0200
-Message-ID: <20250623130646.061636841@linuxfoundation.org>
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 234/411] NFC: nci: uart: Set tty->disc_data only in success path
+Date: Mon, 23 Jun 2025 15:06:18 +0200
+Message-ID: <20250623130639.547496418@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,94 +47,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 03bcbbb3995ba5df43af9aba45334e35f2dfe27b upstream.
+commit fc27ab48904ceb7e4792f0c400f1ef175edf16fe upstream.
 
-Signal vt subsystem to redraw console when switching to dummycon
-with deferred takeover enabled. Makes the console switch to fbcon
-and displays the available output.
+Setting tty->disc_data before opening the NCI device means we need to
+clean it up on error paths.  This also opens some short window if device
+starts sending data, even before NCIUARTSETDRIVER IOCTL succeeded
+(broken hardware?).  Close the window by exposing tty->disc_data only on
+the success path, when opening of the NCI device and try_module_get()
+succeeds.
 
-With deferred takeover enabled, dummycon acts as the placeholder
-until the first output to the console happens. At that point, fbcon
-takes over. If the output happens while dummycon is not active, it
-cannot inform fbcon. This is the case if the vt subsystem runs in
-graphics mode.
+The code differs in error path in one aspect: tty->disc_data won't be
+ever assigned thus NULL-ified.  This however should not be relevant
+difference, because of "tty->disc_data=NULL" in nci_uart_tty_open().
 
-A typical graphical boot starts plymouth, a display manager and a
-compositor; all while leaving out dummycon. Switching to a text-mode
-console leaves the console with dummycon even if a getty terminal
-has been started.
-
-Returning true from dummycon's con_switch helper signals the vt
-subsystem to redraw the screen. If there's output available dummycon's
-con_putc{s} helpers trigger deferred takeover of fbcon, which sets a
-display mode and displays the output. If no output is available,
-dummycon remains active.
-
-v2:
-- make the comment slightly more verbose (Javier)
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reported-by: Andrei Borzenkov <arvidjaar@gmail.com>
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1242191
-Tested-by: Andrei Borzenkov <arvidjaar@gmail.com>
-Acked-by: Javier Martinez Canillas <javierm@redhat.com>
-Fixes: 83d83bebf401 ("console/fbcon: Add support for deferred console takeover")
-Cc: Hans de Goede <hdegoede@redhat.com>
-Cc: linux-fbdev@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v4.19+
-Link: https://lore.kernel.org/r/20250520071418.8462-1-tzimmermann@suse.de
+Cc: Linus Torvalds <torvalds@linuxfoundation.org>
+Fixes: 9961127d4bce ("NFC: nci: add generic uart support")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20250618073649.25049-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/console/dummycon.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ net/nfc/nci/uart.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/video/console/dummycon.c
-+++ b/drivers/video/console/dummycon.c
-@@ -85,6 +85,15 @@ static bool dummycon_blank(struct vc_dat
- 	/* Redraw, so that we get putc(s) for output done while blanked */
- 	return true;
- }
+--- a/net/nfc/nci/uart.c
++++ b/net/nfc/nci/uart.c
+@@ -131,22 +131,22 @@ static int nci_uart_set_driver(struct tt
+ 
+ 	memcpy(nu, nci_uart_drivers[driver], sizeof(struct nci_uart));
+ 	nu->tty = tty;
+-	tty->disc_data = nu;
+ 	skb_queue_head_init(&nu->tx_q);
+ 	INIT_WORK(&nu->write_work, nci_uart_write_work);
+ 	spin_lock_init(&nu->rx_lock);
+ 
+ 	ret = nu->ops.open(nu);
+ 	if (ret) {
+-		tty->disc_data = NULL;
+ 		kfree(nu);
++		return ret;
+ 	} else if (!try_module_get(nu->owner)) {
+ 		nu->ops.close(nu);
+-		tty->disc_data = NULL;
+ 		kfree(nu);
+ 		return -ENOENT;
+ 	}
+-	return ret;
++	tty->disc_data = nu;
 +
-+static bool dummycon_switch(struct vc_data *vc)
-+{
-+	/*
-+	 * Redraw, so that we get putc(s) for output done while switched
-+	 * away. Informs deferred consoles to take over the display.
-+	 */
-+	return true;
-+}
- #else
- static void dummycon_putc(struct vc_data *vc, u16 c, unsigned int y,
- 			  unsigned int x) { }
-@@ -95,6 +104,10 @@ static bool dummycon_blank(struct vc_dat
- {
- 	return false;
++	return 0;
  }
-+static bool dummycon_switch(struct vc_data *vc)
-+{
-+	return false;
-+}
- #endif
  
- static const char *dummycon_startup(void)
-@@ -123,11 +136,6 @@ static bool dummycon_scroll(struct vc_da
- {
- 	return false;
- }
--
--static bool dummycon_switch(struct vc_data *vc)
--{
--	return false;
--}
- 
- /*
-  *  The console `switch' structure for the dummy console
+ /* ------ LDISC part ------ */
 
 
