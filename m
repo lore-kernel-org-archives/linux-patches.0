@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769D17080E;
-	Mon, 23 Jun 2025 22:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CD3218580;
+	Mon, 23 Jun 2025 22:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716500; cv=none; b=CSN9vPXY0kXgMG2qJnUjCMsh2x0TTKHXPIIVZTcVquYOWpsN4JMkIpf87/XfSdwWbTwM08P1ACbf1Ig/CWTVTCjWiLCPdMC6NKHn2uD8au+3BXvYtq0VdoXgQlFfZgBzFXK1pJs3xVGmpqw2/RQ7l1aQDCrzfb6A2L8VCN+uvy8=
+	t=1750716503; cv=none; b=CymWvUDdkU9qC7tKinMNifVmGNaom2yg6XxxfjzJuHQZmVrFU3/s/Fd+6Mo6N8iJCvrP0+TPsJnvqO/MI3tyVNRVJGgxJl03IRm98v8ChzJRIKIfxd4+Ahg4ps6Trec/ubkkGBpdLb4Fq/b9Lepk/w/jO5D41hFxP47webn4dik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716500; c=relaxed/simple;
-	bh=vn71yLkYt256x5+9dncPhHS0Sach/z0PyUCcAk9Q5Ec=;
+	s=arc-20240116; t=1750716503; c=relaxed/simple;
+	bh=f1Ot9nmDzHqSZhlaOcmUKhTlqbieoogB7wjfx6gVBLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AIeYc8MxOCKpCpi99/cLweYERc38HMOQ7UWKWBX3+o/90Xjddq3xW854p/OOJL/0lgs4FqgtTQvuGCbPSd+guwU2nUbn0wHqtdeaypCxPBBhAaMGm47r54KYRKrvENiPch2k+Lb4hqtIRxSgD0D3DT5RmnypKDfVu26eCsGhJ9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEQt+TCv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=REL1fJhd06dy6oNr5kAYhAkllh3dL+QmpQ2mksdVG/DCVR1cHSeoOW5xGIF0mxpjfVKurbbaMbCPPmjexrKTgc3ILUJ8qA3VJolfezdK1D2bZTPoDWv8GB1Eae756II/OV9IkaM2lPe09+aKyBuUUth0qhxVue7ElN9hvP2JXGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6Fs5u0H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEQt+TCv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA3AC4CEEA;
-	Mon, 23 Jun 2025 22:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6Fs5u0H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BCDEC4CEEA;
+	Mon, 23 Jun 2025 22:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716500;
-	bh=vn71yLkYt256x5+9dncPhHS0Sach/z0PyUCcAk9Q5Ec=;
+	s=korg; t=1750716502;
+	bh=f1Ot9nmDzHqSZhlaOcmUKhTlqbieoogB7wjfx6gVBLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bEQt+TCv12G0/C2eNdU9MV083YfXggMKazF+m6dc1ay3pyL77rRIIV8hfBHgKyT5P
-	 m+nlDWxYaqrmZERMIhfLzKN7VP1QB1OGJqC/E4/4RPeFBuSABS46I2brIOTUCdR83d
-	 Kyri5ofSIhiGdlANZhKut0rly5eg9BHUQdRDdFAU=
+	b=M6Fs5u0H7p2ez9sLyDB+dcu5kM5g8nZAEmHYumsDpvHtAjWWtTHhF2g0R7eXMxaW3
+	 YDFnbUvDz5gsl6OhsuQkCdmA2SZ0kfMZFceeShRd3BBwrah0bsUHBLzSNtKyCp2Ovv
+	 uCBi+FLbAh3jEbkNp9nAighNziSe6ff39pR0rw08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Fuad Tabba <tabba@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.15 556/592] KVM: arm64: VHE: Synchronize restore of host debug registers
-Date: Mon, 23 Jun 2025 15:08:34 +0200
-Message-ID: <20250623130713.668998481@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 359/411] ALSA: hda/intel: Add Thinkpad E15 to PM deny list
+Date: Mon, 23 Jun 2025 15:08:23 +0200
+Message-ID: <20250623130642.680185078@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,53 +45,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit cade3d57e456e69f67aa9894bf89dc8678796bb7 upstream.
+commit c987a390f1b3b8bdac11031d7004e3410fe259bd upstream.
 
-When KVM runs in non-protected VHE mode, there's no context
-synchronization event between __debug_switch_to_host() restoring the
-host debug registers and __kvm_vcpu_run() unmasking debug exceptions.
-Due to this, it's theoretically possible for the host to take an
-unexpected debug exception due to the stale guest configuration.
+Lenovo Thinkpad E15 with Conexant CX8070 codec seems causing ugly
+noises after runtime-PM suspend.  Disable the codec runtime PM as a
+workaround.
 
-This cannot happen in NVHE/HVHE mode as debug exceptions are masked in
-the hyp code, and the exception return to the host will provide the
-necessary context synchronization before debug exceptions can be taken.
-
-For now, avoid the problem by adding an ISB after VHE hyp code restores
-the host debug registers.
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Fuad Tabba <tabba@google.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Oliver Upton <oliver.upton@linux.dev>
-Cc: Will Deacon <will@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250617133718.4014181-2-mark.rutland@arm.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220210
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250608091415.21170-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/include/hyp/debug-sr.h |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/hda/hda_intel.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/kvm/hyp/include/hyp/debug-sr.h
-+++ b/arch/arm64/kvm/hyp/include/hyp/debug-sr.h
-@@ -167,6 +167,9 @@ static inline void __debug_switch_to_hos
- 
- 	__debug_save_state(guest_dbg, guest_ctxt);
- 	__debug_restore_state(host_dbg, host_ctxt);
-+
-+	if (has_vhe())
-+		isb();
- }
- 
- #endif /* __ARM64_KVM_HYP_DEBUG_SR_H__ */
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2227,6 +2227,8 @@ static const struct snd_pci_quirk power_
+ 	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
+ 	/* Dell ALC3271 */
+ 	SND_PCI_QUIRK(0x1028, 0x0962, "Dell ALC3271", 0),
++	/* https://bugzilla.kernel.org/show_bug.cgi?id=220210 */
++	SND_PCI_QUIRK(0x17aa, 0x5079, "Lenovo Thinkpad E15", 0),
+ 	{}
+ };
+ #endif /* CONFIG_PM */
 
 
