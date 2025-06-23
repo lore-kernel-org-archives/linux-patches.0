@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F70B250C06;
-	Mon, 23 Jun 2025 13:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D771B250C06;
+	Mon, 23 Jun 2025 13:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685711; cv=none; b=NSJuEu6w+TThaFhS+S65DHYPOE5iEZh46D/Ha/UlawPA5wvsCNNC8FSEhlZaVLFn4pMNW5HfPb31/fBCYG6lzCRoWNQNmWcyIgHIHjdtOUWnyMPI03x3KjdjDtXFqy0yxCP1KnmhCkQlaWy6Yjv2l41Dng5LH3MJrtJcEUQnSZY=
+	t=1750685714; cv=none; b=kQZtgb8Z91h1hh4mKLUUib/pUcx3vywD1gM2wj+c/Qp6Xf+QsHb91/xuAgvIAbvUBUaJEvy7E7/3nk7kGlDsspORco2cxBlzMzu5xFzvSb9TmeDDCDUDUTPZ9PpEAQj/Y8HTHomg1MxgJIKU6EEsOcq8xO1qa1c175dO472Sw/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685711; c=relaxed/simple;
-	bh=lMeENYXfUGO+NgnsThHCcOb9l1dbqMqKOFl/B2xZJYQ=;
+	s=arc-20240116; t=1750685714; c=relaxed/simple;
+	bh=INqqCv9y9C3AxJ3fAS5UL+oqu8smvU40cg/UqsylX6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CRlX6eKfbuDjH1Vr6vb3hFtcFX3QWEm8xMKmXtLknZGosmrdCqh4XqFWs//5x4CumMzO1UWqI3Sf4KhUdV1RhRks41RV5C2aVOD9Fsm9KRThq1AY9UF314KK41Bs8ATfRDqyTlOcZE5l0woqS+ziLFraCDIaIXuHFFaNuznTMuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbM3rDPQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e/D0hEqXVzYZ75eruNDHdmib+9eLO2NIwhYT5F7JD6Z2zsEhynrWz85WCvFyaFYg2PQ+WE2llgZIiT1iW55KtVBgtF4zOKcx2u8tu2RKQaOXcX1lDXZ4QvKLKrETBzedwENJar15GhF0uF6IW7zvc8AZPSUms6iAIuDSAfmlkR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKBrJzIE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbM3rDPQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2BE0C4CEF7;
-	Mon, 23 Jun 2025 13:35:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKBrJzIE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6F6C4CEF1;
+	Mon, 23 Jun 2025 13:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685711;
-	bh=lMeENYXfUGO+NgnsThHCcOb9l1dbqMqKOFl/B2xZJYQ=;
+	s=korg; t=1750685713;
+	bh=INqqCv9y9C3AxJ3fAS5UL+oqu8smvU40cg/UqsylX6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbM3rDPQqMnZfp/z3FJKqxOdw1bRx3KkXk0vIqL0ptqiQpbFTNWvXugXWagDoCh/+
-	 gM0xQicuRCXrd80nUihZ5vPf/M0aXafpk7vJ6E3/pJcisQkWTp47jqGiNU97hRN3iV
-	 1/RYYAqj+GSxAymfmPrEe9DqaBqSsKm5SCTYi/nA=
+	b=RKBrJzIENCu5phdXasgqGNy+Ck/H5PiewL09iPjFo7/tKKFCZiGvSiQGAMTVgrBqr
+	 nZPgG33kAgpDygRq893msJK0J1K5D/zhPCGWO6hXoLyF1c3SolcBMxCOrc4ajQgat4
+	 7F89mYBVTle0Xx4h+diwiKoQeRHT3mkvPo6zVGTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.4 114/222] Input: ims-pcu - check record size in ims_pcu_flash_firmware()
-Date: Mon, 23 Jun 2025 15:07:29 +0200
-Message-ID: <20250623130615.534147907@linuxfoundation.org>
+	Feng Xu <feng.f.xu@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 026/508] EDAC/skx_common: Fix general protection fault
+Date: Mon, 23 Jun 2025 15:01:11 +0200
+Message-ID: <20250623130645.892827235@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,43 +48,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-commit a95ef0199e80f3384eb992889322957d26c00102 upstream.
+[ Upstream commit 20d2d476b3ae18041be423671a8637ed5ffd6958 ]
 
-The "len" variable comes from the firmware and we generally do
-trust firmware, but it's always better to double check.  If the "len"
-is too large it could result in memory corruption when we do
-"memcpy(fragment->data, rec->data, len);"
+After loading i10nm_edac (which automatically loads skx_edac_common), if
+unload only i10nm_edac, then reload it and perform error injection testing,
+a general protection fault may occur:
 
-Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/131fd1ae92c828ee9f4fa2de03d8c210ae1f3524.1748463049.git.dan.carpenter@linaro.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  mce: [Hardware Error]: Machine check events logged
+  Oops: general protection fault ...
+  ...
+  Workqueue: events mce_gen_pool_process
+  RIP: 0010:string+0x53/0xe0
+  ...
+  Call Trace:
+  <TASK>
+  ? die_addr+0x37/0x90
+  ? exc_general_protection+0x1e7/0x3f0
+  ? asm_exc_general_protection+0x26/0x30
+  ? string+0x53/0xe0
+  vsnprintf+0x23e/0x4c0
+  snprintf+0x4d/0x70
+  skx_adxl_decode+0x16a/0x330 [skx_edac_common]
+  skx_mce_check_error.part.0+0xf8/0x220 [skx_edac_common]
+  skx_mce_check_error+0x17/0x20 [skx_edac_common]
+  ...
+
+The issue arose was because the variable 'adxl_component_count' (inside
+skx_edac_common), which counts the ADXL components, was not reset. During
+the reloading of i10nm_edac, the count was incremented by the actual number
+of ADXL components again, resulting in a count that was double the real
+number of ADXL components. This led to an out-of-bounds reference to the
+ADXL component array, causing the general protection fault above.
+
+Fix this issue by resetting the 'adxl_component_count' in adxl_put(),
+which is called during the unloading of {skx,i10nm}_edac.
+
+Fixes: 123b15863550 ("EDAC, i10nm: make skx_common.o a separate module")
+Reported-by: Feng Xu <feng.f.xu@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Tested-by: Feng Xu <feng.f.xu@intel.com>
+Link: https://lore.kernel.org/r/20250417150724.1170168-2-qiuxu.zhuo@intel.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/ims-pcu.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/edac/skx_common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -845,6 +845,12 @@ static int ims_pcu_flash_firmware(struct
- 		addr = be32_to_cpu(rec->addr) / 2;
- 		len = be16_to_cpu(rec->len);
+diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
+index e218909f9f9e8..c11870ac1b3c7 100644
+--- a/drivers/edac/skx_common.c
++++ b/drivers/edac/skx_common.c
+@@ -114,6 +114,7 @@ EXPORT_SYMBOL_GPL(skx_adxl_get);
  
-+		if (len > sizeof(pcu->cmd_buf) - 1 - sizeof(*fragment)) {
-+			dev_err(pcu->dev,
-+				"Invalid record length in firmware: %d\n", len);
-+			return -EINVAL;
-+		}
-+
- 		fragment = (void *)&pcu->cmd_buf[1];
- 		put_unaligned_le32(addr, &fragment->addr);
- 		fragment->len = len;
+ void skx_adxl_put(void)
+ {
++	adxl_component_count = 0;
+ 	kfree(adxl_values);
+ 	kfree(adxl_msg);
+ }
+-- 
+2.39.5
+
 
 
