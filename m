@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05483FB1B;
-	Mon, 23 Jun 2025 22:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BA93FB1B;
+	Mon, 23 Jun 2025 22:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716282; cv=none; b=cS0dDpsrNuaP7F7A0DXJ+nh0oRlU9ELrCwXN5kvuTFGf1RbuLNe3cAyGTZL2GezQem+CdSWwLjYfRzRGd1/c30ny9+vESGqtDDbX9xQ3pAhxpGFTP8oTA6ae5UeUFyEpGHddolTvrRoDydeWsORiw3ue6kYKmThkV5O1NLc+yiI=
+	t=1750716285; cv=none; b=ARmor0Zy/pAFsuSxyWgCAZtOQpMzyLs1vbLG1SiksN/Diqt/8xYVqmERo992aeybZdDgCERPGdwRH0AJ8PuxLD6NAyafu/JmidI3EyS5xggtzVWrOEVIKylX+BQjAPlLefaG+g0HiiHEK2Xp9XAeAolQehsBgCzImHmQiE3ZtV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716282; c=relaxed/simple;
-	bh=1nEzqYq8o0pw0iBwdfeq3Hc0U4aqTE14vui8nK417V4=;
+	s=arc-20240116; t=1750716285; c=relaxed/simple;
+	bh=z+io1kUgWoBvD8dk2fKl+DFDESLE91qOUAy93X8oKy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNAJQnPUIkrROXvFEp3dcp5u04dmpm0EudtZWtE1/QE/L1Ur2FO/zUI4xTFV3eUky8f/fVuGEBLGFfAb+DPOgWDTtLSbmwntgvOYQxIr+fZ3eFdE2ImQMoTQcBKw8sTfG1ZMUGSQEl2RxbfHPQ6PtnZlkDmCu92vF9VezGIkpkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=woWcAXh9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MM8/dgvj/7IfwqW8Awxv8x/90hzq9y9ZJjRiDWx7vcev8M8J37FRRG1JxAGlX2qrFox4AFnln2uTUULr4QqakfujAnLa266lmm3OhR+AifxLyOv/4DjaSfl2ZceoG8novahwPnnux1YCyqTHlPQx8n7t2bBW9wv8xsj4ewdUHuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWm6fhq4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="woWcAXh9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C2EC4CEEA;
-	Mon, 23 Jun 2025 22:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWm6fhq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42750C4CEEA;
+	Mon, 23 Jun 2025 22:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716282;
-	bh=1nEzqYq8o0pw0iBwdfeq3Hc0U4aqTE14vui8nK417V4=;
+	s=korg; t=1750716284;
+	bh=z+io1kUgWoBvD8dk2fKl+DFDESLE91qOUAy93X8oKy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=woWcAXh9VQVPPUfhvc8dPfbRPyb5F0gO3aKkfHA/dW5r3C+p82tOZ0K0LzmDyTanv
-	 Ifm0AxNE10M1aPhRAyIoU++Az6osatS58LGJ6q19frBdDrKButqsll1bMH4p1aN/eC
-	 KlFOy2Us/U+jbwXnPoPQt88q2kpLe8tt7f0BBvyc=
+	b=dWm6fhq4iLo65vFEHp4lrjSBY5bTg1iYpAmOtApvHwFF72Rtffg8TFPbtHnFqmmqv
+	 7qIimx2pB786afDrbEP6/K1jLKqFzvL4brbyjYdqsyYRWd3vNLDho1zDEfV0kvOtJs
+	 UlT04mzu4kpbf+3iGw9CcjbDAaGqpe1bmWZXKAY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Wang <zhiw@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 513/592] drm/nouveau: fix a use-after-free in r535_gsp_rpc_push()
-Date: Mon, 23 Jun 2025 15:07:51 +0200
-Message-ID: <20250623130712.639206735@linuxfoundation.org>
+Subject: [PATCH 6.12 241/414] f2fs: fix to bail out in get_new_segment()
+Date: Mon, 23 Jun 2025 15:06:18 +0200
+Message-ID: <20250623130648.073178436@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +47,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhi Wang <zhiw@nvidia.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 9802f0a63b641f4cddb2139c814c2e95cb825099 ]
+[ Upstream commit bb5eb8a5b222fa5092f60d5555867a05ebc3bdf2 ]
 
-The RPC container is released after being passed to r535_gsp_rpc_send().
+------------[ cut here ]------------
+WARNING: CPU: 3 PID: 579 at fs/f2fs/segment.c:2832 new_curseg+0x5e8/0x6dc
+pc : new_curseg+0x5e8/0x6dc
+Call trace:
+ new_curseg+0x5e8/0x6dc
+ f2fs_allocate_data_block+0xa54/0xe28
+ do_write_page+0x6c/0x194
+ f2fs_do_write_node_page+0x38/0x78
+ __write_node_page+0x248/0x6d4
+ f2fs_sync_node_pages+0x524/0x72c
+ f2fs_write_checkpoint+0x4bc/0x9b0
+ __checkpoint_and_complete_reqs+0x80/0x244
+ issue_checkpoint_thread+0x8c/0xec
+ kthread+0x114/0x1bc
+ ret_from_fork+0x10/0x20
 
-When sending the initial fragment of a large RPC and passing the
-caller's RPC container, the container will be freed prematurely. Subsequent
-attempts to send remaining fragments will therefore result in a
-use-after-free.
+get_new_segment() detects inconsistent status in between free_segmap
+and free_secmap, let's record such error into super block, and bail
+out get_new_segment() instead of continue using the segment.
 
-Allocate a temporary RPC container for holding the initial fragment of a
-large RPC when sending. Free the caller's container when all fragments
-are successfully sent.
-
-Fixes: 176fdcbddfd2 ("drm/nouveau/gsp/r535: add support for booting GSP-RM")
-Signed-off-by: Zhi Wang <zhiw@nvidia.com>
-Link: https://lore.kernel.org/r/20250527163712.3444-1-zhiw@nvidia.com
-[ Rebase onto Blackwell changes. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c   | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ fs/f2fs/segment.c       | 6 +++++-
+ include/linux/f2fs_fs.h | 1 +
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c
-index ffb4104a7d8cd..d558b0f62b010 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c
-@@ -638,12 +638,18 @@ r535_gsp_rpc_push(struct nvkm_gsp *gsp, void *payload,
- 	if (payload_size > max_payload_size) {
- 		const u32 fn = rpc->function;
- 		u32 remain_payload_size = payload_size;
-+		void *next;
- 
--		/* Adjust length, and send initial RPC. */
--		rpc->length = sizeof(*rpc) + max_payload_size;
--		msg->checksum = rpc->length;
-+		/* Send initial RPC. */
-+		next = r535_gsp_rpc_get(gsp, fn, max_payload_size);
-+		if (IS_ERR(next)) {
-+			repv = next;
-+			goto done;
-+		}
- 
--		repv = r535_gsp_rpc_send(gsp, payload, NVKM_GSP_RPC_REPLY_NOWAIT, 0);
-+		memcpy(next, payload, max_payload_size);
-+
-+		repv = r535_gsp_rpc_send(gsp, next, NVKM_GSP_RPC_REPLY_NOWAIT, 0);
- 		if (IS_ERR(repv))
- 			goto done;
- 
-@@ -654,7 +660,6 @@ r535_gsp_rpc_push(struct nvkm_gsp *gsp, void *payload,
- 		while (remain_payload_size) {
- 			u32 size = min(remain_payload_size,
- 				       max_payload_size);
--			void *next;
- 
- 			next = r535_gsp_rpc_get(gsp, NV_VGPU_MSG_FUNCTION_CONTINUATION_RECORD, size);
- 			if (IS_ERR(next)) {
-@@ -675,6 +680,8 @@ r535_gsp_rpc_push(struct nvkm_gsp *gsp, void *payload,
- 		/* Wait for reply. */
- 		repv = r535_gsp_rpc_handle_reply(gsp, fn, policy, payload_size +
- 						 sizeof(*rpc));
-+		if (!IS_ERR(repv))
-+			kvfree(msg);
- 	} else {
- 		repv = r535_gsp_rpc_send(gsp, payload, policy, gsp_rpc_len);
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index b9ffb2ee9548a..769a90b609e2c 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -2772,7 +2772,11 @@ static int get_new_segment(struct f2fs_sb_info *sbi,
  	}
+ got_it:
+ 	/* set it as dirty segment in free segmap */
+-	f2fs_bug_on(sbi, test_bit(segno, free_i->free_segmap));
++	if (test_bit(segno, free_i->free_segmap)) {
++		ret = -EFSCORRUPTED;
++		f2fs_stop_checkpoint(sbi, false, STOP_CP_REASON_CORRUPTED_FREE_BITMAP);
++		goto out_unlock;
++	}
+ 
+ 	/* no free section in conventional zone */
+ 	if (new_sec && pinning &&
+diff --git a/include/linux/f2fs_fs.h b/include/linux/f2fs_fs.h
+index c24f8bc01045d..5206d63b33860 100644
+--- a/include/linux/f2fs_fs.h
++++ b/include/linux/f2fs_fs.h
+@@ -78,6 +78,7 @@ enum stop_cp_reason {
+ 	STOP_CP_REASON_UPDATE_INODE,
+ 	STOP_CP_REASON_FLUSH_FAIL,
+ 	STOP_CP_REASON_NO_SEGMENT,
++	STOP_CP_REASON_CORRUPTED_FREE_BITMAP,
+ 	STOP_CP_REASON_MAX,
+ };
+ 
 -- 
 2.39.5
 
