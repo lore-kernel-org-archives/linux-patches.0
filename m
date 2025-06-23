@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19937229B21;
-	Mon, 23 Jun 2025 22:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DE621B8F6;
+	Mon, 23 Jun 2025 22:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716716; cv=none; b=Av06MpmYj08QCXOBMl3KdtWfYHZ/1NT1qrbHIvZq0+gL349Yx80IvhAadTW1WGkryPbNhkzucuXprp+nWvJoCIhv3e/6qconyG7ysTO3+SZ+JV+i+D6ITNtT1Nr2QlU1l6rzle/Eu6c6myByngsuyNon1Umnku3X5bBTFyzojNw=
+	t=1750716718; cv=none; b=uPweMCBU/9D8/Z9evFiGQcepNr30YN59P9sjbkewVbUcCP7FkfRzZZRn9APMotIGXfYnJe0auJLlRXJkX9gdQJgYRBLW+bgYEwVeRZbWI3zJBfGoSBzAIamc6GCp2JkasthL3y0EylPAoxaMU8MVJMIsPSpQRmL1/0Ln9NXE7l8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716716; c=relaxed/simple;
-	bh=xGE7oH3TXcFtyJuz+pZpbBk5OqcXZY2XlNoutgMxTo4=;
+	s=arc-20240116; t=1750716718; c=relaxed/simple;
+	bh=ekP3m3JDkx80H9/cAplLlpvM7I2VfbHto6kKp/D2qT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e8LrFinZ6d27THfs5bajGyfsxzF0juGJOrtNeisF2TTUJEPDsmHVQwXWba+r5cA0XRNK/NrY4Mleof0CcqBcu8wydN/9jYLxyBSiXipEmZV2zG6bOHHzmD7JZVeOFieGymVDI1wkssUaZQIbOA59jD1B+sLuJLOBrJ9XcK1kmew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQWcuMqy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TmNLiR0NeWPXrIgEL+rkI8/uDRTUziR9qUhpjRKYv6A/T9QrZaJnJn4hu+bIOE0S6TRb6ea9RCDM4yBoOjj3U6RABsfIXEORE3PifHi4NqqcamOFUPe0qLIdtA8wgi1dkfI++oC6ZmmoXxr7F/lN1Qg8PyFYsXAoGXTqOH1WLYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGY9KmX9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQWcuMqy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D89C4CEEA;
-	Mon, 23 Jun 2025 22:11:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGY9KmX9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE1CC4CEEA;
+	Mon, 23 Jun 2025 22:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716715;
-	bh=xGE7oH3TXcFtyJuz+pZpbBk5OqcXZY2XlNoutgMxTo4=;
+	s=korg; t=1750716718;
+	bh=ekP3m3JDkx80H9/cAplLlpvM7I2VfbHto6kKp/D2qT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQWcuMqyu31Y8KqgXn0zjqvTpOxOd2bxm3gEhX0eEXWoPnxKqX2AuS/vaLLl3vy4Y
-	 QiCVEsqvWsSZ8FvoMhIKL7JfNe7wXhQ9nEsiFzLDmD+N74ElpyKZEUisxonBLZ0rJB
-	 WGAzE5XWe7O4JEK9E7bouGj9MlHoPl9osdWNtvNE=
+	b=XGY9KmX90WVxO6zzbUQYbVrB+HjWOLGftbmrmKRteitBHZJ5+ziOHjE9JASC6OCjp
+	 ZUIKAe1d47U3shfTKtxTc0+BGSN022TmcQC+WSRiDQEhgyMXsaBdcl0tmm2PAz7AM9
+	 odBB7QW0X8HsEO79jU/g143ZN4RU8b8P70JLYSM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 284/290] arm64/ptrace: Fix stack-out-of-bounds read in regs_get_kernel_stack_nth()
-Date: Mon, 23 Jun 2025 15:09:05 +0200
-Message-ID: <20250623130635.462426068@linuxfoundation.org>
+	stable@kernel.org,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.1 323/508] media: uvcvideo: Send control events for partial succeeds
+Date: Mon, 23 Jun 2025 15:06:08 +0200
+Message-ID: <20250623130653.274680201@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,110 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 39dfc971e42d886e7df01371cd1bef505076d84c ]
+commit 5c791467aea6277430da5f089b9b6c2a9d8a4af7 upstream.
 
-KASAN reports a stack-out-of-bounds read in regs_get_kernel_stack_nth().
+Today, when we are applying a change to entities A, B. If A succeeds and B
+fails the events for A are not sent.
 
-Call Trace:
-[   97.283505] BUG: KASAN: stack-out-of-bounds in regs_get_kernel_stack_nth+0xa8/0xc8
-[   97.284677] Read of size 8 at addr ffff800089277c10 by task 1.sh/2550
-[   97.285732]
-[   97.286067] CPU: 7 PID: 2550 Comm: 1.sh Not tainted 6.6.0+ #11
-[   97.287032] Hardware name: linux,dummy-virt (DT)
-[   97.287815] Call trace:
-[   97.288279]  dump_backtrace+0xa0/0x128
-[   97.288946]  show_stack+0x20/0x38
-[   97.289551]  dump_stack_lvl+0x78/0xc8
-[   97.290203]  print_address_description.constprop.0+0x84/0x3c8
-[   97.291159]  print_report+0xb0/0x280
-[   97.291792]  kasan_report+0x84/0xd0
-[   97.292421]  __asan_load8+0x9c/0xc0
-[   97.293042]  regs_get_kernel_stack_nth+0xa8/0xc8
-[   97.293835]  process_fetch_insn+0x770/0xa30
-[   97.294562]  kprobe_trace_func+0x254/0x3b0
-[   97.295271]  kprobe_dispatcher+0x98/0xe0
-[   97.295955]  kprobe_breakpoint_handler+0x1b0/0x210
-[   97.296774]  call_break_hook+0xc4/0x100
-[   97.297451]  brk_handler+0x24/0x78
-[   97.298073]  do_debug_exception+0xac/0x178
-[   97.298785]  el1_dbg+0x70/0x90
-[   97.299344]  el1h_64_sync_handler+0xcc/0xe8
-[   97.300066]  el1h_64_sync+0x78/0x80
-[   97.300699]  kernel_clone+0x0/0x500
-[   97.301331]  __arm64_sys_clone+0x70/0x90
-[   97.302084]  invoke_syscall+0x68/0x198
-[   97.302746]  el0_svc_common.constprop.0+0x11c/0x150
-[   97.303569]  do_el0_svc+0x38/0x50
-[   97.304164]  el0_svc+0x44/0x1d8
-[   97.304749]  el0t_64_sync_handler+0x100/0x130
-[   97.305500]  el0t_64_sync+0x188/0x190
-[   97.306151]
-[   97.306475] The buggy address belongs to stack of task 1.sh/2550
-[   97.307461]  and is located at offset 0 in frame:
-[   97.308257]  __se_sys_clone+0x0/0x138
-[   97.308910]
-[   97.309241] This frame has 1 object:
-[   97.309873]  [48, 184) 'args'
-[   97.309876]
-[   97.310749] The buggy address belongs to the virtual mapping at
-[   97.310749]  [ffff800089270000, ffff800089279000) created by:
-[   97.310749]  dup_task_struct+0xc0/0x2e8
-[   97.313347]
-[   97.313674] The buggy address belongs to the physical page:
-[   97.314604] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x14f69a
-[   97.315885] flags: 0x15ffffe00000000(node=1|zone=2|lastcpupid=0xfffff)
-[   97.316957] raw: 015ffffe00000000 0000000000000000 dead000000000122 0000000000000000
-[   97.318207] raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
-[   97.319445] page dumped because: kasan: bad access detected
-[   97.320371]
-[   97.320694] Memory state around the buggy address:
-[   97.321511]  ffff800089277b00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   97.322681]  ffff800089277b80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   97.323846] >ffff800089277c00: 00 00 f1 f1 f1 f1 f1 f1 00 00 00 00 00 00 00 00
-[   97.325023]                          ^
-[   97.325683]  ffff800089277c80: 00 00 00 00 00 00 00 00 00 f3 f3 f3 f3 f3 f3 f3
-[   97.326856]  ffff800089277d00: f3 f3 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+This change changes the code so the events for A are send right after
+they happen.
 
-This issue seems to be related to the behavior of some gcc compilers and
-was also fixed on the s390 architecture before:
-
- commit d93a855c31b7 ("s390/ptrace: Avoid KASAN false positives in regs_get_kernel_stack_nth()")
-
-As described in that commit, regs_get_kernel_stack_nth() has confirmed that
-`addr` is on the stack, so reading the value at `*addr` should be allowed.
-Use READ_ONCE_NOCHECK() helper to silence the KASAN check for this case.
-
-Fixes: 0a8ea52c3eb1 ("arm64: Add HAVE_REGS_AND_STACK_ACCESS_API feature")
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Link: https://lore.kernel.org/r/20250604005533.1278992-1-wutengda@huaweicloud.com
-[will: Use '*addr' as the argument to READ_ONCE_NOCHECK()]
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Message-ID: <20250224-uvc-data-backup-v2-2-de993ed9823b@chromium.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/ptrace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_ctrl.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
-index a26293e0cc555..c30f5a70bd18f 100644
---- a/arch/arm64/kernel/ptrace.c
-+++ b/arch/arm64/kernel/ptrace.c
-@@ -139,7 +139,7 @@ unsigned long regs_get_kernel_stack_nth(struct pt_regs *regs, unsigned int n)
- 
- 	addr += n;
- 	if (regs_within_kernel_stack(regs, (unsigned long)addr))
--		return *addr;
-+		return READ_ONCE_NOCHECK(*addr);
- 	else
- 		return 0;
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1593,7 +1593,9 @@ static bool uvc_ctrl_xctrls_has_control(
  }
--- 
-2.39.5
-
+ 
+ static void uvc_ctrl_send_events(struct uvc_fh *handle,
+-	const struct v4l2_ext_control *xctrls, unsigned int xctrls_count)
++				 struct uvc_entity *entity,
++				 const struct v4l2_ext_control *xctrls,
++				 unsigned int xctrls_count)
+ {
+ 	struct uvc_control_mapping *mapping;
+ 	struct uvc_control *ctrl;
+@@ -1604,6 +1606,9 @@ static void uvc_ctrl_send_events(struct
+ 		u32 changes = V4L2_EVENT_CTRL_CH_VALUE;
+ 
+ 		ctrl = uvc_find_control(handle->chain, xctrls[i].id, &mapping);
++		if (ctrl->entity != entity)
++			continue;
++
+ 		if (ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
+ 			/* Notification will be sent from an Interrupt event. */
+ 			continue;
+@@ -1842,11 +1847,12 @@ int __uvc_ctrl_commit(struct uvc_fh *han
+ 					uvc_ctrl_find_ctrl_idx(entity, ctrls,
+ 							       err_ctrl);
+ 			goto done;
++		} else if (ret > 0 && !rollback) {
++			uvc_ctrl_send_events(handle, entity,
++					     ctrls->controls, ctrls->count);
+ 		}
+ 	}
+ 
+-	if (!rollback)
+-		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
+ 	ret = 0;
+ done:
+ 	mutex_unlock(&chain->ctrl_mutex);
 
 
