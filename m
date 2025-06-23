@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3852253358;
-	Mon, 23 Jun 2025 13:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F91324DFF3;
+	Mon, 23 Jun 2025 13:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684753; cv=none; b=Dl4fkz18THmBNwIiZxYchQ9mARIoKV7O9rP6pETvgJr5luz3pDYvkThrQ5GM7hJb0q1SjjkbndYQeITfcxKoNT/Rr0nUZdMi06Y5vJx8z4gQxPwQg4ncN1tiwPn4pdV6yCvb+8X8ZxkZu/4xgjxMo2WKwIIUGEHa6Dr0CDoa8sQ=
+	t=1750684756; cv=none; b=uKyaJNxSp6GJzx83Ov0UPFWwaUnJAafUbJaFkSQ4lTe8876HP4Dky1p7CRIl5geB83qIh7FyrwzHWia1P6tes4Hg/8V3NHpHXz1j5p+1AvmFqAdWeITR+W8oYFtORMFWFgdeKMhVjcb/6AIjfO1OhnO2wAIwrYBnm/ZMd/C9/14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684753; c=relaxed/simple;
-	bh=y0Ue1cc0J66Dx1b3Y86cpa4IPqHkEPB6koG76jC273E=;
+	s=arc-20240116; t=1750684756; c=relaxed/simple;
+	bh=NueB2x7xpuNZcAlImugODigh8PWteU5465/o2XGIxnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oSI3J2gwyjOZyKLJuzNRuCuLOvcuWi9MDVw0UIoTg+J/6ARIdfNYwJraVVjzVOTlTW2Wk3HUK9xx7y4KNxUfZJU6FQ1MpuKLrMtGeKzD3K7ncroSzcdpeElRm2/nxPBM60ZDBe9m9tDyEjGw8IsYYli0rCKZdFlE8oWeAAy1XCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHSTrOCB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H0pTmKZ/SBiNwiV3hdS7vi6Xb0fJxmGGoct0tcddRO7dWA/ampYdG4l7+aWghIFWeVeRl+4e52fWHrBbkcD5pGxfS4g32VAgiwWH4QxySTani+xXbcYNFHqnGu8d4eLlC+igOovfvxQEQ0i1jq7zWg6uLUbEhdLV4CJlJBI9Qts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwtVAAK/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHSTrOCB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D8FC4CEEA;
-	Mon, 23 Jun 2025 13:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwtVAAK/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E803EC4CEEA;
+	Mon, 23 Jun 2025 13:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684753;
-	bh=y0Ue1cc0J66Dx1b3Y86cpa4IPqHkEPB6koG76jC273E=;
+	s=korg; t=1750684756;
+	bh=NueB2x7xpuNZcAlImugODigh8PWteU5465/o2XGIxnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHSTrOCB2j6wa92KFc592jP47H2u11bIMm9qauRJzuxEVvNMbyGOmEjnWFoaTeG96
-	 EqeUSyEpHV8uhLRMYdQrM5I3orfa6S7vNGd4FF+lfho4a4cB3QdTdnQ0TanQ/KqYy7
-	 3pTWbpwsP2V6BZAQFtL9HZJDw8Mq1va8ETgu+9H4=
+	b=iwtVAAK/ezQ9203XZWEkqBaQ0px78h92a3+1auCsKgc8RuJMqEMTT1OnaR1pKp7rN
+	 fdsZFRqposnKKjffSGDiD4DjIIADx9yjhM8YWbFGie1bTAtAQ86qCmHv8cQQmYcy/+
+	 3ubNLtO+t0MPRNkDONte4t+bV+esoVP65dXJG+7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.15 126/592] hwmon: (ftsteutates) Fix TOCTOU race in fts_read()
-Date: Mon, 23 Jun 2025 15:01:24 +0200
-Message-ID: <20250623130703.267199551@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.15 117/592] ext4: ensure i_size is smaller than maxbytes
+Date: Mon, 23 Jun 2025 15:01:15 +0200
+Message-ID: <20250623130703.055553996@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -50,64 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 14c9ede9ca4cd078ad76a6ab9617b81074eb58bf upstream.
+commit 1a77a028a392fab66dd637cdfac3f888450d00af upstream.
 
-In the fts_read() function, when handling hwmon_pwm_auto_channels_temp,
-the code accesses the shared variable data->fan_source[channel] twice
-without holding any locks. It is first checked against
-FTS_FAN_SOURCE_INVALID, and if the check passes, it is read again
-when used as an argument to the BIT() macro.
+The inode i_size cannot be larger than maxbytes, check it while loading
+inode from the disk.
 
-This creates a Time-of-Check to Time-of-Use (TOCTOU) race condition.
-Another thread executing fts_update_device() can modify the value of
-data->fan_source[channel] between the check and its use. If the value
-is changed to FTS_FAN_SOURCE_INVALID (0xff) during this window, the
-BIT() macro will be called with a large shift value (BIT(255)).
-A bit shift by a value greater than or equal to the type width is
-undefined behavior and can lead to a crash or incorrect values being
-returned to userspace.
-
-Fix this by reading data->fan_source[channel] into a local variable
-once, eliminating the race condition. Additionally, add a bounds check
-to ensure the value is less than BITS_PER_LONG before passing it to
-the BIT() macro, making the code more robust against undefined behavior.
-
-This possible bug was found by an experimental static analysis tool
-developed by our team.
-
-Fixes: 1c5759d8ce05 ("hwmon: (ftsteutates) Replace fanX_source with pwmX_auto_channels_temp")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://lore.kernel.org/r/20250606071640.501262-1-hanguidong02@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Link: https://patch.msgid.link/20250506012009.3896990-4-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/ftsteutates.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/ext4/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/hwmon/ftsteutates.c
-+++ b/drivers/hwmon/ftsteutates.c
-@@ -423,13 +423,16 @@ static int fts_read(struct device *dev,
- 		break;
- 	case hwmon_pwm:
- 		switch (attr) {
--		case hwmon_pwm_auto_channels_temp:
--			if (data->fan_source[channel] == FTS_FAN_SOURCE_INVALID)
-+		case hwmon_pwm_auto_channels_temp: {
-+			u8 fan_source = data->fan_source[channel];
-+
-+			if (fan_source == FTS_FAN_SOURCE_INVALID || fan_source >= BITS_PER_LONG)
- 				*val = 0;
- 			else
--				*val = BIT(data->fan_source[channel]);
-+				*val = BIT(fan_source);
- 
- 			return 0;
-+		}
- 		default:
- 			break;
- 		}
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4922,7 +4922,8 @@ struct inode *__ext4_iget(struct super_b
+ 		ei->i_file_acl |=
+ 			((__u64)le16_to_cpu(raw_inode->i_file_acl_high)) << 32;
+ 	inode->i_size = ext4_isize(sb, raw_inode);
+-	if ((size = i_size_read(inode)) < 0) {
++	size = i_size_read(inode);
++	if (size < 0 || size > ext4_get_maxbytes(inode)) {
+ 		ext4_error_inode(inode, function, line, 0,
+ 				 "iget: bad i_size value: %lld", size);
+ 		ret = -EFSCORRUPTED;
 
 
