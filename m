@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D952246BC9;
-	Mon, 23 Jun 2025 13:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E569F24728E;
+	Mon, 23 Jun 2025 13:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686050; cv=none; b=qkBylEC3sDsCsfX8j4X30z97TiVRlLtXY4w5ufVynq1hORjY9SxBXZjmUV8LTVs6+Ii1pcyyE3x/N3PTaZ/6UzING2zIZ+vW71zs85wqKBIaa6EzsttAo+JPn/vUW2+Jh6xCC0bvS4iPpE0mtiwtWOQbtCACDBeJ67XBjvSiiPU=
+	t=1750686053; cv=none; b=oh6Y5ftVhXDwy5fzEx2zTvPuJ6DKA+vzqsJV4uOLeC+9NMYLlJ30dqYQgQd4pfE1xz63b8814gg3JLsHeDzP8HFuYU425B5Z/2q5lDUzLgyAo52oI84VeQfDn6zCPVdbw+i51uptw5yA9KwV0EH7C4CNuEzK3+I9cY/kIepw2Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686050; c=relaxed/simple;
-	bh=R24aPHOc5v3nKIaqLkAU69VK+VdaO8m/4S2cr+i6pQg=;
+	s=arc-20240116; t=1750686053; c=relaxed/simple;
+	bh=lcug14flMsXGnYGRWFrlKBcG9B6jbSgIemV7NkZhrV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eiVhUMLK0UXNNdcrBgumyiwyQbvS8TrHcVv5u/o9FRq3qgujr5+/tKuHv42yjeICrAmM3RFOjVdT5p8RFtwu1Bs0FgFvZQbsugB4QUrYjJL3D/RcQgka9L2sF++kxI2BGgvDuxRwC9FQ2OEZCmHz0a04julVv7jvVhM+SyMIzgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTp6dNH4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mk3s+4sjK2CaEKqi5Gyp35Eau7AAuTSGz5vbUreQDcZ9uTrKvCbkV8BCDYE++7w75qZHSJqGm3SavYdCIqWKNb68SF0rOxpkBzNCMr2EWHv8flpWaXKVmystWoOJ/uIB/kyUKLMNPF7CCEvANi13kvEAEqBtAWlOLl+KVE2o+Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MYmYATW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTp6dNH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E671AC4CEEA;
-	Mon, 23 Jun 2025 13:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MYmYATW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77EC3C4CEEA;
+	Mon, 23 Jun 2025 13:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686050;
-	bh=R24aPHOc5v3nKIaqLkAU69VK+VdaO8m/4S2cr+i6pQg=;
+	s=korg; t=1750686052;
+	bh=lcug14flMsXGnYGRWFrlKBcG9B6jbSgIemV7NkZhrV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MTp6dNH4FpmSjnGL0ddOXhpAmNy86QT3AL9wd0YBwDAqFVHDVX+Z1gYsEFGv8eJzO
-	 ufGFKPE/hqYu+CmV9f4YqkJrryATdT2D/Ht44+OL4j1b8/j9m46md79dSsX4WE5ias
-	 Nk3WNNQmoDJIkSGZCNPBEA+Y3og4qTGk13LrdfB4=
+	b=1MYmYATWpJzmWNh03PDFKhnUwFSduV4C5Wg8JmGKV4ayKQt+TPTfZ+qTW7tFHA+a1
+	 uUtHxgU3Le4XDBykaWMmR5pj3w2+5o0PIZcextgJ2NbfZjhXiUWyrSiw4ELxeJKLRt
+	 FBycoF7yQRhCUaOuSJC/+3DS5+MVLpxSD4u6BU8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seunghun Han <kkamagui@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Adam Ford <aford173@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 135/222] ACPICA: fix acpi operand cache leak in dswstate.c
-Date: Mon, 23 Jun 2025 15:07:50 +0200
-Message-ID: <20250623130616.154376900@linuxfoundation.org>
+Subject: [PATCH 5.15 077/411] arm64: dts: imx8mm-beacon: Fix RTC capacitive load
+Date: Mon, 23 Jun 2025 15:03:41 +0200
+Message-ID: <20250623130635.316014445@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,112 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Seunghun Han <kkamagui@gmail.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 156fd20a41e776bbf334bd5e45c4f78dfc90ce1c ]
+[ Upstream commit 2e98d456666d63f897ba153210bcef9d78ba0f3a ]
 
-ACPICA commit 987a3b5cf7175916e2a4b6ea5b8e70f830dfe732
+Although not noticeable when used every day, the RTC appears to drift when
+left to sit over time.  This is due to the capacitive load not being
+properly set. Fix RTC drift by correcting the capacitive load setting
+from 7000 to 12500, which matches the actual hardware configuration.
 
-I found an ACPI cache leak in ACPI early termination and boot continuing case.
-
-When early termination occurs due to malicious ACPI table, Linux kernel
-terminates ACPI function and continues to boot process. While kernel terminates
-ACPI function, kmem_cache_destroy() reports Acpi-Operand cache leak.
-
-Boot log of ACPI operand cache leak is as follows:
->[    0.585957] ACPI: Added _OSI(Module Device)
->[    0.587218] ACPI: Added _OSI(Processor Device)
->[    0.588530] ACPI: Added _OSI(3.0 _SCP Extensions)
->[    0.589790] ACPI: Added _OSI(Processor Aggregator Device)
->[    0.591534] ACPI Error: Illegal I/O port address/length above 64K: C806E00000004002/0x2 (20170303/hwvalid-155)
->[    0.594351] ACPI Exception: AE_LIMIT, Unable to initialize fixed events (20170303/evevent-88)
->[    0.597858] ACPI: Unable to start the ACPI Interpreter
->[    0.599162] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
->[    0.601836] kmem_cache_destroy Acpi-Operand: Slab cache still has objects
->[    0.603556] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 4.12.0-rc5 #26
->[    0.605159] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS virtual_box 12/01/2006
->[    0.609177] Call Trace:
->[    0.610063]  ? dump_stack+0x5c/0x81
->[    0.611118]  ? kmem_cache_destroy+0x1aa/0x1c0
->[    0.612632]  ? acpi_sleep_proc_init+0x27/0x27
->[    0.613906]  ? acpi_os_delete_cache+0xa/0x10
->[    0.617986]  ? acpi_ut_delete_caches+0x3f/0x7b
->[    0.619293]  ? acpi_terminate+0xa/0x14
->[    0.620394]  ? acpi_init+0x2af/0x34f
->[    0.621616]  ? __class_create+0x4c/0x80
->[    0.623412]  ? video_setup+0x7f/0x7f
->[    0.624585]  ? acpi_sleep_proc_init+0x27/0x27
->[    0.625861]  ? do_one_initcall+0x4e/0x1a0
->[    0.627513]  ? kernel_init_freeable+0x19e/0x21f
->[    0.628972]  ? rest_init+0x80/0x80
->[    0.630043]  ? kernel_init+0xa/0x100
->[    0.631084]  ? ret_from_fork+0x25/0x30
->[    0.633343] vgaarb: loaded
->[    0.635036] EDAC MC: Ver: 3.0.0
->[    0.638601] PCI: Probing PCI hardware
->[    0.639833] PCI host bridge to bus 0000:00
->[    0.641031] pci_bus 0000:00: root bus resource [io  0x0000-0xffff]
-> ... Continue to boot and log is omitted ...
-
-I analyzed this memory leak in detail and found acpi_ds_obj_stack_pop_and_
-delete() function miscalculated the top of the stack. acpi_ds_obj_stack_push()
-function uses walk_state->operand_index for start position of the top, but
-acpi_ds_obj_stack_pop_and_delete() function considers index 0 for it.
-Therefore, this causes acpi operand memory leak.
-
-This cache leak causes a security threat because an old kernel (<= 4.9) shows
-memory locations of kernel functions in stack dump. Some malicious users
-could use this information to neutralize kernel ASLR.
-
-I made a patch to fix ACPI operand cache leak.
-
-Link: https://github.com/acpica/acpica/commit/987a3b5c
-Signed-off-by: Seunghun Han <kkamagui@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/4999480.31r3eYUQgx@rjwysocki.net
+Fixes: 593816fa2f35 ("arm64: dts: imx: Add Beacon i.MX8m-Mini development kit")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dsutils.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/acpica/dsutils.c b/drivers/acpi/acpica/dsutils.c
-index fb9ed5e1da89d..2bdae8a25e084 100644
---- a/drivers/acpi/acpica/dsutils.c
-+++ b/drivers/acpi/acpica/dsutils.c
-@@ -668,6 +668,8 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 	union acpi_parse_object *arguments[ACPI_OBJ_NUM_OPERANDS];
- 	u32 arg_count = 0;
- 	u32 index = walk_state->num_operands;
-+	u32 prev_num_operands = walk_state->num_operands;
-+	u32 new_num_operands;
- 	u32 i;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
+index 40f5e7a3b0644..7ed267bf9b8f4 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
+@@ -231,6 +231,7 @@
+ 	rtc: rtc@51 {
+ 		compatible = "nxp,pcf85263";
+ 		reg = <0x51>;
++		quartz-load-femtofarads = <12500>;
+ 	};
+ };
  
- 	ACPI_FUNCTION_TRACE_PTR(ds_create_operands, first_arg);
-@@ -696,6 +698,7 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 
- 	/* Create the interpreter arguments, in reverse order */
- 
-+	new_num_operands = index;
- 	index--;
- 	for (i = 0; i < arg_count; i++) {
- 		arg = arguments[index];
-@@ -720,7 +723,11 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 	 * pop everything off of the operand stack and delete those
- 	 * objects
- 	 */
--	acpi_ds_obj_stack_pop_and_delete(arg_count, walk_state);
-+	walk_state->num_operands = i;
-+	acpi_ds_obj_stack_pop_and_delete(new_num_operands, walk_state);
-+
-+	/* Restore operand count */
-+	walk_state->num_operands = prev_num_operands;
- 
- 	ACPI_EXCEPTION((AE_INFO, status, "While creating Arg %u", index));
- 	return_ACPI_STATUS(status);
 -- 
 2.39.5
 
