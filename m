@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3752E219E0;
-	Mon, 23 Jun 2025 21:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5355219E0;
+	Mon, 23 Jun 2025 21:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713776; cv=none; b=lGlOUFxHJsddV6N87QCD6oiaokuM0WUhew4YzDti31Wrb6WS8iUcBHxah234On24nwJepp+oWsnQ4El5Zyt/PdZ8aqV8y56hE/MHsM/rG56i+FxySMGZqUM2thyKzA61zSaVOnqxyrxv2uio41nCTU1IOYt1SDopA8Ax/7F2ddY=
+	t=1750713779; cv=none; b=b9h8U8rJoUt4VD+YuQFCDBnOEjH+dHnZQugCp1BiaGjY3yBSX7asRL+783WFs8a/Uwa7th5MYS41H3lZ3CXnJLYowUoCgaDW23XJZvI8pUMvQZrq9fC1syX8yK82LfWlNr0Un8AsxJSzwVTEJALRtzyxV6Kij5r4eooVzarluEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713776; c=relaxed/simple;
-	bh=2x27rxLKYiQSZLmysyvH49Gm3BvB4xDL212iwN4jIjU=;
+	s=arc-20240116; t=1750713779; c=relaxed/simple;
+	bh=FIxI+W29N8/A/MWDBcJecy8Y6mRSR+3MQ4Kvfxcy8JI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CL5FGmopcV+CiBHmfrQyHLBsnRudmQPyje13cEPWIxKT+sq6GZJVFevWXombcQa3jtVmC7BVKRvVhFH4iqm9Kq59fcmHIcAWt9zkOIOSatfoGAOwwdlZ7BNCFAGhST1/vmQG5WUiWzhlbibbDj6gy2wFUUZJ6rhWvXb6MFm5auQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UugrrZPj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pr7ToTOAn007Ur22qS8awdGy5q78dR+htfWdsfR9ElJreu7CEfiWC+ZKz8iR9ajYPbOgj4PX7jzn3ZVX5F0mENdEQWr//9Jp7ruYZRlaQWTPSI+4LMGmk7H7ITXd/brZNJCQoT5eEVopfnsHrvGNIUB2l872gilPSoMYs5+l5d8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHggzuQw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UugrrZPj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2AE2C4CEEA;
-	Mon, 23 Jun 2025 21:22:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHggzuQw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3625DC4CEEA;
+	Mon, 23 Jun 2025 21:22:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713776;
-	bh=2x27rxLKYiQSZLmysyvH49Gm3BvB4xDL212iwN4jIjU=;
+	s=korg; t=1750713778;
+	bh=FIxI+W29N8/A/MWDBcJecy8Y6mRSR+3MQ4Kvfxcy8JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UugrrZPj3CeMygaUwLTlWXbhAEAI8wHzABz3Am3UIEGzHVWKXuTXvBnQHNlgu3vA7
-	 UeRpuBZLYT+98yWykv0YPJWUE7v3xq3wAMraWJeceEH0nECAdhYVZ/LSWJBrLDFrJ3
-	 P0yD/HwGYCSJIuSodrWg8q9AY4aWpGQK1VnrecWk=
+	b=QHggzuQwBYwotcC0wa0zKk61zk6YIp+c7JGHTO+AiIOKKhFR2eqv9wh+imunpFpJz
+	 o4IBtpS4I4wizmWZAahS54+SyUAsbvGqpQK4qjCK2b7suBKWf2YVQdDt4URl1LlYP5
+	 BfvXRx3XZJB+YkPcyWlUURTgiFpUDeVZf+8kf8U0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Werling <brett.werling@garmin.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.12 082/414] can: tcan4x5x: fix power regulator retrieval during probe
-Date: Mon, 23 Jun 2025 15:03:39 +0200
-Message-ID: <20250623130644.134539446@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	James Clark <james.clark@linaro.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 146/508] perf tests switch-tracking: Fix timestamp comparison
+Date: Mon, 23 Jun 2025 15:03:11 +0200
+Message-ID: <20250623130648.876740360@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,45 +52,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brett Werling <brett.werling@garmin.com>
+From: Leo Yan <leo.yan@arm.com>
 
-commit db22720545207f734aaa9d9f71637bfc8b0155e0 upstream.
+[ Upstream commit 628e124404b3db5e10e17228e680a2999018ab33 ]
 
-Fixes the power regulator retrieval in tcan4x5x_can_probe() by ensuring
-the regulator pointer is not set to NULL in the successful return from
-devm_regulator_get_optional().
+The test might fail on the Arm64 platform with the error:
 
-Fixes: 3814ca3a10be ("can: tcan4x5x: tcan4x5x_can_probe(): turn on the power before parsing the config")
-Signed-off-by: Brett Werling <brett.werling@garmin.com>
-Link: https://patch.msgid.link/20250612191825.3646364-1-brett.werling@garmin.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  # perf test -vvv "Track with sched_switch"
+  Missing sched_switch events
+  #
+
+The issue is caused by incorrect handling of timestamp comparisons. The
+comparison result, a signed 64-bit value, was being directly cast to an
+int, leading to incorrect sorting for sched events.
+
+The case does not fail everytime, usually I can trigger the failure
+after run 20 ~ 30 times:
+
+  # while true; do perf test "Track with sched_switch"; done
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : FAILED!
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : FAILED!
+  106: Track with sched_switch                                         : Ok
+  106: Track with sched_switch                                         : Ok
+
+I used cross compiler to build Perf tool on my host machine and tested on
+Debian / Juno board.  Generally, I think this issue is not very specific
+to GCC versions.  As both internal CI and my local env can reproduce the
+issue.
+
+My Host Build compiler:
+
+  # aarch64-linux-gnu-gcc --version
+  aarch64-linux-gnu-gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+
+Juno Board:
+
+  # lsb_release -a
+  No LSB modules are available.
+  Distributor ID: Debian
+  Description:    Debian GNU/Linux 12 (bookworm)
+  Release:        12
+  Codename:       bookworm
+
+Fix this by explicitly returning 0, 1, or -1 based on whether the result
+is zero, positive, or negative.
+
+Fixes: d44bc558297222d9 ("perf tests: Add a test for tracking with sched_switch")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20250331172759.115604-1-leo.yan@arm.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/tcan4x5x-core.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ tools/perf/tests/switch-tracking.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/can/m_can/tcan4x5x-core.c
-+++ b/drivers/net/can/m_can/tcan4x5x-core.c
-@@ -385,10 +385,11 @@ static int tcan4x5x_can_probe(struct spi
- 	priv = cdev_to_priv(mcan_class);
+diff --git a/tools/perf/tests/switch-tracking.c b/tools/perf/tests/switch-tracking.c
+index 87f565c7f650d..db6c61424badf 100644
+--- a/tools/perf/tests/switch-tracking.c
++++ b/tools/perf/tests/switch-tracking.c
+@@ -257,7 +257,7 @@ static int compar(const void *a, const void *b)
+ 	const struct event_node *nodeb = b;
+ 	s64 cmp = nodea->event_time - nodeb->event_time;
  
- 	priv->power = devm_regulator_get_optional(&spi->dev, "vsup");
--	if (PTR_ERR(priv->power) == -EPROBE_DEFER) {
--		ret = -EPROBE_DEFER;
--		goto out_m_can_class_free_dev;
--	} else {
-+	if (IS_ERR(priv->power)) {
-+		if (PTR_ERR(priv->power) == -EPROBE_DEFER) {
-+			ret = -EPROBE_DEFER;
-+			goto out_m_can_class_free_dev;
-+		}
- 		priv->power = NULL;
- 	}
+-	return cmp;
++	return cmp < 0 ? -1 : (cmp > 0 ? 1 : 0);
+ }
  
+ static int process_events(struct evlist *evlist,
+-- 
+2.39.5
+
 
 
