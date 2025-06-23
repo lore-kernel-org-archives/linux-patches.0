@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317C624EAB1;
-	Mon, 23 Jun 2025 13:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB60D347DD;
+	Mon, 23 Jun 2025 13:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686193; cv=none; b=COC5JePIxPo8rh6WFDdFzyLUfSiJ72FoHjH7IJON0hF06nCh26C/YeCAWZ2iR2rBZkNvE/V7T30R4ILLqvW73MYhvPq9MXzJu99RIGOrthP0WnKeFTzJs+h7PnNZKrPaAy9TBnMFUqkH/L1aMdhUt37ZjaxCZSVWoQZIcH+S8pE=
+	t=1750686195; cv=none; b=qCuj9JcZaj+4nM+kqGpHSwkEhpfSkKWWXonwfe/AbWtQE4CNLm3GUx+/jTicbCzd9zcrd7POiD2lKamt+Zh1E5/R36UZSDLfmSq7GXjmdyuVwVkKjXNVZDoHmBAwGg6BWrXfVG3F1sSu5VumifiapTboi9QIS/PkFZNcNgu2jdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686193; c=relaxed/simple;
-	bh=S2sAs+wMXC40O+bKknW5Xvsqtg1vS+Dg688m8HdmOao=;
+	s=arc-20240116; t=1750686195; c=relaxed/simple;
+	bh=s/fqaUEoxpBxil9Xr/zTXUv91GvSZojZpfXS80or/tU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WLTqFuwPhwZ7BYmG4n+rukVXhJFK4EjeLvd76dpKIWwscZwJ6BnoO8FdBruRBCDcXn6vwDSnqvQOK33NrAcynAi/b6oRMD0G7G6fQBWemjXS/PSSNFN+0lSGJofpvnjDtcZ62hv/7RLDlNdzk4PQ6n7KPMdCi+EHZ6g9HTuvlJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ipCkz5RD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYWmofCFTmiK+i/Pz8XlIiM0Lu8VWk3leBoN4RDyLZ/OJcw6/i100AWMX8OrMGNv1Kxj6c05mA71PFoO7V3YdibH00qAzJjXGMLJBoyMimbUbqc3vtedpKhlR+wkgGmwZDfv4Kwi9uv7dbswzV06vmtjTfJUVXqcoJKh6fMI1SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meMib5Y/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipCkz5RD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8D1C4CEEA;
-	Mon, 23 Jun 2025 13:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meMib5Y/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5179C4CEEA;
+	Mon, 23 Jun 2025 13:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686192;
-	bh=S2sAs+wMXC40O+bKknW5Xvsqtg1vS+Dg688m8HdmOao=;
+	s=korg; t=1750686195;
+	bh=s/fqaUEoxpBxil9Xr/zTXUv91GvSZojZpfXS80or/tU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ipCkz5RDb8pkdD8GhnFC9vDA+KYKxa2f8CRHJOjfx1UoFmdKdpPm528izT2/LWiCk
-	 UsKp/4N3JBWOWJcxXxgSSMYAoP0NjjnpWNW7kF6kC0FgXSjiLhm274A0k/k3S7SELh
-	 Gf8d94XIENXTpFewQRITDqg3CSTFt4MtPhUxiNtg=
+	b=meMib5Y/00+eE6YvfsyCPy/3e9o6RC4cjdAHg7XJ3kFgthucfmLzBspQzINalB64f
+	 mooKlPlItMMuYAgnYT+RqMiidYMim/c8jiC4Nz3x1l0JOCgLb389AaJOn0V/2KEG2s
+	 Nrw2tCEbhHH8AKGkTHFPpPvSFRyWlkTHUVJybZR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moon Yeounsu <yyyynoom@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 163/222] net: dlink: add synchronization for stats update
-Date: Mon, 23 Jun 2025 15:08:18 +0200
-Message-ID: <20250623130616.983007919@linuxfoundation.org>
+Subject: [PATCH 6.1 075/508] clk: bcm: rpi: Add NULL check in raspberrypi_clk_register()
+Date: Mon, 23 Jun 2025 15:02:00 +0200
+Message-ID: <20250623130647.082478420@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,104 +49,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Moon Yeounsu <yyyynoom@gmail.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 12889ce926e9a9baf6b83d809ba316af539b89e2 ]
+[ Upstream commit 73c46d9a93d071ca69858dea3f569111b03e549e ]
 
-This patch synchronizes code that accesses from both user-space
-and IRQ contexts. The `get_stats()` function can be called from both
-context.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+raspberrypi_clk_register() does not check for this case, which results
+in a NULL pointer dereference.
 
-`dev->stats.tx_errors` and `dev->stats.collisions` are also updated
-in the `tx_errors()` function. Therefore, these fields must also be
-protected by synchronized.
+Add NULL check after devm_kasprintf() to prevent this issue.
 
-There is no code that accessses `dev->stats.tx_errors` between the
-previous and updated lines, so the updating point can be moved.
-
-Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
-Link: https://patch.msgid.link/20250515075333.48290-1-yyyynoom@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 93d2725affd6 ("clk: bcm: rpi: Discover the firmware clocks")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Link: https://lore.kernel.org/r/20250402020513.42628-1-bsdhenrymartin@gmail.com
+Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/dlink/dl2k.c | 14 +++++++++++++-
- drivers/net/ethernet/dlink/dl2k.h |  2 ++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/clk/bcm/clk-raspberrypi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
-index eb23157641343..8d57fb5072054 100644
---- a/drivers/net/ethernet/dlink/dl2k.c
-+++ b/drivers/net/ethernet/dlink/dl2k.c
-@@ -155,6 +155,8 @@ rio_probe1 (struct pci_dev *pdev, const struct pci_device_id *ent)
- 	np->ioaddr = ioaddr;
- 	np->chip_id = chip_idx;
- 	np->pdev = pdev;
-+
-+	spin_lock_init(&np->stats_lock);
- 	spin_lock_init (&np->tx_lock);
- 	spin_lock_init (&np->rx_lock);
+diff --git a/drivers/clk/bcm/clk-raspberrypi.c b/drivers/clk/bcm/clk-raspberrypi.c
+index 278f845572813..a7e18789839fe 100644
+--- a/drivers/clk/bcm/clk-raspberrypi.c
++++ b/drivers/clk/bcm/clk-raspberrypi.c
+@@ -290,6 +290,8 @@ static struct clk_hw *raspberrypi_clk_register(struct raspberrypi_clk *rpi,
+ 	init.name = devm_kasprintf(rpi->dev, GFP_KERNEL,
+ 				   "fw-clk-%s",
+ 				   rpi_firmware_clk_names[id]);
++	if (!init.name)
++		return ERR_PTR(-ENOMEM);
+ 	init.ops = &raspberrypi_firmware_clk_ops;
+ 	init.flags = CLK_GET_RATE_NOCACHE;
  
-@@ -875,7 +877,6 @@ tx_error (struct net_device *dev, int tx_status)
- 	frame_id = (tx_status & 0xffff0000);
- 	printk (KERN_ERR "%s: Transmit error, TxStatus %4.4x, FrameId %d.\n",
- 		dev->name, tx_status, frame_id);
--	dev->stats.tx_errors++;
- 	/* Ttransmit Underrun */
- 	if (tx_status & 0x10) {
- 		dev->stats.tx_fifo_errors++;
-@@ -912,9 +913,15 @@ tx_error (struct net_device *dev, int tx_status)
- 		rio_set_led_mode(dev);
- 		/* Let TxStartThresh stay default value */
- 	}
-+
-+	spin_lock(&np->stats_lock);
- 	/* Maximum Collisions */
- 	if (tx_status & 0x08)
- 		dev->stats.collisions++;
-+
-+	dev->stats.tx_errors++;
-+	spin_unlock(&np->stats_lock);
-+
- 	/* Restart the Tx */
- 	dw32(MACCtrl, dr16(MACCtrl) | TxEnable);
- }
-@@ -1084,7 +1091,9 @@ get_stats (struct net_device *dev)
- 	int i;
- #endif
- 	unsigned int stat_reg;
-+	unsigned long flags;
- 
-+	spin_lock_irqsave(&np->stats_lock, flags);
- 	/* All statistics registers need to be acknowledged,
- 	   else statistic overflow could cause problems */
- 
-@@ -1134,6 +1143,9 @@ get_stats (struct net_device *dev)
- 	dr16(TCPCheckSumErrors);
- 	dr16(UDPCheckSumErrors);
- 	dr16(IPCheckSumErrors);
-+
-+	spin_unlock_irqrestore(&np->stats_lock, flags);
-+
- 	return &dev->stats;
- }
- 
-diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
-index 0e33e2eaae960..56aff2f0bdbfa 100644
---- a/drivers/net/ethernet/dlink/dl2k.h
-+++ b/drivers/net/ethernet/dlink/dl2k.h
-@@ -372,6 +372,8 @@ struct netdev_private {
- 	struct pci_dev *pdev;
- 	void __iomem *ioaddr;
- 	void __iomem *eeprom_addr;
-+	// To ensure synchronization when stats are updated.
-+	spinlock_t stats_lock;
- 	spinlock_t tx_lock;
- 	spinlock_t rx_lock;
- 	unsigned int rx_buf_sz;		/* Based on MTU+slack. */
 -- 
 2.39.5
 
