@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E512F24;
-	Mon, 23 Jun 2025 13:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F81253B73;
+	Mon, 23 Jun 2025 13:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685567; cv=none; b=XghpzUn8pTEuqzMrHrixK1vKpoVmOloc++oo7x6OUMeNcLFZcA4zEDlMAgvHmOvexo058lm3m0XJUXvatubNUqcJ3tEE2EMwFQ/yfI69GjzzMD5oPaemws1GbmLDJiqG2D/nkFOtIRcxyOkTiOanjvtLL84cD4wRitRu4W1UmBM=
+	t=1750685570; cv=none; b=nppq0ZQj5B0kOv7hYgR3NldOwwZJ3Z3+srHz5L5NF0qoUHXc++oh1wOYK8oeAFm9Ti+3U3rfhaVX7iZxfDJoaHCve6YYbRFlBnrTb1Ldcw1spkPyNwS+/NjtPOnDNg/4n+GVwiK5o2+0IBsXTJcsuh2xrhcdZtpKYgBUmsX7D0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685567; c=relaxed/simple;
-	bh=nPNocmBpf3FMQW/3KDyBK/vjm66P9V9HVjPHvs+/+MM=;
+	s=arc-20240116; t=1750685570; c=relaxed/simple;
+	bh=M+h2lYOxK8CISQfcEcM5EPovpV6+x3VDYeUEMWSyK5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jl2oURCo1mjBQUnso6oj83Q9HRaYetiwoWRFXjQDFbVpM03Wz20GD7cJHWWK6o5oe9CnYpBTEJCv+hh5ogBmm6yhyaRhw7CF/3LXB4wl/cAmfnSPnR1C9VTKbyLrHEO5nyMcYN7Xv56smKkg2xXK/41186yORpyPOMb48l7R71w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIHUslNP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qCdRVeHS0JM4zW6A2Xkv8pnCu95SeFiFihSa8tAtmK1bDhdsWJaFheL+toNMx7iu/tHqAP6E+Nr+nBh4QOIcK7XnfNUvppdJrEg68INSjFn0HJT27ZfZdG7dfNEAiuSsW5E7ZS7keYBZjrqpapWaEacIs24GQ0FhZ/7gByVo7aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2i86E3Qw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIHUslNP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C7CC4CEEA;
-	Mon, 23 Jun 2025 13:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2i86E3Qw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88170C4CEEA;
+	Mon, 23 Jun 2025 13:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685567;
-	bh=nPNocmBpf3FMQW/3KDyBK/vjm66P9V9HVjPHvs+/+MM=;
+	s=korg; t=1750685569;
+	bh=M+h2lYOxK8CISQfcEcM5EPovpV6+x3VDYeUEMWSyK5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIHUslNP328lzr+QZmTGORAVLy2HuvK6YnS3vvy9PyHJF0lhf/VsqxbfQzdeDk0bK
-	 3RtkHjWl4KO83bPHxL8ZNbaiatoerupHH/BfWZmIttKtfL7UdcQGjITM0/Htf+ka0L
-	 XrTr6iGntafmw+dpfqR/BgjdCBFzdLdRcjTmvVlI=
+	b=2i86E3QwZy/Lclt2EuhfZTuuIy5Cyhb5MOXjg3Ud38yt9EZ4msVlLmxWO88fsvwYA
+	 Px8z5S7YxmrtPIkmuemQMe9RNOmr1ni6n7EmbZC8FubSzGbhbAManilO0FBRxxfR7+
+	 5piJjFjiUbF27NtmB2qYo1+KVSXCoFA8onhYXgyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Damon Ding <damon.ding@rock-chips.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 244/592] drm/bridge: analogix_dp: Add irq flag IRQF_NO_AUTOEN instead of calling disable_irq()
-Date: Mon, 23 Jun 2025 15:03:22 +0200
-Message-ID: <20250623130706.095626686@linuxfoundation.org>
+Subject: [PATCH 5.15 043/411] wifi: rtw88: do not ignore hardware read error during DPK
+Date: Mon, 23 Jun 2025 15:03:07 +0200
+Message-ID: <20250623130634.297080515@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damon Ding <damon.ding@rock-chips.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit efab13e7d13a641a22c7508cde6e1a5285161944 ]
+[ Upstream commit 20d3c19bd8f9b498173c198eadf54580c8caa336 ]
 
-The IRQF_NO_AUTOEN can be used for the drivers that don't want
-interrupts to be enabled automatically via devm_request_threaded_irq().
-Using this flag can provide be more robust compared to the way of
-calling disable_irq() after devm_request_threaded_irq() without the
-IRQF_NO_AUTOEN flag.
+In 'rtw8822c_dpk_cal_coef1()', do not ignore error returned
+by 'check_hw_ready()' but issue a warning to denote possible
+DPK issue. Compile tested only.
 
-Suggested-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
-Link: https://lore.kernel.org/r/20250310104114.2608063-2-damon.ding@rock-chips.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 5227c2ee453d ("rtw88: 8822c: add SW DPK support")
+Suggested-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250415090720.194048-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/analogix/analogix_dp_core.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw88/rtw8822c.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-index 5222b1e9f533d..f96952e9ff4ef 100644
---- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-+++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-@@ -1622,10 +1622,10 @@ analogix_dp_probe(struct device *dev, struct analogix_dp_plat_data *plat_data)
- 		 * that we can get the current state of the GPIO.
- 		 */
- 		dp->irq = gpiod_to_irq(dp->hpd_gpiod);
--		irq_flags = IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING;
-+		irq_flags = IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN;
- 	} else {
- 		dp->irq = platform_get_irq(pdev, 0);
--		irq_flags = 0;
-+		irq_flags = IRQF_NO_AUTOEN;
- 	}
+diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822c.c b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
+index b799655d08e15..96b7f2efeaaa9 100644
+--- a/drivers/net/wireless/realtek/rtw88/rtw8822c.c
++++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
+@@ -3946,7 +3946,8 @@ static void rtw8822c_dpk_cal_coef1(struct rtw_dev *rtwdev)
+ 	rtw_write32(rtwdev, REG_NCTL0, 0x00001148);
+ 	rtw_write32(rtwdev, REG_NCTL0, 0x00001149);
  
- 	if (dp->irq == -ENXIO) {
-@@ -1641,7 +1641,6 @@ analogix_dp_probe(struct device *dev, struct analogix_dp_plat_data *plat_data)
- 		dev_err(&pdev->dev, "failed to request irq\n");
- 		return ERR_PTR(ret);
- 	}
--	disable_irq(dp->irq);
+-	check_hw_ready(rtwdev, 0x2d9c, MASKBYTE0, 0x55);
++	if (!check_hw_ready(rtwdev, 0x2d9c, MASKBYTE0, 0x55))
++		rtw_warn(rtwdev, "DPK stuck, performance may be suboptimal");
  
- 	dp->aux.name = "DP-AUX";
- 	dp->aux.transfer = analogix_dpaux_transfer;
+ 	rtw_write8(rtwdev, 0x1b10, 0x0);
+ 	rtw_write32_mask(rtwdev, REG_NCTL0, BIT_SUBPAGE, 0x0000000c);
 -- 
 2.39.5
 
