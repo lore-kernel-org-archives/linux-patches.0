@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE75248895;
-	Mon, 23 Jun 2025 13:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A0223A9BE;
+	Mon, 23 Jun 2025 13:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684802; cv=none; b=EHona8dU9SQY4snOyqIXHrsImya+iv22rlnPrXQCsAkDJkmtVY/cpV8Q+uGuXoaw4/5i4GBwyci9Gvca+SBJWuQkXKJ3bXJBhjElgyp5Qbh9mBvwVDwO+OlvVOscSEodpOGdHdxkcpRH1aMEX2peVJuJA86wqn9sFDqgniVfxrw=
+	t=1750684805; cv=none; b=Cprx7XrNA8H93B4qvrIhIvkxkuAi82L9bSnyUSm445cH33hyGhzJJpNTTDwt2d9zWJLmvlZCUX47BRJQcFi+QD74Tv8f2LM9Hkc3YGjWFnoYlv/bqgqsqSPTk8O9dmD72+GEe12CVOpLM1s8onPihivMxK21nmO5UNRtMAsOCpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684802; c=relaxed/simple;
-	bh=YHO95B7Qo0gy1xc/b5Vz8JaiVuYJ9UfiO/zp4RqBWXI=;
+	s=arc-20240116; t=1750684805; c=relaxed/simple;
+	bh=rjRW4rGtRJBuhoXtdzsLfY0xRlJXOJm5m1pQKMcmV4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qAkeGLh4M92pz8N1y3OIIB/NKd+tqQinlFVo1Le4U9bsVc6S91SZ9kg9NhrtE8ambHHpza33U93miOfFa+2vAr1Aiq5XEzbssbjcbTmXu3Z9dlIbNRSR3BlHsgzDFCpfeo+qYjCjLWRQeMg10sO05zytX9hF6vjsqwlFSIrqR4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yl3gnytb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SBjuseJWYXuTvS1wQQwr0v8O7TrC0tM6k86yOP+KsbR1/dtnA48CclWsfwx9I5vifwT45G3Mw9HCyi4N9u1iVKZ3wdSLqFKGxjwn9rY0ftgrXurqhTIF1l619VNmfZqWdscDNRRI3GavsPLEz1DtR2Uik1gw8H0UrEtg4SYd4nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DywKJQko; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yl3gnytb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D8BC4CEEA;
-	Mon, 23 Jun 2025 13:20:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DywKJQko"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799A9C4CEEA;
+	Mon, 23 Jun 2025 13:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684802;
-	bh=YHO95B7Qo0gy1xc/b5Vz8JaiVuYJ9UfiO/zp4RqBWXI=;
+	s=korg; t=1750684804;
+	bh=rjRW4rGtRJBuhoXtdzsLfY0xRlJXOJm5m1pQKMcmV4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yl3gnytbJEMSO9xHwSq7EoOpPT6pioBOPh3HNKmgaCWT9UFM6v/ztub60g2av0C5z
-	 MlFQdY3V80xLaB/xBlHvUEllvEo4u7oao/7rkpcYZleO5+CUtnIFY+2jCPRs0nb7IK
-	 bp9BiyKNVYGAl2J/71jM53/eqiVoEle+7Y5zTxeM=
+	b=DywKJQkoRO2VE60luqdJBX7Numcxsj2PlkAHpPrOA6a1UijELEJLvTpWVGQl6ZFKs
+	 Eh9tcnh6L5MHsw6vx141jkUviW6oqAN1p6NeriLSEVd2Tl/ox52R09V130UiuRisO2
+	 VF25Z8SOwdGvIgD1FOLLrAZavyXYWK0O+4YEjylQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.15 175/592] cifs: dns resolution is needed only for primary channel
-Date: Mon, 23 Jun 2025 15:02:13 +0200
-Message-ID: <20250623130704.440168464@linuxfoundation.org>
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 032/222] ktls, sockmap: Fix missing uncharge operation
+Date: Mon, 23 Jun 2025 15:06:07 +0200
+Message-ID: <20250623130612.865075954@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,42 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit b4f60a053a2534c3e510ba0c1f8727566adf8317 upstream.
+[ Upstream commit 79f0c39ae7d3dc628c01b02f23ca5d01f9875040 ]
 
-When calling cifs_reconnect, before the connection to the
-server is reestablished, the code today does a DNS resolution and
-updates server->dstaddr.
+When we specify apply_bytes, we divide the msg into multiple segments,
+each with a length of 'send', and every time we send this part of the data
+using tcp_bpf_sendmsg_redir(), we use sk_msg_return_zero() to uncharge the
+memory of the specified 'send' size.
 
-However, this is not necessary for secondary channels. Secondary
-channels use the interface list returned by the server to decide
-which address to connect to. And that happens after tcon is reconnected
-and server interfaces are requested.
+However, if the first segment of data fails to send, for example, the
+peer's buffer is full, we need to release all of the msg. When releasing
+the msg, we haven't uncharged the memory of the subsequent segments.
 
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This modification does not make significant logical changes, but only
+fills in the missing uncharge places.
+
+This issue has existed all along, until it was exposed after we added the
+apply test in test_sockmap:
+commit 3448ad23b34e ("selftests/bpf: Add apply_bytes test to test_txmsg_redir_wait_sndmem in test_sockmap")
+
+Fixes: d3b18ad31f93 ("tls: add bpf support to sk_msg handling")
+Reported-by: Cong Wang <xiyou.wangcong@gmail.com>
+Closes: https://lore.kernel.org/bpf/aAmIi0vlycHtbXeb@pop-os.localdomain/T/#t
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
+Link: https://lore.kernel.org/r/20250425060015.6968-2-jiayuan.chen@linux.dev
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/tls/tls_sw.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -392,7 +392,8 @@ static int __cifs_reconnect(struct TCP_S
- 		try_to_freeze();
- 		cifs_server_lock(server);
- 
--		if (!cifs_swn_set_server_dstaddr(server)) {
-+		if (!cifs_swn_set_server_dstaddr(server) &&
-+		    !SERVER_IS_CHAN(server)) {
- 			/* resolve the hostname again to make sure that IP address is up-to-date */
- 			rc = reconn_set_ipaddr_from_hostname(server);
- 			cifs_dbg(FYI, "%s: reconn_set_ipaddr_from_hostname: rc=%d\n", __func__, rc);
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 03f608da594e5..432bce3293923 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -856,6 +856,13 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
+ 		err = tcp_bpf_sendmsg_redir(sk_redir, &msg_redir, send, flags);
+ 		lock_sock(sk);
+ 		if (err < 0) {
++			/* Regardless of whether the data represented by
++			 * msg_redir is sent successfully, we have already
++			 * uncharged it via sk_msg_return_zero(). The
++			 * msg->sg.size represents the remaining unprocessed
++			 * data, which needs to be uncharged here.
++			 */
++			sk_mem_uncharge(sk, msg->sg.size);
+ 			*copied -= sk_msg_free_nocharge(sk, &msg_redir);
+ 			msg->sg.size = 0;
+ 		}
+-- 
+2.39.5
+
 
 
