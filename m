@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37703239E63;
-	Mon, 23 Jun 2025 13:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEC32517A0;
+	Mon, 23 Jun 2025 13:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685042; cv=none; b=DaZENQWZ+JisYDowcWQZNQ/pOVMpnkpyb5jfNMX3XvSnyJNQmYFPfoEgFvU/GYXblKeRzrUy0l3AsWXSKdyfI7Yqv3SKspce3FC41+UxrQpOZp1OBB2UrB+lGvyD0N49g6v5I2xi1tI03oYbglw+4oYnqJ27EtjvJmIKJyKtQWE=
+	t=1750685044; cv=none; b=rIMMsfC9F8lIMbzmNrUQ13IgRYb2T3OXWYHgF2eDe3i3zjUkt8zAP+5AHNNcVJ0mRMi1gxoiazeRibZYeg/rEzyQ72ZMb9YKzO6YNo3w2a0P4BKL3dQ6lTpdFqL66KjwqzZE1Lx6n+rvxqMsBHw1nluZMgqhRwoMDwphUuLel5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685042; c=relaxed/simple;
-	bh=AScLikdxe+f5beaBX3Gg/aFr5xDnSkDoEis/Y3Ywg+c=;
+	s=arc-20240116; t=1750685044; c=relaxed/simple;
+	bh=/jS8Wd+Jk+DX27th5xnmNB4wLZgH9D/AcQKNK8yae4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMUr12I19lSiXDXc243rcWxYwQYbPdAUndxi9TVnYs4KOX6ezvX58NfGIIIL3YEWK8/CuoO2rQcFHJoSFB8jxcYMGAFIuSTB+Y76KOC9pFAs3R6s3oWiz+aQRDBT1HppyaISMVDHGtupzGRqBQ4E57ueR6JRQyJtFyyr0fFMnao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0VrvwGE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TlBZCNdDNGulq5/+e3c/zek5Kgv6Ra97eLWiT9r/RABGP4Q9WwlvIyAHwg5Az5ZCDlxLB197dhkQME6Yl2G/5hREkasr1U3K+UPTHes1KHPiD29JocSxZFtOPbx78xMyfrHu+vZZgMAAMZ9CQmUvdgt0cczol5YGRZSRBcTTJrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCtriK/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0VrvwGE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DC0C4CEF0;
-	Mon, 23 Jun 2025 13:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCtriK/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CBFC4CEEA;
+	Mon, 23 Jun 2025 13:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685041;
-	bh=AScLikdxe+f5beaBX3Gg/aFr5xDnSkDoEis/Y3Ywg+c=;
+	s=korg; t=1750685044;
+	bh=/jS8Wd+Jk+DX27th5xnmNB4wLZgH9D/AcQKNK8yae4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A0VrvwGExWl8UHNrh54Ckp4hviYLvggGWwM6VjkqYrlZd72dTYPrM3a8RYKDF1X9W
-	 4vKAZto1hWKk4vTlBtuV5b06G5xc1nKWhaN30Z52+gUq5w1sXPdTOGnZOWG1n4oCpG
-	 xs1ni9d94DYWUkVPGGt+pS+dQWCg/Ma1I4KLuKWg=
+	b=DCtriK/ANHSqsSat6+9L5r7fl8ozb528VauSRsCH3DTmf8w7JiG5pilQO3HYt6efk
+	 YKg6YC6yHghzKl/uNl7yNaL0jvx+NaX8q5r1T2ZK1gcIk4gmyqGNm7Loe/x9qcs5q+
+	 0UzRFhzkB3qFZYf5uWDNrRbSMbu6/lYzikv3tEaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 228/592] ASoC: tegra210_ahub: Add check to of_device_get_match_data()
-Date: Mon, 23 Jun 2025 15:03:06 +0200
-Message-ID: <20250623130705.714286662@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: [PATCH 5.4 089/222] kbuild: Update assembler calls to use proper flags and language target
+Date: Mon, 23 Jun 2025 15:07:04 +0200
+Message-ID: <20250623130614.778190219@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +49,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Nick Desaulniers <ndesaulniers@google.com>
 
-[ Upstream commit 04cb269c204398763a620d426cbee43064854000 ]
+commit d5c8d6e0fa61401a729e9eb6a9c7077b2d3aebb0 upstream.
 
-In tegra_ahub_probe(), check the result of function
-of_device_get_match_data(), return an error code in case it fails.
+as-instr uses KBUILD_AFLAGS, but as-option uses KBUILD_CFLAGS. This can
+cause as-option to fail unexpectedly when CONFIG_WERROR is set, because
+clang will emit -Werror,-Wunused-command-line-argument for various -m
+and -f flags in KBUILD_CFLAGS for assembler sources.
 
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Link: https://patch.msgid.link/20250513123744.3041724-1-ruc_gongyuanjun@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Callers of as-option and as-instr should be adding flags to
+KBUILD_AFLAGS / aflags-y, not KBUILD_CFLAGS / cflags-y. Use
+KBUILD_AFLAGS in all macros to clear up the initial problem.
+
+Unfortunately, -Wunused-command-line-argument can still be triggered
+with clang by the presence of warning flags or macro definitions because
+'-x assembler' is used, instead of '-x assembler-with-cpp', which will
+consume these flags. Switch to '-x assembler-with-cpp' in places where
+'-x assembler' is used, as the compiler is always used as the driver for
+out of line assembler sources in the kernel.
+
+Finally, add -Werror to these macros so that they behave consistently
+whether or not CONFIG_WERROR is set.
+
+[nathan: Reworded and expanded on problems in commit message
+         Use '-x assembler-with-cpp' in a couple more places]
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1699
+Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Anders Roxell <anders.roxell@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/tegra/tegra210_ahub.c | 2 ++
- 1 file changed, 2 insertions(+)
+ scripts/Kbuild.include |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/tegra/tegra210_ahub.c b/sound/soc/tegra/tegra210_ahub.c
-index 99683f292b5d8..ae4965a9f7649 100644
---- a/sound/soc/tegra/tegra210_ahub.c
-+++ b/sound/soc/tegra/tegra210_ahub.c
-@@ -1359,6 +1359,8 @@ static int tegra_ahub_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+--- a/scripts/Kbuild.include
++++ b/scripts/Kbuild.include
+@@ -99,16 +99,16 @@ try-run = $(shell set -e;		\
+ 	fi)
  
- 	ahub->soc_data = of_device_get_match_data(&pdev->dev);
-+	if (!ahub->soc_data)
-+		return -ENODEV;
+ # as-option
+-# Usage: cflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
++# Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
  
- 	platform_set_drvdata(pdev, ahub);
+ as-option = $(call try-run,\
+-	$(CC) $(KBUILD_CFLAGS) $(1) -c -x assembler /dev/null -o "$$TMP",$(1),$(2))
++	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
  
--- 
-2.39.5
-
+ # as-instr
+-# Usage: cflags-y += $(call as-instr,instr,option1,option2)
++# Usage: aflags-y += $(call as-instr,instr,option1,option2)
+ 
+ as-instr = $(call try-run,\
+-	printf "%b\n" "$(1)" | $(CC) $(KBUILD_AFLAGS) -c -x assembler -o "$$TMP" -,$(2),$(3))
++	printf "%b\n" "$(1)" | $(CC) -Werror $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
+ 
+ # __cc-option
+ # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
 
 
