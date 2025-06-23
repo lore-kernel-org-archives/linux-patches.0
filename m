@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13199220F50;
-	Mon, 23 Jun 2025 21:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C8322069F;
+	Mon, 23 Jun 2025 21:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713168; cv=none; b=UPv/8B9sVvC5ttJN0IQf88i3+W+My48Kqr8i6DmtFcBnjcGRnHVzNSeypLNf8CIcbYuqfc9RfAY7AG0tmGmgS9vNAertGYCkS1+EcVJ1gqDhXSqhOwmTRyVS1+rcRNI9+BQBg7GssCWZJqdbvl0qntNu540XYLe6LBemlwrnZA4=
+	t=1750713170; cv=none; b=KMw/u7VDMz96FH++PrmTdpnMbICzgAJfSIgz7s6LTNcs5PZgSIzywXhvtiB4dLeNY4vSaHheUyvDAzvVDTWyADqDitPmBJtcv4SDszzetSYeZp3G9gufVJIZXxp+wGJBR6si3BKcl+k4ft6rlJMjmaQ6zwCaTGJwN6aFN+JnTWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713168; c=relaxed/simple;
-	bh=hNvaZ3BnQ768LUVARcu9uzp/x6Sdn0k0+aC3yPaw1jM=;
+	s=arc-20240116; t=1750713170; c=relaxed/simple;
+	bh=6y7R+yHZ0NuIFWKnAPjycc/3CX4GM1DIIGWFtTPYTY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/T1rZ/J/+zQS32/8c9Y1oXdSGjKPApQWv0ghx2K118Ekqjqgel8nq6/lmTbVizcFQiTagTnO5JY+HBpm1CAU2h7CES8LrxFncYPHAMR1aXBtWmwLlQ+VoltXsbi6uaKaETriE3NK5fvN9+/GhJJjyriPi4pF/UAaqN6Z0pXYZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRi5yAqI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SRcjZ7TY/fYIXzLm0/haYwz55qT1MlLD5pOP0V9q4YYbn+vn3jB7v3By/Bc8BJ062H+x5CGBr66fCX0dqYZ29j4/FyjrKpYt70/7Z/mYDpZmKcm7ZsOPJRxWKXf+E9Gszc5gYYtONnGQYfd8/jDOuIHFMpMUyr7Le86pY6RprsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPEEcI7v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRi5yAqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57273C4CEEA;
-	Mon, 23 Jun 2025 21:12:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPEEcI7v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1367C4CEEA;
+	Mon, 23 Jun 2025 21:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713167;
-	bh=hNvaZ3BnQ768LUVARcu9uzp/x6Sdn0k0+aC3yPaw1jM=;
+	s=korg; t=1750713170;
+	bh=6y7R+yHZ0NuIFWKnAPjycc/3CX4GM1DIIGWFtTPYTY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mRi5yAqIA8Bj3SDOLwx0NynKUqGiaO4lZGmLVKWCJB2Gbzn5tz1qJOSlpJkY9wMSr
-	 RqnIr5l1Ue8ZxtkUX3IU8DsI8fQlEKdTIn6GHwVaNBUE5/HgLhidFpIqbiv/WAY80t
-	 eCLxbcVu0G0r0QMPuWSI1hsGj9OsjK0j8t3vbvXo=
+	b=QPEEcI7vs1qi5Hy6T91ECPYA/ajSK/qLvkwOOOfKiQHhVP9T/NTn3VBtnsl287Six
+	 hbO3yyqHgoeMhIpdoGGJ1gGxPrwmlqEmMh7BKBjkHmygYHoT3Ifj/snyQL3yL4/jb2
+	 RyrgLrxAZJ4A+YxlzpkOqNj08jLuS+qGT9csKqik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreu Montiel <Andreu.Montiel@technica-engineering.de>,
-	Carlos Fernandez <carlos.fernandez@technica-engineering.de>,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Benjamin Berg <benjamin@sipsolutions.net>,
+	Rouven Czerwinski <rouven@czerwinskis.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 129/355] macsec: MACsec SCI assignment for ES = 0
-Date: Mon, 23 Jun 2025 15:05:30 +0200
-Message-ID: <20250623130630.619396334@linuxfoundation.org>
+Subject: [PATCH 5.4 172/222] wifi: mac80211: do not offer a mesh path if forwarding is disabled
+Date: Mon, 23 Jun 2025 15:08:27 +0200
+Message-ID: <20250623130617.243478433@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,130 +48,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Fernandez <carlos.fernandez@technica-engineering.de>
+From: Benjamin Berg <benjamin@sipsolutions.net>
 
-[ Upstream commit d9816ec74e6d6aa29219d010bba3f780ba1d9d75 ]
+[ Upstream commit cf1b684a06170d253b47d6a5287821de976435bd ]
 
-According to 802.1AE standard, when ES and SC flags in TCI are zero,
-used SCI should be the current active SC_RX. Current code uses the
-header MAC address. Without this patch, when ES flag is 0 (using a
-bridge or switch), header MAC will not fit the SCI and MACSec frames
-will be discarted.
+When processing a PREQ the code would always check whether we have a
+mesh path locally and reply accordingly. However, when forwarding is
+disabled then we should not reply with this information as we will not
+forward data packets down that path.
 
-In order to test this issue, MACsec link should be stablished between
-two interfaces, setting SC and ES flags to zero and a port identifier
-different than one. For example, using ip macsec tools:
+Move the check for dot11MeshForwarding up in the function and skip the
+mesh path lookup in that case. In the else block, set forward to false
+so that the rest of the function becomes a no-op and the
+dot11MeshForwarding check does not need to be duplicated.
 
-ip link add link $ETH0 macsec0 type macsec port 11 send_sci off
-end_station off
-ip macsec add macsec0 tx sa 0 pn 2 on key 01 $ETH1_KEY
-ip macsec add macsec0 rx port 11 address $ETH1_MAC
-ip macsec add macsec0 rx port 11 address $ETH1_MAC sa 0 pn 2 on key 02
-ip link set dev macsec0 up
+This explains an effect observed in the Freifunk community where mesh
+forwarding is disabled. In that case a mesh with three STAs and only bad
+links in between them, individual STAs would occionally have indirect
+mpath entries. This should not have happened.
 
-ip link add link $ETH1 macsec1 type macsec port 11 send_sci off
-end_station off
-ip macsec add macsec1 tx sa 0 pn 2 on key 01 $ETH0_KEY
-ip macsec add macsec1 rx port 11 address $ETH0_MAC
-ip macsec add macsec1 rx port 11 address $ETH0_MAC sa 0 pn 2 on key 02
-ip link set dev macsec1 up
-
-Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
-Co-developed-by: Andreu Montiel <Andreu.Montiel@technica-engineering.de>
-Signed-off-by: Andreu Montiel <Andreu.Montiel@technica-engineering.de>
-Signed-off-by: Carlos Fernandez <carlos.fernandez@technica-engineering.de>
-Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Benjamin Berg <benjamin@sipsolutions.net>
+Reviewed-by: Rouven Czerwinski <rouven@czerwinskis.de>
+Link: https://patch.msgid.link/20250430191042.3287004-1-benjamin@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 40 ++++++++++++++++++++++++++++++++++------
- 1 file changed, 34 insertions(+), 6 deletions(-)
+ net/mac80211/mesh_hwmp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 5e30fd017b3ac..e6a013da6680c 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -260,15 +260,39 @@ static sci_t make_sci(u8 *addr, __be16 port)
- 	return sci;
- }
- 
--static sci_t macsec_frame_sci(struct macsec_eth_header *hdr, bool sci_present)
-+static sci_t macsec_active_sci(struct macsec_secy *secy)
- {
--	sci_t sci;
-+	struct macsec_rx_sc *rx_sc = rcu_dereference_bh(secy->rx_sc);
-+
-+	/* Case single RX SC */
-+	if (rx_sc && !rcu_dereference_bh(rx_sc->next))
-+		return (rx_sc->active) ? rx_sc->sci : 0;
-+	/* Case no RX SC or multiple */
-+	else
-+		return 0;
-+}
-+
-+static sci_t macsec_frame_sci(struct macsec_eth_header *hdr, bool sci_present,
-+			      struct macsec_rxh_data *rxd)
-+{
-+	struct macsec_dev *macsec;
-+	sci_t sci = 0;
- 
--	if (sci_present)
-+	/* SC = 1 */
-+	if (sci_present) {
- 		memcpy(&sci, hdr->secure_channel_id,
- 		       sizeof(hdr->secure_channel_id));
--	else
-+	/* SC = 0; ES = 0 */
-+	} else if ((!(hdr->tci_an & (MACSEC_TCI_ES | MACSEC_TCI_SC))) &&
-+		   (list_is_singular(&rxd->secys))) {
-+		/* Only one SECY should exist on this scenario */
-+		macsec = list_first_or_null_rcu(&rxd->secys, struct macsec_dev,
-+						secys);
-+		if (macsec)
-+			return macsec_active_sci(&macsec->secy);
+diff --git a/net/mac80211/mesh_hwmp.c b/net/mac80211/mesh_hwmp.c
+index 295f98b4502e0..ae1c700dc82e8 100644
+--- a/net/mac80211/mesh_hwmp.c
++++ b/net/mac80211/mesh_hwmp.c
+@@ -620,7 +620,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 				mesh_path_add_gate(mpath);
+ 		}
+ 		rcu_read_unlock();
+-	} else {
++	} else if (ifmsh->mshcfg.dot11MeshForwarding) {
+ 		rcu_read_lock();
+ 		mpath = mesh_path_lookup(sdata, target_addr);
+ 		if (mpath) {
+@@ -638,6 +638,8 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 			}
+ 		}
+ 		rcu_read_unlock();
 +	} else {
- 		sci = make_sci(hdr->eth.h_source, MACSEC_PORT_ES);
-+	}
++		forward = false;
+ 	}
  
- 	return sci;
- }
-@@ -1096,7 +1120,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 	struct macsec_rxh_data *rxd;
- 	struct macsec_dev *macsec;
- 	unsigned int len;
--	sci_t sci;
-+	sci_t sci = 0;
- 	u32 hdr_pn;
- 	bool cbit;
- 	struct pcpu_rx_sc_stats *rxsc_stats;
-@@ -1143,11 +1167,14 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 	if (reply) {
+@@ -655,7 +657,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 		}
+ 	}
  
- 	macsec_skb_cb(skb)->has_sci = !!(hdr->tci_an & MACSEC_TCI_SC);
- 	macsec_skb_cb(skb)->assoc_num = hdr->tci_an & MACSEC_AN_MASK;
--	sci = macsec_frame_sci(hdr, macsec_skb_cb(skb)->has_sci);
+-	if (forward && ifmsh->mshcfg.dot11MeshForwarding) {
++	if (forward) {
+ 		u32 preq_id;
+ 		u8 hopcount;
  
- 	rcu_read_lock();
- 	rxd = macsec_data_rcu(skb->dev);
- 
-+	sci = macsec_frame_sci(hdr, macsec_skb_cb(skb)->has_sci, rxd);
-+	if (!sci)
-+		goto drop_nosc;
-+
- 	list_for_each_entry_rcu(macsec, &rxd->secys, secys) {
- 		struct macsec_rx_sc *sc = find_rx_sc(&macsec->secy, sci);
- 
-@@ -1270,6 +1297,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 	macsec_rxsa_put(rx_sa);
- drop_nosa:
- 	macsec_rxsc_put(rx_sc);
-+drop_nosc:
- 	rcu_read_unlock();
- drop_direct:
- 	kfree_skb(skb);
 -- 
 2.39.5
 
