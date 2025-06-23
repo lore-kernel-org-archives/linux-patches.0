@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AD67482;
-	Mon, 23 Jun 2025 21:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD307482;
+	Mon, 23 Jun 2025 21:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713366; cv=none; b=W2mnYZSz4ExJT1QgRjl+Tpv0EI3lq26eoqSzeySFS+tGjn9mLJ5Hso5MmbqkxFoAVg3xBJK/D9N6Dt93fjTO6Er8loenKeJJPw44EQr6uZ3K7QiL+tnJ4luAWTTMzN2IRgsIi/qSXwNKuwQqh+MBvGRWw+iE5PJ4YaFsb2MmDrY=
+	t=1750713368; cv=none; b=eVbqkZWMMrCE67282xHaCJ9Q6VR6osQPb596QgZ+SP+iFT2q4pi560EIXLrHZpAbAe40Mzwiqd+R8WnAYfiG5iGwJ/9RR5Ti4CEEDx5/JGE61OyOp8T6I3G0ZzQIAFQph0sRrSPR32ykfe4Bj98VXsLaDA8tLNk+cRBicpZ8yPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713366; c=relaxed/simple;
-	bh=uXiiwzssqjyGYsb0jtiDVGNvaiy0s/MuuyA/CE4rLec=;
+	s=arc-20240116; t=1750713368; c=relaxed/simple;
+	bh=ghr7hRWRO76EnU3eccUabx6rV6EnIFmQ4VSgQHu9c80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j//KrRf4ugCmxI7x9jRtdJ+S4Yeu+9H9zx/N0HpKavQQs0ZmuqE0whbudm++d7RzglFhTptFabF40vJvBht6S4MTCUK9lcPNbdJ9+s5PMmHUVjGDI7Y+NYW2JCkSSx1IT5YhJQIMa4B2jGp4W8yxFI/OFEL7KfAUsxdyCKRbSaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqDLhAfg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gubeJZgOsp8BWeeGisagxg8oPPJWqs9WOyS7TEwGjp+ZscpXx8Q0lsrUihZiy7qWtBVBOYuRBV5DF1fbkX8mJx5xN+RD+ykip1IsRi7D9kQ1X++Cxg3w/ICIuiBZrJE5SVpWI31PBlbUnD+QCz//fp9oc6znbhof3KSqV6lnY20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xg/hnxqX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqDLhAfg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71165C4CEEA;
-	Mon, 23 Jun 2025 21:16:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xg/hnxqX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64A5C4CEEA;
+	Mon, 23 Jun 2025 21:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713365;
-	bh=uXiiwzssqjyGYsb0jtiDVGNvaiy0s/MuuyA/CE4rLec=;
+	s=korg; t=1750713368;
+	bh=ghr7hRWRO76EnU3eccUabx6rV6EnIFmQ4VSgQHu9c80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sqDLhAfg9MY4jE1hUeGt6bR6ZdFGFbvx3cfSpaIdbzjzJU9Q2mu5gadNiZm0uZZZE
-	 kJxG1t4pDEkGbgP89iGOvHEhMiOm31pm2pebjfLmg7334r3/u6tAvqsJOaHqQrOIFI
-	 2E/2gfBK0qEvxfWzb2C8f75osPOzvyX86KOLueEY=
+	b=xg/hnxqXriT77bMR53aOuwcXZMuJ0k73LaJtQUs5LjOcEmot8g+i/jj5PC6lgH3Cg
+	 ornJQDnP1AMYl9oXpzQTprkhFNx1mQpXQhS3w78z4Q314MHN6TUvSUQX4+rG4B7nJR
+	 hFll1s/3o3JEVy1MU0T3o0Rw/Fmj5ahMP+H/fr6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Anton Protopopov <a.s.protopopov@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/508] libbpf: Use proper errno value in nlattr
-Date: Mon, 23 Jun 2025 15:02:05 +0200
-Message-ID: <20250623130647.205862035@linuxfoundation.org>
+Subject: [PATCH 5.15 119/411] Bluetooth: L2CAP: Fix not responding with L2CAP_CR_LE_ENCRYPTION
+Date: Mon, 23 Jun 2025 15:04:23 +0200
+Message-ID: <20250623130636.543023582@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,77 +46,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anton Protopopov <a.s.protopopov@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit fd5fd538a1f4b34cee6823ba0ddda2f7a55aca96 ]
+[ Upstream commit 03dba9cea72f977e873e4e60e220fa596959dd8f ]
 
-Return value of the validate_nla() function can be propagated all the
-way up to users of libbpf API. In case of error this libbpf version
-of validate_nla returns -1 which will be seen as -EPERM from user's
-point of view. Instead, return a more reasonable -EINVAL.
+Depending on the security set the response to L2CAP_LE_CONN_REQ shall be
+just L2CAP_CR_LE_ENCRYPTION if only encryption when BT_SECURITY_MEDIUM
+is selected since that means security mode 2 which doesn't require
+authentication which is something that is covered in the qualification
+test L2CAP/LE/CFC/BV-25-C.
 
-Fixes: bbf48c18ee0c ("libbpf: add error reporting in XDP")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250510182011.2246631-1-a.s.protopopov@gmail.com
+Link: https://github.com/bluez/bluez/issues/1270
+Fixes: 27e2d4c8d28b ("Bluetooth: Add basic LE L2CAP connect request receiving support")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/nlattr.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ net/bluetooth/l2cap_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/nlattr.c b/tools/lib/bpf/nlattr.c
-index 975e265eab3bf..06663f9ea581f 100644
---- a/tools/lib/bpf/nlattr.c
-+++ b/tools/lib/bpf/nlattr.c
-@@ -63,16 +63,16 @@ static int validate_nla(struct nlattr *nla, int maxtype,
- 		minlen = nla_attr_minlen[pt->type];
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 872a0249f53c8..89021b3b8f443 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5859,7 +5859,8 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
  
- 	if (libbpf_nla_len(nla) < minlen)
--		return -1;
-+		return -EINVAL;
- 
- 	if (pt->maxlen && libbpf_nla_len(nla) > pt->maxlen)
--		return -1;
-+		return -EINVAL;
- 
- 	if (pt->type == LIBBPF_NLA_STRING) {
- 		char *data = libbpf_nla_data(nla);
- 
- 		if (data[libbpf_nla_len(nla) - 1] != '\0')
--			return -1;
-+			return -EINVAL;
+ 	if (!smp_sufficient_security(conn->hcon, pchan->sec_level,
+ 				     SMP_ALLOW_STK)) {
+-		result = L2CAP_CR_LE_AUTHENTICATION;
++		result = pchan->sec_level == BT_SECURITY_MEDIUM ?
++			L2CAP_CR_LE_ENCRYPTION : L2CAP_CR_LE_AUTHENTICATION;
+ 		chan = NULL;
+ 		goto response_unlock;
  	}
- 
- 	return 0;
-@@ -118,19 +118,18 @@ int libbpf_nla_parse(struct nlattr *tb[], int maxtype, struct nlattr *head,
- 		if (policy) {
- 			err = validate_nla(nla, maxtype, policy);
- 			if (err < 0)
--				goto errout;
-+				return err;
- 		}
- 
--		if (tb[type])
-+		if (tb[type]) {
- 			pr_warn("Attribute of type %#x found multiple times in message, "
- 				"previous attribute is being ignored.\n", type);
-+		}
- 
- 		tb[type] = nla;
- 	}
- 
--	err = 0;
--errout:
--	return err;
-+	return 0;
- }
- 
- /**
 -- 
 2.39.5
 
