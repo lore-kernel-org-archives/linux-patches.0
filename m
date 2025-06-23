@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A4213A265;
-	Mon, 23 Jun 2025 13:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E6113A265;
+	Mon, 23 Jun 2025 13:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684527; cv=none; b=K3nBxrLQ6l5mkz34GR0QARXM6YRZhAHNyrQdPeUVDmQV5I1n5RL+67Ys13bEYGNLDdK5wnYMz13kE9XTEkmn3+WmJ71UAg93LITSwHw0lhaNvwKgUOCMkViCWGfIy/5gSABQTM1p3qom9KCL8esvHBUubGgMYyryXo2Yk0LFSVk=
+	t=1750684532; cv=none; b=nSHQCtXcxF6xM/mLxS1oKj5FIqhQuNa4DYpHry63swcjttXvC+wDXE4vXIzEJqF2tpf8Ik3Hk7BK3SHqnzLIJZJerh7lNgRiLSrAPzxmBV5zp6EepbtInsDiuyVsIcMyEnNr/nKHC+ygmqa8Y/A/fZodS5hlaiMeYUDIEmWJ9xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684527; c=relaxed/simple;
-	bh=XH+AuQkAK7T2HAhwmY9WrK40lFNcp+DGrNgamL5/578=;
+	s=arc-20240116; t=1750684532; c=relaxed/simple;
+	bh=jwE4BWeTnR62p3K1QIQH034oyNExj2u23wNS72lAIDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=op/bhBvi2bd3CpiJHV2EQnpkCcMmXbm3hRj07PrZPz0G4JlmXp53kceYq4yikVsbHoV2k6OA06A4AnwBDx+A90PYP1KRreZ77IXrBRUzv5g4aA3uiPxNu6mSd7thETvhJ4DuEkq6n4VtcamcCQy6b+npobqqHhx2nGJlkqkiqNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgJZQVei; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZDi6DHpR39/OBe3k1qZgz8i5Mvqh7WbeOMov1G3u+yEMwCgiINIKB55mzSuMDiRTAc3M2BkEnuUyIixEXON2xrkrsSxbb8bKYmF/h9uadxMApPv6wGLkgz+wrnhZzqJB/MrXZFIL+FPjyZzoWRx8BC729fy22Gtlzner4fj1lM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9qknuDh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgJZQVei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF1EC4CEEA;
-	Mon, 23 Jun 2025 13:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9qknuDh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E04DC4CEEA;
+	Mon, 23 Jun 2025 13:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684525;
-	bh=XH+AuQkAK7T2HAhwmY9WrK40lFNcp+DGrNgamL5/578=;
+	s=korg; t=1750684532;
+	bh=jwE4BWeTnR62p3K1QIQH034oyNExj2u23wNS72lAIDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DgJZQVeiCSpNHxG74D4wENkBRm5qyJE5Ugcu9ROAAfRGzC3DOIMLF+Bwo0r9Gycne
-	 CwS4SQNDhqhDDcwzLfGW0sVpWMVUrdFz0LKakuklDwTooy6a7ebSet0r+14Cyi5r8S
-	 tYvQRsNbr9ftknZGEEdbWZllMqCu3yDxOeVOo6Xg=
+	b=l9qknuDhaFVGZvq5CM0t9iKNHpnwqJCv+i+AFfXMRFo5lXgxvXiiGJodQ0q3819iT
+	 OY/SH4/23oUKaFWyiYKxA0vQpl934NIrjdddPy5Q86QRynjYKUQIJ/PN7f6ElWRYeV
+	 7wk6fdN2/Qhcb9Vg5ZsXQFl8Fm7QWSTCAU4dz2i0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.15 075/592] media: omap3isp: use sgtable-based scatterlist wrappers
-Date: Mon, 23 Jun 2025 15:00:33 +0200
-Message-ID: <20250623130702.054050931@linuxfoundation.org>
+	Brett Werling <brett.werling@garmin.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.15 102/592] can: tcan4x5x: fix power regulator retrieval during probe
+Date: Mon, 23 Jun 2025 15:01:00 +0200
+Message-ID: <20250623130702.702632376@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -51,72 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Brett Werling <brett.werling@garmin.com>
 
-commit 3de572fe2189a4a0bd80295e1f478401e739498e upstream.
+commit db22720545207f734aaa9d9f71637bfc8b0155e0 upstream.
 
-Use common wrappers operating directly on the struct sg_table objects to
-fix incorrect use of scatterlists sync calls. dma_sync_sg_for_*()
-functions have to be called with the number of elements originally passed
-to dma_map_sg_*() function, not the one returned in sgtable's nents.
+Fixes the power regulator retrieval in tcan4x5x_can_probe() by ensuring
+the regulator pointer is not set to NULL in the successful return from
+devm_regulator_get_optional().
 
-Fixes: d33186d0be18 ("[media] omap3isp: ccdc: Use the DMA API for LSC")
-Fixes: 0e24e90f2ca7 ("[media] omap3isp: stat: Use the DMA API")
-CC: stable@vger.kernel.org
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: 3814ca3a10be ("can: tcan4x5x: tcan4x5x_can_probe(): turn on the power before parsing the config")
+Signed-off-by: Brett Werling <brett.werling@garmin.com>
+Link: https://patch.msgid.link/20250612191825.3646364-1-brett.werling@garmin.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/ti/omap3isp/ispccdc.c |    8 ++++----
- drivers/media/platform/ti/omap3isp/ispstat.c |    6 ++----
- 2 files changed, 6 insertions(+), 8 deletions(-)
+ drivers/net/can/m_can/tcan4x5x-core.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/media/platform/ti/omap3isp/ispccdc.c
-+++ b/drivers/media/platform/ti/omap3isp/ispccdc.c
-@@ -446,8 +446,8 @@ static int ccdc_lsc_config(struct isp_cc
- 		if (ret < 0)
- 			goto done;
+--- a/drivers/net/can/m_can/tcan4x5x-core.c
++++ b/drivers/net/can/m_can/tcan4x5x-core.c
+@@ -411,10 +411,11 @@ static int tcan4x5x_can_probe(struct spi
+ 	priv = cdev_to_priv(mcan_class);
  
--		dma_sync_sg_for_cpu(isp->dev, req->table.sgt.sgl,
--				    req->table.sgt.nents, DMA_TO_DEVICE);
-+		dma_sync_sgtable_for_cpu(isp->dev, &req->table.sgt,
-+					 DMA_TO_DEVICE);
- 
- 		if (copy_from_user(req->table.addr, config->lsc,
- 				   req->config.size)) {
-@@ -455,8 +455,8 @@ static int ccdc_lsc_config(struct isp_cc
- 			goto done;
- 		}
- 
--		dma_sync_sg_for_device(isp->dev, req->table.sgt.sgl,
--				       req->table.sgt.nents, DMA_TO_DEVICE);
-+		dma_sync_sgtable_for_device(isp->dev, &req->table.sgt,
-+					    DMA_TO_DEVICE);
+ 	priv->power = devm_regulator_get_optional(&spi->dev, "vsup");
+-	if (PTR_ERR(priv->power) == -EPROBE_DEFER) {
+-		ret = -EPROBE_DEFER;
+-		goto out_m_can_class_free_dev;
+-	} else {
++	if (IS_ERR(priv->power)) {
++		if (PTR_ERR(priv->power) == -EPROBE_DEFER) {
++			ret = -EPROBE_DEFER;
++			goto out_m_can_class_free_dev;
++		}
+ 		priv->power = NULL;
  	}
  
- 	spin_lock_irqsave(&ccdc->lsc.req_lock, flags);
---- a/drivers/media/platform/ti/omap3isp/ispstat.c
-+++ b/drivers/media/platform/ti/omap3isp/ispstat.c
-@@ -161,8 +161,7 @@ static void isp_stat_buf_sync_for_device
- 	if (ISP_STAT_USES_DMAENGINE(stat))
- 		return;
- 
--	dma_sync_sg_for_device(stat->isp->dev, buf->sgt.sgl,
--			       buf->sgt.nents, DMA_FROM_DEVICE);
-+	dma_sync_sgtable_for_device(stat->isp->dev, &buf->sgt, DMA_FROM_DEVICE);
- }
- 
- static void isp_stat_buf_sync_for_cpu(struct ispstat *stat,
-@@ -171,8 +170,7 @@ static void isp_stat_buf_sync_for_cpu(st
- 	if (ISP_STAT_USES_DMAENGINE(stat))
- 		return;
- 
--	dma_sync_sg_for_cpu(stat->isp->dev, buf->sgt.sgl,
--			    buf->sgt.nents, DMA_FROM_DEVICE);
-+	dma_sync_sgtable_for_cpu(stat->isp->dev, &buf->sgt, DMA_FROM_DEVICE);
- }
- 
- static void isp_stat_buf_clear(struct ispstat *stat)
 
 
