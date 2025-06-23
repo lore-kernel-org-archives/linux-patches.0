@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54677136348;
-	Mon, 23 Jun 2025 21:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA81D2222C2;
+	Mon, 23 Jun 2025 21:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715401; cv=none; b=Zdlq3ny2p8ZEMKqW36CtdjFsHWBI0BkRbFIexyLhY1Yznb1G5lxwkiG46PXUe9IskTP+mLSMJ7DiJOyIbaWQdzKkWAGWliBKO1TktHbBmrMs7RBoRoDkjv3kt3iPGLce3VKpxYghAK37DL6/pj/Je/7GnSPms0rFdzRG4EbExeY=
+	t=1750715403; cv=none; b=nGJjzMBzYOiy+Ody69jqdnbMMOLpKYUzkePxe9SC14MtWg6I/hcDGfHr6K7tS7CWvAPni2b4qgxr//QCl2+GI+1B13r3dPzjD8hBKPCHlzZ3akcQ+Get0OnPoEzW61cvH37jUab1hNiBZFY8qCGYo0Sgt0J4S/M4WWMqXfQ39fU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715401; c=relaxed/simple;
-	bh=5e84Hv55r+Gv0Oli+bxhGlxI3HpDn9Sq+dwHgw4KycU=;
+	s=arc-20240116; t=1750715403; c=relaxed/simple;
+	bh=qCzfpH+pfiMaFtIqkdIh85sRQpkzHn8EUy73NlwacBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJJ2KFUMUSX/4gJIQ8+sfeYnxc7uyvDn/PBMr7KXu+qVdI3R0PpTQ9FnhR9Tlcxb5yX1mvdD8cqbnOvTqq2sGnF/yLgebt2BMXLrT5s11sLQfciYeU+AHpSD7qkbB0j5PkS8MUrBdSZxObIaVxr5k4ZJG5p7JWvmuNSNKyXStu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WW9BW4X6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dSFFeFFSp7GVnjBcbh+PeKq2RWqjVeDABvB7v1kFtJSBScNJDYObbZEo6NtZ8tVvyZKSrL+9lyRTtYklW8/BYwKcP0yT5Yq4k4RmqDTCx0ysiyd8Pqr7+9VaEK5g9uUpTYbwuLeQnxYPM3P8VLEDcP5cE32zgYmf8vcUfh7PQ54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pv4jzz2H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WW9BW4X6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5F4C4CEEA;
-	Mon, 23 Jun 2025 21:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pv4jzz2H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DA1C4CEF1;
+	Mon, 23 Jun 2025 21:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715401;
-	bh=5e84Hv55r+Gv0Oli+bxhGlxI3HpDn9Sq+dwHgw4KycU=;
+	s=korg; t=1750715403;
+	bh=qCzfpH+pfiMaFtIqkdIh85sRQpkzHn8EUy73NlwacBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WW9BW4X637JDyHjYHp7Mt6AFFCEYwFGHsUKRogmyTYzs2hMWQenMdGnMK52I3IKBw
-	 ee3deNVH0mj5vpMY725NZ6UAHPCgbcNaMkOY9oGEPGyPZJzpepnPWmoMZrgj7Sry0x
-	 uZ2LDnXaqsl/sAslvItVr1YfbASfwOW32ATwkPd8=
+	b=pv4jzz2Hci+1wyqtlv68ik/tmBJGNfKBLASjXLoMhzKba+HQF7uDZS6+YbfgYKDTa
+	 uM+ZyoCMQL2Q/GAzfYt6DEENpq9E5B6sJSRZ76TzusDMbz+VXF8newz4gdM9HDe3fJ
+	 ajn4V14EIS3gwMGtoTZpX3PlSZnUhll0f6m5vbkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 180/414] ALSA: hda: cs35l41: Fix swapped l/r audio channels for Acer Helios laptops
-Date: Mon, 23 Jun 2025 15:05:17 +0200
-Message-ID: <20250623130646.526555592@linuxfoundation.org>
+	Artem Sadovnikov <a.sadovnikov@ispras.ru>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 6.15 456/592] jffs2: check that raw node were preallocated before writing summary
+Date: Mon, 23 Jun 2025 15:06:54 +0200
+Message-ID: <20250623130711.277271406@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +47,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Artem Sadovnikov <a.sadovnikov@ispras.ru>
 
-[ Upstream commit e43a93c41982e82c1b703dd7fa9c1d965260fbb3 ]
+commit ec9e6f22bce433b260ea226de127ec68042849b0 upstream.
 
-Fixes audio channel assignment from ACPI using configuration table.
+Syzkaller detected a kernel bug in jffs2_link_node_ref, caused by fault
+injection in jffs2_prealloc_raw_node_refs. jffs2_sum_write_sumnode doesn't
+check return value of jffs2_prealloc_raw_node_refs and simply lets any
+error propagate into jffs2_sum_write_data, which eventually calls
+jffs2_link_node_ref in order to link the summary to an expectedly allocated
+node.
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250515162848.405055-3-sbinding@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+kernel BUG at fs/jffs2/nodelist.c:592!
+invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 1 PID: 31277 Comm: syz-executor.7 Not tainted 6.1.128-syzkaller-00139-ge10f83ca10a1 #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+RIP: 0010:jffs2_link_node_ref+0x570/0x690 fs/jffs2/nodelist.c:592
+Call Trace:
+ <TASK>
+ jffs2_sum_write_data fs/jffs2/summary.c:841 [inline]
+ jffs2_sum_write_sumnode+0xd1a/0x1da0 fs/jffs2/summary.c:874
+ jffs2_do_reserve_space+0xa18/0xd60 fs/jffs2/nodemgmt.c:388
+ jffs2_reserve_space+0x55f/0xaa0 fs/jffs2/nodemgmt.c:197
+ jffs2_write_inode_range+0x246/0xb50 fs/jffs2/write.c:362
+ jffs2_write_end+0x726/0x15d0 fs/jffs2/file.c:301
+ generic_perform_write+0x314/0x5d0 mm/filemap.c:3856
+ __generic_file_write_iter+0x2ae/0x4d0 mm/filemap.c:3973
+ generic_file_write_iter+0xe3/0x350 mm/filemap.c:4005
+ call_write_iter include/linux/fs.h:2265 [inline]
+ do_iter_readv_writev+0x20f/0x3c0 fs/read_write.c:735
+ do_iter_write+0x186/0x710 fs/read_write.c:861
+ vfs_iter_write+0x70/0xa0 fs/read_write.c:902
+ iter_file_splice_write+0x73b/0xc90 fs/splice.c:685
+ do_splice_from fs/splice.c:763 [inline]
+ direct_splice_actor+0x10c/0x170 fs/splice.c:950
+ splice_direct_to_actor+0x337/0xa10 fs/splice.c:896
+ do_splice_direct+0x1a9/0x280 fs/splice.c:1002
+ do_sendfile+0xb13/0x12c0 fs/read_write.c:1255
+ __do_sys_sendfile64 fs/read_write.c:1323 [inline]
+ __se_sys_sendfile64 fs/read_write.c:1309 [inline]
+ __x64_sys_sendfile64+0x1cf/0x210 fs/read_write.c:1309
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+Fix this issue by checking return value of jffs2_prealloc_raw_node_refs
+before calling jffs2_sum_write_data.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Cc: stable@vger.kernel.org
+Fixes: 2f785402f39b ("[JFFS2] Reduce visibility of raw_node_ref to upper layers of JFFS2 code.")
+Signed-off-by: Artem Sadovnikov <a.sadovnikov@ispras.ru>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/cs35l41_hda_property.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/jffs2/summary.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/cs35l41_hda_property.c b/sound/pci/hda/cs35l41_hda_property.c
-index 61d2314834e7b..d8249d997c2a0 100644
---- a/sound/pci/hda/cs35l41_hda_property.c
-+++ b/sound/pci/hda/cs35l41_hda_property.c
-@@ -31,6 +31,9 @@ struct cs35l41_config {
- };
+--- a/fs/jffs2/summary.c
++++ b/fs/jffs2/summary.c
+@@ -858,7 +858,10 @@ int jffs2_sum_write_sumnode(struct jffs2
+ 	spin_unlock(&c->erase_completion_lock);
  
- static const struct cs35l41_config cs35l41_config_table[] = {
-+	{ "10251826", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
-+	{ "1025182C", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
-+	{ "10251844", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
- 	{ "10280B27", 2, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 1000, 4500, 24 },
- 	{ "10280B28", 2, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 1000, 4500, 24 },
- 	{ "10280BEB", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, -1, 0, 0, 0, 0 },
-@@ -452,6 +455,9 @@ struct cs35l41_prop_model {
- static const struct cs35l41_prop_model cs35l41_prop_model_table[] = {
- 	{ "CLSA0100", NULL, lenovo_legion_no_acpi },
- 	{ "CLSA0101", NULL, lenovo_legion_no_acpi },
-+	{ "CSC3551", "10251826", generic_dsd_config },
-+	{ "CSC3551", "1025182C", generic_dsd_config },
-+	{ "CSC3551", "10251844", generic_dsd_config },
- 	{ "CSC3551", "10280B27", generic_dsd_config },
- 	{ "CSC3551", "10280B28", generic_dsd_config },
- 	{ "CSC3551", "10280BEB", generic_dsd_config },
--- 
-2.39.5
-
+ 	jeb = c->nextblock;
+-	jffs2_prealloc_raw_node_refs(c, jeb, 1);
++	ret = jffs2_prealloc_raw_node_refs(c, jeb, 1);
++
++	if (ret)
++		goto out;
+ 
+ 	if (!c->summary->sum_num || !c->summary->sum_list_head) {
+ 		JFFS2_WARNING("Empty summary info!!!\n");
+@@ -872,6 +875,8 @@ int jffs2_sum_write_sumnode(struct jffs2
+ 	datasize += padsize;
+ 
+ 	ret = jffs2_sum_write_data(c, jeb, infosize, datasize, padsize);
++
++out:
+ 	spin_lock(&c->erase_completion_lock);
+ 	return ret;
+ }
 
 
