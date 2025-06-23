@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E7E230BC2;
-	Mon, 23 Jun 2025 13:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2602F24;
+	Mon, 23 Jun 2025 13:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685680; cv=none; b=aRt8S/EW3wbiiZtDVRSFVhMiciHbMR3m7o4eKWhB5vk2Q3Ez7GqHPnrTpMjCkhG8aJNR6k4XQvfDlZXw128DoN9Nvql/gQj58YRa1QIdA3NwbP55WnSH4sOH8GibzENJSD6GkkvHklrz7Z+utsSvh+06kPZNL0n1X9EWZ3w/zbw=
+	t=1750685683; cv=none; b=XZELBfYMfEP0GXJLanXzrl+TE8FGb5uJJ7ZhSX/cU8dhP6neY8K5vg9U9ZBxJa2x08M1ihs/cHXkY8vZOXepAb+je1kT5kcM3vk7Uh/OtdqRsW9Qgtc65E6FqOgR4WPCsfhOF544Ct7l+Ac4sSLNpWTNaV+ZYmkfzo/+7uqO3Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685680; c=relaxed/simple;
-	bh=pSDTM5IXYFb6gmF9rJyr2TBboV6Y+MO01iTmTEN4fOc=;
+	s=arc-20240116; t=1750685683; c=relaxed/simple;
+	bh=0+QEK4PuI4K/QZTbdyHe83Mf4hf7EihLhGRjDZQnIZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CJbHW1GC8JHMRnfoYqbhkc97rnoEulV7eLCY8DNz4gz+72Zvxv/T631IESWfxrZwflbRhHBFi0iZpmooKQuIh4onuGFYAP0QzgDHGKFYQSJH9hBEvKbd0BWH9isai9g4YHcgSWTCuRS9Lca56NzG7Qqb5igdPMiNwYuDjPsbTxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TId/IK8q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qMros4t+AUb4+0OJ5j+xI1lPTUjD5OOj5EFqjyqVbSwYQD/o5r7H7apPGgG19HigY8Th//uNymkt6RAVnZQBy43vQ1zrKMn1/XbtOiL0blb68dl47ipcKKdtnvXzsjCKgNPx+pP5Iva30/l4oqR36KQZrFM3zBpUjbhHBgxIHAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSFX/XWD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TId/IK8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9E0C4CEEA;
-	Mon, 23 Jun 2025 13:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSFX/XWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2B3C4CEEA;
+	Mon, 23 Jun 2025 13:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685679;
-	bh=pSDTM5IXYFb6gmF9rJyr2TBboV6Y+MO01iTmTEN4fOc=;
+	s=korg; t=1750685682;
+	bh=0+QEK4PuI4K/QZTbdyHe83Mf4hf7EihLhGRjDZQnIZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TId/IK8qgfWoaF/Pn2GFKH8lxxRir4BP35ODlyiRY8ionBoraB3pT1Ra1Ey+oDQl7
-	 +2+ABXXUbCCCTaJD+Ai9e+n3zs5MF7veVB/z3oSCapgG45agHNIoUj5iOhOLC8in3S
-	 ZfWvp0Q2j5rBaC0maRd2UT/TVjTT50Y1SwlpovK4=
+	b=nSFX/XWDdwvovYdXnG1Ymo0BvSd/PdbRwN2SqWmXOVfAvnMJ0fbXdjcueUxobguPf
+	 zlCdk9aPqJ53oECNX2wtTVeJ/5TaBOkXGzzfeeJAnNMuuX4G3Uqt7UNzULfnPD1wJQ
+	 Tc89LCpo04FWTf1CbYIoi1/Mjw7IgEEyzeJTOwIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amber Lin <Amber.Lin@amd.com>,
-	Apurv Mishra <Apurv.Mishra@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 252/592] drm/amdkfd: Drop workaround for GC v9.4.3 revID 0
-Date: Mon, 23 Jun 2025 15:03:30 +0200
-Message-ID: <20250623130706.290170832@linuxfoundation.org>
+	syzbot+fe2a25dae02a207717a0@syzkaller.appspotmail.com,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Jan Kara <jack@suse.cz>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.4 112/222] ext4: inline: fix len overflow in ext4_prepare_inline_data
+Date: Mon, 23 Jun 2025 15:07:27 +0200
+Message-ID: <20250623130615.474107498@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,148 +49,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Apurv Mishra <Apurv.Mishra@amd.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit daafa303d19f5522e4c24fbf5c1c981a16df2c2f ]
+commit 227cb4ca5a6502164f850d22aec3104d7888b270 upstream.
 
-Remove workaround code for the early engineering
-samples GC v9.4.3 SOCs with revID 0
+When running the following code on an ext4 filesystem with inline_data
+feature enabled, it will lead to the bug below.
 
-Reviewed-by: Amber Lin <Amber.Lin@amd.com>
-Signed-off-by: Apurv Mishra <Apurv.Mishra@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+        fd = open("file1", O_RDWR | O_CREAT | O_TRUNC, 0666);
+        ftruncate(fd, 30);
+        pwrite(fd, "a", 1, (1UL << 40) + 5UL);
+
+That happens because write_begin will succeed as when
+ext4_generic_write_inline_data calls ext4_prepare_inline_data, pos + len
+will be truncated, leading to ext4_prepare_inline_data parameter to be 6
+instead of 0x10000000006.
+
+Then, later when write_end is called, we hit:
+
+        BUG_ON(pos + len > EXT4_I(inode)->i_inline_size);
+
+at ext4_write_inline_data.
+
+Fix it by using a loff_t type for the len parameter in
+ext4_prepare_inline_data instead of an unsigned int.
+
+[   44.545164] ------------[ cut here ]------------
+[   44.545530] kernel BUG at fs/ext4/inline.c:240!
+[   44.545834] Oops: invalid opcode: 0000 [#1] SMP NOPTI
+[   44.546172] CPU: 3 UID: 0 PID: 343 Comm: test Not tainted 6.15.0-rc2-00003-g9080916f4863 #45 PREEMPT(full)  112853fcebfdb93254270a7959841d2c6aa2c8bb
+[   44.546523] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   44.546523] RIP: 0010:ext4_write_inline_data+0xfe/0x100
+[   44.546523] Code: 3c 0e 48 83 c7 48 48 89 de 5b 41 5c 41 5d 41 5e 41 5f 5d e9 e4 fa 43 01 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc 0f 0b <0f> 0b 0f 1f 44 00 00 55 41 57 41 56 41 55 41 54 53 48 83 ec 20 49
+[   44.546523] RSP: 0018:ffffb342008b79a8 EFLAGS: 00010216
+[   44.546523] RAX: 0000000000000001 RBX: ffff9329c579c000 RCX: 0000010000000006
+[   44.546523] RDX: 000000000000003c RSI: ffffb342008b79f0 RDI: ffff9329c158e738
+[   44.546523] RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000000
+[   44.546523] R10: 00007ffffffff000 R11: ffffffff9bd0d910 R12: 0000006210000000
+[   44.546523] R13: fffffc7e4015e700 R14: 0000010000000005 R15: ffff9329c158e738
+[   44.546523] FS:  00007f4299934740(0000) GS:ffff932a60179000(0000) knlGS:0000000000000000
+[   44.546523] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   44.546523] CR2: 00007f4299a1ec90 CR3: 0000000002886002 CR4: 0000000000770eb0
+[   44.546523] PKRU: 55555554
+[   44.546523] Call Trace:
+[   44.546523]  <TASK>
+[   44.546523]  ext4_write_inline_data_end+0x126/0x2d0
+[   44.546523]  generic_perform_write+0x17e/0x270
+[   44.546523]  ext4_buffered_write_iter+0xc8/0x170
+[   44.546523]  vfs_write+0x2be/0x3e0
+[   44.546523]  __x64_sys_pwrite64+0x6d/0xc0
+[   44.546523]  do_syscall_64+0x6a/0xf0
+[   44.546523]  ? __wake_up+0x89/0xb0
+[   44.546523]  ? xas_find+0x72/0x1c0
+[   44.546523]  ? next_uptodate_folio+0x317/0x330
+[   44.546523]  ? set_pte_range+0x1a6/0x270
+[   44.546523]  ? filemap_map_pages+0x6ee/0x840
+[   44.546523]  ? ext4_setattr+0x2fa/0x750
+[   44.546523]  ? do_pte_missing+0x128/0xf70
+[   44.546523]  ? security_inode_post_setattr+0x3e/0xd0
+[   44.546523]  ? ___pte_offset_map+0x19/0x100
+[   44.546523]  ? handle_mm_fault+0x721/0xa10
+[   44.546523]  ? do_user_addr_fault+0x197/0x730
+[   44.546523]  ? do_syscall_64+0x76/0xf0
+[   44.546523]  ? arch_exit_to_user_mode_prepare+0x1e/0x60
+[   44.546523]  ? irqentry_exit_to_user_mode+0x79/0x90
+[   44.546523]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
+[   44.546523] RIP: 0033:0x7f42999c6687
+[   44.546523] Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
+[   44.546523] RSP: 002b:00007ffeae4a7930 EFLAGS: 00000202 ORIG_RAX: 0000000000000012
+[   44.546523] RAX: ffffffffffffffda RBX: 00007f4299934740 RCX: 00007f42999c6687
+[   44.546523] RDX: 0000000000000001 RSI: 000055ea6149200f RDI: 0000000000000003
+[   44.546523] RBP: 00007ffeae4a79a0 R08: 0000000000000000 R09: 0000000000000000
+[   44.546523] R10: 0000010000000005 R11: 0000000000000202 R12: 0000000000000000
+[   44.546523] R13: 00007ffeae4a7ac8 R14: 00007f4299b86000 R15: 000055ea61493dd8
+[   44.546523]  </TASK>
+[   44.546523] Modules linked in:
+[   44.568501] ---[ end trace 0000000000000000 ]---
+[   44.568889] RIP: 0010:ext4_write_inline_data+0xfe/0x100
+[   44.569328] Code: 3c 0e 48 83 c7 48 48 89 de 5b 41 5c 41 5d 41 5e 41 5f 5d e9 e4 fa 43 01 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc 0f 0b <0f> 0b 0f 1f 44 00 00 55 41 57 41 56 41 55 41 54 53 48 83 ec 20 49
+[   44.570931] RSP: 0018:ffffb342008b79a8 EFLAGS: 00010216
+[   44.571356] RAX: 0000000000000001 RBX: ffff9329c579c000 RCX: 0000010000000006
+[   44.571959] RDX: 000000000000003c RSI: ffffb342008b79f0 RDI: ffff9329c158e738
+[   44.572571] RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000000
+[   44.573148] R10: 00007ffffffff000 R11: ffffffff9bd0d910 R12: 0000006210000000
+[   44.573748] R13: fffffc7e4015e700 R14: 0000010000000005 R15: ffff9329c158e738
+[   44.574335] FS:  00007f4299934740(0000) GS:ffff932a60179000(0000) knlGS:0000000000000000
+[   44.575027] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   44.575520] CR2: 00007f4299a1ec90 CR3: 0000000002886002 CR4: 0000000000770eb0
+[   44.576112] PKRU: 55555554
+[   44.576338] Kernel panic - not syncing: Fatal exception
+[   44.576517] Kernel Offset: 0x1a600000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+
+Reported-by: syzbot+fe2a25dae02a207717a0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fe2a25dae02a207717a0
+Fixes: f19d5870cbf7 ("ext4: add normal write support for inline data")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Link: https://patch.msgid.link/20250415-ext4-prepare-inline-overflow-v1-1-f4c13d900967@igalia.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |  8 +++++++-
- drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c      | 14 ++------------
- drivers/gpu/drm/amd/amdkfd/kfd_device.c    |  5 -----
- drivers/gpu/drm/amd/amdkfd/kfd_queue.c     |  4 ++--
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c       |  3 +--
- 5 files changed, 12 insertions(+), 22 deletions(-)
+ fs/ext4/inline.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index f8b3e04d71eda..95124a4a0a67c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -2689,6 +2689,13 @@ static int amdgpu_device_ip_early_init(struct amdgpu_device *adev)
- 		break;
- 	}
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -389,7 +389,7 @@ out:
+ }
  
-+	/* Check for IP version 9.4.3 with A0 hardware */
-+	if (amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 3) &&
-+	    !amdgpu_device_get_rev_id(adev)) {
-+		dev_err(adev->dev, "Unsupported A0 hardware\n");
-+		return -ENODEV;	/* device unsupported - no device error */
-+	}
-+
- 	if (amdgpu_has_atpx() &&
- 	    (amdgpu_is_atpx_hybrid() ||
- 	     amdgpu_has_atpx_dgpu_power_cntl()) &&
-@@ -2701,7 +2708,6 @@ static int amdgpu_device_ip_early_init(struct amdgpu_device *adev)
- 		adev->has_pr3 = parent ? pci_pr3_present(parent) : false;
- 	}
- 
--
- 	adev->pm.pp_feature = amdgpu_pp_feature_mask;
- 	if (amdgpu_sriov_vf(adev) || sched_policy == KFD_SCHED_POLICY_NO_HWS)
- 		adev->pm.pp_feature &= ~PP_GFXOFF_MASK;
-diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-index 5effe8327d29f..53050176c244d 100644
---- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-@@ -1213,10 +1213,7 @@ static void gmc_v9_0_get_coherence_flags(struct amdgpu_device *adev,
- 		if (uncached) {
- 			mtype = MTYPE_UC;
- 		} else if (ext_coherent) {
--			if (gc_ip_version == IP_VERSION(9, 5, 0) || adev->rev_id)
--				mtype = is_local ? MTYPE_CC : MTYPE_UC;
--			else
--				mtype = MTYPE_UC;
-+			mtype = is_local ? MTYPE_CC : MTYPE_UC;
- 		} else if (adev->flags & AMD_IS_APU) {
- 			mtype = is_local ? mtype_local : MTYPE_NC;
- 		} else {
-@@ -1336,7 +1333,7 @@ static void gmc_v9_0_override_vm_pte_flags(struct amdgpu_device *adev,
- 				mtype_local = MTYPE_CC;
- 
- 			*flags = AMDGPU_PTE_MTYPE_VG10(*flags, mtype_local);
--		} else if (adev->rev_id) {
-+		} else {
- 			/* MTYPE_UC case */
- 			*flags = AMDGPU_PTE_MTYPE_VG10(*flags, MTYPE_CC);
- 		}
-@@ -2411,13 +2408,6 @@ static int gmc_v9_0_hw_init(struct amdgpu_ip_block *ip_block)
- 	adev->gmc.flush_tlb_needs_extra_type_2 =
- 		amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 0) &&
- 		adev->gmc.xgmi.num_physical_nodes;
--	/*
--	 * TODO: This workaround is badly documented and had a buggy
--	 * implementation. We should probably verify what we do here.
--	 */
--	adev->gmc.flush_tlb_needs_extra_type_0 =
--		amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 3) &&
--		adev->rev_id == 0;
- 
- 	/* The sequence of these two function calls matters.*/
- 	gmc_v9_0_init_golden_registers(adev);
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-index b9c82be6ce134..bf0854bd55551 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-@@ -352,11 +352,6 @@ struct kfd_dev *kgd2kfd_probe(struct amdgpu_device *adev, bool vf)
- 			f2g = &aldebaran_kfd2kgd;
- 			break;
- 		case IP_VERSION(9, 4, 3):
--			gfx_target_version = adev->rev_id >= 1 ? 90402
--					   : adev->flags & AMD_IS_APU ? 90400
--					   : 90401;
--			f2g = &gc_9_4_3_kfd2kgd;
--			break;
- 		case IP_VERSION(9, 4, 4):
- 			gfx_target_version = 90402;
- 			f2g = &gc_9_4_3_kfd2kgd;
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-index 4afff7094cafc..a65c67cf56ff3 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-@@ -402,7 +402,7 @@ static u32 kfd_get_vgpr_size_per_cu(u32 gfxv)
+ static int ext4_prepare_inline_data(handle_t *handle, struct inode *inode,
+-				    unsigned int len)
++				    loff_t len)
  {
- 	u32 vgpr_size = 0x40000;
- 
--	if ((gfxv / 100 * 100) == 90400 ||	/* GFX_VERSION_AQUA_VANJARAM */
-+	if (gfxv == 90402 ||			/* GFX_VERSION_AQUA_VANJARAM */
- 	    gfxv == 90010 ||			/* GFX_VERSION_ALDEBARAN */
- 	    gfxv == 90008 ||			/* GFX_VERSION_ARCTURUS */
- 	    gfxv == 90500)
-@@ -462,7 +462,7 @@ void kfd_queue_ctx_save_restore_size(struct kfd_topology_device *dev)
- 
- 	if (gfxv == 80002)	/* GFX_VERSION_TONGA */
- 		props->eop_buffer_size = 0x8000;
--	else if ((gfxv / 100 * 100) == 90400)	/* GFX_VERSION_AQUA_VANJARAM */
-+	else if (gfxv == 90402)	/* GFX_VERSION_AQUA_VANJARAM */
- 		props->eop_buffer_size = 4096;
- 	else if (gfxv >= 80000)
- 		props->eop_buffer_size = 4096;
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index 100717a98ec11..72be6e152e881 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -1245,8 +1245,7 @@ svm_range_get_pte_flags(struct kfd_node *node,
- 	case IP_VERSION(9, 4, 4):
- 	case IP_VERSION(9, 5, 0):
- 		if (ext_coherent)
--			mtype_local = (gc_ip_version < IP_VERSION(9, 5, 0) && !node->adev->rev_id) ?
--					AMDGPU_VM_MTYPE_UC : AMDGPU_VM_MTYPE_CC;
-+			mtype_local = AMDGPU_VM_MTYPE_CC;
- 		else
- 			mtype_local = amdgpu_mtype_local == 1 ? AMDGPU_VM_MTYPE_NC :
- 				amdgpu_mtype_local == 2 ? AMDGPU_VM_MTYPE_CC : AMDGPU_VM_MTYPE_RW;
--- 
-2.39.5
-
+ 	int ret, size, no_expand;
+ 	struct ext4_inode_info *ei = EXT4_I(inode);
 
 
