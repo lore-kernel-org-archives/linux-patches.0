@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5131E1DF98B;
-	Mon, 23 Jun 2025 21:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE981DF98B;
+	Mon, 23 Jun 2025 21:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713270; cv=none; b=BJuwyqCn8GPLJH6J8SS2SsfTiBhgWJUNtGj0CoDWGigpsOmZ4mTELZtGucyLe4mVk3AVu6Z40Vbk+8tIr/Yt4Y3cbT3moYKRjr+iXAMGpnUAqIsj9gsL/qO9ApSYRdPiyzxz6tvet4gay0UMD6ptlhh+/u46XXf3nSCaMyULppY=
+	t=1750713272; cv=none; b=PV5Fwg7Of5fYq6IHsv1ooc7Wuv/uM7JfDw87Q5AQWvkhDxFBpTsu2b14YRNUoQ9itZQHoY39ON4HgyZi+xnH2ew9m2OTVSnQdMwXwoi/f86e1cuoNltk3QCEBmQWsZxet7gYDxpdwOfcwD6Aox0Bq7upVjZ/HncI1BTg62Zr8h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713270; c=relaxed/simple;
-	bh=6CiU48ADmwyxK4eg55PH+lTzHzUdSPSc/4H00gDeKWU=;
+	s=arc-20240116; t=1750713272; c=relaxed/simple;
+	bh=vgsja0pqPyTp0x0s0/cSlezVo6Nbd23SNWs3O1hAzPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nx7dHPjtacILUXeD+t0GaoTfwAgxHrUOS1YZXMcNicTIuQi6LTwenmXUEL8OXN6z/tzkNx3LRhZpgo1V+cGVJQH1ZQQtV0THs7Bbwx9wFX4S+BMI2/IrkVIsRU8pEwJ6w7Ifl/4JDvb+K7+dbHM3j8X8uhHeANsO/Oo9FAyyqKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXBmIzcI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d7cXXhyghx+FsD6EF/1aKb4xq1hg/bL6/KGX//5MTiLiI5p/NpaPz9Yx1YHsFPrqx0ZkDOohlRDMUdxts9MNaE3bqIW2v/ZzWSd/9+u4lHPVThcY0/+cokQ4n8dKZDC0BYvYKMcND9V4LNw9n2GDqtmOVwtOp9MNJf9iWOCT+p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wlz53oHJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXBmIzcI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF97CC4CEEA;
-	Mon, 23 Jun 2025 21:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wlz53oHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5535FC4CEEA;
+	Mon, 23 Jun 2025 21:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713270;
-	bh=6CiU48ADmwyxK4eg55PH+lTzHzUdSPSc/4H00gDeKWU=;
+	s=korg; t=1750713272;
+	bh=vgsja0pqPyTp0x0s0/cSlezVo6Nbd23SNWs3O1hAzPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXBmIzcI2vzL7ZufG0Sck7K7dvTYwwX4uuuWBNCCAcbo3RfQNx0z3DtzLuIiqslx0
-	 zSwaJKTFFRRh+NQxqxmX+yteDvVOKldP3jZyp8YDPclcuY+oNEgiJTeOHXK8sxfeBU
-	 XsleVralV6lZWNQym7Za3KFHa55ew2W5TQtI4bRg=
+	b=Wlz53oHJyZtK5PF14zRfyci7lrlQ+/TodXyQnsh2fQ6QCubWMyO7jIPMS7Tl8GrU8
+	 pVkUJ7oa8rSjyntScalmHXX3PtKp3Y6zNCOF9OnLF0xDHYahU9nA48q21HiutteKmn
+	 vRTAMz7C4h50rr6x+Whsyry9jPnsiw6aR0RrxcP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tasos Sahanidis <tasos@tasossah.com>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.6 057/290] ata: pata_via: Force PIO for ATAPI devices on VT6415/VT6330
-Date: Mon, 23 Jun 2025 15:05:18 +0200
-Message-ID: <20250623130628.724742744@linuxfoundation.org>
+	syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com,
+	Charalampos Mitrodimas <charmitro@posteo.net>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 114/411] net: tipc: fix refcount warning in tipc_aead_encrypt
+Date: Mon, 23 Jun 2025 15:04:18 +0200
+Message-ID: <20250623130636.402005532@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tasos Sahanidis <tasos@tasossah.com>
+From: Charalampos Mitrodimas <charmitro@posteo.net>
 
-commit d29fc02caad7f94b62d56ee1b01c954f9c961ba7 upstream.
+[ Upstream commit f29ccaa07cf3d35990f4d25028cc55470d29372b ]
 
-The controller has a hardware bug that can hard hang the system when
-doing ATAPI DMAs without any trace of what happened. Depending on the
-device attached, it can also prevent the system from booting.
+syzbot reported a refcount warning [1] caused by calling get_net() on
+a network namespace that is being destroyed (refcount=0). This happens
+when a TIPC discovery timer fires during network namespace cleanup.
 
-In this case, the system hangs when reading the ATIP from optical media
-with cdrecord -vvv -atip on an _NEC DVD_RW ND-4571A 1-01 and an
-Optiarc DVD RW AD-7200A 1.06 attached to an ASRock 990FX Extreme 4,
-running at UDMA/33.
+The recently added get_net() call in commit e279024617134 ("net/tipc:
+fix slab-use-after-free Read in tipc_aead_encrypt_done") attempts to
+hold a reference to the network namespace. However, if the namespace
+is already being destroyed, its refcount might be zero, leading to the
+use-after-free warning.
 
-The issue can be reproduced by running the same command with a cygwin
-build of cdrecord on WinXP, although it requires more attempts to cause
-it. The hang in that case is also resolved by forcing PIO. It doesn't
-appear that VIA has produced any drivers for that OS, thus no known
-workaround exists.
+Replace get_net() with maybe_get_net(), which safely checks if the
+refcount is non-zero before incrementing it. If the namespace is being
+destroyed, return -ENODEV early, after releasing the bearer reference.
 
-HDDs attached to the controller do not suffer from any DMA issues.
+[1]: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
 
-Cc: stable@vger.kernel.org
-Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/916677
-Signed-off-by: Tasos Sahanidis <tasos@tasossah.com>
-Link: https://lore.kernel.org/r/20250519085508.1398701-1-tasos@tasossah.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
+Fixes: e27902461713 ("net/tipc: fix slab-use-after-free Read in tipc_aead_encrypt_done")
+Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250527-net-tipc-warning-v2-1-df3dc398a047@posteo.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_via.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/tipc/crypto.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/ata/pata_via.c
-+++ b/drivers/ata/pata_via.c
-@@ -368,7 +368,8 @@ static unsigned int via_mode_filter(stru
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index 35e0ffa1bd84b..07f35c48bd3a2 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -829,7 +829,11 @@ static int tipc_aead_encrypt(struct tipc_aead *aead, struct sk_buff *skb,
  	}
  
- 	if (dev->class == ATA_DEV_ATAPI &&
--	    dmi_check_system(no_atapi_dma_dmi_table)) {
-+	    (dmi_check_system(no_atapi_dma_dmi_table) ||
-+	     config->id == PCI_DEVICE_ID_VIA_6415)) {
- 		ata_dev_warn(dev, "controller locks up on ATAPI DMA, forcing PIO\n");
- 		mask &= ATA_MASK_PIO;
- 	}
+ 	/* Get net to avoid freed tipc_crypto when delete namespace */
+-	get_net(aead->crypto->net);
++	if (!maybe_get_net(aead->crypto->net)) {
++		tipc_bearer_put(b);
++		rc = -ENODEV;
++		goto exit;
++	}
+ 
+ 	/* Now, do encrypt */
+ 	rc = crypto_aead_encrypt(req);
+-- 
+2.39.5
+
 
 
