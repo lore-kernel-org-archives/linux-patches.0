@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80929223DD0;
-	Mon, 23 Jun 2025 22:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37A7223316;
+	Mon, 23 Jun 2025 22:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716764; cv=none; b=SpMkzjnDQ9cF/bFZdMbdLzDhnBwvzSwPbv4/bhK8Vho0Ae+/+dsdHfCv3zrsOO5n4LJ+3ZqjJwiLuOYWXK5oeoBYLalzhZypmD4diW0K21HVpwDciFUA7gcMxu32tbAJkneY95O1qRd0lgfblGmLFrgF3Z/eFaI2m+PlEWHxiV8=
+	t=1750716767; cv=none; b=GKyVPuVN72Bl5gkGjd7gBoOj4NVfjvSYNrm5K/UgIS3VsQHq4sbnfCzwI+X2vYr7Qo8aoQkSJ/61LmsC27W7s7fW9BzHpUAkNj7SrKnHMYyaxE96ZAmsd/Gk2wbNdJ7tVYtEoscpsKBH6f6rwE+dEZ+1TOjar2RRODlf5n0FZtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716764; c=relaxed/simple;
-	bh=6ug1tmGr+f4vqAO4eZNzLAT1GastJzZTaU+gL6YCD2g=;
+	s=arc-20240116; t=1750716767; c=relaxed/simple;
+	bh=rGWfF1O+Nz1PoiNKW803GmMJ4NTMWIRAkoeh3ssmYxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+mrWWE7OiXG7irLuU/YWGY+fBjJ6Y2tJBE6VgI5EHGBdcitATHhmSk2ZhgbPhj568uJl7NGPIg4f3Z2L9lb2oLlq3JAv9/C3jNzS98dD4qWZMGLtC5C7VBR+fB4s1hxQBSHiU+DhiQjERS8j3wHdG1l+L61SQN071neiQD9KKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kKTIL6PI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nq9D8+XtJYMIuZ3J0siI5AdTgr1kX5jlpY1BQJjbP44evthOXcZuqRx7w/7GL8tSSLdTICOeuWYkDpkdCjgSNxkt2p1L2F6kL2jK3wCOIru0eVyQ+Mjf8NDXLLcBB24bbUTRd7IJCjcg0q53rXvjZje+Va+y+wUDqcEi4/Y73NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4tbWMgi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kKTIL6PI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F975C4CEED;
-	Mon, 23 Jun 2025 22:12:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4tbWMgi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894E0C4CEED;
+	Mon, 23 Jun 2025 22:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716764;
-	bh=6ug1tmGr+f4vqAO4eZNzLAT1GastJzZTaU+gL6YCD2g=;
+	s=korg; t=1750716766;
+	bh=rGWfF1O+Nz1PoiNKW803GmMJ4NTMWIRAkoeh3ssmYxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kKTIL6PI6t2bBY5e3lPEl62nvshRkqHsm4DO/jUeiXJlEJbIis9C7xQ7xN1j/rfcG
-	 Jih4sjyrtI4d0uqWYTdaQjSgA/tsyZva3Q3NEN7aPU6Ljy3Zx9fkfWsIMW8m+2w8Rl
-	 EhmICaFQZcM+F0Abjns5ijfACxaMHxYZnwdN+hQs=
+	b=R4tbWMgi0nyG+IZajK6rZ5i/xu4IrdOCneH0eMF34nur0qdAsr+Xg55c+MCC9GtNC
+	 6B85xEyAA5ut5/jnP1ChuE81ufsBD9v2VbAveLDQHRkuamsO+EOhhu6Ybo7T2B0IZy
+	 cmw3QdY79OkQAGjw4HMGgByUKOd6JqSiBQKTx1Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Francois Romieu <romieu@fr.zoreil.com>
-Subject: [PATCH 6.15 553/592] net: atm: fix /proc/net/atm/lec handling
-Date: Mon, 23 Jun 2025 15:08:31 +0200
-Message-ID: <20250623130713.598818678@linuxfoundation.org>
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sebastian Priebe <sebastian.priebe@konplan.com>
+Subject: [PATCH 5.15 356/411] block: default BLOCK_LEGACY_AUTOLOAD to y
+Date: Mon, 23 Jun 2025 15:08:20 +0200
+Message-ID: <20250623130642.606622106@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit d03b79f459c7935cff830d98373474f440bd03ae ]
+commit 451f0b6f4c44d7b649ae609157b114b71f6d7875 upstream.
 
-/proc/net/atm/lec must ensure safety against dev_lec[] changes.
+As Luis reported, losetup currently doesn't properly create the loop
+device without this if the device node already exists because old
+scripts created it manually.  So default to y for now and remove the
+aggressive removal schedule.
 
-It appears it had dev_put() calls without prior dev_hold(),
-leading to imbalance and UAF.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Francois Romieu <romieu@fr.zoreil.com> # Minor atm contributor
-Link: https://patch.msgid.link/20250618140844.1686882-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://lore.kernel.org/r/20220225181440.1351591-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: Sebastian Priebe <sebastian.priebe@konplan.com>
+Link: https://lore.kernel.org/r/ZR0P278MB097497EF6CFD85E72819447E9F70A@ZR0P278MB0974.CHEP278.PROD.OUTLOOK.COM
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/atm/lec.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ block/Kconfig |    8 +++-----
+ block/bdev.c  |    2 +-
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/net/atm/lec.c b/net/atm/lec.c
-index 3010a2034d6af..07c01b6f2b2be 100644
---- a/net/atm/lec.c
-+++ b/net/atm/lec.c
-@@ -909,7 +909,6 @@ static void *lec_itf_walk(struct lec_state *state, loff_t *l)
- 	v = (dev && netdev_priv(dev)) ?
- 		lec_priv_walk(state, l, netdev_priv(dev)) : NULL;
- 	if (!v && dev) {
--		dev_put(dev);
- 		/* Partial state reset for the next time we get called */
- 		dev = NULL;
- 	}
-@@ -933,6 +932,7 @@ static void *lec_seq_start(struct seq_file *seq, loff_t *pos)
- {
- 	struct lec_state *state = seq->private;
+--- a/block/Kconfig
++++ b/block/Kconfig
+@@ -28,15 +28,13 @@ if BLOCK
  
-+	mutex_lock(&lec_mutex);
- 	state->itf = 0;
- 	state->dev = NULL;
- 	state->locked = NULL;
-@@ -950,8 +950,9 @@ static void lec_seq_stop(struct seq_file *seq, void *v)
- 	if (state->dev) {
- 		spin_unlock_irqrestore(&state->locked->lec_arp_lock,
- 				       state->flags);
--		dev_put(state->dev);
-+		state->dev = NULL;
- 	}
-+	mutex_unlock(&lec_mutex);
- }
+ config BLOCK_LEGACY_AUTOLOAD
+ 	bool "Legacy autoloading support"
++	default y
+ 	help
+ 	  Enable loading modules and creating block device instances based on
+ 	  accesses through their device special file.  This is a historic Linux
+ 	  feature and makes no sense in a udev world where device files are
+-	  created on demand.
+-
+-	  Say N here unless booting or other functionality broke without it, in
+-	  which case you should also send a report to your distribution and
+-	  linux-block@vger.kernel.org.
++	  created on demand, but scripts that manually create device nodes and
++	  then call losetup might rely on this behavior.
  
- static void *lec_seq_next(struct seq_file *seq, void *v, loff_t *pos)
--- 
-2.39.5
-
+ config BLK_RQ_ALLOC_TIME
+ 	bool
+--- a/block/bdev.c
++++ b/block/bdev.c
+@@ -741,7 +741,7 @@ struct block_device *blkdev_get_no_open(
+ 		inode = ilookup(blockdev_superblock, dev);
+ 		if (inode)
+ 			pr_warn_ratelimited(
+-"block device autoloading is deprecated. It will be removed in Linux 5.19\n");
++"block device autoloading is deprecated and will be removed.\n");
+ 	}
+ 	if (!inode)
+ 		return NULL;
 
 
