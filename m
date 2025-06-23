@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F234C2F24;
-	Mon, 23 Jun 2025 13:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C012F24;
+	Mon, 23 Jun 2025 13:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684828; cv=none; b=iLP6Zoo6qg4GCzi/b8z9B5+CZTJucw6JLzLylZ+E3fr5QU2nKpkP9boUvb+tvFw7pGvI8p/6P77HLuGzEXHjy2saIPakrKUD45UarWl9ZOJ+2ljixN27+Ra+1aLLEQd9FKTwJN8PXLfB+wSlajMAl3HQLZVStcGb3aQxZ23r2F8=
+	t=1750684830; cv=none; b=AeLjRKZ0yHE1BFi8aNcXJS0jtdWhmbx8zyHT5fs8yqEJhY3JK+Ju0P94Zjbjf1CsP4dCz1W4VEiyXY9OsAxWpVuCQTpeXy07hpiUcbPptpWj6TuZeGVbi0P2xwhXKQnxddf/CzXdOt6UyYiH2hZHd65EH/J1hxK3vUHtNd4ydKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684828; c=relaxed/simple;
-	bh=KE17pWozH5UtL2SAPuJz7E6I2h+H1O1E59GVBPgIaQI=;
+	s=arc-20240116; t=1750684830; c=relaxed/simple;
+	bh=Of1vnj2kfxPCYMYhHbAzVLPqglF4jhCQoBXzdGcopDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lkDIrM8NJcTeO0DJY7IFTaqw3Cm8mArZ0x8QXOhBdPqsKazRNliW305KqB+MuEiy3s+A5pAUchS+IYMAKPJ363huZXz/y/uTVNf4KTN/Y49+TyO0rZURurDnGbR5CFIkJMyKyxl+ZhaeaKgS89D4daur1y0ar76jxOU0OGmaTiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t36A8vAX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TUnQCL9D37XdN50wT5xEP7DXs22EQe58JDrSPNPfTku0PFPqd21aoVj7ivlRFjBl2/AtXOKW9JUBudq7UANLza/rJ3fKx8+MpPE3a78smEFZJkiS0rgoZtf/nftrH2NirjN1X4wNmFnck/nkI6BgPWQPziDR9x1FNQgc9fgmqUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bz8IIP3r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t36A8vAX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E5DC4CEEA;
-	Mon, 23 Jun 2025 13:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bz8IIP3r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AAC7C4CEEA;
+	Mon, 23 Jun 2025 13:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684827;
-	bh=KE17pWozH5UtL2SAPuJz7E6I2h+H1O1E59GVBPgIaQI=;
+	s=korg; t=1750684830;
+	bh=Of1vnj2kfxPCYMYhHbAzVLPqglF4jhCQoBXzdGcopDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t36A8vAXuTlLgMpkZhBp4VkjhmTjl9NCSmDkjjLLna6UJyoGqtU+2K8XSQwk5kZvQ
-	 RUN1NYJ/qQjHKPQdejm7BHFvOqvS54z5gU86U6SXLGzFg2VkaoTSvJpyrVrkLS8mwD
-	 A1S8+eYMYZaP9bHntUyEFtog7WjPcs4Gf9xlaw/E=
+	b=bz8IIP3rLNKFryynKrJoTxlulAZ5QgQJQJdAbS0Uf4Kd9c9oWEIXfRn4p9XlP25+X
+	 iTpsPjpdfgIiXk70ImEBE+58EaskzApZmxLDBK13bofzw/UOPtaYLfkVKkH3DCkST7
+	 0G7UrZ55RMpccD5Gy+trmXGUl0KecubQ8T3LDueQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 036/222] netfilter: nf_tables: nft_fib_ipv6: fix VRF ipv4/ipv6 result discrepancy
-Date: Mon, 23 Jun 2025 15:06:11 +0200
-Message-ID: <20250623130612.984583073@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.15 180/592] PCI: cadence-ep: Correct PBA offset in .set_msix() callback
+Date: Mon, 23 Jun 2025 15:02:18 +0200
+Message-ID: <20250623130704.561758169@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,83 +49,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 8b53f46eb430fe5b42d485873b85331d2de2c469 ]
+commit c8bcb01352a86bc5592403904109c22b66bd916e upstream.
 
-With a VRF, ipv4 and ipv6 FIB expression behave differently.
+While cdns_pcie_ep_set_msix() writes the Table Size field correctly (N-1),
+the calculation of the PBA offset is wrong because it calculates space for
+(N-1) entries instead of N.
 
-   fib daddr . iif oif
+This results in the following QEMU error when using PCI passthrough on a
+device which relies on the PCI endpoint subsystem:
 
-Will return the input interface name for ipv4, but the real device
-for ipv6.  Example:
+  failed to add PCI capability 0x11[0x50]@0xb0: table & pba overlap, or they don't fit in BARs, or don't align
 
-If VRF device name is tvrf and real (incoming) device is veth0.
-First round is ok, both ipv4 and ipv6 will yield 'veth0'.
+Fix the calculation of PBA offset in the MSI-X capability.
 
-But in the second round (incoming device will be set to "tvrf"), ipv4
-will yield "tvrf" whereas ipv6 returns "veth0" for the second round too.
+[bhelgaas: more specific subject and commit log]
 
-This makes ipv6 behave like ipv4.
-
-A followup patch will add a test case for this, without this change
-it will fail with:
-  get element inet t fibif6iif { tvrf . dead:1::99 . tvrf }
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  FAIL: did not find tvrf . dead:1::99 . tvrf in fibif6iif
-
-Alternatively we could either not do anything at all or change
-ipv4 to also return the lower/real device, however, nft (userspace)
-doc says "iif: if fib lookup provides a route then check its output
-interface is identical to the packets input interface." which is what
-the nft fib ipv4 behaviour is.
-
-Fixes: f6d0cbcf09c5 ("netfilter: nf_tables: add fib expression")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3ef5d16f50f8 ("PCI: cadence: Add MSI-X support to Endpoint driver")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250514074313.283156-10-cassel@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/netfilter/nft_fib_ipv6.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/pci/controller/cadence/pcie-cadence-ep.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/netfilter/nft_fib_ipv6.c b/net/ipv6/netfilter/nft_fib_ipv6.c
-index 03dbd16f9ad53..018f01efeca5a 100644
---- a/net/ipv6/netfilter/nft_fib_ipv6.c
-+++ b/net/ipv6/netfilter/nft_fib_ipv6.c
-@@ -143,6 +143,7 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
- {
- 	const struct nft_fib *priv = nft_expr_priv(expr);
- 	int noff = skb_network_offset(pkt->skb);
-+	const struct net_device *found = NULL;
- 	const struct net_device *oif = NULL;
- 	u32 *dest = &regs->data[priv->dreg];
- 	struct ipv6hdr *iph, _iph;
-@@ -182,11 +183,15 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
- 	if (rt->rt6i_flags & (RTF_REJECT | RTF_ANYCAST | RTF_LOCAL))
- 		goto put_rt_err;
+--- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+@@ -292,13 +292,14 @@ static int cdns_pcie_ep_set_msix(struct
+ 	struct cdns_pcie *pcie = &ep->pcie;
+ 	u32 cap = CDNS_PCIE_EP_FUNC_MSIX_CAP_OFFSET;
+ 	u32 val, reg;
++	u16 actual_interrupts = interrupts + 1;
  
--	if (oif && oif != rt->rt6i_idev->dev &&
--	    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) != oif->ifindex)
--		goto put_rt_err;
-+	if (!oif) {
-+		found = rt->rt6i_idev->dev;
-+	} else {
-+		if (oif == rt->rt6i_idev->dev ||
-+		    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) == oif->ifindex)
-+			found = oif;
-+	}
+ 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
  
--	nft_fib_store_result(dest, priv, rt->rt6i_idev->dev);
-+	nft_fib_store_result(dest, priv, found);
-  put_rt_err:
- 	ip6_rt_put(rt);
- }
--- 
-2.39.5
-
+ 	reg = cap + PCI_MSIX_FLAGS;
+ 	val = cdns_pcie_ep_fn_readw(pcie, fn, reg);
+ 	val &= ~PCI_MSIX_FLAGS_QSIZE;
+-	val |= interrupts;
++	val |= interrupts; /* 0's based value */
+ 	cdns_pcie_ep_fn_writew(pcie, fn, reg, val);
+ 
+ 	/* Set MSI-X BAR and offset */
+@@ -308,7 +309,7 @@ static int cdns_pcie_ep_set_msix(struct
+ 
+ 	/* Set PBA BAR and offset.  BAR must match MSI-X BAR */
+ 	reg = cap + PCI_MSIX_PBA;
+-	val = (offset + (interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
++	val = (offset + (actual_interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
+ 	cdns_pcie_ep_fn_writel(pcie, fn, reg, val);
+ 
+ 	return 0;
 
 
