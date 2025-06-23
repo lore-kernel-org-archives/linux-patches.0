@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B188136348;
-	Mon, 23 Jun 2025 21:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0243719049B;
+	Mon, 23 Jun 2025 21:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715462; cv=none; b=u8O4xjaOGOQMD63OOFEa0pAbkLv6gy5GI3SEu7SuWERe7oV/JR4vKH47XEcJvjnOQ1St05ZsarHqMGtQJlNfIjDLN9P1LetWEqDlNzC70NySYBCpBcvDVOxCJsH+utVYJpaogM+vjhkUMxomt2O6c8lLkKIhpiQAEptM2Pk3fZ4=
+	t=1750715465; cv=none; b=N3z+PeAKYsExNQwmEk0z9pBaExelAoRGCgUbTsnExdlkj5IkD6DBrkUasBWRZxLgAEF08yukQ+hHtQ08yoDT2Ib0P6KIFFXiim9hHHHfFE18cOt9kVxgJ014SUU0OQ/hxEw+EgXDc9QpxXoQhCyc4XpkRTOxyIgae+h7ClQEmOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715462; c=relaxed/simple;
-	bh=KikcGz6noxFYh49wNwNxfwSXU3CFHMqxuLdnDoEzk34=;
+	s=arc-20240116; t=1750715465; c=relaxed/simple;
+	bh=n0rv/3GPQlrmTW4QXYlFI+bPrQHiN9SGUTtQEnnen+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kpz8Ev721q5IvXI/JuLUWqJQ8u+i6NFES/Y/d2skHCkBq9dHQInEYB/aWjySdpy4RlacmU5pcWYzePbxb1SI+CG9wJTeXTWZHKkTk7C8Z5h2nw0wn4DBrPGnUziVkmCv8j9GAZ06u4WkIr9hjkDnX62JKN2n/LIYJeZDutieKkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ucFuZkYf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SlqI8ikWm7axuMVGUsNQHlgmmRD5ebYw7J2NfVVeXMiXHuUTpCGiKNVSzMW+sMWxpMPTaIkF7rsyKhEhGSt7mNouG5GA7pgJeixEjS4rRNsEiQYkkcpfZZJW5kJ1TLPk7e7zBe+foSxAE08m24nsU5sI5TU52UmTyyCEDbxwF0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZEHqJyA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ucFuZkYf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E35C4CEEA;
-	Mon, 23 Jun 2025 21:51:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZEHqJyA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3EAC4CEEA;
+	Mon, 23 Jun 2025 21:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715462;
-	bh=KikcGz6noxFYh49wNwNxfwSXU3CFHMqxuLdnDoEzk34=;
+	s=korg; t=1750715464;
+	bh=n0rv/3GPQlrmTW4QXYlFI+bPrQHiN9SGUTtQEnnen+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ucFuZkYfeLvGJRPJPT4MjWkx4X7JJlKulGVNpNZ47BjNDuVMS9u6uccHTRm5Rmnpw
-	 l4MqQZIvEAKIiMbXyuYkLQjor1kqixObWzKsjiSpa+3OGNh7py2tTigKEXhqGvFRb4
-	 9OeqL1bbr99XmMaSHKvCbcKqU+xzNB3KmNbJN4hU=
+	b=SZEHqJyAooYHJ0hWoEjZHHu34BUSJowQaNrL+bGmRPOEE2ALserJD6Srv+4BtxCvC
+	 ihhjEO5ZAgx9kCmHJdP+d68shn8RSYho+cmUc3mtKaGfn8/itu0OgZ97l4p7pPMzrj
+	 taIOq689IYmO+yk6sNHNYc0rR1yOfwV+iZn2FoOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 5.15 254/411] PCI: cadence-ep: Correct PBA offset in .set_msix() callback
-Date: Mon, 23 Jun 2025 15:06:38 +0200
-Message-ID: <20250623130640.039865859@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Marc Zyngier <maz@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 184/414] platform-msi: Add msi_remove_device_irq_domain() in platform_device_msi_free_irqs_all()
+Date: Mon, 23 Jun 2025 15:05:21 +0200
+Message-ID: <20250623130646.622077415@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,66 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit c8bcb01352a86bc5592403904109c22b66bd916e upstream.
+[ Upstream commit 9a958e1fd40d6fae8c66385687a00ebd9575a7d2 ]
 
-While cdns_pcie_ep_set_msix() writes the Table Size field correctly (N-1),
-the calculation of the PBA offset is wrong because it calculates space for
-(N-1) entries instead of N.
+platform_device_msi_init_and_alloc_irqs() performs two tasks: allocating
+the MSI domain for a platform device, and allocate a number of MSIs in that
+domain.
 
-This results in the following QEMU error when using PCI passthrough on a
-device which relies on the PCI endpoint subsystem:
+platform_device_msi_free_irqs_all() only frees the MSIs, and leaves the MSI
+domain alive.
 
-  failed to add PCI capability 0x11[0x50]@0xb0: table & pba overlap, or they don't fit in BARs, or don't align
+Given that platform_device_msi_init_and_alloc_irqs() is the sole tool a
+platform device has to allocate platform MSIs, it makes sense for
+platform_device_msi_free_irqs_all() to teardown the MSI domain at the same
+time as the MSIs.
 
-Fix the calculation of PBA offset in the MSI-X capability.
+This avoids warnings and unexpected behaviours when a driver repeatedly
+allocates and frees MSIs.
 
-[bhelgaas: more specific subject and commit log]
-
-Fixes: 3ef5d16f50f8 ("PCI: cadence: Add MSI-X support to Endpoint driver")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250514074313.283156-10-cassel@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/all/20250414-ep-msi-v18-1-f69b49917464@nxp.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pcie-cadence-ep.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/base/platform-msi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
-@@ -294,13 +294,14 @@ static int cdns_pcie_ep_set_msix(struct
- 	struct cdns_pcie *pcie = &ep->pcie;
- 	u32 cap = CDNS_PCIE_EP_FUNC_MSIX_CAP_OFFSET;
- 	u32 val, reg;
-+	u16 actual_interrupts = interrupts + 1;
- 
- 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
- 
- 	reg = cap + PCI_MSIX_FLAGS;
- 	val = cdns_pcie_ep_fn_readw(pcie, fn, reg);
- 	val &= ~PCI_MSIX_FLAGS_QSIZE;
--	val |= interrupts;
-+	val |= interrupts; /* 0's based value */
- 	cdns_pcie_ep_fn_writew(pcie, fn, reg, val);
- 
- 	/* Set MSIX BAR and offset */
-@@ -310,7 +311,7 @@ static int cdns_pcie_ep_set_msix(struct
- 
- 	/* Set PBA BAR and offset.  BAR must match MSIX BAR */
- 	reg = cap + PCI_MSIX_PBA;
--	val = (offset + (interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
-+	val = (offset + (actual_interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
- 	cdns_pcie_ep_fn_writel(pcie, fn, reg, val);
- 
- 	return 0;
+diff --git a/drivers/base/platform-msi.c b/drivers/base/platform-msi.c
+index 0e60dd650b5e0..70db08f3ac6fa 100644
+--- a/drivers/base/platform-msi.c
++++ b/drivers/base/platform-msi.c
+@@ -95,5 +95,6 @@ EXPORT_SYMBOL_GPL(platform_device_msi_init_and_alloc_irqs);
+ void platform_device_msi_free_irqs_all(struct device *dev)
+ {
+ 	msi_domain_free_irqs_all(dev, MSI_DEFAULT_DOMAIN);
++	msi_remove_device_irq_domain(dev, MSI_DEFAULT_DOMAIN);
+ }
+ EXPORT_SYMBOL_GPL(platform_device_msi_free_irqs_all);
+-- 
+2.39.5
+
 
 
