@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F1E4C7F;
-	Mon, 23 Jun 2025 13:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D754C7F;
+	Mon, 23 Jun 2025 13:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685612; cv=none; b=Jpez6runNrNkKKQkJ/PdjOmHqM0LuAND3FAFuUecP/EEgSBFC7UOaas7CXKtR3OG/XCNoV/gmeISiReQYU1fj9DIEsrXNGyYRXAVkKbS4qPlGRk74sJ2HHWf299yeuFg18mJl8B8qqP+eF3ULnBlIjUYbtWn3wsRHpn38JbySPc=
+	t=1750685613; cv=none; b=L438106CnVJOaPnaNx8O9LNofa2YDlnyxhitwJcBbbiOwwOPA9GD30d7AV8Wy+IBOmieQdLenBwgDFuUq1S5gy/soE8Op6cErYEty98wEg9haJSK5Oig5soLxzHAnQVsrgm6VHZhBpBlPOijfSsRo17t8PHHWtfn/1fmCxjTWGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685612; c=relaxed/simple;
-	bh=s+1Adq8DJmoG78cDwj9aPBfaoqP0OkUBvCPHPdh2XmM=;
+	s=arc-20240116; t=1750685613; c=relaxed/simple;
+	bh=cqAeRf8G0w1af8bQzWfUpBp3t4oVe2lprdCBES74xy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ojtrRPcTapgLXszi2SmPDkXwTEdTxXj/rZYGytPxAsNk6vRuqgb3rgSe+xlnwp6gRtJc+ELteZ2SJ611nl2JkOwXg1VlKh8Jyv3A/PgRFo76v8y6Coepr5SU51cSvJID6gCi1C7mmSkwlMgtG45NQosT0B/PAYFp/5TV5InB5Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rAnjoXiC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fOslzVCeIoIfSWi3oKR+ttDFKq043oWRaJ3Pz2YjvFCcm7/9MhfqPfDJSA7mb2mekIkoo9zyOmGHtuFshYo2OLabBqzExnPn3Wtw1nTsCh8bPFFaXccFHFCIOnD+4LIhz+f4c0Naw/DdKBQQkzq6+l/8M5SemHUmJvvrJR8VVHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ccu4SdDR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rAnjoXiC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C02C4CEEA;
-	Mon, 23 Jun 2025 13:33:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ccu4SdDR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4966AC4CEEA;
+	Mon, 23 Jun 2025 13:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685611;
-	bh=s+1Adq8DJmoG78cDwj9aPBfaoqP0OkUBvCPHPdh2XmM=;
+	s=korg; t=1750685613;
+	bh=cqAeRf8G0w1af8bQzWfUpBp3t4oVe2lprdCBES74xy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rAnjoXiCj3GWqb9is8siCswD0ow0V1SIqJESQSTZ6MtzVbI+9JcUY+oflRGn5JeeI
-	 3gUhROhDmkVVUvXHtDyDSL0VoSEos3X4Xgb7Vi/J8NfsvL8vRHeDzIyW3Z1lex/3Ti
-	 wIe5Lo13FZN5QceXiFv/4fKKv6FtcHeiW4PGNhzw=
+	b=Ccu4SdDRBmwFDdXWTAYsNQbG7/DuS+C+GgGHpatJ9Ok2HumLYRmL8aEVraXNF7OKC
+	 ftVcm7pn9Il6uFvmkKKv1yR/PEXU/s7E2plwrWz9LqypIoN+8uZ8zBH0Kip9HYzpK5
+	 z54VeZO5ERJH9gfe4CJb8vdVwehg6Q5yvQ35ZjNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.4 107/222] media: gspca: Add error handling for stv06xx_read_sensor()
-Date: Mon, 23 Jun 2025 15:07:22 +0200
-Message-ID: <20250623130615.328478728@linuxfoundation.org>
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	x86-cpuid@lists.linux.dev,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 019/508] x86/cpu: Sanitize CPUID(0x80000000) output
+Date: Mon, 23 Jun 2025 15:01:04 +0200
+Message-ID: <20250623130645.726495588@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,45 +51,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-commit 398a1b33f1479af35ca915c5efc9b00d6204f8fa upstream.
+[ Upstream commit cc663ba3fe383a628a812f893cc98aafff39ab04 ]
 
-In hdcs_init(), the return value of stv06xx_read_sensor() needs to be
-checked. A proper implementation can be found in vv6410_dump(). Add a
-check in loop condition and propergate error code to fix this issue.
+CPUID(0x80000000).EAX returns the max extended CPUID leaf available.  On
+x86-32 machines without an extended CPUID range, a CPUID(0x80000000)
+query will just repeat the output of the last valid standard CPUID leaf
+on the CPU; i.e., a garbage values.  Current tip:x86/cpu code protects against
+this by doing:
 
-Fixes: 4c98834addfe ("V4L/DVB (10048): gspca - stv06xx: New subdriver.")
-Cc: stable@vger.kernel.org # v2.6+
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	eax = cpuid_eax(0x80000000);
+	c->extended_cpuid_level = eax;
+
+	if ((eax & 0xffff0000) == 0x80000000) {
+		// CPU has an extended CPUID range. Check for 0x80000001
+		if (eax >= 0x80000001) {
+			cpuid(0x80000001, ...);
+		}
+	}
+
+This is correct so far.  Afterwards though, the same possibly broken EAX
+value is used to check the availability of other extended CPUID leaves:
+
+	if (c->extended_cpuid_level >= 0x80000007)
+		...
+	if (c->extended_cpuid_level >= 0x80000008)
+		...
+	if (c->extended_cpuid_level >= 0x8000000a)
+		...
+	if (c->extended_cpuid_level >= 0x8000001f)
+		...
+
+which is invalid.  Fix this by immediately setting the CPU's max extended
+CPUID leaf to zero if CPUID(0x80000000).EAX doesn't indicate a valid
+CPUID extended range.
+
+While at it, add a comment, similar to kernel/head_32.S, clarifying the
+CPUID(0x80000000) sanity check.
+
+References: 8a50e5135af0 ("x86-32: Use symbolic constants, safer CPUID when enabling EFER.NX")
+Fixes: 3da99c977637 ("x86: make (early)_identify_cpu more the same between 32bit and 64 bit")
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: x86-cpuid@lists.linux.dev
+Link: https://lore.kernel.org/r/20250506050437.10264-3-darwi@linutronix.de
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/x86/kernel/cpu/common.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
-+++ b/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
-@@ -520,12 +520,13 @@ static int hdcs_init(struct sd *sd)
- static int hdcs_dump(struct sd *sd)
- {
- 	u16 reg, val;
-+	int err = 0;
- 
- 	pr_info("Dumping sensor registers:\n");
- 
--	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH; reg++) {
--		stv06xx_read_sensor(sd, reg, &val);
-+	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH && !err; reg++) {
-+		err = stv06xx_read_sensor(sd, reg, &val);
- 		pr_info("reg 0x%02x = 0x%02x\n", reg, val);
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index 48cc1612df49f..722eac51beae6 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1045,17 +1045,18 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
+ 		c->x86_capability[CPUID_D_1_EAX] = eax;
  	}
--	return 0;
-+	return (err < 0) ? err : 0;
- }
+ 
+-	/* AMD-defined flags: level 0x80000001 */
++	/*
++	 * Check if extended CPUID leaves are implemented: Max extended
++	 * CPUID leaf must be in the 0x80000001-0x8000ffff range.
++	 */
+ 	eax = cpuid_eax(0x80000000);
+-	c->extended_cpuid_level = eax;
++	c->extended_cpuid_level = ((eax & 0xffff0000) == 0x80000000) ? eax : 0;
+ 
+-	if ((eax & 0xffff0000) == 0x80000000) {
+-		if (eax >= 0x80000001) {
+-			cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
++	if (c->extended_cpuid_level >= 0x80000001) {
++		cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
+ 
+-			c->x86_capability[CPUID_8000_0001_ECX] = ecx;
+-			c->x86_capability[CPUID_8000_0001_EDX] = edx;
+-		}
++		c->x86_capability[CPUID_8000_0001_ECX] = ecx;
++		c->x86_capability[CPUID_8000_0001_EDX] = edx;
+ 	}
+ 
+ 	if (c->extended_cpuid_level >= 0x80000007) {
+-- 
+2.39.5
+
 
 
