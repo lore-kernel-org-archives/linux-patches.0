@@ -1,99 +1,74 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail11.truemail.it (mail11.truemail.it [217.194.8.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C997610C;
-	Sun, 22 Jun 2025 07:26:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB81C1E7C11
+	for <patches@lists.linux.dev>; Mon, 23 Jun 2025 06:41:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.194.8.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750577160; cv=none; b=uPUGJVK4oyhWRjjrHxLHi42fnJPHgLmZFUxD8i0WfSx3NJfbESrQ67PfuZnh5VgwMVvVfj8fEXdKWSUVEWHWq1B8/3osB87c5idXQx5VlWAIBTiabjtF2GPjsRvZNp+VrO9Zx/fu4vsOxcorIbDucDCMBz6TvnCblfQjrtfCT60=
+	t=1750660909; cv=none; b=aa1zMj2AP8ItNI0DhWtze4FIrSKxWev5Yj+LEEt3b/6F9C4dlXZgfhhIXcyHfgyJhR/8GunKvhgKjZH8gBmRf3v1Saw1lQGvPPDgVCZFAvjS6Lm4Ei54BukhP+7O8YLM+h5CtxxzUzbfCHGEz9pTqdlx5jawRM5t1LoqxVboNUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750577160; c=relaxed/simple;
-	bh=zcbbA1/2SXkp1qglZxsnSRGCPPObpRRtEYyL6aHsCbw=;
+	s=arc-20240116; t=1750660909; c=relaxed/simple;
+	bh=LB4oyVTpLCaiEWCy+fk6tCbYw2++tKJbaBq/0UJGbXA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ql92NzzaKS6/a8SO1gb3JiozWzIWHIAy90wMyx1cPUBhm/fvnok+EW1T6D0e8lAbofcgcmqn5DWlSHaRX/WvNW6rBYRybKzKGSeWufRENwger3W4AjXXakJo3sgQ5b2/pXrmtSA/XXuiyAi/UjcuFcmucr7Ur7lz1SGHbLmlS6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKQyJgfl; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=d06zgxd7W5PznykIBpvCx5DgZDwe7p8Jgu0pCm45kidaX5nRFNAho2H/96JM5Z4ap9GMrWnVtP4DqEvt8ygHdtIUgTaX0SC8y6jN/oXnpTzDj92HGC3K8NLJECmFcaa5NtNwFdn9p4g5SHDoSL92WlX0ME56pIsETTmX2JxcmGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it; spf=pass smtp.mailfrom=dolcini.it; dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b=OaU2DLIa; arc=none smtp.client-ip=217.194.8.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dolcini.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKQyJgfl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6A4C4CEE3;
-	Sun, 22 Jun 2025 07:25:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750577160;
-	bh=zcbbA1/2SXkp1qglZxsnSRGCPPObpRRtEYyL6aHsCbw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fKQyJgflm0H4KcVcdtusHpxYIN4HrHOfjR2NTNCSo5kBU7pxZ7bHs9WgURI4PqmAD
-	 eRcuJmdXuCJ+dAEvAhfUSc9pKv2RPYTPTNTlzTZDlimJ0itnp0k9JWpPZ6AC3Abh1z
-	 vC+E8vQzVQLw28i/T90TiOkldyFSBYObHB1/A8cs=
-Date: Sun, 22 Jun 2025 09:24:32 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Pascal Ernster <git@hardfalcon.net>
-Cc: Ronald Warsow <rwarsow@gmx.de>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, conor@kernel.org, hargar@microsoft.com,
-	broonie@kernel.org, "Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.15 000/780] 6.15.3-rc1 review
-Message-ID: <2025062220-appeasing-underling-664c@gregkh>
-References: <20250617152451.485330293@linuxfoundation.org>
- <f2b87714-0ef6-4210-9b30-86b4c79d1ed8@gmx.de>
- <2025061848-clinic-revered-e216@gregkh>
- <c8e4e868-aafb-4df1-8d07-62126bfe2982@hardfalcon.net>
- <097ef8cc-5304-4a7d-abc0-fd011d1235d5@hardfalcon.net>
- <2025061930-jumbo-bobsled-521a@gregkh>
- <79673bf1-1ee7-4c42-8134-ca6ead0a36ac@hardfalcon.net>
+	dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b="OaU2DLIa"
+Received: from francesco-nb (248.201.173.83.static.wline.lns.sme.cust.swisscom.ch [83.173.201.248])
+	by mail11.truemail.it (Postfix) with ESMTPA id B42521FA9E;
+	Mon, 23 Jun 2025 08:41:36 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dolcini.it;
+	s=default; t=1750660897;
+	bh=P4VY0Ku8UYAmClA1iVtBk9nLVcQ0Z5Yu7AkLFRkF3fQ=; h=From:To:Subject;
+	b=OaU2DLIavBehEXG2Fczs94N5gsZGKYRXMp+jBgRkSPQCybVLg+PDt+9Be71MdBSf6
+	 WWO4Imrz10O9tdK6p8HovDurFhyF3Z3H/0OzaBSPo7hk5TP27He+GDIMUWya+CFGKN
+	 Cy4eA5bvZy9vnSN0D/KhQCczB5Sro6iM6AwWzH60m4uNhwa8+Xp2bTYOYEItnwY3jU
+	 KpYqMROZYXon5g9oKXGegBgS0cZUiJz/0Usv1n5R80ud6h5/ySnRTjx0CKgfd0sAmD
+	 ojAvR4yavoVdXbqxpxkyv/HY0+9RfV5tmOlz13p3Y5RVX4hD7qUlfnJWHyTljdmWVO
+	 ku1i17K1N983Q==
+Date: Mon, 23 Jun 2025 08:41:32 +0200
+From: Francesco Dolcini <francesco@dolcini.it>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, Marek Vasut <marex@denx.de>,
+	patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>
+Subject: Re: [PATCH 6.1.y v2] arm64: dts: imx8mm: Drop sd-vsel-gpios from
+ i.MX8M Mini Verdin SoM
+Message-ID: <20250623064132.GA7788@francesco-nb>
+References: <20250604212401.8486-1-francesco@dolcini.it>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <79673bf1-1ee7-4c42-8134-ca6ead0a36ac@hardfalcon.net>
+In-Reply-To: <20250604212401.8486-1-francesco@dolcini.it>
 
-On Sun, Jun 22, 2025 at 12:09:42AM +0200, Pascal Ernster wrote:
-> [2025-06-19 06:17] Greg Kroah-Hartman:
-> > On Wed, Jun 18, 2025 at 10:31:43PM +0200, Pascal Ernster wrote:
-> > > Hello again,
-> > > 
-> > > 
-> > > I've sent this email a few minutes ago but mixed up one of the In-Reply-To
-> > > message IDs, so I'm resending it now with (hopefully) the correct
-> > > In-Reply-To message IDs.
-> > > 
-> > > 
-> > > I've bisected this and found that the issue is caused by commit
-> > > f46262bbc05af38565c560fd960b86a0e195fd4b:
-> > > 
-> > > 'Revert "mm/execmem: Unify early execmem_cache behaviour"'
-> > > 
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/commit/?id=f46262bbc05af38565c560fd960b86a0e195fd4b
-> > > 
-> > > https://lore.kernel.org/stable/20250617152521.879529420@linuxfoundation.org/
-> > > 
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/tree/queue-6.15/revert-mm-execmem-unify-early-execmem_cache-behaviour.patch?id=344d39fc8d8b7515b45a3bf568c115da12517b22
-> > 
-> > Thank you for digging into this.  Looks like I took the last patch in a
-> > patch series and not the previous ones, which caused this problem.  I've
-> > dropped this one now and will add it back next week after I also add all
-> > the other ones in the series.
-> 
-> 
-> You're welcome! :)
-> 
-> Btw, the same patch has turned up again in the stable queue für 6.15.4:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/log/queue-6.15/revert-mm-execmem-unify-early-execmem_cache-behaviour.patch
-> 
-> Is this intentional or a mistake?
+Hello Greg,
 
-Intentional, I took the whole series this time, right?
+On Wed, Jun 04, 2025 at 11:24:01PM +0200, Francesco Dolcini wrote:
+> From: Marek Vasut <marex@denx.de>
+> 
+> [ Upstream commit 8bad8c923f217d238ba4f1a6d19d761e53bfbd26 ]
+> 
+> The VSELECT pin is configured as MX8MM_IOMUXC_GPIO1_IO04_USDHC2_VSELECT
+> and not as a GPIO, drop the bogus sd-vsel-gpios property as the eSDHC
+> block handles the VSELECT pin on its own.
+> 
+> Signed-off-by: Marek Vasut <marex@denx.de>
+> Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+> Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+> Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-thanks,
+Just a short ping on this, to be sure it gets queued for the next 6.1
+stable kernel
 
-greg k-h
+Thanks
+Francesco
+
