@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799D222370A;
-	Mon, 23 Jun 2025 22:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E929F2222B2;
+	Mon, 23 Jun 2025 22:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717538; cv=none; b=iyqsWGG8e0rjvSZL3EOz4ZHFuIxClxl8Dx46d19GpO3IBTvJsB4eoTlLzZTckOC3ux+zNH5HCjKRPfSwRNZ+Y4EH+6lrRQX6/L7k1UROiG+tE+RQgvIODs6ibs8j08024O1rquf50vE1MUkynz4TZMmJGgsPRmfPVudoQ79bYP4=
+	t=1750717541; cv=none; b=iTsR51WL/DdHVBUFBnwSZp68rRwYSoTw2OML/XHoiaDfUZ/i9fP8nlupTRFUkZvAM+6VjNZIS1xMZ/YyKyNfq8xhnpsdJHjJGVS5At3udoNyL5UKq/LvcmKsoKxJPiQ+heMCFPbyx7TftkgNZETOCDSZTHJ7Vf66joX39kjJAJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717538; c=relaxed/simple;
-	bh=Ktb63+2mYSmP5oRxrQtR/ayfRwI02lHYeC27uYiZTwg=;
+	s=arc-20240116; t=1750717541; c=relaxed/simple;
+	bh=gxo5bcogfSEkzGMn9gMHwcpcgUQygaOiW44ognuHwIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SRwQHnuIlRjCub/lpkWMGgrVmRJKIgFSScKKQnaOceE3spedT6Q9f07xalz3fTcQKzp/235iCZAcLMGH40SQ/nJmws2hQoHVZrs5BB0m7llDExxw6yn6e0WkfH2kaPyhYvvfng8BrZ7xveLYywY+BkhyuT0fgrT4EO9gz8Yc8+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9ysLjDs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pn1GGpEp3ZUm9cxV4zyDCGZik/ro07XGFmnYEqAPUgxBY1YDF8uxbPR56FPzw3RJyd9Lm36oIZDEDLHrOV77g5uW/oGnFcY29oBlCeQ4fzzAO834IhgXqfnRPbqb2G7mWVxn/MIFCcDka/F4YXoogMLSYR0GzwFHAi2LrH0Suec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAL4pSjR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9ysLjDs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C18C4CEEA;
-	Mon, 23 Jun 2025 22:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAL4pSjR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7939EC4CEED;
+	Mon, 23 Jun 2025 22:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717538;
-	bh=Ktb63+2mYSmP5oRxrQtR/ayfRwI02lHYeC27uYiZTwg=;
+	s=korg; t=1750717540;
+	bh=gxo5bcogfSEkzGMn9gMHwcpcgUQygaOiW44ognuHwIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9ysLjDs8Ur/K1viqCgmMdTTxWbZoTuCbhtr6p2kmzmFVLaaLZ08gF/ou7/jSXdfd
-	 rPky2pj7l/szO4TaNBEq+z9uZQQh61GKd0j5KlkcWwvkHKEkmJUqwyDUTl57NjQ7SQ
-	 GBhxw1B6kcKUbY7dnMjSRVrnH/YoM5nM0+2OM6to=
+	b=XAL4pSjRwoWe20m0T6WAUam2969nwKLyE6kdog/gpTPiYkZjUr25NzOz/A9wBmlYA
+	 2J1+UugIq+Bn9A0Zhmb7M2lJXJKKARdxTzGQkPwxUpOAa6aGOzzr3rr6zcXr5EuGzz
+	 lDfHvjwDehj2UZ1eGEgC+MRlaBpklU8CI6XTKtRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atish Patra <atishp@rivosinc.com>,
-	Anup Patel <apatel@ventanamicro.com>,
-	Anup Patel <anup@brainfault.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 409/414] RISC-V: KVM: Dont treat SBI HFENCE calls as NOPs
-Date: Mon, 23 Jun 2025 15:09:06 +0200
-Message-ID: <20250623130652.172819952@linuxfoundation.org>
+	stable@kernel.org,
+	Dexuan Cui <decui@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 449/508] scsi: storvsc: Increase the timeouts to storvsc_timeout
+Date: Mon, 23 Jun 2025 15:08:14 +0200
+Message-ID: <20250623130656.201354636@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,50 +46,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Dexuan Cui <decui@microsoft.com>
 
-[ Upstream commit 2e7be162996640bbe3b6da694cc064c511b8a5d9 ]
+commit b2f966568faaad326de97481096d0f3dc0971c43 upstream.
 
-The SBI specification clearly states that SBI HFENCE calls should
-return SBI_ERR_NOT_SUPPORTED when one of the target hart doesn’t
-support hypervisor extension (aka nested virtualization in-case
-of KVM RISC-V).
+Currently storvsc_timeout is only used in storvsc_sdev_configure(), and
+5s and 10s are used elsewhere. It turns out that rarely the 5s is not
+enough on Azure, so let's use storvsc_timeout everywhere.
 
-Fixes: c7fa3c48de86 ("RISC-V: KVM: Treat SBI HFENCE calls as NOPs")
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Link: https://lore.kernel.org/r/20250605061458.196003-3-apatel@ventanamicro.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In case a timeout happens and storvsc_channel_init() returns an error,
+close the VMBus channel so that any host-to-guest messages in the
+channel's ringbuffer, which might come late, can be safely ignored.
+
+Add a "const" to storvsc_timeout.
+
+Cc: stable@kernel.org
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Link: https://lore.kernel.org/r/1749243459-10419-1-git-send-email-decui@microsoft.com
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kvm/vcpu_sbi_replace.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/storvsc_drv.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/kvm/vcpu_sbi_replace.c b/arch/riscv/kvm/vcpu_sbi_replace.c
-index 9752d2ffff683..b17fad091babd 100644
---- a/arch/riscv/kvm/vcpu_sbi_replace.c
-+++ b/arch/riscv/kvm/vcpu_sbi_replace.c
-@@ -127,9 +127,9 @@ static int kvm_sbi_ext_rfence_handler(struct kvm_vcpu *vcpu, struct kvm_run *run
- 	case SBI_EXT_RFENCE_REMOTE_HFENCE_VVMA_ASID:
- 		/*
- 		 * Until nested virtualization is implemented, the
--		 * SBI HFENCE calls should be treated as NOPs
-+		 * SBI HFENCE calls should return not supported
-+		 * hence fallthrough.
- 		 */
--		break;
- 	default:
- 		retdata->err_val = SBI_ERR_NOT_SUPPORTED;
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -358,7 +358,7 @@ MODULE_PARM_DESC(ring_avail_percent_lowa
+ /*
+  * Timeout in seconds for all devices managed by this driver.
+  */
+-static int storvsc_timeout = 180;
++static const int storvsc_timeout = 180;
+ 
+ #if IS_ENABLED(CONFIG_SCSI_FC_ATTRS)
+ static struct scsi_transport_template *fc_transport_template;
+@@ -764,7 +764,7 @@ static void  handle_multichannel_storage
+ 		return;
  	}
--- 
-2.39.5
-
+ 
+-	t = wait_for_completion_timeout(&request->wait_event, 10*HZ);
++	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
+ 	if (t == 0) {
+ 		dev_err(dev, "Failed to create sub-channel: timed out\n");
+ 		return;
+@@ -829,7 +829,7 @@ static int storvsc_execute_vstor_op(stru
+ 	if (ret != 0)
+ 		return ret;
+ 
+-	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
++	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
+ 	if (t == 0)
+ 		return -ETIMEDOUT;
+ 
+@@ -1342,6 +1342,8 @@ static int storvsc_connect_to_vsp(struct
+ 		return ret;
+ 
+ 	ret = storvsc_channel_init(device, is_fc);
++	if (ret)
++		vmbus_close(device->channel);
+ 
+ 	return ret;
+ }
+@@ -1659,7 +1661,7 @@ static int storvsc_host_reset_handler(st
+ 	if (ret != 0)
+ 		return FAILED;
+ 
+-	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
++	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
+ 	if (t == 0)
+ 		return TIMEOUT_ERROR;
+ 
 
 
