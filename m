@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0819B1DD0C7;
-	Mon, 23 Jun 2025 21:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339981DD0C7;
+	Mon, 23 Jun 2025 21:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715441; cv=none; b=GsTyOveXOHyZjrYeJMdCWtNX8gUo/fcTIuMOSN/RFJij8DxAPB/8R9BorimLCmRxpFIxgMoc0ZSqNo5ttEgYKhxp4K5VFCAGGrMUG/scNWsGPegx1UL3qy7FXDBCqaVVQp8JUOjkHzJhdc/9iCH7Ezu6v8IU/it/FEFyMJKJjTk=
+	t=1750715443; cv=none; b=OnltKU1CduoFa9G0lEdVRCRmeTMjLxTXvFB37ZEVPuiEmABupsBsC1swtzhIKjrZjYyeF2uJBt4mosnV2GLBanFSXZ3HZEiyetMwZn22Fp2fCk+b1wdWKF0uasKl2oAkXToihlMfx14MDiApCHXYQv32fn7G+CIe/zQm1S1pHYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715441; c=relaxed/simple;
-	bh=QisKRNzHYn4CVk4sy0+R9zTe19+hHXWdD3hczA8kNXQ=;
+	s=arc-20240116; t=1750715443; c=relaxed/simple;
+	bh=z905HTBBL1w+zHtyyciTn4QgcN3oQtq9t3cndga6S3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pf/WwBrmrA01GcqwWKclPOQCjBYfHo7vEXrPZe3h8yFUq2YXytnGNO0k9TIYIJJ3HIdnsnNvsDtHzV1650T4yfhz6ZHdD31HJflvdMKHKKyk0U1ZOG4UgdX62XpvvBVREav2ieeQJ5Hhzj9DJmEdBk7EVr1n4jgSa8YfNSlooMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6HvQvUv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UUgqoYyZ2iqLLvBRx+eaDiBlekrc4Vz+YB355ZQBRb6YTcq444QG2xJJSmc1AtRy0ddobWWMZP6hd5f29lPLOIgQ+AynfU3Bzz13M+5y8YfXnbtM56cSmjEB07++8UXtPb6b6DcqCXVA0PJqxIOVL8A4sGqsSF8iheh1x4rY5WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxJ+RbgE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6HvQvUv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59884C4CEEA;
-	Mon, 23 Jun 2025 21:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxJ+RbgE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF5CC4CEEA;
+	Mon, 23 Jun 2025 21:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715440;
-	bh=QisKRNzHYn4CVk4sy0+R9zTe19+hHXWdD3hczA8kNXQ=;
+	s=korg; t=1750715443;
+	bh=z905HTBBL1w+zHtyyciTn4QgcN3oQtq9t3cndga6S3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6HvQvUvPnc76rI0Xw3uc7kpumHpHuich+XMvvo24IDCSyP2n23h8b/J708VMQ0AU
-	 kjVBlAXluLVCEzAVJfiI0woZRCvenz7V+1EuW5zbK8JZmncB4UxZ9P98nK4Z33blp+
-	 BiLYJdEKzH1PnvwoLOk6/BtR/Q9af5+S6gimtMYQ=
+	b=MxJ+RbgEQIBs8XklGYMJkaQkyEAS+M5qRytNylzeV5P5Acv/Fnd3cbWLYXznP1kFm
+	 1e2WA3TJF11bcCm+utNeFNG4WxLBQXisGysYyBk98nwkDhRoz4jCoieGAZsxHfEEks
+	 +xA39s0uUuqqkSVXYCKlkZZjqrzabOxkPmdrtD0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Talhah Peerbhai <talhah.peerbhai@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 168/414] ASoC: amd: yc: Add quirk for Lenovo Yoga Pro 7 14ASP9
-Date: Mon, 23 Jun 2025 15:05:05 +0200
-Message-ID: <20250623130646.231049712@linuxfoundation.org>
+Subject: [PATCH 5.10 275/355] bus: fsl-mc: increase MC_CMD_COMPLETION_TIMEOUT_MS value
+Date: Mon, 23 Jun 2025 15:07:56 +0200
+Message-ID: <20250623130635.040981733@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Talhah Peerbhai <talhah.peerbhai@gmail.com>
+From: Laurentiu Tudor <laurentiu.tudor@nxp.com>
 
-[ Upstream commit a28206060dc5848a1a2a15b7f6ac6223d869084d ]
+[ Upstream commit 23d060136841c58c2f9ee8c08ad945d1879ead4b ]
 
-Similar to many other Lenovo models with AMD chips, the Lenovo
-Yoga Pro 7 14ASP9 (product name 83HN) requires a specific quirk
-to ensure internal mic detection. This patch adds a quirk fixing this.
+In case the MC firmware runs in debug mode with extensive prints pushed
+to the console, the current timeout of 500ms is not enough.
+Increase the timeout value so that we don't have any chance of wrongly
+assuming that the firmware is not responding when it's just taking more
+time.
 
-Signed-off-by: Talhah Peerbhai <talhah.peerbhai@gmail.com>
-Link: https://patch.msgid.link/20250515222741.144616-1-talhah.peerbhai@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20250408105814.2837951-7-ioana.ciornei@nxp.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/bus/fsl-mc/mc-sys.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index e632f16c91025..3d9da93d22ee8 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -311,6 +311,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "83AS"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83HN"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
-@@ -360,7 +367,7 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "M5402RA"),
- 		}
- 	},
--        {
-+	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
+diff --git a/drivers/bus/fsl-mc/mc-sys.c b/drivers/bus/fsl-mc/mc-sys.c
+index 85a0225db522a..14d77dc618cc1 100644
+--- a/drivers/bus/fsl-mc/mc-sys.c
++++ b/drivers/bus/fsl-mc/mc-sys.c
+@@ -19,7 +19,7 @@
+ /**
+  * Timeout in milliseconds to wait for the completion of an MC command
+  */
+-#define MC_CMD_COMPLETION_TIMEOUT_MS	500
++#define MC_CMD_COMPLETION_TIMEOUT_MS	15000
+ 
+ /*
+  * usleep_range() min and max values used to throttle down polling
 -- 
 2.39.5
 
