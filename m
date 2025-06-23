@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9954409;
-	Mon, 23 Jun 2025 21:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64ED14409;
+	Mon, 23 Jun 2025 21:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714682; cv=none; b=qLak+k6eu7M+iXXMBzyjOgjO0vmYzPX3A24Scy5hocA91jqjkNkw8tyyHfxEYgQ/eBSHBpR2rbe50KObH7pBgcuiwU55QK0rgnt9zoiTOT0DfLM6ijyRN0n7Cxv5+b4ZFq2x1Xi+yyBEoUX69pT2nn/OPyeTt5BRNBSnqS6Ohik=
+	t=1750714684; cv=none; b=NmEeWh1l+IKH2eSCx5IccD1aV5M03cBbBY7WCugHBdpj/ZQH9t1PHPIX3bhQhX4P76NPvwMhKYsoHJw1xEMLlqMElLE6vl59hc3wZMgN1ndUpqWSiq234dczKET8fXQLemn/tzeEq5uBvcd29sUwUPdvsHeXvdTPDhrruhmAWcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714682; c=relaxed/simple;
-	bh=/YGEN6vaLP3OgPJkUOwhJwwFfWZ6xj9+ljOkETDMfTk=;
+	s=arc-20240116; t=1750714684; c=relaxed/simple;
+	bh=vmhPIEJQmMuZKB7T41/E5dV51yenKuFDzkcyQObozgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwAYg21FSbSsT2Hm5MlJ89uf9B5+uXzWNwnus43SSWCqebmMvhOtZJKwDRfHF8KgP+PfsRPsBc6uLHeQucqEEvVsniFJbQiR4vHT2kU7KYrSo1zl4/vT6OaiyMrIIf17FrrHP68zWgeVJ5Y2pH8BxP8ecRJVIJ3DkoJdHX8tiuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tda4VHv0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZqVpyNIIB1SXEo+RNtxYYpgo5jw5J375Bkktf3kt5E/vPpDZ7CGiK2reS5AGrTF34XL8flZL1AG4IaG/QoTCEGCbR2cNAOUPfIrNsSspDZqo+uoypTyQCezG/50V9Jh4pq25S6Q7kseOWOGirxLO2EAyGmTlA4qcaJdlc6vBmes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zl69p//A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tda4VHv0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83131C4CEEA;
-	Mon, 23 Jun 2025 21:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zl69p//A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1C3C4CEEA;
+	Mon, 23 Jun 2025 21:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714681;
-	bh=/YGEN6vaLP3OgPJkUOwhJwwFfWZ6xj9+ljOkETDMfTk=;
+	s=korg; t=1750714684;
+	bh=vmhPIEJQmMuZKB7T41/E5dV51yenKuFDzkcyQObozgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tda4VHv0U94ZFcGS6OzeXIpEqBWV6iOdzGjnPaWYazfbZ0k/TkGlQmMEwkxzVHmE3
-	 XP4zuITzLu9K8QkYkHQgmtU8eYnKOJvaogk9I5umuAUNCcYVNkD+PagbgalnS+lhjN
-	 Niu/e0G6+ZK7vHPG8BvCoah0TKxR1rgqBStghoM8=
+	b=zl69p//Ah3Pn57tWuogbDlU4Lx42BBw35Cx+mWcOAzRxGvXQGYed5tsm+3F5x/lik
+	 Tp3eYVILr8PszEfDAsqIMHBTIEQPCnC7kiP62ZOa2nCczJ/W5uJAhLaG4ucw8F9EEe
+	 OyciNAY6SVQvvkeYQMmZvrusQn30iGHV8qqdM2Gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Linxuan <chenlinxuan@uniontech.com>,
-	Winston Wen <wentao@uniontech.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 409/592] RDMA/hns: initialize db in update_srq_db()
-Date: Mon, 23 Jun 2025 15:06:07 +0200
-Message-ID: <20250623130710.165786840@linuxfoundation.org>
+Subject: [PATCH 6.6 152/290] tcp: always seek for minimal rtt in tcp_rcv_rtt_update()
+Date: Mon, 23 Jun 2025 15:06:53 +0200
+Message-ID: <20250623130631.468467030@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,75 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Linxuan <chenlinxuan@uniontech.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ffe1cee21f8b533ae27c3a31bfa56b8c1b27fa6e ]
+[ Upstream commit b879dcb1aeeca278eacaac0b1e2425b1c7599f9f ]
 
-On x86_64 with gcc version 13.3.0, I compile
-drivers/infiniband/hw/hns/hns_roce_hw_v2.c with:
+tcp_rcv_rtt_update() goal is to maintain an estimation of the RTT
+in tp->rcv_rtt_est.rtt_us, used by tcp_rcv_space_adjust()
 
-  make defconfig
-  ./scripts/kconfig/merge_config.sh .config <(
-    echo CONFIG_COMPILE_TEST=y
-    echo CONFIG_HNS3=m
-    echo CONFIG_INFINIBAND=m
-    echo CONFIG_INFINIBAND_HNS_HIP08=m
-  )
-  make KCFLAGS="-fno-inline-small-functions -fno-inline-functions-called-once" \
-    drivers/infiniband/hw/hns/hns_roce_hw_v2.o
+When TCP TS are enabled, tcp_rcv_rtt_update() is using
+EWMA to smooth the samples.
 
-Then I get a compile error:
+Change this to immediately latch the incoming value if it
+is lower than tp->rcv_rtt_est.rtt_us, so that tcp_rcv_space_adjust()
+does not overshoot tp->rcvq_space.space and sk->sk_rcvbuf.
 
-    CALL    scripts/checksyscalls.sh
-    DESCEND objtool
-    INSTALL libsubcmd_headers
-    CC [M]  drivers/infiniband/hw/hns/hns_roce_hw_v2.o
-  In file included from drivers/infiniband/hw/hns/hns_roce_hw_v2.c:47:
-  drivers/infiniband/hw/hns/hns_roce_hw_v2.c: In function 'update_srq_db':
-  drivers/infiniband/hw/hns/hns_roce_common.h:74:17: error: 'db' is used uninitialized [-Werror=uninitialized]
-     74 |                 *((__le32 *)_ptr + (field_h) / 32) &=                          \
-        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/infiniband/hw/hns/hns_roce_common.h:90:17: note: in expansion of macro '_hr_reg_clear'
-     90 |                 _hr_reg_clear(ptr, field_type, field_h, field_l);              \
-        |                 ^~~~~~~~~~~~~
-  drivers/infiniband/hw/hns/hns_roce_common.h:95:39: note: in expansion of macro '_hr_reg_write'
-     95 | #define hr_reg_write(ptr, field, val) _hr_reg_write(ptr, field, val)
-        |                                       ^~~~~~~~~~~~~
-  drivers/infiniband/hw/hns/hns_roce_hw_v2.c:948:9: note: in expansion of macro 'hr_reg_write'
-    948 |         hr_reg_write(&db, DB_TAG, srq->srqn);
-        |         ^~~~~~~~~~~~
-  drivers/infiniband/hw/hns/hns_roce_hw_v2.c:946:31: note: 'db' declared here
-    946 |         struct hns_roce_v2_db db;
-        |                               ^~
-  cc1: all warnings being treated as errors
-
-Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Co-developed-by: Winston Wen <wentao@uniontech.com>
-Signed-off-by: Winston Wen <wentao@uniontech.com>
-Link: https://patch.msgid.link/FF922C77946229B6+20250411105459.90782-5-chenlinxuan@uniontech.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250513193919.1089692-8-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 59352d1b62099..bbf6e1983704c 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -942,7 +942,7 @@ static void fill_wqe_idx(struct hns_roce_srq *srq, unsigned int wqe_idx)
- static void update_srq_db(struct hns_roce_srq *srq)
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index a172248b66783..994c563b35f32 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -671,10 +671,12 @@ EXPORT_SYMBOL(tcp_initialize_rcv_mss);
+  */
+ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
  {
- 	struct hns_roce_dev *hr_dev = to_hr_dev(srq->ibsrq.device);
--	struct hns_roce_v2_db db;
-+	struct hns_roce_v2_db db = {};
+-	u32 new_sample = tp->rcv_rtt_est.rtt_us;
+-	long m = sample;
++	u32 new_sample, old_sample = tp->rcv_rtt_est.rtt_us;
++	long m = sample << 3;
  
- 	hr_reg_write(&db, DB_TAG, srq->srqn);
- 	hr_reg_write(&db, DB_CMD, HNS_ROCE_V2_SRQ_DB);
+-	if (new_sample != 0) {
++	if (old_sample == 0 || m < old_sample) {
++		new_sample = m;
++	} else {
+ 		/* If we sample in larger samples in the non-timestamp
+ 		 * case, we could grossly overestimate the RTT especially
+ 		 * with chatty applications or bulk transfer apps which
+@@ -685,17 +687,9 @@ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
+ 		 * else with timestamps disabled convergence takes too
+ 		 * long.
+ 		 */
+-		if (!win_dep) {
+-			m -= (new_sample >> 3);
+-			new_sample += m;
+-		} else {
+-			m <<= 3;
+-			if (m < new_sample)
+-				new_sample = m;
+-		}
+-	} else {
+-		/* No previous measure. */
+-		new_sample = m << 3;
++		if (win_dep)
++			return;
++		new_sample = old_sample - (old_sample >> 3) + sample;
+ 	}
+ 
+ 	tp->rcv_rtt_est.rtt_us = new_sample;
 -- 
 2.39.5
 
