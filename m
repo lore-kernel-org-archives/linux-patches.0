@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997E824EA9D;
-	Mon, 23 Jun 2025 13:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C79A23BF9F;
+	Mon, 23 Jun 2025 13:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685262; cv=none; b=NWhPzhUgV1QeXr2BH0tun6ekmc0Midz/D/j4amM4NfPNpkthBkJrWjvbrUR2rpYlgZ+6Lj3SOYnzXBLYUojr83/8ftRZ6cad28q17E1GavlBtB397yXwGvNpFjO5XDMx58Y4kh121Web4xw8s5ZkvGHGoRKvXdsaSNMfKcQIQJg=
+	t=1750685265; cv=none; b=KY6VMua1IaN0FxPPTnOloSO1kOA+YqAEDIprsPUJO5t6Zv2Zg4bLlNe+jD8tpmTDBwCcZnLVBYm5RReMHtd+Xd9Qn9Ypp3TWI6+VIa8VLE6DVdV1ljjdJctetQsFz8YB7WA1a8nYPXvyFPLFRvr20LppTl2SHWdIPpsHeaf1U7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685262; c=relaxed/simple;
-	bh=qIcyf175drs8agcSUnRw4UpryP8n9ax6ALFUGwS0a/Y=;
+	s=arc-20240116; t=1750685265; c=relaxed/simple;
+	bh=6/SFAhZ5b4XNHgwp1WddKw18WHapjLncjGI16zPr0b0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZjjOxLfYAEa+8C6jp9z6SlFPxudcatWgltyTWKKKvH/P/ZPZvBeLhEbE00uSGpataUQhMOsBMgScW00beH49k7k4qBd8osBnso7MobCWAgSQcHSltV5IvDnhpJHoorjrS8oLN1YmslJtcXuLmNJY437VgVPS3pEtXAhZp+1+FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+7zNVNn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mKVYrZpi/mzHvBaolRKOw6fSxBqp+l3OeTQqJ/T+Fm564lWKoZb3Yvo1zpWUJL473hlv7dfjYFuAy2Wp2LoVekm71fooJiYhTWdcd4j9rxcB967RNkICKBOojl9FWonYl66gTja6yE349dRSTJY5QrVk4RJNJpIhAZIdHr1rHa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfO2d1ee; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+7zNVNn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2D0C4CEEA;
-	Mon, 23 Jun 2025 13:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfO2d1ee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B3FC4CEEA;
+	Mon, 23 Jun 2025 13:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685262;
-	bh=qIcyf175drs8agcSUnRw4UpryP8n9ax6ALFUGwS0a/Y=;
+	s=korg; t=1750685265;
+	bh=6/SFAhZ5b4XNHgwp1WddKw18WHapjLncjGI16zPr0b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L+7zNVNnaHZtfWyErm4R3yMKzrwMsPxZx5m2mm+9Km4qjF2bZroseozhZ0TRAem1Q
-	 dKckbQvapfkfmuz+qAcEYTxqENW1EXLvgX16Qv2ed0UKMeYIaicVyMLdB0tSHaa4Ig
-	 +1GVGCoXDriPBYqDNRy7Zwx2mvX/8OQ8Ru2kucq8=
+	b=kfO2d1eel+RwhSzuznQr7fkA8VZqyzkU8zStyJukxXy/EJ7y5GyZoYMugx8xZZI0A
+	 TkZ470r6zce0lWfThL+p6lkG7miru139iwzTx5u2mcI433E1DzE5U4ISUTayqCJfvN
+	 lXqQE75Gj7jXyn/yn+ikYbBE+A/IeKbNhuqMjabU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Xu <feng.f.xu@intel.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 021/411] EDAC/skx_common: Fix general protection fault
-Date: Mon, 23 Jun 2025 15:02:45 +0200
-Message-ID: <20250623130633.636589176@linuxfoundation.org>
+Subject: [PATCH 6.15 219/592] ACPI: Add missing prototype for non CONFIG_SUSPEND/CONFIG_X86 case
+Date: Mon, 23 Jun 2025 15:02:57 +0200
+Message-ID: <20250623130705.497628572@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 20d2d476b3ae18041be423671a8637ed5ffd6958 ]
+[ Upstream commit e1bdbbc98279164d910d2de82a745f090a8b249f ]
 
-After loading i10nm_edac (which automatically loads skx_edac_common), if
-unload only i10nm_edac, then reload it and perform error injection testing,
-a general protection fault may occur:
+acpi_register_lps0_dev() and acpi_unregister_lps0_dev() may be used
+in drivers that don't require CONFIG_SUSPEND or compile on !X86.
 
-  mce: [Hardware Error]: Machine check events logged
-  Oops: general protection fault ...
-  ...
-  Workqueue: events mce_gen_pool_process
-  RIP: 0010:string+0x53/0xe0
-  ...
-  Call Trace:
-  <TASK>
-  ? die_addr+0x37/0x90
-  ? exc_general_protection+0x1e7/0x3f0
-  ? asm_exc_general_protection+0x26/0x30
-  ? string+0x53/0xe0
-  vsnprintf+0x23e/0x4c0
-  snprintf+0x4d/0x70
-  skx_adxl_decode+0x16a/0x330 [skx_edac_common]
-  skx_mce_check_error.part.0+0xf8/0x220 [skx_edac_common]
-  skx_mce_check_error+0x17/0x20 [skx_edac_common]
-  ...
+Add prototypes for those cases.
 
-The issue arose was because the variable 'adxl_component_count' (inside
-skx_edac_common), which counts the ADXL components, was not reset. During
-the reloading of i10nm_edac, the count was incremented by the actual number
-of ADXL components again, resulting in a count that was double the real
-number of ADXL components. This led to an out-of-bounds reference to the
-ADXL component array, causing the general protection fault above.
-
-Fix this issue by resetting the 'adxl_component_count' in adxl_put(),
-which is called during the unloading of {skx,i10nm}_edac.
-
-Fixes: 123b15863550 ("EDAC, i10nm: make skx_common.o a separate module")
-Reported-by: Feng Xu <feng.f.xu@intel.com>
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Tested-by: Feng Xu <feng.f.xu@intel.com>
-Link: https://lore.kernel.org/r/20250417150724.1170168-2-qiuxu.zhuo@intel.com
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202502191627.fRgoBwcZ-lkp@intel.com/
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20250407183656.1503446-1-superm1@kernel.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/skx_common.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/acpi.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
-index 88c44d5359076..46eeaa142a610 100644
---- a/drivers/edac/skx_common.c
-+++ b/drivers/edac/skx_common.c
-@@ -112,6 +112,7 @@ EXPORT_SYMBOL_GPL(skx_adxl_get);
+diff --git a/include/linux/acpi.h b/include/linux/acpi.h
+index 3f2e93ed97301..fc372bbaa5476 100644
+--- a/include/linux/acpi.h
++++ b/include/linux/acpi.h
+@@ -1125,13 +1125,13 @@ void acpi_os_set_prepare_extended_sleep(int (*func)(u8 sleep_state,
  
- void skx_adxl_put(void)
+ acpi_status acpi_os_prepare_extended_sleep(u8 sleep_state,
+ 					   u32 val_a, u32 val_b);
+-#if defined(CONFIG_SUSPEND) && defined(CONFIG_X86)
+ struct acpi_s2idle_dev_ops {
+ 	struct list_head list_node;
+ 	void (*prepare)(void);
+ 	void (*check)(void);
+ 	void (*restore)(void);
+ };
++#if defined(CONFIG_SUSPEND) && defined(CONFIG_X86)
+ int acpi_register_lps0_dev(struct acpi_s2idle_dev_ops *arg);
+ void acpi_unregister_lps0_dev(struct acpi_s2idle_dev_ops *arg);
+ int acpi_get_lps0_constraint(struct acpi_device *adev);
+@@ -1140,6 +1140,13 @@ static inline int acpi_get_lps0_constraint(struct device *dev)
  {
-+	adxl_component_count = 0;
- 	kfree(adxl_values);
- 	kfree(adxl_msg);
+ 	return ACPI_STATE_UNKNOWN;
  }
++static inline int acpi_register_lps0_dev(struct acpi_s2idle_dev_ops *arg)
++{
++	return -ENODEV;
++}
++static inline void acpi_unregister_lps0_dev(struct acpi_s2idle_dev_ops *arg)
++{
++}
+ #endif /* CONFIG_SUSPEND && CONFIG_X86 */
+ void arch_reserve_mem_area(acpi_physical_address addr, size_t size);
+ #else
 -- 
 2.39.5
 
