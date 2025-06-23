@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4CD2192F8;
-	Mon, 23 Jun 2025 13:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE8F1798F;
+	Mon, 23 Jun 2025 13:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684635; cv=none; b=KZx5rsnXIdN2AYWUNNZ7EIwcPLd1qS5f7M9gG3TDv0kJBzH0RJ4CHu42au94ugFKJ6lErqtqnO4dbFNqUs/1FxPwPqWE1a72dQwnw5raQHt6GyErC7kf7wWsQAVFwNbCGe5UUedrMqvEyodxEaZ3PG8iBwYfoO9Ig5oI5G6JM94=
+	t=1750684637; cv=none; b=sAMN7rK/nHs03Es6ai1kUB7NF0Q0cUXX9GnAR5Rv9B/TILGYGzPz4DIy2TvnmjmIH9aedshg9YWiqbcs8JkOFwKlEPbBzRcovtN/a0xDVtAf+upEP9mDRaDsab+8rCfLP/5XwBwXHv7BXbiIV7gIRmGUatrvYPMo4VW4vPQuJKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684635; c=relaxed/simple;
-	bh=iU2dHop/xC9aQcTFgTYOFl9uRwG5q/hienLyZZjbubU=;
+	s=arc-20240116; t=1750684637; c=relaxed/simple;
+	bh=nQbTnln+nsAv9jovMwXcuXzhh6TS7UkAMNb9VBFGzEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i79A2mZfGMFdy7jP7/1Xst7JWJogTz/4MYtUKlC86ErUGb/i31FSmqtWfP9U+lV2FFizVr0vYwYE0Wfp87bej3CnSQyP0IxOQ4AKWcSv/4KABDjEmCa6FQKs3Wj9eorpJ7ZVngmfZpr1V9nUsJpiLT1iYNGfNCWUF5KG/duzGF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtfZBGXP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tNGR3mmWnAKenr4acAoFGdywsNrbOZ3MV3D4O2nMtftY+eamG25RTSn2IgTaCZhyD0R2JCZie75h/Oo/8qOQPPSpCs9JVg3/68cPpLqMfI35zBhkP9MhPY2Ipk5sKNXyDM49EJckB0UAokW4zNFNlbN11BfbA4um98zGaQuOErQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rj6FfjMN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtfZBGXP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73724C4CEEA;
-	Mon, 23 Jun 2025 13:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rj6FfjMN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0289C4CEEA;
+	Mon, 23 Jun 2025 13:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684634;
-	bh=iU2dHop/xC9aQcTFgTYOFl9uRwG5q/hienLyZZjbubU=;
+	s=korg; t=1750684637;
+	bh=nQbTnln+nsAv9jovMwXcuXzhh6TS7UkAMNb9VBFGzEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dtfZBGXPN3Sg+YqqRvDWJptIYfOCM+/IB5z1btA3jAO5A0elMsrQNwEd2TPSksLbs
-	 wjXX2F3kvJuQUxM4u+iahD87wTHG/T6D3BoJmg0gL8ZKV7eyyvaxLjS+SVNq4qnwdE
-	 Rj2JSSqApTleATyJwUAQqbZ5cpezb7JUumJH5yoY=
+	b=rj6FfjMNKS1+OZFCcSq/Ytr/lC0rR0j9v2AUqx2eq6YWCKcl++flH+FlqM0Fgl+bx
+	 aarCbWokUj4TxP38TUqo/oS12cOfZ+duDBDo2l8DE9gf71OrTBHVO9OihvL3oAmn7B
+	 OJQR3dE/N8ID0csaL0pfb+WnwAoNtszBJURWPaFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Clayton Craft <clayton@craftyguy.net>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH 6.15 142/592] soc: qcom: pmic_glink_altmode: fix spurious DP hotplug events
-Date: Mon, 23 Jun 2025 15:01:40 +0200
-Message-ID: <20250623130703.655548567@linuxfoundation.org>
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Sami Mujawar <sami.mujawar@arm.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Cedric Xing <cedric.xing@intel.com>,
+	Kai Huang <kai.huang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 6.15 143/592] configfs-tsm-report: Fix NULL dereference of tsm_ops
+Date: Mon, 23 Jun 2025 15:01:41 +0200
+Message-ID: <20250623130703.680496349@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -52,107 +57,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Dan Williams <dan.j.williams@intel.com>
 
-commit 5090ac9191a19c61beeade60d3d839e509fab640 upstream.
+commit fba4ceaa242d2bdf4c04b77bda41d32d02d3925d upstream.
 
-The PMIC GLINK driver is currently generating DisplayPort hotplug
-notifications whenever something is connected to (or disconnected from)
-a port regardless of the type of notification sent by the firmware.
+Unlike sysfs, the lifetime of configfs objects is controlled by
+userspace. There is no mechanism for the kernel to find and delete all
+created config-items. Instead, the configfs-tsm-report mechanism has an
+expectation that tsm_unregister() can happen at any time and cause
+established config-item access to start failing.
 
-These notifications are forwarded to user space by the DRM subsystem as
-connector "change" uevents:
+That expectation is not fully satisfied. While tsm_report_read(),
+tsm_report_{is,is_bin}_visible(), and tsm_report_make_item() safely fail
+if tsm_ops have been unregistered, tsm_report_privlevel_store()
+tsm_report_provider_show() fail to check for ops registration. Add the
+missing checks for tsm_ops having been removed.
 
-    KERNEL[1556.223776] change   /devices/platform/soc@0/ae00000.display-subsystem/ae01000.display-controller/drm/card0 (drm)
-    ACTION=change
-    DEVPATH=/devices/platform/soc@0/ae00000.display-subsystem/ae01000.display-controller/drm/card0
-    SUBSYSTEM=drm
-    HOTPLUG=1
-    CONNECTOR=36
-    DEVNAME=/dev/dri/card0
-    DEVTYPE=drm_minor
-    SEQNUM=4176
-    MAJOR=226
-    MINOR=0
+Now, in supporting the ability for tsm_unregister() to always succeed,
+it leaves the problem of what to do with lingering config-items. The
+expectation is that the admin that arranges for the ->remove() (unbind)
+of the ${tsm_arch}-guest driver is also responsible for deletion of all
+open config-items. Until that deletion happens, ->probe() (reload /
+bind) of the ${tsm_arch}-guest driver fails.
 
-On the Lenovo ThinkPad X13s and T14s, the PMIC GLINK firmware sends two
-identical notifications with orientation information when connecting a
-charger, each generating a bogus DRM hotplug event. On the X13s, two
-such notification are also sent every 90 seconds while a charger remains
-connected, which again are forwarded to user space:
+This allows for emergency shutdown / revocation of attestation
+interfaces, and requires coordinated restart.
 
-    port = 1, svid = ff00, mode = 255, hpd_state = 0
-    payload = 01 00 00 00 00 00 00 ff 00 00 00 00 00 00 00 00
-
-Note that the firmware only sends on of these when connecting an
-ethernet adapter.
-
-Fix the spurious hotplug events by only forwarding hotplug notifications
-for the Type-C DisplayPort service id. This also reduces the number of
-uevents from four to two when an actual DisplayPort altmode device is
-connected:
-
-    port = 0, svid = ff01, mode = 2, hpd_state = 0
-    payload = 00 01 02 00 f2 0c 01 ff 03 00 00 00 00 00 00 00
-    port = 0, svid = ff01, mode = 2, hpd_state = 1
-    payload = 00 01 02 00 f2 0c 01 ff 43 00 00 00 00 00 00 00
-
-Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
-Cc: stable@vger.kernel.org	# 6.3
-Cc: Bjorn Andersson <andersson@kernel.org>
-Reported-by: Clayton Craft <clayton@craftyguy.net>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Tested-by: Clayton Craft <clayton@craftyguy.net>
-Link: https://lore.kernel.org/r/20250324132448.6134-1-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 70e6f7e2b985 ("configfs-tsm: Introduce a shared ABI for attestation reports")
+Cc: stable@vger.kernel.org
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Steven Price <steven.price@arm.com>
+Cc: Sami Mujawar <sami.mujawar@arm.com>
+Cc: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reported-by: Cedric Xing <cedric.xing@intel.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Link: https://patch.msgid.link/20250430203331.1177062-1-dan.j.williams@intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/pmic_glink_altmode.c |   30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ drivers/virt/coco/tsm.c |   31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
 
---- a/drivers/soc/qcom/pmic_glink_altmode.c
-+++ b/drivers/soc/qcom/pmic_glink_altmode.c
-@@ -218,21 +218,29 @@ static void pmic_glink_altmode_worker(st
- {
- 	struct pmic_glink_altmode_port *alt_port = work_to_altmode_port(work);
- 	struct pmic_glink_altmode *altmode = alt_port->altmode;
-+	enum drm_connector_status conn_status;
+--- a/drivers/virt/coco/tsm.c
++++ b/drivers/virt/coco/tsm.c
+@@ -15,6 +15,7 @@
+ static struct tsm_provider {
+ 	const struct tsm_ops *ops;
+ 	void *data;
++	atomic_t count;
+ } provider;
+ static DECLARE_RWSEM(tsm_rwsem);
  
- 	typec_switch_set(alt_port->typec_switch, alt_port->orientation);
+@@ -92,6 +93,10 @@ static ssize_t tsm_report_privlevel_stor
+ 	if (rc)
+ 		return rc;
  
--	if (alt_port->svid == USB_TYPEC_DP_SID && alt_port->mode == 0xff)
--		pmic_glink_altmode_safe(altmode, alt_port);
--	else if (alt_port->svid == USB_TYPEC_DP_SID)
--		pmic_glink_altmode_enable_dp(altmode, alt_port, alt_port->mode,
--					     alt_port->hpd_state, alt_port->hpd_irq);
--	else
--		pmic_glink_altmode_enable_usb(altmode, alt_port);
-+	if (alt_port->svid == USB_TYPEC_DP_SID) {
-+		if (alt_port->mode == 0xff) {
-+			pmic_glink_altmode_safe(altmode, alt_port);
-+		} else {
-+			pmic_glink_altmode_enable_dp(altmode, alt_port,
-+						     alt_port->mode,
-+						     alt_port->hpd_state,
-+						     alt_port->hpd_irq);
-+		}
++	guard(rwsem_write)(&tsm_rwsem);
++	if (!provider.ops)
++		return -ENXIO;
 +
-+		if (alt_port->hpd_state)
-+			conn_status = connector_status_connected;
-+		else
-+			conn_status = connector_status_disconnected;
+ 	/*
+ 	 * The valid privilege levels that a TSM might accept, if it accepts a
+ 	 * privilege level setting at all, are a max of TSM_PRIVLEVEL_MAX (see
+@@ -101,7 +106,6 @@ static ssize_t tsm_report_privlevel_stor
+ 	if (provider.ops->privlevel_floor > val || val > TSM_PRIVLEVEL_MAX)
+ 		return -EINVAL;
  
--	drm_aux_hpd_bridge_notify(&alt_port->bridge->dev,
--				  alt_port->hpd_state ?
--				  connector_status_connected :
--				  connector_status_disconnected);
-+		drm_aux_hpd_bridge_notify(&alt_port->bridge->dev, conn_status);
-+	} else {
-+		pmic_glink_altmode_enable_usb(altmode, alt_port);
-+	}
- 
- 	pmic_glink_altmode_request(altmode, ALTMODE_PAN_ACK, alt_port->index);
+-	guard(rwsem_write)(&tsm_rwsem);
+ 	rc = try_advance_write_generation(report);
+ 	if (rc)
+ 		return rc;
+@@ -115,6 +119,10 @@ static ssize_t tsm_report_privlevel_floo
+ 					       char *buf)
+ {
+ 	guard(rwsem_read)(&tsm_rwsem);
++
++	if (!provider.ops)
++		return -ENXIO;
++
+ 	return sysfs_emit(buf, "%u\n", provider.ops->privlevel_floor);
  }
+ CONFIGFS_ATTR_RO(tsm_report_, privlevel_floor);
+@@ -217,6 +225,9 @@ CONFIGFS_ATTR_RO(tsm_report_, generation
+ static ssize_t tsm_report_provider_show(struct config_item *cfg, char *buf)
+ {
+ 	guard(rwsem_read)(&tsm_rwsem);
++	if (!provider.ops)
++		return -ENXIO;
++
+ 	return sysfs_emit(buf, "%s\n", provider.ops->name);
+ }
+ CONFIGFS_ATTR_RO(tsm_report_, provider);
+@@ -284,7 +295,7 @@ static ssize_t tsm_report_read(struct ts
+ 	guard(rwsem_write)(&tsm_rwsem);
+ 	ops = provider.ops;
+ 	if (!ops)
+-		return -ENOTTY;
++		return -ENXIO;
+ 	if (!report->desc.inblob_len)
+ 		return -EINVAL;
+ 
+@@ -421,12 +432,20 @@ static struct config_item *tsm_report_ma
+ 	if (!state)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	atomic_inc(&provider.count);
+ 	config_item_init_type_name(&state->cfg, name, &tsm_report_type);
+ 	return &state->cfg;
+ }
+ 
++static void tsm_report_drop_item(struct config_group *group, struct config_item *item)
++{
++	config_item_put(item);
++	atomic_dec(&provider.count);
++}
++
+ static struct configfs_group_operations tsm_report_group_ops = {
+ 	.make_item = tsm_report_make_item,
++	.drop_item = tsm_report_drop_item,
+ };
+ 
+ static const struct config_item_type tsm_reports_type = {
+@@ -459,6 +478,11 @@ int tsm_register(const struct tsm_ops *o
+ 		return -EBUSY;
+ 	}
+ 
++	if (atomic_read(&provider.count)) {
++		pr_err("configfs/tsm/report not empty\n");
++		return -EBUSY;
++	}
++
+ 	provider.ops = ops;
+ 	provider.data = priv;
+ 	return 0;
+@@ -470,6 +494,9 @@ int tsm_unregister(const struct tsm_ops
+ 	guard(rwsem_write)(&tsm_rwsem);
+ 	if (ops != provider.ops)
+ 		return -EBUSY;
++	if (atomic_read(&provider.count))
++		pr_warn("\"%s\" unregistered with items present in configfs/tsm/report\n",
++			provider.ops->name);
+ 	provider.ops = NULL;
+ 	provider.data = NULL;
+ 	return 0;
 
 
