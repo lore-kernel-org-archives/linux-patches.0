@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BC21E5B71;
-	Mon, 23 Jun 2025 21:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E044C1E5B71;
+	Mon, 23 Jun 2025 21:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714162; cv=none; b=pDzPj09CQ0adOR0Kkpj+csWquv1u4El16wgUach2UtOwErDBXbG6h8acuu/qZKnccEyk6SSq8BmNiTz3t8PiEL63f4sG9ZxtogZBDbUJ3A9Cf5SjJDzYfxOlWfYH29+0ZicVy90wIpKm022OxnmRBiXI4kEFsx6EduWyGNkI8rY=
+	t=1750714165; cv=none; b=Tnoipi8oRb/jpL91asjtXFh74mQxpgCebnlGA1LDVFXjfusSozcpoGCrzEyQI3ymE4TPtwzA3yajYMSfNJXzRoHquakugTfZTcMXaGCqS//wiCOvksMRNl5L2RmRavrma5OTvKj2qCE2Q4XlrXS+4tYLZF8Bs+01lMsu2AovaJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714162; c=relaxed/simple;
-	bh=y2SwAuqS59DC+D72qtupKg83xM0vGa28qtqKdEChbwc=;
+	s=arc-20240116; t=1750714165; c=relaxed/simple;
+	bh=LtCeVzFILe97aJZ9WouchTg2C/4otRrWoBcvhUaAnOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j4kDoVLGjm/Auz0Rg1TuoOSYKStjpS9jfcB0pNus/5NXB99hsfRDHOJl0GbtQFszXnJGudWUcw3+RUPlGDZWRfbqvRWe2F4JJC2XY7nwNT73K9c8gz7sghFlNughRkO7bwW9aaUf02DtmNG4kgKQoqrn7fRsFOyl53y7C8S+HEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=przDQkPw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DHVE46Ikk68s7UN+Oyw3WZfaJLNO1t4Of0/9UeOnhSzCSRApvtbD2ASlMbve6B96zEEUbHUu8OvxnAm0Ux56xTcj8D1ep/mMLeZi0V4TC8j8SUrzRyeSFA8KD4iC7wHKx9FMQxrq/jq8eR/kRb+7oeTa8IQTiE/vH027j0rzo4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmlQISLz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="przDQkPw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA15C4CEEA;
-	Mon, 23 Jun 2025 21:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmlQISLz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7965BC4CEEA;
+	Mon, 23 Jun 2025 21:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714162;
-	bh=y2SwAuqS59DC+D72qtupKg83xM0vGa28qtqKdEChbwc=;
+	s=korg; t=1750714164;
+	bh=LtCeVzFILe97aJZ9WouchTg2C/4otRrWoBcvhUaAnOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=przDQkPwwuvjFvj6+HwL72/V4+RL20cPh236U7NMkQ1k3oLcHiaTgdis13QKNLYGk
-	 7/6NcyEZTej0DLjk/K7hyPkK8N7mkLxS/CVlpJtmW6ipr74XNft/aX/fPQ+N+2V6kA
-	 M6q1Txunp1Z5RMe17tl/wZMFopo9BZZvTriPpDho=
+	b=UmlQISLz+/EWmU83DVwtKXAjDjdHLYJ/+QCw32kFhiGO863uh2yFb+rR4XcXgRCwr
+	 dxQLcNCzmFVboWXyfacr3XZ3XBwfOLz78DpM42KUx0d+rJQfNGrRjqVm3HKbx6l4aA
+	 hsWMK187Xbdqmd/Zwnnudbc/XzOS92HTZ2XOUjHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Yi Liu <yi.l.liu@intel.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 6.12 106/414] iommu/vt-d: Restore context entry setup order for aliased devices
-Date: Mon, 23 Jun 2025 15:04:03 +0200
-Message-ID: <20250623130644.747441925@linuxfoundation.org>
+	Luke Wang <ziniu.wang_1@nxp.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 122/290] mmc: sdhci-esdhc-imx: Save tuning value when card stays powered in suspend
+Date: Mon, 23 Jun 2025 15:06:23 +0200
+Message-ID: <20250623130630.603626108@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,127 +48,194 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Luke Wang <ziniu.wang_1@nxp.com>
 
-commit 320302baed05c6456164652541f23d2a96522c06 upstream.
+[ Upstream commit c63d25cdc59ae2891b39ba2da950910291d9bcbf ]
 
-Commit 2031c469f816 ("iommu/vt-d: Add support for static identity domain")
-changed the context entry setup during domain attachment from a
-set-and-check policy to a clear-and-reset approach. This inadvertently
-introduced a regression affecting PCI aliased devices behind PCIe-to-PCI
-bridges.
+For SoCs like i.MX6UL(L/Z) and i.MX7D, USDHC powers off completely during
+system power management (PM), causing the internal tuning status to be
+lost. To address this, save the tuning value when system suspend and
+restore it for any command issued after system resume when re-tuning is
+held.
 
-Specifically, keyboard and touchpad stopped working on several Apple
-Macbooks with below messages:
+A typical case involves SDIO WiFi devices with the MMC_PM_KEEP_POWER and
+MMC_PM_WAKE_SDIO_IRQ flag, which retain power during system PM. To
+conserve power, WiFi switches to 1-bit mode and restores 4-bit mode upon
+resume. As per the specification, tuning commands are not supported in
+1-bit mode. When sending CMD52 to restore 4-bit mode, re-tuning must be
+held. However, CMD52 still requires a correct sample point to avoid CRC
+errors, necessitating preservation of the previous tuning value.
 
- kernel: platform pxa2xx-spi.3: Adding to iommu group 20
- kernel: input: Apple SPI Keyboard as
- /devices/pci0000:00/0000:00:1e.3/pxa2xx-spi.3/spi_master/spi2/spi-APP000D:00/input/input0
- kernel: DMAR: DRHD: handling fault status reg 3
- kernel: DMAR: [DMA Read NO_PASID] Request device [00:1e.3] fault addr
- 0xffffa000 [fault reason 0x06] PTE Read access is not set
- kernel: DMAR: DRHD: handling fault status reg 3
- kernel: DMAR: [DMA Read NO_PASID] Request device [00:1e.3] fault addr
- 0xffffa000 [fault reason 0x06] PTE Read access is not set
- kernel: applespi spi-APP000D:00: Error writing to device: 01 0e 00 00
- kernel: DMAR: DRHD: handling fault status reg 3
- kernel: DMAR: [DMA Read NO_PASID] Request device [00:1e.3] fault addr
- 0xffffa000 [fault reason 0x06] PTE Read access is not set
- kernel: DMAR: DRHD: handling fault status reg 3
- kernel: applespi spi-APP000D:00: Error writing to device: 01 0e 00 00
-
-Fix this by restoring the previous context setup order.
-
-Fixes: 2031c469f816 ("iommu/vt-d: Add support for static identity domain")
-Closes: https://lore.kernel.org/all/4dada48a-c5dd-4c30-9c85-5b03b0aa01f0@bfh.ch/
-Cc: stable@vger.kernel.org
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Link: https://lore.kernel.org/r/20250514060523.2862195-1-baolu.lu@linux.intel.com
-Link: https://lore.kernel.org/r/20250520075849.755012-2-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250328112517.2624806-1-ziniu.wang_1@nxp.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c  |   11 +++++++++++
- drivers/iommu/intel/iommu.h  |    1 +
- drivers/iommu/intel/nested.c |    4 ++--
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-esdhc-imx.c | 88 +++++++++++++++++++++++++++++-
+ 1 file changed, 86 insertions(+), 2 deletions(-)
 
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -1970,6 +1970,7 @@ static int dmar_domain_attach_device(str
- 		return ret;
+diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
+index e4e9b84f210b2..28ece6839aead 100644
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -80,6 +80,8 @@
+ #define  ESDHC_TUNE_CTRL_STEP		1
+ #define  ESDHC_TUNE_CTRL_MIN		0
+ #define  ESDHC_TUNE_CTRL_MAX		((1 << 7) - 1)
++#define  ESDHC_TUNE_CTRL_STATUS_TAP_SEL_PRE_MASK	GENMASK(30, 24)
++#define  ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK	GENMASK(14, 8)
  
- 	info->domain = domain;
-+	info->domain_attached = true;
- 	spin_lock_irqsave(&domain->lock, flags);
- 	list_add(&info->link, &domain->devices);
- 	spin_unlock_irqrestore(&domain->lock, flags);
-@@ -3381,6 +3382,10 @@ void device_block_translation(struct dev
- 	struct intel_iommu *iommu = info->iommu;
- 	unsigned long flags;
+ /* strobe dll register */
+ #define ESDHC_STROBE_DLL_CTRL		0x70
+@@ -231,6 +233,7 @@ struct esdhc_platform_data {
+ 	unsigned int tuning_step;       /* The delay cell steps in tuning procedure */
+ 	unsigned int tuning_start_tap;	/* The start delay cell point in tuning procedure */
+ 	unsigned int strobe_dll_delay_target;	/* The delay cell for strobe pad (read clock) */
++	unsigned int saved_tuning_delay_cell;	/* save the value of tuning delay cell */
+ };
  
-+	/* Device in DMA blocking state. Noting to do. */
-+	if (!info->domain_attached)
-+		return;
+ struct esdhc_soc_data {
+@@ -1052,7 +1055,7 @@ static void esdhc_reset_tuning(struct sdhci_host *host)
+ {
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
+-	u32 ctrl;
++	u32 ctrl, tuning_ctrl;
+ 	int ret;
+ 
+ 	/* Reset the tuning circuit */
+@@ -1066,6 +1069,16 @@ static void esdhc_reset_tuning(struct sdhci_host *host)
+ 			writel(0, host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
+ 		} else if (imx_data->socdata->flags & ESDHC_FLAG_STD_TUNING) {
+ 			writel(ctrl, host->ioaddr + ESDHC_MIX_CTRL);
++			/*
++			 * enable the std tuning just in case it cleared in
++			 * sdhc_esdhc_tuning_restore.
++			 */
++			tuning_ctrl = readl(host->ioaddr + ESDHC_TUNING_CTRL);
++			if (!(tuning_ctrl & ESDHC_STD_TUNING_EN)) {
++				tuning_ctrl |= ESDHC_STD_TUNING_EN;
++				writel(tuning_ctrl, host->ioaddr + ESDHC_TUNING_CTRL);
++			}
 +
- 	if (info->domain)
- 		cache_tag_unassign_domain(info->domain, dev, IOMMU_NO_PASID);
- 
-@@ -3393,6 +3398,9 @@ void device_block_translation(struct dev
- 			domain_context_clear(info);
+ 			ctrl = readl(host->ioaddr + SDHCI_AUTO_CMD_STATUS);
+ 			ctrl &= ~ESDHC_MIX_CTRL_SMPCLK_SEL;
+ 			ctrl &= ~ESDHC_MIX_CTRL_EXE_TUNE;
+@@ -1144,7 +1157,8 @@ static void esdhc_prepare_tuning(struct sdhci_host *host, u32 val)
+ 	reg |= ESDHC_MIX_CTRL_EXE_TUNE | ESDHC_MIX_CTRL_SMPCLK_SEL |
+ 			ESDHC_MIX_CTRL_FBCLK_SEL;
+ 	writel(reg, host->ioaddr + ESDHC_MIX_CTRL);
+-	writel(val << 8, host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
++	writel(FIELD_PREP(ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK, val),
++	       host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
+ 	dev_dbg(mmc_dev(host->mmc),
+ 		"tuning with delay 0x%x ESDHC_TUNE_CTRL_STATUS 0x%x\n",
+ 			val, readl(host->ioaddr + ESDHC_TUNE_CTRL_STATUS));
+@@ -1532,6 +1546,57 @@ static void sdhci_esdhc_imx_hwinit(struct sdhci_host *host)
  	}
- 
-+	/* Device now in DMA blocking state. */
-+	info->domain_attached = false;
-+
- 	if (!info->domain)
- 		return;
- 
-@@ -4406,6 +4414,9 @@ static int device_set_dirty_tracking(str
- 			break;
- 	}
- 
-+	if (!ret)
-+		info->domain_attached = true;
-+
- 	return ret;
  }
  
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -776,6 +776,7 @@ struct device_domain_info {
- 	u8 ats_supported:1;
- 	u8 ats_enabled:1;
- 	u8 dtlb_extra_inval:1;	/* Quirk for devices need extra flush */
-+	u8 domain_attached:1;	/* Device has domain attached */
- 	u8 ats_qdep;
- 	struct device *dev; /* it's NULL for PCIe-to-PCI bridge */
- 	struct intel_iommu *iommu; /* IOMMU used by this device */
---- a/drivers/iommu/intel/nested.c
-+++ b/drivers/iommu/intel/nested.c
-@@ -27,8 +27,7 @@ static int intel_nested_attach_dev(struc
- 	unsigned long flags;
- 	int ret = 0;
++static void sdhc_esdhc_tuning_save(struct sdhci_host *host)
++{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
++	u32 reg;
++
++	/*
++	 * SD/eMMC do not need this tuning save because it will re-init
++	 * after system resume back.
++	 * Here save the tuning delay value for SDIO device since it may
++	 * keep power during system PM. And for usdhc, only SDR50 and
++	 * SDR104 mode for SDIO device need to do tuning, and need to
++	 * save/restore.
++	 */
++	if (host->timing == MMC_TIMING_UHS_SDR50 ||
++	    host->timing == MMC_TIMING_UHS_SDR104) {
++		reg = readl(host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
++		reg = FIELD_GET(ESDHC_TUNE_CTRL_STATUS_TAP_SEL_PRE_MASK, reg);
++		imx_data->boarddata.saved_tuning_delay_cell = reg;
++	}
++}
++
++static void sdhc_esdhc_tuning_restore(struct sdhci_host *host)
++{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
++	u32 reg;
++
++	if (host->timing == MMC_TIMING_UHS_SDR50 ||
++	    host->timing == MMC_TIMING_UHS_SDR104) {
++		/*
++		 * restore the tuning delay value actually is a
++		 * manual tuning method, so clear the standard
++		 * tuning enable bit here. Will set back this
++		 * ESDHC_STD_TUNING_EN in esdhc_reset_tuning()
++		 * when trigger re-tuning.
++		 */
++		reg = readl(host->ioaddr + ESDHC_TUNING_CTRL);
++		reg &= ~ESDHC_STD_TUNING_EN;
++		writel(reg, host->ioaddr + ESDHC_TUNING_CTRL);
++
++		reg = readl(host->ioaddr + ESDHC_MIX_CTRL);
++		reg |= ESDHC_MIX_CTRL_SMPCLK_SEL | ESDHC_MIX_CTRL_FBCLK_SEL;
++		writel(reg, host->ioaddr + ESDHC_MIX_CTRL);
++
++		writel(FIELD_PREP(ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK,
++				  imx_data->boarddata.saved_tuning_delay_cell),
++		       host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
++	}
++}
++
+ static void esdhc_cqe_enable(struct mmc_host *mmc)
+ {
+ 	struct sdhci_host *host = mmc_priv(mmc);
+@@ -1856,6 +1921,15 @@ static int sdhci_esdhc_suspend(struct device *dev)
+ 	if (host->tuning_mode != SDHCI_TUNING_MODE_3)
+ 		mmc_retune_needed(host->mmc);
  
--	if (info->domain)
--		device_block_translation(dev);
-+	device_block_translation(dev);
++	/*
++	 * For the device need to keep power during system PM, need
++	 * to save the tuning delay value just in case the usdhc
++	 * lost power during system PM.
++	 */
++	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
++	    esdhc_is_usdhc(imx_data))
++		sdhc_esdhc_tuning_save(host);
++
+ 	ret = sdhci_suspend_host(host);
+ 	if (ret)
+ 		return ret;
+@@ -1872,6 +1946,8 @@ static int sdhci_esdhc_suspend(struct device *dev)
+ static int sdhci_esdhc_resume(struct device *dev)
+ {
+ 	struct sdhci_host *host = dev_get_drvdata(dev);
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
+ 	int ret;
  
- 	if (iommu->agaw < dmar_domain->s2_domain->agaw) {
- 		dev_err_ratelimited(dev, "Adjusted guest address width not compatible\n");
-@@ -62,6 +61,7 @@ static int intel_nested_attach_dev(struc
- 		goto unassign_tag;
+ 	ret = pinctrl_pm_select_default_state(dev);
+@@ -1885,6 +1961,14 @@ static int sdhci_esdhc_resume(struct device *dev)
+ 	if (ret)
+ 		return ret;
  
- 	info->domain = dmar_domain;
-+	info->domain_attached = true;
- 	spin_lock_irqsave(&dmar_domain->lock, flags);
- 	list_add(&info->link, &dmar_domain->devices);
- 	spin_unlock_irqrestore(&dmar_domain->lock, flags);
++	/*
++	 * restore the saved tuning delay value for the device which keep
++	 * power during system PM.
++	 */
++	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
++	    esdhc_is_usdhc(imx_data))
++		sdhc_esdhc_tuning_restore(host);
++
+ 	if (host->mmc->caps2 & MMC_CAP2_CQE)
+ 		ret = cqhci_resume(host->mmc);
+ 
+-- 
+2.39.5
+
 
 
