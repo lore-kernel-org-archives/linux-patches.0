@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89391ACEDA;
-	Mon, 23 Jun 2025 21:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641D01ACEDA;
+	Mon, 23 Jun 2025 21:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713828; cv=none; b=OyTSGVOJmYmwi58Je06uwTJy+UE+AndpVnNfHbKafcKS12oNzgsk9uAlf8ZPEZAE5DsxzIqgJhgELB+injpvt9+KAsoAW/jnmurbu9Nmi9cvq/z9rHc+yqia1CkNx4GL15BkNPxjnx84UiQqSBCIiGzTNFGUCaI7zx3ZQkIN99s=
+	t=1750713830; cv=none; b=ltSr9RaZ9R/fIKqcTX6q4uB6uU8OYCcuJYPR7EHGkNjJrIVWikxdc0LHgIMEosqBLHBFv82KzeE57t+Nykdi9dZAx9SSbN+r5mmCO5cVjslS+TjfpcFqIu2+1b6eFQHICckSwulmWVNPv0DRzQTPnU+/wnUaHKBkzpnCSSmdASw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713828; c=relaxed/simple;
-	bh=7rcjZ0z6wC9+XIiup5BoAsYw2sIBF8YwYvd6yDikqj4=;
+	s=arc-20240116; t=1750713830; c=relaxed/simple;
+	bh=PX2bOr8+ZfiujT415gswOusWDW44C10Epp/Wz1Avh4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nAzuYVzhfqPuYXZqrsez1slDEn1T6yZJ7bsGCGsW5zhU/0M+E977OWRpBdO3JKHbMwV1ZZl2TTtd4ZewTJ0M2ltWvUVeuRt9LEIAvAJKDaRD5pZQ7d2ElRueZMka2d21CPwW3QoG/N72Sv7f9HA+L2/FFwOUDswinuCe7J3zhC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KeWtC+rZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GsKxHQpfLOdJGVPeHlAVIHn2WTJ8Y7Ufaqg+RO+xXjMGMThb4pczg8ZZsPR4kaGsoaNgKjzlrm21FSC3Ho+GNOb0/NhulNKZFiw4bxgmkHgv1FNdIEvP+JnD+CHJstfOyhz5R0G1J+pJeaHxmSbAo5VEJeLfp48PORm4LMi6I/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oNgbz+Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KeWtC+rZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80385C4CEEA;
-	Mon, 23 Jun 2025 21:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oNgbz+Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1828C4CEEA;
+	Mon, 23 Jun 2025 21:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713827;
-	bh=7rcjZ0z6wC9+XIiup5BoAsYw2sIBF8YwYvd6yDikqj4=;
+	s=korg; t=1750713830;
+	bh=PX2bOr8+ZfiujT415gswOusWDW44C10Epp/Wz1Avh4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KeWtC+rZJl8dhLNAGmBF2wEDUR2Ad46A/4HXqNqjxLDuElPuot7wTyJRiuAtJa11S
-	 o+3KgNqD//UJRYlFlKm/S1+tLAQsS7mKfIftpkP5leLe7nNCPF+ZPqz0c/RZP4GZaG
-	 /o8IBYPYxb4JrbFa2erDx5jGLv0N6xtkKTTjSQec=
+	b=0oNgbz+QGdqy2VgAU8ZmH0RIBwtH6gWUxnaPv7RgF43UM9iWuS4p5kU9Cfk98ZrrU
+	 RWecHYeaoVoVDsz2Wel+EMaCW1XFtRR/f9jSAz7y0O8CvTsZcWnb5hyXXBpUEO8iYr
+	 DhHoLP6cCbFwALdexdwzitUjFYkxJSD3jeZ5Aygg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Quentin Monnet <qmo@kernel.org>,
+	Takshak Chahande <ctakshak@meta.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 149/508] nfs: ignore SB_RDONLY when remounting nfs
-Date: Mon, 23 Jun 2025 15:03:14 +0200
-Message-ID: <20250623130648.948756742@linuxfoundation.org>
+Subject: [PATCH 6.15 368/592] bpftool: Fix cgroup command to only show cgroup bpf programs
+Date: Mon, 23 Jun 2025 15:05:26 +0200
+Message-ID: <20250623130709.195256086@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,74 +50,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Martin KaFai Lau <martin.lau@kernel.org>
 
-[ Upstream commit 80c4de6ab44c14e910117a02f2f8241ffc6ec54a ]
+[ Upstream commit b69d4413aa1961930fbf9ffad8376d577378daf9 ]
 
-In some scenarios, when mounting NFS, more than one superblock may be
-created. The final superblock used is the last one created, but only the
-first superblock carries the ro flag passed from user space. If a ro flag
-is added to the superblock via remount, it will trigger the issue
-described in Link[1].
+The netkit program is not a cgroup bpf program and should not be shown
+in the output of the "bpftool cgroup show" command.
 
-Link[2] attempted to address this by marking the superblock as ro during
-the initial mount. However, this introduced a new problem in scenarios
-where multiple mount points share the same superblock:
-[root@a ~]# mount /dev/sdb /mnt/sdb
-[root@a ~]# echo "/mnt/sdb *(rw,no_root_squash)" > /etc/exports
-[root@a ~]# echo "/mnt/sdb/test_dir2 *(ro,no_root_squash)" >> /etc/exports
-[root@a ~]# systemctl restart nfs-server
-[root@a ~]# mount -t nfs -o rw 127.0.0.1:/mnt/sdb/test_dir1 /mnt/test_mp1
-[root@a ~]# mount | grep nfs4
-127.0.0.1:/mnt/sdb/test_dir1 on /mnt/test_mp1 type nfs4 (rw,relatime,...
-[root@a ~]# mount -t nfs -o ro 127.0.0.1:/mnt/sdb/test_dir2 /mnt/test_mp2
-[root@a ~]# mount | grep nfs4
-127.0.0.1:/mnt/sdb/test_dir1 on /mnt/test_mp1 type nfs4 (ro,relatime,...
-127.0.0.1:/mnt/sdb/test_dir2 on /mnt/test_mp2 type nfs4 (ro,relatime,...
-[root@a ~]#
+However, if the netkit device happens to have ifindex 3,
+the "bpftool cgroup show" command will output the netkit
+bpf program as well:
 
-When mounting the second NFS, the shared superblock is marked as ro,
-causing the previous NFS mount to become read-only.
+> ip -d link show dev nk1
+3: nk1@if2: ...
+    link/ether ...
+    netkit mode ...
 
-To resolve both issues, the ro flag is no longer applied to the superblock
-during remount. Instead, the ro flag on the mount is used to control
-whether the mount point is read-only.
+> bpftool net show
+tc:
+nk1(3) netkit/peer tw_ns_nk2phy prog_id 469447
 
-Fixes: 281cad46b34d ("NFS: Create a submount rpc_op")
-Link[1]: https://lore.kernel.org/all/20240604112636.236517-3-lilingfeng@huaweicloud.com/
-Link[2]: https://lore.kernel.org/all/20241130035818.1459775-1-lilingfeng3@huawei.com/
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+> bpftool cgroup show /sys/fs/cgroup/...
+ID       AttachType      AttachFlags     Name
+...      ...                             ...
+469447   netkit_peer                     tw_ns_nk2phy
+
+The reason is that the target_fd (which is the cgroup_fd here) and
+the target_ifindex are in a union in the uapi/linux/bpf.h. The bpftool
+iterates all values in "enum bpf_attach_type" which includes
+non cgroup attach types like netkit. The cgroup_fd is usually 3 here,
+so the bug is triggered when the netkit ifindex just happens
+to be 3 as well.
+
+The bpftool's cgroup.c already has a list of cgroup-only attach type
+defined in "cgroup_attach_types[]". This patch fixes it by iterating
+over "cgroup_attach_types[]" instead of "__MAX_BPF_ATTACH_TYPE".
+
+Cc: Quentin Monnet <qmo@kernel.org>
+Reported-by: Takshak Chahande <ctakshak@meta.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/r/20250507203232.1420762-1-martin.lau@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/super.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ tools/bpf/bpftool/cgroup.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfs/super.c b/fs/nfs/super.c
-index a4679cd75f70a..2dca011da034e 100644
---- a/fs/nfs/super.c
-+++ b/fs/nfs/super.c
-@@ -1017,6 +1017,16 @@ int nfs_reconfigure(struct fs_context *fc)
+diff --git a/tools/bpf/bpftool/cgroup.c b/tools/bpf/bpftool/cgroup.c
+index 3f1d6be512151..944ebe21a2169 100644
+--- a/tools/bpf/bpftool/cgroup.c
++++ b/tools/bpf/bpftool/cgroup.c
+@@ -318,11 +318,11 @@ static int show_bpf_progs(int cgroup_fd, enum bpf_attach_type type,
  
- 	sync_filesystem(sb);
+ static int do_show(int argc, char **argv)
+ {
+-	enum bpf_attach_type type;
+ 	int has_attached_progs;
+ 	const char *path;
+ 	int cgroup_fd;
+ 	int ret = -1;
++	unsigned int i;
  
-+	/*
-+	 * The SB_RDONLY flag has been removed from the superblock during
-+	 * mounts to prevent interference between different filesystems.
-+	 * Similarly, it is also necessary to ignore the SB_RDONLY flag
-+	 * during reconfiguration; otherwise, it may also result in the
-+	 * creation of redundant superblocks when mounting a directory with
-+	 * different rw and ro flags multiple times.
-+	 */
-+	fc->sb_flags_mask &= ~SB_RDONLY;
-+
- 	/*
- 	 * Userspace mount programs that send binary options generally send
- 	 * them populated with default values. We have no way to know which
+ 	query_flags = 0;
+ 
+@@ -370,14 +370,14 @@ static int do_show(int argc, char **argv)
+ 		       "AttachFlags", "Name");
+ 
+ 	btf_vmlinux = libbpf_find_kernel_btf();
+-	for (type = 0; type < __MAX_BPF_ATTACH_TYPE; type++) {
++	for (i = 0; i < ARRAY_SIZE(cgroup_attach_types); i++) {
+ 		/*
+ 		 * Not all attach types may be supported, so it's expected,
+ 		 * that some requests will fail.
+ 		 * If we were able to get the show for at least one
+ 		 * attach type, let's return 0.
+ 		 */
+-		if (show_bpf_progs(cgroup_fd, type, 0) == 0)
++		if (show_bpf_progs(cgroup_fd, cgroup_attach_types[i], 0) == 0)
+ 			ret = 0;
+ 	}
+ 
+@@ -400,9 +400,9 @@ static int do_show(int argc, char **argv)
+ static int do_show_tree_fn(const char *fpath, const struct stat *sb,
+ 			   int typeflag, struct FTW *ftw)
+ {
+-	enum bpf_attach_type type;
+ 	int has_attached_progs;
+ 	int cgroup_fd;
++	unsigned int i;
+ 
+ 	if (typeflag != FTW_D)
+ 		return 0;
+@@ -434,8 +434,8 @@ static int do_show_tree_fn(const char *fpath, const struct stat *sb,
+ 	}
+ 
+ 	btf_vmlinux = libbpf_find_kernel_btf();
+-	for (type = 0; type < __MAX_BPF_ATTACH_TYPE; type++)
+-		show_bpf_progs(cgroup_fd, type, ftw->level);
++	for (i = 0; i < ARRAY_SIZE(cgroup_attach_types); i++)
++		show_bpf_progs(cgroup_fd, cgroup_attach_types[i], ftw->level);
+ 
+ 	if (errno == EINVAL)
+ 		/* Last attach type does not support query.
 -- 
 2.39.5
 
