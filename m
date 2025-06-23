@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFC24C74;
-	Mon, 23 Jun 2025 22:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAB14C74;
+	Mon, 23 Jun 2025 22:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716137; cv=none; b=EBJcssi0kIIHknbDlexoaKw4BiJvnlBU0gDNTUtmOr3bJe3vk6hrjnBQOAiPGaUphHGAyuaxAEpNq5CKheYCgK7yXcGLVT+DHuOjQiXvoqHfMoISlkdOLI0xVNzzRDbvQkistDBEUzFTmE2HCgnEeYvLs9OZPhctk6Er2aSVleM=
+	t=1750716139; cv=none; b=AnRbDmtCTwmijHXJSzzdL6qJyLH0jvj9JyunQo0WJo+uVLo0MSdgLpZxR2gOPdNA5wRON+aixjBzbuyk6f/VU1YbLPoS6qeUKXFsUMOApMfhg/fPZa170z0IB+CJlTuSRleBqtKkgFe4jVju2BnObKUfAveE53BEDnnB30KHIgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716137; c=relaxed/simple;
-	bh=I5784QhwCrI4bPjmLjC6CngW3k4BbxnqI0NyPRbP+AI=;
+	s=arc-20240116; t=1750716139; c=relaxed/simple;
+	bh=1uz4gfJBC/lelKQL1QBAZjeeZdbcBoUFn3hJZ6XTApM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mji/Rg1M/ZVT7QkVNhVe5/CeyrI4m6sXx9pATPfGVjiXe4ESk+1dTuJBIxGVsZIdsSYpIpKRiL9PEoI21BiSMCqQi2ri3Rs5JlTpCPCjTdUMgRSgB2HCX3ZjR/s6vlPW7XO6ZQnHIWWrgQ0Ys/umT624f94E4i05xwH01Uc5PI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q4siDoUN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DDV451x7960vOkSy3f54yUOtOmyUBC8sbtAr5xlVP5u6JvEMAPY8Z+o6px3G7mWfJtdF/aX+m9Ipu6JclpqBGkNz+t/F2NBEhgNzw6WfG2jZwxaMHNLkEb9HjL8AvhDsKPfjKXXF9WE2ltbjxkVlXF5GAQvD+SE5/bB1+nNyItI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ca933SLy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4siDoUN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC80DC4CEEA;
-	Mon, 23 Jun 2025 22:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ca933SLy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC1AC4CEEA;
+	Mon, 23 Jun 2025 22:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716137;
-	bh=I5784QhwCrI4bPjmLjC6CngW3k4BbxnqI0NyPRbP+AI=;
+	s=korg; t=1750716139;
+	bh=1uz4gfJBC/lelKQL1QBAZjeeZdbcBoUFn3hJZ6XTApM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q4siDoUNGgnr3myp7TW+RQL3eFzVl8/FXEylnPzP7OiPZIDLNcUezpHTlHCgUbeeJ
-	 2AU7aTcMxu6EcBUli9axJ8+eG20kX8fVXniyEGA5Ir4Z5oz7HZ0AU/e1mK+XzOykt7
-	 01GMC3Yjdo3+z5Fq0glRY4uA9rEOUrvUg/4aiUng=
+	b=Ca933SLybrKWkl9/u8t/HY/luEJCCBkHiLsdUqmFsPXCq3MIEQyl9NtSB/UZ22Tuz
+	 pzXZl+nzNQp4+OxmxLFmgMcn5LPPzBrvK+N3/B/0Ox3W1HszlXWTtNm5fgWxBtR22H
+	 MVY4Xz6I+NUA+uZmnVLGitwpIIKBAeyLvXM2Fwac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Bharath SM <bharathsm@microsoft.com>,
-	xfuren <xfuren@gmail.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.15 504/592] smb: fix secondary channel creation issue with kerberos by populating hostname when adding channels
-Date: Mon, 23 Jun 2025 15:07:42 +0200
-Message-ID: <20250623130712.423292018@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Will Deacon <will@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>
+Subject: [PATCH 5.10 323/355] arm64: move AARCH64_BREAK_FAULT into insn-def.h
+Date: Mon, 23 Jun 2025 15:08:44 +0200
+Message-ID: <20250623130636.471359981@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bharath SM <bharathsm@microsoft.com>
+From: Hou Tao <houtao1@huawei.com>
 
-commit 306cb65bb0cb243389fcbd0a66907d5bdea07d1e upstream.
+[ Upstream commit 97e58e395e9c074fd096dad13c54e9f4112cf71d ]
 
-When mounting a share with kerberos authentication with multichannel
-support, share mounts correctly, but fails to create secondary
-channels. This occurs because the hostname is not populated when
-adding the channels. The hostname is necessary for the userspace
-cifs.upcall program to retrieve the required credentials and pass
-it back to kernel, without hostname secondary channels fails
-establish.
+If CONFIG_ARM64_LSE_ATOMICS is off, encoders for LSE-related instructions
+can return AARCH64_BREAK_FAULT directly in insn.h. In order to access
+AARCH64_BREAK_FAULT in insn.h, we can not include debug-monitors.h in
+insn.h, because debug-monitors.h has already depends on insn.h, so just
+move AARCH64_BREAK_FAULT into insn-def.h.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Bharath SM <bharathsm@microsoft.com>
-Reported-by: xfuren <xfuren@gmail.com>
-Link: https://bugzilla.samba.org/show_bug.cgi?id=15824
-Signed-off-by: Steve French <stfrench@microsoft.com>
+It will be used by the following patch to eliminate unnecessary LSE-related
+encoders when CONFIG_ARM64_LSE_ATOMICS is off.
+
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20220217072232.1186625-2-houtao1@huawei.com
+Signed-off-by: Will Deacon <will@kernel.org>
+[not exist insn-def.h file, move to insn.h]
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/sess.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/include/asm/debug-monitors.h |   12 ------------
+ arch/arm64/include/asm/insn.h           |   12 ++++++++++++
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -498,8 +498,7 @@ cifs_ses_add_channel(struct cifs_ses *se
- 	ctx->domainauto = ses->domainAuto;
- 	ctx->domainname = ses->domainName;
+--- a/arch/arm64/include/asm/debug-monitors.h
++++ b/arch/arm64/include/asm/debug-monitors.h
+@@ -34,18 +34,6 @@
+  */
+ #define BREAK_INSTR_SIZE		AARCH64_INSN_SIZE
  
--	/* no hostname for extra channels */
--	ctx->server_hostname = "";
-+	ctx->server_hostname = ses->server->hostname;
+-/*
+- * BRK instruction encoding
+- * The #imm16 value should be placed at bits[20:5] within BRK ins
+- */
+-#define AARCH64_BREAK_MON	0xd4200000
+-
+-/*
+- * BRK instruction for provoking a fault on purpose
+- * Unlike kgdb, #imm16 value with unallocated handler is used for faulting.
+- */
+-#define AARCH64_BREAK_FAULT	(AARCH64_BREAK_MON | (FAULT_BRK_IMM << 5))
+-
+ #define AARCH64_BREAK_KGDB_DYN_DBG	\
+ 	(AARCH64_BREAK_MON | (KGDB_DYN_DBG_BRK_IMM << 5))
  
- 	ctx->username = ses->user_name;
- 	ctx->password = ses->password;
+--- a/arch/arm64/include/asm/insn.h
++++ b/arch/arm64/include/asm/insn.h
+@@ -13,6 +13,18 @@
+ /* A64 instructions are always 32 bits. */
+ #define	AARCH64_INSN_SIZE		4
+ 
++/*
++ * BRK instruction encoding
++ * The #imm16 value should be placed at bits[20:5] within BRK ins
++ */
++#define AARCH64_BREAK_MON      0xd4200000
++
++/*
++ * BRK instruction for provoking a fault on purpose
++ * Unlike kgdb, #imm16 value with unallocated handler is used for faulting.
++ */
++#define AARCH64_BREAK_FAULT    (AARCH64_BREAK_MON | (FAULT_BRK_IMM << 5))
++
+ #ifndef __ASSEMBLY__
+ /*
+  * ARM Architecture Reference Manual for ARMv8 Profile-A, Issue A.a
 
 
