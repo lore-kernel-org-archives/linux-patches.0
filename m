@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6932C9D;
-	Mon, 23 Jun 2025 21:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40CF4C62;
+	Mon, 23 Jun 2025 21:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713565; cv=none; b=N4mASKCYl3oT2vyU+X0YTy4RHnf5vntP6/Qz+q6Q5FN3Ducx/YAAIHmWz/s9ugud2mkek3uaKRRyAgkUgtdtYFYNHBOp7QaohIfjNSgar0BO5SePRBslFJyzaEvKasTpbz64SBtvLg0kcNZ3K51ehpWeEWPQVLWybPcKmPUUIRY=
+	t=1750713568; cv=none; b=dGRIHPtRUjJWAvV4RoT0rEe8rdF0eTFyIb/27PvWEESnQvno0PVpyktCHciRhOMD3TOYDnmYqaO2oEmU8r0HeYzg+IyCxNDhL/k8fnGp2aXN+/YcaIrszuz9yBBmIiwdBvXfN+dSqFKZdAQTtJNsX82/El451/Gv0N8lwpvJRO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713565; c=relaxed/simple;
-	bh=H+mxZ1n1RtCHAskMfauiWK8sgBRMpOg9b95AVLgGGF8=;
+	s=arc-20240116; t=1750713568; c=relaxed/simple;
+	bh=VzWf7hDtdHfDM1VMNj++4w+E5XJ7Lt7gFmEDZoOb7yA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=doeIzX06W1K6/DyL3o0mic/w1UnRtIRK1CGcZlWPArfsOutA8nQVPRsSb3abSjYgBkgD6aLCvGIW+nqucV2H+0FgZQgXdq5xnNK7F03pKgDvAgM0OQBhXg7Bzm6DhrCRlW/qJzXS32PEG+N/b4X6dp65t29WckeWwIxr2DSxgPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBiYfSju; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SsV/miZvIqcejy8oxiDZMXsWVWoUwk0ozYvkSk/qurhsS5Oh0o6JrTJlVIPakzD9VABSfjx1uTclP/d0aNmx/bKxTW1gv9eu4KZL1NBiFfYkuUNXzQtKOILqf2F/ToBzTJiO0Q2PVKSmKUXsO1XC2KkhH5boXw0CHqXNrCMT3k4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNH3NlSc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBiYfSju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14681C4CEEA;
-	Mon, 23 Jun 2025 21:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNH3NlSc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BEB4C4CEEA;
+	Mon, 23 Jun 2025 21:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713565;
-	bh=H+mxZ1n1RtCHAskMfauiWK8sgBRMpOg9b95AVLgGGF8=;
+	s=korg; t=1750713567;
+	bh=VzWf7hDtdHfDM1VMNj++4w+E5XJ7Lt7gFmEDZoOb7yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NBiYfSjuv22uJEHJgLWIbL/a3lHWxMlugDcJLFDxx5WEh843hfl9W+iJ7i8sUZdVH
-	 Vi+9ygzrgXAz5/CX6jnMkp4Ac0zJ3bsG6IG5T46jKp24GJCqiSMi3SK6CbwoTThYZx
-	 cJIvvhdO1Bo0tRbZROf1GqnuQCiNKHee2cboq46c=
+	b=RNH3NlScc/WgU1JQ8U+OABYMfyor1HNTHtvwVs/bjfX9EPyYDgea5JeIVk20A0Ot/
+	 ON86nTaxUHUeyKY7CJuCcE8y3sntONuRuwS7QO1UYd2t1hmjebpqJ+M0L5mOniIPgA
+	 96WVG0kSokUKG9I+xwg+7UehxS9PSAMb/83d6HZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 193/222] atm: Revert atm_account_tx() if copy_from_iter_full() fails.
-Date: Mon, 23 Jun 2025 15:08:48 +0200
-Message-ID: <20250623130618.037067031@linuxfoundation.org>
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 104/508] f2fs: use d_inode(dentry) cleanup dentry->d_inode
+Date: Mon, 23 Jun 2025 15:02:29 +0200
+Message-ID: <20250623130647.838946820@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +48,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-commit 7851263998d4269125fd6cb3fdbfc7c6db853859 upstream.
+[ Upstream commit a6c397a31f58a1d577c2c8d04b624e9baa31951c ]
 
-In vcc_sendmsg(), we account skb->truesize to sk->sk_wmem_alloc by
-atm_account_tx().
+no logic changes.
 
-It is expected to be reverted by atm_pop_raw() later called by
-vcc->dev->ops->send(vcc, skb).
-
-However, vcc_sendmsg() misses the same revert when copy_from_iter_full()
-fails, and then we will leak a socket.
-
-Let's factorise the revert part as atm_return_tx() and call it in
-the failure path.
-
-Note that the corresponding sk_wmem_alloc operation can be found in
-alloc_tx() as of the blamed commit.
-
-  $ git blame -L:alloc_tx net/atm/common.c c55fa3cccbc2c~
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Simon Horman <horms@kernel.org>
-Closes: https://lore.kernel.org/netdev/20250614161959.GR414686@horms.kernel.org/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250616182147.963333-3-kuni1840@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/atmdev.h |    6 ++++++
- net/atm/common.c       |    1 +
- net/atm/raw.c          |    2 +-
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ fs/f2fs/namei.c | 8 ++++----
+ fs/f2fs/super.c | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/include/linux/atmdev.h
-+++ b/include/linux/atmdev.h
-@@ -257,6 +257,12 @@ static inline void atm_account_tx(struct
- 	ATM_SKB(skb)->atm_options = vcc->atm_options;
- }
+diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
+index 9da104c0743c4..77fa3c639ba38 100644
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -401,7 +401,7 @@ static int f2fs_link(struct dentry *old_dentry, struct inode *dir,
  
-+static inline void atm_return_tx(struct atm_vcc *vcc, struct sk_buff *skb)
-+{
-+	WARN_ON_ONCE(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize,
-+					   &sk_atm(vcc)->sk_wmem_alloc));
-+}
-+
- static inline void atm_force_charge(struct atm_vcc *vcc,int truesize)
- {
- 	atomic_add(truesize, &sk_atm(vcc)->sk_rmem_alloc);
---- a/net/atm/common.c
-+++ b/net/atm/common.c
-@@ -635,6 +635,7 @@ int vcc_sendmsg(struct socket *sock, str
+ 	if (is_inode_flag_set(dir, FI_PROJ_INHERIT) &&
+ 			(!projid_eq(F2FS_I(dir)->i_projid,
+-			F2FS_I(old_dentry->d_inode)->i_projid)))
++			F2FS_I(inode)->i_projid)))
+ 		return -EXDEV;
  
- 	skb->dev = NULL; /* for paths shared with net_device interfaces */
- 	if (!copy_from_iter_full(skb_put(skb, size), size, &m->msg_iter)) {
-+		atm_return_tx(vcc, skb);
- 		kfree_skb(skb);
- 		error = -EFAULT;
- 		goto out;
---- a/net/atm/raw.c
-+++ b/net/atm/raw.c
-@@ -36,7 +36,7 @@ static void atm_pop_raw(struct atm_vcc *
+ 	err = f2fs_dquot_initialize(dir);
+@@ -896,7 +896,7 @@ static int f2fs_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
  
- 	pr_debug("(%d) %d -= %d\n",
- 		 vcc->vci, sk_wmem_alloc_get(sk), ATM_SKB(skb)->acct_truesize);
--	WARN_ON(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize, &sk->sk_wmem_alloc));
-+	atm_return_tx(vcc, skb);
- 	dev_kfree_skb_any(skb);
- 	sk->sk_write_space(sk);
- }
+ 	if (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
+ 			(!projid_eq(F2FS_I(new_dir)->i_projid,
+-			F2FS_I(old_dentry->d_inode)->i_projid)))
++			F2FS_I(old_inode)->i_projid)))
+ 		return -EXDEV;
+ 
+ 	/*
+@@ -1085,10 +1085,10 @@ static int f2fs_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 
+ 	if ((is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
+ 			!projid_eq(F2FS_I(new_dir)->i_projid,
+-			F2FS_I(old_dentry->d_inode)->i_projid)) ||
++			F2FS_I(old_inode)->i_projid)) ||
+ 	    (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
+ 			!projid_eq(F2FS_I(old_dir)->i_projid,
+-			F2FS_I(new_dentry->d_inode)->i_projid)))
++			F2FS_I(new_inode)->i_projid)))
+ 		return -EXDEV;
+ 
+ 	err = f2fs_dquot_initialize(old_dir);
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 72160b906f4b3..c1738820a8f0d 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1830,9 +1830,9 @@ static int f2fs_statfs(struct dentry *dentry, struct kstatfs *buf)
+ 	buf->f_fsid    = u64_to_fsid(id);
+ 
+ #ifdef CONFIG_QUOTA
+-	if (is_inode_flag_set(dentry->d_inode, FI_PROJ_INHERIT) &&
++	if (is_inode_flag_set(d_inode(dentry), FI_PROJ_INHERIT) &&
+ 			sb_has_quota_limits_enabled(sb, PRJQUOTA)) {
+-		f2fs_statfs_project(sb, F2FS_I(dentry->d_inode)->i_projid, buf);
++		f2fs_statfs_project(sb, F2FS_I(d_inode(dentry))->i_projid, buf);
+ 	}
+ #endif
+ 	return 0;
+-- 
+2.39.5
+
 
 
