@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AEA225A47;
-	Mon, 23 Jun 2025 22:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EA22192EC;
+	Mon, 23 Jun 2025 22:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717280; cv=none; b=FW89XtM+w2eoxaIt0xdHjqifnYIZB4hnN4yw/gRe5lEUruQpcazr5dZqYoug75Iwc9nAulO+2RsREDRc4i5wwCmUB2qtrylkHn/BC22sAfHrxzsjOzD2tz2Y+VZHHJZyGcT/O1lZ3lk+1DXfQd/R57TCx7501mnspOOequcyQ+8=
+	t=1750717282; cv=none; b=QLfmO3L12QSHnsQpQwp91ZYnDwLBoE+IXSWtbCMub3Y3WSgK+K84dUqwUUJS0dK6Sb64ewo2ne7n8Rc3O/D70TX0/QDY6s1RC1w8RN/R2GzUp5ix8vx51ZezH5NyUcJqd3Xzgo9cyNxzPP4plE/uyD/JltdSYO/++k2H5rqfdGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717280; c=relaxed/simple;
-	bh=X52zl2bdaQ4UjnDohsNoaxxUJokEWXa2GXPCjfHuaiA=;
+	s=arc-20240116; t=1750717282; c=relaxed/simple;
+	bh=R83DXez0/BevVHHBAnJUScvQYbamP9INLpsRwC7o1Rw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mc9EaA66U0UgZoOxY4SR0p5xxz2a9SDkOn45bzpbmnJ8kXNjpQh0YKj+Uz/omtI0RSw4j/sV8GUsjoCNaFyAJ3OLvbcg7qfRa0rvNyOyuOEAHA6Syzx5I8RT1JUvdItm7N+rXboU9H4JTK5P3W9vOJPyDWjueMrBz5bWMvVCWmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxWvGLTA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lDxRzAI2Kv5EjfvwJXiyVCrnsVlJRh8j1YylL7DstnF+5ZRaXk03WCIIF0oCH1a4RG8h7T6O9u0/YR6OO9YoQ8RXnJq6dJE1xLpAOaBYDa3S65Y5JytHypF739c6QQpLR/gEBrj1y9+6Qvw7FrM5CYMG9aXjgHFnNz9uhm1to9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUW74p2W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxWvGLTA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82065C4CEF6;
-	Mon, 23 Jun 2025 22:21:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUW74p2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF361C4CEED;
+	Mon, 23 Jun 2025 22:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717279;
-	bh=X52zl2bdaQ4UjnDohsNoaxxUJokEWXa2GXPCjfHuaiA=;
+	s=korg; t=1750717282;
+	bh=R83DXez0/BevVHHBAnJUScvQYbamP9INLpsRwC7o1Rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxWvGLTAU1jXI2jZW/dxpYnOjiZrRA2NkpDB5XQa3q0dNB1s1RbWOqGs2CptLdVjS
-	 0lIhRej4xbleqfYE6DK4znVKV4oFVw30Ev6GRn8brrNzOzIVmh7t6DOmi4D7i3UK2L
-	 V2nMlFis7KHomcZsDMO87gxYexYhI9SSoPjQG8y0=
+	b=hUW74p2WBQ5FZFO1lmLTqo7x0ixfojbnMc2rMTPYGyBtBl5ku4xPk0knJ96ZmBpST
+	 Uz6zLGk+NrJBxIxTcvFtwtSrEJWfWr/wPw9kBr11j/6ZBWQOhmWs+nnCmZxmqmkvjU
+	 rIwwI26mlFbNWJQQN7JHXvIy4NpbM4x3Occ7I5ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Williams <sam8641@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 394/508] wifi: mt76: mt7921: add 160 MHz AP for mt7922 device
-Date: Mon, 23 Jun 2025 15:07:19 +0200
-Message-ID: <20250623130654.961901436@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	xfuren <xfuren@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 352/414] smb: fix secondary channel creation issue with kerberos by populating hostname when adding channels
+Date: Mon, 23 Jun 2025 15:08:09 +0200
+Message-ID: <20250623130650.774601200@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Williams <sam8641@gmail.com>
+From: Bharath SM <bharathsm@microsoft.com>
 
-[ Upstream commit 7011faebe543f8f094fdb3281d0ec9e1eab81309 ]
+commit 306cb65bb0cb243389fcbd0a66907d5bdea07d1e upstream.
 
-This allows mt7922 in hostapd mode to transmit up to 1.4 Gbps.
+When mounting a share with kerberos authentication with multichannel
+support, share mounts correctly, but fails to create secondary
+channels. This occurs because the hostname is not populated when
+adding the channels. The hostname is necessary for the userspace
+cifs.upcall program to retrieve the required credentials and pass
+it back to kernel, without hostname secondary channels fails
+establish.
 
-Signed-off-by: Samuel Williams <sam8641@gmail.com>
-Link: https://patch.msgid.link/20250511005316.1118961-1-sam8641@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Bharath SM <bharathsm@microsoft.com>
+Reported-by: xfuren <xfuren@gmail.com>
+Link: https://bugzilla.samba.org/show_bug.cgi?id=15824
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/client/sess.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-index 5070cc23917bd..7adda1718d6ac 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -104,6 +104,11 @@ mt7921_init_he_caps(struct mt7921_phy *phy, enum nl80211_band band,
- 			he_cap_elem->phy_cap_info[9] |=
- 				IEEE80211_HE_PHY_CAP9_TX_1024_QAM_LESS_THAN_242_TONE_RU |
- 				IEEE80211_HE_PHY_CAP9_RX_1024_QAM_LESS_THAN_242_TONE_RU;
-+
-+			if (is_mt7922(phy->mt76->dev)) {
-+				he_cap_elem->phy_cap_info[0] |=
-+					IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_160MHZ_IN_5G;
-+			}
- 			break;
- 		case NL80211_IFTYPE_STATION:
- 			he_cap_elem->mac_cap_info[1] |=
--- 
-2.39.5
-
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -526,8 +526,7 @@ cifs_ses_add_channel(struct cifs_ses *se
+ 	ctx->domainauto = ses->domainAuto;
+ 	ctx->domainname = ses->domainName;
+ 
+-	/* no hostname for extra channels */
+-	ctx->server_hostname = "";
++	ctx->server_hostname = ses->server->hostname;
+ 
+ 	ctx->username = ses->user_name;
+ 	ctx->password = ses->password;
 
 
