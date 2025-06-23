@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681292472A2;
-	Mon, 23 Jun 2025 13:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E97254AFF;
+	Mon, 23 Jun 2025 13:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685836; cv=none; b=GApFSJjq0sSqB2jPljjgwGbdLrKsY36S3b8GzgNh1gB6r2DZ6MHzMnrGvT9ERXPNnSr1Cgo3c3FFRV2Br957CBKfmcYtkxfLB1qdl2akT2kYidRvE7XFeI9AsVxs8psioyLi+bPjS/XL+8XacHHH2HFinc9v4ZUy+kPBuDdxStA=
+	t=1750685839; cv=none; b=a210d37UqEjVaaBihSGNVdQ1eKZpWq/4yyI01XZefptTr1n9p/E+6HNymuG2QBesf8qrMhpUZo723hyrhpN8OLQp4wtpL7HAO5hLD8w0Et5RAmTkVMaDKlw7AwTjTm7icUNjBAANhzesFaaTGaEBcrzyVGMWbqAK9i890MIH6wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685836; c=relaxed/simple;
-	bh=myXgfJ59OgRKzLG1lMBSJBJvyJBi1NkZw6ihPkeFJmQ=;
+	s=arc-20240116; t=1750685839; c=relaxed/simple;
+	bh=SDZPsabRaW9jIlauavQQoQAPW19GGcmWyzSxo0Dj4Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKhDI+gp903QNX4PzDVv2LNJvLsE7/qB5U3242GxLunLR3aVvp87NFAJAOR9Y7L/gok9QvMzyiAXsFblEGevO60UNYKIfKiE6DtfItUVvFIyY7a7Kxhc3Qkm1dDBuLuXRnzOhycJYLEIYCgjuSNrEFpuEdpnIpPtu5lildff0UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sks8QZDo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KxOFTDucGhGwjYfc37+0tCUhOyLbYitI4hnyfh8tqf0+kBRtRI/CDXIUERmtDJFUXgkKavViLYUQI/oA/XSoZpE2u/BUNK8ALt9L25Lidete1y9YcHPpbhNNu694nL3cB/Ax07QxbGabVLoxqt3wbMSHVkEEcWV1A6LEJ9OR8aQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUTZDtfp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sks8QZDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA10C4CEEA;
-	Mon, 23 Jun 2025 13:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUTZDtfp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C739C4CEEA;
+	Mon, 23 Jun 2025 13:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685836;
-	bh=myXgfJ59OgRKzLG1lMBSJBJvyJBi1NkZw6ihPkeFJmQ=;
+	s=korg; t=1750685839;
+	bh=SDZPsabRaW9jIlauavQQoQAPW19GGcmWyzSxo0Dj4Mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sks8QZDoYCYqTi8iYyO4IAHUnTtQCTo1BenkDeUl7cyMAr15trARX/x9VUSuXvKU/
-	 8SzNFXjAP/3oQmiSw1nw+XamlO56hd+4oXEqArJ9mUgJLPHbaJMqU4YeRYCCfSShoh
-	 AagKRC54P0jdIez/JIOjTfS3si7wsJvkHrCFMEOs=
+	b=aUTZDtfpYivgsxr8aHX2NpRWQfDkJ0qTy3fRNa+FtUSu+6losL1bXnNVJvwAPpgHb
+	 xDb1ZkeZOWlD0QSFUtdnGQWkT1vK9/SxNE5nBnDoX5e7X9vgBj/Hzh6ER9TMgCKpwG
+	 Qxuuy6v1NEkgiYJWqlFRakvwmiJ60wo0kNsgcCUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/508] IB/cm: use rwlock for MAD agent lock
-Date: Mon, 23 Jun 2025 15:01:39 +0200
-Message-ID: <20250623130646.574486333@linuxfoundation.org>
+Subject: [PATCH 5.4 144/222] drm/msm/hdmi: add runtime PM calls to DDC transfer function
+Date: Mon, 23 Jun 2025 15:07:59 +0200
+Message-ID: <20250623130616.418088108@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,119 +48,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 4dab26bed543584577b64b36aadb8b5b165bf44f ]
+[ Upstream commit 531b4e2c206e5f7dead04d9da84dfa693ac57481 ]
 
-In workloads where there are many processes establishing connections using
-RDMA CM in parallel (large scale MPI), there can be heavy contention for
-mad_agent_lock in cm_alloc_msg.
+We must be sure that the HDMI controller is powered on, while performing
+the DDC transfer. Add corresponding runtime PM calls to
+msm_hdmi_i2c_xfer().
 
-This contention can occur while inside of a spin_lock_irq region, leading
-to interrupts being disabled for extended durations on many
-cores. Furthermore, it leads to the serialization of rdma_create_ah calls,
-which has negative performance impacts for NICs which are capable of
-processing multiple address handle creations in parallel.
-
-The end result is the machine becoming unresponsive, hung task warnings,
-netdev TX timeouts, etc.
-
-Since the lock appears to be only for protection from cm_remove_one, it
-can be changed to a rwlock to resolve these issues.
-
-Reproducer:
-
-Server:
-  for i in $(seq 1 512); do
-    ucmatose -c 32 -p $((i + 5000)) &
-  done
-
-Client:
-  for i in $(seq 1 512); do
-    ucmatose -c 32 -p $((i + 5000)) -s 10.2.0.52 &
-  done
-
-Fixes: 76039ac9095f ("IB/cm: Protect cm_dev, cm_ports and mad_agent with kref and lock")
-Link: https://patch.msgid.link/r/20250220175612.2763122-1-jmoroni@google.com
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Acked-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/651727/
+Link: https://lore.kernel.org/r/20250505-fd-hdmi-hpd-v5-8-48541f76318c@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cm.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi_i2c.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
-index 950fe205995b7..0a113d0d6b08f 100644
---- a/drivers/infiniband/core/cm.c
-+++ b/drivers/infiniband/core/cm.c
-@@ -166,7 +166,7 @@ struct cm_port {
- struct cm_device {
- 	struct kref kref;
- 	struct list_head list;
--	spinlock_t mad_agent_lock;
-+	rwlock_t mad_agent_lock;
- 	struct ib_device *ib_device;
- 	u8 ack_delay;
- 	int going_down;
-@@ -284,7 +284,7 @@ static struct ib_mad_send_buf *cm_alloc_msg(struct cm_id_private *cm_id_priv)
- 	if (!cm_id_priv->av.port)
- 		return ERR_PTR(-EINVAL);
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
+index de182c0048434..9c78c6c528bea 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
+@@ -107,11 +107,15 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
+ 	if (num == 0)
+ 		return num;
  
--	spin_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
-+	read_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
- 	mad_agent = cm_id_priv->av.port->mad_agent;
- 	if (!mad_agent) {
- 		m = ERR_PTR(-EINVAL);
-@@ -315,7 +315,7 @@ static struct ib_mad_send_buf *cm_alloc_msg(struct cm_id_private *cm_id_priv)
- 	m->context[0] = cm_id_priv;
++	ret = pm_runtime_resume_and_get(&hdmi->pdev->dev);
++	if (ret)
++		return ret;
++
+ 	init_ddc(hdmi_i2c);
  
- out:
--	spin_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
-+	read_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
- 	return m;
+ 	ret = ddc_clear_irq(hdmi_i2c);
+ 	if (ret)
+-		return ret;
++		goto fail;
+ 
+ 	for (i = 0; i < num; i++) {
+ 		struct i2c_msg *p = &msgs[i];
+@@ -169,7 +173,7 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
+ 				hdmi_read(hdmi, REG_HDMI_DDC_SW_STATUS),
+ 				hdmi_read(hdmi, REG_HDMI_DDC_HW_STATUS),
+ 				hdmi_read(hdmi, REG_HDMI_DDC_INT_CTRL));
+-		return ret;
++		goto fail;
+ 	}
+ 
+ 	ddc_status = hdmi_read(hdmi, REG_HDMI_DDC_SW_STATUS);
+@@ -202,7 +206,13 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
+ 		}
+ 	}
+ 
++	pm_runtime_put(&hdmi->pdev->dev);
++
+ 	return i;
++
++fail:
++	pm_runtime_put(&hdmi->pdev->dev);
++	return ret;
  }
  
-@@ -1294,10 +1294,10 @@ static __be64 cm_form_tid(struct cm_id_private *cm_id_priv)
- 	if (!cm_id_priv->av.port)
- 		return cpu_to_be64(low_tid);
- 
--	spin_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
-+	read_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
- 	if (cm_id_priv->av.port->mad_agent)
- 		hi_tid = ((u64)cm_id_priv->av.port->mad_agent->hi_tid) << 32;
--	spin_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
-+	read_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
- 	return cpu_to_be64(hi_tid | low_tid);
- }
- 
-@@ -4365,7 +4365,7 @@ static int cm_add_one(struct ib_device *ib_device)
- 		return -ENOMEM;
- 
- 	kref_init(&cm_dev->kref);
--	spin_lock_init(&cm_dev->mad_agent_lock);
-+	rwlock_init(&cm_dev->mad_agent_lock);
- 	cm_dev->ib_device = ib_device;
- 	cm_dev->ack_delay = ib_device->attrs.local_ca_ack_delay;
- 	cm_dev->going_down = 0;
-@@ -4481,9 +4481,9 @@ static void cm_remove_one(struct ib_device *ib_device, void *client_data)
- 		 * The above ensures no call paths from the work are running,
- 		 * the remaining paths all take the mad_agent_lock.
- 		 */
--		spin_lock(&cm_dev->mad_agent_lock);
-+		write_lock(&cm_dev->mad_agent_lock);
- 		port->mad_agent = NULL;
--		spin_unlock(&cm_dev->mad_agent_lock);
-+		write_unlock(&cm_dev->mad_agent_lock);
- 		ib_unregister_mad_agent(mad_agent);
- 		ib_port_unregister_client_groups(ib_device, i,
- 						 cm_counter_groups);
+ static u32 msm_hdmi_i2c_func(struct i2c_adapter *adapter)
 -- 
 2.39.5
 
