@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58B21F7580;
-	Mon, 23 Jun 2025 22:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0781F7580;
+	Mon, 23 Jun 2025 22:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716771; cv=none; b=s1/6vcfrMd5ZBCyDUTwfSV51zL3CP3A/HmeyNDvohrjuNqcNrv31zPW8VkiSfcHmzNt+X+0qCIHoAQz5eHPVQtZ4FGOxiOjKRHHCS3TUTXtuLHBLhjf5+4vwIYLDC2Z20LtwwBMSaN5qPGWrgySV+GnxldSuSbRj35qefPv4iTk=
+	t=1750716774; cv=none; b=jY55DqdKZ7RQkSw/L3z0rFNOHgrwRHpdsKfU8vaifPMHz4ZAMdt28McFZY/12w829sJJZYp7s8PqapGug2LC2wVDg7+zsV56vAJO1f7IaZ6Tmr0M2IBysVPahM6+VBFnLSbej0qUPxwXGSm/e2ozUZOSo5pMPQIWUjaQQDd5EDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716771; c=relaxed/simple;
-	bh=ZGPuwfNHTdkjZmYFxDAbNqfBGZ+aBPTE8Go2L0f1bM8=;
+	s=arc-20240116; t=1750716774; c=relaxed/simple;
+	bh=9Cv0Y/c/CqGxO2Gh70CHxF09UO1t64z+oVF7b9ndCCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oOUlNIZaspK7WTHPTaRvSBWLbBi2/WBohs5x13w0Zzu1BcJxnde6yb1oawP45VxTixYqyBh/dZaStX10lXr69UQxsqVi5GwnITbp7OrB6+8FP5rWYTyxYlLUeZACSXZ3/WFFiO55OX1bbmJAy0b++HQQXoE+8WeRWxj9wLd/qOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkC39lcF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bvwzrnIkp6894B9RqE6GYG/Ayt7zWEYAVdUCfIMqddyF4csn8Af6tHkvP8fPKbL23bpTUWecd9zW4RQ+42VSQEaWEt9oTG90cjt2yawr0mPrPHqy/AebXFNDuB0pkWPC4LC6kMTsfzhwqyrz3zVvCh+DXhEmMGfbaTrRcFKv+OE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UP1FeCkt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkC39lcF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 648A2C4CEEA;
-	Mon, 23 Jun 2025 22:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UP1FeCkt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA023C4CEF1;
+	Mon, 23 Jun 2025 22:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716771;
-	bh=ZGPuwfNHTdkjZmYFxDAbNqfBGZ+aBPTE8Go2L0f1bM8=;
+	s=korg; t=1750716774;
+	bh=9Cv0Y/c/CqGxO2Gh70CHxF09UO1t64z+oVF7b9ndCCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zkC39lcF6yMA/pvKt/MOqSa+vLF5clLK80RVy8ZEX35nKsp/ezH5EjDBU9JUeqEWO
-	 hD0tOIu3jNIG6sebOV1xiYCgqGVeH/fknutLGM+2kQFbV5LTcE561aa5WZnxpXIfdI
-	 /JWm5VZf2M81rFN/BTLQjp00AK8uGCMOETxBdIvw=
+	b=UP1FeCkt4Az8t45pKiPq7awp4BlSzn96mH3umagQHKc4xMemHnE+zISY/dQuJuqje
+	 H2gJNIylibV+W3buondWQdETBdB/lKhddtKgDQqp9KQO9W9hor+CCBbMmKK1jDzUsz
+	 3PkvcVOVYCaxrG8LVKi6w7NRP2Cm0ounLU3BkXfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Troy Hanson <quic_thanson@quicinc.com>
-Subject: [PATCH 6.1 327/508] bus: mhi: host: Fix conflict between power_up and SYSERR
-Date: Mon, 23 Jun 2025 15:06:12 +0200
-Message-ID: <20250623130653.371048143@linuxfoundation.org>
+	Vlad Dogaru <vdogaru@nvidia.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 281/414] net/mlx5: HWS, Harden IP version definer checks
+Date: Mon, 23 Jun 2025 15:06:58 +0200
+Message-ID: <20250623130649.045547270@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,100 +49,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Hugo <quic_jhugo@quicinc.com>
+From: Vlad Dogaru <vdogaru@nvidia.com>
 
-commit 4d92e7c5ccadc79764674ffc2c88d329aabbb7e0 upstream.
+[ Upstream commit 6991a975e416154576b0f5f06256aec13e23b0a7 ]
 
-When mhi_async_power_up() enables IRQs, it is possible that we could
-receive a SYSERR notification from the device if the firmware has crashed
-for some reason. Then the SYSERR notification queues a work item that
-cannot execute until the pm_mutex is released by mhi_async_power_up().
+Replicate some sanity checks that firmware does, since hardware steering
+does not go through firmware.
 
-So the SYSERR work item will be pending. If mhi_async_power_up() detects
-the SYSERR, it will handle it. If the device is in PBL, then the PBL state
-transition event will be queued, resulting in a work item after the
-pending SYSERR work item. Once mhi_async_power_up() releases the pm_mutex,
-the SYSERR work item can run. It will blindly attempt to reset the MHI
-state machine, which is the recovery action for SYSERR. PBL/SBL are not
-interrupt driven and will ignore the MHI Reset unless SYSERR is actively
-advertised. This will cause the SYSERR work item to timeout waiting for
-reset to be cleared, and will leave the host state in SYSERR processing.
-The PBL transition work item will then run, and immediately fail because
-SYSERR processing is not a valid state for PBL transition.
+When creating a definer, disallow matching on IP addresses without also
+matching on IP version. The latter can be satisfied by matching either
+on the version field in the IP header, or on the ethertype field.
 
-This leaves the device uninitialized.
+Also refuse to match IPv4 IHL alongside IPv6.
 
-This issue has a fairly unique signature in the kernel log:
-
-	mhi mhi3: Requested to power ON
-	Qualcomm Cloud AI 100 0000:36:00.0: Fatal error received from
-	device.  Attempting to recover
-	mhi mhi3: Power on setup success
-	mhi mhi3: Device failed to exit MHI Reset state
-	mhi mhi3: Device MHI is not in valid state
-
-We cannot remove the SYSERR handling from mhi_async_power_up() because the
-device may be in the SYSERR state, but we missed the notification as the
-irq was fired before irqs were enabled. We also can't queue the SYSERR work
-item from mhi_async_power_up() if SYSERR is detected because that may
-result in a duplicate work item, and cause the same issue since the
-duplicate item will blindly issue MHI reset even if SYSERR is no longer
-active.
-
-Instead, add a check in the SYSERR work item to make sure that MHI reset is
-only issued if the device is in SYSERR state for PBL or SBL EEs.
-
-Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250328163526.3365497-1-jeff.hugo@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Vlad Dogaru <vdogaru@nvidia.com>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250422092540.182091-3-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/pm.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ .../mlx5/core/steering/hws/mlx5hws_definer.c  | 44 ++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 2 deletions(-)
 
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -586,6 +586,7 @@ static void mhi_pm_sys_error_transition(
- 	struct mhi_cmd *mhi_cmd;
- 	struct mhi_event_ctxt *er_ctxt;
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	bool reset_device = false;
- 	int ret, i;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
+index 0d0591ba41fdb..fc9ba534d5d97 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
+@@ -508,9 +508,9 @@ static int
+ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
+ 		       u32 *match_param)
+ {
++	bool is_ipv6, smac_set, dmac_set, ip_addr_set, ip_ver_set;
+ 	struct mlx5hws_definer_fc *fc = cd->fc;
+ 	struct mlx5hws_definer_fc *curr_fc;
+-	bool is_ipv6, smac_set, dmac_set;
+ 	u32 *s_ipv6, *d_ipv6;
  
- 	dev_dbg(dev, "Transitioning from PM state: %s to: %s\n",
-@@ -614,8 +615,23 @@ static void mhi_pm_sys_error_transition(
- 	/* Wake up threads waiting for state transition */
- 	wake_up_all(&mhi_cntrl->state_event);
+ 	if (HWS_IS_FLD_SET_SZ(match_param, outer_headers.l4_type, 0x2) ||
+@@ -520,6 +520,20 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
+ 		return -EINVAL;
+ 	}
  
--	/* Trigger MHI RESET so that the device will not access host memory */
- 	if (MHI_REG_ACCESS_VALID(prev_state)) {
-+		/*
-+		 * If the device is in PBL or SBL, it will only respond to
-+		 * RESET if the device is in SYSERR state. SYSERR might
-+		 * already be cleared at this point.
-+		 */
-+		enum mhi_state cur_state = mhi_get_mhi_state(mhi_cntrl);
-+		enum mhi_ee_type cur_ee = mhi_get_exec_env(mhi_cntrl);
++	ip_addr_set = HWS_IS_FLD_SET_SZ(match_param,
++					outer_headers.src_ipv4_src_ipv6,
++					0x80) ||
++		      HWS_IS_FLD_SET_SZ(match_param,
++					outer_headers.dst_ipv4_dst_ipv6, 0x80);
++	ip_ver_set = HWS_IS_FLD_SET(match_param, outer_headers.ip_version) ||
++		     HWS_IS_FLD_SET(match_param, outer_headers.ethertype);
 +
-+		if (cur_state == MHI_STATE_SYS_ERR)
-+			reset_device = true;
-+		else if (cur_ee != MHI_EE_PBL && cur_ee != MHI_EE_SBL)
-+			reset_device = true;
++	if (ip_addr_set && !ip_ver_set) {
++		mlx5hws_err(cd->ctx,
++			    "Unsupported match on IP address without version or ethertype\n");
++		return -EINVAL;
 +	}
 +
-+	/* Trigger MHI RESET so that the device will not access host memory */
-+	if (reset_device) {
- 		u32 in_reset = -1;
- 		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
+ 	/* L2 Check ethertype */
+ 	HWS_SET_HDR(fc, match_param, ETH_TYPE_O,
+ 		    outer_headers.ethertype,
+@@ -575,6 +589,12 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
+ 	is_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2] ||
+ 		  d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
  
++	/* IHL is an IPv4-specific field. */
++	if (is_ipv6 && HWS_IS_FLD_SET(match_param, outer_headers.ipv4_ihl)) {
++		mlx5hws_err(cd->ctx, "Unsupported match on IPv6 address and IPv4 IHL\n");
++		return -EINVAL;
++	}
++
+ 	if (is_ipv6) {
+ 		/* Handle IPv6 source address */
+ 		HWS_SET_HDR(fc, match_param, IPV6_SRC_127_96_O,
+@@ -664,9 +684,9 @@ static int
+ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
+ 		       u32 *match_param)
+ {
++	bool is_ipv6, smac_set, dmac_set, ip_addr_set, ip_ver_set;
+ 	struct mlx5hws_definer_fc *fc = cd->fc;
+ 	struct mlx5hws_definer_fc *curr_fc;
+-	bool is_ipv6, smac_set, dmac_set;
+ 	u32 *s_ipv6, *d_ipv6;
+ 
+ 	if (HWS_IS_FLD_SET_SZ(match_param, inner_headers.l4_type, 0x2) ||
+@@ -676,6 +696,20 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
+ 		return -EINVAL;
+ 	}
+ 
++	ip_addr_set = HWS_IS_FLD_SET_SZ(match_param,
++					inner_headers.src_ipv4_src_ipv6,
++					0x80) ||
++		      HWS_IS_FLD_SET_SZ(match_param,
++					inner_headers.dst_ipv4_dst_ipv6, 0x80);
++	ip_ver_set = HWS_IS_FLD_SET(match_param, inner_headers.ip_version) ||
++		     HWS_IS_FLD_SET(match_param, inner_headers.ethertype);
++
++	if (ip_addr_set && !ip_ver_set) {
++		mlx5hws_err(cd->ctx,
++			    "Unsupported match on IP address without version or ethertype\n");
++		return -EINVAL;
++	}
++
+ 	/* L2 Check ethertype */
+ 	HWS_SET_HDR(fc, match_param, ETH_TYPE_I,
+ 		    inner_headers.ethertype,
+@@ -730,6 +764,12 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
+ 	is_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2] ||
+ 		  d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
+ 
++	/* IHL is an IPv4-specific field. */
++	if (is_ipv6 && HWS_IS_FLD_SET(match_param, inner_headers.ipv4_ihl)) {
++		mlx5hws_err(cd->ctx, "Unsupported match on IPv6 address and IPv4 IHL\n");
++		return -EINVAL;
++	}
++
+ 	if (is_ipv6) {
+ 		/* Handle IPv6 source address */
+ 		HWS_SET_HDR(fc, match_param, IPV6_SRC_127_96_I,
+-- 
+2.39.5
+
 
 
