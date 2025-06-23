@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11E0B676;
-	Mon, 23 Jun 2025 21:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5D1B676;
+	Mon, 23 Jun 2025 21:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715122; cv=none; b=B/ScI1svgmG4tD0N/wwLN7Zalu/OWBt6eCqRMomglLp5LKI/rLyW65fkDAau/0cUDxrrPakkTbiZHH/KyvPi11EUm3u9YBTROA1Q4dd58xdm0f7C4Mq2aMOhlJCvlOLpM30y4b3OHP9VIgbG0lPyF82sB+kW/YbCQE7nOBscVf0=
+	t=1750715125; cv=none; b=icsGEKLpiVcABLYkPMU5F1DAVsJWI2YYOZYnPDqNO+ACiMgVqojqlf4T+oeNkKBiUCA5mwq+po9bNnXGyaxqF03CvZczPIFp0VVPkQ5QVgEoaVbdkQGIXJfap2aDQxlVKK8tgthHUJBOmg6B3nWqnQBKwlC8aaS+R0QP5CY4q+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715122; c=relaxed/simple;
-	bh=Z4QnY2OfqE9vTkT0ecP35VYB2/gpTzPyUI4s9Fp27Ws=;
+	s=arc-20240116; t=1750715125; c=relaxed/simple;
+	bh=0q6dnBUwHhJHehJepHCmL2YFXF6X/SOoCSSCfjIAP/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ATHwxdUrPHSwv8whSjz6ni8BZnNSLAe/zSvplNWkmK+ttgK1th8ajDPbwf05nyUi4lN/e1KQ9mNt/SFqH5xNEUOll6oCqJykVg6sni+oHHbpmDQ88kEcZvYTNlh/uqun68rQVaBiKAiueEJw+TY+UO2lAHKLdKUTHM2DPmHYlpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7+1rPwf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iMRyaXtc/i0eL/KDtoSmFOCiUod30qDEyNNpWlvC0k5vxpvfRCRBMKxTwiAQjhFZDUNAjJVDUNppkNKxMQqByl2xBTxsav4TWKThY6McOytFSzOKvNPyBqlC/dby1Qfpn5phEjDzq0G4XMyl9mNugoyhxFH1RBLg0JoDr9PcBco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omggJ1jL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7+1rPwf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4803DC4CEEA;
-	Mon, 23 Jun 2025 21:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omggJ1jL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5EA7C4CEEA;
+	Mon, 23 Jun 2025 21:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715122;
-	bh=Z4QnY2OfqE9vTkT0ecP35VYB2/gpTzPyUI4s9Fp27Ws=;
+	s=korg; t=1750715125;
+	bh=0q6dnBUwHhJHehJepHCmL2YFXF6X/SOoCSSCfjIAP/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t7+1rPwfBlX0fXQ/EOFc3R7jfw3ybWipfZNWZIOTzAZSPQKfLo9pg286gPG5sqf25
-	 gCdn1NW5tuurA6RLWzPxkggJeqbuGc4eQuyM9CiFz6KJ2Vphx/LxKbJ6X79ii9aypc
-	 Jx/Ckx9/J3nJlBpEbLpvRm/eoUwWpV51nbn4jVAo=
+	b=omggJ1jLZiXXpnjmdvcFRM5TweI9z2xUPB+vED3TN0upLtxXNAnUKTcPn+8XCu6HD
+	 s1whNfk18rwbtUzR/g+zXx5tFEttE5uWY/TN17illpnSrztmzTb2fj9QvElUULmOLN
+	 BaXEdgwyPVkorMAbJEILWdCJ6fVIkpUERL4xAPz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 164/414] iio: adc: ad7944: mask high bits on direct read
-Date: Mon, 23 Jun 2025 15:05:01 +0200
-Message-ID: <20250623130646.135410398@linuxfoundation.org>
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 261/355] pinctrl: armada-37xx: propagate error from armada_37xx_gpio_get_direction()
+Date: Mon, 23 Jun 2025 15:07:42 +0200
+Message-ID: <20250623130634.601026829@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-commit 7cdfbc0113d087348b8e65dd79276d0f57b89a10 upstream.
+[ Upstream commit 6481c0a83367b0672951ccc876fbae7ee37b594b ]
 
-Apply a mask to the raw value received over the SPI bus for unsigned
-direct reads. As we found recently, SPI controllers may not set unused
-bits to 0 when reading with bits_per_word != {8,16,32}. The ad7944 uses
-bits_per_word of 14 and 18, so we need to mask the value to be sure we
-returning the correct value to userspace during a direct read.
+The regmap_read() function can fail, so propagate its error up to
+the stack instead of silently ignoring that.
 
-Fixes: d1efcf8871db ("iio: adc: ad7944: add driver for AD7944/AD7985/AD7986")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20250505-iio-adc-ad7944-max-high-bits-on-direct-read-v1-1-b173facceefe@baylibre.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-6-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7944.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ad7944.c
-+++ b/drivers/iio/adc/ad7944.c
-@@ -290,6 +290,8 @@ static int ad7944_single_conversion(stru
+diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+index b17d0e80f25af..1cb3bcb41684e 100644
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -396,10 +396,13 @@ static int armada_37xx_gpio_get_direction(struct gpio_chip *chip,
+ 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
+ 	unsigned int reg = OUTPUT_EN;
+ 	unsigned int val, mask;
++	int ret;
  
- 	if (chan->scan_type.sign == 's')
- 		*val = sign_extend32(*val, chan->scan_type.realbits - 1);
-+	else
-+		*val &= GENMASK(chan->scan_type.realbits - 1, 0);
+ 	armada_37xx_update_reg(&reg, &offset);
+ 	mask = BIT(offset);
+-	regmap_read(info->regmap, reg, &val);
++	ret = regmap_read(info->regmap, reg, &val);
++	if (ret)
++		return ret;
  
- 	return IIO_VAL_INT;
- }
+ 	if (val & mask)
+ 		return GPIO_LINE_DIRECTION_OUT;
+-- 
+2.39.5
+
 
 
