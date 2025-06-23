@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17926248176;
-	Mon, 23 Jun 2025 13:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01048239E63;
+	Mon, 23 Jun 2025 13:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685150; cv=none; b=b/XP3HexNGd2gXXjUZwnE+q9lBC+Jh070ZCdXhO7b6SgmK6ETbHGwo8RaT/iFIiSdxC7ShyCkf+0WTHHPAXRLXo035fUFZ8Yj1UnFGVrIwBcBQEzMtJPCDeIhxxw3cNdhG6NFQlmXkuw1Ag00dhK1bDKZLEkPQjLucLMd4GjXgA=
+	t=1750685153; cv=none; b=FVtJGQAumXD+ZRYM1DHRgYupg2cxWlfhORiqUZunfDvPPbOQMVJz41BzI5aznNG3/Qsta3wkiCLJX7EDsJN4MEtgVKjl1BpNHTWY0kzmJRUcMhvlKOuJP9//YJx90e9s3ey3tzGDBHzxJpy1Drlz+wIzp62kPpqEa3uscS7zn2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685150; c=relaxed/simple;
-	bh=e0I2vE1KiqK3z92GL6hPuZozyKw4NC6f0KbmI8HwyrI=;
+	s=arc-20240116; t=1750685153; c=relaxed/simple;
+	bh=z+4zJNYNw9HrVz2Ui7iBDQ47DP/2PVUAPRCyyTnxmdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYXsbLG6qes5swa3S34g4A+b0NZNilhBEe4ROngZTuXx45mOrlMRvczAbRrR1mmuyVQQi80KbjKqNPiDlJL2GpbUW7OKLwhGIvVB5FwJrIYqJ5DoclI1KI+fTftVnUnUi/efeCFEMViMH5XSZHsu02xZyUWhJFK4+8KL2fV5m5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkCS2DsS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BmiNoq5vU6HbP4SHeWE4EN88P8g3c+82IMG/32JWrT1I1u16ral57tg3XukeZvYGdIfo04gddIHQoFHTgztUjZRDgo31LGRqwqsR6HMhOj8aqI2YrlBZlS53h6fD8MDnK1cWfPpFaBs2vZ4saPV8lruAN1w8+KeZ2u0I17LXUjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUdbCNUd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkCS2DsS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBFCC4CEEA;
-	Mon, 23 Jun 2025 13:25:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUdbCNUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3D7C4CEF2;
+	Mon, 23 Jun 2025 13:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685150;
-	bh=e0I2vE1KiqK3z92GL6hPuZozyKw4NC6f0KbmI8HwyrI=;
+	s=korg; t=1750685152;
+	bh=z+4zJNYNw9HrVz2Ui7iBDQ47DP/2PVUAPRCyyTnxmdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zkCS2DsSOSM35mPcXcryvFesrTLjl280BiZMCD3EmPkL1OYdw6MjzLxYagLjynuA4
-	 zq223oun1bPLuJVNd8qC7eVlwt6GXNB/6sssjpMCuB8HXH3h1D3984ao/RXaexvvbD
-	 C/7N1QSpfFJw99iRCmoj7g6IOO5MnwwZyQkqVi1s=
+	b=oUdbCNUduqjaLRBvDWDrL/9Op3QYDijxkKgjavX4+89cPqf56igLUlTpF2UqPuP+A
+	 f0y20r00FjesKaUld7bNPJOP1Pg/7kj/QrDw9veMGKwFqdRD21chMQjDshY3NddGZn
+	 quETtLPqkSTDhJXy2yzXwyyGIAl7lmFQnQbIsMsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/355] drm: rcar-du: Fix memory leak in rcar_du_vsps_init()
-Date: Mon, 23 Jun 2025 15:03:51 +0200
-Message-ID: <20250623130627.716697729@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Chris Bainbridge <chris.bainbridge@gmail.com>
+Subject: [PATCH 5.4 070/222] PM: sleep: Fix power.is_suspended cleanup for direct-complete devices
+Date: Mon, 23 Jun 2025 15:06:45 +0200
+Message-ID: <20250623130614.210771885@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,63 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 91e3bf09a90bb4340c0c3c51396e7531555efda4 ]
+[ Upstream commit d46c4c839c20a599a0eb8d73708ce401f9c7d06d ]
 
-The rcar_du_vsps_init() doesn't free the np allocated by
-of_parse_phandle_with_fixed_args() for the non-error case.
+Commit 03f1444016b7 ("PM: sleep: Fix handling devices with direct_complete
+set on errors") caused power.is_suspended to be set for devices with
+power.direct_complete set, but it forgot to ensure the clearing of that
+flag for them in device_resume(), so power.is_suspended is still set for
+them during the next system suspend-resume cycle.
 
-Fix memory leak for the non-error case.
+If that cycle is aborted in dpm_suspend(), the subsequent invocation of
+dpm_resume() will trigger a device_resume() call for every device and
+because power.is_suspended is set for the devices in question, they will
+not be skipped by device_resume() as expected which causes scary error
+messages to be logged (as appropriate).
 
-While at it, replace the label 'error'->'done' as it applies to non-error
-case as well and update the error check condition for rcar_du_vsp_init()
-to avoid breakage in future, if it returns positive value.
+To address this issue, move the clearing of power.is_suspended in
+device_resume() immediately after the power.is_suspended check so it
+will be always cleared for all devices processed by that function.
 
-Fixes: 3e81374e2014 ("drm: rcar-du: Support multiple sources from the same VSP")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20231116122424.80136-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+Fixes: 03f1444016b7 ("PM: sleep: Fix handling devices with direct_complete set on errors")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4280
+Reported-and-tested-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/4990586.GXAFRqVoOG@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rcar-du/rcar_du_kms.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/base/power/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rcar-du/rcar_du_kms.c b/drivers/gpu/drm/rcar-du/rcar_du_kms.c
-index 7015e22872bbe..41b4a6715dad5 100644
---- a/drivers/gpu/drm/rcar-du/rcar_du_kms.c
-+++ b/drivers/gpu/drm/rcar-du/rcar_du_kms.c
-@@ -626,7 +626,7 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
- 		ret = of_parse_phandle_with_fixed_args(np, vsps_prop_name,
- 						       cells, i, &args);
- 		if (ret < 0)
--			goto error;
-+			goto done;
+diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
+index 7375624de5646..6ad29e0793a5f 100644
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -971,6 +971,8 @@ static int device_resume(struct device *dev, pm_message_t state, bool async)
+ 	if (!dev->power.is_suspended)
+ 		goto Complete;
  
- 		/*
- 		 * Add the VSP to the list or update the corresponding existing
-@@ -664,13 +664,11 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
- 		vsp->dev = rcdu;
++	dev->power.is_suspended = false;
++
+ 	if (dev->power.direct_complete) {
+ 		/* Match the pm_runtime_disable() in __device_suspend(). */
+ 		pm_runtime_enable(dev);
+@@ -1026,7 +1028,6 @@ static int device_resume(struct device *dev, pm_message_t state, bool async)
  
- 		ret = rcar_du_vsp_init(vsp, vsps[i].np, vsps[i].crtcs_mask);
--		if (ret < 0)
--			goto error;
-+		if (ret)
-+			goto done;
- 	}
+  End:
+ 	error = dpm_run_callback(callback, dev, state, info);
+-	dev->power.is_suspended = false;
  
--	return 0;
--
--error:
-+done:
- 	for (i = 0; i < ARRAY_SIZE(vsps); ++i)
- 		of_node_put(vsps[i].np);
- 
+ 	device_unlock(dev);
+ 	dpm_watchdog_clear(&wd);
 -- 
 2.39.5
 
