@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0781F7580;
-	Mon, 23 Jun 2025 22:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97931F7580;
+	Mon, 23 Jun 2025 22:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716774; cv=none; b=jY55DqdKZ7RQkSw/L3z0rFNOHgrwRHpdsKfU8vaifPMHz4ZAMdt28McFZY/12w829sJJZYp7s8PqapGug2LC2wVDg7+zsV56vAJO1f7IaZ6Tmr0M2IBysVPahM6+VBFnLSbej0qUPxwXGSm/e2ozUZOSo5pMPQIWUjaQQDd5EDQ=
+	t=1750716776; cv=none; b=gVKB1SdM8nHVYnlAn9ne3I5lReGBP1ruuIYSpbAkGOolnzwtzkwGLIJkDhJ4n5VDeuigjYnBf3Ns5YoYYl492BFH4F9qcPjGIb9cmDNndUhWTa6iuq+MvgCjSRMTxt7M0kSEXAbANp4mlZY8ZdWw9nHvQGLv1FQgzXnBR/46IH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716774; c=relaxed/simple;
-	bh=9Cv0Y/c/CqGxO2Gh70CHxF09UO1t64z+oVF7b9ndCCE=;
+	s=arc-20240116; t=1750716776; c=relaxed/simple;
+	bh=jMlw41lLDcswCLEqK3SebUSfoDc0GU5F5pT7MamoEzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvwzrnIkp6894B9RqE6GYG/Ayt7zWEYAVdUCfIMqddyF4csn8Af6tHkvP8fPKbL23bpTUWecd9zW4RQ+42VSQEaWEt9oTG90cjt2yawr0mPrPHqy/AebXFNDuB0pkWPC4LC6kMTsfzhwqyrz3zVvCh+DXhEmMGfbaTrRcFKv+OE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UP1FeCkt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PGK+OOf5Q9kKhaf7j4B0gvRUCoQyKaM0H2pcEI1sY2dm/AHoAs6aM1Fno3MBs/xXMPns5AipqiXjpq/IaWXT1j2tNAepn+ejeTAcQDbbK7l+IshpPkW73YgspPHkZaqUwClwC6YWkpV7R0bgINQS11PTSr27OFhJvZ1w8flviGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMawNYyU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UP1FeCkt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA023C4CEF1;
-	Mon, 23 Jun 2025 22:12:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMawNYyU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51839C4CEEA;
+	Mon, 23 Jun 2025 22:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716774;
-	bh=9Cv0Y/c/CqGxO2Gh70CHxF09UO1t64z+oVF7b9ndCCE=;
+	s=korg; t=1750716776;
+	bh=jMlw41lLDcswCLEqK3SebUSfoDc0GU5F5pT7MamoEzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UP1FeCkt4Az8t45pKiPq7awp4BlSzn96mH3umagQHKc4xMemHnE+zISY/dQuJuqje
-	 H2gJNIylibV+W3buondWQdETBdB/lKhddtKgDQqp9KQO9W9hor+CCBbMmKK1jDzUsz
-	 3PkvcVOVYCaxrG8LVKi6w7NRP2Cm0ounLU3BkXfg=
+	b=JMawNYyUiF4xVUiP4oPjpUDE07Bd1U1xJYvof/9VDA0kjXMjUHlznL1LCR1yqBgj+
+	 trNk9TzCn6tMA/r11+WqbQIGLGecBbd9cPGTzs2QI66AWYlHQ8w0Udl2eXhUk7cP6K
+	 wlHZ7It3JV8/TnwK573yRVLvB3uqGMA4YjairAO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Dogaru <vdogaru@nvidia.com>,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
+	Donald Hunter <donald.hunter@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 281/414] net/mlx5: HWS, Harden IP version definer checks
-Date: Mon, 23 Jun 2025 15:06:58 +0200
-Message-ID: <20250623130649.045547270@linuxfoundation.org>
+Subject: [PATCH 6.15 554/592] tools: ynl: parse extack for sub-messages
+Date: Mon, 23 Jun 2025 15:08:32 +0200
+Message-ID: <20250623130713.622772590@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,127 +47,137 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vlad Dogaru <vdogaru@nvidia.com>
+From: Donald Hunter <donald.hunter@gmail.com>
 
-[ Upstream commit 6991a975e416154576b0f5f06256aec13e23b0a7 ]
+[ Upstream commit 09d7ff0694ea133c50ad905fd6e548c13f8af458 ]
 
-Replicate some sanity checks that firmware does, since hardware steering
-does not go through firmware.
+Extend the Python YNL extack decoding to handle sub-messages in the same
+way that YNL C does. This involves retaining the input values so that
+they are available during extack decoding.
 
-When creating a definer, disallow matching on IP addresses without also
-matching on IP version. The latter can be satisfied by matching either
-on the version field in the IP header, or on the ethertype field.
+./tools/net/ynl/pyynl/cli.py --family rt-link --do newlink --create \
+    --json '{
+        "linkinfo": {"kind": "netkit", "data": {"policy": 10} }
+    }'
+Netlink error: Invalid argument
+nl_len = 92 (76) nl_flags = 0x300 nl_type = 2
+	error: -22
+	extack: {'msg': 'Provided default xmit policy not supported', 'bad-attr': '.linkinfo.data(netkit).policy'}
 
-Also refuse to match IPv4 IHL alongside IPv6.
-
-Signed-off-by: Vlad Dogaru <vdogaru@nvidia.com>
-Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250422092540.182091-3-mbloch@nvidia.com
+Signed-off-by: Donald Hunter <donald.hunter@gmail.com>
+Link: https://patch.msgid.link/20250523103031.80236-1-donald.hunter@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 9738280aae59 ("tools: ynl: fix mixing ops and notifications on one socket")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mlx5/core/steering/hws/mlx5hws_definer.c  | 44 ++++++++++++++++++-
- 1 file changed, 42 insertions(+), 2 deletions(-)
+ tools/net/ynl/pyynl/lib/ynl.py | 39 ++++++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
-index 0d0591ba41fdb..fc9ba534d5d97 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
-@@ -508,9 +508,9 @@ static int
- hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 		       u32 *match_param)
- {
-+	bool is_ipv6, smac_set, dmac_set, ip_addr_set, ip_ver_set;
- 	struct mlx5hws_definer_fc *fc = cd->fc;
- 	struct mlx5hws_definer_fc *curr_fc;
--	bool is_ipv6, smac_set, dmac_set;
- 	u32 *s_ipv6, *d_ipv6;
+diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
+index dcc2c6b298d60..55b59f6c79b89 100644
+--- a/tools/net/ynl/pyynl/lib/ynl.py
++++ b/tools/net/ynl/pyynl/lib/ynl.py
+@@ -594,7 +594,7 @@ class YnlFamily(SpecFamily):
+             scalar_selector = self._get_scalar(attr, value["selector"])
+             attr_payload = struct.pack("II", scalar_value, scalar_selector)
+         elif attr['type'] == 'sub-message':
+-            msg_format = self._resolve_selector(attr, search_attrs)
++            msg_format, _ = self._resolve_selector(attr, search_attrs)
+             attr_payload = b''
+             if msg_format.fixed_header:
+                 attr_payload += self._encode_struct(msg_format.fixed_header, value)
+@@ -712,10 +712,10 @@ class YnlFamily(SpecFamily):
+             raise Exception(f"No message format for '{value}' in sub-message spec '{sub_msg}'")
  
- 	if (HWS_IS_FLD_SET_SZ(match_param, outer_headers.l4_type, 0x2) ||
-@@ -520,6 +520,20 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 		return -EINVAL;
- 	}
+         spec = sub_msg_spec.formats[value]
+-        return spec
++        return spec, value
  
-+	ip_addr_set = HWS_IS_FLD_SET_SZ(match_param,
-+					outer_headers.src_ipv4_src_ipv6,
-+					0x80) ||
-+		      HWS_IS_FLD_SET_SZ(match_param,
-+					outer_headers.dst_ipv4_dst_ipv6, 0x80);
-+	ip_ver_set = HWS_IS_FLD_SET(match_param, outer_headers.ip_version) ||
-+		     HWS_IS_FLD_SET(match_param, outer_headers.ethertype);
-+
-+	if (ip_addr_set && !ip_ver_set) {
-+		mlx5hws_err(cd->ctx,
-+			    "Unsupported match on IP address without version or ethertype\n");
-+		return -EINVAL;
-+	}
-+
- 	/* L2 Check ethertype */
- 	HWS_SET_HDR(fc, match_param, ETH_TYPE_O,
- 		    outer_headers.ethertype,
-@@ -575,6 +589,12 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 	is_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2] ||
- 		  d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
+     def _decode_sub_msg(self, attr, attr_spec, search_attrs):
+-        msg_format = self._resolve_selector(attr_spec, search_attrs)
++        msg_format, _ = self._resolve_selector(attr_spec, search_attrs)
+         decoded = {}
+         offset = 0
+         if msg_format.fixed_header:
+@@ -787,7 +787,7 @@ class YnlFamily(SpecFamily):
  
-+	/* IHL is an IPv4-specific field. */
-+	if (is_ipv6 && HWS_IS_FLD_SET(match_param, outer_headers.ipv4_ihl)) {
-+		mlx5hws_err(cd->ctx, "Unsupported match on IPv6 address and IPv4 IHL\n");
-+		return -EINVAL;
-+	}
-+
- 	if (is_ipv6) {
- 		/* Handle IPv6 source address */
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_127_96_O,
-@@ -664,9 +684,9 @@ static int
- hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 		       u32 *match_param)
- {
-+	bool is_ipv6, smac_set, dmac_set, ip_addr_set, ip_ver_set;
- 	struct mlx5hws_definer_fc *fc = cd->fc;
- 	struct mlx5hws_definer_fc *curr_fc;
--	bool is_ipv6, smac_set, dmac_set;
- 	u32 *s_ipv6, *d_ipv6;
+         return rsp
  
- 	if (HWS_IS_FLD_SET_SZ(match_param, inner_headers.l4_type, 0x2) ||
-@@ -676,6 +696,20 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 		return -EINVAL;
- 	}
+-    def _decode_extack_path(self, attrs, attr_set, offset, target):
++    def _decode_extack_path(self, attrs, attr_set, offset, target, search_attrs):
+         for attr in attrs:
+             try:
+                 attr_spec = attr_set.attrs_by_val[attr.type]
+@@ -801,26 +801,37 @@ class YnlFamily(SpecFamily):
+             if offset + attr.full_len <= target:
+                 offset += attr.full_len
+                 continue
+-            if attr_spec['type'] != 'nest':
++
++            pathname = attr_spec.name
++            if attr_spec['type'] == 'nest':
++                sub_attrs = self.attr_sets[attr_spec['nested-attributes']]
++                search_attrs = SpaceAttrs(sub_attrs, search_attrs.lookup(attr_spec['name']))
++            elif attr_spec['type'] == 'sub-message':
++                msg_format, value = self._resolve_selector(attr_spec, search_attrs)
++                if msg_format is None:
++                    raise Exception(f"Can't resolve sub-message of {attr_spec['name']} for extack")
++                sub_attrs = self.attr_sets[msg_format.attr_set]
++                pathname += f"({value})"
++            else:
+                 raise Exception(f"Can't dive into {attr.type} ({attr_spec['name']}) for extack")
+             offset += 4
+-            subpath = self._decode_extack_path(NlAttrs(attr.raw),
+-                                               self.attr_sets[attr_spec['nested-attributes']],
+-                                               offset, target)
++            subpath = self._decode_extack_path(NlAttrs(attr.raw), sub_attrs,
++                                               offset, target, search_attrs)
+             if subpath is None:
+                 return None
+-            return '.' + attr_spec.name + subpath
++            return '.' + pathname + subpath
  
-+	ip_addr_set = HWS_IS_FLD_SET_SZ(match_param,
-+					inner_headers.src_ipv4_src_ipv6,
-+					0x80) ||
-+		      HWS_IS_FLD_SET_SZ(match_param,
-+					inner_headers.dst_ipv4_dst_ipv6, 0x80);
-+	ip_ver_set = HWS_IS_FLD_SET(match_param, inner_headers.ip_version) ||
-+		     HWS_IS_FLD_SET(match_param, inner_headers.ethertype);
-+
-+	if (ip_addr_set && !ip_ver_set) {
-+		mlx5hws_err(cd->ctx,
-+			    "Unsupported match on IP address without version or ethertype\n");
-+		return -EINVAL;
-+	}
-+
- 	/* L2 Check ethertype */
- 	HWS_SET_HDR(fc, match_param, ETH_TYPE_I,
- 		    inner_headers.ethertype,
-@@ -730,6 +764,12 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 	is_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2] ||
- 		  d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
+         return None
  
-+	/* IHL is an IPv4-specific field. */
-+	if (is_ipv6 && HWS_IS_FLD_SET(match_param, inner_headers.ipv4_ihl)) {
-+		mlx5hws_err(cd->ctx, "Unsupported match on IPv6 address and IPv4 IHL\n");
-+		return -EINVAL;
-+	}
-+
- 	if (is_ipv6) {
- 		/* Handle IPv6 source address */
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_127_96_I,
+-    def _decode_extack(self, request, op, extack):
++    def _decode_extack(self, request, op, extack, vals):
+         if 'bad-attr-offs' not in extack:
+             return
+ 
+         msg = self.nlproto.decode(self, NlMsg(request, 0, op.attr_set), op)
+         offset = self.nlproto.msghdr_size() + self._struct_size(op.fixed_header)
++        search_attrs = SpaceAttrs(op.attr_set, vals)
+         path = self._decode_extack_path(msg.raw_attrs, op.attr_set, offset,
+-                                        extack['bad-attr-offs'])
++                                        extack['bad-attr-offs'], search_attrs)
+         if path:
+             del extack['bad-attr-offs']
+             extack['bad-attr'] = path
+@@ -1012,7 +1023,7 @@ class YnlFamily(SpecFamily):
+         for (method, vals, flags) in ops:
+             op = self.ops[method]
+             msg = self._encode_message(op, vals, flags, req_seq)
+-            reqs_by_seq[req_seq] = (op, msg, flags)
++            reqs_by_seq[req_seq] = (op, vals, msg, flags)
+             payload += msg
+             req_seq += 1
+ 
+@@ -1027,9 +1038,9 @@ class YnlFamily(SpecFamily):
+             self._recv_dbg_print(reply, nms)
+             for nl_msg in nms:
+                 if nl_msg.nl_seq in reqs_by_seq:
+-                    (op, req_msg, req_flags) = reqs_by_seq[nl_msg.nl_seq]
++                    (op, vals, req_msg, req_flags) = reqs_by_seq[nl_msg.nl_seq]
+                     if nl_msg.extack:
+-                        self._decode_extack(req_msg, op, nl_msg.extack)
++                        self._decode_extack(req_msg, op, nl_msg.extack, vals)
+                 else:
+                     op = None
+                     req_flags = []
 -- 
 2.39.5
 
