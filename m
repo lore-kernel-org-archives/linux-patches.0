@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8870C2C9D;
-	Mon, 23 Jun 2025 21:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DE12C9D;
+	Mon, 23 Jun 2025 21:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713604; cv=none; b=lmzEoTYVaCaSUs0OfliekGwgCsjbejrQgIAp01L+tP1EHl6cxfjnj9kY50BGCAEv2QrG0z+UL36EGzu+02Sla+90pJEbSdfuqUbUZVW9QSRDD8c3zDAPz7ldwhakj52MG0qaaZs7i+PnQTEkgOSpSrS8faoXGFtbfwhGmS66HmI=
+	t=1750713607; cv=none; b=oYbyEsgJUY7YLnwbTDRp1+G/UgVS8zPUSv4zNGmw1wDJBEEwcRFVTAAhNcbA7C4vxb8AiKq6EB3HYfkIvkrDVnmpy46ksxNBk/UH+SnB0fiZ9iEXoAzy4HvNW46u9KB1Mqux9BL54wYBriaBWDbha6svQUsvmTPnxnLcD0Lx1TM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713604; c=relaxed/simple;
-	bh=dfZ9gEoy+aEpbxKhT2wmFWr+38lM5ZGb01xxdm3Ydfw=;
+	s=arc-20240116; t=1750713607; c=relaxed/simple;
+	bh=ek1IFE7FeHGyDqI1nixQRzN8W5C/tc1sfYHel/k7IMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NdBNXCqrqHkg4A4mkSk9NKTKcLbPhdtsSAGx2ItLTUaXIVWANUPiAkpvRYvB2wmhmmWAg7eilyYSlP70XuVMaHlSu8+Oox0wh4a9taYuGgs8VachxOllWe+Tw8TXBoZwqqHMPwdxuOyVao561Ax0gzfMdaYhIvXEnfjpvQ7zb+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=beoVkZ5w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pi9I6aPuH46kZH13scD6pxeu88pVAZveeydVB9NfpI+yl5qE8IjN7cmnzohooPzTBQDiUrSIccTUuoTUomABvoB7N4tu9pub1yLQ4kLrWpI0qMjj8JcOvU4tiFNsvy7328M6StC3tz01TyQNdQlhGD3vq82n7oG2Ni6vnMzYR0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3CkJeSB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="beoVkZ5w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214CEC4CEEA;
-	Mon, 23 Jun 2025 21:20:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3CkJeSB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9E3C4CEEA;
+	Mon, 23 Jun 2025 21:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713604;
-	bh=dfZ9gEoy+aEpbxKhT2wmFWr+38lM5ZGb01xxdm3Ydfw=;
+	s=korg; t=1750713606;
+	bh=ek1IFE7FeHGyDqI1nixQRzN8W5C/tc1sfYHel/k7IMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=beoVkZ5wNrwVPzsT62bLn8RvU364QNXDr0C3exaeeygCBm/XVSqlgRWVoMMo/uTYB
-	 5Oo+o58MsiCZ7s7WvBX0Z+NCDiaSH3OY3t7p71H6FbAAa3dAuuBeeAUJitJPm9CCH6
-	 rH+VQXwT0xkSBPZHqaEOJMPCNzL0WTc3HiCh+Ojg=
+	b=E3CkJeSBnzNAEMRuBTxnqek3BZErTbrc9tSZ4UUVQ+oXHdeWBSVT+RUb6yP7SPHhw
+	 vpPFltExq6BvpBi0yUrrpnmvsgMvxVWg7uJIkwIKKKnQrqpa+e8BsSJ8fd1EwqUIbS
+	 8CJMqXWhLrGShXR99muHvr1dA38VEM8UQ6KEMS+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 155/355] net: usb: aqc111: debug info before sanitation
-Date: Mon, 23 Jun 2025 15:05:56 +0200
-Message-ID: <20250623130631.364766263@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.12 053/414] media: gspca: Add error handling for stv06xx_read_sensor()
+Date: Mon, 23 Jun 2025 15:03:10 +0200
+Message-ID: <20250623130643.380617385@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +46,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit d3faab9b5a6a0477d69c38bd11c43aa5e936f929 upstream.
+commit 398a1b33f1479af35ca915c5efc9b00d6204f8fa upstream.
 
-If we sanitize error returns, the debug statements need
-to come before that so that we don't lose information.
+In hdcs_init(), the return value of stv06xx_read_sensor() needs to be
+checked. A proper implementation can be found in vv6410_dump(). Add a
+check in loop condition and propergate error code to fix this issue.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Fixes: 405b0d610745 ("net: usb: aqc111: fix error handling of usbnet read calls")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4c98834addfe ("V4L/DVB (10048): gspca - stv06xx: New subdriver.")
+Cc: stable@vger.kernel.org # v2.6+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/aqc111.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/usb/aqc111.c
-+++ b/drivers/net/usb/aqc111.c
-@@ -31,11 +31,11 @@ static int aqc111_read_cmd_nopm(struct u
- 				   USB_RECIP_DEVICE, value, index, data, size);
+--- a/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
++++ b/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
+@@ -520,12 +520,13 @@ static int hdcs_init(struct sd *sd)
+ static int hdcs_dump(struct sd *sd)
+ {
+ 	u16 reg, val;
++	int err = 0;
  
- 	if (unlikely(ret < size)) {
--		ret = ret < 0 ? ret : -ENODATA;
--
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
-+
-+		ret = ret < 0 ? ret : -ENODATA;
+ 	pr_info("Dumping sensor registers:\n");
+ 
+-	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH; reg++) {
+-		stv06xx_read_sensor(sd, reg, &val);
++	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH && !err; reg++) {
++		err = stv06xx_read_sensor(sd, reg, &val);
+ 		pr_info("reg 0x%02x = 0x%02x\n", reg, val);
  	}
- 
- 	return ret;
-@@ -50,11 +50,11 @@ static int aqc111_read_cmd(struct usbnet
- 			      USB_RECIP_DEVICE, value, index, data, size);
- 
- 	if (unlikely(ret < size)) {
--		ret = ret < 0 ? ret : -ENODATA;
--
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
-+
-+		ret = ret < 0 ? ret : -ENODATA;
- 	}
- 
- 	return ret;
+-	return 0;
++	return (err < 0) ? err : 0;
+ }
 
 
