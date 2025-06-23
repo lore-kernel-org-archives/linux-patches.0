@@ -1,201 +1,235 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A1725229C
-	for <patches@lists.linux.dev>; Mon, 23 Jun 2025 13:49:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4AB25487B
+	for <patches@lists.linux.dev>; Mon, 23 Jun 2025 13:51:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686571; cv=none; b=iniUZ8zdmie0F0gwITQOHt5GKalvMNcKGTYvJpjpb2lzypVRf0ZxXooHfpYg3W6j7Oqf8J92DBh6ApfU7BXB5k9ykmKrEFWIGh+60jhcPDtKhZIhoSUS1k/HnaEQ/BygAc80E79VmFXrGr2iXbZx9v75qTC8ltpITjHLdNhsiSg=
+	t=1750686697; cv=none; b=BHRw8OnratYKtZ7CV0H82x2DX5tTrhKks9/PgIgGhoaEiFxYIxl+xkiUHTb6iQ70Umoh7Lh/iUA7b3iG1y4FyE/tEApE53w6YV6DyH57bwJ9lzwmMgDdUhWpl/pfCcAEm1RrncT/ZnbtmM54y2mOFfwRJw9hmtg5AGft6ubuZX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686571; c=relaxed/simple;
-	bh=ApXMGC7s2QVLwduVNuTqTcEm2BUNxA3LVDmQvfFW5YM=;
+	s=arc-20240116; t=1750686697; c=relaxed/simple;
+	bh=ospZQHAx1azzHgqpO0329Qy3iUeVF89ddO9PCGb2UkY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZVAppSwBohbDtrmxxLO9jvltRDUFbKe8EFXb79ClLtOxeKqzq6nT1FrnoJ9J2ExLQNhn+ENKyRLqpth5fbaTWZAf3JMGVgpPdLCi+wPfpX79KVpIQPcvHyGoUuEq6DtgO4Uqh+DjYdKjZDo5CFjRUV+lepwva8xWD4Nj8ZtNHPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mHsbr8ZU; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=TeFYDtoc0sWzIxF6PWM1e7sIiA2v0m12gjrFP334Os3z/nqPLqz59DXDlShZofQ/JSoxTVn+B2YmVFZVKopdfWCdWl0ozTlaDWwucqV6deIURAQQuD2fV4IYW6j6DXyU6qNz7UkxrJ3/IpEbeZsVwNBPFzBp5CQj4rldHX3pQjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=kiZ3HiBv; arc=none smtp.client-ip=212.227.17.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mHsbr8ZU"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-451d7b50815so33011185e9.2
-        for <patches@lists.linux.dev>; Mon, 23 Jun 2025 06:49:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750686568; x=1751291368; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7seBYxZ0rUqXY2kxJDY1wUd+HiGClcayRxu17r7nTGk=;
-        b=mHsbr8ZUGp5MT/EROzTHKBlZA1wBnHBLEIajvqQNcI+kvwEYuQoyG5TWZo/ayL9tEs
-         nehX1U3w09cgi1O++JA2JuRj+aygukuzpHZVIEZRg8EEYYqF2dotRDdL0z9n9F6lomPJ
-         /Gv4GUsjqueSzH0sLpiM0Vu4p/ruk7i+IygN/DJFMbYEUD6tg4t28nfXi0p5tRGKXBLy
-         1qcCf+hVSezFGCCq4c0rzeVHQShHORH8+EUDvfg/nl9Y88x3reDz57vzzmVHCG0voGyw
-         t6GtYLE2quCaCIqvcXYzKf2lBsbai45GZBxFxyBGvM8XMigvvIILO7+J40oyTit6FjQS
-         WGlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750686568; x=1751291368;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7seBYxZ0rUqXY2kxJDY1wUd+HiGClcayRxu17r7nTGk=;
-        b=tTPF3ksDzWhgWYChS193bTmzaetjswpeZlNn2fYAujtJk8wd0gk21cCkQ+KfEq1QS4
-         pIz5pWY/5JjTVikVKg3ptDOkH0R+VpQN9xdIu0a4Zl7ienLOyIrnJD2MKdK/GAKoKpzP
-         Jd6JY94uLCC9f2dVgfwxD4qjY6E+QzwjDU0gKmvcEqSrYWac6jQBklIDaC0UJww8sjwi
-         +kX2BBG9mNpMEOPK4Ub70UmgRWpSYThga2vPBKdwtBqGcIbBbHhpoEzaRDdXDqWYgt+k
-         OxQRlk5m6BXQS27hnCOV6+F3wVztP6Nmlmpk8qKAGdka0DEBPCTDxIXwCWNIBwS4XQVM
-         tNGw==
-X-Forwarded-Encrypted: i=1; AJvYcCUjRC8CEvNZfCsKp/MuJMDQcUChVkV2F497BZbWM1u5lUTj8SW+eDM7rG7aPgWtlppAnLIokR8i@lists.linux.dev
-X-Gm-Message-State: AOJu0YxSeZYdqMWnYT3HVarPmv5Na2eoV/9zHEw1HBsZpyBJEHVibTEP
-	9YgwGmcljAWAp6C+mThRPmWvhbtBh5taBxiNy/9lRXAf/RsYqg3/jjxU
-X-Gm-Gg: ASbGncvU4gD2Jql0lhLmjxoZGvJWBmlzT/nRqqEKgsU0ceGjwg1sXa/T2WuvFRqybPq
-	vNzlKfsrxEq0n5a4f7J4SUc+InhqaMT/KAPDlsx+1w4978mbZ7737HNbijtZnmLrx8QOWQlQ2cf
-	f6UoF/FPd44um2MkE1A95P/Gl4OFuoj9/iCls9Y+O7sSfXlTAAcdrX6WPWSx8wMCEYNPsWW+A8q
-	h2b6TKRmXcjhZRDD6ljdUb5JH/hRMAWkUDM3YfmW/nD/Oj4l7rj4YYZ47vWx/9lGlD19q158gJR
-	/eupElc9PIGhYwiZMdNcUDSZTpZ6C43OZss1bmwcB7zcc43Hv8lmiS85dyigbGGrRQev7+9dZw=
-	=
-X-Google-Smtp-Source: AGHT+IHxmpE/gGIOEjTriO6olumF8IddjuRCLhtG/90jInmLS3B8CGPV+mADMuI0VcSaCpHWvXYQXg==
-X-Received: by 2002:a05:600c:1f0e:b0:43d:563:6fef with SMTP id 5b1f17b1804b1-453659ec182mr108475955e9.21.1750686567694;
-        Mon, 23 Jun 2025 06:49:27 -0700 (PDT)
-Received: from mail.gmail.com ([2a04:ee41:4:b2de:1ac0:4dff:fe0f:3782])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6d11906d6sm9440850f8f.85.2025.06.23.06.49.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jun 2025 06:49:27 -0700 (PDT)
-Date: Mon, 23 Jun 2025 13:54:57 +0000
-From: Anton Protopopov <a.s.protopopov@gmail.com>
+	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="kiZ3HiBv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
+	s=s1-ionos; t=1750686647; x=1751291447; i=christian@heusel.eu;
+	bh=5Onc4Y8lpnattujCyjGKi5wWqwWwEpnJ7+2O5Ajcx7A=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=kiZ3HiBvPyrzJ7aKeU+WwqaRXSCWThbvKxWQ4SganOf5d75EeoKVaS45UzgPW8iG
+	 AJOZFQSVoNvah7KZbINiNbhO0HsG33cyVxTmkSRiJ3mmm55FtV/Im9j0ZB9xSiCQB
+	 bEtAW/TP1Q6Na5lor9CKdOdDzlZtXjrOW8hC0rYsZM7AHSusRgrKjuG7CSoK+Ge1y
+	 xc5h03uJgVmIbkCkIiNtdT/W5JzemLQCypt9Jyln3wOej1f4R1+AKAzz3KIz311z+
+	 MXqgxkEHsRHuuG+g+rj7YK8lt5v7HBGkO4qWv8nT3tWG/9rY7RW9+rWrBKVTdxMI4
+	 +Kl8QA2+Oves31TfXw==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from localhost ([94.31.75.247]) by mrelayeu.kundenserver.de
+ (mreue109 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1Mzhax-1ugfyg2FZh-010Vx6; Mon, 23 Jun 2025 15:50:47 +0200
+Date: Mon, 23 Jun 2025 15:50:45 +0200
+From: Christian Heusel <christian@heusel.eu>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 044/355] libbpf: Use proper errno value in nlattr
-Message-ID: <aFlcsaJuwG9HQf6S@mail.gmail.com>
-References: <20250623130626.716971725@linuxfoundation.org>
- <20250623130628.151124578@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.15 000/592] 6.15.4-rc1 review
+Message-ID: <a0ebb389-f088-417b-9fd4-ac8c100d206f@heusel.eu>
+References: <20250623130700.210182694@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="bzrlzjrxqd77i3z3"
 Content-Disposition: inline
-In-Reply-To: <20250623130628.151124578@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+X-Provags-ID: V03:K1:xQORCzsKcY/1G5rTjYyoobOjvK/C4mp5jHpyY05xgU6Q1cU5+rf
+ SdLTMzVMQbqPNHLQSd9PILqzuj1kIEd4kkBfMjYulFb4t0V2tG2jF/0sWWUTqI38ygcKg5t
+ /y4es4dWDGbMZHAEuHjwxJG0te6c91gdeLK2A4K8WATYD2BKmMDe8YPeRSeRJ1DaMmzgZIT
+ lMxq2jG81BTI5GYFyzE2g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:JOj1uUFmIF0=;ApuwC2GWMXKAIY8oF+p9H0wHL6c
+ y0pF3h1rMhrx1wuJrrJ/MfFT9djLuxzrjNvLxwmPEC7zwh3eFfe8p8/Q5ZwUyQyDMfcHuDOo6
+ KBHtD3/JkwZyX9kpzl62XDFASP8qp1A2Hu2l2N6JsYXs6UbSr31vBBs9RHA/qg1+M/v9udQHt
+ OGTlPGjn7ltiR4WlEvvkTgz1P9DLOOXMBUw9N0UaPv9LCcwstZ+QC9Mv6Sv6TIuPGJhGxsL/U
+ oOZBNvcRE7S/IQcL4IpfwBTcOvMfX6TcEzxOSNLX/ehzmavObA5MRkVxnQ15BpPnPd4k4EBkn
+ fwJAevRZOv1xHvxnrowSNJBJGCan9jvwqS4iJ0R9kWhneKbuqpliqwkjNR1NmV3xEofEY6UT4
+ k+5Ubq14kSvgG1ASAT8vVCxSqC+hWtI8SBdUjyZywEzJaAYbDfTFCIoUzBr7tzHGu6U1pYbUk
+ kqQBE8z0FTLmjn7z35icuxBX7QDHr1hs7dgs7hCL2upr1V3xv/rnzWh3AopJCyABNe01+ngPk
+ EkBuqCPizmOLg7IyJZZf+XmLzqO4xG7IC6sttkT/8XeIa2EsEsDyWQpjdQ7pUVCG0SZWgBKsN
+ rwmbooIhDFzbZr/zXQbDrDMpjvZ4kvfexlodKpsAajnzVwq5UosGhn9b/GAmigF+qG7aNNpsC
+ wvUkjQsElNZHuuxSJ3bN38aQPSzuv3n4Wz3rnVCzL53EX/xBupn1mSzn46DU28E77DWJwWBeZ
+ cKDl7wo9Y+sPXGsUcXiLwP7zoEayDhfqnmA6dL6RcescEAlrkAdh9DdLIatzg3/qBuYWhilOQ
+ 7+WEj+Sk8e+HHVtq7mNWJcsxZP3miBa7wNTiqkBJ2HkEd2FqHkrOoeiuYq3rbUnaxu8HnPVwp
+ rFEgMRBO9szPbhaUq3YWp7Mjyjk8mMdqw9QfeHtIcNoL0D5U54nod6dO6PvhcGUVtdJ9G7Ljy
+ vmIJeG2aSWK4cJ3e1WoI8CcTcE0YQlsxnfN8gvgt5UoKLuQbvmuA/D0TiBmOYEuNUzerCjnEq
+ Ntk0bI32S6Dksw3hBj7oWB34pl4RsmUH3JA383SQgidKiRJuyXEROyb9TDE5r1H3fUEEGgvXb
+ u/ek4mUisU5OMCOQqOWklUpo3EMDL/GNGJoyONgjXwb2ftCmzmbO/YSQ1WXdsUCDTp6A+gE41
+ DwRsDg1tKNJCdRcALzN6frzqZnK5MrApKSD1yDg4J6n6BlauGQigiMmKzsQNbm6b3E7ZIGOVs
+ px3p7+NYy7iWFlIvbu2g3KbAkqkhlEFRp/7LkoN4jMzQ6HQt8skyqNA1i9BbEkDPerQm4EcT/
+ GuQQP1gMNpXcuLcl5dhtC5x95QYTfv/thw2EBfzRTtm5S2dDYay8K9ZNpeZjAALRti4tK6RA0
+ W4tI7Zit2MCqDOM6H5Hug1mPCEZdV191zYrP453g9QIex1BL4Xv6yAWi7g6Y1XC4io5q9xWLi
+ pQ4zhYZgYdvzLwtGyAEWGGTm7gEs=
 
-On 25/06/23 03:04PM, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Anton Protopopov <a.s.protopopov@gmail.com>
-> 
-> [ Upstream commit fd5fd538a1f4b34cee6823ba0ddda2f7a55aca96 ]
-> 
-> Return value of the validate_nla() function can be propagated all the
-> way up to users of libbpf API. In case of error this libbpf version
-> of validate_nla returns -1 which will be seen as -EPERM from user's
-> point of view. Instead, return a more reasonable -EINVAL.
-> 
-> Fixes: bbf48c18ee0c ("libbpf: add error reporting in XDP")
-> Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-> Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
-> Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-> Link: https://lore.kernel.org/bpf/20250510182011.2246631-1-a.s.protopopov@gmail.com
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  tools/lib/bpf/nlattr.c | 15 +++++++--------
->  1 file changed, 7 insertions(+), 8 deletions(-)
-> 
-> diff --git a/tools/lib/bpf/nlattr.c b/tools/lib/bpf/nlattr.c
-> index 1a04299a2a604..35ad5a845a147 100644
-> --- a/tools/lib/bpf/nlattr.c
-> +++ b/tools/lib/bpf/nlattr.c
-> @@ -63,16 +63,16 @@ static int validate_nla(struct nlattr *nla, int maxtype,
->  		minlen = nla_attr_minlen[pt->type];
->  
->  	if (libbpf_nla_len(nla) < minlen)
-> -		return -1;
-> +		return -EINVAL;
->  
->  	if (pt->maxlen && libbpf_nla_len(nla) > pt->maxlen)
-> -		return -1;
-> +		return -EINVAL;
->  
->  	if (pt->type == LIBBPF_NLA_STRING) {
->  		char *data = libbpf_nla_data(nla);
->  
->  		if (data[libbpf_nla_len(nla) - 1] != '\0')
-> -			return -1;
-> +			return -EINVAL;
->  	}
->  
->  	return 0;
-> @@ -118,19 +118,18 @@ int libbpf_nla_parse(struct nlattr *tb[], int maxtype, struct nlattr *head,
->  		if (policy) {
->  			err = validate_nla(nla, maxtype, policy);
->  			if (err < 0)
-> -				goto errout;
-> +				return err;
->  		}
->  
-> -		if (tb[type])
-> +		if (tb[type]) {
->  			pr_warn("Attribute of type %#x found multiple times in message, "
->  				"previous attribute is being ignored.\n", type);
-> +		}
->  
->  		tb[type] = nla;
->  	}
->  
-> -	err = 0;
-> -errout:
-> -	return err;
-> +	return 0;
->  }
->  
->  /**
-> -- 
-> 2.39.5
-> 
 
-The patch ^ is ok. But the rest of the letter below is unrelated:
+--bzrlzjrxqd77i3z3
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 6.15 000/592] 6.15.4-rc1 review
+MIME-Version: 1.0
 
-> 
-> wer/supply/bq27xxx_battery_i2c.c b/drivers/power/supply/bq27xxx_battery_i2c.c
-> index ba0d22d904295..868e95f0887e1 100644
-> --- a/drivers/power/supply/bq27xxx_battery_i2c.c
-> +++ b/drivers/power/supply/bq27xxx_battery_i2c.c
-> @@ -6,6 +6,7 @@
->   *	Andrew F. Davis <afd@ti.com>
->   */
->  
-> +#include <linux/delay.h>
->  #include <linux/i2c.h>
->  #include <linux/interrupt.h>
->  #include <linux/module.h>
-> @@ -31,6 +32,7 @@ static int bq27xxx_battery_i2c_read(struct bq27xxx_device_info *di, u8 reg,
->  	struct i2c_msg msg[2];
->  	u8 data[2];
->  	int ret;
-> +	int retry = 0;
->  
->  	if (!client->adapter)
->  		return -ENODEV;
-> @@ -47,7 +49,16 @@ static int bq27xxx_battery_i2c_read(struct bq27xxx_device_info *di, u8 reg,
->  	else
->  		msg[1].len = 2;
->  
-> -	ret = i2c_transfer(client->adapter, msg, ARRAY_SIZE(msg));
-> +	do {
-> +		ret = i2c_transfer(client->adapter, msg, ARRAY_SIZE(msg));
-> +		if (ret == -EBUSY && ++retry < 3) {
-> +			/* sleep 10 milliseconds when busy */
-> +			usleep_range(10000, 11000);
-> +			continue;
-> +		}
-> +		break;
-> +	} while (1);
-> +
->  	if (ret < 0)
->  		return ret;
->  
-> -- 
-> 2.39.5
-> 
-> 
-> 
+On 25/06/23 02:59PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.15.4 release.
+> There are 592 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+> Responses should be made by Wed, 25 Jun 2025 13:05:55 +0000.
+> Anything received after that time might be too late.
+>=20
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.4-=
+rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
+ linux-6.15.y
+> and the diffstat can be found below.
+>=20
+> thanks,
+>=20
+> greg k-h
+
+Hey Greg,
+
+this stable release candidate does not build for me as-is on x86:
+
+error[E0432]: unresolved import `crate::sync::Completion`
+  --> rust/kernel/devres.rs:16:22
+   |
+16 |     sync::{rcu, Arc, Completion},
+   |                      ^^^^^^^^^^ no `Completion` in `sync`
+
+error[E0412]: cannot find type `Bound` in this scope
+   --> rust/kernel/devres.rs:226:49
+    |
+226 |     pub fn access<'a>(&'a self, dev: &'a Device<Bound>) -> Result<&'a=
+ T> {
+    |                                                 ^^^^^ not found in th=
+is scope
+    |
+help: consider importing this enum
+    |
+8   + use core::range::Bound;
+    |
+
+error[E0107]: struct takes 0 generic arguments but 1 generic argument was s=
+upplied
+   --> rust/kernel/devres.rs:226:42
+    |
+226 |     pub fn access<'a>(&'a self, dev: &'a Device<Bound>) -> Result<&'a=
+ T> {
+    |                                          ^^^^^^------- help: remove t=
+he unnecessary generics
+    |                                          |
+    |                                          expected 0 generic arguments
+    |
+note: struct defined here, with 0 generic parameters
+   --> rust/kernel/device.rs:45:12
+    |
+45  | pub struct Device(Opaque<bindings::device>);
+    |            ^^^^^^
+
+error[E0600]: cannot apply unary operator `!` to type `()`
+   --> rust/kernel/devres.rs:172:12
+    |
+172 |         if !inner.data.revoke() {
+    |            ^^^^^^^^^^^^^^^^^^^^ cannot apply unary operator `!`
+
+error[E0599]: no method named `access` found for struct `Revocable` in the =
+current scope
+   --> rust/kernel/devres.rs:234:33
+    |
+234 |         Ok(unsafe { self.0.data.access() })
+    |                                 ^^^^^^
+    |
+   ::: rust/kernel/revocable.rs:64:1
+    |
+64  | #[pin_data(PinnedDrop)]
+    | ----------------------- method `access` not found for this struct
+    |
+help: there is a method `try_access` with a similar name
+    |
+234 |         Ok(unsafe { self.0.data.try_access() })
+    |                                 ++++
+
+error[E0599]: no method named `try_access_with` found for struct `Revocable=
+` in the current scope
+   --> rust/kernel/devres.rs:244:21
+    |
+244 |         self.0.data.try_access_with(f)
+    |                     ^^^^^^^^^^^^^^^
+    |
+   ::: rust/kernel/revocable.rs:64:1
+    |
+64  | #[pin_data(PinnedDrop)]
+    | ----------------------- method `try_access_with` not found for this s=
+truct
+    |
+help: there is a method `try_access` with a similar name, but with differen=
+t arguments
+   --> rust/kernel/revocable.rs:97:5
+    |
+97  |     pub fn try_access(&self) -> Option<RevocableGuard<'_, T>> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> rust/kernel/devres.rs:257:21
+    |
+257 |         if unsafe { self.0.data.revoke_nosync() } {
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `bool`, foun=
+d `()`
+
+error: aborting due to 7 previous errors
+
+Some errors have detailed explanations: E0107, E0308, E0412, E0432, E0599, =
+E0600.
+For more information about an error, try `rustc --explain E0107`.
+make[2]: *** [rust/Makefile:536: rust/kernel.o] Error 1
+make[1]: *** [/build/linux/src/linux-6.15.3/Makefile:1280: prepare] Error 2
+make: *** [Makefile:248: __sub-make] Error 2
+
+
+--bzrlzjrxqd77i3z3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmhZW7UACgkQwEfU8yi1
+JYV7pBAAoLezFTzYpDLyAa2Xg8+9dwvSN121/S9xM+EPfrq72KeTvU+H0emNmKa+
++nr5DxoIlE5ywlPMu759wMoS0sv2vdCSO4Fo9u0RYLwY8igZO3F7gNCtzLTOl5w3
+m54Dg0zKeKt+YljwZbXOeFiBVW6SGCzBXfRIukYzZU8Lx+6iDfQgAYVuTuBpe8Dg
+RodEzxKyw4W83yxbU9X7h/uNWc3HNmHu+YtPsvEnBLMlIXQ8m/gUSB7nDmLRlLW3
+HoJxDx1122V3vcZKhiNJYVScKqXtYI3jAVuzsnq+5s/HF3IEBQPiVr/ouHO1Lpkx
+JaRt1xv/rpLSAO2M9Zbmhhz7QFj7sJ0WpcIVYnixJQxjSGAL/GQ4cVKGfDVIYPL2
+yQPmI1aVQ7d7pGS5RD64SXXtTrl2+7UAdbvDuFxjTlCeY6ZkGreGuGiy+L4eB9vc
+n9pvVjAJSC6FkE3ICvS3OFxIF2KrSsQS7d3kDQ5GFqoQfVsFJtb0DLsOkhylUitm
+wF3pP+42RKUSPcsEdYJe7PCTAeCAWQVcaBtnM2KjctQGkTW5QcfX0to55W1y9xiM
+upVPaxdCoSUOGlpSYQuapIe39B4VyQad9qN7OdYe/4iJWbbto8rg0IqOS9JYbdJf
+w1/Cv1HYzowFUdxT5TKlPLCPQNaLC9VYSleec/iOUC2ig0VN5MA=
+=Nnoh
+-----END PGP SIGNATURE-----
+
+--bzrlzjrxqd77i3z3--
