@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48321F5820;
-	Mon, 23 Jun 2025 21:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3451C5D46;
+	Mon, 23 Jun 2025 21:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714421; cv=none; b=n37aHl4IbUJbsY3cmwHbeIJDfhLcIDeqUfVdCd5VwFUuFApCwNGbVVqiCwsALZOPl1dzJeiIBHwGDzl4iPIeve22wF2wyA6iWhJSIZbTRYiitSyHW9W7e1y1Y0GSgTMbKxhfpwaTkUsWJZ1va7zWOW+L6laophRS1VJ9/6t+uwQ=
+	t=1750714424; cv=none; b=j/RgtZky+NS7w7Bj4v1nrkFsqauzEF9w6tw27e5mJxS6h5bmJHdmGT0wzicldbgBAEiamALqhr5SXMv0Rko5+XrILIL4tR63RHBLOSe36KMaCqQi62aIA9v0BhpwxAMhTZ4r9v6CFbsfFvPYD3HB+87M09FB1hqwsL5CILpNr3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714421; c=relaxed/simple;
-	bh=/xRqDO7QSZ61RupOW0+3z6+uekjwE6IYM1xFVhGXlho=;
+	s=arc-20240116; t=1750714424; c=relaxed/simple;
+	bh=VbCsPZamD9/SEwHcP3cG2xBux9zBxmR3/SkyTTeIJho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ctw2KEJtSnRyt69VSNaWbLIrVr0kS1WcrHgLRn+ArehYxwevZ3prT23cbtVgS4R/3QNYOgNJnt/dV9rskOtYvpKE0Oe15MyzEIw5D0Onb32ygHMBkz0Lo+Mj0T0o2OvvOHMy9pwXNskJQZwYR5WpvbDifkMDaFbfIwvw7EwD458=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLCk2Sfw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fdECSKUyJIwRcIIFYM6K4mzfacfzh+KBJW5+ShXSglrscV9fKlsf5vjZz1ww99ixUUT4Fz7iRJJo+itFXLOvPFob2g2oXtvrLhkJPS4bpLBggF1/369XaZVUIC8EB28dsU1eMHlta4mhjdqHh9evwijb5EulCaAeStoOo848kdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3di9mqn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLCk2Sfw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D433C4CEED;
-	Mon, 23 Jun 2025 21:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3di9mqn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A60B1C4CEEA;
+	Mon, 23 Jun 2025 21:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714421;
-	bh=/xRqDO7QSZ61RupOW0+3z6+uekjwE6IYM1xFVhGXlho=;
+	s=korg; t=1750714424;
+	bh=VbCsPZamD9/SEwHcP3cG2xBux9zBxmR3/SkyTTeIJho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jLCk2SfwtcGcG4qsNz5saS6Y9xGuq72wTz573996otCdC56CF0GQyrxo9sPXH93MU
-	 dfWCkMCZZmrKqHx8E7amtU+jj6BVjFMXDFKFCXyEFnbqWoJthY3ftzqhDKrX0NGUQO
-	 l++3iDNrGkWhVz1buymQDbrkWKAgm1tCWKGdjlHg=
+	b=Z3di9mqnFKq/mYURbqiECdWjJHfDmc9ei3EPnOwesJJ1Sfvt8TlP5UciA/6nC0W2G
+	 Lu4b/SkUq5WCDj9XKa/jn5kntn2zjN5pNB0l1/IlGdz3+F96O2vhL+hcQ0HfeyIrCH
+	 QD9GXAGe7moBX0fx8eb16RVxSTcki5c6VAm3R/B0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Khem Raj <raj.khem@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.10 205/355] mips: Add -std= flag specified in KBUILD_CFLAGS to vdso CFLAGS
-Date: Mon, 23 Jun 2025 15:06:46 +0200
-Message-ID: <20250623130632.817622195@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 136/290] f2fs: use vmalloc instead of kvmalloc in .init_{,de}compress_ctx
+Date: Mon, 23 Jun 2025 15:06:37 +0200
+Message-ID: <20250623130631.000162050@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,51 +47,159 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Khem Raj <raj.khem@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 0f4ae7c6ecb89bfda026d210dcf8216fb67d2333 upstream.
+[ Upstream commit 70dd07c888451503c3e93b6821e10d1ea1ec9930 ]
 
-GCC 15 changed the default C standard dialect from gnu17 to gnu23,
-which should not have impacted the kernel because it explicitly requests
-the gnu11 standard in the main Makefile. However, mips/vdso code uses
-its own CFLAGS without a '-std=' value, which break with this dialect
-change because of the kernel's own definitions of bool, false, and true
-conflicting with the C23 reserved keywords.
+.init_{,de}compress_ctx uses kvmalloc() to alloc memory, it will try
+to allocate physically continuous page first, it may cause more memory
+allocation pressure, let's use vmalloc instead to mitigate it.
 
-  include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
-     11 |         false   = 0,
-        |         ^~~~~
-  include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
-  include/linux/types.h:35:33: error: 'bool' cannot be defined via 'typedef'
-     35 | typedef _Bool                   bool;
-        |                                 ^~~~
-  include/linux/types.h:35:33: note: 'bool' is a keyword with '-std=c23' onwards
+[Test]
+cd /data/local/tmp
+touch file
+f2fs_io setflags compression file
+f2fs_io getflags file
+for i in $(seq 1 10); do sync; echo 3 > /proc/sys/vm/drop_caches;\
+time f2fs_io write 512 0 4096 zero osync file; truncate -s 0 file;\
+done
 
-Add -std as specified in KBUILD_CFLAGS to the decompressor and purgatory
-CFLAGS to eliminate these errors and make the C standard version of these
-areas match the rest of the kernel.
+[Result]
+Before		After		Delta
+21.243		21.694		-2.12%
 
-Signed-off-by: Khem Raj <raj.khem@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+For compression, we recommend to use ioctl to compress file data in
+background for workaround.
+
+For decompression, only zstd will be affected.
+
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/vdso/Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/compress.c | 23 ++++++++++-------------
+ fs/f2fs/f2fs.h     |  5 +++++
+ 2 files changed, 15 insertions(+), 13 deletions(-)
 
---- a/arch/mips/vdso/Makefile
-+++ b/arch/mips/vdso/Makefile
-@@ -29,6 +29,7 @@ endif
- # offsets.
- cflags-vdso := $(ccflags-vdso) \
- 	$(filter -W%,$(filter-out -Wa$(comma)%,$(KBUILD_CFLAGS))) \
-+	$(filter -std=%,$(KBUILD_CFLAGS)) \
- 	-O3 -g -fPIC -fno-strict-aliasing -fno-common -fno-builtin -G 0 \
- 	-mrelax-pic-calls $(call cc-option, -mexplicit-relocs) \
- 	-fno-stack-protector -fno-jump-tables -DDISABLE_BRANCH_PROFILING \
+diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
+index f7ef69f44f3d8..e962de4ecaa2f 100644
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -176,8 +176,7 @@ void f2fs_compress_ctx_add_page(struct compress_ctx *cc, struct page *page)
+ #ifdef CONFIG_F2FS_FS_LZO
+ static int lzo_init_compress_ctx(struct compress_ctx *cc)
+ {
+-	cc->private = f2fs_kvmalloc(F2FS_I_SB(cc->inode),
+-				LZO1X_MEM_COMPRESS, GFP_NOFS);
++	cc->private = f2fs_vmalloc(LZO1X_MEM_COMPRESS);
+ 	if (!cc->private)
+ 		return -ENOMEM;
+ 
+@@ -187,7 +186,7 @@ static int lzo_init_compress_ctx(struct compress_ctx *cc)
+ 
+ static void lzo_destroy_compress_ctx(struct compress_ctx *cc)
+ {
+-	kvfree(cc->private);
++	vfree(cc->private);
+ 	cc->private = NULL;
+ }
+ 
+@@ -244,7 +243,7 @@ static int lz4_init_compress_ctx(struct compress_ctx *cc)
+ 		size = LZ4HC_MEM_COMPRESS;
+ #endif
+ 
+-	cc->private = f2fs_kvmalloc(F2FS_I_SB(cc->inode), size, GFP_NOFS);
++	cc->private = f2fs_vmalloc(size);
+ 	if (!cc->private)
+ 		return -ENOMEM;
+ 
+@@ -259,7 +258,7 @@ static int lz4_init_compress_ctx(struct compress_ctx *cc)
+ 
+ static void lz4_destroy_compress_ctx(struct compress_ctx *cc)
+ {
+-	kvfree(cc->private);
++	vfree(cc->private);
+ 	cc->private = NULL;
+ }
+ 
+@@ -340,8 +339,7 @@ static int zstd_init_compress_ctx(struct compress_ctx *cc)
+ 	params = zstd_get_params(level, cc->rlen);
+ 	workspace_size = zstd_cstream_workspace_bound(&params.cParams);
+ 
+-	workspace = f2fs_kvmalloc(F2FS_I_SB(cc->inode),
+-					workspace_size, GFP_NOFS);
++	workspace = f2fs_vmalloc(workspace_size);
+ 	if (!workspace)
+ 		return -ENOMEM;
+ 
+@@ -349,7 +347,7 @@ static int zstd_init_compress_ctx(struct compress_ctx *cc)
+ 	if (!stream) {
+ 		f2fs_err_ratelimited(F2FS_I_SB(cc->inode),
+ 				"%s zstd_init_cstream failed", __func__);
+-		kvfree(workspace);
++		vfree(workspace);
+ 		return -EIO;
+ 	}
+ 
+@@ -362,7 +360,7 @@ static int zstd_init_compress_ctx(struct compress_ctx *cc)
+ 
+ static void zstd_destroy_compress_ctx(struct compress_ctx *cc)
+ {
+-	kvfree(cc->private);
++	vfree(cc->private);
+ 	cc->private = NULL;
+ 	cc->private2 = NULL;
+ }
+@@ -421,8 +419,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
+ 
+ 	workspace_size = zstd_dstream_workspace_bound(max_window_size);
+ 
+-	workspace = f2fs_kvmalloc(F2FS_I_SB(dic->inode),
+-					workspace_size, GFP_NOFS);
++	workspace = f2fs_vmalloc(workspace_size);
+ 	if (!workspace)
+ 		return -ENOMEM;
+ 
+@@ -430,7 +427,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
+ 	if (!stream) {
+ 		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
+ 				"%s zstd_init_dstream failed", __func__);
+-		kvfree(workspace);
++		vfree(workspace);
+ 		return -EIO;
+ 	}
+ 
+@@ -442,7 +439,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
+ 
+ static void zstd_destroy_decompress_ctx(struct decompress_io_ctx *dic)
+ {
+-	kvfree(dic->private);
++	vfree(dic->private);
+ 	dic->private = NULL;
+ 	dic->private2 = NULL;
+ }
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index 911c4c64d729d..2d9a86129bd8d 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3449,6 +3449,11 @@ static inline void *f2fs_kvzalloc(struct f2fs_sb_info *sbi,
+ 	return f2fs_kvmalloc(sbi, size, flags | __GFP_ZERO);
+ }
+ 
++static inline void *f2fs_vmalloc(size_t size)
++{
++	return vmalloc(size);
++}
++
+ static inline int get_extra_isize(struct inode *inode)
+ {
+ 	return F2FS_I(inode)->i_extra_isize / sizeof(__le32);
+-- 
+2.39.5
+
 
 
