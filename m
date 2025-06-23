@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B981F24E4C3;
-	Mon, 23 Jun 2025 13:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C84E2505CB;
+	Mon, 23 Jun 2025 13:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684499; cv=none; b=KA+eX1qotU81gfGrYCJ+aEpcxgmyswxuGZZfzlVG1SpRE4qbH1z2OJlpuhm2WO/ibNIbfNcvO1C2c9xDTZfYzEcfk0SFhLFuL23OAdcJEJz6QrvohfMrW0CnRbC8csKyenJ0B+TksIKchiGEEGXfqwaXAcw+Zyisx0vGyc+lcis=
+	t=1750684502; cv=none; b=qey24LWJJKGmNVuS3QLAf/NvOJzZl0B/P/ATT7M1f40LSP77Qovepxmopa82JRqFdIODK4zWKuiVuLbixU4aAngCxBV+QQHGRmrzUxVxGilMllCi8PZxzuG1odHRjdrpNR/a08jcmZ8jecaX0WxEi1zKX05XzMR+r3uNiMI1oBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684499; c=relaxed/simple;
-	bh=0YqWQl8TuXrX3c5HXuytMN5AgJ+Qqy684D9QdWK6GW8=;
+	s=arc-20240116; t=1750684502; c=relaxed/simple;
+	bh=iRnweNH7PawYuTLZehxbdg1AVYfVgu/cgXC2zfeBeCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PfiiqYvt+dgKbA2u79DXShvEqiWTN0SgLchrKwlE9Dclkj1wy/JJSLQcaWtKD4AS0XkjU4GH2lmhU6XBfugqufop9whwqSiclM8yv0QylH7uWJWXD+ETlISZLlvQeyQhp6EcbjIiUISRd0nAT0HkK8FVRGtGbbbHJkBhi1QDDIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dC64Jtc5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vClLjTPb11PK+/exlNnX7mIsRlWCqU2wxG1SLjugLiE30LYS6UXQvqat5uwTsZAF77h5ybrfD+zaFy8edzdzBIx3EOr8gLmjqGbWfssaxG7uQGqyBbG60L4a2tqYnNlHbG+KYhQO3bpGyel7rFv+Ohw2DDK2R0UGXVmT8qep1GY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4OaeC+u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dC64Jtc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F22DC4CEEA;
-	Mon, 23 Jun 2025 13:14:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4OaeC+u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34D8C4CEEA;
+	Mon, 23 Jun 2025 13:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684499;
-	bh=0YqWQl8TuXrX3c5HXuytMN5AgJ+Qqy684D9QdWK6GW8=;
+	s=korg; t=1750684502;
+	bh=iRnweNH7PawYuTLZehxbdg1AVYfVgu/cgXC2zfeBeCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dC64Jtc5fzanrcuIHjcyE4jpax/P0KD/f+TP2Xe62xqWqRcmmYiGTRDzEkuDudYc3
-	 nIgDU1YNIf185ehASyW1OY+8mlxhjyg+61VOGvGerameA1MQsX7uGXKB17EMWxVs5O
-	 Xu6Ym3/momqqHZI677gIWj+lniC72ccujNHRJzvg=
+	b=x4OaeC+udjjk+TOSFHOItGM0RfJhAMgSm2eJQTJ2V6CHzBs8yvh2QyAZEgyWKwAze
+	 tZLw8kAfJ3NmRMPkp6BDe8PlduUFRy1+kcmeqHtwFDSyJY8mVa7NgaKEtAsQ8XlDnX
+	 CyrP2LYy6hpBENhOHlK12+PMGTLo4GLQaLR087hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.15 092/592] arm64/mm: Close theoretical race where stale TLB entry remains valid
-Date: Mon, 23 Jun 2025 15:00:50 +0200
-Message-ID: <20250623130702.470096890@linuxfoundation.org>
+	Ross Stutterheim <ross.stutterheim@garmin.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 6.15 093/592] ARM: 9447/1: arm/memremap: fix arch_memremap_can_ram_remap()
+Date: Mon, 23 Jun 2025 15:00:51 +0200
+Message-ID: <20250623130702.493258612@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -50,105 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Ross Stutterheim <ross.stutterheim@garmin.com>
 
-commit 4b634918384c0f84c33aeb4dd9fd4c38e7be5ccb upstream.
+commit 96e0b355883006554a0bee3697da475971d6bba8 upstream.
 
-Commit 3ea277194daa ("mm, mprotect: flush TLB if potentially racing with
-a parallel reclaim leaving stale TLB entries") describes a race that,
-prior to the commit, could occur between reclaim and operations such as
-mprotect() when using reclaim's tlbbatch mechanism. See that commit for
-details but the summary is:
+arm/memremap: fix arch_memremap_can_ram_remap()
 
-"""
-Nadav Amit identified a theoritical race between page reclaim and
-mprotect due to TLB flushes being batched outside of the PTL being held.
+commit 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure
+presence of linear map") added the definition of
+arch_memremap_can_ram_remap() for arm[64] specific filtering of what pages
+can be used from the linear mapping. memblock_is_map_memory() was called
+with the pfn of the address given to arch_memremap_can_ram_remap();
+however, memblock_is_map_memory() expects to be given an address for arm,
+not a pfn.
 
-He described the race as follows:
+This results in calls to memremap() returning a newly mapped area when
+it should return an address in the existing linear mapping.
 
-	CPU0				CPU1
-	----				----
-					user accesses memory using RW PTE
-					[PTE now cached in TLB]
-	try_to_unmap_one()
-	==> ptep_get_and_clear()
-	==> set_tlb_ubc_flush_pending()
-					mprotect(addr, PROT_READ)
-					==> change_pte_range()
-					==> [ PTE non-present - no flush ]
+Fix this by removing the address to pfn translation and pass the
+address directly.
 
-					user writes using cached RW PTE
-	...
-
-	try_to_unmap_flush()
-"""
-
-The solution was to insert flush_tlb_batched_pending() in mprotect() and
-friends to explcitly drain any pending reclaim TLB flushes. In the
-modern version of this solution, arch_flush_tlb_batched_pending() is
-called to do that synchronisation.
-
-arm64's tlbbatch implementation simply issues TLBIs at queue-time
-(arch_tlbbatch_add_pending()), eliding the trailing dsb(ish). The
-trailing dsb(ish) is finally issued in arch_tlbbatch_flush() at the end
-of the batch to wait for all the issued TLBIs to complete.
-
-Now, the Arm ARM states:
-
-"""
-The completion of the TLB maintenance instruction is guaranteed only by
-the execution of a DSB by the observer that performed the TLB
-maintenance instruction. The execution of a DSB by a different observer
-does not have this effect, even if the DSB is known to be executed after
-the TLB maintenance instruction is observed by that different observer.
-"""
-
-arch_tlbbatch_add_pending() and arch_tlbbatch_flush() conform to this
-requirement because they are called from the same task (either kswapd or
-caller of madvise(MADV_PAGEOUT)), so either they are on the same CPU or
-if the task was migrated, __switch_to() contains an extra dsb(ish).
-
-HOWEVER, arm64's arch_flush_tlb_batched_pending() is also implemented as
-a dsb(ish). But this may be running on a CPU remote from the one that
-issued the outstanding TLBIs. So there is no architectural gurantee of
-synchonization. Therefore we are still vulnerable to the theoretical
-race described in Commit 3ea277194daa ("mm, mprotect: flush TLB if
-potentially racing with a parallel reclaim leaving stale TLB entries").
-
-Fix this by flushing the entire mm in arch_flush_tlb_batched_pending().
-This aligns with what the other arches that implement the tlbbatch
-feature do.
-
-Cc: <stable@vger.kernel.org>
-Fixes: 43b3dfdd0455 ("arm64: support batched/deferred tlb shootdown during page reclamation/migration")
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Link: https://lore.kernel.org/r/20250530152445.2430295-1-ryan.roberts@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure presence of linear map")
+Signed-off-by: Ross Stutterheim <ross.stutterheim@garmin.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/tlbflush.h |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/arm/mm/ioremap.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/arch/arm64/include/asm/tlbflush.h
-+++ b/arch/arm64/include/asm/tlbflush.h
-@@ -323,13 +323,14 @@ static inline bool arch_tlbbatch_should_
- }
- 
- /*
-- * If mprotect/munmap/etc occurs during TLB batched flushing, we need to
-- * synchronise all the TLBI issued with a DSB to avoid the race mentioned in
-- * flush_tlb_batched_pending().
-+ * If mprotect/munmap/etc occurs during TLB batched flushing, we need to ensure
-+ * all the previously issued TLBIs targeting mm have completed. But since we
-+ * can be executing on a remote CPU, a DSB cannot guarantee this like it can
-+ * for arch_tlbbatch_flush(). Our only option is to flush the entire mm.
-  */
- static inline void arch_flush_tlb_batched_pending(struct mm_struct *mm)
+--- a/arch/arm/mm/ioremap.c
++++ b/arch/arm/mm/ioremap.c
+@@ -515,7 +515,5 @@ void __init early_ioremap_init(void)
+ bool arch_memremap_can_ram_remap(resource_size_t offset, size_t size,
+ 				 unsigned long flags)
  {
--	dsb(ish);
-+	flush_tlb_mm(mm);
+-	unsigned long pfn = PHYS_PFN(offset);
+-
+-	return memblock_is_map_memory(pfn);
++	return memblock_is_map_memory(offset);
  }
- 
- /*
 
 
