@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6934F1F8722;
-	Mon, 23 Jun 2025 21:59:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9425770838;
+	Mon, 23 Jun 2025 21:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715949; cv=none; b=q40z1xE8Iiive+Yh9QJ7CaqL+7sOp/hswCnqHl7qDT7f/PQObHVgoZsEnnanMgOQ+XbHXIhpQukgSwLvB42t5auY7/2PjBr5ejka7fJDJJRU1eWNjxgIyMcalfSh5Q9dREjtzFuQguJkaa7kQfJnFaC6oSHKI4hIhG4SWSxobWk=
+	t=1750715951; cv=none; b=p3F04mWSvi4KT8oH0Ca8F8FkZtcPog469kRJKa5D4FLkJrEPpRzQfV7QU7gOKoXIz4Lv//D0ZV/eLkOtEyDpPh8adxL7xH1Qu0dPApzZlTF9X5AXxf7pweBELHY0OoKA/J02iCDCmqsse5HNSX0soinP2rly8iD1uhuI/3E3ejU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715949; c=relaxed/simple;
-	bh=Mak8GoHH8EQkxCXaxCuCA699DXSG6HTstWDwjxIojx4=;
+	s=arc-20240116; t=1750715951; c=relaxed/simple;
+	bh=nNI5BkSwe3sKYjGsWOPzKnzWWLck64JopXx+/2dKxUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDkAgipSzvKWN2T8q0xrEDoSyACuCM7FRi3TPkMIVXpwOw/IsZiDwB9k9am8cPHWFQop/RhdZnRs47mAHIRz+cmN1pojKYBlfrgwOvTB8hnf0awa7w4sER1e6RTJkYav1wk/JzRK/PdlMr6BZtvDrwcz4SG4kPGLitm2w3BM67U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9Ffp7g+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dblHelqrBXLV2Qce1ua3izmGRe/UW8Eq828jDNn60AXeNq6ZW/ln/cQ7D24r9P9GpIptmNdqOTHBS5yP93xIMoM8mrCVhmWGVnIZIYL2kWT0CqLgeq1cLEO2hLNC51uj8LNSFeusRvR4D9Ak++WidUbZBmKBzuTnxz8Q0tKkU9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ju5jbiqL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9Ffp7g+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B117CC4CEEA;
-	Mon, 23 Jun 2025 21:59:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ju5jbiqL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC82C4CEF2;
+	Mon, 23 Jun 2025 21:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715949;
-	bh=Mak8GoHH8EQkxCXaxCuCA699DXSG6HTstWDwjxIojx4=;
+	s=korg; t=1750715951;
+	bh=nNI5BkSwe3sKYjGsWOPzKnzWWLck64JopXx+/2dKxUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K9Ffp7g+pb6NRdsO8U/4HZihyPiOHN6bOcnvqcx0nlIGiLAVZACirBq83zNotOtzl
-	 oL/QmWO/XiIiIDgbp1JblsI6HEVzVeaUHI86lC8aIGZFY9rc4w7a8VUMQGibeip1BG
-	 ZsZZy1fM2Fr+BKy7/p4rydIQB42PwJ0/QVoCjpHU=
+	b=Ju5jbiqL8mdcAesMiv0P2EKk38Ox4NVo6cU37wr7TRZVc4Am2XQGUYbifQ4YYSPYp
+	 Y0FzkGnCVCLVNtG8rKOYaDCHwNnG/0DkysFEtwVoSgRYP7+kTkbkZnLCV52D5nZF8P
+	 Xgnw3aS5SaSpMMBFrp/dTYJ/HyGC1B2lUi5O/UHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Wei Wang <weiwan@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 218/414] tcp: remove zero TCP TS samples for autotuning
-Date: Mon, 23 Jun 2025 15:05:55 +0200
-Message-ID: <20250623130647.467188122@linuxfoundation.org>
+	Chin-Yen Lee <timlee@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Zenm Chen <zenmchen@gmail.com>
+Subject: [PATCH 6.6 231/290] wifi: rtw89: pci: use DBI function for 8852AE/8852BE/8851BE
+Date: Mon, 23 Jun 2025 15:08:12 +0200
+Message-ID: <20250623130633.876550929@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,97 +48,133 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Chin-Yen Lee <timlee@realtek.com>
 
-[ Upstream commit d59fc95be9d0fd05ed3ccc11b4a2f832bdf2ee03 ]
+commit 9496d62f3877bc0f97b415bc04af98d092878026 upstream.
 
-For TCP flows using ms RFC 7323 timestamp granularity
-tcp_rcv_rtt_update() can be fed with 1 ms samples, breaking
-TCP autotuning for data center flows with sub ms RTT.
+Sometimes driver can't use kernel API pci_read/write_config_byte
+to access the PCI config space of above address 0x100 due to
+the negotiated PCI setting. 8852AE/8852BE/8851BE provide another
+way called DBI function, which belongs to WiFi mac and could
+access all PCI config space for this case.
 
-Instead, rely on the window based samples, fed by tcp_rcv_rtt_measure()
-
-tcp_rcvbuf_grow() for a 10 second TCP_STREAM sesssion now looks saner.
-We can see rcvbuf is kept at a reasonable value.
-
-  222.234976: tcp:tcp_rcvbuf_grow: time=348 rtt_us=330 copied=110592 inq=0 space=40960 ooo=0 scaling_ratio=230 rcvbuf=131072 ...
-  222.235276: tcp:tcp_rcvbuf_grow: time=300 rtt_us=288 copied=126976 inq=0 space=110592 ooo=0 scaling_ratio=230 rcvbuf=246187 ...
-  222.235569: tcp:tcp_rcvbuf_grow: time=294 rtt_us=288 copied=184320 inq=0 space=126976 ooo=0 scaling_ratio=230 rcvbuf=282659 ...
-  222.235833: tcp:tcp_rcvbuf_grow: time=264 rtt_us=244 copied=373760 inq=0 space=184320 ooo=0 scaling_ratio=230 rcvbuf=410312 ...
-  222.236142: tcp:tcp_rcvbuf_grow: time=308 rtt_us=219 copied=424960 inq=20480 space=373760 ooo=0 scaling_ratio=230 rcvbuf=832022 ...
-  222.236378: tcp:tcp_rcvbuf_grow: time=236 rtt_us=219 copied=692224 inq=49152 space=404480 ooo=0 scaling_ratio=230 rcvbuf=900407 ...
-  222.236602: tcp:tcp_rcvbuf_grow: time=225 rtt_us=219 copied=730112 inq=49152 space=643072 ooo=0 scaling_ratio=230 rcvbuf=1431534 ...
-  222.237050: tcp:tcp_rcvbuf_grow: time=229 rtt_us=219 copied=1160192 inq=49152 space=680960 ooo=0 scaling_ratio=230 rcvbuf=1515876 ...
-  222.237618: tcp:tcp_rcvbuf_grow: time=305 rtt_us=218 copied=2228224 inq=49152 space=1111040 ooo=0 scaling_ratio=230 rcvbuf=2473271 ...
-  222.238591: tcp:tcp_rcvbuf_grow: time=224 rtt_us=218 copied=3063808 inq=360448 space=2179072 ooo=0 scaling_ratio=230 rcvbuf=4850803 ...
-  222.240647: tcp:tcp_rcvbuf_grow: time=260 rtt_us=218 copied=2752512 inq=0 space=2703360 ooo=0 scaling_ratio=230 rcvbuf=6017914 ...
-  222.243535: tcp:tcp_rcvbuf_grow: time=224 rtt_us=218 copied=2834432 inq=49152 space=2752512 ooo=0 scaling_ratio=230 rcvbuf=6127331 ...
-  222.245108: tcp:tcp_rcvbuf_grow: time=240 rtt_us=218 copied=2883584 inq=49152 space=2785280 ooo=0 scaling_ratio=230 rcvbuf=6200275 ...
-  222.245333: tcp:tcp_rcvbuf_grow: time=224 rtt_us=218 copied=2859008 inq=0 space=2834432 ooo=0 scaling_ratio=230 rcvbuf=6309692 ...
-  222.301021: tcp:tcp_rcvbuf_grow: time=222 rtt_us=218 copied=2883584 inq=0 space=2859008 ooo=0 scaling_ratio=230 rcvbuf=6364400 ...
-  222.989242: tcp:tcp_rcvbuf_grow: time=225 rtt_us=218 copied=2899968 inq=0 space=2883584 ooo=0 scaling_ratio=230 rcvbuf=6419108 ...
-  224.139553: tcp:tcp_rcvbuf_grow: time=224 rtt_us=218 copied=3014656 inq=65536 space=2899968 ooo=0 scaling_ratio=230 rcvbuf=6455580 ...
-  224.584608: tcp:tcp_rcvbuf_grow: time=232 rtt_us=218 copied=3014656 inq=49152 space=2949120 ooo=0 scaling_ratio=230 rcvbuf=6564997 ...
-  230.145560: tcp:tcp_rcvbuf_grow: time=223 rtt_us=218 copied=2981888 inq=0 space=2965504 ooo=0 scaling_ratio=230 rcvbuf=6601469 ...
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Wei Wang <weiwan@google.com>
-Link: https://patch.msgid.link/20250513193919.1089692-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/linux-wireless/79fe81b7db7148b9a7da2353c16d70fb@realtek.com/T/#t
+Signed-off-by: Chin-Yen Lee <timlee@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20240103012346.6822-1-pkshih@realtek.com
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_input.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/wireless/realtek/rtw89/pci.c |   69 ++++++++++++++++++++++++++++++-
+ drivers/net/wireless/realtek/rtw89/pci.h |    1 
+ 2 files changed, 68 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index cf4fef18a9cad..61ada4682094f 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -707,7 +707,7 @@ static inline void tcp_rcv_rtt_measure(struct tcp_sock *tp)
- 	tp->rcv_rtt_est.time = tp->tcp_mstamp;
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -1822,22 +1822,87 @@ static int rtw89_write16_mdio_clr(struct
+ 	return 0;
  }
  
--static s32 tcp_rtt_tsopt_us(const struct tcp_sock *tp)
-+static s32 tcp_rtt_tsopt_us(const struct tcp_sock *tp, u32 min_delta)
++static int rtw89_dbi_write8(struct rtw89_dev *rtwdev, u16 addr, u8 data)
++{
++	u16 addr_2lsb = addr & B_AX_DBI_2LSB;
++	u16 write_addr;
++	u8 flag;
++	int ret;
++
++	write_addr = addr & B_AX_DBI_ADDR_MSK;
++	write_addr |= u16_encode_bits(BIT(addr_2lsb), B_AX_DBI_WREN_MSK);
++	rtw89_write8(rtwdev, R_AX_DBI_WDATA + addr_2lsb, data);
++	rtw89_write16(rtwdev, R_AX_DBI_FLAG, write_addr);
++	rtw89_write8(rtwdev, R_AX_DBI_FLAG + 2, B_AX_DBI_WFLAG >> 16);
++
++	ret = read_poll_timeout_atomic(rtw89_read8, flag, !flag, 10,
++				       10 * RTW89_PCI_WR_RETRY_CNT, false,
++				       rtwdev, R_AX_DBI_FLAG + 2);
++	if (ret)
++		rtw89_err(rtwdev, "failed to write DBI register, addr=0x%X\n",
++			  addr);
++
++	return ret;
++}
++
++static int rtw89_dbi_read8(struct rtw89_dev *rtwdev, u16 addr, u8 *value)
++{
++	u16 read_addr = addr & B_AX_DBI_ADDR_MSK;
++	u8 flag;
++	int ret;
++
++	rtw89_write16(rtwdev, R_AX_DBI_FLAG, read_addr);
++	rtw89_write8(rtwdev, R_AX_DBI_FLAG + 2, B_AX_DBI_RFLAG >> 16);
++
++	ret = read_poll_timeout_atomic(rtw89_read8, flag, !flag, 10,
++				       10 * RTW89_PCI_WR_RETRY_CNT, false,
++				       rtwdev, R_AX_DBI_FLAG + 2);
++	if (ret) {
++		rtw89_err(rtwdev, "failed to read DBI register, addr=0x%X\n",
++			  addr);
++		return ret;
++	}
++
++	read_addr = R_AX_DBI_RDATA + (addr & 3);
++	*value = rtw89_read8(rtwdev, read_addr);
++
++	return 0;
++}
++
+ static int rtw89_pci_write_config_byte(struct rtw89_dev *rtwdev, u16 addr,
+ 				       u8 data)
  {
- 	u32 delta, delta_us;
+ 	struct rtw89_pci *rtwpci = (struct rtw89_pci *)rtwdev->priv;
++	enum rtw89_core_chip_id chip_id = rtwdev->chip->chip_id;
+ 	struct pci_dev *pdev = rtwpci->pdev;
++	int ret;
  
-@@ -717,7 +717,7 @@ static s32 tcp_rtt_tsopt_us(const struct tcp_sock *tp)
- 
- 	if (likely(delta < INT_MAX / (USEC_PER_SEC / TCP_TS_HZ))) {
- 		if (!delta)
--			delta = 1;
-+			delta = min_delta;
- 		delta_us = delta * (USEC_PER_SEC / TCP_TS_HZ);
- 		return delta_us;
- 	}
-@@ -735,9 +735,9 @@ static inline void tcp_rcv_rtt_measure_ts(struct sock *sk,
- 
- 	if (TCP_SKB_CB(skb)->end_seq -
- 	    TCP_SKB_CB(skb)->seq >= inet_csk(sk)->icsk_ack.rcv_mss) {
--		s32 delta = tcp_rtt_tsopt_us(tp);
-+		s32 delta = tcp_rtt_tsopt_us(tp, 0);
- 
--		if (delta >= 0)
-+		if (delta > 0)
- 			tcp_rcv_rtt_update(tp, delta, 0);
- 	}
+-	return pci_write_config_byte(pdev, addr, data);
++	ret = pci_write_config_byte(pdev, addr, data);
++	if (!ret)
++		return 0;
++
++	if (chip_id == RTL8852A || chip_id == RTL8852B || chip_id == RTL8851B)
++		ret = rtw89_dbi_write8(rtwdev, addr, data);
++
++	return ret;
  }
-@@ -3220,7 +3220,7 @@ static bool tcp_ack_update_rtt(struct sock *sk, const int flag,
- 	 */
- 	if (seq_rtt_us < 0 && tp->rx_opt.saw_tstamp &&
- 	    tp->rx_opt.rcv_tsecr && flag & FLAG_ACKED)
--		seq_rtt_us = ca_rtt_us = tcp_rtt_tsopt_us(tp);
-+		seq_rtt_us = ca_rtt_us = tcp_rtt_tsopt_us(tp, 1);
  
- 	rs->rtt_us = ca_rtt_us; /* RTT of last (S)ACKed packet (or -1) */
- 	if (seq_rtt_us < 0)
--- 
-2.39.5
-
+ static int rtw89_pci_read_config_byte(struct rtw89_dev *rtwdev, u16 addr,
+ 				      u8 *value)
+ {
+ 	struct rtw89_pci *rtwpci = (struct rtw89_pci *)rtwdev->priv;
++	enum rtw89_core_chip_id chip_id = rtwdev->chip->chip_id;
+ 	struct pci_dev *pdev = rtwpci->pdev;
++	int ret;
++
++	ret = pci_read_config_byte(pdev, addr, value);
++	if (!ret)
++		return 0;
++
++	if (chip_id == RTL8852A || chip_id == RTL8852B || chip_id == RTL8851B)
++		ret = rtw89_dbi_read8(rtwdev, addr, value);
+ 
+-	return pci_read_config_byte(pdev, addr, value);
++	return ret;
+ }
+ 
+ static int rtw89_pci_config_byte_set(struct rtw89_dev *rtwdev, u16 addr,
+--- a/drivers/net/wireless/realtek/rtw89/pci.h
++++ b/drivers/net/wireless/realtek/rtw89/pci.h
+@@ -42,6 +42,7 @@
+ #define B_AX_DBI_WFLAG			BIT(16)
+ #define B_AX_DBI_WREN_MSK		GENMASK(15, 12)
+ #define B_AX_DBI_ADDR_MSK		GENMASK(11, 2)
++#define B_AX_DBI_2LSB			GENMASK(1, 0)
+ #define R_AX_DBI_WDATA			0x1094
+ #define R_AX_DBI_RDATA			0x1098
+ 
 
 
