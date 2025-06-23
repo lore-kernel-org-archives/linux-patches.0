@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476582571C7;
-	Mon, 23 Jun 2025 13:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884E2255F3C;
+	Mon, 23 Jun 2025 13:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685514; cv=none; b=YYYO5jXEMzjTPQHFlWoqa6pwwGeH26SDv5Qmntwb73njeHWo026nEwlVGhzExNWUfySsQ2otpIDYwQGTxssH41HU0Ud+n56e+S1uQpCYmHIgI9PQQKKF47n4Aaj3m/q+cCPibj6+rc2YsSoPnXyYm5z4ZE7j7MK7gfFQ+ziuetY=
+	t=1750685516; cv=none; b=Aq3Ppgvbfw2h+O6aO9Mx2cPUVn3ECG/r05vl3rjqbS3yFlvk2Uc8ig/I00EnDO/Gshfy41l7mpwCYnstwlQwlevTqrT+5rb0rGA71qXc9ixCJrcf4MtUUluJ3ulnsAAivQBuJgXrk+zgNEcQ+sKfoUtZa2q1Ep1WZ1WlZ5GzpYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685514; c=relaxed/simple;
-	bh=uvjuNTThKJA0OPDQ/gLhJgV9Vd7kC961hNdM8uey0JI=;
+	s=arc-20240116; t=1750685516; c=relaxed/simple;
+	bh=kDxbiKQfVDjwxJzN2yJ0dyk7lT/7rV4rZWVnO2qQ1zU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TKmZvBb2TNSIJja7ukQR2wzbPNDwk670v5Frkz+RhOyapmKnIvjODxPZ3BrDI3q+BS2BqMHSBYwk5/FYR3QnfbeqSVedYopbGZNq+nmV0QKWsj8m7adNZcPZ1A7CfddX1o0DFJ2n1y7U8KUY5G89VhW2aJQe7Flij94U913Ufek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYbRfNv4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RiMNEN5Br+2UVPD0TJO1S4Cso0VmFsiSrF+YOMY8yaYn5A4WiTUoGfF4aI+lGkwbU/Mc4zmzYPyPynDkghGqmTbHgxthmH8PEGYKrUaVZy8VLXVwBJWi8u4olXs6QmcRaXzVXoxonbl8hoxMMrccvzlibjtYsdtpSKQTdHIhYBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mo+wYi0R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYbRfNv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836FDC4CEEA;
-	Mon, 23 Jun 2025 13:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mo+wYi0R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB2AC4CEF0;
+	Mon, 23 Jun 2025 13:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685513;
-	bh=uvjuNTThKJA0OPDQ/gLhJgV9Vd7kC961hNdM8uey0JI=;
+	s=korg; t=1750685516;
+	bh=kDxbiKQfVDjwxJzN2yJ0dyk7lT/7rV4rZWVnO2qQ1zU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jYbRfNv4E1FRGWdUBfQWJyahlhV5GzRPsbT4inENJ01geI2y+L6Eo+V5N2czciEIW
-	 SmaPmkW79f/MiK4gJgT4uyUUz1AC3iOa1rdlMuxO6mLFedKFWSz8EGRYLToK33oSrz
-	 WloRHmkm2XFTUh9VKysf6R5JInGV3Md5qes6BYrQ=
+	b=Mo+wYi0Rm1JiVMfeU1iM8NT4XWQuopAsDbeh71uXwKzJ2DVBjbehqw8q9TW/yi14W
+	 hEXiNIF4Oi7b/oYlEY1lh8eIKkVdcZdSPTdwYpl3R1hwNct1HJ1Lc3CZxC00IIA2mA
+	 KOYlPZk0eIxtR5u0A6FmwFgtzmYOmfiRMMU+WxYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 039/411] bpf, sockmap: fix duplicated data transmission
-Date: Mon, 23 Jun 2025 15:03:03 +0200
-Message-ID: <20250623130634.178442198@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 100/222] calipso: unlock rcu before returning -EAFNOSUPPORT
+Date: Mon, 23 Jun 2025 15:07:15 +0200
+Message-ID: <20250623130615.125592282@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +49,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3b4f14b794287be137ea2c6158765d1ea1e018a4 ]
+commit 3cae906e1a6184cdc9e4d260e4dbdf9a118d94ad upstream.
 
-In the !ingress path under sk_psock_handle_skb(), when sending data to the
-remote under snd_buf limitations, partial skb data might be transmitted.
+syzbot reported that a recent patch forgot to unlock rcu
+in the error path.
 
-Although we preserved the partial transmission state (offset/length), the
-state wasn't properly consumed during retries. This caused the retry path
-to resend the entire skb data instead of continuing from the previous
-offset, resulting in data overlap at the receiver side.
+Adopt the convention that netlbl_conn_setattr() is already using.
 
-Fixes: 405df89dd52c ("bpf, sockmap: Improved check for empty queue")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20250407142234.47591-3-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6e9f2df1c550 ("calipso: Don't call calipso functions for AF_INET sk.")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/20250604133826.1667664-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skmsg.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ net/netlabel/netlabel_kapi.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index a5947aa559837..f4186d4980b92 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -639,11 +639,6 @@ static void sk_psock_backlog(struct work_struct *work)
- 	int ret;
- 
- 	mutex_lock(&psock->work_mutex);
--	if (unlikely(state->len)) {
--		len = state->len;
--		off = state->off;
--	}
--
- 	while ((skb = skb_peek(&psock->ingress_skb))) {
- 		len = skb->len;
- 		off = 0;
-@@ -653,6 +648,13 @@ static void sk_psock_backlog(struct work_struct *work)
- 			off = stm->offset;
- 			len = stm->full_len;
- 		}
-+
-+		/* Resume processing from previous partial state */
-+		if (unlikely(state->len)) {
-+			len = state->len;
-+			off = state->off;
+--- a/net/netlabel/netlabel_kapi.c
++++ b/net/netlabel/netlabel_kapi.c
+@@ -1140,8 +1140,10 @@ int netlbl_conn_setattr(struct sock *sk,
+ 		break;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	case AF_INET6:
+-		if (sk->sk_family != AF_INET6)
+-			return -EAFNOSUPPORT;
++		if (sk->sk_family != AF_INET6) {
++			ret_val = -EAFNOSUPPORT;
++			goto conn_setattr_return;
 +		}
-+
- 		ingress = skb_bpf_ingress(skb);
- 		skb_bpf_redirect_clear(skb);
- 		do {
-@@ -680,6 +682,8 @@ static void sk_psock_backlog(struct work_struct *work)
- 			len -= ret;
- 		} while (len);
  
-+		/* The entire skb sent, clear state */
-+		sk_psock_skb_state(psock, state, 0, 0);
- 		skb = skb_dequeue(&psock->ingress_skb);
- 		if (!ingress) {
- 			kfree_skb(skb);
--- 
-2.39.5
-
+ 		addr6 = (struct sockaddr_in6 *)addr;
+ 		entry = netlbl_domhsh_getentry_af6(secattr->domain,
 
 
