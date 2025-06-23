@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169DA19C554;
-	Mon, 23 Jun 2025 21:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903C319C554;
+	Mon, 23 Jun 2025 21:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714072; cv=none; b=IgCtva/iV8xWsyUAL4e9+lmPtQMBUd1O0NvKXqBjNpePllPXS24lO9r/9NhtrRP25ikjuSB+vF4ziH//zNZN4/N+HGb7xwh7eTRTFDvjF7WNkRT1FeXtVvMwfEqzgPHxngOQpLEqvxjr0mtbQaIPTCvy6DP15hofdykeoSIK0ro=
+	t=1750714074; cv=none; b=pLZ4x79lPqxBGHyk0Zh/KzbZhpTL5GGvPWpgkbLHHTHGV1/sGqD5ZRjqrV9db53PEg1gabBJq6xYuKc+PXvww6WL4LWBb2sqaoG5xyaXvmKIW/6OB4ZE+vHjFCMgOHEpCQogqeramZvJAJTypj1WgF4pN8aXwPQ1JEnN1ZCD/2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714072; c=relaxed/simple;
-	bh=f03Jf5491enVbopMQvuF3HdsRtJmDI3G8STHsWJk6tU=;
+	s=arc-20240116; t=1750714074; c=relaxed/simple;
+	bh=rExsFh8giyJuxsj6EKvNjn80rDeRC9PGIhX0h216Xtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l/aSffYn+ESxcUz7L9n/ws2aiwj+sUtpLRLdHW0A2BtaQBiznKBRu2SBnl9BXLIBqS5r86HVQg9O2ZDWU8N7xsCulU9wsKmIwIyiyG1ylUTKyL41ddvlhbe1sMk7ecd5/jrsIAC5dU8v0zROVUujQRMC8Fapbcy//KD1eUQ9Kok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uN5dEWwS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gGeJUiIXBG3pAaSSV2xra2BhPRTbm+5SJsKjxevTaLdrGyd1luLByNeZzcO+v2GgshpOXJvflDeCDCPm+A39RDiMvytnTHq+KVNpM3iFX9edUT/hgkwKUTOXhyIhf3duyzUQxVqDD9C68e/XSSLc7eDO8/TmWvBURwyMRzfKf2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fp5Ilopu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uN5dEWwS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A170FC4CEEA;
-	Mon, 23 Jun 2025 21:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fp5Ilopu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDFBC4CEEA;
+	Mon, 23 Jun 2025 21:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714072;
-	bh=f03Jf5491enVbopMQvuF3HdsRtJmDI3G8STHsWJk6tU=;
+	s=korg; t=1750714074;
+	bh=rExsFh8giyJuxsj6EKvNjn80rDeRC9PGIhX0h216Xtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uN5dEWwS1TfPAnKYhSl1EgdqsJvxIEQ+dHoQXl/XyIKP86noqwYtVYk0cmu2mOZIX
-	 Cn+fYhynVhrACIm92mtkxhBCT270tObq5qc0yG7DvH5nZDUqnxLgVp7jlOu1wVA/6Z
-	 7sIB6MPQAUAPL8BorQjOfuGtX5E5Bc4K9mUQUeR0=
+	b=Fp5IlopuBtmD0JgnJ8ze4I0QPDeWpMghlvvKuC3Suz1+XIgDWrpAgPGPaZFTxlgVV
+	 MDEAmGN0oEO5M+m8RM7SUmFx0uTZCEQYZCZ5Tp4ZRQmOxQ9rhSEssutkIaqJ82GV9P
+	 jCqQi2j+NZgkORan6X0oGGLS/B75WmwFI/oO/V3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youssef Samir <quic_yabdulra@quicinc.com>,
-	Sumit Kumar <quic_sumk@quicinc.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.12 079/414] bus: mhi: ep: Update read pointer only after buffer is written
-Date: Mon, 23 Jun 2025 15:03:36 +0200
-Message-ID: <20250623130644.057671600@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 143/508] rpmsg: qcom_smd: Fix uninitialized return variable in __qcom_smd_send()
+Date: Mon, 23 Jun 2025 15:03:08 +0200
+Message-ID: <20250623130648.805509806@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,69 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sumit Kumar <quic_sumk@quicinc.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 6f18d174b73d0ceeaa341f46c0986436b3aefc9a upstream.
+[ Upstream commit 5de775df3362090a6e90046d1f2d83fe62489aa0 ]
 
-Inside mhi_ep_ring_add_element, the read pointer (rd_offset) is updated
-before the buffer is written, potentially causing race conditions where
-the host sees an updated read pointer before the buffer is actually
-written. Updating rd_offset prematurely can lead to the host accessing
-an uninitialized or incomplete element, resulting in data corruption.
+The "ret" variable isn't initialized if we don't enter the loop.  For
+example,  if "channel->state" is not SMD_CHANNEL_OPENED.
 
-Invoke the buffer write before updating rd_offset to ensure the element
-is fully written before signaling its availability.
-
-Fixes: bbdcba57a1a2 ("bus: mhi: ep: Add support for ring management")
-cc: stable@vger.kernel.org
-Co-developed-by: Youssef Samir <quic_yabdulra@quicinc.com>
-Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
-Signed-off-by: Sumit Kumar <quic_sumk@quicinc.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://patch.msgid.link/20250409-rp_fix-v1-1-8cf1fa22ed28@quicinc.com
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 33e3820dda88 ("rpmsg: smd: Use spinlock in tx path")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/aAkhvV0nSbrsef1P@stanley.mountain
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/ep/ring.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/rpmsg/qcom_smd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bus/mhi/ep/ring.c
-+++ b/drivers/bus/mhi/ep/ring.c
-@@ -131,19 +131,23 @@ int mhi_ep_ring_add_element(struct mhi_e
- 	}
+diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
+index 1044cf03c5422..eb2e66f5ca7b5 100644
+--- a/drivers/rpmsg/qcom_smd.c
++++ b/drivers/rpmsg/qcom_smd.c
+@@ -746,7 +746,7 @@ static int __qcom_smd_send(struct qcom_smd_channel *channel, const void *data,
+ 	__le32 hdr[5] = { cpu_to_le32(len), };
+ 	int tlen = sizeof(hdr) + len;
+ 	unsigned long flags;
+-	int ret;
++	int ret = 0;
  
- 	old_offset = ring->rd_offset;
--	mhi_ep_ring_inc_index(ring);
- 
- 	dev_dbg(dev, "Adding an element to ring at offset (%zu)\n", ring->rd_offset);
-+	buf_info.host_addr = ring->rbase + (old_offset * sizeof(*el));
-+	buf_info.dev_addr = el;
-+	buf_info.size = sizeof(*el);
-+
-+	ret = mhi_cntrl->write_sync(mhi_cntrl, &buf_info);
-+	if (ret)
-+		return ret;
-+
-+	mhi_ep_ring_inc_index(ring);
- 
- 	/* Update rp in ring context */
- 	rp = cpu_to_le64(ring->rd_offset * sizeof(*el) + ring->rbase);
- 	memcpy_toio((void __iomem *) &ring->ring_ctx->generic.rp, &rp, sizeof(u64));
- 
--	buf_info.host_addr = ring->rbase + (old_offset * sizeof(*el));
--	buf_info.dev_addr = el;
--	buf_info.size = sizeof(*el);
--
--	return mhi_cntrl->write_sync(mhi_cntrl, &buf_info);
-+	return ret;
- }
- 
- void mhi_ep_ring_init(struct mhi_ep_ring *ring, enum mhi_ep_ring_type type, u32 id)
+ 	/* Word aligned channels only accept word size aligned data */
+ 	if (channel->info_word && len % 4)
+-- 
+2.39.5
+
 
 
