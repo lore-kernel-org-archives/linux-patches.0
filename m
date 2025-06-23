@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42A31AD3FA;
-	Mon, 23 Jun 2025 21:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34103221FBE;
+	Mon, 23 Jun 2025 21:55:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715714; cv=none; b=WqzA0xGVqLNH1M0Xamv66RBthFyvCcncQE3GjDA9VCmM2OIuhvXg4wGLngkuvNyNxxiwjiHICPIxDkyuks5AJ/C6fSafqTSh1dGOBo0vW8fb1sxk73pgUq301oufRGB1qBCGqETzkOuzvmXWXlDNlXL7KXj88vpArY+0oZGttR0=
+	t=1750715717; cv=none; b=RG1BZLu5VeUPFUmZ6PywwwGXT4C5qXoLrl1HDFZbV2XI2FVoS4712gOcJNAdzun5xcXhW1rPcvLYCtzM++tfvNQLld337gjvXQHAVFhkyVXN4p7CL0BPCU3dUtJ5ExvtovnxZQjxXM8nACmDrBNw8xCxy6G6S+U8Nsf2eTYP3hY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715714; c=relaxed/simple;
-	bh=Mj3g3x42kQKMsPmSVtHgDFlMKGvLSEgo0ywF0/W0Sc8=;
+	s=arc-20240116; t=1750715717; c=relaxed/simple;
+	bh=3osOHv8ptPzm36t49Uvvj7NNIOLaaWjblirFt2SBMlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSu2DPguabgxz6R57ognltnlSZJOcIe4ErNoe43S0FeNEzL9BdxWmXhBcoJmRQhgdlQp/s9x/F42/9OM4pIWXCPcdfZscyEwlqannG0kdzqHPQ6PG8aB0kd7rHZA0sRa2LQrV/GXpOzJISd27U+LzJ42vAKpEBPSJZPCjzyW2zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBqm4mMX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PewC3XxYNRtSb3Pkyaz4KqWYWp3X3OsFq9Z0OLKKTtsb042VEWCv+gIwX0/hksS/Dm+JGYhgW4N6e0o8X2qXi5joPI5vHuQ3J5TKdT9XqBrFSjtghAc5t81iF3O+uc3asojaK0yNpfr92urUz+aUkHoDv59jv78iS8uxXWpBYhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8LcfRoZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBqm4mMX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0CAC4CEEA;
-	Mon, 23 Jun 2025 21:55:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8LcfRoZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BAAC4CEEA;
+	Mon, 23 Jun 2025 21:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715714;
-	bh=Mj3g3x42kQKMsPmSVtHgDFlMKGvLSEgo0ywF0/W0Sc8=;
+	s=korg; t=1750715717;
+	bh=3osOHv8ptPzm36t49Uvvj7NNIOLaaWjblirFt2SBMlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBqm4mMXGWt5wMafRd9nTX+p+M3dCwqc5A6uEQOojiYeZKIgQeeYYzzM5lEKcFl/E
-	 CSRPFV3DwYOPV5nql7g0CbcDJE8KQRbb8nmfCF+uRkGuqb59HbQ/KHlZF1AxRs2ljV
-	 BecqxX3l2YHaK0bQl6QSrSR+WaKS0U1hNyKR3+6o=
+	b=F8LcfRoZ81iAL2Z3KwlRzzY6DLInVdPo+jHnx9Gp01KM2nry3n8mgqy8UrvG2Lq2d
+	 ce4hPyAV96mhfl6jyUupYZjQVy0M6GGfoNgo5Di6CtkhPpHatU8CjZClR7wUSmb3+M
+	 /RQ+KRjmRgX8XvgosKz/1e+nV3HUERcPcGU5r9EE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c52569baf0c843f35495@syzkaller.appspotmail.com,
-	Terry Junge <linuxhid@cosmicgizmosystems.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.10 292/355] HID: usbhid: Eliminate recurrent out-of-bounds bug in usbhid_parse()
-Date: Mon, 23 Jun 2025 15:08:13 +0200
-Message-ID: <20250623130635.553558470@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Damon Ding <damon.ding@rock-chips.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 274/411] drm/bridge: analogix_dp: Add irq flag IRQF_NO_AUTOEN instead of calling disable_irq()
+Date: Mon, 23 Jun 2025 15:06:58 +0200
+Message-ID: <20250623130640.551990577@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,171 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Terry Junge <linuxhid@cosmicgizmosystems.com>
+From: Damon Ding <damon.ding@rock-chips.com>
 
-commit fe7f7ac8e0c708446ff017453add769ffc15deed upstream.
+[ Upstream commit efab13e7d13a641a22c7508cde6e1a5285161944 ]
 
-Update struct hid_descriptor to better reflect the mandatory and
-optional parts of the HID Descriptor as per USB HID 1.11 specification.
-Note: the kernel currently does not parse any optional HID class
-descriptors, only the mandatory report descriptor.
+The IRQF_NO_AUTOEN can be used for the drivers that don't want
+interrupts to be enabled automatically via devm_request_threaded_irq().
+Using this flag can provide be more robust compared to the way of
+calling disable_irq() after devm_request_threaded_irq() without the
+IRQF_NO_AUTOEN flag.
 
-Update all references to member element desc[0] to rpt_desc.
-
-Add test to verify bLength and bNumDescriptors values are valid.
-
-Replace the for loop with direct access to the mandatory HID class
-descriptor member for the report descriptor. This eliminates the
-possibility of getting an out-of-bounds fault.
-
-Add a warning message if the HID descriptor contains any unsupported
-optional HID class descriptors.
-
-Reported-by: syzbot+c52569baf0c843f35495@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c52569baf0c843f35495
-Fixes: f043bfc98c19 ("HID: usbhid: fix out-of-bounds bug")
-Cc: stable@vger.kernel.org
-Signed-off-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
+Link: https://lore.kernel.org/r/20250310104114.2608063-2-damon.ding@rock-chips.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-hyperv.c            |    5 +++--
- drivers/hid/usbhid/hid-core.c       |   25 ++++++++++++++-----------
- drivers/usb/gadget/function/f_hid.c |   12 ++++++------
- include/linux/hid.h                 |    3 ++-
- 4 files changed, 25 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/bridge/analogix/analogix_dp_core.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/hid-hyperv.c
-+++ b/drivers/hid/hid-hyperv.c
-@@ -199,7 +199,8 @@ static void mousevsc_on_receive_device_i
- 	if (!input_device->hid_desc)
- 		goto cleanup;
- 
--	input_device->report_desc_size = desc->desc[0].wDescriptorLength;
-+	input_device->report_desc_size = le16_to_cpu(
-+					desc->rpt_desc.wDescriptorLength);
- 	if (input_device->report_desc_size == 0) {
- 		input_device->dev_info_status = -EINVAL;
- 		goto cleanup;
-@@ -217,7 +218,7 @@ static void mousevsc_on_receive_device_i
- 
- 	memcpy(input_device->report_desc,
- 	       ((unsigned char *)desc) + desc->bLength,
--	       desc->desc[0].wDescriptorLength);
-+	       le16_to_cpu(desc->rpt_desc.wDescriptorLength));
- 
- 	/* Send the ack */
- 	memset(&ack, 0, sizeof(struct mousevsc_prt_msg));
---- a/drivers/hid/usbhid/hid-core.c
-+++ b/drivers/hid/usbhid/hid-core.c
-@@ -984,12 +984,11 @@ static int usbhid_parse(struct hid_devic
- 	struct usb_host_interface *interface = intf->cur_altsetting;
- 	struct usb_device *dev = interface_to_usbdev (intf);
- 	struct hid_descriptor *hdesc;
-+	struct hid_class_descriptor *hcdesc;
- 	u32 quirks = 0;
- 	unsigned int rsize = 0;
- 	char *rdesc;
--	int ret, n;
--	int num_descriptors;
--	size_t offset = offsetof(struct hid_descriptor, desc);
-+	int ret;
- 
- 	quirks = hid_lookup_quirk(hid);
- 
-@@ -1011,20 +1010,19 @@ static int usbhid_parse(struct hid_devic
- 		return -ENODEV;
+diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+index f0305f833b6c0..8c35bc016dbcc 100644
+--- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
++++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+@@ -1771,10 +1771,10 @@ analogix_dp_probe(struct device *dev, struct analogix_dp_plat_data *plat_data)
+ 		 * that we can get the current state of the GPIO.
+ 		 */
+ 		dp->irq = gpiod_to_irq(dp->hpd_gpiod);
+-		irq_flags = IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING;
++		irq_flags = IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN;
+ 	} else {
+ 		dp->irq = platform_get_irq(pdev, 0);
+-		irq_flags = 0;
++		irq_flags = IRQF_NO_AUTOEN;
  	}
  
--	if (hdesc->bLength < sizeof(struct hid_descriptor)) {
--		dbg_hid("hid descriptor is too short\n");
-+	if (!hdesc->bNumDescriptors ||
-+	    hdesc->bLength != sizeof(*hdesc) +
-+			      (hdesc->bNumDescriptors - 1) * sizeof(*hcdesc)) {
-+		dbg_hid("hid descriptor invalid, bLen=%hhu bNum=%hhu\n",
-+			hdesc->bLength, hdesc->bNumDescriptors);
- 		return -EINVAL;
+ 	if (dp->irq == -ENXIO) {
+@@ -1791,7 +1791,6 @@ analogix_dp_probe(struct device *dev, struct analogix_dp_plat_data *plat_data)
+ 		dev_err(&pdev->dev, "failed to request irq\n");
+ 		goto err_disable_clk;
  	}
+-	disable_irq(dp->irq);
  
- 	hid->version = le16_to_cpu(hdesc->bcdHID);
- 	hid->country = hdesc->bCountryCode;
+ 	return dp;
  
--	num_descriptors = min_t(int, hdesc->bNumDescriptors,
--	       (hdesc->bLength - offset) / sizeof(struct hid_class_descriptor));
--
--	for (n = 0; n < num_descriptors; n++)
--		if (hdesc->desc[n].bDescriptorType == HID_DT_REPORT)
--			rsize = le16_to_cpu(hdesc->desc[n].wDescriptorLength);
-+	if (hdesc->rpt_desc.bDescriptorType == HID_DT_REPORT)
-+		rsize = le16_to_cpu(hdesc->rpt_desc.wDescriptorLength);
- 
- 	if (!rsize || rsize > HID_MAX_DESCRIPTOR_SIZE) {
- 		dbg_hid("weird size of report descriptor (%u)\n", rsize);
-@@ -1052,6 +1050,11 @@ static int usbhid_parse(struct hid_devic
- 		goto err;
- 	}
- 
-+	if (hdesc->bNumDescriptors > 1)
-+		hid_warn(intf,
-+			"%u unsupported optional hid class descriptors\n",
-+			(int)(hdesc->bNumDescriptors - 1));
-+
- 	hid->quirks |= quirks;
- 
- 	return 0;
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -114,8 +114,8 @@ static struct hid_descriptor hidg_desc =
- 	.bcdHID				= cpu_to_le16(0x0101),
- 	.bCountryCode			= 0x00,
- 	.bNumDescriptors		= 0x1,
--	/*.desc[0].bDescriptorType	= DYNAMIC */
--	/*.desc[0].wDescriptorLenght	= DYNAMIC */
-+	/*.rpt_desc.bDescriptorType	= DYNAMIC */
-+	/*.rpt_desc.wDescriptorLength	= DYNAMIC */
- };
- 
- /* Super-Speed Support */
-@@ -724,8 +724,8 @@ static int hidg_setup(struct usb_functio
- 			struct hid_descriptor hidg_desc_copy = hidg_desc;
- 
- 			VDBG(cdev, "USB_REQ_GET_DESCRIPTOR: HID\n");
--			hidg_desc_copy.desc[0].bDescriptorType = HID_DT_REPORT;
--			hidg_desc_copy.desc[0].wDescriptorLength =
-+			hidg_desc_copy.rpt_desc.bDescriptorType = HID_DT_REPORT;
-+			hidg_desc_copy.rpt_desc.wDescriptorLength =
- 				cpu_to_le16(hidg->report_desc_length);
- 
- 			length = min_t(unsigned short, length,
-@@ -966,8 +966,8 @@ static int hidg_bind(struct usb_configur
- 	 * We can use hidg_desc struct here but we should not relay
- 	 * that its content won't change after returning from this function.
- 	 */
--	hidg_desc.desc[0].bDescriptorType = HID_DT_REPORT;
--	hidg_desc.desc[0].wDescriptorLength =
-+	hidg_desc.rpt_desc.bDescriptorType = HID_DT_REPORT;
-+	hidg_desc.rpt_desc.wDescriptorLength =
- 		cpu_to_le16(hidg->report_desc_length);
- 
- 	hidg_hs_in_ep_desc.bEndpointAddress =
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -674,8 +674,9 @@ struct hid_descriptor {
- 	__le16 bcdHID;
- 	__u8  bCountryCode;
- 	__u8  bNumDescriptors;
-+	struct hid_class_descriptor rpt_desc;
- 
--	struct hid_class_descriptor desc[1];
-+	struct hid_class_descriptor opt_descs[];
- } __attribute__ ((packed));
- 
- #define HID_DEVICE(b, g, ven, prod)					\
+-- 
+2.39.5
+
 
 
