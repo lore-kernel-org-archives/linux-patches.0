@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23824C2E0;
-	Mon, 23 Jun 2025 21:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3E0C2E0;
+	Mon, 23 Jun 2025 21:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714280; cv=none; b=PDd3wzWMW7jKl1qReQgfdyuJHmlUch0z8pDvxMRgjy/AuYFRnY1NbyjteRS+uKFsDkVYS/D7weJPlNPa0+3MdcuTw0KNp6B9hcN+b1e6joti45Wh0fXDSDVTvcuLvp3rXu6qhAS5T48SOHVPSdLzJD0wTwCRCGXRwGqhozro04Q=
+	t=1750714282; cv=none; b=COhl5TXDMgNXeGT4xuwNdiAeMETqjh+JhAptFNIH8aTbogaZv7A4/xdO4kPOgpT6s42zS3qglnA74kX6oOV/doqo2gA5w96titSCsBJ25omzF6AGS9QT703QT41rdh25D5YOwnFZ/jezBCXd0G4Fsed3Iqe1TzdJfFCfXyC7byc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714280; c=relaxed/simple;
-	bh=EoZDJGrraGdPOofVqoLZd0/hnB0dTvUTYd76Cozn/o0=;
+	s=arc-20240116; t=1750714282; c=relaxed/simple;
+	bh=9VISglJNjYu13TbqizywU0Hb8a7S9R49wbwM58X9Baw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HerGwussRWYHWi819eOS3wLiQqUfQLsuAZXUEvxoHK0FAE6GeEEVSmKHuF0JrT3bdDltvn6FIlmOlXr5CaAOPNon3HzMjjTRNxpDrkJtJZUdJrsdycI+P6BL8rhTDYnVGD1XlgH8qRYI/o7FLRUiAnDcRdncYPT/x1lyBpmbKf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqDGQLhd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DKGBk2fvv29g5u7uQdG7/c7VTnVt0L5NGR7un+qiNlo5xxJC3p/KuoAxBs9WzbBX8Q7yUYxRD7Q3+HvMaJ/Pc8zNYmbF+L4LyPwjc1PCHGbW3HBp+OrnDwXveRc210mG+kZlzV7YQJUBtTe3VHek7EYZzh6IHuPZW8Q9ZGfo+DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0k5vgcVX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqDGQLhd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42834C4CEEA;
-	Mon, 23 Jun 2025 21:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0k5vgcVX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CB8C4CEEA;
+	Mon, 23 Jun 2025 21:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714279;
-	bh=EoZDJGrraGdPOofVqoLZd0/hnB0dTvUTYd76Cozn/o0=;
+	s=korg; t=1750714282;
+	bh=9VISglJNjYu13TbqizywU0Hb8a7S9R49wbwM58X9Baw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gqDGQLhdsvjeslRC3ZjjCsSXJjqL7/y4CkaELDSlbatdAt/v/ivfpLX01v4dssJ8a
-	 YG+K3hX5PJjgp8qF52XXvc6H22cD/w7aVYzfVi8hrgf/GkVg1C3MUAXUk5yXVkLP4t
-	 ZjukyfKy3xuKqLJ3foEUn1MpfXAOyxCFxtQ3CBig=
+	b=0k5vgcVXBmSY8kDKA03PUHfyqQ8CiQ4KhxvRqIthdb9EBAd9B/mWyEr5JYaxEC4M2
+	 hIx/OwqnhnD3ao9q3Xo1+NC7ljqHBhshNXf9acGbRYpVCFi3H0nzo0KgtujFmcBZh1
+	 Rjm1dgfaPB49I9ypyQVS1MX8kXl5nLqrQ9VfiEMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Nathan Lynch <nathan.lynch@amd.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 154/508] dmaengine: ti: Add NULL check in udma_probe()
-Date: Mon, 23 Jun 2025 15:03:19 +0200
-Message-ID: <20250623130649.069448334@linuxfoundation.org>
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 5.15 178/411] usb: usbtmc: Fix read_stb function and get_stb ioctl
+Date: Mon, 23 Jun 2025 15:05:22 +0200
+Message-ID: <20250623130638.166735600@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,47 +45,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Dave Penkler <dpenkler@gmail.com>
 
-[ Upstream commit fd447415e74bccd7362f760d4ea727f8e1ebfe91 ]
+commit acb3dac2805d3342ded7dbbd164add32bbfdf21c upstream.
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-udma_probe() does not check for this case, which results in a NULL
-pointer dereference.
+The usbtmc488_ioctl_read_stb function relied on a positive return from
+usbtmc_get_stb to reset the srq condition in the driver. The
+USBTMC_IOCTL_GET_STB case tested for a positive return to return the stb
+to the user.
 
-Add NULL check after devm_kasprintf() to prevent this issue.
+Commit: <cac01bd178d6> ("usb: usbtmc: Fix erroneous get_stb ioctl
+error returns") changed the return value of usbtmc_get_stb to 0 on
+success instead of returning the value of usb_control_msg which is
+positive in the normal case. This change caused the function
+usbtmc488_ioctl_read_stb and the USBTMC_IOCTL_GET_STB ioctl to no
+longer function correctly.
 
-Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Nathan Lynch <nathan.lynch@amd.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/20250402023900.43440-1-bsdhenrymartin@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Change the test in usbtmc488_ioctl_read_stb to test for failure
+first and return the failure code immediately.
+Change the test for the USBTMC_IOCTL_GET_STB ioctl to test for 0
+instead of a positive value.
+
+Fixes: cac01bd178d6 ("usb: usbtmc: Fix erroneous get_stb ioctl error returns")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250521121656.18174-3-dpenkler@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/ti/k3-udma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/class/usbtmc.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index edad538928dd7..1d12dc141070a 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -5490,7 +5490,8 @@ static int udma_probe(struct platform_device *pdev)
- 		uc->config.dir = DMA_MEM_TO_MEM;
- 		uc->name = devm_kasprintf(dev, GFP_KERNEL, "%s chan%d",
- 					  dev_name(dev), i);
--
-+		if (!uc->name)
-+			return -ENOMEM;
- 		vchan_init(&uc->vc, &ud->ddev);
- 		/* Use custom vchan completion handling */
- 		tasklet_setup(&uc->vc.task, udma_vchan_complete);
--- 
-2.39.5
-
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -565,14 +565,15 @@ static int usbtmc488_ioctl_read_stb(stru
+ 
+ 	rv = usbtmc_get_stb(file_data, &stb);
+ 
+-	if (rv > 0) {
+-		srq_asserted = atomic_xchg(&file_data->srq_asserted,
+-					srq_asserted);
+-		if (srq_asserted)
+-			stb |= 0x40; /* Set RQS bit */
++	if (rv < 0)
++		return rv;
++
++	srq_asserted = atomic_xchg(&file_data->srq_asserted, srq_asserted);
++	if (srq_asserted)
++		stb |= 0x40; /* Set RQS bit */
++
++	rv = put_user(stb, (__u8 __user *)arg);
+ 
+-		rv = put_user(stb, (__u8 __user *)arg);
+-	}
+ 	return rv;
+ 
+ }
+@@ -2201,7 +2202,7 @@ static long usbtmc_ioctl(struct file *fi
+ 
+ 	case USBTMC_IOCTL_GET_STB:
+ 		retval = usbtmc_get_stb(file_data, &tmp_byte);
+-		if (retval > 0)
++		if (!retval)
+ 			retval = put_user(tmp_byte, (__u8 __user *)arg);
+ 		break;
+ 
 
 
