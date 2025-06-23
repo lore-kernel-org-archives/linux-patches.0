@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E750246BC9;
-	Mon, 23 Jun 2025 13:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2E3246BC9;
+	Mon, 23 Jun 2025 13:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685475; cv=none; b=K9IXbMaEa92g5CbdQ7lsixNf7+1xm287ezzAGbvLaho4xpL0m3kaEy6J8WtgOTvuYYpXr+WTr7tb8rIVcmH/Zd7fAXOpOt6HZmzHXTRK7gnsgDsbnaI7FGb6+lYBLGB65LC/eyzYfPpfEbmHREwDJgzqP7w29XP9QE3Rd+pAiSc=
+	t=1750685479; cv=none; b=McZ2zMHXwkhoDmWH/KBDgH2wgtW18pdqMCIPH42T5PR9qUVgRSgZ19Jtjwx4HU1a3hBLJ0ZZ2JDG3ec17F499wuaSWAZQAfgc6PpmcBYTqTJ38M13EdeIk+bVreLQwgmsK5K3SKOifhJyu3KmzKpMKsCjtu84QVzTUdOcywKDJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685475; c=relaxed/simple;
-	bh=/AfS6rj3Uk8FdFaPSnnQuiFWCnzIoWKJ1E7ilb+8Vjs=;
+	s=arc-20240116; t=1750685479; c=relaxed/simple;
+	bh=XwhWbZvNZynVWKg5tEGeUuE+/nTKoHusZ0HZoOgz/bY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rElamBlUpDNgx6tuUgLrbTTbeCyoGY39uJnueDC+fRVcvGsiQlnXuxNR0vI5sS1yQ0diZfzzbN8VtPjoct76nxwFF9/Bg3VRmL49QZT7caT16Fugi5YoFdxPvnaLLumiFcIMWhQOCP5AV5PGuOUZzJNRlAPMNWc3IfCmbvfwAu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldCoclYe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fWBfrugHOADp4ftuFTsyk8mtxbeuZeir6vlmrTx5GEGnndR2VLMhkhjn/Yg5Y1m6DeWha2p8oTHBDpkdAARdqKhb0gCpCOxlY/bslURmPO6gmUmusI4o76yG12BKMeU/UTd7BoLWkidZl27m+nSPmyW7b2qBti0/MDAhBTd8a8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjPm+cKR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldCoclYe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20915C4CEEA;
-	Mon, 23 Jun 2025 13:31:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjPm+cKR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD652C4CEEA;
+	Mon, 23 Jun 2025 13:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685475;
-	bh=/AfS6rj3Uk8FdFaPSnnQuiFWCnzIoWKJ1E7ilb+8Vjs=;
+	s=korg; t=1750685478;
+	bh=XwhWbZvNZynVWKg5tEGeUuE+/nTKoHusZ0HZoOgz/bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ldCoclYeGq7abazL/N5tpyM38KMOpCoA97hmzr/5PLcm3YYi4ZENpNBDZALo4jp14
-	 pF0BAu5BRGfLGpd9VbcSrjxut5vMYjnAKl3jYtjDf/6O4+pSOEzGkTGgdAxdK64Puv
-	 pQ9tvut8AeD5oFPXTBQU7ms3bLp7zchf49l6pK3U=
+	b=XjPm+cKRKrkQFMy5ZAJgH5+GUFJJpw8UyHv1RIwoQ44qY9+3Q6KgNP0Z081YQyvhg
+	 A1vTwrlR/sHyhKz5t8dp1pJdR94WbkS8kGecVbqw+mLVDcGF9NVq9YN/PE7CY71KOV
+	 afJt33/yYKwSC2MUTPyUoPK4eJPKApaqWG3PR+jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Tony Jones <tonyj@suse.de>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 077/355] perf scripts python: exported-sql-viewer.py: Fix pattern matching with Python 3
-Date: Mon, 23 Jun 2025 15:04:38 +0200
-Message-ID: <20250623130629.136544535@linuxfoundation.org>
+Subject: [PATCH 6.15 262/592] media: verisilicon: Enable wide 4K in AV1 decoder
+Date: Mon, 23 Jun 2025 15:03:40 +0200
+Message-ID: <20250623130706.537915726@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,54 +48,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 
-[ Upstream commit 17e548405a81665fd14cee960db7d093d1396400 ]
+[ Upstream commit 311e40e877bd980bc665e6c8d3b15d96f0ec2aa8 ]
 
-The script allows the user to enter patterns to find symbols.
+Tested on RK3588, this decoder is capable of handling WUHD, so bump the
+maximum width and height accordingly.
 
-The pattern matching characters are converted for use in SQL.
-
-For PostgreSQL the conversion involves using the Python maketrans()
-method which is slightly different in Python 3 compared with Python 2.
-
-Fix to work in Python 3.
-
-Fixes: beda0e725e5f06ac ("perf script python: Add Python3 support to exported-sql-viewer.py")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Tony Jones <tonyj@suse.de>
-Link: https://lore.kernel.org/r/20250512093932.79854-4-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/scripts/python/exported-sql-viewer.py | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../platform/verisilicon/rockchip_vpu_hw.c    | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/tools/perf/scripts/python/exported-sql-viewer.py b/tools/perf/scripts/python/exported-sql-viewer.py
-index 711d4f9f5645c..4cea374b284c1 100755
---- a/tools/perf/scripts/python/exported-sql-viewer.py
-+++ b/tools/perf/scripts/python/exported-sql-viewer.py
-@@ -679,7 +679,10 @@ class CallGraphModelBase(TreeModel):
- 				s = value.replace("%", "\%")
- 				s = s.replace("_", "\_")
- 				# Translate * and ? into SQL LIKE pattern characters % and _
--				trans = string.maketrans("*?", "%_")
-+				if sys.version_info[0] == 3:
-+					trans = str.maketrans("*?", "%_")
-+				else:
-+					trans = string.maketrans("*?", "%_")
- 				match = " LIKE '" + str(s).translate(trans) + "'"
- 			else:
- 				match = " GLOB '" + str(value) + "'"
+diff --git a/drivers/media/platform/verisilicon/rockchip_vpu_hw.c b/drivers/media/platform/verisilicon/rockchip_vpu_hw.c
+index 964122e7c3559..b64f0658f7f1e 100644
+--- a/drivers/media/platform/verisilicon/rockchip_vpu_hw.c
++++ b/drivers/media/platform/verisilicon/rockchip_vpu_hw.c
+@@ -85,10 +85,10 @@ static const struct hantro_fmt rockchip_vpu981_postproc_fmts[] = {
+ 		.postprocessed = true,
+ 		.frmsize = {
+ 			.min_width = ROCKCHIP_VPU981_MIN_SIZE,
+-			.max_width = FMT_UHD_WIDTH,
++			.max_width = FMT_4K_WIDTH,
+ 			.step_width = MB_DIM,
+ 			.min_height = ROCKCHIP_VPU981_MIN_SIZE,
+-			.max_height = FMT_UHD_HEIGHT,
++			.max_height = FMT_4K_HEIGHT,
+ 			.step_height = MB_DIM,
+ 		},
+ 	},
+@@ -99,10 +99,10 @@ static const struct hantro_fmt rockchip_vpu981_postproc_fmts[] = {
+ 		.postprocessed = true,
+ 		.frmsize = {
+ 			.min_width = ROCKCHIP_VPU981_MIN_SIZE,
+-			.max_width = FMT_UHD_WIDTH,
++			.max_width = FMT_4K_WIDTH,
+ 			.step_width = MB_DIM,
+ 			.min_height = ROCKCHIP_VPU981_MIN_SIZE,
+-			.max_height = FMT_UHD_HEIGHT,
++			.max_height = FMT_4K_HEIGHT,
+ 			.step_height = MB_DIM,
+ 		},
+ 	},
+@@ -318,10 +318,10 @@ static const struct hantro_fmt rockchip_vpu981_dec_fmts[] = {
+ 		.match_depth = true,
+ 		.frmsize = {
+ 			.min_width = ROCKCHIP_VPU981_MIN_SIZE,
+-			.max_width = FMT_UHD_WIDTH,
++			.max_width = FMT_4K_WIDTH,
+ 			.step_width = MB_DIM,
+ 			.min_height = ROCKCHIP_VPU981_MIN_SIZE,
+-			.max_height = FMT_UHD_HEIGHT,
++			.max_height = FMT_4K_HEIGHT,
+ 			.step_height = MB_DIM,
+ 		},
+ 	},
+@@ -331,10 +331,10 @@ static const struct hantro_fmt rockchip_vpu981_dec_fmts[] = {
+ 		.match_depth = true,
+ 		.frmsize = {
+ 			.min_width = ROCKCHIP_VPU981_MIN_SIZE,
+-			.max_width = FMT_UHD_WIDTH,
++			.max_width = FMT_4K_WIDTH,
+ 			.step_width = MB_DIM,
+ 			.min_height = ROCKCHIP_VPU981_MIN_SIZE,
+-			.max_height = FMT_UHD_HEIGHT,
++			.max_height = FMT_4K_HEIGHT,
+ 			.step_height = MB_DIM,
+ 		},
+ 	},
+@@ -344,10 +344,10 @@ static const struct hantro_fmt rockchip_vpu981_dec_fmts[] = {
+ 		.max_depth = 2,
+ 		.frmsize = {
+ 			.min_width = ROCKCHIP_VPU981_MIN_SIZE,
+-			.max_width = FMT_UHD_WIDTH,
++			.max_width = FMT_4K_WIDTH,
+ 			.step_width = MB_DIM,
+ 			.min_height = ROCKCHIP_VPU981_MIN_SIZE,
+-			.max_height = FMT_UHD_HEIGHT,
++			.max_height = FMT_4K_HEIGHT,
+ 			.step_height = MB_DIM,
+ 		},
+ 	},
 -- 
 2.39.5
 
