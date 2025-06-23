@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7EA24A06B;
-	Mon, 23 Jun 2025 13:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB41324A06B;
+	Mon, 23 Jun 2025 13:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684479; cv=none; b=hYe4nYO7/so8ipC5Zgui6fmMaWDlUKh8KhKAsB7r6DE/REMdaZtAphb+juRKax9qR23VhBTQ0sqBNu/D+3FJG+1J6pjb01qXRzdrcFQwM2/cBQWjwrNZwVfjtYClmlLrVtL9G5EH+XxHEHkrPSsUfkVgFxiKZW1GrR3I+x+44eY=
+	t=1750684481; cv=none; b=EPdGQLW6C8Y+ur5v6IfwIw+MjCWBTZDmTzmYGKTdoazvod4BEVqxggPIubxXIpdWATOODhRTkTmJUvVjpKxp4dKu8iNQPGIifMhGk3VFLCAwDjcf1QTfd9KMkPfAw67K0f1+gSSKMx697TNe8iBJ7dZCMbCC1Z3zvoxHmo7nMXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684479; c=relaxed/simple;
-	bh=IxX/CsQg8vIkZlblxP5nftohn4ElJmo81SBRt3NCseE=;
+	s=arc-20240116; t=1750684481; c=relaxed/simple;
+	bh=v4dkyuESmsX1CF0zJt7YKZNLI94BlZZ72pt8u7tvSWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gTBsQIQKs3g9KANeZw0WQeuQewoB+yY8eZSUrN/4Hg0Bdyf4mrRuMjEVwMTc7LD4KUIRhsEMqwIl1f/ySA/zerh6fiM7CGu2QESJeQI0fd2SVudxIoTlaRywc9OFmGaHYlcQs/yb0V4shCXsCxH4tk/hgw0yYOLj+gmq0eeV0bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhWBQp5H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=da9seUXkK3GKpuPMDCdP4Wdqna1WvGr19B/+vCThYlEI0lPEhtAqju6TixPWh1KtCYH+aDLWdACSHAE5WQp5OHaYdpWSKmCfP7Hnm9kX/bDbIrLz1eRAjk6HgmJB5Qvb717T2Nd9iZRi8CSNdOObs7ZgZk9qumrd8lVSmO6soOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLkud+Sy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhWBQp5H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A68C4CEEA;
-	Mon, 23 Jun 2025 13:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLkud+Sy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FDC9C4CEEA;
+	Mon, 23 Jun 2025 13:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684479;
-	bh=IxX/CsQg8vIkZlblxP5nftohn4ElJmo81SBRt3NCseE=;
+	s=korg; t=1750684481;
+	bh=v4dkyuESmsX1CF0zJt7YKZNLI94BlZZ72pt8u7tvSWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uhWBQp5H5hGLyZecghPTrmDHMaaNNcWEbBmd1c0oo0EPNqA1bGURzpNS3pF9RPV8X
-	 QVuNTZWGBFBV8fi/VYbH5q1kgPNj7w4sSAIt6kLA8U4fId3GP4ZRx9o4ytuK8emrWD
-	 lgUss2w5a3l7etzyqVXNlmovT8m1gPYPudRqS8fw=
+	b=RLkud+SyicfboIar9VzjaO24Yayv9STpQwhPmpw7BK+NOD4qo3pqyQb2UbYuV9Kyh
+	 3rMIhvjiMabKktjR+mCMf9ZK37ARxZfNiWRA0qMwhJEWb8HZYxfEy5d1AUR1hnIfz9
+	 8GIJY1ZOpYJiIQvcKEY+F9u0cLpRZKbhiI7Gd4gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ming Qian <ming.qian@oss.nxp.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.15 085/592] media: imx-jpeg: Drop the first error frames
-Date: Mon, 23 Jun 2025 15:00:43 +0200
-Message-ID: <20250623130702.300933717@linuxfoundation.org>
+Subject: [PATCH 6.15 086/592] media: imx-jpeg: Move mxc_jpeg_free_slot_data() ahead
+Date: Mon, 23 Jun 2025 15:00:44 +0200
+Message-ID: <20250623130702.323798271@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -53,52 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Qian <ming.qian@oss.nxp.com>
 
-commit d52b9b7e2f10d22a49468128540533e8d76910cd upstream.
+commit 46e9c092f850bd7b4d06de92d3d21877f49a3fcb upstream.
 
-When an output buffer contains error frame header,
-v4l2_jpeg_parse_header() will return error, then driver will mark this
-buffer and a capture buffer done with error flag in device_run().
-
-But if the error occurs in the first frames, before setup the capture
-queue, there is no chance to schedule device_run(), and there may be no
-capture to mark error.
-
-So we need to drop this buffer with error flag, and make the decoding
-can continue.
+Move function mxc_jpeg_free_slot_data() above mxc_jpeg_alloc_slot_data()
+allowing to call that function during allocation failures.
+No functional changes are made.
 
 Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
 Cc: stable@vger.kernel.org
 Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |   40 ++++++++++++-------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
 --- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
 +++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -1918,9 +1918,19 @@ static void mxc_jpeg_buf_queue(struct vb
- 	jpeg_src_buf = vb2_to_mxc_buf(vb);
- 	jpeg_src_buf->jpeg_parse_error = false;
- 	ret = mxc_jpeg_parse(ctx, vb);
--	if (ret)
-+	if (ret) {
- 		jpeg_src_buf->jpeg_parse_error = true;
- 
-+		/*
-+		 * if the capture queue is not setup, the device_run() won't be scheduled,
-+		 * need to drop the error buffer, so that the decoding can continue
-+		 */
-+		if (!vb2_is_streaming(v4l2_m2m_get_dst_vq(ctx->fh.m2m_ctx))) {
-+			v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
-+			return;
-+		}
-+	}
-+
- end:
- 	v4l2_m2m_buf_queue(ctx->fh.m2m_ctx, vbuf);
+@@ -752,6 +752,26 @@ static int mxc_get_free_slot(struct mxc_
+ 	return -1;
  }
+ 
++static void mxc_jpeg_free_slot_data(struct mxc_jpeg_dev *jpeg)
++{
++	/* free descriptor for decoding/encoding phase */
++	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
++			  jpeg->slot_data.desc,
++			  jpeg->slot_data.desc_handle);
++
++	/* free descriptor for encoder configuration phase / decoder DHT */
++	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
++			  jpeg->slot_data.cfg_desc,
++			  jpeg->slot_data.cfg_desc_handle);
++
++	/* free configuration stream */
++	dma_free_coherent(jpeg->dev, MXC_JPEG_MAX_CFG_STREAM,
++			  jpeg->slot_data.cfg_stream_vaddr,
++			  jpeg->slot_data.cfg_stream_handle);
++
++	jpeg->slot_data.used = false;
++}
++
+ static bool mxc_jpeg_alloc_slot_data(struct mxc_jpeg_dev *jpeg)
+ {
+ 	struct mxc_jpeg_desc *desc;
+@@ -798,26 +818,6 @@ err:
+ 	return false;
+ }
+ 
+-static void mxc_jpeg_free_slot_data(struct mxc_jpeg_dev *jpeg)
+-{
+-	/* free descriptor for decoding/encoding phase */
+-	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
+-			  jpeg->slot_data.desc,
+-			  jpeg->slot_data.desc_handle);
+-
+-	/* free descriptor for encoder configuration phase / decoder DHT */
+-	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
+-			  jpeg->slot_data.cfg_desc,
+-			  jpeg->slot_data.cfg_desc_handle);
+-
+-	/* free configuration stream */
+-	dma_free_coherent(jpeg->dev, MXC_JPEG_MAX_CFG_STREAM,
+-			  jpeg->slot_data.cfg_stream_vaddr,
+-			  jpeg->slot_data.cfg_stream_handle);
+-
+-	jpeg->slot_data.used = false;
+-}
+-
+ static void mxc_jpeg_check_and_set_last_buffer(struct mxc_jpeg_ctx *ctx,
+ 					       struct vb2_v4l2_buffer *src_buf,
+ 					       struct vb2_v4l2_buffer *dst_buf)
 
 
