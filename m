@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AB722257E;
-	Mon, 23 Jun 2025 21:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC32122257E;
+	Mon, 23 Jun 2025 21:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713509; cv=none; b=f1pzjRdGvLwnla6WvDyKWYVNahYVBI+qWWzJklBI9G5pn65geBvh5p2HnvIm8JeEkauER5L2xG5g/hXYf7IdcYXBzi8Drsq/cAqQHKDGVpu0UnyhGwaqGV7kT+z43f9f0Qr8YRpfMVBNjEGMc9yWY2KVqQuzHPPoN6dSyr7v9Nw=
+	t=1750713511; cv=none; b=XdScZv+/OQkpVM2uT5tIwykM/Y6slKsy+3A0iSI+EHAkW58jPrnPGhXm5bDphrAByVgB9nCjrp4+MdZx9wIfef3SuceNC+vi0hiiFAy/g84h670vYndp6yq+Skh9zZXRVo44VRbt+zYKYSnLZlnM8fM/OMlnpMxMtwVCYKEflOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713509; c=relaxed/simple;
-	bh=E93B4ZPeqLDUVQNzfJlxJeXZ/beby/EEtOd9ZL3yyQ0=;
+	s=arc-20240116; t=1750713511; c=relaxed/simple;
+	bh=bGqxe9SFQBHbCXXc44uvdgIHc+0hjSdPKMTwuYL7EWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KyTDfoZd5despGkTpGkuBqwKBQ46SvdhfYMyYzCI2k8mI7AKDbeOQmHY7TAw9Ax6YbW7vVsPax68RYJvJGa6mCmVbYlA+t9vkBg7veFRgf2zetLMz57ZV0z6PHPOiw64dadLVjQ7bO3w9fwdDm6EG9UtIzrqV5O/uLRAnXjJRWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jgYTLqd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=obw3kZLSpqlhDqBTMHMeZNyMpGWeaKCutZ/UzRINxj+HxrfqnjW7KcoUtVez5T4nPVJjo4d919lHZU5/mWQfcE1mQOknTWHAo/pLRJLgYZlf31CbRj8+9AQBemPymLd2FW6TLCcU/P3w1EFMROiuReqYczE3c6ez1Sn7ijsMSNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8ClJdXJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jgYTLqd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0EDFC4CEEA;
-	Mon, 23 Jun 2025 21:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8ClJdXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541E5C4CEEA;
+	Mon, 23 Jun 2025 21:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713509;
-	bh=E93B4ZPeqLDUVQNzfJlxJeXZ/beby/EEtOd9ZL3yyQ0=;
+	s=korg; t=1750713511;
+	bh=bGqxe9SFQBHbCXXc44uvdgIHc+0hjSdPKMTwuYL7EWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0jgYTLqdgKJJ2Dlfy4EjQCYqtOQWmwgIge2QzGfU26MhrV2PyB0nDpil/Gf9yQA65
-	 kBhXV0wzhBGWq1i63Uoyef8u3Aam+UMapDc8zF7RH6gr168c4jTu5BYnRvt3+PUVvF
-	 CdiUoUbmGLly7CIqrG1VFucEKAb2qStr2K2OLfOs=
+	b=g8ClJdXJIssPLXk494iZZK/kXpmjwqhoGQOElvx2CNyezCp79QIo68LfZdsdONpR0
+	 HR8QX93fCKpA1s/J2vnpddkdnzMUj7LYdCADdvSPi7EbTKXGt+scK7aoY2S38f/hcl
+	 S57m8YSU7PiTAT8WOd4k4quegcD+5mgLsOQXJRuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 351/592] xfrm: validate assignment of maximal possible SEQ number
-Date: Mon, 23 Jun 2025 15:05:09 +0200
-Message-ID: <20250623130708.795304810@linuxfoundation.org>
+	syzbot <syzbot+3361c2d6f78a3e0892f9@syzkaller.appspotmail.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 094/290] net: ch9200: fix uninitialised access during mii_nway_restart
+Date: Mon, 23 Jun 2025 15:05:55 +0200
+Message-ID: <20250623130629.798138487@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,108 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-[ Upstream commit e86212b6b13a20c5ad404c5597933f57fd0f1519 ]
+commit 9ad0452c0277b816a435433cca601304cfac7c21 upstream.
 
-Users can set any seq/seq_hi/oseq/oseq_hi values. The XFRM core code
-doesn't prevent from them to set even 0xFFFFFFFF, however this value
-will cause for traffic drop.
+In mii_nway_restart() the code attempts to call
+mii->mdio_read which is ch9200_mdio_read(). ch9200_mdio_read()
+utilises a local buffer called "buff", which is initialised
+with control_read(). However "buff" is conditionally
+initialised inside control_read():
 
-Is is happening because SEQ numbers here mean that packet with such
-number was processed and next number should be sent on the wire. In this
-case, the next number will be 0, and it means overflow which causes to
-(expected) packet drops.
+        if (err == size) {
+                memcpy(data, buf, size);
+        }
 
-While it can be considered as misconfiguration and handled by XFRM
-datapath in the same manner as any other SEQ number, let's add
-validation to easy for packet offloads implementations which need to
-configure HW with next SEQ to send and not with current SEQ like it is
-done in core code.
+If the condition of "err == size" is not met, then
+"buff" remains uninitialised. Once this happens the
+uninitialised "buff" is accessed and returned during
+ch9200_mdio_read():
 
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+        return (buff[0] | buff[1] << 8);
+
+The problem stems from the fact that ch9200_mdio_read()
+ignores the return value of control_read(), leading to
+uinit-access of "buff".
+
+To fix this we should check the return value of
+control_read() and return early on error.
+
+Reported-by: syzbot <syzbot+3361c2d6f78a3e0892f9@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=3361c2d6f78a3e0892f9
+Tested-by: syzbot <syzbot+3361c2d6f78a3e0892f9@syzkaller.appspotmail.com>
+Fixes: 4a476bd6d1d9 ("usbnet: New driver for QinHeng CH9200 devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Link: https://patch.msgid.link/20250526183607.66527-1-qasdev00@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_user.c | 52 +++++++++++++++++++++++++++++++++++---------
- 1 file changed, 42 insertions(+), 10 deletions(-)
+ drivers/net/usb/ch9200.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 784a2d124749f..614b58cb26ab7 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -178,11 +178,27 @@ static inline int verify_replay(struct xfrm_usersa_info *p,
- 				       "Replay seq and seq_hi should be 0 for output SA");
- 			return -EINVAL;
- 		}
--		if (rs->oseq_hi && !(p->flags & XFRM_STATE_ESN)) {
--			NL_SET_ERR_MSG(
--				extack,
--				"Replay oseq_hi should be 0 in non-ESN mode for output SA");
--			return -EINVAL;
-+
-+		if (!(p->flags & XFRM_STATE_ESN)) {
-+			if (rs->oseq_hi) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay oseq_hi should be 0 in non-ESN mode for output SA");
-+				return -EINVAL;
-+			}
-+			if (rs->oseq == U32_MAX) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay oseq should be less than 0xFFFFFFFF in non-ESN mode for output SA");
-+				return -EINVAL;
-+			}
-+		} else {
-+			if (rs->oseq == U32_MAX && rs->oseq_hi == U32_MAX) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay oseq and oseq_hi should be less than 0xFFFFFFFF for output SA");
-+				return -EINVAL;
-+			}
- 		}
- 		if (rs->bmp_len) {
- 			NL_SET_ERR_MSG(extack, "Replay bmp_len should 0 for output SA");
-@@ -196,11 +212,27 @@ static inline int verify_replay(struct xfrm_usersa_info *p,
- 				       "Replay oseq and oseq_hi should be 0 for input SA");
- 			return -EINVAL;
- 		}
--		if (rs->seq_hi && !(p->flags & XFRM_STATE_ESN)) {
--			NL_SET_ERR_MSG(
--				extack,
--				"Replay seq_hi should be 0 in non-ESN mode for input SA");
--			return -EINVAL;
-+		if (!(p->flags & XFRM_STATE_ESN)) {
-+			if (rs->seq_hi) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay seq_hi should be 0 in non-ESN mode for input SA");
-+				return -EINVAL;
-+			}
-+
-+			if (rs->seq == U32_MAX) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay seq should be less than 0xFFFFFFFF in non-ESN mode for input SA");
-+				return -EINVAL;
-+			}
-+		} else {
-+			if (rs->seq == U32_MAX && rs->seq_hi == U32_MAX) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay seq and seq_hi should be less than 0xFFFFFFFF for input SA");
-+				return -EINVAL;
-+			}
- 		}
- 	}
+--- a/drivers/net/usb/ch9200.c
++++ b/drivers/net/usb/ch9200.c
+@@ -178,6 +178,7 @@ static int ch9200_mdio_read(struct net_d
+ {
+ 	struct usbnet *dev = netdev_priv(netdev);
+ 	unsigned char buff[2];
++	int ret;
  
--- 
-2.39.5
-
+ 	netdev_dbg(netdev, "%s phy_id:%02x loc:%02x\n",
+ 		   __func__, phy_id, loc);
+@@ -185,8 +186,10 @@ static int ch9200_mdio_read(struct net_d
+ 	if (phy_id != 0)
+ 		return -ENODEV;
+ 
+-	control_read(dev, REQUEST_READ, 0, loc * 2, buff, 0x02,
+-		     CONTROL_TIMEOUT_MS);
++	ret = control_read(dev, REQUEST_READ, 0, loc * 2, buff, 0x02,
++			   CONTROL_TIMEOUT_MS);
++	if (ret < 0)
++		return ret;
+ 
+ 	return (buff[0] | buff[1] << 8);
+ }
 
 
