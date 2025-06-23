@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6112222B7;
-	Mon, 23 Jun 2025 21:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AC921B9C9;
+	Mon, 23 Jun 2025 21:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714091; cv=none; b=QXt9oiRen5xN49L5EW1ImGnEamHSwWCdU4OY+XtmEJ8cOlAfaqnpH9rSqSL+YUoWVq3E0xTEIpvJTAbb9f/p1s72GUC6hzEsbwgKwT544LSwzcEPBABXKgUY03/zi25KtCbckcnv6n+J83mSbLJqYkJfTCcrfjkX23vPZcjL9pQ=
+	t=1750714094; cv=none; b=I3Ds38ZqYgcKEJnWgKrl//QqjEISZJKcue4KC8c/N0MHbSjRfzWsKsPJWIDHEdCYUB1oiO1ak3YppGDSTufvTAlMgmRHs1EJjopgg3D6gqTA4WbXoUh3g7CRkWt2gvHomBbhWWVSQ3QRiHfHqCPphar99BiHJjmFlukWLIX6RrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714091; c=relaxed/simple;
-	bh=kP835cKUTtODxPz0n4s9/Et+CGzLDbx09heZY11FBXY=;
+	s=arc-20240116; t=1750714094; c=relaxed/simple;
+	bh=Ehi01Hri5nfR8qca0PI9J2pbObGKmkyShDWPJ+E0XQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hd12bKAoD9624mWFHbsJG7ntC0s1/s3/n95uW4hSHx2l7hp/NKFdGNoREbYNrLcbk54UVqZpyUeTWOuXQXBMf7oC/NwbEM1dTm3bSZ6XGzTBIvkhPcPmRfzDLSrfftJB8Bm5bYBljSJlpUW7zpVfXMSPKIckUUmBztlHBa3iUqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vau/BgeA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxfgIGpQFn4cBKcmcAamjiMORzJAXU11S+/7hhVDNq4tG2QCT+CNViK6ClOwkRZahSSij41/6EnTgpUFSZ2JStbtv4InymHYrXtQhpr7QG9k58FVgUgri4nzFxU0aeDrdkx/Xo31f+njVcjr7PdTj33MkUzKyxkq997Uo5T8K6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJZKE+FG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vau/BgeA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3905DC4CEEA;
-	Mon, 23 Jun 2025 21:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJZKE+FG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7ADC4CEEA;
+	Mon, 23 Jun 2025 21:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714091;
-	bh=kP835cKUTtODxPz0n4s9/Et+CGzLDbx09heZY11FBXY=;
+	s=korg; t=1750714094;
+	bh=Ehi01Hri5nfR8qca0PI9J2pbObGKmkyShDWPJ+E0XQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vau/BgeAWsA9xAYkUDgh/m3sbftDXnt3unhr+OZOqAk5swwvqp/Mf5wSKIoT643XF
-	 Ioib3l/kBnnhXi5J7wJZT/d4OhKuJEZdFz/M1G2RUGYt4FV7Ddu9z/3u0XQUELAzib
-	 yt/inkMifRkJztkgTK08E3R8eeczF8hZdDUYo1mo=
+	b=vJZKE+FG+zFupW4//nVhEU5JZP2R5tx8XHKVx5bRIxBFzMBTTckLKmNgXHP1RICDm
+	 eUA+RKfsTiMmjxeSKdg4ba0uzvxO2+GSv00NzsrVBZcKjM9c0HXG8HnwyYwAVo+S9b
+	 oGe0ZtFrYexyg/HpL5tejXwVu986gsFwuu8pQNi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Lee Jones <lee@kernel.org>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/508] mfd: exynos-lpass: Avoid calling exynos_lpass_disable() twice in exynos_lpass_remove()
-Date: Mon, 23 Jun 2025 15:03:09 +0200
-Message-ID: <20250623130648.828804871@linuxfoundation.org>
+Subject: [PATCH 6.15 363/592] net: vertexcom: mse102x: Return code for mse102x_rx_pkt_spi
+Date: Mon, 23 Jun 2025 15:05:21 +0200
+Message-ID: <20250623130709.078525499@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,39 +47,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit b70b84556eeca5262d290e8619fe0af5b7664a52 ]
+[ Upstream commit 4ecf56f4b66011b583644bf9a62188d05dfcd78c ]
 
-exynos_lpass_disable() is called twice in the remove function. Remove
-one of these calls.
+The MSE102x doesn't provide any interrupt register, so the only way
+to handle the level interrupt is to fetch the whole packet from
+the MSE102x internal buffer via SPI. So in cases the interrupt
+handler fails to do this, it should return IRQ_NONE. This allows
+the core to disable the interrupt in case the issue persists
+and prevent an interrupt storm.
 
-Fixes: 90f447170c6f ("mfd: exynos-lpass: Add runtime PM support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/74d69e8de10308c9855db6d54155a3de4b11abfd.1745247209.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://patch.msgid.link/20250509120435.43646-6-wahrenst@gmx.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/exynos-lpass.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/vertexcom/mse102x.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mfd/exynos-lpass.c b/drivers/mfd/exynos-lpass.c
-index 166cd21088cdd..5ee00f86e39c7 100644
---- a/drivers/mfd/exynos-lpass.c
-+++ b/drivers/mfd/exynos-lpass.c
-@@ -143,7 +143,6 @@ static int exynos_lpass_remove(struct platform_device *pdev)
- {
- 	struct exynos_lpass *lpass = platform_get_drvdata(pdev);
+diff --git a/drivers/net/ethernet/vertexcom/mse102x.c b/drivers/net/ethernet/vertexcom/mse102x.c
+index e4d993f313740..545177e84c0eb 100644
+--- a/drivers/net/ethernet/vertexcom/mse102x.c
++++ b/drivers/net/ethernet/vertexcom/mse102x.c
+@@ -306,7 +306,7 @@ static void mse102x_dump_packet(const char *msg, int len, const char *data)
+ 		       data, len, true);
+ }
  
--	exynos_lpass_disable(lpass);
- 	pm_runtime_disable(&pdev->dev);
- 	if (!pm_runtime_status_suspended(&pdev->dev))
- 		exynos_lpass_disable(lpass);
+-static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
++static irqreturn_t mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ {
+ 	struct sk_buff *skb;
+ 	unsigned int rxalign;
+@@ -327,7 +327,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 		mse102x_tx_cmd_spi(mse, CMD_CTR);
+ 		ret = mse102x_rx_cmd_spi(mse, (u8 *)&rx);
+ 		if (ret)
+-			return;
++			return IRQ_NONE;
+ 
+ 		cmd_resp = be16_to_cpu(rx);
+ 		if ((cmd_resp & CMD_MASK) != CMD_RTS) {
+@@ -360,7 +360,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 	rxalign = ALIGN(rxlen + DET_SOF_LEN + DET_DFT_LEN, 4);
+ 	skb = netdev_alloc_skb_ip_align(mse->ndev, rxalign);
+ 	if (!skb)
+-		return;
++		return IRQ_NONE;
+ 
+ 	/* 2 bytes Start of frame (before ethernet header)
+ 	 * 2 bytes Data frame tail (after ethernet frame)
+@@ -370,7 +370,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 	if (mse102x_rx_frame_spi(mse, rxpkt, rxlen, drop)) {
+ 		mse->ndev->stats.rx_errors++;
+ 		dev_kfree_skb(skb);
+-		return;
++		return IRQ_HANDLED;
+ 	}
+ 
+ 	if (netif_msg_pktdata(mse))
+@@ -381,6 +381,8 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 
+ 	mse->ndev->stats.rx_packets++;
+ 	mse->ndev->stats.rx_bytes += rxlen;
++
++	return IRQ_HANDLED;
+ }
+ 
+ static int mse102x_tx_pkt_spi(struct mse102x_net *mse, struct sk_buff *txb,
+@@ -512,12 +514,13 @@ static irqreturn_t mse102x_irq(int irq, void *_mse)
+ {
+ 	struct mse102x_net *mse = _mse;
+ 	struct mse102x_net_spi *mses = to_mse102x_spi(mse);
++	irqreturn_t ret;
+ 
+ 	mutex_lock(&mses->lock);
+-	mse102x_rx_pkt_spi(mse);
++	ret = mse102x_rx_pkt_spi(mse);
+ 	mutex_unlock(&mses->lock);
+ 
+-	return IRQ_HANDLED;
++	return ret;
+ }
+ 
+ static int mse102x_net_open(struct net_device *ndev)
 -- 
 2.39.5
 
