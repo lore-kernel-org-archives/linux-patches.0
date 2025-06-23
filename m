@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C897D70838;
-	Mon, 23 Jun 2025 21:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D63270838;
+	Mon, 23 Jun 2025 21:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713076; cv=none; b=RMcmXJurob/iCwHhDMYroi7gCooHwIwTUJI9T0ZLpHEp4UbzIrP4CD00FXh5zDbYezKMYg2Vk5Tjxqn2LwF/DfcVyX9Uaa8EQkqVsKH08UAV6DPEoXd+KfXEVbJrClyC08MjR+HFDcVWTY5W+Yd1C/O3l8M/LIjl2LHHT+b2UoA=
+	t=1750713079; cv=none; b=WOnachATCQBakMQWgYkYqq0WrD6FB/WipDvga7DNQmUKbrFsu0pVpyKFoVfjVEACjOcOMfmISjO+aEV3C+7zEFc0nZSKhqliuxEChWJdUL55V88S1mIdHaKwUVuQxCT50E6Mvh4lASgqEXgZv7gVkHO9uGaxOwCO+GCJvzLu/jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713076; c=relaxed/simple;
-	bh=L8YBMyxjGo8VVGneLNSZXkpalbBYNCcYITPcRzqQ7Qs=;
+	s=arc-20240116; t=1750713079; c=relaxed/simple;
+	bh=hyUIoXISDd5BspxcGEYnh1ZsCHSprQcBIrpUa2UlTLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qNlTCmvp2nmCC9FshNjVZhMGRlDMFoCReepVGHtAGmsUc20nEV5Ld+VhfAvC4dmmaFRAtsNV6qgiHeYCEc5tBVNKJjI0P0usFdKn5AaJFa7BIWNd66viQre6XY+mnAqJ3DhZQLq+8bkqkEl8UgpNTRvzwQQ1E8yq6aUCZN9CZ/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUeXi3k6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e8C6U3gNRqCHT/hUFx7A0r/IRF/5PIeCcvamtFcBhb/Ah35PEAZAy8sWUFEw/FSV4wJnAi4MJQ0+ycM0vDsl1wZmJ8notxHjyUytH9CC39jCObgDdy6Un2hN3/2uQKIU/niL/AoJs5VGArggA2m9yqbTh9TOUD9ZgvygwhJPjeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJhTjESI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUeXi3k6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD3BC4CEEA;
-	Mon, 23 Jun 2025 21:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJhTjESI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B96C4CEEA;
+	Mon, 23 Jun 2025 21:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713076;
-	bh=L8YBMyxjGo8VVGneLNSZXkpalbBYNCcYITPcRzqQ7Qs=;
+	s=korg; t=1750713079;
+	bh=hyUIoXISDd5BspxcGEYnh1ZsCHSprQcBIrpUa2UlTLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gUeXi3k63t3tMUMmDjfX2pmmlgBK1CxEA/mPmkmHHH3Uf4MMwdwx6gGjZS1uxwk2P
-	 sma4KRvp87lkgjT8jE7c1MwUro4YOwva2fSLbzgbmrZmj8XujaZeNTD5IAgaiZm0uP
-	 d3DPstQXpqnf2zFyTgj8ptMfr0zhew5m2rWRH2PE=
+	b=dJhTjESIYFWkJdtqYx4OpqDMDeYJwD3h1VmE/2eU+JKgdzpq2I6S9BungtboOojBS
+	 vrpNsIljkE6zb9UrAaO/kw3XgPy+fPwohb5PtIFEeDiPylH32wgbk4OJrweBgB4KjS
+	 G6/VqchSaAXFboGMwn24Yn+pkolYGDdBk/RYVoH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Chris Bainbridge <chris.bainbridge@gmail.com>
-Subject: [PATCH 5.15 123/411] PM: sleep: Fix power.is_suspended cleanup for direct-complete devices
-Date: Mon, 23 Jun 2025 15:04:27 +0200
-Message-ID: <20250623130636.653112180@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: [PATCH 5.10 144/355] kbuild: Update assembler calls to use proper flags and language target
+Date: Mon, 23 Jun 2025 15:05:45 +0200
+Message-ID: <20250623130631.040649977@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,64 +49,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Nick Desaulniers <ndesaulniers@google.com>
 
-[ Upstream commit d46c4c839c20a599a0eb8d73708ce401f9c7d06d ]
+commit d5c8d6e0fa61401a729e9eb6a9c7077b2d3aebb0 upstream.
 
-Commit 03f1444016b7 ("PM: sleep: Fix handling devices with direct_complete
-set on errors") caused power.is_suspended to be set for devices with
-power.direct_complete set, but it forgot to ensure the clearing of that
-flag for them in device_resume(), so power.is_suspended is still set for
-them during the next system suspend-resume cycle.
+as-instr uses KBUILD_AFLAGS, but as-option uses KBUILD_CFLAGS. This can
+cause as-option to fail unexpectedly when CONFIG_WERROR is set, because
+clang will emit -Werror,-Wunused-command-line-argument for various -m
+and -f flags in KBUILD_CFLAGS for assembler sources.
 
-If that cycle is aborted in dpm_suspend(), the subsequent invocation of
-dpm_resume() will trigger a device_resume() call for every device and
-because power.is_suspended is set for the devices in question, they will
-not be skipped by device_resume() as expected which causes scary error
-messages to be logged (as appropriate).
+Callers of as-option and as-instr should be adding flags to
+KBUILD_AFLAGS / aflags-y, not KBUILD_CFLAGS / cflags-y. Use
+KBUILD_AFLAGS in all macros to clear up the initial problem.
 
-To address this issue, move the clearing of power.is_suspended in
-device_resume() immediately after the power.is_suspended check so it
-will be always cleared for all devices processed by that function.
+Unfortunately, -Wunused-command-line-argument can still be triggered
+with clang by the presence of warning flags or macro definitions because
+'-x assembler' is used, instead of '-x assembler-with-cpp', which will
+consume these flags. Switch to '-x assembler-with-cpp' in places where
+'-x assembler' is used, as the compiler is always used as the driver for
+out of line assembler sources in the kernel.
 
-Fixes: 03f1444016b7 ("PM: sleep: Fix handling devices with direct_complete set on errors")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4280
-Reported-and-tested-by: Chris Bainbridge <chris.bainbridge@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/4990586.GXAFRqVoOG@rjwysocki.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Finally, add -Werror to these macros so that they behave consistently
+whether or not CONFIG_WERROR is set.
+
+[nathan: Reworded and expanded on problems in commit message
+         Use '-x assembler-with-cpp' in a couple more places]
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1699
+Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Anders Roxell <anders.roxell@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ scripts/Kbuild.include  |    8 ++++----
+ scripts/Kconfig.include |    2 +-
+ scripts/as-version.sh   |    2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index d77ab224b861a..c784de10b494e 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -900,6 +900,8 @@ static void __device_resume(struct device *dev, pm_message_t state, bool async)
- 	if (!dev->power.is_suspended)
- 		goto Complete;
+--- a/scripts/Kbuild.include
++++ b/scripts/Kbuild.include
+@@ -101,16 +101,16 @@ try-run = $(shell set -e;		\
+ 	fi)
  
-+	dev->power.is_suspended = false;
-+
- 	if (dev->power.direct_complete) {
- 		/* Match the pm_runtime_disable() in __device_suspend(). */
- 		pm_runtime_enable(dev);
-@@ -955,7 +957,6 @@ static void __device_resume(struct device *dev, pm_message_t state, bool async)
+ # as-option
+-# Usage: cflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
++# Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
  
-  End:
- 	error = dpm_run_callback(callback, dev, state, info);
--	dev->power.is_suspended = false;
+ as-option = $(call try-run,\
+-	$(CC) $(KBUILD_CFLAGS) $(1) -c -x assembler /dev/null -o "$$TMP",$(1),$(2))
++	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
  
- 	device_unlock(dev);
- 	dpm_watchdog_clear(&wd);
--- 
-2.39.5
-
+ # as-instr
+-# Usage: cflags-y += $(call as-instr,instr,option1,option2)
++# Usage: aflags-y += $(call as-instr,instr,option1,option2)
+ 
+ as-instr = $(call try-run,\
+-	printf "%b\n" "$(1)" | $(CC) $(KBUILD_AFLAGS) -c -x assembler -o "$$TMP" -,$(2),$(3))
++	printf "%b\n" "$(1)" | $(CC) -Werror $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
+ 
+ # __cc-option
+ # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
+--- a/scripts/Kconfig.include
++++ b/scripts/Kconfig.include
+@@ -33,7 +33,7 @@ ld-option = $(success,$(LD) -v $(1))
+ 
+ # $(as-instr,<instr>)
+ # Return y if the assembler supports <instr>, n otherwise
+-as-instr = $(success,printf "%b\n" "$(1)" | $(CC) $(CLANG_FLAGS) -c -x assembler -o /dev/null -)
++as-instr = $(success,printf "%b\n" "$(1)" | $(CC) $(CLANG_FLAGS) -c -x assembler-with-cpp -o /dev/null -)
+ 
+ # check if $(CC) and $(LD) exist
+ $(error-if,$(failure,command -v $(CC)),compiler '$(CC)' not found)
+--- a/scripts/as-version.sh
++++ b/scripts/as-version.sh
+@@ -45,7 +45,7 @@ orig_args="$@"
+ # Get the first line of the --version output.
+ IFS='
+ '
+-set -- $(LC_ALL=C "$@" -Wa,--version -c -x assembler /dev/null -o /dev/null 2>/dev/null)
++set -- $(LC_ALL=C "$@" -Wa,--version -c -x assembler-with-cpp /dev/null -o /dev/null 2>/dev/null)
+ 
+ # Split the line on spaces.
+ IFS=' '
 
 
