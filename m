@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173CA24DCFD;
-	Mon, 23 Jun 2025 13:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107B61E480;
+	Mon, 23 Jun 2025 13:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685941; cv=none; b=mwdqFlqgFDBqvfhR6+0ZqLTn3AG1FP+2WlXOY9YOcBGS+LwXeDnRyvnxmVY8YGQDVby9EUfVQ0tRnF4MhaNEKbCXWEHxu05ZcAvaeOmGw7cJA7Kiu1RzCsNgHYRIdgCRz6UZ49cViSpb7s5+2l+kVower4dR3Gy4taR5LtffYyE=
+	t=1750685944; cv=none; b=AOTFc1r0f4oXBTNrWwfG+ykEa+W8//Alun2H4ehw7dajLjVeAy6JQsiYXDYluK6fhojY5n1LhZ6EkpSlQhruTdratdicsCjDT9s6RzjCU5VC/H7RkQ8V7/gjyPbg9KEBNnYFbJ5ODozmPf/9TT8hlf1aCQuwgyROohQ5Wl9VxCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685941; c=relaxed/simple;
-	bh=CG5Dz6HYwuQh+9pVqNHMJTOng9Pt2g6Kpo3AkjDgZmo=;
+	s=arc-20240116; t=1750685944; c=relaxed/simple;
+	bh=52U7i5tTdeK4hebS3AriLJUl8CpW3Ide2MdeesJ8bVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ufkdeVk4NaAnLhS/3YaTipFn0OkN2xEeqgmZfeUL5QCEWHcmmdSSU5nm9/BdEBPz8r7aM/dQXVS94FHEZo3kzdwR23dU7pw4HhE0Ed27MFl7FGK7io13zthted5J/yeiHSAX+ac2+n7zKLAh8h9yYOd6OKrHH019SdOzxVnww9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+QPFd/B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YMSgqNlYQCEIG0HDIjEQtSQ5xjEmz9gqckkPHXkqvagVnq2R0bePMwVHVi14e2T29C2iavgMBZ5Sb9eXqE9/Hx8i/bIFIq/Pde5UQnXKzCttMvUBUkTvEV9wNAyjxEmdRl+sAzdGzDVNL5tM7LY3Iz0sLmuPgBVDYkFZRqshcHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ofs4P2uy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+QPFd/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC7AC4CEEA;
-	Mon, 23 Jun 2025 13:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ofs4P2uy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C999C4CEEA;
+	Mon, 23 Jun 2025 13:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685941;
-	bh=CG5Dz6HYwuQh+9pVqNHMJTOng9Pt2g6Kpo3AkjDgZmo=;
+	s=korg; t=1750685943;
+	bh=52U7i5tTdeK4hebS3AriLJUl8CpW3Ide2MdeesJ8bVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+QPFd/BZo/wA9urpJ/3Lv69kBWP6N1qborXILSfw+N+aSLHHM8SKAyFExyoJ8MGN
-	 JcZGJFqDA/oCeyoMHNa3VZ3dOD8jpnf1cH594gSPz1X4WCF6ozlIaRqHATYtcOJ9yC
-	 dBl6kBWzbC+fndmwjqUwTAA2X/IRjOggfLRwQSqE=
+	b=Ofs4P2uy0nyN9+FMiOTxcmXY9uhHYNpjlBpOiJIsAjp4SN1qe1R1bc1StSeRXNjE/
+	 Yc64hLn0qIKWIu5qlgW3GZ7OYROAdKaGf/S5dxnYUNkzBF12cHiRt65VuJGkSgIo/b
+	 rEBkTJdPM7QjJhdpPlBl0zv3PLNmgShtwtmqRv4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@linaro.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Michael Tretter <m.tretter@pengutronix.de>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 081/355] perf tests switch-tracking: Fix timestamp comparison
-Date: Mon, 23 Jun 2025 15:04:42 +0200
-Message-ID: <20250623130629.248667020@linuxfoundation.org>
+Subject: [PATCH 6.15 272/592] media: uapi: v4l: Change V4L2_TYPE_IS_CAPTURE condition
+Date: Mon, 23 Jun 2025 15:03:50 +0200
+Message-ID: <20250623130706.798554925@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,104 +49,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Nas Chung <nas.chung@chipsnmedia.com>
 
-[ Upstream commit 628e124404b3db5e10e17228e680a2999018ab33 ]
+[ Upstream commit ad2698efce37e910dcf3c3914263e6cb3e86f8cd ]
 
-The test might fail on the Arm64 platform with the error:
+Explicitly compare a buffer type only with valid buffer types,
+to avoid matching a buffer type outside of the valid buffer type set.
 
-  # perf test -vvv "Track with sched_switch"
-  Missing sched_switch events
-  #
-
-The issue is caused by incorrect handling of timestamp comparisons. The
-comparison result, a signed 64-bit value, was being directly cast to an
-int, leading to incorrect sorting for sched events.
-
-The case does not fail everytime, usually I can trigger the failure
-after run 20 ~ 30 times:
-
-  # while true; do perf test "Track with sched_switch"; done
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : FAILED!
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : FAILED!
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-
-I used cross compiler to build Perf tool on my host machine and tested on
-Debian / Juno board.  Generally, I think this issue is not very specific
-to GCC versions.  As both internal CI and my local env can reproduce the
-issue.
-
-My Host Build compiler:
-
-  # aarch64-linux-gnu-gcc --version
-  aarch64-linux-gnu-gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-
-Juno Board:
-
-  # lsb_release -a
-  No LSB modules are available.
-  Distributor ID: Debian
-  Description:    Debian GNU/Linux 12 (bookworm)
-  Release:        12
-  Codename:       bookworm
-
-Fix this by explicitly returning 0, 1, or -1 based on whether the result
-is zero, positive, or negative.
-
-Fixes: d44bc558297222d9 ("perf tests: Add a test for tracking with sched_switch")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20250331172759.115604-1-leo.yan@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Reviewed-by: Michael Tretter <m.tretter@pengutronix.de>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/switch-tracking.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/uapi/linux/videodev2.h | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/tests/switch-tracking.c b/tools/perf/tests/switch-tracking.c
-index db5e1f70053a8..7b28d468fc6e8 100644
---- a/tools/perf/tests/switch-tracking.c
-+++ b/tools/perf/tests/switch-tracking.c
-@@ -255,7 +255,7 @@ static int compar(const void *a, const void *b)
- 	const struct event_node *nodeb = b;
- 	s64 cmp = nodea->event_time - nodeb->event_time;
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index b0e1f660c5f72..af86ece741e94 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -153,10 +153,18 @@ enum v4l2_buf_type {
+ 	V4L2_BUF_TYPE_SDR_OUTPUT           = 12,
+ 	V4L2_BUF_TYPE_META_CAPTURE         = 13,
+ 	V4L2_BUF_TYPE_META_OUTPUT	   = 14,
++	/*
++	 * Note: V4L2_TYPE_IS_VALID and V4L2_TYPE_IS_OUTPUT must
++	 * be updated if a new type is added.
++	 */
+ 	/* Deprecated, do not use */
+ 	V4L2_BUF_TYPE_PRIVATE              = 0x80,
+ };
  
--	return cmp;
-+	return cmp < 0 ? -1 : (cmp > 0 ? 1 : 0);
- }
++#define V4L2_TYPE_IS_VALID(type)		 \
++	((type) >= V4L2_BUF_TYPE_VIDEO_CAPTURE &&\
++	 (type) <= V4L2_BUF_TYPE_META_OUTPUT)
++
+ #define V4L2_TYPE_IS_MULTIPLANAR(type)			\
+ 	((type) == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE	\
+ 	 || (type) == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
+@@ -170,7 +178,8 @@ enum v4l2_buf_type {
+ 	 || (type) == V4L2_BUF_TYPE_SDR_OUTPUT			\
+ 	 || (type) == V4L2_BUF_TYPE_META_OUTPUT)
  
- static int process_events(struct evlist *evlist,
+-#define V4L2_TYPE_IS_CAPTURE(type) (!V4L2_TYPE_IS_OUTPUT(type))
++#define V4L2_TYPE_IS_CAPTURE(type)	\
++	(V4L2_TYPE_IS_VALID(type) && !V4L2_TYPE_IS_OUTPUT(type))
+ 
+ enum v4l2_tuner_type {
+ 	V4L2_TUNER_RADIO	     = 1,
 -- 
 2.39.5
 
