@@ -1,40 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA89B19E7F9;
-	Mon, 23 Jun 2025 22:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6601F6667;
+	Mon, 23 Jun 2025 22:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717112; cv=none; b=GT/mu1TgHw8Joz1HX8wkiBp8Jb99gqwnfibEOAUUcjMf7HdDO8PvUiOCoBtkDlPUPvB2J2YVhkaRzjUJVdEt8/p5cIzzbNshcx96Pai96Cfh0D+PYM+7QckuysJHxN4qfGV+lqF+hhEtbADu2Ahk8tsjmGBjddfenIcXNZmQecM=
+	t=1750717114; cv=none; b=t9p6CpLe5qU/GIijtGDH4XbxlGaRSaqjMdKKopbYeYVQxB7MAwCT5CkcCO3bR+P/gy5KsXZZHcr3WDgoyQ42po3mnVIF34K2zLqdmnUXX6O6lWYJkkLJTs2MTfsSgnII6fCskOYeRGJiD2USyFOYOP8oBb7szNZm135d8RqGHpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717112; c=relaxed/simple;
-	bh=Ar4phHCW1MhhMno7fVSCJnsREEJr+E/lRH7Xd5ag2ck=;
+	s=arc-20240116; t=1750717114; c=relaxed/simple;
+	bh=dVBgv5nk7ht8ypmlsElD5XYY43j+95Of+JPbbzwJOQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZmePGlqBeqwrvQQLFIwvOp4Qv07C0s7JYCvHLonfQxgPC42cuScyOgBsoWgitWy/aKpaCcuSjTWyGI3l0E3fJEoCddxygOsWUgotUXkKFzzEMQo2BpBzdB9zk15znZ9rEKYMWxMwWCUNLwhRXnTWKdxln671LQvskuQMeJLKig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jm422E0A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHF6Qn/5sD1OzUomOSGzWVb1CvAfgcaOAjW/cAjW/b5GfJ72fhvKxcpLEs6kKSKF2VGO5ZNDPZpZTsoGNQL9ssEArgdnCjKsaJsLfASi3QJYAxMn5M4fPPm4dDYDWvmAZOK2XwUMptxMAG2VtRKCQy004RbKcaHRN0Djm1ly1n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1H5gJmnk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jm422E0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77ADDC4CEEA;
-	Mon, 23 Jun 2025 22:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1H5gJmnk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6DA2C4CEEA;
+	Mon, 23 Jun 2025 22:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717111;
-	bh=Ar4phHCW1MhhMno7fVSCJnsREEJr+E/lRH7Xd5ag2ck=;
+	s=korg; t=1750717114;
+	bh=dVBgv5nk7ht8ypmlsElD5XYY43j+95Of+JPbbzwJOQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jm422E0AR66DYTBVCkZirKNkrVjrf8CO/ZdP6Xr2OMrbCwJCc19YMh3AEkzfVKMjc
-	 ksVsKTq4naZQ9QdfDZSGr67A9I2O0oFBxDIH3e56cGVOxo6w4CDIh7xNaXD8iPHWs0
-	 Bn7qxPuxG7UJYxWNnTTlvrUq6DjIPgukw/BlzbWg=
+	b=1H5gJmnkPWYIMxm2BXPDjZGVFAM5IPFI2VcVMP+RJPhjlWDnSp4OpBwnNCOfL9fa9
+	 rd//K2ABjtxTFVKg0kFqLQ0oWx0W1midtKB3XUet2xrjMsFuoXoowVoc0vckO4in+r
+	 yERJLRQcMSqkGffH6TnoKtruvN4hhgJ+9MM4BHeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Zenm Chen <zenmchen@gmail.com>
-Subject: [PATCH 6.12 325/414] wifi: rtw89: phy: add dummy C2H event handler for report of TAS power
-Date: Mon, 23 Jun 2025 15:07:42 +0200
-Message-ID: <20250623130650.119403520@linuxfoundation.org>
+	Gavin Guo <gavinguo@igalia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Florent Revest <revest@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 403/411] mm/huge_memory: fix dereferencing invalid pmd migration entry
+Date: Mon, 23 Jun 2025 15:09:07 +0200
+Message-ID: <20250623130643.824952354@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,93 +53,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Gavin Guo <gavinguo@igalia.com>
 
-commit 09489812013f9ff3850c3af9900c88012b8c1e5d upstream.
+commit be6e843fc51a584672dfd9c4a6a24c8cb81d5fb7 upstream.
 
-The newer firmware, lik RTL8852C version 0.27.111.0, will notify driver
-report of TAS (Time Averaged SAR) power by new C2H events. This is to
-assist in higher accurate calculation of TAS.
+When migrating a THP, concurrent access to the PMD migration entry during
+a deferred split scan can lead to an invalid address access, as
+illustrated below.  To prevent this invalid access, it is necessary to
+check the PMD migration entry and return early.  In this context, there is
+no need to use pmd_to_swp_entry and pfn_swap_entry_to_page to verify the
+equality of the target folio.  Since the PMD migration entry is locked, it
+cannot be served as the target.
 
-For now, driver doesn't use the report yet, so add a dummy handler to
-avoid it throws info like:
-   rtw89_8852ce 0000:03:00.0: c2h class 9 func 6 not support
+Mailing list discussion and explanation from Hugh Dickins: "An anon_vma
+lookup points to a location which may contain the folio of interest, but
+might instead contain another folio: and weeding out those other folios is
+precisely what the "folio != pmd_folio((*pmd)" check (and the "risk of
+replacing the wrong folio" comment a few lines above it) is for."
 
-Also add "MAC" and "PHY" to the message to disambiguate the source of
-C2H event.
+BUG: unable to handle page fault for address: ffffea60001db008
+CPU: 0 UID: 0 PID: 2199114 Comm: tee Not tainted 6.14.0+ #4 NONE
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:split_huge_pmd_locked+0x3b5/0x2b60
+Call Trace:
+<TASK>
+try_to_migrate_one+0x28c/0x3730
+rmap_walk_anon+0x4f6/0x770
+unmap_folio+0x196/0x1f0
+split_huge_page_to_list_to_order+0x9f6/0x1560
+deferred_split_scan+0xac5/0x12a0
+shrinker_debugfs_scan_write+0x376/0x470
+full_proxy_write+0x15c/0x220
+vfs_write+0x2fc/0xcb0
+ksys_write+0x146/0x250
+do_syscall_64+0x6a/0x120
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241209042127.21424-1-pkshih@realtek.com
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+The bug is found by syzkaller on an internal kernel, then confirmed on
+upstream.
+
+Link: https://lkml.kernel.org/r/20250421113536.3682201-1-gavinguo@igalia.com
+Link: https://lore.kernel.org/all/20250414072737.1698513-1-gavinguo@igalia.com/
+Link: https://lore.kernel.org/all/20250418085802.2973519-1-gavinguo@igalia.com/
+Fixes: 84c3fc4e9c56 ("mm: thp: check pmd migration entry in common path")
+Signed-off-by: Gavin Guo <gavinguo@igalia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Hugh Dickins <hughd@google.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Cc: Florent Revest <revest@google.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[gavin: backport the migration checking logic to __split_huge_pmd]
+Signed-off-by: Gavin Guo <gavinguo@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac.c |    4 ++--
- drivers/net/wireless/realtek/rtw89/phy.c |   10 ++++++++--
- drivers/net/wireless/realtek/rtw89/phy.h |    1 +
- 3 files changed, 11 insertions(+), 4 deletions(-)
+ mm/huge_memory.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -5513,11 +5513,11 @@ void rtw89_mac_c2h_handle(struct rtw89_d
- 	case RTW89_MAC_C2H_CLASS_FWDBG:
- 		return;
- 	default:
--		rtw89_info(rtwdev, "c2h class %d not support\n", class);
-+		rtw89_info(rtwdev, "MAC c2h class %d not support\n", class);
- 		return;
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2161,7 +2161,7 @@ void __split_huge_pmd(struct vm_area_str
+ 	VM_BUG_ON(freeze && !page);
+ 	if (page) {
+ 		VM_WARN_ON_ONCE(!PageLocked(page));
+-		if (page != pmd_page(*pmd))
++		if (is_pmd_migration_entry(*pmd) || page != pmd_page(*pmd))
+ 			goto out;
  	}
- 	if (!handler) {
--		rtw89_info(rtwdev, "c2h class %d func %d not support\n", class,
-+		rtw89_info(rtwdev, "MAC c2h class %d func %d not support\n", class,
- 			   func);
- 		return;
- 	}
---- a/drivers/net/wireless/realtek/rtw89/phy.c
-+++ b/drivers/net/wireless/realtek/rtw89/phy.c
-@@ -3062,10 +3062,16 @@ rtw89_phy_c2h_rfk_report_state(struct rt
- 		    (int)(len - sizeof(report->hdr)), &report->state);
- }
  
-+static void
-+rtw89_phy_c2h_rfk_log_tas_pwr(struct rtw89_dev *rtwdev, struct sk_buff *c2h, u32 len)
-+{
-+}
-+
- static
- void (* const rtw89_phy_c2h_rfk_report_handler[])(struct rtw89_dev *rtwdev,
- 						  struct sk_buff *c2h, u32 len) = {
- 	[RTW89_PHY_C2H_RFK_REPORT_FUNC_STATE] = rtw89_phy_c2h_rfk_report_state,
-+	[RTW89_PHY_C2H_RFK_LOG_TAS_PWR] = rtw89_phy_c2h_rfk_log_tas_pwr,
- };
- 
- bool rtw89_phy_c2h_chk_atomic(struct rtw89_dev *rtwdev, u8 class, u8 func)
-@@ -3119,11 +3125,11 @@ void rtw89_phy_c2h_handle(struct rtw89_d
- 			return;
- 		fallthrough;
- 	default:
--		rtw89_info(rtwdev, "c2h class %d not support\n", class);
-+		rtw89_info(rtwdev, "PHY c2h class %d not support\n", class);
- 		return;
- 	}
- 	if (!handler) {
--		rtw89_info(rtwdev, "c2h class %d func %d not support\n", class,
-+		rtw89_info(rtwdev, "PHY c2h class %d func %d not support\n", class,
- 			   func);
- 		return;
- 	}
---- a/drivers/net/wireless/realtek/rtw89/phy.h
-+++ b/drivers/net/wireless/realtek/rtw89/phy.h
-@@ -151,6 +151,7 @@ enum rtw89_phy_c2h_rfk_log_func {
- 
- enum rtw89_phy_c2h_rfk_report_func {
- 	RTW89_PHY_C2H_RFK_REPORT_FUNC_STATE = 0,
-+	RTW89_PHY_C2H_RFK_LOG_TAS_PWR = 6,
- };
- 
- enum rtw89_phy_c2h_dm_func {
 
 
