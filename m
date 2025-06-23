@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D647E2472AF;
-	Mon, 23 Jun 2025 13:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682484C6E;
+	Mon, 23 Jun 2025 13:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685859; cv=none; b=pbSMjBETcn38MRR8AtZ1APFF6YvkUGwebhKivGj++kS4hGbwdbYi2DCejYxjJ8W4HO2s97hP1ILlG7NPERO6N+FhSfWOrOpsRNzFaEj5/uN4L3kYDYmyTEHKPxsuiIc/ecKwnMHIEtVNKfVkOSAsHx2N8BSDfd+QVygdyYoYoes=
+	t=1750685862; cv=none; b=qa7CFtGjWlECxGcDToZP+078DHVU6H4fZMLVjkcGYWNAPptvrKdjhm2zsYZCmDhjdWVqFbpIyqbBoLZ/Wkml1LNuloWz06J1l/+nsst0WpnDV+5xivYFuHN3KTWcI9fDOEQln13dtgnAqjxSkYi3i68Jsi/HB0MGsA1QxmF9CQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685859; c=relaxed/simple;
-	bh=ylAcUDKOkTdgsvJhVxV4ojCFkUDYfUppumXmypJgcp4=;
+	s=arc-20240116; t=1750685862; c=relaxed/simple;
+	bh=zTcruN7qKVo66XTe50CGetfVBLWVpNHw5nIQt6CInUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u/MfVz2VIrFIzdb+RUp99DEhu9epWPTp4V+Cl3fjuxuSMxDOh4PTGfxMR7jcPDR+UAAaP4lDMk4gKisBP8/xoa7KTKaAuJqfKyf10VJ2z32ReFKW+baWnYTZ2AocdmV3cDSF/ttn0DltXP9bcD+53713p/ftORV8I7tU3QPF5kQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdaypue7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bIz71eFYgYfI+i9fOpxhQBzsPqywdnjdmDt3IPdiRE9M3OREKp/t+xKkW0BUFTfDJXqZCsBdKGy/GtFUVXdRm+Cg7+dcPiL5M0mgeUWBenmIT3AwF73VhvqEz8d7h8maRNSr+5BxzZY0a7rIZ0YTXrmsyHrUgT9+AUEKszuETVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxqNxX0Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdaypue7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4CDC4CEEA;
-	Mon, 23 Jun 2025 13:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxqNxX0Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F04D6C4CEEA;
+	Mon, 23 Jun 2025 13:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685859;
-	bh=ylAcUDKOkTdgsvJhVxV4ojCFkUDYfUppumXmypJgcp4=;
+	s=korg; t=1750685862;
+	bh=zTcruN7qKVo66XTe50CGetfVBLWVpNHw5nIQt6CInUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tdaypue73b5u/L9vI6GwURbYGojo2HWuwkJ5ThW2aD41WIrs0EPg3rEo0x5fnT1ii
-	 qrQ8n07pPaS617mu3iC7SOSzpENQNZ9IWNFcDRUTuB60qrLAWbHxkmqpUNCUrLLY3B
-	 uqsQ84+Bue9XcuAA8Zbi4p7SD3h8W8zSvswu2HMQ=
+	b=vxqNxX0QtS5/X15PFXlyEB+9+0DxdVORZUN+6DrjIEywZczgFaDRM46yS4NEdBXM4
+	 t5n1PPbEdNbhjI32Ai5S1+wEJorH0y+CFzBt6xntJ1pVUbeJ4v2xGK5lGhAFo0wmCD
+	 APY5OiP5F8zU+8UgWnjFZFfKdX0KdFJMTSCEwY5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 067/411] net: usb: aqc111: fix error handling of usbnet read calls
-Date: Mon, 23 Jun 2025 15:03:31 +0200
-Message-ID: <20250623130635.010976640@linuxfoundation.org>
+Subject: [PATCH 5.4 145/222] media: uapi: v4l: Fix V4L2_TYPE_IS_OUTPUT condition
+Date: Mon, 23 Jun 2025 15:08:00 +0200
+Message-ID: <20250623130616.448019095@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,108 +48,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Nas Chung <nas.chung@chipsnmedia.com>
 
-[ Upstream commit 405b0d610745fb5e84fc2961d9b960abb9f3d107 ]
+[ Upstream commit f81f69a0e3da141bdd73a16b8676f4e542533d87 ]
 
-Syzkaller, courtesy of syzbot, identified an error (see report [1]) in
-aqc111 driver, caused by incomplete sanitation of usb read calls'
-results. This problem is quite similar to the one fixed in commit
-920a9fa27e78 ("net: asix: add proper error handling of usb read errors").
+V4L2_TYPE_IS_OUTPUT() returns true for V4L2_BUF_TYPE_VIDEO_OVERLAY
+which definitely belongs to CAPTURE.
 
-For instance, usbnet_read_cmd() may read fewer than 'size' bytes,
-even if the caller expected the full amount, and aqc111_read_cmd()
-will not check its result properly. As [1] shows, this may lead
-to MAC address in aqc111_bind() being only partly initialized,
-triggering KMSAN warnings.
-
-Fix the issue by verifying that the number of bytes read is
-as expected and not less.
-
-[1] Partial syzbot report:
-BUG: KMSAN: uninit-value in is_valid_ether_addr include/linux/etherdevice.h:208 [inline]
-BUG: KMSAN: uninit-value in usbnet_probe+0x2e57/0x4390 drivers/net/usb/usbnet.c:1830
- is_valid_ether_addr include/linux/etherdevice.h:208 [inline]
- usbnet_probe+0x2e57/0x4390 drivers/net/usb/usbnet.c:1830
- usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
- call_driver_probe drivers/base/dd.c:-1 [inline]
- really_probe+0x4d1/0xd90 drivers/base/dd.c:658
- __driver_probe_device+0x268/0x380 drivers/base/dd.c:800
-...
-
-Uninit was stored to memory at:
- dev_addr_mod+0xb0/0x550 net/core/dev_addr_lists.c:582
- __dev_addr_set include/linux/netdevice.h:4874 [inline]
- eth_hw_addr_set include/linux/etherdevice.h:325 [inline]
- aqc111_bind+0x35f/0x1150 drivers/net/usb/aqc111.c:717
- usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
- usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
-...
-
-Uninit was stored to memory at:
- ether_addr_copy include/linux/etherdevice.h:305 [inline]
- aqc111_read_perm_mac drivers/net/usb/aqc111.c:663 [inline]
- aqc111_bind+0x794/0x1150 drivers/net/usb/aqc111.c:713
- usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
- usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
- call_driver_probe drivers/base/dd.c:-1 [inline]
-...
-
-Local variable buf.i created at:
- aqc111_read_perm_mac drivers/net/usb/aqc111.c:656 [inline]
- aqc111_bind+0x221/0x1150 drivers/net/usb/aqc111.c:713
- usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
-
-Reported-by: syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=3b6b9ff7b80430020c7b
-Tested-by: syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com
-Fixes: df2d59a2ab6c ("net: usb: aqc111: Add support for getting and setting of MAC address")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patch.msgid.link/20250520113240.2369438-1-n.zhandarovich@fintech.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/aqc111.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ include/uapi/linux/videodev2.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
-index 4b48a5c09bd49..a67960bea770b 100644
---- a/drivers/net/usb/aqc111.c
-+++ b/drivers/net/usb/aqc111.c
-@@ -30,10 +30,13 @@ static int aqc111_read_cmd_nopm(struct usbnet *dev, u8 cmd, u16 value,
- 	ret = usbnet_read_cmd_nopm(dev, cmd, USB_DIR_IN | USB_TYPE_VENDOR |
- 				   USB_RECIP_DEVICE, value, index, data, size);
- 
--	if (unlikely(ret < 0))
-+	if (unlikely(ret < size)) {
-+		ret = ret < 0 ? ret : -ENODATA;
-+
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
-+	}
- 
- 	return ret;
- }
-@@ -46,10 +49,13 @@ static int aqc111_read_cmd(struct usbnet *dev, u8 cmd, u16 value,
- 	ret = usbnet_read_cmd(dev, cmd, USB_DIR_IN | USB_TYPE_VENDOR |
- 			      USB_RECIP_DEVICE, value, index, data, size);
- 
--	if (unlikely(ret < 0))
-+	if (unlikely(ret < size)) {
-+		ret = ret < 0 ? ret : -ENODATA;
-+
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
-+	}
- 
- 	return ret;
- }
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index 895c5ba8b6ac2..5384c9d61d510 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -164,7 +164,6 @@ enum v4l2_buf_type {
+ #define V4L2_TYPE_IS_OUTPUT(type)				\
+ 	((type) == V4L2_BUF_TYPE_VIDEO_OUTPUT			\
+ 	 || (type) == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE		\
+-	 || (type) == V4L2_BUF_TYPE_VIDEO_OVERLAY		\
+ 	 || (type) == V4L2_BUF_TYPE_VIDEO_OUTPUT_OVERLAY	\
+ 	 || (type) == V4L2_BUF_TYPE_VBI_OUTPUT			\
+ 	 || (type) == V4L2_BUF_TYPE_SLICED_VBI_OUTPUT		\
 -- 
 2.39.5
 
