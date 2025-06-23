@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E17347DD;
-	Mon, 23 Jun 2025 13:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D173D1E487;
+	Mon, 23 Jun 2025 13:42:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686132; cv=none; b=dPZWRMu+vwJRBAXIVUSx79Bz1HSExrJHE/PppCjeN+rfasfmv3Q3bAaOoDKlzJJhKWYCDPW055sBgWybp9gfagiFeEkmBcPmVpHYVSeuhlcI6o7IKE5wwUhfYMoEc63EYN4ldEx0og+rhr3vxl66zLQQYC3xe8l90NyjB+IspBo=
+	t=1750686134; cv=none; b=uM0Vs62i3tq8qow+CkSkqGEt3Bqo1VJAZC/NHd29dyBhO+K4zR+mTjbQJljWmet0aDlMyvgsvfY8NRVm9G2tvnbTeWV72TKUh1h5frtL1STJIPjrgbAoZPcd9ZBRVMfK19f4/d59tm8ArTe6xwD/cOz0hPUZlsiW5PZ4gCnuKuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686132; c=relaxed/simple;
-	bh=II8ytU23JHN9MABiHzk4HsA01Z/rOG2b7qrMT/JV3Rk=;
+	s=arc-20240116; t=1750686134; c=relaxed/simple;
+	bh=BLHbSmZoG9xa7QNvYh2UI9PIFGd/uqn6nu5XDZvUOqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TvyK4dvhINOnZZEWd3Txn9g4Iba9GiIaEDxkguOe0RED/z3BSPXXsznGf8E6+n5GJhZoBCxDz+K6wXzgIEDx+OvHfSov/G6Byhsnv/k3kyfeC5EKYfaC2o76mnWFAmeQcjYiHrWAV1FCLrzJNbj735saY52Ujn0sWaAbQlcjQ6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJ6hvTGz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s4c9q0C2VZaB/lbkfp+iSOVOUEXX4fXgnBBzu8FyJ6Lemmi+dtrs7ljg42NW5pQuNrYup0Jih6L/iM70W0vaWbtYwA7Nedi918r0hqe8tB1VchYgrdCYMOsxBtXfcKy+tcGrH85m3i91E0emzYU+d/ooR5Z5Bk+f1JKgBSj/ADI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dj6GMaIC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJ6hvTGz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB428C4CEF1;
-	Mon, 23 Jun 2025 13:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dj6GMaIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AD2C4CEEA;
+	Mon, 23 Jun 2025 13:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686132;
-	bh=II8ytU23JHN9MABiHzk4HsA01Z/rOG2b7qrMT/JV3Rk=;
+	s=korg; t=1750686134;
+	bh=BLHbSmZoG9xa7QNvYh2UI9PIFGd/uqn6nu5XDZvUOqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HJ6hvTGz7pq+d8tI2x5+PfcNwZFINBV1SYPRG82TUbVCoS6zysWlEU6NJgmC6kEPo
-	 D/Ps5nSp5+wmFJxnFeHMqZVxPMqezrudvaV/TJegUFtiCQ2I2avHN5VEvmusPzqnIH
-	 oqjSjT/spyQ5OZVLhs7fYBa5T11vJP3uldYD7GOM=
+	b=dj6GMaICiv3iOR2IbynEHrUt/YF+oX7q3GAkDzX9/VayFQYBIVge6OdwlWen6Tf3N
+	 I8QwaVZo/Tqu1pg9oUnq4HFOUCVY6RwPhETAmg601pJHsJAtMiXVLbgy1TpVMUwoxa
+	 ygbH2EhI/1c3PFLRQLGToCjcjxfmiCJQUXQ0R9/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Daly <quic_pdaly@quicinc.com>,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 139/222] PM: runtime: fix denying of auto suspend in pm_suspend_timer_fn()
-Date: Mon, 23 Jun 2025 15:07:54 +0200
-Message-ID: <20250623130616.272714709@linuxfoundation.org>
+Subject: [PATCH 5.15 081/411] nilfs2: add pointer check for nilfs_direct_propagate()
+Date: Mon, 23 Jun 2025 15:03:45 +0200
+Message-ID: <20250623130635.436644687@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,63 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charan Teja Kalla <quic_charante@quicinc.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 40d3b40dce375d6f1c1dbf08d79eed3aed6c691d ]
+[ Upstream commit f43f02429295486059605997bc43803527d69791 ]
 
-pm_runtime_put_autosuspend() schedules a hrtimer to expire
-at "dev->power.timer_expires". If the hrtimer's callback,
-pm_suspend_timer_fn(), observes that the current time equals
-"dev->power.timer_expires", it unexpectedly bails out instead of
-proceeding with runtime suspend.
+Patch series "nilfs2: improve sanity checks in dirty state propagation".
 
-pm_suspend_timer_fn():
+This fixes one missed check for block mapping anomalies and one improper
+return of an error code during a preparation step for log writing, thereby
+improving checking for filesystem corruption on writeback.
 
- if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
- 	dev->power.timer_expires = 0;
- 	rpm_suspend(..)
- }
+This patch (of 2):
 
-Additionally, as ->timer_expires is not cleared, all the future auto
-suspend requests will not schedule hrtimer to perform auto suspend.
+In nilfs_direct_propagate(), the printer get from nilfs_direct_get_ptr()
+need to be checked to ensure it is not an invalid pointer.
 
-rpm_suspend():
+If the pointer value obtained by nilfs_direct_get_ptr() is
+NILFS_BMAP_INVALID_PTR, means that the metadata (in this case, i_bmap in
+the nilfs_inode_info struct) that should point to the data block at the
+buffer head of the argument is corrupted and the data block is orphaned,
+meaning that the file system has lost consistency.
 
- if ((rpmflags & RPM_AUTO) &&...) {
- 	if (!(dev->power.timer_expires && ...) { <-- this will fail.
- 		hrtimer_start_range_ns(&dev->power.suspend_timer,...);
- 	}
- }
+Add a value check and return -EINVAL when it is an invalid pointer.
 
-Fix this by as well checking if current time reaches the set expiration.
-
-Co-developed-by: Patrick Daly <quic_pdaly@quicinc.com>
-Signed-off-by: Patrick Daly <quic_pdaly@quicinc.com>
-Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Link: https://patch.msgid.link/20250515064125.1211561-1-quic_charante@quicinc.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lkml.kernel.org/r/20250428173808.6452-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20250428173808.6452-2-konishi.ryusuke@gmail.com
+Fixes: 36a580eb489f ("nilfs2: direct block mapping")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/runtime.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/direct.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index d301a6de762df..7fa231076ad5f 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -982,7 +982,7 @@ static enum hrtimer_restart  pm_suspend_timer_fn(struct hrtimer *timer)
- 	 * If 'expires' is after the current time, we've been called
- 	 * too early.
- 	 */
--	if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
-+	if (expires > 0 && expires <= ktime_get_mono_fast_ns()) {
- 		dev->power.timer_expires = 0;
- 		rpm_suspend(dev, dev->power.timer_autosuspends ?
- 		    (RPM_ASYNC | RPM_AUTO) : RPM_ASYNC);
+diff --git a/fs/nilfs2/direct.c b/fs/nilfs2/direct.c
+index 7faf8c285d6c9..a72371cd6b956 100644
+--- a/fs/nilfs2/direct.c
++++ b/fs/nilfs2/direct.c
+@@ -273,6 +273,9 @@ static int nilfs_direct_propagate(struct nilfs_bmap *bmap,
+ 	dat = nilfs_bmap_get_dat(bmap);
+ 	key = nilfs_bmap_data_get_key(bmap, bh);
+ 	ptr = nilfs_direct_get_ptr(bmap, key);
++	if (ptr == NILFS_BMAP_INVALID_PTR)
++		return -EINVAL;
++
+ 	if (!buffer_nilfs_volatile(bh)) {
+ 		oldreq.pr_entry_nr = ptr;
+ 		newreq.pr_entry_nr = ptr;
 -- 
 2.39.5
 
