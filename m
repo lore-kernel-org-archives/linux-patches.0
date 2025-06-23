@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E66A226533;
-	Mon, 23 Jun 2025 22:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D760C2E0;
+	Mon, 23 Jun 2025 22:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716819; cv=none; b=BGcxE76swRis+7rvt+IF2W1HzERm1b9eBkCWnkL0C3+gF4aWEerYxdclQt9Aw4Dt9cHiR91oFtiB7YyQDNSH3LhZ9+sHecGZ+LhVdGP7AfxmOGcpe0nRGpv4WFlsm+8x0t85AeR6LRdYbZWXSOFkvMsCzJav1NA57Ba3SCpZdIk=
+	t=1750716821; cv=none; b=cJ1FYktg7KeJGWDIpmiXNpnnmMwcCRto/lKyGm/htnxq+J3CWVHBhIkJhNaYfg/BGvCa6f3q9bNo6l3fmFCP9DoJg78374cbZRSJh2bMOIJ5ui8vj/LlyidjvUmYaKWXg8cG1P/xEfWU7hx8TWcW4PVX23VbP0mkmcKjrKznbyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716819; c=relaxed/simple;
-	bh=vb8omzoIpFisVPT6R1k7Qi26EXAkRhQBH8zYlP3fyY8=;
+	s=arc-20240116; t=1750716821; c=relaxed/simple;
+	bh=Nr4RfBOhlheR6jDZnzJvc+Kfsjgk09eJsbkkcxo+dlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cMvucW85tnygHMzdSPlPrMoqMYA1h1HBJzWyw19xIC1KL66NUx2XJNBJCWqoYFjJFrtBXgZ1IUoIw8JkRz0LJStToplRUSvYdsA0rVX3SFqLX8nABhvD7bc+NKd8WcIZYcoUIYUl7vVpqnhZUZPPfEMrAkj/3eR+eghpi/bQob0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=laezHdkN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oNM6en/Fxh1ErnvsHYUP7cKm1dMyL19zYJteWzW+Jyt/0ZXbMiIHc3KmIgqJBzMSQaX07/6ZBUr/Waffv8Emh+/l43gMeYuZFfr+x7ultU1bzIoT0+BO6654E2sObhm7PtX0qfa73r1CUklyUKPInBgLkvr8C3j0c7aF9/lAMiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvNgnQO9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laezHdkN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6C1C4CEEA;
-	Mon, 23 Jun 2025 22:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvNgnQO9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527D7C4CEF2;
+	Mon, 23 Jun 2025 22:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716818;
-	bh=vb8omzoIpFisVPT6R1k7Qi26EXAkRhQBH8zYlP3fyY8=;
+	s=korg; t=1750716820;
+	bh=Nr4RfBOhlheR6jDZnzJvc+Kfsjgk09eJsbkkcxo+dlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=laezHdkN88byZvxqGpuMcA56V1joHiHsfISSvD9eKRvu7ZnhzAhQd6BSVO7GeUNMe
-	 wxHJFzKD0Pq7KVcAwdeipVH+K8GJaRYnNNr9fZzA7d/wcURBIBCa9J6mc5cqvZpQaK
-	 SbhNlxX0Velcj8QcPIelSbxOkrPCXfsGS18zBlro=
+	b=pvNgnQO9WizZ7qZrFEPfd+DM1pIsw6iND5sB7U4KeXPSAs6RQZtRAWwYrOgz4FUUC
+	 fOKH5TeMWva1B5rkOB1Ed8jJG7lD/gvXEPGaOmfYDK1ShdjmuKRBiMhxpmNnsXPvpf
+	 2zoH5JNeUl73TCvANk6dPxzBDOe5s0UphUUtPyAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 362/508] regulator: max14577: Add error check for max14577_read_reg()
-Date: Mon, 23 Jun 2025 15:06:47 +0200
-Message-ID: <20250623130654.268345134@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 290/414] platform/x86/amd: pmf: Prevent amd_pmf_tee_deinit() from running twice
+Date: Mon, 23 Jun 2025 15:07:07 +0200
+Message-ID: <20250623130649.262525933@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,50 +46,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 65271f868cb1dca709ff69e45939bbef8d6d0b70 upstream.
+[ Upstream commit 93103d56650d7a38ed37ba4041578310f82776ae ]
 
-The function max14577_reg_get_current_limit() calls the function
-max14577_read_reg(), but does not check its return value. A proper
-implementation can be found in max14577_get_online().
+If any of the tee init fails, pass up the errors and clear the tee_ctx
+pointer. This will prevent cleaning up multiple times.
 
-Add a error check for the max14577_read_reg() and return error code
-if the function fails.
-
-Fixes: b0902bbeb768 ("regulator: max14577: Add regulator driver for Maxim 14577")
-Cc: stable@vger.kernel.org # v3.14
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20250526025627.407-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ac052d8c08f9d ("platform/x86/amd/pmf: Add PMF TEE interface")
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20250512211154.2510397-3-superm1@kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20250522003457.1516679-3-superm1@kernel.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/max14577-regulator.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmf/tee-if.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/regulator/max14577-regulator.c
-+++ b/drivers/regulator/max14577-regulator.c
-@@ -40,11 +40,14 @@ static int max14577_reg_get_current_limi
- 	struct max14577 *max14577 = rdev_get_drvdata(rdev);
- 	const struct maxim_charger_current *limits =
- 		&maxim_charger_currents[max14577->dev_type];
-+	int ret;
+diff --git a/drivers/platform/x86/amd/pmf/tee-if.c b/drivers/platform/x86/amd/pmf/tee-if.c
+index b6bcc1d57f968..a9b195ec6f33f 100644
+--- a/drivers/platform/x86/amd/pmf/tee-if.c
++++ b/drivers/platform/x86/amd/pmf/tee-if.c
+@@ -422,12 +422,12 @@ static int amd_pmf_ta_open_session(struct tee_context *ctx, u32 *id, const uuid_
+ 	rc = tee_client_open_session(ctx, &sess_arg, NULL);
+ 	if (rc < 0 || sess_arg.ret != 0) {
+ 		pr_err("Failed to open TEE session err:%#x, rc:%d\n", sess_arg.ret, rc);
+-		return rc;
++		return rc ?: -EINVAL;
+ 	}
  
- 	if (rdev_get_id(rdev) != MAX14577_CHARGER)
- 		return -EINVAL;
+ 	*id = sess_arg.session;
  
--	max14577_read_reg(rmap, MAX14577_CHG_REG_CHG_CTRL4, &reg_data);
-+	ret = max14577_read_reg(rmap, MAX14577_CHG_REG_CHG_CTRL4, &reg_data);
-+	if (ret < 0)
+-	return rc;
++	return 0;
+ }
+ 
+ static int amd_pmf_register_input_device(struct amd_pmf_dev *dev)
+@@ -462,7 +462,9 @@ static int amd_pmf_tee_init(struct amd_pmf_dev *dev, const uuid_t *uuid)
+ 	dev->tee_ctx = tee_client_open_context(NULL, amd_pmf_amdtee_ta_match, NULL, NULL);
+ 	if (IS_ERR(dev->tee_ctx)) {
+ 		dev_err(dev->dev, "Failed to open TEE context\n");
+-		return PTR_ERR(dev->tee_ctx);
++		ret = PTR_ERR(dev->tee_ctx);
++		dev->tee_ctx = NULL;
 +		return ret;
+ 	}
  
- 	if ((reg_data & CHGCTRL4_MBCICHWRCL_MASK) == 0)
- 		return limits->min;
+ 	ret = amd_pmf_ta_open_session(dev->tee_ctx, &dev->session_id, uuid);
+@@ -502,9 +504,12 @@ static int amd_pmf_tee_init(struct amd_pmf_dev *dev, const uuid_t *uuid)
+ 
+ static void amd_pmf_tee_deinit(struct amd_pmf_dev *dev)
+ {
++	if (!dev->tee_ctx)
++		return;
+ 	tee_shm_free(dev->fw_shm_pool);
+ 	tee_client_close_session(dev->tee_ctx, dev->session_id);
+ 	tee_client_close_context(dev->tee_ctx);
++	dev->tee_ctx = NULL;
+ }
+ 
+ int amd_pmf_init_smart_pc(struct amd_pmf_dev *dev)
+-- 
+2.39.5
+
 
 
