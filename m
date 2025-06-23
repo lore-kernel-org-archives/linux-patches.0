@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7424409;
-	Mon, 23 Jun 2025 21:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0304D4409;
+	Mon, 23 Jun 2025 21:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714463; cv=none; b=YL+fXovbsHzttXlp3XTNRU4MsK47Q9KN/jDip3jeQzyPnuwScvIdG4+6TRXpNhNGxClQkIZV7v8epcrq1qI3hHQt93N13ANZc4sqBh1aN5FKlqwpUMyOHjCrN2RxTVRWnm24M2ZM5acbK1Z6inOSONfdpqHr5i8wvNnb9KVZBag=
+	t=1750714466; cv=none; b=i9oB2Is977XQ2UpqpfIUXfCuBBSpr6+xGhWdxUXHZxbmToqc1vyCXTS8t6xPzfhDWl4sNZ6PgpAPCPi5WChxnHTVAFGDgU+HZLPBr9dgqM+tENuzD1YaY+tY1kLT0oybAZgt2Nx5zW6QII5bupgjjDH3qvwII4zdD6cdAvBTHvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714463; c=relaxed/simple;
-	bh=ab86mJcEeloBx5zwdoBg4sAolgIVRgtqTZBZFzezc50=;
+	s=arc-20240116; t=1750714466; c=relaxed/simple;
+	bh=zmYvh0yqNbrdSSxpAetX/6SX5JgqdqwrWLIIWZPeyJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AwRNMv2mPwjvlzXIOuZx2gVHreK5StRIvP6dI/4cSCKzskbN/MJHO4oaC6lStcsexX39LgKfqWT7A+E4Harb14RYq+uMM4ziF+3hQcuqmnUFfYLiIDJqm9mQoYIz5FPFywqsPZURD8HvilGGA96canUKfbQ7UI81djMkgwX0Fvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1J4+hLOZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b4l0McBm44tnwpHOrLa57iUsFov9tP7Sl3b/9jX19dAgK0dbVf0jth56nTGIMoWk2eEMkb193Lel5sM2F22thWR4WlX6cTUj/k+iEfW4Ecg9uvjM8bWMIRsjEW8arWB4RdBGv9+0i9x5gnUaz2+hbCxlszGJD78C9ceG26nKtdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYVCBiY9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1J4+hLOZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8A2C4CEEA;
-	Mon, 23 Jun 2025 21:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYVCBiY9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3678AC4CEEA;
+	Mon, 23 Jun 2025 21:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714463;
-	bh=ab86mJcEeloBx5zwdoBg4sAolgIVRgtqTZBZFzezc50=;
+	s=korg; t=1750714465;
+	bh=zmYvh0yqNbrdSSxpAetX/6SX5JgqdqwrWLIIWZPeyJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1J4+hLOZOIrFUAeA07E/U/6EeiARTvPBLyKkasn0XI3od7PU8HK6WAwtzA7KRl80J
-	 QazEwKJLbQ7P/41QDd4D3SzXbOLoMEUZaBNhkFV50F5w0Sy+v4u1p2Oqd9rD2cOJNf
-	 sY9iTImQxPSGRjvmI932YdJhI1JN228VM/SiXW+o=
+	b=QYVCBiY9Mzmy1qXIXGO5qEROs7aUNwANLH9xHfOILsZ3kFrplTv8MdEYZryOX5N+v
+	 AG0aej+cyFovukfg4R0O00fP8qfy7qHLwiIK0Zi9i/a20OjX2GODjVx29kzQAlXJMe
+	 X7D3MAqT0lCeOlq26LNbUAzq/xZhG3UqU2UrV42c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <dchinner@redhat.com>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 196/508] xfs: validate fsmap offsets specified in the query keys
-Date: Mon, 23 Jun 2025 15:04:01 +0200
-Message-ID: <20250623130650.092802829@linuxfoundation.org>
+	syzbot+526bd95c0ec629993bf3@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.15 210/411] media: cxusb: no longer judge rbuf when the write fails
+Date: Mon, 23 Jun 2025 15:05:54 +0200
+Message-ID: <20250623130638.956867293@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,100 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 3ee9351e74907fe3acb0721c315af25b05dc87da ]
+commit 73fb3b92da84637e3817580fa205d48065924e15 upstream.
 
-Improve the validation of the fsmap offset fields in the query keys and
-move the validation to the top of the function now that we have pushed
-the low key adjustment code downwards.
+syzbot reported a uninit-value in cxusb_i2c_xfer. [1]
 
-Also fix some indenting issues that aren't worth a separate patch.
+Only when the write operation of usb_bulk_msg() in dvb_usb_generic_rw()
+succeeds and rlen is greater than 0, the read operation of usb_bulk_msg()
+will be executed to read rlen bytes of data from the dvb device into the
+rbuf.
 
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In this case, although rlen is 1, the write operation failed which resulted
+in the dvb read operation not being executed, and ultimately variable i was
+not initialized.
+
+[1]
+BUG: KMSAN: uninit-value in cxusb_gpio_tuner drivers/media/usb/dvb-usb/cxusb.c:124 [inline]
+BUG: KMSAN: uninit-value in cxusb_i2c_xfer+0x153a/0x1a60 drivers/media/usb/dvb-usb/cxusb.c:196
+ cxusb_gpio_tuner drivers/media/usb/dvb-usb/cxusb.c:124 [inline]
+ cxusb_i2c_xfer+0x153a/0x1a60 drivers/media/usb/dvb-usb/cxusb.c:196
+ __i2c_transfer+0xe25/0x3150 drivers/i2c/i2c-core-base.c:-1
+ i2c_transfer+0x317/0x4a0 drivers/i2c/i2c-core-base.c:2315
+ i2c_transfer_buffer_flags+0x125/0x1e0 drivers/i2c/i2c-core-base.c:2343
+ i2c_master_send include/linux/i2c.h:109 [inline]
+ i2cdev_write+0x210/0x280 drivers/i2c/i2c-dev.c:183
+ do_loop_readv_writev fs/read_write.c:848 [inline]
+ vfs_writev+0x963/0x14e0 fs/read_write.c:1057
+ do_writev+0x247/0x5c0 fs/read_write.c:1101
+ __do_sys_writev fs/read_write.c:1169 [inline]
+ __se_sys_writev fs/read_write.c:1166 [inline]
+ __x64_sys_writev+0x98/0xe0 fs/read_write.c:1166
+ x64_sys_call+0x2229/0x3c80 arch/x86/include/generated/asm/syscalls_64.h:21
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcd/0x1e0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Reported-by: syzbot+526bd95c0ec629993bf3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=526bd95c0ec629993bf3
+Tested-by: syzbot+526bd95c0ec629993bf3@syzkaller.appspotmail.com
+Fixes: 22c6d93a7310 ("[PATCH] dvb: usb: support Medion hybrid USB2.0 DVB-T/analogue box")
+Cc: stable@vger.kernel.org
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_fsmap.c | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ drivers/media/usb/dvb-usb/cxusb.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/xfs/xfs_fsmap.c b/fs/xfs/xfs_fsmap.c
-index cdd806d80b7cf..d10f2c719220d 100644
---- a/fs/xfs/xfs_fsmap.c
-+++ b/fs/xfs/xfs_fsmap.c
-@@ -802,6 +802,19 @@ xfs_getfsmap_check_keys(
- 	struct xfs_fsmap		*low_key,
- 	struct xfs_fsmap		*high_key)
- {
-+	if (low_key->fmr_flags & (FMR_OF_SPECIAL_OWNER | FMR_OF_EXTENT_MAP)) {
-+		if (low_key->fmr_offset)
-+			return false;
-+	}
-+	if (high_key->fmr_flags != -1U &&
-+	    (high_key->fmr_flags & (FMR_OF_SPECIAL_OWNER |
-+				    FMR_OF_EXTENT_MAP))) {
-+		if (high_key->fmr_offset && high_key->fmr_offset != -1ULL)
-+			return false;
-+	}
-+	if (high_key->fmr_length && high_key->fmr_length != -1ULL)
-+		return false;
-+
- 	if (low_key->fmr_device > high_key->fmr_device)
- 		return false;
- 	if (low_key->fmr_device < high_key->fmr_device)
-@@ -845,15 +858,15 @@ xfs_getfsmap_check_keys(
-  * ----------------
-  * There are multiple levels of keys and counters at work here:
-  * xfs_fsmap_head.fmh_keys	-- low and high fsmap keys passed in;
-- * 				   these reflect fs-wide sector addrs.
-+ *				   these reflect fs-wide sector addrs.
-  * dkeys			-- fmh_keys used to query each device;
-- * 				   these are fmh_keys but w/ the low key
-- * 				   bumped up by fmr_length.
-+ *				   these are fmh_keys but w/ the low key
-+ *				   bumped up by fmr_length.
-  * xfs_getfsmap_info.next_daddr	-- next disk addr we expect to see; this
-  *				   is how we detect gaps in the fsmap
- 				   records and report them.
-  * xfs_getfsmap_info.low/high	-- per-AG low/high keys computed from
-- * 				   dkeys; used to query the metadata.
-+ *				   dkeys; used to query the metadata.
-  */
- int
- xfs_getfsmap(
-@@ -874,6 +887,8 @@ xfs_getfsmap(
- 	if (!xfs_getfsmap_is_valid_device(mp, &head->fmh_keys[0]) ||
- 	    !xfs_getfsmap_is_valid_device(mp, &head->fmh_keys[1]))
- 		return -EINVAL;
-+	if (!xfs_getfsmap_check_keys(&head->fmh_keys[0], &head->fmh_keys[1]))
-+		return -EINVAL;
+--- a/drivers/media/usb/dvb-usb/cxusb.c
++++ b/drivers/media/usb/dvb-usb/cxusb.c
+@@ -119,9 +119,8 @@ static void cxusb_gpio_tuner(struct dvb_
  
- 	use_rmap = xfs_has_rmapbt(mp) &&
- 		   has_capability_noaudit(current, CAP_SYS_ADMIN);
-@@ -919,15 +934,8 @@ xfs_getfsmap(
- 	 * other mapping for the same physical block range.
- 	 */
- 	dkeys[0] = head->fmh_keys[0];
--	if (dkeys[0].fmr_flags & (FMR_OF_SPECIAL_OWNER | FMR_OF_EXTENT_MAP)) {
--		if (dkeys[0].fmr_offset)
--			return -EINVAL;
--	}
- 	memset(&dkeys[1], 0xFF, sizeof(struct xfs_fsmap));
+ 	o[0] = GPIO_TUNER;
+ 	o[1] = onoff;
+-	cxusb_ctrl_msg(d, CMD_GPIO_WRITE, o, 2, &i, 1);
  
--	if (!xfs_getfsmap_check_keys(dkeys, &head->fmh_keys[1]))
--		return -EINVAL;
--
- 	info.next_daddr = head->fmh_keys[0].fmr_physical +
- 			  head->fmh_keys[0].fmr_length;
- 	info.fsmap_recs = fsmap_recs;
--- 
-2.39.5
-
+-	if (i != 0x01)
++	if (!cxusb_ctrl_msg(d, CMD_GPIO_WRITE, o, 2, &i, 1) && i != 0x01)
+ 		dev_info(&d->udev->dev, "gpio_write failed.\n");
+ 
+ 	st->gpio_write_state[GPIO_TUNER] = onoff;
 
 
