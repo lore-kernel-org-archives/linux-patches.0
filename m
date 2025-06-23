@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A30248F63;
-	Mon, 23 Jun 2025 13:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8435A2459FF;
+	Mon, 23 Jun 2025 13:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684469; cv=none; b=mnRxy+/5aNFFLbyUhZ8T31O4ku1EXPzj2T3HjAQoV/SA2SpqJBSLYKFjJrJ0XXGl9OjPORM4Ewzc17uY6e+zPFCWBNYyo/nst/dUhLPX4C3jWsGL+jBwbwQujMgT3EYFyF2xsHSxlrC0Ill8FpUWGW8Ddw+6YSzm0ufj1rAMFm4=
+	t=1750684471; cv=none; b=prxYXqU/bi1JzwRwdp5FPU4h3/lOmbFqgKvvFrnovdhdssqa6T8icI4HQZ7nPB8EEc2lbBzH28wmMxF4ou52z7/BTW0/5/o9pgQiOWhKgtD/DFMnICttjv5Zx3kvpPqRNB3fAktg4TDcnLMYiDpbmDFwUjgZkD0quM5UNw7dKCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684469; c=relaxed/simple;
-	bh=QOAaV5ScG7y//eqjG5ltivFVfpBAJ0HtCmuzHXzzYtE=;
+	s=arc-20240116; t=1750684471; c=relaxed/simple;
+	bh=xC2ujuLai4JYW/ph5Lpw/eQwdPIBU4KSAQ5fnppHuSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AF9zgG45IHjMcmlgvHnj/vJLyB5nXLolwMlhuYRbEMSp+HNIcAUl67lo9R4eSiLi2nzataQRGaulc7OT9w/I1F2iOp4z/F3uw90Ui8lkeCkGjkH30uLbG4ibfmYzFwFAGA+jvXvMmOkhgGze0gXZk7FHFgmkf2a2qdVJ84gZCUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3b9u1Zx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QORuXeqc1QllwF+CfgWKSoBIG3Oi7ECpFsl0s/btvSN9CZ/wyUTm7WCd9AYaGRHKd4ac3RC+cMAf/N05I9whaKuDrHnL5bHx85CEz+N//ViTYhToUTYermfIA4R17LvIQjnjxYiKKhVU8Hsa05Nj7xjWJhYzDhj9aeIqpVEv6G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/vu+SUD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3b9u1Zx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB99C4CEEA;
-	Mon, 23 Jun 2025 13:14:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/vu+SUD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19586C4CEF1;
+	Mon, 23 Jun 2025 13:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684468;
-	bh=QOAaV5ScG7y//eqjG5ltivFVfpBAJ0HtCmuzHXzzYtE=;
+	s=korg; t=1750684471;
+	bh=xC2ujuLai4JYW/ph5Lpw/eQwdPIBU4KSAQ5fnppHuSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3b9u1ZxXt4NNDpPOJ70muKSyGELizfaYOGmit1FJ+H7B5sf/tEnbAaC/RY0v0BnT
-	 dbWONl5mIFCyw71La4GUramyFjk9bDFX7tpH7eRgen5dlz2wXPYLbvtOiFTxQJCsFZ
-	 PSDtwdJZfbV5GIJqqUM9j21dm17NSFly3OBGyMWg=
+	b=U/vu+SUDUe0Yul0kNGXF9NFK+n+WKG732Kmv3xilayKUiVA+njldlzuXIz6BMU9n3
+	 9WnU1oa1hOhtREzDDULFRaZw208G/GLcd347bqrJlfBTHXP6UUteCU5pvR3UFAea7j
+	 KiOqFpxhvU+qMiIzVRFWI+rWDEpXRMtT+fiaEK20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Tomasz Figa <tfiga@chromium.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.15 073/592] media: iris: fix error code in iris_load_fw_to_memory()
-Date: Mon, 23 Jun 2025 15:00:31 +0200
-Message-ID: <20250623130702.000752620@linuxfoundation.org>
+Subject: [PATCH 6.15 082/592] media: videobuf2: use sgtable-based scatterlist wrappers
+Date: Mon, 23 Jun 2025 15:00:40 +0200
+Message-ID: <20250623130702.227333570@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -52,41 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit e68c3c50a736490d9c07888fe525718d16ff9e9c upstream.
+commit a704a3c503ae1cfd9de8a2e2d16a0c9430e98162 upstream.
 
-Return -ENOMEM if memremap() fails.  Don't return success.
+Use common wrappers operating directly on the struct sg_table objects to
+fix incorrect use of scatterlists sync calls. dma_sync_sg_for_*()
+functions have to be called with the number of elements originally passed
+to dma_map_sg_*() function, not the one returned in sgt->nents.
 
-Fixes: d19b163356b8 ("media: iris: implement video firmware load/unload")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Fixes: d4db5eb57cab ("media: videobuf2: add begin/end cpu_access callbacks to dma-sg")
+CC: stable@vger.kernel.org
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Tomasz Figa <tfiga@chromium.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/iris/iris_firmware.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/common/videobuf2/videobuf2-dma-sg.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
-index 7c493b4a75db..f1b5cd56db32 100644
---- a/drivers/media/platform/qcom/iris/iris_firmware.c
-+++ b/drivers/media/platform/qcom/iris/iris_firmware.c
-@@ -53,8 +53,10 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
- 	}
+--- a/drivers/media/common/videobuf2/videobuf2-dma-sg.c
++++ b/drivers/media/common/videobuf2/videobuf2-dma-sg.c
+@@ -469,7 +469,7 @@ vb2_dma_sg_dmabuf_ops_begin_cpu_access(s
+ 	struct vb2_dma_sg_buf *buf = dbuf->priv;
+ 	struct sg_table *sgt = buf->dma_sgt;
  
- 	mem_virt = memremap(mem_phys, res_size, MEMREMAP_WC);
--	if (!mem_virt)
-+	if (!mem_virt) {
-+		ret = -ENOMEM;
- 		goto err_release_fw;
-+	}
+-	dma_sync_sg_for_cpu(buf->dev, sgt->sgl, sgt->nents, buf->dma_dir);
++	dma_sync_sgtable_for_cpu(buf->dev, sgt, buf->dma_dir);
+ 	return 0;
+ }
  
- 	ret = qcom_mdt_load(dev, firmware, fw_name,
- 			    pas_id, mem_virt, mem_phys, res_size, NULL);
--- 
-2.50.0
-
+@@ -480,7 +480,7 @@ vb2_dma_sg_dmabuf_ops_end_cpu_access(str
+ 	struct vb2_dma_sg_buf *buf = dbuf->priv;
+ 	struct sg_table *sgt = buf->dma_sgt;
+ 
+-	dma_sync_sg_for_device(buf->dev, sgt->sgl, sgt->nents, buf->dma_dir);
++	dma_sync_sgtable_for_device(buf->dev, sgt, buf->dma_dir);
+ 	return 0;
+ }
+ 
 
 
