@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D37D1F463B;
-	Mon, 23 Jun 2025 22:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91951F463B;
+	Mon, 23 Jun 2025 22:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717661; cv=none; b=VlRxY5iziT8BqKCqYonMrN1HqgoawaNP7voKe+AUm3inrRKSk12ZesVIiZQ3fHTw9ZP6Z4DK7BX+FOOEq8iOUlrR48/hyhwndrSd8ScQD/8wuqlwUAxB4nOUdsDqqRDzVYhfQNZVy0h9y67I9pp5iHPebAerzMAnBpvpNGsobIM=
+	t=1750717663; cv=none; b=MqfY5ts2GNvXsFRWFVMIzStFrN86ywPG9B0c+tTP22wbuu6Jh8mjOnHT8IEmipG9bogCqnYW/MQLUNBXpX+fnlFCaTu+B/c7yWIakWHp64ywIUYnqsCfeFmpk5nCNQkIolD3hCN1MVVRKzEeiJo5EuhLnAgj6cMxIEDg+dKOOic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717661; c=relaxed/simple;
-	bh=J5v6ZxmxrudQhQEyYQtARxWAncyL/rJuWBVvyOLv5sU=;
+	s=arc-20240116; t=1750717663; c=relaxed/simple;
+	bh=iA2TMK5+vdODbBIl+LvPIhoVDTNZvECLoAJiQkAjnm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hQFqDEKj06RKI4WteeMEO0RCjoAKK/8+ZRcLvhkR86qd90HXQZfdGBzzXHx0tCsIb7HWhRbSQzJBo02SrdemtZYntqlGk9sAT4Hcd5sKPE3KJC9ylXhz29BRmtbujducRd43w5RPsHDncuT8IwtnclEVmPEl29y7i+MtYIjJtqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icT//SV6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J3zLCRueldtle7PcaIeczRrtPGZbje/2vs3C+pX9JRJ+YZrTY37LHVRlsMBOxvl35s0LPBcgoclzgk+Y3PLDsfWvmmXAduw79fUvcml090D5j0Q2CZW6TQDpluOd7dmiQ4oTiKvabe2cUKDv9jIfxlubd6PV8SBqfl8fhayK7wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdA//ZH0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icT//SV6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046D5C4CEEA;
-	Mon, 23 Jun 2025 22:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdA//ZH0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB44C4CEEA;
+	Mon, 23 Jun 2025 22:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717661;
-	bh=J5v6ZxmxrudQhQEyYQtARxWAncyL/rJuWBVvyOLv5sU=;
+	s=korg; t=1750717663;
+	bh=iA2TMK5+vdODbBIl+LvPIhoVDTNZvECLoAJiQkAjnm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icT//SV6ApJpbc0A42Sm54dOTAQDsbO5OUpXlmjLTTqSQW8Mvwz9rW1yvr4GNIc8E
-	 6WLvae1atMLmU60N7S3Jm6gBz7MUxmMhEMSvzvAIlnRkIq7TUcasbJ5t4PdJD1P3Z9
-	 bBAg2Ck5YN+MRbq3AtGEb+ZxXsW7Wa6Oi4METuJg=
+	b=pdA//ZH06xwsTaYs7UInyNlrLW1d9dqerRMwAjtKJUzfARzwF5nTd94K27EVoOweU
+	 PQ8wTVKtPDUlDwOnML0SsaFx3aHTdBDyNNYpStLqkxBVoVrUIH21bY22L0ICkUZZn9
+	 tjcoftLNhzsjgtriblp5MI+HDwu9WFWrbaqbo1gQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Nelson <robertcnelson@gmail.com>,
-	Shengyu Qu <wiagn233@outlook.com>,
-	Tony Lindgren <tony@atomide.com>,
-	"Nobuhiro Iwamatsu (CIP)" <nobuhiro1.iwamatsu@toshiba.co.jp>
-Subject: [PATCH 6.1 494/508] ARM: dts: am335x-bone-common: Add GPIO PHY reset on revision C3 board
-Date: Mon, 23 Jun 2025 15:08:59 +0200
-Message-ID: <20250623130657.185568709@linuxfoundation.org>
+	Justin Sanders <jsanders.devel@gmail.com>,
+	Valentin Kleibel <valentin@vrvis.at>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 477/508] aoe: clean device rq_list in aoedev_downdev()
+Date: Mon, 23 Jun 2025 15:08:42 +0200
+Message-ID: <20250623130656.815096591@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -52,59 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengyu Qu <wiagn233@outlook.com>
+From: Justin Sanders <jsanders.devel@gmail.com>
 
-commit 623cef652768860bd5f205fb7b741be278585fba upstream.
+[ Upstream commit 7f90d45e57cb2ef1f0adcaf925ddffdfc5e680ca ]
 
-This patch adds ethernet PHY reset GPIO config for Beaglebone Black
-series boards with revision C3. This fixes a random phy startup failure
-bug discussed at [1]. The GPIO pin used for reset is not used on older
-revisions, so it is ok to apply to all board revisions. The reset timing
-was discussed and tested at [2].
+An aoe device's rq_list contains accepted block requests that are
+waiting to be transmitted to the aoe target. This queue was added as
+part of the conversion to blk_mq. However, the queue was not cleaned out
+when an aoe device is downed which caused blk_mq_freeze_queue() to sleep
+indefinitely waiting for those requests to complete, causing a hang. This
+fix cleans out the queue before calling blk_mq_freeze_queue().
 
-[1] https://forum.digikey.com/t/ethernet-device-is-not-detecting-on-ubuntu-20-04-lts-on-bbg/19948
-[2] https://forum.beagleboard.org/t/recognizing-a-beaglebone-black-rev-c3-board/31249/
-
-Signed-off-by: Robert Nelson <robertcnelson@gmail.com>
-Signed-off-by: Shengyu Qu <wiagn233@outlook.com>
-Message-ID: <TY3P286MB26113797A3B2EC7E0348BBB2980FA@TY3P286MB2611.JPNP286.PROD.OUTLOOK.COM>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro1.iwamatsu@toshiba.co.jp>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=212665
+Fixes: 3582dd291788 ("aoe: convert aoeblk to blk-mq")
+Signed-off-by: Justin Sanders <jsanders.devel@gmail.com>
+Link: https://lore.kernel.org/r/20250610170600.869-1-jsanders.devel@gmail.com
+Tested-By: Valentin Kleibel <valentin@vrvis.at>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/am335x-bone-common.dtsi |    8 ++++++++
+ drivers/block/aoe/aoedev.c | 8 ++++++++
  1 file changed, 8 insertions(+)
 
---- a/arch/arm/boot/dts/am335x-bone-common.dtsi
-+++ b/arch/arm/boot/dts/am335x-bone-common.dtsi
-@@ -145,6 +145,8 @@
- 			/* MDIO */
- 			AM33XX_PADCONF(AM335X_PIN_MDIO, PIN_INPUT_PULLUP | SLEWCTRL_FAST, MUX_MODE0)
- 			AM33XX_PADCONF(AM335X_PIN_MDC, PIN_OUTPUT_PULLUP, MUX_MODE0)
-+			/* Added to support GPIO controlled PHY reset */
-+			AM33XX_PADCONF(AM335X_PIN_UART0_CTSN, PIN_OUTPUT_PULLUP, MUX_MODE7)
- 		>;
- 	};
+diff --git a/drivers/block/aoe/aoedev.c b/drivers/block/aoe/aoedev.c
+index 3523dd82d7a00..280679bde3a50 100644
+--- a/drivers/block/aoe/aoedev.c
++++ b/drivers/block/aoe/aoedev.c
+@@ -198,6 +198,7 @@ aoedev_downdev(struct aoedev *d)
+ {
+ 	struct aoetgt *t, **tt, **te;
+ 	struct list_head *head, *pos, *nx;
++	struct request *rq, *rqnext;
+ 	int i;
  
-@@ -153,6 +155,8 @@
- 			/* MDIO reset value */
- 			AM33XX_PADCONF(AM335X_PIN_MDIO, PIN_INPUT_PULLDOWN, MUX_MODE7)
- 			AM33XX_PADCONF(AM335X_PIN_MDC, PIN_INPUT_PULLDOWN, MUX_MODE7)
-+			/* Added to support GPIO controlled PHY reset */
-+			AM33XX_PADCONF(AM335X_PIN_UART0_CTSN, PIN_INPUT_PULLDOWN, MUX_MODE7)
- 		>;
- 	};
+ 	d->flags &= ~DEVFL_UP;
+@@ -223,6 +224,13 @@ aoedev_downdev(struct aoedev *d)
+ 	/* clean out the in-process request (if any) */
+ 	aoe_failip(d);
  
-@@ -377,6 +381,10 @@
- 
- 	ethphy0: ethernet-phy@0 {
- 		reg = <0>;
-+		/* Support GPIO reset on revision C3 boards */
-+		reset-gpios = <&gpio1 8 GPIO_ACTIVE_LOW>;
-+		reset-assert-us = <300>;
-+		reset-deassert-us = <6500>;
- 	};
- };
- 
++	/* clean out any queued block requests */
++	list_for_each_entry_safe(rq, rqnext, &d->rq_list, queuelist) {
++		list_del_init(&rq->queuelist);
++		blk_mq_start_request(rq);
++		blk_mq_end_request(rq, BLK_STS_IOERR);
++	}
++
+ 	/* fast fail all pending I/O */
+ 	if (d->blkq) {
+ 		/* UP is cleared, freeze+quiesce to insure all are errored */
+-- 
+2.39.5
+
 
 
