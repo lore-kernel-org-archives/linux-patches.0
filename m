@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F131F7580;
-	Mon, 23 Jun 2025 22:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CBC223708;
+	Mon, 23 Jun 2025 22:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717234; cv=none; b=FO+qgAUY0uu6FqI45RBHGkCR9kdp/l+nhzXhAEyyVfUBqi2T2WEUnjmJZMm89UYUk1Yl3yklvkWYJvWilHbjyLgUhh/4wVnmkVlXrgvpQu0fcUVOZtpY/k0PmKEgmpIf+NKaKBxms52dDcVUZRQ7VfTmjpXphGf+HGxs1LS85A4=
+	t=1750717238; cv=none; b=Mtlt+r4BAQ5xJO9eiqDgTQ2f2qW7rxzw+UfFPx7kPSoZ7dv/QnlXf+fbnzTAKYh1gopdf2C3PH/LdLbNA0ZXa8WjFgVfrM181ugDTBzNzIasiiU5WYYcDQu6WYH/qx+bmis33Sus/THSibMTNjwEe4j2V56MlLcAks1FrPFp708=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717234; c=relaxed/simple;
-	bh=UW6jRvtt/mJIHo/ogEwQSgc8oZxzTIQ3gkgeQnmOLqA=;
+	s=arc-20240116; t=1750717238; c=relaxed/simple;
+	bh=bmK6KHONtCRoFqoinSfKAM9HVhT18ruEjeEJmgpfIRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNO1Tbsntlqtb+lwU08M7f2tlKQG50IRGgMf6tRBIIrrOKpJnOsgxzgup+IRYZjmYP1sQNw4uwwBLemTRY+oLX7A3jDERibwowyhqQWG9RMpSafSQUQbdPnQhCFUeKaUDjRLnudmpbR8M0qez7L5I226KjlZvXMP5rMXi1tJmso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ggcaAK9j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RpFbPPwyuh2rnrX0PDotBNGdlPh34mNSSDkQTcqdTaCfaS+RbnwJD/0OC1e6iPYkCjPCE1hw8e1UFm0sBBln6fQZC4cJzOWjCnKAL50A8mYyBpxDbNpdlwV69c4fBKKJDK7BKQBOrMAjuEZ91DuhbwabQidgpTh3daIZZ43k57w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NtliFvW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ggcaAK9j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F3FC4CEEA;
-	Mon, 23 Jun 2025 22:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NtliFvW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232D1C4CEEA;
+	Mon, 23 Jun 2025 22:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717234;
-	bh=UW6jRvtt/mJIHo/ogEwQSgc8oZxzTIQ3gkgeQnmOLqA=;
+	s=korg; t=1750717236;
+	bh=bmK6KHONtCRoFqoinSfKAM9HVhT18ruEjeEJmgpfIRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ggcaAK9jaTw9rdmoVhZEj8ikRxeG6bj46XQo0x2CXhOc073PTGUYJSZddjAqPnOKi
-	 EY9UUC5Td2dh3/W282YxcRijAeHtIdrWdTfbiu1tKqJxZ7kCmEClAj4g/4t/JGvU7A
-	 farJ4Gku9QbJUrWhtBHUYSQw1hEn1m3g5Fn85vS0=
+	b=0NtliFvW8QRuC/DkvidZb95lQPx0E1eZinzrjGfKPI76xoS6WnHN1umSpRG3g7WMO
+	 JLutB96mD5BeuhtBgiZQzSKiew6xAD5QFbmStYiBbtIXpLOPd4cWOG4ceDy4yGhG73
+	 QH2IPLkHIuW9ygUVPaApvFxPW17yKoyOT15Dl3Nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Marheine <pmarheine@chromium.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 386/508] ACPI: battery: negate current when discharging
-Date: Mon, 23 Jun 2025 15:07:11 +0200
-Message-ID: <20250623130654.786923906@linuxfoundation.org>
+	Steven Rostedt <rostedt@goodmis.org>,
+	Hongbo Li <lihongbo22@huawei.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 6.12 344/414] erofs: remove unused trace event erofs_destroy_inode
+Date: Mon, 23 Jun 2025 15:08:01 +0200
+Message-ID: <20250623130650.578029882@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Marheine <pmarheine@chromium.org>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 234f71555019d308c6bc6f98c78c5551cb8cd56a ]
+commit 30b58444807c93bffeaba7d776110f2a909d2f9a upstream.
 
-The ACPI specification requires that battery rate is always positive,
-but the kernel ABI for POWER_SUPPLY_PROP_CURRENT_NOW
-(Documentation/ABI/testing/sysfs-class-power) specifies that it should
-be negative when a battery is discharging. When reporting CURRENT_NOW,
-massage the value to match the documented ABI.
+The trace event `erofs_destroy_inode` was added but remains unused. This
+unused event contributes approximately 5KB to the kernel module size.
 
-This only changes the sign of `current_now` and not `power_now` because
-documentation doesn't describe any particular meaning for `power_now` so
-leaving `power_now` unchanged is less likely to confuse userspace
-unnecessarily, whereas becoming consistent with the documented ABI is
-worth potentially confusing clients that read `current_now`.
-
-Signed-off-by: Peter Marheine <pmarheine@chromium.org>
-Link: https://patch.msgid.link/20250508024146.1436129-1-pmarheine@chromium.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Steven Rostedt <rostedt@goodmis.org>
+Closes: https://lore.kernel.org/r/20250612224906.15000244@batman.local.home
+Fixes: 13f06f48f7bf ("staging: erofs: support tracepoint")
+Cc: stable@vger.kernel.org
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250617054056.3232365-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/battery.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ include/trace/events/erofs.h |   18 ------------------
+ 1 file changed, 18 deletions(-)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index 5a4e022662417..2f188a734a0c5 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -241,10 +241,23 @@ static int acpi_battery_get_property(struct power_supply *psy,
- 		break;
- 	case POWER_SUPPLY_PROP_CURRENT_NOW:
- 	case POWER_SUPPLY_PROP_POWER_NOW:
--		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
-+		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
- 			ret = -ENODEV;
--		else
--			val->intval = battery->rate_now * 1000;
-+			break;
-+		}
-+
-+		val->intval = battery->rate_now * 1000;
-+		/*
-+		 * When discharging, the current should be reported as a
-+		 * negative number as per the power supply class interface
-+		 * definition.
-+		 */
-+		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
-+		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
-+		    acpi_battery_handle_discharging(battery)
-+				== POWER_SUPPLY_STATUS_DISCHARGING)
-+			val->intval = -val->intval;
-+
- 		break;
- 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
- 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
--- 
-2.39.5
-
+--- a/include/trace/events/erofs.h
++++ b/include/trace/events/erofs.h
+@@ -211,24 +211,6 @@ TRACE_EVENT(erofs_map_blocks_exit,
+ 		  show_mflags(__entry->mflags), __entry->ret)
+ );
+ 
+-TRACE_EVENT(erofs_destroy_inode,
+-	TP_PROTO(struct inode *inode),
+-
+-	TP_ARGS(inode),
+-
+-	TP_STRUCT__entry(
+-		__field(	dev_t,		dev		)
+-		__field(	erofs_nid_t,	nid		)
+-	),
+-
+-	TP_fast_assign(
+-		__entry->dev	= inode->i_sb->s_dev;
+-		__entry->nid	= EROFS_I(inode)->nid;
+-	),
+-
+-	TP_printk("dev = (%d,%d), nid = %llu", show_dev_nid(__entry))
+-);
+-
+ #endif /* _TRACE_EROFS_H */
+ 
+  /* This part must be outside protection */
 
 
