@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A091E22E6;
-	Mon, 23 Jun 2025 21:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1559223DF0;
+	Mon, 23 Jun 2025 21:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715695; cv=none; b=nZIjwlSf39J2pYKs/Bil3t5rD/pM7cVO52XSBV92vsxV7oZ4VpqojIAFbVWL+981BXYbXNboFDMYFlnEEGD8vP/Ova1oCZ74RRXaGJN7X6bVk/TsQSCiY95ku3J9yz43VJ7HZD9ukEDonYbykAxlXImxYhKVck4Lul3XEiQ3sww=
+	t=1750715697; cv=none; b=Y39obb1U2K3xh7rrctWMSmUt43Q7VUetHMh6Nhc86amgp2NcEA2+SJ00QMTt3V7lorMGt0C1EdtZli3fr5h/P6wkiYJowx+Hqamrri85qIdBueEmMIqx43+sH9S1V2kKJmbiNBjakrS9urdt+7GO/gn/VlWIQh7BH7J8ObgqT5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715695; c=relaxed/simple;
-	bh=7D8sygOiYLG/JKLaIwF4IgNyZkz7lZqO2LPcf9G/+mA=;
+	s=arc-20240116; t=1750715697; c=relaxed/simple;
+	bh=qGMnS12Fr7/GH7B7cAmIgar/YhlGcwM13JgiSsfPIPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sT+wBIVgbFGdAdOGR6j2NBFMraS45qj1W4RVQM9iQTQKEF7lGlRf3r1pAsCx7zzJRBpKPVqCwhR4prWAFTUJLjeWJ3OyqMJrO2boN83oHYmbbAnQa6aK5mORs5m6XOr4kZTfOBI5bhg2h/KetObEPzrkNZ4rE7wducbFHT/bYvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PItb/Db1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOYZFAxQ169Kw4Cy1ZoatHeGV2isQVS4FrXxKFtZapqBfnKeRfM1kn3k7Sz5ZoUTEGz+PiM5y+9cFERY65imLKlh+pC1HWw3ET7xrwkbAMeXB3x7MlH4fsB9g4GLKrv9vHemVSWVlfEv6uW4YlNHgT8kRshpemOREiqRKxhhDd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Euf2wVUe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PItb/Db1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CD3C4CEEA;
-	Mon, 23 Jun 2025 21:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Euf2wVUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9DDC4CEF2;
+	Mon, 23 Jun 2025 21:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715695;
-	bh=7D8sygOiYLG/JKLaIwF4IgNyZkz7lZqO2LPcf9G/+mA=;
+	s=korg; t=1750715697;
+	bh=qGMnS12Fr7/GH7B7cAmIgar/YhlGcwM13JgiSsfPIPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PItb/Db1X2u0sYckk5NOk00y/rG2pI7+44LRfI+85PKewjbM7itUT5tzxd8aG4xKE
-	 5jElWRWFa/p/J/9Tx7iSNxMi/JAFKpymuhKhIAM6Qs36f+CLWpm2FnnuRLxm9q6/tR
-	 /N73JEYGUWsjMYjFQBlFyAiG/DlnLcxFdAwReZ6I=
+	b=Euf2wVUeiBwJSQMRFwuvUoGlXRwucNLK1e3jjHOJhFMU4IrI8w6yFtLfRHFoCbQ/7
+	 LaGsOmueMIfktMSilR/bBB+SSv7iHWO9uR+dQfSm/hW9riyMqBSs+BuKlXu48ODQe8
+	 yxmADYsEs00uEK4VijoDaZroN4N38scj7edrendw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavi Teitz <gavi@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Robert Malz <robert.malz@canonical.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 256/508] net/mlx5: Fix return value when searching for existing flow group
-Date: Mon, 23 Jun 2025 15:05:01 +0200
-Message-ID: <20250623130651.551789964@linuxfoundation.org>
+Subject: [PATCH 6.1 246/508] i40e: retry VFLR handling if there is ongoing VF reset
+Date: Mon, 23 Jun 2025 15:04:51 +0200
+Message-ID: <20250623130651.305136962@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -55,59 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Robert Malz <robert.malz@canonical.com>
 
-[ Upstream commit 8ec40e3f1f72bf8f8accf18020d487caa99f46a4 ]
+[ Upstream commit fb4e9239e029954a37a00818b21e837cebf2aa10 ]
 
-When attempting to add a rule to an existing flow group, if a matching
-flow group exists but is not active, the error code returned should be
-EAGAIN, so that the rule can be added to the matching flow group once
-it is active, rather than ENOENT, which indicates that no matching
-flow group was found.
+When a VFLR interrupt is received during a VF reset initiated from a
+different source, the VFLR may be not fully handled. This can
+leave the VF in an undefined state.
+To address this, set the I40E_VFLR_EVENT_PENDING bit again during VFLR
+handling if the reset is not yet complete. This ensures the driver
+will properly complete the VF reset in such scenarios.
 
-Fixes: bd71b08ec2ee ("net/mlx5: Support multiple updates of steering rules in parallel")
-Signed-off-by: Gavi Teitz <gavi@nvidia.com>
-Signed-off-by: Roi Dayan <roid@nvidia.com>
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250610151514.1094735-4-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 52424f974bc5 ("i40e: Fix VF hang when reset is triggered on another VF")
+Signed-off-by: Robert Malz <robert.malz@canonical.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 5 ++++-
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-index 2717450e96661..b4c0a6dd171fd 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-@@ -1918,6 +1918,7 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
- 	struct mlx5_flow_handle *rule;
- 	struct match_list *iter;
- 	bool take_write = false;
-+	bool try_again = false;
- 	struct fs_fte *fte;
- 	u64  version = 0;
- 	int err;
-@@ -1977,6 +1978,7 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
- 		nested_down_write_ref_node(&g->node, FS_LOCK_PARENT);
- 
- 		if (!g->node.active) {
-+			try_again = true;
- 			up_write_ref_node(&g->node, false);
- 			continue;
- 		}
-@@ -1998,7 +2000,8 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
- 			tree_put_node(&fte->node, false);
- 		return rule;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index 87d74b54a3337..ff4f1c4f3829b 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -4267,7 +4267,10 @@ int i40e_vc_process_vflr_event(struct i40e_pf *pf)
+ 		reg = rd32(hw, I40E_GLGEN_VFLRSTAT(reg_idx));
+ 		if (reg & BIT(bit_idx))
+ 			/* i40e_reset_vf will clear the bit in GLGEN_VFLRSTAT */
+-			i40e_reset_vf(vf, true);
++			if (!i40e_reset_vf(vf, true)) {
++				/* At least one VF did not finish resetting, retry next time */
++				set_bit(__I40E_VFLR_EVENT_PENDING, pf->state);
++			}
  	}
--	rule = ERR_PTR(-ENOENT);
-+	err = try_again ? -EAGAIN : -ENOENT;
-+	rule = ERR_PTR(err);
- out:
- 	kmem_cache_free(steering->ftes_cache, fte);
- 	return rule;
+ 
+ 	return 0;
 -- 
 2.39.5
 
