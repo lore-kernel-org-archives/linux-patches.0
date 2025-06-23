@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787611ACEDA;
-	Mon, 23 Jun 2025 21:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CEC1DF98B;
+	Mon, 23 Jun 2025 21:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713143; cv=none; b=SAiVQUsmt5rZxz/Sw5G1H0qK9EsFq8RFKBn37YZl+tCS/8jX600owMcFKqpgCXZbuG8l6P+j/QQaSX2+kAYxAFtAG55zOh6+FFhnM/+VGs8aTi/fMgqVmquodC5h4ltNQPBH63kIo/msocd80vqI3dq50Pk5VFuvw1OPVcKqkp4=
+	t=1750713145; cv=none; b=bmQTf48cN/psfgoM6nsFaQ4OQ6tPq3S0Z9rirAhbAxZSPXYjHBi4IH/9UV3UMv2JavcQJ9atrbcppalOTK7grCiBqAnyn6P9u/ududXMqnLmBXdg9/7u2k7l8OPPI5A5nc30CmuOkx76b6HVJU8IjF5c3zXxmoCCazgCC0E23JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713143; c=relaxed/simple;
-	bh=DrjwLZcnicdte8Ps+ED/tV4AbMT52oGvE7dLof2yZxc=;
+	s=arc-20240116; t=1750713145; c=relaxed/simple;
+	bh=P9Xd9lCiv3T9rYPCbypddoFf2drgDa5VHzvS+0pv3xQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nI6iibTQNb4Wz5ZyiahTvFtaiGY1PNhPwnMhSX53RLfO8tVJJYEE2zVx3x6zp50WrY1/yglAsGjw/mqFHsuhB5HgqBRxKtUBE7bPBDD8geZ/Dqtno7fWZoX1RDxvMuQ7cxjRaeZaDqDE040ce6TmVtMeJAhQ65Zts8TsJNzmrMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuI4qaRs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gTf9eudsKyooC7Ak/6OQgDQyiNLtolGiN1GtOC2YwaJ42owM/en8zyexIX4WtZH1yQfCuqCM8bpLCDTX46iCskw66m9JTyRroubVbcWc3O+0dH20cjMxK5WQ12Wo2SjrohlhGWSSjwxXJcWObA/VrlEB8ebbRrnTPoIWf+i+eRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEtaoLDr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuI4qaRs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD965C4CEEA;
-	Mon, 23 Jun 2025 21:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEtaoLDr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB2CC4CEEA;
+	Mon, 23 Jun 2025 21:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713143;
-	bh=DrjwLZcnicdte8Ps+ED/tV4AbMT52oGvE7dLof2yZxc=;
+	s=korg; t=1750713145;
+	bh=P9Xd9lCiv3T9rYPCbypddoFf2drgDa5VHzvS+0pv3xQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zuI4qaRsoLV/ALYtvdlLdWf4Q3wBf7cY124hBDCXAalfSV5MKz9LKQ5orJTuIzRYT
-	 tuH5WnmOekC5gDnOolxqOG3P2/LXNHK5BbbdV/9cvysSdJNcACgHnWhjnO7s76PGA3
-	 ZVZ0v/sCgce0CmF2QEki89PEX9nbqVEWjkp3WDbA=
+	b=nEtaoLDrsV38VvAA+RXOU1P3zA1ARUTLXZxuSvaCrDa2GZU0bzGxdUzX2T0IGCoBA
+	 J55+ovAeM+vXAnmd9ll1rUEtHD1pMEYV7SPCjQfCcBEueB0KaP6cxIjUFbZdmd5N+g
+	 Wi+tS4p8In6huRjqpqwskvWMaNwP0anedhJI2coQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Dexuan Cui <decui@microsoft.com>,
-	Long Li <longli@microsoft.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 190/222] scsi: storvsc: Increase the timeouts to storvsc_timeout
-Date: Mon, 23 Jun 2025 15:08:45 +0200
-Message-ID: <20250623130617.946393537@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.12 048/414] media: ccs-pll: Start OP pre-PLL multiplier search from correct value
+Date: Mon, 23 Jun 2025 15:03:05 +0200
+Message-ID: <20250623130643.244150446@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,80 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dexuan Cui <decui@microsoft.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit b2f966568faaad326de97481096d0f3dc0971c43 upstream.
+commit 660e613d05e449766784c549faf5927ffaf281f1 upstream.
 
-Currently storvsc_timeout is only used in storvsc_sdev_configure(), and
-5s and 10s are used elsewhere. It turns out that rarely the 5s is not
-enough on Azure, so let's use storvsc_timeout everywhere.
+The ccs_pll_calculate() function does a search over possible PLL
+configurations to find the "best" one. If the sensor does not support odd
+pre-PLL divisors and the minimum value (with constraints) isn't 1, other
+odd values could be errorneously searched (and selected) for the pre-PLL
+divisor. Fix this.
 
-In case a timeout happens and storvsc_channel_init() returns an error,
-close the VMBus channel so that any host-to-guest messages in the
-channel's ringbuffer, which might come late, can be safely ignored.
-
-Add a "const" to storvsc_timeout.
-
-Cc: stable@kernel.org
-Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Link: https://lore.kernel.org/r/1749243459-10419-1-git-send-email-decui@microsoft.com
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 415ddd993978 ("media: ccs-pll: Split limits and PLL configuration into front and back parts")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/media/i2c/ccs-pll.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -393,7 +393,7 @@ MODULE_PARM_DESC(ring_avail_percent_lowa
- /*
-  * Timeout in seconds for all devices managed by this driver.
-  */
--static int storvsc_timeout = 180;
-+static const int storvsc_timeout = 180;
- 
- #if IS_ENABLED(CONFIG_SCSI_FC_ATTRS)
- static struct scsi_transport_template *fc_transport_template;
-@@ -707,7 +707,7 @@ static void  handle_multichannel_storage
- 		return;
- 	}
- 
--	t = wait_for_completion_timeout(&request->wait_event, 10*HZ);
-+	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
- 	if (t == 0) {
- 		dev_err(dev, "Failed to create sub-channel: timed out\n");
- 		return;
-@@ -768,7 +768,7 @@ static int storvsc_execute_vstor_op(stru
- 	if (ret != 0)
- 		return ret;
- 
--	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
-+	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
- 	if (t == 0)
- 		return -ETIMEDOUT;
- 
-@@ -1200,6 +1200,8 @@ static int storvsc_connect_to_vsp(struct
- 		return ret;
- 
- 	ret = storvsc_channel_init(device, is_fc);
-+	if (ret)
-+		vmbus_close(device->channel);
- 
- 	return ret;
- }
-@@ -1503,7 +1505,7 @@ static int storvsc_host_reset_handler(st
- 	if (ret != 0)
- 		return FAILED;
- 
--	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
-+	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
- 	if (t == 0)
- 		return TIMEOUT_ERROR;
+--- a/drivers/media/i2c/ccs-pll.c
++++ b/drivers/media/i2c/ccs-pll.c
+@@ -817,6 +817,8 @@ int ccs_pll_calculate(struct device *dev
+ 			      one_or_more(
+ 				      DIV_ROUND_UP(op_lim_fr->max_pll_op_clk_freq_hz,
+ 						   pll->ext_clk_freq_hz))));
++	if (!(pll->flags & CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER))
++		min_op_pre_pll_clk_div = clk_div_even(min_op_pre_pll_clk_div);
+ 	dev_dbg(dev, "pll_op check: min / max op_pre_pll_clk_div: %u / %u\n",
+ 		min_op_pre_pll_clk_div, max_op_pre_pll_clk_div);
  
 
 
