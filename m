@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82388224AFA;
-	Mon, 23 Jun 2025 21:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EC619049B;
+	Mon, 23 Jun 2025 21:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715643; cv=none; b=RitS+FG9omjqewnupzoQv6aTZqQAKY0YsBjfRRmqFPVDH4lmLzXvc9kHuhKFU+ID3Atr9zTTuJDFjxLBL5ALsRl8sb/BU38IxV2mQtsPCdU2NbCNdPoRlpqRlip8VVdCSdrWCI6XRkBufi0I6dHQhsmZPgInUNP+8zRq3nprAX8=
+	t=1750715646; cv=none; b=Rwh3RxA7pD1InZId1ZihWkmv84BkXTTvGZh2NDeTi5ZluVribodQHUaBr5WS4WAtvXf4sQRQM2tjnsYTv6J8FGnV1oGGkqARPTraJfgfIRHFByWultHSrB6txE1C7nnfuq70Trlo1+UNVO1tBL68gvEPj1aJn+wRMDsiHTI3TVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715643; c=relaxed/simple;
-	bh=3kjVySsLvELg5ilfpMZH/lqC57ymWAA71Al1m2uA1hM=;
+	s=arc-20240116; t=1750715646; c=relaxed/simple;
+	bh=WsJmt/RYkZuaCF+4N3zLL5AzX/eiogCRSL0CqTRhbaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DlLfNHh8jzz+Dg06ztoCUv1YJ47no1mVkHzuuXbskANSOFPbDMRMpWknXmgz8NRBNA3a+h1jvzCycyW6ybtO8hrJvquJvAU5+ekopyy28TExefATAMsEE8hRUsbnF9cTS2S7jJkG5zQWyfS+7u25+dAiFgd5RQ3uO0yoK+GGANY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqA5/zRj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qMSA7YYx8bekXmP1Sq/NKynbKGGGNAOi766nX47WmmogNZdR2T6Sfu6/00yx+KOh2fd2D88Rr0y8l1pJeRYbI7q837OFbmFZIZFpqo3PWFy61v2473mdPFmeawgVzOEuscXVFngdMMJJlCTaHhulPKumg64KDJv+/1g/a4igvqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yd1KwaMw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqA5/zRj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2AFC4CEEA;
-	Mon, 23 Jun 2025 21:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yd1KwaMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F7EC4CEEA;
+	Mon, 23 Jun 2025 21:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715643;
-	bh=3kjVySsLvELg5ilfpMZH/lqC57ymWAA71Al1m2uA1hM=;
+	s=korg; t=1750715645;
+	bh=WsJmt/RYkZuaCF+4N3zLL5AzX/eiogCRSL0CqTRhbaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dqA5/zRjS53Y3L44iJLeuLMDfrSj5RgSbk5j8xjDH6LIdqyQg1kQSUTa8EOlE3m6E
-	 0V6do6U8wnko3WSZhzBV/XyiwLTKH85E4wiozkjJ3G4DjGXOnGe5kF7/lzR1fgaIoz
-	 MTEcgUIPjxKo32C6i901Tt6F6+CPYT9UunFbUP2U=
+	b=Yd1KwaMw9KplY4fFYJFui1Iq7ZOqsQ4nbv0G2hZ5O77nGDUQAiSMp2Bw+3ze2vEi3
+	 pagzDiCNDpPtdemBRThRAUQ4e8vMTLdXCwCfTe2+ooILOF4ExnYT9/nx5tNNx8FhQb
+	 tXjbnd+AIvOd8xZ0zCXjv0naftq9mv1x+ud9swwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 262/411] clocksource: Fix the CPUs choice in the watchdog per CPU verification
-Date: Mon, 23 Jun 2025 15:06:46 +0200
-Message-ID: <20250623130640.252407875@linuxfoundation.org>
+	Tianyang Zhang <zhangtianyang@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 212/290] LoongArch: Fix panic caused by NULL-PMD in huge_pte_offset()
+Date: Mon, 23 Jun 2025 15:07:53 +0200
+Message-ID: <20250623130633.304484330@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,63 +46,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Tianyang Zhang <zhangtianyang@loongson.cn>
 
-[ Upstream commit 08d7becc1a6b8c936e25d827becabfe3bff72a36 ]
+commit ee084fa96123ede8b0563a1b5a9b23adc43cd50d upstream.
 
-Right now, if the clocksource watchdog detects a clocksource skew, it might
-perform a per CPU check, for example in the TSC case on x86.  In other
-words: supposing TSC is detected as unstable by the clocksource watchdog
-running at CPU1, as part of marking TSC unstable the kernel will also run a
-check of TSC readings on some CPUs to be sure it is synced between them
-all.
+ERROR INFO:
 
-But that check happens only on some CPUs, not all of them; this choice is
-based on the parameter "verify_n_cpus" and in some random cpumask
-calculation. So, the watchdog runs such per CPU checks on up to
-"verify_n_cpus" random CPUs among all online CPUs, with the risk of
-repeating CPUs (that aren't double checked) in the cpumask random
-calculation.
+CPU 25 Unable to handle kernel paging request at virtual address 0x0
+         ...
+ Call Trace:
+ [<900000000023c30c>] huge_pte_offset+0x3c/0x58
+ [<900000000057fd4c>] hugetlb_follow_page_mask+0x74/0x438
+ [<900000000051fee8>] __get_user_pages+0xe0/0x4c8
+ [<9000000000522414>] faultin_page_range+0x84/0x380
+ [<9000000000564e8c>] madvise_vma_behavior+0x534/0xa48
+ [<900000000056689c>] do_madvise+0x1bc/0x3e8
+ [<9000000000566df4>] sys_madvise+0x24/0x38
+ [<90000000015b9e88>] do_syscall+0x78/0x98
+ [<9000000000221f18>] handle_syscall+0xb8/0x158
 
-But if "verify_n_cpus" > num_online_cpus(), it should skip the random
-calculation and just go ahead and check the clocksource sync between
-all online CPUs, without the risk of skipping some CPUs due to
-duplicity in the random cpumask calculation.
+In some cases, pmd may be NULL and rely on NULL as the return value for
+processing, so it is necessary to determine this situation here.
 
-Tests in a 4 CPU laptop with TSC skew detected led to some cases of the per
-CPU verification skipping some CPU even with verify_n_cpus=8, due to the
-duplicity on random cpumask generation. Skipping the randomization when the
-number of online CPUs is smaller than verify_n_cpus, solves that.
-
-Suggested-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://lore.kernel.org/all/20250323173857.372390-1-gpiccoli@igalia.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: bd51834d1cf6 ("LoongArch: Return NULL from huge_pte_offset() for invalid PMD")
+Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/clocksource.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/mm/hugetlbpage.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
-index 32efc87c41f20..57575be840c5a 100644
---- a/kernel/time/clocksource.c
-+++ b/kernel/time/clocksource.c
-@@ -279,7 +279,7 @@ static void clocksource_verify_choose_cpus(void)
- {
- 	int cpu, i, n = verify_n_cpus;
+--- a/arch/loongarch/mm/hugetlbpage.c
++++ b/arch/loongarch/mm/hugetlbpage.c
+@@ -47,7 +47,8 @@ pte_t *huge_pte_offset(struct mm_struct
+ 				pmd = pmd_offset(pud, addr);
+ 		}
+ 	}
+-	return pmd_none(pmdp_get(pmd)) ? NULL : (pte_t *) pmd;
++
++	return (!pmd || pmd_none(pmdp_get(pmd))) ? NULL : (pte_t *) pmd;
+ }
  
--	if (n < 0) {
-+	if (n < 0 || n >= num_online_cpus()) {
- 		/* Check all of the CPUs. */
- 		cpumask_copy(&cpus_chosen, cpu_online_mask);
- 		cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
--- 
-2.39.5
-
+ int pmd_huge(pmd_t pmd)
 
 
