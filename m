@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1552222B2;
-	Mon, 23 Jun 2025 22:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A683A2222B2;
+	Mon, 23 Jun 2025 22:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717635; cv=none; b=SxAZm6B9IZtkWF7D/uQjLy9HjREzsNxHDKoeD/Par8BwYzdBSKnYWuFzKdUE6lHeMHLog/m6P4tmbSgPNK40MXAqzx1WSsOc9mBC8PdnhJ6FvuS/gMScrE9jhHCRWzZmsFtOQ0Jlbyl4xyKNropzc0HPE7kW2PCrt8aqYsIFDRo=
+	t=1750717636; cv=none; b=f0ZEyaG57JHU4zhVJBlrYAtMkBJBOB2anGOPM89r7IQNsu5rmVhFmUZQfgopkXyqYHaD88uzHvXBtoccZZZy0Ln4HVrmVSId0bv1vdCdOGaGrX+VZMNfROC0W8FF+b5X2sScsyQEnIIFEwhBB50/kIec+DA4372PZcjEGjbLRmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717635; c=relaxed/simple;
-	bh=8IqO2LFtkkDDtLMUfVdkifmVaY2E1cWR/oVSt39ILo4=;
+	s=arc-20240116; t=1750717636; c=relaxed/simple;
+	bh=wowtVx74Pc8+xhTjDlOxzIiua8uWoYhKn8H+9lASWX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZsfSuQt8DoJ+KHJ9N6oFBV8+v7fHPNJ4K8GB6LlWwZ/oYh0ljO35ed8icdQBQXCOBsj2O557scchKnscinq5Eu9chQp9VZjitosaWyZrmTnxJoI4iZU+UFi45uvxk/0faSHN2Hbqkv+PF/8hJ8JYuXIS7KrlwFfMZXZulaW0ZwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=soHOS2ce; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RrkdqwQoRpH4pzXCP/f9EoxLe/76xXUKUO8XOb4kaqQaFbWjvgvWM7AqS7jiOdaQiPPQbhJbzoI6xIUR90A8XGTp03EiMsn6KIfLNq3M8tIDZLtVF1iEW6GWzKCWmDpVev731bzDAuGQo8xUr5UGvR+qmAShkUDLfDAO9YqLvnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGaNc957; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="soHOS2ce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE946C4CEEA;
-	Mon, 23 Jun 2025 22:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGaNc957"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350A9C4CEF2;
+	Mon, 23 Jun 2025 22:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717634;
-	bh=8IqO2LFtkkDDtLMUfVdkifmVaY2E1cWR/oVSt39ILo4=;
+	s=korg; t=1750717636;
+	bh=wowtVx74Pc8+xhTjDlOxzIiua8uWoYhKn8H+9lASWX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=soHOS2ce6BL0Ww0u/UDxB4hIGlbc3482DMsJvO9+ijwzrJLRcmC6pDgcwZG35xBjN
-	 UsToJWxmx/I8jxehQM3ByzVN405AT4FGtCcQUA7W+8pRKrZAq3Bp1sIa9E95ls9I9e
-	 7rS59GZQd19jgisTs74Ha/GpfnNvr0u84eHk3jmo=
+	b=dGaNc9571096LOOXYY5ys7U8De7//fP/NOeRL+moNCk8FZtRHraABX6QJB4W9cxIe
+	 x7Wdn72lm6Vztyx0KuQIZ/V23H4odtFqbxvPvrH+iIBrXdwCC+jM/SZoIIsQJ5/C/v
+	 Q+nZUpNRoSMybFX+pDAU9HAo+0WDcBU91AqhvWUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Rouven Czerwinski <rouven.czerwinski@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 436/508] tee: Prevent size calculation wraparound on 32-bit kernels
-Date: Mon, 23 Jun 2025 15:08:01 +0200
-Message-ID: <20250623130655.891698677@linuxfoundation.org>
+Subject: [PATCH 6.1 476/508] pldmfw: Select CRC32 when PLDMFW is selected
+Date: Mon, 23 Jun 2025 15:08:41 +0200
+Message-ID: <20250623130656.792802910@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -52,85 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 39bb67edcc582b3b386a9ec983da67fa8a10ec03 ]
+[ Upstream commit 1224b218a4b9203656ecc932152f4c81a97b4fcc ]
 
-The current code around TEE_IOCTL_PARAM_SIZE() is a bit wrong on
-32-bit kernels: Multiplying a user-provided 32-bit value with the
-size of a structure can wrap around on such platforms.
+pldmfw calls crc32 code and depends on it being enabled, else
+there is a link error as follows. So PLDMFW should select CRC32.
 
-Fix it by using saturating arithmetic for the size calculation.
+  lib/pldmfw/pldmfw.o: In function `pldmfw_flash_image':
+  pldmfw.c:(.text+0x70f): undefined reference to `crc32_le_base'
 
-This has no security consequences because, in all users of
-TEE_IOCTL_PARAM_SIZE(), the subsequent kcalloc() implicitly checks
-for wrapping.
+This problem was introduced by commit b8265621f488 ("Add pldmfw library
+for PLDM firmware update").
 
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
-Tested-by: Rouven Czerwinski <rouven.czerwinski@linaro.org>
+It manifests as of commit d69ea414c9b4 ("ice: implement device flash
+update via devlink").
+
+And is more likely to occur as of commit 9ad19171b6d6 ("lib/crc: remove
+unnecessary prompt for CONFIG_CRC32 and drop 'default y'").
+
+Found by chance while exercising builds based on tinyconfig.
+
+Fixes: b8265621f488 ("Add pldmfw library for PLDM firmware update")
+Signed-off-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250613-pldmfw-crc32-v1-1-f3fad109eee6@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/tee_core.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ lib/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
-index 98da206cd7615..a9a893bc19fa4 100644
---- a/drivers/tee/tee_core.c
-+++ b/drivers/tee/tee_core.c
-@@ -10,6 +10,7 @@
- #include <linux/fs.h>
- #include <linux/idr.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- #include <linux/tee_drv.h>
- #include <linux/uaccess.h>
-@@ -19,7 +20,7 @@
+diff --git a/lib/Kconfig b/lib/Kconfig
+index 9bbf8a4b2108e..0610fad65a366 100644
+--- a/lib/Kconfig
++++ b/lib/Kconfig
+@@ -744,6 +744,7 @@ config GENERIC_LIB_DEVMEM_IS_ALLOWED
  
- #define TEE_NUM_DEVICES	32
+ config PLDMFW
+ 	bool
++	select CRC32
+ 	default n
  
--#define TEE_IOCTL_PARAM_SIZE(x) (sizeof(struct tee_param) * (x))
-+#define TEE_IOCTL_PARAM_SIZE(x) (size_mul(sizeof(struct tee_param), (x)))
- 
- #define TEE_UUID_NS_NAME_SIZE	128
- 
-@@ -487,7 +488,7 @@ static int tee_ioctl_open_session(struct tee_context *ctx,
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
- 
--	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
-+	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	if (arg.num_params) {
-@@ -565,7 +566,7 @@ static int tee_ioctl_invoke(struct tee_context *ctx,
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
- 
--	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
-+	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	if (arg.num_params) {
-@@ -699,7 +700,7 @@ static int tee_ioctl_supp_recv(struct tee_context *ctx,
- 	if (get_user(num_params, &uarg->num_params))
- 		return -EFAULT;
- 
--	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) != buf.buf_len)
-+	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
-@@ -798,7 +799,7 @@ static int tee_ioctl_supp_send(struct tee_context *ctx,
- 	    get_user(num_params, &uarg->num_params))
- 		return -EFAULT;
- 
--	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) > buf.buf_len)
-+	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) > buf.buf_len)
- 		return -EINVAL;
- 
- 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
+ config ASN1_ENCODER
 -- 
 2.39.5
 
