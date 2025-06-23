@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC3972624;
-	Mon, 23 Jun 2025 21:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0814E72624;
+	Mon, 23 Jun 2025 21:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715589; cv=none; b=osbr8wjJuHP//QW7BadTjHy04WrLj1m/4Xh1Dl2Z8RifnEYTvogEQuRi2We2lSLVN+d79owgsaum1GO5+BYCRkDC+eF28e9ItMIcs3h1mpALEvwySI/CsYf4U6iJtwvl7PmLNEBFpDZG/UZDhwWGa5Q9FzuaLQ5Ebfin0fFWbo8=
+	t=1750715592; cv=none; b=mD3IfbJdQDOveuu/0gEhiA81t3sCJxc2DTLzBDLfc6mQvPkouq3GmCT7vHOHdEhI8Ow8BFP5Qmcss6x7EPGycP+OlwCz/kgPPEcAuN1wcr2PKQto0II7/7O76FZxBsN46Kn97KcOxR8AsbjWMBXSsYJ/oy0TG3YLq/SeCf95vI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715589; c=relaxed/simple;
-	bh=rrlGJpZmLIAz5KiiFakrMZSbY6ivtDk5kqJ1acc10KU=;
+	s=arc-20240116; t=1750715592; c=relaxed/simple;
+	bh=WhoAhpX8ogOqlDGsF2zFQzDBoVzTH5mR/PNZa8BuM2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZRLP29BxEJBUTwvOTcH9ZD3FoauS9L2BMMKtbS8O7jN35zjTUZi6bFRb6yPhUppmF3AKvFYNtNluUR/uD1HPgh5qta90h5MuuspLqLqZe/Qh6uLyauqnqLn2XHZ0kWNE66DIzTM7t78UiP5tIfEujmIXWVx9Zo2EJcqpXhLajBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cn68lgRM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HQ382CYYstIL5Ig1ZCLFG6BcrmS7cbj/QAILsTTCs9CTBowAVBp+vF5/i+rWqtbiOb2x9jXNPUpE84wa0iKm9rsWwe9Y0OKvJlW1Jp1ryTVnOKYdIu0PBPGne2tTQiTj4vqJKe64G/gI6Ll+LX4yRGM18VMG2wYYZwR/KI3YZDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxNCMFwY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cn68lgRM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2439AC4CEEA;
-	Mon, 23 Jun 2025 21:53:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxNCMFwY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94334C4CEEA;
+	Mon, 23 Jun 2025 21:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715589;
-	bh=rrlGJpZmLIAz5KiiFakrMZSbY6ivtDk5kqJ1acc10KU=;
+	s=korg; t=1750715591;
+	bh=WhoAhpX8ogOqlDGsF2zFQzDBoVzTH5mR/PNZa8BuM2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cn68lgRM/0w9gikTovREIEvR3qTHt9pUhHrlBI8H4l52oxRmXKZfp2GhKcQ6OUWQC
-	 FD1U1J455B1s12g2ZV5BjLQ0K8k21pJBeebiJ/sx5M2KoIjZmuBoYsC7pcxlZeHk8o
-	 dy2GKffwfF6Imyy1hK0SyFB2D+RcWD7jHHuP/T20=
+	b=mxNCMFwYwL/4wyJ4zBjbiQxp0D3lZz3QyYytkzTKUPwpa7qLKPpL1sHRszffv4v3h
+	 TAvylOVlZe2VMStZTFWslw/q29yk+ge6BtQeOp8bM9Gwxhmw7rmo7jO1J4F5S3r4nf
+	 Y0B3bJ1X3ld7yGYjQLeXnbbt2v0erhseRSOXyXpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seunghun Han <kkamagui@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 261/411] ACPICA: fix acpi operand cache leak in dswstate.c
-Date: Mon, 23 Jun 2025 15:06:45 +0200
-Message-ID: <20250623130640.224936096@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Jann Horn <jannh@google.com>,
+	David Hildenbrand <david@redhat.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Mel Gorman <mgormanmgorman@suse.de>
+Subject: [PATCH 6.15 468/592] mm: close theoretical race where stale TLB entries could linger
+Date: Mon, 23 Jun 2025 15:07:06 +0200
+Message-ID: <20250623130711.561732906@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,114 +52,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Seunghun Han <kkamagui@gmail.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-[ Upstream commit 156fd20a41e776bbf334bd5e45c4f78dfc90ce1c ]
+commit 383c4613c67c26e90e8eebb72e3083457d02033f upstream.
 
-ACPICA commit 987a3b5cf7175916e2a4b6ea5b8e70f830dfe732
+Commit 3ea277194daa ("mm, mprotect: flush TLB if potentially racing with a
+parallel reclaim leaving stale TLB entries") described a theoretical race
+as such:
 
-I found an ACPI cache leak in ACPI early termination and boot continuing case.
 
-When early termination occurs due to malicious ACPI table, Linux kernel
-terminates ACPI function and continues to boot process. While kernel terminates
-ACPI function, kmem_cache_destroy() reports Acpi-Operand cache leak.
+"""
+Nadav Amit identified a theoretical race between page reclaim and mprotect
+due to TLB flushes being batched outside of the PTL being held.
 
-Boot log of ACPI operand cache leak is as follows:
->[    0.585957] ACPI: Added _OSI(Module Device)
->[    0.587218] ACPI: Added _OSI(Processor Device)
->[    0.588530] ACPI: Added _OSI(3.0 _SCP Extensions)
->[    0.589790] ACPI: Added _OSI(Processor Aggregator Device)
->[    0.591534] ACPI Error: Illegal I/O port address/length above 64K: C806E00000004002/0x2 (20170303/hwvalid-155)
->[    0.594351] ACPI Exception: AE_LIMIT, Unable to initialize fixed events (20170303/evevent-88)
->[    0.597858] ACPI: Unable to start the ACPI Interpreter
->[    0.599162] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
->[    0.601836] kmem_cache_destroy Acpi-Operand: Slab cache still has objects
->[    0.603556] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 4.12.0-rc5 #26
->[    0.605159] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS virtual_box 12/01/2006
->[    0.609177] Call Trace:
->[    0.610063]  ? dump_stack+0x5c/0x81
->[    0.611118]  ? kmem_cache_destroy+0x1aa/0x1c0
->[    0.612632]  ? acpi_sleep_proc_init+0x27/0x27
->[    0.613906]  ? acpi_os_delete_cache+0xa/0x10
->[    0.617986]  ? acpi_ut_delete_caches+0x3f/0x7b
->[    0.619293]  ? acpi_terminate+0xa/0x14
->[    0.620394]  ? acpi_init+0x2af/0x34f
->[    0.621616]  ? __class_create+0x4c/0x80
->[    0.623412]  ? video_setup+0x7f/0x7f
->[    0.624585]  ? acpi_sleep_proc_init+0x27/0x27
->[    0.625861]  ? do_one_initcall+0x4e/0x1a0
->[    0.627513]  ? kernel_init_freeable+0x19e/0x21f
->[    0.628972]  ? rest_init+0x80/0x80
->[    0.630043]  ? kernel_init+0xa/0x100
->[    0.631084]  ? ret_from_fork+0x25/0x30
->[    0.633343] vgaarb: loaded
->[    0.635036] EDAC MC: Ver: 3.0.0
->[    0.638601] PCI: Probing PCI hardware
->[    0.639833] PCI host bridge to bus 0000:00
->[    0.641031] pci_bus 0000:00: root bus resource [io  0x0000-0xffff]
-> ... Continue to boot and log is omitted ...
+He described the race as follows:
 
-I analyzed this memory leak in detail and found acpi_ds_obj_stack_pop_and_
-delete() function miscalculated the top of the stack. acpi_ds_obj_stack_push()
-function uses walk_state->operand_index for start position of the top, but
-acpi_ds_obj_stack_pop_and_delete() function considers index 0 for it.
-Therefore, this causes acpi operand memory leak.
+	CPU0                            CPU1
+	----                            ----
+					user accesses memory using RW PTE
+					[PTE now cached in TLB]
+	try_to_unmap_one()
+	==> ptep_get_and_clear()
+	==> set_tlb_ubc_flush_pending()
+					mprotect(addr, PROT_READ)
+					==> change_pte_range()
+					==> [ PTE non-present - no flush ]
 
-This cache leak causes a security threat because an old kernel (<= 4.9) shows
-memory locations of kernel functions in stack dump. Some malicious users
-could use this information to neutralize kernel ASLR.
+					user writes using cached RW PTE
+	...
 
-I made a patch to fix ACPI operand cache leak.
+	try_to_unmap_flush()
 
-Link: https://github.com/acpica/acpica/commit/987a3b5c
-Signed-off-by: Seunghun Han <kkamagui@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/4999480.31r3eYUQgx@rjwysocki.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The same type of race exists for reads when protecting for PROT_NONE and
+also exists for operations that can leave an old TLB entry behind such as
+munmap, mremap and madvise.
+"""
+
+The solution was to introduce flush_tlb_batched_pending() and call it
+under the PTL from mprotect/madvise/munmap/mremap to complete any pending
+tlb flushes.
+
+However, while madvise_free_pte_range() and
+madvise_cold_or_pageout_pte_range() were both retro-fitted to call
+flush_tlb_batched_pending() immediately after initially acquiring the PTL,
+they both temporarily release the PTL to split a large folio if they
+stumble upon one.  In this case, where re-acquiring the PTL
+flush_tlb_batched_pending() must be called again, but it previously was
+not.  Let's fix that.
+
+There are 2 Fixes: tags here: the first is the commit that fixed
+madvise_free_pte_range().  The second is the commit that added
+madvise_cold_or_pageout_pte_range(), which looks like it copy/pasted the
+faulty pattern from madvise_free_pte_range().
+
+This is a theoretical bug discovered during code review.
+
+Link: https://lkml.kernel.org/r/20250606092809.4194056-1-ryan.roberts@arm.com
+Fixes: 3ea277194daa ("mm, mprotect: flush TLB if potentially racing with a parallel reclaim leaving stale TLB entries")
+Fixes: 9c276cc65a58 ("mm: introduce MADV_COLD")
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Reviewed-by: Jann Horn <jannh@google.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Mel Gorman <mgorman <mgorman@suse.de>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpica/dsutils.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ mm/madvise.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/acpica/dsutils.c b/drivers/acpi/acpica/dsutils.c
-index fb9ed5e1da89d..2bdae8a25e084 100644
---- a/drivers/acpi/acpica/dsutils.c
-+++ b/drivers/acpi/acpica/dsutils.c
-@@ -668,6 +668,8 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 	union acpi_parse_object *arguments[ACPI_OBJ_NUM_OPERANDS];
- 	u32 arg_count = 0;
- 	u32 index = walk_state->num_operands;
-+	u32 prev_num_operands = walk_state->num_operands;
-+	u32 new_num_operands;
- 	u32 i;
- 
- 	ACPI_FUNCTION_TRACE_PTR(ds_create_operands, first_arg);
-@@ -696,6 +698,7 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 
- 	/* Create the interpreter arguments, in reverse order */
- 
-+	new_num_operands = index;
- 	index--;
- 	for (i = 0; i < arg_count; i++) {
- 		arg = arguments[index];
-@@ -720,7 +723,11 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 	 * pop everything off of the operand stack and delete those
- 	 * objects
- 	 */
--	acpi_ds_obj_stack_pop_and_delete(arg_count, walk_state);
-+	walk_state->num_operands = i;
-+	acpi_ds_obj_stack_pop_and_delete(new_num_operands, walk_state);
-+
-+	/* Restore operand count */
-+	walk_state->num_operands = prev_num_operands;
- 
- 	ACPI_EXCEPTION((AE_INFO, status, "While creating Arg %u", index));
- 	return_ACPI_STATUS(status);
--- 
-2.39.5
-
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -503,6 +503,7 @@ restart:
+ 					pte_offset_map_lock(mm, pmd, addr, &ptl);
+ 				if (!start_pte)
+ 					break;
++				flush_tlb_batched_pending(mm);
+ 				arch_enter_lazy_mmu_mode();
+ 				if (!err)
+ 					nr = 0;
+@@ -736,6 +737,7 @@ static int madvise_free_pte_range(pmd_t
+ 				start_pte = pte;
+ 				if (!start_pte)
+ 					break;
++				flush_tlb_batched_pending(mm);
+ 				arch_enter_lazy_mmu_mode();
+ 				if (!err)
+ 					nr = 0;
 
 
