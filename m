@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FF6221DAE;
-	Mon, 23 Jun 2025 21:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787611ACEDA;
+	Mon, 23 Jun 2025 21:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713140; cv=none; b=gZNQ5xyrSP4rFHmr/52klL2VClSd8AgxMAf6RZu2O9c4IoCx7VuPlJ9k5eCaYg9YsWDFTEed7zIaOBEIlTsfnW30Kwc4oHbBuJ1GbCPck7FPFjv795/qITCLWCMRTJgwVFeIg8AWZvbxxaCfCcpw/S1EYsT/Nj86/PXkdBhsvf0=
+	t=1750713143; cv=none; b=SAiVQUsmt5rZxz/Sw5G1H0qK9EsFq8RFKBn37YZl+tCS/8jX600owMcFKqpgCXZbuG8l6P+j/QQaSX2+kAYxAFtAG55zOh6+FFhnM/+VGs8aTi/fMgqVmquodC5h4ltNQPBH63kIo/msocd80vqI3dq50Pk5VFuvw1OPVcKqkp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713140; c=relaxed/simple;
-	bh=khV5Ry6jbBn/NsR//l57sq+VWajwtv0e908QzaLOnnU=;
+	s=arc-20240116; t=1750713143; c=relaxed/simple;
+	bh=DrjwLZcnicdte8Ps+ED/tV4AbMT52oGvE7dLof2yZxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GS1CHyNQ+Jc0aA3wTAZuSXtiDAWlHoDIjTptBzF9JUiuWqv5O5wdJzpxEWDTrIEigaLX2WXV0j+JNoGfWTRr2BnGIOsoyHVpscAOIND7YKF6zWHqNhNOK8g2otXkIQZl4kuiEqWBHuIZ+nZByMhSN7o19r6TUwXYFkF9t78NgTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kqj9yXar; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nI6iibTQNb4Wz5ZyiahTvFtaiGY1PNhPwnMhSX53RLfO8tVJJYEE2zVx3x6zp50WrY1/yglAsGjw/mqFHsuhB5HgqBRxKtUBE7bPBDD8geZ/Dqtno7fWZoX1RDxvMuQ7cxjRaeZaDqDE040ce6TmVtMeJAhQ65Zts8TsJNzmrMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuI4qaRs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kqj9yXar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60110C4CEEA;
-	Mon, 23 Jun 2025 21:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuI4qaRs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD965C4CEEA;
+	Mon, 23 Jun 2025 21:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713140;
-	bh=khV5Ry6jbBn/NsR//l57sq+VWajwtv0e908QzaLOnnU=;
+	s=korg; t=1750713143;
+	bh=DrjwLZcnicdte8Ps+ED/tV4AbMT52oGvE7dLof2yZxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kqj9yXar6DlkPXpbVAvht3rfzpkuBmWPiaR+gk7mcSwCE9+KC0k/GZjMAEoPPQxT3
-	 SbF1r30PXX1N0uonDD4emC5eImXFP8cL/gvvCvVwyoOp5zJWuH0VH+Wl+6z0kXf/A0
-	 OMKKUsKLNnq107DdgzmboXzi1uDGGLh9RIReYvpQ=
+	b=zuI4qaRsoLV/ALYtvdlLdWf4Q3wBf7cY124hBDCXAalfSV5MKz9LKQ5orJTuIzRYT
+	 tuH5WnmOekC5gDnOolxqOG3P2/LXNHK5BbbdV/9cvysSdJNcACgHnWhjnO7s76PGA3
+	 ZVZ0v/sCgce0CmF2QEki89PEX9nbqVEWjkp3WDbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 330/592] libbpf/btf: Fix string handling to support multi-split BTF
-Date: Mon, 23 Jun 2025 15:04:48 +0200
-Message-ID: <20250623130708.306047124@linuxfoundation.org>
+	stable@kernel.org,
+	Dexuan Cui <decui@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.4 190/222] scsi: storvsc: Increase the timeouts to storvsc_timeout
+Date: Mon, 23 Jun 2025 15:08:45 +0200
+Message-ID: <20250623130617.946393537@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +48,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Dexuan Cui <decui@microsoft.com>
 
-[ Upstream commit 4e29128a9acec2a622734844bedee013e2901bdf ]
+commit b2f966568faaad326de97481096d0f3dc0971c43 upstream.
 
-libbpf handling of split BTF has been written largely with the
-assumption that multiple splits are possible, i.e. split BTF on top of
-split BTF on top of base BTF.  One area where this does not quite work
-is string handling in split BTF; the start string offset should be the
-base BTF string section length + the base BTF string offset.  This
-worked in the past because for a single split BTF with base the start
-string offset was always 0.
+Currently storvsc_timeout is only used in storvsc_sdev_configure(), and
+5s and 10s are used elsewhere. It turns out that rarely the 5s is not
+enough on Azure, so let's use storvsc_timeout everywhere.
 
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250519165935.261614-2-alan.maguire@oracle.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In case a timeout happens and storvsc_channel_init() returns an error,
+close the VMBus channel so that any host-to-guest messages in the
+channel's ringbuffer, which might come late, can be safely ignored.
+
+Add a "const" to storvsc_timeout.
+
+Cc: stable@kernel.org
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Link: https://lore.kernel.org/r/1749243459-10419-1-git-send-email-decui@microsoft.com
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/bpf/btf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/storvsc_drv.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 38bc6b14b0666..8a7650e6480f9 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -996,7 +996,7 @@ static struct btf *btf_new_empty(struct btf *base_btf)
- 	if (base_btf) {
- 		btf->base_btf = base_btf;
- 		btf->start_id = btf__type_cnt(base_btf);
--		btf->start_str_off = base_btf->hdr->str_len;
-+		btf->start_str_off = base_btf->hdr->str_len + base_btf->start_str_off;
- 		btf->swapped_endian = base_btf->swapped_endian;
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -393,7 +393,7 @@ MODULE_PARM_DESC(ring_avail_percent_lowa
+ /*
+  * Timeout in seconds for all devices managed by this driver.
+  */
+-static int storvsc_timeout = 180;
++static const int storvsc_timeout = 180;
+ 
+ #if IS_ENABLED(CONFIG_SCSI_FC_ATTRS)
+ static struct scsi_transport_template *fc_transport_template;
+@@ -707,7 +707,7 @@ static void  handle_multichannel_storage
+ 		return;
  	}
  
--- 
-2.39.5
-
+-	t = wait_for_completion_timeout(&request->wait_event, 10*HZ);
++	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
+ 	if (t == 0) {
+ 		dev_err(dev, "Failed to create sub-channel: timed out\n");
+ 		return;
+@@ -768,7 +768,7 @@ static int storvsc_execute_vstor_op(stru
+ 	if (ret != 0)
+ 		return ret;
+ 
+-	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
++	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
+ 	if (t == 0)
+ 		return -ETIMEDOUT;
+ 
+@@ -1200,6 +1200,8 @@ static int storvsc_connect_to_vsp(struct
+ 		return ret;
+ 
+ 	ret = storvsc_channel_init(device, is_fc);
++	if (ret)
++		vmbus_close(device->channel);
+ 
+ 	return ret;
+ }
+@@ -1503,7 +1505,7 @@ static int storvsc_host_reset_handler(st
+ 	if (ret != 0)
+ 		return FAILED;
+ 
+-	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
++	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
+ 	if (t == 0)
+ 		return TIMEOUT_ERROR;
+ 
 
 
