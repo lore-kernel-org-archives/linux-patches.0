@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406564C6E;
-	Mon, 23 Jun 2025 13:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D952246BC9;
+	Mon, 23 Jun 2025 13:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686048; cv=none; b=dp5VQsyNu3WXU0nLCC2fdfsAdOZI19ffXxPV+g5cSJ/Iu0ZTRqU+E+E5Ddoc9PkpevNa2dOL5+Kml6tpn1JRGUKPwQYgZclsUway8tZo/iSgFsMLyP/ztoSaxkX6bHgxuhhnsDO/f/rurYF3hkyPOXzHUH4sf5HZ1wfY4c4m8zg=
+	t=1750686050; cv=none; b=qkBylEC3sDsCsfX8j4X30z97TiVRlLtXY4w5ufVynq1hORjY9SxBXZjmUV8LTVs6+Ii1pcyyE3x/N3PTaZ/6UzING2zIZ+vW71zs85wqKBIaa6EzsttAo+JPn/vUW2+Jh6xCC0bvS4iPpE0mtiwtWOQbtCACDBeJ67XBjvSiiPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686048; c=relaxed/simple;
-	bh=N70bXol/GmgBcgBYXLN2DIU3tb0ya+kz5KmpMiZs0dI=;
+	s=arc-20240116; t=1750686050; c=relaxed/simple;
+	bh=R24aPHOc5v3nKIaqLkAU69VK+VdaO8m/4S2cr+i6pQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LMvz7v0BxB89VzC4KPsRcTuJGbvBiZHPmBmzyH090N6EAk8fAIZ7kltZg2cTSZbDEcIeWV3gWU86gEyMXRFiTeI5fy5sKQMC4Fhn0bRRlOc6y1J4kt9VFbPHs4XqN/cfGvBZqQfmH6rvLC7nMI4dFrsIXe5AnUlgrlmjcOGGl4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NczMbubP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eiVhUMLK0UXNNdcrBgumyiwyQbvS8TrHcVv5u/o9FRq3qgujr5+/tKuHv42yjeICrAmM3RFOjVdT5p8RFtwu1Bs0FgFvZQbsugB4QUrYjJL3D/RcQgka9L2sF++kxI2BGgvDuxRwC9FQ2OEZCmHz0a04julVv7jvVhM+SyMIzgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTp6dNH4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NczMbubP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7664BC4CEEA;
-	Mon, 23 Jun 2025 13:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTp6dNH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E671AC4CEEA;
+	Mon, 23 Jun 2025 13:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686047;
-	bh=N70bXol/GmgBcgBYXLN2DIU3tb0ya+kz5KmpMiZs0dI=;
+	s=korg; t=1750686050;
+	bh=R24aPHOc5v3nKIaqLkAU69VK+VdaO8m/4S2cr+i6pQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NczMbubP2m1EV6rgfTbJWkK8hr+eueWGYJjs72BBgEl26ZUgtMjOjeSGpQ9ZeNoQa
-	 2JPiaPtG/xt7I6sWp075Iad5ke4iMP/d93HHmtBOg1keFspESZSFBGyE4sGO3pujZE
-	 7CIdFL/Awk2lsxfln10lZdVHaZSOvRCipfYEIMFY=
+	b=MTp6dNH4FpmSjnGL0ddOXhpAmNy86QT3AL9wd0YBwDAqFVHDVX+Z1gYsEFGv8eJzO
+	 ufGFKPE/hqYu+CmV9f4YqkJrryATdT2D/Ht44+OL4j1b8/j9m46md79dSsX4WE5ias
+	 Nk3WNNQmoDJIkSGZCNPBEA+Y3og4qTGk13LrdfB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Gavin Shan <gshan@redhat.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Seunghun Han <kkamagui@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/508] firmware: psci: Fix refcount leak in psci_dt_init
-Date: Mon, 23 Jun 2025 15:01:30 +0200
-Message-ID: <20250623130646.351198995@linuxfoundation.org>
+Subject: [PATCH 5.4 135/222] ACPICA: fix acpi operand cache leak in dswstate.c
+Date: Mon, 23 Jun 2025 15:07:50 +0200
+Message-ID: <20250623130616.154376900@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,44 +47,112 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Seunghun Han <kkamagui@gmail.com>
 
-[ Upstream commit 7ff37d29fd5c27617b9767e1b8946d115cf93a1e ]
+[ Upstream commit 156fd20a41e776bbf334bd5e45c4f78dfc90ce1c ]
 
-Fix a reference counter leak in psci_dt_init() where of_node_put(np) was
-missing after of_find_matching_node_and_match() when np is unavailable.
+ACPICA commit 987a3b5cf7175916e2a4b6ea5b8e70f830dfe732
 
-Fixes: d09a0011ec0d ("drivers: psci: Allow PSCI node to be disabled")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20250318151712.28763-1-linmq006@gmail.com
-Signed-off-by: Will Deacon <will@kernel.org>
+I found an ACPI cache leak in ACPI early termination and boot continuing case.
+
+When early termination occurs due to malicious ACPI table, Linux kernel
+terminates ACPI function and continues to boot process. While kernel terminates
+ACPI function, kmem_cache_destroy() reports Acpi-Operand cache leak.
+
+Boot log of ACPI operand cache leak is as follows:
+>[    0.585957] ACPI: Added _OSI(Module Device)
+>[    0.587218] ACPI: Added _OSI(Processor Device)
+>[    0.588530] ACPI: Added _OSI(3.0 _SCP Extensions)
+>[    0.589790] ACPI: Added _OSI(Processor Aggregator Device)
+>[    0.591534] ACPI Error: Illegal I/O port address/length above 64K: C806E00000004002/0x2 (20170303/hwvalid-155)
+>[    0.594351] ACPI Exception: AE_LIMIT, Unable to initialize fixed events (20170303/evevent-88)
+>[    0.597858] ACPI: Unable to start the ACPI Interpreter
+>[    0.599162] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
+>[    0.601836] kmem_cache_destroy Acpi-Operand: Slab cache still has objects
+>[    0.603556] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 4.12.0-rc5 #26
+>[    0.605159] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS virtual_box 12/01/2006
+>[    0.609177] Call Trace:
+>[    0.610063]  ? dump_stack+0x5c/0x81
+>[    0.611118]  ? kmem_cache_destroy+0x1aa/0x1c0
+>[    0.612632]  ? acpi_sleep_proc_init+0x27/0x27
+>[    0.613906]  ? acpi_os_delete_cache+0xa/0x10
+>[    0.617986]  ? acpi_ut_delete_caches+0x3f/0x7b
+>[    0.619293]  ? acpi_terminate+0xa/0x14
+>[    0.620394]  ? acpi_init+0x2af/0x34f
+>[    0.621616]  ? __class_create+0x4c/0x80
+>[    0.623412]  ? video_setup+0x7f/0x7f
+>[    0.624585]  ? acpi_sleep_proc_init+0x27/0x27
+>[    0.625861]  ? do_one_initcall+0x4e/0x1a0
+>[    0.627513]  ? kernel_init_freeable+0x19e/0x21f
+>[    0.628972]  ? rest_init+0x80/0x80
+>[    0.630043]  ? kernel_init+0xa/0x100
+>[    0.631084]  ? ret_from_fork+0x25/0x30
+>[    0.633343] vgaarb: loaded
+>[    0.635036] EDAC MC: Ver: 3.0.0
+>[    0.638601] PCI: Probing PCI hardware
+>[    0.639833] PCI host bridge to bus 0000:00
+>[    0.641031] pci_bus 0000:00: root bus resource [io  0x0000-0xffff]
+> ... Continue to boot and log is omitted ...
+
+I analyzed this memory leak in detail and found acpi_ds_obj_stack_pop_and_
+delete() function miscalculated the top of the stack. acpi_ds_obj_stack_push()
+function uses walk_state->operand_index for start position of the top, but
+acpi_ds_obj_stack_pop_and_delete() function considers index 0 for it.
+Therefore, this causes acpi operand memory leak.
+
+This cache leak causes a security threat because an old kernel (<= 4.9) shows
+memory locations of kernel functions in stack dump. Some malicious users
+could use this information to neutralize kernel ASLR.
+
+I made a patch to fix ACPI operand cache leak.
+
+Link: https://github.com/acpica/acpica/commit/987a3b5c
+Signed-off-by: Seunghun Han <kkamagui@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/4999480.31r3eYUQgx@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/psci/psci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/acpi/acpica/dsutils.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-index a44ba09e49d9c..7eddf0912f96c 100644
---- a/drivers/firmware/psci/psci.c
-+++ b/drivers/firmware/psci/psci.c
-@@ -747,8 +747,10 @@ int __init psci_dt_init(void)
+diff --git a/drivers/acpi/acpica/dsutils.c b/drivers/acpi/acpica/dsutils.c
+index fb9ed5e1da89d..2bdae8a25e084 100644
+--- a/drivers/acpi/acpica/dsutils.c
++++ b/drivers/acpi/acpica/dsutils.c
+@@ -668,6 +668,8 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
+ 	union acpi_parse_object *arguments[ACPI_OBJ_NUM_OPERANDS];
+ 	u32 arg_count = 0;
+ 	u32 index = walk_state->num_operands;
++	u32 prev_num_operands = walk_state->num_operands;
++	u32 new_num_operands;
+ 	u32 i;
  
- 	np = of_find_matching_node_and_match(NULL, psci_of_match, &matched_np);
+ 	ACPI_FUNCTION_TRACE_PTR(ds_create_operands, first_arg);
+@@ -696,6 +698,7 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
  
--	if (!np || !of_device_is_available(np))
-+	if (!np || !of_device_is_available(np)) {
-+		of_node_put(np);
- 		return -ENODEV;
-+	}
+ 	/* Create the interpreter arguments, in reverse order */
  
- 	init_fn = (psci_initcall_t)matched_np->data;
- 	ret = init_fn(np);
++	new_num_operands = index;
+ 	index--;
+ 	for (i = 0; i < arg_count; i++) {
+ 		arg = arguments[index];
+@@ -720,7 +723,11 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
+ 	 * pop everything off of the operand stack and delete those
+ 	 * objects
+ 	 */
+-	acpi_ds_obj_stack_pop_and_delete(arg_count, walk_state);
++	walk_state->num_operands = i;
++	acpi_ds_obj_stack_pop_and_delete(new_num_operands, walk_state);
++
++	/* Restore operand count */
++	walk_state->num_operands = prev_num_operands;
+ 
+ 	ACPI_EXCEPTION((AE_INFO, status, "While creating Arg %u", index));
+ 	return_ACPI_STATUS(status);
 -- 
 2.39.5
 
