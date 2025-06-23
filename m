@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FA31DF98B;
-	Mon, 23 Jun 2025 21:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA691DF98B;
+	Mon, 23 Jun 2025 21:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713199; cv=none; b=QQvdOwuOYIR83B6ens28vWnsPOXhK6tet1uQhd4B6cmHI6Y4akUxP46Tpj9peCmLxkbeW/7QIQiWhzsMJM0gJcv5dMo8npW5x+N2cuu5AU1pmqwNzbmjcMQ3qeqq8e5Kmiyay/hf5GjnzY6CcMEbLd/cf6+9w940vG9lPj7Q9IA=
+	t=1750713202; cv=none; b=dhKkeDYyL464FdSdgpmjJ2cLBiV0hPxcsTmZcvRki7GQsLIDkegs/+lv2YBk3RwAzPKpOM4AdXjydqUi+m8AGSn5AhNSO2lmMSakMYxZ+OZqwQdhwdHbb4bGUxQ8rxs5Pq7ayJNhExnAEWBwCvZBdChQyYBnRlC2EVPIYyoVuUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713199; c=relaxed/simple;
-	bh=2BrSaO17kNP17HosRIQ2EZrrJNDeWsYrfwucquLg71s=;
+	s=arc-20240116; t=1750713202; c=relaxed/simple;
+	bh=J6+qwVZb/L8SiVAod0prgyiYXo5DtgHB3H1/kTg1tF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qtGfTocbtxxyH05wzanVlEPm70yQEUUF8S6+rT4uZGWTsDO1qBTMLymbFizjcg56JeEORXr7qUZ5FGIHV/GcLGL6ope22pXgtHSD8iQIqGXYWv27p+MwJ5UyPdLEUxXCw9QJiSJx7pQpvj1HnA97k92qBla5lFTqReqGSVse1H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwSqrzaY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PDJjsujA87Yiravuqykbi1PsYSzKve5DIzLsaYkXousjgvwTgEI5NvKzaztAwTwnVzf76bSRZUQajOPHpbMEI4jwuu7JdUx2Agbuffcof1INwoYUuTlb4/A2PsMoCT4SktKhVfv3QHlSyervfgnBkZSKujdDtckhoE2M2ecFoz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZZZABE1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwSqrzaY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60AFBC4CEED;
-	Mon, 23 Jun 2025 21:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZZZABE1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F13C4CEEA;
+	Mon, 23 Jun 2025 21:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713199;
-	bh=2BrSaO17kNP17HosRIQ2EZrrJNDeWsYrfwucquLg71s=;
+	s=korg; t=1750713202;
+	bh=J6+qwVZb/L8SiVAod0prgyiYXo5DtgHB3H1/kTg1tF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GwSqrzaY6rglX8UuE8VtaU3Lq3RPnHuwLFVNwLlEEAPeKJyiLagsbkqY9VPtFnAAK
-	 PUVItH6D26F0fzAGOMV+YMuZHsO0aj1F90wH4jvg3q6epcMVWyVTeyetBsOSkjModt
-	 BuTxFhNdQiLbcyhtsPxrQ5xLzTWxwCP37I2nqh6A=
+	b=UZZZABE1Svt1SWcijON8rFtN/OS0CBUbM1am4hGV59U4NwWIA9mxuEaLrfLujvb6g
+	 gdNpV9WD2EKt8lwJ4hSS8E99KDHUchon+767Bzcd+cKD3l05ymnjWPPjrG5/viu/r+
+	 o7/p7eoeR7gvPKizX3vvbzb8+RQOHZQZ7iwn0DAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Raczynski <j.raczynski@samsung.com>,
-	Wenjing Shan <wenjing.shan@samsung.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 131/355] net/mdiobus: Fix potential out-of-bounds read/write access
-Date: Mon, 23 Jun 2025 15:05:32 +0200
-Message-ID: <20250623130630.676593593@linuxfoundation.org>
+Subject: [PATCH 6.15 314/592] f2fs: use vmalloc instead of kvmalloc in .init_{,de}compress_ctx
+Date: Mon, 23 Jun 2025 15:04:32 +0200
+Message-ID: <20250623130707.889442312@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +47,157 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Raczynski <j.raczynski@samsung.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 0e629694126ca388916f059453a1c36adde219c4 ]
+[ Upstream commit 70dd07c888451503c3e93b6821e10d1ea1ec9930 ]
 
-When using publicly available tools like 'mdio-tools' to read/write data
-from/to network interface and its PHY via mdiobus, there is no verification of
-parameters passed to the ioctl and it accepts any mdio address.
-Currently there is support for 32 addresses in kernel via PHY_MAX_ADDR define,
-but it is possible to pass higher value than that via ioctl.
-While read/write operation should generally fail in this case,
-mdiobus provides stats array, where wrong address may allow out-of-bounds
-read/write.
+.init_{,de}compress_ctx uses kvmalloc() to alloc memory, it will try
+to allocate physically continuous page first, it may cause more memory
+allocation pressure, let's use vmalloc instead to mitigate it.
 
-Fix that by adding address verification before read/write operation.
-While this excludes this access from any statistics, it improves security of
-read/write operation.
+[Test]
+cd /data/local/tmp
+touch file
+f2fs_io setflags compression file
+f2fs_io getflags file
+for i in $(seq 1 10); do sync; echo 3 > /proc/sys/vm/drop_caches;\
+time f2fs_io write 512 0 4096 zero osync file; truncate -s 0 file;\
+done
 
-Fixes: 080bb352fad00 ("net: phy: Maintain MDIO device and bus statistics")
-Signed-off-by: Jakub Raczynski <j.raczynski@samsung.com>
-Reported-by: Wenjing Shan <wenjing.shan@samsung.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+[Result]
+Before		After		Delta
+21.243		21.694		-2.12%
+
+For compression, we recommend to use ioctl to compress file data in
+background for workaround.
+
+For decompression, only zstd will be affected.
+
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mdio_bus.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/f2fs/compress.c | 23 ++++++++++-------------
+ fs/f2fs/f2fs.h     |  5 +++++
+ 2 files changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
-index 743a63eca7840..d15deb3281edb 100644
---- a/drivers/net/phy/mdio_bus.c
-+++ b/drivers/net/phy/mdio_bus.c
-@@ -754,6 +754,9 @@ int __mdiobus_read(struct mii_bus *bus, int addr, u32 regnum)
+diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
+index 9b94810675c19..5a9b6d5f3ae0a 100644
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -178,8 +178,7 @@ void f2fs_compress_ctx_add_page(struct compress_ctx *cc, struct folio *folio)
+ #ifdef CONFIG_F2FS_FS_LZO
+ static int lzo_init_compress_ctx(struct compress_ctx *cc)
+ {
+-	cc->private = f2fs_kvmalloc(F2FS_I_SB(cc->inode),
+-				LZO1X_MEM_COMPRESS, GFP_NOFS);
++	cc->private = f2fs_vmalloc(LZO1X_MEM_COMPRESS);
+ 	if (!cc->private)
+ 		return -ENOMEM;
  
- 	WARN_ON_ONCE(!mutex_is_locked(&bus->mdio_lock));
+@@ -189,7 +188,7 @@ static int lzo_init_compress_ctx(struct compress_ctx *cc)
  
-+	if (addr >= PHY_MAX_ADDR)
-+		return -ENXIO;
+ static void lzo_destroy_compress_ctx(struct compress_ctx *cc)
+ {
+-	kvfree(cc->private);
++	vfree(cc->private);
+ 	cc->private = NULL;
+ }
+ 
+@@ -246,7 +245,7 @@ static int lz4_init_compress_ctx(struct compress_ctx *cc)
+ 		size = LZ4HC_MEM_COMPRESS;
+ #endif
+ 
+-	cc->private = f2fs_kvmalloc(F2FS_I_SB(cc->inode), size, GFP_NOFS);
++	cc->private = f2fs_vmalloc(size);
+ 	if (!cc->private)
+ 		return -ENOMEM;
+ 
+@@ -261,7 +260,7 @@ static int lz4_init_compress_ctx(struct compress_ctx *cc)
+ 
+ static void lz4_destroy_compress_ctx(struct compress_ctx *cc)
+ {
+-	kvfree(cc->private);
++	vfree(cc->private);
+ 	cc->private = NULL;
+ }
+ 
+@@ -342,8 +341,7 @@ static int zstd_init_compress_ctx(struct compress_ctx *cc)
+ 	params = zstd_get_params(level, cc->rlen);
+ 	workspace_size = zstd_cstream_workspace_bound(&params.cParams);
+ 
+-	workspace = f2fs_kvmalloc(F2FS_I_SB(cc->inode),
+-					workspace_size, GFP_NOFS);
++	workspace = f2fs_vmalloc(workspace_size);
+ 	if (!workspace)
+ 		return -ENOMEM;
+ 
+@@ -351,7 +349,7 @@ static int zstd_init_compress_ctx(struct compress_ctx *cc)
+ 	if (!stream) {
+ 		f2fs_err_ratelimited(F2FS_I_SB(cc->inode),
+ 				"%s zstd_init_cstream failed", __func__);
+-		kvfree(workspace);
++		vfree(workspace);
+ 		return -EIO;
+ 	}
+ 
+@@ -364,7 +362,7 @@ static int zstd_init_compress_ctx(struct compress_ctx *cc)
+ 
+ static void zstd_destroy_compress_ctx(struct compress_ctx *cc)
+ {
+-	kvfree(cc->private);
++	vfree(cc->private);
+ 	cc->private = NULL;
+ 	cc->private2 = NULL;
+ }
+@@ -423,8 +421,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
+ 
+ 	workspace_size = zstd_dstream_workspace_bound(max_window_size);
+ 
+-	workspace = f2fs_kvmalloc(F2FS_I_SB(dic->inode),
+-					workspace_size, GFP_NOFS);
++	workspace = f2fs_vmalloc(workspace_size);
+ 	if (!workspace)
+ 		return -ENOMEM;
+ 
+@@ -432,7 +429,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
+ 	if (!stream) {
+ 		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
+ 				"%s zstd_init_dstream failed", __func__);
+-		kvfree(workspace);
++		vfree(workspace);
+ 		return -EIO;
+ 	}
+ 
+@@ -444,7 +441,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
+ 
+ static void zstd_destroy_decompress_ctx(struct decompress_io_ctx *dic)
+ {
+-	kvfree(dic->private);
++	vfree(dic->private);
+ 	dic->private = NULL;
+ 	dic->private2 = NULL;
+ }
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index 4f34a7d9760a1..34e4ae2a5f5ba 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3527,6 +3527,11 @@ static inline void *f2fs_kvzalloc(struct f2fs_sb_info *sbi,
+ 	return f2fs_kvmalloc(sbi, size, flags | __GFP_ZERO);
+ }
+ 
++static inline void *f2fs_vmalloc(size_t size)
++{
++	return vmalloc(size);
++}
 +
- 	if (bus->read)
- 		retval = bus->read(bus, addr, regnum);
- 	else
-@@ -783,6 +786,9 @@ int __mdiobus_write(struct mii_bus *bus, int addr, u32 regnum, u16 val)
- 
- 	WARN_ON_ONCE(!mutex_is_locked(&bus->mdio_lock));
- 
-+	if (addr >= PHY_MAX_ADDR)
-+		return -ENXIO;
-+
- 	if (bus->write)
- 		err = bus->write(bus, addr, regnum, val);
- 	else
+ static inline int get_extra_isize(struct inode *inode)
+ {
+ 	return F2FS_I(inode)->i_extra_isize / sizeof(__le32);
 -- 
 2.39.5
 
