@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E95E1EE7C6;
-	Mon, 23 Jun 2025 21:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE27B1E22E6;
+	Mon, 23 Jun 2025 21:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714809; cv=none; b=NURWYxxV+Y01PdBEP/p6Uc1+A2GhlLY57HwUXCuPXsBBIeIGy9sk9RpkWoZfU/xsV0BsoamagQQbZdW16P2A+BJ0I5QQYa2jb0HgODGhvlx3vmtbtTISfALiAQnM5IlRq60W3wyV65diyHJAW9emuqO3pB/wMwVBDbnk8Qa2sFI=
+	t=1750714811; cv=none; b=L4wnXmgbfBOtvz4L84eKll6erhRy1GOR84kVcrirSWQucXNYjwzVSoSXfNb3OLMs12E+4lymV6lWUFoHtssTVUvkaGZafotfUyji20+JUh69fMsyrDkisWmJe5HnCIaMddUIbJvADKoOjZhYRCWd4JvGrejHSEwLW2oGScVaR5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714809; c=relaxed/simple;
-	bh=dlUosOSeJGjNd9flPs+UjVMaZ/CBofuY9Py5qDh/svo=;
+	s=arc-20240116; t=1750714811; c=relaxed/simple;
+	bh=twKijJsBYAABSvyl0Vhhiw2JIMPuSuHExDv1CfymBus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yc/pZNp0/z5IeT+KFa5ugsiHti0UzNivphaReXmUYbpPHxAlVPllaYMaEK/7NU8K+4AwHOvzVMqURfDvpojvWDNkopEzI00JvNplmcY8hENkWud4RxZfOrUmLfzT2IzV6y1iHfzxC7/IRi+CguCcfbe3N6AKKOMhKKhWQ7Yv4Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXq3Yu21; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P0za+sKuyGXQnNy75HWFwJIOkqNS1dRN+eeoltgVGJ1DPP05ym54Z4626L26QT+F5Sj7IF6ImSpjOieDMdinKuGvxOnOwMP0PWBQCcBElyr85MFiCtVA5qcV/ffAXzRG2/4+Lz3+vl+KG1UBNFZHj38I7ghFSgffPrr/QXJPi38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Khr6l9QY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXq3Yu21"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8D9C4CEEA;
-	Mon, 23 Jun 2025 21:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Khr6l9QY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B7AC4CEEA;
+	Mon, 23 Jun 2025 21:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714809;
-	bh=dlUosOSeJGjNd9flPs+UjVMaZ/CBofuY9Py5qDh/svo=;
+	s=korg; t=1750714811;
+	bh=twKijJsBYAABSvyl0Vhhiw2JIMPuSuHExDv1CfymBus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sXq3Yu21866LazTGzdNUdTHgoFr02A1oZTuk+sZ2LeK7v71L+ukVCrAh+FcSPY08S
-	 I3Z2xyHUnvS17JIrbyq7dFTvaS6UP8PgI7Mm+C0lS8BAqwRVYko30GqlrDhJEawLX2
-	 zuVnM0eB6KiDLb9KwFc8HfUeRxMXY9KkDjJdsf1U=
+	b=Khr6l9QYmdhPI2xWgYbBuY1On/i991n24FUZE3ktdh7MZVSBiq+B4fDaJOe10qb/Y
+	 5HMeEel8A069eUg1nWteoVJ+rDXJa+U1YKuwTkGoXBWvewkd7UtiSci2tHeaXl/FDB
+	 LzuyeMr8hrv3es+3hlswRvIYyNfD6+ziaRtXfO28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.12 158/414] accel/ivpu: Use firmware names from upstream repo
-Date: Mon, 23 Jun 2025 15:04:55 +0200
-Message-ID: <20250623130645.989583910@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.15 231/411] Input: ims-pcu - check record size in ims_pcu_flash_firmware()
+Date: Mon, 23 Jun 2025 15:06:15 +0200
+Message-ID: <20250623130639.474281340@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +46,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 1c2c0e29f24360b3130c005a3c261cb8c7b363c6 upstream.
+commit a95ef0199e80f3384eb992889322957d26c00102 upstream.
 
-Use FW names from linux-firmware repo instead of deprecated ones.
-The vpu_37xx.bin style names were never released and were only used for
-internal testing, so it is safe to remove them.
+The "len" variable comes from the firmware and we generally do
+trust firmware, but it's always better to double check.  If the "len"
+is too large it could result in memory corruption when we do
+"memcpy(fragment->data, rec->data, len);"
 
-Fixes: c140244f0cfb ("accel/ivpu: Add initial Panther Lake support")
-Cc: stable@vger.kernel.org # v6.13+
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://lore.kernel.org/r/20250506092030.280276-1-jacek.lawrynowicz@linux.intel.com
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/131fd1ae92c828ee9f4fa2de03d8c210ae1f3524.1748463049.git.dan.carpenter@linaro.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_fw.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/input/misc/ims-pcu.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/accel/ivpu/ivpu_fw.c
-+++ b/drivers/accel/ivpu/ivpu_fw.c
-@@ -53,18 +53,18 @@ static struct {
- 	int gen;
- 	const char *name;
- } fw_names[] = {
--	{ IVPU_HW_IP_37XX, "vpu_37xx.bin" },
-+	{ IVPU_HW_IP_37XX, "intel/vpu/vpu_37xx_v1.bin" },
- 	{ IVPU_HW_IP_37XX, "intel/vpu/vpu_37xx_v0.0.bin" },
--	{ IVPU_HW_IP_40XX, "vpu_40xx.bin" },
-+	{ IVPU_HW_IP_40XX, "intel/vpu/vpu_40xx_v1.bin" },
- 	{ IVPU_HW_IP_40XX, "intel/vpu/vpu_40xx_v0.0.bin" },
--	{ IVPU_HW_IP_50XX, "vpu_50xx.bin" },
-+	{ IVPU_HW_IP_50XX, "intel/vpu/vpu_50xx_v1.bin" },
- 	{ IVPU_HW_IP_50XX, "intel/vpu/vpu_50xx_v0.0.bin" },
- };
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -845,6 +845,12 @@ static int ims_pcu_flash_firmware(struct
+ 		addr = be32_to_cpu(rec->addr) / 2;
+ 		len = be16_to_cpu(rec->len);
  
- /* Production fw_names from the table above */
--MODULE_FIRMWARE("intel/vpu/vpu_37xx_v0.0.bin");
--MODULE_FIRMWARE("intel/vpu/vpu_40xx_v0.0.bin");
--MODULE_FIRMWARE("intel/vpu/vpu_50xx_v0.0.bin");
-+MODULE_FIRMWARE("intel/vpu/vpu_37xx_v1.bin");
-+MODULE_FIRMWARE("intel/vpu/vpu_40xx_v1.bin");
-+MODULE_FIRMWARE("intel/vpu/vpu_50xx_v1.bin");
- 
- static int ivpu_fw_request(struct ivpu_device *vdev)
- {
++		if (len > sizeof(pcu->cmd_buf) - 1 - sizeof(*fragment)) {
++			dev_err(pcu->dev,
++				"Invalid record length in firmware: %d\n", len);
++			return -EINVAL;
++		}
++
+ 		fragment = (void *)&pcu->cmd_buf[1];
+ 		put_unaligned_le32(addr, &fragment->addr);
+ 		fragment->len = len;
 
 
