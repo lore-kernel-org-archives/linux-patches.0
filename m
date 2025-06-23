@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C681E1A05;
-	Mon, 23 Jun 2025 21:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585F41E1A05;
+	Mon, 23 Jun 2025 21:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715073; cv=none; b=Sxl2BT9ThcJujWhqqw1y2d2n5pAp48hP36Hlk8BVRug015/uXwQqH8/TgeppM3l/+klXf+rCWKh4w1kyYfkUpiv7pIK52rwq6aeqkHOKt1zNJDn2PUQdyaEPK75tYMzklRhR/RrMuY66LSKiMaier08tynhHYlKzr3UKJ6Y6k4k=
+	t=1750715075; cv=none; b=s496jgoGHQC9NtCjKWa3IKFvjUdWSUvBR3gyFlPtgrDXxtZhhLsqVGT7zKnGC7BlJfZYlmB1f4kxbwI0XGiFn1uWKJ2HTBVv7IGYBp3NsY3ArKI2YKVqmv/BgdYI6dFFsQXGc3yOEOZ5MSv57KLXl2Nho8ccj7+JHo0LQQzGvmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715073; c=relaxed/simple;
-	bh=P/amph1TE09FI6+nfj+qibd2yYmxBJNoFHDfEzjI9wI=;
+	s=arc-20240116; t=1750715075; c=relaxed/simple;
+	bh=vQpEAsV+SHEVNdOhjk+0X5i7tRMpPGRNTEu4SaptXlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aqfRF/OfG/QSaI0IJ7gJbp5+WdWrdDK7zjC1gwXEwFFJJcIRsbIvNaFlgD5KrwCmnv2rJpZNvL14FLSfSmYlU7WQfSikERq5wBD+8mGCTVldXfbLKdRFXRN79qHvLfmyrRgyXxQqAlQ+QVYKLUIagZH5N26LRk4Paf3DRob7EL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PkwpLMLy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gzWAsD5Y9DaqbP2dLveeTIs0S/eFFBEl53zRS6CTUkgMEXDXNL5veoHHE14zzheS6cf1Dvhf4boBDUSNXP8M2LISK7tnR8BgtLkd68HUR+nI5i6bFE1ejOmwrrLfz7JEOO/b/c2ztSUw6Up121Oo/TaGm531vJGFkgE/Jdpl7oY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ck3JzLto; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PkwpLMLy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC4CC4CEEA;
-	Mon, 23 Jun 2025 21:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ck3JzLto"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6981C4CEEA;
+	Mon, 23 Jun 2025 21:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715072;
-	bh=P/amph1TE09FI6+nfj+qibd2yYmxBJNoFHDfEzjI9wI=;
+	s=korg; t=1750715075;
+	bh=vQpEAsV+SHEVNdOhjk+0X5i7tRMpPGRNTEu4SaptXlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PkwpLMLy71Uy6sAeCe3UwAubgBhnwog97/S8plpVTzTHCKWOXacwhvRHda07HPCD0
-	 PH2SJCjBVsRwvERKVTg4ExEYMSU+GqCyMfZyxkGv6mxUQ5c6e2noYDxYhsLsN8w/QA
-	 juTseP46A5PBhNh6bF3HWmSKcNDGZ0bAO65ZmShw=
+	b=ck3JzLtoBk/G+51dnWljmkmg7HvMcNSYI/M+rSKB2XX+xfF25R3yZ9I+Er0Nm9VBk
+	 49HkfTMKkV/wlxavHG9paNs8jLVOlixXlDz8My+gOhNUhLwFv2HkA913yVuaTet1xU
+	 lfC08AQFQnSiPmspgk1sNnsTiLIiEldq3J1pCuj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 213/508] xfs: reset rootdir extent size hint after growfsrt
-Date: Mon, 23 Jun 2025 15:04:18 +0200
-Message-ID: <20250623130650.504681145@linuxfoundation.org>
+Subject: [PATCH 6.6 178/290] software node: Correct a OOB check in software_node_get_reference_args()
+Date: Mon, 23 Jun 2025 15:07:19 +0200
+Message-ID: <20250623130632.233087368@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,97 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit a24cae8fc1f13f6f6929351309f248fd2e9351ce ]
+[ Upstream commit 31e4e12e0e9609850cefd4b2e1adf782f56337d6 ]
 
-If growfsrt is run on a filesystem that doesn't have a rt volume, it's
-possible to change the rt extent size.  If the root directory was
-previously set up with an inherited extent size hint and rtinherit, it's
-possible that the hint is no longer a multiple of the rt extent size.
-Although the verifiers don't complain about this, xfs_repair will, so if
-we detect this situation, log the root directory to clean it up.  This
-is still racy, but it's better than nothing.
+software_node_get_reference_args() wants to get @index-th element, so
+the property value requires at least '(index + 1) * sizeof(*ref)' bytes
+but that can not be guaranteed by current OOB check, and may cause OOB
+for malformed property.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: "Darrick J. Wong" <djwong@kernel.org>
+Fix by using as OOB check '((index + 1) * sizeof(*ref) > prop->length)'.
+
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20250414-fix_swnode-v2-1-9c9e6ae11eab@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_rtalloc.c | 40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ drivers/base/swnode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/xfs/xfs_rtalloc.c b/fs/xfs/xfs_rtalloc.c
-index 149fcfc485d89..fc21b4e81ade8 100644
---- a/fs/xfs/xfs_rtalloc.c
-+++ b/fs/xfs/xfs_rtalloc.c
-@@ -915,6 +915,39 @@ xfs_alloc_rsum_cache(
- 		xfs_warn(mp, "could not allocate realtime summary cache");
- }
+diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
+index 079bd14bdedc7..a7a3e3b66bb5e 100644
+--- a/drivers/base/swnode.c
++++ b/drivers/base/swnode.c
+@@ -518,7 +518,7 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
+ 	if (prop->is_inline)
+ 		return -EINVAL;
  
-+/*
-+ * If we changed the rt extent size (meaning there was no rt volume previously)
-+ * and the root directory had EXTSZINHERIT and RTINHERIT set, it's possible
-+ * that the extent size hint on the root directory is no longer congruent with
-+ * the new rt extent size.  Log the rootdir inode to fix this.
-+ */
-+static int
-+xfs_growfs_rt_fixup_extsize(
-+	struct xfs_mount	*mp)
-+{
-+	struct xfs_inode	*ip = mp->m_rootip;
-+	struct xfs_trans	*tp;
-+	int			error = 0;
-+
-+	xfs_ilock(ip, XFS_IOLOCK_EXCL);
-+	if (!(ip->i_diflags & XFS_DIFLAG_RTINHERIT) ||
-+	    !(ip->i_diflags & XFS_DIFLAG_EXTSZINHERIT))
-+		goto out_iolock;
-+
-+	error = xfs_trans_alloc_inode(ip, &M_RES(mp)->tr_ichange, 0, 0, false,
-+			&tp);
-+	if (error)
-+		goto out_iolock;
-+
-+	xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
-+	error = xfs_trans_commit(tp);
-+	xfs_iunlock(ip, XFS_ILOCK_EXCL);
-+
-+out_iolock:
-+	xfs_iunlock(ip, XFS_IOLOCK_EXCL);
-+	return error;
-+}
-+
- /*
-  * Visible (exported) functions.
-  */
-@@ -944,6 +977,7 @@ xfs_growfs_rt(
- 	xfs_sb_t	*sbp;		/* old superblock */
- 	xfs_fsblock_t	sumbno;		/* summary block number */
- 	uint8_t		*rsum_cache;	/* old summary cache */
-+	xfs_agblock_t	old_rextsize = mp->m_sb.sb_rextsize;
+-	if (index * sizeof(*ref) >= prop->length)
++	if ((index + 1) * sizeof(*ref) > prop->length)
+ 		return -ENOENT;
  
- 	sbp = &mp->m_sb;
- 
-@@ -1177,6 +1211,12 @@ xfs_growfs_rt(
- 	if (error)
- 		goto out_free;
- 
-+	if (old_rextsize != in->extsize) {
-+		error = xfs_growfs_rt_fixup_extsize(mp);
-+		if (error)
-+			goto out_free;
-+	}
-+
- 	/* Update secondary superblocks now the physical grow has completed */
- 	error = xfs_update_secondary_sbs(mp);
- 
+ 	ref_array = prop->pointer;
 -- 
 2.39.5
 
