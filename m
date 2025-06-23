@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAB92AD04;
-	Mon, 23 Jun 2025 21:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D112AD04;
+	Mon, 23 Jun 2025 21:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714274; cv=none; b=nBXEG/OKkmi8RjrmwMLVdlrJEwNt2kIpgZH0INH46Qz/jR3IWa6kpxxqlf9OcQ8aD8mE/euQwojUUUmCC3ud5/zWW2J+bCAKP4R0qloxQmtBmvzyXazvnopypUR2V5r+6VAZBpRWKzsbvHra2Tu1FC/J0FFNO463hgdsCmI44gI=
+	t=1750714277; cv=none; b=oF6aoBIei7YI8F3N99bDW5z2Wkj3MrHms92qtNAjUMPSZR86HOmldx6fVjR49mDD5PmJc2KvnIJXIvM2vxRCF3L4CxRIn6NbmFW8kGZa5VsYrRFm4cvsGEfo+JQdUXfu+kL3SDhPPni/GCYcRdYW464Hjt3LDJcFk77A2jdrzGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714274; c=relaxed/simple;
-	bh=zM/FZ5clxAmeDtVvZnmwh9zu/mn51fMehkDOg3kQPL8=;
+	s=arc-20240116; t=1750714277; c=relaxed/simple;
+	bh=0iNWnCOU3YmM3HNday1VL4pnMHDnYnknhfJc3SKqSe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LYGI7RzBms5BRqE7QctEO5r8Ce/tVy5Xks+nPsQgcLU/DCGouIGEzKnVnX2JHQyUoTrJhZdIKehm02lxEgWIG5PdaDP4EGDwwr3Tinr6AGe3Fa0F7jKm19B9yX1tr2wspdtgshJwRKr2TainioFYvXPJOsDwHM5WDWyitqrvCvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9iwDhiV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kbRpR8PPeRch77lMi3fu61FNTtctVz2qg8Ahuo7tSJNZUfsjAXNxJKJ50zUbzbZtax7xoD0VBM33H+ejkZbkIS7yLDjzsrw37lWqvjYNsZBHemBpMt1eMFQGk1hoIs6Cp162kgTgiGv4M5UooesIEm4esYtrdn8DMVFdn/FpK0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vH4z3Yrv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9iwDhiV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FF1C4CEEA;
-	Mon, 23 Jun 2025 21:31:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vH4z3Yrv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47CDC4CEEA;
+	Mon, 23 Jun 2025 21:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714274;
-	bh=zM/FZ5clxAmeDtVvZnmwh9zu/mn51fMehkDOg3kQPL8=;
+	s=korg; t=1750714277;
+	bh=0iNWnCOU3YmM3HNday1VL4pnMHDnYnknhfJc3SKqSe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w9iwDhiVelKUugk45Pp5kmbJcaDsrR7oYfpIv8R58sXNP8jb/PQdfd2m376CoQiO/
-	 oYig1+1/5MxFEaEP8vD98pXSuxAH6TTg2gFYqgVK3Rp9Rww7LBvaARcqXxaUHO+bF1
-	 6E3ngp2EgjHVHhP3ieT5tLwgKqEPszo9V93u7SM4=
+	b=vH4z3Yrv+TJRPpGq6baRnsiPWxHPtkhd4o36uYL3in7nligD8OvlFkSj5ZZM/Vozl
+	 gcfAvD30/olOgduAcmrrOEJ6nu7MEBREbFs+4HPyrNQoPmfb6Boql7nfgC7RaLFTxN
+	 LR0JlVPctV1aTgp424fW4W0U0iwG7PGyV8Uo71fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Da Xue <da@libre.computer>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>
-Subject: [PATCH 5.10 196/355] clk: meson-g12a: add missing fclk_div2 to spicc
-Date: Mon, 23 Jun 2025 15:06:37 +0200
-Message-ID: <20250623130632.564080254@linuxfoundation.org>
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Jerry Lv <Jerry.Lv@axis.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 127/290] power: supply: bq27xxx: Retrieve again when busy
+Date: Mon, 23 Jun 2025 15:06:28 +0200
+Message-ID: <20250623130630.748065745@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,43 +46,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Da Xue <da@libre.computer>
+From: Jerry Lv <Jerry.Lv@axis.com>
 
-commit daf004f87c3520c414992893e2eadd5db5f86a5a upstream.
+[ Upstream commit f16d9fb6cf03fdbdefa41a8b32ba1e57afb7ae3d ]
 
-SPICC is missing fclk_div2, which means fclk_div5 and fclk_div7 indexes
-are wrong on this clock. This causes the spicc module to output sclk at
-2.5x the expected rate when clock index 3 is picked.
+Multiple applications may access the battery gauge at the same time, so
+the gauge may be busy and EBUSY will be returned. The driver will set a
+flag to record the EBUSY state, and this flag will be kept until the next
+periodic update. When this flag is set, bq27xxx_battery_get_property()
+will just return ENODEV until the flag is updated.
 
-Adding the missing fclk_div2 resolves this.
+Even if the gauge was busy during the last accessing attempt, returning
+ENODEV is not ideal, and can cause confusion in the applications layer.
 
-[jbrunet: amended commit description]
-Fixes: a18c8e0b7697 ("clk: meson: g12a: add support for the SPICC SCLK Source clocks")
-Cc: stable@vger.kernel.org # 6.1
-Signed-off-by: Da Xue <da@libre.computer>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20250512142617.2175291-1-da@libre.computer
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Instead, retry accessing the I2C to update the flag is as expected, for
+the gauge typically recovers from busy state within a few milliseconds.
+If still failed to access the gauge, the real error code would be returned
+instead of ENODEV (as suggested by Pali Rohár).
+
+Reviewed-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Jerry Lv <Jerry.Lv@axis.com>
+Link: https://lore.kernel.org/r/20250415-foo-fix-v2-1-5b45a395e4cc@axis.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/meson/g12a.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/power/supply/bq27xxx_battery.c     |  2 +-
+ drivers/power/supply/bq27xxx_battery_i2c.c | 13 ++++++++++++-
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/clk/meson/g12a.c
-+++ b/drivers/clk/meson/g12a.c
-@@ -3906,6 +3906,7 @@ static const struct clk_parent_data spic
- 	{ .hw = &g12a_clk81.hw },
- 	{ .hw = &g12a_fclk_div4.hw },
- 	{ .hw = &g12a_fclk_div3.hw },
-+	{ .hw = &g12a_fclk_div2.hw },
- 	{ .hw = &g12a_fclk_div5.hw },
- 	{ .hw = &g12a_fclk_div7.hw },
- };
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index 23c8736567574..e51fa2c694bc6 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -2044,7 +2044,7 @@ static int bq27xxx_battery_get_property(struct power_supply *psy,
+ 	mutex_unlock(&di->lock);
+ 
+ 	if (psp != POWER_SUPPLY_PROP_PRESENT && di->cache.flags < 0)
+-		return -ENODEV;
++		return di->cache.flags;
+ 
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_STATUS:
+diff --git a/drivers/power/supply/bq27xxx_battery_i2c.c b/drivers/power/supply/bq27xxx_battery_i2c.c
+index 886e0a8e2abd1..8877fa333cd02 100644
+--- a/drivers/power/supply/bq27xxx_battery_i2c.c
++++ b/drivers/power/supply/bq27xxx_battery_i2c.c
+@@ -6,6 +6,7 @@
+  *	Andrew F. Davis <afd@ti.com>
+  */
+ 
++#include <linux/delay.h>
+ #include <linux/i2c.h>
+ #include <linux/interrupt.h>
+ #include <linux/module.h>
+@@ -32,6 +33,7 @@ static int bq27xxx_battery_i2c_read(struct bq27xxx_device_info *di, u8 reg,
+ 	struct i2c_msg msg[2];
+ 	u8 data[2];
+ 	int ret;
++	int retry = 0;
+ 
+ 	if (!client->adapter)
+ 		return -ENODEV;
+@@ -48,7 +50,16 @@ static int bq27xxx_battery_i2c_read(struct bq27xxx_device_info *di, u8 reg,
+ 	else
+ 		msg[1].len = 2;
+ 
+-	ret = i2c_transfer(client->adapter, msg, ARRAY_SIZE(msg));
++	do {
++		ret = i2c_transfer(client->adapter, msg, ARRAY_SIZE(msg));
++		if (ret == -EBUSY && ++retry < 3) {
++			/* sleep 10 milliseconds when busy */
++			usleep_range(10000, 11000);
++			continue;
++		}
++		break;
++	} while (1);
++
+ 	if (ret < 0)
+ 		return ret;
+ 
+-- 
+2.39.5
+
 
 
