@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB58253B60;
-	Mon, 23 Jun 2025 13:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB67253B60;
+	Mon, 23 Jun 2025 13:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685314; cv=none; b=EeDn2vK5AX95JXcE3Z9nvhhIcgVl12HG2UYPihp2V7lhY8LAlqnQfspias5w63PziiPbH4s9uAfs0bIEmtBZEfzZY7iKfVUzbUoRcj1Fr/YpZGR40xMkjzFjm56rrZFFl3PZ8aJMbRaQpsBFNrvysswn2fAf8nr2HdN4+0knk9I=
+	t=1750685316; cv=none; b=kGAy9c/SbaLwE5TQVWnTbpF8K7O9B548Ujl/YAAnYG+uhWnKfLkZApub1QV3wuHeWhU9vFes4SrmuNNZ7n4S1L2egAHuxogjX9NMatQwyc/Sr+qPrwVCZidpVXNo0wcbqaZqexIdRCKXAvniR99TqrFih0TKWqznpdET2VW1/iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685314; c=relaxed/simple;
-	bh=ug1azJou2Qd8L8Ahmi8cjcAJzxKhZwmxIrrNPh53nfY=;
+	s=arc-20240116; t=1750685316; c=relaxed/simple;
+	bh=E82peAu0aSz0Phn6LYYzQGu1d4zceDg/ARNWUJy69bg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fVRJTb3Aa0sh59hqCW77ivkzyonRGEPgM/qBuSvGwAQYSJHib3nEvgcQHUzVILOnT0L45L8Kle15abKLkIYRVu1+mgd/+WgyV/7+gE/txY/bTMJk4RYOH2PzE1ceOcmbcJUdv7XfOkUpeTlXefhahXkFb0QFP3v9X1EaDaIktOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUDrA/eZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fA+RftjLbLkDahmQkpbbGq7aFE8sozruiSzmtUuBDCUbvcN91GF1AzAEwO8qMnnF2mOt7vhAImPZjm9oWI/NN3QIalxKOzObtzmb+l1ropbUZdRFV2bfg0svMU+jhpcEYgn9eZwVmws6F5v1qb0LrMCCaiUhGVWGYjybe/5wvWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qu2ye6Yl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUDrA/eZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF74C4CEF1;
-	Mon, 23 Jun 2025 13:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qu2ye6Yl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B53C4CEEA;
+	Mon, 23 Jun 2025 13:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685313;
-	bh=ug1azJou2Qd8L8Ahmi8cjcAJzxKhZwmxIrrNPh53nfY=;
+	s=korg; t=1750685316;
+	bh=E82peAu0aSz0Phn6LYYzQGu1d4zceDg/ARNWUJy69bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VUDrA/eZUvprp0z/+AffM6HTt4271gr5G060Kmw7US1QmZYhmXduKie1rzU6A6FWK
-	 yJUfY4CKmDSMldzCgeWNuLRD7z+XevE7y3cPMcXRcQjIooVBUybR+Yd6K/qbkKHCaf
-	 h+e355uPw9rEinj6WFQttPdRimVZMhb9vqHXoysU=
+	b=Qu2ye6YlYpWCM2Q+b5cjpk8y5v/N8BBJmVhF+IfOgpXCqc0rx0z8EH1373666bW/w
+	 O44KND4mLxH4vCyuTQmIg7nEib/5h0ckpRMTPEjE8w15GeqJCxyXMzNnCk4OnT7YFq
+	 xfGZux0g0dIrq7P2w24dcZ3KleQUBGpiuoihS3+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerrard Tai <gerrard.tai@starlabs.sg>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 084/222] net_sched: red: fix a race in __red_change()
-Date: Mon, 23 Jun 2025 15:06:59 +0200
-Message-ID: <20250623130614.624359584@linuxfoundation.org>
+Subject: [PATCH 5.15 026/411] spi: sh-msiof: Fix maximum DMA transfer size
+Date: Mon, 23 Jun 2025 15:02:50 +0200
+Message-ID: <20250623130633.786400593@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 85a3e0ede38450ea3053b8c45d28cf55208409b8 ]
+[ Upstream commit 0941d5166629cb766000530945e54b4e49680c68 ]
 
-Gerrard Tai reported a race condition in RED, whenever SFQ perturb timer
-fires at the wrong time.
+The maximum amount of data to transfer in a single DMA request is
+calculated from the FIFO sizes (which is technically not 100% correct,
+but a simplification, as it is limited by the maximum word count values
+in the Transmit and Control Data Registers).  However, in case there is
+both data to transmit and to receive, the transmit limit is overwritten
+by the receive limit.
 
-The race is as follows:
+Fix this by using the minimum applicable FIFO size instead.  Move the
+calculation outside the loop, so it is not repeated for each individual
+DMA transfer.
 
-CPU 0                                 CPU 1
-[1]: lock root
-[2]: qdisc_tree_flush_backlog()
-[3]: unlock root
- |
- |                                    [5]: lock root
- |                                    [6]: rehash
- |                                    [7]: qdisc_tree_reduce_backlog()
- |
-[4]: qdisc_put()
+As currently tx_fifo_size is always equal to rx_fifo_size, this bug had
+no real impact.
 
-This can be abused to underflow a parent's qlen.
-
-Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
-should fix the race, because all packets will be purged from the qdisc
-before releasing the lock.
-
-Fixes: 0c8d13ac9607 ("net: sched: red: delay destroying child qdisc on replace")
-Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250611111515.1983366-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fe78d0b7691c0274 ("spi: sh-msiof: Fix FIFO size to 64 word from 256 word")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/d9961767a97758b2614f2ee8afe1bd56dc900a60.1747401908.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_red.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-sh-msiof.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/sch_red.c b/net/sched/sch_red.c
-index 476853ff69894..64532ee591a96 100644
---- a/net/sched/sch_red.c
-+++ b/net/sched/sch_red.c
-@@ -235,7 +235,7 @@ static int red_change(struct Qdisc *sch, struct nlattr *opt,
- 	q->flags = ctl->flags;
- 	q->limit = ctl->limit;
- 	if (child) {
--		qdisc_tree_flush_backlog(q->qdisc);
-+		qdisc_purge_queue(q->qdisc);
- 		old_child = q->qdisc;
- 		q->qdisc = child;
- 	}
+diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
+index b7b3ec76e2cbd..f118dff626d0b 100644
+--- a/drivers/spi/spi-sh-msiof.c
++++ b/drivers/spi/spi-sh-msiof.c
+@@ -919,6 +919,7 @@ static int sh_msiof_transfer_one(struct spi_controller *ctlr,
+ 	void *rx_buf = t->rx_buf;
+ 	unsigned int len = t->len;
+ 	unsigned int bits = t->bits_per_word;
++	unsigned int max_wdlen = 256;
+ 	unsigned int bytes_per_word;
+ 	unsigned int words;
+ 	int n;
+@@ -932,17 +933,17 @@ static int sh_msiof_transfer_one(struct spi_controller *ctlr,
+ 	if (!spi_controller_is_slave(p->ctlr))
+ 		sh_msiof_spi_set_clk_regs(p, t);
+ 
++	if (tx_buf)
++		max_wdlen = min(max_wdlen, p->tx_fifo_size);
++	if (rx_buf)
++		max_wdlen = min(max_wdlen, p->rx_fifo_size);
++
+ 	while (ctlr->dma_tx && len > 15) {
+ 		/*
+ 		 *  DMA supports 32-bit words only, hence pack 8-bit and 16-bit
+ 		 *  words, with byte resp. word swapping.
+ 		 */
+-		unsigned int l = 0;
+-
+-		if (tx_buf)
+-			l = min(round_down(len, 4), p->tx_fifo_size * 4);
+-		if (rx_buf)
+-			l = min(round_down(len, 4), p->rx_fifo_size * 4);
++		unsigned int l = min(round_down(len, 4), max_wdlen * 4);
+ 
+ 		if (bits <= 8) {
+ 			copy32 = copy_bswap32;
 -- 
 2.39.5
 
