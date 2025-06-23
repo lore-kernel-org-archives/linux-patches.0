@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5D51F1522;
-	Mon, 23 Jun 2025 13:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352771F1522;
+	Mon, 23 Jun 2025 13:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684399; cv=none; b=OLW4Vj9wx0HwCyWPRkw6cOmyG6x5CcHHGm1yWd8jihCTBWognmdULEfjlxW8Myw8fPv9L6V4tKFj6MG7jkCfkWGtisrplypyiSHkLqXzL5icpcVs1IYg7BBbUCqtH9lYi81EZ1EXgL4pwJepabR+YnCNyjBLGXCKdXJKM6TxDZA=
+	t=1750684402; cv=none; b=GUhgbCFKzWJYPqwJwqUZTps4KOg58vEDDqXkQAKGYRcX5rCV9owB4mrGilZewm9LKyytz2DgNuhRJDgAXGOj2pZSI23TzUMX8WlElYPYb20dDOeep8bD5MyFrwWZQr2o2bYw8DnyrFr2tfwopuC2xKHzhutFUDDWbkhvwdyrt18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684399; c=relaxed/simple;
-	bh=U3/Jq+4Ezo7afz2XcGApfe0Y11Uk5IYzIddcOfoGG3c=;
+	s=arc-20240116; t=1750684402; c=relaxed/simple;
+	bh=oBTFiNkyZga0r+KH5h7FTjsqxUP3XhGX/NKUVAfTbxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Yro0f7SMNH+6KnxcIkse+7YEuABAHKQ8mXz+8VBzM0JOeTiqRH4K+Su+5svaZgGcBV0uGwlU/sd3O2OCSTSwg18lgsV4O3X0n/6BF3AUra9S1viGQ2GFHs2SC6yDJAySM1WiNcJzSTC1H7s7hlIl/Bgba5SgQUfjxvGhMJ4C4Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzjVGZdX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pt7Y4fldUqH3oF+K57WE8iuBVIQ3h/Fg5EXxDnDmzeQE6+PJxFu70wp9vUoaccxsPT9KUscYTgJLmsrMzQa8EPaFx7INcaSnsisIW4UZIKhrQqfs/gKwumuXZSWeeFHXLZLGrnfSKT9tBSAH3k9cv7AD3gNoWdnka2c+hi0CEGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FB6BXtXE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzjVGZdX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3389BC4CEEA;
-	Mon, 23 Jun 2025 13:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FB6BXtXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE80BC4CEEA;
+	Mon, 23 Jun 2025 13:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684399;
-	bh=U3/Jq+4Ezo7afz2XcGApfe0Y11Uk5IYzIddcOfoGG3c=;
+	s=korg; t=1750684402;
+	bh=oBTFiNkyZga0r+KH5h7FTjsqxUP3XhGX/NKUVAfTbxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzjVGZdXtMdgJLAklbQTZhacgSucRyiQM6+odBhFyRq09VX1G+HAdsPsLmNssaLWz
-	 tIb2Z6L2FGfnsCHxkAnieOh0GxdbgjFj2T+DW79j6o1ZZs+toOtD+yCnXSRGLVXqEz
-	 TOM6UWy41e8CEyKZbH1/U25k0wAo4aZf0xiqM9GQ=
+	b=FB6BXtXExfc630DoXOn53S74gGrWOum3YNHY/9VNmrbF6IlEDQP9vOA5ujDwqmX/s
+	 cb0HLTV9XVOr/dYFzuA+dlxccyCYbCPZLxUZaLIeMPbzdIYyK2sRrYRz6Q3eooDHtO
+	 yZUxOEizBTvZP41nuvtZ2K30tqWwwvvIISj7MqoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jo=C3=A3o=20Paulo=20Gon=C3=A7alves?= <jpaulo.silvagoncalves@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.15 027/592] regulator: max20086: Fix MAX200086 chip id
-Date: Mon, 23 Jun 2025 14:59:45 +0200
-Message-ID: <20250623130700.880103490@linuxfoundation.org>
+	syzbot+fe8264911355151c487f@syzkaller.appspotmail.com,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>
+Subject: [PATCH 6.15 054/592] jfs: validate AG parameters in dbMount() to prevent crashes
+Date: Mon, 23 Jun 2025 15:00:12 +0200
+Message-ID: <20250623130701.541456102@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -44,41 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: João Paulo Gonçalves <jpaulo.silvagoncalves@gmail.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-commit 71406b6d1155d883c80c1b4405939a52f723aa05 upstream.
+commit 37bfb464ddca87f203071b5bd562cd91ddc0b40a upstream.
 
->From MAX20086-MAX20089 datasheet, the id for a MAX20086 is 0x30 and not
-0x40. With the current code, the driver will fail on probe when the
-driver tries to identify the chip id from a MAX20086 device over I2C.
+Validate db_agheight, db_agwidth, and db_agstart in dbMount to catch
+corrupted metadata early and avoid undefined behavior in dbAllocAG.
+Limits are derived from L2LPERCTL, LPERCTL/MAXAG, and CTLTREESIZE:
+
+- agheight: 0 to L2LPERCTL/2 (0 to 5) ensures shift
+  (L2LPERCTL - 2*agheight) >= 0.
+- agwidth: 1 to min(LPERCTL/MAXAG, 2^(L2LPERCTL - 2*agheight))
+  ensures agperlev >= 1.
+  - Ranges: 1-8 (agheight 0-3), 1-4 (agheight 4), 1 (agheight 5).
+  - LPERCTL/MAXAG = 1024/128 = 8 limits leaves per AG;
+    2^(10 - 2*agheight) prevents division to 0.
+- agstart: 0 to CTLTREESIZE-1 - agwidth*(MAXAG-1) keeps ti within
+  stree (size 1365).
+  - Ranges: 0-1237 (agwidth 1), 0-348 (agwidth 8).
+
+UBSAN: shift-out-of-bounds in fs/jfs/jfs_dmap.c:1400:9
+shift exponent -335544310 is negative
+CPU: 0 UID: 0 PID: 5822 Comm: syz-executor130 Not tainted 6.14.0-rc5-syzkaller #0
+Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ ubsan_epilogue lib/ubsan.c:231 [inline]
+ __ubsan_handle_shift_out_of_bounds+0x3c8/0x420 lib/ubsan.c:468
+ dbAllocAG+0x1087/0x10b0 fs/jfs/jfs_dmap.c:1400
+ dbDiscardAG+0x352/0xa20 fs/jfs/jfs_dmap.c:1613
+ jfs_ioc_trim+0x45a/0x6b0 fs/jfs/jfs_discard.c:105
+ jfs_ioctl+0x2cd/0x3e0 fs/jfs/ioctl.c:131
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:906 [inline]
+ __se_sys_ioctl+0xf5/0x170 fs/ioctl.c:892
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
 Cc: stable@vger.kernel.org
-Fixes: bfff546aae50 ("regulator: Add MAX20086-MAX20089 driver")
-Signed-off-by: João Paulo Gonçalves <jpaulo.silvagoncalves@gmail.com>
-Link: https://patch.msgid.link/20250420-fix-max20086-v1-1-8cc9ee0d5a08@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+fe8264911355151c487f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fe8264911355151c487f
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/max20086-regulator.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_dmap.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/regulator/max20086-regulator.c
-+++ b/drivers/regulator/max20086-regulator.c
-@@ -29,7 +29,7 @@
- #define	MAX20086_REG_ADC4		0x09
- 
- /* DEVICE IDs */
--#define MAX20086_DEVICE_ID_MAX20086	0x40
-+#define MAX20086_DEVICE_ID_MAX20086	0x30
- #define MAX20086_DEVICE_ID_MAX20087	0x20
- #define MAX20086_DEVICE_ID_MAX20088	0x10
- #define MAX20086_DEVICE_ID_MAX20089	0x00
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -194,7 +194,11 @@ int dbMount(struct inode *ipbmap)
+ 	    !bmp->db_numag || (bmp->db_numag > MAXAG) ||
+ 	    (bmp->db_maxag >= MAXAG) || (bmp->db_maxag < 0) ||
+ 	    (bmp->db_agpref >= MAXAG) || (bmp->db_agpref < 0) ||
+-	    !bmp->db_agwidth ||
++	    (bmp->db_agheight < 0) || (bmp->db_agheight > (L2LPERCTL >> 1)) ||
++	    (bmp->db_agwidth < 1) || (bmp->db_agwidth > (LPERCTL / MAXAG)) ||
++	    (bmp->db_agwidth > (1 << (L2LPERCTL - (bmp->db_agheight << 1)))) ||
++	    (bmp->db_agstart < 0) ||
++	    (bmp->db_agstart > (CTLTREESIZE - 1 - bmp->db_agwidth * (MAXAG - 1))) ||
+ 	    (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) ||
+ 	    (bmp->db_agl2size < 0) ||
+ 	    ((bmp->db_mapsize - 1) >> bmp->db_agl2size) > MAXAG) {
 
 
