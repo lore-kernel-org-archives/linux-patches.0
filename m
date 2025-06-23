@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7297022156B;
-	Mon, 23 Jun 2025 21:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA410224F6;
+	Mon, 23 Jun 2025 21:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714228; cv=none; b=jjoOkD7fdCJF5SrNxUfFMTFcQ9GsKrt39SlqPbKeHDJxg4sJFpbeCoSXmF+4PRTYh0aI0XoRgMQkKkPLGH/+k9N6wySz01OOtOtPh1lO/QVIUWkVRlqYv7RZtmckJPyNoJNegsb/4raX0Rf0BQtIphA3XRZ2UPafn39K4Fim6t4=
+	t=1750714230; cv=none; b=lPvosRknePN2rSH/CrDl5UwlnE2gn6qT1TB/LTeWzFhGhWzxqVTJDc8t6w6Zi+2gPZhKKTe/Tpn/5owuYrct10sSgyMMDfJpwkfpY6fBMQP+KvncB7kXISFwav5qjaCWYpHTVM2O8K39RFR0Y8IQtExNec6/KDgW1cgEPIEX6s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714228; c=relaxed/simple;
-	bh=T301ESbOih4yi2wHzSfIP/HE1C9qAlWtyqhG8l/vi1g=;
+	s=arc-20240116; t=1750714230; c=relaxed/simple;
+	bh=Nq05HT5hjhPoZL4Hsu+RssW1c+QcmfC3+gNQiaxV16k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OzvzsJRvMlyDhRa+7WM6cZANcc1pYA7Iru4xsf105MBbtUlX4mB5hVCo7WdqhreSpY7PvJLFulWhbyyfi1lwd/ErHJ+RA0sRvuE24zqrHWttLhl1vTtGMLArXu7D5nOK3OseQh0f49TEzGLwo802a6S5hgyjbMtsBkI0MK/dUo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGl5Yz75; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BgviGloYPwTmHNpjGJyED4B3nb8WDifUY5I1hbFT4V6I6jjXnB2R/jytJflvqqEYop6A/hLvQ6PwJqHyHY7WvZyO2WtLrnTTEFSRnc9gExlAyTi4cx56AVDvVI5Xh0Y+e469Uin4sn5RpofZZtKmTWVkx7lHXTcC1Vy3Kgwenuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ga4NavzL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGl5Yz75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A6DC4CEEA;
-	Mon, 23 Jun 2025 21:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ga4NavzL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73EEDC4CEEA;
+	Mon, 23 Jun 2025 21:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714228;
-	bh=T301ESbOih4yi2wHzSfIP/HE1C9qAlWtyqhG8l/vi1g=;
+	s=korg; t=1750714230;
+	bh=Nq05HT5hjhPoZL4Hsu+RssW1c+QcmfC3+gNQiaxV16k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGl5Yz75hgh+LLi2JBTZZiUjSyn9N/nIl7GKs4/jyZYDKbdADPqu3n490DdbHF5+g
-	 BsSF5BJtLIfUyho4s9iXwLxIunOEHd1yweZP88XeV03Ay6BO8C1QEeCX4r3jNOfip/
-	 sUoPnQ9ZOAMeh5MIPhMnxgJ4HetUHYV0bP8nlAvc=
+	b=ga4NavzL+rAK1JqxeaX0FTimThxUO5AS1jtAq2og3eIaquAIEpTtbnGVxhcFAT652
+	 Dqw4r+AH0L7Wlse9PlsHnQA9+UkGhU9JQCIp4JTewuXsnVDSq6qxH0NGCLUiMLVDKi
+	 OSAWhR4Z2YbxFpK+j84LQINYvWK19EnkQCvOrSUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Winchenbach <swinchenbach@arka.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 159/508] iio: filter: admv8818: fix integer overflow
-Date: Mon, 23 Jun 2025 15:03:24 +0200
-Message-ID: <20250623130649.190566248@linuxfoundation.org>
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 193/355] fbdev: Fix fb_set_var to prevent null-ptr-deref in fb_videomode_to_var
+Date: Mon, 23 Jun 2025 15:06:34 +0200
+Message-ID: <20250623130632.480139464@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +46,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sam Winchenbach <swinchenbach@arka.org>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit fb6009a28d77edec4eb548b5875dae8c79b88467 ]
+commit 05f6e183879d9785a3cdf2f08a498bc31b7a20aa upstream.
 
-HZ_PER_MHZ is only unsigned long. This math overflows, leading to
-incorrect results.
+If fb_add_videomode() in fb_set_var() fails to allocate memory for
+fb_videomode, later it may lead to a null-ptr dereference in
+fb_videomode_to_var(), as the fb_info is registered while not having the
+mode in modelist that is expected to be there, i.e. the one that is
+described in fb_info->var.
 
-Fixes: f34fe888ad05 ("iio:filter:admv8818: add support for ADMV8818")
-Signed-off-by: Sam Winchenbach <swinchenbach@arka.org>
-Link: https://patch.msgid.link/20250328174831.227202-4-sam.winchenbach@framepointer.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+================================================================
+general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 1 PID: 30371 Comm: syz-executor.1 Not tainted 5.10.226-syzkaller #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+RIP: 0010:fb_videomode_to_var+0x24/0x610 drivers/video/fbdev/core/modedb.c:901
+Call Trace:
+ display_to_var+0x3a/0x7c0 drivers/video/fbdev/core/fbcon.c:929
+ fbcon_resize+0x3e2/0x8f0 drivers/video/fbdev/core/fbcon.c:2071
+ resize_screen drivers/tty/vt/vt.c:1176 [inline]
+ vc_do_resize+0x53a/0x1170 drivers/tty/vt/vt.c:1263
+ fbcon_modechanged+0x3ac/0x6e0 drivers/video/fbdev/core/fbcon.c:2720
+ fbcon_update_vcs+0x43/0x60 drivers/video/fbdev/core/fbcon.c:2776
+ do_fb_ioctl+0x6d2/0x740 drivers/video/fbdev/core/fbmem.c:1128
+ fb_ioctl+0xe7/0x150 drivers/video/fbdev/core/fbmem.c:1203
+ vfs_ioctl fs/ioctl.c:48 [inline]
+ __do_sys_ioctl fs/ioctl.c:753 [inline]
+ __se_sys_ioctl fs/ioctl.c:739 [inline]
+ __x64_sys_ioctl+0x19a/0x210 fs/ioctl.c:739
+ do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
+ entry_SYSCALL_64_after_hwframe+0x67/0xd1
+================================================================
+
+The reason is that fb_info->var is being modified in fb_set_var(), and
+then fb_videomode_to_var() is called. If it fails to add the mode to
+fb_info->modelist, fb_set_var() returns error, but does not restore the
+old value of fb_info->var. Restore fb_info->var on failure the same way
+it is done earlier in the function.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/filter/admv8818.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/core/fbmem.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/filter/admv8818.c b/drivers/iio/filter/admv8818.c
-index a50a8ea2f8dda..831427aa89d83 100644
---- a/drivers/iio/filter/admv8818.c
-+++ b/drivers/iio/filter/admv8818.c
-@@ -152,7 +152,7 @@ static int __admv8818_hpf_select(struct admv8818_state *st, u64 freq)
- 	}
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -1062,8 +1062,10 @@ fb_set_var(struct fb_info *info, struct
+ 	    !list_empty(&info->modelist))
+ 		ret = fb_add_videomode(&mode, &info->modelist);
  
- 	/* Close HPF frequency gap between 12 and 12.5 GHz */
--	if (freq >= 12000 * HZ_PER_MHZ && freq <= 12500 * HZ_PER_MHZ) {
-+	if (freq >= 12000ULL * HZ_PER_MHZ && freq < 12500ULL * HZ_PER_MHZ) {
- 		hpf_band = 3;
- 		hpf_step = 15;
- 	}
--- 
-2.39.5
-
+-	if (ret)
++	if (ret) {
++		info->var = old_var;
+ 		return ret;
++	}
+ 
+ 	event.info = info;
+ 	event.data = &mode;
 
 
