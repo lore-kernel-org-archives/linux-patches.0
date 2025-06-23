@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FB81AD3FA;
-	Mon, 23 Jun 2025 21:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A091E22E6;
+	Mon, 23 Jun 2025 21:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715692; cv=none; b=R2V6TLTpya/ZK5p721pFJslTeekdLHOkS8wBFzgT0hTB0JkFcF66qeV9ZcVb3DLtO0VPeoKDErhcwMwm4TT0ZnyEyyaIG0b8f3LHHku+CQNu7K88+wsm+5j7RGjM1HsehMfIpwcL5E40bV1mVokbPvTvZFpGfKAkFsl1vXWP6b4=
+	t=1750715695; cv=none; b=nZIjwlSf39J2pYKs/Bil3t5rD/pM7cVO52XSBV92vsxV7oZ4VpqojIAFbVWL+981BXYbXNboFDMYFlnEEGD8vP/Ova1oCZ74RRXaGJN7X6bVk/TsQSCiY95ku3J9yz43VJ7HZD9ukEDonYbykAxlXImxYhKVck4Lul3XEiQ3sww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715692; c=relaxed/simple;
-	bh=Bj1KRaAAZuKGjU7TEgNsGXSy/vw3GAyKuKS06LGHFN4=;
+	s=arc-20240116; t=1750715695; c=relaxed/simple;
+	bh=7D8sygOiYLG/JKLaIwF4IgNyZkz7lZqO2LPcf9G/+mA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OiIDXFiZYSYHOM9EAqVxRiQTUFqkEPI59PLWRKk/GYc1FOLd8q+EiIyU1LtYQT496xF5zJ3a0fYdrpUux/tdWxpsTg4Y8L95TX3JI+KZ5ZAKdcWnUqZSCY3QNKdRwK3NqaZh6FiXXO4GRLGqn0gzW4p25YuzUGAtPBO0suIYxeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wt4B3qHe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sT+wBIVgbFGdAdOGR6j2NBFMraS45qj1W4RVQM9iQTQKEF7lGlRf3r1pAsCx7zzJRBpKPVqCwhR4prWAFTUJLjeWJ3OyqMJrO2boN83oHYmbbAnQa6aK5mORs5m6XOr4kZTfOBI5bhg2h/KetObEPzrkNZ4rE7wducbFHT/bYvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PItb/Db1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wt4B3qHe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49FDAC4CEEA;
-	Mon, 23 Jun 2025 21:54:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PItb/Db1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CD3C4CEEA;
+	Mon, 23 Jun 2025 21:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715692;
-	bh=Bj1KRaAAZuKGjU7TEgNsGXSy/vw3GAyKuKS06LGHFN4=;
+	s=korg; t=1750715695;
+	bh=7D8sygOiYLG/JKLaIwF4IgNyZkz7lZqO2LPcf9G/+mA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wt4B3qHe39Uz9F2zXw6/L/RsvmdmYTM3YDz9UV2Mo+pwuqnO0v760TAv0FM70Jj6K
-	 AuOpjA5LKwrElbBpncJful6XzCR+60CpMX0rs221N8HBiaJoNPgDd0gLolMEhKCRXv
-	 WwfUsLB0I8seRPaUZZ1+yXo2dfHAXe/Zd8KE61is=
+	b=PItb/Db1X2u0sYckk5NOk00y/rG2pI7+44LRfI+85PKewjbM7itUT5tzxd8aG4xKE
+	 5jElWRWFa/p/J/9Tx7iSNxMi/JAFKpymuhKhIAM6Qs36f+CLWpm2FnnuRLxm9q6/tR
+	 /N73JEYGUWsjMYjFQBlFyAiG/DlnLcxFdAwReZ6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 215/290] cifs: deal with the channel loading lag while picking channels
-Date: Mon, 23 Jun 2025 15:07:56 +0200
-Message-ID: <20250623130633.396427507@linuxfoundation.org>
+	Gavi Teitz <gavi@nvidia.com>,
+	Roi Dayan <roid@nvidia.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 256/508] net/mlx5: Fix return value when searching for existing flow group
+Date: Mon, 23 Jun 2025 15:05:01 +0200
+Message-ID: <20250623130651.551789964@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,82 +51,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-commit 66d590b828b1fd9fa337047ae58fe1c4c6f43609 upstream.
+[ Upstream commit 8ec40e3f1f72bf8f8accf18020d487caa99f46a4 ]
 
-Our current approach to select a channel for sending requests is this:
-1. iterate all channels to find the min and max queue depth
-2. if min and max are not the same, pick the channel with min depth
-3. if min and max are same, round robin, as all channels are equally loaded
+When attempting to add a rule to an existing flow group, if a matching
+flow group exists but is not active, the error code returned should be
+EAGAIN, so that the rule can be added to the matching flow group once
+it is active, rather than ENOENT, which indicates that no matching
+flow group was found.
 
-The problem with this approach is that there's a lag between selecting
-a channel and sending the request (that increases the queue depth on the channel).
-While these numbers will eventually catch up, there could be a skew in the
-channel usage, depending on the application's I/O parallelism and the server's
-speed of handling requests.
-
-With sufficient parallelism, this lag can artificially increase the queue depth,
-thereby impacting the performance negatively.
-
-This change will change the step 1 above to start the iteration from the last
-selected channel. This is to reduce the skew in channel usage even in the presence
-of this lag.
-
-Fixes: ea90708d3cf3 ("cifs: use the least loaded channel for sending requests")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bd71b08ec2ee ("net/mlx5: Support multiple updates of steering rules in parallel")
+Signed-off-by: Gavi Teitz <gavi@nvidia.com>
+Signed-off-by: Roi Dayan <roid@nvidia.com>
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250610151514.1094735-4-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/transport.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -1025,14 +1025,16 @@ struct TCP_Server_Info *cifs_pick_channe
- 	uint index = 0;
- 	unsigned int min_in_flight = UINT_MAX, max_in_flight = 0;
- 	struct TCP_Server_Info *server = NULL;
--	int i;
-+	int i, start, cur;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+index 2717450e96661..b4c0a6dd171fd 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+@@ -1918,6 +1918,7 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
+ 	struct mlx5_flow_handle *rule;
+ 	struct match_list *iter;
+ 	bool take_write = false;
++	bool try_again = false;
+ 	struct fs_fte *fte;
+ 	u64  version = 0;
+ 	int err;
+@@ -1977,6 +1978,7 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
+ 		nested_down_write_ref_node(&g->node, FS_LOCK_PARENT);
  
- 	if (!ses)
- 		return NULL;
- 
- 	spin_lock(&ses->chan_lock);
-+	start = atomic_inc_return(&ses->chan_seq);
- 	for (i = 0; i < ses->chan_count; i++) {
--		server = ses->chans[i].server;
-+		cur = (start + i) % ses->chan_count;
-+		server = ses->chans[cur].server;
- 		if (!server || server->terminate)
+ 		if (!g->node.active) {
++			try_again = true;
+ 			up_write_ref_node(&g->node, false);
  			continue;
- 
-@@ -1049,17 +1051,15 @@ struct TCP_Server_Info *cifs_pick_channe
- 		 */
- 		if (server->in_flight < min_in_flight) {
- 			min_in_flight = server->in_flight;
--			index = i;
-+			index = cur;
  		}
- 		if (server->in_flight > max_in_flight)
- 			max_in_flight = server->in_flight;
+@@ -1998,7 +2000,8 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
+ 			tree_put_node(&fte->node, false);
+ 		return rule;
  	}
- 
- 	/* if all channels are equally loaded, fall back to round-robin */
--	if (min_in_flight == max_in_flight) {
--		index = (uint)atomic_inc_return(&ses->chan_seq);
--		index %= ses->chan_count;
--	}
-+	if (min_in_flight == max_in_flight)
-+		index = (uint)start % ses->chan_count;
- 
- 	server = ses->chans[index].server;
- 	spin_unlock(&ses->chan_lock);
+-	rule = ERR_PTR(-ENOENT);
++	err = try_again ? -EAGAIN : -ENOENT;
++	rule = ERR_PTR(err);
+ out:
+ 	kmem_cache_free(steering->ftes_cache, fte);
+ 	return rule;
+-- 
+2.39.5
+
 
 
