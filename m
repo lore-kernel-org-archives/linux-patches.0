@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F821F6667;
-	Mon, 23 Jun 2025 22:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78B81E3DCD;
+	Mon, 23 Jun 2025 22:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717200; cv=none; b=ndF1HZxC86wAaowp2lzvAiC7MCPQR9rbo49uhw5KH+4mQKZ0MfeJN3pI7r0BfMjQKGcbsISYRBrCWSCll+R3SUJr/8AUd6OaDUW4IktfeG6YxayMpvl5Jq8qk+yNcX70ghr3cPea0k6pGRJYwjNQLY+1Y1laZovUjQQ+CbhsffY=
+	t=1750717202; cv=none; b=hJTy5hYhpd3GcNiEShTXfSN8auswpmH2dpvH8Q5vkRsLpf5QsGVGc1YkyGsxJ3WQRlaFQOTnZRtM+VhefRj6W858eM+GgKrHExVgnezpTiKue8/OSDLBe0VW5l1NevUBClC0BdcCRuo2aOMhoAZAXXsppPH81X9UcaxoEBZ5Qnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717200; c=relaxed/simple;
-	bh=gyIv5MOXVrGvmqdMSsBX8fIA4rEu6mZ1u1OBQ13CR/w=;
+	s=arc-20240116; t=1750717202; c=relaxed/simple;
+	bh=LitO0OxKGtlSkjSXkxY5mnyyGX7Ypgkfr90+7s9JI/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEdj8U5RYIw9g3g9VIvesAop6GjWibdK1D++jnIlp3nSwLMxDyF2zi9ps5GOGDDiJR/eQb+jHJzyqV6CpRvF1gBJGznq4acXZcjyyQTDoMcMfo/4HwJ3TylvRCXFT1xugpp4/O1vNDk/kq9h8bcQNTU07zpmXSik1fMUTvjd3H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dD3DsyB9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kbFvJzy7G4GKbsALApdtKJ/CII2XHlsNtwSHBZuuhuZTz9dx3OzBIJLHYz0hK+xyNEpeZGa+Y6RrW06Pmka6ItU07SS8JTqxyXEgA3QSGM0TMhz0srQESX7IgZlnjuJ12B42MtDEYdQdAz+xM+fhOmI9Pv4oCPOGDDT/3aBA16c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8lBP+CB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dD3DsyB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AF4C4CEEF;
-	Mon, 23 Jun 2025 22:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8lBP+CB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1167C4CEED;
+	Mon, 23 Jun 2025 22:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717199;
-	bh=gyIv5MOXVrGvmqdMSsBX8fIA4rEu6mZ1u1OBQ13CR/w=;
+	s=korg; t=1750717202;
+	bh=LitO0OxKGtlSkjSXkxY5mnyyGX7Ypgkfr90+7s9JI/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dD3DsyB9NjCJeUiaF1bJ6UQ/k0dmjqLCrG8BbsZ8+rytBVpnbulfY1oWnCfA/2lXb
-	 09cJLcj/uu5ZNPXr5Altde5/sJH2uy0qyJA1uPNANSjnsy0mSPynRMZ4siq7vxoUwb
-	 r4nLSuIBk+3fc2FKxgTFQg1RX5VpmEBDsULtefCc=
+	b=u8lBP+CBDas9T6ws5WZb7s6EYEUfJPNz7CB462LgMfSV1cSzuMBlFCZcIVa2uO5kD
+	 a8kKCymgVBD0yjfIVBCPlNntN057a7dllunEXZ+Zx6G7sojVQmSLuABqKim1TYGcZf
+	 qSH9nqruMTl12N+oS9vGscKv5SYct6BWakqV2MOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
-	Sean Nyekjaer <sean@geanix.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 337/414] iio: accel: fxls8962af: Fix temperature calculation
-Date: Mon, 23 Jun 2025 15:07:54 +0200
-Message-ID: <20250623130650.409119429@linuxfoundation.org>
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 380/508] ACPI: bus: Bail out if acpi_kobj registration fails
+Date: Mon, 23 Jun 2025 15:07:05 +0200
+Message-ID: <20250623130654.659919095@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-commit 16038474e3a0263572f36326ef85057aaf341814 upstream.
+[ Upstream commit 94a370fc8def6038dbc02199db9584b0b3690f1a ]
 
-According to spec temperature should be returned in milli degrees Celsius.
-Add in_temp_scale to calculate from Celsius to milli Celsius.
+The ACPI sysfs code will fail to initialize if acpi_kobj is NULL,
+together with some ACPI drivers.
 
-Fixes: a3e0b51884ee ("iio: accel: add support for FXLS8962AF/FXLS8964AF accelerometers")
-Cc: stable@vger.kernel.org
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Link: https://patch.msgid.link/20250505-fxls-v4-1-a38652e21738@geanix.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Follow the other firmware subsystems and bail out if the kobject
+cannot be registered.
+
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20250518185111.3560-2-W_Armin@gmx.de
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/fxls8962af-core.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/acpi/bus.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/accel/fxls8962af-core.c
-+++ b/drivers/iio/accel/fxls8962af-core.c
-@@ -22,6 +22,7 @@
- #include <linux/property.h>
- #include <linux/regulator/consumer.h>
- #include <linux/regmap.h>
-+#include <linux/units.h>
+diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
+index a16b7de73d164..fafa15507b141 100644
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -1389,8 +1389,10 @@ static int __init acpi_init(void)
+ 	}
  
- #include <linux/iio/buffer.h>
- #include <linux/iio/events.h>
-@@ -436,8 +437,16 @@ static int fxls8962af_read_raw(struct ii
- 		*val = FXLS8962AF_TEMP_CENTER_VAL;
- 		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_SCALE:
--		*val = 0;
--		return fxls8962af_read_full_scale(data, val2);
-+		switch (chan->type) {
-+		case IIO_TEMP:
-+			*val = MILLIDEGREE_PER_DEGREE;
-+			return IIO_VAL_INT;
-+		case IIO_ACCEL:
-+			*val = 0;
-+			return fxls8962af_read_full_scale(data, val2);
-+		default:
-+			return -EINVAL;
-+		}
- 	case IIO_CHAN_INFO_SAMP_FREQ:
- 		return fxls8962af_read_samp_freq(data, val, val2);
- 	default:
-@@ -736,6 +745,7 @@ static const struct iio_event_spec fxls8
- 	.type = IIO_TEMP, \
- 	.address = FXLS8962AF_TEMP_OUT, \
- 	.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) | \
-+			      BIT(IIO_CHAN_INFO_SCALE) | \
- 			      BIT(IIO_CHAN_INFO_OFFSET),\
- 	.scan_index = -1, \
- 	.scan_type = { \
+ 	acpi_kobj = kobject_create_and_add("acpi", firmware_kobj);
+-	if (!acpi_kobj)
+-		pr_debug("%s: kset create error\n", __func__);
++	if (!acpi_kobj) {
++		pr_err("Failed to register kobject\n");
++		return -ENOMEM;
++	}
+ 
+ 	init_prmt();
+ 	acpi_init_pcc();
+-- 
+2.39.5
+
 
 
