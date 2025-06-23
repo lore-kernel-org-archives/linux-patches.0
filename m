@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFB84C7F;
-	Mon, 23 Jun 2025 13:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8134B248191;
+	Mon, 23 Jun 2025 13:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685191; cv=none; b=nM2i5UuQJdp+NbQp+Qo+682yDajWLMLGoehzhWPTACMoKaAPXl1DGx7bjLXac8vJHetRnIEwlDTDf/xWlSoobgWacCdBkxMFSX60YOWJnRGx2tVr6L8NUemCXGWXBdpVrrGwi8JCEL3YKZsyeQE0VrvPUZaOsP/5isDolt2wMb0=
+	t=1750685193; cv=none; b=myGH1ZN523PyoxWVkUPqmHbIAKgyP0Idooikg5TNaMt1z6wQ9TeFvnl/rZZU82R2vexyfYHCGJoH098Ie7t6jGha2k2Rdh9tk/faYXQi+xgCJQP8Z9NWmuQSsJsmzeb7nBXjazHke2YgCoKFOS0nwlPILPLl56a+zDsZ11cPjPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685191; c=relaxed/simple;
-	bh=u86LW8kKY+/rmpySYVgzSAO3SZj3vAL5QBH3LkL+T8M=;
+	s=arc-20240116; t=1750685193; c=relaxed/simple;
+	bh=VPiYl4LlpNNfO6sBILxslKfFKwYofJtged8FE0Myy/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYKUiaoKz9xBJYCrrMgZ5TV3j4UEwC49DvAcJ5erzLUDG1MvUSk7eUmGHBz54x37vRIRXABDq+kCJw/3kQ0tUqPaMVQuTTM1PIbQogrjBzL+JLenohfN4efetmFK0SkB2T/AOKmX5wSnJM4cszpoF4c88c4py/QpjsEqlsyh/bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5poOuvY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IHWKST7XokP2LqEtQsDnxSTGQmuTQq5cMpGXRkS60kIBjYJDbEZ6YC1AIyaNVoj6ayIfvsa2iLP0o4Buu7PB7k2wwT4nRM8jrXwE1iLyc7vUGxeLi1dFlYLRGazprrfsb6lm1eDvB1jNwS79r1OpiD0ihhst6CXKbEMXLecJF/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MO9kizh7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5poOuvY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CA5C4CEEA;
-	Mon, 23 Jun 2025 13:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MO9kizh7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168D7C4CEEA;
+	Mon, 23 Jun 2025 13:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685190;
-	bh=u86LW8kKY+/rmpySYVgzSAO3SZj3vAL5QBH3LkL+T8M=;
+	s=korg; t=1750685193;
+	bh=VPiYl4LlpNNfO6sBILxslKfFKwYofJtged8FE0Myy/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U5poOuvYlyRCceKcjzuT4MnBx0NMvDpgG2XesYHchHXv1E5jJoWk3+IjwwKzdWfof
-	 bqQXwqQBq7ajoSuqF8Utb4ykREg2SaRtfkKuQZzOdJGDVQGfT4stDmY2mIy3R0hMJY
-	 VyDbj9+LgH/4q4yArBr2xEGfrA21+19zjyWL4g4c=
+	b=MO9kizh7lDFi//nWYirKH+5Xne5cq4Bplo6vUAgA5JJ7SLpBhcPWhDK+5wApWaHtP
+	 kGp/LGvT/sYpMYwr4QbJlen5D0SO6saHIhwTXPx5WHQapRLUw4LiRwi73lbIq5tJ2m
+	 l3uzjneXdNSxSo0iD8+OX7yoFFcPf61xcrdmeflk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeal Robot <zealci@zte.com.cn>,
-	zhang songyi <zhang.songyi@zte.com.cn>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 073/222] Input: synaptics-rmi4 - convert to use sysfs_emit() APIs
-Date: Mon, 23 Jun 2025 15:06:48 +0200
-Message-ID: <20250623130614.297836163@linuxfoundation.org>
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.15 005/411] rtc: Make rtc_time64_to_tm() support dates before 1970
+Date: Mon, 23 Jun 2025 15:02:29 +0200
+Message-ID: <20250623130633.154795253@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,74 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: zhang songyi <zhang.songyi@zte.com.cn>
+From: Alexandre Mergnat <amergnat@baylibre.com>
 
-[ Upstream commit 9dedc915937c33302df7fcab01c45e7936d6195a ]
+commit 7df4cfef8b351fec3156160bedfc7d6d29de4cce upstream.
 
-Follow the advice of the Documentation/filesystems/sysfs.rst and show()
-should only use sysfs_emit() or sysfs_emit_at() when formatting the value
-to be returned to user space.
+Conversion of dates before 1970 is still relevant today because these
+dates are reused on some hardwares to store dates bigger than the
+maximal date that is representable in the device's native format.
+This prominently and very soon affects the hardware covered by the
+rtc-mt6397 driver that can only natively store dates in the interval
+1900-01-01 up to 2027-12-31. So to store the date 2028-01-01 00:00:00
+to such a device, rtc_time64_to_tm() must do the right thing for
+time=-2208988800.
 
-Reported-by: Zeal Robot <zealci@zte.com.cn>
-Signed-off-by: zhang songyi <zhang.songyi@zte.com.cn>
-Link: https://lore.kernel.org/r/20220927070936.258300-1-zhang.songyi@zte.com.cn
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Stable-dep-of: ca39500f6af9 ("Input: synaptics-rmi - fix crash with unsupported versions of F34")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20250428-enable-rtc-v4-1-2b2f7e3f9349@baylibre.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_f34.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/rtc/lib.c |   24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/input/rmi4/rmi_f34.c b/drivers/input/rmi4/rmi_f34.c
-index e5dca9868f87f..c26808f10827a 100644
---- a/drivers/input/rmi4/rmi_f34.c
-+++ b/drivers/input/rmi4/rmi_f34.c
-@@ -321,13 +321,13 @@ static ssize_t rmi_driver_bootloader_id_show(struct device *dev,
- 		f34 = dev_get_drvdata(&fn->dev);
+--- a/drivers/rtc/lib.c
++++ b/drivers/rtc/lib.c
+@@ -46,24 +46,38 @@ EXPORT_SYMBOL(rtc_year_days);
+  * rtc_time64_to_tm - converts time64_t to rtc_time.
+  *
+  * @time:	The number of seconds since 01-01-1970 00:00:00.
+- *		(Must be positive.)
++ *		Works for values since at least 1900
+  * @tm:		Pointer to the struct rtc_time.
+  */
+ void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
+ {
+-	unsigned int secs;
+-	int days;
++	int days, secs;
  
- 		if (f34->bl_version == 5)
--			return scnprintf(buf, PAGE_SIZE, "%c%c\n",
--					 f34->bootloader_id[0],
--					 f34->bootloader_id[1]);
-+			return sysfs_emit(buf, "%c%c\n",
-+					  f34->bootloader_id[0],
-+					  f34->bootloader_id[1]);
- 		else
--			return scnprintf(buf, PAGE_SIZE, "V%d.%d\n",
--					 f34->bootloader_id[1],
--					 f34->bootloader_id[0]);
-+			return sysfs_emit(buf, "V%d.%d\n",
-+					  f34->bootloader_id[1],
-+					  f34->bootloader_id[0]);
- 	}
+ 	u64 u64tmp;
+ 	u32 u32tmp, udays, century, day_of_century, year_of_century, year,
+ 		day_of_year, month, day;
+ 	bool is_Jan_or_Feb, is_leap_year;
  
- 	return 0;
-@@ -346,7 +346,7 @@ static ssize_t rmi_driver_configuration_id_show(struct device *dev,
- 	if (fn) {
- 		f34 = dev_get_drvdata(&fn->dev);
+-	/* time must be positive */
++	/*
++	 * Get days and seconds while preserving the sign to
++	 * handle negative time values (dates before 1970-01-01)
++	 */
+ 	days = div_s64_rem(time, 86400, &secs);
  
--		return scnprintf(buf, PAGE_SIZE, "%s\n", f34->configuration_id);
-+		return sysfs_emit(buf, "%s\n", f34->configuration_id);
- 	}
++	/*
++	 * We need 0 <= secs < 86400 which isn't given for negative
++	 * values of time. Fixup accordingly.
++	 */
++	if (secs < 0) {
++		days -= 1;
++		secs += 86400;
++	}
++
+ 	/* day of the week, 1970-01-01 was a Thursday */
+ 	tm->tm_wday = (days + 4) % 7;
++	/* Ensure tm_wday is always positive */
++	if (tm->tm_wday < 0)
++		tm->tm_wday += 7;
  
- 	return 0;
-@@ -499,7 +499,7 @@ static ssize_t rmi_driver_update_fw_status_show(struct device *dev,
- 	if (data->f34_container)
- 		update_status = rmi_f34_status(data->f34_container);
+ 	/*
+ 	 * The following algorithm is, basically, Proposition 6.3 of Neri
+@@ -93,7 +107,7 @@ void rtc_time64_to_tm(time64_t time, str
+ 	 * thus, is slightly different from [1].
+ 	 */
  
--	return scnprintf(buf, PAGE_SIZE, "%d\n", update_status);
-+	return sysfs_emit(buf, "%d\n", update_status);
- }
+-	udays		= ((u32) days) + 719468;
++	udays		= days + 719468;
  
- static DEVICE_ATTR(update_fw_status, 0444,
--- 
-2.39.5
-
+ 	u32tmp		= 4 * udays + 3;
+ 	century		= u32tmp / 146097;
 
 
