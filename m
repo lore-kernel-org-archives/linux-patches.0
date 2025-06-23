@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5942248B5;
-	Mon, 23 Jun 2025 22:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908342940B;
+	Mon, 23 Jun 2025 22:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716674; cv=none; b=PRzPCjD3Nm3fsLr5RM95qR/zL+3C2CoBj+ttl+YAFiYuvRc6ClRrYBxvlGQF0b7BkPRKQ5x1F7qej77cfUV23KJN6FSQ8uAWE5pAkF0imIEAWKzlBy7zo+J7w0vRYwWBeSvz2rvPvxf4GEtWwHY1YETInaW9oVgCU6sMNltARG8=
+	t=1750716676; cv=none; b=Ej8TWV6IrE9pm7hPJevlHg/EbAa9Gx4Bbvy4GFy4cgzptqZ/P0/ptlxtWQdL5WhE9RbPsneeEHvejfCEMWD51eOfMbytFIAurmjUsDF7w4irpA3+DW3z0O7rKvjHacGK95KWRH8JcUTr/BdIwHav4k6qAr6FK66nDG7QPzFKe0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716674; c=relaxed/simple;
-	bh=hDt5w8Ngae7SJ545J9Q1Rn2t1dNkV+fMZg235Yb1kFI=;
+	s=arc-20240116; t=1750716676; c=relaxed/simple;
+	bh=V6CCVjKy2uIz4qGH16KyYPvcfGn9b8uc9GK9w+lI3EU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4iVDMHA/WVbLBbVwbXcG0Yy+DVdj5xTiJkdwCJqS+/QGmnJxGh5DrfEfWeIqz/pyp4DmUQrqhLZ3RDRj2YXQC6OzGddYKIsYk3XIBpWO5kJ1yf1GQkHLGws6VSrPSd5MQOTpC3mfWN+EzKGm69AFyG1x6oxGBPH5Cqu/o/hBs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obbGlCAR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eQtbZNXJkm1sk6xZs2W5qWPrTEQ/QhYcYDxMXWFHrZRZfP4u/HLD0ZttIgyjgNHm7rBN+TyfRR3Eo37TIl9G6dn0VUD+Ft6tjX1pSEAOPhhBu9gTRhqDL1EWyAVI/GXvZXzmg2RfWOD0MEzv4i/CoiBlAFYuJRwq5ijHQyKfhiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DecvL8tk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obbGlCAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED32C4CEEA;
-	Mon, 23 Jun 2025 22:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DecvL8tk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29254C4CEEA;
+	Mon, 23 Jun 2025 22:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716674;
-	bh=hDt5w8Ngae7SJ545J9Q1Rn2t1dNkV+fMZg235Yb1kFI=;
+	s=korg; t=1750716676;
+	bh=V6CCVjKy2uIz4qGH16KyYPvcfGn9b8uc9GK9w+lI3EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=obbGlCAR1T8mqBLcx6s93icYIou3hAlmY7mLfigHeS3uviAErvCTSrZHMVKL1+EFU
-	 Idb8BOHxmw0AxHJOi848PoXVIepRItUD+jRqTAkcCxkM26hGiFO5XEpHfuFaxQCsJe
-	 19x/PKF0MjCEiTgQuCPblRRAwGfMuXoRE5EnXFC0=
+	b=DecvL8tkFMedLxck+7VKeYVV+BjgQRMnCn08pd38NWKt3ySiTwkH6RQBs7QKrDH9W
+	 ajh7PjNMlUn0YraKQgsfdtbpKJ5TEvsz3p1ib8foz2xOLK/PSK19AGKmcvdEZr+MPN
+	 OoYRc67pWvp2XO6RA4OqYqaJOoDZ8ABBdQx/VqnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baisheng Gao <baisheng.gao@unisoc.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 281/290] perf: Fix sample vs do_exit()
-Date: Mon, 23 Jun 2025 15:09:02 +0200
-Message-ID: <20250623130635.372740527@linuxfoundation.org>
+	syzbot+365005005522b70a36f2@syzkaller.appspotmail.com,
+	Denis Arefev <arefev@swemel.ru>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.1 320/508] media: vivid: Change the siize of the composing
+Date: Mon, 23 Jun 2025 15:06:05 +0200
+Message-ID: <20250623130653.198734982@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,106 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Denis Arefev <arefev@swemel.ru>
 
-[ Upstream commit 4f6fc782128355931527cefe3eb45338abd8ab39 ]
+commit f83ac8d30c43fd902af7c84c480f216157b60ef0 upstream.
 
-Baisheng Gao reported an ARM64 crash, which Mark decoded as being a
-synchronous external abort -- most likely due to trying to access
-MMIO in bad ways.
+syzkaller found a bug:
 
-The crash further shows perf trying to do a user stack sample while in
-exit_mmap()'s tlb_finish_mmu() -- i.e. while tearing down the address
-space it is trying to access.
+BUG: KASAN: vmalloc-out-of-bounds in tpg_fill_plane_pattern drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2608 [inline]
+BUG: KASAN: vmalloc-out-of-bounds in tpg_fill_plane_buffer+0x1a9c/0x5af0 drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2705
+Write of size 1440 at addr ffffc9000d0ffda0 by task vivid-000-vid-c/5304
 
-It turns out that we stop perf after we tear down the userspace mm; a
-receipie for disaster, since perf likes to access userspace for
-various reasons.
+CPU: 0 UID: 0 PID: 5304 Comm: vivid-000-vid-c Not tainted 6.14.0-rc2-syzkaller-00039-g09fbf3d50205 #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
 
-Flip this order by moving up where we stop perf in do_exit().
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:489
+ kasan_report+0x143/0x180 mm/kasan/report.c:602
+ kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
+ __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
+ tpg_fill_plane_pattern drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2608 [inline]
+ tpg_fill_plane_buffer+0x1a9c/0x5af0 drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2705
+ vivid_fillbuff drivers/media/test-drivers/vivid/vivid-kthread-cap.c:470 [inline]
+ vivid_thread_vid_cap_tick+0xf8e/0x60d0 drivers/media/test-drivers/vivid/vivid-kthread-cap.c:629
+ vivid_thread_vid_cap+0x8aa/0xf30 drivers/media/test-drivers/vivid/vivid-kthread-cap.c:767
+ kthread+0x7a9/0x920 kernel/kthread.c:464
+ ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:148
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
 
-Additionally, harden PERF_SAMPLE_CALLCHAIN and PERF_SAMPLE_STACK_USER
-to abort when the current task does not have an mm (exit_mm() makes
-sure to set current->mm = NULL; before commencing with the actual
-teardown). Such that CPU wide events don't trip on this same problem.
+The composition size cannot be larger than the size of fmt_cap_rect.
+So execute v4l2_rect_map_inside() even if has_compose_cap == 0.
 
-Fixes: c5ebcedb566e ("perf: Add ability to attach user stack dump to sample")
-Reported-by: Baisheng Gao <baisheng.gao@unisoc.com>
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250605110815.GQ39944@noisy.programming.kicks-ass.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 94a7ad928346 ("media: vivid: fix compose size exceed boundary")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+365005005522b70a36f2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?id=8ed8e8cc30cbe0d86c9a25bd1d6a5775129b8ea3
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |  7 +++++++
- kernel/exit.c        | 17 +++++++++--------
- 2 files changed, 16 insertions(+), 8 deletions(-)
+ drivers/media/test-drivers/vivid/vivid-vid-cap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 563f39518f7fe..90577a7a3a51e 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6987,6 +6987,10 @@ perf_sample_ustack_size(u16 stack_size, u16 header_size,
- 	if (!regs)
- 		return 0;
- 
-+	/* No mm, no stack, no dump. */
-+	if (!current->mm)
-+		return 0;
-+
- 	/*
- 	 * Check if we fit in with the requested stack size into the:
- 	 * - TASK_SIZE
-@@ -7685,6 +7689,9 @@ perf_callchain(struct perf_event *event, struct pt_regs *regs)
- 	const u32 max_stack = event->attr.sample_max_stack;
- 	struct perf_callchain_entry *callchain;
- 
-+	if (!current->mm)
-+		user = false;
-+
- 	if (!kernel && !user)
- 		return &__empty_callchain;
- 
-diff --git a/kernel/exit.c b/kernel/exit.c
-index 3540b2c9b1b6a..03a1dd32e6ff3 100644
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -858,6 +858,15 @@ void __noreturn do_exit(long code)
- 	tsk->exit_code = code;
- 	taskstats_exit(tsk, group_dead);
- 
-+	/*
-+	 * Since sampling can touch ->mm, make sure to stop everything before we
-+	 * tear it down.
-+	 *
-+	 * Also flushes inherited counters to the parent - before the parent
-+	 * gets woken up by child-exit notifications.
-+	 */
-+	perf_event_exit_task(tsk);
-+
- 	exit_mm();
- 
- 	if (group_dead)
-@@ -874,14 +883,6 @@ void __noreturn do_exit(long code)
- 	exit_task_work(tsk);
- 	exit_thread(tsk);
- 
--	/*
--	 * Flush inherited counters to the parent - before the parent
--	 * gets woken up by child-exit notifications.
--	 *
--	 * because of cgroup mode, must be called before cgroup_exit()
--	 */
--	perf_event_exit_task(tsk);
--
- 	sched_autogroup_exit_task(tsk);
- 	cgroup_exit(tsk);
- 
--- 
-2.39.5
-
+--- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+@@ -974,8 +974,8 @@ int vivid_vid_cap_s_selection(struct fil
+ 			if (dev->has_compose_cap) {
+ 				v4l2_rect_set_min_size(compose, &min_rect);
+ 				v4l2_rect_set_max_size(compose, &max_rect);
+-				v4l2_rect_map_inside(compose, &fmt);
+ 			}
++			v4l2_rect_map_inside(compose, &fmt);
+ 			dev->fmt_cap_rect = fmt;
+ 			tpg_s_buf_height(&dev->tpg, fmt.height);
+ 		} else if (dev->has_compose_cap) {
 
 
