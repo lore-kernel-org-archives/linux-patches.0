@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E821F30E84D;
-	Mon, 23 Jun 2025 13:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F2230E84D;
+	Mon, 23 Jun 2025 13:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685701; cv=none; b=gGwkw+guuo2sjdF/y7J+dOZMt4aIRdMFU/upZiSCVBmVk4pUdNe32WAtl8Ac0Nc25Z7IkGe0TshhabDlMFdHfBhFbu75ugVPl+4g3TsgXKyd+4AQTWj36uwVDgSFjxx1NBZ8VgxO4b0LPeFyKSFVsyUK/1WXevkYmxHVteUPlVk=
+	t=1750685703; cv=none; b=gVZkjdJ9dBJpMvx6SZ3zff5u+i8BRws2ZtKN+9Gxy9Ntu/BkLplHEJDOrjp0SRW3leFiRR8ew+SJrEoUdshaza3C+zRC4Yz/HGA/6bN4wjJ9byzL+fnWcP1E/2mLfOi7xKz9hV6BtvpFSf0cYByj3QfWFrOzRYFjEg0gT9cdLUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685701; c=relaxed/simple;
-	bh=8iIUhNqAAmb+WEZJ8VoG4R9R6U3JT3Yjozyk2UVBqek=;
+	s=arc-20240116; t=1750685703; c=relaxed/simple;
+	bh=K9WQDYTGVPi04TEAFu2sYmuhPRDF9xdWHQnKjGpP7DU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s6EYYNfqk0CgpLiSZUd5f6rKWD2NYHjV0TxRi1o93d+vqjMAhTfsGxSdz7OGHIXVCgWKcqGNiLXZGNfSh5ziwijLnK0zFkUVa7Cgr0RabnD13MVK1/7Ae3nxwnXR6JcfqnU40ST/kJ3aoS9wpXgctUEcrZ7qM68nadH7BRZPjfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwc2Eh6k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qIWQ7mRSHoTe0QF1ZwjVT6W3PcjJTlK0nu7qL9jYgIC5OsLArup540rE7JTBFT7MdVn3Bq8yawTpCReD3cPOA9GX0Y0NzKXS136hTfrLRxFFC4NhuqOe5APcSJeiPBLAC0v0oKwpI/BJ9d3SlwOjA6mCIWFofSa8GnbzpjX03/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPB5viDZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwc2Eh6k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC5BC4CEEA;
-	Mon, 23 Jun 2025 13:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPB5viDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D7DC4CEEA;
+	Mon, 23 Jun 2025 13:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685700;
-	bh=8iIUhNqAAmb+WEZJ8VoG4R9R6U3JT3Yjozyk2UVBqek=;
+	s=korg; t=1750685703;
+	bh=K9WQDYTGVPi04TEAFu2sYmuhPRDF9xdWHQnKjGpP7DU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xwc2Eh6klOJyfMq1OomCDIs3blmUp8G2KbNXiD/HIJ/w2CEodKuDKXHTNDKVA7zjz
-	 VK0yZ42x2/lMz/LGtEP5JnAfXBptIcz6gpUVzt8fqvzV8QzUzkH6QaT9tIrinYFQJ6
-	 VXoAwNeqjjOPjLFIIzXSqKiDj6xTF2rBu/Ehz3mU=
+	b=rPB5viDZ05KykD5w0qFkuE8vBEFQ1WrDFaBVVyt3yE1a/NMPG+I3TGMNtgBlHb2af
+	 bnSYGQiuX/3pluzktWdatbOZmScQjHKzSgLGOsHl7kilWHYLz/hrEZiljZJQmxDOZr
+	 DOp7xFuiFEpfYqIeWdTICFrNGAD8Ym+ljKFuQuyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 069/355] soc: aspeed: lpc: Fix impossible judgment condition
-Date: Mon, 23 Jun 2025 15:04:30 +0200
-Message-ID: <20250623130628.906178453@linuxfoundation.org>
+Subject: [PATCH 5.15 053/411] clk: qcom: gcc-sm6350: Add *_wait_val values for GDSCs
+Date: Mon, 23 Jun 2025 15:03:17 +0200
+Message-ID: <20250623130634.588012596@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit d9f0a97e859bdcef51f9c187b1eb712eb13fd3ff ]
+[ Upstream commit afdfd829a99e467869e3ca1955fb6c6e337c340a ]
 
-smatch error：
-drivers/soc/aspeed/aspeed-lpc-snoop.c:169
-aspeed_lpc_snoop_config_irq() warn: platform_get_irq() does not return zero
+Compared to the msm-4.19 driver the mainline GDSC driver always sets the
+bits for en_rest, en_few & clk_dis, and if those values are not set
+per-GDSC in the respective driver then the default value from the GDSC
+driver is used. The downstream driver only conditionally sets
+clk_dis_wait_val if qcom,clk-dis-wait-val is given in devicetree.
 
-platform_get_irq() return non-zero IRQ number or negative error code,
-change '!lpc_snoop->irq' to 'lpc_snoop->irq < 0' to fix this.
+Correct this situation by explicitly setting those values. For all GDSCs
+the reset value of those bits are used.
 
-Fixes: 9f4f9ae81d0a ("drivers/misc: add Aspeed LPC snoop driver")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20231027020703.1231875-1-suhui@nfschina.com
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 131abae905df ("clk: qcom: Add SM6350 GCC driver")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
+Link: https://lore.kernel.org/r/20250425-sm6350-gdsc-val-v1-3-1f252d9c5e4e@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/aspeed/aspeed-lpc-snoop.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-sm6350.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-index 538d7aab8db5c..8a2a22c40ef53 100644
---- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-@@ -168,7 +168,7 @@ static int aspeed_lpc_snoop_config_irq(struct aspeed_lpc_snoop *lpc_snoop,
- 	int rc;
+diff --git a/drivers/clk/qcom/gcc-sm6350.c b/drivers/clk/qcom/gcc-sm6350.c
+index 0860c6178b4d3..e31a25084b0a3 100644
+--- a/drivers/clk/qcom/gcc-sm6350.c
++++ b/drivers/clk/qcom/gcc-sm6350.c
+@@ -2319,6 +2319,9 @@ static struct clk_branch gcc_video_xo_clk = {
  
- 	lpc_snoop->irq = platform_get_irq(pdev, 0);
--	if (!lpc_snoop->irq)
-+	if (lpc_snoop->irq < 0)
- 		return -ENODEV;
+ static struct gdsc usb30_prim_gdsc = {
+ 	.gdscr = 0x1a004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "usb30_prim_gdsc",
+ 	},
+@@ -2327,6 +2330,9 @@ static struct gdsc usb30_prim_gdsc = {
  
- 	rc = devm_request_irq(dev, lpc_snoop->irq,
+ static struct gdsc ufs_phy_gdsc = {
+ 	.gdscr = 0x3a004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "ufs_phy_gdsc",
+ 	},
 -- 
 2.39.5
 
