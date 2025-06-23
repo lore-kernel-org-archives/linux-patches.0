@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBFD16D9BF;
-	Mon, 23 Jun 2025 22:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E262222C2;
+	Mon, 23 Jun 2025 22:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717248; cv=none; b=RZlWGAXtDkK6+tNJAxb+QdBolMi1yS+DsZSXTbp9T3C3Cz/eiuCOcxptYIyoIIvOElcDOdA7vAmRmbf1Ocf0chCiJ5HOA9w/bKoiG0CC3Sf+38pL42RHl6zrhcm6v4GbJXXnWyofBZh9acXVEax+Q8DLCRAwbbIIHtvWS+ECmkA=
+	t=1750717251; cv=none; b=b4flrCQacba5M0VVdRNPIAWDv0CNicX2auNxvf+7BqzkRHBXlhY+q5NYQpy1KDLALGFiaWxoWfzkzQyK7HXdIgNhb5VwDWtTm8kojdsfA8N2O6l1NKj/Yu/4M4WsbMrrWdXFADLmrNNhb96eZRXbsjmkkzwoaAoF5ul+aOBIpcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717248; c=relaxed/simple;
-	bh=vJMGfa6+oSYjdYWrnrE+8GcMeeTojLYRF3mwfvkMbBs=;
+	s=arc-20240116; t=1750717251; c=relaxed/simple;
+	bh=E4g8f8jkgT7fauI2G0qWUwBwfeNbwIaUnF5vvQq64S0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eBbQ+T2xHNmJlbQ/V1Ehom2tu7fnlWgWaIZv9jT6Vk6aTK743Ob/gdJMfYufPKhw58ZBlyvyAzIr/fAAYQkIPvMjc5Y4Dw70huOqOnkyviq1RZfYVPTp/BJGTK346EPJPZODNkML3LHH+7yhcFExX+uOBLIvTx9k/z2oNnZsMo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUd9wDiW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R2USGm0ksy7O820uvY7ItOxbj+YwnauluV/4ICy+2uvWv8VAS4U2geogEh23N1UraiDb8NuRQRTlz06vmuG057ybfSBgcYqPXvMar1m/UiJe31jpENKKwYDlI200Kjs1eXPnVDs1/ON5HEUh75iByPILkDxnHfMjuNvK61PUbk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NXmHVBsY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUd9wDiW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5808BC4CEEA;
-	Mon, 23 Jun 2025 22:20:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXmHVBsY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31E2C4CEEA;
+	Mon, 23 Jun 2025 22:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717248;
-	bh=vJMGfa6+oSYjdYWrnrE+8GcMeeTojLYRF3mwfvkMbBs=;
+	s=korg; t=1750717251;
+	bh=E4g8f8jkgT7fauI2G0qWUwBwfeNbwIaUnF5vvQq64S0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iUd9wDiWsMOGqAc794ZVT7SqrnXvq5pIXhzRCP5jtbf9kciS5uhKvhKSLZYJh3fc9
-	 QHPvFkT2AToEeo9w3AFSZEwBQKywdNDTw+A2LNcPZ54cU8Bo4oBM3DBmKmnKYimudk
-	 Q7N/Yldd/7aALtNFajU9GcuL/yH2ggh8oriC1LU0=
+	b=NXmHVBsYO0I6PH7fkXkGhfhPKILq6JFBSr/6VGfrdS0c8LNDYGlDmKNH0AaFnTV3U
+	 dzFc5cpBa7NfhwWHJfeKFxy1m/Snzhq8aVLLCnGrBR4mSYRCWqvNmDz/kFzZ6h6rMw
+	 HKcrmPvdFrsc1OsUjuRuXsdcvuAEqwoeEyxkL9H0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	tianshuo han <hantianshuo233@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>
-Subject: [PATCH 6.12 346/414] sunrpc: handle SVC_GARBAGE during svc auth processing as auth error
-Date: Mon, 23 Jun 2025 15:08:03 +0200
-Message-ID: <20250623130650.626391923@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 389/508] tipc: use kfree_sensitive() for aead cleanup
+Date: Mon, 23 Jun 2025 15:07:14 +0200
+Message-ID: <20250623130654.852384720@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,71 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-commit 94d10a4dba0bc482f2b01e39f06d5513d0f75742 upstream.
+[ Upstream commit c8ef20fe7274c5766a317f9193b70bed717b6b3d ]
 
-tianshuo han reported a remotely-triggerable crash if the client sends a
-kernel RPC server a specially crafted packet. If decoding the RPC reply
-fails in such a way that SVC_GARBAGE is returned without setting the
-rq_accept_statp pointer, then that pointer can be dereferenced and a
-value stored there.
+The tipc_aead_free() function currently uses kfree() to release the aead
+structure. However, this structure contains sensitive information, such
+as key's SALT value, which should be securely erased from memory to
+prevent potential leakage.
 
-If it's the first time the thread has processed an RPC, then that
-pointer will be set to NULL and the kernel will crash. In other cases,
-it could create a memory scribble.
+To enhance security, replace kfree() with kfree_sensitive() when freeing
+the aead structure. This change ensures that sensitive data is explicitly
+cleared before memory deallocation, aligning with the approach used in
+tipc_aead_init() and adhering to best practices for handling confidential
+information.
 
-The server sunrpc code treats a SVC_GARBAGE return from svc_authenticate
-or pg_authenticate as if it should send a GARBAGE_ARGS reply. RFC 5531
-says that if authentication fails that the RPC should be rejected
-instead with a status of AUTH_ERR.
-
-Handle a SVC_GARBAGE return as an AUTH_ERROR, with a reason of
-AUTH_BADCRED instead of returning GARBAGE_ARGS in that case. This
-sidesteps the whole problem of touching the rpc_accept_statp pointer in
-this situation and avoids the crash.
-
-Cc: stable@kernel.org
-Fixes: 29cd2927fb91 ("SUNRPC: Fix encoding of accepted but unsuccessful RPC replies")
-Reported-by: tianshuo han <hantianshuo233@gmail.com>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250523114717.4021518-1-zilin@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svc.c |   11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ net/tipc/crypto.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -1369,7 +1369,8 @@ svc_process_common(struct svc_rqst *rqst
- 	case SVC_OK:
- 		break;
- 	case SVC_GARBAGE:
--		goto err_garbage_args;
-+		rqstp->rq_auth_stat = rpc_autherr_badcred;
-+		goto err_bad_auth;
- 	case SVC_SYSERR:
- 		goto err_system_err;
- 	case SVC_DENIED:
-@@ -1510,14 +1511,6 @@ err_bad_proc:
- 	*rqstp->rq_accept_statp = rpc_proc_unavail;
- 	goto sendit;
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index 17e2b09002853..d52829c6aa472 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -425,7 +425,7 @@ static void tipc_aead_free(struct rcu_head *rp)
+ 	}
+ 	free_percpu(aead->tfm_entry);
+ 	kfree_sensitive(aead->key);
+-	kfree(aead);
++	kfree_sensitive(aead);
+ }
  
--err_garbage_args:
--	svc_printk(rqstp, "failed to decode RPC header\n");
--
--	if (serv->sv_stats)
--		serv->sv_stats->rpcbadfmt++;
--	*rqstp->rq_accept_statp = rpc_garbage_args;
--	goto sendit;
--
- err_system_err:
- 	if (serv->sv_stats)
- 		serv->sv_stats->rpcbadfmt++;
+ static int tipc_aead_users(struct tipc_aead __rcu *aead)
+-- 
+2.39.5
+
 
 
