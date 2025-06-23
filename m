@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F7A1E1A05;
-	Mon, 23 Jun 2025 21:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51B54315A;
+	Mon, 23 Jun 2025 21:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714992; cv=none; b=B5EhnGQjeqmHTb2B6adKB/29bCfO8s0FzrW6voIxpt+2ac6d4BHvYcFxpj6aX57TWk3HLZYvzaZcF6dCcnmt0Ua1uLzqfAcNiC38GfCqHg5SbCPVkUhPZpsDy90pG9Vrnu6eHF2gv2vNvjx91k3UiuSFJ4fCg7sFjNcOoM6N5dw=
+	t=1750714994; cv=none; b=BxOahdCaphSHqS4imZJtDabsgYz9L9BfBpqmE5g4Aewj8vMIuaflLS6dycQ1bhDptNs9Vqo1jbwwnb8Jy0eTjM4J95Ie7OMuqE7jU3mhmuENM2LbEMdo1WqvDvr7wqhA9xyK86cs1kAWYiVAZSiOzmj6fbqPPDIjQ20WWJHX+iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714992; c=relaxed/simple;
-	bh=K5qo4OHiO7hIVDbZMJCrpsBVPXj2gFBaw+3CT7k/EyA=;
+	s=arc-20240116; t=1750714994; c=relaxed/simple;
+	bh=AueGq5ua9ycGYfeY4pOnE+QGnALuHv4JMTGtFma5dN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDQwXynTdgEoolKZSxIj3xNF7FR1BRtZJJMQXZERROm+68/K+TnsHgGGmo/LC0Ph2mJs1nXnHz1D63LtVndsHHG3mpuX8vOsbW8XH3QLdnTDXUxyXxEbxWVnVPtr/qSWe5jFZ0yYh9WQSPtS6Y8J/Ar3aPjfan440nVRi5L9ZL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUDiGJbZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=f3eA3I/4PmVVwwDYTVVtwIYDsemG7Ue1e1cQ36Evc1HFxlunwIOQPWsDvYipjn990MumIZwy0nafkw4WAdnUicG4FZdQvpkmFrwZmWVAtGJwolO4UHE9+MmL2mbrjUVfG6QAQx5zxCIBskUWHoGVYEX9y38+oQZIkNEEgvT+RAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zklpZA8E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUDiGJbZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A5EC4CEED;
-	Mon, 23 Jun 2025 21:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zklpZA8E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBE4C4CEEA;
+	Mon, 23 Jun 2025 21:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714992;
-	bh=K5qo4OHiO7hIVDbZMJCrpsBVPXj2gFBaw+3CT7k/EyA=;
+	s=korg; t=1750714994;
+	bh=AueGq5ua9ycGYfeY4pOnE+QGnALuHv4JMTGtFma5dN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pUDiGJbZ+rJ5GNCBl3vwni0aw6g49DwjWgWFgkOYcKIaFwiOnCVnQ0tOwBDRhM9cr
-	 ur4VsW9BYpwon6+z99mI/rUs3uu70ZEYos/1Qdm8M+PQDSlUviIkvVikdLvuTfp3aa
-	 T7g+s6cOKhEcoABrK5QWrgx/dURCo8U2ENwXpc+Q=
+	b=zklpZA8ELgE1qN1DIxPM2iLHh7ss/M/0a6O4lnDgW7++CWllGEbtRiFazkvn2AQrD
+	 d2Jfin2DtCU3SpWBsNv7xTvcguZY59+Qj/BKTYRrHU5NXgsMynj9vXTeq2Xqh6dWHv
+	 tuf+wvtSORKHcxnOlm2jubFEIffIxmr9GHKhv1Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
+	=?UTF-8?q?V=C3=ADctor=20Gonzalo?= <victor.gonzalo@anddroptable.net>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 208/508] xfs: attr forks require attr, not attr2
-Date: Mon, 23 Jun 2025 15:04:13 +0200
-Message-ID: <20250623130650.385031884@linuxfoundation.org>
+Subject: [PATCH 6.6 173/290] wifi: iwlwifi: Add missing MODULE_FIRMWARE for Qu-c0-jf-b0
+Date: Mon, 23 Jun 2025 15:07:14 +0200
+Message-ID: <20250623130632.091305599@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Víctor Gonzalo <victor.gonzalo@anddroptable.net>
 
-[ Upstream commit 73c34b0b85d46bf9c2c0b367aeaffa1e2481b136 ]
+[ Upstream commit 2b801487ac3be7bec561ae62d1a6c4d6f5283f8c ]
 
-It turns out that I misunderstood the difference between the attr and
-attr2 feature bits.  "attr" means that at some point an attr fork was
-created somewhere in the filesystem.  "attr2" means that inodes have
-variable-sized forks, but says nothing about whether or not there
-actually /are/ attr forks in the system.
+The module metadata for the firmware file iwlwifi-Qu-c0-jf-b0-* is missing.
 
-If we have an attr fork, we only need to check that attr is set.
-
-Fixes: 99d9d8d05da26 ("xfs: scrub inode block mappings")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Víctor Gonzalo <victor.gonzalo@anddroptable.net>
+Link: https://patch.msgid.link/20240313180227.2224780-1-victor.gonzalo@anddroptable.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/bmap.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/cfg/22000.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/xfs/scrub/bmap.c b/fs/xfs/scrub/bmap.c
-index f0b9cb6506fdd..45b135929144e 100644
---- a/fs/xfs/scrub/bmap.c
-+++ b/fs/xfs/scrub/bmap.c
-@@ -647,7 +647,13 @@ xchk_bmap(
- 		}
- 		break;
- 	case XFS_ATTR_FORK:
--		if (!xfs_has_attr(mp) && !xfs_has_attr2(mp))
-+		/*
-+		 * "attr" means that an attr fork was created at some point in
-+		 * the life of this filesystem.  "attr2" means that inodes have
-+		 * variable-sized data/attr fork areas.  Hence we only check
-+		 * attr here.
-+		 */
-+		if (!xfs_has_attr(mp))
- 			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
- 		break;
- 	default:
+diff --git a/drivers/net/wireless/intel/iwlwifi/cfg/22000.c b/drivers/net/wireless/intel/iwlwifi/cfg/22000.c
+index d594694206b33..906f2790f5619 100644
+--- a/drivers/net/wireless/intel/iwlwifi/cfg/22000.c
++++ b/drivers/net/wireless/intel/iwlwifi/cfg/22000.c
+@@ -44,6 +44,8 @@
+ 	IWL_QU_C_HR_B_FW_PRE "-" __stringify(api) ".ucode"
+ #define IWL_QU_B_JF_B_MODULE_FIRMWARE(api) \
+ 	IWL_QU_B_JF_B_FW_PRE "-" __stringify(api) ".ucode"
++#define IWL_QU_C_JF_B_MODULE_FIRMWARE(api) \
++	IWL_QU_C_JF_B_FW_PRE "-" __stringify(api) ".ucode"
+ #define IWL_CC_A_MODULE_FIRMWARE(api)			\
+ 	IWL_CC_A_FW_PRE "-" __stringify(api) ".ucode"
+ 
+@@ -423,6 +425,7 @@ const struct iwl_cfg iwl_cfg_quz_a0_hr_b0 = {
+ MODULE_FIRMWARE(IWL_QU_B_HR_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
+ MODULE_FIRMWARE(IWL_QU_C_HR_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
+ MODULE_FIRMWARE(IWL_QU_B_JF_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
++MODULE_FIRMWARE(IWL_QU_C_JF_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
+ MODULE_FIRMWARE(IWL_QUZ_A_HR_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
+ MODULE_FIRMWARE(IWL_QUZ_A_JF_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
+ MODULE_FIRMWARE(IWL_CC_A_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
 -- 
 2.39.5
 
