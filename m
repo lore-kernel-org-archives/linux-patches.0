@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B7B15ADB4;
-	Mon, 23 Jun 2025 22:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA02016D9BF;
+	Mon, 23 Jun 2025 22:21:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717265; cv=none; b=OSaq+qo/kM/UmLguBKfiexUSZ9eOhGo54LZl2/k/KZmanloCZyOccCf2p9xWtVz3l86b0rbg/5+WQI2YQV6eUQiEUdcEc0g0F+rC1mjrBNzySUBWteZMz+1iaRJF4FCOTSY9MfSwDEqQheYWZWimRsYz4vMvrnvWsMcMid15Upk=
+	t=1750717267; cv=none; b=H7EQJdZ4fyzJmJmUaas29XfENhQUwyegbRkGVY7S4dBfJ1TXyBGMdx1qc2jP/L36EnCHRtwq9LzWbF/5lYlb41gKO2qWMrJLYBJC9Y5rXHa5zGGOsH65oS4ifj7hz6Vn1t4IpLqoYheqpWseM9hvRMsvwe05AFPl01i7U85138I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717265; c=relaxed/simple;
-	bh=Z5W6CuHPVPV05Qi5cBvVC30PTJPD8Dqb/5HRn3eUB0s=;
+	s=arc-20240116; t=1750717267; c=relaxed/simple;
+	bh=mf0jVpDRQMYzq1kaagXM+mpE4r7rD4rD5yjapqdIfuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WC9HJBoLRdU3lEA2h6TbyVaGOC6S7xXX7gtCTclNfQ2L9mF3f9DStIALjR6jUtzhLTnlkrKoIfwKwo46frboV11Tx8BjIvSL1eoYiz3yXNYk4dEtf4vT1xBnQSysIUhsHTH8J1xcq/aTmPI150AceOOmjhnkp2yjDrpIjNWX7h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRbcmQxO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ULh0LRzaQH0tEtjtpsyMk3ZHF8IbbFug6PdYLWO9esgDu8IREft3c8VCYkSBxIZ/NJ3Ons1F5Kxmz7iqcX1kJYwwcI0PePaEvanp+XI7kXFlNFaVonk08aaRMnyNGIxBMRpSd4gbS1U454+ygn4GQq77bU5py8cpb0sB90NH9QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EmA5vjj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRbcmQxO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4550C4CEEA;
-	Mon, 23 Jun 2025 22:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EmA5vjj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C30C4CEEA;
+	Mon, 23 Jun 2025 22:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717265;
-	bh=Z5W6CuHPVPV05Qi5cBvVC30PTJPD8Dqb/5HRn3eUB0s=;
+	s=korg; t=1750717267;
+	bh=mf0jVpDRQMYzq1kaagXM+mpE4r7rD4rD5yjapqdIfuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRbcmQxOy8AmOyaH6D4A4/dmK/KY/u9CwpSbuS/DHX5svG58jpF3V9m8ngMATjA9B
-	 UJSEYGhAErAKVf/qZfdYMd0n2Ysrs4lYI4gjOJwUm8riqj3wF5fNFpxhLGiTaHZJDp
-	 sYgzLOM3OskNfeN7oy3pXfhN0eE8cyjTrmcwJBH0=
+	b=1EmA5vjjdhVkMW6kv7iabYxbEHuKD/t0UvXeKt+7SUKR5qpI1jIe5w04aoVgzIdce
+	 bxM+WD4dE4FuM5/vq9mqe7b1nFNvUY5xahkcpBZitTxC3got99RjUAx/M/9RT41nxH
+	 GgSZinfqrGB9C0NYZ8LwopRPNhTSflS1M2DOqnII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.12 349/414] x86/tools: Drop duplicate unlikely() definition in insn_decoder_test.c
-Date: Mon, 23 Jun 2025 15:08:06 +0200
-Message-ID: <20250623130650.700321132@linuxfoundation.org>
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 392/508] emulex/benet: correct command version selection in be_cmd_get_stats()
+Date: Mon, 23 Jun 2025 15:07:17 +0200
+Message-ID: <20250623130654.917025481@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-commit f710202b2a45addea3dcdcd862770ecbaf6597ef upstream.
+[ Upstream commit edb888d29748cee674006a52e544925dacc7728e ]
 
-After commit c104c16073b7 ("Kunit to check the longest symbol length"),
-there is a warning when building with clang because there is now a
-definition of unlikely from compiler.h in tools/include/linux, which
-conflicts with the one in the instruction decoder selftest:
+Logic here always sets hdr->version to 2 if it is not a BE3 or Lancer chip,
+even if it is BE2. Use 'else if' to prevent multiple assignments, setting
+version 0 for BE2, version 1 for BE3 and Lancer, and version 2 for others.
+Fixes potential incorrect version setting when BE2_chip and
+BE3_chip/lancer_chip checks could both be true.
 
-  arch/x86/tools/insn_decoder_test.c:15:9: warning: 'unlikely' macro redefined [-Wmacro-redefined]
-
-Remove the second unlikely() definition, as it is no longer necessary,
-clearing up the warning.
-
-Fixes: c104c16073b7 ("Kunit to check the longest symbol length")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20250318-x86-decoder-test-fix-unlikely-redef-v1-1-74c84a7bf05b@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250519141731.691136-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/tools/insn_decoder_test.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/emulex/benet/be_cmds.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/tools/insn_decoder_test.c
-+++ b/arch/x86/tools/insn_decoder_test.c
-@@ -12,8 +12,6 @@
- #include <stdarg.h>
- #include <linux/kallsyms.h>
- 
--#define unlikely(cond) (cond)
--
- #include <asm/insn.h>
- #include <inat.c>
- #include <insn.c>
+diff --git a/drivers/net/ethernet/emulex/benet/be_cmds.c b/drivers/net/ethernet/emulex/benet/be_cmds.c
+index d00f4e29c9d88..17098cd89dfff 100644
+--- a/drivers/net/ethernet/emulex/benet/be_cmds.c
++++ b/drivers/net/ethernet/emulex/benet/be_cmds.c
+@@ -1608,7 +1608,7 @@ int be_cmd_get_stats(struct be_adapter *adapter, struct be_dma_mem *nonemb_cmd)
+ 	/* version 1 of the cmd is not supported only by BE2 */
+ 	if (BE2_chip(adapter))
+ 		hdr->version = 0;
+-	if (BE3_chip(adapter) || lancer_chip(adapter))
++	else if (BE3_chip(adapter) || lancer_chip(adapter))
+ 		hdr->version = 1;
+ 	else
+ 		hdr->version = 2;
+-- 
+2.39.5
+
 
 
