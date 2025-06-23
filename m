@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D82619049B;
-	Mon, 23 Jun 2025 22:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920571E87B;
+	Mon, 23 Jun 2025 22:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716321; cv=none; b=FO0o6sCXDTo0X9XkEI7UpbqHvW0kp60aZNNNwGbani5hN/8uxjs3xE5X9C2z0WKWRJd+vPWJSSf+68Nu1+K43xmYNSF/GPFkV+6I1NxJHtyfZ2LeCwYQ8x1MAKuor0lrv1dkYQuN6kfjCVu1PfEbgiRmb602EViLsVI607cK0DU=
+	t=1750716323; cv=none; b=ez8WWIg67VwhZWIDpO0BPXPbqivBZ3DPO/UmGD+sXMTVOSsQMeSUlXnrRnNwpSI0C19Y5VyXOhQu8AQU1hhJHyFQ9TJ9rVtRqORqV/HOC8XhDtr+bcDl1ALca0FVnvxTyB6wwD2Ag0Z9kRDAz5cFx+cGScGJHojSMzhjkmmrcj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716321; c=relaxed/simple;
-	bh=ZuVBdFtBWjHMroEAgaB2cG43llQMVOnfKF1IDLTkQQI=;
+	s=arc-20240116; t=1750716323; c=relaxed/simple;
+	bh=ukR+0rd78kN3xN803KQtwjpEC+JQ0wCFftZP6hHdwE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oo9aFDzenZzMdjE5TSl2LvyWim29QcVKcSYkfuhU0KU0yFbqvXxkN+uohFl6n7UWP8+jaubDX9MqzQ3Be59h6HOBP87lIt3E1fIuw+/2ODOElKcd5VRJN/RncmvAdSGQDPe3B3GzYlpgACMAjWRkzzkuLlmYIBoACyMVR2ARwPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yC8OWAbY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yq6MrmHADdL8Gyrq9oPaacWQ0A/kmWV3SZ1cMu3bcGU9zdq8okNnAEEnmvwtD/f8NGEPFP5jG5nqm9iMdp5S0YJ67NQI3JolgFTrNr86lCkYwRiTBSPAOY1dlAIMTtxWLypvW683q/86BNgGImi6Nl4SG7kHV169tl+FwehrD1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7gV2a1Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yC8OWAbY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A2CC4CEEA;
-	Mon, 23 Jun 2025 22:05:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7gV2a1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BCFC4CEEA;
+	Mon, 23 Jun 2025 22:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716321;
-	bh=ZuVBdFtBWjHMroEAgaB2cG43llQMVOnfKF1IDLTkQQI=;
+	s=korg; t=1750716323;
+	bh=ukR+0rd78kN3xN803KQtwjpEC+JQ0wCFftZP6hHdwE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yC8OWAbY9nN+U6+YlklLt7PDkdKR2VCXGziYC19TinGZYYw2OWRGR4SfnG5k1Mayk
-	 bSPbIwwJ5REKk3eSeGI5zEH4FfjDDa14AZqkq860E8cJ2CR/0k/iURWs7dZXL+wJ5s
-	 /RbNzTQqbgJxASiQ0gc7tP02vQ0YU4F+pgZWUbJQ=
+	b=g7gV2a1Y0yKA5ioYA5rsNKEyIrVbNq19iPSdhOvKojdg0Y4OM9FuZnwOrd4KSfR1Q
+	 FdxwpGnEQo1Pq6ya5aC041in3QWsVPtD6dPxE1Z5GZF8+yCIRZ6Q+b08aoXy9Xr0YU
+	 YRoOaZncWXVt27/rhPbv845FpTzO0xhGFX5oQfhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 5.10 341/355] net_sched: sch_sfq: annotate data-races around q->perturb_period
-Date: Mon, 23 Jun 2025 15:09:02 +0200
-Message-ID: <20250623130636.979778156@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 256/290] ptp: allow reading of currently dialed frequency to succeed on free-running clocks
+Date: Mon, 23 Jun 2025 15:08:37 +0200
+Message-ID: <20250623130634.621783511@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit a17ef9e6c2c1cf0fc6cd6ca6a9ce525c67d1da7f ]
+[ Upstream commit aa112cbc5f0ac6f3b44d829005bf34005d9fe9bb ]
 
-sfq_perturbation() reads q->perturb_period locklessly.
-Add annotations to fix potential issues.
+There is a bug in ptp_clock_adjtime() which makes it refuse the
+operation even if we just want to read the current clock dialed
+frequency, not modify anything (tx->modes == 0). That should be possible
+even if the clock is free-running. For context, the kernel UAPI is the
+same for getting and setting the frequency of a POSIX clock.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240430180015.3111398-1-edumazet@google.com
+For example, ptp4l errors out at clock_create() -> clockadj_get_freq()
+-> clock_adjtime() time, when it should logically only have failed on
+actual adjustments to the clock, aka if the clock was configured as
+slave. But in master mode it should work.
+
+This was discovered when examining the issue described in the previous
+commit, where ptp_clock_freerun() returned true despite n_vclocks being
+zero.
+
+Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250613174749.406826-3-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Harshit: Backport to 5.10.y, conflicts resolved due to missing commit:
-  d636fc5dd692 ("net: sched: add rcu annotations around qdisc->qdisc_sleeping")
-  in 5.10.y ]
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/ptp/ptp_clock.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -611,6 +611,7 @@ static void sfq_perturbation(struct time
- 	struct Qdisc *sch = q->sch;
- 	spinlock_t *root_lock = qdisc_lock(qdisc_root_sleeping(sch));
- 	siphash_key_t nkey;
-+	int period;
+diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
+index 6b7e8b7ebcef5..b7fc260ed43bc 100644
+--- a/drivers/ptp/ptp_clock.c
++++ b/drivers/ptp/ptp_clock.c
+@@ -104,7 +104,8 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
+ 	struct ptp_clock_info *ops;
+ 	int err = -EOPNOTSUPP;
  
- 	get_random_bytes(&nkey, sizeof(nkey));
- 	spin_lock(root_lock);
-@@ -619,8 +620,12 @@ static void sfq_perturbation(struct time
- 		sfq_rehash(sch);
- 	spin_unlock(root_lock);
- 
--	if (q->perturb_period)
--		mod_timer(&q->perturb_timer, jiffies + q->perturb_period);
-+	/* q->perturb_period can change under us from
-+	 * sfq_change() and sfq_destroy().
-+	 */
-+	period = READ_ONCE(q->perturb_period);
-+	if (period)
-+		mod_timer(&q->perturb_timer, jiffies + period);
- }
- 
- static int sfq_change(struct Qdisc *sch, struct nlattr *opt)
-@@ -662,7 +667,7 @@ static int sfq_change(struct Qdisc *sch,
- 		q->quantum = ctl->quantum;
- 		q->scaled_quantum = SFQ_ALLOT_SIZE(q->quantum);
+-	if (ptp_clock_freerun(ptp)) {
++	if (tx->modes & (ADJ_SETOFFSET | ADJ_FREQUENCY | ADJ_OFFSET) &&
++	    ptp_clock_freerun(ptp)) {
+ 		pr_err("ptp: physical clock is free running\n");
+ 		return -EBUSY;
  	}
--	q->perturb_period = ctl->perturb_period * HZ;
-+	WRITE_ONCE(q->perturb_period, ctl->perturb_period * HZ);
- 	if (ctl->flows)
- 		q->maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
- 	if (ctl->divisor) {
-@@ -724,7 +729,7 @@ static void sfq_destroy(struct Qdisc *sc
- 	struct sfq_sched_data *q = qdisc_priv(sch);
- 
- 	tcf_block_put(q->block);
--	q->perturb_period = 0;
-+	WRITE_ONCE(q->perturb_period, 0);
- 	del_timer_sync(&q->perturb_timer);
- 	sfq_free(q->ht);
- 	sfq_free(q->slots);
+-- 
+2.39.5
+
 
 
