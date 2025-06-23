@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772E6C2E0;
-	Mon, 23 Jun 2025 21:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85EFC2E0;
+	Mon, 23 Jun 2025 21:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714289; cv=none; b=dkYwNZHuXZNtUOKyoScFei11yiLnpZdhKNhpnkL4PGfFnnT4AmhIVcqwbekNTH0e2cjZuuws4gRHK+bb6gmLqw0i18roActKIv7mr5JguqCR8LOuWz/Bhv4pPMgyEG2d4xqHcXca1WqMedYcIjffDz2w1MEvzDpau6Ef5HBT0/w=
+	t=1750714292; cv=none; b=alaD0FVbvd48fk7tt5vd40nW348/BpoePPZ98wYUXpNnXPY/32nhwqECYsL63L7vkvSAdTnCrpLr5MX9lDADxbimOPROC/guiGB400B00oFafIyxVlgn5ZbXGS/EG9SsIEGCMx8iHx6cKMc/2a3eRyYOK+eWscQ0SLs+pbWJA3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714289; c=relaxed/simple;
-	bh=7jNopkZbxCuyWk92S4h1UIaowHIjYqwzuuA/2Tm9yY4=;
+	s=arc-20240116; t=1750714292; c=relaxed/simple;
+	bh=9NGdw5DeSX20CyUdUJtBdSYycmxhpWS6LEjkWn786OU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R4edjWGNf1/OLd96bgEbb+OjSQ+EusSf4KXRCllpUxK5TPI1m4h0TzMywbQjFVtdZuxAalcM9xrAvJgW2D9rpnUYF0n/45xiklBKn4uJv3h0sN9mllr5l6tz6uQ9SG6HZvY7BwWfYq6ZIDv7s8FDXYrKD3aQ+VmlRNHdWIxAzC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0uZjj4M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MGLNqyBtJHawCVAm9UUDwHsB2OJbCQkSFw9ybLytxqk1TA9K8dhanbRKcxbKvGjqwZqtTgb9QoI8sEFH1v2UghhHtddtl9JIzV2RPjxmX8hMVOB2O1si/f8Sc75G0fzakf3lQIWfjo+aU436tm/F66daKAAra6Gf6Eggl31tWH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFVQFI/S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0uZjj4M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4B0C4CEEA;
-	Mon, 23 Jun 2025 21:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFVQFI/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C14CC4CEEA;
+	Mon, 23 Jun 2025 21:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714289;
-	bh=7jNopkZbxCuyWk92S4h1UIaowHIjYqwzuuA/2Tm9yY4=;
+	s=korg; t=1750714291;
+	bh=9NGdw5DeSX20CyUdUJtBdSYycmxhpWS6LEjkWn786OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0uZjj4Mh1/EU9rKTdhwFpYxeLv7bRCCpfxeKxxTAbKBQsI42LqN6Jd8FYqPyU0uU
-	 1Gt9Uc7RAGy+Ob1V9fiAbJ27yxrV9FJ+7qOsQZBiygMkKhxy5dQHnDGyZSpF4W0ouC
-	 I9CdqLXSwKOs7Yt/FKdtZbocgepgsZp8yXOD36JE=
+	b=nFVQFI/SiqaKo3OvIdFoBEt5veFjHwkBZ7KcfYvXH2Mxe4iM7b4YnvLpq8ANp1bhD
+	 N+/BqDi8nU96607BZtzngAuBpeIUfiB/o9WlCBswp7xRIsb5KJD31RPowy1I5jZASn
+	 cw00MwkaKpIaCIrT8xgkQJtdw83N1Bju4cbGsnoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangYuli <wangyuli@uniontech.com>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 163/508] MIPS: Loongson64: Add missing #interrupt-cells for loongson64c_ls7a
-Date: Mon, 23 Jun 2025 15:03:28 +0200
-Message-ID: <20250623130649.287665085@linuxfoundation.org>
+	Jeongjun Park <aha310510@gmail.com>,
+	syzbot+a2b84e569d06ca3a949c@syzkaller.appspotmail.com,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Vasiliy Kulikov <segoon@openwall.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 197/355] ipc: fix to protect IPCS lookups using RCU
+Date: Mon, 23 Jun 2025 15:06:38 +0200
+Message-ID: <20250623130632.592209791@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,47 +49,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit 6d223b8ffcd1593d032b71875def2daa71c53111 ]
+commit d66adabe91803ef34a8b90613c81267b5ded1472 upstream.
 
-Similar to commit 98a9e2ac3755 ("MIPS: Loongson64: DTS: Fix msi node for ls7a").
+syzbot reported that it discovered a use-after-free vulnerability, [0]
 
-Fix follow warnings:
-  arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts:28.31-36.4: Warning (interrupt_provider): /bus@10000000/msi-controller@2ff00000: Missing '#interrupt-cells' in interrupt provider
-  arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dtb: Warning (interrupt_map): Failed prerequisite 'interrupt_provider'
+[0]: https://lore.kernel.org/all/67af13f8.050a0220.21dd3.0038.GAE@google.com/
 
-Fixes: 24af105962c8 ("MIPS: Loongson64: DeviceTree for LS7A PCH")
-Tested-by: WangYuli <wangyuli@uniontech.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+idr_for_each() is protected by rwsem, but this is not enough.  If it is
+not protected by RCU read-critical region, when idr_for_each() calls
+radix_tree_node_free() through call_rcu() to free the radix_tree_node
+structure, the node will be freed immediately, and when reading the next
+node in radix_tree_for_each_slot(), the already freed memory may be read.
+
+Therefore, we need to add code to make sure that idr_for_each() is
+protected within the RCU read-critical region when we call it in
+shm_destroy_orphaned().
+
+Link: https://lkml.kernel.org/r/20250424143322.18830-1-aha310510@gmail.com
+Fixes: b34a6b1da371 ("ipc: introduce shm_rmid_forced sysctl")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Reported-by: syzbot+a2b84e569d06ca3a949c@syzkaller.appspotmail.com
+Cc: Jeongjun Park <aha310510@gmail.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Vasiliy Kulikov <segoon@openwall.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts | 1 +
- 1 file changed, 1 insertion(+)
+ ipc/shm.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts b/arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts
-index c7ea4f1c0bb21..6c277ab83d4b9 100644
---- a/arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts
-+++ b/arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts
-@@ -29,6 +29,7 @@
- 		compatible = "loongson,pch-msi-1.0";
- 		reg = <0 0x2ff00000 0 0x8>;
- 		interrupt-controller;
-+		#interrupt-cells = <1>;
- 		msi-controller;
- 		loongson,msi-base-vec = <64>;
- 		loongson,msi-num-vecs = <64>;
--- 
-2.39.5
-
+--- a/ipc/shm.c
++++ b/ipc/shm.c
+@@ -417,8 +417,11 @@ static int shm_try_destroy_orphaned(int
+ void shm_destroy_orphaned(struct ipc_namespace *ns)
+ {
+ 	down_write(&shm_ids(ns).rwsem);
+-	if (shm_ids(ns).in_use)
++	if (shm_ids(ns).in_use) {
++		rcu_read_lock();
+ 		idr_for_each(&shm_ids(ns).ipcs_idr, &shm_try_destroy_orphaned, ns);
++		rcu_read_unlock();
++	}
+ 	up_write(&shm_ids(ns).rwsem);
+ }
+ 
 
 
