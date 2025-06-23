@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE399219E0;
-	Mon, 23 Jun 2025 13:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E37A4C7F;
+	Mon, 23 Jun 2025 13:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685077; cv=none; b=hhroge4EiXrhjeYZN/IJWTQKCT83mpctXmKU7eoeHXe36fukjMht1SSXN5Y9HvTqWCATl20uoShL5g6W92NTnrjkuzh3Rqk21qotLqA10MZRIUc073K44Zv96wMASiWB8N2ZoBIzEAD1aNLZdDp9TNVloUvotmNbuK2IJ9EOvxI=
+	t=1750685080; cv=none; b=YqS2WmgwJFUV7mPXqvqbPKh/IHuMCsKKV41piLc5AHAd2d6nI0Slj+PeV1d49RIDYbaTC3UaIzeon11ve61YtPm9xbISRc+xGPXVgc8E2zjHPBvQLqyo0l4pYGh8XeChRIOXjOTk1N9IncG4Ggn26giAUuPO3uCSZlVkbGNSBhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685077; c=relaxed/simple;
-	bh=RW9P3AbNz+8bU6hxNFndavKLaNiypTppX86oYkXWJns=;
+	s=arc-20240116; t=1750685080; c=relaxed/simple;
+	bh=VrZ3BmcLnImUJ/GkJLcTep5poRc73YrcOKK305eVYYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G4+01+PyuB7asqJzisea4K2dwf3psGd83c1pXC90PtXdy1gNL61POK3DeQqeyiBtQBklx72xhk5+EQwWNyz3daHnAAmqCvZe6JYlb/Vbv9Fb54bJNna/st2UKV3jFj7PH+nJfxvPkfnFR3FFmHXvLOR5EPHsxSMM7WaNRae0vRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cl8MWUwJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ek0KxDSUbOASkyiXAPutrt5cq+VsufXaSUHpvFv3pl82gIPvo3DfuF67VdV3U95vA/GalujIHVQl7snQI8mE3/MHmUeCg5XbRCA0fHSxZvaOjVVud/OWNu3ly+dPF4g0aNQb+S2hL3SnpOwG6I5u+Sm6wbUO/EAK4aETQqJxM6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2a+V8XL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cl8MWUwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A76C4CEEA;
-	Mon, 23 Jun 2025 13:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2a+V8XL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B0DC4CEEA;
+	Mon, 23 Jun 2025 13:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685077;
-	bh=RW9P3AbNz+8bU6hxNFndavKLaNiypTppX86oYkXWJns=;
+	s=korg; t=1750685080;
+	bh=VrZ3BmcLnImUJ/GkJLcTep5poRc73YrcOKK305eVYYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cl8MWUwJwN5goULmAj+sp3gvaEZ48r/4AZukN90mkeUjdXnr+6VgPqCrB7IcNHBgJ
-	 3LKnZ3NrGiyB4v3QhZPsra1OiFp+iQYNOm76dizae0GyEiXXe1aY6LpATbelG1eXo8
-	 f04+gNKoTXAp/Fw/GTXJ4uyBw8T49HzHB+XWqnv4=
+	b=A2a+V8XL7E0Q0kFfoDm2DlngbxrHM5tgRQuaPPB2jy+u4GFDvTM+mCLlS8lbktkz5
+	 DW6niVKbSk4HNkX5nocnFUe4KiOMtNWbf6Xiayg2TUaNTxhLLkR4zD/bJ+YMuOTyEL
+	 c+YNgTQWqJ2mrzWMyJ+H1ui2yqLvzSOKOSYEKtNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 006/508] rtc: Make rtc_time64_to_tm() support dates before 1970
-Date: Mon, 23 Jun 2025 15:00:51 +0200
-Message-ID: <20250623130645.412035955@linuxfoundation.org>
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 052/355] netfilter: nft_tunnel: fix geneve_opt dump
+Date: Mon, 23 Jun 2025 15:04:13 +0200
+Message-ID: <20250623130628.395166117@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,89 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Mergnat <amergnat@baylibre.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-commit 7df4cfef8b351fec3156160bedfc7d6d29de4cce upstream.
+[ Upstream commit 22a9613de4c29d7d0770bfb8a5a9d73eb8df7dad ]
 
-Conversion of dates before 1970 is still relevant today because these
-dates are reused on some hardwares to store dates bigger than the
-maximal date that is representable in the device's native format.
-This prominently and very soon affects the hardware covered by the
-rtc-mt6397 driver that can only natively store dates in the interval
-1900-01-01 up to 2027-12-31. So to store the date 2028-01-01 00:00:00
-to such a device, rtc_time64_to_tm() must do the right thing for
-time=-2208988800.
+When dumping a nft_tunnel with more than one geneve_opt configured the
+netlink attribute hierarchy should be as follow:
 
-Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20250428-enable-rtc-v4-1-2b2f7e3f9349@baylibre.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ NFTA_TUNNEL_KEY_OPTS
+ |
+ |--NFTA_TUNNEL_KEY_OPTS_GENEVE
+ |  |
+ |  |--NFTA_TUNNEL_KEY_GENEVE_CLASS
+ |  |--NFTA_TUNNEL_KEY_GENEVE_TYPE
+ |  |--NFTA_TUNNEL_KEY_GENEVE_DATA
+ |
+ |--NFTA_TUNNEL_KEY_OPTS_GENEVE
+ |  |
+ |  |--NFTA_TUNNEL_KEY_GENEVE_CLASS
+ |  |--NFTA_TUNNEL_KEY_GENEVE_TYPE
+ |  |--NFTA_TUNNEL_KEY_GENEVE_DATA
+ |
+ |--NFTA_TUNNEL_KEY_OPTS_GENEVE
+ ...
+
+Otherwise, userspace tools won't be able to fetch the geneve options
+configured correctly.
+
+Fixes: 925d844696d9 ("netfilter: nft_tunnel: add support for geneve opts")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/lib.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ net/netfilter/nft_tunnel.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/rtc/lib.c
-+++ b/drivers/rtc/lib.c
-@@ -46,24 +46,38 @@ EXPORT_SYMBOL(rtc_year_days);
-  * rtc_time64_to_tm - converts time64_t to rtc_time.
-  *
-  * @time:	The number of seconds since 01-01-1970 00:00:00.
-- *		(Must be positive.)
-+ *		Works for values since at least 1900
-  * @tm:		Pointer to the struct rtc_time.
-  */
- void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
- {
--	unsigned int secs;
--	int days;
-+	int days, secs;
+diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
+index cfe6cf1be4217..95f8230322289 100644
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -588,10 +588,10 @@ static int nft_tunnel_opts_dump(struct sk_buff *skb,
+ 		struct geneve_opt *opt;
+ 		int offset = 0;
  
- 	u64 u64tmp;
- 	u32 u32tmp, udays, century, day_of_century, year_of_century, year,
- 		day_of_year, month, day;
- 	bool is_Jan_or_Feb, is_leap_year;
- 
--	/* time must be positive */
-+	/*
-+	 * Get days and seconds while preserving the sign to
-+	 * handle negative time values (dates before 1970-01-01)
-+	 */
- 	days = div_s64_rem(time, 86400, &secs);
- 
-+	/*
-+	 * We need 0 <= secs < 86400 which isn't given for negative
-+	 * values of time. Fixup accordingly.
-+	 */
-+	if (secs < 0) {
-+		days -= 1;
-+		secs += 86400;
-+	}
-+
- 	/* day of the week, 1970-01-01 was a Thursday */
- 	tm->tm_wday = (days + 4) % 7;
-+	/* Ensure tm_wday is always positive */
-+	if (tm->tm_wday < 0)
-+		tm->tm_wday += 7;
- 
- 	/*
- 	 * The following algorithm is, basically, Proposition 6.3 of Neri
-@@ -93,7 +107,7 @@ void rtc_time64_to_tm(time64_t time, str
- 	 * thus, is slightly different from [1].
- 	 */
- 
--	udays		= ((u32) days) + 719468;
-+	udays		= days + 719468;
- 
- 	u32tmp		= 4 * udays + 3;
- 	century		= u32tmp / 146097;
+-		inner = nla_nest_start_noflag(skb, NFTA_TUNNEL_KEY_OPTS_GENEVE);
+-		if (!inner)
+-			goto failure;
+ 		while (opts->len > offset) {
++			inner = nla_nest_start_noflag(skb, NFTA_TUNNEL_KEY_OPTS_GENEVE);
++			if (!inner)
++				goto failure;
+ 			opt = (struct geneve_opt *)(opts->u.data + offset);
+ 			if (nla_put_be16(skb, NFTA_TUNNEL_KEY_GENEVE_CLASS,
+ 					 opt->opt_class) ||
+@@ -601,8 +601,8 @@ static int nft_tunnel_opts_dump(struct sk_buff *skb,
+ 				    opt->length * 4, opt->opt_data))
+ 				goto inner_failure;
+ 			offset += sizeof(*opt) + opt->length * 4;
++			nla_nest_end(skb, inner);
+ 		}
+-		nla_nest_end(skb, inner);
+ 	}
+ 	nla_nest_end(skb, nest);
+ 	return 0;
+-- 
+2.39.5
+
 
 
