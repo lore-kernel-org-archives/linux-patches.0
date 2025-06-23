@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CA42192EC;
-	Mon, 23 Jun 2025 22:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B152192EC;
+	Mon, 23 Jun 2025 22:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717438; cv=none; b=VYiX0WX0ONNNqq+fXcBPa1Mc3nrfEdz1X/YPwHB7+sc24k/HOu0fQmOM3eaRNAY9HvFk1H+gi3nzx4EVWlQTVTPr3nhNj3Csrf1aZ4iYrCIOFh3AI76YZMOBe3X76jNrJieEhloX3/1MI2Oz+8dCRiC1LU4yhC6if5W5ioKhs9c=
+	t=1750717441; cv=none; b=lmCpR6T2sq1jp+KdKa0Q0HEWo8eI0PnRKCu5LcwBKPtW55BtvtGzW362j0P0LKN4lg0nqMVj+VWFFquXOkorEsk/gZ60VTY7eZXbBhZ/FzlvvbYveSbjYb1tf/sm60+hFA4+iH1npdmHVt/JitqczbJkP8Db8UUTG8lll4nXfPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717438; c=relaxed/simple;
-	bh=+bnaW4+QsQ4YVbK7cPPljAie48omWvWWfcMosBxEB94=;
+	s=arc-20240116; t=1750717441; c=relaxed/simple;
+	bh=WZj+yO3+tsu1+TZlRRUQnTg5dp/kr3fPTnstNcYbX3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UTWymImfowA4cVKZC88tuSSkwrEGoBA+TvJJo4LNdZlRfpDteBzLvzNX2aJRI2BVv3rzO2JaHgBePBvPkbNuutfB1pzYov3HqbYDUW1Ml8ZCpXFEV9ARkFiP2LvLd+uYMB5E/msTxY5aHS3eL6y6pChg3UOMUYgTUYvCD4r247Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1G8agq4n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LSXaGNSNOM4F0pTxukpBYWPM8oe8iYR5+wig5inahXRpCyR0S5bvU8Ry7cGd0hLnBD7iCYhXupvP5P0HoEThstxRr+KjvtKCF5/4HztLTCskuB+e+W9mbtWv/dZgHynz6RPxGwjy1eZgnnFIKb8k1Oi8PZ6QYsM5/YHVzV11E5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZlFANan; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1G8agq4n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A615C4CEEA;
-	Mon, 23 Jun 2025 22:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZlFANan"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C3CC4CEEA;
+	Mon, 23 Jun 2025 22:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717438;
-	bh=+bnaW4+QsQ4YVbK7cPPljAie48omWvWWfcMosBxEB94=;
+	s=korg; t=1750717440;
+	bh=WZj+yO3+tsu1+TZlRRUQnTg5dp/kr3fPTnstNcYbX3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1G8agq4nECjG8MnShLPcRRPCeZZ2sdAV8ejRBYex35xHUlam57X6QRAIhFZMcuj1N
-	 Pq1HkYbpRI6lGXpY8dBvSXEUO2cHsN1nKQXWyMQoXpV7/Z+xBd9LAkRFgZ0DdWnOdU
-	 RUqvTQH/rYlJMa2M6mUhT8xA4oAZoMOkIRtKibj4=
+	b=ZZlFANanNzoxdQwcTAxZy30RtU812gR1x+JKTq2cfLcPj4l+giMUd+RpaCQR7WRbx
+	 dksVj55mD5PGzwInS0uph/3nGDLuXLGYfTOPCPsK8xe1hESkeljsBn5mNSg5Cf9K1P
+	 2gAubdh2obkjfElKfa+o7MpIeLskqL2gqaLFK5ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 426/508] sock: Correct error checking condition for (assign|release)_proto_idx()
-Date: Mon, 23 Jun 2025 15:07:51 +0200
-Message-ID: <20250623130655.665572977@linuxfoundation.org>
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.1 427/508] i40e: fix MMIO write access to an invalid page in i40e_clear_hw
+Date: Mon, 23 Jun 2025 15:07:52 +0200
+Message-ID: <20250623130655.687518825@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -52,46 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Kyungwook Boo <bookyungwook@gmail.com>
 
-[ Upstream commit faeefc173be40512341b102cf1568aa0b6571acd ]
+[ Upstream commit 015bac5daca978448f2671478c553ce1f300c21e ]
 
-(assign|release)_proto_idx() wrongly check find_first_zero_bit() failure
-by condition '(prot->inuse_idx == PROTO_INUSE_NR - 1)' obviously.
+When the device sends a specific input, an integer underflow can occur, leading
+to MMIO write access to an invalid page.
 
-Fix by correcting the condition to '(prot->inuse_idx == PROTO_INUSE_NR)'
+Prevent the integer underflow by changing the type of related variables.
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250410-fix_net-v2-1-d69e7c5739a4@quicinc.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kyungwook Boo <bookyungwook@gmail.com>
+Link: https://lore.kernel.org/lkml/ffc91764-1142-4ba2-91b6-8c773f6f7095@gmail.com/T/
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_common.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 168e7f42c0542..d8c0650322ea6 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3797,7 +3797,7 @@ static int assign_proto_idx(struct proto *prot)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_common.c b/drivers/net/ethernet/intel/i40e/i40e_common.c
+index 6266756b47b9d..a707974e42794 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_common.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_common.c
+@@ -1063,10 +1063,11 @@ int i40e_pf_reset(struct i40e_hw *hw)
+ void i40e_clear_hw(struct i40e_hw *hw)
  {
- 	prot->inuse_idx = find_first_zero_bit(proto_inuse_idx, PROTO_INUSE_NR);
+ 	u32 num_queues, base_queue;
+-	u32 num_pf_int;
+-	u32 num_vf_int;
++	s32 num_pf_int;
++	s32 num_vf_int;
+ 	u32 num_vfs;
+-	u32 i, j;
++	s32 i;
++	u32 j;
+ 	u32 val;
+ 	u32 eol = 0x7ff;
  
--	if (unlikely(prot->inuse_idx == PROTO_INUSE_NR - 1)) {
-+	if (unlikely(prot->inuse_idx == PROTO_INUSE_NR)) {
- 		pr_err("PROTO_INUSE_NR exhausted\n");
- 		return -ENOSPC;
- 	}
-@@ -3808,7 +3808,7 @@ static int assign_proto_idx(struct proto *prot)
- 
- static void release_proto_idx(struct proto *prot)
- {
--	if (prot->inuse_idx != PROTO_INUSE_NR - 1)
-+	if (prot->inuse_idx != PROTO_INUSE_NR)
- 		clear_bit(prot->inuse_idx, proto_inuse_idx);
- }
- #else
 -- 
 2.39.5
 
