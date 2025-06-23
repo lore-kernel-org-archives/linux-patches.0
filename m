@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9902B19CC11;
-	Mon, 23 Jun 2025 21:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC6919CC11;
+	Mon, 23 Jun 2025 21:37:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714652; cv=none; b=DWwsb5e8vhE4PPUcmx6rjH/t/UTvRivvRmT76Xl+9Gv6PkuTxOn+AOY+0nNu2d+Y8gzWkhyxihEAgQJZ3+0L0j9ZsmuQy8LXea98iMRCYgVBotW/Ol/5brRSCEyYkGymybSarCKciw6tLjAq5TkwqKc0JgOxnd1UEbR6E9CxxBc=
+	t=1750714655; cv=none; b=OmNLJYRHtHnP3Ko5QsMYgm1+HPXyaO8iwVRufuCK5N6iEnVuCTYDXAmk7BdTyJNqoLwjF1wkDReB2qIuED7JA5b4wCpw75KL5RwvNVtvD1QXG8fHnBRrAa1aOcE0ZpfqCB+rZJMIxPuQhMnlWWWz+R0mBvUy+txLVrw5HRVa438=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714652; c=relaxed/simple;
-	bh=5qIxFWOsQKn/7LWVNzmfqNxtA/0VsF00L3cW1aG9TTA=;
+	s=arc-20240116; t=1750714655; c=relaxed/simple;
+	bh=PZU7SfMJrI3CvP2QfOmMN2CAWpaR22fF4tlB2ZPLUQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GwUpkrJAxDjNfljDv+EuXXHALfdsl/5bw7SnbermUOUABnCs5IhEOUxSZw1C4K/dQZlf6LBDdolmsGVVqNjkJLX60m6+sR68Gv95qVV4BS8qyOcTMuw7Fb9W8qc+FE2jwzLpc6iRZDsCORHxodKNzpJU3xsfbvXKmxxJfQVJ4Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmOOHA+q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oGWpjYQUzigEx9HlvU/hTSiTeGPIUICwkUmsUtyEWUf4nsVCyfCSXOK3AfFMdrL4zi2gME7GMC0xufqTr/jHjsgT5xq/KIX7gDIs9nwJw5s2OLb1BZlc35o6iPPeYbNg5jnvPnLxfG+HNuA7+oNprC6kSUOIFN/cQvc2VNSjV1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ka6bBJaY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmOOHA+q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31ECBC4CEEA;
-	Mon, 23 Jun 2025 21:37:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ka6bBJaY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2B0C4CEEA;
+	Mon, 23 Jun 2025 21:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714652;
-	bh=5qIxFWOsQKn/7LWVNzmfqNxtA/0VsF00L3cW1aG9TTA=;
+	s=korg; t=1750714654;
+	bh=PZU7SfMJrI3CvP2QfOmMN2CAWpaR22fF4tlB2ZPLUQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmOOHA+qtrs6gD//f+MjgM+fiERAiU53/aEl6GPwWy/iWuPXlcDZAq05slcMwrrSO
-	 RapmTy3AOnJHKxMRdW7gf68VUkWmZZZUU4X9T5fRFB0td6w+BSFSp5z8e2SOTnKqc2
-	 /naxAvo6AMtRepUNiCJMSC25ShYU6fo7S4+aqZHE=
+	b=Ka6bBJaYYgJSeVwCY4Ur+mjwjeb51BUlbyGbfT6agEa0MCFe86T2Aw7YivPexBMzm
+	 4ZcdXg1CLgzGzhDGdZjE3njM33Q0u/NmGDYUP1xAuRAweu2kw4GUWA2j4a5ip5uwgU
+	 b8QZ1Mwi1CC4lb3QRYWiNjsPgWzaFCNw/NnwCdyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/290] wifi: ath11k: Fix QMI memory reuse logic
-Date: Mon, 23 Jun 2025 15:06:51 +0200
-Message-ID: <20250623130631.406919972@linuxfoundation.org>
+Subject: [PATCH 6.1 187/508] ASoC: codecs: hda: Fix RPM usage count underflow
+Date: Mon, 23 Jun 2025 15:03:52 +0200
+Message-ID: <20250623130649.874361566@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,74 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit cd2e7bae92bd7e65063ab8d04721d2b711ba4cbe ]
+[ Upstream commit ff0045de4ee0288dec683690f66f2f369b7d3466 ]
 
-Firmware requests 2 segments at first. The first segment is of 6799360
-whose allocation fails due to dma remapping not available. The success
-is returned to firmware. Then firmware asks for 22 smaller segments
-instead of 2 big ones. Those get allocated successfully. At suspend/
-hibernation time, these segments aren't freed as they will be reused
-by firmware after resuming.
+RPM manipulation in hda_codec_probe_complete()'s error path is
+superfluous and leads to RPM usage count underflow if the
+build-controls operation fails.
 
-After resuming, the firmware asks for the 2 segments again with the
-first segment of 6799360 size. Since chunk->vaddr is not NULL, the
-type and size are compared with the previous type and size to know if
-it can be reused or not. Unfortunately, it is detected that it cannot
-be reused and this first smaller segment is freed. Then we continue to
-allocate 6799360 size memory which fails and ath11k_qmi_free_target_mem_chunk()
-is called which frees the second smaller segment as well. Later success
-is returned to firmware which asks for 22 smaller segments again. But
-as we had freed 2 segments already, we'll allocate the first 2 new
-smaller segments again and reuse the remaining 20. Hence 20 small
-segments are being reused instead of 22.
+hda_codec_probe_complete() is called in:
 
-Add skip logic when vaddr is set, but size/type don't match. Use the
-same skip and success logic as used when dma_alloc_coherent() fails.
-By skipping, the possibility of resume failure due to kernel failing to
-allocate memory for QMI can be avoided.
+1) hda_codec_probe() for all non-HDMI codecs
+2) in card->late_probe() for HDMI codecs
 
-	kernel: ath11k_pci 0000:03:00.0: failed to allocate dma memory for qmi (524288 B type 1)
-	ath11k_pci 0000:03:00.0: failed to allocate qmi target memory: -22
+Error path for hda_codec_probe() takes care of bus' RPM already.
+For 2) if late_probe() fails, ASoC performs card cleanup what
+triggers hda_codec_remote() - same treatment is in 1).
 
-Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
-
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20250428080242.466901-1-usama.anjum@collabora.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: b5df2a7dca1c ("ASoC: codecs: Add HD-Audio codec driver")
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250530141025.2942936-2-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/qmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/soc/codecs/hda.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
-index fa46e645009cf..91e31f30d2c80 100644
---- a/drivers/net/wireless/ath/ath11k/qmi.c
-+++ b/drivers/net/wireless/ath/ath11k/qmi.c
-@@ -1989,6 +1989,15 @@ static int ath11k_qmi_alloc_target_mem_chunk(struct ath11k_base *ab)
- 			    chunk->prev_size == chunk->size)
- 				continue;
+diff --git a/sound/soc/codecs/hda.c b/sound/soc/codecs/hda.c
+index 61e8e9be6b8d7..bd81572a6775b 100644
+--- a/sound/soc/codecs/hda.c
++++ b/sound/soc/codecs/hda.c
+@@ -149,7 +149,7 @@ int hda_codec_probe_complete(struct hda_codec *codec)
+ 	ret = snd_hda_codec_build_controls(codec);
+ 	if (ret < 0) {
+ 		dev_err(&hdev->dev, "unable to create controls %d\n", ret);
+-		goto out;
++		return ret;
+ 	}
  
-+			if (ab->qmi.mem_seg_count <= ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT) {
-+				ath11k_dbg(ab, ATH11K_DBG_QMI,
-+					   "size/type mismatch (current %d %u) (prev %d %u), try later with small size\n",
-+					    chunk->size, chunk->type,
-+					    chunk->prev_size, chunk->prev_type);
-+				ab->qmi.target_mem_delayed = true;
-+				return 0;
-+			}
+ 	/* Bus suspended codecs as it does not manage their pm */
+@@ -157,7 +157,7 @@ int hda_codec_probe_complete(struct hda_codec *codec)
+ 	/* rpm was forbidden in snd_hda_codec_device_new() */
+ 	snd_hda_codec_set_power_save(codec, 2000);
+ 	snd_hda_codec_register(codec);
+-out:
 +
- 			/* cannot reuse the existing chunk */
- 			dma_free_coherent(ab->dev, chunk->prev_size,
- 					  chunk->vaddr, chunk->paddr);
+ 	/* Complement pm_runtime_get_sync(bus) in probe */
+ 	pm_runtime_mark_last_busy(bus->dev);
+ 	pm_runtime_put_autosuspend(bus->dev);
 -- 
 2.39.5
 
