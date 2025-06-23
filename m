@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA410224F6;
-	Mon, 23 Jun 2025 21:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F96B2AD04;
+	Mon, 23 Jun 2025 21:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714230; cv=none; b=lPvosRknePN2rSH/CrDl5UwlnE2gn6qT1TB/LTeWzFhGhWzxqVTJDc8t6w6Zi+2gPZhKKTe/Tpn/5owuYrct10sSgyMMDfJpwkfpY6fBMQP+KvncB7kXISFwav5qjaCWYpHTVM2O8K39RFR0Y8IQtExNec6/KDgW1cgEPIEX6s4=
+	t=1750714233; cv=none; b=uP41xowB9A+D5SGYmIpt32JGeDDeqPV5Ki68EBn5+pFKsx/sEui8MawXKzQEwtONephx1Acgn6iZHs3ItY+QSYXDkM9zorhGpJbvKnJi6IAbzQBcK8985YMb8VNnvz4Fr9g6DcCIy3oGz/TzlBEYLLy0SE5RocVDxYXazfJ3Pa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714230; c=relaxed/simple;
-	bh=Nq05HT5hjhPoZL4Hsu+RssW1c+QcmfC3+gNQiaxV16k=;
+	s=arc-20240116; t=1750714233; c=relaxed/simple;
+	bh=an7SThgsD+07Zlafn2EEy7coE44PUHn54vLFLWcIszE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BgviGloYPwTmHNpjGJyED4B3nb8WDifUY5I1hbFT4V6I6jjXnB2R/jytJflvqqEYop6A/hLvQ6PwJqHyHY7WvZyO2WtLrnTTEFSRnc9gExlAyTi4cx56AVDvVI5Xh0Y+e469Uin4sn5RpofZZtKmTWVkx7lHXTcC1Vy3Kgwenuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ga4NavzL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=heEE6Iwx4403FQ80j7Kpl1b2fHbzkhbf2pJhI55kQQ6LGRNcI7OwoODG9iZP0wGN5MG6mNoARmBjR1rzgj5kizZhOtLpcM3X9qZ55XbpNsZxN8BNSghq9ZqYyiPkAfx1C5zsu4Dl3MHaM4ZEaVTOPySLAHSp2/wPb+UhpTZwHhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfchNGCG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ga4NavzL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73EEDC4CEEA;
-	Mon, 23 Jun 2025 21:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfchNGCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65A2C4CEEA;
+	Mon, 23 Jun 2025 21:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714230;
-	bh=Nq05HT5hjhPoZL4Hsu+RssW1c+QcmfC3+gNQiaxV16k=;
+	s=korg; t=1750714233;
+	bh=an7SThgsD+07Zlafn2EEy7coE44PUHn54vLFLWcIszE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ga4NavzL+rAK1JqxeaX0FTimThxUO5AS1jtAq2og3eIaquAIEpTtbnGVxhcFAT652
-	 Dqw4r+AH0L7Wlse9PlsHnQA9+UkGhU9JQCIp4JTewuXsnVDSq6qxH0NGCLUiMLVDKi
-	 OSAWhR4Z2YbxFpK+j84LQINYvWK19EnkQCvOrSUA=
+	b=HfchNGCGWPLEjFiBNMLhCTRdpz3BizFAjjnS0w6B1mJ4C0ILNUc2M6UrMRjAe4Uuw
+	 FyTPztAZLoLJeywZACvrJxsMox8iHofj5whXwqwh+D4VDWlw7NOXdCMtKSpNqkBW29
+	 Pp/TTA1yWEsHyINOEups158bUwC6YYEjqSQnWQ5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 193/355] fbdev: Fix fb_set_var to prevent null-ptr-deref in fb_videomode_to_var
-Date: Mon, 23 Jun 2025 15:06:34 +0200
-Message-ID: <20250623130632.480139464@linuxfoundation.org>
+	Tom Rini <trini@konsulko.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 5.15 175/411] kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS
+Date: Mon, 23 Jun 2025 15:05:19 +0200
+Message-ID: <20250623130638.095624728@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,73 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit 05f6e183879d9785a3cdf2f08a498bc31b7a20aa upstream.
+commit feb843a469fb0ab00d2d23cfb9bcc379791011bb upstream.
 
-If fb_add_videomode() in fb_set_var() fails to allocate memory for
-fb_videomode, later it may lead to a null-ptr dereference in
-fb_videomode_to_var(), as the fb_info is registered while not having the
-mode in modelist that is expected to be there, i.e. the one that is
-described in fb_info->var.
+When preprocessing arch/*/kernel/vmlinux.lds.S, the target triple is
+not passed to $(CPP) because we add it only to KBUILD_{C,A}FLAGS.
 
-================================================================
-general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 1 PID: 30371 Comm: syz-executor.1 Not tainted 5.10.226-syzkaller #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:fb_videomode_to_var+0x24/0x610 drivers/video/fbdev/core/modedb.c:901
-Call Trace:
- display_to_var+0x3a/0x7c0 drivers/video/fbdev/core/fbcon.c:929
- fbcon_resize+0x3e2/0x8f0 drivers/video/fbdev/core/fbcon.c:2071
- resize_screen drivers/tty/vt/vt.c:1176 [inline]
- vc_do_resize+0x53a/0x1170 drivers/tty/vt/vt.c:1263
- fbcon_modechanged+0x3ac/0x6e0 drivers/video/fbdev/core/fbcon.c:2720
- fbcon_update_vcs+0x43/0x60 drivers/video/fbdev/core/fbcon.c:2776
- do_fb_ioctl+0x6d2/0x740 drivers/video/fbdev/core/fbmem.c:1128
- fb_ioctl+0xe7/0x150 drivers/video/fbdev/core/fbmem.c:1203
- vfs_ioctl fs/ioctl.c:48 [inline]
- __do_sys_ioctl fs/ioctl.c:753 [inline]
- __se_sys_ioctl fs/ioctl.c:739 [inline]
- __x64_sys_ioctl+0x19a/0x210 fs/ioctl.c:739
- do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
- entry_SYSCALL_64_after_hwframe+0x67/0xd1
-================================================================
+As a result, the linker script is preprocessed with predefined macros
+for the build host instead of the target.
 
-The reason is that fb_info->var is being modified in fb_set_var(), and
-then fb_videomode_to_var() is called. If it fails to add the mode to
-fb_info->modelist, fb_set_var() returns error, but does not restore the
-old value of fb_info->var. Restore fb_info->var on failure the same way
-it is done earlier in the function.
+Assuming you use an x86 build machine, compare the following:
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+ $ clang -dM -E -x c /dev/null
+ $ clang -dM -E -x c /dev/null -target aarch64-linux-gnu
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Signed-off-by: Helge Deller <deller@gmx.de>
+There is no actual problem presumably because our linker scripts do not
+rely on such predefined macros, but it is better to define correct ones.
+
+Move $(CLANG_FLAGS) to KBUILD_CPPFLAGS, so that all *.c, *.S, *.lds.S
+will be processed with the proper target triple.
+
+[Note]
+After the patch submission, we got an actual problem that needs this
+commit. (CBL issue 1859)
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1859
+Reported-by: Tom Rini <trini@konsulko.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbmem.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ scripts/Makefile.clang |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -1062,8 +1062,10 @@ fb_set_var(struct fb_info *info, struct
- 	    !list_empty(&info->modelist))
- 		ret = fb_add_videomode(&mode, &info->modelist);
- 
--	if (ret)
-+	if (ret) {
-+		info->var = old_var;
- 		return ret;
-+	}
- 
- 	event.info = info;
- 	event.data = &mode;
+--- a/scripts/Makefile.clang
++++ b/scripts/Makefile.clang
+@@ -35,6 +35,5 @@ endif
+ # so they can be implemented or wrapped in cc-option.
+ CLANG_FLAGS	+= -Werror=unknown-warning-option
+ CLANG_FLAGS	+= -Werror=ignored-optimization-argument
+-KBUILD_CFLAGS	+= $(CLANG_FLAGS)
+-KBUILD_AFLAGS	+= $(CLANG_FLAGS)
++KBUILD_CPPFLAGS	+= $(CLANG_FLAGS)
+ export CLANG_FLAGS
 
 
