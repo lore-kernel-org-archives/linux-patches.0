@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13A81DF98B;
-	Mon, 23 Jun 2025 21:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B591F582A;
+	Mon, 23 Jun 2025 21:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713238; cv=none; b=lHWbeNuXebCucWR/Y4sstdjZsCwFJDUfX1BEp2WC07iO8HHHaMnxtCBRTszCBP8BZQoYK7Se2cd/82NOWZqLaTlmt0r9t219HL7mHj25v1L9fR+Y1c2j+GakcZ2NLBFVkSoLviRAUPdYfxEtZeUtHBI8OiYOz8cVOiNsz7kuGZc=
+	t=1750713241; cv=none; b=Kz8Kb/ZjIbezxByxXetfReRjTCld5/rPdcnVNqvlw1txL0fLjKjDJpJWduzMAundKos954QqbZVGcEBfZrvpcURIrYTwDw1OzTQLUbkBKrXn3oJqVrDJ9t4CJ9CzmOJAn48yTJy1WxYgmSKF3pNru7VM3tp4pzFQxkT58I7Tigk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713238; c=relaxed/simple;
-	bh=B/Xu4Lm3fcF+tzDba2Eqg3uenOnBK199n/8YXt/pwwY=;
+	s=arc-20240116; t=1750713241; c=relaxed/simple;
+	bh=o6mclz4DpA5+J2QjQu4o62R6m+CygRmoL5v29Hs4PfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eW7OSBijZHj9L+LhF5z0baM+4x5NwGkJ/lNBsmdPE/DaZ7uuVDLyriHMEuv++gfxDF+aCypXARP1Mfzuukud6nULGxoQl0B8p9ylxzyqjZDHdPBvw+G7DzFicRZTtJzuuWmVXxiUxH0fkpP04TGoIvTjT5XRXKX0hoSYzVwoNL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dv0qOgst; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KYKxQxU7ioGPWdjgtI64khZezHPA3g+9fp1TMJSG3cUYaISyg09ewdxU4X/E2p61peVqdxw8rP2D50ViOd3E8i/PwjsUU5MLnB82hsV/knpLR3bsYeEwwbSqkM9Os8YVotxqfK40BPfUhZ/8T0QMSIuV2YQgNFIfIdxpFlOjVV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZTqcoVU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dv0qOgst"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A78AC4CEEA;
-	Mon, 23 Jun 2025 21:13:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZTqcoVU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB7EC4CEEA;
+	Mon, 23 Jun 2025 21:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713238;
-	bh=B/Xu4Lm3fcF+tzDba2Eqg3uenOnBK199n/8YXt/pwwY=;
+	s=korg; t=1750713241;
+	bh=o6mclz4DpA5+J2QjQu4o62R6m+CygRmoL5v29Hs4PfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dv0qOgstkyel6/c2615vIJjdMq4t3sIKLirT7l0EZeqfv6rJDjVSsxJ1TwwViE+Ai
-	 7P6sD7V/xV1iUXYd+T0dpAiCsv9nMkDQQG934xwChQfFLUH2zIH/OFEmdQrKHi3C7J
-	 AjL2SunnWPvhdPaugBeT8LkQkaHxcXzvlbCYcTUQ=
+	b=TZTqcoVUnxFSawIBliJ7bnotsjWwf4h2lLE6BwwzidOIvRY36OOx66kY4CLRfmH9J
+	 j7ts9LwsOiOX/cZyXVVmKxlrFMy050jsak9rBLT6rMYOMuegRFvoV4vADn8Vh1zPl+
+	 wxklj9bgcZMeuhiFekAvgddKM5BLJwWn5a0H45/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavi Teitz <gavi@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liwei Sun <sunliweis@126.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 133/355] net/mlx5: Fix return value when searching for existing flow group
-Date: Mon, 23 Jun 2025 15:05:34 +0200
-Message-ID: <20250623130630.731898383@linuxfoundation.org>
+Subject: [PATCH 6.15 316/592] Bluetooth: btusb: Add new VID/PID 13d3/3584 for MT7922
+Date: Mon, 23 Jun 2025 15:04:34 +0200
+Message-ID: <20250623130707.941976366@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,63 +47,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Liwei Sun <sunliweis@126.com>
 
-[ Upstream commit 8ec40e3f1f72bf8f8accf18020d487caa99f46a4 ]
+[ Upstream commit 71d9d3522aec301e4a1c4eae4b5e0656fc4a7262 ]
 
-When attempting to add a rule to an existing flow group, if a matching
-flow group exists but is not active, the error code returned should be
-EAGAIN, so that the rule can be added to the matching flow group once
-it is active, rather than ENOENT, which indicates that no matching
-flow group was found.
+A new variant of MT7922 wireless device has been identified.
+The device introduces itself as MEDIATEK MT7922,
+so treat it as MediaTek device.
+With this patch, btusb driver works as expected:
+[    3.151162] Bluetooth: Core ver 2.22
+[    3.151185] Bluetooth: HCI device and connection manager initialized
+[    3.151189] Bluetooth: HCI socket layer initialized
+[    3.151191] Bluetooth: L2CAP socket layer initialized
+[    3.151194] Bluetooth: SCO socket layer initialized
+[    3.295718] Bluetooth: hci0: HW/SW Version: 0x008a008a, Build Time: 20241106163512
+[    4.676634] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[    4.676637] Bluetooth: BNEP filters: protocol multicast
+[    4.676640] Bluetooth: BNEP socket layer initialized
+[    5.560453] Bluetooth: hci0: Device setup in 2320660 usecs
+[    5.560457] Bluetooth: hci0: HCI Enhanced Setup Synchronous Connection command is advertised, but not supported.
+[    5.619197] Bluetooth: hci0: AOSP extensions version v1.00
+[    5.619204] Bluetooth: hci0: AOSP quality report is supported
+[    5.619301] Bluetooth: MGMT ver 1.23
+[    6.741247] Bluetooth: RFCOMM TTY layer initialized
+[    6.741258] Bluetooth: RFCOMM socket layer initialized
+[    6.741261] Bluetooth: RFCOMM ver 1.11
 
-Fixes: bd71b08ec2ee ("net/mlx5: Support multiple updates of steering rules in parallel")
-Signed-off-by: Gavi Teitz <gavi@nvidia.com>
-Signed-off-by: Roi Dayan <roid@nvidia.com>
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250610151514.1094735-4-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+lspci output:
+04:00.0 Network controller: MEDIATEK Corp. MT7922 802.11ax PCI Express Wireless Network Adapter
+
+USB information:
+T:  Bus=01 Lev=01 Prnt=01 Port=04 Cnt=02 Dev#=  3 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3584 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:* If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+
+Signed-off-by: Liwei Sun <sunliweis@126.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-index c1a33f05702ec..4b237a0fee34b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-@@ -1869,6 +1869,7 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
- 	struct mlx5_flow_handle *rule;
- 	struct match_list *iter;
- 	bool take_write = false;
-+	bool try_again = false;
- 	struct fs_fte *fte;
- 	u64  version = 0;
- 	int err;
-@@ -1928,6 +1929,7 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
- 		nested_down_write_ref_node(&g->node, FS_LOCK_PARENT);
- 
- 		if (!g->node.active) {
-+			try_again = true;
- 			up_write_ref_node(&g->node, false);
- 			continue;
- 		}
-@@ -1949,7 +1951,8 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
- 			tree_put_node(&fte->node, false);
- 		return rule;
- 	}
--	rule = ERR_PTR(-ENOENT);
-+	err = try_again ? -EAGAIN : -ENOENT;
-+	rule = ERR_PTR(err);
- out:
- 	kmem_cache_free(steering->ftes_cache, fte);
- 	return rule;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 256b451bbe065..df3380a8de85e 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -678,6 +678,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3568), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3584), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3605), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3607), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.39.5
 
