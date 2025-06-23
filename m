@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DF5C2E0;
-	Mon, 23 Jun 2025 21:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76629C2E0;
+	Mon, 23 Jun 2025 21:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714314; cv=none; b=bIsgo4ugqyvYWCsJcFEvvwt671uW3zj2Q17tclVzjFPBx6zcMSgQP/nlj/EmsbxULnojb0gkICXq/h8OV3TuQvnjDL3NqDCbhtFy/TpNcLH7cLnZe2AMj8lCYbn5RVU7a4InIDiG4HGkQZMEaKPX2el/pVHMQJv//QKTkjyHnp8=
+	t=1750714316; cv=none; b=Kso43NIUTg2Qq1dCxqKVmRt6Ys0HG4DN78y9IwkkH7JUv+15nO8//QcS01HnmI+vNJQh2UTm7KiOr4A6vmyNj/pqZ0vFBLvD3Pv3HBX2t5ZVokrrdNAHmmziAiwtkz+gCwOn7BsCz7ySXDwazDI51HqYax2o1Gf1wcm3mVhM220=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714314; c=relaxed/simple;
-	bh=O3zN4yi4ORNAgt8Gqq3QzNWLUhQ3Im4eY5/Pgag6cWw=;
+	s=arc-20240116; t=1750714316; c=relaxed/simple;
+	bh=Na1C4K6MP38UGtChRgsaIFfOnJxWG5rMyAuy0thpn2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gp3BTjH+dMex2gS0Rzioqa89HnaMrZULVQ28fdHwtAJ10PBaXgPPwxzUkRr3KxRC5t5Ac47Cgmh84J+j7QpRC7zS8csVQs1Bm0r1Izk4PYxI5DLl0pOoB9TXoic/VC8gGNool37bPazoff6GoZHY9lB98u76UhUtbkDg3nqLJVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ay4YS30O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eeRqf8v04UU6fMJbXBfgwDMD8ECSmUFQDCX+r2CfyJlA+eWoO5eRd/TZTDmVzufGm2JcoxuIamThoWQ4Zb2cN9Ez0exrkSaYuhDZRf9m44IOD9kjj9KhK6nPFiwpFDzAoAo1ks3zlmxTtdW3TcDoSdjCtTmD1PCBhgiw/haalHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tvy51gZU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ay4YS30O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A38C4CEEA;
-	Mon, 23 Jun 2025 21:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tvy51gZU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C34BC4CEEA;
+	Mon, 23 Jun 2025 21:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714313;
-	bh=O3zN4yi4ORNAgt8Gqq3QzNWLUhQ3Im4eY5/Pgag6cWw=;
+	s=korg; t=1750714316;
+	bh=Na1C4K6MP38UGtChRgsaIFfOnJxWG5rMyAuy0thpn2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ay4YS30OsoNg2HTMrut+aEc46quf4RqFV7dheKrGi7+4nPThXKLhdNbm27QWa8PT6
-	 G3LazlMtCInIHTPw710xyNfHTCBavfeiflsBzmyz2pB+82qp5ABTOKsv6Ea/LJtJjo
-	 JBcvJmbEm814LgXkCeLkYeij4JZalyJiruHxKVsE=
+	b=Tvy51gZUVMJH/Atwrj9JqB2Dv6C/sh9CmQAdpoasQZUtPJ6Xol5gql+E0MHgxOaps
+	 tmKap5itPFD2J+BlCrRW0VuLGyESLYkIv15VAYAgVS1VVrEFjXyq1UmY0Bz3WbS1is
+	 3EZUb4OE7Wm0MYQAfmKMgVidv2zd4WRwCoh7npbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Pawel Laszczak <pawell@cadence.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 5.15 180/411] usb: cdnsp: Fix issue with detecting command completion event
-Date: Mon, 23 Jun 2025 15:05:24 +0200
-Message-ID: <20250623130638.216185769@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.12 095/414] ext4: ensure i_size is smaller than maxbytes
+Date: Mon, 23 Jun 2025 15:03:52 +0200
+Message-ID: <20250623130644.468288773@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +49,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit f4ecdc352646f7d23f348e5c544dbe3212c94fc8 upstream.
+commit 1a77a028a392fab66dd637cdfac3f888450d00af upstream.
 
-In some cases, there is a small-time gap in which CMD_RING_BUSY can be
-cleared by controller but adding command completion event to event ring
-will be delayed. As the result driver will return error code.
+The inode i_size cannot be larger than maxbytes, check it while loading
+inode from the disk.
 
-This behavior has been detected on usbtest driver (test 9) with
-configuration including ep1in/ep1out bulk and ep2in/ep2out isoc
-endpoint.
-
-Probably this gap occurred because controller was busy with adding some
-other events to event ring.
-
-The CMD_RING_BUSY is cleared to '0' when the Command Descriptor has been
-executed and not when command completion event has been added to event
-ring.
-
-To fix this issue for this test the small delay is sufficient less than
-10us) but to make sure the problem doesn't happen again in the future
-the patch introduces 10 retries to check with delay about 20us before
-returning error code.
-
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/PH7PR07MB9538AA45362ACCF1B94EE9B7DD96A@PH7PR07MB9538.namprd07.prod.outlook.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Link: https://patch.msgid.link/20250506012009.3896990-4-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-gadget.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/cdns3/cdnsp-gadget.c
-+++ b/drivers/usb/cdns3/cdnsp-gadget.c
-@@ -546,6 +546,7 @@ int cdnsp_wait_for_cmd_compl(struct cdns
- 	dma_addr_t cmd_deq_dma;
- 	union cdnsp_trb *event;
- 	u32 cycle_state;
-+	u32 retry = 10;
- 	int ret, val;
- 	u64 cmd_dma;
- 	u32  flags;
-@@ -577,8 +578,23 @@ int cdnsp_wait_for_cmd_compl(struct cdns
- 		flags = le32_to_cpu(event->event_cmd.flags);
- 
- 		/* Check the owner of the TRB. */
--		if ((flags & TRB_CYCLE) != cycle_state)
-+		if ((flags & TRB_CYCLE) != cycle_state) {
-+			/*
-+			 * Give some extra time to get chance controller
-+			 * to finish command before returning error code.
-+			 * Checking CMD_RING_BUSY is not sufficient because
-+			 * this bit is cleared to '0' when the Command
-+			 * Descriptor has been executed by controller
-+			 * and not when command completion event has
-+			 * be added to event ring.
-+			 */
-+			if (retry--) {
-+				udelay(20);
-+				continue;
-+			}
-+
- 			return -EINVAL;
-+		}
- 
- 		cmd_dma = le64_to_cpu(event->event_cmd.cmd_trb);
- 
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4928,7 +4928,8 @@ struct inode *__ext4_iget(struct super_b
+ 		ei->i_file_acl |=
+ 			((__u64)le16_to_cpu(raw_inode->i_file_acl_high)) << 32;
+ 	inode->i_size = ext4_isize(sb, raw_inode);
+-	if ((size = i_size_read(inode)) < 0) {
++	size = i_size_read(inode);
++	if (size < 0 || size > ext4_get_maxbytes(inode)) {
+ 		ext4_error_inode(inode, function, line, 0,
+ 				 "iget: bad i_size value: %lld", size);
+ 		ret = -EFSCORRUPTED;
 
 
