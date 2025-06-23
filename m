@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8381250BEC;
-	Mon, 23 Jun 2025 13:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788C725178C;
+	Mon, 23 Jun 2025 13:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685334; cv=none; b=ZowkpZO17dfmpsrBZG3qj0S17OrZo8iwRub4GOHQ9ZiDaWR0c/Eya1j3kHPCxK48h3Q1YYzQ8yW39NBj1h6bxSyAKCpwChfRX9ISXQ55MPYbf6lS7nh4kI7zGhIFxp3QuZxfzSwkIegxpcRKhvHiwNu6w++qzrlONhfvEgUAmLg=
+	t=1750685336; cv=none; b=Id2g6UsFiQH7jTVlNp8kgfjcu5Pipbq2QruaD6CqSD9xGb8mq+Hz2g6UVQUX0gSs5SLbJEE33nBpNAjxOPYgELJVXhYRtvTMou+4/rAzLA7e0OSlqEJLuwQ9y5hS1AzXyzdBJcbJ69VFRm+K9hvJWXaOqfF7PueSTPCn8m5IKVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685334; c=relaxed/simple;
-	bh=1uFZ9p0FNSvAOxAYlURTk7HQ/TF0x5O5fdiT1GvxWS4=;
+	s=arc-20240116; t=1750685336; c=relaxed/simple;
+	bh=TK6/9lXwSJk+nIerwHpHZ0eHE07rtN1ty3rhaIKvNYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q/XiBNCAXKOx5X5Ya8j8t7jTJnTZGiYwHcxRSk+SDKdq2xfP4vnXE3uzE7zOXYiD2Eecy4jFZTDUwst55eDUdDA7gAb7Jt+nstuHL/YKledcGvxltEYN3psL7jIcYsAn7VWKZ2ITvb9yonVFF8C+OTmeGmt08JHT/E+dXvzwNU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHP3IR6s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g/esDeTHazsn0IFNM+ox+vSpA+7/Qpm8R5LX1fk3qwFj0wNDIXdRWeJdoU3MQbweSSKHKzHvNnJhw9Amo0VxDM/Uo3Qlzen2cUT/BhEr6i/E/VAfy6c5twiCSyLfgn2KBfpdU4HgRWqVW09JjCEsbK9/zh9aCZpyV0IejhC2LWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEArihD3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHP3IR6s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB86C4CEEA;
-	Mon, 23 Jun 2025 13:28:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEArihD3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0EAC4CEF1;
+	Mon, 23 Jun 2025 13:28:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685333;
-	bh=1uFZ9p0FNSvAOxAYlURTk7HQ/TF0x5O5fdiT1GvxWS4=;
+	s=korg; t=1750685336;
+	bh=TK6/9lXwSJk+nIerwHpHZ0eHE07rtN1ty3rhaIKvNYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RHP3IR6sA1hbPakG3OHWns9CsusZakwH2tYJmZOb5e8WWmU17c+hdYOThjXD6o4B8
-	 Yz9akTFWozBZJoP2kde7kCT5XAtIvfxCauMElDynfKzExQw6kgqtv+Htc8ic3GWFbi
-	 2uGlZxp9ev6H3+TkM9Xbtcy/LWA0jzVXZ95LykJg=
+	b=eEArihD3ngiT1tX+eXQkUsV7rbfmFKBZEdeAy/+J7Y5I/maB5YMykndAFlwbAMwyK
+	 j2G5Hj6AZrTs+6OX0oECf54ejqiwYlEh35m/mGCFG8XXK8TeIM3PhMtRgICDJAD796
+	 KPZPLpLtxf5vwg4/CLTjIAcP2UEGdYJlIOo7C6Wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.15 205/592] iio: adc: ad7606: fix raw read for 18-bit chips
-Date: Mon, 23 Jun 2025 15:02:43 +0200
-Message-ID: <20250623130705.164726490@linuxfoundation.org>
+	Alex Bee <knaerzche@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 028/411] media: rkvdec: Fix frame size enumeration
+Date: Mon, 23 Jun 2025 15:02:52 +0200
+Message-ID: <20250623130633.846076693@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +49,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-commit 3f5fd1717ae9497215f22aa748fc2c09df88b0e3 upstream.
+[ Upstream commit f270005b99fa19fee9a6b4006e8dee37c10f1944 ]
 
-Fix 18-bit raw read for 18-bit chips by applying a mask to the value
-we receive from the SPI controller.
+The VIDIOC_ENUM_FRAMESIZES ioctl should return all frame sizes (i.e.
+width and height in pixels) that the device supports for the given pixel
+format.
 
-SPI controllers either return 1, 2 or 4 bytes per word depending on the
-bits_per_word. For 16-bit chips, there was no problem since they raw
-data fit exactly in the 2 bytes received from the SPI controller. But
-now that we have 18-bit chips and we are using bits_per_word = 18, we
-cannot assume that the extra bits in the 32-bit word are always zero.
-In fact, with the AXI SPI Engine controller, these bits are not always
-zero which caused the raw values to read 10s of 1000s of volts instead
-of the correct value. Therefore, we need to mask the value we receive
-from the SPI controller to ensure that only the 18 bits of real data
-are used.
+It doesn't make a lot of sense to return the frame-sizes in a stepwise
+manner, which is used to enforce hardware alignments requirements for
+CAPTURE buffers, for coded formats.
 
-Fixes: f3838e934dff ("iio: adc: ad7606: add support for AD7606C-{16,18} parts")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250502-iio-adc-ad7606-fix-raw-read-for-18-bit-chips-v1-1-06caa92d8f11@baylibre.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Instead, applications should receive an indication, about the maximum
+supported frame size for that hardware decoder, via a continuous
+frame-size enumeration.
+
+Fixes: cd33c830448b ("media: rkvdec: Add the rkvdec driver")
+Suggested-by: Alex Bee <knaerzche@gmail.com>
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7606.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ drivers/staging/media/rkvdec/rkvdec.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7606.c b/drivers/iio/adc/ad7606.c
-index 703556eb7257..8ed65a35b486 100644
---- a/drivers/iio/adc/ad7606.c
-+++ b/drivers/iio/adc/ad7606.c
-@@ -727,17 +727,16 @@ static int ad7606_scan_direct(struct iio_dev *indio_dev, unsigned int ch,
- 		goto error_ret;
+diff --git a/drivers/staging/media/rkvdec/rkvdec.c b/drivers/staging/media/rkvdec/rkvdec.c
+index 29b68a13674ee..9c85370fd81bc 100644
+--- a/drivers/staging/media/rkvdec/rkvdec.c
++++ b/drivers/staging/media/rkvdec/rkvdec.c
+@@ -188,8 +188,14 @@ static int rkvdec_enum_framesizes(struct file *file, void *priv,
+ 	if (!fmt)
+ 		return -EINVAL;
  
- 	chan = &indio_dev->channels[ch + 1];
--	if (chan->scan_type.sign == 'u') {
--		if (realbits > 16)
--			*val = st->data.buf32[ch];
--		else
--			*val = st->data.buf16[ch];
--	} else {
--		if (realbits > 16)
--			*val = sign_extend32(st->data.buf32[ch], realbits - 1);
--		else
--			*val = sign_extend32(st->data.buf16[ch], realbits - 1);
--	}
+-	fsize->type = V4L2_FRMSIZE_TYPE_STEPWISE;
+-	fsize->stepwise = fmt->frmsize;
++	fsize->type = V4L2_FRMSIZE_TYPE_CONTINUOUS;
++	fsize->stepwise.min_width = 1;
++	fsize->stepwise.max_width = fmt->frmsize.max_width;
++	fsize->stepwise.step_width = 1;
++	fsize->stepwise.min_height = 1;
++	fsize->stepwise.max_height = fmt->frmsize.max_height;
++	fsize->stepwise.step_height = 1;
 +
-+	if (realbits > 16)
-+		*val = st->data.buf32[ch];
-+	else
-+		*val = st->data.buf16[ch];
-+
-+	*val &= GENMASK(realbits - 1, 0);
-+
-+	if (chan->scan_type.sign == 's')
-+		*val = sign_extend32(*val, realbits - 1);
+ 	return 0;
+ }
  
- error_ret:
- 	if (!st->gpio_convst) {
 -- 
-2.50.0
+2.39.5
 
 
 
