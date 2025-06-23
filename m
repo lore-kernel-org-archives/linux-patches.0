@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465382192EC;
-	Mon, 23 Jun 2025 22:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7545221543;
+	Mon, 23 Jun 2025 22:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717453; cv=none; b=fJxYCUCEGJV8gGELTwu/kDSc40zZumfgqXAfsdc8kGvl4FbbzvaGEEy+4l/jLBpyFfqia/SbWxlZP5REBwUgVEHCvoD7igYppSVSDrP96vUaMYkFfckAZ110745bHsNXMm0eQxYvzH4G47EYNWBF+eouyzdT20D4hQx1qOkokDY=
+	t=1750717455; cv=none; b=nbbLJs1FBEUnWePjz1fGW1Zvo8mpANgEXXUhyKA3nBqhpzNyRARAUmMjYmQrgaroa7DdlBYQfWJWmL90A8uxKEoBEW99hR33L8w1j1nP13A6Qq9Oeg5eYoibA5yENSVx9tGLU0DsED87RLC8LYDlywKe2vo5HPLPDE7RN8b8IqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717453; c=relaxed/simple;
-	bh=CC7jNw0J767dTgjthMI6sPU0jSsHD0sVESN13eDLCTc=;
+	s=arc-20240116; t=1750717455; c=relaxed/simple;
+	bh=jt1zwUjA3ozTGuNHY3UwTMDPsMmP20jcF1aKPc1eMcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r8sG7yerbXvvy/kzk0atVTfUk6t8McFjGiH9zqvV31fWDzYDKXgBrlgME2fOZ8lN3TSRBJtBPD7AGr9ICdeghda0hj999mdZguKUJdmBLoLwtNfUX1+cQoWQgD8+x2Xtwopjw0bDHFNpwudVMy98au5/Nz03oAsK0o+c4zY5S+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+fzYFAx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rn84r9GF3FA0UcuFsZ/GR7twX+ZrKRPMfDpaC4cB77nbodpDp6grvKn1G8+VyIAXtEDPR2JgowDuvunjK/4dyFgdc6omFbj19Ztyzz0h6+uvnTBPUVSyDGkJ9CXJyWbbvZLo54AelyotnxkvTyEcFoP0Z9IFZafoNHlLQqczmX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyEX170s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+fzYFAx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E66C4CEEA;
-	Mon, 23 Jun 2025 22:24:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyEX170s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402F9C4CEEA;
+	Mon, 23 Jun 2025 22:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717453;
-	bh=CC7jNw0J767dTgjthMI6sPU0jSsHD0sVESN13eDLCTc=;
+	s=korg; t=1750717455;
+	bh=jt1zwUjA3ozTGuNHY3UwTMDPsMmP20jcF1aKPc1eMcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+fzYFAx5nYv9DtaQvx9GV4PGX5M9cwD6vcS7j35KTVM6i8Apxw1oO/OFKyqPNOwo
-	 lhP2Q0F02H5TCzBfbbQbAn68eIFCNfBn6d1/aeUFSp5TuOjymCgHjGwulf/fXM09zr
-	 /VbdFesqht6GpPzb85vJtxcJGHEMdWpBAVKoaWMc=
+	b=jyEX170sn0chBGySgFLoK6CqKWPZDv31AFUM5Zp8LYdVl6m4x6JBi0FSzFT4hVrAA
+	 4qQs54AQ4lJLWWtKknjKZeNe3mh1uf3uAQyZ9uho5Qf9WT8ywfVjOp63Hgo+j/xsqp
+	 YKkP7sjDweymq6WqxwuBE3IuEj94nRVdelXx+Z88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 390/414] drm/xe/bmg: Update Wa_16023588340
-Date: Mon, 23 Jun 2025 15:08:47 +0200
-Message-ID: <20250623130651.694804352@linuxfoundation.org>
+Subject: [PATCH 6.1 430/508] net: ethernet: cortina: Use TOE/TSO on all TCP
+Date: Mon, 23 Jun 2025 15:07:55 +0200
+Message-ID: <20250623130655.756227525@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +45,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 16c1241b08751a67cd7a0221ea9f82b0b02806f4 ]
+[ Upstream commit 6a07e3af4973402fa199a80036c10060b922c92c ]
 
-This allows for additional L2 caching modes.
+It is desireable to push the hardware accelerator to also
+process non-segmented TCP frames: we pass the skb->len
+to the "TOE/TSO" offloader and it will handle them.
 
-Fixes: 01570b446939 ("drm/xe/bmg: implement Wa_16023588340")
-Cc: Matthew Auld <matthew.auld@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Link: https://lore.kernel.org/r/20250612-wa-14022085890-v4-2-94ba5dcc1e30@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 6ab42fa03d4c88a0ddf5e56e62794853b198e7bf)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Without this quirk the driver becomes unstable and lock
+up and and crash.
+
+I do not know exactly why, but it is probably due to the
+TOE (TCP offload engine) feature that is coupled with the
+segmentation feature - it is not possible to turn one
+part off and not the other, either both TOE and TSO are
+active, or neither of them.
+
+Not having the TOE part active seems detrimental, as if
+that hardware feature is not really supposed to be turned
+off.
+
+The datasheet says:
+
+  "Based on packet parsing and TCP connection/NAT table
+   lookup results, the NetEngine puts the packets
+   belonging to the same TCP connection to the same queue
+   for the software to process. The NetEngine puts
+   incoming packets to the buffer or series of buffers
+   for a jumbo packet. With this hardware acceleration,
+   IP/TCP header parsing, checksum validation and
+   connection lookup are offloaded from the software
+   processing."
+
+After numerous tests with the hardware locking up after
+something between minutes and hours depending on load
+using iperf3 I have concluded this is necessary to stabilize
+the hardware.
+
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://patch.msgid.link/20250408-gemini-ethernet-tso-always-v1-1-e669f932359c@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/cortina/gemini.c | 37 +++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
-index 335548e3b6b9c..231ed53cf907c 100644
---- a/drivers/gpu/drm/xe/xe_gt.c
-+++ b/drivers/gpu/drm/xe/xe_gt.c
-@@ -114,7 +114,7 @@ static void xe_gt_enable_host_l2_vram(struct xe_gt *gt)
- 		xe_gt_mcr_multicast_write(gt, XE2_GAMREQSTRM_CTRL, reg);
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 7cc0ea3737b2d..729a69007ec47 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1148,6 +1148,7 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
+ 	struct gmac_txdesc *txd;
+ 	skb_frag_t *skb_frag;
+ 	dma_addr_t mapping;
++	bool tcp = false;
+ 	void *buffer;
+ 	u16 mss;
+ 	int ret;
+@@ -1155,6 +1156,13 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
+ 	word1 = skb->len;
+ 	word3 = SOF_BIT;
+ 
++	/* Determine if we are doing TCP */
++	if (skb->protocol == htons(ETH_P_IP))
++		tcp = (ip_hdr(skb)->protocol == IPPROTO_TCP);
++	else
++		/* IPv6 */
++		tcp = (ipv6_hdr(skb)->nexthdr == IPPROTO_TCP);
++
+ 	mss = skb_shinfo(skb)->gso_size;
+ 	if (mss) {
+ 		/* This means we are dealing with TCP and skb->len is the
+@@ -1167,8 +1175,26 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
+ 			   mss, skb->len);
+ 		word1 |= TSS_MTU_ENABLE_BIT;
+ 		word3 |= mss;
++	} else if (tcp) {
++		/* Even if we are not using TSO, use the hardware offloader
++		 * for transferring the TCP frame: this hardware has partial
++		 * TCP awareness (called TOE - TCP Offload Engine) and will
++		 * according to the datasheet put packets belonging to the
++		 * same TCP connection in the same queue for the TOE/TSO
++		 * engine to process. The engine will deal with chopping
++		 * up frames that exceed ETH_DATA_LEN which the
++		 * checksumming engine cannot handle (see below) into
++		 * manageable chunks. It flawlessly deals with quite big
++		 * frames and frames containing custom DSA EtherTypes.
++		 */
++		mss = netdev->mtu + skb_tcp_all_headers(skb);
++		mss = min(mss, skb->len);
++		netdev_dbg(netdev, "TOE/TSO len %04x mtu %04x mss %04x\n",
++			   skb->len, netdev->mtu, mss);
++		word1 |= TSS_MTU_ENABLE_BIT;
++		word3 |= mss;
+ 	} else if (skb->len >= ETH_FRAME_LEN) {
+-		/* Hardware offloaded checksumming isn't working on frames
++		/* Hardware offloaded checksumming isn't working on non-TCP frames
+ 		 * bigger than 1514 bytes. A hypothesis about this is that the
+ 		 * checksum buffer is only 1518 bytes, so when the frames get
+ 		 * bigger they get truncated, or the last few bytes get
+@@ -1185,21 +1211,16 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
  	}
  
--	xe_gt_mcr_multicast_write(gt, XEHPC_L3CLOS_MASK(3), 0x3);
-+	xe_gt_mcr_multicast_write(gt, XEHPC_L3CLOS_MASK(3), 0xF);
- 	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- }
+ 	if (skb->ip_summed == CHECKSUM_PARTIAL) {
+-		int tcp = 0;
+-
+ 		/* We do not switch off the checksumming on non TCP/UDP
+ 		 * frames: as is shown from tests, the checksumming engine
+ 		 * is smart enough to see that a frame is not actually TCP
+ 		 * or UDP and then just pass it through without any changes
+ 		 * to the frame.
+ 		 */
+-		if (skb->protocol == htons(ETH_P_IP)) {
++		if (skb->protocol == htons(ETH_P_IP))
+ 			word1 |= TSS_IP_CHKSUM_BIT;
+-			tcp = ip_hdr(skb)->protocol == IPPROTO_TCP;
+-		} else { /* IPv6 */
++		else
+ 			word1 |= TSS_IPV6_ENABLE_BIT;
+-			tcp = ipv6_hdr(skb)->nexthdr == IPPROTO_TCP;
+-		}
  
+ 		word1 |= tcp ? TSS_TCP_CHKSUM_BIT : TSS_UDP_CHKSUM_BIT;
+ 	}
 -- 
 2.39.5
 
