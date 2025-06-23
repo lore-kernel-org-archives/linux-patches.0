@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD03424E019;
-	Mon, 23 Jun 2025 13:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B3424BBEB;
+	Mon, 23 Jun 2025 13:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684599; cv=none; b=PX6/e0Q/WNdRB1u3CvJuzdBKwdMW19m034L1QvcFXKCgbtgCVyy8tCMZh9ElwbGaaNGWtCE1O5irYOXn4NLDOzB7fQnyFExlScz24/8ZNJY7EoSH4YJdqd6RsPA3D3T/wVPypSxpyZVsM4kf4LU2a2JID0Ztu1ksa/hhSteRDjU=
+	t=1750684601; cv=none; b=WgatahsfEHVlnu3WfQQ0dL1ORhH2e1uMiJiNj0nPHAv6dJ+dmfxSoSBROwyGcAMi6PGn9LHNUr1O2aj83FvtPuK9XJd3j+ZGVo9oHxMd7ZhtmJAKeOu/OMaJQ7ni7Kh2IzJYLXRvcxGfqRdo90dfRGslbMYhSff4JvAQGOELTFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684599; c=relaxed/simple;
-	bh=iTTkp4o6wdRFJm9ExDeDnhgdufGp2/0ZBBvrRZhpCuE=;
+	s=arc-20240116; t=1750684601; c=relaxed/simple;
+	bh=7sogNlnLGQ8J1dnwJnlX36c24dNYsSFH9EF1RW/B71I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8x0Jwq55u79kr6vGw6DELFvSm/tl3PnpmG5oAKLgEOHRdG75GQ3lk6jMR62FWyLaLFkezOF0zYzrLBoliktlVRHaNWfUhy1LceBfbUl5N2jqNVzPIF7E2k9itsV8SEGQYmFRRClZFq+MylIeJG6de4ZU7pjQTuj6f+tCFzzUOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCQvH1yk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZCi+3AtlaZWIjq4IScLNGvwE9t+lZxapS9EtnHzPNY1glHAN7ecC3zLOftIcPhOyxEQiqnD4+iVRFxjMuSYnn7vlSnTpWVHgpJGHPz8X14+zg6+Wzw37ddzUGOwCz8xoSanUGvCvJ1X8VZutUWAkj8YNlCipL2aPoD3vF7lqQCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bf2y1opg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCQvH1yk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A07C4CEEA;
-	Mon, 23 Jun 2025 13:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bf2y1opg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06CD5C4CEEA;
+	Mon, 23 Jun 2025 13:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684598;
-	bh=iTTkp4o6wdRFJm9ExDeDnhgdufGp2/0ZBBvrRZhpCuE=;
+	s=korg; t=1750684601;
+	bh=7sogNlnLGQ8J1dnwJnlX36c24dNYsSFH9EF1RW/B71I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GCQvH1ykFf/58Fbqo4MZVzcYr9PiQzY5WyEPvnibhFYDcic6myOHt22D09K5VWe7G
-	 wIv2XOLappRXaEcewl1oM9+Yz7cUAJ6JOZTOqKFtA6+lJXZN60F6XYZPJ4nP4vW5uY
-	 gJ4C0N0bPVg5HB+JIpDJyTeXIcoKnvOotm1Lms1U=
+	b=Bf2y1opgQM+SmxrKfCXZHoKozKTej/0A3e4uiIWdeuw5ChGJ6JAbmOWyyM8nMUci1
+	 ortP9Ob5HUZKujBHo1YUiPLWd/57MjnzhbZsHkPbQXbUlLdFLnotgrl5gt5BvCJQr4
+	 3R4ZWghlkJaCwqIIBksYQ/8lrwSJal8Ao8/ho5TQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.15 129/592] net: ftgmac100: select FIXED_PHY
-Date: Mon, 23 Jun 2025 15:01:27 +0200
-Message-ID: <20250623130703.340440423@linuxfoundation.org>
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.15 130/592] iommu/vt-d: Restore context entry setup order for aliased devices
+Date: Mon, 23 Jun 2025 15:01:28 +0200
+Message-ID: <20250623130703.364127103@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -50,33 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-commit ae409629e022fbebbc6d31a1bfeccdbbeee20fd6 upstream.
+commit 320302baed05c6456164652541f23d2a96522c06 upstream.
 
-Depending on e.g. DT configuration this driver uses a fixed link.
-So we shouldn't rely on the user to enable FIXED_PHY, select it in
-Kconfig instead. We may end up with a non-functional driver otherwise.
+Commit 2031c469f816 ("iommu/vt-d: Add support for static identity domain")
+changed the context entry setup during domain attachment from a
+set-and-check policy to a clear-and-reset approach. This inadvertently
+introduced a regression affecting PCI aliased devices behind PCIe-to-PCI
+bridges.
 
-Fixes: 38561ded50d0 ("net: ftgmac100: support fixed link")
+Specifically, keyboard and touchpad stopped working on several Apple
+Macbooks with below messages:
+
+ kernel: platform pxa2xx-spi.3: Adding to iommu group 20
+ kernel: input: Apple SPI Keyboard as
+ /devices/pci0000:00/0000:00:1e.3/pxa2xx-spi.3/spi_master/spi2/spi-APP000D:00/input/input0
+ kernel: DMAR: DRHD: handling fault status reg 3
+ kernel: DMAR: [DMA Read NO_PASID] Request device [00:1e.3] fault addr
+ 0xffffa000 [fault reason 0x06] PTE Read access is not set
+ kernel: DMAR: DRHD: handling fault status reg 3
+ kernel: DMAR: [DMA Read NO_PASID] Request device [00:1e.3] fault addr
+ 0xffffa000 [fault reason 0x06] PTE Read access is not set
+ kernel: applespi spi-APP000D:00: Error writing to device: 01 0e 00 00
+ kernel: DMAR: DRHD: handling fault status reg 3
+ kernel: DMAR: [DMA Read NO_PASID] Request device [00:1e.3] fault addr
+ 0xffffa000 [fault reason 0x06] PTE Read access is not set
+ kernel: DMAR: DRHD: handling fault status reg 3
+ kernel: applespi spi-APP000D:00: Error writing to device: 01 0e 00 00
+
+Fix this by restoring the previous context setup order.
+
+Fixes: 2031c469f816 ("iommu/vt-d: Add support for static identity domain")
+Closes: https://lore.kernel.org/all/4dada48a-c5dd-4c30-9c85-5b03b0aa01f0@bfh.ch/
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://patch.msgid.link/476bb33b-5584-40f0-826a-7294980f2895@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Link: https://lore.kernel.org/r/20250514060523.2862195-1-baolu.lu@linux.intel.com
+Link: https://lore.kernel.org/r/20250520075849.755012-2-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/faraday/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/intel/iommu.c  |   11 +++++++++++
+ drivers/iommu/intel/iommu.h  |    1 +
+ drivers/iommu/intel/nested.c |    4 ++--
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/faraday/Kconfig
-+++ b/drivers/net/ethernet/faraday/Kconfig
-@@ -31,6 +31,7 @@ config FTGMAC100
- 	depends on ARM || COMPILE_TEST
- 	depends on !64BIT || BROKEN
- 	select PHYLIB
-+	select FIXED_PHY
- 	select MDIO_ASPEED if MACH_ASPEED_G6
- 	select CRC32
- 	help
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -1859,6 +1859,7 @@ static int dmar_domain_attach_device(str
+ 		return ret;
+ 
+ 	info->domain = domain;
++	info->domain_attached = true;
+ 	spin_lock_irqsave(&domain->lock, flags);
+ 	list_add(&info->link, &domain->devices);
+ 	spin_unlock_irqrestore(&domain->lock, flags);
+@@ -3257,6 +3258,10 @@ void device_block_translation(struct dev
+ 	struct intel_iommu *iommu = info->iommu;
+ 	unsigned long flags;
+ 
++	/* Device in DMA blocking state. Noting to do. */
++	if (!info->domain_attached)
++		return;
++
+ 	if (info->domain)
+ 		cache_tag_unassign_domain(info->domain, dev, IOMMU_NO_PASID);
+ 
+@@ -3268,6 +3273,9 @@ void device_block_translation(struct dev
+ 			domain_context_clear(info);
+ 	}
+ 
++	/* Device now in DMA blocking state. */
++	info->domain_attached = false;
++
+ 	if (!info->domain)
+ 		return;
+ 
+@@ -4357,6 +4365,9 @@ static int identity_domain_attach_dev(st
+ 	else
+ 		ret = device_setup_pass_through(dev);
+ 
++	if (!ret)
++		info->domain_attached = true;
++
+ 	return ret;
+ }
+ 
+--- a/drivers/iommu/intel/iommu.h
++++ b/drivers/iommu/intel/iommu.h
+@@ -773,6 +773,7 @@ struct device_domain_info {
+ 	u8 ats_supported:1;
+ 	u8 ats_enabled:1;
+ 	u8 dtlb_extra_inval:1;	/* Quirk for devices need extra flush */
++	u8 domain_attached:1;	/* Device has domain attached */
+ 	u8 ats_qdep;
+ 	unsigned int iopf_refcount;
+ 	struct device *dev; /* it's NULL for PCIe-to-PCI bridge */
+--- a/drivers/iommu/intel/nested.c
++++ b/drivers/iommu/intel/nested.c
+@@ -27,8 +27,7 @@ static int intel_nested_attach_dev(struc
+ 	unsigned long flags;
+ 	int ret = 0;
+ 
+-	if (info->domain)
+-		device_block_translation(dev);
++	device_block_translation(dev);
+ 
+ 	if (iommu->agaw < dmar_domain->s2_domain->agaw) {
+ 		dev_err_ratelimited(dev, "Adjusted guest address width not compatible\n");
+@@ -62,6 +61,7 @@ static int intel_nested_attach_dev(struc
+ 		goto unassign_tag;
+ 
+ 	info->domain = dmar_domain;
++	info->domain_attached = true;
+ 	spin_lock_irqsave(&dmar_domain->lock, flags);
+ 	list_add(&info->link, &dmar_domain->devices);
+ 	spin_unlock_irqrestore(&dmar_domain->lock, flags);
 
 
