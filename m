@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106F81EFFA6;
-	Mon, 23 Jun 2025 21:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4391EFFA6;
+	Mon, 23 Jun 2025 21:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713497; cv=none; b=AEDQ0mqV+oZe+EVNkgshLUz5BG3KntoQN4GBUuYVKuq1YbENoB+Vr5GCCSdp/3+PGf9ZoAKsnsmikyML0RwcWriISPCnk+PfLl/ZVkFp8OqEP3gfFf+b0t8shdOgecWaWwy35mxy/Y2y+b2HThgEkCAX5KRqg0hS16xr8tNBXUQ=
+	t=1750713499; cv=none; b=efrCgFZ9Q+3GzmgzX1KURgS+G18DDtjCvU8smKj3dAeLT+8f4x3lCBHZyrt3TK8ugc2W6XMMCVQxHdIULjy1VRXVFOvdqba45ou5CIkzEpkh+dK8uye+/OIx3WUkFgGvi03oGv7aNuMTXhJgN3FLLgC304vWh2z7ge097qkZ2H8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713497; c=relaxed/simple;
-	bh=S9dgMIQdfz1dQ4QkuSBaFR+jx28P8Tsc/jP0DEHhT2M=;
+	s=arc-20240116; t=1750713499; c=relaxed/simple;
+	bh=Pe0/pIhNdBD0ILoZb1sB1a4WQQ+ZbpU4oRLH0nRnKsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t7dBkCeDZqlSqeS1Mtwx/i0g5u4/GHEgAIX3txBCm4EJa9vUg2wGn7tDQF8aMcw0R1DeX1XIOwR3x4ybFCFFLE7tqhrTSNhU58QgraVOBNcPAp0xgzjLgNrbP6kpNOrmScOoqEwVHuEQbiq+HDKsTf4bzxpBMp2W4UlfbM6jAw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkAHu2Jq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ki1QbRCaj6GFNHyD9i42iM/Gknn5gLQQvs84Ix0hNV1VnBBTlcLzpcg9Z0v3e5J9TXdQj3NqGoaCDa5hJnTEGu8urLNVm7muIkHxJR6TrGMzuwsEhWecLktRa6kiaxK6geCOvQ9ao1AxrhDeVQqPk8cb+HoIA4BXw8Tq5u6mGfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OY3D7Fgd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkAHu2Jq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF3BC4CEEA;
-	Mon, 23 Jun 2025 21:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OY3D7Fgd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0EAC4CEEA;
+	Mon, 23 Jun 2025 21:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713496;
-	bh=S9dgMIQdfz1dQ4QkuSBaFR+jx28P8Tsc/jP0DEHhT2M=;
+	s=korg; t=1750713499;
+	bh=Pe0/pIhNdBD0ILoZb1sB1a4WQQ+ZbpU4oRLH0nRnKsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KkAHu2Jqo01LDoTrzefYEbW7UD4U5SS8bHZ4OhaGpMzlc5n3vkkXqXzV9knF45OM5
-	 Fl0yXIbQKH17Camb63d+oy58Vxovjdcn9wby3GlqmQJJJ6zmCt4H9lqGa0BdBawrPH
-	 bcOYhGL2jkmFhErFiQ6wzpCWCg+0mFok4NPfyF3Q=
+	b=OY3D7Fgdm4l0gpS74xDwC7pbWxVigFiuullLP8hTBvec5zYaTdexfpf7cBq+Gfx0t
+	 TZJIl7kTEp51K8hHTuxQqwcbPCdTWyZKQnPVab5xPZyYctUQ46hsGeMHLT7MBuLd1T
+	 Y1MkVL96RXrPf3UHELmv7BQRYWHaOZJW3vC8zJow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Francois Romieu <romieu@fr.zoreil.com>
-Subject: [PATCH 5.4 209/222] net: atm: fix /proc/net/atm/lec handling
-Date: Mon, 23 Jun 2025 15:09:04 +0200
-Message-ID: <20250623130618.585562973@linuxfoundation.org>
+	Robert Malz <robert.malz@canonical.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 150/411] i40e: return false from i40e_reset_vf if reset is in progress
+Date: Mon, 23 Jun 2025 15:04:54 +0200
+Message-ID: <20250623130637.401763034@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Robert Malz <robert.malz@canonical.com>
 
-[ Upstream commit d03b79f459c7935cff830d98373474f440bd03ae ]
+[ Upstream commit a2c90d63b71223d69a813333c1abf4fdacddbbe5 ]
 
-/proc/net/atm/lec must ensure safety against dev_lec[] changes.
+The function i40e_vc_reset_vf attempts, up to 20 times, to handle a
+VF reset request, using the return value of i40e_reset_vf as an indicator
+of whether the reset was successfully triggered. Currently, i40e_reset_vf
+always returns true, which causes new reset requests to be ignored if a
+different VF reset is already in progress.
 
-It appears it had dev_put() calls without prior dev_hold(),
-leading to imbalance and UAF.
+This patch updates the return value of i40e_reset_vf to reflect when
+another VF reset is in progress, allowing the caller to properly use
+the retry mechanism.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Francois Romieu <romieu@fr.zoreil.com> # Minor atm contributor
-Link: https://patch.msgid.link/20250618140844.1686882-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 52424f974bc5 ("i40e: Fix VF hang when reset is triggered on another VF")
+Signed-off-by: Robert Malz <robert.malz@canonical.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/lec.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/atm/lec.c b/net/atm/lec.c
-index 5b9220c42dfcc..49fe366c3b1d7 100644
---- a/net/atm/lec.c
-+++ b/net/atm/lec.c
-@@ -916,7 +916,6 @@ static void *lec_itf_walk(struct lec_state *state, loff_t *l)
- 	v = (dev && netdev_priv(dev)) ?
- 		lec_priv_walk(state, l, netdev_priv(dev)) : NULL;
- 	if (!v && dev) {
--		dev_put(dev);
- 		/* Partial state reset for the next time we get called */
- 		dev = NULL;
- 	}
-@@ -940,6 +939,7 @@ static void *lec_seq_start(struct seq_file *seq, loff_t *pos)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index 65a29f955d9c4..a5265b1a7184a 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -1548,8 +1548,8 @@ static void i40e_cleanup_reset_vf(struct i40e_vf *vf)
+  * @vf: pointer to the VF structure
+  * @flr: VFLR was issued or not
+  *
+- * Returns true if the VF is in reset, resets successfully, or resets
+- * are disabled and false otherwise.
++ * Return: True if reset was performed successfully or if resets are disabled.
++ * False if reset is already in progress.
+  **/
+ bool i40e_reset_vf(struct i40e_vf *vf, bool flr)
  {
- 	struct lec_state *state = seq->private;
+@@ -1568,7 +1568,7 @@ bool i40e_reset_vf(struct i40e_vf *vf, bool flr)
  
-+	mutex_lock(&lec_mutex);
- 	state->itf = 0;
- 	state->dev = NULL;
- 	state->locked = NULL;
-@@ -957,8 +957,9 @@ static void lec_seq_stop(struct seq_file *seq, void *v)
- 	if (state->dev) {
- 		spin_unlock_irqrestore(&state->locked->lec_arp_lock,
- 				       state->flags);
--		dev_put(state->dev);
-+		state->dev = NULL;
- 	}
-+	mutex_unlock(&lec_mutex);
- }
+ 	/* If VF is being reset already we don't need to continue. */
+ 	if (test_and_set_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+-		return true;
++		return false;
  
- static void *lec_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+ 	i40e_trigger_vf_reset(vf, flr);
+ 
 -- 
 2.39.5
 
