@@ -1,47 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24660239E63;
-	Mon, 23 Jun 2025 13:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C70A239E63;
+	Mon, 23 Jun 2025 13:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685139; cv=none; b=OfwviuYaKV9O12F5KXLE6VVmXCvB46G3RkTkA8sOzMHmW9soVYhcjfgNswo3p8VUcjyUGRculctcz39fHG2wPlxCEpCro4p2d9Fc/hIMOrR44s+JoY7fPUpIHSM1FUaYWtw92TcuEWPcb89WrNSv96RaBAqHCkq0yJjrSM6ARf4=
+	t=1750685144; cv=none; b=jQEIs9l8vHHNww8dtBYns+1dZhoucbA2gRs7G8V6ofohEdqKlNtATID6WbgnGUMqvySwZp4Yjm9mljNSxn0YWKYVIkh2kpnZjfWvxEdJSdib/SrUl8t2EYR4Xw8tilRHa0LKaPBe5xZnDfigvJmyWgRrTBehp7DSI/ZrJERrc4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685139; c=relaxed/simple;
-	bh=uhxdBek+0/MFSg4xrMnunS0vXSmNTbAClezkwt1vCzA=;
+	s=arc-20240116; t=1750685144; c=relaxed/simple;
+	bh=noiEv5yBnXtSssLFuPEwsR9AnFlNeoMZdJ8cZ+mB0XM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtehEWHZqSHdgXnJyahrO3jJZMi+WRwFvfnKgyT29R5TCwdFc1644nY2Vc6yYeuXVlyhp6g3acJvwTYo88cKgPZy0EIGs7MQxpMNM73YqSvx4nDH0+w5IWexpW62bLfsC/yE2YU+3uTlBOczLMfZlqPC3+uZzYop1j33UWC4VsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t37a2IcL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCPaayfNCF/nG3a+3eHRBB3u1fQ3SwbciaSfQZ6dHuqpSeAPOlFjljIOhvKXfLpi3jMPQN66946uw09G0OOBp+KulJoS34n2QuD2uXrhmkT2+yf2rzOnay3g5nyu21RxLOnNJL+8EHP4ZLWkRfGgJpN89jBM9JcKeXZrPaPjmCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oIyYf/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t37a2IcL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828A9C4CEEA;
-	Mon, 23 Jun 2025 13:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oIyYf/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17CBFC4CEEA;
+	Mon, 23 Jun 2025 13:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685139;
-	bh=uhxdBek+0/MFSg4xrMnunS0vXSmNTbAClezkwt1vCzA=;
+	s=korg; t=1750685143;
+	bh=noiEv5yBnXtSssLFuPEwsR9AnFlNeoMZdJ8cZ+mB0XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t37a2IcLxofv4gOgrQmAvEQFXI846t+XUlm23kY41h0fN86nOB257xb0B6Ea8Vo9Z
-	 /HTusNMNlNx31TtrSQBw7vqgvJ7QmXx51lu3WSktbyoZ+r3Y0F1GcdcN6yK/9uViTe
-	 jckGv8D8Mo8UavBIxRabP0xFPUP15wrbO584UcN8=
+	b=0oIyYf/A5A0BDzLm2IJrDtLbxHdUSmMHgFcdzXKNzsjCpkCOzcZVbv7WYt2u2yhp9
+	 Z+WZV6MNKPWiAzd7HJky9C+TwBUwI8NKGj0KNJ4fa0C1DNhhesKEW95pS/hKSaN66j
+	 9KCBqzlkZWLGOzoNcL9PgvsYsVevECTPtXqeH4qM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jesse Brandeburg <jbrandeburg@cloudflare.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Saritha Sanigani <sarithax.sanigani@intel.com>
-Subject: [PATCH 5.4 069/222] ice: create new Tx scheduler nodes for new queues only
-Date: Mon, 23 Jun 2025 15:06:44 +0200
-Message-ID: <20250623130614.179252792@linuxfoundation.org>
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 5.15 011/411] thunderbolt: Do not double dequeue a configuration request
+Date: Mon, 23 Jun 2025 15:02:35 +0200
+Message-ID: <20250623130633.330629415@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,76 +46,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Kubiak <michal.kubiak@intel.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit 6fa2942578472c9cab13a8fc1dae0d830193e0a1 ]
+commit 0f73628e9da1ee39daf5f188190cdbaee5e0c98c upstream.
 
-The current implementation of the Tx scheduler tree attempts
-to create nodes for all Tx queues, ignoring the fact that some
-queues may already exist in the tree. For example, if the VSI
-already has 128 Tx queues and the user requests for 16 new queues,
-the Tx scheduler will compute the tree for 272 queues (128 existing
-queues + 144 new queues), instead of 144 queues (128 existing queues
-and 16 new queues).
-Fix that by modifying the node count calculation algorithm to skip
-the queues that already exist in the tree.
+Some of our devices crash in tb_cfg_request_dequeue():
 
-Fixes: 5513b920a4f7 ("ice: Update Tx scheduler tree for VSI multi-Tx queue support")
-Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Jesse Brandeburg <jbrandeburg@cloudflare.com>
-Tested-by: Saritha Sanigani <sarithax.sanigani@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ general protection fault, probably for non-canonical address 0xdead000000000122
+
+ CPU: 6 PID: 91007 Comm: kworker/6:2 Tainted: G U W 6.6.65
+ RIP: 0010:tb_cfg_request_dequeue+0x2d/0xa0
+ Call Trace:
+ <TASK>
+ ? tb_cfg_request_dequeue+0x2d/0xa0
+ tb_cfg_request_work+0x33/0x80
+ worker_thread+0x386/0x8f0
+ kthread+0xed/0x110
+ ret_from_fork+0x38/0x50
+ ret_from_fork_asm+0x1b/0x30
+
+The circumstances are unclear, however, the theory is that
+tb_cfg_request_work() can be scheduled twice for a request:
+first time via frame.callback from ring_work() and second
+time from tb_cfg_request().  Both times kworkers will execute
+tb_cfg_request_dequeue(), which results in double list_del()
+from the ctl->request_queue (the list poison deference hints
+at it: 0xdead000000000122).
+
+Do not dequeue requests that don't have TB_CFG_REQUEST_ACTIVE
+bit set.
+
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_sched.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/thunderbolt/ctl.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_sched.c b/drivers/net/ethernet/intel/ice/ice_sched.c
-index d1c0ccee879bc..c6c96d3ee9cce 100644
---- a/drivers/net/ethernet/intel/ice/ice_sched.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sched.c
-@@ -1188,16 +1188,16 @@ ice_sched_get_vsi_node(struct ice_hw *hw, struct ice_sched_node *tc_node,
- /**
-  * ice_sched_calc_vsi_child_nodes - calculate number of VSI child nodes
-  * @hw: pointer to the HW struct
-- * @num_qs: number of queues
-+ * @num_new_qs: number of new queues that will be added to the tree
-  * @num_nodes: num nodes array
-  *
-  * This function calculates the number of VSI child nodes based on the
-  * number of queues.
-  */
- static void
--ice_sched_calc_vsi_child_nodes(struct ice_hw *hw, u16 num_qs, u16 *num_nodes)
-+ice_sched_calc_vsi_child_nodes(struct ice_hw *hw, u16 num_new_qs, u16 *num_nodes)
- {
--	u16 num = num_qs;
-+	u16 num = num_new_qs;
- 	u8 i, qgl, vsil;
+--- a/drivers/thunderbolt/ctl.c
++++ b/drivers/thunderbolt/ctl.c
+@@ -143,6 +143,11 @@ static void tb_cfg_request_dequeue(struc
+ 	struct tb_ctl *ctl = req->ctl;
  
- 	qgl = ice_sched_get_qgrp_layer(hw);
-@@ -1438,8 +1438,9 @@ ice_sched_update_vsi_child_nodes(struct ice_port_info *pi, u16 vsi_handle,
- 	if (status)
- 		return status;
- 
--	if (new_numqs)
--		ice_sched_calc_vsi_child_nodes(hw, new_numqs, new_num_nodes);
-+	ice_sched_calc_vsi_child_nodes(hw, new_numqs - prev_numqs,
-+				       new_num_nodes);
+ 	mutex_lock(&ctl->request_queue_lock);
++	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
++		mutex_unlock(&ctl->request_queue_lock);
++		return;
++	}
 +
- 	/* Keep the max number of queue configuration all the time. Update the
- 	 * tree only if number of queues > previous number of queues. This may
- 	 * leave some extra nodes in the tree if number of queues < previous
--- 
-2.39.5
-
+ 	list_del(&req->list);
+ 	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
+ 	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
 
 
