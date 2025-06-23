@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E19216419;
-	Mon, 23 Jun 2025 13:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B50252912;
+	Mon, 23 Jun 2025 13:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685810; cv=none; b=eqIRdOToNtf1CC2WC0wQC4uI2+GT4yV0+suoMZSr0C2+gsHyu4pEDB9WrRfxvTYQE33Cd2Zxy1j8Fqw4XUpRLFp6ZQQftCOHUpW7cGqxO/gggqxTDsv/0ala7eIP6AfVRdNaV04fe9jX2f+HGJD6xay/tTnChRzP/4u++v5DQRM=
+	t=1750685813; cv=none; b=eNMiWOuPEkT4s9/KpbpmCXb+Fj4moC64v5ycgQkXqnBt7Q+xoG2NQQngLjIXu8KVIeEXR4xt/mkYdlfsXfh0TD3OGw6wl2a59zw5qAwamtvXL2LMBPe0fcSCk6nm48hxqeUKA40tdjwR2U40Rrsisiks37kfBRzuOdehgSpls8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685810; c=relaxed/simple;
-	bh=fnHPn09GXRz7FjTUEt9fkpu4yTN4Qf5r9AAwU1qWU9o=;
+	s=arc-20240116; t=1750685813; c=relaxed/simple;
+	bh=WF+wQxVwYxf0ZvZBFIP1BC9oVu1cUr9fU/xu2924X2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rdZGD/mH8YCXZwzYJ4WvcKktFp9+pd/Yj4x2L4/f8IEypKPb/7QIMMaZ+CEnM5QsX0sgn1Nn9zfuOQO5Fi1kx+Aq/boUlgy9zyIpUIRT7FyoaNaFgzxem+omTNCQ6rkX1zK6IwIW8ZA37bt5H2RgvGuT652pspOsukLYUyj51Rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMMu5mDB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uqv5hpjMpKae2BHW5N/XPE4BJWDHEK6Cx9DMdzVVMUg0ZWunYlu50GzoO5P+BeC6wrau1Yeiv+XDZmhtm6hegyojljfEFOtAhdKIaquWlt9bEze1qOOlx/4xGzz1lq9t/E3kd2iM2jm5l3+bwIK+9lpcekxM7LBnxe7p9mlL7n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l56Cbjw1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMMu5mDB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E71C4CEEA;
-	Mon, 23 Jun 2025 13:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l56Cbjw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826F9C4CEEA;
+	Mon, 23 Jun 2025 13:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685810;
-	bh=fnHPn09GXRz7FjTUEt9fkpu4yTN4Qf5r9AAwU1qWU9o=;
+	s=korg; t=1750685812;
+	bh=WF+wQxVwYxf0ZvZBFIP1BC9oVu1cUr9fU/xu2924X2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hMMu5mDBmZ2dVqxyK3zsKoIZUDcY71eaWW1auvX466ICYASqX6+DJ+vr0bSZs71PP
-	 JuOIh5A4mzGsgajynqWINFl/PmxYNKr78YSWu+uh8ibDjcJDj1NKXjLauxg95CCCVC
-	 eJaoUp2zUVD/gBFJiAXkr3jE76iIbUqSpwF4g9Do=
+	b=l56Cbjw1KGGcr6mBdAB5AnMOabed/ClxZXQt5q/oOcCbv8eWhPcDGeJ3IRfx2Doij
+	 FpdKNXG3iOhWmHfN8Z3pLrVUefRGgAdhinI17OfddiKxHl5O9wBCzYgnAbubAfk5ue
+	 mPmYFgExclWsBvNM8Z4yu3emXk+xpqct3g1vThbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <Christian.Koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Shashank Sharma <shashank.sharma@amd.com>,
+	Arvind Yadav <arvind.yadav@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/355] net: stmmac: platform: guarantee uniqueness of bus_id
-Date: Mon, 23 Jun 2025 15:04:56 +0200
-Message-ID: <20250623130629.649007397@linuxfoundation.org>
+Subject: [PATCH 6.15 286/592] drm/amdgpu: fix MES GFX mask
+Date: Mon, 23 Jun 2025 15:04:04 +0200
+Message-ID: <20250623130707.160010828@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,72 +48,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quentin Schulz <quentin.schulz@cherry.de>
+From: Arvind Yadav <Arvind.Yadav@amd.com>
 
-[ Upstream commit eb7fd7aa35bfcc1e1fda4ecc42ccfcb526cdc780 ]
+[ Upstream commit 9d3afcb7b9f950b9b7c58ceeeb9e71f3476e69ed ]
 
-bus_id is currently derived from the ethernetX alias. If one is missing
-for the device, 0 is used. If ethernet0 points to another stmmac device
-or if there are 2+ stmmac devices without an ethernet alias, then bus_id
-will be 0 for all of those.
+Current MES GFX mask prevents FW to enable oversubscription. This patch
+does the following:
+- Fixes the mask values and adds a description for the same
+- Removes the central mask setup and makes it IP specific, as it would
+  be different when the number of pipes and queues are different.
 
-This is an issue because the bus_id is used to generate the mdio bus id
-(new_bus->id in drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-stmmac_mdio_register) and this needs to be unique.
+v2: squash in fix from Shashank
 
-This allows to avoid needing to define ethernet aliases for devices with
-multiple stmmac controllers (such as the Rockchip RK3588) for multiple
-stmmac devices to probe properly.
-
-Obviously, the bus_id isn't guaranteed to be stable across reboots if no
-alias is set for the device but that is easily fixed by simply adding an
-alias if this is desired.
-
-Fixes: 25c83b5c2e82 ("dt:net:stmmac: Add support to dwmac version 3.610 and 3.710")
-Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250527-stmmac-mdio-bus_id-v2-1-a5ca78454e3c@cherry.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Christian König <Christian.Koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Shashank Sharma <shashank.sharma@amd.com>
+Signed-off-by: Arvind Yadav <arvind.yadav@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c |  3 ---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h |  2 +-
+ drivers/gpu/drm/amd/amdgpu/mes_v11_0.c  | 15 +++++++++++++--
+ drivers/gpu/drm/amd/amdgpu/mes_v12_0.c  | 15 ++++++++++++---
+ 4 files changed, 26 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index f02ce09020fbc..7ebbb81375e84 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -400,6 +400,7 @@ stmmac_probe_config_dt(struct platform_device *pdev, const char **mac)
- 	struct device_node *np = pdev->dev.of_node;
- 	struct plat_stmmacenet_data *plat;
- 	struct stmmac_dma_cfg *dma_cfg;
-+	static int bus_id = -ENODEV;
- 	int phy_mode;
- 	int rc;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+index fb212f0a1136a..5590ad5e8cd76 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+@@ -150,9 +150,6 @@ int amdgpu_mes_init(struct amdgpu_device *adev)
+ 		adev->mes.compute_hqd_mask[i] = 0xc;
+ 	}
  
-@@ -435,8 +436,14 @@ stmmac_probe_config_dt(struct platform_device *pdev, const char **mac)
- 	of_property_read_u32(np, "max-speed", &plat->max_speed);
+-	for (i = 0; i < AMDGPU_MES_MAX_GFX_PIPES; i++)
+-		adev->mes.gfx_hqd_mask[i] = i ? 0 : 0xfffffffe;
+-
+ 	for (i = 0; i < AMDGPU_MES_MAX_SDMA_PIPES; i++) {
+ 		if (i >= adev->sdma.num_instances)
+ 			break;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
+index da2c9a8cb3e01..52dd54a32fb47 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
+@@ -111,8 +111,8 @@ struct amdgpu_mes {
  
- 	plat->bus_id = of_alias_get_id(np, "ethernet");
--	if (plat->bus_id < 0)
--		plat->bus_id = 0;
-+	if (plat->bus_id < 0) {
-+		if (bus_id < 0)
-+			bus_id = of_alias_get_highest_id("ethernet");
-+		/* No ethernet alias found, init at -1 so first bus_id is 0 */
-+		if (bus_id < 0)
-+			bus_id = -1;
-+		plat->bus_id = ++bus_id;
-+	}
+ 	uint32_t                        vmid_mask_gfxhub;
+ 	uint32_t                        vmid_mask_mmhub;
+-	uint32_t                        compute_hqd_mask[AMDGPU_MES_MAX_COMPUTE_PIPES];
+ 	uint32_t                        gfx_hqd_mask[AMDGPU_MES_MAX_GFX_PIPES];
++	uint32_t                        compute_hqd_mask[AMDGPU_MES_MAX_COMPUTE_PIPES];
+ 	uint32_t                        sdma_hqd_mask[AMDGPU_MES_MAX_SDMA_PIPES];
+ 	uint32_t                        aggregated_doorbells[AMDGPU_MES_PRIORITY_NUM_LEVELS];
+ 	uint32_t                        sch_ctx_offs[AMDGPU_MAX_MES_PIPES];
+diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+index 480283da18454..821c9baf5baa6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+@@ -669,6 +669,18 @@ static int mes_v11_0_misc_op(struct amdgpu_mes *mes,
+ 			offsetof(union MESAPI__MISC, api_status));
+ }
  
- 	/* Default to phy auto-detection */
- 	plat->phy_addr = -1;
++static void mes_v11_0_set_gfx_hqd_mask(union MESAPI_SET_HW_RESOURCES *pkt)
++{
++	/*
++	 * GFX pipe 0 queue 0 is being used by Kernel queue.
++	 * Set GFX pipe 0 queue 1 for MES scheduling
++	 * mask = 10b
++	 * GFX pipe 1 can't be used for MES due to HW limitation.
++	 */
++	pkt->gfx_hqd_mask[0] = 0x2;
++	pkt->gfx_hqd_mask[1] = 0;
++}
++
+ static int mes_v11_0_set_hw_resources(struct amdgpu_mes *mes)
+ {
+ 	int i;
+@@ -693,8 +705,7 @@ static int mes_v11_0_set_hw_resources(struct amdgpu_mes *mes)
+ 		mes_set_hw_res_pkt.compute_hqd_mask[i] =
+ 			mes->compute_hqd_mask[i];
+ 
+-	for (i = 0; i < MAX_GFX_PIPES; i++)
+-		mes_set_hw_res_pkt.gfx_hqd_mask[i] = mes->gfx_hqd_mask[i];
++	mes_v11_0_set_gfx_hqd_mask(&mes_set_hw_res_pkt);
+ 
+ 	for (i = 0; i < MAX_SDMA_PIPES; i++)
+ 		mes_set_hw_res_pkt.sdma_hqd_mask[i] = mes->sdma_hqd_mask[i];
+diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
+index 624c6b4e452c8..7984ebda5b8bf 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
+@@ -694,6 +694,17 @@ static int mes_v12_0_set_hw_resources_1(struct amdgpu_mes *mes, int pipe)
+ 			offsetof(union MESAPI_SET_HW_RESOURCES_1, api_status));
+ }
+ 
++static void mes_v12_0_set_gfx_hqd_mask(union MESAPI_SET_HW_RESOURCES *pkt)
++{
++	/*
++	 * GFX V12 has only one GFX pipe, but 8 queues in it.
++	 * GFX pipe 0 queue 0 is being used by Kernel queue.
++	 * Set GFX pipe 0 queue 1-7 for MES scheduling
++	 * mask = 1111 1110b
++	 */
++	pkt->gfx_hqd_mask[0] = 0xFE;
++}
++
+ static int mes_v12_0_set_hw_resources(struct amdgpu_mes *mes, int pipe)
+ {
+ 	int i;
+@@ -716,9 +727,7 @@ static int mes_v12_0_set_hw_resources(struct amdgpu_mes *mes, int pipe)
+ 			mes_set_hw_res_pkt.compute_hqd_mask[i] =
+ 				mes->compute_hqd_mask[i];
+ 
+-		for (i = 0; i < MAX_GFX_PIPES; i++)
+-			mes_set_hw_res_pkt.gfx_hqd_mask[i] =
+-				mes->gfx_hqd_mask[i];
++		mes_v12_0_set_gfx_hqd_mask(&mes_set_hw_res_pkt);
+ 
+ 		for (i = 0; i < MAX_SDMA_PIPES; i++)
+ 			mes_set_hw_res_pkt.sdma_hqd_mask[i] =
 -- 
 2.39.5
 
