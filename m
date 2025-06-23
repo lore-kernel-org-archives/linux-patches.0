@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE682628C;
-	Mon, 23 Jun 2025 21:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C382628C;
+	Mon, 23 Jun 2025 21:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713801; cv=none; b=KVvQRrr2CrVPm64oYZ+KvXb7d42s7SfteK+j9EZ0oyMg39APEwCYKt7/qQY7QEIuI8dJIrKqL510hAOA6TVNmV+JETuMgBhxuwjQcZPrKB20qD0hdGORNYWAY+J9pbGx3lp1S0mNCgMgyvZplnYYqlaL7dnt8GO4vPPZh4U48wk=
+	t=1750713803; cv=none; b=Sb5O84TsBAhbbZqaN1L8ILcYqVD2KhMXsk9JprdMBqc1nMhC7om7yYndoDdVfhYN1F2vr3HnQ4dbn5MY/h3qqzFg4oKsT8If2/BuPDpJKz1mPM56xKxXyFxrLPpD95Qo2R7k+N8jU+XjeQ52FqdGpOeV6O1wrb2DJ8JpucCeji0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713801; c=relaxed/simple;
-	bh=hfy6ggw8UISOawMRoC/1lYi2AEqwhP5W6u0I2gQe9VU=;
+	s=arc-20240116; t=1750713803; c=relaxed/simple;
+	bh=lmaAhbmgNfzwzplXTaud80kN9O0sv/sGAM3tzXBgXVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qIvvA9tHAoJ4n2JPUmdFB57xbq0lmevWWMO9cBiB2SBCyg2rKaywdAOhupEKyghWGEDMPUdRWir5goWCbfQb+s/pdLMWeYNkbJ2F4xQ5EEAqIB4qg+9eYyYAWprRXv0bGYbU18MOjxvrB94jmolYU9KQrLsiwbw1hHuEuzFS18c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FjDcN+rO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dl1g/qKbBR5vXBx2SlCIP3GSHELB1GeEvtWOcW/TM1nYugXGz1QckilG6TCtx376Up4Ef019yMgtPOJAjiBfdwW7QaOdeePvWXTwnjlczz1aEg10RNZAYMQnvX5C5SqHjUMNy81V/ZOX393XOPwVh5XcSv2775GShXd8O1jelY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUEjjULU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FjDcN+rO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F1FC4CEEA;
-	Mon, 23 Jun 2025 21:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUEjjULU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D6BC4CEEA;
+	Mon, 23 Jun 2025 21:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713800;
-	bh=hfy6ggw8UISOawMRoC/1lYi2AEqwhP5W6u0I2gQe9VU=;
+	s=korg; t=1750713803;
+	bh=lmaAhbmgNfzwzplXTaud80kN9O0sv/sGAM3tzXBgXVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FjDcN+rOCZhgTWzui4JkWLQcYhmqgo3r2gB+vk9qMC8IoOCA/BzxbYm3Z6aVK7bJ/
-	 X0dkPorVLmKUXL0xQ0aQk4qW8n+2j7xYy9lEs+smxFbvdF8eHkZKMcguoDlrYDMAnf
-	 LOY76ANFGeub2MIYI/OVTHC5adPYg8//tPQjNapY=
+	b=vUEjjULUhJYMd58Rox/mgGDPogWsfiroUGUC7gENixkpq9ua0CPdBPAUXXVA+eA1y
+	 UBf6s52dZbT2MmLVSAPhOZRSjJbjjSk+PMPp9U5SBWa2mIG+HY7q2I6IBwy4kYNfmr
+	 qUeIJKC697WvnPlscfarNW+mO7gZDit6mBev1j3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seunghun Han <kkamagui@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 116/290] ACPICA: fix acpi operand cache leak in dswstate.c
-Date: Mon, 23 Jun 2025 15:06:17 +0200
-Message-ID: <20250623130630.433524875@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: [PATCH 5.15 168/411] x86/boot/compressed: prefer cc-option for CFLAGS additions
+Date: Mon, 23 Jun 2025 15:05:12 +0200
+Message-ID: <20250623130637.924163381@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,114 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Seunghun Han <kkamagui@gmail.com>
+From: Nick Desaulniers <ndesaulniers@google.com>
 
-[ Upstream commit 156fd20a41e776bbf334bd5e45c4f78dfc90ce1c ]
+commit 994f5f7816ff963f49269cfc97f63cb2e4edb84f upstream.
 
-ACPICA commit 987a3b5cf7175916e2a4b6ea5b8e70f830dfe732
+as-option tests new options using KBUILD_CFLAGS, which causes problems
+when using as-option to update KBUILD_AFLAGS because many compiler
+options are not valid assembler options.
 
-I found an ACPI cache leak in ACPI early termination and boot continuing case.
+This will be fixed in a follow up patch. Before doing so, move the
+assembler test for -Wa,-mrelax-relocations=no from using as-option to
+cc-option.
 
-When early termination occurs due to malicious ACPI table, Linux kernel
-terminates ACPI function and continues to boot process. While kernel terminates
-ACPI function, kmem_cache_destroy() reports Acpi-Operand cache leak.
-
-Boot log of ACPI operand cache leak is as follows:
->[    0.585957] ACPI: Added _OSI(Module Device)
->[    0.587218] ACPI: Added _OSI(Processor Device)
->[    0.588530] ACPI: Added _OSI(3.0 _SCP Extensions)
->[    0.589790] ACPI: Added _OSI(Processor Aggregator Device)
->[    0.591534] ACPI Error: Illegal I/O port address/length above 64K: C806E00000004002/0x2 (20170303/hwvalid-155)
->[    0.594351] ACPI Exception: AE_LIMIT, Unable to initialize fixed events (20170303/evevent-88)
->[    0.597858] ACPI: Unable to start the ACPI Interpreter
->[    0.599162] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
->[    0.601836] kmem_cache_destroy Acpi-Operand: Slab cache still has objects
->[    0.603556] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 4.12.0-rc5 #26
->[    0.605159] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS virtual_box 12/01/2006
->[    0.609177] Call Trace:
->[    0.610063]  ? dump_stack+0x5c/0x81
->[    0.611118]  ? kmem_cache_destroy+0x1aa/0x1c0
->[    0.612632]  ? acpi_sleep_proc_init+0x27/0x27
->[    0.613906]  ? acpi_os_delete_cache+0xa/0x10
->[    0.617986]  ? acpi_ut_delete_caches+0x3f/0x7b
->[    0.619293]  ? acpi_terminate+0xa/0x14
->[    0.620394]  ? acpi_init+0x2af/0x34f
->[    0.621616]  ? __class_create+0x4c/0x80
->[    0.623412]  ? video_setup+0x7f/0x7f
->[    0.624585]  ? acpi_sleep_proc_init+0x27/0x27
->[    0.625861]  ? do_one_initcall+0x4e/0x1a0
->[    0.627513]  ? kernel_init_freeable+0x19e/0x21f
->[    0.628972]  ? rest_init+0x80/0x80
->[    0.630043]  ? kernel_init+0xa/0x100
->[    0.631084]  ? ret_from_fork+0x25/0x30
->[    0.633343] vgaarb: loaded
->[    0.635036] EDAC MC: Ver: 3.0.0
->[    0.638601] PCI: Probing PCI hardware
->[    0.639833] PCI host bridge to bus 0000:00
->[    0.641031] pci_bus 0000:00: root bus resource [io  0x0000-0xffff]
-> ... Continue to boot and log is omitted ...
-
-I analyzed this memory leak in detail and found acpi_ds_obj_stack_pop_and_
-delete() function miscalculated the top of the stack. acpi_ds_obj_stack_push()
-function uses walk_state->operand_index for start position of the top, but
-acpi_ds_obj_stack_pop_and_delete() function considers index 0 for it.
-Therefore, this causes acpi operand memory leak.
-
-This cache leak causes a security threat because an old kernel (<= 4.9) shows
-memory locations of kernel functions in stack dump. Some malicious users
-could use this information to neutralize kernel ASLR.
-
-I made a patch to fix ACPI operand cache leak.
-
-Link: https://github.com/acpica/acpica/commit/987a3b5c
-Signed-off-by: Seunghun Han <kkamagui@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/4999480.31r3eYUQgx@rjwysocki.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/llvm/CAK7LNATcHt7GcXZ=jMszyH=+M_LC9Qr6yeAGRCBbE6xriLxtUQ@mail.gmail.com/
+Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Anders Roxell <anders.roxell@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpica/dsutils.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/x86/boot/compressed/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/dsutils.c b/drivers/acpi/acpica/dsutils.c
-index fb9ed5e1da89d..2bdae8a25e084 100644
---- a/drivers/acpi/acpica/dsutils.c
-+++ b/drivers/acpi/acpica/dsutils.c
-@@ -668,6 +668,8 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 	union acpi_parse_object *arguments[ACPI_OBJ_NUM_OPERANDS];
- 	u32 arg_count = 0;
- 	u32 index = walk_state->num_operands;
-+	u32 prev_num_operands = walk_state->num_operands;
-+	u32 new_num_operands;
- 	u32 i;
+--- a/arch/x86/boot/compressed/Makefile
++++ b/arch/x86/boot/compressed/Makefile
+@@ -50,7 +50,7 @@ KBUILD_CFLAGS += $(call cc-option,-fmacr
+ KBUILD_CFLAGS += -fno-asynchronous-unwind-tables
+ KBUILD_CFLAGS += -D__DISABLE_EXPORTS
+ # Disable relocation relaxation in case the link is not PIE.
+-KBUILD_CFLAGS += $(call as-option,-Wa$(comma)-mrelax-relocations=no)
++KBUILD_CFLAGS += $(call cc-option,-Wa$(comma)-mrelax-relocations=no)
+ KBUILD_CFLAGS += -include $(srctree)/include/linux/hidden.h
  
- 	ACPI_FUNCTION_TRACE_PTR(ds_create_operands, first_arg);
-@@ -696,6 +698,7 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 
- 	/* Create the interpreter arguments, in reverse order */
- 
-+	new_num_operands = index;
- 	index--;
- 	for (i = 0; i < arg_count; i++) {
- 		arg = arguments[index];
-@@ -720,7 +723,11 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 	 * pop everything off of the operand stack and delete those
- 	 * objects
- 	 */
--	acpi_ds_obj_stack_pop_and_delete(arg_count, walk_state);
-+	walk_state->num_operands = i;
-+	acpi_ds_obj_stack_pop_and_delete(new_num_operands, walk_state);
-+
-+	/* Restore operand count */
-+	walk_state->num_operands = prev_num_operands;
- 
- 	ACPI_EXCEPTION((AE_INFO, status, "While creating Arg %u", index));
- 	return_ACPI_STATUS(status);
--- 
-2.39.5
-
+ # sev.c indirectly inludes inat-table.h which is generated during
 
 
