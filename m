@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE3E24DCFD;
-	Mon, 23 Jun 2025 13:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBAD347DD;
+	Mon, 23 Jun 2025 13:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685936; cv=none; b=r+aLEiYvRWIVEh2oqJM1bpiFJ8TgLm36AA3SoJ4SzluabYmz7bewGaccuWKu8bddDh1mR83O7vSbc26rZhMuhZ/W202CVBJKJs7SqP5i5+GMgluK2JGihynEG90Ocm2VsyKKUh1OgWS5+FOX5DNZbkz/uWLY3XCWbIkavsNU7YI=
+	t=1750685938; cv=none; b=VfYeJfHaaMH2rFhRLIHCXUipA7IK0G9idlI5aRo2CDzEf8acC7QJMIZBFIUECVH+nyxPCkGN6/2DViAo/hSqaptUCKobbiGGJao9uznux5iSugoOJTHcSo3C+hZWK5eSMbLE+z+CJI4wgSHePP4ER2gkdmAhEhFKM5dzpSVMRCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685936; c=relaxed/simple;
-	bh=USEyD2NBzr7LTMRvzFG7rCbdsZ1+CTD/i1ZQtgwlCko=;
+	s=arc-20240116; t=1750685938; c=relaxed/simple;
+	bh=yD/hOhY2zjhmB6g+FEZkB/otTa2/HakNQZgaZi2+bCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KkZbH5QUAwOBviR6qSYxctbwqlwYFd34KEQVfnyD7Y651rPPgL7h78GHoI7MTs31YYnvzGhs0+kNHBQgYQLsM95LBiIDYHckF6wMQEClCovZNvIm/I/HToc1ByDmiiE54FIMn89n9ny7oC6nPlsCYRMpCv+p5Tl59I3I0mPQ24Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kE2cu7SW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LMwOl8UsmsPyGM2zTEDOZhdNoPsl8YSoQ3/77YWmQ+tH6f3TBGUIpbRsQ6MuLFTd0NYScObjwdzJL6bm44/tGSW99HgnZYoaZLKegWH9LZwwK+D1zG6vjvV6Mn9arLwYR+XBvWYcea6ZnrxXauGBX+v/byOQhiZHJ2BcTJ4OE0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUcIah7K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kE2cu7SW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6EF7C4CEEA;
-	Mon, 23 Jun 2025 13:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUcIah7K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251F7C4CEEA;
+	Mon, 23 Jun 2025 13:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685936;
-	bh=USEyD2NBzr7LTMRvzFG7rCbdsZ1+CTD/i1ZQtgwlCko=;
+	s=korg; t=1750685938;
+	bh=yD/hOhY2zjhmB6g+FEZkB/otTa2/HakNQZgaZi2+bCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kE2cu7SW0T8WTTMzZUMaRd28/BVW1EIExkh8S6EA63qcDlPgNsRWETex0uDnjMaEo
-	 TihyBXN5efN9vBAA7BKQLUjQCHtJpUQjgmtnX5PapvoYR7Ic/2eFR16MsRkcVyxE8N
-	 NSzvRfKUNyt6RGASMeV7EF6UXPWVFIF4dXyKKgwk=
+	b=gUcIah7KJnJzsSdONOvYRjZ5FOgxQJnFjvCSuRGtUJIcx93cW3L2KUZSXu1NPxpqq
+	 ALo8RRMx2BOi+3I78Esp39UECB0YQ8wbjn6UrfkpSnjeTI/fUWMY2T2Ipei+HZsYAx
+	 yrWwpZGJ2AO4I0DHRI4HJfXt7cg3+zGkIp7JZR9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	John Cheung <john.cs.hey@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/411] calipso: Dont call calipso functions for AF_INET sk.
-Date: Mon, 23 Jun 2025 15:03:34 +0200
-Message-ID: <20250623130635.101186277@linuxfoundation.org>
+	stable@kernel.org,
+	Robert Morris <rtm@mit.edu>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 013/290] wifi: p54: prevent buffer-overflow in p54_rx_eeprom_readback()
+Date: Mon, 23 Jun 2025 15:04:34 +0200
+Message-ID: <20250623130627.381063139@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,112 +48,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Christian Lamparter <chunkeey@gmail.com>
 
-[ Upstream commit 6e9f2df1c550ead7cecb3e450af1105735020c92 ]
+commit da1b9a55ff116cb040528ef664c70a4eec03ae99 upstream.
 
-syzkaller reported a null-ptr-deref in txopt_get(). [0]
+Robert Morris reported:
 
-The offset 0x70 was of struct ipv6_txoptions in struct ipv6_pinfo,
-so struct ipv6_pinfo was NULL there.
+|If a malicious USB device pretends to be an Intersil p54 wifi
+|interface and generates an eeprom_readback message with a large
+|eeprom->v1.len, p54_rx_eeprom_readback() will copy data from the
+|message beyond the end of priv->eeprom.
+|
+|static void p54_rx_eeprom_readback(struct p54_common *priv,
+|                                   struct sk_buff *skb)
+|{
+|        struct p54_hdr *hdr = (struct p54_hdr *) skb->data;
+|        struct p54_eeprom_lm86 *eeprom = (struct p54_eeprom_lm86 *) hdr->data;
+|
+|        if (priv->fw_var >= 0x509) {
+|                memcpy(priv->eeprom, eeprom->v2.data,
+|                       le16_to_cpu(eeprom->v2.len));
+|        } else {
+|                memcpy(priv->eeprom, eeprom->v1.data,
+|                       le16_to_cpu(eeprom->v1.len));
+|        }
+| [...]
 
-However, this never happens for IPv6 sockets as inet_sk(sk)->pinet6
-is always set in inet6_create(), meaning the socket was not IPv6 one.
+The eeprom->v{1,2}.len is set by the driver in p54_download_eeprom().
+The device is supposed to provide the same length back to the driver.
+But yes, it's possible (like shown in the report) to alter the value
+to something that causes a crash/panic due to overrun.
 
-The root cause is missing validation in netlbl_conn_setattr().
+This patch addresses the issue by adding the size to the common device
+context, so p54_rx_eeprom_readback no longer relies on possibly tampered
+values... That said, it also checks if the "firmware" altered the value
+and no longer copies them.
 
-netlbl_conn_setattr() switches branches based on struct
-sockaddr.sa_family, which is passed from userspace.  However,
-netlbl_conn_setattr() does not check if the address family matches
-the socket.
+The one, small saving grace is: Before the driver tries to read the eeprom,
+it needs to upload >a< firmware. the vendor firmware has a proprietary
+license and as a reason, it is not present on most distributions by
+default.
 
-The syzkaller must have called connect() for an IPv6 address on
-an IPv4 socket.
-
-We have a proper validation in tcp_v[46]_connect(), but
-security_socket_connect() is called in the earlier stage.
-
-Let's copy the validation to netlbl_conn_setattr().
-
-[0]:
-Oops: general protection fault, probably for non-canonical address 0xdffffc000000000e: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
-CPU: 2 UID: 0 PID: 12928 Comm: syz.9.1677 Not tainted 6.12.0 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:txopt_get include/net/ipv6.h:390 [inline]
-RIP: 0010:
-Code: 02 00 00 49 8b ac 24 f8 02 00 00 e8 84 69 2a fd e8 ff 00 16 fd 48 8d 7d 70 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 53 02 00 00 48 8b 6d 70 48 85 ed 0f 84 ab 01 00
-RSP: 0018:ffff88811b8afc48 EFLAGS: 00010212
-RAX: dffffc0000000000 RBX: 1ffff11023715f8a RCX: ffffffff841ab00c
-RDX: 000000000000000e RSI: ffffc90007d9e000 RDI: 0000000000000070
-RBP: 0000000000000000 R08: ffffed1023715f9d R09: ffffed1023715f9e
-R10: ffffed1023715f9d R11: 0000000000000003 R12: ffff888123075f00
-R13: ffff88810245bd80 R14: ffff888113646780 R15: ffff888100578a80
-FS:  00007f9019bd7640(0000) GS:ffff8882d2d00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f901b927bac CR3: 0000000104788003 CR4: 0000000000770ef0
-PKRU: 80000000
-Call Trace:
- <TASK>
- calipso_sock_setattr+0x56/0x80 net/netlabel/netlabel_calipso.c:557
- netlbl_conn_setattr+0x10c/0x280 net/netlabel/netlabel_kapi.c:1177
- selinux_netlbl_socket_connect_helper+0xd3/0x1b0 security/selinux/netlabel.c:569
- selinux_netlbl_socket_connect_locked security/selinux/netlabel.c:597 [inline]
- selinux_netlbl_socket_connect+0xb6/0x100 security/selinux/netlabel.c:615
- selinux_socket_connect+0x5f/0x80 security/selinux/hooks.c:4931
- security_socket_connect+0x50/0xa0 security/security.c:4598
- __sys_connect_file+0xa4/0x190 net/socket.c:2067
- __sys_connect+0x12c/0x170 net/socket.c:2088
- __do_sys_connect net/socket.c:2098 [inline]
- __se_sys_connect net/socket.c:2095 [inline]
- __x64_sys_connect+0x73/0xb0 net/socket.c:2095
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xaa/0x1b0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f901b61a12d
-Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f9019bd6fa8 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
-RAX: ffffffffffffffda RBX: 00007f901b925fa0 RCX: 00007f901b61a12d
-RDX: 000000000000001c RSI: 0000200000000140 RDI: 0000000000000003
-RBP: 00007f901b701505 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000000 R14: 00007f901b5b62a0 R15: 00007f9019bb7000
- </TASK>
-Modules linked in:
-
-Fixes: ceba1832b1b2 ("calipso: Set the calipso socket label to match the secattr.")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Reported-by: John Cheung <john.cs.hey@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAP=Rh=M1LzunrcQB1fSGauMrJrhL6GGps5cPAKzHJXj6GQV+-g@mail.gmail.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20250522221858.91240-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@kernel.org>
+Reported-by: Robert Morris <rtm@mit.edu>
+Closes: https://lore.kernel.org/linux-wireless/28782.1747258414@localhost/
+Fixes: 7cb770729ba8 ("p54: move eeprom code into common library")
+Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
+Link: https://patch.msgid.link/20250516184107.47794-1-chunkeey@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netlabel/netlabel_kapi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/intersil/p54/fwio.c |    2 ++
+ drivers/net/wireless/intersil/p54/p54.h  |    1 +
+ drivers/net/wireless/intersil/p54/txrx.c |   13 +++++++++----
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/net/netlabel/netlabel_kapi.c b/net/netlabel/netlabel_kapi.c
-index 27511c90a26f4..75b645c1928db 100644
---- a/net/netlabel/netlabel_kapi.c
-+++ b/net/netlabel/netlabel_kapi.c
-@@ -1140,6 +1140,9 @@ int netlbl_conn_setattr(struct sock *sk,
- 		break;
- #if IS_ENABLED(CONFIG_IPV6)
- 	case AF_INET6:
-+		if (sk->sk_family != AF_INET6)
-+			return -EAFNOSUPPORT;
+--- a/drivers/net/wireless/intersil/p54/fwio.c
++++ b/drivers/net/wireless/intersil/p54/fwio.c
+@@ -231,6 +231,7 @@ int p54_download_eeprom(struct p54_commo
+ 
+ 	mutex_lock(&priv->eeprom_mutex);
+ 	priv->eeprom = buf;
++	priv->eeprom_slice_size = len;
+ 	eeprom_hdr = skb_put(skb, eeprom_hdr_size + len);
+ 
+ 	if (priv->fw_var < 0x509) {
+@@ -253,6 +254,7 @@ int p54_download_eeprom(struct p54_commo
+ 		ret = -EBUSY;
+ 	}
+ 	priv->eeprom = NULL;
++	priv->eeprom_slice_size = 0;
+ 	mutex_unlock(&priv->eeprom_mutex);
+ 	return ret;
+ }
+--- a/drivers/net/wireless/intersil/p54/p54.h
++++ b/drivers/net/wireless/intersil/p54/p54.h
+@@ -258,6 +258,7 @@ struct p54_common {
+ 
+ 	/* eeprom handling */
+ 	void *eeprom;
++	size_t eeprom_slice_size;
+ 	struct completion eeprom_comp;
+ 	struct mutex eeprom_mutex;
+ };
+--- a/drivers/net/wireless/intersil/p54/txrx.c
++++ b/drivers/net/wireless/intersil/p54/txrx.c
+@@ -496,14 +496,19 @@ static void p54_rx_eeprom_readback(struc
+ 		return ;
+ 
+ 	if (priv->fw_var >= 0x509) {
+-		memcpy(priv->eeprom, eeprom->v2.data,
+-		       le16_to_cpu(eeprom->v2.len));
++		if (le16_to_cpu(eeprom->v2.len) != priv->eeprom_slice_size)
++			return;
 +
- 		addr6 = (struct sockaddr_in6 *)addr;
- 		entry = netlbl_domhsh_getentry_af6(secattr->domain,
- 						   &addr6->sin6_addr);
--- 
-2.39.5
-
++		memcpy(priv->eeprom, eeprom->v2.data, priv->eeprom_slice_size);
+ 	} else {
+-		memcpy(priv->eeprom, eeprom->v1.data,
+-		       le16_to_cpu(eeprom->v1.len));
++		if (le16_to_cpu(eeprom->v1.len) != priv->eeprom_slice_size)
++			return;
++
++		memcpy(priv->eeprom, eeprom->v1.data, priv->eeprom_slice_size);
+ 	}
+ 
+ 	priv->eeprom = NULL;
++	priv->eeprom_slice_size = 0;
+ 	tmp = p54_find_and_unlink_skb(priv, hdr->req_id);
+ 	dev_kfree_skb_any(tmp);
+ 	complete(&priv->eeprom_comp);
 
 
