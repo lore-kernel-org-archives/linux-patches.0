@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101BD19D084;
-	Mon, 23 Jun 2025 21:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F6E19D084;
+	Mon, 23 Jun 2025 21:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714829; cv=none; b=tucwMllsWpIfbzN0Ke0YjGyJj4I9k6oJF1JD5DTiIXcJO5YTh5Or0CAk8QlwVW50GwaH1Eo6LfxLw0cUm17f9yvGcTLr2sWo13DKP9ieXxgyC7f4V1mMFdtzs8XdpjsH3YZDam6u8c5ToQ/xtTwmsRb5LkoFIsRTYA79ardEgxY=
+	t=1750714831; cv=none; b=Amo7OV7PfH0gE0ZiRgN+AWLKDYKuhe7fx3VwTQW6efSN2fM6HzymrWUK1w+i7gkSdwBZmx9HTZzNLx6vSG2pnFHbxnsrKcZ22Y8YFrOyYVJnTSt+bLUhf5pRl45bCk46lt/bp5qQ9QnUzGL3UMqxMFK1X3502Fom1Sdt9U0pfVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714829; c=relaxed/simple;
-	bh=wREyGbwZ2KGfr8yy2i+34HlgjtgJL5Wh72zbFaXHN5E=;
+	s=arc-20240116; t=1750714831; c=relaxed/simple;
+	bh=XzNHHIwWUdHzvKTa/dM8Bxl1YdYQ9XCMwF8clhfGvuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=luokSUlaYK/DIbkSQyft3yuYld4bMAAlCLYD8TsXkD/vzXMA73Wt6kf3rEm1w1vOaIHXvciVrBqLZ91VZpf+AcXoSBHycKpR65Kcqcq41FDl/Hdg+/yDHjk8UfINhO7dP0Ou9+P7pafsSFhAOnyuaEqRauYUwAqpWEx3l+HE5pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1i/6s3B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OZGftYTg/AMOl7vfIPhbL5G3PZ6+6Lgn7GVZdA7O5qvLnhKWRLB9T+VqDwVQ+7vMe75ElMzqKttgGtsmEYwM1AVgH1wv8XqnfYuY+IF7NBALA1axA4F3L1whFFUV7Zu+VYgTlWLsqdPXywrJXjf3ByiPS/Nvjz5ot7ivvbbEPxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbwrfvN6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1i/6s3B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C638C4CEEA;
-	Mon, 23 Jun 2025 21:40:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbwrfvN6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106D1C4CEEA;
+	Mon, 23 Jun 2025 21:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714828;
-	bh=wREyGbwZ2KGfr8yy2i+34HlgjtgJL5Wh72zbFaXHN5E=;
+	s=korg; t=1750714831;
+	bh=XzNHHIwWUdHzvKTa/dM8Bxl1YdYQ9XCMwF8clhfGvuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r1i/6s3BWChzd3XuAXjnVgKqQLi/WzfbbOhEhMkiDUZkn8e/7ln/YxRQAAuI7KAQx
-	 TXqAsilI0DDY8cwRXCtzzNiTUmM0renULO1JWQIoRH8e7pLxOa4pUY2pFxGpfb24hC
-	 j+nP7SCwaHBfyfUCwkiItFXjIDGtYQn5c2CFfzV0=
+	b=rbwrfvN6tuaTx7sEfTosyW/JZ/KryVmreTV1DqGNogBpV0egj140jMcIz81vCgevU
+	 vZeArmCZCntg/uLxEJtjvlCTdWBkpZPbkQj1SWhgxt/JD4soyQxxpGXIdr3usy4vzG
+	 Wq5Y9imkaznkQqG4Z1g/8cpMsaSIrgWip3Frk0kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 5.15 232/411] f2fs: prevent kernel warning due to negative i_nlink from corrupted image
-Date: Mon, 23 Jun 2025 15:06:16 +0200
-Message-ID: <20250623130639.498414702@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 256/355] tcp: always seek for minimal rtt in tcp_rcv_rtt_update()
+Date: Mon, 23 Jun 2025 15:07:37 +0200
+Message-ID: <20250623130634.453126857@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,87 +47,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 42cb74a92adaf88061039601ddf7c874f58b554e upstream.
+[ Upstream commit b879dcb1aeeca278eacaac0b1e2425b1c7599f9f ]
 
-WARNING: CPU: 1 PID: 9426 at fs/inode.c:417 drop_nlink+0xac/0xd0
-home/cc/linux/fs/inode.c:417
-Modules linked in:
-CPU: 1 UID: 0 PID: 9426 Comm: syz-executor568 Not tainted
-6.14.0-12627-g94d471a4f428 #2 PREEMPT(full)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.13.0-1ubuntu1.1 04/01/2014
-RIP: 0010:drop_nlink+0xac/0xd0 home/cc/linux/fs/inode.c:417
-Code: 48 8b 5d 28 be 08 00 00 00 48 8d bb 70 07 00 00 e8 f9 67 e6 ff
-f0 48 ff 83 70 07 00 00 5b 5d e9 9a 12 82 ff e8 95 12 82 ff 90
-&lt;0f&gt; 0b 90 c7 45 48 ff ff ff ff 5b 5d e9 83 12 82 ff e8 fe 5f e6
-ff
-RSP: 0018:ffffc900026b7c28 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff8239710f
-RDX: ffff888041345a00 RSI: ffffffff8239717b RDI: 0000000000000005
-RBP: ffff888054509ad0 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000000000000 R11: ffffffff9ab36f08 R12: ffff88804bb40000
-R13: ffff8880545091e0 R14: 0000000000008000 R15: ffff8880545091e0
-FS:  000055555d0c5880(0000) GS:ffff8880eb3e3000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f915c55b178 CR3: 0000000050d20000 CR4: 0000000000352ef0
-Call Trace:
- <task>
- f2fs_i_links_write home/cc/linux/fs/f2fs/f2fs.h:3194 [inline]
- f2fs_drop_nlink+0xd1/0x3c0 home/cc/linux/fs/f2fs/dir.c:845
- f2fs_delete_entry+0x542/0x1450 home/cc/linux/fs/f2fs/dir.c:909
- f2fs_unlink+0x45c/0x890 home/cc/linux/fs/f2fs/namei.c:581
- vfs_unlink+0x2fb/0x9b0 home/cc/linux/fs/namei.c:4544
- do_unlinkat+0x4c5/0x6a0 home/cc/linux/fs/namei.c:4608
- __do_sys_unlink home/cc/linux/fs/namei.c:4654 [inline]
- __se_sys_unlink home/cc/linux/fs/namei.c:4652 [inline]
- __x64_sys_unlink+0xc5/0x110 home/cc/linux/fs/namei.c:4652
- do_syscall_x64 home/cc/linux/arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xc7/0x250 home/cc/linux/arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fb3d092324b
-Code: 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48 83 c8 ff c3 66
-2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa b8 57 00 00 00 0f 05
-&lt;48&gt; 3d 01 f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01
-48
-RSP: 002b:00007ffdc232d938 EFLAGS: 00000206 ORIG_RAX: 0000000000000057
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fb3d092324b
-RDX: 00007ffdc232d960 RSI: 00007ffdc232d960 RDI: 00007ffdc232d9f0
-RBP: 00007ffdc232d9f0 R08: 0000000000000001 R09: 00007ffdc232d7c0
-R10: 00000000fffffffd R11: 0000000000000206 R12: 00007ffdc232eaf0
-R13: 000055555d0cebb0 R14: 00007ffdc232d958 R15: 0000000000000001
- </task>
+tcp_rcv_rtt_update() goal is to maintain an estimation of the RTT
+in tp->rcv_rtt_est.rtt_us, used by tcp_rcv_space_adjust()
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When TCP TS are enabled, tcp_rcv_rtt_update() is using
+EWMA to smooth the samples.
+
+Change this to immediately latch the incoming value if it
+is lower than tp->rcv_rtt_est.rtt_us, so that tcp_rcv_space_adjust()
+does not overshoot tp->rcvq_space.space and sk->sk_rcvbuf.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250513193919.1089692-8-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/namei.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/ipv4/tcp_input.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -555,6 +555,15 @@ static int f2fs_unlink(struct inode *dir
- 		goto fail;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index c874ed9484b54..ad91377f6cfae 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -640,10 +640,12 @@ EXPORT_SYMBOL(tcp_initialize_rcv_mss);
+  */
+ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
+ {
+-	u32 new_sample = tp->rcv_rtt_est.rtt_us;
+-	long m = sample;
++	u32 new_sample, old_sample = tp->rcv_rtt_est.rtt_us;
++	long m = sample << 3;
+ 
+-	if (new_sample != 0) {
++	if (old_sample == 0 || m < old_sample) {
++		new_sample = m;
++	} else {
+ 		/* If we sample in larger samples in the non-timestamp
+ 		 * case, we could grossly overestimate the RTT especially
+ 		 * with chatty applications or bulk transfer apps which
+@@ -654,17 +656,9 @@ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
+ 		 * else with timestamps disabled convergence takes too
+ 		 * long.
+ 		 */
+-		if (!win_dep) {
+-			m -= (new_sample >> 3);
+-			new_sample += m;
+-		} else {
+-			m <<= 3;
+-			if (m < new_sample)
+-				new_sample = m;
+-		}
+-	} else {
+-		/* No previous measure. */
+-		new_sample = m << 3;
++		if (win_dep)
++			return;
++		new_sample = old_sample - (old_sample >> 3) + sample;
  	}
  
-+	if (unlikely(inode->i_nlink == 0)) {
-+		f2fs_warn(F2FS_I_SB(inode), "%s: inode (ino=%lx) has zero i_nlink",
-+			  __func__, inode->i_ino);
-+		err = -EFSCORRUPTED;
-+		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
-+		f2fs_put_page(page, 0);
-+		goto fail;
-+	}
-+
- 	f2fs_balance_fs(sbi, true);
- 
- 	f2fs_lock_op(sbi);
+ 	tp->rcv_rtt_est.rtt_us = new_sample;
+-- 
+2.39.5
+
 
 
