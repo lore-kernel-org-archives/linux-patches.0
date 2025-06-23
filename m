@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C0E4315A;
-	Mon, 23 Jun 2025 21:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663C44315A;
+	Mon, 23 Jun 2025 21:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714934; cv=none; b=dbyTW2A6NzPGywopMqbtV8Z9J/kcHzO/Eqd9tOXTUsjnMG+cze/Nlmsha0bPX/qDltGNUT6A9ZP5LgOH9rAJ1mCeXczRb9hrR7QTOPkGJYCYcNttFTC4W2+YmRsacVRWa11CewvGQm68ObeJqZw8JVhJx0yL2UGxu7m/KPLrP9Y=
+	t=1750714936; cv=none; b=IoAEimAeanL4HIAPFt/gJKNnQHKrmEq8fdzRQtkRQoipNJW3USju0ZR2H8GBHksbCIJYPGyOMcNnCkaZw2s/gK3bTk7V1rp6wPFEtdHuY6gwbM1AjdAqFFI/av83N9fqZwg1QsExCWitbUiOa3CwJWgkjqhguAFcHMs+cvebFtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714934; c=relaxed/simple;
-	bh=xrfLNXMuref17AUYcZqr8r2enXQ19HeUZ/mXhtAwx+c=;
+	s=arc-20240116; t=1750714936; c=relaxed/simple;
+	bh=h87W+dBkdtpNKfve7uedsrDMTxON5UWpf3cl0eJ1ebI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pnx4Ihvvp+f9/7upq2lTOTuJyH4MTDBFM36fN8r82MFbdvnmpato1k2ynu1T2fMuAdWKr+D7EY6Dqy/X/Z/fhdDcJ1NtbXG9z/pjJplQqCoOqyfPjbWBRYTDBYshBIzPPfRvQmFdur906c0FT/EwdOGDpDKWCmYgbdTmkj65BA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpmrPZyj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ypc6z9YGq0uFTYyEVjv4YYiYJLsgExoyZ1MWwzI2ltdH/OxJkWKhVYLxnHsAjgnVrI8eg8pZgI2jBzQRGB6V3AOEbYXSUYPmCqXV3d+KHPh4UbBF/B0T4r/1ps/ZpQOSuVj8V0vVHLfbcXnP/qr3eJMBKp7LGyWT3hr15MHI5e8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p4w2CQDW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpmrPZyj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852A0C4CEEA;
-	Mon, 23 Jun 2025 21:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4w2CQDW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28B2C4CEEA;
+	Mon, 23 Jun 2025 21:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714933;
-	bh=xrfLNXMuref17AUYcZqr8r2enXQ19HeUZ/mXhtAwx+c=;
+	s=korg; t=1750714936;
+	bh=h87W+dBkdtpNKfve7uedsrDMTxON5UWpf3cl0eJ1ebI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mpmrPZyjP4mQs1eV/KOiKyr/OsKUrbVS5QeXo+045Ez+kIXkQ6BFP6qt+xhVGbjFB
-	 7rQ91ZS/Kw5FDo5mkg0/UFw/qfuDz3Vy1u+tX5j7MGUEj4caBkQXx9/Ir0wFPewG3j
-	 v4sUUzo77WmfCe/cOYZZaYD1mth52ZUjedWV5NZI=
+	b=p4w2CQDWR3pzE+CIKfBUCc+jdJsX+VOK6QcHn/6VmYbDxjoHaD91rb0F5gEFFFHjX
+	 uEXaH0YiPqo4P/0loOffBH/2FeFU9N5Bg1v3TeMbhtDy6zOxJg9afzL1gaGeY7o5ri
+	 jHT/lQOWy99aDbFj/o6mnvJJTzgivOz7pJmQ9z2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 145/414] cifs: dns resolution is needed only for primary channel
-Date: Mon, 23 Jun 2025 15:04:42 +0200
-Message-ID: <20250623130645.678499835@linuxfoundation.org>
+	stable@kernel.org,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.15 218/411] media: uvcvideo: Send control events for partial succeeds
+Date: Mon, 23 Jun 2025 15:06:02 +0200
+Message-ID: <20250623130639.152955249@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,42 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit b4f60a053a2534c3e510ba0c1f8727566adf8317 upstream.
+commit 5c791467aea6277430da5f089b9b6c2a9d8a4af7 upstream.
 
-When calling cifs_reconnect, before the connection to the
-server is reestablished, the code today does a DNS resolution and
-updates server->dstaddr.
+Today, when we are applying a change to entities A, B. If A succeeds and B
+fails the events for A are not sent.
 
-However, this is not necessary for secondary channels. Secondary
-channels use the interface list returned by the server to decide
-which address to connect to. And that happens after tcon is reconnected
-and server interfaces are requested.
+This change changes the code so the events for A are send right after
+they happen.
 
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: stable@kernel.org
+Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Message-ID: <20250224-uvc-data-backup-v2-2-de993ed9823b@chromium.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_ctrl.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -408,7 +408,8 @@ static int __cifs_reconnect(struct TCP_S
- 		try_to_freeze();
- 		cifs_server_lock(server);
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1540,7 +1540,9 @@ static bool uvc_ctrl_xctrls_has_control(
+ }
  
--		if (!cifs_swn_set_server_dstaddr(server)) {
-+		if (!cifs_swn_set_server_dstaddr(server) &&
-+		    !SERVER_IS_CHAN(server)) {
- 			/* resolve the hostname again to make sure that IP address is up-to-date */
- 			rc = reconn_set_ipaddr_from_hostname(server);
- 			cifs_dbg(FYI, "%s: reconn_set_ipaddr_from_hostname: rc=%d\n", __func__, rc);
+ static void uvc_ctrl_send_events(struct uvc_fh *handle,
+-	const struct v4l2_ext_control *xctrls, unsigned int xctrls_count)
++				 struct uvc_entity *entity,
++				 const struct v4l2_ext_control *xctrls,
++				 unsigned int xctrls_count)
+ {
+ 	struct uvc_control_mapping *mapping;
+ 	struct uvc_control *ctrl;
+@@ -1551,6 +1553,9 @@ static void uvc_ctrl_send_events(struct
+ 		u32 changes = V4L2_EVENT_CTRL_CH_VALUE;
+ 
+ 		ctrl = uvc_find_control(handle->chain, xctrls[i].id, &mapping);
++		if (ctrl->entity != entity)
++			continue;
++
+ 		if (ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
+ 			/* Notification will be sent from an Interrupt event. */
+ 			continue;
+@@ -1786,11 +1791,12 @@ int __uvc_ctrl_commit(struct uvc_fh *han
+ 					uvc_ctrl_find_ctrl_idx(entity, ctrls,
+ 							       err_ctrl);
+ 			goto done;
++		} else if (ret > 0 && !rollback) {
++			uvc_ctrl_send_events(handle, entity,
++					     ctrls->controls, ctrls->count);
+ 		}
+ 	}
+ 
+-	if (!rollback)
+-		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
+ 	ret = 0;
+ done:
+ 	mutex_unlock(&chain->ctrl_mutex);
 
 
