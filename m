@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE0B1F582A;
-	Mon, 23 Jun 2025 21:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1493770838;
+	Mon, 23 Jun 2025 21:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712812; cv=none; b=bfcik5q8+tJMVP1foGCInTUniXc50dJwwc1TLdPIOyvbxRb7PKWG6LWaMfz7KvO/5GY4a6VS/O/748D9qEdC0LO5dMDyu1nJqKuXKuYGrUGYfwggrDGDtZEPjUooc5MikI5Oy8jBZLeAFRMKKqmu+TxuqimcvAQriMbF+wzIPHo=
+	t=1750712815; cv=none; b=OrY7h6VKtjNdIXv9Apb/jkK8mq7PFGGa0w/oooC+ulV+vVBf9KSSQ5Iki9kZOQndNSaR9KwsH54VHELluttY5bU3e1pol509306n14wDB61XTlkmgCKfexXHljw8fJORau7xaFncnrFHv0Yc77G/g5myk97+sNZ1MHdRpYXKQsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712812; c=relaxed/simple;
-	bh=uW3Yj92i9TAdsO5wihB0b7xqevM+8pIjDkC5G5aiR+0=;
+	s=arc-20240116; t=1750712815; c=relaxed/simple;
+	bh=B40L8W4q2bgS4r66ArFSWmVPk03JUK2efWedYqa13ek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iCmb8KPGYj0ipeotaZ0NZIBCTMt9GU2dQPyT6COVeGZJDX7zn75thaeIopiuyNbasVK5RgiU3PgkN0d9GU+o02K7O3xReYnS+ChKeAIYc8dB6+3G+lKql1rz2k0lIA3fbTq4oZQBohN+6HE7sWfiVcJwlIEglBsez/lD2jtrcTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MDp8GiS0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FHiHWSci72ZVZQ5liiKfp5BkpmVeZP4NoQwKrCBfrY7Zmy+s+RnWdpDea+xV4Jkk06lVf/QiBEOu5bqWY769ynfmeY027eabsQ9HpKH930Wih+NNzi3uUqVPFiW0nZZ58Ltxto9B2kBWPiJa4T4mhdXfTgQBOvqzLfALEzgabPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEcqE8o1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDp8GiS0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37798C4CEEA;
-	Mon, 23 Jun 2025 21:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEcqE8o1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D40C4CEEA;
+	Mon, 23 Jun 2025 21:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712812;
-	bh=uW3Yj92i9TAdsO5wihB0b7xqevM+8pIjDkC5G5aiR+0=;
+	s=korg; t=1750712815;
+	bh=B40L8W4q2bgS4r66ArFSWmVPk03JUK2efWedYqa13ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MDp8GiS0lmPDk5ri66SEa7cAjgFi7KemDgB4YE1rR/nwMLmadhJ334SXgp+uAtraX
-	 F6cCIvhF+seG3sSsmMtQFT3ec6Un8eYwafIVUgYUQSE6wRjDdIk7lvmhJBJcQQVp0I
-	 lGm7i1x4WA52y27rJwvUcTpk/17+CoXZstX8m2Yk=
+	b=HEcqE8o1RpvO25DFo+0JI1Q7YvYLbpYYLQvbQJ2T2OBjObyRkPvoZaHH2TNyYgt43
+	 im2Ku9YJvCSP7PhLDhyAOvmOzldyhrWelhIbO3AC5LDW8L2Lnk27K05Pnlxe4nBtAY
+	 0oAQhO+Ep26XSsRJGC0CDy/2i12WH05J1w5xonaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+526bd95c0ec629993bf3@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 032/290] media: cxusb: no longer judge rbuf when the write fails
-Date: Mon, 23 Jun 2025 15:04:53 +0200
-Message-ID: <20250623130627.965919981@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 295/592] drm/amd/pm: Reset SMU v13.0.x custom settings
+Date: Mon, 23 Jun 2025 15:04:13 +0200
+Message-ID: <20250623130707.397317834@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +47,122 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-commit 73fb3b92da84637e3817580fa205d48065924e15 upstream.
+[ Upstream commit 923406e74ec66364b829b7f8b6b67d46200567a6 ]
 
-syzbot reported a uninit-value in cxusb_i2c_xfer. [1]
+On SMU v13.0.2 and SMU v13.0.6 variants user may choose custom min/max
+clocks in manual perf mode. Those custom min/max values need to be
+reset once user switches to auto or restores default settings.
+Otherwise, they may get used inadvertently during the next operation.
 
-Only when the write operation of usb_bulk_msg() in dvb_usb_generic_rw()
-succeeds and rlen is greater than 0, the read operation of usb_bulk_msg()
-will be executed to read rlen bytes of data from the dvb device into the
-rbuf.
-
-In this case, although rlen is 1, the write operation failed which resulted
-in the dvb read operation not being executed, and ultimately variable i was
-not initialized.
-
-[1]
-BUG: KMSAN: uninit-value in cxusb_gpio_tuner drivers/media/usb/dvb-usb/cxusb.c:124 [inline]
-BUG: KMSAN: uninit-value in cxusb_i2c_xfer+0x153a/0x1a60 drivers/media/usb/dvb-usb/cxusb.c:196
- cxusb_gpio_tuner drivers/media/usb/dvb-usb/cxusb.c:124 [inline]
- cxusb_i2c_xfer+0x153a/0x1a60 drivers/media/usb/dvb-usb/cxusb.c:196
- __i2c_transfer+0xe25/0x3150 drivers/i2c/i2c-core-base.c:-1
- i2c_transfer+0x317/0x4a0 drivers/i2c/i2c-core-base.c:2315
- i2c_transfer_buffer_flags+0x125/0x1e0 drivers/i2c/i2c-core-base.c:2343
- i2c_master_send include/linux/i2c.h:109 [inline]
- i2cdev_write+0x210/0x280 drivers/i2c/i2c-dev.c:183
- do_loop_readv_writev fs/read_write.c:848 [inline]
- vfs_writev+0x963/0x14e0 fs/read_write.c:1057
- do_writev+0x247/0x5c0 fs/read_write.c:1101
- __do_sys_writev fs/read_write.c:1169 [inline]
- __se_sys_writev fs/read_write.c:1166 [inline]
- __x64_sys_writev+0x98/0xe0 fs/read_write.c:1166
- x64_sys_call+0x2229/0x3c80 arch/x86/include/generated/asm/syscalls_64.h:21
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x1e0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Reported-by: syzbot+526bd95c0ec629993bf3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=526bd95c0ec629993bf3
-Tested-by: syzbot+526bd95c0ec629993bf3@syzkaller.appspotmail.com
-Fixes: 22c6d93a7310 ("[PATCH] dvb: usb: support Medion hybrid USB2.0 DVB-T/analogue box")
-Cc: stable@vger.kernel.org
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/cxusb.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h        |  1 +
+ drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c  | 13 +++++++++++--
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c      | 10 ++++++++++
+ .../gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c    |  4 ++--
+ 4 files changed, 24 insertions(+), 4 deletions(-)
 
---- a/drivers/media/usb/dvb-usb/cxusb.c
-+++ b/drivers/media/usb/dvb-usb/cxusb.c
-@@ -119,9 +119,8 @@ static void cxusb_gpio_tuner(struct dvb_
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
+index cd03caffe3173..21589c4583e6b 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
+@@ -310,6 +310,7 @@ int smu_v13_0_get_boot_freq_by_index(struct smu_context *smu,
+ 				     uint32_t *value);
  
- 	o[0] = GPIO_TUNER;
- 	o[1] = onoff;
--	cxusb_ctrl_msg(d, CMD_GPIO_WRITE, o, 2, &i, 1);
+ void smu_v13_0_interrupt_work(struct smu_context *smu);
++void smu_v13_0_reset_custom_level(struct smu_context *smu);
+ bool smu_v13_0_12_is_dpm_running(struct smu_context *smu);
+ int smu_v13_0_12_get_max_metrics_size(void);
+ int smu_v13_0_12_setup_driver_pptable(struct smu_context *smu);
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
+index 83163d7c7f001..5cb3b9bb60898 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
+@@ -1270,6 +1270,7 @@ static int aldebaran_set_performance_level(struct smu_context *smu,
+ 	struct smu_13_0_dpm_table *gfx_table =
+ 		&dpm_context->dpm_tables.gfx_table;
+ 	struct smu_umd_pstate_table *pstate_table = &smu->pstate_table;
++	int r;
  
--	if (i != 0x01)
-+	if (!cxusb_ctrl_msg(d, CMD_GPIO_WRITE, o, 2, &i, 1) && i != 0x01)
- 		dev_info(&d->udev->dev, "gpio_write failed.\n");
+ 	/* Disable determinism if switching to another mode */
+ 	if ((smu_dpm->dpm_level == AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM) &&
+@@ -1282,7 +1283,11 @@ static int aldebaran_set_performance_level(struct smu_context *smu,
  
- 	st->gpio_write_state[GPIO_TUNER] = onoff;
+ 	case AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM:
+ 		return 0;
+-
++	case AMD_DPM_FORCED_LEVEL_AUTO:
++		r = smu_v13_0_set_performance_level(smu, level);
++		if (!r)
++			smu_v13_0_reset_custom_level(smu);
++		return r;
+ 	case AMD_DPM_FORCED_LEVEL_HIGH:
+ 	case AMD_DPM_FORCED_LEVEL_LOW:
+ 	case AMD_DPM_FORCED_LEVEL_PROFILE_STANDARD:
+@@ -1423,7 +1428,11 @@ static int aldebaran_usr_edit_dpm_table(struct smu_context *smu, enum PP_OD_DPM_
+ 			min_clk = dpm_context->dpm_tables.gfx_table.min;
+ 			max_clk = dpm_context->dpm_tables.gfx_table.max;
+ 
+-			return aldebaran_set_soft_freq_limited_range(smu, SMU_GFXCLK, min_clk, max_clk, false);
++			ret = aldebaran_set_soft_freq_limited_range(
++				smu, SMU_GFXCLK, min_clk, max_clk, false);
++			if (ret)
++				return ret;
++			smu_v13_0_reset_custom_level(smu);
+ 		}
+ 		break;
+ 	case PP_OD_COMMIT_DPM_TABLE:
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+index ba5a9012dbd5e..075f381ad311b 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -2595,3 +2595,13 @@ int smu_v13_0_set_wbrf_exclusion_ranges(struct smu_context *smu,
+ 
+ 	return ret;
+ }
++
++void smu_v13_0_reset_custom_level(struct smu_context *smu)
++{
++	struct smu_umd_pstate_table *pstate_table = &smu->pstate_table;
++
++	pstate_table->uclk_pstate.custom.min = 0;
++	pstate_table->uclk_pstate.custom.max = 0;
++	pstate_table->gfxclk_pstate.custom.min = 0;
++	pstate_table->gfxclk_pstate.custom.max = 0;
++}
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
+index c478b3be37af1..b8feabb019cf8 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
+@@ -1927,7 +1927,7 @@ static int smu_v13_0_6_set_performance_level(struct smu_context *smu,
+ 				return ret;
+ 			pstate_table->uclk_pstate.curr.max = uclk_table->max;
+ 		}
+-		pstate_table->uclk_pstate.custom.max = 0;
++		smu_v13_0_reset_custom_level(smu);
+ 
+ 		return 0;
+ 	case AMD_DPM_FORCED_LEVEL_MANUAL:
+@@ -2140,7 +2140,7 @@ static int smu_v13_0_6_usr_edit_dpm_table(struct smu_context *smu,
+ 				smu, SMU_UCLK, min_clk, max_clk, false);
+ 			if (ret)
+ 				return ret;
+-			pstate_table->uclk_pstate.custom.max = 0;
++			smu_v13_0_reset_custom_level(smu);
+ 		}
+ 		break;
+ 	case PP_OD_COMMIT_DPM_TABLE:
+-- 
+2.39.5
+
 
 
