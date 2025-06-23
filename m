@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB1E1E5B71;
-	Mon, 23 Jun 2025 21:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BC21E5B71;
+	Mon, 23 Jun 2025 21:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714160; cv=none; b=tYCwVG/5QCDg8mYVCQjx8pRRoLHpsN3BBzx8N7XMEqcVs9GVERDIz4As4fTdkUerhjo0Mza7KwjufOI0G5Ro4NMw5I20neyC6HbrZqbxT6cJemfzb1lnaJzQ4ZTVG2502omJO7/HuECBVUt1MpQVZ+vXKKRcRccaClrqWtckvho=
+	t=1750714162; cv=none; b=pDzPj09CQ0adOR0Kkpj+csWquv1u4El16wgUach2UtOwErDBXbG6h8acuu/qZKnccEyk6SSq8BmNiTz3t8PiEL63f4sG9ZxtogZBDbUJ3A9Cf5SjJDzYfxOlWfYH29+0ZicVy90wIpKm022OxnmRBiXI4kEFsx6EduWyGNkI8rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714160; c=relaxed/simple;
-	bh=A5naOdF94ZSukqFRotR2MuFNiV+kNhnLcADP2BRWTIU=;
+	s=arc-20240116; t=1750714162; c=relaxed/simple;
+	bh=y2SwAuqS59DC+D72qtupKg83xM0vGa28qtqKdEChbwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Viqny0MHiEnFsBjQuOCPcM/ZEm62IHEyeLOj4mWW0b5Ec7DwUCgdt+S3sXIO2jJf9kwFLnhuFNfobqijzEvq91D4cDquKoFkCwhYLz/jSbwT8PtBUL7Ze6EzhUXhOAa+P6i3f2FU7VlnNYnLYwzb/eS944tWOguTGgKmUckBjS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zgN39chT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j4kDoVLGjm/Auz0Rg1TuoOSYKStjpS9jfcB0pNus/5NXB99hsfRDHOJl0GbtQFszXnJGudWUcw3+RUPlGDZWRfbqvRWe2F4JJC2XY7nwNT73K9c8gz7sghFlNughRkO7bwW9aaUf02DtmNG4kgKQoqrn7fRsFOyl53y7C8S+HEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=przDQkPw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zgN39chT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A15C4CEEA;
-	Mon, 23 Jun 2025 21:29:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="przDQkPw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA15C4CEEA;
+	Mon, 23 Jun 2025 21:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714159;
-	bh=A5naOdF94ZSukqFRotR2MuFNiV+kNhnLcADP2BRWTIU=;
+	s=korg; t=1750714162;
+	bh=y2SwAuqS59DC+D72qtupKg83xM0vGa28qtqKdEChbwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zgN39chTHRefRnR7brr+OgOPHlyuBqahx4u+dyP/69yJ5tRpJK+cDEWhbJOhYk6DB
-	 920JBZ4cHkGzJHjHzsW3cGkhtjO26nH77QRc+67aD1/UsoY6qMXfNaw4uXWofK0AB/
-	 Nj14BC1fDin7dvnwRSIIeIi+yat50y81zqpraqDE=
+	b=przDQkPwwuvjFvj6+HwL72/V4+RL20cPh236U7NMkQ1k3oLcHiaTgdis13QKNLYGk
+	 7/6NcyEZTej0DLjk/K7hyPkK8N7mkLxS/CVlpJtmW6ipr74XNft/aX/fPQ+N+2V6kA
+	 M6q1Txunp1Z5RMe17tl/wZMFopo9BZZvTriPpDho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <dchinner@redhat.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 191/411] xfs: allow inode inactivation during a ro mount log recovery
-Date: Mon, 23 Jun 2025 15:05:35 +0200
-Message-ID: <20250623130638.486179842@linuxfoundation.org>
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.12 106/414] iommu/vt-d: Restore context entry setup order for aliased devices
+Date: Mon, 23 Jun 2025 15:04:03 +0200
+Message-ID: <20250623130644.747441925@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,78 +48,127 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit 76e589013fec672c3587d6314f2d1f0aeddc26d9 ]
+commit 320302baed05c6456164652541f23d2a96522c06 upstream.
 
-In the next patch, we're going to prohibit log recovery if the primary
-superblock contains an unrecognized rocompat feature bit even on
-readonly mounts.  This requires removing all the code in the log
-mounting process that temporarily disables the readonly state.
+Commit 2031c469f816 ("iommu/vt-d: Add support for static identity domain")
+changed the context entry setup during domain attachment from a
+set-and-check policy to a clear-and-reset approach. This inadvertently
+introduced a regression affecting PCI aliased devices behind PCIe-to-PCI
+bridges.
 
-Unfortunately, inode inactivation disables itself on readonly mounts.
-Clearing the iunlinked lists after log recovery needs inactivation to
-run to free the unreferenced inodes, which (AFAICT) is the only reason
-why log mounting plays games with the readonly state in the first place.
+Specifically, keyboard and touchpad stopped working on several Apple
+Macbooks with below messages:
 
-Therefore, change the inactivation predicates to allow inactivation
-during log recovery of a readonly mount.
+ kernel: platform pxa2xx-spi.3: Adding to iommu group 20
+ kernel: input: Apple SPI Keyboard as
+ /devices/pci0000:00/0000:00:1e.3/pxa2xx-spi.3/spi_master/spi2/spi-APP000D:00/input/input0
+ kernel: DMAR: DRHD: handling fault status reg 3
+ kernel: DMAR: [DMA Read NO_PASID] Request device [00:1e.3] fault addr
+ 0xffffa000 [fault reason 0x06] PTE Read access is not set
+ kernel: DMAR: DRHD: handling fault status reg 3
+ kernel: DMAR: [DMA Read NO_PASID] Request device [00:1e.3] fault addr
+ 0xffffa000 [fault reason 0x06] PTE Read access is not set
+ kernel: applespi spi-APP000D:00: Error writing to device: 01 0e 00 00
+ kernel: DMAR: DRHD: handling fault status reg 3
+ kernel: DMAR: [DMA Read NO_PASID] Request device [00:1e.3] fault addr
+ 0xffffa000 [fault reason 0x06] PTE Read access is not set
+ kernel: DMAR: DRHD: handling fault status reg 3
+ kernel: applespi spi-APP000D:00: Error writing to device: 01 0e 00 00
 
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Stable-dep-of: 74ad4693b647 ("xfs: fix log recovery when unknown rocompat bits are set")
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by restoring the previous context setup order.
+
+Fixes: 2031c469f816 ("iommu/vt-d: Add support for static identity domain")
+Closes: https://lore.kernel.org/all/4dada48a-c5dd-4c30-9c85-5b03b0aa01f0@bfh.ch/
+Cc: stable@vger.kernel.org
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Link: https://lore.kernel.org/r/20250514060523.2862195-1-baolu.lu@linux.intel.com
+Link: https://lore.kernel.org/r/20250520075849.755012-2-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_inode.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/iommu/intel/iommu.c  |   11 +++++++++++
+ drivers/iommu/intel/iommu.h  |    1 +
+ drivers/iommu/intel/nested.c |    4 ++--
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
-index 3b36d5569d15d..98955cd0de406 100644
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -32,6 +32,7 @@
- #include "xfs_symlink.h"
- #include "xfs_trans_priv.h"
- #include "xfs_log.h"
-+#include "xfs_log_priv.h"
- #include "xfs_bmap_btree.h"
- #include "xfs_reflink.h"
- #include "xfs_ag.h"
-@@ -1678,8 +1679,11 @@ xfs_inode_needs_inactive(
- 	if (VFS_I(ip)->i_mode == 0)
- 		return false;
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -1970,6 +1970,7 @@ static int dmar_domain_attach_device(str
+ 		return ret;
  
--	/* If this is a read-only mount, don't do this (would generate I/O) */
--	if (xfs_is_readonly(mp))
-+	/*
-+	 * If this is a read-only mount, don't do this (would generate I/O)
-+	 * unless we're in log recovery and cleaning the iunlinked list.
-+	 */
-+	if (xfs_is_readonly(mp) && !xlog_recovery_needed(mp->m_log))
- 		return false;
+ 	info->domain = domain;
++	info->domain_attached = true;
+ 	spin_lock_irqsave(&domain->lock, flags);
+ 	list_add(&info->link, &domain->devices);
+ 	spin_unlock_irqrestore(&domain->lock, flags);
+@@ -3381,6 +3382,10 @@ void device_block_translation(struct dev
+ 	struct intel_iommu *iommu = info->iommu;
+ 	unsigned long flags;
  
- 	/* If the log isn't running, push inodes straight to reclaim. */
-@@ -1739,8 +1743,11 @@ xfs_inactive(
- 	mp = ip->i_mount;
- 	ASSERT(!xfs_iflags_test(ip, XFS_IRECOVERY));
++	/* Device in DMA blocking state. Noting to do. */
++	if (!info->domain_attached)
++		return;
++
+ 	if (info->domain)
+ 		cache_tag_unassign_domain(info->domain, dev, IOMMU_NO_PASID);
  
--	/* If this is a read-only mount, don't do this (would generate I/O) */
--	if (xfs_is_readonly(mp))
-+	/*
-+	 * If this is a read-only mount, don't do this (would generate I/O)
-+	 * unless we're in log recovery and cleaning the iunlinked list.
-+	 */
-+	if (xfs_is_readonly(mp) && !xlog_recovery_needed(mp->m_log))
- 		goto out;
+@@ -3393,6 +3398,9 @@ void device_block_translation(struct dev
+ 			domain_context_clear(info);
+ 	}
  
- 	/* Metadata inodes require explicit resource cleanup. */
--- 
-2.39.5
-
++	/* Device now in DMA blocking state. */
++	info->domain_attached = false;
++
+ 	if (!info->domain)
+ 		return;
+ 
+@@ -4406,6 +4414,9 @@ static int device_set_dirty_tracking(str
+ 			break;
+ 	}
+ 
++	if (!ret)
++		info->domain_attached = true;
++
+ 	return ret;
+ }
+ 
+--- a/drivers/iommu/intel/iommu.h
++++ b/drivers/iommu/intel/iommu.h
+@@ -776,6 +776,7 @@ struct device_domain_info {
+ 	u8 ats_supported:1;
+ 	u8 ats_enabled:1;
+ 	u8 dtlb_extra_inval:1;	/* Quirk for devices need extra flush */
++	u8 domain_attached:1;	/* Device has domain attached */
+ 	u8 ats_qdep;
+ 	struct device *dev; /* it's NULL for PCIe-to-PCI bridge */
+ 	struct intel_iommu *iommu; /* IOMMU used by this device */
+--- a/drivers/iommu/intel/nested.c
++++ b/drivers/iommu/intel/nested.c
+@@ -27,8 +27,7 @@ static int intel_nested_attach_dev(struc
+ 	unsigned long flags;
+ 	int ret = 0;
+ 
+-	if (info->domain)
+-		device_block_translation(dev);
++	device_block_translation(dev);
+ 
+ 	if (iommu->agaw < dmar_domain->s2_domain->agaw) {
+ 		dev_err_ratelimited(dev, "Adjusted guest address width not compatible\n");
+@@ -62,6 +61,7 @@ static int intel_nested_attach_dev(struc
+ 		goto unassign_tag;
+ 
+ 	info->domain = dmar_domain;
++	info->domain_attached = true;
+ 	spin_lock_irqsave(&dmar_domain->lock, flags);
+ 	list_add(&info->link, &dmar_domain->devices);
+ 	spin_unlock_irqrestore(&dmar_domain->lock, flags);
 
 
