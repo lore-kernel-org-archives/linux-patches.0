@@ -1,56 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B646B676;
-	Mon, 23 Jun 2025 22:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2C8B676;
+	Mon, 23 Jun 2025 22:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717070; cv=none; b=NRmh5tyWqps5HscnYlPYZTSFtL4rshbi+efRJwx1pDWfOXzXczyLlXXZH47am21PZPmbFnOWQohpW37Fy/N/U3/o0bdD3bzYleoqueYGC9HKecSf//6IKmXn/wYIhEqYNFbLqgYfhicuSQPpS5FjukYpRgSBDfZOMhIrT3yNU/8=
+	t=1750717072; cv=none; b=YsAbXrObtVBhJIOJVH5aatqOgSMBZuATHUESMSZR+gQ5DtWw9dMGleqdEdA2QmDkRS1BTUcJIidYpf10nSMTKRsDj5MSR8i2VDwsxd2BLVW1NBMzzEASbY55p/z2PJtccm3KUto2NY1OdAUzfc9lnUTrATQVn+yBJ1V5IFhrboE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717070; c=relaxed/simple;
-	bh=w5VP1NNyut4C7ZnWQf0DGSnqOiTDeWQ/5VcRjX2CHZ4=;
+	s=arc-20240116; t=1750717072; c=relaxed/simple;
+	bh=Oj6tc0XrxoYpet6jmEotqFPC1jf+qTOpk5a0W2rpsl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WVY+F6UQvdv81p3Bk6XwwNsRQu6SvVojq58yO9KBZq+3b8ObBPlDq9QkqIrH6bG6Bm5K1X1lR+homObDcXBlS1uj5Wd5EaKq8jNkrZHf+2oNEdTWBm86NMvZNdhnaa5xJ4ZqoBSzzyKm9CN16iBct3pQ/B7RDgA59NzbMLn6aEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgIXusV6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gfrWyD4jO/EQ3nHhWsLQ62TnBWQZaMr0oHMb2VFK/KqdtCjkAamP1FvPQl4VBTLjXUjIDWAgbsz5N/1ChdKLPbFz6J2entlDaOlBAFOUar5Cot1qTM9SFJTrv5BXiSbIH9ws/eXlTFk+9LbZYkJolcR0XFueQn84bOGDhMOJfyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16fHXXdv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgIXusV6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9144AC4CEEA;
-	Mon, 23 Jun 2025 22:17:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16fHXXdv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269CFC4CEEA;
+	Mon, 23 Jun 2025 22:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717070;
-	bh=w5VP1NNyut4C7ZnWQf0DGSnqOiTDeWQ/5VcRjX2CHZ4=;
+	s=korg; t=1750717072;
+	bh=Oj6tc0XrxoYpet6jmEotqFPC1jf+qTOpk5a0W2rpsl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fgIXusV6mg5q79PTjqbqYEjv525VQhNZl6pdcr7ZQICgM0lj1veTKkDUypSwMAEZQ
-	 Y3+MUV7bgyDb77GuOEkatU1/IujRJymWk8xtwPSQNlXhbRpIFYuW/fCstxq5tfIQqO
-	 PD6k8xFBt7LlfnC0vnlk00iN3AGsclwAJmvY4x38=
+	b=16fHXXdv1SpggsAcCGyL8ty6cqEsD+o1+GlVNKlIRt4e75WF7XCKTA5FLdEK/9WIs
+	 cVdzuDRnQeoQTc4xARM7h7ad42je9q//2CAAdyyUPgHL6cnuREPWaAdvUJqa4ngplr
+	 Acf7ysRCGnIjFosIJtKOKlgCbb+lxeLFOsX/a99M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Ignacio Moreno Gonzalez <Ignacio.MorenoGonzalez@kuka.com>,
-	kernel test robot <lkp@intel.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Yang Shi <yang@os.amperecomputing.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	James Houghton <jthoughton@google.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 359/508] KVM: s390: rename PROT_NONE to PROT_TYPE_DUMMY
-Date: Mon, 23 Jun 2025 15:06:44 +0200
-Message-ID: <20250623130654.197059647@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 312/414] nvme: always punt polled uring_cmd end_io work to task_work
+Date: Mon, 23 Jun 2025 15:07:29 +0200
+Message-ID: <20250623130649.801288567@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -62,92 +45,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 15ac613f124e51a6623975efad9657b1f3ee47e7 upstream.
+commit 9ce6c9875f3e995be5fd720b65835291f8a609b1 upstream.
 
-The enum type prot_type declared in arch/s390/kvm/gaccess.c declares an
-unfortunate identifier within it - PROT_NONE.
+Currently NVMe uring_cmd completions will complete locally, if they are
+polled. This is done because those completions are always invoked from
+task context. And while that is true, there's no guarantee that it's
+invoked under the right ring context, or even task. If someone does
+NVMe passthrough via multiple threads and with a limited number of
+poll queues, then ringA may find completions from ringB. For that case,
+completing the request may not be sound.
 
-This clashes with the protection bit define from the uapi for mmap()
-declared in include/uapi/asm-generic/mman-common.h, which is indeed what
-those casually reading this code would assume this to refer to.
+Always just punt the passthrough completions via task_work, which will
+redirect the completion, if needed.
 
-This means that any changes which subsequently alter headers in any way
-which results in the uapi header being imported here will cause build
-errors.
-
-Resolve the issue by renaming PROT_NONE to PROT_TYPE_DUMMY.
-
-Link: https://lkml.kernel.org/r/20250519145657.178365-1-lorenzo.stoakes@oracle.com
-Fixes: b3cefd6bf16e ("KVM: s390: Pass initialized arg even if unused")
-Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Suggested-by: Ignacio Moreno Gonzalez <Ignacio.MorenoGonzalez@kuka.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202505140943.IgHDa9s7-lkp@intel.com/
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Acked-by: Ignacio Moreno Gonzalez <Ignacio.MorenoGonzalez@kuka.com>
-Acked-by: Yang Shi <yang@os.amperecomputing.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Acked-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Janosch Frank <frankja@linux.ibm.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 585079b6e425 ("nvme: wire up async polling for io passthrough commands")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/gaccess.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/nvme/host/ioctl.c |   21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
---- a/arch/s390/kvm/gaccess.c
-+++ b/arch/s390/kvm/gaccess.c
-@@ -490,7 +490,7 @@ enum prot_type {
- 	PROT_TYPE_DAT  = 3,
- 	PROT_TYPE_IEP  = 4,
- 	/* Dummy value for passing an initialized value when code != PGM_PROTECTION */
--	PROT_NONE,
-+	PROT_TYPE_DUMMY,
- };
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -442,21 +442,14 @@ static enum rq_end_io_ret nvme_uring_cmd
+ 	pdu->result = le64_to_cpu(nvme_req(req)->result.u64);
  
- static int trans_exc_ending(struct kvm_vcpu *vcpu, int code, unsigned long gva, u8 ar,
-@@ -506,7 +506,7 @@ static int trans_exc_ending(struct kvm_v
- 	switch (code) {
- 	case PGM_PROTECTION:
- 		switch (prot) {
--		case PROT_NONE:
-+		case PROT_TYPE_DUMMY:
- 			/* We should never get here, acts like termination */
- 			WARN_ON_ONCE(1);
- 			break;
-@@ -976,7 +976,7 @@ static int guest_range_to_gpas(struct kv
- 			gpa = kvm_s390_real_to_abs(vcpu, ga);
- 			if (kvm_is_error_gpa(vcpu->kvm, gpa)) {
- 				rc = PGM_ADDRESSING;
--				prot = PROT_NONE;
-+				prot = PROT_TYPE_DUMMY;
- 			}
- 		}
- 		if (rc)
-@@ -1134,7 +1134,7 @@ int access_guest_with_key(struct kvm_vcp
- 		if (rc == PGM_PROTECTION)
- 			prot = PROT_TYPE_KEYC;
- 		else
--			prot = PROT_NONE;
-+			prot = PROT_TYPE_DUMMY;
- 		rc = trans_exc_ending(vcpu, rc, ga, ar, mode, prot, terminate);
- 	}
- out_unlock:
+ 	/*
+-	 * For iopoll, complete it directly. Note that using the uring_cmd
+-	 * helper for this is safe only because we check blk_rq_is_poll().
+-	 * As that returns false if we're NOT on a polled queue, then it's
+-	 * safe to use the polled completion helper.
+-	 *
+-	 * Otherwise, move the completion to task work.
++	 * IOPOLL could potentially complete this request directly, but
++	 * if multiple rings are polling on the same queue, then it's possible
++	 * for one ring to find completions for another ring. Punting the
++	 * completion via task_work will always direct it to the right
++	 * location, rather than potentially complete requests for ringA
++	 * under iopoll invocations from ringB.
+ 	 */
+-	if (blk_rq_is_poll(req)) {
+-		if (pdu->bio)
+-			blk_rq_unmap_user(pdu->bio);
+-		io_uring_cmd_iopoll_done(ioucmd, pdu->result, pdu->status);
+-	} else {
+-		io_uring_cmd_do_in_task_lazy(ioucmd, nvme_uring_task_cb);
+-	}
+-
++	io_uring_cmd_do_in_task_lazy(ioucmd, nvme_uring_task_cb);
+ 	return RQ_END_IO_FREE;
+ }
+ 
 
 
