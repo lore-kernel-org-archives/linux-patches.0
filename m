@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0CC25291F;
-	Mon, 23 Jun 2025 13:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DBE2550A4;
+	Mon, 23 Jun 2025 13:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685293; cv=none; b=FMOgCtryRrs4u7Jmexj0TpsJClyn7uzh2OjYg2rqHPccHD0USfAgCO6wN0wwboz5Znq8K9AIToiVwhslZmeg11xqRugE08BMmx4OT37ixSyER/CL3+6q56UdSxbq1ekKjH5MVrbqfDKcIvebf/65bVHnSP/knkHVZL1zHGI/fzw=
+	t=1750685295; cv=none; b=oeq/wkfy6TFRdFeeGp2C9fHYWO3Ehx61Nl2BijCmVMzf9LKYBezsKPbs9xZIz9LJlL9N0TOQ+rkv95yTjaFCgI3mgN2YAWL1mFvbuMctAnbo4siPImpJ/Ek2K3tAfg64ULMs+KZp9pT8z7sZKlsM/S+eTTJ3B0lP4ra+xPVtnNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685293; c=relaxed/simple;
-	bh=ewsYCTPS5uR3Ci6VVUMPy1bOM6ZBBmIqO+R8KPNBGQM=;
+	s=arc-20240116; t=1750685295; c=relaxed/simple;
+	bh=5BAEjZyksUoWft7iFwVzBkp6F82fLJqW6KCtGZHx1m8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADgmdeASU4i8aNJsHyMBhuATPQRiDkXzG51knCqsbbsHivnWShpcICNLajj0L/6DaiT5cp0upPmL3JxH1Onq9E1oolbfQBCKlPcAUZd7Mspn62thDeVZEGwIRtlSgF7qyD8oXRoqojb30CZ8rzrzrMdzho0GEL+G3/sQjifATjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuqam2qw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hrB3K7heGAf/kTbNHYeq9FlBWGgYKiJzGwrel2E2TvRGBUrSAjoWL9zviuof2SFyccvGEr+14p1iaMfCBCERSDdXYQHOXtmMJZIwh2HLP54rfKHj88e/wTzymz5yU4DgC2IKj+U5sXmM5swDMMhGh8+yCF7gFiq/tbVxoxK9kyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+on9S0B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuqam2qw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E2EC4CEEA;
-	Mon, 23 Jun 2025 13:28:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+on9S0B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60AACC4CEF1;
+	Mon, 23 Jun 2025 13:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685293;
-	bh=ewsYCTPS5uR3Ci6VVUMPy1bOM6ZBBmIqO+R8KPNBGQM=;
+	s=korg; t=1750685295;
+	bh=5BAEjZyksUoWft7iFwVzBkp6F82fLJqW6KCtGZHx1m8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kuqam2qw6W2+EAugXE0JYtKzUp6g5yE0vtSeTw8pKr8aW2hEsBZJqlX1zsWUOlktq
-	 r7SP45g9Y1B/isdBomxwM6gGcPreqsVG8kA6R8tWKolnXi5ldpBYFjq6cTdOuott6N
-	 P7hEmPb0hC7P8bTpQ9QbLeWWiNSmvOL4yjB4DnzI=
+	b=M+on9S0BI58UJFRgG63ErDRgGp2m+joC3Tweqxv47u2PjNWC8pzrtC2t/I46nKxdn
+	 cD59N9c9S0SsLvGpQOLax4Op/v9CUQy0hHQulCJaTjIKDtUDLkPTMZJH4yFhgqDx/L
+	 7hm9kI715HvCqeL+9dylFh7I48RdGXoufERoo3dQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavi Teitz <gavi@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jiaqing Zhao <jiaqing.zhao@linux.intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 082/222] net/mlx5: Fix return value when searching for existing flow group
-Date: Mon, 23 Jun 2025 15:06:57 +0200
-Message-ID: <20250623130614.565146160@linuxfoundation.org>
+Subject: [PATCH 5.15 024/411] x86/mtrr: Check if fixed-range MTRRs exist in mtrr_save_fixed_ranges()
+Date: Mon, 23 Jun 2025 15:02:48 +0200
+Message-ID: <20250623130633.729541120@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,63 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
 
-[ Upstream commit 8ec40e3f1f72bf8f8accf18020d487caa99f46a4 ]
+[ Upstream commit 824c6384e8d9275d4ec7204f3f79a4ac6bc10379 ]
 
-When attempting to add a rule to an existing flow group, if a matching
-flow group exists but is not active, the error code returned should be
-EAGAIN, so that the rule can be added to the matching flow group once
-it is active, rather than ENOENT, which indicates that no matching
-flow group was found.
+When suspending, save_processor_state() calls mtrr_save_fixed_ranges()
+to save fixed-range MTRRs.
 
-Fixes: bd71b08ec2ee ("net/mlx5: Support multiple updates of steering rules in parallel")
-Signed-off-by: Gavi Teitz <gavi@nvidia.com>
-Signed-off-by: Roi Dayan <roid@nvidia.com>
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250610151514.1094735-4-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+On platforms without fixed-range MTRRs like the ACRN hypervisor which
+has removed fixed-range MTRR emulation, accessing these MSRs will
+trigger an unchecked MSR access error. Make sure fixed-range MTRRs are
+supported before access to prevent such error.
+
+Since mtrr_state.have_fixed is only set when MTRRs are present and
+enabled, checking the CPU feature flag in mtrr_save_fixed_ranges() is
+unnecessary.
+
+Fixes: 3ebad5905609 ("[PATCH] x86: Save and restore the fixed-range MTRRs of the BSP when suspending")
+Signed-off-by: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/20250509170633.3411169-2-jiaqing.zhao@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/mtrr/generic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-index 25f9185d5a15e..22318edff5514 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-@@ -1716,6 +1716,7 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
- 	struct mlx5_flow_handle *rule;
- 	struct match_list *iter;
- 	bool take_write = false;
-+	bool try_again = false;
- 	struct fs_fte *fte;
- 	u64  version;
- 	int err;
-@@ -1771,6 +1772,7 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
- 		nested_down_write_ref_node(&g->node, FS_LOCK_PARENT);
+diff --git a/arch/x86/kernel/cpu/mtrr/generic.c b/arch/x86/kernel/cpu/mtrr/generic.c
+index 558108296f3cf..31549e7f6b7c6 100644
+--- a/arch/x86/kernel/cpu/mtrr/generic.c
++++ b/arch/x86/kernel/cpu/mtrr/generic.c
+@@ -349,7 +349,7 @@ static void get_fixed_ranges(mtrr_type *frs)
  
- 		if (!g->node.active) {
-+			try_again = true;
- 			up_write_ref_node(&g->node, false);
- 			continue;
- 		}
-@@ -1792,7 +1794,8 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
- 			tree_put_node(&fte->node, false);
- 		return rule;
- 	}
--	rule = ERR_PTR(-ENOENT);
-+	err = try_again ? -EAGAIN : -ENOENT;
-+	rule = ERR_PTR(err);
- out:
- 	kmem_cache_free(steering->ftes_cache, fte);
- 	return rule;
+ void mtrr_save_fixed_ranges(void *info)
+ {
+-	if (boot_cpu_has(X86_FEATURE_MTRR))
++	if (mtrr_state.have_fixed)
+ 		get_fixed_ranges(mtrr_state.fixed_ranges);
+ }
+ 
 -- 
 2.39.5
 
