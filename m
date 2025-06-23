@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CF9242D90;
-	Mon, 23 Jun 2025 13:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA75724A06D;
+	Mon, 23 Jun 2025 13:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686137; cv=none; b=l03WAfQbtd0XDX/YVdLBfT50sBtcZZl6fYxFcc3gvNaBgadRZKG67hWNMTEh7HynRblQ+4rDP3UStIGZt916K63H0c9UbNPdO6XnTYIgXzd+BVA16zZsMcKPutIvCksQNEwrX0hkopzRZf/zDqDLpgS4Liir+iW6sK09ejRsedM=
+	t=1750686139; cv=none; b=BE+vNQAnMsow/E6AAHVOrDSOzdcmdX6JSgn01DqBqBngedSH9JDAaeL9Ybo0Ejdt/fb2cJV5GetKsV2HhXmUcN8zv+2NU9rVzrQlt6SsByou7Gz+D9qaBzKz4ahVaHYK8ACq5/Mr7bW1y48PcFOxkJyNbjlajs0mDXx4Wu1Tgrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686137; c=relaxed/simple;
-	bh=rZ4wD9fFOdyHYm+AuHgLkkQj/yvGiFd9yoMQWZdAJtE=;
+	s=arc-20240116; t=1750686139; c=relaxed/simple;
+	bh=AvubVWhCH4vpvhwCSf8bZIZTaFWJgvplZV+nAdWTLek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cVZXR2yue0UtU7ghtQ3jg+FyfA3AIKKZeqrgwbpko3G2ptNHN6qTe1qD8btSHlcVe5+NcIg+FxnJuxyFclVSDNWMBYMApcjLXP8qF/dvd9NdFBcuXOstxEzxY7z2ys8ZsvX2A4tDxf7+zQBKeRGOVvN/kzLlXaxJXSqubg+1N+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqoiRIXm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Pzq0RuyNMVp+41pUK1bkeAtkn1E7C+02mzTcf3g6S/vGEPeKAI1xQVEUDuECROaZjA98YROhxC0Y+ruNZCzXjGSN5hVrBw+H9xLmkYq/o/79sagKeNYRjoySTf93us3evta9Fywa63oTWKM5N7F2gN1VlGESHe6pF8tJiWPugTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTMJinUt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqoiRIXm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4BEC4CEEA;
-	Mon, 23 Jun 2025 13:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTMJinUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB82C4CEEA;
+	Mon, 23 Jun 2025 13:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686137;
-	bh=rZ4wD9fFOdyHYm+AuHgLkkQj/yvGiFd9yoMQWZdAJtE=;
+	s=korg; t=1750686139;
+	bh=AvubVWhCH4vpvhwCSf8bZIZTaFWJgvplZV+nAdWTLek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uqoiRIXm4gKOJbyLe3vlvBAXQ6bt5aF4eW7HKZKjMtA7oAT7qUO+lY2xrvyT8xnnD
-	 71o5FCMlgXTOu2ipaP93Jv9evqt9ys2D5hAc84a5ZPxWNJA8CBOsSCfFMV/xKmRZyM
-	 6zKBZefEJyqr5uK3o5QUH7zQKH0rbaID5OFOPMbo=
+	b=aTMJinUtAFXJKkwtx2MN1FKPHB6h1r6YrqNfEuqi/+j0Yss4YqcS+Y1PZjC0Aprk4
+	 rDPN68NDfEEoXv0FKeBY/R1etIKcxmnZIx56qQoH3KJKRIGGixOWtc44lV1ekwgwYl
+	 LG9CQOW1nkAIBCDevYqeRDjNUzHY8yS2WN0z9Mkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Paul Hsieh <Paul.Hsieh@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 263/592] drm/amd/display: Skip to enable dsc if it has been off
-Date: Mon, 23 Jun 2025 15:03:41 +0200
-Message-ID: <20250623130706.564104039@linuxfoundation.org>
+Subject: [PATCH 5.10 100/355] spi: bcm63xx-spi: fix shared reset
+Date: Mon, 23 Jun 2025 15:05:01 +0200
+Message-ID: <20250623130629.792769681@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,63 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Hsieh <Paul.Hsieh@amd.com>
+From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit 8b8a602c985e99074fa1d5233cd224b7bcfb9df2 ]
+[ Upstream commit 5ad20e3d8cfe3b2e42bbddc7e0ebaa74479bb589 ]
 
-[Why]
-It makes DSC enable when we commit the stream which need
-keep power off.And then it will skip to disable DSC if
-pipe reset at this situation as power has been off. It may
-cause the DSC unexpected enable on the pipe with the
-next new stream which doesn't support DSC.
+Some bmips SoCs (bcm6362, bcm63268) share the same SPI reset for both SPI
+and HSSPI controllers, so reset shouldn't be exclusive.
 
-[HOW]
-Check the DSC used on current pipe status when update stream.
-Skip to enable if it has been off. The operation enable
-DSC should happen when set power on.
-
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Paul Hsieh <Paul.Hsieh@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 38807adeaf1e ("spi: bcm63xx-spi: add reset support")
+Reported-by: Jonas Gorski <jonas.gorski@gmail.com>
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20250529130915.2519590-2-noltari@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/hwss/dcn314/dcn314_hwseq.c  | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/spi/spi-bcm63xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn314/dcn314_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn314/dcn314_hwseq.c
-index be26c925fdfa1..e68f21fd5f0fb 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn314/dcn314_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn314/dcn314_hwseq.c
-@@ -84,6 +84,20 @@ static void update_dsc_on_stream(struct pipe_ctx *pipe_ctx, bool enable)
- 		struct dsc_config dsc_cfg;
- 		struct dsc_optc_config dsc_optc_cfg = {0};
- 		enum optc_dsc_mode optc_dsc_mode;
-+		struct dcn_dsc_state dsc_state = {0};
-+
-+		if (!dsc) {
-+			DC_LOG_DSC("DSC is NULL for tg instance %d:", pipe_ctx->stream_res.tg->inst);
-+			return;
-+		}
-+
-+		if (dsc->funcs->dsc_read_state) {
-+			dsc->funcs->dsc_read_state(dsc, &dsc_state);
-+			if (!dsc_state.dsc_fw_en) {
-+				DC_LOG_DSC("DSC has been disabled for tg instance %d:", pipe_ctx->stream_res.tg->inst);
-+				return;
-+			}
-+		}
+diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
+index b31b5f4e959e5..da559b86f6b17 100644
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -533,7 +533,7 @@ static int bcm63xx_spi_probe(struct platform_device *pdev)
+ 		return PTR_ERR(clk);
+ 	}
  
- 		/* Enable DSC hw block */
- 		dsc_cfg.pic_width = (stream->timing.h_addressable + stream->timing.h_border_left + stream->timing.h_border_right) / opp_cnt;
+-	reset = devm_reset_control_get_optional_exclusive(dev, NULL);
++	reset = devm_reset_control_get_optional_shared(dev, NULL);
+ 	if (IS_ERR(reset))
+ 		return PTR_ERR(reset);
+ 
 -- 
 2.39.5
 
