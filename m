@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE78219E0;
-	Mon, 23 Jun 2025 21:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9D9219E0;
+	Mon, 23 Jun 2025 21:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713756; cv=none; b=NEfnNl+3xiJ5HRYUTsjami3bcX9FzZMXw4EAgwh4xMtJPazgna9OxJFVzsYsTsiyoiARasjbkYMtnx/bWK/NYgENINDeTJ4pL4p5bIaQR2KA55m8q8bCfILtJp/xIdde+ckO4XBN7DFhu5uix07atBluldzwOGxIu07Z7QHSIAU=
+	t=1750713759; cv=none; b=SWAgfzzlTX8xk/n0lBKEelndrhiEfMjrmBWSve2OApfm2w0lL0wx6gZZJGP+R9zin19WugjHbKJyzU/f+cuqNsj88KUfwVWclBvu2uElYVYFAe/5Oxwf38QO93/wsJtRXnSALj4QvDp/zAQ8sitLVl7fptb7VS/tBBT1baS0mDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713756; c=relaxed/simple;
-	bh=ncCo20lTkLu0Hz0yHyBltJbSccOG3/YtcazvBXWNLYA=;
+	s=arc-20240116; t=1750713759; c=relaxed/simple;
+	bh=Sp7R7WB3e1YMlgAC65pkrsKf1KJn28vNPLFQAlBNhdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGssC3LlUbOlyfeUPoI9woyeDPXEuKipvCKVvaaFKQk65jDJPLMOVUXURXm/0771puh56gEs1fHfdMIbZNLTf+6WVtAsvK4qhKDp8LhuOCOs/ZSaSrN9cWHnJ+UAavPfNi9BHioJ9EkcRw2xubPcqdzxeuwTANedzh/rGc/avlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXl3BrMo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S1JWAC8b5OxjNNIEliPbg51gH0IaHxCKF/xb0/G/JZAzlGliTqqsyHREnfA+5zOWtQgi5JoO+kPMnIQlX0uEyYVtHXN0LFGdhVc7q9NTO1LNlbDTHrfBdJEX08Om2/JkQ1fhn/xvWecOU1hPtl8XQHIgrE5zaoNdvHhZqZE0QFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R2ZiZPrm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXl3BrMo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367B6C4CEEA;
-	Mon, 23 Jun 2025 21:22:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R2ZiZPrm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F96C4CEEA;
+	Mon, 23 Jun 2025 21:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713756;
-	bh=ncCo20lTkLu0Hz0yHyBltJbSccOG3/YtcazvBXWNLYA=;
+	s=korg; t=1750713759;
+	bh=Sp7R7WB3e1YMlgAC65pkrsKf1KJn28vNPLFQAlBNhdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CXl3BrMoLH46j6QlG1G4Eq/RPCMW44IBA7f+bC3CFkMbaC6qpgl/vJqglP1fkglI0
-	 t2IBAo3FdQ504Nrarq2k9RRTQrmWhMLac+X2PPn6AaLs6nF1luw7e7d4T5pgDAIUum
-	 GOkUXvHUFK1RGSI25KC8VC+xVaWdtC+6Ga/oUNe4=
+	b=R2ZiZPrmkaCVsMtiIAQFR27R85gyajvgAbQb/CXaVbFYCPHzcDYo2kT4RZQZB+MMM
+	 IcuZL6X6HOvdfJK/nijUpj56JKB+oJiSKbrlmJGsmgzSaKr30aP/NXj+VJpBYccD4t
+	 LCtMJGpJ67VPKmorWNT0LvAQu4n8T4vtcKOi2Yrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	John Cheung <john.cs.hey@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/508] calipso: Dont call calipso functions for AF_INET sk.
-Date: Mon, 23 Jun 2025 15:02:26 +0200
-Message-ID: <20250623130647.762274843@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	"Ivan T. Ivanov" <iivanov@suse.de>,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH 6.6 096/290] video: screen_info: Relocate framebuffers behind PCI bridges
+Date: Mon, 23 Jun 2025 15:05:57 +0200
+Message-ID: <20250623130629.857711915@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,112 +48,176 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 6e9f2df1c550ead7cecb3e450af1105735020c92 ]
+commit 2f29b5c231011b94007d2c8a6d793992f2275db1 upstream.
 
-syzkaller reported a null-ptr-deref in txopt_get(). [0]
+Apply PCI host-bridge window offsets to screen_info framebuffers. Fixes
+invalid access to I/O memory.
 
-The offset 0x70 was of struct ipv6_txoptions in struct ipv6_pinfo,
-so struct ipv6_pinfo was NULL there.
+Resources behind a PCI host bridge can be relocated by a certain offset
+in the kernel's CPU address range used for I/O. The framebuffer memory
+range stored in screen_info refers to the CPU addresses as seen during
+boot (where the offset is 0). During boot up, firmware may assign a
+different memory offset to the PCI host bridge and thereby relocating
+the framebuffer address of the PCI graphics device as seen by the kernel.
+The information in screen_info must be updated as well.
 
-However, this never happens for IPv6 sockets as inet_sk(sk)->pinet6
-is always set in inet6_create(), meaning the socket was not IPv6 one.
+The helper pcibios_bus_to_resource() performs the relocation of the
+screen_info's framebuffer resource (given in PCI bus addresses). The
+result matches the I/O-memory resource of the PCI graphics device (given
+in CPU addresses). As before, we store away the information necessary to
+later update the information in screen_info itself.
 
-The root cause is missing validation in netlbl_conn_setattr().
+Commit 78aa89d1dfba ("firmware/sysfb: Update screen_info for relocated
+EFI framebuffers") added the code for updating screen_info. It is based
+on similar functionality that pre-existed in efifb. Efifb uses a pointer
+to the PCI resource, while the newer code does a memcpy of the region.
+Hence efifb sees any updates to the PCI resource and avoids the issue.
 
-netlbl_conn_setattr() switches branches based on struct
-sockaddr.sa_family, which is passed from userspace.  However,
-netlbl_conn_setattr() does not check if the address family matches
-the socket.
+v3:
+- Only use struct pci_bus_region for PCI bus addresses (Bjorn)
+- Clarify address semantics in commit messages and comments (Bjorn)
+v2:
+- Fixed tags (Takashi, Ivan)
+- Updated information on efifb
 
-The syzkaller must have called connect() for an IPv6 address on
-an IPv4 socket.
-
-We have a proper validation in tcp_v[46]_connect(), but
-security_socket_connect() is called in the earlier stage.
-
-Let's copy the validation to netlbl_conn_setattr().
-
-[0]:
-Oops: general protection fault, probably for non-canonical address 0xdffffc000000000e: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
-CPU: 2 UID: 0 PID: 12928 Comm: syz.9.1677 Not tainted 6.12.0 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:txopt_get include/net/ipv6.h:390 [inline]
-RIP: 0010:
-Code: 02 00 00 49 8b ac 24 f8 02 00 00 e8 84 69 2a fd e8 ff 00 16 fd 48 8d 7d 70 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 53 02 00 00 48 8b 6d 70 48 85 ed 0f 84 ab 01 00
-RSP: 0018:ffff88811b8afc48 EFLAGS: 00010212
-RAX: dffffc0000000000 RBX: 1ffff11023715f8a RCX: ffffffff841ab00c
-RDX: 000000000000000e RSI: ffffc90007d9e000 RDI: 0000000000000070
-RBP: 0000000000000000 R08: ffffed1023715f9d R09: ffffed1023715f9e
-R10: ffffed1023715f9d R11: 0000000000000003 R12: ffff888123075f00
-R13: ffff88810245bd80 R14: ffff888113646780 R15: ffff888100578a80
-FS:  00007f9019bd7640(0000) GS:ffff8882d2d00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f901b927bac CR3: 0000000104788003 CR4: 0000000000770ef0
-PKRU: 80000000
-Call Trace:
- <TASK>
- calipso_sock_setattr+0x56/0x80 net/netlabel/netlabel_calipso.c:557
- netlbl_conn_setattr+0x10c/0x280 net/netlabel/netlabel_kapi.c:1177
- selinux_netlbl_socket_connect_helper+0xd3/0x1b0 security/selinux/netlabel.c:569
- selinux_netlbl_socket_connect_locked security/selinux/netlabel.c:597 [inline]
- selinux_netlbl_socket_connect+0xb6/0x100 security/selinux/netlabel.c:615
- selinux_socket_connect+0x5f/0x80 security/selinux/hooks.c:4931
- security_socket_connect+0x50/0xa0 security/security.c:4598
- __sys_connect_file+0xa4/0x190 net/socket.c:2067
- __sys_connect+0x12c/0x170 net/socket.c:2088
- __do_sys_connect net/socket.c:2098 [inline]
- __se_sys_connect net/socket.c:2095 [inline]
- __x64_sys_connect+0x73/0xb0 net/socket.c:2095
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xaa/0x1b0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f901b61a12d
-Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f9019bd6fa8 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
-RAX: ffffffffffffffda RBX: 00007f901b925fa0 RCX: 00007f901b61a12d
-RDX: 000000000000001c RSI: 0000200000000140 RDI: 0000000000000003
-RBP: 00007f901b701505 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000000 R14: 00007f901b5b62a0 R15: 00007f9019bb7000
- </TASK>
-Modules linked in:
-
-Fixes: ceba1832b1b2 ("calipso: Set the calipso socket label to match the secattr.")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Reported-by: John Cheung <john.cs.hey@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAP=Rh=M1LzunrcQB1fSGauMrJrhL6GGps5cPAKzHJXj6GQV+-g@mail.gmail.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20250522221858.91240-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reported-by: "Ivan T. Ivanov" <iivanov@suse.de>
+Closes: https://bugzilla.suse.com/show_bug.cgi?id=1240696
+Tested-by: "Ivan T. Ivanov" <iivanov@suse.de>
+Fixes: 78aa89d1dfba ("firmware/sysfb: Update screen_info for relocated EFI framebuffers")
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.9+
+Link: https://lore.kernel.org/r/20250528080234.7380-1-tzimmermann@suse.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netlabel/netlabel_kapi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/video/screen_info_pci.c | 75 +++++++++++++++++++++------------
+ 1 file changed, 48 insertions(+), 27 deletions(-)
 
-diff --git a/net/netlabel/netlabel_kapi.c b/net/netlabel/netlabel_kapi.c
-index 27511c90a26f4..75b645c1928db 100644
---- a/net/netlabel/netlabel_kapi.c
-+++ b/net/netlabel/netlabel_kapi.c
-@@ -1140,6 +1140,9 @@ int netlbl_conn_setattr(struct sock *sk,
- 		break;
- #if IS_ENABLED(CONFIG_IPV6)
- 	case AF_INET6:
-+		if (sk->sk_family != AF_INET6)
-+			return -EAFNOSUPPORT;
+diff --git a/drivers/video/screen_info_pci.c b/drivers/video/screen_info_pci.c
+index 6c5833517141..66bfc1d0a6dc 100644
+--- a/drivers/video/screen_info_pci.c
++++ b/drivers/video/screen_info_pci.c
+@@ -7,8 +7,8 @@
+ 
+ static struct pci_dev *screen_info_lfb_pdev;
+ static size_t screen_info_lfb_bar;
+-static resource_size_t screen_info_lfb_offset;
+-static struct resource screen_info_lfb_res = DEFINE_RES_MEM(0, 0);
++static resource_size_t screen_info_lfb_res_start; // original start of resource
++static resource_size_t screen_info_lfb_offset; // framebuffer offset within resource
+ 
+ static bool __screen_info_relocation_is_valid(const struct screen_info *si, struct resource *pr)
+ {
+@@ -31,7 +31,7 @@ void screen_info_apply_fixups(void)
+ 	if (screen_info_lfb_pdev) {
+ 		struct resource *pr = &screen_info_lfb_pdev->resource[screen_info_lfb_bar];
+ 
+-		if (pr->start != screen_info_lfb_res.start) {
++		if (pr->start != screen_info_lfb_res_start) {
+ 			if (__screen_info_relocation_is_valid(si, pr)) {
+ 				/*
+ 				 * Only update base if we have an actual
+@@ -47,46 +47,67 @@ void screen_info_apply_fixups(void)
+ 	}
+ }
+ 
++static int __screen_info_lfb_pci_bus_region(const struct screen_info *si, unsigned int type,
++					    struct pci_bus_region *r)
++{
++	u64 base, size;
 +
- 		addr6 = (struct sockaddr_in6 *)addr;
- 		entry = netlbl_domhsh_getentry_af6(secattr->domain,
- 						   &addr6->sin6_addr);
++	base = __screen_info_lfb_base(si);
++	if (!base)
++		return -EINVAL;
++
++	size = __screen_info_lfb_size(si, type);
++	if (!size)
++		return -EINVAL;
++
++	r->start = base;
++	r->end = base + size - 1;
++
++	return 0;
++}
++
+ static void screen_info_fixup_lfb(struct pci_dev *pdev)
+ {
+ 	unsigned int type;
+-	struct resource res[SCREEN_INFO_MAX_RESOURCES];
+-	size_t i, numres;
++	struct pci_bus_region bus_region;
+ 	int ret;
++	struct resource r = {
++		.flags = IORESOURCE_MEM,
++	};
++	const struct resource *pr;
+ 	const struct screen_info *si = &screen_info;
+ 
+ 	if (screen_info_lfb_pdev)
+ 		return; // already found
+ 
+ 	type = screen_info_video_type(si);
+-	if (type != VIDEO_TYPE_EFI)
+-		return; // only applies to EFI
++	if (!__screen_info_has_lfb(type))
++		return; // only applies to EFI; maybe VESA
+ 
+-	ret = screen_info_resources(si, res, ARRAY_SIZE(res));
++	ret = __screen_info_lfb_pci_bus_region(si, type, &bus_region);
+ 	if (ret < 0)
+ 		return;
+-	numres = ret;
+ 
+-	for (i = 0; i < numres; ++i) {
+-		struct resource *r = &res[i];
+-		const struct resource *pr;
++	/*
++	 * Translate the PCI bus address to resource. Account
++	 * for an offset if the framebuffer is behind a PCI host
++	 * bridge.
++	 */
++	pcibios_bus_to_resource(pdev->bus, &r, &bus_region);
+ 
+-		if (!(r->flags & IORESOURCE_MEM))
+-			continue;
+-		pr = pci_find_resource(pdev, r);
+-		if (!pr)
+-			continue;
++	pr = pci_find_resource(pdev, &r);
++	if (!pr)
++		return;
+ 
+-		/*
+-		 * We've found a PCI device with the framebuffer
+-		 * resource. Store away the parameters to track
+-		 * relocation of the framebuffer aperture.
+-		 */
+-		screen_info_lfb_pdev = pdev;
+-		screen_info_lfb_bar = pr - pdev->resource;
+-		screen_info_lfb_offset = r->start - pr->start;
+-		memcpy(&screen_info_lfb_res, r, sizeof(screen_info_lfb_res));
+-	}
++	/*
++	 * We've found a PCI device with the framebuffer
++	 * resource. Store away the parameters to track
++	 * relocation of the framebuffer aperture.
++	 */
++	screen_info_lfb_pdev = pdev;
++	screen_info_lfb_bar = pr - pdev->resource;
++	screen_info_lfb_offset = r.start - pr->start;
++	screen_info_lfb_res_start = bus_region.start;
+ }
+ DECLARE_PCI_FIXUP_CLASS_HEADER(PCI_ANY_ID, PCI_ANY_ID, PCI_BASE_CLASS_DISPLAY, 16,
+ 			       screen_info_fixup_lfb);
 -- 
-2.39.5
+2.50.0
 
 
 
