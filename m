@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9AC224F6;
-	Mon, 23 Jun 2025 21:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A8522157E;
+	Mon, 23 Jun 2025 21:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714218; cv=none; b=kRg/5so+VVpOZbxqaF+XkMRqPZgGvFr/y2uiUDN/ffhTHtolLUOdXqaTHpF7fz5mJoo/m//MwCckDlue94FeFo80ubrYSR/V3y+rpTpgucw5QzeR4kNamGqskpYwfrpmVv8ONo1H/OyGjluxr7CN3K0cHnCL3hcIymWCViJv0iI=
+	t=1750714221; cv=none; b=GvFNQli4mg5kWMh6lkYWnToiJNNNjbIXoJ52IG2pP4Uz8wGkgrsu9T1D6xaFfueXOcrXpCOLi/q03pFcvoIVSfkS0d07ZbOHtuRqi53HLo0v7q7ZZnVC81aUz/vlCqhye5YSNJLdIiRqFc+cxinLuNrgu4bUto4f3tzxuzvxMAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714218; c=relaxed/simple;
-	bh=gVd/mcskyW6SBY6ut3W1D/Efc19v7iXWuWO28OuTmS4=;
+	s=arc-20240116; t=1750714221; c=relaxed/simple;
+	bh=6x7GEenNuSzexhYQDAxrurdiDV5OqE2vRrm7LTP1FNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kc5Aurt5OMp6oAzFdsN9gYVYvyKU5pBzp8ShL1vvaZP9flckBTTRkqmgzxZYkNSfacY1mVt9CvLuFZ1v3owLUxzxXLBPd9lBlqMOQD1biUt/bYRDZyqIUcBzpO5mYa4wUe8eL5vaDFTDz3/7jP41yAXi3Uiio7fxLIe+Cui/FIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsAzVbIk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dlmskDsX4FGmYJEFnANt2A03OtFTCtlFzHqWAOIj2GIoiarJbbJaVtNpFlwyfQsCwXRhOmA+uqioqAa8qnw2seOltzp44NWFzqFXvCLVHo9iPoyEuriKLRAFSdu6piUcM3n61FulpVev03pBEKTEVH4RIVneEYrbG2wz65aYwBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjAM85LT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsAzVbIk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3390EC4CEEA;
-	Mon, 23 Jun 2025 21:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjAM85LT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1F9C4CEEA;
+	Mon, 23 Jun 2025 21:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714218;
-	bh=gVd/mcskyW6SBY6ut3W1D/Efc19v7iXWuWO28OuTmS4=;
+	s=korg; t=1750714221;
+	bh=6x7GEenNuSzexhYQDAxrurdiDV5OqE2vRrm7LTP1FNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BsAzVbIkhAc2DPyuJKGiMxqSp0NqNgr7FPyjtErV7w0n79ZQFOo9QO9Eu3T7dX3As
-	 fDefNIwZgNhRLTtDTTc5GcSaWsxN5OpUdY6tstZX1cpujR7aQl3KOquXb8BjHYC99+
-	 koNiDNMpsewF9qwx7lPEyrm5/D98hv/zcBcL61+M=
+	b=zjAM85LTW+7UXxYH8U6YkJgLFpJ8zJAUeGcnqMhCT3CXgeQ3OPh1O1EFPqgmoBELY
+	 BD4IbG4oWYg0qYVeNoM44tjVbTlYKClukjvTA5S7MKhoO8BiPX2togmTgfL/h+mwLL
+	 pKSEIAWP0dSrhYeLC9grJ7EhdxrOb83MOBof/xos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Gompa <neal@gompa.dev>,
-	Hector Martin <marcan@marcan.st>,
-	James Calligeros <jcalligeros99@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/290] ASoC: tas2770: Power cycle amp on ISENSE/VSENSE change
-Date: Mon, 23 Jun 2025 15:06:24 +0200
-Message-ID: <20250623130630.631533959@linuxfoundation.org>
+	Mikko Korhonen <mjkorhon@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.12 089/414] ata: ahci: Disallow LPM for Asus B550-F motherboard
+Date: Mon, 23 Jun 2025 15:03:46 +0200
+Message-ID: <20250623130644.312806577@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,77 +46,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Mikko Korhonen <mjkorhon@gmail.com>
 
-[ Upstream commit f529c91be8a34ac12e7599bf87c65b6f4a2c9f5c ]
+commit a7b3b77fd111d49f8e25624e4ea1046322a57baf upstream.
 
-The ISENSE/VSENSE blocks are only powered up when the amplifier
-transitions from shutdown to active. This means that if those controls
-are flipped on while the amplifier is already playing back audio, they
-will have no effect.
+Asus ROG STRIX B550-F GAMING (WI-FI) motherboard has problems on some
+SATA ports with at least one hard drive model (WDC WD20EFAX-68FB5N0)
+when LPM is enabled. Disabling LPM solves the issue.
 
-Fix this by forcing a power cycle around transitions in those controls.
-
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20250406-apple-codec-changes-v5-1-50a00ec850a3@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 7627a0edef54 ("ata: ahci: Drop low power policy board type")
+Signed-off-by: Mikko Korhonen <mjkorhon@gmail.com>
+Link: https://lore.kernel.org/r/20250617062055.784827-1-mjkorhon@gmail.com
+[cassel: more detailed comment, make single line comments consistent]
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/tas2770.c | 30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
+ drivers/ata/ahci.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
-index 5c6b825c757b3..181b16530e5bc 100644
---- a/sound/soc/codecs/tas2770.c
-+++ b/sound/soc/codecs/tas2770.c
-@@ -158,11 +158,37 @@ static const struct snd_kcontrol_new isense_switch =
- static const struct snd_kcontrol_new vsense_switch =
- 	SOC_DAPM_SINGLE("Switch", TAS2770_PWR_CTRL, 2, 1, 1);
- 
-+static int sense_event(struct snd_soc_dapm_widget *w,
-+			struct snd_kcontrol *kcontrol, int event)
-+{
-+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
-+	struct tas2770_priv *tas2770 = snd_soc_component_get_drvdata(component);
-+
-+	/*
-+	 * Powering up ISENSE/VSENSE requires a trip through the shutdown state.
-+	 * Do that here to ensure that our changes are applied properly, otherwise
-+	 * we might end up with non-functional IVSENSE if playback started earlier,
-+	 * which would break software speaker protection.
-+	 */
-+	switch (event) {
-+	case SND_SOC_DAPM_PRE_REG:
-+		return snd_soc_component_update_bits(component, TAS2770_PWR_CTRL,
-+						    TAS2770_PWR_CTRL_MASK,
-+						    TAS2770_PWR_CTRL_SHUTDOWN);
-+	case SND_SOC_DAPM_POST_REG:
-+		return tas2770_update_pwr_ctrl(tas2770);
-+	default:
-+		return 0;
-+	}
-+}
-+
- static const struct snd_soc_dapm_widget tas2770_dapm_widgets[] = {
- 	SND_SOC_DAPM_AIF_IN("ASI1", "ASI1 Playback", 0, SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_MUX("ASI1 Sel", SND_SOC_NOPM, 0, 0, &tas2770_asi1_mux),
--	SND_SOC_DAPM_SWITCH("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch),
--	SND_SOC_DAPM_SWITCH("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch),
-+	SND_SOC_DAPM_SWITCH_E("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch,
-+		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
-+	SND_SOC_DAPM_SWITCH_E("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch,
-+		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
- 	SND_SOC_DAPM_DAC_E("DAC", NULL, SND_SOC_NOPM, 0, 0, tas2770_dac_event,
- 			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD),
- 	SND_SOC_DAPM_OUTPUT("OUT"),
--- 
-2.39.5
-
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -1458,7 +1458,23 @@ static bool ahci_broken_lpm(struct pci_d
+ 				DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+ 				DMI_MATCH(DMI_PRODUCT_VERSION, "ASUSPRO D840MB_M840SA"),
+ 			},
+-			/* 320 is broken, there is no known good version yet. */
++			/* 320 is broken, there is no known good version. */
++		},
++		{
++			/*
++			 * AMD 500 Series Chipset SATA Controller [1022:43eb]
++			 * on this motherboard timeouts on ports 5 and 6 when
++			 * LPM is enabled, at least with WDC WD20EFAX-68FB5N0
++			 * hard drives. LPM with the same drive works fine on
++			 * all other ports on the same controller.
++			 */
++			.matches = {
++				DMI_MATCH(DMI_BOARD_VENDOR,
++					  "ASUSTeK COMPUTER INC."),
++				DMI_MATCH(DMI_BOARD_NAME,
++					  "ROG STRIX B550-F GAMING (WI-FI)"),
++			},
++			/* 3621 is broken, there is no known good version. */
+ 		},
+ 		{ }	/* terminate list */
+ 	};
 
 
