@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434761DDC04;
-	Mon, 23 Jun 2025 21:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2C719D084;
+	Mon, 23 Jun 2025 21:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714980; cv=none; b=TXwoIEwkx9W9nU/rt4DYFWdwGoR2FXVX5ks9Inb3DfC0k3NzjAPCIgOaj4KsCtAUEWbbVM1VL6tdcYWlUpxyNS2pP9D21hUYQqELzZniTw9xz67hn834+aBxI19T/OtSkTRjhvjU+rWogJiZfBiOAK1eXUt2oIiY/6sTFaOIjIk=
+	t=1750714983; cv=none; b=JnJw//GNNVqm+lRRBQ3Ax4SmCsqWMb9njwDj7/GkBEam43VgFHzc2w7TOfBx3Qwn1zvyWmfnOxMO/EwjnSsSKydfiQQJGa9Yl0u3fSsWgQGPwIBBBkIuFZ0sO5C+fWR0ILeaKFVO4IIoAXh+0KWg33ZkoiglXDnPZyWWQe5KDrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714980; c=relaxed/simple;
-	bh=CWdoPcVQxuHQVdcaV3L+tRzUNefo+1RrnlJEQl18SJw=;
+	s=arc-20240116; t=1750714983; c=relaxed/simple;
+	bh=D9YKm19cmeddaIxcjOZFR1Qt0rea7c5TJH2LdqFGhjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LodRptY1sk1/R89r0XVagCISp3wRKWUsOoVEJAMrvCc7ebHAnJfJVwW0vFtk9ILAm2SVP2qfWhM4SHLpjN3W6W5vTaprDzICEYCWmCz7jsHHZRhSWSg52hDL7qqlDbYohZv6GIERULR2DmTzW6Bq0BFqV3dNavMsB7MtgU2V1P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNi6JKdx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZJpQTy7VPam3SPlm15LehV2E5QvlC7U9dRbJMwXI4nFPC8gRo8AU2UEj8sRCPPqchIj7cmyonmjGftljzuj9CnXSH7m83gmvBvuNaGgN14bKHO0Z2aFXcHpuIMjDyv/n2UzzK3vxB7j2ajwYZqzgrf2GqtuyLSgOF+F6vOvfbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVAo6K6r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNi6JKdx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE121C4CEEA;
-	Mon, 23 Jun 2025 21:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVAo6K6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494C3C4CEEA;
+	Mon, 23 Jun 2025 21:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714980;
-	bh=CWdoPcVQxuHQVdcaV3L+tRzUNefo+1RrnlJEQl18SJw=;
+	s=korg; t=1750714982;
+	bh=D9YKm19cmeddaIxcjOZFR1Qt0rea7c5TJH2LdqFGhjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YNi6JKdxj7WJp+F73roCxfAU6bT1EdfDesO0/xXI+xGC0n1nC7Fcw+wmanVC9hKJZ
-	 6pgHDoD1UZF2Mh2H37HozCjfXhxVykkeiM4kakJOGY63nK3tBlkH/r8Oc8fVOwRN8B
-	 pazL9dVmSxLvGzS2kltn48ZWYKzqvFe7vWJIAT8I=
+	b=yVAo6K6rbpu0AW3M6f7iP2BGnpucQ+eMOgdj/E9XK6J+gaQkn3qR8VDzBb1fIaMEN
+	 fcJam0kvQennY/kn4JKjcp4dYOBDx0dHngXZysjEm28hmwaafXkKG1zqcL50VbSyTu
+	 3HOw7CTlW7rONODYRvEWVE5YjaET69ULFNhANOm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.12 148/414] uio_hv_generic: Use correct size for interrupt and monitor pages
-Date: Mon, 23 Jun 2025 15:04:45 +0200
-Message-ID: <20250623130645.749663675@linuxfoundation.org>
+	Andreas Kemnade <andreas@kemnade.info>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Tony Lindgren <tony@atomide.com>
+Subject: [PATCH 5.15 221/411] ARM: omap: pmic-cpcap: do not mess around without CPCAP or OMAP4
+Date: Mon, 23 Jun 2025 15:06:05 +0200
+Message-ID: <20250623130639.226109773@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-commit c951ab8fd3589cf6991ed4111d2130816f2e3ac2 upstream.
+commit 7397daf1029d5bfd3415ec8622f5179603d5702d upstream.
 
-Interrupt and monitor pages should be in Hyper-V page size (4k bytes).
-This can be different from the system page size.
+The late init call just writes to omap4 registers as soon as
+CONFIG_MFD_CPCAP is enabled without checking whether the
+cpcap driver is actually there or the SoC is indeed an
+OMAP4.
+Rather do these things only with the right device combination.
 
-This size is read and used by the user-mode program to determine the
-mapped data region. An example of such user-mode program is the VMBus
-driver in DPDK.
+Fixes booting the BT200 with said configuration enabled and non-factory
+X-Loader and probably also some surprising behavior on other devices.
 
-Cc: stable@vger.kernel.org
-Fixes: 95096f2fbd10 ("uio-hv-generic: new userspace i/o driver for VMBus")
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/1746492997-4599-3-git-send-email-longli@linuxonhyperv.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <1746492997-4599-3-git-send-email-longli@linuxonhyperv.com>
+Fixes: c145649bf262 ("ARM: OMAP2+: Configure voltage controller for cpcap to low-speed")
+CC: stable@vger.kernel.org
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Reivewed-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20250331144439.769697-1-andreas@kemnade.info
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/uio/uio_hv_generic.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/mach-omap2/pmic-cpcap.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/uio/uio_hv_generic.c
-+++ b/drivers/uio/uio_hv_generic.c
-@@ -274,13 +274,13 @@ hv_uio_probe(struct hv_device *dev,
- 	pdata->info.mem[INT_PAGE_MAP].name = "int_page";
- 	pdata->info.mem[INT_PAGE_MAP].addr
- 		= (uintptr_t)vmbus_connection.int_page;
--	pdata->info.mem[INT_PAGE_MAP].size = PAGE_SIZE;
-+	pdata->info.mem[INT_PAGE_MAP].size = HV_HYP_PAGE_SIZE;
- 	pdata->info.mem[INT_PAGE_MAP].memtype = UIO_MEM_LOGICAL;
+--- a/arch/arm/mach-omap2/pmic-cpcap.c
++++ b/arch/arm/mach-omap2/pmic-cpcap.c
+@@ -264,7 +264,11 @@ int __init omap4_cpcap_init(void)
  
- 	pdata->info.mem[MON_PAGE_MAP].name = "monitor_page";
- 	pdata->info.mem[MON_PAGE_MAP].addr
- 		= (uintptr_t)vmbus_connection.monitor_pages[1];
--	pdata->info.mem[MON_PAGE_MAP].size = PAGE_SIZE;
-+	pdata->info.mem[MON_PAGE_MAP].size = HV_HYP_PAGE_SIZE;
- 	pdata->info.mem[MON_PAGE_MAP].memtype = UIO_MEM_LOGICAL;
+ static int __init cpcap_late_init(void)
+ {
+-	omap4_vc_set_pmic_signaling(PWRDM_POWER_RET);
++	if (!of_find_compatible_node(NULL, NULL, "motorola,cpcap"))
++		return 0;
++
++	if (soc_is_omap443x() || soc_is_omap446x() || soc_is_omap447x())
++		omap4_vc_set_pmic_signaling(PWRDM_POWER_RET);
  
- 	pdata->recv_buf = vzalloc(RECV_BUFFER_SIZE);
+ 	return 0;
+ }
 
 
