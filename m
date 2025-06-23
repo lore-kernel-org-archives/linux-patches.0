@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C70A239E63;
-	Mon, 23 Jun 2025 13:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B734248176;
+	Mon, 23 Jun 2025 13:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685144; cv=none; b=jQEIs9l8vHHNww8dtBYns+1dZhoucbA2gRs7G8V6ofohEdqKlNtATID6WbgnGUMqvySwZp4Yjm9mljNSxn0YWKYVIkh2kpnZjfWvxEdJSdib/SrUl8t2EYR4Xw8tilRHa0LKaPBe5xZnDfigvJmyWgRrTBehp7DSI/ZrJERrc4I=
+	t=1750685147; cv=none; b=GjklZ1VTllhRZgLUu6YT1wKh9q9Rg0soceeYx43ArVJJLKPrlsNewG6xIcgfBE+qjAs/k820nezgzOjjtmr4CS+seEAetSNAZ52iHyZSMfYB3Hy8g3oZXROakM4+SDvecGNW7M6SPDl5luLVauleTedO/gDM/c7y1XxQHAz/I0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685144; c=relaxed/simple;
-	bh=noiEv5yBnXtSssLFuPEwsR9AnFlNeoMZdJ8cZ+mB0XM=;
+	s=arc-20240116; t=1750685147; c=relaxed/simple;
+	bh=PY8TMAlqlYjKOfv28Xy1TJlcKztfrwtG8MvcqXdKtLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCPaayfNCF/nG3a+3eHRBB3u1fQ3SwbciaSfQZ6dHuqpSeAPOlFjljIOhvKXfLpi3jMPQN66946uw09G0OOBp+KulJoS34n2QuD2uXrhmkT2+yf2rzOnay3g5nyu21RxLOnNJL+8EHP4ZLWkRfGgJpN89jBM9JcKeXZrPaPjmCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oIyYf/A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rPvq9aaRVvSXI0SwaStibZRH5alwT6zq1dKHidfGlH9prYPrPbtDs6kLgVRJeH94bRXj1OawSqen6XNhseG4PrNztbk3tlD1fGKxWuI93WJywy5vqqy3hsFFSuUbKx5D+XlQGz+ZANy5wG4wMqbAIU132JNruWLiV2aHwOR9hLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlF3dUeF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oIyYf/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17CBFC4CEEA;
-	Mon, 23 Jun 2025 13:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlF3dUeF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15CCC4CEEA;
+	Mon, 23 Jun 2025 13:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685143;
-	bh=noiEv5yBnXtSssLFuPEwsR9AnFlNeoMZdJ8cZ+mB0XM=;
+	s=korg; t=1750685147;
+	bh=PY8TMAlqlYjKOfv28Xy1TJlcKztfrwtG8MvcqXdKtLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0oIyYf/A5A0BDzLm2IJrDtLbxHdUSmMHgFcdzXKNzsjCpkCOzcZVbv7WYt2u2yhp9
-	 Z+WZV6MNKPWiAzd7HJky9C+TwBUwI8NKGj0KNJ4fa0C1DNhhesKEW95pS/hKSaN66j
-	 9KCBqzlkZWLGOzoNcL9PgvsYsVevECTPtXqeH4qM=
+	b=jlF3dUeFgeFXHezr6uxlFNcGvyVSpVK33KEe5j97DPwTd9ibsTebHlhI0oHPBNAR+
+	 GRvf+rkZ2MXTW2nAV1//w0T2UAQCwmSwhrxv7Xo8ACLo43Wi3TM9um88Dhg+wc+9BV
+	 Cb7Np7pQQwpW1c9DhusFFjXMWO7jrz8DUnlAW/qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 5.15 011/411] thunderbolt: Do not double dequeue a configuration request
-Date: Mon, 23 Jun 2025 15:02:35 +0200
-Message-ID: <20250623130633.330629415@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 209/592] power: supply: gpio-charger: Fix wakeup source leaks on device unbind
+Date: Mon, 23 Jun 2025 15:02:47 +0200
+Message-ID: <20250623130705.259472579@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 0f73628e9da1ee39daf5f188190cdbaee5e0c98c upstream.
+[ Upstream commit 51212ce95354c5b51e8c3054bf80eeeed80003b6 ]
 
-Some of our devices crash in tb_cfg_request_dequeue():
+Device can be unbound, so driver must also release memory for the wakeup
+source.
 
- general protection fault, probably for non-canonical address 0xdead000000000122
-
- CPU: 6 PID: 91007 Comm: kworker/6:2 Tainted: G U W 6.6.65
- RIP: 0010:tb_cfg_request_dequeue+0x2d/0xa0
- Call Trace:
- <TASK>
- ? tb_cfg_request_dequeue+0x2d/0xa0
- tb_cfg_request_work+0x33/0x80
- worker_thread+0x386/0x8f0
- kthread+0xed/0x110
- ret_from_fork+0x38/0x50
- ret_from_fork_asm+0x1b/0x30
-
-The circumstances are unclear, however, the theory is that
-tb_cfg_request_work() can be scheduled twice for a request:
-first time via frame.callback from ring_work() and second
-time from tb_cfg_request().  Both times kworkers will execute
-tb_cfg_request_dequeue(), which results in double list_del()
-from the ctl->request_queue (the list poison deference hints
-at it: 0xdead000000000122).
-
-Do not dequeue requests that don't have TB_CFG_REQUEST_ACTIVE
-bit set.
-
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250406202730.55096-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/ctl.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/power/supply/gpio-charger.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/thunderbolt/ctl.c
-+++ b/drivers/thunderbolt/ctl.c
-@@ -143,6 +143,11 @@ static void tb_cfg_request_dequeue(struc
- 	struct tb_ctl *ctl = req->ctl;
+diff --git a/drivers/power/supply/gpio-charger.c b/drivers/power/supply/gpio-charger.c
+index 1dfd5b0cb30d8..1b2da9b5fb654 100644
+--- a/drivers/power/supply/gpio-charger.c
++++ b/drivers/power/supply/gpio-charger.c
+@@ -366,7 +366,9 @@ static int gpio_charger_probe(struct platform_device *pdev)
  
- 	mutex_lock(&ctl->request_queue_lock);
-+	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
-+		mutex_unlock(&ctl->request_queue_lock);
-+		return;
-+	}
-+
- 	list_del(&req->list);
- 	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
- 	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
+ 	platform_set_drvdata(pdev, gpio_charger);
+ 
+-	device_init_wakeup(dev, 1);
++	ret = devm_device_init_wakeup(dev);
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to init wakeup\n");
+ 
+ 	return 0;
+ }
+-- 
+2.39.5
+
 
 
