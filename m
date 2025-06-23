@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B302561A8;
-	Mon, 23 Jun 2025 13:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3243624679C;
+	Mon, 23 Jun 2025 13:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685521; cv=none; b=th65V1D6QaEpaPoGaP14QkHl0ZXfN3TEymYWvHrLYjR7MEAbUgdu7WjF1Dw4KQwnhoEv5eRXMmcgumCwtjqvWG+S0yk471KRFSa/GtZ/5P075xDyG5HMIxiDw8/OdqBHr88QczOM5bF27UA53F3UE0bYzScZGDeDOHXQ8P5mx1E=
+	t=1750685524; cv=none; b=WzFeRmqMOM8H3hw6smHJImkCVuB9UoOiTYErWFnNKDd+aIRUqNASOcKUJwh+PkV2aG3JYEsGlAB3ZkTH6gT5XAHBvBU+NZtWnxVtjnYGrmcBu7XhhATOoEVP3LEHXKWFeqCEyERnl+YO5OydVsEG+GpzylIFLjdUTEqZwYS0k/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685521; c=relaxed/simple;
-	bh=oTMgnc7RXhlZ9aKqTIUpFY7tBhKzj4ZwJTe/vOlcBR0=;
+	s=arc-20240116; t=1750685524; c=relaxed/simple;
+	bh=RC88L9PP3XcddebBilHPpuRRPdbtniHcaWuroyNS1tQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYmRlbcD2DKUlTD+DKzM9Z2zBM+L8UQvj2XrohX9jxQZi+nH05XDmI2EENdBiNaO5FKy7GsvzRBlo6ORfFEReemcq8IOClL0RCDJSgMvATrB0dEvr2LVKQFVriIeG45FhF9c6VHE72g/wZXxzuq7IG6D06X0Z0d3iofADegH78o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDS1woZe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pTQxH97vmvtxm4W7vrIpsrKOr7rmQ99/ZJn79kdMRzJYLxb7SwVCqIuumsSiL0ldWrh96T7MaRqW2dv3pf3NS4qb2BEpowh3j+CU6WhDH8AwQrHIKPS7T35ADmMo3rUQ+gv1gv3dVAh+3gXf9pmo7ihP9CY3Czg8HdHBjZ9Xfn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ll2oA2c1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDS1woZe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8F5C4CEEA;
-	Mon, 23 Jun 2025 13:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ll2oA2c1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B042AC4CEEA;
+	Mon, 23 Jun 2025 13:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685521;
-	bh=oTMgnc7RXhlZ9aKqTIUpFY7tBhKzj4ZwJTe/vOlcBR0=;
+	s=korg; t=1750685524;
+	bh=RC88L9PP3XcddebBilHPpuRRPdbtniHcaWuroyNS1tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fDS1woZeFSwtJ9mqMSC+UFszAH0Iw3qrN65F4Yo8SrxCRkLg4PUwCgG1HekNH/tNG
-	 rqDsxezuJy6TjUw9Ch2O213KiBsqMZgxbqmjRdhvgTIQo5GXU36iVM2iXJTbHgKCIR
-	 ttP4t6btlC5NT52Mehi8W7ZsZCXccD/QpgZyPZEA=
+	b=ll2oA2c1KfONN+663sMzgwuSqEJHf018H7DnQ0Hccn8VMeqdp5wgWILnYO4FMktQ/
+	 rO0YhbgADGq10cc9LRU5dOKkZZITOpmAswUI1jMn6QWevVeQXNpEZ2B7AVMHNjwy+v
+	 162Y+9HgMCCmQeadPwYwi7PW0c3fmCboLoyncAbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <jesse.zhang@amd.com>,
-	"Shaoyun.liu" <Shaoyun.liu@amd.com>,
-	Prike Liang <Prike.Liang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Faicker Mo <faicker.mo@zenlayer.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 241/592] drm/amdgpu: Fix API status offset for MES queue reset
-Date: Mon, 23 Jun 2025 15:03:19 +0200
-Message-ID: <20250623130706.023610277@linuxfoundation.org>
+Subject: [PATCH 5.10 056/355] net: openvswitch: Fix the dead loop of MPLS parse
+Date: Mon, 23 Jun 2025 15:04:17 +0200
+Message-ID: <20250623130628.511741666@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +49,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse.Zhang <Jesse.Zhang@amd.com>
+From: Faicker Mo <faicker.mo@zenlayer.com>
 
-[ Upstream commit ad7c088e31f026d71fe87fd09473fafb7d6ed006 ]
+[ Upstream commit 0bdc924bfb319fb10d1113cbf091fc26fb7b1f99 ]
 
-The mes_v11_0_reset_hw_queue and mes_v12_0_reset_hw_queue functions were
-using the wrong union type (MESAPI__REMOVE_QUEUE) when getting the offset
-for api_status. Since these functions handle queue reset operations, they
-should use MESAPI__RESET union instead.
+The unexpected MPLS packet may not end with the bottom label stack.
+When there are many stacks, The label count value has wrapped around.
+A dead loop occurs, soft lockup/CPU stuck finally.
 
-This fixes the polling of API status during hardware queue reset operations
-in the MES for both v11 and v12 versions.
+stack backtrace:
+UBSAN: array-index-out-of-bounds in /build/linux-0Pa0xK/linux-5.15.0/net/openvswitch/flow.c:662:26
+index -1 is out of range for type '__be32 [3]'
+CPU: 34 PID: 0 Comm: swapper/34 Kdump: loaded Tainted: G           OE   5.15.0-121-generic #131-Ubuntu
+Hardware name: Dell Inc. PowerEdge C6420/0JP9TF, BIOS 2.12.2 07/14/2021
+Call Trace:
+ <IRQ>
+ show_stack+0x52/0x5c
+ dump_stack_lvl+0x4a/0x63
+ dump_stack+0x10/0x16
+ ubsan_epilogue+0x9/0x36
+ __ubsan_handle_out_of_bounds.cold+0x44/0x49
+ key_extract_l3l4+0x82a/0x840 [openvswitch]
+ ? kfree_skbmem+0x52/0xa0
+ key_extract+0x9c/0x2b0 [openvswitch]
+ ovs_flow_key_extract+0x124/0x350 [openvswitch]
+ ovs_vport_receive+0x61/0xd0 [openvswitch]
+ ? kernel_init_free_pages.part.0+0x4a/0x70
+ ? get_page_from_freelist+0x353/0x540
+ netdev_port_receive+0xc4/0x180 [openvswitch]
+ ? netdev_port_receive+0x180/0x180 [openvswitch]
+ netdev_frame_hook+0x1f/0x40 [openvswitch]
+ __netif_receive_skb_core.constprop.0+0x23a/0xf00
+ __netif_receive_skb_list_core+0xfa/0x240
+ netif_receive_skb_list_internal+0x18e/0x2a0
+ napi_complete_done+0x7a/0x1c0
+ bnxt_poll+0x155/0x1c0 [bnxt_en]
+ __napi_poll+0x30/0x180
+ net_rx_action+0x126/0x280
+ ? bnxt_msix+0x67/0x80 [bnxt_en]
+ handle_softirqs+0xda/0x2d0
+ irq_exit_rcu+0x96/0xc0
+ common_interrupt+0x8e/0xa0
+ </IRQ>
 
-Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
-Reviewed-By: Shaoyun.liu <Shaoyun.liu@amd.com>
-Reviewed-by: Prike Liang <Prike.Liang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: fbdcdd78da7c ("Change in Openvswitch to support MPLS label depth of 3 in ingress direction")
+Signed-off-by: Faicker Mo <faicker.mo@zenlayer.com>
+Acked-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/259D3404-575D-4A6D-B263-1DF59A67CF89@zenlayer.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v11_0.c | 2 +-
- drivers/gpu/drm/amd/amdgpu/mes_v12_0.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/openvswitch/flow.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-index ef9538fbbf537..480283da18454 100644
---- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-@@ -480,7 +480,7 @@ static int mes_v11_0_reset_hw_queue(struct amdgpu_mes *mes,
+diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
+index 9bad601c7fe82..94531289ed26a 100644
+--- a/net/openvswitch/flow.c
++++ b/net/openvswitch/flow.c
+@@ -638,7 +638,7 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
+ 			memset(&key->ipv4, 0, sizeof(key->ipv4));
+ 		}
+ 	} else if (eth_p_mpls(key->eth.type)) {
+-		u8 label_count = 1;
++		size_t label_count = 1;
  
- 	return mes_v11_0_submit_pkt_and_poll_completion(mes,
- 			&mes_reset_queue_pkt, sizeof(mes_reset_queue_pkt),
--			offsetof(union MESAPI__REMOVE_QUEUE, api_status));
-+			offsetof(union MESAPI__RESET, api_status));
- }
- 
- static int mes_v11_0_map_legacy_queue(struct amdgpu_mes *mes,
-diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-index e6ab617b9a404..624c6b4e452c8 100644
---- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-@@ -500,7 +500,7 @@ static int mes_v12_0_reset_hw_queue(struct amdgpu_mes *mes,
- 
- 	return mes_v12_0_submit_pkt_and_poll_completion(mes, pipe,
- 			&mes_reset_queue_pkt, sizeof(mes_reset_queue_pkt),
--			offsetof(union MESAPI__REMOVE_QUEUE, api_status));
-+			offsetof(union MESAPI__RESET, api_status));
- }
- 
- static int mes_v12_0_map_legacy_queue(struct amdgpu_mes *mes,
+ 		memset(&key->mpls, 0, sizeof(key->mpls));
+ 		skb_set_inner_network_header(skb, skb->mac_len);
 -- 
 2.39.5
 
