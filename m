@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCD1136988;
-	Mon, 23 Jun 2025 13:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E682459FF;
+	Mon, 23 Jun 2025 13:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684418; cv=none; b=U5pOabrrFrEuK3a7SBAucPjDJ1g0WNnL2H929PCAZtmBp/WOs40LqZpMd4aSMlYu109N7S8axPQx3rCdXzLQcjP+AJ7RW0EZKdj2umObo+o90yAeWL2iYJ0ekqaQbFy8M3kbSZ1e/ak5Qt2ZoInixzvXSA+NBrtLs9x8tlxdsMU=
+	t=1750684420; cv=none; b=MuHkKOtcOV6dsQX7ofdRxyX8xgNQiNetjDVlsutyywzowBoM0xRiZy49YQCvMZdC2eQJgOE6L37UAuOf/XdGE8FsutPdOeMzI7TsJwXGFFyY66rI+4L8qO85Xs1bvES+h9qGIlX4MIO0lZyxZ1vdfpxtQ6vxiBrdvUuXUCKeHYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684418; c=relaxed/simple;
-	bh=CqvxmGDRHJ16zJW/Fk22Nyj6i+AMa/0uSIXRbpd1ixw=;
+	s=arc-20240116; t=1750684420; c=relaxed/simple;
+	bh=1Crsd2P+Dsz1gb2RPJkbXgmM+7Owv0Byezgx2+8ZTyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKFmjhs2pEptu1dWvWEUIB2ZIi89OrV3zjwmsUkMBv8621YqJWxGCIXFLcQy5KjYIoDitCsmgDiNxM2HDEbp5cxJQDIIELnYOJe5Dm93k8DoxFnkjpWzsFEmjLZ7VpY1pO9Po4Gp7OcJSN67+4/zuOnwHliTDXWSiDPc0KfKPds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGXeD10i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J3X0DI5d/p1faXmBNZG8tGIZrSvIxVOMx5p4XGVdMW9fiA3X5hCIy5Flsldry3kwRb9334Mv496ezjPZu3e1nJ7vIfwT957tDbJGZLfhsadaowyzYTM4ZEKcMlk+FQjN5yZIgy+XwFLw9mmnra6lkLyeQh6r30SfqP9GE8igiuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VznEsNiE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGXeD10i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358BEC4CEEA;
-	Mon, 23 Jun 2025 13:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VznEsNiE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81BAC4CEEA;
+	Mon, 23 Jun 2025 13:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684417;
-	bh=CqvxmGDRHJ16zJW/Fk22Nyj6i+AMa/0uSIXRbpd1ixw=;
+	s=korg; t=1750684420;
+	bh=1Crsd2P+Dsz1gb2RPJkbXgmM+7Owv0Byezgx2+8ZTyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGXeD10izMy0JFVf8wo4PvCIbTb3yiwEoksj5bhtyBBgAs3UPcDRKqvul5GYysWz+
-	 SN6LcviB9NgZS5ehcxVuvfWyMU17BnJCa5y9dJqlCzoXGHVJ9P08jJmKbmYaixP6Jl
-	 ERdavVXcWHF4lsHM4+VvN11deQIYdew4fCcXgERg=
+	b=VznEsNiEZIiERiXfubfrb4/ANqmLvYdn+EQXkbvcLMMU7+q0uEJ6eOm9aU6mjy2Nl
+	 W/xRjQdcxZDcR+pusVffSMo91jowyFNscfWgEs7B4bJtVcmQYn/9GZBOFSduF8EsZY
+	 Uk+Ycn0ZarFAypPhe3hTaVbVtEWFIrVJFzkzQz1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Jai Luthra <jai.luthra@ideasonboard.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.15 060/592] media: i2c: ds90ub913: Fix returned fmt from .set_fmt()
-Date: Mon, 23 Jun 2025 15:00:18 +0200
-Message-ID: <20250623130701.683753698@linuxfoundation.org>
+Subject: [PATCH 6.15 061/592] media: ccs-pll: Start VT pre-PLL multiplier search from correct value
+Date: Mon, 23 Jun 2025 15:00:19 +0200
+Message-ID: <20250623130701.708139592@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -52,39 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit ef205273132bdc9bcfa1540eef8105475a453300 upstream.
+commit 06d2d478b09e6764fb6161d1621fc10d9f0f2860 upstream.
 
-When setting the sink pad's stream format, set_fmt accidentally changes
-the returned format's code to 'outcode', while the purpose is to only
-use the 'outcode' for the propagated source stream format.
+The ccs_pll_calculate_vt_tree() function does a search over possible VT
+PLL configurations to find the "best" one. If the sensor does not support
+odd pre-PLL divisors and the minimum value (with constraints) isn't 1,
+other odd values could be errorneously searched (and selected) for the
+pre-PLL divisor. Fix this.
 
-Fixes: c158d0d4ff15 ("media: i2c: add DS90UB913 driver")
+Fixes: 415ddd993978 ("media: ccs-pll: Split limits and PLL configuration into front and back parts")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Jai Luthra <jai.luthra@ideasonboard.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ds90ub913.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/i2c/ccs-pll.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/i2c/ds90ub913.c
-+++ b/drivers/media/i2c/ds90ub913.c
-@@ -450,10 +450,10 @@ static int ub913_set_fmt(struct v4l2_sub
- 	if (!fmt)
- 		return -EINVAL;
+--- a/drivers/media/i2c/ccs-pll.c
++++ b/drivers/media/i2c/ccs-pll.c
+@@ -397,6 +397,8 @@ static int ccs_pll_calculate_vt_tree(str
+ 	min_pre_pll_clk_div = max_t(u16, min_pre_pll_clk_div,
+ 				    pll->ext_clk_freq_hz /
+ 				    lim_fr->max_pll_ip_clk_freq_hz);
++	if (!(pll->flags & CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER))
++		min_pre_pll_clk_div = clk_div_even(min_pre_pll_clk_div);
  
--	format->format.code = finfo->outcode;
--
- 	*fmt = format->format;
- 
-+	fmt->code = finfo->outcode;
-+
- 	return 0;
- }
- 
+ 	dev_dbg(dev, "vt min/max_pre_pll_clk_div: %u,%u\n",
+ 		min_pre_pll_clk_div, max_pre_pll_clk_div);
 
 
