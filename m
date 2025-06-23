@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BAD223335;
-	Mon, 23 Jun 2025 21:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601511AD3FA;
+	Mon, 23 Jun 2025 21:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715805; cv=none; b=SsDI7u2z5tJYz1KCSlIxXud8DHf4Z+3VGcjpRhON46uE88bFLS11G6SO2DRlHLdtPuSzjcDONkS5+1ISOB16Vd38W4ZTVFcjiJyFe6w8Gz93jvH29mJKx2PKK/PVbnLgt2+2B/Za92BrZqaL1PLokp9E0UnLvZLK23MZzwFxhvI=
+	t=1750715807; cv=none; b=fDQB/hUHTdrVoiL8WZp9dctwt59azTD2Wp7LZWxxoa1XB86NyyQ9G4hzAUXHMybQQ+ZbmT9uFpQlWqQVwwnlAM7k3PlqWbQELRXh2ZAVKENHO4x9f74fcs4nDabYo4HIkTdQgLj1Df38O9NYxXjazRC72TqJ3SsUg5ilQ7p6gIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715805; c=relaxed/simple;
-	bh=ShgV9xFjDjzzeqyVS3obLu7mSBo5LZOfXxJg4RBPzpw=;
+	s=arc-20240116; t=1750715807; c=relaxed/simple;
+	bh=DpTXsGOY8YcZoPv+/aD4FF8I9T/638ihWlTQdmpITdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mUU3yj7C4IlNLITEpb9uloV2VKKNeOHvjQTFLQt8EDdBWXxO2oh7+2eRC0gMlMnooyH2dYLHAoZKDWLHt9z0fM0/UzsxUnEhwxrjfl28o45w+VfGsd2FnNKaFawZOZJ7x1hqi0mhrrHFe3u0nsTgR1PPRKIxmf03hemXSxDUWMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWy6FdBg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jXAnqcBHNg2SP4SH4vH3btstNZaw6TI2P0usCV6OHJWjBncFkwvkhA/akpzreilz4lDAnIi9wdFunkJX4S51u08xwKFNrdMKLQgcis+Mme3RGeyXYZCPGR/5y8+i9gqbdAgVvhHl+awEkzfG0zdBUsDeKEvPoQjHyRoxxqnsZ4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxC6OIf0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWy6FdBg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80311C4CEEA;
-	Mon, 23 Jun 2025 21:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxC6OIf0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFAAC4CEEA;
+	Mon, 23 Jun 2025 21:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715804;
-	bh=ShgV9xFjDjzzeqyVS3obLu7mSBo5LZOfXxJg4RBPzpw=;
+	s=korg; t=1750715807;
+	bh=DpTXsGOY8YcZoPv+/aD4FF8I9T/638ihWlTQdmpITdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PWy6FdBgszqVYRr7ORWOY0ZGfj2Xo2HiHL0RaRYv1vZOQyQuDrudS1JuwL+Cg2K8b
-	 kLmhAKJLkssVVvMTTHTbj05gCzBuBd4AXdARqjninwjfMHRUWoeihKMHJHB+Erer28
-	 MDNVPm3oJjLtAT8ZGmbeiOeY4Ryyzqscf9QcUzCs=
+	b=fxC6OIf0phDrMO/8xOihUUjozHbOY9+6DcyS6ctWrw3XyttdPrtDsOd4GXaK6Bxlt
+	 DDlNukZr07xYfNrn8c+yUYajHZNkl3czi66u+yJe/js2vxX0fIIX7dNurJXK8P7t9d
+	 /QM2yrtS4ueeiavD7RlCTlOrmHMmIguydwym7zac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Rodrigo Siqueira <siqueira@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 243/508] drm/meson: use vclk_freq instead of pixel_freq in debug print
-Date: Mon, 23 Jun 2025 15:04:48 +0200
-Message-ID: <20250623130651.232941735@linuxfoundation.org>
+Subject: [PATCH 5.15 286/411] drm/amdgpu/gfx7: fix CSIB handling
+Date: Mon, 23 Jun 2025 15:07:10 +0200
+Message-ID: <20250623130640.847515289@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +47,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit faf2f8382088e8c74bd6eeb236c8c9190e61615e ]
+[ Upstream commit be7652c23d833d1ab2c67b16e173b1a4e69d1ae6 ]
 
-meson_vclk_vic_supported_freq() has a debug print which includes the
-pixel freq. However, within the whole function the pixel freq is
-irrelevant, other than checking the end of the params array. Switch to
-printing the vclk_freq which is being compared / matched against the
-inputs to the function to avoid confusion when analyzing error reports
-from users.
+We shouldn't return after the last section.
+We need to update the rest of the CSIB.
 
-Fixes: e5fab2ec9ca4 ("drm/meson: vclk: add support for YUV420 setup")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250606221031.3419353-1-martin.blumenstingl@googlemail.com
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_vclk.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
-index 3325580d885d0..c4123bb958e4c 100644
---- a/drivers/gpu/drm/meson/meson_vclk.c
-+++ b/drivers/gpu/drm/meson/meson_vclk.c
-@@ -790,9 +790,9 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv,
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c
+index 37b4a3db63602..b6e5599c8b3cd 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c
+@@ -4005,8 +4005,6 @@ static void gfx_v7_0_get_csb_buffer(struct amdgpu_device *adev,
+ 				buffer[count++] = cpu_to_le32(ext->reg_index - PACKET3_SET_CONTEXT_REG_START);
+ 				for (i = 0; i < ext->reg_count; i++)
+ 					buffer[count++] = cpu_to_le32(ext->extent[i]);
+-			} else {
+-				return;
+ 			}
+ 		}
  	}
- 
- 	for (i = 0 ; params[i].pixel_freq ; ++i) {
--		DRM_DEBUG_DRIVER("i = %d pixel_freq = %lluHz alt = %lluHz\n",
--				 i, params[i].pixel_freq,
--				 PIXEL_FREQ_1000_1001(params[i].pixel_freq));
-+		DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
-+				 i, params[i].vclk_freq,
-+				 PIXEL_FREQ_1000_1001(params[i].vclk_freq));
- 		DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
- 				 i, params[i].phy_freq,
- 				 PHY_FREQ_1000_1001(params[i].phy_freq));
 -- 
 2.39.5
 
