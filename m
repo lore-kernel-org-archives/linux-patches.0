@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946AF24DCFD;
-	Mon, 23 Jun 2025 13:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E9625334B;
+	Mon, 23 Jun 2025 13:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685867; cv=none; b=ksQSFlS8uEonXXTjMEVKDhbt9Hxmpk+/6QVsJKHiKM3RH97GJlsytJBcZ0cflm6RnM2MXYKUQPkp/WK9l6aEbDQRJf1fJppFkV9bFKrAB9BxjZCt+T5QBabGTGC+Fjk9blpQ79BcbHKZ1d8K8660jzeQO2RuD4GICZE+JQWviGc=
+	t=1750685870; cv=none; b=FJ2p7KqsGo7raTgTzo6jG0ZzqVFTgDGcjtDzfmLYRF970YShdJSknFj0I7RHefUe8c0mX5b7iOAb7pozdZlmlWAjnUiANoemzeQe6y8IXuCSpBS1lVjv4RK8xTWSa82+gTHAdjGeRp615hDOKhEz0nHWLYqmRWg53t/e500OZbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685867; c=relaxed/simple;
-	bh=CCg3U/dA14kinUEkcKxQ6svZq3aFFckl718DtQ1RG0w=;
+	s=arc-20240116; t=1750685870; c=relaxed/simple;
+	bh=tjRpYGGlByNtz4OPfINBltHbscSTGG/Uzgmy3T7xjbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fNb6CYPIzmdzC8o4S91iU4AatJQ9EaB+PyAkGB6X3lH3l7OnnKsl+/EMAiEdwdpio+uCpb+T6incbheuvn7KPWKvDrWVRxxilIo8r/aLy6235DNYaOtzUtozCe3JfjjbCbNuZ50FHruE23b7MpZ65h6u2ik4zlhMdmAOSXTFzA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCnIi5Ml; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JGUZrX/7aAtW3VE1Us88atb3NPAKVcvGzecKAQj6PXhO+0kJl3nH0JO7lvaDY3jLM0V4rP2hojXZZywd76vn01cCniyo6mdgcb+B3a++nu7rehPin7HwlqY1bUO4slgtCP8FnV9UdZcXafeu0StMcCjmLvO9BwQm/Y/GQKRLiYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZB4ZgxY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCnIi5Ml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2936FC4CEEA;
-	Mon, 23 Jun 2025 13:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZB4ZgxY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAF0C4CEEA;
+	Mon, 23 Jun 2025 13:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685867;
-	bh=CCg3U/dA14kinUEkcKxQ6svZq3aFFckl718DtQ1RG0w=;
+	s=korg; t=1750685870;
+	bh=tjRpYGGlByNtz4OPfINBltHbscSTGG/Uzgmy3T7xjbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QCnIi5Ml4PAK9sCgFNjMfrnZVf3WElH9AMH1YXSjR2qkFILjlwePJEh6a9Yxa+fUr
-	 kd6yArE86uOmZuBPVWSXIU0zEiBOqFiMqbBBsCY1De5UBOoAfLWCwniTME9+H9vWm8
-	 5HUGFyQV551LpwrUEqn5OQnx8b9K7ODtcLS5f/JY=
+	b=wZB4ZgxYeWuaEgiwuq7tSNZ+96Md0HOB4hZuEV/UheATXEXWSRb96z04rt3sJ9Eb+
+	 PNz5EYGtZ9ttFzozhKaFWlSlFFNYrZzaqIVwpdatC/E9X9N1lbs3TgFHGhCiRP/fK+
+	 E/8/gwSu5RANGY3d9lMI0O9P4Z0xfVaes72icnWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 030/290] media: ccs-pll: Correct the upper limit of maximum op_pre_pll_clk_div
-Date: Mon, 23 Jun 2025 15:04:51 +0200
-Message-ID: <20250623130627.898425237@linuxfoundation.org>
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 011/414] ASoC: amd: sof_amd_sdw: Fix unlikely uninitialized variable use in create_sdw_dailinks()
+Date: Mon, 23 Jun 2025 15:02:28 +0200
+Message-ID: <20250623130642.309835484@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +46,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-commit f639494db450770fa30d6845d9c84b9cb009758f upstream.
+commit 6b83ba4bc3ecb915476d688c9f00f3be57b49a0c upstream.
 
-The PLL calculator does a search of the PLL configuration space for all
-valid OP pre-PLL clock dividers. The maximum did not take into account the
-CCS PLL flag CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER in which case also odd PLL
-dividers (other than 1) are valid. Do that now.
+Initialize current_be_id to 0 in SOF based AMD generic SoundWire machine
+driver to handle the unlikely case when there are no devices connected to
+a DAI.
+In this case create_sdw_dailink() would return without touching the passed
+pointer to current_be_id.
 
-Fixes: 4e1e8d240dff ("media: ccs-pll: Add support for extended input PLL clock divider")
+Found by gcc -fanalyzer
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: 6d8348ddc56ed ("ASoC: amd: acp: refactor SoundWire machine driver code")
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://patch.msgid.link/20250506120823.3621604-2-Vijendar.Mukunda@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ccs-pll.c |    2 +-
+ sound/soc/amd/acp/acp-sdw-sof-mach.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/i2c/ccs-pll.c
-+++ b/drivers/media/i2c/ccs-pll.c
-@@ -794,7 +794,7 @@ int ccs_pll_calculate(struct device *dev
- 		op_lim_fr->min_pre_pll_clk_div, op_lim_fr->max_pre_pll_clk_div);
- 	max_op_pre_pll_clk_div =
- 		min_t(u16, op_lim_fr->max_pre_pll_clk_div,
--		      clk_div_even(pll->ext_clk_freq_hz /
-+		      DIV_ROUND_UP(pll->ext_clk_freq_hz,
- 				   op_lim_fr->min_pll_ip_clk_freq_hz));
- 	min_op_pre_pll_clk_div =
- 		max_t(u16, op_lim_fr->min_pre_pll_clk_div,
+--- a/sound/soc/amd/acp/acp-sdw-sof-mach.c
++++ b/sound/soc/amd/acp/acp-sdw-sof-mach.c
+@@ -267,7 +267,7 @@ static int create_sdw_dailinks(struct sn
+ 
+ 	/* generate DAI links by each sdw link */
+ 	while (sof_dais->initialised) {
+-		int current_be_id;
++		int current_be_id = 0;
+ 
+ 		ret = create_sdw_dailink(card, sof_dais, dai_links,
+ 					 &current_be_id, codec_conf);
 
 
