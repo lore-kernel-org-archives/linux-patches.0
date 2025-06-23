@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814921E5B71;
-	Mon, 23 Jun 2025 21:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178EC1EFF9F;
+	Mon, 23 Jun 2025 21:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714179; cv=none; b=HN3dqZRfeA67ZO+m1sqNUeIR4nXkCSxBpMh+9OjR7ebBNt5SRwwtU3nBRfdlNmmKJdROQvdYaooZF2xNUeDCPfnZmsikIYQjysZnNQjCB0pY7b+40E3rJiy7nDlo/KCqzDiAdtylAbpDbUX5hoAJE6FeIGgNs3YccGyxyzX1/Vw=
+	t=1750714182; cv=none; b=DlXIAJeRP/pMXOVU4IE0Ufd50oedX5JV5mOUiW0fVsWcg1xFKd5d0a+IeuS6MSJQfsvv760PCFOR5e6T5uFgNV2yG8f2EnMJ2poAsQMUv1nLmenq5B4hkIjyp2M+CzWiEX+3kOg7YEM4oZxvo6NUmmWPMpUhXN4v+Djnqqa8r9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714179; c=relaxed/simple;
-	bh=HZf1ZKLOQfhlEz7zWOiagM5Z13SKsM85LKqfVADPGu0=;
+	s=arc-20240116; t=1750714182; c=relaxed/simple;
+	bh=CeXz7mHNFVMOsbHpgBCy36Hzd4KcA9rfuneCRW+DkxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B/zz3bjAqQmhvxFr+SXbZIb6igwyOEmGJxhx9I1nquuPv4NsIc1SEA2omZxuIDn1/PpH0UIzx/wmwryZZfUPzy2rRhu+mZoDzuU+dRDdWYH1NQQgFM9Sfyk9eLnQw/5X/pbEi8cyn+osgSfhj6gXpIvswgmallgvdolXvs32DCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=du8+wmrD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qUjfs1uGBfjUPIHy4xAkQL41UIZ7zQBvT8UYUSCU+dE7kILCYWPWBEvMdkC1pOC9su8Qg/vvvRejizz19ZW6JsNq57C95XLo67FHs8DpoOcBTVJWnQsWduwrt9ZIOx6BkuosUUGkMiiYiaaJB0B9uK60czAN6TCc4hUoULMjQE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7h4dIaQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="du8+wmrD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B83AC4CEF0;
-	Mon, 23 Jun 2025 21:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7h4dIaQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A7AC4CEEA;
+	Mon, 23 Jun 2025 21:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714179;
-	bh=HZf1ZKLOQfhlEz7zWOiagM5Z13SKsM85LKqfVADPGu0=;
+	s=korg; t=1750714182;
+	bh=CeXz7mHNFVMOsbHpgBCy36Hzd4KcA9rfuneCRW+DkxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=du8+wmrD07WAslWF6j3omRuqN8X+pouaXtSSBY87h9hdekXh955hrQLeBRzVrUVRl
-	 snztNlTnJDLKpmSbB2QKNAF0/EYTsqJ8pxfC9IKOLKNiTlUiX2RqCldUZarRX1FdLP
-	 uZRvslabNxxU2q0zZABGf2oa67E5zrmVx2+g4LWc=
+	b=T7h4dIaQye51m7nFYdDs7/QWzLKH2YSndqw7OXxrNNwG1Cu1EMZGDaqR8nDJQXZ1q
+	 P3kHfzYQk0BdrSjUkxg4QiEwIOQ0N3V/U3PvWvGRZbQNr18jsbksTxnca5i5g6XTuK
+	 i/wu4P//Tlbb/ZV9kJdBbN/rORTFxSHDA8F5Je7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 107/414] fbdev: Fix do_register_framebuffer to prevent null-ptr-deref in fb_videomode_to_var
-Date: Mon, 23 Jun 2025 15:04:04 +0200
-Message-ID: <20250623130644.770908522@linuxfoundation.org>
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 395/592] bnxt_en: Remove unused field "ref_count" in struct bnxt_ulp
+Date: Mon, 23 Jun 2025 15:05:53 +0200
+Message-ID: <20250623130709.839591924@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,110 +49,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-commit 17186f1f90d34fa701e4f14e6818305151637b9e upstream.
+[ Upstream commit 5bccacb4cc32cb835fe2fe100a210332c494e81d ]
 
-If fb_add_videomode() in do_register_framebuffer() fails to allocate
-memory for fb_videomode, it will later lead to a null-ptr dereference in
-fb_videomode_to_var(), as the fb_info is registered while not having the
-mode in modelist that is expected to be there, i.e. the one that is
-described in fb_info->var.
+The "ref_count" field in struct bnxt_ulp is unused after
+commit a43c26fa2e6c ("RDMA/bnxt_re: Remove the sriov config callback").
+So we can just remove it now.
 
-================================================================
-general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 1 PID: 30371 Comm: syz-executor.1 Not tainted 5.10.226-syzkaller #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:fb_videomode_to_var+0x24/0x610 drivers/video/fbdev/core/modedb.c:901
-Call Trace:
- display_to_var+0x3a/0x7c0 drivers/video/fbdev/core/fbcon.c:929
- fbcon_resize+0x3e2/0x8f0 drivers/video/fbdev/core/fbcon.c:2071
- resize_screen drivers/tty/vt/vt.c:1176 [inline]
- vc_do_resize+0x53a/0x1170 drivers/tty/vt/vt.c:1263
- fbcon_modechanged+0x3ac/0x6e0 drivers/video/fbdev/core/fbcon.c:2720
- fbcon_update_vcs+0x43/0x60 drivers/video/fbdev/core/fbcon.c:2776
- do_fb_ioctl+0x6d2/0x740 drivers/video/fbdev/core/fbmem.c:1128
- fb_ioctl+0xe7/0x150 drivers/video/fbdev/core/fbmem.c:1203
- vfs_ioctl fs/ioctl.c:48 [inline]
- __do_sys_ioctl fs/ioctl.c:753 [inline]
- __se_sys_ioctl fs/ioctl.c:739 [inline]
- __x64_sys_ioctl+0x19a/0x210 fs/ioctl.c:739
- do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
- entry_SYSCALL_64_after_hwframe+0x67/0xd1
-================================================================
-
-Even though fbcon_init() checks beforehand if fb_match_mode() in
-var_to_display() fails, it can not prevent the panic because fbcon_init()
-does not return error code. Considering this and the comment in the code
-about fb_match_mode() returning NULL - "This should not happen" - it is
-better to prevent registering the fb_info if its mode was not set
-successfully. Also move fb_add_videomode() closer to the beginning of
-do_register_framebuffer() to avoid having to do the cleanup on fail.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250417172448.1206107-4-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbmem.c |   18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c | 5 -----
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h | 1 -
+ 2 files changed, 6 deletions(-)
 
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -388,7 +388,7 @@ static int fb_check_foreignness(struct f
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
+index 7564705d64783..84c4812414fd4 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
+@@ -149,7 +149,6 @@ void bnxt_unregister_dev(struct bnxt_en_dev *edev)
+ 	struct net_device *dev = edev->net;
+ 	struct bnxt *bp = netdev_priv(dev);
+ 	struct bnxt_ulp *ulp;
+-	int i = 0;
  
- static int do_register_framebuffer(struct fb_info *fb_info)
- {
--	int i;
-+	int i, err = 0;
- 	struct fb_videomode mode;
+ 	ulp = edev->ulp_tbl;
+ 	netdev_lock(dev);
+@@ -165,10 +164,6 @@ void bnxt_unregister_dev(struct bnxt_en_dev *edev)
+ 	synchronize_rcu();
+ 	ulp->max_async_event_id = 0;
+ 	ulp->async_events_bmap = NULL;
+-	while (atomic_read(&ulp->ref_count) != 0 && i < 10) {
+-		msleep(100);
+-		i++;
+-	}
+ 	mutex_unlock(&edev->en_dev_lock);
+ 	netdev_unlock(dev);
+ 	return;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h
+index 7fa3b8d1ebd28..f6b5efb5e7753 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h
+@@ -50,7 +50,6 @@ struct bnxt_ulp {
+ 	unsigned long	*async_events_bmap;
+ 	u16		max_async_event_id;
+ 	u16		msix_requested;
+-	atomic_t	ref_count;
+ };
  
- 	if (fb_check_foreignness(fb_info))
-@@ -397,10 +397,18 @@ static int do_register_framebuffer(struc
- 	if (num_registered_fb == FB_MAX)
- 		return -ENXIO;
- 
--	num_registered_fb++;
- 	for (i = 0 ; i < FB_MAX; i++)
- 		if (!registered_fb[i])
- 			break;
-+
-+	if (!fb_info->modelist.prev || !fb_info->modelist.next)
-+		INIT_LIST_HEAD(&fb_info->modelist);
-+
-+	fb_var_to_videomode(&mode, &fb_info->var);
-+	err = fb_add_videomode(&mode, &fb_info->modelist);
-+	if (err < 0)
-+		return err;
-+
- 	fb_info->node = i;
- 	refcount_set(&fb_info->count, 1);
- 	mutex_init(&fb_info->lock);
-@@ -426,16 +434,12 @@ static int do_register_framebuffer(struc
- 	if (bitmap_empty(fb_info->pixmap.blit_y, FB_MAX_BLIT_HEIGHT))
- 		bitmap_fill(fb_info->pixmap.blit_y, FB_MAX_BLIT_HEIGHT);
- 
--	if (!fb_info->modelist.prev || !fb_info->modelist.next)
--		INIT_LIST_HEAD(&fb_info->modelist);
--
- 	if (fb_info->skip_vt_switch)
- 		pm_vt_switch_required(fb_info->device, false);
- 	else
- 		pm_vt_switch_required(fb_info->device, true);
- 
--	fb_var_to_videomode(&mode, &fb_info->var);
--	fb_add_videomode(&mode, &fb_info->modelist);
-+	num_registered_fb++;
- 	registered_fb[i] = fb_info;
- 
- #ifdef CONFIG_GUMSTIX_AM200EPD
+ struct bnxt_en_dev {
+-- 
+2.39.5
+
 
 
