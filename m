@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DA919C554;
-	Mon, 23 Jun 2025 21:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B8419C554;
+	Mon, 23 Jun 2025 21:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714077; cv=none; b=VtuvwD7UbB4tXhxSLaWo3PTDiKaDC4Rb2M/KxHl6UU+1JuyfSvFeDm/vrGHrzgtEpi96UGpRQGOGAprHd2eeGAC+I+Oyx2rwmjm2g1Zqm/vvbqfd1i8exe92P56RCAKQLU03XVcoDwSpBqQYcyZBHbBgrmUC+WejfIQPQZoyDFc=
+	t=1750714079; cv=none; b=JzRvLiZXsEOo2WJ5NP1utGUJOlEWRDKBnEQpLW4CU+DK5n6kG1QQ0xPMpmPn3qAFOAohaLiG1XA65jD989AkbU1LG7AY1hB10YuIasu7V59a1FJO+U34uMsW7w4huxVmyGBqCLHSHWGWAwnhqlaDNmXoEPKVpn9ZyNIPdcuAo6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714077; c=relaxed/simple;
-	bh=+KVla1/fCKrRqDNOt8V2AvUsHYN9CYv4eZx4O9Dtmkw=;
+	s=arc-20240116; t=1750714079; c=relaxed/simple;
+	bh=1wzJasK7Nc1nd1kblmjJXC6F0IcVS8ap+RvKoiRR7oM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZR2xmY4qfaFOuerhnd//JSEHznOi/AOL/FIQvmxTGmJpEqPL3pReIlBL6hmBKRAXTVAAmxd5BuvvS+aD1qJ43nG4bjwGLhDJxzpfDgZBIvMqRXwpSPV8mdCCUCNAlJItiLf8O3tYHzypjgsx3LubIv1KS1ZYYfvnOyzKjoDVXSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lT6MgWaf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g7gqCP48P5wUkicbCbH9OQepGJwKTgvnH66gRsfsr5epa5n3PPGbm+6Jg8UathEycF6f3bpBr6WF0uuvRkng+Azx3eabppmBPsYVICFKa7Kc6HdlrjZ9BWTuceO8qi6QBMjsVhWIxHoR7k4YFTj+eEMTwzvLDxIJ9QBq3Q3eYEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+jSWTO8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lT6MgWaf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F029C4CEF0;
-	Mon, 23 Jun 2025 21:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+jSWTO8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7ECC4CEEA;
+	Mon, 23 Jun 2025 21:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714076;
-	bh=+KVla1/fCKrRqDNOt8V2AvUsHYN9CYv4eZx4O9Dtmkw=;
+	s=korg; t=1750714079;
+	bh=1wzJasK7Nc1nd1kblmjJXC6F0IcVS8ap+RvKoiRR7oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lT6MgWafV2LhUD/VkOLRrNrz7cES+nSS+VP6Zl5BrWQfYExNQM8yPsj4joXsL3cjP
-	 4gvDolf/y3wGWi+Q3jAqSAm4I6fpW8HqhWgWMwXBYjXhxlQKeB8T7aO4hbz6By9a5r
-	 QdXXWiQNX6G98tBYkmnn3JygiUQmucnioLheJru0=
+	b=J+jSWTO8U1Qi/C8NqNJP7fQVZ5Y4mExVql2E42nVYBcILHx6bKb9b+lzLG3jLT5gm
+	 GLFZxv7KHu81FIS6EP+rrkFg3mTrMHIpyHShQzoH1S5eSCs9MBNI1SkZ8FBRKRSTVT
+	 qBrLfuYIXn54IyJW0eJpEEdlSZjWTI9OsLwtWIZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 362/592] net: mlx4: add SOF_TIMESTAMPING_TX_SOFTWARE flag when getting ts info
-Date: Mon, 23 Jun 2025 15:05:20 +0200
-Message-ID: <20250623130709.054440591@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 099/290] regulator: max14577: Add error check for max14577_read_reg()
+Date: Mon, 23 Jun 2025 15:06:00 +0200
+Message-ID: <20250623130629.945782090@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +46,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit b86bcfee30576b752302c55693fff97242b35dfd ]
+commit 65271f868cb1dca709ff69e45939bbef8d6d0b70 upstream.
 
-As mlx4 has implemented skb_tx_timestamp() in mlx4_en_xmit(), the
-SOFTWARE flag is surely needed when users are trying to get timestamp
-information.
+The function max14577_reg_get_current_limit() calls the function
+max14577_read_reg(), but does not check its return value. A proper
+implementation can be found in max14577_get_online().
 
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250510093442.79711-1-kerneljasonxing@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a error check for the max14577_read_reg() and return error code
+if the function fails.
+
+Fixes: b0902bbeb768 ("regulator: max14577: Add regulator driver for Maxim 14577")
+Cc: stable@vger.kernel.org # v3.14
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20250526025627.407-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx4/en_ethtool.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/regulator/max14577-regulator.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
-index cd17a3f4faf83..a68cd3f0304c6 100644
---- a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
-@@ -1897,6 +1897,7 @@ static int mlx4_en_get_ts_info(struct net_device *dev,
- 	if (mdev->dev->caps.flags2 & MLX4_DEV_CAP_FLAG2_TS) {
- 		info->so_timestamping |=
- 			SOF_TIMESTAMPING_TX_HARDWARE |
-+			SOF_TIMESTAMPING_TX_SOFTWARE |
- 			SOF_TIMESTAMPING_RX_HARDWARE |
- 			SOF_TIMESTAMPING_RAW_HARDWARE;
+--- a/drivers/regulator/max14577-regulator.c
++++ b/drivers/regulator/max14577-regulator.c
+@@ -40,11 +40,14 @@ static int max14577_reg_get_current_limi
+ 	struct max14577 *max14577 = rdev_get_drvdata(rdev);
+ 	const struct maxim_charger_current *limits =
+ 		&maxim_charger_currents[max14577->dev_type];
++	int ret;
  
--- 
-2.39.5
-
+ 	if (rdev_get_id(rdev) != MAX14577_CHARGER)
+ 		return -EINVAL;
+ 
+-	max14577_read_reg(rmap, MAX14577_CHG_REG_CHG_CTRL4, &reg_data);
++	ret = max14577_read_reg(rmap, MAX14577_CHG_REG_CHG_CTRL4, &reg_data);
++	if (ret < 0)
++		return ret;
+ 
+ 	if ((reg_data & CHGCTRL4_MBCICHWRCL_MASK) == 0)
+ 		return limits->min;
 
 
