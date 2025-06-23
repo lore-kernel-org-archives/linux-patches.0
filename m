@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02230221545;
-	Mon, 23 Jun 2025 21:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F0E1EEA3C;
+	Mon, 23 Jun 2025 21:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713717; cv=none; b=ihGkTLDPB3CcJt1plKrFDyYPYCpmqOvHkRVyUttmGY9AK8ttJAsx/q+JuBlGNScfOP2xAu5uRw/maPwy/1y06XvTtXC20MbB4w+pnbFbWYPboGBclPb0EsDjd06wlnvtrjhgajU8NMxVBJlMsbIwTTL1dCrCoV1ptmqhBdWcr+E=
+	t=1750713719; cv=none; b=cypMiq1gpOTLRjqw68EZl2uqVoDb8flGFd/meSChnLg18siAzcjlQhgZfvzCnDfyg25ttRtkAyKC0Q2wf/iyGgfhm6wGvub96rG/8lqtilhJAdj9XN2IELs4kzbB/ciMc0iubn+ArpqaR7QHz02eFYiT/uYJGuRcM0pzV+TzaJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713717; c=relaxed/simple;
-	bh=+f9opYO3MNvb5GmTPRE1PA2ST3NmfprSRl8+J4yUKRU=;
+	s=arc-20240116; t=1750713719; c=relaxed/simple;
+	bh=VQR7TkmWa8GoMvx1FDk0k1t+wKA8ux731QKlviIl9ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNFZTCozFIyTWlyiYRv9ugJk7NPslMY9ze3faVVqwdnXzXR2qWc81UfxIUEZd+l3VvBhgzrDbVIFHXUJ8iBMvi++0TpK/F9/oaCnP6QeX4lgXYycRuCr4nYoA7rwcNjFNOFCSYPnp19FSkDhFuoNb5EUvIlwe2wm3lImNbSWlrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhiA9yBz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LgaVToQpjVG+3iscdKkdeTWLUtGqERDW41mEJBptxKsRr3Mqs0N7onr6asrOora9C1P0wACe3pC8uNDediAoIxdcSvN7kgkyMJ3EqMyPu2l/rfxDM8XNV+f8W7X2ebptKy+x/Vu9kInDlNajO761sFf/2q8BqS5M+wBKi1RAxuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvghKf/c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhiA9yBz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E91C4CEEA;
-	Mon, 23 Jun 2025 21:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvghKf/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1B6C4CEEA;
+	Mon, 23 Jun 2025 21:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713716;
-	bh=+f9opYO3MNvb5GmTPRE1PA2ST3NmfprSRl8+J4yUKRU=;
+	s=korg; t=1750713719;
+	bh=VQR7TkmWa8GoMvx1FDk0k1t+wKA8ux731QKlviIl9ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhiA9yBzCbFfQYmTK2V0nDiOiaecjCwhF/xj0HCAAh5183JPUt2O3LsSqaYsb6KLf
-	 fuGmdxfZ2aBksE3V9mzBBVfbPLIXMXPnYXs0DYj/GbzgD2f03lcmObSNIwPkcJghVr
-	 Stf6L5Z0XoGUiKfPp21l2XhFXd2DKmvl41N+ZfVE=
+	b=gvghKf/cvxyF1yJOmL+WU1o4qTFjJxt4l7zblboBG2bst4fhJMfyQvXz9ogyM7N9Q
+	 DAfaTzzbUnC+XaHAkpqOZ3HXMT7E+0zkpFQrkUw/zo4HopmYQrE84nTTlaARoixgP7
+	 9MqmvbBDprTklBV9tU/TokLmGsffuSv1Fp9wKP0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 059/414] media: omap3isp: use sgtable-based scatterlist wrappers
-Date: Mon, 23 Jun 2025 15:03:16 +0200
-Message-ID: <20250623130643.550202771@linuxfoundation.org>
+	Dian-Syuan Yang <dian_syuan0116@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 343/592] wifi: rtw89: leave idle mode when setting WEP encryption for AP mode
+Date: Mon, 23 Jun 2025 15:05:01 +0200
+Message-ID: <20250623130708.609488486@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,76 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
 
-commit 3de572fe2189a4a0bd80295e1f478401e739498e upstream.
+[ Upstream commit d105652b33245162867ac769bea336976e67efb8 ]
 
-Use common wrappers operating directly on the struct sg_table objects to
-fix incorrect use of scatterlists sync calls. dma_sync_sg_for_*()
-functions have to be called with the number of elements originally passed
-to dma_map_sg_*() function, not the one returned in sgtable's nents.
+Due to mac80211 triggering the hardware to enter idle mode, it fails
+to install WEP key causing connected station can't ping successfully.
+Currently, it forces the hardware to leave idle mode before driver
+adding WEP keys.
 
-Fixes: d33186d0be18 ("[media] omap3isp: ccdc: Use the DMA API for LSC")
-Fixes: 0e24e90f2ca7 ("[media] omap3isp: stat: Use the DMA API")
-CC: stable@vger.kernel.org
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250507031203.8256-1-pkshih@realtek.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/ti/omap3isp/ispccdc.c |    8 ++++----
- drivers/media/platform/ti/omap3isp/ispstat.c |    6 ++----
- 2 files changed, 6 insertions(+), 8 deletions(-)
+ drivers/net/wireless/realtek/rtw89/cam.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/platform/ti/omap3isp/ispccdc.c
-+++ b/drivers/media/platform/ti/omap3isp/ispccdc.c
-@@ -446,8 +446,8 @@ static int ccdc_lsc_config(struct isp_cc
- 		if (ret < 0)
- 			goto done;
+diff --git a/drivers/net/wireless/realtek/rtw89/cam.c b/drivers/net/wireless/realtek/rtw89/cam.c
+index eca3d767ff603..bc6f799e291e8 100644
+--- a/drivers/net/wireless/realtek/rtw89/cam.c
++++ b/drivers/net/wireless/realtek/rtw89/cam.c
+@@ -6,6 +6,7 @@
+ #include "debug.h"
+ #include "fw.h"
+ #include "mac.h"
++#include "ps.h"
  
--		dma_sync_sg_for_cpu(isp->dev, req->table.sgt.sgl,
--				    req->table.sgt.nents, DMA_TO_DEVICE);
-+		dma_sync_sgtable_for_cpu(isp->dev, &req->table.sgt,
-+					 DMA_TO_DEVICE);
+ static struct sk_buff *
+ rtw89_cam_get_sec_key_cmd(struct rtw89_dev *rtwdev,
+@@ -471,9 +472,11 @@ int rtw89_cam_sec_key_add(struct rtw89_dev *rtwdev,
  
- 		if (copy_from_user(req->table.addr, config->lsc,
- 				   req->config.size)) {
-@@ -455,8 +455,8 @@ static int ccdc_lsc_config(struct isp_cc
- 			goto done;
- 		}
- 
--		dma_sync_sg_for_device(isp->dev, req->table.sgt.sgl,
--				       req->table.sgt.nents, DMA_TO_DEVICE);
-+		dma_sync_sgtable_for_device(isp->dev, &req->table.sgt,
-+					    DMA_TO_DEVICE);
- 	}
- 
- 	spin_lock_irqsave(&ccdc->lsc.req_lock, flags);
---- a/drivers/media/platform/ti/omap3isp/ispstat.c
-+++ b/drivers/media/platform/ti/omap3isp/ispstat.c
-@@ -161,8 +161,7 @@ static void isp_stat_buf_sync_for_device
- 	if (ISP_STAT_USES_DMAENGINE(stat))
- 		return;
- 
--	dma_sync_sg_for_device(stat->isp->dev, buf->sgt.sgl,
--			       buf->sgt.nents, DMA_FROM_DEVICE);
-+	dma_sync_sgtable_for_device(stat->isp->dev, &buf->sgt, DMA_FROM_DEVICE);
- }
- 
- static void isp_stat_buf_sync_for_cpu(struct ispstat *stat,
-@@ -171,8 +170,7 @@ static void isp_stat_buf_sync_for_cpu(st
- 	if (ISP_STAT_USES_DMAENGINE(stat))
- 		return;
- 
--	dma_sync_sg_for_cpu(stat->isp->dev, buf->sgt.sgl,
--			    buf->sgt.nents, DMA_FROM_DEVICE);
-+	dma_sync_sgtable_for_cpu(stat->isp->dev, &buf->sgt, DMA_FROM_DEVICE);
- }
- 
- static void isp_stat_buf_clear(struct ispstat *stat)
+ 	switch (key->cipher) {
+ 	case WLAN_CIPHER_SUITE_WEP40:
++		rtw89_leave_ips_by_hwflags(rtwdev);
+ 		hw_key_type = RTW89_SEC_KEY_TYPE_WEP40;
+ 		break;
+ 	case WLAN_CIPHER_SUITE_WEP104:
++		rtw89_leave_ips_by_hwflags(rtwdev);
+ 		hw_key_type = RTW89_SEC_KEY_TYPE_WEP104;
+ 		break;
+ 	case WLAN_CIPHER_SUITE_TKIP:
+-- 
+2.39.5
+
 
 
