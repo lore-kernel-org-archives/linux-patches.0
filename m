@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8384C1DF98B;
-	Mon, 23 Jun 2025 21:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D2E202983;
+	Mon, 23 Jun 2025 21:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713226; cv=none; b=I54ot3r7SPO1HFBT7Gjxs4dqWYlln0DP1c3jNVdukgBRk8ISmL2+Ei71TSqG3kEaxZ9i5uBBG9TnSe904LPKBWyJOUGoBidLEKHeH6QXH406CRIJklo535q6K/F0WkHS2ETzlkMpSXv1V7ZXyYYJNPCxW9NDoAXzUUUA8CtZSc8=
+	t=1750713229; cv=none; b=UEC+601AS5slMDurm/81m9spJprACZirqHZTIhhtJb6M1VxYwDm4p5Vk/6a+xEINFGX7FCQkBtf+KMMQP+Mb14j/nkQJrLKL//+LvzdGor8/yEzdjUQw38uYJd7exS3jHFmBt22+owgK+Z+z7uqzBVLT7HHxc+KcpA7VmcXgep8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713226; c=relaxed/simple;
-	bh=xBr224TaNc/D1iBDAkGcAPHLkAMKlPwPcnLYLcdTJMQ=;
+	s=arc-20240116; t=1750713229; c=relaxed/simple;
+	bh=6Yep8TWqonM1mZ4XERMCmf6wSqMKox9w4Dvu33Q2Msk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qvfrhuqaQZOM/hNWIBcSXdq7D2XrXMrT+Hu2jC28MgVx29/cqk2HpjKVBgEctLPBv72bTSjGeYKBx9Fxxz9MjlscILm5VWVHiPf9r2yjaBKwVdK3uKnSQkIvmvCLhWsVNo4TYTL2cSx2FOssVO/alm5X8ZrxSu1LrxvrIS0xuyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQMGbXdN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m2G84cUDM0Rom+eaVnVbvztL9Z0e2hI5WWs5wmHIBnwzW0VTmh8rIk5u5AIibtcVejirItfTGOsGbclRQSRZNIst+BhtJdu61XomCoUkImf9rNCnFNG/3dZxvVtFIG+xx1/CRDIwxDwjnioipltrvrENNqJfSilVz7FHaQIhS2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHoUIZ2K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQMGbXdN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A941C4CEEA;
-	Mon, 23 Jun 2025 21:13:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHoUIZ2K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80239C4CEEA;
+	Mon, 23 Jun 2025 21:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713226;
-	bh=xBr224TaNc/D1iBDAkGcAPHLkAMKlPwPcnLYLcdTJMQ=;
+	s=korg; t=1750713228;
+	bh=6Yep8TWqonM1mZ4XERMCmf6wSqMKox9w4Dvu33Q2Msk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQMGbXdNunOFUE2w0d5Lz/pRZKcj3uGbI2K+zigBaLEa5vP30pvs5yVJPfcKvdx+f
-	 /B1TSEdHeRG89f3FMyZOFf0PnlnurGZ2MYDZG6/97mEDjEmZix6BxwrlQeGFUkq3e/
-	 6tnVJvD1dJMUCk79OxxvrFHCb3LRegue1pxJCY0A=
+	b=PHoUIZ2KUCU2r3KhEgiJZJ5Gpw7rcnqEgfsyjX8p1joEKW2bBAliZRlFh+tNyyvad
+	 QREtT0JeZEdnrLZpWJBHnMC1ogRaSVV4KMy152QnmKt1/93hFGFEDhFZPXvBk7apCc
+	 t8illerfZzoH9nbwhxgFUdf9EPQg7XV5XG7otDUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Sears <sjs@hammerspace.com>,
-	Jakub Kacinski <kuba@kernel.org>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>
-Subject: [PATCH 6.12 033/414] SUNRPC: Prevent hang on NFS mount with xprtsec=[m]tls
-Date: Mon, 23 Jun 2025 15:02:50 +0200
-Message-ID: <20250623130642.855638549@linuxfoundation.org>
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 085/508] wifi: rtw88: fix the para buffer size to avoid reading out of bounds
+Date: Mon, 23 Jun 2025 15:02:10 +0200
+Message-ID: <20250623130647.334496794@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,62 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-commit 0bd2f6b8996d4f1ca4573652454987826730a04a upstream.
+[ Upstream commit 4c2c372de2e108319236203cce6de44d70ae15cd ]
 
-Engineers at Hammerspace noticed that sometimes mounting with
-"xprtsec=tls" hangs for a minute or so, and then times out, even
-when the NFS server is reachable and responsive.
+Set the size to 6 instead of 2, since 'para' array is passed to
+'rtw_fw_bt_wifi_control(rtwdev, para[0], &para[1])', which reads
+5 bytes:
 
-kTLS shuts off data_ready callbacks if strp->msg_ready is set to
-mitigate data_ready callbacks when a full TLS record is not yet
-ready to be read from the socket.
+void rtw_fw_bt_wifi_control(struct rtw_dev *rtwdev, u8 op_code, u8 *data)
+{
+    ...
+    SET_BT_WIFI_CONTROL_DATA1(h2c_pkt, *data);
+    SET_BT_WIFI_CONTROL_DATA2(h2c_pkt, *(data + 1));
+    ...
+    SET_BT_WIFI_CONTROL_DATA5(h2c_pkt, *(data + 4));
 
-Normally msg_ready is clear when the first TLS record arrives on
-a socket. However, I observed that sometimes tls_setsockopt() sets
-strp->msg_ready, and that prevents forward progress because
-tls_data_ready() becomes a no-op.
-
-Moreover, Jakub says: "If there's a full record queued at the time
-when [tlshd] passes the socket back to the kernel, it's up to the
-reader to read the already queued data out." So SunRPC cannot
-expect a data_ready call when ingress data is already waiting.
-
-Add an explicit poll after SunRPC's upper transport is set up to
-pick up any data that arrived after the TLS handshake but before
-transport set-up is complete.
-
-Reported-by: Steve Sears <sjs@hammerspace.com>
-Suggested-by: Jakub Kacinski <kuba@kernel.org>
-Fixes: 75eb6af7acdf ("SUNRPC: Add a TCP-with-TLS RPC transport class")
-Tested-by: Mike Snitzer <snitzer@kernel.org>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Detected using the static analysis tool - Svace.
+Fixes: 4136214f7c46 ("rtw88: add BT co-existence support")
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250513121304.124141-1-aleksei.kodanev@bell-sw.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/realtek/rtw88/coex.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2743,6 +2743,11 @@ static void xs_tcp_tls_setup_socket(stru
- 	}
- 	rpc_shutdown_client(lower_clnt);
+diff --git a/drivers/net/wireless/realtek/rtw88/coex.c b/drivers/net/wireless/realtek/rtw88/coex.c
+index 8627ab0ce3bdf..1a9336c595c12 100644
+--- a/drivers/net/wireless/realtek/rtw88/coex.c
++++ b/drivers/net/wireless/realtek/rtw88/coex.c
+@@ -309,7 +309,7 @@ static void rtw_coex_tdma_timer_base(struct rtw_dev *rtwdev, u8 type)
+ {
+ 	struct rtw_coex *coex = &rtwdev->coex;
+ 	struct rtw_coex_stat *coex_stat = &coex->stat;
+-	u8 para[2] = {0};
++	u8 para[6] = {};
+ 	u8 times;
+ 	u16 tbtt_interval = coex_stat->wl_beacon_interval;
  
-+	/* Check for ingress data that arrived before the socket's
-+	 * ->data_ready callback was set up.
-+	 */
-+	xs_poll_check_readable(upper_transport);
-+
- out_unlock:
- 	current_restore_flags(pflags, PF_MEMALLOC);
- 	upper_transport->clnt = NULL;
+-- 
+2.39.5
+
 
 
