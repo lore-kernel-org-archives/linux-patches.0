@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C100E6136;
-	Mon, 23 Jun 2025 21:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D67819CC11;
+	Mon, 23 Jun 2025 21:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714664; cv=none; b=L6ekeK3yiuloBllDCh/k38jThiTYx9EzreSUcv5iHpQlhNXPSOsdmm0lg4oI1hNbkIl7vyWQkX0DhJ3WZUwOT2K+MmCr+8dsbsg2a+B1Sj+6Gjl1O8Nxm3CH6rLi14mq2WCJIIk9YZK7FC14AIMrQBr9wzttnJ3r/mgV7c/Eqj0=
+	t=1750714667; cv=none; b=d708TahMOu7K1QhrF5w2YSfjLdjAb5wG+ZeL6wRbkz7gJlgLb4a0V45dUlAEFwnFPdRtM4NB+8Ufa1HVH3i6og58fC5skhYIL3Xsfq2cfrmQNhCSUB3g3J85vbhPQzqSYQ0QUFyYK+8LV/YAejT7mTSQt/uQp34TtG5la6WtLMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714664; c=relaxed/simple;
-	bh=+fALVPS45Ji1d4efZYzPXEQuNeXNQjlgtD0YvKKKjlE=;
+	s=arc-20240116; t=1750714667; c=relaxed/simple;
+	bh=/qSccqiN5/++vvqwg0yMtgx0ozK9GNDAD5JkySrhU1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pKDyWriGnheJMpnBfu0UF3k4grJIi2xgE2HYmjhULgJZcqbbLb7ZWlXherx6nC9u9EzYLA5ZbF5af7NJaqTRRt2F3MiLrQY43lZFC2kmtSLRvN/s9rbWgXg2kLQNNPHVwqRDsHu0vEPvrIgq1ky4GG03i+X9DNT3xTUuLcko9uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbeWLE/h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l46/9jDTlzFaZVYeqIUfJ9Ud8Yk3OlrX9xlorR4sNWss2ZwOwXjfhiFmWf5r0zvdUXFVRnoZkk1I5ElZf7pVEugbNr/PT9q9Krexqb1pTcmlkEko4e3eO4fag5AFbxGZ7bAaOIYF0lCgsCxJe2nKxX5y/cDt2Q+eTGZD1H37J+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cj7b4P81; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbeWLE/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55472C4CEEA;
-	Mon, 23 Jun 2025 21:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cj7b4P81"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70A1C4CEEA;
+	Mon, 23 Jun 2025 21:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714664;
-	bh=+fALVPS45Ji1d4efZYzPXEQuNeXNQjlgtD0YvKKKjlE=;
+	s=korg; t=1750714667;
+	bh=/qSccqiN5/++vvqwg0yMtgx0ozK9GNDAD5JkySrhU1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wbeWLE/h9jTEFwrYcj5YCqph//5RYu6ZApDD2feXyHVAjj1Ty0qw677VQF8A4NSIz
-	 cMdnNUfJE/WViHdeUKg35RU9DhC7dKoWs4lgr+w8Kmv/r65AU1p7da/e5n9H0pOtuX
-	 ovTRRxBDVm0tmWwcK28FTfxreHsnNCNqaUXPl9qM=
+	b=Cj7b4P81dIIKUztdpFJpJla5h8WwIYr6NmDTaQkI8mAZKYobnNdVa68A/+UqAlufy
+	 UeFFQT2GXtmbiO0SpUIBOhM/t2L5P4nA4RKVv9xWkTmXevkMOmYvntW2HwasTaC3i9
+	 73I5Kz+e7yHo37n7FlbXeBh9W882+O9SnFzEaK4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rand Deeb <rand.sec96@gmail.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.15 408/592] ixgbe: Fix unreachable retry logic in combined and byte I2C write functions
-Date: Mon, 23 Jun 2025 15:06:06 +0200
-Message-ID: <20250623130710.141481918@linuxfoundation.org>
+	Dian-Syuan Yang <dian_syuan0116@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 151/290] wifi: rtw89: leave idle mode when setting WEP encryption for AP mode
+Date: Mon, 23 Jun 2025 15:06:52 +0200
+Message-ID: <20250623130631.438098383@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,57 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rand Deeb <rand.sec96@gmail.com>
+From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
 
-[ Upstream commit cdcb3804eeda24d588348bbab6766cf14fddbeaa ]
+[ Upstream commit d105652b33245162867ac769bea336976e67efb8 ]
 
-The current implementation of `ixgbe_write_i2c_combined_generic_int` and
-`ixgbe_write_i2c_byte_generic_int` sets `max_retry` to `1`, which makes
-the condition `retry < max_retry` always evaluate to `false`. This renders
-the retry mechanism ineffective, as the debug message and retry logic are
-never executed.
+Due to mac80211 triggering the hardware to enter idle mode, it fails
+to install WEP key causing connected station can't ping successfully.
+Currently, it forces the hardware to leave idle mode before driver
+adding WEP keys.
 
-This patch increases `max_retry` to `3` in both functions, aligning them
-with the retry logic in `ixgbe_read_i2c_combined_generic_int`. This
-ensures that the retry mechanism functions as intended, improving
-robustness in case of I2C write failures.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250507031203.8256-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/cam.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
-index 0a03a8bb5f886..2d54828bdfbbc 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
-@@ -167,7 +167,7 @@ int ixgbe_write_i2c_combined_generic_int(struct ixgbe_hw *hw, u8 addr,
- 					 u16 reg, u16 val, bool lock)
- {
- 	u32 swfw_mask = hw->phy.phy_semaphore_mask;
--	int max_retry = 1;
-+	int max_retry = 3;
- 	int retry = 0;
- 	u8 reg_high;
- 	u8 csum;
-@@ -2285,7 +2285,7 @@ static int ixgbe_write_i2c_byte_generic_int(struct ixgbe_hw *hw, u8 byte_offset,
- 					    u8 dev_addr, u8 data, bool lock)
- {
- 	u32 swfw_mask = hw->phy.phy_semaphore_mask;
--	u32 max_retry = 1;
-+	u32 max_retry = 3;
- 	u32 retry = 0;
- 	int status;
+diff --git a/drivers/net/wireless/realtek/rtw89/cam.c b/drivers/net/wireless/realtek/rtw89/cam.c
+index f5301c2bbf133..9a0ffaddb8360 100644
+--- a/drivers/net/wireless/realtek/rtw89/cam.c
++++ b/drivers/net/wireless/realtek/rtw89/cam.c
+@@ -6,6 +6,7 @@
+ #include "debug.h"
+ #include "fw.h"
+ #include "mac.h"
++#include "ps.h"
  
+ static struct sk_buff *
+ rtw89_cam_get_sec_key_cmd(struct rtw89_dev *rtwdev,
+@@ -333,9 +334,11 @@ int rtw89_cam_sec_key_add(struct rtw89_dev *rtwdev,
+ 
+ 	switch (key->cipher) {
+ 	case WLAN_CIPHER_SUITE_WEP40:
++		rtw89_leave_ips_by_hwflags(rtwdev);
+ 		hw_key_type = RTW89_SEC_KEY_TYPE_WEP40;
+ 		break;
+ 	case WLAN_CIPHER_SUITE_WEP104:
++		rtw89_leave_ips_by_hwflags(rtwdev);
+ 		hw_key_type = RTW89_SEC_KEY_TYPE_WEP104;
+ 		break;
+ 	case WLAN_CIPHER_SUITE_CCMP:
 -- 
 2.39.5
 
