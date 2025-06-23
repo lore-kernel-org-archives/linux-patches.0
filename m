@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BF9226D16;
-	Mon, 23 Jun 2025 22:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798571F7580;
+	Mon, 23 Jun 2025 22:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716828; cv=none; b=ur3tkcqRFOd2T6Expdbvwk/iI8uEgyo1PJZj8qnz8wzcQawqoKGJL9MVuxrF+BhtXvRfoLoEpjDdFGuXhB1LWuKuXh/B0AgLb2mRg1c2d/DYWignzgsjppBGeBAVkLmusoGkXhPPPXJRhx4zU3ImXV1dyfGlj05Tmu5nDPIvu1o=
+	t=1750716830; cv=none; b=BQmxkm3fCW61X+3VPw1jd3Tv1gW4oNIEBTCradD0PIT8x1X4kSKO9b6c8qgSptv0tLAInsPdZFtIrZM83YfBIM4TskHWSUt0OtT/3MZf3OwZ+GvG2V7JOckP6tytoDRt3kBqO4iL9YYBzPIXFrJFRK1ZC4AQ1m8hFERGaktNZwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716828; c=relaxed/simple;
-	bh=GlZ9yneoNTpDJumUuErplhJj+YMdPAAzIbR0vTRgtaw=;
+	s=arc-20240116; t=1750716830; c=relaxed/simple;
+	bh=LJCJTacA7TYWapd1/uk6+iLDP9HNq95QTDMTKn0HfyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6hlPmk9H+udUNZTTFmVR4aBlpFnaiHPhBVOCuIw4YysqLTVrspj8JBzHAJUe36HujX2cMgais5sxavk6s7rV8C5mqOu944kcEHEdrovPkAQGSBeOU3wGrLleDefiZp4Rgeb1LPotNHJtKCABaiAHNdV9a9Fly/+s4u0LXNoIp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSdFmCnZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H2fS0DUrbmO/j22I+F2KuORbSaDuRFf4O25CEhMHVaPk/PLif+YJZzM7E9RBFEN589643IUp3l8feRkA+P3tRv6RTvIgfk+vM4FGRMOfzcCcUZv71gSZcnGLHhP0S2IU67UQQ4d79a+Ktin95c6uG9UCTNe0hIyubJxWFl0IJIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ce7e/Zan; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSdFmCnZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E168C4CEEA;
-	Mon, 23 Jun 2025 22:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ce7e/Zan"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114E3C4CEEA;
+	Mon, 23 Jun 2025 22:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716827;
-	bh=GlZ9yneoNTpDJumUuErplhJj+YMdPAAzIbR0vTRgtaw=;
+	s=korg; t=1750716830;
+	bh=LJCJTacA7TYWapd1/uk6+iLDP9HNq95QTDMTKn0HfyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MSdFmCnZA7YrG/9cszBdgTTETTQ0q8SCi6bggTZgqJbVdf7RJE/dJC4tGMD3rB2KQ
-	 Rq/u6J7pGo6iUoVdGS/tFsGdVSBZvaotaBWV0wKiLZNAEIcnzplAHFL+E5odkmKc+f
-	 dLQ+TYTyu6fFbDai30fZh5YBH084PX7VeHeZx7Hc=
+	b=Ce7e/ZantNpNGbrYH1aQ9imQcJWDNxl8SeIY15T8yEaPt9ib60UO1ZIQRbsdKwJvQ
+	 cQC41lo5rCUjmv16rwLSx9lDCgtidgF59+VC7tFa1E4RGw8HMPjJobCMWupUGdRPN7
+	 OgywPusk9d4lMmBqhFnpT+ufU2fuH11AT3bZHZ3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Pu Lehui <pulehui@huawei.com>
-Subject: [PATCH 5.15 396/411] arm64: proton-pack: Add new CPUs k values for branch mitigation
-Date: Mon, 23 Jun 2025 15:09:00 +0200
-Message-ID: <20250623130643.647165645@linuxfoundation.org>
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Peng Fan <peng.fan@nxp.com>
+Subject: [PATCH 6.1 363/508] remoteproc: core: Cleanup acquired resources when rproc_handle_resources() fails in rproc_attach()
+Date: Mon, 23 Jun 2025 15:06:48 +0200
+Message-ID: <20250623130654.292796011@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +47,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Morse <james.morse@arm.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit efe676a1a7554219eae0b0dcfe1e0cdcc9ef9aef ]
+commit 7692c9fbedd9087dc9050903f58095915458d9b1 upstream.
 
-Update the list of 'k' values for the branch mitigation from arm's
-website.
+When rproc->state = RPROC_DETACHED and rproc_attach() is used
+to attach to the remote processor, if rproc_handle_resources()
+returns a failure, the resources allocated by imx_rproc_prepare()
+should be released, otherwise the following memory leak will occur.
 
-Add the values for Cortex-X1C. The MIDR_EL1 value can be found here:
-https://developer.arm.com/documentation/101968/0002/Register-descriptions/AArch>
+Since almost the same thing is done in imx_rproc_prepare() and
+rproc_resource_cleanup(), Function rproc_resource_cleanup() is able
+to deal with empty lists so it is better to fix the "goto" statements
+in rproc_attach(). replace the "unprepare_device" goto statement with
+"clean_up_resources" and get rid of the "unprepare_device" label.
 
-Link: https://developer.arm.com/documentation/110280/2-0/?lang=en
-Signed-off-by: James Morse <james.morse@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
+unreferenced object 0xffff0000861c5d00 (size 128):
+comm "kworker/u12:3", pid 59, jiffies 4294893509 (age 149.220s)
+hex dump (first 32 bytes):
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00 00 02 88 00 00 00 00 00 00 10 00 00 00 00 00 ............
+backtrace:
+ [<00000000f949fe18>] slab_post_alloc_hook+0x98/0x37c
+ [<00000000adbfb3e7>] __kmem_cache_alloc_node+0x138/0x2e0
+ [<00000000521c0345>] kmalloc_trace+0x40/0x158
+ [<000000004e330a49>] rproc_mem_entry_init+0x60/0xf8
+ [<000000002815755e>] imx_rproc_prepare+0xe0/0x180
+ [<0000000003f61b4e>] rproc_boot+0x2ec/0x528
+ [<00000000e7e994ac>] rproc_add+0x124/0x17c
+ [<0000000048594076>] imx_rproc_probe+0x4ec/0x5d4
+ [<00000000efc298a1>] platform_probe+0x68/0xd8
+ [<00000000110be6fe>] really_probe+0x110/0x27c
+ [<00000000e245c0ae>] __driver_probe_device+0x78/0x12c
+ [<00000000f61f6f5e>] driver_probe_device+0x3c/0x118
+ [<00000000a7874938>] __device_attach_driver+0xb8/0xf8
+ [<0000000065319e69>] bus_for_each_drv+0x84/0xe4
+ [<00000000db3eb243>] __device_attach+0xfc/0x18c
+ [<0000000072e4e1a4>] device_initial_probe+0x14/0x20
+
+Fixes: 10a3d4079eae ("remoteproc: imx_rproc: move memory parsing to rproc_ops")
+Suggested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250430092043.1819308-2-xiaolei.wang@windriver.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/cputype.h |    2 ++
- arch/arm64/kernel/proton-pack.c  |    1 +
- 2 files changed, 3 insertions(+)
+ drivers/remoteproc/remoteproc_core.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -81,6 +81,7 @@
- #define ARM_CPU_PART_CORTEX_A78AE	0xD42
- #define ARM_CPU_PART_CORTEX_X1		0xD44
- #define ARM_CPU_PART_CORTEX_A510	0xD46
-+#define ARM_CPU_PART_CORTEX_X1C		0xD4C
- #define ARM_CPU_PART_CORTEX_A520	0xD80
- #define ARM_CPU_PART_CORTEX_A710	0xD47
- #define ARM_CPU_PART_CORTEX_A715	0xD4D
-@@ -147,6 +148,7 @@
- #define MIDR_CORTEX_A78AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78AE)
- #define MIDR_CORTEX_X1	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1)
- #define MIDR_CORTEX_A510 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A510)
-+#define MIDR_CORTEX_X1C MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1C)
- #define MIDR_CORTEX_A520 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A520)
- #define MIDR_CORTEX_A710 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A710)
- #define MIDR_CORTEX_A715 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A715)
---- a/arch/arm64/kernel/proton-pack.c
-+++ b/arch/arm64/kernel/proton-pack.c
-@@ -891,6 +891,7 @@ static u8 spectre_bhb_loop_affected(void
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
-+		MIDR_ALL_VERSIONS(MIDR_CORTEX_X1C),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
- 		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -1615,7 +1615,7 @@ static int rproc_attach(struct rproc *rp
+ 	ret = rproc_set_rsc_table(rproc);
+ 	if (ret) {
+ 		dev_err(dev, "can't load resource table: %d\n", ret);
+-		goto unprepare_device;
++		goto clean_up_resources;
+ 	}
+ 
+ 	/* reset max_notifyid */
+@@ -1632,7 +1632,7 @@ static int rproc_attach(struct rproc *rp
+ 	ret = rproc_handle_resources(rproc, rproc_loading_handlers);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to process resources: %d\n", ret);
+-		goto unprepare_device;
++		goto clean_up_resources;
+ 	}
+ 
+ 	/* Allocate carveout resources associated to rproc */
+@@ -1651,7 +1651,6 @@ static int rproc_attach(struct rproc *rp
+ 
+ clean_up_resources:
+ 	rproc_resource_cleanup(rproc);
+-unprepare_device:
+ 	/* release HW resources if needed */
+ 	rproc_unprepare_device(rproc);
+ disable_iommu:
 
 
