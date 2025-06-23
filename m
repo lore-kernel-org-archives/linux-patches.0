@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6BBB676;
-	Mon, 23 Jun 2025 22:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C414FB676;
+	Mon, 23 Jun 2025 22:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716950; cv=none; b=gjpakA3sWy8JPZJfWP1noRyqNEmuX5VScO9x2H/GeaYv9K/icpfKTneL64nOLpqMQz/sHRhG7AEy47dAVW7tBrYuxdYcmuM+pV/JN+gcFcfjjsKLv3rJrXisbzeXF5GtJq2/zyFwCAeDz3kPY80cWBu2Pqr14+np1dCtPR8p3y8=
+	t=1750716952; cv=none; b=DhEeo7MPzujmuPiBDCZ/0U8L/2p+Gb/hfV5efcLkmfKj0hjHTLRWrcTJQ+lROimNBlQd30vw7QMl18xaREoinifNNz08Gv1+79xhy+Xtd3qA2o++p41nc3WFMI0uVz+RJv0Is0+WwqI9/CzUU07the1BIOQLYz9ck9V6ezrabIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716950; c=relaxed/simple;
-	bh=fzUuhfOL4gFuzirkjEiHvHn02oKsDjUwTX449t5caRI=;
+	s=arc-20240116; t=1750716952; c=relaxed/simple;
+	bh=uMD1aua5Bx4gTj60V2HB2kbCr4m0X49dju0tnsmOzUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RoK39f3pyb8uBVstDhiVWJaW+PMUHpkwxkLYfaxEBCdzQz1iy9bXnoTm/4iI5wO5Wd8i+mxxxachLKbrjz3w2cZNrA6xH0SfNZBZKLetz5rbslfJwAzGRK3CUDIEodBgKIvyIfZOkiexxinSZ6tgPX09kc3vsmButoV4Ol1PbFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EB4UyQzV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k2pK6ZmY44GY/fM3ehfFAKB5FHd1QTfuy4AZsXsvEA4c9Rqsrn9jynsoPllOm7wH9puwqzj8diA58J5hUgJ44FHziOrjpj1eORhHmRIUcU9KN8ypiS5SP65ostQlDKh+RBsdCO7zbickmK12yYuLBq5GpHdMCQcxk2Iy7KyA7HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgDOLyBo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EB4UyQzV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92EEC4CEEA;
-	Mon, 23 Jun 2025 22:15:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgDOLyBo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C003C4CEEA;
+	Mon, 23 Jun 2025 22:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716950;
-	bh=fzUuhfOL4gFuzirkjEiHvHn02oKsDjUwTX449t5caRI=;
+	s=korg; t=1750716952;
+	bh=uMD1aua5Bx4gTj60V2HB2kbCr4m0X49dju0tnsmOzUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EB4UyQzVS2F0f7jGAPdd4iX5nY7KfX5uSX6avL4Kln6fkHFjbv+I+oE3gP4a3w6Vn
-	 RewUxcdcgfm58U9ynWUViVYeypB0wCsmyFXsDLvoTjcBEXu3ax4heuWboJKjNDEAhq
-	 gywSdFepP6FjjLqHssfc9JnL+O8ucx6N65PAapV8=
+	b=xgDOLyBonAWerasDIyL3693qad+MlYVpPqSoHuIqHmaKUHUYAdMn3xlsA4jT9asaX
+	 +4uw2y2QQDyR+7RlRxLYlaCgEgSBLGJxW45I0Xo2hyh2met5WiuPjMxPVocqYeOuJ0
+	 wSwMJsYP7Jh57nvSFF/Phjjp1wFp/Sn2tlIBuQPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8b64dec3affaed7b3af5@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 381/411] net: atm: add lec_mutex
-Date: Mon, 23 Jun 2025 15:08:45 +0200
-Message-ID: <20250623130643.237512404@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 348/508] parisc: fix building with gcc-15
+Date: Mon, 23 Jun 2025 15:06:33 +0200
+Message-ID: <20250623130653.912522069@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,165 +46,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d13a3824bfd2b4774b671a75cf766a16637a0e67 ]
+commit 7cbb015e2d3d6f180256cde0c908eab21268e7b9 upstream.
 
-syzbot found its way in net/atm/lec.c, and found an error path
-in lecd_attach() could leave a dangling pointer in dev_lec[].
+The decompressor is built with the default C dialect, which is now gnu23
+on gcc-15, and this clashes with the kernel's bool type definition:
 
-Add a mutex to protect dev_lecp[] uses from lecd_attach(),
-lec_vcc_attach() and lec_mcast_attach().
+In file included from include/uapi/linux/posix_types.h:5,
+                 from arch/parisc/boot/compressed/misc.c:7:
+include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
+   11 |         false   = 0,
 
-Following patch will use this mutex for /proc/net/atm/lec.
+Add the -std=gnu11 argument here, as we do for all other architectures.
 
-BUG: KASAN: slab-use-after-free in lecd_attach net/atm/lec.c:751 [inline]
-BUG: KASAN: slab-use-after-free in lane_ioctl+0x2224/0x23e0 net/atm/lec.c:1008
-Read of size 8 at addr ffff88807c7b8e68 by task syz.1.17/6142
-
-CPU: 1 UID: 0 PID: 6142 Comm: syz.1.17 Not tainted 6.16.0-rc1-syzkaller-00239-g08215f5486ec #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:94 [inline]
-  dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
-  print_address_description mm/kasan/report.c:408 [inline]
-  print_report+0xcd/0x680 mm/kasan/report.c:521
-  kasan_report+0xe0/0x110 mm/kasan/report.c:634
-  lecd_attach net/atm/lec.c:751 [inline]
-  lane_ioctl+0x2224/0x23e0 net/atm/lec.c:1008
-  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
-  sock_do_ioctl+0x118/0x280 net/socket.c:1190
-  sock_ioctl+0x227/0x6b0 net/socket.c:1311
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:907 [inline]
-  __se_sys_ioctl fs/ioctl.c:893 [inline]
-  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-Allocated by task 6132:
-  kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
-  kasan_save_track+0x14/0x30 mm/kasan/common.c:68
-  poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
-  __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:394
-  kasan_kmalloc include/linux/kasan.h:260 [inline]
-  __do_kmalloc_node mm/slub.c:4328 [inline]
-  __kvmalloc_node_noprof+0x27b/0x620 mm/slub.c:5015
-  alloc_netdev_mqs+0xd2/0x1570 net/core/dev.c:11711
-  lecd_attach net/atm/lec.c:737 [inline]
-  lane_ioctl+0x17db/0x23e0 net/atm/lec.c:1008
-  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
-  sock_do_ioctl+0x118/0x280 net/socket.c:1190
-  sock_ioctl+0x227/0x6b0 net/socket.c:1311
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:907 [inline]
-  __se_sys_ioctl fs/ioctl.c:893 [inline]
-  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 6132:
-  kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
-  kasan_save_track+0x14/0x30 mm/kasan/common.c:68
-  kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:576
-  poison_slab_object mm/kasan/common.c:247 [inline]
-  __kasan_slab_free+0x51/0x70 mm/kasan/common.c:264
-  kasan_slab_free include/linux/kasan.h:233 [inline]
-  slab_free_hook mm/slub.c:2381 [inline]
-  slab_free mm/slub.c:4643 [inline]
-  kfree+0x2b4/0x4d0 mm/slub.c:4842
-  free_netdev+0x6c5/0x910 net/core/dev.c:11892
-  lecd_attach net/atm/lec.c:744 [inline]
-  lane_ioctl+0x1ce8/0x23e0 net/atm/lec.c:1008
-  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
-  sock_do_ioctl+0x118/0x280 net/socket.c:1190
-  sock_ioctl+0x227/0x6b0 net/socket.c:1311
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:907 [inline]
-  __se_sys_ioctl fs/ioctl.c:893 [inline]
-  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+8b64dec3affaed7b3af5@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6852c6f6.050a0220.216029.0018.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250618140844.1686882-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/atm/lec.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/parisc/boot/compressed/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/atm/lec.c b/net/atm/lec.c
-index ca9952c52fb5c..3f67b84c8f1c9 100644
---- a/net/atm/lec.c
-+++ b/net/atm/lec.c
-@@ -124,6 +124,7 @@ static unsigned char bus_mac[ETH_ALEN] = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
+--- a/arch/parisc/boot/compressed/Makefile
++++ b/arch/parisc/boot/compressed/Makefile
+@@ -22,6 +22,7 @@ KBUILD_CFLAGS += -fno-PIE -mno-space-reg
+ ifndef CONFIG_64BIT
+ KBUILD_CFLAGS += -mfast-indirect-calls
+ endif
++KBUILD_CFLAGS += -std=gnu11
  
- /* Device structures */
- static struct net_device *dev_lec[MAX_LEC_ITF];
-+static DEFINE_MUTEX(lec_mutex);
- 
- #if IS_ENABLED(CONFIG_BRIDGE)
- static void lec_handle_bridge(struct sk_buff *skb, struct net_device *dev)
-@@ -687,6 +688,7 @@ static int lec_vcc_attach(struct atm_vcc *vcc, void __user *arg)
- 	int bytes_left;
- 	struct atmlec_ioc ioc_data;
- 
-+	lockdep_assert_held(&lec_mutex);
- 	/* Lecd must be up in this case */
- 	bytes_left = copy_from_user(&ioc_data, arg, sizeof(struct atmlec_ioc));
- 	if (bytes_left != 0)
-@@ -712,6 +714,7 @@ static int lec_vcc_attach(struct atm_vcc *vcc, void __user *arg)
- 
- static int lec_mcast_attach(struct atm_vcc *vcc, int arg)
- {
-+	lockdep_assert_held(&lec_mutex);
- 	if (arg < 0 || arg >= MAX_LEC_ITF)
- 		return -EINVAL;
- 	arg = array_index_nospec(arg, MAX_LEC_ITF);
-@@ -727,6 +730,7 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
- 	int i;
- 	struct lec_priv *priv;
- 
-+	lockdep_assert_held(&lec_mutex);
- 	if (arg < 0)
- 		arg = 0;
- 	if (arg >= MAX_LEC_ITF)
-@@ -744,6 +748,7 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
- 		snprintf(dev_lec[i]->name, IFNAMSIZ, "lec%d", i);
- 		if (register_netdev(dev_lec[i])) {
- 			free_netdev(dev_lec[i]);
-+			dev_lec[i] = NULL;
- 			return -EINVAL;
- 		}
- 
-@@ -1005,6 +1010,7 @@ static int lane_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 		return -ENOIOCTLCMD;
- 	}
- 
-+	mutex_lock(&lec_mutex);
- 	switch (cmd) {
- 	case ATMLEC_CTRL:
- 		err = lecd_attach(vcc, (int)arg);
-@@ -1019,6 +1025,7 @@ static int lane_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 		break;
- 	}
- 
-+	mutex_unlock(&lec_mutex);
- 	return err;
- }
- 
--- 
-2.39.5
-
+ LDFLAGS_vmlinux := -X -e startup --as-needed -T
+ $(obj)/vmlinux: $(obj)/vmlinux.lds $(addprefix $(obj)/, $(OBJECTS)) $(LIBGCC) FORCE
 
 
