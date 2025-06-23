@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFF94C7F;
-	Mon, 23 Jun 2025 13:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE0E242D90;
+	Mon, 23 Jun 2025 13:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685462; cv=none; b=YVVMDAkUgMY2x0nFz9Yh//x/ssndyuvg5XC+3cf+98EbstZQ1XtMZbKGaCcbALHojZHU/JcTXRbEC3G6iJF5WffXNCPlp391cvc93HiQ3pemNXY7BKzBSU50/KdWgBf2FJ/UqcySSzwwHucQtFmtVlxlzYc7yPB0UwsOhzjWfC8=
+	t=1750685465; cv=none; b=LrcXEadd2fK1OWa+eHRwZCmQKL7KHB5oWIlJYxQs/gFb88+biFHq7RdZ1iIS/cQhG3grKbDSs3gT5vH+FhQ8AH80f33Z0BR96KRZv8JH09fiUQkMVdV8e+2bKNQgd0F6M6lL1dyxYO9JqsJmWHNydcJg2p5hLUoqOXQTEZJoxfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685462; c=relaxed/simple;
-	bh=Wp7aTzOd6p6oXJHevi5UwZ7MS7HTcYwci3sIsVwKcDA=;
+	s=arc-20240116; t=1750685465; c=relaxed/simple;
+	bh=xV6Rq1BPmwALaEKOx7xfx2UhR2QJIiYs686RpJozJHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ifp2SEYSzIBubOBjbT9h09I3YrE7cTluD7X9Cf4w1Iq8FEzI1leNLM5OAVAJkmfxxdNnA/CSBLy0H5HEfbupR1yHMGa61NsjQdlLVZWWt2uKwwJhEVus9tYLODgPXQxYSEQJehzYYUI7t4/5BKtEusjN47FZnpJHok3Qv4iDrR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEA4/Tb8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RxM4kpyz6TADCR+qU7wOFoae0AtzY2RgMJ6fEBSah4ZqLuKtI2oVO/i7fSSZpwjpoRR4ARkHOYcdodyaK9zPK3NzPO7wYcDI/yVdqOQgRjnWiWpomzXIaQG+ypU7Xxw2+rc2RZ8hKmwTHl2jI1q2Z07tzeQ3Fljh9MFPQqs1r+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/hJCqYf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEA4/Tb8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64409C4CEEA;
-	Mon, 23 Jun 2025 13:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/hJCqYf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA18C4CEEA;
+	Mon, 23 Jun 2025 13:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685462;
-	bh=Wp7aTzOd6p6oXJHevi5UwZ7MS7HTcYwci3sIsVwKcDA=;
+	s=korg; t=1750685465;
+	bh=xV6Rq1BPmwALaEKOx7xfx2UhR2QJIiYs686RpJozJHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TEA4/Tb8HIK0NC/D1gbsiTXTbvHg0cijQJEByrccmXj6cdy6B3RlqcEIHFY4anPkH
-	 JxJfFpEls+ZGEIa4PblT7mewDDr/qYE3lrdYlsHjdsIKaXAe4dz93E+/XUkSNBvFf1
-	 hTRAjXOvI17ZuY31nQHu9cQKBELEOB66MKOlwLSU=
+	b=i/hJCqYfiHY6otcUbDwcNIzxJKuJJZ5c3ErdvL6hZH3Z2A6SBI9ks2NCm3aSBQo3V
+	 EylwRB/T10QpW68wfgxCEaS3qQMyUEslRXoubWFa+e3l1RJr1DXBCLH+OJJyDVs5/z
+	 KwuGG8rHKBpas0ZYX9F/iQbjrKhrN7mQrW87AFfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	syzbot+a2b84e569d06ca3a949c@syzkaller.appspotmail.com,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Vasiliy Kulikov <segoon@openwall.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 121/222] ipc: fix to protect IPCS lookups using RCU
-Date: Mon, 23 Jun 2025 15:07:36 +0200
-Message-ID: <20250623130615.739079769@linuxfoundation.org>
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 033/508] ACPI: OSI: Stop advertising support for "3.0 _SCP Extensions"
+Date: Mon, 23 Jun 2025 15:01:18 +0200
+Message-ID: <20250623130646.061145708@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,58 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-commit d66adabe91803ef34a8b90613c81267b5ded1472 upstream.
+[ Upstream commit 8cf4fdac9bdead7bca15fc56fdecdf78d11c3ec6 ]
 
-syzbot reported that it discovered a use-after-free vulnerability, [0]
+As specified in section 5.7.2 of the ACPI specification the feature
+group string "3.0 _SCP Extensions" implies that the operating system
+evaluates the _SCP control method with additional parameters.
 
-[0]: https://lore.kernel.org/all/67af13f8.050a0220.21dd3.0038.GAE@google.com/
+However the ACPI thermal driver evaluates the _SCP control method
+without those additional parameters, conflicting with the above
+feature group string advertised to the firmware thru _OSI.
 
-idr_for_each() is protected by rwsem, but this is not enough.  If it is
-not protected by RCU read-critical region, when idr_for_each() calls
-radix_tree_node_free() through call_rcu() to free the radix_tree_node
-structure, the node will be freed immediately, and when reading the next
-node in radix_tree_for_each_slot(), the already freed memory may be read.
+Stop advertising support for this feature string to avoid confusing
+the ACPI firmware.
 
-Therefore, we need to add code to make sure that idr_for_each() is
-protected within the RCU read-critical region when we call it in
-shm_destroy_orphaned().
-
-Link: https://lkml.kernel.org/r/20250424143322.18830-1-aha310510@gmail.com
-Fixes: b34a6b1da371 ("ipc: introduce shm_rmid_forced sysctl")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Reported-by: syzbot+a2b84e569d06ca3a949c@syzkaller.appspotmail.com
-Cc: Jeongjun Park <aha310510@gmail.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Vasiliy Kulikov <segoon@openwall.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e5f660ebef68 ("ACPI / osi: Collect _OSI handling into one single file")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20250410165456.4173-2-W_Armin@gmx.de
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- ipc/shm.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/acpi/osi.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/ipc/shm.c
-+++ b/ipc/shm.c
-@@ -417,8 +417,11 @@ static int shm_try_destroy_orphaned(int
- void shm_destroy_orphaned(struct ipc_namespace *ns)
- {
- 	down_write(&shm_ids(ns).rwsem);
--	if (shm_ids(ns).in_use)
-+	if (shm_ids(ns).in_use) {
-+		rcu_read_lock();
- 		idr_for_each(&shm_ids(ns).ipcs_idr, &shm_try_destroy_orphaned, ns);
-+		rcu_read_unlock();
-+	}
- 	up_write(&shm_ids(ns).rwsem);
- }
+diff --git a/drivers/acpi/osi.c b/drivers/acpi/osi.c
+index d4405e1ca9b97..ae9620757865b 100644
+--- a/drivers/acpi/osi.c
++++ b/drivers/acpi/osi.c
+@@ -42,7 +42,6 @@ static struct acpi_osi_entry
+ osi_setup_entries[OSI_STRING_ENTRIES_MAX] __initdata = {
+ 	{"Module Device", true},
+ 	{"Processor Device", true},
+-	{"3.0 _SCP Extensions", true},
+ 	{"Processor Aggregator Device", true},
+ };
  
+-- 
+2.39.5
+
 
 
