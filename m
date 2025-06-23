@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5865222576;
-	Mon, 23 Jun 2025 22:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E057222576;
+	Mon, 23 Jun 2025 22:14:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716865; cv=none; b=SjNQUpY0B4R35CLNAxmO8cDIlmREpcPxpXXi6GM0OU+1Se8PK3tD3yEw7xfIe7G3SQZTdwgL+kbSg/BHsRh5P4vi2SrqeRqVvlv9fERLED3BJHSvBq83Vki4jhYdg58vkrcx9jqF05989/w9c/3VmJ7BvVaHuV7wDvmV3q5jH/I=
+	t=1750716867; cv=none; b=tDjofOvvRvxluxmzJ4KFI4pE6HPumigGNATQodxbMYYY8HJEJwVSiwPsc87DwQVtDnsGGvcTcStWU7exW94kZRXUJoJthNBanM8wu4L7Tlm9TovVEw4SmFdOjhvcOg14rWS0pwAf/v82Ve3X3Lrr2G5HxSPqrPWgorycfwPqqfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716865; c=relaxed/simple;
-	bh=DOEGl1mMLOH27NM4EvX0xaodoltD6FWm5+4w7mWQTAs=;
+	s=arc-20240116; t=1750716867; c=relaxed/simple;
+	bh=68hbiWBrtqEPHs4uxg/7C+3KwQnkynX/oRrFiOaBBHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R5VB67Ar7DrsIyJKBG/2GW4UPEJzaJWWg+nGfkjk4fHiMOTYPqze/xtlGCxqOejqlxHZD179II2Ibqm79h+OX3/XuWsG4S2OAuJomUoEkriA+JYU0CU3evwOrw+b4XtpAUjDo3hHGsp2nHY8E7EZ5Nm359r/DrVnw/LJqdmERVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/dHKWfx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OXaGIfxCo1RDMLfRpTGbfGzCJ7yOKW8Av1qxad//8BjB+iwXkkC4z3YKcBD4YXwxxkCfltV7OvZi5DGj8IYcv9vaNBCiwi3VSVG1IdTSI5mG19DgHf8On4+HqI+fHVOAmMZGq3l+vGbIPU1capyLj21s8En+Llb1aXirrhKlrqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTIThpNN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/dHKWfx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77281C4CEEA;
-	Mon, 23 Jun 2025 22:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTIThpNN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3971C4CEEA;
+	Mon, 23 Jun 2025 22:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716864;
-	bh=DOEGl1mMLOH27NM4EvX0xaodoltD6FWm5+4w7mWQTAs=;
+	s=korg; t=1750716867;
+	bh=68hbiWBrtqEPHs4uxg/7C+3KwQnkynX/oRrFiOaBBHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q/dHKWfx7i/8CNF51BdMEiXWJr5TWumVA9PcMhDtcAlRvNmvS2km5h6dfeXb3VS5y
-	 +pYRs4wlKQF7nKb2a2MTu0HI910nm2xmBmIbBhLOliNUYohL0FiuTedfsOe7qd380U
-	 IkzPVEtXlxTdD2fjGVg8w8PpKx1e3evR845vm5tQ=
+	b=QTIThpNNQwb6Bb2PUEWHN7iqsv2B84GJYfQ9uqWiMNFZtA9t5xE83VQIfVeWofTnW
+	 nLE8z0M/okasMPqadeLCdS3+9+R7C7VsUh8YPnjXH4xQjYsza/erZ4wrUWcYdl0g+d
+	 v01Fxu7+21baZEkUofkHJJoFbCk/JQT5OMp4N9JM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kumar <krikku@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 5.15 373/411] net: ice: Perform accurate aRFS flow match
-Date: Mon, 23 Jun 2025 15:08:37 +0200
-Message-ID: <20250623130643.032227125@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.1 340/508] f2fs: prevent kernel warning due to negative i_nlink from corrupted image
+Date: Mon, 23 Jun 2025 15:06:25 +0200
+Message-ID: <20250623130653.703811486@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,162 +46,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krishna Kumar <krikku@gmail.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit 5d3bc9e5e725aa36cca9b794e340057feb6880b4 ]
+commit 42cb74a92adaf88061039601ddf7c874f58b554e upstream.
 
-This patch fixes an issue seen in a large-scale deployment under heavy
-incoming pkts where the aRFS flow wrongly matches a flow and reprograms the
-NIC with wrong settings. That mis-steering causes RX-path latency spikes
-and noisy neighbor effects when many connections collide on the same
-hash (some of our production servers have 20-30K connections).
+WARNING: CPU: 1 PID: 9426 at fs/inode.c:417 drop_nlink+0xac/0xd0
+home/cc/linux/fs/inode.c:417
+Modules linked in:
+CPU: 1 UID: 0 PID: 9426 Comm: syz-executor568 Not tainted
+6.14.0-12627-g94d471a4f428 #2 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.13.0-1ubuntu1.1 04/01/2014
+RIP: 0010:drop_nlink+0xac/0xd0 home/cc/linux/fs/inode.c:417
+Code: 48 8b 5d 28 be 08 00 00 00 48 8d bb 70 07 00 00 e8 f9 67 e6 ff
+f0 48 ff 83 70 07 00 00 5b 5d e9 9a 12 82 ff e8 95 12 82 ff 90
+&lt;0f&gt; 0b 90 c7 45 48 ff ff ff ff 5b 5d e9 83 12 82 ff e8 fe 5f e6
+ff
+RSP: 0018:ffffc900026b7c28 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff8239710f
+RDX: ffff888041345a00 RSI: ffffffff8239717b RDI: 0000000000000005
+RBP: ffff888054509ad0 R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000000000000 R11: ffffffff9ab36f08 R12: ffff88804bb40000
+R13: ffff8880545091e0 R14: 0000000000008000 R15: ffff8880545091e0
+FS:  000055555d0c5880(0000) GS:ffff8880eb3e3000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f915c55b178 CR3: 0000000050d20000 CR4: 0000000000352ef0
+Call Trace:
+ <task>
+ f2fs_i_links_write home/cc/linux/fs/f2fs/f2fs.h:3194 [inline]
+ f2fs_drop_nlink+0xd1/0x3c0 home/cc/linux/fs/f2fs/dir.c:845
+ f2fs_delete_entry+0x542/0x1450 home/cc/linux/fs/f2fs/dir.c:909
+ f2fs_unlink+0x45c/0x890 home/cc/linux/fs/f2fs/namei.c:581
+ vfs_unlink+0x2fb/0x9b0 home/cc/linux/fs/namei.c:4544
+ do_unlinkat+0x4c5/0x6a0 home/cc/linux/fs/namei.c:4608
+ __do_sys_unlink home/cc/linux/fs/namei.c:4654 [inline]
+ __se_sys_unlink home/cc/linux/fs/namei.c:4652 [inline]
+ __x64_sys_unlink+0xc5/0x110 home/cc/linux/fs/namei.c:4652
+ do_syscall_x64 home/cc/linux/arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xc7/0x250 home/cc/linux/arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fb3d092324b
+Code: 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48 83 c8 ff c3 66
+2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa b8 57 00 00 00 0f 05
+&lt;48&gt; 3d 01 f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01
+48
+RSP: 002b:00007ffdc232d938 EFLAGS: 00000206 ORIG_RAX: 0000000000000057
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fb3d092324b
+RDX: 00007ffdc232d960 RSI: 00007ffdc232d960 RDI: 00007ffdc232d9f0
+RBP: 00007ffdc232d9f0 R08: 0000000000000001 R09: 00007ffdc232d7c0
+R10: 00000000fffffffd R11: 0000000000000206 R12: 00007ffdc232eaf0
+R13: 000055555d0cebb0 R14: 00007ffdc232d958 R15: 0000000000000001
+ </task>
 
-set_rps_cpu() calls ndo_rx_flow_steer() with flow_id that is calculated by
-hashing the skb sized by the per rx-queue table size. This results in
-multiple connections (even across different rx-queues) getting the same
-hash value. The driver steer function modifies the wrong flow to use this
-rx-queue, e.g.: Flow#1 is first added:
-    Flow#1:  <ip1, port1, ip2, port2>, Hash 'h', q#10
-
-Later when a new flow needs to be added:
-	    Flow#2:  <ip3, port3, ip4, port4>, Hash 'h', q#20
-
-The driver finds the hash 'h' from Flow#1 and updates it to use q#20. This
-results in both flows getting un-optimized - packets for Flow#1 goes to
-q#20, and then reprogrammed back to q#10 later and so on; and Flow #2
-programming is never done as Flow#1 is matched first for all misses. Many
-flows may wrongly share the same hash and reprogram rules of the original
-flow each with their own q#.
-
-Tested on two 144-core servers with 16K netperf sessions for 180s. Netperf
-clients are pinned to cores 0-71 sequentially (so that wrong packets on q#s
-72-143 can be measured). IRQs are set 1:1 for queues -> CPUs, enable XPS,
-enable aRFS (global value is 144 * rps_flow_cnt).
-
-Test notes about results from ice_rx_flow_steer():
----------------------------------------------------
-1. "Skip:" counter increments here:
-    if (fltr_info->q_index == rxq_idx ||
-	arfs_entry->fltr_state != ICE_ARFS_ACTIVE)
-	    goto out;
-2. "Add:" counter increments here:
-    ret = arfs_entry->fltr_info.fltr_id;
-    INIT_HLIST_NODE(&arfs_entry->list_entry);
-3. "Update:" counter increments here:
-    /* update the queue to forward to on an already existing flow */
-
-Runtime comparison: original code vs with the patch for different
-rps_flow_cnt values.
-
-+-------------------------------+--------------+--------------+
-| rps_flow_cnt                  |      512     |    2048      |
-+-------------------------------+--------------+--------------+
-| Ratio of Pkts on Good:Bad q's | 214 vs 822K  | 1.1M vs 980K |
-| Avoid wrong aRFS programming  | 0 vs 310K    | 0 vs 30K     |
-| CPU User                      | 216 vs 183   | 216 vs 206   |
-| CPU System                    | 1441 vs 1171 | 1447 vs 1320 |
-| CPU Softirq                   | 1245 vs 920  | 1238 vs 961  |
-| CPU Total                     | 29 vs 22.7   | 29 vs 24.9   |
-| aRFS Update                   | 533K vs 59   | 521K vs 32   |
-| aRFS Skip                     | 82M vs 77M   | 7.2M vs 4.5M |
-+-------------------------------+--------------+--------------+
-
-A separate TCP_STREAM and TCP_RR with 1,4,8,16,64,128,256,512 connections
-showed no performance degradation.
-
-Some points on the patch/aRFS behavior:
-1. Enabling full tuple matching ensures flows are always correctly matched,
-   even with smaller hash sizes.
-2. 5-6% drop in CPU utilization as the packets arrive at the correct CPUs
-   and fewer calls to driver for programming on misses.
-3. Larger hash tables reduces mis-steering due to more unique flow hashes,
-   but still has clashes. However, with larger per-device rps_flow_cnt, old
-   flows take more time to expire and new aRFS flows cannot be added if h/w
-   limits are reached (rps_may_expire_flow() succeeds when 10*rps_flow_cnt
-   pkts have been processed by this cpu that are not part of the flow).
-
-Fixes: 28bf26724fdb0 ("ice: Implement aRFS")
-Signed-off-by: Krishna Kumar <krikku@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_arfs.c | 48 +++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ fs/f2fs/namei.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_arfs.c b/drivers/net/ethernet/intel/ice/ice_arfs.c
-index 760783f0efe18..8bef1f52515f3 100644
---- a/drivers/net/ethernet/intel/ice/ice_arfs.c
-+++ b/drivers/net/ethernet/intel/ice/ice_arfs.c
-@@ -376,6 +376,50 @@ ice_arfs_is_perfect_flow_set(struct ice_hw *hw, __be16 l3_proto, u8 l4_proto)
- 	return false;
- }
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -550,6 +550,15 @@ static int f2fs_unlink(struct inode *dir
+ 		goto fail;
+ 	}
  
-+/**
-+ * ice_arfs_cmp - Check if aRFS filter matches this flow.
-+ * @fltr_info: filter info of the saved ARFS entry.
-+ * @fk: flow dissector keys.
-+ * @n_proto:  One of htons(ETH_P_IP) or htons(ETH_P_IPV6).
-+ * @ip_proto: One of IPPROTO_TCP or IPPROTO_UDP.
-+ *
-+ * Since this function assumes limited values for n_proto and ip_proto, it
-+ * is meant to be called only from ice_rx_flow_steer().
-+ *
-+ * Return:
-+ * * true	- fltr_info refers to the same flow as fk.
-+ * * false	- fltr_info and fk refer to different flows.
-+ */
-+static bool
-+ice_arfs_cmp(const struct ice_fdir_fltr *fltr_info, const struct flow_keys *fk,
-+	     __be16 n_proto, u8 ip_proto)
-+{
-+	/* Determine if the filter is for IPv4 or IPv6 based on flow_type,
-+	 * which is one of ICE_FLTR_PTYPE_NONF_IPV{4,6}_{TCP,UDP}.
-+	 */
-+	bool is_v4 = fltr_info->flow_type == ICE_FLTR_PTYPE_NONF_IPV4_TCP ||
-+		     fltr_info->flow_type == ICE_FLTR_PTYPE_NONF_IPV4_UDP;
++	if (unlikely(inode->i_nlink == 0)) {
++		f2fs_warn(F2FS_I_SB(inode), "%s: inode (ino=%lx) has zero i_nlink",
++			  __func__, inode->i_ino);
++		err = -EFSCORRUPTED;
++		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
++		f2fs_put_page(page, 0);
++		goto fail;
++	}
 +
-+	/* Following checks are arranged in the quickest and most discriminative
-+	 * fields first for early failure.
-+	 */
-+	if (is_v4)
-+		return n_proto == htons(ETH_P_IP) &&
-+			fltr_info->ip.v4.src_port == fk->ports.src &&
-+			fltr_info->ip.v4.dst_port == fk->ports.dst &&
-+			fltr_info->ip.v4.src_ip == fk->addrs.v4addrs.src &&
-+			fltr_info->ip.v4.dst_ip == fk->addrs.v4addrs.dst &&
-+			fltr_info->ip.v4.proto == ip_proto;
-+
-+	return fltr_info->ip.v6.src_port == fk->ports.src &&
-+		fltr_info->ip.v6.dst_port == fk->ports.dst &&
-+		fltr_info->ip.v6.proto == ip_proto &&
-+		!memcmp(&fltr_info->ip.v6.src_ip, &fk->addrs.v6addrs.src,
-+			sizeof(struct in6_addr)) &&
-+		!memcmp(&fltr_info->ip.v6.dst_ip, &fk->addrs.v6addrs.dst,
-+			sizeof(struct in6_addr));
-+}
-+
- /**
-  * ice_rx_flow_steer - steer the Rx flow to where application is being run
-  * @netdev: ptr to the netdev being adjusted
-@@ -447,6 +491,10 @@ ice_rx_flow_steer(struct net_device *netdev, const struct sk_buff *skb,
- 			continue;
+ 	f2fs_balance_fs(sbi, true);
  
- 		fltr_info = &arfs_entry->fltr_info;
-+
-+		if (!ice_arfs_cmp(fltr_info, &fk, n_proto, ip_proto))
-+			continue;
-+
- 		ret = fltr_info->fltr_id;
- 
- 		if (fltr_info->q_index == rxq_idx ||
--- 
-2.39.5
-
+ 	f2fs_lock_op(sbi);
 
 
