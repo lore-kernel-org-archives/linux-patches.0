@@ -1,212 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41C6C2E0;
-	Mon, 23 Jun 2025 22:12:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52643226888
+	for <patches@lists.linux.dev>; Mon, 23 Jun 2025 22:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716750; cv=none; b=kIxOP46WCqvv/INMxVoV0EtchNPBWpM7HQHPRmmEiGVmqvtektFEN8YjRUFI52dgW/9N/YCPNHyPGcmOulhe0NUuj77DEVnExgYpsbhQZsBO3PGzfsLn6U35UbIy0YfP4SGrdQzwmedYQoBGQ1pkQPpCZiLFE7XLRuK1ctivT0c=
+	t=1750716751; cv=none; b=AaM2WbWW3BBCTvHgcXz/+ZCDRvxHz93nliuCIViUxe8LuUWyWgDzg+eJdV8SGpTPSUTYryLVaAK0/kfuKsAz+bb6GGwfr2RRcafxwBxAOopYQP57TNp0h30rY7syqRalUItJP4ae9XnKAG6EHuf7uU56D/QLFaTsMnvimClmA1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716750; c=relaxed/simple;
-	bh=UE+j3DZWlUSg88bDjaMg9p72NoCU76XLQa7rTXXSHBk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NMgQj0TzFnQuWtD5wRq5cO+R81Bw3JG6mfG9zjdHTUkzfM4KlAl5WaOqM5mPV3pFNEnWgwEn6ZK/4VGCWfRhjsL3pkTh4BdUSa0MMaXIS2RRNizGumGZrHd1DqSATO2plP/cGHSDtEtJYFLVDgkrirVqoSHg5RCuQWRiE04fPRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmGGM8Yi; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750716751; c=relaxed/simple;
+	bh=vX8V9d5czqB7qJFtk/cKvJmbgNp7qUz5USbg6t/IFEg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Sfev0LOdsLP+0vrC8/qogAfbzOKpqTyDGdwBLlek7koyyvsLDcdEzhgxQZiKt4SFckPaqVadNi/4sU7IDVzf02L8O6cGbpfcrK88S9BOjQXt4jz6d+avMtBOr1fab30EQTooc0cxvbbA7Ht51gnIHl+ruLZfgTD0NLMOxrZ3ChE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZGxATtxK; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmGGM8Yi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B456C4CEEA;
-	Mon, 23 Jun 2025 22:12:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716749;
-	bh=UE+j3DZWlUSg88bDjaMg9p72NoCU76XLQa7rTXXSHBk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mmGGM8YieR+I3Q4WhIWbjBR80LkbPwQMkDiIg5jbEUsd0/8Z2eQAyFVeq2tIcT3Au
-	 O87G/xhkWXwESfQ4MoBzIDORoGH65EadS/2+8smVL+jf3F2ACS8fir8fkwac3G2HAX
-	 AQt/pHiC6Rr5SROVgW+fi0a9223l2tYjnFbAryKM=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	syzbot+8b64dec3affaed7b3af5@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 552/592] net: atm: add lec_mutex
-Date: Mon, 23 Jun 2025 15:08:30 +0200
-Message-ID: <20250623130713.575396526@linuxfoundation.org>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZGxATtxK"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-74924255af4so2159254b3a.1
+        for <patches@lists.linux.dev>; Mon, 23 Jun 2025 15:12:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750716749; x=1751321549; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=rNNk9iay4TFsaR3oROHDPyt7j9eK6fHVYAQhw0ci6+U=;
+        b=ZGxATtxKxIlzX2/OnL7oSyJdGcjQhf/81Og+RvjwNOBZ5VnWwwAnP252Ki5zEODGsr
+         6TYmo7BZ08wUKaXivaFtve+QCL7AfSGcOuGnQNm+2iOMKv799ANAGrIvRhkko+8QE1Cg
+         M9BlRdtCTHZr/RzRthvbyQz3Tm6PAEaOAjTK+feE4EqYyoReEJL7+rvWVj4NA0wYCCLz
+         9M0O2z1fef/8PucQxhtx6sCWkWAAU9zofJADZwjagXkwP8uWeDgWU6W92ARkDAF3nvgF
+         HAFZJMdifx9Ym4dFdZHtTliyHcoSyzzlsA1esM2wQ3k3u04yl/VBtfavCD/k8rATtxPi
+         LppA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750716749; x=1751321549;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rNNk9iay4TFsaR3oROHDPyt7j9eK6fHVYAQhw0ci6+U=;
+        b=Zq4U8rpm3KAEWlmuQZPKM+gVCfPOxDnu8pm+JNjcT8ygOcy3dYmZi2VHwIudijx0AZ
+         AH8WAXGOsI3054rMllA1QMWRbxHZU5nB0JZRIiheMM37NPuNwnxVIBAE8h7RtdkL/yGS
+         T/lTimZmzc3swxUlvrZT7g3ciMZ9hJVgUegyONCP9u+73VKnv6v6G7xydIhGeLorvR8U
+         WAhQHjJirvBRVgFXuoyPvcHb+ULKpEFoggZlx/ZB16OFy86KDEllR6qqW0DON2BxFPWr
+         3YRBqceTviFDIyPV8zhezB8WbNq1KxDulh7RjN1qfI7EvtVNpE1lypbdjXUzn/BJ7HUA
+         4JRQ==
+X-Gm-Message-State: AOJu0YweLDkHKSCBs6nO3Ck8RkSWu3yyXKQOR/JlS9hJPAMC3IwXAbEd
+	2h635yLXHFxVBoBaaiVOnOU4garEVMH9aWjEo8JsOXL59DqPvWzTUUJ+
+X-Gm-Gg: ASbGnctb7Bpgam55e5n4jEoqaQmWNW9HbgPNWhzkQCdvpiEYKGFbfZKjoWI7wf1OpDX
+	h9Hr5DOX1eTdBQNqYCU8SAVz4PSoBnHRUthkumBtC5H37r4jUfcsRKZAXC3p8uFpqVkT1S5tAAZ
+	AzEgga9dGM4sDhZ7zQpMVpnWg7YzcJ3YnBTG/jBUppfNkzqf+fZKq3kzNDOF/jfzikIutHIuose
+	uTvJ9NZ2e7fX8fQLE5eSbA97q9LLMAiH6mAxPg5Noq26yF61ExD4pwJ6oqSfaXsWLUk4W7frejn
+	iAJqfYK1fN1cr5UECRNS3mnWampXRIMss9xnLAVlsZfW2QunzsNXf6mQ1mZl40lx1Z3Lu01vIFD
+	mFdInbpkT8kt7GZYQzrDnX77y
+X-Google-Smtp-Source: AGHT+IFkA9rLLTXE/wzSDCD/eX9kG0gVoLWTteo6t/0lF66T7wkylkPLNX8ySW5Xjw4muC09909y/A==
+X-Received: by 2002:a05:6a00:4fc2:b0:736:35d4:f03f with SMTP id d2e1a72fcca58-7490d52ca7cmr21366005b3a.6.1750716749472;
+        Mon, 23 Jun 2025 15:12:29 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b31f118e851sm7376633a12.4.2025.06.23.15.12.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jun 2025 15:12:28 -0700 (PDT)
+Message-ID: <2a1bcdf7-a6e9-4035-b85f-123c76e4ca7b@gmail.com>
+Date: Mon, 23 Jun 2025 15:12:25 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/508] 6.1.142-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250623130645.255320792@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+ WlfRzlpjIPmdjgoicA==
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+On 6/23/25 06:00, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.142 release.
+> There are 508 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 25 Jun 2025 13:05:52 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.142-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-From: Eric Dumazet <edumazet@google.com>
-
-[ Upstream commit d13a3824bfd2b4774b671a75cf766a16637a0e67 ]
-
-syzbot found its way in net/atm/lec.c, and found an error path
-in lecd_attach() could leave a dangling pointer in dev_lec[].
-
-Add a mutex to protect dev_lecp[] uses from lecd_attach(),
-lec_vcc_attach() and lec_mcast_attach().
-
-Following patch will use this mutex for /proc/net/atm/lec.
-
-BUG: KASAN: slab-use-after-free in lecd_attach net/atm/lec.c:751 [inline]
-BUG: KASAN: slab-use-after-free in lane_ioctl+0x2224/0x23e0 net/atm/lec.c:1008
-Read of size 8 at addr ffff88807c7b8e68 by task syz.1.17/6142
-
-CPU: 1 UID: 0 PID: 6142 Comm: syz.1.17 Not tainted 6.16.0-rc1-syzkaller-00239-g08215f5486ec #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:94 [inline]
-  dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
-  print_address_description mm/kasan/report.c:408 [inline]
-  print_report+0xcd/0x680 mm/kasan/report.c:521
-  kasan_report+0xe0/0x110 mm/kasan/report.c:634
-  lecd_attach net/atm/lec.c:751 [inline]
-  lane_ioctl+0x2224/0x23e0 net/atm/lec.c:1008
-  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
-  sock_do_ioctl+0x118/0x280 net/socket.c:1190
-  sock_ioctl+0x227/0x6b0 net/socket.c:1311
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:907 [inline]
-  __se_sys_ioctl fs/ioctl.c:893 [inline]
-  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-Allocated by task 6132:
-  kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
-  kasan_save_track+0x14/0x30 mm/kasan/common.c:68
-  poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
-  __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:394
-  kasan_kmalloc include/linux/kasan.h:260 [inline]
-  __do_kmalloc_node mm/slub.c:4328 [inline]
-  __kvmalloc_node_noprof+0x27b/0x620 mm/slub.c:5015
-  alloc_netdev_mqs+0xd2/0x1570 net/core/dev.c:11711
-  lecd_attach net/atm/lec.c:737 [inline]
-  lane_ioctl+0x17db/0x23e0 net/atm/lec.c:1008
-  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
-  sock_do_ioctl+0x118/0x280 net/socket.c:1190
-  sock_ioctl+0x227/0x6b0 net/socket.c:1311
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:907 [inline]
-  __se_sys_ioctl fs/ioctl.c:893 [inline]
-  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 6132:
-  kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
-  kasan_save_track+0x14/0x30 mm/kasan/common.c:68
-  kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:576
-  poison_slab_object mm/kasan/common.c:247 [inline]
-  __kasan_slab_free+0x51/0x70 mm/kasan/common.c:264
-  kasan_slab_free include/linux/kasan.h:233 [inline]
-  slab_free_hook mm/slub.c:2381 [inline]
-  slab_free mm/slub.c:4643 [inline]
-  kfree+0x2b4/0x4d0 mm/slub.c:4842
-  free_netdev+0x6c5/0x910 net/core/dev.c:11892
-  lecd_attach net/atm/lec.c:744 [inline]
-  lane_ioctl+0x1ce8/0x23e0 net/atm/lec.c:1008
-  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
-  sock_do_ioctl+0x118/0x280 net/socket.c:1190
-  sock_ioctl+0x227/0x6b0 net/socket.c:1311
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:907 [inline]
-  __se_sys_ioctl fs/ioctl.c:893 [inline]
-  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+8b64dec3affaed7b3af5@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6852c6f6.050a0220.216029.0018.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250618140844.1686882-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/atm/lec.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/net/atm/lec.c b/net/atm/lec.c
-index ded2f0df2ee66..3010a2034d6af 100644
---- a/net/atm/lec.c
-+++ b/net/atm/lec.c
-@@ -124,6 +124,7 @@ static unsigned char bus_mac[ETH_ALEN] = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
- 
- /* Device structures */
- static struct net_device *dev_lec[MAX_LEC_ITF];
-+static DEFINE_MUTEX(lec_mutex);
- 
- #if IS_ENABLED(CONFIG_BRIDGE)
- static void lec_handle_bridge(struct sk_buff *skb, struct net_device *dev)
-@@ -685,6 +686,7 @@ static int lec_vcc_attach(struct atm_vcc *vcc, void __user *arg)
- 	int bytes_left;
- 	struct atmlec_ioc ioc_data;
- 
-+	lockdep_assert_held(&lec_mutex);
- 	/* Lecd must be up in this case */
- 	bytes_left = copy_from_user(&ioc_data, arg, sizeof(struct atmlec_ioc));
- 	if (bytes_left != 0)
-@@ -710,6 +712,7 @@ static int lec_vcc_attach(struct atm_vcc *vcc, void __user *arg)
- 
- static int lec_mcast_attach(struct atm_vcc *vcc, int arg)
- {
-+	lockdep_assert_held(&lec_mutex);
- 	if (arg < 0 || arg >= MAX_LEC_ITF)
- 		return -EINVAL;
- 	arg = array_index_nospec(arg, MAX_LEC_ITF);
-@@ -725,6 +728,7 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
- 	int i;
- 	struct lec_priv *priv;
- 
-+	lockdep_assert_held(&lec_mutex);
- 	if (arg < 0)
- 		arg = 0;
- 	if (arg >= MAX_LEC_ITF)
-@@ -742,6 +746,7 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
- 		snprintf(dev_lec[i]->name, IFNAMSIZ, "lec%d", i);
- 		if (register_netdev(dev_lec[i])) {
- 			free_netdev(dev_lec[i]);
-+			dev_lec[i] = NULL;
- 			return -EINVAL;
- 		}
- 
-@@ -1003,6 +1008,7 @@ static int lane_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 		return -ENOIOCTLCMD;
- 	}
- 
-+	mutex_lock(&lec_mutex);
- 	switch (cmd) {
- 	case ATMLEC_CTRL:
- 		err = lecd_attach(vcc, (int)arg);
-@@ -1017,6 +1023,7 @@ static int lane_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 		break;
- 	}
- 
-+	mutex_unlock(&lec_mutex);
- 	return err;
- }
- 
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-2.39.5
-
-
-
+Florian
