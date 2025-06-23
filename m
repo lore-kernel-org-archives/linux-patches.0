@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65D4255F39;
-	Mon, 23 Jun 2025 13:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434A2253B47;
+	Mon, 23 Jun 2025 13:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685600; cv=none; b=KEL/1g24OS+S6kLivj5I/txGarOCHTjie3fNOWooYkh1pZDXrXIgP1tkqpg5nz+7no0nN01sCbuab5I/jxJn0MUuzCVlD19v5hZC5YRyXVod0hod4sQD0ZqA3JF27EXh5q1JC4cdImLUyQrtiBuipDMZ6wL3mICQDjn85JRxJfA=
+	t=1750685603; cv=none; b=XQ04myXxuhP5xjjDssgJPOLRFULHr19pAKOjP2UpCnNcE1hlV/FfASXn6DwltSSPVswQf6pskrrs33fJvCO7TbBgrMCBf/BpFT290wXKCOKvEG72tm6g5hxyp3kxiCd0b5LHO00JNIzzBLBf9fM6Uv4ZrTLwdenaP2a9lwdaomU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685600; c=relaxed/simple;
-	bh=A2gj8+4sT1hReJ6NCKg5T1BA053jxwxIUQVtPy85K0g=;
+	s=arc-20240116; t=1750685603; c=relaxed/simple;
+	bh=pMTp9b5q8/g0GLzZ2e2G32bYnljWUAKxh5+Uk8ha/ck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=maoUIk+AmAQMy2Rb8MjTaZSxLx8mKgFHKCkrzjyfV9zthaMplTU5BV9x+NSO/fZ71EQyQKMCTY4lzD03m2lfQfVh1bViz/hi/SC4KVs1+uGiL82odKKpvt1X4y6XBImzrzLIvpEmh9YclMurYBWT7jSDXK3tiSLbWc/TqN66hPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0UvG5zZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l85jVygFSSQUrCKzzY/uuj35RTynnMPnPHMebdMiPfkyRIxNQW/JBrQxqVad4aLfuMcuZc4YUICVbKW2rD4DpQG51JM5gWscwXZ33bRZxjQhKAEmqa9PVxan7yw5mQoaxu85WVD/6wiJEIVUbL85lqSVxYha5p1unJWJ/J00hYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbw5W7WW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0UvG5zZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39930C4CEEA;
-	Mon, 23 Jun 2025 13:33:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbw5W7WW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB529C4CEEA;
+	Mon, 23 Jun 2025 13:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685600;
-	bh=A2gj8+4sT1hReJ6NCKg5T1BA053jxwxIUQVtPy85K0g=;
+	s=korg; t=1750685603;
+	bh=pMTp9b5q8/g0GLzZ2e2G32bYnljWUAKxh5+Uk8ha/ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B0UvG5zZLxE8Y3b+yLOjybedLlV+67fvFbaye/IjDTj9eS+QUxYEhms6U3uoRcqxU
-	 aYsijqfb6x2nKAT/BgWYsX3GxP+lcj0fS3LfY8rl+euv1Vfe9n1pWv5xNZnMPO0wwj
-	 gUwKlhCe8A1E+4iNji68/OMbFl/6aP6jlRSRIXTk=
+	b=qbw5W7WWR3aZAZiL/85E2s5aIIDaECCHZpCernQI57ud+5CUOjSQA1wts5uIpFK21
+	 hG5UPr3ni2/LPrJiR7ghzrqqT6RQSQMdHq//1nWHgC/UE3x/YB3b6QlwtBD7QVIDd/
+	 ipQ8W4yLdZpLUeBS+qPRrikOIGqkyVmr5zFNcGaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie James <eajames@linux.ibm.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Adam Ford <aford173@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/508] powerpc/crash: Fix non-smp kexec preparation
-Date: Mon, 23 Jun 2025 15:01:03 +0200
-Message-ID: <20250623130645.702988014@linuxfoundation.org>
+Subject: [PATCH 5.10 062/355] arm64: dts: imx8mm-beacon: Fix RTC capacitive load
+Date: Mon, 23 Jun 2025 15:04:23 +0200
+Message-ID: <20250623130628.694603367@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eddie James <eajames@linux.ibm.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 882b25af265de8e05c66f72b9a29f6047102958f ]
+[ Upstream commit 2e98d456666d63f897ba153210bcef9d78ba0f3a ]
 
-In non-smp configurations, crash_kexec_prepare is never called in
-the crash shutdown path. One result of this is that the crashing_cpu
-variable is never set, preventing crash_save_cpu from storing the
-NT_PRSTATUS elf note in the core dump.
+Although not noticeable when used every day, the RTC appears to drift when
+left to sit over time.  This is due to the capacitive load not being
+properly set. Fix RTC drift by correcting the capacitive load setting
+from 7000 to 12500, which matches the actual hardware configuration.
 
-Fixes: c7255058b543 ("powerpc/crash: save cpu register data in crash_smp_send_stop()")
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
-Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250211162054.857762-1-eajames@linux.ibm.com
+Fixes: 593816fa2f35 ("arm64: dts: imx: Add Beacon i.MX8m-Mini development kit")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kexec/crash.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/kexec/crash.c b/arch/powerpc/kexec/crash.c
-index 252724ed666a3..14abe7046cd74 100644
---- a/arch/powerpc/kexec/crash.c
-+++ b/arch/powerpc/kexec/crash.c
-@@ -356,7 +356,10 @@ void default_machine_crash_shutdown(struct pt_regs *regs)
- 	if (TRAP(regs) == INTERRUPT_SYSTEM_RESET)
- 		is_via_system_reset = 1;
- 
--	crash_smp_send_stop();
-+	if (IS_ENABLED(CONFIG_SMP))
-+		crash_smp_send_stop();
-+	else
-+		crash_kexec_prepare();
- 
- 	crash_save_cpu(regs, crashing_cpu);
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
+index b88c3c99b007e..34b2e862b7083 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
+@@ -194,6 +194,7 @@
+ 	rtc@51 {
+ 		compatible = "nxp,pcf85263";
+ 		reg = <0x51>;
++		quartz-load-femtofarads = <12500>;
+ 	};
+ };
  
 -- 
 2.39.5
