@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913A816D9BF;
-	Mon, 23 Jun 2025 22:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF4B16D9BF;
+	Mon, 23 Jun 2025 22:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717170; cv=none; b=QKms9IajozojbwF4xfmZFxEoN0xCvwyZb8a57242xZbXgfbmz8K0TjbmiLMDnj/25wBI0cwXPaImSNiBJVDvunLlFudD0kjVOcMfqKY6FDa84z7D1Q4+U01S3hic4RxkOkpbElfJSwQP+jXcj9MUFmERxNN2PNcgMqSE6WulhTs=
+	t=1750717173; cv=none; b=GZ6nx7u3SLDwahrJVjGhjaNGHt4xIb5KJD0DsGEOlhyS+RmK0M8SO2xI7WvuqRHZOo10o/z+ioAzl0BBhTtx549XTeVmSkn6fwAVgMvBQg++vRUlPi+wq5Y7BkIrlv/35WwD9d5mSJ9XwVAKMjUpGC+SJed+53Kv9KJdu6gloA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717170; c=relaxed/simple;
-	bh=A57cGmsDGraNdj88R62LQbW3ctsm49gBxpPwjnnKhLA=;
+	s=arc-20240116; t=1750717173; c=relaxed/simple;
+	bh=QUY9veXfGBtoWI17IIgguIrlBu5W0EhgywDbF2GEOy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NvSalYT3TbL8e0SmhykaF+EJfGbv5eyu6M5OL+hT5BNLEFAX34mtXP/6uNusTeQqZ+9geUHeF2UxaB9viX3zeVUKVTcjPimwGhKCwCfSIF16x2cpNvH6w01B/WPvGdhEaDml9JHiPX7pWnCky74iPVHQ/drrL7BbGvq1Rx51qhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xijnOoWc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YWe+Ki8Fc2CueH/2KSm9QsRHbb7Fw+QE6jw82ilk3B/IVzwEAXXOFo+jE3//q7uZNJITRU+d/uCNdcUD2KvgZZDOVfHOx1UnHc738nw7zX5mhanXy30xPbY6fYDTF4mBxOyUk+KjiMulUiwpbvZPctMz6/6dmlYzcetWJtsQOGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KD/D9SRn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xijnOoWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC63C4CEEA;
-	Mon, 23 Jun 2025 22:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KD/D9SRn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BEDC4CEEA;
+	Mon, 23 Jun 2025 22:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717170;
-	bh=A57cGmsDGraNdj88R62LQbW3ctsm49gBxpPwjnnKhLA=;
+	s=korg; t=1750717172;
+	bh=QUY9veXfGBtoWI17IIgguIrlBu5W0EhgywDbF2GEOy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xijnOoWcraDjAT9MhSd/LTLMTP9aFJGaKdICP8T8dlmOoR1+jMSqeLTLJzDGdp4A1
-	 mDJqRqJBIaOKfv2QNaT0+gOYxMMkBLmp+gBw9w2izk4hGgtfJAYUI9sJbJpOByK/Wd
-	 BnCFzKbg3/d2q1pVqCVBM/6aFiwrdJsac7j970Z8=
+	b=KD/D9SRn0my2b9LBS93KKnzoZZ9rxC+xZRZBTpib2ZOJz/IKFqwAROfsKprLjufmx
+	 h0AJVDR7ln+dAIc9KiCbjmI3EtSxdFsAUn4ONgJRHyz89jMlStzIfi7mwhxvKZNhDh
+	 xZdjIwKOs2YeEfP32whqA0COHf3kcidTjGZwq38A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	Will Deacon <will@kernel.org>,
+	Talhah Peerbhai <talhah.peerbhai@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 410/411] arm64/ptrace: Fix stack-out-of-bounds read in regs_get_kernel_stack_nth()
-Date: Mon, 23 Jun 2025 15:09:14 +0200
-Message-ID: <20250623130644.007613068@linuxfoundation.org>
+Subject: [PATCH 6.1 375/508] ASoC: amd: yc: Add quirk for Lenovo Yoga Pro 7 14ASP9
+Date: Mon, 23 Jun 2025 15:07:00 +0200
+Message-ID: <20250623130654.552840953@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,108 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Talhah Peerbhai <talhah.peerbhai@gmail.com>
 
-[ Upstream commit 39dfc971e42d886e7df01371cd1bef505076d84c ]
+[ Upstream commit a28206060dc5848a1a2a15b7f6ac6223d869084d ]
 
-KASAN reports a stack-out-of-bounds read in regs_get_kernel_stack_nth().
+Similar to many other Lenovo models with AMD chips, the Lenovo
+Yoga Pro 7 14ASP9 (product name 83HN) requires a specific quirk
+to ensure internal mic detection. This patch adds a quirk fixing this.
 
-Call Trace:
-[   97.283505] BUG: KASAN: stack-out-of-bounds in regs_get_kernel_stack_nth+0xa8/0xc8
-[   97.284677] Read of size 8 at addr ffff800089277c10 by task 1.sh/2550
-[   97.285732]
-[   97.286067] CPU: 7 PID: 2550 Comm: 1.sh Not tainted 6.6.0+ #11
-[   97.287032] Hardware name: linux,dummy-virt (DT)
-[   97.287815] Call trace:
-[   97.288279]  dump_backtrace+0xa0/0x128
-[   97.288946]  show_stack+0x20/0x38
-[   97.289551]  dump_stack_lvl+0x78/0xc8
-[   97.290203]  print_address_description.constprop.0+0x84/0x3c8
-[   97.291159]  print_report+0xb0/0x280
-[   97.291792]  kasan_report+0x84/0xd0
-[   97.292421]  __asan_load8+0x9c/0xc0
-[   97.293042]  regs_get_kernel_stack_nth+0xa8/0xc8
-[   97.293835]  process_fetch_insn+0x770/0xa30
-[   97.294562]  kprobe_trace_func+0x254/0x3b0
-[   97.295271]  kprobe_dispatcher+0x98/0xe0
-[   97.295955]  kprobe_breakpoint_handler+0x1b0/0x210
-[   97.296774]  call_break_hook+0xc4/0x100
-[   97.297451]  brk_handler+0x24/0x78
-[   97.298073]  do_debug_exception+0xac/0x178
-[   97.298785]  el1_dbg+0x70/0x90
-[   97.299344]  el1h_64_sync_handler+0xcc/0xe8
-[   97.300066]  el1h_64_sync+0x78/0x80
-[   97.300699]  kernel_clone+0x0/0x500
-[   97.301331]  __arm64_sys_clone+0x70/0x90
-[   97.302084]  invoke_syscall+0x68/0x198
-[   97.302746]  el0_svc_common.constprop.0+0x11c/0x150
-[   97.303569]  do_el0_svc+0x38/0x50
-[   97.304164]  el0_svc+0x44/0x1d8
-[   97.304749]  el0t_64_sync_handler+0x100/0x130
-[   97.305500]  el0t_64_sync+0x188/0x190
-[   97.306151]
-[   97.306475] The buggy address belongs to stack of task 1.sh/2550
-[   97.307461]  and is located at offset 0 in frame:
-[   97.308257]  __se_sys_clone+0x0/0x138
-[   97.308910]
-[   97.309241] This frame has 1 object:
-[   97.309873]  [48, 184) 'args'
-[   97.309876]
-[   97.310749] The buggy address belongs to the virtual mapping at
-[   97.310749]  [ffff800089270000, ffff800089279000) created by:
-[   97.310749]  dup_task_struct+0xc0/0x2e8
-[   97.313347]
-[   97.313674] The buggy address belongs to the physical page:
-[   97.314604] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x14f69a
-[   97.315885] flags: 0x15ffffe00000000(node=1|zone=2|lastcpupid=0xfffff)
-[   97.316957] raw: 015ffffe00000000 0000000000000000 dead000000000122 0000000000000000
-[   97.318207] raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
-[   97.319445] page dumped because: kasan: bad access detected
-[   97.320371]
-[   97.320694] Memory state around the buggy address:
-[   97.321511]  ffff800089277b00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   97.322681]  ffff800089277b80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   97.323846] >ffff800089277c00: 00 00 f1 f1 f1 f1 f1 f1 00 00 00 00 00 00 00 00
-[   97.325023]                          ^
-[   97.325683]  ffff800089277c80: 00 00 00 00 00 00 00 00 00 f3 f3 f3 f3 f3 f3 f3
-[   97.326856]  ffff800089277d00: f3 f3 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-
-This issue seems to be related to the behavior of some gcc compilers and
-was also fixed on the s390 architecture before:
-
- commit d93a855c31b7 ("s390/ptrace: Avoid KASAN false positives in regs_get_kernel_stack_nth()")
-
-As described in that commit, regs_get_kernel_stack_nth() has confirmed that
-`addr` is on the stack, so reading the value at `*addr` should be allowed.
-Use READ_ONCE_NOCHECK() helper to silence the KASAN check for this case.
-
-Fixes: 0a8ea52c3eb1 ("arm64: Add HAVE_REGS_AND_STACK_ACCESS_API feature")
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Link: https://lore.kernel.org/r/20250604005533.1278992-1-wutengda@huaweicloud.com
-[will: Use '*addr' as the argument to READ_ONCE_NOCHECK()]
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Talhah Peerbhai <talhah.peerbhai@gmail.com>
+Link: https://patch.msgid.link/20250515222741.144616-1-talhah.peerbhai@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/ptrace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
-index 4ef9e688508c4..18dd5bc12d4f3 100644
---- a/arch/arm64/kernel/ptrace.c
-+++ b/arch/arm64/kernel/ptrace.c
-@@ -140,7 +140,7 @@ unsigned long regs_get_kernel_stack_nth(struct pt_regs *regs, unsigned int n)
- 
- 	addr += n;
- 	if (regs_within_kernel_stack(regs, (unsigned long)addr))
--		return *addr;
-+		return READ_ONCE_NOCHECK(*addr);
- 	else
- 		return 0;
- }
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 1f94269e121af..d5dc1d48fca94 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -304,6 +304,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "83AS"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83HN"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+@@ -353,7 +360,7 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "M5402RA"),
+ 		}
+ 	},
+-        {
++	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
 -- 
 2.39.5
 
