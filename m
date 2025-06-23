@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606962F24;
-	Mon, 23 Jun 2025 13:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985322F24;
+	Mon, 23 Jun 2025 13:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685552; cv=none; b=uxcv4mXCwkTwfLMHUhCBRCPO1FVNY/w7l6Bv2FcgM1Gd0e44EZfPhGEP1ayQmW5zAAKvuMVOlPbDjEAMdaz9TTgnnHgIIe6/fDerH/Qesxjn2zp7u5zw+7CerXPyZhM/atZeQtHrDubk4L6Tzj3zJ6T7Q+UDBw3wVQWWdQ12A1w=
+	t=1750685554; cv=none; b=MbHAjAKO6dfSCTujouvzpaOQRxH/QejsVAuvZmj1/l0E34A3UvaLOTN/5mMzrBDBqX+Gz/LqZDpZZpVBac1Ve0Fl6HQv9KosGIb+SSwM6CiULJPV9XC35iwUxo+1K/bQt9Ya/51j/8VlT34WfSIsZ/Bu2frrDhlOCa/4kPb8Hhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685552; c=relaxed/simple;
-	bh=aC5q5XMEWsBBWzbUZPld4GBMVEPmlmlld/espUbymCU=;
+	s=arc-20240116; t=1750685554; c=relaxed/simple;
+	bh=b7nAGH9aMJpaLQLCba8yqgxOwRg7hkqHFd1QTyuXIwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RaQiFU5Ahp7SIjzv8rcHZIzQMezeUm5DBd9XDzaQjQnT9z8T3+v1y3//Ip0nkN0yV1S7Uy5icEZ8PMECDbT2CTJK3nBL3n9zSHopaDpfPvQUQVSPrCYruQQYzNhx5Qqq5X7QSRabjAkBVWZ4gVoBfwXg01JCXXLYQXfGG6N4JXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1c1p4KPC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kqpmNbf4HMzD1mcgSV3jjgFTrOH9KmNKH4AdjAPWNdx0gDNlFVaiggNOkQJBOWtTCXiuWB9oY+fvGN29oGyPaLs9cSmx+lTpqOnnZEI7gYePKFelmiOSqkL7FM6t28+qUU0rLwR0jl6MvnOaail0fXlH5LSfRs4RkHd/JsHBQ4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXirDt3S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1c1p4KPC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDF1C4CEEA;
-	Mon, 23 Jun 2025 13:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXirDt3S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DEA2C4CEEA;
+	Mon, 23 Jun 2025 13:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685552;
-	bh=aC5q5XMEWsBBWzbUZPld4GBMVEPmlmlld/espUbymCU=;
+	s=korg; t=1750685554;
+	bh=b7nAGH9aMJpaLQLCba8yqgxOwRg7hkqHFd1QTyuXIwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1c1p4KPCO6oBRUbk76ZzoG5yyFydsIY0molPe+NkXLtixD7CqTUuoPATY1Scw4dQ0
-	 OYrgg8CqGvom7U+ec9zGalM+AGRXZR47wv0sYkYB4UJuDOSmgGo1AyjPdl71Z9rDDq
-	 tpu/BNDED2rTM/lPwbv5wiCzq+Ir3gaoLIb4/FLU=
+	b=OXirDt3S5m+KpPX5VN7gLHtRxsePyGUPqbwAdOInMuwG3YSvf1GtACLzo2PAKkhXp
+	 mF3OdulkWpNVg6yerfptzMtxAG07X+psU4qqx8aagSFKF6HzwLv28SHKG74COqx1wN
+	 BNhOkwKyGHist0EHR1XjTSAllsJEQ+VvdKVuaBvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeevaka Prabu Badrappan <jeevaka.badrappan@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	lmarch2 <2524158037@qq.com>,
+	Viktor Malik <vmalik@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 243/592] drm/xe: Fix CFI violation when accessing sysfs files
-Date: Mon, 23 Jun 2025 15:03:21 +0200
-Message-ID: <20250623130706.070492303@linuxfoundation.org>
+Subject: [PATCH 5.15 042/411] libbpf: Fix buffer overflow in bpf_object__init_prog
+Date: Mon, 23 Jun 2025 15:03:06 +0200
+Message-ID: <20250623130634.266430669@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,499 +49,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeevaka Prabu Badrappan <jeevaka.badrappan@intel.com>
+From: Viktor Malik <vmalik@redhat.com>
 
-[ Upstream commit 4ea512714c42c69828b4a2647d206bf404043ad5 ]
+[ Upstream commit ee684de5c1b0ac01821320826baec7da93f3615b ]
 
-When an attribute group is created with sysfs_create_group() or
-sysfs_create_files() the ->sysfs_ops() callback is set to
-kobj_sysfs_ops, which sets the ->show() callback to kobj_attr_show().
-kobj_attr_show() uses container_of() to get the ->show() callback
-from the attribute it was passed, meaning the ->show() callback needs
-to be the same type as the ->show() callback in 'struct kobj_attribute'.
+As shown in [1], it is possible to corrupt a BPF ELF file such that
+arbitrary BPF instructions are loaded by libbpf. This can be done by
+setting a symbol (BPF program) section offset to a large (unsigned)
+number such that <section start + symbol offset> overflows and points
+before the section data in the memory.
 
-However, cur_freq_show() has the type of the ->show() callback in
-'struct device_attribute', which causes a CFI violation when opening the
-'id' sysfs node under gtidle/freq/throttle. This happens to work because
-the layout of 'struct kobj_attribute' and 'struct device_attribute' are
-the same, so the container_of() cast happens to allow the ->show()
-callback to still work.
+Consider the situation below where:
+- prog_start = sec_start + symbol_offset    <-- size_t overflow here
+- prog_end   = prog_start + prog_size
 
-Changed the type of cur_freq_show() and few more functions to match the
-->show() callback in 'struct kobj_attributes' to resolve the CFI
-violation.
+    prog_start        sec_start        prog_end        sec_end
+        |                |                 |              |
+        v                v                 v              v
+    .....................|################################|............
 
-CFI failure seen while accessing sysfs files under
-/sys/class/drm/card0/device/tile0/gt*/gtidle/*
-/sys/class/drm/card0/device/tile0/gt*/freq0/*
-/sys/class/drm/card0/device/tile0/gt*/freq0/throttle/*
+The report in [1] also provides a corrupted BPF ELF which can be used as
+a reproducer:
 
-[ 2599.618075] RIP: 0010:__cfi_cur_freq_show+0xd/0x10 [xe]
-[ 2599.624452] Code: 44 c1 44 89 fa e8 03 95 39 f2 48 98 5b 41 5e 41 5f 5d c3 c9
-[ 2599.646638] RSP: 0018:ffffbe438ead7d10 EFLAGS: 00010286
-[ 2599.652823] RAX: ffff9f7d8b3845d8 RBX: ffff9f7dee8c95d8 RCX: 0000000000000000
-[ 2599.661246] RDX: ffff9f7e6f439000 RSI: ffffffffc13ada30 RDI: ffff9f7d975d4b00
-[ 2599.669669] RBP: ffffbe438ead7d18 R08: 0000000000001000 R09: ffff9f7e6f439000
-[ 2599.678092] R10: 00000000e07304a6 R11: ffffffffc1241ca0 R12: ffffffffb4836ea0
-[ 2599.688435] R13: ffff9f7e45fb1180 R14: ffff9f7d975d4b00 R15: ffff9f7e6f439000
-[ 2599.696860] FS: 000076b02b66cfc0(0000) GS:ffff9f80ef400000(0000) knlGS:00000
-[ 2599.706412] CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 2599.713196] CR2: 00005f80d94641a9 CR3: 00000001e44ec006 CR4: 0000000100f72ef0
-[ 2599.721618] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[ 2599.730041] DR3: 0000000000000000 DR6: 00000000ffff07f0 DR7: 0000000000000400
-[ 2599.738464] PKRU: 55555554
-[ 2599.741655] Call Trace:
-[ 2599.744541] <TASK>
-[ 2599.747017] ? __die_body+0x69/0xb0
-[ 2599.751151] ? die+0xa9/0xd0
-[ 2599.754548] ? do_trap+0x89/0x160
-[ 2599.758476] ? __cfi_cur_freq_show+0xd/0x10 [xe b37985c94829727668bd7c5b33c1]
-[ 2599.768315] ? handle_invalid_op+0x69/0x90
-[ 2599.773167] ? __cfi_cur_freq_show+0xd/0x10 [xe b37985c94829727668bd7c5b33c1]
-[ 2599.783010] ? exc_invalid_op+0x36/0x60
-[ 2599.787552] ? fred_hwexc+0x123/0x1a0
-[ 2599.791873] ? fred_entry_from_kernel+0x7b/0xd0
-[ 2599.797219] ? asm_fred_entrypoint_kernel+0x45/0x70
-[ 2599.802976] ? act_freq_show+0x70/0x70 [xe b37985c94829727668bd7c5b33c1d9998]
-[ 2599.812301] ? __cfi_cur_freq_show+0xd/0x10 [xe b37985c94829727668bd7c5b33c1]
-[ 2599.822137] ? __kmalloc_node_noprof+0x1f3/0x420
-[ 2599.827594] ? __kvmalloc_node_noprof+0xcb/0x180
-[ 2599.833045] ? kobj_attr_show+0x22/0x40
-[ 2599.837571] sysfs_kf_seq_show+0xa8/0x110
-[ 2599.842302] kernfs_seq_show+0x38/0x50
+    $ readelf -S crash
+    Section Headers:
+      [Nr] Name              Type             Address           Offset
+           Size              EntSize          Flags  Link  Info  Align
+    ...
+      [ 2] uretprobe.mu[...] PROGBITS         0000000000000000  00000040
+           0000000000000068  0000000000000000  AX       0     0     8
 
-Signed-off-by: Jeevaka Prabu Badrappan <jeevaka.badrappan@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://lore.kernel.org/r/20250422171852.85558-1-jeevaka.badrappan@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+    $ readelf -s crash
+    Symbol table '.symtab' contains 8 entries:
+       Num:    Value          Size Type    Bind   Vis      Ndx Name
+    ...
+         6: ffffffffffffffb8   104 FUNC    GLOBAL DEFAULT    2 handle_tp
+
+Here, the handle_tp prog has section offset ffffffffffffffb8, i.e. will
+point before the actual memory where section 2 is allocated.
+
+This is also reported by AddressSanitizer:
+
+    =================================================================
+    ==1232==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c7302fe0000 at pc 0x7fc3046e4b77 bp 0x7ffe64677cd0 sp 0x7ffe64677490
+    READ of size 104 at 0x7c7302fe0000 thread T0
+        #0 0x7fc3046e4b76 in memcpy (/lib64/libasan.so.8+0xe4b76)
+        #1 0x00000040df3e in bpf_object__init_prog /src/libbpf/src/libbpf.c:856
+        #2 0x00000040df3e in bpf_object__add_programs /src/libbpf/src/libbpf.c:928
+        #3 0x00000040df3e in bpf_object__elf_collect /src/libbpf/src/libbpf.c:3930
+        #4 0x00000040df3e in bpf_object_open /src/libbpf/src/libbpf.c:8067
+        #5 0x00000040f176 in bpf_object__open_file /src/libbpf/src/libbpf.c:8090
+        #6 0x000000400c16 in main /poc/poc.c:8
+        #7 0x7fc3043d25b4 in __libc_start_call_main (/lib64/libc.so.6+0x35b4)
+        #8 0x7fc3043d2667 in __libc_start_main@@GLIBC_2.34 (/lib64/libc.so.6+0x3667)
+        #9 0x000000400b34 in _start (/poc/poc+0x400b34)
+
+    0x7c7302fe0000 is located 64 bytes before 104-byte region [0x7c7302fe0040,0x7c7302fe00a8)
+    allocated by thread T0 here:
+        #0 0x7fc3046e716b in malloc (/lib64/libasan.so.8+0xe716b)
+        #1 0x7fc3045ee600 in __libelf_set_rawdata_wrlock (/lib64/libelf.so.1+0xb600)
+        #2 0x7fc3045ef018 in __elf_getdata_rdlock (/lib64/libelf.so.1+0xc018)
+        #3 0x00000040642f in elf_sec_data /src/libbpf/src/libbpf.c:3740
+
+The problem here is that currently, libbpf only checks that the program
+end is within the section bounds. There used to be a check
+`while (sec_off < sec_sz)` in bpf_object__add_programs, however, it was
+removed by commit 6245947c1b3c ("libbpf: Allow gaps in BPF program
+sections to support overriden weak functions").
+
+Add a check for detecting the overflow of `sec_off + prog_sz` to
+bpf_object__init_prog to fix this issue.
+
+[1] https://github.com/lmarch2/poc/blob/main/libbpf/libbpf.md
+
+Fixes: 6245947c1b3c ("libbpf: Allow gaps in BPF program sections to support overriden weak functions")
+Reported-by: lmarch2 <2524158037@qq.com>
+Signed-off-by: Viktor Malik <vmalik@redhat.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Link: https://github.com/lmarch2/poc/blob/main/libbpf/libbpf.md
+Link: https://lore.kernel.org/bpf/20250415155014.397603-1-vmalik@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_freq.c     | 82 ++++++++++++++------------
- drivers/gpu/drm/xe/xe_gt_idle.c     | 28 +++++----
- drivers/gpu/drm/xe/xe_gt_throttle.c | 90 ++++++++++++++---------------
- 3 files changed, 107 insertions(+), 93 deletions(-)
+ tools/lib/bpf/libbpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_freq.c b/drivers/gpu/drm/xe/xe_gt_freq.c
-index 552ac92496a40..60d9354e7dbf4 100644
---- a/drivers/gpu/drm/xe/xe_gt_freq.c
-+++ b/drivers/gpu/drm/xe/xe_gt_freq.c
-@@ -61,9 +61,10 @@ dev_to_xe(struct device *dev)
- 	return gt_to_xe(kobj_to_gt(dev->kobj.parent));
- }
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 40e0d84e3d8ed..13dea519e59f2 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -692,7 +692,7 @@ bpf_object__add_programs(struct bpf_object *obj, Elf_Data *sec_data,
+ 			return -LIBBPF_ERRNO__FORMAT;
+ 		}
  
--static ssize_t act_freq_show(struct device *dev,
--			     struct device_attribute *attr, char *buf)
-+static ssize_t act_freq_show(struct kobject *kobj,
-+			     struct kobj_attribute *attr, char *buf)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_guc_pc *pc = dev_to_pc(dev);
- 	u32 freq;
- 
-@@ -73,11 +74,12 @@ static ssize_t act_freq_show(struct device *dev,
- 
- 	return sysfs_emit(buf, "%d\n", freq);
- }
--static DEVICE_ATTR_RO(act_freq);
-+static struct kobj_attribute attr_act_freq = __ATTR_RO(act_freq);
- 
--static ssize_t cur_freq_show(struct device *dev,
--			     struct device_attribute *attr, char *buf)
-+static ssize_t cur_freq_show(struct kobject *kobj,
-+			     struct kobj_attribute *attr, char *buf)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_guc_pc *pc = dev_to_pc(dev);
- 	u32 freq;
- 	ssize_t ret;
-@@ -90,11 +92,12 @@ static ssize_t cur_freq_show(struct device *dev,
- 
- 	return sysfs_emit(buf, "%d\n", freq);
- }
--static DEVICE_ATTR_RO(cur_freq);
-+static struct kobj_attribute attr_cur_freq = __ATTR_RO(cur_freq);
- 
--static ssize_t rp0_freq_show(struct device *dev,
--			     struct device_attribute *attr, char *buf)
-+static ssize_t rp0_freq_show(struct kobject *kobj,
-+			     struct kobj_attribute *attr, char *buf)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_guc_pc *pc = dev_to_pc(dev);
- 	u32 freq;
- 
-@@ -104,11 +107,12 @@ static ssize_t rp0_freq_show(struct device *dev,
- 
- 	return sysfs_emit(buf, "%d\n", freq);
- }
--static DEVICE_ATTR_RO(rp0_freq);
-+static struct kobj_attribute attr_rp0_freq = __ATTR_RO(rp0_freq);
- 
--static ssize_t rpe_freq_show(struct device *dev,
--			     struct device_attribute *attr, char *buf)
-+static ssize_t rpe_freq_show(struct kobject *kobj,
-+			     struct kobj_attribute *attr, char *buf)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_guc_pc *pc = dev_to_pc(dev);
- 	u32 freq;
- 
-@@ -118,11 +122,12 @@ static ssize_t rpe_freq_show(struct device *dev,
- 
- 	return sysfs_emit(buf, "%d\n", freq);
- }
--static DEVICE_ATTR_RO(rpe_freq);
-+static struct kobj_attribute attr_rpe_freq = __ATTR_RO(rpe_freq);
- 
--static ssize_t rpa_freq_show(struct device *dev,
--			     struct device_attribute *attr, char *buf)
-+static ssize_t rpa_freq_show(struct kobject *kobj,
-+			     struct kobj_attribute *attr, char *buf)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_guc_pc *pc = dev_to_pc(dev);
- 	u32 freq;
- 
-@@ -132,20 +137,22 @@ static ssize_t rpa_freq_show(struct device *dev,
- 
- 	return sysfs_emit(buf, "%d\n", freq);
- }
--static DEVICE_ATTR_RO(rpa_freq);
-+static struct kobj_attribute attr_rpa_freq = __ATTR_RO(rpa_freq);
- 
--static ssize_t rpn_freq_show(struct device *dev,
--			     struct device_attribute *attr, char *buf)
-+static ssize_t rpn_freq_show(struct kobject *kobj,
-+			     struct kobj_attribute *attr, char *buf)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_guc_pc *pc = dev_to_pc(dev);
- 
- 	return sysfs_emit(buf, "%d\n", xe_guc_pc_get_rpn_freq(pc));
- }
--static DEVICE_ATTR_RO(rpn_freq);
-+static struct kobj_attribute attr_rpn_freq = __ATTR_RO(rpn_freq);
- 
--static ssize_t min_freq_show(struct device *dev,
--			     struct device_attribute *attr, char *buf)
-+static ssize_t min_freq_show(struct kobject *kobj,
-+			     struct kobj_attribute *attr, char *buf)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_guc_pc *pc = dev_to_pc(dev);
- 	u32 freq;
- 	ssize_t ret;
-@@ -159,9 +166,10 @@ static ssize_t min_freq_show(struct device *dev,
- 	return sysfs_emit(buf, "%d\n", freq);
- }
- 
--static ssize_t min_freq_store(struct device *dev, struct device_attribute *attr,
--			      const char *buff, size_t count)
-+static ssize_t min_freq_store(struct kobject *kobj,
-+			      struct kobj_attribute *attr, const char *buff, size_t count)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_guc_pc *pc = dev_to_pc(dev);
- 	u32 freq;
- 	ssize_t ret;
-@@ -178,11 +186,12 @@ static ssize_t min_freq_store(struct device *dev, struct device_attribute *attr,
- 
- 	return count;
- }
--static DEVICE_ATTR_RW(min_freq);
-+static struct kobj_attribute attr_min_freq = __ATTR_RW(min_freq);
- 
--static ssize_t max_freq_show(struct device *dev,
--			     struct device_attribute *attr, char *buf)
-+static ssize_t max_freq_show(struct kobject *kobj,
-+			     struct kobj_attribute *attr, char *buf)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_guc_pc *pc = dev_to_pc(dev);
- 	u32 freq;
- 	ssize_t ret;
-@@ -196,9 +205,10 @@ static ssize_t max_freq_show(struct device *dev,
- 	return sysfs_emit(buf, "%d\n", freq);
- }
- 
--static ssize_t max_freq_store(struct device *dev, struct device_attribute *attr,
--			      const char *buff, size_t count)
-+static ssize_t max_freq_store(struct kobject *kobj,
-+			      struct kobj_attribute *attr, const char *buff, size_t count)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_guc_pc *pc = dev_to_pc(dev);
- 	u32 freq;
- 	ssize_t ret;
-@@ -215,17 +225,17 @@ static ssize_t max_freq_store(struct device *dev, struct device_attribute *attr,
- 
- 	return count;
- }
--static DEVICE_ATTR_RW(max_freq);
-+static struct kobj_attribute attr_max_freq = __ATTR_RW(max_freq);
- 
- static const struct attribute *freq_attrs[] = {
--	&dev_attr_act_freq.attr,
--	&dev_attr_cur_freq.attr,
--	&dev_attr_rp0_freq.attr,
--	&dev_attr_rpa_freq.attr,
--	&dev_attr_rpe_freq.attr,
--	&dev_attr_rpn_freq.attr,
--	&dev_attr_min_freq.attr,
--	&dev_attr_max_freq.attr,
-+	&attr_act_freq.attr,
-+	&attr_cur_freq.attr,
-+	&attr_rp0_freq.attr,
-+	&attr_rpa_freq.attr,
-+	&attr_rpe_freq.attr,
-+	&attr_rpn_freq.attr,
-+	&attr_min_freq.attr,
-+	&attr_max_freq.attr,
- 	NULL
- };
- 
-diff --git a/drivers/gpu/drm/xe/xe_gt_idle.c b/drivers/gpu/drm/xe/xe_gt_idle.c
-index fbbace7b0b12a..c11206410a4d4 100644
---- a/drivers/gpu/drm/xe/xe_gt_idle.c
-+++ b/drivers/gpu/drm/xe/xe_gt_idle.c
-@@ -249,9 +249,10 @@ int xe_gt_idle_pg_print(struct xe_gt *gt, struct drm_printer *p)
- 	return 0;
- }
- 
--static ssize_t name_show(struct device *dev,
--			 struct device_attribute *attr, char *buff)
-+static ssize_t name_show(struct kobject *kobj,
-+			 struct kobj_attribute *attr, char *buff)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_gt_idle *gtidle = dev_to_gtidle(dev);
- 	struct xe_guc_pc *pc = gtidle_to_pc(gtidle);
- 	ssize_t ret;
-@@ -262,11 +263,12 @@ static ssize_t name_show(struct device *dev,
- 
- 	return ret;
- }
--static DEVICE_ATTR_RO(name);
-+static struct kobj_attribute name_attr = __ATTR_RO(name);
- 
--static ssize_t idle_status_show(struct device *dev,
--				struct device_attribute *attr, char *buff)
-+static ssize_t idle_status_show(struct kobject *kobj,
-+				struct kobj_attribute *attr, char *buff)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_gt_idle *gtidle = dev_to_gtidle(dev);
- 	struct xe_guc_pc *pc = gtidle_to_pc(gtidle);
- 	enum xe_gt_idle_state state;
-@@ -277,6 +279,7 @@ static ssize_t idle_status_show(struct device *dev,
- 
- 	return sysfs_emit(buff, "%s\n", gt_idle_state_to_string(state));
- }
-+static struct kobj_attribute idle_status_attr = __ATTR_RO(idle_status);
- 
- u64 xe_gt_idle_residency_msec(struct xe_gt_idle *gtidle)
- {
-@@ -291,10 +294,11 @@ u64 xe_gt_idle_residency_msec(struct xe_gt_idle *gtidle)
- 	return residency;
- }
- 
--static DEVICE_ATTR_RO(idle_status);
--static ssize_t idle_residency_ms_show(struct device *dev,
--				      struct device_attribute *attr, char *buff)
-+
-+static ssize_t idle_residency_ms_show(struct kobject *kobj,
-+				      struct kobj_attribute *attr, char *buff)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_gt_idle *gtidle = dev_to_gtidle(dev);
- 	struct xe_guc_pc *pc = gtidle_to_pc(gtidle);
- 	u64 residency;
-@@ -305,12 +309,12 @@ static ssize_t idle_residency_ms_show(struct device *dev,
- 
- 	return sysfs_emit(buff, "%llu\n", residency);
- }
--static DEVICE_ATTR_RO(idle_residency_ms);
-+static struct kobj_attribute idle_residency_attr = __ATTR_RO(idle_residency_ms);
- 
- static const struct attribute *gt_idle_attrs[] = {
--	&dev_attr_name.attr,
--	&dev_attr_idle_status.attr,
--	&dev_attr_idle_residency_ms.attr,
-+	&name_attr.attr,
-+	&idle_status_attr.attr,
-+	&idle_residency_attr.attr,
- 	NULL,
- };
- 
-diff --git a/drivers/gpu/drm/xe/xe_gt_throttle.c b/drivers/gpu/drm/xe/xe_gt_throttle.c
-index 8db78d616b6f2..aa962c783cdf7 100644
---- a/drivers/gpu/drm/xe/xe_gt_throttle.c
-+++ b/drivers/gpu/drm/xe/xe_gt_throttle.c
-@@ -114,115 +114,115 @@ static u32 read_reason_vr_tdc(struct xe_gt *gt)
- 	return tdc;
- }
- 
--static ssize_t status_show(struct device *dev,
--			   struct device_attribute *attr,
--			   char *buff)
-+static ssize_t status_show(struct kobject *kobj,
-+			   struct kobj_attribute *attr, char *buff)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_gt *gt = dev_to_gt(dev);
- 	bool status = !!read_status(gt);
- 
- 	return sysfs_emit(buff, "%u\n", status);
- }
--static DEVICE_ATTR_RO(status);
-+static struct kobj_attribute attr_status = __ATTR_RO(status);
- 
--static ssize_t reason_pl1_show(struct device *dev,
--			       struct device_attribute *attr,
--			       char *buff)
-+static ssize_t reason_pl1_show(struct kobject *kobj,
-+			       struct kobj_attribute *attr, char *buff)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_gt *gt = dev_to_gt(dev);
- 	bool pl1 = !!read_reason_pl1(gt);
- 
- 	return sysfs_emit(buff, "%u\n", pl1);
- }
--static DEVICE_ATTR_RO(reason_pl1);
-+static struct kobj_attribute attr_reason_pl1 = __ATTR_RO(reason_pl1);
- 
--static ssize_t reason_pl2_show(struct device *dev,
--			       struct device_attribute *attr,
--			       char *buff)
-+static ssize_t reason_pl2_show(struct kobject *kobj,
-+			       struct kobj_attribute *attr, char *buff)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_gt *gt = dev_to_gt(dev);
- 	bool pl2 = !!read_reason_pl2(gt);
- 
- 	return sysfs_emit(buff, "%u\n", pl2);
- }
--static DEVICE_ATTR_RO(reason_pl2);
-+static struct kobj_attribute attr_reason_pl2 = __ATTR_RO(reason_pl2);
- 
--static ssize_t reason_pl4_show(struct device *dev,
--			       struct device_attribute *attr,
--			       char *buff)
-+static ssize_t reason_pl4_show(struct kobject *kobj,
-+			       struct kobj_attribute *attr, char *buff)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_gt *gt = dev_to_gt(dev);
- 	bool pl4 = !!read_reason_pl4(gt);
- 
- 	return sysfs_emit(buff, "%u\n", pl4);
- }
--static DEVICE_ATTR_RO(reason_pl4);
-+static struct kobj_attribute attr_reason_pl4 = __ATTR_RO(reason_pl4);
- 
--static ssize_t reason_thermal_show(struct device *dev,
--				   struct device_attribute *attr,
--				   char *buff)
-+static ssize_t reason_thermal_show(struct kobject *kobj,
-+				   struct kobj_attribute *attr, char *buff)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_gt *gt = dev_to_gt(dev);
- 	bool thermal = !!read_reason_thermal(gt);
- 
- 	return sysfs_emit(buff, "%u\n", thermal);
- }
--static DEVICE_ATTR_RO(reason_thermal);
-+static struct kobj_attribute attr_reason_thermal = __ATTR_RO(reason_thermal);
- 
--static ssize_t reason_prochot_show(struct device *dev,
--				   struct device_attribute *attr,
--				   char *buff)
-+static ssize_t reason_prochot_show(struct kobject *kobj,
-+				   struct kobj_attribute *attr, char *buff)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_gt *gt = dev_to_gt(dev);
- 	bool prochot = !!read_reason_prochot(gt);
- 
- 	return sysfs_emit(buff, "%u\n", prochot);
- }
--static DEVICE_ATTR_RO(reason_prochot);
-+static struct kobj_attribute attr_reason_prochot = __ATTR_RO(reason_prochot);
- 
--static ssize_t reason_ratl_show(struct device *dev,
--				struct device_attribute *attr,
--				char *buff)
-+static ssize_t reason_ratl_show(struct kobject *kobj,
-+				struct kobj_attribute *attr, char *buff)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_gt *gt = dev_to_gt(dev);
- 	bool ratl = !!read_reason_ratl(gt);
- 
- 	return sysfs_emit(buff, "%u\n", ratl);
- }
--static DEVICE_ATTR_RO(reason_ratl);
-+static struct kobj_attribute attr_reason_ratl = __ATTR_RO(reason_ratl);
- 
--static ssize_t reason_vr_thermalert_show(struct device *dev,
--					 struct device_attribute *attr,
--					 char *buff)
-+static ssize_t reason_vr_thermalert_show(struct kobject *kobj,
-+					 struct kobj_attribute *attr, char *buff)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_gt *gt = dev_to_gt(dev);
- 	bool thermalert = !!read_reason_vr_thermalert(gt);
- 
- 	return sysfs_emit(buff, "%u\n", thermalert);
- }
--static DEVICE_ATTR_RO(reason_vr_thermalert);
-+static struct kobj_attribute attr_reason_vr_thermalert = __ATTR_RO(reason_vr_thermalert);
- 
--static ssize_t reason_vr_tdc_show(struct device *dev,
--				  struct device_attribute *attr,
--				  char *buff)
-+static ssize_t reason_vr_tdc_show(struct kobject *kobj,
-+				  struct kobj_attribute *attr, char *buff)
- {
-+	struct device *dev = kobj_to_dev(kobj);
- 	struct xe_gt *gt = dev_to_gt(dev);
- 	bool tdc = !!read_reason_vr_tdc(gt);
- 
- 	return sysfs_emit(buff, "%u\n", tdc);
- }
--static DEVICE_ATTR_RO(reason_vr_tdc);
-+static struct kobj_attribute attr_reason_vr_tdc = __ATTR_RO(reason_vr_tdc);
- 
- static struct attribute *throttle_attrs[] = {
--	&dev_attr_status.attr,
--	&dev_attr_reason_pl1.attr,
--	&dev_attr_reason_pl2.attr,
--	&dev_attr_reason_pl4.attr,
--	&dev_attr_reason_thermal.attr,
--	&dev_attr_reason_prochot.attr,
--	&dev_attr_reason_ratl.attr,
--	&dev_attr_reason_vr_thermalert.attr,
--	&dev_attr_reason_vr_tdc.attr,
-+	&attr_status.attr,
-+	&attr_reason_pl1.attr,
-+	&attr_reason_pl2.attr,
-+	&attr_reason_pl4.attr,
-+	&attr_reason_thermal.attr,
-+	&attr_reason_prochot.attr,
-+	&attr_reason_ratl.attr,
-+	&attr_reason_vr_thermalert.attr,
-+	&attr_reason_vr_tdc.attr,
- 	NULL
- };
- 
+-		if (sec_off + prog_sz > sec_sz) {
++		if (sec_off + prog_sz > sec_sz || sec_off + prog_sz < sec_off) {
+ 			pr_warn("sec '%s': program at offset %zu crosses section boundary\n",
+ 				sec_name, sec_off);
+ 			return -LIBBPF_ERRNO__FORMAT;
 -- 
 2.39.5
 
