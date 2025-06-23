@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94CE22333B;
-	Mon, 23 Jun 2025 22:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4D717BD9;
+	Mon, 23 Jun 2025 22:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716996; cv=none; b=lOkxnarFYxolBwk1VcLQ2UbdLphsc0frRT3Krfjzx0oSR0IkBjbAAQN9SFFw0nXZR35ebqXWSVhyFGEpNWZ2EAMeGERcwK2NpDMLRDRwtskVcp8xOcNNAK29Sa09JWBq7hopgnxLOL7QivYRp6PnNWHRrNn4FIjQN5gW/Ioo/do=
+	t=1750716999; cv=none; b=bUktL9e5s0i0xsFMm7iDh37Q159vByVnQSZjEyaGyGAx1JjmqQ8KHhozaS1urLcosB1DqeK4mxxR8tM4EQKB/sJhOeSpb2YvFW0ipUWZmNyvPX5YpMPxXQkpx+s7LpC/3ZAhrNUpAEvAG3t9o4eeczOaWvuKYFBTjf+cwX29V1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716996; c=relaxed/simple;
-	bh=y0nZez4b1w1zIxCYtb7mB0NL0A2lp61rGa89lsErJS4=;
+	s=arc-20240116; t=1750716999; c=relaxed/simple;
+	bh=G+Fz/e3vu1ZBCDcqrDdHWfeCYrXaLGQ+8Kh4YDmuqC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZ6kR5jtMYQ6hrm9G59fcXtTYthuZ6p8JVAtR0OAlSWXfrJAgieHOtHcVXO0QZqBLjum+vpRoD+IsQBFr9ByQIcUXrXyX+zKRS+bprp58ruY9MxjwS5tfr7h8nelrxpCeV7+xKBnBy92BA4H7XRq0XeJ9bi6s4udsnoZrF/L0n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KnzQVTLB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vilq1ypSI5Pcck7D9hfnGoX2nE7Ql+9b5/Z40HMXvW9Zd/H4YMDlYz13Dn+Z8r7IVMy9Ql6dGJ7WbwyAOk/tOUhxusYiRGp/Udv05TRA/BtLgKLa1kQsRb6NxdYy5VyHQalKrsEvzjrUepGU26C6adTcry1hvc8e/93alVlJiLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7guSZB3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KnzQVTLB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAB5C4CEEA;
-	Mon, 23 Jun 2025 22:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7guSZB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB86AC4CEEA;
+	Mon, 23 Jun 2025 22:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716996;
-	bh=y0nZez4b1w1zIxCYtb7mB0NL0A2lp61rGa89lsErJS4=;
+	s=korg; t=1750716999;
+	bh=G+Fz/e3vu1ZBCDcqrDdHWfeCYrXaLGQ+8Kh4YDmuqC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KnzQVTLBlrkKWTdOx+MAyGwk3MSBW0K7jweaY+NvhpJo5fAMEL5X3sOHaF+4YkzLL
-	 6XCrlTZ1TXsKS4fARPAGziC8n96g5KmHbIFX83BNphWYms9MWjniV18LwIbS7NJQWM
-	 49OZ0OuXsLV+9XidKM9PwCG0kKA2BliRNZJ6mmDQ=
+	b=M7guSZB3+xnz9hrUmyrVlcgyb/MO5XvFWEaiZc6biOXDrYu0mKWWRwKylLVry4gHU
+	 Zk726whoDEq3Je2uLLV1pyukHqv5z35hWPPAEgZB+YtyXRnUb/YV/KkRdePvEueLow
+	 GnyjB/PoAR4dwdtycHRCwj/UeAnLRG4i/yq8MRgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.1 336/508] ext4: factor out ext4_get_maxbytes()
-Date: Mon, 23 Jun 2025 15:06:21 +0200
-Message-ID: <20250623130653.598879240@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 6.12 305/414] jffs2: check jffs2_prealloc_raw_node_refs() result in few other places
+Date: Mon, 23 Jun 2025 15:07:22 +0200
+Message-ID: <20250623130649.627643340@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,78 +47,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit dbe27f06fa38b9bfc598f8864ae1c5d5831d9992 upstream.
+commit 2b6d96503255a3ed676cd70f8368870c6d6a25c6 upstream.
 
-There are several locations that get the correct maxbytes value based on
-the inode's block type. It would be beneficial to extract a common
-helper function to make the code more clear.
+Fuzzing hit another invalid pointer dereference due to the lack of
+checking whether jffs2_prealloc_raw_node_refs() completed successfully.
+Subsequent logic implies that the node refs have been allocated.
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Link: https://patch.msgid.link/20250506012009.3896990-3-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Handle that. The code is ready for propagating the error upwards.
+
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 1 PID: 5835 Comm: syz-executor145 Not tainted 5.10.234-syzkaller #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+RIP: 0010:jffs2_link_node_ref+0xac/0x690 fs/jffs2/nodelist.c:600
+Call Trace:
+ jffs2_mark_erased_block fs/jffs2/erase.c:460 [inline]
+ jffs2_erase_pending_blocks+0x688/0x1860 fs/jffs2/erase.c:118
+ jffs2_garbage_collect_pass+0x638/0x1a00 fs/jffs2/gc.c:253
+ jffs2_reserve_space+0x3f4/0xad0 fs/jffs2/nodemgmt.c:167
+ jffs2_write_inode_range+0x246/0xb50 fs/jffs2/write.c:362
+ jffs2_write_end+0x712/0x1110 fs/jffs2/file.c:302
+ generic_perform_write+0x2c2/0x500 mm/filemap.c:3347
+ __generic_file_write_iter+0x252/0x610 mm/filemap.c:3465
+ generic_file_write_iter+0xdb/0x230 mm/filemap.c:3497
+ call_write_iter include/linux/fs.h:2039 [inline]
+ do_iter_readv_writev+0x46d/0x750 fs/read_write.c:740
+ do_iter_write+0x18c/0x710 fs/read_write.c:866
+ vfs_writev+0x1db/0x6a0 fs/read_write.c:939
+ do_pwritev fs/read_write.c:1036 [inline]
+ __do_sys_pwritev fs/read_write.c:1083 [inline]
+ __se_sys_pwritev fs/read_write.c:1078 [inline]
+ __x64_sys_pwritev+0x235/0x310 fs/read_write.c:1078
+ do_syscall_64+0x30/0x40 arch/x86/entry/common.c:46
+ entry_SYSCALL_64_after_hwframe+0x67/0xd1
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 2f785402f39b ("[JFFS2] Reduce visibility of raw_node_ref to upper layers of JFFS2 code.")
+Fixes: f560928baa60 ("[JFFS2] Allocate node_ref for wasted space when skipping to page boundary")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h    |    7 +++++++
- fs/ext4/extents.c |    7 +------
- fs/ext4/file.c    |    7 +------
- 3 files changed, 9 insertions(+), 12 deletions(-)
+ fs/jffs2/erase.c |    4 +++-
+ fs/jffs2/scan.c  |    4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -3354,6 +3354,13 @@ static inline unsigned int ext4_flex_bg_
- 	return 1 << sbi->s_log_groups_per_flex;
- }
+--- a/fs/jffs2/erase.c
++++ b/fs/jffs2/erase.c
+@@ -425,7 +425,9 @@ static void jffs2_mark_erased_block(stru
+ 			.totlen =	cpu_to_je32(c->cleanmarker_size)
+ 		};
  
-+static inline loff_t ext4_get_maxbytes(struct inode *inode)
-+{
-+	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
-+		return inode->i_sb->s_maxbytes;
-+	return EXT4_SB(inode->i_sb)->s_bitmap_maxbytes;
-+}
-+
- #define ext4_std_error(sb, errno)				\
- do {								\
- 	if ((errno))						\
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -4974,12 +4974,7 @@ static const struct iomap_ops ext4_iomap
+-		jffs2_prealloc_raw_node_refs(c, jeb, 1);
++		ret = jffs2_prealloc_raw_node_refs(c, jeb, 1);
++		if (ret)
++			goto filebad;
  
- static int ext4_fiemap_check_ranges(struct inode *inode, u64 start, u64 *len)
- {
--	u64 maxbytes;
--
--	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
--		maxbytes = inode->i_sb->s_maxbytes;
--	else
--		maxbytes = EXT4_SB(inode->i_sb)->s_bitmap_maxbytes;
-+	u64 maxbytes = ext4_get_maxbytes(inode);
+ 		marker.hdr_crc = cpu_to_je32(crc32(0, &marker, sizeof(struct jffs2_unknown_node)-4));
  
- 	if (*len == 0)
- 		return -EINVAL;
---- a/fs/ext4/file.c
-+++ b/fs/ext4/file.c
-@@ -880,12 +880,7 @@ static int ext4_file_open(struct inode *
- loff_t ext4_llseek(struct file *file, loff_t offset, int whence)
- {
- 	struct inode *inode = file->f_mapping->host;
--	loff_t maxbytes;
--
--	if (!(ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
--		maxbytes = EXT4_SB(inode->i_sb)->s_bitmap_maxbytes;
--	else
--		maxbytes = inode->i_sb->s_maxbytes;
-+	loff_t maxbytes = ext4_get_maxbytes(inode);
+--- a/fs/jffs2/scan.c
++++ b/fs/jffs2/scan.c
+@@ -256,7 +256,9 @@ int jffs2_scan_medium(struct jffs2_sb_in
  
- 	switch (whence) {
- 	default:
+ 		jffs2_dbg(1, "%s(): Skipping %d bytes in nextblock to ensure page alignment\n",
+ 			  __func__, skip);
+-		jffs2_prealloc_raw_node_refs(c, c->nextblock, 1);
++		ret = jffs2_prealloc_raw_node_refs(c, c->nextblock, 1);
++		if (ret)
++			goto out;
+ 		jffs2_scan_dirty_space(c, c->nextblock, skip);
+ 	}
+ #endif
 
 
