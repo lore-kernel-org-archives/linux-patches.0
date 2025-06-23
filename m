@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156C91ACEDA;
-	Mon, 23 Jun 2025 21:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825CA1EDA0F;
+	Mon, 23 Jun 2025 21:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713818; cv=none; b=WFmhBcUIsFEhY2mQ0ALxNknzaxBAAPO814LauFeb82XTXqDqU4a+W2ZDni2YAv/7e3LtQ7hwHEa1uHclTx5iQVThDug0Azuu9QNgSGU2khgJW30mrChrJR92W/+OagkAmaaWRV1u/5SXaXzrz6W6c4b1/21AI4YbSIPm0fZAzTE=
+	t=1750713820; cv=none; b=XEKMOWloFH3ODD5JZ6kCzdlg7Ws3kA6j+PaBbdEnKXgcNE6/atWe/XNU7d00I2cHgniAMOXnhdWzHEs7O+QE4T6SYYWD9LFM8FuZ1lAQMFlqOv7ucW1+P/gJB5NVobc0zgPl1uop3K9tMnt0cDwDCzehopKveBP8XZpDrtIuvrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713818; c=relaxed/simple;
-	bh=YqIaBmVTzsbq1cd8GYkfFHmuIL3Bmpjl5Ryyfm7KHYk=;
+	s=arc-20240116; t=1750713820; c=relaxed/simple;
+	bh=u2I54/01iM1pA+7C5OSSdFrZQwDn4FhfD0H/8optDE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BnX1dI3NvojK4EkfRRZ2T4fqZBGGm26G5UVrkKGc2WQZcPJquNt3je5zDpxsABSyCqCeRqlmjw/jNEHr8p5B5QeUApyNKIo+DZunhcn/o/aw5aj7OVDKcziUbi+/NfO+jGv/mwbYCIHmbBkn8JG4VDhY9D/sQw+a2vIYbYLsihY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8NwL51M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OtXakO9ZWrNVdKcVjkVN14U2U8wOKs3KG0IYfreG6wPgPFidHyZUa1TtT7QHPk4nm64nCZaTj0/QsVYb9ErTQ794Ul8Bv+cjBGBGkjsEe2xbxjE+9/cXH2YsGjuK/X+2i/l8TNammWhl3eLHAeHlmFmoZu86kUU2DkulRG2YP6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1FAZGym; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8NwL51M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0634C4CEEA;
-	Mon, 23 Jun 2025 21:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1FAZGym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B491C4CEEA;
+	Mon, 23 Jun 2025 21:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713817;
-	bh=YqIaBmVTzsbq1cd8GYkfFHmuIL3Bmpjl5Ryyfm7KHYk=;
+	s=korg; t=1750713820;
+	bh=u2I54/01iM1pA+7C5OSSdFrZQwDn4FhfD0H/8optDE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8NwL51Mp3bvkTpEG7u5Hvvd9ENdPBUxWa2g0na5MJ8+S12tyKJfgDwKnnnjhEC+i
-	 SpinUX01ccFZWyJCsZ4lD/RxnCdW4wHZi/HxOz9IWALlkfFsrKkawTZq1jxjYHtOnC
-	 a0YxOYvpQj9NrzQMQORADMfMZsVZwSMz07CtWz7Q=
+	b=m1FAZGymZ55PyUmfe4ZQiS44lgVfuXzFO5p5Gj0NtICg2qY5HsV6EwTiR+z0uLt62
+	 0marTvbdKfwWYLGuHSt1xVAUoupXRoMBRs44zX9u2oPUpOm7u/UrqCYv8ZYlxfYOJj
+	 iz5qY1EE15v+LIFQzFZs4Dp49dCEhDhCDS6D2sI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Talhah Peerbhai <talhah.peerbhai@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/290] ASoC: amd: yc: Add quirk for Lenovo Yoga Pro 7 14ASP9
-Date: Mon, 23 Jun 2025 15:06:18 +0200
-Message-ID: <20250623130630.461596373@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 5.15 169/411] MIPS: Move -Wa,-msoft-float check from as-option to cc-option
+Date: Mon, 23 Jun 2025 15:05:13 +0200
+Message-ID: <20250623130637.949923111@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +45,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Talhah Peerbhai <talhah.peerbhai@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit a28206060dc5848a1a2a15b7f6ac6223d869084d ]
+This patch is for linux-6.1.y and earlier, it has no direct mainline
+equivalent.
 
-Similar to many other Lenovo models with AMD chips, the Lenovo
-Yoga Pro 7 14ASP9 (product name 83HN) requires a specific quirk
-to ensure internal mic detection. This patch adds a quirk fixing this.
+In order to backport commit d5c8d6e0fa61 ("kbuild: Update assembler
+calls to use proper flags and language target") to resolve a separate
+issue regarding PowerPC, the problem noticed and fixed by
+commit 80a20d2f8288 ("MIPS: Always use -Wa,-msoft-float and eliminate
+GAS_HAS_SET_HARDFLOAT") needs to be addressed. Unfortunately, 6.1 and
+earlier do not contain commit e4412739472b ("Documentation: raise
+minimum supported version of binutils to 2.25"), so it cannot be assumed
+that all supported versions of GNU as have support for -msoft-float.
 
-Signed-off-by: Talhah Peerbhai <talhah.peerbhai@gmail.com>
-Link: https://patch.msgid.link/20250515222741.144616-1-talhah.peerbhai@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In order to switch from KBUILD_CFLAGS to KBUILD_AFLAGS in as-option
+without consequence, move the '-Wa,-msoft-float' check to cc-option,
+including '$(cflags-y)' directly to avoid the issue mentioned in
+commit 80a20d2f8288 ("MIPS: Always use -Wa,-msoft-float and eliminate
+GAS_HAS_SET_HARDFLOAT").
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/mips/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 622df58a96942..9fdee74c28df2 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -311,6 +311,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "83AS"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83HN"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
-@@ -360,7 +367,7 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "M5402RA"),
- 		}
- 	},
--        {
-+	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
--- 
-2.39.5
-
+--- a/arch/mips/Makefile
++++ b/arch/mips/Makefile
+@@ -110,7 +110,7 @@ endif
+ # (specifically newer than 2.24.51.20140728) we then also need to explicitly
+ # set ".set hardfloat" in all files which manipulate floating point registers.
+ #
+-ifneq ($(call as-option,-Wa$(comma)-msoft-float,),)
++ifneq ($(call cc-option,$(cflags-y) -Wa$(comma)-msoft-float,),)
+ 	cflags-y		+= -DGAS_HAS_SET_HARDFLOAT -Wa,-msoft-float
+ endif
+ 
 
 
