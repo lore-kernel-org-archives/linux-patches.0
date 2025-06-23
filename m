@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD62E1E51FA;
-	Mon, 23 Jun 2025 21:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BB21E51FA;
+	Mon, 23 Jun 2025 21:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714047; cv=none; b=Ywd51tLtoIqZflzrrDE04Zt16TC03B5BX2SGTdao6HS18ANVLHEzoJSa6bEEV0HyclC9xpLhekG/yXIafXCdubPNOwQpEUHXEzzhWeYmaeBUE9XY7QOYzisNNiLueIF4bgSnli3AtzR10lvtEcYBuJUENIuZyb9Wl9fUCCdxEN4=
+	t=1750714050; cv=none; b=ERMyKUE2QS24Qw210FrX2mZIhwQkyYu0Ym13/syOQ+9Jpiyt+mBHpJ2ejaUeQKmcoLvEHEYmSbkTIz0e8exZdfcdFSZ5sExIJPlVllRUqYaJ6Vw4fh4mG5Jv7pXjmKnpA865zkcZUvlZJcwUp1u6oaC7l1vuOlgj5Et7oDiEftA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714047; c=relaxed/simple;
-	bh=Vl/DKnb89In8Al0iWiSVWXbVlY9zV5qU04Ej850BAbY=;
+	s=arc-20240116; t=1750714050; c=relaxed/simple;
+	bh=NmcXHfJHKz4CH0mvhJdI/D8IBE5cqimV2TvEOeezJMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=siFgycN+Is8ibJ6zmq9uQLk25fDPwd/iY7pwwdbdGG0NIaC73oRqC8/LPRsqOQ127CIBR8+wydbkn4xnO3N5FIfXBLyAr1RXRp5Ibl7P5Zz+y3qexIe6xe2AmaB+r5fzBE4DEv5XZZ0E7V6jZ5CgkD0Byn7d/6JmUAmqUSv26nM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHi0AMR1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X7gbPJ0duHfaZSOJnTzVNRHbgD1XRjga54adKEQL5yVweWdm8Fqi8ISgOt4VdfINLTloijtPQ0bQ1T0G7cHWAQDwEi9VsGPHF2stkY9xIGlK0r2ZyJkyCOjW/fr4O6u28/pC28wQHW22DngEb/D4AAyrVnE1oBj9o2Zu0/FEU+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gL/uUnpV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHi0AMR1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47DBEC4CEEA;
-	Mon, 23 Jun 2025 21:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gL/uUnpV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9F3C4CEEA;
+	Mon, 23 Jun 2025 21:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714047;
-	bh=Vl/DKnb89In8Al0iWiSVWXbVlY9zV5qU04Ej850BAbY=;
+	s=korg; t=1750714050;
+	bh=NmcXHfJHKz4CH0mvhJdI/D8IBE5cqimV2TvEOeezJMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHi0AMR1HSQWE3JCr41vsDsXTe8ZbvVsFMTdFwzggLfDgrX6t8XGPpKm2yKWKFMpY
-	 CVoyHSWa+OmzQZk2Y0uYvMl1NBWsWsvvUxKaW5J1Uzll37DDabWqad0mc6CVVSgH9n
-	 /JaMR7SIbfDkJiGcQJHIMF41CPhi+N2uKlt47688=
+	b=gL/uUnpVLniZK+jDyUzqRPG0X4NxjGeCGQFTILFe8kylPRY5uou/dzVtCBabHAv1N
+	 7QLaB5IAFn1U0Ps8UKyXmHVLo1SP8Ont0yOlRc8HAM4GVkw2YHTpbxme6+Mys6JGf1
+	 CU6//4+qSNkbBM7Gc58RegjCrvOXXaxnQPabC98s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.6 110/290] PCI: Fix lock symmetry in pci_slot_unlock()
-Date: Mon, 23 Jun 2025 15:06:11 +0200
-Message-ID: <20250623130630.264524331@linuxfoundation.org>
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 162/411] net_sched: ets: fix a race in ets_qdisc_change()
+Date: Mon, 23 Jun 2025 15:05:06 +0200
+Message-ID: <20250623130637.731511765@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit f3efb9569b4a21354ef2caf7ab0608a3e14cc6e4 upstream.
+[ Upstream commit d92adacdd8c2960be856e0b82acc5b7c5395fddb ]
 
-The commit a4e772898f8b ("PCI: Add missing bridge lock to pci_bus_lock()")
-made the lock function to call depend on dev->subordinate but left
-pci_slot_unlock() unmodified creating locking asymmetry compared with
-pci_slot_lock().
+Gerrard Tai reported a race condition in ETS, whenever SFQ perturb timer
+fires at the wrong time.
 
-Because of the asymmetric lock handling, the same bridge device is unlocked
-twice. First pci_bus_unlock() unlocks bus->self and then pci_slot_unlock()
-will unconditionally unlock the same bridge device.
+The race is as follows:
 
-Move pci_dev_unlock() inside an else branch to match the logic in
-pci_slot_lock().
+CPU 0                                 CPU 1
+[1]: lock root
+[2]: qdisc_tree_flush_backlog()
+[3]: unlock root
+ |
+ |                                    [5]: lock root
+ |                                    [6]: rehash
+ |                                    [7]: qdisc_tree_reduce_backlog()
+ |
+[4]: qdisc_put()
 
-Fixes: a4e772898f8b ("PCI: Add missing bridge lock to pci_bus_lock()")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250505115412.37628-1-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This can be abused to underflow a parent's qlen.
+
+Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
+should fix the race, because all packets will be purged from the qdisc
+before releasing the lock.
+
+Fixes: b05972f01e7d ("net: sched: tbf: don't call qdisc_put() while holding tree lock")
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250611111515.1983366-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_ets.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5823,7 +5823,8 @@ static void pci_slot_unlock(struct pci_s
- 			continue;
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
+diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
+index a37979ec78f88..b49e1a9775865 100644
+--- a/net/sched/sch_ets.c
++++ b/net/sched/sch_ets.c
+@@ -675,7 +675,7 @@ static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
+ 	for (i = q->nbands; i < oldbands; i++) {
+ 		if (i >= q->nstrict && q->classes[i].qdisc->q.qlen)
+ 			list_del_init(&q->classes[i].alist);
+-		qdisc_tree_flush_backlog(q->classes[i].qdisc);
++		qdisc_purge_queue(q->classes[i].qdisc);
  	}
- }
- 
+ 	q->nstrict = nstrict;
+ 	memcpy(q->prio2band, priomap, sizeof(priomap));
+-- 
+2.39.5
+
 
 
