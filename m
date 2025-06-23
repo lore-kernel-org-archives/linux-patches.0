@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F5B223DD7;
-	Mon, 23 Jun 2025 21:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF5C224244;
+	Mon, 23 Jun 2025 21:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713409; cv=none; b=XziLc3alX1H0m+GS7bsRZjcjMCXEZTohx+QsKj4c8n4JBHIR2ILEg2T8ZO6clIalOXwp1+Q1lxWl9dJPj064e1ThMd1S0FYVlEJMBBuC8QT4rKZhVIELH+a3BsWVxSq18aVpCKdpYo5bj1Hau7IxmQsVgHPV9oY5VIHJz0n1ktk=
+	t=1750713413; cv=none; b=GdWMaHm2IcLtI+fQVzeSeHuYnGQQ+Hd2nmHP+cDbFm9ir57vVyI5+i3KPg/FaO4CDANoLo+Tl/dnhihlt9Xccv1WZTaQwm6jbDte5BAJi1ylSCD+2qNtliML+QPCyX/pCBxu5THGFyMTetxwf6Ff0a9lUvo4kc/Ta5E1ZXYkai4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713409; c=relaxed/simple;
-	bh=LhMju5G9g+4JnQY49X3FT6QMxcDKuB2CswnS0kR6H4E=;
+	s=arc-20240116; t=1750713413; c=relaxed/simple;
+	bh=eplStVWqseqt8kme4nJCi/Oks70DFYSO25Rzg2e9RVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ID+xWOZ0CN55pfS2YuNJ3HM3s5wMAFOjAVSWTTKkLW5Uty0JiKAajYTHf3uYph4l17O3hiFrRoETYId2tjsNJSI00PIeSpTzDkmXtCYpgEQfSu5jdOdoHgyo+DHR5GL6J+mQeDzZNuFC/N3DivLNU3Im3P/dnxd0HOffYloFONo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IiCGbBtz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pJnZor1YQrpOGGWlzFHwGYawiqR+gWSMsDK4RMFSS/anL2xZg5xXH+VCCEq+oPZwcB38mH3uB7vrd/GGY8xMpj2nxayaeu9RxvIeFMJaVnG6NYSnWTmBlzgaIJo6x7QKuD7YLUTIcFa54BLgQL8evefWxeTBRiyXr19/zzyyTqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJ/A//U2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IiCGbBtz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38324C4CEEA;
-	Mon, 23 Jun 2025 21:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJ/A//U2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE01C4CEED;
+	Mon, 23 Jun 2025 21:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713409;
-	bh=LhMju5G9g+4JnQY49X3FT6QMxcDKuB2CswnS0kR6H4E=;
+	s=korg; t=1750713412;
+	bh=eplStVWqseqt8kme4nJCi/Oks70DFYSO25Rzg2e9RVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IiCGbBtzfAOzlIVOMtUgs2XM8f21e6FldKkenXx0g2WcEH0GkuPWWWLGqwXKgFdFZ
-	 EfAj9OAbwOLJydF3VgSggg6IXPVIkIUioW3EjwaJx+XtRSn9VCwIXOqW60D7uQ/Hq7
-	 tWrMvKGV38QuwqPNuU2BQa0lUG4q+kEHbg6GZkRM=
+	b=aJ/A//U27UQapylMlBhPUfTF8bVLaHsWv/dE9fKyTgRrqAfkrmHawWKl8WDv2QTMp
+	 EwT+F8igAuEbJw0WfTLXnFWbmK7f3qL+d4hKvZqtvz5nu5C4uHfaJF2Ne2PXyTx4aI
+	 EBda/lD3VlbBG1cXVYIIVPXinppFqlN1HdeOzrYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Greental <yonatan02greental@gmail.com>,
-	Haren Myneni <haren@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 145/411] powerpc/vas: Return -EINVAL if the offset is non-zero in mmap()
-Date: Mon, 23 Jun 2025 15:04:49 +0200
-Message-ID: <20250623130637.262043326@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Tomasz Figa <tfiga@chromium.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.12 062/414] media: videobuf2: use sgtable-based scatterlist wrappers
+Date: Mon, 23 Jun 2025 15:03:19 +0200
+Message-ID: <20250623130643.623309916@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,56 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haren Myneni <haren@linux.ibm.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 0d67f0dee6c9176bc09a5482dd7346e3a0f14d0b ]
+commit a704a3c503ae1cfd9de8a2e2d16a0c9430e98162 upstream.
 
-The user space calls mmap() to map VAS window paste address
-and the kernel returns the complete mapped page for each
-window. So return -EINVAL if non-zero is passed for offset
-parameter to mmap().
+Use common wrappers operating directly on the struct sg_table objects to
+fix incorrect use of scatterlists sync calls. dma_sync_sg_for_*()
+functions have to be called with the number of elements originally passed
+to dma_map_sg_*() function, not the one returned in sgt->nents.
 
-See Documentation/arch/powerpc/vas-api.rst for mmap()
-restrictions.
-
-Co-developed-by: Jonathan Greental <yonatan02greental@gmail.com>
-Signed-off-by: Jonathan Greental <yonatan02greental@gmail.com>
-Reported-by: Jonathan Greental <yonatan02greental@gmail.com>
-Fixes: dda44eb29c23 ("powerpc/vas: Add VAS user space API")
-Signed-off-by: Haren Myneni <haren@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250610021227.361980-2-maddy@linux.ibm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d4db5eb57cab ("media: videobuf2: add begin/end cpu_access callbacks to dma-sg")
+CC: stable@vger.kernel.org
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Tomasz Figa <tfiga@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/book3s/vas-api.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/media/common/videobuf2/videobuf2-dma-sg.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/platforms/book3s/vas-api.c b/arch/powerpc/platforms/book3s/vas-api.c
-index 4d82c92ddd523..bfe52af0719eb 100644
---- a/arch/powerpc/platforms/book3s/vas-api.c
-+++ b/arch/powerpc/platforms/book3s/vas-api.c
-@@ -367,6 +367,15 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
- 		return -EINVAL;
- 	}
+--- a/drivers/media/common/videobuf2/videobuf2-dma-sg.c
++++ b/drivers/media/common/videobuf2/videobuf2-dma-sg.c
+@@ -469,7 +469,7 @@ vb2_dma_sg_dmabuf_ops_begin_cpu_access(s
+ 	struct vb2_dma_sg_buf *buf = dbuf->priv;
+ 	struct sg_table *sgt = buf->dma_sgt;
  
-+	/*
-+	 * Map complete page to the paste address. So the user
-+	 * space should pass 0ULL to the offset parameter.
-+	 */
-+	if (vma->vm_pgoff) {
-+		pr_debug("Page offset unsupported to map paste address\n");
-+		return -EINVAL;
-+	}
-+
- 	/* Ensure instance has an open send window */
- 	if (!txwin) {
- 		pr_err("%s(): No send window open?\n", __func__);
--- 
-2.39.5
-
+-	dma_sync_sg_for_cpu(buf->dev, sgt->sgl, sgt->nents, buf->dma_dir);
++	dma_sync_sgtable_for_cpu(buf->dev, sgt, buf->dma_dir);
+ 	return 0;
+ }
+ 
+@@ -480,7 +480,7 @@ vb2_dma_sg_dmabuf_ops_end_cpu_access(str
+ 	struct vb2_dma_sg_buf *buf = dbuf->priv;
+ 	struct sg_table *sgt = buf->dma_sgt;
+ 
+-	dma_sync_sg_for_device(buf->dev, sgt->sgl, sgt->nents, buf->dma_dir);
++	dma_sync_sgtable_for_device(buf->dev, sgt, buf->dma_dir);
+ 	return 0;
+ }
+ 
 
 
