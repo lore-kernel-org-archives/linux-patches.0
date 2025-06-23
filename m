@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581897482;
-	Mon, 23 Jun 2025 21:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E807482;
+	Mon, 23 Jun 2025 21:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713592; cv=none; b=VlYy9wPHAS88nYSNY/3Xx8zgXSdpFeIWDdQopm954PdSSC5hiBEJdeaAKYFAoFpX5MX3rI8o1eC/vRUmj+9qJWtbOZujXVLxtURrABOv/VbmqmWdpjKaZZ0Iej6+/An8y2Ot7nnOuNmZJqVpA0AVXZv9gLBJdHtFLMaK2ByqrMg=
+	t=1750713594; cv=none; b=W+ZUzvwWLd2Y27W712TgK8Qi0dRp02jhCaGvTdk7an/7f4cPP+Xe8IpGz/3rJzCxjpCmOaZkzs/Jmc5VT0YkgOF53rN9xUJ9HUTLMFs1Rsm12a4+IjQLsNqY0QNfqmb0+xku5W42wJ1TwSqxjHJ+bLKHQbulVgAE9IRgVnIIMkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713592; c=relaxed/simple;
-	bh=k3rOPfotZi65lFnmV0B+om8IxC95Gt2xoXtju/xjbSg=;
+	s=arc-20240116; t=1750713594; c=relaxed/simple;
+	bh=YViEm5A7eGaBFKqQBHnsRYgC56FbCyQHsHKqxrwm9uM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZpRCT9OosLiZrbqt+s31tngRlgbC9xSjlb1ZyzNLdRZIpJB2O5MRjBDqifBlb/1d0vYOBU4i6z1nkZDP1CPZS/RuKwr+lgrW4LEzGC6gijjbIoTUg/4tmUV/NHe3gj69zik7APHnPiEKy1SgQr4SH9aI1vT1848KUt2ZJZR0mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tU/Wx6S5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sfbYsGm6crf9j4YhBOTadXyFsGAXw7n1mS3GoFGNcSGBsY8A3FRjGq3wyu/rpxF+tAzyhPp8LQQIW/Mkl34qG11/R0rH0NvOlFqnTNt9hGK4aTYsxv2KS4rCkY0HyZ9FSL1j+XUW3PjOEc4JSo4vH6rqNSLCvZEo2nFY2RDsY64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iryCWGcF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tU/Wx6S5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4890C4CEEA;
-	Mon, 23 Jun 2025 21:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iryCWGcF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED98C4CEEA;
+	Mon, 23 Jun 2025 21:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713592;
-	bh=k3rOPfotZi65lFnmV0B+om8IxC95Gt2xoXtju/xjbSg=;
+	s=korg; t=1750713594;
+	bh=YViEm5A7eGaBFKqQBHnsRYgC56FbCyQHsHKqxrwm9uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tU/Wx6S5kFJ0D5oFgqx6ZZg639HF1Qr9vc1cX/BTfqll0WIeiFHEhoS2gS1Ok9vsg
-	 lU+DQ7rfMI1+2rEtaTpaEquwg/QjKHVj27gjhzHxrLHMUg+tX9L4/zJulYZebi4Qrc
-	 XfS2YIr23akp0ulRd1MBnLbdLwxHdbHiUct2IXB8=
+	b=iryCWGcFHtOuBvOHEltk7IByKmtVpocqcl1f3v3ScovVL6Z0xPtZrNwBQ2koISbDl
+	 Zgc63LKQPHlndzII4e1z+Wrv9J5s9oLpQt+JWfuWJlG1HH0j2eeeQSZdiPwszJ5065
+	 A9T2VznxKsDa6TUiHtrpyKlIcFbB4DcVXQBbMRfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 336/592] clk: qcom: gcc: Set FORCE_MEM_CORE_ON for gcc_ufs_axi_clk for 8650/8750
-Date: Mon, 23 Jun 2025 15:04:54 +0200
-Message-ID: <20250623130708.445250478@linuxfoundation.org>
+Subject: [PATCH 5.15 128/411] fix propagation graph breakage by MOVE_MOUNT_SET_GROUP move_mount(2)
+Date: Mon, 23 Jun 2025 15:04:32 +0200
+Message-ID: <20250623130636.788800879@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +47,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit da94a81ea6c6f1cd2f389c5631e33c145ac7b35b ]
+[ Upstream commit d8cc0362f918d020ca1340d7694f07062dc30f36 ]
 
-Update the force mem core bit for UFS AXI clock to force the core on
-signal to remain active during halt state of the clk. If force mem
-core bit of the clock is not set, the memories of the subsystem will
-not retain the logic across power states. This is required for the MCQ
-feature of the UFS driver.
+9ffb14ef61ba "move_mount: allow to add a mount into an existing group"
+breaks assertions on ->mnt_share/->mnt_slave.  For once, the data structures
+in question are actually documented.
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Reviewed-by: Imran Shaik <quic_imrashai@quicinc.com>
-Link: https://lore.kernel.org/r/20250414-gcc_ufs_mem_core-v1-1-67b5529b9b5d@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Documentation/filesystem/sharedsubtree.rst:
+        All vfsmounts in a peer group have the same ->mnt_master.  If it is
+	non-NULL, they form a contiguous (ordered) segment of slave list.
+
+do_set_group() puts a mount into the same place in propagation graph
+as the old one.  As the result, if old mount gets events from somewhere
+and is not a pure event sink, new one needs to be placed next to the
+old one in the slave list the old one's on.  If it is a pure event
+sink, we only need to make sure the new one doesn't end up in the
+middle of some peer group.
+
+"move_mount: allow to add a mount into an existing group" ends up putting
+the new one in the beginning of list; that's definitely not going to be
+in the middle of anything, so that's fine for case when old is not marked
+shared.  In case when old one _is_ marked shared (i.e. is not a pure event
+sink), that breaks the assumptions of propagation graph iterators.
+
+Put the new mount next to the old one on the list - that does the right thing
+in "old is marked shared" case and is just as correct as the current behaviour
+if old is not marked shared (kudos to Pavel for pointing that out - my original
+suggested fix changed behaviour in the "nor marked" case, which complicated
+things for no good reason).
+
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Fixes: 9ffb14ef61ba ("move_mount: allow to add a mount into an existing group")
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm8650.c | 2 ++
- drivers/clk/qcom/gcc-sm8750.c | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ fs/namespace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8650.c b/drivers/clk/qcom/gcc-sm8650.c
-index fa1672c4e7d81..24f98062b9dd5 100644
---- a/drivers/clk/qcom/gcc-sm8650.c
-+++ b/drivers/clk/qcom/gcc-sm8650.c
-@@ -3817,7 +3817,9 @@ static int gcc_sm8650_probe(struct platform_device *pdev)
- 	qcom_branch_set_clk_en(regmap, 0x32004); /* GCC_VIDEO_AHB_CLK */
- 	qcom_branch_set_clk_en(regmap, 0x32030); /* GCC_VIDEO_XO_CLK */
+diff --git a/fs/namespace.c b/fs/namespace.c
+index a99a060e89316..76a1cf75457be 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2765,7 +2765,7 @@ static int do_set_group(struct path *from_path, struct path *to_path)
+ 	if (IS_MNT_SLAVE(from)) {
+ 		struct mount *m = from->mnt_master;
  
-+	/* FORCE_MEM_CORE_ON for ufs phy ice core and gcc ufs phy axi clocks  */
- 	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_ice_core_clk, true);
-+	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_axi_clk, true);
+-		list_add(&to->mnt_slave, &m->mnt_slave_list);
++		list_add(&to->mnt_slave, &from->mnt_slave);
+ 		to->mnt_master = m;
+ 	}
  
- 	/* Clear GDSC_SLEEP_ENA_VOTE to stop votes being auto-removed in sleep. */
- 	regmap_write(regmap, 0x52150, 0x0);
-diff --git a/drivers/clk/qcom/gcc-sm8750.c b/drivers/clk/qcom/gcc-sm8750.c
-index b36d709760958..8092dd6b37b56 100644
---- a/drivers/clk/qcom/gcc-sm8750.c
-+++ b/drivers/clk/qcom/gcc-sm8750.c
-@@ -3244,8 +3244,9 @@ static int gcc_sm8750_probe(struct platform_device *pdev)
- 	regmap_update_bits(regmap, 0x52010, BIT(20), BIT(20));
- 	regmap_update_bits(regmap, 0x52010, BIT(21), BIT(21));
- 
--	/* FORCE_MEM_CORE_ON for ufs phy ice core clocks */
-+	/* FORCE_MEM_CORE_ON for ufs phy ice core and gcc ufs phy axi clocks  */
- 	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_ice_core_clk, true);
-+	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_axi_clk, true);
- 
- 	return qcom_cc_really_probe(&pdev->dev, &gcc_sm8750_desc, regmap);
- }
 -- 
 2.39.5
 
