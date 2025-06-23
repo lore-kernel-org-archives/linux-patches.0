@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E349B1F7580;
-	Mon, 23 Jun 2025 21:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991D01DF98B;
+	Mon, 23 Jun 2025 21:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713136; cv=none; b=s5K+nGLUmZQxgMy21iFzgWA/Vr6cAjFna8PDjJ0Gdd/t2CAhIOGTvx0R+xIjK3w3g/yYjguL0ZJBA6D+PzFl9QERFGYpd6kJvbhAqkaVFNor5XBcJyg+tcz05VV082gJls9shSwh8Md40KwqrUUFti0EV1GaKvWIWUwKzrnPEHw=
+	t=1750713138; cv=none; b=n5QEvYPM8zGlROd4k7iPn3Y3IrWAOgnmpPlysbTdCzPakHqPuYu8oiJY1Wt71TrvZNmoBSLxgNjUd/fZGPnCQSTz0Db+0BCmRpnIY5MB/LjoIenZAiuA9XEcWVodJi4wsinSFaWbZ9/SSV3pd6Mvygq3nhoqz7CoAvKQI3Vzj8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713136; c=relaxed/simple;
-	bh=VM+Y/agfYK87uiVcnFnHPF+pfjphLGgLE5YjtvG0RfI=;
+	s=arc-20240116; t=1750713138; c=relaxed/simple;
+	bh=bH1vtAD20jMDp/KOwytvc7WS25YHHQ+oJTtR45qv3ZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4jTRRNC8dPRaFpB+B/xLkKXdTonTrqkiCOIDS4bRE59XpoPUwarW7oAiWiZ1/UO737OnOuvnMC44lDBkHf9G0cL2ODdhzVCTkgh0dSrRtBB4/BabT7quf3dT8ZAiDQMgSUW6KrMlIMNtMd8J7H3nOyYCKpJtvJfyUBLrQNG4ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFqj8I1a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ocqOgENiXQaPzSFznKG0FUPAyMMDS0IGztwzmN+0+OFjIcCKc7IpmmWi1ETz4h7HV+bRCJh4xbM/dI4aprBqe7jhJIG6QzXDtyhPFDVko6ex8VnE2dz85Lx/x6Z+eZfhngT1wf0VBqr5EOUkbtNkh2YP2FKOhoqMT6+k88rJjgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDYUBDqV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFqj8I1a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7805DC4CEEA;
-	Mon, 23 Jun 2025 21:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDYUBDqV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E477FC4CEEA;
+	Mon, 23 Jun 2025 21:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713135;
-	bh=VM+Y/agfYK87uiVcnFnHPF+pfjphLGgLE5YjtvG0RfI=;
+	s=korg; t=1750713138;
+	bh=bH1vtAD20jMDp/KOwytvc7WS25YHHQ+oJTtR45qv3ZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFqj8I1a9iIDbcMXVsfnwEoseqfiV+b95MXF95D6cx+5Hjc5R+8p4ZsAbeBFLrVSZ
-	 yZw/F4Uy6Na5BNEPxtzMKIbheDVwpjG4FesFGfDoDK7vh5Ozgz99Md9peRAcZi4h5F
-	 Y7cVAI76VX9G9ntWiLxNsLgfr/zYzKxBSLBFQI1I=
+	b=xDYUBDqV0poDHYQz3uzNLgkAwMy2UHrBdQl5GJoZi9lY9xJ2Tad8JLVDAkcMeMp8g
+	 VsU9bzqOVMT1XttPi7KIJ8RW5UsaNkAmxy96rnwswv75My7giNik7RyZkQivLsI25M
+	 PbOJ/Dvd1ZZg5/33a3nM8iI62SXQmU8AOvhMQwIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Tony Lindgren <tony@atomide.com>
-Subject: [PATCH 6.6 051/290] ARM: omap: pmic-cpcap: do not mess around without CPCAP or OMAP4
-Date: Mon, 23 Jun 2025 15:05:12 +0200
-Message-ID: <20250623130628.537995186@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.10 147/355] kbuild: Add CLANG_FLAGS to as-instr
+Date: Mon, 23 Jun 2025 15:05:48 +0200
+Message-ID: <20250623130631.128775626@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +46,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 7397daf1029d5bfd3415ec8622f5179603d5702d upstream.
+commit cff6e7f50bd315e5b39c4e46c704ac587ceb965f upstream.
 
-The late init call just writes to omap4 registers as soon as
-CONFIG_MFD_CPCAP is enabled without checking whether the
-cpcap driver is actually there or the SoC is indeed an
-OMAP4.
-Rather do these things only with the right device combination.
+A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
+KBUILD_CPPFLAGS so that '--target' is available while preprocessing.
+When that occurs, the following errors appear multiple times when
+building ARCH=powerpc powernv_defconfig:
 
-Fixes booting the BT200 with said configuration enabled and non-factory
-X-Loader and probably also some surprising behavior on other devices.
+  ld.lld: error: vmlinux.a(arch/powerpc/kernel/head_64.o):(.text+0x12d4): relocation R_PPC64_ADDR16_HI out of range: -4611686018409717520 is not in [-2147483648, 2147483647]; references '__start___soft_mask_table'
+  ld.lld: error: vmlinux.a(arch/powerpc/kernel/head_64.o):(.text+0x12e8): relocation R_PPC64_ADDR16_HI out of range: -4611686018409717392 is not in [-2147483648, 2147483647]; references '__stop___soft_mask_table'
 
-Fixes: c145649bf262 ("ARM: OMAP2+: Configure voltage controller for cpcap to low-speed")
-CC: stable@vger.kernel.org
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Reivewed-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20250331144439.769697-1-andreas@kemnade.info
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Diffing the .o.cmd files reveals that -DHAVE_AS_ATHIGH=1 is not present
+anymore, because as-instr only uses KBUILD_AFLAGS, which will no longer
+contain '--target'.
+
+Mirror Kconfig's as-instr and add CLANG_FLAGS explicitly to the
+invocation to ensure the target information is always present.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-omap2/pmic-cpcap.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ scripts/Kbuild.include |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm/mach-omap2/pmic-cpcap.c
-+++ b/arch/arm/mach-omap2/pmic-cpcap.c
-@@ -264,7 +264,11 @@ int __init omap4_cpcap_init(void)
+--- a/scripts/Kbuild.include
++++ b/scripts/Kbuild.include
+@@ -110,7 +110,7 @@ as-option = $(call try-run,\
+ # Usage: aflags-y += $(call as-instr,instr,option1,option2)
  
- static int __init cpcap_late_init(void)
- {
--	omap4_vc_set_pmic_signaling(PWRDM_POWER_RET);
-+	if (!of_find_compatible_node(NULL, NULL, "motorola,cpcap"))
-+		return 0;
-+
-+	if (soc_is_omap443x() || soc_is_omap446x() || soc_is_omap447x())
-+		omap4_vc_set_pmic_signaling(PWRDM_POWER_RET);
+ as-instr = $(call try-run,\
+-	printf "%b\n" "$(1)" | $(CC) -Werror $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
++	printf "%b\n" "$(1)" | $(CC) -Werror $(CLANG_FLAGS) $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
  
- 	return 0;
- }
+ # __cc-option
+ # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
 
 
