@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7832E1E487;
-	Mon, 23 Jun 2025 13:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0104E1E487;
+	Mon, 23 Jun 2025 13:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684512; cv=none; b=NZ9nh5oRrhDuMXbVu+Jzs+rjmBFLsH81capyVCB5saWWbj/pyh8SIcWSJUurv3XilHOriemoUIDeXxqjvXBuzC8d8iazMhZ+qlMMqZ8luRw8ssiLXAwyjfhC7JqMYvVXR8Z5i+EtB/343PZeCDR22yLo53OzO3U1PM0x0QbPIfY=
+	t=1750684515; cv=none; b=MuWPv+iQ/86sh6X+bu9annY0lpySr511LGgrM8+/QmHmtYdyiWR7b4tINzWlOSav8bFNqdgbpP8DZjUj5ZlfRGKck+uDi2St/N1UBUJhbNTdg0xQn5PRhVFA6XQkL2QN+35HUv+5RLkqtl5rvyEmGj9epajBmE3qDjtHyejcJyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684512; c=relaxed/simple;
-	bh=IOdKLNmgt9kE24Tc1VJbbV9Jf6cAOUdQfX3A00wziE4=;
+	s=arc-20240116; t=1750684515; c=relaxed/simple;
+	bh=ziDLXIbWAXOZE0tn2IhuFQDf1Ho5tZ4LRzAACAs/fLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNudgXUVoe+VluBuHjqKSgJaiLtzoPTlJ/CbFJy8LchYCC4fkE/fiwp2TOCfb0gFHsmvJN9FT3oYtyUNbtUTvXRrzR2eFugVavv7kIXeVungsYB0iiEMTqiqpx/yhpBBizi5taVoMIYRunmzpugXbue7/GFN6OkMWf5c7eKtkhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pt14YgYc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VqTQ250/ugVoXQCTgiss53KlP3071iECt9AZRlBBn5g/RWPxIS1nvQtXVqZSHzkhSxqR9CqvZ8M2mRaUveJBIg68/xWrULgN0PLImIIOgBOncCsazYmgyKuNyhgbTByrHYbuYkkFTR11UJ+JrZi23bCGUHTclG68Fbr7/GAC3AQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/Hf3D1z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pt14YgYc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE81C4CEEA;
-	Mon, 23 Jun 2025 13:15:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/Hf3D1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879EBC4CEEA;
+	Mon, 23 Jun 2025 13:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684512;
-	bh=IOdKLNmgt9kE24Tc1VJbbV9Jf6cAOUdQfX3A00wziE4=;
+	s=korg; t=1750684514;
+	bh=ziDLXIbWAXOZE0tn2IhuFQDf1Ho5tZ4LRzAACAs/fLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pt14YgYchjf5M2FssSrVrXqOCqsOOnsIk07AaaZqvZQTRIxdkCDjA7R7blNkQs3Sr
-	 ExjVqTOOLmsXUedST3Bs91jWOCeiYWbTjA2MvFfGtH1NUN0avO9XY/4FpijuWtjd2x
-	 qPc9IpSpq6UIQVDOQVqHu1XhHkgEDoT94uXVE0gM=
+	b=d/Hf3D1zUu06mur9UbfaA0eU7fEa69Q10mV8qijuPY8hQ91NJsAgp/QE4r6xnHr68
+	 aRy/Od293ydP6IIu7KM6dCzBtBaBrlJF5DTM5lc73O9fKYvJUjmZycQnYOzpTJlISM
+	 GcGsMH2KWYHuKMKyxavDFpe4UlgtLLBtuzrZvoxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.15 097/592] block: use plug request list tail for one-shot backmerge attempt
-Date: Mon, 23 Jun 2025 15:00:55 +0200
-Message-ID: <20250623130702.584168208@linuxfoundation.org>
+Subject: [PATCH 6.15 098/592] block: Clear BIO_EMULATES_ZONE_APPEND flag on BIO completion
+Date: Mon, 23 Jun 2025 15:00:56 +0200
+Message-ID: <20250623130702.608252826@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -50,70 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 961296e89dc3800e6a3abc3f5d5bb4192cf31e98 upstream.
+commit f705d33c2f0353039d03e5d6f18f70467d86080e upstream.
 
-Previously, the block layer stored the requests in the plug list in
-LIFO order. For this reason, blk_attempt_plug_merge() would check
-just the head entry for a back merge attempt, and abort after that
-unless requests for multiple queues existed in the plug list. If more
-than one request is present in the plug list, this makes the one-shot
-back merging less useful than before, as it'll always fail to find a
-quick merge candidate.
+When blk_zone_write_plug_bio_endio() is called for a regular write BIO
+used to emulate a zone append operation, that is, a BIO flagged with
+BIO_EMULATES_ZONE_APPEND, the BIO operation code is restored to the
+original REQ_OP_ZONE_APPEND but the BIO_EMULATES_ZONE_APPEND flag is not
+cleared. Clear it to fully return the BIO to its orginal definition.
 
-Use the tail entry for the one-shot merge attempt, which is the last
-added request in the list. If that fails, abort immediately unless
-there are multiple queues available. If multiple queues are available,
-then scan the list. Ideally the latter scan would be a backwards scan
-of the list, but as it currently stands, the plug list is singly linked
-and hence this isn't easily feasible.
-
+Fixes: 9b1ce7f0c6f8 ("block: Implement zone append emulation")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-block/20250611121626.7252-1-abuehaze@amazon.com/
-Reported-by: Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>
-Fixes: e70c301faece ("block: don't reorder requests in blk_add_rq_to_plug")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250611005915.89843-1-dlemoal@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-merge.c |   26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ block/blk-zoned.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/block/blk-merge.c
-+++ b/block/blk-merge.c
-@@ -1127,20 +1127,20 @@ bool blk_attempt_plug_merge(struct reque
- 	if (!plug || rq_list_empty(&plug->mq_list))
- 		return false;
- 
--	rq_list_for_each(&plug->mq_list, rq) {
--		if (rq->q == q) {
--			if (blk_attempt_bio_merge(q, rq, bio, nr_segs, false) ==
--			    BIO_MERGE_OK)
--				return true;
--			break;
--		}
-+	rq = plug->mq_list.tail;
-+	if (rq->q == q)
-+		return blk_attempt_bio_merge(q, rq, bio, nr_segs, false) ==
-+			BIO_MERGE_OK;
-+	else if (!plug->multiple_queues)
-+		return false;
- 
--		/*
--		 * Only keep iterating plug list for merges if we have multiple
--		 * queues
--		 */
--		if (!plug->multiple_queues)
--			break;
-+	rq_list_for_each(&plug->mq_list, rq) {
-+		if (rq->q != q)
-+			continue;
-+		if (blk_attempt_bio_merge(q, rq, bio, nr_segs, false) ==
-+		    BIO_MERGE_OK)
-+			return true;
-+		break;
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -1225,6 +1225,7 @@ void blk_zone_write_plug_bio_endio(struc
+ 	if (bio_flagged(bio, BIO_EMULATES_ZONE_APPEND)) {
+ 		bio->bi_opf &= ~REQ_OP_MASK;
+ 		bio->bi_opf |= REQ_OP_ZONE_APPEND;
++		bio_clear_flag(bio, BIO_EMULATES_ZONE_APPEND);
  	}
- 	return false;
- }
+ 
+ 	/*
 
 
