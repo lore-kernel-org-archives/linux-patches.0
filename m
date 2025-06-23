@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726DA222590;
-	Mon, 23 Jun 2025 22:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1359225A47;
+	Mon, 23 Jun 2025 22:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716328; cv=none; b=hvZXf1fjYsCVnkSZ7SpUahIz9S4AFpiROVk0JpDfTSbrjfsWPvC7NuTvNiUO0zQqWYv6B3bPaiuQMT/QwAzinpXE7GcTHmBBrEcvIFo3Oun82+EkgJBnU1YndbWQ/lDBrS0OA7ZKVh+r/67NvsfAkEvCc1tT+8f0mSF8YYXHkuk=
+	t=1750716331; cv=none; b=dot91yF06erR9BlaiUU62/Su7yCgfOzp+hMIPYxnoLrCpkzAh5gyoRicAPuTScVuv2MZUoTQMunMfaFjHq+saU2qVg3QmUl+AC/eTO98UsUfFCGVb50ho/pJ0mX75SnO07rC53WHAlmy0Nk7+yaUghpnjFqoARua4n87CMypw7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716328; c=relaxed/simple;
-	bh=kleeZwu5N572GPYu6SKm21BQQU9VATMkDs4XVpfhC1U=;
+	s=arc-20240116; t=1750716331; c=relaxed/simple;
+	bh=XyHsGRMgJmJ2vZILpww6jTPodltodJVqnpDFZ94lipY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BfqoMy54Z2597E8G891kyJgiTjnspWxs4VZMFXMCVsT7jthPZHYs94QU7zZQ4GLkMKnhQZpDwsCGkKa46+o94YJRh12EVAwhg1GEK6Rjejnkd9HGk+QHlRE3ZulPGYN0XACxXKydX6oWLZmgYpMR8IIUdykvCiT7NE4BhayMWUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRLHIZxs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g2gKI1hQarGNMkd2S0o+p+Wvg86nEi1seiK6VSRrl0wjqSufbXl3qGINXNey7K4+T5riv8qvUs1QyiWbkWUyyHZKt5eOtmQKWWrQ8vb6THSoeD0nbsN3+h8l9P5Tstmj70Hbu2AwU37uG958gH9YLSdjvQb8xhA4u+OKuAw7wgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdkA1IU5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRLHIZxs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC5EC4CEEA;
-	Mon, 23 Jun 2025 22:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdkA1IU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB14C4CEEA;
+	Mon, 23 Jun 2025 22:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716328;
-	bh=kleeZwu5N572GPYu6SKm21BQQU9VATMkDs4XVpfhC1U=;
+	s=korg; t=1750716330;
+	bh=XyHsGRMgJmJ2vZILpww6jTPodltodJVqnpDFZ94lipY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MRLHIZxseN/Zrvd8iUNscG13B57ZR+l/ZtIGXQr+lD66IKiXwx8WQ/7+Lw7ey6C4W
-	 ie1l1P5xZKZvwlm4ScY0bObPJrITOu5Z63ekz+iBiEcc4eQDpIi4jqfofR0eT+0Uim
-	 lP+OVyQ+B92eTEN5YEObT42j1afWwxuRLJ5sh+IM=
+	b=rdkA1IU5jMYmrwmUz85OwlEvm03mi4XwcQOx18HxgKwwGBjltpoa3lTEpyWLx7Q+q
+	 h3L0gfLT6/naJSV+hbti6tTVSTPjJs/MIfujKvLMUtBk9Z0kQ7wOFsV7IGhh027h5T
+	 3f/J07ndnSHwbMJK5QyMcYtgIW/Gloa3osHy3GC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Schrefl <chrisi.schrefl@gmail.com>,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Jason Xing <kernelxing@tencent.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 516/592] rust: devres: implement Devres::access()
-Date: Mon, 23 Jun 2025 15:07:54 +0200
-Message-ID: <20250623130712.710172536@linuxfoundation.org>
+Subject: [PATCH 5.15 322/411] net: mlx4: add SOF_TIMESTAMPING_TX_SOFTWARE flag when getting ts info
+Date: Mon, 23 Jun 2025 15:07:46 +0200
+Message-ID: <20250623130641.742664285@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,95 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit f301cb978c068faa8fcd630be2cb317a2d0ec063 ]
+[ Upstream commit b86bcfee30576b752302c55693fff97242b35dfd ]
 
-Implement a direct accessor for the data stored within the Devres for
-cases where we can prove that we own a reference to a Device<Bound>
-(i.e. a bound device) of the same device that was used to create the
-corresponding Devres container.
+As mlx4 has implemented skb_tx_timestamp() in mlx4_en_xmit(), the
+SOFTWARE flag is surely needed when users are trying to get timestamp
+information.
 
-Usually, when accessing the data stored within a Devres container, it is
-not clear whether the data has been revoked already due to the device
-being unbound and, hence, we have to try whether the access is possible
-and subsequently keep holding the RCU read lock for the duration of the
-access.
-
-However, when we can prove that we hold a reference to Device<Bound>
-matching the device the Devres container has been created with, we can
-guarantee that the device is not unbound for the duration of the
-lifetime of the Device<Bound> reference and, hence, it is not possible
-for the data within the Devres container to be revoked.
-
-Therefore, in this case, we can bypass the atomic check and the RCU read
-lock, which is a great optimization and simplification for drivers.
-
-Reviewed-by: Christian Schrefl <chrisi.schrefl@gmail.com>
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Acked-by: Boqun Feng <boqun.feng@gmail.com>
-Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
-Link: https://lore.kernel.org/r/20250428140137.468709-3-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Stable-dep-of: 20c96ed278e3 ("rust: devres: do not dereference to the internal Revocable")
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250510093442.79711-1-kerneljasonxing@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/devres.rs | 38 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ drivers/net/ethernet/mellanox/mlx4/en_ethtool.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/rust/kernel/devres.rs b/rust/kernel/devres.rs
-index f3a4e3383b8d2..acb8e1d13ddd9 100644
---- a/rust/kernel/devres.rs
-+++ b/rust/kernel/devres.rs
-@@ -196,6 +196,44 @@ pub fn new_foreign_owned(dev: &Device, data: T, flags: Flags) -> Result {
+diff --git a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
+index c3cffb32fb067..d8c1a52d54c67 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
+@@ -1909,6 +1909,7 @@ static int mlx4_en_get_ts_info(struct net_device *dev,
+ 	if (mdev->dev->caps.flags2 & MLX4_DEV_CAP_FLAG2_TS) {
+ 		info->so_timestamping |=
+ 			SOF_TIMESTAMPING_TX_HARDWARE |
++			SOF_TIMESTAMPING_TX_SOFTWARE |
+ 			SOF_TIMESTAMPING_RX_HARDWARE |
+ 			SOF_TIMESTAMPING_RAW_HARDWARE;
  
-         Ok(())
-     }
-+
-+    /// Obtain `&'a T`, bypassing the [`Revocable`].
-+    ///
-+    /// This method allows to directly obtain a `&'a T`, bypassing the [`Revocable`], by presenting
-+    /// a `&'a Device<Bound>` of the same [`Device`] this [`Devres`] instance has been created with.
-+    ///
-+    /// # Errors
-+    ///
-+    /// An error is returned if `dev` does not match the same [`Device`] this [`Devres`] instance
-+    /// has been created with.
-+    ///
-+    /// # Example
-+    ///
-+    /// ```no_run
-+    /// # use kernel::{device::Core, devres::Devres, pci};
-+    ///
-+    /// fn from_core(dev: &pci::Device<Core>, devres: Devres<pci::Bar<0x4>>) -> Result {
-+    ///     let bar = devres.access(dev.as_ref())?;
-+    ///
-+    ///     let _ = bar.read32(0x0);
-+    ///
-+    ///     // might_sleep()
-+    ///
-+    ///     bar.write32(0x42, 0x0);
-+    ///
-+    ///     Ok(())
-+    /// }
-+    /// ```
-+    pub fn access<'a>(&'a self, dev: &'a Device<Bound>) -> Result<&'a T> {
-+        if self.0.dev.as_raw() != dev.as_raw() {
-+            return Err(EINVAL);
-+        }
-+
-+        // SAFETY: `dev` being the same device as the device this `Devres` has been created for
-+        // proves that `self.0.data` hasn't been revoked and is guaranteed to not be revoked as
-+        // long as `dev` lives; `dev` lives at least as long as `self`.
-+        Ok(unsafe { self.deref().access() })
-+    }
- }
- 
- impl<T> Deref for Devres<T> {
 -- 
 2.39.5
 
