@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B62E219E0;
-	Mon, 23 Jun 2025 13:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE399219E0;
+	Mon, 23 Jun 2025 13:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685075; cv=none; b=FFulWrwE4WOsvhipwHLR+POCoLwdOK2SJPc5yfiHbIAO0qg6RWe+kwIQpm3i7Sna5vQQi4M4KF4ZZ21gPGkHdAljW2G/6BZT1o6hU65A6wG9DVc9zLf4JDS9InQlAqUet2hbOSmkMIJB4onVX6AFoxt7jhhN+Q4u7yXy4Nkf180=
+	t=1750685077; cv=none; b=hhroge4EiXrhjeYZN/IJWTQKCT83mpctXmKU7eoeHXe36fukjMht1SSXN5Y9HvTqWCATl20uoShL5g6W92NTnrjkuzh3Rqk21qotLqA10MZRIUc073K44Zv96wMASiWB8N2ZoBIzEAD1aNLZdDp9TNVloUvotmNbuK2IJ9EOvxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685075; c=relaxed/simple;
-	bh=bgZk599NM8mOHFNcsjhxxq3iv4z1ukPoqxUKM4QX6XU=;
+	s=arc-20240116; t=1750685077; c=relaxed/simple;
+	bh=RW9P3AbNz+8bU6hxNFndavKLaNiypTppX86oYkXWJns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aOCWdsSkX9AGmzzfHfLfJNxGjBlzi01u50s4M0wVa3NCGlo2ZPMuueCuCZN4TSF1aVN4RotDIJQZUWUl0o1eTwG5UvifJPyAWZB01ARJjpyNt2otmnzmgdbrC3QaZXxVzswi8jDNTo9Cedvv/4/OfaeLffYco9k7hjNN2XlMQhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aCAOhGCn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G4+01+PyuB7asqJzisea4K2dwf3psGd83c1pXC90PtXdy1gNL61POK3DeQqeyiBtQBklx72xhk5+EQwWNyz3daHnAAmqCvZe6JYlb/Vbv9Fb54bJNna/st2UKV3jFj7PH+nJfxvPkfnFR3FFmHXvLOR5EPHsxSMM7WaNRae0vRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cl8MWUwJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aCAOhGCn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2600C4CEF0;
-	Mon, 23 Jun 2025 13:24:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cl8MWUwJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A76C4CEEA;
+	Mon, 23 Jun 2025 13:24:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685075;
-	bh=bgZk599NM8mOHFNcsjhxxq3iv4z1ukPoqxUKM4QX6XU=;
+	s=korg; t=1750685077;
+	bh=RW9P3AbNz+8bU6hxNFndavKLaNiypTppX86oYkXWJns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aCAOhGCnbr1rKtie/s8vikwXBYRiY/TiO5edJvTBJGpD21OB8IjNVqDPVPHxNwxO6
-	 Ontve/E1bGRiCgj+7N4yGJjdgd6da8IhSG20A19WrhTq6pNIwfaQeiKJ7MjfImE/CS
-	 9tpV6J9qm/266rdEytA5ovBCS42fIuWbNo03MAxE=
+	b=cl8MWUwJwN5goULmAj+sp3gvaEZ48r/4AZukN90mkeUjdXnr+6VgPqCrB7IcNHBgJ
+	 3LKnZ3NrGiyB4v3QhZPsra1OiFp+iQYNOm76dizae0GyEiXXe1aY6LpATbelG1eXo8
+	 f04+gNKoTXAp/Fw/GTXJ4uyBw8T49HzHB+XWqnv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/411] drm: rcar-du: Fix memory leak in rcar_du_vsps_init()
-Date: Mon, 23 Jun 2025 15:02:57 +0200
-Message-ID: <20250623130633.999991847@linuxfoundation.org>
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.1 006/508] rtc: Make rtc_time64_to_tm() support dates before 1970
+Date: Mon, 23 Jun 2025 15:00:51 +0200
+Message-ID: <20250623130645.412035955@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,67 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Alexandre Mergnat <amergnat@baylibre.com>
 
-[ Upstream commit 91e3bf09a90bb4340c0c3c51396e7531555efda4 ]
+commit 7df4cfef8b351fec3156160bedfc7d6d29de4cce upstream.
 
-The rcar_du_vsps_init() doesn't free the np allocated by
-of_parse_phandle_with_fixed_args() for the non-error case.
+Conversion of dates before 1970 is still relevant today because these
+dates are reused on some hardwares to store dates bigger than the
+maximal date that is representable in the device's native format.
+This prominently and very soon affects the hardware covered by the
+rtc-mt6397 driver that can only natively store dates in the interval
+1900-01-01 up to 2027-12-31. So to store the date 2028-01-01 00:00:00
+to such a device, rtc_time64_to_tm() must do the right thing for
+time=-2208988800.
 
-Fix memory leak for the non-error case.
-
-While at it, replace the label 'error'->'done' as it applies to non-error
-case as well and update the error check condition for rcar_du_vsp_init()
-to avoid breakage in future, if it returns positive value.
-
-Fixes: 3e81374e2014 ("drm: rcar-du: Support multiple sources from the same VSP")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20231116122424.80136-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20250428-enable-rtc-v4-1-2b2f7e3f9349@baylibre.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/rcar-du/rcar_du_kms.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/rtc/lib.c |   24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/rcar-du/rcar_du_kms.c b/drivers/gpu/drm/rcar-du/rcar_du_kms.c
-index fdb8a0d127ad3..11dc0f44d2bd8 100644
---- a/drivers/gpu/drm/rcar-du/rcar_du_kms.c
-+++ b/drivers/gpu/drm/rcar-du/rcar_du_kms.c
-@@ -627,7 +627,7 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
- 		ret = of_parse_phandle_with_fixed_args(np, vsps_prop_name,
- 						       cells, i, &args);
- 		if (ret < 0)
--			goto error;
-+			goto done;
+--- a/drivers/rtc/lib.c
++++ b/drivers/rtc/lib.c
+@@ -46,24 +46,38 @@ EXPORT_SYMBOL(rtc_year_days);
+  * rtc_time64_to_tm - converts time64_t to rtc_time.
+  *
+  * @time:	The number of seconds since 01-01-1970 00:00:00.
+- *		(Must be positive.)
++ *		Works for values since at least 1900
+  * @tm:		Pointer to the struct rtc_time.
+  */
+ void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
+ {
+-	unsigned int secs;
+-	int days;
++	int days, secs;
  
- 		/*
- 		 * Add the VSP to the list or update the corresponding existing
-@@ -665,13 +665,11 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
- 		vsp->dev = rcdu;
+ 	u64 u64tmp;
+ 	u32 u32tmp, udays, century, day_of_century, year_of_century, year,
+ 		day_of_year, month, day;
+ 	bool is_Jan_or_Feb, is_leap_year;
  
- 		ret = rcar_du_vsp_init(vsp, vsps[i].np, vsps[i].crtcs_mask);
--		if (ret < 0)
--			goto error;
-+		if (ret)
-+			goto done;
- 	}
+-	/* time must be positive */
++	/*
++	 * Get days and seconds while preserving the sign to
++	 * handle negative time values (dates before 1970-01-01)
++	 */
+ 	days = div_s64_rem(time, 86400, &secs);
  
--	return 0;
--
--error:
-+done:
- 	for (i = 0; i < ARRAY_SIZE(vsps); ++i)
- 		of_node_put(vsps[i].np);
++	/*
++	 * We need 0 <= secs < 86400 which isn't given for negative
++	 * values of time. Fixup accordingly.
++	 */
++	if (secs < 0) {
++		days -= 1;
++		secs += 86400;
++	}
++
+ 	/* day of the week, 1970-01-01 was a Thursday */
+ 	tm->tm_wday = (days + 4) % 7;
++	/* Ensure tm_wday is always positive */
++	if (tm->tm_wday < 0)
++		tm->tm_wday += 7;
  
--- 
-2.39.5
-
+ 	/*
+ 	 * The following algorithm is, basically, Proposition 6.3 of Neri
+@@ -93,7 +107,7 @@ void rtc_time64_to_tm(time64_t time, str
+ 	 * thus, is slightly different from [1].
+ 	 */
+ 
+-	udays		= ((u32) days) + 719468;
++	udays		= days + 719468;
+ 
+ 	u32tmp		= 4 * udays + 3;
+ 	century		= u32tmp / 146097;
 
 
