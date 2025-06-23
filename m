@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F391F582A;
-	Mon, 23 Jun 2025 21:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C861F582A;
+	Mon, 23 Jun 2025 21:08:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712881; cv=none; b=kW514Ni1LSR5MjdcBDLJxk7OVdAa21nnkHz+P0B5tVyiMCtuMmsCw+nf7C7z2usKi5MAx+wTdGGpsAwr1FICmOQIns8KT2Gd3PFIVjOYZYCEIJ/PxwI7ZQawT9rEsQuq1pVgX7je3KH9xiJQyKSM1cN+a/PrxEhy9k3JPhAERRY=
+	t=1750712883; cv=none; b=l7NZKbNgE0UxM7zCN6Vrp6S2l0kfJ6iZUEkkq4bJMyxv3EMoPnx7akqrgUEjRRcd4hh//p8DlfsPBGu3huJ0ZIUZHa3aBWMcjaemSo+Z6px7X0M+dxZd3VYkpo6FAkF1Dc1nyTJAI41dlS2V0TD+zbPr8/tA0caz9qWJGMDoQZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712881; c=relaxed/simple;
-	bh=k5Jc/9gwucAXKMZouEvHR2oeIpD1UZwZV9W+C8IQrbM=;
+	s=arc-20240116; t=1750712883; c=relaxed/simple;
+	bh=dAbSMYlQvZvKzawW/B66sU85yvnA2YuS6RbI98b1DDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=toj2yJrA8dL/6+FJMfFarXW/Uw3DkHMBAXO9ed2XUiXJjDH43lsVDwV5UEo0HPvEA3WFNBkgOWSTMq2aqCH4y0xF7i/f3xmemF2gb3GUZLkQhP58u92Ln5plP0HDO8IKAwtSEMJYQT+BLdVj2nwFyxgfHYSe1DgwzgaRctqKTMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u17eQdVq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=N30MKcVksvRnQpGJ7rMEaPh976y9vHSpwMEsHsR7mPtptz3de0+pE1cFaXNQTZlOC8bwXXCYbRox46+QpoDXH9dsTV8EkOwmayS8HlJm9K6rG10sAidjmUbxE0ezmBn15gYnG6nWmPnKb9wW1PDN3gipkB0x9Vzoyt7+54Gogno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPc/wG6R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u17eQdVq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E320FC4CEEA;
-	Mon, 23 Jun 2025 21:08:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPc/wG6R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D9FC4CEEA;
+	Mon, 23 Jun 2025 21:08:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712881;
-	bh=k5Jc/9gwucAXKMZouEvHR2oeIpD1UZwZV9W+C8IQrbM=;
+	s=korg; t=1750712883;
+	bh=dAbSMYlQvZvKzawW/B66sU85yvnA2YuS6RbI98b1DDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u17eQdVqvl+hZ12km7pyk1nN7+jTO4IuVBSMXG6knAEOHJgWDbObd+wRiucqs18ev
-	 hLYCKpWKBoV2NCP99aN/PVHdUbIfgrMNYBOQWUov7Og4Iy77D0N8GhrUavHdZdg6zb
-	 IVNj4ydrIRMWEyQyc5mQgo1k6R5SSA2eidEfTNtU=
+	b=bPc/wG6RtTZkc2afgKgba046TVXtJPBlMppIAipFDvA4gNfT49rOhHH4CE4cm+v5i
+	 bGHYY4F6MJ7+vk09WvPrv7N7rZQBjBl2mWOsdewaqIh7npAA40HXNH0K0y+oVy1CzB
+	 86ilTmf2w2vAbE4MuCOakbeSnmhzdXj4XL8HP67Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/508] f2fs: clean up w/ fscrypt_is_bounce_page()
-Date: Mon, 23 Jun 2025 15:01:50 +0200
-Message-ID: <20250623130646.841923352@linuxfoundation.org>
+Subject: [PATCH 6.1 057/508] bpf, sockmap: Fix panic when calling skb_linearize
+Date: Mon, 23 Jun 2025 15:01:42 +0200
+Message-ID: <20250623130646.645633281@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -45,38 +45,200 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 0c708e35cf26449ca317fcbfc274704660b6d269 ]
+[ Upstream commit 5ca2e29f6834c64c0e5a9ccf1278c21fb49b827e ]
 
-Just cleanup, no logic changes.
+The panic can be reproduced by executing the command:
+./bench sockmap -c 2 -p 1 -a --rx-verdict-ingress --rx-strp 100000
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Then a kernel panic was captured:
+'''
+[  657.460555] kernel BUG at net/core/skbuff.c:2178!
+[  657.462680] Tainted: [W]=WARN
+[  657.463287] Workqueue: events sk_psock_backlog
+...
+[  657.469610]  <TASK>
+[  657.469738]  ? die+0x36/0x90
+[  657.469916]  ? do_trap+0x1d0/0x270
+[  657.470118]  ? pskb_expand_head+0x612/0xf40
+[  657.470376]  ? pskb_expand_head+0x612/0xf40
+[  657.470620]  ? do_error_trap+0xa3/0x170
+[  657.470846]  ? pskb_expand_head+0x612/0xf40
+[  657.471092]  ? handle_invalid_op+0x2c/0x40
+[  657.471335]  ? pskb_expand_head+0x612/0xf40
+[  657.471579]  ? exc_invalid_op+0x2d/0x40
+[  657.471805]  ? asm_exc_invalid_op+0x1a/0x20
+[  657.472052]  ? pskb_expand_head+0xd1/0xf40
+[  657.472292]  ? pskb_expand_head+0x612/0xf40
+[  657.472540]  ? lock_acquire+0x18f/0x4e0
+[  657.472766]  ? find_held_lock+0x2d/0x110
+[  657.472999]  ? __pfx_pskb_expand_head+0x10/0x10
+[  657.473263]  ? __kmalloc_cache_noprof+0x5b/0x470
+[  657.473537]  ? __pfx___lock_release.isra.0+0x10/0x10
+[  657.473826]  __pskb_pull_tail+0xfd/0x1d20
+[  657.474062]  ? __kasan_slab_alloc+0x4e/0x90
+[  657.474707]  sk_psock_skb_ingress_enqueue+0x3bf/0x510
+[  657.475392]  ? __kasan_kmalloc+0xaa/0xb0
+[  657.476010]  sk_psock_backlog+0x5cf/0xd70
+[  657.476637]  process_one_work+0x858/0x1a20
+'''
+
+The panic originates from the assertion BUG_ON(skb_shared(skb)) in
+skb_linearize(). A previous commit(see Fixes tag) introduced skb_get()
+to avoid race conditions between skb operations in the backlog and skb
+release in the recvmsg path. However, this caused the panic to always
+occur when skb_linearize is executed.
+
+The "--rx-strp 100000" parameter forces the RX path to use the strparser
+module which aggregates data until it reaches 100KB before calling sockmap
+logic. The 100KB payload exceeds MAX_MSG_FRAGS, triggering skb_linearize.
+
+To fix this issue, just move skb_get into sk_psock_skb_ingress_enqueue.
+
+'''
+sk_psock_backlog:
+    sk_psock_handle_skb
+       skb_get(skb) <== we move it into 'sk_psock_skb_ingress_enqueue'
+       sk_psock_skb_ingress____________
+                                       ↓
+                                       |
+                                       | → sk_psock_skb_ingress_self
+                                       |      sk_psock_skb_ingress_enqueue
+sk_psock_verdict_apply_________________↑          skb_linearize
+'''
+
+Note that for verdict_apply path, the skb_get operation is unnecessary so
+we add 'take_ref' param to control it's behavior.
+
+Fixes: a454d84ee20b ("bpf, sockmap: Fix skb refcnt race after locking changes")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/r/20250407142234.47591-4-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/skmsg.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 0b0e3d44e158e..2ae682f8d0c8e 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -56,7 +56,7 @@ bool f2fs_is_cp_guaranteed(struct page *page)
- 	struct inode *inode;
- 	struct f2fs_sb_info *sbi;
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 72f4949cbb70f..0613f9a2543bb 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -528,16 +528,22 @@ static int sk_psock_skb_ingress_enqueue(struct sk_buff *skb,
+ 					u32 off, u32 len,
+ 					struct sk_psock *psock,
+ 					struct sock *sk,
+-					struct sk_msg *msg)
++					struct sk_msg *msg,
++					bool take_ref)
+ {
+ 	int num_sge, copied;
  
--	if (!mapping)
-+	if (fscrypt_is_bounce_page(page))
- 		return false;
++	/* skb_to_sgvec will fail when the total number of fragments in
++	 * frag_list and frags exceeds MAX_MSG_FRAGS. For example, the
++	 * caller may aggregate multiple skbs.
++	 */
+ 	num_sge = skb_to_sgvec(skb, msg->sg.data, off, len);
+ 	if (num_sge < 0) {
+ 		/* skb linearize may fail with ENOMEM, but lets simply try again
+ 		 * later if this happens. Under memory pressure we don't want to
+ 		 * drop the skb. We need to linearize the skb so that the mapping
+ 		 * in skb_to_sgvec can not error.
++		 * Note that skb_linearize requires the skb not to be shared.
+ 		 */
+ 		if (skb_linearize(skb))
+ 			return -EAGAIN;
+@@ -554,7 +560,7 @@ static int sk_psock_skb_ingress_enqueue(struct sk_buff *skb,
+ 	msg->sg.start = 0;
+ 	msg->sg.size = copied;
+ 	msg->sg.end = num_sge;
+-	msg->skb = skb;
++	msg->skb = take_ref ? skb_get(skb) : skb;
  
- 	inode = mapping->host;
+ 	sk_psock_queue_msg(psock, msg);
+ 	sk_psock_data_ready(sk, psock);
+@@ -562,7 +568,7 @@ static int sk_psock_skb_ingress_enqueue(struct sk_buff *skb,
+ }
+ 
+ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb,
+-				     u32 off, u32 len);
++				     u32 off, u32 len, bool take_ref);
+ 
+ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb,
+ 				u32 off, u32 len)
+@@ -576,7 +582,7 @@ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb,
+ 	 * correctly.
+ 	 */
+ 	if (unlikely(skb->sk == sk))
+-		return sk_psock_skb_ingress_self(psock, skb, off, len);
++		return sk_psock_skb_ingress_self(psock, skb, off, len, true);
+ 	msg = sk_psock_create_ingress_msg(sk, skb);
+ 	if (!msg)
+ 		return -EAGAIN;
+@@ -588,7 +594,7 @@ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb,
+ 	 * into user buffers.
+ 	 */
+ 	skb_set_owner_r(skb, sk);
+-	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg);
++	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg, true);
+ 	if (err < 0)
+ 		kfree(msg);
+ 	return err;
+@@ -599,7 +605,7 @@ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb,
+  * because the skb is already accounted for here.
+  */
+ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb,
+-				     u32 off, u32 len)
++				     u32 off, u32 len, bool take_ref)
+ {
+ 	struct sk_msg *msg = alloc_sk_msg(GFP_ATOMIC);
+ 	struct sock *sk = psock->sk;
+@@ -608,7 +614,7 @@ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb
+ 	if (unlikely(!msg))
+ 		return -EAGAIN;
+ 	skb_set_owner_r(skb, sk);
+-	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg);
++	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg, take_ref);
+ 	if (err < 0)
+ 		kfree(msg);
+ 	return err;
+@@ -617,18 +623,13 @@ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb
+ static int sk_psock_handle_skb(struct sk_psock *psock, struct sk_buff *skb,
+ 			       u32 off, u32 len, bool ingress)
+ {
+-	int err = 0;
+-
+ 	if (!ingress) {
+ 		if (!sock_writeable(psock->sk))
+ 			return -EAGAIN;
+ 		return skb_send_sock(psock->sk, skb, off, len);
+ 	}
+-	skb_get(skb);
+-	err = sk_psock_skb_ingress(psock, skb, off, len);
+-	if (err < 0)
+-		kfree_skb(skb);
+-	return err;
++
++	return sk_psock_skb_ingress(psock, skb, off, len);
+ }
+ 
+ static void sk_psock_skb_state(struct sk_psock *psock,
+@@ -1016,7 +1017,7 @@ static int sk_psock_verdict_apply(struct sk_psock *psock, struct sk_buff *skb,
+ 				off = stm->offset;
+ 				len = stm->full_len;
+ 			}
+-			err = sk_psock_skb_ingress_self(psock, skb, off, len);
++			err = sk_psock_skb_ingress_self(psock, skb, off, len, false);
+ 		}
+ 		if (err < 0) {
+ 			spin_lock_bh(&psock->ingress_lock);
 -- 
 2.39.5
 
