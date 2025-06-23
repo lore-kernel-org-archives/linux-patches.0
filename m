@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E535253B66;
-	Mon, 23 Jun 2025 13:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25746253949;
+	Mon, 23 Jun 2025 13:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684937; cv=none; b=VhdtOg2BT/f9lUFCWsiDDQlwjmz+HvD2UklXzm9lAnNF8iM3F0dx9/fmVE9oqv6bBb0HWILRvFPhWy9j+nzKO5ZGyNXT9Np7rQv687plJ6Xkz7gy3eZbNnE2GkPN19f0/GD0KjLhESAsZXOtAqg2gzQJXSObgyvMxlypTrrQ2gk=
+	t=1750684940; cv=none; b=fRASDxclIJwGeF03mmFoH7MjaP63QFSz5FaFLyXcHoOqNSUTAhFkzde12oC8PnrB/V24iX2J0ICsFYw0uEmKloujdsALfusLeiEw5JbA8b/Wbk+J3EUHF4oXyUGKEqZ+cn0huxqfbVjl3mtplsg5uVQem6e1KrgnXx1rl1kekcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684937; c=relaxed/simple;
-	bh=dIlGe6VxijYtX+frye8J+ET9c86HpsmNiZySx+iXtwA=;
+	s=arc-20240116; t=1750684940; c=relaxed/simple;
+	bh=J7zAU2DcJMIS4a19q/+KrLCtfi/Bfy+YNe5DAmQKFVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOWbD0D87SisB/HKj0rMLxYeCAItNOJpKKMWezX6hQUff3dR9tSZ5zxOyKo68nzpMYL9D/mZbpNblzm9tcer02oh++jdr1yPq8yGmwGazqneG6RklyiK3nxhkG7fIBbBObuMdBlwIlr8ovXSTi89Nomf93SGJFZsGaXQzkbmSPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmvTzO9m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CScc1a4cOgBk2fgKEZnhBsXXAspSFlkHCK9VndsEuhOhQbx+M4HE74frWI/dm4H9+gk7HkcZANNaj/d+E4T/LoKzviucSMHx6i6hxfPwdc2u2GL7siN2lSJ49vYEyvVfbwjvcwSOFvONAMk1yRXxJ9hFN9hXPB7B48O8pN/iumk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eRLa9oU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmvTzO9m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2086CC4CEEA;
-	Mon, 23 Jun 2025 13:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eRLa9oU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4D5C4CEEA;
+	Mon, 23 Jun 2025 13:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684937;
-	bh=dIlGe6VxijYtX+frye8J+ET9c86HpsmNiZySx+iXtwA=;
+	s=korg; t=1750684940;
+	bh=J7zAU2DcJMIS4a19q/+KrLCtfi/Bfy+YNe5DAmQKFVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RmvTzO9msr3R9ldfuOItcM/PovkQRH61KX+eWpmdia0Pj0sflQAaFk2Es/ffz/xrW
-	 PyRt/4psvTDxo0Yo2JLa+Q73QPMa+WdWJapoYeY4zLbKvcvXn1eekbyqnmL3HwDYYe
-	 d3xhApgSy0NlH9ZH4NCUnM7HcslIEcFVRIN1oFzI=
+	b=2eRLa9oUyKCWpULAvXlOIHYm4+D4phdsDPK0x3U9tZ+X5dc4nZdOM3AxmT+1mA7kj
+	 oReLbV2DyOU0vl9WFz/Mq/VsZWu7I6zXixq2SHmgXT+Vm/U7viEl94jNUl3/GS6tFS
+	 cCOKXLb/CQz0fP5tnPh1ZYKJ2a5X9jpdwc78jPJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ahmed S. Darwish" <darwi@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	x86-cpuid@lists.linux.dev,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Lukasz Czechowski <lukasz.czechowski@thaumatec.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 013/355] x86/cpu: Sanitize CPUID(0x80000000) output
-Date: Mon, 23 Jun 2025 15:03:34 +0200
-Message-ID: <20250623130627.164055707@linuxfoundation.org>
+Subject: [PATCH 5.4 049/222] arm64: dts: rockchip: disable unrouted USB controllers and PHY on RK3399 Puma with Haikou
+Date: Mon, 23 Jun 2025 15:06:24 +0200
+Message-ID: <20250623130613.463241471@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,94 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed S. Darwish <darwi@linutronix.de>
+From: Quentin Schulz <quentin.schulz@cherry.de>
 
-[ Upstream commit cc663ba3fe383a628a812f893cc98aafff39ab04 ]
+[ Upstream commit febd8c6ab52c683b447fe22fc740918c86feae43 ]
 
-CPUID(0x80000000).EAX returns the max extended CPUID leaf available.  On
-x86-32 machines without an extended CPUID range, a CPUID(0x80000000)
-query will just repeat the output of the last valid standard CPUID leaf
-on the CPU; i.e., a garbage values.  Current tip:x86/cpu code protects against
-this by doing:
+The u2phy0_host port is the part of the USB PHY0 (namely the
+HOST0_DP/DM lanes) which routes directly to the USB2.0 HOST
+controller[1]. The other lanes of the PHY are routed to the USB3.0 OTG
+controller (dwc3), which we do use.
 
-	eax = cpuid_eax(0x80000000);
-	c->extended_cpuid_level = eax;
+The HOST0_DP/DM lanes aren't routed on RK3399 Puma so let's simply
+disable the USB2.0 controllers.
 
-	if ((eax & 0xffff0000) == 0x80000000) {
-		// CPU has an extended CPUID range. Check for 0x80000001
-		if (eax >= 0x80000001) {
-			cpuid(0x80000001, ...);
-		}
-	}
+USB3 OTG has been known to be unstable on RK3399 Puma Haikou for a
+while, one of the recurring issues being that only USB2 is detected and
+not USB3 in host mode. Reading the justification above and seeing that
+we are keeping u2phy0_host in the Haikou carrierboard DTS probably may
+have bothered you since it should be changed to u2phy0_otg. The issue is
+that if it's switched to that, USB OTG on Haikou is entirely broken. I
+have checked the routing in the Gerber file, the lanes are going to the
+expected ball pins (that is, NOT HOST0_DP/DM).
+u2phy0_host is for sure the wrong part of the PHY to use, but it's the
+only one that works at the moment for that board so keep it until we
+figure out what exactly is broken.
 
-This is correct so far.  Afterwards though, the same possibly broken EAX
-value is used to check the availability of other extended CPUID leaves:
+No intended functional change.
 
-	if (c->extended_cpuid_level >= 0x80000007)
-		...
-	if (c->extended_cpuid_level >= 0x80000008)
-		...
-	if (c->extended_cpuid_level >= 0x8000000a)
-		...
-	if (c->extended_cpuid_level >= 0x8000001f)
-		...
+[1] https://rockchip.fr/Rockchip%20RK3399%20TRM%20V1.3%20Part2.pdf
+    Chapter 2 USB2.0 PHY
 
-which is invalid.  Fix this by immediately setting the CPU's max extended
-CPUID leaf to zero if CPUID(0x80000000).EAX doesn't indicate a valid
-CPUID extended range.
-
-While at it, add a comment, similar to kernel/head_32.S, clarifying the
-CPUID(0x80000000) sanity check.
-
-References: 8a50e5135af0 ("x86-32: Use symbolic constants, safer CPUID when enabling EFER.NX")
-Fixes: 3da99c977637 ("x86: make (early)_identify_cpu more the same between 32bit and 64 bit")
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: x86-cpuid@lists.linux.dev
-Link: https://lore.kernel.org/r/20250506050437.10264-3-darwi@linutronix.de
+Fixes: 2c66fc34e945 ("arm64: dts: rockchip: add RK3399-Q7 (Puma) SoM")
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Signed-off-by: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
+Link: https://lore.kernel.org/r/20250425-onboard_usb_dev-v2-5-4a76a474a010@thaumatec.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/common.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 840fdffec850b..db225e325ccfd 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -931,17 +931,18 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
- 		c->x86_capability[CPUID_D_1_EAX] = eax;
- 	}
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
+index d29937e4a606b..ea3fbd8da2cf6 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
+@@ -246,14 +246,6 @@
+ 	status = "okay";
+ };
  
--	/* AMD-defined flags: level 0x80000001 */
-+	/*
-+	 * Check if extended CPUID leaves are implemented: Max extended
-+	 * CPUID leaf must be in the 0x80000001-0x8000ffff range.
-+	 */
- 	eax = cpuid_eax(0x80000000);
--	c->extended_cpuid_level = eax;
-+	c->extended_cpuid_level = ((eax & 0xffff0000) == 0x80000000) ? eax : 0;
- 
--	if ((eax & 0xffff0000) == 0x80000000) {
--		if (eax >= 0x80000001) {
--			cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
-+	if (c->extended_cpuid_level >= 0x80000001) {
-+		cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
- 
--			c->x86_capability[CPUID_8000_0001_ECX] = ecx;
--			c->x86_capability[CPUID_8000_0001_EDX] = edx;
--		}
-+		c->x86_capability[CPUID_8000_0001_ECX] = ecx;
-+		c->x86_capability[CPUID_8000_0001_EDX] = edx;
- 	}
- 
- 	if (c->extended_cpuid_level >= 0x80000007) {
+-&usb_host0_ehci {
+-	status = "okay";
+-};
+-
+-&usb_host0_ohci {
+-	status = "okay";
+-};
+-
+ &vopb {
+ 	status = "okay";
+ };
 -- 
 2.39.5
 
