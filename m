@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D865770838;
-	Mon, 23 Jun 2025 21:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A783E70838;
+	Mon, 23 Jun 2025 21:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713051; cv=none; b=PVyiFHwDV1UIN6sVbaYWSoZiIN/7LcdQFC4YgmeKye6LkiyBYGS6hee3IT9hX7bd0Sju4e21GLot/NvUlxAtiEH2UXET0qFolDrB0vk8Qti/duHCYuL/QAJdscecu/2HwP8kJsj5tgh5aW4eZwi/hXvgpJ5U2Ihh9wXNMwBWHMg=
+	t=1750713054; cv=none; b=cEbZinuoDx+05lf/dw+WZB9a+XyKllu5Cz1EluiQW/2xqAfKqAru95uU8FuuouMk3MLK4slENlZr0OCNq8TpDhCl5+QATbaLHqSf5AZn+nB9XMb/17q6z0Kpm7WBsmLdu3/+T4mmqCWMliZBHomS0Ms4Al65coGMZsfqMy8CYbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713051; c=relaxed/simple;
-	bh=B0u8xqDLcooZ2UHoifr5j3zGCSO0RY4ou3k7odDAPMI=;
+	s=arc-20240116; t=1750713054; c=relaxed/simple;
+	bh=JxXYELSmYGCPe+F1Vd/8GTw2WDkogA6BwkxzAMZiFus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AbrnygwifHadlQAZl+/HVF+Sp8tfmc+/wtI/okLSHMGdmZRw0dykkWoZ5IQeTQeytkfzHgS9BVNlHdNcvYiY8I5521yx8pRdU6XwS6cbmB78swuRK6z4MKrLBhUq++cZvJN1GXNknWBnuPeU05HYU8Qfr40WJ6+/TLimoCS2sIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcO6RD6B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QlW7jf4PPRvh3RM2wmSROpQ+B9qAmuyG2UtzBwxghMoD641EMfaP3apRGJo1u2kzMWijfm/Yn/cYKs9OHsYlmC7Tpd0fAYGwBOITc+uz4Nuy668v7WQlauOLrC9AlqqhbpZ1ZGhPbH0qZ3dVjjlh+hql114b2MSCZLaTycey3jU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OPeIsauF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcO6RD6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B95C4CEF0;
-	Mon, 23 Jun 2025 21:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OPeIsauF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CDB9C4CEF0;
+	Mon, 23 Jun 2025 21:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713051;
-	bh=B0u8xqDLcooZ2UHoifr5j3zGCSO0RY4ou3k7odDAPMI=;
+	s=korg; t=1750713054;
+	bh=JxXYELSmYGCPe+F1Vd/8GTw2WDkogA6BwkxzAMZiFus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rcO6RD6BLu7SJTGjGJ2BkpEupdCyHwWbiPkZ1/vcwbTMho5vu4TGw6JLs8QWWXSwn
-	 VVxHlYarvxOSATn0uzTwNYpU3WKCWPG+PkYl63/FYuxOVTOwj5A/rlqbzWxCstcU3F
-	 31Awtl45Bm5emgpbssLS93o9F7YSU3hO/wQ62rao=
+	b=OPeIsauFan46Mj4s+H+VvgdEd2HEH9LfvPjADRgFdjhm9rekDjZDQlsGlE8bSocyo
+	 tIBq6OWZf+i5Civ5FRqrU4RLSU4WVGGJQfx/+KIZP2fW2KHwfXZk02Nh8Kb+2WJqXN
+	 ok3mT5JSLqN/gaQfUZ/S7nXJxxbcJ0bSbaVgEYD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/508] netfilter: nft_tunnel: fix geneve_opt dump
-Date: Mon, 23 Jun 2025 15:02:20 +0200
-Message-ID: <20250623130647.597382043@linuxfoundation.org>
+Subject: [PATCH 5.10 128/355] net: Fix TOCTOU issue in sk_is_readable()
+Date: Mon, 23 Jun 2025 15:05:29 +0200
+Message-ID: <20250623130630.591249304@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +49,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 22a9613de4c29d7d0770bfb8a5a9d73eb8df7dad ]
+[ Upstream commit 2660a544fdc0940bba15f70508a46cf9a6491230 ]
 
-When dumping a nft_tunnel with more than one geneve_opt configured the
-netlink attribute hierarchy should be as follow:
+sk->sk_prot->sock_is_readable is a valid function pointer when sk resides
+in a sockmap. After the last sk_psock_put() (which usually happens when
+socket is removed from sockmap), sk->sk_prot gets restored and
+sk->sk_prot->sock_is_readable becomes NULL.
 
- NFTA_TUNNEL_KEY_OPTS
- |
- |--NFTA_TUNNEL_KEY_OPTS_GENEVE
- |  |
- |  |--NFTA_TUNNEL_KEY_GENEVE_CLASS
- |  |--NFTA_TUNNEL_KEY_GENEVE_TYPE
- |  |--NFTA_TUNNEL_KEY_GENEVE_DATA
- |
- |--NFTA_TUNNEL_KEY_OPTS_GENEVE
- |  |
- |  |--NFTA_TUNNEL_KEY_GENEVE_CLASS
- |  |--NFTA_TUNNEL_KEY_GENEVE_TYPE
- |  |--NFTA_TUNNEL_KEY_GENEVE_DATA
- |
- |--NFTA_TUNNEL_KEY_OPTS_GENEVE
- ...
+This makes sk_is_readable() racy, if the value of sk->sk_prot is reloaded
+after the initial check. Which in turn may lead to a null pointer
+dereference.
 
-Otherwise, userspace tools won't be able to fetch the geneve options
-configured correctly.
+Ensure the function pointer does not turn NULL after the check.
 
-Fixes: 925d844696d9 ("netfilter: nft_tunnel: add support for geneve opts")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 8934ce2fd081 ("bpf: sockmap redirect ingress support")
+Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250609-skisreadable-toctou-v1-1-d0dfb2d62c37@rbox.co
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_tunnel.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/net/sock.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
-index d026982a00fc4..be741db50ffae 100644
---- a/net/netfilter/nft_tunnel.c
-+++ b/net/netfilter/nft_tunnel.c
-@@ -617,10 +617,10 @@ static int nft_tunnel_opts_dump(struct sk_buff *skb,
- 		struct geneve_opt *opt;
- 		int offset = 0;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index b9e34b955c561..bc9a1e535d580 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2827,8 +2827,11 @@ int sock_bind_add(struct sock *sk, struct sockaddr *addr, int addr_len);
  
--		inner = nla_nest_start_noflag(skb, NFTA_TUNNEL_KEY_OPTS_GENEVE);
--		if (!inner)
--			goto failure;
- 		while (opts->len > offset) {
-+			inner = nla_nest_start_noflag(skb, NFTA_TUNNEL_KEY_OPTS_GENEVE);
-+			if (!inner)
-+				goto failure;
- 			opt = (struct geneve_opt *)(opts->u.data + offset);
- 			if (nla_put_be16(skb, NFTA_TUNNEL_KEY_GENEVE_CLASS,
- 					 opt->opt_class) ||
-@@ -630,8 +630,8 @@ static int nft_tunnel_opts_dump(struct sk_buff *skb,
- 				    opt->length * 4, opt->opt_data))
- 				goto inner_failure;
- 			offset += sizeof(*opt) + opt->length * 4;
-+			nla_nest_end(skb, inner);
- 		}
--		nla_nest_end(skb, inner);
- 	}
- 	nla_nest_end(skb, nest);
- 	return 0;
+ static inline bool sk_is_readable(struct sock *sk)
+ {
+-	if (sk->sk_prot->sock_is_readable)
+-		return sk->sk_prot->sock_is_readable(sk);
++	const struct proto *prot = READ_ONCE(sk->sk_prot);
++
++	if (prot->sock_is_readable)
++		return prot->sock_is_readable(sk);
++
+ 	return false;
+ }
+ #endif	/* _SOCK_H */
 -- 
 2.39.5
 
