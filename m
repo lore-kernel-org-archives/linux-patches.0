@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7BF19F120;
-	Mon, 23 Jun 2025 22:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAE516D9BF;
+	Mon, 23 Jun 2025 22:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717107; cv=none; b=cEzb91cLX9KfBvpGErv2+tQwa5jm+vA5NECh7rl8LuseSuMI81MyDDVpZHQxvSgfauMHt+ZHSVE6CKo+wtxDRfYTjJ3ldk0JpNvFqNiHiadQUj4g+aZrtQBsWG4iVfQPlpCdeobqvRBpdqhhlXJVN8jH2M666kNqoP+/b4qla/U=
+	t=1750717109; cv=none; b=qJu5+5JUBrItXO2CcZA0QCfG+im/+uEu5Z7F+dEsxJYjh5WFvIWNinCrJBFnbNTPxxTUW2rx5pXJquX3oos5f0C9DQVYJoe+VnaDMxzS50JNNwV91GNxwCrdzFbB7mY6i5aZtEG0zJISTLsq6Xusbfu6Zk70gSS6rEIZEqqZyMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717107; c=relaxed/simple;
-	bh=KkkBPCKvGpxLWNiZOcN1CwDLRofOEFtJTJCwH582aCY=;
+	s=arc-20240116; t=1750717109; c=relaxed/simple;
+	bh=U8FplPlMzD6l61erJluzmBnZV88GlH41D4EqABhfSGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kDWTXD+gKdT7HopOWJeYC+rIS0A8VczvnfceL19BdO8vfwGp2dDEBVRIafPvH/NaUbeqszjSwa0oAzKNZCxUDhb55ktJmAZwJ5otzk72Atu5wAjiB/L47cHabCypi+Tt7/PUYMgQOJOe3iYlKrOMA/Zp3aCw7hKBFPhLHl9i7+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HRd7F/A5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZL59wx2dCbwRISfLw/XyAOTABhorbdbKoTbTfs6R1VSmwL6fIjYLe4shLJocL71a5YBS1buoZwTViCvA9TOGcbfNZH50YEh09ps/+6zQnM98gO/kT65cV3qaC6WkFA1QnEvgXSyxGAWZYioq8soiyKcq+1zssKmOnUL7DtQ/sns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFt0JFnL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRd7F/A5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6DDC4CEEA;
-	Mon, 23 Jun 2025 22:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFt0JFnL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2C3C4CEEA;
+	Mon, 23 Jun 2025 22:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717106;
-	bh=KkkBPCKvGpxLWNiZOcN1CwDLRofOEFtJTJCwH582aCY=;
+	s=korg; t=1750717109;
+	bh=U8FplPlMzD6l61erJluzmBnZV88GlH41D4EqABhfSGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HRd7F/A5lzfrmxRZQ3KAHFYpqcKJMPdpgXJuz4w2URzE3wALjkXfuRWRPlI1Mwjhr
-	 nAkcr0WDUXkRmKPCy3xxXMpJIDtxx9vPYka3SjWkvt7fZI7L1ojWa2Rs+j6Oih/npd
-	 7k2GntNs6sbMzDuHP+BBg2ww8H0qSawaHCijwljA=
+	b=wFt0JFnL2Sq0s15z8WEclOaN0ESW2QaD5tQoj92urIdDKR4YiE11TaXWNVSXI8Gdk
+	 HmZtPHQ+hA21+O4+TzxyiaWPSUDQft5klHu7Ub3xuomPxE38uAN/8eA0ltDYlU2yfm
+	 x+eSLuAWlceNFeHXcl1df0tCwZXtNBf7+jn4tamU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.12 319/414] ksmbd: fix null pointer dereference in destroy_previous_session
-Date: Mon, 23 Jun 2025 15:07:36 +0200
-Message-ID: <20250623130649.971028081@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.1 367/508] PCI: cadence-ep: Correct PBA offset in .set_msix() callback
+Date: Mon, 23 Jun 2025 15:06:52 +0200
+Message-ID: <20250623130654.383703385@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +49,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 7ac5b66acafcc9292fb935d7e03790f2b8b2dc0e upstream.
+commit c8bcb01352a86bc5592403904109c22b66bd916e upstream.
 
-If client set ->PreviousSessionId on kerberos session setup stage,
-NULL pointer dereference error will happen. Since sess->user is not
-set yet, It can pass the user argument as NULL to destroy_previous_session.
-sess->user will be set in ksmbd_krb5_authenticate(). So this patch move
-calling destroy_previous_session() after ksmbd_krb5_authenticate().
+While cdns_pcie_ep_set_msix() writes the Table Size field correctly (N-1),
+the calculation of the PBA offset is wrong because it calculates space for
+(N-1) entries instead of N.
 
+This results in the following QEMU error when using PCI passthrough on a
+device which relies on the PCI endpoint subsystem:
+
+  failed to add PCI capability 0x11[0x50]@0xb0: table & pba overlap, or they don't fit in BARs, or don't align
+
+Fix the calculation of PBA offset in the MSI-X capability.
+
+[bhelgaas: more specific subject and commit log]
+
+Fixes: 3ef5d16f50f8 ("PCI: cadence: Add MSI-X support to Endpoint driver")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-27391
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://patch.msgid.link/20250514074313.283156-10-cassel@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/pci/controller/cadence/pcie-cadence-ep.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1605,17 +1605,18 @@ static int krb5_authenticate(struct ksmb
- 	out_len = work->response_sz -
- 		(le16_to_cpu(rsp->SecurityBufferOffset) + 4);
+--- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+@@ -294,13 +294,14 @@ static int cdns_pcie_ep_set_msix(struct
+ 	struct cdns_pcie *pcie = &ep->pcie;
+ 	u32 cap = CDNS_PCIE_EP_FUNC_MSIX_CAP_OFFSET;
+ 	u32 val, reg;
++	u16 actual_interrupts = interrupts + 1;
  
--	/* Check previous session */
--	prev_sess_id = le64_to_cpu(req->PreviousSessionId);
--	if (prev_sess_id && prev_sess_id != sess->id)
--		destroy_previous_session(conn, sess->user, prev_sess_id);
--
- 	retval = ksmbd_krb5_authenticate(sess, in_blob, in_len,
- 					 out_blob, &out_len);
- 	if (retval) {
- 		ksmbd_debug(SMB, "krb5 authentication failed\n");
- 		return -EINVAL;
- 	}
-+
-+	/* Check previous session */
-+	prev_sess_id = le64_to_cpu(req->PreviousSessionId);
-+	if (prev_sess_id && prev_sess_id != sess->id)
-+		destroy_previous_session(conn, sess->user, prev_sess_id);
-+
- 	rsp->SecurityBufferLength = cpu_to_le16(out_len);
+ 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
  
- 	if ((conn->sign || server_conf.enforced_signing) ||
+ 	reg = cap + PCI_MSIX_FLAGS;
+ 	val = cdns_pcie_ep_fn_readw(pcie, fn, reg);
+ 	val &= ~PCI_MSIX_FLAGS_QSIZE;
+-	val |= interrupts;
++	val |= interrupts; /* 0's based value */
+ 	cdns_pcie_ep_fn_writew(pcie, fn, reg, val);
+ 
+ 	/* Set MSIX BAR and offset */
+@@ -310,7 +311,7 @@ static int cdns_pcie_ep_set_msix(struct
+ 
+ 	/* Set PBA BAR and offset.  BAR must match MSIX BAR */
+ 	reg = cap + PCI_MSIX_PBA;
+-	val = (offset + (interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
++	val = (offset + (actual_interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
+ 	cdns_pcie_ep_fn_writel(pcie, fn, reg, val);
+ 
+ 	return 0;
 
 
