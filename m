@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F51253F20;
-	Mon, 23 Jun 2025 13:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9522024FBFF;
+	Mon, 23 Jun 2025 13:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685747; cv=none; b=DGPXwlGlFE672Md9Smtpizx+0V+f+ADNV8jFxoUJROW975t4mao8C+cNDOtQCL70aZpPq+rMfrDzJkBGqnlopgB4iZzAl/w83xWQHQgKKM0ygBuh0hGs4dEO1Kg0BVh91QxJ0fBHMZhtsOVkFI9MHqDuWfR22a4udZdr586rNsI=
+	t=1750685749; cv=none; b=s8R8f0gRtQuSzuoeQVObI1il47oDdr+9iRWhwYSEFI06brK8HHV8iKzF17Ukm5itViB98f1d0tMg9HPNN2C6APgDNrGsHZKpRcV5tSNA3shJ8Uz3MxNnjQmrOB4232Z2KOYXrRLWkQx5vH9IAVSgfmzPljBXF+7zbOpuXmPGS9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685747; c=relaxed/simple;
-	bh=RRCXfEprhEVtcpATvkLNC2zN7MM/jznvAmeCaX10BsI=;
+	s=arc-20240116; t=1750685749; c=relaxed/simple;
+	bh=GvdJgakxtL+4vmd7m/s98YhMyinqb1c3YFZihKs/H+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ek0N19s8SlxxkzS3zVJOUsl67cpWFC/cYoryFP1h8uhRdNrBSV2cxVCFL0q7rWxXZ2ideAe4sXBVCpqeEKPgUsFebFFm/lPNiNhd6BoJS6695yns5SWUpxsqfHPjm53WOBiBDbW8kbhXpUML5CCHLS+Qx5OoleA2y/ijFc/p4Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlaG3zzz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WLiIJy+42DnLeZF+JtURqHDFO1sGqFvHAuPMKQgPLeH4O+0lDzgRRjWi2/L2y8nMjwvl8BdIonP+LJOJfkAdodtiuCL736wq6Dc608BuzMuNcbCfHtQbNfJo63J7iQVHpgcwC/gLGDPba/jtA8X+4fIRDkpkUeGjvZLIQmAucgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSChmR7k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlaG3zzz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED60C4CEEA;
-	Mon, 23 Jun 2025 13:35:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSChmR7k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B375C4CEF0;
+	Mon, 23 Jun 2025 13:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685746;
-	bh=RRCXfEprhEVtcpATvkLNC2zN7MM/jznvAmeCaX10BsI=;
+	s=korg; t=1750685749;
+	bh=GvdJgakxtL+4vmd7m/s98YhMyinqb1c3YFZihKs/H+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OlaG3zzzIJjc/9ta8ezEGXHujZYhIuGkcQYZ90QVprcXTHgZrwsQ1XDJoslcqOxp4
-	 FSKpISHsEDE5jOKvcc6p1lxmPaROpKs21F+0a8jB1+NgzX/InDacH58GgUUMU2KR6z
-	 Qb5z2oAghonFz2Zocnl8FkInVKBrdPZzYcHiYquw=
+	b=vSChmR7kncCYioG8jNTFiiLb3jYXJ/ey45I/MvXrCKpJ5dGnXczr5ijn7PR/rvQhj
+	 Rd8YMzN3QJBuhFkWkPnumgpCUB6U2oRyKRwqq2dLlVpum8VoJe9aA+Livsw02uob9b
+	 J05UQX3fzFWLg1Atb1vL8FSt9HgLlMOxWjXa1QOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Marcelo Schmitt <marcelo.schmitt@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Aric Cyr <aric.cyr@amd.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 092/355] iio: adc: ad7124: Fix 3dB filter frequency reading
-Date: Mon, 23 Jun 2025 15:04:53 +0200
-Message-ID: <20250623130629.563496455@linuxfoundation.org>
+Subject: [PATCH 6.15 283/592] drm/amd/display: Fix Vertical Interrupt definitions for dcn32, dcn401
+Date: Mon, 23 Jun 2025 15:04:01 +0200
+Message-ID: <20250623130707.082404560@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,47 +48,274 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Dillon Varone <dillon.varone@amd.com>
 
-[ Upstream commit 8712e4986e7ce42a14c762c4c350f290989986a5 ]
+[ Upstream commit e8cc149ed906a371a5962ff8065393bae28165c9 ]
 
-The sinc4 filter has a factor 0.23 between Output Data Rate and f_{3dB}
-and for sinc3 the factor is 0.272 according to the data sheets for
-ad7124-4 (Rev. E.) and ad7124-8 (Rev. F).
+[WHY&HOW]
+- VUPDATE_NO_LOCK should be used in place of VUPDATE always
+- Add VERTICAL_INTERRUPT1 and VERTICAL_INTERRUPT2 definitions
 
-Fixes: cef2760954cf ("iio: adc: ad7124: add 3db filter")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
-Link: https://patch.msgid.link/20250317115247.3735016-6-u.kleine-koenig@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Aric Cyr <aric.cyr@amd.com>
+Signed-off-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7124.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../display/dc/irq/dcn32/irq_service_dcn32.c  | 61 ++++++++++++++-----
+ .../dc/irq/dcn401/irq_service_dcn401.c        | 60 +++++++++++++-----
+ drivers/gpu/drm/amd/display/dc/irq_types.h    |  9 +++
+ 3 files changed, 101 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7124.c b/drivers/iio/adc/ad7124.c
-index 99d1288e66828..503814fca4dc0 100644
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -320,9 +320,9 @@ static int ad7124_get_3db_filter_freq(struct ad7124_state *st,
+diff --git a/drivers/gpu/drm/amd/display/dc/irq/dcn32/irq_service_dcn32.c b/drivers/gpu/drm/amd/display/dc/irq/dcn32/irq_service_dcn32.c
+index f0ac0aeeac512..f839afacd5a5c 100644
+--- a/drivers/gpu/drm/amd/display/dc/irq/dcn32/irq_service_dcn32.c
++++ b/drivers/gpu/drm/amd/display/dc/irq/dcn32/irq_service_dcn32.c
+@@ -191,6 +191,16 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
+ 	.ack = NULL
+ };
  
- 	switch (st->channel_config[channel].filter_type) {
- 	case AD7124_SINC3_FILTER:
--		return DIV_ROUND_CLOSEST(fadc * 230, 1000);
-+		return DIV_ROUND_CLOSEST(fadc * 272, 1000);
- 	case AD7124_SINC4_FILTER:
--		return DIV_ROUND_CLOSEST(fadc * 262, 1000);
-+		return DIV_ROUND_CLOSEST(fadc * 230, 1000);
- 	default:
- 		return -EINVAL;
++static struct irq_source_info_funcs vline1_irq_info_funcs = {
++	.set = NULL,
++	.ack = NULL
++};
++
++static struct irq_source_info_funcs vline2_irq_info_funcs = {
++	.set = NULL,
++	.ack = NULL
++};
++
+ #undef BASE_INNER
+ #define BASE_INNER(seg) DCN_BASE__INST0_SEG ## seg
+ 
+@@ -259,6 +269,13 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
+ 		.funcs = &pflip_irq_info_funcs\
  	}
+ 
++#define vblank_int_entry(reg_num)\
++	[DC_IRQ_SOURCE_VBLANK1 + reg_num] = {\
++		IRQ_REG_ENTRY(OTG, reg_num,\
++			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_INT_EN,\
++			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_EVENT_CLEAR),\
++		.funcs = &vblank_irq_info_funcs\
++	}
+ /* vupdate_no_lock_int_entry maps to DC_IRQ_SOURCE_VUPDATEx, to match semantic
+  * of DCE's DC_IRQ_SOURCE_VUPDATEx.
+  */
+@@ -270,14 +287,6 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
+ 		.funcs = &vupdate_no_lock_irq_info_funcs\
+ 	}
+ 
+-#define vblank_int_entry(reg_num)\
+-	[DC_IRQ_SOURCE_VBLANK1 + reg_num] = {\
+-		IRQ_REG_ENTRY(OTG, reg_num,\
+-			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_INT_EN,\
+-			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_EVENT_CLEAR),\
+-		.funcs = &vblank_irq_info_funcs\
+-}
+-
+ #define vline0_int_entry(reg_num)\
+ 	[DC_IRQ_SOURCE_DC1_VLINE0 + reg_num] = {\
+ 		IRQ_REG_ENTRY(OTG, reg_num,\
+@@ -285,6 +294,20 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
+ 			OTG_VERTICAL_INTERRUPT0_CONTROL, OTG_VERTICAL_INTERRUPT0_CLEAR),\
+ 		.funcs = &vline0_irq_info_funcs\
+ 	}
++#define vline1_int_entry(reg_num)\
++	[DC_IRQ_SOURCE_DC1_VLINE1 + reg_num] = {\
++		IRQ_REG_ENTRY(OTG, reg_num,\
++			OTG_VERTICAL_INTERRUPT1_CONTROL, OTG_VERTICAL_INTERRUPT1_INT_ENABLE,\
++			OTG_VERTICAL_INTERRUPT1_CONTROL, OTG_VERTICAL_INTERRUPT1_CLEAR),\
++		.funcs = &vline1_irq_info_funcs\
++	}
++#define vline2_int_entry(reg_num)\
++	[DC_IRQ_SOURCE_DC1_VLINE2 + reg_num] = {\
++		IRQ_REG_ENTRY(OTG, reg_num,\
++			OTG_VERTICAL_INTERRUPT2_CONTROL, OTG_VERTICAL_INTERRUPT2_INT_ENABLE,\
++			OTG_VERTICAL_INTERRUPT2_CONTROL, OTG_VERTICAL_INTERRUPT2_CLEAR),\
++		.funcs = &vline2_irq_info_funcs\
++	}
+ #define dmub_outbox_int_entry()\
+ 	[DC_IRQ_SOURCE_DMCUB_OUTBOX] = {\
+ 		IRQ_REG_ENTRY_DMUB(\
+@@ -387,21 +410,29 @@ irq_source_info_dcn32[DAL_IRQ_SOURCES_NUMBER] = {
+ 	dc_underflow_int_entry(6),
+ 	[DC_IRQ_SOURCE_DMCU_SCP] = dummy_irq_entry(),
+ 	[DC_IRQ_SOURCE_VBIOS_SW] = dummy_irq_entry(),
+-	vupdate_no_lock_int_entry(0),
+-	vupdate_no_lock_int_entry(1),
+-	vupdate_no_lock_int_entry(2),
+-	vupdate_no_lock_int_entry(3),
+ 	vblank_int_entry(0),
+ 	vblank_int_entry(1),
+ 	vblank_int_entry(2),
+ 	vblank_int_entry(3),
++	[DC_IRQ_SOURCE_DC5_VLINE1] = dummy_irq_entry(),
++	[DC_IRQ_SOURCE_DC6_VLINE1] = dummy_irq_entry(),
++	dmub_outbox_int_entry(),
++	vupdate_no_lock_int_entry(0),
++	vupdate_no_lock_int_entry(1),
++	vupdate_no_lock_int_entry(2),
++	vupdate_no_lock_int_entry(3),
+ 	vline0_int_entry(0),
+ 	vline0_int_entry(1),
+ 	vline0_int_entry(2),
+ 	vline0_int_entry(3),
+-	[DC_IRQ_SOURCE_DC5_VLINE1] = dummy_irq_entry(),
+-	[DC_IRQ_SOURCE_DC6_VLINE1] = dummy_irq_entry(),
+-	dmub_outbox_int_entry(),
++	vline1_int_entry(0),
++	vline1_int_entry(1),
++	vline1_int_entry(2),
++	vline1_int_entry(3),
++	vline2_int_entry(0),
++	vline2_int_entry(1),
++	vline2_int_entry(2),
++	vline2_int_entry(3)
+ };
+ 
+ static const struct irq_service_funcs irq_service_funcs_dcn32 = {
+diff --git a/drivers/gpu/drm/amd/display/dc/irq/dcn401/irq_service_dcn401.c b/drivers/gpu/drm/amd/display/dc/irq/dcn401/irq_service_dcn401.c
+index b43c9524b0de1..8499e505cf3ef 100644
+--- a/drivers/gpu/drm/amd/display/dc/irq/dcn401/irq_service_dcn401.c
++++ b/drivers/gpu/drm/amd/display/dc/irq/dcn401/irq_service_dcn401.c
+@@ -171,6 +171,16 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
+ 	.ack = NULL
+ };
+ 
++static struct irq_source_info_funcs vline1_irq_info_funcs = {
++	.set = NULL,
++	.ack = NULL
++};
++
++static struct irq_source_info_funcs vline2_irq_info_funcs = {
++	.set = NULL,
++	.ack = NULL
++};
++
+ #undef BASE_INNER
+ #define BASE_INNER(seg) DCN_BASE__INST0_SEG ## seg
+ 
+@@ -239,6 +249,13 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
+ 		.funcs = &pflip_irq_info_funcs\
+ 	}
+ 
++#define vblank_int_entry(reg_num)\
++	[DC_IRQ_SOURCE_VBLANK1 + reg_num] = {\
++		IRQ_REG_ENTRY(OTG, reg_num,\
++			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_INT_EN,\
++			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_EVENT_CLEAR),\
++		.funcs = &vblank_irq_info_funcs\
++	}
+ /* vupdate_no_lock_int_entry maps to DC_IRQ_SOURCE_VUPDATEx, to match semantic
+  * of DCE's DC_IRQ_SOURCE_VUPDATEx.
+  */
+@@ -250,13 +267,6 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
+ 		.funcs = &vupdate_no_lock_irq_info_funcs\
+ 	}
+ 
+-#define vblank_int_entry(reg_num)\
+-	[DC_IRQ_SOURCE_VBLANK1 + reg_num] = {\
+-		IRQ_REG_ENTRY(OTG, reg_num,\
+-			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_INT_EN,\
+-			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_EVENT_CLEAR),\
+-		.funcs = &vblank_irq_info_funcs\
+-	}
+ #define vline0_int_entry(reg_num)\
+ 	[DC_IRQ_SOURCE_DC1_VLINE0 + reg_num] = {\
+ 		IRQ_REG_ENTRY(OTG, reg_num,\
+@@ -264,6 +274,20 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
+ 			OTG_VERTICAL_INTERRUPT0_CONTROL, OTG_VERTICAL_INTERRUPT0_CLEAR),\
+ 		.funcs = &vline0_irq_info_funcs\
+ 	}
++#define vline1_int_entry(reg_num)\
++	[DC_IRQ_SOURCE_DC1_VLINE1 + reg_num] = {\
++		IRQ_REG_ENTRY(OTG, reg_num,\
++			OTG_VERTICAL_INTERRUPT1_CONTROL, OTG_VERTICAL_INTERRUPT1_INT_ENABLE,\
++			OTG_VERTICAL_INTERRUPT1_CONTROL, OTG_VERTICAL_INTERRUPT1_CLEAR),\
++		.funcs = &vline1_irq_info_funcs\
++	}
++#define vline2_int_entry(reg_num)\
++	[DC_IRQ_SOURCE_DC1_VLINE2 + reg_num] = {\
++		IRQ_REG_ENTRY(OTG, reg_num,\
++			OTG_VERTICAL_INTERRUPT2_CONTROL, OTG_VERTICAL_INTERRUPT2_INT_ENABLE,\
++			OTG_VERTICAL_INTERRUPT2_CONTROL, OTG_VERTICAL_INTERRUPT2_CLEAR),\
++		.funcs = &vline2_irq_info_funcs\
++	}
+ #define dmub_outbox_int_entry()\
+ 	[DC_IRQ_SOURCE_DMCUB_OUTBOX] = {\
+ 		IRQ_REG_ENTRY_DMUB(\
+@@ -364,21 +388,29 @@ irq_source_info_dcn401[DAL_IRQ_SOURCES_NUMBER] = {
+ 	dc_underflow_int_entry(6),
+ 	[DC_IRQ_SOURCE_DMCU_SCP] = dummy_irq_entry(),
+ 	[DC_IRQ_SOURCE_VBIOS_SW] = dummy_irq_entry(),
+-	vupdate_no_lock_int_entry(0),
+-	vupdate_no_lock_int_entry(1),
+-	vupdate_no_lock_int_entry(2),
+-	vupdate_no_lock_int_entry(3),
+ 	vblank_int_entry(0),
+ 	vblank_int_entry(1),
+ 	vblank_int_entry(2),
+ 	vblank_int_entry(3),
++	[DC_IRQ_SOURCE_DC5_VLINE1] = dummy_irq_entry(),
++	[DC_IRQ_SOURCE_DC6_VLINE1] = dummy_irq_entry(),
++	dmub_outbox_int_entry(),
++	vupdate_no_lock_int_entry(0),
++	vupdate_no_lock_int_entry(1),
++	vupdate_no_lock_int_entry(2),
++	vupdate_no_lock_int_entry(3),
+ 	vline0_int_entry(0),
+ 	vline0_int_entry(1),
+ 	vline0_int_entry(2),
+ 	vline0_int_entry(3),
+-	[DC_IRQ_SOURCE_DC5_VLINE1] = dummy_irq_entry(),
+-	[DC_IRQ_SOURCE_DC6_VLINE1] = dummy_irq_entry(),
+-	dmub_outbox_int_entry(),
++	vline1_int_entry(0),
++	vline1_int_entry(1),
++	vline1_int_entry(2),
++	vline1_int_entry(3),
++	vline2_int_entry(0),
++	vline2_int_entry(1),
++	vline2_int_entry(2),
++	vline2_int_entry(3),
+ };
+ 
+ static const struct irq_service_funcs irq_service_funcs_dcn401 = {
+diff --git a/drivers/gpu/drm/amd/display/dc/irq_types.h b/drivers/gpu/drm/amd/display/dc/irq_types.h
+index 110f656d43aee..eadab0a2afebe 100644
+--- a/drivers/gpu/drm/amd/display/dc/irq_types.h
++++ b/drivers/gpu/drm/amd/display/dc/irq_types.h
+@@ -161,6 +161,13 @@ enum dc_irq_source {
+ 	DC_IRQ_SOURCE_DPCX_TX_PHYE,
+ 	DC_IRQ_SOURCE_DPCX_TX_PHYF,
+ 
++	DC_IRQ_SOURCE_DC1_VLINE2,
++	DC_IRQ_SOURCE_DC2_VLINE2,
++	DC_IRQ_SOURCE_DC3_VLINE2,
++	DC_IRQ_SOURCE_DC4_VLINE2,
++	DC_IRQ_SOURCE_DC5_VLINE2,
++	DC_IRQ_SOURCE_DC6_VLINE2,
++
+ 	DAL_IRQ_SOURCES_NUMBER
+ };
+ 
+@@ -170,6 +177,8 @@ enum irq_type
+ 	IRQ_TYPE_VUPDATE = DC_IRQ_SOURCE_VUPDATE1,
+ 	IRQ_TYPE_VBLANK = DC_IRQ_SOURCE_VBLANK1,
+ 	IRQ_TYPE_VLINE0 = DC_IRQ_SOURCE_DC1_VLINE0,
++	IRQ_TYPE_VLINE1 = DC_IRQ_SOURCE_DC1_VLINE1,
++	IRQ_TYPE_VLINE2 = DC_IRQ_SOURCE_DC1_VLINE2,
+ 	IRQ_TYPE_DCUNDERFLOW = DC_IRQ_SOURCE_DC1UNDERFLOW,
+ };
+ 
 -- 
 2.39.5
 
