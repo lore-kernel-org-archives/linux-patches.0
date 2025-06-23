@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA45A44C77;
-	Mon, 23 Jun 2025 21:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7424409;
+	Mon, 23 Jun 2025 21:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714460; cv=none; b=btcaqO/WZRmogXXdDwGVzmrv/pwKLXKnGpzFEiQuuMUaFg2hIFmlEItPXpSGmRec5/g+7XgBtjcXN2HEiXsYic/oGSrrwv0K4jRXgLlce3g8eMCtxF4NlIAogYuXSXZRFYSk63ifnOF0dtObVqrqI6yrexENZhhrgoctfDa4uYs=
+	t=1750714463; cv=none; b=YL+fXovbsHzttXlp3XTNRU4MsK47Q9KN/jDip3jeQzyPnuwScvIdG4+6TRXpNhNGxClQkIZV7v8epcrq1qI3hHQt93N13ANZc4sqBh1aN5FKlqwpUMyOHjCrN2RxTVRWnm24M2ZM5acbK1Z6inOSONfdpqHr5i8wvNnb9KVZBag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714460; c=relaxed/simple;
-	bh=E4fc+zCSdfa7/Tazp7ELi9tU4pkidQOjBGiIHaJIgnI=;
+	s=arc-20240116; t=1750714463; c=relaxed/simple;
+	bh=ab86mJcEeloBx5zwdoBg4sAolgIVRgtqTZBZFzezc50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BbTBJZcf2wQivWYMWcvpK4IueQcjFLw5oTUogxfrpqmMqaAIPeqzebQEIZQuCqeI1u3N17HQFrvNEU3z7kJCH0JNymPGw5TU5BWhxbeUhnlKiI5wEwfPEHAcaFPq1EbzktDjm2fRfJAdqi/1X41osEj/NmTjy/KcOMGu/jADHPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4T8TCyZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AwRNMv2mPwjvlzXIOuZx2gVHreK5StRIvP6dI/4cSCKzskbN/MJHO4oaC6lStcsexX39LgKfqWT7A+E4Harb14RYq+uMM4ziF+3hQcuqmnUFfYLiIDJqm9mQoYIz5FPFywqsPZURD8HvilGGA96canUKfbQ7UI81djMkgwX0Fvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1J4+hLOZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4T8TCyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5994EC4CEEA;
-	Mon, 23 Jun 2025 21:34:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1J4+hLOZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8A2C4CEEA;
+	Mon, 23 Jun 2025 21:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714460;
-	bh=E4fc+zCSdfa7/Tazp7ELi9tU4pkidQOjBGiIHaJIgnI=;
+	s=korg; t=1750714463;
+	bh=ab86mJcEeloBx5zwdoBg4sAolgIVRgtqTZBZFzezc50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S4T8TCyZlRS3idFD0UOd9OvQow6uRnlS4wHTuLgUf6Cloeci4EGtvl7BXou7LzajL
-	 TzjTUfruNxEfjp+DwoY/6FskHNUU0JzSNoQ0euxPI7CgzvYdFjJobxJMdl4/j4pdTh
-	 87uAFfAoEen2nVs9dCSjykORGg1BvoSEAafaJDjs=
+	b=1J4+hLOZOIrFUAeA07E/U/6EeiARTvPBLyKkasn0XI3od7PU8HK6WAwtzA7KRl80J
+	 QazEwKJLbQ7P/41QDd4D3SzXbOLoMEUZaBNhkFV50F5w0Sy+v4u1p2Oqd9rD2cOJNf
+	 sY9iTImQxPSGRjvmI932YdJhI1JN228VM/SiXW+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <dchinner@redhat.com>,
+	Leah Rumancik <leah.rumancik@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 159/290] pinctrl: armada-37xx: propagate error from armada_37xx_pmx_gpio_set_direction()
-Date: Mon, 23 Jun 2025 15:07:00 +0200
-Message-ID: <20250623130631.677209307@linuxfoundation.org>
+Subject: [PATCH 6.1 196/508] xfs: validate fsmap offsets specified in the query keys
+Date: Mon, 23 Jun 2025 15:04:01 +0200
+Message-ID: <20250623130650.092802829@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,53 +48,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit bfa0ff804ffa8b1246ade8be08de98c9eb19d16f ]
+[ Upstream commit 3ee9351e74907fe3acb0721c315af25b05dc87da ]
 
-The armada_37xx_gpio_direction_{in,out}put() functions can fail, so
-propagate their error values back to the stack instead of silently
-ignoring those.
+Improve the validation of the fsmap offset fields in the query keys and
+move the validation to the top of the function now that we have pushed
+the low key adjustment code downwards.
 
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-5-07e9ac1ab737@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Also fix some indenting issues that aren't worth a separate patch.
+
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_fsmap.c | 30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-index 8008bad481b7d..a9e665ea0f617 100644
---- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-+++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -472,16 +472,17 @@ static int armada_37xx_pmx_gpio_set_direction(struct pinctrl_dev *pctldev,
+diff --git a/fs/xfs/xfs_fsmap.c b/fs/xfs/xfs_fsmap.c
+index cdd806d80b7cf..d10f2c719220d 100644
+--- a/fs/xfs/xfs_fsmap.c
++++ b/fs/xfs/xfs_fsmap.c
+@@ -802,6 +802,19 @@ xfs_getfsmap_check_keys(
+ 	struct xfs_fsmap		*low_key,
+ 	struct xfs_fsmap		*high_key)
  {
- 	struct armada_37xx_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
- 	struct gpio_chip *chip = range->gc;
-+	int ret;
++	if (low_key->fmr_flags & (FMR_OF_SPECIAL_OWNER | FMR_OF_EXTENT_MAP)) {
++		if (low_key->fmr_offset)
++			return false;
++	}
++	if (high_key->fmr_flags != -1U &&
++	    (high_key->fmr_flags & (FMR_OF_SPECIAL_OWNER |
++				    FMR_OF_EXTENT_MAP))) {
++		if (high_key->fmr_offset && high_key->fmr_offset != -1ULL)
++			return false;
++	}
++	if (high_key->fmr_length && high_key->fmr_length != -1ULL)
++		return false;
++
+ 	if (low_key->fmr_device > high_key->fmr_device)
+ 		return false;
+ 	if (low_key->fmr_device < high_key->fmr_device)
+@@ -845,15 +858,15 @@ xfs_getfsmap_check_keys(
+  * ----------------
+  * There are multiple levels of keys and counters at work here:
+  * xfs_fsmap_head.fmh_keys	-- low and high fsmap keys passed in;
+- * 				   these reflect fs-wide sector addrs.
++ *				   these reflect fs-wide sector addrs.
+  * dkeys			-- fmh_keys used to query each device;
+- * 				   these are fmh_keys but w/ the low key
+- * 				   bumped up by fmr_length.
++ *				   these are fmh_keys but w/ the low key
++ *				   bumped up by fmr_length.
+  * xfs_getfsmap_info.next_daddr	-- next disk addr we expect to see; this
+  *				   is how we detect gaps in the fsmap
+ 				   records and report them.
+  * xfs_getfsmap_info.low/high	-- per-AG low/high keys computed from
+- * 				   dkeys; used to query the metadata.
++ *				   dkeys; used to query the metadata.
+  */
+ int
+ xfs_getfsmap(
+@@ -874,6 +887,8 @@ xfs_getfsmap(
+ 	if (!xfs_getfsmap_is_valid_device(mp, &head->fmh_keys[0]) ||
+ 	    !xfs_getfsmap_is_valid_device(mp, &head->fmh_keys[1]))
+ 		return -EINVAL;
++	if (!xfs_getfsmap_check_keys(&head->fmh_keys[0], &head->fmh_keys[1]))
++		return -EINVAL;
  
- 	dev_dbg(info->dev, "gpio_direction for pin %u as %s-%d to %s\n",
- 		offset, range->name, offset, input ? "input" : "output");
+ 	use_rmap = xfs_has_rmapbt(mp) &&
+ 		   has_capability_noaudit(current, CAP_SYS_ADMIN);
+@@ -919,15 +934,8 @@ xfs_getfsmap(
+ 	 * other mapping for the same physical block range.
+ 	 */
+ 	dkeys[0] = head->fmh_keys[0];
+-	if (dkeys[0].fmr_flags & (FMR_OF_SPECIAL_OWNER | FMR_OF_EXTENT_MAP)) {
+-		if (dkeys[0].fmr_offset)
+-			return -EINVAL;
+-	}
+ 	memset(&dkeys[1], 0xFF, sizeof(struct xfs_fsmap));
  
- 	if (input)
--		armada_37xx_gpio_direction_input(chip, offset);
-+		ret = armada_37xx_gpio_direction_input(chip, offset);
- 	else
--		armada_37xx_gpio_direction_output(chip, offset, 0);
-+		ret = armada_37xx_gpio_direction_output(chip, offset, 0);
- 
--	return 0;
-+	return ret;
- }
- 
- static int armada_37xx_gpio_request_enable(struct pinctrl_dev *pctldev,
+-	if (!xfs_getfsmap_check_keys(dkeys, &head->fmh_keys[1]))
+-		return -EINVAL;
+-
+ 	info.next_daddr = head->fmh_keys[0].fmr_physical +
+ 			  head->fmh_keys[0].fmr_length;
+ 	info.fsmap_recs = fsmap_recs;
 -- 
 2.39.5
 
