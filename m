@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291D622370A;
-	Mon, 23 Jun 2025 22:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410372222B2;
+	Mon, 23 Jun 2025 22:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717600; cv=none; b=C36eJr51ztecwca6P20nwO5uU7moSiU7svwYajvKpXgZIKiTdNzygJt/2hxZh5AhP49G23UQ3QNTrFG5476zUo78/TxCWFTzhrZdiDq5fypbUe20OmoqbOlQcViX6u9d6cD97I1ZNSuj8zaOTauGL5ArMujKIY74L2ZyX9ysEOc=
+	t=1750717602; cv=none; b=MYEt301EgkUXnQFwJuxqGfcjovWhS8QZ5niKt+emN16OK4OYhAFt4YC9kcozVRdnBLSoy7r4k80ZlsvvTj/EtNA7Pvk4jVDxO1z/7ytLxpOulVUDOgYugarORvASyQDfDAI0KaDDH0iqY2m2DBYmUB0ikjVQAnZXiRkVa+Kiq8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717600; c=relaxed/simple;
-	bh=TEAUb9Y+laqqY2Y9E/79hJJwBI39hTeyOO4ZpyRJ7fI=;
+	s=arc-20240116; t=1750717602; c=relaxed/simple;
+	bh=2DFkYwZ8qcr8yRXWTijUzQ6KgRC9ECWhLUUA6BI2UVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LLObU3IdT1FRsZYlLGHrALR4gti3thH+BBjpqVxOkpW1XR8g/VtCWrWcRSLVh+Xt60wA2RrczXqbaoVMmjax+CifRbhYNKHYprxyn6ytcJReaaBNyCDCduvKLgcHvJ9258fDrlfL1ZApaF54PsbjCm5use23QDGxNU8eRq2Ewt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmMIhy4b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cqTkVwmw9aFYRM+fknPX3YSic8fDRlxZSHeOpLa7SArF6kOFyeK0G4KCXioHCQoDNV0dD7mbtDbBjmSmFSbQp0Wxzk3cohMn6G34u12B8m0Z/rmd7xXDCAkvMDz/lyaZOxQFpw9Z4uXPk3WV+ZnAQti1BGBwM9MMiokrYnyCqIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVWssdy1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmMIhy4b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61806C4CEED;
-	Mon, 23 Jun 2025 22:26:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVWssdy1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB03FC4CEEA;
+	Mon, 23 Jun 2025 22:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717599;
-	bh=TEAUb9Y+laqqY2Y9E/79hJJwBI39hTeyOO4ZpyRJ7fI=;
+	s=korg; t=1750717602;
+	bh=2DFkYwZ8qcr8yRXWTijUzQ6KgRC9ECWhLUUA6BI2UVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VmMIhy4by9ScutlpnFTDMF9wcbY5zAKWE3sxUg8WnQpThjbb2m7iKxOYQHtm2sMCo
-	 aFAgYJwX3JKfmL4Vi5ojpvAXhQ+iqUjqlCVT8MZXNjXXAOE5TCMKl8D6JZwT8/uCOj
-	 g9KJharh5omEYYNGZA63teSBooVPY4k0YbgLbmlM=
+	b=kVWssdy1cAf8H6GHsZK4Emq76xLpoqwhny6s/fRySkfOdkkaCj24tzeX+Yr7HrnQ8
+	 45GnCBRinXNzAca7LgBVI75oKe4Z68U9i5iFeFnepIXjyWu4sdryFBDSLTRxBgDoxo
+	 63PEHbNT43FE3g9eaRDLluucj7AmITc1XbNqHRic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Guo <gavinguo@igalia.com>,
-	David Hildenbrand <david@redhat.com>,
-	Hugh Dickins <hughd@google.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Gavin Shan <gshan@redhat.com>,
-	Florent Revest <revest@google.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 466/508] mm/huge_memory: fix dereferencing invalid pmd migration entry
-Date: Mon, 23 Jun 2025 15:08:31 +0200
-Message-ID: <20250623130656.572860328@linuxfoundation.org>
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 467/508] net: Fix checksum update for ILA adj-transport
+Date: Mon, 23 Jun 2025 15:08:32 +0200
+Message-ID: <20250623130656.594717168@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -57,100 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gavin Guo <gavinguo@igalia.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-commit be6e843fc51a584672dfd9c4a6a24c8cb81d5fb7 upstream.
+commit 6043b794c7668c19dabc4a93c75b924a19474d59 upstream.
 
-When migrating a THP, concurrent access to the PMD migration entry during
-a deferred split scan can lead to an invalid address access, as
-illustrated below.  To prevent this invalid access, it is necessary to
-check the PMD migration entry and return early.  In this context, there is
-no need to use pmd_to_swp_entry and pfn_swap_entry_to_page to verify the
-equality of the target folio.  Since the PMD migration entry is locked, it
-cannot be served as the target.
+During ILA address translations, the L4 checksums can be handled in
+different ways. One of them, adj-transport, consist in parsing the
+transport layer and updating any found checksum. This logic relies on
+inet_proto_csum_replace_by_diff and produces an incorrect skb->csum when
+in state CHECKSUM_COMPLETE.
 
-Mailing list discussion and explanation from Hugh Dickins: "An anon_vma
-lookup points to a location which may contain the folio of interest, but
-might instead contain another folio: and weeding out those other folios is
-precisely what the "folio != pmd_folio((*pmd)" check (and the "risk of
-replacing the wrong folio" comment a few lines above it) is for."
+This bug can be reproduced with a simple ILA to SIR mapping, assuming
+packets are received with CHECKSUM_COMPLETE:
 
-BUG: unable to handle page fault for address: ffffea60001db008
-CPU: 0 UID: 0 PID: 2199114 Comm: tee Not tainted 6.14.0+ #4 NONE
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:split_huge_pmd_locked+0x3b5/0x2b60
-Call Trace:
-<TASK>
-try_to_migrate_one+0x28c/0x3730
-rmap_walk_anon+0x4f6/0x770
-unmap_folio+0x196/0x1f0
-split_huge_page_to_list_to_order+0x9f6/0x1560
-deferred_split_scan+0xac5/0x12a0
-shrinker_debugfs_scan_write+0x376/0x470
-full_proxy_write+0x15c/0x220
-vfs_write+0x2fc/0xcb0
-ksys_write+0x146/0x250
-do_syscall_64+0x6a/0x120
-entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  $ ip a show dev eth0
+  14: eth0@if15: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+      link/ether 62:ae:35:9e:0f:8d brd ff:ff:ff:ff:ff:ff link-netnsid 0
+      inet6 3333:0:0:1::c078/64 scope global
+         valid_lft forever preferred_lft forever
+      inet6 fd00:10:244:1::c078/128 scope global nodad
+         valid_lft forever preferred_lft forever
+      inet6 fe80::60ae:35ff:fe9e:f8d/64 scope link proto kernel_ll
+         valid_lft forever preferred_lft forever
+  $ ip ila add loc_match fd00:10:244:1 loc 3333:0:0:1 \
+      csum-mode adj-transport ident-type luid dev eth0
 
-The bug is found by syzkaller on an internal kernel, then confirmed on
-upstream.
+Then I hit [fd00:10:244:1::c078]:8000 with a server listening only on
+[3333:0:0:1::c078]:8000. With the bug, the SYN packet is dropped with
+SKB_DROP_REASON_TCP_CSUM after inet_proto_csum_replace_by_diff changed
+skb->csum. The translation and drop are visible on pwru [1] traces:
 
-Link: https://lkml.kernel.org/r/20250421113536.3682201-1-gavinguo@igalia.com
-Link: https://lore.kernel.org/all/20250414072737.1698513-1-gavinguo@igalia.com/
-Link: https://lore.kernel.org/all/20250418085802.2973519-1-gavinguo@igalia.com/
-Fixes: 84c3fc4e9c56 ("mm: thp: check pmd migration entry in common path")
-Signed-off-by: Gavin Guo <gavinguo@igalia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Hugh Dickins <hughd@google.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Cc: Florent Revest <revest@google.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[gavin: backport the migration checking logic to __split_huge_pmd]
-Signed-off-by: Gavin Guo <gavinguo@igalia.com>
+  IFACE   TUPLE                                                        FUNC
+  eth0:9  [fd00:10:244:3::3d8]:51420->[fd00:10:244:1::c078]:8000(tcp)  ipv6_rcv
+  eth0:9  [fd00:10:244:3::3d8]:51420->[fd00:10:244:1::c078]:8000(tcp)  ip6_rcv_core
+  eth0:9  [fd00:10:244:3::3d8]:51420->[fd00:10:244:1::c078]:8000(tcp)  nf_hook_slow
+  eth0:9  [fd00:10:244:3::3d8]:51420->[fd00:10:244:1::c078]:8000(tcp)  inet_proto_csum_replace_by_diff
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     tcp_v6_early_demux
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     ip6_route_input
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     ip6_input
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     ip6_input_finish
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     ip6_protocol_deliver_rcu
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     raw6_local_deliver
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     ipv6_raw_deliver
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     tcp_v6_rcv
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     __skb_checksum_complete
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     kfree_skb_reason(SKB_DROP_REASON_TCP_CSUM)
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     skb_release_head_state
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     skb_release_data
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     skb_free_head
+  eth0:9  [fd00:10:244:3::3d8]:51420->[3333:0:0:1::c078]:8000(tcp)     kfree_skbmem
+
+This is happening because inet_proto_csum_replace_by_diff is updating
+skb->csum when it shouldn't. The L4 checksum is updated such that it
+"cancels" the IPv6 address change in terms of checksum computation, so
+the impact on skb->csum is null.
+
+Note this would be different for an IPv4 packet since three fields
+would be updated: the IPv4 address, the IP checksum, and the L4
+checksum. Two would cancel each other and skb->csum would still need
+to be updated to take the L4 checksum change into account.
+
+This patch fixes it by passing an ipv6 flag to
+inet_proto_csum_replace_by_diff, to skip the skb->csum update if we're
+in the IPv6 case. Note the behavior of the only other user of
+inet_proto_csum_replace_by_diff, the BPF subsystem, is left as is in
+this patch and fixed in the subsequent patch.
+
+With the fix, using the reproduction from above, I can confirm
+skb->csum is not touched by inet_proto_csum_replace_by_diff and the TCP
+SYN proceeds to the application after the ILA translation.
+
+Link: https://github.com/cilium/pwru [1]
+Fixes: 65d7ab8de582 ("net: Identifier Locator Addressing module")
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/b5539869e3550d46068504feb02d37653d939c0b.1748509484.git.paul.chaignon@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/net/checksum.h    |    2 +-
+ net/core/filter.c         |    2 +-
+ net/core/utils.c          |    4 ++--
+ net/ipv6/ila/ila_common.c |    6 +++---
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2282,12 +2282,14 @@ void __split_huge_pmd(struct vm_area_str
+--- a/include/net/checksum.h
++++ b/include/net/checksum.h
+@@ -156,7 +156,7 @@ void inet_proto_csum_replace16(__sum16 *
+ 			       const __be32 *from, const __be32 *to,
+ 			       bool pseudohdr);
+ void inet_proto_csum_replace_by_diff(__sum16 *sum, struct sk_buff *skb,
+-				     __wsum diff, bool pseudohdr);
++				     __wsum diff, bool pseudohdr, bool ipv6);
+ 
+ static __always_inline
+ void inet_proto_csum_replace2(__sum16 *sum, struct sk_buff *skb,
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -1977,7 +1977,7 @@ BPF_CALL_5(bpf_l4_csum_replace, struct s
+ 		if (unlikely(from != 0))
+ 			return -EINVAL;
+ 
+-		inet_proto_csum_replace_by_diff(ptr, skb, to, is_pseudo);
++		inet_proto_csum_replace_by_diff(ptr, skb, to, is_pseudo, false);
+ 		break;
+ 	case 2:
+ 		inet_proto_csum_replace2(ptr, skb, from, to, is_pseudo);
+--- a/net/core/utils.c
++++ b/net/core/utils.c
+@@ -473,11 +473,11 @@ void inet_proto_csum_replace16(__sum16 *
+ EXPORT_SYMBOL(inet_proto_csum_replace16);
+ 
+ void inet_proto_csum_replace_by_diff(__sum16 *sum, struct sk_buff *skb,
+-				     __wsum diff, bool pseudohdr)
++				     __wsum diff, bool pseudohdr, bool ipv6)
  {
- 	spinlock_t *ptl;
- 	struct mmu_notifier_range range;
-+	bool pmd_migration;
+ 	if (skb->ip_summed != CHECKSUM_PARTIAL) {
+ 		csum_replace_by_diff(sum, diff);
+-		if (skb->ip_summed == CHECKSUM_COMPLETE && pseudohdr)
++		if (skb->ip_summed == CHECKSUM_COMPLETE && pseudohdr && !ipv6)
+ 			skb->csum = ~csum_sub(diff, skb->csum);
+ 	} else if (pseudohdr) {
+ 		*sum = ~csum_fold(csum_add(diff, csum_unfold(*sum)));
+--- a/net/ipv6/ila/ila_common.c
++++ b/net/ipv6/ila/ila_common.c
+@@ -86,7 +86,7 @@ static void ila_csum_adjust_transport(st
  
- 	mmu_notifier_range_init(&range, MMU_NOTIFY_CLEAR, 0, vma, vma->vm_mm,
- 				address & HPAGE_PMD_MASK,
- 				(address & HPAGE_PMD_MASK) + HPAGE_PMD_SIZE);
- 	mmu_notifier_invalidate_range_start(&range);
- 	ptl = pmd_lock(vma->vm_mm, pmd);
-+	pmd_migration = is_pmd_migration_entry(*pmd);
+ 			diff = get_csum_diff(ip6h, p);
+ 			inet_proto_csum_replace_by_diff(&th->check, skb,
+-							diff, true);
++							diff, true, true);
+ 		}
+ 		break;
+ 	case NEXTHDR_UDP:
+@@ -97,7 +97,7 @@ static void ila_csum_adjust_transport(st
+ 			if (uh->check || skb->ip_summed == CHECKSUM_PARTIAL) {
+ 				diff = get_csum_diff(ip6h, p);
+ 				inet_proto_csum_replace_by_diff(&uh->check, skb,
+-								diff, true);
++								diff, true, true);
+ 				if (!uh->check)
+ 					uh->check = CSUM_MANGLED_0;
+ 			}
+@@ -111,7 +111,7 @@ static void ila_csum_adjust_transport(st
  
- 	/*
- 	 * If caller asks to setup a migration entry, we need a folio to check
-@@ -2296,13 +2298,12 @@ void __split_huge_pmd(struct vm_area_str
- 	VM_BUG_ON(freeze && !folio);
- 	VM_WARN_ON_ONCE(folio && !folio_test_locked(folio));
- 
--	if (pmd_trans_huge(*pmd) || pmd_devmap(*pmd) ||
--	    is_pmd_migration_entry(*pmd)) {
-+	if (pmd_trans_huge(*pmd) || pmd_devmap(*pmd) || pmd_migration) {
- 		/*
--		 * It's safe to call pmd_page when folio is set because it's
--		 * guaranteed that pmd is present.
-+		 * Do not apply pmd_folio() to a migration entry; and folio lock
-+		 * guarantees that it must be of the wrong folio anyway.
- 		 */
--		if (folio && folio != page_folio(pmd_page(*pmd)))
-+		if (folio && (pmd_migration || folio != page_folio(pmd_page(*pmd))))
- 			goto out;
- 		__split_huge_pmd_locked(vma, pmd, range.start, freeze);
+ 			diff = get_csum_diff(ip6h, p);
+ 			inet_proto_csum_replace_by_diff(&ih->icmp6_cksum, skb,
+-							diff, true);
++							diff, true, true);
+ 		}
+ 		break;
  	}
 
 
