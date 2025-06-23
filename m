@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7481EE7C6;
-	Mon, 23 Jun 2025 21:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC581EE7C6;
+	Mon, 23 Jun 2025 21:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714517; cv=none; b=OVrQuONArxJtxvonHbf5QASte8QN0XDAaojWXE8ZGDpHkiXbUUnRA3AlLyxCqjqud9LFJP8bUrTfwma4RXKrANVEuFjLYrgCkZxrgtOdZut1cOQ6MEL4NsB5zPieu3YcT/Wg53w2/qOREnb3Hhr06Alw9IwjV+3DbYeTMxZW8Ck=
+	t=1750714519; cv=none; b=gfIazFopIRZvXHsYYu0A6nW0CptG7AigzqzZEsSsSTZ8n04jd0ZAf6N9wAINxe1Y8uBHJ7H8JFag8UKiVZZn+ISyWSo+eYpem3oDUTIvd+HIk66m1Ehvi5SWoG03N57ctkf7YMQMPmAJ8/zuOq2s1L/MyZm5Gldf17v8bvlZYLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714517; c=relaxed/simple;
-	bh=FQO6BYQ1iii0zt/sX6BPPA/XtVXVzojK0vs8UenzKHo=;
+	s=arc-20240116; t=1750714519; c=relaxed/simple;
+	bh=/JxwcFRd4m5Ac8DjeEXGoRy7a5pI1yt/KdteJBhF6Eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3W+r93dwZ+f2uI6l4D43PqC7dTGGQglMTV8GV3r8e8P5kk5h5hi7sCg0DC1kokogiT0tO26Zb3zF18sNYwAPIz8RiNb21KbEp7L5DaGB0oZT09bjcfJKd049FyWkhAiY1H2Ielrv1Q77MrbF290b7g9k7LjYo1akoI0DZwvOK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSJmzte8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hbJoB5oSVbHyDxpEkdZhS9vkzFHCdqVxGWqfqHASp8kFjeotepUGCI0LIRZ79xZIlqOmmeqOtIr+lAWgRScFYymQARYVR/d0auRqrX7CqO5teT2apOHu9CQ2EfLdoy1FaIZeeyvy5I4IOrzZLmbGww9OJykrLYwnExZIDxcv9H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SD4uEc/M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSJmzte8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABA3C4CEEA;
-	Mon, 23 Jun 2025 21:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SD4uEc/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E192C4CEEA;
+	Mon, 23 Jun 2025 21:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714516;
-	bh=FQO6BYQ1iii0zt/sX6BPPA/XtVXVzojK0vs8UenzKHo=;
+	s=korg; t=1750714519;
+	bh=/JxwcFRd4m5Ac8DjeEXGoRy7a5pI1yt/KdteJBhF6Eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LSJmzte8WIkHI5jZt4YHKSQQ6F6C07bHhfbUssIiIEV9uSartT1fVDbDGL1dT2Jn3
-	 NWpDTfeX03Fv/s2RLUV6CA9RBaBBTLdqCPMxV+6HAVFJ8Gg81lfoOUKV96EzHihMNY
-	 HQ0oB5DniG1c0VzkmUilB60dEeZITwjbzZAa8JPY=
+	b=SD4uEc/Mdw+xyWE179Cocc8q92n73ISmAWvmhroGvXCfEFfMkvro/VsHELlP8yGcx
+	 9sNcmGKOhnryoS5qTJOyhggV4zb8cfqQjc1P+5OU/bbB4tWTRl2p2e0HlelVairR30
+	 jekyF7v/r1v70rKZ2iASjSC+UO3PB9GKTaJxSwjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	"Ivan T. Ivanov" <iivanov@suse.de>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.12 134/414] video: screen_info: Relocate framebuffers behind PCI bridges
-Date: Mon, 23 Jun 2025 15:04:31 +0200
-Message-ID: <20250623130645.404511035@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 233/355] ext4: ext4: unify EXT4_EX_NOCACHE|NOFAIL flags in ext4_ext_remove_space()
+Date: Mon, 23 Jun 2025 15:07:14 +0200
+Message-ID: <20250623130633.756051943@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,173 +47,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 2f29b5c231011b94007d2c8a6d793992f2275db1 upstream.
+[ Upstream commit 53ce42accd2002cc490fc86000ac532530507a74 ]
 
-Apply PCI host-bridge window offsets to screen_info framebuffers. Fixes
-invalid access to I/O memory.
+When removing space, we should use EXT4_EX_NOCACHE because we don't
+need to cache extents, and we should also use EXT4_EX_NOFAIL to prevent
+metadata inconsistencies that may arise from memory allocation failures.
+While ext4_ext_remove_space() already uses these two flags in most
+places, they are missing in ext4_ext_search_right() and
+read_extent_tree_block() calls. Unify the flags to ensure consistent
+behavior throughout the extent removal process.
 
-Resources behind a PCI host bridge can be relocated by a certain offset
-in the kernel's CPU address range used for I/O. The framebuffer memory
-range stored in screen_info refers to the CPU addresses as seen during
-boot (where the offset is 0). During boot up, firmware may assign a
-different memory offset to the PCI host bridge and thereby relocating
-the framebuffer address of the PCI graphics device as seen by the kernel.
-The information in screen_info must be updated as well.
-
-The helper pcibios_bus_to_resource() performs the relocation of the
-screen_info's framebuffer resource (given in PCI bus addresses). The
-result matches the I/O-memory resource of the PCI graphics device (given
-in CPU addresses). As before, we store away the information necessary to
-later update the information in screen_info itself.
-
-Commit 78aa89d1dfba ("firmware/sysfb: Update screen_info for relocated
-EFI framebuffers") added the code for updating screen_info. It is based
-on similar functionality that pre-existed in efifb. Efifb uses a pointer
-to the PCI resource, while the newer code does a memcpy of the region.
-Hence efifb sees any updates to the PCI resource and avoids the issue.
-
-v3:
-- Only use struct pci_bus_region for PCI bus addresses (Bjorn)
-- Clarify address semantics in commit messages and comments (Bjorn)
-v2:
-- Fixed tags (Takashi, Ivan)
-- Updated information on efifb
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reported-by: "Ivan T. Ivanov" <iivanov@suse.de>
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1240696
-Tested-by: "Ivan T. Ivanov" <iivanov@suse.de>
-Fixes: 78aa89d1dfba ("firmware/sysfb: Update screen_info for relocated EFI framebuffers")
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.9+
-Link: https://lore.kernel.org/r/20250528080234.7380-1-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250423085257.122685-2-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/screen_info_pci.c |   79 +++++++++++++++++++++++++---------------
- 1 file changed, 50 insertions(+), 29 deletions(-)
+ fs/ext4/extents.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/drivers/video/screen_info_pci.c
-+++ b/drivers/video/screen_info_pci.c
-@@ -7,8 +7,8 @@
- 
- static struct pci_dev *screen_info_lfb_pdev;
- static size_t screen_info_lfb_bar;
--static resource_size_t screen_info_lfb_offset;
--static struct resource screen_info_lfb_res = DEFINE_RES_MEM(0, 0);
-+static resource_size_t screen_info_lfb_res_start; // original start of resource
-+static resource_size_t screen_info_lfb_offset; // framebuffer offset within resource
- 
- static bool __screen_info_relocation_is_valid(const struct screen_info *si, struct resource *pr)
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index d659d7c367133..ac97ef3c76e97 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -1526,7 +1526,7 @@ static int ext4_ext_search_left(struct inode *inode,
+ static int ext4_ext_search_right(struct inode *inode,
+ 				 struct ext4_ext_path *path,
+ 				 ext4_lblk_t *logical, ext4_fsblk_t *phys,
+-				 struct ext4_extent *ret_ex)
++				 struct ext4_extent *ret_ex, int flags)
  {
-@@ -31,7 +31,7 @@ void screen_info_apply_fixups(void)
- 	if (screen_info_lfb_pdev) {
- 		struct resource *pr = &screen_info_lfb_pdev->resource[screen_info_lfb_bar];
- 
--		if (pr->start != screen_info_lfb_res.start) {
-+		if (pr->start != screen_info_lfb_res_start) {
- 			if (__screen_info_relocation_is_valid(si, pr)) {
- 				/*
- 				 * Only update base if we have an actual
-@@ -47,46 +47,67 @@ void screen_info_apply_fixups(void)
+ 	struct buffer_head *bh = NULL;
+ 	struct ext4_extent_header *eh;
+@@ -1600,7 +1600,8 @@ static int ext4_ext_search_right(struct inode *inode,
+ 	ix++;
+ 	while (++depth < path->p_depth) {
+ 		/* subtract from p_depth to get proper eh_depth */
+-		bh = read_extent_tree_block(inode, ix, path->p_depth - depth, 0);
++		bh = read_extent_tree_block(inode, ix, path->p_depth - depth,
++					    flags);
+ 		if (IS_ERR(bh))
+ 			return PTR_ERR(bh);
+ 		eh = ext_block_hdr(bh);
+@@ -1608,7 +1609,7 @@ static int ext4_ext_search_right(struct inode *inode,
+ 		put_bh(bh);
  	}
- }
  
-+static int __screen_info_lfb_pci_bus_region(const struct screen_info *si, unsigned int type,
-+					    struct pci_bus_region *r)
-+{
-+	u64 base, size;
-+
-+	base = __screen_info_lfb_base(si);
-+	if (!base)
-+		return -EINVAL;
-+
-+	size = __screen_info_lfb_size(si, type);
-+	if (!size)
-+		return -EINVAL;
-+
-+	r->start = base;
-+	r->end = base + size - 1;
-+
-+	return 0;
-+}
-+
- static void screen_info_fixup_lfb(struct pci_dev *pdev)
- {
- 	unsigned int type;
--	struct resource res[SCREEN_INFO_MAX_RESOURCES];
--	size_t i, numres;
-+	struct pci_bus_region bus_region;
- 	int ret;
-+	struct resource r = {
-+		.flags = IORESOURCE_MEM,
-+	};
-+	const struct resource *pr;
- 	const struct screen_info *si = &screen_info;
+-	bh = read_extent_tree_block(inode, ix, path->p_depth - depth, 0);
++	bh = read_extent_tree_block(inode, ix, path->p_depth - depth, flags);
+ 	if (IS_ERR(bh))
+ 		return PTR_ERR(bh);
+ 	eh = ext_block_hdr(bh);
+@@ -2794,6 +2795,7 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
+ 	struct partial_cluster partial;
+ 	handle_t *handle;
+ 	int i = 0, err = 0;
++	int flags = EXT4_EX_NOCACHE | EXT4_EX_NOFAIL;
  
- 	if (screen_info_lfb_pdev)
- 		return; // already found
+ 	partial.pclu = 0;
+ 	partial.lblk = 0;
+@@ -2824,8 +2826,7 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
+ 		ext4_fsblk_t pblk;
  
- 	type = screen_info_video_type(si);
--	if (type != VIDEO_TYPE_EFI)
--		return; // only applies to EFI
-+	if (!__screen_info_has_lfb(type))
-+		return; // only applies to EFI; maybe VESA
+ 		/* find extent for or closest extent to this block */
+-		path = ext4_find_extent(inode, end, NULL,
+-					EXT4_EX_NOCACHE | EXT4_EX_NOFAIL);
++		path = ext4_find_extent(inode, end, NULL, flags);
+ 		if (IS_ERR(path)) {
+ 			ext4_journal_stop(handle);
+ 			return PTR_ERR(path);
+@@ -2890,7 +2891,7 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
+ 			 */
+ 			lblk = ex_end + 1;
+ 			err = ext4_ext_search_right(inode, path, &lblk, &pblk,
+-						    NULL);
++						    NULL, flags);
+ 			if (err < 0)
+ 				goto out;
+ 			if (pblk) {
+@@ -2967,8 +2968,7 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
+ 				  i + 1, ext4_idx_pblock(path[i].p_idx));
+ 			memset(path + i + 1, 0, sizeof(*path));
+ 			bh = read_extent_tree_block(inode, path[i].p_idx,
+-						    depth - i - 1,
+-						    EXT4_EX_NOCACHE);
++						    depth - i - 1, flags);
+ 			if (IS_ERR(bh)) {
+ 				/* should we reset i_size? */
+ 				err = PTR_ERR(bh);
+@@ -4270,7 +4270,8 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
+ 	if (err)
+ 		goto out;
+ 	ar.lright = map->m_lblk;
+-	err = ext4_ext_search_right(inode, path, &ar.lright, &ar.pright, &ex2);
++	err = ext4_ext_search_right(inode, path, &ar.lright, &ar.pright,
++				    &ex2, 0);
+ 	if (err < 0)
+ 		goto out;
  
--	ret = screen_info_resources(si, res, ARRAY_SIZE(res));
-+	ret = __screen_info_lfb_pci_bus_region(si, type, &bus_region);
- 	if (ret < 0)
- 		return;
--	numres = ret;
- 
--	for (i = 0; i < numres; ++i) {
--		struct resource *r = &res[i];
--		const struct resource *pr;
--
--		if (!(r->flags & IORESOURCE_MEM))
--			continue;
--		pr = pci_find_resource(pdev, r);
--		if (!pr)
--			continue;
--
--		/*
--		 * We've found a PCI device with the framebuffer
--		 * resource. Store away the parameters to track
--		 * relocation of the framebuffer aperture.
--		 */
--		screen_info_lfb_pdev = pdev;
--		screen_info_lfb_bar = pr - pdev->resource;
--		screen_info_lfb_offset = r->start - pr->start;
--		memcpy(&screen_info_lfb_res, r, sizeof(screen_info_lfb_res));
--	}
-+	/*
-+	 * Translate the PCI bus address to resource. Account
-+	 * for an offset if the framebuffer is behind a PCI host
-+	 * bridge.
-+	 */
-+	pcibios_bus_to_resource(pdev->bus, &r, &bus_region);
-+
-+	pr = pci_find_resource(pdev, &r);
-+	if (!pr)
-+		return;
-+
-+	/*
-+	 * We've found a PCI device with the framebuffer
-+	 * resource. Store away the parameters to track
-+	 * relocation of the framebuffer aperture.
-+	 */
-+	screen_info_lfb_pdev = pdev;
-+	screen_info_lfb_bar = pr - pdev->resource;
-+	screen_info_lfb_offset = r.start - pr->start;
-+	screen_info_lfb_res_start = bus_region.start;
- }
- DECLARE_PCI_FIXUP_CLASS_HEADER(PCI_ANY_ID, PCI_ANY_ID, PCI_BASE_CLASS_DISPLAY, 16,
- 			       screen_info_fixup_lfb);
+-- 
+2.39.5
+
 
 
