@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778B91AD3FA;
-	Mon, 23 Jun 2025 21:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE60A222581;
+	Mon, 23 Jun 2025 21:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715785; cv=none; b=DdZj4tbsNDhryat6ISEc5CL/ftI2bkK0ciKm8T5ud37BXyKxIxpZO68J8F9MfFU+LxkkMrKgicJrs4cQiZrvvt9ESIpQSvg07i/Lmibb70DmDCn0nd7RmeIK2+rD7eC0ojPImZuLh5Zoshnj9DEd0QwPJqyzBGWvt+IzCpOG5Ic=
+	t=1750715788; cv=none; b=I8a05cveQrT2Y6uiwb9cU/cNVJsalZ0gGS8nMG+5YM3IXtNSB7cpA+Y6pgp412d1+b+D8p7QUH6bXGFDKySW/C/ZbaR4GXBQW/WNJ/fwCw5kQGi+VopT0LVcw2zAHvtbD7xVio6qIgP3lVqOdQfUqQYJx5Dq55E+Ai1ImrKpgjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715785; c=relaxed/simple;
-	bh=5pITozTKxpdPB4qITJM6kfdh2YjB+BHTj1eV79J0sxQ=;
+	s=arc-20240116; t=1750715788; c=relaxed/simple;
+	bh=k7KcV2ZwDAm3pGw0S0ohookRH3XxrZo9Cep6eeNhij4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C+MY2cHDjow+1CBQYytwJbHbjpKY4TJwa4H4ACgWTrIj5w4gYO/2jrThakGW+VnA/ny72EyrJJ1ckd4EIrIdLWfeHW1YrfEgZGtyTpL6qaNwT7LIpVTpirnT/uUqdZzV6V6vOQPH/wt3QkO2+iS/+CxQFPTV3W/UMUp3uX1/5BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxFL+5w9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rCo5Qobrwdr0YDYb0lIv1yBGogl9lAyGP4uXclRJwwzLxtGRq7IQLtT5uwIrkcjjKEX8t7c/1PaFwfX7+0IeJ0s9DMA/SW3Yzqo9S83Ezh1Kb3+TDBmumew8Blj5Hi+Vj1uAKWdo+M+K8xHeGJZ06oommJDVslu72XfIC1DvvzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AdYjQRt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxFL+5w9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E385C4CEEA;
-	Mon, 23 Jun 2025 21:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AdYjQRt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780D0C4CEEA;
+	Mon, 23 Jun 2025 21:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715785;
-	bh=5pITozTKxpdPB4qITJM6kfdh2YjB+BHTj1eV79J0sxQ=;
+	s=korg; t=1750715787;
+	bh=k7KcV2ZwDAm3pGw0S0ohookRH3XxrZo9Cep6eeNhij4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DxFL+5w9K3xhXKfacwAByVEIfXTE2oIaF7U7chMUJfutLcIOPMlYFz/wHgUwOREdk
-	 dXhavQlbVqbEPNc71PKNYGk3VKOyhq0KpEFy2mL4UQD/MwybjE13ZYjxJtt15L65OF
-	 +MSoMxtE5XxaHlDYtp3uDWG2EPd9ry6YvoGHs8j4=
+	b=2AdYjQRt8a/EjcYK0L7mzygW4K6EVqAYu0f5gJqeH2gwf6LXRDmJnZalwzog9pbD1
+	 1jmtI7aNbRzfvJyuTgYiXmbOKYArTwHsGnx+X7bqBYkxjLIWwJ2QTmAlChrprwmIgR
+	 B1RBiIryaNUcczT78YVJmFTqdmEpBO3O9j6NiRGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Yan <felixonmars@archlinux.org>,
-	Eric Long <i@hack3r.moe>,
-	Jianfei Zhang <zhangjianfei3@gmail.com>,
-	Mingcong Bai <jeffbai@aosc.io>,
-	Minh Le <minhld139@gmail.com>,
-	Sicheng Zhu <Emmet_Z@outlook.com>,
-	Rong Zhang <i@rong.moe>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.15 480/592] platform/x86: ideapad-laptop: use usleep_range() for EC polling
-Date: Mon, 23 Jun 2025 15:07:18 +0200
-Message-ID: <20250623130711.851920314@linuxfoundation.org>
+	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 207/414] cpufreq: scmi: Skip SCMI devices that arent used by the CPUs
+Date: Mon, 23 Jun 2025 15:05:44 +0200
+Message-ID: <20250623130647.182169272@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,126 +48,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Mike Tipton <quic_mdtipton@quicinc.com>
 
-commit 5808c34216954cd832bd4b8bc52dfa287049122b upstream.
+[ Upstream commit 6c9bb86922728c7a4cceb99f131e00dd87514f20 ]
 
-It was reported that ideapad-laptop sometimes causes some recent (since
-2024) Lenovo ThinkBook models shut down when:
- - suspending/resuming
- - closing/opening the lid
- - (dis)connecting a charger
- - reading/writing some sysfs properties, e.g., fan_mode, touchpad
- - pressing down some Fn keys, e.g., Brightness Up/Down (Fn+F5/F6)
- - (seldom) loading the kmod
+Currently, all SCMI devices with performance domains attempt to register
+a cpufreq driver, even if their performance domains aren't used to
+control the CPUs. The cpufreq framework only supports registering a
+single driver, so only the first device will succeed. And if that device
+isn't used for the CPUs, then cpufreq will scale the wrong domains.
 
-The issue has existed since the launch day of such models, and there
-have been some out-of-tree workarounds (see Link:) for the issue. One
-disables some functionalities, while another one simply shortens
-IDEAPAD_EC_TIMEOUT. The disabled functionalities have read_ec_data() in
-their call chains, which calls schedule() between each poll.
+To avoid this, return early from scmi_cpufreq_probe() if the probing
+SCMI device isn't referenced by the CPU device phandles.
 
-It turns out that these models suffer from the indeterminacy of
-schedule() because of their low tolerance for being polled too
-frequently. Sometimes schedule() returns too soon due to the lack of
-ready tasks, causing the margin between two polls to be too short.
-In this case, the command is somehow aborted, and too many subsequent
-polls (they poll for "nothing!") may eventually break the state machine
-in the EC, resulting in a hard shutdown. This explains why shortening
-IDEAPAD_EC_TIMEOUT works around the issue - it reduces the total number
-of polls sent to the EC.
+This keeps the existing assumption that all CPUs are controlled by a
+single SCMI device.
 
-Even when it doesn't lead to a shutdown, frequent polls may also disturb
-the ongoing operation and notably delay (+ 10-20ms) the availability of
-EC response. This phenomenon is unlikely to be exclusive to the models
-mentioned above, so dropping the schedule() manner should also slightly
-improve the responsiveness of various models.
-
-Fix these issues by migrating to usleep_range(150, 300). The interval is
-chosen to add some margin to the minimal 50us and considering EC
-responses are usually available after 150-2500us based on my test. It
-should be enough to fix these issues on all models subject to the EC bug
-without introducing latency on other models.
-
-Tested on ThinkBook 14 G7+ ASP and solved both issues. No regression was
-introduced in the test on a model without the EC bug (ThinkBook X IMH,
-thanks Eric).
-
-Link: https://github.com/ty2/ideapad-laptop-tb2024g6plus/commit/6c5db18c9e8109873c2c90a7d2d7f552148f7ad4
-Link: https://github.com/ferstar/ideapad-laptop-tb/commit/42d1e68e5009529d31bd23f978f636f79c023e80
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218771
-Fixes: 6a09f21dd1e2 ("ideapad: add ACPI helpers")
-Cc: stable@vger.kernel.org
-Tested-by: Felix Yan <felixonmars@archlinux.org>
-Tested-by: Eric Long <i@hack3r.moe>
-Tested-by: Jianfei Zhang <zhangjianfei3@gmail.com>
-Tested-by: Mingcong Bai <jeffbai@aosc.io>
-Tested-by: Minh Le <minhld139@gmail.com>
-Tested-by: Sicheng Zhu <Emmet_Z@outlook.com>
-Signed-off-by: Rong Zhang <i@rong.moe>
-Link: https://lore.kernel.org/r/20250525201833.37939-1-i@rong.moe
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Cristian Marussi <cristian.marussi@arm.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/ideapad-laptop.c |   19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/cpufreq/scmi-cpufreq.c | 36 +++++++++++++++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/ideapad-laptop.c
-+++ b/drivers/platform/x86/ideapad-laptop.c
-@@ -15,6 +15,7 @@
- #include <linux/bug.h>
- #include <linux/cleanup.h>
- #include <linux/debugfs.h>
-+#include <linux/delay.h>
- #include <linux/device.h>
- #include <linux/dmi.h>
- #include <linux/i8042.h>
-@@ -267,6 +268,20 @@ static void ideapad_shared_exit(struct i
-  */
- #define IDEAPAD_EC_TIMEOUT 200 /* in ms */
+diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+index 7e7c1613a67c6..beb660ca240cc 100644
+--- a/drivers/cpufreq/scmi-cpufreq.c
++++ b/drivers/cpufreq/scmi-cpufreq.c
+@@ -367,6 +367,40 @@ static struct cpufreq_driver scmi_cpufreq_driver = {
+ 	.register_em	= scmi_cpufreq_register_em,
+ };
  
-+/*
-+ * Some models (e.g., ThinkBook since 2024) have a low tolerance for being
-+ * polled too frequently. Doing so may break the state machine in the EC,
-+ * resulting in a hard shutdown.
-+ *
-+ * It is also observed that frequent polls may disturb the ongoing operation
-+ * and notably delay the availability of EC response.
-+ *
-+ * These values are used as the delay before the first poll and the interval
-+ * between subsequent polls to solve the above issues.
-+ */
-+#define IDEAPAD_EC_POLL_MIN_US 150
-+#define IDEAPAD_EC_POLL_MAX_US 300
++static bool scmi_dev_used_by_cpus(struct device *scmi_dev)
++{
++	struct device_node *scmi_np = dev_of_node(scmi_dev);
++	struct device_node *cpu_np, *np;
++	struct device *cpu_dev;
++	int cpu, idx;
 +
- static int eval_int(acpi_handle handle, const char *name, unsigned long *res)
++	if (!scmi_np)
++		return false;
++
++	for_each_possible_cpu(cpu) {
++		cpu_dev = get_cpu_device(cpu);
++		if (!cpu_dev)
++			continue;
++
++		cpu_np = dev_of_node(cpu_dev);
++
++		np = of_parse_phandle(cpu_np, "clocks", 0);
++		of_node_put(np);
++
++		if (np == scmi_np)
++			return true;
++
++		idx = of_property_match_string(cpu_np, "power-domain-names", "perf");
++		np = of_parse_phandle(cpu_np, "power-domains", idx);
++		of_node_put(np);
++
++		if (np == scmi_np)
++			return true;
++	}
++
++	return false;
++}
++
+ static int scmi_cpufreq_probe(struct scmi_device *sdev)
  {
- 	unsigned long long result;
-@@ -383,7 +398,7 @@ static int read_ec_data(acpi_handle hand
- 	end_jiffies = jiffies + msecs_to_jiffies(IDEAPAD_EC_TIMEOUT) + 1;
+ 	int ret;
+@@ -375,7 +409,7 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
  
- 	while (time_before(jiffies, end_jiffies)) {
--		schedule();
-+		usleep_range(IDEAPAD_EC_POLL_MIN_US, IDEAPAD_EC_POLL_MAX_US);
+ 	handle = sdev->handle;
  
- 		err = eval_vpcr(handle, 1, &val);
- 		if (err)
-@@ -414,7 +429,7 @@ static int write_ec_cmd(acpi_handle hand
- 	end_jiffies = jiffies + msecs_to_jiffies(IDEAPAD_EC_TIMEOUT) + 1;
+-	if (!handle)
++	if (!handle || !scmi_dev_used_by_cpus(dev))
+ 		return -ENODEV;
  
- 	while (time_before(jiffies, end_jiffies)) {
--		schedule();
-+		usleep_range(IDEAPAD_EC_POLL_MIN_US, IDEAPAD_EC_POLL_MAX_US);
- 
- 		err = eval_vpcr(handle, 1, &val);
- 		if (err)
+ 	perf_ops = handle->devm_protocol_get(sdev, SCMI_PROTOCOL_PERF, &ph);
+-- 
+2.39.5
+
 
 
