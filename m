@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9276E2628C;
-	Mon, 23 Jun 2025 21:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD862C9D;
+	Mon, 23 Jun 2025 21:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713560; cv=none; b=MMvQslTPbQj/i2Dmg8qkebO0Q3ZMah8u+z+tnXVjQnc75EN5olhWiuueoBKsNVmEIMWQI2/uREGqE7PjusRznNeIoeIIVsnWAFNkjp7TKTRfTQOKne3A8/dMme0Kk+28YuFIb6RkNIJ5DOHyXVVk7O6c0QdJgVybUCs0DjpYKrw=
+	t=1750713563; cv=none; b=QnfoAAn404sjhzj+yc7I24Oc8XpXWokqE6fjhrv1E28KU9XJnDpWwnOrkKrltbLdD+L5r3ebTH5zwITArHh8H9GumQ6ksdiNxal4efJqdP2V4ebDrDpKwb/mlqbUR9ykJydylNa4a6Bz9LqbL/DTZmRgrb/0jfOSpj/XNmVm3Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713560; c=relaxed/simple;
-	bh=I3bH8DzU2l5xz+SBTlftQZP/izLFfoPZSOy+gw3i+z4=;
+	s=arc-20240116; t=1750713563; c=relaxed/simple;
+	bh=f6TwXNVxw/ZaZDyL2Bxl69BW4jEYhMQ93HTXJHWfxnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dhi8Bst9b/3VI+Gkb22IzsSxcrlA/JFN0RYs3+dBa5kDJpc7vEAiYgJ1egRykP3ijnvPGZo9appCLRqOsUcnUd9zwMM+JjmAd4+1zI5SSAHj4icCBBzCG7emBwfqo0EeryOl4coydWKArlMCGo2kFC5UPE3rZRlunLud2Rtzbe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0b7zn78O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hKeyl/8EgbBf10+K0Y0nH3PhxojQcoTisebAIS0UM4x0U/gOKP926XJ6+Ii9nNwcijXyuY7toLnxEQ0JahBEbk/GlbnGAPO2tHrvb8E+RE23p+hYW6/F7cBlc1AVO3O1r95w8ulZrrD4pI3dw89zVkpqAXHGXLxcovxDhsOwCug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/NO0z31; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0b7zn78O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A973C4CEEA;
-	Mon, 23 Jun 2025 21:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/NO0z31"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A30CC4CEEA;
+	Mon, 23 Jun 2025 21:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713560;
-	bh=I3bH8DzU2l5xz+SBTlftQZP/izLFfoPZSOy+gw3i+z4=;
+	s=korg; t=1750713562;
+	bh=f6TwXNVxw/ZaZDyL2Bxl69BW4jEYhMQ93HTXJHWfxnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0b7zn78OLOgRjc/WvkMnnW3SL1hK5A01s8h0TXk9nfQLaTDOi9alCmmdU6sbydv/q
-	 +skvcNcEYqCrCZJfrusfhaxPxTGAvwFVHBwatSZ9ogzE5VoE7b1BpGNXg6dBVCvF1V
-	 PiQjUWhuN/SkFlKk1HRY7PK64q5fml9NL4jiQ+2o=
+	b=d/NO0z31qi8zPYzoCrsUjx4JbYyusYIvTFJi/I0cIz6WuquZKSQijO0yFE03BG/kC
+	 b/wnv5H2BPMQl0+LW4d3F0vjbV6pvtQrWx5vbfJg6ZuTfDPgu9TUf0SlKlAXcjLqmt
+	 vKEb6cZB4kxPVzMa718kX83sMxxwtzRbVel6wlFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 077/290] parisc/unaligned: Fix hex output to show 8 hex chars
-Date: Mon, 23 Jun 2025 15:05:38 +0200
-Message-ID: <20250623130629.301600852@linuxfoundation.org>
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 110/508] arm64: dts: qcom: sdm660-xiaomi-lavender: Add missing SD card detect GPIO
+Date: Mon, 23 Jun 2025 15:02:35 +0200
+Message-ID: <20250623130647.994163595@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,66 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Alexey Minnekhanov <alexeymin@postmarketos.org>
 
-commit 213205889d5ffc19cb8df06aa6778b2d4724c887 upstream.
+[ Upstream commit 2eca6af66709de0d1ba14cdf8b6d200a1337a3a2 ]
 
-Change back printk format to 0x%08lx instead of %#08lx, since the latter
-does not seem to reliably format the value to 8 hex chars.
+During initial porting these cd-gpios were missed. Having card detect is
+beneficial because driver does not need to do polling every second and it
+can just use IRQ. SD card detection in U-Boot is also fixed by this.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v5.18+
-Fixes: e5e9e7f222e5b ("parisc/unaligned: Enhance user-space visible output")
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cf85e9aee210 ("arm64: dts: qcom: sdm660-xiaomi-lavender: Add eMMC and SD")
+Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250415130101.1429281-1-alexeymin@postmarketos.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/unaligned.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/parisc/kernel/unaligned.c
-+++ b/arch/parisc/kernel/unaligned.c
-@@ -24,7 +24,7 @@
- #define DPRINTF(fmt, args...)
- #endif
+diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+index a3559f6e34a5e..9612671dc5afa 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
++++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+@@ -402,6 +402,8 @@
+ &sdhc_2 {
+ 	status = "okay";
  
--#define RFMT "%#08lx"
-+#define RFMT "0x%08lx"
- 
- /* 1111 1100 0000 0000 0001 0011 1100 0000 */
- #define OPCODE1(a,b,c)	((a)<<26|(b)<<12|(c)<<6) 
-
-
-@kernel.org>
----
- drivers/i2c/busses/i2c-npcm7xx.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index de713b5747fe5..05a140ec2b64d 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -2178,10 +2178,14 @@ static int npcm_i2c_init_module(struct npcm_i2c *bus, enum i2c_mode mode,
- 
- 	/* Check HW is OK: SDA and SCL should be high at this point. */
- 	if ((npcm_i2c_get_SDA(&bus->adap) == 0) || (npcm_i2c_get_SCL(&bus->adap) == 0)) {
--		dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus->num);
--		dev_err(bus->dev, "SDA=%d SCL=%d\n", npcm_i2c_get_SDA(&bus->adap),
--			npcm_i2c_get_SCL(&bus->adap));
--		return -ENXIO;
-+		dev_warn(bus->dev, " I2C%d SDA=%d SCL=%d, attempting to recover\n", bus->num,
-+				 npcm_i2c_get_SDA(&bus->adap), npcm_i2c_get_SCL(&bus->adap));
-+		if (npcm_i2c_recovery_tgclk(&bus->adap)) {
-+			dev_err(bus->dev, "I2C%d init fail: SDA=%d SCL=%d\n",
-+				bus->num, npcm_i2c_get_SDA(&bus->adap),
-+				npcm_i2c_get_SCL(&bus->adap));
-+			return -ENXIO;
-+		}
- 	}
- 
- 	npcm_i2c_int_enable(bus, true);
++	cd-gpios = <&tlmm 54 GPIO_ACTIVE_HIGH>;
++
+ 	vmmc-supply = <&vreg_l5b_2p95>;
+ 	vqmmc-supply = <&vreg_l2b_2p95>;
+ };
 -- 
 2.39.5
 
