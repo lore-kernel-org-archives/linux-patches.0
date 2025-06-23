@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92A5B676;
-	Mon, 23 Jun 2025 22:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43ED72222AF;
+	Mon, 23 Jun 2025 22:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716913; cv=none; b=afLLZ6qe0L1tMMS4WaqCcNdkekmOg48mF6M5m8URi6op7H+MFDox42NHhb2nrdaaIUMksTFdQriM2mvvHrUfEqnG6Vc5QNCXh1QlLVo5xvnPW3q/boEG82RnCSoBlRhI+p1zYOqGLsA7gckg8yxey8K0X4I6ZZ5gXA62etVxSyk=
+	t=1750716916; cv=none; b=CsLGt8Snt1pmH7o7KoCxrfAAdoJFyWqVjZ1L+jtTnP7NNcRFyWMl6w+OxwdCnGq1sGkH6yzYM0rAA2fLZdKptQDpu6G/Ogm5tglw1QxlmLxY7NsOQ08zHSw73XtxE2qR6UMXUqCNJexN0p0YIjwOWgGTK1V/9AKuS4I4WWqesk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716913; c=relaxed/simple;
-	bh=njdzo8fGBmDKu5xpiPHZBgRDP8W+0ms7z1yon7HeDD0=;
+	s=arc-20240116; t=1750716916; c=relaxed/simple;
+	bh=Vo0TCtqkjiZyWcEo2i2JwJ+ykQ+DLjn08lt0LakBrXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vEqV+1qZEpO/MYt0UGi01YzaRV6RJJfO1vpwZQIgEA9mYcCc+LGxqcgeLV9GYe9sm+JsjdBIbhrF4bcqEJZyRTNbx6sTZKsn4VjSMzdnTw4dSojF3KZj/7juCTZ8Qko0bA1Ex5PhmOkShtlTRp5+R4hSr2ICfchmypq/ZO7NbVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNqFHrGw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ey0tE/wxEY0a31+vTTVaiZWo/8sHe+adEQp1Pd/xAFtf1RYpg1Ya7YGZoI23zK4h2P+MVRcSB+StyoJCMH4AyhrQvEek3FDKx6NjZUlqaRZCxhKE/GOW4HiSEmcOz2ynpc0dv8n3Hin+UYo17NwrtdTbcRWebarOB3QmjnDzxtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1wcgPifJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNqFHrGw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618E6C4CEF1;
-	Mon, 23 Jun 2025 22:15:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wcgPifJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B34C4CEEA;
+	Mon, 23 Jun 2025 22:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716913;
-	bh=njdzo8fGBmDKu5xpiPHZBgRDP8W+0ms7z1yon7HeDD0=;
+	s=korg; t=1750716916;
+	bh=Vo0TCtqkjiZyWcEo2i2JwJ+ykQ+DLjn08lt0LakBrXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dNqFHrGwYfkeXQkQYT644VeJ6luYouh46f42j1SYWUXX7vYxI3GJ9vyX4XcQGXAMI
-	 a8IW7vBb93VqS+ejer4zasd0qkVzJSJHzuglr5hvY8xxMIijORQ778FetJzdgOd18a
-	 BVtCq7hEj6RrXc7T+G/RpJLE1BlBe0lmytxHAy8M=
+	b=1wcgPifJMuQt4sB+HjqVFNpiUNbsNV2yQf8M/nQwisJl1+Nx/I0OhnnoXdGelJJBE
+	 2N/uq0gYAU+wXYw22icunk9aMTnD4NNUlNZflZJbVyJGvFSo2PfcHqf011FyVYPzbh
+	 KlItjiYQnKDzUzvSJ4jZO0VRSovhuovpa39quXVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.15 568/592] dm-table: check BLK_FEAT_ATOMIC_WRITES inside limits_lock
-Date: Mon, 23 Jun 2025 15:08:46 +0200
-Message-ID: <20250623130713.952127334@linuxfoundation.org>
+	Eddie James <eajames@linux.ibm.com>,
+	Joel Stanley <joel@jms.id.au>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 368/411] hwmon: (occ) Add soft minimum power cap attribute
+Date: Mon, 23 Jun 2025 15:08:32 +0200
+Message-ID: <20250623130642.905314603@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,42 +48,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Eddie James <eajames@linux.ibm.com>
 
-commit 85f6d5b729eaace1549f1dcc284d9865f2c3ec02 upstream.
+[ Upstream commit 84dc9e8a7eec2cdff00728baedf0fb35fc7c11e8 ]
 
-dm_set_device_limits() should check q->limits.features for
-BLK_FEAT_ATOMIC_WRITES while holding q->limits_lock, like it does for
-the rest of the queue limits.
+Export the power caps data for the soft minimum power cap through hwmon.
 
-Fixes: b7c18b17a173 ("dm-table: Set BLK_FEAT_ATOMIC_WRITES for target queue limits")
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+Link: https://lore.kernel.org/r/20220215151022.7498-5-eajames@linux.ibm.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 744c2fe950e9 ("hwmon: (occ) Rework attribute registration for stack usage")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-table.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/occ/common.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-table.c
-+++ b/drivers/md/dm-table.c
-@@ -431,13 +431,13 @@ static int dm_set_device_limits(struct d
- 		return 0;
+diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
+index bbe5e4ef4113c..1757f3ab842e1 100644
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -675,6 +675,9 @@ static ssize_t occ_show_caps_3(struct device *dev,
+ 	case 7:
+ 		val = caps->user_source;
+ 		break;
++	case 8:
++		val = get_unaligned_be16(&caps->soft_min) * 1000000ULL;
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -836,12 +839,13 @@ static int occ_setup_sensor_attrs(struct occ *occ)
+ 	case 1:
+ 		num_attrs += (sensors->caps.num_sensors * 7);
+ 		break;
+-	case 3:
+-		show_caps = occ_show_caps_3;
+-		fallthrough;
+ 	case 2:
+ 		num_attrs += (sensors->caps.num_sensors * 8);
+ 		break;
++	case 3:
++		show_caps = occ_show_caps_3;
++		num_attrs += (sensors->caps.num_sensors * 9);
++		break;
+ 	default:
+ 		sensors->caps.num_sensors = 0;
+ 	}
+@@ -1048,6 +1052,15 @@ static int occ_setup_sensor_attrs(struct occ *occ)
+ 			attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+ 						     show_caps, NULL, 7, 0);
+ 			attr++;
++
++			if (sensors->caps.version > 2) {
++				snprintf(attr->name, sizeof(attr->name),
++					 "power%d_cap_min_soft", s);
++				attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
++							     show_caps, NULL,
++							     8, 0);
++				attr++;
++			}
+ 		}
  	}
  
-+	mutex_lock(&q->limits_lock);
- 	/*
- 	 * BLK_FEAT_ATOMIC_WRITES is not inherited from the bottom device in
- 	 * blk_stack_limits(), so do it manually.
- 	 */
- 	limits->features |= (q->limits.features & BLK_FEAT_ATOMIC_WRITES);
- 
--	mutex_lock(&q->limits_lock);
- 	if (blk_stack_limits(limits, &q->limits,
- 			get_start_sect(bdev) + start) < 0)
- 		DMWARN("%s: adding target device %pg caused an alignment inconsistency: "
+-- 
+2.39.5
+
 
 
