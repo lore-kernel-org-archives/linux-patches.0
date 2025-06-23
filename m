@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893371C5D46;
-	Mon, 23 Jun 2025 21:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1221F5820;
+	Mon, 23 Jun 2025 21:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714426; cv=none; b=DH8H+pp/1nDyvX3glyhTj9OJbJJ38dKlQr+WXi7h1FMrYtygJRsxmibnT0XvTbEJaoHZr5nCjz2qs5lycIGGuWDvwV+9nJop+mc6M7DAp4Us93iadG3/9VpO39BqjjNrnxw6GO8T05RmGapQP8+AqBU5q4EeRRF8NHIeRCqp8NI=
+	t=1750714429; cv=none; b=c7pH6ZkAr7qC2hACx1TeNMdcj8uHVDFHaM5bLLPbQPzqb7+yiTikHvharXdo2IGRv+8MMjNwYAYH0tivzYuFmv+P4ugM+h3RHrl4cT2OpOaInnb98Ed5jQFDJpfhuddM1rgbc+D4wG+GyjBuqT76By+WD7LjW45vKEGu+x7FoKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714426; c=relaxed/simple;
-	bh=DTdvBDa68+WJMlhWxmppQVYqvlSzvkICmW+UDKo28oQ=;
+	s=arc-20240116; t=1750714429; c=relaxed/simple;
+	bh=R+HlP0MT9CreJHyM7e2vMC5lO7yg3XPToAdvedw+Kqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s5dPXIefDJJ1IikpL0W4zkk01N89D6V24Xr/Qltwms2NPTBl1vx/EG4yWcPlvG2+Y8FjRA2wzgycZP866VETrg/qD8myGP3Ves7Lv5crtJfBi/xeUSYSFjUSAeoXu1GBB86EYQ+AyHPiQ3B1Fr0YQ7MyTbLQzxTUSCtJ+qx+pGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Us4/8/1c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c+9CfH4J0S5l7xpBWxkz6mLYWtAvtsTngTZ3KV2G1Pl0lz1Fkrl3lQcL8usru2eLidLeIuIPZi2MHsSE/pjiZqXecoWwI5XyAk8l1mMEyxpq6q75yd8FFnfxYn6rHH8XC+SHpyaJXcMaQ/aZl724OzvqnzV/8U3WOS5rWyFJrWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mq1jgUcT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Us4/8/1c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F5A2C4CEEA;
-	Mon, 23 Jun 2025 21:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mq1jgUcT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A793C4CEEA;
+	Mon, 23 Jun 2025 21:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714426;
-	bh=DTdvBDa68+WJMlhWxmppQVYqvlSzvkICmW+UDKo28oQ=;
+	s=korg; t=1750714428;
+	bh=R+HlP0MT9CreJHyM7e2vMC5lO7yg3XPToAdvedw+Kqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Us4/8/1c8oL25+wHRtz4/Nk0cc/rn2CmA6FfaB6+csZL2SXdCDuEOR/6Y+PWCz7UK
-	 I+w+simMeczoXW7j/0U0iTVnbTa4KTQ/+CuObAsA98UPf1Mi1qf4gFl+vrEXppuaDx
-	 RZ2hkKJWEYk3LqHy9rnnrPB1Z/czrzYOw9DWaUtI=
+	b=Mq1jgUcTXLhNJgZkKaeXy1jHDVLY5nuyLm2ucTcfTxg6u4mG5GvcCaoQbZhiw2u1i
+	 LgAeOMHbs4NPKWarZS+S3AS6mVt+5QgMKgr+Bl8mkAqZQ8vfUe4kPya12QsgjiGBMP
+	 NNQaAw041XpzZlLiDN4nHeT+vv2w0vvwedDByDp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 187/411] net: usb: aqc111: debug info before sanitation
-Date: Mon, 23 Jun 2025 15:05:31 +0200
-Message-ID: <20250623130638.389925921@linuxfoundation.org>
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.12 102/414] hwmon: (ftsteutates) Fix TOCTOU race in fts_read()
+Date: Mon, 23 Jun 2025 15:03:59 +0200
+Message-ID: <20250623130644.653781862@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +46,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-commit d3faab9b5a6a0477d69c38bd11c43aa5e936f929 upstream.
+commit 14c9ede9ca4cd078ad76a6ab9617b81074eb58bf upstream.
 
-If we sanitize error returns, the debug statements need
-to come before that so that we don't lose information.
+In the fts_read() function, when handling hwmon_pwm_auto_channels_temp,
+the code accesses the shared variable data->fan_source[channel] twice
+without holding any locks. It is first checked against
+FTS_FAN_SOURCE_INVALID, and if the check passes, it is read again
+when used as an argument to the BIT() macro.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Fixes: 405b0d610745 ("net: usb: aqc111: fix error handling of usbnet read calls")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This creates a Time-of-Check to Time-of-Use (TOCTOU) race condition.
+Another thread executing fts_update_device() can modify the value of
+data->fan_source[channel] between the check and its use. If the value
+is changed to FTS_FAN_SOURCE_INVALID (0xff) during this window, the
+BIT() macro will be called with a large shift value (BIT(255)).
+A bit shift by a value greater than or equal to the type width is
+undefined behavior and can lead to a crash or incorrect values being
+returned to userspace.
+
+Fix this by reading data->fan_source[channel] into a local variable
+once, eliminating the race condition. Additionally, add a bounds check
+to ensure the value is less than BITS_PER_LONG before passing it to
+the BIT() macro, making the code more robust against undefined behavior.
+
+This possible bug was found by an experimental static analysis tool
+developed by our team.
+
+Fixes: 1c5759d8ce05 ("hwmon: (ftsteutates) Replace fanX_source with pwmX_auto_channels_temp")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://lore.kernel.org/r/20250606071640.501262-1-hanguidong02@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/aqc111.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/hwmon/ftsteutates.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/net/usb/aqc111.c
-+++ b/drivers/net/usb/aqc111.c
-@@ -31,11 +31,11 @@ static int aqc111_read_cmd_nopm(struct u
- 				   USB_RECIP_DEVICE, value, index, data, size);
- 
- 	if (unlikely(ret < size)) {
--		ret = ret < 0 ? ret : -ENODATA;
--
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
+--- a/drivers/hwmon/ftsteutates.c
++++ b/drivers/hwmon/ftsteutates.c
+@@ -423,13 +423,16 @@ static int fts_read(struct device *dev,
+ 		break;
+ 	case hwmon_pwm:
+ 		switch (attr) {
+-		case hwmon_pwm_auto_channels_temp:
+-			if (data->fan_source[channel] == FTS_FAN_SOURCE_INVALID)
++		case hwmon_pwm_auto_channels_temp: {
++			u8 fan_source = data->fan_source[channel];
 +
-+		ret = ret < 0 ? ret : -ENODATA;
- 	}
++			if (fan_source == FTS_FAN_SOURCE_INVALID || fan_source >= BITS_PER_LONG)
+ 				*val = 0;
+ 			else
+-				*val = BIT(data->fan_source[channel]);
++				*val = BIT(fan_source);
  
- 	return ret;
-@@ -50,11 +50,11 @@ static int aqc111_read_cmd(struct usbnet
- 			      USB_RECIP_DEVICE, value, index, data, size);
- 
- 	if (unlikely(ret < size)) {
--		ret = ret < 0 ? ret : -ENODATA;
--
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
-+
-+		ret = ret < 0 ? ret : -ENODATA;
- 	}
- 
- 	return ret;
+ 			return 0;
++		}
+ 		default:
+ 			break;
+ 		}
 
 
