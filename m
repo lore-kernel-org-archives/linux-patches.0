@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699D1217668;
-	Mon, 23 Jun 2025 21:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEB0219E0;
+	Mon, 23 Jun 2025 21:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712779; cv=none; b=RIqvCmCUHkUKMHMacjY2evZVg3Qu3a5y+nYHsZRgyKeU+FYj0YtL8irTgOjQHg2lYWIZ48TWZ0O7xOo27Y58eGIGtk7jbqSWar5Re1/Cme+9uPizv6/L6av7D3LXR3YGArWOhz1eFJwmsrhAo9usPgR9gNWgmNoHg3KPc/ScxRc=
+	t=1750712783; cv=none; b=a4vyl7KXle6sDIes6kDLKqqU5MyFSYDyYxhJXMMzXQuIToMKA7epCyGl17yu5v1RUhoL+bPDRq5qAHW6AtplgWW4Ou2pJWliA/egCCMWQ1N0Lj1L7/xl054UebE0APh50x2vHRX9EMtvTtj5EsA8AklvRHw9W1QQNm9zE0LwR7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712779; c=relaxed/simple;
-	bh=7Rwyxw/W46KAtdSONRYV7t90Z00gu+O/OOaDAOd8puM=;
+	s=arc-20240116; t=1750712783; c=relaxed/simple;
+	bh=d4EGg5rr6YAHDa+3u4lIWlNM8R8eGageqAvlmJ7gnuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPmpbSdwxVE3WpDs+9+C8jLWN023mwgbr3fwqBqXBbqDhMLXXphlDOoH3C26vaDkWIC2l2rmmcEtq9HXzP9ZnSVlycPVzjyuadqAUd+agRAOU9N168xi6jWhoIA0K3PDSiKSYOTk0ZlW4n4I5L2vpTCkhaCk3YxzAEA7AJE0/2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/i50UDM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PFzS2c3YZQAs4g8FygE7w1plq9LXqFh89bLPH8Gc1mmM086nf364I1HuD0nE/9ptYQuvvxdMed5D+zmuTqSWLLNR//fEINZ3DJu9qblz/uLCx0LznCERgHCgQKbDHGqgFxMGYnmyfFIRCMxlGtVwzUGvpXr+TYGyI9qQZRuUz6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0XBi3aD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/i50UDM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF30AC4CEEA;
-	Mon, 23 Jun 2025 21:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0XBi3aD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D11EC4CEEA;
+	Mon, 23 Jun 2025 21:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712779;
-	bh=7Rwyxw/W46KAtdSONRYV7t90Z00gu+O/OOaDAOd8puM=;
+	s=korg; t=1750712781;
+	bh=d4EGg5rr6YAHDa+3u4lIWlNM8R8eGageqAvlmJ7gnuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/i50UDMa4d7SKQvYTcQU5UAhsFNbPs+b8SrDhux4lZGY75ODD8fqICkrLTF81s7x
-	 3qWP9lo1lftYPLebUKkkJ2fPqqqTT3qi87UBKg1badDrYH4S/rb8c/sFvEPlotJGbX
-	 sbFOhnwkoxItHtrPoqU+rdqUTsHfM8UY19Dynh/g=
+	b=W0XBi3aDnC+fONlPe8bhA5VQC6BcqfJU3hukj2T81dAfS7K4OhofgJuTO0kZXstej
+	 1mg7xFh3TTbgVNBiTigYqkrWPDNi6ik8C4BmDAOuSr3BSwAJ8qqtaPzM7tr26xD6cy
+	 K6VTwbOoBoP8PRkq6qZEKc92E3pd/o4I/+2mXA4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rengarajan S <rengarajan.s@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 312/592] net: lan743x: Modify the EEPROM and OTP size for PCI1xxxx devices
-Date: Mon, 23 Jun 2025 15:04:30 +0200
-Message-ID: <20250623130707.838173969@linuxfoundation.org>
+	Roland Mainz <roland.mainz@nrubsig.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 030/414] NFSD: Implement FATTR4_CLONE_BLKSIZE attribute
+Date: Mon, 23 Jun 2025 15:02:47 +0200
+Message-ID: <20250623130642.778667449@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,93 +48,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rengarajan S <rengarajan.s@microchip.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 3b9935586a9b54d2da27901b830d3cf46ad66a1e ]
+commit d6ca7d2643eebe09cf46840bdc7d68b6e07aba77 upstream.
 
-Maximum OTP and EEPROM size for hearthstone PCI1xxxx devices are 8 Kb
-and 64 Kb respectively. Adjust max size definitions and return correct
-EEPROM length based on device. Also prevent out-of-bound read/write.
+RFC 7862 states that if an NFS server implements a CLONE operation,
+it MUST also implement FATTR4_CLONE_BLKSIZE. NFSD implements CLONE,
+but does not implement FATTR4_CLONE_BLKSIZE.
 
-Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
-Link: https://patch.msgid.link/20250523173326.18509-1-rengarajan.s@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note that in Section 12.2, RFC 7862 claims that
+FATTR4_CLONE_BLKSIZE is RECOMMENDED, not REQUIRED. Likely this is
+because a minor version is not permitted to add a REQUIRED
+attribute. Confusing.
+
+We assume this attribute reports a block size as a count of bytes,
+as RFC 7862 does not specify a unit.
+
+Reported-by: Roland Mainz <roland.mainz@nrubsig.org>
+Suggested-by: Christoph Hellwig <hch@infradead.org>
+Reviewed-by: Roland Mainz <roland.mainz@nrubsig.org>
+Cc: stable@vger.kernel.org # v6.7+
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/microchip/lan743x_ethtool.c   | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4xdr.c |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_ethtool.c b/drivers/net/ethernet/microchip/lan743x_ethtool.c
-index 1459acfb1e618..64a3b953cc175 100644
---- a/drivers/net/ethernet/microchip/lan743x_ethtool.c
-+++ b/drivers/net/ethernet/microchip/lan743x_ethtool.c
-@@ -18,6 +18,8 @@
- #define EEPROM_MAC_OFFSET		    (0x01)
- #define MAX_EEPROM_SIZE			    (512)
- #define MAX_OTP_SIZE			    (1024)
-+#define MAX_HS_OTP_SIZE			    (8 * 1024)
-+#define MAX_HS_EEPROM_SIZE		    (64 * 1024)
- #define OTP_INDICATOR_1			    (0xF3)
- #define OTP_INDICATOR_2			    (0xF7)
- 
-@@ -272,6 +274,9 @@ static int lan743x_hs_otp_read(struct lan743x_adapter *adapter, u32 offset,
- 	int ret;
- 	int i;
- 
-+	if (offset + length > MAX_HS_OTP_SIZE)
-+		return -EINVAL;
-+
- 	ret = lan743x_hs_syslock_acquire(adapter, LOCK_TIMEOUT_MAX_CNT);
- 	if (ret < 0)
- 		return ret;
-@@ -320,6 +325,9 @@ static int lan743x_hs_otp_write(struct lan743x_adapter *adapter, u32 offset,
- 	int ret;
- 	int i;
- 
-+	if (offset + length > MAX_HS_OTP_SIZE)
-+		return -EINVAL;
-+
- 	ret = lan743x_hs_syslock_acquire(adapter, LOCK_TIMEOUT_MAX_CNT);
- 	if (ret < 0)
- 		return ret;
-@@ -497,6 +505,9 @@ static int lan743x_hs_eeprom_read(struct lan743x_adapter *adapter,
- 	u32 val;
- 	int i;
- 
-+	if (offset + length > MAX_HS_EEPROM_SIZE)
-+		return -EINVAL;
-+
- 	retval = lan743x_hs_syslock_acquire(adapter, LOCK_TIMEOUT_MAX_CNT);
- 	if (retval < 0)
- 		return retval;
-@@ -539,6 +550,9 @@ static int lan743x_hs_eeprom_write(struct lan743x_adapter *adapter,
- 	u32 val;
- 	int i;
- 
-+	if (offset + length > MAX_HS_EEPROM_SIZE)
-+		return -EINVAL;
-+
- 	retval = lan743x_hs_syslock_acquire(adapter, LOCK_TIMEOUT_MAX_CNT);
- 	if (retval < 0)
- 		return retval;
-@@ -604,9 +618,9 @@ static int lan743x_ethtool_get_eeprom_len(struct net_device *netdev)
- 	struct lan743x_adapter *adapter = netdev_priv(netdev);
- 
- 	if (adapter->flags & LAN743X_ADAPTER_FLAG_OTP)
--		return MAX_OTP_SIZE;
-+		return adapter->is_pci11x1x ? MAX_HS_OTP_SIZE : MAX_OTP_SIZE;
- 
--	return MAX_EEPROM_SIZE;
-+	return adapter->is_pci11x1x ? MAX_HS_EEPROM_SIZE : MAX_EEPROM_SIZE;
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -3382,6 +3382,23 @@ static __be32 nfsd4_encode_fattr4_suppat
+ 	return nfsd4_encode_bitmap4(xdr, supp[0], supp[1], supp[2]);
  }
  
- static int lan743x_ethtool_get_eeprom(struct net_device *netdev,
--- 
-2.39.5
-
++/*
++ * Copied from generic_remap_checks/generic_remap_file_range_prep.
++ *
++ * These generic functions use the file system's s_blocksize, but
++ * individual file systems aren't required to use
++ * generic_remap_file_range_prep. Until there is a mechanism for
++ * determining a particular file system's (or file's) clone block
++ * size, this is the best NFSD can do.
++ */
++static __be32 nfsd4_encode_fattr4_clone_blksize(struct xdr_stream *xdr,
++						const struct nfsd4_fattr_args *args)
++{
++	struct inode *inode = d_inode(args->dentry);
++
++	return nfsd4_encode_uint32_t(xdr, inode->i_sb->s_blocksize);
++}
++
+ #ifdef CONFIG_NFSD_V4_SECURITY_LABEL
+ static __be32 nfsd4_encode_fattr4_sec_label(struct xdr_stream *xdr,
+ 					    const struct nfsd4_fattr_args *args)
+@@ -3487,7 +3504,7 @@ static const nfsd4_enc_attr nfsd4_enc_fa
+ 	[FATTR4_MODE_SET_MASKED]	= nfsd4_encode_fattr4__noop,
+ 	[FATTR4_SUPPATTR_EXCLCREAT]	= nfsd4_encode_fattr4_suppattr_exclcreat,
+ 	[FATTR4_FS_CHARSET_CAP]		= nfsd4_encode_fattr4__noop,
+-	[FATTR4_CLONE_BLKSIZE]		= nfsd4_encode_fattr4__noop,
++	[FATTR4_CLONE_BLKSIZE]		= nfsd4_encode_fattr4_clone_blksize,
+ 	[FATTR4_SPACE_FREED]		= nfsd4_encode_fattr4__noop,
+ 	[FATTR4_CHANGE_ATTR_TYPE]	= nfsd4_encode_fattr4__noop,
+ 
 
 
