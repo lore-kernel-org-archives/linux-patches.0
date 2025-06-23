@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AEB222581;
-	Mon, 23 Jun 2025 22:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A302222B2;
+	Mon, 23 Jun 2025 22:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717414; cv=none; b=qwbCZ8rSnwqy8ucOmShhtJlj61mQanPFJ0tXnFQ2VWFPjeikClqJAwfQKMkMAdSIzboBwNgbDSmw1fHXJkupgqoikasyEEMayXrnotrC7gMJsR78zOgLT547tntEnBhcI4nQh53ZCBNmvkw8m14wblZizqMZJorvkp/GciM2Bac=
+	t=1750717416; cv=none; b=aTGbrMDEYZvSJ3/z8VuTcL8q1RmZK3jbqrawvAOoZFSFcOS1eh+AUdm1Q+weeG9mPKkd4t8OXu2p9Guf91UHMzb/D42K53R0v6veHFG12JOQS0PtTzLDbDAA+6X5dTeez5fwsK403B2+OtK4mC80qvnNWZLgRH8X+oSOJKS4NKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717414; c=relaxed/simple;
-	bh=lL55cnOQX+R9AWpIF5GdAmoY6RpASWAfJ/HXD7I/lcI=;
+	s=arc-20240116; t=1750717416; c=relaxed/simple;
+	bh=Fi4zxsdL2Us8qdLQrcnwMB2Y9oLAQ59eZBp5Tb5kfGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egAlp3abNSKUyWcEWiy7L61A1pit8eEiXpWCVjIMiCotcVDGPg04RLv8GjakX2Bcsrcr7bXNIGJj3lgxl3FCXeVL/9FOR+7moYsugI6k+JlDD2hUh9BB3JGOeThAIxKgpRNG/WwaZjm4njl2pc7luwD+WKHeYyMeZTy5Veni2rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsHHjaTk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q9udM4pdS/2Iuq6/YOMsYZYdHqjxiJGspiLXkVFRLdknievHBz6eDwBPmALvq4g6iu1oR0Q5xv7AXpuJfFgKS1zEo2JiJp6CRD8nIohvMnQ8BRwwsqXiYxTLnGlEl4K6bn58pOOZgA2CbVDdRhciM3iIA6BuzYhpL2bPiNfz30o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sN0+pd4s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsHHjaTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A331BC4CEEA;
-	Mon, 23 Jun 2025 22:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sN0+pd4s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D05CC4CEEA;
+	Mon, 23 Jun 2025 22:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717414;
-	bh=lL55cnOQX+R9AWpIF5GdAmoY6RpASWAfJ/HXD7I/lcI=;
+	s=korg; t=1750717416;
+	bh=Fi4zxsdL2Us8qdLQrcnwMB2Y9oLAQ59eZBp5Tb5kfGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nsHHjaTk6BukN5LL/BVA2Q9PtYLwHCkvG4KU2E+ZN3DIwJN84vS4dYRajBfwnc0Tu
-	 iseBtPDZ8PJtGXlO8hN3yH6qmwQgJyA4sQq2SBej2GMyQJWhL/gnckQpbYFwfWHeov
-	 Q/rk8fgdc+oxTU/A9SOgONEogoWdGn0JZD8YzcdQ=
+	b=sN0+pd4skdTndUBdUAgFY22oJK9uNZ5y4LsupHQWDRuMbPsbqnE2iHfMq85uwUjSb
+	 tC28ms5cjyfDiEnVGtt1BvQqD5G2SnsE9Rk97atebiZ21MT+8olcHdthPDMA5uqSBF
+	 NBwiq2GK60e48tQvAsCXW/diOMIfqbOTUmBrjIIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haixia Qu <hxqu@hillstonenet.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 383/414] tipc: fix null-ptr-deref when acquiring remote ip of ethernet bearer
-Date: Mon, 23 Jun 2025 15:08:40 +0200
-Message-ID: <20250623130651.527566684@linuxfoundation.org>
+Subject: [PATCH 6.1 422/508] vxlan: Do not treat dst cache initialization errors as fatal
+Date: Mon, 23 Jun 2025 15:07:47 +0200
+Message-ID: <20250623130655.574733172@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +49,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haixia Qu <hxqu@hillstonenet.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit f82727adcf2992822e12198792af450a76ebd5ef ]
+[ Upstream commit 20c76dadc783759fd3819d289c72be590660cc8b ]
 
-The reproduction steps:
-1. create a tun interface
-2. enable l2 bearer
-3. TIPC_NL_UDP_GET_REMOTEIP with media name set to tun
+FDB entries are allocated in an atomic context as they can be added from
+the data path when learning is enabled.
 
-tipc: Started in network mode
-tipc: Node identity 8af312d38a21, cluster identity 4711
-tipc: Enabled bearer <eth:syz_tun>, priority 1
-Oops: general protection fault
-KASAN: null-ptr-deref in range
-CPU: 1 UID: 1000 PID: 559 Comm: poc Not tainted 6.16.0-rc1+ #117 PREEMPT
-Hardware name: QEMU Ubuntu 24.04 PC
-RIP: 0010:tipc_udp_nl_dump_remoteip+0x4a4/0x8f0
+After converting the FDB hash table to rhashtable, the insertion rate
+will be much higher (*) which will entail a much higher rate of per-CPU
+allocations via dst_cache_init().
 
-the ub was in fact a struct dev.
+When adding a large number of entries (e.g., 256k) in a batch, a small
+percentage (< 0.02%) of these per-CPU allocations will fail [1]. This
+does not happen with the current code since the insertion rate is low
+enough to give the per-CPU allocator a chance to asynchronously create
+new chunks of per-CPU memory.
 
-when bid != 0 && skip_cnt != 0, bearer_list[bid] may be NULL or
-other media when other thread changes it.
+Given that:
 
-fix this by checking media_id.
+a. Only a small percentage of these per-CPU allocations fail.
 
-Fixes: 832629ca5c313 ("tipc: add UDP remoteip dump to netlink API")
-Signed-off-by: Haixia Qu <hxqu@hillstonenet.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20250617055624.2680-1-hxqu@hillstonenet.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+b. The scenario where this happens might not be the most realistic one.
+
+c. The driver can work correctly without dst caches. The dst_cache_*()
+APIs first check that the dst cache was properly initialized.
+
+d. The dst caches are not always used (e.g., 'tos inherit').
+
+It seems reasonable to not treat these allocation failures as fatal.
+
+Therefore, do not bail when dst_cache_init() fails and suppress warnings
+by specifying '__GFP_NOWARN'.
+
+[1] percpu: allocation failed, size=40 align=8 atomic=1, atomic alloc failed, no space left
+
+(*) 97% reduction in average latency of vxlan_fdb_update() when adding
+256k entries in a batch.
+
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250415121143.345227-14-idosch@nvidia.com
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/udp_media.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
-index 108a4cc2e0010..258d6aa4f21ae 100644
---- a/net/tipc/udp_media.c
-+++ b/net/tipc/udp_media.c
-@@ -489,7 +489,7 @@ int tipc_udp_nl_dump_remoteip(struct sk_buff *skb, struct netlink_callback *cb)
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index ef61eab81707c..747ce00dd321d 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -653,10 +653,10 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
+ 	if (rd == NULL)
+ 		return -ENOMEM;
  
- 		rtnl_lock();
- 		b = tipc_bearer_find(net, bname);
--		if (!b) {
-+		if (!b || b->bcast_addr.media_id != TIPC_MEDIA_TYPE_UDP) {
- 			rtnl_unlock();
- 			return -EINVAL;
- 		}
-@@ -500,7 +500,7 @@ int tipc_udp_nl_dump_remoteip(struct sk_buff *skb, struct netlink_callback *cb)
+-	if (dst_cache_init(&rd->dst_cache, GFP_ATOMIC)) {
+-		kfree(rd);
+-		return -ENOMEM;
+-	}
++	/* The driver can work correctly without a dst cache, so do not treat
++	 * dst cache initialization errors as fatal.
++	 */
++	dst_cache_init(&rd->dst_cache, GFP_ATOMIC | __GFP_NOWARN);
  
- 		rtnl_lock();
- 		b = rtnl_dereference(tn->bearer_list[bid]);
--		if (!b) {
-+		if (!b || b->bcast_addr.media_id != TIPC_MEDIA_TYPE_UDP) {
- 			rtnl_unlock();
- 			return -EINVAL;
- 		}
+ 	rd->remote_ip = *ip;
+ 	rd->remote_port = port;
 -- 
 2.39.5
 
