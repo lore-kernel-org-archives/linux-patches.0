@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA5B70838;
-	Mon, 23 Jun 2025 21:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6019670838;
+	Mon, 23 Jun 2025 21:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715937; cv=none; b=rORlo3pqKpNaqnW4eB54dgzzpVwoLiRoD9V36NvMjdkDCFdWXbVgGDcMTAvW8VMep7ijIT9TamKquBu2d5F9WpHaJKZvlKnEbWl7yk8GQ9OjK91MQJEYjpjkUY88dqzKLO2tqlMEojoS+tZs9bG/3boZTbhxGQ17mnHYIAXe2GQ=
+	t=1750715939; cv=none; b=q2Y4oeitsfTz0sxXDNdWVIEBw4/eiyn/eC3Hhag8O1RL80qEitQNKhLjAlv8Ne0h9av4j5lidh8hMJ2ucebr4nIPTz+97eYbJx0GeftT3POKZHSk6XQys5Ug6khLDn8ym6tvqIDvcZPwn4wxKPeDhu6qnFcNe2O1PglOPfjEWQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715937; c=relaxed/simple;
-	bh=WNcmRlUC/+x2ELohiQRKAK/UEn7Z7lXAykhDXLLHg1s=;
+	s=arc-20240116; t=1750715939; c=relaxed/simple;
+	bh=sK1ER12p3Qpsc/j3fiO18/0AOR9M9+tzbtmOrbLMLws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXoyAEkQlV+WB2Wh96TXeYHJyJsb+KNeJSknk0+j7+F0u2PQzxbjHHHMFExTUr7zon8lgAmvLE+PGdUG0OadYMlGBnmPdeLDJHr8G0Oy0lkN5KnGEwnNVCsaVEa08WYsWD6PJaTWz3Z6/5T+uWOubEMkq/VekHIi2Si+/uHzR6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDqLeP7X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bsBEAdFP6oYdvLS2/j9Bd03/4zfqaAVEUNfxZvvd2mQyQPHMTQO+HEVaMJjjid7SDM5HHvC5fQeVTVO0eGYNaFVgG3nbFN1LzGiDQrKzyFOtCmUVQTCfbTebyouPdJE2JLywfpqnlRQKpNdPB2tRIp5owqqRwjXLCV4ux89ct68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T4A2rfht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDqLeP7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C17C4CEEA;
-	Mon, 23 Jun 2025 21:58:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T4A2rfht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC018C4CEEA;
+	Mon, 23 Jun 2025 21:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715936;
-	bh=WNcmRlUC/+x2ELohiQRKAK/UEn7Z7lXAykhDXLLHg1s=;
+	s=korg; t=1750715939;
+	bh=sK1ER12p3Qpsc/j3fiO18/0AOR9M9+tzbtmOrbLMLws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDqLeP7XLkcM0zFy+DgL/daN2r7KvG0lI6tvBI2zXi4alw34zGpeHdFXHPI36LRF/
-	 37tqcwKnhnIHYcgjfjByFxRHPM9ijcfB7D/wPcr2jkax1hZXR57QpbsRyq0rJk+i23
-	 qwjEf/La3P8vec0d/atF3T7oE2FYgZMCrRy4yM1o=
+	b=T4A2rfhtmU4aQ9yddM8JjaCYkB2OiXRuEEvhJAdqiX0Is0TXweCbwNrrf7+CVrGVw
+	 bHAHkkptqMiAp++gHAEeXfcqGPiTwWN1sNfdW9ynNrw5B+mUu2FOCKmR94oBudcjoY
+	 j5gq6zFir1kYmcftAhB1RmaFy+Z6ao4mP+HPbYlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+aaf0488c83d1d5f4f029@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	WangYuli <wangyuli@uniontech.com>
-Subject: [PATCH 6.6 230/290] wifi: cfg80211: init wiphy_work before allocating rfkill fails
-Date: Mon, 23 Jun 2025 15:08:11 +0200
-Message-ID: <20250623130633.845729710@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 270/508] posix-cpu-timers: fix race between handle_posix_cpu_timers() and posix_cpu_timer_del()
+Date: Mon, 23 Jun 2025 15:05:15 +0200
+Message-ID: <20250623130651.888379595@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,104 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-commit fc88dee89d7b63eeb17699393eb659aadf9d9b7c upstream.
+commit f90fff1e152dedf52b932240ebbd670d83330eca upstream.
 
-syzbort reported a uninitialize wiphy_work_lock in cfg80211_dev_free. [1]
+If an exiting non-autoreaping task has already passed exit_notify() and
+calls handle_posix_cpu_timers() from IRQ, it can be reaped by its parent
+or debugger right after unlock_task_sighand().
 
-After rfkill allocation fails, the wiphy release process will be performed,
-which will cause cfg80211_dev_free to access the uninitialized wiphy_work
-related data.
+If a concurrent posix_cpu_timer_del() runs at that moment, it won't be
+able to detect timer->it.cpu.firing != 0: cpu_timer_task_rcu() and/or
+lock_task_sighand() will fail.
 
-Move the initialization of wiphy_work to before rfkill initialization to
-avoid this issue.
+Add the tsk->exit_state check into run_posix_cpu_timers() to fix this.
 
-[1]
-INFO: trying to register non-static key.
-The code is fine but needs lockdep annotation, or maybe
-you didn't initialize this object before use?
-turning off the locking correctness validator.
-CPU: 0 UID: 0 PID: 5935 Comm: syz-executor550 Not tainted 6.14.0-rc6-syzkaller-00103-g4003c9e78778 #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
- assign_lock_key kernel/locking/lockdep.c:983 [inline]
- register_lock_class+0xc39/0x1240 kernel/locking/lockdep.c:1297
- __lock_acquire+0x135/0x3c40 kernel/locking/lockdep.c:5103
- lock_acquire.part.0+0x11b/0x380 kernel/locking/lockdep.c:5851
- __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
- _raw_spin_lock_irqsave+0x3a/0x60 kernel/locking/spinlock.c:162
- cfg80211_dev_free+0x30/0x3d0 net/wireless/core.c:1196
- device_release+0xa1/0x240 drivers/base/core.c:2568
- kobject_cleanup lib/kobject.c:689 [inline]
- kobject_release lib/kobject.c:720 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x1e4/0x5a0 lib/kobject.c:737
- put_device+0x1f/0x30 drivers/base/core.c:3774
- wiphy_free net/wireless/core.c:1224 [inline]
- wiphy_new_nm+0x1c1f/0x2160 net/wireless/core.c:562
- ieee80211_alloc_hw_nm+0x1b7a/0x2260 net/mac80211/main.c:835
- mac80211_hwsim_new_radio+0x1d6/0x54e0 drivers/net/wireless/virtual/mac80211_hwsim.c:5185
- hwsim_new_radio_nl+0xb42/0x12b0 drivers/net/wireless/virtual/mac80211_hwsim.c:6242
- genl_family_rcv_msg_doit+0x202/0x2f0 net/netlink/genetlink.c:1115
- genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
- genl_rcv_msg+0x565/0x800 net/netlink/genetlink.c:1210
- netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2533
- genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
- netlink_unicast_kernel net/netlink/af_netlink.c:1312 [inline]
- netlink_unicast+0x53c/0x7f0 net/netlink/af_netlink.c:1338
- netlink_sendmsg+0x8b8/0xd70 net/netlink/af_netlink.c:1882
- sock_sendmsg_nosec net/socket.c:718 [inline]
- __sock_sendmsg net/socket.c:733 [inline]
- ____sys_sendmsg+0xaaf/0xc90 net/socket.c:2573
- ___sys_sendmsg+0x135/0x1e0 net/socket.c:2627
- __sys_sendmsg+0x16e/0x220 net/socket.c:2659
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+This fix is not needed if CONFIG_POSIX_CPU_TIMERS_TASK_WORK=y, because
+exit_task_work() is called before exit_notify(). But the check still
+makes sense, task_work_add(&tsk->posix_cputimers_work.work) will fail
+anyway in this case.
 
-Fixes: 72d520476a2f ("wifi: cfg80211: cancel wiphy_work before freeing wiphy")
-Reported-by: syzbot+aaf0488c83d1d5f4f029@syzkaller.appspotmail.com
-Close: https://syzkaller.appspot.com/bug?extid=aaf0488c83d1d5f4f029
-Tested-by: syzbot+aaf0488c83d1d5f4f029@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Link: https://patch.msgid.link/tencent_258DD9121DDDB9DD9A1939CFAA0D8625B107@qq.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Cc: stable@vger.kernel.org
+Reported-by: Benoît Sevens <bsevens@google.com>
+Fixes: 0bdd2ed4138e ("sched: run_posix_cpu_timers: Don't check ->exit_state, use lock_task_sighand()")
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/time/posix-cpu-timers.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -550,6 +550,9 @@ use_default_name:
- 	INIT_WORK(&rdev->mgmt_registrations_update_wk,
- 		  cfg80211_mgmt_registrations_update_wk);
- 	spin_lock_init(&rdev->mgmt_registrations_lock);
-+	INIT_WORK(&rdev->wiphy_work, cfg80211_wiphy_work);
-+	INIT_LIST_HEAD(&rdev->wiphy_work_list);
-+	spin_lock_init(&rdev->wiphy_work_lock);
+--- a/kernel/time/posix-cpu-timers.c
++++ b/kernel/time/posix-cpu-timers.c
+@@ -1439,6 +1439,15 @@ void run_posix_cpu_timers(void)
+ 	lockdep_assert_irqs_disabled();
  
- #ifdef CONFIG_CFG80211_DEFAULT_PS
- 	rdev->wiphy.flags |= WIPHY_FLAG_PS_ON_BY_DEFAULT;
-@@ -567,9 +570,6 @@ use_default_name:
- 		return NULL;
- 	}
- 
--	INIT_WORK(&rdev->wiphy_work, cfg80211_wiphy_work);
--	INIT_LIST_HEAD(&rdev->wiphy_work_list);
--	spin_lock_init(&rdev->wiphy_work_lock);
- 	INIT_WORK(&rdev->rfkill_block, cfg80211_rfkill_block_work);
- 	INIT_WORK(&rdev->conn_work, cfg80211_conn_work);
- 	INIT_WORK(&rdev->event_work, cfg80211_event_work);
+ 	/*
++	 * Ensure that release_task(tsk) can't happen while
++	 * handle_posix_cpu_timers() is running. Otherwise, a concurrent
++	 * posix_cpu_timer_del() may fail to lock_task_sighand(tsk) and
++	 * miss timer->it.cpu.firing != 0.
++	 */
++	if (tsk->exit_state)
++		return;
++
++	/*
+ 	 * If the actual expiry is deferred to task work context and the
+ 	 * work is already scheduled there is no point to do anything here.
+ 	 */
 
 
