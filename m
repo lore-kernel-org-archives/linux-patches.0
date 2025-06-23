@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B69246BC9;
-	Mon, 23 Jun 2025 13:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2A016419;
+	Mon, 23 Jun 2025 13:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686055; cv=none; b=Of6NaNIVzw0Pr8EwgwslO2I7L6TDN4uPPbQyn3gQalWvfVhlV4cbnapBf4KU4HxfzliHBhuvFYH9+BtukuXM75z6pHM+ToS8INGSJpUqpPeUnt1RKnOTfuK5dkEDT1ToQmO+ndZ4FIkyHGSxWp7JaAs/Z6mfcqmOIFlnQUUysm4=
+	t=1750686058; cv=none; b=FowG+EFA7Mx5jBiNZK/G2WtyraetsfIZ8c4BQ6zsvFrLmDFmymhHaLn0zYHfVQHAQfRmLZP35ntxoyoXxmmsOABBsm8sCBMmkuf42TGBgZEftwcJ2KrY3pP9P1v6bmZ89aBwBtvX4ab23bBM5/cajIW1Y2zrOF7y98mwbn0a2YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686055; c=relaxed/simple;
-	bh=4y7NnJZQufRAq2xV3Ryb7ogfWts029aKByKCpvkTJOU=;
+	s=arc-20240116; t=1750686058; c=relaxed/simple;
+	bh=eBW6pC8FycgUSplev3FfGUNWr49lRd9Ba1SYBOrRLyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=akxox2CfARs0ExW3nY+TxRDuTIfMSfZynrIie8gShS9n3Lbmll+RsSMcp8TXQOi7DEeVB7qNdjP7ABHPeydNKDO/nnHShqaeD8bz4ZA5kMLge/tKCIHiPmbft9UVtAgKnUbnxXnBkCE15OOLGpM1TIqHRLLbrASzWrVv1mU0b7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pa6T17bC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Bz+E8kzo3KdJVJ5wHrmhAts2m6dt7Zf5i+qLrmmF3aFccneUwrV8m2xiTmwmf/CSyBS4qBG97mfLUVq5yWBtaBgs2lL0cTHWbbbIRL230x4XJWliXp0+eNR+pFjNRygNaHA9Lgs1HkoWuqywZO7a/fHYcHViKtwBHf0g0T8PRsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vetXUeKj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pa6T17bC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C9AC4CEEA;
-	Mon, 23 Jun 2025 13:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vetXUeKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A13C4CEEA;
+	Mon, 23 Jun 2025 13:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686055;
-	bh=4y7NnJZQufRAq2xV3Ryb7ogfWts029aKByKCpvkTJOU=;
+	s=korg; t=1750686057;
+	bh=eBW6pC8FycgUSplev3FfGUNWr49lRd9Ba1SYBOrRLyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pa6T17bCu7wFoQg97qn0/VTWT23M19RgrOzQ8sgrsNCNLu4u+hU/4zB0isKfZTei0
-	 Ej7wMcW17hAIGQRX1hVDuZiY5qJKNLpajhegNXUCKjiRfE67IBT5ZSOeYlFYciuRlH
-	 VytpPkXhY0TjUTnsOg7FTUS7dsrdeJgqO8Q5gAlQ=
+	b=vetXUeKjTzc0hg1ZO+2nkL5nlPANoO3IRITSu4MhjmPu/ed1ZubXZbzD/owrq3NuY
+	 5PMb5r943Oyd/TsOwaTEzuf1Z7bnInwrnMcJnhkgaIaDYjSrHiwkQyxo6URNWEyY+9
+	 hAJtTEHib6K0UzSEYBlHSi6FaF9cY/5QX0tLLj/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqing Pan <quic_miaoqing@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.6 020/290] wifi: ath12k: fix ring-buffer corruption
-Date: Mon, 23 Jun 2025 15:04:41 +0200
-Message-ID: <20250623130627.588737400@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 088/355] PCI/DPC: Initialize aer_err_info before using it
+Date: Mon, 23 Jun 2025 15:04:49 +0200
+Message-ID: <20250623130629.448729306@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,105 +48,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-commit 6b67d2cf14ea997061f61e9c8afd4e1c0f22acb9 upstream.
+[ Upstream commit a424b598e6a6c1e69a2bb801d6fd16e805ab2c38 ]
 
-Users of the Lenovo ThinkPad X13s have reported that Wi-Fi sometimes
-breaks and the log fills up with errors like:
+Previously the struct aer_err_info "info" was allocated on the stack
+without being initialized, so it contained junk except for the fields we
+explicitly set later.
 
-    ath11k_pci 0006:01:00.0: HTC Rx: insufficient length, got 1484, expected 1492
-    ath11k_pci 0006:01:00.0: HTC Rx: insufficient length, got 1460, expected 1484
+Initialize "info" at declaration so it starts as all zeros.
 
-which based on a quick look at the ath11k driver seemed to indicate some
-kind of ring-buffer corruption.
-
-Miaoqing Pan tracked it down to the host seeing the updated destination
-ring head pointer before the updated descriptor, and the error handling
-for that in turn leaves the ring buffer in an inconsistent state.
-
-While this has not yet been observed with ath12k, the ring-buffer
-implementation is very similar to the ath11k one and it suffers from the
-same bugs.
-
-Add the missing memory barrier to make sure that the descriptor is read
-after the head pointer to address the root cause of the corruption while
-fixing up the error handling in case there are ever any (ordering) bugs
-on the device side.
-
-Note that the READ_ONCE() are only needed to avoid compiler mischief in
-case the ring-buffer helpers are ever inlined.
-
-Tested-on: WCN7850 hw2.0 WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Cc: stable@vger.kernel.org	# 6.3
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218623
-Link: https://lore.kernel.org/20250310010217.3845141-3-quic_miaoqing@quicinc.com
-Cc: Miaoqing Pan <quic_miaoqing@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
-Link: https://patch.msgid.link/20250321095219.19369-1-johan+linaro@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8aefa9b0d910 ("PCI/DPC: Print AER status in DPC event handling")
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://patch.msgid.link/20250522232339.1525671-2-helgaas@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/ce.c  |   11 +++++------
- drivers/net/wireless/ath/ath12k/hal.c |    4 ++--
- 2 files changed, 7 insertions(+), 8 deletions(-)
+ drivers/pci/pcie/dpc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ath/ath12k/ce.c
-+++ b/drivers/net/wireless/ath/ath12k/ce.c
-@@ -343,11 +343,10 @@ static int ath12k_ce_completed_recv_next
- 		goto err;
- 	}
- 
-+	/* Make sure descriptor is read after the head pointer. */
-+	dma_rmb();
-+
- 	*nbytes = ath12k_hal_ce_dst_status_get_length(desc);
--	if (*nbytes == 0) {
--		ret = -EIO;
--		goto err;
--	}
- 
- 	*skb = pipe->dest_ring->skb[sw_index];
- 	pipe->dest_ring->skb[sw_index] = NULL;
-@@ -380,8 +379,8 @@ static void ath12k_ce_recv_process_cb(st
- 		dma_unmap_single(ab->dev, ATH12K_SKB_RXCB(skb)->paddr,
- 				 max_nbytes, DMA_FROM_DEVICE);
- 
--		if (unlikely(max_nbytes < nbytes)) {
--			ath12k_warn(ab, "rxed more than expected (nbytes %d, max %d)",
-+		if (unlikely(max_nbytes < nbytes || nbytes == 0)) {
-+			ath12k_warn(ab, "unexpected rx length (nbytes %d, max %d)",
- 				    nbytes, max_nbytes);
- 			dev_kfree_skb_any(skb);
- 			continue;
---- a/drivers/net/wireless/ath/ath12k/hal.c
-+++ b/drivers/net/wireless/ath/ath12k/hal.c
-@@ -1565,7 +1565,7 @@ u32 ath12k_hal_ce_dst_status_get_length(
+diff --git a/drivers/pci/pcie/dpc.c b/drivers/pci/pcie/dpc.c
+index ab83f78f3eb1d..cabbaacdb6e61 100644
+--- a/drivers/pci/pcie/dpc.c
++++ b/drivers/pci/pcie/dpc.c
+@@ -263,7 +263,7 @@ static int dpc_get_aer_uncorrect_severity(struct pci_dev *dev,
+ void dpc_process_error(struct pci_dev *pdev)
  {
- 	u32 len;
+ 	u16 cap = pdev->dpc_cap, status, source, reason, ext_reason;
+-	struct aer_err_info info;
++	struct aer_err_info info = {};
  
--	len = le32_get_bits(desc->flags, HAL_CE_DST_STATUS_DESC_FLAGS_LEN);
-+	len = le32_get_bits(READ_ONCE(desc->flags), HAL_CE_DST_STATUS_DESC_FLAGS_LEN);
- 	desc->flags &= ~cpu_to_le32(HAL_CE_DST_STATUS_DESC_FLAGS_LEN);
- 
- 	return len;
-@@ -1734,7 +1734,7 @@ void ath12k_hal_srng_access_begin(struct
- 		srng->u.src_ring.cached_tp =
- 			*(volatile u32 *)srng->u.src_ring.tp_addr;
- 	else
--		srng->u.dst_ring.cached_hp = *srng->u.dst_ring.hp_addr;
-+		srng->u.dst_ring.cached_hp = READ_ONCE(*srng->u.dst_ring.hp_addr);
- }
- 
- /* Update cached ring head/tail pointers to HW. ath12k_hal_srng_access_begin()
+ 	pci_read_config_word(pdev, cap + PCI_EXP_DPC_STATUS, &status);
+ 	pci_read_config_word(pdev, cap + PCI_EXP_DPC_SOURCE_ID, &source);
+-- 
+2.39.5
+
 
 
