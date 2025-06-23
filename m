@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD4D225A38;
-	Mon, 23 Jun 2025 22:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0895A223DF0;
+	Mon, 23 Jun 2025 22:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716725; cv=none; b=rfhr3j2csbTcrGYIQY9AWLKD7565ma0/yS9K2cs0yQ0/9wGGwABejtE/OTRaMDrngIxYzE6SUpGIKEVKxQ4I4YuwvxT0iQzvNORpTXOkSzRuBoD8QMkTgMLYSR5WpKi1k8J9zQI7/hIGQ1SWV1D3JLKPklCB5o9sawApsDzG0Fk=
+	t=1750716728; cv=none; b=ojNVB3pvh0hnT4ko1FwE5MaJzVibC1SUYCSx19mdi+LuVWHUQIQP/ygFZ7Cs+5v6pSc+46G+QKPooK/F9J3pcVISlH/OJPHo/v6PKPu+X5ugmVSmH6flFHa6i/Mopk4JqdeYi/wIl+JE9nCSW1ICbI+zNeIIAohLksqUFkZMQYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716725; c=relaxed/simple;
-	bh=APm8I8cN2C/gTpzc4JFH7hvDR8/CR8z+d/7luPN9yxA=;
+	s=arc-20240116; t=1750716728; c=relaxed/simple;
+	bh=Ckouslyw5UlUVp4I0xSvnxCvc7ge6h1XOPiJdMkWq2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Hdm9ErduhRBd3tzM9aBtkLjDBs3uyy7cmWHOs925deTFk/YmnLXDvCAMd8Oaf+xzc+1cemMOBKYTxjYhc8k0uUo2ziFTkshy0rr5NgyjONgDTIrma8Te7lsipwUWkBvvVyt243LW5pT4taafhfIcCAmHo3zDS2laIzfVt4BLJms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFNYKdgr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eHQckM2M6a3W9tPcnYyFEmlbznc7WHc7UGYc6xvy/tiCM8jIxUwJv6Gz4q9YCdH3zV6a/0Nvll+rS1G4szJf2aPNcNeob+42Y5kTiTEiS51fS9O/sicFhFgOLHu4WOeQQj66IXbR5CTjIchgpKrKYWwY5NLryh6E3DSbgenuN2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPtV9Im6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFNYKdgr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B039C4CEEA;
-	Mon, 23 Jun 2025 22:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPtV9Im6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D199C4CEEA;
+	Mon, 23 Jun 2025 22:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716725;
-	bh=APm8I8cN2C/gTpzc4JFH7hvDR8/CR8z+d/7luPN9yxA=;
+	s=korg; t=1750716727;
+	bh=Ckouslyw5UlUVp4I0xSvnxCvc7ge6h1XOPiJdMkWq2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SFNYKdgrdIvZ8a2bM+RZM19543eYe89nnOKKI7lZElvNH6sdBAKcHBvAnBaorbCKW
-	 TIR1bQqyRNI7cbBOqTX2D38uplTUfgrPB7HB4AKtVXsWgmkJlUyp7k6sg6k6RBY65J
-	 JvLk6UzCZ9/8sTaAxrN/CjlxnW7/+SMl1f/pD52k=
+	b=mPtV9Im6IlgXLIWV8/49vfuhpisFLrmQIUTzLp2N9WcIdD2CMDOiPq9yoo9iaNr60
+	 f61O7y/nuttssXaNrylgrHyyzARwcYbeW9Xd3iyn4RpInTRbw/JRFBiqBemIohLR4P
+	 lAUmfJEkvMoGXvGUZIgbOZPdsN6wpPvo6zw/PFVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 5.15 353/411] selinux: fix selinux_xfrm_alloc_user() to set correct ctx_len
-Date: Mon, 23 Jun 2025 15:08:17 +0200
-Message-ID: <20250623130642.533396760@linuxfoundation.org>
+	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
+	Daniel Wagner <dwagner@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 285/290] scsi: elx: efct: Fix memory leak in efct_hw_parse_filter()
+Date: Mon, 23 Jun 2025 15:09:06 +0200
+Message-ID: <20250623130635.492143070@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,45 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
 
-commit 86c8db86af43f52f682e53a0f2f0828683be1e52 upstream.
+[ Upstream commit 2a8a5a5dd06eef580f9818567773fd75057cb875 ]
 
-We should count the terminating NUL byte as part of the ctx_len.
-Otherwise, UBSAN logs a warning:
-  UBSAN: array-index-out-of-bounds in security/selinux/xfrm.c:99:14
-  index 60 is out of range for type 'char [*]'
+strsep() modifies the address of the pointer passed to it so that it no
+longer points to the original address. This means kfree() gets the wrong
+pointer.
 
-The allocation itself is correct so there is no actual out of bounds
-indexing, just a warning.
+Fix this by passing unmodified pointer returned from kstrdup() to
+kfree().
 
-Cc: stable@vger.kernel.org
-Suggested-by: Christian Göttsche <cgzones@googlemail.com>
-Link: https://lore.kernel.org/selinux/CAEjxPJ6tA5+LxsGfOJokzdPeRomBHjKLBVR6zbrg+_w3ZZbM3A@mail.gmail.com/
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with Svace.
+
+Fixes: 4df84e846624 ("scsi: elx: efct: Driver initialization routines")
+Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+Link: https://lore.kernel.org/r/20250612163616.24298-1-v.shevtsov@mt-integration.ru
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/xfrm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/elx/efct/efct_hw.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/security/selinux/xfrm.c
-+++ b/security/selinux/xfrm.c
-@@ -95,7 +95,7 @@ static int selinux_xfrm_alloc_user(struc
+diff --git a/drivers/scsi/elx/efct/efct_hw.c b/drivers/scsi/elx/efct/efct_hw.c
+index 5a5525054d71c..5b079b8b7a082 100644
+--- a/drivers/scsi/elx/efct/efct_hw.c
++++ b/drivers/scsi/elx/efct/efct_hw.c
+@@ -1120,7 +1120,7 @@ int
+ efct_hw_parse_filter(struct efct_hw *hw, void *value)
+ {
+ 	int rc = 0;
+-	char *p = NULL;
++	char *p = NULL, *pp = NULL;
+ 	char *token;
+ 	u32 idx = 0;
  
- 	ctx->ctx_doi = XFRM_SC_DOI_LSM;
- 	ctx->ctx_alg = XFRM_SC_ALG_SELINUX;
--	ctx->ctx_len = str_len;
-+	ctx->ctx_len = str_len + 1;
- 	memcpy(ctx->ctx_str, &uctx[1], str_len);
- 	ctx->ctx_str[str_len] = '\0';
- 	rc = security_context_to_sid(&selinux_state, ctx->ctx_str, str_len,
+@@ -1132,6 +1132,7 @@ efct_hw_parse_filter(struct efct_hw *hw, void *value)
+ 		efc_log_err(hw->os, "p is NULL\n");
+ 		return -ENOMEM;
+ 	}
++	pp = p;
+ 
+ 	idx = 0;
+ 	while ((token = strsep(&p, ",")) && *token) {
+@@ -1144,7 +1145,7 @@ efct_hw_parse_filter(struct efct_hw *hw, void *value)
+ 		if (idx == ARRAY_SIZE(hw->config.filter_def))
+ 			break;
+ 	}
+-	kfree(p);
++	kfree(pp);
+ 
+ 	return rc;
+ }
+-- 
+2.39.5
+
 
 
