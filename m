@@ -1,41 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1166219E0;
-	Mon, 23 Jun 2025 13:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633581EDA14;
+	Mon, 23 Jun 2025 13:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684725; cv=none; b=QiHEruheS23dZpnN+nQTazY0ABtzBCwrVjslb14Vh5WuIBmpuqRWac7EwQ/0Pu2a+kK4yfIuZJsmdU5DlL52ZPQsQWnsCSXJAnhayh9F6RxHdcrKo/c2Bjvqgg17rgEXh4a3onoK6m21P7EAogfDui8oy+faca8zHeV4hgjVKxI=
+	t=1750684728; cv=none; b=PITamp6X+eZ2ImQlY6r0VJ2CP9zEgWxOKhRvJQXAH8lgQVbojjYvtQstzyMOeIxHnW3wUP2qSvxJf6ccOZKwd+4B3uW7ohu+CsVGgN284mdRXx0Lt3Kvy/byeEZptgjHmiKE0De7CorLnYV+zqhxPb5Qs/IVAvK9OJtbhal5U3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684725; c=relaxed/simple;
-	bh=IgW28ZByBE1hX0H6jVIs7eA+vQ81JXfS6Tmhlz8DR4E=;
+	s=arc-20240116; t=1750684728; c=relaxed/simple;
+	bh=EjTJAjCsX9bh+ShogjF0b4K8wJIATSf32+wl+8xwd5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kYe30kCoU5rcD524UFQxEYVdN8JfFp9+HwNwB0fD51EUuG5tyi6bT51LKT3lp9aIuvoHUWU5xA7hktQC9kLPG7ygs5d9twyAe1AaM0XAc6GFk8q3s5+MYn40FyxkwmWl7CrPhxyN/pBiPADisGxgzlL5oBFoJ5uucEESELRAv3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFcXMIGW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WQDZlzAbldxKBKzaYHpteT9PqaYOQqjA+TmNlblxtqOh1Ps9dLGcU6WHT7yespX2oG6eB/sA6Ln4rOiHvSgpHTqd7z9yK/mqtX8O7qp1HmXuyv+bbsLL25F2uMhQgIYFkME6rJqQr3AtwqOsu0KgUwM8cIYQ/EbxcFk5x5Ibnj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzGaB707; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFcXMIGW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2A1C4CEEA;
-	Mon, 23 Jun 2025 13:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzGaB707"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EC1C4CEEA;
+	Mon, 23 Jun 2025 13:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684725;
-	bh=IgW28ZByBE1hX0H6jVIs7eA+vQ81JXfS6Tmhlz8DR4E=;
+	s=korg; t=1750684728;
+	bh=EjTJAjCsX9bh+ShogjF0b4K8wJIATSf32+wl+8xwd5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jFcXMIGWsmlIsAg8nsjplPLgJtrjNAORRygbc6hGU6ME38VEXc3qHec6AHJFZ3DGt
-	 J5mX7QO+cuYRWmX1WhwypFl1OKG75TmBHM6c+PxXWZUwnRylhv5hNN9jDLJWjlyvHR
-	 K/z9jes0gmSvLXF6Y3LrztEkERqomYIcots75yfo=
+	b=lzGaB707KeyBvpYJHND1hBQVb2jAD9oCimSrfDxZhbdS9tVVHie//8v26qOeK3YPt
+	 +Sr0z4Ox/qn+12eCsUqfSLAgxrYAzICRCt3Op7EpI5lhx4mZ0a8bRK6/gIhJe+mKMH
+	 P067cPJYFSFZBE5D/zxCZnQXciPRQ7+fsPXXvaUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaqing Zhao <jiaqing.zhao@linux.intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 016/222] x86/mtrr: Check if fixed-range MTRRs exist in mtrr_save_fixed_ranges()
-Date: Mon, 23 Jun 2025 15:05:51 +0200
-Message-ID: <20250623130612.390964915@linuxfoundation.org>
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Ignacio Moreno Gonzalez <Ignacio.MorenoGonzalez@kuka.com>,
+	kernel test robot <lkp@intel.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Yang Shi <yang@os.amperecomputing.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	James Houghton <jthoughton@google.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.15 161/592] KVM: s390: rename PROT_NONE to PROT_TYPE_DUMMY
+Date: Mon, 23 Jun 2025 15:01:59 +0200
+Message-ID: <20250623130704.105752705@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +62,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-[ Upstream commit 824c6384e8d9275d4ec7204f3f79a4ac6bc10379 ]
+commit 15ac613f124e51a6623975efad9657b1f3ee47e7 upstream.
 
-When suspending, save_processor_state() calls mtrr_save_fixed_ranges()
-to save fixed-range MTRRs.
+The enum type prot_type declared in arch/s390/kvm/gaccess.c declares an
+unfortunate identifier within it - PROT_NONE.
 
-On platforms without fixed-range MTRRs like the ACRN hypervisor which
-has removed fixed-range MTRR emulation, accessing these MSRs will
-trigger an unchecked MSR access error. Make sure fixed-range MTRRs are
-supported before access to prevent such error.
+This clashes with the protection bit define from the uapi for mmap()
+declared in include/uapi/asm-generic/mman-common.h, which is indeed what
+those casually reading this code would assume this to refer to.
 
-Since mtrr_state.have_fixed is only set when MTRRs are present and
-enabled, checking the CPU feature flag in mtrr_save_fixed_ranges() is
-unnecessary.
+This means that any changes which subsequently alter headers in any way
+which results in the uapi header being imported here will cause build
+errors.
 
-Fixes: 3ebad5905609 ("[PATCH] x86: Save and restore the fixed-range MTRRs of the BSP when suspending")
-Signed-off-by: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250509170633.3411169-2-jiaqing.zhao@linux.intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Resolve the issue by renaming PROT_NONE to PROT_TYPE_DUMMY.
+
+Link: https://lkml.kernel.org/r/20250519145657.178365-1-lorenzo.stoakes@oracle.com
+Fixes: b3cefd6bf16e ("KVM: s390: Pass initialized arg even if unused")
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Suggested-by: Ignacio Moreno Gonzalez <Ignacio.MorenoGonzalez@kuka.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202505140943.IgHDa9s7-lkp@intel.com/
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Acked-by: Ignacio Moreno Gonzalez <Ignacio.MorenoGonzalez@kuka.com>
+Acked-by: Yang Shi <yang@os.amperecomputing.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Acked-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Janosch Frank <frankja@linux.ibm.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mtrr/generic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kvm/gaccess.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/mtrr/generic.c b/arch/x86/kernel/cpu/mtrr/generic.c
-index 4ea906fe1c351..d15152126877b 100644
---- a/arch/x86/kernel/cpu/mtrr/generic.c
-+++ b/arch/x86/kernel/cpu/mtrr/generic.c
-@@ -350,7 +350,7 @@ static void get_fixed_ranges(mtrr_type *frs)
+--- a/arch/s390/kvm/gaccess.c
++++ b/arch/s390/kvm/gaccess.c
+@@ -318,7 +318,7 @@ enum prot_type {
+ 	PROT_TYPE_DAT  = 3,
+ 	PROT_TYPE_IEP  = 4,
+ 	/* Dummy value for passing an initialized value when code != PGM_PROTECTION */
+-	PROT_NONE,
++	PROT_TYPE_DUMMY,
+ };
  
- void mtrr_save_fixed_ranges(void *info)
- {
--	if (boot_cpu_has(X86_FEATURE_MTRR))
-+	if (mtrr_state.have_fixed)
- 		get_fixed_ranges(mtrr_state.fixed_ranges);
- }
- 
--- 
-2.39.5
-
+ static int trans_exc_ending(struct kvm_vcpu *vcpu, int code, unsigned long gva, u8 ar,
+@@ -334,7 +334,7 @@ static int trans_exc_ending(struct kvm_v
+ 	switch (code) {
+ 	case PGM_PROTECTION:
+ 		switch (prot) {
+-		case PROT_NONE:
++		case PROT_TYPE_DUMMY:
+ 			/* We should never get here, acts like termination */
+ 			WARN_ON_ONCE(1);
+ 			break;
+@@ -804,7 +804,7 @@ static int guest_range_to_gpas(struct kv
+ 			gpa = kvm_s390_real_to_abs(vcpu, ga);
+ 			if (!kvm_is_gpa_in_memslot(vcpu->kvm, gpa)) {
+ 				rc = PGM_ADDRESSING;
+-				prot = PROT_NONE;
++				prot = PROT_TYPE_DUMMY;
+ 			}
+ 		}
+ 		if (rc)
+@@ -962,7 +962,7 @@ int access_guest_with_key(struct kvm_vcp
+ 		if (rc == PGM_PROTECTION)
+ 			prot = PROT_TYPE_KEYC;
+ 		else
+-			prot = PROT_NONE;
++			prot = PROT_TYPE_DUMMY;
+ 		rc = trans_exc_ending(vcpu, rc, ga, ar, mode, prot, terminate);
+ 	}
+ out_unlock:
 
 
