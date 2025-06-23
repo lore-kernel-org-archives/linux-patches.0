@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E3B1EE7C6;
-	Mon, 23 Jun 2025 21:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CB11EE7C6;
+	Mon, 23 Jun 2025 21:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714544; cv=none; b=WmLtGXoCQWVxhv9CMqnmfaMZBuWBjSuvro4zZVtTAUvf5+1hESH2SwWGHyQvK/mhntADNP3YLc4hSQBwNNI71eNwz5bJr0xEVs/EpirjRmZKjg6fEYibRt5naiZaWDrrNfbz1BHP2lrdzUmYtOUELVyUixwx2hAfIOsw333QB+A=
+	t=1750714546; cv=none; b=vGGadn1bQNnisPHtzl31PIBiTg+Us2Y5nlxoxrmCVplttS4Kg8jcHYE/t9irEOi9UuLsIEYxWuYwGFkOJl4uY0TMG8BMcB14oKbYnnJPQVa/dNOYx+18upj/kp2Txjc018fAId28QtKDtlNZDTXjnG9VIlEpzqa/C6kLDJ7hG9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714544; c=relaxed/simple;
-	bh=u1AAgfTIpkNVxSHViYjjXm4jzeOKznoUpp2MiQIYiWY=;
+	s=arc-20240116; t=1750714546; c=relaxed/simple;
+	bh=rXWwY/+QFzW+BJlwTbOnnr9V4iUwUnAgHPMbVY0EbbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQe06LYguedWpHfvwaInfkJj1ELVSsZkNVIUS701A+K+0+s145sEvGKs320M9ePh6KB06N719q+VA5ZIKYBl30Kmn5/4TqmgCww5+UZhH3PANxcO2iI8zV5bkLK4rlUSasP2UjczI1fPnrQ/KOoI9o94B1VJoPYRruhjife5EiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbjWNPAS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ioYid/0krsBrYrQvPN++ksRYCbtZvoOQZFwunPTv2SCNh8Rx1/g30kl1j+cih1vxqU2YSBzj3qvzjE4hc5cJZ4ybJZZlx7tfkpaWB0F4gf4M9/97neNmqIIe8HBjUOnFAeqqDGLkVgJyq/zXwwm9HRKK4qApMLaRlqcIs275Z6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbPKTXSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbjWNPAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B040C4CEEA;
-	Mon, 23 Jun 2025 21:35:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbPKTXSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE275C4CEEA;
+	Mon, 23 Jun 2025 21:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714543;
-	bh=u1AAgfTIpkNVxSHViYjjXm4jzeOKznoUpp2MiQIYiWY=;
+	s=korg; t=1750714546;
+	bh=rXWwY/+QFzW+BJlwTbOnnr9V4iUwUnAgHPMbVY0EbbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZbjWNPAS6pJgfowl7r52zQGjCC7iROVJBSUDfHa6RYXOCHohRc8LkxViVRxLcQSzl
-	 LtXi1/1Scolf50lOll1ScWVt1llgzgpM4bMipegc40vrnSzvr86a2qeBePmy/go/oY
-	 sY80C+s1qIxACgQLFgTdBH5Bs/b1ClOGX79A4VAA=
+	b=TbPKTXSAKJSKslzhso+C5U7BvZ9Ot97AsyzI4BPl9fCYgD/rm//VwblGZbtTnSKhG
+	 YbGbkY0FBVEASqQKVnq9C1rXGxeEwsUuUJT8DLLXE6v1o7U0grYMatW5XFO+In8Gkt
+	 hICy32sFrv4DWb0PbtmwozPB5Crv9RWTPknyFFRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Catherine Hoang <catherine.hoang@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 201/508] xfs: use consistent uid/gid when grabbing dquots for inodes
-Date: Mon, 23 Jun 2025 15:04:06 +0200
-Message-ID: <20250623130650.215459505@linuxfoundation.org>
+	syzbot+0d33ab192bd50b6c91e6@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.15 215/411] media: vidtv: Terminating the subsequent process of initialization failure
+Date: Mon, 23 Jun 2025 15:05:59 +0200
+Message-ID: <20250623130639.079625215@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,109 +47,152 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit  24a4e1cb322e2bf0f3a1afd1978b610a23aa8f36 ]
+commit 1d5f88f053480326873115092bc116b7d14916ba upstream.
 
-[ 6.1: resolved conflicts in xfs_inode.c and xfs_symlink.c due to 6.1
-not having switched to idmap yet ]
+syzbot reported a slab-use-after-free Read in vidtv_mux_init. [1]
 
-I noticed that callers of xfs_qm_vop_dqalloc use the following code to
-compute the anticipated uid of the new file:
+After PSI initialization fails, the si member is accessed again, resulting
+in this uaf.
 
-	mapped_fsuid(idmap, &init_user_ns);
+After si initialization fails, the subsequent process needs to be exited.
 
-whereas the VFS uses a slightly different computation for actually
-assigning i_uid:
+[1]
+BUG: KASAN: slab-use-after-free in vidtv_mux_pid_ctx_init drivers/media/test-drivers/vidtv/vidtv_mux.c:78 [inline]
+BUG: KASAN: slab-use-after-free in vidtv_mux_init+0xac2/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:524
+Read of size 8 at addr ffff88802fa42acc by task syz.2.37/6059
 
-	mapped_fsuid(idmap, i_user_ns(inode));
+CPU: 0 UID: 0 PID: 6059 Comm: syz.2.37 Not tainted 6.14.0-rc5-syzkaller #0
+Hardware name: Google Compute Engine, BIOS Google 02/12/2025
+Call Trace:
+<TASK>
+__dump_stack lib/dump_stack.c:94 [inline]
+dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+print_address_description mm/kasan/report.c:408 [inline]
+print_report+0xc3/0x670 mm/kasan/report.c:521
+kasan_report+0xd9/0x110 mm/kasan/report.c:634
+vidtv_mux_pid_ctx_init drivers/media/test-drivers/vidtv/vidtv_mux.c:78
+vidtv_mux_init+0xac2/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:524
+vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194
+vidtv_start_feed drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
+dmx_section_feed_start_filtering drivers/media/dvb-core/dvb_demux.c:973
+dvb_dmxdev_feed_start drivers/media/dvb-core/dmxdev.c:508 [inline]
+dvb_dmxdev_feed_restart.isra.0 drivers/media/dvb-core/dmxdev.c:537
+dvb_dmxdev_filter_stop+0x2b4/0x3a0 drivers/media/dvb-core/dmxdev.c:564
+dvb_dmxdev_filter_free drivers/media/dvb-core/dmxdev.c:840 [inline]
+dvb_demux_release+0x92/0x550 drivers/media/dvb-core/dmxdev.c:1246
+__fput+0x3ff/0xb70 fs/file_table.c:464
+task_work_run+0x14e/0x250 kernel/task_work.c:227
+exit_task_work include/linux/task_work.h:40 [inline]
+do_exit+0xad8/0x2d70 kernel/exit.c:938
+do_group_exit+0xd3/0x2a0 kernel/exit.c:1087
+__do_sys_exit_group kernel/exit.c:1098 [inline]
+__se_sys_exit_group kernel/exit.c:1096 [inline]
+__x64_sys_exit_group+0x3e/0x50 kernel/exit.c:1096
+x64_sys_call+0x151f/0x1720 arch/x86/include/generated/asm/syscalls_64.h:232
+do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f871d58d169
+Code: Unable to access opcode bytes at 0x7f871d58d13f.
+RSP: 002b:00007fff4b19a788 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f871d58d169
+RDX: 0000000000000064 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: 00007fff4b19a7ec R08: 0000000b4b19a87f R09: 00000000000927c0
+R10: 0000000000000001 R11: 0000000000000246 R12: 0000000000000003
+R13: 00000000000927c0 R14: 000000000001d553 R15: 00007fff4b19a840
+ </TASK>
 
-Technically, these are not the same things.  According to Christian
-Brauner, the only time that inode->i_sb->s_user_ns != &init_user_ns is
-when the filesystem was mounted in a new mount namespace by an
-unpriviledged user.  XFS does not allow this, which is why we've never
-seen bug reports about quotas being incorrect or the uid checks in
-xfs_qm_vop_create_dqattach tripping debug assertions.
+Allocated by task 6059:
+ kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:68
+ poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+ __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:394
+ kmalloc_noprof include/linux/slab.h:901 [inline]
+ kzalloc_noprof include/linux/slab.h:1037 [inline]
+ vidtv_psi_pat_table_init drivers/media/test-drivers/vidtv/vidtv_psi.c:970
+ vidtv_channel_si_init drivers/media/test-drivers/vidtv/vidtv_channel.c:423
+ vidtv_mux_init drivers/media/test-drivers/vidtv/vidtv_mux.c:519
+ vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194
+ vidtv_start_feed drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
+ dmx_section_feed_start_filtering drivers/media/dvb-core/dvb_demux.c:973
+ dvb_dmxdev_feed_start drivers/media/dvb-core/dmxdev.c:508 [inline]
+ dvb_dmxdev_feed_restart.isra.0 drivers/media/dvb-core/dmxdev.c:537
+ dvb_dmxdev_filter_stop+0x2b4/0x3a0 drivers/media/dvb-core/dmxdev.c:564
+ dvb_dmxdev_filter_free drivers/media/dvb-core/dmxdev.c:840 [inline]
+ dvb_demux_release+0x92/0x550 drivers/media/dvb-core/dmxdev.c:1246
+ __fput+0x3ff/0xb70 fs/file_table.c:464
+ task_work_run+0x14e/0x250 kernel/task_work.c:227
+ exit_task_work include/linux/task_work.h:40 [inline]
+ do_exit+0xad8/0x2d70 kernel/exit.c:938
+ do_group_exit+0xd3/0x2a0 kernel/exit.c:1087
+ __do_sys_exit_group kernel/exit.c:1098 [inline]
+ __se_sys_exit_group kernel/exit.c:1096 [inline]
+ __x64_sys_exit_group+0x3e/0x50 kernel/exit.c:1096
+ x64_sys_call arch/x86/include/generated/asm/syscalls_64.h:232
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-However, this /is/ a logic bomb, so let's make the code consistent.
+Freed by task 6059:
+ kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:68
+ kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:576
+ poison_slab_object mm/kasan/common.c:247 [inline]
+ __kasan_slab_free+0x51/0x70 mm/kasan/common.c:264
+ kasan_slab_free include/linux/kasan.h:233 [inline]
+ slab_free_hook mm/slub.c:2353 [inline]
+ slab_free mm/slub.c:4609 [inline]
+ kfree+0x2c4/0x4d0 mm/slub.c:4757
+ vidtv_channel_si_init drivers/media/test-drivers/vidtv/vidtv_channel.c:499
+ vidtv_mux_init drivers/media/test-drivers/vidtv/vidtv_mux.c:519
+ vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194
+ vidtv_start_feed drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
+ dmx_section_feed_start_filtering drivers/media/dvb-core/dvb_demux.c:973
+ dvb_dmxdev_feed_start drivers/media/dvb-core/dmxdev.c:508 [inline]
+ dvb_dmxdev_feed_restart.isra.0 drivers/media/dvb-core/dmxdev.c:537
+ dvb_dmxdev_filter_stop+0x2b4/0x3a0 drivers/media/dvb-core/dmxdev.c:564
+ dvb_dmxdev_filter_free drivers/media/dvb-core/dmxdev.c:840 [inline]
+ dvb_demux_release+0x92/0x550 drivers/media/dvb-core/dmxdev.c:1246
+ __fput+0x3ff/0xb70 fs/file_table.c:464
+ task_work_run+0x14e/0x250 kernel/task_work.c:227
+ exit_task_work include/linux/task_work.h:40 [inline]
+ do_exit+0xad8/0x2d70 kernel/exit.c:938
+ do_group_exit+0xd3/0x2a0 kernel/exit.c:1087
+ __do_sys_exit_group kernel/exit.c:1098 [inline]
+ __se_sys_exit_group kernel/exit.c:1096 [inline]
+ __x64_sys_exit_group+0x3e/0x50 kernel/exit.c:1096
+ x64_sys_call arch/x86/include/generated/asm/syscalls_64.h:232
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Link: https://lore.kernel.org/linux-fsdevel/20240617-weitblick-gefertigt-4a41f37119fa@brauner/
-Fixes: c14329d39f2d ("fs: port fs{g,u}id helpers to mnt_idmap")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3be8037960bc ("media: vidtv: add error checks")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+0d33ab192bd50b6c91e6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0d33ab192bd50b6c91e6
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_inode.c   | 16 ++++++++++------
- fs/xfs/xfs_symlink.c |  8 +++++---
- 2 files changed, 15 insertions(+), 9 deletions(-)
+ drivers/media/test-drivers/vidtv/vidtv_channel.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
-index b26d26d29273d..88d0a088fa862 100644
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -983,10 +983,12 @@ xfs_create(
- 	prid = xfs_get_initial_prid(dp);
+--- a/drivers/media/test-drivers/vidtv/vidtv_channel.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_channel.c
+@@ -497,7 +497,7 @@ free_sdt:
+ 	vidtv_psi_sdt_table_destroy(m->si.sdt);
+ free_pat:
+ 	vidtv_psi_pat_table_destroy(m->si.pat);
+-	return 0;
++	return -EINVAL;
+ }
  
- 	/*
--	 * Make sure that we have allocated dquot(s) on disk.
-+	 * Make sure that we have allocated dquot(s) on disk.  The uid/gid
-+	 * computation code must match what the VFS uses to assign i_[ug]id.
-+	 * INHERIT adjusts the gid computation for setgid/grpid systems.
- 	 */
--	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(mnt_userns, &init_user_ns),
--			mapped_fsgid(mnt_userns, &init_user_ns), prid,
-+	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(mnt_userns, i_user_ns(VFS_I(dp))),
-+			mapped_fsgid(mnt_userns, i_user_ns(VFS_I(dp))), prid,
- 			XFS_QMOPT_QUOTALL | XFS_QMOPT_INHERIT,
- 			&udqp, &gdqp, &pdqp);
- 	if (error)
-@@ -1132,10 +1134,12 @@ xfs_create_tmpfile(
- 	prid = xfs_get_initial_prid(dp);
- 
- 	/*
--	 * Make sure that we have allocated dquot(s) on disk.
-+	 * Make sure that we have allocated dquot(s) on disk.  The uid/gid
-+	 * computation code must match what the VFS uses to assign i_[ug]id.
-+	 * INHERIT adjusts the gid computation for setgid/grpid systems.
- 	 */
--	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(mnt_userns, &init_user_ns),
--			mapped_fsgid(mnt_userns, &init_user_ns), prid,
-+	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(mnt_userns, i_user_ns(VFS_I(dp))),
-+			mapped_fsgid(mnt_userns, i_user_ns(VFS_I(dp))), prid,
- 			XFS_QMOPT_QUOTALL | XFS_QMOPT_INHERIT,
- 			&udqp, &gdqp, &pdqp);
- 	if (error)
-diff --git a/fs/xfs/xfs_symlink.c b/fs/xfs/xfs_symlink.c
-index 8389f3ef88ef2..78bd02a98aa53 100644
---- a/fs/xfs/xfs_symlink.c
-+++ b/fs/xfs/xfs_symlink.c
-@@ -191,10 +191,12 @@ xfs_symlink(
- 	prid = xfs_get_initial_prid(dp);
- 
- 	/*
--	 * Make sure that we have allocated dquot(s) on disk.
-+	 * Make sure that we have allocated dquot(s) on disk.  The uid/gid
-+	 * computation code must match what the VFS uses to assign i_[ug]id.
-+	 * INHERIT adjusts the gid computation for setgid/grpid systems.
- 	 */
--	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(mnt_userns, &init_user_ns),
--			mapped_fsgid(mnt_userns, &init_user_ns), prid,
-+	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(mnt_userns, i_user_ns(VFS_I(dp))),
-+			mapped_fsgid(mnt_userns, i_user_ns(VFS_I(dp))), prid,
- 			XFS_QMOPT_QUOTALL | XFS_QMOPT_INHERIT,
- 			&udqp, &gdqp, &pdqp);
- 	if (error)
--- 
-2.39.5
-
+ void vidtv_channel_si_destroy(struct vidtv_mux *m)
 
 
