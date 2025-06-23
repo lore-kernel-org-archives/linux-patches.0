@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1691F1522;
-	Mon, 23 Jun 2025 13:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA74F1F1522;
+	Mon, 23 Jun 2025 13:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684443; cv=none; b=VLP+uXSbfysviDkrd0FDgQhdMvEuISYulAD2lKMRGL6iBGwU5VC3WXWS2tOSrIssIUDcdPnoID5rZIgBQH/hvI2pIFfklyJVQ7M+9VgPkgNSWs82WkK9X9Etq5EAV3Q29MiAq1cezVwvXNhquq0IGh2n7PX6mP6DTOqhFnZdJVE=
+	t=1750684445; cv=none; b=MRVy2Q9Dh71nqACmuZ9e/gy0g86qnq3t/ZPyGtAhqo2da4Tx+9XJuH1KxHnlWPK3pXT0CgUY66GNclIpezE+Ca7GsrLPCi++dKEVPIrtNMZgD4Z7i1flLCVI3Fltn41/++PIgreCCgjJ0STbNEi89e6zbJNiZ94Kqw66FSCCqjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684443; c=relaxed/simple;
-	bh=Lk1JhRUSlvlxyzsLtrsUNP9vwl0Qt8yaUHLV8cpeV18=;
+	s=arc-20240116; t=1750684445; c=relaxed/simple;
+	bh=Agv1rhOS86S3ZLQsHQvq7ELEF+zP/RtOCKLf37HbDgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0C5KvgjjdJKLQbmAqTIgMFv9yoSkIH2lNJdGUX+0FrnLpeiu3KutjJUBce+E7KBbEQM8aeJtdcwYuW9YBQM9BD+3KPRK+0JVkvSwlK1NX43u7wAav+DZhRkLp8BJ91vXVhoPNcyb/GBWd+oK4zWta3SAXniIVjrhR3fC4miAkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klgjWXJm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZXvcFj+SttSWCW3bhJkXH5agpQJVluTArWzPO01I1iiItVJSDzZ54Jzumc6rWmcT1lFrUbcp4LArwbqmk+EHNl3OT4YGfcuMZC+zH2ZVwkgoxYxHDVFeYROCpSMSQW7vndeAupjhfihYH52b6E/mjrKkmqNJgAmKiCoek9Q7Nq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szTp9uYZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klgjWXJm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C707FC4CEEA;
-	Mon, 23 Jun 2025 13:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szTp9uYZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B94C4CEEA;
+	Mon, 23 Jun 2025 13:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684443;
-	bh=Lk1JhRUSlvlxyzsLtrsUNP9vwl0Qt8yaUHLV8cpeV18=;
+	s=korg; t=1750684445;
+	bh=Agv1rhOS86S3ZLQsHQvq7ELEF+zP/RtOCKLf37HbDgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=klgjWXJmcZo2FHz2GXKkCRmbz1jPlFkeo+0Byo4/l1SjLS65rTHyjvw7puDAgmCaV
-	 M3irGlNgsYKdt7Czfjd4SKK2vgdYZHH6Mf/kvZDgDbLHI7k6dQQ+6HtH4o/am6LCat
-	 5qp+n21KycWzoaMUh43Pu00cL9mn+PMSgT22W7x4=
+	b=szTp9uYZtKATunhts973J0JMaYUXMzdP44wtbRmCiLSzTrXrH+8AGxw2NLgKSO3Nu
+	 +IeEoaasVnRgomHQ91y0FnIr7vRa5nyF6PW9S5RUbC+bjyY44SwX4QFWRfUKSuWyKL
+	 2jdVzIR+4Iz37hMcn/skHym7sI3/mU81HfYMXszw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.15 069/592] media: i2c: imx335: Fix frame size enumeration
-Date: Mon, 23 Jun 2025 15:00:27 +0200
-Message-ID: <20250623130701.903787617@linuxfoundation.org>
+Subject: [PATCH 6.15 070/592] media: imagination: fix a potential memory leak in e5010_probe()
+Date: Mon, 23 Jun 2025 15:00:28 +0200
+Message-ID: <20250623130701.928209971@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -51,43 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kieran Bingham <kieran.bingham@ideasonboard.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit b240df2913d396638033b86af0f0ff76aa1aafc8 upstream.
+commit 609ba05b9484856b08869f827a6edee51d51b5f3 upstream.
 
-In commit cfa49ff0558a ("media: i2c: imx335: Support 2592x1940 10-bit
-mode") the IMX335 driver was extended to support multiple output
-bitdepth modes.
+Add video_device_release() to release the memory allocated by
+video_device_alloc() if something goes wrong.
 
-This incorrectly extended the frame size enumeration to check against
-the supported mbus_codes array instead of the supported mode/frame
-array. This has the unwanted side effect of reporting the currently
-supported frame size 2592x1944 three times.
-
-Fix the check accordingly to report a frame size for each supported
-size, which is presently only a single entry.
-
-Fixes: cfa49ff0558a ("media: i2c: imx335: Support 2592x1940 10-bit mode")
+Fixes: a1e294045885 ("media: imagination: Add E5010 JPEG Encoder driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx335.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/imagination/e5010-jpeg-enc.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/media/i2c/imx335.c
-+++ b/drivers/media/i2c/imx335.c
-@@ -660,7 +660,8 @@ static int imx335_enum_frame_size(struct
- 	struct imx335 *imx335 = to_imx335(sd);
- 	u32 code;
+--- a/drivers/media/platform/imagination/e5010-jpeg-enc.c
++++ b/drivers/media/platform/imagination/e5010-jpeg-enc.c
+@@ -1057,8 +1057,11 @@ static int e5010_probe(struct platform_d
+ 	e5010->vdev->lock = &e5010->mutex;
  
--	if (fsize->index > ARRAY_SIZE(imx335_mbus_codes))
-+	/* Only a single supported_mode available. */
-+	if (fsize->index > 0)
- 		return -EINVAL;
+ 	ret = v4l2_device_register(dev, &e5010->v4l2_dev);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "failed to register v4l2 device\n");
++	if (ret) {
++		dev_err_probe(dev, ret, "failed to register v4l2 device\n");
++		goto fail_after_video_device_alloc;
++	}
++
  
- 	code = imx335_get_format_code(imx335, fsize->code);
+ 	e5010->m2m_dev = v4l2_m2m_init(&e5010_m2m_ops);
+ 	if (IS_ERR(e5010->m2m_dev)) {
+@@ -1118,6 +1121,8 @@ fail_after_video_register_device:
+ 	v4l2_m2m_release(e5010->m2m_dev);
+ fail_after_v4l2_register:
+ 	v4l2_device_unregister(&e5010->v4l2_dev);
++fail_after_video_device_alloc:
++	video_device_release(e5010->vdev);
+ 	return ret;
+ }
+ 
 
 
