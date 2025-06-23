@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE823FB1B;
-	Mon, 23 Jun 2025 22:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4664C3FB1B;
+	Mon, 23 Jun 2025 22:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716252; cv=none; b=daAgGjfOrS2ok2e5DoKfwcy3JG9p0wdOcRMUEb3d5ZcMcFDgRR7x5IqXaS+27nAc86hXc/hKylN9UtvdAdO/kd/p9rRZ7uH9DSnc0SOdk2brMVrShIcIa8gkZYa92XZ6roqn3nD+BD/Op7gQz2KYWMkP5HhAWWqQzWk9V20bu7c=
+	t=1750716255; cv=none; b=OX8oNLaDthDIq2MLpS+2MKtrEDz0gLJ96VCzKWm6gDHrN8ysvcIOiLNZY1Vzc76OQfDxQfRHq1ww1UT2ZTdHqOwhufe+DPoWxTOoA/r06p+6jKCdvG1b0N3DhZ+c85GOYXNYCocT6LDO+uQuRFFOYWkEcKW6X/jmaGmjRj08zvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716252; c=relaxed/simple;
-	bh=HanXi2zTgoGIO0JYDbI3DdQAUggEy46HdXQ0Gc3ES84=;
+	s=arc-20240116; t=1750716255; c=relaxed/simple;
+	bh=3/+9QZ5/XDida0s28YDWQsQqy0EqdR0okbQfJgKhw7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cwXaknEjX+bo8187nfxZ7YHh+eZMRNgHWGWaDHGw5sE4yB0uRyVJq+Xf6+z/HN7N0Q3cWhrLtrp0MmcvXmYvmZnZ4WARkbFZcQ759QyRZ0mGwralPXP7ZQLoh8wwSG0qNOofAqziJ9f2CEtPO5Tn2vq3T5a9YhPo/NZBVnSp/6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ae1Z4CPu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jnw0BWynQK4vdc4W70OxcwRa+0czG5qX6zU1TpuHNJIeAd67Tze6VxVmHM+s5naVSWQhWPdi+o7GPIhs0puOgptRH6u1RSAxW4hfHLsqbiak3UCZRZaQE1QRvA3i0NorM8MWzJxg0w/OgApAhFLogv4BCukIYlvEd52Ozm9lB90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZCVW7b/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ae1Z4CPu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63072C4CEEA;
-	Mon, 23 Jun 2025 22:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZCVW7b/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF803C4CEEA;
+	Mon, 23 Jun 2025 22:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716252;
-	bh=HanXi2zTgoGIO0JYDbI3DdQAUggEy46HdXQ0Gc3ES84=;
+	s=korg; t=1750716255;
+	bh=3/+9QZ5/XDida0s28YDWQsQqy0EqdR0okbQfJgKhw7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ae1Z4CPu/omkEDZwspnEEtqovudfXCZyCnpyLB8xQHkNBSt7s1Phc9w7tVuTDwiQd
-	 jRiw3OgJL2moMtLgzzJTwq0NJIe5BYMVuqc/OUzyNZNOecLWwJ4ieS5tw5QbLyBTsf
-	 qf1j4x6PbDVX0/W3SZz+3CIsYShsvRQNaP603InY=
+	b=XZCVW7b/qbhMpuSrgNP43DCZEwf+wt8KKlLlxgILQ5KQkDBhZxwiezcgHfO2F7lln
+	 RCOgJJQ/vf1rmkKaRvcmGdhpMUVn/rJquYybInS3fYtVjYVbUYeKFdlimDWRBxO+vi
+	 TNflli/YSslcK5YXYRcpBj9dHJ1n5vnbm4phI2+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaus Kudielka <klaus.kudielka@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.1 290/508] crypto: marvell/cesa - Do not chain submitted requests
-Date: Mon, 23 Jun 2025 15:05:35 +0200
-Message-ID: <20250623130652.410772072@linuxfoundation.org>
+	"Luke D. Jones" <luke@ljones.dev>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 239/414] hid-asus: check ROG Ally MCU version and warn
+Date: Mon, 23 Jun 2025 15:06:16 +0200
+Message-ID: <20250623130648.021261390@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,162 +46,186 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Luke D. Jones <luke@ljones.dev>
 
-commit 0413bcf0fc460a68a2a7a8354aee833293d7d693 upstream.
+[ Upstream commit 00e005c952f74f50a3f86af96f56877be4685e14 ]
 
-This driver tries to chain requests together before submitting them
-to hardware in order to reduce completion interrupts.
+ASUS have fixed suspend issues arising from a flag not being cleared in
+the MCU FW in both the ROG Ally 1 and the ROG Ally X.
 
-However, it even extends chains that have already been submitted
-to hardware.  This is dangerous because there is no way of knowing
-whether the hardware has already read the DMA memory in question
-or not.
+Implement a check and a warning to encourage users to update the FW to
+a minimum supported version.
 
-Fix this by splitting the chain list into two.  One for submitted
-requests and one for requests that have not yet been submitted.
-Only extend the latter.
-
-Reported-by: Klaus Kudielka <klaus.kudielka@gmail.com>
-Fixes: 85030c5168f1 ("crypto: marvell - Add support for chaining crypto requests in TDMA mode")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luke D. Jones <luke@ljones.dev>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20250323023421.78012-2-luke@ljones.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/cesa/cesa.c |    2 -
- drivers/crypto/marvell/cesa/cesa.h |    9 ++++--
- drivers/crypto/marvell/cesa/tdma.c |   53 ++++++++++++++++++++++---------------
- 3 files changed, 39 insertions(+), 25 deletions(-)
+ drivers/hid/hid-asus.c | 107 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 105 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/marvell/cesa/cesa.c
-+++ b/drivers/crypto/marvell/cesa/cesa.c
-@@ -94,7 +94,7 @@ static int mv_cesa_std_process(struct mv
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index bcdd168cdc6d7..c5bdf0f1b32f7 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -52,6 +52,10 @@ MODULE_DESCRIPTION("Asus HID Keyboard and TouchPad");
+ #define FEATURE_KBD_LED_REPORT_ID1 0x5d
+ #define FEATURE_KBD_LED_REPORT_ID2 0x5e
  
- static int mv_cesa_int_process(struct mv_cesa_engine *engine, u32 status)
- {
--	if (engine->chain.first && engine->chain.last)
-+	if (engine->chain_hw.first && engine->chain_hw.last)
- 		return mv_cesa_tdma_process(engine, status);
- 
- 	return mv_cesa_std_process(engine, status);
---- a/drivers/crypto/marvell/cesa/cesa.h
-+++ b/drivers/crypto/marvell/cesa/cesa.h
-@@ -440,8 +440,10 @@ struct mv_cesa_dev {
-  *			SRAM
-  * @queue:		fifo of the pending crypto requests
-  * @load:		engine load counter, useful for load balancing
-- * @chain:		list of the current tdma descriptors being processed
-- *			by this engine.
-+ * @chain_hw:		list of the current tdma descriptors being processed
-+ *			by the hardware.
-+ * @chain_sw:		list of the current tdma descriptors that will be
-+ *			submitted to the hardware.
-  * @complete_queue:	fifo of the processed requests by the engine
-  *
-  * Structure storing CESA engine information.
-@@ -463,7 +465,8 @@ struct mv_cesa_engine {
- 	struct gen_pool *pool;
- 	struct crypto_queue queue;
- 	atomic_t load;
--	struct mv_cesa_tdma_chain chain;
-+	struct mv_cesa_tdma_chain chain_hw;
-+	struct mv_cesa_tdma_chain chain_sw;
- 	struct list_head complete_queue;
- 	int irq;
- };
---- a/drivers/crypto/marvell/cesa/tdma.c
-+++ b/drivers/crypto/marvell/cesa/tdma.c
-@@ -38,6 +38,15 @@ void mv_cesa_dma_step(struct mv_cesa_req
- {
- 	struct mv_cesa_engine *engine = dreq->engine;
- 
-+	spin_lock_bh(&engine->lock);
-+	if (engine->chain_sw.first == dreq->chain.first) {
-+		engine->chain_sw.first = NULL;
-+		engine->chain_sw.last = NULL;
-+	}
-+	engine->chain_hw.first = dreq->chain.first;
-+	engine->chain_hw.last = dreq->chain.last;
-+	spin_unlock_bh(&engine->lock);
++#define ROG_ALLY_REPORT_SIZE 64
++#define ROG_ALLY_X_MIN_MCU 313
++#define ROG_ALLY_MIN_MCU 319
 +
- 	writel_relaxed(0, engine->regs + CESA_SA_CFG);
+ #define SUPPORT_KBD_BACKLIGHT BIT(0)
  
- 	mv_cesa_set_int_mask(engine, CESA_SA_INT_ACC0_IDMA_DONE);
-@@ -96,25 +105,27 @@ void mv_cesa_dma_prepare(struct mv_cesa_
- void mv_cesa_tdma_chain(struct mv_cesa_engine *engine,
- 			struct mv_cesa_req *dreq)
- {
--	if (engine->chain.first == NULL && engine->chain.last == NULL) {
--		engine->chain.first = dreq->chain.first;
--		engine->chain.last  = dreq->chain.last;
--	} else {
--		struct mv_cesa_tdma_desc *last;
-+	struct mv_cesa_tdma_desc *last = engine->chain_sw.last;
+ #define MAX_TOUCH_MAJOR 8
+@@ -84,6 +88,7 @@ MODULE_DESCRIPTION("Asus HID Keyboard and TouchPad");
+ #define QUIRK_MEDION_E1239T		BIT(10)
+ #define QUIRK_ROG_NKEY_KEYBOARD		BIT(11)
+ #define QUIRK_ROG_CLAYMORE_II_KEYBOARD BIT(12)
++#define QUIRK_ROG_ALLY_XPAD		BIT(13)
  
--		last = engine->chain.last;
-+	/*
-+	 * Break the DMA chain if the request being queued needs the IV
-+	 * regs to be set before lauching the request.
-+	 */
-+	if (!last || dreq->chain.first->flags & CESA_TDMA_SET_STATE)
-+		engine->chain_sw.first = dreq->chain.first;
-+	else {
- 		last->next = dreq->chain.first;
--		engine->chain.last = dreq->chain.last;
--
--		/*
--		 * Break the DMA chain if the CESA_TDMA_BREAK_CHAIN is set on
--		 * the last element of the current chain, or if the request
--		 * being queued needs the IV regs to be set before lauching
--		 * the request.
--		 */
--		if (!(last->flags & CESA_TDMA_BREAK_CHAIN) &&
--		    !(dreq->chain.first->flags & CESA_TDMA_SET_STATE))
--			last->next_dma = cpu_to_le32(dreq->chain.first->cur_dma);
-+		last->next_dma = cpu_to_le32(dreq->chain.first->cur_dma);
-+	}
-+	last = dreq->chain.last;
-+	engine->chain_sw.last = last;
-+	/*
-+	 * Break the DMA chain if the CESA_TDMA_BREAK_CHAIN is set on
-+	 * the last element of the current chain.
-+	 */
-+	if (last->flags & CESA_TDMA_BREAK_CHAIN) {
-+		engine->chain_sw.first = NULL;
-+		engine->chain_sw.last = NULL;
- 	}
+ #define I2C_KEYBOARD_QUIRKS			(QUIRK_FIX_NOTEBOOK_REPORT | \
+ 						 QUIRK_NO_INIT_REPORTS | \
+@@ -534,9 +539,99 @@ static bool asus_kbd_wmi_led_control_present(struct hid_device *hdev)
+ 	return !!(value & ASUS_WMI_DSTS_PRESENCE_BIT);
  }
  
-@@ -127,7 +138,7 @@ int mv_cesa_tdma_process(struct mv_cesa_
++/*
++ * We don't care about any other part of the string except the version section.
++ * Example strings: FGA80100.RC72LA.312_T01, FGA80100.RC71LS.318_T01
++ * The bytes "5a 05 03 31 00 1a 13" and possibly more come before the version
++ * string, and there may be additional bytes after the version string such as
++ * "75 00 74 00 65 00" or a postfix such as "_T01"
++ */
++static int mcu_parse_version_string(const u8 *response, size_t response_size)
++{
++	const u8 *end = response + response_size;
++	const u8 *p = response;
++	int dots, err, version;
++	char buf[4];
++
++	dots = 0;
++	while (p < end && dots < 2) {
++		if (*p++ == '.')
++			dots++;
++	}
++
++	if (dots != 2 || p >= end || (p + 3) >= end)
++		return -EINVAL;
++
++	memcpy(buf, p, 3);
++	buf[3] = '\0';
++
++	err = kstrtoint(buf, 10, &version);
++	if (err || version < 0)
++		return -EINVAL;
++
++	return version;
++}
++
++static int mcu_request_version(struct hid_device *hdev)
++{
++	u8 *response __free(kfree) = kzalloc(ROG_ALLY_REPORT_SIZE, GFP_KERNEL);
++	const u8 request[] = { 0x5a, 0x05, 0x03, 0x31, 0x00, 0x20 };
++	int ret;
++
++	if (!response)
++		return -ENOMEM;
++
++	ret = asus_kbd_set_report(hdev, request, sizeof(request));
++	if (ret < 0)
++		return ret;
++
++	ret = hid_hw_raw_request(hdev, FEATURE_REPORT_ID, response,
++				ROG_ALLY_REPORT_SIZE, HID_FEATURE_REPORT,
++				HID_REQ_GET_REPORT);
++	if (ret < 0)
++		return ret;
++
++	ret = mcu_parse_version_string(response, ROG_ALLY_REPORT_SIZE);
++	if (ret < 0) {
++		pr_err("Failed to parse MCU version: %d\n", ret);
++		print_hex_dump(KERN_ERR, "MCU: ", DUMP_PREFIX_NONE,
++			      16, 1, response, ROG_ALLY_REPORT_SIZE, false);
++	}
++
++	return ret;
++}
++
++static void validate_mcu_fw_version(struct hid_device *hdev, int idProduct)
++{
++	int min_version, version;
++
++	version = mcu_request_version(hdev);
++	if (version < 0)
++		return;
++
++	switch (idProduct) {
++	case USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY:
++		min_version = ROG_ALLY_MIN_MCU;
++		break;
++	case USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X:
++		min_version = ROG_ALLY_X_MIN_MCU;
++		break;
++	default:
++		min_version = 0;
++	}
++
++	if (version < min_version) {
++		hid_warn(hdev,
++			"The MCU firmware version must be %d or greater to avoid issues with suspend.\n",
++			min_version);
++	}
++}
++
+ static int asus_kbd_register_leds(struct hid_device *hdev)
+ {
+ 	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
++	struct usb_interface *intf;
++	struct usb_device *udev;
+ 	unsigned char kbd_func;
+ 	int ret;
  
- 	tdma_cur = readl(engine->regs + CESA_TDMA_CUR);
- 
--	for (tdma = engine->chain.first; tdma; tdma = next) {
-+	for (tdma = engine->chain_hw.first; tdma; tdma = next) {
- 		spin_lock_bh(&engine->lock);
- 		next = tdma->next;
- 		spin_unlock_bh(&engine->lock);
-@@ -149,12 +160,12 @@ int mv_cesa_tdma_process(struct mv_cesa_
- 								 &backlog);
- 
- 			/* Re-chaining to the next request */
--			engine->chain.first = tdma->next;
-+			engine->chain_hw.first = tdma->next;
- 			tdma->next = NULL;
- 
- 			/* If this is the last request, clear the chain */
--			if (engine->chain.first == NULL)
--				engine->chain.last  = NULL;
-+			if (engine->chain_hw.first == NULL)
-+				engine->chain_hw.last  = NULL;
- 			spin_unlock_bh(&engine->lock);
- 
- 			ctx = crypto_tfm_ctx(req->tfm);
+@@ -560,6 +655,14 @@ static int asus_kbd_register_leds(struct hid_device *hdev)
+ 			if (ret < 0)
+ 				return ret;
+ 		}
++
++		if (drvdata->quirks & QUIRK_ROG_ALLY_XPAD) {
++			intf = to_usb_interface(hdev->dev.parent);
++			udev = interface_to_usbdev(intf);
++			validate_mcu_fw_version(hdev,
++				le16_to_cpu(udev->descriptor.idProduct));
++		}
++
+ 	} else {
+ 		/* Initialize keyboard */
+ 		ret = asus_kbd_init(hdev, FEATURE_KBD_REPORT_ID);
+@@ -1280,10 +1383,10 @@ static const struct hid_device_id asus_devices[] = {
+ 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+ 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY),
+-	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
++	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_ROG_ALLY_XPAD},
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+ 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X),
+-	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
++	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_ROG_ALLY_XPAD },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+ 	    USB_DEVICE_ID_ASUSTEK_ROG_CLAYMORE_II_KEYBOARD),
+ 	  QUIRK_ROG_CLAYMORE_II_KEYBOARD },
+-- 
+2.39.5
+
 
 
