@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673E92550CA;
-	Mon, 23 Jun 2025 13:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CDD2550DD;
+	Mon, 23 Jun 2025 13:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685298; cv=none; b=n+r3/bn0eVFZPLmqywItNt6jnDJEYlWjkhSd5JGvjiP22dmIcVknaLcO6Jo+qX1dstFx1yGhNEj88aWZ4M/VHJOvLlVZd+OtAd+mDuQn+1OzffJLXqZIX/pz2Cs/xX6+DN6bf6yK9oaVJxQw/MBjvsCnCqngMuUGHRW9YySQCh0=
+	t=1750685301; cv=none; b=UvMH6bLasDu8l8dSPDARG+o3wgcqVULBOWuiPjRdfzIWZEW2FMvvsV7QyFdrkX+IYourvslyH1aLQQy3nQWDJW3nNfmpJJDluheQOqSb9CVamWr7Ud0OWtLxRja8dIUCxbiuuPR+n8QwwX7LCyRxcpVUx9sFjWh7dMCA5d2azUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685298; c=relaxed/simple;
-	bh=c0nmHqqjqtyisT0DMS/PbAp5KhQt2refKqbqarku0Rk=;
+	s=arc-20240116; t=1750685301; c=relaxed/simple;
+	bh=2SbrJChU862i8Aoshx6Bgzkry4xn94hl9mec2dT6nSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QwZ42Escx+bXb2Nvf64sggOOJHSUwY5cB429qwqtY+fAeLAU2XYypw+9LwIf0v6g5vyKsJS9oNmx4rhjXNvAoQAL7PXiVuYAvopLA2Nf4pSGue7pb3BLqlZftTbmioSqP/VIGOyBNiUtm+Uoc4fHek+ouaCgn/SmSxs9dSmnjig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvpEkC0R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OLp80rgzoO38XMG391KcUfuRdG9UmaRVhXln4wmvH113TQ9UMksLKMTe6WIisWNCRffEEHQokyrfpFtn7TFUqVKqXUw8oYCg2K/MY9BunED+xUE57Kx5kLDq4NMhIogXj52d16K33Lk8LSzk+ZGXhBi8S0p2EalDy6XtrqNpzb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=js+55BAB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvpEkC0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A1EC4CEEA;
-	Mon, 23 Jun 2025 13:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="js+55BAB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776D0C4CEEA;
+	Mon, 23 Jun 2025 13:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685298;
-	bh=c0nmHqqjqtyisT0DMS/PbAp5KhQt2refKqbqarku0Rk=;
+	s=korg; t=1750685300;
+	bh=2SbrJChU862i8Aoshx6Bgzkry4xn94hl9mec2dT6nSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QvpEkC0RONpJreybLA0Ub17fpxyxRwUiMDh9btw3OTlC+TT18z+Vz0s8n4WR/uL7i
-	 jWUu3EEEiAQbkY6Bid48v7+EuCZYbSdqWE/5i2MXCBjKFzqN0OlF9Tgelq+0k8vd5x
-	 /QQscwMrhb+NcCE7jFNnCEgl+l08Qmaa7XEGvuoU=
+	b=js+55BABNJ54Li3mic57wjbgQDS8prIoSqVcq/F/hJZ4KpmRsjC8kJp8sFhfg7zYn
+	 rOOtuf3qSDQkak2puaW3P3JHnl/sRLjbdqKR3O1LKRTijuDTVupTmGq4bq+IZ9ygyJ
+	 MRIxCg5XrUGqwNLip4RxorkVNKd2zLMX7nGUEI3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 043/355] ktls, sockmap: Fix missing uncharge operation
-Date: Mon, 23 Jun 2025 15:04:04 +0200
-Message-ID: <20250623130628.119047427@linuxfoundation.org>
+Subject: [PATCH 6.15 222/592] ALSA: hda: cs35l41: Fix swapped l/r audio channels for Acer Helios laptops
+Date: Mon, 23 Jun 2025 15:03:00 +0200
+Message-ID: <20250623130705.571712809@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,61 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit 79f0c39ae7d3dc628c01b02f23ca5d01f9875040 ]
+[ Upstream commit e43a93c41982e82c1b703dd7fa9c1d965260fbb3 ]
 
-When we specify apply_bytes, we divide the msg into multiple segments,
-each with a length of 'send', and every time we send this part of the data
-using tcp_bpf_sendmsg_redir(), we use sk_msg_return_zero() to uncharge the
-memory of the specified 'send' size.
+Fixes audio channel assignment from ACPI using configuration table.
 
-However, if the first segment of data fails to send, for example, the
-peer's buffer is full, we need to release all of the msg. When releasing
-the msg, we haven't uncharged the memory of the subsequent segments.
-
-This modification does not make significant logical changes, but only
-fills in the missing uncharge places.
-
-This issue has existed all along, until it was exposed after we added the
-apply test in test_sockmap:
-commit 3448ad23b34e ("selftests/bpf: Add apply_bytes test to test_txmsg_redir_wait_sndmem in test_sockmap")
-
-Fixes: d3b18ad31f93 ("tls: add bpf support to sk_msg handling")
-Reported-by: Cong Wang <xiyou.wangcong@gmail.com>
-Closes: https://lore.kernel.org/bpf/aAmIi0vlycHtbXeb@pop-os.localdomain/T/#t
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
-Link: https://lore.kernel.org/r/20250425060015.6968-2-jiayuan.chen@linux.dev
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250515162848.405055-3-sbinding@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/pci/hda/cs35l41_hda_property.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index ec57ca01b3c48..0723b3a4f6d91 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -859,6 +859,13 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 		err = tcp_bpf_sendmsg_redir(sk_redir, &msg_redir, send, flags);
- 		lock_sock(sk);
- 		if (err < 0) {
-+			/* Regardless of whether the data represented by
-+			 * msg_redir is sent successfully, we have already
-+			 * uncharged it via sk_msg_return_zero(). The
-+			 * msg->sg.size represents the remaining unprocessed
-+			 * data, which needs to be uncharged here.
-+			 */
-+			sk_mem_uncharge(sk, msg->sg.size);
- 			*copied -= sk_msg_free_nocharge(sk, &msg_redir);
- 			msg->sg.size = 0;
- 		}
+diff --git a/sound/pci/hda/cs35l41_hda_property.c b/sound/pci/hda/cs35l41_hda_property.c
+index 61d2314834e7b..d8249d997c2a0 100644
+--- a/sound/pci/hda/cs35l41_hda_property.c
++++ b/sound/pci/hda/cs35l41_hda_property.c
+@@ -31,6 +31,9 @@ struct cs35l41_config {
+ };
+ 
+ static const struct cs35l41_config cs35l41_config_table[] = {
++	{ "10251826", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
++	{ "1025182C", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
++	{ "10251844", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
+ 	{ "10280B27", 2, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 1000, 4500, 24 },
+ 	{ "10280B28", 2, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 1000, 4500, 24 },
+ 	{ "10280BEB", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, -1, 0, 0, 0, 0 },
+@@ -452,6 +455,9 @@ struct cs35l41_prop_model {
+ static const struct cs35l41_prop_model cs35l41_prop_model_table[] = {
+ 	{ "CLSA0100", NULL, lenovo_legion_no_acpi },
+ 	{ "CLSA0101", NULL, lenovo_legion_no_acpi },
++	{ "CSC3551", "10251826", generic_dsd_config },
++	{ "CSC3551", "1025182C", generic_dsd_config },
++	{ "CSC3551", "10251844", generic_dsd_config },
+ 	{ "CSC3551", "10280B27", generic_dsd_config },
+ 	{ "CSC3551", "10280B28", generic_dsd_config },
+ 	{ "CSC3551", "10280BEB", generic_dsd_config },
 -- 
 2.39.5
 
