@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60823FD4;
-	Mon, 23 Jun 2025 21:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE6C3FD4;
+	Mon, 23 Jun 2025 21:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715269; cv=none; b=cJozPWuLYJgMO68hy8vANfKdJxyZoxA9BqyRlkLqj2l2RlT6VwNgPFAqtImPxTGrqU1Uq/+fxgF4RXUIKdDequQqL8FzjDChCgz2TACyEk/4sYxtgAJfHIe4LcvVer50wZkolRxHKE68ixUF7CeqO3yI8kN9KoLllqCNeHjBMdY=
+	t=1750715272; cv=none; b=iVH1WSFC2HAPMzBjVFCHSVArFXXTc+rtPJZ5P5CQ0nOeAl1ks6l1GQmwrbT9nLUx0LiijFmsegGR2PFrrDD2CJn3E060xJ0r8uznxrSQTkzCtkejZo6Um+fabbaSGOA8jreKUeNIVl6IWsD5ytP99GQOszlrTQoYBcX2Zj8HX4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715269; c=relaxed/simple;
-	bh=RSGWcVYwbR7U01p+IeOdzgSoBV/xmm6BhEC047tUIzE=;
+	s=arc-20240116; t=1750715272; c=relaxed/simple;
+	bh=CrMtvfuYVA5OJUPJ2/KA+jpGbhoCHCDev9rfe5Oa4Zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PtWV5tps1ow3ycUGVMEaMyMBL8AqRq7OUd4QBT0yITp4E3fEowQZnrAL49m3IZaGgAtfaeJnUx7GoxfcXeKrhdTKyNBLsMGXulX7tkbnWP+XU7jFvkXJgP8BLYCAtpHEMACdswY2aPHepeeKss8mbhiKQelUIaP+4zsPMnsMq+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9jkvdBy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wnfub9hd4A5rLX38MGRRS7oHf+1kzzsJ79ynV4FywrOCrF99+pdOp1cYFqyn9zjOKp3qb6YATcxRY9Je0hdSKYeWEifUxpr/7TXeCeaUvqI+Vlz+dptFP9C0DYujyIu2O04Yv6McKk360RRIpx22TYFWyr96LzZT9Iwml2YjcPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ajv7cZZx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9jkvdBy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE42C4CEEA;
-	Mon, 23 Jun 2025 21:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ajv7cZZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9831C4CEEA;
+	Mon, 23 Jun 2025 21:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715269;
-	bh=RSGWcVYwbR7U01p+IeOdzgSoBV/xmm6BhEC047tUIzE=;
+	s=korg; t=1750715272;
+	bh=CrMtvfuYVA5OJUPJ2/KA+jpGbhoCHCDev9rfe5Oa4Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T9jkvdBylCgBI4QZXQFwZfiaDxa4R6CHXxcXAki0Lm/P3fHXa9Skw1Nx+hndFQJt6
-	 Q0ae7C6fGSvGtT73ui4HnqNdZI1wgsyTAJIJo/K0NryCd4CoVZE6tgn0xjLk4X5pra
-	 oye3ZnSxt5LZ7tWichiNhvebYNjOESTnBoUsk3yw=
+	b=ajv7cZZxOhXJotAWMvPZ9oWLxq++2mZ/NKG+rCXLDFPNmO5P+4ARjFv/C+dMo3n0e
+	 ocMjKObr49RksZIEOF+qCRRdDjlWXP7pI1x3utUOI60JfWuhEXyFZLqU/WGKxZDQ4g
+	 yWibQsbToTMJ7p0HpIl70A0/TxNOHbUQnf0H2JxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Salem <x0rw3ll@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 172/414] ACPICA: Avoid sequence overread in call to strncmp()
-Date: Mon, 23 Jun 2025 15:05:09 +0200
-Message-ID: <20250623130646.327745523@linuxfoundation.org>
+	Yao Zi <ziyao@disroot.org>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.15 448/592] platform/loongarch: laptop: Get brightness setting from EC on probe
+Date: Mon, 23 Jun 2025 15:06:46 +0200
+Message-ID: <20250623130711.085198960@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +46,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed Salem <x0rw3ll@gmail.com>
+From: Yao Zi <ziyao@disroot.org>
 
-[ Upstream commit 64b9dfd0776e9c38d733094859a09f13282ce6f8 ]
+commit 1205088fd0393bd9eae96b62bf1e4b9eb1b73edf upstream.
 
-ACPICA commit 8b83a8d88dfec59ea147fad35fc6deea8859c58c
+Previously during driver probe, 1 is unconditionally taken as current
+brightness value and set to props.brightness, which will be considered
+as the brightness before suspend and restored to EC on resume. Since a
+brightness value of 1 almost never matches EC's state on coldboot (my
+laptop's EC defaults to 80), this causes surprising changes of screen
+brightness on the first time of resume after coldboot.
 
-ap_get_table_length() checks if tables are valid by
-calling ap_is_valid_header(). The latter then calls
-ACPI_VALIDATE_RSDP_SIG(Table->Signature).
+Let's get brightness from EC and take it as the current brightness on
+probe of the laptop driver to avoid the surprising behavior. Tested on
+TongFang L860-T2 Loongson-3A5000 laptop.
 
-ap_is_valid_header() accepts struct acpi_table_header as an argument, so
-the signature size is always fixed to 4 bytes.
-
-The problem is when the string comparison is between ACPI-defined table
-signature and ACPI_SIG_RSDP. Common ACPI table header specifies the
-Signature field to be 4 bytes long[1], with the exception of the RSDP
-structure whose signature is 8 bytes long "RSD PTR " (including the
-trailing blank character)[2]. Calling strncmp(sig, rsdp_sig, 8) would
-then result in a sequence overread[3] as sig would be smaller (4 bytes)
-than the specified bound (8 bytes).
-
-As a workaround, pass the bound conditionally based on the size of the
-signature being passed.
-
-Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#system-description-table-header [1]
-Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#root-system-description-pointer-rsdp-structure [2]
-Link: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overread [3]
-Link: https://github.com/acpica/acpica/commit/8b83a8d8
-Signed-off-by: Ahmed Salem <x0rw3ll@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2248233.Mh6RI2rZIc@rjwysocki.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6246ed09111f ("LoongArch: Add ACPI-based generic laptop driver")
+Signed-off-by: Yao Zi <ziyao@disroot.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/acpi/actypes.h | 2 +-
+ drivers/platform/loongarch/loongson-laptop.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h
-index 80767e8bf3ad4..d323dfffa4bfc 100644
---- a/include/acpi/actypes.h
-+++ b/include/acpi/actypes.h
-@@ -527,7 +527,7 @@ typedef u64 acpi_integer;
+--- a/drivers/platform/loongarch/loongson-laptop.c
++++ b/drivers/platform/loongarch/loongson-laptop.c
+@@ -392,8 +392,8 @@ static int laptop_backlight_register(voi
+ 	if (!acpi_evalf(hotkey_handle, &status, "ECLL", "d"))
+ 		return -EIO;
  
- /* Support for the special RSDP signature (8 characters) */
+-	props.brightness = 1;
+ 	props.max_brightness = status;
++	props.brightness = ec_get_brightness();
+ 	props.type = BACKLIGHT_PLATFORM;
  
--#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, 8))
-+#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ? ACPI_NAMESEG_SIZE : 8))
- #define ACPI_MAKE_RSDP_SIG(dest)        (memcpy (ACPI_CAST_PTR (char, (dest)), ACPI_SIG_RSDP, 8))
- 
- /* Support for OEMx signature (x can be any character) */
--- 
-2.39.5
-
+ 	backlight_device_register("loongson_laptop",
 
 
