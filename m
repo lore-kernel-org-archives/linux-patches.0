@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D109F1E521E;
-	Mon, 23 Jun 2025 21:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999DC1E521E;
+	Mon, 23 Jun 2025 21:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713922; cv=none; b=l6F1+JoUCAoP64b+sqmuSxTfP4w3DzX76aIUuAChIU7o1pTeAx5j+LoQpofMaAXtqHnAZx5oyXZZuIBKMqmW3M/up909g/zZ9P+5aagaEH3wXzvORhbmiqpPf3vYhbK/tRJuQ3uzxfskAsEW62xzOD/P527I8YU54QRYSvREZMk=
+	t=1750713925; cv=none; b=cYBa35Uo3FzjkRbOqEHqDPtu5L59xdbMm2Bl3YkugiUG+JVtkeTvBDHqXnomuMX6W9M78na3MZN8P8lbzzdCE8HR8J/WBv8VabpxMwdGPFTjHEXOFeC6V5anmpKU5PZltkNO8glC5xS/j0PYsbvQbhgSuHGvMGSGhVxDyYgiKO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713922; c=relaxed/simple;
-	bh=rt3uwgRLPigtYy1IvclkbQvl6hM9vRO88ZH1/5LcWNg=;
+	s=arc-20240116; t=1750713925; c=relaxed/simple;
+	bh=eaeM/VRFVun/gKEs+SUc1gC9qQku+nqY5CHwFfGXxTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ficY65fajaB6Lg/NF/W9CB1vUHV+tjETayw9wFkXWvPBf911lTWioUN0DUerqS1DL5I0A3XBWEaHtAhIrUlJ6t8REGXCAdi3M9tKEXMrN2jGq4mGixspYBlB52PsXQ0Te018iX5viQTapxxoOxVMRoWPzXcjnae/EZsVhDexeMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wfarZNQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ei6hsjGGOTc2BhB8o+YChetBIzyChVuT9x4I5/RhBjciwbOMvetWYvw0xgeu0zuRa6jhGzsafYMoFg3XZkV9geHThmfM+MAHpvgQfxkf53kJEGHq0Ro5Wi0EN1EuOqgePUfGvRdP4grmmc84YmdDf83TzQEBQrjoEMM6y4564Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHmmYrdk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wfarZNQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A688C4CEEA;
-	Mon, 23 Jun 2025 21:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHmmYrdk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D912BC4CEEA;
+	Mon, 23 Jun 2025 21:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713922;
-	bh=rt3uwgRLPigtYy1IvclkbQvl6hM9vRO88ZH1/5LcWNg=;
+	s=korg; t=1750713925;
+	bh=eaeM/VRFVun/gKEs+SUc1gC9qQku+nqY5CHwFfGXxTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0wfarZNQuRGdHaZP3kaxvMqD2G0eha9XODL9i+YnY7SM0aUzvydWuT6wfx/kqp3KZ
-	 G/eechuYmfAKeEHaptSW8VeoRQk2Lq++j9kbL0vHaeXnvJHQaJM9CJqMqaBwI2r6/I
-	 QsvneE/Ur+EkGdO4hIrP6a+GLJZ6duZsk166aNTk=
+	b=BHmmYrdkc1jhv+6zqNHruuDTHz69wNLYTJbXLfzgdoIoGKqIpbOhVVme8Tk6xRRfS
+	 nQkIlDyWNvlhkljA1lRMsKloA5bv8Ejhp8W1D19/oMygmMgFnRPwhjvpXAXganRcEK
+	 Jl9lo0xQvsZ5l6bZgjvpI8Y+xzH17ybzQ/JC6K5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Raczynski <j.raczynski@samsung.com>,
-	Wenjing Shan <wenjing.shan@samsung.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 155/411] net/mdiobus: Fix potential out-of-bounds read/write access
-Date: Mon, 23 Jun 2025 15:04:59 +0200
-Message-ID: <20250623130637.542199420@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.10 174/355] media: v4l2-dev: fix error handling in __video_register_device()
+Date: Mon, 23 Jun 2025 15:06:15 +0200
+Message-ID: <20250623130631.937941891@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Raczynski <j.raczynski@samsung.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit 0e629694126ca388916f059453a1c36adde219c4 ]
+commit 2a934fdb01db6458288fc9386d3d8ceba6dd551a upstream.
 
-When using publicly available tools like 'mdio-tools' to read/write data
-from/to network interface and its PHY via mdiobus, there is no verification of
-parameters passed to the ioctl and it accepts any mdio address.
-Currently there is support for 32 addresses in kernel via PHY_MAX_ADDR define,
-but it is possible to pass higher value than that via ioctl.
-While read/write operation should generally fail in this case,
-mdiobus provides stats array, where wrong address may allow out-of-bounds
-read/write.
+Once device_register() failed, we should call put_device() to
+decrement reference count for cleanup. Or it could cause memory leak.
+And move callback function v4l2_device_release() and v4l2_device_get()
+before put_device().
 
-Fix that by adding address verification before read/write operation.
-While this excludes this access from any statistics, it improves security of
-read/write operation.
+As comment of device_register() says, 'NOTE: _Never_ directly free
+@dev after calling this function, even if it returned an error! Always
+use put_device() to give up the reference initialized in this function
+instead.'
 
-Fixes: 080bb352fad00 ("net: phy: Maintain MDIO device and bus statistics")
-Signed-off-by: Jakub Raczynski <j.raczynski@samsung.com>
-Reported-by: Wenjing Shan <wenjing.shan@samsung.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by code review.
+
+Cc: stable@vger.kernel.org
+Fixes: dc93a70cc7f9 ("V4L/DVB (9973): v4l2-dev: use the release callback from device instead of cdev")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/mdio_bus.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/v4l2-core/v4l2-dev.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
-index c26f46c06a1b2..95536c5e541da 100644
---- a/drivers/net/phy/mdio_bus.c
-+++ b/drivers/net/phy/mdio_bus.c
-@@ -757,6 +757,9 @@ int __mdiobus_read(struct mii_bus *bus, int addr, u32 regnum)
- 
- 	lockdep_assert_held_once(&bus->mdio_lock);
- 
-+	if (addr >= PHY_MAX_ADDR)
-+		return -ENXIO;
+--- a/drivers/media/v4l2-core/v4l2-dev.c
++++ b/drivers/media/v4l2-core/v4l2-dev.c
+@@ -1029,25 +1029,25 @@ int __video_register_device(struct video
+ 	vdev->dev.class = &video_class;
+ 	vdev->dev.devt = MKDEV(VIDEO_MAJOR, vdev->minor);
+ 	vdev->dev.parent = vdev->dev_parent;
++	vdev->dev.release = v4l2_device_release;
+ 	dev_set_name(&vdev->dev, "%s%d", name_base, vdev->num);
 +
- 	if (bus->read)
- 		retval = bus->read(bus, addr, regnum);
- 	else
-@@ -786,6 +789,9 @@ int __mdiobus_write(struct mii_bus *bus, int addr, u32 regnum, u16 val)
- 
- 	lockdep_assert_held_once(&bus->mdio_lock);
- 
-+	if (addr >= PHY_MAX_ADDR)
-+		return -ENXIO;
++	/* Increase v4l2_device refcount */
++	v4l2_device_get(vdev->v4l2_dev);
 +
- 	if (bus->write)
- 		err = bus->write(bus, addr, regnum, val);
- 	else
--- 
-2.39.5
-
+ 	mutex_lock(&videodev_lock);
+ 	ret = device_register(&vdev->dev);
+ 	if (ret < 0) {
+ 		mutex_unlock(&videodev_lock);
+ 		pr_err("%s: device_register failed\n", __func__);
+-		goto cleanup;
++		put_device(&vdev->dev);
++		return ret;
+ 	}
+-	/* Register the release callback that will be called when the last
+-	   reference to the device goes away. */
+-	vdev->dev.release = v4l2_device_release;
+ 
+ 	if (nr != -1 && nr != vdev->num && warn_if_nr_in_use)
+ 		pr_warn("%s: requested %s%d, got %s\n", __func__,
+ 			name_base, nr, video_device_node_name(vdev));
+ 
+-	/* Increase v4l2_device refcount */
+-	v4l2_device_get(vdev->v4l2_dev);
+-
+ 	/* Part 5: Register the entity. */
+ 	ret = video_register_media_controller(vdev);
+ 
 
 
