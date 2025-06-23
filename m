@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6D02505AF;
-	Mon, 23 Jun 2025 13:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8F1252903;
+	Mon, 23 Jun 2025 13:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685766; cv=none; b=P/vnjVISKK8Ls/ikWOR6T5MbZye5Gp3qaL1iAArey2rLVhPbH8i4KgjAY6qTTXKQGvDdP79SJ9w4Eqdd7MLr87atKsgVGAIk9vn/LY6GAdFxHjWJLhJDKnjoeeSvjreqJsUWnJjaspVbqcM5cXnC3eYEZ2+lE7acnuyV6M01HGI=
+	t=1750685769; cv=none; b=j5VqpL4CvQun74cQFKQRY7op3th3h90OYjDWLh1QLV9nMIQo537qc7kRL5gzTLjvG6rLRpm6Xa2lpSsFBt80eMbqloj1tnearxrvn+y/OZBqhgsr7N6pUorTFE0rU1CDhbAWX+J4T+6Hq+3WQMfnuLz5cpq1Ov/t9QQaDkuV9Es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685766; c=relaxed/simple;
-	bh=+LBf8P+JDBBXcYLktiGnZ6DEHWVsRlwBigHEfXwSxAI=;
+	s=arc-20240116; t=1750685769; c=relaxed/simple;
+	bh=3HOG8ig37Oo1mgHlShFD0aE5WpHKfaeW9YcuF5WvOFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JB/hiaxxG3orCK48HlHfaGCX0cB8PKoNvTBp/1zRRkKkkoAIxZ8Ktpss8Dgz5BjR2lqG/DN5wJiF5d8MU11O34vtKwe/UtevSZwudO035Ih20kgGqP3eN2ekRbzWtbAyLjqC/+AK/E21aaR8VbXxJdy0EN2bukArEidJ00yieP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkypOYRs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZI5kq0m39x8gfjq1mETWhc7boezzIG8/EmsgWvWmeRo9n42caO3RFdWzcKl0xuvZBNGkQixQWdmnXAJ9TsylZJJ5vn9AOvcWRNRl8MKrllxBxtCPuFBNcfELwU0sVFbcszp8bWHPJ55MUkqPStne8xzBTcoNJA0hBlMxiI3K4XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scTbO/JG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkypOYRs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47B5FC4CEEA;
-	Mon, 23 Jun 2025 13:36:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scTbO/JG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D28C4CEEA;
+	Mon, 23 Jun 2025 13:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685766;
-	bh=+LBf8P+JDBBXcYLktiGnZ6DEHWVsRlwBigHEfXwSxAI=;
+	s=korg; t=1750685769;
+	bh=3HOG8ig37Oo1mgHlShFD0aE5WpHKfaeW9YcuF5WvOFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LkypOYRsXC1ouyM99Wzx+bOY5y71WadkfcC1LXcD9sOlBQg+R5RTFTfRbe/FWjfPs
-	 G9LJwrn/UawHWppggSSNhKQE3KMR481h8smyJqEpXNx/RzuXBBCtBraEV6r88GVHvP
-	 AAvgHK7YeM0MLpqPhVwgCal0esL7AQWULrmADYpo=
+	b=scTbO/JGd/yTB/9OVpcSMkxPqUincpp12Q81MbBfuf8Mo47ZLf1mYEda8qMDXiOtT
+	 WP5IjGm/M9EWOFfvjyMdRCs51ezAKpMINuwIOju4SYHaIBhMJSMTMpsk4UIykeUSnq
+	 W7RLGkefNXim4thvBUF+YbMOlx+xDB44D0Hvo0P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Wright <rwright@hpe.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 006/414] crypto: qat - add shutdown handler to qat_4xxx
-Date: Mon, 23 Jun 2025 15:02:23 +0200
-Message-ID: <20250623130642.182484717@linuxfoundation.org>
+	WangYuli <wangyuli@uniontech.com>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 093/355] MIPS: Loongson64: Add missing #interrupt-cells for loongson64c_ls7a
+Date: Mon, 23 Jun 2025 15:04:54 +0200
+Message-ID: <20250623130629.591893826@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-commit 845bc952024dbf482c7434daeac66f764642d52d upstream.
+[ Upstream commit 6d223b8ffcd1593d032b71875def2daa71c53111 ]
 
-During a warm reset via kexec, the system bypasses the driver removal
-sequence, meaning that the remove() callback is not invoked.
-If a QAT device is not shutdown properly, the device driver will fail to
-load in a newly rebooted kernel.
+Similar to commit 98a9e2ac3755 ("MIPS: Loongson64: DTS: Fix msi node for ls7a").
 
-This might result in output like the following after the kexec reboot:
+Fix follow warnings:
+  arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts:28.31-36.4: Warning (interrupt_provider): /bus@10000000/msi-controller@2ff00000: Missing '#interrupt-cells' in interrupt provider
+  arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dtb: Warning (interrupt_map): Failed prerequisite 'interrupt_provider'
 
-    4xxx 0000:01:00.0: Failed to power up the device
-    4xxx 0000:01:00.0: Failed to initialize device
-    4xxx 0000:01:00.0: Resetting device qat_dev0
-    4xxx 0000:01:00.0: probe with driver 4xxx failed with error -14
-
-Implement the shutdown() handler that hooks into the reboot notifier
-list. This brings down the QAT device and ensures it is shut down
-properly.
-
-Cc: <stable@vger.kernel.org>
-Fixes: 8c8268166e83 ("crypto: qat - add qat_4xxx driver")
-Link: https://lore.kernel.org/all/Z-DGQrhRj9niR9iZ@gondor.apana.org.au/
-Reported-by: Randy Wright <rwright@hpe.com>
-Closes: https://issues.redhat.com/browse/RHEL-84366
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 24af105962c8 ("MIPS: Loongson64: DeviceTree for LS7A PCH")
+Tested-by: WangYuli <wangyuli@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_4xxx/adf_drv.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c
-@@ -183,11 +183,19 @@ static void adf_remove(struct pci_dev *p
- 	adf_cleanup_accel(accel_dev);
- }
- 
-+static void adf_shutdown(struct pci_dev *pdev)
-+{
-+	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
-+
-+	adf_dev_down(accel_dev);
-+}
-+
- static struct pci_driver adf_driver = {
- 	.id_table = adf_pci_tbl,
- 	.name = ADF_4XXX_DEVICE_NAME,
- 	.probe = adf_probe,
- 	.remove = adf_remove,
-+	.shutdown = adf_shutdown,
- 	.sriov_configure = adf_sriov_configure,
- 	.err_handler = &adf_err_handler,
- };
+diff --git a/arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts b/arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts
+index c7ea4f1c0bb21..6c277ab83d4b9 100644
+--- a/arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts
++++ b/arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts
+@@ -29,6 +29,7 @@
+ 		compatible = "loongson,pch-msi-1.0";
+ 		reg = <0 0x2ff00000 0 0x8>;
+ 		interrupt-controller;
++		#interrupt-cells = <1>;
+ 		msi-controller;
+ 		loongson,msi-base-vec = <64>;
+ 		loongson,msi-num-vecs = <64>;
+-- 
+2.39.5
+
 
 
