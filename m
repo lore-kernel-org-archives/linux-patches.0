@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A0A225785;
-	Mon, 23 Jun 2025 22:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37EA21FF2B;
+	Mon, 23 Jun 2025 22:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716625; cv=none; b=p63hjHNuf6TOwUxXzgwARxbzrXySzcrQ+5kQDsPJr62RIJuFytKZmbfEhPTFeGWh6aUfRKf9tyghCidgU+ZJ9F/250LUYjU5H6JgJ9CY+aKCPW2rocoTxfgu8WFMNG5o4PZ9+nUoRZpXDdMj+Ajtq15w+04HF9tyqvpER5u8BJw=
+	t=1750716627; cv=none; b=OT4/ErU8TzD1Y90g7h/L5e8HWEvRdcw0hzzEBJ4KLsX1tAaGq7JlLUvWu/RYRIJcBQgCQUhf101LKb6vbooI+aekOciiVwYEZLHa3zUbiI6cnF2ZJhgmG6D6CZMGEW2mrZOvsqyqJfgnd8tcYcuKClwPzgCBRYMgVnBR1owbrd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716625; c=relaxed/simple;
-	bh=bb21ZLfaxtzH6NF70JxV6Ymh4lf7xcYXT9ZWXSFIXQ0=;
+	s=arc-20240116; t=1750716627; c=relaxed/simple;
+	bh=ZGCT5OcLD2qtWxy++QUJTfxgXxvfz/6VUwKi9fRLWis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=juH3Lptqgp1TPvSwqIyw+SsrWXY6oz9YmSbM7Nej8GwrY/4lHcZwn9cqeRmvvIDyqfOD4hXWMSdH2eckPG9C0g6m+Q8EtUx+bZ0SKogu4QiTor3SnCTq/5hoYw6PfKpktBO1CiAfOPVO3WLJ8E+RUJVs8v8ikcHMPwcaHpt4j2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evj5o2dx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ANWW9Wl5fES1JuE6jUjRf0rPekRhRa7W+OGK0sb87okXdFwdkLgdRq0PuHt2fYLCF6aW/HoyTTaLJuUWh3377g+nyFjPVqGBTO4kKFZltq5rtxqc4Akd+Q1r3Cd7tsiBFEm6EWtxchRpiPvqwMzK+7wqkPC5tFWwoIQCzKZEey4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIJxTpTE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evj5o2dx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74D9C4CEEA;
-	Mon, 23 Jun 2025 22:10:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIJxTpTE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EAAC4CEEA;
+	Mon, 23 Jun 2025 22:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716625;
-	bh=bb21ZLfaxtzH6NF70JxV6Ymh4lf7xcYXT9ZWXSFIXQ0=;
+	s=korg; t=1750716627;
+	bh=ZGCT5OcLD2qtWxy++QUJTfxgXxvfz/6VUwKi9fRLWis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=evj5o2dxfm8cxiJ3NfbNKyiHlaCMK7E40Ghw9T+lY588P+RyB1AFWv7zND8egho8v
-	 tLdXiMlFCMaerk5QGvjeOtJfhXylmgq1pHL2Az0gjuZXqGuTxc4G/p8WqxpJMZK4XU
-	 HyVUr2X7TPcZO3v+wkbMyGczuCzs062tVKBuvZhA=
+	b=eIJxTpTEiiBGAVtvjGOIbK3BGCwQg1rh/vEAo6bIqRhEXz2C7mTTRbeEuDb9sQkjJ
+	 lYpgga2FD9O+XyvyYO+8PLX6RfzcMiU+qRrnKKUEr07jskHRznfc/OA+Cxuv4Bo7ig
+	 P9LPHia8FUFYQwCbC9osygusmCtCozsShsQ0Joqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Linxuan <chenlinxuan@uniontech.com>,
-	Winston Wen <wentao@uniontech.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	David Wei <dw@davidwei.uk>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 270/414] RDMA/hns: initialize db in update_srq_db()
-Date: Mon, 23 Jun 2025 15:06:47 +0200
-Message-ID: <20250623130648.780759975@linuxfoundation.org>
+Subject: [PATCH 6.15 534/592] bnxt_en: Update MRU and RSS table of RSS contexts on queue reset
+Date: Mon, 23 Jun 2025 15:08:12 +0200
+Message-ID: <20250623130713.138033308@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,75 +49,139 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Linxuan <chenlinxuan@uniontech.com>
+From: Pavan Chebbi <pavan.chebbi@broadcom.com>
 
-[ Upstream commit ffe1cee21f8b533ae27c3a31bfa56b8c1b27fa6e ]
+[ Upstream commit 5dacc94c6fe61cde6f700e95cf35af9944b022c4 ]
 
-On x86_64 with gcc version 13.3.0, I compile
-drivers/infiniband/hw/hns/hns_roce_hw_v2.c with:
+The commit under the Fixes tag below which updates the VNICs' RSS
+and MRU during .ndo_queue_start(), needs to be extended to cover any
+non-default RSS contexts which have their own VNICs.  Without this
+step, packets that are destined to a non-default RSS context may be
+dropped after .ndo_queue_start().
 
-  make defconfig
-  ./scripts/kconfig/merge_config.sh .config <(
-    echo CONFIG_COMPILE_TEST=y
-    echo CONFIG_HNS3=m
-    echo CONFIG_INFINIBAND=m
-    echo CONFIG_INFINIBAND_HNS_HIP08=m
-  )
-  make KCFLAGS="-fno-inline-small-functions -fno-inline-functions-called-once" \
-    drivers/infiniband/hw/hns/hns_roce_hw_v2.o
+We further optimize this scheme by updating the VNIC only if the
+RX ring being restarted is in the RSS table of the VNIC.  Updating
+the VNIC (in particular setting the MRU to 0) will momentarily stop
+all traffic to all rings in the RSS table.  Any VNIC that has the
+RX ring excluded from the RSS table can skip this step and avoid the
+traffic disruption.
 
-Then I get a compile error:
+Note that this scheme is just an improvement.  A VNIC with multiple
+rings in the RSS table will still see traffic disruptions to all rings
+in the RSS table when one of the rings is being restarted.  We are
+working on a FW scheme that will improve upon this further.
 
-    CALL    scripts/checksyscalls.sh
-    DESCEND objtool
-    INSTALL libsubcmd_headers
-    CC [M]  drivers/infiniband/hw/hns/hns_roce_hw_v2.o
-  In file included from drivers/infiniband/hw/hns/hns_roce_hw_v2.c:47:
-  drivers/infiniband/hw/hns/hns_roce_hw_v2.c: In function 'update_srq_db':
-  drivers/infiniband/hw/hns/hns_roce_common.h:74:17: error: 'db' is used uninitialized [-Werror=uninitialized]
-     74 |                 *((__le32 *)_ptr + (field_h) / 32) &=                          \
-        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/infiniband/hw/hns/hns_roce_common.h:90:17: note: in expansion of macro '_hr_reg_clear'
-     90 |                 _hr_reg_clear(ptr, field_type, field_h, field_l);              \
-        |                 ^~~~~~~~~~~~~
-  drivers/infiniband/hw/hns/hns_roce_common.h:95:39: note: in expansion of macro '_hr_reg_write'
-     95 | #define hr_reg_write(ptr, field, val) _hr_reg_write(ptr, field, val)
-        |                                       ^~~~~~~~~~~~~
-  drivers/infiniband/hw/hns/hns_roce_hw_v2.c:948:9: note: in expansion of macro 'hr_reg_write'
-    948 |         hr_reg_write(&db, DB_TAG, srq->srqn);
-        |         ^~~~~~~~~~~~
-  drivers/infiniband/hw/hns/hns_roce_hw_v2.c:946:31: note: 'db' declared here
-    946 |         struct hns_roce_v2_db db;
-        |                               ^~
-  cc1: all warnings being treated as errors
-
-Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Co-developed-by: Winston Wen <wentao@uniontech.com>
-Signed-off-by: Winston Wen <wentao@uniontech.com>
-Link: https://patch.msgid.link/FF922C77946229B6+20250411105459.90782-5-chenlinxuan@uniontech.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 5ac066b7b062 ("bnxt_en: Fix queue start to update vnic RSS table")
+Reported-by: David Wei <dw@davidwei.uk>
+Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250613231841.377988-4-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 56 +++++++++++++++++++++--
+ 1 file changed, 51 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 985b9d7d69f20..81e44b7381229 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -942,7 +942,7 @@ static void fill_wqe_idx(struct hns_roce_srq *srq, unsigned int wqe_idx)
- static void update_srq_db(struct hns_roce_srq *srq)
- {
- 	struct hns_roce_dev *hr_dev = to_hr_dev(srq->ibsrq.device);
--	struct hns_roce_v2_db db;
-+	struct hns_roce_v2_db db = {};
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 3d975e50f9438..c365a9e64f728 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -10738,11 +10738,39 @@ void bnxt_del_one_rss_ctx(struct bnxt *bp, struct bnxt_rss_ctx *rss_ctx,
+ 	bp->num_rss_ctx--;
+ }
  
- 	hr_reg_write(&db, DB_TAG, srq->srqn);
- 	hr_reg_write(&db, DB_CMD, HNS_ROCE_V2_SRQ_DB);
++static bool bnxt_vnic_has_rx_ring(struct bnxt *bp, struct bnxt_vnic_info *vnic,
++				  int rxr_id)
++{
++	u16 tbl_size = bnxt_get_rxfh_indir_size(bp->dev);
++	int i, vnic_rx;
++
++	/* Ntuple VNIC always has all the rx rings. Any change of ring id
++	 * must be updated because a future filter may use it.
++	 */
++	if (vnic->flags & BNXT_VNIC_NTUPLE_FLAG)
++		return true;
++
++	for (i = 0; i < tbl_size; i++) {
++		if (vnic->flags & BNXT_VNIC_RSSCTX_FLAG)
++			vnic_rx = ethtool_rxfh_context_indir(vnic->rss_ctx)[i];
++		else
++			vnic_rx = bp->rss_indir_tbl[i];
++
++		if (rxr_id == vnic_rx)
++			return true;
++	}
++
++	return false;
++}
++
+ static int bnxt_set_vnic_mru_p5(struct bnxt *bp, struct bnxt_vnic_info *vnic,
+-				u16 mru)
++				u16 mru, int rxr_id)
+ {
+ 	int rc;
+ 
++	if (!bnxt_vnic_has_rx_ring(bp, vnic, rxr_id))
++		return 0;
++
+ 	if (mru) {
+ 		rc = bnxt_hwrm_vnic_set_rss_p5(bp, vnic, true);
+ 		if (rc) {
+@@ -10758,6 +10786,24 @@ static int bnxt_set_vnic_mru_p5(struct bnxt *bp, struct bnxt_vnic_info *vnic,
+ 	return 0;
+ }
+ 
++static int bnxt_set_rss_ctx_vnic_mru(struct bnxt *bp, u16 mru, int rxr_id)
++{
++	struct ethtool_rxfh_context *ctx;
++	unsigned long context;
++	int rc;
++
++	xa_for_each(&bp->dev->ethtool->rss_ctx, context, ctx) {
++		struct bnxt_rss_ctx *rss_ctx = ethtool_rxfh_context_priv(ctx);
++		struct bnxt_vnic_info *vnic = &rss_ctx->vnic;
++
++		rc = bnxt_set_vnic_mru_p5(bp, vnic, mru, rxr_id);
++		if (rc)
++			return rc;
++	}
++
++	return 0;
++}
++
+ static void bnxt_hwrm_realloc_rss_ctx_vnic(struct bnxt *bp)
+ {
+ 	bool set_tpa = !!(bp->flags & BNXT_FLAG_TPA);
+@@ -15958,12 +16004,11 @@ static int bnxt_queue_start(struct net_device *dev, void *qmem, int idx)
+ 	for (i = 0; i < bp->nr_vnics; i++) {
+ 		vnic = &bp->vnic_info[i];
+ 
+-		rc = bnxt_set_vnic_mru_p5(bp, vnic, mru);
++		rc = bnxt_set_vnic_mru_p5(bp, vnic, mru, idx);
+ 		if (rc)
+ 			return rc;
+ 	}
+-
+-	return 0;
++	return bnxt_set_rss_ctx_vnic_mru(bp, mru, idx);
+ 
+ err_reset:
+ 	netdev_err(bp->dev, "Unexpected HWRM error during queue start rc: %d\n",
+@@ -15986,8 +16031,9 @@ static int bnxt_queue_stop(struct net_device *dev, void *qmem, int idx)
+ 	for (i = 0; i < bp->nr_vnics; i++) {
+ 		vnic = &bp->vnic_info[i];
+ 
+-		bnxt_set_vnic_mru_p5(bp, vnic, 0);
++		bnxt_set_vnic_mru_p5(bp, vnic, 0, idx);
+ 	}
++	bnxt_set_rss_ctx_vnic_mru(bp, 0, idx);
+ 	/* Make sure NAPI sees that the VNIC is disabled */
+ 	synchronize_net();
+ 	rxr = &bp->rx_ring[idx];
 -- 
 2.39.5
 
