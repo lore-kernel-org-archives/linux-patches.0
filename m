@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946681ACEDA;
-	Mon, 23 Jun 2025 21:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488191ACEDA;
+	Mon, 23 Jun 2025 21:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712903; cv=none; b=IluSVRM1tAKH5OBkLgCjzAe4MAmParLRxsBp7XX7jI6wWodLJQSxzH+9jIb/cHp5HRKwrloLElspLYUz9uFbbwa2LQTLI8Wm95i3gXHFDLtCzDWeTj+oTQw34nKuGZ6d2Dv5lHiG88gZ1LfWDsMbKZPDj6c29sOrTO0J1ZaTBKE=
+	t=1750712906; cv=none; b=P59Go7SNmjX++cHxnBfKj03c6poA5dczrNuTdXkLzgXk2X5PCFypxLHYCk+/PURbtDMJUzU0NZS3Siw7rFOdpRd9ZYVUvo+v67B2iSduNu2fpGfxcsFtXzfG4Cr+ejZsXXEaBSl1Ip3Tod3Pms+dl7ls54O6a30PqmHaF+k/cW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712903; c=relaxed/simple;
-	bh=/gFPscZ6lrITXzuNOrDbnto73c7R6psSMZkBVcrlQUo=;
+	s=arc-20240116; t=1750712906; c=relaxed/simple;
+	bh=kt+HeAdXs4+zMfoCCKAYPbo7/yQfKeVUThyTkYdCDXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kRoZYwFMr/wpoWOCHoUTDuK+8535SfUyRH/0sEccBbeVWVt3uY972EzMQM+iw6NpjNL68nuJX8ZNKoh39juS8Xc2bljWbscpey53ni6W7rvjD2RiuYOg3M3wJCf9qfTQXnmv4niiTdv/YFrq354hkTqOqZJMOQJvCFSBRHN2sjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OP6yNfF6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VDL1DKgy1Xi8smYmYKT3v6wU9hxRaKvcOiNmXf4Gngh/dG8IB106iM4k8Sa0WhxnJGQXJio1v5k62lPm2/Ly2TKqvtEotiFt7bEBTY86p3nvMp7Rertoe5HGCvfSSVLH/MUVqvK5SqzUOIp5QcZct7U+9nv1R5FspUeXtq9pKBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTuTq2QT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OP6yNfF6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B388C4CEEA;
-	Mon, 23 Jun 2025 21:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTuTq2QT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94CA7C4CEEA;
+	Mon, 23 Jun 2025 21:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712903;
-	bh=/gFPscZ6lrITXzuNOrDbnto73c7R6psSMZkBVcrlQUo=;
+	s=korg; t=1750712905;
+	bh=kt+HeAdXs4+zMfoCCKAYPbo7/yQfKeVUThyTkYdCDXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OP6yNfF6WZlPlsksBEBrkUAd9s0hGJcF1JA91V2oaT4EpncSjdUJ3crsr7DPDqxZ+
-	 jtJsqOzFPyDfq+c371a3n0z4VUZnUKKLT06mmcuYCbGjZ/JsPiXvBJavRcZ2L9CXG1
-	 qUVeq0SNXqUTAMGmidec5sho5SCKTAky7YqPEjVQ=
+	b=OTuTq2QT8R8lvJWUjuzNrTU7HR42hmoGYKT97kLDYkyojzonqn1h7TTi8sb1KahFh
+	 J5ojJRlp8RFwFZt5P8uCCxgYWWoEZ8C9edrItVK3ErbmRFOoz7QRgx+incxATB64YA
+	 vJvOCf/8+aWFotCCDJrg16yFgwp4QqhJDx9T0hT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 037/290] media: v4l2-dev: fix error handling in __video_register_device()
-Date: Mon, 23 Jun 2025 15:04:58 +0200
-Message-ID: <20250623130628.113358789@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 095/411] remoteproc: qcom_wcnss_iris: Add missing put_device() on error in probe
+Date: Mon, 23 Jun 2025 15:03:59 +0200
+Message-ID: <20250623130635.864941938@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 2a934fdb01db6458288fc9386d3d8ceba6dd551a upstream.
+[ Upstream commit 0cb4b1b97041d8a1f773425208ded253c1cb5869 ]
 
-Once device_register() failed, we should call put_device() to
-decrement reference count for cleanup. Or it could cause memory leak.
-And move callback function v4l2_device_release() and v4l2_device_get()
-before put_device().
+The device_del() call matches with the device_add() but we also need
+to call put_device() to trigger the qcom_iris_release().
 
-As comment of device_register() says, 'NOTE: _Never_ directly free
-@dev after calling this function, even if it returned an error! Always
-use put_device() to give up the reference initialized in this function
-instead.'
-
-Found by code review.
-
-Cc: stable@vger.kernel.org
-Fixes: dc93a70cc7f9 ("V4L/DVB (9973): v4l2-dev: use the release callback from device instead of cdev")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1fcef985c8bd ("remoteproc: qcom: wcnss: Fix race with iris probe")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/4604f7e0-3217-4095-b28a-3ff8b5afad3a@stanley.mountain
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-dev.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/remoteproc/qcom_wcnss_iris.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/v4l2-core/v4l2-dev.c
-+++ b/drivers/media/v4l2-core/v4l2-dev.c
-@@ -1033,25 +1033,25 @@ int __video_register_device(struct video
- 	vdev->dev.class = &video_class;
- 	vdev->dev.devt = MKDEV(VIDEO_MAJOR, vdev->minor);
- 	vdev->dev.parent = vdev->dev_parent;
-+	vdev->dev.release = v4l2_device_release;
- 	dev_set_name(&vdev->dev, "%s%d", name_base, vdev->num);
-+
-+	/* Increase v4l2_device refcount */
-+	v4l2_device_get(vdev->v4l2_dev);
-+
- 	mutex_lock(&videodev_lock);
- 	ret = device_register(&vdev->dev);
- 	if (ret < 0) {
- 		mutex_unlock(&videodev_lock);
- 		pr_err("%s: device_register failed\n", __func__);
--		goto cleanup;
-+		put_device(&vdev->dev);
-+		return ret;
- 	}
--	/* Register the release callback that will be called when the last
--	   reference to the device goes away. */
--	vdev->dev.release = v4l2_device_release;
+diff --git a/drivers/remoteproc/qcom_wcnss_iris.c b/drivers/remoteproc/qcom_wcnss_iris.c
+index 09720ddddc857..7c7b688eda1d9 100644
+--- a/drivers/remoteproc/qcom_wcnss_iris.c
++++ b/drivers/remoteproc/qcom_wcnss_iris.c
+@@ -196,6 +196,7 @@ struct qcom_iris *qcom_iris_probe(struct device *parent, bool *use_48mhz_xo)
  
- 	if (nr != -1 && nr != vdev->num && warn_if_nr_in_use)
- 		pr_warn("%s: requested %s%d, got %s\n", __func__,
- 			name_base, nr, video_device_node_name(vdev));
+ err_device_del:
+ 	device_del(&iris->dev);
++	put_device(&iris->dev);
  
--	/* Increase v4l2_device refcount */
--	v4l2_device_get(vdev->v4l2_dev);
--
- 	/* Part 5: Register the entity. */
- 	ret = video_register_media_controller(vdev);
- 
+ 	return ERR_PTR(ret);
+ }
+@@ -203,4 +204,5 @@ struct qcom_iris *qcom_iris_probe(struct device *parent, bool *use_48mhz_xo)
+ void qcom_iris_remove(struct qcom_iris *iris)
+ {
+ 	device_del(&iris->dev);
++	put_device(&iris->dev);
+ }
+-- 
+2.39.5
+
 
 
