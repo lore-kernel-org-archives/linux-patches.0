@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8EB23A9BE;
-	Mon, 23 Jun 2025 13:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8245923A9BE;
+	Mon, 23 Jun 2025 13:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684963; cv=none; b=FfRJqH58CrehsChGTPD5m5Fb/38W7PMBHduniek38a77OLoICqzORsI2e0cXXzkyfxBM18bomDSuqWU0Dc/usx7Ja3G7qXmeheZn47XKGm/oUi7OIizTMvmnG1Y/+43BvQHmwim0hnZ+QfQ4agYGACAoqSsCtPCmRKB2vEOf/b8=
+	t=1750684965; cv=none; b=jrpZ/cl00uk0VmjWTjZzpDdm9XvxM6dghbQZeoj2X9YaHw+B9LvZcxm3XkfByvXbJZNHixXfFvX/zp5RDIkmbHtMP6lasfH9JsQTgxb1OTsK9+8Abox+ILiK1smhaImo1MvM9rs6oHHNFx7YUg7shnZkaWBZ1hey6TpdlhK9ErE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684963; c=relaxed/simple;
-	bh=kPxxsPloNAZIbsDAv7MT44M99zRONtWkPcJJU6KB7vY=;
+	s=arc-20240116; t=1750684965; c=relaxed/simple;
+	bh=RREaERR22091YeRakDwzPN36su0Krb7FU79g7bkSFUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QgxN0Nao+C8g1sF7BfJUb2eZ/HpGTxiQs5fUFKYkpggz7NL3I4iVTlUZkmXM57Zx8b6RsOLkAVk+s16zcQNv68XJBsPyCylFg2yL5qBskMag2/cZr92RUktccJ3l4t57dJ+zSLBdpyL9zAgp9gbFkr6a4cTR3igAeYmiTDAJY08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRXN4Hz7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PL48sTvL7sFhYJq0OD6P4/fcYtDUmTrTjMV5NEvu+UHRk1/F69VZeBY3MVhOanz7Qtm6fMoA0Tye2k+2Mxip/msz0NDXIz+jUZJE9SKovHtBAj95PXCJ6A4y5/etZMrFZKBVAQTwIedkm6kGBEtAlT73HzDO4+wwfEUofx27Hks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIXY5lpK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRXN4Hz7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BEA7C4CEEA;
-	Mon, 23 Jun 2025 13:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIXY5lpK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1715FC4CEEA;
+	Mon, 23 Jun 2025 13:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684962;
-	bh=kPxxsPloNAZIbsDAv7MT44M99zRONtWkPcJJU6KB7vY=;
+	s=korg; t=1750684965;
+	bh=RREaERR22091YeRakDwzPN36su0Krb7FU79g7bkSFUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MRXN4Hz7eDhBib6odtylieRnB7uxG2AdV2pNausivVUMhtqXcshZvUG+jebNIr5jo
-	 USKgHuhSeMb/sBoOgRIKs9tJLYaj+cX1HowpjbcLpCZnnxPLcmqoXRO+8UBRszYPTP
-	 azBAG+7DmPG2UPn/CZ5EKjZDEd8d82UVhOeYKdtY=
+	b=IIXY5lpKHudapPjuVWbKxOXIKOhWyhIefY7+GVF6gHLLHQcKIgadlyKstv4nlAINF
+	 oa7AhCp3zYTkALoJqPe+xuAekHLz4HxdGxxNy8j+zt6HyZ3t77WR2aSGursEUJqjip
+	 JCo1F35edbbUlkTdmOvRbFZGJ1CBAseC9JTyxUVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 016/355] crypto: lrw - Only add ecb if it is not already there
-Date: Mon, 23 Jun 2025 15:03:37 +0200
-Message-ID: <20250623130627.267595543@linuxfoundation.org>
+Subject: [PATCH 5.4 052/222] fbdev: core: fbcvt: avoid division by 0 in fb_cvt_hperiod()
+Date: Mon, 23 Jun 2025 15:06:27 +0200
+Message-ID: <20250623130613.659289388@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 3d73909bddc2ebb3224a8bc2e5ce00e9df70c15d ]
+[ Upstream commit 3f6dae09fc8c306eb70fdfef70726e1f154e173a ]
 
-Only add ecb to the cipher name if it isn't already ecb.
+In fb_find_mode_cvt(), iff mode->refresh somehow happens to be 0x80000000,
+cvt.f_refresh will become 0 when multiplying it by 2 due to overflow. It's
+then passed to fb_cvt_hperiod(), where it's used as a divider -- division
+by 0 will result in kernel oops. Add a sanity check for cvt.f_refresh to
+avoid such overflow...
 
-Also use memcmp instead of strncmp since these strings are all
-stored in an array of length CRYPTO_MAX_ALG_NAME.
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
 
-Fixes: 700cb3f5fe75 ("crypto: lrw - Convert to skcipher")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202505151503.d8a6cf10-lkp@intel.com
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 96fe6a2109db ("[PATCH] fbdev: Add VESA Coordinated Video Timings (CVT) support")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/lrw.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/core/fbcvt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/crypto/lrw.c b/crypto/lrw.c
-index 80d9076e42e0b..7adc105c12f71 100644
---- a/crypto/lrw.c
-+++ b/crypto/lrw.c
-@@ -322,7 +322,7 @@ static int lrw_create(struct crypto_template *tmpl, struct rtattr **tb)
+diff --git a/drivers/video/fbdev/core/fbcvt.c b/drivers/video/fbdev/core/fbcvt.c
+index 64843464c6613..cd3821bd82e56 100644
+--- a/drivers/video/fbdev/core/fbcvt.c
++++ b/drivers/video/fbdev/core/fbcvt.c
+@@ -312,7 +312,7 @@ int fb_find_mode_cvt(struct fb_videomode *mode, int margins, int rb)
+ 	cvt.f_refresh = cvt.refresh;
+ 	cvt.interlace = 1;
  
- 	err = crypto_grab_skcipher(spawn, skcipher_crypto_instance(inst),
- 				   cipher_name, 0, mask);
--	if (err == -ENOENT) {
-+	if (err == -ENOENT && memcmp(cipher_name, "ecb(", 4)) {
- 		err = -ENAMETOOLONG;
- 		if (snprintf(ecb_name, CRYPTO_MAX_ALG_NAME, "ecb(%s)",
- 			     cipher_name) >= CRYPTO_MAX_ALG_NAME)
-@@ -356,7 +356,7 @@ static int lrw_create(struct crypto_template *tmpl, struct rtattr **tb)
- 	/* Alas we screwed up the naming so we have to mangle the
- 	 * cipher name.
- 	 */
--	if (!strncmp(cipher_name, "ecb(", 4)) {
-+	if (!memcmp(cipher_name, "ecb(", 4)) {
- 		int len;
- 
- 		len = strscpy(ecb_name, cipher_name + 4, sizeof(ecb_name));
+-	if (!cvt.xres || !cvt.yres || !cvt.refresh) {
++	if (!cvt.xres || !cvt.yres || !cvt.refresh || cvt.f_refresh > INT_MAX) {
+ 		printk(KERN_INFO "fbcvt: Invalid input parameters\n");
+ 		return 1;
+ 	}
 -- 
 2.39.5
 
