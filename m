@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFD3199FBA;
-	Mon, 23 Jun 2025 22:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B7B15ADB4;
+	Mon, 23 Jun 2025 22:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717263; cv=none; b=bNnJYBzDukl+e5lNvuWre5er09WxxqQVXanFoIdvdYoPMTvmxoWjuvfvSF8lz+M4fiHjSnysdEDapOVtgRQACwLWUrrOHGfeh1OHYOuD/gEmWHyaTOsfri2DXqGyCprYy/DBQACaDw/0rV0/leoqiN6yWqmEGRxzZovc/MtsKSE=
+	t=1750717265; cv=none; b=OSaq+qo/kM/UmLguBKfiexUSZ9eOhGo54LZl2/k/KZmanloCZyOccCf2p9xWtVz3l86b0rbg/5+WQI2YQV6eUQiEUdcEc0g0F+rC1mjrBNzySUBWteZMz+1iaRJF4FCOTSY9MfSwDEqQheYWZWimRsYz4vMvrnvWsMcMid15Upk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717263; c=relaxed/simple;
-	bh=TP460RtVM3m3NmNyP+Gty3WVdu1cBHRIlSBKRFGLsos=;
+	s=arc-20240116; t=1750717265; c=relaxed/simple;
+	bh=Z5W6CuHPVPV05Qi5cBvVC30PTJPD8Dqb/5HRn3eUB0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CDN7ZAP3uOZj15PaWt9hc3MvUl7avrCYPavcvMhOwJFWXDL9qA3aPQ5Op8cMnqDL0cGtHeQtAMUSLakMpDNM8YV/joB93bVlVUYPSQJ9G7X4xXQ0FYaRsrj/xL7h0CHCBUBRrib0+agROrJakh5grJyJcxVg8/QApCyoqViHG6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3kPyf4v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WC9HJBoLRdU3lEA2h6TbyVaGOC6S7xXX7gtCTclNfQ2L9mF3f9DStIALjR6jUtzhLTnlkrKoIfwKwo46frboV11Tx8BjIvSL1eoYiz3yXNYk4dEtf4vT1xBnQSysIUhsHTH8J1xcq/aTmPI150AceOOmjhnkp2yjDrpIjNWX7h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRbcmQxO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3kPyf4v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743F9C4CEED;
-	Mon, 23 Jun 2025 22:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRbcmQxO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4550C4CEEA;
+	Mon, 23 Jun 2025 22:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717262;
-	bh=TP460RtVM3m3NmNyP+Gty3WVdu1cBHRIlSBKRFGLsos=;
+	s=korg; t=1750717265;
+	bh=Z5W6CuHPVPV05Qi5cBvVC30PTJPD8Dqb/5HRn3eUB0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3kPyf4vqmbCIZX5sAtgjnA2ZZSgOnr2hvWVm402cWaBpj4ZEZhZGKTI4FLn4ONEn
-	 Ec1eL/6bXvV25DIN+zCd6vg2NRsnX8SuMpROjNwoS/ZpfYDY0/LXrgt1ANhQ/EM62o
-	 m5shUUGPgUVA6TRUgIJrhdH/dWlcIuuQeWWRYdEQ=
+	b=eRbcmQxOy8AmOyaH6D4A4/dmK/KY/u9CwpSbuS/DHX5svG58jpF3V9m8ngMATjA9B
+	 UJSEYGhAErAKVf/qZfdYMd0n2Ysrs4lYI4gjOJwUm8riqj3wF5fNFpxhLGiTaHZJDp
+	 sYgzLOM3OskNfeN7oy3pXfhN0eE8cyjTrmcwJBH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tan En De <ende.tan@starfivetech.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 391/508] i2c: designware: Invoke runtime suspend on quick slave re-registration
-Date: Mon, 23 Jun 2025 15:07:16 +0200
-Message-ID: <20250623130654.895582579@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.12 349/414] x86/tools: Drop duplicate unlikely() definition in insn_decoder_test.c
+Date: Mon, 23 Jun 2025 15:08:06 +0200
+Message-ID: <20250623130650.700321132@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,82 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tan En De <ende.tan@starfivetech.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 2fe2b969d911a09abcd6a47401a3c66c38a310e6 ]
+commit f710202b2a45addea3dcdcd862770ecbaf6597ef upstream.
 
-Replaced pm_runtime_put() with pm_runtime_put_sync_suspend() to ensure
-the runtime suspend is invoked immediately when unregistering a slave.
-This prevents a race condition where suspend was skipped when
-unregistering and registering slave in quick succession.
+After commit c104c16073b7 ("Kunit to check the longest symbol length"),
+there is a warning when building with clang because there is now a
+definition of unlikely from compiler.h in tools/include/linux, which
+conflicts with the one in the instruction decoder selftest:
 
-For example, consider the rapid sequence of
-`delete_device -> new_device -> delete_device -> new_device`.
-In this sequence, it is observed that the dw_i2c_plat_runtime_suspend()
-might not be invoked after `delete_device` operation.
+  arch/x86/tools/insn_decoder_test.c:15:9: warning: 'unlikely' macro redefined [-Wmacro-redefined]
 
-This is because after `delete_device` operation, when the
-pm_runtime_put() is about to trigger suspend, the following `new_device`
-operation might race and cancel the suspend.
+Remove the second unlikely() definition, as it is no longer necessary,
+clearing up the warning.
 
-If that happens, during the `new_device` operation,
-dw_i2c_plat_runtime_resume() is skipped (since there was no suspend), which
-means `i_dev->init()`, i.e. i2c_dw_init_slave(), is skipped.
-Since i2c_dw_init_slave() is skipped, i2c_dw_configure_fifo_slave() is
-skipped too, which leaves `DW_IC_INTR_MASK` unconfigured. If we inspect
-the interrupt mask register using devmem, it will show as zero.
-
-Example shell script to reproduce the issue:
-```
-  #!/bin/sh
-
-  SLAVE_LADDR=0x1010
-  SLAVE_BUS=13
-  NEW_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/new_device
-  DELETE_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/delete_device
-
-  # Create initial device
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-  sleep 2
-
-  # Rapid sequence of
-  # delete_device -> new_device -> delete_device -> new_device
-  echo $SLAVE_LADDR > $DELETE_DEVICE
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-  echo $SLAVE_LADDR > $DELETE_DEVICE
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-
-  # Using devmem to inspect IC_INTR_MASK will show as zero
-```
-
-Signed-off-by: Tan En De <ende.tan@starfivetech.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20250412023303.378600-1-ende.tan@starfivetech.com
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c104c16073b7 ("Kunit to check the longest symbol length")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20250318-x86-decoder-test-fix-unlikely-redef-v1-1-74c84a7bf05b@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-designware-slave.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/tools/insn_decoder_test.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-designware-slave.c b/drivers/i2c/busses/i2c-designware-slave.c
-index 5b54a9b9ed1a3..09b8ccc040c6e 100644
---- a/drivers/i2c/busses/i2c-designware-slave.c
-+++ b/drivers/i2c/busses/i2c-designware-slave.c
-@@ -97,7 +97,7 @@ static int i2c_dw_unreg_slave(struct i2c_client *slave)
- 	dev->disable(dev);
- 	synchronize_irq(dev->irq);
- 	dev->slave = NULL;
--	pm_runtime_put(dev->dev);
-+	pm_runtime_put_sync_suspend(dev->dev);
+--- a/arch/x86/tools/insn_decoder_test.c
++++ b/arch/x86/tools/insn_decoder_test.c
+@@ -12,8 +12,6 @@
+ #include <stdarg.h>
+ #include <linux/kallsyms.h>
  
- 	return 0;
- }
--- 
-2.39.5
-
+-#define unlikely(cond) (cond)
+-
+ #include <asm/insn.h>
+ #include <inat.c>
+ #include <insn.c>
 
 
