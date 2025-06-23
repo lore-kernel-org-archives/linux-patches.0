@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0002192EC;
-	Mon, 23 Jun 2025 22:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E6E16D9BF;
+	Mon, 23 Jun 2025 22:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717205; cv=none; b=Et2ZpBYz9Cdeg+x5ah0EMZmKO7PouDkDd3xmNzPRF6bGnjIskG64Z73oOjX9Gba+o3TKDWl5S7WuOV9EzQO/iZqWQOLW2/TKTghC7nbt/jve37qgaNAoNp9ht7wTEuGWEQhnMwtCJsthRGiaHPAe/jh/iqzeOv3OKxHX3iMBaOU=
+	t=1750717207; cv=none; b=lDQ6fxfHUx88EZOH4AoGgDbc7ulMX3tcQ2RqpN0ZHtN4qmQ1uALVciOFUZt5Xi9mj0ZFFgA7eKpkmJOBt0x/C2tZP9UZfITvjHOjM5XgMx49MGp66zfaNrbytdWMSkPKefOdRfwAFBYqtND6ovKxLNHhMW7WQAcxgJWYtm97tno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717205; c=relaxed/simple;
-	bh=vtb8emUrKYHvw3vOb+ih6ag2i9BK8tjELN9YXkZeS3k=;
+	s=arc-20240116; t=1750717207; c=relaxed/simple;
+	bh=eCyQk2oZjpqZpd7/C2fKiAswfJqqvQgqqlceYrVR10U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KC3m4X5TTTuXi9I94kd76fqF+maKAYw/6COB+KemGBPtapOIug8QqhdNP6zfYdfbWcI1ofWHZv54kLlH2vSB5mlAL/lkQylPYdd5m38lIySW0UhiaZySBSaZCxf7qIIrF2m0YXwaqS4ncGi/JcCrU6qhBC/n7+zb+zcRgkUyFXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bp8LSkdL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bYPrzFzw1rR9/7cgfTisz8kvNKRJQb1yRraJ4NuvZy19NgsSQnO6pnwClPd6IwtgVzjbMb3F8LKwOqtEC4WGHiKVS7V2rEOfnsYE4LxyulHytwxxICHTA8slQVrCtNE/hwcHEMxTkkc4WpH8I0Mw+VlvtfCWXXv8dYRqrPALys0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWm+n3cK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bp8LSkdL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74618C4CEEA;
-	Mon, 23 Jun 2025 22:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWm+n3cK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A6DC4CEED;
+	Mon, 23 Jun 2025 22:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717204;
-	bh=vtb8emUrKYHvw3vOb+ih6ag2i9BK8tjELN9YXkZeS3k=;
+	s=korg; t=1750717207;
+	bh=eCyQk2oZjpqZpd7/C2fKiAswfJqqvQgqqlceYrVR10U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bp8LSkdLKpzjtgSamKpOFzBk/j64hBfsQ2f1Kn6zRqc+IsmbAMYkZPyeUKR8vJioC
-	 FO95PaEXcuVS2VQiMbloh5Md75fK2dob/Sj78nJoSLNhXz55kRjW8N6poOaKQlsIeR
-	 QaNiX4b0ObfLZRle13TAXSdwXPUajmXLRf7tOvmw=
+	b=uWm+n3cKcJwrwE97u7LvwAc3sct34yhusU8LfS0sMXiaqt5r0goT7yelyDIMVl+Mr
+	 wkgcHUAvcnZwMBeB96vzCfko8q2AbgkkVWlB6bti5gY1ZbZHuUM01ud6I8eF/Yluxt
+	 922YVksgA+u6uw8pFza4As1zDjjOPb8aXlwdltsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 338/414] mm/hugetlb: unshare page tables during VMA split, not before
-Date: Mon, 23 Jun 2025 15:07:55 +0200
-Message-ID: <20250623130650.431737751@linuxfoundation.org>
+	Seunghun Han <kkamagui@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 381/508] ACPICA: fix acpi parse and parseext cache leaks
+Date: Mon, 23 Jun 2025 15:07:06 +0200
+Message-ID: <20250623130654.681534520@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,241 +45,240 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Seunghun Han <kkamagui@gmail.com>
 
-commit 081056dc00a27bccb55ccc3c6f230a3d5fd3f7e0 upstream.
+[ Upstream commit bed18f0bdcd6737a938264a59d67923688696fc4 ]
 
-Currently, __split_vma() triggers hugetlb page table unsharing through
-vm_ops->may_split().  This happens before the VMA lock and rmap locks are
-taken - which is too early, it allows racing VMA-locked page faults in our
-process and racing rmap walks from other processes to cause page tables to
-be shared again before we actually perform the split.
+ACPICA commit 8829e70e1360c81e7a5a901b5d4f48330e021ea5
 
-Fix it by explicitly calling into the hugetlb unshare logic from
-__split_vma() in the same place where THP splitting also happens.  At that
-point, both the VMA and the rmap(s) are write-locked.
+I'm Seunghun Han, and I work for National Security Research Institute of
+South Korea.
 
-An annoying detail is that we can now call into the helper
-hugetlb_unshare_pmds() from two different locking contexts:
+I have been doing a research on ACPI and found an ACPI cache leak in ACPI
+early abort cases.
 
-1. from hugetlb_split(), holding:
-    - mmap lock (exclusively)
-    - VMA lock
-    - file rmap lock (exclusively)
-2. hugetlb_unshare_all_pmds(), which I think is designed to be able to
-   call us with only the mmap lock held (in shared mode), but currently
-   only runs while holding mmap lock (exclusively) and VMA lock
+Boot log of ACPI cache leak is as follows:
+[    0.352414] ACPI: Added _OSI(Module Device)
+[    0.353182] ACPI: Added _OSI(Processor Device)
+[    0.353182] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    0.353182] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.356028] ACPI: Unable to start the ACPI Interpreter
+[    0.356799] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
+[    0.360215] kmem_cache_destroy Acpi-State: Slab cache still has objects
+[    0.360648] CPU: 0 PID: 1 Comm: swapper/0 Tainted: G        W
+4.12.0-rc4-next-20170608+ #10
+[    0.361273] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
+virtual_box 12/01/2006
+[    0.361873] Call Trace:
+[    0.362243]  ? dump_stack+0x5c/0x81
+[    0.362591]  ? kmem_cache_destroy+0x1aa/0x1c0
+[    0.362944]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.363296]  ? acpi_os_delete_cache+0xa/0x10
+[    0.363646]  ? acpi_ut_delete_caches+0x6d/0x7b
+[    0.364000]  ? acpi_terminate+0xa/0x14
+[    0.364000]  ? acpi_init+0x2af/0x34f
+[    0.364000]  ? __class_create+0x4c/0x80
+[    0.364000]  ? video_setup+0x7f/0x7f
+[    0.364000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.364000]  ? do_one_initcall+0x4e/0x1a0
+[    0.364000]  ? kernel_init_freeable+0x189/0x20a
+[    0.364000]  ? rest_init+0xc0/0xc0
+[    0.364000]  ? kernel_init+0xa/0x100
+[    0.364000]  ? ret_from_fork+0x25/0x30
 
-Backporting note:
-This commit fixes a racy protection that was introduced in commit
-b30c14cd6102 ("hugetlb: unshare some PMDs when splitting VMAs"); that
-commit claimed to fix an issue introduced in 5.13, but it should actually
-also go all the way back.
+I analyzed this memory leak in detail. I found that “Acpi-State” cache and
+“Acpi-Parse” cache were merged because the size of cache objects was same
+slab cache size.
 
-[jannh@google.com: v2]
-  Link: https://lkml.kernel.org/r/20250528-hugetlb-fixes-splitrace-v2-1-1329349bad1a@google.com
-Link: https://lkml.kernel.org/r/20250528-hugetlb-fixes-splitrace-v2-0-1329349bad1a@google.com
-Link: https://lkml.kernel.org/r/20250527-hugetlb-fixes-splitrace-v1-1-f4136f5ec58a@google.com
-Fixes: 39dde65c9940 ("[PATCH] shared page table for hugetlb page")
-Signed-off-by: Jann Horn <jannh@google.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>	[b30c14cd6102: hugetlb: unshare some PMDs when splitting VMAs]
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[stable backport: added missing include]
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+I finally found “Acpi-Parse” cache and “Acpi-parse_ext” cache were leaked
+using SLAB_NEVER_MERGE flag in kmem_cache_create() function.
+
+Real ACPI cache leak point is as follows:
+[    0.360101] ACPI: Added _OSI(Module Device)
+[    0.360101] ACPI: Added _OSI(Processor Device)
+[    0.360101] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    0.361043] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.364016] ACPI: Unable to start the ACPI Interpreter
+[    0.365061] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
+[    0.368174] kmem_cache_destroy Acpi-Parse: Slab cache still has objects
+[    0.369332] CPU: 1 PID: 1 Comm: swapper/0 Tainted: G        W
+4.12.0-rc4-next-20170608+ #8
+[    0.371256] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
+virtual_box 12/01/2006
+[    0.372000] Call Trace:
+[    0.372000]  ? dump_stack+0x5c/0x81
+[    0.372000]  ? kmem_cache_destroy+0x1aa/0x1c0
+[    0.372000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.372000]  ? acpi_os_delete_cache+0xa/0x10
+[    0.372000]  ? acpi_ut_delete_caches+0x56/0x7b
+[    0.372000]  ? acpi_terminate+0xa/0x14
+[    0.372000]  ? acpi_init+0x2af/0x34f
+[    0.372000]  ? __class_create+0x4c/0x80
+[    0.372000]  ? video_setup+0x7f/0x7f
+[    0.372000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.372000]  ? do_one_initcall+0x4e/0x1a0
+[    0.372000]  ? kernel_init_freeable+0x189/0x20a
+[    0.372000]  ? rest_init+0xc0/0xc0
+[    0.372000]  ? kernel_init+0xa/0x100
+[    0.372000]  ? ret_from_fork+0x25/0x30
+[    0.388039] kmem_cache_destroy Acpi-parse_ext: Slab cache still has objects
+[    0.389063] CPU: 1 PID: 1 Comm: swapper/0 Tainted: G        W
+4.12.0-rc4-next-20170608+ #8
+[    0.390557] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
+virtual_box 12/01/2006
+[    0.392000] Call Trace:
+[    0.392000]  ? dump_stack+0x5c/0x81
+[    0.392000]  ? kmem_cache_destroy+0x1aa/0x1c0
+[    0.392000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.392000]  ? acpi_os_delete_cache+0xa/0x10
+[    0.392000]  ? acpi_ut_delete_caches+0x6d/0x7b
+[    0.392000]  ? acpi_terminate+0xa/0x14
+[    0.392000]  ? acpi_init+0x2af/0x34f
+[    0.392000]  ? __class_create+0x4c/0x80
+[    0.392000]  ? video_setup+0x7f/0x7f
+[    0.392000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.392000]  ? do_one_initcall+0x4e/0x1a0
+[    0.392000]  ? kernel_init_freeable+0x189/0x20a
+[    0.392000]  ? rest_init+0xc0/0xc0
+[    0.392000]  ? kernel_init+0xa/0x100
+[    0.392000]  ? ret_from_fork+0x25/0x30
+
+When early abort is occurred due to invalid ACPI information, Linux kernel
+terminates ACPI by calling acpi_terminate() function. The function calls
+acpi_ut_delete_caches() function to delete local caches (acpi_gbl_namespace_
+cache, state_cache, operand_cache, ps_node_cache, ps_node_ext_cache).
+
+But the deletion codes in acpi_ut_delete_caches() function only delete
+slab caches using kmem_cache_destroy() function, therefore the cache
+objects should be flushed before acpi_ut_delete_caches() function.
+
+"Acpi-Parse" cache and "Acpi-ParseExt" cache are used in an AML parse
+function, acpi_ps_parse_loop(). The function should complete all ops
+using acpi_ps_complete_final_op() when an error occurs due to invalid
+AML codes.
+However, the current implementation of acpi_ps_complete_final_op() does not
+complete all ops when it meets some errors and this cause cache leak.
+
+This cache leak has a security threat because an old kernel (<= 4.9) shows
+memory locations of kernel functions in stack dump. Some malicious users
+could use this information to neutralize kernel ASLR.
+
+To fix ACPI cache leak for enhancing security, I made a patch to complete all
+ops unconditionally for acpi_ps_complete_final_op() function.
+
+I hope that this patch improves the security of Linux kernel.
+
+Thank you.
+
+Link: https://github.com/acpica/acpica/commit/8829e70e
+Signed-off-by: Seunghun Han <kkamagui@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2363774.ElGaqSPkdT@rjwysocki.net
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/hugetlb.h          |    3 +
- mm/hugetlb.c                     |   60 ++++++++++++++++++++++++++++-----------
- mm/vma.c                         |    7 ++++
- mm/vma_internal.h                |    1 
- tools/testing/vma/vma_internal.h |    2 +
- 5 files changed, 57 insertions(+), 16 deletions(-)
+ drivers/acpi/acpica/psobject.c | 52 ++++++++++------------------------
+ 1 file changed, 15 insertions(+), 37 deletions(-)
 
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -272,6 +272,7 @@ long hugetlb_change_protection(struct vm
- bool is_hugetlb_entry_migration(pte_t pte);
- bool is_hugetlb_entry_hwpoisoned(pte_t pte);
- void hugetlb_unshare_all_pmds(struct vm_area_struct *vma);
-+void hugetlb_split(struct vm_area_struct *vma, unsigned long addr);
- 
- #else /* !CONFIG_HUGETLB_PAGE */
- 
-@@ -465,6 +466,8 @@ static inline vm_fault_t hugetlb_fault(s
- 
- static inline void hugetlb_unshare_all_pmds(struct vm_area_struct *vma) { }
- 
-+static inline void hugetlb_split(struct vm_area_struct *vma, unsigned long addr) {}
-+
- #endif /* !CONFIG_HUGETLB_PAGE */
- 
- #ifndef pgd_write
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -87,7 +87,7 @@ static void hugetlb_vma_lock_free(struct
- static void hugetlb_vma_lock_alloc(struct vm_area_struct *vma);
- static void __hugetlb_vma_unlock_write_free(struct vm_area_struct *vma);
- static void hugetlb_unshare_pmds(struct vm_area_struct *vma,
--		unsigned long start, unsigned long end);
-+		unsigned long start, unsigned long end, bool take_locks);
- static struct resv_map *vma_resv_map(struct vm_area_struct *vma);
- 
- static void hugetlb_free_folio(struct folio *folio)
-@@ -5071,26 +5071,40 @@ static int hugetlb_vm_op_split(struct vm
+diff --git a/drivers/acpi/acpica/psobject.c b/drivers/acpi/acpica/psobject.c
+index bca249e67c6b5..3c887515bad41 100644
+--- a/drivers/acpi/acpica/psobject.c
++++ b/drivers/acpi/acpica/psobject.c
+@@ -636,7 +636,8 @@ acpi_status
+ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 			  union acpi_parse_object *op, acpi_status status)
  {
- 	if (addr & ~(huge_page_mask(hstate_vma(vma))))
- 		return -EINVAL;
-+	return 0;
-+}
+-	acpi_status status2;
++	acpi_status return_status = status;
++	u8 ascending = TRUE;
  
-+void hugetlb_split(struct vm_area_struct *vma, unsigned long addr)
-+{
- 	/*
- 	 * PMD sharing is only possible for PUD_SIZE-aligned address ranges
- 	 * in HugeTLB VMAs. If we will lose PUD_SIZE alignment due to this
- 	 * split, unshare PMDs in the PUD_SIZE interval surrounding addr now.
-+	 * This function is called in the middle of a VMA split operation, with
-+	 * MM, VMA and rmap all write-locked to prevent concurrent page table
-+	 * walks (except hardware and gup_fast()).
- 	 */
-+	vma_assert_write_locked(vma);
-+	i_mmap_assert_write_locked(vma->vm_file->f_mapping);
-+
- 	if (addr & ~PUD_MASK) {
--		/*
--		 * hugetlb_vm_op_split is called right before we attempt to
--		 * split the VMA. We will need to unshare PMDs in the old and
--		 * new VMAs, so let's unshare before we split.
--		 */
- 		unsigned long floor = addr & PUD_MASK;
- 		unsigned long ceil = floor + PUD_SIZE;
+ 	ACPI_FUNCTION_TRACE_PTR(ps_complete_final_op, walk_state);
  
--		if (floor >= vma->vm_start && ceil <= vma->vm_end)
--			hugetlb_unshare_pmds(vma, floor, ceil);
-+		if (floor >= vma->vm_start && ceil <= vma->vm_end) {
-+			/*
-+			 * Locking:
-+			 * Use take_locks=false here.
-+			 * The file rmap lock is already held.
-+			 * The hugetlb VMA lock can't be taken when we already
-+			 * hold the file rmap lock, and we don't need it because
-+			 * its purpose is to synchronize against concurrent page
-+			 * table walks, which are not possible thanks to the
-+			 * locks held by our caller.
-+			 */
-+			hugetlb_unshare_pmds(vma, floor, ceil, /* take_locks = */ false);
-+		}
- 	}
+@@ -650,7 +651,7 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 			  op));
+ 	do {
+ 		if (op) {
+-			if (walk_state->ascending_callback != NULL) {
++			if (ascending && walk_state->ascending_callback != NULL) {
+ 				walk_state->op = op;
+ 				walk_state->op_info =
+ 				    acpi_ps_get_opcode_info(op->common.
+@@ -672,49 +673,26 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 				}
+ 
+ 				if (status == AE_CTRL_TERMINATE) {
+-					status = AE_OK;
 -
--	return 0;
+-					/* Clean up */
+-					do {
+-						if (op) {
+-							status2 =
+-							    acpi_ps_complete_this_op
+-							    (walk_state, op);
+-							if (ACPI_FAILURE
+-							    (status2)) {
+-								return_ACPI_STATUS
+-								    (status2);
+-							}
+-						}
+-
+-						acpi_ps_pop_scope(&
+-								  (walk_state->
+-								   parser_state),
+-								  &op,
+-								  &walk_state->
+-								  arg_types,
+-								  &walk_state->
+-								  arg_count);
+-
+-					} while (op);
+-
+-					return_ACPI_STATUS(status);
++					ascending = FALSE;
++					return_status = AE_CTRL_TERMINATE;
+ 				}
+ 
+ 				else if (ACPI_FAILURE(status)) {
+ 
+ 					/* First error is most important */
+ 
+-					(void)
+-					    acpi_ps_complete_this_op(walk_state,
+-								     op);
+-					return_ACPI_STATUS(status);
++					ascending = FALSE;
++					return_status = status;
+ 				}
+ 			}
+ 
+-			status2 = acpi_ps_complete_this_op(walk_state, op);
+-			if (ACPI_FAILURE(status2)) {
+-				return_ACPI_STATUS(status2);
++			status = acpi_ps_complete_this_op(walk_state, op);
++			if (ACPI_FAILURE(status)) {
++				ascending = FALSE;
++				if (ACPI_SUCCESS(return_status) ||
++				    return_status == AE_CTRL_TERMINATE) {
++					return_status = status;
++				}
+ 			}
+ 		}
+ 
+@@ -724,5 +702,5 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 
+ 	} while (op);
+ 
+-	return_ACPI_STATUS(status);
++	return_ACPI_STATUS(return_status);
  }
- 
- static unsigned long hugetlb_vm_op_pagesize(struct vm_area_struct *vma)
-@@ -7491,9 +7505,16 @@ void move_hugetlb_state(struct folio *ol
- 	}
- }
- 
-+/*
-+ * If @take_locks is false, the caller must ensure that no concurrent page table
-+ * access can happen (except for gup_fast() and hardware page walks).
-+ * If @take_locks is true, we take the hugetlb VMA lock (to lock out things like
-+ * concurrent page fault handling) and the file rmap lock.
-+ */
- static void hugetlb_unshare_pmds(struct vm_area_struct *vma,
- 				   unsigned long start,
--				   unsigned long end)
-+				   unsigned long end,
-+				   bool take_locks)
- {
- 	struct hstate *h = hstate_vma(vma);
- 	unsigned long sz = huge_page_size(h);
-@@ -7517,8 +7538,12 @@ static void hugetlb_unshare_pmds(struct
- 	mmu_notifier_range_init(&range, MMU_NOTIFY_CLEAR, 0, mm,
- 				start, end);
- 	mmu_notifier_invalidate_range_start(&range);
--	hugetlb_vma_lock_write(vma);
--	i_mmap_lock_write(vma->vm_file->f_mapping);
-+	if (take_locks) {
-+		hugetlb_vma_lock_write(vma);
-+		i_mmap_lock_write(vma->vm_file->f_mapping);
-+	} else {
-+		i_mmap_assert_write_locked(vma->vm_file->f_mapping);
-+	}
- 	for (address = start; address < end; address += PUD_SIZE) {
- 		ptep = hugetlb_walk(vma, address, sz);
- 		if (!ptep)
-@@ -7528,8 +7553,10 @@ static void hugetlb_unshare_pmds(struct
- 		spin_unlock(ptl);
- 	}
- 	flush_hugetlb_tlb_range(vma, start, end);
--	i_mmap_unlock_write(vma->vm_file->f_mapping);
--	hugetlb_vma_unlock_write(vma);
-+	if (take_locks) {
-+		i_mmap_unlock_write(vma->vm_file->f_mapping);
-+		hugetlb_vma_unlock_write(vma);
-+	}
- 	/*
- 	 * No need to call mmu_notifier_arch_invalidate_secondary_tlbs(), see
- 	 * Documentation/mm/mmu_notifier.rst.
-@@ -7544,7 +7571,8 @@ static void hugetlb_unshare_pmds(struct
- void hugetlb_unshare_all_pmds(struct vm_area_struct *vma)
- {
- 	hugetlb_unshare_pmds(vma, ALIGN(vma->vm_start, PUD_SIZE),
--			ALIGN_DOWN(vma->vm_end, PUD_SIZE));
-+			ALIGN_DOWN(vma->vm_end, PUD_SIZE),
-+			/* take_locks = */ true);
- }
- 
- #ifdef CONFIG_CMA
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -416,7 +416,14 @@ static int __split_vma(struct vma_iterat
- 	init_vma_prep(&vp, vma);
- 	vp.insert = new;
- 	vma_prepare(&vp);
-+
-+	/*
-+	 * Get rid of huge pages and shared page tables straddling the split
-+	 * boundary.
-+	 */
- 	vma_adjust_trans_huge(vma, vma->vm_start, addr, 0);
-+	if (is_vm_hugetlb_page(vma))
-+		hugetlb_split(vma, addr);
- 
- 	if (new_below) {
- 		vma->vm_start = addr;
---- a/mm/vma_internal.h
-+++ b/mm/vma_internal.h
-@@ -17,6 +17,7 @@
- #include <linux/file.h>
- #include <linux/fs.h>
- #include <linux/huge_mm.h>
-+#include <linux/hugetlb.h>
- #include <linux/hugetlb_inline.h>
- #include <linux/kernel.h>
- #include <linux/khugepaged.h>
---- a/tools/testing/vma/vma_internal.h
-+++ b/tools/testing/vma/vma_internal.h
-@@ -735,6 +735,8 @@ static inline void vma_adjust_trans_huge
- 	(void)adjust_next;
- }
- 
-+static inline void hugetlb_split(struct vm_area_struct *, unsigned long) {}
-+
- static inline void vma_iter_free(struct vma_iterator *vmi)
- {
- 	mas_destroy(&vmi->mas);
+-- 
+2.39.5
+
 
 
