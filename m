@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FC44409;
-	Mon, 23 Jun 2025 22:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091114409;
+	Mon, 23 Jun 2025 22:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716090; cv=none; b=bkygkOW/IgtLfpLh9avdw9RMmYmWBMLID5rdhbVFelURQh/aWLW7F3J+uG1vqOuABVvDsHlO7r+Z8F7l+8nZlQygBQtB6cI3t8vKoyF739DYLUggyDDFc3rFRoGf8VMQBHyQE5SOcNyQUg/1VEsGBza8tYnQEhtKddoL6EKLDnM=
+	t=1750716093; cv=none; b=oXDu1KkHmuJ/fOSV75I+J9sFYfexhvHKdZ5h9c8WfdOZvca9ccYTOcp9UuZStKpxalGvhEY3BlpuByYRJZYoIutE6u93AbpoQrgQEBoWNJS0xA9Z6wlEV1MX0lEfoveOtvBFJfnul3oFbI+EL8ISGtc+6JOU5xO4/xdW4Uq1TE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716090; c=relaxed/simple;
-	bh=6FfMaLHvTPnIPR3dsmKJzg5qnyRNXATgaEt2b+FtDHM=;
+	s=arc-20240116; t=1750716093; c=relaxed/simple;
+	bh=X/zI9ankXMLBAzBSpOF1oSD1h5+AiRshnH7hjhdmg30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q1nAkbxgCmVcm+Z9nuZ11363QQ6gv7r6SJkYcrg+XSkzzYvhccDi50+UDTZ/6j9AWIxcTxzLnqE1LfUB7cixeEonqv+FU2VwaRqathDSMS3doKJMr27awoRxOfHjSnMffaLfh1b6cUaJi3b75EDIua397y9kgp7ogDvoH9CY51g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M840zE9g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oAVCoe8Rw/d7uECvZOgGEFsfroKLGUs4I8JxorZRwrGVLteeXxlWdR7XHT3vqTYxF8M8J1FfvT/E/tHH4q9OvTsF/LGbGRyNR0yKhZfZcITB32rqscbCk2dJySFBrW5ZQXtTbyNWUOxdoWO6/VelLcD8a1o0loT9KIUGQcftGhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+kzBkA1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M840zE9g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29238C4CEEA;
-	Mon, 23 Jun 2025 22:01:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+kzBkA1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E48C4CEEA;
+	Mon, 23 Jun 2025 22:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716090;
-	bh=6FfMaLHvTPnIPR3dsmKJzg5qnyRNXATgaEt2b+FtDHM=;
+	s=korg; t=1750716092;
+	bh=X/zI9ankXMLBAzBSpOF1oSD1h5+AiRshnH7hjhdmg30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M840zE9gBXruHS16sq9NknsjsDODjohDYKzVsmDElr7bEJVKU5cYEJyq0iTtQnQzC
-	 vPTxqJs1NKOdrUFr/d8w2Z7OOVDGeIMahD5c6lqWciI+t7DWTZ7xA6EkrA6nApWvIm
-	 5IzMY8UqKU3v6EEcGB3hFgUWt8HXhsQnzqEWPf4M=
+	b=x+kzBkA1opZAT4Bv96VS1fZE9Q3lpsaMsBuMKgTM1ExNQzvJ9dXHdyAwPuUTQIJ6v
+	 YE4ueb6ketnRSORGqAjYlMg2bAbjRC1TuiCL6MCO31tFZIKzTj1wbWySFk7owKVCo+
+	 d1S3NycWwTqDT8WGTZyu+2Ey/bKh+pRIoDWvENWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Roger Quadros <rogerq@kernel.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	"Nobuhiro Iwamatsu (CIP)" <nobuhiro1.iwamatsu@toshiba.co.jp>
-Subject: [PATCH 5.10 320/355] ARM: dts: am335x-bone-common: Increase MDIO reset deassert delay to 50ms
-Date: Mon, 23 Jun 2025 15:08:41 +0200
-Message-ID: <20250623130636.385337147@linuxfoundation.org>
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 289/411] media: ti: cal: Fix wrong goto on error path
+Date: Mon, 23 Jun 2025 15:07:13 +0200
+Message-ID: <20250623130640.921507648@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,51 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit 929d8490f8790164f5f63671c1c58d6c50411cb2 upstream.
+[ Upstream commit a5b18fd769b7dc2e77a9e6a390844cbf50626ae8 ]
 
-Commit b9bf5612610aa7e3 ("ARM: dts: am335x-bone-common: Increase MDIO
-reset deassert time") already increased the MDIO reset deassert delay
-from 6.5 to 13 ms, but this may still cause Ethernet PHY probe failures:
+If pm_runtime_resume_and_get() fails, we should unprepare the context,
+but currently we skip that as we goto to a later line.
 
-    SMSC LAN8710/LAN8720 4a101000.mdio:00: probe with driver SMSC LAN8710/LAN8720 failed with error -5
-
-On BeagleBone Black Rev. C3, ETH_RESETn is controlled by an open-drain
-AND gate.  It is pulled high by a 10K resistor, and has a 4.7µF
-capacitor to ground, giving an RC time constant of 47ms.  As it takes
-0.7RC to charge the capacitor above the threshold voltage of a CMOS
-input (VDD/2), the delay should be at least 33ms.  Considering the
-typical tolerance of 20% on capacitors, 40ms would be safer.  Add an
-additional safety margin and settle for 50ms.
-
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/9002a58daa1b2983f39815b748ee9d2f8dcc4829.1730366936.git.geert+renesas@glider.be
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro1.iwamatsu@toshiba.co.jp>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/am335x-bone-common.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/ti-vpe/cal-video.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm/boot/dts/am335x-bone-common.dtsi
-+++ b/arch/arm/boot/dts/am335x-bone-common.dtsi
-@@ -381,7 +381,7 @@
- 		/* Support GPIO reset on revision C3 boards */
- 		reset-gpios = <&gpio1 8 GPIO_ACTIVE_LOW>;
- 		reset-assert-us = <300>;
--		reset-deassert-us = <13000>;
-+		reset-deassert-us = <50000>;
- 	};
- };
+diff --git a/drivers/media/platform/ti-vpe/cal-video.c b/drivers/media/platform/ti-vpe/cal-video.c
+index d87177d04e921..2e93c1b8f3597 100644
+--- a/drivers/media/platform/ti-vpe/cal-video.c
++++ b/drivers/media/platform/ti-vpe/cal-video.c
+@@ -744,7 +744,7 @@ static int cal_start_streaming(struct vb2_queue *vq, unsigned int count)
  
+ 	ret = pm_runtime_resume_and_get(ctx->cal->dev);
+ 	if (ret < 0)
+-		goto error_pipeline;
++		goto error_unprepare;
+ 
+ 	cal_ctx_set_dma_addr(ctx, addr);
+ 	cal_ctx_start(ctx);
+@@ -761,8 +761,8 @@ static int cal_start_streaming(struct vb2_queue *vq, unsigned int count)
+ error_stop:
+ 	cal_ctx_stop(ctx);
+ 	pm_runtime_put_sync(ctx->cal->dev);
++error_unprepare:
+ 	cal_ctx_unprepare(ctx);
+-
+ error_pipeline:
+ 	media_pipeline_stop(&ctx->vdev.entity);
+ error_release_buffers:
+-- 
+2.39.5
+
 
 
