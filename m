@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F0B2367B0;
-	Mon, 23 Jun 2025 13:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B62E219E0;
+	Mon, 23 Jun 2025 13:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685072; cv=none; b=eI/Lr614EqUMqX8ZNkfs0Zf8c2zHsVRtvbBLY57hBqdtBS6Gc3yIbPan9+W1buQqCsLxuiSwRzarkdtYiQ1gxEUOF7/nJcYMj0h+S956ZktJlYr5Et2uBwwWs+/YT32ZnAdDbyN3/MTgJO9NsqGiBhzcVka8uum1cSAzYq/T3tw=
+	t=1750685075; cv=none; b=FFulWrwE4WOsvhipwHLR+POCoLwdOK2SJPc5yfiHbIAO0qg6RWe+kwIQpm3i7Sna5vQQi4M4KF4ZZ21gPGkHdAljW2G/6BZT1o6hU65A6wG9DVc9zLf4JDS9InQlAqUet2hbOSmkMIJB4onVX6AFoxt7jhhN+Q4u7yXy4Nkf180=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685072; c=relaxed/simple;
-	bh=42XGv2aV8VCJXfqV1+8NNh/vlckzTtUQB1/nYm0l10g=;
+	s=arc-20240116; t=1750685075; c=relaxed/simple;
+	bh=bgZk599NM8mOHFNcsjhxxq3iv4z1ukPoqxUKM4QX6XU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CbY/yAZp9WTrB76ZUert5p/XNhG7x21eU6oLUrMOaxy4JQWNRil4aAK9l4pvkYaSIooduF7hFix3mG3vweLyfcPO3LRECMujHgjMn7H3qQ2JL4jWCzY0Z+8g1zpXJEJufaOrw3VcoIr6F20nWAPtBk8azMI02J4iHFs/TgHf82g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RiUIYake; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aOCWdsSkX9AGmzzfHfLfJNxGjBlzi01u50s4M0wVa3NCGlo2ZPMuueCuCZN4TSF1aVN4RotDIJQZUWUl0o1eTwG5UvifJPyAWZB01ARJjpyNt2otmnzmgdbrC3QaZXxVzswi8jDNTo9Cedvv/4/OfaeLffYco9k7hjNN2XlMQhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aCAOhGCn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RiUIYake"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A8FC4CEEA;
-	Mon, 23 Jun 2025 13:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aCAOhGCn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2600C4CEF0;
+	Mon, 23 Jun 2025 13:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685072;
-	bh=42XGv2aV8VCJXfqV1+8NNh/vlckzTtUQB1/nYm0l10g=;
+	s=korg; t=1750685075;
+	bh=bgZk599NM8mOHFNcsjhxxq3iv4z1ukPoqxUKM4QX6XU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RiUIYaket50qsKjcDgzFvac2RDkoQ8DgwcaaZ5MwFKrBKNsUBscMs2XxGhHNHgHC4
-	 j8F4QOn8JREfCpalr2ti+b/ITJ6VxmiH2xxyrTIi/XkUug9ToxAWl9kVqs848kkHXX
-	 g2d/spfIiCKhsSGV4xpmMqx72TS5tF2ZE/jwBMWs=
+	b=aCAOhGCnbr1rKtie/s8vikwXBYRiY/TiO5edJvTBJGpD21OB8IjNVqDPVPHxNwxO6
+	 Ontve/E1bGRiCgj+7N4yGJjdgd6da8IhSG20A19WrhTq6pNIwfaQeiKJ7MjfImE/CS
+	 9tpV6J9qm/266rdEytA5ovBCS42fIuWbNo03MAxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.4 091/222] mips: Include KBUILD_CPPFLAGS in CHECKFLAGS invocation
-Date: Mon, 23 Jun 2025 15:07:06 +0200
-Message-ID: <20250623130614.836926785@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 033/411] drm: rcar-du: Fix memory leak in rcar_du_vsps_init()
+Date: Mon, 23 Jun 2025 15:02:57 +0200
+Message-ID: <20250623130633.999991847@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,42 +48,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 08f6554ff90ef189e6b8f0303e57005bddfdd6a7 upstream.
+[ Upstream commit 91e3bf09a90bb4340c0c3c51396e7531555efda4 ]
 
-A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
-KBUILD_CPPFLAGS so that '--target' is available while preprocessing.
-When that occurs, the following error appears when building ARCH=mips
-with clang (tip of tree error shown):
+The rcar_du_vsps_init() doesn't free the np allocated by
+of_parse_phandle_with_fixed_args() for the non-error case.
 
-  clang: error: unsupported option '-mabi=' for target 'x86_64-pc-linux-gnu'
+Fix memory leak for the non-error case.
 
-Add KBUILD_CPPFLAGS in the CHECKFLAGS invocation to keep everything
-working after the move.
+While at it, replace the label 'error'->'done' as it applies to non-error
+case as well and update the error check condition for rcar_du_vsp_init()
+to avoid breakage in future, if it returns positive value.
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3e81374e2014 ("drm: rcar-du: Support multiple sources from the same VSP")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://lore.kernel.org/r/20231116122424.80136-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/rcar-du/rcar_du_kms.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/arch/mips/Makefile
-+++ b/arch/mips/Makefile
-@@ -319,7 +319,7 @@ KBUILD_CFLAGS += -fno-asynchronous-unwin
- KBUILD_LDFLAGS		+= -m $(ld-emul)
+diff --git a/drivers/gpu/drm/rcar-du/rcar_du_kms.c b/drivers/gpu/drm/rcar-du/rcar_du_kms.c
+index fdb8a0d127ad3..11dc0f44d2bd8 100644
+--- a/drivers/gpu/drm/rcar-du/rcar_du_kms.c
++++ b/drivers/gpu/drm/rcar-du/rcar_du_kms.c
+@@ -627,7 +627,7 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
+ 		ret = of_parse_phandle_with_fixed_args(np, vsps_prop_name,
+ 						       cells, i, &args);
+ 		if (ret < 0)
+-			goto error;
++			goto done;
  
- ifdef CONFIG_MIPS
--CHECKFLAGS += $(shell $(CC) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
-+CHECKFLAGS += $(shell $(CC) $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
- 	egrep -vw '__GNUC_(MINOR_|PATCHLEVEL_)?_' | \
- 	sed -e "s/^\#define /-D'/" -e "s/ /'='/" -e "s/$$/'/" -e 's/\$$/&&/g')
- endif
+ 		/*
+ 		 * Add the VSP to the list or update the corresponding existing
+@@ -665,13 +665,11 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
+ 		vsp->dev = rcdu;
+ 
+ 		ret = rcar_du_vsp_init(vsp, vsps[i].np, vsps[i].crtcs_mask);
+-		if (ret < 0)
+-			goto error;
++		if (ret)
++			goto done;
+ 	}
+ 
+-	return 0;
+-
+-error:
++done:
+ 	for (i = 0; i < ARRAY_SIZE(vsps); ++i)
+ 		of_node_put(vsps[i].np);
+ 
+-- 
+2.39.5
+
 
 
