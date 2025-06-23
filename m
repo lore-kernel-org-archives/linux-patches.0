@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07F6136348;
-	Mon, 23 Jun 2025 21:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57ACB136348;
+	Mon, 23 Jun 2025 21:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715470; cv=none; b=Z60drrvobQsrMyaxzKqs9kCrQOS6Rx2U5PDXU1OUzsOk7dbM4hlTigi2+xq89O4LIImMEkYtI0SISyG9MyTjK0QFG9Xibzb3Xq+6f0SUyD0Qmrt4QNyRPiLg5QGK3JfbYVAZS/O4vhQkDCM+Ke363FJZBQZGC5tyxEpWspe7uiw=
+	t=1750715472; cv=none; b=UikgIyWekYi7px2Xd5CxeAPLr0iK1EYRCgrMaei4UPDSDNumf6gr953o0SxWGD6ZvF0yDqRY4ve5ci6shLRF/Z9wMxTVfWU20OTP2hMmBsDa3BVS/TOy5cqoD4OUq9dhtHD120NG7eIUbqfo3A3S+l/5CH3Pus89NbIwvQbpBRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715470; c=relaxed/simple;
-	bh=/MZatzuM8wAyOlk7wFZhPUYmnev8z3OfPITEXi8/mCY=;
+	s=arc-20240116; t=1750715472; c=relaxed/simple;
+	bh=262EtadwUye/wHlgJmbT7tq9rSuiS9wpPA+ma0iWdtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eVnDGAyjpSHH3e4r0qLJi/4uQ1N6qNlXQBwObkN7hjuDJss/swZ62Jc/xPhM1paaR6xut1EBwZx01TIszhFAO6TgvFs2XxtHayp7OKv7mEOFv8jmzM/e8aUnpgMRbP4y1CLt08ttsIPQxDOkBRuh0Cr59KSmXQLhAZwMrohgNto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnOOt5Uv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WDgfyymDlb/5O2ZmRe12OTQKhm61Ox/F4EJSeSSsDuMyjxDaNKz6Vr65FjtmBaaLjtExo3d3PRPQlNqn+8dQTu5++l4Ri51IDpsmGHBIUW3WLtHgPpPs64SifvvAaJelLzRzw3npYja73ld46QlK0XKD5/N8vmbilvLZ3ZONzy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXQ05Wku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnOOt5Uv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F339C4CEED;
-	Mon, 23 Jun 2025 21:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXQ05Wku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2764C4CEEA;
+	Mon, 23 Jun 2025 21:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715469;
-	bh=/MZatzuM8wAyOlk7wFZhPUYmnev8z3OfPITEXi8/mCY=;
+	s=korg; t=1750715472;
+	bh=262EtadwUye/wHlgJmbT7tq9rSuiS9wpPA+ma0iWdtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GnOOt5Uvdnc1gWAjvkhr7zSXULmuF0Bxszcr0pDS4PSFLfeI7iCWqTT666Rw/lXVe
-	 DvLAMEVKeZoG9Nuuh0trKHRVB69jfoFhuWiHvrtGFd0dShPd7bL1pZ2WVnJ5hMfPZw
-	 lIORGVMIuxJkOIuSkvjRbWuU0YKnapwHzT04dbNU=
+	b=cXQ05Wku/S9nSPuUInkeGpbKveZEVoFHS/nMY1iAmsagrpTtGYyePAg+p4ivEYBac
+	 HBjHuJkFA5EBfuQfv5gvl4UQIqejCGjh6N8+z42u+WWKN690xk6yVAQfqrrjfrOoMF
+	 +hmAOy79jzgIArs93FXejyUnRGzjBB/RMEQpUDLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Neal Gompa <neal@gompa.dev>,
+	Hector Martin <marcan@marcan.st>,
+	James Calligeros <jcalligeros99@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 244/508] drm/meson: fix more rounding issues with 59.94Hz modes
-Date: Mon, 23 Jun 2025 15:04:49 +0200
-Message-ID: <20250623130651.255684290@linuxfoundation.org>
+Subject: [PATCH 5.15 264/411] ASoC: tas2770: Power cycle amp on ISENSE/VSENSE change
+Date: Mon, 23 Jun 2025 15:06:48 +0200
+Message-ID: <20250623130640.303289445@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,136 +49,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit 0cee6c4d3518b2e757aedae78771f17149f57653 ]
+[ Upstream commit f529c91be8a34ac12e7599bf87c65b6f4a2c9f5c ]
 
-Commit 1017560164b6 ("drm/meson: use unsigned long long / Hz for
-frequency types") attempts to resolve video playback using 59.94Hz.
- using YUV420 by changing the clock calculation to use
-Hz instead of kHz (thus yielding more precision).
+The ISENSE/VSENSE blocks are only powered up when the amplifier
+transitions from shutdown to active. This means that if those controls
+are flipped on while the amplifier is already playing back audio, they
+will have no effect.
 
-The basic calculation itself is correct, however the comparisions in
-meson_vclk_vic_supported_freq() and meson_vclk_setup() don't work
-anymore for 59.94Hz modes (using the freq * 1000 / 1001 logic). For
-example, drm/edid specifies a 593407kHz clock for 3840x2160@59.94Hz.
-With the mentioend commit we convert this to Hz. Then meson_vclk
-tries to find a matchig "params" entry (as the clock setup code
-currently only supports specific frequencies) by taking the venc_freq
-from the params and calculating the "alt frequency" (used for the
-59.94Hz modes) from it, which is:
-  (594000000Hz * 1000) / 1001 = 593406593Hz
+Fix this by forcing a power cycle around transitions in those controls.
 
-Similar calculation is applied to the phy_freq (TMDS clock), which is 10
-times the pixel clock.
-
-Implement a new meson_vclk_freqs_are_matching_param() function whose
-purpose is to compare if the requested and calculated frequencies. They
-may not match exactly (for the reasons mentioned above). Allow the
-clocks to deviate slightly to make the 59.94Hz modes again.
-
-Fixes: 1017560164b6 ("drm/meson: use unsigned long long / Hz for frequency types")
-Reported-by: Christian Hewitt <christianshewitt@gmail.com>
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250609202751.962208-1-martin.blumenstingl@googlemail.com
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
+Link: https://patch.msgid.link/20250406-apple-codec-changes-v5-1-50a00ec850a3@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_vclk.c | 55 ++++++++++++++++++------------
- 1 file changed, 34 insertions(+), 21 deletions(-)
+ sound/soc/codecs/tas2770.c | 30 ++++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
-index c4123bb958e4c..dfe0c28a0f054 100644
---- a/drivers/gpu/drm/meson/meson_vclk.c
-+++ b/drivers/gpu/drm/meson/meson_vclk.c
-@@ -110,10 +110,7 @@
- #define HDMI_PLL_LOCK		BIT(31)
- #define HDMI_PLL_LOCK_G12A	(3 << 30)
+diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
+index 4e71dc1cf588f..48bef7e5e4002 100644
+--- a/sound/soc/codecs/tas2770.c
++++ b/sound/soc/codecs/tas2770.c
+@@ -158,11 +158,37 @@ static const struct snd_kcontrol_new isense_switch =
+ static const struct snd_kcontrol_new vsense_switch =
+ 	SOC_DAPM_SINGLE("Switch", TAS2770_PWR_CTRL, 2, 1, 1);
  
--#define PIXEL_FREQ_1000_1001(_freq)	\
--	DIV_ROUND_CLOSEST_ULL((_freq) * 1000ULL, 1001ULL)
--#define PHY_FREQ_1000_1001(_freq)	\
--	(PIXEL_FREQ_1000_1001(DIV_ROUND_DOWN_ULL(_freq, 10ULL)) * 10)
-+#define FREQ_1000_1001(_freq)	DIV_ROUND_CLOSEST_ULL((_freq) * 1000ULL, 1001ULL)
- 
- /* VID PLL Dividers */
- enum {
-@@ -772,6 +769,36 @@ static void meson_hdmi_pll_generic_set(struct meson_drm *priv,
- 		  pll_freq);
- }
- 
-+static bool meson_vclk_freqs_are_matching_param(unsigned int idx,
-+						unsigned long long phy_freq,
-+						unsigned long long vclk_freq)
++static int sense_event(struct snd_soc_dapm_widget *w,
++			struct snd_kcontrol *kcontrol, int event)
 +{
-+	DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
-+			 idx, params[idx].vclk_freq,
-+			 FREQ_1000_1001(params[idx].vclk_freq));
-+	DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
-+			 idx, params[idx].phy_freq,
-+			 FREQ_1000_1001(params[idx].phy_freq));
++	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
++	struct tas2770_priv *tas2770 = snd_soc_component_get_drvdata(component);
 +
-+	/* Match strict frequency */
-+	if (phy_freq == params[idx].phy_freq &&
-+	    vclk_freq == params[idx].vclk_freq)
-+		return true;
-+
-+	/* Match 1000/1001 variant: vclk deviation has to be less than 1kHz
-+	 * (drm EDID is defined in 1kHz steps, so everything smaller must be
-+	 * rounding error) and the PHY freq deviation has to be less than
-+	 * 10kHz (as the TMDS clock is 10 times the pixel clock, so anything
-+	 * smaller must be rounding error as well).
++	/*
++	 * Powering up ISENSE/VSENSE requires a trip through the shutdown state.
++	 * Do that here to ensure that our changes are applied properly, otherwise
++	 * we might end up with non-functional IVSENSE if playback started earlier,
++	 * which would break software speaker protection.
 +	 */
-+	if (abs(vclk_freq - FREQ_1000_1001(params[idx].vclk_freq)) < 1000 &&
-+	    abs(phy_freq - FREQ_1000_1001(params[idx].phy_freq)) < 10000)
-+		return true;
-+
-+	/* no match */
-+	return false;
++	switch (event) {
++	case SND_SOC_DAPM_PRE_REG:
++		return snd_soc_component_update_bits(component, TAS2770_PWR_CTRL,
++						    TAS2770_PWR_CTRL_MASK,
++						    TAS2770_PWR_CTRL_SHUTDOWN);
++	case SND_SOC_DAPM_POST_REG:
++		return tas2770_update_pwr_ctrl(tas2770);
++	default:
++		return 0;
++	}
 +}
 +
- enum drm_mode_status
- meson_vclk_vic_supported_freq(struct meson_drm *priv,
- 			      unsigned long long phy_freq,
-@@ -790,19 +817,7 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv,
- 	}
- 
- 	for (i = 0 ; params[i].pixel_freq ; ++i) {
--		DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
--				 i, params[i].vclk_freq,
--				 PIXEL_FREQ_1000_1001(params[i].vclk_freq));
--		DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
--				 i, params[i].phy_freq,
--				 PHY_FREQ_1000_1001(params[i].phy_freq));
--		/* Match strict frequency */
--		if (phy_freq == params[i].phy_freq &&
--		    vclk_freq == params[i].vclk_freq)
--			return MODE_OK;
--		/* Match 1000/1001 variant */
--		if (phy_freq == PHY_FREQ_1000_1001(params[i].phy_freq) &&
--		    vclk_freq == PIXEL_FREQ_1000_1001(params[i].vclk_freq))
-+		if (meson_vclk_freqs_are_matching_param(i, phy_freq, vclk_freq))
- 			return MODE_OK;
- 	}
- 
-@@ -1075,10 +1090,8 @@ void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
- 	}
- 
- 	for (freq = 0 ; params[freq].pixel_freq ; ++freq) {
--		if ((phy_freq == params[freq].phy_freq ||
--		     phy_freq == PHY_FREQ_1000_1001(params[freq].phy_freq)) &&
--		    (vclk_freq == params[freq].vclk_freq ||
--		     vclk_freq == PIXEL_FREQ_1000_1001(params[freq].vclk_freq))) {
-+		if (meson_vclk_freqs_are_matching_param(freq, phy_freq,
-+							vclk_freq)) {
- 			if (vclk_freq != params[freq].vclk_freq)
- 				vic_alternate_clock = true;
- 			else
+ static const struct snd_soc_dapm_widget tas2770_dapm_widgets[] = {
+ 	SND_SOC_DAPM_AIF_IN("ASI1", "ASI1 Playback", 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_MUX("ASI1 Sel", SND_SOC_NOPM, 0, 0, &tas2770_asi1_mux),
+-	SND_SOC_DAPM_SWITCH("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch),
+-	SND_SOC_DAPM_SWITCH("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch),
++	SND_SOC_DAPM_SWITCH_E("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch,
++		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
++	SND_SOC_DAPM_SWITCH_E("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch,
++		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
+ 	SND_SOC_DAPM_DAC_E("DAC", NULL, SND_SOC_NOPM, 0, 0, tas2770_dac_event,
+ 			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD),
+ 	SND_SOC_DAPM_OUTPUT("OUT"),
 -- 
 2.39.5
 
