@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857ED16419;
-	Mon, 23 Jun 2025 13:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E78824728E;
+	Mon, 23 Jun 2025 13:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685900; cv=none; b=nbJddKlwVwjRND+lESKkeYOeGf6vUZMDDuJX5G7Rb+ZWmLgVA+NWQ5kCu6bZRCjgyBCSpqKw9azoCfFfZQKrFsoFxrDgbo6xAGW0Kf3/NvlrCNXLi90GtGuKX58GUHjYGim+AQosjn+PTu2sNjntHCRSLg/eFB4a+Tpw45PuhyI=
+	t=1750685903; cv=none; b=FrgHvUOtrmuG9jzdtyzq8zbFDXQnNf1rHqm8I59PpK+X5NzDHvWCzThjI/lEFtro+3BvExJ2P7biTqwqrgIZSCr/8fFgG2qlJ7yd+2RTLYFLfDWHIAaQxE1uV/O/oFwugExU/aIVwip10ec3QW4r5VzM7G+vkAxBjSlMOkFYYJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685900; c=relaxed/simple;
-	bh=IWkGBORHTGRh2LB3BIwEHZIOdUHR4/ih0iMQq4Hhr34=;
+	s=arc-20240116; t=1750685903; c=relaxed/simple;
+	bh=supZzu7TKuMJ5i8O0rUdZ/NwgoqwLeKKyJ9q36NlhhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJnGTIfIcmaAVR5Exo//kbO00pmIlTrjX3QeocV5FSj92xvvmGLXodbGgJejZXJYf1xk0Q2MFbFOrfnqddOMlHwT/A5x9weJZ6jf1BJad/L7R3LIJYd7c+/tDKV2kCzISJQ4DUZDslCi9UslKMN0Lj0Utcu6TEPVi/6Fy/brXkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlxIIVg8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dO27yU+SA0GoNNb8OqhuTWMhaPtnz6Le9oOEXeK3IqRP4YbFDNSfoQ0TkLEwNQtK7wsDuluDp3/TWAp3Tq8GnspLUqnT7y+oz835c0LrygxFx5/N0bz3O9govKIWvm18owmFia3gZDV6HuXdiBQFbSKP5iI2VMMWwLz1qm9ISVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16ELnjLh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlxIIVg8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F64C4CEEA;
-	Mon, 23 Jun 2025 13:38:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16ELnjLh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7479C4CEEA;
+	Mon, 23 Jun 2025 13:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685900;
-	bh=IWkGBORHTGRh2LB3BIwEHZIOdUHR4/ih0iMQq4Hhr34=;
+	s=korg; t=1750685903;
+	bh=supZzu7TKuMJ5i8O0rUdZ/NwgoqwLeKKyJ9q36NlhhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zlxIIVg8i3GtRtdD0nrq4bNichXCWSXOZ7ItLBjd3XSaZOVJ3pcoW25dk4XSC0qmm
-	 qVcEY3jnwL0WNOVB8BqjZBP2roA/Cd4ufYFdozC2GRpoq1XzTk52VDuPe0lzKJFu8w
-	 N+Vo7Y0zjWxQLVr9GJgpdanjn2CPIkCRCJX59+Bc=
+	b=16ELnjLhSg2EjdPRjZjZ6Q2wLP6A8+rt0jEeQVrezbGDXoYno4UIih9DLrs4eiRM9
+	 nRsDs0dD8ekiOwl2/9WgtHx3hmnSIZE8YO4ZlYy2HjnKFdTkm1ob+mPI6VEOmor0Wy
+	 MA2he8Uctka8JPhD0eZL7N0Ha33OFjhqhPP8clPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0903f6d7f285e41cdf10@syzkaller.appspotmail.com,
-	KaFai Wan <mannkafai@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 068/411] bpf: Avoid __bpf_prog_ret0_warn when jit fails
-Date: Mon, 23 Jun 2025 15:03:32 +0200
-Message-ID: <20250623130635.040647825@linuxfoundation.org>
+Subject: [PATCH 6.15 264/592] drm/amdgpu: Add basic validation for RAS header
+Date: Mon, 23 Jun 2025 15:03:42 +0200
+Message-ID: <20250623130706.591895789@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: KaFai Wan <mannkafai@gmail.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 86bc9c742426a16b52a10ef61f5b721aecca2344 ]
+[ Upstream commit 5df0d6addb7e9b6f71f7162d1253762a5be9138e ]
 
-syzkaller reported an issue:
+If RAS header read from EEPROM is corrupted, it could result in trying
+to allocate huge memory for reading the records. Add some validation to
+header fields.
 
-WARNING: CPU: 3 PID: 217 at kernel/bpf/core.c:2357 __bpf_prog_ret0_warn+0xa/0x20 kernel/bpf/core.c:2357
-Modules linked in:
-CPU: 3 UID: 0 PID: 217 Comm: kworker/u32:6 Not tainted 6.15.0-rc4-syzkaller-00040-g8bac8898fe39
-RIP: 0010:__bpf_prog_ret0_warn+0xa/0x20 kernel/bpf/core.c:2357
-Call Trace:
- <TASK>
- bpf_dispatcher_nop_func include/linux/bpf.h:1316 [inline]
- __bpf_prog_run include/linux/filter.h:718 [inline]
- bpf_prog_run include/linux/filter.h:725 [inline]
- cls_bpf_classify+0x74a/0x1110 net/sched/cls_bpf.c:105
- ...
-
-When creating bpf program, 'fp->jit_requested' depends on bpf_jit_enable.
-This issue is triggered because of CONFIG_BPF_JIT_ALWAYS_ON is not set
-and bpf_jit_enable is set to 1, causing the arch to attempt JIT the prog,
-but jit failed due to FAULT_INJECTION. As a result, incorrectly
-treats the program as valid, when the program runs it calls
-`__bpf_prog_ret0_warn` and triggers the WARN_ON_ONCE(1).
-
-Reported-by: syzbot+0903f6d7f285e41cdf10@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/6816e34e.a70a0220.254cdc.002c.GAE@google.com
-Fixes: fa9dd599b4da ("bpf: get rid of pure_initcall dependency to enable jits")
-Signed-off-by: KaFai Wan <mannkafai@gmail.com>
-Link: https://lore.kernel.org/r/20250526133358.2594176-1-mannkafai@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c    | 22 ++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index d7dbca573df31..1ded3eb492b8e 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -1909,7 +1909,7 @@ struct bpf_prog *bpf_prog_select_runtime(struct bpf_prog *fp, int *err)
- 	/* In case of BPF to BPF calls, verifier did all the prep
- 	 * work with regards to JITing, etc.
- 	 */
--	bool jit_needed = false;
-+	bool jit_needed = fp->jit_requested;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
+index 0ea7cfaf3587d..e979a6086178c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
+@@ -1392,17 +1392,33 @@ int amdgpu_ras_eeprom_init(struct amdgpu_ras_eeprom_control *control)
  
- 	if (fp->bpf_func)
- 		goto finalize;
+ 	__decode_table_header_from_buf(hdr, buf);
+ 
+-	if (hdr->version >= RAS_TABLE_VER_V2_1) {
++	switch (hdr->version) {
++	case RAS_TABLE_VER_V2_1:
++	case RAS_TABLE_VER_V3:
+ 		control->ras_num_recs = RAS_NUM_RECS_V2_1(hdr);
+ 		control->ras_record_offset = RAS_RECORD_START_V2_1;
+ 		control->ras_max_record_count = RAS_MAX_RECORD_COUNT_V2_1;
+-	} else {
++		break;
++	case RAS_TABLE_VER_V1:
+ 		control->ras_num_recs = RAS_NUM_RECS(hdr);
+ 		control->ras_record_offset = RAS_RECORD_START;
+ 		control->ras_max_record_count = RAS_MAX_RECORD_COUNT;
++		break;
++	default:
++		dev_err(adev->dev,
++			"RAS header invalid, unsupported version: %u",
++			hdr->version);
++		return -EINVAL;
+ 	}
+-	control->ras_fri = RAS_OFFSET_TO_INDEX(control, hdr->first_rec_offset);
+ 
++	if (control->ras_num_recs > control->ras_max_record_count) {
++		dev_err(adev->dev,
++			"RAS header invalid, records in header: %u max allowed :%u",
++			control->ras_num_recs, control->ras_max_record_count);
++		return -EINVAL;
++	}
++
++	control->ras_fri = RAS_OFFSET_TO_INDEX(control, hdr->first_rec_offset);
+ 	control->ras_num_mca_recs = 0;
+ 	control->ras_num_pa_recs = 0;
+ 	return 0;
 -- 
 2.39.5
 
