@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE2E221DAE;
-	Mon, 23 Jun 2025 22:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802D53597E;
+	Mon, 23 Jun 2025 22:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716449; cv=none; b=ez2tat7E9dlfDT5+H1ZQmQkTK9V5zY0Rq1OCBwMXpgrtXUGn+kMrVroQLBql/gEOqaHVU+Q/ORnk+EF2pglfNimHvzIRvFRJBS7xA51YPIJ7+vh4FVpnbKAilHKIWjC3Y3Y6AwzF/ehCvDh0rmX+Avk1R0L1dgmF0dp6y3g0qH4=
+	t=1750716451; cv=none; b=HEo5qhHzbVPJpHfCcIlsDObQht1/q4oy8ufhaRDnrNB3Wkl999iGhkFuPmbhmQNkvDh16E+xJo/0/EydrHsjLKCRqHp8OpXMXZLc2qzfMTG9cENKed1cuKTIeYGWbSu4r7Rk/tuZXxWd+768llBssyVYtvXwzwFYG3Iwe7IXuug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716449; c=relaxed/simple;
-	bh=bxQlS+Mmr6ZcP93dG9k2UAM/8hF26b97k6MHP9F0Csc=;
+	s=arc-20240116; t=1750716451; c=relaxed/simple;
+	bh=e5u9bZbULRF+F4IoTJIW5Xq1ijlvAygB3Erz2a9bFQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2MbLpt1exscUhgkAGJmwIRkYF/c+W/IkT0oE6MKQbQLpq1MniGJwL3h92Tufytkh/uI2QxyG0rMomp4WmfHoHF+LsGm3ocLsLTVWVCrtAQnMDS6MP0y+8AIfKCvZ3ESnS0ldVstvSgUdOyOqb/4C/Uu1dDqED3BqAooovnneYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAtqEvtQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WcphBUB/Hbup3b7Vhunw7vD/F4m8soHj0IbQvPqUv6nqs48eIQRdXUrQfYCzox+B3gfAaDDbZt9oKUoovYlElWKKa3ju0HvJZtFjnidqSzpElMNF4Q4Uy1WxeUG7IbQCdc8MY53cZlLB4CMk9s/CSG1i9R0fEg78XikcSpXoZk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfgQBrCk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAtqEvtQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD69C4CEEA;
-	Mon, 23 Jun 2025 22:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfgQBrCk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1712CC4CEEA;
+	Mon, 23 Jun 2025 22:07:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716448;
-	bh=bxQlS+Mmr6ZcP93dG9k2UAM/8hF26b97k6MHP9F0Csc=;
+	s=korg; t=1750716451;
+	bh=e5u9bZbULRF+F4IoTJIW5Xq1ijlvAygB3Erz2a9bFQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NAtqEvtQZuCRKk+nfB5Kd/FbWNlDfCS3EvTOlZirGgeokw2IWcr/dwkIOljMwDCoe
-	 /BlNwChzeUHO340Wa0fLIguy9zj4BZ2pC7tj8pIfaUZwEoFOV0TaHCighLMdmTyFqq
-	 C/c3zg5ndGYN1yvZ57SV3z2oAqL3cTSWJ82gyVW8=
+	b=wfgQBrCk0ikpfSylnjgYerzPFcSSQ81lFVMBhunrTTDIlC9WGv+uCboDw1IkWWnl8
+	 lTQcTAcv77dofhDngplrSdrvCn2XzheNqpjuY9+arMHtDsW0mdZxZUch17YI4bdeC+
+	 GBEB+RRz0GDsTeCca26+X9q8cJsq8EauqxY21E+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Rengarajan S <rengarajan.s@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 264/290] net: lan743x: fix potential out-of-bounds write in lan743x_ptp_io_event_clock_get()
-Date: Mon, 23 Jun 2025 15:08:45 +0200
-Message-ID: <20250623130634.850468899@linuxfoundation.org>
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 303/508] nfsd: nfsd4_spo_must_allow() must check this is a v4 compound request
+Date: Mon, 23 Jun 2025 15:05:48 +0200
+Message-ID: <20250623130652.759414416@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,64 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit e353b0854d3a1a31cb061df8d022fbfea53a0f24 ]
+commit 1244f0b2c3cecd3f349a877006e67c9492b41807 upstream.
 
-Before calling lan743x_ptp_io_event_clock_get(), the 'channel' value
-is checked against the maximum value of PCI11X1X_PTP_IO_MAX_CHANNELS(8).
-This seems correct and aligns with the PTP interrupt status register
-(PTP_INT_STS) specifications.
+If the request being processed is not a v4 compound request, then
+examining the cstate can have undefined results.
 
-However, lan743x_ptp_io_event_clock_get() writes to ptp->extts[] with
-only LAN743X_PTP_N_EXTTS(4) elements, using channel as an index:
+This patch adds a check that the rpc procedure being executed
+(rq_procinfo) is the NFSPROC4_COMPOUND procedure.
 
-    lan743x_ptp_io_event_clock_get(..., u8 channel,...)
-    {
-        ...
-        /* Update Local timestamp */
-        extts = &ptp->extts[channel];
-        extts->ts.tv_sec = sec;
-        ...
-    }
-
-To avoid an out-of-bounds write and utilize all the supported GPIO
-inputs, set LAN743X_PTP_N_EXTTS to 8.
-
-Detected using the static analysis tool - Svace.
-Fixes: 60942c397af6 ("net: lan743x: Add support for PTP-IO Event Input External Timestamp (extts)")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Acked-by: Rengarajan S <rengarajan.s@microchip.com>
-Link: https://patch.msgid.link/20250616113743.36284-1-aleksei.kodanev@bell-sw.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Olga Kornievskaia <okorniev@redhat.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: NeilBrown <neil@brown.name>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/lan743x_ptp.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4proc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_ptp.h b/drivers/net/ethernet/microchip/lan743x_ptp.h
-index 0d29914cd4606..225e8232474d7 100644
---- a/drivers/net/ethernet/microchip/lan743x_ptp.h
-+++ b/drivers/net/ethernet/microchip/lan743x_ptp.h
-@@ -18,9 +18,9 @@
-  */
- #define LAN743X_PTP_N_EVENT_CHAN	2
- #define LAN743X_PTP_N_PEROUT		LAN743X_PTP_N_EVENT_CHAN
--#define LAN743X_PTP_N_EXTTS		4
--#define LAN743X_PTP_N_PPS		0
- #define PCI11X1X_PTP_IO_MAX_CHANNELS	8
-+#define LAN743X_PTP_N_EXTTS		PCI11X1X_PTP_IO_MAX_CHANNELS
-+#define LAN743X_PTP_N_PPS		0
- #define PTP_CMD_CTL_TIMEOUT_CNT		50
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -3536,7 +3536,8 @@ bool nfsd4_spo_must_allow(struct svc_rqs
+ 	struct nfs4_op_map *allow = &cstate->clp->cl_spo_must_allow;
+ 	u32 opiter;
  
- struct lan743x_adapter;
--- 
-2.39.5
-
+-	if (!cstate->minorversion)
++	if (rqstp->rq_procinfo != &nfsd_version4.vs_proc[NFSPROC4_COMPOUND] ||
++	    cstate->minorversion == 0)
+ 		return false;
+ 
+ 	if (cstate->spo_must_allowed)
 
 
