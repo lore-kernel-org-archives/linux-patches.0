@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD9F253F1E;
-	Mon, 23 Jun 2025 13:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59F3257AC1;
+	Mon, 23 Jun 2025 13:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684736; cv=none; b=dMENor5R2JSU2idXeMbsaRvSV17AfRSaSKcbfN42RlwVbJ0MujFtGoKWcpOcSjUiOlx0A2tSwtOlXhDEGzc5Y58yOIeyqbcQL1p69B7Hvu1kLzV7Sq4HvHiN0j/ZW51rtQIUBdH+I6HyDDcfJ7TCfgMISYy+Y7vofgj3l6G+9pE=
+	t=1750684738; cv=none; b=M9WU1S09IagBIP7cpeIoCRzaBYyR9mFquvB5kYmPp9LixdLTYD2eIN4aT2l6mWm4vanQ3X+HiumKr68oto/Wqu/OfGxcsBcFkWKRmVino6jKJKyFv10KYUtpGY4iT6vDQY458TpdGKIAwT4gbuoNqQaZUPnONoGGsMJjJeKG4Xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684736; c=relaxed/simple;
-	bh=snto/jOmO7P5Ejx5NUqmylm9t7MC11Hwwzx9wCG9t90=;
+	s=arc-20240116; t=1750684738; c=relaxed/simple;
+	bh=bESmtmmf1HTBwAar1dss4wgQ8mr0KUiREIhYXqC5b/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=enBJdtNynbZ974sjHCR69/5c0lcEe0pt/SWCJqTeM80f22dROFwoC1Pd3iiqZBbe43PtCtGxR+dDv2Nyg7jTnBCWtrbp8MHutoeJ3MkHNoI67f+6AkjO8BfXVf03icWsTbIY+dt7WQjs4KcpuLb4FrjwVByrbZu4/bnMisZ1K/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQCPgM8A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jd7hsGQ1ZM6bzs1FbSXhGCEBlv8lG7quZMWV+wvBW/KfQ/jQ8Ll//Ygv4/d+5J5ikJvZlUty/MNYfyrB+kMwu/FIDqlTZB7S8D9Jpu3lwtxm+ulUnxZxlc7XAG5RsLgP957TE8uhzpN4m9Pe2dVfH6qD2OJxFqvZwkrSadiJHIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UqYYiSGb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQCPgM8A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EAB5C4CEF0;
-	Mon, 23 Jun 2025 13:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UqYYiSGb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11034C4CEF2;
+	Mon, 23 Jun 2025 13:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684735;
-	bh=snto/jOmO7P5Ejx5NUqmylm9t7MC11Hwwzx9wCG9t90=;
+	s=korg; t=1750684738;
+	bh=bESmtmmf1HTBwAar1dss4wgQ8mr0KUiREIhYXqC5b/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IQCPgM8AWbPMuY91f3m97tnY5xh6oromAAFu0hi2dodYKvlSBrLf4nHWRg8FxYGdn
-	 zXaU1eucbE97aJsUXctNLjpOhavIdmp4iLeHFLhAwT4K7hJGXUu4zty5UBuyRpg0Oy
-	 cAHdlisMFNN+OIEtpVbteLbkEzt8Bh2pZy5srLpU=
+	b=UqYYiSGbfRXne/cjIsQ/7IbpuCBJMz0I4XFHnFTKg4gzlFslTstSc1YQfD1lrY1Ps
+	 30VxcuzfobrxD3tH3h/xOPsdbLHz1057DupR+diwOKm3dykQG/txQtXuX40OcvH4uK
+	 p9k7jq5X24yHZLwFLAxYS43/NjRS2vvlUyl2taog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Helge Deller <deller@gmx.de>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Zsolt Kajtar <soci@c64.rulez.org>
-Subject: [PATCH 6.15 162/592] sysfb: Fix screen_info type check for VGA
-Date: Mon, 23 Jun 2025 15:02:00 +0200
-Message-ID: <20250623130704.130942401@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 018/222] spi: sh-msiof: Fix maximum DMA transfer size
+Date: Mon, 23 Jun 2025 15:05:53 +0200
+Message-ID: <20250623130612.451684962@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,95 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit f670b50ef5e4a69bf4d2ec5ac6a9228d93b13a7a upstream.
+[ Upstream commit 0941d5166629cb766000530945e54b4e49680c68 ]
 
-Use the helper screen_info_video_type() to get the framebuffer
-type from struct screen_info. Handle supported values in sorted
-switch statement.
+The maximum amount of data to transfer in a single DMA request is
+calculated from the FIFO sizes (which is technically not 100% correct,
+but a simplification, as it is limited by the maximum word count values
+in the Transmit and Control Data Registers).  However, in case there is
+both data to transmit and to receive, the transmit limit is overwritten
+by the receive limit.
 
-Reading orig_video_isVGA is unreliable. On most systems it is a
-VIDEO_TYPE_ constant. On some systems with VGA it is simply set
-to 1 to signal the presence of a VGA output. See vga_probe() for
-an example. Retrieving the screen_info type with the helper
-screen_info_video_type() detects these cases and returns the
-appropriate VIDEO_TYPE_ constant. For VGA, sysfb creates a device
-named "vga-framebuffer".
+Fix this by using the minimum applicable FIFO size instead.  Move the
+calculation outside the loop, so it is not repeated for each individual
+DMA transfer.
 
-The sysfb code has been taken from vga16fb, where it likely didn't
-work correctly either. With this bugfix applied, vga16fb loads for
-compatible vga-framebuffer devices.
+As currently tx_fifo_size is always equal to rx_fifo_size, this bug had
+no real impact.
 
-Fixes: 0db5b61e0dc0 ("fbdev/vga16fb: Create EGA/VGA devices in sysfb code")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-Cc: Helge Deller <deller@gmx.de>
-Cc: "Uwe Kleine-König" <u.kleine-koenig@baylibre.com>
-Cc: Zsolt Kajtar <soci@c64.rulez.org>
-Cc: <stable@vger.kernel.org> # v6.1+
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://lore.kernel.org/r/20250603154838.401882-1-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fe78d0b7691c0274 ("spi: sh-msiof: Fix FIFO size to 64 word from 256 word")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/d9961767a97758b2614f2ee8afe1bd56dc900a60.1747401908.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/sysfb.c |   26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ drivers/spi/spi-sh-msiof.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/firmware/sysfb.c
-+++ b/drivers/firmware/sysfb.c
-@@ -143,6 +143,7 @@ static __init int sysfb_init(void)
- {
- 	struct screen_info *si = &screen_info;
- 	struct device *parent;
-+	unsigned int type;
- 	struct simplefb_platform_data mode;
- 	const char *name;
- 	bool compatible;
-@@ -170,17 +171,26 @@ static __init int sysfb_init(void)
- 			goto put_device;
- 	}
+diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
+index edb26b0857063..80a39424dc1e2 100644
+--- a/drivers/spi/spi-sh-msiof.c
++++ b/drivers/spi/spi-sh-msiof.c
+@@ -918,6 +918,7 @@ static int sh_msiof_transfer_one(struct spi_controller *ctlr,
+ 	void *rx_buf = t->rx_buf;
+ 	unsigned int len = t->len;
+ 	unsigned int bits = t->bits_per_word;
++	unsigned int max_wdlen = 256;
+ 	unsigned int bytes_per_word;
+ 	unsigned int words;
+ 	int n;
+@@ -931,17 +932,17 @@ static int sh_msiof_transfer_one(struct spi_controller *ctlr,
+ 	if (!spi_controller_is_slave(p->ctlr))
+ 		sh_msiof_spi_set_clk_regs(p, clk_get_rate(p->clk), t->speed_hz);
  
-+	type = screen_info_video_type(si);
++	if (tx_buf)
++		max_wdlen = min(max_wdlen, p->tx_fifo_size);
++	if (rx_buf)
++		max_wdlen = min(max_wdlen, p->rx_fifo_size);
 +
- 	/* if the FB is incompatible, create a legacy framebuffer device */
--	if (si->orig_video_isVGA == VIDEO_TYPE_EFI)
--		name = "efi-framebuffer";
--	else if (si->orig_video_isVGA == VIDEO_TYPE_VLFB)
--		name = "vesa-framebuffer";
--	else if (si->orig_video_isVGA == VIDEO_TYPE_VGAC)
--		name = "vga-framebuffer";
--	else if (si->orig_video_isVGA == VIDEO_TYPE_EGAC)
-+	switch (type) {
-+	case VIDEO_TYPE_EGAC:
- 		name = "ega-framebuffer";
--	else
-+		break;
-+	case VIDEO_TYPE_VGAC:
-+		name = "vga-framebuffer";
-+		break;
-+	case VIDEO_TYPE_VLFB:
-+		name = "vesa-framebuffer";
-+		break;
-+	case VIDEO_TYPE_EFI:
-+		name = "efi-framebuffer";
-+		break;
-+	default:
- 		name = "platform-framebuffer";
-+		break;
-+	}
+ 	while (ctlr->dma_tx && len > 15) {
+ 		/*
+ 		 *  DMA supports 32-bit words only, hence pack 8-bit and 16-bit
+ 		 *  words, with byte resp. word swapping.
+ 		 */
+-		unsigned int l = 0;
+-
+-		if (tx_buf)
+-			l = min(round_down(len, 4), p->tx_fifo_size * 4);
+-		if (rx_buf)
+-			l = min(round_down(len, 4), p->rx_fifo_size * 4);
++		unsigned int l = min(round_down(len, 4), max_wdlen * 4);
  
- 	pd = platform_device_alloc(name, 0);
- 	if (!pd) {
+ 		if (bits <= 8) {
+ 			copy32 = copy_bswap32;
+-- 
+2.39.5
+
 
 
