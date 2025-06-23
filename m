@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CCE19C554;
-	Mon, 23 Jun 2025 21:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A071819C554;
+	Mon, 23 Jun 2025 21:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714067; cv=none; b=kEA9L9nIOBmNiQ4PmclVwscf6F2uX0pL3e23zSJoiNTMmNsOIMVyfnEVklIa+YXTAbu/MzXuiYAoNSDyDJhb9ZI5urSw40cE0d0bOcJPPRKjGGtkMtkoRCQM+VQ4JFGx0v2efirfdRD46wUs9IP2ZfhSL2XVdVIut44JNpiLsDM=
+	t=1750714069; cv=none; b=GL6pbEdHilWIWYOuHB32ZS7YGBMdKkUeK5OE6v3tvT1dnQkl4IstNeznsH3BBGsvdjjaK4MQ74Cedic+HlicPD3jf9hLPOEGNVMavPSZaqZwq1uqYl1bZg7TRByiUvw3n/eQ9HoleiHh8LjnJsYmhW8ZtSuUz3IMmXULqEqZ2Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714067; c=relaxed/simple;
-	bh=H7wMhU1U96Z+AW0stYIeRuy/q347GKnX5vB8THidO44=;
+	s=arc-20240116; t=1750714069; c=relaxed/simple;
+	bh=At4CMw4r+c5cjlKEa7ofPaaaXVYdAd2iGIp+fjSsedQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SjUo8fxKQiNOMsC5nqJy8els/fS/jnuxCX6JU+20qCEIgAuazi9cwf1OiUOjYcbo+UbNbUsQwxiXymnV12lUaK5uOBew1wY7hv9+cBRs58ZwSGftm7hlot2PXwDqQsI4n8qE9RhbDogimhXqBg7qBxIBTxlPimNIFgmMAzSlz6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NaMgenbw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fJh1p8x0iE4WBO4Cbsbf4akTwP3tag4R9dx5oDe2SE+obMqJ2r/cBpcTT9EKS2e/ylSvlMWnk4sMWPLCDJDKJsxWFY2q+eVfkLJJzL6VXpnhcl257zwdId+c5tec7dGuFGbghIxvNgMO229TKnzadS/VR5w8IJinOkNZquvx9qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4wwlyJ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NaMgenbw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C333EC4CEEA;
-	Mon, 23 Jun 2025 21:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4wwlyJ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B315C4CEEA;
+	Mon, 23 Jun 2025 21:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714067;
-	bh=H7wMhU1U96Z+AW0stYIeRuy/q347GKnX5vB8THidO44=;
+	s=korg; t=1750714069;
+	bh=At4CMw4r+c5cjlKEa7ofPaaaXVYdAd2iGIp+fjSsedQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NaMgenbwfNxQhPQ429KSDRGUS7FAbGXVtk/UfVpLAqw2A3XRies7L3RsQRLiAIjsi
-	 A3Py/UlMxiJNYMIipUHvLDcuTZPBb3NAmjaZvoAllsPA9E7A++QR+mC2QkF7Wpa9MV
-	 hWIj8l7uBVx/e7iII35edsvhVOq77chj4C0dYBsw=
+	b=g4wwlyJ6ReRiX1NGubVf8q+5S+G6qsJRQXVezCE2vfUY4qZpPaY7JUAv/Fy4LEQpi
+	 vUPk2v1F8HGklnk2zvzAx9tnh7VQ7uOZCFJ22i/jRjw2TyDzU0eyrCbXKRFKOqlggD
+	 qJMRcsLhJx75neC2xhk9yjHGbKJklE1RRalMtpU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 163/411] fs/filesystems: Fix potential unsigned integer underflow in fs_name()
-Date: Mon, 23 Jun 2025 15:05:07 +0200
-Message-ID: <20250623130637.755801712@linuxfoundation.org>
+	Tasos Sahanidis <tasos@tasossah.com>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 5.10 182/355] ata: pata_via: Force PIO for ATAPI devices on VT6415/VT6330
+Date: Mon, 23 Jun 2025 15:06:23 +0200
+Message-ID: <20250623130632.162918336@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +46,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Tasos Sahanidis <tasos@tasossah.com>
 
-[ Upstream commit 1363c134ade81e425873b410566e957fecebb261 ]
+commit d29fc02caad7f94b62d56ee1b01c954f9c961ba7 upstream.
 
-fs_name() has @index as unsigned int, so there is underflow risk for
-operation '@index--'.
+The controller has a hardware bug that can hard hang the system when
+doing ATAPI DMAs without any trace of what happened. Depending on the
+device attached, it can also prevent the system from booting.
 
-Fix by breaking the for loop when '@index == 0' which is also more proper
-than '@index <= 0' for unsigned integer comparison.
+In this case, the system hangs when reading the ATIP from optical media
+with cdrecord -vvv -atip on an _NEC DVD_RW ND-4571A 1-01 and an
+Optiarc DVD RW AD-7200A 1.06 attached to an ASRock 990FX Extreme 4,
+running at UDMA/33.
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/20250410-fix_fs-v1-1-7c14ccc8ebaa@quicinc.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The issue can be reproduced by running the same command with a cygwin
+build of cdrecord on WinXP, although it requires more attempts to cause
+it. The hang in that case is also resolved by forcing PIO. It doesn't
+appear that VIA has produced any drivers for that OS, thus no known
+workaround exists.
+
+HDDs attached to the controller do not suffer from any DMA issues.
+
+Cc: stable@vger.kernel.org
+Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/916677
+Signed-off-by: Tasos Sahanidis <tasos@tasossah.com>
+Link: https://lore.kernel.org/r/20250519085508.1398701-1-tasos@tasossah.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/filesystems.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/ata/pata_via.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/filesystems.c b/fs/filesystems.c
-index 58b9067b2391c..95e5256821a53 100644
---- a/fs/filesystems.c
-+++ b/fs/filesystems.c
-@@ -156,15 +156,19 @@ static int fs_index(const char __user * __name)
- static int fs_name(unsigned int index, char __user * buf)
- {
- 	struct file_system_type * tmp;
--	int len, res;
-+	int len, res = -EINVAL;
+--- a/drivers/ata/pata_via.c
++++ b/drivers/ata/pata_via.c
+@@ -368,7 +368,8 @@ static unsigned long via_mode_filter(str
+ 	}
  
- 	read_lock(&file_systems_lock);
--	for (tmp = file_systems; tmp; tmp = tmp->next, index--)
--		if (index <= 0 && try_module_get(tmp->owner))
-+	for (tmp = file_systems; tmp; tmp = tmp->next, index--) {
-+		if (index == 0) {
-+			if (try_module_get(tmp->owner))
-+				res = 0;
- 			break;
-+		}
-+	}
- 	read_unlock(&file_systems_lock);
--	if (!tmp)
--		return -EINVAL;
-+	if (res)
-+		return res;
- 
- 	/* OK, we got the reference, so we can safely block */
- 	len = strlen(tmp->name) + 1;
--- 
-2.39.5
-
+ 	if (dev->class == ATA_DEV_ATAPI &&
+-	    dmi_check_system(no_atapi_dma_dmi_table)) {
++	    (dmi_check_system(no_atapi_dma_dmi_table) ||
++	     config->id == PCI_DEVICE_ID_VIA_6415)) {
+ 		ata_dev_warn(dev, "controller locks up on ATAPI DMA, forcing PIO\n");
+ 		mask &= ATA_MASK_PIO;
+ 	}
 
 
