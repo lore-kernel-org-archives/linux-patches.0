@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64ED14409;
-	Mon, 23 Jun 2025 21:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27FB4409;
+	Mon, 23 Jun 2025 21:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714684; cv=none; b=NmEeWh1l+IKH2eSCx5IccD1aV5M03cBbBY7WCugHBdpj/ZQH9t1PHPIX3bhQhX4P76NPvwMhKYsoHJw1xEMLlqMElLE6vl59hc3wZMgN1ndUpqWSiq234dczKET8fXQLemn/tzeEq5uBvcd29sUwUPdvsHeXvdTPDhrruhmAWcY=
+	t=1750714686; cv=none; b=L0JsHZDP0SfC0h+3hp+FSHCe/g3vDFseWP/f4E9NPaBHT1DxNoIOxtZz44LJTIXEl5ECStCceFkLXAy194NLA3V/CHNi1D9811rHGaOfqcshGPasqxuqrEzyK5wrpvLpkaDmKgCgtgVVfSmCVPxed8n4L3+8ZxQhtjB/CEof9DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714684; c=relaxed/simple;
-	bh=vmhPIEJQmMuZKB7T41/E5dV51yenKuFDzkcyQObozgc=;
+	s=arc-20240116; t=1750714686; c=relaxed/simple;
+	bh=rSixTftBZnGQuvRJ/ZyxmN7mIsxWBeGfo7HTxMHKIDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZqVpyNIIB1SXEo+RNtxYYpgo5jw5J375Bkktf3kt5E/vPpDZ7CGiK2reS5AGrTF34XL8flZL1AG4IaG/QoTCEGCbR2cNAOUPfIrNsSspDZqo+uoypTyQCezG/50V9Jh4pq25S6Q7kseOWOGirxLO2EAyGmTlA4qcaJdlc6vBmes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zl69p//A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mG1jSPP0lkOEIK8MjLkf239qSXrjIqZTZmKZVt2sqrwkO7jCveMJ8jqXuXpLZMZnVN/t5LF7iIM/fqZka/1EL/igWpAgvn0Zq9nuP4hx5Xcbu9uZ44BW0qugkhZ8zXADdIwA+Sh2a0Hmep/9TfrSSIEsP3cJmXba5/JB/xe78Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAHWfmaC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zl69p//A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1C3C4CEEA;
-	Mon, 23 Jun 2025 21:38:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAHWfmaC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6F8C4CEEA;
+	Mon, 23 Jun 2025 21:38:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714684;
-	bh=vmhPIEJQmMuZKB7T41/E5dV51yenKuFDzkcyQObozgc=;
+	s=korg; t=1750714686;
+	bh=rSixTftBZnGQuvRJ/ZyxmN7mIsxWBeGfo7HTxMHKIDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zl69p//Ah3Pn57tWuogbDlU4Lx42BBw35Cx+mWcOAzRxGvXQGYed5tsm+3F5x/lik
-	 Tp3eYVILr8PszEfDAsqIMHBTIEQPCnC7kiP62ZOa2nCczJ/W5uJAhLaG4ucw8F9EEe
-	 OyciNAY6SVQvvkeYQMmZvrusQn30iGHV8qqdM2Gs=
+	b=hAHWfmaC07EQQWfN+JYvNaN2U3xCHvQmLXMXfgujWLcfM+8QUuVLiZBzkJ9sZBwhx
+	 qenHJqvc7/mo/lW4/mX7bE1FqFERBBmcYTj1gZ/H8L6mJJXu+aLRf1mACCDZ7CVuBz
+	 yeBRzmXjc/K2pI8yRTEdM0xZxiFGu+FWKfUUWN5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 152/290] tcp: always seek for minimal rtt in tcp_rcv_rtt_update()
-Date: Mon, 23 Jun 2025 15:06:53 +0200
-Message-ID: <20250623130631.468467030@linuxfoundation.org>
+Subject: [PATCH 6.1 189/508] fix propagation graph breakage by MOVE_MOUNT_SET_GROUP move_mount(2)
+Date: Mon, 23 Jun 2025 15:03:54 +0200
+Message-ID: <20250623130649.924261209@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +47,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit b879dcb1aeeca278eacaac0b1e2425b1c7599f9f ]
+[ Upstream commit d8cc0362f918d020ca1340d7694f07062dc30f36 ]
 
-tcp_rcv_rtt_update() goal is to maintain an estimation of the RTT
-in tp->rcv_rtt_est.rtt_us, used by tcp_rcv_space_adjust()
+9ffb14ef61ba "move_mount: allow to add a mount into an existing group"
+breaks assertions on ->mnt_share/->mnt_slave.  For once, the data structures
+in question are actually documented.
 
-When TCP TS are enabled, tcp_rcv_rtt_update() is using
-EWMA to smooth the samples.
+Documentation/filesystem/sharedsubtree.rst:
+        All vfsmounts in a peer group have the same ->mnt_master.  If it is
+	non-NULL, they form a contiguous (ordered) segment of slave list.
 
-Change this to immediately latch the incoming value if it
-is lower than tp->rcv_rtt_est.rtt_us, so that tcp_rcv_space_adjust()
-does not overshoot tp->rcvq_space.space and sk->sk_rcvbuf.
+do_set_group() puts a mount into the same place in propagation graph
+as the old one.  As the result, if old mount gets events from somewhere
+and is not a pure event sink, new one needs to be placed next to the
+old one in the slave list the old one's on.  If it is a pure event
+sink, we only need to make sure the new one doesn't end up in the
+middle of some peer group.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250513193919.1089692-8-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+"move_mount: allow to add a mount into an existing group" ends up putting
+the new one in the beginning of list; that's definitely not going to be
+in the middle of anything, so that's fine for case when old is not marked
+shared.  In case when old one _is_ marked shared (i.e. is not a pure event
+sink), that breaks the assumptions of propagation graph iterators.
+
+Put the new mount next to the old one on the list - that does the right thing
+in "old is marked shared" case and is just as correct as the current behaviour
+if old is not marked shared (kudos to Pavel for pointing that out - my original
+suggested fix changed behaviour in the "nor marked" case, which complicated
+things for no good reason).
+
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Fixes: 9ffb14ef61ba ("move_mount: allow to add a mount into an existing group")
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ fs/namespace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index a172248b66783..994c563b35f32 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -671,10 +671,12 @@ EXPORT_SYMBOL(tcp_initialize_rcv_mss);
-  */
- static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
- {
--	u32 new_sample = tp->rcv_rtt_est.rtt_us;
--	long m = sample;
-+	u32 new_sample, old_sample = tp->rcv_rtt_est.rtt_us;
-+	long m = sample << 3;
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 211a81240680d..65aa3495db6a1 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2809,7 +2809,7 @@ static int do_set_group(struct path *from_path, struct path *to_path)
+ 	if (IS_MNT_SLAVE(from)) {
+ 		struct mount *m = from->mnt_master;
  
--	if (new_sample != 0) {
-+	if (old_sample == 0 || m < old_sample) {
-+		new_sample = m;
-+	} else {
- 		/* If we sample in larger samples in the non-timestamp
- 		 * case, we could grossly overestimate the RTT especially
- 		 * with chatty applications or bulk transfer apps which
-@@ -685,17 +687,9 @@ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
- 		 * else with timestamps disabled convergence takes too
- 		 * long.
- 		 */
--		if (!win_dep) {
--			m -= (new_sample >> 3);
--			new_sample += m;
--		} else {
--			m <<= 3;
--			if (m < new_sample)
--				new_sample = m;
--		}
--	} else {
--		/* No previous measure. */
--		new_sample = m << 3;
-+		if (win_dep)
-+			return;
-+		new_sample = old_sample - (old_sample >> 3) + sample;
+-		list_add(&to->mnt_slave, &m->mnt_slave_list);
++		list_add(&to->mnt_slave, &from->mnt_slave);
+ 		to->mnt_master = m;
  	}
  
- 	tp->rcv_rtt_est.rtt_us = new_sample;
 -- 
 2.39.5
 
