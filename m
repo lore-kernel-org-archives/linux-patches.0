@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCA71E3DCD;
-	Mon, 23 Jun 2025 22:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913A816D9BF;
+	Mon, 23 Jun 2025 22:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717168; cv=none; b=bp8OHRoL7j3hy/1pv+6ztmQckCF7EDqlAEj2oWas/OkYHXevy0TAM87BPVsPv+ELhwSVwmvh9fWNX9e60eW1A4mtiJ/YmVJAP/0bHYT+sjYaAZPZkYr7RAGY8iUG2KhKbPXN/WWGnsAz4H3rTCYNAKgIbPnbPNKCMiE6a6bZGa0=
+	t=1750717170; cv=none; b=QKms9IajozojbwF4xfmZFxEoN0xCvwyZb8a57242xZbXgfbmz8K0TjbmiLMDnj/25wBI0cwXPaImSNiBJVDvunLlFudD0kjVOcMfqKY6FDa84z7D1Q4+U01S3hic4RxkOkpbElfJSwQP+jXcj9MUFmERxNN2PNcgMqSE6WulhTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717168; c=relaxed/simple;
-	bh=lGyDc+yqAfHx0H/IpSMbO/37zyUgjWYtynxUDsUJb8E=;
+	s=arc-20240116; t=1750717170; c=relaxed/simple;
+	bh=A57cGmsDGraNdj88R62LQbW3ctsm49gBxpPwjnnKhLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szMXyRhsbMIV7eDozvGFgmI1/NX/2w50tZRD/mUBcJ2U06lWF2vp4ptUTtKRSoy3AaMluP+TvNUNjC9IfYVF39GCDhnUoypqHrQanf8wWhtcemA0yKWm1wOlu7KvHGuJycIgk5cmckv8MeMNMOGDjjs5GEORn9UmnWcFUKh6xQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RE8+6eY9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NvSalYT3TbL8e0SmhykaF+EJfGbv5eyu6M5OL+hT5BNLEFAX34mtXP/6uNusTeQqZ+9geUHeF2UxaB9viX3zeVUKVTcjPimwGhKCwCfSIF16x2cpNvH6w01B/WPvGdhEaDml9JHiPX7pWnCky74iPVHQ/drrL7BbGvq1Rx51qhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xijnOoWc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RE8+6eY9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77A2C4CEEA;
-	Mon, 23 Jun 2025 22:19:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xijnOoWc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC63C4CEEA;
+	Mon, 23 Jun 2025 22:19:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717168;
-	bh=lGyDc+yqAfHx0H/IpSMbO/37zyUgjWYtynxUDsUJb8E=;
+	s=korg; t=1750717170;
+	bh=A57cGmsDGraNdj88R62LQbW3ctsm49gBxpPwjnnKhLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RE8+6eY9VVuxlg/G4KIj9XkqStK2BkkFq/y6RWnb2bkCYgTfN27t4nWB+cbQ5OJE9
-	 rTyDAsS7t7jRQ5FDAg7qCy6gRaWNGxe6jg7o+kIS47ndure0TM8WFSPMMC/nNOJX/e
-	 MouUxu+KY90TS7N74ZHoQTm2NHFKauf4HEW/sjhE=
+	b=xijnOoWcraDjAT9MhSd/LTLMTP9aFJGaKdICP8T8dlmOoR1+jMSqeLTLJzDGdp4A1
+	 mDJqRqJBIaOKfv2QNaT0+gOYxMMkBLmp+gBw9w2izk4hGgtfJAYUI9sJbJpOByK/Wd
+	 BnCFzKbg3/d2q1pVqCVBM/6aFiwrdJsac7j970Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 332/414] ALSA: hda/intel: Add Thinkpad E15 to PM deny list
-Date: Mon, 23 Jun 2025 15:07:49 +0200
-Message-ID: <20250623130650.287374446@linuxfoundation.org>
+	Tengda Wu <wutengda@huaweicloud.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 410/411] arm64/ptrace: Fix stack-out-of-bounds read in regs_get_kernel_stack_nth()
+Date: Mon, 23 Jun 2025 15:09:14 +0200
+Message-ID: <20250623130644.007613068@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,37 +47,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-commit c987a390f1b3b8bdac11031d7004e3410fe259bd upstream.
+[ Upstream commit 39dfc971e42d886e7df01371cd1bef505076d84c ]
 
-Lenovo Thinkpad E15 with Conexant CX8070 codec seems causing ugly
-noises after runtime-PM suspend.  Disable the codec runtime PM as a
-workaround.
+KASAN reports a stack-out-of-bounds read in regs_get_kernel_stack_nth().
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220210
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250608091415.21170-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Call Trace:
+[   97.283505] BUG: KASAN: stack-out-of-bounds in regs_get_kernel_stack_nth+0xa8/0xc8
+[   97.284677] Read of size 8 at addr ffff800089277c10 by task 1.sh/2550
+[   97.285732]
+[   97.286067] CPU: 7 PID: 2550 Comm: 1.sh Not tainted 6.6.0+ #11
+[   97.287032] Hardware name: linux,dummy-virt (DT)
+[   97.287815] Call trace:
+[   97.288279]  dump_backtrace+0xa0/0x128
+[   97.288946]  show_stack+0x20/0x38
+[   97.289551]  dump_stack_lvl+0x78/0xc8
+[   97.290203]  print_address_description.constprop.0+0x84/0x3c8
+[   97.291159]  print_report+0xb0/0x280
+[   97.291792]  kasan_report+0x84/0xd0
+[   97.292421]  __asan_load8+0x9c/0xc0
+[   97.293042]  regs_get_kernel_stack_nth+0xa8/0xc8
+[   97.293835]  process_fetch_insn+0x770/0xa30
+[   97.294562]  kprobe_trace_func+0x254/0x3b0
+[   97.295271]  kprobe_dispatcher+0x98/0xe0
+[   97.295955]  kprobe_breakpoint_handler+0x1b0/0x210
+[   97.296774]  call_break_hook+0xc4/0x100
+[   97.297451]  brk_handler+0x24/0x78
+[   97.298073]  do_debug_exception+0xac/0x178
+[   97.298785]  el1_dbg+0x70/0x90
+[   97.299344]  el1h_64_sync_handler+0xcc/0xe8
+[   97.300066]  el1h_64_sync+0x78/0x80
+[   97.300699]  kernel_clone+0x0/0x500
+[   97.301331]  __arm64_sys_clone+0x70/0x90
+[   97.302084]  invoke_syscall+0x68/0x198
+[   97.302746]  el0_svc_common.constprop.0+0x11c/0x150
+[   97.303569]  do_el0_svc+0x38/0x50
+[   97.304164]  el0_svc+0x44/0x1d8
+[   97.304749]  el0t_64_sync_handler+0x100/0x130
+[   97.305500]  el0t_64_sync+0x188/0x190
+[   97.306151]
+[   97.306475] The buggy address belongs to stack of task 1.sh/2550
+[   97.307461]  and is located at offset 0 in frame:
+[   97.308257]  __se_sys_clone+0x0/0x138
+[   97.308910]
+[   97.309241] This frame has 1 object:
+[   97.309873]  [48, 184) 'args'
+[   97.309876]
+[   97.310749] The buggy address belongs to the virtual mapping at
+[   97.310749]  [ffff800089270000, ffff800089279000) created by:
+[   97.310749]  dup_task_struct+0xc0/0x2e8
+[   97.313347]
+[   97.313674] The buggy address belongs to the physical page:
+[   97.314604] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x14f69a
+[   97.315885] flags: 0x15ffffe00000000(node=1|zone=2|lastcpupid=0xfffff)
+[   97.316957] raw: 015ffffe00000000 0000000000000000 dead000000000122 0000000000000000
+[   97.318207] raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
+[   97.319445] page dumped because: kasan: bad access detected
+[   97.320371]
+[   97.320694] Memory state around the buggy address:
+[   97.321511]  ffff800089277b00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   97.322681]  ffff800089277b80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   97.323846] >ffff800089277c00: 00 00 f1 f1 f1 f1 f1 f1 00 00 00 00 00 00 00 00
+[   97.325023]                          ^
+[   97.325683]  ffff800089277c80: 00 00 00 00 00 00 00 00 00 f3 f3 f3 f3 f3 f3 f3
+[   97.326856]  ffff800089277d00: f3 f3 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+This issue seems to be related to the behavior of some gcc compilers and
+was also fixed on the s390 architecture before:
+
+ commit d93a855c31b7 ("s390/ptrace: Avoid KASAN false positives in regs_get_kernel_stack_nth()")
+
+As described in that commit, regs_get_kernel_stack_nth() has confirmed that
+`addr` is on the stack, so reading the value at `*addr` should be allowed.
+Use READ_ONCE_NOCHECK() helper to silence the KASAN check for this case.
+
+Fixes: 0a8ea52c3eb1 ("arm64: Add HAVE_REGS_AND_STACK_ACCESS_API feature")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Link: https://lore.kernel.org/r/20250604005533.1278992-1-wutengda@huaweicloud.com
+[will: Use '*addr' as the argument to READ_ONCE_NOCHECK()]
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/kernel/ptrace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2286,6 +2286,8 @@ static const struct snd_pci_quirk power_
- 	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
- 	/* Dell ALC3271 */
- 	SND_PCI_QUIRK(0x1028, 0x0962, "Dell ALC3271", 0),
-+	/* https://bugzilla.kernel.org/show_bug.cgi?id=220210 */
-+	SND_PCI_QUIRK(0x17aa, 0x5079, "Lenovo Thinkpad E15", 0),
- 	{}
- };
+diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
+index 4ef9e688508c4..18dd5bc12d4f3 100644
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -140,7 +140,7 @@ unsigned long regs_get_kernel_stack_nth(struct pt_regs *regs, unsigned int n)
  
+ 	addr += n;
+ 	if (regs_within_kernel_stack(regs, (unsigned long)addr))
+-		return *addr;
++		return READ_ONCE_NOCHECK(*addr);
+ 	else
+ 		return 0;
+ }
+-- 
+2.39.5
+
 
 
