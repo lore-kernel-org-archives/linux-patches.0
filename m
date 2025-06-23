@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C84E2505CB;
-	Mon, 23 Jun 2025 13:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5203251793;
+	Mon, 23 Jun 2025 13:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684502; cv=none; b=qey24LWJJKGmNVuS3QLAf/NvOJzZl0B/P/ATT7M1f40LSP77Qovepxmopa82JRqFdIODK4zWKuiVuLbixU4aAngCxBV+QQHGRmrzUxVxGilMllCi8PZxzuG1odHRjdrpNR/a08jcmZ8jecaX0WxEi1zKX05XzMR+r3uNiMI1oBM=
+	t=1750684504; cv=none; b=FBwCubErHRcts8xeKAHRKS0hMR7+idRhNQXjCgg9fxwpZ7P5Wndj8H+PHfyXvMApAVeb/mRNuqIaHcMkyW+Z+9VT43Q0Ah8t0ddXBztHUgCVE+v2rX0qZJNZMuq/6g5EPzkubR/pVuXu77DxCL/p9mXJZK+NtlYoThIXqTAYvuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684502; c=relaxed/simple;
-	bh=iRnweNH7PawYuTLZehxbdg1AVYfVgu/cgXC2zfeBeCI=;
+	s=arc-20240116; t=1750684504; c=relaxed/simple;
+	bh=umIh7b7NJdAOZ+djeQdX7M7gJGR3phhQ1NtOUgqIwwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vClLjTPb11PK+/exlNnX7mIsRlWCqU2wxG1SLjugLiE30LYS6UXQvqat5uwTsZAF77h5ybrfD+zaFy8edzdzBIx3EOr8gLmjqGbWfssaxG7uQGqyBbG60L4a2tqYnNlHbG+KYhQO3bpGyel7rFv+Ohw2DDK2R0UGXVmT8qep1GY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4OaeC+u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KbDKA9/r5uTRGe0EXovH0f73u6A1G9iWW4aZhNCwCME7kTB36yiEqXVWGxAPNgz5cwfVmexBAeCT0DlZYD1EzCsUHC1aoIoMH7kVO2617V2hrsyssZSLfGca6tYdT1sZesfOwlddmkjmYTrukjGpyrPunj/dQgw+3zOHmeEvJvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDNEd58B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4OaeC+u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34D8C4CEEA;
-	Mon, 23 Jun 2025 13:15:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDNEd58B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68AE7C4CEEA;
+	Mon, 23 Jun 2025 13:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684502;
-	bh=iRnweNH7PawYuTLZehxbdg1AVYfVgu/cgXC2zfeBeCI=;
+	s=korg; t=1750684504;
+	bh=umIh7b7NJdAOZ+djeQdX7M7gJGR3phhQ1NtOUgqIwwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x4OaeC+udjjk+TOSFHOItGM0RfJhAMgSm2eJQTJ2V6CHzBs8yvh2QyAZEgyWKwAze
-	 tZLw8kAfJ3NmRMPkp6BDe8PlduUFRy1+kcmeqHtwFDSyJY8mVa7NgaKEtAsQ8XlDnX
-	 CyrP2LYy6hpBENhOHlK12+PMGTLo4GLQaLR087hw=
+	b=zDNEd58BWWI+9hB+M47qgkgW/DcJHVFATOlbcI7mgpC1lH86aZkeDX9Y4ZxDso+C/
+	 Oy7iORfcZi28tAKu4De9CTiRAaoIFPu3hVG1FxFavyDFSvxK1P86qYWwZVOl837YtC
+	 qvMsNfMMiXpl4PYf50OPfIoJipCWQ5QngoB00lxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Stutterheim <ross.stutterheim@garmin.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 6.15 093/592] ARM: 9447/1: arm/memremap: fix arch_memremap_can_ram_remap()
-Date: Mon, 23 Jun 2025 15:00:51 +0200
-Message-ID: <20250623130702.493258612@linuxfoundation.org>
+	Andreas Kemnade <andreas@kemnade.info>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Tony Lindgren <tony@atomide.com>
+Subject: [PATCH 6.15 094/592] ARM: omap: pmic-cpcap: do not mess around without CPCAP or OMAP4
+Date: Mon, 23 Jun 2025 15:00:52 +0200
+Message-ID: <20250623130702.515693579@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -53,48 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ross Stutterheim <ross.stutterheim@garmin.com>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-commit 96e0b355883006554a0bee3697da475971d6bba8 upstream.
+commit 7397daf1029d5bfd3415ec8622f5179603d5702d upstream.
 
-arm/memremap: fix arch_memremap_can_ram_remap()
+The late init call just writes to omap4 registers as soon as
+CONFIG_MFD_CPCAP is enabled without checking whether the
+cpcap driver is actually there or the SoC is indeed an
+OMAP4.
+Rather do these things only with the right device combination.
 
-commit 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure
-presence of linear map") added the definition of
-arch_memremap_can_ram_remap() for arm[64] specific filtering of what pages
-can be used from the linear mapping. memblock_is_map_memory() was called
-with the pfn of the address given to arch_memremap_can_ram_remap();
-however, memblock_is_map_memory() expects to be given an address for arm,
-not a pfn.
+Fixes booting the BT200 with said configuration enabled and non-factory
+X-Loader and probably also some surprising behavior on other devices.
 
-This results in calls to memremap() returning a newly mapped area when
-it should return an address in the existing linear mapping.
-
-Fix this by removing the address to pfn translation and pass the
-address directly.
-
-Fixes: 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure presence of linear map")
-Signed-off-by: Ross Stutterheim <ross.stutterheim@garmin.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: c145649bf262 ("ARM: OMAP2+: Configure voltage controller for cpcap to low-speed")
+CC: stable@vger.kernel.org
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Reivewed-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20250331144439.769697-1-andreas@kemnade.info
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mm/ioremap.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm/mach-omap2/pmic-cpcap.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/arm/mm/ioremap.c
-+++ b/arch/arm/mm/ioremap.c
-@@ -515,7 +515,5 @@ void __init early_ioremap_init(void)
- bool arch_memremap_can_ram_remap(resource_size_t offset, size_t size,
- 				 unsigned long flags)
+--- a/arch/arm/mach-omap2/pmic-cpcap.c
++++ b/arch/arm/mach-omap2/pmic-cpcap.c
+@@ -264,7 +264,11 @@ int __init omap4_cpcap_init(void)
+ 
+ static int __init cpcap_late_init(void)
  {
--	unsigned long pfn = PHYS_PFN(offset);
--
--	return memblock_is_map_memory(pfn);
-+	return memblock_is_map_memory(offset);
+-	omap4_vc_set_pmic_signaling(PWRDM_POWER_RET);
++	if (!of_find_compatible_node(NULL, NULL, "motorola,cpcap"))
++		return 0;
++
++	if (soc_is_omap443x() || soc_is_omap446x() || soc_is_omap447x())
++		omap4_vc_set_pmic_signaling(PWRDM_POWER_RET);
+ 
+ 	return 0;
  }
 
 
