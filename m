@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961E02222B2;
-	Mon, 23 Jun 2025 22:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13824223DE5;
+	Mon, 23 Jun 2025 22:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717582; cv=none; b=AU47/2SJ6GxX7RyZ3Iyb3lQ0R987nxiJ9TSr8IiimXBxeeuVji+ZTdO4Y7vx0fGQzTUgYLmKwk2/DgpcWam7AbjWPDgb0JebZ0b3SJZQUgzAygyPxOKemghc3oRq33VP310/opyQ+FIij6UcspTP52yaCLPQshTFKkK6p3eWSsQ=
+	t=1750717585; cv=none; b=YgSpUFNVDOck6K7URxfirwKkI+BlFI5G2TQxv4tdwvtLPcMW5OpPxDNc/PMVy67+1/kVt8crtW0MJWAIt4/rDpuI6LLhZRe/Bwr0NZpkDnGhOtPFVhlIk7K3gr4RbXLWO3zR0NTOjikUJ5yx4FHryyvzPd7qxKI7cllWL6Q3HJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717582; c=relaxed/simple;
-	bh=RTxtZboRNILakiDdcSWAzegc0A8hwCq4GzjUXtRwLTk=;
+	s=arc-20240116; t=1750717585; c=relaxed/simple;
+	bh=GkvHBtr5VGhm7AbPpHc0YRmAiEoXHLiHpKKrc7jupz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sfmW17qDRjY+7YNJ5FubzON8uhvgfUu8bMNF8YrfnKy+8sCv0PVSXesS3XfOGYAEPPJyUf//EZar3Esmkx+0Ax6Y5buYn8S6xvuYjAOXKR0ukTpTmpNk75wD1D+mrF8XeJ3nHPv+hAYWKP1nIjJ16XYnysQT1yTOz79Q2C9A/Ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zoh+zJd8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fhOV3z39adEEoxVZGN9U4LnzoHofOl5ZHmaPnzSywyEM1IV1uG2vtbffswjvyxZ//aVLGAhRi1G83kyAlgk2ix3ijBoW7vjhzKXwQ9I+NjIvfw42Z8Cq+WYH2DzoxiEE2BlD5WRh0rebTMXmecM17dCgcknPZBTPTKp0gGReyms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmHEeGSy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zoh+zJd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDE8C4CEEA;
-	Mon, 23 Jun 2025 22:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmHEeGSy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24F3C4CEEA;
+	Mon, 23 Jun 2025 22:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717582;
-	bh=RTxtZboRNILakiDdcSWAzegc0A8hwCq4GzjUXtRwLTk=;
+	s=korg; t=1750717585;
+	bh=GkvHBtr5VGhm7AbPpHc0YRmAiEoXHLiHpKKrc7jupz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zoh+zJd8u50o8pfVwDUfazmpDTmjzKhdBOwqFKcBAG03UKdlv42prZxTdcdAAgXja
-	 Qddbj1B8MPw8Kogcss+c1ZdkIzC8ylGpNFFKPIaPQcqd3PXv97cwkKWfqxdDsHMWl1
-	 kf4HUS+QKgZqIJg5W98a1jpvATXIaELuFJiJj14s=
+	b=VmHEeGSy7AaJkXCQGtxSzOzZhg49cJEDKb8tWR6cy/W69GQtyM8K0MU44RuGc3PQ7
+	 cC+6lgvpQqt30ixiV6itYYWrpnD7AaOa6bBuR0XYIr4HYGCsLkUJVbkV+Wk8T0SmX/
+	 H6pZdT0PXH6ns5vlQYuMdQwS9T57b643S+6oHNtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangdicheng <wangdicheng@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 459/508] ALSA: usb-audio: Rename ALSA kcontrol PCM and PCM1 for the KTMicro sound card
-Date: Mon, 23 Jun 2025 15:08:24 +0200
-Message-ID: <20250623130656.421561455@linuxfoundation.org>
+Subject: [PATCH 6.1 460/508] ALSA: hda/intel: Add Thinkpad E15 to PM deny list
+Date: Mon, 23 Jun 2025 15:08:25 +0200
+Message-ID: <20250623130656.443260217@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -50,49 +49,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangdicheng <wangdicheng@kylinos.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 93adf20ff4d6e865e0b974110d3cf2f07c057177 upstream.
+commit c987a390f1b3b8bdac11031d7004e3410fe259bd upstream.
 
-PCM1 not in Pulseaudio's control list; standardize control to
-"Speaker" and "Headphone".
+Lenovo Thinkpad E15 with Conexant CX8070 codec seems causing ugly
+noises after runtime-PM suspend.  Disable the codec runtime PM as a
+workaround.
 
-Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220210
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250613063636.239683-1-wangdich9700@163.com
+Link: https://patch.msgid.link/20250608091415.21170-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_maps.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ sound/pci/hda/hda_intel.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -383,6 +383,13 @@ static const struct usbmix_name_map ms_u
- 	{ 0 }   /* terminator */
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2261,6 +2261,8 @@ static const struct snd_pci_quirk power_
+ 	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
+ 	/* Dell ALC3271 */
+ 	SND_PCI_QUIRK(0x1028, 0x0962, "Dell ALC3271", 0),
++	/* https://bugzilla.kernel.org/show_bug.cgi?id=220210 */
++	SND_PCI_QUIRK(0x17aa, 0x5079, "Lenovo Thinkpad E15", 0),
+ 	{}
  };
- 
-+/* KTMicro USB */
-+static struct usbmix_name_map s31b2_0022_map[] = {
-+	{ 23, "Speaker Playback" },
-+	{ 18, "Headphone Playback" },
-+	{ 0 }
-+};
-+
- /* ASUS ROG Zenith II with Realtek ALC1220-VB */
- static const struct usbmix_name_map asus_zenith_ii_map[] = {
- 	{ 19, NULL, 12 }, /* FU, Input Gain Pad - broken response, disabled */
-@@ -692,6 +699,11 @@ static const struct usbmix_ctl_map usbmi
- 		.id = USB_ID(0x045e, 0x083c),
- 		.map = ms_usb_link_map,
- 	},
-+	{
-+		/* KTMicro USB */
-+		.id = USB_ID(0X31b2, 0x0022),
-+		.map = s31b2_0022_map,
-+	},
- 	{ 0 } /* terminator */
- };
- 
+ #endif /* CONFIG_PM */
 
 
