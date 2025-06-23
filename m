@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE55F254869;
-	Mon, 23 Jun 2025 13:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672B9250BEC;
+	Mon, 23 Jun 2025 13:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685328; cv=none; b=ak7f7nm5YlJW+Wdpkex58j+RIv9I3bUD7fjvlqkj4UcHVak9RJu7wYl+gXgWSQPfJtP7/amuVblpVs4mwDal1vx4kPCkE8NZe65/pPvjOxieUzjpnRKlaL4TSApA1Olq4vRParJxQS37cOv/Tag/artSOzlU/Yhhg5dI4hP7L4o=
+	t=1750685331; cv=none; b=OiQ7w3ynRFflhuNGK4LI/aCDuAVyWki9arE5hFrjs/Vddp33UFEOCvpo68bvwhep/wxj0Z4fN0rPzd6cIB6BK8M//d04YlbRqDFZNvGTquyaSPKJAXf9VriP7ahmep05PmqayHBtpomIKA1T8OE4hWTUBzx2RaBaA0juqL1UKaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685328; c=relaxed/simple;
-	bh=4/vMeErcNvlosAn9+VH7xxTJCYApmjr5r+F1Olf/kt4=;
+	s=arc-20240116; t=1750685331; c=relaxed/simple;
+	bh=QSSmpiv5FBe9B/o8u996/+lNauUB17u7wHMbTonn32I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CW5+Vo+Rmys2d9HhaH7BUZ2YSW/AObEuv5LypXg6ibeJxp7O4DpBx7jktY+UADgUhMDdZyej1glbmmgMRqdcdBE4imnACNR+BGSiVj3mkuO8OLpJQTWDq8pJr1R4iBYv7m3mPWSgt1MahUUUuWPEIHldpln+hQJhIWiIIeEZB6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sit1Rimb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rivN5C7F/kTqy1ozJPtyr52CovRM7NUiYbMX/l0KprgFR3dpXwWhDEoxZCrAOKRcA2U9LCXcGVcu4kgq4d1Cwal9uC5+7JimS9e76jqHHAWCEVL/YhNrMGR1NYEbXzmNoGXsAXnRlFlXyYqajPhYCz0fzeGLisYpCQUeowdaqzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QnvSio+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sit1Rimb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F651C4CEEA;
-	Mon, 23 Jun 2025 13:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QnvSio+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F04D2C4CEEA;
+	Mon, 23 Jun 2025 13:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685328;
-	bh=4/vMeErcNvlosAn9+VH7xxTJCYApmjr5r+F1Olf/kt4=;
+	s=korg; t=1750685331;
+	bh=QSSmpiv5FBe9B/o8u996/+lNauUB17u7wHMbTonn32I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sit1RimbtIIaTiSVe7H9pefrfM2a3JWjcGdjK1rDIfGfGuKuI32jBl4P95EL6+QIU
-	 uh0qiWiQ5iwtKpQolUczm4dsm2dDlEhy/AMoHw5uK/Y+YMnNzaLRdnUwaEfYfxqJbu
-	 lZUX+Az6L3nNAXSKfZImXm2fp2R5KhMQkR0ptp2M=
+	b=0QnvSio+xfdUGtk9C06uOSjBg66IylBbFzWeiecOiYBfGEcHdkeOpErDz7t3yp3Nn
+	 QOXQOjMxExSkQ7RMlDLBtJw32Qp5aFly9e8odkVurx9Gvn9JQs2csaWs1A7ogFxwiA
+	 0deUBv1axjnvaFb/Iq0N+ozYTTJkRcFXwD5hczxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+45b0c89a0fc7ae8dbadc@syzkaller.appspotmail.com,
-	Alexei Starovoitov <ast@kernel.org>,
-	Tao Chen <chen.dylane@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Michael Walle <michael@walle.cc>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/355] bpf: Fix WARN() in get_bpf_raw_tp_regs
-Date: Mon, 23 Jun 2025 15:04:07 +0200
-Message-ID: <20250623130628.214027987@linuxfoundation.org>
+Subject: [PATCH 5.4 086/222] net: mdio: C22 is now optional, EOPNOTSUPP if not provided
+Date: Mon, 23 Jun 2025 15:07:01 +0200
+Message-ID: <20250623130614.689593769@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,88 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tao Chen <chen.dylane@linux.dev>
+From: Andrew Lunn <andrew@lunn.ch>
 
-[ Upstream commit 3880cdbed1c4607e378f58fa924c5d6df900d1d3 ]
+[ Upstream commit b063b1924fd9bf0bc157cf644764dc2151d04ccc ]
 
-syzkaller reported an issue:
+When performing a C22 operation, check that the bus driver actually
+provides the methods, and return -EOPNOTSUPP if not. C45 only busses
+do exist, and in future their C22 methods will be NULL.
 
-WARNING: CPU: 3 PID: 5971 at kernel/trace/bpf_trace.c:1861 get_bpf_raw_tp_regs+0xa4/0x100 kernel/trace/bpf_trace.c:1861
-Modules linked in:
-CPU: 3 UID: 0 PID: 5971 Comm: syz-executor205 Not tainted 6.15.0-rc5-syzkaller-00038-g707df3375124 #0 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-RIP: 0010:get_bpf_raw_tp_regs+0xa4/0x100 kernel/trace/bpf_trace.c:1861
-RSP: 0018:ffffc90003636fa8 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000003 RCX: ffffffff81c6bc4c
-RDX: ffff888032efc880 RSI: ffffffff81c6bc83 RDI: 0000000000000005
-RBP: ffff88806a730860 R08: 0000000000000005 R09: 0000000000000003
-R10: 0000000000000004 R11: 0000000000000000 R12: 0000000000000004
-R13: 0000000000000001 R14: ffffc90003637008 R15: 0000000000000900
-FS:  0000000000000000(0000) GS:ffff8880d6cdf000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f7baee09130 CR3: 0000000029f5a000 CR4: 0000000000352ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ____bpf_get_stack_raw_tp kernel/trace/bpf_trace.c:1934 [inline]
- bpf_get_stack_raw_tp+0x24/0x160 kernel/trace/bpf_trace.c:1931
- bpf_prog_ec3b2eefa702d8d3+0x43/0x47
- bpf_dispatcher_nop_func include/linux/bpf.h:1316 [inline]
- __bpf_prog_run include/linux/filter.h:718 [inline]
- bpf_prog_run include/linux/filter.h:725 [inline]
- __bpf_trace_run kernel/trace/bpf_trace.c:2363 [inline]
- bpf_trace_run3+0x23f/0x5a0 kernel/trace/bpf_trace.c:2405
- __bpf_trace_mmap_lock_acquire_returned+0xfc/0x140 include/trace/events/mmap_lock.h:47
- __traceiter_mmap_lock_acquire_returned+0x79/0xc0 include/trace/events/mmap_lock.h:47
- __do_trace_mmap_lock_acquire_returned include/trace/events/mmap_lock.h:47 [inline]
- trace_mmap_lock_acquire_returned include/trace/events/mmap_lock.h:47 [inline]
- __mmap_lock_do_trace_acquire_returned+0x138/0x1f0 mm/mmap_lock.c:35
- __mmap_lock_trace_acquire_returned include/linux/mmap_lock.h:36 [inline]
- mmap_read_trylock include/linux/mmap_lock.h:204 [inline]
- stack_map_get_build_id_offset+0x535/0x6f0 kernel/bpf/stackmap.c:157
- __bpf_get_stack+0x307/0xa10 kernel/bpf/stackmap.c:483
- ____bpf_get_stack kernel/bpf/stackmap.c:499 [inline]
- bpf_get_stack+0x32/0x40 kernel/bpf/stackmap.c:496
- ____bpf_get_stack_raw_tp kernel/trace/bpf_trace.c:1941 [inline]
- bpf_get_stack_raw_tp+0x124/0x160 kernel/trace/bpf_trace.c:1931
- bpf_prog_ec3b2eefa702d8d3+0x43/0x47
-
-Tracepoint like trace_mmap_lock_acquire_returned may cause nested call
-as the corner case show above, which will be resolved with more general
-method in the future. As a result, WARN_ON_ONCE will be triggered. As
-Alexei suggested, remove the WARN_ON_ONCE first.
-
-Fixes: 9594dc3c7e71 ("bpf: fix nested bpf tracepoints with per-cpu data")
-Reported-by: syzbot+45b0c89a0fc7ae8dbadc@syzkaller.appspotmail.com
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Tao Chen <chen.dylane@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250513042747.757042-1-chen.dylane@linux.dev
-
-Closes: https://lore.kernel.org/bpf/8bc2554d-1052-4922-8832-e0078a033e1d@gmail.com
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 0e629694126c ("net/mdiobus: Fix potential out-of-bounds read/write access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/mdio_bus.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 6957381b139ce..782e64ff839d5 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -1604,7 +1604,7 @@ static struct pt_regs *get_bpf_raw_tp_regs(void)
- 	struct bpf_raw_tp_regs *tp_regs = this_cpu_ptr(&bpf_raw_tp_regs);
- 	int nest_level = this_cpu_inc_return(bpf_raw_tp_nest_level);
+diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
+index fdf8221f46fa5..e5c25beae21e0 100644
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -565,7 +565,10 @@ int __mdiobus_read(struct mii_bus *bus, int addr, u32 regnum)
  
--	if (WARN_ON_ONCE(nest_level > ARRAY_SIZE(tp_regs->regs))) {
-+	if (nest_level > ARRAY_SIZE(tp_regs->regs)) {
- 		this_cpu_dec(bpf_raw_tp_nest_level);
- 		return ERR_PTR(-EBUSY);
- 	}
+ 	WARN_ON_ONCE(!mutex_is_locked(&bus->mdio_lock));
+ 
+-	retval = bus->read(bus, addr, regnum);
++	if (bus->read)
++		retval = bus->read(bus, addr, regnum);
++	else
++		retval = -EOPNOTSUPP;
+ 
+ 	trace_mdio_access(bus, 1, addr, regnum, retval, retval);
+ 
+@@ -590,7 +593,10 @@ int __mdiobus_write(struct mii_bus *bus, int addr, u32 regnum, u16 val)
+ 
+ 	WARN_ON_ONCE(!mutex_is_locked(&bus->mdio_lock));
+ 
+-	err = bus->write(bus, addr, regnum, val);
++	if (bus->write)
++		err = bus->write(bus, addr, regnum, val);
++	else
++		err = -EOPNOTSUPP;
+ 
+ 	trace_mdio_access(bus, 0, addr, regnum, val, err);
+ 
 -- 
 2.39.5
 
