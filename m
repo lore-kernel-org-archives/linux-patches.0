@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5334F16419;
-	Mon, 23 Jun 2025 13:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C896D248891;
+	Mon, 23 Jun 2025 13:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686098; cv=none; b=X73+Z7fWwux6fi4r53h0lwYS5EWTpq6OT1DaQz3CfS6VsIlMbNgIZyL4Q+ecpyYwH/LOAgTFR5XsVfTMDCooeTARo424zgasqYIeYWSNaAJLzNGcPeWL04EsC8qiE8AVvgtUGsZGJ+M83SzGZZUhFFnN/spN9F5zlA1qwXU7V+k=
+	t=1750686099; cv=none; b=pksePn8huka5jEVeNlbPMjD7EK1TcXms9qe32mEpIsc3SsozAX2KfKufD+YBmmHoSZ454Hkumc2INzMmhF+H+8KiD8dKRLlwulZUewTD/DywbkDXcwp6/r7waaJvjAHn2keuQoDuRWh/Md5qs3YT1LoxhZPbSc3vRwWwmjYlpw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686098; c=relaxed/simple;
-	bh=SNLycSAsaMVzcJld3wvIR1nBoP78HUGWOMEbqj/NBAE=;
+	s=arc-20240116; t=1750686099; c=relaxed/simple;
+	bh=gl+uYTnazoNDKlMjsRcLVvKpjtOPnXtd+1xFPXz2NDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=koJi8bd+7v318VQbowRu6lcSGJB0H7e0iU2Vq8eCmnzgNGHJ0lT36YJt2CQapaFnf13tQR0hfoaZaeBURTP47kE3du8iA4KK1hz7Pi+C95TuaAyqMeOfgFPJIUeF2dl96qSoQ7DGQ//ZOr3jpgAUVsdFCkhLo/xfLM/BrlyfR/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0GQrPo7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=efqwDnzSOVmk7J/tQIMXgUC2A9sjQCcT+OGjlIjsmGaPKCbe4wcTQmhA8FW0YBbANUvQTJHsKx2zLYwvCznkBcWc5W6dcUJAWxu1s504mk1S/oawobdyDe0sE9HKJyY7fooDvgXtdHOUcOrwcJBrZg3w1pa9OHD/WczMd8feHfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZMi+T9L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0GQrPo7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77752C4CEEA;
-	Mon, 23 Jun 2025 13:41:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZMi+T9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C26DC4CEEA;
+	Mon, 23 Jun 2025 13:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686096;
-	bh=SNLycSAsaMVzcJld3wvIR1nBoP78HUGWOMEbqj/NBAE=;
+	s=korg; t=1750686099;
+	bh=gl+uYTnazoNDKlMjsRcLVvKpjtOPnXtd+1xFPXz2NDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y0GQrPo7opl5452OYfXFsuGklluwjFn5H/X0eINPS13JRkvmA87+4XAiObuWXNlNL
-	 +SwJpRsuKWwvq/MIHbb1awN13PnFPfRD+E0dgWfbnrlTn77K/7JkMR0weaeJZ1F/kI
-	 9DtiN5F8q/n3rcCDzyuthS0lKL2noEUPpCqgLIhA=
+	b=HZMi+T9LDX6bprxgZT0nW6LcadPzIIXyoLQy5WIT6UmS9D3QYPyS+kEb0mxbcH5Yc
+	 Zb6QI4r+NdSrnIOIOv4hLFa5rktjbY6uwCERnwNAu/zBCyQyljHoFHhfpoPzZdNb+9
+	 gZAsBczJiGhPFeaGtS2ppV4aSNpnPoJLrkieie/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+65761fc25a137b9c8c6e@syzkaller.appspotmail.com,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/411] Squashfs: check return result of sb_min_blocksize
-Date: Mon, 23 Jun 2025 15:03:43 +0200
-Message-ID: <20250623130635.374335677@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.6 022/290] wifi: rtw88: usb: Reduce control message timeout to 500 ms
+Date: Mon, 23 Jun 2025 15:04:43 +0200
+Message-ID: <20250623130627.651330827@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +46,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 734aa85390ea693bb7eaf2240623d41b03705c84 ]
+commit 490340faddea461319652ce36dbc7c1b4482c35e upstream.
 
-Syzkaller reports an "UBSAN: shift-out-of-bounds in squashfs_bio_read" bug.
+RTL8811AU stops responding during the firmware download on some systems:
 
-Syzkaller forks multiple processes which after mounting the Squashfs
-filesystem, issues an ioctl("/dev/loop0", LOOP_SET_BLOCK_SIZE, 0x8000).
-Now if this ioctl occurs at the same time another process is in the
-process of mounting a Squashfs filesystem on /dev/loop0, the failure
-occurs.  When this happens the following code in squashfs_fill_super()
-fails.
+[  809.256440] rtw_8821au 5-2.1:1.0: Firmware version 42.4.0, H2C version 0
+[  812.759142] rtw_8821au 5-2.1:1.0 wlp48s0f4u2u1: renamed from wlan0
+[  837.315388] rtw_8821au 1-4:1.0: write register 0x1ef4 failed with -110
+[  867.524259] rtw_8821au 1-4:1.0: write register 0x1ef8 failed with -110
+[  868.930976] rtw_8821au 5-2.1:1.0 wlp48s0f4u2u1: entered promiscuous mode
+[  897.730952] rtw_8821au 1-4:1.0: write register 0x1efc failed with -110
 
-----
-msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
-msblk->devblksize_log2 = ffz(~msblk->devblksize);
-----
+Each write takes 30 seconds to fail because that's the timeout currently
+used for control messages in rtw_usb_write().
 
-sb_min_blocksize() returns 0, which means msblk->devblksize is set to 0.
+In this scenario the firmware download takes at least 2000 seconds.
+Because this is done from the USB probe function, the long delay makes
+other things in the system hang.
 
-As a result, ffz(~msblk->devblksize) returns 64, and msblk->devblksize_log2
-is set to 64.
+Reduce the timeout to 500 ms. This is the value used by the official USB
+wifi drivers from Realtek.
 
-This subsequently causes the
+Of course this only makes things hang for ~30 seconds instead of ~30
+minutes. It doesn't fix the firmware download.
 
-UBSAN: shift-out-of-bounds in fs/squashfs/block.c:195:36
-shift exponent 64 is too large for 64-bit type 'u64' (aka
-'unsigned long long')
+Tested with RTL8822CU, RTL8812BU, RTL8811CU, RTL8814AU, RTL8811AU,
+RTL8812AU, RTL8821AU, RTL8723DU.
 
-This commit adds a check for a 0 return by sb_min_blocksize().
-
-Link: https://lkml.kernel.org/r/20250409024747.876480-1-phillip@squashfs.org.uk
-Fixes: 0aa666190509 ("Squashfs: super block operations")
-Reported-by: syzbot+65761fc25a137b9c8c6e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67f0dd7a.050a0220.0a13.0230.GAE@google.com/
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: a82dfd33d123 ("wifi: rtw88: Add common USB chip support")
+Link: https://github.com/lwfinger/rtw88/issues/344
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/1e35dd26-3f10-40b1-b2b4-f72184a26611@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/squashfs/super.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/realtek/rtw88/usb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/squashfs/super.c b/fs/squashfs/super.c
-index 60d6951915f44..5108740f9653c 100644
---- a/fs/squashfs/super.c
-+++ b/fs/squashfs/super.c
-@@ -136,6 +136,11 @@ static int squashfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 	msblk->panic_on_errors = (opts->errors == Opt_errors_panic);
+--- a/drivers/net/wireless/realtek/rtw88/usb.c
++++ b/drivers/net/wireless/realtek/rtw88/usb.c
+@@ -133,7 +133,7 @@ static void rtw_usb_write(struct rtw_dev
  
- 	msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
-+	if (!msblk->devblksize) {
-+		errorf(fc, "squashfs: unable to set blocksize\n");
-+		return -EINVAL;
-+	}
-+
- 	msblk->devblksize_log2 = ffz(~msblk->devblksize);
- 
- 	mutex_init(&msblk->meta_index_mutex);
--- 
-2.39.5
-
+ 	ret = usb_control_msg(udev, usb_sndctrlpipe(udev, 0),
+ 			      RTW_USB_CMD_REQ, RTW_USB_CMD_WRITE,
+-			      addr, 0, data, len, 30000);
++			      addr, 0, data, len, 500);
+ 	if (ret < 0 && ret != -ENODEV && count++ < 4)
+ 		rtw_err(rtwdev, "write register 0x%x failed with %d\n",
+ 			addr, ret);
 
 
