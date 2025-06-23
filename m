@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B752192EC;
-	Mon, 23 Jun 2025 22:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AD92192EC;
+	Mon, 23 Jun 2025 22:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717338; cv=none; b=rxLxmrTROh6i1CLmuLT2i9ADebuH4C+jJHRS6HcngjPD1ZKG9pYchsqZnHqI0vIsYeTKlmdH5c2HP25Mpo/pmvwI2bbIlZGBBl2lyOgjsyE33BD31CW3tR7uitofBI1erQeZRmeCb0A/Mr59LLM5hjD+/Vt7qAXwpL+1ppI53oI=
+	t=1750717341; cv=none; b=uNztk6S20yodg44lBmLhYZaM/S5VikKwN7LUkjl7ZrRfB72l0GmLnX8KGcj+pBS37yXRR/5VvppeZmPCui+GStnwj+OZSSZndWtal6Sqbd6q272szPUnoKNnw0Q8FVlBRll+c49CZMSQYW6FgNGlJ45k/QzkONRGCDJUZMxAqIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717338; c=relaxed/simple;
-	bh=S8jXtAmEn7M6j3nq8KHtuVQ0/lFhdj9oA9oFr0MLDlA=;
+	s=arc-20240116; t=1750717341; c=relaxed/simple;
+	bh=XQ+BSS1rDTTBd6cDB07SyVsZjcEQrrwhWZOMfHOgmco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gxtw7AOmNIURCG5pj2d5/UByL+unwfKsgjSorlZ3faCTa3LMbMgG7IoVpDZ7HdjNsK3a74+D+Mvip86glAM/kuI/wj6G7iu2ymh3wHgIgTS1oFwpIJub8VomPvP0ycM4PSZawRIKuKShsVAZZtpOCbev3OJdnLLwALUFYLJnA0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwC5xUsH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=POTnGuWXuj2nbMgKO+9my7zygWrJkrc56eG9pR7VdLqs1wSP0Cjm+IhH/BJcFPopBIVLDwK2/7qe2PxpQep28GpgGfB/ES84ujlnlqgBD5VMem/s0idKNLmQWQdP0avaoXw063o1DDRl5a7BfIQ3irh8749R6Za6WzHKo6Pdggg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDBuAdKm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwC5xUsH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134C6C4CEEA;
-	Mon, 23 Jun 2025 22:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDBuAdKm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81679C4CEEF;
+	Mon, 23 Jun 2025 22:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717338;
-	bh=S8jXtAmEn7M6j3nq8KHtuVQ0/lFhdj9oA9oFr0MLDlA=;
+	s=korg; t=1750717340;
+	bh=XQ+BSS1rDTTBd6cDB07SyVsZjcEQrrwhWZOMfHOgmco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MwC5xUsH8/pojBtsqOc4Arxdi8G1prvUXVBbc6dj2bPiuRX/NYnm4dMh2qlGQ4yBk
-	 s01u2GOPnYsZZpmQo+pUl82OBNnXrnocKqBxLAv6VUhR4sUEekkrL/9HwpRNR806Zm
-	 K8gOqGG02G6hzMPyydbTWBnts22JeAVFc6nRZ55U=
+	b=CDBuAdKm1NOQ8S/SiFyqERnWdkmD4KXYZlB8ow5RNM0B+Xh0ITINcNriHpeclAPrU
+	 sht4qX4sH5LRtlqlaBcQiS3HkzLzyd6oyELkEkQ8+1vbWlo1dK+tn7LtipyeSaCnw3
+	 DDec8ZRv47aU6SkYXOO1ZnGK29uGSpFibAL+ZNfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Gil Fine <gil.fine@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 407/508] pinctrl: armada-37xx: propagate error from armada_37xx_gpio_get_direction()
-Date: Mon, 23 Jun 2025 15:07:32 +0200
-Message-ID: <20250623130655.244781637@linuxfoundation.org>
+Subject: [PATCH 6.12 369/414] e1000e: set fixed clock frequency indication for Nahum 11 and Nahum 13
+Date: Mon, 23 Jun 2025 15:08:26 +0200
+Message-ID: <20250623130651.183659113@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +49,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Vitaly Lifshits <vitaly.lifshits@intel.com>
 
-[ Upstream commit 6481c0a83367b0672951ccc876fbae7ee37b594b ]
+[ Upstream commit 688a0d61b2d7427189c4eb036ce485d8fc957cbb ]
 
-The regmap_read() function can fail, so propagate its error up to
-the stack instead of silently ignoring that.
+On some systems with Nahum 11 and Nahum 13 the value of the XTAL clock in
+the software STRAP is incorrect. This causes the PTP timer to run at the
+wrong rate and can lead to synchronization issues.
 
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-6-07e9ac1ab737@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+The STRAP value is configured by the system firmware, and a firmware
+update is not always possible. Since the XTAL clock on these systems
+always runs at 38.4MHz, the driver may ignore the STRAP and just set
+the correct value.
+
+Fixes: cc23f4f0b6b9 ("e1000e: Add support for Meteor Lake")
+Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Reviewed-by: Gil Fine <gil.fine@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/e1000e/netdev.c | 14 +++++++++++---
+ drivers/net/ethernet/intel/e1000e/ptp.c    |  8 +++++---
+ 2 files changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-index 7483ffa2a409c..e9032359a68a5 100644
---- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-+++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -402,10 +402,13 @@ static int armada_37xx_gpio_get_direction(struct gpio_chip *chip,
- 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
- 	unsigned int reg = OUTPUT_EN;
- 	unsigned int val, mask;
-+	int ret;
- 
- 	armada_37xx_update_reg(&reg, &offset);
- 	mask = BIT(offset);
--	regmap_read(info->regmap, reg, &val);
-+	ret = regmap_read(info->regmap, reg, &val);
-+	if (ret)
-+		return ret;
- 
- 	if (val & mask)
- 		return GPIO_LINE_DIRECTION_OUT;
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 07e9033463582..5fe54e9b71e25 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -3540,9 +3540,6 @@ s32 e1000e_get_base_timinca(struct e1000_adapter *adapter, u32 *timinca)
+ 	case e1000_pch_cnp:
+ 	case e1000_pch_tgp:
+ 	case e1000_pch_adp:
+-	case e1000_pch_mtp:
+-	case e1000_pch_lnp:
+-	case e1000_pch_ptp:
+ 	case e1000_pch_nvp:
+ 		if (er32(TSYNCRXCTL) & E1000_TSYNCRXCTL_SYSCFI) {
+ 			/* Stable 24MHz frequency */
+@@ -3558,6 +3555,17 @@ s32 e1000e_get_base_timinca(struct e1000_adapter *adapter, u32 *timinca)
+ 			adapter->cc.shift = shift;
+ 		}
+ 		break;
++	case e1000_pch_mtp:
++	case e1000_pch_lnp:
++	case e1000_pch_ptp:
++		/* System firmware can misreport this value, so set it to a
++		 * stable 38400KHz frequency.
++		 */
++		incperiod = INCPERIOD_38400KHZ;
++		incvalue = INCVALUE_38400KHZ;
++		shift = INCVALUE_SHIFT_38400KHZ;
++		adapter->cc.shift = shift;
++		break;
+ 	case e1000_82574:
+ 	case e1000_82583:
+ 		/* Stable 25MHz frequency */
+diff --git a/drivers/net/ethernet/intel/e1000e/ptp.c b/drivers/net/ethernet/intel/e1000e/ptp.c
+index 89d57dd911dc8..ea3c3eb2ef202 100644
+--- a/drivers/net/ethernet/intel/e1000e/ptp.c
++++ b/drivers/net/ethernet/intel/e1000e/ptp.c
+@@ -295,15 +295,17 @@ void e1000e_ptp_init(struct e1000_adapter *adapter)
+ 	case e1000_pch_cnp:
+ 	case e1000_pch_tgp:
+ 	case e1000_pch_adp:
+-	case e1000_pch_mtp:
+-	case e1000_pch_lnp:
+-	case e1000_pch_ptp:
+ 	case e1000_pch_nvp:
+ 		if (er32(TSYNCRXCTL) & E1000_TSYNCRXCTL_SYSCFI)
+ 			adapter->ptp_clock_info.max_adj = MAX_PPB_24MHZ;
+ 		else
+ 			adapter->ptp_clock_info.max_adj = MAX_PPB_38400KHZ;
+ 		break;
++	case e1000_pch_mtp:
++	case e1000_pch_lnp:
++	case e1000_pch_ptp:
++		adapter->ptp_clock_info.max_adj = MAX_PPB_38400KHZ;
++		break;
+ 	case e1000_82574:
+ 	case e1000_82583:
+ 		adapter->ptp_clock_info.max_adj = MAX_PPB_25MHZ;
 -- 
 2.39.5
 
