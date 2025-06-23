@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90A23FB1B;
-	Mon, 23 Jun 2025 21:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341DC3FB1B;
+	Mon, 23 Jun 2025 21:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715819; cv=none; b=FzS/BStCUDHXRxAa5uxAdPD2Q1F4HmLg6B8YFjGXQ3NKQXsPqZWTC8dz5eCiUBAn6L12cVGiyU1QoqbvrkQssZDeAye3cCoK2+FPqSoeaXXdgryMk0fmDkhtsncZ9kVpnq2ZlpghLk0lYr2PC/xxvZdWf4OUnkiqtV0LzqEHAAY=
+	t=1750715822; cv=none; b=fBDSRwdvhyZomkSHJ/qPXCS5bixp1WLeII2GrO1iOwTWDi7IZ1NohTrOk1sP+XvdX54UU7NiCoX0OA3OknIUNsMwHH9ysCQOxNq1vaT9XlhyCQybkhbi9M4gZ4Nlqie7ZEY7j5zZUyf6+fS/mchTcRBE0LRSz3my1Vby/5yiRrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715819; c=relaxed/simple;
-	bh=Kli21YFHwbV5KspaCWhSyPckI1DiiBvLexh8MNPJsbE=;
+	s=arc-20240116; t=1750715822; c=relaxed/simple;
+	bh=P3OZNLzTzYud0PwJzMVaHz9TwTkLevChHw5qntH3iag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQo73FDeRQhH4oShUQp0IlQEaD5UQGZdJmRmDswufzOUAShI7EpAhPiVd1KgigKYNAA86XTs/VX809KERwQ8vDYY5BJKsRJf9XhLNdwpEHDC+BGsgO/M2TKvkg3BuXVdwNSVySj0ylfFHBfLlSAJnEPLb8/eoo5MbV7ePyZFTGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1HXvGzPY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JfsAdHpie1Jr0XTTCt5fMyDVWfPb+70gvaeH6BPvEtiNCntm6KdwbUDrKMuawJwp+0gnbBAa4O0gMxZjN0c+tAUyWBdW9wpxiYzUBiPguNHOyMJjInsfc/s2qS9cT7q/Rn+7jKHzT/PycQDn31CPSNy4CWzyNZ4gRPu0o3ySiiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVNEPwP4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HXvGzPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E65BC4CEEA;
-	Mon, 23 Jun 2025 21:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVNEPwP4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD769C4CEEA;
+	Mon, 23 Jun 2025 21:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715819;
-	bh=Kli21YFHwbV5KspaCWhSyPckI1DiiBvLexh8MNPJsbE=;
+	s=korg; t=1750715822;
+	bh=P3OZNLzTzYud0PwJzMVaHz9TwTkLevChHw5qntH3iag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1HXvGzPY3iu26C2/R5jlrX6F795ylyCXtDyegzlo0ieKaO01iciozzYHrNR7f60Rh
-	 lgWhKBEP6veCM42gRbSiuiT83Ckuage2RjQO+RqDlrhnAcxuLchdbIJU7WG0HKnaix
-	 /0RR8aaAGUtIXUL+EXq56mrMv/HXIZoCQqgY/0ls=
+	b=EVNEPwP4seArO0Ki3v6PW9LJVxUtnAhp2GUb+kkcdFrf1FklMhIxCnCnE9ddsgKM5
+	 Ed+cByYr0pkadj64/P5yutDHKnBGWoggMU6TVAuPJN66iD0bJm+lSVyVRIOqjOtOe0
+	 YM5sB2BT8Er5tvI1agVTT6dmbOTAJt6BvqTzSEd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Will Deacon <will@kernel.org>,
-	Pu Lehui <pulehui@huawei.com>
-Subject: [PATCH 5.10 324/355] arm64: insn: add encoders for atomic operations
-Date: Mon, 23 Jun 2025 15:08:45 +0200
-Message-ID: <20250623130636.497997351@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 306/411] tipc: use kfree_sensitive() for aead cleanup
+Date: Mon, 23 Jun 2025 15:07:30 +0200
+Message-ID: <20250623130641.348001400@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,405 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit fa1114d9eba5087ba5e81aab4c56f546995e6cd3 ]
+[ Upstream commit c8ef20fe7274c5766a317f9193b70bed717b6b3d ]
 
-It is a preparation patch for eBPF atomic supports under arm64. eBPF
-needs support atomic[64]_fetch_add, atomic[64]_[fetch_]{and,or,xor} and
-atomic[64]_{xchg|cmpxchg}. The ordering semantics of eBPF atomics are
-the same with the implementations in linux kernel.
+The tipc_aead_free() function currently uses kfree() to release the aead
+structure. However, this structure contains sensitive information, such
+as key's SALT value, which should be securely erased from memory to
+prevent potential leakage.
 
-Add three helpers to support LDCLR/LDEOR/LDSET/SWP, CAS and DMB
-instructions. STADD/STCLR/STEOR/STSET are simply encoded as aliases for
-LDADD/LDCLR/LDEOR/LDSET with XZR as the destination register, so no extra
-helper is added. atomic_fetch_add() and other atomic ops needs support for
-STLXR instruction, so extend enum aarch64_insn_ldst_type to do that.
+To enhance security, replace kfree() with kfree_sensitive() when freeing
+the aead structure. This change ensures that sensitive data is explicitly
+cleared before memory deallocation, aligning with the approach used in
+tipc_aead_init() and adhering to best practices for handling confidential
+information.
 
-LDADD/LDEOR/LDSET/SWP and CAS instructions are only available when LSE
-atomics is enabled, so just return AARCH64_BREAK_FAULT directly in
-these newly-added helpers if CONFIG_ARM64_LSE_ATOMICS is disabled.
-
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20220217072232.1186625-3-houtao1@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250523114717.4021518-1-zilin@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/insn.h |   80 ++++++++++++++++--
- arch/arm64/kernel/insn.c      |  185 ++++++++++++++++++++++++++++++++++++++----
- arch/arm64/net/bpf_jit.h      |   11 ++
- 3 files changed, 253 insertions(+), 23 deletions(-)
+ net/tipc/crypto.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/include/asm/insn.h
-+++ b/arch/arm64/include/asm/insn.h
-@@ -218,7 +218,9 @@ enum aarch64_insn_ldst_type {
- 	AARCH64_INSN_LDST_LOAD_PAIR_POST_INDEX,
- 	AARCH64_INSN_LDST_STORE_PAIR_POST_INDEX,
- 	AARCH64_INSN_LDST_LOAD_EX,
-+	AARCH64_INSN_LDST_LOAD_ACQ_EX,
- 	AARCH64_INSN_LDST_STORE_EX,
-+	AARCH64_INSN_LDST_STORE_REL_EX,
- };
- 
- enum aarch64_insn_adsb_type {
-@@ -293,6 +295,36 @@ enum aarch64_insn_adr_type {
- 	AARCH64_INSN_ADR_TYPE_ADR,
- };
- 
-+enum aarch64_insn_mem_atomic_op {
-+	AARCH64_INSN_MEM_ATOMIC_ADD,
-+	AARCH64_INSN_MEM_ATOMIC_CLR,
-+	AARCH64_INSN_MEM_ATOMIC_EOR,
-+	AARCH64_INSN_MEM_ATOMIC_SET,
-+	AARCH64_INSN_MEM_ATOMIC_SWP,
-+};
-+
-+enum aarch64_insn_mem_order_type {
-+	AARCH64_INSN_MEM_ORDER_NONE,
-+	AARCH64_INSN_MEM_ORDER_ACQ,
-+	AARCH64_INSN_MEM_ORDER_REL,
-+	AARCH64_INSN_MEM_ORDER_ACQREL,
-+};
-+
-+enum aarch64_insn_mb_type {
-+	AARCH64_INSN_MB_SY,
-+	AARCH64_INSN_MB_ST,
-+	AARCH64_INSN_MB_LD,
-+	AARCH64_INSN_MB_ISH,
-+	AARCH64_INSN_MB_ISHST,
-+	AARCH64_INSN_MB_ISHLD,
-+	AARCH64_INSN_MB_NSH,
-+	AARCH64_INSN_MB_NSHST,
-+	AARCH64_INSN_MB_NSHLD,
-+	AARCH64_INSN_MB_OSH,
-+	AARCH64_INSN_MB_OSHST,
-+	AARCH64_INSN_MB_OSHLD,
-+};
-+
- #define	__AARCH64_INSN_FUNCS(abbr, mask, val)				\
- static __always_inline bool aarch64_insn_is_##abbr(u32 code)		\
- {									\
-@@ -310,6 +342,11 @@ __AARCH64_INSN_FUNCS(prfm,	0x3FC00000, 0
- __AARCH64_INSN_FUNCS(prfm_lit,	0xFF000000, 0xD8000000)
- __AARCH64_INSN_FUNCS(str_reg,	0x3FE0EC00, 0x38206800)
- __AARCH64_INSN_FUNCS(ldadd,	0x3F20FC00, 0x38200000)
-+__AARCH64_INSN_FUNCS(ldclr,	0x3F20FC00, 0x38201000)
-+__AARCH64_INSN_FUNCS(ldeor,	0x3F20FC00, 0x38202000)
-+__AARCH64_INSN_FUNCS(ldset,	0x3F20FC00, 0x38203000)
-+__AARCH64_INSN_FUNCS(swp,	0x3F20FC00, 0x38208000)
-+__AARCH64_INSN_FUNCS(cas,	0x3FA07C00, 0x08A07C00)
- __AARCH64_INSN_FUNCS(ldr_reg,	0x3FE0EC00, 0x38606800)
- __AARCH64_INSN_FUNCS(ldr_lit,	0xBF000000, 0x18000000)
- __AARCH64_INSN_FUNCS(ldrsw_lit,	0xFF000000, 0x98000000)
-@@ -452,13 +489,6 @@ u32 aarch64_insn_gen_load_store_ex(enum
- 				   enum aarch64_insn_register state,
- 				   enum aarch64_insn_size_type size,
- 				   enum aarch64_insn_ldst_type type);
--u32 aarch64_insn_gen_ldadd(enum aarch64_insn_register result,
--			   enum aarch64_insn_register address,
--			   enum aarch64_insn_register value,
--			   enum aarch64_insn_size_type size);
--u32 aarch64_insn_gen_stadd(enum aarch64_insn_register address,
--			   enum aarch64_insn_register value,
--			   enum aarch64_insn_size_type size);
- u32 aarch64_insn_gen_add_sub_imm(enum aarch64_insn_register dst,
- 				 enum aarch64_insn_register src,
- 				 int imm, enum aarch64_insn_variant variant,
-@@ -519,6 +549,42 @@ u32 aarch64_insn_gen_prefetch(enum aarch
- 			      enum aarch64_insn_prfm_type type,
- 			      enum aarch64_insn_prfm_target target,
- 			      enum aarch64_insn_prfm_policy policy);
-+#ifdef CONFIG_ARM64_LSE_ATOMICS
-+u32 aarch64_insn_gen_atomic_ld_op(enum aarch64_insn_register result,
-+				  enum aarch64_insn_register address,
-+				  enum aarch64_insn_register value,
-+				  enum aarch64_insn_size_type size,
-+				  enum aarch64_insn_mem_atomic_op op,
-+				  enum aarch64_insn_mem_order_type order);
-+u32 aarch64_insn_gen_cas(enum aarch64_insn_register result,
-+			 enum aarch64_insn_register address,
-+			 enum aarch64_insn_register value,
-+			 enum aarch64_insn_size_type size,
-+			 enum aarch64_insn_mem_order_type order);
-+#else
-+static inline
-+u32 aarch64_insn_gen_atomic_ld_op(enum aarch64_insn_register result,
-+				  enum aarch64_insn_register address,
-+				  enum aarch64_insn_register value,
-+				  enum aarch64_insn_size_type size,
-+				  enum aarch64_insn_mem_atomic_op op,
-+				  enum aarch64_insn_mem_order_type order)
-+{
-+	return AARCH64_BREAK_FAULT;
-+}
-+
-+static inline
-+u32 aarch64_insn_gen_cas(enum aarch64_insn_register result,
-+			 enum aarch64_insn_register address,
-+			 enum aarch64_insn_register value,
-+			 enum aarch64_insn_size_type size,
-+			 enum aarch64_insn_mem_order_type order)
-+{
-+	return AARCH64_BREAK_FAULT;
-+}
-+#endif
-+u32 aarch64_insn_gen_dmb(enum aarch64_insn_mb_type type);
-+
- s32 aarch64_get_branch_offset(u32 insn);
- u32 aarch64_set_branch_offset(u32 insn, s32 offset);
- 
---- a/arch/arm64/kernel/insn.c
-+++ b/arch/arm64/kernel/insn.c
-@@ -721,10 +721,16 @@ u32 aarch64_insn_gen_load_store_ex(enum
- 
- 	switch (type) {
- 	case AARCH64_INSN_LDST_LOAD_EX:
-+	case AARCH64_INSN_LDST_LOAD_ACQ_EX:
- 		insn = aarch64_insn_get_load_ex_value();
-+		if (type == AARCH64_INSN_LDST_LOAD_ACQ_EX)
-+			insn |= BIT(15);
- 		break;
- 	case AARCH64_INSN_LDST_STORE_EX:
-+	case AARCH64_INSN_LDST_STORE_REL_EX:
- 		insn = aarch64_insn_get_store_ex_value();
-+		if (type == AARCH64_INSN_LDST_STORE_REL_EX)
-+			insn |= BIT(15);
- 		break;
- 	default:
- 		pr_err("%s: unknown load/store exclusive encoding %d\n", __func__, type);
-@@ -746,12 +752,65 @@ u32 aarch64_insn_gen_load_store_ex(enum
- 					    state);
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index 07f35c48bd3a2..b525e6483881a 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -425,7 +425,7 @@ static void tipc_aead_free(struct rcu_head *rp)
+ 	}
+ 	free_percpu(aead->tfm_entry);
+ 	kfree_sensitive(aead->key);
+-	kfree(aead);
++	kfree_sensitive(aead);
  }
  
--u32 aarch64_insn_gen_ldadd(enum aarch64_insn_register result,
--			   enum aarch64_insn_register address,
--			   enum aarch64_insn_register value,
--			   enum aarch64_insn_size_type size)
-+#ifdef CONFIG_ARM64_LSE_ATOMICS
-+static u32 aarch64_insn_encode_ldst_order(enum aarch64_insn_mem_order_type type,
-+					  u32 insn)
- {
--	u32 insn = aarch64_insn_get_ldadd_value();
-+	u32 order;
-+
-+	switch (type) {
-+	case AARCH64_INSN_MEM_ORDER_NONE:
-+		order = 0;
-+		break;
-+	case AARCH64_INSN_MEM_ORDER_ACQ:
-+		order = 2;
-+		break;
-+	case AARCH64_INSN_MEM_ORDER_REL:
-+		order = 1;
-+		break;
-+	case AARCH64_INSN_MEM_ORDER_ACQREL:
-+		order = 3;
-+		break;
-+	default:
-+		pr_err("%s: unknown mem order %d\n", __func__, type);
-+		return AARCH64_BREAK_FAULT;
-+	}
-+
-+	insn &= ~GENMASK(23, 22);
-+	insn |= order << 22;
-+
-+	return insn;
-+}
-+
-+u32 aarch64_insn_gen_atomic_ld_op(enum aarch64_insn_register result,
-+				  enum aarch64_insn_register address,
-+				  enum aarch64_insn_register value,
-+				  enum aarch64_insn_size_type size,
-+				  enum aarch64_insn_mem_atomic_op op,
-+				  enum aarch64_insn_mem_order_type order)
-+{
-+	u32 insn;
-+
-+	switch (op) {
-+	case AARCH64_INSN_MEM_ATOMIC_ADD:
-+		insn = aarch64_insn_get_ldadd_value();
-+		break;
-+	case AARCH64_INSN_MEM_ATOMIC_CLR:
-+		insn = aarch64_insn_get_ldclr_value();
-+		break;
-+	case AARCH64_INSN_MEM_ATOMIC_EOR:
-+		insn = aarch64_insn_get_ldeor_value();
-+		break;
-+	case AARCH64_INSN_MEM_ATOMIC_SET:
-+		insn = aarch64_insn_get_ldset_value();
-+		break;
-+	case AARCH64_INSN_MEM_ATOMIC_SWP:
-+		insn = aarch64_insn_get_swp_value();
-+		break;
-+	default:
-+		pr_err("%s: unimplemented mem atomic op %d\n", __func__, op);
-+		return AARCH64_BREAK_FAULT;
-+	}
- 
- 	switch (size) {
- 	case AARCH64_INSN_SIZE_32:
-@@ -764,6 +823,8 @@ u32 aarch64_insn_gen_ldadd(enum aarch64_
- 
- 	insn = aarch64_insn_encode_ldst_size(size, insn);
- 
-+	insn = aarch64_insn_encode_ldst_order(order, insn);
-+
- 	insn = aarch64_insn_encode_register(AARCH64_INSN_REGTYPE_RT, insn,
- 					    result);
- 
-@@ -774,18 +835,69 @@ u32 aarch64_insn_gen_ldadd(enum aarch64_
- 					    value);
- }
- 
--u32 aarch64_insn_gen_stadd(enum aarch64_insn_register address,
--			   enum aarch64_insn_register value,
--			   enum aarch64_insn_size_type size)
-+static u32 aarch64_insn_encode_cas_order(enum aarch64_insn_mem_order_type type,
-+					 u32 insn)
- {
--	/*
--	 * STADD is simply encoded as an alias for LDADD with XZR as
--	 * the destination register.
--	 */
--	return aarch64_insn_gen_ldadd(AARCH64_INSN_REG_ZR, address,
--				      value, size);
-+	u32 order;
-+
-+	switch (type) {
-+	case AARCH64_INSN_MEM_ORDER_NONE:
-+		order = 0;
-+		break;
-+	case AARCH64_INSN_MEM_ORDER_ACQ:
-+		order = BIT(22);
-+		break;
-+	case AARCH64_INSN_MEM_ORDER_REL:
-+		order = BIT(15);
-+		break;
-+	case AARCH64_INSN_MEM_ORDER_ACQREL:
-+		order = BIT(15) | BIT(22);
-+		break;
-+	default:
-+		pr_err("%s: unknown mem order %d\n", __func__, type);
-+		return AARCH64_BREAK_FAULT;
-+	}
-+
-+	insn &= ~(BIT(15) | BIT(22));
-+	insn |= order;
-+
-+	return insn;
- }
- 
-+u32 aarch64_insn_gen_cas(enum aarch64_insn_register result,
-+			 enum aarch64_insn_register address,
-+			 enum aarch64_insn_register value,
-+			 enum aarch64_insn_size_type size,
-+			 enum aarch64_insn_mem_order_type order)
-+{
-+	u32 insn;
-+
-+	switch (size) {
-+	case AARCH64_INSN_SIZE_32:
-+	case AARCH64_INSN_SIZE_64:
-+		break;
-+	default:
-+		pr_err("%s: unimplemented size encoding %d\n", __func__, size);
-+		return AARCH64_BREAK_FAULT;
-+	}
-+
-+	insn = aarch64_insn_get_cas_value();
-+
-+	insn = aarch64_insn_encode_ldst_size(size, insn);
-+
-+	insn = aarch64_insn_encode_cas_order(order, insn);
-+
-+	insn = aarch64_insn_encode_register(AARCH64_INSN_REGTYPE_RT, insn,
-+					    result);
-+
-+	insn = aarch64_insn_encode_register(AARCH64_INSN_REGTYPE_RN, insn,
-+					    address);
-+
-+	return aarch64_insn_encode_register(AARCH64_INSN_REGTYPE_RS, insn,
-+					    value);
-+}
-+#endif
-+
- static u32 aarch64_insn_encode_prfm_imm(enum aarch64_insn_prfm_type type,
- 					enum aarch64_insn_prfm_target target,
- 					enum aarch64_insn_prfm_policy policy,
-@@ -1697,3 +1809,48 @@ u32 aarch64_insn_gen_extr(enum aarch64_i
- 	insn = aarch64_insn_encode_register(AARCH64_INSN_REGTYPE_RN, insn, Rn);
- 	return aarch64_insn_encode_register(AARCH64_INSN_REGTYPE_RM, insn, Rm);
- }
-+
-+u32 aarch64_insn_gen_dmb(enum aarch64_insn_mb_type type)
-+{
-+	u32 opt;
-+	u32 insn;
-+
-+	switch (type) {
-+	case AARCH64_INSN_MB_SY:
-+		opt = 0xf;
-+		break;
-+	case AARCH64_INSN_MB_ST:
-+		opt = 0xe;
-+		break;
-+	case AARCH64_INSN_MB_LD:
-+		opt = 0xd;
-+		break;
-+	case AARCH64_INSN_MB_ISH:
-+		opt = 0xb;
-+		break;
-+	case AARCH64_INSN_MB_ISHST:
-+		opt = 0xa;
-+		break;
-+	case AARCH64_INSN_MB_ISHLD:
-+		opt = 0x9;
-+		break;
-+	case AARCH64_INSN_MB_NSH:
-+		opt = 0x7;
-+		break;
-+	case AARCH64_INSN_MB_NSHST:
-+		opt = 0x6;
-+		break;
-+	case AARCH64_INSN_MB_NSHLD:
-+		opt = 0x5;
-+		break;
-+	default:
-+		pr_err("%s: unknown dmb type %d\n", __func__, type);
-+		return AARCH64_BREAK_FAULT;
-+	}
-+
-+	insn = aarch64_insn_get_dmb_value();
-+	insn &= ~GENMASK(11, 8);
-+	insn |= (opt << 8);
-+
-+	return insn;
-+}
---- a/arch/arm64/net/bpf_jit.h
-+++ b/arch/arm64/net/bpf_jit.h
-@@ -89,9 +89,16 @@
- #define A64_STXR(sf, Rt, Rn, Rs) \
- 	A64_LSX(sf, Rt, Rn, Rs, STORE_EX)
- 
--/* LSE atomics */
-+/*
-+ * LSE atomics
-+ *
-+ * STADD is simply encoded as an alias for LDADD with XZR as
-+ * the destination register.
-+ */
- #define A64_STADD(sf, Rn, Rs) \
--	aarch64_insn_gen_stadd(Rn, Rs, A64_SIZE(sf))
-+	aarch64_insn_gen_atomic_ld_op(A64_ZR, Rn, Rs, \
-+		A64_SIZE(sf), AARCH64_INSN_MEM_ATOMIC_ADD, \
-+		AARCH64_INSN_MEM_ORDER_NONE)
- 
- /* Add/subtract (immediate) */
- #define A64_ADDSUB_IMM(sf, Rd, Rn, imm12, type) \
+ static int tipc_aead_users(struct tipc_aead __rcu *aead)
+-- 
+2.39.5
+
 
 
