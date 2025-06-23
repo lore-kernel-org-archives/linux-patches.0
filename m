@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3E2136988;
-	Mon, 23 Jun 2025 13:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BD4136988;
+	Mon, 23 Jun 2025 13:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684407; cv=none; b=DqNvgTMAit4m5Gthkba9c2QXr7jnlP+JVhevtA5wlglM968shoDFzixPxjY5cOILY3dpnBzvOAoMBo9EC7iwCyP2sMOGqteWQnaVZIM2K9YclYwo0v9s2gHogL+UX0Ul6eKswiG8h+O0k9S7OU2NsJVuUVKAKpkM07AArxYiXVE=
+	t=1750684410; cv=none; b=GfKWB8d9Ci3kk824BCrdaR1YgTNSm3Z2++LouxLLY99CHH/0fCvnxn99iPUwfAxewI4SF4gZI05RSh0fnn++I5hxEe2fdAnsCZxxlCrfua3wQrpQyufduen6fNjQgPSwPuLSHBK59a28wa1B63pGMeoWgLTJSTma28wWIm0dWFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684407; c=relaxed/simple;
-	bh=mhCZZ3eJJQ0K+cpfKchdFeOh02ObUQt281UNdDU70NM=;
+	s=arc-20240116; t=1750684410; c=relaxed/simple;
+	bh=9rVyxKvlrzkQ+xSRMZGRXeUvvWQtOH8OreSzhlV8/R4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDR6Z8B9B55TemWvOZkKz3PpRdG8oWHX9dMqBU3djzPVwGKNWQg2r6nRpFB0kupVPxrGP6r+D5Dmmgp9cefzrQ66iAXSrTAF2yM0HdzSf25wetLwVUArBcFEwr+13WoSrEeeDsYVdIQDD5OwgqhGjqLyHCQhX1LD5xz+JRPx/lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+eqtiXA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CayMm36WHYLtTk12xW1vRty8RF4wZrDyeyPNn+e0ubeQZuJOu0pNhkVGBtC6oNfNgA+Gmcf8tvSGSu2nghr/iA+Orfe450qv6HNXiQlhnaIBWbPWQp6LIYboUVMK9ougPcG9lHhh+EcQ5CfPrmiWI9pNhDQlvnSIxqx/sOOE4NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PzjRBDwi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+eqtiXA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD3CC4CEEA;
-	Mon, 23 Jun 2025 13:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PzjRBDwi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F810C4CEEA;
+	Mon, 23 Jun 2025 13:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684407;
-	bh=mhCZZ3eJJQ0K+cpfKchdFeOh02ObUQt281UNdDU70NM=;
+	s=korg; t=1750684409;
+	bh=9rVyxKvlrzkQ+xSRMZGRXeUvvWQtOH8OreSzhlV8/R4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+eqtiXAl+6TU+YKu/2Vgdc7scxuBz0hT4765akpF7KJZRbrL5wbNhV9CEHyXCk78
-	 vrWvOcR51wyRmntnmTN0IfR9pclNZcXDpmsLbQ9rI5sajXPvYbPRM545Fm7YgZcmjA
-	 UrrPYE18Qnvsd9pqwoNs6HpMuACVX779G7PFZ/Jo=
+	b=PzjRBDwiI9EnJUuTc8t+azmTbNeNv0aiI4IJezvL4d4/k4iBJmJR0Tlt9vxCcH7Ld
+	 ItkMLMsfpcOD8+Ry4N6r5IOK0ipr4R3nd0oQFP8RzMZwg2n8YGfwOUwKuUTWr45bYT
+	 MSGhiYpr7wLhM8DQ4zUaIEhMzvcovBON1j7CzHNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
+	Dongcheng Yan <dongcheng.yan@intel.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.15 056/592] media: ov5675: suppress probe deferral errors
-Date: Mon, 23 Jun 2025 15:00:14 +0200
-Message-ID: <20250623130701.590413401@linuxfoundation.org>
+Subject: [PATCH 6.15 057/592] media: i2c: change lt6911uxe irq_gpio name to "hpd"
+Date: Mon, 23 Jun 2025 15:00:15 +0200
+Message-ID: <20250623130701.614331346@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -51,44 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Dongcheng Yan <dongcheng.yan@intel.com>
 
-commit 8268da3c474a43a79a6540fb06c5d3b730a0d5a5 upstream.
+commit 20244cbafbd6c8486347bb82d972f6e2d2d5a201 upstream.
 
-Probe deferral should not be logged as an error:
+Lt6911uxe is used in IPU6 / x86 platform, worked with an out-of-tree
+int3472 patch and upstream intel/ipu6 before. It is only used on ACPI
+platforms till now and there are no devicetree bindings for this
+driver.
 
-	ov5675 24-0010: failed to get HW configuration: -517
+The upstream int3472 driver uses "hpd" instead of "readystat" now.
+this patch updates the irq_gpio name to "hpd" accordingly, so that
+mere users can now use the upstream version directly without relying
+on out-of-tree int3472 pin support.
 
-Drop the (mostly) redundant dev_err() from sensor probe() to suppress
-it.
+The new name "hpd" (Hotplug Detect) aligns with common naming
+conventions used in other drivers(like adv7604) and documentation.
 
-Note that errors during clock and regulator lookup are already correctly
-logged using dev_err_probe().
-
-Fixes: 49d9ad719e89 ("media: ov5675: add device-tree support and support runtime PM")
+Fixes: e49563c3be09d4 ("media: i2c: add lt6911uxe hdmi bridge driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Dongcheng Yan <dongcheng.yan@intel.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov5675.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/media/i2c/lt6911uxe.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/i2c/ov5675.c
-+++ b/drivers/media/i2c/ov5675.c
-@@ -1295,11 +1295,8 @@ static int ov5675_probe(struct i2c_clien
- 		return -ENOMEM;
+--- a/drivers/media/i2c/lt6911uxe.c
++++ b/drivers/media/i2c/lt6911uxe.c
+@@ -605,10 +605,10 @@ static int lt6911uxe_probe(struct i2c_cl
+ 		return dev_err_probe(dev, PTR_ERR(lt6911uxe->reset_gpio),
+ 				     "failed to get reset gpio\n");
  
- 	ret = ov5675_get_hwcfg(ov5675, &client->dev);
--	if (ret) {
--		dev_err(&client->dev, "failed to get HW configuration: %d",
--			ret);
-+	if (ret)
- 		return ret;
--	}
+-	lt6911uxe->irq_gpio = devm_gpiod_get(dev, "readystat", GPIOD_IN);
++	lt6911uxe->irq_gpio = devm_gpiod_get(dev, "hpd", GPIOD_IN);
+ 	if (IS_ERR(lt6911uxe->irq_gpio))
+ 		return dev_err_probe(dev, PTR_ERR(lt6911uxe->irq_gpio),
+-				     "failed to get ready_stat gpio\n");
++				     "failed to get hpd gpio\n");
  
- 	v4l2_i2c_subdev_init(&ov5675->sd, client, &ov5675_subdev_ops);
- 
+ 	ret = lt6911uxe_fwnode_parse(lt6911uxe, dev);
+ 	if (ret)
 
 
