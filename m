@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE8A4C6E;
-	Mon, 23 Jun 2025 13:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E764C6E;
+	Mon, 23 Jun 2025 13:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686091; cv=none; b=tt9J4XqVE2sVJ/oRDV6dA3E9cCDjFxiVuzlc0Aw4djLLYArMy3EZUmf/mfg/JFgfTC0Qgvc+qnG/7mU9G5+flF/VznqlDFDPyssPIXKgM20rNosbvb5Yn/ok8dezNrDS8/rtdFUdmtgl5WRDKrBj2YjMENpzY1o3VMaO506bWPI=
+	t=1750686094; cv=none; b=PMgxAE+XzJ46eTdwvL8J+ZqLifiyQyVZRwGnQOMyWld2NB/K3mVGVtQN3T2LxS41HigtjPSwK4jWMKLIDPjgGW/GDa6hWtMn5Y7ZbaBocehNw/emF26wQ9jsNAgbS4XAeRtWJjf1NIOIaKyLoAsrDP3bMoSsZc87TP/CmYRnS2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686091; c=relaxed/simple;
-	bh=zwcWopX4dDTuaHc0y/CIqZNIjgXywO3vwK3x+GryTNQ=;
+	s=arc-20240116; t=1750686094; c=relaxed/simple;
+	bh=yQNpsTRxf1iQ56FiWPWo+ZnC5+/6kkHOwNiNDFQ4lmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GOezYBAc4zFqiCIBL2T+iKBncgqVp5dOJpa/OpEoCMWzOUYu2JMi206UDO0KA/wRRV1IzBRTWAibM4te1mnV/FneQUzuaHn4wkNxXYgUfFikdZOnIejf4mocQk/Q9aK53I0FAlVn4EA6lGlzoCKTMAF8DjH6Ep0FpECdGeYT4uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+nlkQyk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=t0Eqah6076avXBlxongkgRLrl0NsVzQ9PhWPRTtRTtBLyMpgJ2aJF/1xYU23AtR8Zx00/qXJ/meQ4NuBDgqQDE5JZREBVntG4dXfJ7gB2SG9tDsQyYygdltzDmlVNQYXnuFGyd/WRudVjsL6aGoe4qn6bHrl1vWP8C9TVNUW+9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIQzKAEY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+nlkQyk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F956C4CEEA;
-	Mon, 23 Jun 2025 13:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIQzKAEY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE936C4CEEA;
+	Mon, 23 Jun 2025 13:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686091;
-	bh=zwcWopX4dDTuaHc0y/CIqZNIjgXywO3vwK3x+GryTNQ=;
+	s=korg; t=1750686094;
+	bh=yQNpsTRxf1iQ56FiWPWo+ZnC5+/6kkHOwNiNDFQ4lmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F+nlkQykmFoiGKk6bCMUaF+kr8dLgCqyoXjzD54CvJDqmA0ga1+ix/D8BuVIkHHwi
-	 85GpWZaQgk3aXiqLmAAx1WNl+GK754c4jrnavRQs+EGLgTq174rR/LRdRlMqpou3Xl
-	 3i6fXSy1vJHBGk03rAO/ID48THwkqZVQFCOjtSZM=
+	b=lIQzKAEYzL9Hml9u5Y4s3YZWueu9354fA/OdhC3acpGyce8HXLKd0AcxA0Os8vE5W
+	 AzWWatW3YvX4T+IUbC5fOKj9REVqZ+YGFzOIvRkc5QTc4+3flbcHzE8FFZjUs43arx
+	 jQnUH8hvU631zIe9Tlt3H9h299XMDoShh1WlIh0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neill Kapron <nkapron@google.com>,
-	Kees Cook <kees@kernel.org>,
+	Seunghun Han <kkamagui@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/508] selftests/seccomp: fix syscall_restart test for arm compat
-Date: Mon, 23 Jun 2025 15:01:32 +0200
-Message-ID: <20250623130646.403332309@linuxfoundation.org>
+Subject: [PATCH 5.4 137/222] ACPICA: fix acpi parse and parseext cache leaks
+Date: Mon, 23 Jun 2025 15:07:52 +0200
+Message-ID: <20250623130616.214195631@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,57 +45,238 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neill Kapron <nkapron@google.com>
+From: Seunghun Han <kkamagui@gmail.com>
 
-[ Upstream commit 797002deed03491215a352ace891749b39741b69 ]
+[ Upstream commit bed18f0bdcd6737a938264a59d67923688696fc4 ]
 
-The inconsistencies in the systcall ABI between arm and arm-compat can
-can cause a failure in the syscall_restart test due to the logic
-attempting to work around the differences. The 'machine' field for an
-ARM64 device running in compat mode can report 'armv8l' or 'armv8b'
-which matches with the string 'arm' when only examining the first three
-characters of the string.
+ACPICA commit 8829e70e1360c81e7a5a901b5d4f48330e021ea5
 
-This change adds additional validation to the workaround logic to make
-sure we only take the arm path when running natively, not in arm-compat.
+I'm Seunghun Han, and I work for National Security Research Institute of
+South Korea.
 
-Fixes: 256d0afb11d6 ("selftests/seccomp: build and pass on arm64")
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://lore.kernel.org/r/20250427094103.3488304-2-nkapron@google.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+I have been doing a research on ACPI and found an ACPI cache leak in ACPI
+early abort cases.
+
+Boot log of ACPI cache leak is as follows:
+[    0.352414] ACPI: Added _OSI(Module Device)
+[    0.353182] ACPI: Added _OSI(Processor Device)
+[    0.353182] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    0.353182] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.356028] ACPI: Unable to start the ACPI Interpreter
+[    0.356799] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
+[    0.360215] kmem_cache_destroy Acpi-State: Slab cache still has objects
+[    0.360648] CPU: 0 PID: 1 Comm: swapper/0 Tainted: G        W
+4.12.0-rc4-next-20170608+ #10
+[    0.361273] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
+virtual_box 12/01/2006
+[    0.361873] Call Trace:
+[    0.362243]  ? dump_stack+0x5c/0x81
+[    0.362591]  ? kmem_cache_destroy+0x1aa/0x1c0
+[    0.362944]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.363296]  ? acpi_os_delete_cache+0xa/0x10
+[    0.363646]  ? acpi_ut_delete_caches+0x6d/0x7b
+[    0.364000]  ? acpi_terminate+0xa/0x14
+[    0.364000]  ? acpi_init+0x2af/0x34f
+[    0.364000]  ? __class_create+0x4c/0x80
+[    0.364000]  ? video_setup+0x7f/0x7f
+[    0.364000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.364000]  ? do_one_initcall+0x4e/0x1a0
+[    0.364000]  ? kernel_init_freeable+0x189/0x20a
+[    0.364000]  ? rest_init+0xc0/0xc0
+[    0.364000]  ? kernel_init+0xa/0x100
+[    0.364000]  ? ret_from_fork+0x25/0x30
+
+I analyzed this memory leak in detail. I found that “Acpi-State” cache and
+“Acpi-Parse” cache were merged because the size of cache objects was same
+slab cache size.
+
+I finally found “Acpi-Parse” cache and “Acpi-parse_ext” cache were leaked
+using SLAB_NEVER_MERGE flag in kmem_cache_create() function.
+
+Real ACPI cache leak point is as follows:
+[    0.360101] ACPI: Added _OSI(Module Device)
+[    0.360101] ACPI: Added _OSI(Processor Device)
+[    0.360101] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    0.361043] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.364016] ACPI: Unable to start the ACPI Interpreter
+[    0.365061] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
+[    0.368174] kmem_cache_destroy Acpi-Parse: Slab cache still has objects
+[    0.369332] CPU: 1 PID: 1 Comm: swapper/0 Tainted: G        W
+4.12.0-rc4-next-20170608+ #8
+[    0.371256] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
+virtual_box 12/01/2006
+[    0.372000] Call Trace:
+[    0.372000]  ? dump_stack+0x5c/0x81
+[    0.372000]  ? kmem_cache_destroy+0x1aa/0x1c0
+[    0.372000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.372000]  ? acpi_os_delete_cache+0xa/0x10
+[    0.372000]  ? acpi_ut_delete_caches+0x56/0x7b
+[    0.372000]  ? acpi_terminate+0xa/0x14
+[    0.372000]  ? acpi_init+0x2af/0x34f
+[    0.372000]  ? __class_create+0x4c/0x80
+[    0.372000]  ? video_setup+0x7f/0x7f
+[    0.372000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.372000]  ? do_one_initcall+0x4e/0x1a0
+[    0.372000]  ? kernel_init_freeable+0x189/0x20a
+[    0.372000]  ? rest_init+0xc0/0xc0
+[    0.372000]  ? kernel_init+0xa/0x100
+[    0.372000]  ? ret_from_fork+0x25/0x30
+[    0.388039] kmem_cache_destroy Acpi-parse_ext: Slab cache still has objects
+[    0.389063] CPU: 1 PID: 1 Comm: swapper/0 Tainted: G        W
+4.12.0-rc4-next-20170608+ #8
+[    0.390557] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
+virtual_box 12/01/2006
+[    0.392000] Call Trace:
+[    0.392000]  ? dump_stack+0x5c/0x81
+[    0.392000]  ? kmem_cache_destroy+0x1aa/0x1c0
+[    0.392000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.392000]  ? acpi_os_delete_cache+0xa/0x10
+[    0.392000]  ? acpi_ut_delete_caches+0x6d/0x7b
+[    0.392000]  ? acpi_terminate+0xa/0x14
+[    0.392000]  ? acpi_init+0x2af/0x34f
+[    0.392000]  ? __class_create+0x4c/0x80
+[    0.392000]  ? video_setup+0x7f/0x7f
+[    0.392000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.392000]  ? do_one_initcall+0x4e/0x1a0
+[    0.392000]  ? kernel_init_freeable+0x189/0x20a
+[    0.392000]  ? rest_init+0xc0/0xc0
+[    0.392000]  ? kernel_init+0xa/0x100
+[    0.392000]  ? ret_from_fork+0x25/0x30
+
+When early abort is occurred due to invalid ACPI information, Linux kernel
+terminates ACPI by calling acpi_terminate() function. The function calls
+acpi_ut_delete_caches() function to delete local caches (acpi_gbl_namespace_
+cache, state_cache, operand_cache, ps_node_cache, ps_node_ext_cache).
+
+But the deletion codes in acpi_ut_delete_caches() function only delete
+slab caches using kmem_cache_destroy() function, therefore the cache
+objects should be flushed before acpi_ut_delete_caches() function.
+
+"Acpi-Parse" cache and "Acpi-ParseExt" cache are used in an AML parse
+function, acpi_ps_parse_loop(). The function should complete all ops
+using acpi_ps_complete_final_op() when an error occurs due to invalid
+AML codes.
+However, the current implementation of acpi_ps_complete_final_op() does not
+complete all ops when it meets some errors and this cause cache leak.
+
+This cache leak has a security threat because an old kernel (<= 4.9) shows
+memory locations of kernel functions in stack dump. Some malicious users
+could use this information to neutralize kernel ASLR.
+
+To fix ACPI cache leak for enhancing security, I made a patch to complete all
+ops unconditionally for acpi_ps_complete_final_op() function.
+
+I hope that this patch improves the security of Linux kernel.
+
+Thank you.
+
+Link: https://github.com/acpica/acpica/commit/8829e70e
+Signed-off-by: Seunghun Han <kkamagui@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2363774.ElGaqSPkdT@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/seccomp/seccomp_bpf.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/acpi/acpica/psobject.c | 52 ++++++++++------------------------
+ 1 file changed, 15 insertions(+), 37 deletions(-)
 
-diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
-index 4ae6c89913074..b300e87404d8e 100644
---- a/tools/testing/selftests/seccomp/seccomp_bpf.c
-+++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
-@@ -3136,12 +3136,15 @@ TEST(syscall_restart)
- 	ret = get_syscall(_metadata, child_pid);
- #if defined(__arm__)
- 	/*
--	 * FIXME:
- 	 * - native ARM registers do NOT expose true syscall.
- 	 * - compat ARM registers on ARM64 DO expose true syscall.
-+	 * - values of utsbuf.machine include 'armv8l' or 'armb8b'
-+	 *   for ARM64 running in compat mode.
- 	 */
- 	ASSERT_EQ(0, uname(&utsbuf));
--	if (strncmp(utsbuf.machine, "arm", 3) == 0) {
-+	if ((strncmp(utsbuf.machine, "arm", 3) == 0) &&
-+	    (strncmp(utsbuf.machine, "armv8l", 6) != 0) &&
-+	    (strncmp(utsbuf.machine, "armv8b", 6) != 0)) {
- 		EXPECT_EQ(__NR_nanosleep, ret);
- 	} else
- #endif
+diff --git a/drivers/acpi/acpica/psobject.c b/drivers/acpi/acpica/psobject.c
+index 98e5c7400e547..3ea26bbd534df 100644
+--- a/drivers/acpi/acpica/psobject.c
++++ b/drivers/acpi/acpica/psobject.c
+@@ -639,7 +639,8 @@ acpi_status
+ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 			  union acpi_parse_object *op, acpi_status status)
+ {
+-	acpi_status status2;
++	acpi_status return_status = status;
++	u8 ascending = TRUE;
+ 
+ 	ACPI_FUNCTION_TRACE_PTR(ps_complete_final_op, walk_state);
+ 
+@@ -653,7 +654,7 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 			  op));
+ 	do {
+ 		if (op) {
+-			if (walk_state->ascending_callback != NULL) {
++			if (ascending && walk_state->ascending_callback != NULL) {
+ 				walk_state->op = op;
+ 				walk_state->op_info =
+ 				    acpi_ps_get_opcode_info(op->common.
+@@ -675,49 +676,26 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 				}
+ 
+ 				if (status == AE_CTRL_TERMINATE) {
+-					status = AE_OK;
+-
+-					/* Clean up */
+-					do {
+-						if (op) {
+-							status2 =
+-							    acpi_ps_complete_this_op
+-							    (walk_state, op);
+-							if (ACPI_FAILURE
+-							    (status2)) {
+-								return_ACPI_STATUS
+-								    (status2);
+-							}
+-						}
+-
+-						acpi_ps_pop_scope(&
+-								  (walk_state->
+-								   parser_state),
+-								  &op,
+-								  &walk_state->
+-								  arg_types,
+-								  &walk_state->
+-								  arg_count);
+-
+-					} while (op);
+-
+-					return_ACPI_STATUS(status);
++					ascending = FALSE;
++					return_status = AE_CTRL_TERMINATE;
+ 				}
+ 
+ 				else if (ACPI_FAILURE(status)) {
+ 
+ 					/* First error is most important */
+ 
+-					(void)
+-					    acpi_ps_complete_this_op(walk_state,
+-								     op);
+-					return_ACPI_STATUS(status);
++					ascending = FALSE;
++					return_status = status;
+ 				}
+ 			}
+ 
+-			status2 = acpi_ps_complete_this_op(walk_state, op);
+-			if (ACPI_FAILURE(status2)) {
+-				return_ACPI_STATUS(status2);
++			status = acpi_ps_complete_this_op(walk_state, op);
++			if (ACPI_FAILURE(status)) {
++				ascending = FALSE;
++				if (ACPI_SUCCESS(return_status) ||
++				    return_status == AE_CTRL_TERMINATE) {
++					return_status = status;
++				}
+ 			}
+ 		}
+ 
+@@ -727,5 +705,5 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 
+ 	} while (op);
+ 
+-	return_ACPI_STATUS(status);
++	return_ACPI_STATUS(return_status);
+ }
 -- 
 2.39.5
 
