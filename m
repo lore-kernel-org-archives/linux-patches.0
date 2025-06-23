@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DA170838;
-	Mon, 23 Jun 2025 21:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF38270838;
+	Mon, 23 Jun 2025 21:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712953; cv=none; b=cNmNYsFeqSPFPO8Y3MoGdU3Ma9LQIXI8hDK/Q8bJEqh2UZsCdKBrS9qbsCYDd5j1HbucCNWvslh6ZRc6sq53B4R95aRjzaFGzZySc47AonsGNi5arKh8iCwpWgDK6i/hYH2VMuP6y94clo9i5WhMJQkPWgqwHewRKn8LLdTinkk=
+	t=1750712955; cv=none; b=kLgI8MHXujv6VNUVaHwWcAV10kNtZyN1CClFit8yofrA6xeCRrf1s7XaFwAmOuZvmEH0lCiwQEbAjRiQUbh7w7ZwH7ao+/CVUjT0uit474BjxTuzQCRxxnFr/8hiz1OjcimYM+tdurwHSOLPyT8LE6FYhIC0HeStfFPGdLKugpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712953; c=relaxed/simple;
-	bh=mijLFZ1HIjEpe4yxlFbwAY6Xl8UJ+rVc1pVlpzp5ZfU=;
+	s=arc-20240116; t=1750712955; c=relaxed/simple;
+	bh=31/XzM6SPUrSjFThxSVIYqSeAFGufEdRAiZPafCNiHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qEd7bS5cnon7yRsXfLFaCYQmgNsNfihOqbxGzHsqLbCp+KRAWXkPYnxb82wu1K4SfBas7g+Rzm77yphj0C5qzY72oyAJH1DorDYFGmQATx2oSNXRsuPtS0aMcSwydE7wratwT+rJcraiKVYOdHO569+y3/TC3R9ckrcGbiG5Fm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ek+gY18o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mfj3jpdGv2RJPjFxC/bclaV4UofwNVLitiU3Ma+8tGcwFBFV99aFjKKYvp3XjAOO/1ZeC+zeRB+8wwaUKyJuAhkmXX1WLicFKZ/S8VZUd7Zo9FTB62tROh/EWIxwnawHNEstu4p4R5XO8QX8NARZ5zM2IOqwFXnOfJzxyRy+PPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GyrKrMRD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ek+gY18o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEAA8C4CEEA;
-	Mon, 23 Jun 2025 21:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GyrKrMRD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56981C4CEEA;
+	Mon, 23 Jun 2025 21:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712953;
-	bh=mijLFZ1HIjEpe4yxlFbwAY6Xl8UJ+rVc1pVlpzp5ZfU=;
+	s=korg; t=1750712955;
+	bh=31/XzM6SPUrSjFThxSVIYqSeAFGufEdRAiZPafCNiHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ek+gY18okG+ZdihLrCdjQ/I74qFacjdaPkhRacYZeXpVJIUZFdn60IlMOaUy69xlZ
-	 TjMJ4D+cdenSO4qHEtdyVb+/pTc2VX7U2I1j5si8r2yd/cMPjILo3p2pZLicdUA2Fv
-	 8nVtbw2+FCQ3xatwFNKmnS4WqEoPFaCcQr+16vVY=
+	b=GyrKrMRDOxW4C/p13cxujQ0+gBMyTjQvdolUtp2igG1cC2I4TLiAcealrwknjF2f3
+	 kqtv2eBoefmEKIpwaP6UM4q25/YJ1V0YwceG9mALvMvS6N+GZFk2gLfRzzfOKj+GQL
+	 yfo26FLIcxvb2OwFJv4sv5655qtgrfgpuh3pqIi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Simon Schuster <schuster.simon@siemens-energy.com>,
+	Andreas Oetken <andreas.oetken@siemens-energy.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 114/355] serial: sh-sci: Move runtime PM enable to sci_probe_single()
-Date: Mon, 23 Jun 2025 15:05:15 +0200
-Message-ID: <20250623130630.187598874@linuxfoundation.org>
+Subject: [PATCH 5.4 157/222] nios2: force update_mmu_cache on spurious tlb-permission--related pagefaults
+Date: Mon, 23 Jun 2025 15:08:12 +0200
+Message-ID: <20250623130616.805674177@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,95 +48,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Simon Schuster <schuster.simon@siemens-energy.com>
 
-commit 239f11209e5f282e16f5241b99256e25dd0614b6 upstream.
+[ Upstream commit 2d8a3179ea035f9341b6a73e5ba4029fc67e983d ]
 
-Relocate the runtime PM enable operation to sci_probe_single(). This change
-prepares the codebase for upcoming fixes.
+NIOS2 uses a software-managed TLB for virtual address translation. To
+flush a cache line, the original mapping is replaced by one to physical
+address 0x0 with no permissions (rwx mapped to 0) set. This can lead to
+TLB-permission--related traps when such a nominally flushed entry is
+encountered as a mapping for an otherwise valid virtual address within a
+process (e.g. due to an MMU-PID-namespace rollover that previously
+flushed the complete TLB including entries of existing, running
+processes).
 
-While at it, replace the existing logic with a direct call to
-devm_pm_runtime_enable() and remove sci_cleanup_single(). The
-devm_pm_runtime_enable() function automatically handles disabling runtime
-PM during driver removal.
+The default ptep_set_access_flags implementation from mm/pgtable-generic.c
+only forces a TLB-update when the page-table entry has changed within the
+page table:
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250116182249.3828577-3-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+	/*
+	 * [...] We return whether the PTE actually changed, which in turn
+	 * instructs the caller to do things like update__mmu_cache. [...]
+	 */
+	int ptep_set_access_flags(struct vm_area_struct *vma,
+				  unsigned long address, pte_t *ptep,
+				  pte_t entry, int dirty)
+	{
+		int changed = !pte_same(*ptep, entry);
+		if (changed) {
+			set_pte_at(vma->vm_mm, address, ptep, entry);
+			flush_tlb_fix_spurious_fault(vma, address);
+		}
+		return changed;
+	}
+
+However, no cross-referencing with the TLB-state occurs, so the
+flushing-induced pseudo entries that are responsible for the pagefault
+in the first place are never pre-empted from TLB on this code path.
+
+This commit fixes this behaviour by always requesting a TLB-update in
+this part of the pagefault handling, fixing spurious page-faults on the
+way. The handling is a straightforward port of the logic from the MIPS
+architecture via an arch-specific ptep_set_access_flags function ported
+from arch/mips/include/asm/pgtable.h.
+
+Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
+Signed-off-by: Andreas Oetken <andreas.oetken@siemens-energy.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sh-sci.c | 24 ++++++------------------
- 1 file changed, 6 insertions(+), 18 deletions(-)
+ arch/nios2/include/asm/pgtable.h | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index f598135ea75c2..4ce6dd7c40928 100644
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -3021,10 +3021,6 @@ static int sci_init_single(struct platform_device *dev,
- 		ret = sci_init_clocks(sci_port, &dev->dev);
- 		if (ret < 0)
- 			return ret;
--
--		port->dev = &dev->dev;
--
--		pm_runtime_enable(&dev->dev);
- 	}
+diff --git a/arch/nios2/include/asm/pgtable.h b/arch/nios2/include/asm/pgtable.h
+index 99985d8b71664..506bbc7730879 100644
+--- a/arch/nios2/include/asm/pgtable.h
++++ b/arch/nios2/include/asm/pgtable.h
+@@ -297,4 +297,20 @@ extern void __init mmu_init(void);
+ extern void update_mmu_cache(struct vm_area_struct *vma,
+ 			     unsigned long address, pte_t *pte);
  
- 	port->type		= p->type;
-@@ -3054,11 +3050,6 @@ static int sci_init_single(struct platform_device *dev,
- 	return 0;
- }
- 
--static void sci_cleanup_single(struct sci_port *port)
--{
--	pm_runtime_disable(port->port.dev);
--}
--
- #if defined(CONFIG_SERIAL_SH_SCI_CONSOLE) || \
-     defined(CONFIG_SERIAL_SH_SCI_EARLYCON)
- static void serial_console_putchar(struct uart_port *port, int ch)
-@@ -3216,8 +3207,6 @@ static int sci_remove(struct platform_device *dev)
- 	sci_ports_in_use &= ~BIT(port->port.line);
- 	uart_remove_one_port(&sci_uart_driver, &port->port);
- 
--	sci_cleanup_single(port);
--
- 	if (port->port.fifosize > 1)
- 		device_remove_file(&dev->dev, &dev_attr_rx_fifo_trigger);
- 	if (type == PORT_SCIFA || type == PORT_SCIFB || type == PORT_HSCIF)
-@@ -3348,6 +3337,11 @@ static int sci_probe_single(struct platform_device *dev,
- 	if (ret)
- 		return ret;
- 
-+	sciport->port.dev = &dev->dev;
-+	ret = devm_pm_runtime_enable(&dev->dev);
-+	if (ret)
-+		return ret;
++static inline int pte_same(pte_t pte_a, pte_t pte_b);
 +
- 	sciport->gpios = mctrl_gpio_init(&sciport->port, 0);
- 	if (IS_ERR(sciport->gpios))
- 		return PTR_ERR(sciport->gpios);
-@@ -3361,13 +3355,7 @@ static int sci_probe_single(struct platform_device *dev,
- 		sciport->port.flags |= UPF_HARD_FLOW;
- 	}
- 
--	ret = uart_add_one_port(&sci_uart_driver, &sciport->port);
--	if (ret) {
--		sci_cleanup_single(sciport);
--		return ret;
--	}
--
--	return 0;
-+	return uart_add_one_port(&sci_uart_driver, &sciport->port);
- }
- 
- static int sci_probe(struct platform_device *dev)
++#define __HAVE_ARCH_PTEP_SET_ACCESS_FLAGS
++static inline int ptep_set_access_flags(struct vm_area_struct *vma,
++					unsigned long address, pte_t *ptep,
++					pte_t entry, int dirty)
++{
++	if (!pte_same(*ptep, entry))
++		set_ptes(vma->vm_mm, address, ptep, entry, 1);
++	/*
++	 * update_mmu_cache will unconditionally execute, handling both
++	 * the case that the PTE changed and the spurious fault case.
++	 */
++	return true;
++}
++
+ #endif /* _ASM_NIOS2_PGTABLE_H */
 -- 
 2.39.5
 
