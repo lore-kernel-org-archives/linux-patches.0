@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E9D2517AF;
-	Mon, 23 Jun 2025 13:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F792566D3;
+	Mon, 23 Jun 2025 13:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684998; cv=none; b=mzIE1UhMVJAOcNgnVNwDOZMCFp/P//QCOVxrAy3Habkb/uBpAyFb/FasgG8yWMCryZbWgjQXE/17/jwY/VWe/cmL3i+FrCGJgIlm9iOZS2oGyvUPnIPeIUPJZqvo3UvHUi/NWFlXFlJC5cNx+MgYKLkkNz8VsyYElJnIYzVlunE=
+	t=1750685001; cv=none; b=TXnGXBrq41qc1xlX7GLifZK5xDc3gbksa1ZtFJk4ct9Pkf1iy8ZqtF29C1bxu+jrRb+xg14xBQsGNZrpJtZdHamSTSvYQeFbZGJOryCCdK0mFtrAJ9KC6v8qmI13oEuHKvV+hGZryz64Wn0u+3jshhZvDQXNGUzWXbUfUlic/2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684998; c=relaxed/simple;
-	bh=OPu/ykZTQR4MGjQUzBd0nFjLWPgJ2CPxYxhhX91tceg=;
+	s=arc-20240116; t=1750685001; c=relaxed/simple;
+	bh=CBe+/9VxXuj6IEIA3M3GeUWj+ZZCflvlWl7ywlqBXSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=palpuJpT9oATB7VEkuMUf8GFPMhQZk4qe5URglycrSd/wIbDB8vm0PcSmHfgr9ay9KotkSH8O8YxKUtaCjHf1d5dkjrJWzddEGUPzKdUBsGo7Pqbr5lV3Ae8z4nm4zxgbKcHEx6FjdOy/RSGha8pqt7dpas2JjprjBP+Q2vQ+T0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rA/WSsni; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O2v7YFIP0o/uvg6y/nMcQmB9eYlWBdQ3Ga5VQU9A4LJQjhPr4cz80+Di316pNcp2bb5LxwOkiG6zhQbco+g9vC38Dgz+pIlJXRngO8tHorilabF9C4pizPnLtIlzTCr7JZdoevqMpdcgJQPVY6ugmcoCLy1CIKunYOuuBABqBsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+lM/BzY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rA/WSsni"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EB4C4CEEA;
-	Mon, 23 Jun 2025 13:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+lM/BzY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84F6C4CEEA;
+	Mon, 23 Jun 2025 13:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684998;
-	bh=OPu/ykZTQR4MGjQUzBd0nFjLWPgJ2CPxYxhhX91tceg=;
+	s=korg; t=1750685001;
+	bh=CBe+/9VxXuj6IEIA3M3GeUWj+ZZCflvlWl7ywlqBXSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rA/WSsnilQuGM113rte1sk9TM8YP4GxTKFhBvUuXwfG1kxRSeHlKXeOHuVDep0oAY
-	 dtJdAF56OBUw8YmlesZes9+JJ3O/GHmgkMx30WfiWDFFk/MQNuKMiqojBX6I3SXM41
-	 xh7Zn+mtQTn2cRWf3loQuCjj50+aeBiEZLIzxOrY=
+	b=1+lM/BzYusYvw/gRBktCR5N021V9AlSVlnEE9IQJFqwiBZ2ql90W59M0ZyQnZAUYm
+	 5+zxrnwMJdUVowEhehe93x8RfVyuO1irFOboqlQQBAr0khKjRurLpiCsRJFuDNh86r
+	 x3qsk4iRY5Vn8/GIQ3VsX8UkTaZKc2eoJlQoiaYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Tony Jones <tonyj@suse.de>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 056/222] perf scripts python: exported-sql-viewer.py: Fix pattern matching with Python 3
-Date: Mon, 23 Jun 2025 15:06:31 +0200
-Message-ID: <20250623130613.794403586@linuxfoundation.org>
+Subject: [PATCH 5.10 021/355] PM: wakeup: Delete space in the end of string shown by pm_show_wakelocks()
+Date: Mon, 23 Jun 2025 15:03:42 +0200
+Message-ID: <20250623130627.436989558@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,54 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 17e548405a81665fd14cee960db7d093d1396400 ]
+[ Upstream commit f0050a3e214aa941b78ad4caf122a735a24d81a6 ]
 
-The script allows the user to enter patterns to find symbols.
+pm_show_wakelocks() is called to generate a string when showing
+attributes /sys/power/wake_(lock|unlock), but the string ends
+with an unwanted space that was added back by mistake by commit
+c9d967b2ce40 ("PM: wakeup: simplify the output logic of
+pm_show_wakelocks()").
 
-The pattern matching characters are converted for use in SQL.
+Remove the unwanted space.
 
-For PostgreSQL the conversion involves using the Python maketrans()
-method which is slightly different in Python 3 compared with Python 2.
-
-Fix to work in Python 3.
-
-Fixes: beda0e725e5f06ac ("perf script python: Add Python3 support to exported-sql-viewer.py")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Tony Jones <tonyj@suse.de>
-Link: https://lore.kernel.org/r/20250512093932.79854-4-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: c9d967b2ce40 ("PM: wakeup: simplify the output logic of pm_show_wakelocks()")
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://patch.msgid.link/20250505-fix_power-v1-1-0f7f2c2f338c@quicinc.com
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/scripts/python/exported-sql-viewer.py | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/power/wakelock.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/perf/scripts/python/exported-sql-viewer.py b/tools/perf/scripts/python/exported-sql-viewer.py
-index 01acf3ea7619d..21473d6df5b9a 100755
---- a/tools/perf/scripts/python/exported-sql-viewer.py
-+++ b/tools/perf/scripts/python/exported-sql-viewer.py
-@@ -667,7 +667,10 @@ class CallGraphModelBase(TreeModel):
- 				s = value.replace("%", "\%")
- 				s = s.replace("_", "\_")
- 				# Translate * and ? into SQL LIKE pattern characters % and _
--				trans = string.maketrans("*?", "%_")
-+				if sys.version_info[0] == 3:
-+					trans = str.maketrans("*?", "%_")
-+				else:
-+					trans = string.maketrans("*?", "%_")
- 				match = " LIKE '" + str(s).translate(trans) + "'"
- 			else:
- 				match = " GLOB '" + str(value) + "'"
+diff --git a/kernel/power/wakelock.c b/kernel/power/wakelock.c
+index 52571dcad768b..4e941999a53ba 100644
+--- a/kernel/power/wakelock.c
++++ b/kernel/power/wakelock.c
+@@ -49,6 +49,9 @@ ssize_t pm_show_wakelocks(char *buf, bool show_active)
+ 			len += sysfs_emit_at(buf, len, "%s ", wl->name);
+ 	}
+ 
++	if (len > 0)
++		--len;
++
+ 	len += sysfs_emit_at(buf, len, "\n");
+ 
+ 	mutex_unlock(&wakelocks_lock);
 -- 
 2.39.5
 
