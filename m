@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D631B15ADB4;
-	Mon, 23 Jun 2025 22:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFFB16D9BF;
+	Mon, 23 Jun 2025 22:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717255; cv=none; b=hazwrDwoJ69oUzE9VqtBvNTcsrta9p44caeOTf8fexFetoWdgQiJfTo2ciFnMkXJzy6KubqOI9Q3QqN56ZxtKUYFiT0M5xHefWvuufIYjvJpMCPWGymRl9FotRhmOx4qP5cGo3oygUmtQapfHngk+x1D3NgK6f/yBNjng3fCnfQ=
+	t=1750717256; cv=none; b=XOZAubhy7AmztzlSyO83zDZs0R7F1tl8x2HVR0cIX/ixWqD6ubS/OAReKJyAnXhOlkCCb6lxVxf+IsC2KzkEIlDRN/G/lP8ghBqRRg/ADPD9XeHc+HbK/i/39rFpKE1HY1P0gmG1tLnokwM4NuTU0nmtEoQUeMAFgfquzXRCIW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717255; c=relaxed/simple;
-	bh=7yfQAR97QfV1pjZxeRPhC/KkN4Ob5VhBG1GmFeZZOAg=;
+	s=arc-20240116; t=1750717256; c=relaxed/simple;
+	bh=pwUeHaqXp/WK1+7pBVT8ftbl9qGTKj8gcGJJCxBFlVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mUGHYvsoM8BqMJnIeqdB0QTiNrBHQphRIF0LCCp8RP45N1ETY8cjeGQvPqvx6wF3Yb2YgVA3w3mY/+aTO6sfWGBfjA2I514WBnMJxScDGQROKtLb3qlJvpm/K3B02edq3sh0veEWOqoCnMyDRbZ9ZJ3GugFHNp0lymV847q+uQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIwG1oXj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ovb0UwGL//SkM9SAFZXu0NhSoat6HtkNoPDYPnvmdW+0BkV+aRgwtfhhLivOGDsx5qpN9KySUL67qvZLXeJyYvaA6MtAQZWM+8zql4knd8X3gB9xom+KLas+WS+e0kmxs0NRkFYO8sxLdRaLmFhxhg8mHi8ZPz8NPjCyFOLNvjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwioGi1/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIwG1oXj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31519C4CEEA;
-	Mon, 23 Jun 2025 22:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwioGi1/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8C0C4CEED;
+	Mon, 23 Jun 2025 22:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717253;
-	bh=7yfQAR97QfV1pjZxeRPhC/KkN4Ob5VhBG1GmFeZZOAg=;
+	s=korg; t=1750717255;
+	bh=pwUeHaqXp/WK1+7pBVT8ftbl9qGTKj8gcGJJCxBFlVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIwG1oXjrinCB0cGsFTTrOy49QMvMPmp0RVb7y0K/CzstnFq/+dKH8sojaZR2ktLJ
-	 T2nX3IoDVhGO5C+urEUEYGqJX8LEpajOvJSH06zBha/fEyTQ2nASGP4svngjkQgxFd
-	 Ud5ZRmgMkpA48E1AjsAyYsiGdNHu7sWeyOuuSLGE=
+	b=PwioGi1/E0nqwT1E5T+IYhrZZigp1ZfpiCySqCrEKWn6TJ1Wg9E99XVquFVZ2SOtr
+	 JjyeF1VkrMd5NAuJKSkpXjrkc6R3blyys/RCcCAiO7drFoKqNNsdyWOby3DXyZ+zF0
+	 vJ83E7iO5r6GXQt1wdOi1KLZy9mSs8yjQ7Rt6Kxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.12 347/414] drm/v3d: Avoid NULL pointer dereference in `v3d_job_update_stats()`
-Date: Mon, 23 Jun 2025 15:08:04 +0200
-Message-ID: <20250623130650.651063837@linuxfoundation.org>
+	syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 390/508] bpf: Check rcu_read_lock_trace_held() in bpf_map_lookup_percpu_elem()
+Date: Mon, 23 Jun 2025 15:07:15 +0200
+Message-ID: <20250623130654.873705692@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,115 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Hou Tao <houtao1@huawei.com>
 
-commit e1bc3a13bd775791cca0bb144d977b00f3598042 upstream.
+[ Upstream commit d4965578267e2e81f67c86e2608481e77e9c8569 ]
 
-The following kernel Oops was recently reported by Mesa CI:
+bpf_map_lookup_percpu_elem() helper is also available for sleepable bpf
+program. When BPF JIT is disabled or under 32-bit host,
+bpf_map_lookup_percpu_elem() will not be inlined. Using it in a
+sleepable bpf program will trigger the warning in
+bpf_map_lookup_percpu_elem(), because the bpf program only holds
+rcu_read_lock_trace lock. Therefore, add the missed check.
 
-[  800.139824] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000588
-[  800.148619] Mem abort info:
-[  800.151402]   ESR = 0x0000000096000005
-[  800.155141]   EC = 0x25: DABT (current EL), IL = 32 bits
-[  800.160444]   SET = 0, FnV = 0
-[  800.163488]   EA = 0, S1PTW = 0
-[  800.166619]   FSC = 0x05: level 1 translation fault
-[  800.171487] Data abort info:
-[  800.174357]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
-[  800.179832]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[  800.184873]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[  800.190176] user pgtable: 4k pages, 39-bit VAs, pgdp=00000001014c2000
-[  800.196607] [0000000000000588] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000
-[  800.205305] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
-[  800.211564] Modules linked in: vc4 snd_soc_hdmi_codec drm_display_helper v3d cec gpu_sched drm_dma_helper drm_shmem_helper drm_kms_helper drm drm_panel_orientation_quirks snd_soc_core snd_compress snd_pcm_dmaengine snd_pcm i2c_brcmstb snd_timer snd backlight
-[  800.234448] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.25+rpt-rpi-v8 #1  Debian 1:6.12.25-1+rpt1
-[  800.244182] Hardware name: Raspberry Pi 4 Model B Rev 1.4 (DT)
-[  800.250005] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  800.256959] pc : v3d_job_update_stats+0x60/0x130 [v3d]
-[  800.262112] lr : v3d_job_update_stats+0x48/0x130 [v3d]
-[  800.267251] sp : ffffffc080003e60
-[  800.270555] x29: ffffffc080003e60 x28: ffffffd842784980 x27: 0224012000000000
-[  800.277687] x26: ffffffd84277f630 x25: ffffff81012fd800 x24: 0000000000000020
-[  800.284818] x23: ffffff8040238b08 x22: 0000000000000570 x21: 0000000000000158
-[  800.291948] x20: 0000000000000000 x19: ffffff8040238000 x18: 0000000000000000
-[  800.299078] x17: ffffffa8c1bd2000 x16: ffffffc080000000 x15: 0000000000000000
-[  800.306208] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-[  800.313338] x11: 0000000000000040 x10: 0000000000001a40 x9 : ffffffd83b39757c
-[  800.320468] x8 : ffffffd842786420 x7 : 7fffffffffffffff x6 : 0000000000ef32b0
-[  800.327598] x5 : 00ffffffffffffff x4 : 0000000000000015 x3 : ffffffd842784980
-[  800.334728] x2 : 0000000000000004 x1 : 0000000000010002 x0 : 000000ba4c0ca382
-[  800.341859] Call trace:
-[  800.344294]  v3d_job_update_stats+0x60/0x130 [v3d]
-[  800.349086]  v3d_irq+0x124/0x2e0 [v3d]
-[  800.352835]  __handle_irq_event_percpu+0x58/0x218
-[  800.357539]  handle_irq_event+0x54/0xb8
-[  800.361369]  handle_fasteoi_irq+0xac/0x240
-[  800.365458]  handle_irq_desc+0x48/0x68
-[  800.369200]  generic_handle_domain_irq+0x24/0x38
-[  800.373810]  gic_handle_irq+0x48/0xd8
-[  800.377464]  call_on_irq_stack+0x24/0x58
-[  800.381379]  do_interrupt_handler+0x88/0x98
-[  800.385554]  el1_interrupt+0x34/0x68
-[  800.389123]  el1h_64_irq_handler+0x18/0x28
-[  800.393211]  el1h_64_irq+0x64/0x68
-[  800.396603]  default_idle_call+0x3c/0x168
-[  800.400606]  do_idle+0x1fc/0x230
-[  800.403827]  cpu_startup_entry+0x40/0x50
-[  800.407742]  rest_init+0xe4/0xf0
-[  800.410962]  start_kernel+0x5e8/0x790
-[  800.414616]  __primary_switched+0x80/0x90
-[  800.418622] Code: 8b170277 8b160296 11000421 b9000861 (b9401ac1)
-[  800.424707] ---[ end trace 0000000000000000 ]---
-[  800.457313] ---[ end Kernel panic - not syncing: Oops: Fatal exception in interrupt ]---
-
-This issue happens when the file descriptor is closed before the jobs
-submitted by it are completed. When the job completes, we update the
-global GPU stats and the per-fd GPU stats, which are exposed through
-fdinfo. If the file descriptor was closed, then the struct `v3d_file_priv`
-and its stats were already freed and we can't update the per-fd stats.
-
-Therefore, if the file descriptor was already closed, don't update the
-per-fd GPU stats, only update the global ones.
-
-Cc: stable@vger.kernel.org # v6.12+
-Reviewed-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
-Link: https://lore.kernel.org/r/20250602151451.10161-1-mcanal@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/bpf/000000000000176a130617420310@google.com/
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20250526062534.1105938-1-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/bpf/helpers.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -191,7 +191,6 @@ v3d_job_update_stats(struct v3d_job *job
- 	struct v3d_dev *v3d = job->v3d;
- 	struct v3d_file_priv *file = job->file->driver_priv;
- 	struct v3d_stats *global_stats = &v3d->queue[queue].stats;
--	struct v3d_stats *local_stats = &file->stats[queue];
- 	u64 now = local_clock();
- 	unsigned long flags;
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 4fef0a0155255..94e85d311641b 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -125,7 +125,8 @@ const struct bpf_func_proto bpf_map_peek_elem_proto = {
  
-@@ -201,7 +200,12 @@ v3d_job_update_stats(struct v3d_job *job
- 	else
- 		preempt_disable();
+ BPF_CALL_3(bpf_map_lookup_percpu_elem, struct bpf_map *, map, void *, key, u32, cpu)
+ {
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
++		     !rcu_read_lock_bh_held());
+ 	return (unsigned long) map->ops->map_lookup_percpu_elem(map, key, cpu);
+ }
  
--	v3d_stats_update(local_stats, now);
-+	/* Don't update the local stats if the file context has already closed */
-+	if (file)
-+		v3d_stats_update(&file->stats[queue], now);
-+	else
-+		drm_dbg(&v3d->drm, "The file descriptor was closed before job completion\n");
-+
- 	v3d_stats_update(global_stats, now);
- 
- 	if (IS_ENABLED(CONFIG_LOCKDEP))
+-- 
+2.39.5
+
 
 
