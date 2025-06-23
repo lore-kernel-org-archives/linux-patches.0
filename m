@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9D91AD3FA;
-	Mon, 23 Jun 2025 21:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0147223DED;
+	Mon, 23 Jun 2025 21:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715533; cv=none; b=pzIulIqPm5BB3Y0U4tIorjogk4VJpNR1C8jnX0EZJ+FlV6fNxHgcec1fr1idFAapnMjzoyIr9s8PlEjVKUe4K9ZKzC4Gq0hUbP4rK3rYq3B9W+5bgxirmX+0KryBpC1hcYt4n+icO7EYB+NqNXJajT/nKlAchNCyb8Qei9BEx9M=
+	t=1750715536; cv=none; b=NrhFpcQgZmms1CWfy/UgLFfj0VXiM+YUK8bGp8O+FvmxrgYJdNQsKNL0kbTonxKy6Xi4T+Lk6uGz5OkcVl+m3AuBUHo220HKDJ9y73KD5nhR4k4r0+sKaZI3mrzQl2eE43DejzB3bac0QxoEg1H6fddZx0LNkYOr9eS0/wgZMF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715533; c=relaxed/simple;
-	bh=h92xyJA3g6ybl60fS/Y55iQdzDAEVgDJq3ro2XK1xB8=;
+	s=arc-20240116; t=1750715536; c=relaxed/simple;
+	bh=bUtVv/oMRkDLUCeb2hY9zHJpjk134RcY1B3VJT4dswo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MfxUWmc08wc1rdRuigiAuQoVYsN0xcLF8zZp4hr0s1WDlllsWXsoqwqGbSci6bv8USyGG2TYmqQNSr9qCzFpBxqHWOr+16hE04BOQlWquWfcyEmzvKUnEROVH82L0yWXRR41mL0CdXBCZU+grfdGbEyYoX494YcSUunKG0Ulomg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylz3oSp5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LSEzwj+Th5ZLBIJXiM4UZJoY2HS2mHeb8UtnHB1muEgUP38lZqUyvlKwLTnH5ShjiII5CYUMFv2wK2XGzLnqT80IxCgZERcXgi1H767vgzW3WwdToPUSwu0XOi0e5Q3pjlaC70wYzpmWhBRZJxkVPI/d95JtetUcNa211ssYjfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n63QtS1U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylz3oSp5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AACC4CEEA;
-	Mon, 23 Jun 2025 21:52:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n63QtS1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B46C4CEEA;
+	Mon, 23 Jun 2025 21:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715533;
-	bh=h92xyJA3g6ybl60fS/Y55iQdzDAEVgDJq3ro2XK1xB8=;
+	s=korg; t=1750715535;
+	bh=bUtVv/oMRkDLUCeb2hY9zHJpjk134RcY1B3VJT4dswo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylz3oSp5cljbA15pT/ZrSJj3GqbTATy58R634Ir8IrigtHt+9rn1RotF6aoBMa+w0
-	 15XC9nMD+Bbfacq3U9x47LzQzNLn9Csr/Ayff7D6XwmphGIuymBASJVQb4l5VSFhwP
-	 5cYZy+cmFniyZhHXJMnQrh0vi7VZ08IYQ7qsP3Ws=
+	b=n63QtS1UxUsR99xPjJOgKW4PnE4a4UvCcRzeWDzB4VqxPw6eqQqjLiaGl+3qrX5nd
+	 1Xnm3F+ou6yloC+382/oi8xlYVqSF89ydFpPesXN9SPIr5TP1ivuDYTtnweJoVxvMw
+	 yRNBo2idAARKyHbM1UqN9UIanIrTvh68VfVkCs8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.15 485/592] atm: Revert atm_account_tx() if copy_from_iter_full() fails.
-Date: Mon, 23 Jun 2025 15:07:23 +0200
-Message-ID: <20250623130711.969342840@linuxfoundation.org>
+	Kang Yang <kang.yang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 212/414] wifi: ath12k: fix macro definition HAL_RX_MSDU_PKT_LENGTH_GET
+Date: Mon, 23 Jun 2025 15:05:49 +0200
+Message-ID: <20250623130647.308714983@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Kang Yang <kang.yang@oss.qualcomm.com>
 
-commit 7851263998d4269125fd6cb3fdbfc7c6db853859 upstream.
+[ Upstream commit a69bbf89d751ba2d6da21d773c4e29c91c5e53c4 ]
 
-In vcc_sendmsg(), we account skb->truesize to sk->sk_wmem_alloc by
-atm_account_tx().
+Currently, HAL_RX_MSDU_PKT_LENGTH_GET uses u32_get_bits to obtain the
+MSDU length from the MSDU description.
 
-It is expected to be reverted by atm_pop_raw() later called by
-vcc->dev->ops->send(vcc, skb).
+This is not right. Because all halphy descriptions are little endian.
 
-However, vcc_sendmsg() misses the same revert when copy_from_iter_full()
-fails, and then we will leak a socket.
+So use le32_get_bits for HAL_RX_MSDU_PKT_LENGTH_GET.
 
-Let's factorise the revert part as atm_return_tx() and call it in
-the failure path.
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
 
-Note that the corresponding sk_wmem_alloc operation can be found in
-alloc_tx() as of the blamed commit.
-
-  $ git blame -L:alloc_tx net/atm/common.c c55fa3cccbc2c~
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Simon Horman <horms@kernel.org>
-Closes: https://lore.kernel.org/netdev/20250614161959.GR414686@horms.kernel.org/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250616182147.963333-3-kuni1840@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250421023444.1778-9-kang.yang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/atmdev.h |    6 ++++++
- net/atm/common.c       |    1 +
- net/atm/raw.c          |    2 +-
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/hal_desc.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/atmdev.h
-+++ b/include/linux/atmdev.h
-@@ -249,6 +249,12 @@ static inline void atm_account_tx(struct
- 	ATM_SKB(skb)->atm_options = vcc->atm_options;
- }
+diff --git a/drivers/net/wireless/ath/ath12k/hal_desc.h b/drivers/net/wireless/ath/ath12k/hal_desc.h
+index c68998e9667c9..8cbe28950d0c0 100644
+--- a/drivers/net/wireless/ath/ath12k/hal_desc.h
++++ b/drivers/net/wireless/ath/ath12k/hal_desc.h
+@@ -705,7 +705,7 @@ enum hal_rx_msdu_desc_reo_dest_ind {
+ #define RX_MSDU_DESC_INFO0_DECAP_FORMAT		GENMASK(30, 29)
  
-+static inline void atm_return_tx(struct atm_vcc *vcc, struct sk_buff *skb)
-+{
-+	WARN_ON_ONCE(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize,
-+					   &sk_atm(vcc)->sk_wmem_alloc));
-+}
-+
- static inline void atm_force_charge(struct atm_vcc *vcc,int truesize)
- {
- 	atomic_add(truesize, &sk_atm(vcc)->sk_rmem_alloc);
---- a/net/atm/common.c
-+++ b/net/atm/common.c
-@@ -635,6 +635,7 @@ int vcc_sendmsg(struct socket *sock, str
+ #define HAL_RX_MSDU_PKT_LENGTH_GET(val)		\
+-	(u32_get_bits((val), RX_MSDU_DESC_INFO0_MSDU_LENGTH))
++	(le32_get_bits((val), RX_MSDU_DESC_INFO0_MSDU_LENGTH))
  
- 	skb->dev = NULL; /* for paths shared with net_device interfaces */
- 	if (!copy_from_iter_full(skb_put(skb, size), size, &m->msg_iter)) {
-+		atm_return_tx(vcc, skb);
- 		kfree_skb(skb);
- 		error = -EFAULT;
- 		goto out;
---- a/net/atm/raw.c
-+++ b/net/atm/raw.c
-@@ -36,7 +36,7 @@ static void atm_pop_raw(struct atm_vcc *
- 
- 	pr_debug("(%d) %d -= %d\n",
- 		 vcc->vci, sk_wmem_alloc_get(sk), ATM_SKB(skb)->acct_truesize);
--	WARN_ON(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize, &sk->sk_wmem_alloc));
-+	atm_return_tx(vcc, skb);
- 	dev_kfree_skb_any(skb);
- 	sk->sk_write_space(sk);
- }
+ struct rx_msdu_desc {
+ 	__le32 info0;
+-- 
+2.39.5
+
 
 
