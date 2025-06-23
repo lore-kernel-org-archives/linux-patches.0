@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB647221543;
-	Mon, 23 Jun 2025 22:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220692192EC;
+	Mon, 23 Jun 2025 22:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717433; cv=none; b=OUJyfK+odJFbw0ulPbx5/IJKP91kPDWO086p0haojvrqvPILwYU6zISmH9uJp371QIeZ6M4hvS3fP7X1Vj5GGk+48kJUBne0E94cMKgD0NbDF+tNYxZ3FZ2tmX+wzxvpYSbC5G++xedIhLK8pGPNz+NbZ5EctFPwJW614idMk+8=
+	t=1750717436; cv=none; b=Dp3jz6dTLcYs80qPPkefALRCOdZTLsOzPT7jK5twR6pHHuFVuUegTaTcwv3K2SCdwV/KMXWUJHwg0f3UsJfNFIZZOIpVoLqWO71OyGd1nt8sYqVEQJoJzZVc0qGPnSO9SneVRBYzB8a3d44g5UmElKHSHS5VVjPgJUHt+cB9I2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717433; c=relaxed/simple;
-	bh=L93Opi6YnP9t+TJNZym9UZUui/9d4qc566iJUy0Nc6M=;
+	s=arc-20240116; t=1750717436; c=relaxed/simple;
+	bh=pRVzdiz1aERjS2hPK93DSL0+HibmYJfBLiK+mcYVuHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOHi5xshUSZptlzLcKn/6Zed0shB6lgnjHepBj/MjDz64sRvsauFlf83XUt1OIXqqY5ywgpbKKi1b95slEoFaUgK4l/Wu+BHAJSkvge7n0TawtIp1t/vXrMezMhVP8F61bDwUAvz2EN4T9NBET5sAtxkD/2q5FS9dk9b1rfc/gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XYOj2hXA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YPWKynz8B89Zzcg6pIQwVKc6+EBdPLOhd9I8ixNA4PM+p4iwCIArLAuG5ODFWVc75Ge/jZ8jbJKO2qxfZ200PdjXRon6TxlD7GAb2JAnNLGZB8gjv3/hE3Obotpn27ii0ROCjy52fGhBld6Wg0Oa+eyuxGdt3R+RGzxEa+Aj65w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAfUcLcF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XYOj2hXA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CBCC4CEEA;
-	Mon, 23 Jun 2025 22:23:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAfUcLcF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C54C4CEEA;
+	Mon, 23 Jun 2025 22:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717433;
-	bh=L93Opi6YnP9t+TJNZym9UZUui/9d4qc566iJUy0Nc6M=;
+	s=korg; t=1750717436;
+	bh=pRVzdiz1aERjS2hPK93DSL0+HibmYJfBLiK+mcYVuHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XYOj2hXAiZrLuoQiAJWe2Z9A1tiRAbC7Er1aAPvYebpgk2Vfc5WcfKSRLnqwejW33
-	 miioo0zsxlvQayy90GrJ0/loXGXfDQUISvbchudGxjIzKakJ8ALBdnj0osCSyA/zcF
-	 7SMQ8aTEw8daHqjLgvTlMswkft+In+5p79deO2bo=
+	b=WAfUcLcFUmjx8YqAWOD8qihzoUYVmYXR3SnETemFX/tV6IutyT/io6OqdM0PTnaoT
+	 ZXJoZtPRYlw//6mgmDg7Qa7H/yjiiZHMHWFTFuxNQ3F2Pogk+1QYxnB5sMHg/y3LNe
+	 RsnF1OWmr9FUutYVIB1SsxOZSrhPoQGQOWz3pH2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Rengarajan S <rengarajan.s@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ronnie Sahlberg <rsahlberg@whamcloud.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 386/414] net: lan743x: fix potential out-of-bounds write in lan743x_ptp_io_event_clock_get()
-Date: Mon, 23 Jun 2025 15:08:43 +0200
-Message-ID: <20250623130651.598804782@linuxfoundation.org>
+Subject: [PATCH 6.12 387/414] ublk: santizize the arguments from userspace when adding a device
+Date: Mon, 23 Jun 2025 15:08:44 +0200
+Message-ID: <20250623130651.621997975@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
 References: <20250623130642.015559452@linuxfoundation.org>
@@ -53,58 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: Ronnie Sahlberg <rsahlberg@whamcloud.com>
 
-[ Upstream commit e353b0854d3a1a31cb061df8d022fbfea53a0f24 ]
+[ Upstream commit 8c8472855884355caf3d8e0c50adf825f83454b2 ]
 
-Before calling lan743x_ptp_io_event_clock_get(), the 'channel' value
-is checked against the maximum value of PCI11X1X_PTP_IO_MAX_CHANNELS(8).
-This seems correct and aligns with the PTP interrupt status register
-(PTP_INT_STS) specifications.
+Sanity check the values for queue depth and number of queues
+we get from userspace when adding a device.
 
-However, lan743x_ptp_io_event_clock_get() writes to ptp->extts[] with
-only LAN743X_PTP_N_EXTTS(4) elements, using channel as an index:
-
-    lan743x_ptp_io_event_clock_get(..., u8 channel,...)
-    {
-        ...
-        /* Update Local timestamp */
-        extts = &ptp->extts[channel];
-        extts->ts.tv_sec = sec;
-        ...
-    }
-
-To avoid an out-of-bounds write and utilize all the supported GPIO
-inputs, set LAN743X_PTP_N_EXTTS to 8.
-
-Detected using the static analysis tool - Svace.
-Fixes: 60942c397af6 ("net: lan743x: Add support for PTP-IO Event Input External Timestamp (extts)")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Acked-by: Rengarajan S <rengarajan.s@microchip.com>
-Link: https://patch.msgid.link/20250616113743.36284-1-aleksei.kodanev@bell-sw.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Ronnie Sahlberg <rsahlberg@whamcloud.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
+Fixes: 62fe99cef94a ("ublk: add read()/write() support for ublk char device")
+Link: https://lore.kernel.org/r/20250619021031.181340-1-ronniesahlberg@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan743x_ptp.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/block/ublk_drv.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_ptp.h b/drivers/net/ethernet/microchip/lan743x_ptp.h
-index 0d29914cd4606..225e8232474d7 100644
---- a/drivers/net/ethernet/microchip/lan743x_ptp.h
-+++ b/drivers/net/ethernet/microchip/lan743x_ptp.h
-@@ -18,9 +18,9 @@
-  */
- #define LAN743X_PTP_N_EVENT_CHAN	2
- #define LAN743X_PTP_N_PEROUT		LAN743X_PTP_N_EVENT_CHAN
--#define LAN743X_PTP_N_EXTTS		4
--#define LAN743X_PTP_N_PPS		0
- #define PCI11X1X_PTP_IO_MAX_CHANNELS	8
-+#define LAN743X_PTP_N_EXTTS		PCI11X1X_PTP_IO_MAX_CHANNELS
-+#define LAN743X_PTP_N_PPS		0
- #define PTP_CMD_CTL_TIMEOUT_CNT		50
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index a01a547c562f3..746ef36e58df2 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -2457,6 +2457,9 @@ static int ublk_ctrl_add_dev(struct io_uring_cmd *cmd)
+ 	if (copy_from_user(&info, argp, sizeof(info)))
+ 		return -EFAULT;
  
- struct lan743x_adapter;
++	if (info.queue_depth > UBLK_MAX_QUEUE_DEPTH || info.nr_hw_queues > UBLK_MAX_NR_QUEUES)
++		return -EINVAL;
++
+ 	if (capable(CAP_SYS_ADMIN))
+ 		info.flags &= ~UBLK_F_UNPRIVILEGED_DEV;
+ 	else if (!(info.flags & UBLK_F_UNPRIVILEGED_DEV))
 -- 
 2.39.5
 
