@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3A6242D90;
-	Mon, 23 Jun 2025 13:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094354C6E;
+	Mon, 23 Jun 2025 13:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686223; cv=none; b=uTWnBsHJbfHVI5KMXY2Iym2kcOlZXByxnf9RmiuDROpGqKH+tLCznpl1vi3dgbDHG7zvALjgOrlVlIUpyTrkdL0AEZ+BDyCbiNnG0SDpZPnXnLpDys8U1sPXa3O5ZBU155D1dVA45GuZneIjBoLk71vJbxwITltiHeaQqOKRoP4=
+	t=1750686226; cv=none; b=YtZM00+EBtHq2AJAnCLmL31/7mYbA5t3Xc6BdreD/ldU5drjDrvwy9ptPoNwbGf3zFicc8A8ZGk7jgbxbEvjxnLEAtVxHQwAayyW1EgV5ED0wowz3j0pEBf4jNmHqV4K5YuMzKduzZwqBd99e5/Qld5xsA4qYrFLFjNIeROIcC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686223; c=relaxed/simple;
-	bh=Y5HcotSkw7AM11lMpZ0akUOFk9UN1ILNAZj19BbWjNA=;
+	s=arc-20240116; t=1750686226; c=relaxed/simple;
+	bh=TvqqEYtjKWzIG08D7r8SEGYG8K2yOnBT6U52q8vMO4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OuMdB8bx9+4iLwnasMi8BtCdu+CxWnbU+wAOGL3s/UJrpnO9PRYn6dma59TciYx5szHcCDfhpUXrwZ3/4NZfroeStglAT0fKYjH+kFpw/xC/KcenlHzhTTDeTDCZ48t6KXromotUz4j8gnlMjuIG5kKZmE+39+EXbwZpu7U1x+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDDhkz7+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kAmQAtXAbZfWDzkOkkGIOhS8TOgYq4VEQh57oqX53b2e7TlloK4zedJXiP/JIXrKsqyMdaPrDBmYO4yFzKJt7ZWhB4XftuhSVUQ6KCdQ3W27tO2FHAB/IPF6+/5eLtErGiS/BgeYNIPdapJ8Vs4JskiorDCX9jxSr+xvSkztcLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVl5NsES; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDDhkz7+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CABFC4CEEA;
-	Mon, 23 Jun 2025 13:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVl5NsES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D92C4CEEA;
+	Mon, 23 Jun 2025 13:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686223;
-	bh=Y5HcotSkw7AM11lMpZ0akUOFk9UN1ILNAZj19BbWjNA=;
+	s=korg; t=1750686225;
+	bh=TvqqEYtjKWzIG08D7r8SEGYG8K2yOnBT6U52q8vMO4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wDDhkz7+i8hVo6gfmVkmPZrUflGtoi42puMTKumJRttPlPo5RTC3ikDJ+BrXj3GRe
-	 PSae4SrZV3Ntuo4WHt5AuGNgpM4XH/SuEHuKdRG3n3j10UxS3pFKMLYfHv2KWhr+Sv
-	 sHg0ttfsDhYltkfPfUA7zSixzigwugtEaj+kojPw=
+	b=HVl5NsESEqnNd4kvFtZyAtb612uaS1OxNi74ZqLJHpo84e7qjPRNcVVnH9g2HZewv
+	 /tjESF62ugaRhFR+5fDwn0K0HMFFegHuE0mCQs6NAARlY76a6zgRxKq87plhynLEg2
+	 tzkUGdwJWIJni4DQ4Xqf0RICtpaWp5k9GG0WM80Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonin Godard <antonin.godard@bootlin.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
+	Aric Cyr <aric.cyr@amd.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 310/592] drm/panel: simple: Add POWERTIP PH128800T004-ZZA01 panel entry
-Date: Mon, 23 Jun 2025 15:04:28 +0200
-Message-ID: <20250623130707.785519519@linuxfoundation.org>
+Subject: [PATCH 6.15 293/592] drm/amd/display: Fix VUpdate offset calculations for dcn401
+Date: Mon, 23 Jun 2025 15:04:11 +0200
+Message-ID: <20250623130707.344185926@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -52,71 +54,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonin Godard <antonin.godard@bootlin.com>
+From: Dillon Varone <dillon.varone@amd.com>
 
-[ Upstream commit 6374a1005f20c1c2f7bbcc1bc735c2be4910a685 ]
+[ Upstream commit fe45e2af4a22e569b35b7f45eb9f040f6fbef94f ]
 
-Add support for the POWERTIP PH128800T004-ZZA01 10.1" (1280x800)
-LCD-TFT panel. Its panel description is very much like the POWERTIP
-PH128800T006-ZHC01 configured below this one, only its timings are
-different.
+[WHY&HOW]
+DCN401 uses a different structure to store the VStartup offset used to
+calculate the VUpdate position, so adjust the calculations to use this
+value.
 
-Signed-off-by: Antonin Godard <antonin.godard@bootlin.com>
-Reviewed-by: Dmitry Baryshkov <lumag@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250311-add-powertip-ph128800t004-v1-2-7f95e6984cea@bootlin.com
-Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Reviewed-by: Aric Cyr <aric.cyr@amd.com>
+Signed-off-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 29 ++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ .../amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 44 +++++++++++++++++++
+ .../amd/display/dc/hwss/dcn401/dcn401_hwseq.h |  1 +
+ .../amd/display/dc/hwss/dcn401/dcn401_init.c  |  2 +-
+ 3 files changed, 46 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 3aaac96c0bfbf..53211b5eaa09b 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -3798,6 +3798,32 @@ static const struct panel_desc pda_91_00156_a0  = {
- 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
- };
- 
-+static const struct drm_display_mode powertip_ph128800t004_zza01_mode = {
-+	.clock = 71150,
-+	.hdisplay = 1280,
-+	.hsync_start = 1280 + 48,
-+	.hsync_end = 1280 + 48 + 32,
-+	.htotal = 1280 + 48 + 32 + 80,
-+	.vdisplay = 800,
-+	.vsync_start = 800 + 9,
-+	.vsync_end = 800 + 9 + 8,
-+	.vtotal = 800 + 9 + 8 + 6,
-+	.flags = DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC,
-+};
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+index 3af6a3402b894..061553aebd883 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+@@ -2646,3 +2646,47 @@ void dcn401_plane_atomic_power_down(struct dc *dc,
+ 	if (hws->funcs.dpp_root_clock_control)
+ 		hws->funcs.dpp_root_clock_control(hws, dpp->inst, false);
+ }
 +
-+static const struct panel_desc powertip_ph128800t004_zza01 = {
-+	.modes = &powertip_ph128800t004_zza01_mode,
-+	.num_modes = 1,
-+	.bpc = 8,
-+	.size = {
-+		.width = 216,
-+		.height = 135,
-+	},
-+	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
-+	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
-+	.connector_type = DRM_MODE_CONNECTOR_LVDS,
-+};
++/*
++ * apply_front_porch_workaround
++ *
++ * This is a workaround for a bug that has existed since R5xx and has not been
++ * fixed keep Front porch at minimum 2 for Interlaced mode or 1 for progressive.
++ */
++static void apply_front_porch_workaround(
++	struct dc_crtc_timing *timing)
++{
++	if (timing->flags.INTERLACE == 1) {
++		if (timing->v_front_porch < 2)
++			timing->v_front_porch = 2;
++	} else {
++		if (timing->v_front_porch < 1)
++			timing->v_front_porch = 1;
++	}
++}
 +
- static const struct drm_display_mode powertip_ph128800t006_zhc01_mode = {
- 	.clock = 66500,
- 	.hdisplay = 1280,
-@@ -5155,6 +5181,9 @@ static const struct of_device_id platform_of_match[] = {
- 	}, {
- 		.compatible = "pda,91-00156-a0",
- 		.data = &pda_91_00156_a0,
-+	}, {
-+		.compatible = "powertip,ph128800t004-zza01",
-+		.data = &powertip_ph128800t004_zza01,
- 	}, {
- 		.compatible = "powertip,ph128800t006-zhc01",
- 		.data = &powertip_ph128800t006_zhc01,
++int dcn401_get_vupdate_offset_from_vsync(struct pipe_ctx *pipe_ctx)
++{
++	const struct dc_crtc_timing *dc_crtc_timing = &pipe_ctx->stream->timing;
++	struct dc_crtc_timing patched_crtc_timing;
++	int vesa_sync_start;
++	int asic_blank_end;
++	int interlace_factor;
++
++	patched_crtc_timing = *dc_crtc_timing;
++	apply_front_porch_workaround(&patched_crtc_timing);
++
++	interlace_factor = patched_crtc_timing.flags.INTERLACE ? 2 : 1;
++
++	vesa_sync_start = patched_crtc_timing.v_addressable +
++			patched_crtc_timing.v_border_bottom +
++			patched_crtc_timing.v_front_porch;
++
++	asic_blank_end = (patched_crtc_timing.v_total -
++			vesa_sync_start -
++			patched_crtc_timing.v_border_top)
++			* interlace_factor;
++
++	return asic_blank_end -
++			pipe_ctx->global_sync.dcn4x.vstartup_lines + 1;
++}
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.h b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.h
+index 781cf0efccc6c..37c915568afcb 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.h
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.h
+@@ -109,4 +109,5 @@ void dcn401_detect_pipe_changes(
+ void dcn401_plane_atomic_power_down(struct dc *dc,
+ 		struct dpp *dpp,
+ 		struct hubp *hubp);
++int dcn401_get_vupdate_offset_from_vsync(struct pipe_ctx *pipe_ctx);
+ #endif /* __DC_HWSS_DCN401_H__ */
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_init.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_init.c
+index fe7aceb2f5104..aa9573ce44fce 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_init.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_init.c
+@@ -73,7 +73,7 @@ static const struct hw_sequencer_funcs dcn401_funcs = {
+ 	.init_sys_ctx = dcn20_init_sys_ctx,
+ 	.init_vm_ctx = dcn20_init_vm_ctx,
+ 	.set_flip_control_gsl = dcn20_set_flip_control_gsl,
+-	.get_vupdate_offset_from_vsync = dcn10_get_vupdate_offset_from_vsync,
++	.get_vupdate_offset_from_vsync = dcn401_get_vupdate_offset_from_vsync,
+ 	.calc_vupdate_position = dcn10_calc_vupdate_position,
+ 	.apply_idle_power_optimizations = dcn401_apply_idle_power_optimizations,
+ 	.does_plane_fit_in_mall = NULL,
 -- 
 2.39.5
 
