@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61951E87B;
-	Mon, 23 Jun 2025 22:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271771A4F12;
+	Mon, 23 Jun 2025 22:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716394; cv=none; b=J27Wfb0lCSYTiEbn4OdSo6LiW9A4r9PP15pjUWS/G3XUmpktLCna1Kxje6jEpXSHCvLg0flnb7bvDnviJ/8kZHtzqR/6f4ae1ztZKaYHZTxxKD/ImM7TZ7EZqpdTdAqFGK5WYeDPR1gdBaJY5BfIfbA2V4+hF6sGns5zVvgy/r0=
+	t=1750716397; cv=none; b=bPe3/D3TTCLqyM74hoazgxweB2mCxB/nautWnJL7zfuQgBdQQ4JRr79Oger4YzAFkOglGbxId2TcR81hSvaVrIT4hk5dgVjrTU0OEfSCHHTJtJzwDsjoHE+9I4w5mjSODS2pxgtaAGsBQfz2pGpNtai7Vhd0eAB0iBXHgnrlflc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716394; c=relaxed/simple;
-	bh=sskoEcqTswoU5sD39TnbgB/AUoFDMg+h7UPN17Bk6Og=;
+	s=arc-20240116; t=1750716397; c=relaxed/simple;
+	bh=ZUzYO9ldCxGnis+EKKTlVRrc3fYKuA+nc6u7PSxKJzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tGU0W8S+W7TPN+e6UAk0ZghAPtljQRJWVDvQXP6bOe/AJsR72UQrhFXyZH7Vfcn9Z+rgkBAVbfn/12gdfiMlSGx4S5gz8H5MrQWOEDm11g9RkyfeZwMNEhYUk0uL4kXh6+GCdT38xXG48OVcH9BaNEheW/LwJlSjFYZmxES56+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=js7FHl5P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YwbfvVUG/ILafSkbzlZDp4LL4XeJy/FI641QrStdCSUtaZ0FE4OF0demb8mxN4hd0HlklNKsNdaQFMWV/qvR+yWBr/r0rNiepH6kWkqjn4hUjERAcPlEggTTJHAHd8iGzO9i8X+ZsvB5UkTXEkp6TalZtaNHxHsr7WlQDqrJ7nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnIkDjQk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="js7FHl5P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF42C4CEEA;
-	Mon, 23 Jun 2025 22:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnIkDjQk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D3FC4CEF2;
+	Mon, 23 Jun 2025 22:06:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716394;
-	bh=sskoEcqTswoU5sD39TnbgB/AUoFDMg+h7UPN17Bk6Og=;
+	s=korg; t=1750716397;
+	bh=ZUzYO9ldCxGnis+EKKTlVRrc3fYKuA+nc6u7PSxKJzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=js7FHl5P0Fc8l0fi375NrZYS/Ewn4wkothRfK7PUQuLJ4r4Njyj+7g19Ey1Pr5gH1
-	 GffRLf1s7UORDd68LgxrzHkfSuKAtqE0VhRsDD1Bzr3YLjS4LcwWQygWXXJiFFlr7J
-	 CtP1etHvqAkmox2lEFjHJCZN1TvjPhtA0fhD2G7I=
+	b=GnIkDjQkNTXU6piakyuUvNvkTEFOqjoiX3bh7bLbwrLlYSmhmxHBBlyyhLwAmB1vt
+	 44dcuRwn8GAfz5dtcNQ3WXquNohkXSKif3LmXqwaclCmFVHI66Balr6w8qiRCiH12G
+	 lUipwUyeaIm5pUiZJFnLmyTvmrqJmK3zwGZMzrCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 326/411] scsi: lpfc: Fix lpfc_check_sli_ndlp() handling for GEN_REQUEST64 commands
-Date: Mon, 23 Jun 2025 15:07:50 +0200
-Message-ID: <20250623130641.847550048@linuxfoundation.org>
+	Gavin Guo <gavinguo@igalia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Florent Revest <revest@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 346/355] mm/huge_memory: fix dereferencing invalid pmd migration entry
+Date: Mon, 23 Jun 2025 15:09:07 +0200
+Message-ID: <20250623130637.130239273@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +53,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Gavin Guo <gavinguo@igalia.com>
 
-[ Upstream commit 05ae6c9c7315d844fbc15afe393f5ba5e5771126 ]
+commit be6e843fc51a584672dfd9c4a6a24c8cb81d5fb7 upstream.
 
-In lpfc_check_sli_ndlp(), the get_job_els_rsp64_did remote_id assignment
-does not apply for GEN_REQUEST64 commands as it only has meaning for a
-ELS_REQUEST64 command.  So, if (iocb->ndlp == ndlp) is false, we could
-erroneously return the wrong value.  Fix by replacing the fallthrough
-statement with a break statement before the remote_id check.
+When migrating a THP, concurrent access to the PMD migration entry during
+a deferred split scan can lead to an invalid address access, as
+illustrated below.  To prevent this invalid access, it is necessary to
+check the PMD migration entry and return early.  In this context, there is
+no need to use pmd_to_swp_entry and pfn_swap_entry_to_page to verify the
+equality of the target folio.  Since the PMD migration entry is locked, it
+cannot be served as the target.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20250425194806.3585-2-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Mailing list discussion and explanation from Hugh Dickins: "An anon_vma
+lookup points to a location which may contain the folio of interest, but
+might instead contain another folio: and weeding out those other folios is
+precisely what the "folio != pmd_folio((*pmd)" check (and the "risk of
+replacing the wrong folio" comment a few lines above it) is for."
+
+BUG: unable to handle page fault for address: ffffea60001db008
+CPU: 0 UID: 0 PID: 2199114 Comm: tee Not tainted 6.14.0+ #4 NONE
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:split_huge_pmd_locked+0x3b5/0x2b60
+Call Trace:
+<TASK>
+try_to_migrate_one+0x28c/0x3730
+rmap_walk_anon+0x4f6/0x770
+unmap_folio+0x196/0x1f0
+split_huge_page_to_list_to_order+0x9f6/0x1560
+deferred_split_scan+0xac5/0x12a0
+shrinker_debugfs_scan_write+0x376/0x470
+full_proxy_write+0x15c/0x220
+vfs_write+0x2fc/0xcb0
+ksys_write+0x146/0x250
+do_syscall_64+0x6a/0x120
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The bug is found by syzkaller on an internal kernel, then confirmed on
+upstream.
+
+Link: https://lkml.kernel.org/r/20250421113536.3682201-1-gavinguo@igalia.com
+Link: https://lore.kernel.org/all/20250414072737.1698513-1-gavinguo@igalia.com/
+Link: https://lore.kernel.org/all/20250418085802.2973519-1-gavinguo@igalia.com/
+Fixes: 84c3fc4e9c56 ("mm: thp: check pmd migration entry in common path")
+Signed-off-by: Gavin Guo <gavinguo@igalia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Hugh Dickins <hughd@google.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Cc: Florent Revest <revest@google.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[gavin: backport the migration checking logic to __split_huge_pmd]
+Signed-off-by: Gavin Guo <gavinguo@igalia.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_hbadisc.c | 2 +-
+ mm/huge_memory.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index d04669ae878bd..413b7adca0211 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -5086,7 +5086,7 @@ lpfc_check_sli_ndlp(struct lpfc_hba *phba,
- 		case CMD_GEN_REQUEST64_CR:
- 			if (iocb->context_un.ndlp == ndlp)
- 				return 1;
--			fallthrough;
-+			break;
- 		case CMD_ELS_REQUEST64_CR:
- 			if (icmd->un.elsreq64.remoteID == ndlp->nlp_DID)
- 				return 1;
--- 
-2.39.5
-
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2227,7 +2227,7 @@ void __split_huge_pmd(struct vm_area_str
+ 	VM_BUG_ON(freeze && !page);
+ 	if (page) {
+ 		VM_WARN_ON_ONCE(!PageLocked(page));
+-		if (page != pmd_page(*pmd))
++		if (is_pmd_migration_entry(*pmd) || page != pmd_page(*pmd))
+ 			goto out;
+ 	}
+ 
 
 
