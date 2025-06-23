@@ -1,40 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C481F7580;
-	Mon, 23 Jun 2025 22:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFB01F7580;
+	Mon, 23 Jun 2025 22:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717030; cv=none; b=CJYEI/rwj3UckjiYRwwn9JEGZv0+TXzF/cNaSD6zzaDdQ1LcLd0RGACdX8kIXBtW0FOKKHazYfV4btWNH2+GJGBKiEvQDbefrB9y/IYw8Zb1P7YjqWJjG5NVr+Pch+/3VB3eentxEpj28nXhKJOgJMh0fcN1sAqSOdwSS0fNLbs=
+	t=1750717033; cv=none; b=n8a9srIXEw16Yt3BWvNBeYqGzy/9dNk3VUP0d8p3buVUGdaqqB5nEuMmrTtL4C2eipEXHvoZdLJ68ghT8yAr34OAW3N1veBUrlNVSbPT8CAEVVpCquGET2FvvhBEtWAE6ZRjkexForNW4o8Bo2WBJ5GlOnPPIBJQ9VqJDcOXcNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717030; c=relaxed/simple;
-	bh=j9fSHw8MJhC3PHK6sjrfKrie1kyFmEn5zQurGVWHEDs=;
+	s=arc-20240116; t=1750717033; c=relaxed/simple;
+	bh=mA2JlrbQl7AhTgYiKSUMX9E18GuHyPp2Va7WjYH+Jlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jC9ZxSALdDc1DRuSluhr3K8YveIZa6x3S4oVr0cVQ/lru6+PwV4sDSD09OHrV5hc7KDd9WOB4dLkH3W2mPGFXixLGh8LxZdB0uDl+Hid2ArCPEVQ3ktsPFwF/9uiZbV6g9rUYay9o3Dp403QFyVgei5PGkaTlpbYdvc7hYKM58Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCedoDrZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ppWbSLW1qlliJBjoTk1eqbyfi5EH0FqpS0sgCC4E3qSAWlHk1MaFj7hgNSHKv0LVHtAEiQ9bO9650bstnRYsZGTJ83S/e0bpvVpftk3/YXtcxjFj8yPtQ8c/z8fLlTv21rdUnLhtqjcKaOG8jklidonprtLO176dblMIXlvyj3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/WNtzvM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCedoDrZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711DCC4CEEA;
-	Mon, 23 Jun 2025 22:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/WNtzvM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F0CC4CEEA;
+	Mon, 23 Jun 2025 22:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717030;
-	bh=j9fSHw8MJhC3PHK6sjrfKrie1kyFmEn5zQurGVWHEDs=;
+	s=korg; t=1750717033;
+	bh=mA2JlrbQl7AhTgYiKSUMX9E18GuHyPp2Va7WjYH+Jlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCedoDrZ0MIjL8mg/Xph4peHex1Rh+D2v7TNGkg8UY4sN1eAmireVfhH+0gQTJFUf
-	 V4NS4z6mZS35c8fcJxHvsdUp5NGd1j61K+ecZoJUMnVp+ErV60mTKu0Ixyd69zn5ce
-	 KhJBTvHfNptj54lE07tZK8llFkanJCqCm19ilZ9A=
+	b=j/WNtzvM69MKamLRDYZVBUO4Mkpzbkb2q39LHzkUFjQLLZ1NRqwuXGVugSsVV+taQ
+	 k0H+zlAdJbNAeSD2bo1TU2TAZ4hjISCbW/jF3oVXrMI/H/PhUNynA6YEWM2pWKDCrG
+	 pD+EcOajDkSuNuOTET31a3i+Sibp2JF6KSaE4O9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 308/414] cifs: do not disable interface polling on failure
-Date: Mon, 23 Jun 2025 15:07:25 +0200
-Message-ID: <20250623130649.702139795@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Namhyung Kim <namhyung.kim@lge.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 579/592] perf evsel: Missed close() when probing hybrid core PMUs
+Date: Mon, 23 Jun 2025 15:08:57 +0200
+Message-ID: <20250623130714.209725389@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,73 +60,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Ian Rogers <irogers@google.com>
 
-commit 42ca547b13a20e7cbb04fbdf8d5f089ac4bb35b7 upstream.
+[ Upstream commit ebec62bc7ec435b475722a5467d67c720a1ad79f ]
 
-When a server has multichannel enabled, we keep polling the server
-for interfaces periodically. However, when this query fails, we
-disable the polling. This can be problematic as it takes away the
-chance for the server to start advertizing again.
+Add missing close() to avoid leaking perf events.
 
-This change reschedules the delayed work, even if the current call
-failed. That way, multichannel sessions can recover.
+In past perfs this mattered little as the function was just used by 'perf
+list'.
 
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+As the function is now used to detect hybrid PMUs leaking the perf event
+is somewhat more painful.
+
+Fixes: b41f1cec91c37eee ("perf list: Skip unsupported events")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Michael Petlan <mpetlan@redhat.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Namhyung Kim <namhyung.kim@lge.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Link: https://lore.kernel.org/r/20250614004108.1650988-2-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c |    6 +-----
- fs/smb/client/smb2pdu.c |    9 +++++----
- 2 files changed, 6 insertions(+), 9 deletions(-)
+ tools/perf/util/print-events.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -132,13 +132,9 @@ static void smb2_query_server_interfaces
- 	rc = server->ops->query_server_interfaces(xid, tcon, false);
- 	free_xid(xid);
- 
--	if (rc) {
--		if (rc == -EOPNOTSUPP)
--			return;
--
-+	if (rc)
- 		cifs_dbg(FYI, "%s: failed to query server interfaces: %d\n",
- 				__func__, rc);
--	}
- 
- 	queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
- 			   (SMB_INTERFACE_POLL_INTERVAL * HZ));
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -440,6 +440,10 @@ skip_sess_setup:
- 		free_xid(xid);
- 		ses->flags &= ~CIFS_SES_FLAGS_PENDING_QUERY_INTERFACES;
- 
-+		/* regardless of rc value, setup polling */
-+		queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
-+				   (SMB_INTERFACE_POLL_INTERVAL * HZ));
-+
- 		mutex_unlock(&ses->session_mutex);
- 
- 		if (rc == -EOPNOTSUPP && ses->chan_count > 1) {
-@@ -460,11 +464,8 @@ skip_sess_setup:
- 		if (ses->chan_max > ses->chan_count &&
- 		    ses->iface_count &&
- 		    !SERVER_IS_CHAN(server)) {
--			if (ses->chan_count == 1) {
-+			if (ses->chan_count == 1)
- 				cifs_server_dbg(VFS, "supports multichannel now\n");
--				queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
--						 (SMB_INTERFACE_POLL_INTERVAL * HZ));
--			}
- 
- 			cifs_try_adding_channels(ses);
+diff --git a/tools/perf/util/print-events.c b/tools/perf/util/print-events.c
+index a786cbfb0ff56..83aaf7cda6359 100644
+--- a/tools/perf/util/print-events.c
++++ b/tools/perf/util/print-events.c
+@@ -268,6 +268,7 @@ bool is_event_supported(u8 type, u64 config)
+ 			ret = evsel__open(evsel, NULL, tmap) >= 0;
  		}
+ 
++		evsel__close(evsel);
+ 		evsel__delete(evsel);
+ 	}
+ 
+-- 
+2.39.5
+
 
 
