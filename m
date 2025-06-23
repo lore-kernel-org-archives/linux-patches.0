@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F6419049B;
-	Mon, 23 Jun 2025 21:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56CC19049B;
+	Mon, 23 Jun 2025 21:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715653; cv=none; b=OcqFRKLqDIZmiD5Wq7yPbDWfqKFQUTve9Bbb5SlVr+GtqCK7X+cvZfQgB92Z0JtHsdY+KEa/jn+U8SwDE4vm1M+N9yNXmPAYD0UP75B1t27rNa1PCRxQ0aDQKVmJA3dcvomDkwyATielt6vdBC1YxvxSWbU1rVpouszNdHDdeeY=
+	t=1750715655; cv=none; b=FzdbzY/O8Xs/qWRVzsGCYRSYtM0hS4E9UrP449mbfxv4w8coqucAeuSbT6w95vdjwgP62H0UmRBmRzYSnzeWBuFW5TY1rNXFUEgm6E2LSC/mS+U7zFFvMQwAZqsxkiH6ltn7PzrATGavqrByzZ8Sg6ypoE3FZxyXy5ldLRIoEko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715653; c=relaxed/simple;
-	bh=VpV/B24rbf1Xjm7T7fcTbIDWN00VhhYeNZ4qwWoh8xU=;
+	s=arc-20240116; t=1750715655; c=relaxed/simple;
+	bh=cEtcxhBs7tFKjQ/WLBbKtx1BRpFo2LKGuYRmtwmNkZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zdx64/a5Qlk0lTDOAhumZdG8p+ndN9n8zvsIW5KxQQ+2xeQVy18OwZmJ/cK/EK27uzjPisNW94HZ+yUZb1Y10nx9yXzNKFA7lBuJtJwBT2Iux6POmz55aQN8crzFH92A+CpktHer+gGHvuyH70mNepKofzSkRkB78trcDRSLexU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVRlF/aS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X9AcYKsJ6KOZfj9zNytbDI/A2gFrO95BXRd63b2jMP6k6F/HCbtDDp/uCbVxWv2hba1twKoco/HE6dUSDd/jFKRWWtu/H5WQMP6c2HjmILh4P7uVZl/w02LvEECF/yYW4ESkeyW4/bpaYFKicnavbl+qf2DkdaeiYjHWpXXhQTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAV6Kzgo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVRlF/aS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98AFC4CEEA;
-	Mon, 23 Jun 2025 21:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAV6Kzgo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F37FC4CEEA;
+	Mon, 23 Jun 2025 21:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715653;
-	bh=VpV/B24rbf1Xjm7T7fcTbIDWN00VhhYeNZ4qwWoh8xU=;
+	s=korg; t=1750715655;
+	bh=cEtcxhBs7tFKjQ/WLBbKtx1BRpFo2LKGuYRmtwmNkZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sVRlF/aSoxSL6q+jTjw1J8UJoDJ9ih32IQT/MNuCOIY+3EXRLX5PJAARtwIJ6bDv+
-	 JwKoTo5zgL8xvzOwAkLL72ED+9WXRqRcBN3mhONuYSvBSKY8vZ3NL+v5gJYr9pHWUO
-	 TcXfmGjKYlpPMm7XOZK9p5DPHlAUfr+1lENbu4DU=
+	b=TAV6KzgonCchvdRyneuRRieMZT9kmS8u+KYPzKwxkn9SdqILyA47ft/aPQGnVc0ir
+	 t5DqwG/5OGLKM5FQS0yqC5kn4A7zDg8y54Zg4fKZkv6XPOtAj3k+shBN7zlfP4gVVQ
+	 9MpBsPyena3wkYP4L8nyxvePQ1sRM9CE54TC9KXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Daly <quic_pdaly@quicinc.com>,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 270/411] PM: runtime: fix denying of auto suspend in pm_suspend_timer_fn()
-Date: Mon, 23 Jun 2025 15:06:54 +0200
-Message-ID: <20250623130640.451742024@linuxfoundation.org>
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.15 472/592] x86/Kconfig: only enable ROX cache in execmem when STRICT_MODULE_RWX is set
+Date: Mon, 23 Jun 2025 15:07:10 +0200
+Message-ID: <20250623130711.660583732@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +46,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charan Teja Kalla <quic_charante@quicinc.com>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit 40d3b40dce375d6f1c1dbf08d79eed3aed6c691d ]
+commit 47410d839fcda6890cb82828f874f97710982f24 upstream.
 
-pm_runtime_put_autosuspend() schedules a hrtimer to expire
-at "dev->power.timer_expires". If the hrtimer's callback,
-pm_suspend_timer_fn(), observes that the current time equals
-"dev->power.timer_expires", it unexpectedly bails out instead of
-proceeding with runtime suspend.
+Currently ROX cache in execmem is enabled regardless of
+STRICT_MODULE_RWX setting. This breaks an assumption that module memory
+is writable when STRICT_MODULE_RWX is disabled, for instance for kernel
+debuggin.
 
-pm_suspend_timer_fn():
+Only enable ROX cache in execmem when STRICT_MODULE_RWX is set to
+restore the original behaviour of module text permissions.
 
- if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
- 	dev->power.timer_expires = 0;
- 	rpm_suspend(..)
- }
-
-Additionally, as ->timer_expires is not cleared, all the future auto
-suspend requests will not schedule hrtimer to perform auto suspend.
-
-rpm_suspend():
-
- if ((rpmflags & RPM_AUTO) &&...) {
- 	if (!(dev->power.timer_expires && ...) { <-- this will fail.
- 		hrtimer_start_range_ns(&dev->power.suspend_timer,...);
- 	}
- }
-
-Fix this by as well checking if current time reaches the set expiration.
-
-Co-developed-by: Patrick Daly <quic_pdaly@quicinc.com>
-Signed-off-by: Patrick Daly <quic_pdaly@quicinc.com>
-Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Link: https://patch.msgid.link/20250515064125.1211561-1-quic_charante@quicinc.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 64f6a4e10c05 ("x86: re-enable EXECMEM_ROX support")
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20250603111446.2609381-3-rppt@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/runtime.c | 2 +-
+ arch/x86/Kconfig |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index edee7f1af1cec..35e1a090ef901 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -996,7 +996,7 @@ static enum hrtimer_restart  pm_suspend_timer_fn(struct hrtimer *timer)
- 	 * If 'expires' is after the current time, we've been called
- 	 * too early.
- 	 */
--	if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
-+	if (expires > 0 && expires <= ktime_get_mono_fast_ns()) {
- 		dev->power.timer_expires = 0;
- 		rpm_suspend(dev, dev->power.timer_autosuspends ?
- 		    (RPM_ASYNC | RPM_AUTO) : RPM_ASYNC);
--- 
-2.39.5
-
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -88,7 +88,7 @@ config X86
+ 	select ARCH_HAS_DMA_OPS			if GART_IOMMU || XEN
+ 	select ARCH_HAS_EARLY_DEBUG		if KGDB
+ 	select ARCH_HAS_ELF_RANDOMIZE
+-	select ARCH_HAS_EXECMEM_ROX		if X86_64
++	select ARCH_HAS_EXECMEM_ROX		if X86_64 && STRICT_MODULE_RWX
+ 	select ARCH_HAS_FAST_MULTIPLIER
+ 	select ARCH_HAS_FORTIFY_SOURCE
+ 	select ARCH_HAS_GCOV_PROFILE_ALL
 
 
