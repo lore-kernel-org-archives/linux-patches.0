@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880622367B0;
-	Mon, 23 Jun 2025 13:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C905A2517A0;
+	Mon, 23 Jun 2025 13:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684927; cv=none; b=J+68v+8JxjnJGT3GHQiA0Z09bE5PCWjFCj549z1Xiwnpyj2ZypvGDHcCGk7gWiWC1HsWwUzy9SKLytQJUUEZ4NnETlBdwo0SW8qOkl2yerVa0P82h3kApeY4LFrucJ296R/wuPEsah8klAspfTk9SIdir97FqXkNtTUqVinEv4c=
+	t=1750684929; cv=none; b=KUKx4k9Xl7qO0aEdc8yhUaXN8tsLCPBZbHdFXZp9kq+TCaZujzFTKjR1zs8XAl6O56HzakTByaKOqXgrdDS4JYNXm9PY4nG3065hjzptTJihrJe9fyZcKDOGPkGRL3w9Xoba+UPfIoFQ/xG+UbfvArIdkgFSKCyW0zourdzQ0cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684927; c=relaxed/simple;
-	bh=Bwr+bU+p+WwJVRjrN2WAdbC+Y5d4Ty2X77qBBkM8sDk=;
+	s=arc-20240116; t=1750684929; c=relaxed/simple;
+	bh=F8fH2rhX7Xg5DhtZ9T2hpgEshiTlZtiZlUsL//rh6Xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IK/+s7Owbh7THErZzW3fOYmwt+TCEVHGUb+KbdBdhoyPYDcx/0ienj45IpHwbO1cjBJLO0xgQD54pk/9zvguR6ZYrGiENITwUVuWHRo4e3FkSyz/8WaUzrl0zCl/GF0knUmm8SnRmujxMzrYX/336kXb5WSvN5+f5/LIWW10z2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vot51BdD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bgd4YkogmH24AdqRE6QaMPDKrTICrY61NnGHBm5ZQIn88SrdHXJ4BCE3Occb6VA/qNL6pwLGu/fNJ75K2IJ7Oc/tknJ+ceXLG15CAUFGlNg8cWFET+l6ddKNhxb8X7HzR42bRBgkBaF8eM0RtV45V1esXvzhY1YTuPIbHCegyXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2uQ77JJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vot51BdD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89D7C4CEEA;
-	Mon, 23 Jun 2025 13:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2uQ77JJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D243C4CEEA;
+	Mon, 23 Jun 2025 13:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684927;
-	bh=Bwr+bU+p+WwJVRjrN2WAdbC+Y5d4Ty2X77qBBkM8sDk=;
+	s=korg; t=1750684929;
+	bh=F8fH2rhX7Xg5DhtZ9T2hpgEshiTlZtiZlUsL//rh6Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vot51BdDymxmPWSTqvn2HqlNtlDRhRbUQkFn9/H6oHFlvjNZA1gfOyVZIlCMEIKBx
-	 VPR+/W6s0/a2bHLOxonbrKbwhxlmI4V0xoOa1Bl3r9mLiuicl+CuT1YDmUC/F2khrd
-	 s6biwbhlRlnb/qJIepJo+2KEbhqiiAa135+Vp4QM=
+	b=x2uQ77JJwjGO10TViByG7Uf+O5y18EnftgFfesW6jPLiPKFNev3Klg1bXZAaNUKe5
+	 +kA9eQOrYp8KZ8jGyqhJQphXwaNP6k9U/B+X6gSgE77GvN2FVEyemEs93xw+6hRJTH
+	 DlGCShiJc1+DljUZDrME5QagR0KqBUjXT65Fn68Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.15 191/592] accel/ivpu: Use firmware names from upstream repo
-Date: Mon, 23 Jun 2025 15:02:29 +0200
-Message-ID: <20250623130704.829403024@linuxfoundation.org>
+	Corentin Labbe <clabbe.montjoie@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 012/355] crypto: sun8i-ss - do not use sg_dma_len before calling DMA functions
+Date: Mon, 23 Jun 2025 15:03:33 +0200
+Message-ID: <20250623130627.128440081@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Corentin Labbe <clabbe.montjoie@gmail.com>
 
-commit 1c2c0e29f24360b3130c005a3c261cb8c7b363c6 upstream.
+[ Upstream commit 2dfc7cd74a5e062a5405560447517e7aab1c7341 ]
 
-Use FW names from linux-firmware repo instead of deprecated ones.
-The vpu_37xx.bin style names were never released and were only used for
-internal testing, so it is safe to remove them.
+When testing sun8i-ss with multi_v7_defconfig, all CBC algorithm fail crypto
+selftests.
+This is strange since on sunxi_defconfig, everything was ok.
+The problem was in the IV setup loop which never run because sg_dma_len
+was 0.
 
-Fixes: c140244f0cfb ("accel/ivpu: Add initial Panther Lake support")
-Cc: stable@vger.kernel.org # v6.13+
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://lore.kernel.org/r/20250506092030.280276-1-jacek.lawrynowicz@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 359e893e8af4 ("crypto: sun8i-ss - rework handling of IV")
+Signed-off-by: Corentin Labbe <clabbe.montjoie@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_fw.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/accel/ivpu/ivpu_fw.c
-+++ b/drivers/accel/ivpu/ivpu_fw.c
-@@ -55,18 +55,18 @@ static struct {
- 	int gen;
- 	const char *name;
- } fw_names[] = {
--	{ IVPU_HW_IP_37XX, "vpu_37xx.bin" },
-+	{ IVPU_HW_IP_37XX, "intel/vpu/vpu_37xx_v1.bin" },
- 	{ IVPU_HW_IP_37XX, "intel/vpu/vpu_37xx_v0.0.bin" },
--	{ IVPU_HW_IP_40XX, "vpu_40xx.bin" },
-+	{ IVPU_HW_IP_40XX, "intel/vpu/vpu_40xx_v1.bin" },
- 	{ IVPU_HW_IP_40XX, "intel/vpu/vpu_40xx_v0.0.bin" },
--	{ IVPU_HW_IP_50XX, "vpu_50xx.bin" },
-+	{ IVPU_HW_IP_50XX, "intel/vpu/vpu_50xx_v1.bin" },
- 	{ IVPU_HW_IP_50XX, "intel/vpu/vpu_50xx_v0.0.bin" },
- };
+diff --git a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+index 8a94f812e6d29..f8603b931b9bb 100644
+--- a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
++++ b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+@@ -117,7 +117,7 @@ static int sun8i_ss_setup_ivs(struct skcipher_request *areq)
  
- /* Production fw_names from the table above */
--MODULE_FIRMWARE("intel/vpu/vpu_37xx_v0.0.bin");
--MODULE_FIRMWARE("intel/vpu/vpu_40xx_v0.0.bin");
--MODULE_FIRMWARE("intel/vpu/vpu_50xx_v0.0.bin");
-+MODULE_FIRMWARE("intel/vpu/vpu_37xx_v1.bin");
-+MODULE_FIRMWARE("intel/vpu/vpu_40xx_v1.bin");
-+MODULE_FIRMWARE("intel/vpu/vpu_50xx_v1.bin");
- 
- static int ivpu_fw_request(struct ivpu_device *vdev)
- {
+ 	/* we need to copy all IVs from source in case DMA is bi-directionnal */
+ 	while (sg && len) {
+-		if (sg_dma_len(sg) == 0) {
++		if (sg->length == 0) {
+ 			sg = sg_next(sg);
+ 			continue;
+ 		}
+-- 
+2.39.5
+
 
 
