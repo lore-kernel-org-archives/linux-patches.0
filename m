@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDB4253B47;
-	Mon, 23 Jun 2025 13:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B8B253F03;
+	Mon, 23 Jun 2025 13:21:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684897; cv=none; b=pr+/nFWkMx9eB5juiTbNbtXHtNvTEaLfOQkCDphLoFtmtvmQX45g18RSa/FzWASUYUBjm77qC0fPNY8pFlU/m4ICtu8ANt6PJNX2gIa7UyaSSaa8Dih1UFpkTJDledAxiFjvkaMK+cNnNLurLcwuXQmf5HM/hlwSKFbeTIeD5QU=
+	t=1750684899; cv=none; b=CGcD7B4c4Re2kfH9f+d+GOnps6OtPwxcU46OaOXGpWYDU52zqvyRvNO90Zv0kzDuFlkOyso13HJygXWqNYNTRBH1HtOH1e3i6y664QSs6db8DKUb6KCpLCin/ATJQ99m1kUW9xnQ6kSkxU0QRs5hxpUI7hSUFBd8rCOCUGp2kJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684897; c=relaxed/simple;
-	bh=ukGayRdj0enmx+UFFXdsd/JY5w6/uVfZf8veEDx+3mU=;
+	s=arc-20240116; t=1750684899; c=relaxed/simple;
+	bh=PrTNEiScKSnjGCp1wKKc9sXfXHgsvK9Oybu50QAR2ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCH+pZChj0MD06itxHSgNDmLg+hOxY5LvEkms90tE7ctrn42rZpyBP6M78p559B0kRCoNI9gStZ42ZP/j6J9P8etGqKGp309pksnSKkLTrbOLVqQtTHP80AxRkrc/cJn+A8LpOCPrfYOM4zfZuUDwneU9K179RMx8bi3O2EniDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nexKXbhB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NB4pbxVtNufA+FtpS5dSYOxGcqNwN4fkaw5BRK/ebflfwaasssSL2XvN/bosEltxUjgrsyCBz9/ET/5LHtLNHDDTZtTnWOAqqlgIVQrEnPcKGPD143O2yJ+jl+T6C+4t8YI4RU11bwEd7pwFwRCSPWw+erPvoCzNL0afV8mWf9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FmjzsBP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nexKXbhB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757D7C4CEEA;
-	Mon, 23 Jun 2025 13:21:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FmjzsBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13C2C4CEEA;
+	Mon, 23 Jun 2025 13:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684896;
-	bh=ukGayRdj0enmx+UFFXdsd/JY5w6/uVfZf8veEDx+3mU=;
+	s=korg; t=1750684899;
+	bh=PrTNEiScKSnjGCp1wKKc9sXfXHgsvK9Oybu50QAR2ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nexKXbhBOMGw5ONCczOqkeTrNJ47oHjV0x+wMIe4dtowkDKCwjvOefnX5iEOnbvwM
-	 Hhxsi5yO3Bmf2rMEnSwCocrxtsR2RSJKL6phXd8RlxBme0528Fd9k1XSIeKL1ry/A4
-	 ITTUEOD8iHfUydvKzZlc6JjKyQAl+Ig7VkGqOCKM=
+	b=1FmjzsBPf4K4ljwdr/I1w9Z2JnYATyphSbVYdEEVNxSP/ZNPt7fKV2LjnoBlA8tm6
+	 3pzYq4hhiQNQjM3EL+FCdfmZlIGBIQ13QazmQTmJ0rzlKbvOBf45j77ixH6InTPUC1
+	 v9KruKcFsMeDQ1kvnwgg9Qo/HYm+KbhHcOb0zW8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 5.10 008/355] thunderbolt: Do not double dequeue a configuration request
-Date: Mon, 23 Jun 2025 15:03:29 +0200
-Message-ID: <20250623130626.990118838@linuxfoundation.org>
+	syzbot+65761fc25a137b9c8c6e@syzkaller.appspotmail.com,
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 044/222] Squashfs: check return result of sb_min_blocksize
+Date: Mon, 23 Jun 2025 15:06:19 +0200
+Message-ID: <20250623130613.244459792@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +48,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Phillip Lougher <phillip@squashfs.org.uk>
 
-commit 0f73628e9da1ee39daf5f188190cdbaee5e0c98c upstream.
+[ Upstream commit 734aa85390ea693bb7eaf2240623d41b03705c84 ]
 
-Some of our devices crash in tb_cfg_request_dequeue():
+Syzkaller reports an "UBSAN: shift-out-of-bounds in squashfs_bio_read" bug.
 
- general protection fault, probably for non-canonical address 0xdead000000000122
+Syzkaller forks multiple processes which after mounting the Squashfs
+filesystem, issues an ioctl("/dev/loop0", LOOP_SET_BLOCK_SIZE, 0x8000).
+Now if this ioctl occurs at the same time another process is in the
+process of mounting a Squashfs filesystem on /dev/loop0, the failure
+occurs.  When this happens the following code in squashfs_fill_super()
+fails.
 
- CPU: 6 PID: 91007 Comm: kworker/6:2 Tainted: G U W 6.6.65
- RIP: 0010:tb_cfg_request_dequeue+0x2d/0xa0
- Call Trace:
- <TASK>
- ? tb_cfg_request_dequeue+0x2d/0xa0
- tb_cfg_request_work+0x33/0x80
- worker_thread+0x386/0x8f0
- kthread+0xed/0x110
- ret_from_fork+0x38/0x50
- ret_from_fork_asm+0x1b/0x30
+----
+msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
+msblk->devblksize_log2 = ffz(~msblk->devblksize);
+----
 
-The circumstances are unclear, however, the theory is that
-tb_cfg_request_work() can be scheduled twice for a request:
-first time via frame.callback from ring_work() and second
-time from tb_cfg_request().  Both times kworkers will execute
-tb_cfg_request_dequeue(), which results in double list_del()
-from the ctl->request_queue (the list poison deference hints
-at it: 0xdead000000000122).
+sb_min_blocksize() returns 0, which means msblk->devblksize is set to 0.
 
-Do not dequeue requests that don't have TB_CFG_REQUEST_ACTIVE
-bit set.
+As a result, ffz(~msblk->devblksize) returns 64, and msblk->devblksize_log2
+is set to 64.
 
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This subsequently causes the
+
+UBSAN: shift-out-of-bounds in fs/squashfs/block.c:195:36
+shift exponent 64 is too large for 64-bit type 'u64' (aka
+'unsigned long long')
+
+This commit adds a check for a 0 return by sb_min_blocksize().
+
+Link: https://lkml.kernel.org/r/20250409024747.876480-1-phillip@squashfs.org.uk
+Fixes: 0aa666190509 ("Squashfs: super block operations")
+Reported-by: syzbot+65761fc25a137b9c8c6e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/67f0dd7a.050a0220.0a13.0230.GAE@google.com/
+Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/ctl.c |    5 +++++
+ fs/squashfs/super.c | 5 +++++
  1 file changed, 5 insertions(+)
 
---- a/drivers/thunderbolt/ctl.c
-+++ b/drivers/thunderbolt/ctl.c
-@@ -131,6 +131,11 @@ static void tb_cfg_request_dequeue(struc
- 	struct tb_ctl *ctl = req->ctl;
+diff --git a/fs/squashfs/super.c b/fs/squashfs/super.c
+index 2110323b610b9..545207683ddd7 100644
+--- a/fs/squashfs/super.c
++++ b/fs/squashfs/super.c
+@@ -86,6 +86,11 @@ static int squashfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	msblk = sb->s_fs_info;
  
- 	mutex_lock(&ctl->request_queue_lock);
-+	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
-+		mutex_unlock(&ctl->request_queue_lock);
-+		return;
+ 	msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
++	if (!msblk->devblksize) {
++		errorf(fc, "squashfs: unable to set blocksize\n");
++		return -EINVAL;
 +	}
 +
- 	list_del(&req->list);
- 	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
- 	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
+ 	msblk->devblksize_log2 = ffz(~msblk->devblksize);
+ 
+ 	mutex_init(&msblk->meta_index_mutex);
+-- 
+2.39.5
+
 
 
