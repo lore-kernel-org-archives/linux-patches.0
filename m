@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01792236EF;
-	Mon, 23 Jun 2025 22:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5924225776;
+	Mon, 23 Jun 2025 22:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716904; cv=none; b=cTkfJYTpWI0oRryI9mrC4pjSm0UcaLwG2fyEv6rDd5H9i/ncE54yHA+qqyS/Snq/iGmRrvSkE551KNzO7Iar5VJY9UoT8EXDlX0Ur0USIvd/9vSVOjl8z4D3QhXhrYD9HxAGkIK/qX9CgzlQdUrjx8/mq+Gd4x077jXTY7mp6tw=
+	t=1750716907; cv=none; b=agonO3P8JotRv817KtHm2D/VkpWBw7m3d3xQ0Xx3gwnmjd5fAfEQwqyiUDh3AGp1IQE9YVZhtn07vGRGAtTNXELpQAH6B5KqmuOLB2ysAijxn0cn4rFfutDs6Tqr54CWVCcCV2hSUXjVN91wk3hBkwHdOiTV6LiXUBtXPPsaUN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716904; c=relaxed/simple;
-	bh=okGVvH/UnwSQggs31Pmj9KZF5YWaeWkITmpKZt4RCd0=;
+	s=arc-20240116; t=1750716907; c=relaxed/simple;
+	bh=9IrGpFX58Kw0nmpSAJ3szvEh+Dm/z0rs08gV34I9FgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNRF8f5gkailwQpBM+YFySOYfJ4VO9tgW+qsxWqYa7j/6VyPkk+uGv+WdrygtgnFTNkZsLxskf7piAHdt1pjtgkkl0D5QXULpBWO7TeUbm6kkRw5m6biI2vvAhYxHbEtdw/RSLk10S8i2vlCsSAeYB3CoO1wQESVx0hXum8m7+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WO6CkxVh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YhUvObd30kFdEKuvkem/eSc2T/UJtH7bhh5Tb2HY509l71XXdntwU3N9AvHeiA88GrHXKNHpq0DqYHzsoLUAxPtXyyxMgqHhGjdhwGKNE9JuJIlXXIFIp/QWSOPobkVs2niThiOmkmpsVnViCEce0GfQ+DT1gNCrqF9Op2EQHmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EooSZuDS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WO6CkxVh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865F6C4CEEA;
-	Mon, 23 Jun 2025 22:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EooSZuDS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2935C4CEEA;
+	Mon, 23 Jun 2025 22:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716903;
-	bh=okGVvH/UnwSQggs31Pmj9KZF5YWaeWkITmpKZt4RCd0=;
+	s=korg; t=1750716906;
+	bh=9IrGpFX58Kw0nmpSAJ3szvEh+Dm/z0rs08gV34I9FgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WO6CkxVhzmuTPoi6i+/NNrc5LXvJzrPLU4+3KguveoXGj55cm9AZ2hvq3TOb3TDMr
-	 iHElquzGI1Kob8Qenpr/2MGuvYpDGv1+w6aakCCA+LfndnKF7u62aDF7E/IO9Ku8Uf
-	 HlpHytzAIvD73TUngQlJ+LH7KCBWTE1NxlktxlUM=
+	b=EooSZuDSX1uTfqvVgxqb4V4tzsxaUdysLDlR9imvxSaLAArxOzTNT9SeoLJjFABlY
+	 iGhKXN5Epag02JOkMotzUy8PUB+znmFt+cUp+nXGF4Unfln0MQr2jxBFqOJYa31Zsc
+	 djPoyCN75hokr4tRaX8OVOawUqElimDx+60IY82g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.15 567/592] rust: devres: fix doctest build under `!CONFIG_PCI`
-Date: Mon, 23 Jun 2025 15:08:45 +0200
-Message-ID: <20250623130713.929070950@linuxfoundation.org>
+	syzbot+1d3c235276f62963e93a@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 377/411] atm: atmtcp: Free invalid length skb in atmtcp_c_send().
+Date: Mon, 23 Jun 2025 15:08:41 +0200
+Message-ID: <20250623130643.131796841@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,47 +48,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 42055939a3a4cac8afbebff85a29571c2bd3238c upstream.
+[ Upstream commit 2f370ae1fb6317985f3497b1bb80d457508ca2f7 ]
 
-The doctest requires `CONFIG_PCI`:
+syzbot reported the splat below. [0]
 
-    error[E0432]: unresolved import `kernel::pci`
-        --> rust/doctests_kernel_generated.rs:2689:44
-         |
-    2689 | use kernel::{device::Core, devres::Devres, pci};
-         |                                            ^^^ no `pci` in the root
-         |
-    note: found an item that was configured out
-        --> rust/kernel/lib.rs:96:9
-    note: the item is gated here
-        --> rust/kernel/lib.rs:95:1
+vcc_sendmsg() copies data passed from userspace to skb and passes
+it to vcc->dev->ops->send().
 
-Thus conditionally compile it (which still checks the syntax).
+atmtcp_c_send() accesses skb->data as struct atmtcp_hdr after
+checking if skb->len is 0, but it's not enough.
 
-Fixes: f301cb978c06 ("rust: devres: implement Devres::access()")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Link: https://lore.kernel.org/r/20250511182533.1016163-1-ojeda@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Also, when skb->len == 0, skb and sk (vcc) were leaked because
+dev_kfree_skb() is not called and sk_wmem_alloc adjustment is missing
+to revert atm_account_tx() in vcc_sendmsg(), which is expected
+to be done in atm_pop_raw().
+
+Let's properly free skb with an invalid length in atmtcp_c_send().
+
+[0]:
+BUG: KMSAN: uninit-value in atmtcp_c_send+0x255/0xed0 drivers/atm/atmtcp.c:294
+ atmtcp_c_send+0x255/0xed0 drivers/atm/atmtcp.c:294
+ vcc_sendmsg+0xd7c/0xff0 net/atm/common.c:644
+ sock_sendmsg_nosec net/socket.c:712 [inline]
+ __sock_sendmsg+0x330/0x3d0 net/socket.c:727
+ ____sys_sendmsg+0x7e0/0xd80 net/socket.c:2566
+ ___sys_sendmsg+0x271/0x3b0 net/socket.c:2620
+ __sys_sendmsg net/socket.c:2652 [inline]
+ __do_sys_sendmsg net/socket.c:2657 [inline]
+ __se_sys_sendmsg net/socket.c:2655 [inline]
+ __x64_sys_sendmsg+0x211/0x3e0 net/socket.c:2655
+ x64_sys_call+0x32fb/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:47
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Uninit was created at:
+ slab_post_alloc_hook mm/slub.c:4154 [inline]
+ slab_alloc_node mm/slub.c:4197 [inline]
+ kmem_cache_alloc_node_noprof+0x818/0xf00 mm/slub.c:4249
+ kmalloc_reserve+0x13c/0x4b0 net/core/skbuff.c:579
+ __alloc_skb+0x347/0x7d0 net/core/skbuff.c:670
+ alloc_skb include/linux/skbuff.h:1336 [inline]
+ vcc_sendmsg+0xb40/0xff0 net/atm/common.c:628
+ sock_sendmsg_nosec net/socket.c:712 [inline]
+ __sock_sendmsg+0x330/0x3d0 net/socket.c:727
+ ____sys_sendmsg+0x7e0/0xd80 net/socket.c:2566
+ ___sys_sendmsg+0x271/0x3b0 net/socket.c:2620
+ __sys_sendmsg net/socket.c:2652 [inline]
+ __do_sys_sendmsg net/socket.c:2657 [inline]
+ __se_sys_sendmsg net/socket.c:2655 [inline]
+ __x64_sys_sendmsg+0x211/0x3e0 net/socket.c:2655
+ x64_sys_call+0x32fb/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:47
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+CPU: 1 UID: 0 PID: 5798 Comm: syz-executor192 Not tainted 6.16.0-rc1-syzkaller-00010-g2c4a1f3fe03e #0 PREEMPT(undef)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+1d3c235276f62963e93a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1d3c235276f62963e93a
+Tested-by: syzbot+1d3c235276f62963e93a@syzkaller.appspotmail.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250616182147.963333-2-kuni1840@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/devres.rs |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/atm/atmtcp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/rust/kernel/devres.rs
-+++ b/rust/kernel/devres.rs
-@@ -208,6 +208,7 @@ impl<T> Devres<T> {
-     /// # Example
-     ///
-     /// ```no_run
-+    /// # #![cfg(CONFIG_PCI)]
-     /// # use kernel::{device::Core, devres::Devres, pci};
-     ///
-     /// fn from_core(dev: &pci::Device<Core>, devres: Devres<pci::Bar<0x4>>) -> Result {
+diff --git a/drivers/atm/atmtcp.c b/drivers/atm/atmtcp.c
+index 96bea1ab1eccf..ff558908897f3 100644
+--- a/drivers/atm/atmtcp.c
++++ b/drivers/atm/atmtcp.c
+@@ -288,7 +288,9 @@ static int atmtcp_c_send(struct atm_vcc *vcc,struct sk_buff *skb)
+ 	struct sk_buff *new_skb;
+ 	int result = 0;
+ 
+-	if (!skb->len) return 0;
++	if (skb->len < sizeof(struct atmtcp_hdr))
++		goto done;
++
+ 	dev = vcc->dev_data;
+ 	hdr = (struct atmtcp_hdr *) skb->data;
+ 	if (hdr->length == ATMTCP_HDR_MAGIC) {
+-- 
+2.39.5
+
 
 
