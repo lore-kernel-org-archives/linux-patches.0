@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1C321D3DD;
-	Mon, 23 Jun 2025 21:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FD31E1A05;
+	Mon, 23 Jun 2025 21:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715068; cv=none; b=Hn500Ink4kjnvC3U1IkNRVXDoGyES4WGuqYNZ+7Md08m4MZUkF+EO7M66qrlyCbi0HHZyoN8FEHSW3VAQnGz1gf3EAi8NKzEYWTG1wmzb1INBTZkd2Mrry3FIZz3aw1VK6lLomWvXutW38zz78FYils7t56G6R4jPvv0gUw7WmE=
+	t=1750715070; cv=none; b=cRwDgIzghtWPIr/PJo9Dk6oVeQO1SW2fUctFkfpu8d+H75zeKI0CJxc0sAPwWHSScCv0BbmbvZSkyKlnVsnC0asukuSu+mRn3JdNG/Lim/Y2PLVRn4jAgXpydX2gCCuHMYWZDudRNknfsootUTT8NaX+++H8x71EhRC9f1akMHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715068; c=relaxed/simple;
-	bh=QP992tYqm8ptmjJGEuS63mK2E1lYnE5ESsSpa2fAdLs=;
+	s=arc-20240116; t=1750715070; c=relaxed/simple;
+	bh=qgjwA4oJLSq0JjFPwZuHuiZCKLWeLqI3/+VZ7mZknHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRWMia4eqljzOsDq51rmV4eKunHLQAUKVZ7IU+pOuS3ovvJ9gVaUn2gAtzCsbaNqCxdYBTN0me1q+y7gPrXQk5vlkp8dT4ASsALItesgLWnfNhEtMHADBF0CGhsgoZcahu7ND8YmeVQISQ3KucWXNQvEszMXhnsx8U9y6kTFozM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k8oMIo44; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Fhd7cZM5DCVko6G4Pfep3j1Fi7q5SPY7yx5YYnJLHvgNhuux4YsPe+MGp1ZVCr2rxy3fMX7Wl5p0oRsjH/P9digVSN7kH3s3c3lnruDXn/V9uw6rVyiH/Rhd+aUXEZ5pmQ+5qdxaIwxmi4i9YJJZTDYJ62GrFPtrCmM7EuLvERU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3djqo4X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8oMIo44"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974D6C4CEEA;
-	Mon, 23 Jun 2025 21:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3djqo4X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 111B7C4CEEA;
+	Mon, 23 Jun 2025 21:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715067;
-	bh=QP992tYqm8ptmjJGEuS63mK2E1lYnE5ESsSpa2fAdLs=;
+	s=korg; t=1750715070;
+	bh=qgjwA4oJLSq0JjFPwZuHuiZCKLWeLqI3/+VZ7mZknHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k8oMIo44tj569OXLAGA5wE3bMT3eEsm+U6OYqreUnCRBtl9X1izz+soUhQ1J+MvuC
-	 TiTD43iVxviEDekVuA0vG0xgJ0Bc7wXh+/iDX92gtoqyU/ZpLcf+GcEuqA7B0zRv93
-	 Qm7fSV7BiG+jX4PA6IpuJo00t7VRkpbXcJg13r9Q=
+	b=a3djqo4X0sVLbAkGM50Ipxu5WesiYhe2bqtfrffhq1pc5+p/1okX5apx/i3Vb6ILr
+	 mcpNPKfSMw9fqmj+gwMTfbL3wVROUJgT5bY3kucUFH/f6A8j2KgHQuZKtJl8PcvlhF
+	 QYoumnWSODtv5ESc2iaVVfqKb/P6z/eJWn74WoK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tan En De <ende.tan@starfivetech.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 250/355] i2c: designware: Invoke runtime suspend on quick slave re-registration
-Date: Mon, 23 Jun 2025 15:07:31 +0200
-Message-ID: <20250623130634.266487967@linuxfoundation.org>
+Subject: [PATCH 6.15 435/592] platform/x86/amd: pmc: Clear metrics table at start of cycle
+Date: Mon, 23 Jun 2025 15:06:33 +0200
+Message-ID: <20250623130710.782955713@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,82 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tan En De <ende.tan@starfivetech.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 2fe2b969d911a09abcd6a47401a3c66c38a310e6 ]
+[ Upstream commit 4dbd11796f3a8eb95647507befc41995458a4023 ]
 
-Replaced pm_runtime_put() with pm_runtime_put_sync_suspend() to ensure
-the runtime suspend is invoked immediately when unregistering a slave.
-This prevents a race condition where suspend was skipped when
-unregistering and registering slave in quick succession.
+The area of memory that contains the metrics table may contain garbage
+when the cycle starts.  This normally doesn't matter because the cycle
+itself will populate it with valid data, however commit 9f5595d5f03fd
+("platform/x86/amd: pmc: Require at least 2.5 seconds between HW sleep
+cycles") started to use it during the check() phase.  Depending upon
+what garbage is in the table it's possible that the system will wait
+2.5 seconds for even the first cycle, which will be visible to a user.
 
-For example, consider the rapid sequence of
-`delete_device -> new_device -> delete_device -> new_device`.
-In this sequence, it is observed that the dw_i2c_plat_runtime_suspend()
-might not be invoked after `delete_device` operation.
+To prevent this from happening explicitly clear the table when logging
+is started.
 
-This is because after `delete_device` operation, when the
-pm_runtime_put() is about to trigger suspend, the following `new_device`
-operation might race and cancel the suspend.
-
-If that happens, during the `new_device` operation,
-dw_i2c_plat_runtime_resume() is skipped (since there was no suspend), which
-means `i_dev->init()`, i.e. i2c_dw_init_slave(), is skipped.
-Since i2c_dw_init_slave() is skipped, i2c_dw_configure_fifo_slave() is
-skipped too, which leaves `DW_IC_INTR_MASK` unconfigured. If we inspect
-the interrupt mask register using devmem, it will show as zero.
-
-Example shell script to reproduce the issue:
-```
-  #!/bin/sh
-
-  SLAVE_LADDR=0x1010
-  SLAVE_BUS=13
-  NEW_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/new_device
-  DELETE_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/delete_device
-
-  # Create initial device
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-  sleep 2
-
-  # Rapid sequence of
-  # delete_device -> new_device -> delete_device -> new_device
-  echo $SLAVE_LADDR > $DELETE_DEVICE
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-  echo $SLAVE_LADDR > $DELETE_DEVICE
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-
-  # Using devmem to inspect IC_INTR_MASK will show as zero
-```
-
-Signed-off-by: Tan En De <ende.tan@starfivetech.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20250412023303.378600-1-ende.tan@starfivetech.com
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Fixes: 9f5595d5f03fd ("platform/x86/amd: pmc: Require at least 2.5 seconds between HW sleep cycles")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20250603132412.3555302-1-superm1@kernel.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-slave.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmc/pmc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-designware-slave.c b/drivers/i2c/busses/i2c-designware-slave.c
-index 5b54a9b9ed1a3..09b8ccc040c6e 100644
---- a/drivers/i2c/busses/i2c-designware-slave.c
-+++ b/drivers/i2c/busses/i2c-designware-slave.c
-@@ -97,7 +97,7 @@ static int i2c_dw_unreg_slave(struct i2c_client *slave)
- 	dev->disable(dev);
- 	synchronize_irq(dev->irq);
- 	dev->slave = NULL;
--	pm_runtime_put(dev->dev);
-+	pm_runtime_put_sync_suspend(dev->dev);
+diff --git a/drivers/platform/x86/amd/pmc/pmc.c b/drivers/platform/x86/amd/pmc/pmc.c
+index 0329fafe14ebc..f45525bbd1549 100644
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -157,6 +157,8 @@ static int amd_pmc_setup_smu_logging(struct amd_pmc_dev *dev)
+ 			return -ENOMEM;
+ 	}
  
- 	return 0;
- }
++	memset_io(dev->smu_virt_addr, 0, sizeof(struct smu_metrics));
++
+ 	/* Start the logging */
+ 	amd_pmc_send_cmd(dev, 0, NULL, SMU_MSG_LOG_RESET, false);
+ 	amd_pmc_send_cmd(dev, 0, NULL, SMU_MSG_LOG_START, false);
 -- 
 2.39.5
 
