@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D7A4C6E;
-	Mon, 23 Jun 2025 13:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317C624EAB1;
+	Mon, 23 Jun 2025 13:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686190; cv=none; b=BwiE4hJqSUwCtZUY8Hy+T+Z7VKO5Y7SqBuKiI+UTcoFrhB5ecS26rhTokyv3Z6/u391hdbSuuSjrF+By4GvlK/5cX+j7H+TeUt2IgM5ZsxDupvJLZ7uCtr3dWIQ6+1ycx86BqITOFR4CbFq2O193yxp0N/GFzj3GXaCGHY3nHxo=
+	t=1750686193; cv=none; b=COC5JePIxPo8rh6WFDdFzyLUfSiJ72FoHjH7IJON0hF06nCh26C/YeCAWZ2iR2rBZkNvE/V7T30R4ILLqvW73MYhvPq9MXzJu99RIGOrthP0WnKeFTzJs+h7PnNZKrPaAy9TBnMFUqkH/L1aMdhUt37ZjaxCZSVWoQZIcH+S8pE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686190; c=relaxed/simple;
-	bh=a/47+7GvjOyAuFJ2of8yaRN1s7Cz84VYFw2QR0WO/ZE=;
+	s=arc-20240116; t=1750686193; c=relaxed/simple;
+	bh=S2sAs+wMXC40O+bKknW5Xvsqtg1vS+Dg688m8HdmOao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ko6beSuewlJ5NC/osPzvoVuxax/yLfHltvVIwSrVfV5EUWU7D3XxZ181j6qsqebgXqe8ZJVbWeR5ezMWgemEmzLRt/O6S98XHSWz4ATc0XfCIQZ9LnQpgvNgpMtn6ucwfaM0B3lb6jfcjNLOCyVZYcwU6Vi85dy6PSnZ9mub5uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiJ4Dn9X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WLTqFuwPhwZ7BYmG4n+rukVXhJFK4EjeLvd76dpKIWwscZwJ6BnoO8FdBruRBCDcXn6vwDSnqvQOK33NrAcynAi/b6oRMD0G7G6fQBWemjXS/PSSNFN+0lSGJofpvnjDtcZ62hv/7RLDlNdzk4PQ6n7KPMdCi+EHZ6g9HTuvlJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ipCkz5RD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiJ4Dn9X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C82C4CEEA;
-	Mon, 23 Jun 2025 13:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipCkz5RD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8D1C4CEEA;
+	Mon, 23 Jun 2025 13:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686190;
-	bh=a/47+7GvjOyAuFJ2of8yaRN1s7Cz84VYFw2QR0WO/ZE=;
+	s=korg; t=1750686192;
+	bh=S2sAs+wMXC40O+bKknW5Xvsqtg1vS+Dg688m8HdmOao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yiJ4Dn9XWaGu4obF0RyJyJYSpwU61mruFTh+nLy27ztn8IRNJQdUlU4iEJYNUecIl
-	 6dfOC1n+eyI0lpPwRjTqNYCq6Dl40teNLUexVA8llra0bU5mtZsHVG0xS6K+rXYrPr
-	 A7V2ghqlIpCXbIS2WW082GTTVRr5NkMKaOuaSkxE=
+	b=ipCkz5RDb8pkdD8GhnFC9vDA+KYKxa2f8CRHJOjfx1UoFmdKdpPm528izT2/LWiCk
+	 UsKp/4N3JBWOWJcxXxgSSMYAoP0NjjnpWNW7kF6kC0FgXSjiLhm274A0k/k3S7SELh
+	 Gf8d94XIENXTpFewQRITDqg3CSTFt4MtPhUxiNtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Moon Yeounsu <yyyynoom@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 120/355] net_sched: sch_sfq: fix a potential crash on gso_skb handling
-Date: Mon, 23 Jun 2025 15:05:21 +0200
-Message-ID: <20250623130630.363787564@linuxfoundation.org>
+Subject: [PATCH 5.4 163/222] net: dlink: add synchronization for stats update
+Date: Mon, 23 Jun 2025 15:08:18 +0200
+Message-ID: <20250623130616.983007919@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +45,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Moon Yeounsu <yyyynoom@gmail.com>
 
-[ Upstream commit 82ffbe7776d0ac084031f114167712269bf3d832 ]
+[ Upstream commit 12889ce926e9a9baf6b83d809ba316af539b89e2 ]
 
-SFQ has an assumption of always being able to queue at least one packet.
+This patch synchronizes code that accesses from both user-space
+and IRQ contexts. The `get_stats()` function can be called from both
+context.
 
-However, after the blamed commit, sch->q.len can be inflated by packets
-in sch->gso_skb, and an enqueue() on an empty SFQ qdisc can be followed
-by an immediate drop.
+`dev->stats.tx_errors` and `dev->stats.collisions` are also updated
+in the `tx_errors()` function. Therefore, these fields must also be
+protected by synchronized.
 
-Fix sfq_drop() to properly clear q->tail in this situation.
+There is no code that accessses `dev->stats.tx_errors` between the
+previous and updated lines, so the updating point can be moved.
 
-Tested:
-
-ip netns add lb
-ip link add dev to-lb type veth peer name in-lb netns lb
-ethtool -K to-lb tso off                 # force qdisc to requeue gso_skb
-ip netns exec lb ethtool -K in-lb gro on # enable NAPI
-ip link set dev to-lb up
-ip -netns lb link set dev in-lb up
-ip addr add dev to-lb 192.168.20.1/24
-ip -netns lb addr add dev in-lb 192.168.20.2/24
-tc qdisc replace dev to-lb root sfq limit 100
-
-ip netns exec lb netserver
-
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-
-Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
-Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
-Closes: https://lore.kernel.org/netdev/9da42688-bfaa-4364-8797-e9271f3bdaef@hetzner-cloud.de/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20250606165127.3629486-1-edumazet@google.com
+Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
+Link: https://patch.msgid.link/20250515075333.48290-1-yyyynoom@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/dlink/dl2k.c | 14 +++++++++++++-
+ drivers/net/ethernet/dlink/dl2k.h |  2 ++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index 066754a18569b..6b65c5efb378e 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -317,7 +317,10 @@ static unsigned int sfq_drop(struct Qdisc *sch, struct sk_buff **to_free)
- 		/* It is difficult to believe, but ALL THE SLOTS HAVE LENGTH 1. */
- 		x = q->tail->next;
- 		slot = &q->slots[x];
--		q->tail->next = slot->next;
-+		if (slot->next == x)
-+			q->tail = NULL; /* no more active slots */
-+		else
-+			q->tail->next = slot->next;
- 		q->ht[slot->hash] = SFQ_EMPTY_SLOT;
- 		goto drop;
+diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
+index eb23157641343..8d57fb5072054 100644
+--- a/drivers/net/ethernet/dlink/dl2k.c
++++ b/drivers/net/ethernet/dlink/dl2k.c
+@@ -155,6 +155,8 @@ rio_probe1 (struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	np->ioaddr = ioaddr;
+ 	np->chip_id = chip_idx;
+ 	np->pdev = pdev;
++
++	spin_lock_init(&np->stats_lock);
+ 	spin_lock_init (&np->tx_lock);
+ 	spin_lock_init (&np->rx_lock);
+ 
+@@ -875,7 +877,6 @@ tx_error (struct net_device *dev, int tx_status)
+ 	frame_id = (tx_status & 0xffff0000);
+ 	printk (KERN_ERR "%s: Transmit error, TxStatus %4.4x, FrameId %d.\n",
+ 		dev->name, tx_status, frame_id);
+-	dev->stats.tx_errors++;
+ 	/* Ttransmit Underrun */
+ 	if (tx_status & 0x10) {
+ 		dev->stats.tx_fifo_errors++;
+@@ -912,9 +913,15 @@ tx_error (struct net_device *dev, int tx_status)
+ 		rio_set_led_mode(dev);
+ 		/* Let TxStartThresh stay default value */
  	}
++
++	spin_lock(&np->stats_lock);
+ 	/* Maximum Collisions */
+ 	if (tx_status & 0x08)
+ 		dev->stats.collisions++;
++
++	dev->stats.tx_errors++;
++	spin_unlock(&np->stats_lock);
++
+ 	/* Restart the Tx */
+ 	dw32(MACCtrl, dr16(MACCtrl) | TxEnable);
+ }
+@@ -1084,7 +1091,9 @@ get_stats (struct net_device *dev)
+ 	int i;
+ #endif
+ 	unsigned int stat_reg;
++	unsigned long flags;
+ 
++	spin_lock_irqsave(&np->stats_lock, flags);
+ 	/* All statistics registers need to be acknowledged,
+ 	   else statistic overflow could cause problems */
+ 
+@@ -1134,6 +1143,9 @@ get_stats (struct net_device *dev)
+ 	dr16(TCPCheckSumErrors);
+ 	dr16(UDPCheckSumErrors);
+ 	dr16(IPCheckSumErrors);
++
++	spin_unlock_irqrestore(&np->stats_lock, flags);
++
+ 	return &dev->stats;
+ }
+ 
+diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
+index 0e33e2eaae960..56aff2f0bdbfa 100644
+--- a/drivers/net/ethernet/dlink/dl2k.h
++++ b/drivers/net/ethernet/dlink/dl2k.h
+@@ -372,6 +372,8 @@ struct netdev_private {
+ 	struct pci_dev *pdev;
+ 	void __iomem *ioaddr;
+ 	void __iomem *eeprom_addr;
++	// To ensure synchronization when stats are updated.
++	spinlock_t stats_lock;
+ 	spinlock_t tx_lock;
+ 	spinlock_t rx_lock;
+ 	unsigned int rx_buf_sz;		/* Based on MTU+slack. */
 -- 
 2.39.5
 
