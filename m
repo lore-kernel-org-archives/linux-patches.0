@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0826615ADB4;
-	Mon, 23 Jun 2025 22:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6347615ADB4;
+	Mon, 23 Jun 2025 22:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717363; cv=none; b=hNQ0JsWeN5YbblRjgbBMl9kEpd4VjRy4coTy64gJFa4CuHbY7A7r4UbHD0DAYNnqiL8LpTJ28DC/h4hRMOJEZ0dBYDdkGyfSzcpEE6rVm5lGzsKAhrBhe8jwfvbjDdBCRkwQI0fC2SBgMrpdGWeEJPMUAVpCaVox4OyC6OJ+KaE=
+	t=1750717365; cv=none; b=iMDMt7eAytwnwFGlq53jgcxa4xQjIg+2mrNbJFMgDt5z6TrFQvlTgGv6wtPC6aesNAWM2ZK+F6X7qGPPS++xJScbmO3O+MllROSI23RhzXkJcBZRJO4ejRxa9F0H1cTwUyEZVxkWbWcU76VYiQOUB2graOx/kgdmJf3otEVyquY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717363; c=relaxed/simple;
-	bh=4Wkn3sETFbzRRSJYRvmV3iEH1avXOKGGs82h8x8I80Y=;
+	s=arc-20240116; t=1750717365; c=relaxed/simple;
+	bh=ZtmRi5YLwOf0YHwcmxICyq31hP3upUgKzXCQN295NHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PJ6V3QdghLEt0GYpm2J3ZEdoT+haGkQjl5VsXiUnmnTicrzyN5hAJnmbZzygWHyZTPDejQHLxqBASMvDG1+95NoNks0Rpu04wP+xFJwswPgIJHB20Sqyc7i7Z9zt5nEJwRfa7wi4wqL4AvHGb3QrvF4eYexHj3kGkfPpBefqq/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IiQw4VMU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pdzcs2uv+c8sUyKlFSXF9TamD4FUlA+YP5BW11vT2I20nP4moWjy8ZJ//FqTkkD7bRa8HySPKS2nuIu/IWwPx0QIv8kG+ghZQHyd+wG7ftwfSeOaUCdGNIEtECDA98hjwEVdk2xTYvK7v3b2DrxvkAS4EmPuS0leC9leXbMvRhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iO3iqvhd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IiQw4VMU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA8AC4CEEA;
-	Mon, 23 Jun 2025 22:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iO3iqvhd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9F7C4CEEA;
+	Mon, 23 Jun 2025 22:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717362;
-	bh=4Wkn3sETFbzRRSJYRvmV3iEH1avXOKGGs82h8x8I80Y=;
+	s=korg; t=1750717365;
+	bh=ZtmRi5YLwOf0YHwcmxICyq31hP3upUgKzXCQN295NHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IiQw4VMUcamgS5AVcbxwnauL/IEWIMojvmdPcaZBgo3PCX9w6Iu52kOyp+cSDG5+Z
-	 IuVJgJKJ8vUkRXADUJeyDhXEWQpw2sqv/wNXeNuOGeBqMvnqBqnW9WidKoZ+BzUPdD
-	 bQWm4BZq3+5pxVbEkoiudOhhrlQmwyk6y/tl7W8c=
+	b=iO3iqvhdfoIy/tcqfhVoMSbI3JUzA9qdWUA1bkyYUdJwJ8geuBnTMdskn60mq2lTE
+	 +O1Td9Laf4btchxMw+d28get/JPGFk2toB8mMajrB9iX6dFHKbGmuOI22m8scxp5Tc
+	 XSUAjuXc1KFzlggZ5e74AUNO1dzDn3vr0lgGC15g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Salah Triki <salah.triki@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 373/414] bnxt_en: Fix double invocation of bnxt_ulp_stop()/bnxt_ulp_start()
-Date: Mon, 23 Jun 2025 15:08:30 +0200
-Message-ID: <20250623130651.279682317@linuxfoundation.org>
+Subject: [PATCH 6.1 412/508] wireless: purelifi: plfxlc: fix memory leak in plfxlc_usb_wreq_asyn()
+Date: Mon, 23 Jun 2025 15:07:37 +0200
+Message-ID: <20250623130655.353958354@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,136 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-[ Upstream commit 1e9ac33fa271be0d2480fd732f9642d81542500b ]
+[ Upstream commit 63a9a727d373fa5b8ce509eef50dbc45e0f745b9 ]
 
-Before the commit under the Fixes tag below, bnxt_ulp_stop() and
-bnxt_ulp_start() were always invoked in pairs.  After that commit,
-the new bnxt_ulp_restart() can be invoked after bnxt_ulp_stop()
-has been called.  This may result in the RoCE driver's aux driver
-.suspend() method being invoked twice.  The 2nd bnxt_re_suspend()
-call will crash when it dereferences a NULL pointer:
+Add usb_free_urb() in the error path to prevent memory leak.
 
-(NULL ib_device): Handle device suspend call
-BUG: kernel NULL pointer dereference, address: 0000000000000b78
-PGD 0 P4D 0
-Oops: Oops: 0000 [#1] SMP PTI
-CPU: 20 UID: 0 PID: 181 Comm: kworker/u96:5 Tainted: G S                  6.15.0-rc1 #4 PREEMPT(voluntary)
-Tainted: [S]=CPU_OUT_OF_SPEC
-Hardware name: Dell Inc. PowerEdge R730/072T6D, BIOS 2.4.3 01/17/2017
-Workqueue: bnxt_pf_wq bnxt_sp_task [bnxt_en]
-RIP: 0010:bnxt_re_suspend+0x45/0x1f0 [bnxt_re]
-Code: 8b 05 a7 3c 5b f5 48 89 44 24 18 31 c0 49 8b 5c 24 08 4d 8b 2c 24 e8 ea 06 0a f4 48 c7 c6 04 60 52 c0 48 89 df e8 1b ce f9 ff <48> 8b 83 78 0b 00 00 48 8b 80 38 03 00 00 a8 40 0f 85 b5 00 00 00
-RSP: 0018:ffffa2e84084fd88 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000001
-RDX: 0000000000000000 RSI: ffffffffb4b6b934 RDI: 00000000ffffffff
-RBP: ffffa1760954c9c0 R08: 0000000000000000 R09: c0000000ffffdfff
-R10: 0000000000000001 R11: ffffa2e84084fb50 R12: ffffa176031ef070
-R13: ffffa17609775000 R14: ffffa17603adc180 R15: 0000000000000000
-FS:  0000000000000000(0000) GS:ffffa17daa397000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000b78 CR3: 00000004aaa30003 CR4: 00000000003706f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-bnxt_ulp_stop+0x69/0x90 [bnxt_en]
-bnxt_sp_task+0x678/0x920 [bnxt_en]
-? __schedule+0x514/0xf50
-process_scheduled_works+0x9d/0x400
-worker_thread+0x11c/0x260
-? __pfx_worker_thread+0x10/0x10
-kthread+0xfe/0x1e0
-? __pfx_kthread+0x10/0x10
-ret_from_fork+0x2b/0x40
-? __pfx_kthread+0x10/0x10
-ret_from_fork_asm+0x1a/0x30
-
-Check the BNXT_EN_FLAG_ULP_STOPPED flag and do not proceed if the flag
-is already set.  This will preserve the original symmetrical
-bnxt_ulp_stop() and bnxt_ulp_start().
-
-Also, inside bnxt_ulp_start(), clear the BNXT_EN_FLAG_ULP_STOPPED
-flag after taking the mutex to avoid any race condition.  And for
-symmetry, only proceed in bnxt_ulp_start() if the
-BNXT_EN_FLAG_ULP_STOPPED is set.
-
-Fixes: 3c163f35bd50 ("bnxt_en: Optimize recovery path ULP locking in the driver")
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Co-developed-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250613231841.377988-2-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Link: https://patch.msgid.link/aA3_maPlEJzO7wrL@pc
+[fix subject]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c | 24 ++++++++-----------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ drivers/net/wireless/purelifi/plfxlc/usb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
-index b33c29fdf8fd3..1867552a8bdbe 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
-@@ -230,10 +230,9 @@ void bnxt_ulp_stop(struct bnxt *bp)
- 		return;
+diff --git a/drivers/net/wireless/purelifi/plfxlc/usb.c b/drivers/net/wireless/purelifi/plfxlc/usb.c
+index 311676c1ece0a..8151bc5e00ccc 100644
+--- a/drivers/net/wireless/purelifi/plfxlc/usb.c
++++ b/drivers/net/wireless/purelifi/plfxlc/usb.c
+@@ -503,8 +503,10 @@ int plfxlc_usb_wreq_async(struct plfxlc_usb *usb, const u8 *buffer,
+ 			  (void *)buffer, buffer_len, complete_fn, context);
  
- 	mutex_lock(&edev->en_dev_lock);
--	if (!bnxt_ulp_registered(edev)) {
--		mutex_unlock(&edev->en_dev_lock);
--		return;
--	}
-+	if (!bnxt_ulp_registered(edev) ||
-+	    (edev->flags & BNXT_EN_FLAG_ULP_STOPPED))
-+		goto ulp_stop_exit;
+ 	r = usb_submit_urb(urb, GFP_ATOMIC);
+-	if (r)
++	if (r) {
++		usb_free_urb(urb);
+ 		dev_err(&udev->dev, "Async write submit failed (%d)\n", r);
++	}
  
- 	edev->flags |= BNXT_EN_FLAG_ULP_STOPPED;
- 	if (aux_priv) {
-@@ -249,6 +248,7 @@ void bnxt_ulp_stop(struct bnxt *bp)
- 			adrv->suspend(adev, pm);
- 		}
- 	}
-+ulp_stop_exit:
- 	mutex_unlock(&edev->en_dev_lock);
+ 	return r;
  }
- 
-@@ -257,19 +257,13 @@ void bnxt_ulp_start(struct bnxt *bp, int err)
- 	struct bnxt_aux_priv *aux_priv = bp->aux_priv;
- 	struct bnxt_en_dev *edev = bp->edev;
- 
--	if (!edev)
--		return;
--
--	edev->flags &= ~BNXT_EN_FLAG_ULP_STOPPED;
--
--	if (err)
-+	if (!edev || err)
- 		return;
- 
- 	mutex_lock(&edev->en_dev_lock);
--	if (!bnxt_ulp_registered(edev)) {
--		mutex_unlock(&edev->en_dev_lock);
--		return;
--	}
-+	if (!bnxt_ulp_registered(edev) ||
-+	    !(edev->flags & BNXT_EN_FLAG_ULP_STOPPED))
-+		goto ulp_start_exit;
- 
- 	if (edev->ulp_tbl->msix_requested)
- 		bnxt_fill_msix_vecs(bp, edev->msix_entries);
-@@ -286,6 +280,8 @@ void bnxt_ulp_start(struct bnxt *bp, int err)
- 			adrv->resume(adev);
- 		}
- 	}
-+ulp_start_exit:
-+	edev->flags &= ~BNXT_EN_FLAG_ULP_STOPPED;
- 	mutex_unlock(&edev->en_dev_lock);
- }
- 
 -- 
 2.39.5
 
