@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D49724DFF3;
-	Mon, 23 Jun 2025 13:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A820924DFF3;
+	Mon, 23 Jun 2025 13:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684764; cv=none; b=G6ChjymvQMeUsyZAQR8IGhdEzvQzfZMndJcRoUP2Dqaw4pI48U+w1x5OdfS6ZGDlidr+n+3M151Cwxx+93e0yWJzQoVDoM2Gzs/GKiEVpzQFQa9iOdexNX/A71eBah7YcnDcBhDAlUIwKDVcjLPA6b345vDLYVmN8VxMwQgVjvc=
+	t=1750684766; cv=none; b=Ysx2ZbapSVL4tpQ9vkorR0lKAbbnnJNuUa1tje0iEhE7c1RIA4Hm1fduV0ahm4CPfIS8S2prQzaa0R3tBczvaTcz0QuFm6+//LEfaQ7zA083wdGepUKl2TkCZTJ175QcZaO57TE70SE76/NRZ36r5FuGZRdOtYerZmMLzPllg8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684764; c=relaxed/simple;
-	bh=44GKPhUdjyF3f7bWPBqDPJb66fEU0Tca3oo6xdkjC34=;
+	s=arc-20240116; t=1750684766; c=relaxed/simple;
+	bh=42jeMrsOn2iCAOM8vpwG4HzNs6YusSM0eTFIPqFozGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bI7bYuD0s+i9/BFADynsPkf9I6eCuxrzXJjOUr+2fg0kq4j8oyqTrzXCvH6WUd0PWRpBOV7WDW3jlr+JvAalyq3BLdQLGLBXFYpvARe/PyygbnFMlR9yEHX9k3dFuQIjBBPK1rwd0BzwTY8NV8L/4LzjZxtVX6c6Q0cQ1P28lJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwT+IiNM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fm0uCoNWGeh5Jd4dADM+T3NEJhBL7llqUwE9y0U7mSbXNa275MIznuFUFGMzno6lYx/uOcPFeBOH8yaxm/E9muExZzEJ+qkk/R65JrBfuauBSRNTkA8dcPdRYVJWx5Rz9xulYukVP9azpiziEQ5G5fnjbyopDtwpMOegeQQ+/eQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtwKet+t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwT+IiNM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A365CC4CEEA;
-	Mon, 23 Jun 2025 13:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtwKet+t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B385C4CEEA;
+	Mon, 23 Jun 2025 13:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684764;
-	bh=44GKPhUdjyF3f7bWPBqDPJb66fEU0Tca3oo6xdkjC34=;
+	s=korg; t=1750684766;
+	bh=42jeMrsOn2iCAOM8vpwG4HzNs6YusSM0eTFIPqFozGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WwT+IiNMsa3MRLDiqQooPZ9TynMfgDyz569KrsXrrhmYQA43NOc5df5OOpavQgpcJ
-	 Xh9TrBZgeLYwHEORDio0bvJgT4VWoHO8XyB6JkHtPQobCJrQit/URUBtE01HzakDGD
-	 T8NJxY5zdy0VIIQNxRDVIdWkOQfq1Qpg6gqyNJRY=
+	b=JtwKet+txPMO0s32JsLOjMnRUFV1kgKvzDb9b0s52t3qhK/yhuH06gBnKIX4V+Woz
+	 eHmVlJC0VocUX+PBsikWfB4y7FdXlOWIC1faYxHaXSqX7ke6BdOBtOYDMtDJSzRBn3
+	 x0CY/2ircrLPMxDvY218qmrNNh41+Cj3GLFgGt1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@linaro.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 060/222] perf tests switch-tracking: Fix timestamp comparison
-Date: Mon, 23 Jun 2025 15:06:35 +0200
-Message-ID: <20250623130613.916846456@linuxfoundation.org>
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.15 003/411] pinctrl: armada-37xx: set GPIO output value before setting direction
+Date: Mon, 23 Jun 2025 15:02:27 +0200
+Message-ID: <20250623130633.095665130@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,106 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 628e124404b3db5e10e17228e680a2999018ab33 ]
+commit e6ebd4942981f8ad37189bbb36a3c8495e21ef4c upstream.
 
-The test might fail on the Arm64 platform with the error:
+Changing the direction before updating the output value in the
+OUTPUT_VAL register may result in a glitch on the output line
+if the previous value in the OUTPUT_VAL register is different
+from the one we want to set.
 
-  # perf test -vvv "Track with sched_switch"
-  Missing sched_switch events
-  #
+In order to avoid that, update the output value before changing
+the direction.
 
-The issue is caused by incorrect handling of timestamp comparisons. The
-comparison result, a signed 64-bit value, was being directly cast to an
-int, leading to incorrect sorting for sched events.
-
-The case does not fail everytime, usually I can trigger the failure
-after run 20 ~ 30 times:
-
-  # while true; do perf test "Track with sched_switch"; done
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : FAILED!
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : FAILED!
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-
-I used cross compiler to build Perf tool on my host machine and tested on
-Debian / Juno board.  Generally, I think this issue is not very specific
-to GCC versions.  As both internal CI and my local env can reproduce the
-issue.
-
-My Host Build compiler:
-
-  # aarch64-linux-gnu-gcc --version
-  aarch64-linux-gnu-gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-
-Juno Board:
-
-  # lsb_release -a
-  No LSB modules are available.
-  Distributor ID: Debian
-  Description:    Debian GNU/Linux 12 (bookworm)
-  Release:        12
-  Codename:       bookworm
-
-Fix this by explicitly returning 0, 1, or -1 based on whether the result
-is zero, positive, or negative.
-
-Fixes: d44bc558297222d9 ("perf tests: Add a test for tracking with sched_switch")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20250331172759.115604-1-leo.yan@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6702abb3bf23 ("pinctrl: armada-37xx: Fix direction_output() callback behavior")
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-2-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/tests/switch-tracking.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/tools/perf/tests/switch-tracking.c b/tools/perf/tests/switch-tracking.c
-index ffa592e0020ee..ffe3831fb7bf2 100644
---- a/tools/perf/tests/switch-tracking.c
-+++ b/tools/perf/tests/switch-tracking.c
-@@ -254,7 +254,7 @@ static int compar(const void *a, const void *b)
- 	const struct event_node *nodeb = b;
- 	s64 cmp = nodea->event_time - nodeb->event_time;
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -413,23 +413,22 @@ static int armada_37xx_gpio_direction_ou
+ 					     unsigned int offset, int value)
+ {
+ 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
+-	unsigned int val_offset = offset;
+-	unsigned int reg = OUTPUT_EN;
++	unsigned int en_offset = offset;
++	unsigned int reg = OUTPUT_VAL;
+ 	unsigned int mask, val, ret;
  
--	return cmp;
-+	return cmp < 0 ? -1 : (cmp > 0 ? 1 : 0);
+ 	armada_37xx_update_reg(&reg, &offset);
+ 	mask = BIT(offset);
++	val = value ? mask : 0;
+ 
+-	ret = regmap_update_bits(info->regmap, reg, mask, mask);
+-
++	ret = regmap_update_bits(info->regmap, reg, mask, val);
+ 	if (ret)
+ 		return ret;
+ 
+-	reg = OUTPUT_VAL;
+-	armada_37xx_update_reg(&reg, &val_offset);
++	reg = OUTPUT_EN;
++	armada_37xx_update_reg(&reg, &en_offset);
+ 
+-	val = value ? mask : 0;
+-	regmap_update_bits(info->regmap, reg, mask, val);
++	regmap_update_bits(info->regmap, reg, mask, mask);
+ 
+ 	return 0;
  }
- 
- static int process_events(struct evlist *evlist,
--- 
-2.39.5
-
 
 
