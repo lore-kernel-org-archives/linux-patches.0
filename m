@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20500218580;
-	Mon, 23 Jun 2025 22:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC56B218580;
+	Mon, 23 Jun 2025 22:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716407; cv=none; b=M045NXdxzZZcNwm2OIslBHroLjGku9uxEV4cx329mjhYpPjah+VLnR43dDZN+Uvk4MNYXGtn7TRhO70C0y53ZCXVLvEmswlAxe/Qe2KIKtnZUPgE1GXTIkujz3DmVcMpkZ8+LmpZOc2IV2wnT4zEGtEQ2+XxSwqbz/8qDAwP76c=
+	t=1750716409; cv=none; b=E6B7I43rJVgH3UI8Nqv6c5X9rq/hHbQpX0JsI9OrJmgVbIFu0MybWQnPwixpstyufFy3P8Ro5oTJvHjZvwxeHIImmh2PZ0TsI7LZCpckusTed+2V14Z6/xG3jJrZG5PaSZx0Pz14fwv8NpVqUnjW3xaGbrF9GGUfUJf0xAOL2cU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716407; c=relaxed/simple;
-	bh=2BKWwUGQbEHHoT5f8/yih74R4izNgoQgraji8tzdm9A=;
+	s=arc-20240116; t=1750716409; c=relaxed/simple;
+	bh=4MxAW4MeKyKWlPTpyfJR4hKfpQqcofEev8TME8YUE4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WpHxEu1gd2XYUBqVK0G6qDKOv9vW8/KFipnt3BtQmY35JdF6jeFsB9J+LvXgo31UlKk2rLzl+CIXK8A6BOjQ5Jn+7lO9LjfuMRuWst4vQDXH4pMO7QLXtZ0Rv+EgzBqDf/+0quYf6uHL2sGWFbwcNAaoiPKdcWVIeM3FxaqVfZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0fS8Wlr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IiOYhEov6LT76aQJT874xX8DPk06evx/G8vz2eZHMG80W1IpwHtQhLyoS9anCSPQvr4LXqHzdkJBTkjoijQB1LFUpv0jh9RetOODsivCwDaoD/WeiPPOwM1TliGHw50C4ba9/zZ24LKVpIFzOv9rpYmuGlYXj0CcW1uf1E5wL4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fqpthWWx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0fS8Wlr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC755C4CEEA;
-	Mon, 23 Jun 2025 22:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqpthWWx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455E9C4CEEA;
+	Mon, 23 Jun 2025 22:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716407;
-	bh=2BKWwUGQbEHHoT5f8/yih74R4izNgoQgraji8tzdm9A=;
+	s=korg; t=1750716409;
+	bh=4MxAW4MeKyKWlPTpyfJR4hKfpQqcofEev8TME8YUE4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q0fS8Wlr2yA6BaYWZoeHr7CV1uDkwC7PYkWFRDItVYQ6seYBep++n0nrNuMGVScYt
-	 64+4rExzxmzR9ZINKUuJiXeyTkExrnmbjkUyB1yAE8JAAUKhpZ9isztXEEq4PMjHE0
-	 dE4mYdFxW0r4ZFVqOY+wOD/NzwlXjvE1ggora6Ys=
+	b=fqpthWWxIxBzdJ2pnDIwwZKIBSjGA68460HL6rUBKSVvWGjyZ9NPnIh1eIr5ocwO6
+	 HHAh4LH9pTA+QCqTprDig3NktkuBKmPoC714qAb8Ye28846F8hkJ+D2p5BzWL2KzOO
+	 fQ3gmUbw3AhpcoRKg3Mf1yyPyrpfsvRHgA+9yfJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 521/592] hwmon: (ltc4282) avoid repeated register write
-Date: Mon, 23 Jun 2025 15:07:59 +0200
-Message-ID: <20250623130712.827720218@linuxfoundation.org>
+Subject: [PATCH 6.12 249/414] wifi: mac80211_hwsim: Prevent tsf from setting if beacon is disabled
+Date: Mon, 23 Jun 2025 15:06:26 +0200
+Message-ID: <20250623130648.272700955@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,47 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit c25892b7a1744355e16281cd24a9b59ec15ec974 ]
+[ Upstream commit c575f5374be7a5c4be4acb9fe6be3a4669d94674 ]
 
-The fault enabled bits were being mistankenly enabled twice in case the FW
-property is present. Remove one of the writes.
+Setting tsf is meaningless if beacon is disabled, so check that beacon
+is enabled before setting tsf.
 
-Fixes: cbc29538dbf7 ("hwmon: Add driver for LTC4282")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20250611-fix-ltc4282-repetead-write-v1-1-fe46edd08cf1@analog.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reported-by: syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=064815c6cd721082a52a
+Tested-by: syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://patch.msgid.link/tencent_3609AC2EFAAED68CA5A7E3C6D212D1C67806@qq.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ltc4282.c | 7 -------
- 1 file changed, 7 deletions(-)
+ drivers/net/wireless/virtual/mac80211_hwsim.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hwmon/ltc4282.c b/drivers/hwmon/ltc4282.c
-index 7f38d26962396..f607fe8f79370 100644
---- a/drivers/hwmon/ltc4282.c
-+++ b/drivers/hwmon/ltc4282.c
-@@ -1511,13 +1511,6 @@ static int ltc4282_setup(struct ltc4282_state *st, struct device *dev)
- 			return ret;
- 	}
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
+index 4a2b7c9921bc6..6fcc21f596ea7 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
+@@ -1229,6 +1229,11 @@ static void mac80211_hwsim_set_tsf(struct ieee80211_hw *hw,
+ 	/* MLD not supported here */
+ 	u32 bcn_int = data->link_data[0].beacon_int;
+ 	u64 delta = abs(tsf - now);
++	struct ieee80211_bss_conf *conf;
++
++	conf = link_conf_dereference_protected(vif, data->link_data[0].link_id);
++	if (conf && !conf->enable_beacon)
++		return;
  
--	if (device_property_read_bool(dev, "adi,fault-log-enable")) {
--		ret = regmap_set_bits(st->map, LTC4282_ADC_CTRL,
--				      LTC4282_FAULT_LOG_EN_MASK);
--		if (ret)
--			return ret;
--	}
--
- 	if (device_property_read_bool(dev, "adi,fault-log-enable")) {
- 		ret = regmap_set_bits(st->map, LTC4282_ADC_CTRL, LTC4282_FAULT_LOG_EN_MASK);
- 		if (ret)
+ 	/* adjust after beaconing with new timestamp at old TBTT */
+ 	if (tsf > now) {
 -- 
 2.39.5
 
