@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21123597E;
-	Mon, 23 Jun 2025 22:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE713597E;
+	Mon, 23 Jun 2025 22:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716458; cv=none; b=HOLw+j3DTnOfapB3j3EJfza0cj7/k7guHy+HV/YB5ID7QH/pTbBfB5wFFvhW5rmIlhOy5ANZiLDtKb9jrtjwu3JuZCsvvvn8Pj3DZc5xBbrBghTWo8/HT8jxIDDBO623haPMYqQZJhLUUYW+QAH6/fo7F0OTBTth5ja/cs51lQ4=
+	t=1750716461; cv=none; b=eeRVf1cEoJ0Y0rj2BfjZDg9c2OkxKEwA1ZAzDNIJyeeIJoZyqsXtWMxB76B60yiB0YWRSARQa5oQ64iDdpXkgBS0hIb/NzhV80rNCmp5944FlK3PSsgP0Et100kG1iB9ec7GWLwyplG6hDRONL0Okc6FVNq+hCtG7iBjIslNhSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716458; c=relaxed/simple;
-	bh=P0UKYy1OvxLb8/zMsoUUjeJktRa/BGfgebAHpVAGLx0=;
+	s=arc-20240116; t=1750716461; c=relaxed/simple;
+	bh=XCVA6T1QomhMtjP1XuceDEiSqtiF0LCHIePXyDv92w8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u7Pvs5+DSSX4yUMH1vkzAf/jQcvh+v+mldNRv4a+tU75TRK9L+23GSSvPfyBl8MEq+Ls6wZkZNdD+QX7qlpnelvKtOY4tqWb3bYREpVurq6eif5vFhmgDrGg1BXvSnwKBna1EzDcsibOEhr0WxX9eHxBVDcela8+bl+Ef+0JhYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMc2Nvyl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CiiUrC9gw3A9KkykkH02kTrSlA7W/HE4ThejYCzbHrS5X88xW+BsqYYt6+dFyM9IF/4IV7zRNCk8nb/HPsw0v1tQSbSZ9f6d0RyYz8fX1rdDunkBxZ4eTz92tbKsuVIfAgRWh+FN7ZHKHwA4IeG1tya6HuJQpsKdHcHa9Cbfprs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fI2dScGe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMc2Nvyl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D5CC4CEEA;
-	Mon, 23 Jun 2025 22:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fI2dScGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9376C4CEEA;
+	Mon, 23 Jun 2025 22:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716458;
-	bh=P0UKYy1OvxLb8/zMsoUUjeJktRa/BGfgebAHpVAGLx0=;
+	s=korg; t=1750716461;
+	bh=XCVA6T1QomhMtjP1XuceDEiSqtiF0LCHIePXyDv92w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zMc2Nvyl1BwkL8D3vQ6TP8A1k2J6SInBKjQ9SqEIKF8hI5eyd0ybnnHKvnXq1B8Nf
-	 Ia/CNlnJy/MAkm5LzXTh1l0hdfFzzx/4Ch4jMdyyJrCvuFpEzTDcttb/JALxRqQ04c
-	 erHFs8Lzz7u8y3bXPqbeUbrAUGMnWD0HR1pnnEhM=
+	b=fI2dScGebyP2Et20PWhJDpHR78nZPAlkZEz+/A0kehNySKV1KPDNV6mS7xfecTFAy
+	 /d7TX5IL5G4gIblnpgQD74mQ7hQuaL/i+gaJntzixCfVNJzkb7j0ItzHuN7v3P0NKW
+	 JK+lvBdoW/fCkZSIiDcBeS22cj0ONwLk46FoodGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 252/414] bpf: Use proper type to calculate bpf_raw_tp_null_args.mask index
-Date: Mon, 23 Jun 2025 15:06:29 +0200
-Message-ID: <20250623130648.345660390@linuxfoundation.org>
+Subject: [PATCH 5.15 330/411] software node: Correct a OOB check in software_node_get_reference_args()
+Date: Mon, 23 Jun 2025 15:07:54 +0200
+Message-ID: <20250623130641.955587097@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,52 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 53ebef53a657d7957d35dc2b953db64f1bb28065 ]
+[ Upstream commit 31e4e12e0e9609850cefd4b2e1adf782f56337d6 ]
 
-The calculation of the index used to access the mask field in 'struct
-bpf_raw_tp_null_args' is done with 'int' type, which could overflow when
-the tracepoint being attached has more than 8 arguments.
+software_node_get_reference_args() wants to get @index-th element, so
+the property value requires at least '(index + 1) * sizeof(*ref)' bytes
+but that can not be guaranteed by current OOB check, and may cause OOB
+for malformed property.
 
-While none of the tracepoints mentioned in raw_tp_null_args[] currently
-have more than 8 arguments, there do exist tracepoints that had more
-than 8 arguments (e.g. iocost_iocg_forgive_debt), so use the correct
-type for calculation and avoid Smatch static checker warning.
+Fix by using as OOB check '((index + 1) * sizeof(*ref) > prop->length)'.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/bpf/20250418074946.35569-1-shung-hsi.yu@suse.com
-
-Closes: https://lore.kernel.org/r/843a3b94-d53d-42db-93d4-be10a4090146@stanley.mountain/
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20250414-fix_swnode-v2-1-9c9e6ae11eab@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/base/swnode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 2c54c148a94f3..f83bd019db141 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -6684,10 +6684,10 @@ bool btf_ctx_access(int off, int size, enum bpf_access_type type,
- 			/* Is this a func with potential NULL args? */
- 			if (strcmp(tname, raw_tp_null_args[i].func))
- 				continue;
--			if (raw_tp_null_args[i].mask & (0x1 << (arg * 4)))
-+			if (raw_tp_null_args[i].mask & (0x1ULL << (arg * 4)))
- 				info->reg_type |= PTR_MAYBE_NULL;
- 			/* Is the current arg IS_ERR? */
--			if (raw_tp_null_args[i].mask & (0x2 << (arg * 4)))
-+			if (raw_tp_null_args[i].mask & (0x2ULL << (arg * 4)))
- 				ptr_err_raw_tp = true;
- 			break;
- 		}
+diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
+index 15f149fc19401..0af6071f86641 100644
+--- a/drivers/base/swnode.c
++++ b/drivers/base/swnode.c
+@@ -524,7 +524,7 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
+ 	if (prop->is_inline)
+ 		return -EINVAL;
+ 
+-	if (index * sizeof(*ref) >= prop->length)
++	if ((index + 1) * sizeof(*ref) > prop->length)
+ 		return -ENOENT;
+ 
+ 	ref_array = prop->pointer;
 -- 
 2.39.5
 
