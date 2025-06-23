@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790EC1EE7C6;
-	Mon, 23 Jun 2025 21:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E3B1EE7C6;
+	Mon, 23 Jun 2025 21:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714541; cv=none; b=MSHMxqS4Jsx4FKX8ZRgkmqYF8Tw5Ujl6WHLa5SLXLTbqyoEtf608KHv4Ae18pN3ejhYOjoSqi8gJ8SE+ZdzYs3I9yLSTOsMvyLPlTvA4nfYD8KU3bIsa8GAQpi9G2H7eaGpfKw+0q2x9t2UNofYotcZEuZ2bAxgJUiBhdRPe2ZQ=
+	t=1750714544; cv=none; b=WmLtGXoCQWVxhv9CMqnmfaMZBuWBjSuvro4zZVtTAUvf5+1hESH2SwWGHyQvK/mhntADNP3YLc4hSQBwNNI71eNwz5bJr0xEVs/EpirjRmZKjg6fEYibRt5naiZaWDrrNfbz1BHP2lrdzUmYtOUELVyUixwx2hAfIOsw333QB+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714541; c=relaxed/simple;
-	bh=RmML+VZvR3FMdFbM5DQ1Udyvj0fPV185WCM9f4GxJ+o=;
+	s=arc-20240116; t=1750714544; c=relaxed/simple;
+	bh=u1AAgfTIpkNVxSHViYjjXm4jzeOKznoUpp2MiQIYiWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fHayP91Xp2iFLll6EpPbIjrYm2jCSZi2cLhUvnKAql/p38Pfphqu/67bh/uup9uaAsJXQggE3Oj1GL5s9h2N2hviz0Z7DJ76GwK5pRPtsAoNP7B/Ex5IvmtEZR/QJ6ag0w7BCzOelEORDyOqkjpLICKvfM+jNsDneAV+0qZAUD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bs4ZxhMt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQe06LYguedWpHfvwaInfkJj1ELVSsZkNVIUS701A+K+0+s145sEvGKs320M9ePh6KB06N719q+VA5ZIKYBl30Kmn5/4TqmgCww5+UZhH3PANxcO2iI8zV5bkLK4rlUSasP2UjczI1fPnrQ/KOoI9o94B1VJoPYRruhjife5EiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbjWNPAS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bs4ZxhMt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1264EC4CEEA;
-	Mon, 23 Jun 2025 21:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbjWNPAS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B040C4CEEA;
+	Mon, 23 Jun 2025 21:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714541;
-	bh=RmML+VZvR3FMdFbM5DQ1Udyvj0fPV185WCM9f4GxJ+o=;
+	s=korg; t=1750714543;
+	bh=u1AAgfTIpkNVxSHViYjjXm4jzeOKznoUpp2MiQIYiWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bs4ZxhMtEarvv+FdAN1AzhwM7i6y6DogsMDUZ8l0XHrIl/fxOOxU5odAgruB6WgvI
-	 9Q3QtQ4dFdgeLnNNv4IqGj1+9NLHJPPLvRtxDLBq9mG5F9K1bQkHgZPF0nnrMnpQMB
-	 uXujUOsFIG61q5dsliKcYwJwnDz4WKUJ/wdIDlAg=
+	b=ZbjWNPAS6pJgfowl7r52zQGjCC7iROVJBSUDfHa6RYXOCHohRc8LkxViVRxLcQSzl
+	 LtXi1/1Scolf50lOll1ScWVt1llgzgpM4bMipegc40vrnSzvr86a2qeBePmy/go/oY
+	 sY80C+s1qIxACgQLFgTdBH5Bs/b1ClOGX79A4VAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin@sipsolutions.net>,
-	Rouven Czerwinski <rouven@czerwinskis.de>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 164/290] wifi: mac80211: do not offer a mesh path if forwarding is disabled
-Date: Mon, 23 Jun 2025 15:07:05 +0200
-Message-ID: <20250623130631.831614835@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Catherine Hoang <catherine.hoang@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Leah Rumancik <leah.rumancik@gmail.com>
+Subject: [PATCH 6.1 201/508] xfs: use consistent uid/gid when grabbing dquots for inodes
+Date: Mon, 23 Jun 2025 15:04:06 +0200
+Message-ID: <20250623130650.215459505@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,69 +49,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Berg <benjamin@sipsolutions.net>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit cf1b684a06170d253b47d6a5287821de976435bd ]
+[ Upstream commit  24a4e1cb322e2bf0f3a1afd1978b610a23aa8f36 ]
 
-When processing a PREQ the code would always check whether we have a
-mesh path locally and reply accordingly. However, when forwarding is
-disabled then we should not reply with this information as we will not
-forward data packets down that path.
+[ 6.1: resolved conflicts in xfs_inode.c and xfs_symlink.c due to 6.1
+not having switched to idmap yet ]
 
-Move the check for dot11MeshForwarding up in the function and skip the
-mesh path lookup in that case. In the else block, set forward to false
-so that the rest of the function becomes a no-op and the
-dot11MeshForwarding check does not need to be duplicated.
+I noticed that callers of xfs_qm_vop_dqalloc use the following code to
+compute the anticipated uid of the new file:
 
-This explains an effect observed in the Freifunk community where mesh
-forwarding is disabled. In that case a mesh with three STAs and only bad
-links in between them, individual STAs would occionally have indirect
-mpath entries. This should not have happened.
+	mapped_fsuid(idmap, &init_user_ns);
 
-Signed-off-by: Benjamin Berg <benjamin@sipsolutions.net>
-Reviewed-by: Rouven Czerwinski <rouven@czerwinskis.de>
-Link: https://patch.msgid.link/20250430191042.3287004-1-benjamin@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+whereas the VFS uses a slightly different computation for actually
+assigning i_uid:
+
+	mapped_fsuid(idmap, i_user_ns(inode));
+
+Technically, these are not the same things.  According to Christian
+Brauner, the only time that inode->i_sb->s_user_ns != &init_user_ns is
+when the filesystem was mounted in a new mount namespace by an
+unpriviledged user.  XFS does not allow this, which is why we've never
+seen bug reports about quotas being incorrect or the uid checks in
+xfs_qm_vop_create_dqattach tripping debug assertions.
+
+However, this /is/ a logic bomb, so let's make the code consistent.
+
+Link: https://lore.kernel.org/linux-fsdevel/20240617-weitblick-gefertigt-4a41f37119fa@brauner/
+Fixes: c14329d39f2d ("fs: port fs{g,u}id helpers to mnt_idmap")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_hwmp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_inode.c   | 16 ++++++++++------
+ fs/xfs/xfs_symlink.c |  8 +++++---
+ 2 files changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/net/mac80211/mesh_hwmp.c b/net/mac80211/mesh_hwmp.c
-index c6395551f5df0..54930b06c3a4a 100644
---- a/net/mac80211/mesh_hwmp.c
-+++ b/net/mac80211/mesh_hwmp.c
-@@ -634,7 +634,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 				mesh_path_add_gate(mpath);
- 		}
- 		rcu_read_unlock();
--	} else {
-+	} else if (ifmsh->mshcfg.dot11MeshForwarding) {
- 		rcu_read_lock();
- 		mpath = mesh_path_lookup(sdata, target_addr);
- 		if (mpath) {
-@@ -652,6 +652,8 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 			}
- 		}
- 		rcu_read_unlock();
-+	} else {
-+		forward = false;
- 	}
+diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
+index b26d26d29273d..88d0a088fa862 100644
+--- a/fs/xfs/xfs_inode.c
++++ b/fs/xfs/xfs_inode.c
+@@ -983,10 +983,12 @@ xfs_create(
+ 	prid = xfs_get_initial_prid(dp);
  
- 	if (reply) {
-@@ -669,7 +671,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 		}
- 	}
+ 	/*
+-	 * Make sure that we have allocated dquot(s) on disk.
++	 * Make sure that we have allocated dquot(s) on disk.  The uid/gid
++	 * computation code must match what the VFS uses to assign i_[ug]id.
++	 * INHERIT adjusts the gid computation for setgid/grpid systems.
+ 	 */
+-	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(mnt_userns, &init_user_ns),
+-			mapped_fsgid(mnt_userns, &init_user_ns), prid,
++	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(mnt_userns, i_user_ns(VFS_I(dp))),
++			mapped_fsgid(mnt_userns, i_user_ns(VFS_I(dp))), prid,
+ 			XFS_QMOPT_QUOTALL | XFS_QMOPT_INHERIT,
+ 			&udqp, &gdqp, &pdqp);
+ 	if (error)
+@@ -1132,10 +1134,12 @@ xfs_create_tmpfile(
+ 	prid = xfs_get_initial_prid(dp);
  
--	if (forward && ifmsh->mshcfg.dot11MeshForwarding) {
-+	if (forward) {
- 		u32 preq_id;
- 		u8 hopcount;
+ 	/*
+-	 * Make sure that we have allocated dquot(s) on disk.
++	 * Make sure that we have allocated dquot(s) on disk.  The uid/gid
++	 * computation code must match what the VFS uses to assign i_[ug]id.
++	 * INHERIT adjusts the gid computation for setgid/grpid systems.
+ 	 */
+-	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(mnt_userns, &init_user_ns),
+-			mapped_fsgid(mnt_userns, &init_user_ns), prid,
++	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(mnt_userns, i_user_ns(VFS_I(dp))),
++			mapped_fsgid(mnt_userns, i_user_ns(VFS_I(dp))), prid,
+ 			XFS_QMOPT_QUOTALL | XFS_QMOPT_INHERIT,
+ 			&udqp, &gdqp, &pdqp);
+ 	if (error)
+diff --git a/fs/xfs/xfs_symlink.c b/fs/xfs/xfs_symlink.c
+index 8389f3ef88ef2..78bd02a98aa53 100644
+--- a/fs/xfs/xfs_symlink.c
++++ b/fs/xfs/xfs_symlink.c
+@@ -191,10 +191,12 @@ xfs_symlink(
+ 	prid = xfs_get_initial_prid(dp);
  
+ 	/*
+-	 * Make sure that we have allocated dquot(s) on disk.
++	 * Make sure that we have allocated dquot(s) on disk.  The uid/gid
++	 * computation code must match what the VFS uses to assign i_[ug]id.
++	 * INHERIT adjusts the gid computation for setgid/grpid systems.
+ 	 */
+-	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(mnt_userns, &init_user_ns),
+-			mapped_fsgid(mnt_userns, &init_user_ns), prid,
++	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(mnt_userns, i_user_ns(VFS_I(dp))),
++			mapped_fsgid(mnt_userns, i_user_ns(VFS_I(dp))), prid,
+ 			XFS_QMOPT_QUOTALL | XFS_QMOPT_INHERIT,
+ 			&udqp, &gdqp, &pdqp);
+ 	if (error)
 -- 
 2.39.5
 
