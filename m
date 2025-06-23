@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091114409;
-	Mon, 23 Jun 2025 22:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796E84409;
+	Mon, 23 Jun 2025 22:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716093; cv=none; b=oXDu1KkHmuJ/fOSV75I+J9sFYfexhvHKdZ5h9c8WfdOZvca9ccYTOcp9UuZStKpxalGvhEY3BlpuByYRJZYoIutE6u93AbpoQrgQEBoWNJS0xA9Z6wlEV1MX0lEfoveOtvBFJfnul3oFbI+EL8ISGtc+6JOU5xO4/xdW4Uq1TE8=
+	t=1750716095; cv=none; b=ZxG5ZzWT7xAwrDApFq4C6UuZuVWvnW8MyHNMLn2vA4jJZiOWn5jbJii23dV5vUwdar0Eod9XK/HQsUIQeyuaLAxGofM6ixPZiSBrGcXY4EQ5vDGZbd5RcUShkxkVsf892vPVjESH44YmBJEkMRwilRbiN+yhN4erqNY3OZIFp4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716093; c=relaxed/simple;
-	bh=X/zI9ankXMLBAzBSpOF1oSD1h5+AiRshnH7hjhdmg30=;
+	s=arc-20240116; t=1750716095; c=relaxed/simple;
+	bh=WuXfuZWcf9hI4X8mYQ+F55SUH8gyIZgDxCOqeZwcHPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oAVCoe8Rw/d7uECvZOgGEFsfroKLGUs4I8JxorZRwrGVLteeXxlWdR7XHT3vqTYxF8M8J1FfvT/E/tHH4q9OvTsF/LGbGRyNR0yKhZfZcITB32rqscbCk2dJySFBrW5ZQXtTbyNWUOxdoWO6/VelLcD8a1o0loT9KIUGQcftGhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+kzBkA1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s38I0L+CTXkLiZdENId1MaBdoqvY43Ri4B7x0VZ5tAc4McNEZ1CCGJCtHXmC7eCFHYfKU6B+eHWbGj7BbJ/eVotT85KjQ3h3QYlv7c2WHTqdd1cluNyxq/3I4Wrc4jdfa6aDj+AZxltduJh2Sa1OQcWYIOhMZMacUPKlrgw60As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bt8i0uQl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+kzBkA1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E48C4CEEA;
-	Mon, 23 Jun 2025 22:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bt8i0uQl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDBAC4CEEA;
+	Mon, 23 Jun 2025 22:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716092;
-	bh=X/zI9ankXMLBAzBSpOF1oSD1h5+AiRshnH7hjhdmg30=;
+	s=korg; t=1750716095;
+	bh=WuXfuZWcf9hI4X8mYQ+F55SUH8gyIZgDxCOqeZwcHPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+kzBkA1opZAT4Bv96VS1fZE9Q3lpsaMsBuMKgTM1ExNQzvJ9dXHdyAwPuUTQIJ6v
-	 YE4ueb6ketnRSORGqAjYlMg2bAbjRC1TuiCL6MCO31tFZIKzTj1wbWySFk7owKVCo+
-	 d1S3NycWwTqDT8WGTZyu+2Ey/bKh+pRIoDWvENWA=
+	b=Bt8i0uQlQw9gp3DwyWfb5N4Fislsurn2lU6rrqrWsBESeF7QuaNFuu/MpOgYPYEZF
+	 5I4gQ3W1f3UxwnO/vgUVLijP1wFPhZ5FWy4czyvskptZICkU8LodVQQif4ClM4eYZR
+	 X64CkuWa/j5f8gh8KNkl7YJSEMtORFa8ZopxnM80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sukrut Bellary <sbellary@baylibre.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Judith Mendez <jm@ti.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 289/411] media: ti: cal: Fix wrong goto on error path
-Date: Mon, 23 Jun 2025 15:07:13 +0200
-Message-ID: <20250623130640.921507648@linuxfoundation.org>
+Subject: [PATCH 5.15 302/411] pmdomain: ti: Fix STANDBY handling of PER power domain
+Date: Mon, 23 Jun 2025 15:07:26 +0200
+Message-ID: <20250623130641.249318542@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
 References: <20250623130632.993849527@linuxfoundation.org>
@@ -53,45 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Sukrut Bellary <sbellary@baylibre.com>
 
-[ Upstream commit a5b18fd769b7dc2e77a9e6a390844cbf50626ae8 ]
+[ Upstream commit 36795548dcc841c73f03793ed6cf741a88130922 ]
 
-If pm_runtime_resume_and_get() fails, we should unprepare the context,
-but currently we skip that as we goto to a later line.
+Per AM335x TRM[1](section 8.1.4.3 Power mode), in case of STANDBY,
+PER domain should be ON. So, fix the PER power domain handling on standby.
 
-Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+[1] https://www.ti.com/lit/ug/spruh73q/spruh73q.pdf
+
+Signed-off-by: Sukrut Bellary <sbellary@baylibre.com>
+Reviewed-by: Kevin Hilman <khilman@baylibre.com>
+Tested-by: Judith Mendez <jm@ti.com>
+Link: https://lore.kernel.org/r/20250318230042.3138542-3-sbellary@baylibre.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/ti-vpe/cal-video.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/ti/omap_prm.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/ti-vpe/cal-video.c b/drivers/media/platform/ti-vpe/cal-video.c
-index d87177d04e921..2e93c1b8f3597 100644
---- a/drivers/media/platform/ti-vpe/cal-video.c
-+++ b/drivers/media/platform/ti-vpe/cal-video.c
-@@ -744,7 +744,7 @@ static int cal_start_streaming(struct vb2_queue *vq, unsigned int count)
- 
- 	ret = pm_runtime_resume_and_get(ctx->cal->dev);
- 	if (ret < 0)
--		goto error_pipeline;
-+		goto error_unprepare;
- 
- 	cal_ctx_set_dma_addr(ctx, addr);
- 	cal_ctx_start(ctx);
-@@ -761,8 +761,8 @@ static int cal_start_streaming(struct vb2_queue *vq, unsigned int count)
- error_stop:
- 	cal_ctx_stop(ctx);
- 	pm_runtime_put_sync(ctx->cal->dev);
-+error_unprepare:
- 	cal_ctx_unprepare(ctx);
+diff --git a/drivers/soc/ti/omap_prm.c b/drivers/soc/ti/omap_prm.c
+index 1248d5d56c8d4..544e57fff96ca 100644
+--- a/drivers/soc/ti/omap_prm.c
++++ b/drivers/soc/ti/omap_prm.c
+@@ -19,7 +19,9 @@
+ #include <linux/pm_domain.h>
+ #include <linux/reset-controller.h>
+ #include <linux/delay.h>
 -
- error_pipeline:
- 	media_pipeline_stop(&ctx->vdev.entity);
- error_release_buffers:
++#if IS_ENABLED(CONFIG_SUSPEND)
++#include <linux/suspend.h>
++#endif
+ #include <linux/platform_data/ti-prm.h>
+ 
+ enum omap_prm_domain_mode {
+@@ -89,6 +91,7 @@ struct omap_reset_data {
+ #define OMAP_PRM_HAS_RSTST	BIT(1)
+ #define OMAP_PRM_HAS_NO_CLKDM	BIT(2)
+ #define OMAP_PRM_RET_WHEN_IDLE	BIT(3)
++#define OMAP_PRM_ON_WHEN_STANDBY	BIT(4)
+ 
+ #define OMAP_PRM_HAS_RESETS	(OMAP_PRM_HAS_RSTCTRL | OMAP_PRM_HAS_RSTST)
+ 
+@@ -405,7 +408,8 @@ static const struct omap_prm_data am3_prm_data[] = {
+ 		.name = "per", .base = 0x44e00c00,
+ 		.pwrstctrl = 0xc, .pwrstst = 0x8, .dmap = &omap_prm_noinact,
+ 		.rstctrl = 0x0, .rstmap = am3_per_rst_map,
+-		.flags = OMAP_PRM_HAS_RSTCTRL, .clkdm_name = "pruss_ocp"
++		.flags = OMAP_PRM_HAS_RSTCTRL | OMAP_PRM_ON_WHEN_STANDBY,
++		.clkdm_name = "pruss_ocp",
+ 	},
+ 	{
+ 		.name = "wkup", .base = 0x44e00d00,
 -- 
 2.39.5
 
