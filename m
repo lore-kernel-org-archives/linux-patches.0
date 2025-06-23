@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3E0C2E0;
-	Mon, 23 Jun 2025 21:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CEFC2E0;
+	Mon, 23 Jun 2025 21:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714282; cv=none; b=COhl5TXDMgNXeGT4xuwNdiAeMETqjh+JhAptFNIH8aTbogaZv7A4/xdO4kPOgpT6s42zS3qglnA74kX6oOV/doqo2gA5w96titSCsBJ25omzF6AGS9QT703QT41rdh25D5YOwnFZ/jezBCXd0G4Fsed3Iqe1TzdJfFCfXyC7byc=
+	t=1750714284; cv=none; b=BuB0osq3XXIkbJ464+yINxMKoq94MBwdoumiUCgBM02FudtWPyTlB4w+Wte0flmbHZep1dBVsw805cBd/CUTtky4zo/7D69Pdtpp/YTN3scT79fkHef7/DbvUsNvOiy919r/0wKTPjt7YcocZ0vxhgPNEwuws9hyDmd0tiDKjh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714282; c=relaxed/simple;
-	bh=9VISglJNjYu13TbqizywU0Hb8a7S9R49wbwM58X9Baw=;
+	s=arc-20240116; t=1750714284; c=relaxed/simple;
+	bh=ZA72sWKoSfJnj8Wt9kGvgn0NpgX/cch4s/6zkII8xCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DKGBk2fvv29g5u7uQdG7/c7VTnVt0L5NGR7un+qiNlo5xxJC3p/KuoAxBs9WzbBX8Q7yUYxRD7Q3+HvMaJ/Pc8zNYmbF+L4LyPwjc1PCHGbW3HBp+OrnDwXveRc210mG+kZlzV7YQJUBtTe3VHek7EYZzh6IHuPZW8Q9ZGfo+DI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0k5vgcVX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=niUkVhAA7oe5p85sMQrbA83joOnbX8vGObRwajhcSE7UYc3XsLMQKniaXl8H9NY5b9WvwpJEU4vQ3vhb5iWUIr8D1GeOXGlXVF5DHHwX0O51mpjdi3I8K2ewvgWL2RUZuMDozrlagTz6FglX2f4XKKoq63+vOVZp4cf8aIEMTVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlEFusw/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0k5vgcVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CB8C4CEEA;
-	Mon, 23 Jun 2025 21:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlEFusw/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29675C4CEEA;
+	Mon, 23 Jun 2025 21:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714282;
-	bh=9VISglJNjYu13TbqizywU0Hb8a7S9R49wbwM58X9Baw=;
+	s=korg; t=1750714284;
+	bh=ZA72sWKoSfJnj8Wt9kGvgn0NpgX/cch4s/6zkII8xCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0k5vgcVXBmSY8kDKA03PUHfyqQ8CiQ4KhxvRqIthdb9EBAd9B/mWyEr5JYaxEC4M2
-	 hIx/OwqnhnD3ao9q3Xo1+NC7ljqHBhshNXf9acGbRYpVCFi3H0nzo0KgtujFmcBZh1
-	 Rjm1dgfaPB49I9ypyQVS1MX8kXl5nLqrQ9VfiEMk=
+	b=tlEFusw/GP0L2t1JKp+RDr0FWkEvAMrcqnVs1zDG0QeMg0D7tOELX14tepqIJx+8u
+	 zmcICYq1trGtkxr9bcuu0sqzrkY43rN7dNR1RtUc9VGbg28IEJygcIof0jnPFeyYnX
+	 FGHDHuW18QI/CjrRaFPyaU9rtAgb5IAdp2C/edwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>
-Subject: [PATCH 5.15 178/411] usb: usbtmc: Fix read_stb function and get_stb ioctl
-Date: Mon, 23 Jun 2025 15:05:22 +0200
-Message-ID: <20250623130638.166735600@linuxfoundation.org>
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	kdevops@lists.linux.dev,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.12 093/414] ext4: fix calculation of credits for extent tree modification
+Date: Mon, 23 Jun 2025 15:03:50 +0200
+Message-ID: <20250623130644.416255647@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,73 +51,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: Jan Kara <jack@suse.cz>
 
-commit acb3dac2805d3342ded7dbbd164add32bbfdf21c upstream.
+commit 32a93f5bc9b9812fc710f43a4d8a6830f91e4988 upstream.
 
-The usbtmc488_ioctl_read_stb function relied on a positive return from
-usbtmc_get_stb to reset the srq condition in the driver. The
-USBTMC_IOCTL_GET_STB case tested for a positive return to return the stb
-to the user.
+Luis and David are reporting that after running generic/750 test for 90+
+hours on 2k ext4 filesystem, they are able to trigger a warning in
+jbd2_journal_dirty_metadata() complaining that there are not enough
+credits in the running transaction started in ext4_do_writepages().
 
-Commit: <cac01bd178d6> ("usb: usbtmc: Fix erroneous get_stb ioctl
-error returns") changed the return value of usbtmc_get_stb to 0 on
-success instead of returning the value of usb_control_msg which is
-positive in the normal case. This change caused the function
-usbtmc488_ioctl_read_stb and the USBTMC_IOCTL_GET_STB ioctl to no
-longer function correctly.
+Indeed the code in ext4_do_writepages() is racy and the extent tree can
+change between the time we compute credits necessary for extent tree
+computation and the time we actually modify the extent tree. Thus it may
+happen that the number of credits actually needed is higher. Modify
+ext4_ext_index_trans_blocks() to count with the worst case of maximum
+tree depth. This can reduce the possible number of writers that can
+operate in the system in parallel (because the credit estimates now won't
+fit in one transaction) but for reasonably sized journals this shouldn't
+really be an issue. So just go with a safe and simple fix.
 
-Change the test in usbtmc488_ioctl_read_stb to test for failure
-first and return the failure code immediately.
-Change the test for the USBTMC_IOCTL_GET_STB ioctl to test for 0
-instead of a positive value.
-
-Fixes: cac01bd178d6 ("usb: usbtmc: Fix erroneous get_stb ioctl error returns")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://lore.kernel.org/r/20250521121656.18174-3-dpenkler@gmail.com
+Link: https://lore.kernel.org/all/20250415013641.f2ppw6wov4kn4wq2@offworld
+Reported-by: Davidlohr Bueso <dave@stgolabs.net>
+Reported-by: Luis Chamberlain <mcgrof@kernel.org>
+Tested-by: kdevops@lists.linux.dev
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250429175535.23125-2-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usbtmc.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ fs/ext4/extents.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -565,14 +565,15 @@ static int usbtmc488_ioctl_read_stb(stru
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -2396,18 +2396,19 @@ int ext4_ext_calc_credits_for_single_ext
+ int ext4_ext_index_trans_blocks(struct inode *inode, int extents)
+ {
+ 	int index;
+-	int depth;
  
- 	rv = usbtmc_get_stb(file_data, &stb);
+ 	/* If we are converting the inline data, only one is needed here. */
+ 	if (ext4_has_inline_data(inode))
+ 		return 1;
  
--	if (rv > 0) {
--		srq_asserted = atomic_xchg(&file_data->srq_asserted,
--					srq_asserted);
--		if (srq_asserted)
--			stb |= 0x40; /* Set RQS bit */
-+	if (rv < 0)
-+		return rv;
-+
-+	srq_asserted = atomic_xchg(&file_data->srq_asserted, srq_asserted);
-+	if (srq_asserted)
-+		stb |= 0x40; /* Set RQS bit */
-+
-+	rv = put_user(stb, (__u8 __user *)arg);
+-	depth = ext_depth(inode);
+-
++	/*
++	 * Extent tree can change between the time we estimate credits and
++	 * the time we actually modify the tree. Assume the worst case.
++	 */
+ 	if (extents <= 1)
+-		index = depth * 2;
++		index = EXT4_MAX_EXTENT_DEPTH * 2;
+ 	else
+-		index = depth * 3;
++		index = EXT4_MAX_EXTENT_DEPTH * 3;
  
--		rv = put_user(stb, (__u8 __user *)arg);
--	}
- 	return rv;
- 
+ 	return index;
  }
-@@ -2201,7 +2202,7 @@ static long usbtmc_ioctl(struct file *fi
- 
- 	case USBTMC_IOCTL_GET_STB:
- 		retval = usbtmc_get_stb(file_data, &tmp_byte);
--		if (retval > 0)
-+		if (!retval)
- 			retval = put_user(tmp_byte, (__u8 __user *)arg);
- 		break;
- 
 
 
