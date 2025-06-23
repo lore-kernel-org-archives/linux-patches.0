@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12094315A;
-	Mon, 23 Jun 2025 21:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6452AEE4;
+	Mon, 23 Jun 2025 21:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715012; cv=none; b=AAEPowuS6MRk2wgLDdcgTQEbaWP/cpG5vQ0MXXNZHCYRrT2ZLxI4m9y11fxNm8Xt+EZZIf0uQuCz3nbeLOzY+6unOQduluhYRr7E9tEPGRxT5U+YEu+M4f5eaI+LYlzjXmu+A22Fkkdx6wFH8eRDoSBLmg9c1a/y/awSUMDlFBg=
+	t=1750715014; cv=none; b=PqTC79dd4c9WjZfOMJAe/nlwlPsjF/8oA0YoSjG1HrNi6tBl4EPhGw3LpVlQnZ6dodOIIILSyMfLWG6THIQ9PBarDXHX8oKhwcXMihto4UQvUwlrNtQUQp7s08O1yNMp203DJid3NRQjkSouWoaXmD/O/Ae3upv2FeTR0KL+0ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715012; c=relaxed/simple;
-	bh=avdJkp5+b66eWCNkrlVBIqE8rk6FeMuNiuQ0lem0f8I=;
+	s=arc-20240116; t=1750715014; c=relaxed/simple;
+	bh=0MfK6WPFvizMaT3Q8mRIM82cdzkw7bKTOXlMuz69Fas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qly9jxQILWP0WS3+Zn5PQ961DEBtWkens38Vgu2ixrd6npYh8ErguJ/6+f8n9pCf9rgD03a+sg1V3SC293ev+vm240R1AvZG931wUm8MUEo4xwmwcMcSl2M1sL/BIwetlISSVirDTTbRmboG/1gJxleeoEMJG6WJgsH+SK/xPDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxLsGzer; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hLF+KjqKFDzXG16J1poYod60keF4UJJjr5/VtX37PfemVSufza6GrGBZHi9H82j0gUmaiTgwz/KJZ6lvTOQaYt3Iq/J1ZM+bJdE5loKY5pIiFpFx8ip4AVP3D3AJ+Y5l2/uUFI5SoZWsc5XnGImBz4VilLRYRhuAfZYuDTyKEZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMc3qFZK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxLsGzer"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3C7C4CEEA;
-	Mon, 23 Jun 2025 21:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMc3qFZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9BCC4CEEA;
+	Mon, 23 Jun 2025 21:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715011;
-	bh=avdJkp5+b66eWCNkrlVBIqE8rk6FeMuNiuQ0lem0f8I=;
+	s=korg; t=1750715014;
+	bh=0MfK6WPFvizMaT3Q8mRIM82cdzkw7bKTOXlMuz69Fas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CxLsGzer6K30ARg4rxknhIfzKX+MNctosGfqXjMR9g7ZDb5DY/bXqqLeQgBnRRswC
-	 Z4778msoosdjGMrWP9XbGYXBaPSQ45ZYGz7/pG3o6P2UlK0mlOmsxnz5Stc7AE09TL
-	 umVYrhAR6BsdcjX7zJ1QQcl1rXYZ3tQwvapn3vzI=
+	b=kMc3qFZKZDI0/xlRt21aQl1bwOfkhyBrU/co1okXqUyz1vDgf2ck+dQBxgZqPVRw9
+	 76qhYluLGijWpQLc7Bauqz8LM2SRaQ6K2LGUBFwDORkMb2GtR5txcpKgjXMaoCrSR6
+	 yA55qGVHIQKRMAKGPZXGmWHdOyy4gV86giLQdHWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Peng Fan <peng.fan@nxp.com>
-Subject: [PATCH 6.12 140/414] remoteproc: core: Cleanup acquired resources when rproc_handle_resources() fails in rproc_attach()
-Date: Mon, 23 Jun 2025 15:04:37 +0200
-Message-ID: <20250623130645.555762866@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.12 150/414] PCI: cadence-ep: Correct PBA offset in .set_msix() callback
+Date: Mon, 23 Jun 2025 15:04:47 +0200
+Message-ID: <20250623130645.797099665@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
 References: <20250623130642.015559452@linuxfoundation.org>
@@ -51,83 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 7692c9fbedd9087dc9050903f58095915458d9b1 upstream.
+commit c8bcb01352a86bc5592403904109c22b66bd916e upstream.
 
-When rproc->state = RPROC_DETACHED and rproc_attach() is used
-to attach to the remote processor, if rproc_handle_resources()
-returns a failure, the resources allocated by imx_rproc_prepare()
-should be released, otherwise the following memory leak will occur.
+While cdns_pcie_ep_set_msix() writes the Table Size field correctly (N-1),
+the calculation of the PBA offset is wrong because it calculates space for
+(N-1) entries instead of N.
 
-Since almost the same thing is done in imx_rproc_prepare() and
-rproc_resource_cleanup(), Function rproc_resource_cleanup() is able
-to deal with empty lists so it is better to fix the "goto" statements
-in rproc_attach(). replace the "unprepare_device" goto statement with
-"clean_up_resources" and get rid of the "unprepare_device" label.
+This results in the following QEMU error when using PCI passthrough on a
+device which relies on the PCI endpoint subsystem:
 
-unreferenced object 0xffff0000861c5d00 (size 128):
-comm "kworker/u12:3", pid 59, jiffies 4294893509 (age 149.220s)
-hex dump (first 32 bytes):
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
-00 00 02 88 00 00 00 00 00 00 10 00 00 00 00 00 ............
-backtrace:
- [<00000000f949fe18>] slab_post_alloc_hook+0x98/0x37c
- [<00000000adbfb3e7>] __kmem_cache_alloc_node+0x138/0x2e0
- [<00000000521c0345>] kmalloc_trace+0x40/0x158
- [<000000004e330a49>] rproc_mem_entry_init+0x60/0xf8
- [<000000002815755e>] imx_rproc_prepare+0xe0/0x180
- [<0000000003f61b4e>] rproc_boot+0x2ec/0x528
- [<00000000e7e994ac>] rproc_add+0x124/0x17c
- [<0000000048594076>] imx_rproc_probe+0x4ec/0x5d4
- [<00000000efc298a1>] platform_probe+0x68/0xd8
- [<00000000110be6fe>] really_probe+0x110/0x27c
- [<00000000e245c0ae>] __driver_probe_device+0x78/0x12c
- [<00000000f61f6f5e>] driver_probe_device+0x3c/0x118
- [<00000000a7874938>] __device_attach_driver+0xb8/0xf8
- [<0000000065319e69>] bus_for_each_drv+0x84/0xe4
- [<00000000db3eb243>] __device_attach+0xfc/0x18c
- [<0000000072e4e1a4>] device_initial_probe+0x14/0x20
+  failed to add PCI capability 0x11[0x50]@0xb0: table & pba overlap, or they don't fit in BARs, or don't align
 
-Fixes: 10a3d4079eae ("remoteproc: imx_rproc: move memory parsing to rproc_ops")
-Suggested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Fix the calculation of PBA offset in the MSI-X capability.
+
+[bhelgaas: more specific subject and commit log]
+
+Fixes: 3ef5d16f50f8 ("PCI: cadence: Add MSI-X support to Endpoint driver")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250430092043.1819308-2-xiaolei.wang@windriver.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Link: https://patch.msgid.link/20250514074313.283156-10-cassel@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/remoteproc_core.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/pci/controller/cadence/pcie-cadence-ep.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1617,7 +1617,7 @@ static int rproc_attach(struct rproc *rp
- 	ret = rproc_set_rsc_table(rproc);
- 	if (ret) {
- 		dev_err(dev, "can't load resource table: %d\n", ret);
--		goto unprepare_device;
-+		goto clean_up_resources;
- 	}
+--- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+@@ -292,13 +292,14 @@ static int cdns_pcie_ep_set_msix(struct
+ 	struct cdns_pcie *pcie = &ep->pcie;
+ 	u32 cap = CDNS_PCIE_EP_FUNC_MSIX_CAP_OFFSET;
+ 	u32 val, reg;
++	u16 actual_interrupts = interrupts + 1;
  
- 	/* reset max_notifyid */
-@@ -1634,7 +1634,7 @@ static int rproc_attach(struct rproc *rp
- 	ret = rproc_handle_resources(rproc, rproc_loading_handlers);
- 	if (ret) {
- 		dev_err(dev, "Failed to process resources: %d\n", ret);
--		goto unprepare_device;
-+		goto clean_up_resources;
- 	}
+ 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
  
- 	/* Allocate carveout resources associated to rproc */
-@@ -1653,7 +1653,6 @@ static int rproc_attach(struct rproc *rp
+ 	reg = cap + PCI_MSIX_FLAGS;
+ 	val = cdns_pcie_ep_fn_readw(pcie, fn, reg);
+ 	val &= ~PCI_MSIX_FLAGS_QSIZE;
+-	val |= interrupts;
++	val |= interrupts; /* 0's based value */
+ 	cdns_pcie_ep_fn_writew(pcie, fn, reg, val);
  
- clean_up_resources:
- 	rproc_resource_cleanup(rproc);
--unprepare_device:
- 	/* release HW resources if needed */
- 	rproc_unprepare_device(rproc);
- disable_iommu:
+ 	/* Set MSIX BAR and offset */
+@@ -308,7 +309,7 @@ static int cdns_pcie_ep_set_msix(struct
+ 
+ 	/* Set PBA BAR and offset.  BAR must match MSIX BAR */
+ 	reg = cap + PCI_MSIX_PBA;
+-	val = (offset + (interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
++	val = (offset + (actual_interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
+ 	cdns_pcie_ep_fn_writel(pcie, fn, reg, val);
+ 
+ 	return 0;
 
 
