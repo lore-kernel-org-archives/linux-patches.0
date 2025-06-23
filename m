@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E02255F59;
-	Mon, 23 Jun 2025 13:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EEF253B56;
+	Mon, 23 Jun 2025 13:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685446; cv=none; b=mmQ2AEveOp4NDNCe6HjlpvHCjizS2sZIXyVch1EFilRor4JFces7HNd2/8scIwFgVql12TZD+3Z4RQdeoreBE+EMzIPSQC1bPRbCAKwCr7P384YFYyW2C7h4ejo7itaIzCANktWJuCWgOwed3/17y/TMJJp2IW/lkUZduJTvi5A=
+	t=1750685452; cv=none; b=Yuk8UJI5bMSoB+6P39VbbXeIoC9tUky2rj6WbjkpcDEZomyxf5btmU2gs4MHtx5lhw0LlD0JjH//8BlP3zlMUS8i8fOfDzlECHtwQTSnxcvsXAUrqUB+iri2JellAV/dMgJBDzKFkI5oCJ0ITC4lTufXRTVayV0r0bfxBNpJLQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685446; c=relaxed/simple;
-	bh=AfUGZ9sng1clDVGjFqNSID4FbTkget+emqPolUDhfz4=;
+	s=arc-20240116; t=1750685452; c=relaxed/simple;
+	bh=XiMe01OOkXOFoGbfIMMQ3MdobT2hhDrl1aCC6w6+O3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PwoxbmKKS1B/cg3nIFLbsnpJyPIsxpUGtpZA1+w45U75U73rPILMGnBrs6gh37H7h3lyHPkYZrfmcD66MYoA+tuHQaOLJMqj++kydUjnKMlAk4/CHnAg0u+cUmujSZcdnrx60m9dLUijL7HkuGf6D/VRkm+mfOXgzCPBfRgwu9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hFXFWJyu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cMUKfzoiHx+nebFL0agJFmqzTdqxIfzFDaSBMVWfYt1euLg/CIiV9VficLgn3p21sGMcfKbiI/5oUvWZi0+5i4W9E4oT3MSysJAo+yrfZjcfCHYBk93uaDL9teNh4JXfR8Vi7wPfsyxk9kYIHL6zOkz4xFTEaz7iGhNDQK5Yu7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8yLnoRY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFXFWJyu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D976C4CEEA;
-	Mon, 23 Jun 2025 13:30:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8yLnoRY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B79C4CEEA;
+	Mon, 23 Jun 2025 13:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685446;
-	bh=AfUGZ9sng1clDVGjFqNSID4FbTkget+emqPolUDhfz4=;
+	s=korg; t=1750685451;
+	bh=XiMe01OOkXOFoGbfIMMQ3MdobT2hhDrl1aCC6w6+O3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hFXFWJyuA+3P1mPxi59JvakLUN/5jTiBT5oB5f3+9dh377BMx4Y09V9ralFls5RXq
-	 HO/ZZfgr0sx4ms9FvfV/Xtcz5uebtQcubIw7Da7zTvwWlupjJMr/cmtx9QTZkzO8zG
-	 M79B1531mRHq4yu/mOoMzI1fM9mf4U8kQMO55NwI=
+	b=d8yLnoRYWatTCrQmjIvJLjAUkzE5JswJComIv61+XUBDvHYaQeCnMlRMyhgIolwDh
+	 qDZxgmiB6FVFthxyBXrE7Xt8NsoNVgWWRNdyYVOKO2uI8sUj+0o48RyUOhe68One45
+	 aesWJTF93IDZMUGUwkzdAUOSU6w9EzwrD0c5KP1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gautam Menghani <gautam@linux.ibm.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Vaibhav Jain <vaibhav@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.6 008/290] powerpc/pseries/msi: Avoid reading PCI device registers in reduced power states
-Date: Mon, 23 Jun 2025 15:04:29 +0200
-Message-ID: <20250623130627.212896622@linuxfoundation.org>
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 076/355] backlight: pm8941: Add NULL check in wled_configure()
+Date: Mon, 23 Jun 2025 15:04:37 +0200
+Message-ID: <20250623130629.106558386@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,61 +49,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gautam Menghani <gautam@linux.ibm.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-commit 9cc0eafd28c7faef300822992bb08d79cab2a36c upstream.
+[ Upstream commit e12d3e1624a02706cdd3628bbf5668827214fa33 ]
 
-When a system is being suspended to RAM, the PCI devices are also
-suspended and the PPC code ends up calling pseries_msi_compose_msg() and
-this triggers the BUG_ON() in __pci_read_msi_msg() because the device at
-this point is in reduced power state. In reduced power state, the memory
-mapped registers of the PCI device are not accessible.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+wled_configure() does not check for this case, which results in a NULL
+pointer dereference.
 
-To replicate the bug:
-1. Make sure deep sleep is selected
-	# cat /sys/power/mem_sleep
-	s2idle [deep]
+Add NULL check after devm_kasprintf() to prevent this issue.
 
-2. Make sure console is not suspended (so that dmesg logs are visible)
-	echo N > /sys/module/printk/parameters/console_suspend
-
-3. Suspend the system
-	echo mem > /sys/power/state
-
-To fix this behaviour, read the cached msi message of the device when the
-device is not in PCI_D0 power state instead of touching the hardware.
-
-Fixes: a5f3d2c17b07 ("powerpc/pseries/pci: Add MSI domains")
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250305090237.294633-1-gautam@linux.ibm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f86b77583d88 ("backlight: pm8941: Convert to using %pOFn instead of device_node.name")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: "Daniel Thompson (RISCstar)" <danielt@kernel.org>
+Link: https://lore.kernel.org/r/20250401091647.22784-1-bsdhenrymartin@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/msi.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/video/backlight/qcom-wled.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/platforms/pseries/msi.c
-+++ b/arch/powerpc/platforms/pseries/msi.c
-@@ -519,7 +519,12 @@ static struct msi_domain_info pseries_ms
+diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+index 486d35da01507..54c4bb66009fc 100644
+--- a/drivers/video/backlight/qcom-wled.c
++++ b/drivers/video/backlight/qcom-wled.c
+@@ -1404,9 +1404,11 @@ static int wled_configure(struct wled *wled)
+ 	wled->ctrl_addr = be32_to_cpu(*prop_addr);
  
- static void pseries_msi_compose_msg(struct irq_data *data, struct msi_msg *msg)
- {
--	__pci_read_msi_msg(irq_data_get_msi_desc(data), msg);
-+	struct pci_dev *dev = msi_desc_to_pci_dev(irq_data_get_msi_desc(data));
-+
-+	if (dev->current_state == PCI_D0)
-+		__pci_read_msi_msg(irq_data_get_msi_desc(data), msg);
-+	else
-+		get_cached_msi_msg(data->irq, msg);
- }
- 
- static struct irq_chip pseries_msi_irq_chip = {
+ 	rc = of_property_read_string(dev->of_node, "label", &wled->name);
+-	if (rc)
++	if (rc) {
+ 		wled->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFn", dev->of_node);
+-
++		if (!wled->name)
++			return -ENOMEM;
++	}
+ 	switch (wled->version) {
+ 	case 3:
+ 		u32_opts = wled3_opts;
+-- 
+2.39.5
+
 
 
