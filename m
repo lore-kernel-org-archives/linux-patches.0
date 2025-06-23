@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DE725524C;
-	Mon, 23 Jun 2025 13:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CA52550D7;
+	Mon, 23 Jun 2025 13:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685841; cv=none; b=SgDa8Llq5kvxAM1HK+mObG4W6P+YgzorrQi9xpC+d/bGqBwMsA1g2gI1a4g0MyNA1nrDdSZ4/ufqKxHnA32EFibiw01aT38s0CRdP+HpySh0UPQ49V35Wo96J38uqCr8w0+kLKfXgww9o0eKIszagtF6mLIu0BJkqYfy4dB3m4E=
+	t=1750685846; cv=none; b=jX7h3ENzEa2y5cOD7nNEAmyEjwAmZrc9ICnmpJPE5xXYtdDScD62Vz1MEmrFjJHbhtn5K1woOarT197ZznU8CluxUXbRWgXixtMBic2RwSkXwn1HzT2qGPvwK2n4UCErnNZAOSGLYgF39frD+U72KZugO14wrBzoDj4AHmUwmLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685841; c=relaxed/simple;
-	bh=Nqum986AksRmpxbMDQe6hIHgBF7cRd61f9RVJEiNoRk=;
+	s=arc-20240116; t=1750685846; c=relaxed/simple;
+	bh=DJy/NLrHGfd9BJx9i/rDXjsP4r3qMrU+MtNxYC1TmPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DRBv+JrBoOV0m24yErPixaDjfQ7M1+5fP3ZvduvtJDosPYRCqDsEkHErDEgAW+EC99xeLnhg3fGLFgRxez/p5tMkt2/T/AwqURO4CObIDimGQb3YjDcu9dYklMZ2ESXeCjazCNkNAzYfWUGZrzUSm2S2R0zJsQeVkHU1GQubF7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQD9gikq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eOgwuz3KhwrrF2JXAbLC2uTjAGnnRod29K9tKAUC/9X4bEekgRrednuwdbdAlpuVTdEbJJZFCnMX7uM4zC97MVr1JSzWsGb5AarNYL0gmjrXITF+XpsMlTaWju0xENZ6h/KupZBJ21rwd7aDBtCU8M/gxkvy0cMceECMPo4yA+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQv6oPV4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQD9gikq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A8DC4CEEA;
-	Mon, 23 Jun 2025 13:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQv6oPV4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469D1C4CEEA;
+	Mon, 23 Jun 2025 13:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685841;
-	bh=Nqum986AksRmpxbMDQe6hIHgBF7cRd61f9RVJEiNoRk=;
+	s=korg; t=1750685846;
+	bh=DJy/NLrHGfd9BJx9i/rDXjsP4r3qMrU+MtNxYC1TmPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WQD9gikqzjzbqmj/hswC4mSGZNiQDxYh1wGpmk3L60pPpMwQC8x1tet5KzQebkkE5
-	 FfemEJYMct8SmwLJCGWGVbsOUu1RJcKGcZdK2kZ1p6PJ4VXnUHw/vB8aJCUZ/34Lw8
-	 NnUuxJVdc1UEIhlY+AxZtnrP9bnLHSGbDDJVcC1E=
+	b=MQv6oPV4i8elamJ9qEGVTM61JOgtCh8jH7BfGAj+G4vdsw6exOW498A+/DL7TBlJ7
+	 ez+4rCqXycCX+ENiRbqR/WE85Hf1EYuzi2mjAU9xlijooHeTQXg0Eoaj6oDQm+A+YC
+	 EQgpG4CnpYmraAcpAvTyz6mUu8s3DgNc9xCLNJGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/411] soc: aspeed: lpc: Fix impossible judgment condition
-Date: Mon, 23 Jun 2025 15:03:50 +0200
-Message-ID: <20250623130635.589070740@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.6 029/290] media: ccs-pll: Start OP pre-PLL multiplier search from correct value
+Date: Mon, 23 Jun 2025 15:04:50 +0200
+Message-ID: <20250623130627.862029716@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit d9f0a97e859bdcef51f9c187b1eb712eb13fd3ff ]
+commit 660e613d05e449766784c549faf5927ffaf281f1 upstream.
 
-smatch error：
-drivers/soc/aspeed/aspeed-lpc-snoop.c:169
-aspeed_lpc_snoop_config_irq() warn: platform_get_irq() does not return zero
+The ccs_pll_calculate() function does a search over possible PLL
+configurations to find the "best" one. If the sensor does not support odd
+pre-PLL divisors and the minimum value (with constraints) isn't 1, other
+odd values could be errorneously searched (and selected) for the pre-PLL
+divisor. Fix this.
 
-platform_get_irq() return non-zero IRQ number or negative error code,
-change '!lpc_snoop->irq' to 'lpc_snoop->irq < 0' to fix this.
-
-Fixes: 9f4f9ae81d0a ("drivers/misc: add Aspeed LPC snoop driver")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20231027020703.1231875-1-suhui@nfschina.com
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 415ddd993978 ("media: ccs-pll: Split limits and PLL configuration into front and back parts")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/aspeed/aspeed-lpc-snoop.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/ccs-pll.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-index eceeaf8dfbeba..d9bdc2e084086 100644
---- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-@@ -167,7 +167,7 @@ static int aspeed_lpc_snoop_config_irq(struct aspeed_lpc_snoop *lpc_snoop,
- 	int rc;
+--- a/drivers/media/i2c/ccs-pll.c
++++ b/drivers/media/i2c/ccs-pll.c
+@@ -817,6 +817,8 @@ int ccs_pll_calculate(struct device *dev
+ 			      one_or_more(
+ 				      DIV_ROUND_UP(op_lim_fr->max_pll_op_clk_freq_hz,
+ 						   pll->ext_clk_freq_hz))));
++	if (!(pll->flags & CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER))
++		min_op_pre_pll_clk_div = clk_div_even(min_op_pre_pll_clk_div);
+ 	dev_dbg(dev, "pll_op check: min / max op_pre_pll_clk_div: %u / %u\n",
+ 		min_op_pre_pll_clk_div, max_op_pre_pll_clk_div);
  
- 	lpc_snoop->irq = platform_get_irq(pdev, 0);
--	if (!lpc_snoop->irq)
-+	if (lpc_snoop->irq < 0)
- 		return -ENODEV;
- 
- 	rc = devm_request_irq(dev, lpc_snoop->irq,
--- 
-2.39.5
-
 
 
