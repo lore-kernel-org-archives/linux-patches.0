@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920571E87B;
-	Mon, 23 Jun 2025 22:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CC91A4F12;
+	Mon, 23 Jun 2025 22:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716323; cv=none; b=ez8WWIg67VwhZWIDpO0BPXPbqivBZ3DPO/UmGD+sXMTVOSsQMeSUlXnrRnNwpSI0C19Y5VyXOhQu8AQU1hhJHyFQ9TJ9rVtRqORqV/HOC8XhDtr+bcDl1ALca0FVnvxTyB6wwD2Ag0Z9kRDAz5cFx+cGScGJHojSMzhjkmmrcj0=
+	t=1750716326; cv=none; b=gFCcpmGe9kFf36Lm00MPcgiHpNtI0uXjpOqA77Gw69kOSGxPsjUGunKYrA+5AR3d17mDPER9BomTM0B7d4/W4xa3tQN6lGhFnruUt9hdeZ1Mgd6jEM6Gc9Gii9bZaHfCtSN34Ss/klUgd1Axbil7Zlpab1KUXEe8z4tN2GKjAaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716323; c=relaxed/simple;
-	bh=ukR+0rd78kN3xN803KQtwjpEC+JQ0wCFftZP6hHdwE8=;
+	s=arc-20240116; t=1750716326; c=relaxed/simple;
+	bh=2DipuLCzwhlVxRkMEA0DlpZkOTi+eDsqbmxqkBvgJeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yq6MrmHADdL8Gyrq9oPaacWQ0A/kmWV3SZ1cMu3bcGU9zdq8okNnAEEnmvwtD/f8NGEPFP5jG5nqm9iMdp5S0YJ67NQI3JolgFTrNr86lCkYwRiTBSPAOY1dlAIMTtxWLypvW683q/86BNgGImi6Nl4SG7kHV169tl+FwehrD1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7gV2a1Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CK7mIcdwtZSn0EIAvdbQd460v4DvXjq+V5qf8A8B93DYtn8z0nL8emMvdhXPYtJnxXnh5e5q56gYF96VJ0U2NrjBTo0a/g8qAyFks27NWYOWIRIlBC0+YyfficVwqLV8ttP8LfIiBE5Dh81cxz2pCnoR0RfsPP5cHSYsyQeC9hM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0d8bt8Z6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7gV2a1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BCFC4CEEA;
-	Mon, 23 Jun 2025 22:05:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0d8bt8Z6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBBEC4CEEA;
+	Mon, 23 Jun 2025 22:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716323;
-	bh=ukR+0rd78kN3xN803KQtwjpEC+JQ0wCFftZP6hHdwE8=;
+	s=korg; t=1750716325;
+	bh=2DipuLCzwhlVxRkMEA0DlpZkOTi+eDsqbmxqkBvgJeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7gV2a1Y0yKA5ioYA5rsNKEyIrVbNq19iPSdhOvKojdg0Y4OM9FuZnwOrd4KSfR1Q
-	 FdxwpGnEQo1Pq6ya5aC041in3QWsVPtD6dPxE1Z5GZF8+yCIRZ6Q+b08aoXy9Xr0YU
-	 YRoOaZncWXVt27/rhPbv845FpTzO0xhGFX5oQfhI=
+	b=0d8bt8Z6kvnGaOHKmmOLWM3worc2KX0PONlIwRL1cv9rS/icU+1CK5crHZRfyd9iv
+	 yFGIdZPLQ7Zzskg4xcfqTg5yaRLc+I6KmU+lPE9usYIT9v/C45U6lHFuwLcSnTpoar
+	 Jcp9NaeemTY10GWH2g1rqerRGOEg3brGHXK+cfnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 256/290] ptp: allow reading of currently dialed frequency to succeed on free-running clocks
-Date: Mon, 23 Jun 2025 15:08:37 +0200
-Message-ID: <20250623130634.621783511@linuxfoundation.org>
+	Gautam Menghani <gautam@linux.ibm.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Vaibhav Jain <vaibhav@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.1 295/508] powerpc/pseries/msi: Avoid reading PCI device registers in reduced power states
+Date: Mon, 23 Jun 2025 15:05:40 +0200
+Message-ID: <20250623130652.546644539@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Gautam Menghani <gautam@linux.ibm.com>
 
-[ Upstream commit aa112cbc5f0ac6f3b44d829005bf34005d9fe9bb ]
+commit 9cc0eafd28c7faef300822992bb08d79cab2a36c upstream.
 
-There is a bug in ptp_clock_adjtime() which makes it refuse the
-operation even if we just want to read the current clock dialed
-frequency, not modify anything (tx->modes == 0). That should be possible
-even if the clock is free-running. For context, the kernel UAPI is the
-same for getting and setting the frequency of a POSIX clock.
+When a system is being suspended to RAM, the PCI devices are also
+suspended and the PPC code ends up calling pseries_msi_compose_msg() and
+this triggers the BUG_ON() in __pci_read_msi_msg() because the device at
+this point is in reduced power state. In reduced power state, the memory
+mapped registers of the PCI device are not accessible.
 
-For example, ptp4l errors out at clock_create() -> clockadj_get_freq()
--> clock_adjtime() time, when it should logically only have failed on
-actual adjustments to the clock, aka if the clock was configured as
-slave. But in master mode it should work.
+To replicate the bug:
+1. Make sure deep sleep is selected
+	# cat /sys/power/mem_sleep
+	s2idle [deep]
 
-This was discovered when examining the issue described in the previous
-commit, where ptp_clock_freerun() returned true despite n_vclocks being
-zero.
+2. Make sure console is not suspended (so that dmesg logs are visible)
+	echo N > /sys/module/printk/parameters/console_suspend
 
-Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250613174749.406826-3-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+3. Suspend the system
+	echo mem > /sys/power/state
+
+To fix this behaviour, read the cached msi message of the device when the
+device is not in PCI_D0 power state instead of touching the hardware.
+
+Fixes: a5f3d2c17b07 ("powerpc/pseries/pci: Add MSI domains")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250305090237.294633-1-gautam@linux.ibm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ptp/ptp_clock.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/msi.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
-index 6b7e8b7ebcef5..b7fc260ed43bc 100644
---- a/drivers/ptp/ptp_clock.c
-+++ b/drivers/ptp/ptp_clock.c
-@@ -104,7 +104,8 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
- 	struct ptp_clock_info *ops;
- 	int err = -EOPNOTSUPP;
+--- a/arch/powerpc/platforms/pseries/msi.c
++++ b/arch/powerpc/platforms/pseries/msi.c
+@@ -522,7 +522,12 @@ static struct msi_domain_info pseries_ms
  
--	if (ptp_clock_freerun(ptp)) {
-+	if (tx->modes & (ADJ_SETOFFSET | ADJ_FREQUENCY | ADJ_OFFSET) &&
-+	    ptp_clock_freerun(ptp)) {
- 		pr_err("ptp: physical clock is free running\n");
- 		return -EBUSY;
- 	}
--- 
-2.39.5
-
+ static void pseries_msi_compose_msg(struct irq_data *data, struct msi_msg *msg)
+ {
+-	__pci_read_msi_msg(irq_data_get_msi_desc(data), msg);
++	struct pci_dev *dev = msi_desc_to_pci_dev(irq_data_get_msi_desc(data));
++
++	if (dev->current_state == PCI_D0)
++		__pci_read_msi_msg(irq_data_get_msi_desc(data), msg);
++	else
++		get_cached_msi_msg(data->irq, msg);
+ }
+ 
+ static struct irq_chip pseries_msi_irq_chip = {
 
 
