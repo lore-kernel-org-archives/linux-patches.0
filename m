@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162C14C7F;
-	Mon, 23 Jun 2025 13:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94848252906;
+	Mon, 23 Jun 2025 13:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684782; cv=none; b=aaa7pZVXlx8dCMUZvX+ZPah+RUYmgFQnnKQlcOWgV+TVVkEG7fASVAMZe6sb+sCU1MIEeZf8uKuudxJDk5l3+3VTkuDxp5a2w6uBzKcA2e5i2CQHY6RRw0DkEHyLMHEzpcc8rhOlGJiJ2MToA9W0ZlHMv94UDC5Aa0/zIqrF50g=
+	t=1750684784; cv=none; b=KEHOOpsHcyXw+Dxw3joibpEK3Gsv+59FAIW2bHxI+qeck2BQWs56l0TgEaCkHCtZBHwAJX+62GRwxXXrVIiy6BRGnPsWfLwyoVfaZdl24mhFzrVaovVjFqZa4OB+NfQsHJpMMSTwEJthdxhIQkl0vQiOgTzK+oZor4h6LnyMZPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684782; c=relaxed/simple;
-	bh=1nglawtXadk4Xr3pZP7nyl8rhmuC6GAvuITizqS5Qwg=;
+	s=arc-20240116; t=1750684784; c=relaxed/simple;
+	bh=G8qIyFR45xZRLon4zjj6so7QARSXy+iNlF/N6SZ//qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mKdaa+VSx0Fwi/e576qGFbPf2xPAHiXFsox/mOY7coOxV8mB6neC1yGFE1/EzauOf8qDA38YHD3wtkYQxGV+YwtXaZrAhlLdrzuRYO0rBWR59S4d1Cn0gmIbEEgaqKzsYWqM3VtohCxsK/LDUqSIem8nt1YQKjyh8X4nOrRan0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFNZnTwx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hALdz/o1N+80gchTuQ8eTabmBGvqXLJJdIvOKVPnev8OropdMwP1fgxq1Q10ryvAfqLjxk9vKF8jWU4OzNNhUp+1us7kx4iHvgmq7tSofyAJMfZwvFw4qpjPtEd+67GbROZRAosC1Da5faG/jZBNvV9S7OgAN/jwx2Yslj+kARg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTTcWlLr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFNZnTwx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94ADBC4CEEA;
-	Mon, 23 Jun 2025 13:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTTcWlLr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A59C4CEF0;
+	Mon, 23 Jun 2025 13:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684781;
-	bh=1nglawtXadk4Xr3pZP7nyl8rhmuC6GAvuITizqS5Qwg=;
+	s=korg; t=1750684784;
+	bh=G8qIyFR45xZRLon4zjj6so7QARSXy+iNlF/N6SZ//qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFNZnTwx36J5UXYf1EYJBxfCEwRe1w+1SIL7IJK0n3Qjx+P6cfDw6jntdoyPGmd0Q
-	 bjXHu5q7aGUTmqwmjFlJGqFDpjv2YmIiVvEsNrmGShB3t++Kn7LhNaVvU1cGGtRlzW
-	 oGANHfcWbDrQFyRB1kOyY0KcuW5h2MEl+756M5J8=
+	b=MTTcWlLrfoQQYzICNvocO7cOXElR978QxqI9cYlpV4alGjUXliJgYFtyFYaFgjYvW
+	 7p2GmFK3dSeQeFsOe5sbRK0FACtQW/3xCGvSO+uIa8hUCbR5QuWb/GoukL7D1R1QjS
+	 xsxDBzwme1aU7MiPHsrNWhQMc38lrOLoYnPIoBzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.15 171/592] remoteproc: core: Release rproc->clean_table after rproc_attach() fails
-Date: Mon, 23 Jun 2025 15:02:09 +0200
-Message-ID: <20250623130704.346682374@linuxfoundation.org>
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 028/222] wifi: rtw88: do not ignore hardware read error during DPK
+Date: Mon, 23 Jun 2025 15:06:03 +0200
+Message-ID: <20250623130612.743008530@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,63 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit bcd241230fdbc6005230f80a4f8646ff5a84f15b upstream.
+[ Upstream commit 20d3c19bd8f9b498173c198eadf54580c8caa336 ]
 
-When rproc->state = RPROC_DETACHED is attached to remote processor
-through rproc_attach(), if rproc_handle_resources() returns failure,
-then the clean table should be released, otherwise the following
-memory leak will occur.
+In 'rtw8822c_dpk_cal_coef1()', do not ignore error returned
+by 'check_hw_ready()' but issue a warning to denote possible
+DPK issue. Compile tested only.
 
-unreferenced object 0xffff000086a99800 (size 1024):
-comm "kworker/u12:3", pid 59, jiffies 4294893670 (age 121.140s)
-hex dump (first 32 bytes):
-00 00 00 00 00 80 00 00 00 00 00 00 00 00 10 00 ............
-00 00 00 00 00 00 08 00 00 00 00 00 00 00 00 00 ............
-backtrace:
- [<000000008bbe4ca8>] slab_post_alloc_hook+0x98/0x3fc
- [<000000003b8a272b>] __kmem_cache_alloc_node+0x13c/0x230
- [<000000007a507c51>] __kmalloc_node_track_caller+0x5c/0x260
- [<0000000037818dae>] kmemdup+0x34/0x60
- [<00000000610f7f57>] rproc_boot+0x35c/0x56c
- [<0000000065f8871a>] rproc_add+0x124/0x17c
- [<00000000497416ee>] imx_rproc_probe+0x4ec/0x5d4
- [<000000003bcaa37d>] platform_probe+0x68/0xd8
- [<00000000771577f9>] really_probe+0x110/0x27c
- [<00000000531fea59>] __driver_probe_device+0x78/0x12c
- [<0000000080036a04>] driver_probe_device+0x3c/0x118
- [<000000007e0bddcb>] __device_attach_driver+0xb8/0xf8
- [<000000000cf1fa33>] bus_for_each_drv+0x84/0xe4
- [<000000001a53b53e>] __device_attach+0xfc/0x18c
- [<00000000d1a2a32c>] device_initial_probe+0x14/0x20
- [<00000000d8f8b7ae>] bus_probe_device+0xb0/0xb4
- unreferenced object 0xffff0000864c9690 (size 16):
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 9dc9507f1880 ("remoteproc: Properly deal with the resource table when detaching")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250430092043.1819308-3-xiaolei.wang@windriver.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5227c2ee453d ("rtw88: 8822c: add SW DPK support")
+Suggested-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250415090720.194048-1-dmantipov@yandex.ru
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtw88/rtw8822c.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1655,6 +1655,7 @@ clean_up_resources:
- 	rproc_resource_cleanup(rproc);
- 	/* release HW resources if needed */
- 	rproc_unprepare_device(rproc);
-+	kfree(rproc->clean_table);
- disable_iommu:
- 	rproc_disable_iommu(rproc);
- 	return ret;
+diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822c.c b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
+index 72d711a62b07b..0cc8d507165af 100644
+--- a/drivers/net/wireless/realtek/rtw88/rtw8822c.c
++++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
+@@ -2857,7 +2857,8 @@ void rtw8822c_dpk_cal_coef1(struct rtw_dev *rtwdev)
+ 	rtw_write32(rtwdev, REG_NCTL0, 0x00001148);
+ 	rtw_write32(rtwdev, REG_NCTL0, 0x00001149);
+ 
+-	check_hw_ready(rtwdev, 0x2d9c, MASKBYTE0, 0x55);
++	if (!check_hw_ready(rtwdev, 0x2d9c, MASKBYTE0, 0x55))
++		rtw_warn(rtwdev, "DPK stuck, performance may be suboptimal");
+ 
+ 	rtw_write8(rtwdev, 0x1b10, 0x0);
+ 	rtw_write32_mask(rtwdev, REG_NCTL0, BIT_SUBPAGE, 0x0000000c);
+-- 
+2.39.5
+
 
 
