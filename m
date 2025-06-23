@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908342940B;
-	Mon, 23 Jun 2025 22:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA48229B16;
+	Mon, 23 Jun 2025 22:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716676; cv=none; b=Ej8TWV6IrE9pm7hPJevlHg/EbAa9Gx4Bbvy4GFy4cgzptqZ/P0/ptlxtWQdL5WhE9RbPsneeEHvejfCEMWD51eOfMbytFIAurmjUsDF7w4irpA3+DW3z0O7rKvjHacGK95KWRH8JcUTr/BdIwHav4k6qAr6FK66nDG7QPzFKe0k=
+	t=1750716680; cv=none; b=rPBMiszKOphPqAWG2mbD+8qzXPuYwRfzadUEfQ/GvzW0+9p12/XslnB6mSJJ1Q1Yuw7J/QlZpHWQX1M/+jQzBzTnj7/ThGAlwqhEXCRcHR7pmIjlUMBgCSDMqzcAPMF1ucIUQTt2FWHTTy/7MjtLD57cUzfiBtfJ0f6F9tzWP6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716676; c=relaxed/simple;
-	bh=V6CCVjKy2uIz4qGH16KyYPvcfGn9b8uc9GK9w+lI3EU=;
+	s=arc-20240116; t=1750716680; c=relaxed/simple;
+	bh=2celsTrBJb+YiZ/ur1JSJXMSgaola/dCv5loiiBKGzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQtbZNXJkm1sk6xZs2W5qWPrTEQ/QhYcYDxMXWFHrZRZfP4u/HLD0ZttIgyjgNHm7rBN+TyfRR3Eo37TIl9G6dn0VUD+Ft6tjX1pSEAOPhhBu9gTRhqDL1EWyAVI/GXvZXzmg2RfWOD0MEzv4i/CoiBlAFYuJRwq5ijHQyKfhiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DecvL8tk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UC8wnwJN57bgRoEgKy1o21Hrrzn7Fm82phQFmeRMzU58lkDspZB4dyMIqsfAV4LJm3mA6xJLML20CxI81EEA7ohrISTl3MuttRiNNDF2yWjtH0AnHMsW4qSWgTUrn2+DN0yMyRNWbHUQ/iN6RgwMpP7tEPoJJUFXoCe/xwa1TIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ytwoc6WL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DecvL8tk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29254C4CEEA;
-	Mon, 23 Jun 2025 22:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ytwoc6WL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97929C4CEF2;
+	Mon, 23 Jun 2025 22:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716676;
-	bh=V6CCVjKy2uIz4qGH16KyYPvcfGn9b8uc9GK9w+lI3EU=;
+	s=korg; t=1750716678;
+	bh=2celsTrBJb+YiZ/ur1JSJXMSgaola/dCv5loiiBKGzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DecvL8tkFMedLxck+7VKeYVV+BjgQRMnCn08pd38NWKt3ySiTwkH6RQBs7QKrDH9W
-	 ajh7PjNMlUn0YraKQgsfdtbpKJ5TEvsz3p1ib8foz2xOLK/PSK19AGKmcvdEZr+MPN
-	 OoYRc67pWvp2XO6RA4OqYqaJOoDZ8ABBdQx/VqnM=
+	b=Ytwoc6WLLRd1eWshBAhRvHHrR0xtOzcEASwuEvshi1PWNeubIs2yw6VqSc3nxCekt
+	 6It1sWc77lYJmMAV1+eeB1xIEfQWfC+x+qnRHBUd5KJi6tN+20/Kmjtc4+VQeJMyOT
+	 blRaF8lQL8uo1kPTQMJs3iEr1x4938GzsWCnYgNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+365005005522b70a36f2@syzkaller.appspotmail.com,
-	Denis Arefev <arefev@swemel.ru>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 320/508] media: vivid: Change the siize of the composing
-Date: Mon, 23 Jun 2025 15:06:05 +0200
-Message-ID: <20250623130653.198734982@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 274/414] bpf, sockmap: Fix data lost during EAGAIN retries
+Date: Mon, 23 Jun 2025 15:06:51 +0200
+Message-ID: <20250623130648.875954833@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +47,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit f83ac8d30c43fd902af7c84c480f216157b60ef0 upstream.
+[ Upstream commit 7683167196bd727ad5f3c3fc6a9ca70f54520a81 ]
 
-syzkaller found a bug:
+We call skb_bpf_redirect_clear() to clean _sk_redir before handling skb in
+backlog, but when sk_psock_handle_skb() return EAGAIN due to sk_rcvbuf
+limit, the redirect info in _sk_redir is not recovered.
 
-BUG: KASAN: vmalloc-out-of-bounds in tpg_fill_plane_pattern drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2608 [inline]
-BUG: KASAN: vmalloc-out-of-bounds in tpg_fill_plane_buffer+0x1a9c/0x5af0 drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2705
-Write of size 1440 at addr ffffc9000d0ffda0 by task vivid-000-vid-c/5304
+Fix skb redir loss during EAGAIN retries by restoring _sk_redir
+information using skb_bpf_set_redir().
 
-CPU: 0 UID: 0 PID: 5304 Comm: vivid-000-vid-c Not tainted 6.14.0-rc2-syzkaller-00039-g09fbf3d50205 #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+Before this patch:
+'''
+./bench sockmap -c 2 -p 1 -a --rx-verdict-ingress
+Setting up benchmark 'sockmap'...
+create socket fd c1:13 p1:14 c2:15 p2:16
+Benchmark 'sockmap' started.
+Send Speed 1343.172 MB/s, BPF Speed 1343.238 MB/s, Rcv Speed   65.271 MB/s
+Send Speed 1352.022 MB/s, BPF Speed 1352.088 MB/s, Rcv Speed   0 MB/s
+Send Speed 1354.105 MB/s, BPF Speed 1354.105 MB/s, Rcv Speed   0 MB/s
+Send Speed 1355.018 MB/s, BPF Speed 1354.887 MB/s, Rcv Speed   0 MB/s
+'''
+Due to the high send rate, the RX processing path may frequently hit the
+sk_rcvbuf limit. Once triggered, incorrect _sk_redir will cause the flow
+to mistakenly enter the "!ingress" path, leading to send failures.
+(The Rcv speed depends on tcp_rmem).
 
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:489
- kasan_report+0x143/0x180 mm/kasan/report.c:602
- kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
- __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
- tpg_fill_plane_pattern drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2608 [inline]
- tpg_fill_plane_buffer+0x1a9c/0x5af0 drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2705
- vivid_fillbuff drivers/media/test-drivers/vivid/vivid-kthread-cap.c:470 [inline]
- vivid_thread_vid_cap_tick+0xf8e/0x60d0 drivers/media/test-drivers/vivid/vivid-kthread-cap.c:629
- vivid_thread_vid_cap+0x8aa/0xf30 drivers/media/test-drivers/vivid/vivid-kthread-cap.c:767
- kthread+0x7a9/0x920 kernel/kthread.c:464
- ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:148
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
- </TASK>
+After this patch:
+'''
+./bench sockmap -c 2 -p 1 -a --rx-verdict-ingress
+Setting up benchmark 'sockmap'...
+create socket fd c1:13 p1:14 c2:15 p2:16
+Benchmark 'sockmap' started.
+Send Speed 1347.236 MB/s, BPF Speed 1347.367 MB/s, Rcv Speed   65.402 MB/s
+Send Speed 1353.320 MB/s, BPF Speed 1353.320 MB/s, Rcv Speed   65.536 MB/s
+Send Speed 1353.186 MB/s, BPF Speed 1353.121 MB/s, Rcv Speed   65.536 MB/s
+'''
 
-The composition size cannot be larger than the size of fmt_cap_rect.
-So execute v4l2_rect_map_inside() even if has_compose_cap == 0.
-
-Fixes: 94a7ad928346 ("media: vivid: fix compose size exceed boundary")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+365005005522b70a36f2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?id=8ed8e8cc30cbe0d86c9a25bd1d6a5775129b8ea3
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/r/20250407142234.47591-2-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vivid/vivid-vid-cap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/skmsg.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -974,8 +974,8 @@ int vivid_vid_cap_s_selection(struct fil
- 			if (dev->has_compose_cap) {
- 				v4l2_rect_set_min_size(compose, &min_rect);
- 				v4l2_rect_set_max_size(compose, &max_rect);
--				v4l2_rect_map_inside(compose, &fmt);
- 			}
-+			v4l2_rect_map_inside(compose, &fmt);
- 			dev->fmt_cap_rect = fmt;
- 			tpg_s_buf_height(&dev->tpg, fmt.height);
- 		} else if (dev->has_compose_cap) {
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index a8d238dd982af..97f52394d1eb1 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -689,7 +689,8 @@ static void sk_psock_backlog(struct work_struct *work)
+ 			if (ret <= 0) {
+ 				if (ret == -EAGAIN) {
+ 					sk_psock_skb_state(psock, state, len, off);
+-
++					/* Restore redir info we cleared before */
++					skb_bpf_set_redir(skb, psock->sk, ingress);
+ 					/* Delay slightly to prioritize any
+ 					 * other work that might be here.
+ 					 */
+-- 
+2.39.5
+
 
 
