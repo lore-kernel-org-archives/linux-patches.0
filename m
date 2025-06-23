@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ABD1ACEDA;
-	Mon, 23 Jun 2025 21:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8698221545;
+	Mon, 23 Jun 2025 21:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713852; cv=none; b=kMycTT6WRcE9RVFNqthmAGAfeFbBEDjTknPKQ5DGR/Vf1P7dCRjxTl0U6BmUrOl3LljA9wKyruChb+wmxlpuvxge5c9HxX0m6mIou6Y4q69z5Z9+zdLhvxjBQAZhACtB41r7Cd5xOFs4oOU9gwkRf0WcAwuEME7uRnti3xGqq08=
+	t=1750713854; cv=none; b=G+HAPgmnfePpKpHTooPvE+rtRcoaF1BNB+WkqZ5QpQLwOlm0KxZShG8SNYBtdjHjWNEHVu7wAEJ8qlUSZVWMk8yw1ApG5CJDcoiSk3CVD0LTm4zA1kA8FGs9dmlp6BHdQpTd9vbtvRY17S0iek30yQrHhgo1++WRbDrqZ8SQggE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713852; c=relaxed/simple;
-	bh=RFtkHTkCsC31eysJ0Jbq4wZDS7rcUMj12+OuOXs0UFg=;
+	s=arc-20240116; t=1750713854; c=relaxed/simple;
+	bh=avVWpvHB7P3k10xqp0tgZ4i6UzlM2dF0smNA5SyuEZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OXHonOw6Yp/H3cBpjVsLAdd6MXfTjK1N0b5nrLc8+75AFbP84Fet5i/FZ2+5Kuylp1qu78IZeDnA3SDmi/MmZqFvtm26WAOtgtPi9LzNnkv1dj0MoTmt6hD8uVOorRgWfF022s87aT83NNZH7sMxaNk9Rt+wRA0A8jR042oESKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKoXuibC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cqgQF4Kv3RQa55XlU6ah2v3jHpx9fYUSg7DP9pFgvHKtSkXaRyYoNuzyhdV6dHBK1KRfCoii1tyd0CRHxNox2tl8rYxzNsLCDfwMEMLYTjHRCne0mzyOeewafUNqqYW8BKbrYhXZmYceRpS8yoNCLzr6wbWnYwWrfaxYZziu5LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1TQOvu4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKoXuibC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE34FC4CEEA;
-	Mon, 23 Jun 2025 21:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1TQOvu4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5629EC4CEEA;
+	Mon, 23 Jun 2025 21:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713852;
-	bh=RFtkHTkCsC31eysJ0Jbq4wZDS7rcUMj12+OuOXs0UFg=;
+	s=korg; t=1750713854;
+	bh=avVWpvHB7P3k10xqp0tgZ4i6UzlM2dF0smNA5SyuEZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yKoXuibCRhiylrcLntctVBC30XfiQR2FGfx5apNykL1vQGUyGYWotm+XfMYQNcR0F
-	 IDBkhM3GND9ZNclINDWqsUv2Uwu9Rt1/zZXYgZgfoWxN0h33yVk0ptvKuVDGOhL3jw
-	 dMz+n1VJPcJ9T0+vR6N4exgMulokHHvYKclrGtIU=
+	b=q1TQOvu4vMxA3zG+1BDYAR0h3j1esYnT2TZsGFmBoDIIeshS1Bp6uNYODDMW2uYBw
+	 YIW2MBUTks8RfES4e3nB9rLcF+XKfsqWjTWkhFEp0IBIvIegJP0YGdznt6bNYeIwh6
+	 b/m+fR/UGKN1x/mf3WHdGOme109n8p5wdfQMe/jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH 5.15 171/411] kbuild: Update assembler calls to use proper flags and language target
-Date: Mon, 23 Jun 2025 15:05:15 +0200
-Message-ID: <20250623130637.996853582@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 5.10 190/355] f2fs: fix to do sanity check on sit_bitmap_size
+Date: Mon, 23 Jun 2025 15:06:31 +0200
+Message-ID: <20250623130632.391556726@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,95 +46,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nick Desaulniers <ndesaulniers@google.com>
+From: Chao Yu <chao@kernel.org>
 
-commit d5c8d6e0fa61401a729e9eb6a9c7077b2d3aebb0 upstream.
+commit 5db0d252c64e91ba1929c70112352e85dc5751e7 upstream.
 
-as-instr uses KBUILD_AFLAGS, but as-option uses KBUILD_CFLAGS. This can
-cause as-option to fail unexpectedly when CONFIG_WERROR is set, because
-clang will emit -Werror,-Wunused-command-line-argument for various -m
-and -f flags in KBUILD_CFLAGS for assembler sources.
+w/ below testcase, resize will generate a corrupted image which
+contains inconsistent metadata, so when mounting such image, it
+will trigger kernel panic:
 
-Callers of as-option and as-instr should be adding flags to
-KBUILD_AFLAGS / aflags-y, not KBUILD_CFLAGS / cflags-y. Use
-KBUILD_AFLAGS in all macros to clear up the initial problem.
+touch img
+truncate -s $((512*1024*1024*1024)) img
+mkfs.f2fs -f img $((256*1024*1024))
+resize.f2fs -s -i img -t $((1024*1024*1024))
+mount img /mnt/f2fs
 
-Unfortunately, -Wunused-command-line-argument can still be triggered
-with clang by the presence of warning flags or macro definitions because
-'-x assembler' is used, instead of '-x assembler-with-cpp', which will
-consume these flags. Switch to '-x assembler-with-cpp' in places where
-'-x assembler' is used, as the compiler is always used as the driver for
-out of line assembler sources in the kernel.
+------------[ cut here ]------------
+kernel BUG at fs/f2fs/segment.h:863!
+Oops: invalid opcode: 0000 [#1] SMP PTI
+CPU: 11 UID: 0 PID: 3922 Comm: mount Not tainted 6.15.0-rc1+ #191 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:f2fs_ra_meta_pages+0x47c/0x490
 
-Finally, add -Werror to these macros so that they behave consistently
-whether or not CONFIG_WERROR is set.
+Call Trace:
+ f2fs_build_segment_manager+0x11c3/0x2600
+ f2fs_fill_super+0xe97/0x2840
+ mount_bdev+0xf4/0x140
+ legacy_get_tree+0x2b/0x50
+ vfs_get_tree+0x29/0xd0
+ path_mount+0x487/0xaf0
+ __x64_sys_mount+0x116/0x150
+ do_syscall_64+0x82/0x190
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7fdbfde1bcfe
 
-[nathan: Reworded and expanded on problems in commit message
-         Use '-x assembler-with-cpp' in a couple more places]
+The reaseon is:
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1699
-Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+sit_i->bitmap_size is 192, so size of sit bitmap is 192*8=1536, at maximum
+there are 1536 sit blocks, however MAIN_SEGS is 261893, so that sit_blk_cnt
+is 4762, build_sit_entries() -> current_sit_addr() tries to access
+out-of-boundary in sit_bitmap at offset from [1536, 4762), once sit_bitmap
+and sit_bitmap_mirror is not the same, it will trigger f2fs_bug_on().
+
+Let's add sanity check in f2fs_sanity_check_ckpt() to avoid panic.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/Kconfig.include   |    2 +-
- scripts/Makefile.compiler |    8 ++++----
- scripts/as-version.sh     |    2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ fs/f2fs/super.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/scripts/Kconfig.include
-+++ b/scripts/Kconfig.include
-@@ -33,7 +33,7 @@ ld-option = $(success,$(LD) -v $(1))
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3017,6 +3017,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_s
+ 	block_t user_block_count, valid_user_blocks;
+ 	block_t avail_node_count, valid_node_count;
+ 	unsigned int nat_blocks, nat_bits_bytes, nat_bits_blocks;
++	unsigned int sit_blk_cnt;
+ 	int i, j;
  
- # $(as-instr,<instr>)
- # Return y if the assembler supports <instr>, n otherwise
--as-instr = $(success,printf "%b\n" "$(1)" | $(CC) $(CLANG_FLAGS) -c -x assembler -o /dev/null -)
-+as-instr = $(success,printf "%b\n" "$(1)" | $(CC) $(CLANG_FLAGS) -c -x assembler-with-cpp -o /dev/null -)
+ 	total = le32_to_cpu(raw_super->segment_count);
+@@ -3118,6 +3119,13 @@ int f2fs_sanity_check_ckpt(struct f2fs_s
+ 		return 1;
+ 	}
  
- # check if $(CC) and $(LD) exist
- $(error-if,$(failure,command -v $(CC)),compiler '$(CC)' not found)
---- a/scripts/Makefile.compiler
-+++ b/scripts/Makefile.compiler
-@@ -29,16 +29,16 @@ try-run = $(shell set -e;		\
- 	fi)
- 
- # as-option
--# Usage: cflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
-+# Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
- 
- as-option = $(call try-run,\
--	$(CC) $(KBUILD_CFLAGS) $(1) -c -x assembler /dev/null -o "$$TMP",$(1),$(2))
-+	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
- 
- # as-instr
--# Usage: cflags-y += $(call as-instr,instr,option1,option2)
-+# Usage: aflags-y += $(call as-instr,instr,option1,option2)
- 
- as-instr = $(call try-run,\
--	printf "%b\n" "$(1)" | $(CC) $(KBUILD_AFLAGS) -c -x assembler -o "$$TMP" -,$(2),$(3))
-+	printf "%b\n" "$(1)" | $(CC) -Werror $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
- 
- # __cc-option
- # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
---- a/scripts/as-version.sh
-+++ b/scripts/as-version.sh
-@@ -45,7 +45,7 @@ orig_args="$@"
- # Get the first line of the --version output.
- IFS='
- '
--set -- $(LC_ALL=C "$@" -Wa,--version -c -x assembler /dev/null -o /dev/null 2>/dev/null)
-+set -- $(LC_ALL=C "$@" -Wa,--version -c -x assembler-with-cpp /dev/null -o /dev/null 2>/dev/null)
- 
- # Split the line on spaces.
- IFS=' '
++	sit_blk_cnt = DIV_ROUND_UP(main_segs, SIT_ENTRY_PER_BLOCK);
++	if (sit_bitmap_size * 8 < sit_blk_cnt) {
++		f2fs_err(sbi, "Wrong bitmap size: sit: %u, sit_blk_cnt:%u",
++			 sit_bitmap_size, sit_blk_cnt);
++		return 1;
++	}
++
+ 	cp_pack_start_sum = __start_sum_addr(sbi);
+ 	cp_payload = __cp_payload(sbi);
+ 	if (cp_pack_start_sum < cp_payload + 1 ||
 
 
