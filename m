@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B22F2192EC;
-	Mon, 23 Jun 2025 22:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FC42192EC;
+	Mon, 23 Jun 2025 22:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717511; cv=none; b=HoBfBY7rGC0KVc2SbBC3IuhobIjehHM470yTyG7b84Aoa1emG0C1SRCzjz7DF7Ke7HQHV3ieeqmRRGvqL9nFaB+EMaikm2NOPqRV5argTt7KQNGTQX8c3KcFzAfeq1md25/SyD7SBVteHfmGKuZKbbv/gIivQCWYuxcJP6Q6Pn0=
+	t=1750717514; cv=none; b=gaIGe/gFlnojnIxKg4auyYjQoYEPI196vKoqF3YjE2WzyXd3ciAQi3HuQ4brB7NfxDhIFIiE0qVylwWXv5XngTFcEuFAVF1Z9nL2zoN67Rzn3MAWICzZ8qujZnkPePtfg7wnFWP5JynClWOP5G2evoBd5uW7Cfr51b5Lg6x0YZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717511; c=relaxed/simple;
-	bh=L+fRAFXZECmNOoXwR9Ogcb1iHX0so5cY1P6bMq8iyLo=;
+	s=arc-20240116; t=1750717514; c=relaxed/simple;
+	bh=Or2lhJOd2GanAwly+UM7GxxhACDPhj4lJWbOsKa1Q7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TtAEOMhNz4iddGyK0XrTpD94UCMeWZ96L2tzDrpmowKCRkQzEvhyoPHuFZo9JyGBqbyVfgiFfO6T4CAVDAMmiMwPt9g7rfNoh9Rk2EvrvFO20krYITZXiX24o+i8Vxw8C6D74B1bt+XDOC6SQrP++qbgyiU/NhqLd7CLiKQwaVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8FL2Por; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eNrTgFgreq5Zm3YUrHIRtp4h+92PTXxATBj+penMHJFRl1sSL0vqcW41SgRXMpawI/STJSSN8E1hrNkwFjFA9H3ZL7bRZCw/r8PXGPpgHrTO4Hk1U4Lvu8390RcoDWK0Fy9tKTydN2OkUpml2+joRiRn5V7Wil7tn0Lsho3o/Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrwbBU+n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8FL2Por"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D0EC4CEEA;
-	Mon, 23 Jun 2025 22:25:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrwbBU+n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A955C4CEEA;
+	Mon, 23 Jun 2025 22:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717511;
-	bh=L+fRAFXZECmNOoXwR9Ogcb1iHX0so5cY1P6bMq8iyLo=;
+	s=korg; t=1750717513;
+	bh=Or2lhJOd2GanAwly+UM7GxxhACDPhj4lJWbOsKa1Q7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A8FL2PorCEG+1YRFw4NOO7h+QqwacMwBxKfo7tu1neinTi0KhwGBbNPicc5KeowUi
-	 r8OzFCP0S53TfWX9u6UXY+rnKQOGshexuyKuSAPhowWczQGoPvX1rExbdz4aKexnFc
-	 g7hDQTFlu1SDNw5jK/kbr0Vh5eWg0h5jGosi0ul4=
+	b=zrwbBU+n2UAfGqd/fL8VAc2VVuVwyfjuJQ7COdMX6XA34cMueuLqDhPJGLzQLycrc
+	 dLxkjRBVTmrPQGQjdc0IobkySYm678cvBcmfXqa2ZP+KxvG/zj2jfCaQ+/EzZeU2dt
+	 4/OFGwG3lKl6+8Q232Gi9menrgUa50RzYc5/oP9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 404/414] perf: Fix cgroup state vs ERROR
-Date: Mon, 23 Jun 2025 15:09:01 +0200
-Message-ID: <20250623130652.039085986@linuxfoundation.org>
+	Yao Zi <ziyao@disroot.org>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 444/508] platform/loongarch: laptop: Unregister generic_sub_drivers on exit
+Date: Mon, 23 Jun 2025 15:08:09 +0200
+Message-ID: <20250623130656.085776152@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,136 +46,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Yao Zi <ziyao@disroot.org>
 
-[ Upstream commit 61988e36dc5457cdff7ae7927e8d9ad1419ee998 ]
+commit f78fb2576f22b0ba5297412a9aa7691920666c41 upstream.
 
-While chasing down a missing perf_cgroup_event_disable() elsewhere,
-Leo Yan found that both perf_put_aux_event() and
-perf_remove_sibling_event() were also missing one.
+Without correct unregisteration, ACPI notify handlers and the platform
+drivers installed by generic_subdriver_init() will become dangling
+references after removing the loongson_laptop module, triggering various
+kernel faults when a hotkey is sent or at kernel shutdown.
 
-Specifically, the rule is that events that switch to OFF,ERROR need to
-call perf_cgroup_event_disable().
-
-Unify the disable paths to ensure this.
-
-Fixes: ab43762ef010 ("perf: Allow normal events to output AUX data")
-Fixes: 9f0c4fa111dc ("perf/core: Add a new PERF_EV_CAP_SIBLING event capability")
-Reported-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250605123343.GD35970@noisy.programming.kicks-ass.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6246ed09111f ("LoongArch: Add ACPI-based generic laptop driver")
+Signed-off-by: Yao Zi <ziyao@disroot.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c | 51 ++++++++++++++++++++++++++------------------
- 1 file changed, 30 insertions(+), 21 deletions(-)
+ drivers/platform/loongarch/loongson-laptop.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index ed3bc2e390511..3389a5a2724df 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -2111,8 +2111,9 @@ perf_aux_output_match(struct perf_event *event, struct perf_event *aux_event)
- }
+--- a/drivers/platform/loongarch/loongson-laptop.c
++++ b/drivers/platform/loongarch/loongson-laptop.c
+@@ -611,11 +611,17 @@ static int __init generic_acpi_laptop_in
  
- static void put_event(struct perf_event *event);
--static void event_sched_out(struct perf_event *event,
--			    struct perf_event_context *ctx);
-+static void __event_disable(struct perf_event *event,
-+			    struct perf_event_context *ctx,
-+			    enum perf_event_state state);
- 
- static void perf_put_aux_event(struct perf_event *event)
+ static void __exit generic_acpi_laptop_exit(void)
  {
-@@ -2145,8 +2146,7 @@ static void perf_put_aux_event(struct perf_event *event)
- 		 * state so that we don't try to schedule it again. Note
- 		 * that perf_event_enable() will clear the ERROR status.
- 		 */
--		event_sched_out(iter, ctx);
--		perf_event_set_state(event, PERF_EVENT_STATE_ERROR);
-+		__event_disable(iter, ctx, PERF_EVENT_STATE_ERROR);
++	int i;
++
+ 	if (generic_inputdev) {
+-		if (input_device_registered)
+-			input_unregister_device(generic_inputdev);
+-		else
++		if (!input_device_registered) {
+ 			input_free_device(generic_inputdev);
++		} else {
++			input_unregister_device(generic_inputdev);
++
++			for (i = 0; i < ARRAY_SIZE(generic_sub_drivers); i++)
++				generic_subdriver_exit(&generic_sub_drivers[i]);
++		}
  	}
  }
  
-@@ -2204,18 +2204,6 @@ static inline struct list_head *get_event_list(struct perf_event *event)
- 				    &event->pmu_ctx->flexible_active;
- }
- 
--/*
-- * Events that have PERF_EV_CAP_SIBLING require being part of a group and
-- * cannot exist on their own, schedule them out and move them into the ERROR
-- * state. Also see _perf_event_enable(), it will not be able to recover
-- * this ERROR state.
-- */
--static inline void perf_remove_sibling_event(struct perf_event *event)
--{
--	event_sched_out(event, event->ctx);
--	perf_event_set_state(event, PERF_EVENT_STATE_ERROR);
--}
--
- static void perf_group_detach(struct perf_event *event)
- {
- 	struct perf_event *leader = event->group_leader;
-@@ -2251,8 +2239,15 @@ static void perf_group_detach(struct perf_event *event)
- 	 */
- 	list_for_each_entry_safe(sibling, tmp, &event->sibling_list, sibling_list) {
- 
-+		/*
-+		 * Events that have PERF_EV_CAP_SIBLING require being part of
-+		 * a group and cannot exist on their own, schedule them out
-+		 * and move them into the ERROR state. Also see
-+		 * _perf_event_enable(), it will not be able to recover this
-+		 * ERROR state.
-+		 */
- 		if (sibling->event_caps & PERF_EV_CAP_SIBLING)
--			perf_remove_sibling_event(sibling);
-+			__event_disable(sibling, ctx, PERF_EVENT_STATE_ERROR);
- 
- 		sibling->group_leader = sibling;
- 		list_del_init(&sibling->sibling_list);
-@@ -2512,6 +2507,15 @@ static void perf_remove_from_context(struct perf_event *event, unsigned long fla
- 	event_function_call(event, __perf_remove_from_context, (void *)flags);
- }
- 
-+static void __event_disable(struct perf_event *event,
-+			    struct perf_event_context *ctx,
-+			    enum perf_event_state state)
-+{
-+	event_sched_out(event, ctx);
-+	perf_cgroup_event_disable(event, ctx);
-+	perf_event_set_state(event, state);
-+}
-+
- /*
-  * Cross CPU call to disable a performance event
-  */
-@@ -2526,13 +2530,18 @@ static void __perf_event_disable(struct perf_event *event,
- 	perf_pmu_disable(event->pmu_ctx->pmu);
- 	ctx_time_update_event(ctx, event);
- 
-+	/*
-+	 * When disabling a group leader, the whole group becomes ineligible
-+	 * to run, so schedule out the full group.
-+	 */
- 	if (event == event->group_leader)
- 		group_sched_out(event, ctx);
--	else
--		event_sched_out(event, ctx);
- 
--	perf_event_set_state(event, PERF_EVENT_STATE_OFF);
--	perf_cgroup_event_disable(event, ctx);
-+	/*
-+	 * But only mark the leader OFF; the siblings will remain
-+	 * INACTIVE.
-+	 */
-+	__event_disable(event, ctx, PERF_EVENT_STATE_OFF);
- 
- 	perf_pmu_enable(event->pmu_ctx->pmu);
- }
--- 
-2.39.5
-
 
 
