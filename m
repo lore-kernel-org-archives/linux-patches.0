@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8421F2505CE;
-	Mon, 23 Jun 2025 13:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B792459FF;
+	Mon, 23 Jun 2025 13:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684302; cv=none; b=Tr1B0xrZxOLcOA8MLbKUEi0VFaFEAem1h7aGMOnFi0nURLKjuI1xXS3iMlf+fYrCHc7GXbqJkG6LjOajL4LDFHKn8ApH5EdZNGIk3aFuYrhjyc4jciVpgUM0P8J7wiHMocy3eGX1Lyi8SYai4Kzxt84sMFLoQulGj2xQFqo+YZU=
+	t=1750684305; cv=none; b=iN64yoLNg1bozjjRUQV8kihPm2XkONQYgq5azODMscWLrmUThGjoix/a/Ymy4EHQmvVYS2vm+BV0HbSIu9h8eaLFKPLNSE5++Nv4i8iuOxhp6LD3y1cZ9NJhfzRZm451Ru6AUujU0rUP3xRYyn9ryLzIynLEjWvVDButvo/Ko5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684302; c=relaxed/simple;
-	bh=sxU3OmJPwBBAJR8zd1RPoEbyapsOnWVZ2uGxbERTltA=;
+	s=arc-20240116; t=1750684305; c=relaxed/simple;
+	bh=Z+InN0LJH8lRUZYtcc2qQpN48gkPrIo0W7G/jgR3omA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvFPVAHvscDkrQsjRJVB5drBNbXKVEvNh+wa1L+mbVjR+t2Wh6fnu58Bn6hKN2x/qA8uQYcg2+Uv9iSXqxNDzURzLDWEsp9YTKzlJ+NLQu2b3gGdAa3a9yGouUCxplh9ScZoOEeG1bbswJQBhvRxcR8LvrOoWZ/1sWP94FXgU/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQ5aEnBz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DuBLomhm6Lwt2nFG7TWW05fK9ByPoVjpOMJwGHVKWO+MqtY8SMwMX33rIIl38cqeLpFltNwY4qtu/tRJ1wKR9DHeoQE8S5I7s/N7zayjxjk5Mo3epL1fBObfAqFlhtvIWEeD3BPAouxE0htD/r8TZUl0B4uFBZdN9fCtifGR4S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXK8EB5N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQ5aEnBz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DCBC4CEEA;
-	Mon, 23 Jun 2025 13:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXK8EB5N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A588C4CEEA;
+	Mon, 23 Jun 2025 13:11:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684302;
-	bh=sxU3OmJPwBBAJR8zd1RPoEbyapsOnWVZ2uGxbERTltA=;
+	s=korg; t=1750684304;
+	bh=Z+InN0LJH8lRUZYtcc2qQpN48gkPrIo0W7G/jgR3omA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQ5aEnBzaG3Pa37vLXcIj58JpnvIcCho8RBkz97TlP0hGJNV0EE5XHgwvNgHRBrOX
-	 wcwT80Z2v8Egrm0ZxiUMKE/YqKoiuUQ5HyODWQc78fh81WIc8og64HKS44QXhGt/ay
-	 4KDZ281IfML873O1X/vT/zn31Riv5gwA5iibbEkM=
+	b=wXK8EB5NK4ILx9A25j6AIiswRsenFTEH7eeHHzGlYlQBx0XXylQMsEW/cHjQQHOs6
+	 QVuBg+bk5B77jXMRYI9t4qYV2POZHZ2k323sikE2FdtManx5HIz3AlDGFIbX/TNytO
+	 Ge5AmY9Yg936VH+oNz2hSGWWZM7Rlf/TeEjjVVxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.15 017/592] io_uring: account drain memory to cgroup
-Date: Mon, 23 Jun 2025 14:59:35 +0200
-Message-ID: <20250623130700.634696878@linuxfoundation.org>
+Subject: [PATCH 6.15 018/592] io_uring/kbuf: account ring io_buffer_list memory
+Date: Mon, 23 Jun 2025 14:59:36 +0200
+Message-ID: <20250623130700.659346089@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -52,31 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit f979c20547e72568e3c793bc92c7522bc3166246 upstream.
+commit 475a8d30371604a6363da8e304a608a5959afc40 upstream.
 
-Account drain allocations against memcg. It's not a big problem as each
-such allocation is paired with a request, which is accounted, but it's
-nicer to follow the limits more closely.
+Follow the non-ringed pbuf struct io_buffer_list allocations and account
+it against the memcg. There is low chance of that being an actual
+problem as ring provided buffer should either pin user memory or
+allocate it, which is already accounted.
 
 Cc: stable@vger.kernel.org # 6.1
 Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/f8dfdbd755c41fd9c75d12b858af07dfba5bbb68.1746788718.git.asml.silence@gmail.com
+Link: https://lore.kernel.org/r/3985218b50d341273cafff7234e1a7e6d0db9808.1747150490.git.asml.silence@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    2 +-
+ io_uring/kbuf.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1689,7 +1689,7 @@ queue:
- 	spin_unlock(&ctx->completion_lock);
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -624,7 +624,7 @@ int io_register_pbuf_ring(struct io_ring
+ 		io_destroy_bl(ctx, bl);
+ 	}
  
- 	io_prep_async_link(req);
--	de = kmalloc(sizeof(*de), GFP_KERNEL);
-+	de = kmalloc(sizeof(*de), GFP_KERNEL_ACCOUNT);
- 	if (!de) {
- 		ret = -ENOMEM;
- 		io_req_defer_failed(req, ret);
+-	free_bl = bl = kzalloc(sizeof(*bl), GFP_KERNEL);
++	free_bl = bl = kzalloc(sizeof(*bl), GFP_KERNEL_ACCOUNT);
+ 	if (!bl)
+ 		return -ENOMEM;
+ 
 
 
