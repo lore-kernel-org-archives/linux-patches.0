@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0683F2628C;
-	Mon, 23 Jun 2025 21:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2CF2628C;
+	Mon, 23 Jun 2025 21:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713361; cv=none; b=gp/rBP7K9/BuQXTvEFzWxhAxBGR6HvEa2BIqshG3yvSsMAaY9IuCJIyZZmR5ZgojPuh6vjf+NuiBO++fcK1kgzBOHnFZOM+U9senHZLuhXPoyPxnJzGCWXQXCf+ORmAKg0Wj0ZU3MVz3w8ynBejTxX2lBe6xn7sNW4f7We+gWyI=
+	t=1750713363; cv=none; b=EjVkI6L5r/DOBIhKuAiP5siskjADtxCm1KPz6lMIFokzek74iCMa2K7bhiDyg6HAp2roDC7GAvvYdljp2oCtECzQjj2uXwTmXlGRnAPcNYz5ZqSj2IE4DcEXBmzLGvCkRyb5AmLGqWWX+ItSTJPcu1sAk1jLWZ/o86xdSMlPjl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713361; c=relaxed/simple;
-	bh=hQTFpyCcnptHsbqDaTG0LES4YhcjNCx5KpmXGMQqL9c=;
+	s=arc-20240116; t=1750713363; c=relaxed/simple;
+	bh=wDOjEp4ShBDsxnjTPeD6K+oHRmvtc8eyiZHTJRKYunw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7ry0/X3eDu+o0uTbaY/fgwjorhzJ+ECQGXWTklRKAdS2ljun0fnSM5GH7xasoXICA8kkpBdInflCWP26IOuOV58jDK7jOx6bTdrdYUy0RJTtfybS54DrFmQxjBmDfSTX81RlIYeWQcjtoiGbfCswhNzUh2Cp9KUt1SSNwqHlOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4vk5/+z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aY/UNdrAEpqOpIN+srY1LMJ+C7VixSxy/hxxJTMn6blZlfEeid6x+0eEm6Veqbzd+7P03L5qkgZ+ogbbtJ9mKtyKTVECnWard8KYDeMWpFyPt08kGATf3JevftupbAzibu/iouK7IADBKikqj8QDD/HqJVcNO0byhWIafJkRelc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xOO1d2m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4vk5/+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC31C4CEEA;
-	Mon, 23 Jun 2025 21:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xOO1d2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03734C4CEED;
+	Mon, 23 Jun 2025 21:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713360;
-	bh=hQTFpyCcnptHsbqDaTG0LES4YhcjNCx5KpmXGMQqL9c=;
+	s=korg; t=1750713363;
+	bh=wDOjEp4ShBDsxnjTPeD6K+oHRmvtc8eyiZHTJRKYunw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4vk5/+zT61hfqmIf59Pe1/+pIyPoIRWeQ2mAm0i2IweqAWouBavESwQTyU0zFce6
-	 hrXOk+UBUioTwHvs4o0KduCgEOlNbM4ub8iM2o44HE7VRO7Feqz9LGAB2v6mUi/NLT
-	 RVDh212Ml/QXT6QqgvbhLtLatk6QoPNWQ2W9/Xm4=
+	b=0xOO1d2mWr2jBW4WNRpMz/MryaxrPEpdgRjMV3VpSAebeuXHiZzKxQ6zMhjOYpPpS
+	 VbmP31oOQjS5LXHZtxRWrVc/i4b+erTWudsUGkIXVjFzwqZpPncsJcaLCXqfRmw4eL
+	 NSDEs4sGEcB6uR0yDOw65NWic8JsUXnMzlHAy8PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/508] vfio/type1: Fix error unwind in migration dirty bitmap allocation
-Date: Mon, 23 Jun 2025 15:02:17 +0200
-Message-ID: <20250623130647.519560294@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.6 062/290] ext4: factor out ext4_get_maxbytes()
+Date: Mon, 23 Jun 2025 15:05:23 +0200
+Message-ID: <20250623130628.870031309@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +49,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 4518e5a60c7fbf0cdff393c2681db39d77b4f87e ]
+commit dbe27f06fa38b9bfc598f8864ae1c5d5831d9992 upstream.
 
-When setting up dirty page tracking at the vfio IOMMU backend for
-device migration, if an error is encountered allocating a tracking
-bitmap, the unwind loop fails to free previously allocated tracking
-bitmaps.  This occurs because the wrong loop index is used to
-generate the tracking object.  This results in unintended memory
-usage for the life of the current DMA mappings where bitmaps were
-successfully allocated.
+There are several locations that get the correct maxbytes value based on
+the inode's block type. It would be beneficial to extract a common
+helper function to make the code more clear.
 
-Use the correct loop index to derive the tracking object for
-freeing during unwind.
-
-Fixes: d6a4c185660c ("vfio iommu: Implementation of ioctl for dirty pages tracking")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://lore.kernel.org/r/20250521034647.2877-1-lirongqing@baidu.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Link: https://patch.msgid.link/20250506012009.3896990-3-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/vfio_iommu_type1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/ext4.h    |    7 +++++++
+ fs/ext4/extents.c |    7 +------
+ fs/ext4/file.c    |    7 +------
+ 3 files changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-index 18a2dbbc77799..26fac124231f5 100644
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -299,7 +299,7 @@ static int vfio_dma_bitmap_alloc_all(struct vfio_iommu *iommu, size_t pgsize)
- 			struct rb_node *p;
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -3351,6 +3351,13 @@ static inline unsigned int ext4_flex_bg_
+ 	return 1 << sbi->s_log_groups_per_flex;
+ }
  
- 			for (p = rb_prev(n); p; p = rb_prev(p)) {
--				struct vfio_dma *dma = rb_entry(n,
-+				struct vfio_dma *dma = rb_entry(p,
- 							struct vfio_dma, node);
++static inline loff_t ext4_get_maxbytes(struct inode *inode)
++{
++	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
++		return inode->i_sb->s_maxbytes;
++	return EXT4_SB(inode->i_sb)->s_bitmap_maxbytes;
++}
++
+ #define ext4_std_error(sb, errno)				\
+ do {								\
+ 	if ((errno))						\
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -4970,12 +4970,7 @@ static const struct iomap_ops ext4_iomap
  
- 				vfio_dma_bitmap_free(dma);
--- 
-2.39.5
-
+ static int ext4_fiemap_check_ranges(struct inode *inode, u64 start, u64 *len)
+ {
+-	u64 maxbytes;
+-
+-	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
+-		maxbytes = inode->i_sb->s_maxbytes;
+-	else
+-		maxbytes = EXT4_SB(inode->i_sb)->s_bitmap_maxbytes;
++	u64 maxbytes = ext4_get_maxbytes(inode);
+ 
+ 	if (*len == 0)
+ 		return -EINVAL;
+--- a/fs/ext4/file.c
++++ b/fs/ext4/file.c
+@@ -898,12 +898,7 @@ static int ext4_file_open(struct inode *
+ loff_t ext4_llseek(struct file *file, loff_t offset, int whence)
+ {
+ 	struct inode *inode = file->f_mapping->host;
+-	loff_t maxbytes;
+-
+-	if (!(ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
+-		maxbytes = EXT4_SB(inode->i_sb)->s_bitmap_maxbytes;
+-	else
+-		maxbytes = inode->i_sb->s_maxbytes;
++	loff_t maxbytes = ext4_get_maxbytes(inode);
+ 
+ 	switch (whence) {
+ 	default:
 
 
