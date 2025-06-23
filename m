@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656D41DF98B;
-	Mon, 23 Jun 2025 21:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1461DF98B;
+	Mon, 23 Jun 2025 21:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713285; cv=none; b=hjSjzO6PZUKDprlyEwDKrg8OdHnLaTkMG7GS/q2Z30JTAUbOUofKFO+vKdpGZ5UzR1lVTYyDtGETfQx3MjLHcakZjWTgL8WikNFO7tIrYGttoX/2eP3Hats+yMkxfm/OAYI3ztUlDnsxC52LBwXUzfDLVrKNlCh4mCgBOIoH+Nc=
+	t=1750713287; cv=none; b=H7Hj/7YnseahQ3d06YmkBMmm5KEm37+0NrWJmT7ebQ+jjzyx9y4mtS+VdiefbLKyaGxWMuwU+TIv3Ub/BmvER2/V2oZDeKceBUdXtXFp4OGK4InkI1EQT6Ef0QAEUIigFqbk42FcJkp7LnPPin3xQTiirteOw/RpHmU4XoVSeyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713285; c=relaxed/simple;
-	bh=fmv1/WROGjvSvxvlwBkkW2i5dL06c6JNnKPH43Gy9mQ=;
+	s=arc-20240116; t=1750713287; c=relaxed/simple;
+	bh=i6Mi3VGG2110GuPRZtd1AUGedilNtko8Y+rM69Mqrtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcZfLLTRnWTg2Hy+ZGzUJ9dEZxi/UbnP7JCwMhs1O2pnDgXGRO8oP44tNPmsYsafJMpv2ADeo3lHsLYdJGISyiJvyy7EfDsKPyLU1WF3y5rpLX14OwbQ4Fs9gL7hiB68hfZXh4NkqKR9WE2dOle2zNnlQ2bAsyvTauoA80bDOCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7sGM9/p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CzJGn35wzY0bS/kfAuEeOUnnPgq5iD/3IQdhx3kDBsGa2Lb/92eTs62wVyNL8lJYR7WpSestYXWhncUcyu3SaBa/9NZCZL2BAL672QnLNpWPUr/vANHusH3pfcTT8q1FNEi5mJl2/hMitEvhbZr+izaKjJ1ioEZXDW/bGtVmBIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtiahedY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7sGM9/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D38C4CEEA;
-	Mon, 23 Jun 2025 21:14:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtiahedY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BECC4CEEA;
+	Mon, 23 Jun 2025 21:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713285;
-	bh=fmv1/WROGjvSvxvlwBkkW2i5dL06c6JNnKPH43Gy9mQ=;
+	s=korg; t=1750713287;
+	bh=i6Mi3VGG2110GuPRZtd1AUGedilNtko8Y+rM69Mqrtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K7sGM9/pX5c+2luKNQv14eXCTJLWvTWCcb0jFdUtk6pvPh4LJteqG7L6qi8OUaWbb
-	 SssxbHtPUBWfOl9qrMVvsgB/sjo3kAGGxff7kof6HxDvnwh/+p+7TGClE1M/qM0/rZ
-	 IVSEuuOpHcN3+td/zz9MYxNh8yseB/stNkvku6qw=
+	b=PtiahedYfxpfJy1diwQzclpvCoaAIBKu5vtBYHwpCfUXoshsCW5Xpun0OFhcJxaoM
+	 5reHABFgwB3trG2gZSui2DXn++S7IRlZA9gid3LhIrw+SHe25GVcQZE5sThC6pnwmX
+	 IkUuWn7b5Z+mKSnY7cKGsgim9chJujbK/nAa53ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Longfang Liu <liulongfang@huawei.com>,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/508] ktls, sockmap: Fix missing uncharge operation
-Date: Mon, 23 Jun 2025 15:02:04 +0200
-Message-ID: <20250623130647.181217813@linuxfoundation.org>
+Subject: [PATCH 6.1 088/508] hisi_acc_vfio_pci: add eq and aeq interruption restore
+Date: Mon, 23 Jun 2025 15:02:13 +0200
+Message-ID: <20250623130647.414427829@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -53,57 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Longfang Liu <liulongfang@huawei.com>
 
-[ Upstream commit 79f0c39ae7d3dc628c01b02f23ca5d01f9875040 ]
+[ Upstream commit 3495cec0787721ba7a9d5c19d0bbb66d182de584 ]
 
-When we specify apply_bytes, we divide the msg into multiple segments,
-each with a length of 'send', and every time we send this part of the data
-using tcp_bpf_sendmsg_redir(), we use sk_msg_return_zero() to uncharge the
-memory of the specified 'send' size.
+In order to ensure that the task packets of the accelerator
+device are not lost during the migration process, it is necessary
+to send an EQ and AEQ command to the device after the live migration
+is completed and to update the completion position of the task queue.
 
-However, if the first segment of data fails to send, for example, the
-peer's buffer is full, we need to release all of the msg. When releasing
-the msg, we haven't uncharged the memory of the subsequent segments.
+Let the device recheck the completed tasks data and if there are
+uncollected packets, device resend a task completion interrupt
+to the software.
 
-This modification does not make significant logical changes, but only
-fills in the missing uncharge places.
-
-This issue has existed all along, until it was exposed after we added the
-apply test in test_sockmap:
-commit 3448ad23b34e ("selftests/bpf: Add apply_bytes test to test_txmsg_redir_wait_sndmem in test_sockmap")
-
-Fixes: d3b18ad31f93 ("tls: add bpf support to sk_msg handling")
-Reported-by: Cong Wang <xiyou.wangcong@gmail.com>
-Closes: https://lore.kernel.org/bpf/aAmIi0vlycHtbXeb@pop-os.localdomain/T/#t
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
-Link: https://lore.kernel.org/r/20250425060015.6968-2-jiayuan.chen@linux.dev
+Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
+Signed-off-by: Longfang Liu <liulongfang@huawei.com>
+Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Link: https://lore.kernel.org/r/20250510081155.55840-3-liulongfang@huawei.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index af820ae9b1a52..5f95f837dfc7f 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -904,6 +904,13 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 					    &msg_redir, send, flags);
- 		lock_sock(sk);
- 		if (err < 0) {
-+			/* Regardless of whether the data represented by
-+			 * msg_redir is sent successfully, we have already
-+			 * uncharged it via sk_msg_return_zero(). The
-+			 * msg->sg.size represents the remaining unprocessed
-+			 * data, which needs to be uncharged here.
-+			 */
-+			sk_mem_uncharge(sk, msg->sg.size);
- 			*copied -= sk_msg_free_nocharge(sk, &msg_redir);
- 			msg->sg.size = 0;
- 		}
+diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+index b5efb37712d5e..de3e1a148ddab 100644
+--- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
++++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+@@ -469,6 +469,19 @@ static int vf_qm_get_match_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 	return 0;
+ }
+ 
++static void vf_qm_xeqc_save(struct hisi_qm *qm,
++			    struct hisi_acc_vf_migration_file *migf)
++{
++	struct acc_vf_data *vf_data = &migf->vf_data;
++	u16 eq_head, aeq_head;
++
++	eq_head = vf_data->qm_eqc_dw[0] & 0xFFFF;
++	qm_db(qm, 0, QM_DOORBELL_CMD_EQ, eq_head, 0);
++
++	aeq_head = vf_data->qm_aeqc_dw[0] & 0xFFFF;
++	qm_db(qm, 0, QM_DOORBELL_CMD_AEQ, aeq_head, 0);
++}
++
+ static int vf_qm_load_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 			   struct hisi_acc_vf_migration_file *migf)
+ {
+@@ -569,6 +582,9 @@ static int vf_qm_state_save(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 	}
+ 
+ 	migf->total_length = sizeof(struct acc_vf_data);
++	/* Save eqc and aeqc interrupt information */
++	vf_qm_xeqc_save(vf_qm, migf);
++
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
