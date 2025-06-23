@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BD5242D90;
-	Mon, 23 Jun 2025 13:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3D124BBE4;
+	Mon, 23 Jun 2025 13:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684856; cv=none; b=Pu5MSfrMpkxjN+5SUERRtPBhhx5Paezjxpxl3Lntr3iur9Gs8XhOQb/tWHzTZFo3VRAgeDnL78rhPK0MaYPZmMNei0QZmN48XNbyDsGim22q9ia7t2hVRoQ8aGxwUHH/Ccf4vz5aiveCtSTuhKb0JfSYW8makdGF8ry4fIrY52Y=
+	t=1750684859; cv=none; b=k5BUyMHqN8sL0hQhODD8oIHqipYeBAtPYOad/l74CUGzj5CyQoubG2q1+QZ7KoaSSioFpa51/MI5CTqZ18lAGx/YBSAebD1w+CYOzGZj/tI2bxlStrrJ0/bV0M/qtyjJfFVe6v2xCjBgjEOBfILkvvwOnKAcI9DukXnuhRq+dsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684856; c=relaxed/simple;
-	bh=bI3NzLKfnI6Dqe1Th8dPj0Xsxk8gsh9qBMEzYcU5zRU=;
+	s=arc-20240116; t=1750684859; c=relaxed/simple;
+	bh=qxObiOjVLEbe7HopXL9RuYnz1JrPR+HomhiV5H1Kd1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KbfUXsa9wyT6CFj4PXnX0gyq6sIt7//BSVVpNl/+FcDvu+Cnqwwe0xOIhsBIoDPvB24L/murl8LncMe8jGofMqN33GjNwAiwsd6ixTTR00iMI/kCgQIfwkITdxGeOHZI+Zu0XwrdVr3lY9dRAxGThloiaU/oGyLf/jE8fo7IGI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0kggG8Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o3SwwyquBslNIViEthV+Mpr7wJsZY2Tv6aTZi5BIojDx55thURjE/ITFqecNDC+r2skFqMokYLZHchW4+jKaBYVaLDwlL8zY4xr8zsnpTgL1/F8ygF0/XauoL1Liam9F7IKKeaI+PvMVHArqVuerfXyNLd50zRJoQdJiLz5sFiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCZwiK6I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0kggG8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E021C4CEEA;
-	Mon, 23 Jun 2025 13:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCZwiK6I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC1EC4CEF0;
+	Mon, 23 Jun 2025 13:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684856;
-	bh=bI3NzLKfnI6Dqe1Th8dPj0Xsxk8gsh9qBMEzYcU5zRU=;
+	s=korg; t=1750684859;
+	bh=qxObiOjVLEbe7HopXL9RuYnz1JrPR+HomhiV5H1Kd1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x0kggG8YyFXoTo22qXxZ00xY97KSRLpDD9a89F7t7fH/NK1H6O9LiKzyZjqCbQzAK
-	 q5lxxpxRTPoLwgYvOOXT5jNe4xAQXTa0898tNoUscDx2CJU3qDmyGvHHuj/gCHkojn
-	 YaUyNxKq/oYdT5NJhHmo4//MDuZT/reSxGhg10qs=
+	b=wCZwiK6Ia9lpepscR9PdLUV6ZD4rpZbbhyTqAKVxU22kggYEbn5Y+sz9uri4GprD9
+	 yRPBDceEoFi7781favDP8fATsquX8oG5bdqPj/UR8p2q+Q56Lrdofb9Ot+Gc0iG+M3
+	 5LE/xA+2bZNKGT2Mrd/MhXFWZJ+t2tquy+ZlamyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 023/222] drm: rcar-du: Fix memory leak in rcar_du_vsps_init()
-Date: Mon, 23 Jun 2025 15:05:58 +0200
-Message-ID: <20250623130612.597661839@linuxfoundation.org>
+Subject: [PATCH 5.4 040/222] f2fs: use d_inode(dentry) cleanup dentry->d_inode
+Date: Mon, 23 Jun 2025 15:06:15 +0200
+Message-ID: <20250623130613.108160386@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
 References: <20250623130611.896514667@linuxfoundation.org>
@@ -52,59 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit 91e3bf09a90bb4340c0c3c51396e7531555efda4 ]
+[ Upstream commit a6c397a31f58a1d577c2c8d04b624e9baa31951c ]
 
-The rcar_du_vsps_init() doesn't free the np allocated by
-of_parse_phandle_with_fixed_args() for the non-error case.
+no logic changes.
 
-Fix memory leak for the non-error case.
-
-While at it, replace the label 'error'->'done' as it applies to non-error
-case as well and update the error check condition for rcar_du_vsp_init()
-to avoid breakage in future, if it returns positive value.
-
-Fixes: 3e81374e2014 ("drm: rcar-du: Support multiple sources from the same VSP")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20231116122424.80136-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rcar-du/rcar_du_kms.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ fs/f2fs/namei.c | 8 ++++----
+ fs/f2fs/super.c | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/rcar-du/rcar_du_kms.c b/drivers/gpu/drm/rcar-du/rcar_du_kms.c
-index 2dc9caee87670..97c5b137add80 100644
---- a/drivers/gpu/drm/rcar-du/rcar_du_kms.c
-+++ b/drivers/gpu/drm/rcar-du/rcar_du_kms.c
-@@ -567,7 +567,7 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
- 		ret = of_parse_phandle_with_fixed_args(np, "vsps", cells, i,
- 						       &args);
- 		if (ret < 0)
--			goto error;
-+			goto done;
+diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
+index 99a91c746b399..e74e5d2570ef6 100644
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -329,7 +329,7 @@ static int f2fs_link(struct dentry *old_dentry, struct inode *dir,
  
- 		/*
- 		 * Add the VSP to the list or update the corresponding existing
-@@ -601,13 +601,11 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
- 		vsp->dev = rcdu;
+ 	if (is_inode_flag_set(dir, FI_PROJ_INHERIT) &&
+ 			(!projid_eq(F2FS_I(dir)->i_projid,
+-			F2FS_I(old_dentry->d_inode)->i_projid)))
++			F2FS_I(inode)->i_projid)))
+ 		return -EXDEV;
  
- 		ret = rcar_du_vsp_init(vsp, vsps[i].np, vsps[i].crtcs_mask);
--		if (ret < 0)
--			goto error;
-+		if (ret)
-+			goto done;
+ 	err = dquot_initialize(dir);
+@@ -869,7 +869,7 @@ static int f2fs_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 
+ 	if (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
+ 			(!projid_eq(F2FS_I(new_dir)->i_projid,
+-			F2FS_I(old_dentry->d_inode)->i_projid)))
++			F2FS_I(old_inode)->i_projid)))
+ 		return -EXDEV;
+ 
+ 	if (flags & RENAME_WHITEOUT) {
+@@ -1066,10 +1066,10 @@ static int f2fs_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 
+ 	if ((is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
+ 			!projid_eq(F2FS_I(new_dir)->i_projid,
+-			F2FS_I(old_dentry->d_inode)->i_projid)) ||
++			F2FS_I(old_inode)->i_projid)) ||
+ 	    (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
+ 			!projid_eq(F2FS_I(old_dir)->i_projid,
+-			F2FS_I(new_dentry->d_inode)->i_projid)))
++			F2FS_I(new_inode)->i_projid)))
+ 		return -EXDEV;
+ 
+ 	err = dquot_initialize(old_dir);
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index da51474596eff..d4ba9ad16a137 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1342,9 +1342,9 @@ static int f2fs_statfs(struct dentry *dentry, struct kstatfs *buf)
+ 	buf->f_fsid.val[1] = (u32)(id >> 32);
+ 
+ #ifdef CONFIG_QUOTA
+-	if (is_inode_flag_set(dentry->d_inode, FI_PROJ_INHERIT) &&
++	if (is_inode_flag_set(d_inode(dentry), FI_PROJ_INHERIT) &&
+ 			sb_has_quota_limits_enabled(sb, PRJQUOTA)) {
+-		f2fs_statfs_project(sb, F2FS_I(dentry->d_inode)->i_projid, buf);
++		f2fs_statfs_project(sb, F2FS_I(d_inode(dentry))->i_projid, buf);
  	}
- 
--	return 0;
--
--error:
-+done:
- 	for (i = 0; i < ARRAY_SIZE(vsps); ++i)
- 		of_node_put(vsps[i].np);
- 
+ #endif
+ 	return 0;
 -- 
 2.39.5
 
