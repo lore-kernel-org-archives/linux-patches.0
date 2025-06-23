@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DC64315A;
-	Mon, 23 Jun 2025 21:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0324315A;
+	Mon, 23 Jun 2025 21:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714860; cv=none; b=M5QGznJeoXYQNLRcj8rdP8L2qmn58U0D0CXIs86mZZ2uIfEKLUvNO+xabGl1E+0bqOJf0j9u6eMcYRO4ZfQowGmqdYLTcMZBbbLBrh6ah1jp5vQk2U8pUXl1i67LvBskkU+CRevzmvKHNWu9gvTAptz59sU0+1TQI/qGH1aZQ7s=
+	t=1750714863; cv=none; b=jiKBm8nTOagel2G67NpNnSNOHdMymBtMfsOZ9/b7mxH6mBC5vkPboX55uSZoeaCMjWn6iRBLDWFWQb7++pfSshR10dmoDJd8aMbfWuXwk3CTTJv5UntZM7qUITMVTissKaiQ+FpmdrgLWsQvKtTVpl3MhnV68QSr1nJ3Jg2NoIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714860; c=relaxed/simple;
-	bh=FRxTu3fHfYEum/TFb2S78o6VxtHCtIm9X4jkiAxPZQ4=;
+	s=arc-20240116; t=1750714863; c=relaxed/simple;
+	bh=PfilexD8Os8Wia3vVZLuYShLaPCWq4g3wn/+iA8g5GM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KwALObCcUI48H37ttwHLnLM1uaqmeXGUeAvYSDrhJiQ06NUmcKzZtKU1fZ+jD3XzASI7D6TLQ8dPpZ62LsIvLI3NntJtdMIZEiNV7vFJfGakIpPmwCzf0ztThiVysSS6iTo4E3RsxEUcaL6kYRaw+RogxBsbIDbvQibP8bncjLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgp5trTV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J0ea+8rT+fL8SUvLvnSvMfwFjfTwMVT6U1AiMA8ABJjYmjkOAYnJsAITOzcoX4cwmd8bU/zGafJFHNqRX2bZLw0nPq1o7Sdiva6J4kvpVttOqF3+ON6xR3KTN+aVco2sdtPvU0ejnzFAB7n8QCx7iTdncT9IdbJ0YfTQIr7Q/sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVAW/w/k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgp5trTV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E730C4CEEA;
-	Mon, 23 Jun 2025 21:41:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVAW/w/k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5D0C4CEEA;
+	Mon, 23 Jun 2025 21:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714860;
-	bh=FRxTu3fHfYEum/TFb2S78o6VxtHCtIm9X4jkiAxPZQ4=;
+	s=korg; t=1750714863;
+	bh=PfilexD8Os8Wia3vVZLuYShLaPCWq4g3wn/+iA8g5GM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hgp5trTVYukxYtM0pJA5Ts+ULd1i0cUhK+OAKT8ZG5Zhs6HmfeBq/fTf6gSpBFpLP
-	 5wtulOQmXHpU+ZHCaaydNq/o84KOcxS0eHZB3IZLd0QAnWKVG3NHJo+BkO1r7R1st9
-	 fWSldPTzjSlvaviG+2viFu5oyKNus+7wzE8kLcog=
+	b=RVAW/w/kqOz1daVJD3BVSRZAlyQ7f1Y7VkkE8PfaKTxVdnp5GMaNou5PJxqXuDnmo
+	 49MNTLjtEv8Ty5I05oWCNZP9LJK23XPZ9vO1wGAC6s4ovnyNsiXgaIGyzfyyYEJHHV
+	 pf4Mhi9x2n4322rI8KAQxcmAHlxmD7/eSGlAk5iM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 234/411] NFC: nci: uart: Set tty->disc_data only in success path
-Date: Mon, 23 Jun 2025 15:06:18 +0200
-Message-ID: <20250623130639.547496418@linuxfoundation.org>
+	David Ahern <dsahern@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 258/355] ipv4/route: Use this_cpu_inc() for stats on PREEMPT_RT
+Date: Mon, 23 Jun 2025 15:07:39 +0200
+Message-ID: <20250623130634.512700864@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit fc27ab48904ceb7e4792f0c400f1ef175edf16fe upstream.
+[ Upstream commit 1c0829788a6e6e165846b9bedd0b908ef16260b6 ]
 
-Setting tty->disc_data before opening the NCI device means we need to
-clean it up on error paths.  This also opens some short window if device
-starts sending data, even before NCIUARTSETDRIVER IOCTL succeeded
-(broken hardware?).  Close the window by exposing tty->disc_data only on
-the success path, when opening of the NCI device and try_module_get()
-succeeds.
+The statistics are incremented with raw_cpu_inc() assuming it always
+happens with bottom half disabled. Without per-CPU locking in
+local_bh_disable() on PREEMPT_RT this is no longer true.
 
-The code differs in error path in one aspect: tty->disc_data won't be
-ever assigned thus NULL-ified.  This however should not be relevant
-difference, because of "tty->disc_data=NULL" in nci_uart_tty_open().
+Use this_cpu_inc() on PREEMPT_RT for the increment to not worry about
+preemption.
 
-Cc: Linus Torvalds <torvalds@linuxfoundation.org>
-Fixes: 9961127d4bce ("NFC: nci: add generic uart support")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20250618073649.25049-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: David Ahern <dsahern@kernel.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20250512092736.229935-4-bigeasy@linutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/uart.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ipv4/route.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/nfc/nci/uart.c
-+++ b/net/nfc/nci/uart.c
-@@ -131,22 +131,22 @@ static int nci_uart_set_driver(struct tt
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index a2a7f2597e201..815b6b0089c29 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -197,7 +197,11 @@ const __u8 ip_tos2prio[16] = {
+ EXPORT_SYMBOL(ip_tos2prio);
  
- 	memcpy(nu, nci_uart_drivers[driver], sizeof(struct nci_uart));
- 	nu->tty = tty;
--	tty->disc_data = nu;
- 	skb_queue_head_init(&nu->tx_q);
- 	INIT_WORK(&nu->write_work, nci_uart_write_work);
- 	spin_lock_init(&nu->rx_lock);
+ static DEFINE_PER_CPU(struct rt_cache_stat, rt_cache_stat);
++#ifndef CONFIG_PREEMPT_RT
+ #define RT_CACHE_STAT_INC(field) raw_cpu_inc(rt_cache_stat.field)
++#else
++#define RT_CACHE_STAT_INC(field) this_cpu_inc(rt_cache_stat.field)
++#endif
  
- 	ret = nu->ops.open(nu);
- 	if (ret) {
--		tty->disc_data = NULL;
- 		kfree(nu);
-+		return ret;
- 	} else if (!try_module_get(nu->owner)) {
- 		nu->ops.close(nu);
--		tty->disc_data = NULL;
- 		kfree(nu);
- 		return -ENOENT;
- 	}
--	return ret;
-+	tty->disc_data = nu;
-+
-+	return 0;
- }
- 
- /* ------ LDISC part ------ */
+ #ifdef CONFIG_PROC_FS
+ static void *rt_cache_seq_start(struct seq_file *seq, loff_t *pos)
+-- 
+2.39.5
+
 
 
