@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98BE2550A3;
-	Mon, 23 Jun 2025 13:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438FB254B09;
+	Mon, 23 Jun 2025 13:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685356; cv=none; b=W822YSqO/Nd3r4oBWtNgcxV8OmRzU1RZlva7sh+x8RHvgaUwuaWkwSv1HEMZ4xHIhkflwjEjCH5w0SibBmQUFs/OnCEc+sjW2YiwF9gisWSzBIPirapyp+lZB69u62sk2BV/VJdB6kXmvNQ4BCs6bdpjXwKfE8ZKwfDLCVpc2fU=
+	t=1750685359; cv=none; b=LLSoUA4LH0kH1etM8Rf/tBfJ3ERJZaXsDKAMTxAlXSqglvT3ut3hMp/JxEfpr4ZubDRwvAMDA+aU6IN0CKTCAGkEg901ZoX/DdjFd3JRom7Df0hTPIuVjNrumEY6P0ziU+72IiFexw4hTragDK1tL3VA7BgyOkElBobCNlq4l28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685356; c=relaxed/simple;
-	bh=lxB82SZhNeH9KzzV+vZFvyUqBpptXoV5K2rfc3AoXkg=;
+	s=arc-20240116; t=1750685359; c=relaxed/simple;
+	bh=aPSZnO/c7Kw+JvRxAi+U1zt0pGrsAI+2MD+bynUp0+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sxc4Ph0NrfzICztuUreq5Hr2dQxycK/yvh3UvGyCScs81Giwibd66sKNYtMYzlf83D0RtN1isFuspjxiMLL+dsIWwmv7UJB75A+slcuMerQjdzQTYrdkzXY+em0PgPDfPXdBS6qHe8GUL+McdIfRkSPRxV3NbScAqvJvBV1IH5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQW0LckJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I8M2zoJpky3CfVEZftfiDx1SMpoXS5ef/sawXTts2b1Amr1XVAYdb7i37NMUvlr7flba+6Fs6/PTLnazHSTsOAvH9lhzxp/9jtcVPxhht8Maklpv4mJ57VLClBLbEbb8DG11oyyUFFhWwQqJSBU8XvR9UtqvsItBhQ9/3DmfDpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtCIqs7g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQW0LckJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4541FC4CEEA;
-	Mon, 23 Jun 2025 13:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtCIqs7g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB29FC4CEF1;
+	Mon, 23 Jun 2025 13:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685356;
-	bh=lxB82SZhNeH9KzzV+vZFvyUqBpptXoV5K2rfc3AoXkg=;
+	s=korg; t=1750685359;
+	bh=aPSZnO/c7Kw+JvRxAi+U1zt0pGrsAI+2MD+bynUp0+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JQW0LckJzAhwXWO3bRGYExw83peOdH69EFC72X1M2uV5cADC7U0eFaGyOljYRB89A
-	 SvWYNcfAVFLywvmEVk3uWuhz6eub/MOL17J3PfvcQnnl8/kFCDs7OUHnxoRGfqUmbp
-	 8XzWVC7kbO+eKhbRCXxQD6NuY7B15sNy5Q89KSRk=
+	b=FtCIqs7gsNdJxfWHcSBKnzTNpF6TS1aHEX0mgAKLsfcBtokTXAuJs9DSzzkF03Dfg
+	 AV5q1WSuQJZc27tHIFOphWhYb//MwpOaEKOEIGht+Z6uXHyilkoqh7iUtgCG0mlTtD
+	 UgJQ9jlKg6CTA/duqZJ3UIOdxl8ex0AdQ7fisOPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Thompson <funaho@jurai.org>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 030/411] m68k: mac: Fix macintosh_config for Mac II
-Date: Mon, 23 Jun 2025 15:02:54 +0200
-Message-ID: <20250623130633.903393596@linuxfoundation.org>
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.1 003/508] pinctrl: armada-37xx: use correct OUTPUT_VAL register for GPIOs > 31
+Date: Mon, 23 Jun 2025 15:00:48 +0200
+Message-ID: <20250623130645.342973608@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,50 +48,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 52ae3f5da7e5adbe3d1319573b55dac470abb83c ]
+commit 947c93eb29c2a581c0b0b6d5f21af3c2b7ff6d25 upstream.
 
-When booted on my Mac II, the kernel prints this:
+The controller has two consecutive OUTPUT_VAL registers and both
+holds output value for 32 GPIOs. Due to a missing adjustment, the
+current code always uses the first register while setting the
+output value whereas it should use the second one for GPIOs > 31.
 
-    Detected Macintosh model: 6
-    Apple Macintosh Unknown
+Add the missing armada_37xx_update_reg() call to adjust the register
+according to the 'offset' parameter of the function to fix the issue.
 
-The catch-all entry ("Unknown") is mac_data_table[0] which is only needed
-in the unlikely event that the bootinfo model ID can't be matched.
-When model ID is 6, the search should begin and end at mac_data_table[1].
-Fix the off-by-one error that causes this problem.
-
-Cc: Joshua Thompson <funaho@jurai.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/d0f30a551064ca4810b1c48d5a90954be80634a9.1745453246.git.fthain@linux-m68k.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6702abb3bf23 ("pinctrl: armada-37xx: Fix direction_output() callback behavior")
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-1-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/m68k/mac/config.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/m68k/mac/config.c b/arch/m68k/mac/config.c
-index 5d16f9b47aa90..75a5dd778d882 100644
---- a/arch/m68k/mac/config.c
-+++ b/arch/m68k/mac/config.c
-@@ -798,7 +798,7 @@ static void __init mac_identify(void)
- 	}
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -419,6 +419,7 @@ static int armada_37xx_gpio_direction_ou
+ 					     unsigned int offset, int value)
+ {
+ 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
++	unsigned int val_offset = offset;
+ 	unsigned int reg = OUTPUT_EN;
+ 	unsigned int mask, val, ret;
  
- 	macintosh_config = mac_data_table;
--	for (m = macintosh_config; m->ident != -1; m++) {
-+	for (m = &mac_data_table[1]; m->ident != -1; m++) {
- 		if (m->ident == model) {
- 			macintosh_config = m;
- 			break;
--- 
-2.39.5
-
+@@ -431,6 +432,8 @@ static int armada_37xx_gpio_direction_ou
+ 		return ret;
+ 
+ 	reg = OUTPUT_VAL;
++	armada_37xx_update_reg(&reg, &val_offset);
++
+ 	val = value ? mask : 0;
+ 	regmap_update_bits(info->regmap, reg, mask, val);
+ 
 
 
