@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3960D2417C3;
-	Mon, 23 Jun 2025 13:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC8523F295;
+	Mon, 23 Jun 2025 13:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684379; cv=none; b=VZ8o2scnB7yP7B5U/4AG/NCi2T8Q0pnYKgZcBfGtmBYTYL3RL+SOV9oKFDv5CpbfF+9R/CL1aY16UKwnyA0AGEDZtUNTxqGgGlv8TMtDF0D6cnWQ8d0NgmoEx3FS2u7YU8ow0ViFKV6bZ5KGKXwvM/l6oUy0SUflnFXQZKfoDLE=
+	t=1750684381; cv=none; b=SYljbz4AZxDXkFIpjCtfdwetVrAh13pus42T/JsvOmNa5UC+n8CsaHpkSdp8HEV2xQJwfiCGAQRgDhAWqyZXghTeFtM4+MbfJNTBCvm8aSGV+UK1LMOho8QzdgJRWVXQCmixC72B2ZOwutwq+BfrIBUikPrdYXfeXnwFU0G4SsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684379; c=relaxed/simple;
-	bh=shZIPhNd1OD6DZPBRpaIzNuiwjmLzoSKjQoy9IaSRCo=;
+	s=arc-20240116; t=1750684381; c=relaxed/simple;
+	bh=fWA3eHFjuhU+7OCPICQBLYhed1XOPrpME+fVUpcEWpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gj977HQFQwVl4kRCOh3voAPEg5oLZel/VQqsF4QGqxK3hsUKzyzHWzZnSHHOw6C+yVbArTbx1nwQ1qi1CzRwM0htswUVAgG+foVLDT2xKvz2oSQu7aF6i9dhJnlJiJeovO4zs03R9HG++f3QzRl0ogTUGOiDowOoqnV5RrByvYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FECj383h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nfKi0rbhFj9wlpngy/1ZhyV8Cs6atQ2bu7aDFn5KdT5KZeFjQFiLlvoUPt/BixA6Ea85u1+k5/GVRx21jGJFV9seKJFQSDfvu49G0NuzRCEfLKAUAsIsk8OCBZbG9ew0K+7B5gXu/Y3p9r/zOq7fgxeUH2eCkDW7oFpwqMxL2aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sv3pOMDj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FECj383h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C310CC4CEEA;
-	Mon, 23 Jun 2025 13:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sv3pOMDj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6113CC4CEEA;
+	Mon, 23 Jun 2025 13:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684379;
-	bh=shZIPhNd1OD6DZPBRpaIzNuiwjmLzoSKjQoy9IaSRCo=;
+	s=korg; t=1750684381;
+	bh=fWA3eHFjuhU+7OCPICQBLYhed1XOPrpME+fVUpcEWpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FECj383h4AEhKR5sng6+Aa8aZG48K1NKVq2690ODoILgqr2l/eeig+OiO/VKvuCaS
-	 nwltNFRQDaHDVlpg83qYp/XVHpqdIugUTbyF39UefRpYrQ15zVu1WWHlL7z2quCr5r
-	 NwBbTFbSkB9/ryFYOxXcinmTlOeETSwLH9w+jnCc=
+	b=sv3pOMDjWE9MwbhoqWeIMJh0IW5yNVx6y2yuk8xIamKghnIlhVI5Y6ZoAABiOINZq
+	 KwqDeeXTchtam2WRoH5MNZ9LLnkQ0042EfPjrV4hXidiZ5+azmMVH3/tk8BowkryGC
+	 RdgdHMSfjjNao4sW2FzDAYpgh7pQHwF5j7bxgfzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
+	Scott Mayhew <smayhew@redhat.com>,
 	Jeff Layton <jlayton@kernel.org>,
+	Benjamin Coddington <bcodding@redhat.com>,
 	Anna Schumaker <anna.schumaker@oracle.com>
-Subject: [PATCH 6.15 046/592] NFS: always probe for LOCALIO support asynchronously
-Date: Mon, 23 Jun 2025 15:00:04 +0200
-Message-ID: <20250623130701.340340225@linuxfoundation.org>
+Subject: [PATCH 6.15 047/592] NFSv4: Dont check for OPEN feature support in v4.1
+Date: Mon, 23 Jun 2025 15:00:05 +0200
+Message-ID: <20250623130701.363786313@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -51,101 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Scott Mayhew <smayhew@redhat.com>
 
-commit 1ff4716f420b5a6e6ef095b23bb5db76f46be7fc upstream.
+commit 4d4832ed13ff505fe0371544b4773e79be2bb964 upstream.
 
-It was reported that NFS client mounts of AWS Elastic File System
-(EFS) volumes is slow, this is because the AWS firewall disallows
-LOCALIO (because it doesn't consider the use of NFS_LOCALIO_PROGRAM
-valid), see: https://bugzilla.redhat.com/show_bug.cgi?id=2335129
+fattr4_open_arguments is a v4.2 recommended attribute, so we shouldn't
+be sending it to v4.1 servers.
 
-Switch to performing the LOCALIO probe asynchronously to address the
-potential for the NFS LOCALIO protocol being disallowed and/or slowed
-by the remote server's response.
-
-While at it, fix nfs_local_probe_async() to always take/put a
-reference on the nfs_client that is using the LOCALIO protocol.
-Also, unexport the nfs_local_probe() symbol and make it private to
-fs/nfs/localio.c
-
-This change has the side-effect of initially issuing reads, writes and
-commits over the wire via SUNRPC until the LOCALIO probe completes.
-
-Suggested-by: Jeff Layton <jlayton@kernel.org> # to always probe async
-Fixes: 76d4cb6345da ("nfs: probe for LOCALIO when v4 client reconnects to server")
-Cc: stable@vger.kernel.org # 6.14+
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: cb78f9b7d0c0 ("nfs: fix the fetch of FATTR4_OPEN_ARGUMENTS")
+Signed-off-by: Scott Mayhew <smayhew@redhat.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Cc: stable@vger.kernel.org # 6.11+
 Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/client.c                           |    2 +-
- fs/nfs/flexfilelayout/flexfilelayoutdev.c |    2 +-
- fs/nfs/internal.h                         |    1 -
- fs/nfs/localio.c                          |    6 ++++--
- 4 files changed, 6 insertions(+), 5 deletions(-)
+ fs/nfs/nfs4proc.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/nfs/client.c
-+++ b/fs/nfs/client.c
-@@ -439,7 +439,7 @@ struct nfs_client *nfs_get_client(const
- 			spin_unlock(&nn->nfs_client_lock);
- 			new = rpc_ops->init_client(new, cl_init);
- 			if (!IS_ERR(new))
--				 nfs_local_probe(new);
-+				 nfs_local_probe_async(new);
- 			return new;
- 		}
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -3976,8 +3976,9 @@ static int _nfs4_server_capabilities(str
+ 		     FATTR4_WORD0_CASE_INSENSITIVE |
+ 		     FATTR4_WORD0_CASE_PRESERVING;
+ 	if (minorversion)
+-		bitmask[2] = FATTR4_WORD2_SUPPATTR_EXCLCREAT |
+-			     FATTR4_WORD2_OPEN_ARGUMENTS;
++		bitmask[2] = FATTR4_WORD2_SUPPATTR_EXCLCREAT;
++	if (minorversion > 1)
++		bitmask[2] |= FATTR4_WORD2_OPEN_ARGUMENTS;
  
---- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-@@ -400,7 +400,7 @@ nfs4_ff_layout_prepare_ds(struct pnfs_la
- 		 * keep ds_clp even if DS is local, so that if local IO cannot
- 		 * proceed somehow, we can fall back to NFS whenever we want.
- 		 */
--		nfs_local_probe(ds->ds_clp);
-+		nfs_local_probe_async(ds->ds_clp);
- 		max_payload =
- 			nfs_block_size(rpc_max_payload(ds->ds_clp->cl_rpcclient),
- 				       NULL);
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -455,7 +455,6 @@ extern int nfs_wait_bit_killable(struct
- 
- #if IS_ENABLED(CONFIG_NFS_LOCALIO)
- /* localio.c */
--extern void nfs_local_probe(struct nfs_client *);
- extern void nfs_local_probe_async(struct nfs_client *);
- extern void nfs_local_probe_async_work(struct work_struct *);
- extern struct nfsd_file *nfs_local_open_fh(struct nfs_client *,
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -171,7 +171,7 @@ static bool nfs_server_uuid_is_local(str
-  * - called after alloc_client and init_client (so cl_rpcclient exists)
-  * - this function is idempotent, it can be called for old or new clients
-  */
--void nfs_local_probe(struct nfs_client *clp)
-+static void nfs_local_probe(struct nfs_client *clp)
- {
- 	/* Disallow localio if disabled via sysfs or AUTH_SYS isn't used */
- 	if (!localio_enabled ||
-@@ -191,14 +191,16 @@ void nfs_local_probe(struct nfs_client *
- 		nfs_localio_enable_client(clp);
- 	nfs_uuid_end(&clp->cl_uuid);
- }
--EXPORT_SYMBOL_GPL(nfs_local_probe);
- 
- void nfs_local_probe_async_work(struct work_struct *work)
- {
- 	struct nfs_client *clp =
- 		container_of(work, struct nfs_client, cl_local_probe_work);
- 
-+	if (!refcount_inc_not_zero(&clp->cl_count))
-+		return;
- 	nfs_local_probe(clp);
-+	nfs_put_client(clp);
- }
- 
- void nfs_local_probe_async(struct nfs_client *clp)
+ 	status = nfs4_call_sync(server->client, server, &msg, &args.seq_args, &res.seq_res, 0);
+ 	if (status == 0) {
 
 
