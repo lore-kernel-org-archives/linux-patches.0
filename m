@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62051253F2D;
-	Mon, 23 Jun 2025 13:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC58253F2D;
+	Mon, 23 Jun 2025 13:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685016; cv=none; b=cEMjd1RbVSfvGgwSoTaj2gVhft0sDmU6wZ5NYv8DaZow5J6T+Ntm/mp7f70uzRbT7k81RCCMEYmy9ectOQUPbBKV1fRA32wrsrS0z9Lc1GwHaDxzEDfoDcP83na9K7ahnqW57Srx+IOobP7ZBV27TweZpLW4Oi3bb5UtHoPQkSY=
+	t=1750685019; cv=none; b=NLW0nEpSwxhc6xbmVzEG/aMoV5goPD0vMHZxcZ980u7RB1tkfA6qdwDhWeMA0x16qCkh6OwJhACgrYCLmTfyctYbX3P1/ZfuzJWLowZyGTrcCf7RFN4GxGKMEj4aUPbtyJWHe1rP3/mJeFtp5Wv70n6F4gfhu1LNWQ1GKJKlN00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685016; c=relaxed/simple;
-	bh=zsNAi8/jHhbvscy6HbldMBiWUUnLtMQbx+ntGUTB3QM=;
+	s=arc-20240116; t=1750685019; c=relaxed/simple;
+	bh=6n1HJNjZntPUU4HrqWG4BSHgcAHjRGQ6+bHLNnss/A8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G4iIQBuwJmeRha0dCFhh1Qrf4b5ufhzwLhDQNZeD7fP+rxmqgfR4zKC9d/416T4dyqmFzf3XLRNNP6+QjxiToS0PnYVpnF8n93lYWX+NzfkblEuchDeUYtKMvcUcMzwCEyGhKXOh4WtkUCSBAGdjPzD29bLqwP2UtW0C8JRncnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SP+2Xqgo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CU5wzaNra9IqGBVJOfaUaHXmIoigKID6BoWkSunywc77o6S4BFOV/HTRAWaVkYaOfQtSO60deziHZuTnv2cjzQKO1VOQWb055AunycvaCq4xEhpArns5+3gi+teG6XkU2rULMX2COGBdNfBffhm2biFqv8OKNwCwFMZ73XdNtF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OoCRkRPN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SP+2Xqgo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6CC3C4CEEA;
-	Mon, 23 Jun 2025 13:23:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OoCRkRPN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697F2C4CEEA;
+	Mon, 23 Jun 2025 13:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685016;
-	bh=zsNAi8/jHhbvscy6HbldMBiWUUnLtMQbx+ntGUTB3QM=;
+	s=korg; t=1750685018;
+	bh=6n1HJNjZntPUU4HrqWG4BSHgcAHjRGQ6+bHLNnss/A8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SP+2XqgoCdFVz19P3sv0L5R3q+lmSxb+IODE9SvoJl2isCJMDaYdP7jLQmBDBT4J9
-	 loRaclu5LgGAuROH8AhmxRB/SnSasNSVlIYPhePJDyrUNdQlMMUytrfE8WNldyzpuM
-	 l7YcFAQ1xgPHQMRgLwIqBjcQRbTE0D6F/PoKKCFg=
+	b=OoCRkRPNfXB4uOssI36WeEL9edkf0MaMT1Pd0obCD4ygvj3DpoH4f7x2DHfW6jR/j
+	 WUX+JAl5uzY5l5PpyOkG+Rz6/bqdWz8C5xjrcQ6NFfikGmwvtk0lOPk4Lf7jdK5fU+
+	 o6CjOK8Fh7DsA/aWpAt6g8J8Af+6hKN2vecBeZfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Lee Jones <lee@kernel.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 058/222] mfd: exynos-lpass: Avoid calling exynos_lpass_disable() twice in exynos_lpass_remove()
-Date: Mon, 23 Jun 2025 15:06:33 +0200
-Message-ID: <20250623130613.857672777@linuxfoundation.org>
+Subject: [PATCH 5.10 023/355] ACPI: OSI: Stop advertising support for "3.0 _SCP Extensions"
+Date: Mon, 23 Jun 2025 15:03:44 +0200
+Message-ID: <20250623130627.497537158@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,39 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit b70b84556eeca5262d290e8619fe0af5b7664a52 ]
+[ Upstream commit 8cf4fdac9bdead7bca15fc56fdecdf78d11c3ec6 ]
 
-exynos_lpass_disable() is called twice in the remove function. Remove
-one of these calls.
+As specified in section 5.7.2 of the ACPI specification the feature
+group string "3.0 _SCP Extensions" implies that the operating system
+evaluates the _SCP control method with additional parameters.
 
-Fixes: 90f447170c6f ("mfd: exynos-lpass: Add runtime PM support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/74d69e8de10308c9855db6d54155a3de4b11abfd.1745247209.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Lee Jones <lee@kernel.org>
+However the ACPI thermal driver evaluates the _SCP control method
+without those additional parameters, conflicting with the above
+feature group string advertised to the firmware thru _OSI.
+
+Stop advertising support for this feature string to avoid confusing
+the ACPI firmware.
+
+Fixes: e5f660ebef68 ("ACPI / osi: Collect _OSI handling into one single file")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20250410165456.4173-2-W_Armin@gmx.de
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/exynos-lpass.c | 1 -
+ drivers/acpi/osi.c | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/drivers/mfd/exynos-lpass.c b/drivers/mfd/exynos-lpass.c
-index 99bd0e73c19c3..ffda3445d1c0f 100644
---- a/drivers/mfd/exynos-lpass.c
-+++ b/drivers/mfd/exynos-lpass.c
-@@ -144,7 +144,6 @@ static int exynos_lpass_remove(struct platform_device *pdev)
- {
- 	struct exynos_lpass *lpass = platform_get_drvdata(pdev);
- 
--	exynos_lpass_disable(lpass);
- 	pm_runtime_disable(&pdev->dev);
- 	if (!pm_runtime_status_suspended(&pdev->dev))
- 		exynos_lpass_disable(lpass);
+diff --git a/drivers/acpi/osi.c b/drivers/acpi/osi.c
+index 9f68538091384..d93409f2b2a07 100644
+--- a/drivers/acpi/osi.c
++++ b/drivers/acpi/osi.c
+@@ -42,7 +42,6 @@ static struct acpi_osi_entry
+ osi_setup_entries[OSI_STRING_ENTRIES_MAX] __initdata = {
+ 	{"Module Device", true},
+ 	{"Processor Device", true},
+-	{"3.0 _SCP Extensions", true},
+ 	{"Processor Aggregator Device", true},
+ 	/*
+ 	 * Linux-Dell-Video is used by BIOS to disable RTD3 for NVidia graphics
 -- 
 2.39.5
 
