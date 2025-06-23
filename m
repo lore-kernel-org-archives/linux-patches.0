@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457151E487;
-	Mon, 23 Jun 2025 13:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE8A4C6E;
+	Mon, 23 Jun 2025 13:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686089; cv=none; b=sSL9xND11szpJVrQ3wQ+As/xS9q/IRZSeHVXQ6i8RnegjZ4XmHtPt0igB5xWwOd5RnGPZHhBKanz+lE/trE2c6VGWPwqJwGHkudCp9GkMiGUt+d/Z7aQoTPc7LfJLSj6JzOtXfWovj6m1AfuRT0TcnEZSYgvkzevJgD4wZOAZoA=
+	t=1750686091; cv=none; b=tt9J4XqVE2sVJ/oRDV6dA3E9cCDjFxiVuzlc0Aw4djLLYArMy3EZUmf/mfg/JFgfTC0Qgvc+qnG/7mU9G5+flF/VznqlDFDPyssPIXKgM20rNosbvb5Yn/ok8dezNrDS8/rtdFUdmtgl5WRDKrBj2YjMENpzY1o3VMaO506bWPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686089; c=relaxed/simple;
-	bh=PU9ByO6dO/doDZKDkKU5lNMnZ5JWaBXXMhzn3cnxuOE=;
+	s=arc-20240116; t=1750686091; c=relaxed/simple;
+	bh=zwcWopX4dDTuaHc0y/CIqZNIjgXywO3vwK3x+GryTNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UbcG09bPV2aDex5T41wv+kptyF4cE0PTUPgx8CiDkN6nTu8t6g3aYfNO2mYsVFDuNxwzqtPOiQwsGJRuE/RCZqDd8uX/91/yYa34AXKjgRSdWdkiNlX9AnIn2zw1FMUP6n8yfy3pAbLi5UqVUPYZDD6FKvqLrhWK8p03E7IDly4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OvlOEztp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GOezYBAc4zFqiCIBL2T+iKBncgqVp5dOJpa/OpEoCMWzOUYu2JMi206UDO0KA/wRRV1IzBRTWAibM4te1mnV/FneQUzuaHn4wkNxXYgUfFikdZOnIejf4mocQk/Q9aK53I0FAlVn4EA6lGlzoCKTMAF8DjH6Ep0FpECdGeYT4uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+nlkQyk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OvlOEztp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD98BC4CEEA;
-	Mon, 23 Jun 2025 13:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+nlkQyk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F956C4CEEA;
+	Mon, 23 Jun 2025 13:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686089;
-	bh=PU9ByO6dO/doDZKDkKU5lNMnZ5JWaBXXMhzn3cnxuOE=;
+	s=korg; t=1750686091;
+	bh=zwcWopX4dDTuaHc0y/CIqZNIjgXywO3vwK3x+GryTNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OvlOEztpcW7HG3Qu500NG120AdnhhkSNTm9E+S5ZwoTPBkJjRDuYyofWiYuIxWUBe
-	 zIINYb/xqnSALD7lkC+cgWGv08emoNzNnOJ8OK+EUajE4+/9igtAi9FoTCZSR2thzV
-	 H2ldN6XncURgJ+HiOa6JDgH01s9k6BmulyOcQ9YA=
+	b=F+nlkQykmFoiGKk6bCMUaF+kr8dLgCqyoXjzD54CvJDqmA0ga1+ix/D8BuVIkHHwi
+	 85GpWZaQgk3aXiqLmAAx1WNl+GK754c4jrnavRQs+EGLgTq174rR/LRdRlMqpou3Xl
+	 3i6fXSy1vJHBGk03rAO/ID48THwkqZVQFCOjtSZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Lukasz Laguna <lukasz.laguna@intel.com>,
+	Neill Kapron <nkapron@google.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 280/592] drm/xe/vf: Fix guc_info debugfs for VFs
-Date: Mon, 23 Jun 2025 15:03:58 +0200
-Message-ID: <20250623130707.002905832@linuxfoundation.org>
+Subject: [PATCH 6.1 047/508] selftests/seccomp: fix syscall_restart test for arm compat
+Date: Mon, 23 Jun 2025 15:01:32 +0200
+Message-ID: <20250623130646.403332309@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,86 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Neill Kapron <nkapron@google.com>
 
-[ Upstream commit dba7d17d50b4488c697e991d18a0e55669d9fa59 ]
+[ Upstream commit 797002deed03491215a352ace891749b39741b69 ]
 
-The guc_info debugfs attempts to read a bunch of registers that the VFs
-doesn't have access to, so fix it by skipping the reads.
+The inconsistencies in the systcall ABI between arm and arm-compat can
+can cause a failure in the syscall_restart test due to the logic
+attempting to work around the differences. The 'machine' field for an
+ARM64 device running in compat mode can report 'armv8l' or 'armv8b'
+which matches with the string 'arm' when only examining the first three
+characters of the string.
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4775
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Lukasz Laguna <lukasz.laguna@intel.com>
-Reviewed-by: Lukasz Laguna <lukasz.laguna@intel.com>
-Link: https://lore.kernel.org/r/20250423173908.1571412-1-daniele.ceraolospurio@intel.com
+This change adds additional validation to the workaround logic to make
+sure we only take the arm path when running natively, not in arm-compat.
+
+Fixes: 256d0afb11d6 ("selftests/seccomp: build and pass on arm64")
+Signed-off-by: Neill Kapron <nkapron@google.com>
+Link: https://lore.kernel.org/r/20250427094103.3488304-2-nkapron@google.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc.c | 44 +++++++++++++++++++------------------
- 1 file changed, 23 insertions(+), 21 deletions(-)
+ tools/testing/selftests/seccomp/seccomp_bpf.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
-index bc5714a5b36b2..f082be4af4cff 100644
---- a/drivers/gpu/drm/xe/xe_guc.c
-+++ b/drivers/gpu/drm/xe/xe_guc.c
-@@ -1508,30 +1508,32 @@ void xe_guc_print_info(struct xe_guc *guc, struct drm_printer *p)
- 
- 	xe_uc_fw_print(&guc->fw, p);
- 
--	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
--	if (!fw_ref)
--		return;
-+	if (!IS_SRIOV_VF(gt_to_xe(gt))) {
-+		fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
-+		if (!fw_ref)
-+			return;
-+
-+		status = xe_mmio_read32(&gt->mmio, GUC_STATUS);
-+
-+		drm_printf(p, "\nGuC status 0x%08x:\n", status);
-+		drm_printf(p, "\tBootrom status = 0x%x\n",
-+			   REG_FIELD_GET(GS_BOOTROM_MASK, status));
-+		drm_printf(p, "\tuKernel status = 0x%x\n",
-+			   REG_FIELD_GET(GS_UKERNEL_MASK, status));
-+		drm_printf(p, "\tMIA Core status = 0x%x\n",
-+			   REG_FIELD_GET(GS_MIA_MASK, status));
-+		drm_printf(p, "\tLog level = %d\n",
-+			   xe_guc_log_get_level(&guc->log));
-+
-+		drm_puts(p, "\nScratch registers:\n");
-+		for (i = 0; i < SOFT_SCRATCH_COUNT; i++) {
-+			drm_printf(p, "\t%2d: \t0x%x\n",
-+				   i, xe_mmio_read32(&gt->mmio, SOFT_SCRATCH(i)));
-+		}
- 
--	status = xe_mmio_read32(&gt->mmio, GUC_STATUS);
--
--	drm_printf(p, "\nGuC status 0x%08x:\n", status);
--	drm_printf(p, "\tBootrom status = 0x%x\n",
--		   REG_FIELD_GET(GS_BOOTROM_MASK, status));
--	drm_printf(p, "\tuKernel status = 0x%x\n",
--		   REG_FIELD_GET(GS_UKERNEL_MASK, status));
--	drm_printf(p, "\tMIA Core status = 0x%x\n",
--		   REG_FIELD_GET(GS_MIA_MASK, status));
--	drm_printf(p, "\tLog level = %d\n",
--		   xe_guc_log_get_level(&guc->log));
--
--	drm_puts(p, "\nScratch registers:\n");
--	for (i = 0; i < SOFT_SCRATCH_COUNT; i++) {
--		drm_printf(p, "\t%2d: \t0x%x\n",
--			   i, xe_mmio_read32(&gt->mmio, SOFT_SCRATCH(i)));
-+		xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 	}
- 
--	xe_force_wake_put(gt_to_fw(gt), fw_ref);
--
- 	drm_puts(p, "\n");
- 	xe_guc_ct_print(&guc->ct, p, false);
- 
+diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
+index 4ae6c89913074..b300e87404d8e 100644
+--- a/tools/testing/selftests/seccomp/seccomp_bpf.c
++++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
+@@ -3136,12 +3136,15 @@ TEST(syscall_restart)
+ 	ret = get_syscall(_metadata, child_pid);
+ #if defined(__arm__)
+ 	/*
+-	 * FIXME:
+ 	 * - native ARM registers do NOT expose true syscall.
+ 	 * - compat ARM registers on ARM64 DO expose true syscall.
++	 * - values of utsbuf.machine include 'armv8l' or 'armb8b'
++	 *   for ARM64 running in compat mode.
+ 	 */
+ 	ASSERT_EQ(0, uname(&utsbuf));
+-	if (strncmp(utsbuf.machine, "arm", 3) == 0) {
++	if ((strncmp(utsbuf.machine, "arm", 3) == 0) &&
++	    (strncmp(utsbuf.machine, "armv8l", 6) != 0) &&
++	    (strncmp(utsbuf.machine, "armv8b", 6) != 0)) {
+ 		EXPECT_EQ(__NR_nanosleep, ret);
+ 	} else
+ #endif
 -- 
 2.39.5
 
