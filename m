@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9860A4C7F;
-	Mon, 23 Jun 2025 13:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8053D2505A9;
+	Mon, 23 Jun 2025 13:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685394; cv=none; b=sltbiLM76VbE7/QiDSUt1r/+PG9TRYZVBgtw0qqQt/1YANuIJw2wOosba7e/PyFbTpehB6RBupRRF4HvrAYERrFWV1DcgSC9OyTZUcR4Gl0rcuvKgDIuK9NeE0/h1JjYgyPx3QMQIJ4ITVjbKpGKRkRW9TLdyBv0jZC4hLzLa5k=
+	t=1750685397; cv=none; b=PKeamRcJGpfQGUo7anqVp15rvCSG0gO0ywU9rfYPkp4x07531l0PhxR8c/QlS6uklczdzpJWXrJKrN3rp6ZS+pPm4RQk+/YyKZ3frvmqX+5nwdK7vbROnfOOZqfHEdB5vixkxGR4RiZLcYMF3FilqlxT9k7y8SPB7sHYhECYEGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685394; c=relaxed/simple;
-	bh=APbQiXVDJiPDV5bOf2xaTGwZngAWfxgGbVCTPoVUBhg=;
+	s=arc-20240116; t=1750685397; c=relaxed/simple;
+	bh=PFKGPoHcThBjLaagnwO93QHiV3LMf7KgWY81VcDGGv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ch4K4J3KC/RtO3uJaF08U7HraQSyFb2T1TG3jkbkVX5yu/oinc0QQRRBOK+j6YUexuTsnsXAIkU5bjUO5hcfMqt9GmfbKOqDxl+3rytkz5/u6Y0NH59HsaXkxhjEVF5G2cGntN1qACmity0TifFabpZ4khcRVL4Pa6RKEZp1aj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5oy6f8x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZbpouEucpwjtDe2uKzAfWN1u17DFU4cDXYV1tW9ittAhuDuxlB9waFR2RV+NEM8cB9Sd3RefyS/kq/Zh2FGzaSLugRMNZJ46Q4XJIXtStXwyehngbEHM2K3TwYFdQc6R3qN2CbSiv20dCtL6vdxMBh9iyxD1fSvbmIdLNiflFIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NB45HzYH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5oy6f8x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C735C4CEEA;
-	Mon, 23 Jun 2025 13:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NB45HzYH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15092C4CEEA;
+	Mon, 23 Jun 2025 13:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685394;
-	bh=APbQiXVDJiPDV5bOf2xaTGwZngAWfxgGbVCTPoVUBhg=;
+	s=korg; t=1750685397;
+	bh=PFKGPoHcThBjLaagnwO93QHiV3LMf7KgWY81VcDGGv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y5oy6f8x0RuvVTVx9kOLlSflnumAtGZWxoREhMx4tZ+LqS5mAjiyTq64ISUPUFYpP
-	 itgjs38Ft1KObbyrBncguiJpsxo4I/BwXNicTh6a2hPF1lwe15cEbi6l+hX6FidMO8
-	 0kLzepzG1bQnwBdIpxuRPsNSToVK60uDVQ+7adnI=
+	b=NB45HzYH8Y7EvGThCeS8jLR5NiRzCRAbfv2BnbAgfeYSxZ2Jjpn/ffqxFPpirXtzM
+	 cTkjg5oHYX9aJN8t7XBbzXHZdcwzp+/23YqnJGPvcBx2A6+x3MRvlVE2By5puheYBq
+	 Zund5Pg0ASVAUAPv8WAJu0vyr5kp9vyrNI91oG1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
+	Ingo Saitz <ingo@hannover.ccc.de>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 238/592] drm/rockchip: inno-hdmi: Fix video timing HSYNC/VSYNC polarity setting for rk3036
-Date: Mon, 23 Jun 2025 15:03:16 +0200
-Message-ID: <20250623130705.949364848@linuxfoundation.org>
+Subject: [PATCH 5.10 073/355] randstruct: gcc-plugin: Fix attribute addition
+Date: Mon, 23 Jun 2025 15:04:34 +0200
+Message-ID: <20250623130629.020877474@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,128 +48,136 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit ad10b82c2bcac7f87ac6eaecfca33378b43425ee ]
+[ Upstream commit f39f18f3c3531aa802b58a20d39d96e82eb96c14 ]
 
-The HSYNC/VSYNC polarity of rk3036 HDMI are controlled by GRF.
-Without the polarity configuration in GRF, it can be observed
-from the HDMI protocol analyzer that the H/V front/back timing
-output by RK3036 HDMI are currently not in line with the specifications.
+Based on changes in the 2021 public version of the randstruct
+out-of-tree GCC plugin[1], more carefully update the attributes on
+resulting decls, to avoid tripping checks in GCC 15's
+comptypes_check_enum_int() when it has been configured with
+"--enable-checking=misc":
 
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Tested-by: Heiko Stuebner <heiko@sntech.de> #rk3036-kylin
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20250422070455.432666-5-andyshrk@163.com
+arch/arm64/kernel/kexec_image.c:132:14: internal compiler error: in comptypes_check_enum_int, at c/c-typeck.cc:1519
+  132 | const struct kexec_file_ops kexec_image_ops = {
+      |              ^~~~~~~~~~~~~~
+ internal_error(char const*, ...), at gcc/gcc/diagnostic-global-context.cc:517
+ fancy_abort(char const*, int, char const*), at gcc/gcc/diagnostic.cc:1803
+ comptypes_check_enum_int(tree_node*, tree_node*, bool*), at gcc/gcc/c/c-typeck.cc:1519
+ ...
+
+Link: https://archive.org/download/grsecurity/grsecurity-3.1-5.10.41-202105280954.patch.gz [1]
+Reported-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Closes: https://github.com/KSPP/linux/issues/367
+Closes: https://lore.kernel.org/lkml/20250530000646.104457-1-thiago.bauermann@linaro.org/
+Reported-by: Ingo Saitz <ingo@hannover.ccc.de>
+Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1104745
+Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
+Tested-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Link: https://lore.kernel.org/r/20250530221824.work.623-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/inno_hdmi.c | 36 +++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ scripts/gcc-plugins/gcc-common.h              | 32 +++++++++++++++++++
+ scripts/gcc-plugins/randomize_layout_plugin.c | 22 ++++++-------
+ 2 files changed, 43 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/inno_hdmi.c b/drivers/gpu/drm/rockchip/inno_hdmi.c
-index 483ecfeaebb08..87dfd30001583 100644
---- a/drivers/gpu/drm/rockchip/inno_hdmi.c
-+++ b/drivers/gpu/drm/rockchip/inno_hdmi.c
-@@ -10,10 +10,12 @@
- #include <linux/delay.h>
- #include <linux/err.h>
- #include <linux/hdmi.h>
-+#include <linux/mfd/syscon.h>
- #include <linux/mod_devicetable.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
- #include <linux/platform_device.h>
-+#include <linux/regmap.h>
- 
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
-@@ -29,8 +31,19 @@
- 
- #include "inno_hdmi.h"
- 
-+#define HIWORD_UPDATE(val, mask)	((val) | (mask) << 16)
-+
- #define INNO_HDMI_MIN_TMDS_CLOCK  25000000U
- 
-+#define RK3036_GRF_SOC_CON2	0x148
-+#define RK3036_HDMI_PHSYNC	BIT(4)
-+#define RK3036_HDMI_PVSYNC	BIT(5)
-+
-+enum inno_hdmi_dev_type {
-+	RK3036_HDMI,
-+	RK3128_HDMI,
-+};
-+
- struct inno_hdmi_phy_config {
- 	unsigned long pixelclock;
- 	u8 pre_emphasis;
-@@ -38,6 +51,7 @@ struct inno_hdmi_phy_config {
- };
- 
- struct inno_hdmi_variant {
-+	enum inno_hdmi_dev_type dev_type;
- 	struct inno_hdmi_phy_config *phy_configs;
- 	struct inno_hdmi_phy_config *default_phy_config;
- };
-@@ -58,6 +72,7 @@ struct inno_hdmi {
- 	struct clk *pclk;
- 	struct clk *refclk;
- 	void __iomem *regs;
-+	struct regmap *grf;
- 
- 	struct drm_connector	connector;
- 	struct rockchip_encoder	encoder;
-@@ -374,7 +389,15 @@ static int inno_hdmi_config_video_csc(struct inno_hdmi *hdmi)
- static int inno_hdmi_config_video_timing(struct inno_hdmi *hdmi,
- 					 struct drm_display_mode *mode)
- {
--	int value;
-+	int value, psync;
-+
-+	if (hdmi->variant->dev_type == RK3036_HDMI) {
-+		psync = mode->flags & DRM_MODE_FLAG_PHSYNC ? RK3036_HDMI_PHSYNC : 0;
-+		value = HIWORD_UPDATE(psync, RK3036_HDMI_PHSYNC);
-+		psync = mode->flags & DRM_MODE_FLAG_PVSYNC ? RK3036_HDMI_PVSYNC : 0;
-+		value |= HIWORD_UPDATE(psync, RK3036_HDMI_PVSYNC);
-+		regmap_write(hdmi->grf, RK3036_GRF_SOC_CON2, value);
-+	}
- 
- 	/* Set detail external video timing polarity and interlace mode */
- 	value = v_EXTERANL_VIDEO(1);
-@@ -911,6 +934,15 @@ static int inno_hdmi_bind(struct device *dev, struct device *master,
- 		goto err_disable_pclk;
- 	}
- 
-+	if (hdmi->variant->dev_type == RK3036_HDMI) {
-+		hdmi->grf = syscon_regmap_lookup_by_phandle(dev->of_node, "rockchip,grf");
-+		if (IS_ERR(hdmi->grf)) {
-+			ret = dev_err_probe(dev, PTR_ERR(hdmi->grf),
-+					    "Unable to get rockchip,grf\n");
-+			goto err_disable_clk;
-+		}
-+	}
-+
- 	irq = platform_get_irq(pdev, 0);
- 	if (irq < 0) {
- 		ret = irq;
-@@ -995,11 +1027,13 @@ static void inno_hdmi_remove(struct platform_device *pdev)
+diff --git a/scripts/gcc-plugins/gcc-common.h b/scripts/gcc-plugins/gcc-common.h
+index 0c037b8845308..50fe17ce569c9 100644
+--- a/scripts/gcc-plugins/gcc-common.h
++++ b/scripts/gcc-plugins/gcc-common.h
+@@ -185,6 +185,38 @@ static inline tree build_const_char_string(int len, const char *str)
+ 	return cstr;
  }
  
- static const struct inno_hdmi_variant rk3036_inno_hdmi_variant = {
-+	.dev_type = RK3036_HDMI,
- 	.phy_configs = rk3036_hdmi_phy_configs,
- 	.default_phy_config = &rk3036_hdmi_phy_configs[1],
- };
++static inline void __add_type_attr(tree type, const char *attr, tree args)
++{
++	tree oldattr;
++
++	if (type == NULL_TREE)
++		return;
++	oldattr = lookup_attribute(attr, TYPE_ATTRIBUTES(type));
++	if (oldattr != NULL_TREE) {
++		gcc_assert(TREE_VALUE(oldattr) == args || TREE_VALUE(TREE_VALUE(oldattr)) == TREE_VALUE(args));
++		return;
++	}
++
++	TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
++	TYPE_ATTRIBUTES(type) = tree_cons(get_identifier(attr), args, TYPE_ATTRIBUTES(type));
++}
++
++static inline void add_type_attr(tree type, const char *attr, tree args)
++{
++	tree main_variant = TYPE_MAIN_VARIANT(type);
++
++	__add_type_attr(TYPE_CANONICAL(type), attr, args);
++	__add_type_attr(TYPE_CANONICAL(main_variant), attr, args);
++	__add_type_attr(main_variant, attr, args);
++
++	for (type = TYPE_NEXT_VARIANT(main_variant); type; type = TYPE_NEXT_VARIANT(type)) {
++		if (!lookup_attribute(attr, TYPE_ATTRIBUTES(type)))
++			TYPE_ATTRIBUTES(type) = TYPE_ATTRIBUTES(main_variant);
++
++		__add_type_attr(TYPE_CANONICAL(type), attr, args);
++	}
++}
++
+ #define PASS_INFO(NAME, REF, ID, POS)		\
+ struct register_pass_info NAME##_pass_info = {	\
+ 	.pass = make_##NAME##_pass(),		\
+diff --git a/scripts/gcc-plugins/randomize_layout_plugin.c b/scripts/gcc-plugins/randomize_layout_plugin.c
+index a5aea51ecca99..472427f169a4a 100644
+--- a/scripts/gcc-plugins/randomize_layout_plugin.c
++++ b/scripts/gcc-plugins/randomize_layout_plugin.c
+@@ -95,6 +95,9 @@ static tree handle_randomize_layout_attr(tree *node, tree name, tree args, int f
  
- static const struct inno_hdmi_variant rk3128_inno_hdmi_variant = {
-+	.dev_type = RK3128_HDMI,
- 	.phy_configs = rk3128_hdmi_phy_configs,
- 	.default_phy_config = &rk3128_hdmi_phy_configs[1],
- };
+ 	if (TYPE_P(*node)) {
+ 		type = *node;
++	} else if (TREE_CODE(*node) == FIELD_DECL) {
++		*no_add_attrs = false;
++		return NULL_TREE;
+ 	} else {
+ 		gcc_assert(TREE_CODE(*node) == TYPE_DECL);
+ 		type = TREE_TYPE(*node);
+@@ -381,15 +384,14 @@ static int relayout_struct(tree type)
+ 		TREE_CHAIN(newtree[i]) = newtree[i+1];
+ 	TREE_CHAIN(newtree[num_fields - 1]) = NULL_TREE;
+ 
++	add_type_attr(type, "randomize_performed", NULL_TREE);
++	add_type_attr(type, "designated_init", NULL_TREE);
++	if (has_flexarray)
++		add_type_attr(type, "has_flexarray", NULL_TREE);
++
+ 	main_variant = TYPE_MAIN_VARIANT(type);
+-	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant)) {
++	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant))
+ 		TYPE_FIELDS(variant) = newtree[0];
+-		TYPE_ATTRIBUTES(variant) = copy_list(TYPE_ATTRIBUTES(variant));
+-		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("randomize_performed"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+-		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("designated_init"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+-		if (has_flexarray)
+-			TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("has_flexarray"), NULL_TREE, TYPE_ATTRIBUTES(type));
+-	}
+ 
+ 	/*
+ 	 * force a re-layout of the main variant
+@@ -457,10 +459,8 @@ static void randomize_type(tree type)
+ 	if (lookup_attribute("randomize_layout", TYPE_ATTRIBUTES(TYPE_MAIN_VARIANT(type))) || is_pure_ops_struct(type))
+ 		relayout_struct(type);
+ 
+-	for (variant = TYPE_MAIN_VARIANT(type); variant; variant = TYPE_NEXT_VARIANT(variant)) {
+-		TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
+-		TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("randomize_considered"), NULL_TREE, TYPE_ATTRIBUTES(type));
+-	}
++	add_type_attr(type, "randomize_considered", NULL_TREE);
++
+ #ifdef __DEBUG_PLUGIN
+ 	fprintf(stderr, "Marking randomize_considered on struct %s\n", ORIG_TYPE_NAME(type));
+ #ifdef __DEBUG_VERBOSE
 -- 
 2.39.5
 
