@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0704FB676;
-	Mon, 23 Jun 2025 22:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D33D1F7580;
+	Mon, 23 Jun 2025 22:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716882; cv=none; b=tDN0AlcU6hLFE133+RDwW64EAteDISTrgOyd0YWs/2J1O+39A5lXSUKPvEymA8XCHNPIK2iW4O3Tl84uPaFK1fxU9rI3X49NBmmoq+LxU5j+IlEXYFxrU+yMLnQKBoKaySSr9AE25nSDhRduaKKPApRo+0z/ROI+8gKWpXhY2+U=
+	t=1750716884; cv=none; b=Yli8q5nRQOIID/K0+7SycPszRMVWXsrzkyxs2BMtZTRRkWl9nlhNVAMb4OVz/oKyxP0SCC1QlXfcgaRfmEtI7ix4F4X/Qka7uwKpzKsqXE5uYuvnmPKCsKRAxSIXL8RNPg0h+eCppRsfLyeuTpeffKw7mcCF2EEOL+VAMsOxbV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716882; c=relaxed/simple;
-	bh=bx/ieRhTPGq2roR1yCK25GB8k1K81Eb1+j0S2VtcpNw=;
+	s=arc-20240116; t=1750716884; c=relaxed/simple;
+	bh=2hYZDC8eSnmMHF2eYPyOjEwddZ6ViNS36kZF0LS7TOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PzwWuXZFFM8TKhVPb/lYEQLT9nVwYEG0TLVfWUqfOyEH/2jyXY+mO/IC8PyhzdCbV4lBRjD//R2VaXtVFYtO63tWZ6NwmcaUH8i7vdmutmxBca8Yk2h4e2U1G914P8yZdpTJx8q1pKQ1FGc5JQ6rmw01DjP5KSEqwEXbdFSyuEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qD3nK5SU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SnrIVTQri6bGot97VqJg0KEetr3YErU08naEaSw0reUllT3edYPaiX2Pu5Vrjp6OWV5pL7ah2L4fwONIsyFboh7ODtgHZR6Mo6dOR/RHidrWuNtOoBM8wViSLIa66vzQPDlnWbiJlAbsOxdLf4JpRQ0uOLL8tTPBRFjYCmFaf9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdfO/SWF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qD3nK5SU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DDFC4CEEA;
-	Mon, 23 Jun 2025 22:14:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdfO/SWF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F23C4CEEA;
+	Mon, 23 Jun 2025 22:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716881;
-	bh=bx/ieRhTPGq2roR1yCK25GB8k1K81Eb1+j0S2VtcpNw=;
+	s=korg; t=1750716884;
+	bh=2hYZDC8eSnmMHF2eYPyOjEwddZ6ViNS36kZF0LS7TOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qD3nK5SUqpz0XkZ5t2KdCX2mPD9VFVCl1jJudqOvMdbXa5q/HWKd8uDjKh4+K3Jmd
-	 1sghwmsdPun/lyLeNNowArxBvVZdxMihUKymnV+7OL8QM+BvWkkS4VkHyL0j6BRqKA
-	 ldQ15L0t2kgifOM0bpQI0uMhqAxyUGBZ9wjer2O8=
+	b=ZdfO/SWF/1SPGgrLqEMMxNVBfZL2TJAgqQOzFQ0yOI8y5d4a685SIdurTdnoNcBak
+	 5qqpDmOGMQMq1+QZCfrmYrlC1MEKcOmxW3zmitmQGJktvDe12ITbVmNV3DnujH8tKf
+	 5eDk22SIJ6CIlfwxzDyYvq2jsatLmDDaPklNckqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH 6.15 565/592] EDAC/igen6: Fix NULL pointer dereference
-Date: Mon, 23 Jun 2025 15:08:43 +0200
-Message-ID: <20250623130713.882391957@linuxfoundation.org>
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 375/411] wifi: carl9170: do not ping device which has failed to load firmware
+Date: Mon, 23 Jun 2025 15:08:39 +0200
+Message-ID: <20250623130643.081616710@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,158 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit 88efa0de3285be66969b71ec137d9dab1ee19e52 upstream.
+[ Upstream commit 15d25307692312cec4b57052da73387f91a2e870 ]
 
-A kernel panic was reported with the following kernel log:
+Syzkaller reports [1, 2] crashes caused by an attempts to ping
+the device which has failed to load firmware. Since such a device
+doesn't pass 'ieee80211_register_hw()', an internal workqueue
+managed by 'ieee80211_queue_work()' is not yet created and an
+attempt to queue work on it causes null-ptr-deref.
 
-  EDAC igen6: Expected 2 mcs, but only 1 detected.
-  BUG: unable to handle page fault for address: 000000000000d570
-  ...
-  Hardware name: Notebook V54x_6x_TU/V54x_6x_TU, BIOS Dasharo (coreboot+UEFI) v0.9.0 07/17/2024
-  RIP: e030:ecclog_handler+0x7e/0xf0 [igen6_edac]
-  ...
-  igen6_probe+0x2a0/0x343 [igen6_edac]
-  ...
-  igen6_init+0xc5/0xff0 [igen6_edac]
-  ...
+[1] https://syzkaller.appspot.com/bug?extid=9a4aec827829942045ff
+[2] https://syzkaller.appspot.com/bug?extid=0d8afba53e8fb2633217
 
-This issue occurred because one memory controller was disabled by
-the BIOS but the igen6_edac driver still checked all the memory
-controllers, including this absent one, to identify the source of
-the error. Accessing the null MMIO for the absent memory controller
-resulted in the oops above.
-
-Fix this issue by reverting the configuration structure to non-const
-and updating the field 'res_cfg->num_imc' to reflect the number of
-detected memory controllers.
-
-Fixes: 20e190b1c1fd ("EDAC/igen6: Skip absent memory controllers")
-Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Closes: https://lore.kernel.org/all/aFFN7RlXkaK_loQb@mail-itl/
-Suggested-by: Borislav Petkov <bp@alien8.de>
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Link: https://lore.kernel.org/r/20250618162307.1523736-1-qiuxu.zhuo@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e4a668c59080 ("carl9170: fix spurious restart due to high latency")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Christian Lamparter <chunkeey@gmail.com>
+Link: https://patch.msgid.link/20250616181205.38883-1-dmantipov@yandex.ru
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/igen6_edac.c |   24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/net/wireless/ath/carl9170/usb.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/drivers/edac/igen6_edac.c
-+++ b/drivers/edac/igen6_edac.c
-@@ -125,7 +125,7 @@
- #define MEM_SLICE_HASH_MASK(v)		(GET_BITFIELD(v, 6, 19) << 6)
- #define MEM_SLICE_HASH_LSB_MASK_BIT(v)	GET_BITFIELD(v, 24, 26)
+diff --git a/drivers/net/wireless/ath/carl9170/usb.c b/drivers/net/wireless/ath/carl9170/usb.c
+index a5265997b5767..debac4699687e 100644
+--- a/drivers/net/wireless/ath/carl9170/usb.c
++++ b/drivers/net/wireless/ath/carl9170/usb.c
+@@ -438,14 +438,21 @@ static void carl9170_usb_rx_complete(struct urb *urb)
  
--static const struct res_config {
-+static struct res_config {
- 	bool machine_check;
- 	/* The number of present memory controllers. */
- 	int num_imc;
-@@ -473,7 +473,7 @@ static u64 rpl_p_err_addr(u64 ecclog)
- 	return ECC_ERROR_LOG_ADDR45(ecclog);
- }
+ 		if (atomic_read(&ar->rx_anch_urbs) == 0) {
+ 			/*
+-			 * The system is too slow to cope with
+-			 * the enormous workload. We have simply
+-			 * run out of active rx urbs and this
+-			 * unfortunately leads to an unpredictable
+-			 * device.
++			 * At this point, either the system is too slow to
++			 * cope with the enormous workload (so we have simply
++			 * run out of active rx urbs and this unfortunately
++			 * leads to an unpredictable device), or the device
++			 * is not fully functional after an unsuccessful
++			 * firmware loading attempts (so it doesn't pass
++			 * ieee80211_register_hw() and there is no internal
++			 * workqueue at all).
+ 			 */
  
--static const struct res_config ehl_cfg = {
-+static struct res_config ehl_cfg = {
- 	.num_imc		= 1,
- 	.imc_base		= 0x5000,
- 	.ibecc_base		= 0xdc00,
-@@ -483,7 +483,7 @@ static const struct res_config ehl_cfg =
- 	.err_addr_to_imc_addr	= ehl_err_addr_to_imc_addr,
- };
- 
--static const struct res_config icl_cfg = {
-+static struct res_config icl_cfg = {
- 	.num_imc		= 1,
- 	.imc_base		= 0x5000,
- 	.ibecc_base		= 0xd800,
-@@ -493,7 +493,7 @@ static const struct res_config icl_cfg =
- 	.err_addr_to_imc_addr	= ehl_err_addr_to_imc_addr,
- };
- 
--static const struct res_config tgl_cfg = {
-+static struct res_config tgl_cfg = {
- 	.machine_check		= true,
- 	.num_imc		= 2,
- 	.imc_base		= 0x5000,
-@@ -507,7 +507,7 @@ static const struct res_config tgl_cfg =
- 	.err_addr_to_imc_addr	= tgl_err_addr_to_imc_addr,
- };
- 
--static const struct res_config adl_cfg = {
-+static struct res_config adl_cfg = {
- 	.machine_check		= true,
- 	.num_imc		= 2,
- 	.imc_base		= 0xd800,
-@@ -518,7 +518,7 @@ static const struct res_config adl_cfg =
- 	.err_addr_to_imc_addr	= adl_err_addr_to_imc_addr,
- };
- 
--static const struct res_config adl_n_cfg = {
-+static struct res_config adl_n_cfg = {
- 	.machine_check		= true,
- 	.num_imc		= 1,
- 	.imc_base		= 0xd800,
-@@ -529,7 +529,7 @@ static const struct res_config adl_n_cfg
- 	.err_addr_to_imc_addr	= adl_err_addr_to_imc_addr,
- };
- 
--static const struct res_config rpl_p_cfg = {
-+static struct res_config rpl_p_cfg = {
- 	.machine_check		= true,
- 	.num_imc		= 2,
- 	.imc_base		= 0xd800,
-@@ -541,7 +541,7 @@ static const struct res_config rpl_p_cfg
- 	.err_addr_to_imc_addr	= adl_err_addr_to_imc_addr,
- };
- 
--static const struct res_config mtl_ps_cfg = {
-+static struct res_config mtl_ps_cfg = {
- 	.machine_check		= true,
- 	.num_imc		= 2,
- 	.imc_base		= 0xd800,
-@@ -552,7 +552,7 @@ static const struct res_config mtl_ps_cf
- 	.err_addr_to_imc_addr	= adl_err_addr_to_imc_addr,
- };
- 
--static const struct res_config mtl_p_cfg = {
-+static struct res_config mtl_p_cfg = {
- 	.machine_check		= true,
- 	.num_imc		= 2,
- 	.imc_base		= 0xd800,
-@@ -563,7 +563,7 @@ static const struct res_config mtl_p_cfg
- 	.err_addr_to_imc_addr	= adl_err_addr_to_imc_addr,
- };
- 
--static const struct pci_device_id igen6_pci_tbl[] = {
-+static struct pci_device_id igen6_pci_tbl[] = {
- 	{ PCI_VDEVICE(INTEL, DID_EHL_SKU5), (kernel_ulong_t)&ehl_cfg },
- 	{ PCI_VDEVICE(INTEL, DID_EHL_SKU6), (kernel_ulong_t)&ehl_cfg },
- 	{ PCI_VDEVICE(INTEL, DID_EHL_SKU7), (kernel_ulong_t)&ehl_cfg },
-@@ -1342,9 +1342,11 @@ static int igen6_register_mcis(struct pc
- 		return -ENODEV;
- 	}
- 
--	if (lmc < res_cfg->num_imc)
-+	if (lmc < res_cfg->num_imc) {
- 		igen6_printk(KERN_WARNING, "Expected %d mcs, but only %d detected.",
- 			     res_cfg->num_imc, lmc);
-+		res_cfg->num_imc = lmc;
-+	}
- 
- 	return 0;
- 
+-			ieee80211_queue_work(ar->hw, &ar->ping_work);
++			if (ar->registered)
++				ieee80211_queue_work(ar->hw, &ar->ping_work);
++			else
++				pr_warn_once("device %s is not registered\n",
++					     dev_name(&ar->udev->dev));
+ 		}
+ 	} else {
+ 		/*
+-- 
+2.39.5
+
 
 
