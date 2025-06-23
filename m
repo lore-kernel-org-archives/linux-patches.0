@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF09C1E22E6;
-	Mon, 23 Jun 2025 22:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652A33597E;
+	Mon, 23 Jun 2025 22:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716454; cv=none; b=RgeWLgK7Lh6tQ4WM7jWBYBwmNPmKijapZz+Z8XRkCRn+PlkMjl+7d2vkuwdxkmaI1ymdXTtFO8u1v8+1SoWEDBKmkDOzR4GttVkos+5r8vQMhw1y7iIccvj++f8heb297C5Kc/9xFXDo85zC41NgaGd6fVe1acWyM67y63xzpJM=
+	t=1750716456; cv=none; b=YtuC3pXZve8iMWm+ZE9RmGjsYp8le4KcgpPgnDaSapPJAVK0UGnvehI41O/pLYZ1WH7nWxPbG3W1WQ/dsxh7A6mYayk9JhDJY+SBsFNGXHG9gVIYU8n0K5OndMcS+CcxabtS0jWi30TZMugDIRuZ9f0lYoc7yXxeHm6TPXUrqPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716454; c=relaxed/simple;
-	bh=7/q6oyqkLHANi/r9cbqyNhOLO5nJkFmBRVrXjkGNjs8=;
+	s=arc-20240116; t=1750716456; c=relaxed/simple;
+	bh=s5WuLT907lH4PvpM/Ip/DULVHQafPJoiDahFO1MBKFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lfURcdpzpgoAj0Ca6RWoVFOBHOvGf7LonScF9XJBqOm6ievmWbKwHlA5rRvhzhaIhYOlnyBuv6mLw1KvZVRym5fSdQzUV2P9+D9Gpv6UFbqN03BgYdsdzeu0PtGZhnsrzqGMBZo2+NCfdhLJvcylFv19cglKusJP7YAAj4VFN3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2H3lsTI7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sw10kaTcLP3I7yjAA9zJsO29gvo/XxadaREMWTmSotQz3NoeBGbSb+YWa1pp3DmefyBUTpJNUTGVXQJ0QEL6tFVgbzujNNJhRn+cK4mVRxjOmcLgPOlvMm9cCNWHg/aeUYZ2O19JuOlgRzgWYzzl9ZWt3mJTt34XB3KLEYmjlIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTN/wv1d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2H3lsTI7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D14C4CEEA;
-	Mon, 23 Jun 2025 22:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTN/wv1d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D48C4CEEA;
+	Mon, 23 Jun 2025 22:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716453;
-	bh=7/q6oyqkLHANi/r9cbqyNhOLO5nJkFmBRVrXjkGNjs8=;
+	s=korg; t=1750716456;
+	bh=s5WuLT907lH4PvpM/Ip/DULVHQafPJoiDahFO1MBKFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2H3lsTI7/O2QhYyXk558o5M6oUFxEJzeO/OGLFWy++2EkMHJfOWPeWkRHqiVu3/xo
-	 eAMMsKL7+BsUCFJXDCgfHf1wx98WNyuPb/7iBMyPo/nFl1UMVeJbIa2nKxmFbBhfGo
-	 SyzvfMaNDlilbBpfhS3DkP+/r55Jpl3ACDsceil4=
+	b=CTN/wv1d8renrPvD1fbz9CrY/QtRctL7I32dvIEmwtbkll7jo6MerU3MVS8EQZK0S
+	 2DeaL5D41qJb+9mv+TYRqeNlXMLRBpT7xwXBEs+FS74kGpeSSr1B6chJvUUJlXIzVv
+	 gKsK6mC2WuxL8pqAQjMqXThP95hVC+BwK7UojlKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Pu Lehui <pulehui@huawei.com>
-Subject: [PATCH 5.10 335/355] arm64: proton-pack: Add new CPUs k values for branch mitigation
-Date: Mon, 23 Jun 2025 15:08:56 +0200
-Message-ID: <20250623130636.808301449@linuxfoundation.org>
+	syzbot+763e12bbf004fb1062e4@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 524/592] io_uring/sqpoll: dont put task_struct on tctx setup failure
+Date: Mon, 23 Jun 2025 15:08:02 +0200
+Message-ID: <20250623130712.899472658@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +47,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Morse <james.morse@arm.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit efe676a1a7554219eae0b0dcfe1e0cdcc9ef9aef ]
+[ Upstream commit f2320f1dd6f6f82cb2c7aff23a12bab537bdea89 ]
 
-Update the list of 'k' values for the branch mitigation from arm's
-website.
+A recent commit moved the error handling of sqpoll thread and tctx
+failures into the thread itself, as part of fixing an issue. However, it
+missed that tctx allocation may also fail, and that
+io_sq_offload_create() does its own error handling for the task_struct
+in that case.
 
-Add the values for Cortex-X1C. The MIDR_EL1 value can be found here:
-https://developer.arm.com/documentation/101968/0002/Register-descriptions/AArch>
+Remove the manual task putting in io_sq_offload_create(), as
+io_sq_thread() will notice that the tctx did not get setup and hence it
+should put itself and exit.
 
-Link: https://developer.arm.com/documentation/110280/2-0/?lang=en
-Signed-off-by: James Morse <james.morse@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+763e12bbf004fb1062e4@syzkaller.appspotmail.com
+Fixes: ac0b8b327a56 ("io_uring: fix use-after-free of sq->thread in __io_uring_show_fdinfo()")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/cputype.h |    2 ++
- arch/arm64/kernel/proton-pack.c  |    1 +
- 2 files changed, 3 insertions(+)
+ io_uring/sqpoll.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -80,6 +80,7 @@
- #define ARM_CPU_PART_CORTEX_A78AE	0xD42
- #define ARM_CPU_PART_CORTEX_X1		0xD44
- #define ARM_CPU_PART_CORTEX_A510	0xD46
-+#define ARM_CPU_PART_CORTEX_X1C		0xD4C
- #define ARM_CPU_PART_CORTEX_A520	0xD80
- #define ARM_CPU_PART_CORTEX_A710	0xD47
- #define ARM_CPU_PART_CORTEX_A715	0xD4D
-@@ -144,6 +145,7 @@
- #define MIDR_CORTEX_A78AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78AE)
- #define MIDR_CORTEX_X1	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1)
- #define MIDR_CORTEX_A510 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A510)
-+#define MIDR_CORTEX_X1C MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1C)
- #define MIDR_CORTEX_A520 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A520)
- #define MIDR_CORTEX_A710 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A710)
- #define MIDR_CORTEX_A715 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A715)
---- a/arch/arm64/kernel/proton-pack.c
-+++ b/arch/arm64/kernel/proton-pack.c
-@@ -899,6 +899,7 @@ static u8 spectre_bhb_loop_affected(void
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
-+		MIDR_ALL_VERSIONS(MIDR_CORTEX_X1C),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
- 		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
+diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
+index 268d2fbe6160c..d3a94cd0f5e65 100644
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -419,7 +419,6 @@ void io_sqpoll_wait_sq(struct io_ring_ctx *ctx)
+ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
+ 				struct io_uring_params *p)
+ {
+-	struct task_struct *task_to_put = NULL;
+ 	int ret;
+ 
+ 	/* Retain compatibility with failing for an invalid attach attempt */
+@@ -498,7 +497,7 @@ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
+ 		rcu_assign_pointer(sqd->thread, tsk);
+ 		mutex_unlock(&sqd->lock);
+ 
+-		task_to_put = get_task_struct(tsk);
++		get_task_struct(tsk);
+ 		ret = io_uring_alloc_task_context(tsk, ctx);
+ 		wake_up_new_task(tsk);
+ 		if (ret)
+@@ -513,8 +512,6 @@ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
+ 	complete(&ctx->sq_data->exited);
+ err:
+ 	io_sq_thread_finish(ctx);
+-	if (task_to_put)
+-		put_task_struct(task_to_put);
+ 	return ret;
+ }
+ 
+-- 
+2.39.5
+
 
 
