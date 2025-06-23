@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D82221545;
-	Mon, 23 Jun 2025 21:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBCC1EF397;
+	Mon, 23 Jun 2025 21:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713742; cv=none; b=U4AqdpE2bKqAlb1W4Rh/L0w+ZiNsMFNGvFCT5DpAaqCucXv8gmLQ71H0aadmPrbrKNsjq3sX6lZ4/7P6UFgjKU8cQsDLsUqyF5Mn0PveqDXbqyI5uB4s8G4F8cpHiJWqtepNjV7GzBipd4ddzlOUV4Ng1Nspppo4edLOssbx0sU=
+	t=1750713744; cv=none; b=qaEBlkC0UCAlwov77/C+YTt4DozOO3EAYtAEDqFPhM92IuR4x755mGi/riJexObwj+0ncMkz4Ru7pirl7+cz6afAlvMIUvwfHwKIo3AJv2pZI8OoZoqFzwB3EPP0tcyIjI45tw39XaVQVYOU0QoFPOaX5DVCDwVYrOyzRm0K5Ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713742; c=relaxed/simple;
-	bh=IZFlmXPMmhjdm0H0sQF1Np0BpXYwMlMiAjxXmXDAQ+k=;
+	s=arc-20240116; t=1750713744; c=relaxed/simple;
+	bh=23208ErY8arvCRSQcXbwI+C0a49BX/3cuuTU8AOwme8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d1NFV2+tcwdpPsttGxr6b4Se/p/iKvffkpf9uBJROLf/Po/zqb39VvwyIzh2TVsOuydssEN7jIggXHKjBCRhdNnfZe+fUV2amH6C0TyEBLcHzTcm7ZEsrMcK5OaqdwxtjsyhpfdMSFziMfswhpIH+1boU849PuzpL8DSVY0HcUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WkNH48Ok; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jWZpAq7rf0NUmELqS3Em1FpxCZHmj3PoM59HRQXWOw0Z/kPvFxDMpkkU52KVeR997feqViZeH4RmLduxvooqCNJfQ7qGL/QOfJuhPHbLQVxj8elzllpUSXMrxAhCOSUow2lw87zojqlT6B+KEt8gpxS7fEcjIhN+hOtZJAarnA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOdjglYe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WkNH48Ok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0B4C4CEEA;
-	Mon, 23 Jun 2025 21:22:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOdjglYe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2415C4CEEA;
+	Mon, 23 Jun 2025 21:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713741;
-	bh=IZFlmXPMmhjdm0H0sQF1Np0BpXYwMlMiAjxXmXDAQ+k=;
+	s=korg; t=1750713744;
+	bh=23208ErY8arvCRSQcXbwI+C0a49BX/3cuuTU8AOwme8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WkNH48OkJ2ZAApt5Lzwi2RzszmKrZTQ5RWe4zZr4lqjmwpYhmXV1ZB5eigzYqmmRx
-	 jfCmAxly8U/rtTxNsa3NDSgjZ3qwOdjW6l4Vq1IV8YhoeysLvQ2vjE1AL/37tc/mU9
-	 vMQesvxFhB1RbgQ9ULjqDyflir2dNFswVWWKe358=
+	b=bOdjglYeOM9qt+mAROPBRmLoYNrX5kljJ+5tG5I9tSEKu4EPedcFN8ipugmmxQBNb
+	 yEfDs2NhCz8pmQAcpJy+4/64rGctzdZ43CRVKlVVNd6FLL+50Ufo1NO0R7qg/uPgby
+	 Rc/fEwlF/WzYWhnOJoxT5WMD6CIHbPJ1dlyaxHq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	syzbot+8a583bdd1a5cc0b0e068@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/508] bus: fsl-mc: fix double-free on mc_dev
-Date: Mon, 23 Jun 2025 15:02:45 +0200
-Message-ID: <20250623130648.248747533@linuxfoundation.org>
+Subject: [PATCH 5.4 203/222] mpls: Use rcu_dereference_rtnl() in mpls_route_input_rcu().
+Date: Mon, 23 Jun 2025 15:08:58 +0200
+Message-ID: <20250623130618.413316268@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +48,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit d694bf8a9acdbd061596f3e7549bc8cb70750a60 ]
+[ Upstream commit 6dbb0d97c5096072c78a6abffe393584e57ae945 ]
 
-The blamed commit tried to simplify how the deallocations are done but,
-in the process, introduced a double-free on the mc_dev variable.
+As syzbot reported [0], mpls_route_input_rcu() can be called
+from mpls_getroute(), where is under RTNL.
 
-In case the MC device is a DPRC, a new mc_bus is allocated and the
-mc_dev variable is just a reference to one of its fields. In this
-circumstance, on the error path only the mc_bus should be freed.
+net->mpls.platform_label is only updated under RTNL.
 
-This commit introduces back the following checkpatch warning which is a
-false-positive.
+Let's use rcu_dereference_rtnl() in mpls_route_input_rcu() to
+silence the splat.
 
-WARNING: kfree(NULL) is safe and this check is probably not required
-+       if (mc_bus)
-+               kfree(mc_bus);
+[0]:
+WARNING: suspicious RCU usage
+6.15.0-rc7-syzkaller-00082-g5cdb2c77c4c3 #0 Not tainted
+ ----------------------------
+net/mpls/af_mpls.c:84 suspicious rcu_dereference_check() usage!
 
-Fixes: a042fbed0290 ("staging: fsl-mc: simplify couple of deallocations")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20250408105814.2837951-2-ioana.ciornei@nxp.com
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+other info that might help us debug this:
+
+rcu_scheduler_active = 2, debug_locks = 1
+1 lock held by syz.2.4451/17730:
+ #0: ffffffff9012a3e8 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_lock net/core/rtnetlink.c:80 [inline]
+ #0: ffffffff9012a3e8 (rtnl_mutex){+.+.}-{4:4}, at: rtnetlink_rcv_msg+0x371/0xe90 net/core/rtnetlink.c:6961
+
+stack backtrace:
+CPU: 1 UID: 0 PID: 17730 Comm: syz.2.4451 Not tainted 6.15.0-rc7-syzkaller-00082-g5cdb2c77c4c3 #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
+ lockdep_rcu_suspicious+0x166/0x260 kernel/locking/lockdep.c:6865
+ mpls_route_input_rcu+0x1d4/0x200 net/mpls/af_mpls.c:84
+ mpls_getroute+0x621/0x1ea0 net/mpls/af_mpls.c:2381
+ rtnetlink_rcv_msg+0x3c9/0xe90 net/core/rtnetlink.c:6964
+ netlink_rcv_skb+0x16d/0x440 net/netlink/af_netlink.c:2534
+ netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
+ netlink_unicast+0x53a/0x7f0 net/netlink/af_netlink.c:1339
+ netlink_sendmsg+0x8d1/0xdd0 net/netlink/af_netlink.c:1883
+ sock_sendmsg_nosec net/socket.c:712 [inline]
+ __sock_sendmsg net/socket.c:727 [inline]
+ ____sys_sendmsg+0xa98/0xc70 net/socket.c:2566
+ ___sys_sendmsg+0x134/0x1d0 net/socket.c:2620
+ __sys_sendmmsg+0x200/0x420 net/socket.c:2709
+ __do_sys_sendmmsg net/socket.c:2736 [inline]
+ __se_sys_sendmmsg net/socket.c:2733 [inline]
+ __x64_sys_sendmmsg+0x9c/0x100 net/socket.c:2733
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcd/0x230 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f0a2818e969
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f0a28f52038 EFLAGS: 00000246 ORIG_RAX: 0000000000000133
+RAX: ffffffffffffffda RBX: 00007f0a283b5fa0 RCX: 00007f0a2818e969
+RDX: 0000000000000003 RSI: 0000200000000080 RDI: 0000000000000003
+RBP: 00007f0a28210ab1 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007f0a283b5fa0 R15: 00007ffce5e9f268
+ </TASK>
+
+Fixes: 0189197f4416 ("mpls: Basic routing support")
+Reported-by: syzbot+8a583bdd1a5cc0b0e068@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68507981.a70a0220.395abc.01ef.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250616201532.1036568-1-kuni1840@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/fsl-mc/fsl-mc-bus.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/mpls/af_mpls.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
-index 6143dbf31f311..6e4556530df58 100644
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -910,8 +910,10 @@ int fsl_mc_device_add(struct fsl_mc_obj_desc *obj_desc,
+diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
+index 3a55a392e0218..bac87a6b7e5b9 100644
+--- a/net/mpls/af_mpls.c
++++ b/net/mpls/af_mpls.c
+@@ -80,8 +80,8 @@ static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned index)
  
- error_cleanup_dev:
- 	kfree(mc_dev->regions);
--	kfree(mc_bus);
--	kfree(mc_dev);
-+	if (mc_bus)
-+		kfree(mc_bus);
-+	else
-+		kfree(mc_dev);
- 
- 	return error;
+ 	if (index < net->mpls.platform_labels) {
+ 		struct mpls_route __rcu **platform_label =
+-			rcu_dereference(net->mpls.platform_label);
+-		rt = rcu_dereference(platform_label[index]);
++			rcu_dereference_rtnl(net->mpls.platform_label);
++		rt = rcu_dereference_rtnl(platform_label[index]);
+ 	}
+ 	return rt;
  }
 -- 
 2.39.5
