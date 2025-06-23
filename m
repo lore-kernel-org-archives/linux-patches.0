@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB462236FB;
-	Mon, 23 Jun 2025 22:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF35222576;
+	Mon, 23 Jun 2025 22:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716686; cv=none; b=NeJezFHOP3qRzf6d+SYoY4ZaCxhLGJOHOQqD6eEKMSAtmcrns4z8sdMuJG8rI7qWkK68n/aQ8wK6ERN2H9izfQNvQG8Ij+xZFh/tR86dVrjyCNQhfdfpkDt5VanKgWPcqgwL5BtCJjcgeWeJpdwMLjNzJiLRNymbln3gVhJwgFM=
+	t=1750716689; cv=none; b=WOgX9kgW6fhQ1ova3ZChpGvwYNKhsLgPav6CqKSm7E31EmecdCWDb7MSUOWzk8Ea3kUvYwmf50vLQapK2mXwqbChuVJh4riO7UDiRVYDsTefhj1tpYzgfEtO56YSRs0d+1z9r8XkwUYlzWZVYwoaFrwcGQQocHfZuEdbv06nc0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716686; c=relaxed/simple;
-	bh=fxzLZfa1EUf//OFPlY/X3oUAb/G33jfVSCAHW0/sFn8=;
+	s=arc-20240116; t=1750716689; c=relaxed/simple;
+	bh=A1buDsckJr2nx4D7fh4isvrAiC9WJFKd4Q7hBbuvXVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQZ0HlGk8ZbxxgUA12Q0qw/RcA9jnbLYM8DB3WPFll4YDtf5K9wQLDKh7tPrmKKTIy06bRbRayh2EwuFpy0lV6+zG3HUnvwncjv0BWVe4iVs4TqLF4DkRHD/2osc+vYIhmMeANXZh+sFGHBFj5qG6p/VXJLvvsO1bBIFxOuVpnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qt3TkT3U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aikE5O+graz/co9n2d2V6A1fP8YKbx+QieLcrcpYU3+JhMJ06ZOTPU5CmxRTr7g7ih54+9zQDeX/yGI5IJqJ9IF3btjxXkv93uRJdJn7ItB9/J+XSmFqO6yzhiKI756abGJyAjwot0FcBEm+KRnnmwRFQ2I2vDpmR1lSECbU5bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOnDboJu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qt3TkT3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E082BC4CEEA;
-	Mon, 23 Jun 2025 22:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOnDboJu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2B4C4CEEA;
+	Mon, 23 Jun 2025 22:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716686;
-	bh=fxzLZfa1EUf//OFPlY/X3oUAb/G33jfVSCAHW0/sFn8=;
+	s=korg; t=1750716688;
+	bh=A1buDsckJr2nx4D7fh4isvrAiC9WJFKd4Q7hBbuvXVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qt3TkT3UegB0ue9n5fCTUQzFVVpq80OtiEmU8eYlA8IgoGcWuowrTNKAT5tajYL7j
-	 LIJd679nubEY1+DaC9Ol2ahcpbV1bXJs9mCyuEg/fkhS0PfRg4wmblgPC1kJPG6hBL
-	 hAkKjukzwEear8mztfDzNwRO6S6NwnS3RV6FoCNk=
+	b=FOnDboJuyKWw9jBhQjlFvqtVm30S92Ue+jf7+Fxks4MviDtNeIJtuEPE0PSTD/q4E
+	 DOkY+wmCnacWIfLf2r9sgJDqgyUsvVmp29Ypn4ZIBme+ly+UvwLJYpB9kSfI5fBGKs
+	 9HNYAakrtDQsZ66ivGZGFc0GlpNonbE6qsizFEPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	M Nikhil <nikh1092@linux.ibm.com>,
-	Nihar Panda <niharp@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 350/411] scsi: s390: zfcp: Ensure synchronous unit_add
-Date: Mon, 23 Jun 2025 15:08:14 +0200
-Message-ID: <20250623130642.456999188@linuxfoundation.org>
+	Leo Yan <leo.yan@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 282/290] perf: Fix cgroup state vs ERROR
+Date: Mon, 23 Jun 2025 15:09:03 +0200
+Message-ID: <20250623130635.403165239@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,50 +47,136 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 9697ca0d53e3db357be26d2414276143c4a2cd49 upstream.
+[ Upstream commit 61988e36dc5457cdff7ae7927e8d9ad1419ee998 ]
 
-Improve the usability of the unit_add sysfs attribute by ensuring that
-the associated FCP LUN scan processing is completed synchronously.  This
-enables configuration tooling to consistently determine the end of the
-scan process to allow for serialization of follow-on actions.
+While chasing down a missing perf_cgroup_event_disable() elsewhere,
+Leo Yan found that both perf_put_aux_event() and
+perf_remove_sibling_event() were also missing one.
 
-While the scan process associated with unit_add typically completes
-synchronously, it is deferred to an asynchronous background process if
-unit_add is used before initial remote port scanning has completed.  This
-occurs when unit_add is used immediately after setting the associated FCP
-device online.
+Specifically, the rule is that events that switch to OFF,ERROR need to
+call perf_cgroup_event_disable().
 
-To ensure synchronous unit_add processing, wait for remote port scanning
-to complete before initiating the FCP LUN scan.
+Unify the disable paths to ensure this.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: M Nikhil <nikh1092@linux.ibm.com>
-Reviewed-by: Nihar Panda <niharp@linux.ibm.com>
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Nihar Panda <niharp@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250603182252.2287285-2-niharp@linux.ibm.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ab43762ef010 ("perf: Allow normal events to output AUX data")
+Fixes: 9f0c4fa111dc ("perf/core: Add a new PERF_EV_CAP_SIBLING event capability")
+Reported-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20250605123343.GD35970@noisy.programming.kicks-ass.net
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/scsi/zfcp_sysfs.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/events/core.c | 51 ++++++++++++++++++++++++++------------------
+ 1 file changed, 30 insertions(+), 21 deletions(-)
 
---- a/drivers/s390/scsi/zfcp_sysfs.c
-+++ b/drivers/s390/scsi/zfcp_sysfs.c
-@@ -450,6 +450,8 @@ static ssize_t zfcp_sysfs_unit_add_store
- 	if (kstrtoull(buf, 0, (unsigned long long *) &fcp_lun))
- 		return -EINVAL;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 90577a7a3a51e..e9e785542b9f4 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -2067,8 +2067,9 @@ perf_aux_output_match(struct perf_event *event, struct perf_event *aux_event)
+ }
  
-+	flush_work(&port->rport_work);
+ static void put_event(struct perf_event *event);
+-static void event_sched_out(struct perf_event *event,
+-			    struct perf_event_context *ctx);
++static void __event_disable(struct perf_event *event,
++			    struct perf_event_context *ctx,
++			    enum perf_event_state state);
+ 
+ static void perf_put_aux_event(struct perf_event *event)
+ {
+@@ -2101,8 +2102,7 @@ static void perf_put_aux_event(struct perf_event *event)
+ 		 * state so that we don't try to schedule it again. Note
+ 		 * that perf_event_enable() will clear the ERROR status.
+ 		 */
+-		event_sched_out(iter, ctx);
+-		perf_event_set_state(event, PERF_EVENT_STATE_ERROR);
++		__event_disable(iter, ctx, PERF_EVENT_STATE_ERROR);
+ 	}
+ }
+ 
+@@ -2156,18 +2156,6 @@ static inline struct list_head *get_event_list(struct perf_event *event)
+ 				    &event->pmu_ctx->flexible_active;
+ }
+ 
+-/*
+- * Events that have PERF_EV_CAP_SIBLING require being part of a group and
+- * cannot exist on their own, schedule them out and move them into the ERROR
+- * state. Also see _perf_event_enable(), it will not be able to recover
+- * this ERROR state.
+- */
+-static inline void perf_remove_sibling_event(struct perf_event *event)
+-{
+-	event_sched_out(event, event->ctx);
+-	perf_event_set_state(event, PERF_EVENT_STATE_ERROR);
+-}
+-
+ static void perf_group_detach(struct perf_event *event)
+ {
+ 	struct perf_event *leader = event->group_leader;
+@@ -2203,8 +2191,15 @@ static void perf_group_detach(struct perf_event *event)
+ 	 */
+ 	list_for_each_entry_safe(sibling, tmp, &event->sibling_list, sibling_list) {
+ 
++		/*
++		 * Events that have PERF_EV_CAP_SIBLING require being part of
++		 * a group and cannot exist on their own, schedule them out
++		 * and move them into the ERROR state. Also see
++		 * _perf_event_enable(), it will not be able to recover this
++		 * ERROR state.
++		 */
+ 		if (sibling->event_caps & PERF_EV_CAP_SIBLING)
+-			perf_remove_sibling_event(sibling);
++			__event_disable(sibling, ctx, PERF_EVENT_STATE_ERROR);
+ 
+ 		sibling->group_leader = sibling;
+ 		list_del_init(&sibling->sibling_list);
+@@ -2437,6 +2432,15 @@ static void perf_remove_from_context(struct perf_event *event, unsigned long fla
+ 	event_function_call(event, __perf_remove_from_context, (void *)flags);
+ }
+ 
++static void __event_disable(struct perf_event *event,
++			    struct perf_event_context *ctx,
++			    enum perf_event_state state)
++{
++	event_sched_out(event, ctx);
++	perf_cgroup_event_disable(event, ctx);
++	perf_event_set_state(event, state);
++}
 +
- 	retval = zfcp_unit_add(port, fcp_lun);
- 	if (retval)
- 		return retval;
+ /*
+  * Cross CPU call to disable a performance event
+  */
+@@ -2455,13 +2459,18 @@ static void __perf_event_disable(struct perf_event *event,
+ 
+ 	perf_pmu_disable(event->pmu_ctx->pmu);
+ 
++	/*
++	 * When disabling a group leader, the whole group becomes ineligible
++	 * to run, so schedule out the full group.
++	 */
+ 	if (event == event->group_leader)
+ 		group_sched_out(event, ctx);
+-	else
+-		event_sched_out(event, ctx);
+ 
+-	perf_event_set_state(event, PERF_EVENT_STATE_OFF);
+-	perf_cgroup_event_disable(event, ctx);
++	/*
++	 * But only mark the leader OFF; the siblings will remain
++	 * INACTIVE.
++	 */
++	__event_disable(event, ctx, PERF_EVENT_STATE_OFF);
+ 
+ 	perf_pmu_enable(event->pmu_ctx->pmu);
+ }
+-- 
+2.39.5
+
 
 
