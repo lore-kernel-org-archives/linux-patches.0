@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85E72517AF;
-	Mon, 23 Jun 2025 13:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A67D252910;
+	Mon, 23 Jun 2025 13:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685180; cv=none; b=oS35ym4xPxzYqzR5xVPEICGoW4lpmNUqef3lRlPCfdZr6JA5XEhaWiEbjSTAcJRs6hzEcnScQ2sKcQkl1oqtghg2qGuauuiOV8a6kA7Y0ORPSBfPuCaXa2UTntdgk8ukCAv2+35+HMThM8gOrDuZFSrU5wsHhzgThn+rxXVXG3E=
+	t=1750685183; cv=none; b=PKJdkuvc1q35Jf2eWas2JAMci/qEefBSnlbtP00JmyqEbe9L6pUA4S1IqVqX8nr/rD2nrbxWXXwqutxmbO13SDWGIdVhA0XvaHx6tTx3hslmjXFzb5hxckKNJ4Njky7lCNI/0vy3/U0z9qbRQcBV+6eN9PJ3Zch6Jft1TcHaWS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685180; c=relaxed/simple;
-	bh=ut+yHLwr/F+Tv6jgujG2AZj3UYok27ElMkJ1qkSbkEE=;
+	s=arc-20240116; t=1750685183; c=relaxed/simple;
+	bh=gPqpNsv2vvVKeB+4HQdU0nL9IRL4W3DFkUuc3aKvCxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uOS2ZtoUsA0RsPKK/4cPh0yopLkt2xEBc3Egb+It9AdI5a9upHg5lUG5IVDs4bG822qqyTiGltyf3x0/yYuMZ1nm50kpohpDqdnvsKN/lGGdLnAJbnpQib8SV9ezg7/KsFn8L/vmTpsBFSWfbolXykl3MJHsnmE2mEy24ib8nu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKEGtVw+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DxRoCJ98fXxCDt6TfCOWuYibKrnJfTedRIXjVNpbAtYeKrgrA+B+txVo0zUk8q2W3T1/M5QtMcq7m8DzuUvVTL2IaHf+wHUo02XWDAF3EAfWMeA2hngsOOQmJIHwPMmisomPNOOR43VquHQ3Dg9YVX/wY2UYcHpopKwePKLm+Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awdkZKac; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKEGtVw+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7BFC4CEEA;
-	Mon, 23 Jun 2025 13:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awdkZKac"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E40C4CEF0;
+	Mon, 23 Jun 2025 13:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685180;
-	bh=ut+yHLwr/F+Tv6jgujG2AZj3UYok27ElMkJ1qkSbkEE=;
+	s=korg; t=1750685183;
+	bh=gPqpNsv2vvVKeB+4HQdU0nL9IRL4W3DFkUuc3aKvCxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WKEGtVw+7QgktMpyN5VCXkojigFrA+qqLP4yiuRIZSBhgiAGQuUg8K+EtipS5TRle
-	 QRNuDnuIBkKGRWRQQOt7+lVMJxAERNjVFlIvymjZ4+ZoE9GEuo+3wj7ML4ewdbo/Lt
-	 ktAGYDMvnSKeBwPQNRQxqR2Dz4bFtRw/9D00JNgk=
+	b=awdkZKacB+d30LX9b+PCR7gCuXKMiJkkpM/a2RnaAX8B3CxpsiMoqqt3wHDs/z9qk
+	 5vBz/mGXPl3rN+AprbRKjDfLReK4BmPTl3TE0BjPpumRzYUDhXnDdtrg8VKwqdSVQn
+	 ma7Es8Rm2SsNEs650EvV1jIZxh1cuMK46E0ETyZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Corentin Labbe <clabbe.montjoie@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 072/222] pmdomain: core: Fix error checking in genpd_dev_pm_attach_by_id()
-Date: Mon, 23 Jun 2025 15:06:47 +0200
-Message-ID: <20250623130614.268710150@linuxfoundation.org>
+Subject: [PATCH 5.15 014/411] crypto: sun8i-ss - do not use sg_dma_len before calling DMA functions
+Date: Mon, 23 Jun 2025 15:02:38 +0200
+Message-ID: <20250623130633.420984626@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Corentin Labbe <clabbe.montjoie@gmail.com>
 
-[ Upstream commit 0f5757667ec0aaf2456c3b76fcf0c6c3ea3591fe ]
+[ Upstream commit 2dfc7cd74a5e062a5405560447517e7aab1c7341 ]
 
-The error checking for of_count_phandle_with_args() does not handle
-negative error codes correctly.  The problem is that "index" is a u32 so
-in the condition "if (index >= num_domains)" negative error codes stored
-in "num_domains" are type promoted to very high positive values and
-"index" is always going to be valid.
+When testing sun8i-ss with multi_v7_defconfig, all CBC algorithm fail crypto
+selftests.
+This is strange since on sunxi_defconfig, everything was ok.
+The problem was in the IV setup loop which never run because sg_dma_len
+was 0.
 
-Test for negative error codes first and then test if "index" is valid.
-
-Fixes: 3ccf3f0cd197 ("PM / Domains: Enable genpd_dev_pm_attach_by_id|name() for single PM domain")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/aBxPQ8AI8N5v-7rL@stanley.mountain
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 359e893e8af4 ("crypto: sun8i-ss - rework handling of IV")
+Signed-off-by: Corentin Labbe <clabbe.montjoie@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/domain.c | 2 +-
+ drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index eed4c865a4bf8..2ccd0c8003e24 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -2509,7 +2509,7 @@ struct device *genpd_dev_pm_attach_by_id(struct device *dev,
- 	/* Verify that the index is within a valid range. */
- 	num_domains = of_count_phandle_with_args(dev->of_node, "power-domains",
- 						 "#power-domain-cells");
--	if (index >= num_domains)
-+	if (num_domains < 0 || index >= num_domains)
- 		return NULL;
+diff --git a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+index 0cc8cafdde27c..3bf56ac1132fd 100644
+--- a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
++++ b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+@@ -117,7 +117,7 @@ static int sun8i_ss_setup_ivs(struct skcipher_request *areq)
  
- 	/* Allocate and register device on the genpd bus. */
+ 	/* we need to copy all IVs from source in case DMA is bi-directionnal */
+ 	while (sg && len) {
+-		if (sg_dma_len(sg) == 0) {
++		if (sg->length == 0) {
+ 			sg = sg_next(sg);
+ 			continue;
+ 		}
 -- 
 2.39.5
 
