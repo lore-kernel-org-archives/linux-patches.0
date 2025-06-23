@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A5442056;
-	Mon, 23 Jun 2025 21:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611C21FECBA;
+	Mon, 23 Jun 2025 21:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715321; cv=none; b=CjxxY+FiVe5EqHL7gionJptNE4u1l3y0LVZgTH7FJVeJrH5C7lLNPA1SyEDkqIalatal718qqbmbco1xi+NL6psTrpi+BLgNqt7fBNNnJX0OSFc7I7JPvJ8Aiayz6vHM/RkiXP4LkrC4XhZFfN2BCedWIlooJpM2/Kg49nFG+t8=
+	t=1750715324; cv=none; b=cgX0zweiMWXhE/hDVxtGoBWghi1Wqim6GKpjI/P76kylS4dpvnOZ1QrZtgTiDK1MNn8jFh36bGHzGZu1F3WDRSm2yNVNvb+XtBXcqbshSswNUHO8DLzkSpcldRp4LrYSWjNwnyXl4xbQpJat0Yrp+nY/9Pvujd1b2XRcAIJyEB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715321; c=relaxed/simple;
-	bh=XSma3ZNutnPzw7bNf8WLSCla3CTG2fesbbfFaiR89ko=;
+	s=arc-20240116; t=1750715324; c=relaxed/simple;
+	bh=Is5MoJfrJeHDJxDtF+G77dej9qKZWZ06s/LQBgcA7WI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JN0dpb7Hj9/9eYrgPA5HP8X8JyKGqODv7aaqc+qWah1eOrZqbWQyFrRgfwKgxiqXNQ678NzsbroZOWLw4DoPfCXScffwQ8vNislMYlb7R0oi480Aw1QEw9wt8PO94X9EG9XqLq9SGKaQdhyVKYl9253tRX6TBM+vPJ6KV3bFT4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQQVCsJu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JnrFjqp7e3n+gqKFHG17Ffql22lkJqrwh2OSwmpGDUEtkWQiWzCXzttw/GOboafPnJ8Enu4zjirBpJ02Cfhq9hGVh+gvOMvP4/AhrWjMm1vt63qZALDlRUz0EQh12tSXqokD4mzzSLthISAFKTPEnJmoqUosHDWsC69vvsmO3kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NtwDhgLj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQQVCsJu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E881C4CEEA;
-	Mon, 23 Jun 2025 21:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NtwDhgLj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0A9C4CEEA;
+	Mon, 23 Jun 2025 21:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715321;
-	bh=XSma3ZNutnPzw7bNf8WLSCla3CTG2fesbbfFaiR89ko=;
+	s=korg; t=1750715324;
+	bh=Is5MoJfrJeHDJxDtF+G77dej9qKZWZ06s/LQBgcA7WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQQVCsJu/daKssJiSQE0VCZhRsNUOzbWo7B9/1so4kjHgQNxk/KDobdl2eeFsqkqq
-	 X/5PuyRydsxE+ZeaiMiGm3/8bllZ3V7oLYVu2z5+fqicz8Nhg0J/nmhZ9HU6IXuODR
-	 vPhWyBHbSRoT1+oFqQ0ccUExZgWLN3l3gbTrPJU0=
+	b=NtwDhgLjTpPKcfrz7cZdAKXrWFbdPkQuqNkOe9WDTkP0nxHC2GodwiWtWzQOqBoA1
+	 KnlTCLC8HseN9LBz0RwwInfryq42a1oGuyv5Qtx/snqfLGMXzp0L13XOEzgOXW/VmE
+	 10j1MLESM91TfDOvcvSSodZ8cADAKmrGEXRH6Vls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Yanteng Si <si.yanteng@linux.dev>,
-	WANG Xuerui <git@xen0n.name>,
-	Xi Ruoyao <xry111@xry111.site>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.15 451/592] LoongArch: vDSO: Correctly use asm parameters in syscall wrappers
-Date: Mon, 23 Jun 2025 15:06:49 +0200
-Message-ID: <20250623130711.155594138@linuxfoundation.org>
+	Balamurugan S <quic_bselvara@quicinc.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 192/290] wifi: ath12k: fix incorrect CE addresses
+Date: Mon, 23 Jun 2025 15:07:33 +0200
+Message-ID: <20250623130632.635740830@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,86 +47,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Balamurugan S <quic_bselvara@quicinc.com>
 
-commit e242bbbb6d7ac7556aa1e358294dc7e3c82cc902 upstream.
+[ Upstream commit 60031d9c3589c7983fd1deb4a4c0bebf0929890e ]
 
-The syscall wrappers use the "a0" register for two different register
-variables, both the first argument and the return value. Here the "ret"
-variable is used as both input and output while the argument register is
-only used as input. Clang treats the conflicting input parameters as an
-undefined behaviour and optimizes away the argument assignment.
+In the current ath12k implementation, the CE addresses
+CE_HOST_IE_ADDRESS and CE_HOST_IE_2_ADDRESS are incorrect. These
+values were inherited from ath11k, but ath12k does not currently use
+them.
 
-The code seems to work by chance for the most part today but that may
-change in the future. Specifically clock_gettime_fallback() fails with
-clockids from 16 to 23, as implemented by the upcoming auxiliary clocks.
+However, the Ath12k AHB support relies on these addresses. Therefore,
+correct the CE addresses for ath12k.
 
-Switch the "ret" register variable to a pure output, similar to the
-other architectures' vDSO code. This works in both clang and GCC.
+Tested-on: IPQ5332 hw1.0 AHB WLAN.WBE.1.3.1-00130-QCAHKSWPL_SILICONZ-1
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00210-QCAHKSWPL_SILICONZ-1
 
-Link: https://lore.kernel.org/lkml/20250602102825-42aa84f0-23f1-4d10-89fc-e8bbaffd291a@linutronix.de/
-Link: https://lore.kernel.org/lkml/20250519082042.742926976@linutronix.de/
-Fixes: c6b99bed6b8f ("LoongArch: Add VDSO and VSYSCALL support")
-Fixes: 18efd0b10e0f ("LoongArch: vDSO: Wire up getrandom() vDSO implementation")
-Cc: stable@vger.kernel.org
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
-Reviewed-by: WANG Xuerui <git@xen0n.name>
-Reviewed-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Balamurugan S <quic_bselvara@quicinc.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+Link: https://patch.msgid.link/20250321-ath12k-ahb-v12-2-bb389ed76ae5@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/vdso/getrandom.h    |    2 +-
- arch/loongarch/include/asm/vdso/gettimeofday.h |    6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/ce.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/loongarch/include/asm/vdso/getrandom.h
-+++ b/arch/loongarch/include/asm/vdso/getrandom.h
-@@ -20,7 +20,7 @@ static __always_inline ssize_t getrandom
+diff --git a/drivers/net/wireless/ath/ath12k/ce.h b/drivers/net/wireless/ath/ath12k/ce.h
+index 857bc5f9e946a..f9547a3945e44 100644
+--- a/drivers/net/wireless/ath/ath12k/ce.h
++++ b/drivers/net/wireless/ath/ath12k/ce.h
+@@ -1,7 +1,7 @@
+ /* SPDX-License-Identifier: BSD-3-Clause-Clear */
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2022, 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
  
- 	asm volatile(
- 	"      syscall 0\n"
--	: "+r" (ret)
-+	: "=r" (ret)
- 	: "r" (nr), "r" (buffer), "r" (len), "r" (flags)
- 	: "$t0", "$t1", "$t2", "$t3", "$t4", "$t5", "$t6", "$t7", "$t8",
- 	  "memory");
---- a/arch/loongarch/include/asm/vdso/gettimeofday.h
-+++ b/arch/loongarch/include/asm/vdso/gettimeofday.h
-@@ -25,7 +25,7 @@ static __always_inline long gettimeofday
+ #ifndef ATH12K_CE_H
+@@ -39,8 +39,8 @@
+ #define PIPEDIR_INOUT_H2H	4 /* bidirectional, host to host */
  
- 	asm volatile(
- 	"       syscall 0\n"
--	: "+r" (ret)
-+	: "=r" (ret)
- 	: "r" (nr), "r" (tv), "r" (tz)
- 	: "$t0", "$t1", "$t2", "$t3", "$t4", "$t5", "$t6", "$t7",
- 	  "$t8", "memory");
-@@ -44,7 +44,7 @@ static __always_inline long clock_gettim
+ /* CE address/mask */
+-#define CE_HOST_IE_ADDRESS	0x00A1803C
+-#define CE_HOST_IE_2_ADDRESS	0x00A18040
++#define CE_HOST_IE_ADDRESS	0x75804C
++#define CE_HOST_IE_2_ADDRESS	0x758050
+ #define CE_HOST_IE_3_ADDRESS	CE_HOST_IE_ADDRESS
  
- 	asm volatile(
- 	"       syscall 0\n"
--	: "+r" (ret)
-+	: "=r" (ret)
- 	: "r" (nr), "r" (clkid), "r" (ts)
- 	: "$t0", "$t1", "$t2", "$t3", "$t4", "$t5", "$t6", "$t7",
- 	  "$t8", "memory");
-@@ -63,7 +63,7 @@ static __always_inline int clock_getres_
- 
- 	asm volatile(
- 	"       syscall 0\n"
--	: "+r" (ret)
-+	: "=r" (ret)
- 	: "r" (nr), "r" (clkid), "r" (ts)
- 	: "$t0", "$t1", "$t2", "$t3", "$t4", "$t5", "$t6", "$t7",
- 	  "$t8", "memory");
+ #define CE_HOST_IE_3_SHIFT	0xC
+-- 
+2.39.5
+
 
 
