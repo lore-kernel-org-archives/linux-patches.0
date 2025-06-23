@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B833E223DD7;
-	Mon, 23 Jun 2025 21:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7E9218AC1;
+	Mon, 23 Jun 2025 21:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715168; cv=none; b=dEwtw+ETgx0v8vlWuLs5foR11R359uusArebWf3e7HUYgDt/1fGV0ow4NwAllOwMrmfCo/9W1YidsMZ/B3lPoU+YBA13ES/RoPFUKy1cfmMV/4gj2/j6Gk603Bn6Oj1F2HqQp9bYXR8yi1x3zl+UgcYYqm54R+VjtL7qTSSajiM=
+	t=1750715171; cv=none; b=G/cdVtFGWOIW342HuSaKcEECfagpzRb8dc8TQz0VCUPWWIXdSRu5zYQSJrOJNTjKsM4/xT3wJ0ek2bBQPkvuOV+3271IQZhGiWIFV3+G37OXvDP3YQ+Q5Yu6re8azPl5LsbYyFAHh3RC0ZBQ3FKJUGec48XXfskRv70yyHyjOW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715168; c=relaxed/simple;
-	bh=vs+hB5uXg0PS+GQfuJ2BNPwv+3sWFy4+xeUCEE2pvMY=;
+	s=arc-20240116; t=1750715171; c=relaxed/simple;
+	bh=gxYpF7Et4d0HBwxQ2MCyCUrOoJ7lIDgECAt12083sIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=phw+aRsGzRPjSsLNSmf6WkO2Bxx7joxqMSyMRm3jTTWMGwuUO+COeWNKIfQ9u41E1nVEd64lQkQeVnm8BefwLlOw99CDST9d2lVvErcxvilARnGOgMN1feYsGe2gasVs6VYMyjfn+GoyylkMlRzGXLyxiJ8JOTkrbIWL53SJWIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0IoK+l5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mdB1ZksY+FRJJst4aAyPpOj3jTuEnTgKI9O+A/ywGv7uLWqeX12czltzNVCuByr1vctVHuKWv2h4p2xDhxYWF5ejXjU3vlOal2+YSUrlU3utcId2WVQVYW7r7eNFjSfEdCgDxbmxhirY5dj23oQCfj1sS40ic8YPKchbTb+Nkag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEnK19a/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0IoK+l5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CA8C4CEEA;
-	Mon, 23 Jun 2025 21:46:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEnK19a/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B3BC4CEEA;
+	Mon, 23 Jun 2025 21:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715168;
-	bh=vs+hB5uXg0PS+GQfuJ2BNPwv+3sWFy4+xeUCEE2pvMY=;
+	s=korg; t=1750715171;
+	bh=gxYpF7Et4d0HBwxQ2MCyCUrOoJ7lIDgECAt12083sIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G0IoK+l5UnNG8PnmZrPFzQ4uDOLK5IJlUmgefu+RM0lrl0mO4BYwuzQRJniWXp4fi
-	 nrkD784ttt3OqXTr4eOJKNPCXc98RkINIiu3fDOz7H3XVpUwMyJE2nqTIQ/gwsniEw
-	 n2LYn46k8ZDoWMRe4I1d+FumOrmWcvN6NFV8bUy0=
+	b=YEnK19a/sTrrExPMAWivTQSJtf0nD4apMtAXZFM+Dpj58naxzPYlBA/FfMifBL4ag
+	 TkEQytnqN/B6QteAXcuJVWF1LI63dzrXHh827hZlb2U+vpNL70EmqSnb6Lg5pK4pVa
+	 umYkU0FoLWqAODfzWkpYd9Qvxk0+S/fCTjegKJg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Greental <yonatan02greental@gmail.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 239/508] powerpc/powernv/memtrace: Fix out of bounds issue in memtrace mmap
-Date: Mon, 23 Jun 2025 15:04:44 +0200
-Message-ID: <20250623130651.135641419@linuxfoundation.org>
+	Diederik de Haas <didi.debian@cknow.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>
+Subject: [PATCH 5.15 257/411] PCI: dw-rockchip: Fix PHY function call sequence in rockchip_pcie_phy_deinit()
+Date: Mon, 23 Jun 2025 15:06:41 +0200
+Message-ID: <20250623130640.114086998@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +49,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Diederik de Haas <didi.debian@cknow.org>
 
-[ Upstream commit cd097df4596f3a1e9d75eb8520162de1eb8485b2 ]
+commit 286ed198b899739862456f451eda884558526a9d upstream.
 
-memtrace mmap issue has an out of bounds issue. This patch fixes the by
-checking that the requested mapping region size should stay within the
-allocated region size.
+The documentation for the phy_power_off() function explicitly says that it
+must be called before phy_exit().
 
-Reported-by: Jonathan Greental <yonatan02greental@gmail.com>
-Fixes: 08a022ad3dfa ("powerpc/powernv/memtrace: Allow mmaping trace buffers")
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250610021227.361980-1-maddy@linux.ibm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Hence, follow the same rule in rockchip_pcie_phy_deinit().
+
+Fixes: 0e898eb8df4e ("PCI: rockchip-dwc: Add Rockchip RK356X host controller driver")
+Signed-off-by: Diederik de Haas <didi.debian@cknow.org>
+[mani: commit message change]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
+Cc: stable@vger.kernel.org	# v5.15+
+Link: https://patch.msgid.link/20250417142138.1377451-1-didi.debian@cknow.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/powernv/memtrace.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/powernv/memtrace.c b/arch/powerpc/platforms/powernv/memtrace.c
-index 877720c645151..35471b679638a 100644
---- a/arch/powerpc/platforms/powernv/memtrace.c
-+++ b/arch/powerpc/platforms/powernv/memtrace.c
-@@ -48,11 +48,15 @@ static ssize_t memtrace_read(struct file *filp, char __user *ubuf,
- static int memtrace_mmap(struct file *filp, struct vm_area_struct *vma)
+--- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
++++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+@@ -178,8 +178,8 @@ static int rockchip_pcie_phy_init(struct
+ 
+ static void rockchip_pcie_phy_deinit(struct rockchip_pcie *rockchip)
  {
- 	struct memtrace_entry *ent = filp->private_data;
-+	unsigned long ent_nrpages = ent->size >> PAGE_SHIFT;
-+	unsigned long vma_nrpages = vma_pages(vma);
+-	phy_exit(rockchip->phy);
+ 	phy_power_off(rockchip->phy);
++	phy_exit(rockchip->phy);
+ }
  
--	if (ent->size < vma->vm_end - vma->vm_start)
-+	/* The requested page offset should be within object's page count */
-+	if (vma->vm_pgoff >= ent_nrpages)
- 		return -EINVAL;
- 
--	if (vma->vm_pgoff << PAGE_SHIFT >= ent->size)
-+	/* The requested mapping range should remain within the bounds */
-+	if (vma_nrpages > ent_nrpages - vma->vm_pgoff)
- 		return -EINVAL;
- 
- 	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
--- 
-2.39.5
-
+ static int rockchip_pcie_reset_control_release(struct rockchip_pcie *rockchip)
 
 
