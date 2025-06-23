@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0147223DED;
-	Mon, 23 Jun 2025 21:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56951AD3FA;
+	Mon, 23 Jun 2025 21:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715536; cv=none; b=NrhFpcQgZmms1CWfy/UgLFfj0VXiM+YUK8bGp8O+FvmxrgYJdNQsKNL0kbTonxKy6Xi4T+Lk6uGz5OkcVl+m3AuBUHo220HKDJ9y73KD5nhR4k4r0+sKaZI3mrzQl2eE43DejzB3bac0QxoEg1H6fddZx0LNkYOr9eS0/wgZMF4=
+	t=1750715538; cv=none; b=sgQuWoNIxurLMOqjHpwnfMm6B6dwWFUPppetWE1CRb7k13bBao57QzKI/VEuZjNsAzVjqpzdH6nWQRBKYyGSgCkQWv+GsWmbH5kYibXV6kytbhYHsVwMJUN8lFSDGmNeR7ZZwYlMOEeULbF8aZX0B2av/Tl9mX/4ngrsDZyx7o4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715536; c=relaxed/simple;
-	bh=bUtVv/oMRkDLUCeb2hY9zHJpjk134RcY1B3VJT4dswo=;
+	s=arc-20240116; t=1750715538; c=relaxed/simple;
+	bh=SHoKsJSbMsuSimz5qdkFS+LJ/Uj3xFOWtJjE8JYw9CI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSEzwj+Th5ZLBIJXiM4UZJoY2HS2mHeb8UtnHB1muEgUP38lZqUyvlKwLTnH5ShjiII5CYUMFv2wK2XGzLnqT80IxCgZERcXgi1H767vgzW3WwdToPUSwu0XOi0e5Q3pjlaC70wYzpmWhBRZJxkVPI/d95JtetUcNa211ssYjfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n63QtS1U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=R5qaqPalIaKfICLa++Cmy2CxfuGvsP/xPyMo4KpSJIXc1LetvWa5V4ioX3Byj2AiYcNWvtU07h8bBeUw4XqlEcFv7/pGeqpKnURtauE4Ips5TlR/DBOzmwUmRfENgVpKcwcfKniUmUlYfkwyci6QC1G1qG1pjr/dIyssj7mw2TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFq7Qeo7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n63QtS1U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B46C4CEEA;
-	Mon, 23 Jun 2025 21:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFq7Qeo7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F388AC4CEEA;
+	Mon, 23 Jun 2025 21:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715535;
-	bh=bUtVv/oMRkDLUCeb2hY9zHJpjk134RcY1B3VJT4dswo=;
+	s=korg; t=1750715538;
+	bh=SHoKsJSbMsuSimz5qdkFS+LJ/Uj3xFOWtJjE8JYw9CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n63QtS1UxUsR99xPjJOgKW4PnE4a4UvCcRzeWDzB4VqxPw6eqQqjLiaGl+3qrX5nd
-	 1Xnm3F+ou6yloC+382/oi8xlYVqSF89ydFpPesXN9SPIr5TP1ivuDYTtnweJoVxvMw
-	 yRNBo2idAARKyHbM1UqN9UIanIrTvh68VfVkCs8A=
+	b=dFq7Qeo7iLA5JoV1ygyFg7xQzKKeby9rvHhoVZj1qqz1sYm41nJVn+eqciIO/XLPr
+	 CKBWGTcuL8xTa6aE9lCFiSSwl+nidpChy8oRNyXUMDDiE44wXteNsvbVbbfRb765By
+	 HDqkpasUApHhaIyQ06wpFRWkrs9RBMPIiMgT+U7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <kang.yang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 212/414] wifi: ath12k: fix macro definition HAL_RX_MSDU_PKT_LENGTH_GET
-Date: Mon, 23 Jun 2025 15:05:49 +0200
-Message-ID: <20250623130647.308714983@linuxfoundation.org>
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.6 226/290] selinux: fix selinux_xfrm_alloc_user() to set correct ctx_len
+Date: Mon, 23 Jun 2025 15:08:07 +0200
+Message-ID: <20250623130633.726959225@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,50 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kang Yang <kang.yang@oss.qualcomm.com>
+From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-[ Upstream commit a69bbf89d751ba2d6da21d773c4e29c91c5e53c4 ]
+commit 86c8db86af43f52f682e53a0f2f0828683be1e52 upstream.
 
-Currently, HAL_RX_MSDU_PKT_LENGTH_GET uses u32_get_bits to obtain the
-MSDU length from the MSDU description.
+We should count the terminating NUL byte as part of the ctx_len.
+Otherwise, UBSAN logs a warning:
+  UBSAN: array-index-out-of-bounds in security/selinux/xfrm.c:99:14
+  index 60 is out of range for type 'char [*]'
 
-This is not right. Because all halphy descriptions are little endian.
+The allocation itself is correct so there is no actual out of bounds
+indexing, just a warning.
 
-So use le32_get_bits for HAL_RX_MSDU_PKT_LENGTH_GET.
-
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250421023444.1778-9-kang.yang@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Suggested-by: Christian Göttsche <cgzones@googlemail.com>
+Link: https://lore.kernel.org/selinux/CAEjxPJ6tA5+LxsGfOJokzdPeRomBHjKLBVR6zbrg+_w3ZZbM3A@mail.gmail.com/
+Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/hal_desc.h | 2 +-
+ security/selinux/xfrm.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/hal_desc.h b/drivers/net/wireless/ath/ath12k/hal_desc.h
-index c68998e9667c9..8cbe28950d0c0 100644
---- a/drivers/net/wireless/ath/ath12k/hal_desc.h
-+++ b/drivers/net/wireless/ath/ath12k/hal_desc.h
-@@ -705,7 +705,7 @@ enum hal_rx_msdu_desc_reo_dest_ind {
- #define RX_MSDU_DESC_INFO0_DECAP_FORMAT		GENMASK(30, 29)
+--- a/security/selinux/xfrm.c
++++ b/security/selinux/xfrm.c
+@@ -95,7 +95,7 @@ static int selinux_xfrm_alloc_user(struc
  
- #define HAL_RX_MSDU_PKT_LENGTH_GET(val)		\
--	(u32_get_bits((val), RX_MSDU_DESC_INFO0_MSDU_LENGTH))
-+	(le32_get_bits((val), RX_MSDU_DESC_INFO0_MSDU_LENGTH))
- 
- struct rx_msdu_desc {
- 	__le32 info0;
--- 
-2.39.5
-
+ 	ctx->ctx_doi = XFRM_SC_DOI_LSM;
+ 	ctx->ctx_alg = XFRM_SC_ALG_SELINUX;
+-	ctx->ctx_len = str_len;
++	ctx->ctx_len = str_len + 1;
+ 	memcpy(ctx->ctx_str, &uctx[1], str_len);
+ 	ctx->ctx_str[str_len] = '\0';
+ 	rc = security_context_to_sid(ctx->ctx_str, str_len,
 
 
