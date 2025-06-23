@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7A21EF397;
-	Mon, 23 Jun 2025 21:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE62E224B01;
+	Mon, 23 Jun 2025 21:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713945; cv=none; b=s/QkoTcqTDhkv2MELXEbtW6OFmANdSFHKIeuKV6mUb/MpsNGlkLRVzGyohMvoJYJbJrCNseEbMxWOKA30RMHQ2gsfCYHM0l4dO/YBbZ+1Q9vhn3G5J+KXfFo8Fpv4KSnWrbgxKtiqRDIv0VajKoTn3wmd3t7KqR2DPo1BDjWaxY=
+	t=1750713948; cv=none; b=MbTLiWC7o6BmGHZYOYIIpxvi+4rGqzEr1kAoGmxNPZhEKWX/bKiOISDFj89pMEEfp4cIgVENHZIhqGPE0WoEYWWvyCWBqiN4SVfy3CTqL9ruRrq820VOwNz3NL1lDzVgYChI+DuWRFXRV/AaHZze5BhiIXgbubPWx9lUyLvs2W8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713945; c=relaxed/simple;
-	bh=hiXd79DYEhx6V54g4qAxb5EY0iECS84NqI+ne50XoXw=;
+	s=arc-20240116; t=1750713948; c=relaxed/simple;
+	bh=0nEFvdJrHjla68baqkebCUaoNtwuCCH2it+0FJslXpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XS7tIpCorG8+BvCfZMyBYNQ6XeVnAhklzmKnPZuZlgRtpJ8DSbqnpAOMjqqEyTzyoKlWO9bm+KpmmDpxzI6VXp6xmvXHadc3Qjtjk+02/bbMGCA3sj5iZ/RI6SaQuAQJAl5rQrqRZBZRpdj4g+uW7TtcKcci45U8C7HAVXk1178=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwCMU9vC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X89ehy+I1ujYL8TLS4B43+H3n+l+uBINircyt+ok1LHu0iYwPUJeAPIRku5PwSvvo21UZnA19sxTDeri+43Xykek0V3OWIlUVj7nth3hRVwAkITKirWv9nbZUSzSjPUNnJb/yiO5FzCnOC4cTNFeV+MM46L0V8lmQAC3BVoSaes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfPE4huN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwCMU9vC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824FFC4CEED;
-	Mon, 23 Jun 2025 21:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfPE4huN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2576BC4CEF6;
+	Mon, 23 Jun 2025 21:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713945;
-	bh=hiXd79DYEhx6V54g4qAxb5EY0iECS84NqI+ne50XoXw=;
+	s=korg; t=1750713947;
+	bh=0nEFvdJrHjla68baqkebCUaoNtwuCCH2it+0FJslXpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QwCMU9vCfa/IM5YootFeZd2FThPcWqLtyDZWuzUQ3stVle4KQ31H8MtiEhiFOBMgt
-	 87Bdjbyeyvxyd+ElVTsGe6UoAyxQ2MVvsHal0FgSROmEmX/iAbV2GvlJkAe6vPhn9x
-	 RK12axnQdBOc+SLW6CE8hghy6B2Xhf15+I1o+3WI=
+	b=sfPE4huNPdCpfbEEitefZGfBMmoLpP+NLMYVvuSuofgm2XKHY1DmIhH/+MssXAQVW
+	 cs0SpnhZGkwn3MxHLetG9953kGeZi304jdgZQA60CDrBxjLqAfB55D1fblB1Kf+a95
+	 /icb+zu+PGnIPZ5UoZfxurbH3/wteYg6irSznPXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 129/508] fbdev: core: fbcvt: avoid division by 0 in fb_cvt_hperiod()
-Date: Mon, 23 Jun 2025 15:02:54 +0200
-Message-ID: <20250623130648.465786379@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.12 072/414] arm64/mm: Close theoretical race where stale TLB entry remains valid
+Date: Mon, 23 Jun 2025 15:03:29 +0200
+Message-ID: <20250623130643.873591658@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +46,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-[ Upstream commit 3f6dae09fc8c306eb70fdfef70726e1f154e173a ]
+commit 4b634918384c0f84c33aeb4dd9fd4c38e7be5ccb upstream.
 
-In fb_find_mode_cvt(), iff mode->refresh somehow happens to be 0x80000000,
-cvt.f_refresh will become 0 when multiplying it by 2 due to overflow. It's
-then passed to fb_cvt_hperiod(), where it's used as a divider -- division
-by 0 will result in kernel oops. Add a sanity check for cvt.f_refresh to
-avoid such overflow...
+Commit 3ea277194daa ("mm, mprotect: flush TLB if potentially racing with
+a parallel reclaim leaving stale TLB entries") describes a race that,
+prior to the commit, could occur between reclaim and operations such as
+mprotect() when using reclaim's tlbbatch mechanism. See that commit for
+details but the summary is:
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
+"""
+Nadav Amit identified a theoritical race between page reclaim and
+mprotect due to TLB flushes being batched outside of the PTL being held.
 
-Fixes: 96fe6a2109db ("[PATCH] fbdev: Add VESA Coordinated Video Timings (CVT) support")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+He described the race as follows:
+
+	CPU0				CPU1
+	----				----
+					user accesses memory using RW PTE
+					[PTE now cached in TLB]
+	try_to_unmap_one()
+	==> ptep_get_and_clear()
+	==> set_tlb_ubc_flush_pending()
+					mprotect(addr, PROT_READ)
+					==> change_pte_range()
+					==> [ PTE non-present - no flush ]
+
+					user writes using cached RW PTE
+	...
+
+	try_to_unmap_flush()
+"""
+
+The solution was to insert flush_tlb_batched_pending() in mprotect() and
+friends to explcitly drain any pending reclaim TLB flushes. In the
+modern version of this solution, arch_flush_tlb_batched_pending() is
+called to do that synchronisation.
+
+arm64's tlbbatch implementation simply issues TLBIs at queue-time
+(arch_tlbbatch_add_pending()), eliding the trailing dsb(ish). The
+trailing dsb(ish) is finally issued in arch_tlbbatch_flush() at the end
+of the batch to wait for all the issued TLBIs to complete.
+
+Now, the Arm ARM states:
+
+"""
+The completion of the TLB maintenance instruction is guaranteed only by
+the execution of a DSB by the observer that performed the TLB
+maintenance instruction. The execution of a DSB by a different observer
+does not have this effect, even if the DSB is known to be executed after
+the TLB maintenance instruction is observed by that different observer.
+"""
+
+arch_tlbbatch_add_pending() and arch_tlbbatch_flush() conform to this
+requirement because they are called from the same task (either kswapd or
+caller of madvise(MADV_PAGEOUT)), so either they are on the same CPU or
+if the task was migrated, __switch_to() contains an extra dsb(ish).
+
+HOWEVER, arm64's arch_flush_tlb_batched_pending() is also implemented as
+a dsb(ish). But this may be running on a CPU remote from the one that
+issued the outstanding TLBIs. So there is no architectural gurantee of
+synchonization. Therefore we are still vulnerable to the theoretical
+race described in Commit 3ea277194daa ("mm, mprotect: flush TLB if
+potentially racing with a parallel reclaim leaving stale TLB entries").
+
+Fix this by flushing the entire mm in arch_flush_tlb_batched_pending().
+This aligns with what the other arches that implement the tlbbatch
+feature do.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 43b3dfdd0455 ("arm64: support batched/deferred tlb shootdown during page reclamation/migration")
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Link: https://lore.kernel.org/r/20250530152445.2430295-1-ryan.roberts@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcvt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/tlbflush.h |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbcvt.c b/drivers/video/fbdev/core/fbcvt.c
-index 64843464c6613..cd3821bd82e56 100644
---- a/drivers/video/fbdev/core/fbcvt.c
-+++ b/drivers/video/fbdev/core/fbcvt.c
-@@ -312,7 +312,7 @@ int fb_find_mode_cvt(struct fb_videomode *mode, int margins, int rb)
- 	cvt.f_refresh = cvt.refresh;
- 	cvt.interlace = 1;
+--- a/arch/arm64/include/asm/tlbflush.h
++++ b/arch/arm64/include/asm/tlbflush.h
+@@ -330,13 +330,14 @@ static inline void arch_tlbbatch_add_pen
+ }
  
--	if (!cvt.xres || !cvt.yres || !cvt.refresh) {
-+	if (!cvt.xres || !cvt.yres || !cvt.refresh || cvt.f_refresh > INT_MAX) {
- 		printk(KERN_INFO "fbcvt: Invalid input parameters\n");
- 		return 1;
- 	}
--- 
-2.39.5
-
+ /*
+- * If mprotect/munmap/etc occurs during TLB batched flushing, we need to
+- * synchronise all the TLBI issued with a DSB to avoid the race mentioned in
+- * flush_tlb_batched_pending().
++ * If mprotect/munmap/etc occurs during TLB batched flushing, we need to ensure
++ * all the previously issued TLBIs targeting mm have completed. But since we
++ * can be executing on a remote CPU, a DSB cannot guarantee this like it can
++ * for arch_tlbbatch_flush(). Our only option is to flush the entire mm.
+  */
+ static inline void arch_flush_tlb_batched_pending(struct mm_struct *mm)
+ {
+-	dsb(ish);
++	flush_tlb_mm(mm);
+ }
+ 
+ /*
 
 
