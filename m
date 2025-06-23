@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B5422FF35;
-	Mon, 23 Jun 2025 13:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04D413A265;
+	Mon, 23 Jun 2025 13:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684619; cv=none; b=CmjJ9PlLEFjPdpTDz/yMWDCY1BQWruwzSZoh9rBVBSRsKthQwzekMC2gPBZP4z638lN7a+Vk8uPHysSx5/2qGpoQHgrGLJO8WRpxi6pFgC7NgLe7lptvFsV3g4/veEwtVqcIIEWyMFgZ14Zo0CltDmnLDpNaAh4Wdgnh1nHpTc8=
+	t=1750684622; cv=none; b=qKaKMpX5Co8s6aZRg6/YgAHPHeWZ1XWhlh4i+RSJYClRY823jVy8kpQra+y4HO+4W6fQmj7ChayLUHj+TQlFJG9IpnHlvhPXQlJNcTS66IC6TUR/La6tiRntHje5cz2E2xBOoPnAMMGbEx7w5HFK1vephNUS6VbU0e7rkKzmDWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684619; c=relaxed/simple;
-	bh=DnrPAZA7rOmmwBAijl3QvTQ7VRFrDqihiokSMyAFGlg=;
+	s=arc-20240116; t=1750684622; c=relaxed/simple;
+	bh=JRnuxx9Qb/yCToVkQsUplktDt/XWn1X2SjZIIlUzhyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HdzzDCwHQ7Yipy2WnluJAXk0dioCV7pOxoOYdmj17gWo4lj1BCWijCv2X5vbLvIWZb/qCSo8JIy7mDKVQqj4HWAtJLpVi8RtXdQv1timHXHkCQTJRhRfoC1rJzjxusLEhqh2FWzDFQuv8hLjU8osIfmXRGOTwdNive9xF0ep5+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rUSD/X8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EANH4SteV3Xl4PGEO3R1pIExUSyzSzHEbvpXbPNptM4Zfs9lh7TOnzSlE/80SR2ehh1nPiqcVwABV+VvmYwgOHmyEPFMl95kccJZTVGFAshzMu1Z4Ox19ARqHfR1aS0yErOK92DHWs2KgQ0jAfAaW0u2daow3flLKxMG/rFuiCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spAzzbpZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rUSD/X8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB3F9C4CEEA;
-	Mon, 23 Jun 2025 13:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spAzzbpZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C853C4CEEA;
+	Mon, 23 Jun 2025 13:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684619;
-	bh=DnrPAZA7rOmmwBAijl3QvTQ7VRFrDqihiokSMyAFGlg=;
+	s=korg; t=1750684621;
+	bh=JRnuxx9Qb/yCToVkQsUplktDt/XWn1X2SjZIIlUzhyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1rUSD/X8wWi1tNcJdZCE66x75DOcN+deFDR++KNMfWlbXSIAt+ytkr6lWXIok4iAa
-	 c/bt0+PvgSuHf3QyYDHjXC1d0cazOmd9cI/70boLATW4XP0eeQ62pbCq88i1I0T/zF
-	 dKcn0y/m96FXHMpxEB2SO4yLn8WoGzrhUzCDguE8=
+	b=spAzzbpZOL26ABcWAYUezUMsnN4S7Y0JzP0KqWB808r4aQgHD0I4t2RA/gtah178/
+	 lE3DtCZ9zdlEThH3z5E2h+WEOw34M74xgHkMyQ7oLowICjLNT48KFrIHJnGGlY/lTT
+	 SVhxgRTjmc83FeTZSyQh3EBAKFq5xg3o/wjYYtxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Gatien Chevallier <gatien.chevallier@foss.st.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.15 119/592] Input: gpio-keys - fix a sleep while atomic with PREEMPT_RT
-Date: Mon, 23 Jun 2025 15:01:17 +0200
-Message-ID: <20250623130703.100917577@linuxfoundation.org>
+	Da Xue <da@libre.computer>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>
+Subject: [PATCH 6.15 137/592] clk: meson-g12a: add missing fclk_div2 to spicc
+Date: Mon, 23 Jun 2025 15:01:35 +0200
+Message-ID: <20250623130703.532204072@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -52,66 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Da Xue <da@libre.computer>
 
-commit f4a8f561d08e39f7833d4a278ebfb12a41eef15f upstream.
+commit daf004f87c3520c414992893e2eadd5db5f86a5a upstream.
 
-When enabling PREEMPT_RT, the gpio_keys_irq_timer() callback runs in
-hard irq context, but the input_event() takes a spin_lock, which isn't
-allowed there as it is converted to a rt_spin_lock().
+SPICC is missing fclk_div2, which means fclk_div5 and fclk_div7 indexes
+are wrong on this clock. This causes the spicc module to output sclk at
+2.5x the expected rate when clock index 3 is picked.
 
-[ 4054.289999] BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-[ 4054.290028] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/0
-...
-[ 4054.290195]  __might_resched+0x13c/0x1f4
-[ 4054.290209]  rt_spin_lock+0x54/0x11c
-[ 4054.290219]  input_event+0x48/0x80
-[ 4054.290230]  gpio_keys_irq_timer+0x4c/0x78
-[ 4054.290243]  __hrtimer_run_queues+0x1a4/0x438
-[ 4054.290257]  hrtimer_interrupt+0xe4/0x240
-[ 4054.290269]  arch_timer_handler_phys+0x2c/0x44
-[ 4054.290283]  handle_percpu_devid_irq+0x8c/0x14c
-[ 4054.290297]  handle_irq_desc+0x40/0x58
-[ 4054.290307]  generic_handle_domain_irq+0x1c/0x28
-[ 4054.290316]  gic_handle_irq+0x44/0xcc
+Adding the missing fclk_div2 resolves this.
 
-Considering the gpio_keys_irq_isr() can run in any context, e.g. it can
-be threaded, it seems there's no point in requesting the timer isr to
-run in hard irq context.
-
-Relax the hrtimer not to use the hard context.
-
-Fixes: 019002f20cb5 ("Input: gpio-keys - use hrtimer for release timer")
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Signed-off-by: Gatien Chevallier <gatien.chevallier@foss.st.com>
-Link: https://lore.kernel.org/r/20250528-gpio_keys_preempt_rt-v2-1-3fc55a9c3619@foss.st.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+[jbrunet: amended commit description]
+Fixes: a18c8e0b7697 ("clk: meson: g12a: add support for the SPICC SCLK Source clocks")
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Da Xue <da@libre.computer>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20250512142617.2175291-1-da@libre.computer
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/gpio_keys.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/meson/g12a.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/keyboard/gpio_keys.c
-+++ b/drivers/input/keyboard/gpio_keys.c
-@@ -486,7 +486,7 @@ static irqreturn_t gpio_keys_irq_isr(int
- 	if (bdata->release_delay)
- 		hrtimer_start(&bdata->release_timer,
- 			      ms_to_ktime(bdata->release_delay),
--			      HRTIMER_MODE_REL_HARD);
-+			      HRTIMER_MODE_REL);
- out:
- 	return IRQ_HANDLED;
- }
-@@ -628,7 +628,7 @@ static int gpio_keys_setup_key(struct pl
- 
- 		bdata->release_delay = button->debounce_interval;
- 		hrtimer_setup(&bdata->release_timer, gpio_keys_irq_timer,
--			      CLOCK_REALTIME, HRTIMER_MODE_REL_HARD);
-+			      CLOCK_REALTIME, HRTIMER_MODE_REL);
- 
- 		isr = gpio_keys_irq_isr;
- 		irqflags = 0;
+--- a/drivers/clk/meson/g12a.c
++++ b/drivers/clk/meson/g12a.c
+@@ -4093,6 +4093,7 @@ static const struct clk_parent_data spic
+ 	{ .hw = &g12a_clk81.hw },
+ 	{ .hw = &g12a_fclk_div4.hw },
+ 	{ .hw = &g12a_fclk_div3.hw },
++	{ .hw = &g12a_fclk_div2.hw },
+ 	{ .hw = &g12a_fclk_div5.hw },
+ 	{ .hw = &g12a_fclk_div7.hw },
+ };
 
 
