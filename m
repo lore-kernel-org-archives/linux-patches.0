@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C64070838;
-	Mon, 23 Jun 2025 21:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C363B70838;
+	Mon, 23 Jun 2025 21:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712985; cv=none; b=B13aGLIAnuKGbP+wd9nFj9FZ+2/BMuBBm3DBezQTbFrT3n7WP81wU0rM90a6D+Flqzs1RHC/bWc+i87tbXaX4OotCsjhJNxXzZmpfRQdd+NI5gTORinndUI3WU4IPO2h6mISvEMA2ws6Hxm9yiKvR91zG2KvKPoVZmGrUlneg4A=
+	t=1750712987; cv=none; b=hEi90+RMj/k5s9bRWtofZ9MrOP+UTLyDS6iiqoB3NaQV0x/02dZAiniPnW+FoY5NJbgrE/A/Txx2bVZqQX4aoxGHxe+V3FgabrtOSKtKJ+/PYDp3qNyZ0T7M6c4b7usJU5bm6pKa/qgylxVsnzOBFcBSGsWo+yt6Zz1D5nENs3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712985; c=relaxed/simple;
-	bh=97XCfldlVipqjpx5BCOIvv6g0MXBSVHcrAuxBl3P+3w=;
+	s=arc-20240116; t=1750712987; c=relaxed/simple;
+	bh=F4OXDox4r9Iy/eP2qpuA3zm2xQkF+AGwVtkSGx4bg4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WO2YaVKE7xc+4HJZiY0rrZUUdaynRtjbqf3DyA0sGEzxCqkJt/AszA8WDbOSyUhxje0lXYnD3vcnCFvF5oafXaexD7pNY12dFmPfROqm2H8hF+apFI/tpUpZgZZpb1rOSs30/M0C5rB34m28gsN5fs6ACPx+xIjT9O9rfeHDpwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C75M2QFd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HJGK54LEiTsDkSDR1+PxodL+fgjwsGPuPibVsxSQnNdmvVaVjpX8coVti6COmZAWKlqxcLZsCHZitP2s1hX6+Cjo2hO98PQmtFXsAPUWhEwI0A/GeGDJ2z7RhGe1A07AsdVqfSbP9KO8UzaPK0FzMoAuBp6i38Vdu3N+XbIA6tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuO18G6Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C75M2QFd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFEBDC4CEEA;
-	Mon, 23 Jun 2025 21:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuO18G6Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B79CC4CEEA;
+	Mon, 23 Jun 2025 21:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712985;
-	bh=97XCfldlVipqjpx5BCOIvv6g0MXBSVHcrAuxBl3P+3w=;
+	s=korg; t=1750712987;
+	bh=F4OXDox4r9Iy/eP2qpuA3zm2xQkF+AGwVtkSGx4bg4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C75M2QFdilnJAMhs4iQjmuplhT5feBFoMOxZn8nUcXCrRTBu8JFc4+Q2rCK5LA4DD
-	 uCZHHVtNpgfISn+dvkno+LJ3Zd787n8v9hDLDUUZ3/ZofsB6evfMjsd1XP2hBZgQq7
-	 lJPp8H4mYW5eiEWtVtGjGf8yANKF7VH0EtPfvPVE=
+	b=DuO18G6YSrNwYUZrpd7GOO6chbrc/O562NnAmJWcHiz+s9X8dzDB3Jt3jWeKh4Bi8
+	 /McB8tT3szvJ7hKQne8sgRnNArY8BGqyRNuwFCPywYxAUcwBY1N1RQnqV9KPw+UsDd
+	 +PdRa4QJO1hlnfuCKwd07QDLXie0KvouwGLprleE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@linaro.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Simon Schuster <schuster.simon@siemens-energy.com>,
+	Andreas Oetken <andreas.oetken@siemens-energy.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 099/411] perf tests switch-tracking: Fix timestamp comparison
-Date: Mon, 23 Jun 2025 15:04:03 +0200
-Message-ID: <20250623130635.985156909@linuxfoundation.org>
+Subject: [PATCH 6.15 304/592] nios2: force update_mmu_cache on spurious tlb-permission--related pagefaults
+Date: Mon, 23 Jun 2025 15:04:22 +0200
+Message-ID: <20250623130707.629865050@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,104 +48,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Simon Schuster <schuster.simon@siemens-energy.com>
 
-[ Upstream commit 628e124404b3db5e10e17228e680a2999018ab33 ]
+[ Upstream commit 2d8a3179ea035f9341b6a73e5ba4029fc67e983d ]
 
-The test might fail on the Arm64 platform with the error:
+NIOS2 uses a software-managed TLB for virtual address translation. To
+flush a cache line, the original mapping is replaced by one to physical
+address 0x0 with no permissions (rwx mapped to 0) set. This can lead to
+TLB-permission--related traps when such a nominally flushed entry is
+encountered as a mapping for an otherwise valid virtual address within a
+process (e.g. due to an MMU-PID-namespace rollover that previously
+flushed the complete TLB including entries of existing, running
+processes).
 
-  # perf test -vvv "Track with sched_switch"
-  Missing sched_switch events
-  #
+The default ptep_set_access_flags implementation from mm/pgtable-generic.c
+only forces a TLB-update when the page-table entry has changed within the
+page table:
 
-The issue is caused by incorrect handling of timestamp comparisons. The
-comparison result, a signed 64-bit value, was being directly cast to an
-int, leading to incorrect sorting for sched events.
+	/*
+	 * [...] We return whether the PTE actually changed, which in turn
+	 * instructs the caller to do things like update__mmu_cache. [...]
+	 */
+	int ptep_set_access_flags(struct vm_area_struct *vma,
+				  unsigned long address, pte_t *ptep,
+				  pte_t entry, int dirty)
+	{
+		int changed = !pte_same(*ptep, entry);
+		if (changed) {
+			set_pte_at(vma->vm_mm, address, ptep, entry);
+			flush_tlb_fix_spurious_fault(vma, address);
+		}
+		return changed;
+	}
 
-The case does not fail everytime, usually I can trigger the failure
-after run 20 ~ 30 times:
+However, no cross-referencing with the TLB-state occurs, so the
+flushing-induced pseudo entries that are responsible for the pagefault
+in the first place are never pre-empted from TLB on this code path.
 
-  # while true; do perf test "Track with sched_switch"; done
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : FAILED!
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : FAILED!
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
+This commit fixes this behaviour by always requesting a TLB-update in
+this part of the pagefault handling, fixing spurious page-faults on the
+way. The handling is a straightforward port of the logic from the MIPS
+architecture via an arch-specific ptep_set_access_flags function ported
+from arch/mips/include/asm/pgtable.h.
 
-I used cross compiler to build Perf tool on my host machine and tested on
-Debian / Juno board.  Generally, I think this issue is not very specific
-to GCC versions.  As both internal CI and my local env can reproduce the
-issue.
-
-My Host Build compiler:
-
-  # aarch64-linux-gnu-gcc --version
-  aarch64-linux-gnu-gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-
-Juno Board:
-
-  # lsb_release -a
-  No LSB modules are available.
-  Distributor ID: Debian
-  Description:    Debian GNU/Linux 12 (bookworm)
-  Release:        12
-  Codename:       bookworm
-
-Fix this by explicitly returning 0, 1, or -1 based on whether the result
-is zero, positive, or negative.
-
-Fixes: d44bc558297222d9 ("perf tests: Add a test for tracking with sched_switch")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20250331172759.115604-1-leo.yan@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
+Signed-off-by: Andreas Oetken <andreas.oetken@siemens-energy.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/switch-tracking.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/nios2/include/asm/pgtable.h | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/tools/perf/tests/switch-tracking.c b/tools/perf/tests/switch-tracking.c
-index 72abf5d86f712..e6a4efc20fd61 100644
---- a/tools/perf/tests/switch-tracking.c
-+++ b/tools/perf/tests/switch-tracking.c
-@@ -256,7 +256,7 @@ static int compar(const void *a, const void *b)
- 	const struct event_node *nodeb = b;
- 	s64 cmp = nodea->event_time - nodeb->event_time;
+diff --git a/arch/nios2/include/asm/pgtable.h b/arch/nios2/include/asm/pgtable.h
+index eab87c6beacb5..e5d64c84aadf7 100644
+--- a/arch/nios2/include/asm/pgtable.h
++++ b/arch/nios2/include/asm/pgtable.h
+@@ -291,4 +291,20 @@ void update_mmu_cache_range(struct vm_fault *vmf, struct vm_area_struct *vma,
+ #define update_mmu_cache(vma, addr, ptep) \
+ 	update_mmu_cache_range(NULL, vma, addr, ptep, 1)
  
--	return cmp;
-+	return cmp < 0 ? -1 : (cmp > 0 ? 1 : 0);
- }
- 
- static int process_events(struct evlist *evlist,
++static inline int pte_same(pte_t pte_a, pte_t pte_b);
++
++#define __HAVE_ARCH_PTEP_SET_ACCESS_FLAGS
++static inline int ptep_set_access_flags(struct vm_area_struct *vma,
++					unsigned long address, pte_t *ptep,
++					pte_t entry, int dirty)
++{
++	if (!pte_same(*ptep, entry))
++		set_ptes(vma->vm_mm, address, ptep, entry, 1);
++	/*
++	 * update_mmu_cache will unconditionally execute, handling both
++	 * the case that the PTE changed and the spurious fault case.
++	 */
++	return true;
++}
++
+ #endif /* _ASM_NIOS2_PGTABLE_H */
 -- 
 2.39.5
 
