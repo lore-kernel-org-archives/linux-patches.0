@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D3815ADB4;
-	Mon, 23 Jun 2025 22:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F9915ADB4;
+	Mon, 23 Jun 2025 22:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717358; cv=none; b=hhhrfSfCkeQSuAho9WVa+pSVsbkWN0aIzu0iJHabP48QAWxsY8TI0J9My34PttBHv+39eZ/7r3NPh9Pwl+NVmWqw3T5vtIvt9Ug/XPo8+eAR6BlDmP9kIdZqMbf8Mt49IPZD+v5UILh+vwOW90Vv1v+iOmAYU/am1TrmhU6Y1lA=
+	t=1750717360; cv=none; b=HRprA1+NGIccUgjXA9JeJ0jkdWPWafmqTCPEG4Y2daOO5ss39zp4T6o8dpay2URlvz4ax4ZD6axamBqfDoNnwUgCvojJwIJB61oZF7kceN4RyM9HGRvNZ6HNiSmIxlUYF5+sOKB/UwLUx08eoF6nG505mw4bRIiCdFqKeCglKpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717358; c=relaxed/simple;
-	bh=xVDcuImuL87Jc7nkVzEQ3AZp/vUxR59jRymuJWHP97I=;
+	s=arc-20240116; t=1750717360; c=relaxed/simple;
+	bh=r6ui5DVz54ZfUamJrWUyN1EIhUvW7OtLnukWWrmvkUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACSxGe6dz6rsS7RR4JteqnDZak+aJd6u0nJ3i20C/d7QXAhiDDe4nt5Q6O2nk6ne123SIQ44GGbIlPKJfQnfjurq63942KedoSZ6hKeqirXDPYiHMtfI5dDPKZ+WixR82hyY/thmuaZmHYuT/PYnaopjSmmLR51xhqb128m5YUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qU7rfPYZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PlE0c12V9+Touszc/IGTp9A6nAInsgwf6cgKaUnvus/LzTEzWOjnmDNgdCrcWbO5AjlEZu5CvbzdSU+BbAUaulv6apc9rGb9hgxNuMjEPrmeTi0OjVIuGQmwlkZsjNj1H7w307LrxBpDNCWqEawMuVnY2YTNPYbMvNxcWx/FeUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hROw3CBy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qU7rfPYZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7EDC4CEEA;
-	Mon, 23 Jun 2025 22:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hROw3CBy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16863C4CEEA;
+	Mon, 23 Jun 2025 22:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717357;
-	bh=xVDcuImuL87Jc7nkVzEQ3AZp/vUxR59jRymuJWHP97I=;
+	s=korg; t=1750717360;
+	bh=r6ui5DVz54ZfUamJrWUyN1EIhUvW7OtLnukWWrmvkUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qU7rfPYZpGghvw5yyf4LWcfrqH56nOZswk4qoeMqXaE0ffASEJePy5UJmiw3dGnOe
-	 FOxJdRD5c1GmHx3QEEA188vr+mJNTevRTlA5kDQ9kQwf4nXS1gaewguN888CAH3okn
-	 JyYYj9YdGuoTMIkysOtVTIIFThcMbBuErgf0qW6I=
+	b=hROw3CByQgDsTHLLLZuJHR5olfZmY83HHhy6GeAPMRywX4W3g1sAcDW5sGxv6u6HY
+	 MYUpnV0TVxtC+oefNDSTIZijVXFz5/uK0mYTJGH3lj1ZhhGE06h52DkBJApfI5mwcY
+	 no7JDxodRGnqtuzLQY7/yv4gjWOiWrSOdob5PBMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	willemb@google.com,
-	asml.silence@gmail.com,
-	Mina Almasry <almasrymina@google.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	Stefan Wahren <wahrenst@gmx.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 372/414] net: netmem: fix skb_ensure_writable with unreadable skbs
-Date: Mon, 23 Jun 2025 15:08:29 +0200
-Message-ID: <20250623130651.256118847@linuxfoundation.org>
+Subject: [PATCH 6.1 411/508] net: vertexcom: mse102x: Return code for mse102x_rx_pkt_spi
+Date: Mon, 23 Jun 2025 15:07:36 +0200
+Message-ID: <20250623130655.332067460@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,49 +47,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mina Almasry <almasrymina@google.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 6f793a1d053775f8324b8dba1e7ed224f8b0166f ]
+[ Upstream commit 4ecf56f4b66011b583644bf9a62188d05dfcd78c ]
 
-skb_ensure_writable should succeed when it's trying to write to the
-header of the unreadable skbs, so it doesn't need an unconditional
-skb_frags_readable check. The preceding pskb_may_pull() call will
-succeed if write_len is within the head and fail if we're trying to
-write to the unreadable payload, so we don't need an additional check.
+The MSE102x doesn't provide any interrupt register, so the only way
+to handle the level interrupt is to fetch the whole packet from
+the MSE102x internal buffer via SPI. So in cases the interrupt
+handler fails to do this, it should return IRQ_NONE. This allows
+the core to disable the interrupt in case the issue persists
+and prevent an interrupt storm.
 
-Removing this check restores DSCP functionality with unreadable skbs as
-it's called from dscp_tg.
-
-Cc: willemb@google.com
-Cc: asml.silence@gmail.com
-Fixes: 65249feb6b3d ("net: add support for skbs with unreadable frags")
-Signed-off-by: Mina Almasry <almasrymina@google.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20250615200733.520113-1-almasrymina@google.com
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://patch.msgid.link/20250509120435.43646-6-wahrenst@gmx.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/ethernet/vertexcom/mse102x.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index fdb36165c58f5..cf54593149cce 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -6197,9 +6197,6 @@ int skb_ensure_writable(struct sk_buff *skb, unsigned int write_len)
- 	if (!pskb_may_pull(skb, write_len))
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/vertexcom/mse102x.c b/drivers/net/ethernet/vertexcom/mse102x.c
+index 060a566bc6aae..c902f8761d5d4 100644
+--- a/drivers/net/ethernet/vertexcom/mse102x.c
++++ b/drivers/net/ethernet/vertexcom/mse102x.c
+@@ -306,7 +306,7 @@ static void mse102x_dump_packet(const char *msg, int len, const char *data)
+ 		       data, len, true);
+ }
  
--	if (!skb_frags_readable(skb))
--		return -EFAULT;
--
- 	if (!skb_cloned(skb) || skb_clone_writable(skb, write_len))
- 		return 0;
+-static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
++static irqreturn_t mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ {
+ 	struct sk_buff *skb;
+ 	unsigned int rxalign;
+@@ -327,7 +327,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 		mse102x_tx_cmd_spi(mse, CMD_CTR);
+ 		ret = mse102x_rx_cmd_spi(mse, (u8 *)&rx);
+ 		if (ret)
+-			return;
++			return IRQ_NONE;
  
+ 		cmd_resp = be16_to_cpu(rx);
+ 		if ((cmd_resp & CMD_MASK) != CMD_RTS) {
+@@ -360,7 +360,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 	rxalign = ALIGN(rxlen + DET_SOF_LEN + DET_DFT_LEN, 4);
+ 	skb = netdev_alloc_skb_ip_align(mse->ndev, rxalign);
+ 	if (!skb)
+-		return;
++		return IRQ_NONE;
+ 
+ 	/* 2 bytes Start of frame (before ethernet header)
+ 	 * 2 bytes Data frame tail (after ethernet frame)
+@@ -370,7 +370,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 	if (mse102x_rx_frame_spi(mse, rxpkt, rxlen, drop)) {
+ 		mse->ndev->stats.rx_errors++;
+ 		dev_kfree_skb(skb);
+-		return;
++		return IRQ_HANDLED;
+ 	}
+ 
+ 	if (netif_msg_pktdata(mse))
+@@ -381,6 +381,8 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 
+ 	mse->ndev->stats.rx_packets++;
+ 	mse->ndev->stats.rx_bytes += rxlen;
++
++	return IRQ_HANDLED;
+ }
+ 
+ static int mse102x_tx_pkt_spi(struct mse102x_net *mse, struct sk_buff *txb,
+@@ -512,12 +514,13 @@ static irqreturn_t mse102x_irq(int irq, void *_mse)
+ {
+ 	struct mse102x_net *mse = _mse;
+ 	struct mse102x_net_spi *mses = to_mse102x_spi(mse);
++	irqreturn_t ret;
+ 
+ 	mutex_lock(&mses->lock);
+-	mse102x_rx_pkt_spi(mse);
++	ret = mse102x_rx_pkt_spi(mse);
+ 	mutex_unlock(&mses->lock);
+ 
+-	return IRQ_HANDLED;
++	return ret;
+ }
+ 
+ static int mse102x_net_open(struct net_device *ndev)
 -- 
 2.39.5
 
