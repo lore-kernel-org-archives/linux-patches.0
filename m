@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B691F7580;
-	Mon, 23 Jun 2025 22:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FC62236FB;
+	Mon, 23 Jun 2025 22:09:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716547; cv=none; b=PYWs3QrBYAjanaWjrPERnQik2Y33X3s2cbIr1DXpqgB70YLC81AFOQqC9zAn2WnCYz1koxAytIsUUbFesY5sMV0PSJQu199t59dgMojjCrcTdsjBEazuslErPyZLVSBw3s/RyvEhCgBlGdWc15fzMNJK2BgNETXDBwfjFufNj+U=
+	t=1750716549; cv=none; b=UuwKdAAqJmlmpinhnj/cpLZ6TbIaPoWJ16o2QiHWzzMDhRhfvhdD2dSFjSsifbyjXDdUW3tWv6u6h/2NzLo72dW81R7BxVhNwWuyJvlrq4SpyvOXSoHZEX0icC9d4Y6WAFuWlcZdyDP3Ik5TS17hvwpz98NW2mewmEPVq1nKSAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716547; c=relaxed/simple;
-	bh=jjpi61QiMuyDQXqZFVMxw1XvnemgenGUhavP+a+0Qd4=;
+	s=arc-20240116; t=1750716549; c=relaxed/simple;
+	bh=TjjdIjB9q9Gk7dR2sXCoNJgXeZiVytVpD4u5x2uU/AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tX/7QmYoe7qIEM7HOFN3T0g/C1nNs0e4xcR/RWJLnvyjLjnMM5YENorX2NYgeClByor0hKIeNqe6SiTpFOr4GYlLV/Fw1xAYrEq/QbSh/BGYSd17HMB7wFFKhYWC41c2J9I1LupzN3p+g5dBs3a7PTYCBKIVk/zPuuVRF0ld0QY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkzbUGIq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BQS7yHNYdKafv3XeQLzeqFtTbBAV1+wTdCsx/TKiAc3ZbP7gINvGwO4+YnIQgGT7rA6r1RMLwBrgr/fk/nI+FhTXHRHic8s7oAr9Wm7QAJRevVHQdLLvyGsmaVRvePe0KiFxBURKkVLMCAD/Al2iaLeIPDIcil9Aso+k6kwhefU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKRtRv53; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkzbUGIq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B428C4CEEA;
-	Mon, 23 Jun 2025 22:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKRtRv53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04FB3C4CEEA;
+	Mon, 23 Jun 2025 22:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716546;
-	bh=jjpi61QiMuyDQXqZFVMxw1XvnemgenGUhavP+a+0Qd4=;
+	s=korg; t=1750716549;
+	bh=TjjdIjB9q9Gk7dR2sXCoNJgXeZiVytVpD4u5x2uU/AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XkzbUGIqcszdUT4CJcVAZKD3vU8Ir9O7iVwgDAgV7Fh4D18zKw9Du19TQZ7pSos7D
-	 DV3fN1gDZiSiexJOITjYvcfJtcjdq5jMC/yQjhStODLrlMmEyuJW4VhHy8eLKfql4B
-	 EoCdyDSTNq3WlV+CSczD8R2Vc+oI9WxdRIkdoi+A=
+	b=nKRtRv53uTcvENwEtTU++SIZDE/n5PAmOiCS88jGpjLybRfnKfV1cXVmkUd/HNBeF
+	 Q/fe2RLc8PuZkvD4Ms3xqO31tyBQViAp9eeeGLF1uzHGZuTQAXen5C8TsKUYHdgkyW
+	 UMbYovJ+w2Uzbb7h6eGKe9Y4lI1VLfhoF2CL1pBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Ken Chen <kenneth.w.chen@intel.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Nanyong Sun <sunnanyong@huawei.com>,
-	Jane Chu <jane.chu@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jann Horn <jannh@google.com>
-Subject: [PATCH 5.15 363/411] mm: hugetlb: independent PMD page table shared count
-Date: Mon, 23 Jun 2025 15:08:27 +0200
-Message-ID: <20250623130642.779623727@linuxfoundation.org>
+	syzbot+fe2a25dae02a207717a0@syzkaller.appspotmail.com,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Jan Kara <jack@suse.cz>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 334/508] ext4: inline: fix len overflow in ext4_prepare_inline_data
+Date: Mon, 23 Jun 2025 15:06:19 +0200
+Message-ID: <20250623130653.549017449@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,166 +49,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit 59d9094df3d79443937add8700b2ef1a866b1081 upstream.
+commit 227cb4ca5a6502164f850d22aec3104d7888b270 upstream.
 
-The folio refcount may be increased unexpectly through try_get_folio() by
-caller such as split_huge_pages.  In huge_pmd_unshare(), we use refcount
-to check whether a pmd page table is shared.  The check is incorrect if
-the refcount is increased by the above caller, and this can cause the page
-table leaked:
+When running the following code on an ext4 filesystem with inline_data
+feature enabled, it will lead to the bug below.
 
- BUG: Bad page state in process sh  pfn:109324
- page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x66 pfn:0x109324
- flags: 0x17ffff800000000(node=0|zone=2|lastcpupid=0xfffff)
- page_type: f2(table)
- raw: 017ffff800000000 0000000000000000 0000000000000000 0000000000000000
- raw: 0000000000000066 0000000000000000 00000000f2000000 0000000000000000
- page dumped because: nonzero mapcount
- ...
- CPU: 31 UID: 0 PID: 7515 Comm: sh Kdump: loaded Tainted: G    B              6.13.0-rc2master+ #7
- Tainted: [B]=BAD_PAGE
- Hardware name: QEMU KVM Virtual Machine, BIOS 0.0.0 02/06/2015
- Call trace:
-  show_stack+0x20/0x38 (C)
-  dump_stack_lvl+0x80/0xf8
-  dump_stack+0x18/0x28
-  bad_page+0x8c/0x130
-  free_page_is_bad_report+0xa4/0xb0
-  free_unref_page+0x3cc/0x620
-  __folio_put+0xf4/0x158
-  split_huge_pages_all+0x1e0/0x3e8
-  split_huge_pages_write+0x25c/0x2d8
-  full_proxy_write+0x64/0xd8
-  vfs_write+0xcc/0x280
-  ksys_write+0x70/0x110
-  __arm64_sys_write+0x24/0x38
-  invoke_syscall+0x50/0x120
-  el0_svc_common.constprop.0+0xc8/0xf0
-  do_el0_svc+0x24/0x38
-  el0_svc+0x34/0x128
-  el0t_64_sync_handler+0xc8/0xd0
-  el0t_64_sync+0x190/0x198
+        fd = open("file1", O_RDWR | O_CREAT | O_TRUNC, 0666);
+        ftruncate(fd, 30);
+        pwrite(fd, "a", 1, (1UL << 40) + 5UL);
 
-The issue may be triggered by damon, offline_page, page_idle, etc, which
-will increase the refcount of page table.
+That happens because write_begin will succeed as when
+ext4_generic_write_inline_data calls ext4_prepare_inline_data, pos + len
+will be truncated, leading to ext4_prepare_inline_data parameter to be 6
+instead of 0x10000000006.
 
-1. The page table itself will be discarded after reporting the
-   "nonzero mapcount".
+Then, later when write_end is called, we hit:
 
-2. The HugeTLB page mapped by the page table miss freeing since we
-   treat the page table as shared and a shared page table will not be
-   unmapped.
+        BUG_ON(pos + len > EXT4_I(inode)->i_inline_size);
 
-Fix it by introducing independent PMD page table shared count.  As
-described by comment, pt_index/pt_mm/pt_frag_refcount are used for s390
-gmap, x86 pgds and powerpc, pt_share_count is used for x86/arm64/riscv
-pmds, so we can reuse the field as pt_share_count.
+at ext4_write_inline_data.
 
-Link: https://lkml.kernel.org/r/20241216071147.3984217-1-liushixin2@huawei.com
-Fixes: 39dde65c9940 ("[PATCH] shared page table for hugetlb page")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Ken Chen <kenneth.w.chen@intel.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Nanyong Sun <sunnanyong@huawei.com>
-Cc: Jane Chu <jane.chu@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[backport note: struct ptdesc did not exist yet, stuff it equivalently
-into struct page instead]
-Signed-off-by: Jann Horn <jannh@google.com>
+Fix it by using a loff_t type for the len parameter in
+ext4_prepare_inline_data instead of an unsigned int.
+
+[   44.545164] ------------[ cut here ]------------
+[   44.545530] kernel BUG at fs/ext4/inline.c:240!
+[   44.545834] Oops: invalid opcode: 0000 [#1] SMP NOPTI
+[   44.546172] CPU: 3 UID: 0 PID: 343 Comm: test Not tainted 6.15.0-rc2-00003-g9080916f4863 #45 PREEMPT(full)  112853fcebfdb93254270a7959841d2c6aa2c8bb
+[   44.546523] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   44.546523] RIP: 0010:ext4_write_inline_data+0xfe/0x100
+[   44.546523] Code: 3c 0e 48 83 c7 48 48 89 de 5b 41 5c 41 5d 41 5e 41 5f 5d e9 e4 fa 43 01 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc 0f 0b <0f> 0b 0f 1f 44 00 00 55 41 57 41 56 41 55 41 54 53 48 83 ec 20 49
+[   44.546523] RSP: 0018:ffffb342008b79a8 EFLAGS: 00010216
+[   44.546523] RAX: 0000000000000001 RBX: ffff9329c579c000 RCX: 0000010000000006
+[   44.546523] RDX: 000000000000003c RSI: ffffb342008b79f0 RDI: ffff9329c158e738
+[   44.546523] RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000000
+[   44.546523] R10: 00007ffffffff000 R11: ffffffff9bd0d910 R12: 0000006210000000
+[   44.546523] R13: fffffc7e4015e700 R14: 0000010000000005 R15: ffff9329c158e738
+[   44.546523] FS:  00007f4299934740(0000) GS:ffff932a60179000(0000) knlGS:0000000000000000
+[   44.546523] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   44.546523] CR2: 00007f4299a1ec90 CR3: 0000000002886002 CR4: 0000000000770eb0
+[   44.546523] PKRU: 55555554
+[   44.546523] Call Trace:
+[   44.546523]  <TASK>
+[   44.546523]  ext4_write_inline_data_end+0x126/0x2d0
+[   44.546523]  generic_perform_write+0x17e/0x270
+[   44.546523]  ext4_buffered_write_iter+0xc8/0x170
+[   44.546523]  vfs_write+0x2be/0x3e0
+[   44.546523]  __x64_sys_pwrite64+0x6d/0xc0
+[   44.546523]  do_syscall_64+0x6a/0xf0
+[   44.546523]  ? __wake_up+0x89/0xb0
+[   44.546523]  ? xas_find+0x72/0x1c0
+[   44.546523]  ? next_uptodate_folio+0x317/0x330
+[   44.546523]  ? set_pte_range+0x1a6/0x270
+[   44.546523]  ? filemap_map_pages+0x6ee/0x840
+[   44.546523]  ? ext4_setattr+0x2fa/0x750
+[   44.546523]  ? do_pte_missing+0x128/0xf70
+[   44.546523]  ? security_inode_post_setattr+0x3e/0xd0
+[   44.546523]  ? ___pte_offset_map+0x19/0x100
+[   44.546523]  ? handle_mm_fault+0x721/0xa10
+[   44.546523]  ? do_user_addr_fault+0x197/0x730
+[   44.546523]  ? do_syscall_64+0x76/0xf0
+[   44.546523]  ? arch_exit_to_user_mode_prepare+0x1e/0x60
+[   44.546523]  ? irqentry_exit_to_user_mode+0x79/0x90
+[   44.546523]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
+[   44.546523] RIP: 0033:0x7f42999c6687
+[   44.546523] Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
+[   44.546523] RSP: 002b:00007ffeae4a7930 EFLAGS: 00000202 ORIG_RAX: 0000000000000012
+[   44.546523] RAX: ffffffffffffffda RBX: 00007f4299934740 RCX: 00007f42999c6687
+[   44.546523] RDX: 0000000000000001 RSI: 000055ea6149200f RDI: 0000000000000003
+[   44.546523] RBP: 00007ffeae4a79a0 R08: 0000000000000000 R09: 0000000000000000
+[   44.546523] R10: 0000010000000005 R11: 0000000000000202 R12: 0000000000000000
+[   44.546523] R13: 00007ffeae4a7ac8 R14: 00007f4299b86000 R15: 000055ea61493dd8
+[   44.546523]  </TASK>
+[   44.546523] Modules linked in:
+[   44.568501] ---[ end trace 0000000000000000 ]---
+[   44.568889] RIP: 0010:ext4_write_inline_data+0xfe/0x100
+[   44.569328] Code: 3c 0e 48 83 c7 48 48 89 de 5b 41 5c 41 5d 41 5e 41 5f 5d e9 e4 fa 43 01 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc 0f 0b <0f> 0b 0f 1f 44 00 00 55 41 57 41 56 41 55 41 54 53 48 83 ec 20 49
+[   44.570931] RSP: 0018:ffffb342008b79a8 EFLAGS: 00010216
+[   44.571356] RAX: 0000000000000001 RBX: ffff9329c579c000 RCX: 0000010000000006
+[   44.571959] RDX: 000000000000003c RSI: ffffb342008b79f0 RDI: ffff9329c158e738
+[   44.572571] RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000000
+[   44.573148] R10: 00007ffffffff000 R11: ffffffff9bd0d910 R12: 0000006210000000
+[   44.573748] R13: fffffc7e4015e700 R14: 0000010000000005 R15: ffff9329c158e738
+[   44.574335] FS:  00007f4299934740(0000) GS:ffff932a60179000(0000) knlGS:0000000000000000
+[   44.575027] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   44.575520] CR2: 00007f4299a1ec90 CR3: 0000000002886002 CR4: 0000000000770eb0
+[   44.576112] PKRU: 55555554
+[   44.576338] Kernel panic - not syncing: Fatal exception
+[   44.576517] Kernel Offset: 0x1a600000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+
+Reported-by: syzbot+fe2a25dae02a207717a0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fe2a25dae02a207717a0
+Fixes: f19d5870cbf7 ("ext4: add normal write support for inline data")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Link: https://patch.msgid.link/20250415-ext4-prepare-inline-overflow-v1-1-f4c13d900967@igalia.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mm.h       |    3 +++
- include/linux/mm_types.h |    3 +++
- mm/hugetlb.c             |   18 ++++++++----------
- 3 files changed, 14 insertions(+), 10 deletions(-)
+ fs/ext4/inline.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -2352,6 +2352,9 @@ static inline bool pgtable_pmd_page_ctor
- 	if (!pmd_ptlock_init(page))
- 		return false;
- 	__SetPageTable(page);
-+#ifdef CONFIG_ARCH_WANT_HUGE_PMD_SHARE
-+	atomic_set(&page->pt_share_count, 0);
-+#endif
- 	inc_lruvec_page_state(page, NR_PAGETABLE);
- 	return true;
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -393,7 +393,7 @@ out:
  }
---- a/include/linux/mm_types.h
-+++ b/include/linux/mm_types.h
-@@ -166,6 +166,9 @@ struct page {
- 			union {
- 				struct mm_struct *pt_mm; /* x86 pgds only */
- 				atomic_t pt_frag_refcount; /* powerpc */
-+#ifdef CONFIG_ARCH_WANT_HUGE_PMD_SHARE
-+				atomic_t pt_share_count;
-+#endif
- 			};
- #if ALLOC_SPLIT_PTLOCKS
- 			spinlock_t *ptl;
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -6046,7 +6046,7 @@ pte_t *huge_pmd_share(struct mm_struct *
- 			spte = huge_pte_offset(svma->vm_mm, saddr,
- 					       vma_mmu_pagesize(svma));
- 			if (spte) {
--				get_page(virt_to_page(spte));
-+				atomic_inc(&virt_to_page(spte)->pt_share_count);
- 				break;
- 			}
- 		}
-@@ -6061,7 +6061,7 @@ pte_t *huge_pmd_share(struct mm_struct *
- 				(pmd_t *)((unsigned long)spte & PAGE_MASK));
- 		mm_inc_nr_pmds(mm);
- 	} else {
--		put_page(virt_to_page(spte));
-+		atomic_dec(&virt_to_page(spte)->pt_share_count);
- 	}
- 	spin_unlock(ptl);
- out:
-@@ -6072,11 +6072,7 @@ out:
- /*
-  * unmap huge page backed by shared pte.
-  *
-- * Hugetlb pte page is ref counted at the time of mapping.  If pte is shared
-- * indicated by page_count > 1, unmap is achieved by clearing pud and
-- * decrementing the ref count. If count == 1, the pte page is not shared.
-- *
-- * Called with page table lock held and i_mmap_rwsem held in write mode.
-+ * Called with page table lock held.
-  *
-  * returns: 1 successfully unmapped a shared pte page
-  *	    0 the underlying pte page is not shared, or it is the last user
-@@ -6084,17 +6080,19 @@ out:
- int huge_pmd_unshare(struct mm_struct *mm, struct vm_area_struct *vma,
- 					unsigned long *addr, pte_t *ptep)
+ 
+ static int ext4_prepare_inline_data(handle_t *handle, struct inode *inode,
+-				    unsigned int len)
++				    loff_t len)
  {
-+	unsigned long sz = huge_page_size(hstate_vma(vma));
- 	pgd_t *pgd = pgd_offset(mm, *addr);
- 	p4d_t *p4d = p4d_offset(pgd, *addr);
- 	pud_t *pud = pud_offset(p4d, *addr);
- 
- 	i_mmap_assert_write_locked(vma->vm_file->f_mapping);
--	BUG_ON(page_count(virt_to_page(ptep)) == 0);
--	if (page_count(virt_to_page(ptep)) == 1)
-+	if (sz != PMD_SIZE)
-+		return 0;
-+	if (!atomic_read(&virt_to_page(ptep)->pt_share_count))
- 		return 0;
- 
- 	pud_clear(pud);
--	put_page(virt_to_page(ptep));
-+	atomic_dec(&virt_to_page(ptep)->pt_share_count);
- 	mm_dec_nr_pmds(mm);
- 	/*
- 	 * This update of passed address optimizes loops sequentially
+ 	int ret, size, no_expand;
+ 	struct ext4_inode_info *ei = EXT4_I(inode);
 
 
