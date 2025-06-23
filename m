@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B8170838;
-	Mon, 23 Jun 2025 21:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68D970838;
+	Mon, 23 Jun 2025 21:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712948; cv=none; b=affFmEyRkfLJjWBRPnmhgXJNxj+YfBu6TEEWxQeSxCnnmxJj4rfZt4haS67C0WBPvEzY7iPdWOTRHoZurs2J3h/K1170FVvWWLACB9U64iVdjmwnI+L2+EjDqWBbIXx56d6kqaNXsK1Zbym/3rpGmJSwdaaksULoXvzlIv6uoRI=
+	t=1750712950; cv=none; b=EUhu+oLbEp5n4XAUhuxf6Q/T/V2FNJy+ImNV4xyI9cp+070ybBjGrnJF3bxDUJFn7+hUE5T1BbegF6STQE3Zhf9HgDVmn/NDMfhpaDvwSYGsk+3rFoQtmZdK3wp9OS0hfRY+VcBmZ6gw6g09x1wXpltx5IXXTnAosxjM/NPeaVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712948; c=relaxed/simple;
-	bh=zUU5QXN4aP6ZH0Nn9L0DaW1kGEmP5/dMso8esHR+CPE=;
+	s=arc-20240116; t=1750712950; c=relaxed/simple;
+	bh=7d96rNN7EYP/72DaBLl9FroGPqEwFxdenMgdhc58U5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CeWCCkLb+yToteMs/QFOgPMxFkA1BEl1wy/nCes/dL39H4UvAVtFAkMxY7maF/8kWvSfcj75C9K7J34lR6bZX+e5L3y3lqskMEMuQKlcUxDGmxAyx90GMGirHQwjyAJK1RVD5jVGrGXzTYSGEABEucF59aawp3w6vSPaK74mh54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShiJaEB9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gUZfEK2oyExyn56xXzR5/LxKo9/FLnADoswyTbGGoMy2OUYvRvHO6QyumpAQwx5VVMzJSjtscXGbplJbe06QzT1WfymkWhiLiyPDF5WKk9c/skFq+5Uy80AueceL6Kysu5GYfuQi9z5sp2qW2zzcL3BHdMw58QT4NiXQGGy8fmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dv0oCJHt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShiJaEB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9501C4CEEA;
-	Mon, 23 Jun 2025 21:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dv0oCJHt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47576C4CEEA;
+	Mon, 23 Jun 2025 21:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712948;
-	bh=zUU5QXN4aP6ZH0Nn9L0DaW1kGEmP5/dMso8esHR+CPE=;
+	s=korg; t=1750712950;
+	bh=7d96rNN7EYP/72DaBLl9FroGPqEwFxdenMgdhc58U5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShiJaEB9DLqTyx+k12ZjSxBLDlf/PO1j3O7oNhwXWtoHcnspNiTF60n3Dw64W9Yz0
-	 rrxbkXCb79SrnKTYLn2pY0sAy+isenepWFHJAfNLTlR4b2mxGNxvqt7OClJaNXbUui
-	 ik53cL6Ef4BCUNj0+MH3lPiZn1FwNPXoBp2rzgL8=
+	b=Dv0oCJHtS1L3ER2wFeLpnu9S878AuG/fzNHR2LqZ0Rg6g4PAiEIFLrZmOm3LQ/qye
+	 w6eRrB6o5pI8BTCbvlsqS/yJmCOW8BHMCXSxoi/3yBw0cKPEo2BWJRGwhVnjEvfWop
+	 Goz/Qw9N3qUVkJXj2Gzd4tJbjsNVKWoGEmEebxuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 302/592] media: platform: exynos4-is: Add hardware sync wait to fimc_is_hw_change_mode()
-Date: Mon, 23 Jun 2025 15:04:20 +0200
-Message-ID: <20250623130707.578747710@linuxfoundation.org>
+	=?UTF-8?q?Jo=C3=A3o=20Paulo=20Gon=C3=A7alves?= <jpaulo.silvagoncalves@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 020/414] regulator: max20086: Change enable gpio to optional
+Date: Mon, 23 Jun 2025 15:02:37 +0200
+Message-ID: <20250623130642.530818080@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,44 +44,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: João Paulo Gonçalves <jpaulo.silvagoncalves@gmail.com>
 
-[ Upstream commit bd9f6ce7d512fa21249415c16af801a4ed5d97b6 ]
+commit e8ac7336dd62f0443a675ed80b17f0f0e6846e20 upstream.
 
-In fimc_is_hw_change_mode(), the function changes camera modes without
-waiting for hardware completion, risking corrupted data or system hangs
-if subsequent operations proceed before the hardware is ready.
+The enable pin can be configured as always enabled by the hardware. Make
+the enable gpio request optional so the driver doesn't fail to probe
+when `enable-gpios` property is not present in the device tree.
 
-Add fimc_is_hw_wait_intmsr0_intmsd0() after mode configuration, ensuring
-hardware state synchronization and stable interrupt handling.
-
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: bfff546aae50 ("regulator: Add MAX20086-MAX20089 driver")
+Signed-off-by: João Paulo Gonçalves <jpaulo.silvagoncalves@gmail.com>
+Link: https://patch.msgid.link/20250420-fix-max20086-v1-2-8cc9ee0d5a08@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/regulator/max20086-regulator.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c b/drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c
-index 366e6393817d2..5f9c44e825a5f 100644
---- a/drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c
-+++ b/drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c
-@@ -164,6 +164,7 @@ int fimc_is_hw_change_mode(struct fimc_is *is)
- 	if (WARN_ON(is->config_index >= ARRAY_SIZE(cmd)))
- 		return -EINVAL;
- 
-+	fimc_is_hw_wait_intmsr0_intmsd0(is);
- 	mcuctl_write(cmd[is->config_index], is, MCUCTL_REG_ISSR(0));
- 	mcuctl_write(is->sensor_index, is, MCUCTL_REG_ISSR(1));
- 	mcuctl_write(is->setfile.sub_index, is, MCUCTL_REG_ISSR(2));
--- 
-2.39.5
-
+--- a/drivers/regulator/max20086-regulator.c
++++ b/drivers/regulator/max20086-regulator.c
+@@ -264,7 +264,7 @@ static int max20086_i2c_probe(struct i2c
+ 	 * shutdown.
+ 	 */
+ 	flags = boot_on ? GPIOD_OUT_HIGH : GPIOD_OUT_LOW;
+-	chip->ena_gpiod = devm_gpiod_get(chip->dev, "enable", flags);
++	chip->ena_gpiod = devm_gpiod_get_optional(chip->dev, "enable", flags);
+ 	if (IS_ERR(chip->ena_gpiod)) {
+ 		ret = PTR_ERR(chip->ena_gpiod);
+ 		dev_err(chip->dev, "Failed to get enable GPIO: %d\n", ret);
 
 
