@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E92224BBE4;
-	Mon, 23 Jun 2025 13:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048DA1E487;
+	Mon, 23 Jun 2025 13:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684507; cv=none; b=YmAvGNy6HFS7qr7Y4k7txcAOI2qj8HozDc3gEU/ZkZSBItoEVGdoY9Kf3SzOox+FbjhGyrl+swpQX6Q+ljiJ9TDaEHEeCaplvucK+lCkam5L76P5jJAvllQLYN5YvlqwLf0bisS6iaK5wZmKMzwENJ5aD0+2qjRjQnPNkf9XV1s=
+	t=1750684510; cv=none; b=q4J2Itp/2oe93EA4d/aPwNPBwAxTYtVVadfCmgTFXMnWvYekm65eouKasxzOipvScgFC5LGxh2PQuIlsWgywvJH8NN06Qucyee+Pz3mLjZKr0Eqafz08AYLuVExPlkOMVHfXgGXszlW3oOJ4Hi6ZI+onS93wPnlqdsmPDJoX6qY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684507; c=relaxed/simple;
-	bh=p5WWBJfpduQ5Ns9tyXId9mVWsUktYKyOjhaDAweuMhU=;
+	s=arc-20240116; t=1750684510; c=relaxed/simple;
+	bh=LUgAY1OXnafY2TVNfXbpQ+MaGxyllJ4s0cYEt3SD/gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebSuLsMk59CjRsl8fta8nBCyQsTQVQVO4cG5EBy4nAKuPKo/1Lpt3K5A7zhgLkUgHPJJ4QLrNZ4wkYHuD7ztnxIhjfj7BD+SOxvhT8c94DtMkMPiETaSEZLyist4DOKuEJ8xMIA4mSG9FQqT7uEwJfeevd5OJOIueBzb6CFzm8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yowfHEp/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jsv+6zwFzdmCx4bA4H6AB/qBjP0yerR0xi1QaKnUSQxGwNywY4PXWXjULWZa6y47dgMvqhlVjCkBTmI0J15BKnzsFotFM5sXdnxx7Y6ITWt9yJwKivSV9OLCM8ZnZii5oT72XMzEFPzsKB5T8QDXxwRIBFbSxtb/ssJmcZsGfQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmdaf6dh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yowfHEp/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F04C3C4CEEA;
-	Mon, 23 Jun 2025 13:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmdaf6dh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82462C4CEEA;
+	Mon, 23 Jun 2025 13:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684507;
-	bh=p5WWBJfpduQ5Ns9tyXId9mVWsUktYKyOjhaDAweuMhU=;
+	s=korg; t=1750684509;
+	bh=LUgAY1OXnafY2TVNfXbpQ+MaGxyllJ4s0cYEt3SD/gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yowfHEp/FP+lDw8cVswSyBidycXrpLdifd8ymmh55et7FCcTfpB2Ch5nl057xCv0H
-	 DNmhjEp1chjmp9+pM86fh3lLppJhEUrq91M6Pw9/cSUNohn5cSLlmw918fhTPMgJLe
-	 5vPl6eWfwq9Xjh3XC2wUtq2qb+E1NnAX15Qpbgew=
+	b=cmdaf6dhdmcGhVNtJ+XchFPmonmE45GWedHcLeDmdPkFOCulF6HOCGlaHo6hedlJs
+	 jCXpOFoZro2AGZXxjPRMs5PEzoPAwT10szPpCm+AdbgxcJf+TbSc2mLiup9+LC6qXo
+	 yUr73J/V+fZcDJhuK7LnkQAOjXCR3JH31lfQWoGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.15 095/592] ASoC: codecs: wcd9375: Fix double free of regulator supplies
-Date: Mon, 23 Jun 2025 15:00:53 +0200
-Message-ID: <20250623130702.537993331@linuxfoundation.org>
+Subject: [PATCH 6.15 096/592] ASoC: codecs: wcd937x: Drop unused buck_supply
+Date: Mon, 23 Jun 2025 15:00:54 +0200
+Message-ID: <20250623130702.561225597@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -52,51 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 63fe298652d4eda07d738bfcbbc59d1343a675ef upstream.
+commit dc59189d32fc3dbddcf418fd4b418fb61f24ade6 upstream.
 
-Driver gets regulator supplies in probe path with
-devm_regulator_bulk_get(), so should not call regulator_bulk_free() in
-error and remove paths to avoid double free.
+Last user of wcd937x_priv->buck_supply was removed in
+commit 216d04139a6d ("ASoC: codecs: wcd937x: Remove separate handling
+for vdd-buck supply").
 
 Fixes: 216d04139a6d ("ASoC: codecs: wcd937x: Remove separate handling for vdd-buck supply")
 Cc: stable@vger.kernel.org
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20250526-b4-b4-asoc-wcd9395-vdd-px-fixes-v1-3-0b8a2993b7d3@linaro.org
+Link: https://patch.msgid.link/20250526-b4-b4-asoc-wcd9395-vdd-px-fixes-v1-2-0b8a2993b7d3@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd937x.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ sound/soc/codecs/wcd937x.c |    1 -
+ 1 file changed, 1 deletion(-)
 
 --- a/sound/soc/codecs/wcd937x.c
 +++ b/sound/soc/codecs/wcd937x.c
-@@ -2945,10 +2945,8 @@ static int wcd937x_probe(struct platform
- 		return dev_err_probe(dev, ret, "Failed to get supplies\n");
- 
- 	ret = regulator_bulk_enable(WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
--	if (ret) {
--		regulator_bulk_free(WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
-+	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to enable supplies\n");
--	}
- 
- 	wcd937x_dt_parse_micbias_info(dev, wcd937x);
- 
-@@ -2984,7 +2982,6 @@ static int wcd937x_probe(struct platform
- 
- err_disable_regulators:
- 	regulator_bulk_disable(WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
--	regulator_bulk_free(WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
- 
- 	return ret;
- }
-@@ -3001,7 +2998,6 @@ static void wcd937x_remove(struct platfo
- 	pm_runtime_dont_use_autosuspend(dev);
- 
- 	regulator_bulk_disable(WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
--	regulator_bulk_free(WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
- }
- 
- #if defined(CONFIG_OF)
+@@ -91,7 +91,6 @@ struct wcd937x_priv {
+ 	struct regmap_irq_chip *wcd_regmap_irq_chip;
+ 	struct regmap_irq_chip_data *irq_chip;
+ 	struct regulator_bulk_data supplies[WCD937X_MAX_BULK_SUPPLY];
+-	struct regulator *buck_supply;
+ 	struct snd_soc_jack *jack;
+ 	unsigned long status_mask;
+ 	s32 micb_ref[WCD937X_MAX_MICBIAS];
 
 
