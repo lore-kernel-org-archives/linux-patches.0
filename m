@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0124315A;
-	Mon, 23 Jun 2025 21:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD63E4315A;
+	Mon, 23 Jun 2025 21:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714963; cv=none; b=VVMwh64lMZrPo6brkqX+C03HjsyRnkFbFkcKX9M5z9JSN8P0J2KYphNjKedW5BvMWx1epWFAGRsqu7fTw21zLCQv2tVvgHhLZ0PXTL7R+juxi3q5TmCksK9xy1Vy3iSziexc7rXOi1UoU/fUg4PP739lrVlQm4cN1wEhvC6ZbHU=
+	t=1750714965; cv=none; b=LlrUXiqqNRYsSsaJepVSNOtOpLCW5qBQD83oXGPQ4a+mVmJHYFoCcn2pwP5Wft68hulvb3uOM24PqADlRt2yKf2RAid0eMgDWhZtZSfRCdDgk7HjOpnbN5rdcGpawO6FLwu2SLmrqAmbFNcl3PevEiiZFyRoMjHiQCKGlWvoapc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714963; c=relaxed/simple;
-	bh=7Raqfa5AgVY1OMgTghQK9Mkl96cDzIBGJ+jJOYKILFE=;
+	s=arc-20240116; t=1750714965; c=relaxed/simple;
+	bh=31RuLpQMZ+LtTIHTB+r/73c8kYv97lba3b1wWZJOvhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+TVCKpcXH56nQtHEl6PsPGR+JWoZ7w3LIm9bV6Pi3t7wwWNm6CGAJuVedgMwEuXorc7LX1xzr3/g85wSeruUVjblH1VOZuIlMa90IzQCQ6yMhjplrcUvoOYzfqrPZbOyGdUMyPfO7B4Q7tqVXIodFFHwHmsjAI24kSrp0tCHqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SPT2Mm8A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uKAdEO67g+nXu52nM6QAoyERlJZyblTGD5tcbfApOx9Mu2P5S9Rd/HPSY1NwwenMFpzXMBSzzROVHrcLPnaZqFBhOkXqb4dVknutIAHA70eA9lcL529brV4xLnt1mMyy6H8v3omUry3dNNKAFWAiU7fdxfeBX6giF0DkjP+TyEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyA+c8GJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPT2Mm8A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92E2C4CEEA;
-	Mon, 23 Jun 2025 21:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyA+c8GJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452A0C4CEEA;
+	Mon, 23 Jun 2025 21:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714963;
-	bh=7Raqfa5AgVY1OMgTghQK9Mkl96cDzIBGJ+jJOYKILFE=;
+	s=korg; t=1750714965;
+	bh=31RuLpQMZ+LtTIHTB+r/73c8kYv97lba3b1wWZJOvhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SPT2Mm8AeVsAkqo1UdhAEQtb0pFAghvHSr0+AuChZt7TsUNRnLQfyJV7F5O9BbNU2
-	 SWeswP0AtfLUxoREtU+ZsH97pP7R/7TanwvuRAZVLUk45TEfUU0zzBTpfIjy1JDFnS
-	 lk8DLdTvciG9O4GjfECXaMJwRFnBfWVWnoja9+O8=
+	b=pyA+c8GJdQYZBhgauBPrD83csTP3aAxVQPAOPLf1Wdxl8Il+h3zdN6y0HkNxiimmE
+	 JJp/+bmNwGaI4eLglVyjc/ezsOmAJqrVK2c9vpWRSOd1baYKKeTIbXrlrmc6g+YejS
+	 PY+yD4eGf+D3r1xMtzwre8TzwRfVePWsB/JCDHzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 171/290] wifi: mac80211_hwsim: Prevent tsf from setting if beacon is disabled
-Date: Mon, 23 Jun 2025 15:07:12 +0200
-Message-ID: <20250623130632.035297116@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.12 147/414] Drivers: hv: Allocate interrupt and monitor pages aligned to system page boundary
+Date: Mon, 23 Jun 2025 15:04:44 +0200
+Message-ID: <20250623130645.725680505@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +47,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Long Li <longli@microsoft.com>
 
-[ Upstream commit c575f5374be7a5c4be4acb9fe6be3a4669d94674 ]
+commit 09eea7ad0b8e973dcf5ed49902838e5d68177f8e upstream.
 
-Setting tsf is meaningless if beacon is disabled, so check that beacon
-is enabled before setting tsf.
+There are use cases that interrupt and monitor pages are mapped to
+user-mode through UIO, so they need to be system page aligned. Some
+Hyper-V allocation APIs introduced earlier broke those requirements.
 
-Reported-by: syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=064815c6cd721082a52a
-Tested-by: syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Link: https://patch.msgid.link/tencent_3609AC2EFAAED68CA5A7E3C6D212D1C67806@qq.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by using page allocation functions directly for interrupt
+and monitor pages.
+
+Cc: stable@vger.kernel.org
+Fixes: ca48739e59df ("Drivers: hv: vmbus: Move Hyper-V page allocator to arch neutral code")
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/1746492997-4599-2-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <1746492997-4599-2-git-send-email-longli@linuxonhyperv.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/virtual/mac80211_hwsim.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/hv/connection.c |   23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index d86a1bd7aab08..f5f48f7e6d26e 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -1201,6 +1201,11 @@ static void mac80211_hwsim_set_tsf(struct ieee80211_hw *hw,
- 	/* MLD not supported here */
- 	u32 bcn_int = data->link_data[0].beacon_int;
- 	u64 delta = abs(tsf - now);
-+	struct ieee80211_bss_conf *conf;
-+
-+	conf = link_conf_dereference_protected(vif, data->link_data[0].link_id);
-+	if (conf && !conf->enable_beacon)
-+		return;
+--- a/drivers/hv/connection.c
++++ b/drivers/hv/connection.c
+@@ -207,10 +207,19 @@ int vmbus_connect(void)
+ 	mutex_init(&vmbus_connection.channel_mutex);
  
- 	/* adjust after beaconing with new timestamp at old TBTT */
- 	if (tsf > now) {
--- 
-2.39.5
-
+ 	/*
++	 * The following Hyper-V interrupt and monitor pages can be used by
++	 * UIO for mapping to user-space, so they should always be allocated on
++	 * system page boundaries. The system page size must be >= the Hyper-V
++	 * page size.
++	 */
++	BUILD_BUG_ON(PAGE_SIZE < HV_HYP_PAGE_SIZE);
++
++	/*
+ 	 * Setup the vmbus event connection for channel interrupt
+ 	 * abstraction stuff
+ 	 */
+-	vmbus_connection.int_page = hv_alloc_hyperv_zeroed_page();
++	vmbus_connection.int_page =
++		(void *)__get_free_page(GFP_KERNEL | __GFP_ZERO);
+ 	if (vmbus_connection.int_page == NULL) {
+ 		ret = -ENOMEM;
+ 		goto cleanup;
+@@ -225,8 +234,8 @@ int vmbus_connect(void)
+ 	 * Setup the monitor notification facility. The 1st page for
+ 	 * parent->child and the 2nd page for child->parent
+ 	 */
+-	vmbus_connection.monitor_pages[0] = hv_alloc_hyperv_page();
+-	vmbus_connection.monitor_pages[1] = hv_alloc_hyperv_page();
++	vmbus_connection.monitor_pages[0] = (void *)__get_free_page(GFP_KERNEL);
++	vmbus_connection.monitor_pages[1] = (void *)__get_free_page(GFP_KERNEL);
+ 	if ((vmbus_connection.monitor_pages[0] == NULL) ||
+ 	    (vmbus_connection.monitor_pages[1] == NULL)) {
+ 		ret = -ENOMEM;
+@@ -342,21 +351,23 @@ void vmbus_disconnect(void)
+ 		destroy_workqueue(vmbus_connection.work_queue);
+ 
+ 	if (vmbus_connection.int_page) {
+-		hv_free_hyperv_page(vmbus_connection.int_page);
++		free_page((unsigned long)vmbus_connection.int_page);
+ 		vmbus_connection.int_page = NULL;
+ 	}
+ 
+ 	if (vmbus_connection.monitor_pages[0]) {
+ 		if (!set_memory_encrypted(
+ 			(unsigned long)vmbus_connection.monitor_pages[0], 1))
+-			hv_free_hyperv_page(vmbus_connection.monitor_pages[0]);
++			free_page((unsigned long)
++				vmbus_connection.monitor_pages[0]);
+ 		vmbus_connection.monitor_pages[0] = NULL;
+ 	}
+ 
+ 	if (vmbus_connection.monitor_pages[1]) {
+ 		if (!set_memory_encrypted(
+ 			(unsigned long)vmbus_connection.monitor_pages[1], 1))
+-			hv_free_hyperv_page(vmbus_connection.monitor_pages[1]);
++			free_page((unsigned long)
++				vmbus_connection.monitor_pages[1]);
+ 		vmbus_connection.monitor_pages[1] = NULL;
+ 	}
+ }
 
 
