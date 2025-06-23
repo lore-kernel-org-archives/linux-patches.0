@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7554324DCFD;
-	Mon, 23 Jun 2025 13:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE9224DCFD;
+	Mon, 23 Jun 2025 13:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685755; cv=none; b=WA8L7Ydj2T1gZIzlBGv029Rl4+IOG0zWK81wJQ4wGdJw7hlepSMvskSpzJr3G+OEF9aNShG3LPDyu3kij0HUAoc9ihiLkYky8o9bFRhAdJjR+x2zhXkVYxDRRZ7V90w8HBkOEfffcoxsh+nF3lCaLIxrfCFKd32676wKJMoAMYM=
+	t=1750685761; cv=none; b=eX5WUwzL4LKNEySCzPBGBmTn3BXXndq2H+QsztpCxgMuMB7EX3B8f2moXvvEU6PRPHpnHDKBx+vsewz1CCVj8XHCLJlPX8mGYsSXOFpIHjXnqcltc8l/eiXL/wP/u01X4SLchpsiZYWlCpalF0IVXX4wUVn57F408sJZW2+1qnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685755; c=relaxed/simple;
-	bh=LJYoa++gsuQw0NmD6/aHhzSKLXx8IK6ikfbxcgBDGmc=;
+	s=arc-20240116; t=1750685761; c=relaxed/simple;
+	bh=1Vpnx8dR+Z6KbyNE/qDJ0Ey/wOy01vB6VGN29redVis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MjXY6ctCFBDf7Ntn9MQ+FqdUVGH/lv4585BSs2L+dkvePxKyzjhoMzHpq4GIlQgNnzvztId7EbhGOLubDyCXO06xd+nLjLCGdWhTdtZ9aMyIKNnrqygWazJbUFAc376Fb0yTcSIJuiGqIp2Evqh0OwplcFuxg7tZEvH70yw+HAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwnBxrIV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EiljmNeKg1QaHoVBs5ZFS2do9tVrpmdxMqx8Rgai+n6nnybppVczN21ue9kdAT6KTMcfnNYjA4WIwQ5N/TmD/zORBbxSgiQizxTcOus+AXQ+egoav0dzE2nKaxtR5OtgA3h5N+2W+8BxNtVQwenc22ebJmdYHF9kyGdDMYdjoFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cw4mawtA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwnBxrIV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05DEC4CEEA;
-	Mon, 23 Jun 2025 13:35:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cw4mawtA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F185C4CEEA;
+	Mon, 23 Jun 2025 13:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685755;
-	bh=LJYoa++gsuQw0NmD6/aHhzSKLXx8IK6ikfbxcgBDGmc=;
+	s=korg; t=1750685761;
+	bh=1Vpnx8dR+Z6KbyNE/qDJ0Ey/wOy01vB6VGN29redVis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XwnBxrIV8uckCKiauoKYxMS5EYR0KmT3GIkwFeAY4LI8rZlgc0mrEaK0Sf8bWIVsi
-	 tGyD0LIvMdGnn1BGLOB78E9hGPiwQ46dSCUfFdSD2jgTHnd+H2fkXtRevE8GHBBjWf
-	 aZUoBUdHfVnUs6gMp3N1ON98hvt3AlhIEJlM3Ork=
+	b=cw4mawtAR61JkQVW3e9Z7zgAJ0gCebaZ+ud+dv4+/zPuyGux6bp/145WqJddS02E+
+	 44yLtGqBPRLtLpYv1nWbB6ZascA9SP+J626wVI7lfyA6DdiJkF7XkZSj0ivcY30+2W
+	 7NCTehukdUPfskGpw/0nGQ/4eg9lEYZutzrkTHcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Marheine <pmarheine@chromium.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 140/222] ACPI: battery: negate current when discharging
-Date: Mon, 23 Jun 2025 15:07:55 +0200
-Message-ID: <20250623130616.302223882@linuxfoundation.org>
+Subject: [PATCH 5.15 082/411] nilfs2: do not propagate ENOENT error from nilfs_btree_propagate()
+Date: Mon, 23 Jun 2025 15:03:46 +0200
+Message-ID: <20250623130635.467796076@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Marheine <pmarheine@chromium.org>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 234f71555019d308c6bc6f98c78c5551cb8cd56a ]
+[ Upstream commit 8e39fbb1edbb4ec9d7c1124f403877fc167fcecd ]
 
-The ACPI specification requires that battery rate is always positive,
-but the kernel ABI for POWER_SUPPLY_PROP_CURRENT_NOW
-(Documentation/ABI/testing/sysfs-class-power) specifies that it should
-be negative when a battery is discharging. When reporting CURRENT_NOW,
-massage the value to match the documented ABI.
+In preparation for writing logs, in nilfs_btree_propagate(), which makes
+parent and ancestor node blocks dirty starting from a modified data block
+or b-tree node block, if the starting block does not belong to the b-tree,
+i.e.  is isolated, nilfs_btree_do_lookup() called within the function
+fails with -ENOENT.
 
-This only changes the sign of `current_now` and not `power_now` because
-documentation doesn't describe any particular meaning for `power_now` so
-leaving `power_now` unchanged is less likely to confuse userspace
-unnecessarily, whereas becoming consistent with the documented ABI is
-worth potentially confusing clients that read `current_now`.
+In this case, even though -ENOENT is an internal code, it is propagated to
+the log writer via nilfs_bmap_propagate() and may be erroneously returned
+to system calls such as fsync().
 
-Signed-off-by: Peter Marheine <pmarheine@chromium.org>
-Link: https://patch.msgid.link/20250508024146.1436129-1-pmarheine@chromium.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fix this issue by changing the error code to -EINVAL in this case, and
+having the bmap layer detect metadata corruption and convert the error
+code appropriately.
+
+Link: https://lkml.kernel.org/r/20250428173808.6452-3-konishi.ryusuke@gmail.com
+Fixes: 1f5abe7e7dbc ("nilfs2: replace BUG_ON and BUG calls triggerable from ioctl")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/battery.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ fs/nilfs2/btree.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index cf853e985d6d9..a5e120eca7f33 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -266,10 +266,23 @@ static int acpi_battery_get_property(struct power_supply *psy,
- 		break;
- 	case POWER_SUPPLY_PROP_CURRENT_NOW:
- 	case POWER_SUPPLY_PROP_POWER_NOW:
--		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
-+		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
- 			ret = -ENODEV;
--		else
--			val->intval = battery->rate_now * 1000;
-+			break;
+diff --git a/fs/nilfs2/btree.c b/fs/nilfs2/btree.c
+index 29f967fb7e9b6..b2abab4b28732 100644
+--- a/fs/nilfs2/btree.c
++++ b/fs/nilfs2/btree.c
+@@ -2096,11 +2096,13 @@ static int nilfs_btree_propagate(struct nilfs_bmap *btree,
+ 
+ 	ret = nilfs_btree_do_lookup(btree, path, key, NULL, level + 1, 0);
+ 	if (ret < 0) {
+-		if (unlikely(ret == -ENOENT))
++		if (unlikely(ret == -ENOENT)) {
+ 			nilfs_crit(btree->b_inode->i_sb,
+ 				   "writing node/leaf block does not appear in b-tree (ino=%lu) at key=%llu, level=%d",
+ 				   btree->b_inode->i_ino,
+ 				   (unsigned long long)key, level);
++			ret = -EINVAL;
 +		}
-+
-+		val->intval = battery->rate_now * 1000;
-+		/*
-+		 * When discharging, the current should be reported as a
-+		 * negative number as per the power supply class interface
-+		 * definition.
-+		 */
-+		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
-+		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
-+		    acpi_battery_handle_discharging(battery)
-+				== POWER_SUPPLY_STATUS_DISCHARGING)
-+			val->intval = -val->intval;
-+
- 		break;
- 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
- 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
+ 		goto out;
+ 	}
+ 
 -- 
 2.39.5
 
