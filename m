@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C81221543;
-	Mon, 23 Jun 2025 22:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0066A222581;
+	Mon, 23 Jun 2025 22:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717533; cv=none; b=Au7g4KHG/zRNlpJOZDRvD7kV7sjlXlCaklSclU4iZCnmhFIANm7BzTkMy9dqtc4HQhZ0Z1WYLvmNCb+8BL3aSrEpI1WE8Fqs678Fm7QsPNAOnMk3Rk8zNZTtinO9SWSmrQyu9d8GkOc5LERz20UUG8PlGymBLpbpdkA1JJhn5bs=
+	t=1750717536; cv=none; b=dpu6DT+LZB0XXe4PHO0ZP5IU0fU3IRi5qnK1DjS75aeAa4P3wzfxj7vaqeHkCXY8NlotbA5Lt85eD0hVhgWhaWHjbSa+Qf4LCP2X2c9i2txeuf96nne1JbRRV8vxe0THliXwaipt+BNBhWlx3nhcV3u8EvdnhNZ6ARiYvig56L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717533; c=relaxed/simple;
-	bh=h2ESqK2WhJoIF47qLaO9/LWsJ6meponAZsQ3Xb78no8=;
+	s=arc-20240116; t=1750717536; c=relaxed/simple;
+	bh=ktY+8X/rj0qkVFA7G8UTHVhhfOohpFrnNQEqT4ErWeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QdeWCZve8LwUL/lGI3Z8+Ju6mEb8PRtSesz79c8OR8HAgCnjHi+HkqUrDsLFtk93WP6fRkDpnQG7BqwDSmjk7hXjfbHsxc3wjIWVWGCpoD/4Qt66Ndqj2cuIx0JiO7erq36Kedw/DjtdeE201+yFFDad3dk2iLCTDEC25hODlDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZE3pL9Dk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AuVDfCTfdzZ28PYSNOjlg+10x6BjLk7fyKNTm+OpWWzv7VuKsyS/KJF61VE3gFfQRyqCmBKRCAuPOO0v7Bmlzf0ZDingURtae6oY6ir7XanG5tpyRIvYl5Fes1anZ2bFCmJOQ/3yGKTIAFE9xgjaMMK+2tkCXtnllWE0cMeU1lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ywn0+DDR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZE3pL9Dk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC40C4CEEA;
-	Mon, 23 Jun 2025 22:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ywn0+DDR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A618C4CEEA;
+	Mon, 23 Jun 2025 22:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717533;
-	bh=h2ESqK2WhJoIF47qLaO9/LWsJ6meponAZsQ3Xb78no8=;
+	s=korg; t=1750717535;
+	bh=ktY+8X/rj0qkVFA7G8UTHVhhfOohpFrnNQEqT4ErWeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZE3pL9DkZgIkBMUh3ZEhcDcaF+e++nwkzkB/fuS+V4GilWgTgndVSIwE6v6G19w8j
-	 0mFpE/trTm7hihLSzVZCt9S47vjhkUFNaJ8hcBCR77EJx9r71e051/QjeiCD2yi5hu
-	 4Ayx9T+vCexFKHMvk4EmF1XYO3d6+Ofbp5GJWCVc=
+	b=Ywn0+DDRaf61P+UUaB+vUFEiyXIqm77/92RApj3Hq6qP2Wx/Q8cqr8kkjwVcS0apM
+	 S/se1IOOud5CdPz/TU3dJxdu19p1sHg4C7qIG91PoVp9bytJ3F1yeHdPR6Fv+RFHzg
+	 h+uyjWuzdpy3FSkFg2kJVVHDldRyrhJybSRWSPWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atish Patra <atishp@rivosinc.com>,
-	Anup Patel <apatel@ventanamicro.com>,
-	Anup Patel <anup@brainfault.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 408/414] RISC-V: KVM: Fix the size parameter check in SBI SFENCE calls
-Date: Mon, 23 Jun 2025 15:09:05 +0200
-Message-ID: <20250623130652.147953373@linuxfoundation.org>
+	Bharath SM <bharathsm@microsoft.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 448/508] smb: improve directory cache reuse for readdir operations
+Date: Mon, 23 Jun 2025 15:08:13 +0200
+Message-ID: <20250623130656.179011702@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,56 +47,157 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Bharath SM <bharathsm.hsk@gmail.com>
 
-[ Upstream commit 6aba0cb5bba6141158d5449f2cf53187b7f755f9 ]
+commit 72dd7961a4bb4fa1fc456169a61dd12e68e50645 upstream.
 
-As-per the SBI specification, an SBI remote fence operation applies
-to the entire address space if either:
-1) start_addr and size are both 0
-2) size is equal to 2^XLEN-1
+Currently, cached directory contents were not reused across subsequent
+'ls' operations because the cache validity check relied on comparing
+the ctx pointer, which changes with each readdir invocation. As a
+result, the cached dir entries was not marked as valid and the cache was
+not utilized for subsequent 'ls' operations.
 
->From the above, only #1 is checked by SBI SFENCE calls so fix the
-size parameter check in SBI SFENCE calls to cover #2 as well.
+This change uses the file pointer, which remains consistent across all
+readdir calls for a given directory instance, to associate and validate
+the cache. As a result, cached directory contents can now be
+correctly reused, improving performance for repeated directory listings.
 
-Fixes: 13acfec2dbcc ("RISC-V: KVM: Add remote HFENCE functions based on VCPU requests")
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Link: https://lore.kernel.org/r/20250605061458.196003-2-apatel@ventanamicro.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Performance gains with local windows SMB server:
+
+Without the patch and default actimeo=1:
+ 1000 directory enumeration operations on dir with 10k files took 135.0s
+
+With this patch and actimeo=0:
+ 1000 directory enumeration operations on dir with 10k files took just 5.1s
+
+Signed-off-by: Bharath SM <bharathsm@microsoft.com>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kvm/vcpu_sbi_replace.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/cached_dir.h |    8 ++++----
+ fs/smb/client/readdir.c    |   28 +++++++++++++++-------------
+ 2 files changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/arch/riscv/kvm/vcpu_sbi_replace.c b/arch/riscv/kvm/vcpu_sbi_replace.c
-index 5fbf3f94f1e85..9752d2ffff683 100644
---- a/arch/riscv/kvm/vcpu_sbi_replace.c
-+++ b/arch/riscv/kvm/vcpu_sbi_replace.c
-@@ -103,7 +103,7 @@ static int kvm_sbi_ext_rfence_handler(struct kvm_vcpu *vcpu, struct kvm_run *run
- 		kvm_riscv_vcpu_pmu_incr_fw(vcpu, SBI_PMU_FW_FENCE_I_SENT);
- 		break;
- 	case SBI_EXT_RFENCE_REMOTE_SFENCE_VMA:
--		if (cp->a2 == 0 && cp->a3 == 0)
-+		if ((cp->a2 == 0 && cp->a3 == 0) || cp->a3 == -1UL)
- 			kvm_riscv_hfence_vvma_all(vcpu->kvm, hbase, hmask);
- 		else
- 			kvm_riscv_hfence_vvma_gva(vcpu->kvm, hbase, hmask,
-@@ -111,7 +111,7 @@ static int kvm_sbi_ext_rfence_handler(struct kvm_vcpu *vcpu, struct kvm_run *run
- 		kvm_riscv_vcpu_pmu_incr_fw(vcpu, SBI_PMU_FW_HFENCE_VVMA_SENT);
- 		break;
- 	case SBI_EXT_RFENCE_REMOTE_SFENCE_VMA_ASID:
--		if (cp->a2 == 0 && cp->a3 == 0)
-+		if ((cp->a2 == 0 && cp->a3 == 0) || cp->a3 == -1UL)
- 			kvm_riscv_hfence_vvma_asid_all(vcpu->kvm,
- 						       hbase, hmask, cp->a4);
- 		else
--- 
-2.39.5
-
+--- a/fs/smb/client/cached_dir.h
++++ b/fs/smb/client/cached_dir.h
+@@ -21,10 +21,10 @@ struct cached_dirent {
+ struct cached_dirents {
+ 	bool is_valid:1;
+ 	bool is_failed:1;
+-	struct dir_context *ctx; /*
+-				  * Only used to make sure we only take entries
+-				  * from a single context. Never dereferenced.
+-				  */
++	struct file *file; /*
++			    * Used to associate the cache with a single
++			    * open file instance.
++			    */
+ 	struct mutex de_mutex;
+ 	int pos;		 /* Expected ctx->pos */
+ 	struct list_head entries;
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -882,9 +882,9 @@ static bool emit_cached_dirents(struct c
+ }
+ 
+ static void update_cached_dirents_count(struct cached_dirents *cde,
+-					struct dir_context *ctx)
++					struct file *file)
+ {
+-	if (cde->ctx != ctx)
++	if (cde->file != file)
+ 		return;
+ 	if (cde->is_valid || cde->is_failed)
+ 		return;
+@@ -893,9 +893,9 @@ static void update_cached_dirents_count(
+ }
+ 
+ static void finished_cached_dirents_count(struct cached_dirents *cde,
+-					struct dir_context *ctx)
++					struct dir_context *ctx, struct file *file)
+ {
+-	if (cde->ctx != ctx)
++	if (cde->file != file)
+ 		return;
+ 	if (cde->is_valid || cde->is_failed)
+ 		return;
+@@ -908,11 +908,12 @@ static void finished_cached_dirents_coun
+ static void add_cached_dirent(struct cached_dirents *cde,
+ 			      struct dir_context *ctx,
+ 			      const char *name, int namelen,
+-			      struct cifs_fattr *fattr)
++			      struct cifs_fattr *fattr,
++				  struct file *file)
+ {
+ 	struct cached_dirent *de;
+ 
+-	if (cde->ctx != ctx)
++	if (cde->file != file)
+ 		return;
+ 	if (cde->is_valid || cde->is_failed)
+ 		return;
+@@ -942,7 +943,8 @@ static void add_cached_dirent(struct cac
+ static bool cifs_dir_emit(struct dir_context *ctx,
+ 			  const char *name, int namelen,
+ 			  struct cifs_fattr *fattr,
+-			  struct cached_fid *cfid)
++			  struct cached_fid *cfid,
++			  struct file *file)
+ {
+ 	bool rc;
+ 	ino_t ino = cifs_uniqueid_to_ino_t(fattr->cf_uniqueid);
+@@ -954,7 +956,7 @@ static bool cifs_dir_emit(struct dir_con
+ 	if (cfid) {
+ 		mutex_lock(&cfid->dirents.de_mutex);
+ 		add_cached_dirent(&cfid->dirents, ctx, name, namelen,
+-				  fattr);
++				  fattr, file);
+ 		mutex_unlock(&cfid->dirents.de_mutex);
+ 	}
+ 
+@@ -1054,7 +1056,7 @@ static int cifs_filldir(char *find_entry
+ 	cifs_prime_dcache(file_dentry(file), &name, &fattr);
+ 
+ 	return !cifs_dir_emit(ctx, name.name, name.len,
+-			      &fattr, cfid);
++			      &fattr, cfid, file);
+ }
+ 
+ 
+@@ -1105,8 +1107,8 @@ int cifs_readdir(struct file *file, stru
+ 	 * we need to initialize scanning and storing the
+ 	 * directory content.
+ 	 */
+-	if (ctx->pos == 0 && cfid->dirents.ctx == NULL) {
+-		cfid->dirents.ctx = ctx;
++	if (ctx->pos == 0 && cfid->dirents.file == NULL) {
++		cfid->dirents.file = file;
+ 		cfid->dirents.pos = 2;
+ 	}
+ 	/*
+@@ -1174,7 +1176,7 @@ int cifs_readdir(struct file *file, stru
+ 	} else {
+ 		if (cfid) {
+ 			mutex_lock(&cfid->dirents.de_mutex);
+-			finished_cached_dirents_count(&cfid->dirents, ctx);
++			finished_cached_dirents_count(&cfid->dirents, ctx, file);
+ 			mutex_unlock(&cfid->dirents.de_mutex);
+ 		}
+ 		cifs_dbg(FYI, "Could not find entry\n");
+@@ -1215,7 +1217,7 @@ int cifs_readdir(struct file *file, stru
+ 		ctx->pos++;
+ 		if (cfid) {
+ 			mutex_lock(&cfid->dirents.de_mutex);
+-			update_cached_dirents_count(&cfid->dirents, ctx);
++			update_cached_dirents_count(&cfid->dirents, file);
+ 			mutex_unlock(&cfid->dirents.de_mutex);
+ 		}
+ 
 
 
