@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE97419D084;
-	Mon, 23 Jun 2025 21:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED0B19D084;
+	Mon, 23 Jun 2025 21:40:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714838; cv=none; b=qdpBWnlcZrEQRg44yF6f9tpZHCDBpWRZB27nYPPp1AAJubWPvph28q14xHcy2ZFQSbqvjxkF8+mPZEQOIQmWJ2h9AyT7DYjn2Shl7oSfMNb/QUqcqihij+DHOsqkJYSfN2DOvqCCZBYBSD2sk85YCJWd7kuU5RP90Dowd8be9nA=
+	t=1750714841; cv=none; b=cK8SHTVOALFLWE+O68hmSL0S91082vyklTDKGHB89D+Hs4qtwzQZkrQ18dRosVvevSu6ua0dl7pCWEz4OclbY5u2NZjXvIJvsV1hPpdjWleogWDOb0aSMI68GlAYf71Y6U/8IjcFGK2JraVlSupRcT0cTxfrSzN7d1DRvsnRX2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714838; c=relaxed/simple;
-	bh=gqPQtsQn9g5neX26umufQZQqR+eqwj+TZFz/F91mFuY=;
+	s=arc-20240116; t=1750714841; c=relaxed/simple;
+	bh=9YVS21FZiDD8nBAKTlO6ItKCINhxl0+TsZJ/3GYU354=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qJHbTd6NXFWuEqUjPGkPPMQal/uMPIapioNytRuVS6kQjugwbNfZ/ilHARW/Sq60BlSWP0Pa+w4ujIeXNgeYLb6WO9RVCoy45YwhVgGtx5ciy+Tn7AcgHgWom1a8FiFgM0wZqsbOAdFYgrMJdSbVCEm98f/8o7lubLjIPN4FXwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiinTHi8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hXmHRj8Rv75+731O7kQPSjD120X/fsccTWHycKYqxNLM4UcJTlQMb1V7guNc3xJiik6++9oJwpy0Ke6bKcWYhwSuME4WqjHYzMSt+V74imWWjIJUqW5Hj+vCYqs57b71JQnWd7Bm75IKW+37t/3K35L/b4WXiUyXfSBNXNFn+vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tsTHudgx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiinTHi8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E9CC4CEEA;
-	Mon, 23 Jun 2025 21:40:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tsTHudgx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE7CC4CEEA;
+	Mon, 23 Jun 2025 21:40:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714838;
-	bh=gqPQtsQn9g5neX26umufQZQqR+eqwj+TZFz/F91mFuY=;
+	s=korg; t=1750714841;
+	bh=9YVS21FZiDD8nBAKTlO6ItKCINhxl0+TsZJ/3GYU354=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CiinTHi8AkQ8tjRaP6fnUVVWyWvb6zWGSqoMIvbX4XfOH5/erxZCadYDur8n88sbi
-	 exVPRZ46GPnc/blNq7TAm40S4MWwklW1vA6/ultoh0OVgI81RH4Y/RXBo/fROkTdiC
-	 vgwEK1MQhWwwm7hadW49g/IxtFKS3CViogk0Bmws=
+	b=tsTHudgxujr1q5Fs+aKtIj25PILRurhaZatO8flZe1wtNkLcZUM+enngm+tkNi+10
+	 SGHBdlNWO5RnBaTZc2XtbUuSpHWitRBJC1GE1HYFki8nAgU3bFffq6H8i7VSI/4ZHw
+	 8BgvUM7mmGROTh7B3bdAzevUCfzY1FL9JKVgjW/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Pacuszka <mateuszx.pacuszka@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 184/290] ice: fix check for existing switch rule
-Date: Mon, 23 Jun 2025 15:07:25 +0200
-Message-ID: <20250623130632.409257442@linuxfoundation.org>
+Subject: [PATCH 6.6 166/290] clk: rockchip: rk3036: mark ddrphy as critical
+Date: Mon, 23 Jun 2025 15:07:07 +0200
+Message-ID: <20250623130631.888697849@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
 References: <20250623130626.910356556@linuxfoundation.org>
@@ -56,54 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Pacuszka <mateuszx.pacuszka@intel.com>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit a808691df39b52cd9db861b118e88e18b63e2299 ]
+[ Upstream commit 596a977b34a722c00245801a5774aa79cec4e81d ]
 
-In case the rule already exists and another VSI wants to subscribe to it
-new VSI list is being created and both VSIs are moved to it.
-Currently, the check for already existing VSI with the same rule is done
-based on fdw_id.hw_vsi_id, which applies only to LOOKUP_RX flag.
-Change it to vsi_handle. This is software VSI ID, but it can be applied
-here, because vsi_map itself is also based on it.
+The ddrphy is supplied by the dpll, but due to the limited number of PLLs
+on the rk3036, the dpll also is used for other periperhals, like the GPU.
 
-Additionally change return status in case the VSI already exists in the
-VSI map to "Already exists". Such case should be handled by the caller.
+So it happened, when the Lima driver turned off the gpu clock, this in
+turn also disabled the dpll and thus the ram.
 
-Signed-off-by: Mateusz Pacuszka <mateuszx.pacuszka@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250503202532.992033-4-heiko@sntech.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_switch.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/rockchip/clk-rk3036.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
-index 19f730a68fa21..ac004ef1d724d 100644
---- a/drivers/net/ethernet/intel/ice/ice_switch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_switch.c
-@@ -3024,7 +3024,7 @@ ice_add_update_vsi_list(struct ice_hw *hw,
- 		u16 vsi_handle_arr[2];
+diff --git a/drivers/clk/rockchip/clk-rk3036.c b/drivers/clk/rockchip/clk-rk3036.c
+index d644bc155ec6e..f5f27535087a3 100644
+--- a/drivers/clk/rockchip/clk-rk3036.c
++++ b/drivers/clk/rockchip/clk-rk3036.c
+@@ -431,6 +431,7 @@ static const char *const rk3036_critical_clocks[] __initconst = {
+ 	"hclk_peri",
+ 	"pclk_peri",
+ 	"pclk_ddrupctl",
++	"ddrphy",
+ };
  
- 		/* A rule already exists with the new VSI being added */
--		if (cur_fltr->fwd_id.hw_vsi_id == new_fltr->fwd_id.hw_vsi_id)
-+		if (cur_fltr->vsi_handle == new_fltr->vsi_handle)
- 			return -EEXIST;
- 
- 		vsi_handle_arr[0] = cur_fltr->vsi_handle;
-@@ -5991,7 +5991,7 @@ ice_adv_add_update_vsi_list(struct ice_hw *hw,
- 
- 		/* A rule already exists with the new VSI being added */
- 		if (test_bit(vsi_handle, m_entry->vsi_list_info->vsi_map))
--			return 0;
-+			return -EEXIST;
- 
- 		/* Update the previously created VSI list set with
- 		 * the new VSI ID passed in
+ static void __init rk3036_clk_init(struct device_node *np)
 -- 
 2.39.5
 
