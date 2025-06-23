@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA97821D3F6;
-	Mon, 23 Jun 2025 22:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F94F19DF4A;
+	Mon, 23 Jun 2025 22:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716176; cv=none; b=Hp/Qf6a8A6hyPgcEQ6ECnB2T4w4YiDQCxIcLcghEMj7jhtjClpkL6ML6+4WEFgw/SIaToc3194IuNpw9Re7o6n4l00OLHnxUtH2ElZxNYsmRMsBDaKzRDuohOR0TCX6Oq+HfyZKB8Z2kFyzpSioKRPpb0ENZwnqsf2/RircJE+w=
+	t=1750716179; cv=none; b=RJxdpAb4TUsL/RawvPrYfLj+VVtmzGy+938ddHNSsrP463jNA8ZtcbMzLYpHiPB4L8nIFNQpnNJKsuD9guJbNQwSGLPpHBVrhVPMRk/Df3UoHd/+C2ExWy8GHTB7RM6sqjMHMKhh2hVhO3w0gahl1B3tOHR83q+Plo9LS7qEZgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716176; c=relaxed/simple;
-	bh=dDANdip0xdvv9GP+Zhack2KLo0P2DQmhRWCLXNmyN3Y=;
+	s=arc-20240116; t=1750716179; c=relaxed/simple;
+	bh=Fb2RXm5Qc9fHZ6ie+zsWg6VWClRu9tXbXHu5nirJ1Uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j0I1wGtNW4YKYXIEAA/GacukVV2GlDz9I0ZMCVMoaNl8fla0NLv9z+MzSWqViRgliuKqcRM1Vfrq0hLVg5RA1hXpDFuV/qbyfDnYbQThL8IvTjw8hAEhv+o86iZHmEdziMTuzqL3F7Cn4pnXs13AlO21WYT9EsWjsrmyecx0NvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=im/+BoHv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IFxy4cnhyvK5FL4pkLseaiAYdZK88QLvo+Dlk4ZV1tJ6bvo0o3pVKnQXoYuD9bFTmXruVIEBaAx/VmtdjslGTUskovzzad70kj+mhaCxJx5O5n3l89pZ9phkUpcLehb5KvtmDqUAWXpy+vs5/R5/E4/qYPrqbb2xE1V4RKFTpUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3nBTNmQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="im/+BoHv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D51C4CEEA;
-	Mon, 23 Jun 2025 22:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3nBTNmQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FE8C4CEEA;
+	Mon, 23 Jun 2025 22:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716176;
-	bh=dDANdip0xdvv9GP+Zhack2KLo0P2DQmhRWCLXNmyN3Y=;
+	s=korg; t=1750716179;
+	bh=Fb2RXm5Qc9fHZ6ie+zsWg6VWClRu9tXbXHu5nirJ1Uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=im/+BoHvTWSJrl4SiJr8/PHzU4XjiarQuTxBy+zUKdpVhFUt0r0QiD64SzZ7b2Qft
-	 YFQUzpjsCzYG0YRgQLVRFVw9OlRRjE8oXhOBUvVlA798g+0EQXvtihdfSQr/29q6F7
-	 VBgGOIounHE6XVlCRD+AYP534EQkL111ridOupKE=
+	b=A3nBTNmQw5BjvD4HmOyainLx+y4aTUYJ8ciN6HLHlfx5ulPGyusOuvn3ZC/wWbxFf
+	 ZtQVjYJ/cn269gdpbwYl9RYZggl5aIfh4V44l2Gv/4WtKv8IfJAWw7yhkCQ48ju5IV
+	 IS1w7Zwipn6DuDnRkR72BSXOmd95bzCRRx59xzf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?V=C3=ADctor=20Gonzalo?= <victor.gonzalo@anddroptable.net>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 255/414] wifi: iwlwifi: Add missing MODULE_FIRMWARE for Qu-c0-jf-b0
-Date: Mon, 23 Jun 2025 15:06:32 +0200
-Message-ID: <20250623130648.418172234@linuxfoundation.org>
+Subject: [PATCH 6.12 238/414] clk: rockchip: rk3036: mark ddrphy as critical
+Date: Mon, 23 Jun 2025 15:06:15 +0200
+Message-ID: <20250623130647.990744515@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
 References: <20250623130642.015559452@linuxfoundation.org>
@@ -45,48 +44,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Víctor Gonzalo <victor.gonzalo@anddroptable.net>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 2b801487ac3be7bec561ae62d1a6c4d6f5283f8c ]
+[ Upstream commit 596a977b34a722c00245801a5774aa79cec4e81d ]
 
-The module metadata for the firmware file iwlwifi-Qu-c0-jf-b0-* is missing.
+The ddrphy is supplied by the dpll, but due to the limited number of PLLs
+on the rk3036, the dpll also is used for other periperhals, like the GPU.
 
-Signed-off-by: Víctor Gonzalo <victor.gonzalo@anddroptable.net>
-Link: https://patch.msgid.link/20240313180227.2224780-1-victor.gonzalo@anddroptable.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+So it happened, when the Lima driver turned off the gpu clock, this in
+turn also disabled the dpll and thus the ram.
+
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250503202532.992033-4-heiko@sntech.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/cfg/22000.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/clk/rockchip/clk-rk3036.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/cfg/22000.c b/drivers/net/wireless/intel/iwlwifi/cfg/22000.c
-index 2e2fcb3807efb..10d647fbc971e 100644
---- a/drivers/net/wireless/intel/iwlwifi/cfg/22000.c
-+++ b/drivers/net/wireless/intel/iwlwifi/cfg/22000.c
-@@ -44,6 +44,8 @@
- 	IWL_QU_C_HR_B_FW_PRE "-" __stringify(api) ".ucode"
- #define IWL_QU_B_JF_B_MODULE_FIRMWARE(api) \
- 	IWL_QU_B_JF_B_FW_PRE "-" __stringify(api) ".ucode"
-+#define IWL_QU_C_JF_B_MODULE_FIRMWARE(api) \
-+	IWL_QU_C_JF_B_FW_PRE "-" __stringify(api) ".ucode"
- #define IWL_CC_A_MODULE_FIRMWARE(api)			\
- 	IWL_CC_A_FW_PRE "-" __stringify(api) ".ucode"
+diff --git a/drivers/clk/rockchip/clk-rk3036.c b/drivers/clk/rockchip/clk-rk3036.c
+index d341ce0708aac..e4af3a9286379 100644
+--- a/drivers/clk/rockchip/clk-rk3036.c
++++ b/drivers/clk/rockchip/clk-rk3036.c
+@@ -431,6 +431,7 @@ static const char *const rk3036_critical_clocks[] __initconst = {
+ 	"hclk_peri",
+ 	"pclk_peri",
+ 	"pclk_ddrupctl",
++	"ddrphy",
+ };
  
-@@ -423,6 +425,7 @@ const struct iwl_cfg iwl_cfg_quz_a0_hr_b0 = {
- MODULE_FIRMWARE(IWL_QU_B_HR_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
- MODULE_FIRMWARE(IWL_QU_C_HR_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
- MODULE_FIRMWARE(IWL_QU_B_JF_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
-+MODULE_FIRMWARE(IWL_QU_C_JF_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
- MODULE_FIRMWARE(IWL_QUZ_A_HR_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
- MODULE_FIRMWARE(IWL_QUZ_A_JF_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
- MODULE_FIRMWARE(IWL_CC_A_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
+ static void __init rk3036_clk_init(struct device_node *np)
 -- 
 2.39.5
 
