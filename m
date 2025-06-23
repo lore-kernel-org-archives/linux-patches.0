@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6151DDC04;
-	Mon, 23 Jun 2025 21:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FC74315A;
+	Mon, 23 Jun 2025 21:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715004; cv=none; b=Dk3/EwvWEUloecBRGTcBsMmCO8CmjDfMTfJZ11xLZN1uOYC+1wbi4I9qrhjVQrSoTtRcM04nqqZdk08rxiUXooKMXqwb2KSb3yU+JN8H5Vb/N5YqHUM/7sXRaazDl2PwLUMZiO7nN/L2sdbip2utSYWG2qcZI3/L2nW2TU7qhnI=
+	t=1750715007; cv=none; b=E2mxmXyr+w2jt90Qt2f0+hb7bOVmH7ukgtMpGmRv7u/+NHPNtWz/0b3ZsBw4r5q3fUKSoNX11lpJqdgUvHad3L3MHlOJHgCQ8tpqQkeK7yOoajcRb/ltht1vSWyELvjDI0qJ7WJty1h//TZtMvYNmJFTPNr4RfJSfsIGARH9qYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715004; c=relaxed/simple;
-	bh=rw/z9NhhNP5etsRWjAUArgncQDKcgK715g0Jp5/7DTw=;
+	s=arc-20240116; t=1750715007; c=relaxed/simple;
+	bh=XdMCK9X8NjuxgMhwBH9DpDUwPnX476PG8XPPlllqmOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jSwnG+HraIFWWnHq3NZRqRdN3QzWK/vrIErAewnhc1LQI6oEah92+iX0mVme99F2YxoNGuWUU42XU4iP5hu0s3aDvF+OREwgWQKzwOa4nTDzd2xVNrkifXW4UliTiC5GW5rBQhMfvxc2kVOCgbi9eAlOX0DswSU+1HKnPGxpcGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0Tj4R3Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zj6EBz3YhqAz8exO+nZ6cKd134AHCYLzNIabHgJEZ9XqXBJBv5rBBP6YT+q1Wsu6tH2SrXl5t6/Q/KLL0yx/aERA1b3HzUVS9q9kqvu6SnXqxCVKt6AwFrcpIIKj/epnZZ2PO8JKM0z+h2+C+zTVm8kAPcSRTqkPoVWn8FQgx2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VfXZda6w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0Tj4R3Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F3BC4CEEA;
-	Mon, 23 Jun 2025 21:43:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfXZda6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B9AC4CEEA;
+	Mon, 23 Jun 2025 21:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715004;
-	bh=rw/z9NhhNP5etsRWjAUArgncQDKcgK715g0Jp5/7DTw=;
+	s=korg; t=1750715006;
+	bh=XdMCK9X8NjuxgMhwBH9DpDUwPnX476PG8XPPlllqmOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o0Tj4R3YZTIrJrmgCK9Dmsew7mMU4BYOmB8I5APxu1cJRvi4RjrYk79lNV5Ubx3wP
-	 V0rV5dxzFNNsopFb/ujV09G9rx4s3FqvbezXBf12xXyTQygTOej9WsCWCFg/PTgOXf
-	 mms8+BQLKeiug6F2IdRU+akS+XJawyrnuASVs9p8=
+	b=VfXZda6wAXzvLKN3Z32EsuACiLh9Zbw8WmuoyXT6GOAqagVKiiADyzC/oMAaPrdwe
+	 bLB7rixFoM+rX33rJtzabf6KZ1FKkQRVHuQLjUl1wjnEok6aQmaKQQTu+0D8/vtHWO
+	 0yYkooyn2wCiwUWRm2tusxrwnJY35X/0+Ni40fd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sukrut Bellary <sbellary@baylibre.com>,
-	Judith Mendez <jm@ti.com>,
-	Kevin Hilman <khilman@baylibre.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Chandan Babu R <chandanbabu@kernel.org>,
+	Leah Rumancik <leah.rumancik@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 431/592] ARM: OMAP2+: Fix l4ls clk domain handling in STANDBY
-Date: Mon, 23 Jun 2025 15:06:29 +0200
-Message-ID: <20250623130710.687405434@linuxfoundation.org>
+Subject: [PATCH 6.1 209/508] xfs: conditionally allow FS_XFLAG_REALTIME changes if S_DAX is set
+Date: Mon, 23 Jun 2025 15:04:14 +0200
+Message-ID: <20250623130650.407767767@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,89 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sukrut Bellary <sbellary@baylibre.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 47fe74098f3dadba2f9cc1e507d813a4aa93f5f3 ]
+[ Upstream commit 8d16762047c627073955b7ed171a36addaf7b1ff ]
 
-Don't put the l4ls clk domain to sleep in case of standby.
-Since CM3 PM FW[1](ti-v4.1.y) doesn't wake-up/enable the l4ls clk domain
-upon wake-up, CM3 PM FW fails to wake-up the MPU.
+If a file has the S_DAX flag (aka fsdax access mode) set, we cannot
+allow users to change the realtime flag unless the datadev and rtdev
+both support fsdax access modes.  Even if there are no extents allocated
+to the file, the setattr thread could be racing with another thread
+that has already started down the write code paths.
 
-[1] https://git.ti.com/cgit/processor-firmware/ti-amx3-cm3-pm-firmware/
-
-Signed-off-by: Sukrut Bellary <sbellary@baylibre.com>
-Tested-by: Judith Mendez <jm@ti.com>
-Link: https://lore.kernel.org/r/20250318230042.3138542-2-sbellary@baylibre.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Fixes: ba23cba9b3bdc ("fs: allow per-device dax status checking for filesystems")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/clockdomain.h           |  1 +
- arch/arm/mach-omap2/clockdomains33xx_data.c |  2 +-
- arch/arm/mach-omap2/cm33xx.c                | 14 +++++++++++++-
- 3 files changed, 15 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_ioctl.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/arch/arm/mach-omap2/clockdomain.h b/arch/arm/mach-omap2/clockdomain.h
-index c36fb27212615..86a2f9e5d0ef9 100644
---- a/arch/arm/mach-omap2/clockdomain.h
-+++ b/arch/arm/mach-omap2/clockdomain.h
-@@ -48,6 +48,7 @@
- #define CLKDM_NO_AUTODEPS			(1 << 4)
- #define CLKDM_ACTIVE_WITH_MPU			(1 << 5)
- #define CLKDM_MISSING_IDLE_REPORTING		(1 << 6)
-+#define CLKDM_STANDBY_FORCE_WAKEUP		BIT(7)
+diff --git a/fs/xfs/xfs_ioctl.c b/fs/xfs/xfs_ioctl.c
+index 1afb1b1b831ea..ef3dc07785669 100644
+--- a/fs/xfs/xfs_ioctl.c
++++ b/fs/xfs/xfs_ioctl.c
+@@ -1128,6 +1128,17 @@ xfs_ioctl_setattr_xflags(
+ 		/* Can't change realtime flag if any extents are allocated. */
+ 		if (ip->i_df.if_nextents || ip->i_delayed_blks)
+ 			return -EINVAL;
++
++		/*
++		 * If S_DAX is enabled on this file, we can only switch the
++		 * device if both support fsdax.  We can't update S_DAX because
++		 * there might be other threads walking down the access paths.
++		 */
++		if (IS_DAX(VFS_I(ip)) &&
++		    (mp->m_ddev_targp->bt_daxdev == NULL ||
++		     (mp->m_rtdev_targp &&
++		      mp->m_rtdev_targp->bt_daxdev == NULL)))
++			return -EINVAL;
+ 	}
  
- #define CLKDM_CAN_HWSUP		(CLKDM_CAN_ENABLE_AUTO | CLKDM_CAN_DISABLE_AUTO)
- #define CLKDM_CAN_SWSUP		(CLKDM_CAN_FORCE_SLEEP | CLKDM_CAN_FORCE_WAKEUP)
-diff --git a/arch/arm/mach-omap2/clockdomains33xx_data.c b/arch/arm/mach-omap2/clockdomains33xx_data.c
-index 87f4e927eb183..c05a3c07d4486 100644
---- a/arch/arm/mach-omap2/clockdomains33xx_data.c
-+++ b/arch/arm/mach-omap2/clockdomains33xx_data.c
-@@ -19,7 +19,7 @@ static struct clockdomain l4ls_am33xx_clkdm = {
- 	.pwrdm		= { .name = "per_pwrdm" },
- 	.cm_inst	= AM33XX_CM_PER_MOD,
- 	.clkdm_offs	= AM33XX_CM_PER_L4LS_CLKSTCTRL_OFFSET,
--	.flags		= CLKDM_CAN_SWSUP,
-+	.flags		= CLKDM_CAN_SWSUP | CLKDM_STANDBY_FORCE_WAKEUP,
- };
- 
- static struct clockdomain l3s_am33xx_clkdm = {
-diff --git a/arch/arm/mach-omap2/cm33xx.c b/arch/arm/mach-omap2/cm33xx.c
-index acdf72a541c02..a4dd42abda89b 100644
---- a/arch/arm/mach-omap2/cm33xx.c
-+++ b/arch/arm/mach-omap2/cm33xx.c
-@@ -20,6 +20,9 @@
- #include "cm-regbits-34xx.h"
- #include "cm-regbits-33xx.h"
- #include "prm33xx.h"
-+#if IS_ENABLED(CONFIG_SUSPEND)
-+#include <linux/suspend.h>
-+#endif
- 
- /*
-  * CLKCTRL_IDLEST_*: possible values for the CM_*_CLKCTRL.IDLEST bitfield:
-@@ -328,8 +331,17 @@ static int am33xx_clkdm_clk_disable(struct clockdomain *clkdm)
- {
- 	bool hwsup = false;
- 
-+#if IS_ENABLED(CONFIG_SUSPEND)
-+	/*
-+	 * In case of standby, Don't put the l4ls clk domain to sleep.
-+	 * Since CM3 PM FW doesn't wake-up/enable the l4ls clk domain
-+	 * upon wake-up, CM3 PM FW fails to wake-up th MPU.
-+	 */
-+	if (pm_suspend_target_state == PM_SUSPEND_STANDBY &&
-+	    (clkdm->flags & CLKDM_STANDBY_FORCE_WAKEUP))
-+		return 0;
-+#endif
- 	hwsup = am33xx_cm_is_clkdm_in_hwsup(clkdm->cm_inst, clkdm->clkdm_offs);
--
- 	if (!hwsup && (clkdm->flags & CLKDM_CAN_FORCE_SLEEP))
- 		am33xx_clkdm_sleep(clkdm);
- 
+ 	if (rtflag) {
 -- 
 2.39.5
 
