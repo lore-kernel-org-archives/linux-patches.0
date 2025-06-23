@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E342AEE4;
-	Mon, 23 Jun 2025 21:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737934315A;
+	Mon, 23 Jun 2025 21:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715041; cv=none; b=U2nYoFEj0JHWJg45s8R5LxKbMxVHDakG16tR4G9trfG4ZUHz1cRFI6Km3eCiOULBKene5z/Y+GEy0O6tTP/+itTIcK6wxSn8IxB9PZRPfdGD50PmwIPGcXRrLD5jdAiO4igT80fPaT0Co9dUjKMq9kLGpFEsM4LDoZkLRzV2Y84=
+	t=1750715043; cv=none; b=hkN7rGFiU+FMjt7/VOLFaU/U19CxtzW+6lSvJ1jaPgg5yF/F2DJHq2HngDuD2IFzuoTMRAOd9TIEYMp7sUrAQM/or01scl9hK6BEMETSkQmCQdE+qiQjvH31erE3rZ/CqILZDit5kL5tnN+dawPP/2VIfLTvHjzQEXc7DizsC00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715041; c=relaxed/simple;
-	bh=m2c7NNtOAO8hDRzvFOt4s5+J2tlGEpxOR/6crDljpyM=;
+	s=arc-20240116; t=1750715043; c=relaxed/simple;
+	bh=PnLM/BL/G1Og7TZkvMiZ9N8fG0Mzav8fc6Z6cOfRvm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eiLZ4BzPhHyvTU9xwyc4WcQJawYFQ5mTi5D2kSfYoMxgZQ416O84bZyfxu93VObKKdfl/SEDGcf4fIXRcVy/RgUsnn7n3H9CZW5MIZsWCfITwr6CrLIqy805viyT/uGPZyl6+d1/QlxWxYytFEsOvq5yRQvX4zrQkuhjSELs3W8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0qkY+s/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=moqHlVSVOA69zt4GDc+o0f0nSCvN5l7VouBJXokK9KF9h/2dI4dhNTjJa4TAJpJb3Mf/acbbpkNLqVilh74iRvAQfjY4g1h2JuST6/HE1MJuCOpHkH9DUzJqXJoZad0A30sKVSZlEFmVEw6THQ4utrwXdTolkTJp+G8pweKhAn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+AMDUGp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0qkY+s/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CFBC4CEED;
-	Mon, 23 Jun 2025 21:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+AMDUGp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084DAC4CEEA;
+	Mon, 23 Jun 2025 21:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715040;
-	bh=m2c7NNtOAO8hDRzvFOt4s5+J2tlGEpxOR/6crDljpyM=;
+	s=korg; t=1750715043;
+	bh=PnLM/BL/G1Og7TZkvMiZ9N8fG0Mzav8fc6Z6cOfRvm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X0qkY+s/IihUU6po/Ie2Aqsb8L933FcGrwTDJxVWqmgK9yrte0fDesfX2lKNAtHJU
-	 L7apZZEmcsBJZqjfDzY/qJpdzAzY99nmuq07Obto+a+O+YcaDqx4iII4GGT9snWn2H
-	 V5R81oPnftncMAc5uF2A1PmO4QYHeZz5zCKX9ico=
+	b=O+AMDUGpLgcEDMI1jHWPH9TJWPWf32KUHU9hlhw+c/SGVk88XbVxAVGl6pbWmd7A1
+	 bcytU1HFj/62vGX2kz/L5K3n71MzkApp8SfGnQykUIDOQzxEtPwZSxfHs1aLT63jHy
+	 0mFfojuNv3FUYwwMsiYgbG9+npxtWehGuG7iZyVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wozizhi@huawei.com,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 211/508] xfs: use XFS_BUF_DADDR_NULL for daddrs in getfsmap code
-Date: Mon, 23 Jun 2025 15:04:16 +0200
-Message-ID: <20250623130650.457031945@linuxfoundation.org>
+Subject: [PATCH 6.6 176/290] vxlan: Do not treat dst cache initialization errors as fatal
+Date: Mon, 23 Jun 2025 15:07:17 +0200
+Message-ID: <20250623130632.176088241@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,51 +49,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 6b35cc8d9239569700cc7cc737c8ed40b8b9cfdb ]
+[ Upstream commit 20c76dadc783759fd3819d289c72be590660cc8b ]
 
-Use XFS_BUF_DADDR_NULL (instead of a magic sentinel value) to mean "this
-field is null" like the rest of xfs.
+FDB entries are allocated in an atomic context as they can be added from
+the data path when learning is enabled.
 
-Cc: wozizhi@huawei.com
-Fixes: e89c041338ed6 ("xfs: implement the GETFSMAP ioctl")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: "Darrick J. Wong" <djwong@kernel.org>
+After converting the FDB hash table to rhashtable, the insertion rate
+will be much higher (*) which will entail a much higher rate of per-CPU
+allocations via dst_cache_init().
+
+When adding a large number of entries (e.g., 256k) in a batch, a small
+percentage (< 0.02%) of these per-CPU allocations will fail [1]. This
+does not happen with the current code since the insertion rate is low
+enough to give the per-CPU allocator a chance to asynchronously create
+new chunks of per-CPU memory.
+
+Given that:
+
+a. Only a small percentage of these per-CPU allocations fail.
+
+b. The scenario where this happens might not be the most realistic one.
+
+c. The driver can work correctly without dst caches. The dst_cache_*()
+APIs first check that the dst cache was properly initialized.
+
+d. The dst caches are not always used (e.g., 'tos inherit').
+
+It seems reasonable to not treat these allocation failures as fatal.
+
+Therefore, do not bail when dst_cache_init() fails and suppress warnings
+by specifying '__GFP_NOWARN'.
+
+[1] percpu: allocation failed, size=40 align=8 atomic=1, atomic alloc failed, no space left
+
+(*) 97% reduction in average latency of vxlan_fdb_update() when adding
+256k entries in a batch.
+
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250415121143.345227-14-idosch@nvidia.com
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_fsmap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/xfs/xfs_fsmap.c b/fs/xfs/xfs_fsmap.c
-index 1efd18437ca4c..a0668a1ef1006 100644
---- a/fs/xfs/xfs_fsmap.c
-+++ b/fs/xfs/xfs_fsmap.c
-@@ -252,7 +252,7 @@ xfs_getfsmap_rec_before_start(
- 	const struct xfs_rmap_irec	*rec,
- 	xfs_daddr_t			rec_daddr)
- {
--	if (info->low_daddr != -1ULL)
-+	if (info->low_daddr != XFS_BUF_DADDR_NULL)
- 		return rec_daddr < info->low_daddr;
- 	if (info->low.rm_blockcount)
- 		return xfs_rmap_compare(rec, &info->low) < 0;
-@@ -986,7 +986,7 @@ xfs_getfsmap(
- 		info.dev = handlers[i].dev;
- 		info.last = false;
- 		info.pag = NULL;
--		info.low_daddr = -1ULL;
-+		info.low_daddr = XFS_BUF_DADDR_NULL;
- 		info.low.rm_blockcount = 0;
- 		error = handlers[i].fn(tp, dkeys, &info);
- 		if (error)
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 2ed879a0abc6c..1b6b6acd34894 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -606,10 +606,10 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
+ 	if (rd == NULL)
+ 		return -ENOMEM;
+ 
+-	if (dst_cache_init(&rd->dst_cache, GFP_ATOMIC)) {
+-		kfree(rd);
+-		return -ENOMEM;
+-	}
++	/* The driver can work correctly without a dst cache, so do not treat
++	 * dst cache initialization errors as fatal.
++	 */
++	dst_cache_init(&rd->dst_cache, GFP_ATOMIC | __GFP_NOWARN);
+ 
+ 	rd->remote_ip = *ip;
+ 	rd->remote_port = port;
 -- 
 2.39.5
 
