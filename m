@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9D1219A7A;
-	Mon, 23 Jun 2025 21:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42B2221FBE;
+	Mon, 23 Jun 2025 21:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715421; cv=none; b=g+v50fQZSEgsXUvLYt225RRGWZbQfZsUjqQvIilFabr/g7y4706/xknrkzzaYbNpEoYcCSUD0WPphNlgW9/LCdNJKM6uU8arrzQlN6YnZJvffAsU254qoH+BvjOR0SnLzGdPtw/5l1aut+LGkYeIgmM+qfSXM2iqNtg6ll9GSeA=
+	t=1750715423; cv=none; b=amKwS9RuO5a3AWYl1MG79v+EJEZ4RMuAviZGwBIObf9NkIH9oyCghedJld+5oy8zvZjSQVS6FcI2HBsdC/6RlAZXzeWS0GhmTytyGF+ZCcjp0lAgCK/IFXiFxMBa/g18ENdU0xwClBTXQwLo5J9rnFgbH7Qq7E/ErlSY8oG2pJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715421; c=relaxed/simple;
-	bh=wn4blYwhyeuvKPW/hEmA213nBq9KzUFmJE5hOjdJ7J0=;
+	s=arc-20240116; t=1750715423; c=relaxed/simple;
+	bh=dTbqIC7qytD2R3Ei3W96XwzA99r2sz9LgIFLr+64M1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7gtPU/zBA54wnrxcELr+d2uYOzv61+6wS/W81OBkEPssuvKxvierFUmNemHdLAiLNsD5mEiR2cw6/JxR9+WxEeCX8T1F+IfBM8ZRb+jO/6uIvCnkYMelZjuak3pnAcr1BEv7tmjNvdS0f0TSsQpPjE404z9H8UK1P38a554vDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WIDZQPzL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rurnL2eND/b3Nti8dsyduwaAoA7PjGtJbGJ3KVIkmt98V/ibuUBo+e1HHrXbNXUeu+POfPu8W20C/UK9vVFvIVqlYCEyun8zpPkpSmx279u69W5lAQG4jctHbmy0KvJ/sRY+77sPAl0r65P/2ucHDkkj1eKKLQYtxQoqwLTBtHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpflxJ80; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WIDZQPzL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA744C4CEF1;
-	Mon, 23 Jun 2025 21:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpflxJ80"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ADCCC4CEF2;
+	Mon, 23 Jun 2025 21:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715421;
-	bh=wn4blYwhyeuvKPW/hEmA213nBq9KzUFmJE5hOjdJ7J0=;
+	s=korg; t=1750715423;
+	bh=dTbqIC7qytD2R3Ei3W96XwzA99r2sz9LgIFLr+64M1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WIDZQPzLr6bgcctf04XIOYYC5UNTfQw3yDYwKNqF/GCcUdPDP+x8g9mciYlweDiSJ
-	 rPeQHaN/i4ydYEebCC6l3aazPYlMvLkLal1El5lMrIgtPZ/j8eB5W4SSxNe22TnZTM
-	 33ndqjldL3yay/IFE5wostjMTTC1BvE4/gYdbxlQ=
+	b=SpflxJ807qh7bngTEAIR7ZboF+EeM1WulxTgrI8PTh1kx6k4uNtE1qoj03Hr5PhXz
+	 UKLxerrok3DsMWkwQxn232Tcr0936HseAU7mM4F68BjnEr5cTLZIf3MyIJfI7Xuiah
+	 B122RbZ2ZMp1VMPevOhW7ABRM4ph/GejsG7y7qRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 6.15 457/592] jffs2: check jffs2_prealloc_raw_node_refs() result in few other places
-Date: Mon, 23 Jun 2025 15:06:55 +0200
-Message-ID: <20250623130711.301302022@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	Rouven Czerwinski <rouven.czerwinski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 198/290] tee: Prevent size calculation wraparound on 32-bit kernels
+Date: Mon, 23 Jun 2025 15:07:39 +0200
+Message-ID: <20250623130632.802960354@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,84 +48,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Jann Horn <jannh@google.com>
 
-commit 2b6d96503255a3ed676cd70f8368870c6d6a25c6 upstream.
+[ Upstream commit 39bb67edcc582b3b386a9ec983da67fa8a10ec03 ]
 
-Fuzzing hit another invalid pointer dereference due to the lack of
-checking whether jffs2_prealloc_raw_node_refs() completed successfully.
-Subsequent logic implies that the node refs have been allocated.
+The current code around TEE_IOCTL_PARAM_SIZE() is a bit wrong on
+32-bit kernels: Multiplying a user-provided 32-bit value with the
+size of a structure can wrap around on such platforms.
 
-Handle that. The code is ready for propagating the error upwards.
+Fix it by using saturating arithmetic for the size calculation.
 
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 1 PID: 5835 Comm: syz-executor145 Not tainted 5.10.234-syzkaller #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:jffs2_link_node_ref+0xac/0x690 fs/jffs2/nodelist.c:600
-Call Trace:
- jffs2_mark_erased_block fs/jffs2/erase.c:460 [inline]
- jffs2_erase_pending_blocks+0x688/0x1860 fs/jffs2/erase.c:118
- jffs2_garbage_collect_pass+0x638/0x1a00 fs/jffs2/gc.c:253
- jffs2_reserve_space+0x3f4/0xad0 fs/jffs2/nodemgmt.c:167
- jffs2_write_inode_range+0x246/0xb50 fs/jffs2/write.c:362
- jffs2_write_end+0x712/0x1110 fs/jffs2/file.c:302
- generic_perform_write+0x2c2/0x500 mm/filemap.c:3347
- __generic_file_write_iter+0x252/0x610 mm/filemap.c:3465
- generic_file_write_iter+0xdb/0x230 mm/filemap.c:3497
- call_write_iter include/linux/fs.h:2039 [inline]
- do_iter_readv_writev+0x46d/0x750 fs/read_write.c:740
- do_iter_write+0x18c/0x710 fs/read_write.c:866
- vfs_writev+0x1db/0x6a0 fs/read_write.c:939
- do_pwritev fs/read_write.c:1036 [inline]
- __do_sys_pwritev fs/read_write.c:1083 [inline]
- __se_sys_pwritev fs/read_write.c:1078 [inline]
- __x64_sys_pwritev+0x235/0x310 fs/read_write.c:1078
- do_syscall_64+0x30/0x40 arch/x86/entry/common.c:46
- entry_SYSCALL_64_after_hwframe+0x67/0xd1
+This has no security consequences because, in all users of
+TEE_IOCTL_PARAM_SIZE(), the subsequent kcalloc() implicitly checks
+for wrapping.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 2f785402f39b ("[JFFS2] Reduce visibility of raw_node_ref to upper layers of JFFS2 code.")
-Fixes: f560928baa60 ("[JFFS2] Allocate node_ref for wasted space when skipping to page boundary")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Tested-by: Rouven Czerwinski <rouven.czerwinski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jffs2/erase.c |    4 +++-
- fs/jffs2/scan.c  |    4 +++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/tee/tee_core.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/fs/jffs2/erase.c
-+++ b/fs/jffs2/erase.c
-@@ -425,7 +425,9 @@ static void jffs2_mark_erased_block(stru
- 			.totlen =	cpu_to_je32(c->cleanmarker_size)
- 		};
+diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
+index 0eb342de0b001..d7ad16f262b2e 100644
+--- a/drivers/tee/tee_core.c
++++ b/drivers/tee/tee_core.c
+@@ -10,6 +10,7 @@
+ #include <linux/fs.h>
+ #include <linux/idr.h>
+ #include <linux/module.h>
++#include <linux/overflow.h>
+ #include <linux/slab.h>
+ #include <linux/tee_drv.h>
+ #include <linux/uaccess.h>
+@@ -19,7 +20,7 @@
  
--		jffs2_prealloc_raw_node_refs(c, jeb, 1);
-+		ret = jffs2_prealloc_raw_node_refs(c, jeb, 1);
-+		if (ret)
-+			goto filebad;
+ #define TEE_NUM_DEVICES	32
  
- 		marker.hdr_crc = cpu_to_je32(crc32(0, &marker, sizeof(struct jffs2_unknown_node)-4));
+-#define TEE_IOCTL_PARAM_SIZE(x) (sizeof(struct tee_param) * (x))
++#define TEE_IOCTL_PARAM_SIZE(x) (size_mul(sizeof(struct tee_param), (x)))
  
---- a/fs/jffs2/scan.c
-+++ b/fs/jffs2/scan.c
-@@ -256,7 +256,9 @@ int jffs2_scan_medium(struct jffs2_sb_in
+ #define TEE_UUID_NS_NAME_SIZE	128
  
- 		jffs2_dbg(1, "%s(): Skipping %d bytes in nextblock to ensure page alignment\n",
- 			  __func__, skip);
--		jffs2_prealloc_raw_node_refs(c, c->nextblock, 1);
-+		ret = jffs2_prealloc_raw_node_refs(c, c->nextblock, 1);
-+		if (ret)
-+			goto out;
- 		jffs2_scan_dirty_space(c, c->nextblock, skip);
- 	}
- #endif
+@@ -487,7 +488,7 @@ static int tee_ioctl_open_session(struct tee_context *ctx,
+ 	if (copy_from_user(&arg, uarg, sizeof(arg)))
+ 		return -EFAULT;
+ 
+-	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
++	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	if (arg.num_params) {
+@@ -565,7 +566,7 @@ static int tee_ioctl_invoke(struct tee_context *ctx,
+ 	if (copy_from_user(&arg, uarg, sizeof(arg)))
+ 		return -EFAULT;
+ 
+-	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
++	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	if (arg.num_params) {
+@@ -699,7 +700,7 @@ static int tee_ioctl_supp_recv(struct tee_context *ctx,
+ 	if (get_user(num_params, &uarg->num_params))
+ 		return -EFAULT;
+ 
+-	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) != buf.buf_len)
++	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) != buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
+@@ -798,7 +799,7 @@ static int tee_ioctl_supp_send(struct tee_context *ctx,
+ 	    get_user(num_params, &uarg->num_params))
+ 		return -EFAULT;
+ 
+-	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) > buf.buf_len)
++	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) > buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
+-- 
+2.39.5
+
 
 
