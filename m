@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD31B676;
-	Mon, 23 Jun 2025 22:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409D1223DCC;
+	Mon, 23 Jun 2025 22:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717715; cv=none; b=fvM5AXZExsRpfjZJ20idtpovQYNxX6SIPt+6VRJknNNn2vuk/uCDao/tvEIF26WA7gnEeDXBwGiGRD/VPD105MMIdnM3KojkrrOEuS6Jii6iGmckeK0kUlQThahFzeQOqmdaEvsRDCk/tEtjeelPHDIwzFhOYMrnMTrH1opIhdM=
+	t=1750717719; cv=none; b=rS3PJBdJbozTIbSqy7tQBOXOX/T1eLz5wt0aqV3MtLe5TH9zralTrvqGSaEVXfU+OXAWXvCPUC6YtVjvkrMcYpXQdokljQWLSjmQxOs+X1boXH4hkZ4M52HsPorbYH3nuaH703YYKPIZVLHSCi8GGoRb2mpGOXe5Hbma+RVwPic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717715; c=relaxed/simple;
-	bh=U2bO/1eg9zr5/OFIF1lJwF4cZ9aTl6esonxQ2Mwef+M=;
+	s=arc-20240116; t=1750717719; c=relaxed/simple;
+	bh=iZsM6cG1nyvK4xgnIFWZiMK0djzIMStGJhAmdpflKKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YiSboHZYC8ehR8z9Am7DOxnvmmiYwbOuB+BQfGpY6/AsDuZZ4Dvmsc3pHKTCWVhb6H3g9CQ8toy97guu2qDL7YI9pGgaVlfzna8V0ptF7ynLm8XIzz3ZzfwkyWsbyyzS+WX1QxZzBOAIM4wbMytKNEpMlEkqhRibhrzD34a2zFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=if3EO31E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ujLOLlria918CHqnNsKiQkpTwqTuy95IOodSUYAUkWkwRCG5SNz0thB1GiR0KRXCPqQRtklYq9drPF4J1JNMzxRiKv9dYs/7amidB12ROtkXTaPndP8QEr7MIW+1aBZMjIlPTKH0egFMQUIt9dLcN2aO6K/LraI0ggmJB2neu+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uHOvN9Bc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="if3EO31E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F138AC4CEEA;
-	Mon, 23 Jun 2025 22:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHOvN9Bc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607D8C4CEEA;
+	Mon, 23 Jun 2025 22:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717715;
-	bh=U2bO/1eg9zr5/OFIF1lJwF4cZ9aTl6esonxQ2Mwef+M=;
+	s=korg; t=1750717717;
+	bh=iZsM6cG1nyvK4xgnIFWZiMK0djzIMStGJhAmdpflKKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=if3EO31EAoukblGZObr+ERaoeTZ2BVvZoaOjMqKX8hYNdLQN7Fsen7xd5mzvcuxGU
-	 J3ZXhiWjcidaGZO9OAEekq1q1Da3x0sd9kLOEWYxCvbtrhbNZ0hSauxJf2HgAj2fVn
-	 mFjLr3At6S1iGaBhGTIK4e8rOuASzF6scVOieaoc=
+	b=uHOvN9BcdV6nyvyz3wdifdY5JA+SuFVxYWE4sEv7Vzh+4MexM7qrk+uZ1GxoQp3ZY
+	 mScFxli51mEF3NIh0HsXRCCVB0luAm1AGf0pLc5+U6kTF2dy/c49u5LMuZPt/7gGvz
+	 g3lFuBddtGuL8QQWtavNmz3xzK5i38EosDTYGO88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Wheeler <netdev@lists.ewheeler.net>,
-	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 484/508] tcp: fix tcp_packet_delayed() for tcp_is_non_sack_preventing_reopen() behavior
-Date: Mon, 23 Jun 2025 15:08:49 +0200
-Message-ID: <20250623130656.967740954@linuxfoundation.org>
+Subject: [PATCH 6.1 475/508] hwmon: (occ) fix unaligned accesses
+Date: Mon, 23 Jun 2025 15:08:40 +0200
+Message-ID: <20250623130656.771094489@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -54,105 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d0fa59897e049e84432600e86df82aab3dce7aa5 ]
+[ Upstream commit 2c021b45c154958566aad0cae9f74ab26a2d5732 ]
 
-After the following commit from 2024:
+Passing a pointer to an unaligned integer as a function argument is
+undefined behavior:
 
-commit e37ab7373696 ("tcp: fix to allow timestamp undo if no retransmits were sent")
+drivers/hwmon/occ/common.c:492:27: warning: taking address of packed member 'accumulator' of class or structure 'power_sensor_2' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  492 |   val = occ_get_powr_avg(&power->accumulator,
+      |                           ^~~~~~~~~~~~~~~~~~
+drivers/hwmon/occ/common.c:493:13: warning: taking address of packed member 'update_tag' of class or structure 'power_sensor_2' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  493 |            &power->update_tag);
+      |             ^~~~~~~~~~~~~~~~~
 
-...there was buggy behavior where TCP connections without SACK support
-could easily see erroneous undo events at the end of fast recovery or
-RTO recovery episodes. The erroneous undo events could cause those
-connections to suffer repeated loss recovery episodes and high
-retransmit rates.
+Move the get_unaligned() calls out of the function and pass these
+through argument registers instead.
 
-The problem was an interaction between the non-SACK behavior on these
-connections and the undo logic. The problem is that, for non-SACK
-connections at the end of a loss recovery episode, if snd_una ==
-high_seq, then tcp_is_non_sack_preventing_reopen() holds steady in
-CA_Recovery or CA_Loss, but clears tp->retrans_stamp to 0. Then upon
-the next ACK the "tcp: fix to allow timestamp undo if no retransmits
-were sent" logic saw the tp->retrans_stamp at 0 and erroneously
-concluded that no data was retransmitted, and erroneously performed an
-undo of the cwnd reduction, restoring cwnd immediately to the value it
-had before loss recovery.  This caused an immediate burst of traffic
-and build-up of queues and likely another immediate loss recovery
-episode.
-
-This commit fixes tcp_packet_delayed() to ignore zero retrans_stamp
-values for non-SACK connections when snd_una is at or above high_seq,
-because tcp_is_non_sack_preventing_reopen() clears retrans_stamp in
-this case, so it's not a valid signal that we can undo.
-
-Note that the commit named in the Fixes footer restored long-present
-behavior from roughly 2005-2019, so apparently this bug was present
-for a while during that era, and this was simply not caught.
-
-Fixes: e37ab7373696 ("tcp: fix to allow timestamp undo if no retransmits were sent")
-Reported-by: Eric Wheeler <netdev@lists.ewheeler.net>
-Closes: https://lore.kernel.org/netdev/64ea9333-e7f9-0df-b0f2-8d566143acab@ewheeler.net/
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Co-developed-by: Yuchung Cheng <ycheng@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c10e753d43eb ("hwmon (occ): Add sensor types and versions")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20250610092553.2641094-1-arnd@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 37 +++++++++++++++++++++++++------------
- 1 file changed, 25 insertions(+), 12 deletions(-)
+ drivers/hwmon/occ/common.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 2888aaae0d76f..222b829f33f42 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -2441,20 +2441,33 @@ static inline bool tcp_packet_delayed(const struct tcp_sock *tp)
- {
- 	const struct sock *sk = (const struct sock *)tp;
- 
--	if (tp->retrans_stamp &&
--	    tcp_tsopt_ecr_before(tp, tp->retrans_stamp))
--		return true;  /* got echoed TS before first retransmission */
--
--	/* Check if nothing was retransmitted (retrans_stamp==0), which may
--	 * happen in fast recovery due to TSQ. But we ignore zero retrans_stamp
--	 * in TCP_SYN_SENT, since when we set FLAG_SYN_ACKED we also clear
--	 * retrans_stamp even if we had retransmitted the SYN.
-+	/* Received an echoed timestamp before the first retransmission? */
-+	if (tp->retrans_stamp)
-+		return tcp_tsopt_ecr_before(tp, tp->retrans_stamp);
-+
-+	/* We set tp->retrans_stamp upon the first retransmission of a loss
-+	 * recovery episode, so normally if tp->retrans_stamp is 0 then no
-+	 * retransmission has happened yet (likely due to TSQ, which can cause
-+	 * fast retransmits to be delayed). So if snd_una advanced while
-+	 * (tp->retrans_stamp is 0 then apparently a packet was merely delayed,
-+	 * not lost. But there are exceptions where we retransmit but then
-+	 * clear tp->retrans_stamp, so we check for those exceptions.
- 	 */
--	if (!tp->retrans_stamp &&	   /* no record of a retransmit/SYN? */
--	    sk->sk_state != TCP_SYN_SENT)  /* not the FLAG_SYN_ACKED case? */
--		return true;  /* nothing was retransmitted */
- 
--	return false;
-+	/* (1) For non-SACK connections, tcp_is_non_sack_preventing_reopen()
-+	 * clears tp->retrans_stamp when snd_una == high_seq.
-+	 */
-+	if (!tcp_is_sack(tp) && !before(tp->snd_una, tp->high_seq))
-+		return false;
-+
-+	/* (2) In TCP_SYN_SENT tcp_clean_rtx_queue() clears tp->retrans_stamp
-+	 * when setting FLAG_SYN_ACKED is set, even if the SYN was
-+	 * retransmitted.
-+	 */
-+	if (sk->sk_state == TCP_SYN_SENT)
-+		return false;
-+
-+	return true;	/* tp->retrans_stamp is zero; no retransmit yet */
+diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
+index 256cda99fdc95..483f79b394298 100644
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -459,12 +459,10 @@ static ssize_t occ_show_power_1(struct device *dev,
+ 	return sysfs_emit(buf, "%llu\n", val);
  }
  
- /* Undo procedures. */
+-static u64 occ_get_powr_avg(u64 *accum, u32 *samples)
++static u64 occ_get_powr_avg(u64 accum, u32 samples)
+ {
+-	u64 divisor = get_unaligned_be32(samples);
+-
+-	return (divisor == 0) ? 0 :
+-		div64_u64(get_unaligned_be64(accum) * 1000000ULL, divisor);
++	return (samples == 0) ? 0 :
++		mul_u64_u32_div(accum, 1000000UL, samples);
+ }
+ 
+ static ssize_t occ_show_power_2(struct device *dev,
+@@ -489,8 +487,8 @@ static ssize_t occ_show_power_2(struct device *dev,
+ 				  get_unaligned_be32(&power->sensor_id),
+ 				  power->function_id, power->apss_channel);
+ 	case 1:
+-		val = occ_get_powr_avg(&power->accumulator,
+-				       &power->update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->accumulator),
++				       get_unaligned_be32(&power->update_tag));
+ 		break;
+ 	case 2:
+ 		val = (u64)get_unaligned_be32(&power->update_tag) *
+@@ -527,8 +525,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
+ 		return sysfs_emit(buf, "%u_system\n",
+ 				  get_unaligned_be32(&power->sensor_id));
+ 	case 1:
+-		val = occ_get_powr_avg(&power->system.accumulator,
+-				       &power->system.update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->system.accumulator),
++				       get_unaligned_be32(&power->system.update_tag));
+ 		break;
+ 	case 2:
+ 		val = (u64)get_unaligned_be32(&power->system.update_tag) *
+@@ -541,8 +539,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
+ 		return sysfs_emit(buf, "%u_proc\n",
+ 				  get_unaligned_be32(&power->sensor_id));
+ 	case 5:
+-		val = occ_get_powr_avg(&power->proc.accumulator,
+-				       &power->proc.update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->proc.accumulator),
++				       get_unaligned_be32(&power->proc.update_tag));
+ 		break;
+ 	case 6:
+ 		val = (u64)get_unaligned_be32(&power->proc.update_tag) *
+@@ -555,8 +553,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
+ 		return sysfs_emit(buf, "%u_vdd\n",
+ 				  get_unaligned_be32(&power->sensor_id));
+ 	case 9:
+-		val = occ_get_powr_avg(&power->vdd.accumulator,
+-				       &power->vdd.update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->vdd.accumulator),
++				       get_unaligned_be32(&power->vdd.update_tag));
+ 		break;
+ 	case 10:
+ 		val = (u64)get_unaligned_be32(&power->vdd.update_tag) *
+@@ -569,8 +567,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
+ 		return sysfs_emit(buf, "%u_vdn\n",
+ 				  get_unaligned_be32(&power->sensor_id));
+ 	case 13:
+-		val = occ_get_powr_avg(&power->vdn.accumulator,
+-				       &power->vdn.update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->vdn.accumulator),
++				       get_unaligned_be32(&power->vdn.update_tag));
+ 		break;
+ 	case 14:
+ 		val = (u64)get_unaligned_be32(&power->vdn.update_tag) *
 -- 
 2.39.5
 
