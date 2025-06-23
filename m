@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4F53FD4;
-	Mon, 23 Jun 2025 21:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793CB3FD4;
+	Mon, 23 Jun 2025 21:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715307; cv=none; b=frimAC5vaMLIEBLZaBD1f8b/xJCj6lsUp+frtg+FDxZqKc8AspN3wpDTkik5zkFX6E3j/472jE3xLTAXuXeNSrmMR0D6RJMuMzkV1KJHpF5MOucGJzy21t9KjR16N66grc2bAjViBB2k5p47/L7o5BkrInS1CRPg9qo72DDG9pk=
+	t=1750715309; cv=none; b=X9QDeF3O3Uz9GZBNVV2vJ8iVboxbRn4wDhPC7GhqUUXLgwYZyo2pntLt44NyFWCpONU7+qQIwR0Pzir1maO1AyKXHsIea0z0EIjLRm3B9Or8Ghm2sRauPxQCi1xhvNCREZQFV/k4uTjjf4nlm/IbLscgylr3fL5c5r3EzPZdIsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715307; c=relaxed/simple;
-	bh=Moe9+dCCcx97AoUnKwrc29hTgViRfautm06QX45yAOA=;
+	s=arc-20240116; t=1750715309; c=relaxed/simple;
+	bh=eXYYSW7TlsNBYiQSlbfOhbNRRD3buLqhMtMqYnCLEPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jBjY5Nb+2CcAi5bGwJkX+ySpI5aWVvLVhkren9fPol35zJOP/FS3FvRDaov8BH7lbqOjUk/r+vkIt2zqkEeh2PQirZ6wlSKtdHU+xQ/9R/OAhLynbc23KbRGwwufu7nYKgsYi10u0JIVXAJdQioA6sjKfSRUIkJZnbh4JKqPDuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4dWHSX9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JyxJ8u2nJQkE1dZrWBB4rMOkL3f3yf0G9by552bnNXWw/FBjFpYdoRJizTxJ7r375iev3+EZYirw2Rw4zW6CiCxwGCApdQUmZ2n5cMX/6bsZiprKcSjWtufMYVfMcqAsQ/U5rtvhfbss65wye+5nRmEFC+H7aBAzo1nLHBPPCxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tWqOJ2wt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4dWHSX9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AB9C4CEEA;
-	Mon, 23 Jun 2025 21:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tWqOJ2wt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F78BC4CEEA;
+	Mon, 23 Jun 2025 21:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715306;
-	bh=Moe9+dCCcx97AoUnKwrc29hTgViRfautm06QX45yAOA=;
+	s=korg; t=1750715309;
+	bh=eXYYSW7TlsNBYiQSlbfOhbNRRD3buLqhMtMqYnCLEPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4dWHSX9s4IQxxPbM/5UBCXa3QpN6Oox+VqsuLMFs8NS7GWWPLOAKIKbDjUMpNDQI
-	 HxTZsuosXJQlXXhJIFIFjWEkj+c1Y1YWyFuNf9bAa27+IG/qmeLOV2NTtJwzX+7Ccm
-	 AReBLsbuDg43XYQZY00vug2viib4mdNZoGAXIwaY=
+	b=tWqOJ2wtbTsbt+WLNKDtL0WfOku2dcR24/hBeZ3ajHfPNIsuZkSvtk0cen72tQpua
+	 5hM/zTwvLLbm4ZTwVbbusDy/iIzNu/PYuMxsDmEeWqbxP7OphldRTmxZtRYBvnLEp3
+	 v2/RTa9rRKpi3YYAszNm1Di5IPPAKe66YMwscA9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <ziyao@disroot.org>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.15 450/592] platform/loongarch: laptop: Add backlight power control support
-Date: Mon, 23 Jun 2025 15:06:48 +0200
-Message-ID: <20250623130711.131913410@linuxfoundation.org>
+	Hari Chandrakanthan <quic_haric@quicinc.com>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 191/290] wifi: ath12k: fix link valid field initialization in the monitor Rx
+Date: Mon, 23 Jun 2025 15:07:32 +0200
+Message-ID: <20250623130632.606817390@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,149 +50,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yao Zi <ziyao@disroot.org>
+From: Hari Chandrakanthan <quic_haric@quicinc.com>
 
-commit 53c762b47f726e4079a1f06f684bce2fc0d56fba upstream.
+[ Upstream commit 2826139f9295821fe2b049318a1cc057ec003131 ]
 
-loongson_laptop_turn_{on,off}_backlight() are designed for controlling
-the power of the backlight, but they aren't really used in the driver
-previously.
+Currently, the link_valid field is not initialized in the monitor Rx path.
+This can result in random values for the link_valid and link_id leads to
+undefined behaviour in mac80211. Therefore, initialize the link_valid
+field in the monitor Rx path.
 
-Unify these two functions since they only differ in arguments passed to
-ACPI method, and wire up loongson_laptop_backlight_update() to update
-the power state of the backlight as well. Tested on the TongFang L860-T2
-Loongson-3A5000 laptop.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-Cc: stable@vger.kernel.org
-Fixes: 6246ed09111f ("LoongArch: Add ACPI-based generic laptop driver")
-Signed-off-by: Yao Zi <ziyao@disroot.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hari Chandrakanthan <quic_haric@quicinc.com>
+Tested-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+Link: https://patch.msgid.link/20250324062518.2752822-2-quic_periyasa@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/loongarch/loongson-laptop.c |   73 +++++++++++++--------------
- 1 file changed, 37 insertions(+), 36 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/platform/loongarch/loongson-laptop.c
-+++ b/drivers/platform/loongarch/loongson-laptop.c
-@@ -56,8 +56,7 @@ static struct input_dev *generic_inputde
- static acpi_handle hotkey_handle;
- static struct key_entry hotkey_keycode_map[GENERIC_HOTKEY_MAP_MAX];
+diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
+index 35f22a4a16cf2..69bf75ebd7518 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
+@@ -1077,6 +1077,8 @@ static void ath12k_dp_mon_rx_deliver_msdu(struct ath12k *ar, struct napi_struct
+ 	bool is_mcbc = rxcb->is_mcbc;
+ 	bool is_eapol_tkip = rxcb->is_eapol;
  
--int loongson_laptop_turn_on_backlight(void);
--int loongson_laptop_turn_off_backlight(void);
-+static bool bl_powered;
- static int loongson_laptop_backlight_update(struct backlight_device *bd);
- 
- /* 2. ACPI Helpers and device model */
-@@ -354,16 +353,42 @@ static int ec_backlight_level(u8 level)
- 	return level;
- }
- 
-+static int ec_backlight_set_power(bool state)
-+{
-+	int status;
-+	union acpi_object arg0 = { ACPI_TYPE_INTEGER };
-+	struct acpi_object_list args = { 1, &arg0 };
++	status->link_valid = 0;
 +
-+	arg0.integer.value = state;
-+	status = acpi_evaluate_object(NULL, "\\BLSW", &args, NULL);
-+	if (ACPI_FAILURE(status)) {
-+		pr_info("Loongson lvds error: 0x%x\n", status);
-+		return -EIO;
-+	}
-+
-+	return 0;
-+}
-+
- static int loongson_laptop_backlight_update(struct backlight_device *bd)
- {
--	int lvl = ec_backlight_level(bd->props.brightness);
-+	bool target_powered = !backlight_is_blank(bd);
-+	int ret = 0, lvl = ec_backlight_level(bd->props.brightness);
- 
- 	if (lvl < 0)
- 		return -EIO;
-+
- 	if (ec_set_brightness(lvl))
- 		return -EIO;
- 
--	return 0;
-+	if (target_powered != bl_powered) {
-+		ret = ec_backlight_set_power(target_powered);
-+		if (ret < 0)
-+			return ret;
-+
-+		bl_powered = target_powered;
-+	}
-+
-+	return ret;
- }
- 
- static int loongson_laptop_get_brightness(struct backlight_device *bd)
-@@ -384,7 +409,7 @@ static const struct backlight_ops backli
- 
- static int laptop_backlight_register(void)
- {
--	int status = 0;
-+	int status = 0, ret;
- 	struct backlight_properties props;
- 
- 	memset(&props, 0, sizeof(props));
-@@ -392,44 +417,20 @@ static int laptop_backlight_register(voi
- 	if (!acpi_evalf(hotkey_handle, &status, "ECLL", "d"))
- 		return -EIO;
- 
-+	ret = ec_backlight_set_power(true);
-+	if (ret)
-+		return ret;
-+
-+	bl_powered = true;
-+
- 	props.max_brightness = status;
- 	props.brightness = ec_get_brightness();
-+	props.power = BACKLIGHT_POWER_ON;
- 	props.type = BACKLIGHT_PLATFORM;
- 
- 	backlight_device_register("loongson_laptop",
- 				NULL, NULL, &backlight_laptop_ops, &props);
- 
--	return 0;
--}
--
--int loongson_laptop_turn_on_backlight(void)
--{
--	int status;
--	union acpi_object arg0 = { ACPI_TYPE_INTEGER };
--	struct acpi_object_list args = { 1, &arg0 };
--
--	arg0.integer.value = 1;
--	status = acpi_evaluate_object(NULL, "\\BLSW", &args, NULL);
--	if (ACPI_FAILURE(status)) {
--		pr_info("Loongson lvds error: 0x%x\n", status);
--		return -ENODEV;
--	}
--
--	return 0;
--}
--
--int loongson_laptop_turn_off_backlight(void)
--{
--	int status;
--	union acpi_object arg0 = { ACPI_TYPE_INTEGER };
--	struct acpi_object_list args = { 1, &arg0 };
--
--	arg0.integer.value = 0;
--	status = acpi_evaluate_object(NULL, "\\BLSW", &args, NULL);
--	if (ACPI_FAILURE(status)) {
--		pr_info("Loongson lvds error: 0x%x\n", status);
--		return -ENODEV;
--	}
- 
- 	return 0;
- }
+ 	if ((status->encoding == RX_ENC_HE) && !(status->flag & RX_FLAG_RADIOTAP_HE) &&
+ 	    !(status->flag & RX_FLAG_SKIP_MONITOR)) {
+ 		he = skb_push(msdu, sizeof(known));
+-- 
+2.39.5
+
 
 
