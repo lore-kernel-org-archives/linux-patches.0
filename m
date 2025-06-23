@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A77A223DE5;
-	Mon, 23 Jun 2025 21:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDFB21B9E5;
+	Mon, 23 Jun 2025 21:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715154; cv=none; b=jfeFd23jli2d8sAkg1eOwJ1Je3quZji60hCTh9yyxFRpu7wpUG5xDjtIz1fjXKL6x9B1H/A7vNLcwwtlIgDVFBvonY0FHYuCAQSts7lb7FHW7wyY/8X5oLJihltt1SrhuVwTmkf8lNfVvywuaVSTWOMnWojR5CagXnVXQB7jHDE=
+	t=1750715157; cv=none; b=L7pWlA9cl3RlL4Ip0UrIrCQLDhYmEiCYRa8NIlzNEgyFXsd5IKfpP5aFUIRAjLYRAxOyT9BapKuSG5BeBg+UHXHV5ULk3rT/kJXi6o+z9OfS0TPJ4h3S/nd8G1xdJ43SSuYLFBaxMRYNdjY9Y27co/Oh4brWIOLYWH9vyt6I+Po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715154; c=relaxed/simple;
-	bh=09h7R+QR+GYPkzdVqXP0NrGILx5mldhz2zo7eIGAAMs=;
+	s=arc-20240116; t=1750715157; c=relaxed/simple;
+	bh=jWA+JWoWPw0tPKoYSbdrPmvMe/GDE00V7yVYSbDO9T0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EzSspE2OuYyKS7IMjhLoFUd8ADSPZjrxqGCyKkE5GyADllZxQivUBngxheIDpNvh9SHNFJRwntb3eW8wYsF20ItVVkwQR3pwbJEomtN81NzMObqYN1pYxpgt+PGAMER5Z4LDc0Rkkw//CmJ3GrxB+EHHEOaqADPi9SRdlpvTkdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udtx+gbB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dARtTCHpdvrNFpnO5+n9mCVCWlDbq+LeMvjHbNKrScr+uEYBnoYIQxym6DMigCegfrLYKwhrpocZJDX3b7V0nanb8qB0AYv2bMeEQnGxY3RZY3sfcjO9o6UKbGLSDeHPcjjo4oORxRNMANkF7+KYTmluLyXgj2tIiSV4ZP5m1bE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGezQe8X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udtx+gbB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AE4C4CEEA;
-	Mon, 23 Jun 2025 21:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGezQe8X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771D0C4CEEA;
+	Mon, 23 Jun 2025 21:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715154;
-	bh=09h7R+QR+GYPkzdVqXP0NrGILx5mldhz2zo7eIGAAMs=;
+	s=korg; t=1750715156;
+	bh=jWA+JWoWPw0tPKoYSbdrPmvMe/GDE00V7yVYSbDO9T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=udtx+gbBryPVShJid2ZtGQXWlIRjZ2zAdsqLdwwmR0EA78gWKz4XGvr9RQBmh2nmG
-	 BNUJhMR3dHoVtQ8O9qXkSco5sylguy8t2XPLaA6Syu9Q67yVIZbFsYWJd0rej4vi3t
-	 JKIr/eJbanhMfhKn5JdWDF1ycg/fRKae2PC11oak=
+	b=HGezQe8XnHyEdgjaRzHie5VOwIkjLgJaQc6+cSrglL1IbdEyLqTBEpKF5GSnf+6RA
+	 dLNhESbci0gaTMQs11l2i+pqVGrWG3PnGYqTPNc3fcIP7QqFv4pAMdZ0lF7QkrM4jC
+	 +Ptd//7wBIpHyLAJ+8gmlKficA+AsPhlUrdJTcwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 5.15 256/411] PCI: Fix lock symmetry in pci_slot_unlock()
-Date: Mon, 23 Jun 2025 15:06:40 +0200
-Message-ID: <20250623130640.089896399@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 186/414] Make cc-option work correctly for the -Wno-xyzzy pattern
+Date: Mon, 23 Jun 2025 15:05:23 +0200
+Message-ID: <20250623130646.670500482@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,49 +52,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit f3efb9569b4a21354ef2caf7ab0608a3e14cc6e4 upstream.
+[ Upstream commit 550ccb178de2f379f5e1a1833dd6f4bdafef4b68 ]
 
-The commit a4e772898f8b ("PCI: Add missing bridge lock to pci_bus_lock()")
-made the lock function to call depend on dev->subordinate but left
-pci_slot_unlock() unmodified creating locking asymmetry compared with
-pci_slot_lock().
+This is the follow-up to commit a79be02bba5c ("Fix mis-uses of
+'cc-option' for warning disablement") where I mentioned that the best
+fix would be to just make 'cc-option' a bit smarter, and work for all
+compiler options, including the '-Wno-xyzzy' pattern that it used to
+accept unknown options for.
 
-Because of the asymmetric lock handling, the same bridge device is unlocked
-twice. First pci_bus_unlock() unlocks bus->self and then pci_slot_unlock()
-will unconditionally unlock the same bridge device.
+It turns out that fixing cc-option is pretty straightforward: just
+rewrite any '-Wno-xyzzy' option pattern to use '-Wxyzzy' instead for
+testing.
 
-Move pci_dev_unlock() inside an else branch to match the logic in
-pci_slot_lock().
+That makes the whole artificial distinction between 'cc-option' and
+'cc-disable-warning' go away, and we can happily forget about the odd
+build rule that you have to treat compiler options that disable warnings
+specially.
 
-Fixes: a4e772898f8b ("PCI: Add missing bridge lock to pci_bus_lock()")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250505115412.37628-1-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The 'cc-disable-warning' helper remains as a backwards compatibility
+syntax for now, but is implemented in terms of the new and improved
+cc-option.
+
+Acked-by: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Thomas Weißschuh <linux@weissschuh.net>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ scripts/Makefile.compiler | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5593,7 +5593,8 @@ static void pci_slot_unlock(struct pci_s
- 			continue;
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
- 	}
- }
+diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
+index c6cd729b65cbf..05685b3df9e5e 100644
+--- a/scripts/Makefile.compiler
++++ b/scripts/Makefile.compiler
+@@ -43,7 +43,7 @@ as-instr = $(call try-run,\
+ # __cc-option
+ # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
+ __cc-option = $(call try-run,\
+-	$(1) -Werror $(2) $(3) -c -x c /dev/null -o "$$TMP",$(3),$(4))
++	$(1) -Werror $(2) $(3:-Wno-%=-W%) -c -x c /dev/null -o "$$TMP",$(3),$(4))
  
+ # cc-option
+ # Usage: cflags-y += $(call cc-option,-march=winchip-c6,-march=i586)
+@@ -57,7 +57,7 @@ cc-option-yn = $(if $(call cc-option,$1),y,n)
+ 
+ # cc-disable-warning
+ # Usage: cflags-y += $(call cc-disable-warning,unused-but-set-variable)
+-cc-disable-warning = $(if $(call cc-option,-W$(strip $1)),-Wno-$(strip $1))
++cc-disable-warning = $(call cc-option,-Wno-$(strip $1))
+ 
+ # gcc-min-version
+ # Usage: cflags-$(call gcc-min-version, 70100) += -foo
+-- 
+2.39.5
+
 
 
