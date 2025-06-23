@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051761EE7C6;
-	Mon, 23 Jun 2025 21:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC20221734;
+	Mon, 23 Jun 2025 21:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714578; cv=none; b=qM5dqyC6pnsaE+W/uZ2OUJpRFIDjCoK28rr+8CpcKge2MNzii8YgqDS/LKNqnbKVS9I+jGkxcZchoF5LHW61O+v9KMxdwGZ4n/taNX1F4EZKPeDD+y+RnPurTf1f7YLYDBz3qqUxU8k/n8mEMCTXHNsJk246rGncmJk9VzC7QNc=
+	t=1750714580; cv=none; b=BRWX6ve+WjdZ/AP/4EnTlduO9eixGPAeo4H4i5rR+vgGxtX9pb5RaPZiv2CfgTahIdvE6E/T7rPahy1HcC8qsIaMcldKILjYqxev1BlC3FJ8obFhb8iTssA0p6BkvdkhjNovf5GZK1TmxIDNMiIr6Pejn6jxzzYkUsHpXJ68hLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714578; c=relaxed/simple;
-	bh=IMjSbDzumGe4Ni7UIXskWbJX2Rh2pZigYpZw3qd4pcA=;
+	s=arc-20240116; t=1750714580; c=relaxed/simple;
+	bh=zuqfRXM5EUadGKk0sjqeHK07torravIrXZblN0tZI0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rllxy37NG0V/P1OvEfr76vSc3yphY99ieurlQkB1h0ove0E13FSNFQ0D3wNhRwTpA4Aq3FC4hNXzaF2+sYwbp8+INzGbnfiICiUFVTIkBoZ/s/sihd1efGvJw/RcP5d6yaBK8sMpGMTM+MKbcAg3w7M9S0MLl3XBgZiEcRyCB4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deRz9cBv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aVMkS2bCbVioMGzx7AX9ZzNARAWHy6Aut9eHE+t8y+QqQQIcEFYu63DPYOnmhlKGJVZkGMRjTRl0YygseJWfuHxxJ4wKq+l3bjKS3wRUMbC41+gGX9JoSDX8SHNWkxklj1vhHPZFGe/SFXvYRrDGIjgiO1zqccQ5DAD6I+TX2ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+oIDRUF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deRz9cBv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914B2C4CEEA;
-	Mon, 23 Jun 2025 21:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+oIDRUF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037E9C4CEEA;
+	Mon, 23 Jun 2025 21:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714577;
-	bh=IMjSbDzumGe4Ni7UIXskWbJX2Rh2pZigYpZw3qd4pcA=;
+	s=korg; t=1750714580;
+	bh=zuqfRXM5EUadGKk0sjqeHK07torravIrXZblN0tZI0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=deRz9cBvnG/boUl6EWL4TweI5fuT9DlVtRs4b3nOlpqGX5/25PnzUlvDwFVQeqDFr
-	 vGa/l9xWqklkl7zcqeAOlVoMW1GqfPm6K3W4zN09smODApsXhxs9Px6NQYCRTpxt5p
-	 ja6S8tsd2xvI589TEPnAMwojlAIc1BLpZfRXYjcM=
+	b=U+oIDRUFpzb8B3ngxpVwSk6SKGzjgYIq5rw0bYmGTcriGDjWXNH9D2jaGDJEAeRMS
+	 dORpOCEzLgVQdCd8wK88ZNv9dtUAYcCHkUvwj38rxyHruzowmxfDf3STzBB6ELN6dX
+	 hW92C17eRdlI7UyuCzSy5c/7d++so8wXS/0CEsrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinliang Zheng <alexjlzheng@tencent.com>,
-	MengEn Sun <mengensun@tencent.com>,
-	Andrea Righi <andrea@betterlinux.com>,
-	Fenggaung Wu <fengguang.wu@intel.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 117/414] mm: fix ratelimit_pages update error in dirty_ratio_handler()
-Date: Mon, 23 Jun 2025 15:04:14 +0200
-Message-ID: <20250623130645.003726774@linuxfoundation.org>
+	Seunghun Han <kkamagui@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 216/355] ACPICA: fix acpi parse and parseext cache leaks
+Date: Mon, 23 Jun 2025 15:06:57 +0200
+Message-ID: <20250623130633.239662123@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,81 +45,240 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinliang Zheng <alexjlzheng@tencent.com>
+From: Seunghun Han <kkamagui@gmail.com>
 
-commit f83f362d40ccceb647f7d80eb92206733d76a36b upstream.
+[ Upstream commit bed18f0bdcd6737a938264a59d67923688696fc4 ]
 
-In dirty_ratio_handler(), vm_dirty_bytes must be set to zero before
-calling writeback_set_ratelimit(), as global_dirty_limits() always
-prioritizes the value of vm_dirty_bytes.
+ACPICA commit 8829e70e1360c81e7a5a901b5d4f48330e021ea5
 
-It's domain_dirty_limits() that's relevant here, not node_dirty_ok:
+I'm Seunghun Han, and I work for National Security Research Institute of
+South Korea.
 
-  dirty_ratio_handler
-    writeback_set_ratelimit
-      global_dirty_limits(&dirty_thresh)           <- ratelimit_pages based on dirty_thresh
-        domain_dirty_limits
-          if (bytes)                               <- bytes = vm_dirty_bytes <--------+
-            thresh = f1(bytes)                     <- prioritizes vm_dirty_bytes      |
-          else                                                                        |
-            thresh = f2(ratio)                                                        |
-      ratelimit_pages = f3(dirty_thresh)                                              |
-    vm_dirty_bytes = 0                             <- it's late! ---------------------+
+I have been doing a research on ACPI and found an ACPI cache leak in ACPI
+early abort cases.
 
-This causes ratelimit_pages to still use the value calculated based on
-vm_dirty_bytes, which is wrong now.
+Boot log of ACPI cache leak is as follows:
+[    0.352414] ACPI: Added _OSI(Module Device)
+[    0.353182] ACPI: Added _OSI(Processor Device)
+[    0.353182] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    0.353182] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.356028] ACPI: Unable to start the ACPI Interpreter
+[    0.356799] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
+[    0.360215] kmem_cache_destroy Acpi-State: Slab cache still has objects
+[    0.360648] CPU: 0 PID: 1 Comm: swapper/0 Tainted: G        W
+4.12.0-rc4-next-20170608+ #10
+[    0.361273] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
+virtual_box 12/01/2006
+[    0.361873] Call Trace:
+[    0.362243]  ? dump_stack+0x5c/0x81
+[    0.362591]  ? kmem_cache_destroy+0x1aa/0x1c0
+[    0.362944]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.363296]  ? acpi_os_delete_cache+0xa/0x10
+[    0.363646]  ? acpi_ut_delete_caches+0x6d/0x7b
+[    0.364000]  ? acpi_terminate+0xa/0x14
+[    0.364000]  ? acpi_init+0x2af/0x34f
+[    0.364000]  ? __class_create+0x4c/0x80
+[    0.364000]  ? video_setup+0x7f/0x7f
+[    0.364000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.364000]  ? do_one_initcall+0x4e/0x1a0
+[    0.364000]  ? kernel_init_freeable+0x189/0x20a
+[    0.364000]  ? rest_init+0xc0/0xc0
+[    0.364000]  ? kernel_init+0xa/0x100
+[    0.364000]  ? ret_from_fork+0x25/0x30
 
+I analyzed this memory leak in detail. I found that “Acpi-State” cache and
+“Acpi-Parse” cache were merged because the size of cache objects was same
+slab cache size.
 
-The impact visible to userspace is difficult to capture directly because
-there is no procfs/sysfs interface exported to user space.  However, it
-will have a real impact on the balance of dirty pages.
+I finally found “Acpi-Parse” cache and “Acpi-parse_ext” cache were leaked
+using SLAB_NEVER_MERGE flag in kmem_cache_create() function.
 
-For example:
+Real ACPI cache leak point is as follows:
+[    0.360101] ACPI: Added _OSI(Module Device)
+[    0.360101] ACPI: Added _OSI(Processor Device)
+[    0.360101] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    0.361043] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.364016] ACPI: Unable to start the ACPI Interpreter
+[    0.365061] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
+[    0.368174] kmem_cache_destroy Acpi-Parse: Slab cache still has objects
+[    0.369332] CPU: 1 PID: 1 Comm: swapper/0 Tainted: G        W
+4.12.0-rc4-next-20170608+ #8
+[    0.371256] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
+virtual_box 12/01/2006
+[    0.372000] Call Trace:
+[    0.372000]  ? dump_stack+0x5c/0x81
+[    0.372000]  ? kmem_cache_destroy+0x1aa/0x1c0
+[    0.372000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.372000]  ? acpi_os_delete_cache+0xa/0x10
+[    0.372000]  ? acpi_ut_delete_caches+0x56/0x7b
+[    0.372000]  ? acpi_terminate+0xa/0x14
+[    0.372000]  ? acpi_init+0x2af/0x34f
+[    0.372000]  ? __class_create+0x4c/0x80
+[    0.372000]  ? video_setup+0x7f/0x7f
+[    0.372000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.372000]  ? do_one_initcall+0x4e/0x1a0
+[    0.372000]  ? kernel_init_freeable+0x189/0x20a
+[    0.372000]  ? rest_init+0xc0/0xc0
+[    0.372000]  ? kernel_init+0xa/0x100
+[    0.372000]  ? ret_from_fork+0x25/0x30
+[    0.388039] kmem_cache_destroy Acpi-parse_ext: Slab cache still has objects
+[    0.389063] CPU: 1 PID: 1 Comm: swapper/0 Tainted: G        W
+4.12.0-rc4-next-20170608+ #8
+[    0.390557] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
+virtual_box 12/01/2006
+[    0.392000] Call Trace:
+[    0.392000]  ? dump_stack+0x5c/0x81
+[    0.392000]  ? kmem_cache_destroy+0x1aa/0x1c0
+[    0.392000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.392000]  ? acpi_os_delete_cache+0xa/0x10
+[    0.392000]  ? acpi_ut_delete_caches+0x6d/0x7b
+[    0.392000]  ? acpi_terminate+0xa/0x14
+[    0.392000]  ? acpi_init+0x2af/0x34f
+[    0.392000]  ? __class_create+0x4c/0x80
+[    0.392000]  ? video_setup+0x7f/0x7f
+[    0.392000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.392000]  ? do_one_initcall+0x4e/0x1a0
+[    0.392000]  ? kernel_init_freeable+0x189/0x20a
+[    0.392000]  ? rest_init+0xc0/0xc0
+[    0.392000]  ? kernel_init+0xa/0x100
+[    0.392000]  ? ret_from_fork+0x25/0x30
 
-1. On default, we have vm_dirty_ratio=40, vm_dirty_bytes=0
+When early abort is occurred due to invalid ACPI information, Linux kernel
+terminates ACPI by calling acpi_terminate() function. The function calls
+acpi_ut_delete_caches() function to delete local caches (acpi_gbl_namespace_
+cache, state_cache, operand_cache, ps_node_cache, ps_node_ext_cache).
 
-2. echo 8192 > dirty_bytes, then vm_dirty_bytes=8192,
-   vm_dirty_ratio=0, and ratelimit_pages is calculated based on
-   vm_dirty_bytes now.
+But the deletion codes in acpi_ut_delete_caches() function only delete
+slab caches using kmem_cache_destroy() function, therefore the cache
+objects should be flushed before acpi_ut_delete_caches() function.
 
-3. echo 20 > dirty_ratio, then since vm_dirty_bytes is not reset to
-   zero when writeback_set_ratelimit() -> global_dirty_limits() ->
-   domain_dirty_limits() is called, reallimit_pages is still calculated
-   based on vm_dirty_bytes instead of vm_dirty_ratio.  This does not
-   conform to the actual intent of the user.
+"Acpi-Parse" cache and "Acpi-ParseExt" cache are used in an AML parse
+function, acpi_ps_parse_loop(). The function should complete all ops
+using acpi_ps_complete_final_op() when an error occurs due to invalid
+AML codes.
+However, the current implementation of acpi_ps_complete_final_op() does not
+complete all ops when it meets some errors and this cause cache leak.
 
-Link: https://lkml.kernel.org/r/20250415090232.7544-1-alexjlzheng@tencent.com
-Fixes: 9d823e8f6b1b ("writeback: per task dirty rate limit")
-Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
-Reviewed-by: MengEn Sun <mengensun@tencent.com>
-Cc: Andrea Righi <andrea@betterlinux.com>
-Cc: Fenggaung Wu <fengguang.wu@intel.com>
-Cc: Jinliang Zheng <alexjlzheng@tencent.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This cache leak has a security threat because an old kernel (<= 4.9) shows
+memory locations of kernel functions in stack dump. Some malicious users
+could use this information to neutralize kernel ASLR.
+
+To fix ACPI cache leak for enhancing security, I made a patch to complete all
+ops unconditionally for acpi_ps_complete_final_op() function.
+
+I hope that this patch improves the security of Linux kernel.
+
+Thank you.
+
+Link: https://github.com/acpica/acpica/commit/8829e70e
+Signed-off-by: Seunghun Han <kkamagui@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2363774.ElGaqSPkdT@rjwysocki.net
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page-writeback.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpica/psobject.c | 52 ++++++++++------------------------
+ 1 file changed, 15 insertions(+), 37 deletions(-)
 
---- a/mm/page-writeback.c
-+++ b/mm/page-writeback.c
-@@ -543,8 +543,8 @@ static int dirty_ratio_handler(const str
+diff --git a/drivers/acpi/acpica/psobject.c b/drivers/acpi/acpica/psobject.c
+index 2480c26c51710..bf708126a7523 100644
+--- a/drivers/acpi/acpica/psobject.c
++++ b/drivers/acpi/acpica/psobject.c
+@@ -636,7 +636,8 @@ acpi_status
+ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 			  union acpi_parse_object *op, acpi_status status)
+ {
+-	acpi_status status2;
++	acpi_status return_status = status;
++	u8 ascending = TRUE;
  
- 	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
- 	if (ret == 0 && write && vm_dirty_ratio != old_ratio) {
--		writeback_set_ratelimit();
- 		vm_dirty_bytes = 0;
-+		writeback_set_ratelimit();
- 	}
- 	return ret;
+ 	ACPI_FUNCTION_TRACE_PTR(ps_complete_final_op, walk_state);
+ 
+@@ -650,7 +651,7 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 			  op));
+ 	do {
+ 		if (op) {
+-			if (walk_state->ascending_callback != NULL) {
++			if (ascending && walk_state->ascending_callback != NULL) {
+ 				walk_state->op = op;
+ 				walk_state->op_info =
+ 				    acpi_ps_get_opcode_info(op->common.
+@@ -672,49 +673,26 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 				}
+ 
+ 				if (status == AE_CTRL_TERMINATE) {
+-					status = AE_OK;
+-
+-					/* Clean up */
+-					do {
+-						if (op) {
+-							status2 =
+-							    acpi_ps_complete_this_op
+-							    (walk_state, op);
+-							if (ACPI_FAILURE
+-							    (status2)) {
+-								return_ACPI_STATUS
+-								    (status2);
+-							}
+-						}
+-
+-						acpi_ps_pop_scope(&
+-								  (walk_state->
+-								   parser_state),
+-								  &op,
+-								  &walk_state->
+-								  arg_types,
+-								  &walk_state->
+-								  arg_count);
+-
+-					} while (op);
+-
+-					return_ACPI_STATUS(status);
++					ascending = FALSE;
++					return_status = AE_CTRL_TERMINATE;
+ 				}
+ 
+ 				else if (ACPI_FAILURE(status)) {
+ 
+ 					/* First error is most important */
+ 
+-					(void)
+-					    acpi_ps_complete_this_op(walk_state,
+-								     op);
+-					return_ACPI_STATUS(status);
++					ascending = FALSE;
++					return_status = status;
+ 				}
+ 			}
+ 
+-			status2 = acpi_ps_complete_this_op(walk_state, op);
+-			if (ACPI_FAILURE(status2)) {
+-				return_ACPI_STATUS(status2);
++			status = acpi_ps_complete_this_op(walk_state, op);
++			if (ACPI_FAILURE(status)) {
++				ascending = FALSE;
++				if (ACPI_SUCCESS(return_status) ||
++				    return_status == AE_CTRL_TERMINATE) {
++					return_status = status;
++				}
+ 			}
+ 		}
+ 
+@@ -724,5 +702,5 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 
+ 	} while (op);
+ 
+-	return_ACPI_STATUS(status);
++	return_ACPI_STATUS(return_status);
  }
+-- 
+2.39.5
+
 
 
