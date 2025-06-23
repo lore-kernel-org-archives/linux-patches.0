@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C201E521E;
-	Mon, 23 Jun 2025 21:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4C4221723;
+	Mon, 23 Jun 2025 21:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714006; cv=none; b=hMH/El08XJ+SkU3YosNnfRgyIBGXEm019oelyd35VDasTcooumb36ZzZ+YwmKvphkElKhCAkRTwqnQdX9fYwv512iggjE7jE4mpprWOK3pTHF7zvQ+2hTESgpxLUMxCIzGRHAfOeRHeTeIR8C8im/UCMDoM/MP6mG6cayud3Vn4=
+	t=1750714009; cv=none; b=NzoffLL7bIDDDYC8Ub4STVzT5Ml1rgfjty/EQywCU95YNCTNHahtzBG/1jDwwG7tolHb4S+jQi9zax3IoosHqXVagznNb34eUN1EyrhKNhISnR+T/u24eCZlS5S7fgxJRoecYT2G9GdLHxeVDRn2ii8vTMUPOfzthtUtvFibFmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714006; c=relaxed/simple;
-	bh=d4pT/ZHCZoOp34wuK25EItzxvm7Tg3g0NnjZjctycS8=;
+	s=arc-20240116; t=1750714009; c=relaxed/simple;
+	bh=+k/ziOObDWyZWpDhGiBxncroO/E+IcBTpkVewWE1Khs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hXy7r46nvH0Tq2W+h4Gzz/2Iio1VQX61FUqrv/LuZ0SH2fIuB0ABHSrrPpGrwNXN71JqF5ORASmlPfhVxr2D7x/bU0arP3EO8kh/Ah5gQIVgroU719N21X8uc+8ov1m0FJPeySLuz4tN4WhVcoWUG3tc1/Bkhf1msgDT1MFmAtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JqhQCvKZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kJjSLx/s/8G8x4MsQZCeCHn0oGgUa0eBmbqxo6iE+vgRJass6h2muDofA2+ji5bv79XSSZDdr3INqo7E7C1pLwZwvECLCYw/7PxMKws5+SDyAm6/U9uGfMlFZh3KMtMqJY7QR4cA4ichNESxsbd+mKJsw/cVfPzk040J7gpJlSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6CfYeLs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqhQCvKZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D543BC4CEEA;
-	Mon, 23 Jun 2025 21:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6CfYeLs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4024EC4CEEA;
+	Mon, 23 Jun 2025 21:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714006;
-	bh=d4pT/ZHCZoOp34wuK25EItzxvm7Tg3g0NnjZjctycS8=;
+	s=korg; t=1750714008;
+	bh=+k/ziOObDWyZWpDhGiBxncroO/E+IcBTpkVewWE1Khs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JqhQCvKZxoNG22njsKNCps5JIbjYkhrV/6Wz4x6XcDvVrbMf8UHjtHCLkUMG1C4hK
-	 uIvOtmlWpL1AH289uftPzGx7MBKxWRvaGe0zQXat7SyYfSeZo30OnhwW119/RXV7lh
-	 TcpI3NYqN9csUsZQXO4J+6jngfBWEY5FrzogkzLA=
+	b=C6CfYeLsyaPyEi6dOG9WaWYy6y5r21xmJ0T6gfu0CNZ0drKr0dcce6X6ZMphUFQ14
+	 0PFrrcmv7EZESbEuVdIw6p5HVRTzjxpEPmKzzgCI6A3DraJQ3VNL8t54D1CDYZz3We
+	 6xcoxUwedlgVn1xjCEhizs4pl7oGQgOMcAcaDoRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 139/508] perf intel-pt: Fix PEBS-via-PT data_src
-Date: Mon, 23 Jun 2025 15:03:04 +0200
-Message-ID: <20250623130648.707437026@linuxfoundation.org>
+Subject: [PATCH 6.15 358/592] pinctrl: armada-37xx: propagate error from armada_37xx_pmx_gpio_set_direction()
+Date: Mon, 23 Jun 2025 15:05:16 +0200
+Message-ID: <20250623130708.957435526@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,336 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit e00eac6b5b6d956f38d8880c44bf7fd9954063c3 ]
+[ Upstream commit bfa0ff804ffa8b1246ade8be08de98c9eb19d16f ]
 
-The Fixes commit did not add support for decoding PEBS-via-PT data_src.
-Fix by adding support.
+The armada_37xx_gpio_direction_{in,out}put() functions can fail, so
+propagate their error values back to the stack instead of silently
+ignoring those.
 
-PEBS-via-PT is a feature of some E-core processors, starting with
-processors based on Tremont microarchitecture. Because the kernel only
-supports Intel PT features that are on all processors, there is no support
-for PEBS-via-PT on hybrids.
-
-Currently that leaves processors based on Tremont, Gracemont and Crestmont,
-however there are no events on Tremont that produce data_src information,
-and for Gracemont and Crestmont there are only:
-
-	mem-loads	event=0xd0,umask=0x5,ldlat=3
-	mem-stores	event=0xd0,umask=0x6
-
-Affected processors include Alder Lake N (Gracemont), Sierra Forest
-(Crestmont) and Grand Ridge (Crestmont).
-
-Example:
-
- # perf record -d -e intel_pt/branch=0/ -e mem-loads/aux-output/pp uname
-
- Before:
-
-  # perf.before script --itrace=o -Fdata_src
-            0 |OP No|LVL N/A|SNP N/A|TLB N/A|LCK No|BLK  N/A
-            0 |OP No|LVL N/A|SNP N/A|TLB N/A|LCK No|BLK  N/A
-
- After:
-
-  # perf script --itrace=o -Fdata_src
-  10268100142 |OP LOAD|LVL L1 hit|SNP None|TLB L1 or L2 hit|LCK No|BLK  N/A
-  10450100442 |OP LOAD|LVL L2 hit|SNP None|TLB L2 miss|LCK No|BLK  N/A
-
-Fixes: 975846eddf907297 ("perf intel-pt: Add memory information to synthesized PEBS sample")
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20250512093932.79854-2-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-5-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/intel-pt.c | 205 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 202 insertions(+), 3 deletions(-)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/intel-pt.c b/tools/perf/util/intel-pt.c
-index bd09af447eb0d..018eaddd4e6af 100644
---- a/tools/perf/util/intel-pt.c
-+++ b/tools/perf/util/intel-pt.c
-@@ -122,6 +122,7 @@ struct intel_pt {
- 
- 	bool single_pebs;
- 	bool sample_pebs;
-+	int pebs_data_src_fmt;
- 	struct evsel *pebs_evsel;
- 
- 	u64 evt_sample_type;
-@@ -170,6 +171,7 @@ enum switch_state {
- struct intel_pt_pebs_event {
- 	struct evsel *evsel;
- 	u64 id;
-+	int data_src_fmt;
- };
- 
- struct intel_pt_queue {
-@@ -2176,7 +2178,146 @@ static void intel_pt_add_lbrs(struct branch_stack *br_stack,
- 	}
- }
- 
--static int intel_pt_do_synth_pebs_sample(struct intel_pt_queue *ptq, struct evsel *evsel, u64 id)
-+#define P(a, b) PERF_MEM_S(a, b)
-+#define OP_LH (P(OP, LOAD) | P(LVL, HIT))
-+#define LEVEL(x) P(LVLNUM, x)
-+#define REM P(REMOTE, REMOTE)
-+#define SNOOP_NONE_MISS (P(SNOOP, NONE) | P(SNOOP, MISS))
-+
-+#define PERF_PEBS_DATA_SOURCE_GRT_MAX	0x10
-+#define PERF_PEBS_DATA_SOURCE_GRT_MASK	(PERF_PEBS_DATA_SOURCE_GRT_MAX - 1)
-+
-+/* Based on kernel __intel_pmu_pebs_data_source_grt() and pebs_data_source */
-+static const u64 pebs_data_source_grt[PERF_PEBS_DATA_SOURCE_GRT_MAX] = {
-+	P(OP, LOAD) | P(LVL, MISS) | LEVEL(L3) | P(SNOOP, NA),         /* L3 miss|SNP N/A */
-+	OP_LH | P(LVL, L1)  | LEVEL(L1)  | P(SNOOP, NONE),             /* L1 hit|SNP None */
-+	OP_LH | P(LVL, LFB) | LEVEL(LFB) | P(SNOOP, NONE),             /* LFB/MAB hit|SNP None */
-+	OP_LH | P(LVL, L2)  | LEVEL(L2)  | P(SNOOP, NONE),             /* L2 hit|SNP None */
-+	OP_LH | P(LVL, L3)  | LEVEL(L3)  | P(SNOOP, NONE),             /* L3 hit|SNP None */
-+	OP_LH | P(LVL, L3)  | LEVEL(L3)  | P(SNOOP, HIT),              /* L3 hit|SNP Hit */
-+	OP_LH | P(LVL, L3)  | LEVEL(L3)  | P(SNOOP, HITM),             /* L3 hit|SNP HitM */
-+	OP_LH | P(LVL, L3)  | LEVEL(L3)  | P(SNOOP, HITM),             /* L3 hit|SNP HitM */
-+	OP_LH | P(LVL, L3)  | LEVEL(L3)  | P(SNOOPX, FWD),             /* L3 hit|SNP Fwd */
-+	OP_LH | P(LVL, REM_CCE1) | REM | LEVEL(L3) | P(SNOOP, HITM),   /* Remote L3 hit|SNP HitM */
-+	OP_LH | P(LVL, LOC_RAM)  | LEVEL(RAM) | P(SNOOP, HIT),         /* RAM hit|SNP Hit */
-+	OP_LH | P(LVL, REM_RAM1) | REM | LEVEL(L3) | P(SNOOP, HIT),    /* Remote L3 hit|SNP Hit */
-+	OP_LH | P(LVL, LOC_RAM)  | LEVEL(RAM) | SNOOP_NONE_MISS,       /* RAM hit|SNP None or Miss */
-+	OP_LH | P(LVL, REM_RAM1) | LEVEL(RAM) | REM | SNOOP_NONE_MISS, /* Remote RAM hit|SNP None or Miss */
-+	OP_LH | P(LVL, IO)  | LEVEL(NA) | P(SNOOP, NONE),              /* I/O hit|SNP None */
-+	OP_LH | P(LVL, UNC) | LEVEL(NA) | P(SNOOP, NONE),              /* Uncached hit|SNP None */
-+};
-+
-+/* Based on kernel __intel_pmu_pebs_data_source_cmt() and pebs_data_source */
-+static const u64 pebs_data_source_cmt[PERF_PEBS_DATA_SOURCE_GRT_MAX] = {
-+	P(OP, LOAD) | P(LVL, MISS) | LEVEL(L3) | P(SNOOP, NA),       /* L3 miss|SNP N/A */
-+	OP_LH | P(LVL, L1)  | LEVEL(L1)  | P(SNOOP, NONE),           /* L1 hit|SNP None */
-+	OP_LH | P(LVL, LFB) | LEVEL(LFB) | P(SNOOP, NONE),           /* LFB/MAB hit|SNP None */
-+	OP_LH | P(LVL, L2)  | LEVEL(L2)  | P(SNOOP, NONE),           /* L2 hit|SNP None */
-+	OP_LH | P(LVL, L3)  | LEVEL(L3)  | P(SNOOP, NONE),           /* L3 hit|SNP None */
-+	OP_LH | P(LVL, L3)  | LEVEL(L3)  | P(SNOOP, MISS),           /* L3 hit|SNP Hit */
-+	OP_LH | P(LVL, L3)  | LEVEL(L3)  | P(SNOOP, HIT),            /* L3 hit|SNP HitM */
-+	OP_LH | P(LVL, L3)  | LEVEL(L3)  | P(SNOOPX, FWD),           /* L3 hit|SNP HitM */
-+	OP_LH | P(LVL, L3)  | LEVEL(L3)  | P(SNOOP, HITM),           /* L3 hit|SNP Fwd */
-+	OP_LH | P(LVL, REM_CCE1) | REM | LEVEL(L3) | P(SNOOP, HITM), /* Remote L3 hit|SNP HitM */
-+	OP_LH | P(LVL, LOC_RAM)  | LEVEL(RAM) | P(SNOOP, NONE),      /* RAM hit|SNP Hit */
-+	OP_LH | LEVEL(RAM) | REM | P(SNOOP, NONE),                   /* Remote L3 hit|SNP Hit */
-+	OP_LH | LEVEL(RAM) | REM | P(SNOOPX, FWD),                   /* RAM hit|SNP None or Miss */
-+	OP_LH | LEVEL(RAM) | REM | P(SNOOP, HITM),                   /* Remote RAM hit|SNP None or Miss */
-+	OP_LH | P(LVL, IO)  | LEVEL(NA) | P(SNOOP, NONE),            /* I/O hit|SNP None */
-+	OP_LH | P(LVL, UNC) | LEVEL(NA) | P(SNOOP, NONE),            /* Uncached hit|SNP None */
-+};
-+
-+/* Based on kernel pebs_set_tlb_lock() */
-+static inline void pebs_set_tlb_lock(u64 *val, bool tlb, bool lock)
-+{
-+	/*
-+	 * TLB access
-+	 * 0 = did not miss 2nd level TLB
-+	 * 1 = missed 2nd level TLB
-+	 */
-+	if (tlb)
-+		*val |= P(TLB, MISS) | P(TLB, L2);
-+	else
-+		*val |= P(TLB, HIT) | P(TLB, L1) | P(TLB, L2);
-+
-+	/* locked prefix */
-+	if (lock)
-+		*val |= P(LOCK, LOCKED);
-+}
-+
-+/* Based on kernel __grt_latency_data() */
-+static u64 intel_pt_grt_latency_data(u8 dse, bool tlb, bool lock, bool blk,
-+				     const u64 *pebs_data_source)
-+{
-+	u64 val;
-+
-+	dse &= PERF_PEBS_DATA_SOURCE_GRT_MASK;
-+	val = pebs_data_source[dse];
-+
-+	pebs_set_tlb_lock(&val, tlb, lock);
-+
-+	if (blk)
-+		val |= P(BLK, DATA);
-+	else
-+		val |= P(BLK, NA);
-+
-+	return val;
-+}
-+
-+/* Default value for data source */
-+#define PERF_MEM_NA (PERF_MEM_S(OP, NA)    |\
-+		     PERF_MEM_S(LVL, NA)   |\
-+		     PERF_MEM_S(SNOOP, NA) |\
-+		     PERF_MEM_S(LOCK, NA)  |\
-+		     PERF_MEM_S(TLB, NA)   |\
-+		     PERF_MEM_S(LVLNUM, NA))
-+
-+enum DATA_SRC_FORMAT {
-+	DATA_SRC_FORMAT_ERR  = -1,
-+	DATA_SRC_FORMAT_NA   =  0,
-+	DATA_SRC_FORMAT_GRT  =  1,
-+	DATA_SRC_FORMAT_CMT  =  2,
-+};
-+
-+/* Based on kernel grt_latency_data() and cmt_latency_data */
-+static u64 intel_pt_get_data_src(u64 mem_aux_info, int data_src_fmt)
-+{
-+	switch (data_src_fmt) {
-+	case DATA_SRC_FORMAT_GRT: {
-+		union {
-+			u64 val;
-+			struct {
-+				unsigned int dse:4;
-+				unsigned int locked:1;
-+				unsigned int stlb_miss:1;
-+				unsigned int fwd_blk:1;
-+				unsigned int reserved:25;
-+			};
-+		} x = {.val = mem_aux_info};
-+		return intel_pt_grt_latency_data(x.dse, x.stlb_miss, x.locked, x.fwd_blk,
-+						 pebs_data_source_grt);
-+	}
-+	case DATA_SRC_FORMAT_CMT: {
-+		union {
-+			u64 val;
-+			struct {
-+				unsigned int dse:5;
-+				unsigned int locked:1;
-+				unsigned int stlb_miss:1;
-+				unsigned int fwd_blk:1;
-+				unsigned int reserved:24;
-+			};
-+		} x = {.val = mem_aux_info};
-+		return intel_pt_grt_latency_data(x.dse, x.stlb_miss, x.locked, x.fwd_blk,
-+						 pebs_data_source_cmt);
-+	}
-+	default:
-+		return PERF_MEM_NA;
-+	}
-+}
-+
-+static int intel_pt_do_synth_pebs_sample(struct intel_pt_queue *ptq, struct evsel *evsel,
-+					 u64 id, int data_src_fmt)
+diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+index 4ac514cfd8884..15f257a856098 100644
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -472,16 +472,17 @@ static int armada_37xx_pmx_gpio_set_direction(struct pinctrl_dev *pctldev,
  {
- 	const struct intel_pt_blk_items *items = &ptq->state->items;
- 	struct perf_sample sample = { .ip = 0, };
-@@ -2294,6 +2435,18 @@ static int intel_pt_do_synth_pebs_sample(struct intel_pt_queue *ptq, struct evse
- 		}
- 	}
+ 	struct armada_37xx_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
+ 	struct gpio_chip *chip = range->gc;
++	int ret;
  
-+	if (sample_type & PERF_SAMPLE_DATA_SRC) {
-+		if (items->has_mem_aux_info && data_src_fmt) {
-+			if (data_src_fmt < 0) {
-+				pr_err("Intel PT missing data_src info\n");
-+				return -1;
-+			}
-+			sample.data_src = intel_pt_get_data_src(items->mem_aux_info, data_src_fmt);
-+		} else {
-+			sample.data_src = PERF_MEM_NA;
-+		}
-+	}
-+
- 	if (sample_type & PERF_SAMPLE_TRANSACTION && items->has_tsx_aux_info) {
- 		u64 ax = items->has_rax ? items->rax : 0;
- 		/* Refer kernel's intel_hsw_transaction() */
-@@ -2312,9 +2465,10 @@ static int intel_pt_synth_single_pebs_sample(struct intel_pt_queue *ptq)
- {
- 	struct intel_pt *pt = ptq->pt;
- 	struct evsel *evsel = pt->pebs_evsel;
-+	int data_src_fmt = pt->pebs_data_src_fmt;
- 	u64 id = evsel->core.id[0];
+ 	dev_dbg(info->dev, "gpio_direction for pin %u as %s-%d to %s\n",
+ 		offset, range->name, offset, input ? "input" : "output");
  
--	return intel_pt_do_synth_pebs_sample(ptq, evsel, id);
-+	return intel_pt_do_synth_pebs_sample(ptq, evsel, id, data_src_fmt);
+ 	if (input)
+-		armada_37xx_gpio_direction_input(chip, offset);
++		ret = armada_37xx_gpio_direction_input(chip, offset);
+ 	else
+-		armada_37xx_gpio_direction_output(chip, offset, 0);
++		ret = armada_37xx_gpio_direction_output(chip, offset, 0);
+ 
+-	return 0;
++	return ret;
  }
  
- static int intel_pt_synth_pebs_sample(struct intel_pt_queue *ptq)
-@@ -2339,7 +2493,7 @@ static int intel_pt_synth_pebs_sample(struct intel_pt_queue *ptq)
- 				       hw_id);
- 			return intel_pt_synth_single_pebs_sample(ptq);
- 		}
--		err = intel_pt_do_synth_pebs_sample(ptq, pe->evsel, pe->id);
-+		err = intel_pt_do_synth_pebs_sample(ptq, pe->evsel, pe->id, pe->data_src_fmt);
- 		if (err)
- 			return err;
- 	}
-@@ -3290,6 +3444,49 @@ static int intel_pt_process_itrace_start(struct intel_pt *pt,
- 					event->itrace_start.tid);
- }
- 
-+/*
-+ * Events with data_src are identified by L1_Hit_Indication
-+ * refer https://github.com/intel/perfmon
-+ */
-+static int intel_pt_data_src_fmt(struct intel_pt *pt, struct evsel *evsel)
-+{
-+	struct perf_env *env = pt->machine->env;
-+	int fmt = DATA_SRC_FORMAT_NA;
-+
-+	if (!env->cpuid)
-+		return DATA_SRC_FORMAT_ERR;
-+
-+	/*
-+	 * PEBS-via-PT is only supported on E-core non-hybrid. Of those only
-+	 * Gracemont and Crestmont have data_src. Check for:
-+	 *	Alderlake N   (Gracemont)
-+	 *	Sierra Forest (Crestmont)
-+	 *	Grand Ridge   (Crestmont)
-+	 */
-+
-+	if (!strncmp(env->cpuid, "GenuineIntel,6,190,", 19))
-+		fmt = DATA_SRC_FORMAT_GRT;
-+
-+	if (!strncmp(env->cpuid, "GenuineIntel,6,175,", 19) ||
-+	    !strncmp(env->cpuid, "GenuineIntel,6,182,", 19))
-+		fmt = DATA_SRC_FORMAT_CMT;
-+
-+	if (fmt == DATA_SRC_FORMAT_NA)
-+		return fmt;
-+
-+	/*
-+	 * Only data_src events are:
-+	 *	mem-loads	event=0xd0,umask=0x5
-+	 *	mem-stores	event=0xd0,umask=0x6
-+	 */
-+	if (evsel->core.attr.type == PERF_TYPE_RAW &&
-+	    ((evsel->core.attr.config & 0xffff) == 0x5d0 ||
-+	     (evsel->core.attr.config & 0xffff) == 0x6d0))
-+		return fmt;
-+
-+	return DATA_SRC_FORMAT_NA;
-+}
-+
- static int intel_pt_process_aux_output_hw_id(struct intel_pt *pt,
- 					     union perf_event *event,
- 					     struct perf_sample *sample)
-@@ -3310,6 +3507,7 @@ static int intel_pt_process_aux_output_hw_id(struct intel_pt *pt,
- 
- 	ptq->pebs[hw_id].evsel = evsel;
- 	ptq->pebs[hw_id].id = sample->id;
-+	ptq->pebs[hw_id].data_src_fmt = intel_pt_data_src_fmt(pt, evsel);
- 
- 	return 0;
- }
-@@ -3855,6 +4053,7 @@ static void intel_pt_setup_pebs_events(struct intel_pt *pt)
- 			}
- 			pt->single_pebs = true;
- 			pt->sample_pebs = true;
-+			pt->pebs_data_src_fmt = intel_pt_data_src_fmt(pt, evsel);
- 			pt->pebs_evsel = evsel;
- 		}
- 	}
+ static int armada_37xx_gpio_request_enable(struct pinctrl_dev *pctldev,
 -- 
 2.39.5
 
