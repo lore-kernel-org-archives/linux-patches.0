@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903C319C554;
-	Mon, 23 Jun 2025 21:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DA919C554;
+	Mon, 23 Jun 2025 21:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714074; cv=none; b=pLZ4x79lPqxBGHyk0Zh/KzbZhpTL5GGvPWpgkbLHHTHGV1/sGqD5ZRjqrV9db53PEg1gabBJq6xYuKc+PXvww6WL4LWBb2sqaoG5xyaXvmKIW/6OB4ZE+vHjFCMgOHEpCQogqeramZvJAJTypj1WgF4pN8aXwPQ1JEnN1ZCD/2A=
+	t=1750714077; cv=none; b=VtuvwD7UbB4tXhxSLaWo3PTDiKaDC4Rb2M/KxHl6UU+1JuyfSvFeDm/vrGHrzgtEpi96UGpRQGOGAprHd2eeGAC+I+Oyx2rwmjm2g1Zqm/vvbqfd1i8exe92P56RCAKQLU03XVcoDwSpBqQYcyZBHbBgrmUC+WejfIQPQZoyDFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714074; c=relaxed/simple;
-	bh=rExsFh8giyJuxsj6EKvNjn80rDeRC9PGIhX0h216Xtk=;
+	s=arc-20240116; t=1750714077; c=relaxed/simple;
+	bh=+KVla1/fCKrRqDNOt8V2AvUsHYN9CYv4eZx4O9Dtmkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gGeJUiIXBG3pAaSSV2xra2BhPRTbm+5SJsKjxevTaLdrGyd1luLByNeZzcO+v2GgshpOXJvflDeCDCPm+A39RDiMvytnTHq+KVNpM3iFX9edUT/hgkwKUTOXhyIhf3duyzUQxVqDD9C68e/XSSLc7eDO8/TmWvBURwyMRzfKf2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fp5Ilopu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZR2xmY4qfaFOuerhnd//JSEHznOi/AOL/FIQvmxTGmJpEqPL3pReIlBL6hmBKRAXTVAAmxd5BuvvS+aD1qJ43nG4bjwGLhDJxzpfDgZBIvMqRXwpSPV8mdCCUCNAlJItiLf8O3tYHzypjgsx3LubIv1KS1ZYYfvnOyzKjoDVXSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lT6MgWaf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fp5Ilopu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDFBC4CEEA;
-	Mon, 23 Jun 2025 21:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lT6MgWaf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F029C4CEF0;
+	Mon, 23 Jun 2025 21:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714074;
-	bh=rExsFh8giyJuxsj6EKvNjn80rDeRC9PGIhX0h216Xtk=;
+	s=korg; t=1750714076;
+	bh=+KVla1/fCKrRqDNOt8V2AvUsHYN9CYv4eZx4O9Dtmkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fp5IlopuBtmD0JgnJ8ze4I0QPDeWpMghlvvKuC3Suz1+XIgDWrpAgPGPaZFTxlgVV
-	 MDEAmGN0oEO5M+m8RM7SUmFx0uTZCEQYZCZ5Tp4ZRQmOxQ9rhSEssutkIaqJ82GV9P
-	 jCqQi2j+NZgkORan6X0oGGLS/B75WmwFI/oO/V3A=
+	b=lT6MgWafV2LhUD/VkOLRrNrz7cES+nSS+VP6Zl5BrWQfYExNQM8yPsj4joXsL3cjP
+	 4gvDolf/y3wGWi+Q3jAqSAm4I6fpW8HqhWgWMwXBYjXhxlQKeB8T7aO4hbz6By9a5r
+	 QdXXWiQNX6G98tBYkmnn3JygiUQmucnioLheJru0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jason Xing <kernelxing@tencent.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 143/508] rpmsg: qcom_smd: Fix uninitialized return variable in __qcom_smd_send()
-Date: Mon, 23 Jun 2025 15:03:08 +0200
-Message-ID: <20250623130648.805509806@linuxfoundation.org>
+Subject: [PATCH 6.15 362/592] net: mlx4: add SOF_TIMESTAMPING_TX_SOFTWARE flag when getting ts info
+Date: Mon, 23 Jun 2025 15:05:20 +0200
+Message-ID: <20250623130709.054440591@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 5de775df3362090a6e90046d1f2d83fe62489aa0 ]
+[ Upstream commit b86bcfee30576b752302c55693fff97242b35dfd ]
 
-The "ret" variable isn't initialized if we don't enter the loop.  For
-example,  if "channel->state" is not SMD_CHANNEL_OPENED.
+As mlx4 has implemented skb_tx_timestamp() in mlx4_en_xmit(), the
+SOFTWARE flag is surely needed when users are trying to get timestamp
+information.
 
-Fixes: 33e3820dda88 ("rpmsg: smd: Use spinlock in tx path")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/aAkhvV0nSbrsef1P@stanley.mountain
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250510093442.79711-1-kerneljasonxing@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_smd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx4/en_ethtool.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-index 1044cf03c5422..eb2e66f5ca7b5 100644
---- a/drivers/rpmsg/qcom_smd.c
-+++ b/drivers/rpmsg/qcom_smd.c
-@@ -746,7 +746,7 @@ static int __qcom_smd_send(struct qcom_smd_channel *channel, const void *data,
- 	__le32 hdr[5] = { cpu_to_le32(len), };
- 	int tlen = sizeof(hdr) + len;
- 	unsigned long flags;
--	int ret;
-+	int ret = 0;
+diff --git a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
+index cd17a3f4faf83..a68cd3f0304c6 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
+@@ -1897,6 +1897,7 @@ static int mlx4_en_get_ts_info(struct net_device *dev,
+ 	if (mdev->dev->caps.flags2 & MLX4_DEV_CAP_FLAG2_TS) {
+ 		info->so_timestamping |=
+ 			SOF_TIMESTAMPING_TX_HARDWARE |
++			SOF_TIMESTAMPING_TX_SOFTWARE |
+ 			SOF_TIMESTAMPING_RX_HARDWARE |
+ 			SOF_TIMESTAMPING_RAW_HARDWARE;
  
- 	/* Word aligned channels only accept word size aligned data */
- 	if (channel->info_word && len % 4)
 -- 
 2.39.5
 
