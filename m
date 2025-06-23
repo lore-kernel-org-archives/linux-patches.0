@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D448670838;
-	Mon, 23 Jun 2025 21:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D35270838;
+	Mon, 23 Jun 2025 21:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712972; cv=none; b=ewXsUeJwbNxpRzs20q7SYwYK3iSpTfWLcUhY2KxAg3nRE4NiAdp3xsDzaMcxoiTAH9XpoMpiECqoV04A1VjkO+5Y1qdwFs6uawpOu8vULFD0zbAL/Z0efkcbo6oBLyFE/JsVFVxwq/eHqwLFyDNQsW64fvj0fODO6QZBHv1Nz98=
+	t=1750712975; cv=none; b=XIuuPmAeKe82brXx+FfN57NGkErm7jksWpykBJ39ALU2m+CgW9rVfoH3SKZGupXphGYrzPFtMQdTzw7NxYRJ7S7NFLd4zgPot5iSnDWpyI78hMYoDa3MH/QZk0g7D/MtntVsTDr9Dc3TAzubPqpx/q2lTcM1OThI7qh75Kp76CM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712972; c=relaxed/simple;
-	bh=AMf5fMA9UcUIBFwsdAkZzaxv7dyM3AjXJ3sAFZDK9Eo=;
+	s=arc-20240116; t=1750712975; c=relaxed/simple;
+	bh=MIHAvzo1JtF5w3hQdS/wIF5VWkqrpUewSb/kKAmJ9ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KMp4ecSi4qpldt5y9u84WOTqVtJx2pV60ZGqAAb+cc7LTeVdjssD8tkiPeEuekrvoJxD9W/A87LCDm/OJZL2oC5suMTrDLKiFhKbVz95tK2yvSulFxwu/SsUSsLNO1P6dYjkIFxBUu/NwHINQQfsmXMMIbTulRLCN1NRR64W8n8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqvItfU8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D6zEQjYlGsFIk4Axn6PXMTI8LBA754K/CG/I+bd8ab/1VZ6btEGdobUSCbiO7vlB+BbqkisRNpRan9M8TNDN6/WrxedaQ9LnxrzKnOo5UdqxTdh0gD4XyD2iJ4NBA7lN1OU8eanVO+IqjxYvxcgbQYnqiE+lqZLBUoXJ3J5gYBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnzEj4Jv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqvItfU8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB95C4CEEA;
-	Mon, 23 Jun 2025 21:09:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnzEj4Jv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F343AC4CEEA;
+	Mon, 23 Jun 2025 21:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712972;
-	bh=AMf5fMA9UcUIBFwsdAkZzaxv7dyM3AjXJ3sAFZDK9Eo=;
+	s=korg; t=1750712975;
+	bh=MIHAvzo1JtF5w3hQdS/wIF5VWkqrpUewSb/kKAmJ9ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aqvItfU8X8FPh8ms2EaCkCuoTYOKkLBEZMJshEfSzt9uA0RUEstmXFH8YhbSPEdq+
-	 vTJqjpEKqCieHYUJ/+uq0ceWg81qqRlzckkZyR9g5lmzdRviPqgxxFxU/R4x/KjDBt
-	 EvnoekHXdrG/FkS0hwy+lv4RZAcMPH+UU9Xffa5I=
+	b=NnzEj4JvDcEVxG7KyLD+3qJC19WWIzXK9gx5MVMCvsJUTr3jTdo6RE/rtKrGRJjye
+	 NHkz3bX0udfP5b6wmGZ8hOd7F2s7igIFV7VQe4mLqKFv9ICmRVd+DQirdpvrytWNG1
+	 S9ocMzdRhNGsTPJM5kVR3GpWwGEGuNGQPZU+xTFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/355] serial: sh-sci: Clean sci_ports[0] after at earlycon exit
-Date: Mon, 23 Jun 2025 15:05:16 +0200
-Message-ID: <20250623130630.216733391@linuxfoundation.org>
+Subject: [PATCH 5.4 158/222] cpufreq: Force sync policy boost with global boost on sysfs update
+Date: Mon, 23 Jun 2025 15:08:13 +0200
+Message-ID: <20250623130616.834189642@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,127 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-commit 5f1017069933489add0c08659673443c9905659e upstream.
+[ Upstream commit 121baab7b88ed865532dadb7ef1aee6e2bea86f5 ]
 
-The early_console_setup() function initializes sci_ports[0].port with an
-object of type struct uart_port obtained from the struct earlycon_device
-passed as an argument to early_console_setup().
+If the global boost flag is enabled and policy boost flag is disabled, a
+call to `cpufreq_boost_trigger_state(true)` must enable the policy's
+boost state.
 
-Later, during serial port probing, the serial port used as earlycon
-(e.g., port A) might be remapped to a different position in the sci_ports[]
-array, and a different serial port (e.g., port B) might be assigned to slot
-0. For example:
+The current code misses that because of an optimization. Fix it.
 
-sci_ports[0] = port B
-sci_ports[X] = port A
-
-In this scenario, the new port mapped at index zero (port B) retains the
-data associated with the earlycon configuration. Consequently, after the
-Linux boot process, any access to the serial port now mapped to
-sci_ports[0] (port B) will block the original earlycon port (port A).
-
-To address this, introduce an early_console_exit() function to clean up
-sci_ports[0] when earlycon is exited.
-
-To prevent the cleanup of sci_ports[0] while the serial device is still
-being used by earlycon, introduce the struct sci_port::probing flag and
-account for it in early_console_exit().
-
-Fixes: 0b0cced19ab1 ("serial: sh-sci: Add CONFIG_SERIAL_EARLYCON support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250116182249.3828577-5-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Suggested-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Reviewed-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/852ff11c589e6300730d207baac195b2d9d8b95f.1745511526.git.viresh.kumar@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sh-sci.c | 32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+ drivers/cpufreq/cpufreq.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index 4ce6dd7c40928..7c574901ad1c5 100644
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -166,6 +166,7 @@ static struct sci_port sci_ports[SCI_NPORTS];
- static unsigned long sci_ports_in_use;
- static struct uart_driver sci_uart_driver;
- static bool sci_uart_earlycon;
-+static bool sci_uart_earlycon_dev_probing;
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 09510ff16ee2f..2a2fea6743aa6 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2580,8 +2580,10 @@ int cpufreq_boost_trigger_state(int state)
+ 	unsigned long flags;
+ 	int ret = 0;
  
- static inline struct sci_port *
- to_sci_port(struct uart_port *uart)
-@@ -3308,7 +3309,8 @@ static struct plat_sci_port *sci_parse_dt(struct platform_device *pdev,
- static int sci_probe_single(struct platform_device *dev,
- 				      unsigned int index,
- 				      struct plat_sci_port *p,
--				      struct sci_port *sciport)
-+				      struct sci_port *sciport,
-+				      struct resource *sci_res)
- {
- 	int ret;
- 
-@@ -3355,6 +3357,14 @@ static int sci_probe_single(struct platform_device *dev,
- 		sciport->port.flags |= UPF_HARD_FLOW;
- 	}
- 
-+	if (sci_uart_earlycon && sci_ports[0].port.mapbase == sci_res->start) {
-+		/*
-+		 * Skip cleanup the sci_port[0] in early_console_exit(), this
-+		 * port is the same as the earlycon one.
-+		 */
-+		sci_uart_earlycon_dev_probing = true;
-+	}
-+
- 	return uart_add_one_port(&sci_uart_driver, &sciport->port);
- }
- 
-@@ -3413,7 +3423,7 @@ static int sci_probe(struct platform_device *dev)
- 
- 	platform_set_drvdata(dev, sp);
- 
--	ret = sci_probe_single(dev, dev_id, p, sp);
-+	ret = sci_probe_single(dev, dev_id, p, sp, res);
- 	if (ret)
- 		return ret;
- 
-@@ -3496,6 +3506,22 @@ sh_early_platform_init_buffer("earlyprintk", &sci_driver,
- #ifdef CONFIG_SERIAL_SH_SCI_EARLYCON
- static struct plat_sci_port port_cfg;
- 
-+static int early_console_exit(struct console *co)
-+{
-+	struct sci_port *sci_port = &sci_ports[0];
-+
+-	if (cpufreq_driver->boost_enabled == state)
+-		return 0;
 +	/*
-+	 * Clean the slot used by earlycon. A new SCI device might
-+	 * map to this slot.
++	 * Don't compare 'cpufreq_driver->boost_enabled' with 'state' here to
++	 * make sure all policies are in sync with global boost flag.
 +	 */
-+	if (!sci_uart_earlycon_dev_probing) {
-+		memset(sci_port, 0, sizeof(*sci_port));
-+		sci_uart_earlycon = false;
-+	}
-+
-+	return 0;
-+}
-+
- static int __init early_console_setup(struct earlycon_device *device,
- 				      int type)
- {
-@@ -3515,6 +3541,8 @@ static int __init early_console_setup(struct earlycon_device *device,
- 		       SCSCR_RE | SCSCR_TE | port_cfg.scscr);
  
- 	device->con->write = serial_console_write;
-+	device->con->exit = early_console_exit;
-+
- 	return 0;
- }
- static int __init sci_early_console_setup(struct earlycon_device *device,
+ 	write_lock_irqsave(&cpufreq_driver_lock, flags);
+ 	cpufreq_driver->boost_enabled = state;
 -- 
 2.39.5
 
