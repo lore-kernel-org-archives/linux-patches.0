@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669D7226533;
-	Mon, 23 Jun 2025 22:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72F8223708;
+	Mon, 23 Jun 2025 22:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717048; cv=none; b=PnR8D9M0wpa+OnFQ4fr3frE8FI28Cf8vLSszmmtfl+lAPUPBEGxpPleacHjAb3BS27MG30/5qG4LmPnrfRbd07UrPO56oy8UkFLRcc1rAOoImwubXA6v6GnqPdAczK3XkRJK0Rd1Dkl98xR/cepxGU6MYIyI0objBxCVJ0PzAyk=
+	t=1750717050; cv=none; b=QHZufjQYKjt5BPqioVBu8RfV+HxGAIQLwCUVbs5lBRtZMk1RasWPhvXO4NcY9RiZymsgQaPp0J2ZFbv47moYC7r+qvPfb3LpxAWwZUbX1e/K7JYRFBsDPo9bvdsgfIgFEbFgA2YIKvlDjtuHr42O6i9KPwLkiOi4MV7+/nrjJrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717048; c=relaxed/simple;
-	bh=ls+xSuRBuk1wu07M08WcDrm8MuwBevZmvwdmzbCA+XE=;
+	s=arc-20240116; t=1750717050; c=relaxed/simple;
+	bh=lslYffTdbTL5b+PPEMV/UFZiJFDQy+8K0GSjxu1EBNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lITPlBlzmm1r3O/7p8Fw8MPJVTALmhFThtvwYLNuYFfQWlg2LNO4qs4r66n0HyNmF/FfWwRlkUXN9DRWwJ91Vqi7vM3erK5hyGzBZyOuK77fWrHyI596snr2nXpQ5HJ++Taq/in8oPqPb5h16vDRGwVT3LsYmYbF4uLMDeZxw6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIDOD17e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L/U5p+Pf+FDbatllQpRyF7G7QFfAXcBpjUMYo64TXWq2vF7MwU/PfofL5hAJQBgZlWzq0JQrfHohTK7cjxksGv3Wz/RsrZDHq8kCSrnjU3N+irgIitJmqXjFVMw1E95gl2NNvMbKftuoqcFk+qR5oIEOBwwepcCUrsRsLOK71ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=seRm9uzt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIDOD17e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF46C4CEF1;
-	Mon, 23 Jun 2025 22:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seRm9uzt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3663CC4CEEA;
+	Mon, 23 Jun 2025 22:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717048;
-	bh=ls+xSuRBuk1wu07M08WcDrm8MuwBevZmvwdmzbCA+XE=;
+	s=korg; t=1750717050;
+	bh=lslYffTdbTL5b+PPEMV/UFZiJFDQy+8K0GSjxu1EBNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sIDOD17ecMXK3q4p/uTDpnEyRs+UwVIeU416lakPdJKtsj5WvKs3dlDLFBF0WWNWI
-	 beQyiJ/UT6x1U4Dm+5mmVsOSTBYlXjSulJ5V8gX3zoH+1XylwD+Xcq30rJvn3nhEq7
-	 wQH6FIINhPZJoGbpYtvyXSUibpxBmZleeuw4G54A=
+	b=seRm9uztP+C/YOQsTfHDh321flbs1AcPjmFMowRrRvveHnnXeKfm1yujhL5vddlzR
+	 j/bCWxLaybL4nNMWKxFqPH5u2viy6AvYRXhYj9vSBLJteRBXM5HIHD4HiDqe1Oh6/5
+	 4vTiaf1ws+ZcNQ8dkdR8JXC6A28x3wQnCswioPhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 357/508] ftrace: Fix UAF when lookup kallsym after ftrace disabled
-Date: Mon, 23 Jun 2025 15:06:42 +0200
-Message-ID: <20250623130654.147416177@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 370/411] hwmon: (occ) fix unaligned accesses
+Date: Mon, 23 Jun 2025 15:08:34 +0200
+Message-ID: <20250623130642.956232602@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,116 +47,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit f914b52c379c12288b7623bb814d0508dbe7481d upstream.
+[ Upstream commit 2c021b45c154958566aad0cae9f74ab26a2d5732 ]
 
-The following issue happens with a buggy module:
+Passing a pointer to an unaligned integer as a function argument is
+undefined behavior:
 
-BUG: unable to handle page fault for address: ffffffffc05d0218
-PGD 1bd66f067 P4D 1bd66f067 PUD 1bd671067 PMD 101808067 PTE 0
-Oops: Oops: 0000 [#1] SMP KASAN PTI
-Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-RIP: 0010:sized_strscpy+0x81/0x2f0
-RSP: 0018:ffff88812d76fa08 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffffffffc0601010 RCX: dffffc0000000000
-RDX: 0000000000000038 RSI: dffffc0000000000 RDI: ffff88812608da2d
-RBP: 8080808080808080 R08: ffff88812608da2d R09: ffff88812608da68
-R10: ffff88812608d82d R11: ffff88812608d810 R12: 0000000000000038
-R13: ffff88812608da2d R14: ffffffffc05d0218 R15: fefefefefefefeff
-FS:  00007fef552de740(0000) GS:ffff8884251c7000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffffffc05d0218 CR3: 00000001146f0000 CR4: 00000000000006f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ftrace_mod_get_kallsym+0x1ac/0x590
- update_iter_mod+0x239/0x5b0
- s_next+0x5b/0xa0
- seq_read_iter+0x8c9/0x1070
- seq_read+0x249/0x3b0
- proc_reg_read+0x1b0/0x280
- vfs_read+0x17f/0x920
- ksys_read+0xf3/0x1c0
- do_syscall_64+0x5f/0x2e0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+drivers/hwmon/occ/common.c:492:27: warning: taking address of packed member 'accumulator' of class or structure 'power_sensor_2' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  492 |   val = occ_get_powr_avg(&power->accumulator,
+      |                           ^~~~~~~~~~~~~~~~~~
+drivers/hwmon/occ/common.c:493:13: warning: taking address of packed member 'update_tag' of class or structure 'power_sensor_2' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  493 |            &power->update_tag);
+      |             ^~~~~~~~~~~~~~~~~
 
-The above issue may happen as follows:
-(1) Add kprobe tracepoint;
-(2) insmod test.ko;
-(3)  Module triggers ftrace disabled;
-(4) rmmod test.ko;
-(5) cat /proc/kallsyms; --> Will trigger UAF as test.ko already removed;
-ftrace_mod_get_kallsym()
-...
-strscpy(module_name, mod_map->mod->name, MODULE_NAME_LEN);
-...
+Move the get_unaligned() calls out of the function and pass these
+through argument registers instead.
 
-The problem is when a module triggers an issue with ftrace and
-sets ftrace_disable. The ftrace_disable is set when an anomaly is
-discovered and to prevent any more damage, ftrace stops all text
-modification. The issue that happened was that the ftrace_disable stops
-more than just the text modification.
-
-When a module is loaded, its init functions can also be traced. Because
-kallsyms deletes the init functions after a module has loaded, ftrace
-saves them when the module is loaded and function tracing is enabled. This
-allows the output of the function trace to show the init function names
-instead of just their raw memory addresses.
-
-When a module is removed, ftrace_release_mod() is called, and if
-ftrace_disable is set, it just returns without doing anything more. The
-problem here is that it leaves the mod_list still around and if kallsyms
-is called, it will call into this code and access the module memory that
-has already been freed as it will return:
-
-  strscpy(module_name, mod_map->mod->name, MODULE_NAME_LEN);
-
-Where the "mod" no longer exists and triggers a UAF bug.
-
-Link: https://lore.kernel.org/all/20250523135452.626d8dcd@gandalf.local.home/
-
-Cc: stable@vger.kernel.org
-Fixes: aba4b5c22cba ("ftrace: Save module init functions kallsyms symbols for tracing")
-Link: https://lore.kernel.org/20250529111955.2349189-2-yebin@huaweicloud.com
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c10e753d43eb ("hwmon (occ): Add sensor types and versions")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20250610092553.2641094-1-arnd@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ftrace.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/hwmon/occ/common.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -6962,9 +6962,10 @@ void ftrace_release_mod(struct module *m
+diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
+index f846c1baff1e7..8b8f50ef36aff 100644
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -458,12 +458,10 @@ static ssize_t occ_show_power_1(struct device *dev,
+ 	return sysfs_emit(buf, "%llu\n", val);
+ }
  
- 	mutex_lock(&ftrace_lock);
- 
--	if (ftrace_disabled)
--		goto out_unlock;
+-static u64 occ_get_powr_avg(u64 *accum, u32 *samples)
++static u64 occ_get_powr_avg(u64 accum, u32 samples)
+ {
+-	u64 divisor = get_unaligned_be32(samples);
 -
-+	/*
-+	 * To avoid the UAF problem after the module is unloaded, the
-+	 * 'mod_map' resource needs to be released unconditionally.
-+	 */
- 	list_for_each_entry_safe(mod_map, n, &ftrace_mod_maps, list) {
- 		if (mod_map->mod == mod) {
- 			list_del_rcu(&mod_map->list);
-@@ -6973,6 +6974,9 @@ void ftrace_release_mod(struct module *m
- 		}
- 	}
+-	return (divisor == 0) ? 0 :
+-		div64_u64(get_unaligned_be64(accum) * 1000000ULL, divisor);
++	return (samples == 0) ? 0 :
++		mul_u64_u32_div(accum, 1000000UL, samples);
+ }
  
-+	if (ftrace_disabled)
-+		goto out_unlock;
-+
- 	/*
- 	 * Each module has its own ftrace_pages, remove
- 	 * them from the list.
+ static ssize_t occ_show_power_2(struct device *dev,
+@@ -488,8 +486,8 @@ static ssize_t occ_show_power_2(struct device *dev,
+ 				  get_unaligned_be32(&power->sensor_id),
+ 				  power->function_id, power->apss_channel);
+ 	case 1:
+-		val = occ_get_powr_avg(&power->accumulator,
+-				       &power->update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->accumulator),
++				       get_unaligned_be32(&power->update_tag));
+ 		break;
+ 	case 2:
+ 		val = (u64)get_unaligned_be32(&power->update_tag) *
+@@ -526,8 +524,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
+ 		return sysfs_emit(buf, "%u_system\n",
+ 				  get_unaligned_be32(&power->sensor_id));
+ 	case 1:
+-		val = occ_get_powr_avg(&power->system.accumulator,
+-				       &power->system.update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->system.accumulator),
++				       get_unaligned_be32(&power->system.update_tag));
+ 		break;
+ 	case 2:
+ 		val = (u64)get_unaligned_be32(&power->system.update_tag) *
+@@ -540,8 +538,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
+ 		return sysfs_emit(buf, "%u_proc\n",
+ 				  get_unaligned_be32(&power->sensor_id));
+ 	case 5:
+-		val = occ_get_powr_avg(&power->proc.accumulator,
+-				       &power->proc.update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->proc.accumulator),
++				       get_unaligned_be32(&power->proc.update_tag));
+ 		break;
+ 	case 6:
+ 		val = (u64)get_unaligned_be32(&power->proc.update_tag) *
+@@ -554,8 +552,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
+ 		return sysfs_emit(buf, "%u_vdd\n",
+ 				  get_unaligned_be32(&power->sensor_id));
+ 	case 9:
+-		val = occ_get_powr_avg(&power->vdd.accumulator,
+-				       &power->vdd.update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->vdd.accumulator),
++				       get_unaligned_be32(&power->vdd.update_tag));
+ 		break;
+ 	case 10:
+ 		val = (u64)get_unaligned_be32(&power->vdd.update_tag) *
+@@ -568,8 +566,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
+ 		return sysfs_emit(buf, "%u_vdn\n",
+ 				  get_unaligned_be32(&power->sensor_id));
+ 	case 13:
+-		val = occ_get_powr_avg(&power->vdn.accumulator,
+-				       &power->vdn.update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->vdn.accumulator),
++				       get_unaligned_be32(&power->vdn.update_tag));
+ 		break;
+ 	case 14:
+ 		val = (u64)get_unaligned_be32(&power->vdn.update_tag) *
+-- 
+2.39.5
+
 
 
