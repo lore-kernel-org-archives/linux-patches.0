@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C8C22A4E1;
-	Mon, 23 Jun 2025 22:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBB822B586;
+	Mon, 23 Jun 2025 22:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716593; cv=none; b=hqmt0Gir6fMnBgctEe1PbkAxQufxc0n+nIJS8uf8MgdmeOvwsKcfk4P7NWJkMEXsc5yRkgy7Vikb9axSruxf3XGPPU3IcL3zmnWwGGS0p9iQ3rn+lEWkRwCr99SKR3+KdxjU4vHxmZMvwuyXE2EKvyqylup8uHUV9ts59ylUoRQ=
+	t=1750716595; cv=none; b=PQv7ZLRN+OVqvIJPSxuH2OZ4oMWPFD5QbyyAwZQYJ8ZAzzUs7+ShaD6ylei6gUfJpOp8KkGs5t3Lb9NgdLHJIEWYsEK5XJJRDphNZdHsPReIKO+yiDLCwppIzkBNX+nAEoljXBzebM4REiytrqh7vTxaWgTDVC+SlktblW+BT34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716593; c=relaxed/simple;
-	bh=i1pYAlS3K6SOmBeIqkYRxO36QI/QFK5AIK8gr1DDQrY=;
+	s=arc-20240116; t=1750716595; c=relaxed/simple;
+	bh=PUfSLj9VENi4iMztwVed9s7JJlu2wYQuhGT2f/bIAe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ca90M1yp8OKasW7swc/Vrx40YW72qsrChwsNGqiSkJzhkIFZKU/r1ht7MwrXK7+vx+9jqZ8K6Ub5U2kFd3m39zNG7Cmqlhb623O0at5xeG0tglbNtorhe9iyW2lSrsE1KcQvwsmEJSNhifVY2G3f5UiFaHoPH3Dla1jLp3PXAFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrdY2av5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MoMURrw0Rf1fHeFL8sW4q+vuvAc08UNZ/bhWbF+HmlvnMGOWwsledMpLLyFrNkvO8VpR59eZKZ2Uo84pNP6291dSgvaexweeIba+9s6nydeTno+5cbKPiUzZkNL8/ArxAYrG55h/J2h3CqdCwEoy6VNi5SfPjIOyOs72X+1McB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKwejkZ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrdY2av5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECB5C4CEF6;
-	Mon, 23 Jun 2025 22:09:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKwejkZ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C71C4CEF1;
+	Mon, 23 Jun 2025 22:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716593;
-	bh=i1pYAlS3K6SOmBeIqkYRxO36QI/QFK5AIK8gr1DDQrY=;
+	s=korg; t=1750716595;
+	bh=PUfSLj9VENi4iMztwVed9s7JJlu2wYQuhGT2f/bIAe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrdY2av52DfyTBMSYv4dZyVLuIgC85iCuDGYyi28t330kBH2MRkgeY/TZF3Asr4rI
-	 FZQF2oB3GweOPuj0ebcLG2eWCPGdcogxWRbAzmtrTkkQ+qwAqVeOZqNUp6UR2OoNB+
-	 MsQFJtAo6BOWiKjQv+F1yIsuP88pBpfT+ufnkBrA=
+	b=FKwejkZ/BgL3CqqEKMNYWICGflRQYsZDN+4xgBA99XgkSwr5LPTIlXyUYCO/f01wD
+	 phZJKPQv+x6EWMobe5fkLA8PLHdEYMfRRslGvzAwz+O63p8sPQif/IAkG9HlfVCVl7
+	 BuaWKf/jmBJXh5ms7jk/wYE0Z7gan1d0e73QeRu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Foster <colin.foster@in-advantage.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	"Nobuhiro Iwamatsu (CIP)" <nobuhiro1.iwamatsu@toshiba.co.jp>
-Subject: [PATCH 6.6 275/290] ARM: dts: am335x-bone-common: Increase MDIO reset deassert time
-Date: Mon, 23 Jun 2025 15:08:56 +0200
-Message-ID: <20250623130635.195494801@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.1 314/508] media: gspca: Add error handling for stv06xx_read_sensor()
+Date: Mon, 23 Jun 2025 15:05:59 +0200
+Message-ID: <20250623130653.046521578@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +46,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Colin Foster <colin.foster@in-advantage.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit b9bf5612610aa7e38d58fee16f489814db251c01 upstream.
+commit 398a1b33f1479af35ca915c5efc9b00d6204f8fa upstream.
 
-Prior to commit df16c1c51d81 ("net: phy: mdio_device: Reset device only
-when necessary") MDIO reset deasserts were performed twice during boot.
-Now that the second deassert is no longer performed, device probe
-failures happen due to the change in timing with the following error
-message:
+In hdcs_init(), the return value of stv06xx_read_sensor() needs to be
+checked. A proper implementation can be found in vv6410_dump(). Add a
+check in loop condition and propergate error code to fix this issue.
 
-SMSC LAN8710/LAN8720: probe of 4a101000.mdio:00 failed with error -5
-
-Restore the original effective timing, which resolves the probe
-failures.
-
-Signed-off-by: Colin Foster <colin.foster@in-advantage.com>
-Link: https://lore.kernel.org/r/20240531183817.2698445-1-colin.foster@in-advantage.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro1.iwamatsu@toshiba.co.jp>
+Fixes: 4c98834addfe ("V4L/DVB (10048): gspca - stv06xx: New subdriver.")
+Cc: stable@vger.kernel.org # v2.6+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi
-+++ b/arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi
-@@ -385,7 +385,7 @@
- 		/* Support GPIO reset on revision C3 boards */
- 		reset-gpios = <&gpio1 8 GPIO_ACTIVE_LOW>;
- 		reset-assert-us = <300>;
--		reset-deassert-us = <6500>;
-+		reset-deassert-us = <13000>;
- 	};
- };
+--- a/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
++++ b/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
+@@ -520,12 +520,13 @@ static int hdcs_init(struct sd *sd)
+ static int hdcs_dump(struct sd *sd)
+ {
+ 	u16 reg, val;
++	int err = 0;
  
+ 	pr_info("Dumping sensor registers:\n");
+ 
+-	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH; reg++) {
+-		stv06xx_read_sensor(sd, reg, &val);
++	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH && !err; reg++) {
++		err = stv06xx_read_sensor(sd, reg, &val);
+ 		pr_info("reg 0x%02x = 0x%02x\n", reg, val);
+ 	}
+-	return 0;
++	return (err < 0) ? err : 0;
+ }
 
 
