@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167EC21D3DD;
-	Mon, 23 Jun 2025 21:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D554D221734;
+	Mon, 23 Jun 2025 21:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714726; cv=none; b=I6BaNT+kcbsiB5HvUgBHfrRuMX0wFZZS2pQmIX98/ysKa9xmUmDiryQLSQnNzCBKpawS40dgU37Duit0thyT1fME3oWzJy5VBLafkQ7PHCwf7DBeukHjfxqTtibbrEf33zt48CQJjLoC3Zv73HrJxJ2UUn2mz0IahwaxE72u/xA=
+	t=1750714728; cv=none; b=GlAasMK5VbZgJa06FlobGXRub3PjqnqtrmToXNaqhd3gkG54x5Ct4GaDF0lLsI53Iifx/EKarkOttgJROHyS/65cGbj/MBlxLGrmEtdGFCVWKPvAF9eeGmu0rQJJzT4roYfuKfU/weWvpdhV+8gFtHDniN6EH3gooaUBwzRlHqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714726; c=relaxed/simple;
-	bh=+1Jb+dc8mYjzOZMU48BsCcDpje1kVknZ4ioB4hkWy/Q=;
+	s=arc-20240116; t=1750714728; c=relaxed/simple;
+	bh=z7vQ4CxOkTYpuQrIzIpzCVj96ASGO7XkEX3uPzX0nRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iGfQ6Ep0Ybo1e7s4bk4z+gp5u6zCcNbt7V773Ceb3+V7HR4rt6bALW70gn4Na86tygt1MVl/LpjKx7zC7ps2eC0iot0sTUsAdGQW3P1Ykhe02siI7j03C3mDC/D1fLHvicp+6w20WT1AUK1bG621uhSiCXaOudzLv4CkHG8N+GI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxpByocN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eL0BbVbQflvjfB3y5ebahAdwkpAmYB6qcnjtSrGSAUGStTHydmxJPYNTtmvvEgxI87x8BYFZR3UdAw9qdw0hp9dwiLxEovg4WUwP8VkxOi2ldCCRZ5e5V8yyWx7bEV15jzGRzJ5OPF+pAblNLYTpMqw0cKkekwcwum9v2CeJ9sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTnX/slk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxpByocN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20A0C4CEEA;
-	Mon, 23 Jun 2025 21:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTnX/slk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E97C4CEF0;
+	Mon, 23 Jun 2025 21:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714726;
-	bh=+1Jb+dc8mYjzOZMU48BsCcDpje1kVknZ4ioB4hkWy/Q=;
+	s=korg; t=1750714728;
+	bh=z7vQ4CxOkTYpuQrIzIpzCVj96ASGO7XkEX3uPzX0nRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxpByocNC20C5ymYKYSxT3V1GOBKARLhoJniaRHe8VjNccBChKWLLdH77A6XrXrEs
-	 gDXlf4ZDpRgocKeBzo7yoneYex+8wh9OJKiS85775dAFL1Au7anwmHsTNrAb9UDMdf
-	 j+HMzBcWArcRJmuSEvW1rVStscWYbqgiU0/RsnYA=
+	b=kTnX/slkHWQFb2Kd9Lup/CE2G9iyx6xBPpCxHKjPU668qw490bgBDqmxZOocHFwUu
+	 Iz4GQ4/0CyK5OtyU3jQ00UG0VUBGOIX3BHeBcwewWkj8N+BFdcYsOgH4Ux3po1j1tf
+	 4WnP0kx1N7aCU28L0llmfcb65sFcSYocvmCTgUm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianzhou Zhao <xnxc22xnxc22@qq.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
+	Yanteng Si <si.yanteng@linux.dev>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 225/355] exfat: fix double free in delayed_free
-Date: Mon, 23 Jun 2025 15:07:06 +0200
-Message-ID: <20250623130633.508901622@linuxfoundation.org>
+Subject: [PATCH 6.1 179/508] net: stmmac: make sure that ptp_rate is not 0 before configuring timestamping
+Date: Mon, 23 Jun 2025 15:03:44 +0200
+Message-ID: <20250623130649.678127322@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,44 +47,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Alexis Lothoré <alexis.lothore@bootlin.com>
 
-[ Upstream commit 1f3d9724e16d62c7d42c67d6613b8512f2887c22 ]
+[ Upstream commit 030ce919e114a111e83b7976ecb3597cefd33f26 ]
 
-The double free could happen in the following path.
+The stmmac platform drivers that do not open-code the clk_ptp_rate value
+after having retrieved the default one from the device-tree can end up
+with 0 in clk_ptp_rate (as clk_get_rate can return 0). It will
+eventually propagate up to PTP initialization when bringing up the
+interface, leading to a divide by 0:
 
-exfat_create_upcase_table()
-        exfat_create_upcase_table() : return error
-        exfat_free_upcase_table() : free ->vol_utbl
-        exfat_load_default_upcase_table : return error
-     exfat_kill_sb()
-           delayed_free()
-                  exfat_free_upcase_table() <--------- double free
-This patch set ->vol_util as NULL after freeing it.
+ Division by zero in kernel.
+ CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.30-00001-g48313bd5768a #22
+ Hardware name: STM32 (Device Tree Support)
+ Call trace:
+  unwind_backtrace from show_stack+0x18/0x1c
+  show_stack from dump_stack_lvl+0x6c/0x8c
+  dump_stack_lvl from Ldiv0_64+0x8/0x18
+  Ldiv0_64 from stmmac_init_tstamp_counter+0x190/0x1a4
+  stmmac_init_tstamp_counter from stmmac_hw_setup+0xc1c/0x111c
+  stmmac_hw_setup from __stmmac_open+0x18c/0x434
+  __stmmac_open from stmmac_open+0x3c/0xbc
+  stmmac_open from __dev_open+0xf4/0x1ac
+  __dev_open from __dev_change_flags+0x1cc/0x224
+  __dev_change_flags from dev_change_flags+0x24/0x60
+  dev_change_flags from ip_auto_config+0x2e8/0x11a0
+  ip_auto_config from do_one_initcall+0x84/0x33c
+  do_one_initcall from kernel_init_freeable+0x1b8/0x214
+  kernel_init_freeable from kernel_init+0x24/0x140
+  kernel_init from ret_from_fork+0x14/0x28
+ Exception stack(0xe0815fb0 to 0xe0815ff8)
 
-Reported-by: Jianzhou Zhao <xnxc22xnxc22@qq.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Prevent this division by 0 by adding an explicit check and error log
+about the actual issue. While at it, remove the same check from
+stmmac_ptp_register, which then becomes duplicate
+
+Fixes: 19d857c9038e ("stmmac: Fix calculations for ptp counters when clock input = 50Mhz.")
+Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
+Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20250529-stmmac_tstamp_div-v4-1-d73340a794d5@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/nls.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 5 +++++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/exfat/nls.c b/fs/exfat/nls.c
-index 314d5407a1be5..a75d5fb2404c7 100644
---- a/fs/exfat/nls.c
-+++ b/fs/exfat/nls.c
-@@ -804,4 +804,5 @@ int exfat_create_upcase_table(struct super_block *sb)
- void exfat_free_upcase_table(struct exfat_sb_info *sbi)
- {
- 	kvfree(sbi->vol_utbl);
-+	sbi->vol_utbl = NULL;
- }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 14e5b94b0b5ab..948e35c405a84 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -841,6 +841,11 @@ int stmmac_init_tstamp_counter(struct stmmac_priv *priv, u32 systime_flags)
+ 	if (!(priv->dma_cap.time_stamp || priv->dma_cap.atime_stamp))
+ 		return -EOPNOTSUPP;
+ 
++	if (!priv->plat->clk_ptp_rate) {
++		netdev_err(priv->dev, "Invalid PTP clock rate");
++		return -EINVAL;
++	}
++
+ 	stmmac_config_hw_tstamping(priv, priv->ptpaddr, systime_flags);
+ 	priv->systime_flags = systime_flags;
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+index 9c91a3dc8e385..cc223fe086484 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -301,7 +301,7 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
+ 
+ 	/* Calculate the clock domain crossing (CDC) error if necessary */
+ 	priv->plat->cdc_error_adj = 0;
+-	if (priv->plat->has_gmac4 && priv->plat->clk_ptp_rate)
++	if (priv->plat->has_gmac4)
+ 		priv->plat->cdc_error_adj = (2 * NSEC_PER_SEC) / priv->plat->clk_ptp_rate;
+ 
+ 	stmmac_ptp_clock_ops.n_per_out = priv->dma_cap.pps_out_num;
 -- 
 2.39.5
 
