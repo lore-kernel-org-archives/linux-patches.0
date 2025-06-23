@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EB72253B0;
-	Mon, 23 Jun 2025 21:46:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DDFB676;
+	Mon, 23 Jun 2025 21:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715193; cv=none; b=qQqEb9xHOg1Mfltfs3pEEJllC9atR5VDFnh51UA3vdVlvKC96hN3p6NP4C3Sn8WAk76ZvwDLc44ft05sK2rLUzbDto5J/8VBao2IHr4jY3oPQZbCx1zX35zgzdVEIit8C+ITiIdXuSa2VGcs6Z761tnZIYhuCVKkkQ/2RpI1DEg=
+	t=1750715196; cv=none; b=XhpLs6d+eHMLDlGtWfZUzufAMrz9fy/BqEHw+lGIuV4B4fVxQw4/PniEE7eMjL8NxknlW/3FPoweMOfMjjEhes4kmDCwWhiWz3Gx2BganIu03yQguad688uWQvE14XmV6USunqrDhb/QxVwbHfmnMq1qEMBSLLHqwImTLcX+nxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715193; c=relaxed/simple;
-	bh=Ml12dc+ib7BucN+WZnDE8emFO1KpI1AshJmthd7KEhQ=;
+	s=arc-20240116; t=1750715196; c=relaxed/simple;
+	bh=E0K3v1Q0MwFqomMLaPmOMWWVhvIZN1gUzhLQe7dQkWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WysPU5676N6dOVAsD0aJPHLebfwjOrCG7D/bRUlJ75BcK6aNnCe4uAHqYX4hJOaoUQRhmHm/BVNizqxy5wTSeNs0lBwc4Ct9YZGp8kgMgxknDCCJ18I/uEEgAu0kd9TnFVjpXTX4P3dclNG1ab3ogYLwstWh0Gmd6iW940nd7rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftJoYCP8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=REObHvfUzqSRqxg7Xory0OF/3YzowsmxPJt4ScvOE6gi/vYNAxvr9qCMCDI6XnJwTHtVSdDD//vijglaS159Jr3WJv5Tet4DvvnxDOmKksRoBQsvfhg53SwjYGOD3Q5JuDdV78zjFBexXybDphq3AyaL39h6jbjtvoQBvhJMeL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWKbIf9W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftJoYCP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFFDC4CEEA;
-	Mon, 23 Jun 2025 21:46:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWKbIf9W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811B0C4CEEA;
+	Mon, 23 Jun 2025 21:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715193;
-	bh=Ml12dc+ib7BucN+WZnDE8emFO1KpI1AshJmthd7KEhQ=;
+	s=korg; t=1750715195;
+	bh=E0K3v1Q0MwFqomMLaPmOMWWVhvIZN1gUzhLQe7dQkWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ftJoYCP85tD+re5Xse1aFv7lr4SCkOUXUUo6YXsz6Yz2jo1gIesfYbqfwYE/s0Tb/
-	 YVoWc5DmC3NkZnaRtRrpkxWi7cz+X9HfTpUm2t/iU4fEON94IjDA0Zfyz+EU052CTk
-	 T5puRIt3NBA8LoJY4KKmtX06HdApNUXZ6Eabg+lE=
+	b=dWKbIf9W8VaH3Y1XTk/50GaS+5J2+7b1EcGASUg6+iPlEPdnfUUraa9cgIAZZ8yfe
+	 6fBpVBBDubW+JEKt4gMitJ0YSXW6wmyKYIpDL8gHNMS/tsU8dbwW2WhxTx8yNsXZzX
+	 66y1aUsxxi7/qdAfS4t3A3FxA0sYpcrlWi+lb4F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	M Nikhil <nikh1092@linux.ibm.com>,
-	Nihar Panda <niharp@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.15 464/592] scsi: s390: zfcp: Ensure synchronous unit_add
-Date: Mon, 23 Jun 2025 15:07:02 +0200
-Message-ID: <20250623130711.465168480@linuxfoundation.org>
+	Narayana Murty N <nnmlinux@linux.ibm.com>,
+	Vaibhav Jain <vaibhav@linux.ibm.com>,
+	Ganesh Goudar <ganeshgr@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 205/290] powerpc/eeh: Fix missing PE bridge reconfiguration during VFIO EEH recovery
+Date: Mon, 23 Jun 2025 15:07:46 +0200
+Message-ID: <20250623130633.094741964@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,50 +49,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Narayana Murty N <nnmlinux@linux.ibm.com>
 
-commit 9697ca0d53e3db357be26d2414276143c4a2cd49 upstream.
+[ Upstream commit 33bc69cf6655cf60829a803a45275f11a74899e5 ]
 
-Improve the usability of the unit_add sysfs attribute by ensuring that
-the associated FCP LUN scan processing is completed synchronously.  This
-enables configuration tooling to consistently determine the end of the
-scan process to allow for serialization of follow-on actions.
+VFIO EEH recovery for PCI passthrough devices fails on PowerNV and pseries
+platforms due to missing host-side PE bridge reconfiguration. In the
+current implementation, eeh_pe_configure() only performs RTAS or OPAL-based
+bridge reconfiguration for native host devices, but skips it entirely for
+PEs managed through VFIO in guest passthrough scenarios.
 
-While the scan process associated with unit_add typically completes
-synchronously, it is deferred to an asynchronous background process if
-unit_add is used before initial remote port scanning has completed.  This
-occurs when unit_add is used immediately after setting the associated FCP
-device online.
+This leads to incomplete EEH recovery when a PCI error affects a
+passthrough device assigned to a QEMU/KVM guest. Although VFIO triggers the
+EEH recovery flow through VFIO_EEH_PE_ENABLE ioctl, the platform-specific
+bridge reconfiguration step is silently bypassed. As a result, the PE's
+config space is not fully restored, causing subsequent config space access
+failures or EEH freeze-on-access errors inside the guest.
 
-To ensure synchronous unit_add processing, wait for remote port scanning
-to complete before initiating the FCP LUN scan.
+This patch fixes the issue by ensuring that eeh_pe_configure() always
+invokes the platform's configure_bridge() callback (e.g.,
+pseries_eeh_phb_configure_bridge) even for VFIO-managed PEs. This ensures
+that RTAS or OPAL calls to reconfigure the PE bridge are correctly issued
+on the host side, restoring the PE's configuration space after an EEH
+event.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: M Nikhil <nikh1092@linux.ibm.com>
-Reviewed-by: Nihar Panda <niharp@linux.ibm.com>
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Nihar Panda <niharp@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250603182252.2287285-2-niharp@linux.ibm.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This fix is essential for reliable EEH recovery in QEMU/KVM guests using
+VFIO PCI passthrough on PowerNV and pseries systems.
+
+Tested with:
+- QEMU/KVM guest using VFIO passthrough (IBM Power9,(lpar)Power11 host)
+- Injected EEH errors with pseries EEH errinjct tool on host, recovery
+  verified on qemu guest.
+- Verified successful config space access and CAP_EXP DevCtl restoration
+  after recovery
+
+Fixes: 212d16cdca2d ("powerpc/eeh: EEH support for VFIO PCI device")
+Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
+Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+Reviewed-by: Ganesh Goudar <ganeshgr@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250508062928.146043-1-nnmlinux@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/scsi/zfcp_sysfs.c |    2 ++
+ arch/powerpc/kernel/eeh.c | 2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/s390/scsi/zfcp_sysfs.c
-+++ b/drivers/s390/scsi/zfcp_sysfs.c
-@@ -449,6 +449,8 @@ static ssize_t zfcp_sysfs_unit_add_store
- 	if (kstrtoull(buf, 0, (unsigned long long *) &fcp_lun))
- 		return -EINVAL;
+diff --git a/arch/powerpc/kernel/eeh.c b/arch/powerpc/kernel/eeh.c
+index ab316e155ea9f..2e286bba2f645 100644
+--- a/arch/powerpc/kernel/eeh.c
++++ b/arch/powerpc/kernel/eeh.c
+@@ -1516,6 +1516,8 @@ int eeh_pe_configure(struct eeh_pe *pe)
+ 	/* Invalid PE ? */
+ 	if (!pe)
+ 		return -ENODEV;
++	else
++		ret = eeh_ops->configure_bridge(pe);
  
-+	flush_work(&port->rport_work);
-+
- 	retval = zfcp_unit_add(port, fcp_lun);
- 	if (retval)
- 		return retval;
+ 	return ret;
+ }
+-- 
+2.39.5
+
 
 
