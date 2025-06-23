@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3325A24DCFD;
-	Mon, 23 Jun 2025 13:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5E5248191;
+	Mon, 23 Jun 2025 13:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685057; cv=none; b=DX3fXsXPw0iR7mofyacquk+cq+HAIqSa9oEyu5q5cQjZJGbUMPMWssyPhJPLIUTCPy5sohsLJReBIzt79HNt8S1LGXNQw29coRqCI3Q6p3mMMFTEFg0joovjkIIS1Y0HLNtCQOUkU+Ii5oT2BIwj16so8EeIVQDuhm6ozSZr+3I=
+	t=1750685059; cv=none; b=Bw2x7eOYNhLtK80/JfH/js497ju8cwp58Ho0cl3uw1CDYsXmUoj4/jyFXmJxO5nNqsnOkZROLyepXnRygfDuieEB3q+XcMhtbgipe0OHYCA5E6qCxik3kaZ4ZNjBNPIXL4QrQDphDWbH1ktB2gCDdtIL0LIrvOv5MxTXey1RCp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685057; c=relaxed/simple;
-	bh=o4vPKN4nHmtr5Y3zNWdDGESFQbTpujHD9C1bOGuhQMQ=;
+	s=arc-20240116; t=1750685059; c=relaxed/simple;
+	bh=7/RQ46W1USMvNb+sDImB9teg1F9sKYXKA2Fv/RsR12o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LkLwlVaRrEXwEJE+8fHfmwTOfNWLbPBaToS9npy8kFyPVp2rxBORNw+6IMK2UiZmncJgavQW67wAfysVSuNpW4sax6KX6A3BpqmWNo9w5U9NhuKSniugyWkMoewnWnIu4fhpzormnD15dq8B9b+uJeSDEXUA4mVIPUeoz6eU9l8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESiL1PXT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=faxUQZ8BxXd6mEC9oQ5eAcCI8D5JrTBqDEI99ahI2PzqvZtukj8D2vxS9kotysMQNwdRI+kF/3c7hpWb2mKAqiFW76I4gsDHmdjGfq26ADlc7FeB9Uk9OKXkrs1jDI5AwdQqNazrw0Xi68pd92MIpdX5c9w1je4AcrMVoTFuo1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFBHu+bu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESiL1PXT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA75C4CEEA;
-	Mon, 23 Jun 2025 13:24:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFBHu+bu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A58C4CEEA;
+	Mon, 23 Jun 2025 13:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685057;
-	bh=o4vPKN4nHmtr5Y3zNWdDGESFQbTpujHD9C1bOGuhQMQ=;
+	s=korg; t=1750685059;
+	bh=7/RQ46W1USMvNb+sDImB9teg1F9sKYXKA2Fv/RsR12o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ESiL1PXTnyQSg33vCYlnjIO4pu9q2Zzo7HvgFe74KpLecQjV6RwXWElyhLBuoGF1e
-	 UD59JRJoYzJdbvEKLCzbHWMnzvfrihbT2cQe15244shYrsK5IQMk0gvvKIHt5xnjoF
-	 IsbHCiH8CJenH2XaHs3ua7qJcWGcokuXJJDQ3S3c=
+	b=TFBHu+buVoBGL5Fh6GJ43ltjsDYL8PcKw+pJNXp9D/3onMO+rEeJT/p8iSbVIXTPs
+	 LvPRgAO9k16UD8hhjDXZa/EZ2WcYj1EnsgP/Gwb4LIgN2C1QovQt6DncsZLw/k48X7
+	 +nTLYvh9ZtWmTG36dE8Qsovnr1L2AxWmR2zv/txA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.4 090/222] drm/amd/display: Do not add -mhard-float to dml_ccflags for clang
-Date: Mon, 23 Jun 2025 15:07:05 +0200
-Message-ID: <20250623130614.807611126@linuxfoundation.org>
+	Neill Kapron <nkapron@google.com>,
+	Kees Cook <kees@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 032/411] selftests/seccomp: fix syscall_restart test for arm compat
+Date: Mon, 23 Jun 2025 15:02:56 +0200
+Message-ID: <20250623130633.971316764@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,47 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Neill Kapron <nkapron@google.com>
 
-commit 7db038d9790eda558dd6c1dde4cdd58b64789c47 upstream.
+[ Upstream commit 797002deed03491215a352ace891749b39741b69 ]
 
-When clang's -Qunused-arguments is dropped from KBUILD_CPPFLAGS, it
-warns:
+The inconsistencies in the systcall ABI between arm and arm-compat can
+can cause a failure in the syscall_restart test due to the logic
+attempting to work around the differences. The 'machine' field for an
+ARM64 device running in compat mode can report 'armv8l' or 'armv8b'
+which matches with the string 'arm' when only examining the first three
+characters of the string.
 
-  clang-16: error: argument unused during compilation: '-mhard-float' [-Werror,-Wunused-command-line-argument]
+This change adds additional validation to the workaround logic to make
+sure we only take the arm path when running natively, not in arm-compat.
 
-Similar to commit 84edc2eff827 ("selftest/fpu: avoid clang warning"),
-just add this flag to GCC builds. Commit 0f0727d971f6 ("drm/amd/display:
-readd -msse2 to prevent Clang from emitting libcalls to undefined SW FP
-routines") added '-msse2' to prevent clang from emitting software
-floating point routines.
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 256d0afb11d6 ("selftests/seccomp: build and pass on arm64")
+Signed-off-by: Neill Kapron <nkapron@google.com>
+Link: https://lore.kernel.org/r/20250427094103.3488304-2-nkapron@google.com
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/Makefile |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/seccomp/seccomp_bpf.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-@@ -24,7 +24,8 @@
- # It provides the general basic services required by other DAL
- # subcomponents.
- 
--dml_ccflags := -mhard-float -msse
-+dml_ccflags-$(CONFIG_CC_IS_GCC) := -mhard-float
-+dml_ccflags := $(dml_ccflags-y) -msse
- 
- ifdef CONFIG_CC_IS_GCC
- ifeq ($(call cc-ifversion, -lt, 0701, y), y)
+diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
+index ac340a9c09187..c1da445ab4db9 100644
+--- a/tools/testing/selftests/seccomp/seccomp_bpf.c
++++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
+@@ -3085,12 +3085,15 @@ TEST(syscall_restart)
+ 	ret = get_syscall(_metadata, child_pid);
+ #if defined(__arm__)
+ 	/*
+-	 * FIXME:
+ 	 * - native ARM registers do NOT expose true syscall.
+ 	 * - compat ARM registers on ARM64 DO expose true syscall.
++	 * - values of utsbuf.machine include 'armv8l' or 'armb8b'
++	 *   for ARM64 running in compat mode.
+ 	 */
+ 	ASSERT_EQ(0, uname(&utsbuf));
+-	if (strncmp(utsbuf.machine, "arm", 3) == 0) {
++	if ((strncmp(utsbuf.machine, "arm", 3) == 0) &&
++	    (strncmp(utsbuf.machine, "armv8l", 6) != 0) &&
++	    (strncmp(utsbuf.machine, "armv8b", 6) != 0)) {
+ 		EXPECT_EQ(__NR_nanosleep, ret);
+ 	} else
+ #endif
+-- 
+2.39.5
+
 
 
