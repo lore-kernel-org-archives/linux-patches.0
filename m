@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECCF1E5B71;
-	Mon, 23 Jun 2025 21:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FAB1E5B71;
+	Mon, 23 Jun 2025 21:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713724; cv=none; b=ZhLGExL/4VxnRQTy2yOA+WJ04GZrC5GGmLRVl2hf7ALLgb3h4+MmsFEiAXyJA+pGXnoVsr+vSghMLJ2qHcNXajkChnDHESvduA+vrbou7FeGJ6f1k+9y7mDbpd2kcptJnRM0RSb5WVQK9C8OlE3UVx8A1hLtlKq+fUfMYHyMzsM=
+	t=1750713726; cv=none; b=piMFA/pDAAVRNHKw+nFSGk4T6lrWEYh5PlRrDg026im767Bb/O/00Ur43+7u3AJPWTFcMRa56KnK9nIkPwjK6v6aUTNuudcudxFLJHebYoxuN/daENfY8wYDVMfaiVyhr1pA6hBdZIC8bvuCGPFwN/zREVQwxRzhhnd+Phv3SBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713724; c=relaxed/simple;
-	bh=FpCMFtSAfKU/MtyKN3Dr0HD1S7R0YkvEDJv4Q1eb744=;
+	s=arc-20240116; t=1750713726; c=relaxed/simple;
+	bh=wN8L8tc+daTOMVwxcL0jZZNVA/Tpf3pRbrHL8Ny3J7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EfV3iMCyorTIcEixHrDknbiUAodrSwLfNFS+quk6cnAfsrfzsQJJ1ET7tyffhnlqWLuW3P/n/h9tyK+w79QueMKqOqTXmlOn4E4NiNq/Lfd1URAAF2g3fyTKD30vkxyRILxFTAcU4iET/Pc/Na9CcgNW5CCNQR+bRQ5mPf/QQOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIaaKEf2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CjKjIkiC3ylP/VCaSFQyCIT/KvsiUD2VrtihoGPO3Snl4MViT/CP42VjUBY/nkttsGud1/azFFlTVvl0gqluy57whTcHFqzlD8JShRCOgNNuaVUfMBva/SQdqMSmy5X5rYJH2Eha4WnmiBcupUpRKr+NZ+5Lr+MKXqvDVYXsHQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDResPVc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIaaKEf2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80B6C4CEEA;
-	Mon, 23 Jun 2025 21:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDResPVc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59EC4C4CEEA;
+	Mon, 23 Jun 2025 21:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713724;
-	bh=FpCMFtSAfKU/MtyKN3Dr0HD1S7R0YkvEDJv4Q1eb744=;
+	s=korg; t=1750713726;
+	bh=wN8L8tc+daTOMVwxcL0jZZNVA/Tpf3pRbrHL8Ny3J7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gIaaKEf2+VSB5NH0vtHib1BNPgFUyv7JYJsNLCVN95NFuifQCQNPezrXVKsvyzWJq
-	 zvL3C1GqQvEKpBNghku6uNzxB07uLHiiSvYOSrV8p/BGEqnwRB8YVg8rCeqb2sdwx4
-	 X/CzYbbYEo73XS7H33yhFkS1O1Fh6oZJlolIZx2o=
+	b=sDResPVc8yJAK+zksHx3z9k1u+Qu0qcE3nLaOk/IicGfxfU+tBCKpbhk4yyURtMxr
+	 kfqIyEV8QHgC2A8CtUWMXQ1QQvhpI5WyvBaNLll1I3ppf/ME33b/sFn135TVlYsN43
+	 jO6PZsfZY3tWu+2qStFnWtHlhfLhjbx0tbwL+2F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/508] nilfs2: do not propagate ENOENT error from nilfs_btree_propagate()
-Date: Mon, 23 Jun 2025 15:02:44 +0200
-Message-ID: <20250623130648.223284802@linuxfoundation.org>
+Subject: [PATCH 5.4 202/222] wifi: carl9170: do not ping device which has failed to load firmware
+Date: Mon, 23 Jun 2025 15:08:57 +0200
+Message-ID: <20250623130618.348486975@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,57 +48,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 8e39fbb1edbb4ec9d7c1124f403877fc167fcecd ]
+[ Upstream commit 15d25307692312cec4b57052da73387f91a2e870 ]
 
-In preparation for writing logs, in nilfs_btree_propagate(), which makes
-parent and ancestor node blocks dirty starting from a modified data block
-or b-tree node block, if the starting block does not belong to the b-tree,
-i.e.  is isolated, nilfs_btree_do_lookup() called within the function
-fails with -ENOENT.
+Syzkaller reports [1, 2] crashes caused by an attempts to ping
+the device which has failed to load firmware. Since such a device
+doesn't pass 'ieee80211_register_hw()', an internal workqueue
+managed by 'ieee80211_queue_work()' is not yet created and an
+attempt to queue work on it causes null-ptr-deref.
 
-In this case, even though -ENOENT is an internal code, it is propagated to
-the log writer via nilfs_bmap_propagate() and may be erroneously returned
-to system calls such as fsync().
+[1] https://syzkaller.appspot.com/bug?extid=9a4aec827829942045ff
+[2] https://syzkaller.appspot.com/bug?extid=0d8afba53e8fb2633217
 
-Fix this issue by changing the error code to -EINVAL in this case, and
-having the bmap layer detect metadata corruption and convert the error
-code appropriately.
-
-Link: https://lkml.kernel.org/r/20250428173808.6452-3-konishi.ryusuke@gmail.com
-Fixes: 1f5abe7e7dbc ("nilfs2: replace BUG_ON and BUG calls triggerable from ioctl")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e4a668c59080 ("carl9170: fix spurious restart due to high latency")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Christian Lamparter <chunkeey@gmail.com>
+Link: https://patch.msgid.link/20250616181205.38883-1-dmantipov@yandex.ru
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/btree.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/carl9170/usb.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nilfs2/btree.c b/fs/nilfs2/btree.c
-index 3139a1863751b..29cb1236e1a9b 100644
---- a/fs/nilfs2/btree.c
-+++ b/fs/nilfs2/btree.c
-@@ -2094,11 +2094,13 @@ static int nilfs_btree_propagate(struct nilfs_bmap *btree,
+diff --git a/drivers/net/wireless/ath/carl9170/usb.c b/drivers/net/wireless/ath/carl9170/usb.c
+index 98fdfa84b0a9a..d5d23b297fd94 100644
+--- a/drivers/net/wireless/ath/carl9170/usb.c
++++ b/drivers/net/wireless/ath/carl9170/usb.c
+@@ -438,14 +438,21 @@ static void carl9170_usb_rx_complete(struct urb *urb)
  
- 	ret = nilfs_btree_do_lookup(btree, path, key, NULL, level + 1, 0);
- 	if (ret < 0) {
--		if (unlikely(ret == -ENOENT))
-+		if (unlikely(ret == -ENOENT)) {
- 			nilfs_crit(btree->b_inode->i_sb,
- 				   "writing node/leaf block does not appear in b-tree (ino=%lu) at key=%llu, level=%d",
- 				   btree->b_inode->i_ino,
- 				   (unsigned long long)key, level);
-+			ret = -EINVAL;
-+		}
- 		goto out;
- 	}
+ 		if (atomic_read(&ar->rx_anch_urbs) == 0) {
+ 			/*
+-			 * The system is too slow to cope with
+-			 * the enormous workload. We have simply
+-			 * run out of active rx urbs and this
+-			 * unfortunately leads to an unpredictable
+-			 * device.
++			 * At this point, either the system is too slow to
++			 * cope with the enormous workload (so we have simply
++			 * run out of active rx urbs and this unfortunately
++			 * leads to an unpredictable device), or the device
++			 * is not fully functional after an unsuccessful
++			 * firmware loading attempts (so it doesn't pass
++			 * ieee80211_register_hw() and there is no internal
++			 * workqueue at all).
+ 			 */
  
+-			ieee80211_queue_work(ar->hw, &ar->ping_work);
++			if (ar->registered)
++				ieee80211_queue_work(ar->hw, &ar->ping_work);
++			else
++				pr_warn_once("device %s is not registered\n",
++					     dev_name(&ar->udev->dev));
+ 		}
+ 	} else {
+ 		/*
 -- 
 2.39.5
 
