@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B196199FBA;
-	Mon, 23 Jun 2025 22:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FD416D9BF;
+	Mon, 23 Jun 2025 22:21:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717297; cv=none; b=pNrVc/NXh4ai5szbVEyuiQEVOswV59EtYmTPO4Sdv5LBOgg0pVVXr13oZVjetQp4f67Zkh0FssXtSwXrcC5lnLmYcCt7f3huq6/h/NuunMxTYaBuki9NeCfI7i+ablXUxNy63moQpFD3t+3cA3p2tEUwz4WTmVdVXuHJY4mEbwA=
+	t=1750717299; cv=none; b=HkOY2GzSxSdTkkdx0EOdyjFnCBHKHpIYxtHNEP5AmANLBXwrmZKtB/aS2IlcjQlJJhAYrzbMn/VsfHAUmvH8aUx2NvpffI49YYqAy14vG+WjqZl2OQ37kabBL5aUz4qccQPPICJTkfs6Ijp9xgirmaQRYwQ6Rqyyw/xjMpxDLFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717297; c=relaxed/simple;
-	bh=FaALA4ius8zCVnyifv0jU7dnA0O/2DzBJqtSEpmUX2s=;
+	s=arc-20240116; t=1750717299; c=relaxed/simple;
+	bh=6LSMYxOWU2Tkr60KjlXNBTxnFHJsJ+HR1DB7vxt0gXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tK9EhQt+1WabGMrc7+RrIg4isyQycsL9R8TQs6XvnPpVZVT8ziJD58YtIlhro0VzTfymK5kgsqPnGWOjUWWmcGmzqKea6gKUcUfWnNZLGXqZsMkAkgPQK/0n8q70JBF0LJ/Ki1Q23KSR8e/iFehmEsLB+nfJIRJrlm0upzqKJyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=atcz+HME; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i+Fm0NNi+UtPg0C5C2m3WnWPK0B8OOAVS59KugOkAsHVOrW5SK/qJisXady38suoEpj2yJbCJaH7Mh559KS/bH9M8dQGKLdwJHy9NV0PgwdZwaVciF4RSaCCdPZLPLVD+7vAyoZ7zs139ebq3fkP3uAJVm4rsb2FtB9U3MSKdug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bY5q9xyf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="atcz+HME"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94578C4CEEA;
-	Mon, 23 Jun 2025 22:21:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bY5q9xyf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A90EC4CEEA;
+	Mon, 23 Jun 2025 22:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717296;
-	bh=FaALA4ius8zCVnyifv0jU7dnA0O/2DzBJqtSEpmUX2s=;
+	s=korg; t=1750717299;
+	bh=6LSMYxOWU2Tkr60KjlXNBTxnFHJsJ+HR1DB7vxt0gXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=atcz+HMEEoAK1HrOS5Q2GYAbLqE8qMuQD1GieB670tXFzy+kSFz7wq4a2JBve4EOz
-	 LWhfNTkflBU6HVSCGkOleOOmq9NtgcK9J4Kx1FVpNqWd9r8KwAtgAgTvktlQYe9+Kt
-	 JzBw7OnmDc638pJtlPHCzwUbGPe3/UUSptLCutN4=
+	b=bY5q9xyf5TcSsqehxVWARxZoVKeoIF2aD4Tl8NfxN4LvF5AYWV8ZQ2j1VLbaJ84cO
+	 F/cvlO5Vm9jHEktYsZ+XRiy/eOc5uvqbSqnUz6FGoZWGcRLtREU6GduwYIomDa6bdK
+	 e698RCKnpTc4jyO5nz6+LiIr/pcQ6yggl8D5OH3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 355/414] drm/msm: Fix CP_RESET_CONTEXT_STATE bitfield names
-Date: Mon, 23 Jun 2025 15:08:12 +0200
-Message-ID: <20250623130650.847514247@linuxfoundation.org>
+Subject: [PATCH 6.12 361/414] hwmon: (occ) Rework attribute registration for stack usage
+Date: Mon, 23 Jun 2025 15:08:18 +0200
+Message-ID: <20250623130650.992032944@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
 References: <20250623130642.015559452@linuxfoundation.org>
@@ -51,34 +51,362 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Connor Abbott <cwabbott0@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit b1c9e797ad37d188675505b66a3a4bbeea5d9560 ]
+[ Upstream commit 744c2fe950e936c4d62430de899d6253424200ed ]
 
-Based on kgsl.
+clang produces an output with excessive stack usage when building the
+occ_setup_sensor_attrs() function, apparently the result of having
+a lot of struct literals and building with the -fno-strict-overflow
+option that leads clang to skip some optimization in case the 'attr'
+pointer overruns:
 
-Fixes: af66706accdf ("drm/msm/a6xx: Add skeleton A7xx support")
-Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/654922/
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+drivers/hwmon/occ/common.c:775:12: error: stack frame size (1392) exceeds limit (1280) in 'occ_setup_sensor_attrs' [-Werror,-Wframe-larger-than]
+
+Replace the custom macros for initializing the attributes with a
+simpler function call that does not run into this corner case.
+
+Link: https://godbolt.org/z/Wf1Yx76a5
+Fixes: 54076cb3b5ff ("hwmon (occ): Add sensor attributes and register hwmon device")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20250610092315.2640039-1-arnd@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/occ/common.c | 212 +++++++++++++++----------------------
+ 1 file changed, 85 insertions(+), 127 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml b/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml
-index c6cdc5c003dc0..2ca0ad6efc96e 100644
---- a/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml
-+++ b/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml
-@@ -2260,7 +2260,8 @@ opcode: CP_LOAD_STATE4 (30) (4 dwords)
- 	<reg32 offset="0" name="0">
- 		<bitfield name="CLEAR_ON_CHIP_TS" pos="0" type="boolean"/>
- 		<bitfield name="CLEAR_RESOURCE_TABLE" pos="1" type="boolean"/>
--		<bitfield name="CLEAR_GLOBAL_LOCAL_TS" pos="2" type="boolean"/>
-+		<bitfield name="CLEAR_BV_BR_COUNTER" pos="2" type="boolean"/>
-+		<bitfield name="RESET_GLOBAL_LOCAL_TS" pos="3" type="boolean"/>
- 	</reg32>
- </domain>
+diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
+index 9486db249c64f..9029ad53790b1 100644
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -747,29 +747,30 @@ static ssize_t occ_show_extended(struct device *dev,
+ }
+ 
+ /*
+- * Some helper macros to make it easier to define an occ_attribute. Since these
+- * are dynamically allocated, we shouldn't use the existing kernel macros which
++ * A helper to make it easier to define an occ_attribute. Since these
++ * are dynamically allocated, we cannot use the existing kernel macros which
+  * stringify the name argument.
+  */
+-#define ATTR_OCC(_name, _mode, _show, _store) {				\
+-	.attr	= {							\
+-		.name = _name,						\
+-		.mode = VERIFY_OCTAL_PERMISSIONS(_mode),		\
+-	},								\
+-	.show	= _show,						\
+-	.store	= _store,						\
+-}
+-
+-#define SENSOR_ATTR_OCC(_name, _mode, _show, _store, _nr, _index) {	\
+-	.dev_attr	= ATTR_OCC(_name, _mode, _show, _store),	\
+-	.index		= _index,					\
+-	.nr		= _nr,						\
++static void occ_init_attribute(struct occ_attribute *attr, int mode,
++	ssize_t (*show)(struct device *dev, struct device_attribute *attr, char *buf),
++	ssize_t (*store)(struct device *dev, struct device_attribute *attr,
++				   const char *buf, size_t count),
++	int nr, int index, const char *fmt, ...)
++{
++	va_list args;
++
++	va_start(args, fmt);
++	vsnprintf(attr->name, sizeof(attr->name), fmt, args);
++	va_end(args);
++
++	attr->sensor.dev_attr.attr.name = attr->name;
++	attr->sensor.dev_attr.attr.mode = mode;
++	attr->sensor.dev_attr.show = show;
++	attr->sensor.dev_attr.store = store;
++	attr->sensor.index = index;
++	attr->sensor.nr = nr;
+ }
+ 
+-#define OCC_INIT_ATTR(_name, _mode, _show, _store, _nr, _index)		\
+-	((struct sensor_device_attribute_2)				\
+-		SENSOR_ATTR_OCC(_name, _mode, _show, _store, _nr, _index))
+-
+ /*
+  * Allocate and instatiate sensor_device_attribute_2s. It's most efficient to
+  * use our own instead of the built-in hwmon attribute types.
+@@ -855,14 +856,15 @@ static int occ_setup_sensor_attrs(struct occ *occ)
+ 		sensors->extended.num_sensors = 0;
+ 	}
+ 
+-	occ->attrs = devm_kzalloc(dev, sizeof(*occ->attrs) * num_attrs,
++	occ->attrs = devm_kcalloc(dev, num_attrs, sizeof(*occ->attrs),
+ 				  GFP_KERNEL);
+ 	if (!occ->attrs)
+ 		return -ENOMEM;
+ 
+ 	/* null-terminated list */
+-	occ->group.attrs = devm_kzalloc(dev, sizeof(*occ->group.attrs) *
+-					num_attrs + 1, GFP_KERNEL);
++	occ->group.attrs = devm_kcalloc(dev, num_attrs + 1,
++					sizeof(*occ->group.attrs),
++					GFP_KERNEL);
+ 	if (!occ->group.attrs)
+ 		return -ENOMEM;
+ 
+@@ -872,43 +874,33 @@ static int occ_setup_sensor_attrs(struct occ *occ)
+ 		s = i + 1;
+ 		temp = ((struct temp_sensor_2 *)sensors->temp.data) + i;
+ 
+-		snprintf(attr->name, sizeof(attr->name), "temp%d_label", s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444, show_temp, NULL,
+-					     0, i);
++		occ_init_attribute(attr, 0444, show_temp, NULL,
++				   0, i, "temp%d_label", s);
+ 		attr++;
+ 
+ 		if (sensors->temp.version == 2 &&
+ 		    temp->fru_type == OCC_FRU_TYPE_VRM) {
+-			snprintf(attr->name, sizeof(attr->name),
+-				 "temp%d_alarm", s);
++			occ_init_attribute(attr, 0444, show_temp, NULL,
++					   1, i, "temp%d_alarm", s);
+ 		} else {
+-			snprintf(attr->name, sizeof(attr->name),
+-				 "temp%d_input", s);
++			occ_init_attribute(attr, 0444, show_temp, NULL,
++					   1, i, "temp%d_input", s);
+ 		}
+ 
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444, show_temp, NULL,
+-					     1, i);
+ 		attr++;
+ 
+ 		if (sensors->temp.version > 1) {
+-			snprintf(attr->name, sizeof(attr->name),
+-				 "temp%d_fru_type", s);
+-			attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-						     show_temp, NULL, 2, i);
++			occ_init_attribute(attr, 0444, show_temp, NULL,
++					   2, i, "temp%d_fru_type", s);
+ 			attr++;
+ 
+-			snprintf(attr->name, sizeof(attr->name),
+-				 "temp%d_fault", s);
+-			attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-						     show_temp, NULL, 3, i);
++			occ_init_attribute(attr, 0444, show_temp, NULL,
++					   3, i, "temp%d_fault", s);
+ 			attr++;
+ 
+ 			if (sensors->temp.version == 0x10) {
+-				snprintf(attr->name, sizeof(attr->name),
+-					 "temp%d_max", s);
+-				attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-							     show_temp, NULL,
+-							     4, i);
++				occ_init_attribute(attr, 0444, show_temp, NULL,
++						   4, i, "temp%d_max", s);
+ 				attr++;
+ 			}
+ 		}
+@@ -917,14 +909,12 @@ static int occ_setup_sensor_attrs(struct occ *occ)
+ 	for (i = 0; i < sensors->freq.num_sensors; ++i) {
+ 		s = i + 1;
+ 
+-		snprintf(attr->name, sizeof(attr->name), "freq%d_label", s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444, show_freq, NULL,
+-					     0, i);
++		occ_init_attribute(attr, 0444, show_freq, NULL,
++				   0, i, "freq%d_label", s);
+ 		attr++;
+ 
+-		snprintf(attr->name, sizeof(attr->name), "freq%d_input", s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444, show_freq, NULL,
+-					     1, i);
++		occ_init_attribute(attr, 0444, show_freq, NULL,
++				   1, i, "freq%d_input", s);
+ 		attr++;
+ 	}
+ 
+@@ -940,32 +930,24 @@ static int occ_setup_sensor_attrs(struct occ *occ)
+ 			s = (i * 4) + 1;
+ 
+ 			for (j = 0; j < 4; ++j) {
+-				snprintf(attr->name, sizeof(attr->name),
+-					 "power%d_label", s);
+-				attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-							     show_power, NULL,
+-							     nr++, i);
++				occ_init_attribute(attr, 0444, show_power,
++						   NULL, nr++, i,
++						   "power%d_label", s);
+ 				attr++;
+ 
+-				snprintf(attr->name, sizeof(attr->name),
+-					 "power%d_average", s);
+-				attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-							     show_power, NULL,
+-							     nr++, i);
++				occ_init_attribute(attr, 0444, show_power,
++						   NULL, nr++, i,
++						   "power%d_average", s);
+ 				attr++;
+ 
+-				snprintf(attr->name, sizeof(attr->name),
+-					 "power%d_average_interval", s);
+-				attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-							     show_power, NULL,
+-							     nr++, i);
++				occ_init_attribute(attr, 0444, show_power,
++						   NULL, nr++, i,
++						   "power%d_average_interval", s);
+ 				attr++;
+ 
+-				snprintf(attr->name, sizeof(attr->name),
+-					 "power%d_input", s);
+-				attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-							     show_power, NULL,
+-							     nr++, i);
++				occ_init_attribute(attr, 0444, show_power,
++						   NULL, nr++, i,
++						   "power%d_input", s);
+ 				attr++;
+ 
+ 				s++;
+@@ -977,28 +959,20 @@ static int occ_setup_sensor_attrs(struct occ *occ)
+ 		for (i = 0; i < sensors->power.num_sensors; ++i) {
+ 			s = i + 1;
+ 
+-			snprintf(attr->name, sizeof(attr->name),
+-				 "power%d_label", s);
+-			attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-						     show_power, NULL, 0, i);
++			occ_init_attribute(attr, 0444, show_power, NULL,
++					   0, i, "power%d_label", s);
+ 			attr++;
+ 
+-			snprintf(attr->name, sizeof(attr->name),
+-				 "power%d_average", s);
+-			attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-						     show_power, NULL, 1, i);
++			occ_init_attribute(attr, 0444, show_power, NULL,
++					   1, i, "power%d_average", s);
+ 			attr++;
+ 
+-			snprintf(attr->name, sizeof(attr->name),
+-				 "power%d_average_interval", s);
+-			attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-						     show_power, NULL, 2, i);
++			occ_init_attribute(attr, 0444, show_power, NULL,
++					   2, i, "power%d_average_interval", s);
+ 			attr++;
+ 
+-			snprintf(attr->name, sizeof(attr->name),
+-				 "power%d_input", s);
+-			attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-						     show_power, NULL, 3, i);
++			occ_init_attribute(attr, 0444, show_power, NULL,
++					   3, i, "power%d_input", s);
+ 			attr++;
+ 		}
+ 
+@@ -1006,56 +980,43 @@ static int occ_setup_sensor_attrs(struct occ *occ)
+ 	}
+ 
+ 	if (sensors->caps.num_sensors >= 1) {
+-		snprintf(attr->name, sizeof(attr->name), "power%d_label", s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444, show_caps, NULL,
+-					     0, 0);
++		occ_init_attribute(attr, 0444, show_caps, NULL,
++				   0, 0, "power%d_label", s);
+ 		attr++;
+ 
+-		snprintf(attr->name, sizeof(attr->name), "power%d_cap", s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444, show_caps, NULL,
+-					     1, 0);
++		occ_init_attribute(attr, 0444, show_caps, NULL,
++				   1, 0, "power%d_cap", s);
+ 		attr++;
+ 
+-		snprintf(attr->name, sizeof(attr->name), "power%d_input", s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444, show_caps, NULL,
+-					     2, 0);
++		occ_init_attribute(attr, 0444, show_caps, NULL,
++				   2, 0, "power%d_input", s);
+ 		attr++;
+ 
+-		snprintf(attr->name, sizeof(attr->name),
+-			 "power%d_cap_not_redundant", s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444, show_caps, NULL,
+-					     3, 0);
++		occ_init_attribute(attr, 0444, show_caps, NULL,
++				   3, 0, "power%d_cap_not_redundant", s);
+ 		attr++;
+ 
+-		snprintf(attr->name, sizeof(attr->name), "power%d_cap_max", s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444, show_caps, NULL,
+-					     4, 0);
++		occ_init_attribute(attr, 0444, show_caps, NULL,
++				   4, 0, "power%d_cap_max", s);
+ 		attr++;
+ 
+-		snprintf(attr->name, sizeof(attr->name), "power%d_cap_min", s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444, show_caps, NULL,
+-					     5, 0);
++		occ_init_attribute(attr, 0444, show_caps, NULL,
++				   5, 0, "power%d_cap_min", s);
+ 		attr++;
+ 
+-		snprintf(attr->name, sizeof(attr->name), "power%d_cap_user",
+-			 s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0644, show_caps,
+-					     occ_store_caps_user, 6, 0);
++		occ_init_attribute(attr, 0644, show_caps, occ_store_caps_user,
++				   6, 0, "power%d_cap_user", s);
+ 		attr++;
+ 
+ 		if (sensors->caps.version > 1) {
+-			snprintf(attr->name, sizeof(attr->name),
+-				 "power%d_cap_user_source", s);
+-			attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-						     show_caps, NULL, 7, 0);
++			occ_init_attribute(attr, 0444, show_caps, NULL,
++					   7, 0, "power%d_cap_user_source", s);
+ 			attr++;
+ 
+ 			if (sensors->caps.version > 2) {
+-				snprintf(attr->name, sizeof(attr->name),
+-					 "power%d_cap_min_soft", s);
+-				attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-							     show_caps, NULL,
+-							     8, 0);
++				occ_init_attribute(attr, 0444, show_caps, NULL,
++						   8, 0,
++						   "power%d_cap_min_soft", s);
+ 				attr++;
+ 			}
+ 		}
+@@ -1064,19 +1025,16 @@ static int occ_setup_sensor_attrs(struct occ *occ)
+ 	for (i = 0; i < sensors->extended.num_sensors; ++i) {
+ 		s = i + 1;
+ 
+-		snprintf(attr->name, sizeof(attr->name), "extn%d_label", s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-					     occ_show_extended, NULL, 0, i);
++		occ_init_attribute(attr, 0444, occ_show_extended, NULL,
++				   0, i, "extn%d_label", s);
+ 		attr++;
+ 
+-		snprintf(attr->name, sizeof(attr->name), "extn%d_flags", s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-					     occ_show_extended, NULL, 1, i);
++		occ_init_attribute(attr, 0444, occ_show_extended, NULL,
++				   1, i, "extn%d_flags", s);
+ 		attr++;
+ 
+-		snprintf(attr->name, sizeof(attr->name), "extn%d_input", s);
+-		attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
+-					     occ_show_extended, NULL, 2, i);
++		occ_init_attribute(attr, 0444, occ_show_extended, NULL,
++				   2, i, "extn%d_input", s);
+ 		attr++;
+ 	}
  
 -- 
 2.39.5
