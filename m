@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B2824BC07;
-	Mon, 23 Jun 2025 13:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A3724DD0A;
+	Mon, 23 Jun 2025 13:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684484; cv=none; b=uwkYcSkBpcFVu4S6f5UpJ9ZE+bde91dvM4d97Gvw9lVp2Ckrq5bw5HfvZisaB2yBLefkWeJWdOuXCs7jM3dhkB9MoE2rQBorhzdBcMYPl3pY8Z99wf3qFNvnoLDUcJbTizzzUYC4+ySLIsXnrkEIyLEIrGi+HL+1aqG3xtjMnf4=
+	t=1750684487; cv=none; b=vFGZ3xuji0ZCyk747LLp77uPV1F0zt7ejr+vwV9YChUpnCJyBZEDBgJJvl01MwBGF7yO40/nBOV9S3/SbFxqMl5zcWTN7bZ15+Sp/fS+cJZK0MB9/0Ge9TehWY/2PaHzCyN4cHhl4OBuigGmBOwOA8bajvsC21COv3FjVQavhw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684484; c=relaxed/simple;
-	bh=ZKoKDfc12niSpfoZu5yICu6cXkI7FLYfNprjYGbiKD0=;
+	s=arc-20240116; t=1750684487; c=relaxed/simple;
+	bh=sGLkbGrLnkMpP0IlDuPqfw58rx+nCwAKNA/eqbcmFLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Js+/21VjKi7LkR3nfklpYG471dzP+9/yAzBwNgwWLUQ5yPBpPr3/1BrTAnm2pyoBe8oaOmh7rRZFsFEK0vR/vO0pivlrv7FGNVUTKeB7B9NFIDeZfIl67m6mBEW4X9KG+uCG/lXXdHgSlikSx5KJn5aeTxNkF9Hx+Hz0v3nASr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FE7qaOmE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D88Pen8ud/Mi68kUSZdutkLR0Z1yl1oqKo++u3YGqh4WotRsfnfe8HOSiQBbQNvpu9LNIZEktR0JUO/qsmzOSajsF41IxuKzS+YYoq1i0IXX5HxR8wOXfilg0EkLc3WLlXV1c5PqHK+Ve3Pt3Ee4P1HJd9FC5EVsUXKQoL5F4KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qonu6p8w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FE7qaOmE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD29BC4CEEA;
-	Mon, 23 Jun 2025 13:14:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qonu6p8w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76817C4CEEA;
+	Mon, 23 Jun 2025 13:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684484;
-	bh=ZKoKDfc12niSpfoZu5yICu6cXkI7FLYfNprjYGbiKD0=;
+	s=korg; t=1750684486;
+	bh=sGLkbGrLnkMpP0IlDuPqfw58rx+nCwAKNA/eqbcmFLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FE7qaOmE0vlb3aHzCFuu+FcyB4DjH1waGbvhMP+rmNN3ZOu44H5i9NXxLYLbdrVeG
-	 RtZS1iDK4G3CDTgD/6KQZmjAUnzvL7kePo1x4CA2FLDq7uPNR1aUKz9m4qZCoK/fOq
-	 qsjRHhB02Cdbts40fiPRZRnXgP+WT6Mj9x7rNx/A=
+	b=qonu6p8w+QsHrsS+DZ3mQR5SAtRfvV9aVjpyN3AMA/PjOCPDoyIuTXzWlSK74Verc
+	 DSelf5MVlXki1m2LUsWgkT1t56p/+NLIe5ZXe6AaKMkVpIFG29tb/8YOQO6lq9gkiX
+	 JabLFKdxlx/xXb7fjMsv+CaX+kRCtT+MGFgt7pkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ming Qian <ming.qian@oss.nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Frank Li <Frank.Li@nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.15 087/592] media: imx-jpeg: Reset slot data pointers when freed
-Date: Mon, 23 Jun 2025 15:00:45 +0200
-Message-ID: <20250623130702.347557938@linuxfoundation.org>
+Subject: [PATCH 6.15 088/592] media: imx-jpeg: Cleanup after an allocation error
+Date: Mon, 23 Jun 2025 15:00:46 +0200
+Message-ID: <20250623130702.371183073@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -54,49 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Qian <ming.qian@oss.nxp.com>
 
-commit faa8051b128f4b34277ea8a026d02d83826f8122 upstream.
+commit 7500bb9cf164edbb2c8117d57620227b1a4a8369 upstream.
 
-Ensure that the slot data pointers are reset to NULL and handles are
-set to 0 after freeing the coherent memory. This makes he function
-mxc_jpeg_alloc_slot_data() and mxc_jpeg_free_slot_data() safe to be
-called multiple times.
+When allocation failures are not cleaned up by the driver, further
+allocation errors will be false-positives, which will cause buffers to
+remain uninitialized and cause NULL pointer dereferences.
+Ensure proper cleanup of failed allocations to prevent these issues.
 
 Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
 Cc: stable@vger.kernel.org
 Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
 +++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -758,16 +758,22 @@ static void mxc_jpeg_free_slot_data(stru
- 	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
- 			  jpeg->slot_data.desc,
- 			  jpeg->slot_data.desc_handle);
-+	jpeg->slot_data.desc = NULL;
-+	jpeg->slot_data.desc_handle = 0;
+@@ -820,6 +820,7 @@ skip_alloc:
+ 	return true;
+ err:
+ 	dev_err(jpeg->dev, "Could not allocate descriptors for slot %d", jpeg->slot_data.slot);
++	mxc_jpeg_free_slot_data(jpeg);
  
- 	/* free descriptor for encoder configuration phase / decoder DHT */
- 	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
- 			  jpeg->slot_data.cfg_desc,
- 			  jpeg->slot_data.cfg_desc_handle);
-+	jpeg->slot_data.cfg_desc_handle = 0;
-+	jpeg->slot_data.cfg_desc = NULL;
- 
- 	/* free configuration stream */
- 	dma_free_coherent(jpeg->dev, MXC_JPEG_MAX_CFG_STREAM,
- 			  jpeg->slot_data.cfg_stream_vaddr,
- 			  jpeg->slot_data.cfg_stream_handle);
-+	jpeg->slot_data.cfg_stream_vaddr = NULL;
-+	jpeg->slot_data.cfg_stream_handle = 0;
- 
- 	jpeg->slot_data.used = false;
+ 	return false;
  }
 
 
