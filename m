@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802D53597E;
-	Mon, 23 Jun 2025 22:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF09C1E22E6;
+	Mon, 23 Jun 2025 22:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716451; cv=none; b=HEo5qhHzbVPJpHfCcIlsDObQht1/q4oy8ufhaRDnrNB3Wkl999iGhkFuPmbhmQNkvDh16E+xJo/0/EydrHsjLKCRqHp8OpXMXZLc2qzfMTG9cENKed1cuKTIeYGWbSu4r7Rk/tuZXxWd+768llBssyVYtvXwzwFYG3Iwe7IXuug=
+	t=1750716454; cv=none; b=RgeWLgK7Lh6tQ4WM7jWBYBwmNPmKijapZz+Z8XRkCRn+PlkMjl+7d2vkuwdxkmaI1ymdXTtFO8u1v8+1SoWEDBKmkDOzR4GttVkos+5r8vQMhw1y7iIccvj++f8heb297C5Kc/9xFXDo85zC41NgaGd6fVe1acWyM67y63xzpJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716451; c=relaxed/simple;
-	bh=e5u9bZbULRF+F4IoTJIW5Xq1ijlvAygB3Erz2a9bFQo=;
+	s=arc-20240116; t=1750716454; c=relaxed/simple;
+	bh=7/q6oyqkLHANi/r9cbqyNhOLO5nJkFmBRVrXjkGNjs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcphBUB/Hbup3b7Vhunw7vD/F4m8soHj0IbQvPqUv6nqs48eIQRdXUrQfYCzox+B3gfAaDDbZt9oKUoovYlElWKKa3ju0HvJZtFjnidqSzpElMNF4Q4Uy1WxeUG7IbQCdc8MY53cZlLB4CMk9s/CSG1i9R0fEg78XikcSpXoZk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfgQBrCk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lfURcdpzpgoAj0Ca6RWoVFOBHOvGf7LonScF9XJBqOm6ievmWbKwHlA5rRvhzhaIhYOlnyBuv6mLw1KvZVRym5fSdQzUV2P9+D9Gpv6UFbqN03BgYdsdzeu0PtGZhnsrzqGMBZo2+NCfdhLJvcylFv19cglKusJP7YAAj4VFN3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2H3lsTI7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfgQBrCk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1712CC4CEEA;
-	Mon, 23 Jun 2025 22:07:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2H3lsTI7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D14C4CEEA;
+	Mon, 23 Jun 2025 22:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716451;
-	bh=e5u9bZbULRF+F4IoTJIW5Xq1ijlvAygB3Erz2a9bFQo=;
+	s=korg; t=1750716453;
+	bh=7/q6oyqkLHANi/r9cbqyNhOLO5nJkFmBRVrXjkGNjs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfgQBrCk0ikpfSylnjgYerzPFcSSQ81lFVMBhunrTTDIlC9WGv+uCboDw1IkWWnl8
-	 lTQcTAcv77dofhDngplrSdrvCn2XzheNqpjuY9+arMHtDsW0mdZxZUch17YI4bdeC+
-	 GBEB+RRz0GDsTeCca26+X9q8cJsq8EauqxY21E+c=
+	b=2H3lsTI7/O2QhYyXk558o5M6oUFxEJzeO/OGLFWy++2EkMHJfOWPeWkRHqiVu3/xo
+	 eAMMsKL7+BsUCFJXDCgfHf1wx98WNyuPb/7iBMyPo/nFl1UMVeJbIa2nKxmFbBhfGo
+	 SyzvfMaNDlilbBpfhS3DkP+/r55Jpl3ACDsceil4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neil@brown.name>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 303/508] nfsd: nfsd4_spo_must_allow() must check this is a v4 compound request
-Date: Mon, 23 Jun 2025 15:05:48 +0200
-Message-ID: <20250623130652.759414416@linuxfoundation.org>
+	James Morse <james.morse@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Pu Lehui <pulehui@huawei.com>
+Subject: [PATCH 5.10 335/355] arm64: proton-pack: Add new CPUs k values for branch mitigation
+Date: Mon, 23 Jun 2025 15:08:56 +0200
+Message-ID: <20250623130636.808301449@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: James Morse <james.morse@arm.com>
 
-commit 1244f0b2c3cecd3f349a877006e67c9492b41807 upstream.
+[ Upstream commit efe676a1a7554219eae0b0dcfe1e0cdcc9ef9aef ]
 
-If the request being processed is not a v4 compound request, then
-examining the cstate can have undefined results.
+Update the list of 'k' values for the branch mitigation from arm's
+website.
 
-This patch adds a check that the rpc procedure being executed
-(rq_procinfo) is the NFSPROC4_COMPOUND procedure.
+Add the values for Cortex-X1C. The MIDR_EL1 value can be found here:
+https://developer.arm.com/documentation/101968/0002/Register-descriptions/AArch>
 
-Reported-by: Olga Kornievskaia <okorniev@redhat.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: NeilBrown <neil@brown.name>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://developer.arm.com/documentation/110280/2-0/?lang=en
+Signed-off-by: James Morse <james.morse@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/cputype.h |    2 ++
+ arch/arm64/kernel/proton-pack.c  |    1 +
+ 2 files changed, 3 insertions(+)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -3536,7 +3536,8 @@ bool nfsd4_spo_must_allow(struct svc_rqs
- 	struct nfs4_op_map *allow = &cstate->clp->cl_spo_must_allow;
- 	u32 opiter;
- 
--	if (!cstate->minorversion)
-+	if (rqstp->rq_procinfo != &nfsd_version4.vs_proc[NFSPROC4_COMPOUND] ||
-+	    cstate->minorversion == 0)
- 		return false;
- 
- 	if (cstate->spo_must_allowed)
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -80,6 +80,7 @@
+ #define ARM_CPU_PART_CORTEX_A78AE	0xD42
+ #define ARM_CPU_PART_CORTEX_X1		0xD44
+ #define ARM_CPU_PART_CORTEX_A510	0xD46
++#define ARM_CPU_PART_CORTEX_X1C		0xD4C
+ #define ARM_CPU_PART_CORTEX_A520	0xD80
+ #define ARM_CPU_PART_CORTEX_A710	0xD47
+ #define ARM_CPU_PART_CORTEX_A715	0xD4D
+@@ -144,6 +145,7 @@
+ #define MIDR_CORTEX_A78AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78AE)
+ #define MIDR_CORTEX_X1	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1)
+ #define MIDR_CORTEX_A510 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A510)
++#define MIDR_CORTEX_X1C MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1C)
+ #define MIDR_CORTEX_A520 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A520)
+ #define MIDR_CORTEX_A710 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A710)
+ #define MIDR_CORTEX_A715 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A715)
+--- a/arch/arm64/kernel/proton-pack.c
++++ b/arch/arm64/kernel/proton-pack.c
+@@ -899,6 +899,7 @@ static u8 spectre_bhb_loop_affected(void
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_X1C),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
+ 		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
 
 
