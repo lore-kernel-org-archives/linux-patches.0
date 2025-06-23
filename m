@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E56226CF1;
-	Mon, 23 Jun 2025 22:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FE5223DD0;
+	Mon, 23 Jun 2025 22:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716847; cv=none; b=OB2ay0+iU6A6mrRijdHBjzWFqaUF6DC8dScERb/rGzzHk156Dv8KCQh4e90p6Ib0NbAWqe/h7qPhEFT7eyxcUQQdHTlvsBqrOgjBc/FMiRfoM5P6n2Oxnfer+TsHrZXbOTZ1cEf2PIP4zgp/ribyVklIyD5dQUJFR0I2ig4j6dg=
+	t=1750716850; cv=none; b=RWzg0z0lrBmMb0a+1ULxDvsGWqK1JxQNpEcUQ4Eymlbdj6fH++OrceBBGISc7NfX6L+W52rstgRxbWoY7qV8nPS6SPzX7Mv7tIkgH1atwf4CR784lsb5wOW2ueqZYIOqJ84gP0YF9a8ElQRNVT1Buw/E3F/VORf8S1PA/cqqZio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716847; c=relaxed/simple;
-	bh=plAFY97hYnbXOM2rmsk+gTYqVyXQWHr8WIChAzwroRQ=;
+	s=arc-20240116; t=1750716850; c=relaxed/simple;
+	bh=ym+DM5H4RVruw5rbBEH1jDQcRWDPV+jeG9kk0XMW/9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g98Uo3GyvHfLIBbhHlfymQzupku8UcfZTE8+l5aOq2eFEwZ/sgkxifgNMi1zprhfyfWjaSfrdIWLVJb0dCJXj3pMaXuXMK0WB31elpgzSFCxuA4yuewa56/+8UPvj6pp5pjw7ATuUAfWaCPcAWUNkSJbX4vBD6b1ZvVCMhvttHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dbgx1MsS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CYwmuBa3sR6t0HutJC9sfWEx8icdsu2w+tWBxvwYhlycdypMMb57VdCeIN8TvG8T3x7cmlNxwbr2zcWBvwCjmjIyeWUZjXidG9kt8rhV7ERCPBAy71ab92s96KkK//SCDIYj8FOKvx2pZ530Y2YTKFcaDf5R8WYJIj4IXVfCpds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FuyIEpKJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dbgx1MsS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3030BC4CEEA;
-	Mon, 23 Jun 2025 22:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FuyIEpKJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07E5C4CEEA;
+	Mon, 23 Jun 2025 22:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716847;
-	bh=plAFY97hYnbXOM2rmsk+gTYqVyXQWHr8WIChAzwroRQ=;
+	s=korg; t=1750716850;
+	bh=ym+DM5H4RVruw5rbBEH1jDQcRWDPV+jeG9kk0XMW/9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dbgx1MsSwqYrUfBj0zPBtqUdsqve8lYt/yBwMGgmKkgQiIMYLFax0ExSOiqtm94LV
-	 N+DI2a+N2bB0lWRtL4vFYxCWo3ZmF/d2jjhFNDI4Zf073s93I5yz3b0yKrDkrDpcLf
-	 cUqJtsxNlor4jXD2ayZtTqq72itRj2w1j7qNX9zY=
+	b=FuyIEpKJ26rtfMXjEMTIA6+ZVpA2HiASjuShU1GDgWDMQyGvqzgeGBBavx+WlFd35
+	 V0V+7dzCGsMP+3uD8r8azDu7hR8AAj2sSqXaOa9RhddM8niZ/xPjF7HJKQAB8w9sls
+	 JMFItuTdu1hTh0Ai4X5rK9LSoNiQm66FRdlojzHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Elder <elder@riscstar.com>,
-	Troy Mitchell <troymitchell988@gmail.com>,
-	Andi Shyti <andi@smida.it>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 6.15 562/592] i2c: k1: check for transfer error
-Date: Mon, 23 Jun 2025 15:08:40 +0200
-Message-ID: <20250623130713.810476550@linuxfoundation.org>
+	Stuart Hayes <stuart.w.hayes@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 291/414] platform/x86: dell_rbu: Fix list usage
+Date: Mon, 23 Jun 2025 15:07:08 +0200
+Message-ID: <20250623130649.287548626@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,56 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Elder <elder@riscstar.com>
+From: Stuart Hayes <stuart.w.hayes@gmail.com>
 
-commit a6c23dac756b9541b33aa3bcd30f464df2879209 upstream.
+[ Upstream commit 61ce04601e0d8265ec6d2ffa6df5a7e1bce64854 ]
 
-If spacemit_i2c_xfer_msg() times out waiting for a message transfer to
-complete, or if the hardware reports an error, it returns a negative
-error code (-ETIMEDOUT, -EAGAIN, -ENXIO. or -EIO).
+Pass the correct list head to list_for_each_entry*() when looping through
+the packet list.
 
-The sole caller of spacemit_i2c_xfer_msg() is spacemit_i2c_xfer(),
-which is the i2c_algorithm->xfer callback function.  It currently
-does not save the value returned by spacemit_i2c_xfer_msg().
+Without this patch, reading the packet data via sysfs will show the data
+incorrectly (because it starts at the wrong packet), and clearing the
+packet list will result in a NULL pointer dereference.
 
-The result is that transfer errors go unreported, and a caller
-has no indication anything is wrong.
-
-When this code was out for review, the return value *was* checked
-in early versions.  But for some reason, that assignment got dropped
-between versions 5 and 6 of the series, perhaps related to reworking
-the code to merge spacemit_i2c_xfer_core() into spacemit_i2c_xfer().
-
-Simply assigning the value returned to "ret" fixes the problem.
-
-Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-Signed-off-by: Alex Elder <elder@riscstar.com>
-Cc: <stable@vger.kernel.org> # v6.15+
-Reviewed-by: Troy Mitchell <troymitchell988@gmail.com>
-Link: https://lore.kernel.org/r/20250616125137.1555453-1-elder@riscstar.com
-Signed-off-by: Andi Shyti <andi@smida.it>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d19f359fbdc6 ("platform/x86: dell_rbu: don't open code list_for_each_entry*()")
+Signed-off-by: Stuart Hayes <stuart.w.hayes@gmail.com>
+Link: https://lore.kernel.org/r/20250609184659.7210-3-stuart.w.hayes@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-k1.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/dell/dell_rbu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/i2c-k1.c
-+++ b/drivers/i2c/busses/i2c-k1.c
-@@ -477,7 +477,7 @@ static int spacemit_i2c_xfer(struct i2c_
+diff --git a/drivers/platform/x86/dell/dell_rbu.c b/drivers/platform/x86/dell/dell_rbu.c
+index 9f51e0fcab04e..4d2b5f6dd513f 100644
+--- a/drivers/platform/x86/dell/dell_rbu.c
++++ b/drivers/platform/x86/dell/dell_rbu.c
+@@ -292,7 +292,7 @@ static int packet_read_list(char *data, size_t * pread_length)
+ 	remaining_bytes = *pread_length;
+ 	bytes_read = rbu_data.packet_read_count;
  
- 	ret = spacemit_i2c_wait_bus_idle(i2c);
- 	if (!ret)
--		spacemit_i2c_xfer_msg(i2c);
-+		ret = spacemit_i2c_xfer_msg(i2c);
- 	else if (ret < 0)
- 		dev_dbg(i2c->dev, "i2c transfer error: %d\n", ret);
- 	else
+-	list_for_each_entry(newpacket, (&packet_data_head.list)->next, list) {
++	list_for_each_entry(newpacket, &packet_data_head.list, list) {
+ 		bytes_copied = do_packet_read(pdest, newpacket,
+ 			remaining_bytes, bytes_read, &temp_count);
+ 		remaining_bytes -= bytes_copied;
+@@ -315,7 +315,7 @@ static void packet_empty_list(void)
+ {
+ 	struct packet_data *newpacket, *tmp;
+ 
+-	list_for_each_entry_safe(newpacket, tmp, (&packet_data_head.list)->next, list) {
++	list_for_each_entry_safe(newpacket, tmp, &packet_data_head.list, list) {
+ 		list_del(&newpacket->list);
+ 
+ 		/*
+-- 
+2.39.5
+
 
 
