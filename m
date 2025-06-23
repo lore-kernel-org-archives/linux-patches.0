@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F139470838;
-	Mon, 23 Jun 2025 21:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DF770838;
+	Mon, 23 Jun 2025 21:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713047; cv=none; b=eqV7r1TXKMjc9V/ugMwbx5aHdfLGgBgfB7GMism97LGSpzb2Qy+vZjmKjnSthDvRlSRz/bCYLLKdTnPHFvpILvsBmB50TQ0OGVJRrVnQHoQAyGkRj+n3XRPQU7r4VQ8HBxJ7IUWZAlYmyk0RBQj2YhH9j5Eus3gBFy7c6d376SY=
+	t=1750713049; cv=none; b=HrlpqKb5eLA+qJTQ7cQRc3mcf3EcG26Co9OmHIs7H4BF0MR0TYY2Z3GsxdErMdQF6CVmHRgyePpMIaWB0BzthyMiXLZYfx6BQBeFhidknAn0+CVwRn1fq77PoD/bK7D9lUrC+lnzO/eyluxvYxIeCtsJVhc3FYAtwHSDQOsCpZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713047; c=relaxed/simple;
-	bh=UetWgWwNxH6ZtpxGj0QooftH/glfE7QiH1c/VQ9WLDE=;
+	s=arc-20240116; t=1750713049; c=relaxed/simple;
+	bh=q3ns3jUbXdK0A4C7HhxqsultUQi4PBOxRBRuShKu4dI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hKDi3DPbpuhpbWkcEAJXC5nhwNmrKOPOZSZJX5p1ZYAxSwrRSRZJ6lR3BiER8X3n5jhv17gQ+pM2gqWBQj3cLZi4MolcwYIevDk5jvGX6hdi/t6qo7QKM20yhjh6qEVBkqVkTOK2eUMexj2R+uC1umWBdraHQg5WZOUfbIg9XaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nS5jfZ3U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dege6J54Pb+IrcMIBs048Y757OzGK06M2hvw774+m5/SyI9lmaq1paqXrlNAi/P9ce6o6lSR8v6liN0YS2LBziAIk5LnWzymxrptB+VPnAZ77fzGKiLV+Dtq/WnrK18VBq4PbutDqC37NrGaqn1Us38DXB8CHtZsicda6jOlHs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNqEXCVV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nS5jfZ3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89265C4CEEA;
-	Mon, 23 Jun 2025 21:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNqEXCVV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00992C4CEEA;
+	Mon, 23 Jun 2025 21:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713046;
-	bh=UetWgWwNxH6ZtpxGj0QooftH/glfE7QiH1c/VQ9WLDE=;
+	s=korg; t=1750713049;
+	bh=q3ns3jUbXdK0A4C7HhxqsultUQi4PBOxRBRuShKu4dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nS5jfZ3Uq2dlTdyRJRG+xtT2OrG2gZOkW4k6VonaDrUR4ggb+18pyIlsImvNNO3El
-	 VX5y4txxB7AVUrFtM96P8pdcKJ8/NIpR9uSJ7LKViOGZYcebt/MeOukBe/ZHdo7AzS
-	 SQw+6dh4Qzgp1Vl9JjzycmTB3CycR8/TTT1ueeKI=
+	b=WNqEXCVV7H99korVsC7yYQD36HVuZvt76E7YEmiX/nSssDsmc1rygFF9BCUiu/ZTk
+	 EJ4zoQHYtEDOcF7O5I78ISth6A+4ZD+2A5dkBpvIYzYgWe0mA7yvfSzRmNeIC8SsOa
+	 C4i31TpY14wQyscyUQlhG+yYq63D/JGtDxKi0z6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Narayana Murty N <nnmlinux@linux.ibm.com>,
-	Vaibhav Jain <vaibhav@linux.ibm.com>,
-	Ganesh Goudar <ganeshgr@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 185/222] powerpc/eeh: Fix missing PE bridge reconfiguration during VFIO EEH recovery
-Date: Mon, 23 Jun 2025 15:08:40 +0200
-Message-ID: <20250623130617.735165926@linuxfoundation.org>
+	Umang Jain <umang.jain@ideasonboard.com>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.12 043/414] media: imx335: Use correct register width for HNUM
+Date: Mon, 23 Jun 2025 15:03:00 +0200
+Message-ID: <20250623130643.113703518@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,70 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Narayana Murty N <nnmlinux@linux.ibm.com>
+From: Umang Jain <umang.jain@ideasonboard.com>
 
-[ Upstream commit 33bc69cf6655cf60829a803a45275f11a74899e5 ]
+commit b122c9cfcb39c8ef520d50eddfbe15f3e6551a50 upstream.
 
-VFIO EEH recovery for PCI passthrough devices fails on PowerNV and pseries
-platforms due to missing host-side PE bridge reconfiguration. In the
-current implementation, eeh_pe_configure() only performs RTAS or OPAL-based
-bridge reconfiguration for native host devices, but skips it entirely for
-PEs managed through VFIO in guest passthrough scenarios.
+CCI_REG_HNUM should be using CCI_REG16_LE() instead of CCI_REG8()
+as HNUM spans from 0x302e[0:7] to 0x302f[0:3].
 
-This leads to incomplete EEH recovery when a PCI error affects a
-passthrough device assigned to a QEMU/KVM guest. Although VFIO triggers the
-EEH recovery flow through VFIO_EEH_PE_ENABLE ioctl, the platform-specific
-bridge reconfiguration step is silently bypassed. As a result, the PE's
-config space is not fully restored, causing subsequent config space access
-failures or EEH freeze-on-access errors inside the guest.
-
-This patch fixes the issue by ensuring that eeh_pe_configure() always
-invokes the platform's configure_bridge() callback (e.g.,
-pseries_eeh_phb_configure_bridge) even for VFIO-managed PEs. This ensures
-that RTAS or OPAL calls to reconfigure the PE bridge are correctly issued
-on the host side, restoring the PE's configuration space after an EEH
-event.
-
-This fix is essential for reliable EEH recovery in QEMU/KVM guests using
-VFIO PCI passthrough on PowerNV and pseries systems.
-
-Tested with:
-- QEMU/KVM guest using VFIO passthrough (IBM Power9,(lpar)Power11 host)
-- Injected EEH errors with pseries EEH errinjct tool on host, recovery
-  verified on qemu guest.
-- Verified successful config space access and CAP_EXP DevCtl restoration
-  after recovery
-
-Fixes: 212d16cdca2d ("powerpc/eeh: EEH support for VFIO PCI device")
-Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
-Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
-Reviewed-by: Ganesh Goudar <ganeshgr@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250508062928.146043-1-nnmlinux@linux.ibm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Umang Jain <umang.jain@ideasonboard.com>
+Signed-off-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Fixes: 8f0926dba799 ("media: imx335: Use V4L2 CCI for accessing sensor registers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/eeh.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/i2c/imx335.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/eeh.c b/arch/powerpc/kernel/eeh.c
-index 8b0e523b2abbe..301654971b32c 100644
---- a/arch/powerpc/kernel/eeh.c
-+++ b/arch/powerpc/kernel/eeh.c
-@@ -1723,6 +1723,8 @@ int eeh_pe_configure(struct eeh_pe *pe)
- 	/* Invalid PE ? */
- 	if (!pe)
- 		return -ENODEV;
-+	else
-+		ret = eeh_ops->configure_bridge(pe);
+diff --git a/drivers/media/i2c/imx335.c b/drivers/media/i2c/imx335.c
+index 0beb80b8c458..d400a019f6b3 100644
+--- a/drivers/media/i2c/imx335.c
++++ b/drivers/media/i2c/imx335.c
+@@ -31,7 +31,7 @@
+ #define IMX335_REG_CPWAIT_TIME		CCI_REG8(0x300d)
+ #define IMX335_REG_WINMODE		CCI_REG8(0x3018)
+ #define IMX335_REG_HTRIMMING_START	CCI_REG16_LE(0x302c)
+-#define IMX335_REG_HNUM			CCI_REG8(0x302e)
++#define IMX335_REG_HNUM			CCI_REG16_LE(0x302e)
  
- 	return ret;
- }
+ /* Lines per frame */
+ #define IMX335_REG_VMAX			CCI_REG24_LE(0x3030)
 -- 
-2.39.5
+2.50.0
 
 
 
