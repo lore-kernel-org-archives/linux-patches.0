@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4509B1AD3FA;
-	Mon, 23 Jun 2025 21:54:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FB81AD3FA;
+	Mon, 23 Jun 2025 21:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715690; cv=none; b=Qc2GfQof8bsNGczoyy0F89en2gLfhZAVcs7lmTnOZKEp0kei/VT9X5G+srNnbrNNXLpcmYIZdmq9GIV1SbMmZX0QtORWt9XOhRCLxfy+1/ZyWqHKKbZJ/Z+z2vqQ6LboXkw3dmsA9gNT9AYzX0gvGaKgZlcjIqcJptXSSOpS+ZY=
+	t=1750715692; cv=none; b=R2V6TLTpya/ZK5p721pFJslTeekdLHOkS8wBFzgT0hTB0JkFcF66qeV9ZcVb3DLtO0VPeoKDErhcwMwm4TT0ZnyEyyaIG0b8f3LHHku+CQNu7K88+wsm+5j7RGjM1HsehMfIpwcL5E40bV1mVokbPvTvZFpGfKAkFsl1vXWP6b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715690; c=relaxed/simple;
-	bh=emq25WlPkuID4ug9H7GYaiCWmRVc4COo3lk1kvl1cNE=;
+	s=arc-20240116; t=1750715692; c=relaxed/simple;
+	bh=Bj1KRaAAZuKGjU7TEgNsGXSy/vw3GAyKuKS06LGHFN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YRCKHL+YfOckqb2EpkZsjMqdwiAYm90H9B+cR25s7/yWos40Ovf5yGZbO5/hUJKkLarfZraWW8DouSXN/wvnFqsgLvnZJZyg5ieHGemXbwAkKUT8lpJuur0oUHqFQSQgOXbjL2vqlbmmfx5kfDnrIGu/CfHZb5GLyx4zMRafFpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+mYecHF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OiIDXFiZYSYHOM9EAqVxRiQTUFqkEPI59PLWRKk/GYc1FOLd8q+EiIyU1LtYQT496xF5zJ3a0fYdrpUux/tdWxpsTg4Y8L95TX3JI+KZ5ZAKdcWnUqZSCY3QNKdRwK3NqaZh6FiXXO4GRLGqn0gzW4p25YuzUGAtPBO0suIYxeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wt4B3qHe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+mYecHF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBD4C4CEEA;
-	Mon, 23 Jun 2025 21:54:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wt4B3qHe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49FDAC4CEEA;
+	Mon, 23 Jun 2025 21:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715690;
-	bh=emq25WlPkuID4ug9H7GYaiCWmRVc4COo3lk1kvl1cNE=;
+	s=korg; t=1750715692;
+	bh=Bj1KRaAAZuKGjU7TEgNsGXSy/vw3GAyKuKS06LGHFN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+mYecHFJgtYIBavm5uNjE4BrpjBQWb6AYzTRqcprpHzMaVxKkPTc3qa7m9pFy9qj
-	 hKE0ikrurgHfnfk7QYu+b70GClyolra/paZx7rkbTeHGwiY2q/jCxY51oqe3T63uq4
-	 UeP2emAMuPFg+jVoG8QfGH0Dvf6rmct5aSG+hsmI=
+	b=Wt4B3qHe39Uz9F2zXw6/L/RsvmdmYTM3YDz9UV2Mo+pwuqnO0v760TAv0FM70Jj6K
+	 AuOpjA5LKwrElbBpncJful6XzCR+60CpMX0rs221N8HBiaJoNPgDd0gLolMEhKCRXv
+	 WwfUsLB0I8seRPaUZZ1+yXo2dfHAXe/Zd8KE61is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henk Vergonet <henk.vergonet@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 201/414] wifi: mt76: mt76x2: Add support for LiteOn WN4516R,WN4519R
-Date: Mon, 23 Jun 2025 15:05:38 +0200
-Message-ID: <20250623130647.034861470@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 215/290] cifs: deal with the channel loading lag while picking channels
+Date: Mon, 23 Jun 2025 15:07:56 +0200
+Message-ID: <20250623130633.396427507@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,90 +46,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henk Vergonet <henk.vergonet@gmail.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 3c0e4f606d8693795a2c965d6f4987b1bfc31097 ]
+commit 66d590b828b1fd9fa337047ae58fe1c4c6f43609 upstream.
 
-Adds support for:
- - LiteOn WN4516R
- - LiteOn WN4519R
- Both use:
- - A nonstandard USB connector
- - Mediatek chipset MT7600U
- - ASIC revision: 76320044
+Our current approach to select a channel for sending requests is this:
+1. iterate all channels to find the min and max queue depth
+2. if min and max are not the same, pick the channel with min depth
+3. if min and max are same, round robin, as all channels are equally loaded
 
-Disabled VHT support on ASIC revision 76320044:
+The problem with this approach is that there's a lag between selecting
+a channel and sending the request (that increases the queue depth on the channel).
+While these numbers will eventually catch up, there could be a skew in the
+channel usage, depending on the application's I/O parallelism and the server's
+speed of handling requests.
 
- This fixes the 5G connectibity issue on LiteOn WN4519R module
- see https://github.com/openwrt/mt76/issues/971
+With sufficient parallelism, this lag can artificially increase the queue depth,
+thereby impacting the performance negatively.
 
- And may also fix the 5G issues on the XBox One Wireless Adapter
- see https://github.com/openwrt/mt76/issues/200
+This change will change the step 1 above to start the iteration from the last
+selected channel. This is to reduce the skew in channel usage even in the presence
+of this lag.
 
- I have looked at the FCC info related to the MT7632U chip as mentioned in here:
- https://github.com/openwrt/mt76/issues/459
- These confirm the chipset does not support 'ac' mode and hence VHT should be turned of.
-
-Signed-off-by: Henk Vergonet <henk.vergonet@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250418143914.31384-1-henk.vergonet@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ea90708d3cf3 ("cifs: use the least loaded channel for sending requests")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x2/usb.c     |  2 ++
- .../net/wireless/mediatek/mt76/mt76x2/usb_init.c    | 13 ++++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ fs/smb/client/transport.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-index 84ef80ab4afbf..96cecc576a986 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-@@ -17,6 +17,8 @@ static const struct usb_device_id mt76x2u_device_table[] = {
- 	{ USB_DEVICE(0x057c, 0x8503) },	/* Avm FRITZ!WLAN AC860 */
- 	{ USB_DEVICE(0x7392, 0xb711) },	/* Edimax EW 7722 UAC */
- 	{ USB_DEVICE(0x0e8d, 0x7632) },	/* HC-M7662BU1 */
-+	{ USB_DEVICE(0x0471, 0x2126) }, /* LiteOn WN4516R module, nonstandard USB connector */
-+	{ USB_DEVICE(0x0471, 0x7600) }, /* LiteOn WN4519R module, nonstandard USB connector */
- 	{ USB_DEVICE(0x2c4e, 0x0103) },	/* Mercury UD13 */
- 	{ USB_DEVICE(0x0846, 0x9014) },	/* Netgear WNDA3100v3 */
- 	{ USB_DEVICE(0x0846, 0x9053) },	/* Netgear A6210 */
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
-index 33a14365ec9b9..3b55628115115 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
-@@ -191,6 +191,7 @@ int mt76x2u_register_device(struct mt76x02_dev *dev)
- {
- 	struct ieee80211_hw *hw = mt76_hw(dev);
- 	struct mt76_usb *usb = &dev->mt76.usb;
-+	bool vht;
- 	int err;
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -1025,14 +1025,16 @@ struct TCP_Server_Info *cifs_pick_channe
+ 	uint index = 0;
+ 	unsigned int min_in_flight = UINT_MAX, max_in_flight = 0;
+ 	struct TCP_Server_Info *server = NULL;
+-	int i;
++	int i, start, cur;
  
- 	INIT_DELAYED_WORK(&dev->cal_work, mt76x2u_phy_calibrate);
-@@ -217,7 +218,17 @@ int mt76x2u_register_device(struct mt76x02_dev *dev)
+ 	if (!ses)
+ 		return NULL;
  
- 	/* check hw sg support in order to enable AMSDU */
- 	hw->max_tx_fragments = dev->mt76.usb.sg_en ? MT_TX_SG_MAX_SIZE : 1;
--	err = mt76_register_device(&dev->mt76, true, mt76x02_rates,
-+	switch (dev->mt76.rev) {
-+	case 0x76320044:
-+		/* these ASIC revisions do not support VHT */
-+		vht = false;
-+		break;
-+	default:
-+		vht = true;
-+		break;
-+	}
-+
-+	err = mt76_register_device(&dev->mt76, vht, mt76x02_rates,
- 				   ARRAY_SIZE(mt76x02_rates));
- 	if (err)
- 		goto fail;
--- 
-2.39.5
-
+ 	spin_lock(&ses->chan_lock);
++	start = atomic_inc_return(&ses->chan_seq);
+ 	for (i = 0; i < ses->chan_count; i++) {
+-		server = ses->chans[i].server;
++		cur = (start + i) % ses->chan_count;
++		server = ses->chans[cur].server;
+ 		if (!server || server->terminate)
+ 			continue;
+ 
+@@ -1049,17 +1051,15 @@ struct TCP_Server_Info *cifs_pick_channe
+ 		 */
+ 		if (server->in_flight < min_in_flight) {
+ 			min_in_flight = server->in_flight;
+-			index = i;
++			index = cur;
+ 		}
+ 		if (server->in_flight > max_in_flight)
+ 			max_in_flight = server->in_flight;
+ 	}
+ 
+ 	/* if all channels are equally loaded, fall back to round-robin */
+-	if (min_in_flight == max_in_flight) {
+-		index = (uint)atomic_inc_return(&ses->chan_seq);
+-		index %= ses->chan_count;
+-	}
++	if (min_in_flight == max_in_flight)
++		index = (uint)start % ses->chan_count;
+ 
+ 	server = ses->chans[index].server;
+ 	spin_unlock(&ses->chan_lock);
 
 
