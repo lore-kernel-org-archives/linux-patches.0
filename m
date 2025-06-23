@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D998921ADB5;
-	Mon, 23 Jun 2025 21:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5229B1E8324;
+	Mon, 23 Jun 2025 21:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713216; cv=none; b=j/Q3Paq8tcAYC9cjnj/93kQl45LY/kGL33PBby1TBoqWDGAByFaF+jQpY6HAiOp+EWW9gtNBLd69LF80+duvLTqEKRgDj+F1tg3mgfRbkHrZnmMoOuAp1AbOWqxOVtLaI1NPrQBDQExtNXglFukPFGdsFXA2B3prVaaPE4pRSmQ=
+	t=1750713219; cv=none; b=DmIb5gVUp3as+gjI4pGyOZAYvt3X9Xf49zFRnnyI+hEr/orHBlLMbHjFM2w58fyGUtx9wg6XjbaMQsutlQj+nDw08yOmMVzOG79Zw2YwC/bqAc3C1rp+QfDxDdq2EOxsX+4fBFvMj0/dLFD+WfC4lcz7i5ni72Ha9vEbYKk4Izk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713216; c=relaxed/simple;
-	bh=oVYHCcjC3FeKZenQVu96hDrZC7M8+yI3nSzKK/leF6A=;
+	s=arc-20240116; t=1750713219; c=relaxed/simple;
+	bh=TAdRQj+HISuBpCLf3cuKLEt5yoXkGvss6XCumPeEkz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IQtUP3lct+7i2+WhuYjXAmPk/hBMes/fNPbgHjSkiMOmv7Q6OHGf7xBe4U7jo6TNRvvABEvD8hGx6O6c+vvsrHMxJGdw2eZUugWQZUlx1/85mukz2hV/ltgDQIm00IinMrzAeS5aBdPsHfENXeFSYwocrHGKX0mUkp4m5DjP3VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLkjVng0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LaRyRYsf87RiipEwo7kSUFq7xevj7iLrSvOssRpQVa/OCPH0ebfYwDjA9e0YcbgU7h2UInN6weWI6O1BjLB5WYF/D6R+QF4T2NzaXxVRQMjatIogb9SyQSanC8KG72b33XnkQqNhWADj3C+AiFAaUcA5JU8+duNNZXBlAoACffA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dNNkcvY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLkjVng0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF74C4CEEA;
-	Mon, 23 Jun 2025 21:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dNNkcvY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCE1C4CEEA;
+	Mon, 23 Jun 2025 21:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713216;
-	bh=oVYHCcjC3FeKZenQVu96hDrZC7M8+yI3nSzKK/leF6A=;
+	s=korg; t=1750713219;
+	bh=TAdRQj+HISuBpCLf3cuKLEt5yoXkGvss6XCumPeEkz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qLkjVng0ubVFQdQ3jQRGH1Bz87pSo0eyhUSaAP6NRLWJvF/I7T25YXv5yepGBKvwc
-	 NlX9XOZss2vMQqwTqsVYfdJqkHPo4Gs7U7F1lkWj4+JA0xxoioi7vOppQGj4+LBMK1
-	 yJ+YfqJam4UrmNBAzoq9DQrRJWNDVMaQxr4xFOnM=
+	b=1dNNkcvYfoSfZ+DpbR/LUsC9H+PRTOj8NnOsEgP171KXGxNleX3HtkGvncJBO0oG9
+	 m1uma4TjuEr0cz5bCwWnrCK2quKQjyD5WJI8deXH5Z5tqBQta7PaxoHubNB46xVsiU
+	 PynikrrZq6ASC8hGfF7mvYnBgqnB2rFtYd944rSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Pitre <npitre@baylibre.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 111/411] vt: remove VT_RESIZE and VT_RESIZEX from vt_compat_ioctl()
-Date: Mon, 23 Jun 2025 15:04:15 +0200
-Message-ID: <20250623130636.319587738@linuxfoundation.org>
+Subject: [PATCH 5.10 132/355] net/mlx5: Ensure fw pages are always allocated on same NUMA
+Date: Mon, 23 Jun 2025 15:05:33 +0200
+Message-ID: <20250623130630.704462119@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +49,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Pitre <npitre@baylibre.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit c4c7ead7b86c1e7f11c64915b7e5bb6d2e242691 ]
+[ Upstream commit f37258133c1e95e61db532e14067e28b4881bf24 ]
 
-They are listed amon those cmd values that "treat 'arg' as an integer"
-which is wrong. They should instead fall into the default case. Probably
-nobody ever relied on that code since 2009 but still.
+When firmware asks the driver to allocate more pages, using event of
+give_pages, the driver should always allocate it from same NUMA, the
+original device NUMA. Current code uses dev_to_node() which can result
+in different NUMA as it is changed by other driver flows, such as
+mlx5_dma_zalloc_coherent_node(). Instead, use saved numa node for
+allocating firmware pages.
 
-Fixes: e92166517e3c ("tty: handle VT specific compat ioctls in vt driver")
-Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/pr214s15-36r8-6732-2pop-159nq85o48r7@syhkavp.arg
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 311c7c71c9bb ("net/mlx5e: Allocate DMA coherent memory on reader NUMA node")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250610151514.1094735-2-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/vt/vt_ioctl.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/vt/vt_ioctl.c b/drivers/tty/vt/vt_ioctl.c
-index 58013698635f0..fadecf3485862 100644
---- a/drivers/tty/vt/vt_ioctl.c
-+++ b/drivers/tty/vt/vt_ioctl.c
-@@ -1103,8 +1103,6 @@ long vt_compat_ioctl(struct tty_struct *tty,
- 	case VT_WAITACTIVE:
- 	case VT_RELDISP:
- 	case VT_DISALLOCATE:
--	case VT_RESIZE:
--	case VT_RESIZEX:
- 		return vt_ioctl(tty, cmd, arg);
- 
- 	/*
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
+index 1ea71f06fdb1c..b7ccdef697fd0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
+@@ -272,7 +272,7 @@ static void free_4k(struct mlx5_core_dev *dev, u64 addr, u32 function)
+ static int alloc_system_page(struct mlx5_core_dev *dev, u32 function)
+ {
+ 	struct device *device = mlx5_core_dma_dev(dev);
+-	int nid = dev_to_node(device);
++	int nid = dev->priv.numa_node;
+ 	struct page *page;
+ 	u64 zero_addr = 1;
+ 	u64 addr;
 -- 
 2.39.5
 
