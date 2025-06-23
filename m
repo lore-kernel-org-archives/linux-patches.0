@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE292236E5;
-	Mon, 23 Jun 2025 21:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4000C223DD0;
+	Mon, 23 Jun 2025 21:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715724; cv=none; b=ttdkp3rxqS7xiZb91cOWQrMbFL5fkyUO0CkWA3EenOIRWxWDH/EkRIWAeS3dADrfKvyDxz+VNJKbDCyPudz0xuB0qeHm2ZOUoSA9GETpWp64d7QeCmAt0wglPaNV7iRZz51UHj4AzhoB57njY91+NJ/eM/QpCwJPYnjAAP5XABM=
+	t=1750715727; cv=none; b=kecMbOaB32QU6HtOuPWJJ+2Pd1JZsPMYV+oxxIL6mot9I7tPAQTFVTqFqHjP6/A5YvwvIHBxVIO2mVfue6qAGM7KXX3l0XzhEzONXa0DJCwdOXS1bKjEIrbLRV99oqvrLAWJXhTcFnZZpEeq/5hDq40LKS+yjseaXOPG6lzDXNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715724; c=relaxed/simple;
-	bh=bx9iYJ1DyQSFgYK13BzJ3OYpWs7613CzdjnfpHZKEmE=;
+	s=arc-20240116; t=1750715727; c=relaxed/simple;
+	bh=FUJzrs+UnRYI3NngdG3yT+LGJ62VpfSFgKCpLfVZXng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vD52KNTgAvM9zCkA79LEp2VDSEGMUaBZcj5qhRbFURl7ydUVKFtaw7j4dF9KWTW6nu00ZlpSHt79eefHbf06Gb23w4siz1aIJdc9JdwR7yXBiVHEmwIu1CbGhnA8f9wqrP5m2R/kpCH31GAaAPMziBrFI4QwgHhEELNMGKWZpJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVlIzV3G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZfdZRImlDn3gefesV9A5Qg4iDcLtjEjaQ4tRQJAn0Fj4jLTl0b3HsfINzGBWJfgQZfzF7S5BONYJPUo4kSU5HlTuOJ9DV4XROQlXsGFh6icjvDYw4s7GthqXdJvU8OJbrE1b0KE1nJlaQTJybthQWYCDK+HOahWF6JIovI/RyeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jthC0IKo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVlIzV3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17054C4CEED;
-	Mon, 23 Jun 2025 21:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jthC0IKo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB19C4CEEA;
+	Mon, 23 Jun 2025 21:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715724;
-	bh=bx9iYJ1DyQSFgYK13BzJ3OYpWs7613CzdjnfpHZKEmE=;
+	s=korg; t=1750715726;
+	bh=FUJzrs+UnRYI3NngdG3yT+LGJ62VpfSFgKCpLfVZXng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVlIzV3GcQA5VjJboptoWnwscMxgyTfaIuiInPBAyV/fIRWoanXI4TJWD0g3VbtIs
-	 /Jfqu9cfZJ9wGllUs7Ul/a4UD6JC97YVtBKIWbgkxKw4D/so9ftWou3HoVdq2UvY7w
-	 E8yGko6weLiBCzAaYDKPGbasPEGGMl5veHJzog+U=
+	b=jthC0IKoAxBhsmXtJo38f2uQNgaMAVP6Wy8gzxiVNQwvs5PJ4lNERtUGGs/tYYgeg
+	 +KZCBQQ8JluDiCjWuDeJ7QuAXjllb9T+iTYbjMvHkikiEwny6joOvcmAt/DDgaDgfJ
+	 N+Pxu8cpTyubh3hpywrnyXIqqQT3ENXR5vyg8hgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Salem <x0rw3ll@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 263/411] ACPICA: Avoid sequence overread in call to strncmp()
-Date: Mon, 23 Jun 2025 15:06:47 +0200
-Message-ID: <20250623130640.278480453@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 217/290] cifs: do not disable interface polling on failure
+Date: Mon, 23 Jun 2025 15:07:58 +0200
+Message-ID: <20250623130633.456292482@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +46,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed Salem <x0rw3ll@gmail.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 64b9dfd0776e9c38d733094859a09f13282ce6f8 ]
+commit 42ca547b13a20e7cbb04fbdf8d5f089ac4bb35b7 upstream.
 
-ACPICA commit 8b83a8d88dfec59ea147fad35fc6deea8859c58c
+When a server has multichannel enabled, we keep polling the server
+for interfaces periodically. However, when this query fails, we
+disable the polling. This can be problematic as it takes away the
+chance for the server to start advertizing again.
 
-ap_get_table_length() checks if tables are valid by
-calling ap_is_valid_header(). The latter then calls
-ACPI_VALIDATE_RSDP_SIG(Table->Signature).
+This change reschedules the delayed work, even if the current call
+failed. That way, multichannel sessions can recover.
 
-ap_is_valid_header() accepts struct acpi_table_header as an argument, so
-the signature size is always fixed to 4 bytes.
-
-The problem is when the string comparison is between ACPI-defined table
-signature and ACPI_SIG_RSDP. Common ACPI table header specifies the
-Signature field to be 4 bytes long[1], with the exception of the RSDP
-structure whose signature is 8 bytes long "RSD PTR " (including the
-trailing blank character)[2]. Calling strncmp(sig, rsdp_sig, 8) would
-then result in a sequence overread[3] as sig would be smaller (4 bytes)
-than the specified bound (8 bytes).
-
-As a workaround, pass the bound conditionally based on the size of the
-signature being passed.
-
-Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#system-description-table-header [1]
-Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#root-system-description-pointer-rsdp-structure [2]
-Link: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overread [3]
-Link: https://github.com/acpica/acpica/commit/8b83a8d8
-Signed-off-by: Ahmed Salem <x0rw3ll@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2248233.Mh6RI2rZIc@rjwysocki.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/acpi/actypes.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/connect.c |    6 +-----
+ fs/smb/client/smb2pdu.c |    9 +++++----
+ 2 files changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h
-index cefbb7ad253e0..ea50b9c469c9d 100644
---- a/include/acpi/actypes.h
-+++ b/include/acpi/actypes.h
-@@ -524,7 +524,7 @@ typedef u64 acpi_integer;
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -132,13 +132,9 @@ static void smb2_query_server_interfaces
+ 	rc = server->ops->query_server_interfaces(xid, tcon, false);
+ 	free_xid(xid);
  
- /* Support for the special RSDP signature (8 characters) */
+-	if (rc) {
+-		if (rc == -EOPNOTSUPP)
+-			return;
+-
++	if (rc)
+ 		cifs_dbg(FYI, "%s: failed to query server interfaces: %d\n",
+ 				__func__, rc);
+-	}
  
--#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, 8))
-+#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ? ACPI_NAMESEG_SIZE : 8))
- #define ACPI_MAKE_RSDP_SIG(dest)        (memcpy (ACPI_CAST_PTR (char, (dest)), ACPI_SIG_RSDP, 8))
+ 	queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
+ 			   (SMB_INTERFACE_POLL_INTERVAL * HZ));
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -437,6 +437,10 @@ skip_sess_setup:
+ 		free_xid(xid);
+ 		ses->flags &= ~CIFS_SES_FLAGS_PENDING_QUERY_INTERFACES;
  
- /* Support for OEMx signature (x can be any character) */
--- 
-2.39.5
-
++		/* regardless of rc value, setup polling */
++		queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
++				   (SMB_INTERFACE_POLL_INTERVAL * HZ));
++
+ 		mutex_unlock(&ses->session_mutex);
+ 
+ 		if (rc == -EOPNOTSUPP && ses->chan_count > 1) {
+@@ -457,11 +461,8 @@ skip_sess_setup:
+ 		if (ses->chan_max > ses->chan_count &&
+ 		    ses->iface_count &&
+ 		    !SERVER_IS_CHAN(server)) {
+-			if (ses->chan_count == 1) {
++			if (ses->chan_count == 1)
+ 				cifs_server_dbg(VFS, "supports multichannel now\n");
+-				queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
+-						 (SMB_INTERFACE_POLL_INTERVAL * HZ));
+-			}
+ 
+ 			cifs_try_adding_channels(ses);
+ 		}
 
 
