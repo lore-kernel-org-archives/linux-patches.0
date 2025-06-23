@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35CA222576;
-	Mon, 23 Jun 2025 21:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222DB222576;
+	Mon, 23 Jun 2025 21:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715958; cv=none; b=q3qWx8lbbP5MuDxa7ImACnu0sDb2RcCfQNyXTw0MDK3unWA5ujNuadBGEXX8x0CFtfwn/BamOQFgTHHpHH8CqFEMM/JCgM0NpWr3gkKGDsiBKbdovOp7kIiq/RBlOxrQ/3HuOT8EjRoW1cINrphtJ+b8+EiZUdpudVXkF7G70kE=
+	t=1750715961; cv=none; b=R7xLeQ9v6btquD+TJq6ezcxx5KjXOucdbjI/2/fwn1Z4yN5Pzwx3nVP0INJFs47e1LMzGKzFiWeJlnvNRWlyz4PQQOsS+B/SNCcWaJmxJxV3xoLA5NlqHqhtNbKdF+f/6i3LHSCnzhMOurA/tA8IXEc84cqPRHqpZr2Yf7cYuQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715958; c=relaxed/simple;
-	bh=1BD0GDfymz6TFYnv5lk1eGAHL2UbBInQMn1VJUUrzhE=;
+	s=arc-20240116; t=1750715961; c=relaxed/simple;
+	bh=QHVH3yquZ2VgtO5Rn3QYSqC1jYpy1IrR8z0SSVo3CDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ujYopJb1lUHaO6INZ1+A2AYno/YKzc6/iD9lK11QMYge2kZ3gL9IKp8B3zOlFJB+rpKEEEn2PN4QqBbfmsRZGLLvRDz+HpI3xQ57T/em/Q1y+jEbLzEn/E52YsNAyMSV1z+nEngRpKJjzxZ8m+6R77SK+VKDjwdKqdhz8ef324w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSDutfWX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p1ZfMMm58GOXLnGkVdOqwN0S3ikIl59s+LZeZ+7rliNtRHcdCmFFmjPCbRzce2wNz4fh8wYD6pngmSx1mV9etjq+FINkgpis3MlOIIipwl2ECGTjqsXGDQSZ4C2Nm1iR2WRGFRzv63rGAFP4d7V3gvdPNqn58EUEJPUENDmogYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSh6xzXh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSDutfWX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B66C4CEEA;
-	Mon, 23 Jun 2025 21:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSh6xzXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6561C4CEEA;
+	Mon, 23 Jun 2025 21:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715958;
-	bh=1BD0GDfymz6TFYnv5lk1eGAHL2UbBInQMn1VJUUrzhE=;
+	s=korg; t=1750715961;
+	bh=QHVH3yquZ2VgtO5Rn3QYSqC1jYpy1IrR8z0SSVo3CDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vSDutfWXuNgezyDIVHq+g1u1FgScGjRk5hfNUNnpkTcKJLXMoYXeaG7GtVXw0hsVZ
-	 L0+JIYXLbIwQjP0QAzYni/JVLPo81kAMKwO82S0ul12Hu45ShlbLLn0q6rQ/JdP/te
-	 d2a+bv8Mn+s7n43kCuFaVPvUv+Wznb1UlelBsjnk=
+	b=hSh6xzXhDidQu4gQ69EGmhHmem/1egf3WxgaRQU20FhU8W51pSiPjG8QzXCjY22nP
+	 QHe197aPoeAl5U5EdDnjuPelgmjL351V7l98kEFBKm/Sg8WxY/W7s3v6S28Wf603NW
+	 QoveI0URV+2txrQlbAzd+mHhoShfl2Ba14iYvgTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 287/411] ext4: ext4: unify EXT4_EX_NOCACHE|NOFAIL flags in ext4_ext_remove_space()
-Date: Mon, 23 Jun 2025 15:07:11 +0200
-Message-ID: <20250623130640.872880497@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.1 271/508] drm/amd/display: Do not add -mhard-float to dml_ccflags for clang
+Date: Mon, 23 Jun 2025 15:05:16 +0200
+Message-ID: <20250623130651.913043524@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,111 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 53ce42accd2002cc490fc86000ac532530507a74 ]
+commit 7db038d9790eda558dd6c1dde4cdd58b64789c47 upstream.
 
-When removing space, we should use EXT4_EX_NOCACHE because we don't
-need to cache extents, and we should also use EXT4_EX_NOFAIL to prevent
-metadata inconsistencies that may arise from memory allocation failures.
-While ext4_ext_remove_space() already uses these two flags in most
-places, they are missing in ext4_ext_search_right() and
-read_extent_tree_block() calls. Unify the flags to ensure consistent
-behavior throughout the extent removal process.
+When clang's -Qunused-arguments is dropped from KBUILD_CPPFLAGS, it
+warns:
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250423085257.122685-2-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  clang-16: error: argument unused during compilation: '-mhard-float' [-Werror,-Wunused-command-line-argument]
+
+Similar to commit 84edc2eff827 ("selftest/fpu: avoid clang warning"),
+just add this flag to GCC builds. Commit 0f0727d971f6 ("drm/amd/display:
+readd -msse2 to prevent Clang from emitting libcalls to undefined SW FP
+routines") added '-msse2' to prevent clang from emitting software
+floating point routines.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Anders Roxell <anders.roxell@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/Makefile |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 461a698794d22..e41a6d642472b 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -1531,7 +1531,7 @@ static int ext4_ext_search_left(struct inode *inode,
- static int ext4_ext_search_right(struct inode *inode,
- 				 struct ext4_ext_path *path,
- 				 ext4_lblk_t *logical, ext4_fsblk_t *phys,
--				 struct ext4_extent *ret_ex)
-+				 struct ext4_extent *ret_ex, int flags)
- {
- 	struct buffer_head *bh = NULL;
- 	struct ext4_extent_header *eh;
-@@ -1605,7 +1605,8 @@ static int ext4_ext_search_right(struct inode *inode,
- 	ix++;
- 	while (++depth < path->p_depth) {
- 		/* subtract from p_depth to get proper eh_depth */
--		bh = read_extent_tree_block(inode, ix, path->p_depth - depth, 0);
-+		bh = read_extent_tree_block(inode, ix, path->p_depth - depth,
-+					    flags);
- 		if (IS_ERR(bh))
- 			return PTR_ERR(bh);
- 		eh = ext_block_hdr(bh);
-@@ -1613,7 +1614,7 @@ static int ext4_ext_search_right(struct inode *inode,
- 		put_bh(bh);
- 	}
+--- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
+@@ -26,7 +26,8 @@
+ # subcomponents.
  
--	bh = read_extent_tree_block(inode, ix, path->p_depth - depth, 0);
-+	bh = read_extent_tree_block(inode, ix, path->p_depth - depth, flags);
- 	if (IS_ERR(bh))
- 		return PTR_ERR(bh);
- 	eh = ext_block_hdr(bh);
-@@ -2799,6 +2800,7 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
- 	struct partial_cluster partial;
- 	handle_t *handle;
- 	int i = 0, err = 0;
-+	int flags = EXT4_EX_NOCACHE | EXT4_EX_NOFAIL;
+ ifdef CONFIG_X86
+-dml_ccflags := -mhard-float -msse
++dml_ccflags-$(CONFIG_CC_IS_GCC) := -mhard-float
++dml_ccflags := $(dml_ccflags-y) -msse
+ endif
  
- 	partial.pclu = 0;
- 	partial.lblk = 0;
-@@ -2829,8 +2831,7 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
- 		ext4_fsblk_t pblk;
- 
- 		/* find extent for or closest extent to this block */
--		path = ext4_find_extent(inode, end, NULL,
--					EXT4_EX_NOCACHE | EXT4_EX_NOFAIL);
-+		path = ext4_find_extent(inode, end, NULL, flags);
- 		if (IS_ERR(path)) {
- 			ext4_journal_stop(handle);
- 			return PTR_ERR(path);
-@@ -2895,7 +2896,7 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
- 			 */
- 			lblk = ex_end + 1;
- 			err = ext4_ext_search_right(inode, path, &lblk, &pblk,
--						    NULL);
-+						    NULL, flags);
- 			if (err < 0)
- 				goto out;
- 			if (pblk) {
-@@ -2972,8 +2973,7 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
- 				  i + 1, ext4_idx_pblock(path[i].p_idx));
- 			memset(path + i + 1, 0, sizeof(*path));
- 			bh = read_extent_tree_block(inode, path[i].p_idx,
--						    depth - i - 1,
--						    EXT4_EX_NOCACHE);
-+						    depth - i - 1, flags);
- 			if (IS_ERR(bh)) {
- 				/* should we reset i_size? */
- 				err = PTR_ERR(bh);
-@@ -4276,7 +4276,8 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
- 	if (err)
- 		goto out;
- 	ar.lright = map->m_lblk;
--	err = ext4_ext_search_right(inode, path, &ar.lright, &ar.pright, &ex2);
-+	err = ext4_ext_search_right(inode, path, &ar.lright, &ar.pright,
-+				    &ex2, 0);
- 	if (err < 0)
- 		goto out;
- 
--- 
-2.39.5
-
+ ifdef CONFIG_PPC64
 
 
