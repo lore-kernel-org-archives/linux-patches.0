@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFBD1EFFA6;
-	Mon, 23 Jun 2025 21:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF13A1EDA0F;
+	Mon, 23 Jun 2025 21:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713485; cv=none; b=HqODjB3Cs+AsQxhD2jjPQd41Ub7o9Uja0u5ywpaTiCNhDoaglGxzllnGNt19GQeA+S9vOmQGqhVDYXis2LdNJNYwd782MO//VHx+/uMvd5ZXHA72oolFOn5m5OM3/f/WT0E6N/br4ZbSoyOK4coHXdRIfvcAKdRFOW5kwAPBWbM=
+	t=1750713487; cv=none; b=L8kFPYwe26x/RJ65pwPSqJIMo4oxCn3+oWDmXguj8O6eHTgciyaY8xpVwdGN7G3avN0dNBnDDbdKmJ+NsyrcJsm3dfZHSwghoQD1hfH0p514cD5Lqkx0orsvxJwY4L7kP2LLqWIbRoiFkkawe5m9cZz43xZ/xW3ANP3BHS0Rjxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713485; c=relaxed/simple;
-	bh=Az51LPuBZHk/REtVqjvzbPWZPsMW5Oh1R81LCP56Guo=;
+	s=arc-20240116; t=1750713487; c=relaxed/simple;
+	bh=Spn/OWQqEkdrqAj5onNNE9JY93AbSw18WHnHnBMyqMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S8Y1uDNvbSCAbSQxoYDNDATlJq2sLJvLcI98fCIk1nPlKLSsrMkgPsEz3SIIicGSfQQbd/OuenPrwpVlaEcisici5oSGdc7HFSAskBiNoRkqE2CS9doicfcgcvI7EsFYBLk//gRj4ygE22IS281nV86MuJJWouJVxvi9ePo8Ixw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fWJy/ins; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OmShApxhPCCaNrIk8VBiz9icZqTHI9WO08F9xsaLc+tD+diLahJCMTiq7YgnHeQDN4w/Toi3JGIDQcNncb1cM6X6wxffLA6OhcSacAj7eUS8ul0szmkjAMRgzbslB/l11vs+kuISnjfBxfSptx11euKgK/HSKb5CDL72UCsAI50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIN1PQhW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWJy/ins"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1EABC4CEF0;
-	Mon, 23 Jun 2025 21:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIN1PQhW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46354C4CEEA;
+	Mon, 23 Jun 2025 21:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713485;
-	bh=Az51LPuBZHk/REtVqjvzbPWZPsMW5Oh1R81LCP56Guo=;
+	s=korg; t=1750713487;
+	bh=Spn/OWQqEkdrqAj5onNNE9JY93AbSw18WHnHnBMyqMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fWJy/insojNinsJpt2U4jfViszy0YO88s1p2tMF2zdjO+O6mLbi9KVCMgP46UCZmm
-	 gZUVFKDVT7q54j2lZr0HFU7fo0xU7ZUZqQAwNzH+CauI9XmRwjh/RPWxtTUeZrHVvH
-	 Lf3uldT4kFk2O1eClPV4s9EPahacRORSmTVvO960=
+	b=OIN1PQhWgHHTGwjb6bYSF37cWawvw4s32MqCnKW3eAYisZX5Z6hf6LZPQck8j+CZN
+	 rMA2rBGWJ5+vJwK9bytm/ijQD820BMqVQ+KiLSwscRBNe/C2FZuqOouf8i95y6nPt2
+	 neKfuQ4DgaQw4uz6DobIOy1a0Hb/jH2QizggU3EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 066/414] media: imx-jpeg: Move mxc_jpeg_free_slot_data() ahead
-Date: Mon, 23 Jun 2025 15:03:23 +0200
-Message-ID: <20250623130643.720720682@linuxfoundation.org>
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 350/592] net: page_pool: Dont recycle into cache on PREEMPT_RT
+Date: Mon, 23 Jun 2025 15:05:08 +0200
+Message-ID: <20250623130708.772199303@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,85 +49,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 46e9c092f850bd7b4d06de92d3d21877f49a3fcb upstream.
+[ Upstream commit 32471b2f481dea8624f27669d36ffd131d24b732 ]
 
-Move function mxc_jpeg_free_slot_data() above mxc_jpeg_alloc_slot_data()
-allowing to call that function during allocation failures.
-No functional changes are made.
+With preemptible softirq and no per-CPU locking in local_bh_disable() on
+PREEMPT_RT the consumer can be preempted while a skb is returned.
 
-Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Avoid the race by disabling the recycle into the cache on PREEMPT_RT.
+
+Cc: Jesper Dangaard Brouer <hawk@kernel.org>
+Cc: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20250512092736.229935-2-bigeasy@linutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |   40 ++++++++++++-------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ net/core/page_pool.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -752,6 +752,26 @@ static int mxc_get_free_slot(struct mxc_
- 	return -1;
- }
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index 2d9c51f480fb5..3eabe78c93f4c 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -836,6 +836,10 @@ static bool page_pool_napi_local(const struct page_pool *pool)
+ 	const struct napi_struct *napi;
+ 	u32 cpuid;
  
-+static void mxc_jpeg_free_slot_data(struct mxc_jpeg_dev *jpeg)
-+{
-+	/* free descriptor for decoding/encoding phase */
-+	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
-+			  jpeg->slot_data.desc,
-+			  jpeg->slot_data.desc_handle);
++	/* On PREEMPT_RT the softirq can be preempted by the consumer */
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))
++		return false;
 +
-+	/* free descriptor for encoder configuration phase / decoder DHT */
-+	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
-+			  jpeg->slot_data.cfg_desc,
-+			  jpeg->slot_data.cfg_desc_handle);
-+
-+	/* free configuration stream */
-+	dma_free_coherent(jpeg->dev, MXC_JPEG_MAX_CFG_STREAM,
-+			  jpeg->slot_data.cfg_stream_vaddr,
-+			  jpeg->slot_data.cfg_stream_handle);
-+
-+	jpeg->slot_data.used = false;
-+}
-+
- static bool mxc_jpeg_alloc_slot_data(struct mxc_jpeg_dev *jpeg)
- {
- 	struct mxc_jpeg_desc *desc;
-@@ -798,26 +818,6 @@ err:
- 	return false;
- }
+ 	if (unlikely(!in_softirq()))
+ 		return false;
  
--static void mxc_jpeg_free_slot_data(struct mxc_jpeg_dev *jpeg)
--{
--	/* free descriptor for decoding/encoding phase */
--	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
--			  jpeg->slot_data.desc,
--			  jpeg->slot_data.desc_handle);
--
--	/* free descriptor for encoder configuration phase / decoder DHT */
--	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
--			  jpeg->slot_data.cfg_desc,
--			  jpeg->slot_data.cfg_desc_handle);
--
--	/* free configuration stream */
--	dma_free_coherent(jpeg->dev, MXC_JPEG_MAX_CFG_STREAM,
--			  jpeg->slot_data.cfg_stream_vaddr,
--			  jpeg->slot_data.cfg_stream_handle);
--
--	jpeg->slot_data.used = false;
--}
--
- static void mxc_jpeg_check_and_set_last_buffer(struct mxc_jpeg_ctx *ctx,
- 					       struct vb2_v4l2_buffer *src_buf,
- 					       struct vb2_v4l2_buffer *dst_buf)
+-- 
+2.39.5
+
 
 
