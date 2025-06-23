@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0E47080E;
-	Mon, 23 Jun 2025 22:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769D17080E;
+	Mon, 23 Jun 2025 22:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716498; cv=none; b=FTnWACIW5GDFcGjOPUf2lJpBY28fAl2inVrUcfTv5tYF3a8PKtaaewEKLGfVAnhd/F1PTGg8hLluefHTTwyuz7bN20IkhH7Qt0GweMz2OSgvLqqOXPjEN3dCEmWfsQ9ISQZCnQzD0pfeH4YT0CoodWuis3Z7YejQC5oa0WYmUpk=
+	t=1750716500; cv=none; b=CSN9vPXY0kXgMG2qJnUjCMsh2x0TTKHXPIIVZTcVquYOWpsN4JMkIpf87/XfSdwWbTwM08P1ACbf1Ig/CWTVTCjWiLCPdMC6NKHn2uD8au+3BXvYtq0VdoXgQlFfZgBzFXK1pJs3xVGmpqw2/RQ7l1aQDCrzfb6A2L8VCN+uvy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716498; c=relaxed/simple;
-	bh=ECVv7DVIggYBdWn80IZ9PXx/FTjapqCAGjVNGxEXn/w=;
+	s=arc-20240116; t=1750716500; c=relaxed/simple;
+	bh=vn71yLkYt256x5+9dncPhHS0Sach/z0PyUCcAk9Q5Ec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tnGkeT+UcingdWZAavZTdt+ufdm33128FX8cossnrmY8NCeUYehtrbexTFuW2hvWLnWjvybykDB9B347inr9RW2F+b0IP3Fmz8RtHF/tJbS4LaoSyg5abdHZSKhtXvLIQQ1xIaWYOXLUvYzVAfNg6YzJPaZNBTVFS5lSHj7oS94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i012crPj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AIeYc8MxOCKpCpi99/cLweYERc38HMOQ7UWKWBX3+o/90Xjddq3xW854p/OOJL/0lgs4FqgtTQvuGCbPSd+guwU2nUbn0wHqtdeaypCxPBBhAaMGm47r54KYRKrvENiPch2k+Lb4hqtIRxSgD0D3DT5RmnypKDfVu26eCsGhJ9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEQt+TCv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i012crPj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DDDC4CEED;
-	Mon, 23 Jun 2025 22:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEQt+TCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA3AC4CEEA;
+	Mon, 23 Jun 2025 22:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716497;
-	bh=ECVv7DVIggYBdWn80IZ9PXx/FTjapqCAGjVNGxEXn/w=;
+	s=korg; t=1750716500;
+	bh=vn71yLkYt256x5+9dncPhHS0Sach/z0PyUCcAk9Q5Ec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i012crPjUWFFdLgVNhtN13UWxhi+jTJrkAUWxXAwvsb06KhCQ+2k6YYps3dXGmMdV
-	 pJahFb1HlGc1sUHXpPVOdA4hnOPU+LwNKDsjAowkGhYkA7ufqC7X8ApBL0cmDG1sq7
-	 FciHzZJybcniGkL7ssW307qo7E+KSKm+XFEzlEx4=
+	b=bEQt+TCv12G0/C2eNdU9MV083YfXggMKazF+m6dc1ay3pyL77rRIIV8hfBHgKyT5P
+	 m+nlDWxYaqrmZERMIhfLzKN7VP1QB1OGJqC/E4/4RPeFBuSABS46I2brIOTUCdR83d
+	 Kyri5ofSIhiGdlANZhKut0rly5eg9BHUQdRDdFAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Folkesson <marcus.folkesson@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 283/414] watchdog: da9052_wdt: respect TWDMIN
-Date: Mon, 23 Jun 2025 15:07:00 +0200
-Message-ID: <20250623130649.093085642@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Fuad Tabba <tabba@google.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.15 556/592] KVM: arm64: VHE: Synchronize restore of host debug registers
+Date: Mon, 23 Jun 2025 15:08:34 +0200
+Message-ID: <20250623130713.668998481@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +51,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marcus Folkesson <marcus.folkesson@gmail.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 325f510fcd9cda5a44bcb662b74ba4e3dabaca10 ]
+commit cade3d57e456e69f67aa9894bf89dc8678796bb7 upstream.
 
-We have to wait at least the minimium time for the watchdog window
-(TWDMIN) before writings to the wdt register after the
-watchdog is activated.
-Otherwise the chip will assert TWD_ERROR and power down to reset mode.
+When KVM runs in non-protected VHE mode, there's no context
+synchronization event between __debug_switch_to_host() restoring the
+host debug registers and __kvm_vcpu_run() unmasking debug exceptions.
+Due to this, it's theoretically possible for the host to take an
+unexpected debug exception due to the stale guest configuration.
 
-Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250326-da9052-fixes-v3-4-a38a560fef0e@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This cannot happen in NVHE/HVHE mode as debug exceptions are masked in
+the hyp code, and the exception return to the host will provide the
+necessary context synchronization before debug exceptions can be taken.
+
+For now, avoid the problem by adding an ISB after VHE hyp code restores
+the host debug registers.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Fuad Tabba <tabba@google.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Cc: Will Deacon <will@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250617133718.4014181-2-mark.rutland@arm.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/da9052_wdt.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kvm/hyp/include/hyp/debug-sr.h |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/watchdog/da9052_wdt.c b/drivers/watchdog/da9052_wdt.c
-index d708c091bf1b1..180526220d8c4 100644
---- a/drivers/watchdog/da9052_wdt.c
-+++ b/drivers/watchdog/da9052_wdt.c
-@@ -164,6 +164,7 @@ static int da9052_wdt_probe(struct platform_device *pdev)
- 	da9052_wdt = &driver_data->wdt;
+--- a/arch/arm64/kvm/hyp/include/hyp/debug-sr.h
++++ b/arch/arm64/kvm/hyp/include/hyp/debug-sr.h
+@@ -167,6 +167,9 @@ static inline void __debug_switch_to_hos
  
- 	da9052_wdt->timeout = DA9052_DEF_TIMEOUT;
-+	da9052_wdt->min_hw_heartbeat_ms = DA9052_TWDMIN;
- 	da9052_wdt->info = &da9052_wdt_info;
- 	da9052_wdt->ops = &da9052_wdt_ops;
- 	da9052_wdt->parent = dev;
--- 
-2.39.5
-
+ 	__debug_save_state(guest_dbg, guest_ctxt);
+ 	__debug_restore_state(host_dbg, host_ctxt);
++
++	if (has_vhe())
++		isb();
+ }
+ 
+ #endif /* __ARM64_KVM_HYP_DEBUG_SR_H__ */
 
 
