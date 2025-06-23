@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DD5219E0;
-	Mon, 23 Jun 2025 21:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9722C219E0;
+	Mon, 23 Jun 2025 21:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712793; cv=none; b=eYQtgjnpgyBuBX0CO08vR0rzsH7J8AjzaNS8zmQ8sAnCjLdLEtuMcgkEMSeKwrXmkNGKnQ5mHV60o96UStvtH1dvpKUCirkW/cjsJhNZG8k0FvTb9gPyMMiJSqYmD7PRatcdFSCfWao9kUS/3DzCGEfndfWT3VfHP4/HMhSh/P0=
+	t=1750712794; cv=none; b=lQ5ouoFV3JLyxnZwErS9C79KZUn00rqhwLB7l4rXjSgy4pTHiRh1h8NXxkwtJ4h4VyhuPr90/qZkVAYiiRmhNSqWiOXgsQWjTTYllK9sJkVYJGIFoVj/rx7OeyD2RTcs0wY5d71TDv13H+etlBig/BJ4/w8slN7GKwv8/AecPEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712793; c=relaxed/simple;
-	bh=RxZwN8jQMyRSU7cS3if0USNroHHaGPtFZMEbhbup0AA=;
+	s=arc-20240116; t=1750712794; c=relaxed/simple;
+	bh=oqj/OzSWkY2qcDUGmoz0CJCu0IKmMGj0HmOaBBM1JeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cSUYnqR4rYVvb8d/kj8U6cfW/m8sNKJgkR66EzBHPdgXW4IAM0ueBclfTtmki7pTiDsfCvSgrsxEt0pqL/s6Xwr2neURfOOna1WMXPm2RfO75trPQADL5X3x9T2dLY4Be999NyjAY9Pp0hlWWf4OVujzFRL6OfGGmu9r677Rjn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YI5heMho; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hq5RmoWJJviohz/VC8/T3TYSGkoX63VQFmapumxi0L1KKebcSycIA8nP2R3m1KPPVE+Tq46OII1yGARl11EdHv/iEjK+iWVGUq8v1tGBo7bh4S5TZmem0ZZyXks6JkG1H8jp1IQAPxt0BB7dX4iLNTuGBcevXj9WtGECyosB360=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQt+IqQf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YI5heMho"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F61C4CEEA;
-	Mon, 23 Jun 2025 21:06:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQt+IqQf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30653C4CEF0;
+	Mon, 23 Jun 2025 21:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712792;
-	bh=RxZwN8jQMyRSU7cS3if0USNroHHaGPtFZMEbhbup0AA=;
+	s=korg; t=1750712794;
+	bh=oqj/OzSWkY2qcDUGmoz0CJCu0IKmMGj0HmOaBBM1JeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YI5heMhooD2Dkg+l25nXLBVH2TkUAfWTkUKark6cPJrx2W8S+uiwI6zBxuy9Eib4J
-	 vSajt3NteXL1P98FexWaOATAcBaC8WBfV4ucNmwhVxobbHNNs3vFA9MZhi2NQdujSj
-	 lZMhJg/Nfr+j2mB1mM4OBqbaiD99f/1x/vITQOU0=
+	b=pQt+IqQfVzr8baW3Drd3SUpm6HLSHuZCThrTgbgTop4abzhfYpa4a3n8pwluNCH5X
+	 gbrkcUM0PalN7DquS3KyKm3W3ZFvZ5Bows1D0nEJu2Yi3VADKLSigz1PeDnGLntQlT
+	 kODwgB6nWuxQLOmRQaurlefpWH1efv4dNsFiV0Pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dylan J. Wolff" <wolffd@comp.nus.edu.sg>,
-	Jiacheng Xu <stitch@zju.edu.cn>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Christian Brauner <brauner@kernel.org>,
+	"Orlando, Noah" <Noah.Orlando@deshaw.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 294/592] jfs: Fix null-ptr-deref in jfs_ioc_trim
-Date: Mon, 23 Jun 2025 15:04:12 +0200
-Message-ID: <20250623130707.370091759@linuxfoundation.org>
+Subject: [PATCH 5.10 106/355] do_change_type(): refuse to operate on unmounted/not ours mounts
+Date: Mon, 23 Jun 2025 15:05:07 +0200
+Message-ID: <20250623130629.961297416@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,121 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dylan Wolff <wolffd@comp.nus.edu.sg>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit a4685408ff6c3e2af366ad9a7274f45ff3f394ee ]
+[ Upstream commit 12f147ddd6de7382dad54812e65f3f08d05809fc ]
 
-[ Syzkaller Report ]
+Ensure that propagation settings can only be changed for mounts located
+in the caller's mount namespace. This change aligns permission checking
+with the rest of mount(2).
 
-Oops: general protection fault, probably for non-canonical address
-0xdffffc0000000087: 0000 [#1
-KASAN: null-ptr-deref in range [0x0000000000000438-0x000000000000043f]
-CPU: 2 UID: 0 PID: 10614 Comm: syz-executor.0 Not tainted
-6.13.0-rc6-gfbfd64d25c7a-dirty #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-Sched_ext: serialise (enabled+all), task: runnable_at=-30ms
-RIP: 0010:jfs_ioc_trim+0x34b/0x8f0
-Code: e7 e8 59 a4 87 fe 4d 8b 24 24 4d 8d bc 24 38 04 00 00 48 8d 93
-90 82 fe ff 4c 89 ff 31 f6
-RSP: 0018:ffffc900055f7cd0 EFLAGS: 00010206
-RAX: 0000000000000087 RBX: 00005866a9e67ff8 RCX: 000000000000000a
-RDX: 0000000000000001 RSI: 0000000000000004 RDI: 0000000000000001
-RBP: dffffc0000000000 R08: ffff88807c180003 R09: 1ffff1100f830000
-R10: dffffc0000000000 R11: ffffed100f830001 R12: 0000000000000000
-R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000438
-FS:  00007fe520225640(0000) GS:ffff8880b7e80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005593c91b2c88 CR3: 000000014927c000 CR4: 00000000000006f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-? __die_body+0x61/0xb0
-? die_addr+0xb1/0xe0
-? exc_general_protection+0x333/0x510
-? asm_exc_general_protection+0x26/0x30
-? jfs_ioc_trim+0x34b/0x8f0
-jfs_ioctl+0x3c8/0x4f0
-? __pfx_jfs_ioctl+0x10/0x10
-? __pfx_jfs_ioctl+0x10/0x10
-__se_sys_ioctl+0x269/0x350
-? __pfx___se_sys_ioctl+0x10/0x10
-? do_syscall_64+0xfb/0x210
-do_syscall_64+0xee/0x210
-? syscall_exit_to_user_mode+0x1e0/0x330
-entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fe51f4903ad
-Code: c3 e8 a7 2b 00 00 0f 1f 80 00 00 00 00 f3 0f 1e fa 48 89 f8 48
-89 f7 48 89 d6 48 89 ca 4d
-RSP: 002b:00007fe5202250c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007fe51f5cbf80 RCX: 00007fe51f4903ad
-RDX: 0000000020000680 RSI: 00000000c0185879 RDI: 0000000000000005
-RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007fe520225640
-R13: 000000000000000e R14: 00007fe51f44fca0 R15: 00007fe52021d000
-</TASK>
-Modules linked in:
----[ end trace 0000000000000000 ]---
-RIP: 0010:jfs_ioc_trim+0x34b/0x8f0
-Code: e7 e8 59 a4 87 fe 4d 8b 24 24 4d 8d bc 24 38 04 00 00 48 8d 93
-90 82 fe ff 4c 89 ff 31 f6
-RSP: 0018:ffffc900055f7cd0 EFLAGS: 00010206
-RAX: 0000000000000087 RBX: 00005866a9e67ff8 RCX: 000000000000000a
-RDX: 0000000000000001 RSI: 0000000000000004 RDI: 0000000000000001
-RBP: dffffc0000000000 R08: ffff88807c180003 R09: 1ffff1100f830000
-R10: dffffc0000000000 R11: ffffed100f830001 R12: 0000000000000000
-R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000438
-FS:  00007fe520225640(0000) GS:ffff8880b7e80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005593c91b2c88 CR3: 000000014927c000 CR4: 00000000000006f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Kernel panic - not syncing: Fatal exception
-
-[ Analysis ]
-
-We believe that we have found a concurrency bug in the `fs/jfs` module
-that results in a null pointer dereference. There is a closely related
-issue which has been fixed:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d6c1b3599b2feb5c7291f5ac3a36e5fa7cedb234
-
-... but, unfortunately, the accepted patch appears to still be
-susceptible to a null pointer dereference under some interleavings.
-
-To trigger the bug, we think that `JFS_SBI(ipbmap->i_sb)->bmap` is set
-to NULL in `dbFreeBits` and then dereferenced in `jfs_ioc_trim`. This
-bug manifests quite rarely under normal circumstances, but is
-triggereable from a syz-program.
-
-Reported-and-tested-by: Dylan J. Wolff<wolffd@comp.nus.edu.sg>
-Reported-and-tested-by: Jiacheng Xu <stitch@zju.edu.cn>
-Signed-off-by: Dylan J. Wolff<wolffd@comp.nus.edu.sg>
-Signed-off-by: Jiacheng Xu <stitch@zju.edu.cn>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Fixes: 07b20889e305 ("beginning of the shared-subtree proper")
+Reported-by: "Orlando, Noah" <Noah.Orlando@deshaw.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_discard.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/namespace.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/jfs/jfs_discard.c b/fs/jfs/jfs_discard.c
-index 5f4b305030ad5..4b660296caf39 100644
---- a/fs/jfs/jfs_discard.c
-+++ b/fs/jfs/jfs_discard.c
-@@ -86,7 +86,8 @@ int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
- 	down_read(&sb->s_umount);
- 	bmp = JFS_SBI(ip->i_sb)->bmap;
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 869cc6e06d889..2d5af6653cd11 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2308,6 +2308,10 @@ static int do_change_type(struct path *path, int ms_flags)
+ 		return -EINVAL;
  
--	if (minlen > bmp->db_agsize ||
-+	if (bmp == NULL ||
-+	    minlen > bmp->db_agsize ||
- 	    start >= bmp->db_mapsize ||
- 	    range->len < sb->s_blocksize) {
- 		up_read(&sb->s_umount);
+ 	namespace_lock();
++	if (!check_mnt(mnt)) {
++		err = -EINVAL;
++		goto out_unlock;
++	}
+ 	if (type == MS_SHARED) {
+ 		err = invent_group_ids(mnt, recurse);
+ 		if (err)
 -- 
 2.39.5
 
