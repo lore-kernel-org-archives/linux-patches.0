@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE33A242D90;
-	Mon, 23 Jun 2025 13:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D7A4C6E;
+	Mon, 23 Jun 2025 13:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686187; cv=none; b=ZiWyPBOVKNrDNZKcBc5rGILOUP0PSTs0BOc++SEO7qYbYo1p4z/WXXHQx1eiL572wEWrDslHjvHmXhtdREqUr0bqzglDzxJyY+SG0AFbt6aDuq26ORLWTA4rudTIotE149DDl6JorfSA1UoCfcOrokg9emJzjn8uJkSv1Q0mYVw=
+	t=1750686190; cv=none; b=BwiE4hJqSUwCtZUY8Hy+T+Z7VKO5Y7SqBuKiI+UTcoFrhB5ecS26rhTokyv3Z6/u391hdbSuuSjrF+By4GvlK/5cX+j7H+TeUt2IgM5ZsxDupvJLZ7uCtr3dWIQ6+1ycx86BqITOFR4CbFq2O193yxp0N/GFzj3GXaCGHY3nHxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686187; c=relaxed/simple;
-	bh=gMTwCTDxx08bdoiguvPqD/MaRp700Re6sZg6mMtyCzw=;
+	s=arc-20240116; t=1750686190; c=relaxed/simple;
+	bh=a/47+7GvjOyAuFJ2of8yaRN1s7Cz84VYFw2QR0WO/ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTXNwLrMI9o7FPWDtUECb36QawfwuU0fQZRFBc5PavLVVWKDSeJWI1wMjgPVo+jF6NtskDCzlUgghHSzb9Ykmomz+JnZC1xvEaMhSgcZofxB0c5L9mAoEx4dj3TUg9eT0xTw1kqV0424sKwVtbu6Rf3Mv33yRbN4eVq2mQShwtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1VJY843; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ko6beSuewlJ5NC/osPzvoVuxax/yLfHltvVIwSrVfV5EUWU7D3XxZ181j6qsqebgXqe8ZJVbWeR5ezMWgemEmzLRt/O6S98XHSWz4ATc0XfCIQZ9LnQpgvNgpMtn6ucwfaM0B3lb6jfcjNLOCyVZYcwU6Vi85dy6PSnZ9mub5uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiJ4Dn9X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1VJY843"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545A0C4CEEA;
-	Mon, 23 Jun 2025 13:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiJ4Dn9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C82C4CEEA;
+	Mon, 23 Jun 2025 13:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686187;
-	bh=gMTwCTDxx08bdoiguvPqD/MaRp700Re6sZg6mMtyCzw=;
+	s=korg; t=1750686190;
+	bh=a/47+7GvjOyAuFJ2of8yaRN1s7Cz84VYFw2QR0WO/ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O1VJY843aWUH0ErWvCFZ/hY9C37C4PDXNE7PrYW9miDVEQ6c1QamnWHMFr0/MQ922
-	 FCrmE8K3y93EdXw473JE+O/yQvkCjn/YKq0C1rkwIrccgTMXUENBmNVQfEG2C2gpqP
-	 c/XqhPWhnTEpA3JpZXnPD3dV7Mk/5B6NgYXFLzN0=
+	b=yiJ4Dn9XWaGu4obF0RyJyJYSpwU61mruFTh+nLy27ztn8IRNJQdUlU4iEJYNUecIl
+	 6dfOC1n+eyI0lpPwRjTqNYCq6Dl40teNLUexVA8llra0bU5mtZsHVG0xS6K+rXYrPr
+	 A7V2ghqlIpCXbIS2WW082GTTVRr5NkMKaOuaSkxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.12 026/414] wifi: rtw88: usb: Upload the firmware in bigger chunks
-Date: Mon, 23 Jun 2025 15:02:43 +0200
-Message-ID: <20250623130642.680883511@linuxfoundation.org>
+	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
+	Eric Dumazet <edumazet@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 120/355] net_sched: sch_sfq: fix a potential crash on gso_skb handling
+Date: Mon, 23 Jun 2025 15:05:21 +0200
+Message-ID: <20250623130630.363787564@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,225 +47,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 80fe0bc1659c0ccc79d082e426fa376be5df9c04 upstream.
+[ Upstream commit 82ffbe7776d0ac084031f114167712269bf3d832 ]
 
-RTL8811AU stops responding during the firmware download on some systems:
+SFQ has an assumption of always being able to queue at least one packet.
 
-[  809.256440] rtw_8821au 5-2.1:1.0: Firmware version 42.4.0, H2C version 0
-[  812.759142] rtw_8821au 5-2.1:1.0 wlp48s0f4u2u1: renamed from wlan0
-[  837.315388] rtw_8821au 1-4:1.0: write register 0x1ef4 failed with -110
-[  867.524259] rtw_8821au 1-4:1.0: write register 0x1ef8 failed with -110
-[  868.930976] rtw_8821au 5-2.1:1.0 wlp48s0f4u2u1: entered promiscuous mode
-[  897.730952] rtw_8821au 1-4:1.0: write register 0x1efc failed with -110
+However, after the blamed commit, sch->q.len can be inflated by packets
+in sch->gso_skb, and an enqueue() on an empty SFQ qdisc can be followed
+by an immediate drop.
 
-Maybe it takes too long when writing the firmware 4 bytes at a time.
+Fix sfq_drop() to properly clear q->tail in this situation.
 
-Write 196 bytes at a time for RTL8821AU, RTL8811AU, and RTL8812AU,
-and 254 bytes at a time for RTL8723DU. These are the sizes used in
-their official drivers. Tested with all these chips.
+Tested:
 
-Cc: stable@vger.kernel.org
-Link: https://github.com/lwfinger/rtw88/issues/344
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/43f1daad-3ec0-4a3b-a50c-9cd9eb2c2f52@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ip netns add lb
+ip link add dev to-lb type veth peer name in-lb netns lb
+ethtool -K to-lb tso off                 # force qdisc to requeue gso_skb
+ip netns exec lb ethtool -K in-lb gro on # enable NAPI
+ip link set dev to-lb up
+ip -netns lb link set dev in-lb up
+ip addr add dev to-lb 192.168.20.1/24
+ip -netns lb addr add dev in-lb 192.168.20.2/24
+tc qdisc replace dev to-lb root sfq limit 100
+
+ip netns exec lb netserver
+
+netperf -H 192.168.20.2 -l 100 &
+netperf -H 192.168.20.2 -l 100 &
+netperf -H 192.168.20.2 -l 100 &
+netperf -H 192.168.20.2 -l 100 &
+
+Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
+Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
+Closes: https://lore.kernel.org/netdev/9da42688-bfaa-4364-8797-e9271f3bdaef@hetzner-cloud.de/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://patch.msgid.link/20250606165127.3629486-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/hci.h  |    8 ++++
- drivers/net/wireless/realtek/rtw88/mac.c  |   11 +++---
- drivers/net/wireless/realtek/rtw88/mac.h  |    2 +
- drivers/net/wireless/realtek/rtw88/pci.c  |    2 +
- drivers/net/wireless/realtek/rtw88/sdio.c |    2 +
- drivers/net/wireless/realtek/rtw88/usb.c  |   55 ++++++++++++++++++++++++++++++
- 6 files changed, 76 insertions(+), 4 deletions(-)
+ net/sched/sch_sfq.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtw88/hci.h
-+++ b/drivers/net/wireless/realtek/rtw88/hci.h
-@@ -19,6 +19,8 @@ struct rtw_hci_ops {
- 	void (*link_ps)(struct rtw_dev *rtwdev, bool enter);
- 	void (*interface_cfg)(struct rtw_dev *rtwdev);
- 	void (*dynamic_rx_agg)(struct rtw_dev *rtwdev, bool enable);
-+	void (*write_firmware_page)(struct rtw_dev *rtwdev, u32 page,
-+				    const u8 *data, u32 size);
- 
- 	int (*write_data_rsvd_page)(struct rtw_dev *rtwdev, u8 *buf, u32 size);
- 	int (*write_data_h2c)(struct rtw_dev *rtwdev, u8 *buf, u32 size);
-@@ -79,6 +81,12 @@ static inline void rtw_hci_dynamic_rx_ag
- 		rtwdev->hci.ops->dynamic_rx_agg(rtwdev, enable);
- }
- 
-+static inline void rtw_hci_write_firmware_page(struct rtw_dev *rtwdev, u32 page,
-+					       const u8 *data, u32 size)
-+{
-+	rtwdev->hci.ops->write_firmware_page(rtwdev, page, data, size);
-+}
-+
- static inline int
- rtw_hci_write_data_rsvd_page(struct rtw_dev *rtwdev, u8 *buf, u32 size)
- {
---- a/drivers/net/wireless/realtek/rtw88/mac.c
-+++ b/drivers/net/wireless/realtek/rtw88/mac.c
-@@ -854,8 +854,8 @@ fwdl_ready:
- 	}
- }
- 
--static void
--write_firmware_page(struct rtw_dev *rtwdev, u32 page, const u8 *data, u32 size)
-+void rtw_write_firmware_page(struct rtw_dev *rtwdev, u32 page,
-+			     const u8 *data, u32 size)
- {
- 	u32 val32;
- 	u32 block_nr;
-@@ -885,6 +885,7 @@ write_firmware_page(struct rtw_dev *rtwd
- 		rtw_write32(rtwdev, write_addr, le32_to_cpu(remain_data));
- 	}
- }
-+EXPORT_SYMBOL(rtw_write_firmware_page);
- 
- static int
- download_firmware_legacy(struct rtw_dev *rtwdev, const u8 *data, u32 size)
-@@ -902,11 +903,13 @@ download_firmware_legacy(struct rtw_dev
- 	rtw_write8_set(rtwdev, REG_MCUFW_CTRL, BIT_FWDL_CHK_RPT);
- 
- 	for (page = 0; page < total_page; page++) {
--		write_firmware_page(rtwdev, page, data, DLFW_PAGE_SIZE_LEGACY);
-+		rtw_hci_write_firmware_page(rtwdev, page, data,
-+					    DLFW_PAGE_SIZE_LEGACY);
- 		data += DLFW_PAGE_SIZE_LEGACY;
- 	}
- 	if (last_page_size)
--		write_firmware_page(rtwdev, page, data, last_page_size);
-+		rtw_hci_write_firmware_page(rtwdev, page, data,
-+					    last_page_size);
- 
- 	if (!check_hw_ready(rtwdev, REG_MCUFW_CTRL, BIT_FWDL_CHK_RPT, 1)) {
- 		rtw_err(rtwdev, "failed to check download firmware report\n");
---- a/drivers/net/wireless/realtek/rtw88/mac.h
-+++ b/drivers/net/wireless/realtek/rtw88/mac.h
-@@ -32,6 +32,8 @@ void rtw_set_channel_mac(struct rtw_dev
- 			 u8 primary_ch_idx);
- int rtw_mac_power_on(struct rtw_dev *rtwdev);
- void rtw_mac_power_off(struct rtw_dev *rtwdev);
-+void rtw_write_firmware_page(struct rtw_dev *rtwdev, u32 page,
-+			     const u8 *data, u32 size);
- int rtw_download_firmware(struct rtw_dev *rtwdev, struct rtw_fw_state *fw);
- int rtw_mac_init(struct rtw_dev *rtwdev);
- void rtw_mac_flush_queues(struct rtw_dev *rtwdev, u32 queues, bool drop);
---- a/drivers/net/wireless/realtek/rtw88/pci.c
-+++ b/drivers/net/wireless/realtek/rtw88/pci.c
-@@ -12,6 +12,7 @@
- #include "fw.h"
- #include "ps.h"
- #include "debug.h"
-+#include "mac.h"
- 
- static bool rtw_disable_msi;
- static bool rtw_pci_disable_aspm;
-@@ -1602,6 +1603,7 @@ static struct rtw_hci_ops rtw_pci_ops =
- 	.link_ps = rtw_pci_link_ps,
- 	.interface_cfg = rtw_pci_interface_cfg,
- 	.dynamic_rx_agg = NULL,
-+	.write_firmware_page = rtw_write_firmware_page,
- 
- 	.read8 = rtw_pci_read8,
- 	.read16 = rtw_pci_read16,
---- a/drivers/net/wireless/realtek/rtw88/sdio.c
-+++ b/drivers/net/wireless/realtek/rtw88/sdio.c
-@@ -10,6 +10,7 @@
- #include <linux/mmc/host.h>
- #include <linux/mmc/sdio_func.h>
- #include "main.h"
-+#include "mac.h"
- #include "debug.h"
- #include "fw.h"
- #include "ps.h"
-@@ -1155,6 +1156,7 @@ static struct rtw_hci_ops rtw_sdio_ops =
- 	.link_ps = rtw_sdio_link_ps,
- 	.interface_cfg = rtw_sdio_interface_cfg,
- 	.dynamic_rx_agg = NULL,
-+	.write_firmware_page = rtw_write_firmware_page,
- 
- 	.read8 = rtw_sdio_read8,
- 	.read16 = rtw_sdio_read16,
---- a/drivers/net/wireless/realtek/rtw88/usb.c
-+++ b/drivers/net/wireless/realtek/rtw88/usb.c
-@@ -164,6 +164,60 @@ static void rtw_usb_write32(struct rtw_d
- 	rtw_usb_write(rtwdev, addr, val, 4);
- }
- 
-+static void rtw_usb_write_firmware_page(struct rtw_dev *rtwdev, u32 page,
-+					const u8 *data, u32 size)
-+{
-+	struct rtw_usb *rtwusb = rtw_get_usb_priv(rtwdev);
-+	struct usb_device *udev = rtwusb->udev;
-+	u32 addr = FW_START_ADDR_LEGACY;
-+	u8 *data_dup, *buf;
-+	u32 n, block_size;
-+	int ret;
-+
-+	switch (rtwdev->chip->id) {
-+	case RTW_CHIP_TYPE_8723D:
-+		block_size = 254;
-+		break;
-+	default:
-+		block_size = 196;
-+		break;
-+	}
-+
-+	data_dup = kmemdup(data, size, GFP_KERNEL);
-+	if (!data_dup)
-+		return;
-+
-+	buf = data_dup;
-+
-+	rtw_write32_mask(rtwdev, REG_MCUFW_CTRL, BIT_ROM_PGE, page);
-+
-+	while (size > 0) {
-+		if (size >= block_size)
-+			n = block_size;
-+		else if (size >= 8)
-+			n = 8;
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index 066754a18569b..6b65c5efb378e 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -317,7 +317,10 @@ static unsigned int sfq_drop(struct Qdisc *sch, struct sk_buff **to_free)
+ 		/* It is difficult to believe, but ALL THE SLOTS HAVE LENGTH 1. */
+ 		x = q->tail->next;
+ 		slot = &q->slots[x];
+-		q->tail->next = slot->next;
++		if (slot->next == x)
++			q->tail = NULL; /* no more active slots */
 +		else
-+			n = 1;
-+
-+		ret = usb_control_msg(udev, usb_sndctrlpipe(udev, 0),
-+				      RTW_USB_CMD_REQ, RTW_USB_CMD_WRITE,
-+				      addr, 0, buf, n, 500);
-+		if (ret != n) {
-+			if (ret != -ENODEV)
-+				rtw_err(rtwdev,
-+					"write 0x%x len %d failed: %d\n",
-+					addr, n, ret);
-+			break;
-+		}
-+
-+		addr += n;
-+		buf += n;
-+		size -= n;
-+	}
-+
-+	kfree(data_dup);
-+}
-+
- static int dma_mapping_to_ep(enum rtw_dma_mapping dma_mapping)
- {
- 	switch (dma_mapping) {
-@@ -815,6 +869,7 @@ static struct rtw_hci_ops rtw_usb_ops =
- 	.link_ps = rtw_usb_link_ps,
- 	.interface_cfg = rtw_usb_interface_cfg,
- 	.dynamic_rx_agg = rtw_usb_dynamic_rx_agg,
-+	.write_firmware_page = rtw_usb_write_firmware_page,
- 
- 	.write8  = rtw_usb_write8,
- 	.write16 = rtw_usb_write16,
++			q->tail->next = slot->next;
+ 		q->ht[slot->hash] = SFQ_EMPTY_SLOT;
+ 		goto drop;
+ 	}
+-- 
+2.39.5
+
 
 
