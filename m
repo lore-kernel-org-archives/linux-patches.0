@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17D01AD3FA;
-	Mon, 23 Jun 2025 21:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3C41AD3FA;
+	Mon, 23 Jun 2025 21:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715709; cv=none; b=Vwx4L6bOc+g5yH+yzF4KxS4fs0C2x/zoxBDs2TSsCS6n1HTJjzNGi0bt/qs6/sTIjzOm7Bd9RbsIgDKtT0tgQm/1ZZvudYLJi6hJuT/B+AJAV3fA2UAhbdqsdSY7pUzUayL/cM1KCvRVc0Zn/ssqhv18KULhb3VXhTPKOuvHjUQ=
+	t=1750715712; cv=none; b=Q4IAVtH+E3sxOoVfoNCwa3d8wdGRVlk+ynXSmv29J1q9iDRYYUWsUnRF75upnHT1Qqnu4+N37BxT6uVJ5X6k0GL2IUcxWOIRfx6fRduHO5EZ03GW0wjCZIdYYU+nxH1xyiZLIfnl23YQExmQ+cKf/Zo81cIYO9oDeDc2XmIF62c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715709; c=relaxed/simple;
-	bh=S9560ulDtBoigIQOXmxYViV8gfEmqU+4A229dB6rrIM=;
+	s=arc-20240116; t=1750715712; c=relaxed/simple;
+	bh=UKPVukJpuqMmgxIzC51NH6QLjcxaGqvdb1KwOFuFggM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JEh+XM5fjRuXdYJyoZfDzagWyRg7Fk3CN8tOPKbX95LQBolgTSFs590jsPmqSi7GzrMhPI2wIspOplcOEYUHgCoEBRtT9auk0V65jPwyRFGGuTPB2WS/YhbUL3DOWNeMsFHtNVBK1QtXwga7IMLeMZ3u67/ssFeC1j7gkmTLLT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4ec0QY1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UvM99Ff/J1N+z6CIWEv3G5I6puiORbioVFpONJGZKYFulEh6meF5ACh12S26pPeAfcJURzfzfla94tyignO9E8949idM9gGPyUieTqTUqKRgtIdVcmT+1+E2aRT0azLt7s2tcQ4ta0vD7AFYcNiWo4p+udy7YwDl06LjCCFxy0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoVFODgv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4ec0QY1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B287C4CEEA;
-	Mon, 23 Jun 2025 21:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoVFODgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8603C4CEEA;
+	Mon, 23 Jun 2025 21:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715709;
-	bh=S9560ulDtBoigIQOXmxYViV8gfEmqU+4A229dB6rrIM=;
+	s=korg; t=1750715712;
+	bh=UKPVukJpuqMmgxIzC51NH6QLjcxaGqvdb1KwOFuFggM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w4ec0QY1zgq287KHHnkesw4EyKaND4PUEGeLN9tSFOmN5D0rZfE612DPs+UU1JTsU
-	 VEY3WdKR+uT+mLatfMaBL3cEfAoPqDxhwaKvEpwcE5SeZl2XXxlMrXk6jLcl4CE8Fu
-	 Q2QWzB5TTq1cgLQhEDFc5e5IXH8Dudm5oZOqaz1o=
+	b=HoVFODgvYgymDEH0ivmLy+Pvj4l1tB3PLWYzY9g1loZdoPSU0RUfOx7zA2FAa8yWH
+	 TL08j2bPGph90aFgVYEHVbdew7JysatCg5cvrrUuRVElH8nC2zbWhE5oi8BaQH31Vp
+	 NcG7ais2OlK6OWIyAISrIyl74+HqVWmhcCrtuf68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 216/290] cifs: serialize other channels when query server interfaces is pending
-Date: Mon, 23 Jun 2025 15:07:57 +0200
-Message-ID: <20250623130633.426054991@linuxfoundation.org>
+	Jianbo Liu <jianbol@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Alex Lazar <alazar@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 257/508] net/mlx5e: Fix leak of Geneve TLV option object
+Date: Mon, 23 Jun 2025 15:05:02 +0200
+Message-ID: <20250623130651.575153968@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,90 +50,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-commit b5e3e6e28cf3853566ba5d816f79aba5be579158 upstream.
+[ Upstream commit aa9c44b842096c553871bc68a8cebc7861fa192b ]
 
-Today, during smb2_reconnect, session_mutex is released as soon as
-the tcon is reconnected and is in a good state. However, in case
-multichannel is enabled, there is also a query of server interfaces that
-follows. We've seen that this query can race with reconnects of other
-channels, causing them to step on each other with reconnects.
+Previously, a unique tunnel id was added for the matching on TC
+non-zero chains, to support inner header rewrite with goto action.
+Later, it was used to support VF tunnel offload for vxlan, then for
+Geneve and GRE. To support VF tunnel, a temporary mlx5_flow_spec is
+used to parse tunnel options. For Geneve, if there is TLV option, a
+object is created, or refcnt is added if already exists. But the
+temporary mlx5_flow_spec is directly freed after parsing, which causes
+the leak because no information regarding the object is saved in
+flow's mlx5_flow_spec, which is used to free the object when deleting
+the flow.
 
-This change extends the hold of session_mutex till after the query of
-server interfaces is complete. In order to avoid recursive smb2_reconnect
-checks during query ioctl, this change also introduces a session flag
-for sessions where such a query is in progress.
+To fix the leak, call mlx5_geneve_tlv_option_del() before free the
+temporary spec if it has TLV object.
 
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 521933cdc4aa ("net/mlx5e: Support Geneve and GRE with VF tunnel offload")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Alex Lazar <alazar@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250610151514.1094735-9-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h |    1 +
- fs/smb/client/smb2pdu.c  |   24 ++++++++++++++++++------
- 2 files changed, 19 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1053,6 +1053,7 @@ struct cifs_chan {
- };
- 
- #define CIFS_SES_FLAG_SCALE_CHANNELS (0x1)
-+#define CIFS_SES_FLAGS_PENDING_QUERY_INTERFACES (0x2)
- 
- /*
-  * Session structure.  One of these for each uid session with a particular host
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -425,14 +425,19 @@ skip_sess_setup:
- 	if (!rc &&
- 	    (server->capabilities & SMB2_GLOBAL_CAP_MULTI_CHANNEL) &&
- 	    server->ops->query_server_interfaces) {
--		mutex_unlock(&ses->session_mutex);
--
- 		/*
--		 * query server network interfaces, in case they change
-+		 * query server network interfaces, in case they change.
-+		 * Also mark the session as pending this update while the query
-+		 * is in progress. This will be used to avoid calling
-+		 * smb2_reconnect recursively.
- 		 */
-+		ses->flags |= CIFS_SES_FLAGS_PENDING_QUERY_INTERFACES;
- 		xid = get_xid();
- 		rc = server->ops->query_server_interfaces(xid, tcon, false);
- 		free_xid(xid);
-+		ses->flags &= ~CIFS_SES_FLAGS_PENDING_QUERY_INTERFACES;
-+
-+		mutex_unlock(&ses->session_mutex);
- 
- 		if (rc == -EOPNOTSUPP && ses->chan_count > 1) {
- 			/*
-@@ -574,11 +579,18 @@ static int smb2_ioctl_req_init(u32 opcod
- 			       struct TCP_Server_Info *server,
- 			       void **request_buf, unsigned int *total_len)
- {
--	/* Skip reconnect only for FSCTL_VALIDATE_NEGOTIATE_INFO IOCTLs */
--	if (opcode == FSCTL_VALIDATE_NEGOTIATE_INFO) {
-+	/*
-+	 * Skip reconnect in one of the following cases:
-+	 * 1. For FSCTL_VALIDATE_NEGOTIATE_INFO IOCTLs
-+	 * 2. For FSCTL_QUERY_NETWORK_INTERFACE_INFO IOCTL when called from
-+	 * smb2_reconnect (indicated by CIFS_SES_FLAG_SCALE_CHANNELS ses flag)
-+	 */
-+	if (opcode == FSCTL_VALIDATE_NEGOTIATE_INFO ||
-+	    (opcode == FSCTL_QUERY_NETWORK_INTERFACE_INFO &&
-+	     (tcon->ses->flags & CIFS_SES_FLAGS_PENDING_QUERY_INTERFACES)))
- 		return __smb2_plain_req_init(SMB2_IOCTL, tcon, server,
- 					     request_buf, total_len);
--	}
-+
- 	return smb2_plain_req_init(SMB2_IOCTL, tcon, server,
- 				   request_buf, total_len);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+index 43239555f7850..05888942ef276 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -1873,9 +1873,8 @@ mlx5e_tc_add_fdb_flow(struct mlx5e_priv *priv,
+ 	return err;
  }
+ 
+-static bool mlx5_flow_has_geneve_opt(struct mlx5e_tc_flow *flow)
++static bool mlx5_flow_has_geneve_opt(struct mlx5_flow_spec *spec)
+ {
+-	struct mlx5_flow_spec *spec = &flow->attr->parse_attr->spec;
+ 	void *headers_v = MLX5_ADDR_OF(fte_match_param,
+ 				       spec->match_value,
+ 				       misc_parameters_3);
+@@ -1907,7 +1906,7 @@ static void mlx5e_tc_del_fdb_flow(struct mlx5e_priv *priv,
+ 	}
+ 	complete_all(&flow->del_hw_done);
+ 
+-	if (mlx5_flow_has_geneve_opt(flow))
++	if (mlx5_flow_has_geneve_opt(&attr->parse_attr->spec))
+ 		mlx5_geneve_tlv_option_del(priv->mdev->geneve);
+ 
+ 	mlx5_eswitch_del_vlan_action(esw, attr);
+@@ -2415,12 +2414,13 @@ static int parse_tunnel_attr(struct mlx5e_priv *priv,
+ 
+ 		err = mlx5e_tc_tun_parse(filter_dev, priv, tmp_spec, f, match_level);
+ 		if (err) {
+-			kvfree(tmp_spec);
+ 			NL_SET_ERR_MSG_MOD(extack, "Failed to parse tunnel attributes");
+ 			netdev_warn(priv->netdev, "Failed to parse tunnel attributes");
+-			return err;
++		} else {
++			err = mlx5e_tc_set_attr_rx_tun(flow, tmp_spec);
+ 		}
+-		err = mlx5e_tc_set_attr_rx_tun(flow, tmp_spec);
++		if (mlx5_flow_has_geneve_opt(tmp_spec))
++			mlx5_geneve_tlv_option_del(priv->mdev->geneve);
+ 		kvfree(tmp_spec);
+ 		if (err)
+ 			return err;
+-- 
+2.39.5
+
 
 
