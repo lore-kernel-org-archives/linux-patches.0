@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42B2221FBE;
-	Mon, 23 Jun 2025 21:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D461219A7A;
+	Mon, 23 Jun 2025 21:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715423; cv=none; b=amKwS9RuO5a3AWYl1MG79v+EJEZ4RMuAviZGwBIObf9NkIH9oyCghedJld+5oy8zvZjSQVS6FcI2HBsdC/6RlAZXzeWS0GhmTytyGF+ZCcjp0lAgCK/IFXiFxMBa/g18ENdU0xwClBTXQwLo5J9rnFgbH7Qq7E/ErlSY8oG2pJ4=
+	t=1750715426; cv=none; b=o9ItRpdAe+BKLloZMtfDxuU/xNTWN62GL/Km9yGvYV/GOL7pGNyuY5QRbxfb8NFdRWaPW5F6AikwZI8kEr3DhMk9YZ5T3/dH9U9e1NjfwZ0QRAv698cT2jKID1Xu4s6FBiAklq2yIj2vXvXVoKceiWTQperqJSwtsGHta/dBJ6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715423; c=relaxed/simple;
-	bh=dTbqIC7qytD2R3Ei3W96XwzA99r2sz9LgIFLr+64M1Q=;
+	s=arc-20240116; t=1750715426; c=relaxed/simple;
+	bh=j7b0CpFzGgPMk9RTLPUoS3EJHOWRlaqYjMKMvjhgO7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rurnL2eND/b3Nti8dsyduwaAoA7PjGtJbGJ3KVIkmt98V/ibuUBo+e1HHrXbNXUeu+POfPu8W20C/UK9vVFvIVqlYCEyun8zpPkpSmx279u69W5lAQG4jctHbmy0KvJ/sRY+77sPAl0r65P/2ucHDkkj1eKKLQYtxQoqwLTBtHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpflxJ80; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V0EfLmNRlWPeCRe2M+ZlYMrVJoDmrD+SalFPDiQd7RBzzTxowRavcIrs70w7t2GETfsLErBljoOKx/EtfU+IqVZoX8pz06PBtnGrB3O4kby8+qZuPB5UEISfzP0chWG1RngbWbEq6vhscF2G3WzjXN/2iwJHs1ageOmEBrZPBac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KKdQTctl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpflxJ80"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ADCCC4CEF2;
-	Mon, 23 Jun 2025 21:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKdQTctl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF6DC4CEF2;
+	Mon, 23 Jun 2025 21:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715423;
-	bh=dTbqIC7qytD2R3Ei3W96XwzA99r2sz9LgIFLr+64M1Q=;
+	s=korg; t=1750715426;
+	bh=j7b0CpFzGgPMk9RTLPUoS3EJHOWRlaqYjMKMvjhgO7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SpflxJ807qh7bngTEAIR7ZboF+EeM1WulxTgrI8PTh1kx6k4uNtE1qoj03Hr5PhXz
-	 UKLxerrok3DsMWkwQxn232Tcr0936HseAU7mM4F68BjnEr5cTLZIf3MyIJfI7Xuiah
-	 B122RbZ2ZMp1VMPevOhW7ABRM4ph/GejsG7y7qRM=
+	b=KKdQTctly3QvUwtU11yoA5hO6/k86+K77NynG6ZF4yae+7ljg6qq0jNoi8L1l2KDS
+	 sCZL4A6kdTfWKYVdCIrIbf+ke5JuV5kjeXhvr3ZeU2adSaeJm/GkkWdYHg2L6eYCm+
+	 d29GBY+Mpzv9eK5fmSvOAKjeVnb9mpN7RAvUyjxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Rouven Czerwinski <rouven.czerwinski@linaro.org>,
+	Marcus Folkesson <marcus.folkesson@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 198/290] tee: Prevent size calculation wraparound on 32-bit kernels
-Date: Mon, 23 Jun 2025 15:07:39 +0200
-Message-ID: <20250623130632.802960354@linuxfoundation.org>
+Subject: [PATCH 5.10 274/355] watchdog: da9052_wdt: respect TWDMIN
+Date: Mon, 23 Jun 2025 15:07:55 +0200
+Message-ID: <20250623130635.009276473@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,89 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Marcus Folkesson <marcus.folkesson@gmail.com>
 
-[ Upstream commit 39bb67edcc582b3b386a9ec983da67fa8a10ec03 ]
+[ Upstream commit 325f510fcd9cda5a44bcb662b74ba4e3dabaca10 ]
 
-The current code around TEE_IOCTL_PARAM_SIZE() is a bit wrong on
-32-bit kernels: Multiplying a user-provided 32-bit value with the
-size of a structure can wrap around on such platforms.
+We have to wait at least the minimium time for the watchdog window
+(TWDMIN) before writings to the wdt register after the
+watchdog is activated.
+Otherwise the chip will assert TWD_ERROR and power down to reset mode.
 
-Fix it by using saturating arithmetic for the size calculation.
-
-This has no security consequences because, in all users of
-TEE_IOCTL_PARAM_SIZE(), the subsequent kcalloc() implicitly checks
-for wrapping.
-
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
-Tested-by: Rouven Czerwinski <rouven.czerwinski@linaro.org>
+Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20250326-da9052-fixes-v3-4-a38a560fef0e@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/tee_core.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/watchdog/da9052_wdt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
-index 0eb342de0b001..d7ad16f262b2e 100644
---- a/drivers/tee/tee_core.c
-+++ b/drivers/tee/tee_core.c
-@@ -10,6 +10,7 @@
- #include <linux/fs.h>
- #include <linux/idr.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- #include <linux/tee_drv.h>
- #include <linux/uaccess.h>
-@@ -19,7 +20,7 @@
+diff --git a/drivers/watchdog/da9052_wdt.c b/drivers/watchdog/da9052_wdt.c
+index d708c091bf1b1..180526220d8c4 100644
+--- a/drivers/watchdog/da9052_wdt.c
++++ b/drivers/watchdog/da9052_wdt.c
+@@ -164,6 +164,7 @@ static int da9052_wdt_probe(struct platform_device *pdev)
+ 	da9052_wdt = &driver_data->wdt;
  
- #define TEE_NUM_DEVICES	32
- 
--#define TEE_IOCTL_PARAM_SIZE(x) (sizeof(struct tee_param) * (x))
-+#define TEE_IOCTL_PARAM_SIZE(x) (size_mul(sizeof(struct tee_param), (x)))
- 
- #define TEE_UUID_NS_NAME_SIZE	128
- 
-@@ -487,7 +488,7 @@ static int tee_ioctl_open_session(struct tee_context *ctx,
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
- 
--	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
-+	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	if (arg.num_params) {
-@@ -565,7 +566,7 @@ static int tee_ioctl_invoke(struct tee_context *ctx,
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
- 
--	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
-+	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	if (arg.num_params) {
-@@ -699,7 +700,7 @@ static int tee_ioctl_supp_recv(struct tee_context *ctx,
- 	if (get_user(num_params, &uarg->num_params))
- 		return -EFAULT;
- 
--	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) != buf.buf_len)
-+	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
-@@ -798,7 +799,7 @@ static int tee_ioctl_supp_send(struct tee_context *ctx,
- 	    get_user(num_params, &uarg->num_params))
- 		return -EFAULT;
- 
--	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) > buf.buf_len)
-+	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) > buf.buf_len)
- 		return -EINVAL;
- 
- 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
+ 	da9052_wdt->timeout = DA9052_DEF_TIMEOUT;
++	da9052_wdt->min_hw_heartbeat_ms = DA9052_TWDMIN;
+ 	da9052_wdt->info = &da9052_wdt_info;
+ 	da9052_wdt->ops = &da9052_wdt_ops;
+ 	da9052_wdt->parent = dev;
 -- 
 2.39.5
 
