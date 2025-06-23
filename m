@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DC93FB1B;
-	Mon, 23 Jun 2025 21:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258BE3FB1B;
+	Mon, 23 Jun 2025 21:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713102; cv=none; b=JadYWqf55IMFK4QYaFHsWSeO68/3O/F3WCzxLe/h81kzVd+P7HOKV9OkKdP7lnVvU6WPNwpXJnZ4ZLWjDf/Fh+y7nQ8R9rpxT8+dYgDsZMuJQ/gOSJKLumY3w7HEnB8UicndlZS5yoz5unZNNpyO312VnPWmGWNnMVNKIrfDVug=
+	t=1750713104; cv=none; b=NaD/FkMhcRamNuza7jUIfoPYduh+3EZNXoRBEDAuBnhkkiN5QmXKzBlG2vB1wG1hKMyZems6KcKTIqNT7jlQhc/BlWbomZx4Ec+YZMbArsS2k796l4oxduQtpQ2ggXyiWUCXNK8tuU8fmXsX+NxVPcQWHWD9mCDdLFkg4Q6iSe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713102; c=relaxed/simple;
-	bh=3uAXvAgQKAqGN3s6BzAQZLr3PS8Kl1o+0RdognG9RcM=;
+	s=arc-20240116; t=1750713104; c=relaxed/simple;
+	bh=BkO9gg3h30ld/m3tHtOoBivSn3xpVTzalGCIXchjTDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQFffcof/DBZwECoITH0KiJYz8HBPdsiuWCVvwTl8mTDjbPgFLAhbpfOdi9teFQTNCXaBKmWiNU+1GrGWrof+99Vs3HXsdqKThS9C/OPy+m4DGL12pa2mahANp6tZFkrIf/F1od63r5Uf/g/5pvYzBGHiBnNyhDzbmFA6crMib0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azp1Iogt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ech6LcBqQEbGd5ixYOcJwV49Sa6MUSycn04HiiWlXp7axfM4qQAoJ5dUQzfjcQLZeeI6hJM66+sngAJM4vAwlx/tg7p60GU/ZdAIvR6+9HISD7OG1PDMBeoRj68clu99iVeyVZEgbkGT0PZFCqDVMq6x8CuiSKXDFs793h9SfuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWQEnaWK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azp1Iogt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE12FC4CEEA;
-	Mon, 23 Jun 2025 21:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWQEnaWK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53127C4CEEA;
+	Mon, 23 Jun 2025 21:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713101;
-	bh=3uAXvAgQKAqGN3s6BzAQZLr3PS8Kl1o+0RdognG9RcM=;
+	s=korg; t=1750713103;
+	bh=BkO9gg3h30ld/m3tHtOoBivSn3xpVTzalGCIXchjTDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=azp1Iogtyn36vm5MKsUNQrRYE2BO1u8CsIWXtQaevssbc94feR6kEFTLrrwg58ac9
-	 D32eJoN05lTg7bL348t7boMMfVodl0eZNZzEnaIuhrlzm4I4rUUUhgWPFtEklaiQBz
-	 JAsBYtoSdETwdfI17YRSd76zxcRFnf5SpNqnFgiQ=
+	b=EWQEnaWK2wNtv7/YoBSby3ndIT/fwO9uCYxZOeEFUB/HaMWPdNxHGt1hBbA/T3lXM
+	 wSiMBDLCOok6hhz3p7vuDZuT8EPX/h27+yln/D2yFTJXH+KfBHtLHKDGC9KyQL2iqE
+	 9t1iX3xv4ItBy2H2cbaBIdoQdI7Nvh0EhcRZXPik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 328/592] wifi: mac80211: validate SCAN_FLAG_AP in scan request during MLO
-Date: Mon, 23 Jun 2025 15:04:46 +0200
-Message-ID: <20250623130708.257826972@linuxfoundation.org>
+	Artem Sadovnikov <a.sadovnikov@ispras.ru>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 5.4 188/222] jffs2: check that raw node were preallocated before writing summary
+Date: Mon, 23 Jun 2025 15:08:43 +0200
+Message-ID: <20250623130617.886871453@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +47,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+From: Artem Sadovnikov <a.sadovnikov@ispras.ru>
 
-[ Upstream commit 78a7a126dc5b8e3c5a3d4da9f513e0236d2dc1a3 ]
+commit ec9e6f22bce433b260ea226de127ec68042849b0 upstream.
 
-When an AP interface is already beaconing, a subsequent scan is not allowed
-unless the user space explicitly sets the flag NL80211_SCAN_FLAG_AP in the
-scan request. If this flag is not set, the scan request will be returned
-with the error code -EOPNOTSUPP. However, this restriction currently
-applies only to non-ML interfaces. For ML interfaces, scans are allowed
-without this flag being explicitly set by the user space which is wrong.
-This is because the beaconing check currently uses only the deflink, which
-does not get set during MLO.
+Syzkaller detected a kernel bug in jffs2_link_node_ref, caused by fault
+injection in jffs2_prealloc_raw_node_refs. jffs2_sum_write_sumnode doesn't
+check return value of jffs2_prealloc_raw_node_refs and simply lets any
+error propagate into jffs2_sum_write_data, which eventually calls
+jffs2_link_node_ref in order to link the summary to an expectedly allocated
+node.
 
-Hence to fix this, during MLO, use the existing helper
-ieee80211_num_beaconing_links() to know if any of the link is beaconing.
+kernel BUG at fs/jffs2/nodelist.c:592!
+invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 1 PID: 31277 Comm: syz-executor.7 Not tainted 6.1.128-syzkaller-00139-ge10f83ca10a1 #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+RIP: 0010:jffs2_link_node_ref+0x570/0x690 fs/jffs2/nodelist.c:592
+Call Trace:
+ <TASK>
+ jffs2_sum_write_data fs/jffs2/summary.c:841 [inline]
+ jffs2_sum_write_sumnode+0xd1a/0x1da0 fs/jffs2/summary.c:874
+ jffs2_do_reserve_space+0xa18/0xd60 fs/jffs2/nodemgmt.c:388
+ jffs2_reserve_space+0x55f/0xaa0 fs/jffs2/nodemgmt.c:197
+ jffs2_write_inode_range+0x246/0xb50 fs/jffs2/write.c:362
+ jffs2_write_end+0x726/0x15d0 fs/jffs2/file.c:301
+ generic_perform_write+0x314/0x5d0 mm/filemap.c:3856
+ __generic_file_write_iter+0x2ae/0x4d0 mm/filemap.c:3973
+ generic_file_write_iter+0xe3/0x350 mm/filemap.c:4005
+ call_write_iter include/linux/fs.h:2265 [inline]
+ do_iter_readv_writev+0x20f/0x3c0 fs/read_write.c:735
+ do_iter_write+0x186/0x710 fs/read_write.c:861
+ vfs_iter_write+0x70/0xa0 fs/read_write.c:902
+ iter_file_splice_write+0x73b/0xc90 fs/splice.c:685
+ do_splice_from fs/splice.c:763 [inline]
+ direct_splice_actor+0x10c/0x170 fs/splice.c:950
+ splice_direct_to_actor+0x337/0xa10 fs/splice.c:896
+ do_splice_direct+0x1a9/0x280 fs/splice.c:1002
+ do_sendfile+0xb13/0x12c0 fs/read_write.c:1255
+ __do_sys_sendfile64 fs/read_write.c:1323 [inline]
+ __se_sys_sendfile64 fs/read_write.c:1309 [inline]
+ __x64_sys_sendfile64+0x1cf/0x210 fs/read_write.c:1309
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-Signed-off-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250516-bug_fix_mlo_scan-v2-1-12e59d9110ac@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this issue by checking return value of jffs2_prealloc_raw_node_refs
+before calling jffs2_sum_write_data.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Cc: stable@vger.kernel.org
+Fixes: 2f785402f39b ("[JFFS2] Reduce visibility of raw_node_ref to upper layers of JFFS2 code.")
+Signed-off-by: Artem Sadovnikov <a.sadovnikov@ispras.ru>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/cfg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jffs2/summary.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 9f683f838431d..acfde525fad2f 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -2904,7 +2904,7 @@ static int ieee80211_scan(struct wiphy *wiphy,
- 		 * the frames sent while scanning on other channel will be
- 		 * lost)
- 		 */
--		if (sdata->deflink.u.ap.beacon &&
-+		if (ieee80211_num_beaconing_links(sdata) &&
- 		    (!(wiphy->features & NL80211_FEATURE_AP_SCAN) ||
- 		     !(req->flags & NL80211_SCAN_FLAG_AP)))
- 			return -EOPNOTSUPP;
--- 
-2.39.5
-
+--- a/fs/jffs2/summary.c
++++ b/fs/jffs2/summary.c
+@@ -858,7 +858,10 @@ int jffs2_sum_write_sumnode(struct jffs2
+ 	spin_unlock(&c->erase_completion_lock);
+ 
+ 	jeb = c->nextblock;
+-	jffs2_prealloc_raw_node_refs(c, jeb, 1);
++	ret = jffs2_prealloc_raw_node_refs(c, jeb, 1);
++
++	if (ret)
++		goto out;
+ 
+ 	if (!c->summary->sum_num || !c->summary->sum_list_head) {
+ 		JFFS2_WARNING("Empty summary info!!!\n");
+@@ -872,6 +875,8 @@ int jffs2_sum_write_sumnode(struct jffs2
+ 	datasize += padsize;
+ 
+ 	ret = jffs2_sum_write_data(c, jeb, infosize, datasize, padsize);
++
++out:
+ 	spin_lock(&c->erase_completion_lock);
+ 	return ret;
+ }
 
 
