@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45666222576;
-	Mon, 23 Jun 2025 22:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A49222576;
+	Mon, 23 Jun 2025 22:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716598; cv=none; b=sIVz9PuYIrA1EVHLqQ21qkLaXIDDOtYp6daXK1nrv0/VZLACxLiEtbGukiSOF/J1+ObaeNYXdMxe7M8wqZWpW5XRMHd0tHHeat/OfrnyC54wCcShhjZlY9ysrdYDN/TT7rKtC2TRyR8lzenJp34PEw4n5JbB1WVNzOouzQ7+9rM=
+	t=1750716600; cv=none; b=Ks5wcrbsqc+xaBXEYAcRt/FGBWSiNy75v+1bkLX8tgagopQ28riOlzMlOgKsyAOGGzRolUSEbNegle26v2aB9VmLJ4RZIcK1fNllgpdA73wEOKSKydMJCto+uXDpdkAYX+UtLo3LN8OqR9BXji2LjXy+85mN/0WxxIyCcBmb6c0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716598; c=relaxed/simple;
-	bh=5frQLmnejkwYjByx8+w/jd5bNtqIW/nJ/GonxwhSADs=;
+	s=arc-20240116; t=1750716600; c=relaxed/simple;
+	bh=0mLVcLswd6V7AI7LzOMJeWl50AGq/tJQprEEimoGruo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jByunL9DJ8RiklvUuDYC+rxwDNfSXhlE+YaFUaTZqKW4YR5fADSwo8miUI2T364eFR6pS4VgX/mQ9NzL3aVTrmjkQEa63qCQ9g3PtjEqaJ+Kf2xiiaMtusOGgTGjR0v2BLAb/++PqUqCkqZXNltM1/4HUepIxKd02sSFAPkP7Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxVg751k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NjzIDRFWwKNqe3PV1oiiuCR9A0ZMtP2C4FPzn954EG9Ko4vwo/5paGoBshpqCUs3BpaQU5TLiTZaILq3iboBAb0sH6rxAKwI6P3SvBcNn1Lp9imoVlzgEWjVe4/VMGKWCYQ8ou0yrEyclfipLtvD+/y+qOPRP5J69Gvh8gyjx6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=upmZEPMM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxVg751k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E32C4CEF1;
-	Mon, 23 Jun 2025 22:09:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="upmZEPMM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424FBC4CEEA;
+	Mon, 23 Jun 2025 22:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716598;
-	bh=5frQLmnejkwYjByx8+w/jd5bNtqIW/nJ/GonxwhSADs=;
+	s=korg; t=1750716600;
+	bh=0mLVcLswd6V7AI7LzOMJeWl50AGq/tJQprEEimoGruo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GxVg751kfg+bZcOzFj5G9uZH2OUVgoLFmZwadOeujqop3MPUjZmNSF/klqWFzHKcm
-	 RxLEbLyUUthZMXIZXtA0Oer+7TVgp8qM7dm1W2KCGGax4hyOHxSJTqX0zZjVKgZues
-	 H/4axgSjfZ4a1jJfOmOoj2m0Tu4MqjDvaNKVDme8=
+	b=upmZEPMMHex+SbSX825nkP/prYBnG55mUrS4SwnraZUXqxFd8/OVm2Ob5cdaz5YXk
+	 ovAp3lGkP7lSE5WZa79BCXUhtVbuFV6/i91j3/j0DgU383u63ZMUJA1BO3zpwTHM8F
+	 jbc0Bu0NuhPncNEDSpejKdSstMu/RaO9e5lP13JY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyungwook Boo <bookyungwook@gmail.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.12 268/414] i40e: fix MMIO write access to an invalid page in i40e_clear_hw
-Date: Mon, 23 Jun 2025 15:06:45 +0200
-Message-ID: <20250623130648.731133336@linuxfoundation.org>
+	Michael Walle <mwalle@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 261/414] net: ethernet: ti: am65-cpsw: handle -EPROBE_DEFER
+Date: Mon, 23 Jun 2025 15:06:38 +0200
+Message-ID: <20250623130648.562206831@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
 References: <20250623130642.015559452@linuxfoundation.org>
@@ -55,46 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyungwook Boo <bookyungwook@gmail.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit 015bac5daca978448f2671478c553ce1f300c21e ]
+[ Upstream commit 09737cb80b8686ffca4ed1805fee745d5c85604d ]
 
-When the device sends a specific input, an integer underflow can occur, leading
-to MMIO write access to an invalid page.
+of_get_mac_address() might fetch the MAC address from NVMEM and that
+driver might not have been loaded. In that case, -EPROBE_DEFER is
+returned. Right now, this will trigger an immediate fallback to
+am65_cpsw_am654_get_efuse_macid() possibly resulting in a random MAC
+address although the MAC address is stored in the referenced NVMEM.
 
-Prevent the integer underflow by changing the type of related variables.
+Fix it by handling the -EPROBE_DEFER return code correctly. This also
+means that the creation of the MDIO device has to be moved to a later
+stage as -EPROBE_DEFER must not be returned after child devices are
+created.
 
-Signed-off-by: Kyungwook Boo <bookyungwook@gmail.com>
-Link: https://lore.kernel.org/lkml/ffc91764-1142-4ba2-91b6-8c773f6f7095@gmail.com/T/
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250414084336.4017237-3-mwalle@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_common.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_common.c b/drivers/net/ethernet/intel/i40e/i40e_common.c
-index e8031f1a9b4fc..2f5a850148676 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_common.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_common.c
-@@ -817,10 +817,11 @@ int i40e_pf_reset(struct i40e_hw *hw)
- void i40e_clear_hw(struct i40e_hw *hw)
- {
- 	u32 num_queues, base_queue;
--	u32 num_pf_int;
--	u32 num_vf_int;
-+	s32 num_pf_int;
-+	s32 num_vf_int;
- 	u32 num_vfs;
--	u32 i, j;
-+	s32 i;
-+	u32 j;
- 	u32 val;
- 	u32 eol = 0x7ff;
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 61788a43cb861..393cc5192e90d 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2693,7 +2693,9 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 			goto of_node_put;
  
+ 		ret = of_get_mac_address(port_np, port->slave.mac_addr);
+-		if (ret) {
++		if (ret == -EPROBE_DEFER) {
++			goto of_node_put;
++		} else if (ret) {
+ 			am65_cpsw_am654_get_efuse_macid(port_np,
+ 							port->port_id,
+ 							port->slave.mac_addr);
+@@ -3586,6 +3588,16 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
++	am65_cpsw_nuss_get_ver(common);
++
++	ret = am65_cpsw_nuss_init_host_p(common);
++	if (ret)
++		goto err_pm_clear;
++
++	ret = am65_cpsw_nuss_init_slave_ports(common);
++	if (ret)
++		goto err_pm_clear;
++
+ 	node = of_get_child_by_name(dev->of_node, "mdio");
+ 	if (!node) {
+ 		dev_warn(dev, "MDIO node not found\n");
+@@ -3602,16 +3614,6 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
+ 	}
+ 	of_node_put(node);
+ 
+-	am65_cpsw_nuss_get_ver(common);
+-
+-	ret = am65_cpsw_nuss_init_host_p(common);
+-	if (ret)
+-		goto err_of_clear;
+-
+-	ret = am65_cpsw_nuss_init_slave_ports(common);
+-	if (ret)
+-		goto err_of_clear;
+-
+ 	/* init common data */
+ 	ale_params.dev = dev;
+ 	ale_params.ale_ageout = AM65_CPSW_ALE_AGEOUT_DEFAULT;
 -- 
 2.39.5
 
