@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3C51EE7C6;
-	Mon, 23 Jun 2025 21:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FE01EEA5D;
+	Mon, 23 Jun 2025 21:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714558; cv=none; b=RB3lXJsGZjHdCuCAWhUDoSqo3k9e4OBQJT7ZEKZTgfucFRVNtG0Wk5nA5vf5HL1EsGTmpHp7i5Pzx+u0yCOSc1VN4wiRu6wYPwnokYeHbhMoqji2sIQU+5RDkO+7qIeBhZpZd2+XuXQGc1OjuUJbNHFiWRheufVz7jkND6Y0pfE=
+	t=1750714561; cv=none; b=XxL+KONzenNx5b5h8vcVS3KOl5dlUDuthQOgYtH2uABwUjomg0mCtTr3LfIiUAcNcTiQO2UconJ7eO28uZLt5KvLvSmVMrVaJ42moZQyHhlGbrVHdmYv3LV5KvHJ5KDntNPSXFK/Plz7H3XaqfrrKY3/I1v5OTewqc/KxthsEKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714558; c=relaxed/simple;
-	bh=c8DNX0//Ll6crInEW5Wb6ToNx7ZDzDROZq/j4/ZfYl4=;
+	s=arc-20240116; t=1750714561; c=relaxed/simple;
+	bh=XKoDa5HUIa8twybGlKBtc6agnS9sLqu8eS16RQE50/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g2ZcYLuRLnJnToTyZqw5farlDKXMiEAyID4Kan5U04d+DTanuXCzU+K2p3W3B25moZgErY07quf9b88i85imRxspevs6SBPMwr9ozLlUuHK/o0/Hw54pwQVQ+nAtRsmjQGSL+FfsnvWg7Bj1JhFhe1XPiwLwRvAP3DawstwU8Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOY4gV8E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BFi+I+0kajEPufyz6cfnmXTgy3j4+2CAVKWSkysjGX+RO/ZQICg8PttPoqGzHFeKX4TsVO0q8ts7p9LiZN/U5GvJh0AF+5Qfwh/Drfb3dfEvJkglusWNLWtegmbVhGY05t79Drn2oLKDu2DX6CbL59zldY1MrNLjAqEgSgRVhww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTWRPQEQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOY4gV8E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3532EC4CEEA;
-	Mon, 23 Jun 2025 21:35:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTWRPQEQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27EFC4CEEA;
+	Mon, 23 Jun 2025 21:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714558;
-	bh=c8DNX0//Ll6crInEW5Wb6ToNx7ZDzDROZq/j4/ZfYl4=;
+	s=korg; t=1750714561;
+	bh=XKoDa5HUIa8twybGlKBtc6agnS9sLqu8eS16RQE50/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tOY4gV8ES4Y4Y0IT51a8G5i7RHkRknHUx153+VTF1GIR7ybEE0wXZ/fPQZYOsZ3qW
-	 4Whe98OaVrigSpfIiZIrAmH4e5ey5UXqcyoa/kBdewC/rlc+Ja82Fh1RNDVrTtmOqM
-	 UjZyukqC2PZ6S0+lAxYdTMBdPQ++DhKDT1cp4UDk=
+	b=xTWRPQEQ6OijMYTeh8nSrk4bqc7BcRn7TomwLrqmAi9Zcsr67D4XREMpaH8j1DPin
+	 NSXSSQ66nLKdN7oJFDDjMCOWx3UAK0z7Wytn0bFp3eNpYFa2gnjvp/70e3SOt/1w/r
+	 JCUkYBy0PctCNe+NMFhNruN9jfQ/1x0l01mIF0y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.12 116/414] RDMA/iwcm: Fix use-after-free of work objects after cm_id destruction
-Date: Mon, 23 Jun 2025 15:04:13 +0200
-Message-ID: <20250623130644.980503153@linuxfoundation.org>
+	Neal Gompa <neal@gompa.dev>,
+	Hector Martin <marcan@marcan.st>,
+	James Calligeros <jcalligeros99@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 215/355] ASoC: tas2770: Power cycle amp on ISENSE/VSENSE change
+Date: Mon, 23 Jun 2025 15:06:56 +0200
+Message-ID: <20250623130633.210296882@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,195 +49,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Hector Martin <marcan@marcan.st>
 
-commit 6883b680e703c6b2efddb4e7a8d891ce1803d06b upstream.
+[ Upstream commit f529c91be8a34ac12e7599bf87c65b6f4a2c9f5c ]
 
-The commit 59c68ac31e15 ("iw_cm: free cm_id resources on the last
-deref") simplified cm_id resource management by freeing cm_id once all
-references to the cm_id were removed. The references are removed either
-upon completion of iw_cm event handlers or when the application destroys
-the cm_id. This commit introduced the use-after-free condition where
-cm_id_private object could still be in use by event handler works during
-the destruction of cm_id. The commit aee2424246f9 ("RDMA/iwcm: Fix a
-use-after-free related to destroying CM IDs") addressed this use-after-
-free by flushing all pending works at the cm_id destruction.
+The ISENSE/VSENSE blocks are only powered up when the amplifier
+transitions from shutdown to active. This means that if those controls
+are flipped on while the amplifier is already playing back audio, they
+will have no effect.
 
-However, still another use-after-free possibility remained. It happens
-with the work objects allocated for each cm_id_priv within
-alloc_work_entries() during cm_id creation, and subsequently freed in
-dealloc_work_entries() once all references to the cm_id are removed.
-If the cm_id's last reference is decremented in the event handler work,
-the work object for the work itself gets removed, and causes the use-
-after-free BUG below:
+Fix this by forcing a power cycle around transitions in those controls.
 
-  BUG: KASAN: slab-use-after-free in __pwq_activate_work+0x1ff/0x250
-  Read of size 8 at addr ffff88811f9cf800 by task kworker/u16:1/147091
-
-  CPU: 2 UID: 0 PID: 147091 Comm: kworker/u16:1 Not tainted 6.15.0-rc2+ #27 PREEMPT(voluntary)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
-  Workqueue:  0x0 (iw_cm_wq)
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x6a/0x90
-   print_report+0x174/0x554
-   ? __virt_addr_valid+0x208/0x430
-   ? __pwq_activate_work+0x1ff/0x250
-   kasan_report+0xae/0x170
-   ? __pwq_activate_work+0x1ff/0x250
-   __pwq_activate_work+0x1ff/0x250
-   pwq_dec_nr_in_flight+0x8c5/0xfb0
-   process_one_work+0xc11/0x1460
-   ? __pfx_process_one_work+0x10/0x10
-   ? assign_work+0x16c/0x240
-   worker_thread+0x5ef/0xfd0
-   ? __pfx_worker_thread+0x10/0x10
-   kthread+0x3b0/0x770
-   ? __pfx_kthread+0x10/0x10
-   ? rcu_is_watching+0x11/0xb0
-   ? _raw_spin_unlock_irq+0x24/0x50
-   ? rcu_is_watching+0x11/0xb0
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x30/0x70
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
-
-  Allocated by task 147416:
-   kasan_save_stack+0x2c/0x50
-   kasan_save_track+0x10/0x30
-   __kasan_kmalloc+0xa6/0xb0
-   alloc_work_entries+0xa9/0x260 [iw_cm]
-   iw_cm_connect+0x23/0x4a0 [iw_cm]
-   rdma_connect_locked+0xbfd/0x1920 [rdma_cm]
-   nvme_rdma_cm_handler+0x8e5/0x1b60 [nvme_rdma]
-   cma_cm_event_handler+0xae/0x320 [rdma_cm]
-   cma_work_handler+0x106/0x1b0 [rdma_cm]
-   process_one_work+0x84f/0x1460
-   worker_thread+0x5ef/0xfd0
-   kthread+0x3b0/0x770
-   ret_from_fork+0x30/0x70
-   ret_from_fork_asm+0x1a/0x30
-
-  Freed by task 147091:
-   kasan_save_stack+0x2c/0x50
-   kasan_save_track+0x10/0x30
-   kasan_save_free_info+0x37/0x60
-   __kasan_slab_free+0x4b/0x70
-   kfree+0x13a/0x4b0
-   dealloc_work_entries+0x125/0x1f0 [iw_cm]
-   iwcm_deref_id+0x6f/0xa0 [iw_cm]
-   cm_work_handler+0x136/0x1ba0 [iw_cm]
-   process_one_work+0x84f/0x1460
-   worker_thread+0x5ef/0xfd0
-   kthread+0x3b0/0x770
-   ret_from_fork+0x30/0x70
-   ret_from_fork_asm+0x1a/0x30
-
-  Last potentially related work creation:
-   kasan_save_stack+0x2c/0x50
-   kasan_record_aux_stack+0xa3/0xb0
-   __queue_work+0x2ff/0x1390
-   queue_work_on+0x67/0xc0
-   cm_event_handler+0x46a/0x820 [iw_cm]
-   siw_cm_upcall+0x330/0x650 [siw]
-   siw_cm_work_handler+0x6b9/0x2b20 [siw]
-   process_one_work+0x84f/0x1460
-   worker_thread+0x5ef/0xfd0
-   kthread+0x3b0/0x770
-   ret_from_fork+0x30/0x70
-   ret_from_fork_asm+0x1a/0x30
-
-This BUG is reproducible by repeating the blktests test case nvme/061
-for the rdma transport and the siw driver.
-
-To avoid the use-after-free of cm_id_private work objects, ensure that
-the last reference to the cm_id is decremented not in the event handler
-works, but in the cm_id destruction context. For that purpose, move
-iwcm_deref_id() call from destroy_cm_id() to the callers of
-destroy_cm_id(). In iw_destroy_cm_id(), call iwcm_deref_id() after
-flushing the pending works.
-
-During the fix work, I noticed that iw_destroy_cm_id() is called from
-cm_work_handler() and process_event() context. However, the comment of
-iw_destroy_cm_id() notes that the function "cannot be called by the
-event thread". Drop the false comment.
-
-Closes: https://lore.kernel.org/linux-rdma/r5676e754sv35aq7cdsqrlnvyhiq5zktteaurl7vmfih35efko@z6lay7uypy3c/
-Fixes: 59c68ac31e15 ("iw_cm: free cm_id resources on the last deref")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Link: https://patch.msgid.link/20250510101036.1756439-1-shinichiro.kawasaki@wdc.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
+Link: https://patch.msgid.link/20250406-apple-codec-changes-v5-1-50a00ec850a3@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/iwcm.c |   29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ sound/soc/codecs/tas2770.c | 30 ++++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
---- a/drivers/infiniband/core/iwcm.c
-+++ b/drivers/infiniband/core/iwcm.c
-@@ -366,12 +366,9 @@ EXPORT_SYMBOL(iw_cm_disconnect);
- /*
-  * CM_ID <-- DESTROYING
-  *
-- * Clean up all resources associated with the connection and release
-- * the initial reference taken by iw_create_cm_id.
-- *
-- * Returns true if and only if the last cm_id_priv reference has been dropped.
-+ * Clean up all resources associated with the connection.
-  */
--static bool destroy_cm_id(struct iw_cm_id *cm_id)
-+static void destroy_cm_id(struct iw_cm_id *cm_id)
- {
- 	struct iwcm_id_private *cm_id_priv;
- 	struct ib_qp *qp;
-@@ -440,20 +437,22 @@ static bool destroy_cm_id(struct iw_cm_i
- 		iwpm_remove_mapinfo(&cm_id->local_addr, &cm_id->m_local_addr);
- 		iwpm_remove_mapping(&cm_id->local_addr, RDMA_NL_IWCM);
- 	}
--
--	return iwcm_deref_id(cm_id_priv);
- }
+diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
+index 1928c1616a52d..629cc24d51c3d 100644
+--- a/sound/soc/codecs/tas2770.c
++++ b/sound/soc/codecs/tas2770.c
+@@ -158,11 +158,37 @@ static const struct snd_kcontrol_new isense_switch =
+ static const struct snd_kcontrol_new vsense_switch =
+ 	SOC_DAPM_SINGLE("Switch", TAS2770_PWR_CTRL, 2, 1, 1);
  
- /*
-- * This function is only called by the application thread and cannot
-- * be called by the event thread. The function will wait for all
-- * references to be released on the cm_id and then kfree the cm_id
-- * object.
-+ * Destroy cm_id. If the cm_id still has other references, wait for all
-+ * references to be released on the cm_id and then release the initial
-+ * reference taken by iw_create_cm_id.
-  */
- void iw_destroy_cm_id(struct iw_cm_id *cm_id)
- {
--	if (!destroy_cm_id(cm_id))
-+	struct iwcm_id_private *cm_id_priv;
++static int sense_event(struct snd_soc_dapm_widget *w,
++			struct snd_kcontrol *kcontrol, int event)
++{
++	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
++	struct tas2770_priv *tas2770 = snd_soc_component_get_drvdata(component);
 +
-+	cm_id_priv = container_of(cm_id, struct iwcm_id_private, id);
-+	destroy_cm_id(cm_id);
-+	if (refcount_read(&cm_id_priv->refcount) > 1)
- 		flush_workqueue(iwcm_wq);
-+	iwcm_deref_id(cm_id_priv);
- }
- EXPORT_SYMBOL(iw_destroy_cm_id);
- 
-@@ -1033,8 +1032,10 @@ static void cm_work_handler(struct work_
- 
- 		if (!test_bit(IWCM_F_DROP_EVENTS, &cm_id_priv->flags)) {
- 			ret = process_event(cm_id_priv, &levent);
--			if (ret)
--				WARN_ON_ONCE(destroy_cm_id(&cm_id_priv->id));
-+			if (ret) {
-+				destroy_cm_id(&cm_id_priv->id);
-+				WARN_ON_ONCE(iwcm_deref_id(cm_id_priv));
-+			}
- 		} else
- 			pr_debug("dropping event %d\n", levent.event);
- 		if (iwcm_deref_id(cm_id_priv))
++	/*
++	 * Powering up ISENSE/VSENSE requires a trip through the shutdown state.
++	 * Do that here to ensure that our changes are applied properly, otherwise
++	 * we might end up with non-functional IVSENSE if playback started earlier,
++	 * which would break software speaker protection.
++	 */
++	switch (event) {
++	case SND_SOC_DAPM_PRE_REG:
++		return snd_soc_component_update_bits(component, TAS2770_PWR_CTRL,
++						    TAS2770_PWR_CTRL_MASK,
++						    TAS2770_PWR_CTRL_SHUTDOWN);
++	case SND_SOC_DAPM_POST_REG:
++		return tas2770_update_pwr_ctrl(tas2770);
++	default:
++		return 0;
++	}
++}
++
+ static const struct snd_soc_dapm_widget tas2770_dapm_widgets[] = {
+ 	SND_SOC_DAPM_AIF_IN("ASI1", "ASI1 Playback", 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_MUX("ASI1 Sel", SND_SOC_NOPM, 0, 0, &tas2770_asi1_mux),
+-	SND_SOC_DAPM_SWITCH("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch),
+-	SND_SOC_DAPM_SWITCH("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch),
++	SND_SOC_DAPM_SWITCH_E("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch,
++		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
++	SND_SOC_DAPM_SWITCH_E("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch,
++		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
+ 	SND_SOC_DAPM_DAC_E("DAC", NULL, SND_SOC_NOPM, 0, 0, tas2770_dac_event,
+ 			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD),
+ 	SND_SOC_DAPM_OUTPUT("OUT"),
+-- 
+2.39.5
+
 
 
