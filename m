@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816A925291B;
-	Mon, 23 Jun 2025 13:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25ECD30E84D;
+	Mon, 23 Jun 2025 13:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684919; cv=none; b=Qd2tx/a1qdCL3reWb8dQGgePtNC5DMfQBT0v5Nw4zUbI+rBEAhJgDKRJLsH2uN8xbgZLJsBosJQ2CZ8nCCQKSRo6PWsEbDay8m1/wjf26xeexYDwnCtAQH2c356Yf6N1dfFahRXH54kzOG2tp6jLgGQr4h/DnDKFHO/WPMZnqqI=
+	t=1750684922; cv=none; b=ZAILADeun2D/Tv8HI0Ns+VIJ7rv4Xcaq1ZWEgGiussy/BZigGB75DUGkd7C8jW+NGyfstjg4/mTjXdMzU/p/Y1rbdQ8VLEbHImhgIbNWogM4zC01zf66lF8JED+Z6ggwAkBnD/WqyGIF1w1Ae3pguJXgxcY6Lvv7EaIQ26/VYDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684919; c=relaxed/simple;
-	bh=DlGETGQjkJncD/pUw18aGcFhfjQ1uK1w8Cmf6dg97n8=;
+	s=arc-20240116; t=1750684922; c=relaxed/simple;
+	bh=tGOHNyVCnxrmrHG/OgPivLq6C41Z/WVO3dP+malVlB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gtjXeuaYBPDkQhuSkPTsxjcoL71dCirsrkMO0I13Ht6gITnAKCoZukwvdSss6WW693vjA5m/NKUvVUe9KWyHrSJ09F9PAq3Rv8bxbR2h1xXTJS/IM+Nvcbaj+BljLlRgILkbOs4+Eh5862Pknlwneq1jmelJrFF1QW4nKFP6h/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5HgCe3r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ivXQFHccRW0H5KCYNSWfpujI0mcAen3lUpTU8sw7TMBTXfVt6/Env2ZZqOg5O6wlnsZqsy0u2pIb/Lp8OW9z1/DM08IO+ioUMMn1vrtOufDuIjsfIehXxGkc9kt41G+fImWXGuXm5/oDVkkS6YIQzFPJVRcsW0Jr42Pld+P6Qzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpJPW2hO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5HgCe3r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15CF5C4CEEA;
-	Mon, 23 Jun 2025 13:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpJPW2hO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4E2C4CEEA;
+	Mon, 23 Jun 2025 13:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684919;
-	bh=DlGETGQjkJncD/pUw18aGcFhfjQ1uK1w8Cmf6dg97n8=;
+	s=korg; t=1750684922;
+	bh=tGOHNyVCnxrmrHG/OgPivLq6C41Z/WVO3dP+malVlB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G5HgCe3raLJ2ozM2gtxJ5RoLDgCun2Bsz83bXYyQruXPhuNRQUX+WSHk50cDpmpD/
-	 pjoTwI0FRD9FqwEyux/spOvORGQNuedtXKIgmPyhhzy6U7HB5tnGdijRdoEh/sbe0J
-	 0ja0peZmu/3aDtmrE8RX3Xq0p6NGnfT4eNfe2D5U=
+	b=ZpJPW2hOgJO+sA6lb0buqJh1fvEEdJfOKIyJqcNoVvIN1TUsFvLWurLfJrw6NF/uN
+	 29zoABgtNcLhLqzyM23Ds4OSvg8WHJD5jCO0TCUII35+sDhokmI0SVXawd0kep0f+S
+	 nOIdgHNihbH4Pl+DJkq/toAt0gVk4GPThI6vFBeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
-	Louis Chauvet <contact@louischauvet.fr>,
+	Qing Wang <wangqing7171@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 024/222] drm/vkms: Adjust vkms_state->active_planes allocation type
-Date: Mon, 23 Jun 2025 15:05:59 +0200
-Message-ID: <20250623130612.627337946@linuxfoundation.org>
+Subject: [PATCH 5.10 011/355] perf/core: Fix broken throttling when max_samples_per_tick=1
+Date: Mon, 23 Jun 2025 15:03:32 +0200
+Message-ID: <20250623130627.094426138@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +47,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Qing Wang <wangqing7171@gmail.com>
 
-[ Upstream commit 258aebf100540d36aba910f545d4d5ddf4ecaf0b ]
+[ Upstream commit f51972e6f8b9a737b2b3eb588069acb538fa72de ]
 
-In preparation for making the kmalloc family of allocators type aware,
-we need to make sure that the returned type from the allocation matches
-the type of the variable being assigned. (Before, the allocator would
-always return "void *", which can be implicitly cast to any pointer type.)
+According to the throttling mechanism, the pmu interrupts number can not
+exceed the max_samples_per_tick in one tick. But this mechanism is
+ineffective when max_samples_per_tick=1, because the throttling check is
+skipped during the first interrupt and only performed when the second
+interrupt arrives.
 
-The assigned type is "struct vkms_plane_state **", but the returned type
-will be "struct drm_plane **". These are the same size (pointer size), but
-the types don't match. Adjust the allocation type to match the assignment.
+Perhaps this bug may cause little influence in one tick, but if in a
+larger time scale, the problem can not be underestimated.
 
-Signed-off-by: Kees Cook <kees@kernel.org>
-Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Fixes: 8b1865873651 ("drm/vkms: totally reworked crc data tracking")
-Link: https://lore.kernel.org/r/20250426061431.work.304-kees@kernel.org
-Signed-off-by: Louis Chauvet <contact@louischauvet.fr>
+When max_samples_per_tick = 1:
+Allowed-interrupts-per-second max-samples-per-second  default-HZ  ARCH
+200                           100                     100         X86
+500                           250                     250         ARM64
+...
+Obviously, the pmu interrupt number far exceed the user's expect.
+
+Fixes: e050e3f0a71b ("perf: Fix broken interrupt rate throttling")
+Signed-off-by: Qing Wang <wangqing7171@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20250405141635.243786-3-wangqing7171@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vkms/vkms_crtc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/events/core.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/vkms/vkms_crtc.c b/drivers/gpu/drm/vkms/vkms_crtc.c
-index 8b01fae65f43b..1b797156cf874 100644
---- a/drivers/gpu/drm/vkms/vkms_crtc.c
-+++ b/drivers/gpu/drm/vkms/vkms_crtc.c
-@@ -187,7 +187,7 @@ static int vkms_crtc_atomic_check(struct drm_crtc *crtc,
- 		i++;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 8f19d6ab039ef..21f56dd6c05a3 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -9031,14 +9031,14 @@ __perf_event_account_interrupt(struct perf_event *event, int throttle)
+ 		hwc->interrupts = 1;
+ 	} else {
+ 		hwc->interrupts++;
+-		if (unlikely(throttle &&
+-			     hwc->interrupts > max_samples_per_tick)) {
+-			__this_cpu_inc(perf_throttled_count);
+-			tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
+-			hwc->interrupts = MAX_INTERRUPTS;
+-			perf_log_throttle(event, 0);
+-			ret = 1;
+-		}
++	}
++
++	if (unlikely(throttle && hwc->interrupts >= max_samples_per_tick)) {
++		__this_cpu_inc(perf_throttled_count);
++		tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
++		hwc->interrupts = MAX_INTERRUPTS;
++		perf_log_throttle(event, 0);
++		ret = 1;
  	}
  
--	vkms_state->active_planes = kcalloc(i, sizeof(plane), GFP_KERNEL);
-+	vkms_state->active_planes = kcalloc(i, sizeof(*vkms_state->active_planes), GFP_KERNEL);
- 	if (!vkms_state->active_planes)
- 		return -ENOMEM;
- 	vkms_state->num_active_planes = i;
+ 	if (event->attr.freq) {
 -- 
 2.39.5
 
