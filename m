@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75ED1DF98B;
-	Mon, 23 Jun 2025 21:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AED01DF98B;
+	Mon, 23 Jun 2025 21:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713255; cv=none; b=b/zXNu3U3S1l4Dds3MplP1a8kwbup7+LqaBM6m5HIsA3BRt0sq8jHYcGsK6RtMAWtnq+4+3fQhHd+9RAOGy6a1NCxt5yyU7GBi+D9Ev86hHkyKC9Kc9hPJkD8qBBKgr7f1dknEn93C5Y7ERThhOJaCWI+hmcnEKG0DH4NO4VVOc=
+	t=1750713258; cv=none; b=Ute8BVpHoaIgsjDfduO3glv4dz+okNiBhOBEwSdy8ILNVKuLCql48aNpAMASGYkhp6rqvv7jh9Zt7P2RQOfQe8HYhQwcFrU2EbtaGshjk+YIxLvXCJrdPvjONSCm9979thkRIfE7VioTE+h3NKhivmppw9/rNzNFlNwTa0V/LzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713255; c=relaxed/simple;
-	bh=OP3T3NAxnOwIKs4PgVfdhSh2bej4YQaeLM8Kxxxz4r8=;
+	s=arc-20240116; t=1750713258; c=relaxed/simple;
+	bh=74u9hILTxoYG+SSl/1Q31ZzJ7aKkLcjfmUUGcei6HmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XULwd+Nb2Y/paLUNYy4rHSVRq2XpLmq4VIPf/hLmnEIqipbvcVTwlLy5AqGyEJyNZQXXiAsu/HrMPOO2jw1I7FFlu6Kc7ifBmWC1tLSBUziXY0KAP6mjMA1STBdQF5YxVZ1oyLDprNJ35aW+Zz/rWAqfiYuzibLdxAdT9Txoz9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sz9cJhFT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EUXdc6rjKZwKBHu7xA2WSSOkFeYLLy2L9xbFfH3Zi8ZbpU3HYFRx3ctTx5zuk3+G330KqzCjY9yMcq2pAIlSwElKqY9VafXHlHU+U56U+DT4r0OGN3v0loeFxgnmeD1sk16eANGeyJgPRxmN87Z75FRGdyYyrFbaNehOBWR4CBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2grbFcl2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sz9cJhFT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496EFC4CEEA;
-	Mon, 23 Jun 2025 21:14:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2grbFcl2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5631C4CEEA;
+	Mon, 23 Jun 2025 21:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713255;
-	bh=OP3T3NAxnOwIKs4PgVfdhSh2bej4YQaeLM8Kxxxz4r8=;
+	s=korg; t=1750713258;
+	bh=74u9hILTxoYG+SSl/1Q31ZzJ7aKkLcjfmUUGcei6HmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sz9cJhFTjRk/VSWyfRcppQIki+Yww3e/dYUNW50X4EN4Qgacoaky5ehH/rn+gCdpm
-	 A8YsTzKoDYRfFusv2LKKp+9hQxjs/hfOaa7uanxvRDn4Vv+n/Ecws2WY0XYJly60uQ
-	 X8YzkLy6i1fFDHZT6AO/oAEoA59W6ErGjQp+QrRM=
+	b=2grbFcl2QwVokuyFfQxjuP/ItNZciD4Fy3HATQ6DMBGo9d5PyDdaGcuiQR0mivlQL
+	 5uQWWG9cT7NMD+BHBajK3lOJtAzn1oBfMfwsJja7gIOaWowkb55aCwgjWyUgSlV8Am
+	 x0TxfK1Gk8GwtlXQJ5prkx2JhuI2o5iltzQbicZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerrard Tai <gerrard.tai@starlabs.sg>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 134/355] net_sched: prio: fix a race in prio_tune()
-Date: Mon, 23 Jun 2025 15:05:35 +0200
-Message-ID: <20250623130630.760344035@linuxfoundation.org>
+Subject: [PATCH 5.4 169/222] pinctrl: armada-37xx: propagate error from armada_37xx_pmx_gpio_set_direction()
+Date: Mon, 23 Jun 2025 15:08:24 +0200
+Message-ID: <20250623130617.156062815@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit d35acc1be3480505b5931f17e4ea9b7617fea4d3 ]
+[ Upstream commit bfa0ff804ffa8b1246ade8be08de98c9eb19d16f ]
 
-Gerrard Tai reported a race condition in PRIO, whenever SFQ perturb timer
-fires at the wrong time.
+The armada_37xx_gpio_direction_{in,out}put() functions can fail, so
+propagate their error values back to the stack instead of silently
+ignoring those.
 
-The race is as follows:
-
-CPU 0                                 CPU 1
-[1]: lock root
-[2]: qdisc_tree_flush_backlog()
-[3]: unlock root
- |
- |                                    [5]: lock root
- |                                    [6]: rehash
- |                                    [7]: qdisc_tree_reduce_backlog()
- |
-[4]: qdisc_put()
-
-This can be abused to underflow a parent's qlen.
-
-Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
-should fix the race, because all packets will be purged from the qdisc
-before releasing the lock.
-
-Fixes: 7b8e0b6e6599 ("net: sched: prio: delay destroying child qdiscs on change")
-Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250611111515.1983366-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-5-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_prio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_prio.c b/net/sched/sch_prio.c
-index 1c805fe05b82a..3d92497af01fe 100644
---- a/net/sched/sch_prio.c
-+++ b/net/sched/sch_prio.c
-@@ -211,7 +211,7 @@ static int prio_tune(struct Qdisc *sch, struct nlattr *opt,
- 	memcpy(q->prio2band, qopt->priomap, TC_PRIO_MAX+1);
+diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+index d3d156b25e96d..4df9dbad0e977 100644
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -464,16 +464,17 @@ static int armada_37xx_pmx_gpio_set_direction(struct pinctrl_dev *pctldev,
+ {
+ 	struct armada_37xx_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
+ 	struct gpio_chip *chip = range->gc;
++	int ret;
  
- 	for (i = q->bands; i < oldbands; i++)
--		qdisc_tree_flush_backlog(q->queues[i]);
-+		qdisc_purge_queue(q->queues[i]);
+ 	dev_dbg(info->dev, "gpio_direction for pin %u as %s-%d to %s\n",
+ 		offset, range->name, offset, input ? "input" : "output");
  
- 	for (i = oldbands; i < q->bands; i++) {
- 		q->queues[i] = queues[i];
+ 	if (input)
+-		armada_37xx_gpio_direction_input(chip, offset);
++		ret = armada_37xx_gpio_direction_input(chip, offset);
+ 	else
+-		armada_37xx_gpio_direction_output(chip, offset, 0);
++		ret = armada_37xx_gpio_direction_output(chip, offset, 0);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int armada_37xx_gpio_request_enable(struct pinctrl_dev *pctldev,
 -- 
 2.39.5
 
