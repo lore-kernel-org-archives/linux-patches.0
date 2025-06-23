@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835002459FF;
-	Mon, 23 Jun 2025 13:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EDA1F1522;
+	Mon, 23 Jun 2025 13:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684325; cv=none; b=V1XPMIkip0hngPOxjnhO76s/ZWms3ciI1lY3x4WbrmuZbkEuEJS/Z2os7l1X6uJcYyTbv0t0eELV1fL4VfQsQhM5Z6BAaFZ94RxUrjbVxbVB/C8EaOKRlJO48rj7LanMhGDNn3YWmBPqs4PcuWzpdRaB749c9t3rxcB5H705FS8=
+	t=1750684328; cv=none; b=N/P/8yeH0TuPyCGd7mCmrepUKnC8CRqqWeJoSF6C5jXzc6V8Bp7scDmBEsZp3k4t/ZSrFkZURlxJAhTU94PoqvdjzjKrZXgrfK7upN5z/O+tYHmsBriPLW72tH6U7oAlReLpHHM6fa8KOkUoZnoRPdKAiryXe6bJVqzHsdwqHn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684325; c=relaxed/simple;
-	bh=M4+ShqjlleNtSnngmwnPxzglkHGdmclHLemuxwnFYT4=;
+	s=arc-20240116; t=1750684328; c=relaxed/simple;
+	bh=IWB9o5OnmDac25mYInM6kVpzwa/L7amrYPPteBFDhso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rf4a02iurTkjeoJPlXiRmcG8lJ8fS7ycvyUgsgadM3qAzb39xeXyRRnNSRohF8bUtbdTLWZRaeBskOIt2suVA/8JFb8uopMe12g3fmMWyOVqPFxWlr5n8omZbirIGmqB9zpQg3oa8+t4lYU24B3c8q0OMX7j8CTu8D7pEU6P7e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpaleJs/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+NbzcUWNQyAvLPuohRNZ+zD+aBNuo4FgnyUgUl8paulJkPwnmbgEDVm4YugD4fZM6SAWwBqzKdM+bD9lk8G6o9D6pz+mhEUckM+3VCGmFCsUceahIMKk9uHkcMXNCnb+spbCwKVl4wP6KBht8Re3kQgYAOxSccsp4cXkLwMUTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zao9qen8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpaleJs/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19BD0C4CEEA;
-	Mon, 23 Jun 2025 13:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zao9qen8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E63C4CEEA;
+	Mon, 23 Jun 2025 13:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684325;
-	bh=M4+ShqjlleNtSnngmwnPxzglkHGdmclHLemuxwnFYT4=;
+	s=korg; t=1750684327;
+	bh=IWB9o5OnmDac25mYInM6kVpzwa/L7amrYPPteBFDhso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wpaleJs/KFXRjT2s6NBUaGHL1hmQMZk28VrPpnaDKEBo7BiLdzOsPbMlFHQCUVMqY
-	 yXyaREhTtynKX8E0eu0xSExRPz4o4fe95upHDb959RTYU6TG/1DhZGxY8z7/PGuNeq
-	 FBM1LVnkDzBPMbYjPYUFedskXI94cxEeCwR1LS9o=
+	b=zao9qen8HWeIxKSbacxZXL0Pm+QW9O93sCig3kiqthvycIHnhSEZSZiIDdftfAsub
+	 rPU1TJ6HVhhEOVxRzrEY5PuQAR6BAniWxhNZguMVz8URiYS8p2sRO0Xtz4QLkQhce8
+	 ouKQ2NcY8QopIatdMjUZPTlx32CBmZ9zY2F1k5uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.15 007/592] crypto: qat - add shutdown handler to qat_c3xxx
-Date: Mon, 23 Jun 2025 14:59:25 +0200
-Message-ID: <20250623130700.396990386@linuxfoundation.org>
+Subject: [PATCH 6.15 008/592] crypto: qat - add shutdown handler to qat_420xx
+Date: Mon, 23 Jun 2025 14:59:26 +0200
+Message-ID: <20250623130700.422724306@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-commit 71e0cc1eab584d6f95526a5e8c69ec666ca33e1b upstream.
+commit 097143f23a1164bfd1b6f70279d229be44da2e30 upstream.
 
 During a warm reset via kexec, the system bypasses the driver removal
 sequence, meaning that the remove() callback is not invoked.
@@ -63,34 +63,31 @@ load in a newly rebooted kernel.
 
 This might result in output like the following after the kexec reboot:
 
-    QAT: AE0 is inactive!!
-    QAT: failed to get device out of reset
-    c3xxx 0000:3f:00.0: qat_hal_clr_reset error
-    c3xxx 0000:3f:00.0: Failed to init the AEs
-    c3xxx 0000:3f:00.0: Failed to initialise Acceleration Engine
-    c3xxx 0000:3f:00.0: Resetting device qat_dev0
-    c3xxx 0000:3f:00.0: probe with driver c3xxx failed with error -14
+    420xx 0000:01:00.0: Failed to power up the device
+    420xx 0000:01:00.0: Failed to initialize device
+    420xx 0000:01:00.0: Resetting device qat_dev0
+    420xx 0000:01:00.0: probe with driver 420xx failed with error -14
 
 Implement the shutdown() handler that hooks into the reboot notifier
 list. This brings down the QAT device and ensures it is shut down
 properly.
 
 Cc: <stable@vger.kernel.org>
-Fixes: 890c55f4dc0e ("crypto: qat - add support for c3xxx accel type")
+Fixes: fcf60f4bcf54 ("crypto: qat - add support for 420xx devices")
 Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/qat/qat_c3xxx/adf_drv.c |    8 ++++++++
+ drivers/crypto/intel/qat/qat_420xx/adf_drv.c |    8 ++++++++
  1 file changed, 8 insertions(+)
 
---- a/drivers/crypto/intel/qat/qat_c3xxx/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_c3xxx/adf_drv.c
-@@ -19,6 +19,13 @@
- #include <adf_dbgfs.h>
- #include "adf_c3xxx_hw_data.h"
+--- a/drivers/crypto/intel/qat/qat_420xx/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_420xx/adf_drv.c
+@@ -186,11 +186,19 @@ static void adf_remove(struct pci_dev *p
+ 	adf_cleanup_accel(accel_dev);
+ }
  
 +static void adf_shutdown(struct pci_dev *pdev)
 +{
@@ -99,11 +96,9 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +	adf_dev_down(accel_dev);
 +}
 +
- static const struct pci_device_id adf_pci_tbl[] = {
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_QAT_C3XXX), },
- 	{ }
-@@ -33,6 +40,7 @@ static struct pci_driver adf_driver = {
- 	.name = ADF_C3XXX_DEVICE_NAME,
+ static struct pci_driver adf_driver = {
+ 	.id_table = adf_pci_tbl,
+ 	.name = ADF_420XX_DEVICE_NAME,
  	.probe = adf_probe,
  	.remove = adf_remove,
 +	.shutdown = adf_shutdown,
