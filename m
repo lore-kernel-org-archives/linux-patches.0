@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800297482;
-	Mon, 23 Jun 2025 21:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08E77482;
+	Mon, 23 Jun 2025 21:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713341; cv=none; b=C3mZaG88XrUK5t2teoEkAmtDWhvdQGxRNImaHk0dcPBJJqxTWb3uOveQD87TeO1Tqx4H71iAk62Xt1XNXfjNcnPgpd5XEJVoVc0bhIjzz6EOOR7mac9rLEqg4jd02xiEI4tzhxMyrmTPn7zBSh9Bxl5tic/JYWiWzyjl9LNX4FU=
+	t=1750713344; cv=none; b=rUE3RNg9FHaAXHx+GHFTixpQu3rFATuh9M7oEiIOxhSPMyPbPxYkrF/zdzyiyBOXidY3QZqwpsvb+5n5RbDGfScmW5GMvMibqVxhWqWG+hm1xQXK4eoQGz7HnKKBdRH6OPgR0F3yNbmYit0mhjRtEAqlyAoAi+RM3IAlPyCBS3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713341; c=relaxed/simple;
-	bh=NPtMRvdMfHYwMJ19RDNunOv70xyLVcV/KAS0ySwMOzg=;
+	s=arc-20240116; t=1750713344; c=relaxed/simple;
+	bh=vglObLWwK6sZGxRD6G1FQOCBQU58ut7L1/KYbv43ww4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0Xn52Z4Q1VKUfyshrjWzN5FMWTWo7i/oFPT/8kSHIkQ6QpptP9r8pkHPmPbZEaQjvwjM/Zgn//B8mfq4Y2J0JY643O1/HR33uyNqS9JhhBthr0jn9epepgU6fm0e/aHMxvKly5Vh1huwXD162KUoANcgNZFJPGjZ+uvgPO0fX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADn9u2M4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HrOYbpf2JWzV65n5ktmxrzLqi0KTmR3qD2/KK/Hel8hcEL7PLIfRjta2n8C8uRRCzbVyMKJfWlAvneolWh8wymtnRe8HAU3IVGxKvU516sJDvxxRzz10yVSW14HiUhhvoKVvj/vzKv+reGXDU+5xSdmJC6vWijWVdbyYH6n11aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPwSIWGE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADn9u2M4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161DEC4CEEA;
-	Mon, 23 Jun 2025 21:15:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPwSIWGE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869C2C4CEEA;
+	Mon, 23 Jun 2025 21:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713341;
-	bh=NPtMRvdMfHYwMJ19RDNunOv70xyLVcV/KAS0ySwMOzg=;
+	s=korg; t=1750713343;
+	bh=vglObLWwK6sZGxRD6G1FQOCBQU58ut7L1/KYbv43ww4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ADn9u2M4hRaZf9pWH0li6DTVvPBDV1mmBVoD5Ul7tK1X8amOmffygOCUaCI+IvBco
-	 CCfhlw2i9/d9ou3r8kpqXoKAMFCkbfLroex0w0/1O9H1bZWSxXteyxWMpBNkPmEk7r
-	 H7HHRbV+aJqawhO07ngMS+B5crPk2F/7uAT8/iBg=
+	b=YPwSIWGEAGAIcfkWclUimsEnZC+HjAr+0LtGwCaPDsEPioxxTb+6yPPyYpVf3plGY
+	 YFVEqAP5q6Oq/fqWux/ugqF7Fzb/dobxSJMlBgUOP5iDTb3vsBQlzbLPycmr+lJsF/
+	 VQ8Tc+CJPWqai++kTbY+7M7egi5TSZ4hJE3Vc/ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.12 039/414] wifi: rtw88: usb: Reduce control message timeout to 500 ms
-Date: Mon, 23 Jun 2025 15:02:56 +0200
-Message-ID: <20250623130643.014217169@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 091/508] netfilter: nf_tables: nft_fib_ipv6: fix VRF ipv4/ipv6 result discrepancy
+Date: Mon, 23 Jun 2025 15:02:16 +0200
+Message-ID: <20250623130647.492501071@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +47,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit 490340faddea461319652ce36dbc7c1b4482c35e upstream.
+[ Upstream commit 8b53f46eb430fe5b42d485873b85331d2de2c469 ]
 
-RTL8811AU stops responding during the firmware download on some systems:
+With a VRF, ipv4 and ipv6 FIB expression behave differently.
 
-[  809.256440] rtw_8821au 5-2.1:1.0: Firmware version 42.4.0, H2C version 0
-[  812.759142] rtw_8821au 5-2.1:1.0 wlp48s0f4u2u1: renamed from wlan0
-[  837.315388] rtw_8821au 1-4:1.0: write register 0x1ef4 failed with -110
-[  867.524259] rtw_8821au 1-4:1.0: write register 0x1ef8 failed with -110
-[  868.930976] rtw_8821au 5-2.1:1.0 wlp48s0f4u2u1: entered promiscuous mode
-[  897.730952] rtw_8821au 1-4:1.0: write register 0x1efc failed with -110
+   fib daddr . iif oif
 
-Each write takes 30 seconds to fail because that's the timeout currently
-used for control messages in rtw_usb_write().
+Will return the input interface name for ipv4, but the real device
+for ipv6.  Example:
 
-In this scenario the firmware download takes at least 2000 seconds.
-Because this is done from the USB probe function, the long delay makes
-other things in the system hang.
+If VRF device name is tvrf and real (incoming) device is veth0.
+First round is ok, both ipv4 and ipv6 will yield 'veth0'.
 
-Reduce the timeout to 500 ms. This is the value used by the official USB
-wifi drivers from Realtek.
+But in the second round (incoming device will be set to "tvrf"), ipv4
+will yield "tvrf" whereas ipv6 returns "veth0" for the second round too.
 
-Of course this only makes things hang for ~30 seconds instead of ~30
-minutes. It doesn't fix the firmware download.
+This makes ipv6 behave like ipv4.
 
-Tested with RTL8822CU, RTL8812BU, RTL8811CU, RTL8814AU, RTL8811AU,
-RTL8812AU, RTL8821AU, RTL8723DU.
+A followup patch will add a test case for this, without this change
+it will fail with:
+  get element inet t fibif6iif { tvrf . dead:1::99 . tvrf }
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  FAIL: did not find tvrf . dead:1::99 . tvrf in fibif6iif
 
-Cc: stable@vger.kernel.org
-Fixes: a82dfd33d123 ("wifi: rtw88: Add common USB chip support")
-Link: https://github.com/lwfinger/rtw88/issues/344
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/1e35dd26-3f10-40b1-b2b4-f72184a26611@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Alternatively we could either not do anything at all or change
+ipv4 to also return the lower/real device, however, nft (userspace)
+doc says "iif: if fib lookup provides a route then check its output
+interface is identical to the packets input interface." which is what
+the nft fib ipv4 behaviour is.
+
+Fixes: f6d0cbcf09c5 ("netfilter: nf_tables: add fib expression")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/usb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/netfilter/nft_fib_ipv6.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw88/usb.c
-+++ b/drivers/net/wireless/realtek/rtw88/usb.c
-@@ -138,7 +138,7 @@ static void rtw_usb_write(struct rtw_dev
+diff --git a/net/ipv6/netfilter/nft_fib_ipv6.c b/net/ipv6/netfilter/nft_fib_ipv6.c
+index c9f1634b3838a..a89ce0fbfe4b1 100644
+--- a/net/ipv6/netfilter/nft_fib_ipv6.c
++++ b/net/ipv6/netfilter/nft_fib_ipv6.c
+@@ -158,6 +158,7 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
+ {
+ 	const struct nft_fib *priv = nft_expr_priv(expr);
+ 	int noff = skb_network_offset(pkt->skb);
++	const struct net_device *found = NULL;
+ 	const struct net_device *oif = NULL;
+ 	u32 *dest = &regs->data[priv->dreg];
+ 	struct ipv6hdr *iph, _iph;
+@@ -202,11 +203,15 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
+ 	if (rt->rt6i_flags & (RTF_REJECT | RTF_ANYCAST | RTF_LOCAL))
+ 		goto put_rt_err;
  
- 	ret = usb_control_msg(udev, usb_sndctrlpipe(udev, 0),
- 			      RTW_USB_CMD_REQ, RTW_USB_CMD_WRITE,
--			      addr, 0, data, len, 30000);
-+			      addr, 0, data, len, 500);
- 	if (ret < 0 && ret != -ENODEV && count++ < 4)
- 		rtw_err(rtwdev, "write register 0x%x failed with %d\n",
- 			addr, ret);
+-	if (oif && oif != rt->rt6i_idev->dev &&
+-	    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) != oif->ifindex)
+-		goto put_rt_err;
++	if (!oif) {
++		found = rt->rt6i_idev->dev;
++	} else {
++		if (oif == rt->rt6i_idev->dev ||
++		    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) == oif->ifindex)
++			found = oif;
++	}
+ 
+-	nft_fib_store_result(dest, priv, rt->rt6i_idev->dev);
++	nft_fib_store_result(dest, priv, found);
+  put_rt_err:
+ 	ip6_rt_put(rt);
+ }
+-- 
+2.39.5
+
 
 
