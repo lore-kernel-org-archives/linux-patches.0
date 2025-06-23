@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFDB221734;
-	Mon, 23 Jun 2025 21:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F319221734;
+	Mon, 23 Jun 2025 21:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714708; cv=none; b=qHppWgkUo6GUiIAyTsVSN0RPI2OQ/NlBP7GYkbH/Jjhx0M7j4Yff2r03hmHicbYQ51+6BQJbbiwcsCvGf9u5Ec0lHQ6zs/VUEdSCK+2uDXn7Vs3Wh0xEb7F72BBjq+6luXbktgYqI7gvE95nYbXZaJLDQh+brjVTMRb7g1kppn4=
+	t=1750714711; cv=none; b=rviMAeYLaM3zK4xdVyyqleoqgiOOaRA/DZ/zodXMa011DwmYA56BDphQOhTms4tMlkW8BrEy5k/jxnvhBhr+MDddCjwVoq0CEl2tRgQTXo6k3akTGp+g9tk/MN5d6r+g/JNu0lOJTm6RmrFy8ngJ1hW/IhQUjvR3VQL0KJxdlPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714708; c=relaxed/simple;
-	bh=3d2Zla+22i8wMJvYnmtM5nKmZNmNEI/hJGThJmrRzXo=;
+	s=arc-20240116; t=1750714711; c=relaxed/simple;
+	bh=VT2U2qSyWrFiJT73f/83++Dttc6bNQFq0GLWM3tUZ2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3Ifq12jTx+DLjbGicX4sf+lcerzyAQDcNfIZ5cG+W/pOLlbnHdWXXW+7Ent+z7uYcPvqApJdDfecwZwSoicN7X64YIrOJVSzAez7TRlmDw9j11iiQYAIzVH6f6d+xAoXL65kzMmaESiNlE49J+jjsGjGAfoCHVcx1msDlV4jTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVXqgJnI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ubJqJIvHvZ1IongpcC3GhCxVXBT3ASI0GT1yRNmTj/faHzcKIJxMEMfDwiwbu8vH6uZalVdl19Hs7x81ZNq1sfvHtSlxkvRretv8+TzlsVuVjox7ahe+a5znldPUX+g3zlE/jp2Uk014wRNExl3wwy5PZ+2ZkjEVqvykkG65bpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yx9RGofU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVXqgJnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B28C4CEEA;
-	Mon, 23 Jun 2025 21:38:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yx9RGofU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27C8C4CEEA;
+	Mon, 23 Jun 2025 21:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714708;
-	bh=3d2Zla+22i8wMJvYnmtM5nKmZNmNEI/hJGThJmrRzXo=;
+	s=korg; t=1750714711;
+	bh=VT2U2qSyWrFiJT73f/83++Dttc6bNQFq0GLWM3tUZ2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VVXqgJnIJ7y6cMGp7GI4E/2+zuwajNmZnuhn+1a0xY4yZG1S5z9y27XFEHslYG/61
-	 gA79R0pwfVtACrG6taDEUrswiBgYSGME7GOIYVTwq9obuis2aB9JtGSoEMxPCgjv3u
-	 HFPuM5m2Z2ceyJIEJ3sB/+DQSuI3KLDlCfDDdB2k=
+	b=Yx9RGofUrOhylVb3+fne9FNefDwI6vopWKIyxx84qkVCYbcs5B4EqQ3h+EfoZ4I+d
+	 fEgtEzy+U9+EwNdZQyC/iMAGIrxyZbQZKF+XKY0Sip0LSDjoBzJMEE5wF4e2gW3ZtA
+	 UlgCJnGj4THOqMnLCJUJ33uUresYI1N4alunLfCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 125/414] dm-mirror: fix a tiny race condition
-Date: Mon, 23 Jun 2025 15:04:22 +0200
-Message-ID: <20250623130645.188621588@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Damon Ding <damon.ding@rock-chips.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 224/355] drm/bridge: analogix_dp: Add irq flag IRQF_NO_AUTOEN instead of calling disable_irq()
+Date: Mon, 23 Jun 2025 15:07:05 +0200
+Message-ID: <20250623130633.475517564@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,57 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Damon Ding <damon.ding@rock-chips.com>
 
-commit 829451beaed6165eb11d7a9fb4e28eb17f489980 upstream.
+[ Upstream commit efab13e7d13a641a22c7508cde6e1a5285161944 ]
 
-There's a tiny race condition in dm-mirror. The functions queue_bio and
-write_callback grab a spinlock, add a bio to the list, drop the spinlock
-and wake up the mirrord thread that processes bios in the list.
+The IRQF_NO_AUTOEN can be used for the drivers that don't want
+interrupts to be enabled automatically via devm_request_threaded_irq().
+Using this flag can provide be more robust compared to the way of
+calling disable_irq() after devm_request_threaded_irq() without the
+IRQF_NO_AUTOEN flag.
 
-It may be possible that the mirrord thread processes the bio just after
-spin_unlock_irqrestore is called, before wakeup_mirrord. This spurious
-wake-up is normally harmless, however if the device mapper device is
-unloaded just after the bio was processed, it may be possible that
-wakeup_mirrord(ms) uses invalid "ms" pointer.
-
-Fix this bug by moving wakeup_mirrord inside the spinlock.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
+Link: https://lore.kernel.org/r/20250310104114.2608063-2-damon.ding@rock-chips.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-raid1.c |    5 ++---
+ drivers/gpu/drm/bridge/analogix/analogix_dp_core.c | 5 ++---
  1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-raid1.c
-+++ b/drivers/md/dm-raid1.c
-@@ -133,10 +133,9 @@ static void queue_bio(struct mirror_set
- 	spin_lock_irqsave(&ms->lock, flags);
- 	should_wake = !(bl->head);
- 	bio_list_add(bl, bio);
--	spin_unlock_irqrestore(&ms->lock, flags);
--
- 	if (should_wake)
- 		wakeup_mirrord(ms);
-+	spin_unlock_irqrestore(&ms->lock, flags);
- }
+diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+index e8baa07450b7d..3d8f08d895612 100644
+--- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
++++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+@@ -1778,10 +1778,10 @@ analogix_dp_probe(struct device *dev, struct analogix_dp_plat_data *plat_data)
+ 		 * that we can get the current state of the GPIO.
+ 		 */
+ 		dp->irq = gpiod_to_irq(dp->hpd_gpiod);
+-		irq_flags = IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING;
++		irq_flags = IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN;
+ 	} else {
+ 		dp->irq = platform_get_irq(pdev, 0);
+-		irq_flags = 0;
++		irq_flags = IRQF_NO_AUTOEN;
+ 	}
  
- static void dispatch_bios(void *context, struct bio_list *bio_list)
-@@ -646,9 +645,9 @@ static void write_callback(unsigned long
- 	if (!ms->failures.head)
- 		should_wake = 1;
- 	bio_list_add(&ms->failures, bio);
--	spin_unlock_irqrestore(&ms->lock, flags);
- 	if (should_wake)
- 		wakeup_mirrord(ms);
-+	spin_unlock_irqrestore(&ms->lock, flags);
- }
+ 	if (dp->irq == -ENXIO) {
+@@ -1798,7 +1798,6 @@ analogix_dp_probe(struct device *dev, struct analogix_dp_plat_data *plat_data)
+ 		dev_err(&pdev->dev, "failed to request irq\n");
+ 		goto err_disable_clk;
+ 	}
+-	disable_irq(dp->irq);
  
- static void do_write(struct mirror_set *ms, struct bio *bio)
+ 	return dp;
+ 
+-- 
+2.39.5
+
 
 
