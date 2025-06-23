@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8FD1F582A;
-	Mon, 23 Jun 2025 21:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED88221DBD;
+	Mon, 23 Jun 2025 21:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713118; cv=none; b=OvS6OvpOx5MkS0tcQ1rdMRJJ/TTBQSkMiqynLx8/zuzyZ0ALe0UTRNX4DTaeQTogSSUS9Ot4efxXU+S2PvhyL21MrINwE/Km7RAyLucllB7ZHCUX/OkMv4fUYZw8iXQcqqHc0BvxbdKvT6LoP81Lboa4tQ0bYQrPBi/R9/Nir6E=
+	t=1750713121; cv=none; b=HPq8H95NHeYkDaf7OQs7QxUgiY8KNUJE9NL+8gYIV2hc9H3rqxsepmSyf1b64pbfcHl8QCduFet/WrksXb8AJGBH6x6zNG6sAfYiPSp8Fnq3Vd+TPWwLkHP48DCFymoeUOl2MxLS/PX6uFrCCk6UvlPDwkH7nUJcug2HNdo6Tis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713118; c=relaxed/simple;
-	bh=U9+nZoZ3Ay8Fp8YEHNksWYW03FyN6jfEWyWB+5cc1Ew=;
+	s=arc-20240116; t=1750713121; c=relaxed/simple;
+	bh=IUweiyndjZKi56cDYhwCMtgEtoBujf4njWWugTxl+do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lxM3D/r2axWOOQP6s0ObGV3XaGkC21mMPBoMWAnJlUwzi482YD70XkvVfCHTPFu/Kb9jzUUlqaSO8m7/bs912O81dW217IFkUJhMtV/3kZ8ATrLKELq+KgQ5oVQOCEcBHsFf3UHYjC//UigJQcq6omQMW1Vsvw+BFKR9Avgywjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHGY0W6g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o89tufNJk1RT0Gd1hGYSLr9lY+N9W2etkSvpus8QAXZ+8neU82aYNXdWKkzThyKpW66jlqjmrvBLa8wGUj/wVB7iszHYElXmeaHuCbizMTy+ODlCZPeFGtZZ13hfVODDwYKfSz5kJBsxdAZXzQH9y2Y1xhRG0Vtnhmse6ILILLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAizX2hD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHGY0W6g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7F1C4CEF1;
-	Mon, 23 Jun 2025 21:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAizX2hD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910D8C4CEEA;
+	Mon, 23 Jun 2025 21:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713118;
-	bh=U9+nZoZ3Ay8Fp8YEHNksWYW03FyN6jfEWyWB+5cc1Ew=;
+	s=korg; t=1750713120;
+	bh=IUweiyndjZKi56cDYhwCMtgEtoBujf4njWWugTxl+do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHGY0W6gGamYDz0JRzkKvH4yD/udCzcBKI3y/G3kcDNxYtyRxqz3JDGzKtHiV3VW0
-	 AzBTHjEkhmtQQxH+mYUitTdvxpxCWBJ97Osq/73pXfMw3J5VeWW8/dWwLVd2Eki2Jr
-	 bOy9Pq8hhlTusVFcPrZwxo4kbZoCXQNlQyPNPAA0=
+	b=qAizX2hDVp9bz1NkJOwEg1w6rL/OzFM0F34aoEjWXl5xx1outtznvOaPpMfpeCI0m
+	 Ir5MFnyV0ikGEjchl5z0G3gJjZ+au0IZbqLEoVhkX98V2/SkeMysimCGKJlq7rCRtr
+	 aHWtQyMP3QASdGAEFInP+7LzyHchtY/WwGfkcjj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.10 146/355] mips: Include KBUILD_CPPFLAGS in CHECKFLAGS invocation
-Date: Mon, 23 Jun 2025 15:05:47 +0200
-Message-ID: <20250623130631.100605001@linuxfoundation.org>
+	Petr Malat <oss@malat.biz>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 329/592] sctp: Do not wake readers in __sctp_write_space()
+Date: Mon, 23 Jun 2025 15:04:47 +0200
+Message-ID: <20250623130708.282928653@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,42 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Petr Malat <oss@malat.biz>
 
-commit 08f6554ff90ef189e6b8f0303e57005bddfdd6a7 upstream.
+[ Upstream commit af295892a7abbf05a3c2ba7abc4d81bb448623d6 ]
 
-A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
-KBUILD_CPPFLAGS so that '--target' is available while preprocessing.
-When that occurs, the following error appears when building ARCH=mips
-with clang (tip of tree error shown):
+Function __sctp_write_space() doesn't set poll key, which leads to
+ep_poll_callback() waking up all waiters, not only these waiting
+for the socket being writable. Set the key properly using
+wake_up_interruptible_poll(), which is preferred over the sync
+variant, as writers are not woken up before at least half of the
+queue is available. Also, TCP does the same.
 
-  clang: error: unsupported option '-mabi=' for target 'x86_64-pc-linux-gnu'
-
-Add KBUILD_CPPFLAGS in the CHECKFLAGS invocation to keep everything
-working after the move.
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Petr Malat <oss@malat.biz>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250516081727.1361451-1-oss@malat.biz
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/socket.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/mips/Makefile
-+++ b/arch/mips/Makefile
-@@ -319,7 +319,7 @@ KBUILD_CFLAGS += -fno-asynchronous-unwin
- KBUILD_LDFLAGS		+= -m $(ld-emul)
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 53725ee7ba06d..b301d64d9d80f 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -9100,7 +9100,8 @@ static void __sctp_write_space(struct sctp_association *asoc)
+ 		wq = rcu_dereference(sk->sk_wq);
+ 		if (wq) {
+ 			if (waitqueue_active(&wq->wait))
+-				wake_up_interruptible(&wq->wait);
++				wake_up_interruptible_poll(&wq->wait, EPOLLOUT |
++						EPOLLWRNORM | EPOLLWRBAND);
  
- ifdef CONFIG_MIPS
--CHECKFLAGS += $(shell $(CC) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
-+CHECKFLAGS += $(shell $(CC) $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
- 	egrep -vw '__GNUC_(MINOR_|PATCHLEVEL_)?_' | \
- 	sed -e "s/^\#define /-D'/" -e "s/ /'='/" -e "s/$$/'/" -e 's/\$$/&&/g')
- endif
+ 			/* Note that we try to include the Async I/O support
+ 			 * here by modeling from the current TCP/UDP code.
+-- 
+2.39.5
+
 
 
