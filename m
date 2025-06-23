@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D97B676;
-	Mon, 23 Jun 2025 22:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E8CB676;
+	Mon, 23 Jun 2025 22:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716703; cv=none; b=XSpqR272l5cwZbrijfSgUpzzAvqzP+I8HkUAOrDBnB0H93Q5pBNr6Z/iAC2DS19QO7MHjAUV7uJs/9BtlE1zxUmXU0BmzpkytEJZBXhSbLtkUiW68qh4v3/cYTs/inSL+NcWoatMdsKxNIG3f2t/DBS5EByvTQhr7ApFsWznq8Q=
+	t=1750716706; cv=none; b=cBDJ8qLBQLJv+ONtdwG5ZKExB4reou+gzODKqIXOPRSrx/z5zT31ld/1QmPTHMGHbOxqnsPR6gXFsy+ysCGDg9433lggU7iIM7eft58FFgOEYxUnmWhLxLjxqGw/LnDYf0pRYgdFn9ldFTelRpfh54PMPXl6IN9Q/I+iePODskg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716703; c=relaxed/simple;
-	bh=0D7EofhzRGGxv9TWn48E5Tud+4HCjvQrwBBcoLb6/SA=;
+	s=arc-20240116; t=1750716706; c=relaxed/simple;
+	bh=jlZLmeHuvIckmSSp1HL2LzpDMS3EafdHvH5tKdEM7WQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p1NQIr1mrqzW1MsXjv23/JEC4nVc70XgEu8C0Ko4hJ7GkCdtGFQaUZhA52isYLYecuWn9Z36HAqgbQeHCHGlE9+SixuXOxQ5P3AN+BuRlirI9IkbdwGxbe518LvmqK50wLgQK6Uir33UOVRmoCfx1kILiFNf3Wp2r+GGRUl24Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ekmFG+LE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HLsZaxKIV42IPCpaA90cFGONiB9YfJg+yEkGI4aBVgRK8FrWJa1fozvckSx8vyDlPzqJK1JIZ62wb27e10nwMAF6S4CfQTNHxKG7W5/00vDIxGmmT+GwnQGvAENcIaQfB2q+xFPomVedp887cINIuSAFDzyYwveN9osoxlyoUbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCdik/Tl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekmFG+LE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D17DC4CEEA;
-	Mon, 23 Jun 2025 22:11:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCdik/Tl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C70EC4CEEA;
+	Mon, 23 Jun 2025 22:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716703;
-	bh=0D7EofhzRGGxv9TWn48E5Tud+4HCjvQrwBBcoLb6/SA=;
+	s=korg; t=1750716705;
+	bh=jlZLmeHuvIckmSSp1HL2LzpDMS3EafdHvH5tKdEM7WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ekmFG+LEwbaTpWKGmKrbv0D7O5d40RtS6wRPi/2FOrU/1kh9hC2mwxHHvpE5O3C9m
-	 gXBIHWb9DZZ9MhC1zV1MOSkV6xJHlKAl5YfayavDr8LBhrLgWQccmoI9GRh/saArpL
-	 EzurVPTzW6TIgaqfpib4WMap7RbYeYbxw+8g0wdg=
+	b=bCdik/Tl0XiK2aBJ/L7WNM6Fo3V1UC64LmFr+s2OGF+kDtI/U+UBkblSqj36PrNUV
+	 gI6zTtj0HfqEwNTTsIV2EgdTgLdWox40tEQId6921S98oJ0IDCDLS5yPJmoQXzwxyz
+	 YhM/N23uidjzAwfpLWjyZSHZyuM3p0rlGmzEz8gI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 322/508] media: uvcvideo: Return the number of processed controls
-Date: Mon, 23 Jun 2025 15:06:07 +0200
-Message-ID: <20250623130653.249731216@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 276/414] octeontx2-pf: Add error log forcn10k_map_unmap_rq_policer()
+Date: Mon, 23 Jun 2025 15:06:53 +0200
+Message-ID: <20250623130648.923331922@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,75 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit ba4fafb02ad6a4eb2e00f861893b5db42ba54369 upstream.
+[ Upstream commit 9c056ec6dd1654b1420dafbbe2a69718850e6ff2 ]
 
-If we let know our callers that we have not done anything, they will be
-able to optimize their decisions.
+The cn10k_free_matchall_ipolicer() calls the cn10k_map_unmap_rq_policer()
+for each queue in a for loop without checking for any errors.
 
-Cc: stable@kernel.org
-Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Message-ID: <20250224-uvc-data-backup-v2-1-de993ed9823b@chromium.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Check the return value of the cn10k_map_unmap_rq_policer() function during
+each loop, and report a warning if the function fails.
+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250408032602.2909-1-vulab@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1734,12 +1734,17 @@ int uvc_ctrl_begin(struct uvc_video_chai
- 	return mutex_lock_interruptible(&chain->ctrl_mutex) ? -ERESTARTSYS : 0;
- }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c
+index 7417087b6db59..a2807a1e4f4a6 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c
+@@ -352,9 +352,12 @@ int cn10k_free_matchall_ipolicer(struct otx2_nic *pfvf)
+ 	mutex_lock(&pfvf->mbox.lock);
  
-+/*
-+ * Returns the number of uvc controls that have been correctly set, or a
-+ * negative number if there has been an error.
-+ */
- static int uvc_ctrl_commit_entity(struct uvc_device *dev,
- 				  struct uvc_fh *handle,
- 				  struct uvc_entity *entity,
- 				  int rollback,
- 				  struct uvc_control **err_ctrl)
- {
-+	unsigned int processed_ctrls = 0;
- 	struct uvc_control *ctrl;
- 	unsigned int i;
- 	int ret;
-@@ -1774,6 +1779,9 @@ static int uvc_ctrl_commit_entity(struct
- 		else
- 			ret = 0;
+ 	/* Remove RQ's policer mapping */
+-	for (qidx = 0; qidx < hw->rx_queues; qidx++)
+-		cn10k_map_unmap_rq_policer(pfvf, qidx,
+-					   hw->matchall_ipolicer, false);
++	for (qidx = 0; qidx < hw->rx_queues; qidx++) {
++		rc = cn10k_map_unmap_rq_policer(pfvf, qidx, hw->matchall_ipolicer, false);
++		if (rc)
++			dev_warn(pfvf->dev, "Failed to unmap RQ %d's policer (error %d).",
++				 qidx, rc);
++	}
  
-+		if (!ret)
-+			processed_ctrls++;
-+
- 		if (rollback || ret < 0)
- 			memcpy(uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
- 			       uvc_ctrl_data(ctrl, UVC_CTRL_DATA_BACKUP),
-@@ -1792,7 +1800,7 @@ static int uvc_ctrl_commit_entity(struct
- 			uvc_ctrl_set_handle(handle, ctrl, handle);
- 	}
+ 	rc = cn10k_free_leaf_profile(pfvf, hw->matchall_ipolicer);
  
--	return 0;
-+	return processed_ctrls;
- }
- 
- static int uvc_ctrl_find_ctrl_idx(struct uvc_entity *entity,
-@@ -1839,6 +1847,7 @@ int __uvc_ctrl_commit(struct uvc_fh *han
- 
- 	if (!rollback)
- 		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
-+	ret = 0;
- done:
- 	mutex_unlock(&chain->ctrl_mutex);
- 	return ret;
+-- 
+2.39.5
+
 
 
