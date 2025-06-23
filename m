@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B974315A;
-	Mon, 23 Jun 2025 21:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEB04315A;
+	Mon, 23 Jun 2025 21:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714953; cv=none; b=hNAgnRZoyjhXWvRPRvwtHt1dEgceA63wg4iKNP3UaAN8pDLgn5MWZqC/I4eABIiYwzHGLtf37QvjBLWzTZZJf606thk8RCIrblgBsykg37mlVR85A4tY0+6i6FM2lhCWEpcGpv37CMY1oqiZzDffkEOOKaGWdAd83ti+uafCwME=
+	t=1750714956; cv=none; b=kTm12WWoE+6uYvKVHbbY6ZX7ts3SFm6xnAwGBFXQI3ZdQzMGpcQEx4YDqo6GgIh097zPjEJ+OCxGNFhv2cloualB+PKu8AUKEruqEd9gGzEzP4xbg1+4DlHNQryEOs65Mfvy712B8coXd9hL7dGs7Nuo2Rqb0attxfiJrhtm/yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714953; c=relaxed/simple;
-	bh=Hw/hbhbTYRAc9vdgHBlp43AF3GW29ik/NUAZGKNcmIc=;
+	s=arc-20240116; t=1750714956; c=relaxed/simple;
+	bh=HSYl8KdX06hzaijzNHQPYJTm8tOvYmXREmZzJs+Zzus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BG8whhArSkPLbbRsBV47R9aHPpfNj8Y/wHzaj67a6BT6Q+3jqmUrFS/BBXEOBQLp+N0yBHvHBZ+b+acXBQRV2EYSOFKGsIu7d8eYH7qE/UzNQQTjIari6r6lC4LoqiU6BcGCxi4OAQ7x1h/EeteM6PptwkIpvRIUOm1Dgi73MHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0hdt/YN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hmbul9snY+0diPohtfBrr4g/8MzqipTgafgXRtKeOscWKEFpeXxw98pR2OOLgxakYFU0NX6Yo8Ryw99B0Ze/jzwUaeio0xVKzLMJHPsHN1xv9eHaiH07RSa4LuTwk5k3yR72C43pe08LGqMSmeQHmJBPGhB6EZhahdglm+4Lc3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EV1a10eT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0hdt/YN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AA6C4CEEA;
-	Mon, 23 Jun 2025 21:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EV1a10eT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D47C4CEEA;
+	Mon, 23 Jun 2025 21:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714953;
-	bh=Hw/hbhbTYRAc9vdgHBlp43AF3GW29ik/NUAZGKNcmIc=;
+	s=korg; t=1750714955;
+	bh=HSYl8KdX06hzaijzNHQPYJTm8tOvYmXREmZzJs+Zzus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K0hdt/YNJoOo6t7B7RJUi1NIZTJFEVkJJGfdKEjEw54xMI9an40F5B9s/dud8/1lu
-	 GjfeA3R5zorzKakG7Aq+f1fTd1UBJhImGTUJhN2JLrEcNUKar4FM7eQZUlp+azKO+L
-	 lZy3AcoMW8SaQy3QscndjC2facpI7obYa3f1kDgY=
+	b=EV1a10eTf59EyfBDbomiGHeCrScOlx5gVHYOVD6CF7rgxCvPFP63EhauYWFzBtS1M
+	 hf/tohnlGVOKUjANbEocoXtGweKnX+EcwSvOX0Q8u2O72gznDm1EcoAx32vRjxqDCj
+	 spdj008gCGwM8Ki6MDvwRQ15/VDNixLSKsLkX2Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Maxime Ripard <mripard@kernel.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 243/355] media: tc358743: ignore video while HPD is low
-Date: Mon, 23 Jun 2025 15:07:24 +0200
-Message-ID: <20250623130634.052766719@linuxfoundation.org>
+Subject: [PATCH 6.15 428/592] watchdog: stm32: Fix wakeup source leaks on device unbind
+Date: Mon, 23 Jun 2025 15:06:26 +0200
+Message-ID: <20250623130710.616817392@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans Verkuil <hverkuil@xs4all.nl>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 6829c5b5d26b1be31880d74ec24cb32d2d75f1ae ]
+[ Upstream commit b6f8a417e17f1929bb8e7e6ba9f4677f1f3ce364 ]
 
-If the HPD is low (happens if there is no EDID or the
-EDID is being updated), then return -ENOLINK in
-tc358743_get_detected_timings() instead of detecting video.
+Device can be unbound or probe can fail, so driver must also release
+memory for the wakeup source.
 
-This avoids userspace thinking that it can start streaming when
-the HPD is low.
-
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Tested-by: Maxime Ripard <mripard@kernel.org>
-Link: https://lore.kernel.org/linux-media/20240628-stoic-bettong-of-fortitude-e25611@houat/
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20250406203531.61322-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/tc358743.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/watchdog/stm32_iwdg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
-index 8e9df9007d2ed..1b3441510b6fa 100644
---- a/drivers/media/i2c/tc358743.c
-+++ b/drivers/media/i2c/tc358743.c
-@@ -309,6 +309,10 @@ static int tc358743_get_detected_timings(struct v4l2_subdev *sd,
+diff --git a/drivers/watchdog/stm32_iwdg.c b/drivers/watchdog/stm32_iwdg.c
+index 8ad06b54c5adc..b356a272ff9a0 100644
+--- a/drivers/watchdog/stm32_iwdg.c
++++ b/drivers/watchdog/stm32_iwdg.c
+@@ -291,7 +291,7 @@ static int stm32_iwdg_irq_init(struct platform_device *pdev,
+ 		return 0;
  
- 	memset(timings, 0, sizeof(struct v4l2_dv_timings));
+ 	if (of_property_read_bool(np, "wakeup-source")) {
+-		ret = device_init_wakeup(dev, true);
++		ret = devm_device_init_wakeup(dev);
+ 		if (ret)
+ 			return ret;
  
-+	/* if HPD is low, ignore any video */
-+	if (!(i2c_rd8(sd, HPD_CTL) & MASK_HPD_OUT0))
-+		return -ENOLINK;
-+
- 	if (no_signal(sd)) {
- 		v4l2_dbg(1, debug, sd, "%s: no valid signal\n", __func__);
- 		return -ENOLINK;
 -- 
 2.39.5
 
