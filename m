@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF267482;
-	Mon, 23 Jun 2025 21:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9202C9D;
+	Mon, 23 Jun 2025 21:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713665; cv=none; b=Xvg8t5k+13MlrS+B2U35x+zmdDpZGir3DrcVy88e5b/II3sxZQgL9FHouPbn4P75ZMLiixzWbAhAoci16KTruYvZhB0OysOesYfN+9HTwPnSL4hCPyCbyNq5QWEzQySvwp7U79oiVellrWwm2ig4odroELSC5qnSTNE2bDfuZP4=
+	t=1750713668; cv=none; b=s5aWhwAoEoVUCFS6sNnraSP85F1ezGEn9c1JMHx7ySqa/XV7bfVe3hDfyJKgQVNxSo573NXRjg5QX2Lmb/0yR26q2cosk4oUBZzsp3ll1amH/baY4aB2GTFvKh0PSbKc4u62npwl4tJLxiDSre9pxV9AjClH7XgYHruCpexM5Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713665; c=relaxed/simple;
-	bh=KVnQYg4Bqwo5e157pBVvAup1OvS6FcqwXGYYkJAovk4=;
+	s=arc-20240116; t=1750713668; c=relaxed/simple;
+	bh=d5ueRQu8lz6B2Nciwpx55RQGj5UV5zickrz6/LK5UuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cxaxVX9RJFItqINogw465vQiU9cmVTbeYzCU205d6wGEVINME55WjLSKhPTwaQxB9iVWTbLYd3Y5ttb+hjeNMmYSgoy8315RWyvbr9/ou4LmIzevx1XldlHxdckzis8GDOTdPPcsY7h+4g69DpEoSbdJyrTUsn/2Rl87jWRFc0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vghMGVpW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lL7w7Ls1k3FopQF7iyQZOpjeZz7p8xxJZ752Zl0gO4WeTfa9rmUc6V3APvkTzzmMradupP7XcJlUeVai5Mc8Qv13Ins+r2rnqa5VlFntOGrC4YHZsLeJfZQcImYcY4PRoGLNvu5O/Lfsx/Lux+r/McBNWH1bO5WFNjiUa8QRTgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8kxvrPZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vghMGVpW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C00EC4CEEA;
-	Mon, 23 Jun 2025 21:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8kxvrPZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8446C4CEEA;
+	Mon, 23 Jun 2025 21:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713665;
-	bh=KVnQYg4Bqwo5e157pBVvAup1OvS6FcqwXGYYkJAovk4=;
+	s=korg; t=1750713668;
+	bh=d5ueRQu8lz6B2Nciwpx55RQGj5UV5zickrz6/LK5UuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vghMGVpWZK9lE+IIq32KkSbzptsm6Iree5Rq0cVyR+QjRsyjsmy2gHvg9mBCkcoBy
-	 swzREXYcPLoid1Uwm0RedNCbcDTHaYBRbnOpOVxz1bvHNkPvN7cPd/Z2evoYtokxTQ
-	 GFdToC+bumui/rGBsVEFg9UZHvKdIkxArIsFGbyw=
+	b=u8kxvrPZsDe5LE1a5oGZ586eFh3S5jLmzO7A17tB3gQNEI0yW2ff5+JXGZ8p8WNyh
+	 APhYnZaXCahkVr2LwV49eZ7MsC4zw4CEFtbRmHs32Ir5CXI2yHFLAsZquTuJX+9NJU
+	 2sc26SC2c2Z3Avk9DWacIAFUebJXjQ0yUT/fpEKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 340/592] wifi: ath12k: fix a possible dead lock caused by ab->base_lock
-Date: Mon, 23 Jun 2025 15:04:58 +0200
-Message-ID: <20250623130708.539642560@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.6 083/290] RDMA/iwcm: Fix use-after-free of work objects after cm_id destruction
+Date: Mon, 23 Jun 2025 15:05:44 +0200
+Message-ID: <20250623130629.484400145@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +47,195 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-[ Upstream commit ef115c265a21e3c11deee7f73bd1061775a7bf20 ]
+commit 6883b680e703c6b2efddb4e7a8d891ce1803d06b upstream.
 
-spin_lock/spin_unlock are used in ath12k_reg_chan_list_event
-to acquire/release ab->base_lock. For now this is safe because
-that function is only called in soft IRQ context.
+The commit 59c68ac31e15 ("iw_cm: free cm_id resources on the last
+deref") simplified cm_id resource management by freeing cm_id once all
+references to the cm_id were removed. The references are removed either
+upon completion of iw_cm event handlers or when the application destroys
+the cm_id. This commit introduced the use-after-free condition where
+cm_id_private object could still be in use by event handler works during
+the destruction of cm_id. The commit aee2424246f9 ("RDMA/iwcm: Fix a
+use-after-free related to destroying CM IDs") addressed this use-after-
+free by flushing all pending works at the cm_id destruction.
 
-But ath12k_reg_chan_list_event() will be called from process
-context in an upcoming patch, and this can result in a deadlock
-if ab->base_lock is acquired in process context and then soft
-IRQ occurs on the same CPU and tries to acquire that lock.
+However, still another use-after-free possibility remained. It happens
+with the work objects allocated for each cm_id_priv within
+alloc_work_entries() during cm_id creation, and subsequently freed in
+dealloc_work_entries() once all references to the cm_id are removed.
+If the cm_id's last reference is decremented in the event handler work,
+the work object for the work itself gets removed, and causes the use-
+after-free BUG below:
 
-Fix it by using spin_lock_bh and spin_unlock_bh instead.
+  BUG: KASAN: slab-use-after-free in __pwq_activate_work+0x1ff/0x250
+  Read of size 8 at addr ffff88811f9cf800 by task kworker/u16:1/147091
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+  CPU: 2 UID: 0 PID: 147091 Comm: kworker/u16:1 Not tainted 6.15.0-rc2+ #27 PREEMPT(voluntary)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
+  Workqueue:  0x0 (iw_cm_wq)
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x6a/0x90
+   print_report+0x174/0x554
+   ? __virt_addr_valid+0x208/0x430
+   ? __pwq_activate_work+0x1ff/0x250
+   kasan_report+0xae/0x170
+   ? __pwq_activate_work+0x1ff/0x250
+   __pwq_activate_work+0x1ff/0x250
+   pwq_dec_nr_in_flight+0x8c5/0xfb0
+   process_one_work+0xc11/0x1460
+   ? __pfx_process_one_work+0x10/0x10
+   ? assign_work+0x16c/0x240
+   worker_thread+0x5ef/0xfd0
+   ? __pfx_worker_thread+0x10/0x10
+   kthread+0x3b0/0x770
+   ? __pfx_kthread+0x10/0x10
+   ? rcu_is_watching+0x11/0xb0
+   ? _raw_spin_unlock_irq+0x24/0x50
+   ? rcu_is_watching+0x11/0xb0
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork+0x30/0x70
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
 
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250418-ath12k-6g-lp-vlp-v1-1-c869c86cad60@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  Allocated by task 147416:
+   kasan_save_stack+0x2c/0x50
+   kasan_save_track+0x10/0x30
+   __kasan_kmalloc+0xa6/0xb0
+   alloc_work_entries+0xa9/0x260 [iw_cm]
+   iw_cm_connect+0x23/0x4a0 [iw_cm]
+   rdma_connect_locked+0xbfd/0x1920 [rdma_cm]
+   nvme_rdma_cm_handler+0x8e5/0x1b60 [nvme_rdma]
+   cma_cm_event_handler+0xae/0x320 [rdma_cm]
+   cma_work_handler+0x106/0x1b0 [rdma_cm]
+   process_one_work+0x84f/0x1460
+   worker_thread+0x5ef/0xfd0
+   kthread+0x3b0/0x770
+   ret_from_fork+0x30/0x70
+   ret_from_fork_asm+0x1a/0x30
+
+  Freed by task 147091:
+   kasan_save_stack+0x2c/0x50
+   kasan_save_track+0x10/0x30
+   kasan_save_free_info+0x37/0x60
+   __kasan_slab_free+0x4b/0x70
+   kfree+0x13a/0x4b0
+   dealloc_work_entries+0x125/0x1f0 [iw_cm]
+   iwcm_deref_id+0x6f/0xa0 [iw_cm]
+   cm_work_handler+0x136/0x1ba0 [iw_cm]
+   process_one_work+0x84f/0x1460
+   worker_thread+0x5ef/0xfd0
+   kthread+0x3b0/0x770
+   ret_from_fork+0x30/0x70
+   ret_from_fork_asm+0x1a/0x30
+
+  Last potentially related work creation:
+   kasan_save_stack+0x2c/0x50
+   kasan_record_aux_stack+0xa3/0xb0
+   __queue_work+0x2ff/0x1390
+   queue_work_on+0x67/0xc0
+   cm_event_handler+0x46a/0x820 [iw_cm]
+   siw_cm_upcall+0x330/0x650 [siw]
+   siw_cm_work_handler+0x6b9/0x2b20 [siw]
+   process_one_work+0x84f/0x1460
+   worker_thread+0x5ef/0xfd0
+   kthread+0x3b0/0x770
+   ret_from_fork+0x30/0x70
+   ret_from_fork_asm+0x1a/0x30
+
+This BUG is reproducible by repeating the blktests test case nvme/061
+for the rdma transport and the siw driver.
+
+To avoid the use-after-free of cm_id_private work objects, ensure that
+the last reference to the cm_id is decremented not in the event handler
+works, but in the cm_id destruction context. For that purpose, move
+iwcm_deref_id() call from destroy_cm_id() to the callers of
+destroy_cm_id(). In iw_destroy_cm_id(), call iwcm_deref_id() after
+flushing the pending works.
+
+During the fix work, I noticed that iw_destroy_cm_id() is called from
+cm_work_handler() and process_event() context. However, the comment of
+iw_destroy_cm_id() notes that the function "cannot be called by the
+event thread". Drop the false comment.
+
+Closes: https://lore.kernel.org/linux-rdma/r5676e754sv35aq7cdsqrlnvyhiq5zktteaurl7vmfih35efko@z6lay7uypy3c/
+Fixes: 59c68ac31e15 ("iw_cm: free cm_id resources on the last deref")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Link: https://patch.msgid.link/20250510101036.1756439-1-shinichiro.kawasaki@wdc.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/iwcm.c |   29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index fe50c3d3cb820..22f21ecc8f235 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -6019,7 +6019,7 @@ static int ath12k_reg_chan_list_event(struct ath12k_base *ab, struct sk_buff *sk
- 		goto fallback;
+--- a/drivers/infiniband/core/iwcm.c
++++ b/drivers/infiniband/core/iwcm.c
+@@ -367,12 +367,9 @@ EXPORT_SYMBOL(iw_cm_disconnect);
+ /*
+  * CM_ID <-- DESTROYING
+  *
+- * Clean up all resources associated with the connection and release
+- * the initial reference taken by iw_create_cm_id.
+- *
+- * Returns true if and only if the last cm_id_priv reference has been dropped.
++ * Clean up all resources associated with the connection.
+  */
+-static bool destroy_cm_id(struct iw_cm_id *cm_id)
++static void destroy_cm_id(struct iw_cm_id *cm_id)
+ {
+ 	struct iwcm_id_private *cm_id_priv;
+ 	struct ib_qp *qp;
+@@ -441,20 +438,22 @@ static bool destroy_cm_id(struct iw_cm_i
+ 		iwpm_remove_mapinfo(&cm_id->local_addr, &cm_id->m_local_addr);
+ 		iwpm_remove_mapping(&cm_id->local_addr, RDMA_NL_IWCM);
  	}
+-
+-	return iwcm_deref_id(cm_id_priv);
+ }
  
--	spin_lock(&ab->base_lock);
-+	spin_lock_bh(&ab->base_lock);
- 	if (test_bit(ATH12K_FLAG_REGISTERED, &ab->dev_flags)) {
- 		/* Once mac is registered, ar is valid and all CC events from
- 		 * fw is considered to be received due to user requests
-@@ -6043,7 +6043,7 @@ static int ath12k_reg_chan_list_event(struct ath12k_base *ab, struct sk_buff *sk
- 		ab->default_regd[pdev_idx] = regd;
- 	}
- 	ab->dfs_region = reg_info->dfs_region;
--	spin_unlock(&ab->base_lock);
-+	spin_unlock_bh(&ab->base_lock);
+ /*
+- * This function is only called by the application thread and cannot
+- * be called by the event thread. The function will wait for all
+- * references to be released on the cm_id and then kfree the cm_id
+- * object.
++ * Destroy cm_id. If the cm_id still has other references, wait for all
++ * references to be released on the cm_id and then release the initial
++ * reference taken by iw_create_cm_id.
+  */
+ void iw_destroy_cm_id(struct iw_cm_id *cm_id)
+ {
+-	if (!destroy_cm_id(cm_id))
++	struct iwcm_id_private *cm_id_priv;
++
++	cm_id_priv = container_of(cm_id, struct iwcm_id_private, id);
++	destroy_cm_id(cm_id);
++	if (refcount_read(&cm_id_priv->refcount) > 1)
+ 		flush_workqueue(iwcm_wq);
++	iwcm_deref_id(cm_id_priv);
+ }
+ EXPORT_SYMBOL(iw_destroy_cm_id);
  
- 	goto mem_free;
+@@ -1037,8 +1036,10 @@ static void cm_work_handler(struct work_
  
--- 
-2.39.5
-
+ 		if (!test_bit(IWCM_F_DROP_EVENTS, &cm_id_priv->flags)) {
+ 			ret = process_event(cm_id_priv, &levent);
+-			if (ret)
+-				WARN_ON_ONCE(destroy_cm_id(&cm_id_priv->id));
++			if (ret) {
++				destroy_cm_id(&cm_id_priv->id);
++				WARN_ON_ONCE(iwcm_deref_id(cm_id_priv));
++			}
+ 		} else
+ 			pr_debug("dropping event %d\n", levent.event);
+ 		if (iwcm_deref_id(cm_id_priv))
 
 
