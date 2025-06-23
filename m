@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10F3239E63;
-	Mon, 23 Jun 2025 13:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E3B24C060;
+	Mon, 23 Jun 2025 13:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685371; cv=none; b=OBojDIWWWAVIncBObDQ0AWc8ZQD616wCHEYwYhF8t4SamnPiyp/+qpnmPU6dsEz3WdHE+qs5Ec1vcy+6N6DEqOG+cmFA0uybsvrxULn32lMBcacauyzf7ZQZgBrmATth0DAib+o/BcpgROW6XzshMwhaUthnNux1P3Bgzc5VDuI=
+	t=1750685374; cv=none; b=B77UpQ/re56gwDZKkQArqph5/iZb/5wYe77KZnJ5B0Yz6RxbCkhtutRhQVjUKUNAOfJNF6/kpu5tPEQGz0fUKEhEWWXPbUpnUNHtfVtrZ4JNKVxZYVfXHt4BPsSg0yGnAGkEnkghuMz8eq+pLTpkEphS1wxfa4eJ/6cDvKhfpz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685371; c=relaxed/simple;
-	bh=uVbibeV5FulFDxj7aQdxPSemB5df6w+A0pd6Tq62yjQ=;
+	s=arc-20240116; t=1750685374; c=relaxed/simple;
+	bh=fjOR9WdrGVOHog23vf+1cYwX7drVLiKTOhfmdeQauyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lwSO+wbD4/oUJKU/MqhppoOXbpheliOMkwQiBom7rFXOhThEjVZvqVVG9oFZAA9IaHXVO8E5/WUUdDuGhuIUghE7HmSCqR+dWx4IUWDwP56aD1DV0tRJPf8q1nmZWTiwW9aObRTaFB4MDh+Mji/7RHy9FcIrVcJ8qhH14MaGimQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LIsWLx2I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ut+ADQPb56sGB5IPRoEQ3K7m9fy13pHrKl1AhveVcHaojhwXVncf/GxY9rs3gogN6FRJPwC02QZ/ruO0gRvKj4cZdF6SksD1ancKztBzyolw0yipvIloxD8ciHgaSw75aHSNlX71g/UYTsTTyPF3xvboefrjf6qR7zBVKOCqYgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWrzKBvs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIsWLx2I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D8FC4CEEA;
-	Mon, 23 Jun 2025 13:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWrzKBvs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE31C4CEEA;
+	Mon, 23 Jun 2025 13:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685371;
-	bh=uVbibeV5FulFDxj7aQdxPSemB5df6w+A0pd6Tq62yjQ=;
+	s=korg; t=1750685374;
+	bh=fjOR9WdrGVOHog23vf+1cYwX7drVLiKTOhfmdeQauyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LIsWLx2I9ji5MWxuPwJsAVsk8MIsh+z77pMTVGzoEcIWiVCaYaIiOUckwW13a5Chp
-	 BYaKDuwITGdHVRH8jejGH4/Z07fiAyRN1L2yFRbMXEeZKxAu5Gof7tGdI/edNPteWJ
-	 YnHfeMSOcIA/FGkhsp2C8cX7pJnCd4Ez/ajaE8eM=
+	b=zWrzKBvseV1vdCta5OlpjiXUB0h6vSudYRd4BGP2GFdEF4d8AJCiADr/B2T+Qp/nZ
+	 50qHQhrYeE7dqQBQGDbw9mn7iyXRD745r63+zeStK4r2ZpsAUnRvNx3SZcOgTT2uqi
+	 iBt5nFJwoh+qVXmRnCbTL82u8V2bZ+0OzBAud9fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/411] ktls, sockmap: Fix missing uncharge operation
-Date: Mon, 23 Jun 2025 15:03:19 +0200
-Message-ID: <20250623130634.645468491@linuxfoundation.org>
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 116/222] NFC: nci: uart: Set tty->disc_data only in success path
+Date: Mon, 23 Jun 2025 15:07:31 +0200
+Message-ID: <20250623130615.590607070@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,63 +47,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 79f0c39ae7d3dc628c01b02f23ca5d01f9875040 ]
+commit fc27ab48904ceb7e4792f0c400f1ef175edf16fe upstream.
 
-When we specify apply_bytes, we divide the msg into multiple segments,
-each with a length of 'send', and every time we send this part of the data
-using tcp_bpf_sendmsg_redir(), we use sk_msg_return_zero() to uncharge the
-memory of the specified 'send' size.
+Setting tty->disc_data before opening the NCI device means we need to
+clean it up on error paths.  This also opens some short window if device
+starts sending data, even before NCIUARTSETDRIVER IOCTL succeeded
+(broken hardware?).  Close the window by exposing tty->disc_data only on
+the success path, when opening of the NCI device and try_module_get()
+succeeds.
 
-However, if the first segment of data fails to send, for example, the
-peer's buffer is full, we need to release all of the msg. When releasing
-the msg, we haven't uncharged the memory of the subsequent segments.
+The code differs in error path in one aspect: tty->disc_data won't be
+ever assigned thus NULL-ified.  This however should not be relevant
+difference, because of "tty->disc_data=NULL" in nci_uart_tty_open().
 
-This modification does not make significant logical changes, but only
-fills in the missing uncharge places.
-
-This issue has existed all along, until it was exposed after we added the
-apply test in test_sockmap:
-commit 3448ad23b34e ("selftests/bpf: Add apply_bytes test to test_txmsg_redir_wait_sndmem in test_sockmap")
-
-Fixes: d3b18ad31f93 ("tls: add bpf support to sk_msg handling")
-Reported-by: Cong Wang <xiyou.wangcong@gmail.com>
-Closes: https://lore.kernel.org/bpf/aAmIi0vlycHtbXeb@pop-os.localdomain/T/#t
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
-Link: https://lore.kernel.org/r/20250425060015.6968-2-jiayuan.chen@linux.dev
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Linus Torvalds <torvalds@linuxfoundation.org>
+Fixes: 9961127d4bce ("NFC: nci: add generic uart support")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20250618073649.25049-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/nfc/nci/uart.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 0f93b0ba72df1..6648008f5da73 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -893,6 +893,13 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 					    &msg_redir, send, flags);
- 		lock_sock(sk);
- 		if (err < 0) {
-+			/* Regardless of whether the data represented by
-+			 * msg_redir is sent successfully, we have already
-+			 * uncharged it via sk_msg_return_zero(). The
-+			 * msg->sg.size represents the remaining unprocessed
-+			 * data, which needs to be uncharged here.
-+			 */
-+			sk_mem_uncharge(sk, msg->sg.size);
- 			*copied -= sk_msg_free_nocharge(sk, &msg_redir);
- 			msg->sg.size = 0;
- 		}
--- 
-2.39.5
-
+--- a/net/nfc/nci/uart.c
++++ b/net/nfc/nci/uart.c
+@@ -131,22 +131,22 @@ static int nci_uart_set_driver(struct tt
+ 
+ 	memcpy(nu, nci_uart_drivers[driver], sizeof(struct nci_uart));
+ 	nu->tty = tty;
+-	tty->disc_data = nu;
+ 	skb_queue_head_init(&nu->tx_q);
+ 	INIT_WORK(&nu->write_work, nci_uart_write_work);
+ 	spin_lock_init(&nu->rx_lock);
+ 
+ 	ret = nu->ops.open(nu);
+ 	if (ret) {
+-		tty->disc_data = NULL;
+ 		kfree(nu);
++		return ret;
+ 	} else if (!try_module_get(nu->owner)) {
+ 		nu->ops.close(nu);
+-		tty->disc_data = NULL;
+ 		kfree(nu);
+ 		return -ENOENT;
+ 	}
+-	return ret;
++	tty->disc_data = nu;
++
++	return 0;
+ }
+ 
+ /* ------ LDISC part ------ */
 
 
