@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B1170838;
-	Mon, 23 Jun 2025 21:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B13D21FF2B;
+	Mon, 23 Jun 2025 21:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715932; cv=none; b=A8/6swMnMv/mJQMqHUCmUOjNyJMAtrzV4h2EO0ObyxWHvfyMmJ5vgjPilN/73sDiRu53U65p3npJZLL3KJ+Gd+ECcowsfI7U7gA18Ie79dj+FmIXxWMakujgtwmSFkMqotX3nZxr0r21llUprFexfm2J5JVsjr3eLvLe+uj5Sik=
+	t=1750715934; cv=none; b=MB+dy4v9hQU2uMQ9m0MLRDWTRlJ1RKgW7fqp5gysoBA3KAmvQuyV3iM/6dZAAgmUcSKUeEKxIR13w+RoLg/emfEYWYZmi8+dMotx7+jPBvtRbnGVb82cIMV2wseDWVR4g3Y3Nky1wrP1ThO9L3owJlQq51yHT3FsZseS4Fr9GY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715932; c=relaxed/simple;
-	bh=l98DksYqtW+A/wqOzKdSQt0qAZFdmDYup0fGNjkLxY4=;
+	s=arc-20240116; t=1750715934; c=relaxed/simple;
+	bh=6d9nqRmmeLYcB2IeuOhhPghpWSZVOWGHtoSZmL+xDBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aVMD9FhGLSrUtwP/mUjCzMgshGCnAUPsCioj/4dp8Eha6O0iU5tv4o1ClVDnJ+8w3PS0v1aW+xnD2wKN8idd5y3ogrnebfM7SuJf8PMffWpQ9ng5Z4/0tH+jo7Vh7rS9CXaVEHZzE++qv3NjLTciUj4Bt2JJIH17WUA0kT2qm5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUESRquK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d8GVyeTOHDqimYRfm/BhtGnvhGvjM0JsEDtTsPOezLUXqpgXh/x1Eja0sKzBCe1WMC36QL6W4t+J1sTJ21Dcu1YxIGejhVaG1eaqCQpZ0nq4RbxNMpjdoroe152TUNOEL1Q31Kt8W+GmXON8LY8vLJfrQdvLcRwjYEB6PKSE/rA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rzGW70A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUESRquK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EEAC4CEEA;
-	Mon, 23 Jun 2025 21:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rzGW70A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12525C4CEEA;
+	Mon, 23 Jun 2025 21:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715931;
-	bh=l98DksYqtW+A/wqOzKdSQt0qAZFdmDYup0fGNjkLxY4=;
+	s=korg; t=1750715934;
+	bh=6d9nqRmmeLYcB2IeuOhhPghpWSZVOWGHtoSZmL+xDBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fUESRquKev3GEviH8Sd6MjL4kn2VsQ3SxzoSfNVpKNAtarxJqqJX7ECV+uwKFiiTs
-	 qp/LNMAZr6kIaPOQi0yOMaxJq49bcg5Pl7qKbtksvDs5XjBhxHYLvzokqdDrCe1Zta
-	 FYovPd7/4YQQoE2abV52gYCp3hs6W9PQ/7T8tboA=
+	b=0rzGW70Ad/3e1GZyd1sRLBWwPof0EL8i94uq/EHBddtZRrSJz8hJ+tWtc/YjSb9Ec
+	 TOa0DbIKAb4kuje39RAW8yEMqPoKknOl7cbf9hNkHXmNmQaJvSovazAdEho+F+0YB6
+	 sILIjQdrkeapqmLWBdrbqvl5l8H17+cJqCksqsPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 292/411] ext4: prevent stale extent cache entries caused by concurrent get es_cache
-Date: Mon, 23 Jun 2025 15:07:16 +0200
-Message-ID: <20250623130641.003629254@linuxfoundation.org>
+Subject: [PATCH 6.12 217/414] tcp: always seek for minimal rtt in tcp_rcv_rtt_update()
+Date: Mon, 23 Jun 2025 15:05:54 +0200
+Message-ID: <20250623130647.441060691@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,74 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f22a0ef2231a7d8374bb021eb86404d0e9de5a02 ]
+[ Upstream commit b879dcb1aeeca278eacaac0b1e2425b1c7599f9f ]
 
-The EXT4_IOC_GET_ES_CACHE and EXT4_IOC_PRECACHE_EXTENTS currently
-invokes ext4_ext_precache() to preload the extent cache without holding
-the inode's i_rwsem. This can result in stale extent cache entries when
-competing with operations such as ext4_collapse_range() which calls
-ext4_ext_remove_space() or ext4_ext_shift_extents().
+tcp_rcv_rtt_update() goal is to maintain an estimation of the RTT
+in tp->rcv_rtt_est.rtt_us, used by tcp_rcv_space_adjust()
 
-The problem arises when ext4_ext_remove_space() temporarily releases
-i_data_sem due to insufficient journal credits. During this interval, a
-concurrent EXT4_IOC_GET_ES_CACHE or EXT4_IOC_PRECACHE_EXTENTS may cache
-extent entries that are about to be deleted. As a result, these cached
-entries become stale and inconsistent with the actual extents.
+When TCP TS are enabled, tcp_rcv_rtt_update() is using
+EWMA to smooth the samples.
 
-Loading the extents cache without holding the inode's i_rwsem or the
-mapping's invalidate_lock is not permitted besides during the writeback.
-Fix this by holding the i_rwsem during EXT4_IOC_GET_ES_CACHE and
-EXT4_IOC_PRECACHE_EXTENTS.
+Change this to immediately latch the incoming value if it
+is lower than tp->rcv_rtt_est.rtt_us, so that tcp_rcv_space_adjust()
+does not overshoot tp->rcvq_space.space and sk->sk_rcvbuf.
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250423085257.122685-6-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250513193919.1089692-8-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 2 ++
- fs/ext4/ioctl.c   | 8 +++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index e41a6d642472b..35bc58a26f7f4 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -5041,7 +5041,9 @@ int ext4_get_es_cache(struct inode *inode, struct fiemap_extent_info *fieinfo,
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index d29219e067b7f..cf4fef18a9cad 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -665,10 +665,12 @@ EXPORT_SYMBOL(tcp_initialize_rcv_mss);
+  */
+ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
+ {
+-	u32 new_sample = tp->rcv_rtt_est.rtt_us;
+-	long m = sample;
++	u32 new_sample, old_sample = tp->rcv_rtt_est.rtt_us;
++	long m = sample << 3;
+ 
+-	if (new_sample != 0) {
++	if (old_sample == 0 || m < old_sample) {
++		new_sample = m;
++	} else {
+ 		/* If we sample in larger samples in the non-timestamp
+ 		 * case, we could grossly overestimate the RTT especially
+ 		 * with chatty applications or bulk transfer apps which
+@@ -679,17 +681,9 @@ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
+ 		 * else with timestamps disabled convergence takes too
+ 		 * long.
+ 		 */
+-		if (!win_dep) {
+-			m -= (new_sample >> 3);
+-			new_sample += m;
+-		} else {
+-			m <<= 3;
+-			if (m < new_sample)
+-				new_sample = m;
+-		}
+-	} else {
+-		/* No previous measure. */
+-		new_sample = m << 3;
++		if (win_dep)
++			return;
++		new_sample = old_sample - (old_sample >> 3) + sample;
  	}
  
- 	if (fieinfo->fi_flags & FIEMAP_FLAG_CACHE) {
-+		inode_lock_shared(inode);
- 		error = ext4_ext_precache(inode);
-+		inode_unlock_shared(inode);
- 		if (error)
- 			return error;
- 		fieinfo->fi_flags &= ~FIEMAP_FLAG_CACHE;
-diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
-index 18002b0a908ce..bd90b454c6213 100644
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -1130,8 +1130,14 @@ static long __ext4_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
- 		return 0;
- 	}
- 	case EXT4_IOC_PRECACHE_EXTENTS:
--		return ext4_ext_precache(inode);
-+	{
-+		int ret;
- 
-+		inode_lock_shared(inode);
-+		ret = ext4_ext_precache(inode);
-+		inode_unlock_shared(inode);
-+		return ret;
-+	}
- 	case FS_IOC_SET_ENCRYPTION_POLICY:
- 		if (!ext4_has_feature_encrypt(sb))
- 			return -EOPNOTSUPP;
+ 	tp->rcv_rtt_est.rtt_us = new_sample;
 -- 
 2.39.5
 
