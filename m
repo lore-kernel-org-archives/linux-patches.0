@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2CF2628C;
-	Mon, 23 Jun 2025 21:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AD67482;
+	Mon, 23 Jun 2025 21:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713363; cv=none; b=EjVkI6L5r/DOBIhKuAiP5siskjADtxCm1KPz6lMIFokzek74iCMa2K7bhiDyg6HAp2roDC7GAvvYdljp2oCtECzQjj2uXwTmXlGRnAPcNYz5ZqSj2IE4DcEXBmzLGvCkRyb5AmLGqWWX+ItSTJPcu1sAk1jLWZ/o86xdSMlPjl4=
+	t=1750713366; cv=none; b=W2mnYZSz4ExJT1QgRjl+Tpv0EI3lq26eoqSzeySFS+tGjn9mLJ5Hso5MmbqkxFoAVg3xBJK/D9N6Dt93fjTO6Er8loenKeJJPw44EQr6uZ3K7QiL+tnJ4luAWTTMzN2IRgsIi/qSXwNKuwQqh+MBvGRWw+iE5PJ4YaFsb2MmDrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713363; c=relaxed/simple;
-	bh=wDOjEp4ShBDsxnjTPeD6K+oHRmvtc8eyiZHTJRKYunw=;
+	s=arc-20240116; t=1750713366; c=relaxed/simple;
+	bh=uXiiwzssqjyGYsb0jtiDVGNvaiy0s/MuuyA/CE4rLec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aY/UNdrAEpqOpIN+srY1LMJ+C7VixSxy/hxxJTMn6blZlfEeid6x+0eEm6Veqbzd+7P03L5qkgZ+ogbbtJ9mKtyKTVECnWard8KYDeMWpFyPt08kGATf3JevftupbAzibu/iouK7IADBKikqj8QDD/HqJVcNO0byhWIafJkRelc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xOO1d2m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j//KrRf4ugCmxI7x9jRtdJ+S4Yeu+9H9zx/N0HpKavQQs0ZmuqE0whbudm++d7RzglFhTptFabF40vJvBht6S4MTCUK9lcPNbdJ9+s5PMmHUVjGDI7Y+NYW2JCkSSx1IT5YhJQIMa4B2jGp4W8yxFI/OFEL7KfAUsxdyCKRbSaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqDLhAfg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xOO1d2m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03734C4CEED;
-	Mon, 23 Jun 2025 21:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqDLhAfg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71165C4CEEA;
+	Mon, 23 Jun 2025 21:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713363;
-	bh=wDOjEp4ShBDsxnjTPeD6K+oHRmvtc8eyiZHTJRKYunw=;
+	s=korg; t=1750713365;
+	bh=uXiiwzssqjyGYsb0jtiDVGNvaiy0s/MuuyA/CE4rLec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0xOO1d2mWr2jBW4WNRpMz/MryaxrPEpdgRjMV3VpSAebeuXHiZzKxQ6zMhjOYpPpS
-	 VbmP31oOQjS5LXHZtxRWrVc/i4b+erTWudsUGkIXVjFzwqZpPncsJcaLCXqfRmw4eL
-	 NSDEs4sGEcB6uR0yDOw65NWic8JsUXnMzlHAy8PM=
+	b=sqDLhAfg9MY4jE1hUeGt6bR6ZdFGFbvx3cfSpaIdbzjzJU9Q2mu5gadNiZm0uZZZE
+	 kJxG1t4pDEkGbgP89iGOvHEhMiOm31pm2pebjfLmg7334r3/u6tAvqsJOaHqQrOIFI
+	 2E/2gfBK0qEvxfWzb2C8f75osPOzvyX86KOLueEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.6 062/290] ext4: factor out ext4_get_maxbytes()
-Date: Mon, 23 Jun 2025 15:05:23 +0200
-Message-ID: <20250623130628.870031309@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Anton Protopopov <a.s.protopopov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 080/508] libbpf: Use proper errno value in nlattr
+Date: Mon, 23 Jun 2025 15:02:05 +0200
+Message-ID: <20250623130647.205862035@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,78 +47,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Anton Protopopov <a.s.protopopov@gmail.com>
 
-commit dbe27f06fa38b9bfc598f8864ae1c5d5831d9992 upstream.
+[ Upstream commit fd5fd538a1f4b34cee6823ba0ddda2f7a55aca96 ]
 
-There are several locations that get the correct maxbytes value based on
-the inode's block type. It would be beneficial to extract a common
-helper function to make the code more clear.
+Return value of the validate_nla() function can be propagated all the
+way up to users of libbpf API. In case of error this libbpf version
+of validate_nla returns -1 which will be seen as -EPERM from user's
+point of view. Instead, return a more reasonable -EINVAL.
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Link: https://patch.msgid.link/20250506012009.3896990-3-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bbf48c18ee0c ("libbpf: add error reporting in XDP")
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250510182011.2246631-1-a.s.protopopov@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h    |    7 +++++++
- fs/ext4/extents.c |    7 +------
- fs/ext4/file.c    |    7 +------
- 3 files changed, 9 insertions(+), 12 deletions(-)
+ tools/lib/bpf/nlattr.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -3351,6 +3351,13 @@ static inline unsigned int ext4_flex_bg_
- 	return 1 << sbi->s_log_groups_per_flex;
+diff --git a/tools/lib/bpf/nlattr.c b/tools/lib/bpf/nlattr.c
+index 975e265eab3bf..06663f9ea581f 100644
+--- a/tools/lib/bpf/nlattr.c
++++ b/tools/lib/bpf/nlattr.c
+@@ -63,16 +63,16 @@ static int validate_nla(struct nlattr *nla, int maxtype,
+ 		minlen = nla_attr_minlen[pt->type];
+ 
+ 	if (libbpf_nla_len(nla) < minlen)
+-		return -1;
++		return -EINVAL;
+ 
+ 	if (pt->maxlen && libbpf_nla_len(nla) > pt->maxlen)
+-		return -1;
++		return -EINVAL;
+ 
+ 	if (pt->type == LIBBPF_NLA_STRING) {
+ 		char *data = libbpf_nla_data(nla);
+ 
+ 		if (data[libbpf_nla_len(nla) - 1] != '\0')
+-			return -1;
++			return -EINVAL;
+ 	}
+ 
+ 	return 0;
+@@ -118,19 +118,18 @@ int libbpf_nla_parse(struct nlattr *tb[], int maxtype, struct nlattr *head,
+ 		if (policy) {
+ 			err = validate_nla(nla, maxtype, policy);
+ 			if (err < 0)
+-				goto errout;
++				return err;
+ 		}
+ 
+-		if (tb[type])
++		if (tb[type]) {
+ 			pr_warn("Attribute of type %#x found multiple times in message, "
+ 				"previous attribute is being ignored.\n", type);
++		}
+ 
+ 		tb[type] = nla;
+ 	}
+ 
+-	err = 0;
+-errout:
+-	return err;
++	return 0;
  }
  
-+static inline loff_t ext4_get_maxbytes(struct inode *inode)
-+{
-+	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
-+		return inode->i_sb->s_maxbytes;
-+	return EXT4_SB(inode->i_sb)->s_bitmap_maxbytes;
-+}
-+
- #define ext4_std_error(sb, errno)				\
- do {								\
- 	if ((errno))						\
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -4970,12 +4970,7 @@ static const struct iomap_ops ext4_iomap
- 
- static int ext4_fiemap_check_ranges(struct inode *inode, u64 start, u64 *len)
- {
--	u64 maxbytes;
--
--	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
--		maxbytes = inode->i_sb->s_maxbytes;
--	else
--		maxbytes = EXT4_SB(inode->i_sb)->s_bitmap_maxbytes;
-+	u64 maxbytes = ext4_get_maxbytes(inode);
- 
- 	if (*len == 0)
- 		return -EINVAL;
---- a/fs/ext4/file.c
-+++ b/fs/ext4/file.c
-@@ -898,12 +898,7 @@ static int ext4_file_open(struct inode *
- loff_t ext4_llseek(struct file *file, loff_t offset, int whence)
- {
- 	struct inode *inode = file->f_mapping->host;
--	loff_t maxbytes;
--
--	if (!(ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
--		maxbytes = EXT4_SB(inode->i_sb)->s_bitmap_maxbytes;
--	else
--		maxbytes = inode->i_sb->s_maxbytes;
-+	loff_t maxbytes = ext4_get_maxbytes(inode);
- 
- 	switch (whence) {
- 	default:
+ /**
+-- 
+2.39.5
+
 
 
