@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991FF230BC2;
-	Mon, 23 Jun 2025 13:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F712367B0;
+	Mon, 23 Jun 2025 13:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685214; cv=none; b=CjyaHgJnMDEJPYCKxS3Lfj3Yzs4bApVtlB05t3tkTI4TYpdSR/whRPScbbaQT1SUjCvcc2XpHMa7KqVp69gcyur1CSzkaH5ATp1sZ5x6dcfisBu1dRlcJOGPBK5b2LIb/0qYAO9EiIs5rzAd63/lhbTRAeKDRXOP761kTq6lhRk=
+	t=1750685216; cv=none; b=m5tskODnHzUGlKaIb4+hZeemouNL+z5Wqb7bAT8sao3zrJ8wKVpVmauAVaGTGir36rIlS2B64oXWc2JCCE1YzLYSA/ncYa9mt2293pG+Ijho2smN5I8yjYLOPB7+V36zGce3ASSAzM/j6Oay1TIbp0YIIWaOrUaSuglcft5L1Bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685214; c=relaxed/simple;
-	bh=UO3boePjUBrdUTISFeDkssFmLf6TnXSLyh/v+JoyigA=;
+	s=arc-20240116; t=1750685216; c=relaxed/simple;
+	bh=mK/3sPbNcoz7A0prXcWJleGBt7K/8+7ea8/LMb3f02o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTbDeWP6tVar5bcgDyidpDciWJ8bPjjmGdlR/f5rEBjnZsEE+81rhkn1czInJxniuUP/2kWGsXV16j/KzHiABMTcYwf6Re5dH6vUQwJ3woLEc2NF4xWdYWLsolDvsL4+QdqUgJKVM78FqP4ldwisY+fXnAZMWUJLUOc74JoTTdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTC9X8TP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nASF1bmFfofhzO9s3+RHAQ3Z7M7iNnCqTbbdcy2aKZ+escsta4Gl72P8YjjSBFmCj5dIHaEE9VD75DJL0OlfDB3WDbJmQm8iKBbtPr4ZIn8Bl59q0wJ11VSaG4Ma7SJsoxZNIPjiITh1UM8Jlzc1+KSsGK5gQw/3m4H/JHyBtsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+E1ICwX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTC9X8TP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D41C4CEEA;
-	Mon, 23 Jun 2025 13:26:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+E1ICwX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AEAC4CEEA;
+	Mon, 23 Jun 2025 13:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685213;
-	bh=UO3boePjUBrdUTISFeDkssFmLf6TnXSLyh/v+JoyigA=;
+	s=korg; t=1750685216;
+	bh=mK/3sPbNcoz7A0prXcWJleGBt7K/8+7ea8/LMb3f02o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cTC9X8TPxAY9Eu9+wmgJkm4+rOS4mn8UIOrPPXDa77TqQBTKLE33zJrVVRPWP5V2D
-	 xbMJDIPOMO+H1rcQIg9KAmUNhQ1RqFQx2G5CQG1fj1aMhxNFsluIsjzWNOVCwYFm9Q
-	 AacOqR8hW54RCdR4b3wURUWogtthFvc+9cEp1f2s=
+	b=K+E1ICwX4Sb13z3V9+3VwocgiSreH/gRjbzSCJhxyr+Tx+z11onz/oK0JSE1hUM+B
+	 DiE/YG34pvJw61KQxshi2nFnJkP8zlFS8ABrNHpvCfGqLBvlfg+Piewvu7D975W0oo
+	 c5EUdBE3qOdROrJJjj79YDw4n+Rdsb0DvL0L8hGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Larry Bassel <larry.bassel@oracle.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 075/222] NFSD: Fix ia_size underflow
-Date: Mon, 23 Jun 2025 15:06:50 +0200
-Message-ID: <20250623130614.356609849@linuxfoundation.org>
+Subject: [PATCH 5.15 017/411] crypto: marvell/cesa - Avoid empty transfer descriptor
+Date: Mon, 23 Jun 2025 15:02:41 +0200
+Message-ID: <20250623130633.514080531@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +46,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit e6faac3f58c7c4176b66f63def17a34232a17b0e ]
+[ Upstream commit 1bafd82d9a40cf09c6c40f1c09cc35b7050b1a9f ]
 
-iattr::ia_size is a loff_t, which is a signed 64-bit type. NFSv3 and
-NFSv4 both define file size as an unsigned 64-bit type. Thus there
-is a range of valid file size values an NFS client can send that is
-already larger than Linux can handle.
+The user may set req->src even if req->nbytes == 0.  If there
+is no data to hash from req->src, do not generate an empty TDMA
+descriptor.
 
-Currently decode_fattr4() dumps a full u64 value into ia_size. If
-that value happens to be larger than S64_MAX, then ia_size
-underflows. I'm about to fix up the NFSv3 behavior as well, so let's
-catch the underflow in the common code path: nfsd_setattr().
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-(cherry picked from commit e6faac3f58c7c4176b66f63def17a34232a17b0e)
-[Larry: backport to 5.4.y. Minor conflict resolved due to missing commit 2f221d6f7b88
-attr: handle idmapped mounts]
-Signed-off-by: Larry Bassel <larry.bassel@oracle.com>
+Fixes: db509a45339f ("crypto: marvell/cesa - add TDMA support")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/vfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/crypto/marvell/cesa/hash.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index 6aa968bee0ce1..bee4fdf6e239a 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -448,6 +448,10 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
- 			.ia_size	= iap->ia_size,
- 		};
+diff --git a/drivers/crypto/marvell/cesa/hash.c b/drivers/crypto/marvell/cesa/hash.c
+index 84c1065092796..72b0f863dee07 100644
+--- a/drivers/crypto/marvell/cesa/hash.c
++++ b/drivers/crypto/marvell/cesa/hash.c
+@@ -663,7 +663,7 @@ static int mv_cesa_ahash_dma_req_init(struct ahash_request *req)
+ 	if (ret)
+ 		goto err_free_tdma;
  
-+		host_err = -EFBIG;
-+		if (iap->ia_size < 0)
-+			goto out_unlock;
-+
- 		host_err = notify_change(dentry, &size_attr, NULL);
- 		if (host_err)
- 			goto out_unlock;
+-	if (iter.src.sg) {
++	if (iter.base.len > iter.src.op_offset) {
+ 		/*
+ 		 * Add all the new data, inserting an operation block and
+ 		 * launch command between each full SRAM block-worth of
 -- 
 2.39.5
 
