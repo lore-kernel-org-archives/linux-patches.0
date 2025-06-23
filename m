@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A0572624;
-	Mon, 23 Jun 2025 21:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1B972624;
+	Mon, 23 Jun 2025 21:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715594; cv=none; b=LJh37HxzzLqL3VmcDjHk+hqElDRZLt7UsYop4sAdNPYINTxcQwIph9fd4IqbkMHhPKy0gxFZ4e8vt27c6vsoNUG3dojlijvdWO6o2ZLdDbCGoRQ8HhWg2+DTcJDm2Tkzuu5U/eF4gNYolR801iIibWNbPVA1KFT2AaGYmfyuMnM=
+	t=1750715597; cv=none; b=H6leOdGH4HZYYZlzjRTso/AaoHSXezZddwVbXPq1qywsv+4XSwSEJjsg0CIib8/4RLaiGOcURmXPmd3XRynAzwwT9AZE8xacmxVJRYHJizYzsox2G0E3jDB9rZFVEl4SdbKJ8pgjHoRvnY/dRgOFJutu/EKnjelzofpa4XrgfKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715594; c=relaxed/simple;
-	bh=14nm5H3nhTnBLFk33o0mg222+asTlknC1cz/VNtmWuU=;
+	s=arc-20240116; t=1750715597; c=relaxed/simple;
+	bh=sF8Fj2WHluooAeFDLW7Oi0Qa13u7UBA7yOEvtzDYXOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUV1JbnS3z3oGLt8JbbFz6PtbqPdgq+KFY5NuDeACOy+BvoFKD2H7p0rVOR8uG8ySU3qy3mITv+7v9AW0XxMZnMf20DuI8AtXtMw34oOGKLOkPGjJj58t9kmQoxDuBofsd14YgWbHMU2ChdYAIixIr7MScDkQ1i81tYhEvxjb/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MgcDoRta; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W8y486jqk2QR3Vdo+aiuIkoudpElehpwwbtatwu1mHJpouI7sBTS6bCxHUrpUDpQ8OcEceDhWD8HENMFLwKM8xQQFOB4slrtC3ffRcSuFJjBXjwAyRfZTU63RbO0Sl45x0Pi1I09rfFMoP1DrY5juxsSJosAsZLB8bKB2WvRPeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLYMNPFz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MgcDoRta"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D49C4CEEA;
-	Mon, 23 Jun 2025 21:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLYMNPFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8697DC4CEEA;
+	Mon, 23 Jun 2025 21:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715594;
-	bh=14nm5H3nhTnBLFk33o0mg222+asTlknC1cz/VNtmWuU=;
+	s=korg; t=1750715596;
+	bh=sF8Fj2WHluooAeFDLW7Oi0Qa13u7UBA7yOEvtzDYXOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MgcDoRtamNSh6EgyCcuW/pIKIBxwm9Oqoc7vBAUM1RP3kiLtTseVSr1KAHHLhe8NV
-	 JZg6+yD2+s9MxVSIC91A9ytXVl7of/dW87rHFher+6q+cHsOlNjkjZT8xOELwJGWAw
-	 6M4KktdyGP0PmLX/gX46EkvojIKp5zj4xTI6DIdI=
+	b=OLYMNPFz/jrLRdF9VvQ564tA+Y6ZYLDIlY21N88eFcd6kvlO036woSNyxKbYt7KKK
+	 dqBg+qr4YgiWvXbkMkUWSGmkL/nfnndBJZKyx/8pwSXnkJgsqTZHQRHWgzaSO9XAWI
+	 CzcGn+SqU0oDgCMxiUx4e1SiAGtI7Cv+xteydhmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 195/414] bpf: Check rcu_read_lock_trace_held() in bpf_map_lookup_percpu_elem()
-Date: Mon, 23 Jun 2025 15:05:32 +0200
-Message-ID: <20250623130646.890205794@linuxfoundation.org>
+	Yao Zi <ziyao@disroot.org>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 209/290] platform/loongarch: laptop: Get brightness setting from EC on probe
+Date: Mon, 23 Jun 2025 15:07:50 +0200
+Message-ID: <20250623130633.214398175@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +46,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Yao Zi <ziyao@disroot.org>
 
-[ Upstream commit d4965578267e2e81f67c86e2608481e77e9c8569 ]
+commit 1205088fd0393bd9eae96b62bf1e4b9eb1b73edf upstream.
 
-bpf_map_lookup_percpu_elem() helper is also available for sleepable bpf
-program. When BPF JIT is disabled or under 32-bit host,
-bpf_map_lookup_percpu_elem() will not be inlined. Using it in a
-sleepable bpf program will trigger the warning in
-bpf_map_lookup_percpu_elem(), because the bpf program only holds
-rcu_read_lock_trace lock. Therefore, add the missed check.
+Previously during driver probe, 1 is unconditionally taken as current
+brightness value and set to props.brightness, which will be considered
+as the brightness before suspend and restored to EC on resume. Since a
+brightness value of 1 almost never matches EC's state on coldboot (my
+laptop's EC defaults to 80), this causes surprising changes of screen
+brightness on the first time of resume after coldboot.
 
-Reported-by: syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/000000000000176a130617420310@google.com/
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20250526062534.1105938-1-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Let's get brightness from EC and take it as the current brightness on
+probe of the laptop driver to avoid the surprising behavior. Tested on
+TongFang L860-T2 Loongson-3A5000 laptop.
+
+Cc: stable@vger.kernel.org
+Fixes: 6246ed09111f ("LoongArch: Add ACPI-based generic laptop driver")
+Signed-off-by: Yao Zi <ziyao@disroot.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/helpers.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/platform/loongarch/loongson-laptop.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index a05aeb3458964..9173d107758d4 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -129,7 +129,8 @@ const struct bpf_func_proto bpf_map_peek_elem_proto = {
+--- a/drivers/platform/loongarch/loongson-laptop.c
++++ b/drivers/platform/loongarch/loongson-laptop.c
+@@ -392,8 +392,8 @@ static int laptop_backlight_register(voi
+ 	if (!acpi_evalf(hotkey_handle, &status, "ECLL", "d"))
+ 		return -EIO;
  
- BPF_CALL_3(bpf_map_lookup_percpu_elem, struct bpf_map *, map, void *, key, u32, cpu)
- {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
-+		     !rcu_read_lock_bh_held());
- 	return (unsigned long) map->ops->map_lookup_percpu_elem(map, key, cpu);
- }
+-	props.brightness = 1;
+ 	props.max_brightness = status;
++	props.brightness = ec_get_brightness();
+ 	props.type = BACKLIGHT_PLATFORM;
  
--- 
-2.39.5
-
+ 	backlight_device_register("loongson_laptop",
 
 
