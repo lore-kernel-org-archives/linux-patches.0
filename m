@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF9F224F6;
-	Mon, 23 Jun 2025 21:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295DF1EE7C6;
+	Mon, 23 Jun 2025 21:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714214; cv=none; b=a945p9WyByk+VhXC8+CLxuaWLkMvFDQUSR9AtNkhOXUSjc/3JdSSo5A2C+R5V1wmtLR5Jr2f9sb6Vi5F2UTmfpz0fu0le/nHP8O4VUhamyXiv2MxQNICnqVvMPAV3B/3+dLnt4cMiCR+pmNOwcxaJjAiREQ5aWhjmzDM+mC9b+s=
+	t=1750714216; cv=none; b=iVrve8NZ3lG82q4SagJbnQ9D0MWbFo1j2arXijS3O0OaeFXtKESuggGzaRVoqLSr0gkc+6NOWjqRgs1L9yrj9cKl6Cwzar5vYUCJUTssjNH0coLF8OEuCkQ0sRTlRtrS66eu9YNVvLgxVcTG2+8pqCs6FGwgfYvhCBCdLkXE2to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714214; c=relaxed/simple;
-	bh=1HcPeYZJDVouU69ODzfJYlezdEZo4Dhlyw9doazfQhQ=;
+	s=arc-20240116; t=1750714216; c=relaxed/simple;
+	bh=Iqvwoc3xEswH6W/TEUDTm8BYpH4fH+drL8bt7ppzi08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYY95RIZq8IRkA5HeEdC9daoAyXKlko1D6t/JtXudYDHy71U0dGWwrsAMdOkoQHNAUZKf7cIWsCPEEBY8U6hBQcqryjK/i6Z3kE/+5RZtW5lGgJAVkDJG4SitlNVtWTctTUuUn09m2uDu7wYCGXKK6NHTMFuMAkZValvBWhdCO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Csg22rsf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lq6S8QpCEf3WaCKu3/v1RP0Xwx5hYXKm967f6tyW8l4G6p15GDbN7rZnK3OQiC42+BzosL9jV5AM3rPLl8z2Vd2kkRqcm5VOs5NhAtuAmuy8uQSy4rQB97s6SE+SReiOMtkLs7ymg4poyDgcFNvxMdWaQdhzBxarYcG7GG6bG7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZtGnrm4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Csg22rsf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A75FC4CEEA;
-	Mon, 23 Jun 2025 21:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZtGnrm4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B24C4CEEA;
+	Mon, 23 Jun 2025 21:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714213;
-	bh=1HcPeYZJDVouU69ODzfJYlezdEZo4Dhlyw9doazfQhQ=;
+	s=korg; t=1750714216;
+	bh=Iqvwoc3xEswH6W/TEUDTm8BYpH4fH+drL8bt7ppzi08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Csg22rsfbe1VAJcm1tL6oPDTQMkWBvtu4FamFiNqUGgmfeFZfXuAWyvvh53Y6H9yz
-	 2USr3rzZ2oiGGKR8+p9mll4SDghrrq/qyN7XTj55YQUdf8/13d1LVbijIOa0WGa3ui
-	 wtWZGWeIyqEScc11KrIk9AM1B1de1N5j+GfykmSs=
+	b=zZtGnrm4jOP+Uw1X9L5doijAD4d1Btb8tstebPBFKqaOu3W6F7j3CRL8mnZv5rYBv
+	 ScEk4feWb6YqKgu/Y+v0X1kbuOcKksS4gklJ54W5urrkXj9EJcqkLvcyt/0pCJCHow
+	 VxVmpgyuiAulapRgJBKJzSGEq2rV94KRSzM2kziY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Winchenbach <swinchenbach@arka.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 158/508] iio: filter: admv8818: fix band 4, state 15
-Date: Mon, 23 Jun 2025 15:03:23 +0200
-Message-ID: <20250623130649.165514129@linuxfoundation.org>
+	Niravkumar L Rabara <niravkumar.l.rabara@intel.com>,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 5.10 192/355] EDAC/altera: Use correct write width with the INTTEST register
+Date: Mon, 23 Jun 2025 15:06:33 +0200
+Message-ID: <20250623130632.450988336@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sam Winchenbach <swinchenbach@arka.org>
+From: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
 
-[ Upstream commit ef0ce24f590ac075d5eda11f2d6434b303333ed6 ]
+commit e5ef4cd2a47f27c0c9d8ff6c0f63a18937c071a3 upstream.
 
-Corrects the upper range of LPF Band 4 from 18.5 GHz to 18.85 GHz per
-the ADMV8818 datasheet
+On the SoCFPGA platform, the INTTEST register supports only 16-bit writes.
+A 32-bit write triggers an SError to the CPU so do 16-bit accesses only.
 
-Fixes: f34fe888ad05 ("iio:filter:admv8818: add support for ADMV8818")
-Signed-off-by: Sam Winchenbach <swinchenbach@arka.org>
-Link: https://patch.msgid.link/20250328174831.227202-3-sam.winchenbach@framepointer.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  [ bp: AI-massage the commit message. ]
+
+Fixes: c7b4be8db8bc ("EDAC, altera: Add Arria10 OCRAM ECC support")
+Signed-off-by: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
+Signed-off-by: Matthew Gerlach <matthew.gerlach@altera.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Dinh Nguyen <dinguyen@kernel.org>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/20250527145707.25458-1-matthew.gerlach@altera.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/filter/admv8818.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/edac/altera_edac.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/filter/admv8818.c b/drivers/iio/filter/admv8818.c
-index c7f5911f9040d..a50a8ea2f8dda 100644
---- a/drivers/iio/filter/admv8818.c
-+++ b/drivers/iio/filter/admv8818.c
-@@ -102,7 +102,7 @@ static const unsigned long long freq_range_lpf[4][2] = {
- 	{2050000000ULL, 3850000000ULL},
- 	{3350000000ULL, 7250000000ULL},
- 	{7000000000, 13000000000},
--	{12550000000, 18500000000}
-+	{12550000000, 18850000000}
- };
+--- a/drivers/edac/altera_edac.c
++++ b/drivers/edac/altera_edac.c
+@@ -1704,9 +1704,9 @@ static ssize_t altr_edac_a10_device_trig
  
- static const struct regmap_config admv8818_regmap_config = {
--- 
-2.39.5
-
+ 	local_irq_save(flags);
+ 	if (trig_type == ALTR_UE_TRIGGER_CHAR)
+-		writel(priv->ue_set_mask, set_addr);
++		writew(priv->ue_set_mask, set_addr);
+ 	else
+-		writel(priv->ce_set_mask, set_addr);
++		writew(priv->ce_set_mask, set_addr);
+ 
+ 	/* Ensure the interrupt test bits are set */
+ 	wmb();
+@@ -1736,7 +1736,7 @@ static ssize_t altr_edac_a10_device_trig
+ 
+ 	local_irq_save(flags);
+ 	if (trig_type == ALTR_UE_TRIGGER_CHAR) {
+-		writel(priv->ue_set_mask, set_addr);
++		writew(priv->ue_set_mask, set_addr);
+ 	} else {
+ 		/* Setup read/write of 4 bytes */
+ 		writel(ECC_WORD_WRITE, drvdata->base + ECC_BLK_DBYTECTRL_OFST);
 
 
