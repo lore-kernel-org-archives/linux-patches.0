@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320B322257E;
-	Mon, 23 Jun 2025 21:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9656E225413;
+	Mon, 23 Jun 2025 21:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715095; cv=none; b=rgnfqhOKCPDUBaNPcBIBn+i1uTCgJVp8rFXD/Sb3ZrBGxu2Lm21HOW2YfOcVlZVniuAf7Z/MxGC4vcQro2b/NWDkJNzGcVHxmIMHHMJuu4zPO+8XHkzSQD/aux6/R69sUxnzpzUo5qgqVXZYBGsmrBtro3C86FJMYHF8WBL8p1k=
+	t=1750715097; cv=none; b=GexW+An7CviE68wJd2joonhIGPJgeOhOAGFv0w/F3ZWyJwloc5vdoHIh3GzHnTF0mKJDqcWg8Wd7pk9l7tMTRktsHRhxuXMEbU/553tGh/ZYtsGxoviBfdcFE+riDBefnRFCsqTNK4SSHptvKgkUbzdsyQcszD0j+CUVflE6PYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715095; c=relaxed/simple;
-	bh=tn78LqaRIqVJkU4nF6YlMeHQwNysXNtJj68n+QXnQ18=;
+	s=arc-20240116; t=1750715097; c=relaxed/simple;
+	bh=8Rm+gGjZKJ6P5/ZmnSdXs32pRpqB55BnYBs9KchHZuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m8zNavbpZdHUTZt7QWnW2o9vZIp2PZcVppUMebcMx0DbMEa+uWqThsiphYwQKZJqXpAMPPzqsEpPbhxWG9Z2KNZGBmjtJbzrIG0yctFSyrgAs3R0EyNxWz/ulz9XvJj3fanWFFJvj7N1J/bzVbZmfQRjeMPN4koKpVQE9w1zp5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IcW24UoJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p1fhlkKwRlrL9End3ChE0zAiLAhlrpA5g8TZ47sHMzRQEfMXP8ak3LpYt2GYuZCp01vc6LIeirr/HOgyb1C9ZEiKfD/iLqwgh5f2yrxmiZFz6cO2+UjoHdWF9SZRJJwRIfdt2XCGUKbO1n0sYIINmdiAACVh+4J5bOd3m5MaVFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTI36FWv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IcW24UoJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C58C4CEF5;
-	Mon, 23 Jun 2025 21:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTI36FWv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AF7C4CEED;
+	Mon, 23 Jun 2025 21:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715094;
-	bh=tn78LqaRIqVJkU4nF6YlMeHQwNysXNtJj68n+QXnQ18=;
+	s=korg; t=1750715097;
+	bh=8Rm+gGjZKJ6P5/ZmnSdXs32pRpqB55BnYBs9KchHZuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IcW24UoJc8bF2IK7ooUW7usxiY5jX99R//zqgCc6L7stKqGrlqrRQD/VH0o9C9CJ2
-	 4VQiNkCw0gJmeevS5cAXvt0mdlS+pvGdPfGdfu543uUUcocQ7C52Fwbckiduqmdpul
-	 jxGyywB0Aylp0UgsV3Al6DRRz2zVdJ3NfRxx25yU=
+	b=xTI36FWvj8IXFrgUNyVzvF19Jg+1qwsZtat26RvLfu53ekh6Swmv2L/vjcm8LKxZz
+	 ar7hhQp2o2UkpPPLdlRkfFJbj8RPGkXqdnOs9FBZvLzkAYuFX/Pv1C7ZobCaVX80At
+	 1KKjDdhQe/OHvr5m6EIL0pVMOYWBLppmH4J9cmMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diederik de Haas <didi.debian@cknow.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Shawn Lin <shawn.lin@rock-chips.com>
-Subject: [PATCH 6.12 155/414] PCI: dw-rockchip: Fix PHY function call sequence in rockchip_pcie_phy_deinit()
-Date: Mon, 23 Jun 2025 15:04:52 +0200
-Message-ID: <20250623130645.916390785@linuxfoundation.org>
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	kdevops@lists.linux.dev,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.15 228/411] ext4: fix calculation of credits for extent tree modification
+Date: Mon, 23 Jun 2025 15:06:12 +0200
+Message-ID: <20250623130639.401665649@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,44 +51,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Diederik de Haas <didi.debian@cknow.org>
+From: Jan Kara <jack@suse.cz>
 
-commit 286ed198b899739862456f451eda884558526a9d upstream.
+commit 32a93f5bc9b9812fc710f43a4d8a6830f91e4988 upstream.
 
-The documentation for the phy_power_off() function explicitly says that it
-must be called before phy_exit().
+Luis and David are reporting that after running generic/750 test for 90+
+hours on 2k ext4 filesystem, they are able to trigger a warning in
+jbd2_journal_dirty_metadata() complaining that there are not enough
+credits in the running transaction started in ext4_do_writepages().
 
-Hence, follow the same rule in rockchip_pcie_phy_deinit().
+Indeed the code in ext4_do_writepages() is racy and the extent tree can
+change between the time we compute credits necessary for extent tree
+computation and the time we actually modify the extent tree. Thus it may
+happen that the number of credits actually needed is higher. Modify
+ext4_ext_index_trans_blocks() to count with the worst case of maximum
+tree depth. This can reduce the possible number of writers that can
+operate in the system in parallel (because the credit estimates now won't
+fit in one transaction) but for reasonably sized journals this shouldn't
+really be an issue. So just go with a safe and simple fix.
 
-Fixes: 0e898eb8df4e ("PCI: rockchip-dwc: Add Rockchip RK356X host controller driver")
-Signed-off-by: Diederik de Haas <didi.debian@cknow.org>
-[mani: commit message change]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
-Cc: stable@vger.kernel.org	# v5.15+
-Link: https://patch.msgid.link/20250417142138.1377451-1-didi.debian@cknow.org
+Link: https://lore.kernel.org/all/20250415013641.f2ppw6wov4kn4wq2@offworld
+Reported-by: Davidlohr Bueso <dave@stgolabs.net>
+Reported-by: Luis Chamberlain <mcgrof@kernel.org>
+Tested-by: kdevops@lists.linux.dev
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250429175535.23125-2-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-dw-rockchip.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/extents.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-+++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-@@ -377,8 +377,8 @@ static int rockchip_pcie_phy_init(struct
- 
- static void rockchip_pcie_phy_deinit(struct rockchip_pcie *rockchip)
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -2372,18 +2372,19 @@ int ext4_ext_calc_credits_for_single_ext
+ int ext4_ext_index_trans_blocks(struct inode *inode, int extents)
  {
--	phy_exit(rockchip->phy);
- 	phy_power_off(rockchip->phy);
-+	phy_exit(rockchip->phy);
- }
+ 	int index;
+-	int depth;
  
- static const struct dw_pcie_ops dw_pcie_ops = {
+ 	/* If we are converting the inline data, only one is needed here. */
+ 	if (ext4_has_inline_data(inode))
+ 		return 1;
+ 
+-	depth = ext_depth(inode);
+-
++	/*
++	 * Extent tree can change between the time we estimate credits and
++	 * the time we actually modify the tree. Assume the worst case.
++	 */
+ 	if (extents <= 1)
+-		index = depth * 2;
++		index = EXT4_MAX_EXTENT_DEPTH * 2;
+ 	else
+-		index = depth * 3;
++		index = EXT4_MAX_EXTENT_DEPTH * 3;
+ 
+ 	return index;
+ }
 
 
