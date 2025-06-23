@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553272C9D;
-	Mon, 23 Jun 2025 21:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5317482;
+	Mon, 23 Jun 2025 21:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713631; cv=none; b=mAnHT68yH94YyIMDevwYKTAMtN7qvdgYJhsPP5epGgFcJBJAEjBUHCTlyE3UQcfTTQHwhifGN9hR2pZUdQbt+mB+KdmoXlgTkFneLk+3PVCNbrMkHR5zcEBG5+qiaCQj+HFHT4u0VLN8dywtQgpY7C9ZAAUZzXemnJG35f5GlVw=
+	t=1750713633; cv=none; b=uFUyGVldRy6Qdiyk9dEwiTM97PiaS1vVUXT05uQiZ583t/Tqbtep/vJ7QXlYqEh33gshjZH7wPucYO7qYcXXkr4w0iAgzcMppoxxgmCx2B5D6BFe0Rx/DNUg+QZ6u0nLqTqY9CvNmD949fiEHtwW9avY87FATSNFMvOUaehvZfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713631; c=relaxed/simple;
-	bh=Q8RHzzxr1VwnqaGeXDLlfYfZrjG27y8ZzGsT9GYwZPg=;
+	s=arc-20240116; t=1750713633; c=relaxed/simple;
+	bh=nJDRUVXh2oElUL0G41pmbZBgPW4V92Zd6L4uI+cvxy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XWIosowEfB8zohCepUfgtvP5iBaHSW1KsJMiImWT5pJFVQZV2Qzd6yQL+a6LL2ZrkCy+blBhxB8MGi4j3II4RLDy6LhNwezScNEgekXujf/wXrGdSQoxFJoMCMFNusLhSveGI5KU4orMGKKqteNEUkjEK+T+XT/yX4SjWQ4Mohs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vm/xDZYe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VBBxcy9uNwnWVEHz/lRoJISsAcFTzXJic8dDT5XvfYojvjIgu7GpY37Em/2PqwDPeMGSlWRj0pgEpXJxXwXaTx3WFlPr9cmdDhHurPVurZAy/JU8g9NKB4i8opX54yGpdLkDFglxNrDwRnUa1rLkuqTveY5vY0sGxDgAIs41wmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTh5h8B8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vm/xDZYe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDD7C4CEEA;
-	Mon, 23 Jun 2025 21:20:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTh5h8B8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53798C4CEEA;
+	Mon, 23 Jun 2025 21:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713631;
-	bh=Q8RHzzxr1VwnqaGeXDLlfYfZrjG27y8ZzGsT9GYwZPg=;
+	s=korg; t=1750713633;
+	bh=nJDRUVXh2oElUL0G41pmbZBgPW4V92Zd6L4uI+cvxy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vm/xDZYeb0bqbawihnk5q/saJzaJiU4VDah2/vCTT80NrMRJEcT0W1johyu4/tb7/
-	 P2JWaVvMbxNQrzD6YDqTTcz5RFFXCoBZALptaIqVgydGBKDKQkf6F5hvnnLfHWGC6f
-	 pN0NJAHfIanYh30t19BtgSt0Dg2rxKIguy7l6rqM=
+	b=hTh5h8B87xTJfJLoapCn3+Q/144pFqdwY0jhE1DIu1hi7aQG4j2bd+GnfD3lKqZsB
+	 lMCL4DkZI330Jvro72jmvBCFjrptab4z8N8jpga0Hh6ssfrleWIud2u1VYgjaemW+K
+	 yvVOr0rxf8CwTDwaRa/tSBEZQ3tGRN8KS09lGOlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	syzbot+a2b84e569d06ca3a949c@syzkaller.appspotmail.com,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Vasiliy Kulikov <segoon@openwall.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 081/290] ipc: fix to protect IPCS lookups using RCU
-Date: Mon, 23 Jun 2025 15:05:42 +0200
-Message-ID: <20250623130629.423561258@linuxfoundation.org>
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 114/508] arm64: dts: qcom: sdm660-lavender: Add missing USB phy supply
+Date: Mon, 23 Jun 2025 15:02:39 +0200
+Message-ID: <20250623130648.100902379@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,58 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Alexey Minnekhanov <alexeymin@postmarketos.org>
 
-commit d66adabe91803ef34a8b90613c81267b5ded1472 upstream.
+[ Upstream commit dbf62a117a1b7f605a98dd1fd1fd6c85ec324ea0 ]
 
-syzbot reported that it discovered a use-after-free vulnerability, [0]
+Fixes the following dtbs check error:
 
-[0]: https://lore.kernel.org/all/67af13f8.050a0220.21dd3.0038.GAE@google.com/
+ phy@c012000: 'vdda-pll-supply' is a required property
 
-idr_for_each() is protected by rwsem, but this is not enough.  If it is
-not protected by RCU read-critical region, when idr_for_each() calls
-radix_tree_node_free() through call_rcu() to free the radix_tree_node
-structure, the node will be freed immediately, and when reading the next
-node in radix_tree_for_each_slot(), the already freed memory may be read.
-
-Therefore, we need to add code to make sure that idr_for_each() is
-protected within the RCU read-critical region when we call it in
-shm_destroy_orphaned().
-
-Link: https://lkml.kernel.org/r/20250424143322.18830-1-aha310510@gmail.com
-Fixes: b34a6b1da371 ("ipc: introduce shm_rmid_forced sysctl")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Reported-by: syzbot+a2b84e569d06ca3a949c@syzkaller.appspotmail.com
-Cc: Jeongjun Park <aha310510@gmail.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Vasiliy Kulikov <segoon@openwall.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e5d3e752b050e ("arm64: dts: qcom: sdm660-xiaomi-lavender: Add USB")
+Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250504115120.1432282-3-alexeymin@postmarketos.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- ipc/shm.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/ipc/shm.c
-+++ b/ipc/shm.c
-@@ -430,8 +430,11 @@ static int shm_try_destroy_orphaned(int
- void shm_destroy_orphaned(struct ipc_namespace *ns)
- {
- 	down_write(&shm_ids(ns).rwsem);
--	if (shm_ids(ns).in_use)
-+	if (shm_ids(ns).in_use) {
-+		rcu_read_lock();
- 		idr_for_each(&shm_ids(ns).ipcs_idr, &shm_try_destroy_orphaned, ns);
-+		rcu_read_unlock();
-+	}
- 	up_write(&shm_ids(ns).rwsem);
- }
+diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+index 9612671dc5afa..6166099aa0c32 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
++++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+@@ -107,6 +107,7 @@
+ 	status = "okay";
  
+ 	vdd-supply = <&vreg_l1b_0p925>;
++	vdda-pll-supply = <&vreg_l10a_1p8>;
+ 	vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
+ };
+ 
+-- 
+2.39.5
+
 
 
