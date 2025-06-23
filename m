@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A942248B5;
-	Mon, 23 Jun 2025 21:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0966121B9C9;
+	Mon, 23 Jun 2025 21:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713999; cv=none; b=B5zUNod92XHVsV+yIbTI8sIBakzPCwxRKEedULhcy2EPnP1ciCyS+cpkHjYHej3aTIY14SHS9r1Hzlp9+0aF6WDZgePIsh/gmxmt3mN6UrdKDnoYnbPk0zJdLPNLdlhi8Pe1Fut8O2pcW+IOj5/Sas2b0BkywH4zeIH4ASgPhMU=
+	t=1750713999; cv=none; b=X8ucEzdeG2ha7OnSX/9AHc68/q/pRC5UoSlG3AdkEheLEpUd3d3rbawWtCggIkcuEEWKEDX8y/kYLmbEVib/IoV/ChfvUgS3bnVsYGhBj1KtAI48oDRkwVUIYzdkEpT8FyW/KbDSqx7hNVJBIASsTGXYrWTCqEH+XFnYVGax4ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750713999; c=relaxed/simple;
-	bh=srEeAfRmOEL0kMaFzOggX8jDMuaYhnAGZmp6T5qQ8cE=;
+	bh=elH5IQGF1t0PwlGaZkNnSZvFYhul5gYuVgh2dZDKPgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FZ1nOm/qv2wWbYv70J+PHxOWOdWQC3pLf0bf/fsYeVQQb8O5qeSf/orRTqETD+v3mJS1evF2LW6wjfkX8L37ZMiyx+QbwU9sQ9NlfZ2MWBIM8MBR+h4GgjwXGzxQYPoSGk+NrE+Y9wtcAkFn0enJPxIIkOL5mF3TbjCsXWHLKdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQgdNi6H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ck1dYPdUxmhZ6XiAGhDQ7GmAOPTtlNXK3MKL9PFDIozsYGtImHvOvvmk06jyk69P/Vd+8JFJsY9dcB3Ki1Xc6zM6pPerqv8gxdvdCf4ZgTW/HOrVAkWiFDqK6yvNokG9zG8+WFLlVxd0jNpiE+L7LhRGKzVW+BY7YeOk/7C6/6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkxwVhWF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQgdNi6H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBB5C4CEEA;
-	Mon, 23 Jun 2025 21:26:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkxwVhWF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88602C4CEED;
+	Mon, 23 Jun 2025 21:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713996;
-	bh=srEeAfRmOEL0kMaFzOggX8jDMuaYhnAGZmp6T5qQ8cE=;
+	s=korg; t=1750713998;
+	bh=elH5IQGF1t0PwlGaZkNnSZvFYhul5gYuVgh2dZDKPgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DQgdNi6HSa/0E8uZjjuNz/tzslQ34Oyh6URbzy+0NnD7SjSNGSUG1tBXMeDNAs2wo
-	 x1xlqs/bxt0bc2cdsstREz8BMa96NeVOE4/yKo9a2SATA2BP/d6SRm0/B9e4ZanA5H
-	 Ek90PMaSWIxg6QGEwY6oiXUaoDuQAo86hIN/AlFY=
+	b=HkxwVhWF4NoT0HSm35zoFWS25T9IgqN0qw1vFpUUIhTBw8GqZCuBzd/uKWr1/MLtW
+	 kllOylX+ufkP8ASh4xRjwVT2j7/2ny/DyFhYL/Pn039KT3h/8t4QnB9w0JgztIFsRF
+	 t26tVJMvM2d+20GG9NtJuhvk2p+9YEZCLZT9L8IM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerrard Tai <gerrard.tai@starlabs.sg>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 159/411] net_sched: red: fix a race in __red_change()
-Date: Mon, 23 Jun 2025 15:05:03 +0200
-Message-ID: <20250623130637.650051592@linuxfoundation.org>
+	Khem Raj <raj.khem@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.6 098/290] mips: Add -std= flag specified in KBUILD_CFLAGS to vdso CFLAGS
+Date: Mon, 23 Jun 2025 15:05:59 +0200
+Message-ID: <20250623130629.916074755@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +46,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Khem Raj <raj.khem@gmail.com>
 
-[ Upstream commit 85a3e0ede38450ea3053b8c45d28cf55208409b8 ]
+commit 0f4ae7c6ecb89bfda026d210dcf8216fb67d2333 upstream.
 
-Gerrard Tai reported a race condition in RED, whenever SFQ perturb timer
-fires at the wrong time.
+GCC 15 changed the default C standard dialect from gnu17 to gnu23,
+which should not have impacted the kernel because it explicitly requests
+the gnu11 standard in the main Makefile. However, mips/vdso code uses
+its own CFLAGS without a '-std=' value, which break with this dialect
+change because of the kernel's own definitions of bool, false, and true
+conflicting with the C23 reserved keywords.
 
-The race is as follows:
+  include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
+     11 |         false   = 0,
+        |         ^~~~~
+  include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
+  include/linux/types.h:35:33: error: 'bool' cannot be defined via 'typedef'
+     35 | typedef _Bool                   bool;
+        |                                 ^~~~
+  include/linux/types.h:35:33: note: 'bool' is a keyword with '-std=c23' onwards
 
-CPU 0                                 CPU 1
-[1]: lock root
-[2]: qdisc_tree_flush_backlog()
-[3]: unlock root
- |
- |                                    [5]: lock root
- |                                    [6]: rehash
- |                                    [7]: qdisc_tree_reduce_backlog()
- |
-[4]: qdisc_put()
+Add -std as specified in KBUILD_CFLAGS to the decompressor and purgatory
+CFLAGS to eliminate these errors and make the C standard version of these
+areas match the rest of the kernel.
 
-This can be abused to underflow a parent's qlen.
-
-Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
-should fix the race, because all packets will be purged from the qdisc
-before releasing the lock.
-
-Fixes: 0c8d13ac9607 ("net: sched: red: delay destroying child qdisc on replace")
-Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250611111515.1983366-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_red.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/vdso/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/sch_red.c b/net/sched/sch_red.c
-index 935d90874b1b7..1b69b7b90d858 100644
---- a/net/sched/sch_red.c
-+++ b/net/sched/sch_red.c
-@@ -283,7 +283,7 @@ static int __red_change(struct Qdisc *sch, struct nlattr **tb,
- 	q->userbits = userbits;
- 	q->limit = ctl->limit;
- 	if (child) {
--		qdisc_tree_flush_backlog(q->qdisc);
-+		qdisc_purge_queue(q->qdisc);
- 		old_child = q->qdisc;
- 		q->qdisc = child;
- 	}
--- 
-2.39.5
-
+--- a/arch/mips/vdso/Makefile
++++ b/arch/mips/vdso/Makefile
+@@ -30,6 +30,7 @@ endif
+ # offsets.
+ cflags-vdso := $(ccflags-vdso) \
+ 	$(filter -W%,$(filter-out -Wa$(comma)%,$(KBUILD_CFLAGS))) \
++	$(filter -std=%,$(KBUILD_CFLAGS)) \
+ 	-O3 -g -fPIC -fno-strict-aliasing -fno-common -fno-builtin -G 0 \
+ 	-mrelax-pic-calls $(call cc-option, -mexplicit-relocs) \
+ 	-fno-stack-protector -fno-jump-tables -DDISABLE_BRANCH_PROFILING \
 
 
