@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A0521CA07;
-	Mon, 23 Jun 2025 21:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D013D221F24;
+	Mon, 23 Jun 2025 21:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713128; cv=none; b=OHe4VGB5UGn4lqeoTBX727NjKflego+XoAyNJzkYQwOm6E4IdUUeB2J7GOens36K/XwWBsTEFQ1iBrF5qMcJCuzNStv05UgdHLz6RoCBUHWEDTbmi/e2oQt3No5W0DZbiN5Qv7/pgChLWogI9edgkf2rj+sr1Jl8bPpqdbvjmtY=
+	t=1750713130; cv=none; b=rRXhNx09YNQhOil9lw06xCw+kwdMDgeQpqhcMeGe4Sxj0K3JaX4DPzdWTynkFBv9WASiHsFfZIZ2DIIE2f1ZSkxMqH6FaM5PxpzWaq5QzuYvBsVgMrAGazEEOn8sfc6W7XHSs59Ix0Hg+Oa+qdtbH+UcNjzsoj+RPt3ZqdOESlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713128; c=relaxed/simple;
-	bh=fYGkASWHmz4eRBMhiZAIfsay2O6EXUnmyIi2sT8crco=;
+	s=arc-20240116; t=1750713130; c=relaxed/simple;
+	bh=3z3R8E2Gr4x8ijl/EXa0Ax8C2P4zfgxsq8tJv1Q6bew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qofc5gVBIQH9kcJqzUPcgqbxYLYtxK9REeijLlWrS6P+n+V5viJcPbd9/SpKu9VEiPrvk4LCjAyIbpalJ7cbTgGhAIRa+fPHBvja9zrWzgqaJzzxQ1McHK8YlCn8LHWR76rNvsM31zB7QLQDnUpAvn1oc05EcW0A12QILPLxGrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keAmi02p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YiMYWeOjAryujwJDQYlxaryGH3agewEMZoh8ovFMjR/tYY2ZKMRcis/8w6+X+2smlsvSgHFAA3ANY7o26r+tKkA+i8JSbMDEvxDe3a8pafDbM/JpDhdq7AGstBPdALyv3ycw2tlQddNcmFC4w008cBGu4T/h+kmCeHgGABRNSGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bj1i8l0O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keAmi02p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5227C4CEED;
-	Mon, 23 Jun 2025 21:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bj1i8l0O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F40FC4CEEA;
+	Mon, 23 Jun 2025 21:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713128;
-	bh=fYGkASWHmz4eRBMhiZAIfsay2O6EXUnmyIi2sT8crco=;
+	s=korg; t=1750713130;
+	bh=3z3R8E2Gr4x8ijl/EXa0Ax8C2P4zfgxsq8tJv1Q6bew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=keAmi02p6oBuoSuYgohWbceb7Sbyvlxt6mOYlfK01GbT3f2XGre/GHpWGhkm7FWLS
-	 PwE8NhOQITB7y9QcWB1e655r8S0N5ujS3OfXCGfbJZCcIdgYQ/lG5yk4rrZIJORyHy
-	 s7qQc7Hkixeq0BnWhVnv49tu0tma1xOqRYLSQ9DM=
+	b=Bj1i8l0OAjIcoHAj6imMFjluBpdMfllU204lMoV6AdTiF8LC1XwipznTpvjM37Gad
+	 03IdbCHUkJUBgN8xloGKECgtvS0FwWMXhfS1cPA1nNOSeUOf6TKUWJ30C38mBQzw03
+	 Pc7AlTf5e0LdpNKd/AWySq5bhWMbHrKo7RPE3SDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thangaraj Samynathan <thangaraj.s@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 099/508] net: lan743x: rename lan743x_reset_phy to lan743x_hw_reset_phy
-Date: Mon, 23 Jun 2025 15:02:24 +0200
-Message-ID: <20250623130647.709319965@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.6 069/290] f2fs: fix to do sanity check on sit_bitmap_size
+Date: Mon, 23 Jun 2025 15:05:30 +0200
+Message-ID: <20250623130629.072022692@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +46,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thangaraj Samynathan <thangaraj.s@microchip.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 68927eb52d0af04863584930db06075d2610e194 ]
+commit 5db0d252c64e91ba1929c70112352e85dc5751e7 upstream.
 
-rename the function to lan743x_hw_reset_phy to better describe it
-operation.
+w/ below testcase, resize will generate a corrupted image which
+contains inconsistent metadata, so when mounting such image, it
+will trigger kernel panic:
 
-Fixes: 23f0703c125be ("lan743x: Add main source files for new lan743x driver")
-Signed-off-by: Thangaraj Samynathan <thangaraj.s@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250526053048.287095-2-thangaraj.s@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+touch img
+truncate -s $((512*1024*1024*1024)) img
+mkfs.f2fs -f img $((256*1024*1024))
+resize.f2fs -s -i img -t $((1024*1024*1024))
+mount img /mnt/f2fs
+
+------------[ cut here ]------------
+kernel BUG at fs/f2fs/segment.h:863!
+Oops: invalid opcode: 0000 [#1] SMP PTI
+CPU: 11 UID: 0 PID: 3922 Comm: mount Not tainted 6.15.0-rc1+ #191 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:f2fs_ra_meta_pages+0x47c/0x490
+
+Call Trace:
+ f2fs_build_segment_manager+0x11c3/0x2600
+ f2fs_fill_super+0xe97/0x2840
+ mount_bdev+0xf4/0x140
+ legacy_get_tree+0x2b/0x50
+ vfs_get_tree+0x29/0xd0
+ path_mount+0x487/0xaf0
+ __x64_sys_mount+0x116/0x150
+ do_syscall_64+0x82/0x190
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7fdbfde1bcfe
+
+The reaseon is:
+
+sit_i->bitmap_size is 192, so size of sit bitmap is 192*8=1536, at maximum
+there are 1536 sit blocks, however MAIN_SEGS is 261893, so that sit_blk_cnt
+is 4762, build_sit_entries() -> current_sit_addr() tries to access
+out-of-boundary in sit_bitmap at offset from [1536, 4762), once sit_bitmap
+and sit_bitmap_mirror is not the same, it will trigger f2fs_bug_on().
+
+Let's add sanity check in f2fs_sanity_check_ckpt() to avoid panic.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/super.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index fd35554191793..0f456d389e53a 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -1389,7 +1389,7 @@ static int lan743x_mac_set_mtu(struct lan743x_adapter *adapter, int new_mtu)
- }
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3608,6 +3608,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_s
+ 	block_t user_block_count, valid_user_blocks;
+ 	block_t avail_node_count, valid_node_count;
+ 	unsigned int nat_blocks, nat_bits_bytes, nat_bits_blocks;
++	unsigned int sit_blk_cnt;
+ 	int i, j;
  
- /* PHY */
--static int lan743x_phy_reset(struct lan743x_adapter *adapter)
-+static int lan743x_hw_reset_phy(struct lan743x_adapter *adapter)
- {
- 	u32 data;
+ 	total = le32_to_cpu(raw_super->segment_count);
+@@ -3719,6 +3720,13 @@ skip_cross:
+ 		return 1;
+ 	}
  
-@@ -1423,7 +1423,7 @@ static void lan743x_phy_update_flowcontrol(struct lan743x_adapter *adapter,
- 
- static int lan743x_phy_init(struct lan743x_adapter *adapter)
- {
--	return lan743x_phy_reset(adapter);
-+	return lan743x_hw_reset_phy(adapter);
- }
- 
- static void lan743x_phy_link_status_change(struct net_device *netdev)
--- 
-2.39.5
-
++	sit_blk_cnt = DIV_ROUND_UP(main_segs, SIT_ENTRY_PER_BLOCK);
++	if (sit_bitmap_size * 8 < sit_blk_cnt) {
++		f2fs_err(sbi, "Wrong bitmap size: sit: %u, sit_blk_cnt:%u",
++			 sit_bitmap_size, sit_blk_cnt);
++		return 1;
++	}
++
+ 	cp_pack_start_sum = __start_sum_addr(sbi);
+ 	cp_payload = __cp_payload(sbi);
+ 	if (cp_pack_start_sum < cp_payload + 1 ||
 
 
