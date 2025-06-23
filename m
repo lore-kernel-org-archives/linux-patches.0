@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1135254B03;
-	Mon, 23 Jun 2025 13:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52994254B1F;
+	Mon, 23 Jun 2025 13:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684952; cv=none; b=ZhxBqDM485DA9IPr7JW9wvjEn9l36c+8eufhf5ae/NPDt+Hnjj6BOfATS79F2GOWH6aavB2CP5K8zC/lOp3SC8kz29o7yAAfzwdzXnPZYrBQVbyYegiYL7eMuYqfoCnKkdl6oek3DSfkf/wcNCmDSI4tw9SRb7cUd5Xy+N0+21c=
+	t=1750684955; cv=none; b=EJ92e6CmV/8trtSxDbQQahhlc4Ijc5ZK1BW+e5qFAF2GSLmkS8T2+84tq2d6LuM2Vj9MqO7FaSz77hyyzhQ9ysVOfKHnFwkXQHvjBs2qWvKqGNYqKt0Ic5EuJhiCkv7XD/Mc5Zndbd6Sz5QZ4Ue7u3OzqQFnXF5Zsb4pDoj4+48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684952; c=relaxed/simple;
-	bh=U1TM1fbcvPlSeV/mxR0JEz1dg/WfygfjVCsw5RaqZuE=;
+	s=arc-20240116; t=1750684955; c=relaxed/simple;
+	bh=7Je3O1RkMwdrHk2r6nzXA0YvRZWzFardXVjoBE9GpdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTBOzwfQR8MJ3Hxx4lxap7cGmNiD9ev6tr1+HQeWK9ugQrJAXe2Hrnq+D5IEukuVEcai6z9M8E804pRXUy7/elSAaWrejPb0v/9TtGyrscnPKt76Bu9kP7IwdIcJgQwowqA1qzOdd2obCTn9d1RR3ZydDsSZniKozi2tTeG7RqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J38S28f7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lyIn7dXIlNNRmUswQW8UZFxzyRbNb4jOcgG0Y6+jF8pK7ldCARqKOkbykBLiMlLvoHn1VBwpzkRdNdaU1tpkth9JHNe07cZLhU+zKx1/8eZ6LVPsx3zV+LoFprcvep0Dr2yAqb68YeQbVnm2iFThN6wuQFiMUny/CW9mK92Q7nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xe1QF2vp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J38S28f7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E6DC4CEEA;
-	Mon, 23 Jun 2025 13:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xe1QF2vp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8C7C4CEEA;
+	Mon, 23 Jun 2025 13:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684952;
-	bh=U1TM1fbcvPlSeV/mxR0JEz1dg/WfygfjVCsw5RaqZuE=;
+	s=korg; t=1750684955;
+	bh=7Je3O1RkMwdrHk2r6nzXA0YvRZWzFardXVjoBE9GpdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J38S28f7DsVsXqBih4dYqOtCPKvvlasp3znRTFYjX8mXJuMa/Z8WCBNyJtnoSSC3O
-	 djsjqJkv5KSQ9ZnAGfNqzk1Dqv5YTqMveH0ltxk3qBevIKjgbfbhN07cquG5FC4R38
-	 pD2wAEVrvb1xpF0y9nDuxohEeBa7KUsw4PE6/+Ps=
+	b=Xe1QF2vptNIyEnLH4Mfbryt22EE41/FO7B7aQZMAavxfIGRgE3eKWoVCeeFXhzgbJ
+	 dy9R0qOxYq4D5l+qe/yoxUp/F+7QvaWXwVFAK7KZ2hn9RfkyzSy0vrBHTZkumOrIcB
+	 gTe/fsC/SqCDBsRiRvEKjLIxBsQAu2ljRapAebrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.15 194/592] accel/ivpu: Fix warning in ivpu_gem_bo_free()
-Date: Mon, 23 Jun 2025 15:02:32 +0200
-Message-ID: <20250623130704.904770624@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 015/355] crypto: marvell/cesa - Avoid empty transfer descriptor
+Date: Mon, 23 Jun 2025 15:03:36 +0200
+Message-ID: <20250623130627.235218709@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 91274fd4ed9ba110b02c53d71d2778b7d13b49ac upstream.
+[ Upstream commit 1bafd82d9a40cf09c6c40f1c09cc35b7050b1a9f ]
 
-Don't WARN if imported buffers are in use in ivpu_gem_bo_free() as they
-can be indeed used in the original context/driver.
+The user may set req->src even if req->nbytes == 0.  If there
+is no data to hash from req->src, do not generate an empty TDMA
+descriptor.
 
-Fixes: 647371a6609d ("accel/ivpu: Add GEM buffer object management")
-Cc: stable@vger.kernel.org # v6.3
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://lore.kernel.org/r/20250528171220.513225-1-jacek.lawrynowicz@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: db509a45339f ("crypto: marvell/cesa - add TDMA support")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_gem.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/marvell/cesa/hash.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/accel/ivpu/ivpu_gem.c
-+++ b/drivers/accel/ivpu/ivpu_gem.c
-@@ -285,7 +285,8 @@ static void ivpu_gem_bo_free(struct drm_
- 	list_del(&bo->bo_list_node);
- 	mutex_unlock(&vdev->bo_list_lock);
+diff --git a/drivers/crypto/marvell/cesa/hash.c b/drivers/crypto/marvell/cesa/hash.c
+index 8441c3198d460..823a8fb114bbb 100644
+--- a/drivers/crypto/marvell/cesa/hash.c
++++ b/drivers/crypto/marvell/cesa/hash.c
+@@ -639,7 +639,7 @@ static int mv_cesa_ahash_dma_req_init(struct ahash_request *req)
+ 	if (ret)
+ 		goto err_free_tdma;
  
--	drm_WARN_ON(&vdev->drm, !dma_resv_test_signaled(obj->resv, DMA_RESV_USAGE_READ));
-+	drm_WARN_ON(&vdev->drm, !drm_gem_is_imported(&bo->base.base) &&
-+		    !dma_resv_test_signaled(obj->resv, DMA_RESV_USAGE_READ));
- 	drm_WARN_ON(&vdev->drm, ivpu_bo_size(bo) == 0);
- 	drm_WARN_ON(&vdev->drm, bo->base.vaddr);
- 
+-	if (iter.src.sg) {
++	if (iter.base.len > iter.src.op_offset) {
+ 		/*
+ 		 * Add all the new data, inserting an operation block and
+ 		 * launch command between each full SRAM block-worth of
+-- 
+2.39.5
+
 
 
