@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABE21F7580;
-	Mon, 23 Jun 2025 22:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CD41F7580;
+	Mon, 23 Jun 2025 22:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716610; cv=none; b=Y/3+yVY6FsYP6iaN6uxx0vOKbfAGpiNyCBv4wr0OodPrMhGIJybBy7a4aXsXl4fBAdAQW6BK2Ei21AretEmrR1mTF9bfMf5GGHT+prk5Gfqm+gkZWq/w+vreY1mXGB296rM0m5R7aSQpaTEfWwWInb2jzttcQRJhrhsYIptP68M=
+	t=1750716613; cv=none; b=ckycx8kBRfvtYeB9r/w++I6ptvxMM2NCZIb/CwVgHwa2HX8O+rOevbBihXbj29fbtoJeYSEZaaZ8kTvR6vHeEz8w2vLD2/ftO5Cc76hRt83ZRL5KzVsw2xdsq/i/gzCdOhoBm2DAQhzBz+b3LQ9g+apZ87vjH3/x0nDY4WdMpOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716610; c=relaxed/simple;
-	bh=5QdEhsLg2bDb1fgdpr6zt7T0KZuWUmlMlabAvxemU1A=;
+	s=arc-20240116; t=1750716613; c=relaxed/simple;
+	bh=Dmds9ooRpbEAM7A9PI+0v3D/DgPbwtpyNiqCjfJoTRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I7OkdXtIDz1Yn+DBn9DCHY7aTQ8oiM4yyn7BOqCO2DNk16nLGEPbhVK+VS1Qi00OGTiNJltu0xBWYMHRH9DT8LgGYvgeCIaXSIFnOh7D+jDXL9OojGyijNCqW6uD4AfIQkkYtPtbxWHBB5/5vocCnZRsNR/OKxAyki39LRJgQa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miO+VIZ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BWIzAQEfDf+EwsEk7oyh0PXvntnNE4txMZfCddOZ+jp0PBftL4fFvtA8qvIfwhcZT1RmBDN/Z94jLB6MiDh8ADKRk7ZztNhG2tvYJDoJo43EIcbyvWtSHbL1PukqR15uzFgVh/+fhf9B8Lr5YmfelFDChLGu4mBXvUxi4O2BKp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATP12G32; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miO+VIZ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24924C4CEEA;
-	Mon, 23 Jun 2025 22:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATP12G32"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD66C4CEEA;
+	Mon, 23 Jun 2025 22:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716610;
-	bh=5QdEhsLg2bDb1fgdpr6zt7T0KZuWUmlMlabAvxemU1A=;
+	s=korg; t=1750716612;
+	bh=Dmds9ooRpbEAM7A9PI+0v3D/DgPbwtpyNiqCjfJoTRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=miO+VIZ+ohiyj8OXyJVuThnSgsn8v5tUrjEHJpqiz/eEd1e16+0Zxn5x6bzRuS2oQ
-	 RbuaCKuoEHWnTXXEayVdwHUUoeQCMsWMFYk8IK3xcCvI1VfE9tfftuW0Yz8RQsU7jj
-	 HRMrHoOpmM+XRC4SVRbIXEcmdT7O9IwG+kMrwm6I=
+	b=ATP12G32hJPhRKdNy/MheZ0CL9mEAZoVYNvhpZXsnZd5ew7u88cc4oYyuOL3qIgcB
+	 XBri3GNRemBC1P7ZCY5WZapiiTkZTJWWz7TqUpSgVHTHOvJ2ogSCq7IXFA2KzTVvjs
+	 pKVxGxEg8G46oZEOyd4QGeHXTu4g8Zigh5JDVIyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 315/508] media: omap3isp: use sgtable-based scatterlist wrappers
-Date: Mon, 23 Jun 2025 15:06:00 +0200
-Message-ID: <20250623130653.072481864@linuxfoundation.org>
+	Rand Deeb <rand.sec96@gmail.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.12 269/414] ixgbe: Fix unreachable retry logic in combined and byte I2C write functions
+Date: Mon, 23 Jun 2025 15:06:46 +0200
+Message-ID: <20250623130648.755643756@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,76 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Rand Deeb <rand.sec96@gmail.com>
 
-commit 3de572fe2189a4a0bd80295e1f478401e739498e upstream.
+[ Upstream commit cdcb3804eeda24d588348bbab6766cf14fddbeaa ]
 
-Use common wrappers operating directly on the struct sg_table objects to
-fix incorrect use of scatterlists sync calls. dma_sync_sg_for_*()
-functions have to be called with the number of elements originally passed
-to dma_map_sg_*() function, not the one returned in sgtable's nents.
+The current implementation of `ixgbe_write_i2c_combined_generic_int` and
+`ixgbe_write_i2c_byte_generic_int` sets `max_retry` to `1`, which makes
+the condition `retry < max_retry` always evaluate to `false`. This renders
+the retry mechanism ineffective, as the debug message and retry logic are
+never executed.
 
-Fixes: d33186d0be18 ("[media] omap3isp: ccdc: Use the DMA API for LSC")
-Fixes: 0e24e90f2ca7 ("[media] omap3isp: stat: Use the DMA API")
-CC: stable@vger.kernel.org
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch increases `max_retry` to `3` in both functions, aligning them
+with the retry logic in `ixgbe_read_i2c_combined_generic_int`. This
+ensures that the retry mechanism functions as intended, improving
+robustness in case of I2C write failures.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/ti/omap3isp/ispccdc.c |    8 ++++----
- drivers/media/platform/ti/omap3isp/ispstat.c |    6 ++----
- 2 files changed, 6 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/ti/omap3isp/ispccdc.c
-+++ b/drivers/media/platform/ti/omap3isp/ispccdc.c
-@@ -446,8 +446,8 @@ static int ccdc_lsc_config(struct isp_cc
- 		if (ret < 0)
- 			goto done;
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
+index 07eaa3c3f4d36..530e4319a2e89 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
+@@ -167,7 +167,7 @@ int ixgbe_write_i2c_combined_generic_int(struct ixgbe_hw *hw, u8 addr,
+ 					 u16 reg, u16 val, bool lock)
+ {
+ 	u32 swfw_mask = hw->phy.phy_semaphore_mask;
+-	int max_retry = 1;
++	int max_retry = 3;
+ 	int retry = 0;
+ 	u8 reg_high;
+ 	u8 csum;
+@@ -2284,7 +2284,7 @@ static int ixgbe_write_i2c_byte_generic_int(struct ixgbe_hw *hw, u8 byte_offset,
+ 					    u8 dev_addr, u8 data, bool lock)
+ {
+ 	u32 swfw_mask = hw->phy.phy_semaphore_mask;
+-	u32 max_retry = 1;
++	u32 max_retry = 3;
+ 	u32 retry = 0;
+ 	int status;
  
--		dma_sync_sg_for_cpu(isp->dev, req->table.sgt.sgl,
--				    req->table.sgt.nents, DMA_TO_DEVICE);
-+		dma_sync_sgtable_for_cpu(isp->dev, &req->table.sgt,
-+					 DMA_TO_DEVICE);
- 
- 		if (copy_from_user(req->table.addr, config->lsc,
- 				   req->config.size)) {
-@@ -455,8 +455,8 @@ static int ccdc_lsc_config(struct isp_cc
- 			goto done;
- 		}
- 
--		dma_sync_sg_for_device(isp->dev, req->table.sgt.sgl,
--				       req->table.sgt.nents, DMA_TO_DEVICE);
-+		dma_sync_sgtable_for_device(isp->dev, &req->table.sgt,
-+					    DMA_TO_DEVICE);
- 	}
- 
- 	spin_lock_irqsave(&ccdc->lsc.req_lock, flags);
---- a/drivers/media/platform/ti/omap3isp/ispstat.c
-+++ b/drivers/media/platform/ti/omap3isp/ispstat.c
-@@ -161,8 +161,7 @@ static void isp_stat_buf_sync_for_device
- 	if (ISP_STAT_USES_DMAENGINE(stat))
- 		return;
- 
--	dma_sync_sg_for_device(stat->isp->dev, buf->sgt.sgl,
--			       buf->sgt.nents, DMA_FROM_DEVICE);
-+	dma_sync_sgtable_for_device(stat->isp->dev, &buf->sgt, DMA_FROM_DEVICE);
- }
- 
- static void isp_stat_buf_sync_for_cpu(struct ispstat *stat,
-@@ -171,8 +170,7 @@ static void isp_stat_buf_sync_for_cpu(st
- 	if (ISP_STAT_USES_DMAENGINE(stat))
- 		return;
- 
--	dma_sync_sg_for_cpu(stat->isp->dev, buf->sgt.sgl,
--			    buf->sgt.nents, DMA_FROM_DEVICE);
-+	dma_sync_sgtable_for_cpu(stat->isp->dev, &buf->sgt, DMA_FROM_DEVICE);
- }
- 
- static void isp_stat_buf_clear(struct ispstat *stat)
+-- 
+2.39.5
+
 
 
