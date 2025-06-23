@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788C725178C;
-	Mon, 23 Jun 2025 13:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018B0248191;
+	Mon, 23 Jun 2025 13:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685336; cv=none; b=Id2g6UsFiQH7jTVlNp8kgfjcu5Pipbq2QruaD6CqSD9xGb8mq+Hz2g6UVQUX0gSs5SLbJEE33nBpNAjxOPYgELJVXhYRtvTMou+4/rAzLA7e0OSlqEJLuwQ9y5hS1AzXyzdBJcbJ69VFRm+K9hvJWXaOqfF7PueSTPCn8m5IKVg=
+	t=1750685339; cv=none; b=fhIiKJVW5ulSacbipxT4vnzhszQR0PXZnYQ+nSpDYP5jDWU7+dLtpNPrzFVtW5bifTJBzcX+ebuXARGDy7mK+5wgP1PrJd7qYFsemgpXCA9/XSRzISGExYc/Ag9OSPHN4WkEt7GAuUCFfBoKAhyoaYkKIlQVBV7HcrmPx1xzGJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685336; c=relaxed/simple;
-	bh=TK6/9lXwSJk+nIerwHpHZ0eHE07rtN1ty3rhaIKvNYM=;
+	s=arc-20240116; t=1750685339; c=relaxed/simple;
+	bh=LIOpDhz1LJs06GTxgStJCg18DFJG+h63wyyJASj8RC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/esDeTHazsn0IFNM+ox+vSpA+7/Qpm8R5LX1fk3qwFj0wNDIXdRWeJdoU3MQbweSSKHKzHvNnJhw9Amo0VxDM/Uo3Qlzen2cUT/BhEr6i/E/VAfy6c5twiCSyLfgn2KBfpdU4HgRWqVW09JjCEsbK9/zh9aCZpyV0IejhC2LWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEArihD3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eHWM+0QpnUu/k2x5HOC50r3F32vYihLTlsJ3kTzvYFBE4kBA8luS3+51SadSSYpKgD7PLK+/YU9N1CBCOnJYBdcvemRjvkM0hJb6/NiPWF+pkcIKcBotExpzoWlmlg/hweumihzzpfpOFf2pi+s5bjl4y5VU11yPhJ2hGaz2dDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPAg8cvB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEArihD3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0EAC4CEF1;
-	Mon, 23 Jun 2025 13:28:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPAg8cvB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFABC4CEEA;
+	Mon, 23 Jun 2025 13:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685336;
-	bh=TK6/9lXwSJk+nIerwHpHZ0eHE07rtN1ty3rhaIKvNYM=;
+	s=korg; t=1750685338;
+	bh=LIOpDhz1LJs06GTxgStJCg18DFJG+h63wyyJASj8RC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eEArihD3ngiT1tX+eXQkUsV7rbfmFKBZEdeAy/+J7Y5I/maB5YMykndAFlwbAMwyK
-	 j2G5Hj6AZrTs+6OX0oECf54ejqiwYlEh35m/mGCFG8XXK8TeIM3PhMtRgICDJAD796
-	 KPZPLpLtxf5vwg4/CLTjIAcP2UEGdYJlIOo7C6Wo=
+	b=gPAg8cvBqcaPvy7Jybpfi2WyNNkZ+qBkgyq9+PE8TC1YopMd0FVlnDQlp5OjmU4Kg
+	 JEA3+cxKnVSSJ9bwGQ0nGVa+W/QhaAF9HLe7M33bww3mazGkJdwaPTMVv7DqeD9zZv
+	 3s7JfHKVaYDMLKQcEda+zEdteebYqvCqcLLqX/UM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	gldrk <me@rarity.fan>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/411] media: rkvdec: Fix frame size enumeration
-Date: Mon, 23 Jun 2025 15:02:52 +0200
-Message-ID: <20250623130633.846076693@linuxfoundation.org>
+Subject: [PATCH 6.15 226/592] ACPICA: utilities: Fix overflow check in vsnprintf()
+Date: Mon, 23 Jun 2025 15:03:04 +0200
+Message-ID: <20250623130705.667911199@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: gldrk <me@rarity.fan>
 
-[ Upstream commit f270005b99fa19fee9a6b4006e8dee37c10f1944 ]
+[ Upstream commit 12b660251007e00a3e4d47ec62dbe3a7ace7023e ]
 
-The VIDIOC_ENUM_FRAMESIZES ioctl should return all frame sizes (i.e.
-width and height in pixels) that the device supports for the given pixel
-format.
+ACPICA commit d9d59b7918514ae55063b93f3ec041b1a569bf49
 
-It doesn't make a lot of sense to return the frame-sizes in a stepwise
-manner, which is used to enforce hardware alignments requirements for
-CAPTURE buffers, for coded formats.
+The old version breaks sprintf on 64-bit systems for buffers
+outside [0..UINT32_MAX].
 
-Instead, applications should receive an indication, about the maximum
-supported frame size for that hardware decoder, via a continuous
-frame-size enumeration.
-
-Fixes: cd33c830448b ("media: rkvdec: Add the rkvdec driver")
-Suggested-by: Alex Bee <knaerzche@gmail.com>
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Link: https://github.com/acpica/acpica/commit/d9d59b79
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/4994935.GXAFRqVoOG@rjwysocki.net
+Signed-off-by: gldrk <me@rarity.fan>
+[ rjw: Added the tag from gldrk ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/rkvdec/rkvdec.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/acpi/acpica/utprint.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/staging/media/rkvdec/rkvdec.c b/drivers/staging/media/rkvdec/rkvdec.c
-index 29b68a13674ee..9c85370fd81bc 100644
---- a/drivers/staging/media/rkvdec/rkvdec.c
-+++ b/drivers/staging/media/rkvdec/rkvdec.c
-@@ -188,8 +188,14 @@ static int rkvdec_enum_framesizes(struct file *file, void *priv,
- 	if (!fmt)
- 		return -EINVAL;
+diff --git a/drivers/acpi/acpica/utprint.c b/drivers/acpi/acpica/utprint.c
+index 42b30b9f93128..7fad03c5252c3 100644
+--- a/drivers/acpi/acpica/utprint.c
++++ b/drivers/acpi/acpica/utprint.c
+@@ -333,11 +333,8 @@ int vsnprintf(char *string, acpi_size size, const char *format, va_list args)
  
--	fsize->type = V4L2_FRMSIZE_TYPE_STEPWISE;
--	fsize->stepwise = fmt->frmsize;
-+	fsize->type = V4L2_FRMSIZE_TYPE_CONTINUOUS;
-+	fsize->stepwise.min_width = 1;
-+	fsize->stepwise.max_width = fmt->frmsize.max_width;
-+	fsize->stepwise.step_width = 1;
-+	fsize->stepwise.min_height = 1;
-+	fsize->stepwise.max_height = fmt->frmsize.max_height;
-+	fsize->stepwise.step_height = 1;
-+
- 	return 0;
- }
+ 	pos = string;
  
+-	if (size != ACPI_UINT32_MAX) {
+-		end = string + size;
+-	} else {
+-		end = ACPI_CAST_PTR(char, ACPI_UINT32_MAX);
+-	}
++	size = ACPI_MIN(size, ACPI_PTR_DIFF(ACPI_MAX_PTR, string));
++	end = string + size;
+ 
+ 	for (; *format; ++format) {
+ 		if (*format != '%') {
 -- 
 2.39.5
 
