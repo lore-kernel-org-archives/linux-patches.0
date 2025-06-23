@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B761FE46D;
-	Mon, 23 Jun 2025 21:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7CA718E377;
+	Mon, 23 Jun 2025 21:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713399; cv=none; b=SMXK9Ez5uoc/XpJ2N+5JfQb5hwsCQk0SrDLr4dMWt8y+NhjywHy+8XrLcuaQrA3ZHIVheIIXdEeEfCVmHJoCUOkyRhY11T5Fdo0NQ3Tuq1pfgKHKKFaOKuBWISN9KGMS1FH8wJWiJD+QNHEBe+HKULD3vFAXtfKg3PARFTn0WEs=
+	t=1750713403; cv=none; b=A6xMlCs0pI6biky0BouZ9Uy1TWqcVU5v2OiC4gRZ3JrsK4qYMx/ek/3c0TAdPizrOUsg5No+jJJBx1fPf11gU4w1lrqfkMxT4AUd32a+69pS/9gCgpsMFv8qqPPZGkpHHUqboQANuyDWaqToUFaOZIRp/r15DRo/e/l04gh8bec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713399; c=relaxed/simple;
-	bh=aS0X4SJaG4DLGiC2IfCHk7GURUlU2tApPlsc0teruW0=;
+	s=arc-20240116; t=1750713403; c=relaxed/simple;
+	bh=wKBPWKo1PljpuQqYepQ/VdQNliuab85jH2Xbj1oUEqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D6UeX370xY2zCRuDlrhW/+L7+1kNydk6Qq/7IyRBWckvoIhH9LO8a0jUy3K8MCHc0rVb/afda+EcEzXgAYal5x+5qQ/Yk8G1qAXnDHkgnzRHsgzK3Zf8UQ6XbN/xGTnhhYH7Nc/oS3mtw1pT2LXvxSMQTQ7hAELjbGbb0WBpNUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAFXVtH1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lPueoUFPHN5s3zFb7iTVcfONUQUBtEZnDAj/bkyP+swEPLAYKEa63sPVQRsYBfN1WXqRR0ZATCdhlVBXH89ljRqbBCYO1GAu2l69MHMdRM5ygUrwFMx0iGQe1U2eh/+HLw+R+w2PfgmZOk/M3SfuEZolK2AtBG+hMz6swH8BZY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoD6K2HL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAFXVtH1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D6DC4CEEA;
-	Mon, 23 Jun 2025 21:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoD6K2HL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5980C4CEEA;
+	Mon, 23 Jun 2025 21:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713399;
-	bh=aS0X4SJaG4DLGiC2IfCHk7GURUlU2tApPlsc0teruW0=;
+	s=korg; t=1750713402;
+	bh=wKBPWKo1PljpuQqYepQ/VdQNliuab85jH2Xbj1oUEqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAFXVtH16ZJDcFv2qzGzWMm+R9LIZvjEsGMRG0vpnTPyc5KJmGiTpUwVav9WMYzAc
-	 eCRt4WgXro4LbsSj2FFQBmjYekMtBn2PLm1eLlecZVwbO6orNyXw6L64U/tKYTuBgR
-	 MQgbkH2gk/A5N38LVg5vZJ1NUTbF8IT7Vr5rNdSc=
+	b=CoD6K2HLBh/HMmt2GjxcjJkPZH2N2RTmEYusJqjZeUJN5NEVPuKQIM0fsS4xZA8rW
+	 pVkVOCTTHOUXDsRpCbJXqwpeP+aGuPK7FyTcQzla2l1J7oZrx8ZJMvHYOnSFcQuQpx
+	 /lIERmLM7lakps97iiHAn9gSEQ1ldV8fRokhOCeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Gao <chao.gao@intel.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 088/290] KVM: VMX: Flush shadow VMCS on emergency reboot
-Date: Mon, 23 Jun 2025 15:05:49 +0200
-Message-ID: <20250623130629.626637301@linuxfoundation.org>
+	Andre Przywara <andre.przywara@arm.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 121/508] dt-bindings: vendor-prefixes: Add Liontron name
+Date: Mon, 23 Jun 2025 15:02:46 +0200
+Message-ID: <20250623130648.272651171@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Gao <chao.gao@intel.com>
+From: Andre Przywara <andre.przywara@arm.com>
 
-commit a0ee1d5faff135e28810f29e0f06328c66f89852 upstream.
+[ Upstream commit 9baa27a2e9fc746143ab686b6dbe2d515284a4c5 ]
 
-Ensure the shadow VMCS cache is evicted during an emergency reboot to
-prevent potential memory corruption if the cache is evicted after reboot.
+Liontron is a company based in Shenzen, China, making industrial
+development boards and embedded computers, mostly using Rockchip and
+Allwinner SoCs.
 
-This issue was identified through code inspection, as __loaded_vmcs_clear()
-flushes both the normal VMCS and the shadow VMCS.
+Add their name to the list of vendors.
 
-Avoid checking the "launched" state during an emergency reboot, unlike the
-behavior in __loaded_vmcs_clear(). This is important because reboot NMIs
-can interfere with operations like copy_shadow_to_vmcs12(), where shadow
-VMCSes are loaded directly using VMPTRLD. In such cases, if NMIs occur
-right after the VMCS load, the shadow VMCSes will be active but the
-"launched" state may not be set.
-
-Fixes: 16f5b9034b69 ("KVM: nVMX: Copy processor-specific shadow-vmcs to VMCS12")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chao Gao <chao.gao@intel.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://lore.kernel.org/r/20250324140849.2099723-1-chao.gao@intel.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20250505164729.18175-2-andre.przywara@arm.com
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/vmx.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -787,8 +787,11 @@ static void vmx_emergency_disable(void)
- 		return;
- 
- 	list_for_each_entry(v, &per_cpu(loaded_vmcss_on_cpu, cpu),
--			    loaded_vmcss_on_cpu_link)
-+			    loaded_vmcss_on_cpu_link) {
- 		vmcs_clear(v->vmcs);
-+		if (v->shadow_vmcs)
-+			vmcs_clear(v->shadow_vmcs);
-+	}
- 
- 	kvm_cpu_vmxoff();
- }
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 77e9413cdee07..f955db429f55a 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -725,6 +725,8 @@ patternProperties:
+     description: Linux-specific binding
+   "^linx,.*":
+     description: Linx Technologies
++  "^liontron,.*":
++    description: Shenzhen Liontron Technology Co., Ltd
+   "^liteon,.*":
+     description: LITE-ON Technology Corp.
+   "^litex,.*":
+-- 
+2.39.5
+
 
 
