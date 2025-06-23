@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947BE1F4628;
-	Mon, 23 Jun 2025 21:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F07E1F4628;
+	Mon, 23 Jun 2025 21:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715878; cv=none; b=gAo5PZQ6mD7gMo5u3DNBKieHy2EN2nHirEr12d//T9NGWf/R1Ej+1wklQHjUX1L1PMM+eCoSdLiEl9fUvs1RGea4W9PO9bVYkf3J18vyVGYJS9TnLRRUJr7ZDWin5HNrPGRoKVDdcpViqhjQSXR9Ujf1OjuSO+rg9lYtbIUJ78c=
+	t=1750715880; cv=none; b=QO24P4z7L2sNQjeChEfq6BhW/FXFxhC+aV+ncLE4pumhtWAXsILTmn42drMKcYu6DwcqmGSgnN544qCqpDeWgYvkIt51JtSzeiEp79tY5SZL+Cf/BjS3Jc2FnvIvbE9F3ZcEGr0/MHCOkKPXDNq60RV2IzB9TclQsKyuvPnnocQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715878; c=relaxed/simple;
-	bh=jhUiJNXaFCeLz/Zhe/RZlots3Zu2tL/SwzF9XhHxnfE=;
+	s=arc-20240116; t=1750715880; c=relaxed/simple;
+	bh=/xLHP2nHAySBHmrYRMWmjPyt6iiQLibHMMJWYax8xx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Oxe0R/6pBj8TQ7yUwfLqLNlSdpPDg2Pl64YqTdt5UlmqVxSVgROyUHnevi33II7rEPziGApF24w/zKg4ARXZ54ugGA/VTLKj8MoQVGWojv8e2zw7J1BELJyj7dor2aDATIqweuTExdWC2LU/RcEDIjs/HR6b2BFiAL2/ooADR/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+MdLmeh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d626NHcXOhEF0FjbgS3Fp/TA3XvaN74knJo8kGHbZQ/0TvUthiKc04DUjG4SHmptcXEP7YBzKZhi2CoCzDeylOtJL9UzBXXwuxPRKy34+6Ut7RemusiwTmAxajYo+LXFXJ5K0pBC/1GkYL5UIfU9mhx7JNyy6vaxMZHgD7j14qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gE2oRlZx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+MdLmeh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F1DC4CEEA;
-	Mon, 23 Jun 2025 21:57:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gE2oRlZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33FD6C4CEEA;
+	Mon, 23 Jun 2025 21:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715878;
-	bh=jhUiJNXaFCeLz/Zhe/RZlots3Zu2tL/SwzF9XhHxnfE=;
+	s=korg; t=1750715880;
+	bh=/xLHP2nHAySBHmrYRMWmjPyt6iiQLibHMMJWYax8xx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I+MdLmehG905WEDNqRBog1TFk8Ad66MeJWL+zZmQDp8OZsrU93JnYyXT2boTFwOsw
-	 KQd3Zo4FG5GI4gXeLWF+YRb/Le/IVIqu4Miux5Cr0kfZ4ZuiDAnzzkpkhns4ltxMkW
-	 CFDBzGvi2ZpvYRSGPvafbBV/lquc1wWM4q1OK6/k=
+	b=gE2oRlZx8H3tQNoQY1dvwtwmJxHxsyEYypWFKHfpybQsCGYdCEiL2ccXIAbrwCFlJ
+	 DfavJD1Y0rEKsSDx1VAwyJ4zJWOerOyP8WzVezTO0KrRYbGPwldFubmzwBf5MP60F2
+	 FHglvAuenuw7IRCWEOG7rtH2lT3BkhJ1hvaqGWh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.1 287/508] kbuild: userprogs: fix bitsize and target detection on clang
-Date: Mon, 23 Jun 2025 15:05:32 +0200
-Message-ID: <20250623130652.333050563@linuxfoundation.org>
+	Connor Abbott <cwabbott0@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 509/592] drm/msm/a7xx: Call CP_RESET_CONTEXT_STATE
+Date: Mon, 23 Jun 2025 15:07:47 +0200
+Message-ID: <20250623130712.543269399@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,46 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Connor Abbott <cwabbott0@gmail.com>
 
-commit 1b71c2fb04e7a713abc6edde4a412416ff3158f2 upstream.
+[ Upstream commit 2b520c6104f34e3a548525173c38ebca4402cac3 ]
 
-scripts/Makefile.clang was changed in the linked commit to move --target from
-KBUILD_CFLAGS to KBUILD_CPPFLAGS, as that generally has a broader scope.
-However that variable is not inspected by the userprogs logic,
-breaking cross compilation on clang.
+Calling this packet is necessary when we switch contexts because there
+are various pieces of state used by userspace to synchronize between BR
+and BV that are persistent across submits and we need to make sure that
+they are in a "safe" state when switching contexts. Otherwise a
+userspace submission in one context could cause another context to
+function incorrectly and hang, effectively a denial of service (although
+without leaking data). This was missed during initial a7xx bringup.
 
-Use both variables to detect bitsize and target arguments for userprogs.
-
-Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: af66706accdf ("drm/msm/a6xx: Add skeleton A7xx support")
+Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/654924/
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Makefile |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1139,8 +1139,8 @@ LDFLAGS_vmlinux += --orphan-handling=war
- endif
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 90991ba5a4ae1..742132feb19cc 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -130,6 +130,20 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
+ 		OUT_RING(ring, lower_32_bits(rbmemptr(ring, fence)));
+ 		OUT_RING(ring, upper_32_bits(rbmemptr(ring, fence)));
+ 		OUT_RING(ring, submit->seqno - 1);
++
++		OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
++		OUT_RING(ring, CP_SET_THREAD_BOTH);
++
++		/* Reset state used to synchronize BR and BV */
++		OUT_PKT7(ring, CP_RESET_CONTEXT_STATE, 1);
++		OUT_RING(ring,
++			 CP_RESET_CONTEXT_STATE_0_CLEAR_ON_CHIP_TS |
++			 CP_RESET_CONTEXT_STATE_0_CLEAR_RESOURCE_TABLE |
++			 CP_RESET_CONTEXT_STATE_0_CLEAR_BV_BR_COUNTER |
++			 CP_RESET_CONTEXT_STATE_0_RESET_GLOBAL_LOCAL_TS);
++
++		OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
++		OUT_RING(ring, CP_SET_THREAD_BR);
+ 	}
  
- # Align the bit size of userspace programs with the kernel
--KBUILD_USERCFLAGS  += $(filter -m32 -m64 --target=%, $(KBUILD_CFLAGS))
--KBUILD_USERLDFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CFLAGS))
-+KBUILD_USERCFLAGS  += $(filter -m32 -m64 --target=%, $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS))
-+KBUILD_USERLDFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS))
- 
- # userspace programs are linked via the compiler, use the correct linker
- ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_LD_IS_LLD),yy)
+ 	if (!sysprof) {
+-- 
+2.39.5
+
 
 
