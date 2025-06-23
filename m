@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23A57482;
-	Mon, 23 Jun 2025 21:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FF47482;
+	Mon, 23 Jun 2025 21:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713600; cv=none; b=WMP61LD0OfdnEG7R68VGZujFhq0HXvcYJiKb28HEstv9TahoM4m2N5HgX1Bn/nfKcpMyCofDuOWtRznJrvAnFVE+YVUIZLOKlW4q3ZeEHeaHOcdaUUpI7BpqJppCkAs/Viqga5G/e9wiCmeSxmUlu6rowdBO+dDzOMBtJcIkl7I=
+	t=1750713602; cv=none; b=EO4HyNuLL1sOCi4BP6Cub5PDGUoUlPWNi1Bied9Vb995QaPc9QfxwpRtzMUDcGmw+aamDORoJ4T1wNmSb10daFPVJ7w/LCKe594N+iieyxbOSVwH93uuIOGjPRKte1LR6nSKX1aGnfr7Oo2+/2XxoWpFBdetRJMN1PNk1dgx0d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713600; c=relaxed/simple;
-	bh=k3tk2kV5pw81kwJkZRoPMGRVoYvWmK1NobW9Oy/RPZs=;
+	s=arc-20240116; t=1750713602; c=relaxed/simple;
+	bh=yedii3MlRFzwhC3bM47NRnhLdbwQmD9VJd6bza7zpAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Czf+VxVW5mHKJrhT3X2bFkyH+Ep3R7tG1N4RcHy12jL5oVLOsmuf/APtLA4XS8l8BQqC6+Yfx8WFojUh8WctuJhgk0REKFWUEtHwV6/8mdgP9/kwSwXHooOkiuk+HvaYY1QQNpEWR2fIJfxBOGp0r5flp+P4g0IQxuagEhSLHFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1lkR62N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZpQkKdiC1T8rxe4I3vyAVG7yaG/D1ROtMIbiMO0PQ7PjL7Y84zehI1xEd5P6xKLWxc7E1PV5v3NXhjOITtR8iju1aQMwS1yRXytpu79wC5jaeUXMEkhAT1JuPvAZJvDwOAa9dmqVKmGfBqpRlbHh3aQOs3tKjeYZZmJL7urHNAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUfvr1b5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1lkR62N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A855C4CEEA;
-	Mon, 23 Jun 2025 21:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUfvr1b5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE93C4CEEA;
+	Mon, 23 Jun 2025 21:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713599;
-	bh=k3tk2kV5pw81kwJkZRoPMGRVoYvWmK1NobW9Oy/RPZs=;
+	s=korg; t=1750713602;
+	bh=yedii3MlRFzwhC3bM47NRnhLdbwQmD9VJd6bza7zpAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P1lkR62NbXuQ8ZHhyAsceRJzy87ZORGUsHXXpj90Eb/KZ9QVKnjUEOkQGBGpVEwU0
-	 dWUetHb23XG/gQ8oNQ+d7YVYVdLmj2qVCc8zP07c85wP4NEHECFq2t5JdbIeMUF1fk
-	 GQf6XJXCy+X+16vdxgRQxTQIaJprGLP/yVjdmGWI=
+	b=NUfvr1b5IH/5x/2kybkAFNnH+rrCGUqeq0dISQb4tQZVK1phtWmvatJSzVhatU3Ki
+	 U6ywlPOakAcUzanWxiQTe/0lmNuahtAyA5GbwXUVisPl4twP75+eik2lBXsm1ZdFFr
+	 9nM6hxhT4tKPSBnZ53etIZBSKxkd7PCPkoMF/a4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangYuli <wangyuli@uniontech.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.4 195/222] Input: sparcspkr - avoid unannotated fall-through
-Date: Mon, 23 Jun 2025 15:08:50 +0200
-Message-ID: <20250623130618.094956393@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 136/411] serial: sh-sci: Check if TX data was written to device in .tx_empty()
+Date: Mon, 23 Jun 2025 15:04:40 +0200
+Message-ID: <20250623130637.007639979@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,76 +46,159 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit 8b1d858cbd4e1800e9336404ba7892b5a721230d upstream.
+commit 7cc0e0a43a91052477c2921f924a37d9c3891f0c upstream.
 
-Fix follow warnings with clang-21i (and reformat for clarity):
-  drivers/input/misc/sparcspkr.c:78:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
-     78 |                 case SND_TONE: break;
-        |                 ^
-  drivers/input/misc/sparcspkr.c:78:3: note: insert 'break;' to avoid fall-through
-     78 |                 case SND_TONE: break;
-        |                 ^
-        |                 break;
-  drivers/input/misc/sparcspkr.c:113:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
-    113 |                 case SND_TONE: break;
-        |                 ^
-  drivers/input/misc/sparcspkr.c:113:3: note: insert 'break;' to avoid fall-through
-    113 |                 case SND_TONE: break;
-        |                 ^
-        |                 break;
-  2 warnings generated.
+On the Renesas RZ/G3S, when doing suspend to RAM, the uart_suspend_port()
+is called. The uart_suspend_port() calls 3 times the
+struct uart_port::ops::tx_empty() before shutting down the port.
 
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://lore.kernel.org/r/6730E40353C76908+20250415052439.155051-1-wangyuli@uniontech.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+According to the documentation, the struct uart_port::ops::tx_empty()
+API tests whether the transmitter FIFO and shifter for the port is
+empty.
+
+The Renesas RZ/G3S SCIFA IP reports the number of data units stored in the
+transmit FIFO through the FDR (FIFO Data Count Register). The data units
+in the FIFOs are written in the shift register and transmitted from there.
+The TEND bit in the Serial Status Register reports if the data was
+transmitted from the shift register.
+
+In the previous code, in the tx_empty() API implemented by the sh-sci
+driver, it is considered that the TX is empty if the hardware reports the
+TEND bit set and the number of data units in the FIFO is zero.
+
+According to the HW manual, the TEND bit has the following meaning:
+
+0: Transmission is in the waiting state or in progress.
+1: Transmission is completed.
+
+It has been noticed that when opening the serial device w/o using it and
+then switch to a power saving mode, the tx_empty() call in the
+uart_port_suspend() function fails, leading to the "Unable to drain
+transmitter" message being printed on the console. This is because the
+TEND=0 if nothing has been transmitted and the FIFOs are empty. As the
+TEND=0 has double meaning (waiting state, in progress) we can't
+determined the scenario described above.
+
+Add a software workaround for this. This sets a variable if any data has
+been sent on the serial console (when using PIO) or if the DMA callback has
+been called (meaning something has been transmitted). In the tx_empty()
+API the status of the DMA transaction is also checked and if it is
+completed or in progress the code falls back in checking the hardware
+registers instead of relying on the software variable.
+
+Fixes: 73a19e4c0301 ("serial: sh-sci: Add DMA support.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20241125115856.513642-1-claudiu.beznea.uj@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[claudiu.beznea: fixed conflict by:
+ - keeping serial_port_out() instead of sci_port_out() in
+   sci_transmit_chars()
+ - keeping !uart_circ_empty(xmit) condition in sci_dma_tx_complete(),
+   after s->tx_occurred = true; assignement]
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/sparcspkr.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/tty/serial/sh-sci.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
---- a/drivers/input/misc/sparcspkr.c
-+++ b/drivers/input/misc/sparcspkr.c
-@@ -74,9 +74,14 @@ static int bbc_spkr_event(struct input_d
- 		return -1;
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index eb9c1e991024a..a276efa103192 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -157,6 +157,7 @@ struct sci_port {
  
- 	switch (code) {
--		case SND_BELL: if (value) value = 1000;
--		case SND_TONE: break;
--		default: return -1;
-+	case SND_BELL:
-+		if (value)
-+			value = 1000;
-+		break;
-+	case SND_TONE:
-+		break;
-+	default:
-+		return -1;
+ 	bool has_rtscts;
+ 	bool autorts;
++	bool tx_occurred;
+ };
+ 
+ #define SCI_NPORTS CONFIG_SERIAL_SH_SCI_NR_UARTS
+@@ -807,6 +808,7 @@ static void sci_transmit_chars(struct uart_port *port)
+ {
+ 	struct circ_buf *xmit = &port->state->xmit;
+ 	unsigned int stopped = uart_tx_stopped(port);
++	struct sci_port *s = to_sci_port(port);
+ 	unsigned short status;
+ 	unsigned short ctrl;
+ 	int count;
+@@ -838,6 +840,7 @@ static void sci_transmit_chars(struct uart_port *port)
+ 		}
+ 
+ 		serial_port_out(port, SCxTDR, c);
++		s->tx_occurred = true;
+ 
+ 		port->icount.tx++;
+ 	} while (--count > 0);
+@@ -1202,6 +1205,8 @@ static void sci_dma_tx_complete(void *arg)
+ 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
+ 		uart_write_wakeup(port);
+ 
++	s->tx_occurred = true;
++
+ 	if (!uart_circ_empty(xmit)) {
+ 		s->cookie_tx = 0;
+ 		schedule_work(&s->work_tx);
+@@ -1684,6 +1689,19 @@ static void sci_flush_buffer(struct uart_port *port)
+ 		s->cookie_tx = -EINVAL;
  	}
+ }
++
++static void sci_dma_check_tx_occurred(struct sci_port *s)
++{
++	struct dma_tx_state state;
++	enum dma_status status;
++
++	if (!s->chan_tx)
++		return;
++
++	status = dmaengine_tx_status(s->chan_tx, s->cookie_tx, &state);
++	if (status == DMA_COMPLETE || status == DMA_IN_PROGRESS)
++		s->tx_occurred = true;
++}
+ #else /* !CONFIG_SERIAL_SH_SCI_DMA */
+ static inline void sci_request_dma(struct uart_port *port)
+ {
+@@ -1693,6 +1711,10 @@ static inline void sci_free_dma(struct uart_port *port)
+ {
+ }
  
- 	if (value > 20 && value < 32767)
-@@ -112,9 +117,14 @@ static int grover_spkr_event(struct inpu
- 		return -1;
++static void sci_dma_check_tx_occurred(struct sci_port *s)
++{
++}
++
+ #define sci_flush_buffer	NULL
+ #endif /* !CONFIG_SERIAL_SH_SCI_DMA */
  
- 	switch (code) {
--		case SND_BELL: if (value) value = 1000;
--		case SND_TONE: break;
--		default: return -1;
-+	case SND_BELL:
-+		if (value)
-+			value = 1000;
-+		break;
-+	case SND_TONE:
-+		break;
-+	default:
-+		return -1;
- 	}
+@@ -2005,6 +2027,12 @@ static unsigned int sci_tx_empty(struct uart_port *port)
+ {
+ 	unsigned short status = serial_port_in(port, SCxSR);
+ 	unsigned short in_tx_fifo = sci_txfill(port);
++	struct sci_port *s = to_sci_port(port);
++
++	sci_dma_check_tx_occurred(s);
++
++	if (!s->tx_occurred)
++		return TIOCSER_TEMT;
  
- 	if (value > 20 && value < 32767)
+ 	return (status & SCxSR_TEND(port)) && !in_tx_fifo ? TIOCSER_TEMT : 0;
+ }
+@@ -2175,6 +2203,7 @@ static int sci_startup(struct uart_port *port)
+ 
+ 	dev_dbg(port->dev, "%s(%d)\n", __func__, port->line);
+ 
++	s->tx_occurred = false;
+ 	sci_request_dma(port);
+ 
+ 	ret = sci_request_irq(s);
+-- 
+2.39.5
+
 
 
