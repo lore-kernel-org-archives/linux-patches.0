@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAA41ACEDA;
-	Mon, 23 Jun 2025 21:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2D0221545;
+	Mon, 23 Jun 2025 21:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712908; cv=none; b=bEFpnZGa1ObhZTW+W2b6kIqgoe+W4/iLkNaDZvuNGZmCgdI4g5/ID2wm6SCDg9yt5u6kfFpD01ZRIUK0oqbBB2mAojUJ01E3J013wYsoauYVZri+l27bqxsTQTzPncASWI2jx62qYY2eaSY7ZpQk4lE0tq6T2hcJR5KaMqF7Crk=
+	t=1750712911; cv=none; b=kGF1ElOvQNIxZbfSIWVHLfYfCdEuMdrat3TcjLV7jYsDZvnJEgdolK5MFeJAui9phSxf/V7XSIhgL7zrlzGa5/75nSHaq1g1nnqNUqSSwC1E0V/LCBUoXU1SuKeFc6k9Kr+PLmQLNpPd21yYpDzrBD/2jPP2OwfyyK1HfvAMVdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712908; c=relaxed/simple;
-	bh=SbgKOSHaynTdD91CfpivsZvfrOui6cFg33hbaCL+wZE=;
+	s=arc-20240116; t=1750712911; c=relaxed/simple;
+	bh=gWIbUmHzYALz6ttfCMAPmqo12ble2N9WSqMsCQgitE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y50VfmV40pd9eG7e7fQUjyXCROTE2MSpN0FTN/t57fwNLU1wkg0qRdUzvScv9pibyhmbUcz9etfkXnp9vIENqdGaMGGsMLQKYfCbU9FaQ7yL3yo6zrprc6cNW7W9C6yIHeBno1wxM0MSBhq3FIDITsuznW+ALdAtUHNcxCIV5NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlQGXNUx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X+TDAu2H4vhH8ZmQ2YMvAWrRii5NVyldh1skI011gvVxsusyZsR7rrI6moG1huvA8PJ6Q5oqOBYqC6RSuW9YMJH4CZzZGP6CBCotsI7VFvqq5nLjyPbVIco2VK44N1I1oT4UK4W9WUMq2F1G0I8m5vpiYcPrRKQhjY5B5z+QVYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cexD/rzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlQGXNUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A34C4CEEA;
-	Mon, 23 Jun 2025 21:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cexD/rzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838C9C4CEEA;
+	Mon, 23 Jun 2025 21:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712908;
-	bh=SbgKOSHaynTdD91CfpivsZvfrOui6cFg33hbaCL+wZE=;
+	s=korg; t=1750712910;
+	bh=gWIbUmHzYALz6ttfCMAPmqo12ble2N9WSqMsCQgitE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TlQGXNUxUgaj/jKTGYEAJ7KO7Vffze0se839rjlL4wFdc8zrkM2J+OFgnSdOH0veE
-	 tg4LY8y8D3OAMb2ggMea0ISiDrJVoefwtz5L+0lYB9s8RzqFzfM0Ck0dQH54Am/8C8
-	 r5xIFKh0Qs0ZiigwpgwmgFbHDje4ho78VIYcG0vo=
+	b=cexD/rzQdFPsEEPTwoat/82g95wlVg4vgN0eygRvjtrjB+QZ8lvlMYIB6PI8AFET6
+	 gOlP2a2AeFjtv8f4aLKsZ28bEPYT9O+NLYkUQ5SG3HTFkg3BIk6l0JU2QqgCuzHKCv
+	 ctDJy728b6kb6o4z6HG6BO4NfroEjV7JHfufz+OI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amber Lin <Amber.Lin@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Samson Tam <Samson.Tam@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 300/592] drm/amdkfd: Set SDMA_RLCx_IB_CNTL/SWITCH_INSIDE_IB
-Date: Mon, 23 Jun 2025 15:04:18 +0200
-Message-ID: <20250623130707.528389969@linuxfoundation.org>
+Subject: [PATCH 6.15 291/592] drm/amd/display: disable EASF narrow filter sharpening
+Date: Mon, 23 Jun 2025 15:04:09 +0200
+Message-ID: <20250623130707.289568425@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -51,37 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amber Lin <Amber.Lin@amd.com>
+From: Samson Tam <Samson.Tam@amd.com>
 
-[ Upstream commit ab9fcc6362e0699fc1150aa1d8503c40fce2c1e1 ]
+[ Upstream commit c8d7e0be8183f4375a5cf5c3efd0c678129ea4de ]
 
-When submitting MQD to CP, set SDMA_RLCx_IB_CNTL/SWITCH_INSIDE_IB bit so
-it'll allow SDMA preemption if there is a massive command buffer of
-long-running SDMA commands.
+[Why & How]
+Default should be 1 to disable EASF narrow filter sharpening.
 
-Signed-off-by: Amber Lin <Amber.Lin@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Signed-off-by: Samson Tam <Samson.Tam@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/display/dc/sspl/dc_spl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-index 80320a6c8854a..97933d2a38032 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -495,6 +495,10 @@ static void update_mqd_sdma(struct mqd_manager *mm, void *mqd,
- 	m->sdma_engine_id = q->sdma_engine_id;
- 	m->sdma_queue_id = q->sdma_queue_id;
- 	m->sdmax_rlcx_dummy_reg = SDMA_RLC_DUMMY_DEFAULT;
-+	/* Allow context switch so we don't cross-process starve with a massive
-+	 * command buffer of long-running SDMA commands
-+	 */
-+	m->sdmax_rlcx_ib_cntl |= SDMA0_GFX_IB_CNTL__SWITCH_INSIDE_IB_MASK;
- 
- 	q->is_active = QUEUE_IS_ACTIVE(*q);
- }
+diff --git a/drivers/gpu/drm/amd/display/dc/sspl/dc_spl.c b/drivers/gpu/drm/amd/display/dc/sspl/dc_spl.c
+index 28348734d900c..124aaff890d21 100644
+--- a/drivers/gpu/drm/amd/display/dc/sspl/dc_spl.c
++++ b/drivers/gpu/drm/amd/display/dc/sspl/dc_spl.c
+@@ -1297,7 +1297,7 @@ static void spl_set_easf_data(struct spl_scratch *spl_scratch, struct spl_out *s
+ 	if (enable_easf_v) {
+ 		dscl_prog_data->easf_v_en = true;
+ 		dscl_prog_data->easf_v_ring = 0;
+-		dscl_prog_data->easf_v_sharp_factor = 0;
++		dscl_prog_data->easf_v_sharp_factor = 1;
+ 		dscl_prog_data->easf_v_bf1_en = 1;	// 1-bit, BF1 calculation enable, 0=disable, 1=enable
+ 		dscl_prog_data->easf_v_bf2_mode = 0xF;	// 4-bit, BF2 calculation mode
+ 		/* 2-bit, BF3 chroma mode correction calculation mode */
+@@ -1461,7 +1461,7 @@ static void spl_set_easf_data(struct spl_scratch *spl_scratch, struct spl_out *s
+ 	if (enable_easf_h) {
+ 		dscl_prog_data->easf_h_en = true;
+ 		dscl_prog_data->easf_h_ring = 0;
+-		dscl_prog_data->easf_h_sharp_factor = 0;
++		dscl_prog_data->easf_h_sharp_factor = 1;
+ 		dscl_prog_data->easf_h_bf1_en =
+ 			1;	// 1-bit, BF1 calculation enable, 0=disable, 1=enable
+ 		dscl_prog_data->easf_h_bf2_mode =
 -- 
 2.39.5
 
