@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5924225776;
-	Mon, 23 Jun 2025 22:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03FF19E7F9;
+	Mon, 23 Jun 2025 22:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716907; cv=none; b=agonO3P8JotRv817KtHm2D/VkpWBw7m3d3xQ0Xx3gwnmjd5fAfEQwqyiUDh3AGp1IQE9YVZhtn07vGRGAtTNXELpQAH6B5KqmuOLB2ysAijxn0cn4rFfutDs6Tqr54CWVCcCV2hSUXjVN91wk3hBkwHdOiTV6LiXUBtXPPsaUN0=
+	t=1750716908; cv=none; b=m/bdW9XcCqWW3h4yYBGXdCn3UOTclvRyo13kdn/emnOz5r2riRdWpSnVd+SSZjCB2JQxMkfmb4GwPp1qcGKTkH2tL8YUIhkT0qinHzN378k6cJiCM1siyF43VtF5puP8MdZ58mB/0thWMSilmRwaZvR+Dmom/sQi1J8f1xneAgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716907; c=relaxed/simple;
-	bh=9IrGpFX58Kw0nmpSAJ3szvEh+Dm/z0rs08gV34I9FgA=;
+	s=arc-20240116; t=1750716908; c=relaxed/simple;
+	bh=KFObIQj5YmzuYI6PitpfxYYFkbW1tCVxtAKo++AdFy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhUvObd30kFdEKuvkem/eSc2T/UJtH7bhh5Tb2HY509l71XXdntwU3N9AvHeiA88GrHXKNHpq0DqYHzsoLUAxPtXyyxMgqHhGjdhwGKNE9JuJIlXXIFIp/QWSOPobkVs2niThiOmkmpsVnViCEce0GfQ+DT1gNCrqF9Op2EQHmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EooSZuDS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DXxJ56XoyKsWLmh2V4QtQbXQeKhZ+GRVFXELGVXm7q5LpCphTylUP998PbtPy0sH8zgLrsF08Ig+zHBHTl3rnQOsrEFUk0u0b0ftGYutkaDkz54HQmFOwV4sofeUIpwc9W9TLhVHS/e6msEjyRQ9X8L1ia4TLXkqRMDj8p93zz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvg5vtaG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EooSZuDS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2935C4CEEA;
-	Mon, 23 Jun 2025 22:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvg5vtaG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68EEFC4CEEA;
+	Mon, 23 Jun 2025 22:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716906;
-	bh=9IrGpFX58Kw0nmpSAJ3szvEh+Dm/z0rs08gV34I9FgA=;
+	s=korg; t=1750716908;
+	bh=KFObIQj5YmzuYI6PitpfxYYFkbW1tCVxtAKo++AdFy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EooSZuDSX1uTfqvVgxqb4V4tzsxaUdysLDlR9imvxSaLAArxOzTNT9SeoLJjFABlY
-	 iGhKXN5Epag02JOkMotzUy8PUB+znmFt+cUp+nXGF4Unfln0MQr2jxBFqOJYa31Zsc
-	 djPoyCN75hokr4tRaX8OVOawUqElimDx+60IY82g=
+	b=vvg5vtaGOecYGBsAXLsQ708q81FPjBb9c+3R4ke95gaQnzuP2N5/zOuOlUsxDo9VI
+	 vxgmie0QBEN9rO+hk8SXTQWW/MEFIuHjxr7jgRQlY/ROgqfodEg0zrNB9umpI320pz
+	 t9KJiunGtDWcAAJj8/P3VRTZ3BxnCmVAijIPuYSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1d3c235276f62963e93a@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 377/411] atm: atmtcp: Free invalid length skb in atmtcp_c_send().
-Date: Mon, 23 Jun 2025 15:08:41 +0200
-Message-ID: <20250623130643.131796841@linuxfoundation.org>
+	Niravkumar L Rabara <niravkumar.l.rabara@intel.com>,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.1 344/508] EDAC/altera: Use correct write width with the INTTEST register
+Date: Mon, 23 Jun 2025 15:06:29 +0200
+Message-ID: <20250623130653.808913882@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,99 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
 
-[ Upstream commit 2f370ae1fb6317985f3497b1bb80d457508ca2f7 ]
+commit e5ef4cd2a47f27c0c9d8ff6c0f63a18937c071a3 upstream.
 
-syzbot reported the splat below. [0]
+On the SoCFPGA platform, the INTTEST register supports only 16-bit writes.
+A 32-bit write triggers an SError to the CPU so do 16-bit accesses only.
 
-vcc_sendmsg() copies data passed from userspace to skb and passes
-it to vcc->dev->ops->send().
+  [ bp: AI-massage the commit message. ]
 
-atmtcp_c_send() accesses skb->data as struct atmtcp_hdr after
-checking if skb->len is 0, but it's not enough.
-
-Also, when skb->len == 0, skb and sk (vcc) were leaked because
-dev_kfree_skb() is not called and sk_wmem_alloc adjustment is missing
-to revert atm_account_tx() in vcc_sendmsg(), which is expected
-to be done in atm_pop_raw().
-
-Let's properly free skb with an invalid length in atmtcp_c_send().
-
-[0]:
-BUG: KMSAN: uninit-value in atmtcp_c_send+0x255/0xed0 drivers/atm/atmtcp.c:294
- atmtcp_c_send+0x255/0xed0 drivers/atm/atmtcp.c:294
- vcc_sendmsg+0xd7c/0xff0 net/atm/common.c:644
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg+0x330/0x3d0 net/socket.c:727
- ____sys_sendmsg+0x7e0/0xd80 net/socket.c:2566
- ___sys_sendmsg+0x271/0x3b0 net/socket.c:2620
- __sys_sendmsg net/socket.c:2652 [inline]
- __do_sys_sendmsg net/socket.c:2657 [inline]
- __se_sys_sendmsg net/socket.c:2655 [inline]
- __x64_sys_sendmsg+0x211/0x3e0 net/socket.c:2655
- x64_sys_call+0x32fb/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:47
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:4154 [inline]
- slab_alloc_node mm/slub.c:4197 [inline]
- kmem_cache_alloc_node_noprof+0x818/0xf00 mm/slub.c:4249
- kmalloc_reserve+0x13c/0x4b0 net/core/skbuff.c:579
- __alloc_skb+0x347/0x7d0 net/core/skbuff.c:670
- alloc_skb include/linux/skbuff.h:1336 [inline]
- vcc_sendmsg+0xb40/0xff0 net/atm/common.c:628
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg+0x330/0x3d0 net/socket.c:727
- ____sys_sendmsg+0x7e0/0xd80 net/socket.c:2566
- ___sys_sendmsg+0x271/0x3b0 net/socket.c:2620
- __sys_sendmsg net/socket.c:2652 [inline]
- __do_sys_sendmsg net/socket.c:2657 [inline]
- __se_sys_sendmsg net/socket.c:2655 [inline]
- __x64_sys_sendmsg+0x211/0x3e0 net/socket.c:2655
- x64_sys_call+0x32fb/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:47
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-CPU: 1 UID: 0 PID: 5798 Comm: syz-executor192 Not tainted 6.16.0-rc1-syzkaller-00010-g2c4a1f3fe03e #0 PREEMPT(undef)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+1d3c235276f62963e93a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1d3c235276f62963e93a
-Tested-by: syzbot+1d3c235276f62963e93a@syzkaller.appspotmail.com
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250616182147.963333-2-kuni1840@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c7b4be8db8bc ("EDAC, altera: Add Arria10 OCRAM ECC support")
+Signed-off-by: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
+Signed-off-by: Matthew Gerlach <matthew.gerlach@altera.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Dinh Nguyen <dinguyen@kernel.org>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/20250527145707.25458-1-matthew.gerlach@altera.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/atm/atmtcp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/edac/altera_edac.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/atm/atmtcp.c b/drivers/atm/atmtcp.c
-index 96bea1ab1eccf..ff558908897f3 100644
---- a/drivers/atm/atmtcp.c
-+++ b/drivers/atm/atmtcp.c
-@@ -288,7 +288,9 @@ static int atmtcp_c_send(struct atm_vcc *vcc,struct sk_buff *skb)
- 	struct sk_buff *new_skb;
- 	int result = 0;
+--- a/drivers/edac/altera_edac.c
++++ b/drivers/edac/altera_edac.c
+@@ -1756,9 +1756,9 @@ altr_edac_a10_device_trig(struct file *f
  
--	if (!skb->len) return 0;
-+	if (skb->len < sizeof(struct atmtcp_hdr))
-+		goto done;
-+
- 	dev = vcc->dev_data;
- 	hdr = (struct atmtcp_hdr *) skb->data;
- 	if (hdr->length == ATMTCP_HDR_MAGIC) {
--- 
-2.39.5
-
+ 	local_irq_save(flags);
+ 	if (trig_type == ALTR_UE_TRIGGER_CHAR)
+-		writel(priv->ue_set_mask, set_addr);
++		writew(priv->ue_set_mask, set_addr);
+ 	else
+-		writel(priv->ce_set_mask, set_addr);
++		writew(priv->ce_set_mask, set_addr);
+ 
+ 	/* Ensure the interrupt test bits are set */
+ 	wmb();
+@@ -1788,7 +1788,7 @@ altr_edac_a10_device_trig2(struct file *
+ 
+ 	local_irq_save(flags);
+ 	if (trig_type == ALTR_UE_TRIGGER_CHAR) {
+-		writel(priv->ue_set_mask, set_addr);
++		writew(priv->ue_set_mask, set_addr);
+ 	} else {
+ 		/* Setup read/write of 4 bytes */
+ 		writel(ECC_WORD_WRITE, drvdata->base + ECC_BLK_DBYTECTRL_OFST);
 
 
