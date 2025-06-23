@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF8219CC11;
-	Mon, 23 Jun 2025 21:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108894409;
+	Mon, 23 Jun 2025 21:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714674; cv=none; b=cnlaYsk6vRDm8tU8bS+BA9lnJ9w7VXxb7aYDaWsp2/ggXCJZY0fQUEtAT82/pha6wT2qO/DNh/UCwkX+sdZ1Kt3JeIGyySBvSwpWd4dTIvrif7K00zUMXmw1JEBtBNfyNS3iYAVgVVl7tDENBPC6Aqe8B/mMJ16XNymBbtW2Uqk=
+	t=1750714677; cv=none; b=c01V1I5Vt3gUZiEYk3940QoLbk27GGL3Cv5ZxE+B129k9Q28oXWZhQ1/gbheoFyJiNIDUEioWY6iXSGCpDhEeHFJGLtG0wxxKkyDp7WDK1w5gZUmd17cv8q1TxcEd4qloEkZQODYqhcOCqsjhGC19pJkr02I8vTrSsZ0S3bVFA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714674; c=relaxed/simple;
-	bh=yoqLCYWZ+OosKlIkxFGCk0Pf/G4hGLMitzLKLPylGEs=;
+	s=arc-20240116; t=1750714677; c=relaxed/simple;
+	bh=ITfdNYwdwQqYWa6wz0KbKHUFbkXkMAqhC/TiFOwC+Zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LjjEcOd2jcSJ4SujxEeRoGI/JPjnCSEXO2TAzIz1yvgGYg1twJPzVWgDqRxq/GVfBHaUerkSrZsJgCHWmQMQQ/eZwDYH3/ydyxRIvtH7iTKMnw8FXSWTC3o/FDwbBB4EGeFeZdWBQeTZNQ+UhEMTLRFEooT/vbRa+N8i01tzzMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnB2BKSy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hqc/VBsyuBnN3qn5D84XQ0fhSG/Mn3aA5Cbd1avEJtAoWv9CmpvJ+4+vudxPA5JoIwAHDv+nDiOQ128zQQ16grd6q16nEsfAudvc306usTZxNNtRprt5GoHWTzUskt8ot2jasrzwDqD3N1Qu0ZqdiFKlH8KlsPEcdunT4Ckntiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJEMnLxc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnB2BKSy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAFEC4CEEA;
-	Mon, 23 Jun 2025 21:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJEMnLxc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0CBC4CEEA;
+	Mon, 23 Jun 2025 21:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714674;
-	bh=yoqLCYWZ+OosKlIkxFGCk0Pf/G4hGLMitzLKLPylGEs=;
+	s=korg; t=1750714676;
+	bh=ITfdNYwdwQqYWa6wz0KbKHUFbkXkMAqhC/TiFOwC+Zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lnB2BKSylaKsapFQD3nEX60eynHt1D2JuHRe+onM0oA4Iu53+W5cyflzHhdUojjVY
-	 RjLe+kRyKKWDVj8HJAsSUDO+ch+JlaoebN3EZ72p+G1bNmDT5s9dGBi9fAj80u7A/J
-	 odq1tZbNJo6EfplFbmcvThIPuHUeGVlLh/nvh1+I=
+	b=FJEMnLxc8lpJrtkFpPwIsLKPcpUwd+Won9j6uzHKHO5fCQyRbkLTOewIStyHan+M+
+	 x7L6+eGE4E3Dy3VwuMUpQ/EgUN2rFiIyO+1Ka9vA6UeKB7rOKbaF9SokB4i/gaiDHU
+	 AYfdmwFGa/uhnt0OR0fqETUnb1YDjUYHAy1wNn84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Da Xue <da@libre.computer>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>
-Subject: [PATCH 6.12 113/414] clk: meson-g12a: add missing fclk_div2 to spicc
-Date: Mon, 23 Jun 2025 15:04:10 +0200
-Message-ID: <20250623130644.912770055@linuxfoundation.org>
+	Jim Mattson <jmattson@google.com>,
+	Yosry Ahmed <yosry.ahmed@linux.dev>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 123/414] KVM: SVM: Clear current_vmcb during vCPU free for all *possible* CPUs
+Date: Mon, 23 Jun 2025 15:04:20 +0200
+Message-ID: <20250623130645.143695748@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
 References: <20250623130642.015559452@linuxfoundation.org>
@@ -51,37 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Da Xue <da@libre.computer>
+From: Yosry Ahmed <yosry.ahmed@linux.dev>
 
-commit daf004f87c3520c414992893e2eadd5db5f86a5a upstream.
+commit 1bee4838eb3a2c689f23c7170ea66ae87ea7d93a upstream.
 
-SPICC is missing fclk_div2, which means fclk_div5 and fclk_div7 indexes
-are wrong on this clock. This causes the spicc module to output sclk at
-2.5x the expected rate when clock index 3 is picked.
+When freeing a vCPU and thus its VMCB, clear current_vmcb for all possible
+CPUs, not just online CPUs, as it's theoretically possible a CPU could go
+offline and come back online in conjunction with KVM reusing the page for
+a new VMCB.
 
-Adding the missing fclk_div2 resolves this.
-
-[jbrunet: amended commit description]
-Fixes: a18c8e0b7697 ("clk: meson: g12a: add support for the SPICC SCLK Source clocks")
-Cc: stable@vger.kernel.org # 6.1
-Signed-off-by: Da Xue <da@libre.computer>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20250512142617.2175291-1-da@libre.computer
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/all/20250320013759.3965869-1-yosry.ahmed@linux.dev
+Fixes: fd65d3142f73 ("kvm: svm: Ensure an IBPB on all affected CPUs when freeing a vmcb")
+Cc: stable@vger.kernel.org
+Cc: Jim Mattson <jmattson@google.com>
+Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
+[sean: split to separate patch, write changelog]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/meson/g12a.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kvm/svm/svm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/meson/g12a.c
-+++ b/drivers/clk/meson/g12a.c
-@@ -4099,6 +4099,7 @@ static const struct clk_parent_data spic
- 	{ .hw = &g12a_clk81.hw },
- 	{ .hw = &g12a_fclk_div4.hw },
- 	{ .hw = &g12a_fclk_div3.hw },
-+	{ .hw = &g12a_fclk_div2.hw },
- 	{ .hw = &g12a_fclk_div5.hw },
- 	{ .hw = &g12a_fclk_div7.hw },
- };
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -1483,7 +1483,7 @@ static void svm_clear_current_vmcb(struc
+ {
+ 	int i;
+ 
+-	for_each_online_cpu(i)
++	for_each_possible_cpu(i)
+ 		cmpxchg(per_cpu_ptr(&svm_data.current_vmcb, i), vmcb, NULL);
+ }
+ 
 
 
