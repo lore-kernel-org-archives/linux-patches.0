@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DEDC2E0;
-	Mon, 23 Jun 2025 22:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E66A226533;
+	Mon, 23 Jun 2025 22:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716815; cv=none; b=hT6gPEDvQZ/MywM11xxJHTNC1GkSuy9QZGsLgan+sISRrFPhexAyUDIBeeojK5s5rm+GdIcLTyaRZvyXc7cgHJ7fDbzRFk+H+xecVqClaixDv73QMXm3vFFkRrh8PrAIsdfpWo/+whqO+lLP8Ef4PIrjwFV1jAwsJxwgky0Ooqw=
+	t=1750716819; cv=none; b=BGcxE76swRis+7rvt+IF2W1HzERm1b9eBkCWnkL0C3+gF4aWEerYxdclQt9Aw4Dt9cHiR91oFtiB7YyQDNSH3LhZ9+sHecGZ+LhVdGP7AfxmOGcpe0nRGpv4WFlsm+8x0t85AeR6LRdYbZWXSOFkvMsCzJav1NA57Ba3SCpZdIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716815; c=relaxed/simple;
-	bh=yPsh4551LxyCwjVPKqflFqC2KqaO6VyENBNufYUXA5E=;
+	s=arc-20240116; t=1750716819; c=relaxed/simple;
+	bh=vb8omzoIpFisVPT6R1k7Qi26EXAkRhQBH8zYlP3fyY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IXXvfp9DtX3BPpsGm+0rUNSvbKMb/Xoa5xjAaQ3cMczB9Dp8qAnhBy8GASPsTUMNMXWbo3FYWRAFq/oBvvTmT3k7MdfXPzIXDAgPkMOuXstz9DGf9OXex44eiJcUOq0Tu1dIvwwUjt8hO11WVs0zSWwcL7Zj4usE1O3nJfq4hWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJzGT15V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cMvucW85tnygHMzdSPlPrMoqMYA1h1HBJzWyw19xIC1KL66NUx2XJNBJCWqoYFjJFrtBXgZ1IUoIw8JkRz0LJStToplRUSvYdsA0rVX3SFqLX8nABhvD7bc+NKd8WcIZYcoUIYUl7vVpqnhZUZPPfEMrAkj/3eR+eghpi/bQob0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=laezHdkN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJzGT15V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE24C4CEEA;
-	Mon, 23 Jun 2025 22:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laezHdkN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6C1C4CEEA;
+	Mon, 23 Jun 2025 22:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716815;
-	bh=yPsh4551LxyCwjVPKqflFqC2KqaO6VyENBNufYUXA5E=;
+	s=korg; t=1750716818;
+	bh=vb8omzoIpFisVPT6R1k7Qi26EXAkRhQBH8zYlP3fyY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pJzGT15VZf+9ec/iWyXve2ORTvEjDgFI3bz7yyBMOB73pRCH9+z/5u+amhwu+HeD9
-	 SrV4k38jDqDsuzdIkITkAgSPl8r7D1mf9Nc+qQSna8Lo4musWL9lZXUgxs5wHg8v56
-	 aTiL/9fMj8qmXcm4Wzt1KV9YtBZK6Vf+ElcWT8TQ=
+	b=laezHdkN88byZvxqGpuMcA56V1joHiHsfISSvD9eKRvu7ZnhzAhQd6BSVO7GeUNMe
+	 wxHJFzKD0Pq7KVcAwdeipVH+K8GJaRYnNNr9fZzA7d/wcURBIBCa9J6mc5cqvZpQaK
+	 SbhNlxX0Velcj8QcPIelSbxOkrPCXfsGS18zBlro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Pu Lehui <pulehui@huawei.com>
-Subject: [PATCH 5.15 395/411] arm64: bpf: Only mitigate cBPF programs loaded by unprivileged users
-Date: Mon, 23 Jun 2025 15:08:59 +0200
-Message-ID: <20250623130643.621280039@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 362/508] regulator: max14577: Add error check for max14577_read_reg()
+Date: Mon, 23 Jun 2025 15:06:47 +0200
+Message-ID: <20250623130654.268345134@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +46,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Morse <james.morse@arm.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit f300769ead032513a68e4a02e806393402e626f8 ]
+commit 65271f868cb1dca709ff69e45939bbef8d6d0b70 upstream.
 
-Support for eBPF programs loaded by unprivileged users is typically
-disabled. This means only cBPF programs need to be mitigated for BHB.
+The function max14577_reg_get_current_limit() calls the function
+max14577_read_reg(), but does not check its return value. A proper
+implementation can be found in max14577_get_online().
 
-In addition, only mitigate cBPF programs that were loaded by an
-unprivileged user. Privileged users can also load the same program
-via eBPF, making the mitigation pointless.
+Add a error check for the max14577_read_reg() and return error code
+if the function fails.
 
-Signed-off-by: James Morse <james.morse@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Fixes: b0902bbeb768 ("regulator: max14577: Add regulator driver for Maxim 14577")
+Cc: stable@vger.kernel.org # v3.14
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20250526025627.407-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/net/bpf_jit_comp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/regulator/max14577-regulator.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -341,6 +341,9 @@ static void __maybe_unused build_bhb_mit
- 	    arm64_get_spectre_v2_state() == SPECTRE_VULNERABLE)
- 		return;
+--- a/drivers/regulator/max14577-regulator.c
++++ b/drivers/regulator/max14577-regulator.c
+@@ -40,11 +40,14 @@ static int max14577_reg_get_current_limi
+ 	struct max14577 *max14577 = rdev_get_drvdata(rdev);
+ 	const struct maxim_charger_current *limits =
+ 		&maxim_charger_currents[max14577->dev_type];
++	int ret;
  
-+	if (capable(CAP_SYS_ADMIN))
-+		return;
-+
- 	if (supports_clearbhb(SCOPE_SYSTEM)) {
- 		emit(aarch64_insn_gen_hint(AARCH64_INSN_HINT_CLEARBHB), ctx);
- 		return;
+ 	if (rdev_get_id(rdev) != MAX14577_CHARGER)
+ 		return -EINVAL;
+ 
+-	max14577_read_reg(rmap, MAX14577_CHG_REG_CHG_CTRL4, &reg_data);
++	ret = max14577_read_reg(rmap, MAX14577_CHG_REG_CHG_CTRL4, &reg_data);
++	if (ret < 0)
++		return ret;
+ 
+ 	if ((reg_data & CHGCTRL4_MBCICHWRCL_MASK) == 0)
+ 		return limits->min;
 
 
