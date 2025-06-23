@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CC04315A;
-	Mon, 23 Jun 2025 21:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049EE4315A;
+	Mon, 23 Jun 2025 21:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714970; cv=none; b=WgR50OLxfbFk0bZ0GJ8AgJzJ4tjpHKRyPbtemeaxl71+aQ/rBP169l6bCDP1CHFNxjuu/8Xo4YVx9Sl9I5FCTu0bsmY/c/VFG+JbLcBoII51dTQRRvvi1jpHw/OpxS1+iMpZf28/uiIW4UnhkERp17G/y3FmbrmmtMfPmiviAsI=
+	t=1750714973; cv=none; b=aAT1ZxHEWbY5orj30hwNjU7AdEK3JHD7fC7cEHFwDjff/cJi4+5VnT9NkOGrPAUGTPLib4ibkfWFl5ASt+8j90xq6/6LpW/DWpFghJRaG8MIKOCcoNXt2OezA+7LZIAQJ7GrA+S+uLlNJA0+Hsdo5GzGkXJyMWcDe/RuknxEt1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714970; c=relaxed/simple;
-	bh=GVnTrg8sr0T24Xi1AL3vAa0rWghpuhQllNGgQjQ+puE=;
+	s=arc-20240116; t=1750714973; c=relaxed/simple;
+	bh=JI78QqjXedzoG9JnwkMxbXGzDuwKp28r47X6n/HqPEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JZVbr3iClQilGBZd959rvr9dfyKoK3zgwbRF/7cg8FAslDmayt5u+XcEWhomvxmS/P5UbfWe8z4KfShYfAUhzyVcnw3EF34O2YV2gUDgr28brVkz7S+ek+nrhzXCnCPCAyIUCAgC9YnJBEt6AaqWBtP4fhIMGihBxS5ibVeZSbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kivw+23W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=utENBrE09COo2GEwQzNa2lSSSR0hvvmpk7PqGqAyNGKULNA8Sc5kgs1HQv3GtASe9U3M55YY176L1viQluuAFwaJQviIyy60ttrSrXkNf8THjNkcMrVtBLbWKp2o8+1z5NWeV7ht2ytBNw31L0bw7hFQ5aAIijLjDsIraIBlfIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9DAh4rb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kivw+23W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2998CC4CEEA;
-	Mon, 23 Jun 2025 21:42:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9DAh4rb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907C8C4CEEA;
+	Mon, 23 Jun 2025 21:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714970;
-	bh=GVnTrg8sr0T24Xi1AL3vAa0rWghpuhQllNGgQjQ+puE=;
+	s=korg; t=1750714972;
+	bh=JI78QqjXedzoG9JnwkMxbXGzDuwKp28r47X6n/HqPEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kivw+23W7DOoQozDkpcfgCi6aY1D+3NXVbn1uDGS8tHMSEGfzJij/hHbo/T4y8HQM
-	 wLcotxeG+YdJyBpWSs9TsvOCZAVUVWu74Y3K4EmeC8YFsZNOB3MqKat9B/LQpsKAD+
-	 BxKxyA/EW507XGtUhjXGrYpaRQ+90LTWU53Xf/1E=
+	b=Q9DAh4rb3mjTy+kNWZ7I9DBi0Rts9h2pDKg+R2VgH/a8l9Xpitb5HVnmRfiO9COEc
+	 BYP6gJHDTi8ALKjcqh5NnqyGlgIXYxytdcYEnvWy7SSGJagUVNZ+KncImEDur+eQt+
+	 rUMPIfXMkVHE7/PRKyYD+SQIh+MuMWvE6203QTmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Frank Li <Frank.Li@nxp.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 244/355] media: platform: exynos4-is: Add hardware sync wait to fimc_is_hw_change_mode()
-Date: Mon, 23 Jun 2025 15:07:25 +0200
-Message-ID: <20250623130634.081620648@linuxfoundation.org>
+Subject: [PATCH 6.15 429/592] i3c: mipi-i3c-hci: Fix handling status of i3c_hci_irq_handler()
+Date: Mon, 23 Jun 2025 15:06:27 +0200
+Message-ID: <20250623130710.640055028@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
 
-[ Upstream commit bd9f6ce7d512fa21249415c16af801a4ed5d97b6 ]
+[ Upstream commit 279c24021b838e76ca8441e9446e0ab45271153a ]
 
-In fimc_is_hw_change_mode(), the function changes camera modes without
-waiting for hardware completion, risking corrupted data or system hangs
-if subsequent operations proceed before the hardware is ready.
+Return IRQ_HANDLED from the i3c_hci_irq_handler() only if some
+INTR_STATUS bit was set or if DMA/PIO handler handled it.
 
-Add fimc_is_hw_wait_intmsr0_intmsd0() after mode configuration, ensuring
-hardware state synchronization and stable interrupt handling.
+Currently it returns IRQ_HANDLED in case INTR_STATUS is zero and IO
+handler returns false. Which could be the case if interrupt comes from
+other device or is spurious.
 
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Link: https://lore.kernel.org/r/20250409140401.299251-2-jarkko.nikula@linux.intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/exynos4-is/fimc-is-regs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i3c/master/mipi-i3c-hci/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/exynos4-is/fimc-is-regs.c b/drivers/media/platform/exynos4-is/fimc-is-regs.c
-index 366e6393817d2..5f9c44e825a5f 100644
---- a/drivers/media/platform/exynos4-is/fimc-is-regs.c
-+++ b/drivers/media/platform/exynos4-is/fimc-is-regs.c
-@@ -164,6 +164,7 @@ int fimc_is_hw_change_mode(struct fimc_is *is)
- 	if (WARN_ON(is->config_index >= ARRAY_SIZE(cmd)))
- 		return -EINVAL;
+diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
+index a71226d7ca593..5834bf8a3fd9e 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/core.c
++++ b/drivers/i3c/master/mipi-i3c-hci/core.c
+@@ -594,6 +594,7 @@ static irqreturn_t i3c_hci_irq_handler(int irq, void *dev_id)
  
-+	fimc_is_hw_wait_intmsr0_intmsd0(is);
- 	mcuctl_write(cmd[is->config_index], is, MCUCTL_REG_ISSR(0));
- 	mcuctl_write(is->sensor_index, is, MCUCTL_REG_ISSR(1));
- 	mcuctl_write(is->setfile.sub_index, is, MCUCTL_REG_ISSR(2));
+ 	if (val) {
+ 		reg_write(INTR_STATUS, val);
++		result = IRQ_HANDLED;
+ 	}
+ 
+ 	if (val & INTR_HC_RESET_CANCEL) {
+@@ -605,12 +606,11 @@ static irqreturn_t i3c_hci_irq_handler(int irq, void *dev_id)
+ 		val &= ~INTR_HC_INTERNAL_ERR;
+ 	}
+ 
+-	hci->io->irq_handler(hci);
++	if (hci->io->irq_handler(hci))
++		result = IRQ_HANDLED;
+ 
+ 	if (val)
+ 		dev_err(&hci->master.dev, "unexpected INTR_STATUS %#x\n", val);
+-	else
+-		result = IRQ_HANDLED;
+ 
+ 	return result;
+ }
 -- 
 2.39.5
 
