@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2052C2222B2;
-	Mon, 23 Jun 2025 22:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8893B22370A;
+	Mon, 23 Jun 2025 22:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717607; cv=none; b=Ai5PCcDWEf7tdwax6J7DSMT/yATdkIPIbcsl4jvbdhYilH3TA+mQ3VE8WQ912APiCpRAWYiJzesc4olNPOxhDW9WO34n1jxwBD4ur9zftH4rkt11y7SY9Oh/yLyOg6fFntsddmI7iOy3ot7sNOR70e5GttRzaYcojOD4WfOyeL4=
+	t=1750717609; cv=none; b=Q9IfRsRfukwoMhj8GgQjoUH8eCscWtHQkjkOUafJOfT3a0CGYc2P/g3V2qxhyCBplgorh2AbiUPfS09K80uZczkegpFCn1cJcVfChG3rL6LCJ0s55UKweXsZe7NKHGI2AeChcJZWqfDSghc5r94bX3KahkLQsCVuFtJlRwj/Dqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717607; c=relaxed/simple;
-	bh=+0UASXMhDgAfgOVYZs6uE1sD6RLCyirchii7vAKHNuM=;
+	s=arc-20240116; t=1750717609; c=relaxed/simple;
+	bh=R7G44ye1t2TaNZxxJiVeZPVXZZFIh/VXAyiClm4Hx2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PgMThqNoA25tbWzmcK2A68Z1d+QKPC9CoStucGjBFD0wGN1x7lcJCRWj0B+h8EttUpaz7/vJsg4wKIclv4ougrdVIRWQ8geIUR1yedbEh0uGDAUY6mC8L1gaR6O+jPrwxcnh/bGK7Znt9djMM2K/n6+k0dJgKzCIE02blUlgK2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9TYlA0W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BSgAZeVmdJAdS9Dw/86F+qNQ+tq4byBYmOcmSi5eg2wHbrP5tOUUILzfQEOqJu15QjS47U2qZxTDi3IbO3MdxeuE3LUGWTepNGGqypkjAwRF5GSJZ6SC6XODcii92xLFe5gsN3MK2UVZxvee9VjUyJ64L6D5RF67PUSNVngzDug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRGPVkp7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9TYlA0W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABECDC4CEEA;
-	Mon, 23 Jun 2025 22:26:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRGPVkp7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2093BC4CEEA;
+	Mon, 23 Jun 2025 22:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717607;
-	bh=+0UASXMhDgAfgOVYZs6uE1sD6RLCyirchii7vAKHNuM=;
+	s=korg; t=1750717609;
+	bh=R7G44ye1t2TaNZxxJiVeZPVXZZFIh/VXAyiClm4Hx2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A9TYlA0WO15SCaD56i/HhP16h1qLngL3UnrzRcPwU8wbkDHdHDSlEYMbhTClimWG6
-	 C8n+Q+UfIwjsmO8tTD+XAFzeXC7m5VSXK73Jw5qeGaUDOyDUjDLzMD6Z5kRfEBvp9M
-	 qVYERvBrcqI2Hmvx8lr0b6Mp0bDMpxkjNPXJiXYE=
+	b=CRGPVkp7IJJhVCmzSuNIg1riI281G4vdkf1Yic2I27e9HRyIEhQKqeIjMpawxfWdd
+	 A1fUz3Jjiboz+tpFlGUqOxFQ8x0QDBe0Mu6hTiXvBadwh5o4hIa/DfzcPG+9ZlhS9F
+	 QqlD+H3u/2xx2mj3y0k8Rt4lnYDe2lGANokyKn/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 468/508] bpf: Fix L4 csum update on IPv6 in CHECKSUM_COMPLETE
-Date: Mon, 23 Jun 2025 15:08:33 +0200
-Message-ID: <20250623130656.616788401@linuxfoundation.org>
+	Steven Rostedt <rostedt@goodmis.org>,
+	Hongbo Li <lihongbo22@huawei.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 6.1 469/508] erofs: remove unused trace event erofs_destroy_inode
+Date: Mon, 23 Jun 2025 15:08:34 +0200
+Message-ID: <20250623130656.639073656@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -51,129 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit ead7f9b8de65632ef8060b84b0c55049a33cfea1 upstream.
+commit 30b58444807c93bffeaba7d776110f2a909d2f9a upstream.
 
-In Cilium, we use bpf_csum_diff + bpf_l4_csum_replace to, among other
-things, update the L4 checksum after reverse SNATing IPv6 packets. That
-use case is however not currently supported and leads to invalid
-skb->csum values in some cases. This patch adds support for IPv6 address
-changes in bpf_l4_csum_update via a new flag.
+The trace event `erofs_destroy_inode` was added but remains unused. This
+unused event contributes approximately 5KB to the kernel module size.
 
-When calling bpf_l4_csum_replace in Cilium, it ends up calling
-inet_proto_csum_replace_by_diff:
-
-    1:  void inet_proto_csum_replace_by_diff(__sum16 *sum, struct sk_buff *skb,
-    2:                                       __wsum diff, bool pseudohdr)
-    3:  {
-    4:      if (skb->ip_summed != CHECKSUM_PARTIAL) {
-    5:          csum_replace_by_diff(sum, diff);
-    6:          if (skb->ip_summed == CHECKSUM_COMPLETE && pseudohdr)
-    7:              skb->csum = ~csum_sub(diff, skb->csum);
-    8:      } else if (pseudohdr) {
-    9:          *sum = ~csum_fold(csum_add(diff, csum_unfold(*sum)));
-    10:     }
-    11: }
-
-The bug happens when we're in the CHECKSUM_COMPLETE state. We've just
-updated one of the IPv6 addresses. The helper now updates the L4 header
-checksum on line 5. Next, it updates skb->csum on line 7. It shouldn't.
-
-For an IPv6 packet, the updates of the IPv6 address and of the L4
-checksum will cancel each other. The checksums are set such that
-computing a checksum over the packet including its checksum will result
-in a sum of 0. So the same is true here when we update the L4 checksum
-on line 5. We'll update it as to cancel the previous IPv6 address
-update. Hence skb->csum should remain untouched in this case.
-
-The same bug doesn't affect IPv4 packets because, in that case, three
-fields are updated: the IPv4 address, the IP checksum, and the L4
-checksum. The change to the IPv4 address and one of the checksums still
-cancel each other in skb->csum, but we're left with one checksum update
-and should therefore update skb->csum accordingly. That's exactly what
-inet_proto_csum_replace_by_diff does.
-
-This special case for IPv6 L4 checksums is also described atop
-inet_proto_csum_replace16, the function we should be using in this case.
-
-This patch introduces a new bpf_l4_csum_replace flag, BPF_F_IPV6,
-to indicate that we're updating the L4 checksum of an IPv6 packet. When
-the flag is set, inet_proto_csum_replace_by_diff will skip the
-skb->csum update.
-
-Fixes: 7d672345ed295 ("bpf: add generic bpf_csum_diff helper")
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://patch.msgid.link/96a6bc3a443e6f0b21ff7b7834000e17fb549e05.1748509484.git.paul.chaignon@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Reported-by: Steven Rostedt <rostedt@goodmis.org>
+Closes: https://lore.kernel.org/r/20250612224906.15000244@batman.local.home
+Fixes: 13f06f48f7bf ("staging: erofs: support tracepoint")
+Cc: stable@vger.kernel.org
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250617054056.3232365-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/bpf.h       |    2 ++
- net/core/filter.c              |    5 +++--
- tools/include/uapi/linux/bpf.h |    2 ++
- 3 files changed, 7 insertions(+), 2 deletions(-)
+ include/trace/events/erofs.h |   18 ------------------
+ 1 file changed, 18 deletions(-)
 
---- a/include/uapi/linux/bpf.h
-+++ b/include/uapi/linux/bpf.h
-@@ -1787,6 +1787,7 @@ union bpf_attr {
-  * 		for updates resulting in a null checksum the value is set to
-  * 		**CSUM_MANGLED_0** instead. Flag **BPF_F_PSEUDO_HDR** indicates
-  * 		the checksum is to be computed against a pseudo-header.
-+ * 		Flag **BPF_F_IPV6** should be set for IPv6 packets.
-  *
-  * 		This helper works in combination with **bpf_csum_diff**\ (),
-  * 		which does not update the checksum in-place, but offers more
-@@ -5715,6 +5716,7 @@ enum {
- 	BPF_F_PSEUDO_HDR		= (1ULL << 4),
- 	BPF_F_MARK_MANGLED_0		= (1ULL << 5),
- 	BPF_F_MARK_ENFORCE		= (1ULL << 6),
-+	BPF_F_IPV6			= (1ULL << 7),
- };
+--- a/include/trace/events/erofs.h
++++ b/include/trace/events/erofs.h
+@@ -232,24 +232,6 @@ DEFINE_EVENT(erofs__map_blocks_exit, z_e
+ 	TP_ARGS(inode, map, flags, ret)
+ );
  
- /* BPF_FUNC_skb_set_tunnel_key and BPF_FUNC_skb_get_tunnel_key flags. */
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -1958,10 +1958,11 @@ BPF_CALL_5(bpf_l4_csum_replace, struct s
- 	bool is_pseudo = flags & BPF_F_PSEUDO_HDR;
- 	bool is_mmzero = flags & BPF_F_MARK_MANGLED_0;
- 	bool do_mforce = flags & BPF_F_MARK_ENFORCE;
-+	bool is_ipv6   = flags & BPF_F_IPV6;
- 	__sum16 *ptr;
+-TRACE_EVENT(erofs_destroy_inode,
+-	TP_PROTO(struct inode *inode),
+-
+-	TP_ARGS(inode),
+-
+-	TP_STRUCT__entry(
+-		__field(	dev_t,		dev		)
+-		__field(	erofs_nid_t,	nid		)
+-	),
+-
+-	TP_fast_assign(
+-		__entry->dev	= inode->i_sb->s_dev;
+-		__entry->nid	= EROFS_I(inode)->nid;
+-	),
+-
+-	TP_printk("dev = (%d,%d), nid = %llu", show_dev_nid(__entry))
+-);
+-
+ #endif /* _TRACE_EROFS_H */
  
- 	if (unlikely(flags & ~(BPF_F_MARK_MANGLED_0 | BPF_F_MARK_ENFORCE |
--			       BPF_F_PSEUDO_HDR | BPF_F_HDR_FIELD_MASK)))
-+			       BPF_F_PSEUDO_HDR | BPF_F_HDR_FIELD_MASK | BPF_F_IPV6)))
- 		return -EINVAL;
- 	if (unlikely(offset > 0xffff || offset & 1))
- 		return -EFAULT;
-@@ -1977,7 +1978,7 @@ BPF_CALL_5(bpf_l4_csum_replace, struct s
- 		if (unlikely(from != 0))
- 			return -EINVAL;
- 
--		inet_proto_csum_replace_by_diff(ptr, skb, to, is_pseudo, false);
-+		inet_proto_csum_replace_by_diff(ptr, skb, to, is_pseudo, is_ipv6);
- 		break;
- 	case 2:
- 		inet_proto_csum_replace2(ptr, skb, from, to, is_pseudo);
---- a/tools/include/uapi/linux/bpf.h
-+++ b/tools/include/uapi/linux/bpf.h
-@@ -1787,6 +1787,7 @@ union bpf_attr {
-  * 		for updates resulting in a null checksum the value is set to
-  * 		**CSUM_MANGLED_0** instead. Flag **BPF_F_PSEUDO_HDR** indicates
-  * 		the checksum is to be computed against a pseudo-header.
-+ * 		Flag **BPF_F_IPV6** should be set for IPv6 packets.
-  *
-  * 		This helper works in combination with **bpf_csum_diff**\ (),
-  * 		which does not update the checksum in-place, but offers more
-@@ -5715,6 +5716,7 @@ enum {
- 	BPF_F_PSEUDO_HDR		= (1ULL << 4),
- 	BPF_F_MARK_MANGLED_0		= (1ULL << 5),
- 	BPF_F_MARK_ENFORCE		= (1ULL << 6),
-+	BPF_F_IPV6			= (1ULL << 7),
- };
- 
- /* BPF_FUNC_clone_redirect and BPF_FUNC_redirect flags. */
+  /* This part must be outside protection */
 
 
