@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35CB4315A;
-	Mon, 23 Jun 2025 21:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4711C4315A;
+	Mon, 23 Jun 2025 21:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715046; cv=none; b=Vyb26Sxbxh1QQvcg24NciYYuWm28iLQPbCEBJCfw4r5LASx/tOM7XwgsS8DCPdQHpqb5lN/Uk6mIyucAUtCgFZqY8/XBJiwhzmQx3fDp2SLC5Wa+u9+nOg3hC7UOgPswL9g7OznfXw3BzSh0zMoO1NsbM8Ehvq692g8MK28ByGs=
+	t=1750715048; cv=none; b=OwSCWMPTBesIDZ/RbmGxp7B20ICp97QSXKUnaga+BaaAIERIf/5s3tseCc/+uttqEXXqoNS902EyLuT4ASMM9RxLxt4wPHmmRLsk8Cbs3y2tTZRZfRUXk9zNh7ADbczkgqhxi/P+OrzGNUghc1Iz/7J06g7Qg20bI+DCg4BDjoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715046; c=relaxed/simple;
-	bh=ST5Zxq1X7213XcpvZDL2R1bMIvm3MrwjS4STJ1OxV0E=;
+	s=arc-20240116; t=1750715048; c=relaxed/simple;
+	bh=Kt92OhGrxaNgsyvs5msRgXoSZlSMwVBharx4zkhf/38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RWP5dBvkqmLDSJn8UkBt9edgkr9vCX0qxOqDTqas1X7FHRc6u3jVgmKu3moWAn++YD86pchkA4golGLFRW5I7txDBTAgNZ+yCCCw5LMIqVABetqaU92nvh5EsBM+XMOGOW9g7VHCmxdp/TorqokybYbMCr8/BNeRdxJM6RS3P2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efbzvcs7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IkMfYud+9ASkkOK6n7XcBGxXyKGeN95P4OQXGSds9HYGoTXuqNkMRXnYBAZcK2HXvtuWEHikhyQ6y9U+KgQlJXUrN08A+hQibAONiUOgZsuO3d/rzH+XxLlx9OTjj5Z5CiFRDzcW52kISKJbiE7a4iA4da9aQYGhn2sxZhOmnOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbKZ5fpS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efbzvcs7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF0BC4CEEA;
-	Mon, 23 Jun 2025 21:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbKZ5fpS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D641CC4CEF1;
+	Mon, 23 Jun 2025 21:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715045;
-	bh=ST5Zxq1X7213XcpvZDL2R1bMIvm3MrwjS4STJ1OxV0E=;
+	s=korg; t=1750715048;
+	bh=Kt92OhGrxaNgsyvs5msRgXoSZlSMwVBharx4zkhf/38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=efbzvcs7aFhMD4dn0BsoYOMfUhNNERyy2OBwV0UY5NMmNpCX6cxPGZlPfIlN7hURL
-	 GbJvcBF9PyKk8fV4Eicn5TESdQyrgyqGt1BLWH5Kh6UjDJ5ghdruW2kkqm7dpMbwvy
-	 R3oExTO+KN9u8+2OH8MaA8wSXo8RWgB5Qy3IdahA=
+	b=BbKZ5fpSKnGULXfoRzRdgbF5jl41R6WkPgcx7v6oDW9pOjRzySY0ABT3O+JOvP5h5
+	 x09AXLQ7Ue7LYaWKTyfBGg6J086UY4WVMdozeDR55UreO0Z1HQwa/v1ktbkr1wIs6j
+	 xBNE6xqXa4aIuPEu+xAbjji6wevyp1U1a0sd+DYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xianglai Li <lixianglai@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.12 152/414] PCI: Add ACS quirk for Loongson PCIe
-Date: Mon, 23 Jun 2025 15:04:49 +0200
-Message-ID: <20250623130645.843163535@linuxfoundation.org>
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 5.15 225/411] bus: fsl-mc: do not add a device-link for the UAPI used DPMCP device
+Date: Mon, 23 Jun 2025 15:06:09 +0200
+Message-ID: <20250623130639.326363185@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,66 +46,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-commit 1f3303aa92e15fa273779acac2d0023609de30f1 upstream.
+commit dd7d8e012b23de158ca0188239c7a1f2a83b4484 upstream.
 
-Loongson PCIe Root Ports don't advertise an ACS capability, but they do not
-allow peer-to-peer transactions between Root Ports. Add an ACS quirk so
-each Root Port can be in a separate IOMMU group.
+The fsl-mc bus associated to the root DPRC in a DPAA2 system exports a
+device file for userspace access to the MC firmware. In case the DPRC's
+local MC portal (DPMCP) is currently in use, a new DPMCP device is
+allocated through the fsl_mc_portal_allocate() function.
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+In this case, the call to fsl_mc_portal_allocate() will fail with -EINVAL
+when trying to add a device link between the root DPRC (consumer) and
+the newly allocated DPMCP device (supplier). This is because the DPMCP
+is a dependent of the DPRC device (the bus).
+
+Fix this by not adding a device link in case the DPMCP is allocated for
+the root DPRC's usage.
+
+Fixes: afb77422819f ("bus: fsl-mc: automatically add a device_link on fsl_mc_[portal,object]_allocate")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250403040756.720409-1-chenhuacai@loongson.cn
+Link: https://lore.kernel.org/r/20250408105814.2837951-3-ioana.ciornei@nxp.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |   23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/bus/fsl-mc/mc-io.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -4995,6 +4995,18 @@ static int pci_quirk_brcm_acs(struct pci
- 		PCI_ACS_SV | PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_UF);
- }
+--- a/drivers/bus/fsl-mc/mc-io.c
++++ b/drivers/bus/fsl-mc/mc-io.c
+@@ -214,12 +214,19 @@ int __must_check fsl_mc_portal_allocate(
+ 	if (error < 0)
+ 		goto error_cleanup_resource;
  
-+static int pci_quirk_loongson_acs(struct pci_dev *dev, u16 acs_flags)
-+{
-+	/*
-+	 * Loongson PCIe Root Ports don't advertise an ACS capability, but
-+	 * they do not allow peer-to-peer transactions between Root Ports.
-+	 * Allow each Root Port to be in a separate IOMMU group by masking
-+	 * SV/RR/CR/UF bits.
+-	dpmcp_dev->consumer_link = device_link_add(&mc_dev->dev,
+-						   &dpmcp_dev->dev,
+-						   DL_FLAG_AUTOREMOVE_CONSUMER);
+-	if (!dpmcp_dev->consumer_link) {
+-		error = -EINVAL;
+-		goto error_cleanup_mc_io;
++	/* If the DPRC device itself tries to allocate a portal (usually for
++	 * UAPI interaction), don't add a device link between them since the
++	 * DPMCP device is an actual child device of the DPRC and a reverse
++	 * dependency is not allowed.
 +	 */
-+	return pci_acs_ctrl_enabled(acs_flags,
-+		PCI_ACS_SV | PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_UF);
-+}
-+
- /*
-  * Wangxun 40G/25G/10G/1G NICs have no ACS capability, but on
-  * multi-function devices, the hardware isolates the functions by
-@@ -5128,6 +5140,17 @@ static const struct pci_dev_acs_enabled
- 	{ PCI_VENDOR_ID_BROADCOM, 0x1762, pci_quirk_mf_endpoint_acs },
- 	{ PCI_VENDOR_ID_BROADCOM, 0x1763, pci_quirk_mf_endpoint_acs },
- 	{ PCI_VENDOR_ID_BROADCOM, 0xD714, pci_quirk_brcm_acs },
-+	/* Loongson PCIe Root Ports */
-+	{ PCI_VENDOR_ID_LOONGSON, 0x3C09, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x3C19, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x3C29, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A09, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A19, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A29, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A39, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A49, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A59, pci_quirk_loongson_acs },
-+	{ PCI_VENDOR_ID_LOONGSON, 0x7A69, pci_quirk_loongson_acs },
- 	/* Amazon Annapurna Labs */
- 	{ PCI_VENDOR_ID_AMAZON_ANNAPURNA_LABS, 0x0031, pci_quirk_al_acs },
- 	/* Zhaoxin multi-function devices */
++	if (mc_dev != mc_bus_dev) {
++		dpmcp_dev->consumer_link = device_link_add(&mc_dev->dev,
++							   &dpmcp_dev->dev,
++							   DL_FLAG_AUTOREMOVE_CONSUMER);
++		if (!dpmcp_dev->consumer_link) {
++			error = -EINVAL;
++			goto error_cleanup_mc_io;
++		}
+ 	}
+ 
+ 	*new_mc_io = mc_io;
 
 
