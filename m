@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E521E3DCD;
-	Mon, 23 Jun 2025 22:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA93223708;
+	Mon, 23 Jun 2025 22:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717214; cv=none; b=lujFvVj2qTjKH8gZ1CCbo5e8F3gXjohQyLsFWxTSdsdBui4pbsQoPYKqquOKavGFV3ejn5Z+h+cnYPyiA8+aOYUo9ZFiD9zVfiSAMe/ldtSnB7tvciGQ6jM4LZwRhCeYmuRpzIBbYI9RU26L2kNlUOqplU7JENJX5NralavFTYI=
+	t=1750717218; cv=none; b=Iv/MWWGKXr1zA+FYGCk16Ag6Z4/m6SUjl9GVpCEYKDpkd2zdRAN/fU7TExamKsM3GpiiVIciZiKy7oaRVo7bWF/fkkkujvRB3Kk7Wdf1FZk0xdhCAjNOVyTesh3u+32MRRqZnnsaxt0BwUdz/SPSnAEfIaBw0T0HIhk7XBxQIZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717214; c=relaxed/simple;
-	bh=ey1gsDPF6cok9Hv+VmQtRrl+g4XuXbAI2/JtRHOxyGc=;
+	s=arc-20240116; t=1750717218; c=relaxed/simple;
+	bh=WJvXQX0hBi1c14qDzlnPYRo+0tnPFmBJDv6kCFRfBSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JtTUae2XUlZwMdyQxj+8qkT4xOt/g2XLvPYEdjfOp5ya/HdvwFOU9hkISo7rWzUQKY7t+kXwc67VfBGdFK2nb1X+7sUVo2LjceUldUx5BV1TSScv8Q1YgrVPb+X2UdraM0zkMTIY0cnYxWojZfOvzV5HC440+I5ZwV30bBdGsRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgzhmDl3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMY1yXNUi1OB9LaNIlKQ4mu4DllC7YeDo6Wi3IyOHjwnk9PE+HZz6FqPI5u68URmOEeSbC3oG4rf66DZpeYx/J/KGr0Tktc+P4rC+HPZ13Jvai5u62KTPkkk/y4N9x2Csm5RMHHLvWHsofGNxjyKcC4r3EMPhRtxkHV/0Kk+Ksk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpRslAC3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgzhmDl3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4914EC4CEEA;
-	Mon, 23 Jun 2025 22:20:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpRslAC3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8C2C4CEEA;
+	Mon, 23 Jun 2025 22:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717214;
-	bh=ey1gsDPF6cok9Hv+VmQtRrl+g4XuXbAI2/JtRHOxyGc=;
+	s=korg; t=1750717217;
+	bh=WJvXQX0hBi1c14qDzlnPYRo+0tnPFmBJDv6kCFRfBSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KgzhmDl3akURFEiM1EqdVVqAjAYxwcqk1vksxCIIhE5aVjV11IB4WiSKO2RVaytaQ
-	 I3CvmbbW3r0QapVgZcxlcX1G9ThoXGhQ0jetX/FKl3Wmz9dcrVNK2PNBObB7DmjZiY
-	 DuHqus0VDZjvjX8F+Urjq9sdnvtdswQ2482bWm9s=
+	b=xpRslAC3pzXCktsz+wWMgJKSiQOT+GNDQ9qvoXMO0SvrRxf2awPBHwkRhqJss4iCN
+	 MxGmUncrirUTmIWBcIzUdvFEPtxmIjOeJuZuhXOiDfXb0fdBm/w2nFYsNnqWWvzOOq
+	 XB9aL8ooledqjaDv0sLeBvEOFUQbPF6UywfOvNYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?L=C6=B0=C6=A1ng=20Vi=E1=BB=87t=20Ho=C3=A0ng?= <tcm4095@gmail.com>,
-	Joel Mathew Thomas <proxy0@tutamail.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 589/592] PCI: pciehp: Ignore belated Presence Detect Changed caused by DPC
-Date: Mon, 23 Jun 2025 15:09:07 +0200
-Message-ID: <20250623130714.444311003@linuxfoundation.org>
+	Miguel Ojeda <ojeda@kernel.org>,
+	Fiona Behrens <me@Kloenk.dev>,
+	Nicolas Schier <n.schier@avm.de>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.12 340/414] kbuild: rust: add rustc-min-version support function
+Date: Mon, 23 Jun 2025 15:07:57 +0200
+Message-ID: <20250623130650.481231861@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +46,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit bbf10cd686835d5a4b8566dc73a3b00b4cd7932a ]
+commit ac954145e1ee3f72033161cbe4ac0b16b5354ae7 upstream.
 
-Commit c3be50f7547c ("PCI: pciehp: Ignore Presence Detect Changed caused by
-DPC") sought to ignore Presence Detect Changed events occurring as a side
-effect of Downstream Port Containment.
+Introduce `rustc-min-version` support function that mimics
+`{gcc,clang}-min-version` ones, following commit 88b61e3bff93
+("Makefile.compiler: replace cc-ifversion with compiler-specific macros").
 
-The commit awaits recovery from DPC and then clears events which occurred
-in the meantime.  However if the first event seen after DPC is Data Link
-Layer State Changed, only that event is cleared and not Presence Detect
-Changed.  The object of the commit is thus defeated.
+In addition, use it in the first use case we have in the kernel (which
+was done independently to minimize the changes needed for the fix).
 
-That's because pciehp_ist() computes the events to clear based on the local
-"events" variable instead of "ctrl->pending_events".  The former contains
-the events that had occurred when pciehp_ist() was entered, whereas the
-latter also contains events that have accumulated while awaiting DPC
-recovery.
-
-In practice, the order of PDC and DLLSC events is arbitrary and the delay
-in-between can be several milliseconds.
-
-So change the logic to always clear PDC events, even if they come after an
-initial DLLSC event.
-
-Fixes: c3be50f7547c ("PCI: pciehp: Ignore Presence Detect Changed caused by DPC")
-Reported-by: Lương Việt Hoàng <tcm4095@gmail.com>
-Reported-by: Joel Mathew Thomas <proxy0@tutamail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219765#c165
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Lương Việt Hoàng <tcm4095@gmail.com>
-Tested-by: Joel Mathew Thomas <proxy0@tutamail.com>
-Link: https://patch.msgid.link/d9c4286a16253af7e93eaf12e076e3ef3546367a.1750257164.git.lukas@wunner.de
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Fiona Behrens <me@Kloenk.dev>
+Reviewed-by: Nicolas Schier <n.schier@avm.de>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/hotplug/pciehp_hpc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/kbuild/makefiles.rst |   14 ++++++++++++++
+ arch/arm64/Makefile                |    2 +-
+ scripts/Makefile.compiler          |    4 ++++
+ 3 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/hotplug/pciehp_hpc.c b/drivers/pci/hotplug/pciehp_hpc.c
-index ebd342bda235d..91d2d92717d98 100644
---- a/drivers/pci/hotplug/pciehp_hpc.c
-+++ b/drivers/pci/hotplug/pciehp_hpc.c
-@@ -771,7 +771,7 @@ static irqreturn_t pciehp_ist(int irq, void *dev_id)
- 		u16 ignored_events = PCI_EXP_SLTSTA_DLLSC;
+--- a/Documentation/kbuild/makefiles.rst
++++ b/Documentation/kbuild/makefiles.rst
+@@ -656,6 +656,20 @@ cc-cross-prefix
+             endif
+     endif
  
- 		if (!ctrl->inband_presence_disabled)
--			ignored_events |= events & PCI_EXP_SLTSTA_PDC;
-+			ignored_events |= PCI_EXP_SLTSTA_PDC;
++$(RUSTC) support functions
++--------------------------
++
++rustc-min-version
++  rustc-min-version tests if the value of $(CONFIG_RUSTC_VERSION) is greater
++  than or equal to the provided value and evaluates to y if so.
++
++  Example::
++
++    rustflags-$(call rustc-min-version, 108500) := -Cfoo
++
++  In this example, rustflags-y will be assigned the value -Cfoo if
++  $(CONFIG_RUSTC_VERSION) is >= 1.85.0.
++
+ $(LD) support functions
+ -----------------------
  
- 		events &= ~ignored_events;
- 		pciehp_ignore_link_change(ctrl, pdev, irq, ignored_events);
--- 
-2.39.5
-
+--- a/arch/arm64/Makefile
++++ b/arch/arm64/Makefile
+@@ -48,7 +48,7 @@ KBUILD_CFLAGS	+= $(CC_FLAGS_NO_FPU) \
+ KBUILD_CFLAGS	+= $(call cc-disable-warning, psabi)
+ KBUILD_AFLAGS	+= $(compat_vdso)
+ 
+-ifeq ($(call test-ge, $(CONFIG_RUSTC_VERSION), 108500),y)
++ifeq ($(call rustc-min-version, 108500),y)
+ KBUILD_RUSTFLAGS += --target=aarch64-unknown-none-softfloat
+ else
+ KBUILD_RUSTFLAGS += --target=aarch64-unknown-none -Ctarget-feature="-neon"
+--- a/scripts/Makefile.compiler
++++ b/scripts/Makefile.compiler
+@@ -67,6 +67,10 @@ gcc-min-version = $(call test-ge, $(CONF
+ # Usage: cflags-$(call clang-min-version, 110000) += -foo
+ clang-min-version = $(call test-ge, $(CONFIG_CLANG_VERSION), $1)
+ 
++# rustc-min-version
++# Usage: rustc-$(call rustc-min-version, 108500) += -Cfoo
++rustc-min-version = $(call test-ge, $(CONFIG_RUSTC_VERSION), $1)
++
+ # ld-option
+ # Usage: KBUILD_LDFLAGS += $(call ld-option, -X, -Y)
+ ld-option = $(call try-run, $(LD) $(KBUILD_LDFLAGS) $(1) -v,$(1),$(2),$(3))
 
 
