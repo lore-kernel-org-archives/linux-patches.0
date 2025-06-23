@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56095223714;
-	Mon, 23 Jun 2025 21:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E081E1A05;
+	Mon, 23 Jun 2025 21:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715113; cv=none; b=bylU5lDZk9dBhrQOTEBBbqpCnYLkMEX9LDUVV3uA2ePinoPfFmUX2M8EVfAgzOcZPOVrgMIuPX+DyEiWNMqoebSQwHPwqZz2mKfFDER4q2pwFOiNXnb+ASVHzyghvkAXAxmpTvYvY+IlHvhGLUQ0s5HWPchjPp58ct51+1uvfXQ=
+	t=1750715117; cv=none; b=iW39lqwYMNVLsQgTKW5qH1rT9tRkOBsgLtSRwKxqmMI1WsNH7XstRIazM1AJC4x2uOLpxnRr5MKQqG7A5qxuacncTJ4EBW7fiz9eD3/6ca8weyloDSJXv+fm9rWpDGOKO76pzLaZrE1jTn9YKSYnj6RWTQ6i+Rn7NmcDyL6ltMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715113; c=relaxed/simple;
-	bh=j1HbhabhAOZI5f2D18C3pvfpsatjfGVd2+AWUzBTiss=;
+	s=arc-20240116; t=1750715117; c=relaxed/simple;
+	bh=S/RnSST8mWOiqg4ik+WJOtxBu9qBGdI2hvZZLIsop+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evuC/zJObxS37uUJuGlkoqNijJhVwFr4S7f/ZYz09/bdazp+9ERyX3G6FRmJbvu4+Qrul8FBrE9kZzwtqGAsWA7ihw7Vkax3LNf9WMmT+9UVuMmU8KvPSRoq3JfmMny0WxW6LLSWp2LG4Sa81ijVqCi0255LwQyuFGgXBiPtXB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdFDiUMy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tYGjYr5Z0a03PzaSx6VZWM50pEHhMYJsClhd9SU/o8JNLJ3yuMfJYt+5CZDylYf/2Ljs01v6E1OcVPPlAm3PXsj4p4gWEWx0vYMGIxscuv/RQ6AytIB+o0oktokxUrlPJOuzk9LA0xbT9f8HeBJxthcrt1dj7obd0Yyd9t/urgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nY7sOFz/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdFDiUMy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3BDC4CEEA;
-	Mon, 23 Jun 2025 21:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nY7sOFz/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09744C4CEEA;
+	Mon, 23 Jun 2025 21:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715112;
-	bh=j1HbhabhAOZI5f2D18C3pvfpsatjfGVd2+AWUzBTiss=;
+	s=korg; t=1750715115;
+	bh=S/RnSST8mWOiqg4ik+WJOtxBu9qBGdI2hvZZLIsop+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gdFDiUMy3R97pIRVbc8BDNsHr2A+87JvjhNGY13wRnRnCiTQAwNMk4/kje97Stf3K
-	 EkqbBB5oDXBcfyMylD9ADK8OkZQkXZTvgzZCAOxnIW7LAtpHcUX8PzeSQX3BQynZm3
-	 40OmmWNXZ+qHluaNTjOlgxIlMXsdQM/sMi1UB0l8=
+	b=nY7sOFz/DCdtbdBJOSSrBbf6s11jfRUdZe0UTrdD8hCEhv3isQJaEIS/d/mEax9DF
+	 /zEWw90e5Y97WYpLIYlbMLKndNJGaEfX6ICd7ABIa7OMlGkudzd1OqnpPgGM7Fpm/F
+	 zT7RSjhP3CYbOcp/eJvHNB8Qx+uwA5CpES3MuuTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.15 229/411] ext4: factor out ext4_get_maxbytes()
-Date: Mon, 23 Jun 2025 15:06:13 +0200
-Message-ID: <20250623130639.425877388@linuxfoundation.org>
+	Petr Malat <oss@malat.biz>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 253/355] sctp: Do not wake readers in __sctp_write_space()
+Date: Mon, 23 Jun 2025 15:07:34 +0200
+Message-ID: <20250623130634.357620009@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,78 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Petr Malat <oss@malat.biz>
 
-commit dbe27f06fa38b9bfc598f8864ae1c5d5831d9992 upstream.
+[ Upstream commit af295892a7abbf05a3c2ba7abc4d81bb448623d6 ]
 
-There are several locations that get the correct maxbytes value based on
-the inode's block type. It would be beneficial to extract a common
-helper function to make the code more clear.
+Function __sctp_write_space() doesn't set poll key, which leads to
+ep_poll_callback() waking up all waiters, not only these waiting
+for the socket being writable. Set the key properly using
+wake_up_interruptible_poll(), which is preferred over the sync
+variant, as writers are not woken up before at least half of the
+queue is available. Also, TCP does the same.
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Link: https://patch.msgid.link/20250506012009.3896990-3-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Petr Malat <oss@malat.biz>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250516081727.1361451-1-oss@malat.biz
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h    |    7 +++++++
- fs/ext4/extents.c |    7 +------
- fs/ext4/file.c    |    7 +------
- 3 files changed, 9 insertions(+), 12 deletions(-)
+ net/sctp/socket.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -3377,6 +3377,13 @@ static inline unsigned int ext4_flex_bg_
- 	return 1 << sbi->s_log_groups_per_flex;
- }
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 3d6c9e35781e9..196196ebe81a9 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -8849,7 +8849,8 @@ static void __sctp_write_space(struct sctp_association *asoc)
+ 		wq = rcu_dereference(sk->sk_wq);
+ 		if (wq) {
+ 			if (waitqueue_active(&wq->wait))
+-				wake_up_interruptible(&wq->wait);
++				wake_up_interruptible_poll(&wq->wait, EPOLLOUT |
++						EPOLLWRNORM | EPOLLWRBAND);
  
-+static inline loff_t ext4_get_maxbytes(struct inode *inode)
-+{
-+	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
-+		return inode->i_sb->s_maxbytes;
-+	return EXT4_SB(inode->i_sb)->s_bitmap_maxbytes;
-+}
-+
- #define ext4_std_error(sb, errno)				\
- do {								\
- 	if ((errno))						\
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -4977,12 +4977,7 @@ static const struct iomap_ops ext4_iomap
- 
- static int ext4_fiemap_check_ranges(struct inode *inode, u64 start, u64 *len)
- {
--	u64 maxbytes;
--
--	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
--		maxbytes = inode->i_sb->s_maxbytes;
--	else
--		maxbytes = EXT4_SB(inode->i_sb)->s_bitmap_maxbytes;
-+	u64 maxbytes = ext4_get_maxbytes(inode);
- 
- 	if (*len == 0)
- 		return -EINVAL;
---- a/fs/ext4/file.c
-+++ b/fs/ext4/file.c
-@@ -863,12 +863,7 @@ static int ext4_file_open(struct inode *
- loff_t ext4_llseek(struct file *file, loff_t offset, int whence)
- {
- 	struct inode *inode = file->f_mapping->host;
--	loff_t maxbytes;
--
--	if (!(ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
--		maxbytes = EXT4_SB(inode->i_sb)->s_bitmap_maxbytes;
--	else
--		maxbytes = inode->i_sb->s_maxbytes;
-+	loff_t maxbytes = ext4_get_maxbytes(inode);
- 
- 	switch (whence) {
- 	default:
+ 			/* Note that we try to include the Async I/O support
+ 			 * here by modeling from the current TCP/UDP code.
+-- 
+2.39.5
+
 
 
