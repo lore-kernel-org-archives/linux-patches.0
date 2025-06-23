@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFC1136348;
-	Mon, 23 Jun 2025 21:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F5D136348;
+	Mon, 23 Jun 2025 21:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715482; cv=none; b=dCBlol5s/7eXguyH31u5ZgYJc5LQyP9Uf46PJmLT4lQXJSUfCkkCzPC3r8jR8XMPCn/AXVHRfqT06X9vw8opwwT0B/JV5nAF7TUIRBqqDCLabKsChGxFEJ2Bjkvy0PboYLosARF45PGP4GYnS7NgQ6iZtnXdwKy3dV2zHnxc5V0=
+	t=1750715484; cv=none; b=L8u7OGZDXoe+tlAZfY4ukIVEK+iseGMmmnt1ST/xcbwWx0kojVfxv5rk0N8KIQqyN+3VuQ6zCGt0y9XKihQ0yb+Tb6jvKeIOhCI8pWiwMalM6stNjUouSP5DY4I+jWwyVJrtkOxzHizNtDMRzGi8TS2/WTSdqJZprAlWGX1jYJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715482; c=relaxed/simple;
-	bh=mZ1rC8E0LuCPKhNiKDAO4l8VYYwOWcqSkzRda54YhkA=;
+	s=arc-20240116; t=1750715484; c=relaxed/simple;
+	bh=LHsfskMnFBmo/VMPKa7fk9yNsA59gPhVon71kWbiLJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ftprqwvtVWxeCVjBM/e4t3IZ5910VILycNTePvyzzSwzfRAcM5RHLEmIB/2elCHgdCuDZ/60WKiSfAm4drbO/5Blb52MmAHuspjuSSG/BGgf4mNLw70puyhLzljdNGtNbymmP8rgJ8FLRpo5AesJ83cy/iNHt5DytU3XUl86uhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJdZlOaL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tMcbF8Mz2UjSPdcyPQzIWVB1KYp7lyArdOoVGF4X851fMBWqmeKT4eNhDOgRKoSGvgDkZ+wChnQbYUN5qecgb91PKCebA7Zckk7gny9s6C1HYsE9/PqFwIlwcZLCAFP2Xs5o8cieslRT0drO2iW0fpSCxP/yfrOqnMjHJta0Hjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bzUoY/LJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJdZlOaL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA232C4CEEA;
-	Mon, 23 Jun 2025 21:51:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bzUoY/LJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BFCBC4CEEA;
+	Mon, 23 Jun 2025 21:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715482;
-	bh=mZ1rC8E0LuCPKhNiKDAO4l8VYYwOWcqSkzRda54YhkA=;
+	s=korg; t=1750715484;
+	bh=LHsfskMnFBmo/VMPKa7fk9yNsA59gPhVon71kWbiLJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJdZlOaLNa5GH0QdfgulqnjHvsb9eo+3GNXywXe6LiPOXcQEeesON5EzrYG98IEp/
-	 7+RWdUx+XYIWIdc40yuS3Is/LIP29twEwRA53bqYsrf8MOAnEb4CTZd4MZeB25Hith
-	 cYAegAoL65NEcvduiy0gdNVZI2GD4qZCw2//sR7M=
+	b=bzUoY/LJmfS96dyDe50g3YAEu30BS78/Bp2Ah0OxdyJWP3FGcowrQ+s++9aiuLV5m
+	 283oNpHcpjmYKrHcRzEa6RLzqbqQSZ5DtcXQS8hZ1jJ6exYJ7RQHynzCon3rgxCOmQ
+	 nQrxsMcDVFptIB3Q7BXELutJVQkBf9h0ZDnYleMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 280/411] drm/amd/display: Add NULL pointer checks in dm_force_atomic_commit()
-Date: Mon, 23 Jun 2025 15:07:04 +0200
-Message-ID: <20250623130640.698642911@linuxfoundation.org>
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.15 482/592] selinux: fix selinux_xfrm_alloc_user() to set correct ctx_len
+Date: Mon, 23 Jun 2025 15:07:20 +0200
+Message-ID: <20250623130711.899295666@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,88 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-[ Upstream commit 3f397cd203f247879c2f1a061e90d4c8d23655de ]
+commit 86c8db86af43f52f682e53a0f2f0828683be1e52 upstream.
 
-This commit updates the dm_force_atomic_commit function to replace the
-usage of PTR_ERR_OR_ZERO with IS_ERR for checking error states after
-retrieving the Connector (drm_atomic_get_connector_state), CRTC
-(drm_atomic_get_crtc_state), and Plane (drm_atomic_get_plane_state)
-states.
+We should count the terminating NUL byte as part of the ctx_len.
+Otherwise, UBSAN logs a warning:
+  UBSAN: array-index-out-of-bounds in security/selinux/xfrm.c:99:14
+  index 60 is out of range for type 'char [*]'
 
-The function utilized PTR_ERR_OR_ZERO for error checking. However, this
-approach is inappropriate in this context because the respective
-functions do not return NULL; they return pointers that encode errors.
+The allocation itself is correct so there is no actual out of bounds
+indexing, just a warning.
 
-This change ensures that error pointers are properly checked using
-IS_ERR before attempting to dereference.
-
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Suggested-by: Christian Göttsche <cgzones@googlemail.com>
+Link: https://lore.kernel.org/selinux/CAEjxPJ6tA5+LxsGfOJokzdPeRomBHjKLBVR6zbrg+_w3ZZbM3A@mail.gmail.com/
+Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ security/selinux/xfrm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index e9f592bdac27f..24bb7063670ae 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -10044,16 +10044,20 @@ static int dm_force_atomic_commit(struct drm_connector *connector)
- 	 */
- 	conn_state = drm_atomic_get_connector_state(state, connector);
+--- a/security/selinux/xfrm.c
++++ b/security/selinux/xfrm.c
+@@ -94,7 +94,7 @@ static int selinux_xfrm_alloc_user(struc
  
--	ret = PTR_ERR_OR_ZERO(conn_state);
--	if (ret)
-+	/* Check for error in getting connector state */
-+	if (IS_ERR(conn_state)) {
-+		ret = PTR_ERR(conn_state);
- 		goto out;
-+	}
- 
- 	/* Attach crtc to drm_atomic_state*/
- 	crtc_state = drm_atomic_get_crtc_state(state, &disconnected_acrtc->base);
- 
--	ret = PTR_ERR_OR_ZERO(crtc_state);
--	if (ret)
-+	/* Check for error in getting crtc state */
-+	if (IS_ERR(crtc_state)) {
-+		ret = PTR_ERR(crtc_state);
- 		goto out;
-+	}
- 
- 	/* force a restore */
- 	crtc_state->mode_changed = true;
-@@ -10061,9 +10065,11 @@ static int dm_force_atomic_commit(struct drm_connector *connector)
- 	/* Attach plane to drm_atomic_state */
- 	plane_state = drm_atomic_get_plane_state(state, plane);
- 
--	ret = PTR_ERR_OR_ZERO(plane_state);
--	if (ret)
-+	/* Check for error in getting plane state */
-+	if (IS_ERR(plane_state)) {
-+		ret = PTR_ERR(plane_state);
- 		goto out;
-+	}
- 
- 	/* Call commit internally with the state we just constructed */
- 	ret = drm_atomic_commit(state);
--- 
-2.39.5
-
+ 	ctx->ctx_doi = XFRM_SC_DOI_LSM;
+ 	ctx->ctx_alg = XFRM_SC_ALG_SELINUX;
+-	ctx->ctx_len = str_len;
++	ctx->ctx_len = str_len + 1;
+ 	memcpy(ctx->ctx_str, &uctx[1], str_len);
+ 	ctx->ctx_str[str_len] = '\0';
+ 	rc = security_context_to_sid(ctx->ctx_str, str_len,
 
 
