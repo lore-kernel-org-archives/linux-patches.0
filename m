@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6552475E3;
-	Mon, 23 Jun 2025 13:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F01E1E487;
+	Mon, 23 Jun 2025 13:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685971; cv=none; b=ptvBlIfYX7vwpcFGeTs3S4h57YiqnwCHSjLUbSUb5P0+rPQaKz1mdjztyR9QMhtdfjPHFiIK5+okhHuFCtujF+V0LMFFFPB5IICe4POFhUGEAeVQHZ0matE1KJMTOM3c9ctP479fzDg4eJjnH/QtoDrIIO+ncyg7jLGMrFYScS8=
+	t=1750685974; cv=none; b=gE1I/TG+KRcO6lIko0IM/6yuxL0UTgnznm43gHH6lUMZIb9hN5n6Rxv9+X1zUUmLRDptM622cV74k6XtNT3Dmc3HUNtqgA9/oKHq06hJmIcYtjamh7POVnfi2HTA3K3+4VeCX1oXztLOHTX4hjeaOoUmyAbj86tpW3lFPr7EPGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685971; c=relaxed/simple;
-	bh=6PebgWWz9evJJy6AAhDlRxBH9L2OZpXxd6U5e1TaxUA=;
+	s=arc-20240116; t=1750685974; c=relaxed/simple;
+	bh=+VE5n96Pat/CBEGoQq/F8/iCTUgEDLhA9ACq2Y48S+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKgMT8XAN25uke5nNmzmLJYXCROyZ693a7wLpE3oH7j6BaoFRVTXq0KHUBqH8nOujT+iq8MMmB91iUSj2QRauzlyJvrqYEFFfDJeRk88OcCsdgphcm2sT1d5pq1qL062eUOqbaOs9DlYFYbsGfqQj1O7IoCT0fIepLX1YgI8H/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uX/wfCA8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h/GAZkkeRZsYtlqo0VSBWKH9bf4bmH+mSG1Pzo4Cc15sPMbS2ogidYT7XT7067gv/JPdbshPg0H4H84WiGw9MHrKdWoKn9Br8aS+Rzt6M47MCFPjTNsvNcb/IGTW8XrbgalqLXGJolbpkSa69D7fJSlOag+MEs3ic4u/QCPxQFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTqoRfFr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uX/wfCA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3562C4CEEA;
-	Mon, 23 Jun 2025 13:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTqoRfFr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDDFC4CEEA;
+	Mon, 23 Jun 2025 13:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685971;
-	bh=6PebgWWz9evJJy6AAhDlRxBH9L2OZpXxd6U5e1TaxUA=;
+	s=korg; t=1750685973;
+	bh=+VE5n96Pat/CBEGoQq/F8/iCTUgEDLhA9ACq2Y48S+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uX/wfCA8NP2YTsV5lPwd1POstduXo5S4hry3NHYU3WAILXxkj5dUWB34totaCwz44
-	 tReLDKMYrFIOMn9Eq/PYz66vB6Ik4wSRdbNjUdrprll//b9xfU0xa7io+HxPLxQ4dO
-	 hZ3/TMQ1Bj9QgqWcO1ahdDowJNDXNo6kx1C3BTvk=
+	b=nTqoRfFr6Dnzya/sbpbt33z1CSPRLgGS/MpffEhQGQdT70bH9tPsqVZlGS80hrYwO
+	 w0oIOl+hnXCrg0EdLDAXm9vhyVf75jrmuMh/EJDQKvB5FeGEWCnvGyJfsokF3S3sQt
+	 HsWGblY+8DGs9YsVSlrdctC3nCSu3DY08h9xYJvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqing Pan <quic_miaoqing@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Steev Klimaszewski <steev@kali.org>,
-	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
-	Clayton Craft <clayton@craftyguy.net>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.6 015/290] wifi: ath11k: fix ring-buffer corruption
-Date: Mon, 23 Jun 2025 15:04:36 +0200
-Message-ID: <20250623130627.443369486@linuxfoundation.org>
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 083/355] nfs: clear SB_RDONLY before getting superblock
+Date: Mon, 23 Jun 2025 15:04:44 +0200
+Message-ID: <20250623130629.306087199@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,102 +47,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-commit 6d037a372f817e9fcb56482f37917545596bd776 upstream.
+[ Upstream commit 8cd9b785943c57a136536250da80ba1eb6f8eb18 ]
 
-Users of the Lenovo ThinkPad X13s have reported that Wi-Fi sometimes
-breaks and the log fills up with errors like:
+As described in the link, commit 52cb7f8f1778 ("nfs: ignore SB_RDONLY when
+mounting nfs") removed the check for the ro flag when determining whether
+to share the superblock, which caused issues when mounting different
+subdirectories under the same export directory via NFSv3. However, this
+change did not affect NFSv4.
 
-    ath11k_pci 0006:01:00.0: HTC Rx: insufficient length, got 1484, expected 1492
-    ath11k_pci 0006:01:00.0: HTC Rx: insufficient length, got 1460, expected 1484
+For NFSv3:
+1) A single superblock is created for the initial mount.
+2) When mounted read-only, this superblock carries the SB_RDONLY flag.
+3) Before commit 52cb7f8f1778 ("nfs: ignore SB_RDONLY when mounting nfs"):
+Subsequent rw mounts would not share the existing ro superblock due to
+flag mismatch, creating a new superblock without SB_RDONLY.
+After the commit:
+  The SB_RDONLY flag is ignored during superblock comparison, and this leads
+  to sharing the existing superblock even for rw mounts.
+  Ultimately results in write operations being rejected at the VFS layer.
 
-which based on a quick look at the driver seemed to indicate some kind
-of ring-buffer corruption.
+For NFSv4:
+1) Multiple superblocks are created and the last one will be kept.
+2) The actually used superblock for ro mounts doesn't carry SB_RDONLY flag.
+Therefore, commit 52cb7f8f1778 doesn't affect NFSv4 mounts.
 
-Miaoqing Pan tracked it down to the host seeing the updated destination
-ring head pointer before the updated descriptor, and the error handling
-for that in turn leaves the ring buffer in an inconsistent state.
+Clear SB_RDONLY before getting superblock when NFS_MOUNT_UNSHARED is not
+set to fix it.
 
-Add the missing memory barrier to make sure that the descriptor is read
-after the head pointer to address the root cause of the corruption while
-fixing up the error handling in case there are ever any (ordering) bugs
-on the device side.
-
-Note that the READ_ONCE() are only needed to avoid compiler mischief in
-case the ring-buffer helpers are ever inlined.
-
-Tested-on: WCN6855 hw2.1 WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218623
-Link: https://lore.kernel.org/20250310010217.3845141-3-quic_miaoqing@quicinc.com
-Cc: Miaoqing Pan <quic_miaoqing@quicinc.com>
-Cc: stable@vger.kernel.org	# 5.6
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
-Tested-by: Steev Klimaszewski <steev@kali.org>
-Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Tested-by: Clayton Craft <clayton@craftyguy.net>
-Link: https://patch.msgid.link/20250321094916.19098-1-johan+linaro@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 52cb7f8f1778 ("nfs: ignore SB_RDONLY when mounting nfs")
+Closes: https://lore.kernel.org/all/12d7ea53-1202-4e21-a7ef-431c94758ce5@app.fastmail.com/T/
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/ce.c  |   11 +++++------
- drivers/net/wireless/ath/ath11k/hal.c |    4 ++--
- 2 files changed, 7 insertions(+), 8 deletions(-)
+ fs/nfs/super.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/net/wireless/ath/ath11k/ce.c
-+++ b/drivers/net/wireless/ath/ath11k/ce.c
-@@ -393,11 +393,10 @@ static int ath11k_ce_completed_recv_next
- 		goto err;
- 	}
+diff --git a/fs/nfs/super.c b/fs/nfs/super.c
+index 2d2238548a6e5..27923c2b36f77 100644
+--- a/fs/nfs/super.c
++++ b/fs/nfs/super.c
+@@ -1248,8 +1248,17 @@ int nfs_get_tree_common(struct fs_context *fc)
+ 	if (IS_ERR(server))
+ 		return PTR_ERR(server);
  
-+	/* Make sure descriptor is read after the head pointer. */
-+	dma_rmb();
-+
- 	*nbytes = ath11k_hal_ce_dst_status_get_length(desc);
--	if (*nbytes == 0) {
--		ret = -EIO;
--		goto err;
--	}
++	/*
++	 * When NFS_MOUNT_UNSHARED is not set, NFS forces the sharing of a
++	 * superblock among each filesystem that mounts sub-directories
++	 * belonging to a single exported root path.
++	 * To prevent interference between different filesystems, the
++	 * SB_RDONLY flag should be removed from the superblock.
++	 */
+ 	if (server->flags & NFS_MOUNT_UNSHARED)
+ 		compare_super = NULL;
++	else
++		fc->sb_flags &= ~SB_RDONLY;
  
- 	*skb = pipe->dest_ring->skb[sw_index];
- 	pipe->dest_ring->skb[sw_index] = NULL;
-@@ -430,8 +429,8 @@ static void ath11k_ce_recv_process_cb(st
- 		dma_unmap_single(ab->dev, ATH11K_SKB_RXCB(skb)->paddr,
- 				 max_nbytes, DMA_FROM_DEVICE);
- 
--		if (unlikely(max_nbytes < nbytes)) {
--			ath11k_warn(ab, "rxed more than expected (nbytes %d, max %d)",
-+		if (unlikely(max_nbytes < nbytes || nbytes == 0)) {
-+			ath11k_warn(ab, "unexpected rx length (nbytes %d, max %d)",
- 				    nbytes, max_nbytes);
- 			dev_kfree_skb_any(skb);
- 			continue;
---- a/drivers/net/wireless/ath/ath11k/hal.c
-+++ b/drivers/net/wireless/ath/ath11k/hal.c
-@@ -601,7 +601,7 @@ u32 ath11k_hal_ce_dst_status_get_length(
- 		(struct hal_ce_srng_dst_status_desc *)buf;
- 	u32 len;
- 
--	len = FIELD_GET(HAL_CE_DST_STATUS_DESC_FLAGS_LEN, desc->flags);
-+	len = FIELD_GET(HAL_CE_DST_STATUS_DESC_FLAGS_LEN, READ_ONCE(desc->flags));
- 	desc->flags &= ~HAL_CE_DST_STATUS_DESC_FLAGS_LEN;
- 
- 	return len;
-@@ -802,7 +802,7 @@ void ath11k_hal_srng_access_begin(struct
- 		srng->u.src_ring.cached_tp =
- 			*(volatile u32 *)srng->u.src_ring.tp_addr;
- 	} else {
--		srng->u.dst_ring.cached_hp = *srng->u.dst_ring.hp_addr;
-+		srng->u.dst_ring.cached_hp = READ_ONCE(*srng->u.dst_ring.hp_addr);
- 
- 		/* Try to prefetch the next descriptor in the ring */
- 		if (srng->flags & HAL_SRNG_FLAGS_CACHED)
+ 	/* -o noac implies -o sync */
+ 	if (server->flags & NFS_MOUNT_NOAC)
+-- 
+2.39.5
+
 
 
