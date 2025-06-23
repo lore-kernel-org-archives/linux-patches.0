@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3D71EEA5D;
-	Mon, 23 Jun 2025 21:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5AE1F3B96;
+	Mon, 23 Jun 2025 21:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714563; cv=none; b=K/fniRUZn7TCwlo7AprPW+FK7A1wqRoPOc460ddsEF2Ld2oFb4TqV+9UC8iu3OgbMJvxNiGuMdgJOjIzuzkMkw7nYxHCOWp7AG1TrB4r40TEhbhYkFhc45Ny3lZc/qx9kTox+MFsgVBoUhIueEhcGLEVMHOdtdUIow9+ROcFEYE=
+	t=1750714568; cv=none; b=iaDrgEQ177QQqwFnwX9NpCI27xuF0I0CI/J+X7sVLlg5xp0rMLWPYs8wpSF47vicWp63/TvwT1ZYdpHbbDJPO0536AoAJvImKKCuM2IwMNovCmLhcrhfYV2jk/Or9mpD8YElHXKPnWNQOE2feiRxnt1gvjQv/pfKvRp+AYKZaTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714563; c=relaxed/simple;
-	bh=ljwIztz9yrt5BLWjJXkeKCqMePLScNWGdDfJ+RR3KLk=;
+	s=arc-20240116; t=1750714568; c=relaxed/simple;
+	bh=+IxT6NNiF4Dgt0cQ8KB7xh2N2NkTift8LZdCZXIUKBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nthk+1cCozEWIQHb+YEpKfFdJc1oz/XBvhkc8+2UYBc5l3FhHT6IDmVM00uJ4YYjy+uJQQsnCOAAlXQkR+QlE0rAdHw0qXKczcOFKlchGmnVQuKaS4EpTNInWl9c+8wbbbUVI5Xbcs60EHVO2y+sK5aaFI1bMPuyRsdYGKxChGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OGvWgeIl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N/gyIPfTHdv25Ut4dBm0m9yKdKj6EQPcXkfj3xQiImyyDDqyczisPkQ5s1GvxEJRdR0PL3Eb4NmQKIKj+Sd32AfNDEoaDw4s/JM3CRqBWJNeiPQs+9ws8SZMDv7B6+a/7AQCsDfOk9Hfx+qBzW8iF7e72el1w4+Rr9RiKBzZOS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JaWGZZFS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OGvWgeIl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1631FC4CEEA;
-	Mon, 23 Jun 2025 21:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JaWGZZFS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FB4C4CEEA;
+	Mon, 23 Jun 2025 21:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714563;
-	bh=ljwIztz9yrt5BLWjJXkeKCqMePLScNWGdDfJ+RR3KLk=;
+	s=korg; t=1750714567;
+	bh=+IxT6NNiF4Dgt0cQ8KB7xh2N2NkTift8LZdCZXIUKBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OGvWgeIlGSA+OHbWoYrjY/YTm8RePfFwY/omH7ij9MqM7pXLVq3FZO2RtBDeTLgSF
-	 oKdHcT6Oy9IJj19crnq9AZw3AvvhxOs4Xd8/w3NIUF+eKGOBAepePNkYCgYN507nqp
-	 jkLiqmPFMcuiMeQ7fGSYMTlHZgdLPIeyj5bg9GQc=
+	b=JaWGZZFSnmKrzT7DySlxG0EBFRgn8/iDLas75WsaxV01FGcmtLfAGNToMOZdEpjmQ
+	 7C/Mcl/puAC1lJAaC264BQHS901Ay/YEx53DRExAUOhbsBqnrQVrQyviQHJlWdFHC7
+	 ag9Ev6+6iQdEseJs86p7FmB06DzR5m11+SWk4sKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9c09fda97a1a65ea859b@syzkaller.appspotmail.com,
-	Yi Yang <yiyang13@huawei.com>,
-	GONG Ruiqi <gongruiqi1@huawei.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 111/414] vgacon: Add check for vc_origin address range in vgacon_scroll()
-Date: Mon, 23 Jun 2025 15:04:08 +0200
-Message-ID: <20250623130644.865920958@linuxfoundation.org>
+	Jonas Sortie Termansen <sortie@maxsi.org>,
+	Jan Kara <jack@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 402/592] isofs: fix Y2038 and Y2156 issues in Rock Ridge TF entry
+Date: Mon, 23 Jun 2025 15:06:00 +0200
+Message-ID: <20250623130710.001617762@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,188 +47,238 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: GONG Ruiqi <gongruiqi1@huawei.com>
+From: Jonas 'Sortie' Termansen <sortie@maxsi.org>
 
-commit 864f9963ec6b4b76d104d595ba28110b87158003 upstream.
+[ Upstream commit 5ea45f54c8d6ca2a95b7bd450ee9eb253310bfd3 ]
 
-Our in-house Syzkaller reported the following BUG (twice), which we
-believed was the same issue with [1]:
+This change implements the Rock Ridge TF entry LONG_FORM bit, which uses
+the ISO 9660 17-byte date format (up to year 9999, with 10ms precision)
+instead of the 7-byte date format (up to year 2155, with 1s precision).
 
-==================================================================
-BUG: KASAN: slab-out-of-bounds in vcs_scr_readw+0xc2/0xd0 drivers/tty/vt/vt.c:4740
-Read of size 2 at addr ffff88800f5bef60 by task syz.7.2620/12393
-...
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x72/0xa0 lib/dump_stack.c:106
- print_address_description.constprop.0+0x6b/0x3d0 mm/kasan/report.c:364
- print_report+0xba/0x280 mm/kasan/report.c:475
- kasan_report+0xa9/0xe0 mm/kasan/report.c:588
- vcs_scr_readw+0xc2/0xd0 drivers/tty/vt/vt.c:4740
- vcs_write_buf_noattr drivers/tty/vt/vc_screen.c:493 [inline]
- vcs_write+0x586/0x840 drivers/tty/vt/vc_screen.c:690
- vfs_write+0x219/0x960 fs/read_write.c:584
- ksys_write+0x12e/0x260 fs/read_write.c:639
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x59/0x110 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x78/0xe2
- ...
- </TASK>
+Previously the LONG_FORM bit was ignored; and isofs would entirely
+misinterpret the date as the wrong format, resulting in garbage
+timestamps on the filesystem.
 
-Allocated by task 5614:
- kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
- kasan_set_track+0x25/0x30 mm/kasan/common.c:52
- ____kasan_kmalloc mm/kasan/common.c:374 [inline]
- __kasan_kmalloc+0x8f/0xa0 mm/kasan/common.c:383
- kasan_kmalloc include/linux/kasan.h:201 [inline]
- __do_kmalloc_node mm/slab_common.c:1007 [inline]
- __kmalloc+0x62/0x140 mm/slab_common.c:1020
- kmalloc include/linux/slab.h:604 [inline]
- kzalloc include/linux/slab.h:721 [inline]
- vc_do_resize+0x235/0xf40 drivers/tty/vt/vt.c:1193
- vgacon_adjust_height+0x2d4/0x350 drivers/video/console/vgacon.c:1007
- vgacon_font_set+0x1f7/0x240 drivers/video/console/vgacon.c:1031
- con_font_set drivers/tty/vt/vt.c:4628 [inline]
- con_font_op+0x4da/0xa20 drivers/tty/vt/vt.c:4675
- vt_k_ioctl+0xa10/0xb30 drivers/tty/vt/vt_ioctl.c:474
- vt_ioctl+0x14c/0x1870 drivers/tty/vt/vt_ioctl.c:752
- tty_ioctl+0x655/0x1510 drivers/tty/tty_io.c:2779
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:871 [inline]
- __se_sys_ioctl+0x12d/0x190 fs/ioctl.c:857
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x59/0x110 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x78/0xe2
+The Y2038 issue in iso_date() is fixed by returning a struct timespec64
+instead of an int.
 
-Last potentially related work creation:
- kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
- __kasan_record_aux_stack+0x94/0xa0 mm/kasan/generic.c:492
- __call_rcu_common.constprop.0+0xc3/0xa10 kernel/rcu/tree.c:2713
- netlink_release+0x620/0xc20 net/netlink/af_netlink.c:802
- __sock_release+0xb5/0x270 net/socket.c:663
- sock_close+0x1e/0x30 net/socket.c:1425
- __fput+0x408/0xab0 fs/file_table.c:384
- __fput_sync+0x4c/0x60 fs/file_table.c:465
- __do_sys_close fs/open.c:1580 [inline]
- __se_sys_close+0x68/0xd0 fs/open.c:1565
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x59/0x110 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x78/0xe2
+parse_rock_ridge_inode_internal() is fixed so it does proper bounds
+checks of the TF entry timestamps.
 
-Second to last potentially related work creation:
- kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
- __kasan_record_aux_stack+0x94/0xa0 mm/kasan/generic.c:492
- __call_rcu_common.constprop.0+0xc3/0xa10 kernel/rcu/tree.c:2713
- netlink_release+0x620/0xc20 net/netlink/af_netlink.c:802
- __sock_release+0xb5/0x270 net/socket.c:663
- sock_close+0x1e/0x30 net/socket.c:1425
- __fput+0x408/0xab0 fs/file_table.c:384
- task_work_run+0x154/0x240 kernel/task_work.c:239
- exit_task_work include/linux/task_work.h:45 [inline]
- do_exit+0x8e5/0x1320 kernel/exit.c:874
- do_group_exit+0xcd/0x280 kernel/exit.c:1023
- get_signal+0x1675/0x1850 kernel/signal.c:2905
- arch_do_signal_or_restart+0x80/0x3b0 arch/x86/kernel/signal.c:310
- exit_to_user_mode_loop kernel/entry/common.c:111 [inline]
- exit_to_user_mode_prepare include/linux/entry-common.h:328 [inline]
- __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
- syscall_exit_to_user_mode+0x1b3/0x1e0 kernel/entry/common.c:218
- do_syscall_64+0x66/0x110 arch/x86/entry/common.c:87
- entry_SYSCALL_64_after_hwframe+0x78/0xe2
-
-The buggy address belongs to the object at ffff88800f5be000
- which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 2656 bytes to the right of
- allocated 1280-byte region [ffff88800f5be000, ffff88800f5be500)
-
-...
-
-Memory state around the buggy address:
- ffff88800f5bee00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88800f5bee80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
->ffff88800f5bef00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-                                                       ^
- ffff88800f5bef80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88800f5bf000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-==================================================================
-
-By analyzing the vmcore, we found that vc->vc_origin was somehow placed
-one line prior to vc->vc_screenbuf when vc was in KD_TEXT mode, and
-further writings to /dev/vcs caused out-of-bounds reads (and writes
-right after) in vcs_write_buf_noattr().
-
-Our further experiments show that in most cases, vc->vc_origin equals to
-vga_vram_base when the console is in KD_TEXT mode, and it's around
-vc->vc_screenbuf for the KD_GRAPHICS mode. But via triggerring a
-TIOCL_SETVESABLANK ioctl beforehand, we can make vc->vc_origin be around
-vc->vc_screenbuf while the console is in KD_TEXT mode, and then by
-writing the special 'ESC M' control sequence to the tty certain times
-(depends on the value of `vc->state.y - vc->vc_top`), we can eventually
-move vc->vc_origin prior to vc->vc_screenbuf. Here's the PoC, tested on
-QEMU:
-
-```
-int main() {
-	const int RI_NUM = 10; // should be greater than `vc->state.y - vc->vc_top`
-	int tty_fd, vcs_fd;
-	const char *tty_path = "/dev/tty0";
-	const char *vcs_path = "/dev/vcs";
-	const char escape_seq[] = "\x1bM";  // ESC + M
-	const char trigger_seq[] = "Let's trigger an OOB write.";
-	struct vt_sizes vt_size = { 70, 2 };
-	int blank = TIOCL_BLANKSCREEN;
-
-	tty_fd = open(tty_path, O_RDWR);
-
-	char vesa_mode[] = { TIOCL_SETVESABLANK, 1 };
-	ioctl(tty_fd, TIOCLINUX, vesa_mode);
-
-	ioctl(tty_fd, TIOCLINUX, &blank);
-	ioctl(tty_fd, VT_RESIZE, &vt_size);
-
-	for (int i = 0; i < RI_NUM; ++i)
-		write(tty_fd, escape_seq, sizeof(escape_seq) - 1);
-
-	vcs_fd = open(vcs_path, O_RDWR);
-	write(vcs_fd, trigger_seq, sizeof(trigger_seq));
-
-	close(vcs_fd);
-	close(tty_fd);
-	return 0;
-}
-```
-
-To solve this problem, add an address range validation check in
-vgacon_scroll(), ensuring vc->vc_origin never precedes vc_screenbuf.
-
-Reported-by: syzbot+9c09fda97a1a65ea859b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9c09fda97a1a65ea859b [1]
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Co-developed-by: Yi Yang <yiyang13@huawei.com>
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Signed-off-by: GONG Ruiqi <gongruiqi1@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jonas 'Sortie' Termansen <sortie@maxsi.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20250411145022.2292255-1-sortie@maxsi.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/console/vgacon.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/isofs/inode.c |  7 +++++--
+ fs/isofs/isofs.h |  4 +++-
+ fs/isofs/rock.c  | 40 ++++++++++++++++++++++-----------------
+ fs/isofs/rock.h  |  6 +-----
+ fs/isofs/util.c  | 49 +++++++++++++++++++++++++++++++-----------------
+ 5 files changed, 64 insertions(+), 42 deletions(-)
 
---- a/drivers/video/console/vgacon.c
-+++ b/drivers/video/console/vgacon.c
-@@ -1168,7 +1168,7 @@ static bool vgacon_scroll(struct vc_data
- 				     c->vc_screenbuf_size - delta);
- 			c->vc_origin = vga_vram_end - c->vc_screenbuf_size;
- 			vga_rolled_over = 0;
--		} else
-+		} else if (oldo - delta >= (unsigned long)c->vc_screenbuf)
- 			c->vc_origin -= delta;
- 		c->vc_scr_end = c->vc_origin + c->vc_screenbuf_size;
- 		scr_memsetw((u16 *) (c->vc_origin), c->vc_video_erase_char,
+diff --git a/fs/isofs/inode.c b/fs/isofs/inode.c
+index 47038e6608123..d5da9817df9b3 100644
+--- a/fs/isofs/inode.c
++++ b/fs/isofs/inode.c
+@@ -1275,6 +1275,7 @@ static int isofs_read_inode(struct inode *inode, int relocated)
+ 	unsigned long offset;
+ 	struct iso_inode_info *ei = ISOFS_I(inode);
+ 	int ret = -EIO;
++	struct timespec64 ts;
+ 
+ 	block = ei->i_iget5_block;
+ 	bh = sb_bread(inode->i_sb, block);
+@@ -1387,8 +1388,10 @@ static int isofs_read_inode(struct inode *inode, int relocated)
+ 			inode->i_ino, de->flags[-high_sierra]);
+ 	}
+ #endif
+-	inode_set_mtime_to_ts(inode,
+-			      inode_set_atime_to_ts(inode, inode_set_ctime(inode, iso_date(de->date, high_sierra), 0)));
++	ts = iso_date(de->date, high_sierra ? ISO_DATE_HIGH_SIERRA : 0);
++	inode_set_ctime_to_ts(inode, ts);
++	inode_set_atime_to_ts(inode, ts);
++	inode_set_mtime_to_ts(inode, ts);
+ 
+ 	ei->i_first_extent = (isonum_733(de->extent) +
+ 			isonum_711(de->ext_attr_length));
+diff --git a/fs/isofs/isofs.h b/fs/isofs/isofs.h
+index 2d55207c9a990..5065558375333 100644
+--- a/fs/isofs/isofs.h
++++ b/fs/isofs/isofs.h
+@@ -106,7 +106,9 @@ static inline unsigned int isonum_733(u8 *p)
+ 	/* Ignore bigendian datum due to broken mastering programs */
+ 	return get_unaligned_le32(p);
+ }
+-extern int iso_date(u8 *, int);
++#define ISO_DATE_HIGH_SIERRA (1 << 0)
++#define ISO_DATE_LONG_FORM (1 << 1)
++struct timespec64 iso_date(u8 *p, int flags);
+ 
+ struct inode;		/* To make gcc happy */
+ 
+diff --git a/fs/isofs/rock.c b/fs/isofs/rock.c
+index dbf911126e610..576498245b9d7 100644
+--- a/fs/isofs/rock.c
++++ b/fs/isofs/rock.c
+@@ -412,7 +412,12 @@ parse_rock_ridge_inode_internal(struct iso_directory_record *de,
+ 				}
+ 			}
+ 			break;
+-		case SIG('T', 'F'):
++		case SIG('T', 'F'): {
++			int flags, size, slen;
++
++			flags = rr->u.TF.flags & TF_LONG_FORM ? ISO_DATE_LONG_FORM : 0;
++			size = rr->u.TF.flags & TF_LONG_FORM ? 17 : 7;
++			slen = rr->len - 5;
+ 			/*
+ 			 * Some RRIP writers incorrectly place ctime in the
+ 			 * TF_CREATE field. Try to handle this correctly for
+@@ -420,27 +425,28 @@ parse_rock_ridge_inode_internal(struct iso_directory_record *de,
+ 			 */
+ 			/* Rock ridge never appears on a High Sierra disk */
+ 			cnt = 0;
+-			if (rr->u.TF.flags & TF_CREATE) {
+-				inode_set_ctime(inode,
+-						iso_date(rr->u.TF.times[cnt++].time, 0),
+-						0);
++			if ((rr->u.TF.flags & TF_CREATE) && size <= slen) {
++				inode_set_ctime_to_ts(inode,
++						iso_date(rr->u.TF.data + size * cnt++, flags));
++				slen -= size;
+ 			}
+-			if (rr->u.TF.flags & TF_MODIFY) {
+-				inode_set_mtime(inode,
+-						iso_date(rr->u.TF.times[cnt++].time, 0),
+-						0);
++			if ((rr->u.TF.flags & TF_MODIFY) && size <= slen) {
++				inode_set_mtime_to_ts(inode,
++						iso_date(rr->u.TF.data + size * cnt++, flags));
++				slen -= size;
+ 			}
+-			if (rr->u.TF.flags & TF_ACCESS) {
+-				inode_set_atime(inode,
+-						iso_date(rr->u.TF.times[cnt++].time, 0),
+-						0);
++			if ((rr->u.TF.flags & TF_ACCESS) && size <= slen) {
++				inode_set_atime_to_ts(inode,
++						iso_date(rr->u.TF.data + size * cnt++, flags));
++				slen -= size;
+ 			}
+-			if (rr->u.TF.flags & TF_ATTRIBUTES) {
+-				inode_set_ctime(inode,
+-						iso_date(rr->u.TF.times[cnt++].time, 0),
+-						0);
++			if ((rr->u.TF.flags & TF_ATTRIBUTES) && size <= slen) {
++				inode_set_ctime_to_ts(inode,
++						iso_date(rr->u.TF.data + size * cnt++, flags));
++				slen -= size;
+ 			}
+ 			break;
++		}
+ 		case SIG('S', 'L'):
+ 			{
+ 				int slen;
+diff --git a/fs/isofs/rock.h b/fs/isofs/rock.h
+index 7755e587f7785..c0856fa9bb6a4 100644
+--- a/fs/isofs/rock.h
++++ b/fs/isofs/rock.h
+@@ -65,13 +65,9 @@ struct RR_PL_s {
+ 	__u8 location[8];
+ };
+ 
+-struct stamp {
+-	__u8 time[7];		/* actually 6 unsigned, 1 signed */
+-} __attribute__ ((packed));
+-
+ struct RR_TF_s {
+ 	__u8 flags;
+-	struct stamp times[];	/* Variable number of these beasts */
++	__u8 data[];
+ } __attribute__ ((packed));
+ 
+ /* Linux-specific extension for transparent decompression */
+diff --git a/fs/isofs/util.c b/fs/isofs/util.c
+index e88dba7216618..42f479da0b282 100644
+--- a/fs/isofs/util.c
++++ b/fs/isofs/util.c
+@@ -16,29 +16,44 @@
+  * to GMT.  Thus  we should always be correct.
+  */
+ 
+-int iso_date(u8 *p, int flag)
++struct timespec64 iso_date(u8 *p, int flags)
+ {
+ 	int year, month, day, hour, minute, second, tz;
+-	int crtime;
++	struct timespec64 ts;
++
++	if (flags & ISO_DATE_LONG_FORM) {
++		year = (p[0] - '0') * 1000 +
++		       (p[1] - '0') * 100 +
++		       (p[2] - '0') * 10 +
++		       (p[3] - '0') - 1900;
++		month = ((p[4] - '0') * 10 + (p[5] - '0'));
++		day = ((p[6] - '0') * 10 + (p[7] - '0'));
++		hour = ((p[8] - '0') * 10 + (p[9] - '0'));
++		minute = ((p[10] - '0') * 10 + (p[11] - '0'));
++		second = ((p[12] - '0') * 10 + (p[13] - '0'));
++		ts.tv_nsec = ((p[14] - '0') * 10 + (p[15] - '0')) * 10000000;
++		tz = p[16];
++	} else {
++		year = p[0];
++		month = p[1];
++		day = p[2];
++		hour = p[3];
++		minute = p[4];
++		second = p[5];
++		ts.tv_nsec = 0;
++		/* High sierra has no time zone */
++		tz = flags & ISO_DATE_HIGH_SIERRA ? 0 : p[6];
++	}
+ 
+-	year = p[0];
+-	month = p[1];
+-	day = p[2];
+-	hour = p[3];
+-	minute = p[4];
+-	second = p[5];
+-	if (flag == 0) tz = p[6]; /* High sierra has no time zone */
+-	else tz = 0;
+-	
+ 	if (year < 0) {
+-		crtime = 0;
++		ts.tv_sec = 0;
+ 	} else {
+-		crtime = mktime64(year+1900, month, day, hour, minute, second);
++		ts.tv_sec = mktime64(year+1900, month, day, hour, minute, second);
+ 
+ 		/* sign extend */
+ 		if (tz & 0x80)
+ 			tz |= (-1 << 8);
+-		
++
+ 		/* 
+ 		 * The timezone offset is unreliable on some disks,
+ 		 * so we make a sanity check.  In no case is it ever
+@@ -65,7 +80,7 @@ int iso_date(u8 *p, int flag)
+ 		 * for pointing out the sign error.
+ 		 */
+ 		if (-52 <= tz && tz <= 52)
+-			crtime -= tz * 15 * 60;
++			ts.tv_sec -= tz * 15 * 60;
+ 	}
+-	return crtime;
+-}		
++	return ts;
++}
+-- 
+2.39.5
+
 
 
