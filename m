@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4125D1E521E;
-	Mon, 23 Jun 2025 21:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D3D1F4628;
+	Mon, 23 Jun 2025 21:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714016; cv=none; b=aMoBegZoFCeUDysFJ/ndbvjS/hucTtiTTWwZTgq50zCz18A5JOlxOs/y+7KyeI1iJtDigpuVyj9KxijIJ9UsmgO8w6lG8nYe9T1tnEDAn9nxtf7iiun7Obw4FKsJqP78pB5HYDTlY1LWTaQXjnbnouelk6vv/h05QcQomd4J/gs=
+	t=1750714018; cv=none; b=Nmcx0vpAJTDOX0MRdmnYJjOM1RyRh7K9ZJG/5OW82dViMWnbUqofNbyyVWdmlfDLc7C8IDDFksMfcDVzrPH5EwPljQHjYx3O0hcjMewWh0haASX6y4mtVwqvtD7ShHJ1Ogj9dIZvz00swz5bEV8JUcrFdBeDyDUJA/LyJokRqh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714016; c=relaxed/simple;
-	bh=z1jNiBJsW/+4HhD0ck6BvNJ3m9iqgmhybe6DFPUWqIs=;
+	s=arc-20240116; t=1750714018; c=relaxed/simple;
+	bh=z3VTJqxHJ5Qe/J/nLPl/2L2yzrxzSCGEqwU/B3/W5BQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uE2sTZHmjvsxbxsO/x1p5Cqualeh0iAhtajsjhSOpRAx3Qn8wWwEDj+/4b7OxX6WLQWDVOFVYfpxTdMPMsmobo5N0vsjISNJQNfNs5Xtl6Ee2ZEp6nJG/MU0bxXqSvPaGUUzdiUg2ZCU5GDfSPhcj04TpUlVbzgKgjRBO1rUnxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHmC3d1F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjKsDDKMEALiBpSO99h3Cs7GsfhyeDVR0Cf2hwLhxB6cKJvCQfTLKLtQMtwcZGyqXp2LKxh8PUt1e4yjkqepqXw//5qcqTFp66cqRwq2cVRq5IegYfgxlR26mNaO+b5sR25+/8BUFxnVvsTmotmWhek8c3GdtSkZ/k3Lx8DWE6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsu8sz7z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHmC3d1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948CDC4CEEA;
-	Mon, 23 Jun 2025 21:26:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsu8sz7z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CAE8C4CEEA;
+	Mon, 23 Jun 2025 21:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714015;
-	bh=z1jNiBJsW/+4HhD0ck6BvNJ3m9iqgmhybe6DFPUWqIs=;
+	s=korg; t=1750714018;
+	bh=z3VTJqxHJ5Qe/J/nLPl/2L2yzrxzSCGEqwU/B3/W5BQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DHmC3d1FVtY3m9tkocxosIGT1emB6o+GXhRmM6MH76BSGsERxNVUG+AXTo4prvSKq
-	 4GNHIaG5FrN/OMu3ZaIScKScrUxBp2CWO0jOfBbZW4nnv/gP9F0uuFvdcgYN8kR6dx
-	 TKQ2lO/k+prXemJDzESStrObgPFoEsMTVMrUyVIs=
+	b=qsu8sz7zxNVzLlW+k8u3u5qwkkaqneYHIZzDGyZGZEInb11tkI1kSBGoC9dgeY+jV
+	 ryOW2Xn1oQ/1L/QsUWfmYcUOJ3S5BqowHawctj56WojwpXC050jh9I0DPG8eZO0T09
+	 7uII6VIJ8E/FDE5f11D8x+qiKszG14fI62/nY9G8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerrard Tai <gerrard.tai@starlabs.sg>,
-	Eric Dumazet <edumazet@google.com>,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 160/411] net_sched: tbf: fix a race in tbf_change()
-Date: Mon, 23 Jun 2025 15:05:04 +0200
-Message-ID: <20250623130637.677911402@linuxfoundation.org>
+	Ross Stutterheim <ross.stutterheim@garmin.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 5.10 179/355] ARM: 9447/1: arm/memremap: fix arch_memremap_can_ram_remap()
+Date: Mon, 23 Jun 2025 15:06:20 +0200
+Message-ID: <20250623130632.078584187@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,63 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ross Stutterheim <ross.stutterheim@garmin.com>
 
-[ Upstream commit 43eb466041216d25dedaef1c383ad7bd89929cbc ]
+commit 96e0b355883006554a0bee3697da475971d6bba8 upstream.
 
-Gerrard Tai reported a race condition in TBF, whenever SFQ perturb timer
-fires at the wrong time.
+arm/memremap: fix arch_memremap_can_ram_remap()
 
-The race is as follows:
+commit 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure
+presence of linear map") added the definition of
+arch_memremap_can_ram_remap() for arm[64] specific filtering of what pages
+can be used from the linear mapping. memblock_is_map_memory() was called
+with the pfn of the address given to arch_memremap_can_ram_remap();
+however, memblock_is_map_memory() expects to be given an address for arm,
+not a pfn.
 
-CPU 0                                 CPU 1
-[1]: lock root
-[2]: qdisc_tree_flush_backlog()
-[3]: unlock root
- |
- |                                    [5]: lock root
- |                                    [6]: rehash
- |                                    [7]: qdisc_tree_reduce_backlog()
- |
-[4]: qdisc_put()
+This results in calls to memremap() returning a newly mapped area when
+it should return an address in the existing linear mapping.
 
-This can be abused to underflow a parent's qlen.
+Fix this by removing the address to pfn translation and pass the
+address directly.
 
-Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
-should fix the race, because all packets will be purged from the qdisc
-before releasing the lock.
-
-Fixes: b05972f01e7d ("net: sched: tbf: don't call qdisc_put() while holding tree lock")
-Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://patch.msgid.link/20250611111515.1983366-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure presence of linear map")
+Signed-off-by: Ross Stutterheim <ross.stutterheim@garmin.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_tbf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mm/ioremap.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_tbf.c b/net/sched/sch_tbf.c
-index 5f50fdeaafa8d..411970dc07f74 100644
---- a/net/sched/sch_tbf.c
-+++ b/net/sched/sch_tbf.c
-@@ -437,7 +437,7 @@ static int tbf_change(struct Qdisc *sch, struct nlattr *opt,
- 
- 	sch_tree_lock(sch);
- 	if (child) {
--		qdisc_tree_flush_backlog(q->qdisc);
-+		qdisc_purge_queue(q->qdisc);
- 		old = q->qdisc;
- 		q->qdisc = child;
- 	}
--- 
-2.39.5
-
+--- a/arch/arm/mm/ioremap.c
++++ b/arch/arm/mm/ioremap.c
+@@ -483,7 +483,5 @@ void __init early_ioremap_init(void)
+ bool arch_memremap_can_ram_remap(resource_size_t offset, size_t size,
+ 				 unsigned long flags)
+ {
+-	unsigned long pfn = PHYS_PFN(offset);
+-
+-	return memblock_is_map_memory(pfn);
++	return memblock_is_map_memory(offset);
+ }
 
 
