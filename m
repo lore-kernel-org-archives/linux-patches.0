@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADC223BF9F;
-	Mon, 23 Jun 2025 13:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2654D24DCE8;
+	Mon, 23 Jun 2025 13:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685085; cv=none; b=DTqyQk7EvO76bt5iIgjdIJrxjVkbtm4U8yo5L5VwSZj8FjISYb9K1U7EIuSow04MOn78uQpa9Ho91BsHHP1CXaU5/NOG0q15fRL1dcqpB0U4JT6DYyW6tYnVKm2fd5eCRZNIlEo1VJwwSarU6kkB3kWbSOz4SkrRDBnz+Q7l7I8=
+	t=1750685088; cv=none; b=N/4tNEiN6RxY0rRWXejx+ViOtvtthivwYzAkvzTzUyQ6DC3jzQ1eyp2P2s0Fd3gyfPmK9+i4zxSu+A3nbj1yMQ4MuTm1aC4kAXFpulGBpQV72K/FEUtA3zFsHvqMmcXLH7Sl+7gPmyTTc1Cinn2oVlF1Wb/2K9dbIV6PMehastA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685085; c=relaxed/simple;
-	bh=7gW1HRrutcwferKOpT3Z8fFV2hDzUQvSLoNDGNagRLU=;
+	s=arc-20240116; t=1750685088; c=relaxed/simple;
+	bh=Gz1vTY/XgspCDp+eLXuU/PDajKALoJ4Gx9otbCAfyec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dpH+Y9kq+jonL21qojvtpuJTMauH227TWa1GGHWTCeCASy98ydghHsSqqMdtn8zrtvr91hXul7/rx6z6LMh9wzMznMBKIlf2NYVB5N9RyUuMEWuzPcNB+Qv/LpPy6Hn//yrCU3wg5RvgHYDpjbkqzbSBCX4yeG4wPoDcdo6zFfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5ZNEaUs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VbDOeHQPcFT5LDDcgiJm/UDlUT214dj3/8l3LFYNI+cnSrDuxsg2pFPLDWWRS1sur+SD8O36MbxiVnlaxkVMzKHEYVyweO9ZxfANeNaC2YOYcvkCVtYM4vwCKrW6qrEhhLiTFk7RXhD+h/eLPMPtRkp8kSCNcEdgsW8VReZw6eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iul80atl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5ZNEaUs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E770BC4CEF0;
-	Mon, 23 Jun 2025 13:24:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iul80atl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74DC5C4CEEA;
+	Mon, 23 Jun 2025 13:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685085;
-	bh=7gW1HRrutcwferKOpT3Z8fFV2hDzUQvSLoNDGNagRLU=;
+	s=korg; t=1750685087;
+	bh=Gz1vTY/XgspCDp+eLXuU/PDajKALoJ4Gx9otbCAfyec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n5ZNEaUsuXeOz3VOvkx9tMZoN3DxxMyXjUAX6i8YjkoOzzm6xW3X5m94iIpxyjA9C
-	 bllfuOhaj0uss/7DqYhlktl5C+czWwmsmArHKq9oyR/TKtNsAPwdudBUR26VBIJ1fC
-	 TZMsSuS9wVf8Ldoai0f82Ec8TPxeZzsMSZNJ3WzU=
+	b=iul80atlGQt7xeZZG5VAiJ14J6Q7+JDZyx0o+w9+tZgad+uU9XURkaNMkQYe5lEf8
+	 VQrDzK2/7KsGmqjeVspM9i7Ymn7Qo4lEQokIllUbBLBhg51UPt3do+t25tnAu1LWMg
+	 2oijqJ6R9x61iPU9cWrynhdYGpeeh533Jb/liqRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.4 092/222] kbuild: Add CLANG_FLAGS to as-instr
-Date: Mon, 23 Jun 2025 15:07:07 +0200
-Message-ID: <20250623130614.866427232@linuxfoundation.org>
+	Kees Cook <kees@kernel.org>,
+	Louis Chauvet <louis.chauvet@bootlin.com>,
+	Louis Chauvet <contact@louischauvet.fr>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 034/411] drm/vkms: Adjust vkms_state->active_planes allocation type
+Date: Mon, 23 Jun 2025 15:02:58 +0200
+Message-ID: <20250623130634.030259986@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,47 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Kees Cook <kees@kernel.org>
 
-commit cff6e7f50bd315e5b39c4e46c704ac587ceb965f upstream.
+[ Upstream commit 258aebf100540d36aba910f545d4d5ddf4ecaf0b ]
 
-A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
-KBUILD_CPPFLAGS so that '--target' is available while preprocessing.
-When that occurs, the following errors appear multiple times when
-building ARCH=powerpc powernv_defconfig:
+In preparation for making the kmalloc family of allocators type aware,
+we need to make sure that the returned type from the allocation matches
+the type of the variable being assigned. (Before, the allocator would
+always return "void *", which can be implicitly cast to any pointer type.)
 
-  ld.lld: error: vmlinux.a(arch/powerpc/kernel/head_64.o):(.text+0x12d4): relocation R_PPC64_ADDR16_HI out of range: -4611686018409717520 is not in [-2147483648, 2147483647]; references '__start___soft_mask_table'
-  ld.lld: error: vmlinux.a(arch/powerpc/kernel/head_64.o):(.text+0x12e8): relocation R_PPC64_ADDR16_HI out of range: -4611686018409717392 is not in [-2147483648, 2147483647]; references '__stop___soft_mask_table'
+The assigned type is "struct vkms_plane_state **", but the returned type
+will be "struct drm_plane **". These are the same size (pointer size), but
+the types don't match. Adjust the allocation type to match the assignment.
 
-Diffing the .o.cmd files reveals that -DHAVE_AS_ATHIGH=1 is not present
-anymore, because as-instr only uses KBUILD_AFLAGS, which will no longer
-contain '--target'.
-
-Mirror Kconfig's as-instr and add CLANG_FLAGS explicitly to the
-invocation to ensure the target information is always present.
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Fixes: 8b1865873651 ("drm/vkms: totally reworked crc data tracking")
+Link: https://lore.kernel.org/r/20250426061431.work.304-kees@kernel.org
+Signed-off-by: Louis Chauvet <contact@louischauvet.fr>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Kbuild.include |    2 +-
+ drivers/gpu/drm/vkms/vkms_crtc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/scripts/Kbuild.include
-+++ b/scripts/Kbuild.include
-@@ -108,7 +108,7 @@ as-option = $(call try-run,\
- # Usage: aflags-y += $(call as-instr,instr,option1,option2)
+diff --git a/drivers/gpu/drm/vkms/vkms_crtc.c b/drivers/gpu/drm/vkms/vkms_crtc.c
+index 57bbd32e9bebb..de8c2d5cc89c0 100644
+--- a/drivers/gpu/drm/vkms/vkms_crtc.c
++++ b/drivers/gpu/drm/vkms/vkms_crtc.c
+@@ -202,7 +202,7 @@ static int vkms_crtc_atomic_check(struct drm_crtc *crtc,
+ 		i++;
+ 	}
  
- as-instr = $(call try-run,\
--	printf "%b\n" "$(1)" | $(CC) -Werror $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
-+	printf "%b\n" "$(1)" | $(CC) -Werror $(CLANG_FLAGS) $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
- 
- # __cc-option
- # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
+-	vkms_state->active_planes = kcalloc(i, sizeof(plane), GFP_KERNEL);
++	vkms_state->active_planes = kcalloc(i, sizeof(*vkms_state->active_planes), GFP_KERNEL);
+ 	if (!vkms_state->active_planes)
+ 		return -ENOMEM;
+ 	vkms_state->num_active_planes = i;
+-- 
+2.39.5
+
 
 
