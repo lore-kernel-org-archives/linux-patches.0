@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE64223DEF;
-	Mon, 23 Jun 2025 22:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5942248B5;
+	Mon, 23 Jun 2025 22:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716671; cv=none; b=nxv0gUHMhSekXcyEfcpFsv6rfe7ZSdEZkhOo2ymyiFmRHsbJhHy3s7Zm1yUIcIckwtgZGqC02sngqvHHdOPCRPGrfeV1nYheBywPAVwrmIu53nKsfDIavEH4/hef5JQjptcyxqRfWfahetUIy368mQFEL0dA3T9u9sAlcjR9ir0=
+	t=1750716674; cv=none; b=PRzPCjD3Nm3fsLr5RM95qR/zL+3C2CoBj+ttl+YAFiYuvRc6ClRrYBxvlGQF0b7BkPRKQ5x1F7qej77cfUV23KJN6FSQ8uAWE5pAkF0imIEAWKzlBy7zo+J7w0vRYwWBeSvz2rvPvxf4GEtWwHY1YETInaW9oVgCU6sMNltARG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716671; c=relaxed/simple;
-	bh=+H/icuFlwsUQPzrYjNBP+FeQwMR3XwEwvn+pMa3JIF4=;
+	s=arc-20240116; t=1750716674; c=relaxed/simple;
+	bh=hDt5w8Ngae7SJ545J9Q1Rn2t1dNkV+fMZg235Yb1kFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p0wd70oFNNWIJel6cIF9sYXoSStzrnHJz1HQEeWyEztzW6d88ZIMVTIV0teGllJAN+/P60WnxTmtyLrW+A0JdnBZGf6A2SxFNViANkj6uP0Jpt0fkpDwJlAONwRWcMWV4Z45SlfDE8cazbAh9arvYC1nvsg9sys8nEXiqP1H+5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o11z8B0x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c4iVDMHA/WVbLBbVwbXcG0Yy+DVdj5xTiJkdwCJqS+/QGmnJxGh5DrfEfWeIqz/pyp4DmUQrqhLZ3RDRj2YXQC6OzGddYKIsYk3XIBpWO5kJ1yf1GQkHLGws6VSrPSd5MQOTpC3mfWN+EzKGm69AFyG1x6oxGBPH5Cqu/o/hBs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obbGlCAR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o11z8B0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455CCC4CEEA;
-	Mon, 23 Jun 2025 22:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obbGlCAR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED32C4CEEA;
+	Mon, 23 Jun 2025 22:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716671;
-	bh=+H/icuFlwsUQPzrYjNBP+FeQwMR3XwEwvn+pMa3JIF4=;
+	s=korg; t=1750716674;
+	bh=hDt5w8Ngae7SJ545J9Q1Rn2t1dNkV+fMZg235Yb1kFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o11z8B0xzgPDE5DsmtjHJ2Ek9gss68u1h0ZBal8FC+cbtKGAoipsRkV2AneDymDZy
-	 oIDf+PrUzEXHWetd27hdctjIwU09etQByiehuPJ3Xo7Co2lovtbTNYA5NraD6rsinc
-	 yzraptiLDY/2dFnxe7RHFjBnKGBIi2GnzJC+po8c=
+	b=obbGlCAR1T8mqBLcx6s93icYIou3hAlmY7mLfigHeS3uviAErvCTSrZHMVKL1+EFU
+	 Idb8BOHxmw0AxHJOi848PoXVIepRItUD+jRqTAkcCxkM26hGiFO5XEpHfuFaxQCsJe
+	 19x/PKF0MjCEiTgQuCPblRRAwGfMuXoRE5EnXFC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Dexuan Cui <decui@microsoft.com>,
-	Long Li <longli@microsoft.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 349/411] scsi: storvsc: Increase the timeouts to storvsc_timeout
-Date: Mon, 23 Jun 2025 15:08:13 +0200
-Message-ID: <20250623130642.432437050@linuxfoundation.org>
+	Baisheng Gao <baisheng.gao@unisoc.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 281/290] perf: Fix sample vs do_exit()
+Date: Mon, 23 Jun 2025 15:09:02 +0200
+Message-ID: <20250623130635.372740527@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,80 +48,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dexuan Cui <decui@microsoft.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit b2f966568faaad326de97481096d0f3dc0971c43 upstream.
+[ Upstream commit 4f6fc782128355931527cefe3eb45338abd8ab39 ]
 
-Currently storvsc_timeout is only used in storvsc_sdev_configure(), and
-5s and 10s are used elsewhere. It turns out that rarely the 5s is not
-enough on Azure, so let's use storvsc_timeout everywhere.
+Baisheng Gao reported an ARM64 crash, which Mark decoded as being a
+synchronous external abort -- most likely due to trying to access
+MMIO in bad ways.
 
-In case a timeout happens and storvsc_channel_init() returns an error,
-close the VMBus channel so that any host-to-guest messages in the
-channel's ringbuffer, which might come late, can be safely ignored.
+The crash further shows perf trying to do a user stack sample while in
+exit_mmap()'s tlb_finish_mmu() -- i.e. while tearing down the address
+space it is trying to access.
 
-Add a "const" to storvsc_timeout.
+It turns out that we stop perf after we tear down the userspace mm; a
+receipie for disaster, since perf likes to access userspace for
+various reasons.
 
-Cc: stable@kernel.org
-Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Link: https://lore.kernel.org/r/1749243459-10419-1-git-send-email-decui@microsoft.com
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Flip this order by moving up where we stop perf in do_exit().
+
+Additionally, harden PERF_SAMPLE_CALLCHAIN and PERF_SAMPLE_STACK_USER
+to abort when the current task does not have an mm (exit_mm() makes
+sure to set current->mm = NULL; before commencing with the actual
+teardown). Such that CPU wide events don't trip on this same problem.
+
+Fixes: c5ebcedb566e ("perf: Add ability to attach user stack dump to sample")
+Reported-by: Baisheng Gao <baisheng.gao@unisoc.com>
+Suggested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20250605110815.GQ39944@noisy.programming.kicks-ass.net
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/storvsc_drv.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ kernel/events/core.c |  7 +++++++
+ kernel/exit.c        | 17 +++++++++--------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -399,7 +399,7 @@ MODULE_PARM_DESC(ring_avail_percent_lowa
- /*
-  * Timeout in seconds for all devices managed by this driver.
-  */
--static int storvsc_timeout = 180;
-+static const int storvsc_timeout = 180;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 563f39518f7fe..90577a7a3a51e 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6987,6 +6987,10 @@ perf_sample_ustack_size(u16 stack_size, u16 header_size,
+ 	if (!regs)
+ 		return 0;
  
- #if IS_ENABLED(CONFIG_SCSI_FC_ATTRS)
- static struct scsi_transport_template *fc_transport_template;
-@@ -819,7 +819,7 @@ static void  handle_multichannel_storage
- 		return;
- 	}
++	/* No mm, no stack, no dump. */
++	if (!current->mm)
++		return 0;
++
+ 	/*
+ 	 * Check if we fit in with the requested stack size into the:
+ 	 * - TASK_SIZE
+@@ -7685,6 +7689,9 @@ perf_callchain(struct perf_event *event, struct pt_regs *regs)
+ 	const u32 max_stack = event->attr.sample_max_stack;
+ 	struct perf_callchain_entry *callchain;
  
--	t = wait_for_completion_timeout(&request->wait_event, 10*HZ);
-+	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
- 	if (t == 0) {
- 		dev_err(dev, "Failed to create sub-channel: timed out\n");
- 		return;
-@@ -885,7 +885,7 @@ static int storvsc_execute_vstor_op(stru
- 	if (ret != 0)
- 		return ret;
++	if (!current->mm)
++		user = false;
++
+ 	if (!kernel && !user)
+ 		return &__empty_callchain;
  
--	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
-+	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
- 	if (t == 0)
- 		return -ETIMEDOUT;
+diff --git a/kernel/exit.c b/kernel/exit.c
+index 3540b2c9b1b6a..03a1dd32e6ff3 100644
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -858,6 +858,15 @@ void __noreturn do_exit(long code)
+ 	tsk->exit_code = code;
+ 	taskstats_exit(tsk, group_dead);
  
-@@ -1398,6 +1398,8 @@ static int storvsc_connect_to_vsp(struct
- 		return ret;
++	/*
++	 * Since sampling can touch ->mm, make sure to stop everything before we
++	 * tear it down.
++	 *
++	 * Also flushes inherited counters to the parent - before the parent
++	 * gets woken up by child-exit notifications.
++	 */
++	perf_event_exit_task(tsk);
++
+ 	exit_mm();
  
- 	ret = storvsc_channel_init(device, is_fc);
-+	if (ret)
-+		vmbus_close(device->channel);
+ 	if (group_dead)
+@@ -874,14 +883,6 @@ void __noreturn do_exit(long code)
+ 	exit_task_work(tsk);
+ 	exit_thread(tsk);
  
- 	return ret;
- }
-@@ -1719,7 +1721,7 @@ static int storvsc_host_reset_handler(st
- 	if (ret != 0)
- 		return FAILED;
+-	/*
+-	 * Flush inherited counters to the parent - before the parent
+-	 * gets woken up by child-exit notifications.
+-	 *
+-	 * because of cgroup mode, must be called before cgroup_exit()
+-	 */
+-	perf_event_exit_task(tsk);
+-
+ 	sched_autogroup_exit_task(tsk);
+ 	cgroup_exit(tsk);
  
--	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
-+	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
- 	if (t == 0)
- 		return TIMEOUT_ERROR;
- 
+-- 
+2.39.5
+
 
 
