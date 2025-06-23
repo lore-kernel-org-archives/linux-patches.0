@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9143C3FB1B;
-	Mon, 23 Jun 2025 22:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7461A4F12;
+	Mon, 23 Jun 2025 22:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716262; cv=none; b=p3W71C+h1ncEYmpPpMc7e+WPVx6E70bPya448tj6bxY8WiDMKd6SqnxvH/4gw4JdI2f21BaCK2+UeJ9Po9TkvnUk81iNSRDgm3RVDkIaJGqxt67/T7PV3WTCarlrI/X2VyfVkaNMwNxNaQGUylEoC69taLbOavpCTDZb+s5Twkc=
+	t=1750716265; cv=none; b=QMiNlL0K9ZRLfIqoa7xKn5FJ5NRrH2CB7lMIxgOcdeMjSpx1Z7FQYXO0apgClBmKYrUBrtJLT8vddzzPJXLMwYvJ83ACfPC/r6ULWBoWN2HCGSDt0USRMac9/flX4x4csoa46Qi8oLeT6522l070fEjjbbaYbg+vAI7Mxbl2lkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716262; c=relaxed/simple;
-	bh=kq34PNUrTriCGL1nlW9fe+F8uo+DjzFndo/w7v33ZlE=;
+	s=arc-20240116; t=1750716265; c=relaxed/simple;
+	bh=Rjjk9uo8GykzxZ1vTRinvcOU7j3eEXxI5jAD6NAeQVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TpTD9nGoiNrwEC6Q9N/7Ipru04DFZWA5RpLuFGOsKB5PiobST+zMK/sv7bynGRIMlJVw5B/aNbvkI19dSTv1f4HcVTQ5d/QsKqlVEJ4HzVZ2sveXc8rs/sMqiIs/9dp6/jXcjTckglOYHUguzINauwczsH5PnqrTN3QUdXocwns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFCatz9M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mFzYW5WgwfXftfbeeF9L4/m7aMxALap6YnIsldlx/xJIpYhw3qLQDI/5+pIMZ3he60yEVCiiSvjP78NfgwUONFPyB7Sr0noURI/Ew8ASfqThNee1KHXP8PV70qiwPiVqg3k6V7Sj7YMqoCJ+Gu5IuwAZbW8urTaoQVqxdSzrXk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZ7rx3IW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFCatz9M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290FFC4CEEA;
-	Mon, 23 Jun 2025 22:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZ7rx3IW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8C9C4CEEA;
+	Mon, 23 Jun 2025 22:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716262;
-	bh=kq34PNUrTriCGL1nlW9fe+F8uo+DjzFndo/w7v33ZlE=;
+	s=korg; t=1750716264;
+	bh=Rjjk9uo8GykzxZ1vTRinvcOU7j3eEXxI5jAD6NAeQVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aFCatz9MTkHqh0/pyEb+jxEFAxXr6kY370yN5f13aKQ7k6xnGAXsROtWaSxu2NzIf
-	 KVabnS7Eeag9ibo15/D6p5NJBxAuHQzzCuUO1ab45Q7OohExARV/2BooIUrvfa45bn
-	 8y8DbB2dNcfzB/Hfm7cnvCqhTsAlHqT+dqi5w788=
+	b=FZ7rx3IWCS2g1u6d8qYYEgnAUIc8A3LYz76q1GsfFsVb1KbU5Frq9DUxYGuDeTE1S
+	 PC/uySc5cY/52/ussQX3xCQuKfjg8EfvWb01mRL+EB0+8vK7NpAy2MemYr7rqFTs6L
+	 4gHq+vdYuwf8C5V1iQ/m9L5v30W5B/IlXr73J0z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Sanders <jsanders.devel@gmail.com>,
-	Valentin Kleibel <valentin@vrvis.at>,
-	Jens Axboe <axboe@kernel.dk>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Mohammed Elbadry <mohammed.0.elbadry@gmail.com>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 252/290] aoe: clean device rq_list in aoedev_downdev()
-Date: Mon, 23 Jun 2025 15:08:33 +0200
-Message-ID: <20250623130634.506194409@linuxfoundation.org>
+Subject: [PATCH 5.15 312/411] i2c: npcm: Add clock toggle recovery
+Date: Mon, 23 Jun 2025 15:07:36 +0200
+Message-ID: <20250623130641.494471991@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +49,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Sanders <jsanders.devel@gmail.com>
+From: Tali Perry <tali.perry1@gmail.com>
 
-[ Upstream commit 7f90d45e57cb2ef1f0adcaf925ddffdfc5e680ca ]
+[ Upstream commit 38010591a0fc3203f1cee45b01ab358b72dd9ab2 ]
 
-An aoe device's rq_list contains accepted block requests that are
-waiting to be transmitted to the aoe target. This queue was added as
-part of the conversion to blk_mq. However, the queue was not cleaned out
-when an aoe device is downed which caused blk_mq_freeze_queue() to sleep
-indefinitely waiting for those requests to complete, causing a hang. This
-fix cleans out the queue before calling blk_mq_freeze_queue().
+During init of the bus, the module checks that the bus is idle.
+If one of the lines are stuck try to recover them first before failing.
+Sometimes SDA and SCL are low if improper reset occurs (e.g., reboot).
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=212665
-Fixes: 3582dd291788 ("aoe: convert aoeblk to blk-mq")
-Signed-off-by: Justin Sanders <jsanders.devel@gmail.com>
-Link: https://lore.kernel.org/r/20250610170600.869-1-jsanders.devel@gmail.com
-Tested-By: Valentin Kleibel <valentin@vrvis.at>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+Signed-off-by: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>
+Reviewed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Link: https://lore.kernel.org/r/20250328193252.1570811-1-mohammed.0.elbadry@gmail.com
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/aoe/aoedev.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/i2c/busses/i2c-npcm7xx.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/block/aoe/aoedev.c b/drivers/block/aoe/aoedev.c
-index 3523dd82d7a00..280679bde3a50 100644
---- a/drivers/block/aoe/aoedev.c
-+++ b/drivers/block/aoe/aoedev.c
-@@ -198,6 +198,7 @@ aoedev_downdev(struct aoedev *d)
- {
- 	struct aoetgt *t, **tt, **te;
- 	struct list_head *head, *pos, *nx;
-+	struct request *rq, *rqnext;
- 	int i;
+diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+index d97694ac29ca9..3f30c3cff7201 100644
+--- a/drivers/i2c/busses/i2c-npcm7xx.c
++++ b/drivers/i2c/busses/i2c-npcm7xx.c
+@@ -1950,10 +1950,14 @@ static int npcm_i2c_init_module(struct npcm_i2c *bus, enum i2c_mode mode,
  
- 	d->flags &= ~DEVFL_UP;
-@@ -223,6 +224,13 @@ aoedev_downdev(struct aoedev *d)
- 	/* clean out the in-process request (if any) */
- 	aoe_failip(d);
+ 	/* check HW is OK: SDA and SCL should be high at this point. */
+ 	if ((npcm_i2c_get_SDA(&bus->adap) == 0) || (npcm_i2c_get_SCL(&bus->adap) == 0)) {
+-		dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus->num);
+-		dev_err(bus->dev, "SDA=%d SCL=%d\n", npcm_i2c_get_SDA(&bus->adap),
+-			npcm_i2c_get_SCL(&bus->adap));
+-		return -ENXIO;
++		dev_warn(bus->dev, " I2C%d SDA=%d SCL=%d, attempting to recover\n", bus->num,
++				 npcm_i2c_get_SDA(&bus->adap), npcm_i2c_get_SCL(&bus->adap));
++		if (npcm_i2c_recovery_tgclk(&bus->adap)) {
++			dev_err(bus->dev, "I2C%d init fail: SDA=%d SCL=%d\n",
++				bus->num, npcm_i2c_get_SDA(&bus->adap),
++				npcm_i2c_get_SCL(&bus->adap));
++			return -ENXIO;
++		}
+ 	}
  
-+	/* clean out any queued block requests */
-+	list_for_each_entry_safe(rq, rqnext, &d->rq_list, queuelist) {
-+		list_del_init(&rq->queuelist);
-+		blk_mq_start_request(rq);
-+		blk_mq_end_request(rq, BLK_STS_IOERR);
-+	}
-+
- 	/* fast fail all pending I/O */
- 	if (d->blkq) {
- 		/* UP is cleared, freeze+quiesce to insure all are errored */
+ 	npcm_i2c_int_enable(bus, true);
 -- 
 2.39.5
 
+
+
+ cha
+ #endif /* CONFIG_KVM */
+ 
+ static bool spectre_bhb_fw_mitigated;
++static bool __read_mostly __nospectre_bhb;
++static int __init parse_spectre_bhb_param(char *str)
++{
++	__nospectre_bhb = true;
++	return 0;
++}
++early_param("nospectre_bhb", parse_spectre_bhb_param);
+ 
+ void spectre_bhb_enable_mitigation(const struct arm64_cpu_capabilities *entry)
+ {
+@@ -1100,7 +1107,7 @@ void spectre_bhb_enable_mitigation(const
+ 		/* No point mitigating Spectre-BHB alone. */
+ 	} else if (!IS_ENABLED(CONFIG_MITIGATE_SPECTRE_BRANCH_HISTORY)) {
+ 		pr_info_once("spectre-bhb mitigation disabled by compile time option\n");
+-	} else if (cpu_mitigations_off()) {
++	} else if (cpu_mitigations_off() || __nospectre_bhb) {
+ 		pr_info_once("spectre-bhb mitigation disabled by command line option\n");
+ 	} else if (supports_ecbhb(SCOPE_LOCAL_CPU)) {
+ 		state = SPECTRE_MITIGATED;
 
 
