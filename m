@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837E11DF98B;
-	Mon, 23 Jun 2025 21:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3AB11DF98B;
+	Mon, 23 Jun 2025 21:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713297; cv=none; b=LLBHGHQWv0DN4dLKAPK1PCzo8b4W+dMd9oewEw4we0rzcZYUApp5e8WmD+O+AhVM2BCXNCDFbPC0n/QCQ1yxxCMnR0qQxg7lrea51hyNBmZ59MNpqKQ5vjLLmA+kmUKy3JOZjkDyyn8aq7tYQg+PlymBmx+ZH79UNzb3aDn9WDU=
+	t=1750713300; cv=none; b=jJYLQKHLCuPD9nw4m4lUqwHw9KuosH9qcEsWj8jK0civgdrFXbmp6er8p2mUPe1Ygn0xzNWT2a9CAgXX0QCYcfq7BZqaqbpV1LeCRQcThuFJ/NgJlQ36i+UmP4bBU7ds5xmLVIARP2Gitnp8fK/yrxRircD4kiIFN/U0GYnaTmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713297; c=relaxed/simple;
-	bh=/avCw4HeFuQJFD0O9H0VZ3QVIoHMrMLIJD2K8mGRHJM=;
+	s=arc-20240116; t=1750713300; c=relaxed/simple;
+	bh=7ltbJQJv//O8K+tkYnSutVSCdxB4UqWiGrgCZRQRc5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mknnI8HEuNFeyBSYjgEVkGUzjGw2efxe/HKCh2vbnmZJ+WAxT38hSuZm7KTy5lEvSkdFRlFPBYJNCYkitM/NXMqpWXUhTvFk8SFK8THHawvZBdzNnol2OUslVQYnS5fvdEqOPKXtHj/gzR/M+/39qptlm4RrpRwuk5JgTDm8p50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IO+LiluO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aNn7WNtPP6AnQd2fdo6aJMm+XK4Q1jlyoQZoszYaYwKmy3zkd9D8dbpQvHioKLiDWidNCp+YH2aXWsHhXyG57x5CrRtqFx+BOl/5jEYU0OVI+fP8zMwH3dz1n/o6hanmHIJ13OUc31WKR7t3FRo4EbERDvnyMs/mPinfBBVxwR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QgjG99CD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IO+LiluO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D248C4CEEA;
-	Mon, 23 Jun 2025 21:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QgjG99CD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBA6C4CEEA;
+	Mon, 23 Jun 2025 21:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713297;
-	bh=/avCw4HeFuQJFD0O9H0VZ3QVIoHMrMLIJD2K8mGRHJM=;
+	s=korg; t=1750713299;
+	bh=7ltbJQJv//O8K+tkYnSutVSCdxB4UqWiGrgCZRQRc5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IO+LiluOZNZr1sbKeV5W0m79AbBn7Jm1/dLC2YvcMWA4nXbXea3qHN+nv8Mm2o7MI
-	 Yx31i5148ezMkNwCX+C3JT0G9dddkb18+uPnS38vdny3pc0AXhcgCMXKPa9esZ4V6s
-	 elHGUg0jkd8JiORga+09NEsy1mGBg9yXlCQV3QY0=
+	b=QgjG99CDLG4sItk6kTEzZSr1fJ0618qIi2zHGQx1F3+EVsGpGdaBfHwmmpjHMinio
+	 6/+sCbEvs1xcrX3tKznmQk28g78EXjrITMPRJoxp+W5TzFqYHgZbSeHTSae51ldml/
+	 R/VsheLf4d0uVTgKxqbPr4h/bBm8aaZMswcsE18s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 319/592] emulex/benet: correct command version selection in be_cmd_get_stats()
-Date: Mon, 23 Jun 2025 15:04:37 +0200
-Message-ID: <20250623130708.023897027@linuxfoundation.org>
+Subject: [PATCH 5.4 179/222] bus: fsl-mc: increase MC_CMD_COMPLETION_TIMEOUT_MS value
+Date: Mon, 23 Jun 2025 15:08:34 +0200
+Message-ID: <20250623130617.549365112@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Laurentiu Tudor <laurentiu.tudor@nxp.com>
 
-[ Upstream commit edb888d29748cee674006a52e544925dacc7728e ]
+[ Upstream commit 23d060136841c58c2f9ee8c08ad945d1879ead4b ]
 
-Logic here always sets hdr->version to 2 if it is not a BE3 or Lancer chip,
-even if it is BE2. Use 'else if' to prevent multiple assignments, setting
-version 0 for BE2, version 1 for BE3 and Lancer, and version 2 for others.
-Fixes potential incorrect version setting when BE2_chip and
-BE3_chip/lancer_chip checks could both be true.
+In case the MC firmware runs in debug mode with extensive prints pushed
+to the console, the current timeout of 500ms is not enough.
+Increase the timeout value so that we don't have any chance of wrongly
+assuming that the firmware is not responding when it's just taking more
+time.
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250519141731.691136-1-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20250408105814.2837951-7-ioana.ciornei@nxp.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/emulex/benet/be_cmds.c | 2 +-
+ drivers/bus/fsl-mc/mc-sys.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/emulex/benet/be_cmds.c b/drivers/net/ethernet/emulex/benet/be_cmds.c
-index 51b8377edd1d0..a89aa4ac0a064 100644
---- a/drivers/net/ethernet/emulex/benet/be_cmds.c
-+++ b/drivers/net/ethernet/emulex/benet/be_cmds.c
-@@ -1609,7 +1609,7 @@ int be_cmd_get_stats(struct be_adapter *adapter, struct be_dma_mem *nonemb_cmd)
- 	/* version 1 of the cmd is not supported only by BE2 */
- 	if (BE2_chip(adapter))
- 		hdr->version = 0;
--	if (BE3_chip(adapter) || lancer_chip(adapter))
-+	else if (BE3_chip(adapter) || lancer_chip(adapter))
- 		hdr->version = 1;
- 	else
- 		hdr->version = 2;
+diff --git a/drivers/bus/fsl-mc/mc-sys.c b/drivers/bus/fsl-mc/mc-sys.c
+index 3221a7fbaf0ad..24307ed59d777 100644
+--- a/drivers/bus/fsl-mc/mc-sys.c
++++ b/drivers/bus/fsl-mc/mc-sys.c
+@@ -19,7 +19,7 @@
+ /**
+  * Timeout in milliseconds to wait for the completion of an MC command
+  */
+-#define MC_CMD_COMPLETION_TIMEOUT_MS	500
++#define MC_CMD_COMPLETION_TIMEOUT_MS	15000
+ 
+ /*
+  * usleep_range() min and max values used to throttle down polling
 -- 
 2.39.5
 
