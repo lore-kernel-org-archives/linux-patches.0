@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4994315A;
-	Mon, 23 Jun 2025 21:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30E721D3DD;
+	Mon, 23 Jun 2025 21:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714919; cv=none; b=n6VWKrm4kvwrsItisNjnijypW1Uvdl8UenhoJJeVMtqKM1ULxfNloBTNiLMouiR0xe9XSeyztw0wRVd2MjJw0gOT74XLxxHzdK7ME0+4Pcg6QKFgk4B4ndHUMylUI827bmN1P43B6dbiKwBu3GKXAyYdiD8nnsxVUaL4CBoEDAk=
+	t=1750714921; cv=none; b=EPv6Dvn/SCmggX09RHShIu8H+DSAaKJhLgeNpCHDkWSKXetW2I3Hly5kSlZL9uma4QK07vYR84karKWbzjfOIR9ka3IDGLDQigLHJmnGerFuRdUjxfeomUpOocZS3bkpx8CiNIeiERyVE5HxpgELurK+8pBQiAm5oXl3MmvUJRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714919; c=relaxed/simple;
-	bh=Bx7kDJyX3Ncq1L9BPzWa69eQ+Re/1XRqB0xVJnidWTc=;
+	s=arc-20240116; t=1750714921; c=relaxed/simple;
+	bh=y3O3UKfi80nI9BAt01HZV6U1DZauYU+hMpkCgLgpbq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EB6vwhvFjmAwBpwxl6xp2HPDb4Zfzsj9keGAjcsdCiKTRr4xbeZeadJnYfdDfaBr+ST05EjN/+63yms+KqLB4Jvy0iw5BWCWHhxm3Mou8jMtWROEJxJyAozhSBAHOXaV5eGTtl30iBff8zMS972Vu2ZRgeUKXoqEUOSmj4W4mac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibgDGz54; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=foIbRmcQqrmMBcKbeX8TAv72ssgeLEJEwIBNZmVzR2Qywdp+xtW4+w1MUTgsJWN8j2h8Z2qjKwJZzLB6LPs7dbKctTE8FblqwR4ynpU10E6UWLydvQtDCgpu7rGIgobgDSQ+rBYJFAfuJe1a9BTIl3cWGP+seyMJdwrpEseFAQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXdUZ1qw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibgDGz54"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE28DC4CEF1;
-	Mon, 23 Jun 2025 21:41:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXdUZ1qw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4194AC4CEEA;
+	Mon, 23 Jun 2025 21:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714919;
-	bh=Bx7kDJyX3Ncq1L9BPzWa69eQ+Re/1XRqB0xVJnidWTc=;
+	s=korg; t=1750714921;
+	bh=y3O3UKfi80nI9BAt01HZV6U1DZauYU+hMpkCgLgpbq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ibgDGz54HfmghGABMmn59kwiBNb+pwVkncSPzrV9/ATCKJ+aEyt0DgtyHykiVuwnX
-	 8wfh662gWngtBbDoKk5EPD7gerE8BoNFqXLXCnhyVGo9y2K5xFyJTVYeP1lH8PS0Pc
-	 ek2YpuRYBdL8kJxGwGNiXLoI+OfHbgKMXfCjnNYE=
+	b=lXdUZ1qw1hG3YEQgNfkDkf/cHRfmSWiqYo39X1SaB6Z61+KbczY4oOxlFNRzA7oxD
+	 O2QIGiKriBHsvPzkrlXsACPAeYfpFE87BDtgi4auAGE0TMhc7eH2UHSt9TcJ8sT+7V
+	 i9Ykl1w+O0L8Ii4fbp3c5r70XOkDLB47gNaOUDeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.15 217/411] media: uvcvideo: Return the number of processed controls
-Date: Mon, 23 Jun 2025 15:06:01 +0200
-Message-ID: <20250623130639.128307520@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.10 241/355] drm/msm/dpu: dont select single flush for active CTL blocks
+Date: Mon, 23 Jun 2025 15:07:22 +0200
+Message-ID: <20250623130633.995432934@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,75 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit ba4fafb02ad6a4eb2e00f861893b5db42ba54369 upstream.
+[ Upstream commit e93eee524bb78f3ee4b78654d0083382f98b3d23 ]
 
-If we let know our callers that we have not done anything, they will be
-able to optimize their decisions.
+In case of ACTIVE CTLs, a single CTL is being used for flushing all INTF
+blocks. Don't skip programming the CTL on those targets.
 
-Cc: stable@kernel.org
-Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Message-ID: <20250224-uvc-data-backup-v2-1-de993ed9823b@chromium.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/641585/
+Link: https://lore.kernel.org/r/20250307-dpu-active-ctl-v3-5-5d20655f10ca@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1679,12 +1679,17 @@ int uvc_ctrl_begin(struct uvc_video_chai
- 	return mutex_lock_interruptible(&chain->ctrl_mutex) ? -ERESTARTSYS : 0;
- }
- 
-+/*
-+ * Returns the number of uvc controls that have been correctly set, or a
-+ * negative number if there has been an error.
-+ */
- static int uvc_ctrl_commit_entity(struct uvc_device *dev,
- 				  struct uvc_fh *handle,
- 				  struct uvc_entity *entity,
- 				  int rollback,
- 				  struct uvc_control **err_ctrl)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index 33880f66625e6..f9da379999467 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -353,7 +353,8 @@ static void dpu_encoder_phys_vid_underrun_irq(void *arg, int irq_idx)
+ static bool dpu_encoder_phys_vid_needs_single_flush(
+ 		struct dpu_encoder_phys *phys_enc)
  {
-+	unsigned int processed_ctrls = 0;
- 	struct uvc_control *ctrl;
- 	unsigned int i;
- 	int ret;
-@@ -1718,6 +1723,9 @@ static int uvc_ctrl_commit_entity(struct
- 		else
- 			ret = 0;
- 
-+		if (!ret)
-+			processed_ctrls++;
-+
- 		if (rollback || ret < 0)
- 			memcpy(uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
- 			       uvc_ctrl_data(ctrl, UVC_CTRL_DATA_BACKUP),
-@@ -1736,7 +1744,7 @@ static int uvc_ctrl_commit_entity(struct
- 			uvc_ctrl_set_handle(handle, ctrl, handle);
- 	}
- 
--	return 0;
-+	return processed_ctrls;
+-	return phys_enc->split_role != ENC_ROLE_SOLO;
++	return !(phys_enc->hw_ctl->caps->features & BIT(DPU_CTL_ACTIVE_CFG)) &&
++		phys_enc->split_role != ENC_ROLE_SOLO;
  }
  
- static int uvc_ctrl_find_ctrl_idx(struct uvc_entity *entity,
-@@ -1783,6 +1791,7 @@ int __uvc_ctrl_commit(struct uvc_fh *han
- 
- 	if (!rollback)
- 		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
-+	ret = 0;
- done:
- 	mutex_unlock(&chain->ctrl_mutex);
- 	return ret;
+ static void _dpu_encoder_phys_vid_setup_irq_hw_idx(
+-- 
+2.39.5
+
 
 
