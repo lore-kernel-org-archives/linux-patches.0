@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E6113A265;
-	Mon, 23 Jun 2025 13:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4BF13A265;
+	Mon, 23 Jun 2025 13:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684532; cv=none; b=nSHQCtXcxF6xM/mLxS1oKj5FIqhQuNa4DYpHry63swcjttXvC+wDXE4vXIzEJqF2tpf8Ik3Hk7BK3SHqnzLIJZJerh7lNgRiLSrAPzxmBV5zp6EepbtInsDiuyVsIcMyEnNr/nKHC+ygmqa8Y/A/fZodS5hlaiMeYUDIEmWJ9xU=
+	t=1750684535; cv=none; b=XrE1q0kRYapz9+wmn5Rv4wg5eP3ljJPuAcOOQDNZyGUF9Tre7O1NwGBVo9lUGuMPecQMdBOMyeTu+sBNsRDI6hcMufYQQhC4p7RPKv03HjVSj4UiWi+x948xVhE+i1TbprtQUWXq8PHhk4VPHQ+3bYzN0Ufrkn1KS7tS16sYwS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684532; c=relaxed/simple;
-	bh=jwE4BWeTnR62p3K1QIQH034oyNExj2u23wNS72lAIDg=;
+	s=arc-20240116; t=1750684535; c=relaxed/simple;
+	bh=RrRYPCu88gJGx3FgLgyvKdyQKvdWDdyXXCIEVyC5Jm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZDi6DHpR39/OBe3k1qZgz8i5Mvqh7WbeOMov1G3u+yEMwCgiINIKB55mzSuMDiRTAc3M2BkEnuUyIixEXON2xrkrsSxbb8bKYmF/h9uadxMApPv6wGLkgz+wrnhZzqJB/MrXZFIL+FPjyZzoWRx8BC729fy22Gtlzner4fj1lM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9qknuDh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mkLFrmsFgNOkCBsDQ6bDhm/ycLuEkikvNk+MmnNMrK220no4KQKaCtKl5BvUE2DEyQxflWQKkyRl6MjPbdLMdF+HkCyse/1gK4JL4MCSL2D+6yOcRrVQEDMcb1TXO43cDqyV5Bxob8C2+XsaMB9Li1lIidP4pR2EmStf7jed6bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JKqFTcI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9qknuDh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E04DC4CEEA;
-	Mon, 23 Jun 2025 13:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JKqFTcI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7EDC4CEEA;
+	Mon, 23 Jun 2025 13:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684532;
-	bh=jwE4BWeTnR62p3K1QIQH034oyNExj2u23wNS72lAIDg=;
+	s=korg; t=1750684534;
+	bh=RrRYPCu88gJGx3FgLgyvKdyQKvdWDdyXXCIEVyC5Jm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l9qknuDhaFVGZvq5CM0t9iKNHpnwqJCv+i+AFfXMRFo5lXgxvXiiGJodQ0q3819iT
-	 OY/SH4/23oUKaFWyiYKxA0vQpl934NIrjdddPy5Q86QRynjYKUQIJ/PN7f6ElWRYeV
-	 7wk6fdN2/Qhcb9Vg5ZsXQFl8Fm7QWSTCAU4dz2i0=
+	b=2JKqFTcIGttOEIFNUpBFbfdqMossRJDC4fERkZvzYaXMW5C6lGSZO+5sSZdPv0iqb
+	 VEfpYKm5+5fBUDuhOIzKBvCvOxxiyV6krUsN/1uoyDJ377xY/bxaZBqSogiTq1GEhd
+	 Q+GRTyjLbrpAHG5GewD4ZLd8NtxQpmNrs2Ow2HJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Werling <brett.werling@garmin.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.15 102/592] can: tcan4x5x: fix power regulator retrieval during probe
-Date: Mon, 23 Jun 2025 15:01:00 +0200
-Message-ID: <20250623130702.702632376@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.15 103/592] ceph: avoid kernel BUG for encrypted inode with unaligned file size
+Date: Mon, 23 Jun 2025 15:01:01 +0200
+Message-ID: <20250623130702.725210292@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -50,41 +51,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Werling <brett.werling@garmin.com>
+From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-commit db22720545207f734aaa9d9f71637bfc8b0155e0 upstream.
+commit 060909278cc0a91373a20726bd3d8ce085f480a9 upstream.
 
-Fixes the power regulator retrieval in tcan4x5x_can_probe() by ensuring
-the regulator pointer is not set to NULL in the successful return from
-devm_regulator_get_optional().
+The generic/397 test hits a BUG_ON for the case of encrypted inode with
+unaligned file size (for example, 33K or 1K):
 
-Fixes: 3814ca3a10be ("can: tcan4x5x: tcan4x5x_can_probe(): turn on the power before parsing the config")
-Signed-off-by: Brett Werling <brett.werling@garmin.com>
-Link: https://patch.msgid.link/20250612191825.3646364-1-brett.werling@garmin.com
+[ 877.737811] run fstests generic/397 at 2025-01-03 12:34:40
+[ 877.875761] libceph: mon0 (2)127.0.0.1:40674 session established
+[ 877.876130] libceph: client4614 fsid 19b90bca-f1ae-47a6-93dd-0b03ee637949
+[ 877.991965] libceph: mon0 (2)127.0.0.1:40674 session established
+[ 877.992334] libceph: client4617 fsid 19b90bca-f1ae-47a6-93dd-0b03ee637949
+[ 878.017234] libceph: mon0 (2)127.0.0.1:40674 session established
+[ 878.017594] libceph: client4620 fsid 19b90bca-f1ae-47a6-93dd-0b03ee637949
+[ 878.031394] xfs_io (pid 18988) is setting deprecated v1 encryption policy; recommend upgrading to v2.
+[ 878.054528] libceph: mon0 (2)127.0.0.1:40674 session established
+[ 878.054892] libceph: client4623 fsid 19b90bca-f1ae-47a6-93dd-0b03ee637949
+[ 878.070287] libceph: mon0 (2)127.0.0.1:40674 session established
+[ 878.070704] libceph: client4626 fsid 19b90bca-f1ae-47a6-93dd-0b03ee637949
+[ 878.264586] libceph: mon0 (2)127.0.0.1:40674 session established
+[ 878.265258] libceph: client4629 fsid 19b90bca-f1ae-47a6-93dd-0b03ee637949
+[ 878.374578] -----------[ cut here ]------------
+[ 878.374586] kernel BUG at net/ceph/messenger.c:1070!
+[ 878.375150] Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+[ 878.378145] CPU: 2 UID: 0 PID: 4759 Comm: kworker/2:9 Not tainted 6.13.0-rc5+ #1
+[ 878.378969] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+[ 878.380167] Workqueue: ceph-msgr ceph_con_workfn
+[ 878.381639] RIP: 0010:ceph_msg_data_cursor_init+0x42/0x50
+[ 878.382152] Code: 89 17 48 8b 46 70 55 48 89 47 08 c7 47 18 00 00 00 00 48 89 e5 e8 de cc ff ff 5d 31 c0 31 d2 31 f6 31 ff c3 cc cc cc cc 0f 0b <0f> 0b 0f 0b 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90 90
+[ 878.383928] RSP: 0018:ffffb4ffc7cbbd28 EFLAGS: 00010287
+[ 878.384447] RAX: ffffffff82bb9ac0 RBX: ffff981390c2f1f8 RCX: 0000000000000000
+[ 878.385129] RDX: 0000000000009000 RSI: ffff981288232b58 RDI: ffff981390c2f378
+[ 878.385839] RBP: ffffb4ffc7cbbe18 R08: 0000000000000000 R09: 0000000000000000
+[ 878.386539] R10: 0000000000000000 R11: 0000000000000000 R12: ffff981390c2f030
+[ 878.387203] R13: ffff981288232b58 R14: 0000000000000029 R15: 0000000000000001
+[ 878.387877] FS: 0000000000000000(0000) GS:ffff9814b7900000(0000) knlGS:0000000000000000
+[ 878.388663] CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 878.389212] CR2: 00005e106a0554e0 CR3: 0000000112bf0001 CR4: 0000000000772ef0
+[ 878.389921] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[ 878.390620] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[ 878.391307] PKRU: 55555554
+[ 878.391567] Call Trace:
+[ 878.391807] <TASK>
+[ 878.392021] ? show_regs+0x71/0x90
+[ 878.392391] ? die+0x38/0xa0
+[ 878.392667] ? do_trap+0xdb/0x100
+[ 878.392981] ? do_error_trap+0x75/0xb0
+[ 878.393372] ? ceph_msg_data_cursor_init+0x42/0x50
+[ 878.393842] ? exc_invalid_op+0x53/0x80
+[ 878.394232] ? ceph_msg_data_cursor_init+0x42/0x50
+[ 878.394694] ? asm_exc_invalid_op+0x1b/0x20
+[ 878.395099] ? ceph_msg_data_cursor_init+0x42/0x50
+[ 878.395583] ? ceph_con_v2_try_read+0xd16/0x2220
+[ 878.396027] ? _raw_spin_unlock+0xe/0x40
+[ 878.396428] ? raw_spin_rq_unlock+0x10/0x40
+[ 878.396842] ? finish_task_switch.isra.0+0x97/0x310
+[ 878.397338] ? __schedule+0x44b/0x16b0
+[ 878.397738] ceph_con_workfn+0x326/0x750
+[ 878.398121] process_one_work+0x188/0x3d0
+[ 878.398522] ? __pfx_worker_thread+0x10/0x10
+[ 878.398929] worker_thread+0x2b5/0x3c0
+[ 878.399310] ? __pfx_worker_thread+0x10/0x10
+[ 878.399727] kthread+0xe1/0x120
+[ 878.400031] ? __pfx_kthread+0x10/0x10
+[ 878.400431] ret_from_fork+0x43/0x70
+[ 878.400771] ? __pfx_kthread+0x10/0x10
+[ 878.401127] ret_from_fork_asm+0x1a/0x30
+[ 878.401543] </TASK>
+[ 878.401760] Modules linked in: hctr2 nhpoly1305_avx2 nhpoly1305_sse2 nhpoly1305 chacha_generic chacha_x86_64 libchacha adiantum libpoly1305 essiv authenc mptcp_diag xsk_diag tcp_diag udp_diag raw_diag inet_diag unix_diag af_packet_diag netlink_diag intel_rapl_msr intel_rapl_common intel_uncore_frequency_common skx_edac_common nfit kvm_intel kvm crct10dif_pclmul crc32_pclmul polyval_clmulni polyval_generic ghash_clmulni_intel sha256_ssse3 sha1_ssse3 aesni_intel joydev crypto_simd cryptd rapl input_leds psmouse sch_fq_codel serio_raw bochs i2c_piix4 floppy qemu_fw_cfg i2c_smbus mac_hid pata_acpi msr parport_pc ppdev lp parport efi_pstore ip_tables x_tables
+[ 878.407319] ---[ end trace 0000000000000000 ]---
+[ 878.407775] RIP: 0010:ceph_msg_data_cursor_init+0x42/0x50
+[ 878.408317] Code: 89 17 48 8b 46 70 55 48 89 47 08 c7 47 18 00 00 00 00 48 89 e5 e8 de cc ff ff 5d 31 c0 31 d2 31 f6 31 ff c3 cc cc cc cc 0f 0b <0f> 0b 0f 0b 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90 90
+[ 878.410087] RSP: 0018:ffffb4ffc7cbbd28 EFLAGS: 00010287
+[ 878.410609] RAX: ffffffff82bb9ac0 RBX: ffff981390c2f1f8 RCX: 0000000000000000
+[ 878.411318] RDX: 0000000000009000 RSI: ffff981288232b58 RDI: ffff981390c2f378
+[ 878.412014] RBP: ffffb4ffc7cbbe18 R08: 0000000000000000 R09: 0000000000000000
+[ 878.412735] R10: 0000000000000000 R11: 0000000000000000 R12: ffff981390c2f030
+[ 878.413438] R13: ffff981288232b58 R14: 0000000000000029 R15: 0000000000000001
+[ 878.414121] FS: 0000000000000000(0000) GS:ffff9814b7900000(0000) knlGS:0000000000000000
+[ 878.414935] CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 878.415516] CR2: 00005e106a0554e0 CR3: 0000000112bf0001 CR4: 0000000000772ef0
+[ 878.416211] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[ 878.416907] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[ 878.417630] PKRU: 55555554
+
+(gdb) l *ceph_msg_data_cursor_init+0x42
+0xffffffff823b45a2 is in ceph_msg_data_cursor_init (net/ceph/messenger.c:1070).
+1065
+1066 void ceph_msg_data_cursor_init(struct ceph_msg_data_cursor *cursor,
+1067                                struct ceph_msg *msg, size_t length)
+1068 {
+1069        BUG_ON(!length);
+1070        BUG_ON(length > msg->data_length);
+1071        BUG_ON(!msg->num_data_items);
+1072
+1073        cursor->total_resid = length;
+1074        cursor->data = msg->data;
+
+The issue takes place because of this:
+
+[ 202.628853] libceph: net/ceph/messenger_v2.c:2034 prepare_sparse_read_data(): msg->data_length 33792, msg->sparse_read_total 36864
+
+1070        BUG_ON(length > msg->data_length);
+
+The generic/397 test (xfstests) executes such steps:
+(1) create encrypted files and directories;
+(2) access the created files and folders with encryption key;
+(3) access the created files and folders without encryption key.
+
+The issue takes place in this portion of code:
+
+    if (IS_ENCRYPTED(inode)) {
+            struct page **pages;
+            size_t page_off;
+
+            err = iov_iter_get_pages_alloc2(&subreq->io_iter, &pages, len,
+                                            &page_off);
+            if (err < 0) {
+                    doutc(cl, "%llx.%llx failed to allocate pages, %d\n",
+                          ceph_vinop(inode), err);
+                    goto out;
+            }
+
+            /* should always give us a page-aligned read */
+            WARN_ON_ONCE(page_off);
+            len = err;
+            err = 0;
+
+            osd_req_op_extent_osd_data_pages(req, 0, pages, len, 0, false,
+                                             false);
+
+The reason of the issue is that subreq->io_iter.count keeps unaligned
+value of length:
+
+[  347.751182] lib/iov_iter.c:1185 __iov_iter_get_pages_alloc(): maxsize 36864, maxpages 4294967295, start 18446659367320516064
+[  347.752808] lib/iov_iter.c:1196 __iov_iter_get_pages_alloc(): maxsize 33792, maxpages 4294967295, start 18446659367320516064
+[  347.754394] lib/iov_iter.c:1015 iter_folioq_get_pages(): maxsize 33792, maxpages 4294967295, extracted 0, _start_offset 18446659367320516064
+
+This patch simply assigns the aligned value to subreq->io_iter.count
+before calling iov_iter_get_pages_alloc2().
+
+[ idryomov: tag the comment with FIXME to make it clear that it's only
+            a workaround for netfslib not coexisting with fscrypt nicely
+            (this is also noted in another pre-existing comment) ]
+
+Cc: David Howells <dhowells@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
+Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/m_can/tcan4x5x-core.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/ceph/addr.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/net/can/m_can/tcan4x5x-core.c
-+++ b/drivers/net/can/m_can/tcan4x5x-core.c
-@@ -411,10 +411,11 @@ static int tcan4x5x_can_probe(struct spi
- 	priv = cdev_to_priv(mcan_class);
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -409,6 +409,15 @@ static void ceph_netfs_issue_read(struct
+ 		struct page **pages;
+ 		size_t page_off;
  
- 	priv->power = devm_regulator_get_optional(&spi->dev, "vsup");
--	if (PTR_ERR(priv->power) == -EPROBE_DEFER) {
--		ret = -EPROBE_DEFER;
--		goto out_m_can_class_free_dev;
--	} else {
-+	if (IS_ERR(priv->power)) {
-+		if (PTR_ERR(priv->power) == -EPROBE_DEFER) {
-+			ret = -EPROBE_DEFER;
-+			goto out_m_can_class_free_dev;
-+		}
- 		priv->power = NULL;
- 	}
- 
++		/*
++		 * FIXME: io_iter.count needs to be corrected to aligned
++		 * length. Otherwise, iov_iter_get_pages_alloc2() operates
++		 * with the initial unaligned length value. As a result,
++		 * ceph_msg_data_cursor_init() triggers BUG_ON() in the case
++		 * if msg->sparse_read_total > msg->data_length.
++		 */
++		subreq->io_iter.count = len;
++
+ 		err = iov_iter_get_pages_alloc2(&subreq->io_iter, &pages, len, &page_off);
+ 		if (err < 0) {
+ 			doutc(cl, "%llx.%llx failed to allocate pages, %d\n",
 
 
