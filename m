@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170FD248895;
-	Mon, 23 Jun 2025 13:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A0416419;
+	Mon, 23 Jun 2025 13:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685984; cv=none; b=i2BXUj0WU4NnQz84owfq08JxYG12+56WWvtvLUKnRoclTMlw+sUgMu9mq/hOctEa2kBVOLMjy9wTDlJaGuthERzN+WvVsZK+x0oUpmSdizijJsmZfyTW/3cUR5mMy1XpkYhbqDcUkBFpvpO4CVErDXLpMLcosvlOxLGIJ+stEa4=
+	t=1750685986; cv=none; b=Bno3EeiClmJGjcIj0xQmzBLjYjbuQvAzMl90mdYXCoY6TnwdrFrIyhBjnoNWPLaokdqKyzCIjKxKLmbE9UXAeu7CFGGIzRMoF7JjOezqhwQt6NuKd8lrDvugoce7BgS+kLI7f4pO4yhQ4fPdGE/LFdEpljcrE+5dv0ZTv2Av+vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685984; c=relaxed/simple;
-	bh=DGne7BRTw2kthKVJJEDAqkwG1OsCjHeuNDGbRKjGu/g=;
+	s=arc-20240116; t=1750685986; c=relaxed/simple;
+	bh=Lj7QYC67anznBAgT7PNaChcPOtF+N0pCEtuYE3qLt9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fih8No1Gy6nf9zubjj2AXBl9VUInu63+UHhvfqM9ZeTGy4WCbMPDMMFmsqFXfA9MBV+s2A8UM61/kTmRQICA6bI0i7KKbTBjodc15s/1+wyVNOYuRIGtUvgVpFgtHniJQwRpuujarEJLG2h4Kf5R9JIFBt0/PlRJzmnGYEGJ/9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5yrrlD1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u8y9ekyZqz1ci48w9NBtsLym1WwVScDeaoAyG7MDzh3suFKn1WIrY5fh7VwSnsdS6x327HUbnD8P1EYwhltw3Aeh5Ip3wVY5kFRQwQlG6XsQRhDvY9ZJDkPBTdvqXjavg4Y7tYEAtD8d0ZkUW/B5u06oGnyzyGCvLU31hms1DLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oysd/dcW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5yrrlD1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3EFC4CEEA;
-	Mon, 23 Jun 2025 13:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oysd/dcW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B5AC4CEEA;
+	Mon, 23 Jun 2025 13:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685984;
-	bh=DGne7BRTw2kthKVJJEDAqkwG1OsCjHeuNDGbRKjGu/g=;
+	s=korg; t=1750685986;
+	bh=Lj7QYC67anznBAgT7PNaChcPOtF+N0pCEtuYE3qLt9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5yrrlD1WyLQwvMZS7Vd6DkaEqZVlYPHzY0YHDGCHaPASZZJudvIJunhkMBX5Lt3k
-	 Sh6EA6Lpi1utm1iBoELt4WhVYeWpVuZdAF1DisryLJu0V7eqVTixzTJtvkir0Gn5Dx
-	 tlKMcnmTQ+bncYc6J7hZ63nuB5VExVIoSeON6rsI=
+	b=Oysd/dcWA+KoJ38b8uO0MUqczSF9DMyu5SucxrDmUzdiH8XbBDmB2CiK3HxEQun39
+	 424Sw9xrbVfU6Il5riXt9J4WDg4IkxBw657DsM20xoqyQr+lNk1VvNdzy7l04kRNRo
+	 muG13NhcM3i8iMLDuOI7wiehlaomj7dzB+qJzOkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 073/411] f2fs: use d_inode(dentry) cleanup dentry->d_inode
-Date: Mon, 23 Jun 2025 15:03:37 +0200
-Message-ID: <20250623130635.198531301@linuxfoundation.org>
+Subject: [PATCH 5.15 064/411] vfio/type1: Fix error unwind in migration dirty bitmap allocation
+Date: Mon, 23 Jun 2025 15:03:28 +0200
+Message-ID: <20250623130634.922621630@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
 References: <20250623130632.993849527@linuxfoundation.org>
@@ -52,72 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit a6c397a31f58a1d577c2c8d04b624e9baa31951c ]
+[ Upstream commit 4518e5a60c7fbf0cdff393c2681db39d77b4f87e ]
 
-no logic changes.
+When setting up dirty page tracking at the vfio IOMMU backend for
+device migration, if an error is encountered allocating a tracking
+bitmap, the unwind loop fails to free previously allocated tracking
+bitmaps.  This occurs because the wrong loop index is used to
+generate the tracking object.  This results in unintended memory
+usage for the life of the current DMA mappings where bitmaps were
+successfully allocated.
 
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Use the correct loop index to derive the tracking object for
+freeing during unwind.
+
+Fixes: d6a4c185660c ("vfio iommu: Implementation of ioctl for dirty pages tracking")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://lore.kernel.org/r/20250521034647.2877-1-lirongqing@baidu.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/namei.c | 8 ++++----
- fs/f2fs/super.c | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/vfio/vfio_iommu_type1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
-index b70ac99267728..364731547f696 100644
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -406,7 +406,7 @@ static int f2fs_link(struct dentry *old_dentry, struct inode *dir,
+diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
+index 66bbb125d7615..6a89bbec738f6 100644
+--- a/drivers/vfio/vfio_iommu_type1.c
++++ b/drivers/vfio/vfio_iommu_type1.c
+@@ -303,7 +303,7 @@ static int vfio_dma_bitmap_alloc_all(struct vfio_iommu *iommu, size_t pgsize)
+ 			struct rb_node *p;
  
- 	if (is_inode_flag_set(dir, FI_PROJ_INHERIT) &&
- 			(!projid_eq(F2FS_I(dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)))
-+			F2FS_I(inode)->i_projid)))
- 		return -EXDEV;
+ 			for (p = rb_prev(n); p; p = rb_prev(p)) {
+-				struct vfio_dma *dma = rb_entry(n,
++				struct vfio_dma *dma = rb_entry(p,
+ 							struct vfio_dma, node);
  
- 	err = f2fs_dquot_initialize(dir);
-@@ -885,7 +885,7 @@ static int f2fs_rename(struct inode *old_dir, struct dentry *old_dentry,
- 
- 	if (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			(!projid_eq(F2FS_I(new_dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)))
-+			F2FS_I(old_inode)->i_projid)))
- 		return -EXDEV;
- 
- 	/*
-@@ -1075,10 +1075,10 @@ static int f2fs_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
- 
- 	if ((is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			!projid_eq(F2FS_I(new_dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)) ||
-+			F2FS_I(old_inode)->i_projid)) ||
- 	    (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			!projid_eq(F2FS_I(old_dir)->i_projid,
--			F2FS_I(new_dentry->d_inode)->i_projid)))
-+			F2FS_I(new_inode)->i_projid)))
- 		return -EXDEV;
- 
- 	err = f2fs_dquot_initialize(old_dir);
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 0cf564ded140a..8d06b8b99d939 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1811,9 +1811,9 @@ static int f2fs_statfs(struct dentry *dentry, struct kstatfs *buf)
- 	buf->f_fsid    = u64_to_fsid(id);
- 
- #ifdef CONFIG_QUOTA
--	if (is_inode_flag_set(dentry->d_inode, FI_PROJ_INHERIT) &&
-+	if (is_inode_flag_set(d_inode(dentry), FI_PROJ_INHERIT) &&
- 			sb_has_quota_limits_enabled(sb, PRJQUOTA)) {
--		f2fs_statfs_project(sb, F2FS_I(dentry->d_inode)->i_projid, buf);
-+		f2fs_statfs_project(sb, F2FS_I(d_inode(dentry))->i_projid, buf);
- 	}
- #endif
- 	return 0;
+ 				vfio_dma_bitmap_free(dma);
 -- 
 2.39.5
 
