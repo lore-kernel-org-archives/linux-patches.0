@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0CD223DF0;
-	Mon, 23 Jun 2025 21:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F6C222571;
+	Mon, 23 Jun 2025 21:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713984; cv=none; b=SeC7O2lqzjzgMVdJ+DV/CmBqk14Uhhd9LaY4qZUPOyKkRxtM/9wR3rifZjBPuIqLGS9K4xTGY8FFLBOc0lOgLYr/KuPYmtMiu3XtTLYr8lHbikYWRmNipmaPhMEf4LBwQBb5hlEgCMcBx8YsRnTGVT5jboai7eiS6WfCNZpCoPU=
+	t=1750713987; cv=none; b=f4KQ+uxjhNAouUPvSXsq13y6fBqcbpbqr7XXLGi33OjyR4QHc/TpbSfaVlLIrhMdh4Uf7WLMTDhI8KZIZTODRkLUeL6sTAjb21JjpDSSp8Wogq/xVlTnvipsXmrdtSIyIBNDazLiM7MpYxrc6ImTqSocyLXvhD5CXx8QRUubXt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713984; c=relaxed/simple;
-	bh=uTXb2shSthsiLwR3tdRSDMoqeHpC3A4/b7pcDoYKspI=;
+	s=arc-20240116; t=1750713987; c=relaxed/simple;
+	bh=/kY9JAhOjZT5XFBsG+fplxM92l6/MLSAmB1KOe5hbLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cKC2XNhxDJA2WVd7kXeaTD5foFjax/yNw7qF901yLJKt2932Jw/gw54dABYpuf9XHgO3XC4FYWbxtASzECo9gqeBv84udX+1Oea7L6HP24Zq3Tcb8ZqIX7EMi19aAK+P5tyHHmUmIECDjzmvIwL/x+GTq3XCpC/sep00NUQ4zow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szi3U5UK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HVDkzNsuJ8prRLAGo289RQFuPCoAtdAdPDZ1wDCH3QJ59i4mCJS5WcPQKhcuy781uoQmbkf0bwOXAQ6qZMqingJNKBc6qNTCm+GiWIVMZyn2pp+m0aCWBItU3Xr4lhXKhO2EDtSMuI9jjybO+2zA/jr3MdcWvq1Duyg6LP+lmQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gA0ASY7n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szi3U5UK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4928C4CEEA;
-	Mon, 23 Jun 2025 21:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gA0ASY7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46BA9C4CEEA;
+	Mon, 23 Jun 2025 21:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713984;
-	bh=uTXb2shSthsiLwR3tdRSDMoqeHpC3A4/b7pcDoYKspI=;
+	s=korg; t=1750713986;
+	bh=/kY9JAhOjZT5XFBsG+fplxM92l6/MLSAmB1KOe5hbLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szi3U5UKowdUbXvdA1vJSOHg6yCD0OkUd4AhAioZHhegqG0jvC2nn7UGt2TNSVhoj
-	 rNC+BvvhvoFS6AkJBs/Oa3/orBc1QCc0GFZdcCD3bG8tS2hXdJSExxGoZvNs9+3D/7
-	 NRFZ4GqDp//P3PggrI8tDiCw4CPNx6736gI3XD7E=
+	b=gA0ASY7nN/UwmeRdZWuTeRtrnQ2oO5re0MX5CHj2TqthA5/cLUbp0xFxUjsjJ0flr
+	 gu4vYoOeMF/20cL6fUn3fx2fn/wmgqcLF2KRAxNZbgDlB87U/oAKXLB/w2tOFSIeJO
+	 kyfN0F2nA/z0JXbMgp1wnoWzo9bLcKQxsumTZ2AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Tony Lindgren <tony@atomide.com>
-Subject: [PATCH 6.12 074/414] ARM: omap: pmic-cpcap: do not mess around without CPCAP or OMAP4
-Date: Mon, 23 Jun 2025 15:03:31 +0200
-Message-ID: <20250623130643.926848134@linuxfoundation.org>
+	Alexei Safin <a.safin@rosa.ru>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 138/508] hwmon: (asus-ec-sensors) check sensor index in read_string()
+Date: Mon, 23 Jun 2025 15:03:03 +0200
+Message-ID: <20250623130648.682926546@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Alexei Safin <a.safin@rosa.ru>
 
-commit 7397daf1029d5bfd3415ec8622f5179603d5702d upstream.
+[ Upstream commit 25be318324563c63cbd9cb53186203a08d2f83a1 ]
 
-The late init call just writes to omap4 registers as soon as
-CONFIG_MFD_CPCAP is enabled without checking whether the
-cpcap driver is actually there or the SoC is indeed an
-OMAP4.
-Rather do these things only with the right device combination.
+Prevent a potential invalid memory access when the requested sensor
+is not found.
 
-Fixes booting the BT200 with said configuration enabled and non-factory
-X-Loader and probably also some surprising behavior on other devices.
+find_ec_sensor_index() may return a negative value (e.g. -ENOENT),
+but its result was used without checking, which could lead to
+undefined behavior when passed to get_sensor_info().
 
-Fixes: c145649bf262 ("ARM: OMAP2+: Configure voltage controller for cpcap to low-speed")
-CC: stable@vger.kernel.org
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Reivewed-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20250331144439.769697-1-andreas@kemnade.info
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add a proper check to return -EINVAL if sensor_index is negative.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: d0ddfd241e57 ("hwmon: (asus-ec-sensors) add driver for ASUS EC")
+Signed-off-by: Alexei Safin <a.safin@rosa.ru>
+Link: https://lore.kernel.org/r/20250424202654.5902-1-a.safin@rosa.ru
+[groeck: Return error code returned from find_ec_sensor_index]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/pmic-cpcap.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/hwmon/asus-ec-sensors.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/arm/mach-omap2/pmic-cpcap.c
-+++ b/arch/arm/mach-omap2/pmic-cpcap.c
-@@ -264,7 +264,11 @@ int __init omap4_cpcap_init(void)
- 
- static int __init cpcap_late_init(void)
+diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
+index d893cfd1cb829..6f20b55f41f2e 100644
+--- a/drivers/hwmon/asus-ec-sensors.c
++++ b/drivers/hwmon/asus-ec-sensors.c
+@@ -839,6 +839,10 @@ static int asus_ec_hwmon_read_string(struct device *dev,
  {
--	omap4_vc_set_pmic_signaling(PWRDM_POWER_RET);
-+	if (!of_find_compatible_node(NULL, NULL, "motorola,cpcap"))
-+		return 0;
+ 	struct ec_sensors_data *state = dev_get_drvdata(dev);
+ 	int sensor_index = find_ec_sensor_index(state, type, channel);
 +
-+	if (soc_is_omap443x() || soc_is_omap446x() || soc_is_omap447x())
-+		omap4_vc_set_pmic_signaling(PWRDM_POWER_RET);
++	if (sensor_index < 0)
++		return sensor_index;
++
+ 	*str = get_sensor_info(state, sensor_index)->label;
  
  	return 0;
- }
+-- 
+2.39.5
+
 
 
