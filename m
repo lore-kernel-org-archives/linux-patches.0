@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9EC4C62;
-	Mon, 23 Jun 2025 21:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A304C62;
+	Mon, 23 Jun 2025 21:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713317; cv=none; b=MIimgTqilVoCQ+ww18GP9taRaGvg2kDyN1VWetaH9n6ElvexR2ZdJ2yXYwolz3zegQtBWsQTB1bBmi9wRhbnJdSgWk+Syu4O6bpZCweW74sPnwRtm0phOPnvIpiKLnMevbhnemWiA9MhAflZ1Iw6czv0nPeVEXEyJf61IoByNp0=
+	t=1750713321; cv=none; b=kfi3OfMB1XEYZmP42HBcWnkvBiiEZFKkPj7/IIgKFFTEFdl6L0q9NJtGSyAxb5+nuMkLVKKpNdMUOnfzWtQtTAm5VAStTzUD6AYNUa503yWo8j67x9mrqCOBFgRgOYwlrrtCnGiQNGdfCrcmfYnYuneP65v1a1XFNCn9h72+Nw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713317; c=relaxed/simple;
-	bh=fjD7JHejFcgiYNUQQcl+RMdKhxRd8qcQnkSHr+EVLGE=;
+	s=arc-20240116; t=1750713321; c=relaxed/simple;
+	bh=edsxRqTjSlbm4uApd3sWjNlfKhOjVcaPbdCRCb5utGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZgPg0SswJ4OBKS9NEnAQT1HL4p7OfwNV1FP/Wg5+ORHyR/sk6P6xuk/PeV3ZLVNDNiMv7liFnDK1VJOGoAjoFADC645KIFCjZ04nzxhFHD2kVfeEe/3Lx5kDmrt6jyYkUx2TETTZPso+l0Z7jUARtjMyam/tTeNuSnD5ENg3Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOpqqRby; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=obDb9ldrLNwzTnwGmSLNyIOdn8xnj2evtMQEPt5M4R3CsRYVFAm/SrKrJ/UBzyuchwUmwKhVsq3RoNXIoBmdi9GXSlZWd1UkE+bj1ScamYLtnFXGrXQJOFNNtYkN/d9JD4ZLlEmsxRaBGiyEyoRRbaOdM5dKq3V9oTYWKDCAzYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrVVPAqM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOpqqRby"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9AFC4CEEA;
-	Mon, 23 Jun 2025 21:15:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrVVPAqM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C35FC4CEEA;
+	Mon, 23 Jun 2025 21:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713317;
-	bh=fjD7JHejFcgiYNUQQcl+RMdKhxRd8qcQnkSHr+EVLGE=;
+	s=korg; t=1750713319;
+	bh=edsxRqTjSlbm4uApd3sWjNlfKhOjVcaPbdCRCb5utGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tOpqqRbym0MKbjj79AY7tS1JTyuQHAyVTlvMb61Jy9nDZK1XS77GJEuG4ZHO6OXL/
-	 2O6lrTEzaaYynW+ZyaA3OzRSyaO9LXHovJDfsaYdFs19O6nUYhaS3bAqaAdfttcNpo
-	 kb91DzO2rjcJcjs7wKsUPjEdC+0UTM8jrG9ECSIQ=
+	b=CrVVPAqMSRm/pmpRl/kOTpVZnLTIcIQQBm/dX4+lMncTpqT+7LnlVBNKliwfLWa6h
+	 2aMa+mu7twnROOgXcpvzhnzfj9Qg0EwGILZtH6PFYQbQg1mLDlO2Z/j5SPhT8Fl1fC
+	 +YKdivLayd/VVw2bygKp3PRRWIKMoOYVDyhbCa7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiande Lu <jiande.lu@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sukrut Bellary <sbellary@baylibre.com>,
+	Judith Mendez <jm@ti.com>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 320/592] Bluetooth: btusb: Add new VID/PID 13d3/3630 for MT7925
-Date: Mon, 23 Jun 2025 15:04:38 +0200
-Message-ID: <20250623130708.050228590@linuxfoundation.org>
+Subject: [PATCH 5.4 180/222] ARM: OMAP2+: Fix l4ls clk domain handling in STANDBY
+Date: Mon, 23 Jun 2025 15:08:35 +0200
+Message-ID: <20250623130617.581185512@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +48,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiande Lu <jiande.lu@mediatek.com>
+From: Sukrut Bellary <sbellary@baylibre.com>
 
-[ Upstream commit 5bd5c716f7ec3e25d8d3b8a7566e192a26f9c7ce ]
+[ Upstream commit 47fe74098f3dadba2f9cc1e507d813a4aa93f5f3 ]
 
-Add VID 13d3 & PID 3630 for MediaTek MT7925 USB Bluetooth chip.
+Don't put the l4ls clk domain to sleep in case of standby.
+Since CM3 PM FW[1](ti-v4.1.y) doesn't wake-up/enable the l4ls clk domain
+upon wake-up, CM3 PM FW fails to wake-up the MPU.
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below.
+[1] https://git.ti.com/cgit/processor-firmware/ti-amx3-cm3-pm-firmware/
 
-T:  Bus=07 Lev=01 Prnt=01 Port=10 Cnt=02 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=13d3 ProdID=3630 Rev= 1.00
-S:  Manufacturer=MediaTek Inc.
-S:  Product=Wireless_Device
-S:  SerialNumber=000000000
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
-
-Signed-off-by: Jiande Lu <jiande.lu@mediatek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sukrut Bellary <sbellary@baylibre.com>
+Tested-by: Judith Mendez <jm@ti.com>
+Link: https://lore.kernel.org/r/20250318230042.3138542-2-sbellary@baylibre.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/mach-omap2/clockdomain.h           |  1 +
+ arch/arm/mach-omap2/clockdomains33xx_data.c |  2 +-
+ arch/arm/mach-omap2/cm33xx.c                | 14 +++++++++++++-
+ 3 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index df3380a8de85e..c7c3cd0dcd49e 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -720,6 +720,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3628), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3630), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/arch/arm/mach-omap2/clockdomain.h b/arch/arm/mach-omap2/clockdomain.h
+index 68550b23c938d..eb6ca2ea80679 100644
+--- a/arch/arm/mach-omap2/clockdomain.h
++++ b/arch/arm/mach-omap2/clockdomain.h
+@@ -48,6 +48,7 @@
+ #define CLKDM_NO_AUTODEPS			(1 << 4)
+ #define CLKDM_ACTIVE_WITH_MPU			(1 << 5)
+ #define CLKDM_MISSING_IDLE_REPORTING		(1 << 6)
++#define CLKDM_STANDBY_FORCE_WAKEUP		BIT(7)
  
- 	/* Additional Realtek 8723AE Bluetooth devices */
- 	{ USB_DEVICE(0x0930, 0x021d), .driver_info = BTUSB_REALTEK },
+ #define CLKDM_CAN_HWSUP		(CLKDM_CAN_ENABLE_AUTO | CLKDM_CAN_DISABLE_AUTO)
+ #define CLKDM_CAN_SWSUP		(CLKDM_CAN_FORCE_SLEEP | CLKDM_CAN_FORCE_WAKEUP)
+diff --git a/arch/arm/mach-omap2/clockdomains33xx_data.c b/arch/arm/mach-omap2/clockdomains33xx_data.c
+index 32c90fd9eba26..3303c41dcefe8 100644
+--- a/arch/arm/mach-omap2/clockdomains33xx_data.c
++++ b/arch/arm/mach-omap2/clockdomains33xx_data.c
+@@ -27,7 +27,7 @@ static struct clockdomain l4ls_am33xx_clkdm = {
+ 	.pwrdm		= { .name = "per_pwrdm" },
+ 	.cm_inst	= AM33XX_CM_PER_MOD,
+ 	.clkdm_offs	= AM33XX_CM_PER_L4LS_CLKSTCTRL_OFFSET,
+-	.flags		= CLKDM_CAN_SWSUP,
++	.flags		= CLKDM_CAN_SWSUP | CLKDM_STANDBY_FORCE_WAKEUP,
+ };
+ 
+ static struct clockdomain l3s_am33xx_clkdm = {
+diff --git a/arch/arm/mach-omap2/cm33xx.c b/arch/arm/mach-omap2/cm33xx.c
+index 084d454f60748..430a9de563a4e 100644
+--- a/arch/arm/mach-omap2/cm33xx.c
++++ b/arch/arm/mach-omap2/cm33xx.c
+@@ -28,6 +28,9 @@
+ #include "cm-regbits-34xx.h"
+ #include "cm-regbits-33xx.h"
+ #include "prm33xx.h"
++#if IS_ENABLED(CONFIG_SUSPEND)
++#include <linux/suspend.h>
++#endif
+ 
+ /*
+  * CLKCTRL_IDLEST_*: possible values for the CM_*_CLKCTRL.IDLEST bitfield:
+@@ -336,8 +339,17 @@ static int am33xx_clkdm_clk_disable(struct clockdomain *clkdm)
+ {
+ 	bool hwsup = false;
+ 
++#if IS_ENABLED(CONFIG_SUSPEND)
++	/*
++	 * In case of standby, Don't put the l4ls clk domain to sleep.
++	 * Since CM3 PM FW doesn't wake-up/enable the l4ls clk domain
++	 * upon wake-up, CM3 PM FW fails to wake-up th MPU.
++	 */
++	if (pm_suspend_target_state == PM_SUSPEND_STANDBY &&
++	    (clkdm->flags & CLKDM_STANDBY_FORCE_WAKEUP))
++		return 0;
++#endif
+ 	hwsup = am33xx_cm_is_clkdm_in_hwsup(clkdm->cm_inst, clkdm->clkdm_offs);
+-
+ 	if (!hwsup && (clkdm->flags & CLKDM_CAN_FORCE_SLEEP))
+ 		am33xx_clkdm_sleep(clkdm);
+ 
 -- 
 2.39.5
 
