@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8E419049B;
-	Mon, 23 Jun 2025 22:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8E61A4F12;
+	Mon, 23 Jun 2025 22:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716301; cv=none; b=jY0FAWeOpGeqaFmlc5VRf5NS3Q9yys6sicSe9hScrbDJuoDYKlSLl6HmR5UedvPSnmX/+azOyILBurXWX4GiDj1vo12/+L159CWNoE5M/jcTR971ysU5ELqvVoWZyV16pulyRTOgF/DII/2fuIMCXeTDvhYGKhvp+Z9EOUK/tVo=
+	t=1750716304; cv=none; b=juqIRs33Ul8Xw0XpG5+LH48OhQ47c14/szESeFejX2To5OtuO/gwUduoRBeihElRjVmHRt0z/pSW5V2KGfz/L/cA5+MEIHbq6A5OElBM/XSBezudowEdoEvx7QoEBUGoYUiP7ZCsn+l2lDBd1tjMS2F0ikEMjcVNxe5uMUj9KJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716301; c=relaxed/simple;
-	bh=kLyADrxaoi5mTi0FgBOzdjO6bjRP6qQ6mEIYNEUDRLk=;
+	s=arc-20240116; t=1750716304; c=relaxed/simple;
+	bh=HH2IKuD4XjzEFlBF1ymLc0MwNyUPIcZ8oTeHEN9jczQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E01Fv5XciNYG5CelQuq+jxDZUyv6rcQxUsurgu+iJIpaBHSe33h5pFnlYhBplnxTRh/UWnYob9L3jwz8d44ifAbzOicZyOL9PqtOO7GmKcJc0QuG9rNCmXS6dNN9JWRu82uBej7awBs2KmHQ53IIfuzaP5QE1hVvGdp1vHWF1zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sN79RNKG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nmruKo6uoF18rqMu1/XorYv314B1lJFBU9HX7KW4dw71CX4E+Ai+DKk7ilqdvCGaaRkvyHI48yjqTdZitF4g2wbbONjMRddsywR+EkMHeWotIZ0WwEcZrE40Myqo3Eohcr8aZf1kKqIGu8ANsSSF2nPgw6G5EVLEpgB9NqprqxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYrVwf70; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sN79RNKG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53226C4CEEA;
-	Mon, 23 Jun 2025 22:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYrVwf70"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09D2C4CEEA;
+	Mon, 23 Jun 2025 22:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716301;
-	bh=kLyADrxaoi5mTi0FgBOzdjO6bjRP6qQ6mEIYNEUDRLk=;
+	s=korg; t=1750716304;
+	bh=HH2IKuD4XjzEFlBF1ymLc0MwNyUPIcZ8oTeHEN9jczQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sN79RNKGlMyGQd5pGwnJRw5SsGan/2df/3kcQDz3OYRmQo5AREGQKm59Ew5BjEYca
-	 iOzVZRYgNL25D0YGafOpUs+yBfpH/yxGvSg+BY9IidcQ4fqVfWhK7U2xovgI2Li2x7
-	 h8BtzO4oZXD0zNZgBCtXCgzDzjHgB01rZPvaU6mg=
+	b=DYrVwf70XeFq1tcoXdjoD4A5HJuAGxC2NIOFW+p64GrIdmTYDgH1koqCMqFjeS8Vl
+	 dPaqZjDfvUQZ5PLzdESzCwG+TutwjW1nDg8ajcfLPbJUXTKZ3wWtjPN+qgJYUH94lF
+	 oOWe43yV0JZN8YJdXG4c/YHowjZvOaUNgF+aSnTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 320/411] pinctrl: armada-37xx: propagate error from armada_37xx_pmx_gpio_set_direction()
-Date: Mon, 23 Jun 2025 15:07:44 +0200
-Message-ID: <20250623130641.690458736@linuxfoundation.org>
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.10 340/355] rtc: Make rtc_time64_to_tm() support dates before 1970
+Date: Mon, 23 Jun 2025 15:09:01 +0200
+Message-ID: <20250623130636.951336632@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Alexandre Mergnat <amergnat@baylibre.com>
 
-[ Upstream commit bfa0ff804ffa8b1246ade8be08de98c9eb19d16f ]
+commit 7df4cfef8b351fec3156160bedfc7d6d29de4cce upstream.
 
-The armada_37xx_gpio_direction_{in,out}put() functions can fail, so
-propagate their error values back to the stack instead of silently
-ignoring those.
+Conversion of dates before 1970 is still relevant today because these
+dates are reused on some hardwares to store dates bigger than the
+maximal date that is representable in the device's native format.
+This prominently and very soon affects the hardware covered by the
+rtc-mt6397 driver that can only natively store dates in the interval
+1900-01-01 up to 2027-12-31. So to store the date 2028-01-01 00:00:00
+to such a device, rtc_time64_to_tm() must do the right thing for
+time=-2208988800.
 
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-5-07e9ac1ab737@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20250428-enable-rtc-v4-1-2b2f7e3f9349@baylibre.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Uwe Kleine-KÃ¶nig <u.kleine-koenig@baylibre.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/rtc/lib.c |   24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-index 3a9a3a1d5d4be..9c8ed5a03a825 100644
---- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-+++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -468,16 +468,17 @@ static int armada_37xx_pmx_gpio_set_direction(struct pinctrl_dev *pctldev,
+--- a/drivers/rtc/lib.c
++++ b/drivers/rtc/lib.c
+@@ -46,24 +46,38 @@ EXPORT_SYMBOL(rtc_year_days);
+  * rtc_time64_to_tm - converts time64_t to rtc_time.
+  *
+  * @time:	The number of seconds since 01-01-1970 00:00:00.
+- *		(Must be positive.)
++ *		Works for values since at least 1900
+  * @tm:		Pointer to the struct rtc_time.
+  */
+ void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
  {
- 	struct armada_37xx_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
- 	struct gpio_chip *chip = range->gc;
-+	int ret;
+-	unsigned int secs;
+-	int days;
++	int days, secs;
  
- 	dev_dbg(info->dev, "gpio_direction for pin %u as %s-%d to %s\n",
- 		offset, range->name, offset, input ? "input" : "output");
+ 	u64 u64tmp;
+ 	u32 u32tmp, udays, century, day_of_century, year_of_century, year,
+ 		day_of_year, month, day;
+ 	bool is_Jan_or_Feb, is_leap_year;
  
- 	if (input)
--		armada_37xx_gpio_direction_input(chip, offset);
-+		ret = armada_37xx_gpio_direction_input(chip, offset);
- 	else
--		armada_37xx_gpio_direction_output(chip, offset, 0);
-+		ret = armada_37xx_gpio_direction_output(chip, offset, 0);
+-	/* time must be positive */
++	/*
++	 * Get days and seconds while preserving the sign to
++	 * handle negative time values (dates before 1970-01-01)
++	 */
+ 	days = div_s64_rem(time, 86400, &secs);
  
--	return 0;
-+	return ret;
- }
++	/*
++	 * We need 0 <= secs < 86400 which isn't given for negative
++	 * values of time. Fixup accordingly.
++	 */
++	if (secs < 0) {
++		days -= 1;
++		secs += 86400;
++	}
++
+ 	/* day of the week, 1970-01-01 was a Thursday */
+ 	tm->tm_wday = (days + 4) % 7;
++	/* Ensure tm_wday is always positive */
++	if (tm->tm_wday < 0)
++		tm->tm_wday += 7;
  
- static int armada_37xx_gpio_request_enable(struct pinctrl_dev *pctldev,
--- 
-2.39.5
-
+ 	/*
+ 	 * The following algorithm is, basically, Proposition 6.3 of Neri
+@@ -93,7 +107,7 @@ void rtc_time64_to_tm(time64_t time, str
+ 	 * thus, is slightly different from [1].
+ 	 */
+ 
+-	udays		= ((u32) days) + 719468;
++	udays		= days + 719468;
+ 
+ 	u32tmp		= 4 * udays + 3;
+ 	century		= u32tmp / 146097;
 
 
