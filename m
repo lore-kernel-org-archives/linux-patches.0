@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C868D1AD3FA;
-	Mon, 23 Jun 2025 21:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465CC3FB1B;
+	Mon, 23 Jun 2025 21:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715853; cv=none; b=C5CuplbPdeQYpvuDtJl/ZsgAfWzZInoYOHE1ow82celgfKwMUtm0YkeLLZh9Ftog0dZw3mEEEGYVYWhZMIFsIEHTb+9/IpWxsVQXJQ9a2vURl5r6oQ7Bx9Efv9VEtrJOIDpTULrNAqt7A7nH/CnDEb/MzSw9ocNJKCQl10RS6Oo=
+	t=1750715856; cv=none; b=V9eqPZtByeqiMnr7klER3NYsaEuZvLmdZDSeWvUbDpWsYbkWUTJH9A+lPYM7ma1qI/PCYjlbNT0biPQe8s2fCEyezeXei83iiU69diP8QkGSPDtVRdFNvvcuGySf6jXBEW/9IW8YAMeKf9gZzY73Qx6e8fIyFHBmPSLlUnOcprY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715853; c=relaxed/simple;
-	bh=6kfQUZZg3k+dORl+5O4iXq9+0nNpM3ND9HTXQkBSl3k=;
+	s=arc-20240116; t=1750715856; c=relaxed/simple;
+	bh=s2bhXbp9T4zIubjWFg99eFT1+MGX4O8bEkoiLYXwqK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZabbIAxsYf3xRrvOTA4XYfGODF3QELyC+Tedt5N9naly1iawy12myVJYx1mL1icZyTcNM73xQbWcDHsPol29XS8smT8B8x3/TprPoZ1gdQ5Cv9qy8UNx3cHE1vO3wBMOnYqme/jqhzlWeFHFFviNJH/a580VCmrshzyej78kono=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQICwlym; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IAoSUpadLXLQvOAlwCjrk3SxJJm+J5vW0Vt+DXagLetAHw9wAnOvPsUjFQYHgykLlmUUJBeZ5Ss0Z4fieYUXTvVBrb3c1vVqOfbZ/rPqrR50hnnKdnUvlN7IylNOZMTNFT7TcnxgrFMiKRXqKPQwRJy6CouFzyP0HE61ZcF2Ufw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZK8liZsD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQICwlym"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F681C4CEEA;
-	Mon, 23 Jun 2025 21:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZK8liZsD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1AFC4CEEA;
+	Mon, 23 Jun 2025 21:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715853;
-	bh=6kfQUZZg3k+dORl+5O4iXq9+0nNpM3ND9HTXQkBSl3k=;
+	s=korg; t=1750715856;
+	bh=s2bhXbp9T4zIubjWFg99eFT1+MGX4O8bEkoiLYXwqK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XQICwlymA6MYMO4okxXsA+hEm0DTMROIFwR9XuYzcohMERFPkdGeuh+59VUJv2EuT
-	 D87mQAitw1Jv4muUjh3JYJfXLV9roGim4Sqks88txfWc9Mu8mved9QQsujHTuguu5X
-	 U9T2+o7JEk9+K27O9DgIFbRH8Mz019eo7Ep5Q/cw=
+	b=ZK8liZsDdmbmq3d5h1I+lBHtDq3vWACMLaqxHwHzSD5axG5HskzJrBQvNi7JQD8wC
+	 sPcg3SAGXLe72GMJgmN2aSpvFXjLHitEwUZOAl/V1c5vWu0h3iLnerkjk2UznGwPsT
+	 BMDuqf6TIIlMZfKC80cUYAqaELnuDNmnReyJfmeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Jason Xing <kernelxing@tencent.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 308/411] emulex/benet: correct command version selection in be_cmd_get_stats()
-Date: Mon, 23 Jun 2025 15:07:32 +0200
-Message-ID: <20250623130641.396970875@linuxfoundation.org>
+Subject: [PATCH 6.12 233/414] net: mlx4: add SOF_TIMESTAMPING_TX_SOFTWARE flag when getting ts info
+Date: Mon, 23 Jun 2025 15:06:10 +0200
+Message-ID: <20250623130647.864332596@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit edb888d29748cee674006a52e544925dacc7728e ]
+[ Upstream commit b86bcfee30576b752302c55693fff97242b35dfd ]
 
-Logic here always sets hdr->version to 2 if it is not a BE3 or Lancer chip,
-even if it is BE2. Use 'else if' to prevent multiple assignments, setting
-version 0 for BE2, version 1 for BE3 and Lancer, and version 2 for others.
-Fixes potential incorrect version setting when BE2_chip and
-BE3_chip/lancer_chip checks could both be true.
+As mlx4 has implemented skb_tx_timestamp() in mlx4_en_xmit(), the
+SOFTWARE flag is surely needed when users are trying to get timestamp
+information.
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250519141731.691136-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250510093442.79711-1-kerneljasonxing@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/emulex/benet/be_cmds.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx4/en_ethtool.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/emulex/benet/be_cmds.c b/drivers/net/ethernet/emulex/benet/be_cmds.c
-index 88f69c486ed09..1cdb7ca019f57 100644
---- a/drivers/net/ethernet/emulex/benet/be_cmds.c
-+++ b/drivers/net/ethernet/emulex/benet/be_cmds.c
-@@ -1608,7 +1608,7 @@ int be_cmd_get_stats(struct be_adapter *adapter, struct be_dma_mem *nonemb_cmd)
- 	/* version 1 of the cmd is not supported only by BE2 */
- 	if (BE2_chip(adapter))
- 		hdr->version = 0;
--	if (BE3_chip(adapter) || lancer_chip(adapter))
-+	else if (BE3_chip(adapter) || lancer_chip(adapter))
- 		hdr->version = 1;
- 	else
- 		hdr->version = 2;
+diff --git a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
+index cd17a3f4faf83..a68cd3f0304c6 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
+@@ -1897,6 +1897,7 @@ static int mlx4_en_get_ts_info(struct net_device *dev,
+ 	if (mdev->dev->caps.flags2 & MLX4_DEV_CAP_FLAG2_TS) {
+ 		info->so_timestamping |=
+ 			SOF_TIMESTAMPING_TX_HARDWARE |
++			SOF_TIMESTAMPING_TX_SOFTWARE |
+ 			SOF_TIMESTAMPING_RX_HARDWARE |
+ 			SOF_TIMESTAMPING_RAW_HARDWARE;
+ 
 -- 
 2.39.5
 
