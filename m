@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79701F7580;
-	Mon, 23 Jun 2025 22:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E05C224B01;
+	Mon, 23 Jun 2025 22:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716644; cv=none; b=IBaTWAEZF5iLIihADD5/wKOkjSzqGI/3vjdH1FJAHetcqWLi20IT9jgxX/82DwKMlM+dXZc0bKelaGwKvWZd4n0naOi3aqgTSwGfAF/RrvwFio53vPVWxYsTtfHrT7KnfPfd11U6s+apc8FrHIniVQUkCvio8AS/ClMzBcajNFc=
+	t=1750716647; cv=none; b=Oixvk9MlfH0ZCnNwJpHAaOa7+Ybi5UGM6qJaGiHrKABabQnCcGjaT2HD+TjfMcTOt6p41DXcGZv05Oz1PiNmYhh+e/Nhhvlh9uMSl2zrj1yuU9w6f4MC1l6sKv5DJboMWX8kKibt/gvIQfWFSCA8MwS7q+tV+emb9O0an0AUbAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716644; c=relaxed/simple;
-	bh=k6iFyZZJBemvHREQj4xxcFRhJf0akJNccL7JB37X3cg=;
+	s=arc-20240116; t=1750716647; c=relaxed/simple;
+	bh=hsFUNYkbto6fByHwa1+5UPgh0lvs+3Xs73/ZzWFSpMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k5U/sIcLOk1sLoya9lnINj3/nQdevQXBMtjomuOgBvysaxGv0q1lP8Cc9sHCcgOVu9JWMP48fMTMHtAP1M/o88X9zYTbuAEBCz+h1kHVfPh7FVn5cGWhOQrv1VERcHY5O9K9+iBGFVu9WyepZUAMrHr35G7inGbfK1DNpVay7fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BQKW1mI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PmNHr9qV9II8vYH/6+yxUfYE8FUtSulRsho3L395U412ZpI6SStMe/2v/LPRVM9nO0snTLB7NOTdFW9t1/Jd+9LHLAQMnqY9+sEpts9BSwKVQx4acutlrLL2kilxyBF4JRtfjIc8o7kffiEtROWhbY/7EZfOwrVrk8tl/9OReCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SU1ySfQ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BQKW1mI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607BEC4CEEA;
-	Mon, 23 Jun 2025 22:10:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SU1ySfQ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4ABC4CEEA;
+	Mon, 23 Jun 2025 22:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716644;
-	bh=k6iFyZZJBemvHREQj4xxcFRhJf0akJNccL7JB37X3cg=;
+	s=korg; t=1750716647;
+	bh=hsFUNYkbto6fByHwa1+5UPgh0lvs+3Xs73/ZzWFSpMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1BQKW1mIhC/Att1JpqBF9FqStCIOexECmBYTvmcLqdQ+kQlD9x5S7UiqMmDEtR3dx
-	 Ea+aV/KHt2n9o1QkqF6RsUfOdV6wa03NduDDISDe9AAdYuhVkfQD7IkiYz8cyDSOhZ
-	 CnwYMtASvs59Re3xFAuZ/CIMKtsZz6RJdU9g9FiE=
+	b=SU1ySfQ12dhyruB7PUGAHcJ99+OtMFoZ5qltjogSeCtoUqfUtybk1xOnyJjWtXTTh
+	 U1sJZG/vGosJHu7lGNILXu8wJiMq4Evca9pDj2m753/UDc2M6b5wc5FCOPsXZm8bUU
+	 em8pF690wlX1a/M3EUS0PpefNOR3i5U2c+615bFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Sadovnikov <a.sadovnikov@ispras.ru>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 5.15 347/411] jffs2: check that raw node were preallocated before writing summary
-Date: Mon, 23 Jun 2025 15:08:11 +0200
-Message-ID: <20250623130642.381178341@linuxfoundation.org>
+	Yao Zi <ziyao@disroot.org>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 279/290] platform/loongarch: laptop: Add backlight power control support
+Date: Mon, 23 Jun 2025 15:09:00 +0200
+Message-ID: <20250623130635.314390752@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,91 +46,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Artem Sadovnikov <a.sadovnikov@ispras.ru>
+From: Yao Zi <ziyao@disroot.org>
 
-commit ec9e6f22bce433b260ea226de127ec68042849b0 upstream.
+commit 53c762b47f726e4079a1f06f684bce2fc0d56fba upstream.
 
-Syzkaller detected a kernel bug in jffs2_link_node_ref, caused by fault
-injection in jffs2_prealloc_raw_node_refs. jffs2_sum_write_sumnode doesn't
-check return value of jffs2_prealloc_raw_node_refs and simply lets any
-error propagate into jffs2_sum_write_data, which eventually calls
-jffs2_link_node_ref in order to link the summary to an expectedly allocated
-node.
+loongson_laptop_turn_{on,off}_backlight() are designed for controlling
+the power of the backlight, but they aren't really used in the driver
+previously.
 
-kernel BUG at fs/jffs2/nodelist.c:592!
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
-CPU: 1 PID: 31277 Comm: syz-executor.7 Not tainted 6.1.128-syzkaller-00139-ge10f83ca10a1 #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:jffs2_link_node_ref+0x570/0x690 fs/jffs2/nodelist.c:592
-Call Trace:
- <TASK>
- jffs2_sum_write_data fs/jffs2/summary.c:841 [inline]
- jffs2_sum_write_sumnode+0xd1a/0x1da0 fs/jffs2/summary.c:874
- jffs2_do_reserve_space+0xa18/0xd60 fs/jffs2/nodemgmt.c:388
- jffs2_reserve_space+0x55f/0xaa0 fs/jffs2/nodemgmt.c:197
- jffs2_write_inode_range+0x246/0xb50 fs/jffs2/write.c:362
- jffs2_write_end+0x726/0x15d0 fs/jffs2/file.c:301
- generic_perform_write+0x314/0x5d0 mm/filemap.c:3856
- __generic_file_write_iter+0x2ae/0x4d0 mm/filemap.c:3973
- generic_file_write_iter+0xe3/0x350 mm/filemap.c:4005
- call_write_iter include/linux/fs.h:2265 [inline]
- do_iter_readv_writev+0x20f/0x3c0 fs/read_write.c:735
- do_iter_write+0x186/0x710 fs/read_write.c:861
- vfs_iter_write+0x70/0xa0 fs/read_write.c:902
- iter_file_splice_write+0x73b/0xc90 fs/splice.c:685
- do_splice_from fs/splice.c:763 [inline]
- direct_splice_actor+0x10c/0x170 fs/splice.c:950
- splice_direct_to_actor+0x337/0xa10 fs/splice.c:896
- do_splice_direct+0x1a9/0x280 fs/splice.c:1002
- do_sendfile+0xb13/0x12c0 fs/read_write.c:1255
- __do_sys_sendfile64 fs/read_write.c:1323 [inline]
- __se_sys_sendfile64 fs/read_write.c:1309 [inline]
- __x64_sys_sendfile64+0x1cf/0x210 fs/read_write.c:1309
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Fix this issue by checking return value of jffs2_prealloc_raw_node_refs
-before calling jffs2_sum_write_data.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+Unify these two functions since they only differ in arguments passed to
+ACPI method, and wire up loongson_laptop_backlight_update() to update
+the power state of the backlight as well. Tested on the TongFang L860-T2
+Loongson-3A5000 laptop.
 
 Cc: stable@vger.kernel.org
-Fixes: 2f785402f39b ("[JFFS2] Reduce visibility of raw_node_ref to upper layers of JFFS2 code.")
-Signed-off-by: Artem Sadovnikov <a.sadovnikov@ispras.ru>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: 6246ed09111f ("LoongArch: Add ACPI-based generic laptop driver")
+Signed-off-by: Yao Zi <ziyao@disroot.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jffs2/summary.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/platform/loongarch/loongson-laptop.c |   73 +++++++++++++--------------
+ 1 file changed, 37 insertions(+), 36 deletions(-)
 
---- a/fs/jffs2/summary.c
-+++ b/fs/jffs2/summary.c
-@@ -858,7 +858,10 @@ int jffs2_sum_write_sumnode(struct jffs2
- 	spin_unlock(&c->erase_completion_lock);
+--- a/drivers/platform/loongarch/loongson-laptop.c
++++ b/drivers/platform/loongarch/loongson-laptop.c
+@@ -56,8 +56,7 @@ static struct input_dev *generic_inputde
+ static acpi_handle hotkey_handle;
+ static struct key_entry hotkey_keycode_map[GENERIC_HOTKEY_MAP_MAX];
  
- 	jeb = c->nextblock;
--	jffs2_prealloc_raw_node_refs(c, jeb, 1);
-+	ret = jffs2_prealloc_raw_node_refs(c, jeb, 1);
+-int loongson_laptop_turn_on_backlight(void);
+-int loongson_laptop_turn_off_backlight(void);
++static bool bl_powered;
+ static int loongson_laptop_backlight_update(struct backlight_device *bd);
+ 
+ /* 2. ACPI Helpers and device model */
+@@ -354,16 +353,42 @@ static int ec_backlight_level(u8 level)
+ 	return level;
+ }
+ 
++static int ec_backlight_set_power(bool state)
++{
++	int status;
++	union acpi_object arg0 = { ACPI_TYPE_INTEGER };
++	struct acpi_object_list args = { 1, &arg0 };
 +
++	arg0.integer.value = state;
++	status = acpi_evaluate_object(NULL, "\\BLSW", &args, NULL);
++	if (ACPI_FAILURE(status)) {
++		pr_info("Loongson lvds error: 0x%x\n", status);
++		return -EIO;
++	}
++
++	return 0;
++}
++
+ static int loongson_laptop_backlight_update(struct backlight_device *bd)
+ {
+-	int lvl = ec_backlight_level(bd->props.brightness);
++	bool target_powered = !backlight_is_blank(bd);
++	int ret = 0, lvl = ec_backlight_level(bd->props.brightness);
+ 
+ 	if (lvl < 0)
+ 		return -EIO;
++
+ 	if (ec_set_brightness(lvl))
+ 		return -EIO;
+ 
+-	return 0;
++	if (target_powered != bl_powered) {
++		ret = ec_backlight_set_power(target_powered);
++		if (ret < 0)
++			return ret;
++
++		bl_powered = target_powered;
++	}
++
++	return ret;
+ }
+ 
+ static int loongson_laptop_get_brightness(struct backlight_device *bd)
+@@ -384,7 +409,7 @@ static const struct backlight_ops backli
+ 
+ static int laptop_backlight_register(void)
+ {
+-	int status = 0;
++	int status = 0, ret;
+ 	struct backlight_properties props;
+ 
+ 	memset(&props, 0, sizeof(props));
+@@ -392,44 +417,20 @@ static int laptop_backlight_register(voi
+ 	if (!acpi_evalf(hotkey_handle, &status, "ECLL", "d"))
+ 		return -EIO;
+ 
++	ret = ec_backlight_set_power(true);
 +	if (ret)
-+		goto out;
- 
- 	if (!c->summary->sum_num || !c->summary->sum_list_head) {
- 		JFFS2_WARNING("Empty summary info!!!\n");
-@@ -872,6 +875,8 @@ int jffs2_sum_write_sumnode(struct jffs2
- 	datasize += padsize;
- 
- 	ret = jffs2_sum_write_data(c, jeb, infosize, datasize, padsize);
++		return ret;
 +
-+out:
- 	spin_lock(&c->erase_completion_lock);
- 	return ret;
++	bl_powered = true;
++
+ 	props.max_brightness = status;
+ 	props.brightness = ec_get_brightness();
++	props.power = FB_BLANK_UNBLANK;
+ 	props.type = BACKLIGHT_PLATFORM;
+ 
+ 	backlight_device_register("loongson_laptop",
+ 				NULL, NULL, &backlight_laptop_ops, &props);
+ 
+-	return 0;
+-}
+-
+-int loongson_laptop_turn_on_backlight(void)
+-{
+-	int status;
+-	union acpi_object arg0 = { ACPI_TYPE_INTEGER };
+-	struct acpi_object_list args = { 1, &arg0 };
+-
+-	arg0.integer.value = 1;
+-	status = acpi_evaluate_object(NULL, "\\BLSW", &args, NULL);
+-	if (ACPI_FAILURE(status)) {
+-		pr_info("Loongson lvds error: 0x%x\n", status);
+-		return -ENODEV;
+-	}
+-
+-	return 0;
+-}
+-
+-int loongson_laptop_turn_off_backlight(void)
+-{
+-	int status;
+-	union acpi_object arg0 = { ACPI_TYPE_INTEGER };
+-	struct acpi_object_list args = { 1, &arg0 };
+-
+-	arg0.integer.value = 0;
+-	status = acpi_evaluate_object(NULL, "\\BLSW", &args, NULL);
+-	if (ACPI_FAILURE(status)) {
+-		pr_info("Loongson lvds error: 0x%x\n", status);
+-		return -ENODEV;
+-	}
+ 
+ 	return 0;
  }
 
 
