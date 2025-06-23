@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C189A1F582A;
-	Mon, 23 Jun 2025 21:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C63D219E0;
+	Mon, 23 Jun 2025 21:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713746; cv=none; b=ocfQHujvrWriLCO54REDIsgp6tFFbHK/Q9eDUpK9Y0oyHNB2XssDVp9shPZ5Yk+XJPr32VD65hmfaaNJC+8e+PH0IFbImLRQjFPiE1rlWjAF2tiuWF1fsDdLzAGRvpXmpTbXJJ03z4VxDIEpVqEOCNIZLjOy1aGI7Fnvd92Yj38=
+	t=1750713749; cv=none; b=BPuBhcApzycU20W+BMC3vLS4b23Vg0zJz9NfvXQ3Rrjl1T2Idjg3fjBtBrY/k3HAfqIlSAUvIgvLdiIZU98Vh3XQQgF3gS0mdaUSDOkYsCsGx+syHjA/v0BgqaMCItKebRSm+OJuLQzxqb+PRhKyGRc0UFw4p9ChG17iCLlRZ+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713746; c=relaxed/simple;
-	bh=6q6lo7o18JX45nQE+WGh/ElLP1/u15FNNv1OmGGVfH4=;
+	s=arc-20240116; t=1750713749; c=relaxed/simple;
+	bh=ANNng+4wRf/S8tBkdWTmY9yCrqRJMdHzAG4YO+1DWuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZJ4QISwToYitwBQkEg+B0Tsj8gaUw0PPwcMYMEtuhNP9JBkjzZjQss55XtjlYy7kNiJSED+cCvBo4cdADig4AaW7Uxl4XH79A/7TB+Tq8RS81eiCrbjWVXOxLnE6p3Xqeql8TN29+gIlIzLg1ctEnHkpjSROrPVb/Fml++JSIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPmO/aSL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6viyXJUJBtDbn05kHeDXWDM04F79xJkgCH5gzQYf5y0UVtVARKnbXbwITOlU6AsBHY5k3UehzZo3j7QFtUoUZsT72SLbDv6bPo0kVqJxiOUoilcnbclI8ukmftc8OOIgo/33Cx22dE9r50o69kqN8M0Bid8A7D3eBf1O1k0t80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6iLdOKL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPmO/aSL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B45C4CEEA;
-	Mon, 23 Jun 2025 21:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6iLdOKL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94EAC4CEEA;
+	Mon, 23 Jun 2025 21:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713746;
-	bh=6q6lo7o18JX45nQE+WGh/ElLP1/u15FNNv1OmGGVfH4=;
+	s=korg; t=1750713749;
+	bh=ANNng+4wRf/S8tBkdWTmY9yCrqRJMdHzAG4YO+1DWuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPmO/aSLM77FN2RqSts5OCo07r67bOJbnCnebfmPef9hgpR/Vv7xemdNtTqqrnZ2h
-	 nhgJtIhh3zZFBFeX8a8+9PevOaCd1Lgb51BeFVrXCQqkyLfnRqzpLQrrs8xBSBOvBB
-	 SXUJs+XAqWnLmh/vx/iWwbEpD7L/JVDfaRlzTkhA=
+	b=g6iLdOKLpfDwAFCZHf0NTLmWBdjwDEz1WEgGByOaK7ip13IkDeOmjwzRhKFhtXpZA
+	 UIPX2fOJul7Zb5/VSiUNHCfskmw1mGGpPqSNFgouhrmXUwjahYZBqp1zSGKItu7p84
+	 5gwR4ovsZt3RAPEFHM0tHddxMLkEVMZCSJv6Xua8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 163/355] ASoC: meson: meson-card-utils: use of_property_present() for DT parsing
-Date: Mon, 23 Jun 2025 15:06:04 +0200
-Message-ID: <20250623130631.599669695@linuxfoundation.org>
+	Jonathan Greental <yonatan02greental@gmail.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 144/411] powerpc/powernv/memtrace: Fix out of bounds issue in memtrace mmap
+Date: Mon, 23 Jun 2025 15:04:48 +0200
+Message-ID: <20250623130637.235289286@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +48,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-commit 171eb6f71e9e3ba6a7410a1d93f3ac213f39dae2 upstream.
+[ Upstream commit cd097df4596f3a1e9d75eb8520162de1eb8485b2 ]
 
-Commit c141ecc3cecd ("of: Warn when of_property_read_bool() is used on
-non-boolean properties") added a warning when trying to parse a property
-with a value (boolean properties are defined as: absent = false, present
-without any value = true). This causes a warning from meson-card-utils.
+memtrace mmap issue has an out of bounds issue. This patch fixes the by
+checking that the requested mapping region size should stay within the
+allocated region size.
 
-meson-card-utils needs to know about the existence of the
-"audio-routing" and/or "audio-widgets" properties in order to properly
-parse them. Switch to of_property_present() in order to silence the
-following warning messages during boot:
-  OF: /sound: Read of boolean property 'audio-routing' with a value.
-  OF: /sound: Read of boolean property 'audio-widgets' with a value.
-
-Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
-Tested-by: Christian Hewitt <christianshewitt@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://patch.msgid.link/20250419213448.59647-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Jonathan Greental <yonatan02greental@gmail.com>
+Fixes: 08a022ad3dfa ("powerpc/powernv/memtrace: Allow mmaping trace buffers")
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250610021227.361980-1-maddy@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/meson-card-utils.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/powernv/memtrace.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/sound/soc/meson/meson-card-utils.c
-+++ b/sound/soc/meson/meson-card-utils.c
-@@ -245,7 +245,7 @@ static int meson_card_parse_of_optional(
- 						    const char *p))
+diff --git a/arch/powerpc/platforms/powernv/memtrace.c b/arch/powerpc/platforms/powernv/memtrace.c
+index 877720c645151..35471b679638a 100644
+--- a/arch/powerpc/platforms/powernv/memtrace.c
++++ b/arch/powerpc/platforms/powernv/memtrace.c
+@@ -48,11 +48,15 @@ static ssize_t memtrace_read(struct file *filp, char __user *ubuf,
+ static int memtrace_mmap(struct file *filp, struct vm_area_struct *vma)
  {
- 	/* If property is not provided, don't fail ... */
--	if (!of_property_read_bool(card->dev->of_node, propname))
-+	if (!of_property_present(card->dev->of_node, propname))
- 		return 0;
+ 	struct memtrace_entry *ent = filp->private_data;
++	unsigned long ent_nrpages = ent->size >> PAGE_SHIFT;
++	unsigned long vma_nrpages = vma_pages(vma);
  
- 	/* ... but do fail if it is provided and the parsing fails */
+-	if (ent->size < vma->vm_end - vma->vm_start)
++	/* The requested page offset should be within object's page count */
++	if (vma->vm_pgoff >= ent_nrpages)
+ 		return -EINVAL;
+ 
+-	if (vma->vm_pgoff << PAGE_SHIFT >= ent->size)
++	/* The requested mapping range should remain within the bounds */
++	if (vma_nrpages > ent_nrpages - vma->vm_pgoff)
+ 		return -EINVAL;
+ 
+ 	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
+-- 
+2.39.5
+
 
 
