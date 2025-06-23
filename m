@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459C71E8324;
-	Mon, 23 Jun 2025 21:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFF41E8324;
+	Mon, 23 Jun 2025 21:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713290; cv=none; b=PY0ickU8HMdiqy0FHU30sdWeEqtyBHwp6ZjXszX+lWvvcq8OOFbgKjS9nvlA1Twliow5MoFkhBndXDq5rDZLBREZ6cJNjGtkD/oImRdZGMKhbS9aVlSysFLHTQxnmkak72T/DmYBK+5cWSnGm314H1hWcu02cyDQGItB6g7CWkc=
+	t=1750713292; cv=none; b=YuIINQCc63xXlJgmgMDzMeFCDKPV0XeG3LpdgzpxV+kW+yyHG/fD/TGswcTfZLtd4+TIu2DHTCEXvtsB4yLaGfH+9Usx+R0smS4aE98rs7t8oQuGZ5JVrs5QIdshgBk37WKhV6UEBfhgcsz2iOtIsoW/qV9v01UukosoLMsVwVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713290; c=relaxed/simple;
-	bh=CZGXeYohmtUgvHDZ2SzIopEVph9/ggb36+hUUrGpXkU=;
+	s=arc-20240116; t=1750713292; c=relaxed/simple;
+	bh=mTnX5VS75AeswuduYWYCWoiv/suq0mPi83EJX75w9a8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ReHGpRw6A6du0f9JFdxaLms5hm1b1PpiUUaQ1cZlbNo8qxCEQQ1T9lRDIyNsdYcUztqB5xz2SfQ5dJDB5xDXHam0i+VKLPTp2z1EimmJNjw0YV4XMimeRTZVFiJw4p5/cLhuQryASvhrDu3QzvmXSuwu5aOcvdmY0qG7V9gGGYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWnFeoAR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RLKV/BW4IQtf2Q9a/FcuOXPv738Ykhn3swWVVx6lXCoh9yGNlpyCglt+mlysiEbRqvGjc0yDuJGn8RVIPBOVajwzjdqQ/OkCu/YmJ2743xcI3e5HZDeWEGroZ4LMmseCQSwIlBCFodcKcRpF9C5Po4mB+Kw2ik/fW1Qc+vDMQR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wThWyH8V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWnFeoAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16C4C4CEEA;
-	Mon, 23 Jun 2025 21:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wThWyH8V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4558DC4CEEA;
+	Mon, 23 Jun 2025 21:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713290;
-	bh=CZGXeYohmtUgvHDZ2SzIopEVph9/ggb36+hUUrGpXkU=;
+	s=korg; t=1750713292;
+	bh=mTnX5VS75AeswuduYWYCWoiv/suq0mPi83EJX75w9a8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MWnFeoAR11iIhX3ZnBB8bND+3k6qK3Sup2uEKr/1DazcheLBSHbGTNrZuoXQv+SNu
-	 H7vDmysRNLbRraCIrkCQ3bkJ/P5HOwrNxA/Z5G7gNQ7rHTPHKPXHGAv3ejmo5oHk42
-	 +ch/yODDGffq54h8h0gJ7/XMd1HIWd/ry+lnl0AY=
+	b=wThWyH8VjpfCH8QN/ninN51dxZfsD2dSQvdkC0YuKNHGTObFeHbS9woJ0nG90Jw/P
+	 HKeXLRM4BlCEMWKs0Jh/qtsHvS5p+IYbPv9AGtLX1Y1uWgO6Q7cGcv6lxTY53BpVO8
+	 EgvqNG2IoMtYogZvHJdKz9+RCvcA2frAWY23gxWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 6.6 058/290] bus: fsl-mc: do not add a device-link for the UAPI used DPMCP device
-Date: Mon, 23 Jun 2025 15:05:19 +0200
-Message-ID: <20250623130628.753632902@linuxfoundation.org>
+	Yanqing Wang <ot_yanqing.wang@mediatek.com>,
+	Macpaul Lin <macpaul.lin@mediatek.com>,
+	Biao Huang <biao.huang@mediatek.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 115/411] driver: net: ethernet: mtk_star_emac: fix suspend/resume issue
+Date: Mon, 23 Jun 2025 15:04:19 +0200
+Message-ID: <20250623130636.430368097@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,64 +49,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Yanqing Wang <ot_yanqing.wang@mediatek.com>
 
-commit dd7d8e012b23de158ca0188239c7a1f2a83b4484 upstream.
+[ Upstream commit ba99c627aac85bc746fb4a6e2d79edb3ad100326 ]
 
-The fsl-mc bus associated to the root DPRC in a DPAA2 system exports a
-device file for userspace access to the MC firmware. In case the DPRC's
-local MC portal (DPMCP) is currently in use, a new DPMCP device is
-allocated through the fsl_mc_portal_allocate() function.
+Identify the cause of the suspend/resume hang: netif_carrier_off()
+is called during link state changes and becomes stuck while
+executing linkwatch_work().
 
-In this case, the call to fsl_mc_portal_allocate() will fail with -EINVAL
-when trying to add a device link between the root DPRC (consumer) and
-the newly allocated DPMCP device (supplier). This is because the DPMCP
-is a dependent of the DPRC device (the bus).
+To resolve this issue, call netif_device_detach() during the Ethernet
+suspend process to temporarily detach the network device from the
+kernel and prevent the suspend/resume hang.
 
-Fix this by not adding a device link in case the DPMCP is allocated for
-the root DPRC's usage.
-
-Fixes: afb77422819f ("bus: fsl-mc: automatically add a device_link on fsl_mc_[portal,object]_allocate")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250408105814.2837951-3-ioana.ciornei@nxp.com
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8c7bd5a454ff ("net: ethernet: mtk-star-emac: new driver")
+Signed-off-by: Yanqing Wang <ot_yanqing.wang@mediatek.com>
+Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
+Signed-off-by: Biao Huang <biao.huang@mediatek.com>
+Link: https://patch.msgid.link/20250528075351.593068-1-macpaul.lin@mediatek.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/fsl-mc/mc-io.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_star_emac.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/bus/fsl-mc/mc-io.c
-+++ b/drivers/bus/fsl-mc/mc-io.c
-@@ -214,12 +214,19 @@ int __must_check fsl_mc_portal_allocate(
- 	if (error < 0)
- 		goto error_cleanup_resource;
+diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+index 639cf1c27dbd4..e336730ba1257 100644
+--- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
++++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+@@ -1464,6 +1464,8 @@ static __maybe_unused int mtk_star_suspend(struct device *dev)
+ 	if (netif_running(ndev))
+ 		mtk_star_disable(ndev);
  
--	dpmcp_dev->consumer_link = device_link_add(&mc_dev->dev,
--						   &dpmcp_dev->dev,
--						   DL_FLAG_AUTOREMOVE_CONSUMER);
--	if (!dpmcp_dev->consumer_link) {
--		error = -EINVAL;
--		goto error_cleanup_mc_io;
-+	/* If the DPRC device itself tries to allocate a portal (usually for
-+	 * UAPI interaction), don't add a device link between them since the
-+	 * DPMCP device is an actual child device of the DPRC and a reverse
-+	 * dependency is not allowed.
-+	 */
-+	if (mc_dev != mc_bus_dev) {
-+		dpmcp_dev->consumer_link = device_link_add(&mc_dev->dev,
-+							   &dpmcp_dev->dev,
-+							   DL_FLAG_AUTOREMOVE_CONSUMER);
-+		if (!dpmcp_dev->consumer_link) {
-+			error = -EINVAL;
-+			goto error_cleanup_mc_io;
-+		}
++	netif_device_detach(ndev);
++
+ 	clk_bulk_disable_unprepare(MTK_STAR_NCLKS, priv->clks);
+ 
+ 	return 0;
+@@ -1488,6 +1490,8 @@ static __maybe_unused int mtk_star_resume(struct device *dev)
+ 			clk_bulk_disable_unprepare(MTK_STAR_NCLKS, priv->clks);
  	}
  
- 	*new_mc_io = mc_io;
++	netif_device_attach(ndev);
++
+ 	return ret;
+ }
+ 
+-- 
+2.39.5
+
 
 
