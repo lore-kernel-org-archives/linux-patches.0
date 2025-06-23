@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C861F582A;
-	Mon, 23 Jun 2025 21:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C5A1F582A;
+	Mon, 23 Jun 2025 21:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712883; cv=none; b=l7NZKbNgE0UxM7zCN6Vrp6S2l0kfJ6iZUEkkq4bJMyxv3EMoPnx7akqrgUEjRRcd4hh//p8DlfsPBGu3huJ0ZIUZHa3aBWMcjaemSo+Z6px7X0M+dxZd3VYkpo6FAkF1Dc1nyTJAI41dlS2V0TD+zbPr8/tA0caz9qWJGMDoQZM=
+	t=1750712886; cv=none; b=CanB7WCEwapuCPd2URCOONcvyBblKzEEDul2Vvpy/VH/MXWN+Vlg8A3YfuBQn7WEfG+hikjh/g+WwLYeGooXHpV7xlKB/mJmOe76ZKhSwSV/D02HdaVIGKY0rNfELozNnIvmXuETaUlU+oXVHBkHK90uZb+qXpoZmLM/SFMcbIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712883; c=relaxed/simple;
-	bh=dAbSMYlQvZvKzawW/B66sU85yvnA2YuS6RbI98b1DDQ=;
+	s=arc-20240116; t=1750712886; c=relaxed/simple;
+	bh=tobbKLm9EnzWHTg1cK4xnW3rWXlS6qOwzGsP/PxK5ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N30MKcVksvRnQpGJ7rMEaPh976y9vHSpwMEsHsR7mPtptz3de0+pE1cFaXNQTZlOC8bwXXCYbRox46+QpoDXH9dsTV8EkOwmayS8HlJm9K6rG10sAidjmUbxE0ezmBn15gYnG6nWmPnKb9wW1PDN3gipkB0x9Vzoyt7+54Gogno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPc/wG6R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FDYwE9sS+YrZZmJEXndHAbIlhYpZZ899bfzBZPKwaZ4GhoTiJflkMcXfzudcHZDLQsITXxTpFVnyOdJjESsVjf7fvLuMaNtGboGzK8nmasjb1ezPViqC+QJ8Pp8yg/ZbpcOekz8E6GuPVlaXu0DNaeeptt5Q1t7xt2wOSQclhqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mL/H10+M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPc/wG6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D9FC4CEEA;
-	Mon, 23 Jun 2025 21:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mL/H10+M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB19FC4CEED;
+	Mon, 23 Jun 2025 21:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712883;
-	bh=dAbSMYlQvZvKzawW/B66sU85yvnA2YuS6RbI98b1DDQ=;
+	s=korg; t=1750712886;
+	bh=tobbKLm9EnzWHTg1cK4xnW3rWXlS6qOwzGsP/PxK5ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bPc/wG6RtTZkc2afgKgba046TVXtJPBlMppIAipFDvA4gNfT49rOhHH4CE4cm+v5i
-	 bGHYY4F6MJ7+vk09WvPrv7N7rZQBjBl2mWOsdewaqIh7npAA40HXNH0K0y+oVy1CzB
-	 86ilTmf2w2vAbE4MuCOakbeSnmhzdXj4XL8HP67Q=
+	b=mL/H10+M2Wu8LP6rERyONiuZ8yclo+sOBSeROi7ilxKkQbiE07p/PyMKJDRvb48/F
+	 oC8W6aMiYZSrKEZ9/ze9ou/X8JTv0tP9GbmSvybGBqf9TmRy786prXg/h3ohG3m6Xt
+	 egS1PQNHcmjJGE3vFuncHdGrtv9LDuDpvj5cnmwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/508] bpf, sockmap: Fix panic when calling skb_linearize
-Date: Mon, 23 Jun 2025 15:01:42 +0200
-Message-ID: <20250623130646.645633281@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.6 036/290] media: omap3isp: use sgtable-based scatterlist wrappers
+Date: Mon, 23 Jun 2025 15:04:57 +0200
+Message-ID: <20250623130628.081340098@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,202 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 5ca2e29f6834c64c0e5a9ccf1278c21fb49b827e ]
+commit 3de572fe2189a4a0bd80295e1f478401e739498e upstream.
 
-The panic can be reproduced by executing the command:
-./bench sockmap -c 2 -p 1 -a --rx-verdict-ingress --rx-strp 100000
+Use common wrappers operating directly on the struct sg_table objects to
+fix incorrect use of scatterlists sync calls. dma_sync_sg_for_*()
+functions have to be called with the number of elements originally passed
+to dma_map_sg_*() function, not the one returned in sgtable's nents.
 
-Then a kernel panic was captured:
-'''
-[  657.460555] kernel BUG at net/core/skbuff.c:2178!
-[  657.462680] Tainted: [W]=WARN
-[  657.463287] Workqueue: events sk_psock_backlog
-...
-[  657.469610]  <TASK>
-[  657.469738]  ? die+0x36/0x90
-[  657.469916]  ? do_trap+0x1d0/0x270
-[  657.470118]  ? pskb_expand_head+0x612/0xf40
-[  657.470376]  ? pskb_expand_head+0x612/0xf40
-[  657.470620]  ? do_error_trap+0xa3/0x170
-[  657.470846]  ? pskb_expand_head+0x612/0xf40
-[  657.471092]  ? handle_invalid_op+0x2c/0x40
-[  657.471335]  ? pskb_expand_head+0x612/0xf40
-[  657.471579]  ? exc_invalid_op+0x2d/0x40
-[  657.471805]  ? asm_exc_invalid_op+0x1a/0x20
-[  657.472052]  ? pskb_expand_head+0xd1/0xf40
-[  657.472292]  ? pskb_expand_head+0x612/0xf40
-[  657.472540]  ? lock_acquire+0x18f/0x4e0
-[  657.472766]  ? find_held_lock+0x2d/0x110
-[  657.472999]  ? __pfx_pskb_expand_head+0x10/0x10
-[  657.473263]  ? __kmalloc_cache_noprof+0x5b/0x470
-[  657.473537]  ? __pfx___lock_release.isra.0+0x10/0x10
-[  657.473826]  __pskb_pull_tail+0xfd/0x1d20
-[  657.474062]  ? __kasan_slab_alloc+0x4e/0x90
-[  657.474707]  sk_psock_skb_ingress_enqueue+0x3bf/0x510
-[  657.475392]  ? __kasan_kmalloc+0xaa/0xb0
-[  657.476010]  sk_psock_backlog+0x5cf/0xd70
-[  657.476637]  process_one_work+0x858/0x1a20
-'''
-
-The panic originates from the assertion BUG_ON(skb_shared(skb)) in
-skb_linearize(). A previous commit(see Fixes tag) introduced skb_get()
-to avoid race conditions between skb operations in the backlog and skb
-release in the recvmsg path. However, this caused the panic to always
-occur when skb_linearize is executed.
-
-The "--rx-strp 100000" parameter forces the RX path to use the strparser
-module which aggregates data until it reaches 100KB before calling sockmap
-logic. The 100KB payload exceeds MAX_MSG_FRAGS, triggering skb_linearize.
-
-To fix this issue, just move skb_get into sk_psock_skb_ingress_enqueue.
-
-'''
-sk_psock_backlog:
-    sk_psock_handle_skb
-       skb_get(skb) <== we move it into 'sk_psock_skb_ingress_enqueue'
-       sk_psock_skb_ingress____________
-                                       ↓
-                                       |
-                                       | → sk_psock_skb_ingress_self
-                                       |      sk_psock_skb_ingress_enqueue
-sk_psock_verdict_apply_________________↑          skb_linearize
-'''
-
-Note that for verdict_apply path, the skb_get operation is unnecessary so
-we add 'take_ref' param to control it's behavior.
-
-Fixes: a454d84ee20b ("bpf, sockmap: Fix skb refcnt race after locking changes")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20250407142234.47591-4-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d33186d0be18 ("[media] omap3isp: ccdc: Use the DMA API for LSC")
+Fixes: 0e24e90f2ca7 ("[media] omap3isp: stat: Use the DMA API")
+CC: stable@vger.kernel.org
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skmsg.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ drivers/media/platform/ti/omap3isp/ispccdc.c |    8 ++++----
+ drivers/media/platform/ti/omap3isp/ispstat.c |    6 ++----
+ 2 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 72f4949cbb70f..0613f9a2543bb 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -528,16 +528,22 @@ static int sk_psock_skb_ingress_enqueue(struct sk_buff *skb,
- 					u32 off, u32 len,
- 					struct sk_psock *psock,
- 					struct sock *sk,
--					struct sk_msg *msg)
-+					struct sk_msg *msg,
-+					bool take_ref)
- {
- 	int num_sge, copied;
+--- a/drivers/media/platform/ti/omap3isp/ispccdc.c
++++ b/drivers/media/platform/ti/omap3isp/ispccdc.c
+@@ -446,8 +446,8 @@ static int ccdc_lsc_config(struct isp_cc
+ 		if (ret < 0)
+ 			goto done;
  
-+	/* skb_to_sgvec will fail when the total number of fragments in
-+	 * frag_list and frags exceeds MAX_MSG_FRAGS. For example, the
-+	 * caller may aggregate multiple skbs.
-+	 */
- 	num_sge = skb_to_sgvec(skb, msg->sg.data, off, len);
- 	if (num_sge < 0) {
- 		/* skb linearize may fail with ENOMEM, but lets simply try again
- 		 * later if this happens. Under memory pressure we don't want to
- 		 * drop the skb. We need to linearize the skb so that the mapping
- 		 * in skb_to_sgvec can not error.
-+		 * Note that skb_linearize requires the skb not to be shared.
- 		 */
- 		if (skb_linearize(skb))
- 			return -EAGAIN;
-@@ -554,7 +560,7 @@ static int sk_psock_skb_ingress_enqueue(struct sk_buff *skb,
- 	msg->sg.start = 0;
- 	msg->sg.size = copied;
- 	msg->sg.end = num_sge;
--	msg->skb = skb;
-+	msg->skb = take_ref ? skb_get(skb) : skb;
+-		dma_sync_sg_for_cpu(isp->dev, req->table.sgt.sgl,
+-				    req->table.sgt.nents, DMA_TO_DEVICE);
++		dma_sync_sgtable_for_cpu(isp->dev, &req->table.sgt,
++					 DMA_TO_DEVICE);
  
- 	sk_psock_queue_msg(psock, msg);
- 	sk_psock_data_ready(sk, psock);
-@@ -562,7 +568,7 @@ static int sk_psock_skb_ingress_enqueue(struct sk_buff *skb,
- }
- 
- static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb,
--				     u32 off, u32 len);
-+				     u32 off, u32 len, bool take_ref);
- 
- static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb,
- 				u32 off, u32 len)
-@@ -576,7 +582,7 @@ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb,
- 	 * correctly.
- 	 */
- 	if (unlikely(skb->sk == sk))
--		return sk_psock_skb_ingress_self(psock, skb, off, len);
-+		return sk_psock_skb_ingress_self(psock, skb, off, len, true);
- 	msg = sk_psock_create_ingress_msg(sk, skb);
- 	if (!msg)
- 		return -EAGAIN;
-@@ -588,7 +594,7 @@ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb,
- 	 * into user buffers.
- 	 */
- 	skb_set_owner_r(skb, sk);
--	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg);
-+	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg, true);
- 	if (err < 0)
- 		kfree(msg);
- 	return err;
-@@ -599,7 +605,7 @@ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb,
-  * because the skb is already accounted for here.
-  */
- static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb,
--				     u32 off, u32 len)
-+				     u32 off, u32 len, bool take_ref)
- {
- 	struct sk_msg *msg = alloc_sk_msg(GFP_ATOMIC);
- 	struct sock *sk = psock->sk;
-@@ -608,7 +614,7 @@ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb
- 	if (unlikely(!msg))
- 		return -EAGAIN;
- 	skb_set_owner_r(skb, sk);
--	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg);
-+	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg, take_ref);
- 	if (err < 0)
- 		kfree(msg);
- 	return err;
-@@ -617,18 +623,13 @@ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb
- static int sk_psock_handle_skb(struct sk_psock *psock, struct sk_buff *skb,
- 			       u32 off, u32 len, bool ingress)
- {
--	int err = 0;
--
- 	if (!ingress) {
- 		if (!sock_writeable(psock->sk))
- 			return -EAGAIN;
- 		return skb_send_sock(psock->sk, skb, off, len);
- 	}
--	skb_get(skb);
--	err = sk_psock_skb_ingress(psock, skb, off, len);
--	if (err < 0)
--		kfree_skb(skb);
--	return err;
-+
-+	return sk_psock_skb_ingress(psock, skb, off, len);
- }
- 
- static void sk_psock_skb_state(struct sk_psock *psock,
-@@ -1016,7 +1017,7 @@ static int sk_psock_verdict_apply(struct sk_psock *psock, struct sk_buff *skb,
- 				off = stm->offset;
- 				len = stm->full_len;
- 			}
--			err = sk_psock_skb_ingress_self(psock, skb, off, len);
-+			err = sk_psock_skb_ingress_self(psock, skb, off, len, false);
+ 		if (copy_from_user(req->table.addr, config->lsc,
+ 				   req->config.size)) {
+@@ -455,8 +455,8 @@ static int ccdc_lsc_config(struct isp_cc
+ 			goto done;
  		}
- 		if (err < 0) {
- 			spin_lock_bh(&psock->ingress_lock);
--- 
-2.39.5
-
+ 
+-		dma_sync_sg_for_device(isp->dev, req->table.sgt.sgl,
+-				       req->table.sgt.nents, DMA_TO_DEVICE);
++		dma_sync_sgtable_for_device(isp->dev, &req->table.sgt,
++					    DMA_TO_DEVICE);
+ 	}
+ 
+ 	spin_lock_irqsave(&ccdc->lsc.req_lock, flags);
+--- a/drivers/media/platform/ti/omap3isp/ispstat.c
++++ b/drivers/media/platform/ti/omap3isp/ispstat.c
+@@ -161,8 +161,7 @@ static void isp_stat_buf_sync_for_device
+ 	if (ISP_STAT_USES_DMAENGINE(stat))
+ 		return;
+ 
+-	dma_sync_sg_for_device(stat->isp->dev, buf->sgt.sgl,
+-			       buf->sgt.nents, DMA_FROM_DEVICE);
++	dma_sync_sgtable_for_device(stat->isp->dev, &buf->sgt, DMA_FROM_DEVICE);
+ }
+ 
+ static void isp_stat_buf_sync_for_cpu(struct ispstat *stat,
+@@ -171,8 +170,7 @@ static void isp_stat_buf_sync_for_cpu(st
+ 	if (ISP_STAT_USES_DMAENGINE(stat))
+ 		return;
+ 
+-	dma_sync_sg_for_cpu(stat->isp->dev, buf->sgt.sgl,
+-			    buf->sgt.nents, DMA_FROM_DEVICE);
++	dma_sync_sgtable_for_cpu(stat->isp->dev, &buf->sgt, DMA_FROM_DEVICE);
+ }
+ 
+ static void isp_stat_buf_clear(struct ispstat *stat)
 
 
