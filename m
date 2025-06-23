@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF5324C060;
-	Mon, 23 Jun 2025 13:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6292E24C060;
+	Mon, 23 Jun 2025 13:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685239; cv=none; b=RNO/sHNO+VBH24I1BYyXAgt0YG3RxCKYt9TQCG9ecIiizOXOhKWPyrC3zTnbKaNqwK4imCdRutGtvhsYjngPPYHIO/Z60Bzb3Wl9577R1+z41bc3FxILxymuO2I1djymeiYFoCvotUlPoLe7cECV8BHd8ILb1DKOnCk2Sk8A3fk=
+	t=1750685242; cv=none; b=VAOh439Tptj0QwptoH8VsriTSIEoG7K8nEK2OayZYNnEp7nu6VwGeY9wmEZ8kxzxLjZXJmvbNTE2sBHgWXVvZk6Co/o/xLTl16OT6sf2lU9NhFBRn6jfVaQxxJV2SjleSMXTXPzXlSy7F3z2XBV3D2TFwuVjnmoZVS7XOiUez90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685239; c=relaxed/simple;
-	bh=rj0GAkXWr99NSUfViMLe+Qc3VP8oVwK2nYpox0dT+eM=;
+	s=arc-20240116; t=1750685242; c=relaxed/simple;
+	bh=lRgo5hYMJsaoPNHbuuq3MqXMMyNm7QbNzsUcTUsyeZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fXgzQnz1uWmYRoDlkiPU86tyarTroKfiOS4Wzw7R8sbnBfgXqurSZbUP2aWzVfsi9WbNW0I3XUh5kT3fx6sUMr7rTmeh7Oonevpej0Jl0AN6XHBdgLzqdN/rLVIvFMWDJtVYBs9Oc6whQuCcfT9WKNM/axBXjftGdgQyhytwvM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d74S0xv2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rZAAc/j10Io7QKn8VsbWAHB8Q+uNLnUnInLigQTtww+o9y5mSpdPjMDjYBKxm/elyggE5yH4CzwEJT1dKTW/nAfBclmk5ahnzWwBtdn6Q7Hl3Eji3Yd4YzUn1PSIM+042xy4flyfHGhs2tIrs2QB17WSdBssoW14NPHOIYBkG/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNDyDkG0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d74S0xv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD1AC4CEEA;
-	Mon, 23 Jun 2025 13:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNDyDkG0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BB8C4CEF1;
+	Mon, 23 Jun 2025 13:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685239;
-	bh=rj0GAkXWr99NSUfViMLe+Qc3VP8oVwK2nYpox0dT+eM=;
+	s=korg; t=1750685241;
+	bh=lRgo5hYMJsaoPNHbuuq3MqXMMyNm7QbNzsUcTUsyeZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d74S0xv25w6plxgtqlAATeGuQ9XI/RRKjL/kROoXYlLOW8+d56I2qMExW232edGkp
-	 hm4LENba9utDU4dXXMQpW5hjzd+s/6KmjyWXRad/LA4LXJ/yiOW4fk/pr3nRWWNgJK
-	 npjX6hVxC8JV1L9fih/QPefet4QtvkFCfMiYxtyI=
+	b=XNDyDkG0V0Oetz2QSgjeEJMWwj4dE/vC4EfUZkMkJYGxo3J+v2/7Pm2CRGjkc4wCb
+	 4ZKplatnD6WJeX52N2v2sneJ/Mxvxju2bKeCvMYpQdGpmN8P3c90r0t4dCz4O/6iKc
+	 sisA+SjPOx9NOwLtegIdmTp+wEAIuEFVMMifDhaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/411] crypto: xts - Only add ecb if it is not already there
-Date: Mon, 23 Jun 2025 15:02:43 +0200
-Message-ID: <20250623130633.578958933@linuxfoundation.org>
+Subject: [PATCH 6.15 217/592] ACPI: bus: Bail out if acpi_kobj registration fails
+Date: Mon, 23 Jun 2025 15:02:55 +0200
+Message-ID: <20250623130705.447486196@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 270b6f13454cb7f2f7058c50df64df409c5dcf55 ]
+[ Upstream commit 94a370fc8def6038dbc02199db9584b0b3690f1a ]
 
-Only add ecb to the cipher name if it isn't already ecb.
+The ACPI sysfs code will fail to initialize if acpi_kobj is NULL,
+together with some ACPI drivers.
 
-Also use memcmp instead of strncmp since these strings are all
-stored in an array of length CRYPTO_MAX_ALG_NAME.
+Follow the other firmware subsystems and bail out if the kobject
+cannot be registered.
 
-Fixes: f1c131b45410 ("crypto: xts - Convert to skcipher")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20250518185111.3560-2-W_Armin@gmx.de
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/xts.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/bus.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/xts.c b/crypto/xts.c
-index b05020657cdc8..1972f40333f04 100644
---- a/crypto/xts.c
-+++ b/crypto/xts.c
-@@ -361,7 +361,7 @@ static int xts_create(struct crypto_template *tmpl, struct rtattr **tb)
+diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
+index 058910af82bca..c2ab2783303f2 100644
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -1446,8 +1446,10 @@ static int __init acpi_init(void)
+ 	}
  
- 	err = crypto_grab_skcipher(&ctx->spawn, skcipher_crypto_instance(inst),
- 				   cipher_name, 0, mask);
--	if (err == -ENOENT) {
-+	if (err == -ENOENT && memcmp(cipher_name, "ecb(", 4)) {
- 		err = -ENAMETOOLONG;
- 		if (snprintf(ctx->name, CRYPTO_MAX_ALG_NAME, "ecb(%s)",
- 			     cipher_name) >= CRYPTO_MAX_ALG_NAME)
-@@ -395,7 +395,7 @@ static int xts_create(struct crypto_template *tmpl, struct rtattr **tb)
- 	/* Alas we screwed up the naming so we have to mangle the
- 	 * cipher name.
- 	 */
--	if (!strncmp(cipher_name, "ecb(", 4)) {
-+	if (!memcmp(cipher_name, "ecb(", 4)) {
- 		int len;
+ 	acpi_kobj = kobject_create_and_add("acpi", firmware_kobj);
+-	if (!acpi_kobj)
+-		pr_debug("%s: kset create error\n", __func__);
++	if (!acpi_kobj) {
++		pr_err("Failed to register kobject\n");
++		return -ENOMEM;
++	}
  
- 		len = strscpy(ctx->name, cipher_name + 4, sizeof(ctx->name));
+ 	init_prmt();
+ 	acpi_init_pcc();
 -- 
 2.39.5
 
