@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1274C6E;
-	Mon, 23 Jun 2025 13:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB8F25392D;
+	Mon, 23 Jun 2025 13:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685493; cv=none; b=ElaOiB01fGtceUinqwTZLsKuXVUm/JOyyV7DMFhJwO4pd50htFkiJbzB9Kc4LwcUx0nVTdz8ILX3RGu8R4W9f7bYKI9afSrzYVIsyxyWBD8QyJn4WI3Z0t+m3TaI2Ld1PYjoeDgmHwX0rXt9uRyQ/nARGzVOzynKf/bMbUtMUvA=
+	t=1750685496; cv=none; b=LU1z7EP79NVoOOpwyKDcwP8yPfZwMHeRmO6Of0Hx0h6klMylwjJXhT6jAjXkJOS4M1nPhcnO35tS8F2B/kdMhjX4XbTPWD/ZPL3y8obvIpvsvJPqc8EKQz/riPzfwWfNKjFqekXC7hKHvY0yxSSuP0UZWhI+++tSivtSH81hF6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685493; c=relaxed/simple;
-	bh=GPmkiTpCqQzzdWSjby7Pc68YOpKbDB9AA2tHz9RdaZo=;
+	s=arc-20240116; t=1750685496; c=relaxed/simple;
+	bh=PdZgKg1EP1GbNGHvfScLwX1EGBdPqaCwcTap9DFIwzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b806d4jfjhweaMBkWfQCK2F0iWfUSLjO3JObpZfhABKfz9aJ2Ua1Po9HdDxBF8qtof8qbTiJS9JQi/HtQIEruqwp2LzuBGuynYVe6NoPA/PAZhIznYiXqjxq3K7B9TK6xVwiZFeRH2R09lPWuZ0LJq0BdwShXiUSVaHJ4Vk4ERM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/0hOWJy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iN2TU7CgEbCQg1P3tR1n60Jdep9Jtg/fSpFWZgSCijFLMDu+dcRpfvDG8egyx5NPinlndWm1ailKrJKYkMJvsrIZ6wh+JPvCe6avkU0FT4/3jp5b36hqESytu1d/hZ4BR0vGdDQyITgdv+aSvAGTs7pFSkVsjgfuCIK+JN6I0tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+GZc8HV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/0hOWJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40DEC4CEEA;
-	Mon, 23 Jun 2025 13:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+GZc8HV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C26C4CEF1;
+	Mon, 23 Jun 2025 13:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685493;
-	bh=GPmkiTpCqQzzdWSjby7Pc68YOpKbDB9AA2tHz9RdaZo=;
+	s=korg; t=1750685495;
+	bh=PdZgKg1EP1GbNGHvfScLwX1EGBdPqaCwcTap9DFIwzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f/0hOWJy4ii8pvMFf9+qLje5i1es8a+Ll4EwnmmJ24pZT3HNRPp6k8ZRVfLw/mVO8
-	 pYIxUz2J4ZVsKnh+J99fQPySJlDNIvXZqS4otwDjCcd8Kp9iCCuJ5THZKF/w5Ap9L4
-	 U14AfiYruLSotaRuwHCZEIj6uHG9X2j8bnDBozVA=
+	b=y+GZc8HVTtwPy9FSeQtHWjhdhxRGGWVk9bBI6sCQ6bAUqQM9CqXvMTDxr5u7F10H0
+	 5Or9v276p6Rs3RZjVGJ4hGd3lI2Y05/b5wGIzFHfrb3Mdp4Br4JQHpKYD5YtJ2twNg
+	 GKyy4dn3kxe/Qq33l9A3g9W70N1sYAU/CIxyPu68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Dave Airlie <airlied@redhat.com>,
+	Ben Skeggs <bskeggs@nvidia.com>,
+	Timur Tabi <ttabi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 078/355] rpmsg: qcom_smd: Fix uninitialized return variable in __qcom_smd_send()
-Date: Mon, 23 Jun 2025 15:04:39 +0200
-Message-ID: <20250623130629.165371233@linuxfoundation.org>
+Subject: [PATCH 6.15 239/592] drm/dp: add option to disable zero sized address only transactions.
+Date: Mon, 23 Jun 2025 15:03:17 +0200
+Message-ID: <20250623130705.973961329@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +48,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Dave Airlie <airlied@redhat.com>
 
-[ Upstream commit 5de775df3362090a6e90046d1f2d83fe62489aa0 ]
+[ Upstream commit f0ddbb1eed1898286d2bd99fd6ab64ca9700d267 ]
 
-The "ret" variable isn't initialized if we don't enter the loop.  For
-example,  if "channel->state" is not SMD_CHANNEL_OPENED.
+Some older NVIDIA and some newer NVIDIA hardware/firmware seems to
+have issues with address only transactions (firmware rejects them).
 
-Fixes: 33e3820dda88 ("rpmsg: smd: Use spinlock in tx path")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/aAkhvV0nSbrsef1P@stanley.mountain
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Add an option to the core drm dp to avoid address only transactions,
+This just puts the MOT flag removal on the last message of the transfer
+and avoids the start of transfer transaction.
+
+This with the flag set in nouveau, allows eDP probing on GB203 device.
+
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
+Reviewed-by: Timur Tabi <ttabi@nvidia.com>
+Tested-by: Timur Tabi <ttabi@nvidia.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_smd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/display/drm_dp_helper.c | 39 +++++++++++++++----------
+ include/drm/display/drm_dp_helper.h     |  5 ++++
+ 2 files changed, 28 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-index b5167ef93abf9..6facf1b31d463 100644
---- a/drivers/rpmsg/qcom_smd.c
-+++ b/drivers/rpmsg/qcom_smd.c
-@@ -746,7 +746,7 @@ static int __qcom_smd_send(struct qcom_smd_channel *channel, const void *data,
- 	__le32 hdr[5] = { cpu_to_le32(len), };
- 	int tlen = sizeof(hdr) + len;
- 	unsigned long flags;
--	int ret;
-+	int ret = 0;
+diff --git a/drivers/gpu/drm/display/drm_dp_helper.c b/drivers/gpu/drm/display/drm_dp_helper.c
+index dbce1c3f49691..753d7c3942a14 100644
+--- a/drivers/gpu/drm/display/drm_dp_helper.c
++++ b/drivers/gpu/drm/display/drm_dp_helper.c
+@@ -2081,14 +2081,17 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
  
- 	/* Word aligned channels only accept word size aligned data */
- 	if (channel->info_word && len % 4)
+ 	for (i = 0; i < num; i++) {
+ 		msg.address = msgs[i].addr;
+-		drm_dp_i2c_msg_set_request(&msg, &msgs[i]);
+-		/* Send a bare address packet to start the transaction.
+-		 * Zero sized messages specify an address only (bare
+-		 * address) transaction.
+-		 */
+-		msg.buffer = NULL;
+-		msg.size = 0;
+-		err = drm_dp_i2c_do_msg(aux, &msg);
++
++		if (!aux->no_zero_sized) {
++			drm_dp_i2c_msg_set_request(&msg, &msgs[i]);
++			/* Send a bare address packet to start the transaction.
++			 * Zero sized messages specify an address only (bare
++			 * address) transaction.
++			 */
++			msg.buffer = NULL;
++			msg.size = 0;
++			err = drm_dp_i2c_do_msg(aux, &msg);
++		}
+ 
+ 		/*
+ 		 * Reset msg.request in case in case it got
+@@ -2107,6 +2110,8 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
+ 			msg.buffer = msgs[i].buf + j;
+ 			msg.size = min(transfer_size, msgs[i].len - j);
+ 
++			if (j + msg.size == msgs[i].len && aux->no_zero_sized)
++				msg.request &= ~DP_AUX_I2C_MOT;
+ 			err = drm_dp_i2c_drain_msg(aux, &msg);
+ 
+ 			/*
+@@ -2124,15 +2129,17 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
+ 	}
+ 	if (err >= 0)
+ 		err = num;
+-	/* Send a bare address packet to close out the transaction.
+-	 * Zero sized messages specify an address only (bare
+-	 * address) transaction.
+-	 */
+-	msg.request &= ~DP_AUX_I2C_MOT;
+-	msg.buffer = NULL;
+-	msg.size = 0;
+-	(void)drm_dp_i2c_do_msg(aux, &msg);
+ 
++	if (!aux->no_zero_sized) {
++		/* Send a bare address packet to close out the transaction.
++		 * Zero sized messages specify an address only (bare
++		 * address) transaction.
++		 */
++		msg.request &= ~DP_AUX_I2C_MOT;
++		msg.buffer = NULL;
++		msg.size = 0;
++		(void)drm_dp_i2c_do_msg(aux, &msg);
++	}
+ 	return err;
+ }
+ 
+diff --git a/include/drm/display/drm_dp_helper.h b/include/drm/display/drm_dp_helper.h
+index 5ae4241959f24..736dbfdd6321d 100644
+--- a/include/drm/display/drm_dp_helper.h
++++ b/include/drm/display/drm_dp_helper.h
+@@ -518,6 +518,11 @@ struct drm_dp_aux {
+ 	 * @powered_down: If true then the remote endpoint is powered down.
+ 	 */
+ 	bool powered_down;
++
++	/**
++	 * @no_zero_sized: If the hw can't use zero sized transfers (NVIDIA)
++	 */
++	bool no_zero_sized;
+ };
+ 
+ int drm_dp_dpcd_probe(struct drm_dp_aux *aux, unsigned int offset);
 -- 
 2.39.5
 
