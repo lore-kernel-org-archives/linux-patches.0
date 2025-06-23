@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295DF1EE7C6;
-	Mon, 23 Jun 2025 21:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9AC224F6;
+	Mon, 23 Jun 2025 21:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714216; cv=none; b=iVrve8NZ3lG82q4SagJbnQ9D0MWbFo1j2arXijS3O0OaeFXtKESuggGzaRVoqLSr0gkc+6NOWjqRgs1L9yrj9cKl6Cwzar5vYUCJUTssjNH0coLF8OEuCkQ0sRTlRtrS66eu9YNVvLgxVcTG2+8pqCs6FGwgfYvhCBCdLkXE2to=
+	t=1750714218; cv=none; b=kRg/5so+VVpOZbxqaF+XkMRqPZgGvFr/y2uiUDN/ffhTHtolLUOdXqaTHpF7fz5mJoo/m//MwCckDlue94FeFo80ubrYSR/V3y+rpTpgucw5QzeR4kNamGqskpYwfrpmVv8ONo1H/OyGjluxr7CN3K0cHnCL3hcIymWCViJv0iI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714216; c=relaxed/simple;
-	bh=Iqvwoc3xEswH6W/TEUDTm8BYpH4fH+drL8bt7ppzi08=;
+	s=arc-20240116; t=1750714218; c=relaxed/simple;
+	bh=gVd/mcskyW6SBY6ut3W1D/Efc19v7iXWuWO28OuTmS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lq6S8QpCEf3WaCKu3/v1RP0Xwx5hYXKm967f6tyW8l4G6p15GDbN7rZnK3OQiC42+BzosL9jV5AM3rPLl8z2Vd2kkRqcm5VOs5NhAtuAmuy8uQSy4rQB97s6SE+SReiOMtkLs7ymg4poyDgcFNvxMdWaQdhzBxarYcG7GG6bG7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZtGnrm4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kc5Aurt5OMp6oAzFdsN9gYVYvyKU5pBzp8ShL1vvaZP9flckBTTRkqmgzxZYkNSfacY1mVt9CvLuFZ1v3owLUxzxXLBPd9lBlqMOQD1biUt/bYRDZyqIUcBzpO5mYa4wUe8eL5vaDFTDz3/7jP41yAXi3Uiio7fxLIe+Cui/FIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsAzVbIk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZtGnrm4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B24C4CEEA;
-	Mon, 23 Jun 2025 21:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsAzVbIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3390EC4CEEA;
+	Mon, 23 Jun 2025 21:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714216;
-	bh=Iqvwoc3xEswH6W/TEUDTm8BYpH4fH+drL8bt7ppzi08=;
+	s=korg; t=1750714218;
+	bh=gVd/mcskyW6SBY6ut3W1D/Efc19v7iXWuWO28OuTmS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZtGnrm4jOP+Uw1X9L5doijAD4d1Btb8tstebPBFKqaOu3W6F7j3CRL8mnZv5rYBv
-	 ScEk4feWb6YqKgu/Y+v0X1kbuOcKksS4gklJ54W5urrkXj9EJcqkLvcyt/0pCJCHow
-	 VxVmpgyuiAulapRgJBKJzSGEq2rV94KRSzM2kziY=
+	b=BsAzVbIkhAc2DPyuJKGiMxqSp0NqNgr7FPyjtErV7w0n79ZQFOo9QO9Eu3T7dX3As
+	 fDefNIwZgNhRLTtDTTc5GcSaWsxN5OpUdY6tstZX1cpujR7aQl3KOquXb8BjHYC99+
+	 koNiDNMpsewF9qwx7lPEyrm5/D98hv/zcBcL61+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niravkumar L Rabara <niravkumar.l.rabara@intel.com>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 5.10 192/355] EDAC/altera: Use correct write width with the INTTEST register
-Date: Mon, 23 Jun 2025 15:06:33 +0200
-Message-ID: <20250623130632.450988336@linuxfoundation.org>
+	Neal Gompa <neal@gompa.dev>,
+	Hector Martin <marcan@marcan.st>,
+	James Calligeros <jcalligeros99@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 123/290] ASoC: tas2770: Power cycle amp on ISENSE/VSENSE change
+Date: Mon, 23 Jun 2025 15:06:24 +0200
+Message-ID: <20250623130630.631533959@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,53 +49,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
+From: Hector Martin <marcan@marcan.st>
 
-commit e5ef4cd2a47f27c0c9d8ff6c0f63a18937c071a3 upstream.
+[ Upstream commit f529c91be8a34ac12e7599bf87c65b6f4a2c9f5c ]
 
-On the SoCFPGA platform, the INTTEST register supports only 16-bit writes.
-A 32-bit write triggers an SError to the CPU so do 16-bit accesses only.
+The ISENSE/VSENSE blocks are only powered up when the amplifier
+transitions from shutdown to active. This means that if those controls
+are flipped on while the amplifier is already playing back audio, they
+will have no effect.
 
-  [ bp: AI-massage the commit message. ]
+Fix this by forcing a power cycle around transitions in those controls.
 
-Fixes: c7b4be8db8bc ("EDAC, altera: Add Arria10 OCRAM ECC support")
-Signed-off-by: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
-Signed-off-by: Matthew Gerlach <matthew.gerlach@altera.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Dinh Nguyen <dinguyen@kernel.org>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/20250527145707.25458-1-matthew.gerlach@altera.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
+Link: https://patch.msgid.link/20250406-apple-codec-changes-v5-1-50a00ec850a3@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/altera_edac.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/codecs/tas2770.c | 30 ++++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1704,9 +1704,9 @@ static ssize_t altr_edac_a10_device_trig
+diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
+index 5c6b825c757b3..181b16530e5bc 100644
+--- a/sound/soc/codecs/tas2770.c
++++ b/sound/soc/codecs/tas2770.c
+@@ -158,11 +158,37 @@ static const struct snd_kcontrol_new isense_switch =
+ static const struct snd_kcontrol_new vsense_switch =
+ 	SOC_DAPM_SINGLE("Switch", TAS2770_PWR_CTRL, 2, 1, 1);
  
- 	local_irq_save(flags);
- 	if (trig_type == ALTR_UE_TRIGGER_CHAR)
--		writel(priv->ue_set_mask, set_addr);
-+		writew(priv->ue_set_mask, set_addr);
- 	else
--		writel(priv->ce_set_mask, set_addr);
-+		writew(priv->ce_set_mask, set_addr);
- 
- 	/* Ensure the interrupt test bits are set */
- 	wmb();
-@@ -1736,7 +1736,7 @@ static ssize_t altr_edac_a10_device_trig
- 
- 	local_irq_save(flags);
- 	if (trig_type == ALTR_UE_TRIGGER_CHAR) {
--		writel(priv->ue_set_mask, set_addr);
-+		writew(priv->ue_set_mask, set_addr);
- 	} else {
- 		/* Setup read/write of 4 bytes */
- 		writel(ECC_WORD_WRITE, drvdata->base + ECC_BLK_DBYTECTRL_OFST);
++static int sense_event(struct snd_soc_dapm_widget *w,
++			struct snd_kcontrol *kcontrol, int event)
++{
++	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
++	struct tas2770_priv *tas2770 = snd_soc_component_get_drvdata(component);
++
++	/*
++	 * Powering up ISENSE/VSENSE requires a trip through the shutdown state.
++	 * Do that here to ensure that our changes are applied properly, otherwise
++	 * we might end up with non-functional IVSENSE if playback started earlier,
++	 * which would break software speaker protection.
++	 */
++	switch (event) {
++	case SND_SOC_DAPM_PRE_REG:
++		return snd_soc_component_update_bits(component, TAS2770_PWR_CTRL,
++						    TAS2770_PWR_CTRL_MASK,
++						    TAS2770_PWR_CTRL_SHUTDOWN);
++	case SND_SOC_DAPM_POST_REG:
++		return tas2770_update_pwr_ctrl(tas2770);
++	default:
++		return 0;
++	}
++}
++
+ static const struct snd_soc_dapm_widget tas2770_dapm_widgets[] = {
+ 	SND_SOC_DAPM_AIF_IN("ASI1", "ASI1 Playback", 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_MUX("ASI1 Sel", SND_SOC_NOPM, 0, 0, &tas2770_asi1_mux),
+-	SND_SOC_DAPM_SWITCH("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch),
+-	SND_SOC_DAPM_SWITCH("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch),
++	SND_SOC_DAPM_SWITCH_E("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch,
++		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
++	SND_SOC_DAPM_SWITCH_E("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch,
++		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
+ 	SND_SOC_DAPM_DAC_E("DAC", NULL, SND_SOC_NOPM, 0, 0, tas2770_dac_event,
+ 			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD),
+ 	SND_SOC_DAPM_OUTPUT("OUT"),
+-- 
+2.39.5
+
 
 
