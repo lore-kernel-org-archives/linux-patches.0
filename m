@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDD9253F1A;
-	Mon, 23 Jun 2025 13:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F01253F1A;
+	Mon, 23 Jun 2025 13:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684947; cv=none; b=qCa19uY33JJUtb598dLvo82sNEbmj39I+8CBqGwk60pDbw7j+KZhbYYddJJBpzOdDeXEatLXDouX7s10wtAo37ABC/grEpaNBQ7Gm1mELLMFkSRTOTBldY5GQFD2VpE/JO28jCB0lbn4i/ySBU8cBoNBz1s11IkMJ2wfeQU4ZDw=
+	t=1750684950; cv=none; b=Uk7/lwHsqxHZK6OVWNF2X4GptqA6InF2TP9oZHwGNSah1yaaz6lOyJytO/x1DLwoD9ueDn7qvno6nBCnJE4tTSCUWq28CARNwyLKEltHMD+r0aULmDPM4rGPsPD0ixiYcM+sgeu4Xos/0xKLlbpcmaWISFGTiV6dgam9XpqmbZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684947; c=relaxed/simple;
-	bh=Fd9ldUHq2fWRF9X+NPd5TP9YcEjyLgo/jHPLhCwSa0o=;
+	s=arc-20240116; t=1750684950; c=relaxed/simple;
+	bh=2ha+NeskSZuHC9ALlkFqH3/f9W7sVRWQDSeLDd4AEcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHEZ5EBIiRNi1hJwQbQ+2qLZ5p0mqPNRY74mSgCCDy2LDr3Ydfo8l1v0rnd/Cdixi0rb1vunZNTBHyZYigzIT7RtHaBxGiTnQKB8qc4k6hR+GTdDHyxDm06TCV0fYoXwaZ25JTb+p/9iWBwzBbvYncsw+oSObMv022s5N9CmV6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISDb+6W1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SZlpqdwa1ycg9yW8WGzwkP50fw8s0T+TW1ebs6rr6Bcczi38x7sjs2hqUoTLmk2YykxoiwGlmjkMqlmiJlBlXZCMoAWSiC/kfl4FyzTpk+rA0p5n3gmOs5oIZQmHy5jO7Qao225M+4+Ieir2lcIza50ZTRgGYtgDP57jnDYi7Ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoJbX/8t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISDb+6W1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45986C4CEEA;
-	Mon, 23 Jun 2025 13:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoJbX/8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9CC9C4CEEA;
+	Mon, 23 Jun 2025 13:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684947;
-	bh=Fd9ldUHq2fWRF9X+NPd5TP9YcEjyLgo/jHPLhCwSa0o=;
+	s=korg; t=1750684950;
+	bh=2ha+NeskSZuHC9ALlkFqH3/f9W7sVRWQDSeLDd4AEcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISDb+6W1lYfmrBwb/Lx4ad562+zMjDIL2PNOEyuLlbV4ocOBANtf5BoAut/MU0L3u
-	 q4x3pj2Rd40RiQKK3XLSzFfRDZ/ytf5pNVFjVZ2T8Byc5C+Ci8VjXyX0vC/S42C7GD
-	 9RZwrCecrDzw6NVspr4t3vRj9MyMPnrEOx5W4iZo=
+	b=DoJbX/8tPL+F7dReneJ5Mb1xFvHmhlgd3f4MXUh3WDN4t1ERlDznYSUWdEtrLyC+q
+	 qgj2xQPvU3a83FC3i1jHivWLa+0Bb4uQ/DLeiNtYRYw/24Bc+aIkwhiVUyMxjeGsjs
+	 cU7an8yw7iXWvMP9gC1p6r2iJ5wak9X/79uoB93U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Khem Raj <raj.khem@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.15 167/592] mips: Add -std= flag specified in KBUILD_CFLAGS to vdso CFLAGS
-Date: Mon, 23 Jun 2025 15:02:05 +0200
-Message-ID: <20250623130704.251450081@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 050/222] soc: aspeed: lpc: Fix impossible judgment condition
+Date: Mon, 23 Jun 2025 15:06:25 +0200
+Message-ID: <20250623130613.576521800@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,53 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Khem Raj <raj.khem@gmail.com>
+From: Su Hui <suhui@nfschina.com>
 
-commit 0f4ae7c6ecb89bfda026d210dcf8216fb67d2333 upstream.
+[ Upstream commit d9f0a97e859bdcef51f9c187b1eb712eb13fd3ff ]
 
-GCC 15 changed the default C standard dialect from gnu17 to gnu23,
-which should not have impacted the kernel because it explicitly requests
-the gnu11 standard in the main Makefile. However, mips/vdso code uses
-its own CFLAGS without a '-std=' value, which break with this dialect
-change because of the kernel's own definitions of bool, false, and true
-conflicting with the C23 reserved keywords.
+smatch error：
+drivers/soc/aspeed/aspeed-lpc-snoop.c:169
+aspeed_lpc_snoop_config_irq() warn: platform_get_irq() does not return zero
 
-  include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
-     11 |         false   = 0,
-        |         ^~~~~
-  include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
-  include/linux/types.h:35:33: error: 'bool' cannot be defined via 'typedef'
-     35 | typedef _Bool                   bool;
-        |                                 ^~~~
-  include/linux/types.h:35:33: note: 'bool' is a keyword with '-std=c23' onwards
+platform_get_irq() return non-zero IRQ number or negative error code,
+change '!lpc_snoop->irq' to 'lpc_snoop->irq < 0' to fix this.
 
-Add -std as specified in KBUILD_CFLAGS to the decompressor and purgatory
-CFLAGS to eliminate these errors and make the C standard version of these
-areas match the rest of the kernel.
-
-Signed-off-by: Khem Raj <raj.khem@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9f4f9ae81d0a ("drivers/misc: add Aspeed LPC snoop driver")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20231027020703.1231875-1-suhui@nfschina.com
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/vdso/Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/aspeed/aspeed-lpc-snoop.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/mips/vdso/Makefile
-+++ b/arch/mips/vdso/Makefile
-@@ -27,6 +27,7 @@ endif
- # offsets.
- cflags-vdso := $(ccflags-vdso) \
- 	$(filter -W%,$(filter-out -Wa$(comma)%,$(KBUILD_CFLAGS))) \
-+	$(filter -std=%,$(KBUILD_CFLAGS)) \
- 	-O3 -g -fPIC -fno-strict-aliasing -fno-common -fno-builtin -G 0 \
- 	-mrelax-pic-calls $(call cc-option, -mexplicit-relocs) \
- 	-fno-stack-protector -fno-jump-tables -DDISABLE_BRANCH_PROFILING \
+diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+index 538d7aab8db5c..8a2a22c40ef53 100644
+--- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
++++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+@@ -168,7 +168,7 @@ static int aspeed_lpc_snoop_config_irq(struct aspeed_lpc_snoop *lpc_snoop,
+ 	int rc;
+ 
+ 	lpc_snoop->irq = platform_get_irq(pdev, 0);
+-	if (!lpc_snoop->irq)
++	if (lpc_snoop->irq < 0)
+ 		return -ENODEV;
+ 
+ 	rc = devm_request_irq(dev, lpc_snoop->irq,
+-- 
+2.39.5
+
 
 
