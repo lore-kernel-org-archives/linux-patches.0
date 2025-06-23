@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B767F1E51FA;
-	Mon, 23 Jun 2025 21:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C721E51FA;
+	Mon, 23 Jun 2025 21:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713898; cv=none; b=o5sIDiqsW0uCNwJRPk4QXeGCcaqFCG5rwgZvb4YcMykD3cwmraYKAiTLamrAyJu+6WdbLcOt6ol4vTa0diogEIYDAzPUg9VzUpobJoDgmuAKOWCaDva3NavURfNfxFuYe6DFH7pqJtDswD5CnegZcbw9WlHjwE5OWVBlQX5FWjM=
+	t=1750713901; cv=none; b=V76JCAKkKXuolY8WVpTDmJy7gNapqRo0mJCkL7Z2jbcoS4NWOtFbRGLA8Yqhca8eq/HLc/ndtPwkLpAw0gLoWJmA/6bdzIhxAAKMJtWNRaKpXNBa/QpvDZdjkCymdum2k1XSiYe80I9oBxFLWDM+DCopBa9JL2Yru5WsmotpRuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713898; c=relaxed/simple;
-	bh=SEPm7Yy7JCCd8Jg5NmteQFqx2syMuTSXfATI7ug3meU=;
+	s=arc-20240116; t=1750713901; c=relaxed/simple;
+	bh=hEjYE1Q3hgw/bT9DCpCbsehvTE2jrJxBDucCcGLLTsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atG55RAuJqoXCqn7R7jCKWiPby69ootN3nPxauzRAlH+ABSvPtwBTylXmRmUzyAJNlGOuytI/HajCAR6kmWVKYtC3oltU4oD4bTZrNUOfjyHze79XAq8rhkT8iV67zKi8lksRkJ+Yw8JkXND50edChuekWkaAk6ryvYP3bS7MQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jwtpDFph; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PEve+4Wc+8dnzieAzUamzVncptSFdZiCsWH1alp77FfOC9L/UoJ9x1r5g0hKyMLoLWsD8t572owYZjFKv3HCdD6i/EvTn6s7ZUwJz8PO6D5LS5yQWslmtsYxfKM4k7s2GhloRnyPC7mk0SFbireYgLhitXoUVg9VuM5qqPLt0iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIxCJ1lB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jwtpDFph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C85FC4CEEA;
-	Mon, 23 Jun 2025 21:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIxCJ1lB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01FAC4CEEA;
+	Mon, 23 Jun 2025 21:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713898;
-	bh=SEPm7Yy7JCCd8Jg5NmteQFqx2syMuTSXfATI7ug3meU=;
+	s=korg; t=1750713901;
+	bh=hEjYE1Q3hgw/bT9DCpCbsehvTE2jrJxBDucCcGLLTsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jwtpDFphtKBszEUCNsgH5HDWSC94cjK9ZF8+Y3fWjKFHipImpKqfm4YLSZKSEs2UW
-	 8JNIcvDDK5KUksSUZ1cvjh3y4bQD+1lIWoiH0LslnMSZtv0Wslh8uAALkarCcsmnFW
-	 wptkHs/BZTW0YuTBFinBPgUwUHg4fAYK9uGzIyT8=
+	b=DIxCJ1lBa+oq6GnGllAMHtMFR/O6XgdqK6iSbtz9Mtjz+ql0ZE1YHwRYhmYlK/WR3
+	 vuCUaRwSOtzVz6jsH093c/avvh4XtuQjVI4ZHHartjT5TMPuox/O0c46YwDNHe0iC4
+	 9Cl7HNpPvFlwoNnuckavNgP14id7pJxKwbZjfU0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 102/290] cifs: reset connections for all channels when reconnect requested
-Date: Mon, 23 Jun 2025 15:06:03 +0200
-Message-ID: <20250623130630.030514398@linuxfoundation.org>
+	Andrew Lunn <andrew@lunn.ch>,
+	Michael Walle <michael@walle.cc>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 154/411] net: mdio: C22 is now optional, EOPNOTSUPP if not provided
+Date: Mon, 23 Jun 2025 15:04:58 +0200
+Message-ID: <20250623130637.515958665@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Andrew Lunn <andrew@lunn.ch>
 
-commit 1f396b9bfe39aaf55ea74a7005806164b236653d upstream.
+[ Upstream commit b063b1924fd9bf0bc157cf644764dc2151d04ccc ]
 
-cifs_reconnect can be called with a flag to mark the session as needing
-reconnect too. When this is done, we expect the connections of all
-channels to be reconnected too, which is not happening today.
+When performing a C22 operation, check that the bus driver actually
+provides the methods, and return -EOPNOTSUPP if not. C45 only busses
+do exist, and in future their C22 methods will be NULL.
 
-Without doing this, we have seen bad things happen when primary and
-secondary channels are connected to different servers (in case of cloud
-services like Azure Files SMB).
-
-This change would force all connections to reconnect as well, not just
-the sessions and tcons.
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 0e629694126c ("net/mdiobus: Fix potential out-of-bounds read/write access")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/phy/mdio_bus.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -393,6 +393,13 @@ static int __cifs_reconnect(struct TCP_S
- 	if (!cifs_tcp_ses_needs_reconnect(server, 1))
- 		return 0;
+diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
+index 5f89828fd9f17..c26f46c06a1b2 100644
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -757,7 +757,10 @@ int __mdiobus_read(struct mii_bus *bus, int addr, u32 regnum)
  
-+	/*
-+	 * if smb session has been marked for reconnect, also reconnect all
-+	 * connections. This way, the other connections do not end up bad.
-+	 */
-+	if (mark_smb_session)
-+		cifs_signal_cifsd_for_reconnect(server, mark_smb_session);
-+
- 	cifs_mark_tcp_ses_conns_for_reconnect(server, mark_smb_session);
+ 	lockdep_assert_held_once(&bus->mdio_lock);
  
- 	cifs_abort_connection(server);
+-	retval = bus->read(bus, addr, regnum);
++	if (bus->read)
++		retval = bus->read(bus, addr, regnum);
++	else
++		retval = -EOPNOTSUPP;
+ 
+ 	trace_mdio_access(bus, 1, addr, regnum, retval, retval);
+ 	mdiobus_stats_acct(&bus->stats[addr], true, retval);
+@@ -783,7 +786,10 @@ int __mdiobus_write(struct mii_bus *bus, int addr, u32 regnum, u16 val)
+ 
+ 	lockdep_assert_held_once(&bus->mdio_lock);
+ 
+-	err = bus->write(bus, addr, regnum, val);
++	if (bus->write)
++		err = bus->write(bus, addr, regnum, val);
++	else
++		err = -EOPNOTSUPP;
+ 
+ 	trace_mdio_access(bus, 0, addr, regnum, val, err);
+ 	mdiobus_stats_acct(&bus->stats[addr], false, err);
+-- 
+2.39.5
+
 
 
