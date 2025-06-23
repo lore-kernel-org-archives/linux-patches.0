@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E4B1E5206;
-	Mon, 23 Jun 2025 21:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7F41E5206;
+	Mon, 23 Jun 2025 21:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715897; cv=none; b=pPtQPTRz/RJR01PPw7YrgugR2jooPW8k+LMRQFYQ688GsNrHkdA40r9KQbjQmgfLZs+uQn91xu2S/mJuBePX5IQkYVj18bZNYouE0XDAlMIh/X69F3aiqETKXL/xNKZalS4R5LiaVrVgWi5S7KQksYN3fJsAzorh5FQ4iXciGBI=
+	t=1750715900; cv=none; b=dd3cFrHravYWwpKqcdjU6VsQqQVXLU/B+zq31Gn1SVOiAZwy7lKdvtiQQRYm/mHNEBF6Qeuh4LshAIY4KuAidpuC8TQ+NZ4Z6nbR0ZORfNK8qZptLqJmOoXz3B1g2ec+048jzCd992ck/rU9kQL2WS7WeLVq2JK8ehidVTcIi/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715897; c=relaxed/simple;
-	bh=Nj0yrQNyxHX/vhNTn/J9vaqUtk38m5nlfAA8sqbxz2M=;
+	s=arc-20240116; t=1750715900; c=relaxed/simple;
+	bh=HLZ2W1wO1P9EZV0nCUvPZm8dwJqmDqyFejq55Yw/k2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HDs/gff8Ft3Z1mMDsxFvL43v2EGICQX9+YAfKHe4iWJwmce0vZGTJb3tdqnO/wbbm8+kRDx/ugjArhoP1tlI4ozrLmZQ4t3B7aJc8kk+pMNnVl/4sh65caRJ/U5ZpJSkz2tLdtXG3y7tJK94BlYn49Cxgh4UJCJ48SHM6L0kNgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBVptEpX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ow28e3jMkajgc5wWRz/i6GU74vfMlUjoV2PKAaOMQIjfgiiKocWnWozQJLlL7mRpWl7Z7a2ypHPmNbnwF824rb0U3YWBOoOU3cg0rrtCpRRrh7x5EuXwy/AgFR1DODlR+XYQNsWR6bTaWpc2aC8vUURqKewClhk5+YcfJlkFHIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgYdTFpw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBVptEpX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A902C4CEED;
-	Mon, 23 Jun 2025 21:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgYdTFpw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5CCC4CEEA;
+	Mon, 23 Jun 2025 21:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715897;
-	bh=Nj0yrQNyxHX/vhNTn/J9vaqUtk38m5nlfAA8sqbxz2M=;
+	s=korg; t=1750715900;
+	bh=HLZ2W1wO1P9EZV0nCUvPZm8dwJqmDqyFejq55Yw/k2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBVptEpXRBzoE9/Til8r5Q1HQowQebIuTjAxF7PSe45QHM3Hh/3Wvhv7dSDeoUUg/
-	 2Aw16TLmJVMaKtetAfP/X+FrNQaZDLJNOfVWIxen07IawaorJ/SXboc6DXuHP0r8KY
-	 zpvUKWzAl5+qRLxASYde3RZmrgj+KUsyLkdEOv3E=
+	b=RgYdTFpwGy+WZKR+iXI92ilii405nSm0p3vMQ/5LlYD3U659vl1jDm/7lqyDEfdC9
+	 iWwDSwsYK+IqsR5+qTyn8Z3JQJNmhduAjNBBBhynROYwZK0E825oSOplcXabM8roTc
+	 zQENeS8kWcxnvjr8RwJRPW7dYg+t139nLrHVRBnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 510/592] drm/ssd130x: fix ssd132x_clear_screen() columns
-Date: Mon, 23 Jun 2025 15:07:48 +0200
-Message-ID: <20250623130712.564887849@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	James Morse <james.morse@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Pu Lehui <pulehui@huawei.com>
+Subject: [PATCH 5.10 329/355] arm64: errata: Add newer ARM cores to the spectre_bhb_loop_affected() lists
+Date: Mon, 23 Jun 2025 15:08:50 +0200
+Message-ID: <20250623130636.638691483@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +48,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit e479da4054875c4cc53a7fb956ebff03d2dac939 ]
+[ Upstream commit a5951389e58d2e816eed3dbec5877de9327fd881 ]
 
-The number of columns relates to the width, not the height.  Use the
-correct variable.
+When comparing to the ARM list [1], it appears that several ARM cores
+were missing from the lists in spectre_bhb_loop_affected(). Add them.
 
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Fixes: fdd591e00a9c ("drm/ssd130x: Add support for the SSD132x OLED controller family")
-Link: https://lore.kernel.org/r/20250611111307.1814876-1-jkeeping@inmusicbrands.com
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+NOTE: for some of these cores it may not matter since other ways of
+clearing the BHB may be used (like the CLRBHB instruction or ECBHB),
+but it still seems good to have all the info from ARM's whitepaper
+included.
+
+[1] https://developer.arm.com/Arm%20Security%20Center/Spectre-BHB
+
+Fixes: 558c303c9734 ("arm64: Mitigate spectre style branch history side channels")
+Cc: stable@vger.kernel.org
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: James Morse <james.morse@arm.com>
+Link: https://lore.kernel.org/r/20250107120555.v4.5.I4a9a527e03f663040721c5401c41de587d015c82@changeid
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/solomon/ssd130x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/proton-pack.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/solomon/ssd130x.c b/drivers/gpu/drm/solomon/ssd130x.c
-index dd2006d51c7a2..eec43d1a55951 100644
---- a/drivers/gpu/drm/solomon/ssd130x.c
-+++ b/drivers/gpu/drm/solomon/ssd130x.c
-@@ -974,7 +974,7 @@ static void ssd130x_clear_screen(struct ssd130x_device *ssd130x, u8 *data_array)
- 
- static void ssd132x_clear_screen(struct ssd130x_device *ssd130x, u8 *data_array)
+--- a/arch/arm64/kernel/proton-pack.c
++++ b/arch/arm64/kernel/proton-pack.c
+@@ -884,6 +884,14 @@ static u8 spectre_bhb_loop_affected(void
  {
--	unsigned int columns = DIV_ROUND_UP(ssd130x->height, SSD132X_SEGMENT_WIDTH);
-+	unsigned int columns = DIV_ROUND_UP(ssd130x->width, SSD132X_SEGMENT_WIDTH);
- 	unsigned int height = ssd130x->height;
+ 	u8 k = 0;
  
- 	memset(data_array, 0, columns * height);
--- 
-2.39.5
-
++	static const struct midr_range spectre_bhb_k132_list[] = {
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_X3),
++		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V2),
++	};
++	static const struct midr_range spectre_bhb_k38_list[] = {
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A715),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A720),
++	};
+ 	static const struct midr_range spectre_bhb_k32_list[] = {
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
+@@ -897,6 +905,7 @@ static u8 spectre_bhb_loop_affected(void
+ 	};
+ 	static const struct midr_range spectre_bhb_k24_list[] = {
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A76),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_A76AE),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A77),
+ 		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
+ 		MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
+@@ -912,7 +921,11 @@ static u8 spectre_bhb_loop_affected(void
+ 		{},
+ 	};
+ 
+-	if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k32_list))
++	if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k132_list))
++		k = 132;
++	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k38_list))
++		k = 38;
++	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k32_list))
+ 		k = 32;
+ 	else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k24_list))
+ 		k = 24;
 
 
