@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9417219049B;
-	Mon, 23 Jun 2025 21:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E9121B9C9;
+	Mon, 23 Jun 2025 21:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715445; cv=none; b=K0R3AG83+GAREuyM2yv9N0wjAGrynY8pe/OkMTuqOCtT97kBXaHi1TROEGnYtF/uhpRvRFrdUgX6PK1mUDZVdnaLX8zpgGTBVOAKCaX3/rpUZSq2kqR12bwyqMvoL26Wc3KqBdddQ2KvrJcZMS7sV9GO2U2OzgBSFqRLTTZKzOU=
+	t=1750715448; cv=none; b=rBvDo5lvfx3CO7vVSK6yLpSGUVVHjiHbtIqorhbWUXD+NPylm08Zmaijm4xnIB2927EqFBHPGiSHH+QWRy7b/n/nCrehcgPbbBBTlrrXVHuHTZKqxk8cjHIz6FCAIdnjfsnfd8jBjz0QCtZULR3l/gr+ty0+7UnRB36WdXqEEBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715445; c=relaxed/simple;
-	bh=mpp6IV3hN7e3Bws/5TIOW1UAwFwKDW6Cu6SAM9tseXo=;
+	s=arc-20240116; t=1750715448; c=relaxed/simple;
+	bh=xl1DLFIwuXVbs9qAXeNYoO2buCQfe7s0aeg339AD2XY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Enov3Y4it7kvg0icew2M1EujiMmwr0SAsUF1DIlYetE9wybldJKlNKG0M9czMWdqYLCwafp8pMTW8ONIkQB4n854CDPQcv8r5VqFFsViHTX0TpPHh2A4r6c7l7W3PLSYNlrYgTN/tZIv0GZnodE5yHdnAVPYhZyuDABJwGIv03U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wz6dWVfC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jxVATtY37LeZyYBlZ0nW/nU/aUCAaSrtYe08L6s3j1BNlsX1nLnS1ZN9p3cW8M8un2OV42VNZFkNKK+EP++p/ghUzlMhYVOauY2t4e9ozu0rk92AJZooRs7jTdFqzTe42KyZBEAz8gpeUwncPmtpVDeDTYW6zWCJocIz5QrQTU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrmLc3No; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wz6dWVfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7CBC4CEEA;
-	Mon, 23 Jun 2025 21:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrmLc3No"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9287BC4CEEA;
+	Mon, 23 Jun 2025 21:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715445;
-	bh=mpp6IV3hN7e3Bws/5TIOW1UAwFwKDW6Cu6SAM9tseXo=;
+	s=korg; t=1750715447;
+	bh=xl1DLFIwuXVbs9qAXeNYoO2buCQfe7s0aeg339AD2XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wz6dWVfC7/TXkKcpnwCNWIgOE8YA5WpcSePzPaKj2PFh+xisnR5IgmYlo6vATuRsm
-	 QAf3KfxexP0/PKCFKA4odgDSs2J+A92H8AYUXMESx8CDiWYC8ylaMM5JaXNUmNjApk
-	 t3UKkSvjd3NRzRd1x1WE1uYv61tOOrredAgvlDY8=
+	b=nrmLc3NoumQXnZwf9lF8gCB16lbfxJAyswl4Xn38uq07YHHs/DfGZeuetiN2KiVqT
+	 Ts7cPGivZzURr6bb6FsHfdsFAidTc2Xu7tr/pUUxikyN3difqshrX3w881LsCCzqgB
+	 OBogrKkMiSqUVirUfP+lE3YqRtwzvme2tVH7Yzuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 235/508] regulator: max20086: Fix refcount leak in max20086_parse_regulators_dt()
-Date: Mon, 23 Jun 2025 15:04:40 +0200
-Message-ID: <20250623130651.040263628@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 5.15 253/411] uio_hv_generic: Use correct size for interrupt and monitor pages
+Date: Mon, 23 Jun 2025 15:06:37 +0200
+Message-ID: <20250623130640.016032852@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,64 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Long Li <longli@microsoft.com>
 
-[ Upstream commit 06118ae36855b7d3d22688298e74a766ccf0cb7a ]
+commit c951ab8fd3589cf6991ed4111d2130816f2e3ac2 upstream.
 
-There is a missing call to of_node_put() if devm_kcalloc() fails.
-Fix this by changing the code to use cleanup.h magic to drop the
-refcount.
+Interrupt and monitor pages should be in Hyper-V page size (4k bytes).
+This can be different from the system page size.
 
-Fixes: 6b0cd72757c6 ("regulator: max20086: fix invalid memory access")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/aDVRLqgJWMxYU03G@stanley.mountain
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This size is read and used by the user-mode program to determine the
+mapped data region. An example of such user-mode program is the VMBus
+driver in DPDK.
+
+Cc: stable@vger.kernel.org
+Fixes: 95096f2fbd10 ("uio-hv-generic: new userspace i/o driver for VMBus")
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/1746492997-4599-3-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <1746492997-4599-3-git-send-email-longli@linuxonhyperv.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/max20086-regulator.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/uio/uio_hv_generic.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/max20086-regulator.c b/drivers/regulator/max20086-regulator.c
-index 332fb58f90952..a24dfffce25c7 100644
---- a/drivers/regulator/max20086-regulator.c
-+++ b/drivers/regulator/max20086-regulator.c
-@@ -5,6 +5,7 @@
- // Copyright (C) 2022 Laurent Pinchart <laurent.pinchart@idesonboard.com>
- // Copyright (C) 2018 Avnet, Inc.
+--- a/drivers/uio/uio_hv_generic.c
++++ b/drivers/uio/uio_hv_generic.c
+@@ -288,13 +288,13 @@ hv_uio_probe(struct hv_device *dev,
+ 	pdata->info.mem[INT_PAGE_MAP].name = "int_page";
+ 	pdata->info.mem[INT_PAGE_MAP].addr
+ 		= (uintptr_t)vmbus_connection.int_page;
+-	pdata->info.mem[INT_PAGE_MAP].size = PAGE_SIZE;
++	pdata->info.mem[INT_PAGE_MAP].size = HV_HYP_PAGE_SIZE;
+ 	pdata->info.mem[INT_PAGE_MAP].memtype = UIO_MEM_LOGICAL;
  
-+#include <linux/cleanup.h>
- #include <linux/err.h>
- #include <linux/gpio.h>
- #include <linux/gpio/consumer.h>
-@@ -134,11 +135,11 @@ static int max20086_regulators_register(struct max20086 *chip)
- static int max20086_parse_regulators_dt(struct max20086 *chip, bool *boot_on)
- {
- 	struct of_regulator_match *matches;
--	struct device_node *node;
- 	unsigned int i;
- 	int ret;
+ 	pdata->info.mem[MON_PAGE_MAP].name = "monitor_page";
+ 	pdata->info.mem[MON_PAGE_MAP].addr
+ 		= (uintptr_t)vmbus_connection.monitor_pages[1];
+-	pdata->info.mem[MON_PAGE_MAP].size = PAGE_SIZE;
++	pdata->info.mem[MON_PAGE_MAP].size = HV_HYP_PAGE_SIZE;
+ 	pdata->info.mem[MON_PAGE_MAP].memtype = UIO_MEM_LOGICAL;
  
--	node = of_get_child_by_name(chip->dev->of_node, "regulators");
-+	struct device_node *node __free(device_node) =
-+		of_get_child_by_name(chip->dev->of_node, "regulators");
- 	if (!node) {
- 		dev_err(chip->dev, "regulators node not found\n");
- 		return -ENODEV;
-@@ -154,7 +155,6 @@ static int max20086_parse_regulators_dt(struct max20086 *chip, bool *boot_on)
- 
- 	ret = of_regulator_match(chip->dev, node, matches,
- 				 chip->info->num_outputs);
--	of_node_put(node);
- 	if (ret < 0) {
- 		dev_err(chip->dev, "Failed to match regulators\n");
- 		return -EINVAL;
--- 
-2.39.5
-
+ 	pdata->recv_buf = vzalloc(RECV_BUFFER_SIZE);
 
 
