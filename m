@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC7D1A4F12;
-	Mon, 23 Jun 2025 22:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC5B1E87B;
+	Mon, 23 Jun 2025 22:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716353; cv=none; b=a8b/0ILQk1Nmy/lTrHbuXUbZaW+rhT6NdLNsDaGtjTDhx/meXkwnZEkF3eGIhPaDT1MWBueThn+C6VlQrAFb5l8JG0G7Vw4QzojO7a90Dspi48oPG4lo0zN3qR4oVlmstRuRtr0rEALGXMG2a7njKob5epfGxldTpyau8j3a+pk=
+	t=1750716355; cv=none; b=N59vrnsrEXLrHNe7mMQnt3GC4Hjhg4L0/ILnTmnZYV2cP+q0m37L8+8KoOIWhwa8bsaorfq0+fO7R4owFE2r7K7gqwYmyb+MMf/W2kpW/kI4UE7rWy8WXUv0ekm0IyJhDHZmxBemJvMNeWwY/g8RJxRj0igYxGplY6pJUfCpPgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716353; c=relaxed/simple;
-	bh=Yh5LwzlJWiunBWLqVAx6FXBrpyFRR1HIGDswIXr/M38=;
+	s=arc-20240116; t=1750716355; c=relaxed/simple;
+	bh=8lqCfUSj7nVDlzM39vJfuetBrwh98O/7K76cPf5EPOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VNamcrIUlgnZ/iQuCCY9Kjy9Pkm/OFngJuczaO+REFdaFuwC97yWNOpjrWFbiGL6NwTy7mVHcuICKUcCkmJd2sywp0vzJe4JDbyxSl6N9QsuRfukiGdxAB1PhRRw+EIYg+0tkUPotX7xGbg/+MyKTbESrjlhab9AZfEl3wmyHwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxLEG6oM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mHSEFlE8PU+UWpy4Su51dF89sJGgIBu1HdlMsayERXh8847BMA1KoAPFfTJ9aPxRRvc9lm36hzphuqlSj+QeMOo+RmG8gM5UmPffIbxJSelSTPSf0F9O/VJHGLtg7aVWilMXklRYSXAl5vF6BipoNMJqZO4fVEGXKZfT2eXw0TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sniDkF7o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxLEG6oM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B03CC4CEEA;
-	Mon, 23 Jun 2025 22:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sniDkF7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C727AC4CEEA;
+	Mon, 23 Jun 2025 22:05:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716352;
-	bh=Yh5LwzlJWiunBWLqVAx6FXBrpyFRR1HIGDswIXr/M38=;
+	s=korg; t=1750716355;
+	bh=8lqCfUSj7nVDlzM39vJfuetBrwh98O/7K76cPf5EPOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fxLEG6oM4ZYcr3a2Ikh/x5gpMLP0CcWN6pXdhO0d4K62bn8aZP7dBAqP/4wezzTNP
-	 JBeq7ccDukWV67GJy11O+89h62jWFoUMWGggik/k7HSOqwOKnJBQN27a//dfdnBPsS
-	 o7khGVjcFpPe11Tn6VZGVA6NNfZegU1bZ67hPnG0=
+	b=sniDkF7oUSEHXv6cvxALTq+/vgtRx9NUWwPdXBUEoHa8KsNT/GvRld92EsTOUHMlJ
+	 o1iAUAbhk8Ihuq68NY+JTmmY3aSVh/cKHCB7xQ3tpUbzQ27PLyXPGw8+9fuiHJ4QgF
+	 gD215QKYng7W7evRSbArlOgTAgTeF8O9CIcDlX6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8a583bdd1a5cc0b0e068@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 258/290] mpls: Use rcu_dereference_rtnl() in mpls_route_input_rcu().
-Date: Mon, 23 Jun 2025 15:08:39 +0200
-Message-ID: <20250623130634.677138565@linuxfoundation.org>
+	=?UTF-8?q?Jo=C3=A3o=20Paulo=20Gon=C3=A7alves?= <jpaulo.silvagoncalves@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 297/508] regulator: max20086: Change enable gpio to optional
+Date: Mon, 23 Jun 2025 15:05:42 +0200
+Message-ID: <20250623130652.601212670@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,101 +44,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: João Paulo Gonçalves <jpaulo.silvagoncalves@gmail.com>
 
-[ Upstream commit 6dbb0d97c5096072c78a6abffe393584e57ae945 ]
+commit e8ac7336dd62f0443a675ed80b17f0f0e6846e20 upstream.
 
-As syzbot reported [0], mpls_route_input_rcu() can be called
-from mpls_getroute(), where is under RTNL.
+The enable pin can be configured as always enabled by the hardware. Make
+the enable gpio request optional so the driver doesn't fail to probe
+when `enable-gpios` property is not present in the device tree.
 
-net->mpls.platform_label is only updated under RTNL.
-
-Let's use rcu_dereference_rtnl() in mpls_route_input_rcu() to
-silence the splat.
-
-[0]:
-WARNING: suspicious RCU usage
-6.15.0-rc7-syzkaller-00082-g5cdb2c77c4c3 #0 Not tainted
- ----------------------------
-net/mpls/af_mpls.c:84 suspicious rcu_dereference_check() usage!
-
-other info that might help us debug this:
-
-rcu_scheduler_active = 2, debug_locks = 1
-1 lock held by syz.2.4451/17730:
- #0: ffffffff9012a3e8 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_lock net/core/rtnetlink.c:80 [inline]
- #0: ffffffff9012a3e8 (rtnl_mutex){+.+.}-{4:4}, at: rtnetlink_rcv_msg+0x371/0xe90 net/core/rtnetlink.c:6961
-
-stack backtrace:
-CPU: 1 UID: 0 PID: 17730 Comm: syz.2.4451 Not tainted 6.15.0-rc7-syzkaller-00082-g5cdb2c77c4c3 #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
- lockdep_rcu_suspicious+0x166/0x260 kernel/locking/lockdep.c:6865
- mpls_route_input_rcu+0x1d4/0x200 net/mpls/af_mpls.c:84
- mpls_getroute+0x621/0x1ea0 net/mpls/af_mpls.c:2381
- rtnetlink_rcv_msg+0x3c9/0xe90 net/core/rtnetlink.c:6964
- netlink_rcv_skb+0x16d/0x440 net/netlink/af_netlink.c:2534
- netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
- netlink_unicast+0x53a/0x7f0 net/netlink/af_netlink.c:1339
- netlink_sendmsg+0x8d1/0xdd0 net/netlink/af_netlink.c:1883
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg net/socket.c:727 [inline]
- ____sys_sendmsg+0xa98/0xc70 net/socket.c:2566
- ___sys_sendmsg+0x134/0x1d0 net/socket.c:2620
- __sys_sendmmsg+0x200/0x420 net/socket.c:2709
- __do_sys_sendmmsg net/socket.c:2736 [inline]
- __se_sys_sendmmsg net/socket.c:2733 [inline]
- __x64_sys_sendmmsg+0x9c/0x100 net/socket.c:2733
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x230 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f0a2818e969
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f0a28f52038 EFLAGS: 00000246 ORIG_RAX: 0000000000000133
-RAX: ffffffffffffffda RBX: 00007f0a283b5fa0 RCX: 00007f0a2818e969
-RDX: 0000000000000003 RSI: 0000200000000080 RDI: 0000000000000003
-RBP: 00007f0a28210ab1 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000000 R14: 00007f0a283b5fa0 R15: 00007ffce5e9f268
- </TASK>
-
-Fixes: 0189197f4416 ("mpls: Basic routing support")
-Reported-by: syzbot+8a583bdd1a5cc0b0e068@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68507981.a70a0220.395abc.01ef.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250616201532.1036568-1-kuni1840@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: bfff546aae50 ("regulator: Add MAX20086-MAX20089 driver")
+Signed-off-by: João Paulo Gonçalves <jpaulo.silvagoncalves@gmail.com>
+Link: https://patch.msgid.link/20250420-fix-max20086-v1-2-8cc9ee0d5a08@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mpls/af_mpls.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/regulator/max20086-regulator.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index 43e8343df0db7..5a4b175b78c8c 100644
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -81,8 +81,8 @@ static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned index)
- 
- 	if (index < net->mpls.platform_labels) {
- 		struct mpls_route __rcu **platform_label =
--			rcu_dereference(net->mpls.platform_label);
--		rt = rcu_dereference(platform_label[index]);
-+			rcu_dereference_rtnl(net->mpls.platform_label);
-+		rt = rcu_dereference_rtnl(platform_label[index]);
- 	}
- 	return rt;
- }
--- 
-2.39.5
-
+--- a/drivers/regulator/max20086-regulator.c
++++ b/drivers/regulator/max20086-regulator.c
+@@ -265,7 +265,7 @@ static int max20086_i2c_probe(struct i2c
+ 	 * shutdown.
+ 	 */
+ 	flags = boot_on ? GPIOD_OUT_HIGH : GPIOD_OUT_LOW;
+-	chip->ena_gpiod = devm_gpiod_get(chip->dev, "enable", flags);
++	chip->ena_gpiod = devm_gpiod_get_optional(chip->dev, "enable", flags);
+ 	if (IS_ERR(chip->ena_gpiod)) {
+ 		ret = PTR_ERR(chip->ena_gpiod);
+ 		dev_err(chip->dev, "Failed to get enable GPIO: %d\n", ret);
 
 
