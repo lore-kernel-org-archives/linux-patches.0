@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF082220686;
-	Mon, 23 Jun 2025 21:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3590A19049B;
+	Mon, 23 Jun 2025 21:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715660; cv=none; b=XSPBqo4SbyWXSuESJxBhLmxfkL2qjcH4Xanifz2Qrrx/MsDJQD3Gu7phUbFwfF066hUrZ+1beqdKHM2k1t550QhA/+mfZvdaOnR826vHgbdd76pJpwTth7YdNoYNLMR9N+aQ0NiySWtoV73ePq5TP6l+0qs57v6DP9QOIP7faVg=
+	t=1750715663; cv=none; b=NzIFOn3JnpxRNVHDSro/mw2t0XVgzijR0qHKEyGK4dtFoHVLhp3ECHp2/pOvHn7E4C/zTW7zByatIMcff9pjv+OS5IY21aSeGaWXM44LgLCdTGMDbQK2rHUxvqFjyFZKdYqglbEYMn1YmkkaRkOpcLNNIDiZWhTr2qpXSOfQXRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715660; c=relaxed/simple;
-	bh=zWcrV2cikwYwjQ6fWEwlbpfgTR1yXKEcBVVnHvoSpek=;
+	s=arc-20240116; t=1750715663; c=relaxed/simple;
+	bh=ZRB/zp/sEPMPwxoHIsEtQ44HdAGo1TAb1bDs/hafttk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RyaSE5ZQqegTQQjbSxVF9Q8qJ+fMIVjqPTHyenYQC8snLWDFnpRsyokHBpBiGFdqvDsqx0OvTMUgw3JjVejM00eTs6D80NuLCq3iXhENVQRbO3IikMpjJga05syVrno+D4+nGq32fvKJI2y6EN1C2HMiJmYvnWIZqpvrkaRraLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlyX8r7U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=USSLHsAD7a3sLucFxbdRvjws1/LZwB+Omgwf3wqfQzAfD0W4txWk4y5jk9QJb4wB4SS/gyCueb710asdOVz1aGiDZKDNv8rNYREj+54XRmV44XrzMp/BE6y0N31mDDBBL40+jf9RlHV6Nrcf1sWTWKRfGa7GmzpsDQL9Edp10c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RpWeJmNw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlyX8r7U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BA6C4CEEA;
-	Mon, 23 Jun 2025 21:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RpWeJmNw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA819C4CEEA;
+	Mon, 23 Jun 2025 21:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715660;
-	bh=zWcrV2cikwYwjQ6fWEwlbpfgTR1yXKEcBVVnHvoSpek=;
+	s=korg; t=1750715663;
+	bh=ZRB/zp/sEPMPwxoHIsEtQ44HdAGo1TAb1bDs/hafttk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TlyX8r7UKZo6Z0KZvCqmmgo9fiSCqV+kmDttkg+6S2uBiw7RIWTqafOd5+5FGVLAJ
-	 2hOm3czt8iJK7HwHz7FN/JNWBbPxgOynLVWvcFHR0xUWxfAOgGyWn2OgbbHRfz9d4h
-	 53h7F4bwjxzJjxVqfvZuzs2+mhtvGtthArk+lbXg=
+	b=RpWeJmNwWpze4KKFFsZbg8Ht6CZIl5wPUCUixF6+OTC9dpKB5LsVLI0L99Qok1Q7A
+	 /OEZFCBBfVGnNxAJl/dLGLL/V4irjftH8mE+wWgw0F3Tjrg2nqpSrQylPcDYndI39k
+	 iskBRQqscd66nN8jCXIHC/lWq0JCGQH/B9N4ICnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Sadovnikov <a.sadovnikov@ispras.ru>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 6.6 213/290] jffs2: check that raw node were preallocated before writing summary
-Date: Mon, 23 Jun 2025 15:07:54 +0200
-Message-ID: <20250623130633.337398023@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 254/508] Bluetooth: MGMT: Fix sparse errors
+Date: Mon, 23 Jun 2025 15:04:59 +0200
+Message-ID: <20250623130651.502798009@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,91 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Artem Sadovnikov <a.sadovnikov@ispras.ru>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit ec9e6f22bce433b260ea226de127ec68042849b0 upstream.
+[ Upstream commit 7dd38ba4acbea9875b4ee061e20a26413e39d9f4 ]
 
-Syzkaller detected a kernel bug in jffs2_link_node_ref, caused by fault
-injection in jffs2_prealloc_raw_node_refs. jffs2_sum_write_sumnode doesn't
-check return value of jffs2_prealloc_raw_node_refs and simply lets any
-error propagate into jffs2_sum_write_data, which eventually calls
-jffs2_link_node_ref in order to link the summary to an expectedly allocated
-node.
+This fixes the following errors:
 
-kernel BUG at fs/jffs2/nodelist.c:592!
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
-CPU: 1 PID: 31277 Comm: syz-executor.7 Not tainted 6.1.128-syzkaller-00139-ge10f83ca10a1 #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:jffs2_link_node_ref+0x570/0x690 fs/jffs2/nodelist.c:592
-Call Trace:
- <TASK>
- jffs2_sum_write_data fs/jffs2/summary.c:841 [inline]
- jffs2_sum_write_sumnode+0xd1a/0x1da0 fs/jffs2/summary.c:874
- jffs2_do_reserve_space+0xa18/0xd60 fs/jffs2/nodemgmt.c:388
- jffs2_reserve_space+0x55f/0xaa0 fs/jffs2/nodemgmt.c:197
- jffs2_write_inode_range+0x246/0xb50 fs/jffs2/write.c:362
- jffs2_write_end+0x726/0x15d0 fs/jffs2/file.c:301
- generic_perform_write+0x314/0x5d0 mm/filemap.c:3856
- __generic_file_write_iter+0x2ae/0x4d0 mm/filemap.c:3973
- generic_file_write_iter+0xe3/0x350 mm/filemap.c:4005
- call_write_iter include/linux/fs.h:2265 [inline]
- do_iter_readv_writev+0x20f/0x3c0 fs/read_write.c:735
- do_iter_write+0x186/0x710 fs/read_write.c:861
- vfs_iter_write+0x70/0xa0 fs/read_write.c:902
- iter_file_splice_write+0x73b/0xc90 fs/splice.c:685
- do_splice_from fs/splice.c:763 [inline]
- direct_splice_actor+0x10c/0x170 fs/splice.c:950
- splice_direct_to_actor+0x337/0xa10 fs/splice.c:896
- do_splice_direct+0x1a9/0x280 fs/splice.c:1002
- do_sendfile+0xb13/0x12c0 fs/read_write.c:1255
- __do_sys_sendfile64 fs/read_write.c:1323 [inline]
- __se_sys_sendfile64 fs/read_write.c:1309 [inline]
- __x64_sys_sendfile64+0x1cf/0x210 fs/read_write.c:1309
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+net/bluetooth/mgmt.c:5400:59: sparse: sparse: incorrect type in argument 3
+(different base types) @@     expected unsigned short [usertype] handle @@
+got restricted __le16 [usertype] monitor_handle @@
+net/bluetooth/mgmt.c:5400:59: sparse:     expected unsigned short [usertype] handle
+net/bluetooth/mgmt.c:5400:59: sparse:     got restricted __le16 [usertype] monitor_handle
 
-Fix this issue by checking return value of jffs2_prealloc_raw_node_refs
-before calling jffs2_sum_write_data.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Cc: stable@vger.kernel.org
-Fixes: 2f785402f39b ("[JFFS2] Reduce visibility of raw_node_ref to upper layers of JFFS2 code.")
-Signed-off-by: Artem Sadovnikov <a.sadovnikov@ispras.ru>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e6ed54e86aae ("Bluetooth: MGMT: Fix UAF on mgmt_remove_adv_monitor_complete")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506060347.ux2O1p7L-lkp@intel.com/
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jffs2/summary.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/bluetooth/mgmt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/jffs2/summary.c
-+++ b/fs/jffs2/summary.c
-@@ -858,7 +858,10 @@ int jffs2_sum_write_sumnode(struct jffs2
- 	spin_unlock(&c->erase_completion_lock);
- 
- 	jeb = c->nextblock;
--	jffs2_prealloc_raw_node_refs(c, jeb, 1);
-+	ret = jffs2_prealloc_raw_node_refs(c, jeb, 1);
-+
-+	if (ret)
-+		goto out;
- 
- 	if (!c->summary->sum_num || !c->summary->sum_list_head) {
- 		JFFS2_WARNING("Empty summary info!!!\n");
-@@ -872,6 +875,8 @@ int jffs2_sum_write_sumnode(struct jffs2
- 	datasize += padsize;
- 
- 	ret = jffs2_sum_write_data(c, jeb, infosize, datasize, padsize);
-+
-+out:
- 	spin_lock(&c->erase_completion_lock);
- 	return ret;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 123cf62e3c000..08bb78ba988d8 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -5237,11 +5237,11 @@ static void mgmt_adv_monitor_added(struct sock *sk, struct hci_dev *hdev,
  }
+ 
+ static void mgmt_adv_monitor_removed(struct sock *sk, struct hci_dev *hdev,
+-				     u16 handle)
++				     __le16 handle)
+ {
+ 	struct mgmt_ev_adv_monitor_removed ev;
+ 
+-	ev.monitor_handle = cpu_to_le16(handle);
++	ev.monitor_handle = handle;
+ 
+ 	mgmt_event(MGMT_EV_ADV_MONITOR_REMOVED, hdev, &ev, sizeof(ev), sk);
+ }
+-- 
+2.39.5
+
 
 
