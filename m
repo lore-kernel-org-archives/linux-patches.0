@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B14F19E7F9;
-	Mon, 23 Jun 2025 22:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DC21F6667;
+	Mon, 23 Jun 2025 22:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716982; cv=none; b=qUmEYj8F5cArFeOY00NOjfFgPruI6UxE1PyLas0LNY6hoOEy4f2uhkSHfEHXBsgl7omBdCWhTFZ+Fd29iptqCnlcWpJblNWZTgW4he93imfPlBXVuJBhNPmUAolIIF0NeS5NXay+57cyH49nfZJvvPwyDzrAx2Hp3zUdqwhn+bg=
+	t=1750716984; cv=none; b=R5WCv3veL2j58Rdku1PKOLVHx1iZmVXykBvdL3/SmgAyHZWUOE1UsUWujM2Xp9ATBnsuzDIZfIWahSa1Gfj+aSB88Y1bJdOp1l7RJIXMxe+YepkR+DYG1sRRHPYkR6URniOKxhiN77lf0xzmFE0nR9Bk6C+r2FUTLbWsXtH5LUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716982; c=relaxed/simple;
-	bh=KfLzE4qX8FrPPa2p8t13cfYwFP3QvCRb9pnwiOy4eH0=;
+	s=arc-20240116; t=1750716984; c=relaxed/simple;
+	bh=+paqczogQmYphWai0NRWCvWFevnceY8oO4u9YSB9gTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZmZOR178btMlhA+sUt9SK5ueFJXTBa22guZVIw9uFJS7wW+sTsMfunVs5MOx1dYlWmcu1IwOxaqizNamDOL8pgt6LZSUWO1JIQB4nKIIXignRnGfeB5qCBSdQUb11WZCypqyCvLGBlFCNIZbvr2BWH2Y3WTE+Ni2r3Gx8+tT+xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2ue0hzc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B0YjCQntL0F8tEN9m+3WkfW+YDtlMWXQoRW50TU7L1K/FmzumVUF24hJy4+M1oeygKClndscCO9iaBjLb6KLA30ZSmJ4oS6GHHuYb8OzQ6VPHug5/HQIydwiwFdf3KP4wYfm+sK+ZQt6eIRpbvrs0fLUT1E5y+vfLa6Xqf/rhqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fufzrGCc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2ue0hzc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5855C4CEEA;
-	Mon, 23 Jun 2025 22:16:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fufzrGCc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7C1C4CEEA;
+	Mon, 23 Jun 2025 22:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716982;
-	bh=KfLzE4qX8FrPPa2p8t13cfYwFP3QvCRb9pnwiOy4eH0=;
+	s=korg; t=1750716984;
+	bh=+paqczogQmYphWai0NRWCvWFevnceY8oO4u9YSB9gTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S2ue0hzcKlTq+51LSQnw3Rrjr8BiMkQLvY0j1H0K+7+fZ214BVHdYgDUme9gQf6CY
-	 L7Pbb5+/8cZtYdtUezFzJbcGcX2Ta8PAHiQIObLmSj1/T3W0mHE5NuUQWl6UhwVgQ2
-	 LUesA+saU1dxkWvz3fKdLsK/fZcv/IDpMki2QN94=
+	b=fufzrGCciJMLBB9G9jUCKVRca4+yTVM1Yhq/QjKmUiVHHxvXv4wjj9GUaUuGy8L/l
+	 IIuKNZRnwnCxiV9MY70+eQjviCgdTh505zsTE46FSza5nhko2I3r0g8AOkBNOfIJGP
+	 jP4IMi4Y/3cvW/j/h+AI0SkTAHyBLU5hHD0yFKLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Foster <colin.foster@in-advantage.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	"Nobuhiro Iwamatsu (CIP)" <nobuhiro1.iwamatsu@toshiba.co.jp>
-Subject: [PATCH 5.15 384/411] ARM: dts: am335x-bone-common: Increase MDIO reset deassert time
-Date: Mon, 23 Jun 2025 15:08:48 +0200
-Message-ID: <20250623130643.316182228@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.1 351/508] RDMA/iwcm: Fix use-after-free of work objects after cm_id destruction
+Date: Mon, 23 Jun 2025 15:06:36 +0200
+Message-ID: <20250623130653.990597293@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +47,195 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Colin Foster <colin.foster@in-advantage.com>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-commit b9bf5612610aa7e38d58fee16f489814db251c01 upstream.
+commit 6883b680e703c6b2efddb4e7a8d891ce1803d06b upstream.
 
-Prior to commit df16c1c51d81 ("net: phy: mdio_device: Reset device only
-when necessary") MDIO reset deasserts were performed twice during boot.
-Now that the second deassert is no longer performed, device probe
-failures happen due to the change in timing with the following error
-message:
+The commit 59c68ac31e15 ("iw_cm: free cm_id resources on the last
+deref") simplified cm_id resource management by freeing cm_id once all
+references to the cm_id were removed. The references are removed either
+upon completion of iw_cm event handlers or when the application destroys
+the cm_id. This commit introduced the use-after-free condition where
+cm_id_private object could still be in use by event handler works during
+the destruction of cm_id. The commit aee2424246f9 ("RDMA/iwcm: Fix a
+use-after-free related to destroying CM IDs") addressed this use-after-
+free by flushing all pending works at the cm_id destruction.
 
-SMSC LAN8710/LAN8720: probe of 4a101000.mdio:00 failed with error -5
+However, still another use-after-free possibility remained. It happens
+with the work objects allocated for each cm_id_priv within
+alloc_work_entries() during cm_id creation, and subsequently freed in
+dealloc_work_entries() once all references to the cm_id are removed.
+If the cm_id's last reference is decremented in the event handler work,
+the work object for the work itself gets removed, and causes the use-
+after-free BUG below:
 
-Restore the original effective timing, which resolves the probe
-failures.
+  BUG: KASAN: slab-use-after-free in __pwq_activate_work+0x1ff/0x250
+  Read of size 8 at addr ffff88811f9cf800 by task kworker/u16:1/147091
 
-Signed-off-by: Colin Foster <colin.foster@in-advantage.com>
-Link: https://lore.kernel.org/r/20240531183817.2698445-1-colin.foster@in-advantage.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro1.iwamatsu@toshiba.co.jp>
+  CPU: 2 UID: 0 PID: 147091 Comm: kworker/u16:1 Not tainted 6.15.0-rc2+ #27 PREEMPT(voluntary)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
+  Workqueue:  0x0 (iw_cm_wq)
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x6a/0x90
+   print_report+0x174/0x554
+   ? __virt_addr_valid+0x208/0x430
+   ? __pwq_activate_work+0x1ff/0x250
+   kasan_report+0xae/0x170
+   ? __pwq_activate_work+0x1ff/0x250
+   __pwq_activate_work+0x1ff/0x250
+   pwq_dec_nr_in_flight+0x8c5/0xfb0
+   process_one_work+0xc11/0x1460
+   ? __pfx_process_one_work+0x10/0x10
+   ? assign_work+0x16c/0x240
+   worker_thread+0x5ef/0xfd0
+   ? __pfx_worker_thread+0x10/0x10
+   kthread+0x3b0/0x770
+   ? __pfx_kthread+0x10/0x10
+   ? rcu_is_watching+0x11/0xb0
+   ? _raw_spin_unlock_irq+0x24/0x50
+   ? rcu_is_watching+0x11/0xb0
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork+0x30/0x70
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
+
+  Allocated by task 147416:
+   kasan_save_stack+0x2c/0x50
+   kasan_save_track+0x10/0x30
+   __kasan_kmalloc+0xa6/0xb0
+   alloc_work_entries+0xa9/0x260 [iw_cm]
+   iw_cm_connect+0x23/0x4a0 [iw_cm]
+   rdma_connect_locked+0xbfd/0x1920 [rdma_cm]
+   nvme_rdma_cm_handler+0x8e5/0x1b60 [nvme_rdma]
+   cma_cm_event_handler+0xae/0x320 [rdma_cm]
+   cma_work_handler+0x106/0x1b0 [rdma_cm]
+   process_one_work+0x84f/0x1460
+   worker_thread+0x5ef/0xfd0
+   kthread+0x3b0/0x770
+   ret_from_fork+0x30/0x70
+   ret_from_fork_asm+0x1a/0x30
+
+  Freed by task 147091:
+   kasan_save_stack+0x2c/0x50
+   kasan_save_track+0x10/0x30
+   kasan_save_free_info+0x37/0x60
+   __kasan_slab_free+0x4b/0x70
+   kfree+0x13a/0x4b0
+   dealloc_work_entries+0x125/0x1f0 [iw_cm]
+   iwcm_deref_id+0x6f/0xa0 [iw_cm]
+   cm_work_handler+0x136/0x1ba0 [iw_cm]
+   process_one_work+0x84f/0x1460
+   worker_thread+0x5ef/0xfd0
+   kthread+0x3b0/0x770
+   ret_from_fork+0x30/0x70
+   ret_from_fork_asm+0x1a/0x30
+
+  Last potentially related work creation:
+   kasan_save_stack+0x2c/0x50
+   kasan_record_aux_stack+0xa3/0xb0
+   __queue_work+0x2ff/0x1390
+   queue_work_on+0x67/0xc0
+   cm_event_handler+0x46a/0x820 [iw_cm]
+   siw_cm_upcall+0x330/0x650 [siw]
+   siw_cm_work_handler+0x6b9/0x2b20 [siw]
+   process_one_work+0x84f/0x1460
+   worker_thread+0x5ef/0xfd0
+   kthread+0x3b0/0x770
+   ret_from_fork+0x30/0x70
+   ret_from_fork_asm+0x1a/0x30
+
+This BUG is reproducible by repeating the blktests test case nvme/061
+for the rdma transport and the siw driver.
+
+To avoid the use-after-free of cm_id_private work objects, ensure that
+the last reference to the cm_id is decremented not in the event handler
+works, but in the cm_id destruction context. For that purpose, move
+iwcm_deref_id() call from destroy_cm_id() to the callers of
+destroy_cm_id(). In iw_destroy_cm_id(), call iwcm_deref_id() after
+flushing the pending works.
+
+During the fix work, I noticed that iw_destroy_cm_id() is called from
+cm_work_handler() and process_event() context. However, the comment of
+iw_destroy_cm_id() notes that the function "cannot be called by the
+event thread". Drop the false comment.
+
+Closes: https://lore.kernel.org/linux-rdma/r5676e754sv35aq7cdsqrlnvyhiq5zktteaurl7vmfih35efko@z6lay7uypy3c/
+Fixes: 59c68ac31e15 ("iw_cm: free cm_id resources on the last deref")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Link: https://patch.msgid.link/20250510101036.1756439-1-shinichiro.kawasaki@wdc.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/am335x-bone-common.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/core/iwcm.c |   29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
---- a/arch/arm/boot/dts/am335x-bone-common.dtsi
-+++ b/arch/arm/boot/dts/am335x-bone-common.dtsi
-@@ -384,7 +384,7 @@
- 		/* Support GPIO reset on revision C3 boards */
- 		reset-gpios = <&gpio1 8 GPIO_ACTIVE_LOW>;
- 		reset-assert-us = <300>;
--		reset-deassert-us = <6500>;
-+		reset-deassert-us = <13000>;
- 	};
- };
+--- a/drivers/infiniband/core/iwcm.c
++++ b/drivers/infiniband/core/iwcm.c
+@@ -367,12 +367,9 @@ EXPORT_SYMBOL(iw_cm_disconnect);
+ /*
+  * CM_ID <-- DESTROYING
+  *
+- * Clean up all resources associated with the connection and release
+- * the initial reference taken by iw_create_cm_id.
+- *
+- * Returns true if and only if the last cm_id_priv reference has been dropped.
++ * Clean up all resources associated with the connection.
+  */
+-static bool destroy_cm_id(struct iw_cm_id *cm_id)
++static void destroy_cm_id(struct iw_cm_id *cm_id)
+ {
+ 	struct iwcm_id_private *cm_id_priv;
+ 	struct ib_qp *qp;
+@@ -441,20 +438,22 @@ static bool destroy_cm_id(struct iw_cm_i
+ 		iwpm_remove_mapinfo(&cm_id->local_addr, &cm_id->m_local_addr);
+ 		iwpm_remove_mapping(&cm_id->local_addr, RDMA_NL_IWCM);
+ 	}
+-
+-	return iwcm_deref_id(cm_id_priv);
+ }
  
+ /*
+- * This function is only called by the application thread and cannot
+- * be called by the event thread. The function will wait for all
+- * references to be released on the cm_id and then kfree the cm_id
+- * object.
++ * Destroy cm_id. If the cm_id still has other references, wait for all
++ * references to be released on the cm_id and then release the initial
++ * reference taken by iw_create_cm_id.
+  */
+ void iw_destroy_cm_id(struct iw_cm_id *cm_id)
+ {
+-	if (!destroy_cm_id(cm_id))
++	struct iwcm_id_private *cm_id_priv;
++
++	cm_id_priv = container_of(cm_id, struct iwcm_id_private, id);
++	destroy_cm_id(cm_id);
++	if (refcount_read(&cm_id_priv->refcount) > 1)
+ 		flush_workqueue(iwcm_wq);
++	iwcm_deref_id(cm_id_priv);
+ }
+ EXPORT_SYMBOL(iw_destroy_cm_id);
+ 
+@@ -1037,8 +1036,10 @@ static void cm_work_handler(struct work_
+ 
+ 		if (!test_bit(IWCM_F_DROP_EVENTS, &cm_id_priv->flags)) {
+ 			ret = process_event(cm_id_priv, &levent);
+-			if (ret)
+-				WARN_ON_ONCE(destroy_cm_id(&cm_id_priv->id));
++			if (ret) {
++				destroy_cm_id(&cm_id_priv->id);
++				WARN_ON_ONCE(iwcm_deref_id(cm_id_priv));
++			}
+ 		} else
+ 			pr_debug("dropping event %d\n", levent.event);
+ 		if (iwcm_deref_id(cm_id_priv))
 
 
