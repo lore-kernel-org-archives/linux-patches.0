@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF5C1E480;
-	Mon, 23 Jun 2025 13:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3542472AF;
+	Mon, 23 Jun 2025 13:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685875; cv=none; b=fSgk+5BkVGvEvuyLXYJi+QMA5wBRXhpSrI+2ZeNKYS0KUkLA/78+7/5n/NRrzXqKa26pVBVX7UBw58QCaa7cLdeIAouwXeyiGQal4LdDf2F6TTl6DDbIuO98j1rwM0RbljkT5jK+M6LGHNlGXoLz1IuEu7Z8fqlvKZ4xL5QkhDw=
+	t=1750685877; cv=none; b=Nv42g4sJ7+tyemlLwOTmCqKOtab+6WyNUO0+LEURdDFNDunfnbfmhv8WYi4P2mwFr82ukoLJMlG9QAAKLMqmvu4Sw5+NPcVsIvKPALl8sDW+tnK7u3sMglPYJtGwurC5ZRnmLozWNegAyin3qUHZ2WikZc52rFMEu3AJj4wg4Qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685875; c=relaxed/simple;
-	bh=YFsNjT9+V7GxltH33hhY+ivgFLhPd8po6Eow8raFKSk=;
+	s=arc-20240116; t=1750685877; c=relaxed/simple;
+	bh=N4qjVFz6TkmDIaGDfp5N+0WZCnhkXTAioqES/q+pawM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHOP7bg+xOGSbd2RntO3k9Mu1hHFCiMgDpL1MykmJeykNvsYPef7cHsI97V93OO07NnnQtDhcoVliysmGxd1xd4EmYVBi8fZMM88lF9SFJ20iXxuLrpRFj68tkG6cg7qQdNT27LwRb26J9KK9WZ+FYJZnYsY2v/wg960PeEBIMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvcTPm2E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GPDGpPTMaxeBkEG6oeuK/QFf0JqDXwFoWp8qOCgpql1bEdKqpljKck0AcDBIBRZBsHu5H65co0MhKO+jinFpOr2W642NPS5QPFCuon5mQbZCzOpDl0HUSD2XE68ZjOPZDAk0oE5Svd+91QYBkgvVO1YEEr2ZrS/L6VGKeAjmvzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4uaZ7Nv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvcTPm2E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52AEC4CEEA;
-	Mon, 23 Jun 2025 13:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4uaZ7Nv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E67C4CEEA;
+	Mon, 23 Jun 2025 13:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685875;
-	bh=YFsNjT9+V7GxltH33hhY+ivgFLhPd8po6Eow8raFKSk=;
+	s=korg; t=1750685877;
+	bh=N4qjVFz6TkmDIaGDfp5N+0WZCnhkXTAioqES/q+pawM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nvcTPm2Eamz03xk/LLt6LwIsgZSrk2b+ZgL6Vma+h03/GDf08l1uCio41afmydywh
-	 QT/iUh7GQ+hlcPKDtjsQ8BpZ5mWiZI8Vl2OsC8CGiy8MLV/SRkF8aaVd+N6dr+ZO6R
-	 MO/hLUInw/tU1J487EvitvYpp/VJ1Cmb+Agbx/UA=
+	b=n4uaZ7NvpsS4CGI2Vk6IfnXCXyqzNw7BaJzvcLxazCGERLjuxX2XDNr/gz+XUswwI
+	 x+mEV4I3Iom1PBLX7R9uOV0tISgz5gSPSwFMpwWJP4VoAqAyAhNHqhDI30Y5bsFfoF
+	 hIPJnuq9IaWb68YKcPElABBAqVZ+Ytck5KhPLfpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 289/592] ext4: prevent stale extent cache entries caused by concurrent get es_cache
-Date: Mon, 23 Jun 2025 15:04:07 +0200
-Message-ID: <20250623130707.236717155@linuxfoundation.org>
+Subject: [PATCH 6.1 056/508] bpf, sockmap: fix duplicated data transmission
+Date: Mon, 23 Jun 2025 15:01:41 +0200
+Message-ID: <20250623130646.623026530@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,74 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit f22a0ef2231a7d8374bb021eb86404d0e9de5a02 ]
+[ Upstream commit 3b4f14b794287be137ea2c6158765d1ea1e018a4 ]
 
-The EXT4_IOC_GET_ES_CACHE and EXT4_IOC_PRECACHE_EXTENTS currently
-invokes ext4_ext_precache() to preload the extent cache without holding
-the inode's i_rwsem. This can result in stale extent cache entries when
-competing with operations such as ext4_collapse_range() which calls
-ext4_ext_remove_space() or ext4_ext_shift_extents().
+In the !ingress path under sk_psock_handle_skb(), when sending data to the
+remote under snd_buf limitations, partial skb data might be transmitted.
 
-The problem arises when ext4_ext_remove_space() temporarily releases
-i_data_sem due to insufficient journal credits. During this interval, a
-concurrent EXT4_IOC_GET_ES_CACHE or EXT4_IOC_PRECACHE_EXTENTS may cache
-extent entries that are about to be deleted. As a result, these cached
-entries become stale and inconsistent with the actual extents.
+Although we preserved the partial transmission state (offset/length), the
+state wasn't properly consumed during retries. This caused the retry path
+to resend the entire skb data instead of continuing from the previous
+offset, resulting in data overlap at the receiver side.
 
-Loading the extents cache without holding the inode's i_rwsem or the
-mapping's invalidate_lock is not permitted besides during the writeback.
-Fix this by holding the i_rwsem during EXT4_IOC_GET_ES_CACHE and
-EXT4_IOC_PRECACHE_EXTENTS.
-
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250423085257.122685-6-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 405df89dd52c ("bpf, sockmap: Improved check for empty queue")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/r/20250407142234.47591-3-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 2 ++
- fs/ext4/ioctl.c   | 8 +++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ net/core/skmsg.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 81e010a6c797c..828a78a9600a8 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -4996,7 +4996,9 @@ int ext4_get_es_cache(struct inode *inode, struct fiemap_extent_info *fieinfo,
- 	}
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 5a790cd1121b1..72f4949cbb70f 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -654,11 +654,6 @@ static void sk_psock_backlog(struct work_struct *work)
+ 	int ret;
  
- 	if (fieinfo->fi_flags & FIEMAP_FLAG_CACHE) {
-+		inode_lock_shared(inode);
- 		error = ext4_ext_precache(inode);
-+		inode_unlock_shared(inode);
- 		if (error)
- 			return error;
- 		fieinfo->fi_flags &= ~FIEMAP_FLAG_CACHE;
-diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
-index d17207386ead1..0e240013c84d2 100644
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -1505,8 +1505,14 @@ static long __ext4_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
- 		return 0;
- 	}
- 	case EXT4_IOC_PRECACHE_EXTENTS:
--		return ext4_ext_precache(inode);
-+	{
-+		int ret;
+ 	mutex_lock(&psock->work_mutex);
+-	if (unlikely(state->len)) {
+-		len = state->len;
+-		off = state->off;
+-	}
+-
+ 	while ((skb = skb_peek(&psock->ingress_skb))) {
+ 		len = skb->len;
+ 		off = 0;
+@@ -668,6 +663,13 @@ static void sk_psock_backlog(struct work_struct *work)
+ 			off = stm->offset;
+ 			len = stm->full_len;
+ 		}
++
++		/* Resume processing from previous partial state */
++		if (unlikely(state->len)) {
++			len = state->len;
++			off = state->off;
++		}
++
+ 		ingress = skb_bpf_ingress(skb);
+ 		skb_bpf_redirect_clear(skb);
+ 		do {
+@@ -695,6 +697,8 @@ static void sk_psock_backlog(struct work_struct *work)
+ 			len -= ret;
+ 		} while (len);
  
-+		inode_lock_shared(inode);
-+		ret = ext4_ext_precache(inode);
-+		inode_unlock_shared(inode);
-+		return ret;
-+	}
- 	case FS_IOC_SET_ENCRYPTION_POLICY:
- 		if (!ext4_has_feature_encrypt(sb))
- 			return -EOPNOTSUPP;
++		/* The entire skb sent, clear state */
++		sk_psock_skb_state(psock, state, 0, 0);
+ 		skb = skb_dequeue(&psock->ingress_skb);
+ 		kfree_skb(skb);
+ 	}
 -- 
 2.39.5
 
