@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB4A70838;
-	Mon, 23 Jun 2025 21:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845E870838;
+	Mon, 23 Jun 2025 21:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713010; cv=none; b=jUDZyBqiZndQuFudvDWiI6v48elIG6C0nhg/O35wFAikjPJhcOB8pwmMT7mnPhVOYgWHku53ZcKzRfMQWA/CRnisM28Cinzyp6yRTsjbL1bhJItiiKLsLNbm4zK9+iUxnKqRHukbAOtr8j/um5Z3jUGkHH6W3VOdadbVTPnvA+o=
+	t=1750713012; cv=none; b=mH66rloKpHxeqo89JEG7MXd+6MXT5s4Ny3iLlOxRDWhnpDhW5mUSicFgVzhiFA5lGiBPDgVBma96Gdje5seUwFgcc08r6DMfimcox4rC2ZQp8ll6NywU6pXmCuJfaFza0qpOuejoE0kAApaFonuwkIymFaJOtNPy7qI/k+6RcdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713010; c=relaxed/simple;
-	bh=gP3Llo70KNnZF4RJESCyMUV0PKCLvgul+RkiwNBVTv8=;
+	s=arc-20240116; t=1750713012; c=relaxed/simple;
+	bh=GlbRRXksUvBDh5K0j2dYaamvy1NA7om3dICxNI5cpfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RtgSMqxH/Ols34mI1/LXfZu7VhA+Gx9xjr8hLg7P/ZzjAXBXHPf9gFdpKJ2veOJ/YGGvNY0zKvUOUjNosL9T259nx1nbEq0E3htW/+9A7nXXOGByNdKTRxhv095lUv/Yskh9fO4mjRGoLOn5QlfS94WYLuTDX+PvrrM27HCLzmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bl9IE+GE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OrC38LdNc+uvhndkIQxuVWSgySbdjm2qznQNMFLJmYtEqbOqQvZTw5xdtPIalCGQRKt5nOuZB40bC8UfA/4UlUChWPiDvEGS1/KUFhc2R71liXV68VRyBVYqwgjzUHWdnnghHdLuuLyo2r4IPHMrtslCwopElzSkPR1QF1322RE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4nLvz1D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bl9IE+GE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E0AC4CEEA;
-	Mon, 23 Jun 2025 21:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4nLvz1D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C157C4CEEA;
+	Mon, 23 Jun 2025 21:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713009;
-	bh=gP3Llo70KNnZF4RJESCyMUV0PKCLvgul+RkiwNBVTv8=;
+	s=korg; t=1750713012;
+	bh=GlbRRXksUvBDh5K0j2dYaamvy1NA7om3dICxNI5cpfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bl9IE+GEJHW4XTLKMbx6K3dYyp5AdJMN8j3x1Zgn3U1t8UgL5fOBGTo1Z8xyISd7G
-	 /cHQ3Y3z2lw9EzviUsy2U/F1GIXWqWSl1z/M1I9fOn0qFaRSPocAqbV2Jxi3K8sX0u
-	 sa6rdhdYwOHDdQZYFUPblg3A5op7tzSw+h956vDU=
+	b=A4nLvz1DhEaX2YnwyFWLauSoPpu9ou87j/89f6Oy0FFP5kgL7LltiQy4ag0+xBKGy
+	 9u1lNCKlLdiowj2M0ziWb6V5hAGPBYLIHAmsOLSlK1F/dL8/4bWDIWPvO/WnmzLRxh
+	 NdCV6limG8nY018PBpjhPlQkj5D7ymECSF1fPXRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Robert Morris <rtm@mit.edu>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 023/414] wifi: p54: prevent buffer-overflow in p54_rx_eeprom_readback()
-Date: Mon, 23 Jun 2025 15:02:40 +0200
-Message-ID: <20250623130642.606606437@linuxfoundation.org>
+	Wen Gong <wgong@codeaurora.org>,
+	Kalle Valo <kvalo@codeaurora.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 117/355] ath10k: prevent deinitializing NAPI twice
+Date: Mon, 23 Jun 2025 15:05:18 +0200
+Message-ID: <20250623130630.277713984@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,118 +47,384 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Lamparter <chunkeey@gmail.com>
+From: Wen Gong <wgong@codeaurora.org>
 
-commit da1b9a55ff116cb040528ef664c70a4eec03ae99 upstream.
+[ Upstream commit e2f8b74e58cb1560c1399ba94a470b770e858259 ]
 
-Robert Morris reported:
+It happened "Kernel panic - not syncing: hung_task: blocked tasks" when
+test simulate crash and ifconfig down/rmmod meanwhile.
 
-|If a malicious USB device pretends to be an Intersil p54 wifi
-|interface and generates an eeprom_readback message with a large
-|eeprom->v1.len, p54_rx_eeprom_readback() will copy data from the
-|message beyond the end of priv->eeprom.
-|
-|static void p54_rx_eeprom_readback(struct p54_common *priv,
-|                                   struct sk_buff *skb)
-|{
-|        struct p54_hdr *hdr = (struct p54_hdr *) skb->data;
-|        struct p54_eeprom_lm86 *eeprom = (struct p54_eeprom_lm86 *) hdr->data;
-|
-|        if (priv->fw_var >= 0x509) {
-|                memcpy(priv->eeprom, eeprom->v2.data,
-|                       le16_to_cpu(eeprom->v2.len));
-|        } else {
-|                memcpy(priv->eeprom, eeprom->v1.data,
-|                       le16_to_cpu(eeprom->v1.len));
-|        }
-| [...]
+Test steps:
 
-The eeprom->v{1,2}.len is set by the driver in p54_download_eeprom().
-The device is supposed to provide the same length back to the driver.
-But yes, it's possible (like shown in the report) to alter the value
-to something that causes a crash/panic due to overrun.
+1.Test commands, either can reproduce the hang for PCIe, SDIO and SNOC.
+echo soft > /sys/kernel/debug/ieee80211/phy0/ath10k/simulate_fw_crash;sleep 0.05;ifconfig wlan0 down
+echo soft > /sys/kernel/debug/ieee80211/phy0/ath10k/simulate_fw_crash;rmmod ath10k_sdio
+echo hw-restart > /sys/kernel/debug/ieee80211/phy0/ath10k/simulate_fw_crash;rmmod ath10k_pci
 
-This patch addresses the issue by adding the size to the common device
-context, so p54_rx_eeprom_readback no longer relies on possibly tampered
-values... That said, it also checks if the "firmware" altered the value
-and no longer copies them.
+2. dmesg:
+[ 5622.548630] ath10k_sdio mmc1:0001:1: simulating soft firmware crash
+[ 5622.655995] ieee80211 phy0: Hardware restart was requested
+[ 5776.355164] INFO: task shill:1572 blocked for more than 122 seconds.
+[ 5776.355687] INFO: task kworker/1:2:24437 blocked for more than 122 seconds.
+[ 5776.359812] Kernel panic - not syncing: hung_task: blocked tasks
+[ 5776.359836] CPU: 1 PID: 55 Comm: khungtaskd Tainted: G        W         4.19.86 #137
+[ 5776.359846] Hardware name: MediaTek krane sku176 board (DT)
+[ 5776.359855] Call trace:
+[ 5776.359868]  dump_backtrace+0x0/0x170
+[ 5776.359881]  show_stack+0x20/0x2c
+[ 5776.359896]  dump_stack+0xd4/0x10c
+[ 5776.359916]  panic+0x12c/0x29c
+[ 5776.359937]  hung_task_panic+0x0/0x50
+[ 5776.359953]  kthread+0x120/0x130
+[ 5776.359965]  ret_from_fork+0x10/0x18
+[ 5776.359986] SMP: stopping secondary CPUs
+[ 5776.360012] Kernel Offset: 0x141ea00000 from 0xffffff8008000000
+[ 5776.360026] CPU features: 0x0,2188200c
+[ 5776.360035] Memory Limit: none
 
-The one, small saving grace is: Before the driver tries to read the eeprom,
-it needs to upload >a< firmware. the vendor firmware has a proprietary
-license and as a reason, it is not present on most distributions by
-default.
+command "ifconfig wlan0 down" or "rmmod ath10k_sdio" will be blocked
+callstack of ifconfig:
+[<0>] __switch_to+0x120/0x13c
+[<0>] msleep+0x28/0x38
+[<0>] ath10k_sdio_hif_stop+0x24c/0x294 [ath10k_sdio]
+[<0>] ath10k_core_stop+0x50/0x78 [ath10k_core]
+[<0>] ath10k_halt+0x120/0x178 [ath10k_core]
+[<0>] ath10k_stop+0x4c/0x8c [ath10k_core]
+[<0>] drv_stop+0xe0/0x1e4 [mac80211]
+[<0>] ieee80211_stop_device+0x48/0x54 [mac80211]
+[<0>] ieee80211_do_stop+0x678/0x6f8 [mac80211]
+[<0>] ieee80211_stop+0x20/0x30 [mac80211]
+[<0>] __dev_close_many+0xb8/0x11c
+[<0>] __dev_change_flags+0xe0/0x1d0
+[<0>] dev_change_flags+0x30/0x6c
+[<0>] devinet_ioctl+0x370/0x564
+[<0>] inet_ioctl+0xdc/0x304
+[<0>] sock_do_ioctl+0x50/0x288
+[<0>] compat_sock_ioctl+0x1b4/0x1aac
+[<0>] __se_compat_sys_ioctl+0x100/0x26fc
+[<0>] __arm64_compat_sys_ioctl+0x20/0x2c
+[<0>] el0_svc_common+0xa4/0x154
+[<0>] el0_svc_compat_handler+0x2c/0x38
+[<0>] el0_svc_compat+0x8/0x18
+[<0>] 0xffffffffffffffff
 
-Cc: <stable@kernel.org>
-Reported-by: Robert Morris <rtm@mit.edu>
-Closes: https://lore.kernel.org/linux-wireless/28782.1747258414@localhost/
-Fixes: 7cb770729ba8 ("p54: move eeprom code into common library")
-Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
-Link: https://patch.msgid.link/20250516184107.47794-1-chunkeey@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+callstack of rmmod:
+[<0>] __switch_to+0x120/0x13c
+[<0>] msleep+0x28/0x38
+[<0>] ath10k_sdio_hif_stop+0x294/0x31c [ath10k_sdio]
+[<0>] ath10k_core_stop+0x50/0x78 [ath10k_core]
+[<0>] ath10k_halt+0x120/0x178 [ath10k_core]
+[<0>] ath10k_stop+0x4c/0x8c [ath10k_core]
+[<0>] drv_stop+0xe0/0x1e4 [mac80211]
+[<0>] ieee80211_stop_device+0x48/0x54 [mac80211]
+[<0>] ieee80211_do_stop+0x678/0x6f8 [mac80211]
+[<0>] ieee80211_stop+0x20/0x30 [mac80211]
+[<0>] __dev_close_many+0xb8/0x11c
+[<0>] dev_close_many+0x70/0x100
+[<0>] dev_close+0x4c/0x80
+[<0>] cfg80211_shutdown_all_interfaces+0x50/0xcc [cfg80211]
+[<0>] ieee80211_remove_interfaces+0x58/0x1a0 [mac80211]
+[<0>] ieee80211_unregister_hw+0x40/0x100 [mac80211]
+[<0>] ath10k_mac_unregister+0x1c/0x44 [ath10k_core]
+[<0>] ath10k_core_unregister+0x38/0x7c [ath10k_core]
+[<0>] ath10k_sdio_remove+0x8c/0xd0 [ath10k_sdio]
+[<0>] sdio_bus_remove+0x48/0x108
+[<0>] device_release_driver_internal+0x138/0x1ec
+[<0>] driver_detach+0x6c/0xa8
+[<0>] bus_remove_driver+0x78/0xa8
+[<0>] driver_unregister+0x30/0x50
+[<0>] sdio_unregister_driver+0x28/0x34
+[<0>] cleanup_module+0x14/0x6bc [ath10k_sdio]
+[<0>] __arm64_sys_delete_module+0x1e0/0x22c
+[<0>] el0_svc_common+0xa4/0x154
+[<0>] el0_svc_compat_handler+0x2c/0x38
+[<0>] el0_svc_compat+0x8/0x18
+[<0>] 0xffffffffffffffff
+
+SNOC:
+[  647.156863] Call trace:
+[  647.162166] [<ffffff80080855a4>] __switch_to+0x120/0x13c
+[  647.164512] [<ffffff800899d8b8>] __schedule+0x5ec/0x798
+[  647.170062] [<ffffff800899dad8>] schedule+0x74/0x94
+[  647.175050] [<ffffff80089a0848>] schedule_timeout+0x314/0x42c
+[  647.179874] [<ffffff80089a0a14>] schedule_timeout_uninterruptible+0x34/0x40
+[  647.185780] [<ffffff80082a494>] msleep+0x28/0x38
+[  647.192546] [<ffffff800117ec4c>] ath10k_snoc_hif_stop+0x4c/0x1e0 [ath10k_snoc]
+[  647.197439] [<ffffff80010dfbd8>] ath10k_core_stop+0x50/0x7c [ath10k_core]
+[  647.204652] [<ffffff80010c8f48>] ath10k_halt+0x114/0x16c [ath10k_core]
+[  647.211420] [<ffffff80010cad68>] ath10k_stop+0x4c/0x88 [ath10k_core]
+[  647.217865] [<ffffff8000fdbf54>] drv_stop+0x110/0x244 [mac80211]
+[  647.224367] [<ffffff80010147ac>] ieee80211_stop_device+0x48/0x54 [mac80211]
+[  647.230359] [<ffffff8000ff3eec>] ieee80211_do_stop+0x6a4/0x73c [mac80211]
+[  647.237033] [<ffffff8000ff4500>] ieee80211_stop+0x20/0x30 [mac80211]
+[  647.243942] [<ffffff80087e39b8>] __dev_close_many+0xa0/0xfc
+[  647.250435] [<ffffff80087e3888>] dev_close_many+0x70/0x100
+[  647.255651] [<ffffff80087e3a60>] dev_close+0x4c/0x80
+[  647.261244] [<ffffff8000f1ba54>] cfg80211_shutdown_all_interfaces+0x44/0xcc [cfg80211]
+[  647.266383] [<ffffff8000ff3fdc>] ieee80211_remove_interfaces+0x58/0x1b4 [mac80211]
+[  647.274128] [<ffffff8000fda540>] ieee80211_unregister_hw+0x50/0x120 [mac80211]
+[  647.281659] [<ffffff80010ca314>] ath10k_mac_unregister+0x1c/0x44 [ath10k_core]
+[  647.288839] [<ffffff80010dfc94>] ath10k_core_unregister+0x48/0x90 [ath10k_core]
+[  647.296027] [<ffffff800117e598>] ath10k_snoc_remove+0x5c/0x150 [ath10k_snoc]
+[  647.303229] [<ffffff80085625fc>] platform_drv_remove+0x28/0x50
+[  647.310517] [<ffffff80085601a4>] device_release_driver_internal+0x114/0x1b8
+[  647.316257] [<ffffff80085602e4>] driver_detach+0x6c/0xa8
+[  647.323021] [<ffffff800855e5b8>] bus_remove_driver+0x78/0xa8
+[  647.328571] [<ffffff800856107c>] driver_unregister+0x30/0x50
+[  647.334213] [<ffffff8008562674>] platform_driver_unregister+0x1c/0x28
+[  647.339876] [<ffffff800117fefc>] cleanup_module+0x1c/0x120 [ath10k_snoc]
+[  647.346196] [<ffffff8008143ab8>] SyS_delete_module+0x1dc/0x22c
+
+PCIe:
+[  615.392770] rmmod           D    0  3523   3458 0x00000080
+[  615.392777] Call Trace:
+[  615.392784]  __schedule+0x617/0x7d3
+[  615.392791]  ? __mod_timer+0x263/0x35c
+[  615.392797]  schedule+0x62/0x72
+[  615.392803]  schedule_timeout+0x8d/0xf3
+[  615.392809]  ? run_local_timers+0x6b/0x6b
+[  615.392814]  msleep+0x1b/0x22
+[  615.392824]  ath10k_pci_hif_stop+0x68/0xd6 [ath10k_pci]
+[  615.392844]  ath10k_core_stop+0x44/0x67 [ath10k_core]
+[  615.392859]  ath10k_halt+0x102/0x153 [ath10k_core]
+[  615.392873]  ath10k_stop+0x38/0x75 [ath10k_core]
+[  615.392893]  drv_stop+0x9a/0x13c [mac80211]
+[  615.392915]  ieee80211_do_stop+0x772/0x7cd [mac80211]
+[  615.392937]  ieee80211_stop+0x1a/0x1e [mac80211]
+[  615.392945]  __dev_close_many+0x9e/0xf0
+[  615.392952]  dev_close_many+0x62/0xe8
+[  615.392958]  dev_close+0x54/0x7d
+[  615.392975]  cfg80211_shutdown_all_interfaces+0x6e/0xa5 [cfg80211]
+[  615.393021]  ieee80211_remove_interfaces+0x52/0x1aa [mac80211]
+[  615.393049]  ieee80211_unregister_hw+0x54/0x136 [mac80211]
+[  615.393068]  ath10k_mac_unregister+0x19/0x4a [ath10k_core]
+[  615.393091]  ath10k_core_unregister+0x39/0x7e [ath10k_core]
+[  615.393104]  ath10k_pci_remove+0x3d/0x7f [ath10k_pci]
+[  615.393117]  pci_device_remove+0x41/0xa6
+[  615.393129]  device_release_driver_internal+0x123/0x1ec
+[  615.393140]  driver_detach+0x60/0x90
+[  615.393152]  bus_remove_driver+0x72/0x9f
+[  615.393164]  pci_unregister_driver+0x1e/0x87
+[  615.393177]  SyS_delete_module+0x1d7/0x277
+[  615.393188]  do_syscall_64+0x6b/0xf7
+[  615.393199]  entry_SYSCALL_64_after_hwframe+0x41/0xa6
+
+The test command run simulate_fw_crash firstly and it call into
+ath10k_sdio_hif_stop from ath10k_core_restart, then napi_disable
+is called and bit NAPI_STATE_SCHED is set. After that, function
+ath10k_sdio_hif_stop is called again from ath10k_stop by command
+"ifconfig wlan0 down" or "rmmod ath10k_sdio", then command blocked.
+
+It is blocked by napi_synchronize, napi_disable will set bit with
+NAPI_STATE_SCHED, and then napi_synchronize will enter dead loop
+becuase bit NAPI_STATE_SCHED is set by napi_disable.
+
+function of napi_synchronize
+static inline void napi_synchronize(const struct napi_struct *n)
+{
+	if (IS_ENABLED(CONFIG_SMP))
+		while (test_bit(NAPI_STATE_SCHED, &n->state))
+			msleep(1);
+	else
+		barrier();
+}
+
+function of napi_disable
+void napi_disable(struct napi_struct *n)
+{
+	might_sleep();
+	set_bit(NAPI_STATE_DISABLE, &n->state);
+
+	while (test_and_set_bit(NAPI_STATE_SCHED, &n->state))
+		msleep(1);
+	while (test_and_set_bit(NAPI_STATE_NPSVC, &n->state))
+		msleep(1);
+
+	hrtimer_cancel(&n->timer);
+
+	clear_bit(NAPI_STATE_DISABLE, &n->state);
+}
+
+Add flag for it avoid the hang and crash.
+
+Tested-on: QCA6174 hw3.2 SDIO WLAN.RMH.4.4.1-00049
+Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00110-QCARMSWP-1
+Tested-on: WCN3990 hw1.0 SNOC hw1.0 WLAN.HL.3.1-01307.1-QCAHLSWMTPL-2
+
+Signed-off-by: Wen Gong <wgong@codeaurora.org>
+Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
+Link: https://lore.kernel.org/r/1598617348-2325-1-git-send-email-wgong@codeaurora.org
+Stable-dep-of: 1650d32b92b0 ("ath10k: snoc: fix unbalanced IRQ enable in crash recovery")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intersil/p54/fwio.c |    2 ++
- drivers/net/wireless/intersil/p54/p54.h  |    1 +
- drivers/net/wireless/intersil/p54/txrx.c |   13 +++++++++----
- 3 files changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath10k/ahb.c  |  5 ++---
+ drivers/net/wireless/ath/ath10k/core.c | 25 +++++++++++++++++++++++++
+ drivers/net/wireless/ath/ath10k/core.h |  5 +++++
+ drivers/net/wireless/ath/ath10k/pci.c  |  7 ++++---
+ drivers/net/wireless/ath/ath10k/sdio.c |  5 ++---
+ drivers/net/wireless/ath/ath10k/snoc.c |  6 +++---
+ 6 files changed, 41 insertions(+), 12 deletions(-)
 
---- a/drivers/net/wireless/intersil/p54/fwio.c
-+++ b/drivers/net/wireless/intersil/p54/fwio.c
-@@ -231,6 +231,7 @@ int p54_download_eeprom(struct p54_commo
+diff --git a/drivers/net/wireless/ath/ath10k/ahb.c b/drivers/net/wireless/ath/ath10k/ahb.c
+index 05a61975c83f4..869524852fbaa 100644
+--- a/drivers/net/wireless/ath/ath10k/ahb.c
++++ b/drivers/net/wireless/ath/ath10k/ahb.c
+@@ -626,7 +626,7 @@ static int ath10k_ahb_hif_start(struct ath10k *ar)
+ {
+ 	ath10k_dbg(ar, ATH10K_DBG_BOOT, "boot ahb hif start\n");
  
- 	mutex_lock(&priv->eeprom_mutex);
- 	priv->eeprom = buf;
-+	priv->eeprom_slice_size = len;
- 	eeprom_hdr = skb_put(skb, eeprom_hdr_size + len);
+-	napi_enable(&ar->napi);
++	ath10k_core_napi_enable(ar);
+ 	ath10k_ce_enable_interrupts(ar);
+ 	ath10k_pci_enable_legacy_irq(ar);
  
- 	if (priv->fw_var < 0x509) {
-@@ -253,6 +254,7 @@ int p54_download_eeprom(struct p54_commo
- 		ret = -EBUSY;
- 	}
- 	priv->eeprom = NULL;
-+	priv->eeprom_slice_size = 0;
- 	mutex_unlock(&priv->eeprom_mutex);
- 	return ret;
+@@ -644,8 +644,7 @@ static void ath10k_ahb_hif_stop(struct ath10k *ar)
+ 	ath10k_ahb_irq_disable(ar);
+ 	synchronize_irq(ar_ahb->irq);
+ 
+-	napi_synchronize(&ar->napi);
+-	napi_disable(&ar->napi);
++	ath10k_core_napi_sync_disable(ar);
+ 
+ 	ath10k_pci_flush(ar);
  }
---- a/drivers/net/wireless/intersil/p54/p54.h
-+++ b/drivers/net/wireless/intersil/p54/p54.h
-@@ -258,6 +258,7 @@ struct p54_common {
+diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
+index 8ce5fbfcee972..a2a52c6276729 100644
+--- a/drivers/net/wireless/ath/ath10k/core.c
++++ b/drivers/net/wireless/ath/ath10k/core.c
+@@ -2303,6 +2303,31 @@ void ath10k_core_start_recovery(struct ath10k *ar)
+ }
+ EXPORT_SYMBOL(ath10k_core_start_recovery);
  
- 	/* eeprom handling */
- 	void *eeprom;
-+	size_t eeprom_slice_size;
- 	struct completion eeprom_comp;
- 	struct mutex eeprom_mutex;
++void ath10k_core_napi_enable(struct ath10k *ar)
++{
++	lockdep_assert_held(&ar->conf_mutex);
++
++	if (test_bit(ATH10K_FLAG_NAPI_ENABLED, &ar->dev_flags))
++		return;
++
++	napi_enable(&ar->napi);
++	set_bit(ATH10K_FLAG_NAPI_ENABLED, &ar->dev_flags);
++}
++EXPORT_SYMBOL(ath10k_core_napi_enable);
++
++void ath10k_core_napi_sync_disable(struct ath10k *ar)
++{
++	lockdep_assert_held(&ar->conf_mutex);
++
++	if (!test_bit(ATH10K_FLAG_NAPI_ENABLED, &ar->dev_flags))
++		return;
++
++	napi_synchronize(&ar->napi);
++	napi_disable(&ar->napi);
++	clear_bit(ATH10K_FLAG_NAPI_ENABLED, &ar->dev_flags);
++}
++EXPORT_SYMBOL(ath10k_core_napi_sync_disable);
++
+ static void ath10k_core_restart(struct work_struct *work)
+ {
+ 	struct ath10k *ar = container_of(work, struct ath10k, restart_work);
+diff --git a/drivers/net/wireless/ath/ath10k/core.h b/drivers/net/wireless/ath/ath10k/core.h
+index b471c0ccf006b..30c01f18b3d2d 100644
+--- a/drivers/net/wireless/ath/ath10k/core.h
++++ b/drivers/net/wireless/ath/ath10k/core.h
+@@ -860,6 +860,9 @@ enum ath10k_dev_flags {
+ 
+ 	/* Indicates that ath10k device is during recovery process and not complete */
+ 	ATH10K_FLAG_RESTARTING,
++
++	/* protected by conf_mutex */
++	ATH10K_FLAG_NAPI_ENABLED,
  };
---- a/drivers/net/wireless/intersil/p54/txrx.c
-+++ b/drivers/net/wireless/intersil/p54/txrx.c
-@@ -496,14 +496,19 @@ static void p54_rx_eeprom_readback(struc
- 		return ;
  
- 	if (priv->fw_var >= 0x509) {
--		memcpy(priv->eeprom, eeprom->v2.data,
--		       le16_to_cpu(eeprom->v2.len));
-+		if (le16_to_cpu(eeprom->v2.len) != priv->eeprom_slice_size)
-+			return;
-+
-+		memcpy(priv->eeprom, eeprom->v2.data, priv->eeprom_slice_size);
- 	} else {
--		memcpy(priv->eeprom, eeprom->v1.data,
--		       le16_to_cpu(eeprom->v1.len));
-+		if (le16_to_cpu(eeprom->v1.len) != priv->eeprom_slice_size)
-+			return;
-+
-+		memcpy(priv->eeprom, eeprom->v1.data, priv->eeprom_slice_size);
- 	}
+ enum ath10k_cal_mode {
+@@ -1300,6 +1303,8 @@ static inline bool ath10k_peer_stats_enabled(struct ath10k *ar)
  
- 	priv->eeprom = NULL;
-+	priv->eeprom_slice_size = 0;
- 	tmp = p54_find_and_unlink_skb(priv, hdr->req_id);
- 	dev_kfree_skb_any(tmp);
- 	complete(&priv->eeprom_comp);
+ extern unsigned long ath10k_coredump_mask;
+ 
++void ath10k_core_napi_sync_disable(struct ath10k *ar);
++void ath10k_core_napi_enable(struct ath10k *ar);
+ struct ath10k *ath10k_core_create(size_t priv_size, struct device *dev,
+ 				  enum ath10k_bus bus,
+ 				  enum ath10k_hw_rev hw_rev,
+diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
+index 83ef0517f0991..24ae59c572066 100644
+--- a/drivers/net/wireless/ath/ath10k/pci.c
++++ b/drivers/net/wireless/ath/ath10k/pci.c
+@@ -1958,7 +1958,7 @@ static int ath10k_pci_hif_start(struct ath10k *ar)
+ 
+ 	ath10k_dbg(ar, ATH10K_DBG_BOOT, "boot hif start\n");
+ 
+-	napi_enable(&ar->napi);
++	ath10k_core_napi_enable(ar);
+ 
+ 	ath10k_pci_irq_enable(ar);
+ 	ath10k_pci_rx_post(ar);
+@@ -2076,8 +2076,9 @@ static void ath10k_pci_hif_stop(struct ath10k *ar)
+ 
+ 	ath10k_pci_irq_disable(ar);
+ 	ath10k_pci_irq_sync(ar);
+-	napi_synchronize(&ar->napi);
+-	napi_disable(&ar->napi);
++
++	ath10k_core_napi_sync_disable(ar);
++
+ 	cancel_work_sync(&ar_pci->dump_work);
+ 
+ 	/* Most likely the device has HTT Rx ring configured. The only way to
+diff --git a/drivers/net/wireless/ath/ath10k/sdio.c b/drivers/net/wireless/ath/ath10k/sdio.c
+index 2ccbb6b4f1b5b..7cb1bc8d6e01c 100644
+--- a/drivers/net/wireless/ath/ath10k/sdio.c
++++ b/drivers/net/wireless/ath/ath10k/sdio.c
+@@ -1863,7 +1863,7 @@ static int ath10k_sdio_hif_start(struct ath10k *ar)
+ 	struct ath10k_sdio *ar_sdio = ath10k_sdio_priv(ar);
+ 	int ret;
+ 
+-	napi_enable(&ar->napi);
++	ath10k_core_napi_enable(ar);
+ 
+ 	/* Sleep 20 ms before HIF interrupts are disabled.
+ 	 * This will give target plenty of time to process the BMI done
+@@ -1990,8 +1990,7 @@ static void ath10k_sdio_hif_stop(struct ath10k *ar)
+ 
+ 	spin_unlock_bh(&ar_sdio->wr_async_lock);
+ 
+-	napi_synchronize(&ar->napi);
+-	napi_disable(&ar->napi);
++	ath10k_core_napi_sync_disable(ar);
+ }
+ 
+ #ifdef CONFIG_PM
+diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+index ee5b16d79f14f..513794099f03f 100644
+--- a/drivers/net/wireless/ath/ath10k/snoc.c
++++ b/drivers/net/wireless/ath/ath10k/snoc.c
+@@ -923,8 +923,7 @@ static void ath10k_snoc_hif_stop(struct ath10k *ar)
+ 	if (!test_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags))
+ 		ath10k_snoc_irq_disable(ar);
+ 
+-	napi_synchronize(&ar->napi);
+-	napi_disable(&ar->napi);
++	ath10k_core_napi_sync_disable(ar);
+ 	ath10k_snoc_buffer_cleanup(ar);
+ 	ath10k_dbg(ar, ATH10K_DBG_BOOT, "boot hif stop\n");
+ }
+@@ -934,7 +933,8 @@ static int ath10k_snoc_hif_start(struct ath10k *ar)
+ 	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
+ 
+ 	bitmap_clear(ar_snoc->pending_ce_irqs, 0, CE_COUNT_MAX);
+-	napi_enable(&ar->napi);
++
++	ath10k_core_napi_enable(ar);
+ 	ath10k_snoc_irq_enable(ar);
+ 	ath10k_snoc_rx_post(ar);
+ 
+-- 
+2.39.5
+
 
 
