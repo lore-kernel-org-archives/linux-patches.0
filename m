@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA5E221FA4;
-	Mon, 23 Jun 2025 21:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A0521CA07;
+	Mon, 23 Jun 2025 21:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713127; cv=none; b=sNQ9Xd9JkXzw9eNJGqYzu1Ci2Ox28JWr92KqpJEolZBRD5cKvyAYgkOx9uHLJiA39vniyFhHydpJ9F0IZczMfDy8oYLFhic2n8PhJETqOVsstFWwmrmwZpoAK9HczO/rl6Cz0ahEmDKW6lW82/JqvlqejealUYUwUcORNRbZ05Y=
+	t=1750713128; cv=none; b=OHe4VGB5UGn4lqeoTBX727NjKflego+XoAyNJzkYQwOm6E4IdUUeB2J7GOens36K/XwWBsTEFQ1iBrF5qMcJCuzNStv05UgdHLz6RoCBUHWEDTbmi/e2oQt3No5W0DZbiN5Qv7/pgChLWogI9edgkf2rj+sr1Jl8bPpqdbvjmtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713127; c=relaxed/simple;
-	bh=QHg8kQkIB6V1G1jGy0BxJERJXf03nX4QOa/nv5CuqJM=;
+	s=arc-20240116; t=1750713128; c=relaxed/simple;
+	bh=fYGkASWHmz4eRBMhiZAIfsay2O6EXUnmyIi2sT8crco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMcOCoQuK21JuXILws3c8RQeT6IDI1VuLhEq7NleamqiPL/FxFV0/7izlfbAeitMzx7zqLRAEf76NY0Z700o5UmOkRwRrRJwI1fBUQLGcbwus7XcsqnchOXhUNaDzjUX5pzzqGZHml6/Xqem7iKXj8msiAmUXNXnO3qhX197o/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wT6sVQdY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qofc5gVBIQH9kcJqzUPcgqbxYLYtxK9REeijLlWrS6P+n+V5viJcPbd9/SpKu9VEiPrvk4LCjAyIbpalJ7cbTgGhAIRa+fPHBvja9zrWzgqaJzzxQ1McHK8YlCn8LHWR76rNvsM31zB7QLQDnUpAvn1oc05EcW0A12QILPLxGrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keAmi02p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wT6sVQdY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE48C4CEEA;
-	Mon, 23 Jun 2025 21:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keAmi02p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5227C4CEED;
+	Mon, 23 Jun 2025 21:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713125;
-	bh=QHg8kQkIB6V1G1jGy0BxJERJXf03nX4QOa/nv5CuqJM=;
+	s=korg; t=1750713128;
+	bh=fYGkASWHmz4eRBMhiZAIfsay2O6EXUnmyIi2sT8crco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wT6sVQdYGztHPZ80nnkILWXuQVrpdwn1pFd+ZNPcZXeqSn6LxdS5KdWpHzhOB2j5t
-	 ld+Dbm9Xm7lp4SEI9krE8qvy7OZQ32JT/suwwXiSvhrBMfmW4uIRjmvm55ZIlosz/U
-	 AezFfbm1tzYYtpDp9Tv0BPtYsRCayJic+Ql1gI3c=
+	b=keAmi02p6oBuoSuYgohWbceb7Sbyvlxt6mOYlfK01GbT3f2XGre/GHpWGhkm7FWLS
+	 PwE8NhOQITB7y9QcWB1e655r8S0N5ujS3OfXCGfbJZCcIdgYQ/lG5yk4rrZIJORyHy
+	 s7qQc7Hkixeq0BnWhVnv49tu0tma1xOqRYLSQ9DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Bingbu Cao <bingbu.cao@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 047/414] media: ov2740: Move pm-runtime cleanup on probe-errors to proper place
-Date: Mon, 23 Jun 2025 15:03:04 +0200
-Message-ID: <20250623130643.217483761@linuxfoundation.org>
+	Thangaraj Samynathan <thangaraj.s@microchip.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 099/508] net: lan743x: rename lan743x_reset_phy to lan743x_hw_reset_phy
+Date: Mon, 23 Jun 2025 15:02:24 +0200
+Message-ID: <20250623130647.709319965@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,49 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Thangaraj Samynathan <thangaraj.s@microchip.com>
 
-commit 81cf4f46a03a07b0b86f9d677c34ba782df7d65e upstream.
+[ Upstream commit 68927eb52d0af04863584930db06075d2610e194 ]
 
-When v4l2_subdev_init_finalize() fails no changes have been made to
-the runtime-pm device state yet, so the probe_error_media_entity_cleanup
-rollback path should not touch the runtime-pm device state.
+rename the function to lan743x_hw_reset_phy to better describe it
+operation.
 
-Instead this should be done from the probe_error_v4l2_subdev_cleanup
-rollback path. Note the pm_runtime_xxx() calls are put above
-the v4l2_subdev_cleanup() call to have the reverse call order of probe().
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Bingbu Cao <bingbu.cao@intel.com>
-Fixes: 289c25923ecd ("media: ov2740: Use sub-device active state")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 23f0703c125be ("lan743x: Add main source files for new lan743x driver")
+Signed-off-by: Thangaraj Samynathan <thangaraj.s@microchip.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250526053048.287095-2-thangaraj.s@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov2740.c |    4 ++--
+ drivers/net/ethernet/microchip/lan743x_main.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/i2c/ov2740.c
-+++ b/drivers/media/i2c/ov2740.c
-@@ -1404,12 +1404,12 @@ static int ov2740_probe(struct i2c_clien
- 	return 0;
+diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
+index fd35554191793..0f456d389e53a 100644
+--- a/drivers/net/ethernet/microchip/lan743x_main.c
++++ b/drivers/net/ethernet/microchip/lan743x_main.c
+@@ -1389,7 +1389,7 @@ static int lan743x_mac_set_mtu(struct lan743x_adapter *adapter, int new_mtu)
+ }
  
- probe_error_v4l2_subdev_cleanup:
-+	pm_runtime_disable(&client->dev);
-+	pm_runtime_set_suspended(&client->dev);
- 	v4l2_subdev_cleanup(&ov2740->sd);
+ /* PHY */
+-static int lan743x_phy_reset(struct lan743x_adapter *adapter)
++static int lan743x_hw_reset_phy(struct lan743x_adapter *adapter)
+ {
+ 	u32 data;
  
- probe_error_media_entity_cleanup:
- 	media_entity_cleanup(&ov2740->sd.entity);
--	pm_runtime_disable(&client->dev);
--	pm_runtime_set_suspended(&client->dev);
+@@ -1423,7 +1423,7 @@ static void lan743x_phy_update_flowcontrol(struct lan743x_adapter *adapter,
  
- probe_error_v4l2_ctrl_handler_free:
- 	v4l2_ctrl_handler_free(ov2740->sd.ctrl_handler);
+ static int lan743x_phy_init(struct lan743x_adapter *adapter)
+ {
+-	return lan743x_phy_reset(adapter);
++	return lan743x_hw_reset_phy(adapter);
+ }
+ 
+ static void lan743x_phy_link_status_change(struct net_device *netdev)
+-- 
+2.39.5
+
 
 
