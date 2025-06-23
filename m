@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D94924EA85;
-	Mon, 23 Jun 2025 13:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF39324DD07;
+	Mon, 23 Jun 2025 13:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684292; cv=none; b=HHVzhFubAmWbwpEtAcgHLZuJZnrlZpuh66w/B94XG8e6QUVfrDOokqk3gX9++OgR22mVBpjoyk0xD7S+uvp/aJ1Jjmxrbvwmpovb/7kJj4In44A59LDBt0QdO1+9YveY4B95DBt1cbYh4wWZgrfkMq6rVYPd2ODUCajVOo+hPXc=
+	t=1750684295; cv=none; b=phW4aLIHP2/+wzEMDrRv7YHlDHCl8plWP8bPrpfWKmi+elCzgTpvTEuM366jIwHw0qgZa0+Etif4xdRfYi3+B22nVKgKBwgW58Y9YiOfxF5N7Ynx6fLJVgZ+ABC1WcwE8AiXEj1UG1I8DKvcQTXzeYlmDHguz17hBwmK2Rw6EHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684292; c=relaxed/simple;
-	bh=MxpWJp0FIFb6H01qH2PdPCXFEjIVQcyWVpDo5AUnYhs=;
+	s=arc-20240116; t=1750684295; c=relaxed/simple;
+	bh=HZWt7ZpHkTzG1AfFNzEP52P3AMe5LOUTOXFl6nbGZSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SBRjwW+8hYLxFYu9npqC2JtQEIi+NNAEe/ZwOfZ15S8FRS3zep1kiU/Ku7xGQg26xi95x2NfeS5nvGArU303oADxBqdP7ff8qat8Ak/DEBUUK3vV1MMVecRqCxAEG2gKfhJTjheZIgjeXTSZ27aqKqQnKj6f75L7eInMg9NRl7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zr97MlXO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B1bSeyG1DCyBRw7BbNIg+nMjxKwet9IW0hERmDXwkvPGIAlzDBzgDE+dELOsTjVIofYz5D6+pzxeNa+XQO2e0mW+fsmW5NITXSRcTZ9wdPddnrbWXs7xYBGs9zeddd9X3PlxYVkIFP0Y5AMpvDg5yCCPrUnlKevkoB2rRJHIc4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bfI0fjHn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zr97MlXO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D90C4CEEA;
-	Mon, 23 Jun 2025 13:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfI0fjHn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783CDC4CEEA;
+	Mon, 23 Jun 2025 13:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684292;
-	bh=MxpWJp0FIFb6H01qH2PdPCXFEjIVQcyWVpDo5AUnYhs=;
+	s=korg; t=1750684294;
+	bh=HZWt7ZpHkTzG1AfFNzEP52P3AMe5LOUTOXFl6nbGZSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zr97MlXOJd1CgJ0nHqQOp2iJBHwFakCrn4LTdbVSxlyIkSeTfHP4q9EjbFeAsOmJd
-	 OyYi5ZRh3gQ8AhNodKXgmF5/XA9gSbLHmyA8cCXwZPmh7XtFKhGw/x4+osrnM4j9cH
-	 U3AdmhF4jC36kmkr8T01KBeCK3g5pRF6EuJ8rcZg=
+	b=bfI0fjHn21mRxQOjXLV6svu/Q87kIAbhiAPUqKciZeQWha1v9hlIeqeWnjZKjz6Gy
+	 mQRP7Mlp+7kpWZ8eH4Ze8lAC+C6tAnrENEHqpxK+DD/1T28jTNtysoO5tSQzjs8aBP
+	 vdw6qYAv2qus/lTQ9EK+2CLu7beozxVWQdGZltO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	patches@opensource.cirrus.com,
-	Jaroslav Kysela <perex@perex.cz>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.15 013/592] firmware: cs_dsp: Fix OOB memory read access in KUnit test
-Date: Mon, 23 Jun 2025 14:59:31 +0200
-Message-ID: <20250623130700.541685721@linuxfoundation.org>
+Subject: [PATCH 6.15 014/592] ASoC: meson: meson-card-utils: use of_property_present() for DT parsing
+Date: Mon, 23 Jun 2025 14:59:32 +0200
+Message-ID: <20250623130700.565600871@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -54,41 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaroslav Kysela <perex@perex.cz>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-commit fe6446215bfad11cf3b446f38b28dc7708973c25 upstream.
+commit 171eb6f71e9e3ba6a7410a1d93f3ac213f39dae2 upstream.
 
-KASAN reported out of bounds access - cs_dsp_mock_bin_add_name_or_info(),
-because the source string length was rounded up to the allocation size.
+Commit c141ecc3cecd ("of: Warn when of_property_read_bool() is used on
+non-boolean properties") added a warning when trying to parse a property
+with a value (boolean properties are defined as: absent = false, present
+without any value = true). This causes a warning from meson-card-utils.
 
-Cc: Simon Trimmer <simont@opensource.cirrus.com>
-Cc: Charles Keepax <ckeepax@opensource.cirrus.com>
-Cc: Richard Fitzgerald <rf@opensource.cirrus.com>
-Cc: patches@opensource.cirrus.com
+meson-card-utils needs to know about the existence of the
+"audio-routing" and/or "audio-widgets" properties in order to properly
+parse them. Switch to of_property_present() in order to silence the
+following warning messages during boot:
+  OF: /sound: Read of boolean property 'audio-routing' with a value.
+  OF: /sound: Read of boolean property 'audio-widgets' with a value.
+
+Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
+Tested-by: Christian Hewitt <christianshewitt@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jaroslav Kysela <perex@perex.cz>
-Link: https://patch.msgid.link/20250523102102.1177151-1-perex@perex.cz
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20250419213448.59647-1-martin.blumenstingl@googlemail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/cirrus/test/cs_dsp_mock_bin.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/meson/meson-card-utils.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/firmware/cirrus/test/cs_dsp_mock_bin.c
-+++ b/drivers/firmware/cirrus/test/cs_dsp_mock_bin.c
-@@ -96,10 +96,11 @@ static void cs_dsp_mock_bin_add_name_or_
+--- a/sound/soc/meson/meson-card-utils.c
++++ b/sound/soc/meson/meson-card-utils.c
+@@ -231,7 +231,7 @@ static int meson_card_parse_of_optional(
+ 						    const char *p))
+ {
+ 	/* If property is not provided, don't fail ... */
+-	if (!of_property_read_bool(card->dev->of_node, propname))
++	if (!of_property_present(card->dev->of_node, propname))
+ 		return 0;
  
- 	if (info_len % 4) {
- 		/* Create a padded string with length a multiple of 4 */
-+		size_t copy_len = info_len;
- 		info_len = round_up(info_len, 4);
- 		tmp = kunit_kzalloc(builder->test_priv->test, info_len, GFP_KERNEL);
- 		KUNIT_ASSERT_NOT_ERR_OR_NULL(builder->test_priv->test, tmp);
--		memcpy(tmp, info, info_len);
-+		memcpy(tmp, info, copy_len);
- 		info = tmp;
- 	}
- 
+ 	/* ... but do fail if it is provided and the parsing fails */
 
 
