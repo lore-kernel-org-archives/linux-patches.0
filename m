@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B26313A265;
-	Mon, 23 Jun 2025 13:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD03424E019;
+	Mon, 23 Jun 2025 13:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684596; cv=none; b=BSEqjUzD/wrAK4CKzPDUXA3WHSrnafnM2IypT/k4QMaAOsCSrdFM4A8YZwBMbHd1WiE+7eIx7fiQgDJpuSBdPDBY0oYiSkFdn16N8lOxN8TV3198ZON0pCdqYkKFAyW64nKS/EXl93SmmYeAz0HxAtWJp7XwqHV/g0jyibZS4ak=
+	t=1750684599; cv=none; b=PX6/e0Q/WNdRB1u3CvJuzdBKwdMW19m034L1QvcFXKCgbtgCVyy8tCMZh9ElwbGaaNGWtCE1O5irYOXn4NLDOzB7fQnyFExlScz24/8ZNJY7EoSH4YJdqd6RsPA3D3T/wVPypSxpyZVsM4kf4LU2a2JID0Ztu1ksa/hhSteRDjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684596; c=relaxed/simple;
-	bh=dy7YIIrLYlJUlgykp1AXC5PSrNCZUWsUxCtkqsNUeXU=;
+	s=arc-20240116; t=1750684599; c=relaxed/simple;
+	bh=iTTkp4o6wdRFJm9ExDeDnhgdufGp2/0ZBBvrRZhpCuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cbeIlBbmMVQGgjbcp+RdQJ4pgVhb5ZcofRbPP3IgaSKPOOUG4rg64kBSmMeehsfuCa34/Ogx0fqdh/x/uEIUgFK3QY5Fh96Ja3Cl6gJNtxwHOxdk13dDLR06t38ejnUrA+jrhQVGqdS5ukCC3qWAZy+foxw5q6/t0/miuHR0i2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtsDVfNS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b8x0Jwq55u79kr6vGw6DELFvSm/tl3PnpmG5oAKLgEOHRdG75GQ3lk6jMR62FWyLaLFkezOF0zYzrLBoliktlVRHaNWfUhy1LceBfbUl5N2jqNVzPIF7E2k9itsV8SEGQYmFRRClZFq+MylIeJG6de4ZU7pjQTuj6f+tCFzzUOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCQvH1yk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtsDVfNS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD209C4CEF0;
-	Mon, 23 Jun 2025 13:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCQvH1yk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A07C4CEEA;
+	Mon, 23 Jun 2025 13:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684596;
-	bh=dy7YIIrLYlJUlgykp1AXC5PSrNCZUWsUxCtkqsNUeXU=;
+	s=korg; t=1750684598;
+	bh=iTTkp4o6wdRFJm9ExDeDnhgdufGp2/0ZBBvrRZhpCuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KtsDVfNS7PQW5taCpcOpilESevz11ivUn7efEwWKY2nJBK2y69rHRKUwPb8Z0EEa0
-	 DFS27ts04f8WAk6MZ3h5bWV9aM3KLyE568DwnTx5HkOQTtCbZulroIvVuBcZjSnDQn
-	 eZahGwx2hk+5dBU66CQ9939zQDxSIvocED5uA3So=
+	b=GCQvH1ykFf/58Fbqo4MZVzcYr9PiQzY5WyEPvnibhFYDcic6myOHt22D09K5VWe7G
+	 wIv2XOLappRXaEcewl1oM9+Yz7cUAJ6JOZTOqKFtA6+lJXZN60F6XYZPJ4nP4vW5uY
+	 gJ4C0N0bPVg5HB+JIpDJyTeXIcoKnvOotm1Lms1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.15 128/592] net/sched: fix use-after-free in taprio_dev_notifier
-Date: Mon, 23 Jun 2025 15:01:26 +0200
-Message-ID: <20250623130703.315941024@linuxfoundation.org>
+Subject: [PATCH 6.15 129/592] net: ftgmac100: select FIXED_PHY
+Date: Mon, 23 Jun 2025 15:01:27 +0200
+Message-ID: <20250623130703.340440423@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -46,54 +44,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit b160766e26d4e2e2d6fe2294e0b02f92baefcec5 upstream.
+commit ae409629e022fbebbc6d31a1bfeccdbbeee20fd6 upstream.
 
-Since taprio’s taprio_dev_notifier() isn’t protected by an
-RCU read-side critical section, a race with advance_sched()
-can lead to a use-after-free.
+Depending on e.g. DT configuration this driver uses a fixed link.
+So we shouldn't rely on the user to enable FIXED_PHY, select it in
+Kconfig instead. We may end up with a non-functional driver otherwise.
 
-Adding rcu_read_lock() inside taprio_dev_notifier() prevents this.
-
-Fixes: fed87cc6718a ("net/sched: taprio: automatically calculate queueMaxSDU based on TC gate durations")
+Fixes: 38561ded50d0 ("net: ftgmac100: support fixed link")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/aEzIYYxt0is9upYG@v4bel-B760M-AORUS-ELITE-AX
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/476bb33b-5584-40f0-826a-7294980f2895@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_taprio.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/faraday/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -1328,13 +1328,15 @@ static int taprio_dev_notifier(struct no
- 
- 		stab = rtnl_dereference(q->root->stab);
- 
--		oper = rtnl_dereference(q->oper_sched);
-+		rcu_read_lock();
-+		oper = rcu_dereference(q->oper_sched);
- 		if (oper)
- 			taprio_update_queue_max_sdu(q, oper, stab);
- 
--		admin = rtnl_dereference(q->admin_sched);
-+		admin = rcu_dereference(q->admin_sched);
- 		if (admin)
- 			taprio_update_queue_max_sdu(q, admin, stab);
-+		rcu_read_unlock();
- 
- 		break;
- 	}
+--- a/drivers/net/ethernet/faraday/Kconfig
++++ b/drivers/net/ethernet/faraday/Kconfig
+@@ -31,6 +31,7 @@ config FTGMAC100
+ 	depends on ARM || COMPILE_TEST
+ 	depends on !64BIT || BROKEN
+ 	select PHYLIB
++	select FIXED_PHY
+ 	select MDIO_ASPEED if MACH_ASPEED_G6
+ 	select CRC32
+ 	help
 
 
