@@ -1,49 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A36570838;
-	Mon, 23 Jun 2025 21:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE6270838;
+	Mon, 23 Jun 2025 21:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713005; cv=none; b=FpcOAdk9Eyy7UwAtlyx6nHzT7bnxj34LjhCAbzvZlJJlWabewm5eLk/U08Xxf9TCA58rvrjS4Toa6QTSq/nLWtPwzQJEhg1Shx0OjcEKg4QhHBaE8yPNA0w34jWoKXueX3yv+V1FrjHbnF8almcR//l/xgJLUIAKKXe1Fy3Jl9Q=
+	t=1750713007; cv=none; b=VmUFMieYH2kTrqPOi6vid5QoE3ebrWFf7FYoG7pDPV+5WtNeTxYp5bTSTTCwanOrg3JLbCXauNrQ2M+7VuBjdEB1hRE/0cxkLj1Kt3DeXn20iYkanEbQdqAkgt6kk+IcHwtXOa6YVwx//PkhEl5P72tYFgt7NEi4tt7pmIAYvpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713005; c=relaxed/simple;
-	bh=NlJWI5s7kNfxQcrVFPfLwbwJU/JAAsSLI1ewjvmHfGY=;
+	s=arc-20240116; t=1750713007; c=relaxed/simple;
+	bh=NFyB5FXFlGCMpQE7RPyhwc+IVyK/wRCvzfac9Mmzp/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jnBGrDTeB+P/BaZdWsG4XsDy9OTEnNZszhvLz+59Q4aOhQI03FLYbxKJPE6Om9d3ypShcmGD6DU70JVBmBROsUZBfqMJxHOu3Zk8Uxk+CHcNNl24V6wbu5BXrdP+J9tcqYGl5i/HSM/2MYa/LhvvqGYichdFlrrGeG4Z9jrJWp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDD+GFyI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=B4ItD4TvJEwtj7XWRytSk5/f3lAEhgVjfpSSPCRF0QryzTSMNzR83WtAuEKxfhzE5tjdJMqNl1i4ZOVvFuSitmWRxd/cNEW6qtyDlfgJXgxaAW+Vu4oEI862OYCaS5pzu3B5+Y/c1XIRQxcZP4qnm0wC0LisJocUhz4VjKS7P4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDkedgJF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDD+GFyI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DF7C4CEEA;
-	Mon, 23 Jun 2025 21:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDkedgJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EF3C4CEEA;
+	Mon, 23 Jun 2025 21:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713004;
-	bh=NlJWI5s7kNfxQcrVFPfLwbwJU/JAAsSLI1ewjvmHfGY=;
+	s=korg; t=1750713007;
+	bh=NFyB5FXFlGCMpQE7RPyhwc+IVyK/wRCvzfac9Mmzp/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pDD+GFyIYFk4vBfay4afZ3Y80aIcDYjaSY2D6VOAuGf8LXZxixM9NbZtwA408sHsT
-	 OZq/1LGr8wDEgWDEdyTztAIJJIrCb//M9gmEvJwgnoHlBhkr0noShVxqaIwvxCYQec
-	 UAOy7H8JbaXi+l10BwvGV70Ro0BEPSPopfBRx/GU=
+	b=CDkedgJF/Mi8fImpssQYgh5vlNzNARfyVaDVeliJdWl/empf4NF4CXdUgOU5MfyrQ
+	 PQaeECP0iSKcUgyo8TN4iJCUFY9sKj6Cjp7SIp2AlVN7ExGyi2qxXSsCQJBKQr9cP9
+	 oGVghq55A4OZURRO+sfiaDElcMHEv9PW9mgmSGGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 100/411] perf record: Fix incorrect --user-regs comments
-Date: Mon, 23 Jun 2025 15:04:04 +0200
-Message-ID: <20250623130636.014127177@linuxfoundation.org>
+Subject: [PATCH 6.15 305/592] media: rcar-vin: Fix stride setting for RAW8 formats
+Date: Mon, 23 Jun 2025 15:04:23 +0200
+Message-ID: <20250623130707.656451312@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,50 +47,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit a4a859eb6704a8aa46aa1cec5396c8d41383a26b ]
+[ Upstream commit e7376745ad5c8548e31d9ea58adfb5a847e017a4 ]
 
-The comment of "--user-regs" option is not correct, fix it.
+Earlier versions of the datasheet where unclear about the stride setting
+for RAW8 capture formats. Later datasheets clarifies that the stride
+only process in this mode for non-image data. For image data the full
+stride shall be used. Compare section "RAW: 8 Bits and Embedded 8-Bit
+Non-Image Data, User Defined 8-bit Data" vs "RAW: 8 Bits".
 
-"on interrupt," -> "in user space,"
+Remove the special case from pixel formats that carry image data and
+treat it as any other image format.
 
-Fixes: 84c417422798c897 ("perf record: Support direct --user-regs arguments")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250403060810.196028-1-dapeng1.mi@linux.intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://lore.kernel.org/r/20250402183302.140055-1-niklas.soderlund+renesas@ragnatech.se
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-record.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../media/platform/renesas/rcar-vin/rcar-dma.c   | 16 ----------------
+ 1 file changed, 16 deletions(-)
 
-diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
-index b92c26f6aa1d7..701592342d150 100644
---- a/tools/perf/builtin-record.c
-+++ b/tools/perf/builtin-record.c
-@@ -2547,7 +2547,7 @@ static struct option __record_options[] = {
- 		    "sample selected machine registers on interrupt,"
- 		    " use '-I?' to list register names", parse_intr_regs),
- 	OPT_CALLBACK_OPTARG(0, "user-regs", &record.opts.sample_user_regs, NULL, "any register",
--		    "sample selected machine registers on interrupt,"
-+		    "sample selected machine registers in user space,"
- 		    " use '--user-regs=?' to list register names", parse_user_regs),
- 	OPT_BOOLEAN(0, "running-time", &record.opts.running_time,
- 		    "Record running/enabled time of read (:S) events"),
+diff --git a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
+index e303c13e1351f..3af67c1b303d6 100644
+--- a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
++++ b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
+@@ -679,22 +679,6 @@ void rvin_crop_scale_comp(struct rvin_dev *vin)
+ 
+ 	fmt = rvin_format_from_pixel(vin, vin->format.pixelformat);
+ 	stride = vin->format.bytesperline / fmt->bpp;
+-
+-	/* For RAW8 format bpp is 1, but the hardware process RAW8
+-	 * format in 2 pixel unit hence configure VNIS_REG as stride / 2.
+-	 */
+-	switch (vin->format.pixelformat) {
+-	case V4L2_PIX_FMT_SBGGR8:
+-	case V4L2_PIX_FMT_SGBRG8:
+-	case V4L2_PIX_FMT_SGRBG8:
+-	case V4L2_PIX_FMT_SRGGB8:
+-	case V4L2_PIX_FMT_GREY:
+-		stride /= 2;
+-		break;
+-	default:
+-		break;
+-	}
+-
+ 	rvin_write(vin, stride, VNIS_REG);
+ }
+ 
 -- 
 2.39.5
 
