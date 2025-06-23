@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD63E4315A;
-	Mon, 23 Jun 2025 21:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304D44315A;
+	Mon, 23 Jun 2025 21:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714965; cv=none; b=LlrUXiqqNRYsSsaJepVSNOtOpLCW5qBQD83oXGPQ4a+mVmJHYFoCcn2pwP5Wft68hulvb3uOM24PqADlRt2yKf2RAid0eMgDWhZtZSfRCdDgk7HjOpnbN5rdcGpawO6FLwu2SLmrqAmbFNcl3PevEiiZFyRoMjHiQCKGlWvoapc=
+	t=1750714968; cv=none; b=Jo5SXgKcDf8NiCnJ6R35JZuandOGfmiNRpGNZ+FK1ammtQlZGpVvE0aGkIlD4rBimiSKmlGrJLFQzyuWRdFKBZgnb4T9uZgGcazy96AAquPpasCJptySif8bSn5DMy19aqkAPeHI+KXMuRbwIT75xYZhFyMF8hU+o9jfPZGBolA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714965; c=relaxed/simple;
-	bh=31RuLpQMZ+LtTIHTB+r/73c8kYv97lba3b1wWZJOvhY=;
+	s=arc-20240116; t=1750714968; c=relaxed/simple;
+	bh=/tUszRO6cePgpFtBQ/DdboO5cuVkKErJ9U6L2nNXinQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKAdEO67g+nXu52nM6QAoyERlJZyblTGD5tcbfApOx9Mu2P5S9Rd/HPSY1NwwenMFpzXMBSzzROVHrcLPnaZqFBhOkXqb4dVknutIAHA70eA9lcL529brV4xLnt1mMyy6H8v3omUry3dNNKAFWAiU7fdxfeBX6giF0DkjP+TyEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyA+c8GJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BXhUmm+zqeuBaeUWxs/IVUCiY4asIYXqAYW1PGsmaQ+9eeiNWCU4QHbHo7wWbH0/aU1n7Ehmyl8Cr0gtP8tXMxGFjCFp9v4J5mbNuZa5go1/eQM2TVB3v2KaEMi/8mGvIw5wgN8xlKw15MXsqbAwjjxI6a4CwQYWXJGrjAMPmto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0XkSvbt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyA+c8GJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452A0C4CEEA;
-	Mon, 23 Jun 2025 21:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0XkSvbt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B449DC4CEEA;
+	Mon, 23 Jun 2025 21:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714965;
-	bh=31RuLpQMZ+LtTIHTB+r/73c8kYv97lba3b1wWZJOvhY=;
+	s=korg; t=1750714968;
+	bh=/tUszRO6cePgpFtBQ/DdboO5cuVkKErJ9U6L2nNXinQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pyA+c8GJdQYZBhgauBPrD83csTP3aAxVQPAOPLf1Wdxl8Il+h3zdN6y0HkNxiimmE
-	 JJp/+bmNwGaI4eLglVyjc/ezsOmAJqrVK2c9vpWRSOd1baYKKeTIbXrlrmc6g+YejS
-	 PY+yD4eGf+D3r1xMtzwre8TzwRfVePWsB/JCDHzo=
+	b=p0XkSvbtxMFqOZdItImuMfI1RYqIC9XgIWYv5WCNVPJzDlSP2mfahBwhxjJ1zOjTO
+	 gw8q3OKDqptepOkPhPepgTwSCIZLZnGHwA+nezhm3u9/JDnvBEjWOTb2FCv3L2A0V4
+	 YHOMZSt8Emfci/edJ+paQPnbfv954dKlPg3TlLeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.12 147/414] Drivers: hv: Allocate interrupt and monitor pages aligned to system page boundary
-Date: Mon, 23 Jun 2025 15:04:44 +0200
-Message-ID: <20250623130645.725680505@linuxfoundation.org>
+	Ross Stutterheim <ross.stutterheim@garmin.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 5.15 220/411] ARM: 9447/1: arm/memremap: fix arch_memremap_can_ram_remap()
+Date: Mon, 23 Jun 2025 15:06:04 +0200
+Message-ID: <20250623130639.201972865@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,93 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Ross Stutterheim <ross.stutterheim@garmin.com>
 
-commit 09eea7ad0b8e973dcf5ed49902838e5d68177f8e upstream.
+commit 96e0b355883006554a0bee3697da475971d6bba8 upstream.
 
-There are use cases that interrupt and monitor pages are mapped to
-user-mode through UIO, so they need to be system page aligned. Some
-Hyper-V allocation APIs introduced earlier broke those requirements.
+arm/memremap: fix arch_memremap_can_ram_remap()
 
-Fix this by using page allocation functions directly for interrupt
-and monitor pages.
+commit 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure
+presence of linear map") added the definition of
+arch_memremap_can_ram_remap() for arm[64] specific filtering of what pages
+can be used from the linear mapping. memblock_is_map_memory() was called
+with the pfn of the address given to arch_memremap_can_ram_remap();
+however, memblock_is_map_memory() expects to be given an address for arm,
+not a pfn.
 
+This results in calls to memremap() returning a newly mapped area when
+it should return an address in the existing linear mapping.
+
+Fix this by removing the address to pfn translation and pass the
+address directly.
+
+Fixes: 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure presence of linear map")
+Signed-off-by: Ross Stutterheim <ross.stutterheim@garmin.com>
+Cc: Mike Rapoport <rppt@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: ca48739e59df ("Drivers: hv: vmbus: Move Hyper-V page allocator to arch neutral code")
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/1746492997-4599-2-git-send-email-longli@linuxonhyperv.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <1746492997-4599-2-git-send-email-longli@linuxonhyperv.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/connection.c |   23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ arch/arm/mm/ioremap.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/hv/connection.c
-+++ b/drivers/hv/connection.c
-@@ -207,10 +207,19 @@ int vmbus_connect(void)
- 	mutex_init(&vmbus_connection.channel_mutex);
- 
- 	/*
-+	 * The following Hyper-V interrupt and monitor pages can be used by
-+	 * UIO for mapping to user-space, so they should always be allocated on
-+	 * system page boundaries. The system page size must be >= the Hyper-V
-+	 * page size.
-+	 */
-+	BUILD_BUG_ON(PAGE_SIZE < HV_HYP_PAGE_SIZE);
-+
-+	/*
- 	 * Setup the vmbus event connection for channel interrupt
- 	 * abstraction stuff
- 	 */
--	vmbus_connection.int_page = hv_alloc_hyperv_zeroed_page();
-+	vmbus_connection.int_page =
-+		(void *)__get_free_page(GFP_KERNEL | __GFP_ZERO);
- 	if (vmbus_connection.int_page == NULL) {
- 		ret = -ENOMEM;
- 		goto cleanup;
-@@ -225,8 +234,8 @@ int vmbus_connect(void)
- 	 * Setup the monitor notification facility. The 1st page for
- 	 * parent->child and the 2nd page for child->parent
- 	 */
--	vmbus_connection.monitor_pages[0] = hv_alloc_hyperv_page();
--	vmbus_connection.monitor_pages[1] = hv_alloc_hyperv_page();
-+	vmbus_connection.monitor_pages[0] = (void *)__get_free_page(GFP_KERNEL);
-+	vmbus_connection.monitor_pages[1] = (void *)__get_free_page(GFP_KERNEL);
- 	if ((vmbus_connection.monitor_pages[0] == NULL) ||
- 	    (vmbus_connection.monitor_pages[1] == NULL)) {
- 		ret = -ENOMEM;
-@@ -342,21 +351,23 @@ void vmbus_disconnect(void)
- 		destroy_workqueue(vmbus_connection.work_queue);
- 
- 	if (vmbus_connection.int_page) {
--		hv_free_hyperv_page(vmbus_connection.int_page);
-+		free_page((unsigned long)vmbus_connection.int_page);
- 		vmbus_connection.int_page = NULL;
- 	}
- 
- 	if (vmbus_connection.monitor_pages[0]) {
- 		if (!set_memory_encrypted(
- 			(unsigned long)vmbus_connection.monitor_pages[0], 1))
--			hv_free_hyperv_page(vmbus_connection.monitor_pages[0]);
-+			free_page((unsigned long)
-+				vmbus_connection.monitor_pages[0]);
- 		vmbus_connection.monitor_pages[0] = NULL;
- 	}
- 
- 	if (vmbus_connection.monitor_pages[1]) {
- 		if (!set_memory_encrypted(
- 			(unsigned long)vmbus_connection.monitor_pages[1], 1))
--			hv_free_hyperv_page(vmbus_connection.monitor_pages[1]);
-+			free_page((unsigned long)
-+				vmbus_connection.monitor_pages[1]);
- 		vmbus_connection.monitor_pages[1] = NULL;
- 	}
+--- a/arch/arm/mm/ioremap.c
++++ b/arch/arm/mm/ioremap.c
+@@ -483,7 +483,5 @@ void __init early_ioremap_init(void)
+ bool arch_memremap_can_ram_remap(resource_size_t offset, size_t size,
+ 				 unsigned long flags)
+ {
+-	unsigned long pfn = PHYS_PFN(offset);
+-
+-	return memblock_is_map_memory(pfn);
++	return memblock_is_map_memory(offset);
  }
 
 
