@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C721E51FA;
-	Mon, 23 Jun 2025 21:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD631F4628;
+	Mon, 23 Jun 2025 21:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713901; cv=none; b=V76JCAKkKXuolY8WVpTDmJy7gNapqRo0mJCkL7Z2jbcoS4NWOtFbRGLA8Yqhca8eq/HLc/ndtPwkLpAw0gLoWJmA/6bdzIhxAAKMJtWNRaKpXNBa/QpvDZdjkCymdum2k1XSiYe80I9oBxFLWDM+DCopBa9JL2Yru5WsmotpRuM=
+	t=1750713903; cv=none; b=cmRsY+NXXGl/JjcfZ3Rw/83GcMjrswyiiGzUed1NDXsPfmJKI0eRt29bZBaveJ5N5YlR1LK/1hBdvR6ENKT2ixZdagO7cqVbDzkVLQZVILuX/vwGXDgTzlFNNRSUcXaoHCpHK3tc+KS4BOTNylyko3q0yu3RTZ9a0zP/HsW6pJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713901; c=relaxed/simple;
-	bh=hEjYE1Q3hgw/bT9DCpCbsehvTE2jrJxBDucCcGLLTsM=;
+	s=arc-20240116; t=1750713903; c=relaxed/simple;
+	bh=Qh/QBJ/B5Xs/CXjFvRQ2/fwXamfUsH+2JqzLnesRhTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEve+4Wc+8dnzieAzUamzVncptSFdZiCsWH1alp77FfOC9L/UoJ9x1r5g0hKyMLoLWsD8t572owYZjFKv3HCdD6i/EvTn6s7ZUwJz8PO6D5LS5yQWslmtsYxfKM4k7s2GhloRnyPC7mk0SFbireYgLhitXoUVg9VuM5qqPLt0iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIxCJ1lB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sCqT+v/Sbd40iXd12vKY1z+NoybtI8lU0fcJ3bTIyzBrQZQxahL3iLdtdawGyeOZ3cdUNQYGDmnYPZp0HsUjWQSqIQ6AWDoxAu2XlfmcvSlGQ+GqEClkN0q3/u0W15nSSvHg0kHsSrqleulM9ITsxREJRIJ79fiRbZDw/FIrpNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+Zs/5jF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIxCJ1lB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01FAC4CEEA;
-	Mon, 23 Jun 2025 21:25:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+Zs/5jF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34240C4CEED;
+	Mon, 23 Jun 2025 21:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713901;
-	bh=hEjYE1Q3hgw/bT9DCpCbsehvTE2jrJxBDucCcGLLTsM=;
+	s=korg; t=1750713903;
+	bh=Qh/QBJ/B5Xs/CXjFvRQ2/fwXamfUsH+2JqzLnesRhTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DIxCJ1lBa+oq6GnGllAMHtMFR/O6XgdqK6iSbtz9Mtjz+ql0ZE1YHwRYhmYlK/WR3
-	 vuCUaRwSOtzVz6jsH093c/avvh4XtuQjVI4ZHHartjT5TMPuox/O0c46YwDNHe0iC4
-	 9Cl7HNpPvFlwoNnuckavNgP14id7pJxKwbZjfU0M=
+	b=b+Zs/5jFJjtNXvZZOM31cW7n8ijGB7z28gWxa/XW8z5l27VBr+Ntw0M8EwZgVlCpO
+	 ZCcmIedNLo+RiIj8WJdOXVBphf6PGNnPxaA69yl3O4qTECNZHDd5UEoUXzJLOF7vsx
+	 eEtR2j3Eu3+k7Zmlf5SshZ325po3ScTa41wEMokc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Michael Walle <michael@walle.cc>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 154/411] net: mdio: C22 is now optional, EOPNOTSUPP if not provided
-Date: Mon, 23 Jun 2025 15:04:58 +0200
-Message-ID: <20250623130637.515958665@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.10 173/355] media: gspca: Add error handling for stv06xx_read_sensor()
+Date: Mon, 23 Jun 2025 15:06:14 +0200
+Message-ID: <20250623130631.909632656@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,57 +46,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Lunn <andrew@lunn.ch>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit b063b1924fd9bf0bc157cf644764dc2151d04ccc ]
+commit 398a1b33f1479af35ca915c5efc9b00d6204f8fa upstream.
 
-When performing a C22 operation, check that the bus driver actually
-provides the methods, and return -EOPNOTSUPP if not. C45 only busses
-do exist, and in future their C22 methods will be NULL.
+In hdcs_init(), the return value of stv06xx_read_sensor() needs to be
+checked. A proper implementation can be found in vv6410_dump(). Add a
+check in loop condition and propergate error code to fix this issue.
 
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Michael Walle <michael@walle.cc>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 0e629694126c ("net/mdiobus: Fix potential out-of-bounds read/write access")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4c98834addfe ("V4L/DVB (10048): gspca - stv06xx: New subdriver.")
+Cc: stable@vger.kernel.org # v2.6+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/mdio_bus.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
-index 5f89828fd9f17..c26f46c06a1b2 100644
---- a/drivers/net/phy/mdio_bus.c
-+++ b/drivers/net/phy/mdio_bus.c
-@@ -757,7 +757,10 @@ int __mdiobus_read(struct mii_bus *bus, int addr, u32 regnum)
+--- a/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
++++ b/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
+@@ -520,12 +520,13 @@ static int hdcs_init(struct sd *sd)
+ static int hdcs_dump(struct sd *sd)
+ {
+ 	u16 reg, val;
++	int err = 0;
  
- 	lockdep_assert_held_once(&bus->mdio_lock);
+ 	pr_info("Dumping sensor registers:\n");
  
--	retval = bus->read(bus, addr, regnum);
-+	if (bus->read)
-+		retval = bus->read(bus, addr, regnum);
-+	else
-+		retval = -EOPNOTSUPP;
- 
- 	trace_mdio_access(bus, 1, addr, regnum, retval, retval);
- 	mdiobus_stats_acct(&bus->stats[addr], true, retval);
-@@ -783,7 +786,10 @@ int __mdiobus_write(struct mii_bus *bus, int addr, u32 regnum, u16 val)
- 
- 	lockdep_assert_held_once(&bus->mdio_lock);
- 
--	err = bus->write(bus, addr, regnum, val);
-+	if (bus->write)
-+		err = bus->write(bus, addr, regnum, val);
-+	else
-+		err = -EOPNOTSUPP;
- 
- 	trace_mdio_access(bus, 0, addr, regnum, val, err);
- 	mdiobus_stats_acct(&bus->stats[addr], false, err);
--- 
-2.39.5
-
+-	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH; reg++) {
+-		stv06xx_read_sensor(sd, reg, &val);
++	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH && !err; reg++) {
++		err = stv06xx_read_sensor(sd, reg, &val);
+ 		pr_info("reg 0x%02x = 0x%02x\n", reg, val);
+ 	}
+-	return 0;
++	return (err < 0) ? err : 0;
+ }
 
 
