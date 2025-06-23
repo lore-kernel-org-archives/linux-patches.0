@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C07F2192EC;
-	Mon, 23 Jun 2025 22:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B820E2192EC;
+	Mon, 23 Jun 2025 22:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717499; cv=none; b=tRA59KiOQ9PyJ5MuLHzbYtdYpI+CyfNnXSbr1HjYcqZpfirmo1pcZvz0LMB+tX4jVjQpUIOSzECfgvfF+rPshILl3xtDEw8cxJWmEeOcvegsjaxUm7jC/UmempOGANqoQOl2oWJU7ZgBw6rWQ6GtVQwtJn9CmWWfI8h6MDPsPwo=
+	t=1750717501; cv=none; b=GC6VWywFC9aQvs6HHOzUD5j9XO52khMQ+Hd6frmc4zqHcszNgNNsm8WfLFWD5AqUQS+Q6KQwrz4klsLLiIdvIKS13+CZVkguF2BrQwquIZIBeb3HybcJPKQUyz8Yefdm8H1qWXhM+DX31gikTckMRneJcun+faLIpiodEN+4q4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717499; c=relaxed/simple;
-	bh=/cjzVSyt2rp4FEeyAuEIlnFm8aZPWs0c6A4EOEPE8KI=;
+	s=arc-20240116; t=1750717501; c=relaxed/simple;
+	bh=0GS3LpZmle9W6DeCO1kWnta89DeX/UdzoD7BG+uNxgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PbolrlysjFZgTjmWb9jnV8UtIXgajcNZ/hYYDFAClPoJHaM8YTiZFT/oAXIoTrlOaVWQhoTWtNuWMTJaD+mYac+yTtRVsWHKFWN3Nq7kHn2+xjlAZUqz5mVvwcwHBmZ4xH168x4mECCfXlFsl/E90Sf5Y8yrLDQ9J4SFPbCZ5oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/5/qaWa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KFhTnieUFHwFoNNId1jCT/uuYSCqJRVhN7NrOpfOTZ+ag1i8IvWnFZdnpwKE8mq+jEHhG+nSmhBc8pNRrKsD+ktkgVQwg619Zdqtq+UtkwgU3J4JrbvlczZnkNQ63TQoANfbp1QiuLzviIORR7ZTDE0XB5ygFSCaea87OZ25vao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOcQmt8e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/5/qaWa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E74C4CEEA;
-	Mon, 23 Jun 2025 22:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOcQmt8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457ABC4CEEA;
+	Mon, 23 Jun 2025 22:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717499;
-	bh=/cjzVSyt2rp4FEeyAuEIlnFm8aZPWs0c6A4EOEPE8KI=;
+	s=korg; t=1750717501;
+	bh=0GS3LpZmle9W6DeCO1kWnta89DeX/UdzoD7BG+uNxgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/5/qaWaghkaIuvn6t3NpTt5qI/gCSAiEgBSwbk1zZzbW52nJY1MuPCdhU3oo4KQk
-	 YwDGB5YMEgd6NwUkGDHgvuCbWk/DORGtaQrzovN8Udh0Vnc81eXPhgciDm8qKaz2xl
-	 /E+ikIHCNPGWOM/dvbvNqK47vGZYp5EwBItilFJA=
+	b=HOcQmt8eIdKDjwsEK2KUm25bhPBcJ6CGCTE1KtAVKC6bbNLgu/6y2nBNeIFsxfs4K
+	 FRvtolqFjT3ynGDUmF00L1nAVsn/QG6UrmzQklE1L6vtF2keUBhwD/LKCmDRxEvSSA
+	 do20VzZ4U6+yavp+S5qhQvheCHDf2rq6RZDpqnk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David.Kaplan@amd.com,
-	peterz@infradead.org,
-	pawan.kumar.gupta@linux.intel.com,
-	mingo@kernel.org,
-	brad.spengler@opensrcsec.com,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Breno Leitao <leitao@debian.org>
-Subject: [PATCH 6.1 441/508] Revert "x86/bugs: Make spectre user default depend on MITIGATION_SPECTRE_V2" on v6.6 and older
-Date: Mon, 23 Jun 2025 15:08:06 +0200
-Message-ID: <20250623130656.013077168@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.12 402/414] s390/pci: Fix __pcilg_mio_inuser() inline assembly
+Date: Mon, 23 Jun 2025 15:08:59 +0200
+Message-ID: <20250623130651.989298555@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,91 +46,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-This reverts commit 594dbf0a19d607f106ed552332b9b8fecd2b64a3 which is
-commit 98fdaeb296f51ef08e727a7cc72e5b5c864c4f4d upstream.
+commit c4abe6234246c75cdc43326415d9cff88b7cf06c upstream.
 
-commit 7adb96687ce8 ("x86/bugs: Make spectre user default depend on
-MITIGATION_SPECTRE_V2") depends on commit 72c70f480a70 ("x86/bugs: Add
-a separate config for Spectre V2"), which introduced
-MITIGATION_SPECTRE_V2.
+Use "a" constraint for the shift operand of the __pcilg_mio_inuser() inline
+assembly. The used "d" constraint allows the compiler to use any general
+purpose register for the shift operand, including register zero.
 
-commit 72c70f480a70 ("x86/bugs: Add a separate config for Spectre V2")
-never landed in stable tree, thus, stable tree doesn't have
-MITIGATION_SPECTRE_V2, that said, commit 7adb96687ce8 ("x86/bugs: Make
-spectre user default depend on MITIGATION_SPECTRE_V2") has no value if
-the dependecy was not applied.
+If register zero is used this my result in incorrect code generation:
 
-Revert commit 7adb96687ce8 ("x86/bugs: Make spectre user default
-depend on MITIGATION_SPECTRE_V2")  in stable kernel which landed in in
-5.4.294, 5.10.238, 5.15.185, 6.1.141 and 6.6.93 stable versions.
+ 8f6:   a7 0a ff f8             ahi     %r0,-8
+ 8fa:   eb 32 00 00 00 0c       srlg    %r3,%r2,0  <----
 
-Cc: David.Kaplan@amd.com
-Cc: peterz@infradead.org
-Cc: pawan.kumar.gupta@linux.intel.com
-Cc: mingo@kernel.org
-Cc: brad.spengler@opensrcsec.com
-Cc: stable@vger.kernel.org # 6.6 6.1 5.15 5.10 5.4
-Reported-by: Brad Spengler <brad.spengler@opensrcsec.com>
-Reported-by: Salvatore Bonaccorso <carnil@debian.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
+If register zero is selected to contain the shift value, the srlg
+instruction ignores the contents of the register and always shifts zero
+bits. Therefore use the "a" constraint which does not permit to select
+register zero.
+
+Fixes: f058599e22d5 ("s390/pci: Fix s390_mmio_read/write with MIO")
+Cc: stable@vger.kernel.org
+Reported-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |    2 --
- arch/x86/kernel/cpu/bugs.c                      |   10 +++-------
- 2 files changed, 3 insertions(+), 9 deletions(-)
+ arch/s390/pci/pci_mmio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -5780,8 +5780,6 @@
+--- a/arch/s390/pci/pci_mmio.c
++++ b/arch/s390/pci/pci_mmio.c
+@@ -228,7 +228,7 @@ static inline int __pcilg_mio_inuser(
+ 		[ioaddr_len] "+&d" (ioaddr_len.pair),
+ 		[cc] "+d" (cc), [val] "=d" (val),
+ 		[dst] "+a" (dst), [cnt] "+d" (cnt), [tmp] "=d" (tmp),
+-		[shift] "+d" (shift)
++		[shift] "+a" (shift)
+ 		:: "cc", "memory");
  
- 			Selecting 'on' will also enable the mitigation
- 			against user space to user space task attacks.
--			Selecting specific mitigation does not force enable
--			user mitigations.
- 
- 			Selecting 'off' will disable both the kernel and
- 			the user space protections.
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1382,13 +1382,9 @@ static __ro_after_init enum spectre_v2_m
- static enum spectre_v2_user_cmd __init
- spectre_v2_parse_user_cmdline(void)
- {
--	enum spectre_v2_user_cmd mode;
- 	char arg[20];
- 	int ret, i;
- 
--	mode = IS_ENABLED(CONFIG_MITIGATION_SPECTRE_V2) ?
--		SPECTRE_V2_USER_CMD_AUTO : SPECTRE_V2_USER_CMD_NONE;
--
- 	switch (spectre_v2_cmd) {
- 	case SPECTRE_V2_CMD_NONE:
- 		return SPECTRE_V2_USER_CMD_NONE;
-@@ -1401,7 +1397,7 @@ spectre_v2_parse_user_cmdline(void)
- 	ret = cmdline_find_option(boot_command_line, "spectre_v2_user",
- 				  arg, sizeof(arg));
- 	if (ret < 0)
--		return mode;
-+		return SPECTRE_V2_USER_CMD_AUTO;
- 
- 	for (i = 0; i < ARRAY_SIZE(v2_user_options); i++) {
- 		if (match_option(arg, ret, v2_user_options[i].option)) {
-@@ -1411,8 +1407,8 @@ spectre_v2_parse_user_cmdline(void)
- 		}
- 	}
- 
--	pr_err("Unknown user space protection option (%s). Switching to default\n", arg);
--	return mode;
-+	pr_err("Unknown user space protection option (%s). Switching to AUTO select\n", arg);
-+	return SPECTRE_V2_USER_CMD_AUTO;
- }
- 
- static inline bool spectre_v2_in_eibrs_mode(enum spectre_v2_mitigation mode)
+ 	/* did we write everything to the user space buffer? */
 
 
