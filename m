@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747B91E5B71;
-	Mon, 23 Jun 2025 21:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AC11E51FA;
+	Mon, 23 Jun 2025 21:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713915; cv=none; b=PUx0fH4JfwK8cikZnusa2P2jaha6EApxc8pBE5XGBImdWxcACRm9tMT0FSLFoKJ4GJYMkSE1xtmnEY0lyn1WxSjN4V91LFwoqXFu7KkEJk2GFHlh3ECbk22L48Rtpj16v24j6Ww1/nox/1ih8MkRN3IKV8agNbAzBNphPFalEQk=
+	t=1750713918; cv=none; b=sQ0ISm12xDzszAmwcBx6WlOrArntUlGXgCL+MfjSjl7sh9uCW93K3mkTCiqofNcj0Nk2R6Sl/H3Ff7QkosrRzGOUBPnKsOKazFDGf7DrZ8Jz3571PtqaXkLPIsEcwZPXo8lc4sq+TJyrED8wQqLaES9ymvXKOiI+/lrCR2dFZIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713915; c=relaxed/simple;
-	bh=4GkhBZ8XZ99OD13NtZ2csAem8ylo/0IR3oVoIb7p6oQ=;
+	s=arc-20240116; t=1750713918; c=relaxed/simple;
+	bh=Ux/3aPNajAwpJuyzAeDYlDAQhG4al7P9n2bLOCD9/Xw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VLYwCC7TOjSw++XvuTBghL6A7kCsHBYR6/wmBMfU8wEv7uDDObPg6wHRycJ7IPcZumQ9Y5hXoQFsuwG0m4KeQx4vhqXgYcSIXdkgZypSUd7aQWBJm55S7qfgbnH0lNypQp5PKOg0M08aWh5IwMwbgotlC3baILlwz8K8FHQF3iM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EIoXsb0H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PBvd7lhYbmhEPARh2YYoiI6Jwz6vYfyYpecWFrYQpQaCS8CICxOkV89kdRYb1R2TEulqNwTuPxwCgJfYpcs+5Coa/tCC7Zm1mB1Ww6ye90stzLouiIH4W9j1ItuguoZWGjUVKyiOgMyN7uYTRbWB4+S0wqdMEv2qWrsajFsz7gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jhPAmh6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EIoXsb0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9F1C4CEEA;
-	Mon, 23 Jun 2025 21:25:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jhPAmh6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E87C4CEEA;
+	Mon, 23 Jun 2025 21:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713915;
-	bh=4GkhBZ8XZ99OD13NtZ2csAem8ylo/0IR3oVoIb7p6oQ=;
+	s=korg; t=1750713917;
+	bh=Ux/3aPNajAwpJuyzAeDYlDAQhG4al7P9n2bLOCD9/Xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EIoXsb0HBMEHWxQOG3e9RrZNEB5igeBGPKcQixgjGqL3h/ynu9/JfSr39Sy6gPYFX
-	 q3QxfwEvKmVUuQOQ2BLhhcNz43FF+CATZZEhD4fngGSRDAIrfvTmCyPBdCvOMP4zdn
-	 YcGTtquy0iKbwJWkisjol9CxHtdnTf8NuWkQUZNQ=
+	b=0jhPAmh6E6TQOuRiIbh9p7qqAin/im50vNhNZAnpRwZnPbnir6lKZ9Pk7nSF2AsAV
+	 4dicMObkNndKeGCkyUYKURh6TRJGw+IkddkCx9us/I83gN7SeThlQFhp3fYCml5WlK
+	 RFhbImaWSrcGdZw3HChtGnERgw5ls610u6mi0dD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 5.4 216/222] rtc: Make rtc_time64_to_tm() support dates before 1970
-Date: Mon, 23 Jun 2025 15:09:11 +0200
-Message-ID: <20250623130618.793308174@linuxfoundation.org>
+	Gabriel Shahrouzi <gshahrouzi@gmail.com>,
+	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 097/290] staging: iio: ad5933: Correct settling cycles encoding per datasheet
+Date: Mon, 23 Jun 2025 15:05:58 +0200
+Message-ID: <20250623130629.886978580@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,89 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Mergnat <amergnat@baylibre.com>
+From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
 
-commit 7df4cfef8b351fec3156160bedfc7d6d29de4cce upstream.
+commit 60638e2a2d4bc03798f00d5ab65ce9b83cb8b03b upstream.
 
-Conversion of dates before 1970 is still relevant today because these
-dates are reused on some hardwares to store dates bigger than the
-maximal date that is representable in the device's native format.
-This prominently and very soon affects the hardware covered by the
-rtc-mt6397 driver that can only natively store dates in the interval
-1900-01-01 up to 2027-12-31. So to store the date 2028-01-01 00:00:00
-to such a device, rtc_time64_to_tm() must do the right thing for
-time=-2208988800.
+The AD5933 datasheet (Table 13) lists the maximum cycles to be 0x7FC
+(2044).
 
-Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20250428-enable-rtc-v4-1-2b2f7e3f9349@baylibre.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Uwe Kleine-KÃ¶nig <u.kleine-koenig@baylibre.com>
+Clamp the user input to the maximum effective value of 0x7FC cycles.
+
+Fixes: f94aa354d676 ("iio: impedance-analyzer: New driver for AD5933/4 Impedance Converter, Network Analyzer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
+Link: https://patch.msgid.link/20250420013009.847851-1-gshahrouzi@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/lib.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ drivers/staging/iio/impedance-analyzer/ad5933.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/rtc/lib.c
-+++ b/drivers/rtc/lib.c
-@@ -46,24 +46,38 @@ EXPORT_SYMBOL(rtc_year_days);
-  * rtc_time64_to_tm - converts time64_t to rtc_time.
-  *
-  * @time:	The number of seconds since 01-01-1970 00:00:00.
-- *		(Must be positive.)
-+ *		Works for values since at least 1900
-  * @tm:		Pointer to the struct rtc_time.
-  */
- void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
- {
--	unsigned int secs;
--	int days;
-+	int days, secs;
+--- a/drivers/staging/iio/impedance-analyzer/ad5933.c
++++ b/drivers/staging/iio/impedance-analyzer/ad5933.c
+@@ -412,7 +412,7 @@ static ssize_t ad5933_store(struct devic
+ 		ret = ad5933_cmd(st, 0);
+ 		break;
+ 	case AD5933_OUT_SETTLING_CYCLES:
+-		val = clamp(val, (u16)0, (u16)0x7FF);
++		val = clamp(val, (u16)0, (u16)0x7FC);
+ 		st->settling_cycles = val;
  
- 	u64 u64tmp;
- 	u32 u32tmp, udays, century, day_of_century, year_of_century, year,
- 		day_of_year, month, day;
- 	bool is_Jan_or_Feb, is_leap_year;
- 
--	/* time must be positive */
-+	/*
-+	 * Get days and seconds while preserving the sign to
-+	 * handle negative time values (dates before 1970-01-01)
-+	 */
- 	days = div_s64_rem(time, 86400, &secs);
- 
-+	/*
-+	 * We need 0 <= secs < 86400 which isn't given for negative
-+	 * values of time. Fixup accordingly.
-+	 */
-+	if (secs < 0) {
-+		days -= 1;
-+		secs += 86400;
-+	}
-+
- 	/* day of the week, 1970-01-01 was a Thursday */
- 	tm->tm_wday = (days + 4) % 7;
-+	/* Ensure tm_wday is always positive */
-+	if (tm->tm_wday < 0)
-+		tm->tm_wday += 7;
- 
- 	/*
- 	 * The following algorithm is, basically, Proposition 6.3 of Neri
-@@ -93,7 +107,7 @@ void rtc_time64_to_tm(time64_t time, str
- 	 * thus, is slightly different from [1].
- 	 */
- 
--	udays		= ((u32) days) + 719468;
-+	udays		= days + 719468;
- 
- 	u32tmp		= 4 * udays + 3;
- 	century		= u32tmp / 146097;
+ 		/* 2x, 4x handling, see datasheet */
 
 
