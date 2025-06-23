@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EED202983;
-	Mon, 23 Jun 2025 21:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22235220F50;
+	Mon, 23 Jun 2025 21:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712771; cv=none; b=Hle4+4X3V3gqvg2bAkaw9GlypxJcZb7UWP3lfl01/1mUBUyigPQCjSbsos3tk1/KfQh+dDCnDIA5dRHuj3lNvoNMvzT0kI+Z1MlkCr90b6idCkm8Y3mQDuUQys6GjPDlNxs8rhTDa0sjm5mtdAIxcn8XNkFLbVoSDyT7qIABr6E=
+	t=1750712774; cv=none; b=sxMsznlQ8KHWPzcsL8Wmf/43qqkgY7s0xbZzPedlxOfPfDYHqWrITsOD2PV5NcP9cAGHdsH/eIkayCq1rHmHrBfJIs9LqN/KaC4bow31TaiErGWjLWjiQIJX4BVciQoMyIu91kT4l0KxRHXcSTdSBzERc8MCsLoDP3zaofr66Gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712771; c=relaxed/simple;
-	bh=ALMKxJY1tpeeexPocNpuBUQe4MiF5zxnsWz7t7m+uMs=;
+	s=arc-20240116; t=1750712774; c=relaxed/simple;
+	bh=j+/o6fEdZhAiHPQAZR4wALQyRmmB0/xTOg4g9DfhzrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGMzAzyztnswjfkZUUI2cKbAPcXGy+CdEP4pZKfoLbMd5zZ22m4xAaQg66u3HYKc9jP/H2UXEiOHlas6eCChKrvACs5zjbbyLCG9sF97g8rtKv0sXTIZMsgQ4JQIhvnQKg/Ympm+7sU0gVsRMGMqQLasXhHL237LDlXoh4sOtT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZPEW6EP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FNbrBD0g035QEk8iJGWeXPUWWEeshrmV3gCVYr89bB/48u/ijK3PdzRryllEFG/ufU2DtlAdou30MEaQk0hBOjhiragblVtaNCC1iMaiIleAGmL6P82oR5pqB32ehxpsLxx313bWyCO+rx2qVKlG6uqNNXYsjrhB20JAo90OlPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVHBrC0+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZPEW6EP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FB1C4CEEA;
-	Mon, 23 Jun 2025 21:06:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVHBrC0+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F7F8C4CEED;
+	Mon, 23 Jun 2025 21:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712771;
-	bh=ALMKxJY1tpeeexPocNpuBUQe4MiF5zxnsWz7t7m+uMs=;
+	s=korg; t=1750712774;
+	bh=j+/o6fEdZhAiHPQAZR4wALQyRmmB0/xTOg4g9DfhzrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZPEW6EPAYh8GwwzLlQrhznokE477AUts4cN4hVNu0WnqWP6qRtUfc1xO0ufr1cXU
-	 QqRJKtOxsKayACP03mDz2PaMSJeqfRalAhWOD07JLI3hfWcvfQazX94H8JqXjQSEJO
-	 7Iai9fF0KxkSIO7c1fuawqHihlnpJAS3tXMsFRu4=
+	b=bVHBrC0+Hb7lBLqoz56GNp2p+C//cbx/Nho3zAxB+l6XxHB0i5ClpA9FnB7oyeJ+M
+	 4qP528hsQIkYZGa+R2tVFZAwzUNha6z34fuOJuP4GEoC7d2t3yIOrCT6SiaZPXP8Nl
+	 XYmxoRQHDTeTT9eTMXlO+G+Q64CE4PyugIeI9vzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
-	Miaoqian Lin <linmq006@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/508] tracing: Fix error handling in event_trigger_parse()
-Date: Mon, 23 Jun 2025 15:02:03 +0200
-Message-ID: <20250623130647.156831797@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.6 049/290] arm64/mm: Close theoretical race where stale TLB entry remains valid
+Date: Mon, 23 Jun 2025 15:05:10 +0200
+Message-ID: <20250623130628.481462587@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,59 +46,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-[ Upstream commit c5dd28e7fb4f63475b50df4f58311df92939d011 ]
+commit 4b634918384c0f84c33aeb4dd9fd4c38e7be5ccb upstream.
 
-According to trigger_data_alloc() doc, trigger_data_free() should be
-used to free an event_trigger_data object. This fixes a mismatch introduced
-when kzalloc was replaced with trigger_data_alloc without updating
-the corresponding deallocation calls.
+Commit 3ea277194daa ("mm, mprotect: flush TLB if potentially racing with
+a parallel reclaim leaving stale TLB entries") describes a race that,
+prior to the commit, could occur between reclaim and operations such as
+mprotect() when using reclaim's tlbbatch mechanism. See that commit for
+details but the summary is:
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Link: https://lore.kernel.org/20250507145455.944453325@goodmis.org
-Link: https://lore.kernel.org/20250318112737.4174-1-linmq006@gmail.com
-Fixes: e1f187d09e11 ("tracing: Have existing event_command.parse() implementations use helpers")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-[ SDR: Changed event_trigger_alloc/free() to trigger_data_alloc/free() ]
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+"""
+Nadav Amit identified a theoritical race between page reclaim and
+mprotect due to TLB flushes being batched outside of the PTL being held.
+
+He described the race as follows:
+
+	CPU0				CPU1
+	----				----
+					user accesses memory using RW PTE
+					[PTE now cached in TLB]
+	try_to_unmap_one()
+	==> ptep_get_and_clear()
+	==> set_tlb_ubc_flush_pending()
+					mprotect(addr, PROT_READ)
+					==> change_pte_range()
+					==> [ PTE non-present - no flush ]
+
+					user writes using cached RW PTE
+	...
+
+	try_to_unmap_flush()
+"""
+
+The solution was to insert flush_tlb_batched_pending() in mprotect() and
+friends to explcitly drain any pending reclaim TLB flushes. In the
+modern version of this solution, arch_flush_tlb_batched_pending() is
+called to do that synchronisation.
+
+arm64's tlbbatch implementation simply issues TLBIs at queue-time
+(arch_tlbbatch_add_pending()), eliding the trailing dsb(ish). The
+trailing dsb(ish) is finally issued in arch_tlbbatch_flush() at the end
+of the batch to wait for all the issued TLBIs to complete.
+
+Now, the Arm ARM states:
+
+"""
+The completion of the TLB maintenance instruction is guaranteed only by
+the execution of a DSB by the observer that performed the TLB
+maintenance instruction. The execution of a DSB by a different observer
+does not have this effect, even if the DSB is known to be executed after
+the TLB maintenance instruction is observed by that different observer.
+"""
+
+arch_tlbbatch_add_pending() and arch_tlbbatch_flush() conform to this
+requirement because they are called from the same task (either kswapd or
+caller of madvise(MADV_PAGEOUT)), so either they are on the same CPU or
+if the task was migrated, __switch_to() contains an extra dsb(ish).
+
+HOWEVER, arm64's arch_flush_tlb_batched_pending() is also implemented as
+a dsb(ish). But this may be running on a CPU remote from the one that
+issued the outstanding TLBIs. So there is no architectural gurantee of
+synchonization. Therefore we are still vulnerable to the theoretical
+race described in Commit 3ea277194daa ("mm, mprotect: flush TLB if
+potentially racing with a parallel reclaim leaving stale TLB entries").
+
+Fix this by flushing the entire mm in arch_flush_tlb_batched_pending().
+This aligns with what the other arches that implement the tlbbatch
+feature do.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 43b3dfdd0455 ("arm64: support batched/deferred tlb shootdown during page reclamation/migration")
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Link: https://lore.kernel.org/r/20250530152445.2430295-1-ryan.roberts@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_trigger.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/tlbflush.h |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/trace/trace_events_trigger.c b/kernel/trace/trace_events_trigger.c
-index 22bee3eae7cc3..782ccb2433bb4 100644
---- a/kernel/trace/trace_events_trigger.c
-+++ b/kernel/trace/trace_events_trigger.c
-@@ -998,7 +998,7 @@ event_trigger_parse(struct event_command *cmd_ops,
- 
- 	if (remove) {
- 		event_trigger_unregister(cmd_ops, file, glob+1, trigger_data);
--		kfree(trigger_data);
-+		trigger_data_free(trigger_data);
- 		ret = 0;
- 		goto out;
- 	}
-@@ -1025,7 +1025,7 @@ event_trigger_parse(struct event_command *cmd_ops,
- 
-  out_free:
- 	event_trigger_reset_filter(cmd_ops, trigger_data);
--	kfree(trigger_data);
-+	trigger_data_free(trigger_data);
- 	goto out;
+--- a/arch/arm64/include/asm/tlbflush.h
++++ b/arch/arm64/include/asm/tlbflush.h
+@@ -311,13 +311,14 @@ static inline void arch_tlbbatch_add_pen
  }
  
--- 
-2.39.5
-
+ /*
+- * If mprotect/munmap/etc occurs during TLB batched flushing, we need to
+- * synchronise all the TLBI issued with a DSB to avoid the race mentioned in
+- * flush_tlb_batched_pending().
++ * If mprotect/munmap/etc occurs during TLB batched flushing, we need to ensure
++ * all the previously issued TLBIs targeting mm have completed. But since we
++ * can be executing on a remote CPU, a DSB cannot guarantee this like it can
++ * for arch_tlbbatch_flush(). Our only option is to flush the entire mm.
+  */
+ static inline void arch_flush_tlb_batched_pending(struct mm_struct *mm)
+ {
+-	dsb(ish);
++	flush_tlb_mm(mm);
+ }
+ 
+ /*
 
 
