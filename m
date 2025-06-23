@@ -1,189 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F0B15ADB4;
-	Mon, 23 Jun 2025 22:21:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3871222422F
+	for <patches@lists.linux.dev>; Mon, 23 Jun 2025 22:21:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717277; cv=none; b=WkAcGn1Kmy9+f8GJ3vZoNwiw+P7DNNrci2FxJ3sHVqzNiuvxr6iZJ9mbMy4OVgW+5ZX+zy8zdtlTGSlvPcLHRlNnz45HmubqzkT6064zpT6PF0GbZdwSc8ZD6MIcBtE7Yh7MaNBhAKlROx4TcexiS99goIA73u544Z0HtOYj7/w=
+	t=1750717279; cv=none; b=pbCF7+3InsiJE1bhchni40Ofz42ggY0fwyL7J60mV+79ItgAKSOOEe00RHMhAy50VQht+WaMTR0dsDVLFDvX9Vd0ubthaiA2klF3w+ZGq2kGpm7gr2+yqfGKicqnYoYAvDxKbKVYeFRv6rh9Gq5HQ18AckXNpAO5+9JQt9GU1uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717277; c=relaxed/simple;
-	bh=xdJVQENc/zCK7p9Kip2Skd/TBis/GsPDZFPr9beU2gQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QEzYG7Z5rX0qDEbCR9kdCW4xoQE1ZfqiYaIiTKHFVPPM+TCk2H7XcQTfv71miSe5kcP1D5AAm+mZ8dfUOvmz5Bcz+KS1SK1w/lWmUTV1sdRKxcH623/1BCgHHvjnyAx6iMFiRzwHLnr7NveJOxBviJMK2kjSiVNVDPXDcv51FWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arRk1s3C; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750717279; c=relaxed/simple;
+	bh=yIlAvRsgijXTH3oVxeZJ0I9VIfkkLUzhzk6JrA+Phs4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gz6XbRCNOpUF0Jqb1M+VlCshNsoAr66DGwk0L32hcadmN3T0uOaOF07Ir/B5Muh7RKvWrD4STbbNo/k8X2byx4efGEKr+Vo6ip+JXgj7ZJoZrH9hFnLE9iYKndWseiS8mWhNqYkrB+ahykTBDiY6ttjbnDJ1t6pjZ0VJtHxlGBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I6hjlZsZ; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arRk1s3C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3E4C4CEED;
-	Mon, 23 Jun 2025 22:21:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717277;
-	bh=xdJVQENc/zCK7p9Kip2Skd/TBis/GsPDZFPr9beU2gQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=arRk1s3CeLFSVAJL6rHgSFne0HGKmsvoV1b4dyK60CrbPmVvvifFb4LDthdxBOUoc
-	 RBt07R0IV3oSTclAJPXThP0Yv7FwE4WT39Z46dEygeoEP9HKuVWFsxCGhEXHhespVb
-	 BkddskAMlFCkVRISpe8KpWpp+BQRe6iZ0xUuBiW0=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 351/414] ipv6: replace ipcm6_init calls with ipcm6_init_sk
-Date: Mon, 23 Jun 2025 15:08:08 +0200
-Message-ID: <20250623130650.750492836@linuxfoundation.org>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I6hjlZsZ"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2360ff7ac1bso33611865ad.3
+        for <patches@lists.linux.dev>; Mon, 23 Jun 2025 15:21:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750717276; x=1751322076; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=XiS6dENs8Ta5fbquyxweL8AOiocCYE0d6u4W3pkICBc=;
+        b=I6hjlZsZKbX+uUi5lXO5WmzUOkVF+OUXj4AE23wEE389y/B81ACrHjwc2s4jeH6LHP
+         zXymEbTPe0NRuBKFt8wsi0DdI9xlmX4IDykBXndfGnWXxm3bsNf2UOa0xRrtqKGRFCZa
+         tSa+8iVh8cx/4Ir0DtChEP66xGch5YWPMZfhGQTG9wgo9xN1gdKJffILHpEn0oeewjJ+
+         W7SuhOp4oNesNEH7DMENQIwQFSU5dtSIMDM1giAmMEUkALFHgtkWcwG5l57eUQBqTaza
+         xumn8YwpqPgnp2Afir3+N29C1tzzETCTtpB3PjIdvPvJNlKjUSJcK1kcaseFWgvSfY5n
+         aTjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750717276; x=1751322076;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XiS6dENs8Ta5fbquyxweL8AOiocCYE0d6u4W3pkICBc=;
+        b=WNCK+JGeV6bIsybHMMIKP5U/N2czD3uMbKqoA525JEbMCqDRvwN9UyzV5BTE4DbGs1
+         cIA4CEUS5vTbTFzKyIlN2RpF27Qh9S/bGjyWoKjGjOJg96lUzZETVV3OX3AeyEigrgNe
+         cUBlOZWHnty4mXXoZNModdA+91lfsOBfoIHPdNkEsZNvMxaVMQhyuOx4Rbm3gItFneWL
+         drFosOTC2vV9Qs4sJhkmH8LLB4tfFNakR1yCErOhVuY01jhBiTA/jP1fCiSRjseZVJ3z
+         O03bekWvLLjr8ettjj7OCZXAsXozx+p7R49W4FGgnFQlTtVIqxT0Y7M4WqIMo/EVveRj
+         ZmXQ==
+X-Gm-Message-State: AOJu0YxCMiztdKofjZQxyoDqL0HXDwsOQ5V3QWsaBsVucHsFI0u5WTlh
+	6+E2rUN/rTyzIpowZU+5sCbqXH2bOKoodLAKRz1pbG9cnATkMuUUFcio
+X-Gm-Gg: ASbGncvhAtOP5tfGnfIeUIDRcQwyYlEXd7WafGT1MuXop1ZAu5EyliQVVKpXHYXHKCd
+	Dqe+pAJlbSQ0GGY1dQkGQ4iqMcEEy9O5WIVvGhIqVUDdOgmoj5vJ/tZtvCuEeH2CYcxz1I8qK3g
+	hp/aBSG7I8maVQCxkPyhP2ByjNJzcek/jwMUA5pidxMa/BTPUysryN9FMBgZNcGzEIatMcn6s6a
+	L0Io/dt1KxdpdlqHoq0qVxNED1uy3mLo3H+lqoMqpHXRQxyLpissL28shf666BcOum9OLqOeeol
+	+03dwjalbGiDvV5ceWcc50KYS49NMbca0/eRePoQQ7nrJ/zfpddIFaRDArfUoZyjb3ql1Gonrsd
+	V8rmRexcrjgqCoKKopSacC0Ko
+X-Google-Smtp-Source: AGHT+IGr2AcmdyY2sfeGodl5CTvBNL0fJLMbZp0mo00ae2s6ff+c4zwxl6fyTs+rSOHIraRfHmozMw==
+X-Received: by 2002:a17:902:ce0b:b0:236:6f7b:bf33 with SMTP id d9443c01a7336-237d99984e3mr269189725ad.24.1750717276533;
+        Mon, 23 Jun 2025 15:21:16 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d86633cesm90570795ad.154.2025.06.23.15.21.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jun 2025 15:21:15 -0700 (PDT)
+Message-ID: <2161be3b-1223-40bb-93fd-5cf3a2f86f89@gmail.com>
+Date: Mon, 23 Jun 2025 15:21:13 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 000/290] 6.6.95-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250623130626.910356556@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+ WlfRzlpjIPmdjgoicA==
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+On 6/23/25 06:04, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.95 release.
+> There are 290 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 25 Jun 2025 13:05:53 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.95-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-From: Willem de Bruijn <willemb@google.com>
-
-commit 096208592b09c2f5fc0c1a174694efa41c04209d upstream.
-
-This initializes tclass and dontfrag before cmsg parsing, removing the
-need for explicit checks against -1 in each caller.
-
-Leave hlimit set to -1, because its full initialization
-(in ip6_sk_dst_hoplimit) requires more state (dst, flowi6, ..).
-
-This also prepares for calling sockcm_init in a follow-on patch.
-
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250214222720.3205500-7-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- include/net/ipv6.h  |    9 ---------
- net/ipv6/raw.c      |    8 +-------
- net/ipv6/udp.c      |    7 +------
- net/l2tp/l2tp_ip6.c |    8 +-------
- 4 files changed, 3 insertions(+), 29 deletions(-)
-
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -363,15 +363,6 @@ struct ipcm6_cookie {
- 	struct ipv6_txoptions *opt;
- };
- 
--static inline void ipcm6_init(struct ipcm6_cookie *ipc6)
--{
--	*ipc6 = (struct ipcm6_cookie) {
--		.hlimit = -1,
--		.tclass = -1,
--		.dontfrag = -1,
--	};
--}
--
- static inline void ipcm6_init_sk(struct ipcm6_cookie *ipc6,
- 				 const struct sock *sk)
- {
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -777,7 +777,7 @@ static int rawv6_sendmsg(struct sock *sk
- 	fl6.flowi6_mark = READ_ONCE(sk->sk_mark);
- 	fl6.flowi6_uid = sk->sk_uid;
- 
--	ipcm6_init(&ipc6);
-+	ipcm6_init_sk(&ipc6, sk);
- 	ipc6.sockc.tsflags = READ_ONCE(sk->sk_tsflags);
- 	ipc6.sockc.mark = fl6.flowi6_mark;
- 
-@@ -890,9 +890,6 @@ static int rawv6_sendmsg(struct sock *sk
- 	if (hdrincl)
- 		fl6.flowi6_flags |= FLOWI_FLAG_KNOWN_NH;
- 
--	if (ipc6.tclass < 0)
--		ipc6.tclass = np->tclass;
--
- 	fl6.flowlabel = ip6_make_flowinfo(ipc6.tclass, fl6.flowlabel);
- 
- 	dst = ip6_dst_lookup_flow(sock_net(sk), sk, &fl6, final_p);
-@@ -903,9 +900,6 @@ static int rawv6_sendmsg(struct sock *sk
- 	if (ipc6.hlimit < 0)
- 		ipc6.hlimit = ip6_sk_dst_hoplimit(np, &fl6, dst);
- 
--	if (ipc6.dontfrag < 0)
--		ipc6.dontfrag = inet6_test_bit(DONTFRAG, sk);
--
- 	if (msg->msg_flags&MSG_CONFIRM)
- 		goto do_confirm;
- 
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1399,7 +1399,7 @@ int udpv6_sendmsg(struct sock *sk, struc
- 	int is_udplite = IS_UDPLITE(sk);
- 	int (*getfrag)(void *, char *, int, int, int, struct sk_buff *);
- 
--	ipcm6_init(&ipc6);
-+	ipcm6_init_sk(&ipc6, sk);
- 	ipc6.gso_size = READ_ONCE(up->gso_size);
- 	ipc6.sockc.tsflags = READ_ONCE(sk->sk_tsflags);
- 	ipc6.sockc.mark = READ_ONCE(sk->sk_mark);
-@@ -1608,9 +1608,6 @@ do_udp_sendmsg:
- 
- 	security_sk_classify_flow(sk, flowi6_to_flowi_common(fl6));
- 
--	if (ipc6.tclass < 0)
--		ipc6.tclass = np->tclass;
--
- 	fl6->flowlabel = ip6_make_flowinfo(ipc6.tclass, fl6->flowlabel);
- 
- 	dst = ip6_sk_dst_lookup_flow(sk, fl6, final_p, connected);
-@@ -1656,8 +1653,6 @@ back_from_confirm:
- 	WRITE_ONCE(up->pending, AF_INET6);
- 
- do_append_data:
--	if (ipc6.dontfrag < 0)
--		ipc6.dontfrag = inet6_test_bit(DONTFRAG, sk);
- 	up->len += ulen;
- 	err = ip6_append_data(sk, getfrag, msg, ulen, sizeof(struct udphdr),
- 			      &ipc6, fl6, dst_rt6_info(dst),
---- a/net/l2tp/l2tp_ip6.c
-+++ b/net/l2tp/l2tp_ip6.c
-@@ -547,7 +547,7 @@ static int l2tp_ip6_sendmsg(struct sock
- 	fl6.flowi6_mark = READ_ONCE(sk->sk_mark);
- 	fl6.flowi6_uid = sk->sk_uid;
- 
--	ipcm6_init(&ipc6);
-+	ipcm6_init_sk(&ipc6, sk);
- 
- 	if (lsa) {
- 		if (addr_len < SIN6_LEN_RFC2133)
-@@ -634,9 +634,6 @@ static int l2tp_ip6_sendmsg(struct sock
- 
- 	security_sk_classify_flow(sk, flowi6_to_flowi_common(&fl6));
- 
--	if (ipc6.tclass < 0)
--		ipc6.tclass = np->tclass;
--
- 	fl6.flowlabel = ip6_make_flowinfo(ipc6.tclass, fl6.flowlabel);
- 
- 	dst = ip6_dst_lookup_flow(sock_net(sk), sk, &fl6, final_p);
-@@ -648,9 +645,6 @@ static int l2tp_ip6_sendmsg(struct sock
- 	if (ipc6.hlimit < 0)
- 		ipc6.hlimit = ip6_sk_dst_hoplimit(np, &fl6, dst);
- 
--	if (ipc6.dontfrag < 0)
--		ipc6.dontfrag = inet6_test_bit(DONTFRAG, sk);
--
- 	if (msg->msg_flags & MSG_CONFIRM)
- 		goto do_confirm;
- 
-
-
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
