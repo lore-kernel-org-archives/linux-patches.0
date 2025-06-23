@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8E61A4F12;
-	Mon, 23 Jun 2025 22:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5C9221DA8;
+	Mon, 23 Jun 2025 22:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716304; cv=none; b=juqIRs33Ul8Xw0XpG5+LH48OhQ47c14/szESeFejX2To5OtuO/gwUduoRBeihElRjVmHRt0z/pSW5V2KGfz/L/cA5+MEIHbq6A5OElBM/XSBezudowEdoEvx7QoEBUGoYUiP7ZCsn+l2lDBd1tjMS2F0ikEMjcVNxe5uMUj9KJY=
+	t=1750716306; cv=none; b=YkoZu9wo4YEJ2MzwhZUycdCXPpZXUMNxM/iWPyCf4zh7fifyVZ9U33Pdj8E4wdN1SRTKr4JkqH03Wg9KpaO4ln5RjvGIpn713YPpRnIgcqKKsvJVYlX5/DfdgEVbkZ1TdECapeE+r8eMYSIgcLa+zYkf+bCZtIWks5W6zAzKKrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716304; c=relaxed/simple;
-	bh=HH2IKuD4XjzEFlBF1ymLc0MwNyUPIcZ8oTeHEN9jczQ=;
+	s=arc-20240116; t=1750716306; c=relaxed/simple;
+	bh=HstrhhGRa+NCi3vwBjw5Qyanz+v/yMWgx6hv/+wXpho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nmruKo6uoF18rqMu1/XorYv314B1lJFBU9HX7KW4dw71CX4E+Ai+DKk7ilqdvCGaaRkvyHI48yjqTdZitF4g2wbbONjMRddsywR+EkMHeWotIZ0WwEcZrE40Myqo3Eohcr8aZf1kKqIGu8ANsSSF2nPgw6G5EVLEpgB9NqprqxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYrVwf70; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=euS1FCT6Nad/1uxZ5tTYNMUtENzVzQou+rOVOEuKoIHVFNpR/x61WKVTeEBBBVe2oNlGoiJs54a75NJdPdDORrj4DYVupYABqXqIKKOmwX5cVxIvEbvIAhDriD77upOvF6mysPYtAJLME/XiDE+L9n5IgL/6q0vvgrvnCVWGJjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQK/vwuB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYrVwf70"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09D2C4CEEA;
-	Mon, 23 Jun 2025 22:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQK/vwuB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335C8C4CEEA;
+	Mon, 23 Jun 2025 22:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716304;
-	bh=HH2IKuD4XjzEFlBF1ymLc0MwNyUPIcZ8oTeHEN9jczQ=;
+	s=korg; t=1750716306;
+	bh=HstrhhGRa+NCi3vwBjw5Qyanz+v/yMWgx6hv/+wXpho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DYrVwf70XeFq1tcoXdjoD4A5HJuAGxC2NIOFW+p64GrIdmTYDgH1koqCMqFjeS8Vl
-	 dPaqZjDfvUQZ5PLzdESzCwG+TutwjW1nDg8ajcfLPbJUXTKZ3wWtjPN+qgJYUH94lF
-	 oOWe43yV0JZN8YJdXG4c/YHowjZvOaUNgF+aSnTA=
+	b=wQK/vwuB3vDjsVC7IvwLYDEYiLtsvRjoz4ZY7xmq8EKGyg0hZqs0fzXXT1z7bqA3I
+	 mK9GbsQ8jBgmvg5urWfvquy5gq4SaAciTWhZIse9E1/tYHG+JRVYmIjMR1xMXB0Clj
+	 /0aIhjv9WOd5YgpkpJjVXHqQBqmA++mINeJWs9mM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 5.10 340/355] rtc: Make rtc_time64_to_tm() support dates before 1970
-Date: Mon, 23 Jun 2025 15:09:01 +0200
-Message-ID: <20250623130636.951336632@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 255/290] ptp: fix breakage after ptp_vclock_in_use() rework
+Date: Mon, 23 Jun 2025 15:08:36 +0200
+Message-ID: <20250623130634.594362927@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,89 +45,170 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Mergnat <amergnat@baylibre.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit 7df4cfef8b351fec3156160bedfc7d6d29de4cce upstream.
+[ Upstream commit 5ab73b010cad294851e558f1d4714a85c6f206c7 ]
 
-Conversion of dates before 1970 is still relevant today because these
-dates are reused on some hardwares to store dates bigger than the
-maximal date that is representable in the device's native format.
-This prominently and very soon affects the hardware covered by the
-rtc-mt6397 driver that can only natively store dates in the interval
-1900-01-01 up to 2027-12-31. So to store the date 2028-01-01 00:00:00
-to such a device, rtc_time64_to_tm() must do the right thing for
-time=-2208988800.
+What is broken
+--------------
 
-Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20250428-enable-rtc-v4-1-2b2f7e3f9349@baylibre.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Uwe Kleine-KÃ¶nig <u.kleine-koenig@baylibre.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ptp4l, and any other application which calls clock_adjtime() on a
+physical clock, is greeted with error -EBUSY after commit 87f7ce260a3c
+("ptp: remove ptp->n_vclocks check logic in ptp_vclock_in_use()").
+
+Explanation for the breakage
+----------------------------
+
+The blamed commit was based on the false assumption that
+ptp_vclock_in_use() callers already test for n_vclocks prior to calling
+this function.
+
+This is notably incorrect for the code path below, in which there is, in
+fact, no n_vclocks test:
+
+ptp_clock_adjtime()
+-> ptp_clock_freerun()
+   -> ptp_vclock_in_use()
+
+The result is that any clock adjustment on any physical clock is now
+impossible. This is _despite_ there not being any vclock over this
+physical clock.
+
+$ ptp4l -i eno0 -2 -P -m
+ptp4l[58.425]: selected /dev/ptp0 as PTP clock
+[   58.429749] ptp: physical clock is free running
+ptp4l[58.431]: Failed to open /dev/ptp0: Device or resource busy
+failed to create a clock
+$ cat /sys/class/ptp/ptp0/n_vclocks
+0
+
+The patch makes the ptp_vclock_in_use() function say "if it's not a
+virtual clock, then this physical clock does have virtual clocks on
+top".
+
+Then ptp_clock_freerun() uses this information to say "this physical
+clock has virtual clocks on top, so it must stay free-running".
+
+Then ptp_clock_adjtime() uses this information to say "well, if this
+physical clock has to be free-running, I can't do it, return -EBUSY".
+
+Simply put, ptp_vclock_in_use() cannot be simplified so as to remove the
+test whether vclocks are in use.
+
+What did the blamed commit intend to fix
+----------------------------------------
+
+The blamed commit presents a lockdep warning stating "possible recursive
+locking detected", with the n_vclocks_store() and ptp_clock_unregister()
+functions involved.
+
+The recursive locking seems this:
+n_vclocks_store()
+-> mutex_lock_interruptible(&ptp->n_vclocks_mux) // 1
+-> device_for_each_child_reverse(..., unregister_vclock)
+   -> unregister_vclock()
+      -> ptp_vclock_unregister()
+         -> ptp_clock_unregister()
+            -> ptp_vclock_in_use()
+               -> mutex_lock_interruptible(&ptp->n_vclocks_mux) // 2
+
+The issue can be triggered by creating and then deleting vclocks:
+$ echo 2 > /sys/class/ptp/ptp0/n_vclocks
+$ echo 0 > /sys/class/ptp/ptp0/n_vclocks
+
+But note that in the original stack trace, the address of the first lock
+is different from the address of the second lock. This is because at
+step 1 marked above, &ptp->n_vclocks_mux is the lock of the parent
+(physical) PTP clock, and at step 2, the lock is of the child (virtual)
+PTP clock. They are different locks of different devices.
+
+In this situation there is no real deadlock, the lockdep warning is
+caused by the fact that the mutexes have the same lock class on both the
+parent and the child. Functionally it is fine.
+
+Proposed alternative solution
+-----------------------------
+
+We must reintroduce the body of ptp_vclock_in_use() mostly as it was
+structured prior to the blamed commit, but avoid the lockdep warning.
+
+Based on the fact that vclocks cannot be nested on top of one another
+(ptp_is_attribute_visible() hides n_vclocks for virtual clocks), we
+already know that ptp->n_vclocks is zero for a virtual clock. And
+ptp->is_virtual_clock is a runtime invariant, established at
+ptp_clock_register() time and never changed. There is no need to
+serialize on any mutex in order to read ptp->is_virtual_clock, and we
+take advantage of that by moving it outside the lock.
+
+Thus, virtual clocks do not need to acquire &ptp->n_vclocks_mux at
+all, and step 2 in the code walkthrough above can simply go away.
+We can simply return false to the question "ptp_vclock_in_use(a virtual
+clock)".
+
+Other notes
+-----------
+
+Releasing &ptp->n_vclocks_mux before ptp_vclock_in_use() returns
+execution seems racy, because the returned value can become stale as
+soon as the function returns and before the return value is used (i.e.
+n_vclocks_store() can run any time). The locking requirement should
+somehow be transferred to the caller, to ensure a longer life time for
+the returned value, but this seems out of scope for this severe bug fix.
+
+Because we are also fixing up the logic from the original commit, there
+is another Fixes: tag for that.
+
+Fixes: 87f7ce260a3c ("ptp: remove ptp->n_vclocks check logic in ptp_vclock_in_use()")
+Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250613174749.406826-2-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/lib.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ drivers/ptp/ptp_private.h | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
---- a/drivers/rtc/lib.c
-+++ b/drivers/rtc/lib.c
-@@ -46,24 +46,38 @@ EXPORT_SYMBOL(rtc_year_days);
-  * rtc_time64_to_tm - converts time64_t to rtc_time.
-  *
-  * @time:	The number of seconds since 01-01-1970 00:00:00.
-- *		(Must be positive.)
-+ *		Works for values since at least 1900
-  * @tm:		Pointer to the struct rtc_time.
-  */
- void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
+diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
+index d0eb4555720eb..a54124269c2f4 100644
+--- a/drivers/ptp/ptp_private.h
++++ b/drivers/ptp/ptp_private.h
+@@ -89,7 +89,27 @@ static inline int queue_cnt(const struct timestamp_event_queue *q)
+ /* Check if ptp virtual clock is in use */
+ static inline bool ptp_vclock_in_use(struct ptp_clock *ptp)
  {
--	unsigned int secs;
--	int days;
-+	int days, secs;
- 
- 	u64 u64tmp;
- 	u32 u32tmp, udays, century, day_of_century, year_of_century, year,
- 		day_of_year, month, day;
- 	bool is_Jan_or_Feb, is_leap_year;
- 
--	/* time must be positive */
-+	/*
-+	 * Get days and seconds while preserving the sign to
-+	 * handle negative time values (dates before 1970-01-01)
-+	 */
- 	days = div_s64_rem(time, 86400, &secs);
- 
-+	/*
-+	 * We need 0 <= secs < 86400 which isn't given for negative
-+	 * values of time. Fixup accordingly.
-+	 */
-+	if (secs < 0) {
-+		days -= 1;
-+		secs += 86400;
-+	}
+-	return !ptp->is_virtual_clock;
++	bool in_use = false;
 +
- 	/* day of the week, 1970-01-01 was a Thursday */
- 	tm->tm_wday = (days + 4) % 7;
-+	/* Ensure tm_wday is always positive */
-+	if (tm->tm_wday < 0)
-+		tm->tm_wday += 7;
++	/* Virtual clocks can't be stacked on top of virtual clocks.
++	 * Avoid acquiring the n_vclocks_mux on virtual clocks, to allow this
++	 * function to be called from code paths where the n_vclocks_mux of the
++	 * parent physical clock is already held. Functionally that's not an
++	 * issue, but lockdep would complain, because they have the same lock
++	 * class.
++	 */
++	if (ptp->is_virtual_clock)
++		return false;
++
++	if (mutex_lock_interruptible(&ptp->n_vclocks_mux))
++		return true;
++
++	if (ptp->n_vclocks)
++		in_use = true;
++
++	mutex_unlock(&ptp->n_vclocks_mux);
++
++	return in_use;
+ }
  
- 	/*
- 	 * The following algorithm is, basically, Proposition 6.3 of Neri
-@@ -93,7 +107,7 @@ void rtc_time64_to_tm(time64_t time, str
- 	 * thus, is slightly different from [1].
- 	 */
- 
--	udays		= ((u32) days) + 719468;
-+	udays		= days + 719468;
- 
- 	u32tmp		= 4 * udays + 3;
- 	century		= u32tmp / 146097;
+ /* Check if ptp clock shall be free running */
+-- 
+2.39.5
+
 
 
