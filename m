@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737934315A;
-	Mon, 23 Jun 2025 21:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35CB4315A;
+	Mon, 23 Jun 2025 21:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715043; cv=none; b=hkN7rGFiU+FMjt7/VOLFaU/U19CxtzW+6lSvJ1jaPgg5yF/F2DJHq2HngDuD2IFzuoTMRAOd9TIEYMp7sUrAQM/or01scl9hK6BEMETSkQmCQdE+qiQjvH31erE3rZ/CqILZDit5kL5tnN+dawPP/2VIfLTvHjzQEXc7DizsC00=
+	t=1750715046; cv=none; b=Vyb26Sxbxh1QQvcg24NciYYuWm28iLQPbCEBJCfw4r5LASx/tOM7XwgsS8DCPdQHpqb5lN/Uk6mIyucAUtCgFZqY8/XBJiwhzmQx3fDp2SLC5Wa+u9+nOg3hC7UOgPswL9g7OznfXw3BzSh0zMoO1NsbM8Ehvq692g8MK28ByGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715043; c=relaxed/simple;
-	bh=PnLM/BL/G1Og7TZkvMiZ9N8fG0Mzav8fc6Z6cOfRvm4=;
+	s=arc-20240116; t=1750715046; c=relaxed/simple;
+	bh=ST5Zxq1X7213XcpvZDL2R1bMIvm3MrwjS4STJ1OxV0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=moqHlVSVOA69zt4GDc+o0f0nSCvN5l7VouBJXokK9KF9h/2dI4dhNTjJa4TAJpJb3Mf/acbbpkNLqVilh74iRvAQfjY4g1h2JuST6/HE1MJuCOpHkH9DUzJqXJoZad0A30sKVSZlEFmVEw6THQ4utrwXdTolkTJp+G8pweKhAn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+AMDUGp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RWP5dBvkqmLDSJn8UkBt9edgkr9vCX0qxOqDTqas1X7FHRc6u3jVgmKu3moWAn++YD86pchkA4golGLFRW5I7txDBTAgNZ+yCCCw5LMIqVABetqaU92nvh5EsBM+XMOGOW9g7VHCmxdp/TorqokybYbMCr8/BNeRdxJM6RS3P2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efbzvcs7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+AMDUGp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084DAC4CEEA;
-	Mon, 23 Jun 2025 21:44:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efbzvcs7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF0BC4CEEA;
+	Mon, 23 Jun 2025 21:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715043;
-	bh=PnLM/BL/G1Og7TZkvMiZ9N8fG0Mzav8fc6Z6cOfRvm4=;
+	s=korg; t=1750715045;
+	bh=ST5Zxq1X7213XcpvZDL2R1bMIvm3MrwjS4STJ1OxV0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+AMDUGpLgcEDMI1jHWPH9TJWPWf32KUHU9hlhw+c/SGVk88XbVxAVGl6pbWmd7A1
-	 bcytU1HFj/62vGX2kz/L5K3n71MzkApp8SfGnQykUIDOQzxEtPwZSxfHs1aLT63jHy
-	 0mFfojuNv3FUYwwMsiYgbG9+npxtWehGuG7iZyVM=
+	b=efbzvcs7aFhMD4dn0BsoYOMfUhNNERyy2OBwV0UY5NMmNpCX6cxPGZlPfIlN7hURL
+	 GbJvcBF9PyKk8fV4Eicn5TESdQyrgyqGt1BLWH5Kh6UjDJ5ghdruW2kkqm7dpMbwvy
+	 R3oExTO+KN9u8+2OH8MaA8wSXo8RWgB5Qy3IdahA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 176/290] vxlan: Do not treat dst cache initialization errors as fatal
-Date: Mon, 23 Jun 2025 15:07:17 +0200
-Message-ID: <20250623130632.176088241@linuxfoundation.org>
+	Xianglai Li <lixianglai@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.12 152/414] PCI: Add ACS quirk for Loongson PCIe
+Date: Mon, 23 Jun 2025 15:04:49 +0200
+Message-ID: <20250623130645.843163535@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,79 +47,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 20c76dadc783759fd3819d289c72be590660cc8b ]
+commit 1f3303aa92e15fa273779acac2d0023609de30f1 upstream.
 
-FDB entries are allocated in an atomic context as they can be added from
-the data path when learning is enabled.
+Loongson PCIe Root Ports don't advertise an ACS capability, but they do not
+allow peer-to-peer transactions between Root Ports. Add an ACS quirk so
+each Root Port can be in a separate IOMMU group.
 
-After converting the FDB hash table to rhashtable, the insertion rate
-will be much higher (*) which will entail a much higher rate of per-CPU
-allocations via dst_cache_init().
-
-When adding a large number of entries (e.g., 256k) in a batch, a small
-percentage (< 0.02%) of these per-CPU allocations will fail [1]. This
-does not happen with the current code since the insertion rate is low
-enough to give the per-CPU allocator a chance to asynchronously create
-new chunks of per-CPU memory.
-
-Given that:
-
-a. Only a small percentage of these per-CPU allocations fail.
-
-b. The scenario where this happens might not be the most realistic one.
-
-c. The driver can work correctly without dst caches. The dst_cache_*()
-APIs first check that the dst cache was properly initialized.
-
-d. The dst caches are not always used (e.g., 'tos inherit').
-
-It seems reasonable to not treat these allocation failures as fatal.
-
-Therefore, do not bail when dst_cache_init() fails and suppress warnings
-by specifying '__GFP_NOWARN'.
-
-[1] percpu: allocation failed, size=40 align=8 atomic=1, atomic alloc failed, no space left
-
-(*) 97% reduction in average latency of vxlan_fdb_update() when adding
-256k entries in a batch.
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250415121143.345227-14-idosch@nvidia.com
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250403040756.720409-1-chenhuacai@loongson.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pci/quirks.c |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 2ed879a0abc6c..1b6b6acd34894 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -606,10 +606,10 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
- 	if (rd == NULL)
- 		return -ENOMEM;
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -4995,6 +4995,18 @@ static int pci_quirk_brcm_acs(struct pci
+ 		PCI_ACS_SV | PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_UF);
+ }
  
--	if (dst_cache_init(&rd->dst_cache, GFP_ATOMIC)) {
--		kfree(rd);
--		return -ENOMEM;
--	}
-+	/* The driver can work correctly without a dst cache, so do not treat
-+	 * dst cache initialization errors as fatal.
++static int pci_quirk_loongson_acs(struct pci_dev *dev, u16 acs_flags)
++{
++	/*
++	 * Loongson PCIe Root Ports don't advertise an ACS capability, but
++	 * they do not allow peer-to-peer transactions between Root Ports.
++	 * Allow each Root Port to be in a separate IOMMU group by masking
++	 * SV/RR/CR/UF bits.
 +	 */
-+	dst_cache_init(&rd->dst_cache, GFP_ATOMIC | __GFP_NOWARN);
- 
- 	rd->remote_ip = *ip;
- 	rd->remote_port = port;
--- 
-2.39.5
-
++	return pci_acs_ctrl_enabled(acs_flags,
++		PCI_ACS_SV | PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_UF);
++}
++
+ /*
+  * Wangxun 40G/25G/10G/1G NICs have no ACS capability, but on
+  * multi-function devices, the hardware isolates the functions by
+@@ -5128,6 +5140,17 @@ static const struct pci_dev_acs_enabled
+ 	{ PCI_VENDOR_ID_BROADCOM, 0x1762, pci_quirk_mf_endpoint_acs },
+ 	{ PCI_VENDOR_ID_BROADCOM, 0x1763, pci_quirk_mf_endpoint_acs },
+ 	{ PCI_VENDOR_ID_BROADCOM, 0xD714, pci_quirk_brcm_acs },
++	/* Loongson PCIe Root Ports */
++	{ PCI_VENDOR_ID_LOONGSON, 0x3C09, pci_quirk_loongson_acs },
++	{ PCI_VENDOR_ID_LOONGSON, 0x3C19, pci_quirk_loongson_acs },
++	{ PCI_VENDOR_ID_LOONGSON, 0x3C29, pci_quirk_loongson_acs },
++	{ PCI_VENDOR_ID_LOONGSON, 0x7A09, pci_quirk_loongson_acs },
++	{ PCI_VENDOR_ID_LOONGSON, 0x7A19, pci_quirk_loongson_acs },
++	{ PCI_VENDOR_ID_LOONGSON, 0x7A29, pci_quirk_loongson_acs },
++	{ PCI_VENDOR_ID_LOONGSON, 0x7A39, pci_quirk_loongson_acs },
++	{ PCI_VENDOR_ID_LOONGSON, 0x7A49, pci_quirk_loongson_acs },
++	{ PCI_VENDOR_ID_LOONGSON, 0x7A59, pci_quirk_loongson_acs },
++	{ PCI_VENDOR_ID_LOONGSON, 0x7A69, pci_quirk_loongson_acs },
+ 	/* Amazon Annapurna Labs */
+ 	{ PCI_VENDOR_ID_AMAZON_ANNAPURNA_LABS, 0x0031, pci_quirk_al_acs },
+ 	/* Zhaoxin multi-function devices */
 
 
