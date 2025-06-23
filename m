@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5DE1F4628;
-	Mon, 23 Jun 2025 21:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DEC1F4628;
+	Mon, 23 Jun 2025 21:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715888; cv=none; b=ZnzUGvuyyQNnZHp4CFNmVC28OreUtgzlY0O1pnbIY353y1+9dvFgE8ePcCeIRjznS9XkjmfXhWYa3pT2pMGyExpYk/GzIeVCsWE9qzwabVhLv1B0gjPp+R2Lh0PZYqW6y+f6pQzOsc6V35Socu1Z5ef5VJLc7nX8IieO/vaLT4M=
+	t=1750715890; cv=none; b=ACIK8mAD6i6deWMwcWrLtGr/X1y6EPHyic/if5VZ8aAee3/dZlfc1qm+bGQdPrxNWxR+EB/TpUQlA5zyGibUCZNjN7D2it5MXeBXi4mPd5do4m/y2l4b79h4tQgACjrR7IaPpLJGg2Uanzj5QPgoWYsB8KludbJt7fUKGN1iWSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715888; c=relaxed/simple;
-	bh=x+JLJZZp5SfCELYYAwWug3f+F9Xi2DIXmXTwPQ/3dTQ=;
+	s=arc-20240116; t=1750715890; c=relaxed/simple;
+	bh=4PQ5rpz48z46VkUeVwAZkhY0eupgBwETDP7B3rvaVds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CofU0UXhzd/7uHDZBrV7fBjZaAc70OATkRK9G3diSZu+60zIYI66UG4MtY+YHzaMO9Ks7uegafIjXC0GiJJTa0O14IJ71QdciX0qDH5Mz/wJ0+kASGHN8HwJzBL4Dn5KoBUglzyI1O0ZQTEJLmVyy3RiHjEHXs4muq+5jnOkQ/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpZB089b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OaWjgztf2lNCLxT6i0zuh77iSvkZe/hmdbsxbov0vZJIvi84wEpULGO34EtGmeMd2ikV5jkKCCqrmCZYaVdK7VOh5/gOw4maPVqmgRkcofp2XvPEi9jn8joGgAchZ9FL8VyRbMAT1XbAtqnu8bYlbXrkshxe7vlIx3NCEbDbAx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LxhLmb4I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpZB089b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86FD5C4CEEA;
-	Mon, 23 Jun 2025 21:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LxhLmb4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F357BC4CEEA;
+	Mon, 23 Jun 2025 21:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715887;
-	bh=x+JLJZZp5SfCELYYAwWug3f+F9Xi2DIXmXTwPQ/3dTQ=;
+	s=korg; t=1750715890;
+	bh=4PQ5rpz48z46VkUeVwAZkhY0eupgBwETDP7B3rvaVds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JpZB089bLMJVHHEGYqFm/BV0tzNzQsmXx6xqs0RTHM4/wo0J465KZrllJy/5ZMkSy
-	 SNo9m2a+1WXJDlTyoj6MXYjS58clEIYlMm5VwgkoftPS7+j7hue1c20osC6J/viCF2
-	 MALwlVCc47mWMyH5uD7OdqOMGF6Vdr9R0vkRfvZs=
+	b=LxhLmb4Ik959ad03U9coQc6H3RVgspwQ0xOxbYTCZNbDLcGiDEbWjb6OLHbXt+CQy
+	 0S7OMyas6pARRpiXQNqM2BeS6SWa4kgha6aFpnCOyiz5dMOtcUCJyC2KiJn8vyBPcG
+	 1ChzF/VPk5hXSxwOXlDVm73A7tn++gJOuMDcWx9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 235/414] wireless: purelifi: plfxlc: fix memory leak in plfxlc_usb_wreq_asyn()
-Date: Mon, 23 Jun 2025 15:06:12 +0200
-Message-ID: <20250623130647.913591654@linuxfoundation.org>
+	wangdicheng <wangdicheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.15 490/592] ALSA: usb-audio: Rename ALSA kcontrol PCM and PCM1 for the KTMicro sound card
+Date: Mon, 23 Jun 2025 15:07:28 +0200
+Message-ID: <20250623130712.088501371@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +46,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: wangdicheng <wangdicheng@kylinos.cn>
 
-[ Upstream commit 63a9a727d373fa5b8ce509eef50dbc45e0f745b9 ]
+commit 93adf20ff4d6e865e0b974110d3cf2f07c057177 upstream.
 
-Add usb_free_urb() in the error path to prevent memory leak.
+PCM1 not in Pulseaudio's control list; standardize control to
+"Speaker" and "Headphone".
 
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Link: https://patch.msgid.link/aA3_maPlEJzO7wrL@pc
-[fix subject]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250613063636.239683-1-wangdich9700@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/purelifi/plfxlc/usb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/usb/mixer_maps.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/wireless/purelifi/plfxlc/usb.c b/drivers/net/wireless/purelifi/plfxlc/usb.c
-index 56d1139ba8bcc..7e7bfa532ed25 100644
---- a/drivers/net/wireless/purelifi/plfxlc/usb.c
-+++ b/drivers/net/wireless/purelifi/plfxlc/usb.c
-@@ -503,8 +503,10 @@ int plfxlc_usb_wreq_async(struct plfxlc_usb *usb, const u8 *buffer,
- 			  (void *)buffer, buffer_len, complete_fn, context);
+--- a/sound/usb/mixer_maps.c
++++ b/sound/usb/mixer_maps.c
+@@ -383,6 +383,13 @@ static const struct usbmix_name_map ms_u
+ 	{ 0 }   /* terminator */
+ };
  
- 	r = usb_submit_urb(urb, GFP_ATOMIC);
--	if (r)
-+	if (r) {
-+		usb_free_urb(urb);
- 		dev_err(&udev->dev, "Async write submit failed (%d)\n", r);
-+	}
++/* KTMicro USB */
++static struct usbmix_name_map s31b2_0022_map[] = {
++	{ 23, "Speaker Playback" },
++	{ 18, "Headphone Playback" },
++	{ 0 }
++};
++
+ /* ASUS ROG Zenith II with Realtek ALC1220-VB */
+ static const struct usbmix_name_map asus_zenith_ii_map[] = {
+ 	{ 19, NULL, 12 }, /* FU, Input Gain Pad - broken response, disabled */
+@@ -692,6 +699,11 @@ static const struct usbmix_ctl_map usbmi
+ 		.id = USB_ID(0x045e, 0x083c),
+ 		.map = ms_usb_link_map,
+ 	},
++	{
++		/* KTMicro USB */
++		.id = USB_ID(0X31b2, 0x0022),
++		.map = s31b2_0022_map,
++	},
+ 	{ 0 } /* terminator */
+ };
  
- 	return r;
- }
--- 
-2.39.5
-
 
 
