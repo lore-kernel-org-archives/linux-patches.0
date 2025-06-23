@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A800221FBE;
-	Mon, 23 Jun 2025 21:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE292236E5;
+	Mon, 23 Jun 2025 21:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715722; cv=none; b=sOZwVVl5fWW3UyxeiRor05f+/epSyZADg5y5SGUjm9+NPiBTq5/enZekAs5PzoyVosrYgPxXPT+FDotimWEpRr01fonBsJdLM6ZtqxEuR1Al1ryemjeIeHx3/p+lTV5XD0kV15m/N9Q3py1xr1scQdhgag8SS9jIh09SjHIVVH0=
+	t=1750715724; cv=none; b=ttdkp3rxqS7xiZb91cOWQrMbFL5fkyUO0CkWA3EenOIRWxWDH/EkRIWAeS3dADrfKvyDxz+VNJKbDCyPudz0xuB0qeHm2ZOUoSA9GETpWp64d7QeCmAt0wglPaNV7iRZz51UHj4AzhoB57njY91+NJ/eM/QpCwJPYnjAAP5XABM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715722; c=relaxed/simple;
-	bh=YoHDvgCRhkQlnHSiWaGLtxunlJseBfa6/rP1qQ8uoAs=;
+	s=arc-20240116; t=1750715724; c=relaxed/simple;
+	bh=bx9iYJ1DyQSFgYK13BzJ3OYpWs7613CzdjnfpHZKEmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hGGDg0k5IN73giv7ulgezuAPw9LTemVdhiKZciaOg0xEt6bUMKjCM83C/vWG+JeX5NtJDdvQ8/c6YnFEGEocadT/zsj9T9sp/tm4o5ltT0n8vtEfI0PSRy1Scs38hpN9x20xsOexmoZLb6lGOStA/bBWixVfVUPLaWsZ6Blnv0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXgHSF/m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vD52KNTgAvM9zCkA79LEp2VDSEGMUaBZcj5qhRbFURl7ydUVKFtaw7j4dF9KWTW6nu00ZlpSHt79eefHbf06Gb23w4siz1aIJdc9JdwR7yXBiVHEmwIu1CbGhnA8f9wqrP5m2R/kpCH31GAaAPMziBrFI4QwgHhEELNMGKWZpJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVlIzV3G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXgHSF/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F113C4CEF1;
-	Mon, 23 Jun 2025 21:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVlIzV3G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17054C4CEED;
+	Mon, 23 Jun 2025 21:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715721;
-	bh=YoHDvgCRhkQlnHSiWaGLtxunlJseBfa6/rP1qQ8uoAs=;
+	s=korg; t=1750715724;
+	bh=bx9iYJ1DyQSFgYK13BzJ3OYpWs7613CzdjnfpHZKEmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WXgHSF/mIeja7lSIVrp2ZLVQU8hOJ3b5weJiy0upcptDbZb2/DxqOZLENYDy9ArMy
-	 fidxom59V/s4X11IjXwZ2N6LZLAffwKGFgRZxSex4Mx+UVCxSHnmzmPHnYiIhc3Ypk
-	 +WzmTk5QP36mGVLXkZPJ5V3f/+TxaKCHHrkaKtFY=
+	b=hVlIzV3GcQA5VjJboptoWnwscMxgyTfaIuiInPBAyV/fIRWoanXI4TJWD0g3VbtIs
+	 /Jfqu9cfZJ9wGllUs7Ul/a4UD6JC97YVtBKIWbgkxKw4D/so9ftWou3HoVdq2UvY7w
+	 E8yGko6weLiBCzAaYDKPGbasPEGGMl5veHJzog+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Yen <leon.yen@mediatek.com>,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Ahmed Salem <x0rw3ll@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 203/414] wifi: mt76: mt7925: introduce thermal protection
-Date: Mon, 23 Jun 2025 15:05:40 +0200
-Message-ID: <20250623130647.083137209@linuxfoundation.org>
+Subject: [PATCH 5.15 263/411] ACPICA: Avoid sequence overread in call to strncmp()
+Date: Mon, 23 Jun 2025 15:06:47 +0200
+Message-ID: <20250623130640.278480453@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,95 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Yen <leon.yen@mediatek.com>
+From: Ahmed Salem <x0rw3ll@gmail.com>
 
-[ Upstream commit 1d81e893b422a6f0ae70f8648867c2e73edfb413 ]
+[ Upstream commit 64b9dfd0776e9c38d733094859a09f13282ce6f8 ]
 
-Add thermal protection to prevent the chip from possible overheating
-due to prolonged high traffic and adverse operating conditions.
+ACPICA commit 8b83a8d88dfec59ea147fad35fc6deea8859c58c
 
-Signed-off-by: Leon Yen <leon.yen@mediatek.com>
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250509082117.453819-1-mingyen.hsieh@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+ap_get_table_length() checks if tables are valid by
+calling ap_is_valid_header(). The latter then calls
+ACPI_VALIDATE_RSDP_SIG(Table->Signature).
+
+ap_is_valid_header() accepts struct acpi_table_header as an argument, so
+the signature size is always fixed to 4 bytes.
+
+The problem is when the string comparison is between ACPI-defined table
+signature and ACPI_SIG_RSDP. Common ACPI table header specifies the
+Signature field to be 4 bytes long[1], with the exception of the RSDP
+structure whose signature is 8 bytes long "RSD PTR " (including the
+trailing blank character)[2]. Calling strncmp(sig, rsdp_sig, 8) would
+then result in a sequence overread[3] as sig would be smaller (4 bytes)
+than the specified bound (8 bytes).
+
+As a workaround, pass the bound conditionally based on the size of the
+signature being passed.
+
+Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#system-description-table-header [1]
+Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#root-system-description-pointer-rsdp-structure [2]
+Link: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overread [3]
+Link: https://github.com/acpica/acpica/commit/8b83a8d8
+Signed-off-by: Ahmed Salem <x0rw3ll@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2248233.Mh6RI2rZIc@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7925/init.c  |  6 ++++++
- .../net/wireless/mediatek/mt76/mt7925/mcu.c   | 20 ++++++++++++++++++-
- .../net/wireless/mediatek/mt76/mt7925/mcu.h   |  1 +
- 3 files changed, 26 insertions(+), 1 deletion(-)
+ include/acpi/actypes.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/init.c b/drivers/net/wireless/mediatek/mt76/mt7925/init.c
-index 039949b344b98..14553dcc61c57 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/init.c
-@@ -204,6 +204,12 @@ static void mt7925_init_work(struct work_struct *work)
- 		return;
- 	}
+diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h
+index cefbb7ad253e0..ea50b9c469c9d 100644
+--- a/include/acpi/actypes.h
++++ b/include/acpi/actypes.h
+@@ -524,7 +524,7 @@ typedef u64 acpi_integer;
  
-+	ret = mt7925_mcu_set_thermal_protect(dev);
-+	if (ret) {
-+		dev_err(dev->mt76.dev, "thermal protection enable failed\n");
-+		return;
-+	}
-+
- 	/* we support chip reset now */
- 	dev->hw_init_done = true;
+ /* Support for the special RSDP signature (8 characters) */
  
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index a19c108ad4b5c..57a1db394dda4 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -961,6 +961,23 @@ int mt7925_mcu_set_deep_sleep(struct mt792x_dev *dev, bool enable)
- }
- EXPORT_SYMBOL_GPL(mt7925_mcu_set_deep_sleep);
+-#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, 8))
++#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ? ACPI_NAMESEG_SIZE : 8))
+ #define ACPI_MAKE_RSDP_SIG(dest)        (memcpy (ACPI_CAST_PTR (char, (dest)), ACPI_SIG_RSDP, 8))
  
-+int mt7925_mcu_set_thermal_protect(struct mt792x_dev *dev)
-+{
-+	char cmd[64];
-+	int ret = 0;
-+
-+	snprintf(cmd, sizeof(cmd), "ThermalProtGband %d %d %d %d %d %d %d %d %d %d",
-+		 0, 100, 90, 80, 30, 1, 1, 115, 105, 5);
-+	ret = mt7925_mcu_chip_config(dev, cmd);
-+
-+	snprintf(cmd, sizeof(cmd), "ThermalProtAband %d %d %d %d %d %d %d %d %d %d",
-+		 1, 100, 90, 80, 30, 1, 1, 115, 105, 5);
-+	ret |= mt7925_mcu_chip_config(dev, cmd);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(mt7925_mcu_set_thermal_protect);
-+
- int mt7925_run_firmware(struct mt792x_dev *dev)
- {
- 	int err;
-@@ -3288,7 +3305,8 @@ int mt7925_mcu_fill_message(struct mt76_dev *mdev, struct sk_buff *skb,
- 		else
- 			uni_txd->option = MCU_CMD_UNI_EXT_ACK;
- 
--		if (cmd == MCU_UNI_CMD(HIF_CTRL))
-+		if (cmd == MCU_UNI_CMD(HIF_CTRL) ||
-+		    cmd == MCU_UNI_CMD(CHIP_CONFIG))
- 			uni_txd->option &= ~MCU_CMD_ACK;
- 
- 		goto exit;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.h
-index 887427e0760ae..780c5921679aa 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.h
-@@ -635,6 +635,7 @@ int mt7925_mcu_add_bss_info(struct mt792x_phy *phy,
- int mt7925_mcu_set_timing(struct mt792x_phy *phy,
- 			  struct ieee80211_bss_conf *link_conf);
- int mt7925_mcu_set_deep_sleep(struct mt792x_dev *dev, bool enable);
-+int mt7925_mcu_set_thermal_protect(struct mt792x_dev *dev);
- int mt7925_mcu_set_channel_domain(struct mt76_phy *phy);
- int mt7925_mcu_set_radio_en(struct mt792x_phy *phy, bool enable);
- int mt7925_mcu_set_chctx(struct mt76_phy *phy, struct mt76_vif *mvif,
+ /* Support for OEMx signature (x can be any character) */
 -- 
 2.39.5
 
