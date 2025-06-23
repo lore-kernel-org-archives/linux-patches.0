@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C1F23BF9F;
-	Mon, 23 Jun 2025 13:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADC223BF9F;
+	Mon, 23 Jun 2025 13:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685085; cv=none; b=e98X7cSqXnr+7hch0mkuv9xoUIi3oDU1iXCWLHlnH6eMGSveeV7hLprRsmpYFMTvKynlo0xS74LnrHY58MrbLAZfNDCuP1b4/LaPzgV+kAlSMryZ4qHjSXBxWtSM1jjmseOU7/gbe+fdlo7Na47uYtlVxzLR3yw49etRgyNgMyA=
+	t=1750685085; cv=none; b=DTqyQk7EvO76bt5iIgjdIJrxjVkbtm4U8yo5L5VwSZj8FjISYb9K1U7EIuSow04MOn78uQpa9Ho91BsHHP1CXaU5/NOG0q15fRL1dcqpB0U4JT6DYyW6tYnVKm2fd5eCRZNIlEo1VJwwSarU6kkB3kWbSOz4SkrRDBnz+Q7l7I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750685085; c=relaxed/simple;
-	bh=jjrJ8rmTosgrQ8aPeFFoUZXKBWM+mm4ouS2G0prpcxg=;
+	bh=7gW1HRrutcwferKOpT3Z8fFV2hDzUQvSLoNDGNagRLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HmsGNq0c4/tGAuIgBMlLFxOwee+gaglZUDg9Jp6w6ezNo0mY6FKmLFvgz8rKmtS69OgOJjx2p7VOJcrG1+TcZbh4KXDYfRtt6GvUwrAEUNbqFRyv3fmu1uRuT+8jALF4Ak8kNI8gRO5LK0d2nQS8lQUs9YVwe2pqm9u48moVj+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jnjNEtg+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dpH+Y9kq+jonL21qojvtpuJTMauH227TWa1GGHWTCeCASy98ydghHsSqqMdtn8zrtvr91hXul7/rx6z6LMh9wzMznMBKIlf2NYVB5N9RyUuMEWuzPcNB+Qv/LpPy6Hn//yrCU3wg5RvgHYDpjbkqzbSBCX4yeG4wPoDcdo6zFfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5ZNEaUs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jnjNEtg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54921C4CEEA;
-	Mon, 23 Jun 2025 13:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5ZNEaUs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E770BC4CEF0;
+	Mon, 23 Jun 2025 13:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685082;
-	bh=jjrJ8rmTosgrQ8aPeFFoUZXKBWM+mm4ouS2G0prpcxg=;
+	s=korg; t=1750685085;
+	bh=7gW1HRrutcwferKOpT3Z8fFV2hDzUQvSLoNDGNagRLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jnjNEtg+hPZfB0PCGnSs8gbmuOPttUQfdpcS17MlVKxYcBislaUJH1necHCKbLK7S
-	 uumuEGyiA4E+ZNzNwrAWBWTAFF64eYIybgZGyTPDe91cAqy9RoOcKNxdCmhAeE9udu
-	 qh7FWdaSTja4GLEys3ldnk0C1HA6Ys0zBzuVpUZA=
+	b=n5ZNEaUsuXeOz3VOvkx9tMZoN3DxxMyXjUAX6i8YjkoOzzm6xW3X5m94iIpxyjA9C
+	 bllfuOhaj0uss/7DqYhlktl5C+czWwmsmArHKq9oyR/TKtNsAPwdudBUR26VBIJ1fC
+	 TZMsSuS9wVf8Ldoai0f82Ec8TPxeZzsMSZNJ3WzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Daly <quic_pdaly@quicinc.com>,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 231/592] PM: runtime: fix denying of auto suspend in pm_suspend_timer_fn()
-Date: Mon, 23 Jun 2025 15:03:09 +0200
-Message-ID: <20250623130705.784658558@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.4 092/222] kbuild: Add CLANG_FLAGS to as-instr
+Date: Mon, 23 Jun 2025 15:07:07 +0200
+Message-ID: <20250623130614.866427232@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +46,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charan Teja Kalla <quic_charante@quicinc.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 40d3b40dce375d6f1c1dbf08d79eed3aed6c691d ]
+commit cff6e7f50bd315e5b39c4e46c704ac587ceb965f upstream.
 
-pm_runtime_put_autosuspend() schedules a hrtimer to expire
-at "dev->power.timer_expires". If the hrtimer's callback,
-pm_suspend_timer_fn(), observes that the current time equals
-"dev->power.timer_expires", it unexpectedly bails out instead of
-proceeding with runtime suspend.
+A future change will move CLANG_FLAGS from KBUILD_{A,C}FLAGS to
+KBUILD_CPPFLAGS so that '--target' is available while preprocessing.
+When that occurs, the following errors appear multiple times when
+building ARCH=powerpc powernv_defconfig:
 
-pm_suspend_timer_fn():
+  ld.lld: error: vmlinux.a(arch/powerpc/kernel/head_64.o):(.text+0x12d4): relocation R_PPC64_ADDR16_HI out of range: -4611686018409717520 is not in [-2147483648, 2147483647]; references '__start___soft_mask_table'
+  ld.lld: error: vmlinux.a(arch/powerpc/kernel/head_64.o):(.text+0x12e8): relocation R_PPC64_ADDR16_HI out of range: -4611686018409717392 is not in [-2147483648, 2147483647]; references '__stop___soft_mask_table'
 
- if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
- 	dev->power.timer_expires = 0;
- 	rpm_suspend(..)
- }
+Diffing the .o.cmd files reveals that -DHAVE_AS_ATHIGH=1 is not present
+anymore, because as-instr only uses KBUILD_AFLAGS, which will no longer
+contain '--target'.
 
-Additionally, as ->timer_expires is not cleared, all the future auto
-suspend requests will not schedule hrtimer to perform auto suspend.
+Mirror Kconfig's as-instr and add CLANG_FLAGS explicitly to the
+invocation to ensure the target information is always present.
 
-rpm_suspend():
-
- if ((rpmflags & RPM_AUTO) &&...) {
- 	if (!(dev->power.timer_expires && ...) { <-- this will fail.
- 		hrtimer_start_range_ns(&dev->power.suspend_timer,...);
- 	}
- }
-
-Fix this by as well checking if current time reaches the set expiration.
-
-Co-developed-by: Patrick Daly <quic_pdaly@quicinc.com>
-Signed-off-by: Patrick Daly <quic_pdaly@quicinc.com>
-Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Link: https://patch.msgid.link/20250515064125.1211561-1-quic_charante@quicinc.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/runtime.c | 2 +-
+ scripts/Kbuild.include |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index 205a4f8828b0a..c55a7c70bc1a8 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1011,7 +1011,7 @@ static enum hrtimer_restart  pm_suspend_timer_fn(struct hrtimer *timer)
- 	 * If 'expires' is after the current time, we've been called
- 	 * too early.
- 	 */
--	if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
-+	if (expires > 0 && expires <= ktime_get_mono_fast_ns()) {
- 		dev->power.timer_expires = 0;
- 		rpm_suspend(dev, dev->power.timer_autosuspends ?
- 		    (RPM_ASYNC | RPM_AUTO) : RPM_ASYNC);
--- 
-2.39.5
-
+--- a/scripts/Kbuild.include
++++ b/scripts/Kbuild.include
+@@ -108,7 +108,7 @@ as-option = $(call try-run,\
+ # Usage: aflags-y += $(call as-instr,instr,option1,option2)
+ 
+ as-instr = $(call try-run,\
+-	printf "%b\n" "$(1)" | $(CC) -Werror $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
++	printf "%b\n" "$(1)" | $(CC) -Werror $(CLANG_FLAGS) $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
+ 
+ # __cc-option
+ # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
 
 
