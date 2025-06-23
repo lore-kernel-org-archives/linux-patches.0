@@ -1,253 +1,97 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279C51E1A05
-	for <patches@lists.linux.dev>; Mon, 23 Jun 2025 20:56:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30428219E0;
+	Mon, 23 Jun 2025 21:05:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712180; cv=none; b=uoIAjOC5H00oshokH9N3LSvgh38tp/my7fKwA/EFlSSOTKUFf5gPxoPq5zH7Wtl6lflIc2zQZvHKqYbPuwmYZtUP6340bQirHyi8MtDFeVb/55/qkVXiaiV0suI5OyjzHEjIMPX918kwfC+YGqzLFF966atqaWLFLMUz92O+jOs=
+	t=1750712756; cv=none; b=NqdDhSCapkJMzCrC+L6OibDf2CE8Gpqq00F394jYsbJvxb2b9o96GPjT5NP0Oue7oQPgR/8AAP8D7TfI6wUPhW//ZA+aVguQQWtOiN65Bcs8rMTIUiMv49GS74x5XIBE0bfCwIayAyL1hCRIRdxGDqkHvhgclifHSHU8lywuxHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712180; c=relaxed/simple;
-	bh=jYM0G9ES4rFsGTmdDqEn/XKwe75r7vjUpoU9BcABy7o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Fr1W4sSdYdjVI1xi0m+X/ixto/RW08UC3bTMsZxkH9jgxKKBNEa53f5ifqzEbin+oMtL2hvtiHUujo4HyKK68ObZ/Lsl+4mOEtwzAyFw2BimopBrigi4BsTY+skfCuRuAs+xJbUb1MsUL1OgP7JymDreB8HgsGZNOl5z75xp4/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fjo4xfS1; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1750712756; c=relaxed/simple;
+	bh=CKx+Hb3Td+bELceguDVxpsykqo1GAefXT/cNEgyfz6s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=L5sGLl6WmXFQYOUhpPhICEL0DyeoxjsL6C7FgMVEk1UIqp/eYvoV+/ukyI+HZJuE9IQ5GHJ6XJ/cqEkNpYFqERaVdr+SoA19BNYR9awr3L7lgOomU8x/t7MC0aLVpl+V+uwtU2lTfku+BAuE31Co74d3iQ3JuthZOunCzemCGI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ag/XibzW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fjo4xfS1"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-311da0bef4aso4924073a91.3
-        for <patches@lists.linux.dev>; Mon, 23 Jun 2025 13:56:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750712178; x=1751316978; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QVzL4zaArPg/5of/Yc7E7efOjPemBYxYx3U1AQg+Scw=;
-        b=fjo4xfS17MkERgn5XKitRKTaCEYHp6RzhCl2Y1sY9juYw7OpnuUqDINW0m4aULDwVf
-         S7XxHR716xdij/ZkAB85tcLWucEgGOTqSHsJsV+Xjc2Jbjjd6Ad4qXEDi2VTnvt+Fu8Q
-         wVMOMsyAnZxFiO323kMX4xVGWnYr8zgdQXH6n4qqSG1qbWaRpi641YVh2w3vo8i9Y77Y
-         66GjU6pevkOoWtdpxkxhEGAyOmI0xZ0jBexpvx8tb4vwQhOqBrAB3VPJHN0Kehtpmqnx
-         1nIzVrOtzGEIfMoWeZgQ93IazKZisrT5dc4JRZ1grH5/SQnznOGMnMsaG0U2BJrvcEuy
-         3czw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750712178; x=1751316978;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QVzL4zaArPg/5of/Yc7E7efOjPemBYxYx3U1AQg+Scw=;
-        b=fLe1Hg97W4FIBvfQHvSP4ZKQnxXQ/qPpC1bfIud/f75/0tLCN6Er9gcL5uN1rG84GQ
-         HEv2TpMD7RBFMuJhuzxAyBHEzdxU8v6mnm6hf1qpCAnDpGQ0mOq95tqzhn8DC5h/RSoz
-         8AvEBTAClZ9U/dviir05zuCQPJ08fJZs/itA+ve4ywV9ZU+7M1iYgNALdMLoli+mIWhW
-         Z7ZVRQXj7I4vJEytNFfNAAbstDWeDd2csGk2U6P4zY+94BfIGg5yZ+4g2KVjQ3sZScc1
-         22q251HpXs1Pb2EXLW7PaHk2CDTg9BlC9HqUtWIGOV6b2dstfLeYSTJOAv/Ot2whJcvZ
-         1uXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW61BbkYIM5I2xqbVjQxCbxzBNII8HqDGcHhzRROO3Hy91KATyvtsEYrIBetMztVvR8aGFKxS6x@lists.linux.dev
-X-Gm-Message-State: AOJu0YwUutM7vQKE/Jkygp/4K8102Va5qZFi1O77NqtyKI1yz73++Fis
-	wYrG94Q5xVPxONmNQCyUTRBpcGvbx3tjcUZEGh0TqWUCnQsLCn3RrCbEHko/TmxAD+Pz10HGgKZ
-	+j1JGPErYSrtmMcr70EQmL+4GsWj7seVWd6JF3LXccteeM5e0edIhEC0wJA==
-X-Gm-Gg: ASbGnctVbnV+Ucn12xnxx6dlcwmcmJWhY9F/zbYBa/zRsBRBgFXT65JDg+4kldxkhxv
-	+dkoMFTRq2/F06mEtxHUMVq6i1sjrTwrQJb4cR+dgJcF6jeKCTa/GX4ipyTW2kE/ltkO+2r0zXR
-	JuegaOLaFmqQA4rOnTZpZyweTDUiqBNqmr8fZ7jWTBfhNPva5dEaYKM21UO2nkqPgkYNPS3NcmW
-	y4u
-X-Google-Smtp-Source: AGHT+IG62A6gBFAgiYMZLM6+rT05GIhGRPJMk/BiwxwHLKvrOe2J7NsF6Q4574dAZySK1HIBp2ZYQWF+gtKGa/ZvJqk=
-X-Received: by 2002:a17:90b:4a88:b0:313:db0b:75e3 with SMTP id
- 98e67ed59e1d1-3159d90ba83mr20236751a91.35.1750712178330; Mon, 23 Jun 2025
- 13:56:18 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ag/XibzW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6E7C4CEEA;
+	Mon, 23 Jun 2025 21:05:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1750712755;
+	bh=CKx+Hb3Td+bELceguDVxpsykqo1GAefXT/cNEgyfz6s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ag/XibzW/2JaE2VgfQTW7zi5/a2VMnX8eA4oCN8bUDh/K1dBSDqa1sTtRC/vYrsdI
+	 jaGUuRPziqsumEVEXk/tiBZ8+3UpJqGAyi1F36NDHN/jTVF1WGHYooCAxXF9C9Hwro
+	 /ombnYFwNCD7PYRtds1h1whWefvjIE1L8LXLxUI8=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 106/411] PCI/DPC: Initialize aer_err_info before using it
+Date: Mon, 23 Jun 2025 15:04:10 +0200
+Message-ID: <20250623130636.185117099@linuxfoundation.org>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250623130700.210182694@linuxfoundation.org>
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 24 Jun 2025 02:26:06 +0530
-X-Gm-Features: Ac12FXzC4d8GyG_bxKGLV9U5tKPTyHhrkv4bTYglFn3es23dk86lnyhnyukxKB8
-Message-ID: <CA+G9fYt+aQL1Z=h7XSccsjmjJWLKvXBCMYJR+vq3g=Pw6wPPMA@mail.gmail.com>
-Subject: Re: [PATCH 6.15 000/592] 6.15.4-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, 23 Jun 2025 at 18:39, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.15.4 release.
-> There are 592 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 25 Jun 2025 13:05:55 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.4-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
+------------------
 
-Regressions on arm, arm64, x86_64 rust config builds with gcc-13 and
-clang-20 failed on
-the Linux stable-rc 6.15.4-rc1.
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-Regressions found on arm64
-* arm, build
-  - rustclang-lkftconfig-kselftest
+[ Upstream commit a424b598e6a6c1e69a2bb801d6fd16e805ab2c38 ]
 
-* arm64, build
-  - rustclang-lkftconfig-kselftest
-  - rustgcc-lkftconfig-kselftest
+Previously the struct aer_err_info "info" was allocated on the stack
+without being initialized, so it contained junk except for the fields we
+explicitly set later.
 
-* riscv, build
-  - rustclang-nightly-lkftconfig-kselftest
+Initialize "info" at declaration so it starts as all zeros.
 
-* x86_64, build
-  - rustclang-nightly-lkftconfig-kselftest
-  - rustgcc-lkftconfig-kselftest
+Fixes: 8aefa9b0d910 ("PCI/DPC: Print AER status in DPC event handling")
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://patch.msgid.link/20250522232339.1525671-2-helgaas@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/pci/pcie/dpc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Regression Analysis:
- - New regression? Yes
- - Reproducibility? Yes
-
-Build regression: stable-rc rust unresolved import `crate::sync::Completion`
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+diff --git a/drivers/pci/pcie/dpc.c b/drivers/pci/pcie/dpc.c
+index ab83f78f3eb1d..cabbaacdb6e61 100644
+--- a/drivers/pci/pcie/dpc.c
++++ b/drivers/pci/pcie/dpc.c
+@@ -263,7 +263,7 @@ static int dpc_get_aer_uncorrect_severity(struct pci_dev *dev,
+ void dpc_process_error(struct pci_dev *pdev)
+ {
+ 	u16 cap = pdev->dpc_cap, status, source, reason, ext_reason;
+-	struct aer_err_info info;
++	struct aer_err_info info = {};
+ 
+ 	pci_read_config_word(pdev, cap + PCI_EXP_DPC_STATUS, &status);
+ 	pci_read_config_word(pdev, cap + PCI_EXP_DPC_SOURCE_ID, &source);
+-- 
+2.39.5
 
 
-## Build errors
-error[E0432]: unresolved import `crate::sync::Completion`
-  --> /builds/linux/rust/kernel/devres.rs:16:22
-   |
-16 |     sync::{rcu, Arc, Completion},
-   |                      ^^^^^^^^^^ no `Completion` in `sync`
 
-error[E0412]: cannot find type `Bound` in this scope
-   --> /builds/linux/rust/kernel/devres.rs:226:49
-    |
-226 |     pub fn access<'a>(&'a self, dev: &'a Device<Bound>) -> Result<&'a T> {
-    |                                                 ^^^^^ not found
-in this scope
-    |
-help: consider importing this enum
-    |
-8   + use core::range::Bound;
-    |
-
-error[E0107]: struct takes 0 generic arguments but 1 generic argument
-was supplied
-   --> /builds/linux/rust/kernel/devres.rs:226:42
-    |
-226 |     pub fn access<'a>(&'a self, dev: &'a Device<Bound>) -> Result<&'a T> {
-    |                                          ^^^^^^------- help:
-remove the unnecessary generics
-    |                                          |
-    |                                          expected 0 generic arguments
-    |
-note: struct defined here, with 0 generic parameters
-   --> /builds/linux/rust/kernel/device.rs:45:12
-    |
-45  | pub struct Device(Opaque<bindings::device>);
-    |            ^^^^^^
-
-error[E0600]: cannot apply unary operator `!` to type `()`
-   --> /builds/linux/rust/kernel/devres.rs:172:12
-    |
-172 |         if !inner.data.revoke() {
-    |            ^^^^^^^^^^^^^^^^^^^^ cannot apply unary operator `!`
-
-error[E0599]: no method named `access` found for struct `Revocable` in
-the current scope
-   --> /builds/linux/rust/kernel/devres.rs:234:33
-    |
-234 |         Ok(unsafe { self.0.data.access() })
-    |                                 ^^^^^^
-    |
-   ::: /builds/linux/rust/kernel/revocable.rs:64:1
-    |
-64  | #[pin_data(PinnedDrop)]
-    | ----------------------- method `access` not found for this struct
-    |
-help: there is a method `try_access` with a similar name
-    |
-234 |         Ok(unsafe { self.0.data.try_access() })
-    |                                 ~~~~~~~~~~
-
-error[E0599]: no method named `try_access_with` found for struct
-`Revocable` in the current scope
-   --> /builds/linux/rust/kernel/devres.rs:244:21
-    |
-244 |         self.0.data.try_access_with(f)
-    |                     ^^^^^^^^^^^^^^^
-    |
-   ::: /builds/linux/rust/kernel/revocable.rs:64:1
-    |
-64  | #[pin_data(PinnedDrop)]
-    | ----------------------- method `try_access_with` not found for this struct
-    |
-help: there is a method `try_access` with a similar name, but with
-different arguments
-   --> /builds/linux/rust/kernel/revocable.rs:97:5
-    |
-97  |     pub fn try_access(&self) -> Option<RevocableGuard<'_, T>> {
-    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-error[E0308]: mismatched types
-   --> /builds/linux/rust/kernel/devres.rs:257:21
-    |
-257 |         if unsafe { self.0.data.revoke_nosync() } {
-    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `bool`,
-found `()`
-
-error: aborting due to 7 previous errors
-
-Some errors have detailed explanations: E0107, E0308, E0412, E0432,
-E0599, E0600.
-For more information about an error, try `rustc --explain E0107`.
-make[3]: *** [/builds/linux/rust/Makefile:536: rust/kernel.o] Error 1
-
-## Source
-* Kernel version: 6.15.4-rc1
-* Git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* Git sha: de19bfa00d6f93fdcd38a5c088466e093af981f2
-* Git describe: v6.15.3-593-gde19bfa00d6f
-* Project details:
-https://regressions.linaro.org/lkft/linux-stable-rc-linux-6.15.y/v6.15.3-593-gde19bfa00d6f/
-* Architectures: arm arm64 x86_64
-* Toolchains: gcc-12
-* Kconfigs: allyesconfig
-
-## Build arm64
-* Build log: https://qa-reports.linaro.org/api/testruns/28840986/log_file/
-* Build details:
-https://regressions.linaro.org/lkft/linux-stable-rc-linux-6.15.y/v6.15.3-593-gde19bfa00d6f/build/rustgcc-lkftconfig-kselftest/
-* Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/2yuYPOcS6L7NBPk6w3gHjPLYyFI/
-* Kernel config:
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2yuYPOcS6L7NBPk6w3gHjPLYyFI/config
-
-## Steps to reproduce
-  - tuxmake --runtime podman \
-            --target-arch arm64 \
-            --toolchain rustgcc --kconfig defconfig \
-            --kconfig-add
-https://gitlab.com/Linaro/lkft/kernel-fragments/-/raw/main/systemd.config
-\
-            --kconfig-add CONFIG_GCC_PLUGINS=n \
-            --kconfig-add tools/testing/selftests/rust/config \
-              TARGETS=rust debugkernel dtbs dtbs-legacy headers kernel
-kselftest modules
-
---
-Linaro LKFT
-https://lkft.linaro.org
