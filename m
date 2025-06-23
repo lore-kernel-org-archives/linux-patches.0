@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E807482;
-	Mon, 23 Jun 2025 21:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386DC2628C;
+	Mon, 23 Jun 2025 21:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713594; cv=none; b=W+ZUzvwWLd2Y27W712TgK8Qi0dRp02jhCaGvTdk7an/7f4cPP+Xe8IpGz/3rJzCxjpCmOaZkzs/Jmc5VT0YkgOF53rN9xUJ9HUTLMFs1Rsm12a4+IjQLsNqY0QNfqmb0+xku5W42wJ1TwSqxjHJ+bLKHQbulVgAE9IRgVnIIMkY=
+	t=1750713597; cv=none; b=a13DQwc6Hgm2TZxrkcjfW/6IbN2qsKlzzd9AsS+bKVa9zN7oOYvZtUW8KupOM0fti09EeQ63SRVHvsSEMHMfxEMfvjt3Lnb+0nf+eZw8AEl0dGKxpiFiAvcYFhMIag6KgS0Bj+aQDhNZanYndEbEIKWJk/aKXMvPWwk8X8LWqU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713594; c=relaxed/simple;
-	bh=YViEm5A7eGaBFKqQBHnsRYgC56FbCyQHsHKqxrwm9uM=;
+	s=arc-20240116; t=1750713597; c=relaxed/simple;
+	bh=EWOOqxPZRcfJISl/hHmmbhmXRA8sdFEw03/510R7sQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sfbYsGm6crf9j4YhBOTadXyFsGAXw7n1mS3GoFGNcSGBsY8A3FRjGq3wyu/rpxF+tAzyhPp8LQQIW/Mkl34qG11/R0rH0NvOlFqnTNt9hGK4aTYsxv2KS4rCkY0HyZ9FSL1j+XUW3PjOEc4JSo4vH6rqNSLCvZEo2nFY2RDsY64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iryCWGcF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ntb8ja1+A88GaMGozuc87jvTzgKAdhYgEmyZ8TlcDUu3ri20VBsjN8zR4NzgJPlT8Kj2DXLy+fHS7X/05qvbeUIA9lX+lWjt4Avir3RfgRwzqhjUdpwWgDbfa2Obndgbe34JEoZRkCDbvny5OrUlrYWiGT8vfyOrB0xByNy5gA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2pVzP/1p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iryCWGcF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED98C4CEEA;
-	Mon, 23 Jun 2025 21:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pVzP/1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EDBC4CEEA;
+	Mon, 23 Jun 2025 21:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713594;
-	bh=YViEm5A7eGaBFKqQBHnsRYgC56FbCyQHsHKqxrwm9uM=;
+	s=korg; t=1750713597;
+	bh=EWOOqxPZRcfJISl/hHmmbhmXRA8sdFEw03/510R7sQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iryCWGcFHtOuBvOHEltk7IByKmtVpocqcl1f3v3ScovVL6Z0xPtZrNwBQ2koISbDl
-	 Zgc63LKQPHlndzII4e1z+Wrv9J5s9oLpQt+JWfuWJlG1HH0j2eeeQSZdiPwszJ5065
-	 A9T2VznxKsDa6TUiHtrpyKlIcFbB4DcVXQBbMRfU=
+	b=2pVzP/1pdtVzQM09CpyiURU8YOq4LhjmMijt5N80U0IkNy7jpEUZJ77wo128xL1/l
+	 yr+FQjHngnpdIcRSDG7H/EWzgrtCV2BtcXjq6aWAPfkv3EzUPjk84mDNSjpkuRZUqn
+	 HQ7nEWAPeIjteGluOd2M495OL8mmiEtqMyk7QxRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Adam Ford <aford173@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 128/411] fix propagation graph breakage by MOVE_MOUNT_SET_GROUP move_mount(2)
-Date: Mon, 23 Jun 2025 15:04:32 +0200
-Message-ID: <20250623130636.788800879@linuxfoundation.org>
+Subject: [PATCH 6.1 112/508] arm64: dts: imx8mn-beacon: Fix RTC capacitive load
+Date: Mon, 23 Jun 2025 15:02:37 +0200
+Message-ID: <20250623130648.051904062@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit d8cc0362f918d020ca1340d7694f07062dc30f36 ]
+[ Upstream commit c3f03bec30efd5082b55876846d57b5d17dae7b9 ]
 
-9ffb14ef61ba "move_mount: allow to add a mount into an existing group"
-breaks assertions on ->mnt_share/->mnt_slave.  For once, the data structures
-in question are actually documented.
+Although not noticeable when used every day, the RTC appears to drift when
+left to sit over time.  This is due to the capacitive load not being
+properly set. Fix RTC drift by correcting the capacitive load setting
+from 7000 to 12500, which matches the actual hardware configuration.
 
-Documentation/filesystem/sharedsubtree.rst:
-        All vfsmounts in a peer group have the same ->mnt_master.  If it is
-	non-NULL, they form a contiguous (ordered) segment of slave list.
-
-do_set_group() puts a mount into the same place in propagation graph
-as the old one.  As the result, if old mount gets events from somewhere
-and is not a pure event sink, new one needs to be placed next to the
-old one in the slave list the old one's on.  If it is a pure event
-sink, we only need to make sure the new one doesn't end up in the
-middle of some peer group.
-
-"move_mount: allow to add a mount into an existing group" ends up putting
-the new one in the beginning of list; that's definitely not going to be
-in the middle of anything, so that's fine for case when old is not marked
-shared.  In case when old one _is_ marked shared (i.e. is not a pure event
-sink), that breaks the assumptions of propagation graph iterators.
-
-Put the new mount next to the old one on the list - that does the right thing
-in "old is marked shared" case and is just as correct as the current behaviour
-if old is not marked shared (kudos to Pavel for pointing that out - my original
-suggested fix changed behaviour in the "nor marked" case, which complicated
-things for no good reason).
-
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Fixes: 9ffb14ef61ba ("move_mount: allow to add a mount into an existing group")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: 36ca3c8ccb53 ("arm64: dts: imx: Add Beacon i.MX8M Nano development kit")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index a99a060e89316..76a1cf75457be 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2765,7 +2765,7 @@ static int do_set_group(struct path *from_path, struct path *to_path)
- 	if (IS_MNT_SLAVE(from)) {
- 		struct mount *m = from->mnt_master;
- 
--		list_add(&to->mnt_slave, &m->mnt_slave_list);
-+		list_add(&to->mnt_slave, &from->mnt_slave);
- 		to->mnt_master = m;
- 	}
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
+index 1133cded9be2f..c4b1c6029c9a9 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
+@@ -240,6 +240,7 @@
+ 	rtc: rtc@51 {
+ 		compatible = "nxp,pcf85263";
+ 		reg = <0x51>;
++		quartz-load-femtofarads = <12500>;
+ 	};
+ };
  
 -- 
 2.39.5
