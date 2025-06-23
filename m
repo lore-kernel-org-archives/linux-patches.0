@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C3C221DA8;
-	Mon, 23 Jun 2025 22:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F041F7580;
+	Mon, 23 Jun 2025 22:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716559; cv=none; b=rtaPGv8HmoSKcMZ97NhbS/dEZdPcTr2bwXYa3hzw12sSS8RfmtZxpug2RGfqTXW6T0xuPx0sAlAZU2kD5iNc7lcqW4Cj52HpMzVAPDUOmaufK5Rs5ElWO60bNvFTEqUdNzclB6/dak2fFY2IuyG+d6vOXrHyTFUnflNVWAh4l6w=
+	t=1750716563; cv=none; b=U6cf/8vyeL5Ej+rWR/JCLrX2itLAYW0Wco/GJSr6jLd4P7TLl/HMjzZQk1RzvO9iXtAxitb5nwRot4DVv9HSsGA8QIHp2yTDNzmSF2PjTgONO4+QHgbO/2BC+lK22fmbHdYb7wZ2DzT7YvvIgpOKoQXOWeb5VRO1IA5EAG8Hc8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716559; c=relaxed/simple;
-	bh=atdH6019UCOyaw8BrWUNJClg5QAGldflq7/4QcT+w5U=;
+	s=arc-20240116; t=1750716563; c=relaxed/simple;
+	bh=oGPFw4EiPXTdvdB1XN/8FvIh+QczlHy59gMnjihVoDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJCfIBMPZdXT6QXlR3zoPDmlZ49d9PX3sWIIErBOZmo9yJGRXcSkdr+m4kAFrpPG3kx22FGddESKGiaIns2NczwT1z9Kd9iProt4LlEpY3s8iHd2f+N4sJAF1Bo82fvmj2ATqgwbdd+ma9Zl+ksrIXaED6LuubGa/FSiLFldoHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJH6CQWw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rt5Ndl80MaPCk+4bbIaGsir6n1M845clN9Ly99Vy54dg090/aMWosCKDeFmDjpptV5WSKufU471m0XBzr+lKorSGq1ZujEuG0ltNgPK1w2Mk3voLLn203RtCcOilLu1L8Mh+29imvWiwgX51CuHBWul4V0oNRCaKxKJt4LdAIl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1X2TqRa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJH6CQWw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C272FC4CEEA;
-	Mon, 23 Jun 2025 22:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1X2TqRa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE3EC4CEEA;
+	Mon, 23 Jun 2025 22:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716559;
-	bh=atdH6019UCOyaw8BrWUNJClg5QAGldflq7/4QcT+w5U=;
+	s=korg; t=1750716561;
+	bh=oGPFw4EiPXTdvdB1XN/8FvIh+QczlHy59gMnjihVoDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UJH6CQWwdMLFvfPdtI69LwLATNOJ78pHxNjzsu1TKsBM+g50hLI8z1lVFtDzind8Q
-	 iivf7mbqmhmv1dA4BzXFajutn0yeCO96mwWgtJzJPPJ8MwWbZMZCDnBdiSjFl6pUSY
-	 olvfe2geJgtUXZxZQJb9NjV/SMpSHv/g9MytLIOA=
+	b=w1X2TqRaKDMxRRDeGdoALMQi3UqPUnrfoKJNXK8U8vdG/birjYxUGr/rlvcNXiwru
+	 3vQzx5s9moZ/l9mh0/c5PEKD2q4cAIk9NlrB5tRhosr3X/tMf2wxBe0YstQqiTWKFL
+	 xhtB4yrgTRGMybN7cLfZu5+WEP3F02pd1SlreHlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	syzbot+8a583bdd1a5cc0b0e068@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 265/414] wifi: ath12k: fix failed to set mhi state error during reboot with hardware grouping
-Date: Mon, 23 Jun 2025 15:06:42 +0200
-Message-ID: <20250623130648.659856305@linuxfoundation.org>
+Subject: [PATCH 6.15 538/592] mpls: Use rcu_dereference_rtnl() in mpls_route_input_rcu().
+Date: Mon, 23 Jun 2025 15:08:16 +0200
+Message-ID: <20250623130713.233401694@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +48,97 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit dce7aec6b1f74b0a46b901ab8de1f7bd0515f733 ]
+[ Upstream commit 6dbb0d97c5096072c78a6abffe393584e57ae945 ]
 
-With hardware grouping, during reboot, whenever a device is removed, it
-powers down itself and all its partner devices in the same group. Now this
-is done by all devices and hence there is multiple power down for devices
-and hence the following error messages can be seen:
+As syzbot reported [0], mpls_route_input_rcu() can be called
+from mpls_getroute(), where is under RTNL.
 
-ath12k_pci 0002:01:00.0: failed to set mhi state POWER_OFF(3) in current mhi state (0x0)
-ath12k_pci 0002:01:00.0: failed to set mhi state: POWER_OFF(3)
-ath12k_pci 0002:01:00.0: failed to set mhi state DEINIT(1) in current mhi state (0x0)
-ath12k_pci 0002:01:00.0: failed to set mhi state: DEINIT(1)
-ath12k_pci 0003:01:00.0: failed to set mhi state POWER_OFF(3) in current mhi state (0x0)
-ath12k_pci 0003:01:00.0: failed to set mhi state: POWER_OFF(3)
-ath12k_pci 0003:01:00.0: failed to set mhi state DEINIT(1) in current mhi state (0x0)
-ath12k_pci 0003:01:00.0: failed to set mhi state: DEINIT(1)
-ath12k_pci 0004:01:00.0: failed to set mhi state POWER_OFF(3) in current mhi state (0x0)
-ath12k_pci 0004:01:00.0: failed to set mhi state: POWER_OFF(3)
+net->mpls.platform_label is only updated under RTNL.
 
-To prevent this, check if the ATH12K_PCI_FLAG_INIT_DONE flag is already
-set before powering down. If it is set, it indicates that another partner
-device has already performed the power down, and this device can skip this
-step.
+Let's use rcu_dereference_rtnl() in mpls_route_input_rcu() to
+silence the splat.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+[0]:
+WARNING: suspicious RCU usage
+6.15.0-rc7-syzkaller-00082-g5cdb2c77c4c3 #0 Not tainted
+ ----------------------------
+net/mpls/af_mpls.c:84 suspicious rcu_dereference_check() usage!
 
-Signed-off-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250408-fix_reboot_issues_with_hw_grouping-v4-3-95e7bf048595@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+other info that might help us debug this:
+
+rcu_scheduler_active = 2, debug_locks = 1
+1 lock held by syz.2.4451/17730:
+ #0: ffffffff9012a3e8 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_lock net/core/rtnetlink.c:80 [inline]
+ #0: ffffffff9012a3e8 (rtnl_mutex){+.+.}-{4:4}, at: rtnetlink_rcv_msg+0x371/0xe90 net/core/rtnetlink.c:6961
+
+stack backtrace:
+CPU: 1 UID: 0 PID: 17730 Comm: syz.2.4451 Not tainted 6.15.0-rc7-syzkaller-00082-g5cdb2c77c4c3 #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
+ lockdep_rcu_suspicious+0x166/0x260 kernel/locking/lockdep.c:6865
+ mpls_route_input_rcu+0x1d4/0x200 net/mpls/af_mpls.c:84
+ mpls_getroute+0x621/0x1ea0 net/mpls/af_mpls.c:2381
+ rtnetlink_rcv_msg+0x3c9/0xe90 net/core/rtnetlink.c:6964
+ netlink_rcv_skb+0x16d/0x440 net/netlink/af_netlink.c:2534
+ netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
+ netlink_unicast+0x53a/0x7f0 net/netlink/af_netlink.c:1339
+ netlink_sendmsg+0x8d1/0xdd0 net/netlink/af_netlink.c:1883
+ sock_sendmsg_nosec net/socket.c:712 [inline]
+ __sock_sendmsg net/socket.c:727 [inline]
+ ____sys_sendmsg+0xa98/0xc70 net/socket.c:2566
+ ___sys_sendmsg+0x134/0x1d0 net/socket.c:2620
+ __sys_sendmmsg+0x200/0x420 net/socket.c:2709
+ __do_sys_sendmmsg net/socket.c:2736 [inline]
+ __se_sys_sendmmsg net/socket.c:2733 [inline]
+ __x64_sys_sendmmsg+0x9c/0x100 net/socket.c:2733
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcd/0x230 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f0a2818e969
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f0a28f52038 EFLAGS: 00000246 ORIG_RAX: 0000000000000133
+RAX: ffffffffffffffda RBX: 00007f0a283b5fa0 RCX: 00007f0a2818e969
+RDX: 0000000000000003 RSI: 0000200000000080 RDI: 0000000000000003
+RBP: 00007f0a28210ab1 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007f0a283b5fa0 R15: 00007ffce5e9f268
+ </TASK>
+
+Fixes: 0189197f4416 ("mpls: Basic routing support")
+Reported-by: syzbot+8a583bdd1a5cc0b0e068@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68507981.a70a0220.395abc.01ef.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250616201532.1036568-1-kuni1840@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/pci.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/mpls/af_mpls.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index 26f4b440c26d2..0f0e13c3dd463 100644
---- a/drivers/net/wireless/ath/ath12k/pci.c
-+++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -1301,6 +1301,9 @@ void ath12k_pci_power_down(struct ath12k_base *ab, bool is_suspend)
- {
- 	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
+diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
+index 1f63b32d76d67..aab2e79fcff04 100644
+--- a/net/mpls/af_mpls.c
++++ b/net/mpls/af_mpls.c
+@@ -81,8 +81,8 @@ static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned index)
  
-+	if (!test_bit(ATH12K_PCI_FLAG_INIT_DONE, &ab_pci->flags))
-+		return;
-+
- 	/* restore aspm in case firmware bootup fails */
- 	ath12k_pci_aspm_restore(ab_pci);
- 
+ 	if (index < net->mpls.platform_labels) {
+ 		struct mpls_route __rcu **platform_label =
+-			rcu_dereference(net->mpls.platform_label);
+-		rt = rcu_dereference(platform_label[index]);
++			rcu_dereference_rtnl(net->mpls.platform_label);
++		rt = rcu_dereference_rtnl(platform_label[index]);
+ 	}
+ 	return rt;
+ }
 -- 
 2.39.5
 
