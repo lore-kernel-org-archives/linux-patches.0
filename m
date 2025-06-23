@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64CE19E7F9;
-	Mon, 23 Jun 2025 22:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCA71E3DCD;
+	Mon, 23 Jun 2025 22:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717165; cv=none; b=fjmkDUVH7+4P6g+JXFVnN3Sz3WBifrT3uQzHN6Xy/q1oiLyK+vVcK8HpjWKu+cmny9DT2Suyo6NIQo6WdClNhw1DzbcnhwMqWKT8rAN6/FJARKIAVgDOB+yYUHo7r6D3q5OrplGGNaaqRuBIwjEOmpjg+nBbTuHkhOfK8HR/fhg=
+	t=1750717168; cv=none; b=bp8OHRoL7j3hy/1pv+6ztmQckCF7EDqlAEj2oWas/OkYHXevy0TAM87BPVsPv+ELhwSVwmvh9fWNX9e60eW1A4mtiJ/YmVJAP/0bHYT+sjYaAZPZkYr7RAGY8iUG2KhKbPXN/WWGnsAz4H3rTCYNAKgIbPnbPNKCMiE6a6bZGa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717165; c=relaxed/simple;
-	bh=wQG268i3ViXo5kcAZqIZhWnUIb0Hg8kHoe53g6X3CkE=;
+	s=arc-20240116; t=1750717168; c=relaxed/simple;
+	bh=lGyDc+yqAfHx0H/IpSMbO/37zyUgjWYtynxUDsUJb8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZ4Xgn36SdhuECEXxgHjS1aaKjWGF1A0EakiFOvDuI7Ne7UALRrxTWKq9FVP5KOfa/7LIw6mHYkDM+DDAvycmknWq+pfgSf0jqEI4gdN+HY05wuJsjGpQrrmdn+9R9HWWprEcTdc09bR0levD70bVgXh9GMk+hVbW2uVa3MAprM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAAS8DNk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=szMXyRhsbMIV7eDozvGFgmI1/NX/2w50tZRD/mUBcJ2U06lWF2vp4ptUTtKRSoy3AaMluP+TvNUNjC9IfYVF39GCDhnUoypqHrQanf8wWhtcemA0yKWm1wOlu7KvHGuJycIgk5cmckv8MeMNMOGDjjs5GEORn9UmnWcFUKh6xQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RE8+6eY9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAAS8DNk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5054DC4CEEA;
-	Mon, 23 Jun 2025 22:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RE8+6eY9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77A2C4CEEA;
+	Mon, 23 Jun 2025 22:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717165;
-	bh=wQG268i3ViXo5kcAZqIZhWnUIb0Hg8kHoe53g6X3CkE=;
+	s=korg; t=1750717168;
+	bh=lGyDc+yqAfHx0H/IpSMbO/37zyUgjWYtynxUDsUJb8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FAAS8DNkfmb/szrysWprSVHTFr1Dk7Y1CkVDYGUFAmUVyzoHlId58vy/GlYOtl7/C
-	 RuvZQFNJrySTcNJa9I6DKce0ygyAo7OUiq/gFl6b9eNoNyddemKJhV+A4zM/FuGSEY
-	 nQ38WC/aOZ/dSxDV+Lg7X45d0tStmAS/Xn6kvKHQ=
+	b=RE8+6eY9VVuxlg/G4KIj9XkqStK2BkkFq/y6RWnb2bkCYgTfN27t4nWB+cbQ5OJE9
+	 rTyDAsS7t7jRQ5FDAg7qCy6gRaWNGxe6jg7o+kIS47ndure0TM8WFSPMMC/nNOJX/e
+	 MouUxu+KY90TS7N74ZHoQTm2NHFKauf4HEW/sjhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seunghun Han <kkamagui@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 374/508] ACPICA: fix acpi operand cache leak in dswstate.c
-Date: Mon, 23 Jun 2025 15:06:59 +0200
-Message-ID: <20250623130654.532675614@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 332/414] ALSA: hda/intel: Add Thinkpad E15 to PM deny list
+Date: Mon, 23 Jun 2025 15:07:49 +0200
+Message-ID: <20250623130650.287374446@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,114 +45,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Seunghun Han <kkamagui@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 156fd20a41e776bbf334bd5e45c4f78dfc90ce1c ]
+commit c987a390f1b3b8bdac11031d7004e3410fe259bd upstream.
 
-ACPICA commit 987a3b5cf7175916e2a4b6ea5b8e70f830dfe732
+Lenovo Thinkpad E15 with Conexant CX8070 codec seems causing ugly
+noises after runtime-PM suspend.  Disable the codec runtime PM as a
+workaround.
 
-I found an ACPI cache leak in ACPI early termination and boot continuing case.
-
-When early termination occurs due to malicious ACPI table, Linux kernel
-terminates ACPI function and continues to boot process. While kernel terminates
-ACPI function, kmem_cache_destroy() reports Acpi-Operand cache leak.
-
-Boot log of ACPI operand cache leak is as follows:
->[    0.585957] ACPI: Added _OSI(Module Device)
->[    0.587218] ACPI: Added _OSI(Processor Device)
->[    0.588530] ACPI: Added _OSI(3.0 _SCP Extensions)
->[    0.589790] ACPI: Added _OSI(Processor Aggregator Device)
->[    0.591534] ACPI Error: Illegal I/O port address/length above 64K: C806E00000004002/0x2 (20170303/hwvalid-155)
->[    0.594351] ACPI Exception: AE_LIMIT, Unable to initialize fixed events (20170303/evevent-88)
->[    0.597858] ACPI: Unable to start the ACPI Interpreter
->[    0.599162] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
->[    0.601836] kmem_cache_destroy Acpi-Operand: Slab cache still has objects
->[    0.603556] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 4.12.0-rc5 #26
->[    0.605159] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS virtual_box 12/01/2006
->[    0.609177] Call Trace:
->[    0.610063]  ? dump_stack+0x5c/0x81
->[    0.611118]  ? kmem_cache_destroy+0x1aa/0x1c0
->[    0.612632]  ? acpi_sleep_proc_init+0x27/0x27
->[    0.613906]  ? acpi_os_delete_cache+0xa/0x10
->[    0.617986]  ? acpi_ut_delete_caches+0x3f/0x7b
->[    0.619293]  ? acpi_terminate+0xa/0x14
->[    0.620394]  ? acpi_init+0x2af/0x34f
->[    0.621616]  ? __class_create+0x4c/0x80
->[    0.623412]  ? video_setup+0x7f/0x7f
->[    0.624585]  ? acpi_sleep_proc_init+0x27/0x27
->[    0.625861]  ? do_one_initcall+0x4e/0x1a0
->[    0.627513]  ? kernel_init_freeable+0x19e/0x21f
->[    0.628972]  ? rest_init+0x80/0x80
->[    0.630043]  ? kernel_init+0xa/0x100
->[    0.631084]  ? ret_from_fork+0x25/0x30
->[    0.633343] vgaarb: loaded
->[    0.635036] EDAC MC: Ver: 3.0.0
->[    0.638601] PCI: Probing PCI hardware
->[    0.639833] PCI host bridge to bus 0000:00
->[    0.641031] pci_bus 0000:00: root bus resource [io  0x0000-0xffff]
-> ... Continue to boot and log is omitted ...
-
-I analyzed this memory leak in detail and found acpi_ds_obj_stack_pop_and_
-delete() function miscalculated the top of the stack. acpi_ds_obj_stack_push()
-function uses walk_state->operand_index for start position of the top, but
-acpi_ds_obj_stack_pop_and_delete() function considers index 0 for it.
-Therefore, this causes acpi operand memory leak.
-
-This cache leak causes a security threat because an old kernel (<= 4.9) shows
-memory locations of kernel functions in stack dump. Some malicious users
-could use this information to neutralize kernel ASLR.
-
-I made a patch to fix ACPI operand cache leak.
-
-Link: https://github.com/acpica/acpica/commit/987a3b5c
-Signed-off-by: Seunghun Han <kkamagui@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/4999480.31r3eYUQgx@rjwysocki.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220210
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250608091415.21170-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpica/dsutils.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/pci/hda/hda_intel.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/acpica/dsutils.c b/drivers/acpi/acpica/dsutils.c
-index fb9ed5e1da89d..2bdae8a25e084 100644
---- a/drivers/acpi/acpica/dsutils.c
-+++ b/drivers/acpi/acpica/dsutils.c
-@@ -668,6 +668,8 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 	union acpi_parse_object *arguments[ACPI_OBJ_NUM_OPERANDS];
- 	u32 arg_count = 0;
- 	u32 index = walk_state->num_operands;
-+	u32 prev_num_operands = walk_state->num_operands;
-+	u32 new_num_operands;
- 	u32 i;
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2286,6 +2286,8 @@ static const struct snd_pci_quirk power_
+ 	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
+ 	/* Dell ALC3271 */
+ 	SND_PCI_QUIRK(0x1028, 0x0962, "Dell ALC3271", 0),
++	/* https://bugzilla.kernel.org/show_bug.cgi?id=220210 */
++	SND_PCI_QUIRK(0x17aa, 0x5079, "Lenovo Thinkpad E15", 0),
+ 	{}
+ };
  
- 	ACPI_FUNCTION_TRACE_PTR(ds_create_operands, first_arg);
-@@ -696,6 +698,7 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 
- 	/* Create the interpreter arguments, in reverse order */
- 
-+	new_num_operands = index;
- 	index--;
- 	for (i = 0; i < arg_count; i++) {
- 		arg = arguments[index];
-@@ -720,7 +723,11 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 	 * pop everything off of the operand stack and delete those
- 	 * objects
- 	 */
--	acpi_ds_obj_stack_pop_and_delete(arg_count, walk_state);
-+	walk_state->num_operands = i;
-+	acpi_ds_obj_stack_pop_and_delete(new_num_operands, walk_state);
-+
-+	/* Restore operand count */
-+	walk_state->num_operands = prev_num_operands;
- 
- 	ACPI_EXCEPTION((AE_INFO, status, "While creating Arg %u", index));
- 	return_ACPI_STATUS(status);
--- 
-2.39.5
-
 
 
