@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52994254B1F;
-	Mon, 23 Jun 2025 13:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D596D23A9BE;
+	Mon, 23 Jun 2025 13:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684955; cv=none; b=EJ92e6CmV/8trtSxDbQQahhlc4Ijc5ZK1BW+e5qFAF2GSLmkS8T2+84tq2d6LuM2Vj9MqO7FaSz77hyyzhQ9ysVOfKHnFwkXQHvjBs2qWvKqGNYqKt0Ic5EuJhiCkv7XD/Mc5Zndbd6Sz5QZ4Ue7u3OzqQFnXF5Zsb4pDoj4+48=
+	t=1750684957; cv=none; b=VQzNY6To8+wCij6ZhZxQ5xO0N+E9KGQPQ6D57+AGmNNJYx+QK6u8rcM9KFJdf+tvZIiaMhG/LwzjOZUrz9XFGk7+s5j0M8mHOiI8Fl72KflI/Ep+WJBBfXkzN6FHpxhDGRnKGwP5lhfCSALGvwoYc6TGRXZ3J8oYSD0mOmxmGmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684955; c=relaxed/simple;
-	bh=7Je3O1RkMwdrHk2r6nzXA0YvRZWzFardXVjoBE9GpdM=;
+	s=arc-20240116; t=1750684957; c=relaxed/simple;
+	bh=arV5++ewlBMfbhOGToIvyeyx/QMojJD0/4+XAghDIq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lyIn7dXIlNNRmUswQW8UZFxzyRbNb4jOcgG0Y6+jF8pK7ldCARqKOkbykBLiMlLvoHn1VBwpzkRdNdaU1tpkth9JHNe07cZLhU+zKx1/8eZ6LVPsx3zV+LoFprcvep0Dr2yAqb68YeQbVnm2iFThN6wuQFiMUny/CW9mK92Q7nM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xe1QF2vp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UxxJ0/WmZgWcqpZXmfp/1flXPLw+lC48nuPtewk+3uZbIOxjWM/G5i3j2eu2yehdL5vXJc0sUCH/YkOyOYJBZzthWbbRuMSkpS93Vmpm9ydI1lnCl0rhmZMyFfMhyrs2GVGf3aANRr2Q7UutXlhpq6etdxWGqzs+7gxRONcpWBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hELL3Lcf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xe1QF2vp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8C7C4CEEA;
-	Mon, 23 Jun 2025 13:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hELL3Lcf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD56C4CEEA;
+	Mon, 23 Jun 2025 13:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684955;
-	bh=7Je3O1RkMwdrHk2r6nzXA0YvRZWzFardXVjoBE9GpdM=;
+	s=korg; t=1750684957;
+	bh=arV5++ewlBMfbhOGToIvyeyx/QMojJD0/4+XAghDIq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xe1QF2vptNIyEnLH4Mfbryt22EE41/FO7B7aQZMAavxfIGRgE3eKWoVCeeFXhzgbJ
-	 dy9R0qOxYq4D5l+qe/yoxUp/F+7QvaWXwVFAK7KZ2hn9RfkyzSy0vrBHTZkumOrIcB
-	 gTe/fsC/SqCDBsRiRvEKjLIxBsQAu2ljRapAebrM=
+	b=hELL3LcfOBIT+ax74PRS/beDAObYJAsGaDJvdGvY/HFE9/s9oYXyBvWpQJZsXPdyJ
+	 pMIcT3bxoWkT87ugTCcy2GzTP7Be+rVDi7EmaJ1xm7gSA4+1VMxQrkkPI+E7XoLOQT
+	 lH1KBQoNYGH0T/1/4bg2+XTABpzP5lOw9+zT0Fss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/355] crypto: marvell/cesa - Avoid empty transfer descriptor
-Date: Mon, 23 Jun 2025 15:03:36 +0200
-Message-ID: <20250623130627.235218709@linuxfoundation.org>
+Subject: [PATCH 5.4 051/222] soc: aspeed: Add NULL check in aspeed_lpc_enable_snoop()
+Date: Mon, 23 Jun 2025 15:06:26 +0200
+Message-ID: <20250623130613.626717085@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +48,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 1bafd82d9a40cf09c6c40f1c09cc35b7050b1a9f ]
+[ Upstream commit f1706e0e1a74b095cbc60375b9b1e6205f5f4c98 ]
 
-The user may set req->src even if req->nbytes == 0.  If there
-is no data to hash from req->src, do not generate an empty TDMA
-descriptor.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+aspeed_lpc_enable_snoop() does not check for this case, which results in a
+NULL pointer dereference.
 
-Fixes: db509a45339f ("crypto: marvell/cesa - add TDMA support")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Add NULL check after devm_kasprintf() to prevent this issue.
+
+Fixes: 3772e5da4454 ("drivers/misc: Aspeed LPC snoop output using misc chardev")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://patch.msgid.link/20250401074647.21300-1-bsdhenrymartin@gmail.com
+[arj: Fix Fixes: tag to use subject from 3772e5da4454]
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/cesa/hash.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/aspeed/aspeed-lpc-snoop.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/marvell/cesa/hash.c b/drivers/crypto/marvell/cesa/hash.c
-index 8441c3198d460..823a8fb114bbb 100644
---- a/drivers/crypto/marvell/cesa/hash.c
-+++ b/drivers/crypto/marvell/cesa/hash.c
-@@ -639,7 +639,7 @@ static int mv_cesa_ahash_dma_req_init(struct ahash_request *req)
- 	if (ret)
- 		goto err_free_tdma;
+diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+index 8a2a22c40ef53..43e30937fc9da 100644
+--- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
++++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+@@ -202,11 +202,15 @@ static int aspeed_lpc_enable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
+ 	lpc_snoop->chan[channel].miscdev.minor = MISC_DYNAMIC_MINOR;
+ 	lpc_snoop->chan[channel].miscdev.name =
+ 		devm_kasprintf(dev, GFP_KERNEL, "%s%d", DEVICE_NAME, channel);
++	if (!lpc_snoop->chan[channel].miscdev.name) {
++		rc = -ENOMEM;
++		goto err_free_fifo;
++	}
+ 	lpc_snoop->chan[channel].miscdev.fops = &snoop_fops;
+ 	lpc_snoop->chan[channel].miscdev.parent = dev;
+ 	rc = misc_register(&lpc_snoop->chan[channel].miscdev);
+ 	if (rc)
+-		return rc;
++		goto err_free_fifo;
  
--	if (iter.src.sg) {
-+	if (iter.base.len > iter.src.op_offset) {
- 		/*
- 		 * Add all the new data, inserting an operation block and
- 		 * launch command between each full SRAM block-worth of
+ 	/* Enable LPC snoop channel at requested port */
+ 	switch (channel) {
+@@ -223,7 +227,8 @@ static int aspeed_lpc_enable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
+ 		hicrb_en = HICRB_ENSNP1D;
+ 		break;
+ 	default:
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto err_misc_deregister;
+ 	}
+ 
+ 	regmap_update_bits(lpc_snoop->regmap, HICR5, hicr5_en, hicr5_en);
+@@ -233,6 +238,12 @@ static int aspeed_lpc_enable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
+ 		regmap_update_bits(lpc_snoop->regmap, HICRB,
+ 				hicrb_en, hicrb_en);
+ 
++	return 0;
++
++err_misc_deregister:
++	misc_deregister(&lpc_snoop->chan[channel].miscdev);
++err_free_fifo:
++	kfifo_free(&lpc_snoop->chan[channel].fifo);
+ 	return rc;
+ }
+ 
 -- 
 2.39.5
 
