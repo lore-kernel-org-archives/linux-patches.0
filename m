@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE0BB676;
-	Mon, 23 Jun 2025 22:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1F6B676;
+	Mon, 23 Jun 2025 22:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717691; cv=none; b=pTtsy6OS9fAj1t2ChIgr7K1iZrUs14yvEMcMwOfkdk6Dz5EOmwzX7b5+GK6mXAGK8hBkhVvPM0ztf6kJ4zpptOutT0t2CLSNZK8qAVasGQhYnCtsUD1MrFr14jeKSLoTvqPa7GDUW22fJHiWEbV/RQbqmSZmx5+O0t7lg72OgMA=
+	t=1750717693; cv=none; b=eJD9MRyIDDck2g8jEew+b+KIgFVzNiMJrUNP32vzDYQfWY+d0CPJkjuLh5H/L09WPP6qTkp+M+6sXeafhLpGWlut3VngIfX/SGzzUj9bQgSGCTqRz/oEyeIG8WIYPYv2OFxA2WBWeKQyRP94kqvOrOoF/fX88IpGshCkDtJIOyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717691; c=relaxed/simple;
-	bh=4+I3ShXQK9YscLK7V8NIBMhelfYziqO6n5QC6KfwlqY=;
+	s=arc-20240116; t=1750717693; c=relaxed/simple;
+	bh=g5+H7sjKJGSGFsrWd/chdLemmFX7jVT5TlPGHn1lqXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjLxJNxtPi/qWLvlkc4gSC1J8+VZEtDTIBUvDz6j1UHuhkPRy/NsJbwY6ok3SZT4eX9UtzQG3+Ct8mgZ6O01XjH0oVvByESEB5CGsfgAC7ZqGQiPsueF9t9XX1WnilN8Nlp1KZoeWx7+LI0k5ADNLj/4ukAn5pqGs6EbP0Pq7MI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYIhC9rG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=usQefy4cJVy4FJg30Bc1Tsh8+AgHIByrVcu+0I9AW2dcq4+LkCec0BnNf+yWHBFZ6sqB/TCkDskyJCPMjt6Sv3L+xuaIjPlDdkDTU5Wvuv4jeyBZm1pjLK/XjDPO6zWDP3nG/MFDZh2erCGl/6NI0WAU6GhLITkvPWkNPbwRTCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJ+81jMr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYIhC9rG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7736AC4CEEA;
-	Mon, 23 Jun 2025 22:28:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJ+81jMr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB134C4CEEA;
+	Mon, 23 Jun 2025 22:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717690;
-	bh=4+I3ShXQK9YscLK7V8NIBMhelfYziqO6n5QC6KfwlqY=;
+	s=korg; t=1750717693;
+	bh=g5+H7sjKJGSGFsrWd/chdLemmFX7jVT5TlPGHn1lqXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xYIhC9rGfLNPGVPnpKknYGrzw0Wovj5+3cnzEv47JBSq/uq+zQ3ITtNyge6h6Q0Uv
-	 6apJNllCYdHNkaoUwoWdQRAxYOP+O4TYfX2Nk+2zDkkd2q5C/w6DhxVfn+d3jo8Csj
-	 rNrD213RamJQLIDjLfa2XGVLId78oZIoXIhSNObQ=
+	b=fJ+81jMrKMfzrYuKccXXQbXZnEa/jKwjXxm03tvWweFykOl4sZYxd208w2mSZ6C0x
+	 76Lg9USwyIgMYNKWozjlOOQYbhW7XmjN3r/3Hix7XTZYdLkalgLpci4kxTSwxOdDbx
+	 PgrlqQ9IeaAUirQMZhjtICw2+s2wHGcvyaGH9yAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kumar <krikku@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.1 478/508] net: ice: Perform accurate aRFS flow match
-Date: Mon, 23 Jun 2025 15:08:43 +0200
-Message-ID: <20250623130656.836790414@linuxfoundation.org>
+	Tengda Wu <wutengda@huaweicloud.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 505/508] arm64/ptrace: Fix stack-out-of-bounds read in regs_get_kernel_stack_nth()
+Date: Mon, 23 Jun 2025 15:09:10 +0200
+Message-ID: <20250623130657.424875542@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -53,156 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kumar <krikku@gmail.com>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit 5d3bc9e5e725aa36cca9b794e340057feb6880b4 ]
+[ Upstream commit 39dfc971e42d886e7df01371cd1bef505076d84c ]
 
-This patch fixes an issue seen in a large-scale deployment under heavy
-incoming pkts where the aRFS flow wrongly matches a flow and reprograms the
-NIC with wrong settings. That mis-steering causes RX-path latency spikes
-and noisy neighbor effects when many connections collide on the same
-hash (some of our production servers have 20-30K connections).
+KASAN reports a stack-out-of-bounds read in regs_get_kernel_stack_nth().
 
-set_rps_cpu() calls ndo_rx_flow_steer() with flow_id that is calculated by
-hashing the skb sized by the per rx-queue table size. This results in
-multiple connections (even across different rx-queues) getting the same
-hash value. The driver steer function modifies the wrong flow to use this
-rx-queue, e.g.: Flow#1 is first added:
-    Flow#1:  <ip1, port1, ip2, port2>, Hash 'h', q#10
+Call Trace:
+[   97.283505] BUG: KASAN: stack-out-of-bounds in regs_get_kernel_stack_nth+0xa8/0xc8
+[   97.284677] Read of size 8 at addr ffff800089277c10 by task 1.sh/2550
+[   97.285732]
+[   97.286067] CPU: 7 PID: 2550 Comm: 1.sh Not tainted 6.6.0+ #11
+[   97.287032] Hardware name: linux,dummy-virt (DT)
+[   97.287815] Call trace:
+[   97.288279]  dump_backtrace+0xa0/0x128
+[   97.288946]  show_stack+0x20/0x38
+[   97.289551]  dump_stack_lvl+0x78/0xc8
+[   97.290203]  print_address_description.constprop.0+0x84/0x3c8
+[   97.291159]  print_report+0xb0/0x280
+[   97.291792]  kasan_report+0x84/0xd0
+[   97.292421]  __asan_load8+0x9c/0xc0
+[   97.293042]  regs_get_kernel_stack_nth+0xa8/0xc8
+[   97.293835]  process_fetch_insn+0x770/0xa30
+[   97.294562]  kprobe_trace_func+0x254/0x3b0
+[   97.295271]  kprobe_dispatcher+0x98/0xe0
+[   97.295955]  kprobe_breakpoint_handler+0x1b0/0x210
+[   97.296774]  call_break_hook+0xc4/0x100
+[   97.297451]  brk_handler+0x24/0x78
+[   97.298073]  do_debug_exception+0xac/0x178
+[   97.298785]  el1_dbg+0x70/0x90
+[   97.299344]  el1h_64_sync_handler+0xcc/0xe8
+[   97.300066]  el1h_64_sync+0x78/0x80
+[   97.300699]  kernel_clone+0x0/0x500
+[   97.301331]  __arm64_sys_clone+0x70/0x90
+[   97.302084]  invoke_syscall+0x68/0x198
+[   97.302746]  el0_svc_common.constprop.0+0x11c/0x150
+[   97.303569]  do_el0_svc+0x38/0x50
+[   97.304164]  el0_svc+0x44/0x1d8
+[   97.304749]  el0t_64_sync_handler+0x100/0x130
+[   97.305500]  el0t_64_sync+0x188/0x190
+[   97.306151]
+[   97.306475] The buggy address belongs to stack of task 1.sh/2550
+[   97.307461]  and is located at offset 0 in frame:
+[   97.308257]  __se_sys_clone+0x0/0x138
+[   97.308910]
+[   97.309241] This frame has 1 object:
+[   97.309873]  [48, 184) 'args'
+[   97.309876]
+[   97.310749] The buggy address belongs to the virtual mapping at
+[   97.310749]  [ffff800089270000, ffff800089279000) created by:
+[   97.310749]  dup_task_struct+0xc0/0x2e8
+[   97.313347]
+[   97.313674] The buggy address belongs to the physical page:
+[   97.314604] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x14f69a
+[   97.315885] flags: 0x15ffffe00000000(node=1|zone=2|lastcpupid=0xfffff)
+[   97.316957] raw: 015ffffe00000000 0000000000000000 dead000000000122 0000000000000000
+[   97.318207] raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
+[   97.319445] page dumped because: kasan: bad access detected
+[   97.320371]
+[   97.320694] Memory state around the buggy address:
+[   97.321511]  ffff800089277b00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   97.322681]  ffff800089277b80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   97.323846] >ffff800089277c00: 00 00 f1 f1 f1 f1 f1 f1 00 00 00 00 00 00 00 00
+[   97.325023]                          ^
+[   97.325683]  ffff800089277c80: 00 00 00 00 00 00 00 00 00 f3 f3 f3 f3 f3 f3 f3
+[   97.326856]  ffff800089277d00: f3 f3 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 
-Later when a new flow needs to be added:
-	    Flow#2:  <ip3, port3, ip4, port4>, Hash 'h', q#20
+This issue seems to be related to the behavior of some gcc compilers and
+was also fixed on the s390 architecture before:
 
-The driver finds the hash 'h' from Flow#1 and updates it to use q#20. This
-results in both flows getting un-optimized - packets for Flow#1 goes to
-q#20, and then reprogrammed back to q#10 later and so on; and Flow #2
-programming is never done as Flow#1 is matched first for all misses. Many
-flows may wrongly share the same hash and reprogram rules of the original
-flow each with their own q#.
+ commit d93a855c31b7 ("s390/ptrace: Avoid KASAN false positives in regs_get_kernel_stack_nth()")
 
-Tested on two 144-core servers with 16K netperf sessions for 180s. Netperf
-clients are pinned to cores 0-71 sequentially (so that wrong packets on q#s
-72-143 can be measured). IRQs are set 1:1 for queues -> CPUs, enable XPS,
-enable aRFS (global value is 144 * rps_flow_cnt).
+As described in that commit, regs_get_kernel_stack_nth() has confirmed that
+`addr` is on the stack, so reading the value at `*addr` should be allowed.
+Use READ_ONCE_NOCHECK() helper to silence the KASAN check for this case.
 
-Test notes about results from ice_rx_flow_steer():
----------------------------------------------------
-1. "Skip:" counter increments here:
-    if (fltr_info->q_index == rxq_idx ||
-	arfs_entry->fltr_state != ICE_ARFS_ACTIVE)
-	    goto out;
-2. "Add:" counter increments here:
-    ret = arfs_entry->fltr_info.fltr_id;
-    INIT_HLIST_NODE(&arfs_entry->list_entry);
-3. "Update:" counter increments here:
-    /* update the queue to forward to on an already existing flow */
-
-Runtime comparison: original code vs with the patch for different
-rps_flow_cnt values.
-
-+-------------------------------+--------------+--------------+
-| rps_flow_cnt                  |      512     |    2048      |
-+-------------------------------+--------------+--------------+
-| Ratio of Pkts on Good:Bad q's | 214 vs 822K  | 1.1M vs 980K |
-| Avoid wrong aRFS programming  | 0 vs 310K    | 0 vs 30K     |
-| CPU User                      | 216 vs 183   | 216 vs 206   |
-| CPU System                    | 1441 vs 1171 | 1447 vs 1320 |
-| CPU Softirq                   | 1245 vs 920  | 1238 vs 961  |
-| CPU Total                     | 29 vs 22.7   | 29 vs 24.9   |
-| aRFS Update                   | 533K vs 59   | 521K vs 32   |
-| aRFS Skip                     | 82M vs 77M   | 7.2M vs 4.5M |
-+-------------------------------+--------------+--------------+
-
-A separate TCP_STREAM and TCP_RR with 1,4,8,16,64,128,256,512 connections
-showed no performance degradation.
-
-Some points on the patch/aRFS behavior:
-1. Enabling full tuple matching ensures flows are always correctly matched,
-   even with smaller hash sizes.
-2. 5-6% drop in CPU utilization as the packets arrive at the correct CPUs
-   and fewer calls to driver for programming on misses.
-3. Larger hash tables reduces mis-steering due to more unique flow hashes,
-   but still has clashes. However, with larger per-device rps_flow_cnt, old
-   flows take more time to expire and new aRFS flows cannot be added if h/w
-   limits are reached (rps_may_expire_flow() succeeds when 10*rps_flow_cnt
-   pkts have been processed by this cpu that are not part of the flow).
-
-Fixes: 28bf26724fdb0 ("ice: Implement aRFS")
-Signed-off-by: Krishna Kumar <krikku@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 0a8ea52c3eb1 ("arm64: Add HAVE_REGS_AND_STACK_ACCESS_API feature")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Link: https://lore.kernel.org/r/20250604005533.1278992-1-wutengda@huaweicloud.com
+[will: Use '*addr' as the argument to READ_ONCE_NOCHECK()]
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_arfs.c | 48 +++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ arch/arm64/kernel/ptrace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_arfs.c b/drivers/net/ethernet/intel/ice/ice_arfs.c
-index 79074f041e39b..e3114c12e1293 100644
---- a/drivers/net/ethernet/intel/ice/ice_arfs.c
-+++ b/drivers/net/ethernet/intel/ice/ice_arfs.c
-@@ -376,6 +376,50 @@ ice_arfs_is_perfect_flow_set(struct ice_hw *hw, __be16 l3_proto, u8 l4_proto)
- 	return false;
+diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
+index 2f1f86d916129..3025d14c253de 100644
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -139,7 +139,7 @@ unsigned long regs_get_kernel_stack_nth(struct pt_regs *regs, unsigned int n)
+ 
+ 	addr += n;
+ 	if (regs_within_kernel_stack(regs, (unsigned long)addr))
+-		return *addr;
++		return READ_ONCE_NOCHECK(*addr);
+ 	else
+ 		return 0;
  }
- 
-+/**
-+ * ice_arfs_cmp - Check if aRFS filter matches this flow.
-+ * @fltr_info: filter info of the saved ARFS entry.
-+ * @fk: flow dissector keys.
-+ * @n_proto:  One of htons(ETH_P_IP) or htons(ETH_P_IPV6).
-+ * @ip_proto: One of IPPROTO_TCP or IPPROTO_UDP.
-+ *
-+ * Since this function assumes limited values for n_proto and ip_proto, it
-+ * is meant to be called only from ice_rx_flow_steer().
-+ *
-+ * Return:
-+ * * true	- fltr_info refers to the same flow as fk.
-+ * * false	- fltr_info and fk refer to different flows.
-+ */
-+static bool
-+ice_arfs_cmp(const struct ice_fdir_fltr *fltr_info, const struct flow_keys *fk,
-+	     __be16 n_proto, u8 ip_proto)
-+{
-+	/* Determine if the filter is for IPv4 or IPv6 based on flow_type,
-+	 * which is one of ICE_FLTR_PTYPE_NONF_IPV{4,6}_{TCP,UDP}.
-+	 */
-+	bool is_v4 = fltr_info->flow_type == ICE_FLTR_PTYPE_NONF_IPV4_TCP ||
-+		     fltr_info->flow_type == ICE_FLTR_PTYPE_NONF_IPV4_UDP;
-+
-+	/* Following checks are arranged in the quickest and most discriminative
-+	 * fields first for early failure.
-+	 */
-+	if (is_v4)
-+		return n_proto == htons(ETH_P_IP) &&
-+			fltr_info->ip.v4.src_port == fk->ports.src &&
-+			fltr_info->ip.v4.dst_port == fk->ports.dst &&
-+			fltr_info->ip.v4.src_ip == fk->addrs.v4addrs.src &&
-+			fltr_info->ip.v4.dst_ip == fk->addrs.v4addrs.dst &&
-+			fltr_info->ip.v4.proto == ip_proto;
-+
-+	return fltr_info->ip.v6.src_port == fk->ports.src &&
-+		fltr_info->ip.v6.dst_port == fk->ports.dst &&
-+		fltr_info->ip.v6.proto == ip_proto &&
-+		!memcmp(&fltr_info->ip.v6.src_ip, &fk->addrs.v6addrs.src,
-+			sizeof(struct in6_addr)) &&
-+		!memcmp(&fltr_info->ip.v6.dst_ip, &fk->addrs.v6addrs.dst,
-+			sizeof(struct in6_addr));
-+}
-+
- /**
-  * ice_rx_flow_steer - steer the Rx flow to where application is being run
-  * @netdev: ptr to the netdev being adjusted
-@@ -447,6 +491,10 @@ ice_rx_flow_steer(struct net_device *netdev, const struct sk_buff *skb,
- 			continue;
- 
- 		fltr_info = &arfs_entry->fltr_info;
-+
-+		if (!ice_arfs_cmp(fltr_info, &fk, n_proto, ip_proto))
-+			continue;
-+
- 		ret = fltr_info->fltr_id;
- 
- 		if (fltr_info->q_index == rxq_idx ||
 -- 
 2.39.5
 
