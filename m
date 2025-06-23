@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0EB4C7F;
-	Mon, 23 Jun 2025 13:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441762367B0;
+	Mon, 23 Jun 2025 13:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685105; cv=none; b=ZBNmjaLrx1qdhql6tP/z48w0Nb4Nt5pWiVMLEyT1b/Jzrg80WES94RxEW0dwaS1j0mCdd+uQUzZb6Kwi08bMJ/rbxfHMt34P8N/tJENg4FJ0zmRLPWCHRWl4FuEzgVduoOV6M+6HJHa45m2Agz4BHKi/1FDhqdPucnUXtJ2PFDQ=
+	t=1750685108; cv=none; b=tw9KjepgvRe6GXzrocqp/eiIb5yN46+OqDEA/bVln2XzEo8g8oTBIWcO9I1oVL+cnXdmB1acMFGl6F5kAdCZy562oEtGwnph8EqmMKW0sSGyhmQZRfsnSqk2suWNO7KG9oohTkYh2O2SwOyGOmXlWZq1JsvhTnTt4JNtRTXnUK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685105; c=relaxed/simple;
-	bh=uVjjG9krSb4Po1zykeJW6cGJwugLSeA+ZnDkL+s4Wi4=;
+	s=arc-20240116; t=1750685108; c=relaxed/simple;
+	bh=PfMjCBijlM5tc5bV/nR6PAu0OmVjpgYSoT8hfEQTxs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCH99pCPs+w2SaxO1KE1Nb4LMP30fWQvgpRstB3pMD8Zvak6aYiZRKm1WiDoTnxqbn//OYIVVLOSFPsxswVi4IlOeg215LyPX4UeN2qio4fBVsifxT6aCRxXBza/ZHjKa1TfkbZQaDF9O3a+7Q8BL7P7iSrJ349WMkTfRL1h40I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+hDB7zV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gmWHUFWWyDItcOQK68M+PmFrT/x/OdkzcMEZeIGN26bcqkqHe+P30nVFOjDkAm5p00dLM/056KDXEz1xaCmwoDyiYHRtArlYvIruogAmyKvPo/q1gKPjahzeBzAQ4cp8WIUNIwBPCjDiogGYoMqx9lZPC6ZvRduhLG/5nE27Ea0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TWxxahvu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+hDB7zV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D174C4CEEA;
-	Mon, 23 Jun 2025 13:25:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TWxxahvu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD399C4CEEA;
+	Mon, 23 Jun 2025 13:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685105;
-	bh=uVjjG9krSb4Po1zykeJW6cGJwugLSeA+ZnDkL+s4Wi4=;
+	s=korg; t=1750685108;
+	bh=PfMjCBijlM5tc5bV/nR6PAu0OmVjpgYSoT8hfEQTxs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+hDB7zVfKpvsZSEjkSeJ8EvOglcMCJ7vVtX9Z9x4o+4itm30nOIc+rVnKT6mc41F
-	 IQNjkT27GVCbRvh8mNMtmoXqiMs1SzYaOyKC3pYADvukvmB5zpTXpW49kZC+VlTXxU
-	 OFpJW4pHOp5+z7SMyvcRQk7h9UlN4KGTmyyHMNNs=
+	b=TWxxahvusfzdfr/VTkKPXTD0MCocBEV8DhqmKfNYv9HM03d1/vE3WWIbRMv/vrxaU
+	 ZyFYYKE2x3HC/wzjGU+WVBG6npR0O6fWNgrsC9cBtQq9YDrr7Z89dLl84jwY9C2ZwE
+	 XkTd4U5/gZ4qryS8K6jjFFGvtXX3MwiUIYi5mqvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayi Li <lijiayi@kylinos.cn>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.1 008/508] usb: quirks: Add NO_LPM quirk for SanDisk Extreme 55AE
-Date: Mon, 23 Jun 2025 15:00:53 +0200
-Message-ID: <20250623130645.460244038@linuxfoundation.org>
+	Thangaraj Samynathan <thangaraj.s@microchip.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 054/355] net: lan743x: rename lan743x_reset_phy to lan743x_hw_reset_phy
+Date: Mon, 23 Jun 2025 15:04:15 +0200
+Message-ID: <20250623130628.454687226@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayi Li <lijiayi@kylinos.cn>
+From: Thangaraj Samynathan <thangaraj.s@microchip.com>
 
-commit 19f795591947596b5b9efa86fd4b9058e45786e9 upstream.
+[ Upstream commit 68927eb52d0af04863584930db06075d2610e194 ]
 
-This device exhibits I/O errors during file transfers due to unstable
-link power management (LPM) behavior. The kernel logs show repeated
-warm resets and eventual disconnection when LPM is enabled:
+rename the function to lan743x_hw_reset_phy to better describe it
+operation.
 
-[ 3467.810740] hub 2-0:1.0: state 7 ports 6 chg 0000 evt 0020
-[ 3467.810740] usb usb2-port5: do warm reset
-[ 3467.866444] usb usb2-port5: not warm reset yet, waiting 50ms
-[ 3467.907407] sd 0:0:0:0: [sda] tag#12 sense submit err -19
-[ 3467.994423] usb usb2-port5: status 02c0, change 0001, 10.0 Gb/s
-[ 3467.994453] usb 2-5: USB disconnect, device number 4
-
-The error -19 (ENODEV) occurs when the device disappears during write
-operations. Adding USB_QUIRK_NO_LPM disables link power management
-for this specific device, resolving the stability issues.
-
-Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250508055947.764538-1-lijiayi@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 23f0703c125be ("lan743x: Add main source files for new lan743x driver")
+Signed-off-by: Thangaraj Samynathan <thangaraj.s@microchip.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250526053048.287095-2-thangaraj.s@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/microchip/lan743x_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -372,6 +372,9 @@ static const struct usb_device_id usb_qu
- 	/* SanDisk Corp. SanDisk 3.2Gen1 */
- 	{ USB_DEVICE(0x0781, 0x55a3), .driver_info = USB_QUIRK_DELAY_INIT },
+diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
+index a0f490a907573..26a230c60efb7 100644
+--- a/drivers/net/ethernet/microchip/lan743x_main.c
++++ b/drivers/net/ethernet/microchip/lan743x_main.c
+@@ -918,7 +918,7 @@ static int lan743x_mac_set_mtu(struct lan743x_adapter *adapter, int new_mtu)
+ }
  
-+	/* SanDisk Extreme 55AE */
-+	{ USB_DEVICE(0x0781, 0x55ae), .driver_info = USB_QUIRK_NO_LPM },
-+
- 	/* Realforce 87U Keyboard */
- 	{ USB_DEVICE(0x0853, 0x011b), .driver_info = USB_QUIRK_NO_LPM },
+ /* PHY */
+-static int lan743x_phy_reset(struct lan743x_adapter *adapter)
++static int lan743x_hw_reset_phy(struct lan743x_adapter *adapter)
+ {
+ 	u32 data;
  
+@@ -952,7 +952,7 @@ static void lan743x_phy_update_flowcontrol(struct lan743x_adapter *adapter,
+ 
+ static int lan743x_phy_init(struct lan743x_adapter *adapter)
+ {
+-	return lan743x_phy_reset(adapter);
++	return lan743x_hw_reset_phy(adapter);
+ }
+ 
+ static void lan743x_phy_link_status_change(struct net_device *netdev)
+-- 
+2.39.5
+
 
 
