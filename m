@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96E4223335;
-	Mon, 23 Jun 2025 21:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AB722257E;
+	Mon, 23 Jun 2025 21:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713506; cv=none; b=J+U4rvB9bjoClEXqKDVwXG0IkKoxDuIvXXP5mdSKYBV4WpmMV5H0wbv0qs3QVoc0PIRRjMLNFeZyR358zmsompvqfgZ64rMdyPOOFCuR6PSqkv566D/kyGwTsd3e5ajl95U9lCEqNQ+RZt1eXH4AHjHcwFLbSBxSTEX1CoSIBVM=
+	t=1750713509; cv=none; b=f1pzjRdGvLwnla6WvDyKWYVNahYVBI+qWWzJklBI9G5pn65geBvh5p2HnvIm8JeEkauER5L2xG5g/hXYf7IdcYXBzi8Drsq/cAqQHKDGVpu0UnyhGwaqGV7kT+z43f9f0Qr8YRpfMVBNjEGMc9yWY2KVqQuzHPPoN6dSyr7v9Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713506; c=relaxed/simple;
-	bh=6pEoo+EYYSNyMZJD0iLVfOtbQJf2KucKIaTSsK/gXg8=;
+	s=arc-20240116; t=1750713509; c=relaxed/simple;
+	bh=E93B4ZPeqLDUVQNzfJlxJeXZ/beby/EEtOd9ZL3yyQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BiJU6k4KTwoF0uScvBXgP72enTGIvK0h7l4rP5DCAYrW5nqmNAhUrH8vwUDoJ1Z3DBT2liQ+ei8cPMzmY+XpsybF6PomDjHsbjiGfjseGvsQAS4QxJ06AXNzNQmAygzBD0UmCREJ7qsJrlQzDFky1I7QIvMvBK0DEjToTdMlSXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdaSZct4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KyTDfoZd5despGkTpGkuBqwKBQ46SvdhfYMyYzCI2k8mI7AKDbeOQmHY7TAw9Ax6YbW7vVsPax68RYJvJGa6mCmVbYlA+t9vkBg7veFRgf2zetLMz57ZV0z6PHPOiw64dadLVjQ7bO3w9fwdDm6EG9UtIzrqV5O/uLRAnXjJRWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jgYTLqd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdaSZct4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C3AC4CEEA;
-	Mon, 23 Jun 2025 21:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jgYTLqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0EDFC4CEEA;
+	Mon, 23 Jun 2025 21:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713506;
-	bh=6pEoo+EYYSNyMZJD0iLVfOtbQJf2KucKIaTSsK/gXg8=;
+	s=korg; t=1750713509;
+	bh=E93B4ZPeqLDUVQNzfJlxJeXZ/beby/EEtOd9ZL3yyQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KdaSZct4YZDUDlx5OyDCQXPcFOGP8T7o0aqjCixSWQvx1teVwgqZdsfAw0gU21nPb
-	 sXHFxuEyelIRgKlmvZ+CS52lrib/Ab/OXPnXYPCSH65MRyyxiYqK3QxUMAT2zyxVaZ
-	 xVrJEG0nW66VPa+FKyX5ykdb3/QIWNa2R4Txf3NY=
+	b=0jgYTLqdgKJJ2Dlfy4EjQCYqtOQWmwgIge2QzGfU26MhrV2PyB0nDpil/Gf9yQA65
+	 kBhXV0wzhBGWq1i63Uoyef8u3Aam+UMapDc8zF7RH6gr168c4jTu5BYnRvt3+PUVvF
+	 CdiUoUbmGLly7CIqrG1VFucEKAb2qStr2K2OLfOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeal Robot <zealci@zte.com.cn>,
-	zhang songyi <zhang.songyi@zte.com.cn>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 131/411] Input: synaptics-rmi4 - convert to use sysfs_emit() APIs
-Date: Mon, 23 Jun 2025 15:04:35 +0200
-Message-ID: <20250623130636.868999039@linuxfoundation.org>
+Subject: [PATCH 6.15 351/592] xfrm: validate assignment of maximal possible SEQ number
+Date: Mon, 23 Jun 2025 15:05:09 +0200
+Message-ID: <20250623130708.795304810@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +47,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: zhang songyi <zhang.songyi@zte.com.cn>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 9dedc915937c33302df7fcab01c45e7936d6195a ]
+[ Upstream commit e86212b6b13a20c5ad404c5597933f57fd0f1519 ]
 
-Follow the advice of the Documentation/filesystems/sysfs.rst and show()
-should only use sysfs_emit() or sysfs_emit_at() when formatting the value
-to be returned to user space.
+Users can set any seq/seq_hi/oseq/oseq_hi values. The XFRM core code
+doesn't prevent from them to set even 0xFFFFFFFF, however this value
+will cause for traffic drop.
 
-Reported-by: Zeal Robot <zealci@zte.com.cn>
-Signed-off-by: zhang songyi <zhang.songyi@zte.com.cn>
-Link: https://lore.kernel.org/r/20220927070936.258300-1-zhang.songyi@zte.com.cn
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Stable-dep-of: ca39500f6af9 ("Input: synaptics-rmi - fix crash with unsupported versions of F34")
+Is is happening because SEQ numbers here mean that packet with such
+number was processed and next number should be sent on the wire. In this
+case, the next number will be 0, and it means overflow which causes to
+(expected) packet drops.
+
+While it can be considered as misconfiguration and handled by XFRM
+datapath in the same manner as any other SEQ number, let's add
+validation to easy for packet offloads implementations which need to
+configure HW with next SEQ to send and not with current SEQ like it is
+done in core code.
+
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/rmi4/rmi_f34.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/xfrm/xfrm_user.c | 52 +++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 42 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/input/rmi4/rmi_f34.c b/drivers/input/rmi4/rmi_f34.c
-index e5dca9868f87f..c26808f10827a 100644
---- a/drivers/input/rmi4/rmi_f34.c
-+++ b/drivers/input/rmi4/rmi_f34.c
-@@ -321,13 +321,13 @@ static ssize_t rmi_driver_bootloader_id_show(struct device *dev,
- 		f34 = dev_get_drvdata(&fn->dev);
- 
- 		if (f34->bl_version == 5)
--			return scnprintf(buf, PAGE_SIZE, "%c%c\n",
--					 f34->bootloader_id[0],
--					 f34->bootloader_id[1]);
-+			return sysfs_emit(buf, "%c%c\n",
-+					  f34->bootloader_id[0],
-+					  f34->bootloader_id[1]);
- 		else
--			return scnprintf(buf, PAGE_SIZE, "V%d.%d\n",
--					 f34->bootloader_id[1],
--					 f34->bootloader_id[0]);
-+			return sysfs_emit(buf, "V%d.%d\n",
-+					  f34->bootloader_id[1],
-+					  f34->bootloader_id[0]);
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index 784a2d124749f..614b58cb26ab7 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -178,11 +178,27 @@ static inline int verify_replay(struct xfrm_usersa_info *p,
+ 				       "Replay seq and seq_hi should be 0 for output SA");
+ 			return -EINVAL;
+ 		}
+-		if (rs->oseq_hi && !(p->flags & XFRM_STATE_ESN)) {
+-			NL_SET_ERR_MSG(
+-				extack,
+-				"Replay oseq_hi should be 0 in non-ESN mode for output SA");
+-			return -EINVAL;
++
++		if (!(p->flags & XFRM_STATE_ESN)) {
++			if (rs->oseq_hi) {
++				NL_SET_ERR_MSG(
++					extack,
++					"Replay oseq_hi should be 0 in non-ESN mode for output SA");
++				return -EINVAL;
++			}
++			if (rs->oseq == U32_MAX) {
++				NL_SET_ERR_MSG(
++					extack,
++					"Replay oseq should be less than 0xFFFFFFFF in non-ESN mode for output SA");
++				return -EINVAL;
++			}
++		} else {
++			if (rs->oseq == U32_MAX && rs->oseq_hi == U32_MAX) {
++				NL_SET_ERR_MSG(
++					extack,
++					"Replay oseq and oseq_hi should be less than 0xFFFFFFFF for output SA");
++				return -EINVAL;
++			}
+ 		}
+ 		if (rs->bmp_len) {
+ 			NL_SET_ERR_MSG(extack, "Replay bmp_len should 0 for output SA");
+@@ -196,11 +212,27 @@ static inline int verify_replay(struct xfrm_usersa_info *p,
+ 				       "Replay oseq and oseq_hi should be 0 for input SA");
+ 			return -EINVAL;
+ 		}
+-		if (rs->seq_hi && !(p->flags & XFRM_STATE_ESN)) {
+-			NL_SET_ERR_MSG(
+-				extack,
+-				"Replay seq_hi should be 0 in non-ESN mode for input SA");
+-			return -EINVAL;
++		if (!(p->flags & XFRM_STATE_ESN)) {
++			if (rs->seq_hi) {
++				NL_SET_ERR_MSG(
++					extack,
++					"Replay seq_hi should be 0 in non-ESN mode for input SA");
++				return -EINVAL;
++			}
++
++			if (rs->seq == U32_MAX) {
++				NL_SET_ERR_MSG(
++					extack,
++					"Replay seq should be less than 0xFFFFFFFF in non-ESN mode for input SA");
++				return -EINVAL;
++			}
++		} else {
++			if (rs->seq == U32_MAX && rs->seq_hi == U32_MAX) {
++				NL_SET_ERR_MSG(
++					extack,
++					"Replay seq and seq_hi should be less than 0xFFFFFFFF for input SA");
++				return -EINVAL;
++			}
+ 		}
  	}
  
- 	return 0;
-@@ -346,7 +346,7 @@ static ssize_t rmi_driver_configuration_id_show(struct device *dev,
- 	if (fn) {
- 		f34 = dev_get_drvdata(&fn->dev);
- 
--		return scnprintf(buf, PAGE_SIZE, "%s\n", f34->configuration_id);
-+		return sysfs_emit(buf, "%s\n", f34->configuration_id);
- 	}
- 
- 	return 0;
-@@ -499,7 +499,7 @@ static ssize_t rmi_driver_update_fw_status_show(struct device *dev,
- 	if (data->f34_container)
- 		update_status = rmi_f34_status(data->f34_container);
- 
--	return scnprintf(buf, PAGE_SIZE, "%d\n", update_status);
-+	return sysfs_emit(buf, "%d\n", update_status);
- }
- 
- static DEVICE_ATTR(update_fw_status, 0444,
 -- 
 2.39.5
 
