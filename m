@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D941DD0C7;
-	Mon, 23 Jun 2025 21:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23FA19049B;
+	Mon, 23 Jun 2025 21:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715380; cv=none; b=r0YKsDBqiC0uz2vLJpdZSGBS4HoKDjlDh8LT+d+fcv4zYjdfyyOAcweDk4NPvZKm6F2/+DtNTKXxzstSiun5TW/Dqko6LYcPE6OMB+bLkYxHaSu+9ckWZG8mtOP28iFBEiY3ullMma2E5t7w6bSxsVdpdaQ2F4dYxF+Oz77eWS4=
+	t=1750715382; cv=none; b=FEosDwfEPhiVq5dlQxVFtTi3VFLHVrZvH0AfMbwhxiecctD9IbXIsNO9ryAMZeRUUCDcwEEW9p6UK5R7rI+dgRrr/xqPr6TIuHsTGYyJ6EPkTokw5AtDSGM6rHp3TfpVYuiZyxZZC3sHRr/F3Qdhb5k4TOTgCveUhJL+KjQKyvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715380; c=relaxed/simple;
-	bh=NDzcMK1y0Tx7wUa+OIrLG94ymw2Qj2+/uh0567Txzqw=;
+	s=arc-20240116; t=1750715382; c=relaxed/simple;
+	bh=kBEu2ene663bIia8g9i0U3PAun9uspMcdEuO8aS8LJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snl8k0MFxhXT9e9Rs3yYL65c3S/PiyIDfIjHPYbuUa1ep79DJwvDOOOgPWVE94ZR2ExPwIykIaAO1MHKv+iHqSAu29cTqDtSPK4su4etVpwZF44U3Q+SrhEGQHRlE8MBj82ku5nFCG7eIbtR1J+rNMLsFMDf+pia5NjTt0E5G3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsaYl8Dw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=alEPfq0rEJtiYSMqxXhsUe/IKbdNsiTiw/vabLsU63ILJvhj9IRxRKmSb3Cq2JWFZUlffc+8i+hb3zwrLHGpU5yWx6IegEmGK/7aDYJBDcUqqj9O7LSTHtF2alddHYecM36n+fqIh+bLzSuf6hgftD0gS7zPyvqcZP7SL2fNV7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIMAXigJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsaYl8Dw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9ABFC4CEEA;
-	Mon, 23 Jun 2025 21:49:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIMAXigJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF81C4CEEA;
+	Mon, 23 Jun 2025 21:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715379;
-	bh=NDzcMK1y0Tx7wUa+OIrLG94ymw2Qj2+/uh0567Txzqw=;
+	s=korg; t=1750715381;
+	bh=kBEu2ene663bIia8g9i0U3PAun9uspMcdEuO8aS8LJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hsaYl8DwgTuSpLrQlb2up8IAiFT1sFmeOE4CrN0IpwoatiWEJGOknnQh+/6qOiYJ0
-	 KpD9yv2gji3lEFQQQxlRzYyYOBpmfewJu8zYJCGKaLEGgzkWzcZc217gMjRnRzgBmy
-	 2cO5hlampKMJtX02HHq1JL3CloZGXKlg1MhVl8XQ=
+	b=SIMAXigJTUFbHwqessQuef45g2x8+RVe5Dyoj46HwYMc3sHnNUn+kh+PVqM/B73RE
+	 +dmnNOND+7OkwiAlFjgjMpoWraPwCblqYsoX3aw3UPyKIm9r3f6ny+XWs/6/YTO4Qm
+	 Lt9hqEIjFq3nSU20fleakT/fR8Yeu4du9PLtzWFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yury Vostrikov <mon@unformed.ru>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 231/508] wifi: ath11k: avoid burning CPU in ath11k_debugfs_fw_stats_request()
-Date: Mon, 23 Jun 2025 15:04:36 +0200
-Message-ID: <20250623130650.943955729@linuxfoundation.org>
+	Khem Raj <raj.khem@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 5.15 249/411] mips: Add -std= flag specified in KBUILD_CFLAGS to vdso CFLAGS
+Date: Mon, 23 Jun 2025 15:06:33 +0200
+Message-ID: <20250623130639.918517839@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,235 +46,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Khem Raj <raj.khem@gmail.com>
 
-[ Upstream commit 9f6e82d11bb9692a90d20b10f87345598945c803 ]
+commit 0f4ae7c6ecb89bfda026d210dcf8216fb67d2333 upstream.
 
-We get report [1] that CPU is running a hot loop in
-ath11k_debugfs_fw_stats_request():
+GCC 15 changed the default C standard dialect from gnu17 to gnu23,
+which should not have impacted the kernel because it explicitly requests
+the gnu11 standard in the main Makefile. However, mips/vdso code uses
+its own CFLAGS without a '-std=' value, which break with this dialect
+change because of the kernel's own definitions of bool, false, and true
+conflicting with the C23 reserved keywords.
 
-94.60%     0.00%  i3status         [kernel.kallsyms]                 [k] do_syscall_64
-        |
-         --94.60%--do_syscall_64
-                   |
-                    --94.55%--__sys_sendmsg
-                              ___sys_sendmsg
-                              ____sys_sendmsg
-                              netlink_sendmsg
-                              netlink_unicast
-                              genl_rcv
-                              netlink_rcv_skb
-                              genl_rcv_msg
-                              |
-                               --94.55%--genl_family_rcv_msg_dumpit
-                                         __netlink_dump_start
-                                         netlink_dump
-                                         genl_dumpit
-                                         nl80211_dump_station
-                                         |
-                                          --94.55%--ieee80211_dump_station
-                                                    sta_set_sinfo
-                                                    |
-                                                     --94.55%--ath11k_mac_op_sta_statistics
-                                                               ath11k_debugfs_get_fw_stats
-                                                               |
-                                                                --94.55%--ath11k_debugfs_fw_stats_request
-                                                                          |
-                                                                          |--41.73%--_raw_spin_lock_bh
-                                                                          |
-                                                                          |--22.74%--__local_bh_enable_ip
-                                                                          |
-                                                                          |--9.22%--_raw_spin_unlock_bh
-                                                                          |
-                                                                           --6.66%--srso_alias_safe_ret
+  include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
+     11 |         false   = 0,
+        |         ^~~~~
+  include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
+  include/linux/types.h:35:33: error: 'bool' cannot be defined via 'typedef'
+     35 | typedef _Bool                   bool;
+        |                                 ^~~~
+  include/linux/types.h:35:33: note: 'bool' is a keyword with '-std=c23' onwards
 
-This is because, if for whatever reason ar->fw_stats_done is not set by
-ath11k_update_stats_event(), ath11k_debugfs_fw_stats_request() won't yield
-CPU before an up to 3s timeout.
+Add -std as specified in KBUILD_CFLAGS to the decompressor and purgatory
+CFLAGS to eliminate these errors and make the C standard version of these
+areas match the rest of the kernel.
 
-Change to completion mechanism to avoid CPU burning.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.37
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Reported-by: Yury Vostrikov <mon@unformed.ru>
-Closes: https://lore.kernel.org/all/7324ac7a-8b7a-42a5-aa19-de52138ff638@app.fastmail.com/ # [1]
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250220082448.31039-2-quic_bqiang@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/core.c    |  1 +
- drivers/net/wireless/ath/ath11k/core.h    |  2 +-
- drivers/net/wireless/ath/ath11k/debugfs.c | 38 +++++++++--------------
- drivers/net/wireless/ath/ath11k/mac.c     |  2 +-
- drivers/net/wireless/ath/ath11k/wmi.c     |  2 +-
- 5 files changed, 18 insertions(+), 27 deletions(-)
+ arch/mips/vdso/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
-index ef269244fe495..a8bdddccca4cb 100644
---- a/drivers/net/wireless/ath/ath11k/core.c
-+++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -644,6 +644,7 @@ void ath11k_fw_stats_init(struct ath11k *ar)
- 	INIT_LIST_HEAD(&ar->fw_stats.bcn);
- 
- 	init_completion(&ar->fw_stats_complete);
-+	init_completion(&ar->fw_stats_done);
- }
- 
- void ath11k_fw_stats_free(struct ath11k_fw_stats *stats)
-diff --git a/drivers/net/wireless/ath/ath11k/core.h b/drivers/net/wireless/ath/ath11k/core.h
-index bd06536f82a64..69feef410b359 100644
---- a/drivers/net/wireless/ath/ath11k/core.h
-+++ b/drivers/net/wireless/ath/ath11k/core.h
-@@ -718,7 +718,7 @@ struct ath11k {
- 	u8 alpha2[REG_ALPHA2_LEN + 1];
- 	struct ath11k_fw_stats fw_stats;
- 	struct completion fw_stats_complete;
--	bool fw_stats_done;
-+	struct completion fw_stats_done;
- 
- 	/* protected by conf_mutex */
- 	bool ps_state_enable;
-diff --git a/drivers/net/wireless/ath/ath11k/debugfs.c b/drivers/net/wireless/ath/ath11k/debugfs.c
-index a8bd944f76d92..a5791155fe065 100644
---- a/drivers/net/wireless/ath/ath11k/debugfs.c
-+++ b/drivers/net/wireless/ath/ath11k/debugfs.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2018-2020 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include <linux/vmalloc.h>
-@@ -96,7 +96,6 @@ void ath11k_debugfs_add_dbring_entry(struct ath11k *ar,
- static void ath11k_debugfs_fw_stats_reset(struct ath11k *ar)
- {
- 	spin_lock_bh(&ar->data_lock);
--	ar->fw_stats_done = false;
- 	ath11k_fw_stats_pdevs_free(&ar->fw_stats.pdevs);
- 	ath11k_fw_stats_vdevs_free(&ar->fw_stats.vdevs);
- 	spin_unlock_bh(&ar->data_lock);
-@@ -114,7 +113,7 @@ void ath11k_debugfs_fw_stats_process(struct ath11k *ar, struct ath11k_fw_stats *
- 	/* WMI_REQUEST_PDEV_STAT request has been already processed */
- 
- 	if (stats->stats_id == WMI_REQUEST_RSSI_PER_CHAIN_STAT) {
--		ar->fw_stats_done = true;
-+		complete(&ar->fw_stats_done);
- 		return;
- 	}
- 
-@@ -138,7 +137,7 @@ void ath11k_debugfs_fw_stats_process(struct ath11k *ar, struct ath11k_fw_stats *
- 				      &ar->fw_stats.vdevs);
- 
- 		if (is_end) {
--			ar->fw_stats_done = true;
-+			complete(&ar->fw_stats_done);
- 			num_vdev = 0;
- 		}
- 		return;
-@@ -158,7 +157,7 @@ void ath11k_debugfs_fw_stats_process(struct ath11k *ar, struct ath11k_fw_stats *
- 				      &ar->fw_stats.bcn);
- 
- 		if (is_end) {
--			ar->fw_stats_done = true;
-+			complete(&ar->fw_stats_done);
- 			num_bcn = 0;
- 		}
- 	}
-@@ -168,21 +167,15 @@ static int ath11k_debugfs_fw_stats_request(struct ath11k *ar,
- 					   struct stats_request_params *req_param)
- {
- 	struct ath11k_base *ab = ar->ab;
--	unsigned long timeout, time_left;
-+	unsigned long time_left;
- 	int ret;
- 
- 	lockdep_assert_held(&ar->conf_mutex);
- 
--	/* FW stats can get split when exceeding the stats data buffer limit.
--	 * In that case, since there is no end marking for the back-to-back
--	 * received 'update stats' event, we keep a 3 seconds timeout in case,
--	 * fw_stats_done is not marked yet
--	 */
--	timeout = jiffies + secs_to_jiffies(3);
--
- 	ath11k_debugfs_fw_stats_reset(ar);
- 
- 	reinit_completion(&ar->fw_stats_complete);
-+	reinit_completion(&ar->fw_stats_done);
- 
- 	ret = ath11k_wmi_send_stats_request_cmd(ar, req_param);
- 
-@@ -193,21 +186,18 @@ static int ath11k_debugfs_fw_stats_request(struct ath11k *ar,
- 	}
- 
- 	time_left = wait_for_completion_timeout(&ar->fw_stats_complete, 1 * HZ);
--
- 	if (!time_left)
- 		return -ETIMEDOUT;
- 
--	for (;;) {
--		if (time_after(jiffies, timeout))
--			break;
-+	/* FW stats can get split when exceeding the stats data buffer limit.
-+	 * In that case, since there is no end marking for the back-to-back
-+	 * received 'update stats' event, we keep a 3 seconds timeout in case,
-+	 * fw_stats_done is not marked yet
-+	 */
-+	time_left = wait_for_completion_timeout(&ar->fw_stats_done, 3 * HZ);
-+	if (!time_left)
-+		return -ETIMEDOUT;
- 
--		spin_lock_bh(&ar->data_lock);
--		if (ar->fw_stats_done) {
--			spin_unlock_bh(&ar->data_lock);
--			break;
--		}
--		spin_unlock_bh(&ar->data_lock);
--	}
- 	return 0;
- }
- 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 8234e34269ed8..e5b4cc2486833 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -8510,11 +8510,11 @@ static int ath11k_fw_stats_request(struct ath11k *ar,
- 	lockdep_assert_held(&ar->conf_mutex);
- 
- 	spin_lock_bh(&ar->data_lock);
--	ar->fw_stats_done = false;
- 	ath11k_fw_stats_pdevs_free(&ar->fw_stats.pdevs);
- 	spin_unlock_bh(&ar->data_lock);
- 
- 	reinit_completion(&ar->fw_stats_complete);
-+	reinit_completion(&ar->fw_stats_done);
- 
- 	ret = ath11k_wmi_send_stats_request_cmd(ar, req_param);
- 	if (ret) {
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 142b201052660..38756ed48082c 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -7575,7 +7575,7 @@ static void ath11k_update_stats_event(struct ath11k_base *ab, struct sk_buff *sk
- 	 */
- 	if (stats.stats_id == WMI_REQUEST_PDEV_STAT) {
- 		list_splice_tail_init(&stats.pdevs, &ar->fw_stats.pdevs);
--		ar->fw_stats_done = true;
-+		complete(&ar->fw_stats_done);
- 		goto complete;
- 	}
- 
--- 
-2.39.5
-
+--- a/arch/mips/vdso/Makefile
++++ b/arch/mips/vdso/Makefile
+@@ -29,6 +29,7 @@ endif
+ # offsets.
+ cflags-vdso := $(ccflags-vdso) \
+ 	$(filter -W%,$(filter-out -Wa$(comma)%,$(KBUILD_CFLAGS))) \
++	$(filter -std=%,$(KBUILD_CFLAGS)) \
+ 	-O3 -g -fPIC -fno-strict-aliasing -fno-common -fno-builtin -G 0 \
+ 	-mrelax-pic-calls $(call cc-option, -mexplicit-relocs) \
+ 	-fno-stack-protector -fno-jump-tables -DDISABLE_BRANCH_PROFILING \
 
 
