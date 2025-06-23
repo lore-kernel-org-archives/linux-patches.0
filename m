@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A61A229B13;
-	Mon, 23 Jun 2025 21:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906C222A4CC;
+	Mon, 23 Jun 2025 21:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715103; cv=none; b=PPTP6K6Vh+DCyfpG2WS9fa+NYXKMVxFU8AE6HaEg5jwz60h5dJ7FoRCGXHpwizus6f5Ml102slv3YL90R9uoKrJQ6qL1AAgXvV45ogM5Rt+2cfG1KbZV5YbNsRD5OR4aXUS6pzLbWsR58G/VBsPCkWIxoyRHQOB/uDbKQQbCVlA=
+	t=1750715105; cv=none; b=ltaoU4/47jzjv6wMjh9gN8t29ICcRkOSOjMM2/pfhCxd/N0auZweLjhtKYz1vdODL6TiFjU/oPyPWl4yTv8t+9rdUc+UCjaAjAlLfuSTugOClCDo3c4mFpuEnv8NT+u9E+8czJLahKLchdAP47NCxFNk+E4ygKhYRfTI5Q9l0B0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715103; c=relaxed/simple;
-	bh=M2The7Cf/qXkO6kcWxAflhhRAivz0/zG4C/gc8IRe7U=;
+	s=arc-20240116; t=1750715105; c=relaxed/simple;
+	bh=bemz+0MAxbLCSPtoaMTUubjGS9rxENpYEJnzlhNIRus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mfiufYYPcOP0UJTWGJCGCrFE759PbtbDz4jQ6fRTdU35kWUGsLk0GLyCQcg6u4z/iiikQXPyxLjYgT5JQddjmFe5rV4Y+LrLxga5FLvE8EajdG5pnI2m5Ochr/0XGpN9oVhvbh8banvhnHyVofhmdjul7nHx2GKDyXJx3zXcVSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4C66KwL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mkoFTo4hok5TrgefBJLDPIyQy17z1BEm+jUqIl6Jnbe0IP+42wLFOKBl1DXOGRxxdODoPmiN9BninUJ08UVUClt4/5RutM27d0ZLizJoCQ8eKZ9jRvN+HAX7Fl09YY+ft169ll8FSFPg/BL4Lx+XpFD9i+aLwuoNP30bk8LfK8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrdzkDWb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4C66KwL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868DEC4CEF4;
-	Mon, 23 Jun 2025 21:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrdzkDWb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267DDC4CEEA;
+	Mon, 23 Jun 2025 21:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715103;
-	bh=M2The7Cf/qXkO6kcWxAflhhRAivz0/zG4C/gc8IRe7U=;
+	s=korg; t=1750715105;
+	bh=bemz+0MAxbLCSPtoaMTUubjGS9rxENpYEJnzlhNIRus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J4C66KwLqYhcKWZXEL/Uf8hp3q7QrAoYufILm212QyvzvTRiGBRNxrCehYhSKttn7
-	 UPHRAI1naczGDSkrwxU7KyKOS1X4+xK5d124OD203qLfEIwXmyJ01TS7yH30oM6MTE
-	 +1kyZdzNRm+ZsMXL8UsuMIqqArdhbo99jV5YJZm4=
+	b=rrdzkDWb2O1l0tJ11BEM1ghAI0/apFLxabG3drLl1wMP+mfW2VvhCV+ZbHWLcopZG
+	 hsh8m17YdQ6YlRI5vkOUHPg78y/adxZTmIHcepodEa1cjwD88IbxrqCdyuKelQnlXQ
+	 91PUgwv5HH6tWOnVuX/8TYsVUu7UsG6RnnCjhQ9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Imre Kaloz <kaloz@openwrt.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 437/592] platform/x86/amd: pmf: Prevent amd_pmf_tee_deinit() from running twice
-Date: Mon, 23 Jun 2025 15:06:35 +0200
-Message-ID: <20250623130710.828652229@linuxfoundation.org>
+Subject: [PATCH 6.1 215/508] arm64: dts: marvell: uDPU: define pinctrl state for alarm LEDs
+Date: Mon, 23 Jun 2025 15:04:20 +0200
+Message-ID: <20250623130650.553628698@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,75 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 93103d56650d7a38ed37ba4041578310f82776ae ]
+[ Upstream commit b04f0d89e880bc2cca6a5c73cf287082c91878da ]
 
-If any of the tee init fails, pass up the errors and clear the tee_ctx
-pointer. This will prevent cleaning up multiple times.
+The two alarm LEDs of on the uDPU board are stopped working since
+commit 78efa53e715e ("leds: Init leds class earlier").
 
-Fixes: ac052d8c08f9d ("platform/x86/amd/pmf: Add PMF TEE interface")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20250512211154.2510397-3-superm1@kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20250522003457.1516679-3-superm1@kernel.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+The LEDs are driven by the GPIO{15,16} pins of the North Bridge
+GPIO controller. These pins are part of the 'spi_quad' pin group
+for which the 'spi' function is selected via the default pinctrl
+state of the 'spi' node. This is wrong however, since in order to
+allow controlling the LEDs, the pins should use the 'gpio' function.
+
+Before the commit mentined above, the 'spi' function is selected
+first by the pinctrl core before probing the spi driver, but then
+it gets overridden to 'gpio' implicitly via the
+devm_gpiod_get_index_optional() call from the 'leds-gpio' driver.
+
+After the commit, the LED subsystem gets initialized before the
+SPI subsystem, so the function of the pin group remains 'spi'
+which in turn prevents controlling of the LEDs.
+
+Despite the change of the initialization order, the root cause is
+that the pinctrl state definition is wrong since its initial commit
+0d45062cfc89 ("arm64: dts: marvell: Add device tree for uDPU board"),
+
+To fix the problem, override the function in the 'spi_quad_pins'
+node to 'gpio' and move the pinctrl state definition from the
+'spi' node into the 'leds' node.
+
+Cc: stable@vger.kernel.org # needs adjustment for < 6.1
+Fixes: 0d45062cfc89 ("arm64: dts: marvell: Add device tree for uDPU board")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/tee-if.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmf/tee-if.c b/drivers/platform/x86/amd/pmf/tee-if.c
-index 027e992b71472..76efce48a45ce 100644
---- a/drivers/platform/x86/amd/pmf/tee-if.c
-+++ b/drivers/platform/x86/amd/pmf/tee-if.c
-@@ -420,12 +420,12 @@ static int amd_pmf_ta_open_session(struct tee_context *ctx, u32 *id, const uuid_
- 	rc = tee_client_open_session(ctx, &sess_arg, NULL);
- 	if (rc < 0 || sess_arg.ret != 0) {
- 		pr_err("Failed to open TEE session err:%#x, rc:%d\n", sess_arg.ret, rc);
--		return rc;
-+		return rc ?: -EINVAL;
- 	}
+diff --git a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
+index 3f79923376fb2..37244e8816d9e 100644
+--- a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
++++ b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
+@@ -26,6 +26,8 @@ memory@0 {
  
- 	*id = sess_arg.session;
+ 	leds {
+ 		compatible = "gpio-leds";
++		pinctrl-names = "default";
++		pinctrl-0 = <&spi_quad_pins>;
  
--	return rc;
-+	return 0;
- }
+ 		led-power1 {
+ 			label = "udpu:green:power";
+@@ -82,8 +84,6 @@ &sdhci0 {
  
- static int amd_pmf_register_input_device(struct amd_pmf_dev *dev)
-@@ -460,7 +460,9 @@ static int amd_pmf_tee_init(struct amd_pmf_dev *dev, const uuid_t *uuid)
- 	dev->tee_ctx = tee_client_open_context(NULL, amd_pmf_amdtee_ta_match, NULL, NULL);
- 	if (IS_ERR(dev->tee_ctx)) {
- 		dev_err(dev->dev, "Failed to open TEE context\n");
--		return PTR_ERR(dev->tee_ctx);
-+		ret = PTR_ERR(dev->tee_ctx);
-+		dev->tee_ctx = NULL;
-+		return ret;
- 	}
+ &spi0 {
+ 	status = "okay";
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&spi_quad_pins>;
  
- 	ret = amd_pmf_ta_open_session(dev->tee_ctx, &dev->session_id, uuid);
-@@ -500,9 +502,12 @@ static int amd_pmf_tee_init(struct amd_pmf_dev *dev, const uuid_t *uuid)
+ 	flash@0 {
+ 		compatible = "jedec,spi-nor";
+@@ -108,6 +108,10 @@ partition@180000 {
+ 	};
+ };
  
- static void amd_pmf_tee_deinit(struct amd_pmf_dev *dev)
- {
-+	if (!dev->tee_ctx)
-+		return;
- 	tee_shm_free(dev->fw_shm_pool);
- 	tee_client_close_session(dev->tee_ctx, dev->session_id);
- 	tee_client_close_context(dev->tee_ctx);
-+	dev->tee_ctx = NULL;
- }
- 
- int amd_pmf_init_smart_pc(struct amd_pmf_dev *dev)
++&spi_quad_pins {
++	function = "gpio";
++};
++
+ &pinctrl_nb {
+ 	i2c2_recovery_pins: i2c2-recovery-pins {
+ 		groups = "i2c2";
 -- 
 2.39.5
 
