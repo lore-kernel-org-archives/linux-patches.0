@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8049119D084;
-	Mon, 23 Jun 2025 21:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4E84315A;
+	Mon, 23 Jun 2025 21:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714924; cv=none; b=XgX4rEECXxHBJccJoTlcH4dJ69tvnLjVRzusvPPftb+B0AyC4fnFQth9mzJIpP6jpBSALWS6QFGeWRUI7Owns9IQ8okTGSUOODUO5boPh7pleArcR+lsP0wtglviQjA2YBzQcrL6XFo1hKa8l9oKJuBDV+o/JCgaD3NOunN8emA=
+	t=1750714926; cv=none; b=ej5N1lnQikg1XVmqROhs7Vxkv9I/ySTKciPeWtDFV/YNlx489vndfaUpCT+Bj35//bUjuguIHhtMAwZmCFrRLfprvMeGbynUteX1HJ1X9G4HTa2KOB4EAA48MbSTtZVJ+u3y9UxVHG89qYw6l66+Q6NsFlt8SN4Evc+OxzEbthg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714924; c=relaxed/simple;
-	bh=kZf3SKoKzEgRUkfdKXxL48LWIK2vL/c1OVI2zE++OpE=;
+	s=arc-20240116; t=1750714926; c=relaxed/simple;
+	bh=auGH6DEU4t4YbKYEs9VNFe7xe7VPPVpEoJDEBzo/qVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mYD/OxTRFXicy7SC3rs92F6sYw1V2ilfGaTMhuN3xsFAFX9GaA9Kt66lqYei+2OfnRDuV+Qmb8pY6AEVZcIhUVCRvLNJtJzte4Y+v6j981hUVDb+5ai2WAFVQbJtsDrwAN+apYiRoyfSYeM+8qLDG2gPGo5UU94X2v7TCpGkxkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALXlSD1b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GAb+dJVXgRI7q3YSk4kcnAKREZfVujgnxnL6/TQfEmBXsPHZ+l77XIwMEC5C2atkMa0MVUY4yXUyRZfdqx/RTLkcLoDdtKDH2gqW0YdDwpGsdAp9me+Y0HWY7+vrj8UDdg32CbF7EMqm9n8Smyd4z6XTCrkNfo8uXDTOvMHYheU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3ZQwCLA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALXlSD1b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB597C4CEEA;
-	Mon, 23 Jun 2025 21:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3ZQwCLA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AC7C4CEEA;
+	Mon, 23 Jun 2025 21:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714924;
-	bh=kZf3SKoKzEgRUkfdKXxL48LWIK2vL/c1OVI2zE++OpE=;
+	s=korg; t=1750714926;
+	bh=auGH6DEU4t4YbKYEs9VNFe7xe7VPPVpEoJDEBzo/qVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ALXlSD1bSlfEe8MWiRHhwKMQI7ilWukq9tPRVD3mYmri4hYn2QgGcZYbjyJRiwblr
-	 TupeCiNoXCxL1Irnr6mPffwVA/zIT39WlW81WeMSTQ4VPcDKoqjp1+ZCOogvj3UzIr
-	 aYFVfHzy5koJhc771PZELVGZyHE771G3jL9KDJRk=
+	b=W3ZQwCLA0W0jPitFRHTXoqb2u1ZIoBs9W4ncJIPU1EAsjCn4ILSMootSf9H9CS0cP
+	 On4bCsaA7LLt2u9ze3JAZooaXOZgUGd/eYeUG2PS9tNMIu/l0hs4siYolZQn3RZaPJ
+	 n1EwbUhGKWf1SkK4FGPlXwwSLCDjR0mbGXr4Ln0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 426/592] wifi: iwlwifi: mld: Work around Clang loop unrolling bug
-Date: Mon, 23 Jun 2025 15:06:24 +0200
-Message-ID: <20250623130710.567963820@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Chandan Babu R <chandanbabu@kernel.org>,
+	Leah Rumancik <leah.rumancik@gmail.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.1 204/508] xfs: Fix xfs_flush_unmap_range() range for RT
+Date: Mon, 23 Jun 2025 15:04:09 +0200
+Message-ID: <20250623130650.287862193@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +50,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit 368556dd234dc4a506a35a0c99c0eee2ab475c77 ]
+[ Upstream commit d3b689d7c711a9f36d3e48db9eaa75784a892f4c ]
 
-The nested loop in iwl_mld_send_proto_offload() confuses Clang into
-thinking there could be a final loop iteration past the end of the
-"nsc" array (which is only 4 entries). The FORTIFY checking in memcmp()
-(via ipv6_addr_cmp()) notices this (due to the available bytes in the
-out-of-bounds position of &nsc[4] being 0), and errors out, failing
-the build. For some reason (likely due to architectural loop unrolling
-configurations), this is only exposed on ARM builds currently. Due to
-Clang's lack of inline tracking[1], the warning is not very helpful:
+Currently xfs_flush_unmap_range() does unmap for a full RT extent range,
+which we also want to ensure is clean and idle.
 
-include/linux/fortify-string.h:719:4: error: call to '__read_overflow' declared with 'error' attribute: detected read beyond size of object (1st parameter)
-  719 |                         __read_overflow();
-      |                         ^
-1 error generated.
+This code change is originally from Dave Chinner.
 
-But this was tracked down to iwl_mld_send_proto_offload()'s
-ipv6_addr_cmp() call.
-
-An upstream Clang bug has been filed[2] to track this. For now fix the
-build by explicitly bounding the inner loop by "n_nsc", which is what
-"c" is already limited to.
-
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2076
-Link: https://github.com/llvm/llvm-project/pull/73552 [1]
-Link: https://github.com/llvm/llvm-project/issues/136603 [2]
-Link: https://lore.kernel.org/r/20250421204153.work.935-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>4
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/d3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/xfs_bmap_util.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/d3.c b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
-index ee99298eebf59..7ce01ad3608e1 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
-@@ -1757,7 +1757,7 @@ iwl_mld_send_proto_offload(struct iwl_mld *mld,
+diff --git a/fs/xfs/xfs_bmap_util.c b/fs/xfs/xfs_bmap_util.c
+index 62b92e92a685d..dabae6323c503 100644
+--- a/fs/xfs/xfs_bmap_util.c
++++ b/fs/xfs/xfs_bmap_util.c
+@@ -963,14 +963,18 @@ xfs_flush_unmap_range(
+ 	xfs_off_t		offset,
+ 	xfs_off_t		len)
+ {
+-	struct xfs_mount	*mp = ip->i_mount;
+ 	struct inode		*inode = VFS_I(ip);
+ 	xfs_off_t		rounding, start, end;
+ 	int			error;
  
- 		addrconf_addr_solict_mult(&wowlan_data->target_ipv6_addrs[i],
- 					  &solicited_addr);
--		for (j = 0; j < c; j++)
-+		for (j = 0; j < n_nsc && j < c; j++)
- 			if (ipv6_addr_cmp(&nsc[j].dest_ipv6_addr,
- 					  &solicited_addr) == 0)
- 				break;
+-	rounding = max_t(xfs_off_t, mp->m_sb.sb_blocksize, PAGE_SIZE);
+-	start = round_down(offset, rounding);
+-	end = round_up(offset + len, rounding) - 1;
++	/*
++	 * Make sure we extend the flush out to extent alignment
++	 * boundaries so any extent range overlapping the start/end
++	 * of the modification we are about to do is clean and idle.
++	 */
++	rounding = max_t(xfs_off_t, xfs_inode_alloc_unitsize(ip), PAGE_SIZE);
++	start = rounddown_64(offset, rounding);
++	end = roundup_64(offset + len, rounding) - 1;
+ 
+ 	error = filemap_write_and_wait_range(inode->i_mapping, start, end);
+ 	if (error)
 -- 
 2.39.5
 
