@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E2C13A265;
-	Mon, 23 Jun 2025 13:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C0524EF8C;
+	Mon, 23 Jun 2025 13:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685247; cv=none; b=l8HdYE9Qwj9Bo6pfZH78/jjd/y2WHO9uWjXwC/joGf8D6vO94akFgGiavX3H/KIVCBJQV7HfMJiUDqB8/i6TRRKvbE9ESp2BqZECvYgHLUulJ6tuPYZCcnvEA02dQoUoGetBFr7BhOF+Rs8u+Q+1KwZkS9o+6+/QAiC7HT/MEp4=
+	t=1750685250; cv=none; b=r7rb/jIwrdSjPCwVYkCTWne/HX1asS/HpU+M6lDqCgIBfErpJ+2rzrTfa5lnkbf9YCyy7SoCQhRNyzZBlf6SFKBXYVYd2JnhNPmTdR1CGHQ/45uwWKObPa5a8zy7HmOQ/xUvOdcLJaOMaF+MHspUBSCZlA+m3cQxj4S5pmcZhjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685247; c=relaxed/simple;
-	bh=SmUiulBthQXZXE5g7JILYv8a/Jq6ecN6am0+M/2gZP0=;
+	s=arc-20240116; t=1750685250; c=relaxed/simple;
+	bh=OYUwpms9Dsap5deIkXdK+wsDPV8Asv2Coyhu0UZVUEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sfV+31Ihze94zrNMRrReNNtwhHfKb4uVe+77DGs0K23xw1ZtVvZn5fBZ0lVRz9G0GC6V1hQDPYhReA/skx1WerXWZcFNdWP931nV2xtxF764yiFVrpTVp4ynxziX+514UcRm6ZPukKDnNSR7wtweHEMl3jb4JI4uQrTZJv7djP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yskefUUF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tcZQggbDMy5ygMuZSvCgFRvvvcj4oBVtKyHafPTGc64kxvoYzBPlhG/YslfMhNbl2dy2CoKFGUoQlD/dPuH5FUdaffEr5bj3Nt/0hTh6c0Vf3ex5rphPsbi7LWRt5nnBNdQD3UTHZCjF4GHzS12+sDF3aWWy3XBsQy9KY0n9x0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0hl76ww; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yskefUUF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24C0C4CEF0;
-	Mon, 23 Jun 2025 13:27:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0hl76ww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5962CC4CEEA;
+	Mon, 23 Jun 2025 13:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685247;
-	bh=SmUiulBthQXZXE5g7JILYv8a/Jq6ecN6am0+M/2gZP0=;
+	s=korg; t=1750685249;
+	bh=OYUwpms9Dsap5deIkXdK+wsDPV8Asv2Coyhu0UZVUEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yskefUUFk72V51dBwokg6fG6qlqCOCE7+CdC/iTQsKYtXXK0TlCV35IeN4CJy+4fv
-	 diaoxuNrIYu9dZXgj0hvZtN446rupLRqLLv/g91L2aldosKerKdiTOnDaGo/ufgvsI
-	 ofOnaQyGsMrvwaKcLCLTlzAhUhRkvBVnF6vXeBEY=
+	b=W0hl76wwVnFGS7EP+yTQhOjeA/6s1WRd+VY3hgm7Z+sZ7GJ8itEeHxv6+uPH9T823
+	 OaPek5ojvIZ00jz/OWSEhoZvnd5GL6QWELk8iKKZXlTZfoaOqtN15gLmY9GxSZzNeK
+	 Wmrsp3Cu6VVyoGBSQB74igmVf7vVMws4xO0jtiwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 078/222] net_sched: sch_sfq: fix a potential crash on gso_skb handling
-Date: Mon, 23 Jun 2025 15:06:53 +0200
-Message-ID: <20250623130614.445417846@linuxfoundation.org>
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.15 006/411] rtc: Fix offset calculation for .start_secs < 0
+Date: Mon, 23 Jun 2025 15:02:30 +0200
+Message-ID: <20250623130633.184293373@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,71 +48,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alexandre Mergnat <amergnat@baylibre.com>
 
-[ Upstream commit 82ffbe7776d0ac084031f114167712269bf3d832 ]
+commit fe9f5f96cfe8b82d0f24cbfa93718925560f4f8d upstream.
 
-SFQ has an assumption of always being able to queue at least one packet.
+The comparison
 
-However, after the blamed commit, sch->q.len can be inflated by packets
-in sch->gso_skb, and an enqueue() on an empty SFQ qdisc can be followed
-by an immediate drop.
+        rtc->start_secs > rtc->range_max
 
-Fix sfq_drop() to properly clear q->tail in this situation.
+has a signed left-hand side and an unsigned right-hand side.
+So the comparison might become true for negative start_secs which is
+interpreted as a (possibly very large) positive value.
 
-Tested:
+As a negative value can never be bigger than an unsigned value
+the correct representation of the (mathematical) comparison
 
-ip netns add lb
-ip link add dev to-lb type veth peer name in-lb netns lb
-ethtool -K to-lb tso off                 # force qdisc to requeue gso_skb
-ip netns exec lb ethtool -K in-lb gro on # enable NAPI
-ip link set dev to-lb up
-ip -netns lb link set dev in-lb up
-ip addr add dev to-lb 192.168.20.1/24
-ip -netns lb addr add dev in-lb 192.168.20.2/24
-tc qdisc replace dev to-lb root sfq limit 100
+        rtc->start_secs > rtc->range_max
 
-ip netns exec lb netserver
+in C is:
 
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
+        rtc->start_secs >= 0 && rtc->start_secs > rtc->range_max
 
-Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
-Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
-Closes: https://lore.kernel.org/netdev/9da42688-bfaa-4364-8797-e9271f3bdaef@hetzner-cloud.de/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20250606165127.3629486-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Use that to fix the offset calculation currently used in the
+rtc-mt6397 driver.
+
+Fixes: 989515647e783 ("rtc: Add one offset seconds to expand RTC range")
+Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20250428-enable-rtc-v4-2-2b2f7e3f9349@baylibre.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_sfq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/rtc/class.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index d7f910610de97..acda653710288 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -317,7 +317,10 @@ static unsigned int sfq_drop(struct Qdisc *sch, struct sk_buff **to_free)
- 		/* It is difficult to believe, but ALL THE SLOTS HAVE LENGTH 1. */
- 		x = q->tail->next;
- 		slot = &q->slots[x];
--		q->tail->next = slot->next;
-+		if (slot->next == x)
-+			q->tail = NULL; /* no more active slots */
-+		else
-+			q->tail->next = slot->next;
- 		q->ht[slot->hash] = SFQ_EMPTY_SLOT;
- 		goto drop;
- 	}
--- 
-2.39.5
-
+--- a/drivers/rtc/class.c
++++ b/drivers/rtc/class.c
+@@ -322,7 +322,7 @@ static void rtc_device_get_offset(struct
+ 	 *
+ 	 * Otherwise the offset seconds should be 0.
+ 	 */
+-	if (rtc->start_secs > rtc->range_max ||
++	if ((rtc->start_secs >= 0 && rtc->start_secs > rtc->range_max) ||
+ 	    rtc->start_secs + range_secs - 1 < rtc->range_min)
+ 		rtc->offset_secs = rtc->start_secs - rtc->range_min;
+ 	else if (rtc->start_secs > rtc->range_min)
 
 
