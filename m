@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB2019049B;
-	Mon, 23 Jun 2025 21:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB29D19049B;
+	Mon, 23 Jun 2025 21:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715631; cv=none; b=mXIyYNRubIswvFh6Zd9UKDu+SN01O5I1UEMTjU91Xq2tcdP1RzqjNUNqZ0Wkp6KxpxaOUOsYWHSCnXNztH6o3Ho2ZozT8/wPR6FV/eXh89UUE9oZbWh1xYQ8QvvndoclAXW3hXBEyewIw8opsrFy8EOH8gtISzWMABeSNioLKLw=
+	t=1750715633; cv=none; b=bbbyxh1cqm1iOyhjPrRDmWjeCXgh8jYtLVUh7NBSbLVfUBFe/8puvcrg4HHFExKtX+aahPm4BuWqcZ2IWJI2tTpax41lqjH/XZ8iZkNk73pm0YcVCb8/2+xEoK9WfRYoLjRQVM1eFKSgMYRGCH2y9d5Mu5Xcq4vq9obclSdiEbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715631; c=relaxed/simple;
-	bh=ZwXgt7IlMzR4s6uJv553kRBKcZh6DvY1eCrJflbs6/U=;
+	s=arc-20240116; t=1750715633; c=relaxed/simple;
+	bh=T6TQdJ3VxVcN64hMg3SFnfdQXcGS9tZ7rza/qk/uGBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cOBWtleaFFhHaO5uG4+yPaNRd5IdOQZtOSj7lOgw3Uhl0PU+45UwPYzS88vAz8bPbB2rmu+pqHHnVEmlZnjnSqeBDUazUbRdvobGjzF6r+BJoKcv7pnqyun5FuhfZSl4zPzXLOiGFy+AilKdgoYDB2kvKLgjYHM4ywPfRbRArJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omHmigGL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m1KecdZEe2XggUi536QK+942tDRL/RqHtSyXMNAD9bfnpmfMU6stRFXIGJEnFJwzg5EkfsYxuVFvs8WSUb4Kgg2JCqAH9kQPp8WUsagnNYowtMrK7jSTbfo4fcdfujsdDawGYIXM6hetlypewxbx24OHUi97p5pFyUCX+KpIrAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IoBHboK1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omHmigGL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EFBC4CEEA;
-	Mon, 23 Jun 2025 21:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IoBHboK1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51410C4CEEA;
+	Mon, 23 Jun 2025 21:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715631;
-	bh=ZwXgt7IlMzR4s6uJv553kRBKcZh6DvY1eCrJflbs6/U=;
+	s=korg; t=1750715633;
+	bh=T6TQdJ3VxVcN64hMg3SFnfdQXcGS9tZ7rza/qk/uGBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omHmigGLaqdpzp3Nl1uqdFAXwpInfJoIWdyp0wsitTy0BR/6w5UGsl44dJj68XNF3
-	 1jGZfxuwI+pOHuQMgm1E6pN2xoCZxmRK9cLAInJdiM1XdW7aFNjRVrrYHU6k3ulrPH
-	 vrX2BQJHA5/MZM6TT6fH7tXNXy8zcN1y2wdqwVmo=
+	b=IoBHboK1C2jJ9R7PHShnAMXPc8isWw41ddbyedjzwRPyZ9ZJpUNhoi+WvCkgIP51r
+	 MiGqtv+TZpR+BEp+6fIO5oKdvuRFrr2I4VgK7NhY3mc2NPLC8Kc1a8q/0DMxN+ZQYm
+	 mT+K388GV6hIJLxmoEC1M/VBR/19TN+r+PvoMhic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 252/508] Bluetooth: Fix NULL pointer deference on eir_get_service_data
-Date: Mon, 23 Jun 2025 15:04:57 +0200
-Message-ID: <20250623130651.450584185@linuxfoundation.org>
+	stable@kernel.org,
+	Dexuan Cui <decui@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 287/355] scsi: storvsc: Increase the timeouts to storvsc_timeout
+Date: Mon, 23 Jun 2025 15:08:08 +0200
+Message-ID: <20250623130635.403917815@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,54 +48,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Dexuan Cui <decui@microsoft.com>
 
-[ Upstream commit 20a2aa01f5aeb6daad9aeaa7c33dd512c58d81eb ]
+commit b2f966568faaad326de97481096d0f3dc0971c43 upstream.
 
-The len parameter is considered optional so it can be NULL so it cannot
-be used for skipping to next entry of EIR_SERVICE_DATA.
+Currently storvsc_timeout is only used in storvsc_sdev_configure(), and
+5s and 10s are used elsewhere. It turns out that rarely the 5s is not
+enough on Azure, so let's use storvsc_timeout everywhere.
 
-Fixes: 8f9ae5b3ae80 ("Bluetooth: eir: Add helpers for managing service data")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In case a timeout happens and storvsc_channel_init() returns an error,
+close the VMBus channel so that any host-to-guest messages in the
+channel's ringbuffer, which might come late, can be safely ignored.
+
+Add a "const" to storvsc_timeout.
+
+Cc: stable@kernel.org
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Link: https://lore.kernel.org/r/1749243459-10419-1-git-send-email-decui@microsoft.com
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/eir.c | 10 ++++++----
+ drivers/scsi/storvsc_drv.c |   10 ++++++----
  1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/eir.c b/net/bluetooth/eir.c
-index 1bc51e2b05a34..3e1713673ecc9 100644
---- a/net/bluetooth/eir.c
-+++ b/net/bluetooth/eir.c
-@@ -366,17 +366,19 @@ u8 eir_create_scan_rsp(struct hci_dev *hdev, u8 instance, u8 *ptr)
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -400,7 +400,7 @@ MODULE_PARM_DESC(ring_avail_percent_lowa
+ /*
+  * Timeout in seconds for all devices managed by this driver.
+  */
+-static int storvsc_timeout = 180;
++static const int storvsc_timeout = 180;
  
- void *eir_get_service_data(u8 *eir, size_t eir_len, u16 uuid, size_t *len)
- {
--	while ((eir = eir_get_data(eir, eir_len, EIR_SERVICE_DATA, len))) {
-+	size_t dlen;
-+
-+	while ((eir = eir_get_data(eir, eir_len, EIR_SERVICE_DATA, &dlen))) {
- 		u16 value = get_unaligned_le16(eir);
- 
- 		if (uuid == value) {
- 			if (len)
--				*len -= 2;
-+				*len = dlen - 2;
- 			return &eir[2];
- 		}
- 
--		eir += *len;
--		eir_len -= *len;
-+		eir += dlen;
-+		eir_len -= dlen;
+ #if IS_ENABLED(CONFIG_SCSI_FC_ATTRS)
+ static struct scsi_transport_template *fc_transport_template;
+@@ -779,7 +779,7 @@ static void  handle_multichannel_storage
+ 		return;
  	}
  
- 	return NULL;
--- 
-2.39.5
-
+-	t = wait_for_completion_timeout(&request->wait_event, 10*HZ);
++	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
+ 	if (t == 0) {
+ 		dev_err(dev, "Failed to create sub-channel: timed out\n");
+ 		return;
+@@ -840,7 +840,7 @@ static int storvsc_execute_vstor_op(stru
+ 	if (ret != 0)
+ 		return ret;
+ 
+-	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
++	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
+ 	if (t == 0)
+ 		return -ETIMEDOUT;
+ 
+@@ -1301,6 +1301,8 @@ static int storvsc_connect_to_vsp(struct
+ 		return ret;
+ 
+ 	ret = storvsc_channel_init(device, is_fc);
++	if (ret)
++		vmbus_close(device->channel);
+ 
+ 	return ret;
+ }
+@@ -1623,7 +1625,7 @@ static int storvsc_host_reset_handler(st
+ 	if (ret != 0)
+ 		return FAILED;
+ 
+-	t = wait_for_completion_timeout(&request->wait_event, 5*HZ);
++	t = wait_for_completion_timeout(&request->wait_event, storvsc_timeout * HZ);
+ 	if (t == 0)
+ 		return TIMEOUT_ERROR;
+ 
 
 
