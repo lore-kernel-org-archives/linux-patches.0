@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A619E1E22E6;
-	Mon, 23 Jun 2025 22:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0311E87B;
+	Mon, 23 Jun 2025 22:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716357; cv=none; b=r7pssE1LvrFDrckkMVhiLtqKvy4y4QPWd9QtdiXSVtulAf8MVLEg+cvt193PamapbjAaNDzrdbDpwtOCStd/pa1nVvkhTZyUzrOdlWRVC+fAXHyRvxSfNbc9sNnxV7n/lAuD/sPd5me7uFZInKcMzxsqTe0glLEEf1Q2CCxxKJA=
+	t=1750716360; cv=none; b=O+xufbdC11h3ENieklUBJGDPLxTX99gaBIWIaCjMv9LfL1iR6Iq3e0fMYWWHpqSN5J5kM3QDpC6G59oE0miTUaUHff8cnRx6G9LhKftAqlxrx6vkGbxPiU9/2yTYhH+IEBzlP6kXexEL0LCkU+JeJtYBbX32L1kdxAVz9Ubsfxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716357; c=relaxed/simple;
-	bh=qTrSylmrOsMNet7uiJNcv9VrbSnqpTevryuX1EqaRZo=;
+	s=arc-20240116; t=1750716360; c=relaxed/simple;
+	bh=q0c0vgEM0/I8rBTgE8M0XDVuOSJYDfu6TFmK0D0iKVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7FKA2jK0fYvAN8iVOTTjL2OkNFD5JYY8BYOZK7zfgPuViszZauDg0T+srgcp12iphpnXoZPq3sB0vjljLe4meM9qiGAUAY6uXjru+XH1yB7Hw0VdOEMkPw7AcX2KGB8Xh1jO3mkONi4gRQeWrMYHD8yfrTwMxokJacNfLNy5Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oINKA/r8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PszWOpNpjBkt/0xvZAestL7jfEVXbj4xC3bg5PCYNTHf3cUUUzkA97SxkCJ+NI/mjTOVEaa940bMxDj9cRNc6Uptx73HrJ+cUOlYMxCa1SxBGlBdJOGWEoqEz8cs9V8WZYGvlD48v46c0rtbwEx87DkU5Kws6N1s0pKflrqijRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ilftOjXW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oINKA/r8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E51CC4CEEA;
-	Mon, 23 Jun 2025 22:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ilftOjXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9801C4CEEA;
+	Mon, 23 Jun 2025 22:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716357;
-	bh=qTrSylmrOsMNet7uiJNcv9VrbSnqpTevryuX1EqaRZo=;
+	s=korg; t=1750716360;
+	bh=q0c0vgEM0/I8rBTgE8M0XDVuOSJYDfu6TFmK0D0iKVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oINKA/r8/bQVJ+ke/4XuSClzQ67rESZ5kQUQadXdYrrdWz6rIeYIgNZdTvjGpQyxL
-	 wgPFlx2s/vRwQUJ4G8xVcqXHcouKxisJf7/+YSBMcV+MPZ3Rp7vf5NFF0Yhk7wTfk5
-	 jJAIF+5nm4SBugZaUFEVDLE1U0Zua4QmHXYn8x90=
+	b=ilftOjXWEp7/gi0sA7n9tNkdcxVArWGaRP/f6hMMnj8u/l2nX+AXrNUwX8eKefO8Z
+	 L95tWRtgGFLEchlFs7EsZTZH3RDgLoq2ptScOPsKXnag04x07SBjbszLC1Y1snJvP+
+	 pSrhI0UFEIcC3NdRf8YoZwayJDM30te1hxq7iueE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 518/592] drm/i915/pmu: Fix build error with GCOV and AutoFDO enabled
-Date: Mon, 23 Jun 2025 15:07:56 +0200
-Message-ID: <20250623130712.757937071@linuxfoundation.org>
+Subject: [PATCH 6.12 246/414] iommu/amd: Ensure GA log notifier callbacks finish running before module unload
+Date: Mon, 23 Jun 2025 15:06:23 +0200
+Message-ID: <20250623130648.199096607@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,83 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit a7137b1825b535eb7258b25beeb0d5425e0037d2 ]
+[ Upstream commit 94c721ea03c7078163f41dbaa101ac721ddac329 ]
 
-i915_pmu.c may fail to build with GCOV and AutoFDO enabled.
+Synchronize RCU when unregistering KVM's GA log notifier to ensure all
+in-flight interrupt handlers complete before KVM-the module is unloaded.
 
-../drivers/gpu/drm/i915/i915_pmu.c:116:3: error: call to '__compiletime_assert_487' declared with 'error' attribute: BUILD_BUG_ON failed: bit > BITS_PER_TYPE(typeof_member(struct i915_pmu, enable)) - 1
-  116 |                 BUILD_BUG_ON(bit >
-      |                 ^
-
-Here is a way to reproduce the issue:
-$ git checkout v6.15
-$ mkdir build
-$ ./scripts/kconfig/merge_config.sh -O build -n -m <(cat <<EOF
-CONFIG_DRM=y
-CONFIG_PCI=y
-CONFIG_DRM_I915=y
-
-CONFIG_PERF_EVENTS=y
-
-CONFIG_DEBUG_FS=y
-CONFIG_GCOV_KERNEL=y
-CONFIG_GCOV_PROFILE_ALL=y
-
-CONFIG_AUTOFDO_CLANG=y
-EOF
-)
-$ PATH=${PATH}:${HOME}/llvm-20.1.5-x86_64/bin make LLVM=1 O=build \
-       olddefconfig
-$ PATH=${PATH}:${HOME}/llvm-20.1.5-x86_64/bin make LLVM=1 O=build \
-       CLANG_AUTOFDO_PROFILE=...PATH_TO_SOME_AFDO_PROFILE... \
-       drivers/gpu/drm/i915/i915_pmu.o
-
-Although not super sure what happened, by reviewing the code, it should
-depend on `__builtin_constant_p(bit)` directly instead of assuming
-`__builtin_constant_p(config)` makes `bit` a builtin constant.
-
-Also fix a nit, to reuse the `bit` local variable.
-
-Fixes: a644fde77ff7 ("drm/i915/pmu: Change bitmask of enabled events to u32")
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Link: https://lore.kernel.org/r/20250612083023.562585-1-tzungbi@kernel.org
-(cherry picked from commit 686d773186bf72b739bab7e12eb8665d914676ee)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20250315031048.2374109-1-seanjc@google.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_pmu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/iommu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/i915_pmu.c b/drivers/gpu/drm/i915/i915_pmu.c
-index e5a188ce31857..990bfaba3ce4e 100644
---- a/drivers/gpu/drm/i915/i915_pmu.c
-+++ b/drivers/gpu/drm/i915/i915_pmu.c
-@@ -112,7 +112,7 @@ static u32 config_mask(const u64 config)
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 4428a9557f295..23e78a034da8f 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -861,6 +861,14 @@ int amd_iommu_register_ga_log_notifier(int (*notifier)(u32))
  {
- 	unsigned int bit = config_bit(config);
+ 	iommu_ga_log_notifier = notifier;
  
--	if (__builtin_constant_p(config))
-+	if (__builtin_constant_p(bit))
- 		BUILD_BUG_ON(bit >
- 			     BITS_PER_TYPE(typeof_member(struct i915_pmu,
- 							 enable)) - 1);
-@@ -121,7 +121,7 @@ static u32 config_mask(const u64 config)
- 			     BITS_PER_TYPE(typeof_member(struct i915_pmu,
- 							 enable)) - 1);
- 
--	return BIT(config_bit(config));
-+	return BIT(bit);
++	/*
++	 * Ensure all in-flight IRQ handlers run to completion before returning
++	 * to the caller, e.g. to ensure module code isn't unloaded while it's
++	 * being executed in the IRQ handler.
++	 */
++	if (!notifier)
++		synchronize_rcu();
++
+ 	return 0;
  }
- 
- static bool is_engine_event(struct perf_event *event)
+ EXPORT_SYMBOL(amd_iommu_register_ga_log_notifier);
 -- 
 2.39.5
 
