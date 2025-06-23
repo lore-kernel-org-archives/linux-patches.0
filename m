@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198C21F7580;
-	Mon, 23 Jun 2025 22:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60181F7580;
+	Mon, 23 Jun 2025 22:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716542; cv=none; b=gk35GXlDFdNqzMDMCaAqRBTzZ0TRRXkA55H6xBR3ilG/rqxCk++hpmnUH5mGtafQyr3C91EI7s271IEVTeWr263bYOtRtq4UGbPsOT3Hgak8ZF/2SKoPBbxRTP6Lh7C+uXKJ83zzFrpu4py6v4XHvW5NiBgCdujc3w7g544/cjo=
+	t=1750716545; cv=none; b=SoscdxeJFf3Ov32je3pfqo07B6Eh4JaNN5IYtvm2/Eexse6SBlziD1BSGfW4Qr05jdr89u4IqnZlPRWbjGm6haAQcVRnI7DZ70b+hNOyW29aqyX/V305DdwprEGcTwiTwO+NFl8RGmqdNOl2FmkFdMnrtQ8lD6A3kb8Lc/Fy0E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716542; c=relaxed/simple;
-	bh=4ND/WNXpOrIgKPar0otscXAHX3uLWjJ553ioXszwWDY=;
+	s=arc-20240116; t=1750716545; c=relaxed/simple;
+	bh=hssEem2guCdLqEmgpj0YDRQHeHQ9WAqfmL4NzcpUdmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6jJGJw3PLY7yVAJI63IHahM5tSWmQyhNF+jmlEkJdfn8o8Z0u/AV8d05lc725uAhOvRpX7Xoln+rTtKtfjWazUQg6sSQoW0+kYDCsAp93dx1F/49Eo6VmpVCHNFRQG3VpwHSeJc86cgdzsOMXdwcMdMOYPOH0QI8m7e1rqJ9iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVNJZ9oB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dcg4gSCJ0uArH3Jswz0rECHGTQv34x7FWTdhmpMJJlsqB/OhQa2m4BfMX962LiQw/oWnnYF7ZJ3TtGhyZTvglKXin8HSRUbvUBJ40bOeGi1m1GpQqpx++hfMUll1r9uY36VE6sVSi7Y2GWIHGOIoDqST4HFEG++m7Nw41AQhxCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZhI9v1f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVNJZ9oB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8264C4CEEA;
-	Mon, 23 Jun 2025 22:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZhI9v1f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21609C4CEEA;
+	Mon, 23 Jun 2025 22:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716542;
-	bh=4ND/WNXpOrIgKPar0otscXAHX3uLWjJ553ioXszwWDY=;
+	s=korg; t=1750716544;
+	bh=hssEem2guCdLqEmgpj0YDRQHeHQ9WAqfmL4NzcpUdmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sVNJZ9oBJDBdJ+45BegHMtVJCvgb+IN0d9wfNG1D/82M6N3LDM2+YIrEBg64rRib4
-	 VsfYPd58E7tTmJTubi4H3BVkSEMhN2fAF47nk+oeWVHe6BTCdH16NYhqEbPScfm60g
-	 XaPVeLptRF9zmEyuyR3zMZuMW82iOTXzf47f3nl0=
+	b=RZhI9v1fnEb8zCAJ7T2879ctFPMSYfyiLKpvyprCLWgcD/0kPW6tDCbphQ6yfbuuw
+	 TDfV0znOJI6nKvl3mdALXv6ej4kFpNrjcGHKrVX68wEgsmDNUHxPqNyp6aLNrE8Fa2
+	 OhV0AY44ceEqc7e7erkxyKdQyYcJ2hl8ASiFMbKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Lindgren <tony@atomide.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Andreas Kemnade <andreas@kemnade.info>
-Subject: [PATCH 6.12 287/414] Revert "bus: ti-sysc: Probe for l4_wkup and l4_cfg interconnect devices first"
-Date: Mon, 23 Jun 2025 15:07:04 +0200
-Message-ID: <20250623130649.190631711@linuxfoundation.org>
+	Vince Weaver <vincent.weaver@maine.edu>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.15 560/592] perf/x86/intel: Fix crash in icl_update_topdown_event()
+Date: Mon, 23 Jun 2025 15:08:38 +0200
+Message-ID: <20250623130713.762462406@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,115 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit 36305857b1ead8f6ca033a913162ebc09bee0b43 ]
+commit b0823d5fbacb1c551d793cbfe7af24e0d1fa45ed upstream.
 
-This reverts commit 4700a00755fb5a4bb5109128297d6fd2d1272ee6.
+The perf_fuzzer found a hard-lockup crash on a RaptorLake machine:
 
-It breaks target-module@2b300050 ("ti,sysc-omap2") probe on AM62x in a case
-when minimally-configured system tries to network-boot:
+  Oops: general protection fault, maybe for address 0xffff89aeceab400: 0000
+  CPU: 23 UID: 0 PID: 0 Comm: swapper/23
+  Tainted: [W]=WARN
+  Hardware name: Dell Inc. Precision 9660/0VJ762
+  RIP: 0010:native_read_pmc+0x7/0x40
+  Code: cc e8 8d a9 01 00 48 89 03 5b cd cc cc cc cc 0f 1f ...
+  RSP: 000:fffb03100273de8 EFLAGS: 00010046
+  ....
+  Call Trace:
+    <TASK>
+    icl_update_topdown_event+0x165/0x190
+    ? ktime_get+0x38/0xd0
+    intel_pmu_read_event+0xf9/0x210
+    __perf_event_read+0xf9/0x210
 
-[    6.888776] probe of 2b300050.target-module returned 517 after 258 usecs
-[   17.129637] probe of 2b300050.target-module returned 517 after 708 usecs
-[   17.137397] platform 2b300050.target-module: deferred probe pending: (reason unknown)
-[   26.878471] Waiting up to 100 more seconds for network.
+CPUs 16-23 are E-core CPUs that don't support the perf metrics feature.
+The icl_update_topdown_event() should not be invoked on these CPUs.
 
-There are minimal configurations possible when the deferred device is not
-being probed any more (because everything else has been successfully
-probed) and deferral lists are not processed any more.
+It's a regression of commit:
 
-Stable mmc enumeration can be achieved by filling /aliases node properly
-(4700a00755fb commit's rationale).
+  f9bdf1f95339 ("perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read")
 
-After revert:
+The bug introduced by that commit is that the is_topdown_event() function
+is mistakenly used to replace the is_topdown_count() call to check if the
+topdown functions for the perf metrics feature should be invoked.
 
-[    9.006816] IP-Config: Complete:
-[    9.010058]      device=lan0, ...
+Fix it.
 
-Tested-by: Andreas Kemnade <andreas@kemnade.info> # GTA04, Panda, BT200
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://lore.kernel.org/r/20250401090643.2776793-1-alexander.sverdlin@siemens.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f9bdf1f95339 ("perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read")
+Closes: https://lore.kernel.org/lkml/352f0709-f026-cd45-e60c-60dfd97f73f3@maine.edu/
+Reported-by: Vince Weaver <vincent.weaver@maine.edu>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Vince Weaver <vincent.weaver@maine.edu>
+Cc: stable@vger.kernel.org # v6.15+
+Link: https://lore.kernel.org/r/20250612143818.2889040-1-kan.liang@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/ti-sysc.c | 49 -------------------------------------------
- 1 file changed, 49 deletions(-)
+ arch/x86/events/intel/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
-index 270a94a06e05c..f715c8d281293 100644
---- a/drivers/bus/ti-sysc.c
-+++ b/drivers/bus/ti-sysc.c
-@@ -677,51 +677,6 @@ static int sysc_parse_and_check_child_range(struct sysc *ddata)
- 	return 0;
- }
- 
--/* Interconnect instances to probe before l4_per instances */
--static struct resource early_bus_ranges[] = {
--	/* am3/4 l4_wkup */
--	{ .start = 0x44c00000, .end = 0x44c00000 + 0x300000, },
--	/* omap4/5 and dra7 l4_cfg */
--	{ .start = 0x4a000000, .end = 0x4a000000 + 0x300000, },
--	/* omap4 l4_wkup */
--	{ .start = 0x4a300000, .end = 0x4a300000 + 0x30000,  },
--	/* omap5 and dra7 l4_wkup without dra7 dcan segment */
--	{ .start = 0x4ae00000, .end = 0x4ae00000 + 0x30000,  },
--};
--
--static atomic_t sysc_defer = ATOMIC_INIT(10);
--
--/**
-- * sysc_defer_non_critical - defer non_critical interconnect probing
-- * @ddata: device driver data
-- *
-- * We want to probe l4_cfg and l4_wkup interconnect instances before any
-- * l4_per instances as l4_per instances depend on resources on l4_cfg and
-- * l4_wkup interconnects.
-- */
--static int sysc_defer_non_critical(struct sysc *ddata)
--{
--	struct resource *res;
--	int i;
--
--	if (!atomic_read(&sysc_defer))
--		return 0;
--
--	for (i = 0; i < ARRAY_SIZE(early_bus_ranges); i++) {
--		res = &early_bus_ranges[i];
--		if (ddata->module_pa >= res->start &&
--		    ddata->module_pa <= res->end) {
--			atomic_set(&sysc_defer, 0);
--
--			return 0;
--		}
--	}
--
--	atomic_dec_if_positive(&sysc_defer);
--
--	return -EPROBE_DEFER;
--}
--
- static struct device_node *stdout_path;
- 
- static void sysc_init_stdout_path(struct sysc *ddata)
-@@ -947,10 +902,6 @@ static int sysc_map_and_check_registers(struct sysc *ddata)
- 	if (error)
- 		return error;
- 
--	error = sysc_defer_non_critical(ddata);
--	if (error)
--		return error;
--
- 	sysc_check_children(ddata);
- 
- 	if (!of_property_present(np, "reg"))
--- 
-2.39.5
-
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -2810,7 +2810,7 @@ static void intel_pmu_read_event(struct
+ 		 * If the PEBS counters snapshotting is enabled,
+ 		 * the topdown event is available in PEBS records.
+ 		 */
+-		if (is_topdown_event(event) && !is_pebs_counter_event_group(event))
++		if (is_topdown_count(event) && !is_pebs_counter_event_group(event))
+ 			static_call(intel_pmu_update_topdown_event)(event, NULL);
+ 		else
+ 			intel_pmu_drain_pebs_buffer();
 
 
