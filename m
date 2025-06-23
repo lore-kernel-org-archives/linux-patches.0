@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380E11E22E6;
-	Mon, 23 Jun 2025 22:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAC1222576;
+	Mon, 23 Jun 2025 22:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716444; cv=none; b=P0T+/NJtv/iyICMEJknJZ5voLk09MyRXroEt70RvBDEz7DBHRxiPrybczCPod4BTb+t5Vahy0y66MFXlNfAbBBEJuvFL1Cabhtm0g1XOzlyTMkwHo6uMniKD6xoAWVXio/wQNy6GsbVNMP/pPaaVtVMaPvzEjq67FEoP6xbaA/s=
+	t=1750716446; cv=none; b=WHbh3dKr9lPM4nHXLyQ5Rx92TPlT4P3nm0oOUgF8ZRYMrnvGGqPmj0mHaN3FcmekUVrVpWoA97H5qaI3aL6vXJguEeOXxpRbN++/YhtPw5ZdvjE2qOHylH9Y2ttcTb5Qksoz11XUTU3pKe8U/NV2AyUDTqrC2z21VZzmYmGSZFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716444; c=relaxed/simple;
-	bh=zE+RgxG3S9ceMKf22dOL5w4XZSKkb5opHQfmRMxU4fg=;
+	s=arc-20240116; t=1750716446; c=relaxed/simple;
+	bh=uTF4iwJkVLnP5uv2TGQBGH7UI5gIk5+WoqEQxqD0Reg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CscC3y5zpy8z5BFuv4tFd98aR1fOmMOPq0++HCRRYpDtGo6f6+e+resEmA3V4Q/2KPTVlYlR0ryC6uT7iwd6NmrUDGn9KtneHc+ZmJcrXtKSUXTv52c72RvU7Jg0cuwfWzNmPwnN+eu4UJRP4sQr/aFylHS5hTLQA8Avfo3iv6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJ05SmRo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BLkgK25gcCuJKHwpomSh/qIuyfteOoQ6M1xhHCUgx2n9sAsSFg3lXdVneslaQgkh9XCPRt0vuLCCAO0zZwGfKrWDRRkZHDLhe9UkIugQ02BkU0pbl+dQooX81DHQJMTJx7RUPrLS+a7PIlJPnhGY0OBya1Y8u743r2l/txh7ETY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H79UsE8r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJ05SmRo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BDFC4CEEA;
-	Mon, 23 Jun 2025 22:07:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H79UsE8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325CBC4CEEA;
+	Mon, 23 Jun 2025 22:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716444;
-	bh=zE+RgxG3S9ceMKf22dOL5w4XZSKkb5opHQfmRMxU4fg=;
+	s=korg; t=1750716446;
+	bh=uTF4iwJkVLnP5uv2TGQBGH7UI5gIk5+WoqEQxqD0Reg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AJ05SmRobzcuTQzz9ybJS3El6tv3daKP4+uN6LgP0X5OalaOqA8G5qaoYFCVyL0TT
-	 C7zPzbVaFe6W1ZgfpWl8yQBXHrzTS6Bbqt3NLtd/KVs/LzIpTI3TNcpHMwX2xxPaYj
-	 5DHvgEWX785rZ5TAKMSfILTRxHdjVPXOUk2DF6+0=
+	b=H79UsE8rC7Vets/VjFvftI2agsQ06Y92bsWavfXxZsiFkwtug4itN3q8MkxQmAntV
+	 u54qo+SXq3800McCDKH7KNTZIfeEmrNd9eWR+rY3glD1l/7DHMMLK1+STdeaLCfKdb
+	 DY3lzuf+76SXNVso5DyPplGNkY2YgiCfvOLK25qQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 329/411] vxlan: Do not treat dst cache initialization errors as fatal
-Date: Mon, 23 Jun 2025 15:07:53 +0200
-Message-ID: <20250623130641.928102364@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 5.10 349/355] s390/pci: Fix __pcilg_mio_inuser() inline assembly
+Date: Mon, 23 Jun 2025 15:09:10 +0200
+Message-ID: <20250623130637.216863166@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,79 +46,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 20c76dadc783759fd3819d289c72be590660cc8b ]
+commit c4abe6234246c75cdc43326415d9cff88b7cf06c upstream.
 
-FDB entries are allocated in an atomic context as they can be added from
-the data path when learning is enabled.
+Use "a" constraint for the shift operand of the __pcilg_mio_inuser() inline
+assembly. The used "d" constraint allows the compiler to use any general
+purpose register for the shift operand, including register zero.
 
-After converting the FDB hash table to rhashtable, the insertion rate
-will be much higher (*) which will entail a much higher rate of per-CPU
-allocations via dst_cache_init().
+If register zero is used this my result in incorrect code generation:
 
-When adding a large number of entries (e.g., 256k) in a batch, a small
-percentage (< 0.02%) of these per-CPU allocations will fail [1]. This
-does not happen with the current code since the insertion rate is low
-enough to give the per-CPU allocator a chance to asynchronously create
-new chunks of per-CPU memory.
+ 8f6:   a7 0a ff f8             ahi     %r0,-8
+ 8fa:   eb 32 00 00 00 0c       srlg    %r3,%r2,0  <----
 
-Given that:
+If register zero is selected to contain the shift value, the srlg
+instruction ignores the contents of the register and always shifts zero
+bits. Therefore use the "a" constraint which does not permit to select
+register zero.
 
-a. Only a small percentage of these per-CPU allocations fail.
-
-b. The scenario where this happens might not be the most realistic one.
-
-c. The driver can work correctly without dst caches. The dst_cache_*()
-APIs first check that the dst cache was properly initialized.
-
-d. The dst caches are not always used (e.g., 'tos inherit').
-
-It seems reasonable to not treat these allocation failures as fatal.
-
-Therefore, do not bail when dst_cache_init() fails and suppress warnings
-by specifying '__GFP_NOWARN'.
-
-[1] percpu: allocation failed, size=40 align=8 atomic=1, atomic alloc failed, no space left
-
-(*) 97% reduction in average latency of vxlan_fdb_update() when adding
-256k entries in a batch.
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250415121143.345227-14-idosch@nvidia.com
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f058599e22d5 ("s390/pci: Fix s390_mmio_read/write with MIO")
+Cc: stable@vger.kernel.org
+Reported-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/s390/pci/pci_mmio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 9c4d7bedc7641..91122d4d404b7 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -713,10 +713,10 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
- 	if (rd == NULL)
- 		return -ENOMEM;
- 
--	if (dst_cache_init(&rd->dst_cache, GFP_ATOMIC)) {
--		kfree(rd);
--		return -ENOMEM;
--	}
-+	/* The driver can work correctly without a dst cache, so do not treat
-+	 * dst cache initialization errors as fatal.
-+	 */
-+	dst_cache_init(&rd->dst_cache, GFP_ATOMIC | __GFP_NOWARN);
- 
- 	rd->remote_ip = *ip;
- 	rd->remote_port = port;
--- 
-2.39.5
-
+--- a/arch/s390/pci/pci_mmio.c
++++ b/arch/s390/pci/pci_mmio.c
+@@ -229,7 +229,7 @@ static inline int __pcilg_mio_inuser(
+ 		:
+ 		[cc] "+d" (cc), [val] "=d" (val), [len] "+d" (len),
+ 		[dst] "+a" (dst), [cnt] "+d" (cnt), [tmp] "=d" (tmp),
+-		[shift] "+d" (shift)
++		[shift] "+a" (shift)
+ 		:
+ 		[ioaddr] "a" (addr)
+ 		: "cc", "memory");
 
 
