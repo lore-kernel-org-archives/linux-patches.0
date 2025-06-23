@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E764972624;
-	Mon, 23 Jun 2025 21:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FCF72624;
+	Mon, 23 Jun 2025 21:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715573; cv=none; b=tz6qs+mWGJg+y9H6Si8mf0t9GmBDNhtSJIv54cW9fsdIAnGm8w+5kpU3ZyeqAN1P6gqmy0XdhJfl4LuKGSudCld0D17fXqfJAy1kUONPmi2qAkg+g7GW1jCf3E3uXtGVAakw4fVU0lnRdBagCcLsq9OUxWJhn5+4WGXbd+VtC/M=
+	t=1750715575; cv=none; b=RRMs0KUWrRRTv7Pusxz9WtOQTW4YPxV7l+fuqOAiag/fwiQy65cq4pawRm/WRVzGXgSF/uWfH6Ql0kBJfrc+xFUnB8gyBCiB8YTNPjs1bN87pk6nGScxbDrl6Zjpj/tmi3zZj0zjOaKRymaGNLDBRNMycOT2O9Lr8hJYRVNrU14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715573; c=relaxed/simple;
-	bh=tEXMoqpAwbVrijksfwbI0VQJyJn4xgivgLi0wm9k+Bg=;
+	s=arc-20240116; t=1750715575; c=relaxed/simple;
+	bh=JmFqn0LcSslupBG5kjHKdw+b50Gp7n7lg0uiPP+/W6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i27FL3SMge56EuPxOU3gtrPGHcGHEz+QD81s00cphgB4ny1iOi6C9qFAC5YZ2hlxWclB9/kJlN8/xfZ2ZCN+sFhCFpCRILpVjY1J+Ro3CCm9Wl8YQseBuoXiIxhLywZM3Q7RsEQat2yCU1WQPw3oWnqy+yxY+UxLD3Z6Ucbkqpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkqdhcq5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Nqnxs/jb89T8BvEhRnKk77tBQ5d+NCVhK7UECGar8s4r2yWNSwJVFyTVi2UC9u7x55CDX8H044QZSpXCrioYZlw0LoqdiW9RwthCKADvxEZohW0fkDnSJt4cBYARaZSZ8auVZjuaRVKbDT8AH2JIV6Rj+/OGqfcLxu0RB2VJeOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7AOXyFR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkqdhcq5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5B6C4CEEA;
-	Mon, 23 Jun 2025 21:52:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7AOXyFR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0F4C4CEEA;
+	Mon, 23 Jun 2025 21:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715572;
-	bh=tEXMoqpAwbVrijksfwbI0VQJyJn4xgivgLi0wm9k+Bg=;
+	s=korg; t=1750715574;
+	bh=JmFqn0LcSslupBG5kjHKdw+b50Gp7n7lg0uiPP+/W6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dkqdhcq5ENnCf4ULYlB4qNmtlohpRnMtveaGTnyVn0XwLsfRbUg0EfbslEC44fkZ/
-	 LhzAv0kP/M2f9KTnPA6J2I/X2srj4g2Vtr1wCsMWhiVFeZC5A0WiUkWgbg0KiFa/2V
-	 A80/Gv2zXnTfohz0dn/CGHQdoL6Ye9YRIj3Qv+/s=
+	b=d7AOXyFRDGVLjdHC2MXRn2XNTBSMTU+6Pk/1HoM7S64XaoL6rwE3ooLHKFfdzOrIb
+	 GfiO86Ru//DJHsV6txnI4ZHGdVBBqDBhVQV5ApR4Sz1XgttT66mCAwYwYfB71jGJKd
+	 7XQSy1qAGEYMExnrhIWUfooXKxW81M6n6411ZsIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 269/508] Revert "io_uring: ensure deferred completions are posted for multishot"
-Date: Mon, 23 Jun 2025 15:05:14 +0200
-Message-ID: <20250623130651.864576415@linuxfoundation.org>
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.15 467/592] net: clear the dst when changing skb protocol
+Date: Mon, 23 Jun 2025 15:07:05 +0200
+Message-ID: <20250623130711.538590230@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -43,45 +46,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-This reverts commit b82c386898f7b00cb49abe3fbd622017aaa61230 which is
-commit 687b2bae0efff9b25e071737d6af5004e6e35af5 upstream.
+commit ba9db6f907ac02215e30128770f85fbd7db2fcf9 upstream.
 
-Jens writes:
-	There's some missing dependencies that makes this not work
-	right, I'll bring it back in a series instead.
+A not-so-careful NAT46 BPF program can crash the kernel
+if it indiscriminately flips ingress packets from v4 to v6:
 
-Link: https://lore.kernel.org/r/313f2335-626f-4eea-8502-d5c3773db35a@kernel.dk
-Reported-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+    ip6_rcv_core (net/ipv6/ip6_input.c:190:20)
+    ipv6_rcv (net/ipv6/ip6_input.c:306:8)
+    process_backlog (net/core/dev.c:6186:4)
+    napi_poll (net/core/dev.c:6906:9)
+    net_rx_action (net/core/dev.c:7028:13)
+    do_softirq (kernel/softirq.c:462:3)
+    netif_rx (net/core/dev.c:5326:3)
+    dev_loopback_xmit (net/core/dev.c:4015:2)
+    ip_mc_finish_output (net/ipv4/ip_output.c:363:8)
+    NF_HOOK (./include/linux/netfilter.h:314:9)
+    ip_mc_output (net/ipv4/ip_output.c:400:5)
+    dst_output (./include/net/dst.h:459:9)
+    ip_local_out (net/ipv4/ip_output.c:130:9)
+    ip_send_skb (net/ipv4/ip_output.c:1496:8)
+    udp_send_skb (net/ipv4/udp.c:1040:8)
+    udp_sendmsg (net/ipv4/udp.c:1328:10)
+
+The output interface has a 4->6 program attached at ingress.
+We try to loop the multicast skb back to the sending socket.
+Ingress BPF runs as part of netif_rx(), pushes a valid v6 hdr
+and changes skb->protocol to v6. We enter ip6_rcv_core which
+tries to use skb_dst(). But the dst is still an IPv4 one left
+after IPv4 mcast output.
+
+Clear the dst in all BPF helpers which change the protocol.
+Try to preserve metadata dsts, those may carry non-routing
+metadata.
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Maciej Żenczykowski <maze@google.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Fixes: d219df60a70e ("bpf: Add ipip6 and ip6ip decap support for bpf_skb_adjust_room()")
+Fixes: 1b00e0dfe7d0 ("bpf: update skb->protocol in bpf_skb_net_grow")
+Fixes: 6578171a7ff0 ("bpf: add bpf_skb_change_proto helper")
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250610001245.1981782-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    8 --------
- 1 file changed, 8 deletions(-)
+ net/core/filter.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -820,14 +820,6 @@ bool io_post_aux_cqe(struct io_ring_ctx
- {
- 	bool filled;
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3233,6 +3233,13 @@ static const struct bpf_func_proto bpf_s
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+ };
  
--	/*
--	 * If multishot has already posted deferred completions, ensure that
--	 * those are flushed first before posting this one. If not, CQEs
--	 * could get reordered.
--	 */
--	if (!wq_list_empty(&ctx->submit_state.compl_reqs))
--		__io_submit_flush_completions(ctx);
--
- 	io_cq_lock(ctx);
- 	filled = io_fill_cqe_aux(ctx, user_data, res, cflags, allow_overflow);
- 	io_cq_unlock_post(ctx);
++static void bpf_skb_change_protocol(struct sk_buff *skb, u16 proto)
++{
++	skb->protocol = htons(proto);
++	if (skb_valid_dst(skb))
++		skb_dst_drop(skb);
++}
++
+ static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
+ {
+ 	/* Caller already did skb_cow() with len as headroom,
+@@ -3329,7 +3336,7 @@ static int bpf_skb_proto_4_to_6(struct s
+ 		}
+ 	}
+ 
+-	skb->protocol = htons(ETH_P_IPV6);
++	bpf_skb_change_protocol(skb, ETH_P_IPV6);
+ 	skb_clear_hash(skb);
+ 
+ 	return 0;
+@@ -3359,7 +3366,7 @@ static int bpf_skb_proto_6_to_4(struct s
+ 		}
+ 	}
+ 
+-	skb->protocol = htons(ETH_P_IP);
++	bpf_skb_change_protocol(skb, ETH_P_IP);
+ 	skb_clear_hash(skb);
+ 
+ 	return 0;
+@@ -3550,10 +3557,10 @@ static int bpf_skb_net_grow(struct sk_bu
+ 		/* Match skb->protocol to new outer l3 protocol */
+ 		if (skb->protocol == htons(ETH_P_IP) &&
+ 		    flags & BPF_F_ADJ_ROOM_ENCAP_L3_IPV6)
+-			skb->protocol = htons(ETH_P_IPV6);
++			bpf_skb_change_protocol(skb, ETH_P_IPV6);
+ 		else if (skb->protocol == htons(ETH_P_IPV6) &&
+ 			 flags & BPF_F_ADJ_ROOM_ENCAP_L3_IPV4)
+-			skb->protocol = htons(ETH_P_IP);
++			bpf_skb_change_protocol(skb, ETH_P_IP);
+ 	}
+ 
+ 	if (skb_is_gso(skb)) {
+@@ -3606,10 +3613,10 @@ static int bpf_skb_net_shrink(struct sk_
+ 	/* Match skb->protocol to new outer l3 protocol */
+ 	if (skb->protocol == htons(ETH_P_IP) &&
+ 	    flags & BPF_F_ADJ_ROOM_DECAP_L3_IPV6)
+-		skb->protocol = htons(ETH_P_IPV6);
++		bpf_skb_change_protocol(skb, ETH_P_IPV6);
+ 	else if (skb->protocol == htons(ETH_P_IPV6) &&
+ 		 flags & BPF_F_ADJ_ROOM_DECAP_L3_IPV4)
+-		skb->protocol = htons(ETH_P_IP);
++		bpf_skb_change_protocol(skb, ETH_P_IP);
+ 
+ 	if (skb_is_gso(skb)) {
+ 		struct skb_shared_info *shinfo = skb_shinfo(skb);
 
 
