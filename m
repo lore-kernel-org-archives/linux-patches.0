@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A055830E84D;
-	Mon, 23 Jun 2025 13:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E532F24;
+	Mon, 23 Jun 2025 13:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685695; cv=none; b=nUGsPfrysFkaSzCiGp8CT8Aq+4vIdZQmU2OM25cHQ4UY+at5/yTBOehTmEA4lY0eHcfky22S5fX1R4/WUc8ill9a7Bmop7974Zgzq5TpJtXvXHJGNBrERBFmWabq3iCaUMdM5rPJXgYb+D9qt1BUhdDEx10dSJ2aT7JvxABc+R0=
+	t=1750685698; cv=none; b=lAi+MJzafWEjQtkWYD6qXvqWuGvoE50kgBznZXwc4div2JZ4XZQ++EvdD1WDSWOCwj44KUvGSdmxU0TlsshhHZEnV318c4ar/hW/Bb8i9pN4C9yOJvEy0bALO4u8AAgikW5D+icLvetwsS3uCjvjE/ZYo24rNaydY8tXcrSmti8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685695; c=relaxed/simple;
-	bh=wFQGiS8+FSF1RgJhb1rRH+sktIFP/s4pT35/J2WOyvk=;
+	s=arc-20240116; t=1750685698; c=relaxed/simple;
+	bh=5h3CFyCvXG7LbFjznuHQ875IQOwr91rqZ5IBuyZaowY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WGMeqCjpscQXBrJAcOomzZFlXq/hpkXNsDfQghFOEOIpi4TAfhiXRwJ0N+AeMruKbDC5gSvVd6ltFQXVkThjhY8Sezzdfg6vBPLRaEI+YYyZ/S0EgfHrVRbbxehMqQc1VwaI55bx0N+9ZGifiAdcjmDh5NGotDHBJQdfqQgUBOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OztuwpI0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dh5STkA0eIpIkULDor5awfR436IKeceq3DzpO3aL6SiBFQje7QsHfr9h0kseVv9F3dXu+sISuiXJ9IGMTfZpAOvciFHp9fZKpjeZvb6+/vfwp6y0L5Oesca51gezjTWVJCpFAF+ZW/1JLS/COKfN5ZuQuR8nnQ3WMnp6rqqpDMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVc4cIxA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OztuwpI0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A1EC4CEEA;
-	Mon, 23 Jun 2025 13:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVc4cIxA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA666C4CEEA;
+	Mon, 23 Jun 2025 13:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685695;
-	bh=wFQGiS8+FSF1RgJhb1rRH+sktIFP/s4pT35/J2WOyvk=;
+	s=korg; t=1750685698;
+	bh=5h3CFyCvXG7LbFjznuHQ875IQOwr91rqZ5IBuyZaowY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OztuwpI0PAzOl5Aj29LCRuQ2LB4gp/qXvtvt+66WQwNpI3gxwrGClPdBCfIbWLiFs
-	 qmyzJPz8k0t4ZYZphq9tu7Sg7UZhcQBil/022+xtBNUiazi/iQd5o/5Zp9+pEBSBiI
-	 wxDTqunRGZ29VBoV1id5HIZo16rkgpJ5BqKuCnow=
+	b=KVc4cIxAdk2kXOQVLvV6MNAP5b31b3lTpwjaeW1VRhR/sTl5lyiozRhWOcj/3nn+L
+	 mQw5jd4Ns5zZoUjPep8X4WHGnGUO/8wGf6k1qmVeK33tesBUkXDPgJg9QKuhp+fkia
+	 55F40g7ch7keV/siWbHgqLap8qSXx1d9XqZkb7F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	kdevops@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.4 113/222] ext4: fix calculation of credits for extent tree modification
-Date: Mon, 23 Jun 2025 15:07:28 +0200
-Message-ID: <20250623130615.504300357@linuxfoundation.org>
+	Neal Gompa <neal@gompa.dev>,
+	Hector Martin <marcan@marcan.st>,
+	James Calligeros <jcalligeros99@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 025/508] ASoC: tas2764: Enable main IRQs
+Date: Mon, 23 Jun 2025 15:01:10 +0200
+Message-ID: <20250623130645.868916583@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,69 +49,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Hector Martin <marcan@marcan.st>
 
-commit 32a93f5bc9b9812fc710f43a4d8a6830f91e4988 upstream.
+[ Upstream commit dd50f0e38563f15819059c923bf142200453e003 ]
 
-Luis and David are reporting that after running generic/750 test for 90+
-hours on 2k ext4 filesystem, they are able to trigger a warning in
-jbd2_journal_dirty_metadata() complaining that there are not enough
-credits in the running transaction started in ext4_do_writepages().
+IRQ handling was added in commit dae191fb957f ("ASoC: tas2764: Add IRQ
+handling") however that same commit masks all interrupts coming from
+the chip. Unmask the "main" interrupts so that we can see and
+deal with a number of errors including clock, voltage, and current.
 
-Indeed the code in ext4_do_writepages() is racy and the extent tree can
-change between the time we compute credits necessary for extent tree
-computation and the time we actually modify the extent tree. Thus it may
-happen that the number of credits actually needed is higher. Modify
-ext4_ext_index_trans_blocks() to count with the worst case of maximum
-tree depth. This can reduce the possible number of writers that can
-operate in the system in parallel (because the credit estimates now won't
-fit in one transaction) but for reasonably sized journals this shouldn't
-really be an issue. So just go with a safe and simple fix.
-
-Link: https://lore.kernel.org/all/20250415013641.f2ppw6wov4kn4wq2@offworld
-Reported-by: Davidlohr Bueso <dave@stgolabs.net>
-Reported-by: Luis Chamberlain <mcgrof@kernel.org>
-Tested-by: kdevops@lists.linux.dev
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250429175535.23125-2-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: dae191fb957f ("ASoC: tas2764: Add IRQ handling")
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
+Link: https://patch.msgid.link/20250406-apple-codec-changes-v5-4-50a00ec850a3@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ sound/soc/codecs/tas2764.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -2592,18 +2592,19 @@ int ext4_ext_calc_credits_for_single_ext
- int ext4_ext_index_trans_blocks(struct inode *inode, int extents)
- {
- 	int index;
--	int depth;
+diff --git a/sound/soc/codecs/tas2764.c b/sound/soc/codecs/tas2764.c
+index 10f0f07b90ff2..8baf92abcf000 100644
+--- a/sound/soc/codecs/tas2764.c
++++ b/sound/soc/codecs/tas2764.c
+@@ -542,7 +542,7 @@ static int tas2764_codec_probe(struct snd_soc_component *component)
+ 	tas2764_reset(tas2764);
  
- 	/* If we are converting the inline data, only one is needed here. */
- 	if (ext4_has_inline_data(inode))
- 		return 1;
+ 	if (tas2764->irq) {
+-		ret = snd_soc_component_write(tas2764->component, TAS2764_INT_MASK0, 0xff);
++		ret = snd_soc_component_write(tas2764->component, TAS2764_INT_MASK0, 0x00);
+ 		if (ret < 0)
+ 			return ret;
  
--	depth = ext_depth(inode);
--
-+	/*
-+	 * Extent tree can change between the time we estimate credits and
-+	 * the time we actually modify the tree. Assume the worst case.
-+	 */
- 	if (extents <= 1)
--		index = depth * 2;
-+		index = EXT4_MAX_EXTENT_DEPTH * 2;
- 	else
--		index = depth * 3;
-+		index = EXT4_MAX_EXTENT_DEPTH * 3;
- 
- 	return index;
- }
+-- 
+2.39.5
+
 
 
