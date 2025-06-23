@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AC11E51FA;
-	Mon, 23 Jun 2025 21:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657FB1E51FA;
+	Mon, 23 Jun 2025 21:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713918; cv=none; b=sQ0ISm12xDzszAmwcBx6WlOrArntUlGXgCL+MfjSjl7sh9uCW93K3mkTCiqofNcj0Nk2R6Sl/H3Ff7QkosrRzGOUBPnKsOKazFDGf7DrZ8Jz3571PtqaXkLPIsEcwZPXo8lc4sq+TJyrED8wQqLaES9ymvXKOiI+/lrCR2dFZIM=
+	t=1750713920; cv=none; b=Nt4wib4DyomI2YEX3VBDPKZhrVaUCLUs9fv3bQ6dhHK7QgPDRgPimbPMdUoHZP7sOg1j/VSZ2nUYAZSPeWA0PQ9QoiLOP8MhRZyqdP4sPLp1gBQHtu0dhCp0dXyPk/eUrMBdhEgV3qGm3gBScSh96/wbjr8RC8OSKOfUoKlANAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713918; c=relaxed/simple;
-	bh=Ux/3aPNajAwpJuyzAeDYlDAQhG4al7P9n2bLOCD9/Xw=;
+	s=arc-20240116; t=1750713920; c=relaxed/simple;
+	bh=3CSfZOx3ZlZwjEHyjFeBdevzNHXBJ1A86K2D9LdPgR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PBvd7lhYbmhEPARh2YYoiI6Jwz6vYfyYpecWFrYQpQaCS8CICxOkV89kdRYb1R2TEulqNwTuPxwCgJfYpcs+5Coa/tCC7Zm1mB1Ww6ye90stzLouiIH4W9j1ItuguoZWGjUVKyiOgMyN7uYTRbWB4+S0wqdMEv2qWrsajFsz7gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jhPAmh6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nvFC/zp6omFy2Z27jjxGe/nwBFIQe+iMWS3eUP/orgCWSdMNne7wrQoTmD67OrFrEzaohAQWkDjrMTuIDKPAMRX3QyYQ+U0tXl755FQfsCBk//2eNE30rcRicLkMzrkGXgIoF5KGgbB92+Z6oiwcKcg3TICSvXhFABhf/o2JgnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyC0sk8i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jhPAmh6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E87C4CEEA;
-	Mon, 23 Jun 2025 21:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyC0sk8i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF468C4CEEA;
+	Mon, 23 Jun 2025 21:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713917;
-	bh=Ux/3aPNajAwpJuyzAeDYlDAQhG4al7P9n2bLOCD9/Xw=;
+	s=korg; t=1750713920;
+	bh=3CSfZOx3ZlZwjEHyjFeBdevzNHXBJ1A86K2D9LdPgR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0jhPAmh6E6TQOuRiIbh9p7qqAin/im50vNhNZAnpRwZnPbnir6lKZ9Pk7nSF2AsAV
-	 4dicMObkNndKeGCkyUYKURh6TRJGw+IkddkCx9us/I83gN7SeThlQFhp3fYCml5WlK
-	 RFhbImaWSrcGdZw3HChtGnERgw5ls610u6mi0dD4=
+	b=nyC0sk8ikBR8uBxGn2a0e1T54w2fJ64gh7mm/OMKKElTD5z+y4pt/R2loP5Ay7ZE0
+	 qnOh36iMoOfZHnfFUW6NrD/KB4sQsNSdAYNmzE7kMNq2JK9QJgMH6iy3H6k5T6Nyh1
+	 D/mIDwO4fkUTDa2DZc1BbiQGt01ookNHyJgMUCvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Shahrouzi <gshahrouzi@gmail.com>,
-	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 097/290] staging: iio: ad5933: Correct settling cycles encoding per datasheet
-Date: Mon, 23 Jun 2025 15:05:58 +0200
-Message-ID: <20250623130629.886978580@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 103/290] cifs: update dstaddr whenever channel iface is updated
+Date: Mon, 23 Jun 2025 15:06:04 +0200
+Message-ID: <20250623130630.058312482@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
 References: <20250623130626.910356556@linuxfoundation.org>
@@ -51,36 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit 60638e2a2d4bc03798f00d5ab65ce9b83cb8b03b upstream.
+commit c1846893991f3b4ec8a0cc12219ada153f0814d6 upstream.
 
-The AD5933 datasheet (Table 13) lists the maximum cycles to be 0x7FC
-(2044).
+When the server interface info changes (more common in clustered
+servers like Azure Files), the per-channel iface gets updated.
+However, this did not update the corresponding dstaddr. As a result
+these channels will still connect (or try connecting) to older addresses.
 
-Clamp the user input to the maximum effective value of 0x7FC cycles.
-
-Fixes: f94aa354d676 ("iio: impedance-analyzer: New driver for AD5933/4 Impedance Converter, Network Analyzer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
-Link: https://patch.msgid.link/20250420013009.847851-1-gshahrouzi@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: b54034a73baf ("cifs: during reconnect, update interface if necessary")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/iio/impedance-analyzer/ad5933.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/sess.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/staging/iio/impedance-analyzer/ad5933.c
-+++ b/drivers/staging/iio/impedance-analyzer/ad5933.c
-@@ -412,7 +412,7 @@ static ssize_t ad5933_store(struct devic
- 		ret = ad5933_cmd(st, 0);
- 		break;
- 	case AD5933_OUT_SETTLING_CYCLES:
--		val = clamp(val, (u16)0, (u16)0x7FF);
-+		val = clamp(val, (u16)0, (u16)0x7FC);
- 		st->settling_cycles = val;
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -485,6 +485,10 @@ cifs_chan_update_iface(struct cifs_ses *
  
- 		/* 2x, 4x handling, see datasheet */
+ 	ses->chans[chan_index].iface = iface;
+ 	spin_unlock(&ses->chan_lock);
++
++	spin_lock(&server->srv_lock);
++	memcpy(&server->dstaddr, &iface->sockaddr, sizeof(server->dstaddr));
++	spin_unlock(&server->srv_lock);
+ }
+ 
+ /*
 
 
