@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3FB6136;
-	Mon, 23 Jun 2025 21:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85DC224AFA;
+	Mon, 23 Jun 2025 21:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715971; cv=none; b=qZROU9yihDWezgl2dKlrDlStVGo7Fe2N/1XkkJEbqTNHHN0iWzPVAp3p+SnvafaKLzxMiZg+4b4poJvDuDTC/67ck4AxFcmyZXtfSMSAKISVwJwo/yRPUKlWdaM7qn7d2MDCvi/NtIxPpK6NGBL3VGSQjWhixv5/z5q49lZPdDE=
+	t=1750715973; cv=none; b=kc54FoUgm2tJBmbUIV94kx0WsfwZgx8c5UQvVfJMAjIYHMfba1VMShtR/A2gnJ4Ejfr8C01cD3zTalZ3akVqHng0+m92y3M0wV1SUKLNgT2uINVTzBU04OPKjaISdUitZLNOiDyPqCSsq6X5nIOCA88ESnB6G8k79dnNYw4DdY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715971; c=relaxed/simple;
-	bh=dTXXHWrYcazqJapTs1bSB9wafvfXS+zUm8b1SrPaqF4=;
+	s=arc-20240116; t=1750715973; c=relaxed/simple;
+	bh=xPN7JKgQGk/KLoQjZikTnmb66yyaHQAVYNuf5g5VZo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Auej81lJKjZiZdkKeMPhTKJq0i/YzKOVgGwO0wTDRYz78yo9bK1jjGuSM2UaRkdzweHBz/Mc9e74bj5huQonoxr2lkEkftHDb4iK7UtK2CDhlUcXvduo+Ix0DLw8oz9xU2jtFkGHc790vn5F0MtKiAmzRnFDu2AWUtWR2BObww4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrTABY+N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SByeZRowGMwC3c06YAJ8oTLp+z5r+BcA1ksGsE5zWf/o1hyesihJVthzbyQvujdVkOz7i7O52A0MvfB1e5hhThSUu/IqpZuCBM1rCcnEbxddx2wvp/8jn9Pgt4M2tBpIxWjPOTT1SYK2jimGOU71q2lEq7C7gjMrp6bMkWhMz8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FG2D6YOT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrTABY+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D7EC4CEEA;
-	Mon, 23 Jun 2025 21:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FG2D6YOT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFA2C4CEED;
+	Mon, 23 Jun 2025 21:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715970;
-	bh=dTXXHWrYcazqJapTs1bSB9wafvfXS+zUm8b1SrPaqF4=;
+	s=korg; t=1750715973;
+	bh=xPN7JKgQGk/KLoQjZikTnmb66yyaHQAVYNuf5g5VZo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TrTABY+NXZBTX6s0/+38NSMyddNbN7ITyPmtzLEhz107AmR7J5vOWSqHWOqus63rC
-	 r3Cl5EK5Rvc0fpSk/e9UoSGIXDCKw7ArXf1ccycP3pKxdps6xgCx2VuEGVmJwoDna6
-	 28ZV+VPC73YFxI135thyYZTKfMgJP+4ngq24as38=
+	b=FG2D6YOTgxU78BsGMqEF8gq12ssPtdbK4R1cTnD5FmT/GluAZOo9WV/JXJM20bbhG
+	 EPnEIv+r6fLRGATLfRibO1jNzrAwdFj7h40NUUNrD2fdIorDSHtcxJZneqH4GU1bRC
+	 FjUaTZaU8y0ljnOsVL84nNl6WLZv+Aps/TzWKbso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 232/290] arm64: Restrict pagetable teardown to avoid false warning
-Date: Mon, 23 Jun 2025 15:08:13 +0200
-Message-ID: <20250623130633.903176177@linuxfoundation.org>
+	Chris Chiu <chris.chiu@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.15 494/592] ALSA: hda/realtek: Fix built-in mic on ASUS VivoBook X513EA
+Date: Mon, 23 Jun 2025 15:07:32 +0200
+Message-ID: <20250623130712.182144534@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,50 +46,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Chris Chiu <chris.chiu@canonical.com>
 
-commit 650768c512faba8070bf4cfbb28c95eb5cd203f3 upstream.
+commit c6451a7325874c119def1d4094f6815c0c8fdc23 upstream.
 
-Commit 9c006972c3fe ("arm64: mmu: drop pXd_present() checks from
-pXd_free_pYd_table()") removes the pxd_present() checks because the
-caller checks pxd_present(). But, in case of vmap_try_huge_pud(), the
-caller only checks pud_present(); pud_free_pmd_page() recurses on each
-pmd through pmd_free_pte_page(), wherein the pmd may be none. Thus it is
-possible to hit a warning in the latter, since pmd_none => !pmd_table().
-Thus, add a pmd_present() check in pud_free_pmd_page().
+The built-in mic of ASUS VivoBook X513EA is broken recently by the
+fix of the pin sort. The fixup ALC256_FIXUP_ASUS_MIC_NO_PRESENCE
+is working for addressing the regression, too.
 
-This problem was found by code inspection.
-
-Fixes: 9c006972c3fe ("arm64: mmu: drop pXd_present() checks from pXd_free_pYd_table()")
-Cc: stable@vger.kernel.org
-Reported-by: Ryan Roberts <ryan.roberts@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
-Link: https://lore.kernel.org/r/20250527082633.61073-1-dev.jain@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 3b4309546b48 ("ALSA: hda: Fix headset detection failure due to unstable sort")
+Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250610035607.690771-1-chris.chiu@canonical.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/mmu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -1253,7 +1253,8 @@ int pud_free_pmd_page(pud_t *pudp, unsig
- 	next = addr;
- 	end = addr + PUD_SIZE;
- 	do {
--		pmd_free_pte_page(pmdp, next);
-+		if (pmd_present(pmdp_get(pmdp)))
-+			pmd_free_pte_page(pmdp, next);
- 	} while (pmdp++, next += PMD_SIZE, next != end);
- 
- 	pud_clear(pudp);
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10907,6 +10907,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8e60, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e61, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e62, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x1043, 0x1032, "ASUS VivoBook X513EA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
+ 	SND_PCI_QUIRK(0x1043, 0x1054, "ASUS G614FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
 
 
