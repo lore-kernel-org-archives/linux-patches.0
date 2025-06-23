@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC76253F20;
-	Mon, 23 Jun 2025 13:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7634C6E;
+	Mon, 23 Jun 2025 13:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685503; cv=none; b=jzdKZtoo2CVrAIh1HGiw8K+KZa/FhEuJ3+XiO0ygIbScGugUwTvbdem3Of3uJ8GWKCaIMtGmByVCinV6rwjtyGU7Y6EOBXWYpJsS4NttMnOQytLN4AGbwcKF6AyH7AgOxt+3vwkM4jPkVWSxoprPlVonGGIVpsaN4fM8FpqXky4=
+	t=1750685506; cv=none; b=JrNSy9F5r7GqjmzX4Yp3U3suhxMIEgN/0/GZbNpPpKQP3OBPwYADCokIA3eulHf6CU6FvbHbASXjJzzL5oKUcrtDRXb6c3iK/jPHqAcp10AjZ5f3jHAEaJbScj0JzimyQUiSKcNyLV4CngHp6pogaj0Xu1YnrVbADh5nsXd5kTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685503; c=relaxed/simple;
-	bh=b6PRhTbnCFjsisuMUCpV8+/cr8zuIRmEG8W7hbLYv94=;
+	s=arc-20240116; t=1750685506; c=relaxed/simple;
+	bh=whkuWnHhng1PHEIgW51OiCMk8TEg1xkAEMP39MZGMDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4bmEuzCV5BjLpCtPPaBQiK4PzRbltBnWy1sLbJ3WOiLZW4WiJtoX7/Qhd7KiJxu+Wx6b5ToMropVSR0aVw+VQv/aEALDthQKbgd37LchNk26vztSQT0bI5tI/fDkH3qLAbxMy/BRRkQcx2614s3BA15QzEO3vksRe12PYZb36k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SmATPKJ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZyuCMyANXsudK3/xN2bSyCp66f3AAxk6m4HetcftvGP8a2ONkGAWLQQ932a5FElANK3DFaQOd/XZ8Ssz8p6JQwmJ1UcFR/mQccrAVQbin7k9AhrOHP2DazLaK0/zPpUh0WLkQz89Qb1OvQsljoXFfpgCV22/x6wJBEVVgjDLxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RYsmsBuM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SmATPKJ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531BCC4CEEA;
-	Mon, 23 Jun 2025 13:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RYsmsBuM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21E9C4CEF2;
+	Mon, 23 Jun 2025 13:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685503;
-	bh=b6PRhTbnCFjsisuMUCpV8+/cr8zuIRmEG8W7hbLYv94=;
+	s=korg; t=1750685506;
+	bh=whkuWnHhng1PHEIgW51OiCMk8TEg1xkAEMP39MZGMDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SmATPKJ6rLJ7+LwPYJlwkO1US1xEbzPAzzWVrtyCQSf43VUww6KRSgXw/Lwlhr1sy
-	 Rxn2+41ZNJUxhI8y1z23tAnAXvdj+jIJOksJVoXTrKs9MnAyxImp/ajDrhrKsN/RKy
-	 yGr1neLsw8986tgBIZAlMBKVKHLW8LOxl+28MEWs=
+	b=RYsmsBuMDIpzO95BOaHJJNmJ7J3Y56EOLXiOdUaU7Ma+ZsDPnlEKhhXBFf/x4DrhQ
+	 YEcc3rg9QN19zkDSEQFmlAqgBtlxsFrIqrL8RFZlGuxkt4tild5sNaBEV+lP9RHbPu
+	 GH+i2iKXn82UyzCvWaMqMo9rXVsV1eEX4ipLOs5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Hsin-chen Chuang <chharry@chromium.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 011/508] Bluetooth: hci_qca: move the SoC type check to the right place
-Date: Mon, 23 Jun 2025 15:00:56 +0200
-Message-ID: <20250623130645.532981536@linuxfoundation.org>
+	Long Li <leo.lilong@huawei.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 240/592] sunrpc: update nextcheck time when adding new cache entries
+Date: Mon, 23 Jun 2025 15:03:18 +0200
+Message-ID: <20250623130705.999524487@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Long Li <leo.lilong@huawei.com>
 
-commit 0fb410c914eb03c7e9d821e26d03bac0a239e5db upstream.
+[ Upstream commit 5ca00634c8bbb2979c73465588f486b9632f5ed5 ]
 
-Commit 3d05fc82237a ("Bluetooth: qca: set power_ctrl_enabled on NULL
-returned by gpiod_get_optional()") accidentally changed the prevous
-behavior where power control would be disabled without the BT_EN GPIO
-only on QCA_WCN6750 and QCA_WCN6855 while also getting the error check
-wrong. We should treat every IS_ERR() return value from
-devm_gpiod_get_optional() as a reason to bail-out while we should only
-set power_ctrl_enabled to false on the two models mentioned above. While
-at it: use dev_err_probe() to save a LOC.
+The cache_detail structure uses a "nextcheck" field to control hash table
+scanning intervals. When a table scan begins, nextcheck is set to current
+time plus 1800 seconds. During scanning, if cache_detail is not empty and
+a cache entry's expiry time is earlier than the current nextcheck, the
+nextcheck is updated to that expiry time.
 
-Cc: stable@vger.kernel.org
-Fixes: 3d05fc82237a ("Bluetooth: qca: set power_ctrl_enabled on NULL returned by gpiod_get_optional()")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Hsin-chen Chuang <chharry@chromium.org>
-Reviewed-by: Hsin-chen Chuang <chharry@chromium.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This mechanism ensures that:
+1) Empty cache_details are scanned every 1800 seconds to avoid unnecessary
+   scans
+2) Non-empty cache_details are scanned based on the earliest expiry time
+   found
+
+However, when adding a new cache entry to an empty cache_detail, the
+nextcheck time was not being updated, remaining at 1800 seconds. This
+could delay cache cleanup for up to 1800 seconds, potentially blocking
+threads(such as nfsd) that are waiting for cache cleanup.
+
+Fix this by updating the nextcheck time whenever a new cache entry is
+added.
+
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/sunrpc/cache.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -2263,14 +2263,14 @@ static int qca_serdev_probe(struct serde
+diff --git a/net/sunrpc/cache.c b/net/sunrpc/cache.c
+index 7ce5e28a6c031..bbaa77d7bbc81 100644
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -135,6 +135,8 @@ static struct cache_head *sunrpc_cache_add_entry(struct cache_detail *detail,
  
- 		qcadev->bt_en = devm_gpiod_get_optional(&serdev->dev, "enable",
- 					       GPIOD_OUT_LOW);
--		if (IS_ERR(qcadev->bt_en) &&
--		    (data->soc_type == QCA_WCN6750 ||
--		     data->soc_type == QCA_WCN6855)) {
--			dev_err(&serdev->dev, "failed to acquire BT_EN gpio\n");
--			return PTR_ERR(qcadev->bt_en);
--		}
-+		if (IS_ERR(qcadev->bt_en))
-+			return dev_err_probe(&serdev->dev,
-+					     PTR_ERR(qcadev->bt_en),
-+					     "failed to acquire BT_EN gpio\n");
+ 	hlist_add_head_rcu(&new->cache_list, head);
+ 	detail->entries++;
++	if (detail->nextcheck > new->expiry_time)
++		detail->nextcheck = new->expiry_time + 1;
+ 	cache_get(new);
+ 	spin_unlock(&detail->hash_lock);
  
--		if (!qcadev->bt_en)
-+		if (!qcadev->bt_en &&
-+		    (data->soc_type == QCA_WCN6750 ||
-+		     data->soc_type == QCA_WCN6855))
- 			power_ctrl_enabled = false;
- 
- 		qcadev->sw_ctrl = devm_gpiod_get_optional(&serdev->dev, "swctrl",
+-- 
+2.39.5
+
 
 
