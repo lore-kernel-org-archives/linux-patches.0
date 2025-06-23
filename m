@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8BA221FBE;
-	Mon, 23 Jun 2025 21:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0A3221FBE;
+	Mon, 23 Jun 2025 21:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713955; cv=none; b=gYdovP0ex0/xRr8JCYQ3WKc+PzabqXL8WtnKrbPsqojbaaSCPu/ib6ZF1ifM9I22b6RQseog06Y+jM/hyjT2w3RjfaPEhbjARJkWR+KLT2yqT01bZgLde8bftLCqTrmTkgiE5XGeGbVqCT03PF2hHTFu8uGVBnoZTmrp7jrd9H0=
+	t=1750713957; cv=none; b=Remd0NwDLDKYtnbbBQoNJy3vNsDngB/IeAxuFJgzTF5BBnTgVF9V584Sq7RKfywBTnuQpIA0GLtqWgw61YNlj2fy9+ldW37gZBy4pGBq7JtixFQ7o3x918TKcay+Pnl14Uj5ShiQsrmtD4US82SmDjgysDnXMHN+7InSzxqoNt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713955; c=relaxed/simple;
-	bh=OJKEXIiqV4WhkahEXLVFLOODgMDP661l8XwlK5s0XvA=;
+	s=arc-20240116; t=1750713957; c=relaxed/simple;
+	bh=5tKfD6x+UiCOAFfso5Amm5/oS2bcDsALp2njnij2gzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0knevwZWiDXuWcjF+QtBYHfDS5fyNNG8hgUUlZ2F+x+npGG9xNXw0TBhRpEK1RrC4Qx2nJLRHyVoWYhQ7z5gjNg6wxHuQ6IsbFZ/b14ePW+X6I6X+BbnfC2zJ1sqq5hcqTXZ2MpO/fgVc9ZkiHn4x0ngB9bqcnoFKTiqp4GTd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rD6NONJU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k6gVzywwrCWOwaa8uvst45IiItIYzyPeo0sWPjr3ods0XWCXtkh5EW1Tdsqu8u+TJWOX+2D3ox7INRlIq61FQUC/hCT76jIQbo0iQnZcvE+JqsA8uYVg/jMl7QbXRx49lWlauX5RfLYL0Q5leu0eBxI+6MGC+ddy1eQb1jZ1460=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzdeJU5o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rD6NONJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7680AC4CEEA;
-	Mon, 23 Jun 2025 21:25:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzdeJU5o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A82C4CEEA;
+	Mon, 23 Jun 2025 21:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713954;
-	bh=OJKEXIiqV4WhkahEXLVFLOODgMDP661l8XwlK5s0XvA=;
+	s=korg; t=1750713957;
+	bh=5tKfD6x+UiCOAFfso5Amm5/oS2bcDsALp2njnij2gzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rD6NONJUkpoePme0+wWuewIFoE7wlaVlA1yx9Yda7HXQuhW9fAKUg3soCPh4QxmWh
-	 SteCyRfPd9gfs8gDF6c4RVZSSR4ck4m/WRp23GgSoouJO+RFdAFBOn14xKHDC6Txch
-	 ASqfJI8E80JJ9slKyHu54byXUHYma3/p2dsEjnpA=
+	b=vzdeJU5oGq3Vr6OSanp0PubDBjJmne3Bcc5hZhRPqI8IZ/0mc742ydjHT9smcru+l
+	 KbgXpEFuyifrgAuwk7xN1R5g6Q03DB6QZjLrLCG0apPBtyCO86/Q5sHTM/3/6L2rtn
+	 S3rCh12BKKs2nmKoL/yKR/0euAdVLOcUMRkQCKAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+de24c3fe3c4091051710@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.4 218/222] jbd2: fix data-race and null-ptr-deref in jbd2_journal_dirty_metadata()
-Date: Mon, 23 Jun 2025 15:09:13 +0200
-Message-ID: <20250623130618.852137804@linuxfoundation.org>
+	Ruben Devos <devosruben6@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 105/290] smb: client: add NULL check in automount_fullpath
+Date: Mon, 23 Jun 2025 15:06:06 +0200
+Message-ID: <20250623130630.114342626@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,77 +46,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Ruben Devos <devosruben6@gmail.com>
 
-commit af98b0157adf6504fade79b3e6cb260c4ff68e37 upstream.
+commit f1e7a277a1736e12cc4bd6d93b8a5c439b8ca20c upstream.
 
-Since handle->h_transaction may be a NULL pointer, so we should change it
-to call is_handle_aborted(handle) first before dereferencing it.
+page is checked for null in __build_path_from_dentry_optional_prefix
+when tcon->origin_fullpath is not set. However, the check is missing when
+it is set.
+Add a check to prevent a potential NULL pointer dereference.
 
-And the following data-race was reported in my fuzzer:
-
-==================================================================
-BUG: KCSAN: data-race in jbd2_journal_dirty_metadata / jbd2_journal_dirty_metadata
-
-write to 0xffff888011024104 of 4 bytes by task 10881 on cpu 1:
- jbd2_journal_dirty_metadata+0x2a5/0x770 fs/jbd2/transaction.c:1556
- __ext4_handle_dirty_metadata+0xe7/0x4b0 fs/ext4/ext4_jbd2.c:358
- ext4_do_update_inode fs/ext4/inode.c:5220 [inline]
- ext4_mark_iloc_dirty+0x32c/0xd50 fs/ext4/inode.c:5869
- __ext4_mark_inode_dirty+0xe1/0x450 fs/ext4/inode.c:6074
- ext4_dirty_inode+0x98/0xc0 fs/ext4/inode.c:6103
-....
-
-read to 0xffff888011024104 of 4 bytes by task 10880 on cpu 0:
- jbd2_journal_dirty_metadata+0xf2/0x770 fs/jbd2/transaction.c:1512
- __ext4_handle_dirty_metadata+0xe7/0x4b0 fs/ext4/ext4_jbd2.c:358
- ext4_do_update_inode fs/ext4/inode.c:5220 [inline]
- ext4_mark_iloc_dirty+0x32c/0xd50 fs/ext4/inode.c:5869
- __ext4_mark_inode_dirty+0xe1/0x450 fs/ext4/inode.c:6074
- ext4_dirty_inode+0x98/0xc0 fs/ext4/inode.c:6103
-....
-
-value changed: 0x00000000 -> 0x00000001
-==================================================================
-
-This issue is caused by missing data-race annotation for jh->b_modified.
-Therefore, the missing annotation needs to be added.
-
-Reported-by: syzbot+de24c3fe3c4091051710@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=de24c3fe3c4091051710
-Fixes: 6e06ae88edae ("jbd2: speedup jbd2_journal_dirty_metadata()")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250514130855.99010-1-aha310510@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Signed-off-by: Ruben Devos <devosruben6@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/transaction.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/client/namespace.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -1419,7 +1419,6 @@ int jbd2_journal_dirty_metadata(handle_t
- 		goto out;
+--- a/fs/smb/client/namespace.c
++++ b/fs/smb/client/namespace.c
+@@ -146,6 +146,9 @@ static char *automount_fullpath(struct d
  	}
+ 	spin_unlock(&tcon->tc_lock);
  
--	journal = transaction->t_journal;
- 	jbd_lock_bh_state(bh);
- 
- 	if (is_handle_aborted(handle)) {
-@@ -1434,6 +1433,8 @@ int jbd2_journal_dirty_metadata(handle_t
- 		goto out_unlock_bh;
- 	}
- 
-+	journal = transaction->t_journal;
++	if (unlikely(!page))
++		return ERR_PTR(-ENOMEM);
 +
- 	if (jh->b_modified == 0) {
- 		/*
- 		 * This buffer's got modified and becoming part
+ 	s = dentry_path_raw(dentry, page, PATH_MAX);
+ 	if (IS_ERR(s))
+ 		return s;
 
 
