@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533631ACEDA;
-	Mon, 23 Jun 2025 21:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822DD1ACEDA;
+	Mon, 23 Jun 2025 21:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713153; cv=none; b=o+8wzqBGBL+dRAbFzO82l4YlzHXLEms+0XS8dqITd6oh5Gt+wEbR4E/hbordhGZ4fztCGHazl8TabGlNAx+Yhpizt9D/4VjXq0uOXdsCJ7cDpg4PGGobK0h5hlhJAK8Lbs6xd+5RFziD7zehEKIwCHAIUVcC5de1T2pwiuhuIow=
+	t=1750713155; cv=none; b=Va+77tZ+q6s5ZMrO/vA1DSZbE59o6C5HWe6BuajUraqNdJHkFk/KFV9M4IdB5Cs1+jHhJag3sjTGdDBHG9uUX2pfNR0g1VEgoea9U43GIoIHi2cxE8rEGPGIPNDFryYbCJqyXiiaXS0gXqNuvToLEO8kH3MttrDCZ5vsvMihRZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713153; c=relaxed/simple;
-	bh=7Cq9gvQhukfLFmuO6VXj3xXZvm8r58Az7BjGQWfSnW8=;
+	s=arc-20240116; t=1750713155; c=relaxed/simple;
+	bh=zHtBULAmpau6XnChW5kVY/zILCaVqOuPyWW12+9nAOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IGGlaDSOmSJHhLPZBV1Acaq/4ogsB4OxrrEuvT3jiJDGu/KS2hyF18JEdmksq16CyqfJtmkmuVp5tGZUQHeH5TvBC4RiKSYA7u0+4VWmIG+4RXzTXzQbjfQY/sXsX5Sz5puwzvo0zDV0wgegpcIJ9vvOpJyN4KkZwSoTgxhZBkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddC9zE1/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aTuzFpsu0/9ob1HgH8wgKwfuVLbjgIODgo+YmHX/usPqJ3KAQadRrIChuIHzxPehQFri8GObb8vdtPd295aHdYgDtm7LokEfFIWwgGwhWTcuQLVSZCcRPj4aVbOWiS71jY61Sefl3RdhS34fYTCUsT9ynk56JH8iQZyoAyFqQpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImYWsAmB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddC9zE1/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3890C4CEEA;
-	Mon, 23 Jun 2025 21:12:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImYWsAmB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194EDC4CEEA;
+	Mon, 23 Jun 2025 21:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713153;
-	bh=7Cq9gvQhukfLFmuO6VXj3xXZvm8r58Az7BjGQWfSnW8=;
+	s=korg; t=1750713155;
+	bh=zHtBULAmpau6XnChW5kVY/zILCaVqOuPyWW12+9nAOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ddC9zE1/3N/ZzdlM1NPQMSJRN3yJutc3I9XZVLRBgYbjPaUs2+RF6BHWkGdtMIkAz
-	 GCDzHinbFH8DDky2oDj9Rb7MajVzBVTyPN8C3H0+J2jhjMT3URNnjvQbfJQfM927dI
-	 i4bCR4CHqzG9peYTzyTI4PpFG5BfvZMUB/fC+tFA=
+	b=ImYWsAmBLgRSmiA9iaPgyN18lSgdpIvpjgJmQuENqnEHoyjzWWXWlO4BnD1n6ZYVK
+	 DQBzs2Zm5Nt6iWdTSngfLnQ33s5SPyC20jtUkf2t4WEewLVrxKq/jo+IQLcXH7GCSc
+	 9kxCh+OVbwGHzME6EdwCfdPSC65Oor+fvSxdC+II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 127/411] seg6: Fix validation of nexthop addresses
-Date: Mon, 23 Jun 2025 15:04:31 +0200
-Message-ID: <20250623130636.763127420@linuxfoundation.org>
+	Tom Rini <trini@konsulko.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 5.10 148/355] kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS
+Date: Mon, 23 Jun 2025 15:05:49 +0200
+Message-ID: <20250623130631.159580975@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,52 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 7632fedb266d93ed0ed9f487133e6c6314a9b2d1 ]
+commit feb843a469fb0ab00d2d23cfb9bcc379791011bb upstream.
 
-The kernel currently validates that the length of the provided nexthop
-address does not exceed the specified length. This can lead to the
-kernel reading uninitialized memory if user space provided a shorter
-length than the specified one.
+When preprocessing arch/*/kernel/vmlinux.lds.S, the target triple is
+not passed to $(CPP) because we add it only to KBUILD_{C,A}FLAGS.
 
-Fix by validating that the provided length exactly matches the specified
-one.
+As a result, the linker script is preprocessed with predefined macros
+for the build host instead of the target.
 
-Fixes: d1df6fd8a1d2 ("ipv6: sr: define core operations for seg6local lightweight tunnel")
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250604113252.371528-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assuming you use an x86 build machine, compare the following:
+
+ $ clang -dM -E -x c /dev/null
+ $ clang -dM -E -x c /dev/null -target aarch64-linux-gnu
+
+There is no actual problem presumably because our linker scripts do not
+rely on such predefined macros, but it is better to define correct ones.
+
+Move $(CLANG_FLAGS) to KBUILD_CPPFLAGS, so that all *.c, *.S, *.lds.S
+will be processed with the proper target triple.
+
+[Note]
+After the patch submission, we got an actual problem that needs this
+commit. (CBL issue 1859)
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1859
+Reported-by: Tom Rini <trini@konsulko.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_local.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ Makefile |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
-index 0b64cf5b0f267..98af48b3fcce6 100644
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -1123,10 +1123,8 @@ static const struct nla_policy seg6_local_policy[SEG6_LOCAL_MAX + 1] = {
- 	[SEG6_LOCAL_SRH]	= { .type = NLA_BINARY },
- 	[SEG6_LOCAL_TABLE]	= { .type = NLA_U32 },
- 	[SEG6_LOCAL_VRFTABLE]	= { .type = NLA_U32 },
--	[SEG6_LOCAL_NH4]	= { .type = NLA_BINARY,
--				    .len = sizeof(struct in_addr) },
--	[SEG6_LOCAL_NH6]	= { .type = NLA_BINARY,
--				    .len = sizeof(struct in6_addr) },
-+	[SEG6_LOCAL_NH4]	= NLA_POLICY_EXACT_LEN(sizeof(struct in_addr)),
-+	[SEG6_LOCAL_NH6]	= NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
- 	[SEG6_LOCAL_IIF]	= { .type = NLA_U32 },
- 	[SEG6_LOCAL_OIF]	= { .type = NLA_U32 },
- 	[SEG6_LOCAL_BPF]	= { .type = NLA_NESTED },
--- 
-2.39.5
-
+--- a/Makefile
++++ b/Makefile
+@@ -586,8 +586,7 @@ else
+ CLANG_FLAGS	+= -fno-integrated-as
+ endif
+ CLANG_FLAGS	+= -Werror=unknown-warning-option
+-KBUILD_CFLAGS	+= $(CLANG_FLAGS)
+-KBUILD_AFLAGS	+= $(CLANG_FLAGS)
++KBUILD_CPPFLAGS	+= $(CLANG_FLAGS)
+ export CLANG_FLAGS
+ endif
+ 
 
 
