@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0814E72624;
-	Mon, 23 Jun 2025 21:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A0572624;
+	Mon, 23 Jun 2025 21:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715592; cv=none; b=mD3IfbJdQDOveuu/0gEhiA81t3sCJxc2DTLzBDLfc6mQvPkouq3GmCT7vHOHdEhI8Ow8BFP5Qmcss6x7EPGycP+OlwCz/kgPPEcAuN1wcr2PKQto0II7/7O76FZxBsN46Kn97KcOxR8AsbjWMBXSsYJ/oy0TG3YLq/SeCf95vI4=
+	t=1750715594; cv=none; b=LJh37HxzzLqL3VmcDjHk+hqElDRZLt7UsYop4sAdNPYINTxcQwIph9fd4IqbkMHhPKy0gxFZ4e8vt27c6vsoNUG3dojlijvdWO6o2ZLdDbCGoRQ8HhWg2+DTcJDm2Tkzuu5U/eF4gNYolR801iIibWNbPVA1KFT2AaGYmfyuMnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715592; c=relaxed/simple;
-	bh=WhoAhpX8ogOqlDGsF2zFQzDBoVzTH5mR/PNZa8BuM2c=;
+	s=arc-20240116; t=1750715594; c=relaxed/simple;
+	bh=14nm5H3nhTnBLFk33o0mg222+asTlknC1cz/VNtmWuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQ382CYYstIL5Ig1ZCLFG6BcrmS7cbj/QAILsTTCs9CTBowAVBp+vF5/i+rWqtbiOb2x9jXNPUpE84wa0iKm9rsWwe9Y0OKvJlW1Jp1ryTVnOKYdIu0PBPGne2tTQiTj4vqJKe64G/gI6Ll+LX4yRGM18VMG2wYYZwR/KI3YZDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxNCMFwY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EUV1JbnS3z3oGLt8JbbFz6PtbqPdgq+KFY5NuDeACOy+BvoFKD2H7p0rVOR8uG8ySU3qy3mITv+7v9AW0XxMZnMf20DuI8AtXtMw34oOGKLOkPGjJj58t9kmQoxDuBofsd14YgWbHMU2ChdYAIixIr7MScDkQ1i81tYhEvxjb/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MgcDoRta; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxNCMFwY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94334C4CEEA;
-	Mon, 23 Jun 2025 21:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MgcDoRta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D49C4CEEA;
+	Mon, 23 Jun 2025 21:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715591;
-	bh=WhoAhpX8ogOqlDGsF2zFQzDBoVzTH5mR/PNZa8BuM2c=;
+	s=korg; t=1750715594;
+	bh=14nm5H3nhTnBLFk33o0mg222+asTlknC1cz/VNtmWuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mxNCMFwYwL/4wyJ4zBjbiQxp0D3lZz3QyYytkzTKUPwpa7qLKPpL1sHRszffv4v3h
-	 TAvylOVlZe2VMStZTFWslw/q29yk+ge6BtQeOp8bM9Gwxhmw7rmo7jO1J4F5S3r4nf
-	 Y0B3bJ1X3ld7yGYjQLeXnbbt2v0erhseRSOXyXpU=
+	b=MgcDoRtamNSh6EgyCcuW/pIKIBxwm9Oqoc7vBAUM1RP3kiLtTseVSr1KAHHLhe8NV
+	 JZg6+yD2+s9MxVSIC91A9ytXVl7of/dW87rHFher+6q+cHsOlNjkjZT8xOELwJGWAw
+	 6M4KktdyGP0PmLX/gX46EkvojIKp5zj4xTI6DIdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Jann Horn <jannh@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Mel Gorman <mgormanmgorman@suse.de>
-Subject: [PATCH 6.15 468/592] mm: close theoretical race where stale TLB entries could linger
-Date: Mon, 23 Jun 2025 15:07:06 +0200
-Message-ID: <20250623130711.561732906@linuxfoundation.org>
+	syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 195/414] bpf: Check rcu_read_lock_trace_held() in bpf_map_lookup_percpu_elem()
+Date: Mon, 23 Jun 2025 15:05:32 +0200
+Message-ID: <20250623130646.890205794@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,99 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Hou Tao <houtao1@huawei.com>
 
-commit 383c4613c67c26e90e8eebb72e3083457d02033f upstream.
+[ Upstream commit d4965578267e2e81f67c86e2608481e77e9c8569 ]
 
-Commit 3ea277194daa ("mm, mprotect: flush TLB if potentially racing with a
-parallel reclaim leaving stale TLB entries") described a theoretical race
-as such:
+bpf_map_lookup_percpu_elem() helper is also available for sleepable bpf
+program. When BPF JIT is disabled or under 32-bit host,
+bpf_map_lookup_percpu_elem() will not be inlined. Using it in a
+sleepable bpf program will trigger the warning in
+bpf_map_lookup_percpu_elem(), because the bpf program only holds
+rcu_read_lock_trace lock. Therefore, add the missed check.
 
-
-"""
-Nadav Amit identified a theoretical race between page reclaim and mprotect
-due to TLB flushes being batched outside of the PTL being held.
-
-He described the race as follows:
-
-	CPU0                            CPU1
-	----                            ----
-					user accesses memory using RW PTE
-					[PTE now cached in TLB]
-	try_to_unmap_one()
-	==> ptep_get_and_clear()
-	==> set_tlb_ubc_flush_pending()
-					mprotect(addr, PROT_READ)
-					==> change_pte_range()
-					==> [ PTE non-present - no flush ]
-
-					user writes using cached RW PTE
-	...
-
-	try_to_unmap_flush()
-
-The same type of race exists for reads when protecting for PROT_NONE and
-also exists for operations that can leave an old TLB entry behind such as
-munmap, mremap and madvise.
-"""
-
-The solution was to introduce flush_tlb_batched_pending() and call it
-under the PTL from mprotect/madvise/munmap/mremap to complete any pending
-tlb flushes.
-
-However, while madvise_free_pte_range() and
-madvise_cold_or_pageout_pte_range() were both retro-fitted to call
-flush_tlb_batched_pending() immediately after initially acquiring the PTL,
-they both temporarily release the PTL to split a large folio if they
-stumble upon one.  In this case, where re-acquiring the PTL
-flush_tlb_batched_pending() must be called again, but it previously was
-not.  Let's fix that.
-
-There are 2 Fixes: tags here: the first is the commit that fixed
-madvise_free_pte_range().  The second is the commit that added
-madvise_cold_or_pageout_pte_range(), which looks like it copy/pasted the
-faulty pattern from madvise_free_pte_range().
-
-This is a theoretical bug discovered during code review.
-
-Link: https://lkml.kernel.org/r/20250606092809.4194056-1-ryan.roberts@arm.com
-Fixes: 3ea277194daa ("mm, mprotect: flush TLB if potentially racing with a parallel reclaim leaving stale TLB entries")
-Fixes: 9c276cc65a58 ("mm: introduce MADV_COLD")
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Reviewed-by: Jann Horn <jannh@google.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Mel Gorman <mgorman <mgorman@suse.de>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/bpf/000000000000176a130617420310@google.com/
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20250526062534.1105938-1-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/bpf/helpers.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -503,6 +503,7 @@ restart:
- 					pte_offset_map_lock(mm, pmd, addr, &ptl);
- 				if (!start_pte)
- 					break;
-+				flush_tlb_batched_pending(mm);
- 				arch_enter_lazy_mmu_mode();
- 				if (!err)
- 					nr = 0;
-@@ -736,6 +737,7 @@ static int madvise_free_pte_range(pmd_t
- 				start_pte = pte;
- 				if (!start_pte)
- 					break;
-+				flush_tlb_batched_pending(mm);
- 				arch_enter_lazy_mmu_mode();
- 				if (!err)
- 					nr = 0;
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index a05aeb3458964..9173d107758d4 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -129,7 +129,8 @@ const struct bpf_func_proto bpf_map_peek_elem_proto = {
+ 
+ BPF_CALL_3(bpf_map_lookup_percpu_elem, struct bpf_map *, map, void *, key, u32, cpu)
+ {
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
++		     !rcu_read_lock_bh_held());
+ 	return (unsigned long) map->ops->map_lookup_percpu_elem(map, key, cpu);
+ }
+ 
+-- 
+2.39.5
+
 
 
