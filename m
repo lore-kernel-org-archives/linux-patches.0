@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AFF3FB1B;
-	Mon, 23 Jun 2025 22:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551BB3FB1B;
+	Mon, 23 Jun 2025 22:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716231; cv=none; b=qrp9lVUHVWXLfCJwyfKBGMmhmcCMdu/gYjEFMZ2xYYzBPSTcGfJwrZiVCZuxS2bS8hp7MQA6g6wT/b4hXCvAkHAqdMaQPE4ft6DFk2Sawsc+vwo7HhzUz8HooQyTfMxLQ5A5+TWl0Ikn9X6pKzFixRwm25FPeHjoyszixu5ya6A=
+	t=1750716233; cv=none; b=E8E5qL6ckp2vM7qjn9K/zaupwTVBFtJRZhV+gQ5rmb+EYVG8Htn+70LrNwalnWpVgGDLDFA0YOGfVfbd8nKOHP4/YCBF2moPAitPsQRcsiW+HUboYLZDyKK5YvCzqvjgmqjCl5SqcISXTirpbgksfAPKhXXxfkB1i35/jOpHJvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716231; c=relaxed/simple;
-	bh=57QtL5FiQ774J5RZjrmndC8lo4FojEC1L5Ih88NuNQI=;
+	s=arc-20240116; t=1750716233; c=relaxed/simple;
+	bh=2e+e/huyhHwhP8C5bknvZ8EUrczBp9LFppbddcY4ybc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KbMD9topXBlOj9b6VfGZwD0OBjy4usaq4Iy8VqPQp5dgfWmSlnCnl8Uotzh2b79/aMGRc4PVGmVyK8aHEE+UkekYhWgTilzKtXQw/+GofXfFHTTJJlQIoSS1+KX1IOrbj0MEMlFK5bH+wzajv1ls+jDshsHHfdNX92JWqWkFDsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNMS3Tmq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ofp0k4IfC9I9h/iV7IO7HsG5FgAz2pJvqsve2Nfw0YJZfnMwoVVdQ/8FJn1RayeBcq6LWjkIMn/4CvAj5DLZC6cbeMRIFdOwph1mgP84e41b3nPDztjxsm1o87MLgGpAonw0hNy1Vzn/jj+Rij2VBEtpV5psCgklGj2XZeckHwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbP/BNQE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNMS3Tmq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75112C4CEEA;
-	Mon, 23 Jun 2025 22:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbP/BNQE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D42C4CEEA;
+	Mon, 23 Jun 2025 22:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716230;
-	bh=57QtL5FiQ774J5RZjrmndC8lo4FojEC1L5Ih88NuNQI=;
+	s=korg; t=1750716233;
+	bh=2e+e/huyhHwhP8C5bknvZ8EUrczBp9LFppbddcY4ybc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pNMS3TmqaJUYwO6OgWQrXXrnrM1vTuo+k5xB7agXxEd2Eu8MQZzVUaqIsb1zfLATO
-	 AfT3GsQXAkuTTWEvkFfdM1x4c0hapUeX0RT2JxgCeN8NiSClfKfoaMHVGn/lHXfXbd
-	 5AHIJae7GfyknKPljIV41WDYGcIeRPl8IKPYWfIs=
+	b=GbP/BNQE3JPYdssntLnZPbTXOtP8O9qmH0lkK709de9ZlSzNXasEirdlrWrG3G3YB
+	 wCDARXX/5in5A0fmbpA/exR8UgjaxT2Xs+PJt8dxYqmahGJnQ6s7nWGbbLI/ohIhRi
+	 KVtzPta/ysc34UHUuYe0fo2hKWeiSH0EMXWE1754=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Aurich <paul@darkrain42.org>,
-	Bharath SM <bharathsm@microsoft.com>,
-	Ruben Devos <rdevos@oxya.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 271/290] smb: Log an error when close_all_cached_dirs fails
-Date: Mon, 23 Jun 2025 15:08:52 +0200
-Message-ID: <20250623130635.071769329@linuxfoundation.org>
+	Eliav Farber <farbere@amazon.com>
+Subject: [PATCH 5.10 336/355] net/ipv4: fix type mismatch in inet_ehash_locks_alloc() causing build failure
+Date: Mon, 23 Jun 2025 15:08:57 +0200
+Message-ID: <20250623130636.843013233@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,69 +43,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Aurich <paul@darkrain42.org>
+From: Eliav Farber <farbere@amazon.com>
 
-commit a2182743a8b4969481f64aec4908ff162e8a206c upstream.
+Fix compilation warning:
 
-Under low-memory conditions, close_all_cached_dirs() can't move the
-dentries to a separate list to dput() them once the locks are dropped.
-This will result in a "Dentry still in use" error, so add an error
-message that makes it clear this is what happened:
+In file included from ./include/linux/kernel.h:15,
+                 from ./include/linux/list.h:9,
+                 from ./include/linux/module.h:12,
+                 from net/ipv4/inet_hashtables.c:12:
+net/ipv4/inet_hashtables.c: In function ‘inet_ehash_locks_alloc’:
+./include/linux/minmax.h:20:35: warning: comparison of distinct pointer types lacks a cast
+   20 |         (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
+      |                                   ^~
+./include/linux/minmax.h:26:18: note: in expansion of macro ‘__typecheck’
+   26 |                 (__typecheck(x, y) && __no_side_effects(x, y))
+      |                  ^~~~~~~~~~~
+./include/linux/minmax.h:36:31: note: in expansion of macro ‘__safe_cmp’
+   36 |         __builtin_choose_expr(__safe_cmp(x, y), \
+      |                               ^~~~~~~~~~
+./include/linux/minmax.h:52:25: note: in expansion of macro ‘__careful_cmp’
+   52 | #define max(x, y)       __careful_cmp(x, y, >)
+      |                         ^~~~~~~~~~~~~
+net/ipv4/inet_hashtables.c:946:19: note: in expansion of macro ‘max’
+  946 |         nblocks = max(nblocks, num_online_nodes() * PAGE_SIZE / locksz);
+      |                   ^~~
+  CC      block/badblocks.o
 
-[  495.281119] CIFS: VFS: \\otters.example.com\share Out of memory while dropping dentries
-[  495.281595] ------------[ cut here ]------------
-[  495.281887] BUG: Dentry ffff888115531138{i=78,n=/}  still in use (2) [unmount of cifs cifs]
-[  495.282391] WARNING: CPU: 1 PID: 2329 at fs/dcache.c:1536 umount_check+0xc8/0xf0
+When warnings are treated as errors, this causes the build to fail.
 
-Also, bail out of looping through all tcons as soon as a single
-allocation fails, since we're already in trouble, and kmalloc() attempts
-for subseqeuent tcons are likely to fail just like the first one did.
+The issue is a type mismatch between the operands passed to the max()
+macro. Here, nblocks is an unsigned int, while the expression
+num_online_nodes() * PAGE_SIZE / locksz is promoted to unsigned long.
 
-Signed-off-by: Paul Aurich <paul@darkrain42.org>
-Acked-by: Bharath SM <bharathsm@microsoft.com>
-Suggested-by: Ruben Devos <rdevos@oxya.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+This happens because:
+ - num_online_nodes() returns int
+ - PAGE_SIZE is typically defined as an unsigned long (depending on the
+   architecture)
+ - locksz is unsigned int
+
+The resulting arithmetic expression is promoted to unsigned long.
+
+Thus, the max() macro compares values of different types: unsigned int
+vs unsigned long.
+
+This issue was introduced in commit f8ece40786c9 ("tcp: bring back NUMA
+dispersion in inet_ehash_locks_alloc()") during the update from kernel
+v5.10.237 to v5.10.238.
+
+It does not exist in newer kernel branches (e.g., v5.15.185 and all 6.x
+branches), because they include commit d03eba99f5bf ("minmax: allow
+min()/max()/clamp() if the arguments have the same signedness.")
+
+Fix the issue by using max_t(unsigned int, ...) to explicitly cast both
+operands to the same type, avoiding the type mismatch and ensuring
+correctness.
+
+Fixes: f8ece40786c9 ("tcp: bring back NUMA dispersion in inet_ehash_locks_alloc()")
+Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cached_dir.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/ipv4/inet_hashtables.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -484,8 +484,17 @@ void close_all_cached_dirs(struct cifs_s
- 		spin_lock(&cfids->cfid_list_lock);
- 		list_for_each_entry(cfid, &cfids->entries, entry) {
- 			tmp_list = kmalloc(sizeof(*tmp_list), GFP_ATOMIC);
--			if (tmp_list == NULL)
--				break;
-+			if (tmp_list == NULL) {
-+				/*
-+				 * If the malloc() fails, we won't drop all
-+				 * dentries, and unmounting is likely to trigger
-+				 * a 'Dentry still in use' error.
-+				 */
-+				cifs_tcon_dbg(VFS, "Out of memory while dropping dentries\n");
-+				spin_unlock(&cfids->cfid_list_lock);
-+				spin_unlock(&cifs_sb->tlink_tree_lock);
-+				goto done;
-+			}
- 			spin_lock(&cfid->fid_lock);
- 			tmp_list->dentry = cfid->dentry;
- 			cfid->dentry = NULL;
-@@ -497,6 +506,7 @@ void close_all_cached_dirs(struct cifs_s
- 	}
- 	spin_unlock(&cifs_sb->tlink_tree_lock);
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -943,7 +943,7 @@ int inet_ehash_locks_alloc(struct inet_h
+ 	nblocks = max(2U * L1_CACHE_BYTES / locksz, 1U) * num_possible_cpus();
  
-+done:
- 	list_for_each_entry_safe(tmp_list, q, &entry, entry) {
- 		list_del(&tmp_list->entry);
- 		dput(tmp_list->dentry);
+ 	/* At least one page per NUMA node. */
+-	nblocks = max(nblocks, num_online_nodes() * PAGE_SIZE / locksz);
++	nblocks = max_t(unsigned int, nblocks, num_online_nodes() * PAGE_SIZE / locksz);
+ 
+ 	nblocks = roundup_pow_of_two(nblocks);
+ 
 
 
