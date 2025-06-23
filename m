@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6681E22E6;
-	Mon, 23 Jun 2025 22:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380E11E22E6;
+	Mon, 23 Jun 2025 22:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716441; cv=none; b=igqzt5ZPqaYBng2Z5sBOP3eqBjjKyYbB+6T++u3votOXaLnWH4OG7XrwZFjHOsurouLGPu0dMa1hzq9G751J/72G0GLGZRP8WnHe2j9q+6YsYS/wbwOIsmtVYRtX+OBebisqE4+z0gwQtRYiyfHJHmfk26KO0neRi9UgwkQrIf0=
+	t=1750716444; cv=none; b=P0T+/NJtv/iyICMEJknJZ5voLk09MyRXroEt70RvBDEz7DBHRxiPrybczCPod4BTb+t5Vahy0y66MFXlNfAbBBEJuvFL1Cabhtm0g1XOzlyTMkwHo6uMniKD6xoAWVXio/wQNy6GsbVNMP/pPaaVtVMaPvzEjq67FEoP6xbaA/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716441; c=relaxed/simple;
-	bh=Dx1AjUh3rsCaHTulDJVvVpGTBK9CgvADPPwC3XI+kCk=;
+	s=arc-20240116; t=1750716444; c=relaxed/simple;
+	bh=zE+RgxG3S9ceMKf22dOL5w4XZSKkb5opHQfmRMxU4fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gM+uZ8u4YCJgGoTRPaRAHkRD3BTrGWTAjCEXNEbUs5BODfPauC1xYGdBm+CIGHO/j+oE5FexfahHV4aybxlc2L3npdVmZjrVV0yja/+26DUqo+KHxrdMQkKE0XFBX5av7m/3C26yvVmxByIqTG9hRmRVJuvLVD8DDYBH99uMseo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JozbSXy0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CscC3y5zpy8z5BFuv4tFd98aR1fOmMOPq0++HCRRYpDtGo6f6+e+resEmA3V4Q/2KPTVlYlR0ryC6uT7iwd6NmrUDGn9KtneHc+ZmJcrXtKSUXTv52c72RvU7Jg0cuwfWzNmPwnN+eu4UJRP4sQr/aFylHS5hTLQA8Avfo3iv6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJ05SmRo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JozbSXy0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D53C4CEEA;
-	Mon, 23 Jun 2025 22:07:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJ05SmRo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BDFC4CEEA;
+	Mon, 23 Jun 2025 22:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716441;
-	bh=Dx1AjUh3rsCaHTulDJVvVpGTBK9CgvADPPwC3XI+kCk=;
+	s=korg; t=1750716444;
+	bh=zE+RgxG3S9ceMKf22dOL5w4XZSKkb5opHQfmRMxU4fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JozbSXy0x7i44SgPjl1aY1jYDnm7loMIVhdizdh2jWUnGjr3LBr4VchfmzjiOJ2WS
-	 4HS6BEIykFghjxfLLbsuGQMi/6Zi0kskOZTenoVzr5v0EYwa4nHgSAjdmwWjREFskU
-	 r1fBnfW9RgZSZo91pNJkqaiPTH6Ir71khWtSz8vM=
+	b=AJ05SmRobzcuTQzz9ybJS3El6tv3daKP4+uN6LgP0X5OalaOqA8G5qaoYFCVyL0TT
+	 C7zPzbVaFe6W1ZgfpWl8yQBXHrzTS6Bbqt3NLtd/KVs/LzIpTI3TNcpHMwX2xxPaYj
+	 5DHvgEWX785rZ5TAKMSfILTRxHdjVPXOUk2DF6+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Dogaru <vdogaru@nvidia.com>,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 251/414] net/mlx5: HWS, Fix IP version decision
-Date: Mon, 23 Jun 2025 15:06:28 +0200
-Message-ID: <20250623130648.321483577@linuxfoundation.org>
+Subject: [PATCH 5.15 329/411] vxlan: Do not treat dst cache initialization errors as fatal
+Date: Mon, 23 Jun 2025 15:07:53 +0200
+Message-ID: <20250623130641.928102364@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,136 +49,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vlad Dogaru <vdogaru@nvidia.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 5f2f8d8b6800e4fc760c2eccec9b2bd2cacf80cf ]
+[ Upstream commit 20c76dadc783759fd3819d289c72be590660cc8b ]
 
-Unify the check for IP version when creating a definer. A given matcher
-is deemed to match on IPv6 if any of the higher order (>31) bits of
-source or destination address mask are set.
+FDB entries are allocated in an atomic context as they can be added from
+the data path when learning is enabled.
 
-A single packet cannot mix IP versions between source and destination
-addresses, so it makes no sense that they would be decided on
-independently.
+After converting the FDB hash table to rhashtable, the insertion rate
+will be much higher (*) which will entail a much higher rate of per-CPU
+allocations via dst_cache_init().
 
-Signed-off-by: Vlad Dogaru <vdogaru@nvidia.com>
-Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250422092540.182091-2-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+When adding a large number of entries (e.g., 256k) in a batch, a small
+percentage (< 0.02%) of these per-CPU allocations will fail [1]. This
+does not happen with the current code since the insertion rate is low
+enough to give the per-CPU allocator a chance to asynchronously create
+new chunks of per-CPU memory.
+
+Given that:
+
+a. Only a small percentage of these per-CPU allocations fail.
+
+b. The scenario where this happens might not be the most realistic one.
+
+c. The driver can work correctly without dst caches. The dst_cache_*()
+APIs first check that the dst cache was properly initialized.
+
+d. The dst caches are not always used (e.g., 'tos inherit').
+
+It seems reasonable to not treat these allocation failures as fatal.
+
+Therefore, do not bail when dst_cache_init() fails and suppress warnings
+by specifying '__GFP_NOWARN'.
+
+[1] percpu: allocation failed, size=40 align=8 atomic=1, atomic alloc failed, no space left
+
+(*) 97% reduction in average latency of vxlan_fdb_update() when adding
+256k entries in a batch.
+
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250415121143.345227-14-idosch@nvidia.com
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mlx5/core/steering/hws/mlx5hws_definer.c  | 38 ++++++++-----------
- 1 file changed, 16 insertions(+), 22 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
-index 72b19b05c0cf4..0d0591ba41fdb 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
-@@ -508,9 +508,9 @@ static int
- hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 		       u32 *match_param)
- {
--	bool is_s_ipv6, is_d_ipv6, smac_set, dmac_set;
- 	struct mlx5hws_definer_fc *fc = cd->fc;
- 	struct mlx5hws_definer_fc *curr_fc;
-+	bool is_ipv6, smac_set, dmac_set;
- 	u32 *s_ipv6, *d_ipv6;
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 9c4d7bedc7641..91122d4d404b7 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -713,10 +713,10 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
+ 	if (rd == NULL)
+ 		return -ENOMEM;
  
- 	if (HWS_IS_FLD_SET_SZ(match_param, outer_headers.l4_type, 0x2) ||
-@@ -572,10 +572,10 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 			      outer_headers.dst_ipv4_dst_ipv6.ipv6_layout);
- 
- 	/* Assume IPv6 is used if ipv6 bits are set */
--	is_s_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2];
--	is_d_ipv6 = d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
-+	is_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2] ||
-+		  d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
- 
--	if (is_s_ipv6) {
-+	if (is_ipv6) {
- 		/* Handle IPv6 source address */
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_127_96_O,
- 			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_127_96,
-@@ -589,13 +589,6 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_31_0_O,
- 			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
- 			    ipv6_src_outer.ipv6_address_31_0);
--	} else {
--		/* Handle IPv4 source address */
--		HWS_SET_HDR(fc, match_param, IPV4_SRC_O,
--			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
--			    ipv4_src_dest_outer.source_address);
+-	if (dst_cache_init(&rd->dst_cache, GFP_ATOMIC)) {
+-		kfree(rd);
+-		return -ENOMEM;
 -	}
--	if (is_d_ipv6) {
- 		/* Handle IPv6 destination address */
- 		HWS_SET_HDR(fc, match_param, IPV6_DST_127_96_O,
- 			    outer_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_127_96,
-@@ -610,6 +603,10 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 			    outer_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
- 			    ipv6_dst_outer.ipv6_address_31_0);
- 	} else {
-+		/* Handle IPv4 source address */
-+		HWS_SET_HDR(fc, match_param, IPV4_SRC_O,
-+			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
-+			    ipv4_src_dest_outer.source_address);
- 		/* Handle IPv4 destination address */
- 		HWS_SET_HDR(fc, match_param, IPV4_DST_O,
- 			    outer_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
-@@ -667,9 +664,9 @@ static int
- hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 		       u32 *match_param)
- {
--	bool is_s_ipv6, is_d_ipv6, smac_set, dmac_set;
- 	struct mlx5hws_definer_fc *fc = cd->fc;
- 	struct mlx5hws_definer_fc *curr_fc;
-+	bool is_ipv6, smac_set, dmac_set;
- 	u32 *s_ipv6, *d_ipv6;
++	/* The driver can work correctly without a dst cache, so do not treat
++	 * dst cache initialization errors as fatal.
++	 */
++	dst_cache_init(&rd->dst_cache, GFP_ATOMIC | __GFP_NOWARN);
  
- 	if (HWS_IS_FLD_SET_SZ(match_param, inner_headers.l4_type, 0x2) ||
-@@ -730,10 +727,10 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 			      inner_headers.dst_ipv4_dst_ipv6.ipv6_layout);
- 
- 	/* Assume IPv6 is used if ipv6 bits are set */
--	is_s_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2];
--	is_d_ipv6 = d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
-+	is_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2] ||
-+		  d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
- 
--	if (is_s_ipv6) {
-+	if (is_ipv6) {
- 		/* Handle IPv6 source address */
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_127_96_I,
- 			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_127_96,
-@@ -747,13 +744,6 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_31_0_I,
- 			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
- 			    ipv6_src_inner.ipv6_address_31_0);
--	} else {
--		/* Handle IPv4 source address */
--		HWS_SET_HDR(fc, match_param, IPV4_SRC_I,
--			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
--			    ipv4_src_dest_inner.source_address);
--	}
--	if (is_d_ipv6) {
- 		/* Handle IPv6 destination address */
- 		HWS_SET_HDR(fc, match_param, IPV6_DST_127_96_I,
- 			    inner_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_127_96,
-@@ -768,6 +758,10 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 			    inner_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
- 			    ipv6_dst_inner.ipv6_address_31_0);
- 	} else {
-+		/* Handle IPv4 source address */
-+		HWS_SET_HDR(fc, match_param, IPV4_SRC_I,
-+			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
-+			    ipv4_src_dest_inner.source_address);
- 		/* Handle IPv4 destination address */
- 		HWS_SET_HDR(fc, match_param, IPV4_DST_I,
- 			    inner_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
+ 	rd->remote_ip = *ip;
+ 	rd->remote_port = port;
 -- 
 2.39.5
 
