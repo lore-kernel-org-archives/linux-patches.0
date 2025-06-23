@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B6D221FCC;
-	Mon, 23 Jun 2025 21:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1A31AD3FA;
+	Mon, 23 Jun 2025 21:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715346; cv=none; b=IVGPPbvNsqmQgwwil8GpbkKcMRaB7T2IzVhJVooHjYrOL6j6kXzuEnEARnNcUnIxLNeeXHUJtOJG4G6Azdb8OH8cuPaHGI5jvp5g/J6H4B1w2qcAwIqejH7xfkFp3meVy8UxZwUAwK2R0f9v+1BfaStr+Yl0QrYF5F3DRnNm1+Q=
+	t=1750715349; cv=none; b=qQEFFjiMBny3+4lA/ql3/XBaWTdUcPtZgm1e3uaVsyjHNFtiivorHmQGr45dfVBsLPRLPduLG/OKWkIIgpDzljrzNS8WBJPvd877nNNE9boNiJ7rUh6+l7uwF/no0JPlAceExLoKxD5NQUS95A27xjFDuI4s+2jChcmx4ZM6w9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715346; c=relaxed/simple;
-	bh=ZL5AFCgdyXwIGk4Yb8rB65FH30OnjhI+MW6uy84ZkTw=;
+	s=arc-20240116; t=1750715349; c=relaxed/simple;
+	bh=ns2+RKVBGXQeGj0Fu1oaupE40/yLYzWtfy4Jpkxzxzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sm9MT5JKUIh4/MO6eT3ZL8IhV7Xs1VfOQ6x15vX6Lt72hPsE6ylOia8rd10CPmYI9fta6en4/WSSNmMIa1ehrz4fk5m5uEmppdk4660VsTVv5yPAHd/Bq+8hXuHL26p9GTEGiPstCHVsj4/1S2HH1tPwkI0lvA06uw+TS2u1vi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKRj03yq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T6Xe/QJbH+UmbXFbhOEnKrETHjUL8RHPFU6iILefow3YMMH6JoSqEUrJw9GMg8K2VEQf+99Gb+I+hDT4RmfXkRwZpYHD1jVarQJofVsVHQIz8zCpM/gslG+HNl+OllzwBhH/w3w0WfUbXmmrybnImV564dMTly+3niVigTAwucM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YIv/pEB+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKRj03yq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30813C4CEEA;
-	Mon, 23 Jun 2025 21:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YIv/pEB+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45C5C4CEEA;
+	Mon, 23 Jun 2025 21:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715346;
-	bh=ZL5AFCgdyXwIGk4Yb8rB65FH30OnjhI+MW6uy84ZkTw=;
+	s=korg; t=1750715349;
+	bh=ns2+RKVBGXQeGj0Fu1oaupE40/yLYzWtfy4Jpkxzxzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RKRj03yqBrgCHK1KC/M8ibJ63juktpuZRhAvNjheTEV639rPv8qE945CU0lpyUtgQ
-	 HYl8HyfIgIzbxaFp2gqLVGXCPEu+CUCfvB9TXlJ6t4t3lEnO51WRbz1/hqe1+/6MlO
-	 BFHXnDXLKOt94FJvV9Z5NzzB0eV32yj7OcYdkiwI=
+	b=YIv/pEB+vvHMF7wXeVufMqheuGjTM2VUhcHsDUCbbzghTNgVgbJRHkirgXK76CyUV
+	 O3nRR0hm38wXXFSLN/bQRRMqY+BPmgyNoan7wshpmOibocsXbhZOHl1eOnDsj0tCIw
+	 tKV5iYCDHDzVS4YuAumRhYMpUQcAqY1OXz1KHqpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 229/508] wifi: ath11k: fix soc_dp_stats debugfs file permission
-Date: Mon, 23 Jun 2025 15:04:34 +0200
-Message-ID: <20250623130650.893592925@linuxfoundation.org>
+	syzbot <syzbot+3361c2d6f78a3e0892f9@syzkaller.appspotmail.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 247/411] net: ch9200: fix uninitialised access during mii_nway_restart
+Date: Mon, 23 Jun 2025 15:06:31 +0200
+Message-ID: <20250623130639.870070565@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-[ Upstream commit fa645e663165d69f05f95a0c3aa3b3d08f4fdeda ]
+commit 9ad0452c0277b816a435433cca601304cfac7c21 upstream.
 
-Currently the soc_dp_stats debugfs file has the following permissions:
+In mii_nway_restart() the code attempts to call
+mii->mdio_read which is ch9200_mdio_read(). ch9200_mdio_read()
+utilises a local buffer called "buff", which is initialised
+with control_read(). However "buff" is conditionally
+initialised inside control_read():
 
--rw------- 1 root root 0 Mar  4 15:04 /sys/kernel/debug/ath11k/pci-0000:03:00.0/soc_dp_stats
+        if (err == size) {
+                memcpy(data, buf, size);
+        }
 
-However this file does not actually support write operations -- no .write()
-method is registered. Therefore use the correct permissions when creating
-the file.
+If the condition of "err == size" is not met, then
+"buff" remains uninitialised. Once this happens the
+uninitialised "buff" is accessed and returned during
+ch9200_mdio_read():
 
-After the change:
+        return (buff[0] | buff[1] << 8);
 
--r-------- 1 root root 0 Mar  4 15:15 /sys/kernel/debug/ath11k/pci-0000:03:00.0/soc_dp_stats
+The problem stems from the fact that ch9200_mdio_read()
+ignores the return value of control_read(), leading to
+uinit-access of "buff".
 
-Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+To fix this we should check the return value of
+control_read() and return early on error.
 
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240305-fix-soc_dp_stats-permission-v1-1-2ec10b42f755@quicinc.com
-Stable-dep-of: 9f6e82d11bb9 ("wifi: ath11k: avoid burning CPU in ath11k_debugfs_fw_stats_request()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot <syzbot+3361c2d6f78a3e0892f9@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=3361c2d6f78a3e0892f9
+Tested-by: syzbot <syzbot+3361c2d6f78a3e0892f9@syzkaller.appspotmail.com>
+Fixes: 4a476bd6d1d9 ("usbnet: New driver for QinHeng CH9200 devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Link: https://patch.msgid.link/20250526183607.66527-1-qasdev00@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/debugfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/usb/ch9200.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/debugfs.c b/drivers/net/wireless/ath/ath11k/debugfs.c
-index 5bb6fd17fdf6f..34aa04d27a1d7 100644
---- a/drivers/net/wireless/ath/ath11k/debugfs.c
-+++ b/drivers/net/wireless/ath/ath11k/debugfs.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2018-2020 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
+--- a/drivers/net/usb/ch9200.c
++++ b/drivers/net/usb/ch9200.c
+@@ -178,6 +178,7 @@ static int ch9200_mdio_read(struct net_d
+ {
+ 	struct usbnet *dev = netdev_priv(netdev);
+ 	unsigned char buff[2];
++	int ret;
  
- #include <linux/vmalloc.h>
-@@ -979,7 +980,7 @@ int ath11k_debugfs_pdev_create(struct ath11k_base *ab)
- 	debugfs_create_file("simulate_fw_crash", 0600, ab->debugfs_soc, ab,
- 			    &fops_simulate_fw_crash);
+ 	netdev_dbg(netdev, "%s phy_id:%02x loc:%02x\n",
+ 		   __func__, phy_id, loc);
+@@ -185,8 +186,10 @@ static int ch9200_mdio_read(struct net_d
+ 	if (phy_id != 0)
+ 		return -ENODEV;
  
--	debugfs_create_file("soc_dp_stats", 0600, ab->debugfs_soc, ab,
-+	debugfs_create_file("soc_dp_stats", 0400, ab->debugfs_soc, ab,
- 			    &fops_soc_dp_stats);
+-	control_read(dev, REQUEST_READ, 0, loc * 2, buff, 0x02,
+-		     CONTROL_TIMEOUT_MS);
++	ret = control_read(dev, REQUEST_READ, 0, loc * 2, buff, 0x02,
++			   CONTROL_TIMEOUT_MS);
++	if (ret < 0)
++		return ret;
  
- 	if (ab->hw_params.sram_dump.start != 0)
--- 
-2.39.5
-
+ 	return (buff[0] | buff[1] << 8);
+ }
 
 
