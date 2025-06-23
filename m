@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FBF19F120;
-	Mon, 23 Jun 2025 22:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBC61F7580;
+	Mon, 23 Jun 2025 22:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717080; cv=none; b=tzXyhCxuolYvGgw5vkOY9+TYnrRbOhCaLuHvgK9quFv5hIRW+cj6MN5vxfw06KsSNVT/mn53uRIHVR9vYJU0yFgubaIBXkSqK9NJrqSjdhW6DXjU9sTosXR4zA913mQvjffygA2Ay9p+AVAfK39CR9Rb1IMSLu61j0F+yhbbMco=
+	t=1750717082; cv=none; b=JzMOC7kkwD2aHPHz2GfATWphhzd53wYwQkVSUcvtwiaZNxQdP5mR4Bs1tg6WGPWh/he4wsTl+n1qXDbGlqsV5CtcVB6W++GOYg8E4YsxWKvtIAnZmETF7PcJqnkxFkmxNYj7a7JumzrRfnv6sywIb1HoIUjR8KDRG4AW6VFXLUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717080; c=relaxed/simple;
-	bh=bdKMON2JPCB1uMpEAAd/SfFDMcdRXnEIeruK6mFvMVU=;
+	s=arc-20240116; t=1750717082; c=relaxed/simple;
+	bh=WaybvoPJsEQ1nWkd19mJ/3YHEiisLmc9toqJYQiaLKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b2RjVHhiz9kua3q/bAVQWz+IE4DaF+SsM+eUj9Mnnji15/tJxO6ePuiNV/pEJpyo5s//8euR0T7ZjsFV5m+FoUZcfWpCq0pHeYllVAg6AWJcxDNRkluX6WXXcz3DBARXtN0ijoinVyM37kLVVs4isbXJsFA3Vwp+G9zpz61TYCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPkdUayR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZfNMbM8KDICMV8kplB7lWpi1ZuzqHYkLPCTGFw337AJIpvz+3ubDM9nDimQvUycF7RTJO4GQEbgNuPs0zXatVQedhbXvVztko0BboZzLESPYzc6uQ2KcImx0a8J6ztKYyQw9jfDlJShOIoIOjFDp/oEieuU/vPihYWFC/AemmzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhNzHuta; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPkdUayR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BD1C4CEEA;
-	Mon, 23 Jun 2025 22:17:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhNzHuta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD06C4CEEA;
+	Mon, 23 Jun 2025 22:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717079;
-	bh=bdKMON2JPCB1uMpEAAd/SfFDMcdRXnEIeruK6mFvMVU=;
+	s=korg; t=1750717082;
+	bh=WaybvoPJsEQ1nWkd19mJ/3YHEiisLmc9toqJYQiaLKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZPkdUayR0+rvobsga3MY5rICrW/Kf4GC1IeKD5sOgmQfz4vXqpU2UY+PMPsLbmYS0
-	 hTh0zzVDoSV2ilYgMGB6GdH+z66Iz2+zlzIaTWaWx2wH3zku2VYh8nWmyPXO11ARIZ
-	 2eTz7qdoZvhpHyZ1j3pHX3dE0PpU8TFiRSxWmQ2Y=
+	b=JhNzHuta1yPsHQp06muqf3EfECecmuJuJozkXrdZcduxzgcmc8xhWPzKXWOSbTR8S
+	 1tucxwW3vMPlDYjYhMiYCCOmivpzE661H1YmkhemrFZgK2RiCW9oCcfgw8Ppd5OEIh
+	 LUdcYeTwWsgqqO7izN+/yy8DKK1Etla+0g4YsbXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Xin Li (Intel)" <xin@zytor.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sohil Mehta <sohil.mehta@intel.com>
-Subject: [PATCH 6.12 318/414] selftests/x86: Add a test to detect infinite SIGTRAP handler loop
-Date: Mon, 23 Jun 2025 15:07:35 +0200
-Message-ID: <20250623130649.947183933@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.12 322/414] platform/x86/intel-uncore-freq: Fail module load when plat_info is NULL
+Date: Mon, 23 Jun 2025 15:07:39 +0200
+Message-ID: <20250623130650.045051025@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
 References: <20250623130642.015559452@linuxfoundation.org>
@@ -52,149 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Li (Intel) <xin@zytor.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit f287822688eeb44ae1cf6ac45701d965efc33218 upstream.
+commit 685f88c72a0c4d12d3bd2ff50286938f14486f85 upstream.
 
-When FRED is enabled, if the Trap Flag (TF) is set without an external
-debugger attached, it can lead to an infinite loop in the SIGTRAP
-handler.  To avoid this, the software event flag in the augmented SS
-must be cleared, ensuring that no single-step trap remains pending when
-ERETU completes.
+Address a Smatch static checker warning regarding an unchecked
+dereference in the function call:
+set_cdie_id(i, cluster_info, plat_info)
+when plat_info is NULL.
 
-This test checks for that specific scenario—verifying whether the kernel
-correctly prevents an infinite SIGTRAP loop in this edge case when FRED
-is enabled.
+Instead of addressing this one case, in general if plat_info is NULL
+then it can cause other issues. For example in a two package system it
+will give warning for duplicate sysfs entry as package ID will be always
+zero for both packages when creating string for attribute group name.
 
-The test should _always_ pass with IDT event delivery, thus no need to
-disable the test even when FRED is not enabled.
+plat_info is derived from TPMI ID TPMI_BUS_INFO, which is integral to
+the core TPMI design. Therefore, it should not be NULL on a production
+platform. Consequently, the module should fail to load if plat_info is
+NULL.
 
-Signed-off-by: Xin Li (Intel) <xin@zytor.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Sohil Mehta <sohil.mehta@intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250609084054.2083189-3-xin%40zytor.com
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/platform-driver-x86/aEKvGCLd1qmX04Tc@stanley.mountain/T/#u
+Fixes: 8a54e2253e4c ("platform/x86/intel-uncore-freq: Uncore frequency control via TPMI")
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250606205300.2384494-1-srinivas.pandruvada@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/x86/Makefile       |    2 
- tools/testing/selftests/x86/sigtrap_loop.c |  101 +++++++++++++++++++++++++++++
- 2 files changed, 102 insertions(+), 1 deletion(-)
- create mode 100644 tools/testing/selftests/x86/sigtrap_loop.c
+ drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/x86/Makefile
-+++ b/tools/testing/selftests/x86/Makefile
-@@ -12,7 +12,7 @@ CAN_BUILD_WITH_NOPIE := $(shell ./check_
+--- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
++++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
+@@ -467,10 +467,13 @@ static int uncore_probe(struct auxiliary
  
- TARGETS_C_BOTHBITS := single_step_syscall sysret_ss_attrs syscall_nt test_mremap_vdso \
- 			check_initial_reg_state sigreturn iopl ioperm \
--			test_vsyscall mov_ss_trap \
-+			test_vsyscall mov_ss_trap sigtrap_loop \
- 			syscall_arg_fault fsgsbase_restore sigaltstack
- TARGETS_C_BOTHBITS += nx_stack
- TARGETS_C_32BIT_ONLY := entry_from_vm86 test_syscall_vdso unwind_vdso \
---- /dev/null
-+++ b/tools/testing/selftests/x86/sigtrap_loop.c
-@@ -0,0 +1,101 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2025 Intel Corporation
-+ */
-+#define _GNU_SOURCE
-+
-+#include <err.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/ucontext.h>
-+
-+#ifdef __x86_64__
-+# define REG_IP REG_RIP
-+#else
-+# define REG_IP REG_EIP
-+#endif
-+
-+static void sethandler(int sig, void (*handler)(int, siginfo_t *, void *), int flags)
-+{
-+	struct sigaction sa;
-+
-+	memset(&sa, 0, sizeof(sa));
-+	sa.sa_sigaction = handler;
-+	sa.sa_flags = SA_SIGINFO | flags;
-+	sigemptyset(&sa.sa_mask);
-+
-+	if (sigaction(sig, &sa, 0))
-+		err(1, "sigaction");
-+
-+	return;
-+}
-+
-+static void sigtrap(int sig, siginfo_t *info, void *ctx_void)
-+{
-+	ucontext_t *ctx = (ucontext_t *)ctx_void;
-+	static unsigned int loop_count_on_same_ip;
-+	static unsigned long last_trap_ip;
-+
-+	if (last_trap_ip == ctx->uc_mcontext.gregs[REG_IP]) {
-+		printf("\tTrapped at %016lx\n", last_trap_ip);
-+
-+		/*
-+		 * If the same IP is hit more than 10 times in a row, it is
-+		 * _considered_ an infinite loop.
-+		 */
-+		if (++loop_count_on_same_ip > 10) {
-+			printf("[FAIL]\tDetected SIGTRAP infinite loop\n");
-+			exit(1);
-+		}
-+
-+		return;
+ 	/* Get the package ID from the TPMI core */
+ 	plat_info = tpmi_get_platform_data(auxdev);
+-	if (plat_info)
+-		pkg = plat_info->package_id;
+-	else
++	if (unlikely(!plat_info)) {
+ 		dev_info(&auxdev->dev, "Platform information is NULL\n");
++		ret = -ENODEV;
++		goto err_rem_common;
 +	}
 +
-+	loop_count_on_same_ip = 0;
-+	last_trap_ip = ctx->uc_mcontext.gregs[REG_IP];
-+	printf("\tTrapped at %016lx\n", last_trap_ip);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+	sethandler(SIGTRAP, sigtrap, 0);
-+
-+	/*
-+	 * Set the Trap Flag (TF) to single-step the test code, therefore to
-+	 * trigger a SIGTRAP signal after each instruction until the TF is
-+	 * cleared.
-+	 *
-+	 * Because the arithmetic flags are not significant here, the TF is
-+	 * set by pushing 0x302 onto the stack and then popping it into the
-+	 * flags register.
-+	 *
-+	 * Four instructions in the following asm code are executed with the
-+	 * TF set, thus the SIGTRAP handler is expected to run four times.
-+	 */
-+	printf("[RUN]\tSIGTRAP infinite loop detection\n");
-+	asm volatile(
-+#ifdef __x86_64__
-+		/*
-+		 * Avoid clobbering the redzone
-+		 *
-+		 * Equivalent to "sub $128, %rsp", however -128 can be encoded
-+		 * in a single byte immediate while 128 uses 4 bytes.
-+		 */
-+		"add $-128, %rsp\n\t"
-+#endif
-+		"push $0x302\n\t"
-+		"popf\n\t"
-+		"nop\n\t"
-+		"nop\n\t"
-+		"push $0x202\n\t"
-+		"popf\n\t"
-+#ifdef __x86_64__
-+		"sub $-128, %rsp\n\t"
-+#endif
-+	);
-+
-+	printf("[OK]\tNo SIGTRAP infinite loop detected\n");
-+	return 0;
-+}
++	pkg = plat_info->package_id;
+ 
+ 	for (i = 0; i < num_resources; ++i) {
+ 		struct tpmi_uncore_power_domain_info *pd_info;
 
 
