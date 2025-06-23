@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880B722257E;
-	Mon, 23 Jun 2025 21:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E901FE46D;
+	Mon, 23 Jun 2025 21:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713392; cv=none; b=Bqznv1LISXayk+BWMIEUyEgyh9GWNbkZ5wBy2L1aqTh2xYl7JxI6dbtvcdYmg8mVc7XF71QU0wecNVVXIAp10B+XFzZn1/lAWZRQ3ESwQMmJzrJr56e3N6GDwmEKV5KhqYQqk/YsGslGIaNO0q2JFyVST4+5lWBK0MbG9tPf5as=
+	t=1750713395; cv=none; b=pgdLQgzrgRkqDsoYM6GpAdFoKhWy6MmSDoP5RIZ7R2GZJoce4cKE09T7LxzWZowB1X/hW9XrT21VeAe5v6V1tR8TFSfaJLbnvsVLztiPNU23s6kI0dYi8fCWpvNdAMmBEazrlK0NekQ3jJd6std2+GA2tetG8H9Nt+wLGqS1sxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713392; c=relaxed/simple;
-	bh=+I876/mSYoFmzLN074SR3DQT12T+NhUHqE3g+QOLaVs=;
+	s=arc-20240116; t=1750713395; c=relaxed/simple;
+	bh=J1E6vRtBgDjvWdibvFACgBDjpiyYu/yJMtyAZqeSfYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPFa2GEszyJshlnHlkgHZYs8mvrEoPnEf9ul0w3maJbR6fEMCP7KkLjk0lDKrTOrCk7ROBmEsiiqtiKzLtb/SyUovKKHi7/jxq5DXm0oSb5byVodXSe79NhTsqO2JycdOcSPrnW70hlyWlbqv5d2FXcUZ43PEku0/TQqOkKEeiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncv3FDFB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qRQBm6l/y1b/ALSegnJrRTV+DIlukarClilnx0hUfGn4zp0Azc22U/Rk1KVIp/D9HaOSkFQjVdGnUuNZtmYuHRzT1TNrmH1kRKYQWvEpDrSppF73axhiHP9zZirahLhHNJTfJIaPsB95udhJWoTh0uXMLWnMK7LD77F39OEY6UQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfYsT1qg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncv3FDFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6EEC4CEEA;
-	Mon, 23 Jun 2025 21:16:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfYsT1qg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A7DC4CEEA;
+	Mon, 23 Jun 2025 21:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713392;
-	bh=+I876/mSYoFmzLN074SR3DQT12T+NhUHqE3g+QOLaVs=;
+	s=korg; t=1750713394;
+	bh=J1E6vRtBgDjvWdibvFACgBDjpiyYu/yJMtyAZqeSfYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ncv3FDFBGte+mJOojkgNVSuAcL/zVfJywd9L8pQ4Jd6KsK7BWCgkP5ZWBUzat2Y/9
-	 PzXDcECEDjy1dI9WqPOjj/5Lvw4LTjn5f3Zsk31kMFpddH4dVgRA53TcMoe1hr+F+Z
-	 FINZqt1gQkxc9yF61DgdhgHUcLEW5nEpH9f/CZLM=
+	b=qfYsT1qgQR+iAhchi9l+thuTJeDwFlDJm5Ci4tp8N7PQaP5ZSJEnUbLqitPtzrkLR
+	 vG8CGsKsx2G4OS/sr+SbqJ1yI+V6qD0SfaMT2uUo3bmgvrW1MUgQjwI8wGBA+MhohO
+	 kasJz/3pfS10WcyZY6/l/KCxw6aqqSs+Q/khzwt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Malz <robert.malz@canonical.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Faicker Mo <faicker.mo@zenlayer.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 124/355] i40e: retry VFLR handling if there is ongoing VF reset
-Date: Mon, 23 Jun 2025 15:05:25 +0200
-Message-ID: <20250623130630.477467158@linuxfoundation.org>
+Subject: [PATCH 6.1 102/508] net: openvswitch: Fix the dead loop of MPLS parse
+Date: Mon, 23 Jun 2025 15:02:27 +0200
+Message-ID: <20250623130647.787866597@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +49,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robert Malz <robert.malz@canonical.com>
+From: Faicker Mo <faicker.mo@zenlayer.com>
 
-[ Upstream commit fb4e9239e029954a37a00818b21e837cebf2aa10 ]
+[ Upstream commit 0bdc924bfb319fb10d1113cbf091fc26fb7b1f99 ]
 
-When a VFLR interrupt is received during a VF reset initiated from a
-different source, the VFLR may be not fully handled. This can
-leave the VF in an undefined state.
-To address this, set the I40E_VFLR_EVENT_PENDING bit again during VFLR
-handling if the reset is not yet complete. This ensures the driver
-will properly complete the VF reset in such scenarios.
+The unexpected MPLS packet may not end with the bottom label stack.
+When there are many stacks, The label count value has wrapped around.
+A dead loop occurs, soft lockup/CPU stuck finally.
 
-Fixes: 52424f974bc5 ("i40e: Fix VF hang when reset is triggered on another VF")
-Signed-off-by: Robert Malz <robert.malz@canonical.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+stack backtrace:
+UBSAN: array-index-out-of-bounds in /build/linux-0Pa0xK/linux-5.15.0/net/openvswitch/flow.c:662:26
+index -1 is out of range for type '__be32 [3]'
+CPU: 34 PID: 0 Comm: swapper/34 Kdump: loaded Tainted: G           OE   5.15.0-121-generic #131-Ubuntu
+Hardware name: Dell Inc. PowerEdge C6420/0JP9TF, BIOS 2.12.2 07/14/2021
+Call Trace:
+ <IRQ>
+ show_stack+0x52/0x5c
+ dump_stack_lvl+0x4a/0x63
+ dump_stack+0x10/0x16
+ ubsan_epilogue+0x9/0x36
+ __ubsan_handle_out_of_bounds.cold+0x44/0x49
+ key_extract_l3l4+0x82a/0x840 [openvswitch]
+ ? kfree_skbmem+0x52/0xa0
+ key_extract+0x9c/0x2b0 [openvswitch]
+ ovs_flow_key_extract+0x124/0x350 [openvswitch]
+ ovs_vport_receive+0x61/0xd0 [openvswitch]
+ ? kernel_init_free_pages.part.0+0x4a/0x70
+ ? get_page_from_freelist+0x353/0x540
+ netdev_port_receive+0xc4/0x180 [openvswitch]
+ ? netdev_port_receive+0x180/0x180 [openvswitch]
+ netdev_frame_hook+0x1f/0x40 [openvswitch]
+ __netif_receive_skb_core.constprop.0+0x23a/0xf00
+ __netif_receive_skb_list_core+0xfa/0x240
+ netif_receive_skb_list_internal+0x18e/0x2a0
+ napi_complete_done+0x7a/0x1c0
+ bnxt_poll+0x155/0x1c0 [bnxt_en]
+ __napi_poll+0x30/0x180
+ net_rx_action+0x126/0x280
+ ? bnxt_msix+0x67/0x80 [bnxt_en]
+ handle_softirqs+0xda/0x2d0
+ irq_exit_rcu+0x96/0xc0
+ common_interrupt+0x8e/0xa0
+ </IRQ>
+
+Fixes: fbdcdd78da7c ("Change in Openvswitch to support MPLS label depth of 3 in ingress direction")
+Signed-off-by: Faicker Mo <faicker.mo@zenlayer.com>
+Acked-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/259D3404-575D-4A6D-B263-1DF59A67CF89@zenlayer.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/openvswitch/flow.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 68e39a38e7588..852ece241a278 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -4170,7 +4170,10 @@ int i40e_vc_process_vflr_event(struct i40e_pf *pf)
- 		reg = rd32(hw, I40E_GLGEN_VFLRSTAT(reg_idx));
- 		if (reg & BIT(bit_idx))
- 			/* i40e_reset_vf will clear the bit in GLGEN_VFLRSTAT */
--			i40e_reset_vf(vf, true);
-+			if (!i40e_reset_vf(vf, true)) {
-+				/* At least one VF did not finish resetting, retry next time */
-+				set_bit(__I40E_VFLR_EVENT_PENDING, pf->state);
-+			}
- 	}
+diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
+index 78960a8a38925..60ebc42a20e7e 100644
+--- a/net/openvswitch/flow.c
++++ b/net/openvswitch/flow.c
+@@ -785,7 +785,7 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
+ 			memset(&key->ipv4, 0, sizeof(key->ipv4));
+ 		}
+ 	} else if (eth_p_mpls(key->eth.type)) {
+-		u8 label_count = 1;
++		size_t label_count = 1;
  
- 	return 0;
+ 		memset(&key->mpls, 0, sizeof(key->mpls));
+ 		skb_set_inner_network_header(skb, skb->mac_len);
 -- 
 2.39.5
 
