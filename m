@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5794B254844;
-	Mon, 23 Jun 2025 13:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18A82522A8;
+	Mon, 23 Jun 2025 13:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686147; cv=none; b=W89ufDs/ZPFktKfjuTC4k6W7iHpswDCiCOCkgDYyjBlek5v1k1fDlZhUt0JqCMeVwbrv5EkLNF1FmlJTW2BOoC+Y57xaa/1Y41T1N0udrTyNO56MlR/5j/eCZ4OvtFzopMm7MIlrWT4YEZLXz0YApR6BDpxkCeEJkwvDQc4ZFIE=
+	t=1750686150; cv=none; b=iZb26tl0hg5pFvJONuxdU6TYL+8Qz/cfQ4aHtuDcp57p4OY6ypk0W8YwYOYt3NbdbClPinGqe+a1Pyl95OgacxFAj/lcmO0TvU7/kbt/ABUiF94bN8KEdClj0g8mqIpxCq12Q+fg3B2UY/m5HusBQEwhebJ59cyBh1rRg4XK8LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686147; c=relaxed/simple;
-	bh=FiqfMiQYL1gmSsxFLHAY06GHpyjzwQkwYSjtcv07Yks=;
+	s=arc-20240116; t=1750686150; c=relaxed/simple;
+	bh=nVeBcWXAdORTwMTdDejYNBRNQxOI33wIRaeuEV1oYOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ofAT62n7i1VQ5rtnCbrfJwpyBaKd+Du+ANrsVfgd3Tl12I88gVQSHjR8XMvPYmgEv3OHZKRB2mkMT8eyWNmh8bmjoxJWdTok8ksUYOeKGNqnx1Yrzf+Ika+WzKWyP/01k3XXMjzRMBBlPtu9OTgiC0gUgUSO6TfxdLVWTE1ykHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBxQTqIj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ToNQP8jnI02M0L3kuiDDP0F/CETCzN2zoDHqlV1rvDK7fnyPYclze76zIF2juxUgcjyRj1oczxG79NL6BvBtxUxAJ8gkapZ6MnSMNxjZEftARFwvRQvjP6NiFd8OKZcGQWPrcQ4i152Dx8KZN1nJ6CihEhy+P1DzK3GdqtGOvHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzG1AkOK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBxQTqIj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2477C4CEF0;
-	Mon, 23 Jun 2025 13:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzG1AkOK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755C0C4CEF0;
+	Mon, 23 Jun 2025 13:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686147;
-	bh=FiqfMiQYL1gmSsxFLHAY06GHpyjzwQkwYSjtcv07Yks=;
+	s=korg; t=1750686149;
+	bh=nVeBcWXAdORTwMTdDejYNBRNQxOI33wIRaeuEV1oYOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBxQTqIjCyYXd5+zW+zbVCd2WiebxPY9kjrOORx/UFf/0GbA0/Ijd1bkxPafYnQ9K
-	 sKB4Y5sF+ZqS9zzzhRu63CaVUbnYPismTMgvKIXy9COl4/6zi1Fp7beNj5iF5ciz35
-	 qFw26pTAnNbQiML4ft5fS/KHzpCC014UtthUnjl4=
+	b=FzG1AkOKzWefWheAF2L5Ufw/QvKdTcpyMonGIgYzdJ/Kp3opRHbeYj9j04Untb6C6
+	 ZNrTHpkATqZckqbQ2utPSTCF1SyuYIu8gaarwyQzCHWe4lZhoEGBThTblSJ+xrSGt5
+	 u1MvKLrJr9jy/tMHO5MN6mDTO1J2Hc4ruE//8l90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 306/592] drm/rockchip: vop2: Make overlay layer select register configuration take effect by vsync
-Date: Mon, 23 Jun 2025 15:04:24 +0200
-Message-ID: <20250623130707.681313552@linuxfoundation.org>
+	Michael Lo <michael.lo@mediatek.com>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.12 024/414] wifi: mt76: mt7925: fix host interrupt register initialization
+Date: Mon, 23 Jun 2025 15:02:41 +0200
+Message-ID: <20250623130642.630171179@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,58 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Michael Lo <michael.lo@mediatek.com>
 
-[ Upstream commit c5996e4ab109c8bb5541453b20647eaaf9350f41 ]
+commit ca872e0ad97159375da8f3d05cac1f48239e01d7 upstream.
 
-Because the layer/window enable/disable is take effect by vsync, if the
-overlay configuration of these layers does not follow vsync and
-takes effect immediately instead, when multiple layers are dynamically
-enable/disable, inconsistent display contents may be seen on the screen.
+ensure proper interrupt handling and aligns with the hardware spec by
+updating the register offset for MT_WFDMA0_HOST_INT_ENA.
 
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20250318062024.4555-1-andyshrk@163.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Signed-off-by: Michael Lo <michael.lo@mediatek.com>
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Link: https://patch.msgid.link/20250509083512.455095-1-mingyen.hsieh@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.h | 1 +
- drivers/gpu/drm/rockchip/rockchip_vop2_reg.c | 5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/pci.c  |    3 ---
+ drivers/net/wireless/mediatek/mt76/mt7925/regs.h |    2 +-
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-index 680bedbb770e6..fc3ecb9fcd957 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-@@ -710,6 +710,7 @@ enum dst_factor_mode {
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
+@@ -482,9 +482,6 @@ static int mt7925_pci_suspend(struct dev
  
- #define VOP2_COLOR_KEY_MASK				BIT(31)
+ 	/* disable interrupt */
+ 	mt76_wr(dev, dev->irq_map->host_irq_enable, 0);
+-	mt76_wr(dev, MT_WFDMA0_HOST_INT_DIS,
+-		dev->irq_map->tx.all_complete_mask |
+-		MT_INT_RX_DONE_ALL | MT_INT_MCU_CMD);
  
-+#define RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL		GENMASK(31, 30)
- #define RK3568_OVL_CTRL__LAYERSEL_REGDONE_IMD		BIT(28)
- #define RK3568_OVL_CTRL__YUV_MODE(vp)			BIT(vp)
+ 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0x0);
  
-diff --git a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-index 0a2840cbe8e22..32c4ed6857395 100644
---- a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-@@ -2070,7 +2070,10 @@ static void rk3568_vop2_setup_layer_mixer(struct vop2_video_port *vp)
- 	struct rockchip_crtc_state *vcstate = to_rockchip_crtc_state(vp->crtc.state);
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/regs.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/regs.h
+@@ -28,7 +28,7 @@
+ #define MT_MDP_TO_HIF			0
+ #define MT_MDP_TO_WM			1
  
- 	ovl_ctrl = vop2_readl(vop2, RK3568_OVL_CTRL);
--	ovl_ctrl |= RK3568_OVL_CTRL__LAYERSEL_REGDONE_IMD;
-+	ovl_ctrl &= ~RK3568_OVL_CTRL__LAYERSEL_REGDONE_IMD;
-+	ovl_ctrl &= ~RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL;
-+	ovl_ctrl |= FIELD_PREP(RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL, vp->id);
-+
- 	if (vcstate->yuv_overlay)
- 		ovl_ctrl |= RK3568_OVL_CTRL__YUV_MODE(vp->id);
- 	else
--- 
-2.39.5
-
+-#define MT_WFDMA0_HOST_INT_ENA		MT_WFDMA0(0x228)
++#define MT_WFDMA0_HOST_INT_ENA		MT_WFDMA0(0x204)
+ #define MT_WFDMA0_HOST_INT_DIS		MT_WFDMA0(0x22c)
+ #define HOST_RX_DONE_INT_ENA4		BIT(12)
+ #define HOST_RX_DONE_INT_ENA5		BIT(13)
 
 
