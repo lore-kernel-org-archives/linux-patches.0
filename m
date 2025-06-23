@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E04A1F4628;
-	Mon, 23 Jun 2025 21:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80FE1DD0C7;
+	Mon, 23 Jun 2025 21:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715391; cv=none; b=awoXoAj4QtHl/dTwBldgWF7RhIVWyDR2qeHpadYmK53eSkECEisAFd7tbHavWTawsYsbBlAn8ChYz/yH/QO06on9thzPlGFcH8Kj/9zfHwLxXGBLqbqmRZrq8U+NERY7bt2seU0B/kxVPkHE1KWC28L/AEH1nveAiT8E0arcXcY=
+	t=1750715394; cv=none; b=avopuTSsJSte/xDg5ZY+5V+t3fwPEV+PEGSq0dlRUU9heN85KiGEbwN6cOwb8aEsVmLUhZvSbJqKn8jd+kcmQXU6y2DCYJ1hU0dPvtkgA7QCUITJJ5iw4timkzq5f1/xOOB7CEMVOaCej8JsJibQNXu/Uzdg1oMEAh2pYH5TvuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715391; c=relaxed/simple;
-	bh=+9yMP2nQOarypFhMiQbFRSTRf3IFKPxfAvrdnSrfYik=;
+	s=arc-20240116; t=1750715394; c=relaxed/simple;
+	bh=IkQ2BmF9iFtYMGcsi7EsWwzkJ6p24F3S6D6tXcqjc7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PoemWvTR8nQ2tlXYQzwEN4EDZ53HxCAqbeyjVfKv/jK268zGKrX2FwwdOwO9JaKo7rybIPEI2498uGqjRCTkT8fd7eFrWKryDwwEgutzl5Zq4RSABNXnU0+invRciFaUc4H/AzttQmjGf5eDWpWP4YW7942JQ38ctk3eLA5Lxr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YvpcA9YV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cvXx2sDCxHyQsm4fXdi2Ig/tKmK7ztlIGsUOGI2fqLHUjj12NtnKABohuMeyJJ+CfvMelPaMsjQ84OryLPSGDMgWwu57onjtVDuENzlf8dRZEq3e43cECyLP5fr7RLaAGvHH73ZkZzE3+0tabR9qHILNPfNm4QvMhBxQkbw8gWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9rc3k7b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YvpcA9YV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08091C4CEEA;
-	Mon, 23 Jun 2025 21:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9rc3k7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E91FC4CEEA;
+	Mon, 23 Jun 2025 21:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715391;
-	bh=+9yMP2nQOarypFhMiQbFRSTRf3IFKPxfAvrdnSrfYik=;
+	s=korg; t=1750715393;
+	bh=IkQ2BmF9iFtYMGcsi7EsWwzkJ6p24F3S6D6tXcqjc7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YvpcA9YVu3oPYlutMG+WDVrUmHhxdtiFf1YJB4b5S/ef6qIgT0b57sQf0POlJGzzb
-	 v2rmQWDOm6Q4taZO4AuI8EEl4yClLFgG1Z/FuzW3ZyRiiEL5qs66Aj+HAZdGxfuVtq
-	 wh2XdH93JVzHH9lVhsBlYZ1xKFBbC2KTN0LJUwxM=
+	b=t9rc3k7b8qCKH+2dFuH/lLGgmF0kp+KTNrPa/8q/JBF9AwOdI46XkJXbny/QIf+jX
+	 HbFB499d0/nc8YmaGgpafktr8fvnvj1BzGImFdBxzjGUkSmOI0VICt0J292kXrPf8P
+	 oBgqVZElM1JcApQK1Tc0OiSUAKu8SthPrTavuJq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 196/290] bus: fsl-mc: increase MC_CMD_COMPLETION_TIMEOUT_MS value
-Date: Mon, 23 Jun 2025 15:07:37 +0200
-Message-ID: <20250623130632.747310846@linuxfoundation.org>
+Subject: [PATCH 5.10 272/355] sock: Correct error checking condition for (assign|release)_proto_idx()
+Date: Mon, 23 Jun 2025 15:07:53 +0200
+Message-ID: <20250623130634.949619670@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 23d060136841c58c2f9ee8c08ad945d1879ead4b ]
+[ Upstream commit faeefc173be40512341b102cf1568aa0b6571acd ]
 
-In case the MC firmware runs in debug mode with extensive prints pushed
-to the console, the current timeout of 500ms is not enough.
-Increase the timeout value so that we don't have any chance of wrongly
-assuming that the firmware is not responding when it's just taking more
-time.
+(assign|release)_proto_idx() wrongly check find_first_zero_bit() failure
+by condition '(prot->inuse_idx == PROTO_INUSE_NR - 1)' obviously.
 
-Signed-off-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20250408105814.2837951-7-ioana.ciornei@nxp.com
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Fix by correcting the condition to '(prot->inuse_idx == PROTO_INUSE_NR)'
+
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250410-fix_net-v2-1-d69e7c5739a4@quicinc.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/fsl-mc/mc-sys.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/sock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bus/fsl-mc/mc-sys.c b/drivers/bus/fsl-mc/mc-sys.c
-index f2052cd0a0517..b22c59d57c8f0 100644
---- a/drivers/bus/fsl-mc/mc-sys.c
-+++ b/drivers/bus/fsl-mc/mc-sys.c
-@@ -19,7 +19,7 @@
- /*
-  * Timeout in milliseconds to wait for the completion of an MC command
-  */
--#define MC_CMD_COMPLETION_TIMEOUT_MS	500
-+#define MC_CMD_COMPLETION_TIMEOUT_MS	15000
+diff --git a/net/core/sock.c b/net/core/sock.c
+index d5818a5a86fdd..3c8b263d2cf21 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3433,7 +3433,7 @@ static int assign_proto_idx(struct proto *prot)
+ {
+ 	prot->inuse_idx = find_first_zero_bit(proto_inuse_idx, PROTO_INUSE_NR);
  
- /*
-  * usleep_range() min and max values used to throttle down polling
+-	if (unlikely(prot->inuse_idx == PROTO_INUSE_NR - 1)) {
++	if (unlikely(prot->inuse_idx == PROTO_INUSE_NR)) {
+ 		pr_err("PROTO_INUSE_NR exhausted\n");
+ 		return -ENOSPC;
+ 	}
+@@ -3444,7 +3444,7 @@ static int assign_proto_idx(struct proto *prot)
+ 
+ static void release_proto_idx(struct proto *prot)
+ {
+-	if (prot->inuse_idx != PROTO_INUSE_NR - 1)
++	if (prot->inuse_idx != PROTO_INUSE_NR)
+ 		clear_bit(prot->inuse_idx, proto_inuse_idx);
+ }
+ #else
 -- 
 2.39.5
 
