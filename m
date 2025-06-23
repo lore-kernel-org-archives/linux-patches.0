@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578FA1EFFA6;
-	Mon, 23 Jun 2025 21:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E681EDA0F;
+	Mon, 23 Jun 2025 21:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714084; cv=none; b=EAQWXmVVU2A3bfzaZmtArMaZBW15FuKlwSKlURaLsKrscZ13K2SuNXaYf0cXjqIBHiHjkZXhTkb8rZrNPQPeLPwl17xG8qlibfTUvqZa8MOHWeoTT1XFRuMAc/UJxUmyZcMgNvcMdSZx332mtdbfNE2wbQd6kX8ruATZtOKtxeQ=
+	t=1750714086; cv=none; b=ZZh9MccqT9tJpmHNefFEQt6/XFUr3TvzrCt7jVKlrA/9EQxHD0plUXydTmC+p11HXIzTvZmlYtr4Pc2gZrme1/blV4EPHVcdqH4nMKIftL7Eco4Iq88DffQFfJfJX+CuzP9ChQQSQV/Un9KTZDARhNovhEWqETHw47IigYYrgdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714084; c=relaxed/simple;
-	bh=eQqqWwWBfKFqEqKAzpAWMwCvER7a6pXVDgfuQDKKRSo=;
+	s=arc-20240116; t=1750714086; c=relaxed/simple;
+	bh=YzRQtB59eEzAxtgn4oJ07eCjsYWkdEdkcg5iq8pN6Js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jcf27LmEaD2f4EZvELFdcWCKsO3McLCfJmtRlTy7482GxDVOiB6dDwrdCELJdRAp7WvF2No/bHD03AfHmlmw1mQpzKPR+ILrKitkaaZRpSkXJywfY70+dEFYYCUa0kewo1rOSpffH2J7Ek9f/teJ3gEpktpb9TYhz8wIuCXjjFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hveF6Zsf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jDqN/4m1QgLSBB2lkAIJfQQqre3xfsjKu7mekqraa95bF9EHONgJ1xNLPF/RAWWal5nNgLz5pqr/DMpbTxORXH6govgvMe1tDFZyd5RCXkYvF5U7iZbQ+qdOjXZz6Ndoa0MNXKdN7mRQssr8YhVoWfTdBuI7zhrJKIT8c3N5RXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKkmGK3+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hveF6Zsf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1698C4CEEA;
-	Mon, 23 Jun 2025 21:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKkmGK3+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C65CC4CEEA;
+	Mon, 23 Jun 2025 21:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714084;
-	bh=eQqqWwWBfKFqEqKAzpAWMwCvER7a6pXVDgfuQDKKRSo=;
+	s=korg; t=1750714086;
+	bh=YzRQtB59eEzAxtgn4oJ07eCjsYWkdEdkcg5iq8pN6Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hveF6ZsfSQ6vMY+7+lagmkwl8jD6Duu8PYIDFL+aGh7Axd2wPOsvmxppdVgie4rwH
-	 kGsBLuiGKrJWEm938ArXHxd2vZhg5f9YJCSIbtrQ2cGNv8umnPPOxPu30xcBb7Tpje
-	 7iRia/0XcGy6FSkRzAKSbTQ9RRhBTA3iVGJfWFM8=
+	b=EKkmGK3+XIdzM/wQcszFatfVJhksG5KW5FSW6HPqRwFnQ7nejZLqnUShYpIccgk32
+	 km/7PFIGTGcv8PViq84BDN0ZWZE8v9UOJiLV5tSHVrUsesPD/TJKPRxqFMMlbZztCu
+	 JGrcwT3iYaxhUOEMSpH0fEMVVq46XKPVnvmp3mg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <wagi@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 164/411] nvmet-fcloop: access fcpreq only when holding reqlock
-Date: Mon, 23 Jun 2025 15:05:08 +0200
-Message-ID: <20250623130637.818382764@linuxfoundation.org>
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 5.10 183/355] bus: fsl-mc: do not add a device-link for the UAPI used DPMCP device
+Date: Mon, 23 Jun 2025 15:06:24 +0200
+Message-ID: <20250623130632.190167938@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,99 +46,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 47a827cd7929d0550c3496d70b417fcb5649b27b ]
+commit dd7d8e012b23de158ca0188239c7a1f2a83b4484 upstream.
 
-The abort handling logic expects that the state and the fcpreq are only
-accessed when holding the reqlock lock.
+The fsl-mc bus associated to the root DPRC in a DPAA2 system exports a
+device file for userspace access to the MC firmware. In case the DPRC's
+local MC portal (DPMCP) is currently in use, a new DPMCP device is
+allocated through the fsl_mc_portal_allocate() function.
 
-While at it, only handle the aborts in the abort handler.
+In this case, the call to fsl_mc_portal_allocate() will fail with -EINVAL
+when trying to add a device link between the root DPRC (consumer) and
+the newly allocated DPMCP device (supplier). This is because the DPMCP
+is a dependent of the DPRC device (the bus).
 
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by not adding a device link in case the DPMCP is allocated for
+the root DPRC's usage.
+
+Fixes: afb77422819f ("bus: fsl-mc: automatically add a device_link on fsl_mc_[portal,object]_allocate")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250408105814.2837951-3-ioana.ciornei@nxp.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fcloop.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ drivers/bus/fsl-mc/mc-io.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/nvme/target/fcloop.c b/drivers/nvme/target/fcloop.c
-index 787dfb3859a0d..74fffcab88155 100644
---- a/drivers/nvme/target/fcloop.c
-+++ b/drivers/nvme/target/fcloop.c
-@@ -613,12 +613,13 @@ fcloop_fcp_recv_work(struct work_struct *work)
- {
- 	struct fcloop_fcpreq *tfcp_req =
- 		container_of(work, struct fcloop_fcpreq, fcp_rcv_work);
--	struct nvmefc_fcp_req *fcpreq = tfcp_req->fcpreq;
-+	struct nvmefc_fcp_req *fcpreq;
- 	unsigned long flags;
- 	int ret = 0;
- 	bool aborted = false;
+--- a/drivers/bus/fsl-mc/mc-io.c
++++ b/drivers/bus/fsl-mc/mc-io.c
+@@ -214,12 +214,19 @@ int __must_check fsl_mc_portal_allocate(
+ 	if (error < 0)
+ 		goto error_cleanup_resource;
  
- 	spin_lock_irqsave(&tfcp_req->reqlock, flags);
-+	fcpreq = tfcp_req->fcpreq;
- 	switch (tfcp_req->inistate) {
- 	case INI_IO_START:
- 		tfcp_req->inistate = INI_IO_ACTIVE;
-@@ -633,16 +634,19 @@ fcloop_fcp_recv_work(struct work_struct *work)
+-	dpmcp_dev->consumer_link = device_link_add(&mc_dev->dev,
+-						   &dpmcp_dev->dev,
+-						   DL_FLAG_AUTOREMOVE_CONSUMER);
+-	if (!dpmcp_dev->consumer_link) {
+-		error = -EINVAL;
+-		goto error_cleanup_mc_io;
++	/* If the DPRC device itself tries to allocate a portal (usually for
++	 * UAPI interaction), don't add a device link between them since the
++	 * DPMCP device is an actual child device of the DPRC and a reverse
++	 * dependency is not allowed.
++	 */
++	if (mc_dev != mc_bus_dev) {
++		dpmcp_dev->consumer_link = device_link_add(&mc_dev->dev,
++							   &dpmcp_dev->dev,
++							   DL_FLAG_AUTOREMOVE_CONSUMER);
++		if (!dpmcp_dev->consumer_link) {
++			error = -EINVAL;
++			goto error_cleanup_mc_io;
++		}
  	}
- 	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
  
--	if (unlikely(aborted))
--		ret = -ECANCELED;
--	else {
--		if (likely(!check_for_drop(tfcp_req)))
--			ret = nvmet_fc_rcv_fcp_req(tfcp_req->tport->targetport,
--				&tfcp_req->tgt_fcp_req,
--				fcpreq->cmdaddr, fcpreq->cmdlen);
--		else
--			pr_info("%s: dropped command ********\n", __func__);
-+	if (unlikely(aborted)) {
-+		/* the abort handler will call fcloop_call_host_done */
-+		return;
-+	}
-+
-+	if (unlikely(check_for_drop(tfcp_req))) {
-+		pr_info("%s: dropped command ********\n", __func__);
-+		return;
- 	}
-+
-+	ret = nvmet_fc_rcv_fcp_req(tfcp_req->tport->targetport,
-+				   &tfcp_req->tgt_fcp_req,
-+				   fcpreq->cmdaddr, fcpreq->cmdlen);
- 	if (ret)
- 		fcloop_call_host_done(fcpreq, tfcp_req, ret);
- 
-@@ -659,9 +663,10 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&tfcp_req->reqlock, flags);
--	fcpreq = tfcp_req->fcpreq;
- 	switch (tfcp_req->inistate) {
- 	case INI_IO_ABORTED:
-+		fcpreq = tfcp_req->fcpreq;
-+		tfcp_req->fcpreq = NULL;
- 		break;
- 	case INI_IO_COMPLETED:
- 		completed = true;
-@@ -683,10 +688,6 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
- 		nvmet_fc_rcv_fcp_abort(tfcp_req->tport->targetport,
- 					&tfcp_req->tgt_fcp_req);
- 
--	spin_lock_irqsave(&tfcp_req->reqlock, flags);
--	tfcp_req->fcpreq = NULL;
--	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
--
- 	fcloop_call_host_done(fcpreq, tfcp_req, -ECANCELED);
- 	/* call_host_done releases reference for abort downcall */
- }
--- 
-2.39.5
-
+ 	*new_mc_io = mc_io;
 
 
