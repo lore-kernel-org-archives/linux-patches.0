@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74EE347DD;
-	Mon, 23 Jun 2025 13:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E19216419;
+	Mon, 23 Jun 2025 13:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685807; cv=none; b=PJcDsYYaxsoUt+WbscCtERYGm/alXsLgTO2rPd4qd/6OVyYVO2LfO3qLXZvyqiv3v5CpBczGJRjiu8A8UhW7bbcT2vUlEkhS8xRSGgEQINamofWBOYbF5IJt82IqkRQjRbzYc7qlBTn78OysZPJSDCfXfsFYynyeHXX2mBh0Z5E=
+	t=1750685810; cv=none; b=eqIRdOToNtf1CC2WC0wQC4uI2+GT4yV0+suoMZSr0C2+gsHyu4pEDB9WrRfxvTYQE33Cd2Zxy1j8Fqw4XUpRLFp6ZQQftCOHUpW7cGqxO/gggqxTDsv/0ala7eIP6AfVRdNaV04fe9jX2f+HGJD6xay/tTnChRzP/4u++v5DQRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685807; c=relaxed/simple;
-	bh=Vq3LdCtP41XH8ASslGrc1EgsHs+/UQIXG0fv3jUaD6E=;
+	s=arc-20240116; t=1750685810; c=relaxed/simple;
+	bh=fnHPn09GXRz7FjTUEt9fkpu4yTN4Qf5r9AAwU1qWU9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jK3v5JDRqSU64+BLvb+nY1KYY2l7VyOEWDUNQCe03nmdtjMPJWKcg+h9W2YSj0eyeJ1U/1y9p9uy0kzi3yrL6qZpE3OwXiUpP8NUtus8sCuf+3CEq/p0FnCLIF9cka1290B932QPh65jCiLrkORzGYjsx9alvr4SP+DmHfnkFc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbkNYgun; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rdZGD/mH8YCXZwzYJ4WvcKktFp9+pd/Yj4x2L4/f8IEypKPb/7QIMMaZ+CEnM5QsX0sgn1Nn9zfuOQO5Fi1kx+Aq/boUlgy9zyIpUIRT7FyoaNaFgzxem+omTNCQ6rkX1zK6IwIW8ZA37bt5H2RgvGuT652pspOsukLYUyj51Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMMu5mDB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbkNYgun"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBBFC4CEEA;
-	Mon, 23 Jun 2025 13:36:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMMu5mDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E71C4CEEA;
+	Mon, 23 Jun 2025 13:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685807;
-	bh=Vq3LdCtP41XH8ASslGrc1EgsHs+/UQIXG0fv3jUaD6E=;
+	s=korg; t=1750685810;
+	bh=fnHPn09GXRz7FjTUEt9fkpu4yTN4Qf5r9AAwU1qWU9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GbkNYgunemRWCzyDVKq/kGeF9z09RRaCHHQ6+7wD686IdwVGVcaC3GU8XQrkEPfW4
-	 BPPuYnsU7FubdA1yiFgrsNzQl1DooNooGob3ajJ1TaWh7n5p2m4y22yb5gIS4cHK0/
-	 fzcn792Y3DamL6kh7mO59a2NX5XnBMDu7D3GL2lU=
+	b=hMMu5mDBmZ2dVqxyK3zsKoIZUDcY71eaWW1auvX466ICYASqX6+DJ+vr0bSZs71PP
+	 JuOIh5A4mzGsgajynqWINFl/PmxYNKr78YSWu+uh8ibDjcJDj1NKXjLauxg95CCCVC
+	 eJaoUp2zUVD/gBFJiAXkr3jE76iIbUqSpwF4g9Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 008/414] crypto: qat - add shutdown handler to qat_dh895xcc
-Date: Mon, 23 Jun 2025 15:02:25 +0200
-Message-ID: <20250623130642.236469352@linuxfoundation.org>
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 095/355] net: stmmac: platform: guarantee uniqueness of bus_id
+Date: Mon, 23 Jun 2025 15:04:56 +0200
+Message-ID: <20250623130629.649007397@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +48,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Quentin Schulz <quentin.schulz@cherry.de>
 
-commit 2c4e8b228733bfbcaf49408fdf94d220f6eb78fc upstream.
+[ Upstream commit eb7fd7aa35bfcc1e1fda4ecc42ccfcb526cdc780 ]
 
-During a warm reset via kexec, the system bypasses the driver removal
-sequence, meaning that the remove() callback is not invoked.
-If a QAT device is not shutdown properly, the device driver will fail to
-load in a newly rebooted kernel.
+bus_id is currently derived from the ethernetX alias. If one is missing
+for the device, 0 is used. If ethernet0 points to another stmmac device
+or if there are 2+ stmmac devices without an ethernet alias, then bus_id
+will be 0 for all of those.
 
-This might result in output like the following after the kexec reboot:
+This is an issue because the bus_id is used to generate the mdio bus id
+(new_bus->id in drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
+stmmac_mdio_register) and this needs to be unique.
 
-    QAT: AE0 is inactive!!
-    QAT: failed to get device out of reset
-    dh895xcc 0000:3f:00.0: qat_hal_clr_reset error
-    dh895xcc 0000:3f:00.0: Failed to init the AEs
-    dh895xcc 0000:3f:00.0: Failed to initialise Acceleration Engine
-    dh895xcc 0000:3f:00.0: Resetting device qat_dev0
-    dh895xcc 0000:3f:00.0: probe with driver dh895xcc failed with error -14
+This allows to avoid needing to define ethernet aliases for devices with
+multiple stmmac controllers (such as the Rockchip RK3588) for multiple
+stmmac devices to probe properly.
 
-Implement the shutdown() handler that hooks into the reboot notifier
-list. This brings down the QAT device and ensures it is shut down
-properly.
+Obviously, the bus_id isn't guaranteed to be stable across reboots if no
+alias is set for the device but that is easily fixed by simply adding an
+alias if this is desired.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 7afa232e76ce ("crypto: qat - Intel(R) QAT DH895xcc accelerator")
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 25c83b5c2e82 ("dt:net:stmmac: Add support to dwmac version 3.610 and 3.710")
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20250527-stmmac-mdio-bus_id-v2-1-a5ca78454e3c@cherry.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_dh895xcc/adf_drv.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/intel/qat/qat_dh895xcc/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_dh895xcc/adf_drv.c
-@@ -19,6 +19,13 @@
- #include <adf_dbgfs.h>
- #include "adf_dh895xcc_hw_data.h"
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+index f02ce09020fbc..7ebbb81375e84 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+@@ -400,6 +400,7 @@ stmmac_probe_config_dt(struct platform_device *pdev, const char **mac)
+ 	struct device_node *np = pdev->dev.of_node;
+ 	struct plat_stmmacenet_data *plat;
+ 	struct stmmac_dma_cfg *dma_cfg;
++	static int bus_id = -ENODEV;
+ 	int phy_mode;
+ 	int rc;
  
-+static void adf_shutdown(struct pci_dev *pdev)
-+{
-+	struct adf_accel_dev *accel_dev = adf_devmgr_pci_to_accel_dev(pdev);
-+
-+	adf_dev_down(accel_dev);
-+}
-+
- static const struct pci_device_id adf_pci_tbl[] = {
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_QAT_DH895XCC), },
- 	{ }
-@@ -33,6 +40,7 @@ static struct pci_driver adf_driver = {
- 	.name = ADF_DH895XCC_DEVICE_NAME,
- 	.probe = adf_probe,
- 	.remove = adf_remove,
-+	.shutdown = adf_shutdown,
- 	.sriov_configure = adf_sriov_configure,
- 	.err_handler = &adf_err_handler,
- };
+@@ -435,8 +436,14 @@ stmmac_probe_config_dt(struct platform_device *pdev, const char **mac)
+ 	of_property_read_u32(np, "max-speed", &plat->max_speed);
+ 
+ 	plat->bus_id = of_alias_get_id(np, "ethernet");
+-	if (plat->bus_id < 0)
+-		plat->bus_id = 0;
++	if (plat->bus_id < 0) {
++		if (bus_id < 0)
++			bus_id = of_alias_get_highest_id("ethernet");
++		/* No ethernet alias found, init at -1 so first bus_id is 0 */
++		if (bus_id < 0)
++			bus_id = -1;
++		plat->bus_id = ++bus_id;
++	}
+ 
+ 	/* Default to phy auto-detection */
+ 	plat->phy_addr = -1;
+-- 
+2.39.5
+
 
 
