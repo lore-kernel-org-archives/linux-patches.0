@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACD12561A8;
-	Mon, 23 Jun 2025 13:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E02255F59;
+	Mon, 23 Jun 2025 13:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685443; cv=none; b=bRibqTEQR/SRCFkkVZZMxEkMnCzzGEYoBkk9YPMObxJBxDr1TcmLRNegUd5a+M3ZzD6T4MFOryPG3ASPLjwkiqoufQqxD1dtKdBIJwn6fIOtYzR2nNjH+gqzT9ETS7dnOct5EcFvAPcXoRNLbCxkjlL8tsTcZtFEtNCdc+zm334=
+	t=1750685446; cv=none; b=mmQ2AEveOp4NDNCe6HjlpvHCjizS2sZIXyVch1EFilRor4JFces7HNd2/8scIwFgVql12TZD+3Z4RQdeoreBE+EMzIPSQC1bPRbCAKwCr7P384YFYyW2C7h4ejo7itaIzCANktWJuCWgOwed3/17y/TMJJp2IW/lkUZduJTvi5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685443; c=relaxed/simple;
-	bh=8/v1/soUdKqH7ew+TVHQHvIDXbY8oOEpUxv8qRA7Eh4=;
+	s=arc-20240116; t=1750685446; c=relaxed/simple;
+	bh=AfUGZ9sng1clDVGjFqNSID4FbTkget+emqPolUDhfz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V67pzmSjqciUOaaL61ErXT1vl8YtB2pfJSy9iZLbxtkeRDfp8zh1LIj2+Whj8TH/upyvvV2CxFvCzcxzc74j5d0P9VV6JMsUa1Q2XtcN60HNNND+z5++jL8bebDP3dcuTaw2WxMPYPlEwe9aYPCSh0RCDy9lHccO7tsemBIgnJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZAsTfEo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PwoxbmKKS1B/cg3nIFLbsnpJyPIsxpUGtpZA1+w45U75U73rPILMGnBrs6gh37H7h3lyHPkYZrfmcD66MYoA+tuHQaOLJMqj++kydUjnKMlAk4/CHnAg0u+cUmujSZcdnrx60m9dLUijL7HkuGf6D/VRkm+mfOXgzCPBfRgwu9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hFXFWJyu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZAsTfEo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17251C4CEEA;
-	Mon, 23 Jun 2025 13:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFXFWJyu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D976C4CEEA;
+	Mon, 23 Jun 2025 13:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685443;
-	bh=8/v1/soUdKqH7ew+TVHQHvIDXbY8oOEpUxv8qRA7Eh4=;
+	s=korg; t=1750685446;
+	bh=AfUGZ9sng1clDVGjFqNSID4FbTkget+emqPolUDhfz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZAsTfEoRXoek55GwHBPR+ik4bGmUoN2ERjd4/Jb6K76j51952gVXLfFHsL9ZS+ty
-	 ImhX0RZVxD4UjXFJcuaRtbbkpAvFyW2lJ7fhraZECTx+9yYh2+PuDEkj3JyA58lMY5
-	 o8luopqPivLbgvLpjjsF6ysAT2yhgxR8D+qwtyw0=
+	b=hFXFWJyuA+3P1mPxi59JvakLUN/5jTiBT5oB5f3+9dh377BMx4Y09V9ralFls5RXq
+	 HO/ZZfgr0sx4ms9FvfV/Xtcz5uebtQcubIw7Da7zTvwWlupjJMr/cmtx9QTZkzO8zG
+	 M79B1531mRHq4yu/mOoMzI1fM9mf4U8kQMO55NwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaqing Zhao <jiaqing.zhao@linux.intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/508] x86/mtrr: Check if fixed-range MTRRs exist in mtrr_save_fixed_ranges()
-Date: Mon, 23 Jun 2025 15:01:17 +0200
-Message-ID: <20250623130646.037118987@linuxfoundation.org>
+	Gautam Menghani <gautam@linux.ibm.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Vaibhav Jain <vaibhav@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.6 008/290] powerpc/pseries/msi: Avoid reading PCI device registers in reduced power states
+Date: Mon, 23 Jun 2025 15:04:29 +0200
+Message-ID: <20250623130627.212896622@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
+From: Gautam Menghani <gautam@linux.ibm.com>
 
-[ Upstream commit 824c6384e8d9275d4ec7204f3f79a4ac6bc10379 ]
+commit 9cc0eafd28c7faef300822992bb08d79cab2a36c upstream.
 
-When suspending, save_processor_state() calls mtrr_save_fixed_ranges()
-to save fixed-range MTRRs.
+When a system is being suspended to RAM, the PCI devices are also
+suspended and the PPC code ends up calling pseries_msi_compose_msg() and
+this triggers the BUG_ON() in __pci_read_msi_msg() because the device at
+this point is in reduced power state. In reduced power state, the memory
+mapped registers of the PCI device are not accessible.
 
-On platforms without fixed-range MTRRs like the ACRN hypervisor which
-has removed fixed-range MTRR emulation, accessing these MSRs will
-trigger an unchecked MSR access error. Make sure fixed-range MTRRs are
-supported before access to prevent such error.
+To replicate the bug:
+1. Make sure deep sleep is selected
+	# cat /sys/power/mem_sleep
+	s2idle [deep]
 
-Since mtrr_state.have_fixed is only set when MTRRs are present and
-enabled, checking the CPU feature flag in mtrr_save_fixed_ranges() is
-unnecessary.
+2. Make sure console is not suspended (so that dmesg logs are visible)
+	echo N > /sys/module/printk/parameters/console_suspend
 
-Fixes: 3ebad5905609 ("[PATCH] x86: Save and restore the fixed-range MTRRs of the BSP when suspending")
-Signed-off-by: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250509170633.3411169-2-jiaqing.zhao@linux.intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+3. Suspend the system
+	echo mem > /sys/power/state
+
+To fix this behaviour, read the cached msi message of the device when the
+device is not in PCI_D0 power state instead of touching the hardware.
+
+Fixes: a5f3d2c17b07 ("powerpc/pseries/pci: Add MSI domains")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250305090237.294633-1-gautam@linux.ibm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mtrr/generic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/msi.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/mtrr/generic.c b/arch/x86/kernel/cpu/mtrr/generic.c
-index 558108296f3cf..31549e7f6b7c6 100644
---- a/arch/x86/kernel/cpu/mtrr/generic.c
-+++ b/arch/x86/kernel/cpu/mtrr/generic.c
-@@ -349,7 +349,7 @@ static void get_fixed_ranges(mtrr_type *frs)
+--- a/arch/powerpc/platforms/pseries/msi.c
++++ b/arch/powerpc/platforms/pseries/msi.c
+@@ -519,7 +519,12 @@ static struct msi_domain_info pseries_ms
  
- void mtrr_save_fixed_ranges(void *info)
+ static void pseries_msi_compose_msg(struct irq_data *data, struct msi_msg *msg)
  {
--	if (boot_cpu_has(X86_FEATURE_MTRR))
-+	if (mtrr_state.have_fixed)
- 		get_fixed_ranges(mtrr_state.fixed_ranges);
+-	__pci_read_msi_msg(irq_data_get_msi_desc(data), msg);
++	struct pci_dev *dev = msi_desc_to_pci_dev(irq_data_get_msi_desc(data));
++
++	if (dev->current_state == PCI_D0)
++		__pci_read_msi_msg(irq_data_get_msi_desc(data), msg);
++	else
++		get_cached_msi_msg(data->irq, msg);
  }
  
--- 
-2.39.5
-
+ static struct irq_chip pseries_msi_irq_chip = {
 
 
