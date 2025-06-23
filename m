@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE0F70838;
-	Mon, 23 Jun 2025 21:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578A170838;
+	Mon, 23 Jun 2025 21:07:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712825; cv=none; b=JPIddgCJ18Z0Ovuf3Payb29PvMXMMXTzXgvp7Aa+0DyvgUqbEpYvm3/DH6aTMI0PD7l2F+OaKA8NImNA8FuvTMFqQqScvC9J1IIcoYMjlszjpi8JqIIQTnn0iEdU9EVz7UCbGpfIferfXKEHHGOxNiHuAi3qv8YZu4D7DPDsQN0=
+	t=1750712827; cv=none; b=oCet1DugdhzDsjOFZVGOLfh0R01Wn0ZUIQqoUamG+qMs4iSm4XN89/A/JcWzHTbYStZJKP/awPzDbeWsI8xeB2u4JBZm6E0ETwMMYBd++Ukp4ONl1dCnEEiAFCLd8lPpB6UmAkvDSs/MRJAmakoNFvRg7BqIwUtSQvHBXrK9m3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712825; c=relaxed/simple;
-	bh=Q1uA7n/rOxBOYtR6+kpaKgtc2xD4+2hR55GPsN8ikuI=;
+	s=arc-20240116; t=1750712827; c=relaxed/simple;
+	bh=d9CiB22dzZwiFsdvzqeoSIwVIvsEhbCDlnm2vQmLVjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q6i9G81OYQhEZcdyX2Iy50P7TN/hHr2vLYtBqKlsZr2HvUo2d2kd3GMnKY+YCbcCRXmeWkyS2t0Z2StE9fbz+6fxMGCkZxNok0b0GaHVkN11LvWw/SJeftyklV82S9xiOWr1NTBhHhrr/Fvmjbynb5fZdgieo+p7Kb5UmlSlJ5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwNz11hD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p0eMoew5SIxrVfZdI+bpTZVnAboo4kqXrpkB5sDKk3064vmdjf3MHnwMm7RNqFlehTVaYXLkCmjyGvebjW4R9g3/L/9hx36G9TAEBKlj1PqDCQACxPQHJhuWW5EOFKYkPu01e8saufdJO10YVx+S/9qj+I7Yr4ZG6wzIrR4kBPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7XSQO0D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwNz11hD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8050EC4CEEA;
-	Mon, 23 Jun 2025 21:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7XSQO0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09EFC4CEEA;
+	Mon, 23 Jun 2025 21:07:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712824;
-	bh=Q1uA7n/rOxBOYtR6+kpaKgtc2xD4+2hR55GPsN8ikuI=;
+	s=korg; t=1750712827;
+	bh=d9CiB22dzZwiFsdvzqeoSIwVIvsEhbCDlnm2vQmLVjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cwNz11hDD1hPOwnFgQ2dQr5wLwxWhYhnKHTjrYQ58b3y0CjPM5vzbGnuvz8NJtXaJ
-	 T6iVbhLvxJPtDFu4HL93puIFGPIeHzz/Vx/ApIKj7eC8ewRc8QjTKtNCQkmVsBl30i
-	 ntjI2vaOs1Ew4KAvmTAQ7szUANgvMCpft31Ias+U=
+	b=J7XSQO0DKEPVQ2dDml5IXXXy1zIilyXgiUyLrVlPvvuf06yyi/zo+GHuV+Tn8OFgF
+	 Su4WXq5IfMDyrGD5Mpe8lzQLwLcDWJiKWPDt6Yx2BV8jJShtp00Xil+HkGmol7vk/8
+	 t8E2+ldyZ5V6d35GhdNK3gsrb/Wby7SzTAhx0L6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Frank Ch. Eigler" <fche@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/508] RDMA/hns: Include hnae3.h in hns_roce_hw_v2.h
-Date: Mon, 23 Jun 2025 15:01:47 +0200
-Message-ID: <20250623130646.770176176@linuxfoundation.org>
+Subject: [PATCH 5.15 091/411] perf build: Warn when libdebuginfod devel files are not available
+Date: Mon, 23 Jun 2025 15:03:55 +0200
+Message-ID: <20250623130635.739804871@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,95 +56,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 2b11d33de23262cb20d1dcb24b586dbb8f54d463 ]
+[ Upstream commit 4fce4b91fd1aabb326c46e237eb4b19ab72598f8 ]
 
-hns_roce_hw_v2.h has a direct dependency on hnae3.h due to the
-inline function hns_roce_write64(), but it doesn't include this
-header currently. This leads to that files including
-hns_roce_hw_v2.h must also include hnae3.h to avoid compilation
-errors, even if they themselves don't really rely on hnae3.h.
-This doesn't make sense, hns_roce_hw_v2.h should include hnae3.h
-directly.
+While working on 'perf version --build-options' I noticed that:
 
-Fixes: d3743fa94ccd ("RDMA/hns: Fix the chip hanging caused by sending doorbell during reset")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250421132750.1363348-6-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+  $ perf version --build-options
+  perf version 6.15.rc1.g312a07a00d31
+                   aio: [ on  ]  # HAVE_AIO_SUPPORT
+                   bpf: [ on  ]  # HAVE_LIBBPF_SUPPORT
+         bpf_skeletons: [ on  ]  # HAVE_BPF_SKEL
+            debuginfod: [ OFF ]  # HAVE_DEBUGINFOD_SUPPORT
+  <SNIP>
+
+And looking at tools/perf/Makefile.config I also noticed that it is not
+opt-in, meaning we will attempt to build with it in all normal cases.
+
+So add the usual warning at build time to let the user know that
+something recommended is missing, now we see:
+
+  Makefile.config:563: No elfutils/debuginfod.h found, no debuginfo server support, please install elfutils-debuginfod-client-devel or equivalent
+
+And after following the recommendation:
+
+  $ perf check feature debuginfod
+            debuginfod: [ on  ]  # HAVE_DEBUGINFOD_SUPPORT
+  $ ldd ~/bin/perf | grep debuginfo
+	libdebuginfod.so.1 => /lib64/libdebuginfod.so.1 (0x00007fee5cf5f000)
+  $
+
+With this feature on several perf tools will fetch what is needed and
+not require all the contents of the debuginfo packages, for instance:
+
+  # rpm -qa | grep kernel-debuginfo
+  # pahole --running_kernel_vmlinux
+  pahole: couldn't find a vmlinux that matches the running kernel
+  HINT: Maybe you're inside a container or missing a debuginfo package?
+  #
+  # perf trace -e open* perf probe --vars icmp_rcv
+      0.000 ( 0.005 ms): perf/97391 openat(dfd: CWD, filename: "/etc/ld.so.cache", flags: RDONLY|CLOEXEC) = 3
+      0.014 ( 0.004 ms): perf/97391 openat(dfd: CWD, filename: "/lib64/libm.so.6", flags: RDONLY|CLOEXEC) = 3
+  <SNIP>
+  32130.100 ( 0.008 ms): perf/97391 openat(dfd: CWD, filename: "/root/.cache/debuginfod_client/aa3c82b4a13f9c0e0301bebb20fe958c4db6f362/debuginfo") = 3
+  <SNIP>
+  Available variables at icmp_rcv
+        @<icmp_rcv+0>
+                struct sk_buff* skb
+  <SNIP>
+  #
+  # pahole --running_kernel_vmlinux
+  /root/.cache/debuginfod_client/aa3c82b4a13f9c0e0301bebb20fe958c4db6f362/debuginfo
+  # file /root/.cache/debuginfod_client/aa3c82b4a13f9c0e0301bebb20fe958c4db6f362/debuginfo
+  /root/.cache/debuginfod_client/aa3c82b4a13f9c0e0301bebb20fe958c4db6f362/debuginfo: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, BuildID[sha1]=aa3c82b4a13f9c0e0301bebb20fe958c4db6f362, with debug_info, not stripped
+  # ls -la /root/.cache/debuginfod_client/aa3c82b4a13f9c0e0301bebb20fe958c4db6f362/debuginfo
+  -r--------. 1 root root 475401512 Mar 27 21:00 /root/.cache/debuginfod_client/aa3c82b4a13f9c0e0301bebb20fe958c4db6f362/debuginfo
+  #
+
+Then, cached:
+
+  # perf stat --null perf probe --vars icmp_rcv
+  Available variables at icmp_rcv
+        @<icmp_rcv+0>
+                struct sk_buff* skb
+
+   Performance counter stats for 'perf probe --vars icmp_rcv':
+
+       0.671389041 seconds time elapsed
+
+       0.519176000 seconds user
+       0.150860000 seconds sys
+
+Fixes: c7a14fdcb3fa7736 ("perf build-ids: Fall back to debuginfod query if debuginfo not found")
+Tested-by: Ingo Molnar <mingo@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Howard Chu <howardchu95@gmail.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Frank Ch. Eigler <fche@redhat.com>
+Link: https://lore.kernel.org/r/Z_dkNDj9EPFwPqq1@gmail.com
+[ Folded patch from Ingo to have the debian/ubuntu devel package added build warning message ]
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_ah.c       | 1 -
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c    | 1 -
- drivers/infiniband/hw/hns/hns_roce_hw_v2.h    | 1 +
- drivers/infiniband/hw/hns/hns_roce_main.c     | 1 -
- drivers/infiniband/hw/hns/hns_roce_restrack.c | 1 -
- 5 files changed, 1 insertion(+), 4 deletions(-)
+ tools/perf/Makefile.config | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_ah.c b/drivers/infiniband/hw/hns/hns_roce_ah.c
-index 103a7787b3712..3a6a1f2430571 100644
---- a/drivers/infiniband/hw/hns/hns_roce_ah.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_ah.c
-@@ -33,7 +33,6 @@
- #include <linux/pci.h>
- #include <rdma/ib_addr.h>
- #include <rdma/ib_cache.h>
--#include "hnae3.h"
- #include "hns_roce_device.h"
- #include "hns_roce_hw_v2.h"
+diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
+index 973c0d5ed8d8b..90cbbe2e90f9b 100644
+--- a/tools/perf/Makefile.config
++++ b/tools/perf/Makefile.config
+@@ -538,6 +538,8 @@ ifndef NO_LIBELF
+     ifeq ($(feature-libdebuginfod), 1)
+       CFLAGS += -DHAVE_DEBUGINFOD_SUPPORT
+       EXTLIBS += -ldebuginfod
++    else
++      $(warning No elfutils/debuginfod.h found, no debuginfo server support, please install libdebuginfod-dev/elfutils-debuginfod-client-devel or equivalent)
+     endif
+   endif
  
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index ab0dca9d199ab..be5d7a8ab4d43 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -42,7 +42,6 @@
- #include <rdma/ib_umem.h>
- #include <rdma/uverbs_ioctl.h>
- 
--#include "hnae3.h"
- #include "hns_roce_common.h"
- #include "hns_roce_device.h"
- #include "hns_roce_cmd.h"
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-index a9eff72f10c62..e032db5e3dbf3 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-@@ -34,6 +34,7 @@
- #define _HNS_ROCE_HW_V2_H
- 
- #include <linux/bitops.h>
-+#include "hnae3.h"
- 
- #define HNS_ROCE_V2_MAX_QP_NUM			0x1000
- #define HNS_ROCE_V2_MAX_WQE_NUM			0x8000
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index eae22ac42e05d..3a35f1fb84db9 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -37,7 +37,6 @@
- #include <rdma/ib_smi.h>
- #include <rdma/ib_user_verbs.h>
- #include <rdma/ib_cache.h>
--#include "hnae3.h"
- #include "hns_roce_common.h"
- #include "hns_roce_device.h"
- #include "hns_roce_hem.h"
-diff --git a/drivers/infiniband/hw/hns/hns_roce_restrack.c b/drivers/infiniband/hw/hns/hns_roce_restrack.c
-index 989a2af2e9382..6ba064899bf14 100644
---- a/drivers/infiniband/hw/hns/hns_roce_restrack.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_restrack.c
-@@ -4,7 +4,6 @@
- #include <rdma/rdma_cm.h>
- #include <rdma/restrack.h>
- #include <uapi/rdma/rdma_netlink.h>
--#include "hnae3.h"
- #include "hns_roce_common.h"
- #include "hns_roce_device.h"
- #include "hns_roce_hw_v2.h"
 -- 
 2.39.5
 
