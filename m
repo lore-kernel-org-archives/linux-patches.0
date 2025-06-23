@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671AD255E26;
-	Mon, 23 Jun 2025 13:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9182F24;
+	Mon, 23 Jun 2025 13:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685585; cv=none; b=YVdhF6oQcfZbAAtJ8SrDVoa1fv03vnrVPSRnQRzNCxpkkfFpZ+ShS2EVwCHODHGMWVcWwC2ZBX1YVPmZamwVqiY/RnAj4QYzfKuQP1p3ZkBwZ/BVhiLWIsMP4lX0BUTda6rN06OgcVnn6E+Pj2DyZcNdrX5IvAAktYAfpGdwe/s=
+	t=1750685588; cv=none; b=rR4C6yQmedoZG4XNlwIEtQbCU/w5yvmbnWx8S92h7SuEBfe8kDzpMH5Ue7ZL2zJnmO9VMvpZ5Cf+0mQjw/WKfGevoutm024WgxU2ZG5ZwSYqbyIA4BW9mEan8EAWAe5zCqw6KTCHxPjWQSb9j72yziYuWR3FwfDqBRD0nRgANNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685585; c=relaxed/simple;
-	bh=vkHrIg/3Ttz4qO9C+0F6hhY3K4i3p5wccrhaOpyqKBQ=;
+	s=arc-20240116; t=1750685588; c=relaxed/simple;
+	bh=5BvW2IopkqCdqc10UhTARxn9uFoqDy+IfddEQDF/vU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QaaFU1X/wK0RwB2beerhEDlSogZM/B9XWBj1lsJcjokKQyC+U1BNy1UKRde0kPiGYY49QqqbrBxccZw7W2gQxVDlXM1pr5gi8IVWgPllT6te9PCTd8QSZwarDB7QZ2OkiaketseC3xCNfSuhe+pShZMALF+8h9YF+BPfhpumWDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjiD6/Vw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MvolkICVc6XWoglJJ3Zxe4g4poXqqhbr0GgCAIXrnqWQoRBuzojVDZLD1KdUbIOo6irsuukz4xqeB3Ss0ziXp6obYaiaTIxVJxneIXaxW70Z452Fg7iBJciIHo4HMDNvnovgV7fD9OF0SVjOABmEbBLCGChr5i5MNSFgA9B/CAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/k+pHGd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjiD6/Vw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E797AC4CEF0;
-	Mon, 23 Jun 2025 13:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/k+pHGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68041C4CEEA;
+	Mon, 23 Jun 2025 13:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685585;
-	bh=vkHrIg/3Ttz4qO9C+0F6hhY3K4i3p5wccrhaOpyqKBQ=;
+	s=korg; t=1750685587;
+	bh=5BvW2IopkqCdqc10UhTARxn9uFoqDy+IfddEQDF/vU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RjiD6/VwTkY31BJIEaccXsoWvBkK33GEfqA0O1vFyJtN2hNpsABEbi8K7Q9EcwcIx
-	 38qZEuXMIRHqoUDNRT8FP+qWEXyOGDklXnSbjAV8n+Urc1RXCk99LiI7E5ZvwI5XaC
-	 cdzeOX0uyfM/1IfshgwRv2JWxLOi8EDu7YnbJuik=
+	b=M/k+pHGdhpHmlNFcUMXUx1ccCnxgKb8NMJThjZOPAzlXQU1Krhe53/YcdkfMHa37q
+	 icn57HH8VijrFe3EurtZ3i9+to7ul8hMRjiyWnZxg7mgriuh6E0oD2xNDR9CPvkgsh
+	 o0/7tNeWCzoKXepASCofd3mmNQgeVap6rwuLvAQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corentin Labbe <clabbe.montjoie@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/508] crypto: sun8i-ss - do not use sg_dma_len before calling DMA functions
-Date: Mon, 23 Jun 2025 15:01:02 +0200
-Message-ID: <20250623130645.678024351@linuxfoundation.org>
+Subject: [PATCH 5.10 061/355] ARM: dts: at91: at91sam9263: fix NAND chip selects
+Date: Mon, 23 Jun 2025 15:04:22 +0200
+Message-ID: <20250623130628.661350455@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +48,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Corentin Labbe <clabbe.montjoie@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 2dfc7cd74a5e062a5405560447517e7aab1c7341 ]
+[ Upstream commit c72ede1c24be689733bcd2233a3a56f2478429c8 ]
 
-When testing sun8i-ss with multi_v7_defconfig, all CBC algorithm fail crypto
-selftests.
-This is strange since on sunxi_defconfig, everything was ok.
-The problem was in the IV setup loop which never run because sg_dma_len
-was 0.
+NAND did not work on my USB-A9263. I discovered that the offending
+commit converted the PIO bank for chip selects wrongly, so all A9263
+boards need to be fixed.
 
-Fixes: 359e893e8af4 ("crypto: sun8i-ss - rework handling of IV")
-Signed-off-by: Corentin Labbe <clabbe.montjoie@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 1004a2977bdc ("ARM: dts: at91: Switch to the new NAND bindings")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20250402210446.5972-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/at91sam9263ek.dts | 2 +-
+ arch/arm/boot/dts/tny_a9263.dts     | 2 +-
+ arch/arm/boot/dts/usb_a9263.dts     | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
-index e97fb203690ae..5a864a71efa11 100644
---- a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
-+++ b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
-@@ -136,7 +136,7 @@ static int sun8i_ss_setup_ivs(struct skcipher_request *areq)
- 
- 	/* we need to copy all IVs from source in case DMA is bi-directionnal */
- 	while (sg && len) {
--		if (sg_dma_len(sg) == 0) {
-+		if (sg->length == 0) {
- 			sg = sg_next(sg);
- 			continue;
- 		}
+diff --git a/arch/arm/boot/dts/at91sam9263ek.dts b/arch/arm/boot/dts/at91sam9263ek.dts
+index 71f60576761a0..df206bdb67883 100644
+--- a/arch/arm/boot/dts/at91sam9263ek.dts
++++ b/arch/arm/boot/dts/at91sam9263ek.dts
+@@ -148,7 +148,7 @@
+ 				nand@3 {
+ 					reg = <0x3 0x0 0x800000>;
+ 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
+-					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
++					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
+ 					nand-bus-width = <8>;
+ 					nand-ecc-mode = "soft";
+ 					nand-on-flash-bbt;
+diff --git a/arch/arm/boot/dts/tny_a9263.dts b/arch/arm/boot/dts/tny_a9263.dts
+index 62b7d9f9a926c..c8b6318aaa838 100644
+--- a/arch/arm/boot/dts/tny_a9263.dts
++++ b/arch/arm/boot/dts/tny_a9263.dts
+@@ -64,7 +64,7 @@
+ 				nand@3 {
+ 					reg = <0x3 0x0 0x800000>;
+ 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
+-					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
++					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
+ 					nand-bus-width = <8>;
+ 					nand-ecc-mode = "soft";
+ 					nand-on-flash-bbt;
+diff --git a/arch/arm/boot/dts/usb_a9263.dts b/arch/arm/boot/dts/usb_a9263.dts
+index d1c07503ff76f..87a5f96014e01 100644
+--- a/arch/arm/boot/dts/usb_a9263.dts
++++ b/arch/arm/boot/dts/usb_a9263.dts
+@@ -84,7 +84,7 @@
+ 				nand@3 {
+ 					reg = <0x3 0x0 0x800000>;
+ 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
+-					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
++					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
+ 					nand-bus-width = <8>;
+ 					nand-ecc-mode = "soft";
+ 					nand-on-flash-bbt;
 -- 
 2.39.5
 
