@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40CF4C62;
-	Mon, 23 Jun 2025 21:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2E44C62;
+	Mon, 23 Jun 2025 21:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713568; cv=none; b=dGRIHPtRUjJWAvV4RoT0rEe8rdF0eTFyIb/27PvWEESnQvno0PVpyktCHciRhOMD3TOYDnmYqaO2oEmU8r0HeYzg+IyCxNDhL/k8fnGp2aXN+/YcaIrszuz9yBBmIiwdBvXfN+dSqFKZdAQTtJNsX82/El451/Gv0N8lwpvJRO4=
+	t=1750713570; cv=none; b=TsbqHxmK4AuyEQyviguJJQKFrI8DOxewrXCq+X6Nel0p0SKQ/lf9SGXaxwaib3wxMfJcyDw1Etxxsjn0T1BS1aTT9zGU/qXXb6AwBUQmpjDqiVw3hCxh3xF2oSuKYPoS4NQqG9Xyk8S3YeYGfgUa9ruhGIAgFhhZKjsPMhKE0kA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713568; c=relaxed/simple;
-	bh=VzWf7hDtdHfDM1VMNj++4w+E5XJ7Lt7gFmEDZoOb7yA=;
+	s=arc-20240116; t=1750713570; c=relaxed/simple;
+	bh=fFc2/+ExhBWtqWoP7X4IV5WoZiWoD4S91mm+TZG3LBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SsV/miZvIqcejy8oxiDZMXsWVWoUwk0ozYvkSk/qurhsS5Oh0o6JrTJlVIPakzD9VABSfjx1uTclP/d0aNmx/bKxTW1gv9eu4KZL1NBiFfYkuUNXzQtKOILqf2F/ToBzTJiO0Q2PVKSmKUXsO1XC2KkhH5boXw0CHqXNrCMT3k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNH3NlSc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uBE4xSE/k4HUwzQNem72BysPhTkfW1ZRbjnNQ6Yq0f0hiVXJWwh2KQC03U8Ylj1CV+SfbUv/7MjzTEjTqV/A0fTyREPM081+RWnuNQvQJUstAxlThc6peEiyzHVFNh8ce8XbZl6WabIhXn2DM4yDrta91Lds1dRdq9HuEOE4pSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xI3C2IlW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNH3NlSc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BEB4C4CEEA;
-	Mon, 23 Jun 2025 21:19:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xI3C2IlW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8259C4CEEA;
+	Mon, 23 Jun 2025 21:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713567;
-	bh=VzWf7hDtdHfDM1VMNj++4w+E5XJ7Lt7gFmEDZoOb7yA=;
+	s=korg; t=1750713570;
+	bh=fFc2/+ExhBWtqWoP7X4IV5WoZiWoD4S91mm+TZG3LBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNH3NlScc/WgU1JQ8U+OABYMfyor1HNTHtvwVs/bjfX9EPyYDgea5JeIVk20A0Ot/
-	 ON86nTaxUHUeyKY7CJuCcE8y3sntONuRuwS7QO1UYd2t1hmjebpqJ+M0L5mOniIPgA
-	 96WVG0kSokUKG9I+xwg+7UehxS9PSAMb/83d6HZw=
+	b=xI3C2IlW2zBLKo8ZntZnXzKi9JJden7wPtZkEg3emqmoafxZt0yZe55fc6+831Txu
+	 j3L36C3lCK5g6lSYUuvxG0joVswmBm/lTNahcTnJDhW4vV3ydRmuo7gXMOR5fpviaq
+	 GpDRhNL+/pdz7dA2WTbO9I8xQ7Rgvx+MGG/6z7BU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Judith Mendez <jm@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/508] f2fs: use d_inode(dentry) cleanup dentry->d_inode
-Date: Mon, 23 Jun 2025 15:02:29 +0200
-Message-ID: <20250623130647.838946820@linuxfoundation.org>
+Subject: [PATCH 5.15 134/411] arm64: dts: ti: k3-am65-main: Fix sdhci node properties
+Date: Mon, 23 Jun 2025 15:04:38 +0200
+Message-ID: <20250623130636.951248797@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,78 +47,141 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit a6c397a31f58a1d577c2c8d04b624e9baa31951c ]
+[ Upstream commit 8ffe9cb889f2b831a9d5bbb1f7ad42d30e31170f ]
 
-no logic changes.
+Update otap-del-sel properties as per datasheet [0].
 
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Add missing clkbuf-sel and itap-del-sel values also as per
+datasheet [0].
+
+Move clkbuf-sel and ti,trm-icp above the otap-del-sel properties
+so the sdhci nodes could be more uniform across platforms.
+
+[0] https://www.ti.com/lit/ds/symlink/am6548.pdf
+
+Fixes: eac99d38f861 ("arm64: dts: ti: k3-am654-main: Update otap-del-sel values")
+Fixes: d7600d070fb0 ("arm64: dts: ti: k3-am65-main: Add support for sdhci1")
+Signed-off-by: Judith Mendez <jm@ti.com>
+Link: https://lore.kernel.org/r/20240423151732.3541894-2-jm@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Stable-dep-of: f55c9f087cc2 ("arm64: dts: ti: k3-am65-main: Add missing taps to sdhci0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/namei.c | 8 ++++----
- fs/f2fs/super.c | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am65-main.dtsi | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
-index 9da104c0743c4..77fa3c639ba38 100644
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -401,7 +401,7 @@ static int f2fs_link(struct dentry *old_dentry, struct inode *dir,
+diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+index b81ee1f2aecd2..1d43d1b529b39 100644
+--- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+@@ -261,6 +261,8 @@ sdhci0: mmc@4f80000 {
+ 		interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>;
+ 		mmc-ddr-1_8v;
+ 		mmc-hs200-1_8v;
++		ti,clkbuf-sel = <0x7>;
++		ti,trm-icp = <0x8>;
+ 		ti,otap-del-sel-legacy = <0x0>;
+ 		ti,otap-del-sel-mmc-hs = <0x0>;
+ 		ti,otap-del-sel-sd-hs = <0x0>;
+@@ -271,8 +273,7 @@ sdhci0: mmc@4f80000 {
+ 		ti,otap-del-sel-ddr50 = <0x5>;
+ 		ti,otap-del-sel-ddr52 = <0x5>;
+ 		ti,otap-del-sel-hs200 = <0x5>;
+-		ti,otap-del-sel-hs400 = <0x0>;
+-		ti,trm-icp = <0x8>;
++		ti,itap-del-sel-ddr52 = <0x0>;
+ 		dma-coherent;
+ 	};
  
- 	if (is_inode_flag_set(dir, FI_PROJ_INHERIT) &&
- 			(!projid_eq(F2FS_I(dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)))
-+			F2FS_I(inode)->i_projid)))
- 		return -EXDEV;
+@@ -283,18 +284,22 @@ sdhci1: mmc@4fa0000 {
+ 		clocks = <&k3_clks 48 0>, <&k3_clks 48 1>;
+ 		clock-names = "clk_ahb", "clk_xin";
+ 		interrupts = <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>;
++		ti,clkbuf-sel = <0x7>;
++		ti,trm-icp = <0x8>;
+ 		ti,otap-del-sel-legacy = <0x0>;
+ 		ti,otap-del-sel-mmc-hs = <0x0>;
+ 		ti,otap-del-sel-sd-hs = <0x0>;
+-		ti,otap-del-sel-sdr12 = <0x0>;
+-		ti,otap-del-sel-sdr25 = <0x0>;
++		ti,otap-del-sel-sdr12 = <0xf>;
++		ti,otap-del-sel-sdr25 = <0xf>;
+ 		ti,otap-del-sel-sdr50 = <0x8>;
+ 		ti,otap-del-sel-sdr104 = <0x7>;
+ 		ti,otap-del-sel-ddr50 = <0x4>;
+ 		ti,otap-del-sel-ddr52 = <0x4>;
+ 		ti,otap-del-sel-hs200 = <0x7>;
+-		ti,clkbuf-sel = <0x7>;
+-		ti,trm-icp = <0x8>;
++		ti,itap-del-sel-legacy = <0xa>;
++		ti,itap-del-sel-sd-hs = <0x1>;
++		ti,itap-del-sel-sdr12 = <0xa>;
++		ti,itap-del-sel-sdr25 = <0x1>;
+ 		dma-coherent;
+ 	};
  
- 	err = f2fs_dquot_initialize(dir);
-@@ -896,7 +896,7 @@ static int f2fs_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
- 
- 	if (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			(!projid_eq(F2FS_I(new_dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)))
-+			F2FS_I(old_inode)->i_projid)))
- 		return -EXDEV;
- 
- 	/*
-@@ -1085,10 +1085,10 @@ static int f2fs_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
- 
- 	if ((is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			!projid_eq(F2FS_I(new_dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)) ||
-+			F2FS_I(old_inode)->i_projid)) ||
- 	    (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			!projid_eq(F2FS_I(old_dir)->i_projid,
--			F2FS_I(new_dentry->d_inode)->i_projid)))
-+			F2FS_I(new_inode)->i_projid)))
- 		return -EXDEV;
- 
- 	err = f2fs_dquot_initialize(old_dir);
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 72160b906f4b3..c1738820a8f0d 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1830,9 +1830,9 @@ static int f2fs_statfs(struct dentry *dentry, struct kstatfs *buf)
- 	buf->f_fsid    = u64_to_fsid(id);
- 
- #ifdef CONFIG_QUOTA
--	if (is_inode_flag_set(dentry->d_inode, FI_PROJ_INHERIT) &&
-+	if (is_inode_flag_set(d_inode(dentry), FI_PROJ_INHERIT) &&
- 			sb_has_quota_limits_enabled(sb, PRJQUOTA)) {
--		f2fs_statfs_project(sb, F2FS_I(dentry->d_inode)->i_projid, buf);
-+		f2fs_statfs_project(sb, F2FS_I(d_inode(dentry))->i_projid, buf);
- 	}
- #endif
- 	return 0;
 -- 
 2.39.5
 
+
+
+task_update_io_bitmap(void)
+ {
++	struct task_struct *tsk = current;
+ 	struct thread_struct *t = &tsk->thread;
+ 
+ 	if (t->iopl_emul == 3 || t->io_bitmap) {
+@@ -54,7 +55,12 @@ void io_bitmap_exit(struct task_struct *
+ 	struct io_bitmap *iobm = tsk->thread.io_bitmap;
+ 
+ 	tsk->thread.io_bitmap = NULL;
+-	task_update_io_bitmap(tsk);
++	/*
++	 * Don't touch the TSS when invoked on a failed fork(). TSS
++	 * reflects the state of @current and not the state of @tsk.
++	 */
++	if (tsk == current)
++		task_update_io_bitmap();
+ 	if (iobm && refcount_dec_and_test(&iobm->refcnt))
+ 		kfree(iobm);
+ }
+@@ -192,8 +198,7 @@ SYSCALL_DEFINE1(iopl, unsigned int, leve
+ 	}
+ 
+ 	t->iopl_emul = level;
+-	task_update_io_bitmap(current);
+-
++	task_update_io_bitmap();
+ 	return 0;
+ }
+ 
+--- a/arch/x86/kernel/process.c
++++ b/arch/x86/kernel/process.c
+@@ -143,6 +143,7 @@ int copy_thread(unsigned long clone_flag
+ 	frame->ret_addr = (unsigned long) ret_from_fork;
+ 	p->thread.sp = (unsigned long) fork_frame;
+ 	p->thread.io_bitmap = NULL;
++	clear_tsk_thread_flag(p, TIF_IO_BITMAP);
+ 	p->thread.iopl_warn = 0;
+ 	memset(p->thread.ptrace_bps, 0, sizeof(p->thread.ptrace_bps));
+ 
+@@ -401,6 +402,11 @@ void native_tss_update_io_bitmap(void)
+ 	} else {
+ 		struct io_bitmap *iobm = t->io_bitmap;
+ 
++		if (WARN_ON_ONCE(!iobm)) {
++			clear_thread_flag(TIF_IO_BITMAP);
++			native_tss_invalidate_io_bitmap();
++		}
++
+ 		/*
+ 		 * Only copy bitmap data when the sequence number differs. The
+ 		 * update time is accounted to the incoming task.
 
 
