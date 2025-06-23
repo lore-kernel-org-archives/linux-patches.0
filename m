@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101486136;
-	Mon, 23 Jun 2025 22:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72064409;
+	Mon, 23 Jun 2025 22:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716022; cv=none; b=ctZZYInmMxnNLxA9aSfkUP3nQYuuP0LtV2vPLqSZ3E1ZHISz3G0GKzcOmZR4UF6zavyI/30Hhn1S8gnPzBlQcwCNu/52bQXx4nMpG9ClfScRMj/FFXMv9phEFyXUtnMSZiZSgztMdUB2U/OXyr4VLha0ddpbH2qfnF08TP6poAo=
+	t=1750716024; cv=none; b=c0QztBC5FqKcm/+hqkSNc0ku3UaNRWl1+xlTKcvhDgKQUqbotKgbopqtCaCu1kmPstzeeOv/q3YJXHZavlTDsYCxTrVHS6yZUbJooKqJLdgJlpcR94du2tyOAvqLmoPcVIMMmBrAbTwJppKZdrw0mdaamSemWuUCT+fl7v4ik9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716022; c=relaxed/simple;
-	bh=ZiBURmDAdIvI9ImGBQhhk3U4J/gfaFI20z5jU34vRGw=;
+	s=arc-20240116; t=1750716024; c=relaxed/simple;
+	bh=Frdh3sz0SdOhAhhoUFtk+3MIwZdlkBTY9pRch5UnGzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwaeX7t6r9vjvmxSlWgB/WmH/vHa+kOUdPtzcYm4/Ob5NttLf2X4knL0xh8h0E6y0UWFyuacmfPDrmnVodJtMU7dLObCFglRlYEiqa6UWIJOZgCVVtdjRgJbwIRLqi+fUen8UxRtp9FngYZMcMCcEScTuFEQAmUjSdLYpjmx08k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNgT2/xA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SvNX+iXK9x0OOlsfKgluBv6bHLSkoLyjKf7v9b0LBhHK4ctjtzDd8mOzUPgvAXoylSWSVl1dFQOpMZ0CEZScadbr9x+CPd84Pfg9oLN0/KsiALjHMWzZGlilkFNiiMyZN5fXZjTl+cvC1WZMoQUj7zTbcCYbbA5LKv0EY4ZDf20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2FtgW2K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNgT2/xA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB18C4CEEA;
-	Mon, 23 Jun 2025 22:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2FtgW2K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C835C4CEEA;
+	Mon, 23 Jun 2025 22:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716021;
-	bh=ZiBURmDAdIvI9ImGBQhhk3U4J/gfaFI20z5jU34vRGw=;
+	s=korg; t=1750716024;
+	bh=Frdh3sz0SdOhAhhoUFtk+3MIwZdlkBTY9pRch5UnGzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wNgT2/xAjWrKlH15ANjouzcCuUomAHR8FAnq3hsKArERe2/zZy3CZkAAJywAfXJIo
-	 us2whHPoqpqfAMEbcK3uK2iqH3OD+SR1oVOVcqI0UnLldJXt18TAT4XznCk3YqYxpo
-	 cVDahBQT5BN6bYn5PvsvqcnNggKjYeAck+6DEYdg=
+	b=O2FtgW2Ksn+I66/7YDbeiCNJHvZTu5dKlPj3NUeQ3CMm20ejIw/MDP+ogpyBlPoYK
+	 D3z9vuVg/KmGJhYJeQwlvlxA4LVOFiDGGT2yamS7wMQvYGy1Rk/Qb6b/m/Ed0IxZSf
+	 0oKJd6aSQSdaYGfa4XcYV1PZ2UABVgfGioL0aDZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Barry Song <21cnbao@gmail.com>,
-	Jann Horn <jannh@google.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	David Hildenbrand <david@redhat.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Barry Song <baohua@kernel.org>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 497/592] mm/madvise: handle madvise_lock() failure during race unwinding
-Date: Mon, 23 Jun 2025 15:07:35 +0200
-Message-ID: <20250623130712.254231443@linuxfoundation.org>
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.1 275/508] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
+Date: Mon, 23 Jun 2025 15:05:20 +0200
+Message-ID: <20250623130652.015566189@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,57 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 9c49e5d09f076001e05537734d7df002162eb2b5 upstream.
+commit 43fc0a99906e04792786edf8534d8d58d1e9de0c upstream.
 
-When unwinding race on -ERESTARTNOINTR handling of process_madvise(),
-madvise_lock() failure is ignored.  Check the failure and abort remaining
-works in the case.
+After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
+KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
+assembly files with clang:
 
-Link: https://lkml.kernel.org/r/20250602174926.1074-1-sj@kernel.org
-Fixes: 4000e3d0a367 ("mm/madvise: remove redundant mmap_lock operations from process_madvise()")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Reported-by: Barry Song <21cnbao@gmail.com>
-Closes: https://lore.kernel.org/CAGsJ_4xJXXO0G+4BizhohSZ4yDteziPw43_uF8nPXPWxUVChzw@mail.gmail.com
-Reviewed-by: Jann Horn <jannh@google.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  arch/powerpc/lib/copypage_power7.S: Assembler messages:
+  arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b01000'
+  arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b01010'
+  arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b01000'
+  arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b01010'
+  arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b01010'
+  clang: error: assembler command failed with exit code 1 (use -v to see invocation)
+
+as-option only uses KBUILD_AFLAGS, so after removing CLANG_FLAGS from
+KBUILD_AFLAGS, there is no more '--target=' or '--prefix=' flags. As a
+result of those missing flags, the host target
+will be tested during as-option calls and likely fail, meaning necessary
+flags may not get added when building assembly files, resulting in
+errors like seen above.
+
+Add KBUILD_CPPFLAGS to as-option invocations to clear up the errors.
+This should have been done in commit d5c8d6e0fa61 ("kbuild: Update
+assembler calls to use proper flags and language target"), which
+switched from using the assembler target to the assembler-with-cpp
+target, so flags that affect preprocessing are passed along in all
+relevant tests. as-option now mirrors cc-option.
+
+Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5Mxag@mail.gmail.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/madvise.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ scripts/Makefile.compiler |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -1832,7 +1832,9 @@ static ssize_t vector_madvise(struct mm_
+--- a/scripts/Makefile.compiler
++++ b/scripts/Makefile.compiler
+@@ -32,7 +32,7 @@ try-run = $(shell set -e;		\
+ # Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
  
- 			/* Drop and reacquire lock to unwind race. */
- 			madvise_unlock(mm, behavior);
--			madvise_lock(mm, behavior);
-+			ret = madvise_lock(mm, behavior);
-+			if (ret)
-+				goto out;
- 			continue;
- 		}
- 		if (ret < 0)
-@@ -1841,6 +1843,7 @@ static ssize_t vector_madvise(struct mm_
- 	}
- 	madvise_unlock(mm, behavior);
+ as-option = $(call try-run,\
+-	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
++	$(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
  
-+out:
- 	ret = (total_len - iov_iter_count(iter)) ? : ret;
- 
- 	return ret;
+ # as-instr
+ # Usage: aflags-y += $(call as-instr,instr,option1,option2)
 
 
