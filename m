@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD5C221543;
-	Mon, 23 Jun 2025 22:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE65221543;
+	Mon, 23 Jun 2025 22:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717575; cv=none; b=rJ5jPKwojrmrS1fTJNfrsWnczmNn0GEkzxLzvNh50EQlnQ+ZTxIXRiqVhJBwAJQA4p93fL0eTlyG50nlukSGfHayJmfJuUnCh204diA41OZb9AjXPEYmrTxgj8YlJmAOatHTZ+QrGDAA4xOcomxbX4bEgwB6QMtF06UjlKhojKQ=
+	t=1750717577; cv=none; b=Q6vTXWvbsvrvfCNov/qPMagRIqVYBLcIrg7+qNSdaU+YYgTy+aMuDXufMvLlI8uwwh3OSHMIIp0ff1GvL1JHuEAJf0FJay8zbjd74l3RS5M9i1l8q9vIvjYhWkzO22pN26rsA3/tmnCoaHjZ+n0BLu4Tm/+zn7PR3quh1rc1WtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717575; c=relaxed/simple;
-	bh=mQN1tauPCmBlEbyjuCT5LcTa2vZscAwl12UJE6dDnYQ=;
+	s=arc-20240116; t=1750717577; c=relaxed/simple;
+	bh=Me7mAQ9qb81mDdMQQahWyAl30uh4k4p84pNtpZI2apY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lDIQBhXYaX2MNVLooS/UKBFg8e8CEXnUXxOfaqCHOmQ2bxqpl+nY1HQtolFsJ6Z3tDdXu2VkZn/O0yytALxH3r7fNN8LP4QaOdj9KfFVyyyUkVlcS8PGYjii2YZsXxizzgpcQrjAQlLRfzMvhWssTCVVE3GehwT07vG4E0KPH2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVzwOtZF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GIi9Vh2aLG2CpRDheyN7H/HyVkMcOZSNnRVITLLQwoKhqWnD+CL398UYv8hrPHEbGr5Wt1sgpy75RW919mRX02FnPQEThIeNaU/ZIzTEV8yG/vI9JUyTpGW4Ioi8CrWGSn/Nho4JTAtEz17gilRzrRQxXojcJVDws6wcTYYEeKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWovhyuI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVzwOtZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8856C4CEEA;
-	Mon, 23 Jun 2025 22:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWovhyuI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56FD9C4CEEA;
+	Mon, 23 Jun 2025 22:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717575;
-	bh=mQN1tauPCmBlEbyjuCT5LcTa2vZscAwl12UJE6dDnYQ=;
+	s=korg; t=1750717577;
+	bh=Me7mAQ9qb81mDdMQQahWyAl30uh4k4p84pNtpZI2apY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fVzwOtZF11jkFf/WqKSAggq+/KUN5RBUj1zky2dSPB1fIWA3Ri4A8PD1MhJW3lov3
-	 Vwz/Xg4NgUyxjjInTnl0KScERAAGEIe9bAdVriXR5H2vKSu671SJopObcN0ehKoepo
-	 NjPy4CqjXUnhNb12N+1tS2n9rk2FXeAaB4cG7pRc=
+	b=jWovhyuIpS98BhLj3vieu0Af6gu6BZPEYvGPpZTXVGbDdu6uG7ubJcL7qNTC8J1CO
+	 o4K0yXUsf4A8eHFjfyg1qgjRQM4VaXcLup4rgtaTqEGVV6bR7uMQEGBhkGZQnBTkmL
+	 ic3Ekf4VdiGTSNTzS85rsQ7QjZALiKrpbKBPwMa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangYuli <wangyuli@uniontech.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 457/508] Input: sparcspkr - avoid unannotated fall-through
-Date: Mon, 23 Jun 2025 15:08:22 +0200
-Message-ID: <20250623130656.377718412@linuxfoundation.org>
+	Stuart Hayes <stuart.w.hayes@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 438/508] platform/x86: dell_rbu: Fix list usage
+Date: Mon, 23 Jun 2025 15:08:03 +0200
+Message-ID: <20250623130655.940360821@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -44,78 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Stuart Hayes <stuart.w.hayes@gmail.com>
 
-commit 8b1d858cbd4e1800e9336404ba7892b5a721230d upstream.
+[ Upstream commit 61ce04601e0d8265ec6d2ffa6df5a7e1bce64854 ]
 
-Fix follow warnings with clang-21i (and reformat for clarity):
-  drivers/input/misc/sparcspkr.c:78:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
-     78 |                 case SND_TONE: break;
-        |                 ^
-  drivers/input/misc/sparcspkr.c:78:3: note: insert 'break;' to avoid fall-through
-     78 |                 case SND_TONE: break;
-        |                 ^
-        |                 break;
-  drivers/input/misc/sparcspkr.c:113:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
-    113 |                 case SND_TONE: break;
-        |                 ^
-  drivers/input/misc/sparcspkr.c:113:3: note: insert 'break;' to avoid fall-through
-    113 |                 case SND_TONE: break;
-        |                 ^
-        |                 break;
-  2 warnings generated.
+Pass the correct list head to list_for_each_entry*() when looping through
+the packet list.
 
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://lore.kernel.org/r/6730E40353C76908+20250415052439.155051-1-wangyuli@uniontech.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Without this patch, reading the packet data via sysfs will show the data
+incorrectly (because it starts at the wrong packet), and clearing the
+packet list will result in a NULL pointer dereference.
+
+Fixes: d19f359fbdc6 ("platform/x86: dell_rbu: don't open code list_for_each_entry*()")
+Signed-off-by: Stuart Hayes <stuart.w.hayes@gmail.com>
+Link: https://lore.kernel.org/r/20250609184659.7210-3-stuart.w.hayes@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/sparcspkr.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/platform/x86/dell/dell_rbu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/input/misc/sparcspkr.c
-+++ b/drivers/input/misc/sparcspkr.c
-@@ -74,9 +74,14 @@ static int bbc_spkr_event(struct input_d
- 		return -1;
+diff --git a/drivers/platform/x86/dell/dell_rbu.c b/drivers/platform/x86/dell/dell_rbu.c
+index 9f51e0fcab04e..4d2b5f6dd513f 100644
+--- a/drivers/platform/x86/dell/dell_rbu.c
++++ b/drivers/platform/x86/dell/dell_rbu.c
+@@ -292,7 +292,7 @@ static int packet_read_list(char *data, size_t * pread_length)
+ 	remaining_bytes = *pread_length;
+ 	bytes_read = rbu_data.packet_read_count;
  
- 	switch (code) {
--		case SND_BELL: if (value) value = 1000;
--		case SND_TONE: break;
--		default: return -1;
-+	case SND_BELL:
-+		if (value)
-+			value = 1000;
-+		break;
-+	case SND_TONE:
-+		break;
-+	default:
-+		return -1;
- 	}
+-	list_for_each_entry(newpacket, (&packet_data_head.list)->next, list) {
++	list_for_each_entry(newpacket, &packet_data_head.list, list) {
+ 		bytes_copied = do_packet_read(pdest, newpacket,
+ 			remaining_bytes, bytes_read, &temp_count);
+ 		remaining_bytes -= bytes_copied;
+@@ -315,7 +315,7 @@ static void packet_empty_list(void)
+ {
+ 	struct packet_data *newpacket, *tmp;
  
- 	if (value > 20 && value < 32767)
-@@ -112,9 +117,14 @@ static int grover_spkr_event(struct inpu
- 		return -1;
+-	list_for_each_entry_safe(newpacket, tmp, (&packet_data_head.list)->next, list) {
++	list_for_each_entry_safe(newpacket, tmp, &packet_data_head.list, list) {
+ 		list_del(&newpacket->list);
  
- 	switch (code) {
--		case SND_BELL: if (value) value = 1000;
--		case SND_TONE: break;
--		default: return -1;
-+	case SND_BELL:
-+		if (value)
-+			value = 1000;
-+		break;
-+	case SND_TONE:
-+		break;
-+	default:
-+		return -1;
- 	}
- 
- 	if (value > 20 && value < 32767)
+ 		/*
+-- 
+2.39.5
+
 
 
