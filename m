@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57F64409;
-	Mon, 23 Jun 2025 22:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE434409;
+	Mon, 23 Jun 2025 22:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716041; cv=none; b=Vt6//qauLn/tsAGO5VN8uW/djfdrFd7Z2pegrwN0wpt2BimEG+bXxneRDM9SKnKwYiBCIVLi1W7DVTTn3RazCM+zozWTgU3i1WT4VOUH8Tf/bHnWFpfOAVpZzlGbLXtCdQT8TVP7Wv98xx7ElsJ7iCW02wcdpXarKPCA9J6N+sg=
+	t=1750716044; cv=none; b=fPsyjYWaIdvHkAJ5huUV+PzwYlZXpqSme6ev8q/7qh8EzQnpE4PztfIJH6YCGa7e8EA11A2qWchyiKIExvgQ/ggq3Vg6GJIhKoN3nfb2WgwVvBi2jEFyBAtxwCgHHk1G4EUAx/q8wJTYJthxOy8zKJ/7gEMJDlBGNvmqDd2nZ4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716041; c=relaxed/simple;
-	bh=PDAHWpl6tmUJZnW+NufPRCFDn7a1DRLZEXj5lQykQiQ=;
+	s=arc-20240116; t=1750716044; c=relaxed/simple;
+	bh=1U6hbO2fiLpFm+s0VX19Lh3o9XrwDLXqu6t+uUMTkzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V89J9q6vBk4a46nBq/As2lcLUHsNPCRBK8Vux23a+dQzMkjsg5lMJ/GtRsP1bc/Bp5LMtSzrBF7KdEkv9OojkkKMVC/t9M/lTgo8YmVS9qmUFtpSTxI+FM/sRb0hMUZWCn3UgndWCxlUfxn48tAMkzU13tlOQs4/wftwK64gV8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Nnj601e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SOCcopJ4eenEIFGwCYLBT+8XEnvboYgefhXpCc0um8Tz+hLTR/q4+sJ2vzdEYWdddqrp0q3GUFwav9UZl/A/e8ALOKQXVTOC8Yk2rrtF4StBKM/9/VebGXq6B5ipj+H86b/mPvQw0Sbz7hRT4cufiXrE8he2aLn7RX4SiwygleI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XP4ynpJF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Nnj601e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C435C4CEED;
-	Mon, 23 Jun 2025 22:00:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XP4ynpJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D22C4CEEA;
+	Mon, 23 Jun 2025 22:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716041;
-	bh=PDAHWpl6tmUJZnW+NufPRCFDn7a1DRLZEXj5lQykQiQ=;
+	s=korg; t=1750716044;
+	bh=1U6hbO2fiLpFm+s0VX19Lh3o9XrwDLXqu6t+uUMTkzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Nnj601eiQjXTFPpyJ7A8Mp+jwP2FtFBnaLtqHyzlDULyz5X+CEnl4ArBIrkNgMqN
-	 Mj8QzJ3Vs+Sup6dMsc7sly/3PI3Xd+ZqDzgaB8xJpGefd2NI5LagSTyyRx2kleb9QI
-	 ycFop7Xpb84dEmh227Fq+uSzGm7dJKYDJOjJvZno=
+	b=XP4ynpJFLg3EwLc2Zu05e6OsDwZJFFS6QrdVFwcgPQc8svO7riHwc9j1Oq/i1IlLj
+	 sV81g4kIpuMVucJEz5VNQc8oPom2Q1y1gaOZDSoNRj2hzm/O9nHFM5FPboby1CvOGr
+	 QDKDhLOKCFJttWwGs9LpxCfxIjO8SIYhHFjhphew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Hongbo Li <lihongbo22@huawei.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.15 498/592] erofs: remove unused trace event erofs_destroy_inode
-Date: Mon, 23 Jun 2025 15:07:36 +0200
-Message-ID: <20250623130712.278004445@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Francois Romieu <romieu@fr.zoreil.com>
+Subject: [PATCH 5.10 317/355] net: atm: fix /proc/net/atm/lec handling
+Date: Mon, 23 Jun 2025 15:08:38 +0200
+Message-ID: <20250623130636.297696692@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 30b58444807c93bffeaba7d776110f2a909d2f9a upstream.
+[ Upstream commit d03b79f459c7935cff830d98373474f440bd03ae ]
 
-The trace event `erofs_destroy_inode` was added but remains unused. This
-unused event contributes approximately 5KB to the kernel module size.
+/proc/net/atm/lec must ensure safety against dev_lec[] changes.
 
-Reported-by: Steven Rostedt <rostedt@goodmis.org>
-Closes: https://lore.kernel.org/r/20250612224906.15000244@batman.local.home
-Fixes: 13f06f48f7bf ("staging: erofs: support tracepoint")
-Cc: stable@vger.kernel.org
-Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250617054056.3232365-1-hsiangkao@linux.alibaba.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+It appears it had dev_put() calls without prior dev_hold(),
+leading to imbalance and UAF.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Francois Romieu <romieu@fr.zoreil.com> # Minor atm contributor
+Link: https://patch.msgid.link/20250618140844.1686882-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/erofs.h |   18 ------------------
- 1 file changed, 18 deletions(-)
+ net/atm/lec.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/include/trace/events/erofs.h
-+++ b/include/trace/events/erofs.h
-@@ -211,24 +211,6 @@ TRACE_EVENT(erofs_map_blocks_exit,
- 		  show_mflags(__entry->mflags), __entry->ret)
- );
+diff --git a/net/atm/lec.c b/net/atm/lec.c
+index 3f67b84c8f1c9..73078306504c0 100644
+--- a/net/atm/lec.c
++++ b/net/atm/lec.c
+@@ -911,7 +911,6 @@ static void *lec_itf_walk(struct lec_state *state, loff_t *l)
+ 	v = (dev && netdev_priv(dev)) ?
+ 		lec_priv_walk(state, l, netdev_priv(dev)) : NULL;
+ 	if (!v && dev) {
+-		dev_put(dev);
+ 		/* Partial state reset for the next time we get called */
+ 		dev = NULL;
+ 	}
+@@ -935,6 +934,7 @@ static void *lec_seq_start(struct seq_file *seq, loff_t *pos)
+ {
+ 	struct lec_state *state = seq->private;
  
--TRACE_EVENT(erofs_destroy_inode,
--	TP_PROTO(struct inode *inode),
--
--	TP_ARGS(inode),
--
--	TP_STRUCT__entry(
--		__field(	dev_t,		dev		)
--		__field(	erofs_nid_t,	nid		)
--	),
--
--	TP_fast_assign(
--		__entry->dev	= inode->i_sb->s_dev;
--		__entry->nid	= EROFS_I(inode)->nid;
--	),
--
--	TP_printk("dev = (%d,%d), nid = %llu", show_dev_nid(__entry))
--);
--
- #endif /* _TRACE_EROFS_H */
++	mutex_lock(&lec_mutex);
+ 	state->itf = 0;
+ 	state->dev = NULL;
+ 	state->locked = NULL;
+@@ -952,8 +952,9 @@ static void lec_seq_stop(struct seq_file *seq, void *v)
+ 	if (state->dev) {
+ 		spin_unlock_irqrestore(&state->locked->lec_arp_lock,
+ 				       state->flags);
+-		dev_put(state->dev);
++		state->dev = NULL;
+ 	}
++	mutex_unlock(&lec_mutex);
+ }
  
-  /* This part must be outside protection */
+ static void *lec_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+-- 
+2.39.5
+
 
 
