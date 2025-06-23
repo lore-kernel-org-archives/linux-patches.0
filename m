@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F869223DCC;
-	Mon, 23 Jun 2025 22:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F46E222581;
+	Mon, 23 Jun 2025 22:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717683; cv=none; b=VpJf4u9qj1xpej36YzOAzw4P7+7gI6JLNSvKpL6Nxf3YvtsroJJcDTSfhdBX7TByF1VhbK26ZmjHhxIAbvY3xaLbL7GOiyztywJynMdHxb1FujDXKp4+nyxF1fsJ1bfI1QemOX5R2TTerhDnR4madNy8imCWbJW03bVW9adLreg=
+	t=1750717686; cv=none; b=pr6ABkXsI/lmU5Bc23dR/rsJkWFc7qLlRHnLwGd0yN4Bz6MiZ4JTKw4Jhhb6kqNNnZVYp8dRQSyXWJQZXz6e2+I9XnlEx1dIoSwkpv0vSL8Z8/1aYxWfQMan7xuUdQftLLXAGXL1okr3gJl0OiT31XHCAHZY/XBbFEOkyhfrGOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717683; c=relaxed/simple;
-	bh=40m5R+fdHCSl+sM3jMzmvrg1q6P7LVBCA4cuKPomqCo=;
+	s=arc-20240116; t=1750717686; c=relaxed/simple;
+	bh=aFY5dGug+OAKgehe4s4PnQfMuP2WHwuzgYGnzA4lgsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aiBavu6ndE8tZEwKV+p8vY9twIzl6VcddIK4kbHq9+J697zItM30VrnaCcM60tz0kVoKFUR6KUNvr3Xlr0S/iA27aqFzSeJ0kkAOuVO8igO4RO3Jap8h/Ra9RnVu3jB0yLarvbtS/YssMzWrMQlVDpmnHckB6jtBFvrxdsbqLe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8wvTQkl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zu3SWvhonPrftywLlUNTLTn6iHahEXds6GcYIH3pNZh99MxQPM7Ib6ct3tJ5UZgpZxgZaC4f5BCAmjX5QPkzX6rjalL5Nj0bXIh3WqqLAcc3BpMaAnenKExdbDkyEgEA/J/l6pRmS97xDT0X3kLTD+dAzp0UnuJHc+dNDkrhAwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpRkD4AK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8wvTQkl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C7FC4CEEA;
-	Mon, 23 Jun 2025 22:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpRkD4AK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B32AC4CEEA;
+	Mon, 23 Jun 2025 22:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717683;
-	bh=40m5R+fdHCSl+sM3jMzmvrg1q6P7LVBCA4cuKPomqCo=;
+	s=korg; t=1750717685;
+	bh=aFY5dGug+OAKgehe4s4PnQfMuP2WHwuzgYGnzA4lgsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8wvTQkl03Gkb8nLBpvAYPB3FQ3SdsJArW8ZLx7HrgbdiJr2dnuv1ydYnZZoZnf75
-	 ch1V/zk8OlO/20LtFpvk1gFPBnN8MPHgpn9skFietHjV9IeW+7KWbrwoZbGxkfhr6y
-	 bGtioE6C+1GHzdZZ8wB986bvxEzlCPHg+EkMGtw0=
+	b=xpRkD4AKDbL3freFYMdPHIoviBBneK14SvqFVMyJmIrwCKW60RlGzv+kD/kmR/5QQ
+	 hzIZzW9b+/lyu0a0KunyaW8/RmtgyjoeCbFQEGQP11hhS/pYpkvNZK/EmfXZOti7K7
+	 46Y+KW8H5H1sw3tKD4j6xOXX3a8jCQ245yfXHaqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <ziyao@disroot.org>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 502/508] platform/loongarch: laptop: Add backlight power control support
-Date: Mon, 23 Jun 2025 15:09:07 +0200
-Message-ID: <20250623130657.359395012@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.1 503/508] s390/pci: Fix __pcilg_mio_inuser() inline assembly
+Date: Mon, 23 Jun 2025 15:09:08 +0200
+Message-ID: <20250623130657.380571232@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -50,145 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Zi <ziyao@disroot.org>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 53c762b47f726e4079a1f06f684bce2fc0d56fba upstream.
+commit c4abe6234246c75cdc43326415d9cff88b7cf06c upstream.
 
-loongson_laptop_turn_{on,off}_backlight() are designed for controlling
-the power of the backlight, but they aren't really used in the driver
-previously.
+Use "a" constraint for the shift operand of the __pcilg_mio_inuser() inline
+assembly. The used "d" constraint allows the compiler to use any general
+purpose register for the shift operand, including register zero.
 
-Unify these two functions since they only differ in arguments passed to
-ACPI method, and wire up loongson_laptop_backlight_update() to update
-the power state of the backlight as well. Tested on the TongFang L860-T2
-Loongson-3A5000 laptop.
+If register zero is used this my result in incorrect code generation:
 
+ 8f6:   a7 0a ff f8             ahi     %r0,-8
+ 8fa:   eb 32 00 00 00 0c       srlg    %r3,%r2,0  <----
+
+If register zero is selected to contain the shift value, the srlg
+instruction ignores the contents of the register and always shifts zero
+bits. Therefore use the "a" constraint which does not permit to select
+register zero.
+
+Fixes: f058599e22d5 ("s390/pci: Fix s390_mmio_read/write with MIO")
 Cc: stable@vger.kernel.org
-Fixes: 6246ed09111f ("LoongArch: Add ACPI-based generic laptop driver")
-Signed-off-by: Yao Zi <ziyao@disroot.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reported-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/loongarch/loongson-laptop.c |   73 +++++++++++++--------------
- 1 file changed, 37 insertions(+), 36 deletions(-)
+ arch/s390/pci/pci_mmio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/loongarch/loongson-laptop.c
-+++ b/drivers/platform/loongarch/loongson-laptop.c
-@@ -56,8 +56,7 @@ static struct input_dev *generic_inputde
- static acpi_handle hotkey_handle;
- static struct key_entry hotkey_keycode_map[GENERIC_HOTKEY_MAP_MAX];
+--- a/arch/s390/pci/pci_mmio.c
++++ b/arch/s390/pci/pci_mmio.c
+@@ -223,7 +223,7 @@ static inline int __pcilg_mio_inuser(
+ 		[ioaddr_len] "+&d" (ioaddr_len.pair),
+ 		[cc] "+d" (cc), [val] "=d" (val),
+ 		[dst] "+a" (dst), [cnt] "+d" (cnt), [tmp] "=d" (tmp),
+-		[shift] "+d" (shift)
++		[shift] "+a" (shift)
+ 		:: "cc", "memory");
  
--int loongson_laptop_turn_on_backlight(void);
--int loongson_laptop_turn_off_backlight(void);
-+static bool bl_powered;
- static int loongson_laptop_backlight_update(struct backlight_device *bd);
- 
- /* 2. ACPI Helpers and device model */
-@@ -354,16 +353,42 @@ static int ec_backlight_level(u8 level)
- 	return level;
- }
- 
-+static int ec_backlight_set_power(bool state)
-+{
-+	int status;
-+	union acpi_object arg0 = { ACPI_TYPE_INTEGER };
-+	struct acpi_object_list args = { 1, &arg0 };
-+
-+	arg0.integer.value = state;
-+	status = acpi_evaluate_object(NULL, "\\BLSW", &args, NULL);
-+	if (ACPI_FAILURE(status)) {
-+		pr_info("Loongson lvds error: 0x%x\n", status);
-+		return -EIO;
-+	}
-+
-+	return 0;
-+}
-+
- static int loongson_laptop_backlight_update(struct backlight_device *bd)
- {
--	int lvl = ec_backlight_level(bd->props.brightness);
-+	bool target_powered = !backlight_is_blank(bd);
-+	int ret = 0, lvl = ec_backlight_level(bd->props.brightness);
- 
- 	if (lvl < 0)
- 		return -EIO;
-+
- 	if (ec_set_brightness(lvl))
- 		return -EIO;
- 
--	return 0;
-+	if (target_powered != bl_powered) {
-+		ret = ec_backlight_set_power(target_powered);
-+		if (ret < 0)
-+			return ret;
-+
-+		bl_powered = target_powered;
-+	}
-+
-+	return ret;
- }
- 
- static int loongson_laptop_get_brightness(struct backlight_device *bd)
-@@ -384,7 +409,7 @@ static const struct backlight_ops backli
- 
- static int laptop_backlight_register(void)
- {
--	int status = 0;
-+	int status = 0, ret;
- 	struct backlight_properties props;
- 
- 	memset(&props, 0, sizeof(props));
-@@ -392,44 +417,20 @@ static int laptop_backlight_register(voi
- 	if (!acpi_evalf(hotkey_handle, &status, "ECLL", "d"))
- 		return -EIO;
- 
-+	ret = ec_backlight_set_power(true);
-+	if (ret)
-+		return ret;
-+
-+	bl_powered = true;
-+
- 	props.max_brightness = status;
- 	props.brightness = ec_get_brightness();
-+	props.power = FB_BLANK_UNBLANK;
- 	props.type = BACKLIGHT_PLATFORM;
- 
- 	backlight_device_register("loongson_laptop",
- 				NULL, NULL, &backlight_laptop_ops, &props);
- 
--	return 0;
--}
--
--int loongson_laptop_turn_on_backlight(void)
--{
--	int status;
--	union acpi_object arg0 = { ACPI_TYPE_INTEGER };
--	struct acpi_object_list args = { 1, &arg0 };
--
--	arg0.integer.value = 1;
--	status = acpi_evaluate_object(NULL, "\\BLSW", &args, NULL);
--	if (ACPI_FAILURE(status)) {
--		pr_info("Loongson lvds error: 0x%x\n", status);
--		return -ENODEV;
--	}
--
--	return 0;
--}
--
--int loongson_laptop_turn_off_backlight(void)
--{
--	int status;
--	union acpi_object arg0 = { ACPI_TYPE_INTEGER };
--	struct acpi_object_list args = { 1, &arg0 };
--
--	arg0.integer.value = 0;
--	status = acpi_evaluate_object(NULL, "\\BLSW", &args, NULL);
--	if (ACPI_FAILURE(status)) {
--		pr_info("Loongson lvds error: 0x%x\n", status);
--		return -ENODEV;
--	}
- 
- 	return 0;
- }
+ 	/* did we write everything to the user space buffer? */
 
 
