@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1B32628C;
-	Mon, 23 Jun 2025 21:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721882628C;
+	Mon, 23 Jun 2025 21:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713845; cv=none; b=uNiQfKDdbkhfcFSTHR6EpOnEgkMV1JS79yM5gxIZdEkbGJzLwXNNdDCHAcg5Jo+JDBRWb3MSpyUkQP6+iCxKjccr33ei/MJ9RZktppLli/wWAszY7GfRkGS6P8E51E+ONYA8Oowkvi71FjA013y+7K8yeCEEj2bgG8JJ3NrgQMc=
+	t=1750713847; cv=none; b=uHViqG9YRA97fX9/MrF6PoiiqfUEO+ZwtMj5x99/Fgpee4HTZxNdvTdfrHAdhhWMuz+aTnHnTPgvpq+yRtRgo/ROlXDS0m7COksJBdIMTE67fnNdjgz+fSS9zXL/8d8F51d+f4s24nMUa2/cxfPJeOJezI+Ih3Tipa12ZEmAiT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713845; c=relaxed/simple;
-	bh=KPnpjJphfUVIqvRRyOsV1aAg1p2r099oEeyt/z3EnCk=;
+	s=arc-20240116; t=1750713847; c=relaxed/simple;
+	bh=700XKjVv8KoY2mg6I3XEKSSC6f+ehnyClkqAP24fT4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pijDWGr3R8eAwld43eZ6OshiEhoXKtnJ51JqurABbslGZ/J7wEOOiL09aLvSVCrHMXjiZI6dolleWerrQUrG4wenTQIZOsqXWaYd/BlftbenmolVAL7wdnW/TH4Se0M0fFTYXpJ2khDEFIjkOh+z2aB6uOigMPx4Udz/ihE1JNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHtduYUb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hROXgZ98OE2wr0EdM35kXPIgXklfciJPuUGOKT78m8ZA8VGWOWKdGcAJZOXWu8HreQMOk7aWdq6GPoXT4DJZJom4oa4NylUWf8BpnoGxPOB9VStuFOCjv9wjirvZPYU0ktzDAml9PpiY7n8gD20zar7OCZ2Ulr+V11dA4pvn7eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wc39ZcHM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHtduYUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9916FC4CEEA;
-	Mon, 23 Jun 2025 21:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wc39ZcHM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B576C4CEEA;
+	Mon, 23 Jun 2025 21:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713844;
-	bh=KPnpjJphfUVIqvRRyOsV1aAg1p2r099oEeyt/z3EnCk=;
+	s=korg; t=1750713847;
+	bh=700XKjVv8KoY2mg6I3XEKSSC6f+ehnyClkqAP24fT4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHtduYUbJxn4nqCEolix3AofiMwWehLDlQRIeMYn/yq8Ko+J0xl9aSSX4LQsY/tXh
-	 pcurBYGx2+tELw82gyTCk4v4OrAxLDSXuCB2aeX0sDX7DlLWmPh0YuHFnphJSsYpTF
-	 e4WQjRp/fLNZ4qBnhHfNn+N+Qt+40eFcZk8y9d1w=
+	b=Wc39ZcHMiOLkSWRrsz30DHSP0P22I53+SiuOrQvLnuUnfT/bykQpTS6HsF1/rHp3S
+	 VLXynmsNsXRcBybZBkLlqH0IuM13ECh4j4pX78gjFAoBQezUHilSkjbWNek/VWLs+z
+	 DRi3LFE5i8Pw1ngNMN3IGRmmXDWfBHEYUZ+2oTmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 150/508] rtc: sh: assign correct interrupts with DT
-Date: Mon, 23 Jun 2025 15:03:15 +0200
-Message-ID: <20250623130648.972893089@linuxfoundation.org>
+Subject: [PATCH 6.15 369/592] clk: rockchip: rk3036: mark ddrphy as critical
+Date: Mon, 23 Jun 2025 15:05:27 +0200
+Message-ID: <20250623130709.219057511@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 8f2efdbc303fe7baa83843d3290dd6ea5ba3276c ]
+[ Upstream commit 596a977b34a722c00245801a5774aa79cec4e81d ]
 
-The DT bindings for this driver define the interrupts in the order as
-they are numbered in the interrupt controller. The old platform_data,
-however, listed them in a different order. So, for DT based platforms,
-they are mixed up. Assign them specifically for DT, so we can keep the
-bindings stable. After the fix, 'rtctest' passes again on the Renesas
-Genmai board (RZ-A1 / R7S72100).
+The ddrphy is supplied by the dpll, but due to the limited number of PLLs
+on the rk3036, the dpll also is used for other periperhals, like the GPU.
 
-Fixes: dab5aec64bf5 ("rtc: sh: add support for rza series")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/20250227134256.9167-11-wsa+renesas@sang-engineering.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+So it happened, when the Lima driver turned off the gpu clock, this in
+turn also disabled the dpll and thus the ram.
+
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250503202532.992033-4-heiko@sntech.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-sh.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/clk/rockchip/clk-rk3036.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-sh.c b/drivers/rtc/rtc-sh.c
-index cd146b5741431..341b1b776e1a3 100644
---- a/drivers/rtc/rtc-sh.c
-+++ b/drivers/rtc/rtc-sh.c
-@@ -485,9 +485,15 @@ static int __init sh_rtc_probe(struct platform_device *pdev)
- 		return -ENOENT;
- 	}
+diff --git a/drivers/clk/rockchip/clk-rk3036.c b/drivers/clk/rockchip/clk-rk3036.c
+index d341ce0708aac..e4af3a9286379 100644
+--- a/drivers/clk/rockchip/clk-rk3036.c
++++ b/drivers/clk/rockchip/clk-rk3036.c
+@@ -431,6 +431,7 @@ static const char *const rk3036_critical_clocks[] __initconst = {
+ 	"hclk_peri",
+ 	"pclk_peri",
+ 	"pclk_ddrupctl",
++	"ddrphy",
+ };
  
--	rtc->periodic_irq = ret;
--	rtc->carry_irq = platform_get_irq(pdev, 1);
--	rtc->alarm_irq = platform_get_irq(pdev, 2);
-+	if (!pdev->dev.of_node) {
-+		rtc->periodic_irq = ret;
-+		rtc->carry_irq = platform_get_irq(pdev, 1);
-+		rtc->alarm_irq = platform_get_irq(pdev, 2);
-+	} else {
-+		rtc->alarm_irq = ret;
-+		rtc->periodic_irq = platform_get_irq(pdev, 1);
-+		rtc->carry_irq = platform_get_irq(pdev, 2);
-+	}
- 
- 	res = platform_get_resource(pdev, IORESOURCE_IO, 0);
- 	if (!res)
+ static void __init rk3036_clk_init(struct device_node *np)
 -- 
 2.39.5
 
