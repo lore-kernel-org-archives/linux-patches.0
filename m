@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535BF21D3DD;
-	Mon, 23 Jun 2025 21:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C100E6136;
+	Mon, 23 Jun 2025 21:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714662; cv=none; b=V6/1FW8jg9EUa84mZSdnqXxMMJ7rI5FOpfgeQM6hNBn2nkUB8KpVnOaNn7vbRP6YeO8M47lRFeo6PgpOYwkMQ9ftvssEhzyyk7SYRVm6p9r3MfP9vK+eMjZ6M47S8qxiP1mHrSp1x9nPZfnrrAHJ1Q6Ox1RjgY2AQC0MbOlkm10=
+	t=1750714664; cv=none; b=L6ekeK3yiuloBllDCh/k38jThiTYx9EzreSUcv5iHpQlhNXPSOsdmm0lg4oI1hNbkIl7vyWQkX0DhJ3WZUwOT2K+MmCr+8dsbsg2a+B1Sj+6Gjl1O8Nxm3CH6rLi14mq2WCJIIk9YZK7FC14AIMrQBr9wzttnJ3r/mgV7c/Eqj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714662; c=relaxed/simple;
-	bh=p3/qNWRPkj5EQOUeAePKdBsS8dUB9B6qeYiC/LiOUyQ=;
+	s=arc-20240116; t=1750714664; c=relaxed/simple;
+	bh=+fALVPS45Ji1d4efZYzPXEQuNeXNQjlgtD0YvKKKjlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OKugeSZdB/KHvNl9p7lHrttJF2Z8Dfxb9GsHFABSRWIandt6kpHD5Lm2iP7JFAmpXDReE4vrcnt7ylcpGnHpTz+ojQZsXkMo4+k7CCG78V2CAAQoH1Ickm41ifn2CYbeHAStxceMvSppIWFMDOiur/vYx9/89YmDMSQ5SgVANww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4ShHlZ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pKDyWriGnheJMpnBfu0UF3k4grJIi2xgE2HYmjhULgJZcqbbLb7ZWlXherx6nC9u9EzYLA5ZbF5af7NJaqTRRt2F3MiLrQY43lZFC2kmtSLRvN/s9rbWgXg2kLQNNPHVwqRDsHu0vEPvrIgq1ky4GG03i+X9DNT3xTUuLcko9uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbeWLE/h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4ShHlZ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD19C4CEEA;
-	Mon, 23 Jun 2025 21:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbeWLE/h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55472C4CEEA;
+	Mon, 23 Jun 2025 21:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714662;
-	bh=p3/qNWRPkj5EQOUeAePKdBsS8dUB9B6qeYiC/LiOUyQ=;
+	s=korg; t=1750714664;
+	bh=+fALVPS45Ji1d4efZYzPXEQuNeXNQjlgtD0YvKKKjlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n4ShHlZ4rHP+ivnP/P4zcNj03937XTI0UVxxbYnLODkgTM/6gSaXKz1dyZZsfGj7/
-	 BQZ/LqhfvCmDnzqMsFNtBHP12Rp7sH+IvW3eWTlm/xrVUf2Tf2FzXaAT6q+aHckdSE
-	 M17L0P9uyvet5o0DwFrDiPfMSr4phpr8rOoSCBt0=
+	b=wbeWLE/h9jTEFwrYcj5YCqph//5RYu6ZApDD2feXyHVAjj1Ty0qw677VQF8A4NSIz
+	 cMdnNUfJE/WViHdeUKg35RU9DhC7dKoWs4lgr+w8Kmv/r65AU1p7da/e5n9H0pOtuX
+	 ovTRRxBDVm0tmWwcK28FTfxreHsnNCNqaUXPl9qM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Marheine <pmarheine@chromium.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 221/355] ACPI: battery: negate current when discharging
-Date: Mon, 23 Jun 2025 15:07:02 +0200
-Message-ID: <20250623130633.385516249@linuxfoundation.org>
+	Rand Deeb <rand.sec96@gmail.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.15 408/592] ixgbe: Fix unreachable retry logic in combined and byte I2C write functions
+Date: Mon, 23 Jun 2025 15:06:06 +0200
+Message-ID: <20250623130710.141481918@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Marheine <pmarheine@chromium.org>
+From: Rand Deeb <rand.sec96@gmail.com>
 
-[ Upstream commit 234f71555019d308c6bc6f98c78c5551cb8cd56a ]
+[ Upstream commit cdcb3804eeda24d588348bbab6766cf14fddbeaa ]
 
-The ACPI specification requires that battery rate is always positive,
-but the kernel ABI for POWER_SUPPLY_PROP_CURRENT_NOW
-(Documentation/ABI/testing/sysfs-class-power) specifies that it should
-be negative when a battery is discharging. When reporting CURRENT_NOW,
-massage the value to match the documented ABI.
+The current implementation of `ixgbe_write_i2c_combined_generic_int` and
+`ixgbe_write_i2c_byte_generic_int` sets `max_retry` to `1`, which makes
+the condition `retry < max_retry` always evaluate to `false`. This renders
+the retry mechanism ineffective, as the debug message and retry logic are
+never executed.
 
-This only changes the sign of `current_now` and not `power_now` because
-documentation doesn't describe any particular meaning for `power_now` so
-leaving `power_now` unchanged is less likely to confuse userspace
-unnecessarily, whereas becoming consistent with the documented ABI is
-worth potentially confusing clients that read `current_now`.
+This patch increases `max_retry` to `3` in both functions, aligning them
+with the retry logic in `ixgbe_read_i2c_combined_generic_int`. This
+ensures that the retry mechanism functions as intended, improving
+robustness in case of I2C write failures.
 
-Signed-off-by: Peter Marheine <pmarheine@chromium.org>
-Link: https://patch.msgid.link/20250508024146.1436129-1-pmarheine@chromium.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/battery.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index f9fb092f33a26..4a188cc28b5ce 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -255,10 +255,23 @@ static int acpi_battery_get_property(struct power_supply *psy,
- 		break;
- 	case POWER_SUPPLY_PROP_CURRENT_NOW:
- 	case POWER_SUPPLY_PROP_POWER_NOW:
--		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
-+		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
- 			ret = -ENODEV;
--		else
--			val->intval = battery->rate_now * 1000;
-+			break;
-+		}
-+
-+		val->intval = battery->rate_now * 1000;
-+		/*
-+		 * When discharging, the current should be reported as a
-+		 * negative number as per the power supply class interface
-+		 * definition.
-+		 */
-+		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
-+		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
-+		    acpi_battery_handle_discharging(battery)
-+				== POWER_SUPPLY_STATUS_DISCHARGING)
-+			val->intval = -val->intval;
-+
- 		break;
- 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
- 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
+index 0a03a8bb5f886..2d54828bdfbbc 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
+@@ -167,7 +167,7 @@ int ixgbe_write_i2c_combined_generic_int(struct ixgbe_hw *hw, u8 addr,
+ 					 u16 reg, u16 val, bool lock)
+ {
+ 	u32 swfw_mask = hw->phy.phy_semaphore_mask;
+-	int max_retry = 1;
++	int max_retry = 3;
+ 	int retry = 0;
+ 	u8 reg_high;
+ 	u8 csum;
+@@ -2285,7 +2285,7 @@ static int ixgbe_write_i2c_byte_generic_int(struct ixgbe_hw *hw, u8 byte_offset,
+ 					    u8 dev_addr, u8 data, bool lock)
+ {
+ 	u32 swfw_mask = hw->phy.phy_semaphore_mask;
+-	u32 max_retry = 1;
++	u32 max_retry = 3;
+ 	u32 retry = 0;
+ 	int status;
+ 
 -- 
 2.39.5
 
