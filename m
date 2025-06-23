@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D862628C;
-	Mon, 23 Jun 2025 21:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9117E2628C;
+	Mon, 23 Jun 2025 21:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713781; cv=none; b=hWs0m6nW6fifOT+GgS3zyjgY00V/b/gmx8DJ2BDq0Bmrvk6OVaW3MI1MaIxkFAfuMOCVLUl0AU9LO4MwjV35TlSA5omcR5eTeZztV0rFYfUaCuiNMgx8fhGykxjuFMUChBv8laWXxQtfD9dvXbLMGBob/bpL3cj+F0m73eUZQHg=
+	t=1750713783; cv=none; b=YRAAzv1kk3wqNpwtrkJvxtIk6NzM0SQm9F73nqsPQRtbI8eLdPtxJhUceMN4YhsHUhit0JEOGylah9Vv0GrXpRRcTUB4cWlgWyKU47iGlfzY/hoSThgBKblrxXWrElUvrwtgMLdA8RT9ZP3+Fcg++wrWmdsW2ByxbSZGGx+b9dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713781; c=relaxed/simple;
-	bh=bNo6Q/Kl+EZgRz5zFiov81yNQUFscwuY8+BExovazMc=;
+	s=arc-20240116; t=1750713783; c=relaxed/simple;
+	bh=UCCk82f7m7a4jf/CfoTQXXfI9k4OV47UKzJA7ABAxQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y4mRBhFAmmRUHkFVlsb05EQaNuJ6ZGD1+8Y+j90jqEPweuS1QiYV5UWvAXF4pFQxSEuuGr1BNyCIyn0jkN+mJnygqif7/b+9ai7cf17S9pYLbrrQw3t1D9uLOjZmObUonr6lKV/+ZnlDwRO2GXT/dIqg35HIIepXTaSVD3snVec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6diXQf9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kgKtx3/NcSbnpZbTGv0dQg+B+ZN03w1qg9Z08mX0C05ioV3Tr76qauyUSoMtiE+jzRRBP7DqmXxYR8nLdcaVvgfy5Bp3dlaP0XP5Vo/FjYj3Eqeeqm3NDMfbcbdvTS9mbCrpdGKdnzRmQzu4XONM4BPlFprA0MPQtbVJgFlwHVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFwdCdGS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6diXQf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5787C4CEF0;
-	Mon, 23 Jun 2025 21:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFwdCdGS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFECC4CEEA;
+	Mon, 23 Jun 2025 21:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713781;
-	bh=bNo6Q/Kl+EZgRz5zFiov81yNQUFscwuY8+BExovazMc=;
+	s=korg; t=1750713783;
+	bh=UCCk82f7m7a4jf/CfoTQXXfI9k4OV47UKzJA7ABAxQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w6diXQf906kaeWDPAZM2clST8BXs3Z/9EKS/yRFJ5H7ePYGXf8U6M9a2xP880IUQo
-	 q1FQBxJEsfck/G7ymL4LMBReQDCi/uP9uaayIE3EPekngbJHCPYuE4sIhgOOGbIClN
-	 fi60g8rogPdgU1H8OVu+RoU673dRZvAKfFENJCf0=
+	b=pFwdCdGSpIVJzeMeYN8j8GB670s1ScgnTR4/D23oy+yim7NefxmwaMbhrxsrTEOyp
+	 zv2F+HmxzvrO0x+2Q23+m+5W5/bbRhvUTHOuhv/XOq9SXdBL3Qlhwn91YjcfOL0wPx
+	 EJbhnudC+QuFGayjKwDuzPdmpMxOMZvzWkTQWcMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 365/592] wifi: iwlwifi: mld: call thermal exit without wiphy lock held
-Date: Mon, 23 Jun 2025 15:05:23 +0200
-Message-ID: <20250623130709.124320241@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Angelo Dureghello <adureghello@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 115/290] iio: adc: ad7606_spi: fix reg write value mask
+Date: Mon, 23 Jun 2025 15:06:16 +0200
+Message-ID: <20250623130630.405087419@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,78 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 83128399f3b4926ab73ce8e5081ce6595e9230e9 ]
+commit 89944d88f8795c6c89b9514cb365998145511cd4 upstream.
 
-The driver must not hold the wiphy mutex when unregistering the thermal
-devices. Do not hold the lock for the call to iwl_mld_thermal_exit and
-only do a lock/unlock to cancel the ct_kill_exit_wk work.
+Fix incorrect value mask for register write. Register values are 8-bit,
+not 9. If this function was called with a value > 0xFF and an even addr,
+it would cause writing to the next register.
 
-The problem is that iwl_mld_tzone_get_temp needs to take the wiphy lock
-while the thermal code is holding its own locks already. When
-unregistering the device, the reverse would happen as the driver was
-calling thermal_cooling_device_unregister with the wiphy mutex already
-held.
-
-It is not likely to trigger this deadlock as it can only happen if the
-thermal code is polling the temperature while the driver is being
-unloaded. However, lockdep reported it so fix it.
-
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20250506194102.3407967-12-miriam.rachel.korenblit@intel.com
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f2a22e1e172f ("iio: adc: ad7606: Add support for software mode for ad7616")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Angelo Dureghello <adureghello@baylibre.com>
+Link: https://patch.msgid.link/20250428-iio-adc-ad7606_spi-fix-write-value-mask-v1-1-a2d5e85a809f@baylibre.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/mld.c     | 3 ++-
- drivers/net/wireless/intel/iwlwifi/mld/thermal.c | 4 ++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/adc/ad7606_spi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mld.c b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-index 7a098942dc802..21f65442638dd 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-@@ -475,8 +475,9 @@ iwl_op_mode_mld_stop(struct iwl_op_mode *op_mode)
- 	iwl_mld_ptp_remove(mld);
- 	iwl_mld_leds_exit(mld);
+--- a/drivers/iio/adc/ad7606_spi.c
++++ b/drivers/iio/adc/ad7606_spi.c
+@@ -151,7 +151,7 @@ static int ad7606_spi_reg_write(struct a
+ 	struct spi_device *spi = to_spi_device(st->dev);
  
--	wiphy_lock(mld->wiphy);
- 	iwl_mld_thermal_exit(mld);
-+
-+	wiphy_lock(mld->wiphy);
- 	iwl_mld_low_latency_stop(mld);
- 	iwl_mld_deinit_time_sync(mld);
- 	wiphy_unlock(mld->wiphy);
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/thermal.c b/drivers/net/wireless/intel/iwlwifi/mld/thermal.c
-index 1909953a9be98..670ac43528006 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/thermal.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/thermal.c
-@@ -419,6 +419,8 @@ static void iwl_mld_cooling_device_unregister(struct iwl_mld *mld)
+ 	st->d16[0] = cpu_to_be16((st->bops->rd_wr_cmd(addr, 1) << 8) |
+-				  (val & 0x1FF));
++				  (val & 0xFF));
  
- void iwl_mld_thermal_initialize(struct iwl_mld *mld)
- {
-+	lockdep_assert_not_held(&mld->wiphy->mtx);
-+
- 	wiphy_delayed_work_init(&mld->ct_kill_exit_wk, iwl_mld_exit_ctkill);
- 
- #ifdef CONFIG_THERMAL
-@@ -429,7 +431,9 @@ void iwl_mld_thermal_initialize(struct iwl_mld *mld)
- 
- void iwl_mld_thermal_exit(struct iwl_mld *mld)
- {
-+	wiphy_lock(mld->wiphy);
- 	wiphy_delayed_work_cancel(mld->wiphy, &mld->ct_kill_exit_wk);
-+	wiphy_unlock(mld->wiphy);
- 
- #ifdef CONFIG_THERMAL
- 	iwl_mld_cooling_device_unregister(mld);
--- 
-2.39.5
-
+ 	return spi_write(spi, &st->d16[0], sizeof(st->d16[0]));
+ }
 
 
