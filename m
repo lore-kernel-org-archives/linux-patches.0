@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77E521FF2B;
-	Mon, 23 Jun 2025 22:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA97821D3F6;
+	Mon, 23 Jun 2025 22:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716174; cv=none; b=OfLQZIGeFlvIr433/YT0z1XUdwp5M+AXEA3MOnQSdxkfmnd/s1Bni8IHJLuqtIv7o7oEHmu8Qd/0dpQo9Zc9+abTpmj6qH54CQYfO/+5ClQhvnm1ylZtfPzdZgc39ztRZQTa0PuQ36MvC4HKmlpDdr2ZWDx0jHijB1VdWr87cVA=
+	t=1750716176; cv=none; b=Hp/Qf6a8A6hyPgcEQ6ECnB2T4w4YiDQCxIcLcghEMj7jhtjClpkL6ML6+4WEFgw/SIaToc3194IuNpw9Re7o6n4l00OLHnxUtH2ElZxNYsmRMsBDaKzRDuohOR0TCX6Oq+HfyZKB8Z2kFyzpSioKRPpb0ENZwnqsf2/RircJE+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716174; c=relaxed/simple;
-	bh=+NBxTrCiWIIKjoAa/O0e/wEBp8BdVT5C89z5Xci66tM=;
+	s=arc-20240116; t=1750716176; c=relaxed/simple;
+	bh=dDANdip0xdvv9GP+Zhack2KLo0P2DQmhRWCLXNmyN3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eDv1eQSZQoM/0NR0z9iY3CI/yztgCvVNCxbf9Kn6xAqcoaMbajcxx0O2oAwbk/srtaclVnCWfv75KcHMDjrJUqR1HnViwx0bqKdbiIHSJ+hr0J8jnX9Cc877r3ueEg+mlm3ImbtSheLvYE3dMEl8rkBPLPbtbShXLpFjqQ3EFQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kSFxA80K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=j0I1wGtNW4YKYXIEAA/GacukVV2GlDz9I0ZMCVMoaNl8fla0NLv9z+MzSWqViRgliuKqcRM1Vfrq0hLVg5RA1hXpDFuV/qbyfDnYbQThL8IvTjw8hAEhv+o86iZHmEdziMTuzqL3F7Cn4pnXs13AlO21WYT9EsWjsrmyecx0NvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=im/+BoHv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSFxA80K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA729C4CEEA;
-	Mon, 23 Jun 2025 22:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="im/+BoHv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D51C4CEEA;
+	Mon, 23 Jun 2025 22:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716174;
-	bh=+NBxTrCiWIIKjoAa/O0e/wEBp8BdVT5C89z5Xci66tM=;
+	s=korg; t=1750716176;
+	bh=dDANdip0xdvv9GP+Zhack2KLo0P2DQmhRWCLXNmyN3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kSFxA80Khbf/DnxUPEfqkeF7Vv+fwrbMS+jEVq6FJKUfjlZnf9r/Mo3QR1yJD67Fa
-	 mWYbep8UuD6um32CySo9pBpgoTc5plWxzRrhZthOvVhC9mOAFXM/YyHrHYSCzjl4kS
-	 DTjhvdwjC/8r8YDvcXgaQSU3YB2lExDb0XJ+bkLM=
+	b=im/+BoHvTWSJrl4SiJr8/PHzU4XjiarQuTxBy+zUKdpVhFUt0r0QiD64SzZ7b2Qft
+	 YFQUzpjsCzYG0YRgQLVRFVw9OlRRjE8oXhOBUvVlA798g+0EQXvtihdfSQr/29q6F7
+	 VBgGOIounHE6XVlCRD+AYP534EQkL111ridOupKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Gil Fine <gil.fine@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	=?UTF-8?q?V=C3=ADctor=20Gonzalo?= <victor.gonzalo@anddroptable.net>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 527/592] e1000e: set fixed clock frequency indication for Nahum 11 and Nahum 13
-Date: Mon, 23 Jun 2025 15:08:05 +0200
-Message-ID: <20250623130712.970345365@linuxfoundation.org>
+Subject: [PATCH 6.12 255/414] wifi: iwlwifi: Add missing MODULE_FIRMWARE for Qu-c0-jf-b0
+Date: Mon, 23 Jun 2025 15:06:32 +0200
+Message-ID: <20250623130648.418172234@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,93 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Víctor Gonzalo <victor.gonzalo@anddroptable.net>
 
-[ Upstream commit 688a0d61b2d7427189c4eb036ce485d8fc957cbb ]
+[ Upstream commit 2b801487ac3be7bec561ae62d1a6c4d6f5283f8c ]
 
-On some systems with Nahum 11 and Nahum 13 the value of the XTAL clock in
-the software STRAP is incorrect. This causes the PTP timer to run at the
-wrong rate and can lead to synchronization issues.
+The module metadata for the firmware file iwlwifi-Qu-c0-jf-b0-* is missing.
 
-The STRAP value is configured by the system firmware, and a firmware
-update is not always possible. Since the XTAL clock on these systems
-always runs at 38.4MHz, the driver may ignore the STRAP and just set
-the correct value.
-
-Fixes: cc23f4f0b6b9 ("e1000e: Add support for Meteor Lake")
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Reviewed-by: Gil Fine <gil.fine@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Víctor Gonzalo <victor.gonzalo@anddroptable.net>
+Link: https://patch.msgid.link/20240313180227.2224780-1-victor.gonzalo@anddroptable.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/netdev.c | 14 +++++++++++---
- drivers/net/ethernet/intel/e1000e/ptp.c    |  8 +++++---
- 2 files changed, 16 insertions(+), 6 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/cfg/22000.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 8ebcb6a7d608a..a0045aa9550b5 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -3534,9 +3534,6 @@ s32 e1000e_get_base_timinca(struct e1000_adapter *adapter, u32 *timinca)
- 	case e1000_pch_cnp:
- 	case e1000_pch_tgp:
- 	case e1000_pch_adp:
--	case e1000_pch_mtp:
--	case e1000_pch_lnp:
--	case e1000_pch_ptp:
- 	case e1000_pch_nvp:
- 		if (er32(TSYNCRXCTL) & E1000_TSYNCRXCTL_SYSCFI) {
- 			/* Stable 24MHz frequency */
-@@ -3552,6 +3549,17 @@ s32 e1000e_get_base_timinca(struct e1000_adapter *adapter, u32 *timinca)
- 			adapter->cc.shift = shift;
- 		}
- 		break;
-+	case e1000_pch_mtp:
-+	case e1000_pch_lnp:
-+	case e1000_pch_ptp:
-+		/* System firmware can misreport this value, so set it to a
-+		 * stable 38400KHz frequency.
-+		 */
-+		incperiod = INCPERIOD_38400KHZ;
-+		incvalue = INCVALUE_38400KHZ;
-+		shift = INCVALUE_SHIFT_38400KHZ;
-+		adapter->cc.shift = shift;
-+		break;
- 	case e1000_82574:
- 	case e1000_82583:
- 		/* Stable 25MHz frequency */
-diff --git a/drivers/net/ethernet/intel/e1000e/ptp.c b/drivers/net/ethernet/intel/e1000e/ptp.c
-index 89d57dd911dc8..ea3c3eb2ef202 100644
---- a/drivers/net/ethernet/intel/e1000e/ptp.c
-+++ b/drivers/net/ethernet/intel/e1000e/ptp.c
-@@ -295,15 +295,17 @@ void e1000e_ptp_init(struct e1000_adapter *adapter)
- 	case e1000_pch_cnp:
- 	case e1000_pch_tgp:
- 	case e1000_pch_adp:
--	case e1000_pch_mtp:
--	case e1000_pch_lnp:
--	case e1000_pch_ptp:
- 	case e1000_pch_nvp:
- 		if (er32(TSYNCRXCTL) & E1000_TSYNCRXCTL_SYSCFI)
- 			adapter->ptp_clock_info.max_adj = MAX_PPB_24MHZ;
- 		else
- 			adapter->ptp_clock_info.max_adj = MAX_PPB_38400KHZ;
- 		break;
-+	case e1000_pch_mtp:
-+	case e1000_pch_lnp:
-+	case e1000_pch_ptp:
-+		adapter->ptp_clock_info.max_adj = MAX_PPB_38400KHZ;
-+		break;
- 	case e1000_82574:
- 	case e1000_82583:
- 		adapter->ptp_clock_info.max_adj = MAX_PPB_25MHZ;
+diff --git a/drivers/net/wireless/intel/iwlwifi/cfg/22000.c b/drivers/net/wireless/intel/iwlwifi/cfg/22000.c
+index 2e2fcb3807efb..10d647fbc971e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/cfg/22000.c
++++ b/drivers/net/wireless/intel/iwlwifi/cfg/22000.c
+@@ -44,6 +44,8 @@
+ 	IWL_QU_C_HR_B_FW_PRE "-" __stringify(api) ".ucode"
+ #define IWL_QU_B_JF_B_MODULE_FIRMWARE(api) \
+ 	IWL_QU_B_JF_B_FW_PRE "-" __stringify(api) ".ucode"
++#define IWL_QU_C_JF_B_MODULE_FIRMWARE(api) \
++	IWL_QU_C_JF_B_FW_PRE "-" __stringify(api) ".ucode"
+ #define IWL_CC_A_MODULE_FIRMWARE(api)			\
+ 	IWL_CC_A_FW_PRE "-" __stringify(api) ".ucode"
+ 
+@@ -423,6 +425,7 @@ const struct iwl_cfg iwl_cfg_quz_a0_hr_b0 = {
+ MODULE_FIRMWARE(IWL_QU_B_HR_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
+ MODULE_FIRMWARE(IWL_QU_C_HR_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
+ MODULE_FIRMWARE(IWL_QU_B_JF_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
++MODULE_FIRMWARE(IWL_QU_C_JF_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
+ MODULE_FIRMWARE(IWL_QUZ_A_HR_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
+ MODULE_FIRMWARE(IWL_QUZ_A_JF_B_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
+ MODULE_FIRMWARE(IWL_CC_A_MODULE_FIRMWARE(IWL_22000_UCODE_API_MAX));
 -- 
 2.39.5
 
