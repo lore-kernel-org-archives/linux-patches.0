@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7901C16D9BF;
-	Mon, 23 Jun 2025 22:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BE119F120;
+	Mon, 23 Jun 2025 22:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717175; cv=none; b=sHwfF+CkQI00EOCxEq9iLqxcKIYJz05cMr6lntLepNtJJcsJ61ZjamqyrI7cBWRh5OeQhw4k9erfKm66ypBEdHu6Nq38KzOVP2tyARm0v188/gjSIFPaMcH/iSWnJeINdyoF7LCDvfAGNdNu15RliMcTrEAWHwn4WVV+mVuZj5k=
+	t=1750717178; cv=none; b=nMFo/Eoai8+1fKyRI5O5whWvNSEIeRf3/D5gmdGxGMYJenql6ha9i7PiTHOE6KmbfnOZPlSyjwQZoM9f1DAFAP0/k2dpD5y24S4smQLKFcG37k6KX67Awef0hXZu0x7W5dBMgv6CwnAvnVOBJW0FASQoOyalIXW5yx38Q08b4CE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717175; c=relaxed/simple;
-	bh=bKIMpNqjRFlc4LP6n4DFFVIci83B82mBxmelRliX2Xc=;
+	s=arc-20240116; t=1750717178; c=relaxed/simple;
+	bh=uVwhkhsaX5eFnWuYTMapDzOjRGlWDX9oFK78SDeso88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GJj5sBv/YmLnZdkHSMnTw8yLovA/pC1FnMPZNXxxvuq8YwACFGHmq7+P6tyMN9PdfS6KugNxGBj6nKZnx/UOVTU3Fs3rBxfZwSKG1t/CszdsDT9QpqKv+xMJ84gFwfKL0qBCkVj/wRXt4whjiOBzmu/Vf8Nhmc0Qq8rX9jDa2Cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQjJ7pFU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CCavexSh5sG0PlodQVGVMgb59bpB2b+DAHsCGF8LNImzK94DyHXTRPN4NaRUv5Bm/HVeP1AEmwQo1tfCPUm+FuF8WoLhxr29k6ywfM745mC/y9WA58I2nqxhZTR8whF1XADHz0FzMdrQKmW8cZ6qzJJMzbOPszx0PnBu8Hi1b24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGPo8o8r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQjJ7pFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118B7C4CEEA;
-	Mon, 23 Jun 2025 22:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGPo8o8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86CD3C4CEEA;
+	Mon, 23 Jun 2025 22:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717175;
-	bh=bKIMpNqjRFlc4LP6n4DFFVIci83B82mBxmelRliX2Xc=;
+	s=korg; t=1750717177;
+	bh=uVwhkhsaX5eFnWuYTMapDzOjRGlWDX9oFK78SDeso88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQjJ7pFUdIccrr0uE2ttQ9KPWDDcCg0fyzJSKtkoz0ftIhIYhZzA+utFTtTiaQjGS
-	 BYb2Y1BaRGX63ooYGvmD1irvaeYLEB+QHBQ1rUw5NSnP/jgzcL2B5yhK5D3VggoBp0
-	 /qNYzcb8BW2oiV5HnnF0sEUlQHUzvcr/8eszGbmw=
+	b=oGPo8o8r0p5PJ/RfBEqjogQSwJN1pvd6Non0KYyPp8w6jSbxYlELcMkz2qCe4tYZY
+	 QQlyN5wlTc18sjWf52t12WBw8z2L3GG8ILgYmMzGavQ5NU45AZrnFd/jXF3V9UVF+N
+	 YKLP0WXq8ZBa8aJZ16QOt9Ui6+ITl1Hgpy2MWIr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edip Hazuri <edip@medip.dev>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 333/414] ALSA: hda/realtek - Add mute LED support for HP Victus 16-s1xxx and HP Victus 15-fa1xxx
-Date: Mon, 23 Jun 2025 15:07:50 +0200
-Message-ID: <20250623130650.311514320@linuxfoundation.org>
+	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
+	Daniel Wagner <dwagner@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 411/411] scsi: elx: efct: Fix memory leak in efct_hw_parse_filter()
+Date: Mon, 23 Jun 2025 15:09:15 +0200
+Message-ID: <20250623130644.033046103@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,46 +48,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edip Hazuri <edip@medip.dev>
+From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
 
-commit a0914bf56e26d2cf457690602883f9cd2ec2c646 upstream.
+[ Upstream commit 2a8a5a5dd06eef580f9818567773fd75057cb875 ]
 
-The mute led on those laptops is using ALC245 but requires a quirk to work
-This patch enables the existing quirk for the devices.
+strsep() modifies the address of the pointer passed to it so that it no
+longer points to the original address. This means kfree() gets the wrong
+pointer.
 
-Tested on my Victus 16-s1011nt Laptop and my friend's Victus
-15-fa1xxx. The LED behaviour works as intended.
+Fix this by passing unmodified pointer returned from kstrdup() to
+kfree().
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Edip Hazuri <edip@medip.dev>
-Link: https://patch.msgid.link/20250609075943.13934-2-edip@medip.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with Svace.
+
+Fixes: 4df84e846624 ("scsi: elx: efct: Driver initialization routines")
+Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+Link: https://lore.kernel.org/r/20250612163616.24298-1-v.shevtsov@mt-integration.ru
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/elx/efct/efct_hw.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10727,6 +10727,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x103c, 0x8b97, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8bb3, "HP Slim OMEN", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8bb4, "HP Slim OMEN", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8bc8, "HP Victus 15-fa1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8bcd, "HP Omen 16-xd0xxx", ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8bdd, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8bde, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
-@@ -10780,6 +10781,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x103c, 0x8c91, "HP EliteBook 660", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c96, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8c97, "HP ZBook", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+	SND_PCI_QUIRK(0x103c, 0x8c9c, "HP Victus 16-s1xxx (MB 8C9C)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8ca1, "HP ZBook Power", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8ca2, "HP ZBook Power", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8ca4, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+diff --git a/drivers/scsi/elx/efct/efct_hw.c b/drivers/scsi/elx/efct/efct_hw.c
+index ba8256b4c7824..6385c6c730fea 100644
+--- a/drivers/scsi/elx/efct/efct_hw.c
++++ b/drivers/scsi/elx/efct/efct_hw.c
+@@ -1120,7 +1120,7 @@ int
+ efct_hw_parse_filter(struct efct_hw *hw, void *value)
+ {
+ 	int rc = 0;
+-	char *p = NULL;
++	char *p = NULL, *pp = NULL;
+ 	char *token;
+ 	u32 idx = 0;
+ 
+@@ -1132,6 +1132,7 @@ efct_hw_parse_filter(struct efct_hw *hw, void *value)
+ 		efc_log_err(hw->os, "p is NULL\n");
+ 		return -ENOMEM;
+ 	}
++	pp = p;
+ 
+ 	idx = 0;
+ 	while ((token = strsep(&p, ",")) && *token) {
+@@ -1144,7 +1145,7 @@ efct_hw_parse_filter(struct efct_hw *hw, void *value)
+ 		if (idx == ARRAY_SIZE(hw->config.filter_def))
+ 			break;
+ 	}
+-	kfree(p);
++	kfree(pp);
+ 
+ 	return rc;
+ }
+-- 
+2.39.5
+
 
 
