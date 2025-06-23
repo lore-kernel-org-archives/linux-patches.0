@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144872036FA;
-	Mon, 23 Jun 2025 21:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C00F221DA8;
+	Mon, 23 Jun 2025 21:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715883; cv=none; b=JJxSlfz94xqFvsUBWwLKjya7v4UIW8eKbJx0W/VNN3wbAu7kMLCK2YiciQPzIUvy4nppnnPVbRyd54/2AXEpH03rJNTvjzltCLhmvw7LP8iopLxFwdHmKoHn35S8trfEU0gIDKObdEjp2ivAWNj+VbFrE/KB0tCHKNQ/eNQyVNM=
+	t=1750715885; cv=none; b=g6tx/du1N3PYnceqYcHImF7LzEUz+hLsMW4XzeQOUHyQM1+qgub1qtn9UUJEwEFO0CTgnrmJ36D77UIhh8zt6ovQv/mRauQTCvN5FSuN7IgiCArbvysboUqIDoRoSz8zf3uZWqWvLD9100GWWzGuC0iSCmpwtP6siPfiw8Hhv44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715883; c=relaxed/simple;
-	bh=sXWlVLyZwJYbUuv1BUVxEfE+SBnVxd8pAlBhBNrJFho=;
+	s=arc-20240116; t=1750715885; c=relaxed/simple;
+	bh=trYDsY2WqqIOW2xxPqg5XGq2uShNWjzmi3JikBgI6/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B5Fx+4P0PzVkRjgL9kp60nTuUWItabUr1PgwfP+TF6540soc8nBD+Vj/W0xnUXPkEzDGA0tUxmmRI2+7G3pkmv48GE94u/s0TKCQanfWmkRjysuDtwuyxqFSm/kKhEWwV4HWAyBc7KqtscaKD6yOD5mESvj4V3nODUG59p+e8aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLo2MI2G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bZIBA+atWluFYif7FtNFPuTgOWHa4xWDioaLf9rShwPDuHWwpA6kjlZlUYlDiA0M1mBBcDPjN/KtHkLHBm87GJa18QDkKz9bDnlm0ijwkf9sPHY42/6ldTj6P2im7vay5sIdxwgbgHiYTglkAohiDc9IjdsqiiQRj+aYR7HUynA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7hmwqP6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLo2MI2G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0CF1C4CEEA;
-	Mon, 23 Jun 2025 21:58:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7hmwqP6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130F7C4CEEA;
+	Mon, 23 Jun 2025 21:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715882;
-	bh=sXWlVLyZwJYbUuv1BUVxEfE+SBnVxd8pAlBhBNrJFho=;
+	s=korg; t=1750715885;
+	bh=trYDsY2WqqIOW2xxPqg5XGq2uShNWjzmi3JikBgI6/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FLo2MI2Gt5YuzDh60OBArhdVIfL+UKYAsTeFkNakqBKjFs9OgnkOvLad6Glz4R8MF
-	 rjFtemfhqKyh59B38ZHio6WuuZoFh4WlTKO0LSjD7xrU0B4IvAKD3MEL42j3VavXkN
-	 X/jcGMhDF6DwEzt/B3bzi0VWkwWWA+WwUw4cSmn8=
+	b=E7hmwqP6dLUze9XX8a7bTfAhvQG5LxWRZ/zs5bNBc8MYaGOIinb3MhJM6RJUfIeqd
+	 urqW9441boEUlR0NjV1t7BeiTDooJ0t4F0t7nI3yShYhThSZJAyZRumLVkJ9Ac5qoS
+	 BrvW1ccwkI3VGGcmH9lYZv7A4vBScAzhgOTexATA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Bauer <sbauer@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Trilok Soni <quic_tsoni@quicinc.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Pu Lehui <pulehui@huawei.com>
-Subject: [PATCH 5.10 328/355] arm64: errata: Add KRYO 2XX/3XX/4XX silver cores to Spectre BHB safe list
-Date: Mon, 23 Jun 2025 15:08:49 +0200
-Message-ID: <20250623130636.610640363@linuxfoundation.org>
+	Petr Malat <oss@malat.biz>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 310/411] sctp: Do not wake readers in __sctp_write_space()
+Date: Mon, 23 Jun 2025 15:07:34 +0200
+Message-ID: <20250623130641.446279418@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,42 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Petr Malat <oss@malat.biz>
 
-[ Upstream commit 0c9fc6e652cd5aed48c5f700c32b7642bea7f453 ]
+[ Upstream commit af295892a7abbf05a3c2ba7abc4d81bb448623d6 ]
 
-Qualcomm has confirmed that, much like Cortex A53 and A55, KRYO
-2XX/3XX/4XX silver cores are unaffected by Spectre BHB. Add them to
-the safe list.
+Function __sctp_write_space() doesn't set poll key, which leads to
+ep_poll_callback() waking up all waiters, not only these waiting
+for the socket being writable. Set the key properly using
+wake_up_interruptible_poll(), which is preferred over the sync
+variant, as writers are not woken up before at least half of the
+queue is available. Also, TCP does the same.
 
-Fixes: 558c303c9734 ("arm64: Mitigate spectre style branch history side channels")
-Cc: stable@vger.kernel.org
-Cc: Scott Bauer <sbauer@quicinc.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Trilok Soni <quic_tsoni@quicinc.com>
-Link: https://lore.kernel.org/r/20250107120555.v4.3.Iab8dbfb5c9b1e143e7a29f410bce5f9525a0ba32@changeid
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Petr Malat <oss@malat.biz>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250516081727.1361451-1-oss@malat.biz
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/proton-pack.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/sctp/socket.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/proton-pack.c
-+++ b/arch/arm64/kernel/proton-pack.c
-@@ -862,6 +862,9 @@ static bool is_spectre_bhb_safe(int scop
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A510),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A520),
- 		MIDR_ALL_VERSIONS(MIDR_BRAHMA_B53),
-+		MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_2XX_SILVER),
-+		MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_3XX_SILVER),
-+		MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_SILVER),
- 		{},
- 	};
- 	static bool all_safe = true;
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 5e84083e50d7a..0aaea911b21ef 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -9092,7 +9092,8 @@ static void __sctp_write_space(struct sctp_association *asoc)
+ 		wq = rcu_dereference(sk->sk_wq);
+ 		if (wq) {
+ 			if (waitqueue_active(&wq->wait))
+-				wake_up_interruptible(&wq->wait);
++				wake_up_interruptible_poll(&wq->wait, EPOLLOUT |
++						EPOLLWRNORM | EPOLLWRBAND);
+ 
+ 			/* Note that we try to include the Async I/O support
+ 			 * here by modeling from the current TCP/UDP code.
+-- 
+2.39.5
+
 
 
