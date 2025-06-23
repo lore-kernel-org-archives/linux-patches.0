@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B12D2472A2;
-	Mon, 23 Jun 2025 13:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86902472AF;
+	Mon, 23 Jun 2025 13:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686218; cv=none; b=VJJ6KpQYW7LH9dzaxOCD+7fSasfBuqCoU1bptI3uDbTDgnokfPtAVAIOlnksFgQ9hHjfY3ntxEjkZH8TxYdXtE/FYP3wyu7v/E+gukI3YPR5oe9gne4BdBvDeX6aQ8z3X/bkbp4uCy9QW1bnIERjxL0dEZvIDTrjz6Timt1MF34=
+	t=1750686220; cv=none; b=VPxo8LjbtggWEJnXjuvOut+SfygZRLDrKFlOwdB8Syj66BS+cv9Q6RXvMDxcOmEZYGfNToxAomAgTG75ovpmIZyiJAVLpmElEOIWAur7wn4CJc7ifulnrBQoFNqtjwx2eM5wkUZ3MYqxQGY0JWWGV4J9llodEF/uiZvP8Fy4WvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686218; c=relaxed/simple;
-	bh=vNYOmdWWJDIiBkA5r2zeZ3DimtkLvrGkGpM7Aes1fq8=;
+	s=arc-20240116; t=1750686220; c=relaxed/simple;
+	bh=2zmzCXy9avrhcvjaObcILQjGUTTuLjFnozqzViL3pLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M62xd9MHPdofNwvow1xIuLUB6X/4sa6V/0qp2QCdEukOYuFhiW5sACagvkCRA+rBQ3OiLaGdhUGnyz3vMqieAEHVL1aTWfVJ52HxhOCkgOeKd3s4jHvmvzuxVzrodonujy+nZkhuzEXu0Qxg97nnvd9m6IuUQI7T/PzcXiu3KPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/519y0L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aR0jKKftclQOnY52gY1kiB3XwBJGeA6Asx8KlIPQQlDLDGqVQiUHXZx0FTXWNx0OdYXFVqbjLw1h+L+suQvHdseKswdn2BfCPqXRyYQ3yYX7j8hijC2SX0nD0LDSwt3HE3m9us7nsuFZ/TF3xvE36/mVcBUbaTgMlrnL8Mb8yFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kKGl4zTy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/519y0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D338EC4CEEA;
-	Mon, 23 Jun 2025 13:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kKGl4zTy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C05C4CEEA;
+	Mon, 23 Jun 2025 13:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686218;
-	bh=vNYOmdWWJDIiBkA5r2zeZ3DimtkLvrGkGpM7Aes1fq8=;
+	s=korg; t=1750686220;
+	bh=2zmzCXy9avrhcvjaObcILQjGUTTuLjFnozqzViL3pLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/519y0L8Qp37oopTiMUyV1aF+lRJfpO23jvXZKaKc+EyMlvGpSVSrhBTPfvpz3o7
-	 DzkNGSW9ASM6DGByM2WUMD0ABYk7UiAd12K1QFH+1Wh0fXbTXZgRQ9aT0OPTeWvoEu
-	 MfPeKuDBxhDCH4B33iFHZYFxyB2sx6+o9Z1NVamc=
+	b=kKGl4zTyf0LSrBTvlhNZu5yeoai4PJzmk1tiL8NDolWiFdcDfSVApHtLxy4JPXp+H
+	 omrdwRCQ0l1o0XUXBdvpQIPL2CgD7fvNoSAE5wxqhROWj9o6o/xB6HwtUAQJOijlMg
+	 kaGmPqtirWM6uQXPWKTT7dIBLfLn8iVVxqMyhsxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 047/290] media: uvcvideo: Send control events for partial succeeds
-Date: Mon, 23 Jun 2025 15:05:08 +0200
-Message-ID: <20250623130628.423836882@linuxfoundation.org>
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Nathan Lynch <nathan.lynch@amd.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 105/411] dmaengine: ti: Add NULL check in udma_probe()
+Date: Mon, 23 Jun 2025 15:04:09 +0200
+Message-ID: <20250623130636.157280162@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-commit 5c791467aea6277430da5f089b9b6c2a9d8a4af7 upstream.
+[ Upstream commit fd447415e74bccd7362f760d4ea727f8e1ebfe91 ]
 
-Today, when we are applying a change to entities A, B. If A succeeds and B
-fails the events for A are not sent.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+udma_probe() does not check for this case, which results in a NULL
+pointer dereference.
 
-This change changes the code so the events for A are send right after
-they happen.
+Add NULL check after devm_kasprintf() to prevent this issue.
 
-Cc: stable@kernel.org
-Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Message-ID: <20250224-uvc-data-backup-v2-2-de993ed9823b@chromium.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Nathan Lynch <nathan.lynch@amd.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/20250402023900.43440-1-bsdhenrymartin@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/dma/ti/k3-udma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1642,7 +1642,9 @@ static bool uvc_ctrl_xctrls_has_control(
- }
- 
- static void uvc_ctrl_send_events(struct uvc_fh *handle,
--	const struct v4l2_ext_control *xctrls, unsigned int xctrls_count)
-+				 struct uvc_entity *entity,
-+				 const struct v4l2_ext_control *xctrls,
-+				 unsigned int xctrls_count)
- {
- 	struct uvc_control_mapping *mapping;
- 	struct uvc_control *ctrl;
-@@ -1653,6 +1655,9 @@ static void uvc_ctrl_send_events(struct
- 		u32 changes = V4L2_EVENT_CTRL_CH_VALUE;
- 
- 		ctrl = uvc_find_control(handle->chain, xctrls[i].id, &mapping);
-+		if (ctrl->entity != entity)
-+			continue;
-+
- 		if (ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
- 			/* Notification will be sent from an Interrupt event. */
- 			continue;
-@@ -1891,11 +1896,12 @@ int __uvc_ctrl_commit(struct uvc_fh *han
- 					uvc_ctrl_find_ctrl_idx(entity, ctrls,
- 							       err_ctrl);
- 			goto done;
-+		} else if (ret > 0 && !rollback) {
-+			uvc_ctrl_send_events(handle, entity,
-+					     ctrls->controls, ctrls->count);
- 		}
- 	}
- 
--	if (!rollback)
--		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
- 	ret = 0;
- done:
- 	mutex_unlock(&chain->ctrl_mutex);
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index 1ca552a324778..ce5875a00f28d 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -5425,7 +5425,8 @@ static int udma_probe(struct platform_device *pdev)
+ 		uc->config.dir = DMA_MEM_TO_MEM;
+ 		uc->name = devm_kasprintf(dev, GFP_KERNEL, "%s chan%d",
+ 					  dev_name(dev), i);
+-
++		if (!uc->name)
++			return -ENOMEM;
+ 		vchan_init(&uc->vc, &ud->ddev);
+ 		/* Use custom vchan completion handling */
+ 		tasklet_setup(&uc->vc.task, udma_vchan_complete);
+-- 
+2.39.5
+
 
 
