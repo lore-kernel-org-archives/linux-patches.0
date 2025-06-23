@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF71F2522A8;
-	Mon, 23 Jun 2025 13:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8FC9246BC9;
+	Mon, 23 Jun 2025 13:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686035; cv=none; b=p5mQK4j+PLVoiPeG1kbfJ85V8SlCha8Fuo4KUz1k4kmB1eav11SFLwh8S+/UhLdhN/QyQXtmDaoitY0iXAlJOG+H0wbCcgJGCYLl9QYteMCSIH5rHwihAJQ7BXQA8fPBROUcCbWbMB8sxJRAhtZVhZKY8EJiZR7cm6RDBLzCucc=
+	t=1750686038; cv=none; b=h95JmL6JFcjp4tSZ+ygfFrgGNoYmSkiLp9Jc+HI3Gk7+/SPSgPRuQP0zJsiSJLotn9j2K3gF5UUJ2FCKhzdZuw9A1TrYR31WGbC0bCbpTfu7CkC/zdukiDup/D4rbiCl/lTKqAqbK+fArMVdtZ1LhVk4NXY2Nn+4USAgaRNWx1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686035; c=relaxed/simple;
-	bh=KDNYyEyFApfX/4sfkVGXVT6G+Z3XfsPX7E52nQXoUxk=;
+	s=arc-20240116; t=1750686038; c=relaxed/simple;
+	bh=vGL+VrjZ/h672YOMUwzJX4IV/69vCg7IL4a+BFL/7UI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NTZOqubrZXl/QGH2HjkjcR9Qo1k/vlahNxP5AsDnNccFFBD3Lm210M6RJOPdj4gdzClYouYRVIvYLjqNK3sBwumUeCEV5OPjVIt3cvpmjKPJpVnQK/qu5CKejxORscMs6jvjzWG9HtRj+OHlYjikRhFYuUCuLyprgR6Y9N3ychA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2UDhPkR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=diPQ28wKoJMDnyccJt4JQGnpTnuTrDALqekROi0+F4R28wpqZqw+a9Aj45Kci6s54GqCitW273FiPmPuKUhg2UhfVWWT8TgMSY0F/+Exy+NjRrnN5WkrJXr6PE2mNl+kXzyu1NNHdeNxphlB6srvwC+o10LXIEQpTpsR+OxUnmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GyaXazO8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2UDhPkR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF230C4CEEA;
-	Mon, 23 Jun 2025 13:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GyaXazO8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7436DC4CEEA;
+	Mon, 23 Jun 2025 13:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686035;
-	bh=KDNYyEyFApfX/4sfkVGXVT6G+Z3XfsPX7E52nQXoUxk=;
+	s=korg; t=1750686037;
+	bh=vGL+VrjZ/h672YOMUwzJX4IV/69vCg7IL4a+BFL/7UI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c2UDhPkRpLc4icTMusvtAdM4LVeD2VjmTYnEavFyBiJYkSyJ+1mR36Tpu5VKn9xsE
-	 ozfUlJp9bT3oGYXqMazj4ReIisAi+WjFuj1o1k5A/0YehlaK8/BwaqorOFsSXwGkks
-	 xQbsJWRXmrwOBqZkhf9/QseGVi3syIFkMGeLQaFY=
+	b=GyaXazO8KFJ1HxshJc8QZrgh6lJLWYiJ171AVGiPDk51QdOyZDvsexcfu1LG72JpD
+	 6dR76To1044kOq7i0fZoBD4h0AVeskFUIJrzTTFLRm3VrPU6mE83nNO6fJTF9fLiz4
+	 pidDU0NnyZgRv5KnSyIzXGMuRYFeXLwkNX9OXCsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 076/411] ARM: dts: at91: at91sam9263: fix NAND chip selects
-Date: Mon, 23 Jun 2025 15:03:40 +0200
-Message-ID: <20250623130635.287247299@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Dave Wysochanski <dwysocha@redhat.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>
+Subject: [PATCH 6.6 019/290] fs/nfs/read: fix double-unlock bug in nfs_return_empty_folio()
+Date: Mon, 23 Jun 2025 15:04:40 +0200
+Message-ID: <20250623130627.561168967@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,71 +47,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit c72ede1c24be689733bcd2233a3a56f2478429c8 ]
+commit 4c10fa44bc5f700e2ea21de2fbae520ba21f19d9 upstream.
 
-NAND did not work on my USB-A9263. I discovered that the offending
-commit converted the PIO bank for chip selects wrongly, so all A9263
-boards need to be fixed.
+Sometimes, when a file was read while it was being truncated by
+another NFS client, the kernel could deadlock because folio_unlock()
+was called twice, and the second call would XOR back the `PG_locked`
+flag.
 
-Fixes: 1004a2977bdc ("ARM: dts: at91: Switch to the new NAND bindings")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/20250402210446.5972-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Most of the time (depending on the timing of the truncation), nobody
+notices the problem because folio_unlock() gets called three times,
+which flips `PG_locked` back off:
+
+ 1. vfs_read, nfs_read_folio, ... nfs_read_add_folio,
+    nfs_return_empty_folio
+ 2. vfs_read, nfs_read_folio, ... netfs_read_collection,
+    netfs_unlock_abandoned_read_pages
+ 3. vfs_read, ... nfs_do_read_folio, nfs_read_add_folio,
+    nfs_return_empty_folio
+
+The problem is that nfs_read_add_folio() is not supposed to unlock the
+folio if fscache is enabled, and a nfs_netfs_folio_unlock() check is
+missing in nfs_return_empty_folio().
+
+Rarely this leads to a warning in netfs_read_collection():
+
+ ------------[ cut here ]------------
+ R=0000031c: folio 10 is not locked
+ WARNING: CPU: 0 PID: 29 at fs/netfs/read_collect.c:133 netfs_read_collection+0x7c0/0xf00
+ [...]
+ Workqueue: events_unbound netfs_read_collection_worker
+ RIP: 0010:netfs_read_collection+0x7c0/0xf00
+ [...]
+ Call Trace:
+  <TASK>
+  netfs_read_collection_worker+0x67/0x80
+  process_one_work+0x12e/0x2c0
+  worker_thread+0x295/0x3a0
+
+Most of the time, however, processes just get stuck forever in
+folio_wait_bit_common(), waiting for `PG_locked` to disappear, which
+never happens because nobody is really holding the folio lock.
+
+Fixes: 000dbe0bec05 ("NFS: Convert buffered read paths to use netfs when fscache is enabled")
+Cc: stable@vger.kernel.org
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Dave Wysochanski <dwysocha@redhat.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/at91sam9263ek.dts | 2 +-
- arch/arm/boot/dts/tny_a9263.dts     | 2 +-
- arch/arm/boot/dts/usb_a9263.dts     | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ fs/nfs/read.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/at91sam9263ek.dts b/arch/arm/boot/dts/at91sam9263ek.dts
-index 71f60576761a0..df206bdb67883 100644
---- a/arch/arm/boot/dts/at91sam9263ek.dts
-+++ b/arch/arm/boot/dts/at91sam9263ek.dts
-@@ -148,7 +148,7 @@
- 				nand@3 {
- 					reg = <0x3 0x0 0x800000>;
- 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
--					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
-+					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
- 					nand-bus-width = <8>;
- 					nand-ecc-mode = "soft";
- 					nand-on-flash-bbt;
-diff --git a/arch/arm/boot/dts/tny_a9263.dts b/arch/arm/boot/dts/tny_a9263.dts
-index 62b7d9f9a926c..c8b6318aaa838 100644
---- a/arch/arm/boot/dts/tny_a9263.dts
-+++ b/arch/arm/boot/dts/tny_a9263.dts
-@@ -64,7 +64,7 @@
- 				nand@3 {
- 					reg = <0x3 0x0 0x800000>;
- 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
--					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
-+					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
- 					nand-bus-width = <8>;
- 					nand-ecc-mode = "soft";
- 					nand-on-flash-bbt;
-diff --git a/arch/arm/boot/dts/usb_a9263.dts b/arch/arm/boot/dts/usb_a9263.dts
-index d1c07503ff76f..87a5f96014e01 100644
---- a/arch/arm/boot/dts/usb_a9263.dts
-+++ b/arch/arm/boot/dts/usb_a9263.dts
-@@ -84,7 +84,7 @@
- 				nand@3 {
- 					reg = <0x3 0x0 0x800000>;
- 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
--					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
-+					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
- 					nand-bus-width = <8>;
- 					nand-ecc-mode = "soft";
- 					nand-on-flash-bbt;
--- 
-2.39.5
-
+--- a/fs/nfs/read.c
++++ b/fs/nfs/read.c
+@@ -56,7 +56,8 @@ static int nfs_return_empty_folio(struct
+ {
+ 	folio_zero_segment(folio, 0, folio_size(folio));
+ 	folio_mark_uptodate(folio);
+-	folio_unlock(folio);
++	if (nfs_netfs_folio_unlock(folio))
++		folio_unlock(folio);
+ 	return 0;
+ }
+ 
 
 
