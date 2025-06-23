@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDE81DF98B;
-	Mon, 23 Jun 2025 21:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75ED1DF98B;
+	Mon, 23 Jun 2025 21:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713253; cv=none; b=iF9uyo4qGzaMqkb3LifueWvXY2dA8guV9hCpB8QsB91EPKm264L3BZTZcpaEV9Q5Omnm/wI2/+IcKAsniEDdQdga0h+DzG7kO2jOoROENVaFISzhs3XkNtFoEuGfSPA5dDYL99mSVFc8LUj0WLXrtu/EaK1ULnD7+qrE4pun6gI=
+	t=1750713255; cv=none; b=b/zXNu3U3S1l4Dds3MplP1a8kwbup7+LqaBM6m5HIsA3BRt0sq8jHYcGsK6RtMAWtnq+4+3fQhHd+9RAOGy6a1NCxt5yyU7GBi+D9Ev86hHkyKC9Kc9hPJkD8qBBKgr7f1dknEn93C5Y7ERThhOJaCWI+hmcnEKG0DH4NO4VVOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713253; c=relaxed/simple;
-	bh=R8qlonhhIzWXDzx2Pv3eVLUWzvbX3zRqMfcMxj8szmA=;
+	s=arc-20240116; t=1750713255; c=relaxed/simple;
+	bh=OP3T3NAxnOwIKs4PgVfdhSh2bej4YQaeLM8Kxxxz4r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cuvJKqOQIgbiqiQR+0PR0ZIcFcxXFZQR6v4CAQChcZlYZHNTVX0wm3zcQky9IgAcC8Vg8kN2djO5JWXjDqSpPc15xiI30+/+k3NCCS5jl+SwKASAJvSyyQ9iq3krsQ9xpbSiFpTqSt41N2wH9i3xOup7vvbJzSeGmCXR9mKbiOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSBkyioo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XULwd+Nb2Y/paLUNYy4rHSVRq2XpLmq4VIPf/hLmnEIqipbvcVTwlLy5AqGyEJyNZQXXiAsu/HrMPOO2jw1I7FFlu6Kc7ifBmWC1tLSBUziXY0KAP6mjMA1STBdQF5YxVZ1oyLDprNJ35aW+Zz/rWAqfiYuzibLdxAdT9Txoz9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sz9cJhFT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSBkyioo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDC2C4CEEA;
-	Mon, 23 Jun 2025 21:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sz9cJhFT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496EFC4CEEA;
+	Mon, 23 Jun 2025 21:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713253;
-	bh=R8qlonhhIzWXDzx2Pv3eVLUWzvbX3zRqMfcMxj8szmA=;
+	s=korg; t=1750713255;
+	bh=OP3T3NAxnOwIKs4PgVfdhSh2bej4YQaeLM8Kxxxz4r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSBkyiooG3aupyH7Y5QkNn9ZfFjzKpFeToqqGl+/TGWTOE40JZpyVyjAK05hGIxMT
-	 XA0I7Sw5G+bB+ie0xmI/3yu0r0GQF19vg07B+kFwt3tP92OzYWctbbW7mbw08sf2dV
-	 ujCklRYOgVpipvM9h61beyeYFQRH0jAg0lHld81g=
+	b=Sz9cJhFTjRk/VSWyfRcppQIki+Yww3e/dYUNW50X4EN4Qgacoaky5ehH/rn+gCdpm
+	 A8YsTzKoDYRfFusv2LKKp+9hQxjs/hfOaa7uanxvRDn4Vv+n/Ecws2WY0XYJly60uQ
+	 X8YzkLy6i1fFDHZT6AO/oAEoA59W6ErGjQp+QrRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 113/411] gve: Fix RX_BUFFERS_POSTED stat to report per-queue fill_cnt
-Date: Mon, 23 Jun 2025 15:04:17 +0200
-Message-ID: <20250623130636.375409639@linuxfoundation.org>
+Subject: [PATCH 5.10 134/355] net_sched: prio: fix a race in prio_tune()
+Date: Mon, 23 Jun 2025 15:05:35 +0200
+Message-ID: <20250623130630.760344035@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +48,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f41a94aade120dc60322865f363cee7865f2df01 ]
+[ Upstream commit d35acc1be3480505b5931f17e4ea9b7617fea4d3 ]
 
-Previously, the RX_BUFFERS_POSTED stat incorrectly reported the
-fill_cnt from RX queue 0 for all queues, resulting in inaccurate
-per-queue statistics.
-Fix this by correctly indexing priv->rx[idx].fill_cnt for each RX queue.
+Gerrard Tai reported a race condition in PRIO, whenever SFQ perturb timer
+fires at the wrong time.
 
-Fixes: 24aeb56f2d38 ("gve: Add Gvnic stats AQ command and ethtool show/set-priv-flags.")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250527130830.1812903-1-alok.a.tiwari@oracle.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The race is as follows:
+
+CPU 0                                 CPU 1
+[1]: lock root
+[2]: qdisc_tree_flush_backlog()
+[3]: unlock root
+ |
+ |                                    [5]: lock root
+ |                                    [6]: rehash
+ |                                    [7]: qdisc_tree_reduce_backlog()
+ |
+[4]: qdisc_put()
+
+This can be abused to underflow a parent's qlen.
+
+Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
+should fix the race, because all packets will be purged from the qdisc
+before releasing the lock.
+
+Fixes: 7b8e0b6e6599 ("net: sched: prio: delay destroying child qdiscs on change")
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250611111515.1983366-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_main.c | 2 +-
+ net/sched/sch_prio.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
-index 2e2069e8130b2..f014b7230e256 100644
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -1299,7 +1299,7 @@ void gve_handle_report_stats(struct gve_priv *priv)
- 			};
- 			stats[stats_idx++] = (struct stats) {
- 				.stat_name = cpu_to_be32(RX_BUFFERS_POSTED),
--				.value = cpu_to_be64(priv->rx[0].fill_cnt),
-+				.value = cpu_to_be64(priv->rx[idx].fill_cnt),
- 				.queue_id = cpu_to_be32(idx),
- 			};
- 		}
+diff --git a/net/sched/sch_prio.c b/net/sched/sch_prio.c
+index 1c805fe05b82a..3d92497af01fe 100644
+--- a/net/sched/sch_prio.c
++++ b/net/sched/sch_prio.c
+@@ -211,7 +211,7 @@ static int prio_tune(struct Qdisc *sch, struct nlattr *opt,
+ 	memcpy(q->prio2band, qopt->priomap, TC_PRIO_MAX+1);
+ 
+ 	for (i = q->bands; i < oldbands; i++)
+-		qdisc_tree_flush_backlog(q->queues[i]);
++		qdisc_purge_queue(q->queues[i]);
+ 
+ 	for (i = oldbands; i < q->bands; i++) {
+ 		q->queues[i] = queues[i];
 -- 
 2.39.5
 
