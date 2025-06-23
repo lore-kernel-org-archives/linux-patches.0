@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0303219049B;
-	Mon, 23 Jun 2025 21:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674931FECBA;
+	Mon, 23 Jun 2025 21:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715678; cv=none; b=VSL1IJVfaBw4iaEvaPvD2br7DKL4Z9mU59sGVKW9xaFtg0Q+hDpM+juN0kPMuN7SsolnuJ3fvSZQmkWl+IKl96CuHfiDa2iR32VY9nIEx2jMN8T+5gsPe//p8A7iIAIybxfOvKV1I+0IqBVIpO5FHlCXTyzTW7Zbu6mEfHED9H8=
+	t=1750715680; cv=none; b=tMw4lci3MaEucg2iPMiDT+wSewW79XjhS7uUUUYkPTKR8bF97iieEbcZ9iUbipzGfluanhRyKFirgBMtVRHOqLE30jAnjfVu8IIAvOsb9KK1ap1yTek3tePBYjX8Gctu/XBPlhhPkFr1pPr3vwUxDOON/mAerUhg5c/cwR2bIkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715678; c=relaxed/simple;
-	bh=kwJ38WAGzrtUtUkZQrWdJHN0SjX7UHGw500ozZyzNw8=;
+	s=arc-20240116; t=1750715680; c=relaxed/simple;
+	bh=DFdoh5armBVdxZMr4K9P8jIK67TTXZj0UeWxp4Awkn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B4nxh35s+585UFh7jmn/HcYs8hW9sr61Y35nrKOYRDgxUWZiPJwVNeFeVyJarPQqfpNDzUmIabdMoDVcSlwkF8QJefyAeMgoNoDUvw3YrG0CGLmunhHB+JQWQEVhX/S+vAYtObfU5HX9DLLJQFL5JD5rfgDANaXNvss16HBNLhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kjernp2y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KwESUx5MygetSZBA2J16ABhx4mhzIPI9VIC2Yx1APc8cR9X+KxpY7I6AfM/OFR8gCkGwp/0Z8iRn9Di76drS9L2Vz8uCcftaQF2S1C5+aT3PK0gH/euQyKP2g6AFyWFD02yZQjAJXflq3vdT/JjtFe82mCUZxvbPN5Cnhiq8EPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ug87ZktS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kjernp2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8B0C4CEEA;
-	Mon, 23 Jun 2025 21:54:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ug87ZktS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00EB2C4CEEA;
+	Mon, 23 Jun 2025 21:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715677;
-	bh=kwJ38WAGzrtUtUkZQrWdJHN0SjX7UHGw500ozZyzNw8=;
+	s=korg; t=1750715680;
+	bh=DFdoh5armBVdxZMr4K9P8jIK67TTXZj0UeWxp4Awkn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kjernp2y7BAeLsx+syAyVVEgQ4OpP++us3idA42hG91x4waIlQHXyUlbmsI02FIK4
-	 Uf1Q9MBZihBnhBMorRdMyagfaox8lHvjq0A4j2rzGmi/yIBWqOTRJfocx1reGcm5wo
-	 m0CUHqV3Z/4vHA/6sdu68GZ3rOUX7F3CRufpripo=
+	b=ug87ZktSRWP5dBUE6w10V6qIam4TGqxck0LexA7ZkYPlUnXD8RKjbaVjqNzyH+ca6
+	 4mB3Di1irycVkGiTScf18UPKIixLPGijy4mgufjUsmL5bHjdHt+FyvE3/Ah6IBG6NI
+	 v3q/BKE6GBmqU9s7Rhy6YcFDxqaUQTUvBLXlUf5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 6.6 214/290] jffs2: check jffs2_prealloc_raw_node_refs() result in few other places
-Date: Mon, 23 Jun 2025 15:07:55 +0200
-Message-ID: <20250623130633.369409650@linuxfoundation.org>
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 255/508] net/mlx5: Ensure fw pages are always allocated on same NUMA
+Date: Mon, 23 Jun 2025 15:05:00 +0200
+Message-ID: <20250623130651.527591951@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,84 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-commit 2b6d96503255a3ed676cd70f8368870c6d6a25c6 upstream.
+[ Upstream commit f37258133c1e95e61db532e14067e28b4881bf24 ]
 
-Fuzzing hit another invalid pointer dereference due to the lack of
-checking whether jffs2_prealloc_raw_node_refs() completed successfully.
-Subsequent logic implies that the node refs have been allocated.
+When firmware asks the driver to allocate more pages, using event of
+give_pages, the driver should always allocate it from same NUMA, the
+original device NUMA. Current code uses dev_to_node() which can result
+in different NUMA as it is changed by other driver flows, such as
+mlx5_dma_zalloc_coherent_node(). Instead, use saved numa node for
+allocating firmware pages.
 
-Handle that. The code is ready for propagating the error upwards.
-
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 1 PID: 5835 Comm: syz-executor145 Not tainted 5.10.234-syzkaller #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:jffs2_link_node_ref+0xac/0x690 fs/jffs2/nodelist.c:600
-Call Trace:
- jffs2_mark_erased_block fs/jffs2/erase.c:460 [inline]
- jffs2_erase_pending_blocks+0x688/0x1860 fs/jffs2/erase.c:118
- jffs2_garbage_collect_pass+0x638/0x1a00 fs/jffs2/gc.c:253
- jffs2_reserve_space+0x3f4/0xad0 fs/jffs2/nodemgmt.c:167
- jffs2_write_inode_range+0x246/0xb50 fs/jffs2/write.c:362
- jffs2_write_end+0x712/0x1110 fs/jffs2/file.c:302
- generic_perform_write+0x2c2/0x500 mm/filemap.c:3347
- __generic_file_write_iter+0x252/0x610 mm/filemap.c:3465
- generic_file_write_iter+0xdb/0x230 mm/filemap.c:3497
- call_write_iter include/linux/fs.h:2039 [inline]
- do_iter_readv_writev+0x46d/0x750 fs/read_write.c:740
- do_iter_write+0x18c/0x710 fs/read_write.c:866
- vfs_writev+0x1db/0x6a0 fs/read_write.c:939
- do_pwritev fs/read_write.c:1036 [inline]
- __do_sys_pwritev fs/read_write.c:1083 [inline]
- __se_sys_pwritev fs/read_write.c:1078 [inline]
- __x64_sys_pwritev+0x235/0x310 fs/read_write.c:1078
- do_syscall_64+0x30/0x40 arch/x86/entry/common.c:46
- entry_SYSCALL_64_after_hwframe+0x67/0xd1
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 2f785402f39b ("[JFFS2] Reduce visibility of raw_node_ref to upper layers of JFFS2 code.")
-Fixes: f560928baa60 ("[JFFS2] Allocate node_ref for wasted space when skipping to page boundary")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 311c7c71c9bb ("net/mlx5e: Allocate DMA coherent memory on reader NUMA node")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250610151514.1094735-2-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jffs2/erase.c |    4 +++-
- fs/jffs2/scan.c  |    4 +++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/jffs2/erase.c
-+++ b/fs/jffs2/erase.c
-@@ -425,7 +425,9 @@ static void jffs2_mark_erased_block(stru
- 			.totlen =	cpu_to_je32(c->cleanmarker_size)
- 		};
- 
--		jffs2_prealloc_raw_node_refs(c, jeb, 1);
-+		ret = jffs2_prealloc_raw_node_refs(c, jeb, 1);
-+		if (ret)
-+			goto filebad;
- 
- 		marker.hdr_crc = cpu_to_je32(crc32(0, &marker, sizeof(struct jffs2_unknown_node)-4));
- 
---- a/fs/jffs2/scan.c
-+++ b/fs/jffs2/scan.c
-@@ -256,7 +256,9 @@ int jffs2_scan_medium(struct jffs2_sb_in
- 
- 		jffs2_dbg(1, "%s(): Skipping %d bytes in nextblock to ensure page alignment\n",
- 			  __func__, skip);
--		jffs2_prealloc_raw_node_refs(c, c->nextblock, 1);
-+		ret = jffs2_prealloc_raw_node_refs(c, c->nextblock, 1);
-+		if (ret)
-+			goto out;
- 		jffs2_scan_dirty_space(c, c->nextblock, skip);
- 	}
- #endif
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
+index 95dc67fb30015..99909c74a2144 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
+@@ -285,7 +285,7 @@ static void free_4k(struct mlx5_core_dev *dev, u64 addr, u32 function)
+ static int alloc_system_page(struct mlx5_core_dev *dev, u32 function)
+ {
+ 	struct device *device = mlx5_core_dma_dev(dev);
+-	int nid = dev_to_node(device);
++	int nid = dev->priv.numa_node;
+ 	struct page *page;
+ 	u64 zero_addr = 1;
+ 	u64 addr;
+-- 
+2.39.5
+
 
 
