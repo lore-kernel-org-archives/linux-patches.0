@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214A619D084;
-	Mon, 23 Jun 2025 21:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973A21F5820;
+	Mon, 23 Jun 2025 21:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714985; cv=none; b=Iqo1z8FAqVWCNrPcTUEnXQlIzhmY5AsLEESHhfTM+5UdM9WPtPhxIg/i2KT52ZrMJu/jv77jDF+pN3qidCLl95rM1GLNa6csZkQflC2dhmOKyVCfTiOG0xFd/17sTkrobQ4bzpCPJqyeg19VgSSTcafeoEuvkDiIsmgxso3pP7c=
+	t=1750714987; cv=none; b=QtLMJoXHJNNMOO3SIaSeXi+/MgO6wGhoVedcw7y9hAl/vapgHdEVHIERL4Er9TrRoBxvWkXFEZd3uIOXJ73HHGwWZxmrXI2PMjyr0eHLBDw5qrs2HbVwo+66pIpcMjrcEtOCGBDQIbRCyTUGuLZ468IdCR2ayv7tCNxmYFOnBnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714985; c=relaxed/simple;
-	bh=6xk8RtvZ789zWBpljEWKA3tiDjnYS+pR0y3FozcTBq8=;
+	s=arc-20240116; t=1750714987; c=relaxed/simple;
+	bh=Tgon6siZGWaxaYn3WDxTR+ligFlVIZWCQDWxb13zMck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQruPO6Fk3d+cdrWeMXu6141eCjgERKI94d9QYpIt6+nUvDBXqeWcxJmjYxl6TCIrhoSj89AyQuSvs6Wir2YLVSNUKQbmT7MvfeGGWu5EHunD9Hl30qGcOrtesyOH0jJo6BODsi2QrgGZiemgdwiVFTQpAPgn0ELmpoi6XQOA7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9pv0SqL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W+tTeBnOtRHPbZNWN9bM3Fa5trKo9MYMw1jUt36oo9HG7pZ+6hh3ExkBoerTDQozk02D5VVQ9b8lryYg/cPm76gHM6ffLNaGv59NPW8K6jbLCQVbwkdKgpN/L/OUDD9W8LgfAp9NvUNzY+c7637uPD1ce0Ju4VPubWGnzUXki4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sk2V+p30; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9pv0SqL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE526C4CEEA;
-	Mon, 23 Jun 2025 21:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sk2V+p30"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27732C4CEEA;
+	Mon, 23 Jun 2025 21:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714985;
-	bh=6xk8RtvZ789zWBpljEWKA3tiDjnYS+pR0y3FozcTBq8=;
+	s=korg; t=1750714987;
+	bh=Tgon6siZGWaxaYn3WDxTR+ligFlVIZWCQDWxb13zMck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9pv0SqLuuWkOU/nhDRV6Vpijq8XwNEQi7N1U78fnyjSjq6oa+oBec3ol11bs/Wxb
-	 29BgOu7jxsyhGHUWxydj0vkStK6vTi9FHUR8C8tgWp4hnra9GIdMq8HLDdCseR9Er+
-	 hsxPV9aLjOws9phW145t2huR5lhVnSXz9J9LlQq0=
+	b=sk2V+p30hWQvE//PVcMWoadSF43HAxfSW2NY/IT+xGlLi0DVJN/PbmDMHQIwUmyq6
+	 pmretY88MxzkrhRvlSZhtc85GOszYbyxIBH7pH2xsrezrR6K50INDwxRWedl2NcrHp
+	 RMfT2fiXgSSS8jh+bT1RRc60gw9etd0Wycd+X9hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Simon Schuster <schuster.simon@siemens-energy.com>,
+	Andreas Oetken <andreas.oetken@siemens-energy.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 236/355] sunrpc: fix race in cache cleanup causing stale nextcheck time
-Date: Mon, 23 Jun 2025 15:07:17 +0200
-Message-ID: <20250623130633.846450386@linuxfoundation.org>
+Subject: [PATCH 5.10 245/355] nios2: force update_mmu_cache on spurious tlb-permission--related pagefaults
+Date: Mon, 23 Jun 2025 15:07:26 +0200
+Message-ID: <20250623130634.112329816@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
 References: <20250623130626.716971725@linuxfoundation.org>
@@ -51,79 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Simon Schuster <schuster.simon@siemens-energy.com>
 
-[ Upstream commit 2298abcbe11e9b553d03c0f1d084da786f7eff88 ]
+[ Upstream commit 2d8a3179ea035f9341b6a73e5ba4029fc67e983d ]
 
-When cache cleanup runs concurrently with cache entry removal, a race
-condition can occur that leads to incorrect nextcheck times. This can
-delay cache cleanup for the cache_detail by up to 1800 seconds:
+NIOS2 uses a software-managed TLB for virtual address translation. To
+flush a cache line, the original mapping is replaced by one to physical
+address 0x0 with no permissions (rwx mapped to 0) set. This can lead to
+TLB-permission--related traps when such a nominally flushed entry is
+encountered as a mapping for an otherwise valid virtual address within a
+process (e.g. due to an MMU-PID-namespace rollover that previously
+flushed the complete TLB including entries of existing, running
+processes).
 
-1. cache_clean() sets nextcheck to current time plus 1800 seconds
-2. While scanning a non-empty bucket, concurrent cache entry removal can
-   empty that bucket
-3. cache_clean() finds no cache entries in the now-empty bucket to update
-   the nextcheck time
-4. This maybe delays the next scan of the cache_detail by up to 1800
-   seconds even when it should be scanned earlier based on remaining
-   entries
+The default ptep_set_access_flags implementation from mm/pgtable-generic.c
+only forces a TLB-update when the page-table entry has changed within the
+page table:
 
-Fix this by moving the hash_lock acquisition earlier in cache_clean().
-This ensures bucket emptiness checks and nextcheck updates happen
-atomically, preventing the race between cleanup and entry removal.
+	/*
+	 * [...] We return whether the PTE actually changed, which in turn
+	 * instructs the caller to do things like update__mmu_cache. [...]
+	 */
+	int ptep_set_access_flags(struct vm_area_struct *vma,
+				  unsigned long address, pte_t *ptep,
+				  pte_t entry, int dirty)
+	{
+		int changed = !pte_same(*ptep, entry);
+		if (changed) {
+			set_pte_at(vma->vm_mm, address, ptep, entry);
+			flush_tlb_fix_spurious_fault(vma, address);
+		}
+		return changed;
+	}
 
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+However, no cross-referencing with the TLB-state occurs, so the
+flushing-induced pseudo entries that are responsible for the pagefault
+in the first place are never pre-empted from TLB on this code path.
+
+This commit fixes this behaviour by always requesting a TLB-update in
+this part of the pagefault handling, fixing spurious page-faults on the
+way. The handling is a straightforward port of the logic from the MIPS
+architecture via an arch-specific ptep_set_access_flags function ported
+from arch/mips/include/asm/pgtable.h.
+
+Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
+Signed-off-by: Andreas Oetken <andreas.oetken@siemens-energy.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/cache.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ arch/nios2/include/asm/pgtable.h | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/net/sunrpc/cache.c b/net/sunrpc/cache.c
-index 0a91945db88fe..81a780c1226c9 100644
---- a/net/sunrpc/cache.c
-+++ b/net/sunrpc/cache.c
-@@ -451,24 +451,21 @@ static int cache_clean(void)
- 		}
- 	}
+diff --git a/arch/nios2/include/asm/pgtable.h b/arch/nios2/include/asm/pgtable.h
+index 2600d76c310c4..966fef8249bbb 100644
+--- a/arch/nios2/include/asm/pgtable.h
++++ b/arch/nios2/include/asm/pgtable.h
+@@ -277,4 +277,20 @@ extern void __init mmu_init(void);
+ extern void update_mmu_cache(struct vm_area_struct *vma,
+ 			     unsigned long address, pte_t *pte);
  
-+	spin_lock(&current_detail->hash_lock);
++static inline int pte_same(pte_t pte_a, pte_t pte_b);
 +
- 	/* find a non-empty bucket in the table */
--	while (current_detail &&
--	       current_index < current_detail->hash_size &&
-+	while (current_index < current_detail->hash_size &&
- 	       hlist_empty(&current_detail->hash_table[current_index]))
- 		current_index++;
- 
- 	/* find a cleanable entry in the bucket and clean it, or set to next bucket */
--
--	if (current_detail && current_index < current_detail->hash_size) {
-+	if (current_index < current_detail->hash_size) {
- 		struct cache_head *ch = NULL;
- 		struct cache_detail *d;
- 		struct hlist_head *head;
- 		struct hlist_node *tmp;
- 
--		spin_lock(&current_detail->hash_lock);
--
- 		/* Ok, now to clean this strand */
--
- 		head = &current_detail->hash_table[current_index];
- 		hlist_for_each_entry_safe(ch, tmp, head, cache_list) {
- 			if (current_detail->nextcheck > ch->expiry_time)
-@@ -489,8 +486,10 @@ static int cache_clean(void)
- 		spin_unlock(&cache_list_lock);
- 		if (ch)
- 			sunrpc_end_cache_remove_entry(ch, d);
--	} else
-+	} else {
-+		spin_unlock(&current_detail->hash_lock);
- 		spin_unlock(&cache_list_lock);
-+	}
- 
- 	return rv;
- }
++#define __HAVE_ARCH_PTEP_SET_ACCESS_FLAGS
++static inline int ptep_set_access_flags(struct vm_area_struct *vma,
++					unsigned long address, pte_t *ptep,
++					pte_t entry, int dirty)
++{
++	if (!pte_same(*ptep, entry))
++		set_ptes(vma->vm_mm, address, ptep, entry, 1);
++	/*
++	 * update_mmu_cache will unconditionally execute, handling both
++	 * the case that the PTE changed and the spurious fault case.
++	 */
++	return true;
++}
++
+ #endif /* _ASM_NIOS2_PGTABLE_H */
 -- 
 2.39.5
 
