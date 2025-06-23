@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7AB4409;
-	Mon, 23 Jun 2025 21:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C14F4409;
+	Mon, 23 Jun 2025 21:38:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714704; cv=none; b=TdX0jU3XCgP0R5I3Hy4AlEAuNAp9vDWhla4yPp8FR/tr6bteuU1FzkTxA2zJpqfpRh4lJMGGWKPWND6oriXLrIb9Ha79gT0bDr5FsxlJZLKd5Uv6muRtNh0WwMxumtAAuc+kfj8O3iiX/KboV9y76PgbKyvZ5Ama96y6DI308Wc=
+	t=1750714706; cv=none; b=QDhip1iDXmStzjN4zJL0PZiQ8XA5PKYX11CdkL7OD4yyW9+9nGqRxORw12PCHEOS3gyOuYriwGtj8oKfkI1T3XvdAh1GFCGl6AuVGLy2E0CjchwiL/yUUctPFT/Ivxvoj8r6txq/2y/E2zntU794z0XX2CBCyL1UeF5XtKh6+FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714704; c=relaxed/simple;
-	bh=iJgMYC1kQboYugp4QPKRWJMT54LbS11hqVXYjtLJMcM=;
+	s=arc-20240116; t=1750714706; c=relaxed/simple;
+	bh=ovDyI1qqm/LVdkMOmK83I5mro0jTym8i8UE9YgHKGEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gb4U5QGbYR2Kdu41DTcEjzgPw/8eT3up8gwd44PxPQPxoHYKPJApmdR5KhamUxYE9cUqZbpkAc3J6Ye9TYFgfz8jl1PMVYq2LikpqLiELVb15GusECeovQoqkGJ3GdETIzcWEfSReMFXw/1v6r5wet7BcV6uFIMOwkS9tC36TZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6BTyNK8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Au6UYGcCih9zYRc6SczEuj3/3kugp0TbkJGo0mR/Bm0TCYEgH0Y2xl4xN6RwlaFu9GFE4ZFd9bRcUB9Lpiqp0U0DS9AaNf+acI689rdaNCtqZWH7O8ZhVApASW4LhHpVmSAr013JNEy3zDJ458jP0krAut3xIDe0y7S1w+c/dWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNEMad3p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6BTyNK8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A73C4CEEA;
-	Mon, 23 Jun 2025 21:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNEMad3p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE82DC4CEEA;
+	Mon, 23 Jun 2025 21:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714703;
-	bh=iJgMYC1kQboYugp4QPKRWJMT54LbS11hqVXYjtLJMcM=;
+	s=korg; t=1750714706;
+	bh=ovDyI1qqm/LVdkMOmK83I5mro0jTym8i8UE9YgHKGEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G6BTyNK8Lw9o79AA8ZGyvIG++ouBEDCWANcmNIESnPs3bLM3dfhdZO7A/scDgsyw3
-	 0GzwsJtYAQFoWps1m9QyjIDw1vEWB6GlDisqDNdpjA/6oSjTS43Lb/ZY+l472JlPGP
-	 jK36iz0D6o6EhpIiUnbHge9msPUUJV3sPVQKIKlc=
+	b=gNEMad3piPtf0WjD933qBDfMszi5/O2ho8XLUHguZZ0W7zCaSMqn0FXIS27YoCo0L
+	 gpspoly1k3BYUjzZdmP1EZJzh0kXMaeMavDheLhMCO+3iG+c+l7/dqmRwE2jWQEeCW
+	 5YDxYuxjpa64EzvO+qNNWrhKIxANNp9QDKEMpFo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	"Orlando, Noah" <Noah.Orlando@deshaw.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 190/508] do_change_type(): refuse to operate on unmounted/not ours mounts
-Date: Mon, 23 Jun 2025 15:03:55 +0200
-Message-ID: <20250623130649.946796214@linuxfoundation.org>
+	Liangliang Zou <rawdiamondmc@outlook.com>,
+	Mingcong Bai <jeffbai@aosc.io>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 5.15 204/411] wifi: rtlwifi: disable ASPM for RTL8723BE with subsystem ID 11ad:1723
+Date: Mon, 23 Jun 2025 15:05:48 +0200
+Message-ID: <20250623130638.809769371@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Mingcong Bai <jeffbai@aosc.io>
 
-[ Upstream commit 12f147ddd6de7382dad54812e65f3f08d05809fc ]
+commit 77a6407c6ab240527166fb19ee96e95f5be4d3cd upstream.
 
-Ensure that propagation settings can only be changed for mounts located
-in the caller's mount namespace. This change aligns permission checking
-with the rest of mount(2).
+RTL8723BE found on some ASUSTek laptops, such as F441U and X555UQ with
+subsystem ID 11ad:1723 are known to output large amounts of PCIe AER
+errors during and after boot up, causing heavy lags and at times lock-ups:
 
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Fixes: 07b20889e305 ("beginning of the shared-subtree proper")
-Reported-by: "Orlando, Noah" <Noah.Orlando@deshaw.com>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  pcieport 0000:00:1c.5: AER: Correctable error message received from 0000:00:1c.5
+  pcieport 0000:00:1c.5: PCIe Bus Error: severity=Correctable, type=Physical Layer, (Receiver ID)
+  pcieport 0000:00:1c.5:   device [8086:9d15] error status/mask=00000001/00002000
+  pcieport 0000:00:1c.5:    [ 0] RxErr
+
+Disable ASPM on this combo as a quirk.
+
+This patch is a revision of a previous patch (linked below) which
+attempted to disable ASPM for RTL8723BE on all Intel Skylake and Kaby Lake
+PCIe bridges. I take a more conservative approach as all known reports
+point to ASUSTek laptops of these two generations with this particular
+wireless card.
+
+Please note, however, before the rtl8723be finishes probing, the AER
+errors remained. After the module finishes probing, all AER errors would
+indeed be eliminated, along with heavy lags, poor network throughput,
+and/or occasional lock-ups.
+
+Cc: <stable@vger.kernel.org>
+Fixes: a619d1abe20c ("rtlwifi: rtl8723be: Add new driver")
+Reported-by: Liangliang Zou <rawdiamondmc@outlook.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218127
+Link: https://lore.kernel.org/lkml/05390e0b-27fd-4190-971e-e70a498c8221@lwfinger.net/T/
+Tested-by: Liangliang Zou <rawdiamondmc@outlook.com>
+Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250422061755.356535-1-jeffbai@aosc.io
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/realtek/rtlwifi/pci.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 65aa3495db6a1..aae1a77ac2d3f 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2371,6 +2371,10 @@ static int do_change_type(struct path *path, int ms_flags)
- 		return -EINVAL;
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -155,6 +155,16 @@ static void _rtl_pci_update_default_sett
+ 	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8192SE &&
+ 	    init_aspm == 0x43)
+ 		ppsc->support_aspm = false;
++
++	/* RTL8723BE found on some ASUSTek laptops, such as F441U and
++	 * X555UQ with subsystem ID 11ad:1723 are known to output large
++	 * amounts of PCIe AER errors during and after boot up, causing
++	 * heavy lags, poor network throughput, and occasional lock-ups.
++	 */
++	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
++	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
++	     rtlpci->pdev->subsystem_device == 0x1723))
++		ppsc->support_aspm = false;
+ }
  
- 	namespace_lock();
-+	if (!check_mnt(mnt)) {
-+		err = -EINVAL;
-+		goto out_unlock;
-+	}
- 	if (type == MS_SHARED) {
- 		err = invent_group_ids(mnt, recurse);
- 		if (err)
--- 
-2.39.5
-
+ static bool _rtl_pci_platform_switch_device_pci_aspm(
 
 
