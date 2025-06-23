@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1042222B2;
-	Mon, 23 Jun 2025 22:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBA62222B2;
+	Mon, 23 Jun 2025 22:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717626; cv=none; b=JL59hhz4UMIV8CWRWf4gdq3i7nLj+GXtBl5N4Tdr01q8TD35qDiJtX144iVny/7ZP4wr1utbhjk1HJfIQjhzrHE4SHKpi9W0IIzfxzJjVrdelYDyodEtAMBG9rrTQxoGxhhAUwENfQGcPspC98XfPj0NQ1HWP1FvFVi+cAPJNxU=
+	t=1750717629; cv=none; b=UbrRMfKaOFVFQeLuExD/Cyg7e9ebJfLs8pYd5+gTIuTmbBo3PeQp08LQceZdy4+kLXgL8gtT5PR4lNrC6n6uHKKoJW8YkeEtDk1RaszzMSFBJCh9xaNh77Yd2g4ze1ZEo+rcv4hw881itKh6omuQM5XZkjl7JhWOttNzOShWFJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717626; c=relaxed/simple;
-	bh=A61kyApMLT3NLDDEAvljlD4CLlkwSUJtakXRvyYPjxA=;
+	s=arc-20240116; t=1750717629; c=relaxed/simple;
+	bh=guXMzAIUl2LDgBKYb3eR+RirKViZEsE/+78wREkywHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lq+qZE5wp0v4g5KBS9kcnLDWWyLO/HEjNg6FSI70sdX6ro0iBTBmr8rm+gNW3KM6SQl5Xm7TcBx/0IEWGffh5/PWMA+b6KFemyeMQD61XMqMzyMLRCY8ejr/R8RzKOBKX+1nP5BicIVQ4EZjNXDjUu7crpozYDd1uoli9LSyH0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jh2Rwh6P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m3C0JBI558TL/dydKxlRa6vYMjLtOGTjFsv+LgNOxNFH0Rtw9DaG4Xw6CCvHAxWTPVSV/jznXyHoQeEQ82uwsvsncqDT/pawY2JyIfQNvsTAwna4gU5lIxT+QcCeiqSfxheVWt0zn1ar8bxiyRuexu2NGq4wOBScNBW/zcR7fZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKGUC3OB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jh2Rwh6P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65482C4CEEA;
-	Mon, 23 Jun 2025 22:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKGUC3OB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9EBFC4CEEA;
+	Mon, 23 Jun 2025 22:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717626;
-	bh=A61kyApMLT3NLDDEAvljlD4CLlkwSUJtakXRvyYPjxA=;
+	s=korg; t=1750717629;
+	bh=guXMzAIUl2LDgBKYb3eR+RirKViZEsE/+78wREkywHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jh2Rwh6P8zei/GClBM9X1am/gaZbC5bFgi+BK0NjY7e9JueNJIA+h4+PYIRSJHgPd
-	 6hDfzmIeKbCEvZHdz2JB8QxY4MWyovAYXze/r6engPsHAqrph1lLO+Bv2wHcOtMREr
-	 On1HtyWPE2nJDZBXsLksrbMgUd6cW1Un6AA5fKJk=
+	b=OKGUC3OB05/XcgVVs08sVif+zCKZuISqZ/i6Ez9GXLDZgVLH5Y1ln46U9mI2RLMPo
+	 IF7VDOqLqLZoHcg2795snvB3AyKMfJLyLT6FVicIft8jNSNkMVdhbkmeX2GQOetdrv
+	 /9Usmi1jVejTyIAtkaX80RgcqpEFsX+AbJm3G1ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Meetakshi Setiya <msetiya@microsoft.com>,
-	zhangjian <zhangjian496@huawei.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 400/414] smb: client: fix first command failure during re-negotiation
-Date: Mon, 23 Jun 2025 15:08:57 +0200
-Message-ID: <20250623130651.939293304@linuxfoundation.org>
+	Narayana Murty N <nnmlinux@linux.ibm.com>,
+	Vaibhav Jain <vaibhav@linux.ibm.com>,
+	Ganesh Goudar <ganeshgr@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 440/508] powerpc/eeh: Fix missing PE bridge reconfiguration during VFIO EEH recovery
+Date: Mon, 23 Jun 2025 15:08:05 +0200
+Message-ID: <20250623130655.988653211@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,75 +49,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: zhangjian <zhangjian496@huawei.com>
+From: Narayana Murty N <nnmlinux@linux.ibm.com>
 
-commit 34331d7beed7576acfc98e991c39738b96162499 upstream.
+[ Upstream commit 33bc69cf6655cf60829a803a45275f11a74899e5 ]
 
-after fabc4ed200f9, server_unresponsive add a condition to check whether client
-need to reconnect depending on server->lstrp. When client failed to reconnect
-for some time and abort connection, server->lstrp is updated for the last time.
-In the following scene, server->lstrp is too old. This cause next command
-failure in re-negotiation rather than waiting for re-negotiation done.
+VFIO EEH recovery for PCI passthrough devices fails on PowerNV and pseries
+platforms due to missing host-side PE bridge reconfiguration. In the
+current implementation, eeh_pe_configure() only performs RTAS or OPAL-based
+bridge reconfiguration for native host devices, but skips it entirely for
+PEs managed through VFIO in guest passthrough scenarios.
 
-1. mount -t cifs -o username=Everyone,echo_internal=10 //$server_ip/export /mnt
-2. ssh $server_ip "echo b > /proc/sysrq-trigger &"
-3. ls /mnt
-4. sleep 21s
-5. ssh $server_ip "service firewalld stop"
-6. ls # return EHOSTDOWN
+This leads to incomplete EEH recovery when a PCI error affects a
+passthrough device assigned to a QEMU/KVM guest. Although VFIO triggers the
+EEH recovery flow through VFIO_EEH_PE_ENABLE ioctl, the platform-specific
+bridge reconfiguration step is silently bypassed. As a result, the PE's
+config space is not fully restored, causing subsequent config space access
+failures or EEH freeze-on-access errors inside the guest.
 
-If the interval between 5 and 6 is too small, 6 may trigger sending negotiation
-request. Before backgrounding cifsd thread try to receive negotiation response
-from server in cifs_readv_from_socket, server_unresponsive may trigger
-cifs_reconnect which cause 6 to be failed:
+This patch fixes the issue by ensuring that eeh_pe_configure() always
+invokes the platform's configure_bridge() callback (e.g.,
+pseries_eeh_phb_configure_bridge) even for VFIO-managed PEs. This ensures
+that RTAS or OPAL calls to reconfigure the PE bridge are correctly issued
+on the host side, restoring the PE's configuration space after an EEH
+event.
 
-ls thread
-----------------
-  smb2_negotiate
-    server->tcpStatus = CifsInNegotiate
-    compound_send_recv
-      wait_for_compound_request
+This fix is essential for reliable EEH recovery in QEMU/KVM guests using
+VFIO PCI passthrough on PowerNV and pseries systems.
 
-cifsd thread
-----------------
-  cifs_readv_from_socket
-    server_unresponsive
-      server->tcpStatus == CifsInNegotiate && jiffies > server->lstrp + 20s
-        cifs_reconnect
-          cifs_abort_connection: mid_state = MID_RETRY_NEEDED
+Tested with:
+- QEMU/KVM guest using VFIO passthrough (IBM Power9,(lpar)Power11 host)
+- Injected EEH errors with pseries EEH errinjct tool on host, recovery
+  verified on qemu guest.
+- Verified successful config space access and CAP_EXP DevCtl restoration
+  after recovery
 
-ls thread
-----------------
-      cifs_sync_mid_result return EAGAIN
-  smb2_negotiate return EHOSTDOWN
-
-Though server->lstrp means last server response time, it is updated in
-cifs_abort_connection and cifs_get_tcp_session. We can also update server->lstrp
-before switching into CifsInNegotiate state to avoid failure in 6.
-
-Fixes: 7ccc1465465d ("smb: client: fix hang in wait_for_response() for negproto")
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Acked-by: Meetakshi Setiya <msetiya@microsoft.com>
-Signed-off-by: zhangjian <zhangjian496@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 212d16cdca2d ("powerpc/eeh: EEH support for VFIO PCI device")
+Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
+Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+Reviewed-by: Ganesh Goudar <ganeshgr@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250508062928.146043-1-nnmlinux@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/kernel/eeh.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -3993,6 +3993,7 @@ retry:
- 		return 0;
- 	}
+diff --git a/arch/powerpc/kernel/eeh.c b/arch/powerpc/kernel/eeh.c
+index ab316e155ea9f..2e286bba2f645 100644
+--- a/arch/powerpc/kernel/eeh.c
++++ b/arch/powerpc/kernel/eeh.c
+@@ -1516,6 +1516,8 @@ int eeh_pe_configure(struct eeh_pe *pe)
+ 	/* Invalid PE ? */
+ 	if (!pe)
+ 		return -ENODEV;
++	else
++		ret = eeh_ops->configure_bridge(pe);
  
-+	server->lstrp = jiffies;
- 	server->tcpStatus = CifsInNegotiate;
- 	spin_unlock(&server->srv_lock);
- 
+ 	return ret;
+ }
+-- 
+2.39.5
+
 
 
