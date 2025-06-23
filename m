@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551BB3FB1B;
-	Mon, 23 Jun 2025 22:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3123FB1B;
+	Mon, 23 Jun 2025 22:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716233; cv=none; b=E8E5qL6ckp2vM7qjn9K/zaupwTVBFtJRZhV+gQ5rmb+EYVG8Htn+70LrNwalnWpVgGDLDFA0YOGfVfbd8nKOHP4/YCBF2moPAitPsQRcsiW+HUboYLZDyKK5YvCzqvjgmqjCl5SqcISXTirpbgksfAPKhXXxfkB1i35/jOpHJvY=
+	t=1750716235; cv=none; b=EmQCw3k/aumgLBkOJIlFkproKJntYHb53lJRmkFMqlCchohbfGWCAkFFZwvuRCiHY9hUnhAkDcDePVOayGR/BNv0d+EC6exwJsRikvyAA2VzycGnPv5/AUd41zmEW8KlBbj5FaUczu2kCuoooP/9RLMSKtJ79DnguuhYc5nmH+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716233; c=relaxed/simple;
-	bh=2e+e/huyhHwhP8C5bknvZ8EUrczBp9LFppbddcY4ybc=;
+	s=arc-20240116; t=1750716235; c=relaxed/simple;
+	bh=ktGDq5kn2XO8NdzT88OOwE/eQa2Na6LbXYb9C7miVfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ofp0k4IfC9I9h/iV7IO7HsG5FgAz2pJvqsve2Nfw0YJZfnMwoVVdQ/8FJn1RayeBcq6LWjkIMn/4CvAj5DLZC6cbeMRIFdOwph1mgP84e41b3nPDztjxsm1o87MLgGpAonw0hNy1Vzn/jj+Rij2VBEtpV5psCgklGj2XZeckHwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbP/BNQE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PklYBGAj2elrsSe5XSAy5wH4Rs82GibSXy3OeK1Xox97T+hBSCn0zBji2zCT97ABsRLRqMNSSYoUPhzpLeuJ1vOiNqOy+sxCodSlYSEEgyFr34bMIiXUaHB08ADIh0ZGp3JibFYSbWpyQKbs27rKfKfp7xwx8kT+T/cRm8eBNPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=seHmAaM9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbP/BNQE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D42C4CEEA;
-	Mon, 23 Jun 2025 22:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seHmAaM9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B01AC4CEEA;
+	Mon, 23 Jun 2025 22:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716233;
-	bh=2e+e/huyhHwhP8C5bknvZ8EUrczBp9LFppbddcY4ybc=;
+	s=korg; t=1750716235;
+	bh=ktGDq5kn2XO8NdzT88OOwE/eQa2Na6LbXYb9C7miVfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GbP/BNQE3JPYdssntLnZPbTXOtP8O9qmH0lkK709de9ZlSzNXasEirdlrWrG3G3YB
-	 wCDARXX/5in5A0fmbpA/exR8UgjaxT2Xs+PJt8dxYqmahGJnQ6s7nWGbbLI/ohIhRi
-	 KVtzPta/ysc34UHUuYe0fo2hKWeiSH0EMXWE1754=
+	b=seHmAaM9D/1R1vn5cT9oJXewF52eGyT8xrjHThSM8IVyG9wsOjFgRqWgqUb+8qgBL
+	 qsPsnaXkHWC05Jad2ITFb4wmMj34AB2cHq7qENUdC4YnGVgTHQ9NCMkcuuxOF3BFw7
+	 94a8LYDqtPN1GcMjCIo2/kgz/OIoSlQWQUPYCKvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 5.10 336/355] net/ipv4: fix type mismatch in inet_ehash_locks_alloc() causing build failure
-Date: Mon, 23 Jun 2025 15:08:57 +0200
-Message-ID: <20250623130636.843013233@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.1 310/508] media: ccs-pll: Correct the upper limit of maximum op_pre_pll_clk_div
+Date: Mon, 23 Jun 2025 15:05:55 +0200
+Message-ID: <20250623130652.941356864@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -43,85 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eliav Farber <farbere@amazon.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-Fix compilation warning:
+commit f639494db450770fa30d6845d9c84b9cb009758f upstream.
 
-In file included from ./include/linux/kernel.h:15,
-                 from ./include/linux/list.h:9,
-                 from ./include/linux/module.h:12,
-                 from net/ipv4/inet_hashtables.c:12:
-net/ipv4/inet_hashtables.c: In function ‘inet_ehash_locks_alloc’:
-./include/linux/minmax.h:20:35: warning: comparison of distinct pointer types lacks a cast
-   20 |         (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
-      |                                   ^~
-./include/linux/minmax.h:26:18: note: in expansion of macro ‘__typecheck’
-   26 |                 (__typecheck(x, y) && __no_side_effects(x, y))
-      |                  ^~~~~~~~~~~
-./include/linux/minmax.h:36:31: note: in expansion of macro ‘__safe_cmp’
-   36 |         __builtin_choose_expr(__safe_cmp(x, y), \
-      |                               ^~~~~~~~~~
-./include/linux/minmax.h:52:25: note: in expansion of macro ‘__careful_cmp’
-   52 | #define max(x, y)       __careful_cmp(x, y, >)
-      |                         ^~~~~~~~~~~~~
-net/ipv4/inet_hashtables.c:946:19: note: in expansion of macro ‘max’
-  946 |         nblocks = max(nblocks, num_online_nodes() * PAGE_SIZE / locksz);
-      |                   ^~~
-  CC      block/badblocks.o
+The PLL calculator does a search of the PLL configuration space for all
+valid OP pre-PLL clock dividers. The maximum did not take into account the
+CCS PLL flag CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER in which case also odd PLL
+dividers (other than 1) are valid. Do that now.
 
-When warnings are treated as errors, this causes the build to fail.
-
-The issue is a type mismatch between the operands passed to the max()
-macro. Here, nblocks is an unsigned int, while the expression
-num_online_nodes() * PAGE_SIZE / locksz is promoted to unsigned long.
-
-This happens because:
- - num_online_nodes() returns int
- - PAGE_SIZE is typically defined as an unsigned long (depending on the
-   architecture)
- - locksz is unsigned int
-
-The resulting arithmetic expression is promoted to unsigned long.
-
-Thus, the max() macro compares values of different types: unsigned int
-vs unsigned long.
-
-This issue was introduced in commit f8ece40786c9 ("tcp: bring back NUMA
-dispersion in inet_ehash_locks_alloc()") during the update from kernel
-v5.10.237 to v5.10.238.
-
-It does not exist in newer kernel branches (e.g., v5.15.185 and all 6.x
-branches), because they include commit d03eba99f5bf ("minmax: allow
-min()/max()/clamp() if the arguments have the same signedness.")
-
-Fix the issue by using max_t(unsigned int, ...) to explicitly cast both
-operands to the same type, avoiding the type mismatch and ensuring
-correctness.
-
-Fixes: f8ece40786c9 ("tcp: bring back NUMA dispersion in inet_ehash_locks_alloc()")
-Signed-off-by: Eliav Farber <farbere@amazon.com>
+Fixes: 4e1e8d240dff ("media: ccs-pll: Add support for extended input PLL clock divider")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_hashtables.c |    2 +-
+ drivers/media/i2c/ccs-pll.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -943,7 +943,7 @@ int inet_ehash_locks_alloc(struct inet_h
- 	nblocks = max(2U * L1_CACHE_BYTES / locksz, 1U) * num_possible_cpus();
- 
- 	/* At least one page per NUMA node. */
--	nblocks = max(nblocks, num_online_nodes() * PAGE_SIZE / locksz);
-+	nblocks = max_t(unsigned int, nblocks, num_online_nodes() * PAGE_SIZE / locksz);
- 
- 	nblocks = roundup_pow_of_two(nblocks);
- 
+--- a/drivers/media/i2c/ccs-pll.c
++++ b/drivers/media/i2c/ccs-pll.c
+@@ -794,7 +794,7 @@ int ccs_pll_calculate(struct device *dev
+ 		op_lim_fr->min_pre_pll_clk_div, op_lim_fr->max_pre_pll_clk_div);
+ 	max_op_pre_pll_clk_div =
+ 		min_t(u16, op_lim_fr->max_pre_pll_clk_div,
+-		      clk_div_even(pll->ext_clk_freq_hz /
++		      DIV_ROUND_UP(pll->ext_clk_freq_hz,
+ 				   op_lim_fr->min_pll_ip_clk_freq_hz));
+ 	min_op_pre_pll_clk_div =
+ 		max_t(u16, op_lim_fr->min_pre_pll_clk_div,
 
 
