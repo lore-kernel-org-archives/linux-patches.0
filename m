@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1100C223316;
-	Mon, 23 Jun 2025 21:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82388224AFA;
+	Mon, 23 Jun 2025 21:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715641; cv=none; b=Q6B26HZXYWKsCIQD5hqBSEQZlNP4vn0zpgHdTm71y5ECekPEuQHdQxGugoDYtVsUiC6tNppSYxOBgYnYSyITYGQuZ6tZP/y1/PVkQxyAEwclA6vpbNafSuopWlIGssysrdVl/7ramaDU1O70TKYXI/Ix2Jy6/BSof0Hx6vw/LGE=
+	t=1750715643; cv=none; b=RitS+FG9omjqewnupzoQv6aTZqQAKY0YsBjfRRmqFPVDH4lmLzXvc9kHuhKFU+ID3Atr9zTTuJDFjxLBL5ALsRl8sb/BU38IxV2mQtsPCdU2NbCNdPoRlpqRlip8VVdCSdrWCI6XRkBufi0I6dHQhsmZPgInUNP+8zRq3nprAX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715641; c=relaxed/simple;
-	bh=+l4VUfI0Ub/CIOHFYBCeQ0T3juTvX+4gLRgHlJN9pd8=;
+	s=arc-20240116; t=1750715643; c=relaxed/simple;
+	bh=3kjVySsLvELg5ilfpMZH/lqC57ymWAA71Al1m2uA1hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cYmoA85bXf/dHqvqeNJ8OfxN+/+QFtjB78C5LycT0lwhuagGKiXrn1hDNoNHTmiMiK4+BHhKm0yrzxBtRtJxD8u7A0OELRKYQI18/lHFmb3paRfVMLPg7vW1VH2teAzznKIVYQ6l0NHRb7+3eLVhtJHt7fKCTDqk5IDvccGzUeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udsKA0d5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DlLfNHh8jzz+Dg06ztoCUv1YJ47no1mVkHzuuXbskANSOFPbDMRMpWknXmgz8NRBNA3a+h1jvzCycyW6ybtO8hrJvquJvAU5+ekopyy28TExefATAMsEE8hRUsbnF9cTS2S7jJkG5zQWyfS+7u25+dAiFgd5RQ3uO0yoK+GGANY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqA5/zRj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udsKA0d5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C93CC4AF0B;
-	Mon, 23 Jun 2025 21:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqA5/zRj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2AFC4CEEA;
+	Mon, 23 Jun 2025 21:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715640;
-	bh=+l4VUfI0Ub/CIOHFYBCeQ0T3juTvX+4gLRgHlJN9pd8=;
+	s=korg; t=1750715643;
+	bh=3kjVySsLvELg5ilfpMZH/lqC57ymWAA71Al1m2uA1hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=udsKA0d5p4K2w34wmoCpAJ1gYb7CCwvvTaLa0HnOeYeT/3FcRVBrIQiLY2+mSQkBC
-	 /9xlJ1d1jpTUom79fpfq2XQ2JiaIHu31icibMOA58VG3Bp0Sr+68wH1djkr4ka+oB0
-	 +zKlR2lal8ro6YpfmBVGYV6zeyfrhs0tWkZQfB0U=
+	b=dqA5/zRjS53Y3L44iJLeuLMDfrSj5RgSbk5j8xjDH6LIdqyQg1kQSUTa8EOlE3m6E
+	 0V6do6U8wnko3WSZhzBV/XyiwLTKH85E4wiozkjJ3G4DjGXOnGe5kF7/lzR1fgaIoz
+	 MTEcgUIPjxKo32C6i901Tt6F6+CPYT9UunFbUP2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 198/414] wifi: mt76: mt7996: drop fragments with multicast or broadcast RA
-Date: Mon, 23 Jun 2025 15:05:35 +0200
-Message-ID: <20250623130646.961641715@linuxfoundation.org>
+Subject: [PATCH 5.15 262/411] clocksource: Fix the CPUs choice in the watchdog per CPU verification
+Date: Mon, 23 Jun 2025 15:06:46 +0200
+Message-ID: <20250623130640.252407875@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-[ Upstream commit 80fda1cd7b0a1edd0849dc71403a070d0922118d ]
+[ Upstream commit 08d7becc1a6b8c936e25d827becabfe3bff72a36 ]
 
-IEEE 802.11 fragmentation can only be applied to unicast frames.
-Therefore, drop fragments with multicast or broadcast RA. This patch
-addresses vulnerabilities such as CVE-2020-26145.
+Right now, if the clocksource watchdog detects a clocksource skew, it might
+perform a per CPU check, for example in the TSC case on x86.  In other
+words: supposing TSC is detected as unstable by the clocksource watchdog
+running at CPU1, as part of marking TSC unstable the kernel will also run a
+check of TSC readings on some CPUs to be sure it is synced between them
+all.
 
-Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20250515032952.1653494-4-shayne.chen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+But that check happens only on some CPUs, not all of them; this choice is
+based on the parameter "verify_n_cpus" and in some random cpumask
+calculation. So, the watchdog runs such per CPU checks on up to
+"verify_n_cpus" random CPUs among all online CPUs, with the risk of
+repeating CPUs (that aren't double checked) in the cpumask random
+calculation.
+
+But if "verify_n_cpus" > num_online_cpus(), it should skip the random
+calculation and just go ahead and check the clocksource sync between
+all online CPUs, without the risk of skipping some CPUs due to
+duplicity in the random cpumask calculation.
+
+Tests in a 4 CPU laptop with TSC skew detected led to some cases of the per
+CPU verification skipping some CPU even with verify_n_cpus=8, due to the
+duplicity on random cpumask generation. Skipping the randomization when the
+number of online CPUs is smaller than verify_n_cpus, solves that.
+
+Suggested-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/all/20250323173857.372390-1-gpiccoli@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/time/clocksource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index ef2d7eaaaffdd..0990a3d481f2d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -623,6 +623,14 @@ mt7996_mac_fill_rx(struct mt7996_dev *dev, enum mt76_rxq_id q,
- 		status->last_amsdu = amsdu_info == MT_RXD4_LAST_AMSDU_FRAME;
- 	}
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index 32efc87c41f20..57575be840c5a 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -279,7 +279,7 @@ static void clocksource_verify_choose_cpus(void)
+ {
+ 	int cpu, i, n = verify_n_cpus;
  
-+	/* IEEE 802.11 fragmentation can only be applied to unicast frames.
-+	 * Hence, drop fragments with multicast/broadcast RA.
-+	 * This check fixes vulnerabilities, like CVE-2020-26145.
-+	 */
-+	if ((ieee80211_has_morefrags(fc) || seq_ctrl & IEEE80211_SCTL_FRAG) &&
-+	    FIELD_GET(MT_RXD3_NORMAL_ADDR_TYPE, rxd3) != MT_RXD3_NORMAL_U2M)
-+		return -EINVAL;
-+
- 	hdr_gap = (u8 *)rxd - skb->data + 2 * remove_pad;
- 	if (hdr_trans && ieee80211_has_morefrags(fc)) {
- 		if (mt7996_reverse_frag0_hdr_trans(skb, hdr_gap))
+-	if (n < 0) {
++	if (n < 0 || n >= num_online_cpus()) {
+ 		/* Check all of the CPUs. */
+ 		cpumask_copy(&cpus_chosen, cpu_online_mask);
+ 		cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
 -- 
 2.39.5
 
