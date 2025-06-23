@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F410B1E51FA;
-	Mon, 23 Jun 2025 21:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6D9219E0;
+	Mon, 23 Jun 2025 21:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713867; cv=none; b=K5QQIPTSrtmTPLpfNnnjJ0erjpA31KYeUcKg+7yx6XWnOWFe3nQDR0Lt7VaCKRl5LR6ntp7NUSSXGNXsBr4XLY0XS/FTqCOhlLcu6+qnSpmik5Qv31jT8xnOy5fmK2dXVOEIyN2KI3AE/sOoBeMMreueEMb5hkSO1ZvzTdPmqLQ=
+	t=1750713869; cv=none; b=dx2J/+vuBUZBWM7vvSzQHgkSN4jFfNJBXvn7G44BbvHyS/PXD0wV5Vf9fzZIC/fDn4j7UadzpRxETzAg2QOY1E7Av328yyE0oZFP7q8zQTuUnfS4dItuWBaNpOHBM9E/MJp4gry+nkUw61JYanByIajLecPDybJqvnp2Tc/6GfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713867; c=relaxed/simple;
-	bh=ZYen/0EebK4z1OxkvbWv3NQ5TtyWGtAPK0ZkgZYBXjA=;
+	s=arc-20240116; t=1750713869; c=relaxed/simple;
+	bh=MAauTzw7ROySuRmxEGh+a4NBj04ieHMjMkf3Inv7UZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuKgd1NGAqhZwWzpC+jPxO2i1MSJ5pWEgKnSLyS47G5dVIM6NXwO8pramkdQ8OZHkl8Kznx2swAF1uHszV8AuJJNX4m4TV+vhuI2h94wKe22sGgk8+S4Mhmi8xQmoHnATduR8Tc/9y5NjqcZ1+H3VG6O3BqQ51zUny0GmYTS7CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4XEfxXh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uuW+vQl6fzRniInabZwl3vWHLZFRpSGyv65az6zDHALBwBDU1FwCTUtheZhl0vM+wC3DDJX1oregf/t1kum9gQmmCJKIAwpSNKqfGFu/2DpmNcYqhP9yXRJ54kxptqsuK/K5u8y7Xmz3oZd9BgDMt0JflAZ7GVDSynng1a+JOP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NpNtS+5O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4XEfxXh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C424C4CEEA;
-	Mon, 23 Jun 2025 21:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NpNtS+5O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C231C4CEEA;
+	Mon, 23 Jun 2025 21:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713866;
-	bh=ZYen/0EebK4z1OxkvbWv3NQ5TtyWGtAPK0ZkgZYBXjA=;
+	s=korg; t=1750713869;
+	bh=MAauTzw7ROySuRmxEGh+a4NBj04ieHMjMkf3Inv7UZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y4XEfxXh/HrxrViDlVOanfiwugmFSlq0Lj4RQqRuDO9VPq8MoPb9TgJZpa40AZsQI
-	 a2RiIyYPi8ZGNbLRrSf4pPEBphcGNFLdtouaIpT9f3RlHi0hsMfAVZp2Nm4xDEwUAq
-	 0BGskoEzk9YhYEBqsO/duBkBOsMUusXv8GmjAAks=
+	b=NpNtS+5OWnfWQh9HpH5Brl3gPBf3XSFEscauYOim6VX6jTRmwSBR7c2uUy7n8Fx4E
+	 tFI5Z5W3NkHPcv2c2ikYy+BR66ADSFH2QeGvc94K/113pc+Fqj5vYUi5u+CG7Rhc9q
+	 lD9P+KtLZrqTVo1Tv/2x2JBZPTraFEpNj4sAF9FU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.15 172/411] drm/amd/display: Do not add -mhard-float to dml_ccflags for clang
-Date: Mon, 23 Jun 2025 15:05:16 +0200
-Message-ID: <20250623130638.021494118@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.10 171/355] media: ov8856: suppress probe deferral errors
+Date: Mon, 23 Jun 2025 15:06:12 +0200
+Message-ID: <20250623130631.852494679@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,47 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 7db038d9790eda558dd6c1dde4cdd58b64789c47 upstream.
+commit e3d86847fba58cf71f66e81b6a2515e07039ae17 upstream.
 
-When clang's -Qunused-arguments is dropped from KBUILD_CPPFLAGS, it
-warns:
+Probe deferral should not be logged as an error:
 
-  clang-16: error: argument unused during compilation: '-mhard-float' [-Werror,-Wunused-command-line-argument]
+	ov8856 24-0010: failed to get HW configuration: -517
 
-Similar to commit 84edc2eff827 ("selftest/fpu: avoid clang warning"),
-just add this flag to GCC builds. Commit 0f0727d971f6 ("drm/amd/display:
-readd -msse2 to prevent Clang from emitting libcalls to undefined SW FP
-routines") added '-msse2' to prevent clang from emitting software
-floating point routines.
+Use dev_err_probe() for the clock lookup and drop the (mostly) redundant
+dev_err() from sensor probe() to suppress it.
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Note that errors during regulator lookup is already correctly logged
+using dev_err_probe().
+
+Fixes: 0c2c7a1e0d69 ("media: ov8856: Add devicetree support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/Makefile |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/i2c/ov8856.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-@@ -26,7 +26,8 @@
- # subcomponents.
+--- a/drivers/media/i2c/ov8856.c
++++ b/drivers/media/i2c/ov8856.c
+@@ -1663,8 +1663,8 @@ static int ov8856_get_hwcfg(struct ov885
+ 	if (!is_acpi_node(fwnode)) {
+ 		ov8856->xvclk = devm_clk_get(dev, "xvclk");
+ 		if (IS_ERR(ov8856->xvclk)) {
+-			dev_err(dev, "could not get xvclk clock (%pe)\n",
+-				ov8856->xvclk);
++			dev_err_probe(dev, PTR_ERR(ov8856->xvclk),
++				      "could not get xvclk clock\n");
+ 			return PTR_ERR(ov8856->xvclk);
+ 		}
  
- ifdef CONFIG_X86
--dml_ccflags := -mhard-float -msse
-+dml_ccflags-$(CONFIG_CC_IS_GCC) := -mhard-float
-+dml_ccflags := $(dml_ccflags-y) -msse
- endif
+@@ -1758,11 +1758,8 @@ static int ov8856_probe(struct i2c_clien
+ 		return -ENOMEM;
  
- ifdef CONFIG_PPC64
+ 	ret = ov8856_get_hwcfg(ov8856, &client->dev);
+-	if (ret) {
+-		dev_err(&client->dev, "failed to get HW configuration: %d",
+-			ret);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	v4l2_i2c_subdev_init(&ov8856->sd, client, &ov8856_subdev_ops);
+ 
 
 
