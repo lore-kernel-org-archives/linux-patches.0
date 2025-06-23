@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D013D221F24;
-	Mon, 23 Jun 2025 21:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E22D1DF98B;
+	Mon, 23 Jun 2025 21:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713130; cv=none; b=rRXhNx09YNQhOil9lw06xCw+kwdMDgeQpqhcMeGe4Sxj0K3JaX4DPzdWTynkFBv9WASiHsFfZIZ2DIIE2f1ZSkxMqH6FaM5PxpzWaq5QzuYvBsVgMrAGazEEOn8sfc6W7XHSs59Ix0Hg+Oa+qdtbH+UcNjzsoj+RPt3ZqdOESlc=
+	t=1750713133; cv=none; b=UQG/5Wovu6pGntRr3H14mpoxKS1995NBUzEUsW4hJQq+Gct17JuH78Y5CB4bWohRA3iFawOyHOXSClncZvxkaKUJj2nAvv/UUJz4frgvoyeYa+lCBIHWwc7JgNjlRxP7On4yMN6/gcBqTpKQz3Q8dX9P8Jun+HMNtZQCEZjloYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713130; c=relaxed/simple;
-	bh=3z3R8E2Gr4x8ijl/EXa0Ax8C2P4zfgxsq8tJv1Q6bew=;
+	s=arc-20240116; t=1750713133; c=relaxed/simple;
+	bh=FT0awCTakRRQBGP6BvFuJLPJfTYZWAK8fBr4LFBpIgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YiMYWeOjAryujwJDQYlxaryGH3agewEMZoh8ovFMjR/tYY2ZKMRcis/8w6+X+2smlsvSgHFAA3ANY7o26r+tKkA+i8JSbMDEvxDe3a8pafDbM/JpDhdq7AGstBPdALyv3ycw2tlQddNcmFC4w008cBGu4T/h+kmCeHgGABRNSGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bj1i8l0O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WJweL5dNTgJzLoRf7xwdzFT1kx+xPvcj93UEBVUirI1LyiRk6E1kuC/bg87afo5VGdV9l8wK1iu5av/L35QNGVvw2hD4dRQYjN6+Np3NUy280xzMaFSlez/GquaLMQc7gFKhrc6GlMWeWjvllzRHDp6j4vWZOrDB24wn4x4xV14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjNSCRIC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bj1i8l0O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F40FC4CEEA;
-	Mon, 23 Jun 2025 21:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjNSCRIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0853FC4CEEA;
+	Mon, 23 Jun 2025 21:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713130;
-	bh=3z3R8E2Gr4x8ijl/EXa0Ax8C2P4zfgxsq8tJv1Q6bew=;
+	s=korg; t=1750713133;
+	bh=FT0awCTakRRQBGP6BvFuJLPJfTYZWAK8fBr4LFBpIgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bj1i8l0OAjIcoHAj6imMFjluBpdMfllU204lMoV6AdTiF8LC1XwipznTpvjM37Gad
-	 03IdbCHUkJUBgN8xloGKECgtvS0FwWMXhfS1cPA1nNOSeUOf6TKUWJ30C38mBQzw03
-	 Pc7AlTf5e0LdpNKd/AWySq5bhWMbHrKo7RPE3SDg=
+	b=NjNSCRICQGtfdfODMZ2htv5q73mm2igx0sloeahpUVxDeL2JY3QHLAHIyk6iuxPWs
+	 QS+7Ap9YkWJDFCChZ2O6nNvDLOtvnoK2RYmlLzl8BdDVfpYejpPlK5gddOseDvuiA2
+	 sIywqYJ4/BuTNkc1GRdoB6tgcYGH9Au9Sf34mQ+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 069/290] f2fs: fix to do sanity check on sit_bitmap_size
-Date: Mon, 23 Jun 2025 15:05:30 +0200
-Message-ID: <20250623130629.072022692@linuxfoundation.org>
+	Mirco Barone <mirco.barone@polito.it>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 126/411] wireguard: device: enable threaded NAPI
+Date: Mon, 23 Jun 2025 15:04:30 +0200
+Message-ID: <20250623130636.733840357@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,86 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Mirco Barone <mirco.barone@polito.it>
 
-commit 5db0d252c64e91ba1929c70112352e85dc5751e7 upstream.
+[ Upstream commit db9ae3b6b43c79b1ba87eea849fd65efa05b4b2e ]
 
-w/ below testcase, resize will generate a corrupted image which
-contains inconsistent metadata, so when mounting such image, it
-will trigger kernel panic:
+Enable threaded NAPI by default for WireGuard devices in response to low
+performance behavior that we observed when multiple tunnels (and thus
+multiple wg devices) are deployed on a single host.  This affects any
+kind of multi-tunnel deployment, regardless of whether the tunnels share
+the same endpoints or not (i.e., a VPN concentrator type of gateway
+would also be affected).
 
-touch img
-truncate -s $((512*1024*1024*1024)) img
-mkfs.f2fs -f img $((256*1024*1024))
-resize.f2fs -s -i img -t $((1024*1024*1024))
-mount img /mnt/f2fs
+The problem is caused by the fact that, in case of a traffic surge that
+involves multiple tunnels at the same time, the polling of the NAPI
+instance of all these wg devices tends to converge onto the same core,
+causing underutilization of the CPU and bottlenecking performance.
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/segment.h:863!
-Oops: invalid opcode: 0000 [#1] SMP PTI
-CPU: 11 UID: 0 PID: 3922 Comm: mount Not tainted 6.15.0-rc1+ #191 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:f2fs_ra_meta_pages+0x47c/0x490
+This happens because NAPI polling is hosted by default in softirq
+context, but the WireGuard driver only raises this softirq after the rx
+peer queue has been drained, which doesn't happen during high traffic.
+In this case, the softirq already active on a core is reused instead of
+raising a new one.
 
-Call Trace:
- f2fs_build_segment_manager+0x11c3/0x2600
- f2fs_fill_super+0xe97/0x2840
- mount_bdev+0xf4/0x140
- legacy_get_tree+0x2b/0x50
- vfs_get_tree+0x29/0xd0
- path_mount+0x487/0xaf0
- __x64_sys_mount+0x116/0x150
- do_syscall_64+0x82/0x190
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7fdbfde1bcfe
+As a result, once two or more tunnel softirqs have been scheduled on
+the same core, they remain pinned there until the surge ends.
 
-The reaseon is:
+In our experiments, this almost always leads to all tunnel NAPIs being
+handled on a single core shortly after a surge begins, limiting
+scalability to less than 3× the performance of a single tunnel, despite
+plenty of unused CPU cores being available.
 
-sit_i->bitmap_size is 192, so size of sit bitmap is 192*8=1536, at maximum
-there are 1536 sit blocks, however MAIN_SEGS is 261893, so that sit_blk_cnt
-is 4762, build_sit_entries() -> current_sit_addr() tries to access
-out-of-boundary in sit_bitmap at offset from [1536, 4762), once sit_bitmap
-and sit_bitmap_mirror is not the same, it will trigger f2fs_bug_on().
+The proposed mitigation is to enable threaded NAPI for all WireGuard
+devices. This moves the NAPI polling context to a dedicated per-device
+kernel thread, allowing the scheduler to balance the load across all
+available cores.
 
-Let's add sanity check in f2fs_sanity_check_ckpt() to avoid panic.
+On our 32-core gateways, enabling threaded NAPI yields a ~4× performance
+improvement with 16 tunnels, increasing throughput from ~13 Gbps to
+~48 Gbps. Meanwhile, CPU usage on the receiver (which is the bottleneck)
+jumps from 20% to 100%.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+We have found no performance regressions in any scenario we tested.
+Single-tunnel throughput remains unchanged.
+
+More details are available in our Netdev paper.
+
+Link: https://netdevconf.info/0x18/docs/netdev-0x18-paper23-talk-paper.pdf
+Signed-off-by: Mirco Barone <mirco.barone@polito.it>
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20250605120616.2808744-1-Jason@zx2c4.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/wireguard/device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3608,6 +3608,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_s
- 	block_t user_block_count, valid_user_blocks;
- 	block_t avail_node_count, valid_node_count;
- 	unsigned int nat_blocks, nat_bits_bytes, nat_bits_blocks;
-+	unsigned int sit_blk_cnt;
- 	int i, j;
+diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
+index e5e344af34237..7bf1ec4ccaa98 100644
+--- a/drivers/net/wireguard/device.c
++++ b/drivers/net/wireguard/device.c
+@@ -352,6 +352,7 @@ static int wg_newlink(struct net *src_net, struct net_device *dev,
+ 	if (ret < 0)
+ 		goto err_free_handshake_queue;
  
- 	total = le32_to_cpu(raw_super->segment_count);
-@@ -3719,6 +3720,13 @@ skip_cross:
- 		return 1;
- 	}
- 
-+	sit_blk_cnt = DIV_ROUND_UP(main_segs, SIT_ENTRY_PER_BLOCK);
-+	if (sit_bitmap_size * 8 < sit_blk_cnt) {
-+		f2fs_err(sbi, "Wrong bitmap size: sit: %u, sit_blk_cnt:%u",
-+			 sit_bitmap_size, sit_blk_cnt);
-+		return 1;
-+	}
-+
- 	cp_pack_start_sum = __start_sum_addr(sbi);
- 	cp_payload = __cp_payload(sbi);
- 	if (cp_pack_start_sum < cp_payload + 1 ||
++	dev_set_threaded(dev, true);
+ 	ret = register_netdevice(dev);
+ 	if (ret < 0)
+ 		goto err_uninit_ratelimiter;
+-- 
+2.39.5
+
 
 
