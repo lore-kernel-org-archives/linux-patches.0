@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8342C9D;
-	Mon, 23 Jun 2025 21:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BDA2C9D;
+	Mon, 23 Jun 2025 21:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713670; cv=none; b=GDxmaUgrGOKTsEPmZ45xXimU/FydoTL/VpK+D9oiuAqgUOXzr0LcEgy/l2mDP4h2t3p6Nlc5I2s13+hNN4qPbM0ySdy2C7EeGbUcBDlW9DrWl9uuTCHqbFiQEJB1IdftLtuOWjIyO0N4moPCuFgF+0eal80UUnQzGxn/AFOtPPc=
+	t=1750713673; cv=none; b=ZjrJ4hPGALVAn65OFLybQLRpIzBfMwDU1KlNVyohBllsVwdUD/p8c3pxWe4mL3gxDBoiZDGcEUmGc9iCP40ISa8XV01rsRY3wLZh4bF0Sxc/raBsEoNMfAOU18BnDfNO7doshOwMd2Bz8D7NFG+Kjc6a4VH0S+CKRT9M8UaAndU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713670; c=relaxed/simple;
-	bh=POvZ4Qci9he0cqUde5CRs63xxpuZkpb0XBQWBx3ttxM=;
+	s=arc-20240116; t=1750713673; c=relaxed/simple;
+	bh=JM6hnH0O1saCoihOygk0DR0vlZd0QGY8Q8+yFVxFtHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ghKsmgG6IKwrpthIodCOtz22wYeaWMX+xTFwoRjqc6DqS/lMDCwqj+SzOFvVX9zC4F53pxpt0m04ki5c7uxRG4ecZlTG8UBeM+qfZ73kn1I0ke4kAWnz5Nd5Pnprnd1ixYM9j1ea82UGUVPL0e/vSfWyXfo7HL9U899Dm4KVxWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ltmml+hh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l2a7WvGtr25Zx1GpsUl3XD2MSgoGjKyY+OWNCq4LVgDbPgHsQ9RoFlipwFbDcPZ/mt7+jKBvvfP94VgdxrZdXzyoH1aPmTJ4gVq9GcSAnj0YEQjsHWkWMBEXDPqyJb4IAano8s1ZrPkBGwwbW5mWK8pH/bfUjfsgU9dRvDaDT3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cw7JaxuZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ltmml+hh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D0CC4CEEA;
-	Mon, 23 Jun 2025 21:21:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cw7JaxuZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B33AC4CEEA;
+	Mon, 23 Jun 2025 21:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713670;
-	bh=POvZ4Qci9he0cqUde5CRs63xxpuZkpb0XBQWBx3ttxM=;
+	s=korg; t=1750713672;
+	bh=JM6hnH0O1saCoihOygk0DR0vlZd0QGY8Q8+yFVxFtHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ltmml+hhO/1L/sI4IgMLSGIK5ggUt40Vm0SUf7IiT3T972Kx4Fo/oRkeehlTG7aDI
-	 ZgaUAq21AtX+JR0M+GLUo1rYrA8rABgILymq7OnxSjEMCkW+WFhTr05w5qcdXDb8yq
-	 W8NCcCG7OOyUrhfb0uji+X881gYmoR7qbYiT4580=
+	b=cw7JaxuZBScsPpEkQAEht6Y2a4gZLZ3Q4biDXmWqERSP/1m/baEH7KkHmhKI2OJi8
+	 4SXHc3j8b/bJD3YlphjPmo8eHBa1OpZ9/mb8aELUX4JF1IbHq3Rv1YvEV+KhMZtRYj
+	 VtheIs+C4IcujTEfqfsTTLxjidsl8Ob1n56hrfG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+65761fc25a137b9c8c6e@syzkaller.appspotmail.com,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	kernel test robot <lkp@intel.com>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 116/508] Squashfs: check return result of sb_min_blocksize
-Date: Mon, 23 Jun 2025 15:02:41 +0200
-Message-ID: <20250623130648.150161508@linuxfoundation.org>
+Subject: [PATCH 5.4 199/222] drm/nouveau/bl: increase buffer size to avoid truncate warning
+Date: Mon, 23 Jun 2025 15:08:54 +0200
+Message-ID: <20250623130618.213040213@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,70 +47,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 734aa85390ea693bb7eaf2240623d41b03705c84 ]
+[ Upstream commit 61b2b3737499f1fb361a54a16828db24a8345e85 ]
 
-Syzkaller reports an "UBSAN: shift-out-of-bounds in squashfs_bio_read" bug.
+The nouveau_get_backlight_name() function generates a unique name for the
+backlight interface, appending an id from 1 to 99 for all backlight devices
+after the first.
 
-Syzkaller forks multiple processes which after mounting the Squashfs
-filesystem, issues an ioctl("/dev/loop0", LOOP_SET_BLOCK_SIZE, 0x8000).
-Now if this ioctl occurs at the same time another process is in the
-process of mounting a Squashfs filesystem on /dev/loop0, the failure
-occurs.  When this happens the following code in squashfs_fill_super()
-fails.
+GCC 15 (and likely other compilers) produce the following
+-Wformat-truncation warning:
 
-----
-msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
-msblk->devblksize_log2 = ffz(~msblk->devblksize);
-----
+nouveau_backlight.c: In function ‘nouveau_backlight_init’:
+nouveau_backlight.c:56:69: error: ‘%d’ directive output may be truncated writing between 1 and 10 bytes into a region of size 3 [-Werror=format-truncation=]
+   56 |                 snprintf(backlight_name, BL_NAME_SIZE, "nv_backlight%d", nb);
+      |                                                                     ^~
+In function ‘nouveau_get_backlight_name’,
+    inlined from ‘nouveau_backlight_init’ at nouveau_backlight.c:351:7:
+nouveau_backlight.c:56:56: note: directive argument in the range [1, 2147483647]
+   56 |                 snprintf(backlight_name, BL_NAME_SIZE, "nv_backlight%d", nb);
+      |                                                        ^~~~~~~~~~~~~~~~
+nouveau_backlight.c:56:17: note: ‘snprintf’ output between 14 and 23 bytes into a destination of size 15
+   56 |                 snprintf(backlight_name, BL_NAME_SIZE, "nv_backlight%d", nb);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-sb_min_blocksize() returns 0, which means msblk->devblksize is set to 0.
+The warning started appearing after commit ab244be47a8f ("drm/nouveau:
+Fix a potential theorical leak in nouveau_get_backlight_name()") This fix
+for the ida usage removed the explicit value check for ids larger than 99.
+The compiler is unable to intuit that the ida_alloc_max() limits the
+returned value range between 0 and 99.
 
-As a result, ffz(~msblk->devblksize) returns 64, and msblk->devblksize_log2
-is set to 64.
+Because the compiler can no longer infer that the number ranges from 0 to
+99, it thinks that it could use as many as 11 digits (10 + the potential -
+sign for negative numbers).
 
-This subsequently causes the
+The warning has gone unfixed for some time, with at least one kernel test
+robot report. The code breaks W=1 builds, which is especially frustrating
+with the introduction of CONFIG_WERROR.
 
-UBSAN: shift-out-of-bounds in fs/squashfs/block.c:195:36
-shift exponent 64 is too large for 64-bit type 'u64' (aka
-'unsigned long long')
+The string is stored temporarily on the stack and then copied into the
+device name. Its not a big deal to use 11 more bytes of stack rounding out
+to an even 24 bytes. Increase BL_NAME_SIZE to 24 to avoid the truncation
+warning. This fixes the W=1 builds that include this driver.
 
-This commit adds a check for a 0 return by sb_min_blocksize().
+Compile tested only.
 
-Link: https://lkml.kernel.org/r/20250409024747.876480-1-phillip@squashfs.org.uk
-Fixes: 0aa666190509 ("Squashfs: super block operations")
-Reported-by: syzbot+65761fc25a137b9c8c6e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67f0dd7a.050a0220.0a13.0230.GAE@google.com/
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: ab244be47a8f ("drm/nouveau: Fix a potential theorical leak in nouveau_get_backlight_name()")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202312050324.0kv4PnfZ-lkp@intel.com/
+Suggested-by: Timur Tabi <ttabi@nvidia.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20250610-jk-nouveua-drm-bl-snprintf-fix-v2-1-7fdd4b84b48e@intel.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/squashfs/super.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_backlight.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/squashfs/super.c b/fs/squashfs/super.c
-index 32565dafa7f3b..37579c07f6fde 100644
---- a/fs/squashfs/super.c
-+++ b/fs/squashfs/super.c
-@@ -137,6 +137,11 @@ static int squashfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 	msblk->panic_on_errors = (opts->errors == Opt_errors_panic);
+diff --git a/drivers/gpu/drm/nouveau/nouveau_backlight.c b/drivers/gpu/drm/nouveau/nouveau_backlight.c
+index f2f3280c3a50e..171cc170c458d 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_backlight.c
++++ b/drivers/gpu/drm/nouveau/nouveau_backlight.c
+@@ -40,7 +40,7 @@
+ #include "nouveau_connector.h"
  
- 	msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
-+	if (!msblk->devblksize) {
-+		errorf(fc, "squashfs: unable to set blocksize\n");
-+		return -EINVAL;
-+	}
-+
- 	msblk->devblksize_log2 = ffz(~msblk->devblksize);
+ static struct ida bl_ida;
+-#define BL_NAME_SIZE 15 // 12 for name + 2 for digits + 1 for '\0'
++#define BL_NAME_SIZE 24 // 12 for name + 11 for digits + 1 for '\0'
  
- 	mutex_init(&msblk->meta_index_mutex);
+ struct nouveau_backlight {
+ 	struct backlight_device *dev;
 -- 
 2.39.5
 
