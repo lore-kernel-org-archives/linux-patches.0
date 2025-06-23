@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22F022422F;
-	Mon, 23 Jun 2025 22:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669D7226533;
+	Mon, 23 Jun 2025 22:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717045; cv=none; b=t+JGoBxSS44YZt+fNR4ufrhVlNI9Wzj0t3FLOkUkG/jwZZzTtTL1pFjQ0iF2qQH3oTqGp0iwGL5FPrl45c/duaCg1EfisZmU4xWMab750GldHi1edY+6cAFMXsoY20EWK/2sVBhBPOcwtrGT3zkcaFkhavxXnRW0mkfJvHMBZ8c=
+	t=1750717048; cv=none; b=PnR8D9M0wpa+OnFQ4fr3frE8FI28Cf8vLSszmmtfl+lAPUPBEGxpPleacHjAb3BS27MG30/5qG4LmPnrfRbd07UrPO56oy8UkFLRcc1rAOoImwubXA6v6GnqPdAczK3XkRJK0Rd1Dkl98xR/cepxGU6MYIyI0objBxCVJ0PzAyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717045; c=relaxed/simple;
-	bh=e+y9yb/oocb4UhzBwf4EiZho+GUVm4z2+9BylXc1nWo=;
+	s=arc-20240116; t=1750717048; c=relaxed/simple;
+	bh=ls+xSuRBuk1wu07M08WcDrm8MuwBevZmvwdmzbCA+XE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSaUpDMjJe5eFFN5iPvkyjK3u8zzPrP+3slCAz2pHkbz27JXEivd9wmST4jx1gZvabPnlmdQ3F5eF+whF04RmY5uKpquvPhMd6gp6marLaxJdvnEWBoc8i6B/Pj3aPYItEotxLpBk0+2febv3XjJL/iTF9tVSbMqY3KngO4JGvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CI28ET+L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lITPlBlzmm1r3O/7p8Fw8MPJVTALmhFThtvwYLNuYFfQWlg2LNO4qs4r66n0HyNmF/FfWwRlkUXN9DRWwJ91Vqi7vM3erK5hyGzBZyOuK77fWrHyI596snr2nXpQ5HJ++Taq/in8oPqPb5h16vDRGwVT3LsYmYbF4uLMDeZxw6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIDOD17e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CI28ET+L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438F3C4CEF1;
-	Mon, 23 Jun 2025 22:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIDOD17e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF46C4CEF1;
+	Mon, 23 Jun 2025 22:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717045;
-	bh=e+y9yb/oocb4UhzBwf4EiZho+GUVm4z2+9BylXc1nWo=;
+	s=korg; t=1750717048;
+	bh=ls+xSuRBuk1wu07M08WcDrm8MuwBevZmvwdmzbCA+XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CI28ET+LRjYO1DyLRnXpbtKtYB3qFhB5WDxImoFIEmExHumo4Os7qo1s2rATXBChK
-	 ezVcq4dLRPBPbA9tPjRTQmYQs951JWnfRICPnE2eSwtQXx2A+KkqFkRzxsBJ2Pjx44
-	 ZM9D/dLyOZztFaOY2+MGF1+ItJnuHpHM5XSyjSUs=
+	b=sIDOD17ecMXK3q4p/uTDpnEyRs+UwVIeU416lakPdJKtsj5WvKs3dlDLFBF0WWNWI
+	 beQyiJ/UT6x1U4Dm+5mmVsOSTBYlXjSulJ5V8gX3zoH+1XylwD+Xcq30rJvn3nhEq7
+	 wQH6FIINhPZJoGbpYtvyXSUibpxBmZleeuw4G54A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Pu Lehui <pulehui@huawei.com>
-Subject: [PATCH 5.15 390/411] arm64: insn: Add support for encoding DSB
-Date: Mon, 23 Jun 2025 15:08:54 +0200
-Message-ID: <20250623130643.490191443@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 357/508] ftrace: Fix UAF when lookup kallsym after ftrace disabled
+Date: Mon, 23 Jun 2025 15:06:42 +0200
+Message-ID: <20250623130654.147416177@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,131 +46,116 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Morse <james.morse@arm.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 63de8abd97ddb9b758bd8f915ecbd18e1f1a87a0 ]
+commit f914b52c379c12288b7623bb814d0508dbe7481d upstream.
 
-To generate code in the eBPF epilogue that uses the DSB instruction,
-insn.c needs a heler to encode the type and domain.
+The following issue happens with a buggy module:
 
-Re-use the crm encoding logic from the DMB instruction.
+BUG: unable to handle page fault for address: ffffffffc05d0218
+PGD 1bd66f067 P4D 1bd66f067 PUD 1bd671067 PMD 101808067 PTE 0
+Oops: Oops: 0000 [#1] SMP KASAN PTI
+Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+RIP: 0010:sized_strscpy+0x81/0x2f0
+RSP: 0018:ffff88812d76fa08 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffffffffc0601010 RCX: dffffc0000000000
+RDX: 0000000000000038 RSI: dffffc0000000000 RDI: ffff88812608da2d
+RBP: 8080808080808080 R08: ffff88812608da2d R09: ffff88812608da68
+R10: ffff88812608d82d R11: ffff88812608d810 R12: 0000000000000038
+R13: ffff88812608da2d R14: ffffffffc05d0218 R15: fefefefefefefeff
+FS:  00007fef552de740(0000) GS:ffff8884251c7000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffffffc05d0218 CR3: 00000001146f0000 CR4: 00000000000006f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ftrace_mod_get_kallsym+0x1ac/0x590
+ update_iter_mod+0x239/0x5b0
+ s_next+0x5b/0xa0
+ seq_read_iter+0x8c9/0x1070
+ seq_read+0x249/0x3b0
+ proc_reg_read+0x1b0/0x280
+ vfs_read+0x17f/0x920
+ ksys_read+0xf3/0x1c0
+ do_syscall_64+0x5f/0x2e0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Signed-off-by: James Morse <james.morse@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
+The above issue may happen as follows:
+(1) Add kprobe tracepoint;
+(2) insmod test.ko;
+(3)  Module triggers ftrace disabled;
+(4) rmmod test.ko;
+(5) cat /proc/kallsyms; --> Will trigger UAF as test.ko already removed;
+ftrace_mod_get_kallsym()
+...
+strscpy(module_name, mod_map->mod->name, MODULE_NAME_LEN);
+...
+
+The problem is when a module triggers an issue with ftrace and
+sets ftrace_disable. The ftrace_disable is set when an anomaly is
+discovered and to prevent any more damage, ftrace stops all text
+modification. The issue that happened was that the ftrace_disable stops
+more than just the text modification.
+
+When a module is loaded, its init functions can also be traced. Because
+kallsyms deletes the init functions after a module has loaded, ftrace
+saves them when the module is loaded and function tracing is enabled. This
+allows the output of the function trace to show the init function names
+instead of just their raw memory addresses.
+
+When a module is removed, ftrace_release_mod() is called, and if
+ftrace_disable is set, it just returns without doing anything more. The
+problem here is that it leaves the mod_list still around and if kallsyms
+is called, it will call into this code and access the module memory that
+has already been freed as it will return:
+
+  strscpy(module_name, mod_map->mod->name, MODULE_NAME_LEN);
+
+Where the "mod" no longer exists and triggers a UAF bug.
+
+Link: https://lore.kernel.org/all/20250523135452.626d8dcd@gandalf.local.home/
+
+Cc: stable@vger.kernel.org
+Fixes: aba4b5c22cba ("ftrace: Save module init functions kallsyms symbols for tracing")
+Link: https://lore.kernel.org/20250529111955.2349189-2-yebin@huaweicloud.com
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/insn.h |    1 
- arch/arm64/lib/insn.c         |   60 +++++++++++++++++++++++++-----------------
- 2 files changed, 38 insertions(+), 23 deletions(-)
+ kernel/trace/ftrace.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/include/asm/insn.h
-+++ b/arch/arm64/include/asm/insn.h
-@@ -607,6 +607,7 @@ u32 aarch64_insn_gen_cas(enum aarch64_in
- }
- #endif
- u32 aarch64_insn_gen_dmb(enum aarch64_insn_mb_type type);
-+u32 aarch64_insn_gen_dsb(enum aarch64_insn_mb_type type);
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -6962,9 +6962,10 @@ void ftrace_release_mod(struct module *m
  
- s32 aarch64_get_branch_offset(u32 insn);
- u32 aarch64_set_branch_offset(u32 insn, s32 offset);
---- a/arch/arm64/lib/insn.c
-+++ b/arch/arm64/lib/insn.c
-@@ -5,6 +5,7 @@
-  *
-  * Copyright (C) 2014-2016 Zi Shen Lim <zlim.lnx@gmail.com>
-  */
-+#include <linux/bitfield.h>
- #include <linux/bitops.h>
- #include <linux/bug.h>
- #include <linux/printk.h>
-@@ -1569,47 +1570,60 @@ u32 aarch64_insn_gen_extr(enum aarch64_i
- 	return aarch64_insn_encode_register(AARCH64_INSN_REGTYPE_RM, insn, Rm);
- }
+ 	mutex_lock(&ftrace_lock);
  
--u32 aarch64_insn_gen_dmb(enum aarch64_insn_mb_type type)
-+static u32 __get_barrier_crm_val(enum aarch64_insn_mb_type type)
- {
--	u32 opt;
--	u32 insn;
+-	if (ftrace_disabled)
+-		goto out_unlock;
 -
- 	switch (type) {
- 	case AARCH64_INSN_MB_SY:
--		opt = 0xf;
--		break;
-+		return 0xf;
- 	case AARCH64_INSN_MB_ST:
--		opt = 0xe;
--		break;
-+		return 0xe;
- 	case AARCH64_INSN_MB_LD:
--		opt = 0xd;
--		break;
-+		return 0xd;
- 	case AARCH64_INSN_MB_ISH:
--		opt = 0xb;
--		break;
-+		return 0xb;
- 	case AARCH64_INSN_MB_ISHST:
--		opt = 0xa;
--		break;
-+		return 0xa;
- 	case AARCH64_INSN_MB_ISHLD:
--		opt = 0x9;
--		break;
-+		return 0x9;
- 	case AARCH64_INSN_MB_NSH:
--		opt = 0x7;
--		break;
-+		return 0x7;
- 	case AARCH64_INSN_MB_NSHST:
--		opt = 0x6;
--		break;
-+		return 0x6;
- 	case AARCH64_INSN_MB_NSHLD:
--		opt = 0x5;
--		break;
-+		return 0x5;
- 	default:
--		pr_err("%s: unknown dmb type %d\n", __func__, type);
-+		pr_err("%s: unknown barrier type %d\n", __func__, type);
- 		return AARCH64_BREAK_FAULT;
++	/*
++	 * To avoid the UAF problem after the module is unloaded, the
++	 * 'mod_map' resource needs to be released unconditionally.
++	 */
+ 	list_for_each_entry_safe(mod_map, n, &ftrace_mod_maps, list) {
+ 		if (mod_map->mod == mod) {
+ 			list_del_rcu(&mod_map->list);
+@@ -6973,6 +6974,9 @@ void ftrace_release_mod(struct module *m
+ 		}
  	}
-+}
-+
-+u32 aarch64_insn_gen_dmb(enum aarch64_insn_mb_type type)
-+{
-+	u32 opt;
-+	u32 insn;
-+
-+	opt = __get_barrier_crm_val(type);
-+	if (opt == AARCH64_BREAK_FAULT)
-+		return AARCH64_BREAK_FAULT;
  
- 	insn = aarch64_insn_get_dmb_value();
- 	insn &= ~GENMASK(11, 8);
- 	insn |= (opt << 8);
- 
-+	return insn;
-+}
++	if (ftrace_disabled)
++		goto out_unlock;
 +
-+u32 aarch64_insn_gen_dsb(enum aarch64_insn_mb_type type)
-+{
-+	u32 opt, insn;
-+
-+	opt = __get_barrier_crm_val(type);
-+	if (opt == AARCH64_BREAK_FAULT)
-+		return AARCH64_BREAK_FAULT;
-+
-+	insn = aarch64_insn_get_dsb_base_value();
-+	insn &= ~GENMASK(11, 8);
-+	insn |= (opt << 8);
-+
- 	return insn;
- }
+ 	/*
+ 	 * Each module has its own ftrace_pages, remove
+ 	 * them from the list.
 
 
