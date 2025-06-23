@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882A42248B5;
-	Mon, 23 Jun 2025 21:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35C318E377;
+	Mon, 23 Jun 2025 21:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713414; cv=none; b=bOT6y0nCrxxK4yFqXhWcpPhhdNjX/OpkmMksaw9gEiJYTm0dEIwKQ64DRP/z8SDrBj4UH+6PZJ4QAV1Dzxz52gCHLaHAAxrdivpNbEukYUMjKjgtqt5IccPoHH+sL/u1SBDjJewRl/p6gXX9hzx9enmXt5hu3BmrSCsNzti0VQA=
+	t=1750713417; cv=none; b=hbHAFdb/UD9iEUx0RlJH/BRUnsgTcUfWSoMmWRjyu+SsKiFUB0bJVaD0Kf4/XWBwg1dh+4FJRnPUbmi/cU16vE9By17hbeqNa7GhnMcYFWyzZj/ZRLmQWzWFliMxRXt9O4C38V7zzt8hKiRKg32smlojNXFeEy054DvY91s6gaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713414; c=relaxed/simple;
-	bh=o36r7+0CyjjffX+Q68pCVAECiBXLa6sxm7S1atlZqoQ=;
+	s=arc-20240116; t=1750713417; c=relaxed/simple;
+	bh=volKZnI0ykmlNUcU/2XKIqeUfE1jQp8iTPZqBusL7YI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VROSS2wQJJraQGYoLnX6AUs/RUZ9GR/v2X9Jq+q9+XNDcldz+Wbz6tKrdwYinaEGKMzNgFqjTKF6+CBOHvBbklKZhsovR76teSUV1GgqYhbARRJb6l/F/PsG1nBLH70+v9rMTw+bw25amIVmgnCU780SryzV2rBgbToxtmAnSIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xgsgf0pP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DuQ6AaeNFQFvGRAODue+hXk2I8EjZSHnmZfLi5FLV+xLIGug5ScBprp4JIGp1SzWBfyZeOGajo9rb9wOPCBTUptjCdZNlQ1kRd/27fgkm1xsxIa8eHSIWXZbUP5JFnBXWp2s9OT5YORm6tTDnlzXDnPlMfi9/FswV1lkj88QnLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKZGvlYR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xgsgf0pP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F199C4CEEA;
-	Mon, 23 Jun 2025 21:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKZGvlYR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2ABC4CEEA;
+	Mon, 23 Jun 2025 21:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713414;
-	bh=o36r7+0CyjjffX+Q68pCVAECiBXLa6sxm7S1atlZqoQ=;
+	s=korg; t=1750713416;
+	bh=volKZnI0ykmlNUcU/2XKIqeUfE1jQp8iTPZqBusL7YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xgsgf0pPoIhoW2gZbDAxgmixB9ACXSrA1oMOWtK8P5vH0dLMkhvOSuAHbdY2zU+Ih
-	 Hw+lGNsLMGKZq3zWqEcw/DfchHMmIAvvTaCPbrKwNGSP37dHVbG1/NhRLpDpGxMXcB
-	 E4GvPikyEk4hn/cmMNu6ZJ1+HkIY6lLEJzUtNczo=
+	b=fKZGvlYROjf/NuLe4kJ1wxfMGLgiD0BWBaLSxUc7apRTKJUQ+soevDym+tqEHywy4
+	 9hot8IsGHsAD8tTMu+Uqm3nHBIwEYRAroZJgp4TEvwIlbRxnm2T63up/NSFJUsA1Hg
+	 /f4eWPGcKmImoXTdEA3wSv8/q/CFAYf5+SnYox3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Wei Wang <weiwan@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 346/592] tcp: fix initial tp->rcvq_space.space value for passive TS enabled flows
-Date: Mon, 23 Jun 2025 15:05:04 +0200
-Message-ID: <20250623130708.678600663@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.6 089/290] dm-mirror: fix a tiny race condition
+Date: Mon, 23 Jun 2025 15:05:50 +0200
+Message-ID: <20250623130629.655015666@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +45,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit cd171461b90a2d2cf230943df60d580174633718 ]
+commit 829451beaed6165eb11d7a9fb4e28eb17f489980 upstream.
 
-tcp_rcv_state_process() must tweak tp->advmss for TS enabled flows
-before the call to tcp_init_transfer() / tcp_init_buffer_space().
+There's a tiny race condition in dm-mirror. The functions queue_bio and
+write_callback grab a spinlock, add a bio to the list, drop the spinlock
+and wake up the mirrord thread that processes bios in the list.
 
-Otherwise tp->rcvq_space.space is off by 120 bytes
-(TCP_INIT_CWND * TCPOLEN_TSTAMP_ALIGNED).
+It may be possible that the mirrord thread processes the bio just after
+spin_unlock_irqrestore is called, before wakeup_mirrord. This spurious
+wake-up is normally harmless, however if the device mapper device is
+unloaded just after the bio was processed, it may be possible that
+wakeup_mirrord(ms) uses invalid "ms" pointer.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Wei Wang <weiwan@google.com>
-Link: https://patch.msgid.link/20250513193919.1089692-7-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this bug by moving wakeup_mirrord inside the spinlock.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_input.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/md/dm-raid1.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 4dfdde48ab503..ed5f0ffab60dc 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -6867,6 +6867,9 @@ tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
- 		if (!tp->srtt_us)
- 			tcp_synack_rtt_meas(sk, req);
- 
-+		if (tp->rx_opt.tstamp_ok)
-+			tp->advmss -= TCPOLEN_TSTAMP_ALIGNED;
-+
- 		if (req) {
- 			tcp_rcv_synrecv_state_fastopen(sk);
- 		} else {
-@@ -6892,9 +6895,6 @@ tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
- 		tp->snd_wnd = ntohs(th->window) << tp->rx_opt.snd_wscale;
- 		tcp_init_wl(tp, TCP_SKB_CB(skb)->seq);
- 
--		if (tp->rx_opt.tstamp_ok)
--			tp->advmss -= TCPOLEN_TSTAMP_ALIGNED;
+--- a/drivers/md/dm-raid1.c
++++ b/drivers/md/dm-raid1.c
+@@ -133,10 +133,9 @@ static void queue_bio(struct mirror_set
+ 	spin_lock_irqsave(&ms->lock, flags);
+ 	should_wake = !(bl->head);
+ 	bio_list_add(bl, bio);
+-	spin_unlock_irqrestore(&ms->lock, flags);
 -
- 		if (!inet_csk(sk)->icsk_ca_ops->cong_control)
- 			tcp_update_pacing_rate(sk);
+ 	if (should_wake)
+ 		wakeup_mirrord(ms);
++	spin_unlock_irqrestore(&ms->lock, flags);
+ }
  
--- 
-2.39.5
-
+ static void dispatch_bios(void *context, struct bio_list *bio_list)
+@@ -646,9 +645,9 @@ static void write_callback(unsigned long
+ 	if (!ms->failures.head)
+ 		should_wake = 1;
+ 	bio_list_add(&ms->failures, bio);
+-	spin_unlock_irqrestore(&ms->lock, flags);
+ 	if (should_wake)
+ 		wakeup_mirrord(ms);
++	spin_unlock_irqrestore(&ms->lock, flags);
+ }
+ 
+ static void do_write(struct mirror_set *ms, struct bio *bio)
 
 
