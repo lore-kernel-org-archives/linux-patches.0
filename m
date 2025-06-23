@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FE01EEA5D;
-	Mon, 23 Jun 2025 21:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3D71EEA5D;
+	Mon, 23 Jun 2025 21:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714561; cv=none; b=XxL+KONzenNx5b5h8vcVS3KOl5dlUDuthQOgYtH2uABwUjomg0mCtTr3LfIiUAcNcTiQO2UconJ7eO28uZLt5KvLvSmVMrVaJ42moZQyHhlGbrVHdmYv3LV5KvHJ5KDntNPSXFK/Plz7H3XaqfrrKY3/I1v5OTewqc/KxthsEKY=
+	t=1750714563; cv=none; b=K/fniRUZn7TCwlo7AprPW+FK7A1wqRoPOc460ddsEF2Ld2oFb4TqV+9UC8iu3OgbMJvxNiGuMdgJOjIzuzkMkw7nYxHCOWp7AG1TrB4r40TEhbhYkFhc45Ny3lZc/qx9kTox+MFsgVBoUhIueEhcGLEVMHOdtdUIow9+ROcFEYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714561; c=relaxed/simple;
-	bh=XKoDa5HUIa8twybGlKBtc6agnS9sLqu8eS16RQE50/8=;
+	s=arc-20240116; t=1750714563; c=relaxed/simple;
+	bh=ljwIztz9yrt5BLWjJXkeKCqMePLScNWGdDfJ+RR3KLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFi+I+0kajEPufyz6cfnmXTgy3j4+2CAVKWSkysjGX+RO/ZQICg8PttPoqGzHFeKX4TsVO0q8ts7p9LiZN/U5GvJh0AF+5Qfwh/Drfb3dfEvJkglusWNLWtegmbVhGY05t79Drn2oLKDu2DX6CbL59zldY1MrNLjAqEgSgRVhww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTWRPQEQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nthk+1cCozEWIQHb+YEpKfFdJc1oz/XBvhkc8+2UYBc5l3FhHT6IDmVM00uJ4YYjy+uJQQsnCOAAlXQkR+QlE0rAdHw0qXKczcOFKlchGmnVQuKaS4EpTNInWl9c+8wbbbUVI5Xbcs60EHVO2y+sK5aaFI1bMPuyRsdYGKxChGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OGvWgeIl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTWRPQEQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27EFC4CEEA;
-	Mon, 23 Jun 2025 21:36:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OGvWgeIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1631FC4CEEA;
+	Mon, 23 Jun 2025 21:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714561;
-	bh=XKoDa5HUIa8twybGlKBtc6agnS9sLqu8eS16RQE50/8=;
+	s=korg; t=1750714563;
+	bh=ljwIztz9yrt5BLWjJXkeKCqMePLScNWGdDfJ+RR3KLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTWRPQEQ6OijMYTeh8nSrk4bqc7BcRn7TomwLrqmAi9Zcsr67D4XREMpaH8j1DPin
-	 NSXSSQ66nLKdN7oJFDDjMCOWx3UAK0z7Wytn0bFp3eNpYFa2gnjvp/70e3SOt/1w/r
-	 JCUkYBy0PctCNe+NMFhNruN9jfQ/1x0l01mIF0y0=
+	b=OGvWgeIlGSA+OHbWoYrjY/YTm8RePfFwY/omH7ij9MqM7pXLVq3FZO2RtBDeTLgSF
+	 oKdHcT6Oy9IJj19crnq9AZw3AvvhxOs4Xd8/w3NIUF+eKGOBAepePNkYCgYN507nqp
+	 jkLiqmPFMcuiMeQ7fGSYMTlHZgdLPIeyj5bg9GQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Gompa <neal@gompa.dev>,
-	Hector Martin <marcan@marcan.st>,
-	James Calligeros <jcalligeros99@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 215/355] ASoC: tas2770: Power cycle amp on ISENSE/VSENSE change
-Date: Mon, 23 Jun 2025 15:06:56 +0200
-Message-ID: <20250623130633.210296882@linuxfoundation.org>
+	syzbot+9c09fda97a1a65ea859b@syzkaller.appspotmail.com,
+	Yi Yang <yiyang13@huawei.com>,
+	GONG Ruiqi <gongruiqi1@huawei.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 111/414] vgacon: Add check for vc_origin address range in vgacon_scroll()
+Date: Mon, 23 Jun 2025 15:04:08 +0200
+Message-ID: <20250623130644.865920958@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,77 +48,188 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: GONG Ruiqi <gongruiqi1@huawei.com>
 
-[ Upstream commit f529c91be8a34ac12e7599bf87c65b6f4a2c9f5c ]
+commit 864f9963ec6b4b76d104d595ba28110b87158003 upstream.
 
-The ISENSE/VSENSE blocks are only powered up when the amplifier
-transitions from shutdown to active. This means that if those controls
-are flipped on while the amplifier is already playing back audio, they
-will have no effect.
+Our in-house Syzkaller reported the following BUG (twice), which we
+believed was the same issue with [1]:
 
-Fix this by forcing a power cycle around transitions in those controls.
+==================================================================
+BUG: KASAN: slab-out-of-bounds in vcs_scr_readw+0xc2/0xd0 drivers/tty/vt/vt.c:4740
+Read of size 2 at addr ffff88800f5bef60 by task syz.7.2620/12393
+...
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x72/0xa0 lib/dump_stack.c:106
+ print_address_description.constprop.0+0x6b/0x3d0 mm/kasan/report.c:364
+ print_report+0xba/0x280 mm/kasan/report.c:475
+ kasan_report+0xa9/0xe0 mm/kasan/report.c:588
+ vcs_scr_readw+0xc2/0xd0 drivers/tty/vt/vt.c:4740
+ vcs_write_buf_noattr drivers/tty/vt/vc_screen.c:493 [inline]
+ vcs_write+0x586/0x840 drivers/tty/vt/vc_screen.c:690
+ vfs_write+0x219/0x960 fs/read_write.c:584
+ ksys_write+0x12e/0x260 fs/read_write.c:639
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x59/0x110 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+ ...
+ </TASK>
 
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20250406-apple-codec-changes-v5-1-50a00ec850a3@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Allocated by task 5614:
+ kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ ____kasan_kmalloc mm/kasan/common.c:374 [inline]
+ __kasan_kmalloc+0x8f/0xa0 mm/kasan/common.c:383
+ kasan_kmalloc include/linux/kasan.h:201 [inline]
+ __do_kmalloc_node mm/slab_common.c:1007 [inline]
+ __kmalloc+0x62/0x140 mm/slab_common.c:1020
+ kmalloc include/linux/slab.h:604 [inline]
+ kzalloc include/linux/slab.h:721 [inline]
+ vc_do_resize+0x235/0xf40 drivers/tty/vt/vt.c:1193
+ vgacon_adjust_height+0x2d4/0x350 drivers/video/console/vgacon.c:1007
+ vgacon_font_set+0x1f7/0x240 drivers/video/console/vgacon.c:1031
+ con_font_set drivers/tty/vt/vt.c:4628 [inline]
+ con_font_op+0x4da/0xa20 drivers/tty/vt/vt.c:4675
+ vt_k_ioctl+0xa10/0xb30 drivers/tty/vt/vt_ioctl.c:474
+ vt_ioctl+0x14c/0x1870 drivers/tty/vt/vt_ioctl.c:752
+ tty_ioctl+0x655/0x1510 drivers/tty/tty_io.c:2779
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:871 [inline]
+ __se_sys_ioctl+0x12d/0x190 fs/ioctl.c:857
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x59/0x110 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+
+Last potentially related work creation:
+ kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
+ __kasan_record_aux_stack+0x94/0xa0 mm/kasan/generic.c:492
+ __call_rcu_common.constprop.0+0xc3/0xa10 kernel/rcu/tree.c:2713
+ netlink_release+0x620/0xc20 net/netlink/af_netlink.c:802
+ __sock_release+0xb5/0x270 net/socket.c:663
+ sock_close+0x1e/0x30 net/socket.c:1425
+ __fput+0x408/0xab0 fs/file_table.c:384
+ __fput_sync+0x4c/0x60 fs/file_table.c:465
+ __do_sys_close fs/open.c:1580 [inline]
+ __se_sys_close+0x68/0xd0 fs/open.c:1565
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x59/0x110 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+
+Second to last potentially related work creation:
+ kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
+ __kasan_record_aux_stack+0x94/0xa0 mm/kasan/generic.c:492
+ __call_rcu_common.constprop.0+0xc3/0xa10 kernel/rcu/tree.c:2713
+ netlink_release+0x620/0xc20 net/netlink/af_netlink.c:802
+ __sock_release+0xb5/0x270 net/socket.c:663
+ sock_close+0x1e/0x30 net/socket.c:1425
+ __fput+0x408/0xab0 fs/file_table.c:384
+ task_work_run+0x154/0x240 kernel/task_work.c:239
+ exit_task_work include/linux/task_work.h:45 [inline]
+ do_exit+0x8e5/0x1320 kernel/exit.c:874
+ do_group_exit+0xcd/0x280 kernel/exit.c:1023
+ get_signal+0x1675/0x1850 kernel/signal.c:2905
+ arch_do_signal_or_restart+0x80/0x3b0 arch/x86/kernel/signal.c:310
+ exit_to_user_mode_loop kernel/entry/common.c:111 [inline]
+ exit_to_user_mode_prepare include/linux/entry-common.h:328 [inline]
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
+ syscall_exit_to_user_mode+0x1b3/0x1e0 kernel/entry/common.c:218
+ do_syscall_64+0x66/0x110 arch/x86/entry/common.c:87
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+
+The buggy address belongs to the object at ffff88800f5be000
+ which belongs to the cache kmalloc-2k of size 2048
+The buggy address is located 2656 bytes to the right of
+ allocated 1280-byte region [ffff88800f5be000, ffff88800f5be500)
+
+...
+
+Memory state around the buggy address:
+ ffff88800f5bee00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88800f5bee80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+>ffff88800f5bef00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+                                                       ^
+ ffff88800f5bef80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88800f5bf000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+==================================================================
+
+By analyzing the vmcore, we found that vc->vc_origin was somehow placed
+one line prior to vc->vc_screenbuf when vc was in KD_TEXT mode, and
+further writings to /dev/vcs caused out-of-bounds reads (and writes
+right after) in vcs_write_buf_noattr().
+
+Our further experiments show that in most cases, vc->vc_origin equals to
+vga_vram_base when the console is in KD_TEXT mode, and it's around
+vc->vc_screenbuf for the KD_GRAPHICS mode. But via triggerring a
+TIOCL_SETVESABLANK ioctl beforehand, we can make vc->vc_origin be around
+vc->vc_screenbuf while the console is in KD_TEXT mode, and then by
+writing the special 'ESC M' control sequence to the tty certain times
+(depends on the value of `vc->state.y - vc->vc_top`), we can eventually
+move vc->vc_origin prior to vc->vc_screenbuf. Here's the PoC, tested on
+QEMU:
+
+```
+int main() {
+	const int RI_NUM = 10; // should be greater than `vc->state.y - vc->vc_top`
+	int tty_fd, vcs_fd;
+	const char *tty_path = "/dev/tty0";
+	const char *vcs_path = "/dev/vcs";
+	const char escape_seq[] = "\x1bM";  // ESC + M
+	const char trigger_seq[] = "Let's trigger an OOB write.";
+	struct vt_sizes vt_size = { 70, 2 };
+	int blank = TIOCL_BLANKSCREEN;
+
+	tty_fd = open(tty_path, O_RDWR);
+
+	char vesa_mode[] = { TIOCL_SETVESABLANK, 1 };
+	ioctl(tty_fd, TIOCLINUX, vesa_mode);
+
+	ioctl(tty_fd, TIOCLINUX, &blank);
+	ioctl(tty_fd, VT_RESIZE, &vt_size);
+
+	for (int i = 0; i < RI_NUM; ++i)
+		write(tty_fd, escape_seq, sizeof(escape_seq) - 1);
+
+	vcs_fd = open(vcs_path, O_RDWR);
+	write(vcs_fd, trigger_seq, sizeof(trigger_seq));
+
+	close(vcs_fd);
+	close(tty_fd);
+	return 0;
+}
+```
+
+To solve this problem, add an address range validation check in
+vgacon_scroll(), ensuring vc->vc_origin never precedes vc_screenbuf.
+
+Reported-by: syzbot+9c09fda97a1a65ea859b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9c09fda97a1a65ea859b [1]
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Co-developed-by: Yi Yang <yiyang13@huawei.com>
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Signed-off-by: GONG Ruiqi <gongruiqi1@huawei.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/tas2770.c | 30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
+ drivers/video/console/vgacon.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
-index 1928c1616a52d..629cc24d51c3d 100644
---- a/sound/soc/codecs/tas2770.c
-+++ b/sound/soc/codecs/tas2770.c
-@@ -158,11 +158,37 @@ static const struct snd_kcontrol_new isense_switch =
- static const struct snd_kcontrol_new vsense_switch =
- 	SOC_DAPM_SINGLE("Switch", TAS2770_PWR_CTRL, 2, 1, 1);
- 
-+static int sense_event(struct snd_soc_dapm_widget *w,
-+			struct snd_kcontrol *kcontrol, int event)
-+{
-+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
-+	struct tas2770_priv *tas2770 = snd_soc_component_get_drvdata(component);
-+
-+	/*
-+	 * Powering up ISENSE/VSENSE requires a trip through the shutdown state.
-+	 * Do that here to ensure that our changes are applied properly, otherwise
-+	 * we might end up with non-functional IVSENSE if playback started earlier,
-+	 * which would break software speaker protection.
-+	 */
-+	switch (event) {
-+	case SND_SOC_DAPM_PRE_REG:
-+		return snd_soc_component_update_bits(component, TAS2770_PWR_CTRL,
-+						    TAS2770_PWR_CTRL_MASK,
-+						    TAS2770_PWR_CTRL_SHUTDOWN);
-+	case SND_SOC_DAPM_POST_REG:
-+		return tas2770_update_pwr_ctrl(tas2770);
-+	default:
-+		return 0;
-+	}
-+}
-+
- static const struct snd_soc_dapm_widget tas2770_dapm_widgets[] = {
- 	SND_SOC_DAPM_AIF_IN("ASI1", "ASI1 Playback", 0, SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_MUX("ASI1 Sel", SND_SOC_NOPM, 0, 0, &tas2770_asi1_mux),
--	SND_SOC_DAPM_SWITCH("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch),
--	SND_SOC_DAPM_SWITCH("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch),
-+	SND_SOC_DAPM_SWITCH_E("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch,
-+		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
-+	SND_SOC_DAPM_SWITCH_E("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch,
-+		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
- 	SND_SOC_DAPM_DAC_E("DAC", NULL, SND_SOC_NOPM, 0, 0, tas2770_dac_event,
- 			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD),
- 	SND_SOC_DAPM_OUTPUT("OUT"),
--- 
-2.39.5
-
+--- a/drivers/video/console/vgacon.c
++++ b/drivers/video/console/vgacon.c
+@@ -1168,7 +1168,7 @@ static bool vgacon_scroll(struct vc_data
+ 				     c->vc_screenbuf_size - delta);
+ 			c->vc_origin = vga_vram_end - c->vc_screenbuf_size;
+ 			vga_rolled_over = 0;
+-		} else
++		} else if (oldo - delta >= (unsigned long)c->vc_screenbuf)
+ 			c->vc_origin -= delta;
+ 		c->vc_scr_end = c->vc_origin + c->vc_screenbuf_size;
+ 		scr_memsetw((u16 *) (c->vc_origin), c->vc_video_erase_char,
 
 
