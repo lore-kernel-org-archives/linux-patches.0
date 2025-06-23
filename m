@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323372F24;
-	Mon, 23 Jun 2025 13:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC76253F20;
+	Mon, 23 Jun 2025 13:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685501; cv=none; b=i3CALjyzItq+hypKMEQe9BMuVo4Dy6LakODtTL8jhTy4IC2coMIFLW5MXKGP7DIfFJA0Qp/A8qhx3pfnxWlOSnW/ZCzgphjpnpGMlS/DdCFWTw95pe5lmQMRqrkBysUgKUJ8Ud7a4vLAwSnKAsBbz/7YUKCNe1RInouR9ECTgbw=
+	t=1750685503; cv=none; b=jzdKZtoo2CVrAIh1HGiw8K+KZa/FhEuJ3+XiO0ygIbScGugUwTvbdem3Of3uJ8GWKCaIMtGmByVCinV6rwjtyGU7Y6EOBXWYpJsS4NttMnOQytLN4AGbwcKF6AyH7AgOxt+3vwkM4jPkVWSxoprPlVonGGIVpsaN4fM8FpqXky4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685501; c=relaxed/simple;
-	bh=w/45TxTkQdOUlso5FL5tlDmL3NPZUkVz5lYGxP+TxIQ=;
+	s=arc-20240116; t=1750685503; c=relaxed/simple;
+	bh=b6PRhTbnCFjsisuMUCpV8+/cr8zuIRmEG8W7hbLYv94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7HaPb+Ef+r1A8YMRzXAFsxbbPOW/HQv+HZCd2/onKpS/iq4wW0qzuSjiGUDe+aA8jGIOc4CaWie016Aw7vxWTaap8jjwsIZTezGVa321afEbia4A5OtpGJrkJZUF9ZhhG9b/sdr64KDlzT3ftPRiRUjHGROFnaEBwV8fQJ6QnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qay82Dmd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i4bmEuzCV5BjLpCtPPaBQiK4PzRbltBnWy1sLbJ3WOiLZW4WiJtoX7/Qhd7KiJxu+Wx6b5ToMropVSR0aVw+VQv/aEALDthQKbgd37LchNk26vztSQT0bI5tI/fDkH3qLAbxMy/BRRkQcx2614s3BA15QzEO3vksRe12PYZb36k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SmATPKJ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qay82Dmd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9AE5C4CEF0;
-	Mon, 23 Jun 2025 13:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SmATPKJ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531BCC4CEEA;
+	Mon, 23 Jun 2025 13:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685501;
-	bh=w/45TxTkQdOUlso5FL5tlDmL3NPZUkVz5lYGxP+TxIQ=;
+	s=korg; t=1750685503;
+	bh=b6PRhTbnCFjsisuMUCpV8+/cr8zuIRmEG8W7hbLYv94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qay82DmdDsCXoL+McRS8yyxyerpFNukVMSpoJ1EY6N/jqOcKmpLRAoAUB1ZONJ6Kb
-	 UFUanKY2r55zD2qA/wQu+jR9diZ28Sxftbax8/nPzPbRRya6WjOsNjqv/NjmdX6M17
-	 HdqYTUV+xT1Xl3oc+kvbobSG1jLqRLebygQjxSCk=
+	b=SmATPKJ6rLJ7+LwPYJlwkO1US1xEbzPAzzWVrtyCQSf43VUww6KRSgXw/Lwlhr1sy
+	 Rxn2+41ZNJUxhI8y1z23tAnAXvdj+jIJOksJVoXTrKs9MnAyxImp/ajDrhrKsN/RKy
+	 yGr1neLsw8986tgBIZAlMBKVKHLW8LOxl+28MEWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Stefano Stabellini <stefano.stabellini@amd.com>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.4 099/222] xen/arm: call uaccess_ttbr0_enable for dm_op hypercall
-Date: Mon, 23 Jun 2025 15:07:14 +0200
-Message-ID: <20250623130615.092758527@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Hsin-chen Chuang <chharry@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 011/508] Bluetooth: hci_qca: move the SoC type check to the right place
+Date: Mon, 23 Jun 2025 15:00:56 +0200
+Message-ID: <20250623130645.532981536@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefano Stabellini <stefano.stabellini@amd.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 7f9bbc1140ff8796230bc2634055763e271fd692 upstream.
+commit 0fb410c914eb03c7e9d821e26d03bac0a239e5db upstream.
 
-dm_op hypercalls might come from userspace and pass memory addresses as
-parameters. The memory addresses typically correspond to buffers
-allocated in userspace to hold extra hypercall parameters.
+Commit 3d05fc82237a ("Bluetooth: qca: set power_ctrl_enabled on NULL
+returned by gpiod_get_optional()") accidentally changed the prevous
+behavior where power control would be disabled without the BT_EN GPIO
+only on QCA_WCN6750 and QCA_WCN6855 while also getting the error check
+wrong. We should treat every IS_ERR() return value from
+devm_gpiod_get_optional() as a reason to bail-out while we should only
+set power_ctrl_enabled to false on the two models mentioned above. While
+at it: use dev_err_probe() to save a LOC.
 
-On ARM, when CONFIG_ARM64_SW_TTBR0_PAN is enabled, they might not be
-accessible by Xen, as a result ioreq hypercalls might fail. See the
-existing comment in arch/arm64/xen/hypercall.S regarding privcmd_call
-for reference.
-
-For privcmd_call, Linux calls uaccess_ttbr0_enable before issuing the
-hypercall thanks to commit 9cf09d68b89a. We need to do the same for
-dm_op. This resolves the problem.
-
-Cc: stable@kernel.org
-Fixes: 9cf09d68b89a ("arm64: xen: Enable user access before a privcmd hvc call")
-Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Message-ID: <alpine.DEB.2.22.394.2505121446370.8380@ubuntu-linux-20-04-desktop>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: 3d05fc82237a ("Bluetooth: qca: set power_ctrl_enabled on NULL returned by gpiod_get_optional()")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Hsin-chen Chuang <chharry@chromium.org>
+Reviewed-by: Hsin-chen Chuang <chharry@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/xen/hypercall.S |   21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/bluetooth/hci_qca.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/arch/arm64/xen/hypercall.S
-+++ b/arch/arm64/xen/hypercall.S
-@@ -84,7 +84,26 @@ HYPERCALL1(tmem_op);
- HYPERCALL1(platform_op_raw);
- HYPERCALL2(multicall);
- HYPERCALL2(vm_assist);
--HYPERCALL3(dm_op);
-+
-+SYM_FUNC_START(HYPERVISOR_dm_op)
-+	mov x16, #__HYPERVISOR_dm_op;	\
-+	/*
-+	 * dm_op hypercalls are issued by the userspace. The kernel needs to
-+	 * enable access to TTBR0_EL1 as the hypervisor would issue stage 1
-+	 * translations to user memory via AT instructions. Since AT
-+	 * instructions are not affected by the PAN bit (ARMv8.1), we only
-+	 * need the explicit uaccess_enable/disable if the TTBR0 PAN emulation
-+	 * is enabled (it implies that hardware UAO and PAN disabled).
-+	 */
-+	uaccess_ttbr0_enable x6, x7, x8
-+	hvc XEN_IMM
-+
-+	/*
-+	 * Disable userspace access from kernel once the hyp call completed.
-+	 */
-+	uaccess_ttbr0_disable x6, x7
-+	ret
-+SYM_FUNC_END(HYPERVISOR_dm_op);
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -2263,14 +2263,14 @@ static int qca_serdev_probe(struct serde
  
- ENTRY(privcmd_call)
- 	mov x16, x0
+ 		qcadev->bt_en = devm_gpiod_get_optional(&serdev->dev, "enable",
+ 					       GPIOD_OUT_LOW);
+-		if (IS_ERR(qcadev->bt_en) &&
+-		    (data->soc_type == QCA_WCN6750 ||
+-		     data->soc_type == QCA_WCN6855)) {
+-			dev_err(&serdev->dev, "failed to acquire BT_EN gpio\n");
+-			return PTR_ERR(qcadev->bt_en);
+-		}
++		if (IS_ERR(qcadev->bt_en))
++			return dev_err_probe(&serdev->dev,
++					     PTR_ERR(qcadev->bt_en),
++					     "failed to acquire BT_EN gpio\n");
+ 
+-		if (!qcadev->bt_en)
++		if (!qcadev->bt_en &&
++		    (data->soc_type == QCA_WCN6750 ||
++		     data->soc_type == QCA_WCN6855))
+ 			power_ctrl_enabled = false;
+ 
+ 		qcadev->sw_ctrl = devm_gpiod_get_optional(&serdev->dev, "swctrl",
 
 
