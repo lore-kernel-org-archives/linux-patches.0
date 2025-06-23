@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5243721B9E5;
-	Mon, 23 Jun 2025 21:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739B319049B;
+	Mon, 23 Jun 2025 21:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715355; cv=none; b=f4TX7ctGZ9AAaIEt6oYvLxYWAF/r293VPRvOq2D+DEwwvxyXzv2k2I/7Okv7eCKEqPTxERz5OO9tl2NMGmTlVuSTgSB/FN25HL8SeH+4R3n9AfmCifHaRlMBI3UlHTSz8gJDKJkDpJ6lckRtXuepHUim4E0OW4nnAftIBIYCuLk=
+	t=1750715356; cv=none; b=biAQmYn6QuvTqVeWphT6JLssK2juxMnT4W5+INQsunie5QW16vSZnilOKlovOVOb8PWaiMI7BHKpus5HP5aACwrOKnytofkhrkWdRF/cx48FAT47gSirmuF/dpISxUkhjwpvav8vbeYEqmR8cctrwiRHjR5eQUaOFmsg5y5UOMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715355; c=relaxed/simple;
-	bh=4th/54VGsmh8XqnaRBeZdc3FZby+zD+d3HVFzuisuuY=;
+	s=arc-20240116; t=1750715356; c=relaxed/simple;
+	bh=NVH0hNQyImhhgVeS7Bi7nLP7bG+VazgxHa8c72NGSY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aA0Nhmv6/drI8REi+4ucTp7EPUNYD1MnmS83Soqz8h3a8OXbXoME2XS0YVn7EhN34ZUlXKX6JFw3x4F9KI5v1y40CfwnNDZgIw17luIANB+dBiaB5Bi8aNzqibXTN+nni79WwNRww+jplRXa50D98Du9f4PYzI3kWEpNckuozcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ery/x0QN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HtLD3yLhaYYvPp5QIUACtx3t3K3gBenopDWSG6WvsWF7227/ytUx/fUDUj+4txETU3xlu90ve24ARLSz1AQogjW4x7219ewMc8f5vdsEYgqzbHmMYYl+r1S2nYvSICbpM4P9K+bRn2051fOLP2CxBV7B/T+gyB0H0u6keyeoyDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkY3/JYu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ery/x0QN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8601FC4CEEA;
-	Mon, 23 Jun 2025 21:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkY3/JYu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C02DC4CEED;
+	Mon, 23 Jun 2025 21:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715353;
-	bh=4th/54VGsmh8XqnaRBeZdc3FZby+zD+d3HVFzuisuuY=;
+	s=korg; t=1750715356;
+	bh=NVH0hNQyImhhgVeS7Bi7nLP7bG+VazgxHa8c72NGSY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ery/x0QNAN6SWEnP5r3tLIraOAMUXXXyaWhLHFyIZUQJT9Ad8wQde1BGOCAob1m9R
-	 KpUxPC0YdVIKHHKyanL5yD/aYC+YhNkxgF/Kgn+qkib7qz7GiRi9cPCB8ZKYmmq4GR
-	 HkBYJDV4aln6wI6SeDLLIiBFo1/NUiWubSLDmMVQ=
+	b=tkY3/JYufSU7yFQHOuL15iSzjQCDTY9HZzi0yFXKUHID4E3woreZ1bmfw0m3grPcz
+	 CJZ01TSD9YrZvZtyWwZpVGXzzPQ3CxmcPbV8vMmSzWY1hWsqh5bqQtqcOAhIxARoAp
+	 xdTBWOluw6AJYKZx/awElQVs8n65Djq6ZkJwI58E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyang Zhang <zhangtianyang@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.15 453/592] LoongArch: Fix panic caused by NULL-PMD in huge_pte_offset()
-Date: Mon, 23 Jun 2025 15:06:51 +0200
-Message-ID: <20250623130711.205247475@linuxfoundation.org>
+	syzbot+a7d4444e7b6e743572f7@syzkaller.appspotmail.com,
+	Kees Cook <kees@kernel.org>,
+	Helge Deller <deller@gmx.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 194/290] fbcon: Make sure modelist not set on unregistered console
+Date: Mon, 23 Jun 2025 15:07:35 +0200
+Message-ID: <20250623130632.691117044@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +48,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tianyang Zhang <zhangtianyang@loongson.cn>
+From: Kees Cook <kees@kernel.org>
 
-commit ee084fa96123ede8b0563a1b5a9b23adc43cd50d upstream.
+[ Upstream commit cedc1b63394a866bf8663a3e40f4546f1d28c8d8 ]
 
-ERROR INFO:
+It looks like attempting to write to the "store_modes" sysfs node will
+run afoul of unregistered consoles:
 
-CPU 25 Unable to handle kernel paging request at virtual address 0x0
-         ...
- Call Trace:
- [<900000000023c30c>] huge_pte_offset+0x3c/0x58
- [<900000000057fd4c>] hugetlb_follow_page_mask+0x74/0x438
- [<900000000051fee8>] __get_user_pages+0xe0/0x4c8
- [<9000000000522414>] faultin_page_range+0x84/0x380
- [<9000000000564e8c>] madvise_vma_behavior+0x534/0xa48
- [<900000000056689c>] do_madvise+0x1bc/0x3e8
- [<9000000000566df4>] sys_madvise+0x24/0x38
- [<90000000015b9e88>] do_syscall+0x78/0x98
- [<9000000000221f18>] handle_syscall+0xb8/0x158
+UBSAN: array-index-out-of-bounds in drivers/video/fbdev/core/fbcon.c:122:28
+index -1 is out of range for type 'fb_info *[32]'
+...
+ fbcon_info_from_console+0x192/0x1a0 drivers/video/fbdev/core/fbcon.c:122
+ fbcon_new_modelist+0xbf/0x2d0 drivers/video/fbdev/core/fbcon.c:3048
+ fb_new_modelist+0x328/0x440 drivers/video/fbdev/core/fbmem.c:673
+ store_modes+0x1c9/0x3e0 drivers/video/fbdev/core/fbsysfs.c:113
+ dev_attr_store+0x55/0x80 drivers/base/core.c:2439
 
-In some cases, pmd may be NULL and rely on NULL as the return value for
-processing, so it is necessary to determine this situation here.
+static struct fb_info *fbcon_registered_fb[FB_MAX];
+...
+static signed char con2fb_map[MAX_NR_CONSOLES];
+...
+static struct fb_info *fbcon_info_from_console(int console)
+...
+        return fbcon_registered_fb[con2fb_map[console]];
 
-Cc: stable@vger.kernel.org
-Fixes: bd51834d1cf6 ("LoongArch: Return NULL from huge_pte_offset() for invalid PMD")
-Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If con2fb_map contains a -1 things go wrong here. Instead, return NULL,
+as callers of fbcon_info_from_console() are trying to compare against
+existing "info" pointers, so error handling should kick in correctly.
+
+Reported-by: syzbot+a7d4444e7b6e743572f7@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/679d0a8f.050a0220.163cdc.000c.GAE@google.com/
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/mm/hugetlbpage.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/core/fbcon.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/arch/loongarch/mm/hugetlbpage.c
-+++ b/arch/loongarch/mm/hugetlbpage.c
-@@ -47,7 +47,8 @@ pte_t *huge_pte_offset(struct mm_struct
- 				pmd = pmd_offset(pud, addr);
- 		}
- 	}
--	return pmd_none(pmdp_get(pmd)) ? NULL : (pte_t *) pmd;
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index 7a6f9a3cb3ba3..75996ef9992e4 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -115,9 +115,14 @@ static signed char con2fb_map_boot[MAX_NR_CONSOLES];
+ 
+ static struct fb_info *fbcon_info_from_console(int console)
+ {
++	signed char fb;
+ 	WARN_CONSOLE_UNLOCKED();
+ 
+-	return fbcon_registered_fb[con2fb_map[console]];
++	fb = con2fb_map[console];
++	if (fb < 0 || fb >= ARRAY_SIZE(fbcon_registered_fb))
++		return NULL;
 +
-+	return (!pmd || pmd_none(pmdp_get(pmd))) ? NULL : (pte_t *) pmd;
++	return fbcon_registered_fb[fb];
  }
  
- uint64_t pmd_to_entrylo(unsigned long pmd_val)
+ static int logo_lines;
+-- 
+2.39.5
+
 
 
