@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C415924DFF3;
-	Mon, 23 Jun 2025 13:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E822F24;
+	Mon, 23 Jun 2025 13:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685559; cv=none; b=pOHvy8nZDLGLFjDF+YuQXc0Mm10zBcf30ViLER2ztwVBOTDPoWFCm00MdYvMr2i4G6lGlyJdnlNL2wfxY4guCHnux5haIXMJpN2S4yPSs5pzwoqeI9Lct2TKC3Rst6ZgtA1o51U5Ma8pZm/i+DIBL6v7gkRdemij2dSkjHHUHyg=
+	t=1750685562; cv=none; b=iZdmhLgjngkc+l0HRJeeuK4h1IOxtMWMK8kRCcuJF0fZslruH5T8z4w2qsqdN79n7lxtm0k5cwA2lK7/7xTQf/OMhYVNCjaSSO12Ij8ol308PaVBb/fMdr78kugwluIUUpKMr93RFA+K4GIcip/XZKQDl947Pdp6kEPdm0iP2fM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685559; c=relaxed/simple;
-	bh=+dIt4TmKT3abRl4acBee1vXMQ8oRTpwST2ibjZkaYA0=;
+	s=arc-20240116; t=1750685562; c=relaxed/simple;
+	bh=QFIl+5UnxmRvruGu9fGBQ3pBnXwuMMh6W8wOt5Ztpf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGJAOgLm4xBgDf/9pQCe30SQzht6otR86YaDOvGIl/WmOqc/ttOK7MaIj4AyM2tsIABPrxDlc3TGtpcFkpLTD+QDNBKO1cLlKFmr6VH+dnpx8i1uQ+exTKMQdgvM2IKxWAqhj2JTTnD3jKAoi4lEee3TIIP6rhkKcoVDA9TLvR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Fedjs2I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nI3iEoxJ8VVuuDHjbGN5sMdulM+fzxQiKGayxjhP6Sp8AZkKaPcXdwnfVu8LXxYtHHJF7RhMNUIK6u9V6zgQTtMi4iDtrfnmCdgaOGPfy3cR3TTIcqy43rrTuCUHQ49suvk00i+yhYCGsZLcZxt8LlUgT1gJ4DLcI2ey0DbclRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJHiNtEq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Fedjs2I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5108AC4CEEA;
-	Mon, 23 Jun 2025 13:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJHiNtEq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACF1C4CEEA;
+	Mon, 23 Jun 2025 13:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685559;
-	bh=+dIt4TmKT3abRl4acBee1vXMQ8oRTpwST2ibjZkaYA0=;
+	s=korg; t=1750685562;
+	bh=QFIl+5UnxmRvruGu9fGBQ3pBnXwuMMh6W8wOt5Ztpf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Fedjs2IZubrP5+PPwFJj3poR+sYybZccv4Dol3+5Ez8AyQCui95YmkSWfiqB9lOz
-	 xVYIowfQRz+yD9hy/w2aQuIxbob/+vHtUdEdoK2fIiiz6t63//otSDosAydQhP0JJC
-	 /M7Ult4OA2NBEOXhznXapoj02xH28/mT/NktZ1hE=
+	b=dJHiNtEqlIZfxoIsQPgfpdQzHdjjd3bqs9qlcN5h9/3yGzXyEDqndojgfQ5+Cl+Kh
+	 XDir3UwTnrS09UIHl+TSgKuRGMeqvJFvqb/AQV4uEwCLAlfSDPawpkmqjaqnNkkMje
+	 xBqwwh//TYJofX3XU08R91ruc+RxuAxfJruVCRMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Wang <wangqing7171@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/508] perf/core: Fix broken throttling when max_samples_per_tick=1
-Date: Mon, 23 Jun 2025 15:01:00 +0200
-Message-ID: <20250623130645.629861734@linuxfoundation.org>
+Subject: [PATCH 5.10 059/355] f2fs: fix to correct check conditions in f2fs_cross_rename
+Date: Mon, 23 Jun 2025 15:04:20 +0200
+Message-ID: <20250623130628.596218404@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,66 +48,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qing Wang <wangqing7171@gmail.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit f51972e6f8b9a737b2b3eb588069acb538fa72de ]
+[ Upstream commit 9883494c45a13dc88d27dde4f988c04823b42a2f ]
 
-According to the throttling mechanism, the pmu interrupts number can not
-exceed the max_samples_per_tick in one tick. But this mechanism is
-ineffective when max_samples_per_tick=1, because the throttling check is
-skipped during the first interrupt and only performed when the second
-interrupt arrives.
+Should be "old_dir" here.
 
-Perhaps this bug may cause little influence in one tick, but if in a
-larger time scale, the problem can not be underestimated.
-
-When max_samples_per_tick = 1:
-Allowed-interrupts-per-second max-samples-per-second  default-HZ  ARCH
-200                           100                     100         X86
-500                           250                     250         ARM64
-...
-Obviously, the pmu interrupt number far exceed the user's expect.
-
-Fixes: e050e3f0a71b ("perf: Fix broken interrupt rate throttling")
-Signed-off-by: Qing Wang <wangqing7171@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250405141635.243786-3-wangqing7171@gmail.com
+Fixes: 5c57132eaf52 ("f2fs: support project quota")
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ fs/f2fs/namei.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 552bb00bfceb0..3544f26b58060 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -9359,14 +9359,14 @@ __perf_event_account_interrupt(struct perf_event *event, int throttle)
- 		hwc->interrupts = 1;
- 	} else {
- 		hwc->interrupts++;
--		if (unlikely(throttle &&
--			     hwc->interrupts > max_samples_per_tick)) {
--			__this_cpu_inc(perf_throttled_count);
--			tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
--			hwc->interrupts = MAX_INTERRUPTS;
--			perf_log_throttle(event, 0);
--			ret = 1;
--		}
-+	}
-+
-+	if (unlikely(throttle && hwc->interrupts >= max_samples_per_tick)) {
-+		__this_cpu_inc(perf_throttled_count);
-+		tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
-+		hwc->interrupts = MAX_INTERRUPTS;
-+		perf_log_throttle(event, 0);
-+		ret = 1;
- 	}
- 
- 	if (event->attr.freq) {
+diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
+index 1e3e525be68bf..a5ebebc15b08e 100644
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -1123,7 +1123,7 @@ static int f2fs_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 	if ((is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
+ 			!projid_eq(F2FS_I(new_dir)->i_projid,
+ 			F2FS_I(old_inode)->i_projid)) ||
+-	    (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
++	    (is_inode_flag_set(old_dir, FI_PROJ_INHERIT) &&
+ 			!projid_eq(F2FS_I(old_dir)->i_projid,
+ 			F2FS_I(new_inode)->i_projid)))
+ 		return -EXDEV;
 -- 
 2.39.5
 
