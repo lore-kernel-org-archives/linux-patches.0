@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108894409;
-	Mon, 23 Jun 2025 21:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC714409;
+	Mon, 23 Jun 2025 21:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714677; cv=none; b=c01V1I5Vt3gUZiEYk3940QoLbk27GGL3Cv5ZxE+B129k9Q28oXWZhQ1/gbheoFyJiNIDUEioWY6iXSGCpDhEeHFJGLtG0wxxKkyDp7WDK1w5gZUmd17cv8q1TxcEd4qloEkZQODYqhcOCqsjhGC19pJkr02I8vTrSsZ0S3bVFA4=
+	t=1750714679; cv=none; b=XjoaacVWLoP0NoJ6TYLwv2S51IpahI/K8WKIapE0V+LMeK4mf96b9T7EGwMU+kR4iqeqU+6So0bYTlN0vJXfNGtp1TRG4gRHV+AMHBt61SC1mKekJp/wTFTq///QKX97E94i3PqncGtideGVhbBBgjzfI3GNXT9cBAIGjZoocuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714677; c=relaxed/simple;
-	bh=ITfdNYwdwQqYWa6wz0KbKHUFbkXkMAqhC/TiFOwC+Zk=;
+	s=arc-20240116; t=1750714679; c=relaxed/simple;
+	bh=16dpxD8lAsO60ECWFUqm2srvFDxIVScKXuijJ0A14h0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hqc/VBsyuBnN3qn5D84XQ0fhSG/Mn3aA5Cbd1avEJtAoWv9CmpvJ+4+vudxPA5JoIwAHDv+nDiOQ128zQQ16grd6q16nEsfAudvc306usTZxNNtRprt5GoHWTzUskt8ot2jasrzwDqD3N1Qu0ZqdiFKlH8KlsPEcdunT4Ckntiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJEMnLxc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OyHkqiMcK/IpQxjPG4xiaYdQJYy6wqJmhSyRynnMF5OMYBTBYXSAM/fwIXTqhFhesxh+lMP6SmKaLlE1bkMK8SyqoKMiALL7vLWXu+wgITmRFhO2rwap5wPwBL/zQkbjqL5QnLjLu7aJfMMQk257XPtePu7sKfgDqBXBzfEZTUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lScSkHFa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJEMnLxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0CBC4CEEA;
-	Mon, 23 Jun 2025 21:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lScSkHFa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B69C4CEEA;
+	Mon, 23 Jun 2025 21:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714676;
-	bh=ITfdNYwdwQqYWa6wz0KbKHUFbkXkMAqhC/TiFOwC+Zk=;
+	s=korg; t=1750714679;
+	bh=16dpxD8lAsO60ECWFUqm2srvFDxIVScKXuijJ0A14h0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJEMnLxc8lpJrtkFpPwIsLKPcpUwd+Won9j6uzHKHO5fCQyRbkLTOewIStyHan+M+
-	 x7L6+eGE4E3Dy3VwuMUpQ/EgUN2rFiIyO+1Ka9vA6UeKB7rOKbaF9SokB4i/gaiDHU
-	 AYfdmwFGa/uhnt0OR0fqETUnb1YDjUYHAy1wNn84=
+	b=lScSkHFaRHMh51cmOmzTGHHRyTxZ/JwZ+08et9xDgSsfl1s5lFqM+CJKRNFe6yoOG
+	 kW/Kr5rUAZ7ioS+Jpe7FAxWlZiwQiYj162fO4AtBAhE0P3bs9P30oAGwohablBBbTA
+	 +be5LVwjXj7E+HwP/JiZnq08aEknX5o86Z3vShyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 123/414] KVM: SVM: Clear current_vmcb during vCPU free for all *possible* CPUs
-Date: Mon, 23 Jun 2025 15:04:20 +0200
-Message-ID: <20250623130645.143695748@linuxfoundation.org>
+	Rodrigo Siqueira <siqueira@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 222/355] drm/amdgpu/gfx6: fix CSIB handling
+Date: Mon, 23 Jun 2025 15:07:03 +0200
+Message-ID: <20250623130633.413942173@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yosry Ahmed <yosry.ahmed@linux.dev>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 1bee4838eb3a2c689f23c7170ea66ae87ea7d93a upstream.
+[ Upstream commit 8307ebc15c1ea98a8a0b7837af1faa6c01514577 ]
 
-When freeing a vCPU and thus its VMCB, clear current_vmcb for all possible
-CPUs, not just online CPUs, as it's theoretically possible a CPU could go
-offline and come back online in conjunction with KVM reusing the page for
-a new VMCB.
+We shouldn't return after the last section.
+We need to update the rest of the CSIB.
 
-Link: https://lore.kernel.org/all/20250320013759.3965869-1-yosry.ahmed@linux.dev
-Fixes: fd65d3142f73 ("kvm: svm: Ensure an IBPB on all affected CPUs when freeing a vmcb")
-Cc: stable@vger.kernel.org
-Cc: Jim Mattson <jmattson@google.com>
-Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-[sean: split to separate patch, write changelog]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/svm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -1483,7 +1483,7 @@ static void svm_clear_current_vmcb(struc
- {
- 	int i;
- 
--	for_each_online_cpu(i)
-+	for_each_possible_cpu(i)
- 		cmpxchg(per_cpu_ptr(&svm_data.current_vmcb, i), vmcb, NULL);
- }
- 
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+index 79c52c7a02e3a..d447b2416b98b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+@@ -2896,8 +2896,6 @@ static void gfx_v6_0_get_csb_buffer(struct amdgpu_device *adev,
+ 				buffer[count++] = cpu_to_le32(ext->reg_index - 0xa000);
+ 				for (i = 0; i < ext->reg_count; i++)
+ 					buffer[count++] = cpu_to_le32(ext->extent[i]);
+-			} else {
+-				return;
+ 			}
+ 		}
+ 	}
+-- 
+2.39.5
+
 
 
