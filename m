@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B7719E7F9;
-	Mon, 23 Jun 2025 22:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2277EB676;
+	Mon, 23 Jun 2025 22:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717099; cv=none; b=UFCCIQANgmALiIEr6xbWyfNhqqGdSyr/eawejFWY6yTYdef5wl5gUKjzkI2J5PE5yiJTVvg2ShiIjRqg9yiT0Tnv/k+Ew/ck5alfVdvWTK5p6tm74NrnsQ9R5KGc2rrJs1SJNUimaaoBhxfq2iH2k+iH7NIKtD+MMsNazQjuyKo=
+	t=1750717102; cv=none; b=pHw0mm/3dqViXGRKCAOzA8NvnXctS3m7i6/aUIyMaZjHDGO6NhB0X5KemOVQfKOICTEtyCmsRmEF0nTIU915Qz9EsI8I6DKlHNvU/BtnCuoz2M2wEMbziicWUFMyiCb1a08cr3wiR+g5QAzxK7d8GsA+lAs3rYCcnh87e6o8aHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717099; c=relaxed/simple;
-	bh=i/QyOYSVnipiEwZeJijeZdCrYY2QACzG4hXSa2+TCIE=;
+	s=arc-20240116; t=1750717102; c=relaxed/simple;
+	bh=mPbGkts0HU0oO7PiakOePRzaY+yMjAlGLhTDhwIU08I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UyGxcLUnQpIYau777ZWA258TklaD8pBe2XQYhFdbN55D5DqNhWnEoK039/Uujdkvc7K9NZiRhtV9jvdY/UKXaC9sZPT3YyjtKRouFPmNTivYG4CBwEO8NuzFx0qNt6PTd+79/5ZefMpQ7Tthj3iLJLgSkGZh6ZN9giNIH/EtG9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubLvcY7v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dCvxW3nGa2Fi1hQOwViAGucPMeQvwrlswAM32cwzNbQSOWenl4EKcpFJqFYrdaUDcURMsk7B9uoHvZQQxkvuncJPgY6niGAd6M1wQ3MRFSlMFjfWqGt+mYofvTN0XkxmhnK8SStZ4Oi/kO/KANk/PjDwKIqPbH0SJaubdjjM4tE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwg+cyz5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubLvcY7v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF239C4CEEA;
-	Mon, 23 Jun 2025 22:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwg+cyz5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E95BC4CEEA;
+	Mon, 23 Jun 2025 22:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717099;
-	bh=i/QyOYSVnipiEwZeJijeZdCrYY2QACzG4hXSa2+TCIE=;
+	s=korg; t=1750717102;
+	bh=mPbGkts0HU0oO7PiakOePRzaY+yMjAlGLhTDhwIU08I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ubLvcY7vUikLN/276uzT0mdU4bLBnGRAlJ9i5LeR4IonkftglwwRZ/rApdopmn0lK
-	 hAYBGP/UudH+PCgt2cHC4gYu8WA7gfYCSCdTEi5thY8LUQ+Hz8EkwJIx6sMevJ7F01
-	 WOoQlWNRaBleAExnE5nEBCBalbt2TKIogigZlxhA=
+	b=vwg+cyz5jYppcvY/kELHPszFtEPIf4dZmgTIM9bhQ3lgEMHrFg+/5wMEf9EMlMPg+
+	 jf3Hi4qdjJQi00f4O9FYT0GEEMj6Ft2ZpRksP2cSzVh62qgQVXTtRg0NnUBgNPyOcD
+	 qmZ9uPu6P8vEEYn4WWFmdGy44tMtsZrFXd43luI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.1 366/508] uio_hv_generic: Use correct size for interrupt and monitor pages
-Date: Mon, 23 Jun 2025 15:06:51 +0200
-Message-ID: <20250623130654.361979074@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 324/414] atm: Revert atm_account_tx() if copy_from_iter_full() fails.
+Date: Mon, 23 Jun 2025 15:07:41 +0200
+Message-ID: <20250623130650.094539144@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +47,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit c951ab8fd3589cf6991ed4111d2130816f2e3ac2 upstream.
+commit 7851263998d4269125fd6cb3fdbfc7c6db853859 upstream.
 
-Interrupt and monitor pages should be in Hyper-V page size (4k bytes).
-This can be different from the system page size.
+In vcc_sendmsg(), we account skb->truesize to sk->sk_wmem_alloc by
+atm_account_tx().
 
-This size is read and used by the user-mode program to determine the
-mapped data region. An example of such user-mode program is the VMBus
-driver in DPDK.
+It is expected to be reverted by atm_pop_raw() later called by
+vcc->dev->ops->send(vcc, skb).
 
-Cc: stable@vger.kernel.org
-Fixes: 95096f2fbd10 ("uio-hv-generic: new userspace i/o driver for VMBus")
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/1746492997-4599-3-git-send-email-longli@linuxonhyperv.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <1746492997-4599-3-git-send-email-longli@linuxonhyperv.com>
+However, vcc_sendmsg() misses the same revert when copy_from_iter_full()
+fails, and then we will leak a socket.
+
+Let's factorise the revert part as atm_return_tx() and call it in
+the failure path.
+
+Note that the corresponding sk_wmem_alloc operation can be found in
+alloc_tx() as of the blamed commit.
+
+  $ git blame -L:alloc_tx net/atm/common.c c55fa3cccbc2c~
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Simon Horman <horms@kernel.org>
+Closes: https://lore.kernel.org/netdev/20250614161959.GR414686@horms.kernel.org/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250616182147.963333-3-kuni1840@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/uio/uio_hv_generic.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/atmdev.h |    6 ++++++
+ net/atm/common.c       |    1 +
+ net/atm/raw.c          |    2 +-
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/uio/uio_hv_generic.c
-+++ b/drivers/uio/uio_hv_generic.c
-@@ -288,13 +288,13 @@ hv_uio_probe(struct hv_device *dev,
- 	pdata->info.mem[INT_PAGE_MAP].name = "int_page";
- 	pdata->info.mem[INT_PAGE_MAP].addr
- 		= (uintptr_t)vmbus_connection.int_page;
--	pdata->info.mem[INT_PAGE_MAP].size = PAGE_SIZE;
-+	pdata->info.mem[INT_PAGE_MAP].size = HV_HYP_PAGE_SIZE;
- 	pdata->info.mem[INT_PAGE_MAP].memtype = UIO_MEM_LOGICAL;
+--- a/include/linux/atmdev.h
++++ b/include/linux/atmdev.h
+@@ -249,6 +249,12 @@ static inline void atm_account_tx(struct
+ 	ATM_SKB(skb)->atm_options = vcc->atm_options;
+ }
  
- 	pdata->info.mem[MON_PAGE_MAP].name = "monitor_page";
- 	pdata->info.mem[MON_PAGE_MAP].addr
- 		= (uintptr_t)vmbus_connection.monitor_pages[1];
--	pdata->info.mem[MON_PAGE_MAP].size = PAGE_SIZE;
-+	pdata->info.mem[MON_PAGE_MAP].size = HV_HYP_PAGE_SIZE;
- 	pdata->info.mem[MON_PAGE_MAP].memtype = UIO_MEM_LOGICAL;
++static inline void atm_return_tx(struct atm_vcc *vcc, struct sk_buff *skb)
++{
++	WARN_ON_ONCE(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize,
++					   &sk_atm(vcc)->sk_wmem_alloc));
++}
++
+ static inline void atm_force_charge(struct atm_vcc *vcc,int truesize)
+ {
+ 	atomic_add(truesize, &sk_atm(vcc)->sk_rmem_alloc);
+--- a/net/atm/common.c
++++ b/net/atm/common.c
+@@ -635,6 +635,7 @@ int vcc_sendmsg(struct socket *sock, str
  
- 	pdata->recv_buf = vzalloc(RECV_BUFFER_SIZE);
+ 	skb->dev = NULL; /* for paths shared with net_device interfaces */
+ 	if (!copy_from_iter_full(skb_put(skb, size), size, &m->msg_iter)) {
++		atm_return_tx(vcc, skb);
+ 		kfree_skb(skb);
+ 		error = -EFAULT;
+ 		goto out;
+--- a/net/atm/raw.c
++++ b/net/atm/raw.c
+@@ -36,7 +36,7 @@ static void atm_pop_raw(struct atm_vcc *
+ 
+ 	pr_debug("(%d) %d -= %d\n",
+ 		 vcc->vci, sk_wmem_alloc_get(sk), ATM_SKB(skb)->acct_truesize);
+-	WARN_ON(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize, &sk->sk_wmem_alloc));
++	atm_return_tx(vcc, skb);
+ 	dev_kfree_skb_any(skb);
+ 	sk->sk_write_space(sk);
+ }
 
 
