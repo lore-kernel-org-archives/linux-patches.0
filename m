@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BA622370A;
-	Mon, 23 Jun 2025 22:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2052C2222B2;
+	Mon, 23 Jun 2025 22:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717604; cv=none; b=f6jOXFfiwxFJVxsMU9lWhRg+IaZXBPru5JD6RLKUbjpKus7CF0MX/x5/iLcgSqQTU+GE/xEcENXkP+4Dj+dH3gUPMB49qbDebXfDEHyJ90SZnYz+V9ogczWDMX3J5EySL0DWpAvCBjZXH9O75TXMJwjty2OD+w+fsbdBDNlPKyU=
+	t=1750717607; cv=none; b=Ai5PCcDWEf7tdwax6J7DSMT/yATdkIPIbcsl4jvbdhYilH3TA+mQ3VE8WQ912APiCpRAWYiJzesc4olNPOxhDW9WO34n1jxwBD4ur9zftH4rkt11y7SY9Oh/yLyOg6fFntsddmI7iOy3ot7sNOR70e5GttRzaYcojOD4WfOyeL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717604; c=relaxed/simple;
-	bh=i5L+HbxuEhwwh8Y3q4oFmttZTqvW8MfEZUkliR54EJI=;
+	s=arc-20240116; t=1750717607; c=relaxed/simple;
+	bh=+0UASXMhDgAfgOVYZs6uE1sD6RLCyirchii7vAKHNuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bS52Huk16u9EyYN/xl8P/xOi3WgMwEyw5D82YzGFtiHzXfC5oBRuSCvQOQatpE8hDFYNJLf/cbtOQsDLf25eGdrknAInDIHYR4BY0OKkTQdkrsjTaZzNquATZdXPJnGJkS/Dr1GXJFwVw3RgXun0I8EIEp0yEW3Hs0AMwlFQsm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Df/UaCfW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PgMThqNoA25tbWzmcK2A68Z1d+QKPC9CoStucGjBFD0wGN1x7lcJCRWj0B+h8EttUpaz7/vJsg4wKIclv4ougrdVIRWQ8geIUR1yedbEh0uGDAUY6mC8L1gaR6O+jPrwxcnh/bGK7Znt9djMM2K/n6+k0dJgKzCIE02blUlgK2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9TYlA0W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Df/UaCfW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C546C4CEED;
-	Mon, 23 Jun 2025 22:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9TYlA0W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABECDC4CEEA;
+	Mon, 23 Jun 2025 22:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717604;
-	bh=i5L+HbxuEhwwh8Y3q4oFmttZTqvW8MfEZUkliR54EJI=;
+	s=korg; t=1750717607;
+	bh=+0UASXMhDgAfgOVYZs6uE1sD6RLCyirchii7vAKHNuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Df/UaCfWRr9qzYG1zLEObTMS5Y8MVaJOr77Y5xrtGmQeSGojEQ4qL2r+Z2pZ0d9oc
-	 7aJPlcoDOpTM9Enpw0Zb+VcnYljB9IO4Ta2r8njN4P1pz48pl8AAy9xNfCwpU+VCAU
-	 dw/cJ5Y/LpQbS3Nh0HTy4fOcLeuA04dHRuxsYf7Q=
+	b=A9TYlA0WO15SCaD56i/HhP16h1qLngL3UnrzRcPwU8wbkDHdHDSlEYMbhTClimWG6
+	 C8n+Q+UfIwjsmO8tTD+XAFzeXC7m5VSXK73Jw5qeGaUDOyDUjDLzMD6Z5kRfEBvp9M
+	 qVYERvBrcqI2Hmvx8lr0b6Mp0bDMpxkjNPXJiXYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: [PATCH 6.12 399/414] serial: sh-sci: Increment the runtime usage counter for the earlycon device
-Date: Mon, 23 Jun 2025 15:08:56 +0200
-Message-ID: <20250623130651.913249351@linuxfoundation.org>
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 468/508] bpf: Fix L4 csum update on IPv6 in CHECKSUM_COMPLETE
+Date: Mon, 23 Jun 2025 15:08:33 +0200
+Message-ID: <20250623130656.616788401@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,88 +47,133 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-commit 651dee03696e1dfde6d9a7e8664bbdcd9a10ea7f upstream.
+commit ead7f9b8de65632ef8060b84b0c55049a33cfea1 upstream.
 
-In the sh-sci driver, serial ports are mapped to the sci_ports[] array,
-with earlycon mapped at index zero.
+In Cilium, we use bpf_csum_diff + bpf_l4_csum_replace to, among other
+things, update the L4 checksum after reverse SNATing IPv6 packets. That
+use case is however not currently supported and leads to invalid
+skb->csum values in some cases. This patch adds support for IPv6 address
+changes in bpf_l4_csum_update via a new flag.
 
-The uart_add_one_port() function eventually calls __device_attach(),
-which, in turn, calls pm_request_idle(). The identified code path is as
-follows:
+When calling bpf_l4_csum_replace in Cilium, it ends up calling
+inet_proto_csum_replace_by_diff:
 
-uart_add_one_port() ->
-  serial_ctrl_register_port() ->
-    serial_core_register_port() ->
-      serial_core_port_device_add() ->
-        serial_base_port_add() ->
-          device_add() ->
-            bus_probe_device() ->
-              device_initial_probe() ->
-                __device_attach() ->
-                  // ...
-                  if (dev->p->dead) {
-                    // ...
-                  } else if (dev->driver) {
-                    // ...
-                  } else {
-                    // ...
-                    pm_request_idle(dev);
-                    // ...
-                  }
+    1:  void inet_proto_csum_replace_by_diff(__sum16 *sum, struct sk_buff *skb,
+    2:                                       __wsum diff, bool pseudohdr)
+    3:  {
+    4:      if (skb->ip_summed != CHECKSUM_PARTIAL) {
+    5:          csum_replace_by_diff(sum, diff);
+    6:          if (skb->ip_summed == CHECKSUM_COMPLETE && pseudohdr)
+    7:              skb->csum = ~csum_sub(diff, skb->csum);
+    8:      } else if (pseudohdr) {
+    9:          *sum = ~csum_fold(csum_add(diff, csum_unfold(*sum)));
+    10:     }
+    11: }
 
-The earlycon device clocks are enabled by the bootloader. However, the
-pm_request_idle() call in __device_attach() disables the SCI port clocks
-while earlycon is still active.
+The bug happens when we're in the CHECKSUM_COMPLETE state. We've just
+updated one of the IPv6 addresses. The helper now updates the L4 header
+checksum on line 5. Next, it updates skb->csum on line 7. It shouldn't.
 
-The earlycon write function, serial_console_write(), calls
-sci_poll_put_char() via serial_console_putchar(). If the SCI port clocks
-are disabled, writing to earlycon may sometimes cause the SR.TDFE bit to
-remain unset indefinitely, causing the while loop in sci_poll_put_char()
-to never exit. On single-core SoCs, this can result in the system being
-blocked during boot when this issue occurs.
+For an IPv6 packet, the updates of the IPv6 address and of the L4
+checksum will cancel each other. The checksums are set such that
+computing a checksum over the packet including its checksum will result
+in a sum of 0. So the same is true here when we update the L4 checksum
+on line 5. We'll update it as to cancel the previous IPv6 address
+update. Hence skb->csum should remain untouched in this case.
 
-To resolve this, increment the runtime PM usage counter for the earlycon
-SCI device before registering the UART port.
+The same bug doesn't affect IPv4 packets because, in that case, three
+fields are updated: the IPv4 address, the IP checksum, and the L4
+checksum. The change to the IPv4 address and one of the checksums still
+cancel each other in skb->csum, but we're left with one checksum update
+and should therefore update skb->csum accordingly. That's exactly what
+inet_proto_csum_replace_by_diff does.
 
-Fixes: 0b0cced19ab1 ("serial: sh-sci: Add CONFIG_SERIAL_EARLYCON support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250116182249.3828577-6-claudiu.beznea.uj@bp.renesas.com
+This special case for IPv6 L4 checksums is also described atop
+inet_proto_csum_replace16, the function we should be using in this case.
+
+This patch introduces a new bpf_l4_csum_replace flag, BPF_F_IPV6,
+to indicate that we're updating the L4 checksum of an IPv6 packet. When
+the flag is set, inet_proto_csum_replace_by_diff will skip the
+skb->csum update.
+
+Fixes: 7d672345ed295 ("bpf: add generic bpf_csum_diff helper")
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/96a6bc3a443e6f0b21ff7b7834000e17fb549e05.1748509484.git.paul.chaignon@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sh-sci.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ include/uapi/linux/bpf.h       |    2 ++
+ net/core/filter.c              |    5 +++--
+ tools/include/uapi/linux/bpf.h |    2 ++
+ 3 files changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -3455,6 +3455,22 @@ static int sci_probe_single(struct platf
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -1787,6 +1787,7 @@ union bpf_attr {
+  * 		for updates resulting in a null checksum the value is set to
+  * 		**CSUM_MANGLED_0** instead. Flag **BPF_F_PSEUDO_HDR** indicates
+  * 		the checksum is to be computed against a pseudo-header.
++ * 		Flag **BPF_F_IPV6** should be set for IPv6 packets.
+  *
+  * 		This helper works in combination with **bpf_csum_diff**\ (),
+  * 		which does not update the checksum in-place, but offers more
+@@ -5715,6 +5716,7 @@ enum {
+ 	BPF_F_PSEUDO_HDR		= (1ULL << 4),
+ 	BPF_F_MARK_MANGLED_0		= (1ULL << 5),
+ 	BPF_F_MARK_ENFORCE		= (1ULL << 6),
++	BPF_F_IPV6			= (1ULL << 7),
+ };
  
- 	if (sci_uart_earlycon && sci_ports[0].port.mapbase == sci_res->start) {
- 		/*
-+		 * In case:
-+		 * - this is the earlycon port (mapped on index 0 in sci_ports[]) and
-+		 * - it now maps to an alias other than zero and
-+		 * - the earlycon is still alive (e.g., "earlycon keep_bootcon" is
-+		 *   available in bootargs)
-+		 *
-+		 * we need to avoid disabling clocks and PM domains through the runtime
-+		 * PM APIs called in __device_attach(). For this, increment the runtime
-+		 * PM reference counter (the clocks and PM domains were already enabled
-+		 * by the bootloader). Otherwise the earlycon may access the HW when it
-+		 * has no clocks enabled leading to failures (infinite loop in
-+		 * sci_poll_put_char()).
-+		 */
-+		pm_runtime_get_noresume(&dev->dev);
-+
-+		/*
- 		 * Skip cleanup the sci_port[0] in early_console_exit(), this
- 		 * port is the same as the earlycon one.
- 		 */
+ /* BPF_FUNC_skb_set_tunnel_key and BPF_FUNC_skb_get_tunnel_key flags. */
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -1958,10 +1958,11 @@ BPF_CALL_5(bpf_l4_csum_replace, struct s
+ 	bool is_pseudo = flags & BPF_F_PSEUDO_HDR;
+ 	bool is_mmzero = flags & BPF_F_MARK_MANGLED_0;
+ 	bool do_mforce = flags & BPF_F_MARK_ENFORCE;
++	bool is_ipv6   = flags & BPF_F_IPV6;
+ 	__sum16 *ptr;
+ 
+ 	if (unlikely(flags & ~(BPF_F_MARK_MANGLED_0 | BPF_F_MARK_ENFORCE |
+-			       BPF_F_PSEUDO_HDR | BPF_F_HDR_FIELD_MASK)))
++			       BPF_F_PSEUDO_HDR | BPF_F_HDR_FIELD_MASK | BPF_F_IPV6)))
+ 		return -EINVAL;
+ 	if (unlikely(offset > 0xffff || offset & 1))
+ 		return -EFAULT;
+@@ -1977,7 +1978,7 @@ BPF_CALL_5(bpf_l4_csum_replace, struct s
+ 		if (unlikely(from != 0))
+ 			return -EINVAL;
+ 
+-		inet_proto_csum_replace_by_diff(ptr, skb, to, is_pseudo, false);
++		inet_proto_csum_replace_by_diff(ptr, skb, to, is_pseudo, is_ipv6);
+ 		break;
+ 	case 2:
+ 		inet_proto_csum_replace2(ptr, skb, from, to, is_pseudo);
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -1787,6 +1787,7 @@ union bpf_attr {
+  * 		for updates resulting in a null checksum the value is set to
+  * 		**CSUM_MANGLED_0** instead. Flag **BPF_F_PSEUDO_HDR** indicates
+  * 		the checksum is to be computed against a pseudo-header.
++ * 		Flag **BPF_F_IPV6** should be set for IPv6 packets.
+  *
+  * 		This helper works in combination with **bpf_csum_diff**\ (),
+  * 		which does not update the checksum in-place, but offers more
+@@ -5715,6 +5716,7 @@ enum {
+ 	BPF_F_PSEUDO_HDR		= (1ULL << 4),
+ 	BPF_F_MARK_MANGLED_0		= (1ULL << 5),
+ 	BPF_F_MARK_ENFORCE		= (1ULL << 6),
++	BPF_F_IPV6			= (1ULL << 7),
+ };
+ 
+ /* BPF_FUNC_clone_redirect and BPF_FUNC_redirect flags. */
 
 
