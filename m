@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18A82522A8;
-	Mon, 23 Jun 2025 13:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759E224A06D;
+	Mon, 23 Jun 2025 13:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686150; cv=none; b=iZb26tl0hg5pFvJONuxdU6TYL+8Qz/cfQ4aHtuDcp57p4OY6ypk0W8YwYOYt3NbdbClPinGqe+a1Pyl95OgacxFAj/lcmO0TvU7/kbt/ABUiF94bN8KEdClj0g8mqIpxCq12Q+fg3B2UY/m5HusBQEwhebJ59cyBh1rRg4XK8LY=
+	t=1750686152; cv=none; b=kH0qpqLMPcdLqE4mV/o4oGGk1zxMiV3jTN+zul4wyCqf2EIKR01IE6SvVQ7wwoM7kDWXSDlsxlQ4KGnSdTNkZAvyzPB77PzpcCSL7qUP6vlevnkJ2Luk1pMiJ156ZtUGKp3Dlc8oILrqvWQ3oy3UBzC0yIAOuiDOSB4wfrXnX6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686150; c=relaxed/simple;
-	bh=nVeBcWXAdORTwMTdDejYNBRNQxOI33wIRaeuEV1oYOI=;
+	s=arc-20240116; t=1750686152; c=relaxed/simple;
+	bh=sKB4isgO2/S79vNhdNFck6svYvunJ806LREd6TOi8ak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ToNQP8jnI02M0L3kuiDDP0F/CETCzN2zoDHqlV1rvDK7fnyPYclze76zIF2juxUgcjyRj1oczxG79NL6BvBtxUxAJ8gkapZ6MnSMNxjZEftARFwvRQvjP6NiFd8OKZcGQWPrcQ4i152Dx8KZN1nJ6CihEhy+P1DzK3GdqtGOvHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzG1AkOK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D+FV83jfIflKtY5/mgEefQNzQkKMciQ1KYucpxT6pq8AMo/pX2W3N9Y45LFYgy5RzjmL71DKPI573prcH+KGQ+bl8fpFKOq8qCgTLkG+x8oHnLA0gTaQzp2FmvmP8K/DW8H9v/esq1w8t4k6hpuvLEij2j2jAluaTbuB17MSVF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnl03+9s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzG1AkOK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755C0C4CEF0;
-	Mon, 23 Jun 2025 13:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnl03+9s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A988C4CEEA;
+	Mon, 23 Jun 2025 13:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686149;
-	bh=nVeBcWXAdORTwMTdDejYNBRNQxOI33wIRaeuEV1oYOI=;
+	s=korg; t=1750686152;
+	bh=sKB4isgO2/S79vNhdNFck6svYvunJ806LREd6TOi8ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FzG1AkOKzWefWheAF2L5Ufw/QvKdTcpyMonGIgYzdJ/Kp3opRHbeYj9j04Untb6C6
-	 ZNrTHpkATqZckqbQ2utPSTCF1SyuYIu8gaarwyQzCHWe4lZhoEGBThTblSJ+xrSGt5
-	 u1MvKLrJr9jy/tMHO5MN6mDTO1J2Hc4ruE//8l90=
+	b=hnl03+9sgrKtRCITos4mje3FIPMFCPWzTjW4GeGt40Ven733TV6VZluXdnjWNfso9
+	 CHWe54kb/bfyaeODZuPOUlQttPLs+WKaVdK8f7BtJTN65xhUrrWeHjazc9Rk28D4S3
+	 v19ba3oYi2Z/uE7GwiWlw77P3dDsIPYW3V291lUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Lo <michael.lo@mediatek.com>,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.12 024/414] wifi: mt76: mt7925: fix host interrupt register initialization
-Date: Mon, 23 Jun 2025 15:02:41 +0200
-Message-ID: <20250623130642.630171179@linuxfoundation.org>
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 118/355] ath10k: snoc: fix unbalanced IRQ enable in crash recovery
+Date: Mon, 23 Jun 2025 15:05:19 +0200
+Message-ID: <20250623130630.306900349@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Lo <michael.lo@mediatek.com>
+From: Caleb Connolly <caleb.connolly@linaro.org>
 
-commit ca872e0ad97159375da8f3d05cac1f48239e01d7 upstream.
+[ Upstream commit 1650d32b92b01db03a1a95d69ee74fcbc34d4b00 ]
 
-ensure proper interrupt handling and aligns with the hardware spec by
-updating the register offset for MT_WFDMA0_HOST_INT_ENA.
+In ath10k_snoc_hif_stop() we skip disabling the IRQs in the crash
+recovery flow, but we still unconditionally call enable again in
+ath10k_snoc_hif_start().
 
-Cc: stable@vger.kernel.org
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Michael Lo <michael.lo@mediatek.com>
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250509083512.455095-1-mingyen.hsieh@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+We can't check the ATH10K_FLAG_CRASH_FLUSH bit since it is cleared
+before hif_start() is called, so instead check the
+ATH10K_SNOC_FLAG_RECOVERY flag and skip enabling the IRQs during crash
+recovery.
+
+This fixes unbalanced IRQ enable splats that happen after recovering from
+a crash.
+
+Fixes: 0e622f67e041 ("ath10k: add support for WCN3990 firmware crash recovery")
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+Tested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250318205043.1043148-1-caleb.connolly@linaro.org
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/pci.c  |    3 ---
- drivers/net/wireless/mediatek/mt76/mt7925/regs.h |    2 +-
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath10k/snoc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-@@ -482,9 +482,6 @@ static int mt7925_pci_suspend(struct dev
+diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+index 513794099f03f..616fcaed061f9 100644
+--- a/drivers/net/wireless/ath/ath10k/snoc.c
++++ b/drivers/net/wireless/ath/ath10k/snoc.c
+@@ -935,7 +935,9 @@ static int ath10k_snoc_hif_start(struct ath10k *ar)
+ 	bitmap_clear(ar_snoc->pending_ce_irqs, 0, CE_COUNT_MAX);
  
- 	/* disable interrupt */
- 	mt76_wr(dev, dev->irq_map->host_irq_enable, 0);
--	mt76_wr(dev, MT_WFDMA0_HOST_INT_DIS,
--		dev->irq_map->tx.all_complete_mask |
--		MT_INT_RX_DONE_ALL | MT_INT_MCU_CMD);
+ 	ath10k_core_napi_enable(ar);
+-	ath10k_snoc_irq_enable(ar);
++	/* IRQs are left enabled when we restart due to a firmware crash */
++	if (!test_bit(ATH10K_SNOC_FLAG_RECOVERY, &ar_snoc->flags))
++		ath10k_snoc_irq_enable(ar);
+ 	ath10k_snoc_rx_post(ar);
  
- 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0x0);
- 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/regs.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/regs.h
-@@ -28,7 +28,7 @@
- #define MT_MDP_TO_HIF			0
- #define MT_MDP_TO_WM			1
- 
--#define MT_WFDMA0_HOST_INT_ENA		MT_WFDMA0(0x228)
-+#define MT_WFDMA0_HOST_INT_ENA		MT_WFDMA0(0x204)
- #define MT_WFDMA0_HOST_INT_DIS		MT_WFDMA0(0x22c)
- #define HOST_RX_DONE_INT_ENA4		BIT(12)
- #define HOST_RX_DONE_INT_ENA5		BIT(13)
+ 	clear_bit(ATH10K_SNOC_FLAG_RECOVERY, &ar_snoc->flags);
+-- 
+2.39.5
+
 
 
