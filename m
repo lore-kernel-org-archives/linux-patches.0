@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3B32940B;
-	Mon, 23 Jun 2025 22:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581F321FF2B;
+	Mon, 23 Jun 2025 22:09:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716574; cv=none; b=K3hgRtCxZ1gPiRZcd8OT/5YVK8C5ple8XAUO6MKtHnu8/B6mKpkzshQcmbl+dV2Sal9jz6t6ZU5z8XNGnQ52MoiIOzeGQnuzH9/SqnHz1lX61UP3c+nNM3bH4mukLN/Xqc8j91w7L5EMHFi0GXU+AORp1JtmFACe8g3ZJZdzdYw=
+	t=1750716576; cv=none; b=XqRYAtylHgsv655Ph1yLlknjupARst5L3h87hhP7kFMqRSX7mBhedyiAIFxS71B8OQKMuuPpH0fQQsiNNA0b3DVn5OCtBa7uadPBSKsC2ZLgdQL5TGgcDlkNHSvZdQRNHRi3y4mnKgR/bTfUwkQZaV+sLI43nH+8FDgII3x9fxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716574; c=relaxed/simple;
-	bh=/wqEmBVExkOjIk8DAQTEFtP5WD2G6OFnWNv5OkQ8qFQ=;
+	s=arc-20240116; t=1750716576; c=relaxed/simple;
+	bh=jiMfNTdvYX0UZApkKGzLF/2mjPng8nY+o4T3DIwHJJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EaBfDeUccJYX8mi6H+wNCXEtrT9B1RYeiaSl7laQPPXx3ZwdiY1cELla80kh6bEsaSUB4+WSHW0dSd49k5PN7KXCyppRyEcMFxdOofrYZO3DCFguPAKDEts7hMLs9a/kNIpUf2AFkg6KDqKO74fZs7Rm0DGovJY6ncUJAGQcuQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SiukiThM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VkY3OtInXPcj5mkH79HcPGy+b7Y6nvqFgcsJBgH6rBspuqPHtgwEJN5hoNJWfPqzneh3Wzqsw/0Q8/K4l9UWDthsJFeDauC0rw0gmkk0frcmppMnn/yyiOkdcOlUTxSPkJ34IeSCwV1ItqfTmDrWqv90GK+s2iWPTp0h21e4eFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWDqIwOZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SiukiThM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C4BC4CEEA;
-	Mon, 23 Jun 2025 22:09:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWDqIwOZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E368DC4CEEA;
+	Mon, 23 Jun 2025 22:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716573;
-	bh=/wqEmBVExkOjIk8DAQTEFtP5WD2G6OFnWNv5OkQ8qFQ=;
+	s=korg; t=1750716576;
+	bh=jiMfNTdvYX0UZApkKGzLF/2mjPng8nY+o4T3DIwHJJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SiukiThM5Lu+MBGbrhQqpV3XSbNs+BN/fhIba4tH2MN7yD7wau0FcqdeF0RMwQKbZ
-	 RQRA7FjQL5QcfMwMcwLgVA9S4YkoY/Qd4pbmQEZSogTKA5mPkTJAolayAWwugUFhFG
-	 0qwwQxHT7xG4ZN3IWCU4uEVft/Dv19b/pE9XUSnA=
+	b=KWDqIwOZbqm/AcA4YHvmF5qkxRFUbogmHO7pv8n4/cLQB3Seeu3GyJeVktEfS6WQU
+	 HG426uhaDBw+df5CXSIMzEqRGn9Vux1W58HVYVJTBh3kq+QB9prIMNT/H2ze0s0CTY
+	 cHTMjsvf8qzviGNxQk1Uu3qDQNt0hU9jQ+0ISYiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chan <michael.chan@broadcom.com>,
-	Simon Horman <horms@kernel.org>,
-	David Wei <dw@davidwei.uk>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	syzbot+1d3c235276f62963e93a@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 533/592] bnxt_en: Add a helper function to configure MRU and RSS
-Date: Mon, 23 Jun 2025 15:08:11 +0200
-Message-ID: <20250623130713.112075768@linuxfoundation.org>
+Subject: [PATCH 6.15 539/592] atm: atmtcp: Free invalid length skb in atmtcp_c_send().
+Date: Mon, 23 Jun 2025 15:08:17 +0200
+Message-ID: <20250623130713.256410739@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -54,102 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavan Chebbi <pavan.chebbi@broadcom.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit e11baaea94e2923739a98abeee85eb0667c04fd3 ]
+[ Upstream commit 2f370ae1fb6317985f3497b1bb80d457508ca2f7 ]
 
-Add a new helper function that will configure MRU and RSS table
-of a VNIC. This will be useful when we configure both on a VNIC
-when resetting an RX ring.  This function will be used again in
-the next bug fix patch where we have to reconfigure VNICs for RSS
-contexts.
+syzbot reported the splat below. [0]
 
-Suggested-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: David Wei <dw@davidwei.uk>
-Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20250613231841.377988-3-michael.chan@broadcom.com
+vcc_sendmsg() copies data passed from userspace to skb and passes
+it to vcc->dev->ops->send().
+
+atmtcp_c_send() accesses skb->data as struct atmtcp_hdr after
+checking if skb->len is 0, but it's not enough.
+
+Also, when skb->len == 0, skb and sk (vcc) were leaked because
+dev_kfree_skb() is not called and sk_wmem_alloc adjustment is missing
+to revert atm_account_tx() in vcc_sendmsg(), which is expected
+to be done in atm_pop_raw().
+
+Let's properly free skb with an invalid length in atmtcp_c_send().
+
+[0]:
+BUG: KMSAN: uninit-value in atmtcp_c_send+0x255/0xed0 drivers/atm/atmtcp.c:294
+ atmtcp_c_send+0x255/0xed0 drivers/atm/atmtcp.c:294
+ vcc_sendmsg+0xd7c/0xff0 net/atm/common.c:644
+ sock_sendmsg_nosec net/socket.c:712 [inline]
+ __sock_sendmsg+0x330/0x3d0 net/socket.c:727
+ ____sys_sendmsg+0x7e0/0xd80 net/socket.c:2566
+ ___sys_sendmsg+0x271/0x3b0 net/socket.c:2620
+ __sys_sendmsg net/socket.c:2652 [inline]
+ __do_sys_sendmsg net/socket.c:2657 [inline]
+ __se_sys_sendmsg net/socket.c:2655 [inline]
+ __x64_sys_sendmsg+0x211/0x3e0 net/socket.c:2655
+ x64_sys_call+0x32fb/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:47
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Uninit was created at:
+ slab_post_alloc_hook mm/slub.c:4154 [inline]
+ slab_alloc_node mm/slub.c:4197 [inline]
+ kmem_cache_alloc_node_noprof+0x818/0xf00 mm/slub.c:4249
+ kmalloc_reserve+0x13c/0x4b0 net/core/skbuff.c:579
+ __alloc_skb+0x347/0x7d0 net/core/skbuff.c:670
+ alloc_skb include/linux/skbuff.h:1336 [inline]
+ vcc_sendmsg+0xb40/0xff0 net/atm/common.c:628
+ sock_sendmsg_nosec net/socket.c:712 [inline]
+ __sock_sendmsg+0x330/0x3d0 net/socket.c:727
+ ____sys_sendmsg+0x7e0/0xd80 net/socket.c:2566
+ ___sys_sendmsg+0x271/0x3b0 net/socket.c:2620
+ __sys_sendmsg net/socket.c:2652 [inline]
+ __do_sys_sendmsg net/socket.c:2657 [inline]
+ __se_sys_sendmsg net/socket.c:2655 [inline]
+ __x64_sys_sendmsg+0x211/0x3e0 net/socket.c:2655
+ x64_sys_call+0x32fb/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:47
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+CPU: 1 UID: 0 PID: 5798 Comm: syz-executor192 Not tainted 6.16.0-rc1-syzkaller-00010-g2c4a1f3fe03e #0 PREEMPT(undef)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+1d3c235276f62963e93a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1d3c235276f62963e93a
+Tested-by: syzbot+1d3c235276f62963e93a@syzkaller.appspotmail.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250616182147.963333-2-kuni1840@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5dacc94c6fe6 ("bnxt_en: Update MRU and RSS table of RSS contexts on queue reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 37 ++++++++++++++++-------
- 1 file changed, 26 insertions(+), 11 deletions(-)
+ drivers/atm/atmtcp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 6afc2ab6fad22..3d975e50f9438 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -10738,6 +10738,26 @@ void bnxt_del_one_rss_ctx(struct bnxt *bp, struct bnxt_rss_ctx *rss_ctx,
- 	bp->num_rss_ctx--;
- }
+diff --git a/drivers/atm/atmtcp.c b/drivers/atm/atmtcp.c
+index d4aa0f353b6c8..eeae160c898d3 100644
+--- a/drivers/atm/atmtcp.c
++++ b/drivers/atm/atmtcp.c
+@@ -288,7 +288,9 @@ static int atmtcp_c_send(struct atm_vcc *vcc,struct sk_buff *skb)
+ 	struct sk_buff *new_skb;
+ 	int result = 0;
  
-+static int bnxt_set_vnic_mru_p5(struct bnxt *bp, struct bnxt_vnic_info *vnic,
-+				u16 mru)
-+{
-+	int rc;
+-	if (!skb->len) return 0;
++	if (skb->len < sizeof(struct atmtcp_hdr))
++		goto done;
 +
-+	if (mru) {
-+		rc = bnxt_hwrm_vnic_set_rss_p5(bp, vnic, true);
-+		if (rc) {
-+			netdev_err(bp->dev, "hwrm vnic %d set rss failure rc: %d\n",
-+				   vnic->vnic_id, rc);
-+			return rc;
-+		}
-+	}
-+	vnic->mru = mru;
-+	bnxt_hwrm_vnic_update(bp, vnic,
-+			      VNIC_UPDATE_REQ_ENABLES_MRU_VALID);
-+
-+	return 0;
-+}
-+
- static void bnxt_hwrm_realloc_rss_ctx_vnic(struct bnxt *bp)
- {
- 	bool set_tpa = !!(bp->flags & BNXT_FLAG_TPA);
-@@ -15884,6 +15904,7 @@ static int bnxt_queue_start(struct net_device *dev, void *qmem, int idx)
- 	struct bnxt_vnic_info *vnic;
- 	struct bnxt_napi *bnapi;
- 	int i, rc;
-+	u16 mru;
- 
- 	rxr = &bp->rx_ring[idx];
- 	clone = qmem;
-@@ -15933,18 +15954,13 @@ static int bnxt_queue_start(struct net_device *dev, void *qmem, int idx)
- 	napi_enable_locked(&bnapi->napi);
- 	bnxt_db_nq_arm(bp, &cpr->cp_db, cpr->cp_raw_cons);
- 
-+	mru = bp->dev->mtu + ETH_HLEN + VLAN_HLEN;
- 	for (i = 0; i < bp->nr_vnics; i++) {
- 		vnic = &bp->vnic_info[i];
- 
--		rc = bnxt_hwrm_vnic_set_rss_p5(bp, vnic, true);
--		if (rc) {
--			netdev_err(bp->dev, "hwrm vnic %d set rss failure rc: %d\n",
--				   vnic->vnic_id, rc);
-+		rc = bnxt_set_vnic_mru_p5(bp, vnic, mru);
-+		if (rc)
- 			return rc;
--		}
--		vnic->mru = bp->dev->mtu + ETH_HLEN + VLAN_HLEN;
--		bnxt_hwrm_vnic_update(bp, vnic,
--				      VNIC_UPDATE_REQ_ENABLES_MRU_VALID);
- 	}
- 
- 	return 0;
-@@ -15969,9 +15985,8 @@ static int bnxt_queue_stop(struct net_device *dev, void *qmem, int idx)
- 
- 	for (i = 0; i < bp->nr_vnics; i++) {
- 		vnic = &bp->vnic_info[i];
--		vnic->mru = 0;
--		bnxt_hwrm_vnic_update(bp, vnic,
--				      VNIC_UPDATE_REQ_ENABLES_MRU_VALID);
-+
-+		bnxt_set_vnic_mru_p5(bp, vnic, 0);
- 	}
- 	/* Make sure NAPI sees that the VNIC is disabled */
- 	synchronize_net();
+ 	dev = vcc->dev_data;
+ 	hdr = (struct atmtcp_hdr *) skb->data;
+ 	if (hdr->length == ATMTCP_HDR_MAGIC) {
 -- 
 2.39.5
 
