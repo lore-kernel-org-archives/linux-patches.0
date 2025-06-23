@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA8B218580;
-	Mon, 23 Jun 2025 21:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37D51EEA5D;
+	Mon, 23 Jun 2025 21:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714414; cv=none; b=iNSB33Lg5e1HaZDT/VYVDuJAOGuaRjx16dKvHqAtiX7f8eMDobhTY7ZBsW+goo0FTpbrGq1e1Y6qsBtHnV7oKNo8c9tgITGq0Egd3PA0LzVOU8qCyhgqRq3MVuXJDp1bPLLRFiC/fz+WRxoLK7LyH9ImM4OzdK/rUMVkLTxvJFs=
+	t=1750714416; cv=none; b=S4dnr5/bUc5zoK5HzwXM/dV+snWssyZgeOjJlU2VDYwD7OR3UGibXC4M35qcwNiZiQouzv8g5GyeXvazElCELRy6zx4wRAXQaQcq8Fp75/rShk4mR131JhqEJETbNPQ58QFFA6mg4QEKkZYD8GmGDdcME3MI9LGyg02XpSPmhLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714414; c=relaxed/simple;
-	bh=qGba+cP7sXO2cSWkO6OBQqF4vmaIRoiw7lFtd8EC6QM=;
+	s=arc-20240116; t=1750714416; c=relaxed/simple;
+	bh=lcuiz/aoXTGTUV8JqrlOedB9uk445hbnTv1Ly45Muik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUkUFVmgpPLIRhkd1ulMcxTdqIFwaZt9Cp8MmMcm6+/4XBoIKu/xQnwMzcai6Xz7rAU3OZaByzX3ivBv0OSUGN3t4kyQdrUWuYV3ccClBftq12oe3+2IB7zAVZn59lVfjybm6I5PCVdg0iglL4fJrNLO2oRe9cqtGLz1LUFEAP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDnbN9q/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n+P+kcZrSVaAW/2mygnYM5XWzr2WHwrlHDVaA4smPJYSD21K2Cqj+j9BqG8faSXeZbFTtpj+NjdGnYErREO4IYN9HPcWCayq+pxEH6DBK9fVWmRL4ilSBzma034vFH/Eb0CtrpriHkHPN4cC5qJz2xU9LhfZ4PN80yoX3ctEaFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZm2iGiZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDnbN9q/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC90AC4CEEA;
-	Mon, 23 Jun 2025 21:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZm2iGiZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3672EC4CEEA;
+	Mon, 23 Jun 2025 21:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714414;
-	bh=qGba+cP7sXO2cSWkO6OBQqF4vmaIRoiw7lFtd8EC6QM=;
+	s=korg; t=1750714416;
+	bh=lcuiz/aoXTGTUV8JqrlOedB9uk445hbnTv1Ly45Muik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDnbN9q/ba8esQsuocpr7GEhVjp+DdWj/C5i8skalfnHyG+1cuFJ6AontvthiXFNi
-	 qbCGe0CA7cKOtWkOw313k8PLFaxXQx+Et5CSQQQgrtnAbvmyNfMxFekKpKuCUpVmXP
-	 AniEjgDO3iNPctPg7e787i8qLBu7pdnmszOa/6iw=
+	b=tZm2iGiZ3Dixe/AuDNxbjyFyTXST+6OetcgeVrHbA8uHa1yque4dJs7NgZhMP05js
+	 pg5r8YtyUvI7TusrmTA0lM984ZDf5oRbWYacKhgrcyhsW9l5HiljH/9+rVwkPYQt5W
+	 rh4LujKHMNHWiaYclpD3noHu9vj1iiitATExelEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Salem <x0rw3ll@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Muna Sinada <muna.sinada@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 121/290] ACPICA: Avoid sequence overread in call to strncmp()
-Date: Mon, 23 Jun 2025 15:06:22 +0200
-Message-ID: <20250623130630.575934414@linuxfoundation.org>
+Subject: [PATCH 6.15 389/592] wifi: mac80211: VLAN traffic in multicast path
+Date: Mon, 23 Jun 2025 15:05:47 +0200
+Message-ID: <20250623130709.695815742@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed Salem <x0rw3ll@gmail.com>
+From: Muna Sinada <muna.sinada@oss.qualcomm.com>
 
-[ Upstream commit 64b9dfd0776e9c38d733094859a09f13282ce6f8 ]
+[ Upstream commit 1a4a6a22552ca9d723f28a1fe35eab1b9b3d8b33 ]
 
-ACPICA commit 8b83a8d88dfec59ea147fad35fc6deea8859c58c
+Currently for MLO, sending out multicast frames on each link is handled by
+mac80211 only when IEEE80211_HW_MLO_MCAST_MULTI_LINK_TX flag is not set.
 
-ap_get_table_length() checks if tables are valid by
-calling ap_is_valid_header(). The latter then calls
-ACPI_VALIDATE_RSDP_SIG(Table->Signature).
+Dynamic VLAN multicast traffic utilizes software encryption.
+Due to this, mac80211 should handle transmitting multicast frames on
+all links for multicast VLAN traffic.
 
-ap_is_valid_header() accepts struct acpi_table_header as an argument, so
-the signature size is always fixed to 4 bytes.
-
-The problem is when the string comparison is between ACPI-defined table
-signature and ACPI_SIG_RSDP. Common ACPI table header specifies the
-Signature field to be 4 bytes long[1], with the exception of the RSDP
-structure whose signature is 8 bytes long "RSD PTR " (including the
-trailing blank character)[2]. Calling strncmp(sig, rsdp_sig, 8) would
-then result in a sequence overread[3] as sig would be smaller (4 bytes)
-than the specified bound (8 bytes).
-
-As a workaround, pass the bound conditionally based on the size of the
-signature being passed.
-
-Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#system-description-table-header [1]
-Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#root-system-description-pointer-rsdp-structure [2]
-Link: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overread [3]
-Link: https://github.com/acpica/acpica/commit/8b83a8d8
-Signed-off-by: Ahmed Salem <x0rw3ll@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2248233.Mh6RI2rZIc@rjwysocki.net
+Signed-off-by: Muna Sinada <muna.sinada@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250325213125.1509362-4-muna.sinada@oss.qualcomm.com
+[remove unnecessary parentheses]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/acpi/actypes.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/tx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h
-index 85c2dcf2b7048..0a24200852415 100644
---- a/include/acpi/actypes.h
-+++ b/include/acpi/actypes.h
-@@ -527,7 +527,7 @@ typedef u64 acpi_integer;
- 
- /* Support for the special RSDP signature (8 characters) */
- 
--#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, 8))
-+#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ? ACPI_NAMESEG_SIZE : 8))
- #define ACPI_MAKE_RSDP_SIG(dest)        (memcpy (ACPI_CAST_PTR (char, (dest)), ACPI_SIG_RSDP, 8))
- 
- /* Support for OEMx signature (x can be any character) */
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 20179db88c4a6..d6af02a524af3 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -4526,8 +4526,10 @@ netdev_tx_t ieee80211_subif_start_xmit(struct sk_buff *skb,
+ 						     IEEE80211_TX_CTRL_MLO_LINK_UNSPEC,
+ 						     NULL);
+ 	} else if (ieee80211_vif_is_mld(&sdata->vif) &&
+-		   sdata->vif.type == NL80211_IFTYPE_AP &&
+-		   !ieee80211_hw_check(&sdata->local->hw, MLO_MCAST_MULTI_LINK_TX)) {
++		   ((sdata->vif.type == NL80211_IFTYPE_AP &&
++		     !ieee80211_hw_check(&sdata->local->hw, MLO_MCAST_MULTI_LINK_TX)) ||
++		    (sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
++		     !sdata->wdev.use_4addr))) {
+ 		ieee80211_mlo_multicast_tx(dev, skb);
+ 	} else {
+ normal:
 -- 
 2.39.5
 
