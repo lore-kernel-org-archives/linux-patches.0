@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D3A1ACEDA;
-	Mon, 23 Jun 2025 21:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3481ACEDA;
+	Mon, 23 Jun 2025 21:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713096; cv=none; b=kx4IkrytvtZaA//KMckxIXq1s8qv7G2gmNYKSEheRxO898akUtFGCZoHP9zmfPhn4YE1UoI17yQNpoaO5zJ6Rj5ILIWw3LPAA0Q6B6a/a3QMkzy/2b3fvmeVpvbr0cMOmJ3fUIRcU20CIaEGtFldO2Xh4aNWCXmGkpccifGy/5g=
+	t=1750713099; cv=none; b=AGTPbkpXGhyiq78yOWRzkJAGhGbL+9ccy9YfJRGBK9dHatrrNPvBdfPRpdri3Oyv2bKkp6+3l3Akkb6pO6YPYV2BRhvijaj1fZfScRu5j47AYV/X6COEYxeLUub7Gxv9+4nmPRmytuUwrwSUJmilqy3+ojsKpedMUcP2k9QirrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713096; c=relaxed/simple;
-	bh=W5MmjbucTmZq56PuiNNF1NL4loy/s6wpg6//qKOcXT8=;
+	s=arc-20240116; t=1750713099; c=relaxed/simple;
+	bh=q1NAvCfxOMHaE1mPFmcG3nOu05BvI7CWNysTNqYzXp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tn463Xw/JwcnUtqUV5voXkEcFO5OsKgnplYiQYSyYwPJ3h/sIcyaep/XvDTE4iyCAb5uDs7S3N01lEc/Jg3fGf24th6HddBCtKWm9iXfSu8k14lN+rHW9L1v9Be6OO85qgJE0mTJEarR8OmTdqS9hvn4Rr1LBb21VeitIhBdIUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghbWr3t6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L319/fC8MUN2qP4+kIiGOPtwC0t93rhUr3PxEfE2PgXefykQ7atUtzvD8W7cT66xp/ngsU86TJRo9hIv/8w/X6jJ8Hl/CFehGAo69xo4JEXWVSYNqYeZWYyWQCulK2qiKDjoaXugjGBDatn3Ldje590MyYttPwhn5h+VFiE/yVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzNYonly; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghbWr3t6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0331AC4CEEA;
-	Mon, 23 Jun 2025 21:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzNYonly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE2CC4CEEA;
+	Mon, 23 Jun 2025 21:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713096;
-	bh=W5MmjbucTmZq56PuiNNF1NL4loy/s6wpg6//qKOcXT8=;
+	s=korg; t=1750713098;
+	bh=q1NAvCfxOMHaE1mPFmcG3nOu05BvI7CWNysTNqYzXp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ghbWr3t6cSErEFkaMPKzoiMm5SfDholoGwlld7jhXH/vil4eAr53G479GVbXyUgmu
-	 UYnwxOz/DaI3KosCDB6iIZHBBb0gOgnStb0iSbO31LcBMQh6nK0EqgLhifHSPB2ccx
-	 2wxSG5cXphI/I0u/MHSGzn7SLSNKVSW9jg7FCyfE=
+	b=MzNYonlyXW21RErTvt8zfM4JbI13N7XyERwmOd5FW0RwjGzQMPi6V0CaIa1/A2WGP
+	 /t4zSjSrdE2cfrzmzYAdMoi8XjkQ8lsPm/dZNWK3cnyw/hTC9JpTqA1pkP5mGdHjoH
+	 bPZff0r+62m6GFzbwB6CXqj9soPHRbu7wOTPHQAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 124/411] gve: add missing NULL check for gve_alloc_pending_packet() in TX DQO
-Date: Mon, 23 Jun 2025 15:04:28 +0200
-Message-ID: <20250623130636.680864227@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.10 145/355] drm/amd/display: Do not add -mhard-float to dml_ccflags for clang
+Date: Mon, 23 Jun 2025 15:05:46 +0200
+Message-ID: <20250623130631.068243045@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,48 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 12c331b29c7397ac3b03584e12902990693bc248 ]
+commit 7db038d9790eda558dd6c1dde4cdd58b64789c47 upstream.
 
-gve_alloc_pending_packet() can return NULL, but gve_tx_add_skb_dqo()
-did not check for this case before dereferencing the returned pointer.
+When clang's -Qunused-arguments is dropped from KBUILD_CPPFLAGS, it
+warns:
 
-Add a missing NULL check to prevent a potential NULL pointer
-dereference when allocation fails.
+  clang-16: error: argument unused during compilation: '-mhard-float' [-Werror,-Wunused-command-line-argument]
 
-This improves robustness in low-memory scenarios.
+Similar to commit 84edc2eff827 ("selftest/fpu: avoid clang warning"),
+just add this flag to GCC builds. Commit 0f0727d971f6 ("drm/amd/display:
+readd -msse2 to prevent Clang from emitting libcalls to undefined SW FP
+routines") added '-msse2' to prevent clang from emitting software
+floating point routines.
 
-Fixes: a57e5de476be ("gve: DQO: Add TX path")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Anders Roxell <anders.roxell@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_tx_dqo.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dml/Makefile |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_tx_dqo.c b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-index dfbb524bf7392..c6f1f4fddf8a7 100644
---- a/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-+++ b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-@@ -462,6 +462,9 @@ static int gve_tx_add_skb_no_copy_dqo(struct gve_tx_ring *tx,
- 	int i;
+--- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
+@@ -26,7 +26,8 @@
+ # subcomponents.
  
- 	pkt = gve_alloc_pending_packet(tx);
-+	if (!pkt)
-+		return -ENOMEM;
-+
- 	pkt->skb = skb;
- 	pkt->num_bufs = 0;
- 	completion_tag = pkt - tx->dqo.pending_packets;
--- 
-2.39.5
-
+ ifdef CONFIG_X86
+-dml_ccflags := -mhard-float -msse
++dml_ccflags-$(CONFIG_CC_IS_GCC) := -mhard-float
++dml_ccflags := $(dml_ccflags-y) -msse
+ endif
+ 
+ ifdef CONFIG_PPC64
 
 
