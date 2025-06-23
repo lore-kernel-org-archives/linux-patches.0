@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C047D4C7F;
-	Mon, 23 Jun 2025 13:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E214C7F;
+	Mon, 23 Jun 2025 13:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685123; cv=none; b=a8RRjg7zmqayfSxAWxnAFlmJZpP+neK1OqgLh131m5eElPx+hqDJ9HzUYIj9k8bXebH3KvkZbqmXEM2pINy3Lm4oVEBz0F1xDJA7po/4lu+K011zeKFecrltj8eVc4aMQfKr2P7OY+QnFxuzCsdnJ5u8by2loBkAtgPuRqoN/7M=
+	t=1750685126; cv=none; b=Ib9YAqOGKJMhl6O34QcqgR65kXO/ev551aZk3OHlJCLJU5NXMwTNNh3+5g4wTcESQem21uxzM8Z+dhU1ErRg12H5XMiSMQfYQmmziMU7NOEMRbTm+YKsbtJNovU6BG2eFwoK6cEgSNWYoZQtzdB7uM+kq6U1wvZR5Dt+TYomUpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685123; c=relaxed/simple;
-	bh=KW8I/pQSGBvaifvhHgx4vYFlIxFgxBv9BsUw5kParSY=;
+	s=arc-20240116; t=1750685126; c=relaxed/simple;
+	bh=v7UrQeSkpp7WxNx5625/jnurgsPjE7eRPuary8gZ2KA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5q4w21urmRw4Bcp9nnKV/3k+jq/wBr+KEClR/uEvIyaTF4fPhenaO/FMxLX3de3SKS81aJ3qtZl8f0ohJGTYkLsX81SaBMGTr45XzQGC/+fR79Li3oUmBVYJXGL9pRfqAksaJ7fcinphio4HMhPYOg8pw8HpdftvFXlEfmwKiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETeJrPeZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MV3DEaJPve6NfAZaBdSnLG3VIYk7S8CkmiqeGHVZUYbMz7Nyvplnq7PkCy642FymtAgNnrDJuv1lg0rzszJFbZPM154JWCjhWaVmEcptYmJEKb8tnSuF5e3pbB5LAsT3slDRD5ypGnDwiRWF5kX09AxIl/SmcEZV3eb+vzqJ7Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ge1p44az; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETeJrPeZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47EB8C4CEEA;
-	Mon, 23 Jun 2025 13:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ge1p44az"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF428C4CEEA;
+	Mon, 23 Jun 2025 13:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685123;
-	bh=KW8I/pQSGBvaifvhHgx4vYFlIxFgxBv9BsUw5kParSY=;
+	s=korg; t=1750685126;
+	bh=v7UrQeSkpp7WxNx5625/jnurgsPjE7eRPuary8gZ2KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ETeJrPeZggbXnBZreK14aYCJkiaExg0+wZU/Y/aY2RvgyvOROdYcnYGepg55Lq1+u
-	 HdNrLn1A8KYomdDgyMnYZZD2xOFywhFIYyUFkm2sd+HkZaaqSaTjIvjpGW1PbpNBfp
-	 gAc+J9+jrrcmRqpji4iSIyTd0RhWN22zJ69vrEp4=
+	b=ge1p44azb51gIHYTkUc6nlDENQMq2BbiZRcS+dmeVLZoPRNOHLmFwP9eFExMapdZh
+	 4fSKcOQbVyDXptJjmWLk65MhUM5HpYLIFXULeBP7NV04pf8rRLF3RIWOGAZMTGlpQc
+	 4VUOy/3k3KAuSaEVfgyWPuEfJvsK7UD7cQfPpVjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Gavin Shan <gshan@redhat.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 028/355] firmware: psci: Fix refcount leak in psci_dt_init
-Date: Mon, 23 Jun 2025 15:03:49 +0200
-Message-ID: <20250623130627.657033290@linuxfoundation.org>
+Subject: [PATCH 5.4 068/222] Bluetooth: L2CAP: Fix not responding with L2CAP_CR_LE_ENCRYPTION
+Date: Mon, 23 Jun 2025 15:06:43 +0200
+Message-ID: <20250623130614.149893731@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,44 +46,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 7ff37d29fd5c27617b9767e1b8946d115cf93a1e ]
+[ Upstream commit 03dba9cea72f977e873e4e60e220fa596959dd8f ]
 
-Fix a reference counter leak in psci_dt_init() where of_node_put(np) was
-missing after of_find_matching_node_and_match() when np is unavailable.
+Depending on the security set the response to L2CAP_LE_CONN_REQ shall be
+just L2CAP_CR_LE_ENCRYPTION if only encryption when BT_SECURITY_MEDIUM
+is selected since that means security mode 2 which doesn't require
+authentication which is something that is covered in the qualification
+test L2CAP/LE/CFC/BV-25-C.
 
-Fixes: d09a0011ec0d ("drivers: psci: Allow PSCI node to be disabled")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20250318151712.28763-1-linmq006@gmail.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Link: https://github.com/bluez/bluez/issues/1270
+Fixes: 27e2d4c8d28b ("Bluetooth: Add basic LE L2CAP connect request receiving support")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/psci/psci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-index 00af99b6f97c1..2c435a8d35487 100644
---- a/drivers/firmware/psci/psci.c
-+++ b/drivers/firmware/psci/psci.c
-@@ -571,8 +571,10 @@ int __init psci_dt_init(void)
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 874f12d93bfa2..dc9edf8fc336a 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5578,7 +5578,8 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
  
- 	np = of_find_matching_node_and_match(NULL, psci_of_match, &matched_np);
- 
--	if (!np || !of_device_is_available(np))
-+	if (!np || !of_device_is_available(np)) {
-+		of_node_put(np);
- 		return -ENODEV;
-+	}
- 
- 	init_fn = (psci_initcall_t)matched_np->data;
- 	ret = init_fn(np);
+ 	if (!smp_sufficient_security(conn->hcon, pchan->sec_level,
+ 				     SMP_ALLOW_STK)) {
+-		result = L2CAP_CR_LE_AUTHENTICATION;
++		result = pchan->sec_level == BT_SECURITY_MEDIUM ?
++			L2CAP_CR_LE_ENCRYPTION : L2CAP_CR_LE_AUTHENTICATION;
+ 		chan = NULL;
+ 		goto response_unlock;
+ 	}
 -- 
 2.39.5
 
