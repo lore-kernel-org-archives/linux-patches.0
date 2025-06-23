@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB8F25392D;
-	Mon, 23 Jun 2025 13:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACDC4C6E;
+	Mon, 23 Jun 2025 13:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685496; cv=none; b=LU1z7EP79NVoOOpwyKDcwP8yPfZwMHeRmO6Of0Hx0h6klMylwjJXhT6jAjXkJOS4M1nPhcnO35tS8F2B/kdMhjX4XbTPWD/ZPL3y8obvIpvsvJPqc8EKQz/riPzfwWfNKjFqekXC7hKHvY0yxSSuP0UZWhI+++tSivtSH81hF6k=
+	t=1750685499; cv=none; b=pjgvoSzBNvuVxr3gwpTU1hH/IA24B7CVk1qC4CMKm8e7b2+WPIEO3zWtAG2EWFDQEEb2NaS04pEmFulb2MRFEFHzRtNN2ULwPCQUEqLm/ixC1YAEMc2Pin0s9pawNvE3CnVC5esJW+DbQbjC9+xgNvNKltMuLju4I8174j6zrfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685496; c=relaxed/simple;
-	bh=PdZgKg1EP1GbNGHvfScLwX1EGBdPqaCwcTap9DFIwzM=;
+	s=arc-20240116; t=1750685499; c=relaxed/simple;
+	bh=8XwaaIDzQF7K68/pboADPyLnQX++tQ69Zf2MN36JiJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iN2TU7CgEbCQg1P3tR1n60Jdep9Jtg/fSpFWZgSCijFLMDu+dcRpfvDG8egyx5NPinlndWm1ailKrJKYkMJvsrIZ6wh+JPvCe6avkU0FT4/3jp5b36hqESytu1d/hZ4BR0vGdDQyITgdv+aSvAGTs7pFSkVsjgfuCIK+JN6I0tI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+GZc8HV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CY0EOcpzeJ7LPjdvjnUGrtRxWgsiLLwmit9b3Nibd/odel1HH11AtWutJ6oq3cwyRVSJeM+OosTa5RTuQhYdO7yHfHQN9XU6kW6wzvTfIZvKBVghojd/5pwVAcpTzYXYJubmqPBqyC939jEYDeC6XjFu+SiN20g8BBY/XKCNBNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpGvYSKZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+GZc8HV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C26C4CEF1;
-	Mon, 23 Jun 2025 13:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpGvYSKZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35306C4CEEA;
+	Mon, 23 Jun 2025 13:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685495;
-	bh=PdZgKg1EP1GbNGHvfScLwX1EGBdPqaCwcTap9DFIwzM=;
+	s=korg; t=1750685498;
+	bh=8XwaaIDzQF7K68/pboADPyLnQX++tQ69Zf2MN36JiJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y+GZc8HVTtwPy9FSeQtHWjhdhxRGGWVk9bBI6sCQ6bAUqQM9CqXvMTDxr5u7F10H0
-	 5Or9v276p6Rs3RZjVGJ4hGd3lI2Y05/b5wGIzFHfrb3Mdp4Br4JQHpKYD5YtJ2twNg
-	 GKyy4dn3kxe/Qq33l9A3g9W70N1sYAU/CIxyPu68=
+	b=wpGvYSKZdkf28mTe9sWFoxxOSghiSRos46SHRXv2jbipqQriEy7Lk0Wm8mPvh/izf
+	 DDReC70nYgJt6RRYvuIlb2Ngh7SkwfP6UmnqXcp7LUcSGQ277BA5P8yZRz4KloqIFf
+	 I3ps7cz0bCUaP/OoHrNyXVSRTG8KuEPUxS2orOcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	Timur Tabi <ttabi@nvidia.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 239/592] drm/dp: add option to disable zero sized address only transactions.
-Date: Mon, 23 Jun 2025 15:03:17 +0200
-Message-ID: <20250623130705.973961329@linuxfoundation.org>
+Subject: [PATCH 5.15 038/411] IB/cm: use rwlock for MAD agent lock
+Date: Mon, 23 Jun 2025 15:03:02 +0200
+Message-ID: <20250623130634.150041202@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,115 +49,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit f0ddbb1eed1898286d2bd99fd6ab64ca9700d267 ]
+[ Upstream commit 4dab26bed543584577b64b36aadb8b5b165bf44f ]
 
-Some older NVIDIA and some newer NVIDIA hardware/firmware seems to
-have issues with address only transactions (firmware rejects them).
+In workloads where there are many processes establishing connections using
+RDMA CM in parallel (large scale MPI), there can be heavy contention for
+mad_agent_lock in cm_alloc_msg.
 
-Add an option to the core drm dp to avoid address only transactions,
-This just puts the MOT flag removal on the last message of the transfer
-and avoids the start of transfer transaction.
+This contention can occur while inside of a spin_lock_irq region, leading
+to interrupts being disabled for extended durations on many
+cores. Furthermore, it leads to the serialization of rdma_create_ah calls,
+which has negative performance impacts for NICs which are capable of
+processing multiple address handle creations in parallel.
 
-This with the flag set in nouveau, allows eDP probing on GB203 device.
+The end result is the machine becoming unresponsive, hung task warnings,
+netdev TX timeouts, etc.
 
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
-Reviewed-by: Timur Tabi <ttabi@nvidia.com>
-Tested-by: Timur Tabi <ttabi@nvidia.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
+Since the lock appears to be only for protection from cm_remove_one, it
+can be changed to a rwlock to resolve these issues.
+
+Reproducer:
+
+Server:
+  for i in $(seq 1 512); do
+    ucmatose -c 32 -p $((i + 5000)) &
+  done
+
+Client:
+  for i in $(seq 1 512); do
+    ucmatose -c 32 -p $((i + 5000)) -s 10.2.0.52 &
+  done
+
+Fixes: 76039ac9095f ("IB/cm: Protect cm_dev, cm_ports and mad_agent with kref and lock")
+Link: https://patch.msgid.link/r/20250220175612.2763122-1-jmoroni@google.com
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Acked-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_dp_helper.c | 39 +++++++++++++++----------
- include/drm/display/drm_dp_helper.h     |  5 ++++
- 2 files changed, 28 insertions(+), 16 deletions(-)
+ drivers/infiniband/core/cm.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/display/drm_dp_helper.c b/drivers/gpu/drm/display/drm_dp_helper.c
-index dbce1c3f49691..753d7c3942a14 100644
---- a/drivers/gpu/drm/display/drm_dp_helper.c
-+++ b/drivers/gpu/drm/display/drm_dp_helper.c
-@@ -2081,14 +2081,17 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
+diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
+index c8a7fe5fbc233..96e00e86ebbf6 100644
+--- a/drivers/infiniband/core/cm.c
++++ b/drivers/infiniband/core/cm.c
+@@ -166,7 +166,7 @@ struct cm_port {
+ struct cm_device {
+ 	struct kref kref;
+ 	struct list_head list;
+-	spinlock_t mad_agent_lock;
++	rwlock_t mad_agent_lock;
+ 	struct ib_device *ib_device;
+ 	u8 ack_delay;
+ 	int going_down;
+@@ -283,7 +283,7 @@ static struct ib_mad_send_buf *cm_alloc_msg(struct cm_id_private *cm_id_priv)
+ 	if (!cm_id_priv->av.port)
+ 		return ERR_PTR(-EINVAL);
  
- 	for (i = 0; i < num; i++) {
- 		msg.address = msgs[i].addr;
--		drm_dp_i2c_msg_set_request(&msg, &msgs[i]);
--		/* Send a bare address packet to start the transaction.
--		 * Zero sized messages specify an address only (bare
--		 * address) transaction.
--		 */
--		msg.buffer = NULL;
--		msg.size = 0;
--		err = drm_dp_i2c_do_msg(aux, &msg);
-+
-+		if (!aux->no_zero_sized) {
-+			drm_dp_i2c_msg_set_request(&msg, &msgs[i]);
-+			/* Send a bare address packet to start the transaction.
-+			 * Zero sized messages specify an address only (bare
-+			 * address) transaction.
-+			 */
-+			msg.buffer = NULL;
-+			msg.size = 0;
-+			err = drm_dp_i2c_do_msg(aux, &msg);
-+		}
+-	spin_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
++	read_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
+ 	mad_agent = cm_id_priv->av.port->mad_agent;
+ 	if (!mad_agent) {
+ 		m = ERR_PTR(-EINVAL);
+@@ -314,7 +314,7 @@ static struct ib_mad_send_buf *cm_alloc_msg(struct cm_id_private *cm_id_priv)
+ 	m->context[0] = cm_id_priv;
  
- 		/*
- 		 * Reset msg.request in case in case it got
-@@ -2107,6 +2110,8 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
- 			msg.buffer = msgs[i].buf + j;
- 			msg.size = min(transfer_size, msgs[i].len - j);
- 
-+			if (j + msg.size == msgs[i].len && aux->no_zero_sized)
-+				msg.request &= ~DP_AUX_I2C_MOT;
- 			err = drm_dp_i2c_drain_msg(aux, &msg);
- 
- 			/*
-@@ -2124,15 +2129,17 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
- 	}
- 	if (err >= 0)
- 		err = num;
--	/* Send a bare address packet to close out the transaction.
--	 * Zero sized messages specify an address only (bare
--	 * address) transaction.
--	 */
--	msg.request &= ~DP_AUX_I2C_MOT;
--	msg.buffer = NULL;
--	msg.size = 0;
--	(void)drm_dp_i2c_do_msg(aux, &msg);
- 
-+	if (!aux->no_zero_sized) {
-+		/* Send a bare address packet to close out the transaction.
-+		 * Zero sized messages specify an address only (bare
-+		 * address) transaction.
-+		 */
-+		msg.request &= ~DP_AUX_I2C_MOT;
-+		msg.buffer = NULL;
-+		msg.size = 0;
-+		(void)drm_dp_i2c_do_msg(aux, &msg);
-+	}
- 	return err;
+ out:
+-	spin_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
++	read_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
+ 	return m;
  }
  
-diff --git a/include/drm/display/drm_dp_helper.h b/include/drm/display/drm_dp_helper.h
-index 5ae4241959f24..736dbfdd6321d 100644
---- a/include/drm/display/drm_dp_helper.h
-+++ b/include/drm/display/drm_dp_helper.h
-@@ -518,6 +518,11 @@ struct drm_dp_aux {
- 	 * @powered_down: If true then the remote endpoint is powered down.
- 	 */
- 	bool powered_down;
-+
-+	/**
-+	 * @no_zero_sized: If the hw can't use zero sized transfers (NVIDIA)
-+	 */
-+	bool no_zero_sized;
- };
+@@ -1310,10 +1310,10 @@ static __be64 cm_form_tid(struct cm_id_private *cm_id_priv)
+ 	if (!cm_id_priv->av.port)
+ 		return cpu_to_be64(low_tid);
  
- int drm_dp_dpcd_probe(struct drm_dp_aux *aux, unsigned int offset);
+-	spin_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
++	read_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
+ 	if (cm_id_priv->av.port->mad_agent)
+ 		hi_tid = ((u64)cm_id_priv->av.port->mad_agent->hi_tid) << 32;
+-	spin_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
++	read_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
+ 	return cpu_to_be64(hi_tid | low_tid);
+ }
+ 
+@@ -4365,7 +4365,7 @@ static int cm_add_one(struct ib_device *ib_device)
+ 		return -ENOMEM;
+ 
+ 	kref_init(&cm_dev->kref);
+-	spin_lock_init(&cm_dev->mad_agent_lock);
++	rwlock_init(&cm_dev->mad_agent_lock);
+ 	cm_dev->ib_device = ib_device;
+ 	cm_dev->ack_delay = ib_device->attrs.local_ca_ack_delay;
+ 	cm_dev->going_down = 0;
+@@ -4481,9 +4481,9 @@ static void cm_remove_one(struct ib_device *ib_device, void *client_data)
+ 		 * The above ensures no call paths from the work are running,
+ 		 * the remaining paths all take the mad_agent_lock.
+ 		 */
+-		spin_lock(&cm_dev->mad_agent_lock);
++		write_lock(&cm_dev->mad_agent_lock);
+ 		port->mad_agent = NULL;
+-		spin_unlock(&cm_dev->mad_agent_lock);
++		write_unlock(&cm_dev->mad_agent_lock);
+ 		ib_unregister_mad_agent(mad_agent);
+ 		ib_port_unregister_client_groups(ib_device, i,
+ 						 cm_counter_groups);
 -- 
 2.39.5
 
