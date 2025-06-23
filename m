@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6FA252903;
-	Mon, 23 Jun 2025 13:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B240252903;
+	Mon, 23 Jun 2025 13:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685928; cv=none; b=p3c1iZ4FEAJsbEYW2EJfycVsDzQK/uOBeigMyAOKndjOB82zx7bSUUHBj+fUcP2Yq1OrFevOqNYP7b95xskJfXR/yySEannaGKQQo2h2QMnyzOPfZ6zu9EFCxNOPCxAQgwWG5F9CzosL5uIEq4o8IwtHNSJ1yfNEev10Xsr+h2A=
+	t=1750685931; cv=none; b=T+EhtoOQnvSAB+0T8oDZlPthWwhR/HXQDRxl6UKKyBBa+iMEaULfVCmJJ+8qQuqzX4M+4amGPHB1g/z585pxCQ/aXMyBtaEN/QPgsGTjOogssli7f0roWmjpiSmdihK8dcW+1ULwcf6U3orKQYZpazQP64C84hGr4jDAFfLimDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685928; c=relaxed/simple;
-	bh=hgIXNwtVHeJq4G8Sgzvbrd/JfkVf2+MKAfY10VOAWTU=;
+	s=arc-20240116; t=1750685931; c=relaxed/simple;
+	bh=81C2I2CwLzEJ246D01X2IjUl1jXtEtr3i6WS1dmVFSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWaHPuXBP5NY0GtCQNpbGVNIF3MJiUXhCQtl6aK+9XCOdRE9hp8c7cgl24IIQmUojF7eYMyPePMhAAFAQfGIGHvy2EiwgIqU0Of/DX17t76m9A1K1AkU4BRGZMaqrPH5FC6FEntgrNJxESNjpLdsRPRAY3zg53wlyfO3d/d5Feg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmyNDH4u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sm8gNv8PSIt/GLuZFGBYQtCV4HljEBGl+dl4OEWifWg/KwryoQw0E4FjAEz9Qy0gV+nWXQPcUCQa7z+q25M1BCV9wyfu1NZb8YhvbhXW//P/1E7OS514u9pPm8FYWnss3KDrul69/x+gboOc+GgxpdQjuRQcVU4IPM0ZZp4dJUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vPu0w52i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmyNDH4u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173D6C4CEF3;
-	Mon, 23 Jun 2025 13:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vPu0w52i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953DEC4CEEA;
+	Mon, 23 Jun 2025 13:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685928;
-	bh=hgIXNwtVHeJq4G8Sgzvbrd/JfkVf2+MKAfY10VOAWTU=;
+	s=korg; t=1750685930;
+	bh=81C2I2CwLzEJ246D01X2IjUl1jXtEtr3i6WS1dmVFSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pmyNDH4up0Y9DzeNMkJKe78MSr6oRVAkFJvGF47jDQC/FZlSvURUE67bBTKbcTVEB
-	 eUdgshVcEhi66XqQ/nUUNRIPJAoehhzZCqZV3mwqIzMANRzHkH1pQlnufS9hv1+Hir
-	 mNdkcooDs78y3/ZY3SgXnzzg6LgXbVPT9uGjK594=
+	b=vPu0w52iqHl+CWn6Qx0IKQIGxDwyJzvhE2x2BAbfGBZRdLryXx6YSUu7LcDHBvTKi
+	 hE62DpQuEFf9TekGr3HFqY5P2DqpMaKVDx8niQp7gOO6i3M7cFoHxUADa89fqRtHGy
+	 9nhjamDjd9GJGsdFZ+xylZxTFkn46qta3KxYXT6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/508] media: rkvdec: Fix frame size enumeration
-Date: Mon, 23 Jun 2025 15:01:23 +0200
-Message-ID: <20250623130646.183144419@linuxfoundation.org>
+Subject: [PATCH 5.15 063/411] netfilter: nf_tables: nft_fib_ipv6: fix VRF ipv4/ipv6 result discrepancy
+Date: Mon, 23 Jun 2025 15:03:27 +0200
+Message-ID: <20250623130634.880682124@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +47,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit f270005b99fa19fee9a6b4006e8dee37c10f1944 ]
+[ Upstream commit 8b53f46eb430fe5b42d485873b85331d2de2c469 ]
 
-The VIDIOC_ENUM_FRAMESIZES ioctl should return all frame sizes (i.e.
-width and height in pixels) that the device supports for the given pixel
-format.
+With a VRF, ipv4 and ipv6 FIB expression behave differently.
 
-It doesn't make a lot of sense to return the frame-sizes in a stepwise
-manner, which is used to enforce hardware alignments requirements for
-CAPTURE buffers, for coded formats.
+   fib daddr . iif oif
 
-Instead, applications should receive an indication, about the maximum
-supported frame size for that hardware decoder, via a continuous
-frame-size enumeration.
+Will return the input interface name for ipv4, but the real device
+for ipv6.  Example:
 
-Fixes: cd33c830448b ("media: rkvdec: Add the rkvdec driver")
-Suggested-by: Alex Bee <knaerzche@gmail.com>
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+If VRF device name is tvrf and real (incoming) device is veth0.
+First round is ok, both ipv4 and ipv6 will yield 'veth0'.
+
+But in the second round (incoming device will be set to "tvrf"), ipv4
+will yield "tvrf" whereas ipv6 returns "veth0" for the second round too.
+
+This makes ipv6 behave like ipv4.
+
+A followup patch will add a test case for this, without this change
+it will fail with:
+  get element inet t fibif6iif { tvrf . dead:1::99 . tvrf }
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  FAIL: did not find tvrf . dead:1::99 . tvrf in fibif6iif
+
+Alternatively we could either not do anything at all or change
+ipv4 to also return the lower/real device, however, nft (userspace)
+doc says "iif: if fib lookup provides a route then check its output
+interface is identical to the packets input interface." which is what
+the nft fib ipv4 behaviour is.
+
+Fixes: f6d0cbcf09c5 ("netfilter: nf_tables: add fib expression")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/rkvdec/rkvdec.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/ipv6/netfilter/nft_fib_ipv6.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/media/rkvdec/rkvdec.c b/drivers/staging/media/rkvdec/rkvdec.c
-index d16cf4115d03a..b5847259f4541 100644
---- a/drivers/staging/media/rkvdec/rkvdec.c
-+++ b/drivers/staging/media/rkvdec/rkvdec.c
-@@ -213,8 +213,14 @@ static int rkvdec_enum_framesizes(struct file *file, void *priv,
- 	if (!fmt)
- 		return -EINVAL;
+diff --git a/net/ipv6/netfilter/nft_fib_ipv6.c b/net/ipv6/netfilter/nft_fib_ipv6.c
+index 1a08b00aa3213..b7e543d4d57be 100644
+--- a/net/ipv6/netfilter/nft_fib_ipv6.c
++++ b/net/ipv6/netfilter/nft_fib_ipv6.c
+@@ -154,6 +154,7 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
+ {
+ 	const struct nft_fib *priv = nft_expr_priv(expr);
+ 	int noff = skb_network_offset(pkt->skb);
++	const struct net_device *found = NULL;
+ 	const struct net_device *oif = NULL;
+ 	u32 *dest = &regs->data[priv->dreg];
+ 	struct ipv6hdr *iph, _iph;
+@@ -198,11 +199,15 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
+ 	if (rt->rt6i_flags & (RTF_REJECT | RTF_ANYCAST | RTF_LOCAL))
+ 		goto put_rt_err;
  
--	fsize->type = V4L2_FRMSIZE_TYPE_STEPWISE;
--	fsize->stepwise = fmt->frmsize;
-+	fsize->type = V4L2_FRMSIZE_TYPE_CONTINUOUS;
-+	fsize->stepwise.min_width = 1;
-+	fsize->stepwise.max_width = fmt->frmsize.max_width;
-+	fsize->stepwise.step_width = 1;
-+	fsize->stepwise.min_height = 1;
-+	fsize->stepwise.max_height = fmt->frmsize.max_height;
-+	fsize->stepwise.step_height = 1;
-+
- 	return 0;
+-	if (oif && oif != rt->rt6i_idev->dev &&
+-	    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) != oif->ifindex)
+-		goto put_rt_err;
++	if (!oif) {
++		found = rt->rt6i_idev->dev;
++	} else {
++		if (oif == rt->rt6i_idev->dev ||
++		    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) == oif->ifindex)
++			found = oif;
++	}
+ 
+-	nft_fib_store_result(dest, priv, rt->rt6i_idev->dev);
++	nft_fib_store_result(dest, priv, found);
+  put_rt_err:
+ 	ip6_rt_put(rt);
  }
- 
 -- 
 2.39.5
 
