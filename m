@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343072F24;
-	Mon, 23 Jun 2025 13:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C415924DFF3;
+	Mon, 23 Jun 2025 13:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685557; cv=none; b=O7EKZ/7pWqQRxYSpIKzI5VS5VVj2eoIaos0S/+gu7x8Q4SBwPHNibXRWZ+XewVoFHfG43XFn3ZnqGrkL0XxBOOGENi+dyczc/CGA6UIquSTV/ipaLMknnvvIYuFOhbEihx5rmDJFO4JSOq8UR78OOv2DU8ss2owy7xwwBqtZx1I=
+	t=1750685559; cv=none; b=pOHvy8nZDLGLFjDF+YuQXc0Mm10zBcf30ViLER2ztwVBOTDPoWFCm00MdYvMr2i4G6lGlyJdnlNL2wfxY4guCHnux5haIXMJpN2S4yPSs5pzwoqeI9Lct2TKC3Rst6ZgtA1o51U5Ma8pZm/i+DIBL6v7gkRdemij2dSkjHHUHyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685557; c=relaxed/simple;
-	bh=rY1e9aHxi4i2UofoAmVIrVI2hUP/ep+6hAcXjhxwVxg=;
+	s=arc-20240116; t=1750685559; c=relaxed/simple;
+	bh=+dIt4TmKT3abRl4acBee1vXMQ8oRTpwST2ibjZkaYA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cW4bY0nE93R59ACNZ5OOKxaCi+4UHIehEWkiUtuwc6PP6u98mD0Pg6zFWk2CotmvrQ472CCwP/1OU6NuqqUgyygXu7F/yV0EBT0JaKzfj6/YD6faFSY3YihUwCS5yP/kLXki+E3E8fYCDbxs37zFa2j3Lmoz+atXYBVHFTlGoh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEHds/+G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JGJAOgLm4xBgDf/9pQCe30SQzht6otR86YaDOvGIl/WmOqc/ttOK7MaIj4AyM2tsIABPrxDlc3TGtpcFkpLTD+QDNBKO1cLlKFmr6VH+dnpx8i1uQ+exTKMQdgvM2IKxWAqhj2JTTnD3jKAoi4lEee3TIIP6rhkKcoVDA9TLvR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Fedjs2I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEHds/+G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDEEAC4CEEA;
-	Mon, 23 Jun 2025 13:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Fedjs2I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5108AC4CEEA;
+	Mon, 23 Jun 2025 13:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685557;
-	bh=rY1e9aHxi4i2UofoAmVIrVI2hUP/ep+6hAcXjhxwVxg=;
+	s=korg; t=1750685559;
+	bh=+dIt4TmKT3abRl4acBee1vXMQ8oRTpwST2ibjZkaYA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZEHds/+GAZ0ZmjqNf72R4Wzd4IknqJVqTnDj/gEAkSmdHN1dMSJuDL8vLhdWWOECr
-	 ITAJd8AmCfIr6RuRYHaHeYWSPFzhbal3+OsxmC0tdwA9tPaPIq1+BmmpYzQwfoG9mR
-	 ShfJAYJs+T+DhuOdNEUhhFjLQkwk05nDp0F3CD7A=
+	b=2Fedjs2IZubrP5+PPwFJj3poR+sYybZccv4Dol3+5Ez8AyQCui95YmkSWfiqB9lOz
+	 xVYIowfQRz+yD9hy/w2aQuIxbob/+vHtUdEdoK2fIiiz6t63//otSDosAydQhP0JJC
+	 /M7Ult4OA2NBEOXhznXapoj02xH28/mT/NktZ1hE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Alexander Aring <aahringo@redhat.com>
-Subject: [PATCH 5.4 103/222] gfs2: move msleep to sleepable context
-Date: Mon, 23 Jun 2025 15:07:18 +0200
-Message-ID: <20250623130615.212582811@linuxfoundation.org>
+	Qing Wang <wangqing7171@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 015/508] perf/core: Fix broken throttling when max_samples_per_tick=1
+Date: Mon, 23 Jun 2025 15:01:00 +0200
+Message-ID: <20250623130645.629861734@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,46 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Qing Wang <wangqing7171@gmail.com>
 
-commit ac5ee087d31ed93b6e45d2968a66828c6f621d8c upstream.
+[ Upstream commit f51972e6f8b9a737b2b3eb588069acb538fa72de ]
 
-This patch moves the msleep_interruptible() out of the non-sleepable
-context by moving the ls->ls_recover_spin spinlock around so
-msleep_interruptible() will be called in a sleepable context.
+According to the throttling mechanism, the pmu interrupts number can not
+exceed the max_samples_per_tick in one tick. But this mechanism is
+ineffective when max_samples_per_tick=1, because the throttling check is
+skipped during the first interrupt and only performed when the second
+interrupt arrives.
 
-Cc: stable@vger.kernel.org
-Fixes: 4a7727725dc7 ("GFS2: Fix recovery issues for spectators")
-Suggested-by: Andreas Gruenbacher <agruenba@redhat.com>
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Perhaps this bug may cause little influence in one tick, but if in a
+larger time scale, the problem can not be underestimated.
+
+When max_samples_per_tick = 1:
+Allowed-interrupts-per-second max-samples-per-second  default-HZ  ARCH
+200                           100                     100         X86
+500                           250                     250         ARM64
+...
+Obviously, the pmu interrupt number far exceed the user's expect.
+
+Fixes: e050e3f0a71b ("perf: Fix broken interrupt rate throttling")
+Signed-off-by: Qing Wang <wangqing7171@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20250405141635.243786-3-wangqing7171@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/lock_dlm.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/events/core.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/fs/gfs2/lock_dlm.c
-+++ b/fs/gfs2/lock_dlm.c
-@@ -905,14 +905,15 @@ locks_done:
- 		if (sdp->sd_args.ar_spectator) {
- 			fs_info(sdp, "Recovery is required. Waiting for a "
- 				"non-spectator to mount.\n");
-+			spin_unlock(&ls->ls_recover_spin);
- 			msleep_interruptible(1000);
- 		} else {
- 			fs_info(sdp, "control_mount wait1 block %u start %u "
- 				"mount %u lvb %u flags %lx\n", block_gen,
- 				start_gen, mount_gen, lvb_gen,
- 				ls->ls_recover_flags);
-+			spin_unlock(&ls->ls_recover_spin);
- 		}
--		spin_unlock(&ls->ls_recover_spin);
- 		goto restart;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 552bb00bfceb0..3544f26b58060 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -9359,14 +9359,14 @@ __perf_event_account_interrupt(struct perf_event *event, int throttle)
+ 		hwc->interrupts = 1;
+ 	} else {
+ 		hwc->interrupts++;
+-		if (unlikely(throttle &&
+-			     hwc->interrupts > max_samples_per_tick)) {
+-			__this_cpu_inc(perf_throttled_count);
+-			tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
+-			hwc->interrupts = MAX_INTERRUPTS;
+-			perf_log_throttle(event, 0);
+-			ret = 1;
+-		}
++	}
++
++	if (unlikely(throttle && hwc->interrupts >= max_samples_per_tick)) {
++		__this_cpu_inc(perf_throttled_count);
++		tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
++		hwc->interrupts = MAX_INTERRUPTS;
++		perf_log_throttle(event, 0);
++		ret = 1;
  	}
  
+ 	if (event->attr.freq) {
+-- 
+2.39.5
+
 
 
