@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85214221543;
-	Mon, 23 Jun 2025 22:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473A1221543;
+	Mon, 23 Jun 2025 22:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717565; cv=none; b=M48SJMRyKrnczbicN5/rQ4gt/tfoPX1tEDqwGVi3DAnod5Oyx6Eym5sg8uHLpSkmQRLON8PrFJoGiZfi2SJ0p1m6dbZ1rX3syKvMapmF5xCeEoOvQZ5cbIFpEmDSovQiRIpVbiblIFFoe4kj8AgjUzwBf/lNJ4VibEmsr11tLM4=
+	t=1750717568; cv=none; b=Qp4+QrQSmcOONlonie49BE3yR++2glxVuEVjozghB9iA7jh0JVQUOX1OWiTZ+2QxommVjBnNO63WMeeeWttYuvde8Jh2DtbNbh/74cWfMswfiaUduBtCTuS8DejleW1h27SrFGgrSoX7ROINhwim4G0LvGiGThxfaFPihRWlBUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717565; c=relaxed/simple;
-	bh=Dc0ovY08yk3v/5VJWqqM3jA3tQBxoPKTxMzaRJC2II8=;
+	s=arc-20240116; t=1750717568; c=relaxed/simple;
+	bh=DTprlywP+mMIOaBbe4uZI+w9Kmq4Cp45tsW5ePyHL6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YT1zLJkZPe8R9PvyPG4OU3tXE8TX9uGAV/9JxhD1VwsEqscQBshKRyIljeMk+HRQ2UTr46Lxh9UP/U7+xKD5YbGSCY5KFwv0/+GPtF0EbihO1yxxiorZDdINeP2ZLDBmdW29zpcVvcmCwumJR283crDwUOuCzI3p7+Gvg9GcSL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBaSN4Og; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ftUoaYub+dB8XFq4JlZY5zUD4t5MiXbTyI0DRod18Im1GfKwKZ+K4+eFjwqnYjmu2uOXACGBsMIs0nV/WMvhTq6EdeWm/WAz/gnkomyHyuEXbZFYm5h+uNXtI7KePNFpbcEtwXgYTElttstrqx4V3iX+zLwHfpyo5EeTsKUYqg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVZc2Doc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBaSN4Og"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA38C4CEED;
-	Mon, 23 Jun 2025 22:26:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVZc2Doc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B613C4CEEA;
+	Mon, 23 Jun 2025 22:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717565;
-	bh=Dc0ovY08yk3v/5VJWqqM3jA3tQBxoPKTxMzaRJC2II8=;
+	s=korg; t=1750717567;
+	bh=DTprlywP+mMIOaBbe4uZI+w9Kmq4Cp45tsW5ePyHL6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBaSN4OgPnvKaOt/j+tSNZKRy6nnhYP10Bu0OKflXQS5UDipdUWUfiUG635VvXUKM
-	 xQk5fo4WhMLYXTYN2OoL+SACZkf1jlFOY00vaoOJGZAIj7sgyUsMqCas6yTjjpByRq
-	 elLfzRDoqL+n6NFpmJFKlS2WylVriX+boPnjrYK4=
+	b=lVZc2DockwNoVgAQnfDpEHmVXXjJh07MsJou2kV4DK6WSDhU/jZcZYAIOGPSOvKDV
+	 SslKb29B2dcRxn/o+O0bo8fdt10IhNZ0BiFL1V+oTJ17FiNN46o6taQntNKfQzc8n+
+	 OejewLTx7PniBYz9zrPAG/6VR2nEC3Iw1mJP9F2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 414/414] cifs: Remove duplicate fattr->cf_dtype assignment from wsl_to_fattr() function
-Date: Mon, 23 Jun 2025 15:09:11 +0200
-Message-ID: <20250623130652.306228496@linuxfoundation.org>
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.1 454/508] ksmbd: fix null pointer dereference in destroy_previous_session
+Date: Mon, 23 Jun 2025 15:08:19 +0200
+Message-ID: <20250623130656.309667489@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,44 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 840738eae94864993a735ab677b9795bb8f3b961 ]
+commit 7ac5b66acafcc9292fb935d7e03790f2b8b2dc0e upstream.
 
-Commit 8bd25b61c5a5 ("smb: client: set correct d_type for reparse DFS/DFSR
-and mount point") deduplicated assignment of fattr->cf_dtype member from
-all places to end of the function cifs_reparse_point_to_fattr(). The only
-one missing place which was not deduplicated is wsl_to_fattr(). Fix it.
+If client set ->PreviousSessionId on kerberos session setup stage,
+NULL pointer dereference error will happen. Since sess->user is not
+set yet, It can pass the user argument as NULL to destroy_previous_session.
+sess->user will be set in ksmbd_krb5_authenticate(). So this patch move
+calling destroy_previous_session() after ksmbd_krb5_authenticate().
 
-Fixes: 8bd25b61c5a5 ("smb: client: set correct d_type for reparse DFS/DFSR and mount point")
-Signed-off-by: Pali Rohár <pali@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-27391
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/reparse.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/smb/server/smb2pdu.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index b6556fe3dfa11..4d45c31336df1 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -738,7 +738,6 @@ static bool wsl_to_fattr(struct cifs_open_info_data *data,
- 	if (!have_xattr_dev && (tag == IO_REPARSE_TAG_LX_CHR || tag == IO_REPARSE_TAG_LX_BLK))
- 		return false;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1610,17 +1610,18 @@ static int krb5_authenticate(struct ksmb
+ 	out_len = work->response_sz -
+ 		(le16_to_cpu(rsp->SecurityBufferOffset) + 4);
  
--	fattr->cf_dtype = S_DT(fattr->cf_mode);
- 	return true;
- }
+-	/* Check previous session */
+-	prev_sess_id = le64_to_cpu(req->PreviousSessionId);
+-	if (prev_sess_id && prev_sess_id != sess->id)
+-		destroy_previous_session(conn, sess->user, prev_sess_id);
+-
+ 	retval = ksmbd_krb5_authenticate(sess, in_blob, in_len,
+ 					 out_blob, &out_len);
+ 	if (retval) {
+ 		ksmbd_debug(SMB, "krb5 authentication failed\n");
+ 		return -EINVAL;
+ 	}
++
++	/* Check previous session */
++	prev_sess_id = le64_to_cpu(req->PreviousSessionId);
++	if (prev_sess_id && prev_sess_id != sess->id)
++		destroy_previous_session(conn, sess->user, prev_sess_id);
++
+ 	rsp->SecurityBufferLength = cpu_to_le16(out_len);
  
--- 
-2.39.5
-
+ 	if ((conn->sign || server_conf.enforced_signing) ||
 
 
