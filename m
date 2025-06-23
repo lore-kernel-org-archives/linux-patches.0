@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D736319E7F9;
-	Mon, 23 Jun 2025 22:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B7719E7F9;
+	Mon, 23 Jun 2025 22:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717096; cv=none; b=GNzwSWESVt7ULE4mBxT4diaupBfpCAudlciRSKQqdIIh+5AdztJHo7OcasFS0ujWIKoTgdy5jgu1+crlgWufsMRRqRDZW8MpYYHjiSAa6WbNEz8X8lfW4+0gccXdlziJuO0PVdYDFsC6YsREPehisI4mEa67OoDbElWEO0SiIJ8=
+	t=1750717099; cv=none; b=UFCCIQANgmALiIEr6xbWyfNhqqGdSyr/eawejFWY6yTYdef5wl5gUKjzkI2J5PE5yiJTVvg2ShiIjRqg9yiT0Tnv/k+Ew/ck5alfVdvWTK5p6tm74NrnsQ9R5KGc2rrJs1SJNUimaaoBhxfq2iH2k+iH7NIKtD+MMsNazQjuyKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717096; c=relaxed/simple;
-	bh=j4wxZQiVX78ICj7XfTSZrp75cc+K0kD5BlO7+a4qMJg=;
+	s=arc-20240116; t=1750717099; c=relaxed/simple;
+	bh=i/QyOYSVnipiEwZeJijeZdCrYY2QACzG4hXSa2+TCIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g9Xnz+NEV+Hx+0UGfrLtjXY6pxJpTcJEXmdDnSfHkHvn8YiVSfuMZ2evmLGwcBoASTF2fb1fTL7zbMUY+Cdkx0bhhTdmST5/YH4koSA/yX36leBv3LS/CrV490R2zMZl3C6x5meaFW8yxRwn42M6OxeORfguZp8xdyo6oiJYHYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjGb1LZD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UyGxcLUnQpIYau777ZWA258TklaD8pBe2XQYhFdbN55D5DqNhWnEoK039/Uujdkvc7K9NZiRhtV9jvdY/UKXaC9sZPT3YyjtKRouFPmNTivYG4CBwEO8NuzFx0qNt6PTd+79/5ZefMpQ7Tthj3iLJLgSkGZh6ZN9giNIH/EtG9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubLvcY7v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjGb1LZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F351C4CEED;
-	Mon, 23 Jun 2025 22:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubLvcY7v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF239C4CEEA;
+	Mon, 23 Jun 2025 22:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717096;
-	bh=j4wxZQiVX78ICj7XfTSZrp75cc+K0kD5BlO7+a4qMJg=;
+	s=korg; t=1750717099;
+	bh=i/QyOYSVnipiEwZeJijeZdCrYY2QACzG4hXSa2+TCIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DjGb1LZD/xCcW7cfTlgrVU2/UbJjZh+uDW3DiTqeIJe6YGh+Y4WtPumyynrK/dFJM
-	 PZLNIa2KdMDPHXJ+b2eYXajhfwwDfYMG/wkGZe2H5vyUzEy5uCp9dB3eg7D+bpHJw9
-	 w4joqg5WPURVb2Xv+jL9Gr1mks4ZXdwlvUeNz+bQ=
+	b=ubLvcY7vUikLN/276uzT0mdU4bLBnGRAlJ9i5LeR4IonkftglwwRZ/rApdopmn0lK
+	 hAYBGP/UudH+PCgt2cHC4gYu8WA7gfYCSCdTEi5thY8LUQ+Hz8EkwJIx6sMevJ7F01
+	 WOoQlWNRaBleAExnE5nEBCBalbt2TKIogigZlxhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Octavian Purdila <tavip@google.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 401/411] net_sched: sch_sfq: move the limit validation
-Date: Mon, 23 Jun 2025 15:09:05 +0200
-Message-ID: <20250623130643.773672785@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.1 366/508] uio_hv_generic: Use correct size for interrupt and monitor pages
+Date: Mon, 23 Jun 2025 15:06:51 +0200
+Message-ID: <20250623130654.361979074@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,84 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Octavian Purdila <tavip@google.com>
+From: Long Li <longli@microsoft.com>
 
-commit b3bf8f63e6179076b57c9de660c9f80b5abefe70 upstream.
+commit c951ab8fd3589cf6991ed4111d2130816f2e3ac2 upstream.
 
-It is not sufficient to directly validate the limit on the data that
-the user passes as it can be updated based on how the other parameters
-are changed.
+Interrupt and monitor pages should be in Hyper-V page size (4k bytes).
+This can be different from the system page size.
 
-Move the check at the end of the configuration update process to also
-catch scenarios where the limit is indirectly updated, for example
-with the following configurations:
+This size is read and used by the user-mode program to determine the
+mapped data region. An example of such user-mode program is the VMBus
+driver in DPDK.
 
-tc qdisc add dev dummy0 handle 1: root sfq limit 2 flows 1 depth 1
-tc qdisc add dev dummy0 handle 1: root sfq limit 2 flows 1 divisor 1
-
-This fixes the following syzkaller reported crash:
-
-------------[ cut here ]------------
-UBSAN: array-index-out-of-bounds in net/sched/sch_sfq.c:203:6
-index 65535 is out of range for type 'struct sfq_head[128]'
-CPU: 1 UID: 0 PID: 3037 Comm: syz.2.16 Not tainted 6.14.0-rc2-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 12/27/2024
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x201/0x300 lib/dump_stack.c:120
- ubsan_epilogue lib/ubsan.c:231 [inline]
- __ubsan_handle_out_of_bounds+0xf5/0x120 lib/ubsan.c:429
- sfq_link net/sched/sch_sfq.c:203 [inline]
- sfq_dec+0x53c/0x610 net/sched/sch_sfq.c:231
- sfq_dequeue+0x34e/0x8c0 net/sched/sch_sfq.c:493
- sfq_reset+0x17/0x60 net/sched/sch_sfq.c:518
- qdisc_reset+0x12e/0x600 net/sched/sch_generic.c:1035
- tbf_reset+0x41/0x110 net/sched/sch_tbf.c:339
- qdisc_reset+0x12e/0x600 net/sched/sch_generic.c:1035
- dev_reset_queue+0x100/0x1b0 net/sched/sch_generic.c:1311
- netdev_for_each_tx_queue include/linux/netdevice.h:2590 [inline]
- dev_deactivate_many+0x7e5/0xe70 net/sched/sch_generic.c:1375
-
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Fixes: 10685681bafc ("net_sched: sch_sfq: don't allow 1 packet limit")
-Signed-off-by: Octavian Purdila <tavip@google.com>
-Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: stable@vger.kernel.org
+Fixes: 95096f2fbd10 ("uio-hv-generic: new userspace i/o driver for VMBus")
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/1746492997-4599-3-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <1746492997-4599-3-git-send-email-longli@linuxonhyperv.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_sfq.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/uio/uio_hv_generic.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -661,10 +661,6 @@ static int sfq_change(struct Qdisc *sch,
- 		if (!p)
- 			return -ENOMEM;
- 	}
--	if (ctl->limit == 1) {
--		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
--		return -EINVAL;
--	}
+--- a/drivers/uio/uio_hv_generic.c
++++ b/drivers/uio/uio_hv_generic.c
+@@ -288,13 +288,13 @@ hv_uio_probe(struct hv_device *dev,
+ 	pdata->info.mem[INT_PAGE_MAP].name = "int_page";
+ 	pdata->info.mem[INT_PAGE_MAP].addr
+ 		= (uintptr_t)vmbus_connection.int_page;
+-	pdata->info.mem[INT_PAGE_MAP].size = PAGE_SIZE;
++	pdata->info.mem[INT_PAGE_MAP].size = HV_HYP_PAGE_SIZE;
+ 	pdata->info.mem[INT_PAGE_MAP].memtype = UIO_MEM_LOGICAL;
  
- 	sch_tree_lock(sch);
+ 	pdata->info.mem[MON_PAGE_MAP].name = "monitor_page";
+ 	pdata->info.mem[MON_PAGE_MAP].addr
+ 		= (uintptr_t)vmbus_connection.monitor_pages[1];
+-	pdata->info.mem[MON_PAGE_MAP].size = PAGE_SIZE;
++	pdata->info.mem[MON_PAGE_MAP].size = HV_HYP_PAGE_SIZE;
+ 	pdata->info.mem[MON_PAGE_MAP].memtype = UIO_MEM_LOGICAL;
  
-@@ -705,6 +701,12 @@ static int sfq_change(struct Qdisc *sch,
- 		limit = min_t(u32, ctl->limit, maxdepth * maxflows);
- 		maxflows = min_t(u32, maxflows, limit);
- 	}
-+	if (limit == 1) {
-+		sch_tree_unlock(sch);
-+		kfree(p);
-+		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
-+		return -EINVAL;
-+	}
- 
- 	/* commit configuration */
- 	q->limit = limit;
+ 	pdata->recv_buf = vzalloc(RECV_BUFFER_SIZE);
 
 
