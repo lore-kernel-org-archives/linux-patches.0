@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB6F1ACEDA;
-	Mon, 23 Jun 2025 21:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBB81ACEDA;
+	Mon, 23 Jun 2025 21:12:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713159; cv=none; b=EiTnXNiCrRkRpxb1YqFZofJ+EQ14T45I2KNA3KutIgxUGkyft6mP5jSijhrg9PGw5bpCZXZiWTfvDAvj1iWRDQDI2KQlpAGQs9L1OpvTGQWDtSRwRhSboLAfqcx3fn1QaKMR3wJ0CN1/ihhVgqavk6WRPzWx4AYs284UMSflbGM=
+	t=1750713160; cv=none; b=LYx4K8Sp8Z/myOc8cYLimTc4RScUWbuu8KsV+KwRePm8p3A2SqYsz2btKclHfMaPByDUHpGo3mISFyZajE8F7UNG/g1EEgMIuJiAtca3ce6GRygtlBzXhAE+XRmx/OwesedLbbMzK/otGqdmgXTaVMTj+Q4/55DI8MKCWQjtH8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713159; c=relaxed/simple;
-	bh=oLgJD8TDkuCHcgBKeXG65Q1byzZXhafIdQK130ODR+8=;
+	s=arc-20240116; t=1750713160; c=relaxed/simple;
+	bh=e1LDS9iP/xy7WnBRog3WbF7VzSPoBTbLZ1pLQHubc7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HdKYppkEA1gwJOwJLV8YSDINyXaN0o7wfi/AxU+5whwyw7BI9Oo4AXVmQvzmfVj81kFrizBJFrbfVKLY7g05Y3HLzpRJZY2A/tNUhGZIgZGuvf/kfjNjwssES+EnDUjC/Wc3qARLptVC9l0kVrgsD6BjR2cD++/1bzXOjxvQRn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUTj24Pm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cw5K6i/N4SMP37F+NCAJBLWud32s7xYlwM2k9hC8yy/ayfAwMy4jqJ/YQIyhAUCW9/n7EIGH94UicH9jlzipCtYL7EPPmjDU6eJAemCVd1ecXVl9pbAIX9UGAIaf8Dv7PG9KtU2bRN74+xcFHRoZnJUkdACwH2zM4PmDX4c3y7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnNZRCZ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUTj24Pm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 821D4C4CEEA;
-	Mon, 23 Jun 2025 21:12:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnNZRCZ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5106C4CEEA;
+	Mon, 23 Jun 2025 21:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713157;
-	bh=oLgJD8TDkuCHcgBKeXG65Q1byzZXhafIdQK130ODR+8=;
+	s=korg; t=1750713160;
+	bh=e1LDS9iP/xy7WnBRog3WbF7VzSPoBTbLZ1pLQHubc7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pUTj24PmRQu2lO7LHg6wPDCTCt1ZSNJpM/USA1wBjWPhVwWIsQwPEnYAGObLKVM33
-	 AKQW14Es9WMXjC1MEEHQc2hTUGVcpSd22zPVmd85NIsCeBaEKfRBeW/i5QRfEZ6IXX
-	 mPTuZtgZRk7M4zhLlvshDdWkpvQu1cYouDFP1etI=
+	b=mnNZRCZ1oMDMmk1VCG0zxSNTIZP5dykrN4eF/7X/NjEjvITP76cB7bX2Tef/Pz1/R
+	 AJUUibk0mVNjPg0hHDofUcxaeIWCCKj4o+w6mhpDS89A0qwIvd+nRevgKZvnRThBFX
+	 Dt4VEIvXtFV1tTUxycNAlA47fMjFIprmUGR+SA8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Tipton <quic_mdtipton@quicinc.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 331/592] cpufreq: scmi: Skip SCMI devices that arent used by the CPUs
-Date: Mon, 23 Jun 2025 15:04:49 +0200
-Message-ID: <20250623130708.329531263@linuxfoundation.org>
+	M Nikhil <nikh1092@linux.ibm.com>,
+	Nihar Panda <niharp@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.4 191/222] scsi: s390: zfcp: Ensure synchronous unit_add
+Date: Mon, 23 Jun 2025 15:08:46 +0200
+Message-ID: <20250623130617.976103357@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,93 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Tipton <quic_mdtipton@quicinc.com>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-[ Upstream commit 6c9bb86922728c7a4cceb99f131e00dd87514f20 ]
+commit 9697ca0d53e3db357be26d2414276143c4a2cd49 upstream.
 
-Currently, all SCMI devices with performance domains attempt to register
-a cpufreq driver, even if their performance domains aren't used to
-control the CPUs. The cpufreq framework only supports registering a
-single driver, so only the first device will succeed. And if that device
-isn't used for the CPUs, then cpufreq will scale the wrong domains.
+Improve the usability of the unit_add sysfs attribute by ensuring that
+the associated FCP LUN scan processing is completed synchronously.  This
+enables configuration tooling to consistently determine the end of the
+scan process to allow for serialization of follow-on actions.
 
-To avoid this, return early from scmi_cpufreq_probe() if the probing
-SCMI device isn't referenced by the CPU device phandles.
+While the scan process associated with unit_add typically completes
+synchronously, it is deferred to an asynchronous background process if
+unit_add is used before initial remote port scanning has completed.  This
+occurs when unit_add is used immediately after setting the associated FCP
+device online.
 
-This keeps the existing assumption that all CPUs are controlled by a
-single SCMI device.
+To ensure synchronous unit_add processing, wait for remote port scanning
+to complete before initiating the FCP LUN scan.
 
-Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Tested-by: Cristian Marussi <cristian.marussi@arm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: M Nikhil <nikh1092@linux.ibm.com>
+Reviewed-by: Nihar Panda <niharp@linux.ibm.com>
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Nihar Panda <niharp@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250603182252.2287285-2-niharp@linux.ibm.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/scmi-cpufreq.c | 36 +++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ drivers/s390/scsi/zfcp_sysfs.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index 944e899eb1be1..ef078426bfd51 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -393,6 +393,40 @@ static struct cpufreq_driver scmi_cpufreq_driver = {
- 	.set_boost	= cpufreq_boost_set_sw,
- };
+--- a/drivers/s390/scsi/zfcp_sysfs.c
++++ b/drivers/s390/scsi/zfcp_sysfs.c
+@@ -355,6 +355,8 @@ static ssize_t zfcp_sysfs_unit_add_store
+ 	if (kstrtoull(buf, 0, (unsigned long long *) &fcp_lun))
+ 		return -EINVAL;
  
-+static bool scmi_dev_used_by_cpus(struct device *scmi_dev)
-+{
-+	struct device_node *scmi_np = dev_of_node(scmi_dev);
-+	struct device_node *cpu_np, *np;
-+	struct device *cpu_dev;
-+	int cpu, idx;
++	flush_work(&port->rport_work);
 +
-+	if (!scmi_np)
-+		return false;
-+
-+	for_each_possible_cpu(cpu) {
-+		cpu_dev = get_cpu_device(cpu);
-+		if (!cpu_dev)
-+			continue;
-+
-+		cpu_np = dev_of_node(cpu_dev);
-+
-+		np = of_parse_phandle(cpu_np, "clocks", 0);
-+		of_node_put(np);
-+
-+		if (np == scmi_np)
-+			return true;
-+
-+		idx = of_property_match_string(cpu_np, "power-domain-names", "perf");
-+		np = of_parse_phandle(cpu_np, "power-domains", idx);
-+		of_node_put(np);
-+
-+		if (np == scmi_np)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- static int scmi_cpufreq_probe(struct scmi_device *sdev)
- {
- 	int ret;
-@@ -401,7 +435,7 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
- 
- 	handle = sdev->handle;
- 
--	if (!handle)
-+	if (!handle || !scmi_dev_used_by_cpus(dev))
- 		return -ENODEV;
- 
- 	scmi_cpufreq_driver.driver_data = sdev;
--- 
-2.39.5
-
+ 	retval = zfcp_unit_add(port, fcp_lun);
+ 	if (retval)
+ 		return retval;
 
 
