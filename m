@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F91324DFF3;
-	Mon, 23 Jun 2025 13:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C2824DFF3;
+	Mon, 23 Jun 2025 13:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684756; cv=none; b=uKyaJNxSp6GJzx83Ov0UPFWwaUnJAafUbJaFkSQ4lTe8876HP4Dky1p7CRIl5geB83qIh7FyrwzHWia1P6tes4Hg/8V3NHpHXz1j5p+1AvmFqAdWeITR+W8oYFtORMFWFgdeKMhVjcb/6AIjfO1OhnO2wAIwrYBnm/ZMd/C9/14=
+	t=1750684759; cv=none; b=RcN1ZkbHl1zy92ESegbzBMUvzl7caGsIqjO0bJi6Az0psAsWwPV8Obag2rwa43BfhKXTipH1ns/l9Yn+avg8NMTi125iReXHOPq1GIKomhA96oPH+MeRKQx7JrmKPsB3YU+LS1DpaCZykrGE6ZeI0ZIblaIN0RT/VVnCp0QxXKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684756; c=relaxed/simple;
-	bh=NueB2x7xpuNZcAlImugODigh8PWteU5465/o2XGIxnM=;
+	s=arc-20240116; t=1750684759; c=relaxed/simple;
+	bh=Kj5oT36P3mrOU3JR1z0zU+6GvxOmNgZxdwHf3ImBLtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H0pTmKZ/SBiNwiV3hdS7vi6Xb0fJxmGGoct0tcddRO7dWA/ampYdG4l7+aWghIFWeVeRl+4e52fWHrBbkcD5pGxfS4g32VAgiwWH4QxySTani+xXbcYNFHqnGu8d4eLlC+igOovfvxQEQ0i1jq7zWg6uLUbEhdLV4CJlJBI9Qts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwtVAAK/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mqVdC4Jia4oqLfjQ+B0GbgraNbU72LNo6FXTNUDHXYkJzAVOsvPOAt2CULfgn7eNOR7V/tVk3WEh3SKRMswvC3xfTvCNxTKklmXWC5tYgAxqyhRxWPWZcpDB+/Ir7wNurJzMiD5POSBXvKmK5Fuyq0bogg5BsEz6hFIC6ncIfsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mc6Mx26e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwtVAAK/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E803EC4CEEA;
-	Mon, 23 Jun 2025 13:19:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mc6Mx26e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7AEC4CEEA;
+	Mon, 23 Jun 2025 13:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684756;
-	bh=NueB2x7xpuNZcAlImugODigh8PWteU5465/o2XGIxnM=;
+	s=korg; t=1750684758;
+	bh=Kj5oT36P3mrOU3JR1z0zU+6GvxOmNgZxdwHf3ImBLtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwtVAAK/ezQ9203XZWEkqBaQ0px78h92a3+1auCsKgc8RuJMqEMTT1OnaR1pKp7rN
-	 fdsZFRqposnKKjffSGDiD4DjIIADx9yjhM8YWbFGie1bTAtAQ86qCmHv8cQQmYcy/+
-	 3ubNLtO+t0MPRNkDONte4t+bV+esoVP65dXJG+7E=
+	b=mc6Mx26ehXnt8ZwUwJfkLOJPBBjbRtmJYAIz+VkVGvxqddLtZHrSQRFeNNYHlC6sb
+	 PLL2AWxseoS8AzIsScnPO+L8mn1bEPoDX3fOs9jFzczvKUS2oEFcYNJt/KUde1v+6O
+	 Pn6RV4i9YVsLmB2rXb3IkCEdssK6irhvUECvVCLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.15 117/592] ext4: ensure i_size is smaller than maxbytes
-Date: Mon, 23 Jun 2025 15:01:15 +0200
-Message-ID: <20250623130703.055553996@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 021/222] firmware: psci: Fix refcount leak in psci_dt_init
+Date: Mon, 23 Jun 2025 15:05:56 +0200
+Message-ID: <20250623130612.539290589@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,39 +49,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 1a77a028a392fab66dd637cdfac3f888450d00af upstream.
+[ Upstream commit 7ff37d29fd5c27617b9767e1b8946d115cf93a1e ]
 
-The inode i_size cannot be larger than maxbytes, check it while loading
-inode from the disk.
+Fix a reference counter leak in psci_dt_init() where of_node_put(np) was
+missing after of_find_matching_node_and_match() when np is unavailable.
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Link: https://patch.msgid.link/20250506012009.3896990-4-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d09a0011ec0d ("drivers: psci: Allow PSCI node to be disabled")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20250318151712.28763-1-linmq006@gmail.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/firmware/psci/psci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4922,7 +4922,8 @@ struct inode *__ext4_iget(struct super_b
- 		ei->i_file_acl |=
- 			((__u64)le16_to_cpu(raw_inode->i_file_acl_high)) << 32;
- 	inode->i_size = ext4_isize(sb, raw_inode);
--	if ((size = i_size_read(inode)) < 0) {
-+	size = i_size_read(inode);
-+	if (size < 0 || size > ext4_get_maxbytes(inode)) {
- 		ext4_error_inode(inode, function, line, 0,
- 				 "iget: bad i_size value: %lld", size);
- 		ret = -EFSCORRUPTED;
+diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+index eb797081d1596..f1926972b2670 100644
+--- a/drivers/firmware/psci/psci.c
++++ b/drivers/firmware/psci/psci.c
+@@ -573,8 +573,10 @@ int __init psci_dt_init(void)
+ 
+ 	np = of_find_matching_node_and_match(NULL, psci_of_match, &matched_np);
+ 
+-	if (!np || !of_device_is_available(np))
++	if (!np || !of_device_is_available(np)) {
++		of_node_put(np);
+ 		return -ENODEV;
++	}
+ 
+ 	init_fn = (psci_initcall_t)matched_np->data;
+ 	ret = init_fn(np);
+-- 
+2.39.5
+
 
 
