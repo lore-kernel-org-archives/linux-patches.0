@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147C01E51FA;
-	Mon, 23 Jun 2025 21:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964501E51FA;
+	Mon, 23 Jun 2025 21:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713928; cv=none; b=gmVf3IQN+yhXyY7cexl+bWbJkOKFDjE20mjrPq1vxCNHp5Iu08Ts0z8ayW1A9DFSyi4PtvN23tdQaWhzlxWV9TS5S///lxwWztPS4hxAtZlHjjS850rnkT21jjljMhmdFCQN0hVu2BrXy75oc4XhnFwUumgSPl0PzBtqrjypX74=
+	t=1750713930; cv=none; b=VHRFxDE+mtgvAr/UkmgdDh4ogKwtPv5ePYUzq805Z2NkcBSKz9TLCif6PYGJMKYPfEMKOlGTKntfYNyAdbqFeqzvIIbyFPo05wfkDTWgYMJicQIwD91ZBY33sJxaJ1jgtQS+WQsPS4qvhrZ+Z3D+e8ahQcXpjoosM6WMgMop+gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713928; c=relaxed/simple;
-	bh=f+HNSjQFLpV7GVzVMIbtmhMQey6j5d+h6l+jzzJO1C8=;
+	s=arc-20240116; t=1750713930; c=relaxed/simple;
+	bh=zodM9iz6PHTw/javcP4p5OXU+RI82DZFauqpZjw+yRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgaSDxIlPWi+c0oNkxp7JQQ+l9P1S+3EbKeQt2vj+3p2vIwuNkgEbC4lBpi+vqYRqAo1dersJrnWfstxnyGkG/6udrjWLa9ToagZ1dpfzrvjo8emJCLhW5sPdjyeGEZ2/bLC1xuVG1OhoroJSVUZ1yQuCffligCFaoYbTdvlmU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbZYFGpV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=htjpnJRB5g/joVB5Fz8h7S578JeKXEYjqhLalpzFjl8A0gbZvz99mlMQaiNe3IzHTenD+fI+1utdTqZz4z/EIeLGfumEUmp0gh+3uAMaSMoQdE2Vbc5phXGwsVOR6Fh3qR+XfDE6NPo0fuv+LAtq648AmmAIZocwBiL+OpyXeK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmkkMvoG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbZYFGpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55195C4CEEA;
-	Mon, 23 Jun 2025 21:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmkkMvoG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A1AC4CEEA;
+	Mon, 23 Jun 2025 21:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713927;
-	bh=f+HNSjQFLpV7GVzVMIbtmhMQey6j5d+h6l+jzzJO1C8=;
+	s=korg; t=1750713930;
+	bh=zodM9iz6PHTw/javcP4p5OXU+RI82DZFauqpZjw+yRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MbZYFGpVDXeDoV96wXo4fA+oLTJO5qvcgnTJfO80LBV5VWZzPUlUfwb9dOjBQYghA
-	 tZy6i8W5YGIT/Ad2lBINYd7c2Zr8uk0xutEdA1GqrnCRIHyKjWhq+J+MNt4m8MCuPD
-	 7hifPuzelmT1tpPwW1x3cqeJjj8D187GujFwr0D0=
+	b=FmkkMvoG2PYQtT0AcriOoid5Abh8kx3gnBvUmBrl65si//uMa/yTyqz3y1MVlf0h9
+	 19pCJMG6SqOWb9t3uG4rloewx4tR4QHLH7Rws1kYNKKDRU/7bWaVEEl0p+VBb39pze
+	 6SAH1uZpHUSh57ZQNBWlb2IzOIw/wJTjQZaW/Hj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 071/414] media: uvcvideo: Fix deferred probing error
-Date: Mon, 23 Jun 2025 15:03:28 +0200
-Message-ID: <20250623130643.848362365@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 135/508] dm: free table mempools if not used in __bind
+Date: Mon, 23 Jun 2025 15:03:00 +0200
+Message-ID: <20250623130648.610586887@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,104 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-commit 387e8939307192d5a852a2afeeb83427fa477151 upstream.
+[ Upstream commit e8819e7f03470c5b468720630d9e4e1d5b99159e ]
 
-uvc_gpio_parse() can return -EPROBE_DEFER when the GPIOs it depends on
-have not yet been probed. This return code should be propagated to the
-caller of uvc_probe() to ensure that probing is retried when the required
-GPIOs become available.
+With request-based dm, the mempools don't need reloading when switching
+tables, but the unused table mempools are not freed until the active
+table is finally freed. Free them immediately if they are not needed.
 
-Currently, this error code is incorrectly converted to -ENODEV,
-causing some internal cameras to be ignored.
-
-This commit fixes this issue by propagating the -EPROBE_DEFER error.
-
-Cc: stable@vger.kernel.org
-Fixes: 2886477ff987 ("media: uvcvideo: Implement UVC_EXT_GPIO_UNIT")
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Message-ID: <20250313-uvc-eprobedefer-v3-1-a1d312708eef@chromium.org>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 29dec90a0f1d9 ("dm: fix bio_set allocation")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c |   27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ drivers/md/dm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -2217,13 +2217,16 @@ static int uvc_probe(struct usb_interfac
- #endif
- 
- 	/* Parse the Video Class control descriptor. */
--	if (uvc_parse_control(dev) < 0) {
-+	ret = uvc_parse_control(dev);
-+	if (ret < 0) {
-+		ret = -ENODEV;
- 		uvc_dbg(dev, PROBE, "Unable to parse UVC descriptors\n");
- 		goto error;
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index 2b8fe98c515ed..cf7520551b63b 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2205,10 +2205,10 @@ static struct dm_table *__bind(struct mapped_device *md, struct dm_table *t,
+ 		 * requests in the queue may refer to bio from the old bioset,
+ 		 * so you must walk through the queue to unprep.
+ 		 */
+-		if (!md->mempools) {
++		if (!md->mempools)
+ 			md->mempools = t->mempools;
+-			t->mempools = NULL;
+-		}
++		else
++			dm_free_md_mempools(t->mempools);
+ 	} else {
+ 		/*
+ 		 * The md may already have mempools that need changing.
+@@ -2217,8 +2217,8 @@ static struct dm_table *__bind(struct mapped_device *md, struct dm_table *t,
+ 		 */
+ 		dm_free_md_mempools(md->mempools);
+ 		md->mempools = t->mempools;
+-		t->mempools = NULL;
  	}
++	t->mempools = NULL;
  
- 	/* Parse the associated GPIOs. */
--	if (uvc_gpio_parse(dev) < 0) {
-+	ret = uvc_gpio_parse(dev);
-+	if (ret < 0) {
- 		uvc_dbg(dev, PROBE, "Unable to parse UVC GPIOs\n");
- 		goto error;
- 	}
-@@ -2249,24 +2252,32 @@ static int uvc_probe(struct usb_interfac
- 	}
- 
- 	/* Register the V4L2 device. */
--	if (v4l2_device_register(&intf->dev, &dev->vdev) < 0)
-+	ret = v4l2_device_register(&intf->dev, &dev->vdev);
-+	if (ret < 0)
- 		goto error;
- 
- 	/* Scan the device for video chains. */
--	if (uvc_scan_device(dev) < 0)
-+	if (uvc_scan_device(dev) < 0) {
-+		ret = -ENODEV;
- 		goto error;
-+	}
- 
- 	/* Initialize controls. */
--	if (uvc_ctrl_init_device(dev) < 0)
-+	if (uvc_ctrl_init_device(dev) < 0) {
-+		ret = -ENODEV;
- 		goto error;
-+	}
- 
- 	/* Register video device nodes. */
--	if (uvc_register_chains(dev) < 0)
-+	if (uvc_register_chains(dev) < 0) {
-+		ret = -ENODEV;
- 		goto error;
-+	}
- 
- #ifdef CONFIG_MEDIA_CONTROLLER
- 	/* Register the media device node */
--	if (media_device_register(&dev->mdev) < 0)
-+	ret = media_device_register(&dev->mdev);
-+	if (ret < 0)
- 		goto error;
- #endif
- 	/* Save our data pointer in the interface data. */
-@@ -2300,7 +2311,7 @@ static int uvc_probe(struct usb_interfac
- error:
- 	uvc_unregister_video(dev);
- 	kref_put(&dev->ref, uvc_delete);
--	return -ENODEV;
-+	return ret;
- }
- 
- static void uvc_disconnect(struct usb_interface *intf)
+ 	old_map = rcu_dereference_protected(md->map, lockdep_is_held(&md->suspend_lock));
+ 	rcu_assign_pointer(md->map, (void *)t);
+-- 
+2.39.5
+
 
 
