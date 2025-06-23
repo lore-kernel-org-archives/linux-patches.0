@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E08B23BF9F;
-	Mon, 23 Jun 2025 13:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C642F30E84D;
+	Mon, 23 Jun 2025 13:19:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684769; cv=none; b=jUb4oO7oe7qvnjzFEQ93awXJ7jM/2DIbQoTFaFPvDL6JVO8+9ql9MdTHaIb7PW1K8ZPpPOY8cOim6KkGkR3oxhISHD+deneIcAZqKUhXGyzBFMHhdU9tsCt7BYbuZDEo7talxccAPYBpjYMtjFF78OLJvpjDmXVCljaInjXi9ak=
+	t=1750684771; cv=none; b=ndGkpEJgqbztQLeWkr5XKP6znIXqmtn8n4/lDo85T2+h3QKDeGHn0XDXsbQJjGELJrlWavJfBxLPHxBJJorgl0RBf8mbqgUuYF7dEHirFfOnvgRevz9Q3MklVERUldRStHjF2E1cNTJj2oZrAoTtGg7dPyf3d1CnCbvVNVaTL+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684769; c=relaxed/simple;
-	bh=tna1mXEk+CXaPTqq5rFgUd7hexb4tdfbMtp0+2jlAxk=;
+	s=arc-20240116; t=1750684771; c=relaxed/simple;
+	bh=KV2lnXjCGtm2mmV7FX79j7rbhyqUIHssbx1Pwk/2DJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ng53emSUKu0PABwaX53+dtZz+gMBSofurFyETemkQW3LNRF4ERQvA+fDdcy3QhRlFiC4lKHrHrHsCbZEw3Z16ENtAZM0+zMXsBq/S0Rt9GIBXFBSTYRwx5kBt26+Dc/dQFdhr6QQu0IUc7fAlhqTthuRARqUwO2ldlNygpQujDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpzPQqR/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DOShoPplke8xY66HeWlPPIi3RMkI5ERQwCBEsoMD0jKunCRvdVtXPuEUjnNKnAZoEBwZn040pzXziDx4XHXIkcBYn6Rrv87eDtICl7YwlvrmjdrO0pP9yUjVlKAQTHuTeuQQ3phBvPoUZxucYuijuBGNHD9iNgpmSnAVw2FOn6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VfvBFBtI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpzPQqR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C642FC4CEEA;
-	Mon, 23 Jun 2025 13:19:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfvBFBtI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578AFC4CEEA;
+	Mon, 23 Jun 2025 13:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684769;
-	bh=tna1mXEk+CXaPTqq5rFgUd7hexb4tdfbMtp0+2jlAxk=;
+	s=korg; t=1750684771;
+	bh=KV2lnXjCGtm2mmV7FX79j7rbhyqUIHssbx1Pwk/2DJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XpzPQqR/mMVHRJijT6KzYZRnnzHcOj5tQsFGOUlLxdETyxLjGbYYG/y0gWii2rJgT
-	 Vd2T/QGaKdj7GEk8i9/ITvs0ljEriRtH7+BbAH4l7IibecHKQuyYSN3UdPPSVTI0pg
-	 0dB4AnPwXZooLtNvFqHmNgAUQLeNsCgjm59/MZcs=
+	b=VfvBFBtI9aDpKgnuV+Gk2bjN2VLDQRhIFGwX2vN+jHYe2sgC7MvxdYwSnou+VWtKn
+	 uS/4hoSzocDMYZOMWplPIs36oMlEJXQ1gi4TjTVBUFYOe/ed6GQFU04ts3GBPInKkT
+	 7muRdlvFbqvUt5pTg/gBPnPXSGsC2GQ/ajOC7hAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.15 204/592] iio: adc: ad7173: fix compiling without gpiolib
-Date: Mon, 23 Jun 2025 15:02:42 +0200
-Message-ID: <20250623130705.141135219@linuxfoundation.org>
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 025/355] drm/vmwgfx: Add seqno waiter for sync_files
+Date: Mon, 23 Jun 2025 15:03:46 +0200
+Message-ID: <20250623130627.562872200@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,106 +47,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-commit c553aa1b03719400a30d9387477190d4743fc1de upstream.
+[ Upstream commit 0039a3b35b10d9c15d3d26320532ab56cc566750 ]
 
-Fix compiling the ad7173 driver when CONFIG_GPIOLIB is not set by
-selecting GPIOLIB to be always enabled and remove the #if.
+Because sync_files are passive waiters they do not participate in
+the processing of fences like the traditional vmw_fence_wait IOCTL.
+If userspace exclusively uses sync_files for synchronization then
+nothing in the kernel actually processes fence updates as interrupts
+for fences are masked and ignored if the kernel does not indicate to the
+SVGA device that there are active waiters.
 
-Commit 031bdc8aee01 ("iio: adc: ad7173: add calibration support") placed
-unrelated code in the middle of the #if IS_ENABLED(CONFIG_GPIOLIB) block
-which caused the reported compile error.
+This oversight results in a bug where the entire GUI can freeze waiting
+on a sync_file that will never be signalled as we've masked the interrupts
+to signal its completion. This bug is incredibly racy as any process which
+interacts with the fencing code via the 3D stack can process the stuck
+fences on behalf of the stuck process causing it to run again. Even a
+simple app like eglinfo is enough to resume the stuck process. Usually
+this bug is seen at a login screen like GDM because there are no other
+3D apps running.
 
-However, later commit 7530ed2aaa3f ("iio: adc: ad7173: add openwire
-detection support for single conversions") makes use of the gpio regmap
-even when we aren't providing gpio controller support. So it makes more
-sense to always enable GPIOLIB rather than trying to make it optional.
+By adding a seqno waiter we re-enable interrupt based processing of the
+dma_fences associated with the sync_file which is signalled as part of a
+dma_fence_callback.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202504220824.HVrTVov1-lkp@intel.com/
-Fixes: 031bdc8aee01 ("iio: adc: ad7173: add calibration support")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250422-iio-adc-ad7173-fix-compile-without-gpiolib-v1-1-295f2c990754@baylibre.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This has likely been broken since it was initially added to the kernel in
+2017 but has gone unnoticed until mutter recently started using sync_files
+heavily over the course of 2024 as part of their explicit sync support.
+
+Fixes: c906965dee22 ("drm/vmwgfx: Add export fence to file descriptor support")
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250228200633.642417-1-ian.forbes@broadcom.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/Kconfig  |  5 +++--
- drivers/iio/adc/ad7173.c | 15 +--------------
- 2 files changed, 4 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 26 +++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/drivers/iio/adc/Kconfig b/drivers/iio/adc/Kconfig
-index 6529df1a498c..ba746754a816 100644
---- a/drivers/iio/adc/Kconfig
-+++ b/drivers/iio/adc/Kconfig
-@@ -129,8 +129,9 @@ config AD7173
- 	tristate "Analog Devices AD7173 driver"
- 	depends on SPI_MASTER
- 	select AD_SIGMA_DELTA
--	select GPIO_REGMAP if GPIOLIB
--	select REGMAP_SPI if GPIOLIB
-+	select GPIOLIB
-+	select GPIO_REGMAP
-+	select REGMAP_SPI
- 	help
- 	  Say yes here to build support for Analog Devices AD7173 and similar ADC
- 	  Currently supported models:
-diff --git a/drivers/iio/adc/ad7173.c b/drivers/iio/adc/ad7173.c
-index 69de5886474c..b3e6bd2a55d7 100644
---- a/drivers/iio/adc/ad7173.c
-+++ b/drivers/iio/adc/ad7173.c
-@@ -230,10 +230,8 @@ struct ad7173_state {
- 	unsigned long long *config_cnts;
- 	struct clk *ext_clk;
- 	struct clk_hw int_clk_hw;
--#if IS_ENABLED(CONFIG_GPIOLIB)
- 	struct regmap *reg_gpiocon_regmap;
- 	struct gpio_regmap *gpio_regmap;
--#endif
- };
- 
- static unsigned int ad4115_sinc5_data_rates[] = {
-@@ -288,8 +286,6 @@ static const char *const ad7173_clk_sel[] = {
- 	"ext-clk", "xtal"
- };
- 
--#if IS_ENABLED(CONFIG_GPIOLIB)
--
- static const struct regmap_range ad7173_range_gpio[] = {
- 	regmap_reg_range(AD7173_REG_GPIO, AD7173_REG_GPIO),
- };
-@@ -543,12 +539,6 @@ static int ad7173_gpio_init(struct ad7173_state *st)
- 
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index 616f6cb622783..987633c6c49f4 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -4027,6 +4027,23 @@ static int vmw_execbuf_tie_context(struct vmw_private *dev_priv,
  	return 0;
  }
--#else
--static int ad7173_gpio_init(struct ad7173_state *st)
--{
--	return 0;
--}
--#endif /* CONFIG_GPIOLIB */
  
- static struct ad7173_state *ad_sigma_delta_to_ad7173(struct ad_sigma_delta *sd)
- {
-@@ -1797,10 +1787,7 @@ static int ad7173_probe(struct spi_device *spi)
- 	if (ret)
- 		return ret;
++/*
++ * DMA fence callback to remove a seqno_waiter
++ */
++struct seqno_waiter_rm_context {
++	struct dma_fence_cb base;
++	struct vmw_private *dev_priv;
++};
++
++static void seqno_waiter_rm_cb(struct dma_fence *f, struct dma_fence_cb *cb)
++{
++	struct seqno_waiter_rm_context *ctx =
++		container_of(cb, struct seqno_waiter_rm_context, base);
++
++	vmw_seqno_waiter_remove(ctx->dev_priv);
++	kfree(ctx);
++}
++
+ int vmw_execbuf_process(struct drm_file *file_priv,
+ 			struct vmw_private *dev_priv,
+ 			void __user *user_commands, void *kernel_commands,
+@@ -4220,6 +4237,15 @@ int vmw_execbuf_process(struct drm_file *file_priv,
+ 		} else {
+ 			/* Link the fence with the FD created earlier */
+ 			fd_install(out_fence_fd, sync_file->file);
++			struct seqno_waiter_rm_context *ctx =
++				kmalloc(sizeof(*ctx), GFP_KERNEL);
++			ctx->dev_priv = dev_priv;
++			vmw_seqno_waiter_add(dev_priv);
++			if (dma_fence_add_callback(&fence->base, &ctx->base,
++						   seqno_waiter_rm_cb) < 0) {
++				vmw_seqno_waiter_remove(dev_priv);
++				kfree(ctx);
++			}
+ 		}
+ 	}
  
--	if (IS_ENABLED(CONFIG_GPIOLIB))
--		return ad7173_gpio_init(st);
--
--	return 0;
-+	return ad7173_gpio_init(st);
- }
- 
- static const struct of_device_id ad7173_of_match[] = {
 -- 
-2.50.0
+2.39.5
 
 
 
