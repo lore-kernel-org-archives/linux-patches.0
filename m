@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424DD219E0;
-	Mon, 23 Jun 2025 13:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC77F219E0;
+	Mon, 23 Jun 2025 13:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684362; cv=none; b=ee5CVQZrgGQHQ1hEmVaypGU6UWpT2SBuivDYoB8/KEU4sHQJITQ+2QMZIas33EoOgUs6XQE7FKR5OUAMVn8C45Op+sJmQXRPX22yJyQ2PwU1bf85Jsdw9MF3APZ2b0YMZsoNcRRGHfK8CiOYjltUWDqDJdaq7kiKGfL33Y8DlSg=
+	t=1750684363; cv=none; b=QrGQ+OjnRU64vCSnW+ETYhZpD46DlyvJDXBUOPdiwIBtdL4qsQ/aWhJBZJ6FR/tR1FqlLDqWmxYe3Nfsf4AwKMJCCSZS556TAT5RkJaBGwrvifk/AtsB5nqz8LDVx+0Rznpz2s3SgGQudInMHBPhfvdX02YQz5IL624M3z788dI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684362; c=relaxed/simple;
-	bh=ncAF2OYVg5BfXkQIoTTWZSMENxNW8vj0mrhqW2wbVnY=;
+	s=arc-20240116; t=1750684363; c=relaxed/simple;
+	bh=QcAJOvGr1RsbKRBGLpsEds7+v7OUkARjxoLnLVL8Ovg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lDRrmQg4ZaJJLqQAg27rwBs4d/gOID6osYKZw3P9nEl2BJ+J2MjRUhV7dqnkeELfGpq4u7174jeYWasSzetIXEVCDO8f/4Jl+8prvils35qBlT7MamWQtvIUOuBMVqelNVZGfBsU7dh9LOqVZNXcx9glDJJ3hS3I706n6eB8n6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnIskSP8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XtE2gfpnX0MArAg08NEuU6ZVKxM1N+0BtmvRrli8MVXDA3Qt+9A6HbqJoeyhYtSW1o0kSOf5tOC4FGfh2OtnbRLzaaR/ebKmE5w0lm+cX2oXLUJyNd4gSadur+mprf0QGGbWdoySh26YdjRbb8SDGiCbZ6tlGUcbWzI9I+Ybwkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uus22f3A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnIskSP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E2DC4CEF0;
-	Mon, 23 Jun 2025 13:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uus22f3A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAD9C4CEEA;
+	Mon, 23 Jun 2025 13:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684361;
-	bh=ncAF2OYVg5BfXkQIoTTWZSMENxNW8vj0mrhqW2wbVnY=;
+	s=korg; t=1750684363;
+	bh=QcAJOvGr1RsbKRBGLpsEds7+v7OUkARjxoLnLVL8Ovg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hnIskSP8dxx/R54UeM30EaqeD3xNQO7z99sOvvl7m4go8IkB+7ObJDUyPKwbl9f8F
-	 l4b2S+FE6/C0wetYnCGTvjsB0NQNRo6hGJJLzDZj6eITL/pHdfEFYWkGrfChihOO3K
-	 ZJo3h5C1kVtjF9ASHVzisKRyKXG6nmwVTVE3O+Q4=
+	b=uus22f3AFsF5GVfu6FLC8mCvTIeVS2IBB9HruEOaJXmcrIU9Al+Ikvn3sxZk7ETzo
+	 yWRwFaqeRKpRd47WfbB8bUQxg5BaDWgV65AVz/gfZu6p5oJGX2zsEc2SCf2c6GPePe
+	 hd4ekvuMKqabQin1XiSuREUf4Fer/8dCCkByKi8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubham Rana <s9.rana@samsung.com>,
-	Maninder Singh <maninder1.s@samsung.com>,
+	Roland Mainz <roland.mainz@nrubsig.org>,
+	Christoph Hellwig <hch@infradead.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.15 040/592] NFSD: fix race between nfsd registration and exports_proc
-Date: Mon, 23 Jun 2025 14:59:58 +0200
-Message-ID: <20250623130701.196811906@linuxfoundation.org>
+Subject: [PATCH 6.15 041/592] NFSD: Implement FATTR4_CLONE_BLKSIZE attribute
+Date: Mon, 23 Jun 2025 14:59:59 +0200
+Message-ID: <20250623130701.221502414@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -52,167 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maninder Singh <maninder1.s@samsung.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit f7fb730cac9aafda8b9813b55d04e28a9664d17c upstream.
+commit d6ca7d2643eebe09cf46840bdc7d68b6e07aba77 upstream.
 
-As of now nfsd calls create_proc_exports_entry() at start of init_nfsd
-and cleanup by remove_proc_entry() at last of exit_nfsd.
+RFC 7862 states that if an NFS server implements a CLONE operation,
+it MUST also implement FATTR4_CLONE_BLKSIZE. NFSD implements CLONE,
+but does not implement FATTR4_CLONE_BLKSIZE.
 
-Which causes kernel OOPs if there is race between below 2 operations:
-(i) exportfs -r
-(ii) mount -t nfsd none /proc/fs/nfsd
+Note that in Section 12.2, RFC 7862 claims that
+FATTR4_CLONE_BLKSIZE is RECOMMENDED, not REQUIRED. Likely this is
+because a minor version is not permitted to add a REQUIRED
+attribute. Confusing.
 
-for 5.4 kernel ARM64:
+We assume this attribute reports a block size as a count of bytes,
+as RFC 7862 does not specify a unit.
 
-CPU 1:
-el1_irq+0xbc/0x180
-arch_counter_get_cntvct+0x14/0x18
-running_clock+0xc/0x18
-preempt_count_add+0x88/0x110
-prep_new_page+0xb0/0x220
-get_page_from_freelist+0x2d8/0x1778
-__alloc_pages_nodemask+0x15c/0xef0
-__vmalloc_node_range+0x28c/0x478
-__vmalloc_node_flags_caller+0x8c/0xb0
-kvmalloc_node+0x88/0xe0
-nfsd_init_net+0x6c/0x108 [nfsd]
-ops_init+0x44/0x170
-register_pernet_operations+0x114/0x270
-register_pernet_subsys+0x34/0x50
-init_nfsd+0xa8/0x718 [nfsd]
-do_one_initcall+0x54/0x2e0
-
-CPU 2 :
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
-
-PC is at : exports_net_open+0x50/0x68 [nfsd]
-
-Call trace:
-exports_net_open+0x50/0x68 [nfsd]
-exports_proc_open+0x2c/0x38 [nfsd]
-proc_reg_open+0xb8/0x198
-do_dentry_open+0x1c4/0x418
-vfs_open+0x38/0x48
-path_openat+0x28c/0xf18
-do_filp_open+0x70/0xe8
-do_sys_open+0x154/0x248
-
-Sometimes it crashes at exports_net_open() and sometimes cache_seq_next_rcu().
-
-and same is happening on latest 6.14 kernel as well:
-
-[    0.000000] Linux version 6.14.0-rc5-next-20250304-dirty
-...
-[  285.455918] Unable to handle kernel paging request at virtual address 00001f4800001f48
-...
-[  285.464902] pc : cache_seq_next_rcu+0x78/0xa4
-...
-[  285.469695] Call trace:
-[  285.470083]  cache_seq_next_rcu+0x78/0xa4 (P)
-[  285.470488]  seq_read+0xe0/0x11c
-[  285.470675]  proc_reg_read+0x9c/0xf0
-[  285.470874]  vfs_read+0xc4/0x2fc
-[  285.471057]  ksys_read+0x6c/0xf4
-[  285.471231]  __arm64_sys_read+0x1c/0x28
-[  285.471428]  invoke_syscall+0x44/0x100
-[  285.471633]  el0_svc_common.constprop.0+0x40/0xe0
-[  285.471870]  do_el0_svc_compat+0x1c/0x34
-[  285.472073]  el0_svc_compat+0x2c/0x80
-[  285.472265]  el0t_32_sync_handler+0x90/0x140
-[  285.472473]  el0t_32_sync+0x19c/0x1a0
-[  285.472887] Code: f9400885 93407c23 937d7c27 11000421 (f86378a3)
-[  285.473422] ---[ end trace 0000000000000000 ]---
-
-It reproduced simply with below script:
-while [ 1 ]
-do
-/exportfs -r
-done &
-
-while [ 1 ]
-do
-insmod /nfsd.ko
-mount -t nfsd none /proc/fs/nfsd
-umount /proc/fs/nfsd
-rmmod nfsd
-done &
-
-So exporting interfaces to user space shall be done at last and
-cleanup at first place.
-
-With change there is no Kernel OOPs.
-
-Co-developed-by: Shubham Rana <s9.rana@samsung.com>
-Signed-off-by: Shubham Rana <s9.rana@samsung.com>
-Signed-off-by: Maninder Singh <maninder1.s@samsung.com>
+Reported-by: Roland Mainz <roland.mainz@nrubsig.org>
+Suggested-by: Christoph Hellwig <hch@infradead.org>
+Reviewed-by: Roland Mainz <roland.mainz@nrubsig.org>
+Cc: stable@vger.kernel.org # v6.7+
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Cc: stable@vger.kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ fs/nfsd/nfs4xdr.c |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -2291,12 +2291,9 @@ static int __init init_nfsd(void)
- 	if (retval)
- 		goto out_free_pnfs;
- 	nfsd_lockd_init();	/* lockd->nfsd callbacks */
--	retval = create_proc_exports_entry();
--	if (retval)
--		goto out_free_lockd;
- 	retval = register_pernet_subsys(&nfsd_net_ops);
- 	if (retval < 0)
--		goto out_free_exports;
-+		goto out_free_lockd;
- 	retval = register_cld_notifier();
- 	if (retval)
- 		goto out_free_subsys;
-@@ -2308,11 +2305,16 @@ static int __init init_nfsd(void)
- 		goto out_free_nfsd4;
- 	retval = genl_register_family(&nfsd_nl_family);
- 	if (retval)
-+		goto out_free_filesystem;
-+	retval = create_proc_exports_entry();
-+	if (retval)
- 		goto out_free_all;
- 	nfsd_localio_ops_init();
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -3391,6 +3391,23 @@ static __be32 nfsd4_encode_fattr4_suppat
+ 	return nfsd4_encode_bitmap4(xdr, supp[0], supp[1], supp[2]);
+ }
  
- 	return 0;
- out_free_all:
-+	genl_unregister_family(&nfsd_nl_family);
-+out_free_filesystem:
- 	unregister_filesystem(&nfsd_fs_type);
- out_free_nfsd4:
- 	nfsd4_destroy_laundry_wq();
-@@ -2320,9 +2322,6 @@ out_free_cld:
- 	unregister_cld_notifier();
- out_free_subsys:
- 	unregister_pernet_subsys(&nfsd_net_ops);
--out_free_exports:
--	remove_proc_entry("fs/nfs/exports", NULL);
--	remove_proc_entry("fs/nfs", NULL);
- out_free_lockd:
- 	nfsd_lockd_shutdown();
- 	nfsd_drc_slab_free();
-@@ -2335,14 +2334,14 @@ out_free_slabs:
++/*
++ * Copied from generic_remap_checks/generic_remap_file_range_prep.
++ *
++ * These generic functions use the file system's s_blocksize, but
++ * individual file systems aren't required to use
++ * generic_remap_file_range_prep. Until there is a mechanism for
++ * determining a particular file system's (or file's) clone block
++ * size, this is the best NFSD can do.
++ */
++static __be32 nfsd4_encode_fattr4_clone_blksize(struct xdr_stream *xdr,
++						const struct nfsd4_fattr_args *args)
++{
++	struct inode *inode = d_inode(args->dentry);
++
++	return nfsd4_encode_uint32_t(xdr, inode->i_sb->s_blocksize);
++}
++
+ #ifdef CONFIG_NFSD_V4_SECURITY_LABEL
+ static __be32 nfsd4_encode_fattr4_sec_label(struct xdr_stream *xdr,
+ 					    const struct nfsd4_fattr_args *args)
+@@ -3545,7 +3562,7 @@ static const nfsd4_enc_attr nfsd4_enc_fa
+ 	[FATTR4_MODE_SET_MASKED]	= nfsd4_encode_fattr4__noop,
+ 	[FATTR4_SUPPATTR_EXCLCREAT]	= nfsd4_encode_fattr4_suppattr_exclcreat,
+ 	[FATTR4_FS_CHARSET_CAP]		= nfsd4_encode_fattr4__noop,
+-	[FATTR4_CLONE_BLKSIZE]		= nfsd4_encode_fattr4__noop,
++	[FATTR4_CLONE_BLKSIZE]		= nfsd4_encode_fattr4_clone_blksize,
+ 	[FATTR4_SPACE_FREED]		= nfsd4_encode_fattr4__noop,
+ 	[FATTR4_CHANGE_ATTR_TYPE]	= nfsd4_encode_fattr4__noop,
  
- static void __exit exit_nfsd(void)
- {
-+	remove_proc_entry("fs/nfs/exports", NULL);
-+	remove_proc_entry("fs/nfs", NULL);
- 	genl_unregister_family(&nfsd_nl_family);
- 	unregister_filesystem(&nfsd_fs_type);
- 	nfsd4_destroy_laundry_wq();
- 	unregister_cld_notifier();
- 	unregister_pernet_subsys(&nfsd_net_ops);
- 	nfsd_drc_slab_free();
--	remove_proc_entry("fs/nfs/exports", NULL);
--	remove_proc_entry("fs/nfs", NULL);
- 	nfsd_lockd_shutdown();
- 	nfsd4_free_slabs();
- 	nfsd4_exit_pnfs();
 
 
