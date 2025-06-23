@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670F94315A;
-	Mon, 23 Jun 2025 21:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D174315A;
+	Mon, 23 Jun 2025 21:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714914; cv=none; b=A7X26nZBTqoZXuqOd2zjP71PMX3N+EwsAHY+qq/TXfFVYgPEMApcd1ATPJISryC8avbc9hJth9I16MfFSPgPkBZZpNKwY58Y3AD3eTfA6c8USfDuMC9ebJA2jcB+97ZPSZSBjbNE89fyq5OoafXCPD2pX29E3JCydxwqOyzuFKc=
+	t=1750714917; cv=none; b=G0gN7fw68SMarUKrv3d1lPbLc46lkI/FtBYrpi3yczMmY3GuxCkhzx2ovYuYXwCi5wiRqSpIWyz3w8Q+Xwt11T9T0mp6n9DGdL5QGjkmnlWK2umcoAqTqiG8cvwYsGinnRgeTF/lcKrb8vBrDnAgt32g11pvo1XQ+WV8ErYi/f8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714914; c=relaxed/simple;
-	bh=OiprrUeHyJiDiG/jn4Uan4iV9cvUASgPJuofiqtgfrk=;
+	s=arc-20240116; t=1750714917; c=relaxed/simple;
+	bh=dhaCsYbXtocCG8sRDBVWLrke1+pq2ZPLTpga4Xyrfv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQjiBSbqORBdcbpzroYp+SJ2ZDfzj4Fc/5F+fLwJUaRKUbEay6E/IOdKxmCTpRg1SAKu11DLswWF9JfW6RFpRo7ddsTJ+8V56F5fnpD2Qhl9ch+g1WTmGc0JrhECxMNmnqhjSoGRm2CY9qyPV7IX2F5A9OqvBnFqk72bNuxkeW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRiyd7HF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lpid0FsZCaykNW+dch37HW2h0kjOuhXF+KnWM+W2c6BCOK63ivSvnbTcrg/lB89RUuxSadtYNFcwZPHZlfVu9Y9bz9t6YO0OQiKeFMP5vTlrC/oQN7aLDGn2Xnw5h4lpkNLLDHuEzV4TrNVWfqOX+QVrwW4AWzrwXq435xvds/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkhVVHBe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRiyd7HF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92F8C4CEEA;
-	Mon, 23 Jun 2025 21:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkhVVHBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6150AC4CEEA;
+	Mon, 23 Jun 2025 21:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714914;
-	bh=OiprrUeHyJiDiG/jn4Uan4iV9cvUASgPJuofiqtgfrk=;
+	s=korg; t=1750714916;
+	bh=dhaCsYbXtocCG8sRDBVWLrke1+pq2ZPLTpga4Xyrfv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KRiyd7HFrlHUV7HFrBOgX01WQnofTGwey8tv/LZ56hg4aH4uXgQaPtTXoRNX5dMqY
-	 GyHVnWfRCpoAFpt/+4PZ07BWX8wQnEAebbJo80+9Q6LXng3enAjnTXmP6QHsvOmlgY
-	 3L5qqNLnlLRmPEnOOYuF3ippHZIGqFKvERxQ4bDQ=
+	b=dkhVVHBetr/XpEFc5IYUygsBHUYR6r8ifL15z+r5k0wP0RGhUJNNKC/aVR9/vUxyi
+	 PrWwTKL4njXOgsTeO3exeTBVaAy0d2FzSkUlFVjUz963IazJKVjhLcwsmbjq5nwM0N
+	 2H4hwDp/C42taO/xMK1J63vksYAMRr+PGSd4u1Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 168/290] scsi: lpfc: Fix lpfc_check_sli_ndlp() handling for GEN_REQUEST64 commands
-Date: Mon, 23 Jun 2025 15:07:09 +0200
-Message-ID: <20250623130631.946920295@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 144/414] cifs: update dstaddr whenever channel iface is updated
+Date: Mon, 23 Jun 2025 15:04:41 +0200
+Message-ID: <20250623130645.654101876@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 05ae6c9c7315d844fbc15afe393f5ba5e5771126 ]
+commit c1846893991f3b4ec8a0cc12219ada153f0814d6 upstream.
 
-In lpfc_check_sli_ndlp(), the get_job_els_rsp64_did remote_id assignment
-does not apply for GEN_REQUEST64 commands as it only has meaning for a
-ELS_REQUEST64 command.  So, if (iocb->ndlp == ndlp) is false, we could
-erroneously return the wrong value.  Fix by replacing the fallthrough
-statement with a break statement before the remote_id check.
+When the server interface info changes (more common in clustered
+servers like Azure Files), the per-channel iface gets updated.
+However, this did not update the corresponding dstaddr. As a result
+these channels will still connect (or try connecting) to older addresses.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20250425194806.3585-2-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b54034a73baf ("cifs: during reconnect, update interface if necessary")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_hbadisc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/sess.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index 5c9bc8af3c2df..ff44283338771 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -5101,7 +5101,7 @@ lpfc_check_sli_ndlp(struct lpfc_hba *phba,
- 		case CMD_GEN_REQUEST64_CR:
- 			if (iocb->ndlp == ndlp)
- 				return 1;
--			fallthrough;
-+			break;
- 		case CMD_ELS_REQUEST64_CR:
- 			if (remote_id == ndlp->nlp_DID)
- 				return 1;
--- 
-2.39.5
-
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -473,6 +473,10 @@ cifs_chan_update_iface(struct cifs_ses *
+ 
+ 	ses->chans[chan_index].iface = iface;
+ 	spin_unlock(&ses->chan_lock);
++
++	spin_lock(&server->srv_lock);
++	memcpy(&server->dstaddr, &iface->sockaddr, sizeof(server->dstaddr));
++	spin_unlock(&server->srv_lock);
+ }
+ 
+ static int
 
 
