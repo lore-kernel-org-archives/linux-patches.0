@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3F7253924;
-	Mon, 23 Jun 2025 13:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA815253358;
+	Mon, 23 Jun 2025 13:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684746; cv=none; b=TEq4DlyPSBMhLZ8OKdweC3CdR8QN1lkQCpXTuD0ks5FrS8Fzss/NPcNUuOr1kyzQqiP20hoGJSSf0YDAOmLmW7hQBnqjjiYDEMu0xO6SrwbWs+c4uzk52PfelSJ1ltDp2VP2MhC5X2qx3pIvx8j9mRrO+/EAIZDlLDIE1xCVQEY=
+	t=1750684748; cv=none; b=roCdWkWA3N7ZlVDxJxkKhikFVGqb3qEhjM4tDHrTlknLBbr7H1CP9PGSyJLq2E6eX4ojGWdZdDSiYSDcNT3TWinNoLIdgJk5jxBwhL0v2RSz6MmxFNNet741p1Al0whZPRgb9K1YFgpdNI8VwLnPqW7qgtPjPPTQjMjZZHtjKU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684746; c=relaxed/simple;
-	bh=1gOSBU2naqGpsx7NnnZZdOzwB3RNu/x8LW0zv6V77w4=;
+	s=arc-20240116; t=1750684748; c=relaxed/simple;
+	bh=nESW20vVFKWyJQXusTc7zaPkbKa/EeLb6STOuPRdAqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hl9tqzMkgy9Pd/nFJB5/XwV1tDGkamq0viNvqTl9ONupqbel1R+Z9ycOvZVHw3VyWgbizA+wYNR1ZYy4OmVn/OivLEgZeICKgAZLevEImkHaV2bI+KId1snFEiW9hN114JBkH+zq4nUGXh9qVtbYJ+kkFOkq7z3gCnm7wkoQpFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08/TnM65; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HqvXuBhI6vGj5Y5bML7sMxblh3xHaO0G0X2iHwyc0OCmnBjTg47yNLK5aKOS1UcrHprrJxy6mmc4TLnKj1fMV586bnjLyJBCd3yN/GCn3ki4rm57rbEkHHVJG0k1EXIxTncH9yad1mV+AMq72EC3ozNjaCBf6ePapTyIP8W9xtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlKLF8XG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08/TnM65"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82E9C4CEF0;
-	Mon, 23 Jun 2025 13:19:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlKLF8XG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FCF4C4CEEA;
+	Mon, 23 Jun 2025 13:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684746;
-	bh=1gOSBU2naqGpsx7NnnZZdOzwB3RNu/x8LW0zv6V77w4=;
+	s=korg; t=1750684748;
+	bh=nESW20vVFKWyJQXusTc7zaPkbKa/EeLb6STOuPRdAqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=08/TnM659uoyJ8A8xpsaOVdtWrPrIQlJeNSN9fOxvfzeRw9/jUi7OAdIZzz9pWZn3
-	 9I6AR//9AGRGd2Uth430bmDipSqqpoBugTZQmEwhUzFmw6iIJsInweglXQVxtGRRjW
-	 zCWf8WrmbbGRnXNuOve9MN/ZoZGAuWxuI497uQLU=
+	b=TlKLF8XGFrZsAlizxeLt2oiczRtXNSLIfqk7+L00GY8DN0ZFmN3Y3ext7eM/8OA0J
+	 O7/SFN4HiopkwcMPmv6r7oQLEu+pj0aULMyYMy44K/0f70iLeh9J+OKDEHgmpF1hs6
+	 fRW3yq3AzaHOBuDLorSSX6ep4QSfb/iwDyc0SUMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 6.15 164/592] nvme-tcp: remove tag set when second admin queue config fails
-Date: Mon, 23 Jun 2025 15:02:02 +0200
-Message-ID: <20250623130704.181302648@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.15 124/592] f2fs: fix to do sanity check on sit_bitmap_size
+Date: Mon, 23 Jun 2025 15:01:22 +0200
+Message-ID: <20250623130703.218737915@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -53,71 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Chao Yu <chao@kernel.org>
 
-commit e7143706702a209c814ed2c3fc6486c2a7decf6c upstream.
+commit 5db0d252c64e91ba1929c70112352e85dc5751e7 upstream.
 
-Commit 104d0e2f6222 ("nvme-fabrics: reset admin connection for secure
-concatenation") modified nvme_tcp_setup_ctrl() to call
-nvme_tcp_configure_admin_queue() twice. The first call prepares for
-DH-CHAP negotitation, and the second call is required for secure
-concatenation. However, this change triggered BUG KASAN slab-use-after-
-free in blk_mq_queue_tag_busy_iter(). This BUG can be recreated by
-repeating the blktests test case nvme/063 a few times [1].
+w/ below testcase, resize will generate a corrupted image which
+contains inconsistent metadata, so when mounting such image, it
+will trigger kernel panic:
 
-When the BUG happens, nvme_tcp_create_ctrl() fails in the call chain
-below:
+touch img
+truncate -s $((512*1024*1024*1024)) img
+mkfs.f2fs -f img $((256*1024*1024))
+resize.f2fs -s -i img -t $((1024*1024*1024))
+mount img /mnt/f2fs
 
-nvme_tcp_create_ctrl()
- nvme_tcp_alloc_ctrl() new=true             ... Alloc nvme_tcp_ctrl and admin_tag_set
- nvme_tcp_setup_ctrl() new=true
-  nvme_tcp_configure_admin_queue() new=true ... Succeed
-   nvme_alloc_admin_tag_set()               ... Alloc the tag set for admin_tag_set
-  nvme_stop_keep_alive()
-  nvme_tcp_teardown_admin_queue() remove=false
-  nvme_tcp_configure_admin_queue() new=false
-   nvme_tcp_alloc_admin_queue()             ... Fail, but do not call nvme_remove_admin_tag_set()
- nvme_uninit_ctrl()
- nvme_put_ctrl()                            ... Free up the nvme_tcp_ctrl and admin_tag_set
+------------[ cut here ]------------
+kernel BUG at fs/f2fs/segment.h:863!
+Oops: invalid opcode: 0000 [#1] SMP PTI
+CPU: 11 UID: 0 PID: 3922 Comm: mount Not tainted 6.15.0-rc1+ #191 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:f2fs_ra_meta_pages+0x47c/0x490
 
-The first call of nvme_tcp_configure_admin_queue() succeeds with
-new=true argument. The second call fails with new=false argument. This
-second call does not call nvme_remove_admin_tag_set() on failure, due to
-the new=false argument. Then the admin tag set is not removed. However,
-nvme_tcp_create_ctrl() assumes that nvme_tcp_setup_ctrl() would call
-nvme_remove_admin_tag_set(). Then it frees up struct nvme_tcp_ctrl which
-has admin_tag_set field. Later on, the timeout handler accesses the
-admin_tag_set field and causes the BUG KASAN slab-use-after-free.
+Call Trace:
+ f2fs_build_segment_manager+0x11c3/0x2600
+ f2fs_fill_super+0xe97/0x2840
+ mount_bdev+0xf4/0x140
+ legacy_get_tree+0x2b/0x50
+ vfs_get_tree+0x29/0xd0
+ path_mount+0x487/0xaf0
+ __x64_sys_mount+0x116/0x150
+ do_syscall_64+0x82/0x190
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7fdbfde1bcfe
 
-To not leave the admin tag set, call nvme_remove_admin_tag_set() when
-the second nvme_tcp_configure_admin_queue() call fails. Do not return
-from nvme_tcp_setup_ctrl() on failure. Instead, jump to "destroy_admin"
-go-to label to call nvme_tcp_teardown_admin_queue() which calls
-nvme_remove_admin_tag_set().
+The reaseon is:
 
-Fixes: 104d0e2f6222 ("nvme-fabrics: reset admin connection for secure concatenation")
+sit_i->bitmap_size is 192, so size of sit bitmap is 192*8=1536, at maximum
+there are 1536 sit blocks, however MAIN_SEGS is 261893, so that sit_blk_cnt
+is 4762, build_sit_entries() -> current_sit_addr() tries to access
+out-of-boundary in sit_bitmap at offset from [1536, 4762), once sit_bitmap
+and sit_bitmap_mirror is not the same, it will trigger f2fs_bug_on().
+
+Let's add sanity check in f2fs_sanity_check_ckpt() to avoid panic.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-nvme/6mhxskdlbo6fk6hotsffvwriauurqky33dfb3s44mqtr5dsxmf@gywwmnyh3twm/ [1]
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/tcp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/super.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -2392,7 +2392,7 @@ static int nvme_tcp_setup_ctrl(struct nv
- 		nvme_tcp_teardown_admin_queue(ctrl, false);
- 		ret = nvme_tcp_configure_admin_queue(ctrl, false);
- 		if (ret)
--			return ret;
-+			goto destroy_admin;
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3717,6 +3717,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_s
+ 	block_t user_block_count, valid_user_blocks;
+ 	block_t avail_node_count, valid_node_count;
+ 	unsigned int nat_blocks, nat_bits_bytes, nat_bits_blocks;
++	unsigned int sit_blk_cnt;
+ 	int i, j;
+ 
+ 	total = le32_to_cpu(raw_super->segment_count);
+@@ -3828,6 +3829,13 @@ skip_cross:
+ 		return 1;
  	}
  
- 	if (ctrl->icdoff) {
++	sit_blk_cnt = DIV_ROUND_UP(main_segs, SIT_ENTRY_PER_BLOCK);
++	if (sit_bitmap_size * 8 < sit_blk_cnt) {
++		f2fs_err(sbi, "Wrong bitmap size: sit: %u, sit_blk_cnt:%u",
++			 sit_bitmap_size, sit_blk_cnt);
++		return 1;
++	}
++
+ 	cp_pack_start_sum = __start_sum_addr(sbi);
+ 	cp_payload = __cp_payload(sbi);
+ 	if (cp_pack_start_sum < cp_payload + 1 ||
 
 
