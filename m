@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2277EB676;
-	Mon, 23 Jun 2025 22:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F881F6667;
+	Mon, 23 Jun 2025 22:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717102; cv=none; b=pHw0mm/3dqViXGRKCAOzA8NvnXctS3m7i6/aUIyMaZjHDGO6NhB0X5KemOVQfKOICTEtyCmsRmEF0nTIU915Qz9EsI8I6DKlHNvU/BtnCuoz2M2wEMbziicWUFMyiCb1a08cr3wiR+g5QAzxK7d8GsA+lAs3rYCcnh87e6o8aHs=
+	t=1750717104; cv=none; b=IIWAaJ0DsyE5ogxrBj/lkcH/ybJ08pxdL7l5l5Zh24KloBRiEVDtcxa0CEhmnapvnqwhvD9ZdK0e4SzpVG7J4rLVKnPKpkvZIripocZD3n5bLmtLVbehijNo4DmW7k3V4WICUTwJVVysHFYrDbOLUpUOlGEzx79Jb84pjuPrgwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717102; c=relaxed/simple;
-	bh=mPbGkts0HU0oO7PiakOePRzaY+yMjAlGLhTDhwIU08I=;
+	s=arc-20240116; t=1750717104; c=relaxed/simple;
+	bh=oIxUzeLJglHW0DKImIM9huXOhAyeNJnhEbGF9HeFHVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dCvxW3nGa2Fi1hQOwViAGucPMeQvwrlswAM32cwzNbQSOWenl4EKcpFJqFYrdaUDcURMsk7B9uoHvZQQxkvuncJPgY6niGAd6M1wQ3MRFSlMFjfWqGt+mYofvTN0XkxmhnK8SStZ4Oi/kO/KANk/PjDwKIqPbH0SJaubdjjM4tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwg+cyz5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LyTzkAaXMOaqs1dFN1J6VFaQNuQGM41ugaGzQRSVz8Ex2sB1EuJ4vCBECJAAmAMxjzGqRFjPpc2yJRLDvFulMnhsSzvfv6zVDiJT7DJBF+cvkpEOFAzFZS7hvqjK9p5twHNATGhpblCkQnlm8X4/bM1/XLkwHFRpXrdklKMk7gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2aALiREe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwg+cyz5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E95BC4CEEA;
-	Mon, 23 Jun 2025 22:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2aALiREe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BE2C4CEEA;
+	Mon, 23 Jun 2025 22:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717102;
-	bh=mPbGkts0HU0oO7PiakOePRzaY+yMjAlGLhTDhwIU08I=;
+	s=korg; t=1750717104;
+	bh=oIxUzeLJglHW0DKImIM9huXOhAyeNJnhEbGF9HeFHVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vwg+cyz5jYppcvY/kELHPszFtEPIf4dZmgTIM9bhQ3lgEMHrFg+/5wMEf9EMlMPg+
-	 jf3Hi4qdjJQi00f4O9FYT0GEEMj6Ft2ZpRksP2cSzVh62qgQVXTtRg0NnUBgNPyOcD
-	 qmZ9uPu6P8vEEYn4WWFmdGy44tMtsZrFXd43luI4=
+	b=2aALiREeSJ070NNJc2Y/x29hO9zXUbVwiNnkaMZrk20SkqgUbZgY8Z6oWW6cxK19a
+	 IBhmyHCcF5C6B3GGvhvlcXGEFsg4YV61J9LAocpeuxDXUrL5Cl1/ZHsFPgdl707FXK
+	 tuuY1ssBnHp+8v/9k/DHH/2AtWDuCoxVddpcEsaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 324/414] atm: Revert atm_account_tx() if copy_from_iter_full() fails.
-Date: Mon, 23 Jun 2025 15:07:41 +0200
-Message-ID: <20250623130650.094539144@linuxfoundation.org>
+Subject: [PATCH 5.15 402/411] net_sched: sch_sfq: reject invalid perturb period
+Date: Mon, 23 Jun 2025 15:09:06 +0200
+Message-ID: <20250623130643.799344459@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +47,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 7851263998d4269125fd6cb3fdbfc7c6db853859 upstream.
+commit 7ca52541c05c832d32b112274f81a985101f9ba8 upstream.
 
-In vcc_sendmsg(), we account skb->truesize to sk->sk_wmem_alloc by
-atm_account_tx().
+Gerrard Tai reported that SFQ perturb_period has no range check yet,
+and this can be used to trigger a race condition fixed in a separate patch.
 
-It is expected to be reverted by atm_pop_raw() later called by
-vcc->dev->ops->send(vcc, skb).
+We want to make sure ctl->perturb_period * HZ will not overflow
+and is positive.
 
-However, vcc_sendmsg() misses the same revert when copy_from_iter_full()
-fails, and then we will leak a socket.
+Tested:
 
-Let's factorise the revert part as atm_return_tx() and call it in
-the failure path.
+tc qd add dev lo root sfq perturb -10   # negative value : error
+Error: sch_sfq: invalid perturb period.
 
-Note that the corresponding sk_wmem_alloc operation can be found in
-alloc_tx() as of the blamed commit.
+tc qd add dev lo root sfq perturb 1000000000 # too big : error
+Error: sch_sfq: invalid perturb period.
 
-  $ git blame -L:alloc_tx net/atm/common.c c55fa3cccbc2c~
+tc qd add dev lo root sfq perturb 2000000 # acceptable value
+tc -s -d qd sh dev lo
+qdisc sfq 8005: root refcnt 2 limit 127p quantum 64Kb depth 127 flows 128 divisor 1024 perturb 2000000sec
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0)
+ backlog 0b 0p requeues 0
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Simon Horman <horms@kernel.org>
-Closes: https://lore.kernel.org/netdev/20250614161959.GR414686@horms.kernel.org/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250616182147.963333-3-kuni1840@gmail.com
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250611083501.1810459-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/atmdev.h |    6 ++++++
- net/atm/common.c       |    1 +
- net/atm/raw.c          |    2 +-
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ net/sched/sch_sfq.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/include/linux/atmdev.h
-+++ b/include/linux/atmdev.h
-@@ -249,6 +249,12 @@ static inline void atm_account_tx(struct
- 	ATM_SKB(skb)->atm_options = vcc->atm_options;
- }
- 
-+static inline void atm_return_tx(struct atm_vcc *vcc, struct sk_buff *skb)
-+{
-+	WARN_ON_ONCE(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize,
-+					   &sk_atm(vcc)->sk_wmem_alloc));
-+}
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -653,6 +653,14 @@ static int sfq_change(struct Qdisc *sch,
+ 		NL_SET_ERR_MSG_MOD(extack, "invalid quantum");
+ 		return -EINVAL;
+ 	}
 +
- static inline void atm_force_charge(struct atm_vcc *vcc,int truesize)
- {
- 	atomic_add(truesize, &sk_atm(vcc)->sk_rmem_alloc);
---- a/net/atm/common.c
-+++ b/net/atm/common.c
-@@ -635,6 +635,7 @@ int vcc_sendmsg(struct socket *sock, str
++	if (ctl->perturb_period < 0 ||
++	    ctl->perturb_period > INT_MAX / HZ) {
++		NL_SET_ERR_MSG_MOD(extack, "invalid perturb period");
++		return -EINVAL;
++	}
++	perturb_period = ctl->perturb_period * HZ;
++
+ 	if (ctl_v1 && !red_check_params(ctl_v1->qth_min, ctl_v1->qth_max,
+ 					ctl_v1->Wlog, ctl_v1->Scell_log, NULL))
+ 		return -EINVAL;
+@@ -669,14 +677,12 @@ static int sfq_change(struct Qdisc *sch,
+ 	headdrop = q->headdrop;
+ 	maxdepth = q->maxdepth;
+ 	maxflows = q->maxflows;
+-	perturb_period = q->perturb_period;
+ 	quantum = q->quantum;
+ 	flags = q->flags;
  
- 	skb->dev = NULL; /* for paths shared with net_device interfaces */
- 	if (!copy_from_iter_full(skb_put(skb, size), size, &m->msg_iter)) {
-+		atm_return_tx(vcc, skb);
- 		kfree_skb(skb);
- 		error = -EFAULT;
- 		goto out;
---- a/net/atm/raw.c
-+++ b/net/atm/raw.c
-@@ -36,7 +36,7 @@ static void atm_pop_raw(struct atm_vcc *
- 
- 	pr_debug("(%d) %d -= %d\n",
- 		 vcc->vci, sk_wmem_alloc_get(sk), ATM_SKB(skb)->acct_truesize);
--	WARN_ON(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize, &sk->sk_wmem_alloc));
-+	atm_return_tx(vcc, skb);
- 	dev_kfree_skb_any(skb);
- 	sk->sk_write_space(sk);
- }
+ 	/* update and validate configuration */
+ 	if (ctl->quantum)
+ 		quantum = ctl->quantum;
+-	perturb_period = ctl->perturb_period * HZ;
+ 	if (ctl->flows)
+ 		maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
+ 	if (ctl->divisor) {
 
 
