@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D66223A9BE;
-	Mon, 23 Jun 2025 13:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDD9253F1A;
+	Mon, 23 Jun 2025 13:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684945; cv=none; b=R3SzwIiq8+/xc7YFapRyL4DkGgptyYIVku6zJl1Gv6mZ5w7f7S22a/ItMaGwOyTMPy7Dx2YCnoUuRyRRpNtrPiSQrXvGofKifqXkjBZwd2ct6xxfHT2OLS62CbclhyFx3ZotUHt8XmT+jDBte24C9/iaKxsurWFWEB5ihTlNwNk=
+	t=1750684947; cv=none; b=qCa19uY33JJUtb598dLvo82sNEbmj39I+8CBqGwk60pDbw7j+KZhbYYddJJBpzOdDeXEatLXDouX7s10wtAo37ABC/grEpaNBQ7Gm1mELLMFkSRTOTBldY5GQFD2VpE/JO28jCB0lbn4i/ySBU8cBoNBz1s11IkMJ2wfeQU4ZDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684945; c=relaxed/simple;
-	bh=cDGwtBm37b2v7VBVwdgzlRRpUvaMUfs7uk6hE1Yo/Pg=;
+	s=arc-20240116; t=1750684947; c=relaxed/simple;
+	bh=Fd9ldUHq2fWRF9X+NPd5TP9YcEjyLgo/jHPLhCwSa0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=osPhKTn21k1gvytmyrtDWPrZodaad7pMy6K3hlUcmOzyCXnd80udqocSicdfoQ1lgh85RQTNRmtB069qh49afdPLyT7dp2RD+IcT9plx/6B0aowEtnBjirSqAuERxD71i+xvgTTLTph6pSor3LxgwmKGauCeCqpi8gt172s9450=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mja1cQEs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BHEZ5EBIiRNi1hJwQbQ+2qLZ5p0mqPNRY74mSgCCDy2LDr3Ydfo8l1v0rnd/Cdixi0rb1vunZNTBHyZYigzIT7RtHaBxGiTnQKB8qc4k6hR+GTdDHyxDm06TCV0fYoXwaZ25JTb+p/9iWBwzBbvYncsw+oSObMv022s5N9CmV6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISDb+6W1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mja1cQEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B18C4CEEA;
-	Mon, 23 Jun 2025 13:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISDb+6W1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45986C4CEEA;
+	Mon, 23 Jun 2025 13:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684945;
-	bh=cDGwtBm37b2v7VBVwdgzlRRpUvaMUfs7uk6hE1Yo/Pg=;
+	s=korg; t=1750684947;
+	bh=Fd9ldUHq2fWRF9X+NPd5TP9YcEjyLgo/jHPLhCwSa0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mja1cQEs617xPefr9CidgUeXkKOb4ntIWRcwsWIF4/W1ygQrijocjOrUFrg9T/Zn7
-	 9+uq23ihU633Rlo5nemWvqFe+sjr44n+TH34EFTUS53iw0yRl4heByJmcpyDGt6LVK
-	 oHr/BTO4ujpdrFMFtM2+j7PLwJeknCFPPtUbondc=
+	b=ISDb+6W1lYfmrBwb/Lx4ad562+zMjDIL2PNOEyuLlbV4ocOBANtf5BoAut/MU0L3u
+	 q4x3pj2Rd40RiQKK3XLSzFfRDZ/ytf5pNVFjVZ2T8Byc5C+Ci8VjXyX0vC/S42C7GD
+	 9RZwrCecrDzw6NVspr4t3vRj9MyMPnrEOx5W4iZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.15 193/592] accel/ivpu: Use dma_resv_lock() instead of a custom mutex
-Date: Mon, 23 Jun 2025 15:02:31 +0200
-Message-ID: <20250623130704.879076429@linuxfoundation.org>
+	Khem Raj <raj.khem@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.15 167/592] mips: Add -std= flag specified in KBUILD_CFLAGS to vdso CFLAGS
+Date: Mon, 23 Jun 2025 15:02:05 +0200
+Message-ID: <20250623130704.251450081@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -50,232 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Khem Raj <raj.khem@gmail.com>
 
-commit 98d3f772ca7d6822bdfc8c960f5f909574db97c9 upstream.
+commit 0f4ae7c6ecb89bfda026d210dcf8216fb67d2333 upstream.
 
-This fixes a potential race conditions in:
- - ivpu_bo_unbind_locked() where we modified the shmem->sgt without
-   holding the dma_resv_lock().
- - ivpu_bo_print_info() where we read the shmem->pages without
-   holding the dma_resv_lock().
+GCC 15 changed the default C standard dialect from gnu17 to gnu23,
+which should not have impacted the kernel because it explicitly requests
+the gnu11 standard in the main Makefile. However, mips/vdso code uses
+its own CFLAGS without a '-std=' value, which break with this dialect
+change because of the kernel's own definitions of bool, false, and true
+conflicting with the C23 reserved keywords.
 
-Using dma_resv_lock() also protects against future syncronisation
-issues that may arise when accessing drm_gem_shmem_object or
-drm_gem_object members.
+  include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
+     11 |         false   = 0,
+        |         ^~~~~
+  include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
+  include/linux/types.h:35:33: error: 'bool' cannot be defined via 'typedef'
+     35 | typedef _Bool                   bool;
+        |                                 ^~~~
+  include/linux/types.h:35:33: note: 'bool' is a keyword with '-std=c23' onwards
 
-Fixes: 42328003ecb6 ("accel/ivpu: Refactor BO creation functions")
-Cc: stable@vger.kernel.org # v6.9+
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://lore.kernel.org/r/20250528154325.500684-1-jacek.lawrynowicz@linux.intel.com
+Add -std as specified in KBUILD_CFLAGS to the decompressor and purgatory
+CFLAGS to eliminate these errors and make the C standard version of these
+areas match the rest of the kernel.
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_gem.c |   63 ++++++++++++++++++++++--------------------
- drivers/accel/ivpu/ivpu_gem.h |    1 
- 2 files changed, 34 insertions(+), 30 deletions(-)
+ arch/mips/vdso/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/accel/ivpu/ivpu_gem.c
-+++ b/drivers/accel/ivpu/ivpu_gem.c
-@@ -33,6 +33,16 @@ static inline void ivpu_dbg_bo(struct iv
- 		 (bool)bo->base.base.import_attach);
- }
- 
-+static inline int ivpu_bo_lock(struct ivpu_bo *bo)
-+{
-+	return dma_resv_lock(bo->base.base.resv, NULL);
-+}
-+
-+static inline void ivpu_bo_unlock(struct ivpu_bo *bo)
-+{
-+	dma_resv_unlock(bo->base.base.resv);
-+}
-+
- /*
-  * ivpu_bo_pin() - pin the backing physical pages and map them to VPU.
-  *
-@@ -43,22 +53,22 @@ static inline void ivpu_dbg_bo(struct iv
- int __must_check ivpu_bo_pin(struct ivpu_bo *bo)
- {
- 	struct ivpu_device *vdev = ivpu_bo_to_vdev(bo);
-+	struct sg_table *sgt;
- 	int ret = 0;
- 
--	mutex_lock(&bo->lock);
--
- 	ivpu_dbg_bo(vdev, bo, "pin");
--	drm_WARN_ON(&vdev->drm, !bo->ctx);
- 
--	if (!bo->mmu_mapped) {
--		struct sg_table *sgt = drm_gem_shmem_get_pages_sgt(&bo->base);
-+	sgt = drm_gem_shmem_get_pages_sgt(&bo->base);
-+	if (IS_ERR(sgt)) {
-+		ret = PTR_ERR(sgt);
-+		ivpu_err(vdev, "Failed to map BO in IOMMU: %d\n", ret);
-+		return ret;
-+	}
- 
--		if (IS_ERR(sgt)) {
--			ret = PTR_ERR(sgt);
--			ivpu_err(vdev, "Failed to map BO in IOMMU: %d\n", ret);
--			goto unlock;
--		}
-+	ivpu_bo_lock(bo);
- 
-+	if (!bo->mmu_mapped) {
-+		drm_WARN_ON(&vdev->drm, !bo->ctx);
- 		ret = ivpu_mmu_context_map_sgt(vdev, bo->ctx, bo->vpu_addr, sgt,
- 					       ivpu_bo_is_snooped(bo));
- 		if (ret) {
-@@ -69,7 +79,7 @@ int __must_check ivpu_bo_pin(struct ivpu
- 	}
- 
- unlock:
--	mutex_unlock(&bo->lock);
-+	ivpu_bo_unlock(bo);
- 
- 	return ret;
- }
-@@ -84,7 +94,7 @@ ivpu_bo_alloc_vpu_addr(struct ivpu_bo *b
- 	if (!drm_dev_enter(&vdev->drm, &idx))
- 		return -ENODEV;
- 
--	mutex_lock(&bo->lock);
-+	ivpu_bo_lock(bo);
- 
- 	ret = ivpu_mmu_context_insert_node(ctx, range, ivpu_bo_size(bo), &bo->mm_node);
- 	if (!ret) {
-@@ -94,7 +104,7 @@ ivpu_bo_alloc_vpu_addr(struct ivpu_bo *b
- 		ivpu_err(vdev, "Failed to add BO to context %u: %d\n", ctx->id, ret);
- 	}
- 
--	mutex_unlock(&bo->lock);
-+	ivpu_bo_unlock(bo);
- 
- 	drm_dev_exit(idx);
- 
-@@ -105,7 +115,7 @@ static void ivpu_bo_unbind_locked(struct
- {
- 	struct ivpu_device *vdev = ivpu_bo_to_vdev(bo);
- 
--	lockdep_assert(lockdep_is_held(&bo->lock) || !kref_read(&bo->base.base.refcount));
-+	lockdep_assert(dma_resv_held(bo->base.base.resv) || !kref_read(&bo->base.base.refcount));
- 
- 	if (bo->mmu_mapped) {
- 		drm_WARN_ON(&vdev->drm, !bo->ctx);
-@@ -123,14 +133,12 @@ static void ivpu_bo_unbind_locked(struct
- 	if (bo->base.base.import_attach)
- 		return;
- 
--	dma_resv_lock(bo->base.base.resv, NULL);
- 	if (bo->base.sgt) {
- 		dma_unmap_sgtable(vdev->drm.dev, bo->base.sgt, DMA_BIDIRECTIONAL, 0);
- 		sg_free_table(bo->base.sgt);
- 		kfree(bo->base.sgt);
- 		bo->base.sgt = NULL;
- 	}
--	dma_resv_unlock(bo->base.base.resv);
- }
- 
- void ivpu_bo_unbind_all_bos_from_context(struct ivpu_device *vdev, struct ivpu_mmu_context *ctx)
-@@ -142,12 +150,12 @@ void ivpu_bo_unbind_all_bos_from_context
- 
- 	mutex_lock(&vdev->bo_list_lock);
- 	list_for_each_entry(bo, &vdev->bo_list, bo_list_node) {
--		mutex_lock(&bo->lock);
-+		ivpu_bo_lock(bo);
- 		if (bo->ctx == ctx) {
- 			ivpu_dbg_bo(vdev, bo, "unbind");
- 			ivpu_bo_unbind_locked(bo);
- 		}
--		mutex_unlock(&bo->lock);
-+		ivpu_bo_unlock(bo);
- 	}
- 	mutex_unlock(&vdev->bo_list_lock);
- }
-@@ -167,7 +175,6 @@ struct drm_gem_object *ivpu_gem_create_o
- 	bo->base.pages_mark_dirty_on_put = true; /* VPU can dirty a BO anytime */
- 
- 	INIT_LIST_HEAD(&bo->bo_list_node);
--	mutex_init(&bo->lock);
- 
- 	return &bo->base.base;
- }
-@@ -286,8 +293,6 @@ static void ivpu_gem_bo_free(struct drm_
- 	drm_WARN_ON(&vdev->drm, bo->mmu_mapped);
- 	drm_WARN_ON(&vdev->drm, bo->ctx);
- 
--	mutex_destroy(&bo->lock);
--
- 	drm_WARN_ON(obj->dev, bo->base.pages_use_count > 1);
- 	drm_gem_shmem_free(&bo->base);
- }
-@@ -370,9 +375,9 @@ ivpu_bo_create(struct ivpu_device *vdev,
- 		goto err_put;
- 
- 	if (flags & DRM_IVPU_BO_MAPPABLE) {
--		dma_resv_lock(bo->base.base.resv, NULL);
-+		ivpu_bo_lock(bo);
- 		ret = drm_gem_shmem_vmap(&bo->base, &map);
--		dma_resv_unlock(bo->base.base.resv);
-+		ivpu_bo_unlock(bo);
- 
- 		if (ret)
- 			goto err_put;
-@@ -395,9 +400,9 @@ void ivpu_bo_free(struct ivpu_bo *bo)
- 	struct iosys_map map = IOSYS_MAP_INIT_VADDR(bo->base.vaddr);
- 
- 	if (bo->flags & DRM_IVPU_BO_MAPPABLE) {
--		dma_resv_lock(bo->base.base.resv, NULL);
-+		ivpu_bo_lock(bo);
- 		drm_gem_shmem_vunmap(&bo->base, &map);
--		dma_resv_unlock(bo->base.base.resv);
-+		ivpu_bo_unlock(bo);
- 	}
- 
- 	drm_gem_object_put(&bo->base.base);
-@@ -416,12 +421,12 @@ int ivpu_bo_info_ioctl(struct drm_device
- 
- 	bo = to_ivpu_bo(obj);
- 
--	mutex_lock(&bo->lock);
-+	ivpu_bo_lock(bo);
- 	args->flags = bo->flags;
- 	args->mmap_offset = drm_vma_node_offset_addr(&obj->vma_node);
- 	args->vpu_addr = bo->vpu_addr;
- 	args->size = obj->size;
--	mutex_unlock(&bo->lock);
-+	ivpu_bo_unlock(bo);
- 
- 	drm_gem_object_put(obj);
- 	return ret;
-@@ -458,7 +463,7 @@ int ivpu_bo_wait_ioctl(struct drm_device
- 
- static void ivpu_bo_print_info(struct ivpu_bo *bo, struct drm_printer *p)
- {
--	mutex_lock(&bo->lock);
-+	ivpu_bo_lock(bo);
- 
- 	drm_printf(p, "%-9p %-3u 0x%-12llx %-10lu 0x%-8x %-4u",
- 		   bo, bo->ctx_id, bo->vpu_addr, bo->base.base.size,
-@@ -475,7 +480,7 @@ static void ivpu_bo_print_info(struct iv
- 
- 	drm_printf(p, "\n");
- 
--	mutex_unlock(&bo->lock);
-+	ivpu_bo_unlock(bo);
- }
- 
- void ivpu_bo_list(struct drm_device *dev, struct drm_printer *p)
---- a/drivers/accel/ivpu/ivpu_gem.h
-+++ b/drivers/accel/ivpu/ivpu_gem.h
-@@ -17,7 +17,6 @@ struct ivpu_bo {
- 	struct list_head bo_list_node;
- 	struct drm_mm_node mm_node;
- 
--	struct mutex lock; /* Protects: ctx, mmu_mapped, vpu_addr */
- 	u64 vpu_addr;
- 	u32 flags;
- 	u32 job_status; /* Valid only for command buffer */
+--- a/arch/mips/vdso/Makefile
++++ b/arch/mips/vdso/Makefile
+@@ -27,6 +27,7 @@ endif
+ # offsets.
+ cflags-vdso := $(ccflags-vdso) \
+ 	$(filter -W%,$(filter-out -Wa$(comma)%,$(KBUILD_CFLAGS))) \
++	$(filter -std=%,$(KBUILD_CFLAGS)) \
+ 	-O3 -g -fPIC -fno-strict-aliasing -fno-common -fno-builtin -G 0 \
+ 	-mrelax-pic-calls $(call cc-option, -mexplicit-relocs) \
+ 	-fno-stack-protector -fno-jump-tables -DDISABLE_BRANCH_PROFILING \
 
 
