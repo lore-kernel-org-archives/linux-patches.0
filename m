@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D777F22370A;
-	Mon, 23 Jun 2025 22:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD47199FBA;
+	Mon, 23 Jun 2025 22:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717323; cv=none; b=jXv5sRo1Bky+1c6Df8XhyeJH3Mt9aVGjR+lGIc1aKS9S1UM6o9vfDrjoRwuGk3oSz9v3tKQVCFSdCXAN4RqOXkxkRyDwekmXQ6u/zYhZcIVQ0qlyPMqJdda4CKL1/tXBP/alr33t98Tl+ZdtVQmQ/HIeNpFl6GDWi2sr+naeQTI=
+	t=1750717326; cv=none; b=jLYtraVs2HXndGptXSEu2+CHLeLxGOXj3OWcn6RgzMVPtkEl4JaUAYxMTShclLwWCYy5ec5C+EMTzhV+Fr8+vbCpY0sdUeotE3TQsa+mdWCMaaQmEA1+9xoKjVkP5fEdtFJe8mQbVtWM8/IQsaS99IuR1rb1f572DGKi9yGZtrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717323; c=relaxed/simple;
-	bh=/Ex0yPqQJS8OPxgH1GdT7ODWeAc9ahbslnLU6hddFoQ=;
+	s=arc-20240116; t=1750717326; c=relaxed/simple;
+	bh=PbqY/EBSdKIRHsUpJj9egCyBu5tl0+njpr9LxAkle1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FIDt57GwwigDdMBQ7Xz9j+Cu6f93c3N/4ssszzVVIS7rDaevUDSNDrNzsrZuqONXPSlM5TyaOPH0WAjZo8RHTRBiq8tY4SfW+siquA5Rzp2DaIMbZk9Ci1LedG4Im+7CUWtWk94ee5GrklLowzlXcibuPU7/Ugs5zXNHlOu+kfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxUzSXFt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eNyWcBT1S8KLmrdgj7Ks244uppyrWfeN2YnXfEEVfJJ6IsSVh2CD5jckIF5UWDKTIyxs51NqGnBq9MyN/w0fwmcwvQNuNoqhYvofV9eW4zIU9tWrgFnUJ4vnXuQT7B++EA204R5cnqmF2ebbtuIpZXCnVMzduIJrpqcl7COJHxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cc8zEDMl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxUzSXFt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70981C4CEEA;
-	Mon, 23 Jun 2025 22:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cc8zEDMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD220C4CEEA;
+	Mon, 23 Jun 2025 22:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717323;
-	bh=/Ex0yPqQJS8OPxgH1GdT7ODWeAc9ahbslnLU6hddFoQ=;
+	s=korg; t=1750717326;
+	bh=PbqY/EBSdKIRHsUpJj9egCyBu5tl0+njpr9LxAkle1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hxUzSXFt/zEMIyWmbn+DRHnQpKGL8kZmanKcF2TiJl/fDWOz9r8P7qMqzbYkEmDyJ
-	 kpVWFsK8bM6Nsy+OVKwRSwIG1YOfbFMPm4/A+RUuDYi5u9lnzwf84/oP8IfqVGgxq9
-	 H2wLrMUihiNaeX/0utC3A0N6H8NBb14IoarwDrU0=
+	b=cc8zEDMlwnF5qyyICUMFkpOfl0SK+/qHzWwY44TFJeiOfdrJ9CJUvbNBAIvvY+5gl
+	 3uF7uSD3O1VmEiWz6yJvlGnXcxuNB+2p+sGoUIWAki7O//V9Fycb+VEIuaV60/wh/R
+	 iPvTtVk6EYJNG/tLrSrvDDtCtqEoU3WQ9eJ9WIpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	syzbot+763e12bbf004fb1062e4@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 356/414] drm/msm/a7xx: Call CP_RESET_CONTEXT_STATE
-Date: Mon, 23 Jun 2025 15:08:13 +0200
-Message-ID: <20250623130650.869993348@linuxfoundation.org>
+Subject: [PATCH 6.12 366/414] io_uring/sqpoll: dont put task_struct on tctx setup failure
+Date: Mon, 23 Jun 2025 15:08:23 +0200
+Message-ID: <20250623130651.111663741@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
 References: <20250623130642.015559452@linuxfoundation.org>
@@ -51,52 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Connor Abbott <cwabbott0@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 2b520c6104f34e3a548525173c38ebca4402cac3 ]
+[ Upstream commit f2320f1dd6f6f82cb2c7aff23a12bab537bdea89 ]
 
-Calling this packet is necessary when we switch contexts because there
-are various pieces of state used by userspace to synchronize between BR
-and BV that are persistent across submits and we need to make sure that
-they are in a "safe" state when switching contexts. Otherwise a
-userspace submission in one context could cause another context to
-function incorrectly and hang, effectively a denial of service (although
-without leaking data). This was missed during initial a7xx bringup.
+A recent commit moved the error handling of sqpoll thread and tctx
+failures into the thread itself, as part of fixing an issue. However, it
+missed that tctx allocation may also fail, and that
+io_sq_offload_create() does its own error handling for the task_struct
+in that case.
 
-Fixes: af66706accdf ("drm/msm/a6xx: Add skeleton A7xx support")
-Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/654924/
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Remove the manual task putting in io_sq_offload_create(), as
+io_sq_thread() will notice that the tctx did not get setup and hence it
+should put itself and exit.
+
+Reported-by: syzbot+763e12bbf004fb1062e4@syzkaller.appspotmail.com
+Fixes: ac0b8b327a56 ("io_uring: fix use-after-free of sq->thread in __io_uring_show_fdinfo()")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ io_uring/sqpoll.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index d2189441aa38a..80c78aff96433 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -123,6 +123,20 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
- 		OUT_RING(ring, lower_32_bits(rbmemptr(ring, fence)));
- 		OUT_RING(ring, upper_32_bits(rbmemptr(ring, fence)));
- 		OUT_RING(ring, submit->seqno - 1);
-+
-+		OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
-+		OUT_RING(ring, CP_SET_THREAD_BOTH);
-+
-+		/* Reset state used to synchronize BR and BV */
-+		OUT_PKT7(ring, CP_RESET_CONTEXT_STATE, 1);
-+		OUT_RING(ring,
-+			 CP_RESET_CONTEXT_STATE_0_CLEAR_ON_CHIP_TS |
-+			 CP_RESET_CONTEXT_STATE_0_CLEAR_RESOURCE_TABLE |
-+			 CP_RESET_CONTEXT_STATE_0_CLEAR_BV_BR_COUNTER |
-+			 CP_RESET_CONTEXT_STATE_0_RESET_GLOBAL_LOCAL_TS);
-+
-+		OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
-+		OUT_RING(ring, CP_SET_THREAD_BR);
- 	}
+diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
+index 9a63068948957..2faa3058b2d0e 100644
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -426,7 +426,6 @@ void io_sqpoll_wait_sq(struct io_ring_ctx *ctx)
+ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
+ 				struct io_uring_params *p)
+ {
+-	struct task_struct *task_to_put = NULL;
+ 	int ret;
  
- 	if (!sysprof) {
+ 	/* Retain compatibility with failing for an invalid attach attempt */
+@@ -510,7 +509,7 @@ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
+ 		rcu_assign_pointer(sqd->thread, tsk);
+ 		mutex_unlock(&sqd->lock);
+ 
+-		task_to_put = get_task_struct(tsk);
++		get_task_struct(tsk);
+ 		ret = io_uring_alloc_task_context(tsk, ctx);
+ 		wake_up_new_task(tsk);
+ 		if (ret)
+@@ -525,8 +524,6 @@ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
+ 	complete(&ctx->sq_data->exited);
+ err:
+ 	io_sq_thread_finish(ctx);
+-	if (task_to_put)
+-		put_task_struct(task_to_put);
+ 	return ret;
+ }
+ 
 -- 
 2.39.5
 
