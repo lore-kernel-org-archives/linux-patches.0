@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9182F24;
-	Mon, 23 Jun 2025 13:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741CE2F24;
+	Mon, 23 Jun 2025 13:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685588; cv=none; b=rR4C6yQmedoZG4XNlwIEtQbCU/w5yvmbnWx8S92h7SuEBfe8kDzpMH5Ue7ZL2zJnmO9VMvpZ5Cf+0mQjw/WKfGevoutm024WgxU2ZG5ZwSYqbyIA4BW9mEan8EAWAe5zCqw6KTCHxPjWQSb9j72yziYuWR3FwfDqBRD0nRgANNI=
+	t=1750685590; cv=none; b=YGYMiE3O79+NHdrY67ulS2/9y1193EWqTHd3FAgsQA1TLglpVjljvgxBzgVx1BQGWOE02CNIqbsCajTMb/INB68HaBjfgh8Ds5F6OpqwvCTxYBpHks36p68D4/GcAlLkAEhBPfCcIz0m48woVfzTRn6SF873uq441zJJUnk5uUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685588; c=relaxed/simple;
-	bh=5BvW2IopkqCdqc10UhTARxn9uFoqDy+IfddEQDF/vU4=;
+	s=arc-20240116; t=1750685590; c=relaxed/simple;
+	bh=qjiM0sMEQ2Us99Yv9HN7z0ji/lMtsiz/Mdm0pMT4QPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MvolkICVc6XWoglJJ3Zxe4g4poXqqhbr0GgCAIXrnqWQoRBuzojVDZLD1KdUbIOo6irsuukz4xqeB3Ss0ziXp6obYaiaTIxVJxneIXaxW70Z452Fg7iBJciIHo4HMDNvnovgV7fD9OF0SVjOABmEbBLCGChr5i5MNSFgA9B/CAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/k+pHGd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pxf6cDgQLBvBlejg7fLjnujeRTRlxb69Zyyup3KnmNeHIbj+eHe3fTsf/Y1GfpMvgJPPU3OTbOpTXyGrdCLUavazeKoCiEnrbkugwEzTHACLhqVWrhKC/kfQ8RdHha7g5pYzeVP8fUJGpiUbvrMEpHRq+naHhFCWjd2rAD6BA98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQXtQ7/r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/k+pHGd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68041C4CEEA;
-	Mon, 23 Jun 2025 13:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQXtQ7/r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09472C4CEEA;
+	Mon, 23 Jun 2025 13:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685587;
-	bh=5BvW2IopkqCdqc10UhTARxn9uFoqDy+IfddEQDF/vU4=;
+	s=korg; t=1750685590;
+	bh=qjiM0sMEQ2Us99Yv9HN7z0ji/lMtsiz/Mdm0pMT4QPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M/k+pHGdhpHmlNFcUMXUx1ccCnxgKb8NMJThjZOPAzlXQU1Krhe53/YcdkfMHa37q
-	 icn57HH8VijrFe3EurtZ3i9+to7ul8hMRjiyWnZxg7mgriuh6E0oD2xNDR9CPvkgsh
-	 o0/7tNeWCzoKXepASCofd3mmNQgeVap6rwuLvAQI=
+	b=lQXtQ7/r+wsImnDSJRbDgd2sY/MF5tz3KvKnO7ITvYFdLu5qfxKguqde6CX2e1IoM
+	 MYUVITCHe8/UvyD5oIR/rPAwznsvv4CSOb0xDDARDOY+vo0iwLS+TFgEJUffV/rmtY
+	 cQ5D7Wr4x4fzUbCKgzPJcS5UANQdEHo+moyuahsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 061/355] ARM: dts: at91: at91sam9263: fix NAND chip selects
-Date: Mon, 23 Jun 2025 15:04:22 +0200
-Message-ID: <20250623130628.661350455@linuxfoundation.org>
+Subject: [PATCH 5.15 045/411] iommu: Protect against overflow in iommu_pgsize()
+Date: Mon, 23 Jun 2025 15:03:09 +0200
+Message-ID: <20250623130634.354510952@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,69 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit c72ede1c24be689733bcd2233a3a56f2478429c8 ]
+[ Upstream commit e586e22974d2b7acbef3c6c3e01b2d5ce69efe33 ]
 
-NAND did not work on my USB-A9263. I discovered that the offending
-commit converted the PIO bank for chip selects wrongly, so all A9263
-boards need to be fixed.
+On a 32 bit system calling:
+ iommu_map(0, 0x40000000)
 
-Fixes: 1004a2977bdc ("ARM: dts: at91: Switch to the new NAND bindings")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/20250402210446.5972-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+When using the AMD V1 page table type with a domain->pgsize of 0xfffff000
+causes iommu_pgsize() to miscalculate a result of:
+  size=0x40000000 count=2
+
+count should be 1. This completely corrupts the mapping process.
+
+This is because the final test to adjust the pagesize malfunctions when
+the addition overflows. Use check_add_overflow() to prevent this.
+
+Fixes: b1d99dc5f983 ("iommu: Hook up '->unmap_pages' driver callback")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/0-v1-3ad28fc2e3a3+163327-iommu_overflow_pgsize_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/at91sam9263ek.dts | 2 +-
- arch/arm/boot/dts/tny_a9263.dts     | 2 +-
- arch/arm/boot/dts/usb_a9263.dts     | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/iommu/iommu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/at91sam9263ek.dts b/arch/arm/boot/dts/at91sam9263ek.dts
-index 71f60576761a0..df206bdb67883 100644
---- a/arch/arm/boot/dts/at91sam9263ek.dts
-+++ b/arch/arm/boot/dts/at91sam9263ek.dts
-@@ -148,7 +148,7 @@
- 				nand@3 {
- 					reg = <0x3 0x0 0x800000>;
- 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
--					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
-+					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
- 					nand-bus-width = <8>;
- 					nand-ecc-mode = "soft";
- 					nand-on-flash-bbt;
-diff --git a/arch/arm/boot/dts/tny_a9263.dts b/arch/arm/boot/dts/tny_a9263.dts
-index 62b7d9f9a926c..c8b6318aaa838 100644
---- a/arch/arm/boot/dts/tny_a9263.dts
-+++ b/arch/arm/boot/dts/tny_a9263.dts
-@@ -64,7 +64,7 @@
- 				nand@3 {
- 					reg = <0x3 0x0 0x800000>;
- 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
--					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
-+					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
- 					nand-bus-width = <8>;
- 					nand-ecc-mode = "soft";
- 					nand-on-flash-bbt;
-diff --git a/arch/arm/boot/dts/usb_a9263.dts b/arch/arm/boot/dts/usb_a9263.dts
-index d1c07503ff76f..87a5f96014e01 100644
---- a/arch/arm/boot/dts/usb_a9263.dts
-+++ b/arch/arm/boot/dts/usb_a9263.dts
-@@ -84,7 +84,7 @@
- 				nand@3 {
- 					reg = <0x3 0x0 0x800000>;
- 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
--					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
-+					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
- 					nand-bus-width = <8>;
- 					nand-ecc-mode = "soft";
- 					nand-on-flash-bbt;
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index d06dbf035c7c7..01e01ca760cf1 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -2411,6 +2411,7 @@ static size_t iommu_pgsize(struct iommu_domain *domain, unsigned long iova,
+ 	unsigned int pgsize_idx, pgsize_idx_next;
+ 	unsigned long pgsizes;
+ 	size_t offset, pgsize, pgsize_next;
++	size_t offset_end;
+ 	unsigned long addr_merge = paddr | iova;
+ 
+ 	/* Page sizes supported by the hardware and small enough for @size */
+@@ -2451,7 +2452,8 @@ static size_t iommu_pgsize(struct iommu_domain *domain, unsigned long iova,
+ 	 * If size is big enough to accommodate the larger page, reduce
+ 	 * the number of smaller pages.
+ 	 */
+-	if (offset + pgsize_next <= size)
++	if (!check_add_overflow(offset, pgsize_next, &offset_end) &&
++	    offset_end <= size)
+ 		size = offset;
+ 
+ out_set_count:
 -- 
 2.39.5
 
