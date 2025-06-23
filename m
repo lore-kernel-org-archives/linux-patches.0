@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A37E19E7F9;
-	Mon, 23 Jun 2025 22:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39CF16D9BF;
+	Mon, 23 Jun 2025 22:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717148; cv=none; b=oONTu3FKa+S/tkrmjDJkd3NnNWTt747ltYzh0pPHUI9IoDa2E+DlR2UCSK7ep06YtsRax5WvjXMMo4X+jqvNKMmDuMdnRlTChS4FV0pIAqzcZudUgXTjWd4UxJ1I1Y7cJKzli8mEB7nW4h6dcuMuniStXXDCmFolIyZfVyIifhI=
+	t=1750717150; cv=none; b=cbzF9U+2rWse6wx604oNfrpn6C1UWJ7M5Mhmms0tTx8Gdoxy5zvtrO9I+zKv+uHE7Ha+lNIDv7MyWSuWqgByrekl7dKRxUIQlYt1qIpYbTAao+ouWEFQFYQmFdvzxlBycrb2MFLbnO6Vr1xE60zmOrq9eiI8CzSGBQRcinL/1Y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717148; c=relaxed/simple;
-	bh=UrcnkYbHLjGdyzFE+xOXeuW0UUEwRo+U19jrWxZVbhQ=;
+	s=arc-20240116; t=1750717150; c=relaxed/simple;
+	bh=aetSlRL3gFebaGGZenFP9w1cgcSeaCpNDykah8esWhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bb1WjJ3w5p971WGgRfEgrbub3J2HTQBDe9WZfeCbgdm71P/ZzTe34uhndnneOPnk7baEvc8IB2enJW+5m8l41QYFrr9L8RA97MvcZ/Il2GHv/vib3k2WKahUBl1knSBlUqDLu41QLk1hT9pdPW4kXNPSQ3FPk1TqbEElNdr3t4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08PL0eEw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JqQi/961hkjFQroA7+vklyzR7sGpPg/Jhels0fyfY/aJehJ1O67/HWXnFvqS/M0T8rC36Ro6YCHGyoRHynmeAl6qXonH6Db+19v7SqYSnGl9yqR0N3ykI4a5sN8BWWpxnWWbuVfXNnnVn1yuZviNxlKNgNN3FYWQNz4lfAK1F9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDqSYtql; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08PL0eEw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01336C4CEEA;
-	Mon, 23 Jun 2025 22:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDqSYtql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AECCC4CEED;
+	Mon, 23 Jun 2025 22:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717148;
-	bh=UrcnkYbHLjGdyzFE+xOXeuW0UUEwRo+U19jrWxZVbhQ=;
+	s=korg; t=1750717150;
+	bh=aetSlRL3gFebaGGZenFP9w1cgcSeaCpNDykah8esWhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=08PL0eEwNE26IHZ1bgtF7j1rGyNoqUx92Y2oiv1J8VnTJliMfOnonvhOstTI0ao04
-	 Gbb6DGlzt2wzEFY8ZxSYlJdGQnhpIBCl2d1qb+GVjeOfYOBZNgyw8TIu0UQLY6Fud4
-	 7mag0ULslI84m/EbKKRLm5jqBsSWQyLN/0yrXFuc=
+	b=DDqSYtqlodJVyOm7fyxTZ1hGu/yL2ub7aaqghiyG7UKb1GRL7ENz+d2Wa7FN291Yu
+	 cnY/ljZfa2BzEK/dhr+SYLWfOOX05ZX1PnvU1ZNeo6ay53bcTWjlEHBbjTLpVmSJ0T
+	 Q9ZCcFuDNYcYT+yttlE8PEGBO1ETsNX0TRqvvJtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Nyekjaer <sean@geanix.com>,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 372/508] iio: imu: inv_icm42600: Fix temperature calculation
-Date: Mon, 23 Jun 2025 15:06:57 +0200
-Message-ID: <20250623130654.490657764@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.12 330/414] arm64: Restrict pagetable teardown to avoid false warning
+Date: Mon, 23 Jun 2025 15:07:47 +0200
+Message-ID: <20250623130650.239017164@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,56 +48,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Dev Jain <dev.jain@arm.com>
 
-commit e2f820014239df9360064079ae93f838ff3b7f8c upstream.
+commit 650768c512faba8070bf4cfbb28c95eb5cd203f3 upstream.
 
->From the documentation:
-"offset to be added to <type>[Y]_raw prior toscaling by <type>[Y]_scale"
-Offset should be applied before multiplying scale, so divide offset by
-scale to make this correct.
+Commit 9c006972c3fe ("arm64: mmu: drop pXd_present() checks from
+pXd_free_pYd_table()") removes the pxd_present() checks because the
+caller checks pxd_present(). But, in case of vmap_try_huge_pud(), the
+caller only checks pud_present(); pud_free_pmd_page() recurses on each
+pmd through pmd_free_pte_page(), wherein the pmd may be none. Thus it is
+possible to hit a warning in the latter, since pmd_none => !pmd_table().
+Thus, add a pmd_present() check in pud_free_pmd_page().
 
-Fixes: bc3eb0207fb5 ("iio: imu: inv_icm42600: add temperature sensor support")
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Acked-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Link: https://patch.msgid.link/20250502-imu-v1-1-129b8391a4e3@geanix.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This problem was found by code inspection.
+
+Fixes: 9c006972c3fe ("arm64: mmu: drop pXd_present() checks from pXd_free_pYd_table()")
+Cc: stable@vger.kernel.org
+Reported-by: Ryan Roberts <ryan.roberts@arm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
+Link: https://lore.kernel.org/r/20250527082633.61073-1-dev.jain@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_temp.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/arm64/mm/mmu.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_temp.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_temp.c
-@@ -67,16 +67,18 @@ int inv_icm42600_temp_read_raw(struct ii
- 		return IIO_VAL_INT;
- 	/*
- 	 * T°C = (temp / 132.48) + 25
--	 * Tm°C = 1000 * ((temp * 100 / 13248) + 25)
-+	 * Tm°C = 1000 * ((temp / 132.48) + 25)
-+	 * Tm°C = 7.548309 * temp + 25000
-+	 * Tm°C = (temp + 3312) * 7.548309
- 	 * scale: 100000 / 13248 ~= 7.548309
--	 * offset: 25000
-+	 * offset: 3312
- 	 */
- 	case IIO_CHAN_INFO_SCALE:
- 		*val = 7;
- 		*val2 = 548309;
- 		return IIO_VAL_INT_PLUS_MICRO;
- 	case IIO_CHAN_INFO_OFFSET:
--		*val = 25000;
-+		*val = 3312;
- 		return IIO_VAL_INT;
- 	default:
- 		return -EINVAL;
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -1285,7 +1285,8 @@ int pud_free_pmd_page(pud_t *pudp, unsig
+ 	next = addr;
+ 	end = addr + PUD_SIZE;
+ 	do {
+-		pmd_free_pte_page(pmdp, next);
++		if (pmd_present(pmdp_get(pmdp)))
++			pmd_free_pte_page(pmdp, next);
+ 	} while (pmdp++, next += PMD_SIZE, next != end);
+ 
+ 	pud_clear(pudp);
 
 
