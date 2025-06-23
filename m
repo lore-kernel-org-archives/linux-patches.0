@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A6B70838;
-	Mon, 23 Jun 2025 21:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0729270838;
+	Mon, 23 Jun 2025 21:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713059; cv=none; b=JnQZHtKkJi7hk+QOloeNHqixYpnf4jJbwMTZYHkFPMNEL38HeIt1PddpG/FEY3yX/jWLakk2QdBBUMtZ9koGgi0x81chkNLdtYb8yygTKfUChpmXU41la9FAxrE5WVVfSeFkLcYM7Tbn6KdkLWh00+3Ks2NyuhPZ4QjCeY6MHH4=
+	t=1750713062; cv=none; b=mPlzJvBhpYpXFLerZWAAfGtm91PzPFJwAxKXi8yWMKJX1xM7XQxSIwn6btJ1nx7PKdGbdb3l2SrqBlwkZ2P3k3rtp8qgHXfXdrKGj6e+GI+Fs5MxKv9HBglieeNDQ47e4pm/88rlH/3jKQRBUW42o6qeMiaD8sIbPcSUXRC06Qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713059; c=relaxed/simple;
-	bh=Co5T8OF3vBfSULil1PZ9InU3aD4X0izpKdI6ZWgOi2A=;
+	s=arc-20240116; t=1750713062; c=relaxed/simple;
+	bh=mnvCxgnpekIVuWY/gJuvOiuR68pEdVdvYHX0VVZW8f8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=frzOOEXNqiGhXfM3sNWutO4nlbm0CO+2xhIRLI1t5d/iYlEdcQ/jeLHGMfdRkkOBckIlr1t/0CgMJ5O9ZmVuTKNzb92w6/hlZ+VsqiRYuf5COYzEgzN2BYdVX0Jmn0zCq//TmqYl11/Br7rsCLYLfLayyi1UBO0KhCJp1iDlzMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/i9XJXE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cyLWoSZ8hXNGmCKzEmsPSJDrrHT4xAbfbFTNdVgD2dVIMZ0pJHeOc8fE28MOBd7n5AUETbtwxwIz6UkegedSldvKrR2rw7JPBrSH8HHr9mmkMsYFsIdCbFXSXj0NTEA1raBwMmIoIB3aMF9YIoBKMx3nhF/Pr+845L5HK8ozuY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kKsUHOay; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/i9XJXE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22958C4CEEA;
-	Mon, 23 Jun 2025 21:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kKsUHOay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BADC4CEEA;
+	Mon, 23 Jun 2025 21:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713059;
-	bh=Co5T8OF3vBfSULil1PZ9InU3aD4X0izpKdI6ZWgOi2A=;
+	s=korg; t=1750713061;
+	bh=mnvCxgnpekIVuWY/gJuvOiuR68pEdVdvYHX0VVZW8f8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/i9XJXEl3lxQXOSL+AJ2/CxKwbZ5zaDTewoPRo/co7l939uVtmhXgcoKGJ2isjtm
-	 iZgmzoaqBJG4nb5Pq5g7qfKQT9dLHZhwAjOzFKq170N9h0r3cYa624YjRSQBaQxR6w
-	 lUOQYNWUoTUuEyV5/ZPAcd95m7gdLo/90ItzBJaM=
+	b=kKsUHOayXn8CH974cYqWe1Cl9BA2jE58SZLzLKkFTDnKXrLHKmpDw9FSvV7/eruqB
+	 B2L9Y7aWdEku+X1qZRnewcSFbrUjpqpF2s6vUeS7NZcqFW2+36+6s5VTEa7qPyhSMQ
+	 6Be4v4EQAydFeDHFqYauNFKDyddZ9NzZG3bCgN/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronak Doshi <ronak.doshi@broadcom.com>,
-	Guolin Yang <guolin.yang@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/411] vmxnet3: correctly report gso type for UDP tunnels
-Date: Mon, 23 Jun 2025 15:04:26 +0200
-Message-ID: <20250623130636.626152964@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.10 143/355] MIPS: Prefer cc-option for additions to cflags
+Date: Mon, 23 Jun 2025 15:05:44 +0200
+Message-ID: <20250623130631.012601632@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,88 +49,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ronak Doshi <ronak.doshi@broadcom.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 982d30c30eaa2ec723df42e3bf526c014c1dbb88 ]
+commit 337ff6bb8960fdc128cabd264aaea3d42ca27a32 upstream.
 
-Commit 3d010c8031e3 ("udp: do not accept non-tunnel GSO skbs landing
-in a tunnel") added checks in linux stack to not accept non-tunnel
-GRO packets landing in a tunnel. This exposed an issue in vmxnet3
-which was not correctly reporting GRO packets for tunnel packets.
+A future change will switch as-option to use KBUILD_AFLAGS instead of
+KBUILD_CFLAGS to allow clang to drop -Qunused-arguments, which may cause
+issues if the flag being tested requires a flag previously added to
+KBUILD_CFLAGS but not KBUILD_AFLAGS. Use cc-option for cflags additions
+so that the flags are tested properly.
 
-This patch fixes this issue by setting correct GSO type for the
-tunnel packets.
-
-Currently, vmxnet3 does not support reporting inner fields for LRO
-tunnel packets. The issue is not seen for egress drivers that do not
-use skb inner fields. The workaround is to enable tnl-segmentation
-offload on the egress interfaces if the driver supports it. This
-problem pre-exists this patch fix and can be addressed as a separate
-future patch.
-
-Fixes: dacce2be3312 ("vmxnet3: add geneve and vxlan tunnel offload support")
-Signed-off-by: Ronak Doshi <ronak.doshi@broadcom.com>
-Acked-by: Guolin Yang <guolin.yang@broadcom.com>
-Link: https://patch.msgid.link/20250530152701.70354-1-ronak.doshi@broadcom.com
-[pabeni@redhat.com: dropped the changelog]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Anders Roxell <anders.roxell@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ arch/mips/Makefile             |    2 +-
+ arch/mips/loongson2ef/Platform |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
-index b88092a6bc851..78d8c04b00a7f 100644
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -1361,6 +1361,30 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
- 	return (hlen + (hdr.tcp->doff << 2));
- }
+--- a/arch/mips/Makefile
++++ b/arch/mips/Makefile
+@@ -153,7 +153,7 @@ cflags-y += -fno-stack-check
+ #
+ # Avoid this by explicitly disabling that assembler behaviour.
+ #
+-cflags-y += $(call as-option,-Wa$(comma)-mno-fix-loongson3-llsc,)
++cflags-y += $(call cc-option,-Wa$(comma)-mno-fix-loongson3-llsc,)
  
-+static void
-+vmxnet3_lro_tunnel(struct sk_buff *skb, __be16 ip_proto)
-+{
-+	struct udphdr *uh = NULL;
-+
-+	if (ip_proto == htons(ETH_P_IP)) {
-+		struct iphdr *iph = (struct iphdr *)skb->data;
-+
-+		if (iph->protocol == IPPROTO_UDP)
-+			uh = (struct udphdr *)(iph + 1);
-+	} else {
-+		struct ipv6hdr *iph = (struct ipv6hdr *)skb->data;
-+
-+		if (iph->nexthdr == IPPROTO_UDP)
-+			uh = (struct udphdr *)(iph + 1);
-+	}
-+	if (uh) {
-+		if (uh->check)
-+			skb_shinfo(skb)->gso_type |= SKB_GSO_UDP_TUNNEL_CSUM;
-+		else
-+			skb_shinfo(skb)->gso_type |= SKB_GSO_UDP_TUNNEL;
-+	}
-+}
-+
- static int
- vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
- 		       struct vmxnet3_adapter *adapter, int quota)
-@@ -1615,6 +1639,8 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
- 			if (segCnt != 0 && mss != 0) {
- 				skb_shinfo(skb)->gso_type = rcd->v4 ?
- 					SKB_GSO_TCPV4 : SKB_GSO_TCPV6;
-+				if (encap_lro)
-+					vmxnet3_lro_tunnel(skb, skb->protocol);
- 				skb_shinfo(skb)->gso_size = mss;
- 				skb_shinfo(skb)->gso_segs = segCnt;
- 			} else if ((segCnt != 0 || skb->len > mtu) && !encap_lro) {
--- 
-2.39.5
-
+ #
+ # CPU-dependent compiler/assembler options for optimization.
+--- a/arch/mips/loongson2ef/Platform
++++ b/arch/mips/loongson2ef/Platform
+@@ -28,7 +28,7 @@ cflags-$(CONFIG_CPU_LOONGSON2F) += \
+ # binutils does not merge support for the flag then we can revisit & remove
+ # this later - for now it ensures vendor toolchains don't cause problems.
+ #
+-cflags-$(CONFIG_CPU_LOONGSON2EF)	+= $(call as-option,-Wa$(comma)-mno-fix-loongson3-llsc,)
++cflags-$(CONFIG_CPU_LOONGSON2EF)	+= $(call cc-option,-Wa$(comma)-mno-fix-loongson3-llsc,)
+ 
+ # Enable the workarounds for Loongson2f
+ ifdef CONFIG_CPU_LOONGSON2F_WORKAROUNDS
 
 
