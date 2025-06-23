@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67442288C6;
-	Mon, 23 Jun 2025 22:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4199221FF2B;
+	Mon, 23 Jun 2025 22:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716507; cv=none; b=HXRsMeRz4U+wu+dqPSn9nnLJfL/wuYBfcB2DhrofzbQhEe6XnEh5I6h3sXPbYMhjS0ov2Hbs6Ri3qx+6vaF3SJlNWHtBABnv12LkR3ZJxTDSsOGzS4DCFLiG5lPfMnDRad81XQ3bvA5Kro/WqRSCM0sI4vYAPd8PYOV47U3SXKs=
+	t=1750716510; cv=none; b=aagLZqobXEuE1DJGKZcOtXreyocbW2Lg82rZLWUbmEZnseA0wqv100Hhmt6ikshOPLraD4yRPKwW6kqtYn7IHhKWuvERTVEAo3DE4V13+8Aeu7TxfzAkAnWFvhtChYpcrYs5k7rWH97KQ9/TJ7G8ozt+VlGoWErRgAqJxR2ZE/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716507; c=relaxed/simple;
-	bh=Id7/eOIruyOCiRoIMpIpz/pLa+0gAm29hNIc9iK9zOw=;
+	s=arc-20240116; t=1750716510; c=relaxed/simple;
+	bh=11h6b96LvNhv0FYJ7gUkqkYCOVIcL8tUCifJHYjh/Uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GSgbinHMtyqUEePGWXteLHGOxowPIQrnV60rNKQdZ3kB9Wi/BboyAwRjhm4Ai0tMty5tcKcjBbZErd9ZEXm0nNdniKavh96Oq01g8Mwwf3v6+RMTBp59b9mFBu0b/OP6JlyOTJjMuP5Z/NEAD2oJKaUywWay9Exw1jdhc3x4XOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iafTT2P+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p0T0/hbKzW8r05UTEXCT8BbJrGo2lryi5DC19pq+bprH/OVkZFrpYgdIgNw8mkv8LmQ07DHJOllBc71PH+eM4GUeRAD7vO9smYO9Txg/SVVlH95/Yt8P6sdlnHGO1V4qt2kevkyuaLs25kx6D35Yh2hdT1ceyy3AwFZivJMVNVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyBGtkd4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iafTT2P+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66679C4CEEA;
-	Mon, 23 Jun 2025 22:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyBGtkd4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE44CC4CEEA;
+	Mon, 23 Jun 2025 22:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716507;
-	bh=Id7/eOIruyOCiRoIMpIpz/pLa+0gAm29hNIc9iK9zOw=;
+	s=korg; t=1750716510;
+	bh=11h6b96LvNhv0FYJ7gUkqkYCOVIcL8tUCifJHYjh/Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iafTT2P+hsBlfhOFV4fWgMxUa14j0TTriyXWCoJZ6lQI+YaEPfzMtWyFGyRWClAw0
-	 ywqb6p98m+mQNRazjxmOex5o3SXPKvQljE98WvjopIotKaCOFjyBqAnMNqH3I2vvQG
-	 wWjnSI8aCljiD1ak4OXuVPyrQ33QLmaRmqSX7pGY=
+	b=XyBGtkd4tpx/jhQAj0otL4vU91OBN1T2t9aLQQkFVUlGnAW2Y3FHUaWhIyIZVaGY0
+	 8Y/83EZ6foC9D5rt+wIDvZvLFv2Bwk1FttyEcJ6qFNh08CWUMReswbIsUQWWhMz/ks
+	 THl7fy6z5G9uaN2IgHHLBHDls/oJIMupeb6kk7ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 284/414] bus: fsl-mc: increase MC_CMD_COMPLETION_TIMEOUT_MS value
-Date: Mon, 23 Jun 2025 15:07:01 +0200
-Message-ID: <20250623130649.118760562@linuxfoundation.org>
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Rik van Riel <riel@surriel.com>
+Subject: [PATCH 6.15 557/592] x86/mm: Disable INVLPGB when PTI is enabled
+Date: Mon, 23 Jun 2025 15:08:35 +0200
+Message-ID: <20250623130713.691846764@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +46,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+From: Dave Hansen <dave.hansen@linux.intel.com>
 
-[ Upstream commit 23d060136841c58c2f9ee8c08ad945d1879ead4b ]
+commit 94a17f2dc90bc7eae36c0f478515d4bd1c23e877 upstream.
 
-In case the MC firmware runs in debug mode with extensive prints pushed
-to the console, the current timeout of 500ms is not enough.
-Increase the timeout value so that we don't have any chance of wrongly
-assuming that the firmware is not responding when it's just taking more
-time.
+PTI uses separate ASIDs (aka. PCIDs) for kernel and user address
+spaces. When the kernel needs to flush the user address space, it
+just sets a bit in a bitmap and then flushes the entire PCID on
+the next switch to userspace.
 
-Signed-off-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20250408105814.2837951-7-ioana.ciornei@nxp.com
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This bitmap is a single 'unsigned long' which is plenty for all 6
+dynamic ASIDs. But, unfortunately, the INVLPGB support brings along a
+bunch more user ASIDs, as many as ~2k more. The bitmap can't address
+that many.
+
+Fortunately, the bitmap is only needed for PTI and all the CPUs
+with INVLPGB are AMD CPUs that aren't vulnerable to Meltdown and
+don't need PTI. The only way someone can run into an issue in
+practice is by booting with pti=on on a newer AMD CPU.
+
+Disable INVLPGB if PTI is enabled. Avoid overrunning the small
+bitmap.
+
+Note: this will be fixed up properly by making the bitmap bigger.
+For now, just avoid the mostly theoretical bug.
+
+Fixes: 4afeb0ed1753 ("x86/mm: Enable broadcast TLB invalidation for multi-threaded processes")
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Rik van Riel <riel@surriel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250610222420.E8CBF472%40davehans-spike.ostc.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/fsl-mc/mc-sys.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/mm/pti.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/bus/fsl-mc/mc-sys.c b/drivers/bus/fsl-mc/mc-sys.c
-index f2052cd0a0517..b22c59d57c8f0 100644
---- a/drivers/bus/fsl-mc/mc-sys.c
-+++ b/drivers/bus/fsl-mc/mc-sys.c
-@@ -19,7 +19,7 @@
- /*
-  * Timeout in milliseconds to wait for the completion of an MC command
-  */
--#define MC_CMD_COMPLETION_TIMEOUT_MS	500
-+#define MC_CMD_COMPLETION_TIMEOUT_MS	15000
+--- a/arch/x86/mm/pti.c
++++ b/arch/x86/mm/pti.c
+@@ -98,6 +98,11 @@ void __init pti_check_boottime_disable(v
+ 		return;
  
- /*
-  * usleep_range() min and max values used to throttle down polling
--- 
-2.39.5
-
+ 	setup_force_cpu_cap(X86_FEATURE_PTI);
++
++	if (cpu_feature_enabled(X86_FEATURE_INVLPGB)) {
++		pr_debug("PTI enabled, disabling INVLPGB\n");
++		setup_clear_cpu_cap(X86_FEATURE_INVLPGB);
++	}
+ }
+ 
+ static int __init pti_parse_cmdline(char *arg)
 
 
