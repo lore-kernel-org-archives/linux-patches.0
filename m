@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F94F19DF4A;
-	Mon, 23 Jun 2025 22:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889701D86DC;
+	Mon, 23 Jun 2025 22:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716179; cv=none; b=RJxdpAb4TUsL/RawvPrYfLj+VVtmzGy+938ddHNSsrP463jNA8ZtcbMzLYpHiPB4L8nIFNQpnNJKsuD9guJbNQwSGLPpHBVrhVPMRk/Df3UoHd/+C2ExWy8GHTB7RM6sqjMHMKhh2hVhO3w0gahl1B3tOHR83q+Plo9LS7qEZgQ=
+	t=1750716181; cv=none; b=FYRZCye4yDLKp27FFtIPXde3K3RuTio5/F5ktMVuAkaTJ/pknqnyEMkmQttAIlfB3nkMpH4SI5aSKD3pb3Wkx1itBENUTcVA+W4oVsNKxYonnG16mJR0wxZZ9vGNxqxX7jnUcLoHYK+jAmULbBqbvglmlHEocW8IEMZi8zqTftg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716179; c=relaxed/simple;
-	bh=Fb2RXm5Qc9fHZ6ie+zsWg6VWClRu9tXbXHu5nirJ1Uw=;
+	s=arc-20240116; t=1750716181; c=relaxed/simple;
+	bh=lB9mwtL7KOVSoS/R9SjNlo8JEgZ48euPZcmRGoLh5dU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IFxy4cnhyvK5FL4pkLseaiAYdZK88QLvo+Dlk4ZV1tJ6bvo0o3pVKnQXoYuD9bFTmXruVIEBaAx/VmtdjslGTUskovzzad70kj+mhaCxJx5O5n3l89pZ9phkUpcLehb5KvtmDqUAWXpy+vs5/R5/E4/qYPrqbb2xE1V4RKFTpUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3nBTNmQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rZFHJaY5cFQjFMHqq9lJaHSyeWkOsEAsf9XWd25kaObjTE6Wve4V+flKlfsAULwxnh0+/nH80eGauFGejYyWv6+4QEyEb9GA06urr2haNVf9TtKfWXIGlIi4dCbhBOGcCr9ZkhRh0eJzX1lAYXIiMBpdLWzC/UwtU0SJGe1F6fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5wPukeC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3nBTNmQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FE8C4CEEA;
-	Mon, 23 Jun 2025 22:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5wPukeC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BF2C4CEF1;
+	Mon, 23 Jun 2025 22:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716179;
-	bh=Fb2RXm5Qc9fHZ6ie+zsWg6VWClRu9tXbXHu5nirJ1Uw=;
+	s=korg; t=1750716181;
+	bh=lB9mwtL7KOVSoS/R9SjNlo8JEgZ48euPZcmRGoLh5dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3nBTNmQw5BjvD4HmOyainLx+y4aTUYJ8ciN6HLHlfx5ulPGyusOuvn3ZC/wWbxFf
-	 ZtQVjYJ/cn269gdpbwYl9RYZggl5aIfh4V44l2Gv/4WtKv8IfJAWw7yhkCQ48ju5IV
-	 IS1w7Zwipn6DuDnRkR72BSXOmd95bzCRRx59xzf0=
+	b=m5wPukeCbohLBEYvBCLdyalX0jYLSbMwG4CUoDqJBypJTbC3oW0Oubxvfj7WNVGI+
+	 zLWeB45nMXLjtkUNQH2NGnaSdii23Tgrp00S8XDLhhP9UWDWdedWDZ58DS6zhtKyzO
+	 AoD+w4qauZu0PI+Ww/Tifn7Xv2eKyM7vfW+DbUkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 238/414] clk: rockchip: rk3036: mark ddrphy as critical
-Date: Mon, 23 Jun 2025 15:06:15 +0200
-Message-ID: <20250623130647.990744515@linuxfoundation.org>
+Subject: [PATCH 5.15 333/411] sock: Correct error checking condition for (assign|release)_proto_idx()
+Date: Mon, 23 Jun 2025 15:07:57 +0200
+Message-ID: <20250623130642.033190587@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,39 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 596a977b34a722c00245801a5774aa79cec4e81d ]
+[ Upstream commit faeefc173be40512341b102cf1568aa0b6571acd ]
 
-The ddrphy is supplied by the dpll, but due to the limited number of PLLs
-on the rk3036, the dpll also is used for other periperhals, like the GPU.
+(assign|release)_proto_idx() wrongly check find_first_zero_bit() failure
+by condition '(prot->inuse_idx == PROTO_INUSE_NR - 1)' obviously.
 
-So it happened, when the Lima driver turned off the gpu clock, this in
-turn also disabled the dpll and thus the ram.
+Fix by correcting the condition to '(prot->inuse_idx == PROTO_INUSE_NR)'
 
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20250503202532.992033-4-heiko@sntech.de
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250410-fix_net-v2-1-d69e7c5739a4@quicinc.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/rockchip/clk-rk3036.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/sock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/rockchip/clk-rk3036.c b/drivers/clk/rockchip/clk-rk3036.c
-index d341ce0708aac..e4af3a9286379 100644
---- a/drivers/clk/rockchip/clk-rk3036.c
-+++ b/drivers/clk/rockchip/clk-rk3036.c
-@@ -431,6 +431,7 @@ static const char *const rk3036_critical_clocks[] __initconst = {
- 	"hclk_peri",
- 	"pclk_peri",
- 	"pclk_ddrupctl",
-+	"ddrphy",
- };
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 7f7f02a01f2dd..3634a4f1f76c6 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3571,7 +3571,7 @@ static int assign_proto_idx(struct proto *prot)
+ {
+ 	prot->inuse_idx = find_first_zero_bit(proto_inuse_idx, PROTO_INUSE_NR);
  
- static void __init rk3036_clk_init(struct device_node *np)
+-	if (unlikely(prot->inuse_idx == PROTO_INUSE_NR - 1)) {
++	if (unlikely(prot->inuse_idx == PROTO_INUSE_NR)) {
+ 		pr_err("PROTO_INUSE_NR exhausted\n");
+ 		return -ENOSPC;
+ 	}
+@@ -3582,7 +3582,7 @@ static int assign_proto_idx(struct proto *prot)
+ 
+ static void release_proto_idx(struct proto *prot)
+ {
+-	if (prot->inuse_idx != PROTO_INUSE_NR - 1)
++	if (prot->inuse_idx != PROTO_INUSE_NR)
+ 		clear_bit(prot->inuse_idx, proto_inuse_idx);
+ }
+ #else
 -- 
 2.39.5
 
