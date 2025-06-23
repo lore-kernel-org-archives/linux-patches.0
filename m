@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0144315A;
-	Mon, 23 Jun 2025 21:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7EB4315A;
+	Mon, 23 Jun 2025 21:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715314; cv=none; b=WADmUCq0olwrYS+A2GxN5AgUO+p4yigc9yH6xIEqhTksO13Usjz0YDItXXoQTEoxQ+FpohMJ4IhNhQYE5Rc5k8l90GppdPTY0xR83hDeuSdWrlu0YIyroaAQ9WpAdPJQ4Pv45N5SQuP28CuAPDB5GyTIR8nvGactDAh0fxxewmc=
+	t=1750715317; cv=none; b=G8Ap2lQ9bcWRcEzCCEu1WN7fVnGCcpUBh4OoRPG9NUOv9rfPMSxPPV06c7LkVorWGwdbHTB9IRllfSGYlKqXEAL3N0xGCPtenHN/iMcvIfLum/p6m8ytRPPXC7ozbNLgdO9h/G21N2emY2I3kvTyU350rB9xWDGspbzT2JF5Oqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715314; c=relaxed/simple;
-	bh=qa2yeibhODCCbiZXjqxOwIC3vJ1krdzEqQ+/IQzhmIE=;
+	s=arc-20240116; t=1750715317; c=relaxed/simple;
+	bh=mDjbuPyaVCd5awQDBMesFhcZEg8r8C9R9GCm0lXTo5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fhgwj9d/Ezu80fjXhmdfSKrbmucO4tcPeBurFdYILwUG4vZHwDLyE3fXMyOK+KKRh86nk6w6fnR8ijIw48IrPilIepmxPKjLY9Ba/sDuRq+rNJgDRHUdrOVDrd2m+0/evOPMJWug8XT+MsCgCsQsraEnMVOdaS+FTtCM4s/FY+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOI8j+8g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EFhYJwhRrPQsxI9YdgM4Va+CP0o/GG+nRZxrF+ftB5nvS3DOoYFDVM0VQo8BsuST5lwGour96JFkuLvm96Rf+H4oXDYBVlN2UQxaWFSD7IG9YlAneYj9QU1OcvfoBrjIUU3Gq5tS4xlVFIMJ4gPesQLQbhURmEITbniq3TCIDAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSvCN9Lf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOI8j+8g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01974C4CEEA;
-	Mon, 23 Jun 2025 21:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSvCN9Lf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7339FC4CEEA;
+	Mon, 23 Jun 2025 21:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715314;
-	bh=qa2yeibhODCCbiZXjqxOwIC3vJ1krdzEqQ+/IQzhmIE=;
+	s=korg; t=1750715316;
+	bh=mDjbuPyaVCd5awQDBMesFhcZEg8r8C9R9GCm0lXTo5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wOI8j+8gV9ufGbVEAtHWTWtqh3l8u9W05JYJWtVSlGjld2DbZGLKgBLvm+c+ZYL7G
-	 fERoP0g4aj1Lsoutay/ESWQ9ujdTm3dTgGAEOHFZMicHd7YpREJ1/6g3yp3NsIC4xh
-	 gI8dMA1WepQEK9Ppx4FkRe2APSrf5oQKkNJ8lJ78=
+	b=lSvCN9Lflf+hy/MXUvLaF7wfqCyf9cBoYtq2YyNLw3gPkS2J5JjBO/ssjL8dW6h6Z
+	 PTP3R0EbRVxNHT7MV64xawiThKJZ1ZLAegWIg169seWWvcT4PrZSbA7rLDtJYo78tD
+	 H8YSLXLxybgIUBKyAXmkCp4ZiW32V8vNtRduy1b8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 227/508] ath10k: snoc: fix unbalanced IRQ enable in crash recovery
-Date: Mon, 23 Jun 2025 15:04:32 +0200
-Message-ID: <20250623130650.847043212@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.15 245/411] dm-mirror: fix a tiny race condition
+Date: Mon, 23 Jun 2025 15:06:29 +0200
+Message-ID: <20250623130639.820900172@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +45,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Caleb Connolly <caleb.connolly@linaro.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 1650d32b92b01db03a1a95d69ee74fcbc34d4b00 ]
+commit 829451beaed6165eb11d7a9fb4e28eb17f489980 upstream.
 
-In ath10k_snoc_hif_stop() we skip disabling the IRQs in the crash
-recovery flow, but we still unconditionally call enable again in
-ath10k_snoc_hif_start().
+There's a tiny race condition in dm-mirror. The functions queue_bio and
+write_callback grab a spinlock, add a bio to the list, drop the spinlock
+and wake up the mirrord thread that processes bios in the list.
 
-We can't check the ATH10K_FLAG_CRASH_FLUSH bit since it is cleared
-before hif_start() is called, so instead check the
-ATH10K_SNOC_FLAG_RECOVERY flag and skip enabling the IRQs during crash
-recovery.
+It may be possible that the mirrord thread processes the bio just after
+spin_unlock_irqrestore is called, before wakeup_mirrord. This spurious
+wake-up is normally harmless, however if the device mapper device is
+unloaded just after the bio was processed, it may be possible that
+wakeup_mirrord(ms) uses invalid "ms" pointer.
 
-This fixes unbalanced IRQ enable splats that happen after recovering from
-a crash.
+Fix this bug by moving wakeup_mirrord inside the spinlock.
 
-Fixes: 0e622f67e041 ("ath10k: add support for WCN3990 firmware crash recovery")
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-Tested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250318205043.1043148-1-caleb.connolly@linaro.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath10k/snoc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/dm-raid1.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
-index 4b7266d928470..b43658b016844 100644
---- a/drivers/net/wireless/ath/ath10k/snoc.c
-+++ b/drivers/net/wireless/ath/ath10k/snoc.c
-@@ -936,7 +936,9 @@ static int ath10k_snoc_hif_start(struct ath10k *ar)
- 	bitmap_clear(ar_snoc->pending_ce_irqs, 0, CE_COUNT_MAX);
+--- a/drivers/md/dm-raid1.c
++++ b/drivers/md/dm-raid1.c
+@@ -128,10 +128,9 @@ static void queue_bio(struct mirror_set
+ 	spin_lock_irqsave(&ms->lock, flags);
+ 	should_wake = !(bl->head);
+ 	bio_list_add(bl, bio);
+-	spin_unlock_irqrestore(&ms->lock, flags);
+-
+ 	if (should_wake)
+ 		wakeup_mirrord(ms);
++	spin_unlock_irqrestore(&ms->lock, flags);
+ }
  
- 	ath10k_core_napi_enable(ar);
--	ath10k_snoc_irq_enable(ar);
-+	/* IRQs are left enabled when we restart due to a firmware crash */
-+	if (!test_bit(ATH10K_SNOC_FLAG_RECOVERY, &ar_snoc->flags))
-+		ath10k_snoc_irq_enable(ar);
- 	ath10k_snoc_rx_post(ar);
+ static void dispatch_bios(void *context, struct bio_list *bio_list)
+@@ -638,9 +637,9 @@ static void write_callback(unsigned long
+ 	if (!ms->failures.head)
+ 		should_wake = 1;
+ 	bio_list_add(&ms->failures, bio);
+-	spin_unlock_irqrestore(&ms->lock, flags);
+ 	if (should_wake)
+ 		wakeup_mirrord(ms);
++	spin_unlock_irqrestore(&ms->lock, flags);
+ }
  
- 	clear_bit(ATH10K_SNOC_FLAG_RECOVERY, &ar_snoc->flags);
--- 
-2.39.5
-
+ static void do_write(struct mirror_set *ms, struct bio *bio)
 
 
