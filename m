@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A4523E330;
-	Mon, 23 Jun 2025 13:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1691F1522;
+	Mon, 23 Jun 2025 13:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684441; cv=none; b=SiKDNQNwNlKLKg0q4xKKXHQrSV1GlTEu0Z2Vk347ot0VvmFYBrNuyRjtn7aKoKtfX0HQuQTeQU8emp6lj/Re+mfAjmPsENYJDR3US37JKbaeHZ0hIzL3vV6Lo82gpkm5sHCepksI4XyCCUhnFGvGSAKAwshqBQ5JoO26/cRmRxU=
+	t=1750684443; cv=none; b=VLP+uXSbfysviDkrd0FDgQhdMvEuISYulAD2lKMRGL6iBGwU5VC3WXWS2tOSrIssIUDcdPnoID5rZIgBQH/hvI2pIFfklyJVQ7M+9VgPkgNSWs82WkK9X9Etq5EAV3Q29MiAq1cezVwvXNhquq0IGh2n7PX6mP6DTOqhFnZdJVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684441; c=relaxed/simple;
-	bh=xEyXeoVzYkj6XfkAAzF6rUHfMyDF/DI659UDKxCrBAw=;
+	s=arc-20240116; t=1750684443; c=relaxed/simple;
+	bh=Lk1JhRUSlvlxyzsLtrsUNP9vwl0Qt8yaUHLV8cpeV18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BpscQt9tqlvIOMEMVrdTkMYnesl9ktAc11+2/slo+pwzJLWEed1OA0wErLKLS65Z7xQpI7VcsulmEzMAmHgjtVLYJblg0959knYUIANxoKOdeEyMTJ1NbfNYTttwlr2pwB8Tl5iX+d9nEzoT2O1rEceOzP+xwVlLhGgdtXiO7JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOowMGQR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l0C5KvgjjdJKLQbmAqTIgMFv9yoSkIH2lNJdGUX+0FrnLpeiu3KutjJUBce+E7KBbEQM8aeJtdcwYuW9YBQM9BD+3KPRK+0JVkvSwlK1NX43u7wAav+DZhRkLp8BJ91vXVhoPNcyb/GBWd+oK4zWta3SAXniIVjrhR3fC4miAkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klgjWXJm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOowMGQR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E523C4CEEA;
-	Mon, 23 Jun 2025 13:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klgjWXJm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C707FC4CEEA;
+	Mon, 23 Jun 2025 13:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684440;
-	bh=xEyXeoVzYkj6XfkAAzF6rUHfMyDF/DI659UDKxCrBAw=;
+	s=korg; t=1750684443;
+	bh=Lk1JhRUSlvlxyzsLtrsUNP9vwl0Qt8yaUHLV8cpeV18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOowMGQRvO9nWyowciYqs4jgiCM+1gcsW4aIpdKhdY0O98Hvl1HTqzyYM0qO4WMRL
-	 lb4ia9Tc3+jWEmGyZ6v/xFomCUCoLE2fvWT1h6HvqylfiXObUwgAu3+MWL6WRWXPS4
-	 77oEzoU9PUHJEyhVyHaFZjBobMws43wVrinzqZDk=
+	b=klgjWXJmcZo2FHz2GXKkCRmbz1jPlFkeo+0Byo4/l1SjLS65rTHyjvw7puDAgmCaV
+	 M3irGlNgsYKdt7Czfjd4SKK2vgdYZHH6Mf/kvZDgDbLHI7k6dQQ+6HtH4o/am6LCat
+	 5qp+n21KycWzoaMUh43Pu00cL9mn+PMSgT22W7x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.15 068/592] media: gspca: Add error handling for stv06xx_read_sensor()
-Date: Mon, 23 Jun 2025 15:00:26 +0200
-Message-ID: <20250623130701.878058587@linuxfoundation.org>
+Subject: [PATCH 6.15 069/592] media: i2c: imx335: Fix frame size enumeration
+Date: Mon, 23 Jun 2025 15:00:27 +0200
+Message-ID: <20250623130701.903787617@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -50,41 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Kieran Bingham <kieran.bingham@ideasonboard.com>
 
-commit 398a1b33f1479af35ca915c5efc9b00d6204f8fa upstream.
+commit b240df2913d396638033b86af0f0ff76aa1aafc8 upstream.
 
-In hdcs_init(), the return value of stv06xx_read_sensor() needs to be
-checked. A proper implementation can be found in vv6410_dump(). Add a
-check in loop condition and propergate error code to fix this issue.
+In commit cfa49ff0558a ("media: i2c: imx335: Support 2592x1940 10-bit
+mode") the IMX335 driver was extended to support multiple output
+bitdepth modes.
 
-Fixes: 4c98834addfe ("V4L/DVB (10048): gspca - stv06xx: New subdriver.")
-Cc: stable@vger.kernel.org # v2.6+
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+This incorrectly extended the frame size enumeration to check against
+the supported mbus_codes array instead of the supported mode/frame
+array. This has the unwanted side effect of reporting the currently
+supported frame size 2592x1944 three times.
+
+Fix the check accordingly to report a frame size for each supported
+size, which is presently only a single entry.
+
+Fixes: cfa49ff0558a ("media: i2c: imx335: Support 2592x1940 10-bit mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/i2c/imx335.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
-+++ b/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
-@@ -520,12 +520,13 @@ static int hdcs_init(struct sd *sd)
- static int hdcs_dump(struct sd *sd)
- {
- 	u16 reg, val;
-+	int err = 0;
+--- a/drivers/media/i2c/imx335.c
++++ b/drivers/media/i2c/imx335.c
+@@ -660,7 +660,8 @@ static int imx335_enum_frame_size(struct
+ 	struct imx335 *imx335 = to_imx335(sd);
+ 	u32 code;
  
- 	pr_info("Dumping sensor registers:\n");
+-	if (fsize->index > ARRAY_SIZE(imx335_mbus_codes))
++	/* Only a single supported_mode available. */
++	if (fsize->index > 0)
+ 		return -EINVAL;
  
--	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH; reg++) {
--		stv06xx_read_sensor(sd, reg, &val);
-+	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH && !err; reg++) {
-+		err = stv06xx_read_sensor(sd, reg, &val);
- 		pr_info("reg 0x%02x = 0x%02x\n", reg, val);
- 	}
--	return 0;
-+	return (err < 0) ? err : 0;
- }
+ 	code = imx335_get_format_code(imx335, fsize->code);
 
 
