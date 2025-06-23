@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8833597E;
-	Mon, 23 Jun 2025 22:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5593597E;
+	Mon, 23 Jun 2025 22:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716414; cv=none; b=sJ66fmqLIWFVkCdema5yC+h6Ozhsbf0QmwgmHKlFnUfTSAKghEuE7/q+cgbSNAZFiaVnfgR1lOCDOLJiJL7jDjGDeY6kUQGe+mIXYhCTdYewlIuQf3Rr95iwU3fF23F+r0zHhfXEW/tB8yRP8X0+pehZSyphVD6/8niReG78nkQ=
+	t=1750716417; cv=none; b=Yqcktu1zdTAaLMup6/4NeTVSMJPbGhWWgxC72FbMxLv0u/h9oNVi5IsQCtoZnNPim38jLvtfBomj/8lJvb/267LFGeOXGuhK9LeHCUSyKvZ7AWxnNdJE20DUeV8SMaIZex5pp/4Y8481M5QWroil/449t00+3OGLD6P34ZY8Tqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716414; c=relaxed/simple;
-	bh=LYxmP6oFDWH8eZPRJW9OgXs/ja/u+/7vYRKvZrj+d9w=;
+	s=arc-20240116; t=1750716417; c=relaxed/simple;
+	bh=WPtRGSWX2QXNMaS7K/y1fpUamKDwTBipdo9yde8Mrjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QffW+zaFn+j/UTNfya/NKLc+I5fqTXbwXQlNV2fz1sg/WSuqBm7dByUkqT+w3TZtnfM1TaJeccXOppAtd+nlIkPoSXaFRl/0kzjp4a2H9qBGq9XVfovQvw9Jv0NVeHXrtx78KarM54VK4/GZAvUVL5Shc7wR1F5WY/bg/NfrxMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbogUmAQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Si4yX+2I5NsCvouWnZLcwSMOEGnMZl1cFaMaNcaPzZ9y16nrO/ZBM40AeGvaixtkSsIPu5+EfrJXlbm0klCu3mcBBr+eiLPwC26xZmOz7jUy3L9aKrR/xkohn33bDhFMJJkp3m2dhHgJ2QU4oNZVxAO2xRFNlzUCbyO30pmYcGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfToMToT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbogUmAQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B19C4CEEA;
-	Mon, 23 Jun 2025 22:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfToMToT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2749C4CEEA;
+	Mon, 23 Jun 2025 22:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716414;
-	bh=LYxmP6oFDWH8eZPRJW9OgXs/ja/u+/7vYRKvZrj+d9w=;
+	s=korg; t=1750716417;
+	bh=WPtRGSWX2QXNMaS7K/y1fpUamKDwTBipdo9yde8Mrjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbogUmAQJNJdDKe+TaMCVSjypLBEEpW3eCoHFqFliCOm4wG4Nif9983EtRMEOQvq1
-	 cDyo79u9AwHQLSW02XQf/4InRsCUg/Bhgn4O6sd2b/OmUzhrBdBgD13c8EAZQR8Dp0
-	 z1GFMHphD4mApg1/T2XPt9L8F1flRWgQAsqvXfB0=
+	b=jfToMToTfB5HTkTtir0+DNNMWR3EsVOv/lXvRKpa28GqBYBnxoJ1BTaC2VbCk6+QG
+	 kmrjdty2zhhbhcwFjhWKQpUT9JvuTzWef/Fy8lCxZgbG508dG4wRWeQGphvNX+twMt
+	 QATvt0StLnuv5kj7y9Xt0dJ9kgG+L2XU510+Z5hQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie James <eajames@linux.ibm.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.10 347/355] hwmon: (occ) Fix P10 VRM temp sensors
-Date: Mon, 23 Jun 2025 15:09:08 +0200
-Message-ID: <20250623130637.158959941@linuxfoundation.org>
+	David Wei <dw@davidwei.uk>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 262/290] tcp: fix passive TFO socket having invalid NAPI ID
+Date: Mon, 23 Jun 2025 15:08:43 +0200
+Message-ID: <20250623130634.791641836@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +49,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eddie James <eajames@linux.ibm.com>
+From: David Wei <dw@davidwei.uk>
 
-commit ffa2600044979aff4bd6238edb9af815a47d7c32 upstream.
+[ Upstream commit dbe0ca8da1f62b6252e7be6337209f4d86d4a914 ]
 
-The P10 (temp sensor version 0x10) doesn't do the same VRM status
-reporting that was used on P9. It just reports the temperature, so
-drop the check for VRM fru type in the sysfs show function, and don't
-set the name to "alarm".
+There is a bug with passive TFO sockets returning an invalid NAPI ID 0
+from SO_INCOMING_NAPI_ID. Normally this is not an issue, but zero copy
+receive relies on a correct NAPI ID to process sockets on the right
+queue.
 
-Fixes: db4919ec86 ("hwmon: (occ) Add new temperature sensor type")
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
-Link: https://lore.kernel.org/r/20210929153604.14968-1-eajames@linux.ibm.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix by adding a sk_mark_napi_id_set().
+
+Fixes: e5907459ce7e ("tcp: Record Rx hash and NAPI ID in tcp_child_process")
+Signed-off-by: David Wei <dw@davidwei.uk>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250617212102.175711-5-dw@davidwei.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/occ/common.c |   17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ net/ipv4/tcp_fastopen.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hwmon/occ/common.c
-+++ b/drivers/hwmon/occ/common.c
-@@ -340,18 +340,11 @@ static ssize_t occ_show_temp_10(struct d
- 		if (val == OCC_TEMP_SENSOR_FAULT)
- 			return -EREMOTEIO;
+diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
+index 32b28fc21b63c..408985eb74eef 100644
+--- a/net/ipv4/tcp_fastopen.c
++++ b/net/ipv4/tcp_fastopen.c
+@@ -3,6 +3,7 @@
+ #include <linux/tcp.h>
+ #include <linux/rcupdate.h>
+ #include <net/tcp.h>
++#include <net/busy_poll.h>
  
--		/*
--		 * VRM doesn't return temperature, only alarm bit. This
--		 * attribute maps to tempX_alarm instead of tempX_input for
--		 * VRM
--		 */
--		if (temp->fru_type != OCC_FRU_TYPE_VRM) {
--			/* sensor not ready */
--			if (val == 0)
--				return -EAGAIN;
-+		/* sensor not ready */
-+		if (val == 0)
-+			return -EAGAIN;
+ void tcp_fastopen_init_key_once(struct net *net)
+ {
+@@ -279,6 +280,8 @@ static struct sock *tcp_fastopen_create_child(struct sock *sk,
  
--			val *= 1000;
--		}
-+		val *= 1000;
- 		break;
- 	case 2:
- 		val = temp->fru_type;
-@@ -888,7 +881,7 @@ static int occ_setup_sensor_attrs(struct
- 				   0, i, "temp%d_label", s);
- 		attr++;
+ 	refcount_set(&req->rsk_refcnt, 2);
  
--		if (sensors->temp.version > 1 &&
-+		if (sensors->temp.version == 2 &&
- 		    temp->fru_type == OCC_FRU_TYPE_VRM) {
- 			occ_init_attribute(attr, 0444, show_temp, NULL,
- 					   1, i, "temp%d_alarm", s);
++	sk_mark_napi_id_set(child, skb);
++
+ 	/* Now finish processing the fastopen child socket. */
+ 	tcp_init_transfer(child, BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB, skb);
+ 
+-- 
+2.39.5
+
 
 
