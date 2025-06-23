@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304D44315A;
-	Mon, 23 Jun 2025 21:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CC04315A;
+	Mon, 23 Jun 2025 21:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714968; cv=none; b=Jo5SXgKcDf8NiCnJ6R35JZuandOGfmiNRpGNZ+FK1ammtQlZGpVvE0aGkIlD4rBimiSKmlGrJLFQzyuWRdFKBZgnb4T9uZgGcazy96AAquPpasCJptySif8bSn5DMy19aqkAPeHI+KXMuRbwIT75xYZhFyMF8hU+o9jfPZGBolA=
+	t=1750714970; cv=none; b=WgR50OLxfbFk0bZ0GJ8AgJzJ4tjpHKRyPbtemeaxl71+aQ/rBP169l6bCDP1CHFNxjuu/8Xo4YVx9Sl9I5FCTu0bsmY/c/VFG+JbLcBoII51dTQRRvvi1jpHw/OpxS1+iMpZf28/uiIW4UnhkERp17G/y3FmbrmmtMfPmiviAsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714968; c=relaxed/simple;
-	bh=/tUszRO6cePgpFtBQ/DdboO5cuVkKErJ9U6L2nNXinQ=;
+	s=arc-20240116; t=1750714970; c=relaxed/simple;
+	bh=GVnTrg8sr0T24Xi1AL3vAa0rWghpuhQllNGgQjQ+puE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXhUmm+zqeuBaeUWxs/IVUCiY4asIYXqAYW1PGsmaQ+9eeiNWCU4QHbHo7wWbH0/aU1n7Ehmyl8Cr0gtP8tXMxGFjCFp9v4J5mbNuZa5go1/eQM2TVB3v2KaEMi/8mGvIw5wgN8xlKw15MXsqbAwjjxI6a4CwQYWXJGrjAMPmto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0XkSvbt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZVbr3iClQilGBZd959rvr9dfyKoK3zgwbRF/7cg8FAslDmayt5u+XcEWhomvxmS/P5UbfWe8z4KfShYfAUhzyVcnw3EF34O2YV2gUDgr28brVkz7S+ek+nrhzXCnCPCAyIUCAgC9YnJBEt6AaqWBtP4fhIMGihBxS5ibVeZSbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kivw+23W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0XkSvbt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B449DC4CEEA;
-	Mon, 23 Jun 2025 21:42:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kivw+23W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2998CC4CEEA;
+	Mon, 23 Jun 2025 21:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714968;
-	bh=/tUszRO6cePgpFtBQ/DdboO5cuVkKErJ9U6L2nNXinQ=;
+	s=korg; t=1750714970;
+	bh=GVnTrg8sr0T24Xi1AL3vAa0rWghpuhQllNGgQjQ+puE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p0XkSvbtxMFqOZdItImuMfI1RYqIC9XgIWYv5WCNVPJzDlSP2mfahBwhxjJ1zOjTO
-	 gw8q3OKDqptepOkPhPepgTwSCIZLZnGHwA+nezhm3u9/JDnvBEjWOTb2FCv3L2A0V4
-	 YHOMZSt8Emfci/edJ+paQPnbfv954dKlPg3TlLeQ=
+	b=Kivw+23W7DOoQozDkpcfgCi6aY1D+3NXVbn1uDGS8tHMSEGfzJij/hHbo/T4y8HQM
+	 wLcotxeG+YdJyBpWSs9TsvOCZAVUVWu74Y3K4EmeC8YFsZNOB3MqKat9B/LQpsKAD+
+	 BxKxyA/EW507XGtUhjXGrYpaRQ+90LTWU53Xf/1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Stutterheim <ross.stutterheim@garmin.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 5.15 220/411] ARM: 9447/1: arm/memremap: fix arch_memremap_can_ram_remap()
-Date: Mon, 23 Jun 2025 15:06:04 +0200
-Message-ID: <20250623130639.201972865@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 244/355] media: platform: exynos4-is: Add hardware sync wait to fimc_is_hw_change_mode()
+Date: Mon, 23 Jun 2025 15:07:25 +0200
+Message-ID: <20250623130634.081620648@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,52 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ross Stutterheim <ross.stutterheim@garmin.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 96e0b355883006554a0bee3697da475971d6bba8 upstream.
+[ Upstream commit bd9f6ce7d512fa21249415c16af801a4ed5d97b6 ]
 
-arm/memremap: fix arch_memremap_can_ram_remap()
+In fimc_is_hw_change_mode(), the function changes camera modes without
+waiting for hardware completion, risking corrupted data or system hangs
+if subsequent operations proceed before the hardware is ready.
 
-commit 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure
-presence of linear map") added the definition of
-arch_memremap_can_ram_remap() for arm[64] specific filtering of what pages
-can be used from the linear mapping. memblock_is_map_memory() was called
-with the pfn of the address given to arch_memremap_can_ram_remap();
-however, memblock_is_map_memory() expects to be given an address for arm,
-not a pfn.
+Add fimc_is_hw_wait_intmsr0_intmsd0() after mode configuration, ensuring
+hardware state synchronization and stable interrupt handling.
 
-This results in calls to memremap() returning a newly mapped area when
-it should return an address in the existing linear mapping.
-
-Fix this by removing the address to pfn translation and pass the
-address directly.
-
-Fixes: 260364d112bc ("arm[64]/memremap: don't abuse pfn_valid() to ensure presence of linear map")
-Signed-off-by: Ross Stutterheim <ross.stutterheim@garmin.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/ioremap.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/media/platform/exynos4-is/fimc-is-regs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm/mm/ioremap.c
-+++ b/arch/arm/mm/ioremap.c
-@@ -483,7 +483,5 @@ void __init early_ioremap_init(void)
- bool arch_memremap_can_ram_remap(resource_size_t offset, size_t size,
- 				 unsigned long flags)
- {
--	unsigned long pfn = PHYS_PFN(offset);
--
--	return memblock_is_map_memory(pfn);
-+	return memblock_is_map_memory(offset);
- }
+diff --git a/drivers/media/platform/exynos4-is/fimc-is-regs.c b/drivers/media/platform/exynos4-is/fimc-is-regs.c
+index 366e6393817d2..5f9c44e825a5f 100644
+--- a/drivers/media/platform/exynos4-is/fimc-is-regs.c
++++ b/drivers/media/platform/exynos4-is/fimc-is-regs.c
+@@ -164,6 +164,7 @@ int fimc_is_hw_change_mode(struct fimc_is *is)
+ 	if (WARN_ON(is->config_index >= ARRAY_SIZE(cmd)))
+ 		return -EINVAL;
+ 
++	fimc_is_hw_wait_intmsr0_intmsd0(is);
+ 	mcuctl_write(cmd[is->config_index], is, MCUCTL_REG_ISSR(0));
+ 	mcuctl_write(is->sensor_index, is, MCUCTL_REG_ISSR(1));
+ 	mcuctl_write(is->setfile.sub_index, is, MCUCTL_REG_ISSR(2));
+-- 
+2.39.5
+
 
 
