@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F9E4409;
-	Mon, 23 Jun 2025 21:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8C24409;
+	Mon, 23 Jun 2025 21:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714451; cv=none; b=pl98NPWAnPzoOCromtzHP9o4yJd7imOiSwVAToMFVAONnkrE/1jxnj//87ROLFGFcza54jdOmAPCVeczWA5iL1lxTYTH3Aht5ty0gNcaNZwLbrAtaRw3ZbbLe70uhlZwgwibFq0IyUvHoRo8ehn7efRsVDVBmC2N4ukXQ4G6ElI=
+	t=1750714453; cv=none; b=Qp0cGtaXf/+JYakBgyhxwBTdv+7ss4l9rIvYpWtkFmncAAuxIYsMuh7n1vDuHSZV2jyCkaohTR6a8ciKI9DkBtNBJufiftOjgyg/eK96zUin16g9JNodV1yfAUvW808s1X7QenKLZcJSeGzm8pT7cOgtJ+eRX5H6Nlpdg9AX6Ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714451; c=relaxed/simple;
-	bh=73lSYHMtVOEjL71WwX7OIoF36eHWO9I1CHARztwESdw=;
+	s=arc-20240116; t=1750714453; c=relaxed/simple;
+	bh=z7EuPlmFvE2p+On/LoJBvfZOvJmHGywXZHwMf3Elbdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i21D/+XGhZFcRgDgQkvKuv5gXU7BfSxW9BDbbwzXJBIDqU3mgusy7k5zDXSgu6ntm81aYS/RMVdbRBMfpNQNaLRUGdsJ9lBegypNETuFhYL8cxDav6gmhilZ31nkYvlKXkAsGvnIaCvVmUyY2FEN4r3M2efhFN4T9Phb7syQsIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FEWFi170; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o+Jq6UuyfPcDDS42x2MHaGsEs7LutHj7jh8+zzb+wj3hfZZjmG1rwYfYGqQeR960b/ZpdV5No7TBBcDflw5Og2GUovwRgYVJGSM7GBZlPSA6JI4/6Qj06v7Zwb6i8mZrNp9syDOun4hthUwXXHf2C7fI+JNISBfwA6GS6JJ8qMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enR0oSO9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEWFi170"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF53C4CEEA;
-	Mon, 23 Jun 2025 21:34:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enR0oSO9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B95BC4CEEA;
+	Mon, 23 Jun 2025 21:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714450;
-	bh=73lSYHMtVOEjL71WwX7OIoF36eHWO9I1CHARztwESdw=;
+	s=korg; t=1750714453;
+	bh=z7EuPlmFvE2p+On/LoJBvfZOvJmHGywXZHwMf3Elbdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FEWFi170/8aZkwH2Mjtq1ihHyMbbwLUxVgJsr0Dd+hzUGAsklgZDuApAdBPDFNfPV
-	 o4c76OPEnuR6Yp69Gk1vPyRTfTIYLAL36D1wWo05FszroN7nmTTF7IKPAcvca7mTBd
-	 lSGfdjn4mGBiUWxE3HUFFCrXx+UyzYkn3iDajbWQ=
+	b=enR0oSO9u7I5S/gOQz0P+KGe3x2kmza90lIKTkWu1iDHGr+1KVyNt9lUbMA+tt/Ez
+	 wlmXaJZb0aS/oqt7xcsGF1CokskjQcaNvsQwPVaU30S0JGmVoZP2w15VlJSS55rbG3
+	 xYSPNrmO4JTwx2odRjtfmE6lLjybL+QW9q6i0zRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.15 209/411] media: ccs-pll: Check for too high VT PLL multiplier in dual PLL case
-Date: Mon, 23 Jun 2025 15:05:53 +0200
-Message-ID: <20250623130638.931705998@linuxfoundation.org>
+	Jun Li <jun.li@nxp.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.12 130/414] phy: fsl-imx8mq-usb: fix phy_tx_vboost_level_from_property()
+Date: Mon, 23 Jun 2025 15:04:27 +0200
+Message-ID: <20250623130645.308206841@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 6868b955acd6e5d7405a2b730c2ffb692ad50d2c upstream.
+commit b15ee09ddb987a122e74fb0fdf1bd6e864959fd3 upstream.
 
-The check for VT PLL upper limit in dual PLL case was missing. Add it now.
+The description of TX_VBOOST_LVL is wrong in register PHY_CTRL3
+bit[31:29].
 
-Fixes: 6c7469e46b60 ("media: ccs-pll: Add trivial dual PLL support")
+The updated description as below:
+  011: Corresponds to a launch amplitude of 0.844 V.
+  100: Corresponds to a launch amplitude of 1.008 V.
+  101: Corresponds to a launch amplitude of 1.156 V.
+
+This will fix the parsing function
+phy_tx_vboost_level_from_property() to return correct value.
+
+Fixes: 63c85ad0cd81 ("phy: fsl-imx8mp-usb: add support for phy tuning")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Reviewed-by: Jun Li <jun.li@nxp.com>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20250430094502.2723983-3-xu.yang_2@nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ccs-pll.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/phy/freescale/phy-fsl-imx8mq-usb.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/media/i2c/ccs-pll.c
-+++ b/drivers/media/i2c/ccs-pll.c
-@@ -312,6 +312,11 @@ __ccs_pll_calculate_vt_tree(struct devic
- 	dev_dbg(dev, "more_mul2: %u\n", more_mul);
+--- a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
++++ b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
+@@ -95,12 +95,12 @@ static u32 phy_tx_preemp_amp_tune_from_p
+ static u32 phy_tx_vboost_level_from_property(u32 microvolt)
+ {
+ 	switch (microvolt) {
+-	case 0 ... 960:
+-		return 0;
+-	case 961 ... 1160:
+-		return 2;
+-	default:
++	case 1156:
++		return 5;
++	case 844:
+ 		return 3;
++	default:
++		return 4;
+ 	}
+ }
  
- 	pll_fr->pll_multiplier = mul * more_mul;
-+	if (pll_fr->pll_multiplier > lim_fr->max_pll_multiplier) {
-+		dev_dbg(dev, "pll multiplier %u too high\n",
-+			pll_fr->pll_multiplier);
-+		return -EINVAL;
-+	}
- 
- 	if (pll_fr->pll_multiplier * pll_fr->pll_ip_clk_freq_hz >
- 	    lim_fr->max_pll_op_clk_freq_hz)
 
 
