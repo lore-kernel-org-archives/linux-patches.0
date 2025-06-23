@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7250C1DF98B;
-	Mon, 23 Jun 2025 21:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF3C1DF98B;
+	Mon, 23 Jun 2025 21:14:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713265; cv=none; b=HUoIa+qJSy/8CKbi9yA6XlQxSfECw/tO2mBZr1HAw10pE0dMiOPC3D+QeYxPgjjYKI0GmNAPTCA7Rf9FQecubs9b7Z21Ss8r4J1YZYA/+tvpKE6eSWLCJVCfffksM88crkS2Rgpr7g/F9MI89QlOs0sd25wjlHSlMIgy3BUWog4=
+	t=1750713268; cv=none; b=MwXR9ZImxMddysiluWPGOUXUOIh2LmE+XaHzzadJAAC8RkouuKPODdIVmgrUyXc1LZcE89G9pfuDt6oyAn1CpAyQOKtXANfDPIiP4TNpiT2Iw+nYev5jVi538ZkeARY5icnJ91r2MoRpBL/7uOmwZtYTgw0bJUas1ucDrcMax50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713265; c=relaxed/simple;
-	bh=RNlWxsLPaWjFUznLhNEXP5XXfuCOVe7dnPMf3HIDZpw=;
+	s=arc-20240116; t=1750713268; c=relaxed/simple;
+	bh=dgxfUZGkceJSdX8zFo9+HMyQfF4Fi5HVQfjmODcMpkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjaEqjbHt7sfb8FpVG/KtloXsf2vwkr3RjZ+WbWpctdIYw0CfOlvYMNG/9/U19B7AVsKTSBPa3ry34pJjYMDdLR3lO8pQRwQflKH3nYKwTIN3K7cIovPsCezGB/ULM3mW6TlIplIBbQgcQW639xYQJStPlVQJc8cH4YLSx+D2Lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrB1mQRL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I4k2VLytyVmY690QkZI7+UB1Ld2AIwFhvkXruOuxENe7z/M/id8H5apLEH/ZqH6DtDiz/cQJ9Eg3aF33ZX79O9E0NL8JiQ4FS3tQBciLGCKHwOBnHijRVt9E68piIjIDRTsqw+drnR1ZQJhEri3/gtT2KM+IzS0NoG81UxwougM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSdiYGuN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrB1mQRL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A808C4CEEA;
-	Mon, 23 Jun 2025 21:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSdiYGuN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75273C4CEEA;
+	Mon, 23 Jun 2025 21:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713265;
-	bh=RNlWxsLPaWjFUznLhNEXP5XXfuCOVe7dnPMf3HIDZpw=;
+	s=korg; t=1750713267;
+	bh=dgxfUZGkceJSdX8zFo9+HMyQfF4Fi5HVQfjmODcMpkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MrB1mQRLclGx9u11YqLn/78g8GJOZH6H6rzzgaZjz/AvCCRJLrbXgLrQp/yBmI5m9
-	 XFhjMmjpnX+5Dgr3q2D+pX1C0CuFaoaL6YZdU4USe94ZX3uUMtQov60NjjiWRlTLTk
-	 BYKYndncI5dJCRrmqr5lsVtrrzDt0pZbefCUUju0=
+	b=SSdiYGuNDvjP3d5u+YssoRhET7inUKBUc8rgOvF3lIWqdhZvLlGV2eLNmMdMpZHeN
+	 QuXe4SHUmR9lgDeEiaLoqdWOTJnCAlpgNlbPGb4lez0la6ml7SXEJfIZphwAzx0i3f
+	 +tPd6zPi5EIoBfHRTb3i3rt2rOFGMLcTusV+IPCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Dave Wysochanski <dwysocha@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>
-Subject: [PATCH 6.12 035/414] fs/nfs/read: fix double-unlock bug in nfs_return_empty_folio()
-Date: Mon, 23 Jun 2025 15:02:52 +0200
-Message-ID: <20250623130642.905524437@linuxfoundation.org>
+	Longfang Liu <liulongfang@huawei.com>,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 087/508] hisi_acc_vfio_pci: fix XQE dma address error
+Date: Mon, 23 Jun 2025 15:02:12 +0200
+Message-ID: <20250623130647.387332999@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,74 +48,159 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Longfang Liu <liulongfang@huawei.com>
 
-commit 4c10fa44bc5f700e2ea21de2fbae520ba21f19d9 upstream.
+[ Upstream commit 8bb7170c5a055ea17c6857c256ee73c10ff872eb ]
 
-Sometimes, when a file was read while it was being truncated by
-another NFS client, the kernel could deadlock because folio_unlock()
-was called twice, and the second call would XOR back the `PG_locked`
-flag.
+The dma addresses of EQE and AEQE are wrong after migration and
+results in guest kernel-mode encryption services  failure.
+Comparing the definition of hardware registers, we found that
+there was an error when the data read from the register was
+combined into an address. Therefore, the address combination
+sequence needs to be corrected.
 
-Most of the time (depending on the timing of the truncation), nobody
-notices the problem because folio_unlock() gets called three times,
-which flips `PG_locked` back off:
+Even after fixing the above problem, we still have an issue
+where the Guest from an old kernel can get migrated to
+new kernel and may result in wrong data.
 
- 1. vfs_read, nfs_read_folio, ... nfs_read_add_folio,
-    nfs_return_empty_folio
- 2. vfs_read, nfs_read_folio, ... netfs_read_collection,
-    netfs_unlock_abandoned_read_pages
- 3. vfs_read, ... nfs_do_read_folio, nfs_read_add_folio,
-    nfs_return_empty_folio
+In order to ensure that the address is correct after migration,
+if an old magic number is detected, the dma address needs to be
+updated.
 
-The problem is that nfs_read_add_folio() is not supposed to unlock the
-folio if fscache is enabled, and a nfs_netfs_folio_unlock() check is
-missing in nfs_return_empty_folio().
-
-Rarely this leads to a warning in netfs_read_collection():
-
- ------------[ cut here ]------------
- R=0000031c: folio 10 is not locked
- WARNING: CPU: 0 PID: 29 at fs/netfs/read_collect.c:133 netfs_read_collection+0x7c0/0xf00
- [...]
- Workqueue: events_unbound netfs_read_collection_worker
- RIP: 0010:netfs_read_collection+0x7c0/0xf00
- [...]
- Call Trace:
-  <TASK>
-  netfs_read_collection_worker+0x67/0x80
-  process_one_work+0x12e/0x2c0
-  worker_thread+0x295/0x3a0
-
-Most of the time, however, processes just get stuck forever in
-folio_wait_bit_common(), waiting for `PG_locked` to disappear, which
-never happens because nobody is really holding the folio lock.
-
-Fixes: 000dbe0bec05 ("NFS: Convert buffered read paths to use netfs when fscache is enabled")
-Cc: stable@vger.kernel.org
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Dave Wysochanski <dwysocha@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
+Signed-off-by: Longfang Liu <liulongfang@huawei.com>
+Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Link: https://lore.kernel.org/r/20250510081155.55840-2-liulongfang@huawei.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/read.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../vfio/pci/hisilicon/hisi_acc_vfio_pci.c    | 41 ++++++++++++++++---
+ .../vfio/pci/hisilicon/hisi_acc_vfio_pci.h    | 14 ++++++-
+ 2 files changed, 47 insertions(+), 8 deletions(-)
 
---- a/fs/nfs/read.c
-+++ b/fs/nfs/read.c
-@@ -56,7 +56,8 @@ static int nfs_return_empty_folio(struct
- {
- 	folio_zero_segment(folio, 0, folio_size(folio));
- 	folio_mark_uptodate(folio);
--	folio_unlock(folio);
-+	if (nfs_netfs_folio_unlock(folio))
-+		folio_unlock(folio);
- 	return 0;
+diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+index 39eeca18a0f7c..b5efb37712d5e 100644
+--- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
++++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+@@ -350,6 +350,32 @@ static int vf_qm_func_stop(struct hisi_qm *qm)
+ 	return hisi_qm_mb(qm, QM_MB_CMD_PAUSE_QM, 0, 0, 0);
  }
  
++static int vf_qm_version_check(struct acc_vf_data *vf_data, struct device *dev)
++{
++	switch (vf_data->acc_magic) {
++	case ACC_DEV_MAGIC_V2:
++		if (vf_data->major_ver != ACC_DRV_MAJOR_VER) {
++			dev_info(dev, "migration driver version<%u.%u> not match!\n",
++				 vf_data->major_ver, vf_data->minor_ver);
++			return -EINVAL;
++		}
++		break;
++	case ACC_DEV_MAGIC_V1:
++		/* Correct dma address */
++		vf_data->eqe_dma = vf_data->qm_eqc_dw[QM_XQC_ADDR_HIGH];
++		vf_data->eqe_dma <<= QM_XQC_ADDR_OFFSET;
++		vf_data->eqe_dma |= vf_data->qm_eqc_dw[QM_XQC_ADDR_LOW];
++		vf_data->aeqe_dma = vf_data->qm_aeqc_dw[QM_XQC_ADDR_HIGH];
++		vf_data->aeqe_dma <<= QM_XQC_ADDR_OFFSET;
++		vf_data->aeqe_dma |= vf_data->qm_aeqc_dw[QM_XQC_ADDR_LOW];
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static int vf_qm_check_match(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 			     struct hisi_acc_vf_migration_file *migf)
+ {
+@@ -363,7 +389,8 @@ static int vf_qm_check_match(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 	if (migf->total_length < QM_MATCH_SIZE)
+ 		return -EINVAL;
+ 
+-	if (vf_data->acc_magic != ACC_DEV_MAGIC) {
++	ret = vf_qm_version_check(vf_data, dev);
++	if (ret) {
+ 		dev_err(dev, "failed to match ACC_DEV_MAGIC\n");
+ 		return -EINVAL;
+ 	}
+@@ -417,7 +444,9 @@ static int vf_qm_get_match_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 	int vf_id = hisi_acc_vdev->vf_id;
+ 	int ret;
+ 
+-	vf_data->acc_magic = ACC_DEV_MAGIC;
++	vf_data->acc_magic = ACC_DEV_MAGIC_V2;
++	vf_data->major_ver = ACC_DRV_MAJOR_VER;
++	vf_data->minor_ver = ACC_DRV_MINOR_VER;
+ 	/* Save device id */
+ 	vf_data->dev_id = hisi_acc_vdev->vf_dev->device;
+ 
+@@ -519,12 +548,12 @@ static int vf_qm_state_save(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 		return -EINVAL;
+ 
+ 	/* Every reg is 32 bit, the dma address is 64 bit. */
+-	vf_data->eqe_dma = vf_data->qm_eqc_dw[1];
++	vf_data->eqe_dma = vf_data->qm_eqc_dw[QM_XQC_ADDR_HIGH];
+ 	vf_data->eqe_dma <<= QM_XQC_ADDR_OFFSET;
+-	vf_data->eqe_dma |= vf_data->qm_eqc_dw[0];
+-	vf_data->aeqe_dma = vf_data->qm_aeqc_dw[1];
++	vf_data->eqe_dma |= vf_data->qm_eqc_dw[QM_XQC_ADDR_LOW];
++	vf_data->aeqe_dma = vf_data->qm_aeqc_dw[QM_XQC_ADDR_HIGH];
+ 	vf_data->aeqe_dma <<= QM_XQC_ADDR_OFFSET;
+-	vf_data->aeqe_dma |= vf_data->qm_aeqc_dw[0];
++	vf_data->aeqe_dma |= vf_data->qm_aeqc_dw[QM_XQC_ADDR_LOW];
+ 
+ 	/* Through SQC_BT/CQC_BT to get sqc and cqc address */
+ 	ret = qm_get_sqc(vf_qm, &vf_data->sqc_dma);
+diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.h b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.h
+index 67343325b3201..f62247d0adf9a 100644
+--- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.h
++++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.h
+@@ -38,6 +38,9 @@
+ #define QM_REG_ADDR_OFFSET	0x0004
+ 
+ #define QM_XQC_ADDR_OFFSET	32U
++#define QM_XQC_ADDR_LOW	0x1
++#define QM_XQC_ADDR_HIGH	0x2
++
+ #define QM_VF_AEQ_INT_MASK	0x0004
+ #define QM_VF_EQ_INT_MASK	0x000c
+ #define QM_IFC_INT_SOURCE_V	0x0020
+@@ -49,10 +52,15 @@
+ #define QM_EQC_DW0		0X8000
+ #define QM_AEQC_DW0		0X8020
+ 
++#define ACC_DRV_MAJOR_VER 1
++#define ACC_DRV_MINOR_VER 0
++
++#define ACC_DEV_MAGIC_V1	0XCDCDCDCDFEEDAACC
++#define ACC_DEV_MAGIC_V2	0xAACCFEEDDECADEDE
++
+ struct acc_vf_data {
+ #define QM_MATCH_SIZE offsetofend(struct acc_vf_data, qm_rsv_state)
+ 	/* QM match information */
+-#define ACC_DEV_MAGIC	0XCDCDCDCDFEEDAACC
+ 	u64 acc_magic;
+ 	u32 qp_num;
+ 	u32 dev_id;
+@@ -60,7 +68,9 @@ struct acc_vf_data {
+ 	u32 qp_base;
+ 	u32 vf_qm_state;
+ 	/* QM reserved match information */
+-	u32 qm_rsv_state[3];
++	u16 major_ver;
++	u16 minor_ver;
++	u32 qm_rsv_state[2];
+ 
+ 	/* QM RW regs */
+ 	u32 aeq_int_mask;
+-- 
+2.39.5
+
 
 
