@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6245A2192EC;
-	Mon, 23 Jun 2025 22:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FBD15ADB4;
+	Mon, 23 Jun 2025 22:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717304; cv=none; b=vBMxjluonuD8I6PVUfQ0TtxdObjLbEzW3wIL2qFSldxsZgwm1zBuT0wijny2ar+BvqcTCZJoBHEWYlK0YhpFZiq3j5Nk/omL/VH6eSzIjucV/6DDEt06FwyCkazMAjo5qXPL0Fh2yo2AyruUYXVVarfJHk3m0URjrFtRNAvIxhE=
+	t=1750717306; cv=none; b=r5xCz9iT9IbfgEF3iVNczNDwaDbhFCsUgKce2sGpGhzTLoT6GA6hlH57jp9VaHiIrY2HOMGWDdmet3P7F7YHZiYfeSnH1XNytj82SNuGgI0YX+7pnS/2SEbIJtEyTa99OVuoEIhPfXfIl9UhJoZHfrHUiTwcoIdLsV82i6n9YFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717304; c=relaxed/simple;
-	bh=y2w6YAwagjSdx3Ex9I/hqCcLqschHAjKa/vYGyDTNXI=;
+	s=arc-20240116; t=1750717306; c=relaxed/simple;
+	bh=RtS+nJQ6RfColGkboAOXyj4Iyu1yN9f9BmztM+5KByo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CUCA+fwT+5NROXIatasXMWM1vEu7ayhbgGdC3tQtBYsvqrpPfXmrWVlLQz3q0vIFZHVqbBGFIahrKGYpFoUliR4DkGV7iBhXLTuEgfsefGInn56xqiPzRpIFTRl2Ks78RG8cLV2UlJDn+7HWVrVWhEPhAowL7ZzHd3an4Ne1jP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhDc8dpJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R5lPBJ3CuyWfu9iqHBGq156gp1VFLtWr4XKVrSUf6ATRSPFZsx3HyWYC5uiBG8QGtoIyATpUfds56sWWAIAzCrS4uje4Pq8Cbz7rmDkIJSgca193STe3Q4K/z7rBU0OexDW2SV3PV/wy+Aw/C1g8IN73F8uYA034t45Mg6VC6ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zz9eqq/B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhDc8dpJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED59BC4CEEA;
-	Mon, 23 Jun 2025 22:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zz9eqq/B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69425C4CEEA;
+	Mon, 23 Jun 2025 22:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717304;
-	bh=y2w6YAwagjSdx3Ex9I/hqCcLqschHAjKa/vYGyDTNXI=;
+	s=korg; t=1750717306;
+	bh=RtS+nJQ6RfColGkboAOXyj4Iyu1yN9f9BmztM+5KByo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KhDc8dpJHU/I+SIFLpHukuSGpw01PA2Fc1/funzIVDHhHszHDaauOsSZjZK2ATHVk
-	 d7okBzQHva5oVZibeTtFFUS5b8wzQGE4aYsgquwSNcXum6zdIQPqW3zjjmZ50Ce4ik
-	 GId6CCyZxPeb5MuTpryZ3y13u4zNyUmYQ9buphts=
+	b=zz9eqq/BQ+cvo5RAv7y7dYXJ1cc9/fWRr7oWgQD5osC43BYV+dJa8wyM27/mi7E/o
+	 0OmXTY7FAL/rNhw6i/V9VgH1TCNp1Hn6RgylE4OZPRMLdD//R7F7tKrce7EG0KKICH
+	 +T66QZhT44n8DT4FbwP07cOwCSk/Z3w2MdzH4TU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 362/414] hwmon: (occ) fix unaligned accesses
-Date: Mon, 23 Jun 2025 15:08:19 +0200
-Message-ID: <20250623130651.016984324@linuxfoundation.org>
+Subject: [PATCH 6.1 401/508] tcp: always seek for minimal rtt in tcp_rcv_rtt_update()
+Date: Mon, 23 Jun 2025 15:07:26 +0200
+Message-ID: <20250623130655.113477561@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,111 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2c021b45c154958566aad0cae9f74ab26a2d5732 ]
+[ Upstream commit b879dcb1aeeca278eacaac0b1e2425b1c7599f9f ]
 
-Passing a pointer to an unaligned integer as a function argument is
-undefined behavior:
+tcp_rcv_rtt_update() goal is to maintain an estimation of the RTT
+in tp->rcv_rtt_est.rtt_us, used by tcp_rcv_space_adjust()
 
-drivers/hwmon/occ/common.c:492:27: warning: taking address of packed member 'accumulator' of class or structure 'power_sensor_2' may result in an unaligned pointer value [-Waddress-of-packed-member]
-  492 |   val = occ_get_powr_avg(&power->accumulator,
-      |                           ^~~~~~~~~~~~~~~~~~
-drivers/hwmon/occ/common.c:493:13: warning: taking address of packed member 'update_tag' of class or structure 'power_sensor_2' may result in an unaligned pointer value [-Waddress-of-packed-member]
-  493 |            &power->update_tag);
-      |             ^~~~~~~~~~~~~~~~~
+When TCP TS are enabled, tcp_rcv_rtt_update() is using
+EWMA to smooth the samples.
 
-Move the get_unaligned() calls out of the function and pass these
-through argument registers instead.
+Change this to immediately latch the incoming value if it
+is lower than tp->rcv_rtt_est.rtt_us, so that tcp_rcv_space_adjust()
+does not overshoot tp->rcvq_space.space and sk->sk_rcvbuf.
 
-Fixes: c10e753d43eb ("hwmon (occ): Add sensor types and versions")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20250610092553.2641094-1-arnd@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250513193919.1089692-8-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/occ/common.c | 28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ net/ipv4/tcp_input.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
-index 9029ad53790b1..b3694a4209b97 100644
---- a/drivers/hwmon/occ/common.c
-+++ b/drivers/hwmon/occ/common.c
-@@ -459,12 +459,10 @@ static ssize_t occ_show_power_1(struct device *dev,
- 	return sysfs_emit(buf, "%llu\n", val);
- }
- 
--static u64 occ_get_powr_avg(u64 *accum, u32 *samples)
-+static u64 occ_get_powr_avg(u64 accum, u32 samples)
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index db1a99df29d55..1044e9bce2d88 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -649,10 +649,12 @@ EXPORT_SYMBOL(tcp_initialize_rcv_mss);
+  */
+ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
  {
--	u64 divisor = get_unaligned_be32(samples);
--
--	return (divisor == 0) ? 0 :
--		div64_u64(get_unaligned_be64(accum) * 1000000ULL, divisor);
-+	return (samples == 0) ? 0 :
-+		mul_u64_u32_div(accum, 1000000UL, samples);
- }
+-	u32 new_sample = tp->rcv_rtt_est.rtt_us;
+-	long m = sample;
++	u32 new_sample, old_sample = tp->rcv_rtt_est.rtt_us;
++	long m = sample << 3;
  
- static ssize_t occ_show_power_2(struct device *dev,
-@@ -489,8 +487,8 @@ static ssize_t occ_show_power_2(struct device *dev,
- 				  get_unaligned_be32(&power->sensor_id),
- 				  power->function_id, power->apss_channel);
- 	case 1:
--		val = occ_get_powr_avg(&power->accumulator,
--				       &power->update_tag);
-+		val = occ_get_powr_avg(get_unaligned_be64(&power->accumulator),
-+				       get_unaligned_be32(&power->update_tag));
- 		break;
- 	case 2:
- 		val = (u64)get_unaligned_be32(&power->update_tag) *
-@@ -527,8 +525,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
- 		return sysfs_emit(buf, "%u_system\n",
- 				  get_unaligned_be32(&power->sensor_id));
- 	case 1:
--		val = occ_get_powr_avg(&power->system.accumulator,
--				       &power->system.update_tag);
-+		val = occ_get_powr_avg(get_unaligned_be64(&power->system.accumulator),
-+				       get_unaligned_be32(&power->system.update_tag));
- 		break;
- 	case 2:
- 		val = (u64)get_unaligned_be32(&power->system.update_tag) *
-@@ -541,8 +539,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
- 		return sysfs_emit(buf, "%u_proc\n",
- 				  get_unaligned_be32(&power->sensor_id));
- 	case 5:
--		val = occ_get_powr_avg(&power->proc.accumulator,
--				       &power->proc.update_tag);
-+		val = occ_get_powr_avg(get_unaligned_be64(&power->proc.accumulator),
-+				       get_unaligned_be32(&power->proc.update_tag));
- 		break;
- 	case 6:
- 		val = (u64)get_unaligned_be32(&power->proc.update_tag) *
-@@ -555,8 +553,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
- 		return sysfs_emit(buf, "%u_vdd\n",
- 				  get_unaligned_be32(&power->sensor_id));
- 	case 9:
--		val = occ_get_powr_avg(&power->vdd.accumulator,
--				       &power->vdd.update_tag);
-+		val = occ_get_powr_avg(get_unaligned_be64(&power->vdd.accumulator),
-+				       get_unaligned_be32(&power->vdd.update_tag));
- 		break;
- 	case 10:
- 		val = (u64)get_unaligned_be32(&power->vdd.update_tag) *
-@@ -569,8 +567,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
- 		return sysfs_emit(buf, "%u_vdn\n",
- 				  get_unaligned_be32(&power->sensor_id));
- 	case 13:
--		val = occ_get_powr_avg(&power->vdn.accumulator,
--				       &power->vdn.update_tag);
-+		val = occ_get_powr_avg(get_unaligned_be64(&power->vdn.accumulator),
-+				       get_unaligned_be32(&power->vdn.update_tag));
- 		break;
- 	case 14:
- 		val = (u64)get_unaligned_be32(&power->vdn.update_tag) *
+-	if (new_sample != 0) {
++	if (old_sample == 0 || m < old_sample) {
++		new_sample = m;
++	} else {
+ 		/* If we sample in larger samples in the non-timestamp
+ 		 * case, we could grossly overestimate the RTT especially
+ 		 * with chatty applications or bulk transfer apps which
+@@ -663,17 +665,9 @@ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
+ 		 * else with timestamps disabled convergence takes too
+ 		 * long.
+ 		 */
+-		if (!win_dep) {
+-			m -= (new_sample >> 3);
+-			new_sample += m;
+-		} else {
+-			m <<= 3;
+-			if (m < new_sample)
+-				new_sample = m;
+-		}
+-	} else {
+-		/* No previous measure. */
+-		new_sample = m << 3;
++		if (win_dep)
++			return;
++		new_sample = old_sample - (old_sample >> 3) + sample;
+ 	}
+ 
+ 	tp->rcv_rtt_est.rtt_us = new_sample;
 -- 
 2.39.5
 
