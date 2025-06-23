@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9C930E84D;
-	Mon, 23 Jun 2025 13:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E7E230BC2;
+	Mon, 23 Jun 2025 13:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685677; cv=none; b=gn0C/UGQpI2pRFpSbCxBMp5rV3T4smvrJ/1EG2UXHmkIjcyo/HFELzVZyBZV5njByGwRlvXvQkcGndknZN6zT0aT3w4ivJtYufSccioRC9mkXT7ZgRlcPFIVObvIKTH5zyM4Yf6RhbyvmbrWOcca5VHJaXa9+xMIrws3LVgWoUw=
+	t=1750685680; cv=none; b=aRt8S/EW3wbiiZtDVRSFVhMiciHbMR3m7o4eKWhB5vk2Q3Ez7GqHPnrTpMjCkhG8aJNR6k4XQvfDlZXw128DoN9Nvql/gQj58YRa1QIdA3NwbP55WnSH4sOH8GibzENJSD6GkkvHklrz7Z+utsSvh+06kPZNL0n1X9EWZ3w/zbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685677; c=relaxed/simple;
-	bh=SAxtojSf+yuuZtNE6wCuoXcaAjS9kbQk7S13Aw91jNg=;
+	s=arc-20240116; t=1750685680; c=relaxed/simple;
+	bh=pSDTM5IXYFb6gmF9rJyr2TBboV6Y+MO01iTmTEN4fOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fw2ElBMRY118hJJh/v1W9M0hH1Gggt1NMgYnpOjulosu0itQvY1lfCCy2DG2vSL5yt5u9lktd3ALkq/nz7ZLkS2RmFkOMPIcSMxS0M5Ct/bGhp+YEROtmcGHenNbMfjB2QmhPXoDzOftp6NL25aFbNm+q+mciYzXiQJvM7DpBgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFwQWHR5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CJbHW1GC8JHMRnfoYqbhkc97rnoEulV7eLCY8DNz4gz+72Zvxv/T631IESWfxrZwflbRhHBFi0iZpmooKQuIh4onuGFYAP0QzgDHGKFYQSJH9hBEvKbd0BWH9isai9g4YHcgSWTCuRS9Lca56NzG7Qqb5igdPMiNwYuDjPsbTxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TId/IK8q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFwQWHR5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12220C4CEF0;
-	Mon, 23 Jun 2025 13:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TId/IK8q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9E0C4CEEA;
+	Mon, 23 Jun 2025 13:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685677;
-	bh=SAxtojSf+yuuZtNE6wCuoXcaAjS9kbQk7S13Aw91jNg=;
+	s=korg; t=1750685679;
+	bh=pSDTM5IXYFb6gmF9rJyr2TBboV6Y+MO01iTmTEN4fOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFwQWHR5+1Nc17oQ9sqgkY+keVsyEeHaWGrpUuHoMR4Veztz5veFxaIC2nReWKXda
-	 pEG/U0YcwQ+TLcpD4My9GZt1RJvW65C3dfN4crtZsUU8hOOh0uhTN5Fw0gxEp0vvvS
-	 ab/KhMkwy9WcDr6aaSLQpP+Vp8pK6wsG0aPrV17s=
+	b=TId/IK8qgfWoaF/Pn2GFKH8lxxRir4BP35ODlyiRY8ionBoraB3pT1Ra1Ey+oDQl7
+	 +2+ABXXUbCCCTaJD+Ai9e+n3zs5MF7veVB/z3oSCapgG45agHNIoUj5iOhOLC8in3S
+	 ZfWvp0Q2j5rBaC0maRd2UT/TVjTT50Y1SwlpovK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Huang Yiwei <quic_hyiwei@quicinc.com>,
-	Gavin Shan <gshan@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Will Deacon <will@kernel.org>,
+	Amber Lin <Amber.Lin@amd.com>,
+	Apurv Mishra <Apurv.Mishra@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/411] firmware: SDEI: Allow sdei initialization without ACPI_APEI_GHES
-Date: Mon, 23 Jun 2025 15:03:00 +0200
-Message-ID: <20250623130634.089863809@linuxfoundation.org>
+Subject: [PATCH 6.15 252/592] drm/amdkfd: Drop workaround for GC v9.4.3 revID 0
+Date: Mon, 23 Jun 2025 15:03:30 +0200
+Message-ID: <20250623130706.290170832@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,138 +48,146 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huang Yiwei <quic_hyiwei@quicinc.com>
+From: Apurv Mishra <Apurv.Mishra@amd.com>
 
-[ Upstream commit 59529bbe642de4eb2191a541d9b4bae7eb73862e ]
+[ Upstream commit daafa303d19f5522e4c24fbf5c1c981a16df2c2f ]
 
-SDEI usually initialize with the ACPI table, but on platforms where
-ACPI is not used, the SDEI feature can still be used to handle
-specific firmware calls or other customized purposes. Therefore, it
-is not necessary for ARM_SDE_INTERFACE to depend on ACPI_APEI_GHES.
+Remove workaround code for the early engineering
+samples GC v9.4.3 SOCs with revID 0
 
-In commit dc4e8c07e9e2 ("ACPI: APEI: explicit init of HEST and GHES
-in acpi_init()"), to make APEI ready earlier, sdei_init was moved
-into acpi_ghes_init instead of being a standalone initcall, adding
-ACPI_APEI_GHES dependency to ARM_SDE_INTERFACE. This restricts the
-flexibility and usability of SDEI.
-
-This patch corrects the dependency in Kconfig and splits sdei_init()
-into two separate functions: sdei_init() and acpi_sdei_init().
-sdei_init() will be called by arch_initcall and will only initialize
-the platform driver, while acpi_sdei_init() will initialize the
-device from acpi_ghes_init() when ACPI is ready. This allows the
-initialization of SDEI without ACPI_APEI_GHES enabled.
-
-Fixes: dc4e8c07e9e2 ("ACPI: APEI: explicit init of HEST and GHES in apci_init()")
-Cc: Shuai Xue <xueshuai@linux.alibaba.com>
-Signed-off-by: Huang Yiwei <quic_hyiwei@quicinc.com>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/20250507045757.2658795-1-quic_hyiwei@quicinc.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Amber Lin <Amber.Lin@amd.com>
+Signed-off-by: Apurv Mishra <Apurv.Mishra@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/Kconfig   |  1 +
- drivers/acpi/apei/ghes.c    |  2 +-
- drivers/firmware/Kconfig    |  1 -
- drivers/firmware/arm_sdei.c | 11 ++++++++---
- include/linux/arm_sdei.h    |  4 ++--
- 5 files changed, 12 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |  8 +++++++-
+ drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c      | 14 ++------------
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c    |  5 -----
+ drivers/gpu/drm/amd/amdkfd/kfd_queue.c     |  4 ++--
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c       |  3 +--
+ 5 files changed, 12 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/acpi/apei/Kconfig b/drivers/acpi/apei/Kconfig
-index 6b18f8bc7be35..71e0d64a7792e 100644
---- a/drivers/acpi/apei/Kconfig
-+++ b/drivers/acpi/apei/Kconfig
-@@ -23,6 +23,7 @@ config ACPI_APEI_GHES
- 	select ACPI_HED
- 	select IRQ_WORK
- 	select GENERIC_ALLOCATOR
-+	select ARM_SDE_INTERFACE if ARM64
- 	help
- 	  Generic Hardware Error Source provides a way to report
- 	  platform hardware errors (such as that from chipset). It
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index a6c8514110736..72087e05b5a5f 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -1478,7 +1478,7 @@ void __init ghes_init(void)
- {
- 	int rc;
- 
--	sdei_init();
-+	acpi_sdei_init();
- 
- 	if (acpi_disabled)
- 		return;
-diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-index b4d83c08acef8..059cb18f4bece 100644
---- a/drivers/firmware/Kconfig
-+++ b/drivers/firmware/Kconfig
-@@ -40,7 +40,6 @@ config ARM_SCPI_POWER_DOMAIN
- config ARM_SDE_INTERFACE
- 	bool "ARM Software Delegated Exception Interface (SDEI)"
- 	depends on ARM64
--	depends on ACPI_APEI_GHES
- 	help
- 	  The Software Delegated Exception Interface (SDEI) is an ARM
- 	  standard for registering callbacks from the platform firmware
-diff --git a/drivers/firmware/arm_sdei.c b/drivers/firmware/arm_sdei.c
-index 3e8051fe82965..71e2a9a89f6ad 100644
---- a/drivers/firmware/arm_sdei.c
-+++ b/drivers/firmware/arm_sdei.c
-@@ -1062,13 +1062,12 @@ static bool __init sdei_present_acpi(void)
- 	return true;
- }
- 
--void __init sdei_init(void)
-+void __init acpi_sdei_init(void)
- {
- 	struct platform_device *pdev;
- 	int ret;
- 
--	ret = platform_driver_register(&sdei_driver);
--	if (ret || !sdei_present_acpi())
-+	if (!sdei_present_acpi())
- 		return;
- 
- 	pdev = platform_device_register_simple(sdei_driver.driver.name,
-@@ -1081,6 +1080,12 @@ void __init sdei_init(void)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index f8b3e04d71eda..95124a4a0a67c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -2689,6 +2689,13 @@ static int amdgpu_device_ip_early_init(struct amdgpu_device *adev)
+ 		break;
  	}
- }
  
-+static int __init sdei_init(void)
-+{
-+	return platform_driver_register(&sdei_driver);
-+}
-+arch_initcall(sdei_init);
++	/* Check for IP version 9.4.3 with A0 hardware */
++	if (amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 3) &&
++	    !amdgpu_device_get_rev_id(adev)) {
++		dev_err(adev->dev, "Unsupported A0 hardware\n");
++		return -ENODEV;	/* device unsupported - no device error */
++	}
 +
- int sdei_event_handler(struct pt_regs *regs,
- 		       struct sdei_registered_event *arg)
- {
-diff --git a/include/linux/arm_sdei.h b/include/linux/arm_sdei.h
-index 255701e1251b4..f652a5028b590 100644
---- a/include/linux/arm_sdei.h
-+++ b/include/linux/arm_sdei.h
-@@ -46,12 +46,12 @@ int sdei_unregister_ghes(struct ghes *ghes);
- /* For use by arch code when CPU hotplug notifiers are not appropriate. */
- int sdei_mask_local_cpu(void);
- int sdei_unmask_local_cpu(void);
--void __init sdei_init(void);
-+void __init acpi_sdei_init(void);
- void sdei_handler_abort(void);
- #else
- static inline int sdei_mask_local_cpu(void) { return 0; }
- static inline int sdei_unmask_local_cpu(void) { return 0; }
--static inline void sdei_init(void) { }
-+static inline void acpi_sdei_init(void) { }
- static inline void sdei_handler_abort(void) { }
- #endif /* CONFIG_ARM_SDE_INTERFACE */
+ 	if (amdgpu_has_atpx() &&
+ 	    (amdgpu_is_atpx_hybrid() ||
+ 	     amdgpu_has_atpx_dgpu_power_cntl()) &&
+@@ -2701,7 +2708,6 @@ static int amdgpu_device_ip_early_init(struct amdgpu_device *adev)
+ 		adev->has_pr3 = parent ? pci_pr3_present(parent) : false;
+ 	}
  
+-
+ 	adev->pm.pp_feature = amdgpu_pp_feature_mask;
+ 	if (amdgpu_sriov_vf(adev) || sched_policy == KFD_SCHED_POLICY_NO_HWS)
+ 		adev->pm.pp_feature &= ~PP_GFXOFF_MASK;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+index 5effe8327d29f..53050176c244d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+@@ -1213,10 +1213,7 @@ static void gmc_v9_0_get_coherence_flags(struct amdgpu_device *adev,
+ 		if (uncached) {
+ 			mtype = MTYPE_UC;
+ 		} else if (ext_coherent) {
+-			if (gc_ip_version == IP_VERSION(9, 5, 0) || adev->rev_id)
+-				mtype = is_local ? MTYPE_CC : MTYPE_UC;
+-			else
+-				mtype = MTYPE_UC;
++			mtype = is_local ? MTYPE_CC : MTYPE_UC;
+ 		} else if (adev->flags & AMD_IS_APU) {
+ 			mtype = is_local ? mtype_local : MTYPE_NC;
+ 		} else {
+@@ -1336,7 +1333,7 @@ static void gmc_v9_0_override_vm_pte_flags(struct amdgpu_device *adev,
+ 				mtype_local = MTYPE_CC;
+ 
+ 			*flags = AMDGPU_PTE_MTYPE_VG10(*flags, mtype_local);
+-		} else if (adev->rev_id) {
++		} else {
+ 			/* MTYPE_UC case */
+ 			*flags = AMDGPU_PTE_MTYPE_VG10(*flags, MTYPE_CC);
+ 		}
+@@ -2411,13 +2408,6 @@ static int gmc_v9_0_hw_init(struct amdgpu_ip_block *ip_block)
+ 	adev->gmc.flush_tlb_needs_extra_type_2 =
+ 		amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 0) &&
+ 		adev->gmc.xgmi.num_physical_nodes;
+-	/*
+-	 * TODO: This workaround is badly documented and had a buggy
+-	 * implementation. We should probably verify what we do here.
+-	 */
+-	adev->gmc.flush_tlb_needs_extra_type_0 =
+-		amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 3) &&
+-		adev->rev_id == 0;
+ 
+ 	/* The sequence of these two function calls matters.*/
+ 	gmc_v9_0_init_golden_registers(adev);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+index b9c82be6ce134..bf0854bd55551 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -352,11 +352,6 @@ struct kfd_dev *kgd2kfd_probe(struct amdgpu_device *adev, bool vf)
+ 			f2g = &aldebaran_kfd2kgd;
+ 			break;
+ 		case IP_VERSION(9, 4, 3):
+-			gfx_target_version = adev->rev_id >= 1 ? 90402
+-					   : adev->flags & AMD_IS_APU ? 90400
+-					   : 90401;
+-			f2g = &gc_9_4_3_kfd2kgd;
+-			break;
+ 		case IP_VERSION(9, 4, 4):
+ 			gfx_target_version = 90402;
+ 			f2g = &gc_9_4_3_kfd2kgd;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
+index 4afff7094cafc..a65c67cf56ff3 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
+@@ -402,7 +402,7 @@ static u32 kfd_get_vgpr_size_per_cu(u32 gfxv)
+ {
+ 	u32 vgpr_size = 0x40000;
+ 
+-	if ((gfxv / 100 * 100) == 90400 ||	/* GFX_VERSION_AQUA_VANJARAM */
++	if (gfxv == 90402 ||			/* GFX_VERSION_AQUA_VANJARAM */
+ 	    gfxv == 90010 ||			/* GFX_VERSION_ALDEBARAN */
+ 	    gfxv == 90008 ||			/* GFX_VERSION_ARCTURUS */
+ 	    gfxv == 90500)
+@@ -462,7 +462,7 @@ void kfd_queue_ctx_save_restore_size(struct kfd_topology_device *dev)
+ 
+ 	if (gfxv == 80002)	/* GFX_VERSION_TONGA */
+ 		props->eop_buffer_size = 0x8000;
+-	else if ((gfxv / 100 * 100) == 90400)	/* GFX_VERSION_AQUA_VANJARAM */
++	else if (gfxv == 90402)	/* GFX_VERSION_AQUA_VANJARAM */
+ 		props->eop_buffer_size = 4096;
+ 	else if (gfxv >= 80000)
+ 		props->eop_buffer_size = 4096;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 100717a98ec11..72be6e152e881 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -1245,8 +1245,7 @@ svm_range_get_pte_flags(struct kfd_node *node,
+ 	case IP_VERSION(9, 4, 4):
+ 	case IP_VERSION(9, 5, 0):
+ 		if (ext_coherent)
+-			mtype_local = (gc_ip_version < IP_VERSION(9, 5, 0) && !node->adev->rev_id) ?
+-					AMDGPU_VM_MTYPE_UC : AMDGPU_VM_MTYPE_CC;
++			mtype_local = AMDGPU_VM_MTYPE_CC;
+ 		else
+ 			mtype_local = amdgpu_mtype_local == 1 ? AMDGPU_VM_MTYPE_NC :
+ 				amdgpu_mtype_local == 2 ? AMDGPU_VM_MTYPE_CC : AMDGPU_VM_MTYPE_RW;
 -- 
 2.39.5
 
