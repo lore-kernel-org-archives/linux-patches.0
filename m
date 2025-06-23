@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF317220686;
-	Mon, 23 Jun 2025 21:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546C71C84A0;
+	Mon, 23 Jun 2025 21:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715118; cv=none; b=VM5XYlT6eR2/oYKqq8lnPyfdPnOWWo9KSV+xpWqy7MRcoj/vOsM3UvAhETHV9pKThwGDZIgfoQLAvVh9IMuRCKWZXV2BE7yJqjJpetc6ym9Em4Enr9NFgodvRQfi58zCILJs7awYCm5TdB5Lk2t8njKWuhZleyMweWtM1i2UfiQ=
+	t=1750715120; cv=none; b=RgYMYKFqjcPehfEktRTWQah5l6aX6ZRCAEPaHQA2R90698WlhkCqy9WAaRkqRJPAhyxjHYRfvdMimNtdr+mvPfQdxJs3Hqxf1uwzdIWxmI5xex6r/0UOtk3OR0goaTJOKdasB7VSU81/tx+KYIonnEhxDkzsXTv0MWAhpx1JZSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715118; c=relaxed/simple;
-	bh=oyQS1KUg3zanR/YgOO37v0GTPcrNfzcL4hcisyvq9TE=;
+	s=arc-20240116; t=1750715120; c=relaxed/simple;
+	bh=WJukbBUoMyLenn/vEXupiiNhG8iyB3/rcODJYw5TKgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EmaWDf4Ta2azj/j/Rln1ElgDGYNnBADCAxBHTRMz7KOISWsi585UPj59A3ddZlnJhLkfbZ4CEqiffrukEAXJc9GICkmgQyNRcvF47l/JwD8QIr1sL0odSu+3KK2Cv7KgBSY/IMGbgkG3obosQ/tTZSZNEqMgaX4VMUbchX7sBC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uu55A3XJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NntcFQ1InhGwhis/3wd1PLkcQvNhpaSuBzjhGzA4wRh6e5YMq7y/L/QqiFua9YvTjQ1TMVWiy2ZwjSusu1IToEarM1RvIyCbWWUKnKlby1KTkM8c9Sg7/ENebMPYf2qgUHy7n4Bdwl8VydQtE8yuUKB3ceShAO1iemrt3IxY480=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0or7/Snx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uu55A3XJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78025C4CEED;
-	Mon, 23 Jun 2025 21:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0or7/Snx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CF8C4CEEA;
+	Mon, 23 Jun 2025 21:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715117;
-	bh=oyQS1KUg3zanR/YgOO37v0GTPcrNfzcL4hcisyvq9TE=;
+	s=korg; t=1750715120;
+	bh=WJukbBUoMyLenn/vEXupiiNhG8iyB3/rcODJYw5TKgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uu55A3XJIy6eiKtkLe0+fGOpSCFCqC17j2W3B1Gtwl9jHVyt7XO/wu5YhReqUuVK8
-	 clL3ceZ0w2SvbBwC5zXAm+zi8L9Z5QhKH0s0BkfeWHLMFDeL2bLwvPPghT8OiMWSKu
-	 /hsRh4yJFgtAQhnsV731oSsMYgBxI9gyxcWFxQRo=
+	b=0or7/SnxzgNBFQ1/NBIFBqRGl/RUkt9yNkOqHPC5fMPd5mXRZRwN+ufb95eH4YFRy
+	 0VVoJ1/gxFksylPTA2Xt/kxgi5swVrprKlZzqKQHODWaP9gCyj4P/tS8Le+u0wnWAv
+	 wJzPHLFWQW1WvpMR88OHFrTHaVbVO9aaCob3D2iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stuart Hayes <stuart.w.hayes@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 438/592] platform/x86: dell_rbu: Fix list usage
-Date: Mon, 23 Jun 2025 15:06:36 +0200
-Message-ID: <20250623130710.853093568@linuxfoundation.org>
+	Gabriel Shahrouzi <gshahrouzi@gmail.com>,
+	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 136/414] staging: iio: ad5933: Correct settling cycles encoding per datasheet
+Date: Mon, 23 Jun 2025 15:04:33 +0200
+Message-ID: <20250623130645.454835958@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,58 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stuart Hayes <stuart.w.hayes@gmail.com>
+From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
 
-[ Upstream commit 61ce04601e0d8265ec6d2ffa6df5a7e1bce64854 ]
+commit 60638e2a2d4bc03798f00d5ab65ce9b83cb8b03b upstream.
 
-Pass the correct list head to list_for_each_entry*() when looping through
-the packet list.
+The AD5933 datasheet (Table 13) lists the maximum cycles to be 0x7FC
+(2044).
 
-Without this patch, reading the packet data via sysfs will show the data
-incorrectly (because it starts at the wrong packet), and clearing the
-packet list will result in a NULL pointer dereference.
+Clamp the user input to the maximum effective value of 0x7FC cycles.
 
-Fixes: d19f359fbdc6 ("platform/x86: dell_rbu: don't open code list_for_each_entry*()")
-Signed-off-by: Stuart Hayes <stuart.w.hayes@gmail.com>
-Link: https://lore.kernel.org/r/20250609184659.7210-3-stuart.w.hayes@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f94aa354d676 ("iio: impedance-analyzer: New driver for AD5933/4 Impedance Converter, Network Analyzer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
+Link: https://patch.msgid.link/20250420013009.847851-1-gshahrouzi@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/dell_rbu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/staging/iio/impedance-analyzer/ad5933.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/dell/dell_rbu.c b/drivers/platform/x86/dell/dell_rbu.c
-index e30ca325938cb..e2afe51b66ee8 100644
---- a/drivers/platform/x86/dell/dell_rbu.c
-+++ b/drivers/platform/x86/dell/dell_rbu.c
-@@ -292,7 +292,7 @@ static int packet_read_list(char *data, size_t * pread_length)
- 	remaining_bytes = *pread_length;
- 	bytes_read = rbu_data.packet_read_count;
+--- a/drivers/staging/iio/impedance-analyzer/ad5933.c
++++ b/drivers/staging/iio/impedance-analyzer/ad5933.c
+@@ -411,7 +411,7 @@ static ssize_t ad5933_store(struct devic
+ 		ret = ad5933_cmd(st, 0);
+ 		break;
+ 	case AD5933_OUT_SETTLING_CYCLES:
+-		val = clamp(val, (u16)0, (u16)0x7FF);
++		val = clamp(val, (u16)0, (u16)0x7FC);
+ 		st->settling_cycles = val;
  
--	list_for_each_entry(newpacket, (&packet_data_head.list)->next, list) {
-+	list_for_each_entry(newpacket, &packet_data_head.list, list) {
- 		bytes_copied = do_packet_read(pdest, newpacket,
- 			remaining_bytes, bytes_read, &temp_count);
- 		remaining_bytes -= bytes_copied;
-@@ -315,7 +315,7 @@ static void packet_empty_list(void)
- {
- 	struct packet_data *newpacket, *tmp;
- 
--	list_for_each_entry_safe(newpacket, tmp, (&packet_data_head.list)->next, list) {
-+	list_for_each_entry_safe(newpacket, tmp, &packet_data_head.list, list) {
- 		list_del(&newpacket->list);
- 
- 		/*
--- 
-2.39.5
-
+ 		/* 2x, 4x handling, see datasheet */
 
 
