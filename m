@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8D91DF98B;
-	Mon, 23 Jun 2025 21:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656D41DF98B;
+	Mon, 23 Jun 2025 21:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713283; cv=none; b=NHxBrzPPcHrrmaGCcavwx2bZAfbOgbCKeNrhnFoA+dh5J9YeNJ5LHZYg2jfNXkGhC49q9S60K92BH1WCnMbuycrTxas5WWZd2BRyCLusuzzHLBTlUFaO2g8Wno3YFZneqfgkE2Ku8zbyEuyqK1BclAG8eaHUWTknh872r5n7O/M=
+	t=1750713285; cv=none; b=hjSjzO6PZUKDprlyEwDKrg8OdHnLaTkMG7GS/q2Z30JTAUbOUofKFO+vKdpGZ5UzR1lVTYyDtGETfQx3MjLHcakZjWTgL8WikNFO7tIrYGttoX/2eP3Hats+yMkxfm/OAYI3ztUlDnsxC52LBwXUzfDLVrKNlCh4mCgBOIoH+Nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713283; c=relaxed/simple;
-	bh=overGrjYdluEC46GsNnqdGd8TAFQvxToYFWG1EK2u+Q=;
+	s=arc-20240116; t=1750713285; c=relaxed/simple;
+	bh=fmv1/WROGjvSvxvlwBkkW2i5dL06c6JNnKPH43Gy9mQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SekBeBuvTw6L6lGJklfIpGhQNkTarjgpE00H2YKoXezgIP020VPmtAF9SJnUX4TpoaoYbKZZhi0q/lxrz03100Gc+NvBlklbaQkc+b7/V2y8G/Tub/05mQiE8/Ls7AURPNFfhFhSY5pCr83J3RP02WfkT6++GAnOh4hCzsFXAG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B01SYN+G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VcZfLLTRnWTg2Hy+ZGzUJ9dEZxi/UbnP7JCwMhs1O2pnDgXGRO8oP44tNPmsYsafJMpv2ADeo3lHsLYdJGISyiJvyy7EfDsKPyLU1WF3y5rpLX14OwbQ4Fs9gL7hiB68hfZXh4NkqKR9WE2dOle2zNnlQ2bAsyvTauoA80bDOCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7sGM9/p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B01SYN+G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A75C4CEEA;
-	Mon, 23 Jun 2025 21:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7sGM9/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D38C4CEEA;
+	Mon, 23 Jun 2025 21:14:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713282;
-	bh=overGrjYdluEC46GsNnqdGd8TAFQvxToYFWG1EK2u+Q=;
+	s=korg; t=1750713285;
+	bh=fmv1/WROGjvSvxvlwBkkW2i5dL06c6JNnKPH43Gy9mQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B01SYN+GZmDwy3fG52hzbCXq6bKQeScdfAPLeUQbUM90nLRjI8zLJompifXo5MSPa
-	 Cm39RW0afWKrwtzaLjtc5cnw3xucqHeIeNsNQOCUcvZ0u/j9c+kyQ5qIotMIeWSO9R
-	 Z1RCDgsDwn0OfJ+xpM7zZGV8qlk3hvH3jtaSPjLY=
+	b=K7sGM9/pX5c+2luKNQv14eXCTJLWvTWCcb0jFdUtk6pvPh4LJteqG7L6qi8OUaWbb
+	 SssxbHtPUBWfOl9qrMVvsgB/sjo3kAGGxff7kof6HxDvnwh/+p+7TGClE1M/qM0/rZ
+	 IVSEuuOpHcN3+td/zz9MYxNh8yseB/stNkvku6qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqing Pan <quic_miaoqing@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.12 036/414] wifi: ath12k: fix ring-buffer corruption
-Date: Mon, 23 Jun 2025 15:02:53 +0200
-Message-ID: <20250623130642.930130378@linuxfoundation.org>
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 079/508] ktls, sockmap: Fix missing uncharge operation
+Date: Mon, 23 Jun 2025 15:02:04 +0200
+Message-ID: <20250623130647.181217813@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,103 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit 6b67d2cf14ea997061f61e9c8afd4e1c0f22acb9 upstream.
+[ Upstream commit 79f0c39ae7d3dc628c01b02f23ca5d01f9875040 ]
 
-Users of the Lenovo ThinkPad X13s have reported that Wi-Fi sometimes
-breaks and the log fills up with errors like:
+When we specify apply_bytes, we divide the msg into multiple segments,
+each with a length of 'send', and every time we send this part of the data
+using tcp_bpf_sendmsg_redir(), we use sk_msg_return_zero() to uncharge the
+memory of the specified 'send' size.
 
-    ath11k_pci 0006:01:00.0: HTC Rx: insufficient length, got 1484, expected 1492
-    ath11k_pci 0006:01:00.0: HTC Rx: insufficient length, got 1460, expected 1484
+However, if the first segment of data fails to send, for example, the
+peer's buffer is full, we need to release all of the msg. When releasing
+the msg, we haven't uncharged the memory of the subsequent segments.
 
-which based on a quick look at the ath11k driver seemed to indicate some
-kind of ring-buffer corruption.
+This modification does not make significant logical changes, but only
+fills in the missing uncharge places.
 
-Miaoqing Pan tracked it down to the host seeing the updated destination
-ring head pointer before the updated descriptor, and the error handling
-for that in turn leaves the ring buffer in an inconsistent state.
+This issue has existed all along, until it was exposed after we added the
+apply test in test_sockmap:
+commit 3448ad23b34e ("selftests/bpf: Add apply_bytes test to test_txmsg_redir_wait_sndmem in test_sockmap")
 
-While this has not yet been observed with ath12k, the ring-buffer
-implementation is very similar to the ath11k one and it suffers from the
-same bugs.
-
-Add the missing memory barrier to make sure that the descriptor is read
-after the head pointer to address the root cause of the corruption while
-fixing up the error handling in case there are ever any (ordering) bugs
-on the device side.
-
-Note that the READ_ONCE() are only needed to avoid compiler mischief in
-case the ring-buffer helpers are ever inlined.
-
-Tested-on: WCN7850 hw2.0 WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Cc: stable@vger.kernel.org	# 6.3
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218623
-Link: https://lore.kernel.org/20250310010217.3845141-3-quic_miaoqing@quicinc.com
-Cc: Miaoqing Pan <quic_miaoqing@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
-Link: https://patch.msgid.link/20250321095219.19369-1-johan+linaro@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d3b18ad31f93 ("tls: add bpf support to sk_msg handling")
+Reported-by: Cong Wang <xiyou.wangcong@gmail.com>
+Closes: https://lore.kernel.org/bpf/aAmIi0vlycHtbXeb@pop-os.localdomain/T/#t
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
+Link: https://lore.kernel.org/r/20250425060015.6968-2-jiayuan.chen@linux.dev
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/ce.c  |   11 +++++------
- drivers/net/wireless/ath/ath12k/hal.c |    4 ++--
- 2 files changed, 7 insertions(+), 8 deletions(-)
+ net/tls/tls_sw.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/net/wireless/ath/ath12k/ce.c
-+++ b/drivers/net/wireless/ath/ath12k/ce.c
-@@ -343,11 +343,10 @@ static int ath12k_ce_completed_recv_next
- 		goto err;
- 	}
- 
-+	/* Make sure descriptor is read after the head pointer. */
-+	dma_rmb();
-+
- 	*nbytes = ath12k_hal_ce_dst_status_get_length(desc);
--	if (*nbytes == 0) {
--		ret = -EIO;
--		goto err;
--	}
- 
- 	*skb = pipe->dest_ring->skb[sw_index];
- 	pipe->dest_ring->skb[sw_index] = NULL;
-@@ -380,8 +379,8 @@ static void ath12k_ce_recv_process_cb(st
- 		dma_unmap_single(ab->dev, ATH12K_SKB_RXCB(skb)->paddr,
- 				 max_nbytes, DMA_FROM_DEVICE);
- 
--		if (unlikely(max_nbytes < nbytes)) {
--			ath12k_warn(ab, "rxed more than expected (nbytes %d, max %d)",
-+		if (unlikely(max_nbytes < nbytes || nbytes == 0)) {
-+			ath12k_warn(ab, "unexpected rx length (nbytes %d, max %d)",
- 				    nbytes, max_nbytes);
- 			dev_kfree_skb_any(skb);
- 			continue;
---- a/drivers/net/wireless/ath/ath12k/hal.c
-+++ b/drivers/net/wireless/ath/ath12k/hal.c
-@@ -1943,7 +1943,7 @@ u32 ath12k_hal_ce_dst_status_get_length(
- {
- 	u32 len;
- 
--	len = le32_get_bits(desc->flags, HAL_CE_DST_STATUS_DESC_FLAGS_LEN);
-+	len = le32_get_bits(READ_ONCE(desc->flags), HAL_CE_DST_STATUS_DESC_FLAGS_LEN);
- 	desc->flags &= ~cpu_to_le32(HAL_CE_DST_STATUS_DESC_FLAGS_LEN);
- 
- 	return len;
-@@ -2113,7 +2113,7 @@ void ath12k_hal_srng_access_begin(struct
- 		srng->u.src_ring.cached_tp =
- 			*(volatile u32 *)srng->u.src_ring.tp_addr;
- 	else
--		srng->u.dst_ring.cached_hp = *srng->u.dst_ring.hp_addr;
-+		srng->u.dst_ring.cached_hp = READ_ONCE(*srng->u.dst_ring.hp_addr);
- }
- 
- /* Update cached ring head/tail pointers to HW. ath12k_hal_srng_access_begin()
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index af820ae9b1a52..5f95f837dfc7f 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -904,6 +904,13 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
+ 					    &msg_redir, send, flags);
+ 		lock_sock(sk);
+ 		if (err < 0) {
++			/* Regardless of whether the data represented by
++			 * msg_redir is sent successfully, we have already
++			 * uncharged it via sk_msg_return_zero(). The
++			 * msg->sg.size represents the remaining unprocessed
++			 * data, which needs to be uncharged here.
++			 */
++			sk_mem_uncharge(sk, msg->sg.size);
+ 			*copied -= sk_msg_free_nocharge(sk, &msg_redir);
+ 			msg->sg.size = 0;
+ 		}
+-- 
+2.39.5
+
 
 
