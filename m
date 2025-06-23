@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D621EFFA6;
-	Mon, 23 Jun 2025 21:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212E01E5B71;
+	Mon, 23 Jun 2025 21:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714113; cv=none; b=UJERSozE+CoLeOoueCwksEZaY3CKkIrhFu1W6nMMuAvv6OOSrZhH8ybeUSpQQn+3UkNbNOSt944SRDMy2sOwedT5LhzxauRv1JSB4w3W9w29zNN/E8M7QG8HDljRhC+V+yXCtJMEvQ0IjoySFXq/RmMwxHRRrfEPKsESVyVtGdU=
+	t=1750714116; cv=none; b=IPc0uNjv/dZCQbYwmyMRyWWR0VbUyrb9n37ur6cpt2O/RoNPGNB8yZAqkeuwtLS1XDKxOlNAXmm8kKiZLCDXx9wwVrpkgtwEQ0cTsLM2QjqtKLicp4BJBpfy+yO6V/lCPCdXEVZB4aKMikRjzR4vx/gwtkC/LPAEDZ4b2iyYwpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714113; c=relaxed/simple;
-	bh=a06sAdX6PMIXSE+HzOraqgewOJH+fSxop2wwR/9vDM4=;
+	s=arc-20240116; t=1750714116; c=relaxed/simple;
+	bh=MLPa6WBThknhFY0KRIEgnUTYjRs/CIu1KOimUgSCLvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=raRQlC5dhnWqrfht/Ou3dg0o/wnuZd7Fxl+h90c9qj80FixSzipZnmHI+E+dAxbwi1MhPVm5nBeZyKxepCeoAUnxybTr1vgdPbvjQBukD4mhL38uoyK5s+qNiXkFKQfBuTAhsYdySLBt7e5F+geu6Cpy8i8465Uezd3agr1F85Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1yNEDgpP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nSdx/Aa3Vd0WwOXaiCAAwdDK+/skCQfuMC6grzf5XGNMj30wVLm93ZCnmSr/QlVJvCOzpq4LbHhF5j1/pjpiKf6Hf1TtA1o6qMqrt+RzfIXq+FkhhhgrMusNgcGjAVPb/NuOAUZVlxpNd4K3UGkJCUdsFjII+9JRJ0Y3hboFX60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDEfU1EM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1yNEDgpP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB44C4CEEA;
-	Mon, 23 Jun 2025 21:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDEfU1EM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2E1C4CEEA;
+	Mon, 23 Jun 2025 21:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714113;
-	bh=a06sAdX6PMIXSE+HzOraqgewOJH+fSxop2wwR/9vDM4=;
+	s=korg; t=1750714116;
+	bh=MLPa6WBThknhFY0KRIEgnUTYjRs/CIu1KOimUgSCLvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1yNEDgpPRu/DIKlki5dPaEosD10hlo1y/CAlxg1W4VB7/MTI5FWDSnYRQZyf1fUk0
-	 77U351u8AtZHXZfJGC9jwdOYww67WYQ20JZIC+88wTYFZTv7TbVSJGDBy81GK9Qrxe
-	 0LYNFRnvGEAx7PSDL8fihSF9NBBJFN/RFIaI4BKE=
+	b=hDEfU1EMcd5oaiuxyZAUciJjC1LaCrlw98yex0oITD2RnCs7ewKDbG+tFtVvrL7ue
+	 fEsEcaxX7CtdBbhervbZ+PbUnkiiNck4g4YSb7ybhAoWz6ByVhILamaKJSjqE3bfDK
+	 usX7ElKftiH+eP1oGf06vTHZNAMa6DK3bd0mWNpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	I Hsin Cheng <richard120310@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.15 188/411] drm/meson: Use 1000ULL when operating with mode->clock
-Date: Mon, 23 Jun 2025 15:05:32 +0200
-Message-ID: <20250623130638.412661364@linuxfoundation.org>
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 103/414] NFC: nci: uart: Set tty->disc_data only in success path
+Date: Mon, 23 Jun 2025 15:04:00 +0200
+Message-ID: <20250623130644.677799536@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +47,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: I Hsin Cheng <richard120310@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit eb0851e14432f3b87c77b704c835ac376deda03a upstream.
+commit fc27ab48904ceb7e4792f0c400f1ef175edf16fe upstream.
 
-Coverity scan reported the usage of "mode->clock * 1000" may lead to
-integer overflow. Use "1000ULL" instead of "1000"
-when utilizing it to avoid potential integer overflow issue.
+Setting tty->disc_data before opening the NCI device means we need to
+clean it up on error paths.  This also opens some short window if device
+starts sending data, even before NCIUARTSETDRIVER IOCTL succeeded
+(broken hardware?).  Close the window by exposing tty->disc_data only on
+the success path, when opening of the NCI device and try_module_get()
+succeeds.
 
-Link: https://scan5.scan.coverity.com/#/project-view/10074/10063?selectedIssue=1646759
-Signed-off-by: I Hsin Cheng <richard120310@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Fixes: 1017560164b6 ("drm/meson: use unsigned long long / Hz for frequency types")
-Link: https://lore.kernel.org/r/20250505184338.678540-1-richard120310@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+The code differs in error path in one aspect: tty->disc_data won't be
+ever assigned thus NULL-ified.  This however should not be relevant
+difference, because of "tty->disc_data=NULL" in nci_uart_tty_open().
+
+Cc: Linus Torvalds <torvalds@linuxfoundation.org>
+Fixes: 9961127d4bce ("NFC: nci: add generic uart support")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20250618073649.25049-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/meson/meson_encoder_hdmi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/nfc/nci/uart.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/meson/meson_encoder_hdmi.c
-+++ b/drivers/gpu/drm/meson/meson_encoder_hdmi.c
-@@ -73,7 +73,7 @@ static void meson_encoder_hdmi_set_vclk(
- 	unsigned long long venc_freq;
- 	unsigned long long hdmi_freq;
+--- a/net/nfc/nci/uart.c
++++ b/net/nfc/nci/uart.c
+@@ -119,22 +119,22 @@ static int nci_uart_set_driver(struct tt
  
--	vclk_freq = mode->clock * 1000;
-+	vclk_freq = mode->clock * 1000ULL;
+ 	memcpy(nu, nci_uart_drivers[driver], sizeof(struct nci_uart));
+ 	nu->tty = tty;
+-	tty->disc_data = nu;
+ 	skb_queue_head_init(&nu->tx_q);
+ 	INIT_WORK(&nu->write_work, nci_uart_write_work);
+ 	spin_lock_init(&nu->rx_lock);
  
- 	/* For 420, pixel clock is half unlike venc clock */
- 	if (encoder_hdmi->output_bus_fmt == MEDIA_BUS_FMT_UYYVYY8_0_5X24)
-@@ -121,7 +121,7 @@ static enum drm_mode_status meson_encode
- 	struct meson_encoder_hdmi *encoder_hdmi = bridge_to_meson_encoder_hdmi(bridge);
- 	struct meson_drm *priv = encoder_hdmi->priv;
- 	bool is_hdmi2_sink = display_info->hdmi.scdc.supported;
--	unsigned long long clock = mode->clock * 1000;
-+	unsigned long long clock = mode->clock * 1000ULL;
- 	unsigned long long phy_freq;
- 	unsigned long long vclk_freq;
- 	unsigned long long venc_freq;
+ 	ret = nu->ops.open(nu);
+ 	if (ret) {
+-		tty->disc_data = NULL;
+ 		kfree(nu);
++		return ret;
+ 	} else if (!try_module_get(nu->owner)) {
+ 		nu->ops.close(nu);
+-		tty->disc_data = NULL;
+ 		kfree(nu);
+ 		return -ENOENT;
+ 	}
+-	return ret;
++	tty->disc_data = nu;
++
++	return 0;
+ }
+ 
+ /* ------ LDISC part ------ */
 
 
