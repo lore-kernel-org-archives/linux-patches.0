@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF75221DA8;
-	Mon, 23 Jun 2025 21:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF5421D3DD;
+	Mon, 23 Jun 2025 21:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714738; cv=none; b=lJPQeptGhS/FbvEGDIJAKOko4RE27TkDALLUF9GNMRN9LO2t8R1Mt3LHLHiZAV9gKDAcnQ1vHRvJbUeokM2w7p2yyPf2IxWUWQoTn5cH5+69bdl3BwlbpAGKq4uxcobM2vEbBgD9tbRp7JY7aOLcpTVA3+KputTkc2PxhtxaoQI=
+	t=1750714741; cv=none; b=tXlZfeQ6bPnwyXW/5qnokZ4sF3DeCCIwbUB3j6H+V6BtuORerOXYUyEmKdPPXvkKbR3+r3YAVCiXOB2gZDV0PH6X8g2lNtVhAT4ikpjYx8kYd0CqwLrOGyscLmWBXTEql/bWmdqK0UUpgUMuKprErPJsi5wTxtq/TWLP7dFAQ6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714738; c=relaxed/simple;
-	bh=WYU5w9ogmvkkaPQJBQstHr+NoUPxivaX1w2s1tJxF2U=;
+	s=arc-20240116; t=1750714741; c=relaxed/simple;
+	bh=YcKoEJKnBWDcMr6eBij6HxOuNbf+KlHx5Cz5DkhMZcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WboFBoucZ7sNdalkBkd/TivRwuTG89TmFcitF3VBf4VuW7yjChUtBBsy8ZjjtdkkFf58yGnATkCtgTXzr+6ySVpbUQfF8TSTVmlmfcd+qBtiOKMRGX45S03lKBdCpUrnu9wzC1a1B3JoBNW4X+kdZTv3YA8FYFKPgOn7MRpt+jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnVPmluS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kKbNUbGJCIv9wXRpFCgThqnFJvDEiVFMys4ZK3XAUgTI3kXRBgabFK5JeoKaO7+Mhva1eo2J7MU6MTHHoehVq+lmEyKbqGz94Hps+vhKPjjkbZ0G+zWQYxLDWPH66ObIwScZ7uehSf3bhNh2VOYvc7tp2u/g0hDPsdRKDK0pme0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OiPaRxzU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnVPmluS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D091DC4CEEA;
-	Mon, 23 Jun 2025 21:38:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OiPaRxzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45003C4CEEA;
+	Mon, 23 Jun 2025 21:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714738;
-	bh=WYU5w9ogmvkkaPQJBQstHr+NoUPxivaX1w2s1tJxF2U=;
+	s=korg; t=1750714740;
+	bh=YcKoEJKnBWDcMr6eBij6HxOuNbf+KlHx5Cz5DkhMZcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AnVPmluS9xiAI5SpRApG721tPgPphbFOO9wSrnCq8xdbQI+BAiJ/WupXcvUwP4T9i
-	 bptDTUYJKDhb0AiNVqO4yNoA9h7N8vJZBqkGovxutaYJZBPOozDh57/co1jCU7QpbJ
-	 4fGJ1NGlCj7npa+gX16trbAHY7lqLlFjSbtWxSp8=
+	b=OiPaRxzUkKhIAH0bJ7keaPqvBCJ5mVPhnDt0mmqSz2SD1MhJhHX3hU8YCpDdjJqPj
+	 YfRdkEfMRw/PIEGd7kjnpPeCQ8l/DhfnMySjeVLmHF0vvKoX5q8ZNSMMrlYfltqxoI
+	 RhSx45O4TY9sVHWg8oHy0/5AiYden64iMgTjUNl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.15 206/411] media: ccs-pll: Start VT pre-PLL multiplier search from correct value
-Date: Mon, 23 Jun 2025 15:05:50 +0200
-Message-ID: <20250623130638.859222856@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lakshmi Sowjanya D <quic_laksd@quicinc.com>,
+	Md Sadre Alam <quic_mdalam@quicinc.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.12 127/414] mtd: rawnand: qcom: Fix read len for onfi param page
+Date: Mon, 23 Jun 2025 15:04:24 +0200
+Message-ID: <20250623130645.237070764@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
 
-commit 06d2d478b09e6764fb6161d1621fc10d9f0f2860 upstream.
+commit e6031b11544b44966ba020c867fe438bccd3bdfa upstream.
 
-The ccs_pll_calculate_vt_tree() function does a search over possible VT
-PLL configurations to find the "best" one. If the sensor does not support
-odd pre-PLL divisors and the minimum value (with constraints) isn't 1,
-other odd values could be errorneously searched (and selected) for the
-pre-PLL divisor. Fix this.
+The minimum size to fetch the data from device to QPIC buffer
+is 512-bytes. If size is less than 512-bytes the data will not be
+protected by ECC as per QPIC standard. So while reading onfi parameter
+page from NAND device set nandc->buf_count = 512.
 
-Fixes: 415ddd993978 ("media: ccs-pll: Split limits and PLL configuration into front and back parts")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: 89550beb098e ("mtd: rawnand: qcom: Implement exec_op()")
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Tested-by: Lakshmi Sowjanya D <quic_laksd@quicinc.com>
+Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ccs-pll.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mtd/nand/raw/qcom_nandc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/i2c/ccs-pll.c
-+++ b/drivers/media/i2c/ccs-pll.c
-@@ -397,6 +397,8 @@ static int ccs_pll_calculate_vt_tree(str
- 	min_pre_pll_clk_div = max_t(u16, min_pre_pll_clk_div,
- 				    pll->ext_clk_freq_hz /
- 				    lim_fr->max_pll_ip_clk_freq_hz);
-+	if (!(pll->flags & CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER))
-+		min_pre_pll_clk_div = clk_div_even(min_pre_pll_clk_div);
+--- a/drivers/mtd/nand/raw/qcom_nandc.c
++++ b/drivers/mtd/nand/raw/qcom_nandc.c
+@@ -2917,7 +2917,7 @@ static int qcom_param_page_type_exec(str
+ 		write_reg_dma(nandc, NAND_DEV_CMD1, 1, NAND_BAM_NEXT_SGL);
+ 	}
  
- 	dev_dbg(dev, "vt min/max_pre_pll_clk_div: %u,%u\n",
- 		min_pre_pll_clk_div, max_pre_pll_clk_div);
+-	nandc->buf_count = len;
++	nandc->buf_count = 512;
+ 	memset(nandc->data_buffer, 0xff, nandc->buf_count);
+ 
+ 	config_nand_single_cw_page_read(chip, false, 0);
 
 
