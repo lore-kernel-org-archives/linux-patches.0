@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2C72222B2;
-	Mon, 23 Jun 2025 22:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048DA2222B2;
+	Mon, 23 Jun 2025 22:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717646; cv=none; b=OT/KgE18jceO60zrm7skXhxSndFMZDzmIGDv6sQdHaa5SXFjt0RfqB5/SNVySxn2Ef140DBX3Wf+MKb7XLzyohKDGN321umGv+fL+4R2GnI7UHyCSpgGytuN9fZmB8nttyeW8mqVkICqa6OIBHIbFqKFcxYlzNTBBxZY+i5gcr8=
+	t=1750717649; cv=none; b=QiC3TJmv9dTjiRjA/bV5yXp1WNdKFZop73SIzH+p0NG1+K/lDYJFbZGBnPB8zyk5Zu0/E483MoDbSeKFVQJXr2bDeAvujyDLvG546+ze43Od4nCmKNZf2E7aVsD5yTzSspi2yYXVOxAufc1B60RH6fYNH1ZdpLG+YrrWzd97hoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717646; c=relaxed/simple;
-	bh=Zrvech6VcXItwKza2DRvOygS1m7VHhXXUUB9Fhxkmu8=;
+	s=arc-20240116; t=1750717649; c=relaxed/simple;
+	bh=f+z0WOeHBUtbxo187+ZCkrZD4O/dm6hKZcTNCS/yIy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oxO32JQXbva/Oc57sTQZ+G7Hk0oO5vJoH56KzMejU7hyAyPS5sa6NsdVK0YeFzCY5MyQpWKYazWetOl3voSmAQs6yS4QuqMQJivCVdEcwryitRSjD3ZthTXGdZWbyj0nAcRhlPafBgt2J2MH2a7uZ7aDKpuYFZI9uCtUTQLEWtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVAZ9y+x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uKGFxIfx0+cG1OsM6M8sxL8igxQMJXZFSJ8xemEsWiOv2e4B4/rTsWmoj5Gg2eAIN1II/ScwrTKq2lmgFPLznGWOco7Gvk+g0V1kCZvPxxsY044g+LZg6qKTo2AdbP7K9zlDFtwsBDH5SSx/7Zk6q/ZKJmG7qsu+ZkaTGeGEQ1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTtJR8L+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVAZ9y+x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3BEC4CEEA;
-	Mon, 23 Jun 2025 22:27:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTtJR8L+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A6EC4CEEA;
+	Mon, 23 Jun 2025 22:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717646;
-	bh=Zrvech6VcXItwKza2DRvOygS1m7VHhXXUUB9Fhxkmu8=;
+	s=korg; t=1750717648;
+	bh=f+z0WOeHBUtbxo187+ZCkrZD4O/dm6hKZcTNCS/yIy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zVAZ9y+xvGMXK5dsQx9Y4xLLeS/l2Qy0rQc3Oirm8yINN2PyVKbHWVdd5WMSXtVi6
-	 V3exxw0Obwuwg7OzTDvCDnIYppazbxf77FNZ+1UUQTaDb5fKxr/GpMSkRRu0FGihQN
-	 CD9V9R1CTm0dC8VaTt9aqmfUScf9tsCW4USfhYGI=
+	b=GTtJR8L+YvRTDbbOgGamBBzNj5A5OiwHjIET4mKpcPE3kEPamU20RgUMaHB5/eQKl
+	 OB0eWkSMsFrlmcszYHJp2tb4CE68f2W4qDr+IhbGGCY5IymwRkOqEdt8dnsS8QqrkY
+	 v0pMa1avDOA9RXoG0F9z/qjUDgE54TFW7qYU+FDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Rengarajan S <rengarajan.s@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	John Cheung <john.cs.hey@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 488/508] net: lan743x: fix potential out-of-bounds write in lan743x_ptp_io_event_clock_get()
-Date: Mon, 23 Jun 2025 15:08:53 +0200
-Message-ID: <20250623130657.054266157@linuxfoundation.org>
+Subject: [PATCH 6.1 489/508] calipso: Fix null-ptr-deref in calipso_req_{set,del}attr().
+Date: Mon, 23 Jun 2025 15:08:54 +0200
+Message-ID: <20250623130657.075795160@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -53,58 +54,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit e353b0854d3a1a31cb061df8d022fbfea53a0f24 ]
+[ Upstream commit 10876da918fa1aec0227fb4c67647513447f53a9 ]
 
-Before calling lan743x_ptp_io_event_clock_get(), the 'channel' value
-is checked against the maximum value of PCI11X1X_PTP_IO_MAX_CHANNELS(8).
-This seems correct and aligns with the PTP interrupt status register
-(PTP_INT_STS) specifications.
+syzkaller reported a null-ptr-deref in sock_omalloc() while allocating
+a CALIPSO option.  [0]
 
-However, lan743x_ptp_io_event_clock_get() writes to ptp->extts[] with
-only LAN743X_PTP_N_EXTTS(4) elements, using channel as an index:
+The NULL is of struct sock, which was fetched by sk_to_full_sk() in
+calipso_req_setattr().
 
-    lan743x_ptp_io_event_clock_get(..., u8 channel,...)
-    {
-        ...
-        /* Update Local timestamp */
-        extts = &ptp->extts[channel];
-        extts->ts.tv_sec = sec;
-        ...
-    }
+Since commit a1a5344ddbe8 ("tcp: avoid two atomic ops for syncookies"),
+reqsk->rsk_listener could be NULL when SYN Cookie is returned to its
+client, as hinted by the leading SYN Cookie log.
 
-To avoid an out-of-bounds write and utilize all the supported GPIO
-inputs, set LAN743X_PTP_N_EXTTS to 8.
+Here are 3 options to fix the bug:
 
-Detected using the static analysis tool - Svace.
-Fixes: 60942c397af6 ("net: lan743x: Add support for PTP-IO Event Input External Timestamp (extts)")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Acked-by: Rengarajan S <rengarajan.s@microchip.com>
-Link: https://patch.msgid.link/20250616113743.36284-1-aleksei.kodanev@bell-sw.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  1) Return 0 in calipso_req_setattr()
+  2) Return an error in calipso_req_setattr()
+  3) Alaways set rsk_listener
+
+1) is no go as it bypasses LSM, but 2) effectively disables SYN Cookie
+for CALIPSO.  3) is also no go as there have been many efforts to reduce
+atomic ops and make TCP robust against DDoS.  See also commit 3b24d854cb35
+("tcp/dccp: do not touch listener sk_refcnt under synflood").
+
+As of the blamed commit, SYN Cookie already did not need refcounting,
+and no one has stumbled on the bug for 9 years, so no CALIPSO user will
+care about SYN Cookie.
+
+Let's return an error in calipso_req_setattr() and calipso_req_delattr()
+in the SYN Cookie case.
+
+This can be reproduced by [1] on Fedora and now connect() of nc times out.
+
+[0]:
+TCP: request_sock_TCPv6: Possible SYN flooding on port [::]:20002. Sending cookies.
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+CPU: 3 UID: 0 PID: 12262 Comm: syz.1.2611 Not tainted 6.14.0 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+RIP: 0010:read_pnet include/net/net_namespace.h:406 [inline]
+RIP: 0010:sock_net include/net/sock.h:655 [inline]
+RIP: 0010:sock_kmalloc+0x35/0x170 net/core/sock.c:2806
+Code: 89 d5 41 54 55 89 f5 53 48 89 fb e8 25 e3 c6 fd e8 f0 91 e3 00 48 8d 7b 30 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 26 01 00 00 48 b8 00 00 00 00 00 fc ff df 4c 8b
+RSP: 0018:ffff88811af89038 EFLAGS: 00010216
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffff888105266400
+RDX: 0000000000000006 RSI: ffff88800c890000 RDI: 0000000000000030
+RBP: 0000000000000050 R08: 0000000000000000 R09: ffff88810526640e
+R10: ffffed1020a4cc81 R11: ffff88810526640f R12: 0000000000000000
+R13: 0000000000000820 R14: ffff888105266400 R15: 0000000000000050
+FS:  00007f0653a07640(0000) GS:ffff88811af80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f863ba096f4 CR3: 00000000163c0005 CR4: 0000000000770ef0
+PKRU: 80000000
+Call Trace:
+ <IRQ>
+ ipv6_renew_options+0x279/0x950 net/ipv6/exthdrs.c:1288
+ calipso_req_setattr+0x181/0x340 net/ipv6/calipso.c:1204
+ calipso_req_setattr+0x56/0x80 net/netlabel/netlabel_calipso.c:597
+ netlbl_req_setattr+0x18a/0x440 net/netlabel/netlabel_kapi.c:1249
+ selinux_netlbl_inet_conn_request+0x1fb/0x320 security/selinux/netlabel.c:342
+ selinux_inet_conn_request+0x1eb/0x2c0 security/selinux/hooks.c:5551
+ security_inet_conn_request+0x50/0xa0 security/security.c:4945
+ tcp_v6_route_req+0x22c/0x550 net/ipv6/tcp_ipv6.c:825
+ tcp_conn_request+0xec8/0x2b70 net/ipv4/tcp_input.c:7275
+ tcp_v6_conn_request+0x1e3/0x440 net/ipv6/tcp_ipv6.c:1328
+ tcp_rcv_state_process+0xafa/0x52b0 net/ipv4/tcp_input.c:6781
+ tcp_v6_do_rcv+0x8a6/0x1a40 net/ipv6/tcp_ipv6.c:1667
+ tcp_v6_rcv+0x505e/0x5b50 net/ipv6/tcp_ipv6.c:1904
+ ip6_protocol_deliver_rcu+0x17c/0x1da0 net/ipv6/ip6_input.c:436
+ ip6_input_finish+0x103/0x180 net/ipv6/ip6_input.c:480
+ NF_HOOK include/linux/netfilter.h:314 [inline]
+ NF_HOOK include/linux/netfilter.h:308 [inline]
+ ip6_input+0x13c/0x6b0 net/ipv6/ip6_input.c:491
+ dst_input include/net/dst.h:469 [inline]
+ ip6_rcv_finish net/ipv6/ip6_input.c:79 [inline]
+ ip6_rcv_finish+0xb6/0x490 net/ipv6/ip6_input.c:69
+ NF_HOOK include/linux/netfilter.h:314 [inline]
+ NF_HOOK include/linux/netfilter.h:308 [inline]
+ ipv6_rcv+0xf9/0x490 net/ipv6/ip6_input.c:309
+ __netif_receive_skb_one_core+0x12e/0x1f0 net/core/dev.c:5896
+ __netif_receive_skb+0x1d/0x170 net/core/dev.c:6009
+ process_backlog+0x41e/0x13b0 net/core/dev.c:6357
+ __napi_poll+0xbd/0x710 net/core/dev.c:7191
+ napi_poll net/core/dev.c:7260 [inline]
+ net_rx_action+0x9de/0xde0 net/core/dev.c:7382
+ handle_softirqs+0x19a/0x770 kernel/softirq.c:561
+ do_softirq.part.0+0x36/0x70 kernel/softirq.c:462
+ </IRQ>
+ <TASK>
+ do_softirq arch/x86/include/asm/preempt.h:26 [inline]
+ __local_bh_enable_ip+0xf1/0x110 kernel/softirq.c:389
+ local_bh_enable include/linux/bottom_half.h:33 [inline]
+ rcu_read_unlock_bh include/linux/rcupdate.h:919 [inline]
+ __dev_queue_xmit+0xc2a/0x3c40 net/core/dev.c:4679
+ dev_queue_xmit include/linux/netdevice.h:3313 [inline]
+ neigh_hh_output include/net/neighbour.h:523 [inline]
+ neigh_output include/net/neighbour.h:537 [inline]
+ ip6_finish_output2+0xd69/0x1f80 net/ipv6/ip6_output.c:141
+ __ip6_finish_output net/ipv6/ip6_output.c:215 [inline]
+ ip6_finish_output+0x5dc/0xd60 net/ipv6/ip6_output.c:226
+ NF_HOOK_COND include/linux/netfilter.h:303 [inline]
+ ip6_output+0x24b/0x8d0 net/ipv6/ip6_output.c:247
+ dst_output include/net/dst.h:459 [inline]
+ NF_HOOK include/linux/netfilter.h:314 [inline]
+ NF_HOOK include/linux/netfilter.h:308 [inline]
+ ip6_xmit+0xbbc/0x20d0 net/ipv6/ip6_output.c:366
+ inet6_csk_xmit+0x39a/0x720 net/ipv6/inet6_connection_sock.c:135
+ __tcp_transmit_skb+0x1a7b/0x3b40 net/ipv4/tcp_output.c:1471
+ tcp_transmit_skb net/ipv4/tcp_output.c:1489 [inline]
+ tcp_send_syn_data net/ipv4/tcp_output.c:4059 [inline]
+ tcp_connect+0x1c0c/0x4510 net/ipv4/tcp_output.c:4148
+ tcp_v6_connect+0x156c/0x2080 net/ipv6/tcp_ipv6.c:333
+ __inet_stream_connect+0x3a7/0xed0 net/ipv4/af_inet.c:677
+ tcp_sendmsg_fastopen+0x3e2/0x710 net/ipv4/tcp.c:1039
+ tcp_sendmsg_locked+0x1e82/0x3570 net/ipv4/tcp.c:1091
+ tcp_sendmsg+0x2f/0x50 net/ipv4/tcp.c:1358
+ inet6_sendmsg+0xb9/0x150 net/ipv6/af_inet6.c:659
+ sock_sendmsg_nosec net/socket.c:718 [inline]
+ __sock_sendmsg+0xf4/0x2a0 net/socket.c:733
+ __sys_sendto+0x29a/0x390 net/socket.c:2187
+ __do_sys_sendto net/socket.c:2194 [inline]
+ __se_sys_sendto net/socket.c:2190 [inline]
+ __x64_sys_sendto+0xe1/0x1c0 net/socket.c:2190
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xc3/0x1d0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f06553c47ed
+Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f0653a06fc8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 00007f0655605fa0 RCX: 00007f06553c47ed
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 000000000000000b
+RBP: 00007f065545db38 R08: 0000200000000140 R09: 000000000000001c
+R10: f7384d4ea84b01bd R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f0655605fac R14: 00007f0655606038 R15: 00007f06539e7000
+ </TASK>
+Modules linked in:
+
+[1]:
+dnf install -y selinux-policy-targeted policycoreutils netlabel_tools procps-ng nmap-ncat
+mount -t selinuxfs none /sys/fs/selinux
+load_policy
+netlabelctl calipso add pass doi:1
+netlabelctl map del default
+netlabelctl map add default address:::1 protocol:calipso,1
+sysctl net.ipv4.tcp_syncookies=2
+nc -l ::1 80 &
+nc ::1 80
+
+Fixes: e1adea927080 ("calipso: Allow request sockets to be relabelled by the lsm.")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Reported-by: John Cheung <john.cs.hey@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAP=Rh=MvfhrGADy+-WJiftV2_WzMH4VEhEFmeT28qY+4yxNu4w@mail.gmail.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/20250617224125.17299-1-kuni1840@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan743x_ptp.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/calipso.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_ptp.h b/drivers/net/ethernet/microchip/lan743x_ptp.h
-index 0d29914cd4606..225e8232474d7 100644
---- a/drivers/net/ethernet/microchip/lan743x_ptp.h
-+++ b/drivers/net/ethernet/microchip/lan743x_ptp.h
-@@ -18,9 +18,9 @@
-  */
- #define LAN743X_PTP_N_EVENT_CHAN	2
- #define LAN743X_PTP_N_PEROUT		LAN743X_PTP_N_EVENT_CHAN
--#define LAN743X_PTP_N_EXTTS		4
--#define LAN743X_PTP_N_PPS		0
- #define PCI11X1X_PTP_IO_MAX_CHANNELS	8
-+#define LAN743X_PTP_N_EXTTS		PCI11X1X_PTP_IO_MAX_CHANNELS
-+#define LAN743X_PTP_N_PPS		0
- #define PTP_CMD_CTL_TIMEOUT_CNT		50
+diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
+index c07e3da08d2a8..24666291c54a8 100644
+--- a/net/ipv6/calipso.c
++++ b/net/ipv6/calipso.c
+@@ -1210,6 +1210,10 @@ static int calipso_req_setattr(struct request_sock *req,
+ 	struct ipv6_opt_hdr *old, *new;
+ 	struct sock *sk = sk_to_full_sk(req_to_sk(req));
  
- struct lan743x_adapter;
++	/* sk is NULL for SYN+ACK w/ SYN Cookie */
++	if (!sk)
++		return -ENOMEM;
++
+ 	if (req_inet->ipv6_opt && req_inet->ipv6_opt->hopopt)
+ 		old = req_inet->ipv6_opt->hopopt;
+ 	else
+@@ -1250,6 +1254,10 @@ static void calipso_req_delattr(struct request_sock *req)
+ 	struct ipv6_txoptions *txopts;
+ 	struct sock *sk = sk_to_full_sk(req_to_sk(req));
+ 
++	/* sk is NULL for SYN+ACK w/ SYN Cookie */
++	if (!sk)
++		return;
++
+ 	if (!req_inet->ipv6_opt || !req_inet->ipv6_opt->hopopt)
+ 		return;
+ 
 -- 
 2.39.5
 
