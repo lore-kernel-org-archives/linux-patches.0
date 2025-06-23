@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6B325523C;
-	Mon, 23 Jun 2025 13:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0787B2561DD;
+	Mon, 23 Jun 2025 13:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684909; cv=none; b=ulglYgKb1L6xKoQVoR5StuNRNcGG9VMIoAFbOp7jcaqewrcKJCQx0uQoaeggp3/bDNiNrzBG40RhKOKWivyZ1w9mKgC+ftnWvpgISEWT87oIYOWEVoYTCU3jUxuYmHpNwPFVaWyPo6CWSiF2XzfAwZfFJpWTqpP/oC8v5cPZJb4=
+	t=1750684912; cv=none; b=Yncf59vclumxYpe1CXeuEfHGviU6852FKao+cw4hBzIcUcm4QeTvHuDSSGOGmvQEBYJRuApzZEw9LU6g5u1HbJoLv9n7wFB8lyv16W8yKfmc4os1EMeXqANKxIaPkkMfUnvPwzSUWkOCPuwDNVg3C3QiOd2359jIlbZ8TSkrNqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684909; c=relaxed/simple;
-	bh=BlYNDB16azII6tqduIMcIO5X6qn1U4f2HhsSGisPR7o=;
+	s=arc-20240116; t=1750684912; c=relaxed/simple;
+	bh=gdqXpPATbouehiEPz4KirEfpPya2QS3mg1/w0d0dCNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FA4YYI0MNuXGYVI+/P6Pp+hwoKCID5Br+6At/vWpffwz+qSJ+mZpsqKOrLuJix/vAIWpGcmxSXfXAshg71ZpUioqr1sSv8XEzyJ4QMmJqx6k7YvlB9KmZoBgbQ5mJQCsd/BhCHn9/iV6+8vTiu7aWOzmKU/bRgfiB1hCt2ixQ8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDSEsyg6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fxNn62yiOoq21DbbrdWrHxhLzP3C7GqU4p2gTzcVKG9uXq7U+8iZ/WgI7vqVDv0Lp8o0g0wfr1IeTvaKVNa11ut98O6kS7MzDepYaFls6519RyAslx8Kk0ByTIrQ1DYUvXryalnKXqv/HiJpPYD9BW/ms2wQw1GE9i7E1OvxEvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoGGZ5JC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDSEsyg6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10461C4CEEA;
-	Mon, 23 Jun 2025 13:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoGGZ5JC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E28BC4CEEA;
+	Mon, 23 Jun 2025 13:21:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684909;
-	bh=BlYNDB16azII6tqduIMcIO5X6qn1U4f2HhsSGisPR7o=;
+	s=korg; t=1750684911;
+	bh=gdqXpPATbouehiEPz4KirEfpPya2QS3mg1/w0d0dCNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDSEsyg6EJTQGtCjf1UfvvzcUIHbeSWGiaZdWgrjaDafRsKeuD4qcRBs+LKg2Ly0I
-	 MeOO5qiTjsJ8Nmj6iMotDrZR9ObPekx2Qq/pvbl5w4UGvXOA8VPHCuwNxJ7qDVP3vf
-	 Ie3x8HjGlPLMfKbDq78cPiFfpkHt2avGe18dODh8=
+	b=HoGGZ5JC4BHEag1gr8awuptxZMntNbup8Ik5bB4NEp7eDRTSvBz0LQMR0ccbRl7yJ
+	 jy6lpSmXKbDCxu133A4ubfZjN0T55Q3xBgZv1XyjyhxoT6a4ww5gvTd8BmPLDMT6lL
+	 Lk+lHHJh8LZYiFW12OJIy3ZH5rUcVlomkm5xaVMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
-	Sean Nyekjaer <sean@geanix.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.15 189/592] iio: accel: fxls8962af: Fix temperature calculation
-Date: Mon, 23 Jun 2025 15:02:27 +0200
-Message-ID: <20250623130704.778459170@linuxfoundation.org>
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 010/355] gfs2: gfs2_create_inode error handling fix
+Date: Mon, 23 Jun 2025 15:03:31 +0200
+Message-ID: <20250623130627.056982575@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-commit 16038474e3a0263572f36326ef85057aaf341814 upstream.
+[ Upstream commit af4044fd0b77e915736527dd83011e46e6415f01 ]
 
-According to spec temperature should be returned in milli degrees Celsius.
-Add in_temp_scale to calculate from Celsius to milli Celsius.
+When gfs2_create_inode() finds a directory, make sure to return -EISDIR.
 
-Fixes: a3e0b51884ee ("iio: accel: add support for FXLS8962AF/FXLS8964AF accelerometers")
-Cc: stable@vger.kernel.org
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Link: https://patch.msgid.link/20250505-fxls-v4-1-a38652e21738@geanix.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 571a4b57975a ("GFS2: bugger off early if O_CREAT open finds a directory")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/fxls8962af-core.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/gfs2/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/accel/fxls8962af-core.c
-+++ b/drivers/iio/accel/fxls8962af-core.c
-@@ -23,6 +23,7 @@
- #include <linux/regulator/consumer.h>
- #include <linux/regmap.h>
- #include <linux/types.h>
-+#include <linux/units.h>
- 
- #include <linux/iio/buffer.h>
- #include <linux/iio/events.h>
-@@ -439,8 +440,16 @@ static int fxls8962af_read_raw(struct ii
- 		*val = FXLS8962AF_TEMP_CENTER_VAL;
- 		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_SCALE:
--		*val = 0;
--		return fxls8962af_read_full_scale(data, val2);
-+		switch (chan->type) {
-+		case IIO_TEMP:
-+			*val = MILLIDEGREE_PER_DEGREE;
-+			return IIO_VAL_INT;
-+		case IIO_ACCEL:
-+			*val = 0;
-+			return fxls8962af_read_full_scale(data, val2);
-+		default:
-+			return -EINVAL;
-+		}
- 	case IIO_CHAN_INFO_SAMP_FREQ:
- 		return fxls8962af_read_samp_freq(data, val, val2);
- 	default:
-@@ -736,6 +745,7 @@ static const struct iio_event_spec fxls8
- 	.type = IIO_TEMP, \
- 	.address = FXLS8962AF_TEMP_OUT, \
- 	.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) | \
-+			      BIT(IIO_CHAN_INFO_SCALE) | \
- 			      BIT(IIO_CHAN_INFO_OFFSET),\
- 	.scan_index = -1, \
- 	.scan_type = { \
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 22905a076a6a2..f266dec205175 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -636,7 +636,8 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
+ 	if (!IS_ERR(inode)) {
+ 		if (S_ISDIR(inode->i_mode)) {
+ 			iput(inode);
+-			inode = ERR_PTR(-EISDIR);
++			inode = NULL;
++			error = -EISDIR;
+ 			goto fail_gunlock;
+ 		}
+ 		d_instantiate(dentry, inode);
+-- 
+2.39.5
+
 
 
