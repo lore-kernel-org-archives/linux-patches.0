@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DA5242D90;
-	Mon, 23 Jun 2025 13:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DDE242D90;
+	Mon, 23 Jun 2025 13:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686167; cv=none; b=NBXSCF3hVPcDWn4N0MfrjvKwodTow0ISsxKoVjEx0nLHZAnDnq3GKmObMqI+ukHXf+0g/wTNySxHem/dJphAn4+uU9fv9X3k7kVvFMUYAVzruYFPcunAZdD+bUhmggokZHA5oGW/i3hyql+kyyuLb2RBlgrP8+XxiGMHR4eC5Q8=
+	t=1750686170; cv=none; b=phTDjceE4vD+en2D3OUX/2zXpcChWuQRYnKJdSjTU4NUjXakHhtICJQs/3bWSaefDu9G/VJ1VLUac9iG5rdbpt+EWn1TmhMRKYL3iAwQrBcckaYT2/bnt24AJcy2VvFlwBEhpFJj19DuCdqe4FMpieYKcavC/f+qIEbFid7G10Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686167; c=relaxed/simple;
-	bh=s3Rm/rbMFucxrtdtcw6GSageAvhvEmQCZIjfOZClKyg=;
+	s=arc-20240116; t=1750686170; c=relaxed/simple;
+	bh=+xJ3mIsovBNQ97nLZMCrva5iMYeNQK3K5gmYUMKDHdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TuqcbcacgCkoGp6T3s27V2IIqFoyAxtrv48gK4IBueypctRz8FO5Q3Fx2+2rsOK7E+aMyQeR8OIKe3UyJv+UNnTKl/8Nk27LNT3oj6I1QSYX3+Z9x0LXip4jNYspTghhXHA9s5N9uVqZUbFSvtF4OrEywZ2gA3U37GpGAqKfZeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8s5k5su; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OaDBfS/gtSwt9Goj9RD/uxQMbItY/XEM03+YXwFN8YeGBx2GRl4MUAi3DSXm9E6rjKKHgtzDMh0X+JNCBfLW/5/EsjGgxTSzSF87WhjyTQufA0yeOGSZYRxFV2hJCr5SMK/xLt2cn3ykN2xqSoNCyosTd1tf+31r0h9RMAIEJmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLOg9jt5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8s5k5su"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319D4C4CEEA;
-	Mon, 23 Jun 2025 13:42:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLOg9jt5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE59C4CEEA;
+	Mon, 23 Jun 2025 13:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686167;
-	bh=s3Rm/rbMFucxrtdtcw6GSageAvhvEmQCZIjfOZClKyg=;
+	s=korg; t=1750686170;
+	bh=+xJ3mIsovBNQ97nLZMCrva5iMYeNQK3K5gmYUMKDHdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h8s5k5suzTxuvo/joe1QAutmszLVZqABuXMmNXWb04MlJ62zuMnS2TJf2mczgK+p/
-	 8mQAtksqVnFbJ8ylXgNVnrH0fr71D4V3BV2FnSOLmatBe4gPnZTBdlz2lBeQD0SiJZ
-	 NZZM047qv7vm0IvEDgSV7Q0nAlMAPE2beDytSy5E=
+	b=VLOg9jt5W6bwKdZcuI61Gny7KTRHvtddgWhPeFkBoNN8TZEvfzAMm430BLVlDQbM3
+	 W0oJft0EzKMl51h6+LxTriY9kYOIEg8oagR2EpmXqjDnuc+8s01544jZjXRa/jRFrh
+	 tZRm16lSOxgw/U9ZbVXEQFbcEmfdIFitdSGnPmXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Clayton Craft <clayton@craftyguy.net>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.12 025/414] wifi: ath11k: fix rx completion meta data corruption
-Date: Mon, 23 Jun 2025 15:02:42 +0200
-Message-ID: <20250623130642.655374894@linuxfoundation.org>
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Maya Matuszczyk <maccraft123mc@gmail.com>,
+	Anthony Ruhier <aruhier@mailbox.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 147/222] drm/msm/a6xx: Increase HFI response timeout
+Date: Mon, 23 Jun 2025 15:08:02 +0200
+Message-ID: <20250623130616.510688166@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,104 +49,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-commit ab52e3e44fe9b666281752e2481d11e25b0e3fdd upstream.
+[ Upstream commit 5f02f5e78ec9688e29b6857813185b1181796abe ]
 
-Add the missing memory barrier to make sure that the REO dest ring
-descriptor is read after the head pointer to avoid using stale data on
-weakly ordered architectures like aarch64.
+When ACD feature is enabled, it triggers some internal calibrations
+which result in a pretty long delay during the first HFI perf vote.
+So, increase the HFI response timeout to match the downstream driver.
 
-This may fix the ring-buffer corruption worked around by commit
-f9fff67d2d7c ("wifi: ath11k: Fix SKB corruption in REO destination
-ring") by silently discarding data, and may possibly also address user
-reported errors like:
-
-	ath11k_pci 0006:01:00.0: msdu_done bit in attention is not set
-
-Tested-on: WCN6855 hw2.1 WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Cc: stable@vger.kernel.org	# 5.6
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218005
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Clayton Craft <clayton@craftyguy.net>
-Link: https://patch.msgid.link/20250321145302.4775-1-johan+linaro@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Tested-by: Maya Matuszczyk <maccraft123mc@gmail.com>
+Tested-by: Anthony Ruhier <aruhier@mailbox.org>
+Patchwork: https://patchwork.freedesktop.org/patch/649344/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -2637,7 +2637,7 @@ int ath11k_dp_process_rx(struct ath11k_b
- 	struct ath11k *ar;
- 	struct hal_reo_dest_ring *desc;
- 	enum hal_reo_dest_ring_push_reason push_reason;
--	u32 cookie;
-+	u32 cookie, info0, rx_msdu_info0, rx_mpdu_info0;
- 	int i;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+index eda11abc5f011..d437196225457 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+@@ -88,7 +88,7 @@ static int a6xx_hfi_wait_for_ack(struct a6xx_gmu *gmu, u32 id, u32 seqnum,
  
- 	for (i = 0; i < MAX_RADIOS; i++)
-@@ -2650,11 +2650,14 @@ int ath11k_dp_process_rx(struct ath11k_b
- try_again:
- 	ath11k_hal_srng_access_begin(ab, srng);
+ 	/* Wait for a response */
+ 	ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_GMU2HOST_INTR_INFO, val,
+-		val & A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ, 100, 5000);
++		val & A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ, 100, 1000000);
  
-+	/* Make sure descriptor is read after the head pointer. */
-+	dma_rmb();
-+
- 	while (likely(desc =
- 	      (struct hal_reo_dest_ring *)ath11k_hal_srng_dst_get_next_entry(ab,
- 									     srng))) {
- 		cookie = FIELD_GET(BUFFER_ADDR_INFO1_SW_COOKIE,
--				   desc->buf_addr_info.info1);
-+				   READ_ONCE(desc->buf_addr_info.info1));
- 		buf_id = FIELD_GET(DP_RXDMA_BUF_COOKIE_BUF_ID,
- 				   cookie);
- 		mac_id = FIELD_GET(DP_RXDMA_BUF_COOKIE_PDEV_ID, cookie);
-@@ -2683,8 +2686,9 @@ try_again:
- 
- 		num_buffs_reaped[mac_id]++;
- 
-+		info0 = READ_ONCE(desc->info0);
- 		push_reason = FIELD_GET(HAL_REO_DEST_RING_INFO0_PUSH_REASON,
--					desc->info0);
-+					info0);
- 		if (unlikely(push_reason !=
- 			     HAL_REO_DEST_RING_PUSH_REASON_ROUTING_INSTRUCTION)) {
- 			dev_kfree_skb_any(msdu);
-@@ -2692,18 +2696,21 @@ try_again:
- 			continue;
- 		}
- 
--		rxcb->is_first_msdu = !!(desc->rx_msdu_info.info0 &
-+		rx_msdu_info0 = READ_ONCE(desc->rx_msdu_info.info0);
-+		rx_mpdu_info0 = READ_ONCE(desc->rx_mpdu_info.info0);
-+
-+		rxcb->is_first_msdu = !!(rx_msdu_info0 &
- 					 RX_MSDU_DESC_INFO0_FIRST_MSDU_IN_MPDU);
--		rxcb->is_last_msdu = !!(desc->rx_msdu_info.info0 &
-+		rxcb->is_last_msdu = !!(rx_msdu_info0 &
- 					RX_MSDU_DESC_INFO0_LAST_MSDU_IN_MPDU);
--		rxcb->is_continuation = !!(desc->rx_msdu_info.info0 &
-+		rxcb->is_continuation = !!(rx_msdu_info0 &
- 					   RX_MSDU_DESC_INFO0_MSDU_CONTINUATION);
- 		rxcb->peer_id = FIELD_GET(RX_MPDU_DESC_META_DATA_PEER_ID,
--					  desc->rx_mpdu_info.meta_data);
-+					  READ_ONCE(desc->rx_mpdu_info.meta_data));
- 		rxcb->seq_no = FIELD_GET(RX_MPDU_DESC_INFO0_SEQ_NUM,
--					 desc->rx_mpdu_info.info0);
-+					 rx_mpdu_info0);
- 		rxcb->tid = FIELD_GET(HAL_REO_DEST_RING_INFO0_RX_QUEUE_NUM,
--				      desc->info0);
-+				      info0);
- 
- 		rxcb->mac_id = mac_id;
- 		__skb_queue_tail(&msdu_list[mac_id], msdu);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(gmu->dev,
+-- 
+2.39.5
+
 
 
