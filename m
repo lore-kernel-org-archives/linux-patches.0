@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DE621B8F6;
-	Mon, 23 Jun 2025 22:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89F222425B;
+	Mon, 23 Jun 2025 22:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716718; cv=none; b=uPweMCBU/9D8/Z9evFiGQcepNr30YN59P9sjbkewVbUcCP7FkfRzZZRn9APMotIGXfYnJe0auJLlRXJkX9gdQJgYRBLW+bgYEwVeRZbWI3zJBfGoSBzAIamc6GCp2JkasthL3y0EylPAoxaMU8MVJMIsPSpQRmL1/0Ln9NXE7l8=
+	t=1750716720; cv=none; b=APVKZmYVpJcxaCQGYc2G22YGU6Lhyn2ooVYOF7Xey9bmApq3yTi+Nj0Nud99tzRBMMcCIjjp2FBFS0yMTnt3+MbxGWNPaZ9AGGwTFh6qFFs4WHHIeo9kOBnr65gm13r/1i46MBceB7BbeK4glpdsaTKQlRK2o+YFOkm0+80qs+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716718; c=relaxed/simple;
-	bh=ekP3m3JDkx80H9/cAplLlpvM7I2VfbHto6kKp/D2qT0=;
+	s=arc-20240116; t=1750716720; c=relaxed/simple;
+	bh=WzzUGGguA5u/n0aarIOzgYKSKujZPFjRqqugIbjnewo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TmNLiR0NeWPXrIgEL+rkI8/uDRTUziR9qUhpjRKYv6A/T9QrZaJnJn4hu+bIOE0S6TRb6ea9RCDM4yBoOjj3U6RABsfIXEORE3PifHi4NqqcamOFUPe0qLIdtA8wgi1dkfI++oC6ZmmoXxr7F/lN1Qg8PyFYsXAoGXTqOH1WLYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGY9KmX9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aZUNggDaJzT5b/+3bGnlBaCDAmLkdnSLVDEfnqAD6/FCmsXL4KkgScv058ZTTHPU4OsDfzyNE93W/pKCbrZ/GIOfwvm8/FYHUljnuj+yS9mD0xlqKJNByw4vonsOFMg5t5zP0LhDIz9bk2kuNESqyl+5Tzp2bL9rU86sye1602A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRgI0uVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGY9KmX9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE1CC4CEEA;
-	Mon, 23 Jun 2025 22:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRgI0uVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4856AC4CEEA;
+	Mon, 23 Jun 2025 22:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716718;
-	bh=ekP3m3JDkx80H9/cAplLlpvM7I2VfbHto6kKp/D2qT0=;
+	s=korg; t=1750716720;
+	bh=WzzUGGguA5u/n0aarIOzgYKSKujZPFjRqqugIbjnewo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XGY9KmX90WVxO6zzbUQYbVrB+HjWOLGftbmrmKRteitBHZJ5+ziOHjE9JASC6OCjp
-	 ZUIKAe1d47U3shfTKtxTc0+BGSN022TmcQC+WSRiDQEhgyMXsaBdcl0tmm2PAz7AM9
-	 odBB7QW0X8HsEO79jU/g143ZN4RU8b8P70JLYSM0=
+	b=mRgI0uVDE29YhCZS+Mqc8LK5tN9EDGtwlSlwlxzWvCvN+ey42mUQybc17jDVUkJNY
+	 MCCGsn24HgOQ9O9TOMhMKeX8l9Q8iru+Re+1k1rZPEqgTVi/B6rBMK1pZeq0O4W5Yu
+	 6QS199W+ByNQ+iy2hpYeYFKG6Ga+firggD46KINs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 323/508] media: uvcvideo: Send control events for partial succeeds
-Date: Mon, 23 Jun 2025 15:06:08 +0200
-Message-ID: <20250623130653.274680201@linuxfoundation.org>
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 277/414] wifi: ath11k: determine PM policy based on machine model
+Date: Mon, 23 Jun 2025 15:06:54 +0200
+Message-ID: <20250623130648.948416031@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +49,144 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-commit 5c791467aea6277430da5f089b9b6c2a9d8a4af7 upstream.
+[ Upstream commit ce8669a27016354dfa8bf3c954255cb9f3583bae ]
 
-Today, when we are applying a change to entities A, B. If A succeeds and B
-fails the events for A are not sent.
+To handle the Lenovo unexpected wakeup issue [1], previously we revert
+commit 166a490f59ac ("wifi: ath11k: support hibernation"). So currently
+WLAN target is put into WoWLAN mode during suspend. This is a temporary
+solution as it does not work on machines where WLAN power is cut off.
 
-This change changes the code so the events for A are send right after
-they happen.
+The thought here is that we do WoWLAN suspend on Lenovo machines while
+do non-WoWLAN suspend (which is done in the reverted commit) on other
+machines. This requires us to identify Lenovo machines from others.
+For that purpose, read board vendor and product name from DMI interface,
+match it against all known affected machines. If there is a match, choose
+WoWLAN suspend mode, else choose non-WoWLAN mode. Save the mode in ab
+for later reference.
 
-Cc: stable@kernel.org
-Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Message-ID: <20250224-uvc-data-backup-v2-2-de993ed9823b@chromium.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1] https://bugzilla.kernel.org/show_bug.cgi?id=219196
+
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+
+Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Tested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://patch.msgid.link/20250328-ath11k-bring-hibernation-back-v3-1-23405ae23431@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath11k/core.c | 55 ++++++++++++++++++++++++++
+ drivers/net/wireless/ath/ath11k/core.h |  7 ++++
+ 2 files changed, 62 insertions(+)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1593,7 +1593,9 @@ static bool uvc_ctrl_xctrls_has_control(
- }
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index 8002fb32a2cc1..2ec1771262fd9 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -811,6 +811,52 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
+ 	},
+ };
  
- static void uvc_ctrl_send_events(struct uvc_fh *handle,
--	const struct v4l2_ext_control *xctrls, unsigned int xctrls_count)
-+				 struct uvc_entity *entity,
-+				 const struct v4l2_ext_control *xctrls,
-+				 unsigned int xctrls_count)
- {
- 	struct uvc_control_mapping *mapping;
- 	struct uvc_control *ctrl;
-@@ -1604,6 +1606,9 @@ static void uvc_ctrl_send_events(struct
- 		u32 changes = V4L2_EVENT_CTRL_CH_VALUE;
- 
- 		ctrl = uvc_find_control(handle->chain, xctrls[i].id, &mapping);
-+		if (ctrl->entity != entity)
-+			continue;
++static const struct dmi_system_id ath11k_pm_quirk_table[] = {
++	{
++		.driver_data = (void *)ATH11K_PM_WOW,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21J4"),
++		},
++	},
++	{
++		.driver_data = (void *)ATH11K_PM_WOW,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21K4"),
++		},
++	},
++	{
++		.driver_data = (void *)ATH11K_PM_WOW,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21K6"),
++		},
++	},
++	{
++		.driver_data = (void *)ATH11K_PM_WOW,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21K8"),
++		},
++	},
++	{
++		.driver_data = (void *)ATH11K_PM_WOW,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21KA"),
++		},
++	},
++	{
++		.driver_data = (void *)ATH11K_PM_WOW,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21F9"),
++		},
++	},
++	{}
++};
 +
- 		if (ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
- 			/* Notification will be sent from an Interrupt event. */
- 			continue;
-@@ -1842,11 +1847,12 @@ int __uvc_ctrl_commit(struct uvc_fh *han
- 					uvc_ctrl_find_ctrl_idx(entity, ctrls,
- 							       err_ctrl);
- 			goto done;
-+		} else if (ret > 0 && !rollback) {
-+			uvc_ctrl_send_events(handle, entity,
-+					     ctrls->controls, ctrls->count);
- 		}
- 	}
+ static inline struct ath11k_pdev *ath11k_core_get_single_pdev(struct ath11k_base *ab)
+ {
+ 	WARN_ON(!ab->hw_params.single_pdev_only);
+@@ -2197,8 +2243,17 @@ EXPORT_SYMBOL(ath11k_core_pre_init);
  
--	if (!rollback)
--		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
- 	ret = 0;
- done:
- 	mutex_unlock(&chain->ctrl_mutex);
+ int ath11k_core_init(struct ath11k_base *ab)
+ {
++	const struct dmi_system_id *dmi_id;
+ 	int ret;
+ 
++	dmi_id = dmi_first_match(ath11k_pm_quirk_table);
++	if (dmi_id)
++		ab->pm_policy = (kernel_ulong_t)dmi_id->driver_data;
++	else
++		ab->pm_policy = ATH11K_PM_DEFAULT;
++
++	ath11k_dbg(ab, ATH11K_DBG_BOOT, "pm policy %u\n", ab->pm_policy);
++
+ 	ret = ath11k_core_soc_create(ab);
+ 	if (ret) {
+ 		ath11k_err(ab, "failed to create soc core: %d\n", ret);
+diff --git a/drivers/net/wireless/ath/ath11k/core.h b/drivers/net/wireless/ath/ath11k/core.h
+index fcdec14eb3cfa..09fdb7be0e197 100644
+--- a/drivers/net/wireless/ath/ath11k/core.h
++++ b/drivers/net/wireless/ath/ath11k/core.h
+@@ -891,6 +891,11 @@ struct ath11k_msi_config {
+ 	u16 hw_rev;
+ };
+ 
++enum ath11k_pm_policy {
++	ATH11K_PM_DEFAULT,
++	ATH11K_PM_WOW,
++};
++
+ /* Master structure to hold the hw data which may be used in core module */
+ struct ath11k_base {
+ 	enum ath11k_hw_rev hw_rev;
+@@ -1053,6 +1058,8 @@ struct ath11k_base {
+ 	} testmode;
+ #endif
+ 
++	enum ath11k_pm_policy pm_policy;
++
+ 	/* must be last */
+ 	u8 drv_priv[] __aligned(sizeof(void *));
+ };
+-- 
+2.39.5
+
 
 
