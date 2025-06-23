@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49154253F20;
-	Mon, 23 Jun 2025 13:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7554324DCFD;
+	Mon, 23 Jun 2025 13:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685752; cv=none; b=QS6PS/oI5BT3dRt/RwQlHpAGsfGAPOE/kWgwnEt7LRIjzmhbg4nyDPXFm5Vbw3DBo3s0H69dcRBuEsQMg6+zcxbV/XxIx0LuL9VtHsT4bi81Ner3Q+K9PaEjqqoftU03katYyZMtfACgbdqO6KJkgXfkeXhDZPZgWszeY94xz5M=
+	t=1750685755; cv=none; b=WA8L7Ydj2T1gZIzlBGv029Rl4+IOG0zWK81wJQ4wGdJw7hlepSMvskSpzJr3G+OEF9aNShG3LPDyu3kij0HUAoc9ihiLkYky8o9bFRhAdJjR+x2zhXkVYxDRRZ7V90w8HBkOEfffcoxsh+nF3lCaLIxrfCFKd32676wKJMoAMYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685752; c=relaxed/simple;
-	bh=W5O5+1+J3OWzmHmw1ZEMNlF/sBKNSHkEyTdyxzpDxQw=;
+	s=arc-20240116; t=1750685755; c=relaxed/simple;
+	bh=LJYoa++gsuQw0NmD6/aHhzSKLXx8IK6ikfbxcgBDGmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXZBTtv6vpWpo01qATVgKkLB3zTi+aGd7GlNKzue3+M2tJFDXRKIKdf513Li+KTMYUtaVTEImKHcaUt34ufDq22MFy+4VdaIYe7bk7PeJ1EUzQiYV+/aUeRO44vVb+REZOQ/fhETTi16Q6owPbSoYPeqpLEJ9MrY3Bth2xzyKRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBjsK94r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MjXY6ctCFBDf7Ntn9MQ+FqdUVGH/lv4585BSs2L+dkvePxKyzjhoMzHpq4GIlQgNnzvztId7EbhGOLubDyCXO06xd+nLjLCGdWhTdtZ9aMyIKNnrqygWazJbUFAc376Fb0yTcSIJuiGqIp2Evqh0OwplcFuxg7tZEvH70yw+HAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwnBxrIV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBjsK94r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A24C4CEEA;
-	Mon, 23 Jun 2025 13:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwnBxrIV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05DEC4CEEA;
+	Mon, 23 Jun 2025 13:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685752;
-	bh=W5O5+1+J3OWzmHmw1ZEMNlF/sBKNSHkEyTdyxzpDxQw=;
+	s=korg; t=1750685755;
+	bh=LJYoa++gsuQw0NmD6/aHhzSKLXx8IK6ikfbxcgBDGmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBjsK94req1+X0qlvBzf9n8TBXtYBLk9Tbeoc6unFPa7B5REZXFSRqgM6J3Lm7sEd
-	 5Zlcf7zFWKMLhp9HhpF0Hlk1jK5825H8s9gmqoAc/9OeUo75Q6DvXm7cq7YyGc8Iog
-	 MBIehPyat+Z3PU52mODOLfOhNW9zIB8iQSQfwlA8=
+	b=XwnBxrIV8uckCKiauoKYxMS5EYR0KmT3GIkwFeAY4LI8rZlgc0mrEaK0Sf8bWIVsi
+	 tGyD0LIvMdGnn1BGLOB78E9hGPiwQ46dSCUfFdSD2jgTHnd+H2fkXtRevE8GHBBjWf
+	 aZUoBUdHfVnUs6gMp3N1ON98hvt3AlhIEJlM3Ork=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Peter Marheine <pmarheine@chromium.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 050/508] drm/tegra: rgb: Fix the unbound reference count
-Date: Mon, 23 Jun 2025 15:01:35 +0200
-Message-ID: <20250623130646.477698409@linuxfoundation.org>
+Subject: [PATCH 5.4 140/222] ACPI: battery: negate current when discharging
+Date: Mon, 23 Jun 2025 15:07:55 +0200
+Message-ID: <20250623130616.302223882@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +47,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Peter Marheine <pmarheine@chromium.org>
 
-[ Upstream commit 3c3642335065c3bde0742b0edc505b6ea8fdc2b3 ]
+[ Upstream commit 234f71555019d308c6bc6f98c78c5551cb8cd56a ]
 
-The of_get_child_by_name() increments the refcount in tegra_dc_rgb_probe,
-but the driver does not decrement the refcount during unbind. Fix the
-unbound reference count using devm_add_action_or_reset() helper.
+The ACPI specification requires that battery rate is always positive,
+but the kernel ABI for POWER_SUPPLY_PROP_CURRENT_NOW
+(Documentation/ABI/testing/sysfs-class-power) specifies that it should
+be negative when a battery is discharging. When reporting CURRENT_NOW,
+massage the value to match the documented ABI.
 
-Fixes: d8f4a9eda006 ("drm: Add NVIDIA Tegra20 support")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20250205112137.36055-1-biju.das.jz@bp.renesas.com
+This only changes the sign of `current_now` and not `power_now` because
+documentation doesn't describe any particular meaning for `power_now` so
+leaving `power_now` unchanged is less likely to confuse userspace
+unnecessarily, whereas becoming consistent with the documented ABI is
+worth potentially confusing clients that read `current_now`.
+
+Signed-off-by: Peter Marheine <pmarheine@chromium.org>
+Link: https://patch.msgid.link/20250508024146.1436129-1-pmarheine@chromium.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/rgb.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/acpi/battery.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/tegra/rgb.c b/drivers/gpu/drm/tegra/rgb.c
-index 86e55e5d12b39..20ac30673ed53 100644
---- a/drivers/gpu/drm/tegra/rgb.c
-+++ b/drivers/gpu/drm/tegra/rgb.c
-@@ -189,6 +189,11 @@ static const struct drm_encoder_helper_funcs tegra_rgb_encoder_helper_funcs = {
- 	.atomic_check = tegra_rgb_encoder_atomic_check,
- };
- 
-+static void tegra_dc_of_node_put(void *data)
-+{
-+	of_node_put(data);
-+}
+diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
+index cf853e985d6d9..a5e120eca7f33 100644
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -266,10 +266,23 @@ static int acpi_battery_get_property(struct power_supply *psy,
+ 		break;
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+ 	case POWER_SUPPLY_PROP_POWER_NOW:
+-		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
++		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
+ 			ret = -ENODEV;
+-		else
+-			val->intval = battery->rate_now * 1000;
++			break;
++		}
 +
- int tegra_dc_rgb_probe(struct tegra_dc *dc)
- {
- 	struct device_node *np;
-@@ -196,7 +201,14 @@ int tegra_dc_rgb_probe(struct tegra_dc *dc)
- 	int err;
- 
- 	np = of_get_child_by_name(dc->dev->of_node, "rgb");
--	if (!np || !of_device_is_available(np))
-+	if (!np)
-+		return -ENODEV;
++		val->intval = battery->rate_now * 1000;
++		/*
++		 * When discharging, the current should be reported as a
++		 * negative number as per the power supply class interface
++		 * definition.
++		 */
++		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
++		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
++		    acpi_battery_handle_discharging(battery)
++				== POWER_SUPPLY_STATUS_DISCHARGING)
++			val->intval = -val->intval;
 +
-+	err = devm_add_action_or_reset(dc->dev, tegra_dc_of_node_put, np);
-+	if (err < 0)
-+		return err;
-+
-+	if (!of_device_is_available(np))
- 		return -ENODEV;
- 
- 	rgb = devm_kzalloc(dc->dev, sizeof(*rgb), GFP_KERNEL);
+ 		break;
+ 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
+ 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
 -- 
 2.39.5
 
