@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30428219E0;
-	Mon, 23 Jun 2025 21:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19AB21CA07;
+	Mon, 23 Jun 2025 21:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712756; cv=none; b=NqdDhSCapkJMzCrC+L6OibDf2CE8Gpqq00F394jYsbJvxb2b9o96GPjT5NP0Oue7oQPgR/8AAP8D7TfI6wUPhW//ZA+aVguQQWtOiN65Bcs8rMTIUiMv49GS74x5XIBE0bfCwIayAyL1hCRIRdxGDqkHvhgclifHSHU8lywuxHU=
+	t=1750712758; cv=none; b=u3lX2WXKW1QPDTi7x98biAapOAlDB4bY8bqxXc+UYTxLSO/3zx7JWf07gPsZqQDI/rVSdKOT4d2Z+I92T0gt5F1Ew5JBTSDKw2QqYn8IMkXGNOnBXvOlV+gIL39A1BbXt790anXl9qzRvUkmU63Yo16972gpuz4xq0hcqK3Qmf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712756; c=relaxed/simple;
-	bh=CKx+Hb3Td+bELceguDVxpsykqo1GAefXT/cNEgyfz6s=;
+	s=arc-20240116; t=1750712758; c=relaxed/simple;
+	bh=L5MJPlykFgrdaaNI97hdO/0crEf7fIkE0+z3TfRaP6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L5sGLl6WmXFQYOUhpPhICEL0DyeoxjsL6C7FgMVEk1UIqp/eYvoV+/ukyI+HZJuE9IQ5GHJ6XJ/cqEkNpYFqERaVdr+SoA19BNYR9awr3L7lgOomU8x/t7MC0aLVpl+V+uwtU2lTfku+BAuE31Co74d3iQ3JuthZOunCzemCGI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ag/XibzW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MhwMmrDpl1pzeLOs21QrummGSW7KNiR/gxj0fpgcaNelIUJa/yuJZ7HQhOHXf04jAixa4YsUYUNpC7ZWjAn8xcrcYy7WpxX6UabWYKXllshl/ViZLYvjcxtJxO5Lls+nxesX/TjWBGVbOAt8/kJ3e5MPr8GcWs8a5Fa7ssXuny4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SC9QuebX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ag/XibzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6E7C4CEEA;
-	Mon, 23 Jun 2025 21:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SC9QuebX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07853C4CEEA;
+	Mon, 23 Jun 2025 21:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712755;
-	bh=CKx+Hb3Td+bELceguDVxpsykqo1GAefXT/cNEgyfz6s=;
+	s=korg; t=1750712758;
+	bh=L5MJPlykFgrdaaNI97hdO/0crEf7fIkE0+z3TfRaP6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ag/XibzW/2JaE2VgfQTW7zi5/a2VMnX8eA4oCN8bUDh/K1dBSDqa1sTtRC/vYrsdI
-	 jaGUuRPziqsumEVEXk/tiBZ8+3UpJqGAyi1F36NDHN/jTVF1WGHYooCAxXF9C9Hwro
-	 /ombnYFwNCD7PYRtds1h1whWefvjIE1L8LXLxUI8=
+	b=SC9QuebXBCfTG7DApt0OPV9KLXRFd9hpbGKZ81w+SBiTF+waY26pqS2GtM/GNBWNK
+	 SANyrvuowfEx9g6LQG4aHFqge2eO/8/2ln69eYcG5iS+BvQNUduP+CR465Mc7+yEki
+	 0pxWqr+2Mz1kOqbHpIooRLBgQA/YXbbMdrkdAOK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sergio Perez Gonzalez <sperezglz@gmail.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 106/411] PCI/DPC: Initialize aer_err_info before using it
-Date: Mon, 23 Jun 2025 15:04:10 +0200
-Message-ID: <20250623130636.185117099@linuxfoundation.org>
+Subject: [PATCH 6.15 311/592] net: macb: Check return value of dma_set_mask_and_coherent()
+Date: Mon, 23 Jun 2025 15:04:29 +0200
+Message-ID: <20250623130707.811498408@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Sergio Perez Gonzalez <sperezglz@gmail.com>
 
-[ Upstream commit a424b598e6a6c1e69a2bb801d6fd16e805ab2c38 ]
+[ Upstream commit 3920a758800762917177a6b5ab39707d8e376fe6 ]
 
-Previously the struct aer_err_info "info" was allocated on the stack
-without being initialized, so it contained junk except for the fields we
-explicitly set later.
+Issue flagged by coverity. Add a safety check for the return value
+of dma_set_mask_and_coherent, go to a safe exit if it returns error.
 
-Initialize "info" at declaration so it starts as all zeros.
-
-Fixes: 8aefa9b0d910 ("PCI/DPC: Print AER status in DPC event handling")
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://patch.msgid.link/20250522232339.1525671-2-helgaas@kernel.org
+Link: https://scan7.scan.coverity.com/#/project-view/53936/11354?selectedIssue=1643754
+Signed-off-by: Sergio Perez Gonzalez <sperezglz@gmail.com>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Link: https://patch.msgid.link/20250526032034.84900-1-sperezglz@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/dpc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/cadence/macb_main.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pcie/dpc.c b/drivers/pci/pcie/dpc.c
-index ab83f78f3eb1d..cabbaacdb6e61 100644
---- a/drivers/pci/pcie/dpc.c
-+++ b/drivers/pci/pcie/dpc.c
-@@ -263,7 +263,7 @@ static int dpc_get_aer_uncorrect_severity(struct pci_dev *dev,
- void dpc_process_error(struct pci_dev *pdev)
- {
- 	u16 cap = pdev->dpc_cap, status, source, reason, ext_reason;
--	struct aer_err_info info;
-+	struct aer_err_info info = {};
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index e1e8bd2ec155b..d1f1ae5ea161c 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -5283,7 +5283,11 @@ static int macb_probe(struct platform_device *pdev)
  
- 	pci_read_config_word(pdev, cap + PCI_EXP_DPC_STATUS, &status);
- 	pci_read_config_word(pdev, cap + PCI_EXP_DPC_SOURCE_ID, &source);
+ #ifdef CONFIG_ARCH_DMA_ADDR_T_64BIT
+ 	if (GEM_BFEXT(DAW64, gem_readl(bp, DCFG6))) {
+-		dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44));
++		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44));
++		if (err) {
++			dev_err(&pdev->dev, "failed to set DMA mask\n");
++			goto err_out_free_netdev;
++		}
+ 		bp->hw_dma_cap |= HW_DMA_CAP_64B;
+ 	}
+ #endif
 -- 
 2.39.5
 
