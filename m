@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88FA70838;
-	Mon, 23 Jun 2025 21:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AF670838;
+	Mon, 23 Jun 2025 21:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713067; cv=none; b=HZLJrMNb4iSAkD8S0ez1Cxc3MkFiWJ3qu5ZgzZlt8ICkH1aE0AZhWEfogO+jF19Jl3INjRiYnmmCW9HAFon0PLYRD0adLkkLjTFQIWTQf9I2hA/+ysA3KSs3HmmuK9Edh/I31cPFR1LLvhxU7+Zgh3gBKC3BGx6X5ux/36eScys=
+	t=1750713069; cv=none; b=B6SYBTvtoaM4nrroO6OjBtuFqrT0w53Ia2mtLuUzWPKBw2zKe27D+/t+vKmois0OYGkQ5mnIriVfgYZau7dMXTwnYQgOQamKAiXmlkx2EIamf5KbwPKVzffYFZAY5VDWITLY4VcbzmCKjAhlqTTowxK8GwUxdgIk5U1KAh1xhYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713067; c=relaxed/simple;
-	bh=ysnfIRYWTRJ/f198VDn/eIf6JjWN9AFPm4w1WEdMhtw=;
+	s=arc-20240116; t=1750713069; c=relaxed/simple;
+	bh=Pt+JI9ez0YkfQ5OYgk4ljxNpkSgZg2aMs/g5h1dxtfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTGBImp/HppmSwvLuSGVWynWIXI5f7iUXF2ByF4UliBSSCznnLV+OzNguPkmAj6KMGHbLMwDa06NZ4QGK11QMr8sTmb7CPEA4OVzhSV4lbDlFxQySzRJ+kpTfL9Wxo0pIlub7L/VSUfAd/VzefoGbnHvKzei1w8B/CNvOdmXLQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbcqU3en; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MRpNkfP3WBk447fcgyQgy57PMaTCkSwtO39hj8M4ZTHcd0Wq93Dexw3fibxcg5RZiVVd3hvZ0RHc1q4ucEDZ/p+r8IHaewZyYJum5X82xj0KRFzKSHrGgiejYrwBi2P4wGpgblcsDxhbug1hBs05AI6eQYEya/RlxFycLYs5kds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNuAvpp4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbcqU3en"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8028FC4CEEA;
-	Mon, 23 Jun 2025 21:11:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNuAvpp4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BBAC4CEEA;
+	Mon, 23 Jun 2025 21:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713066;
-	bh=ysnfIRYWTRJ/f198VDn/eIf6JjWN9AFPm4w1WEdMhtw=;
+	s=korg; t=1750713069;
+	bh=Pt+JI9ez0YkfQ5OYgk4ljxNpkSgZg2aMs/g5h1dxtfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HbcqU3ennCIp/Vt16w9FWubVQbUFJmgjB3ClNfl9w80ekcpVDtO0K45GAGejNpIrm
-	 RkOELQA7CRocWzPQFB9pHUrO3QTPPH7aEtKw3wuyc7KswMmLIlI7YVPZ0SHJfyLGHS
-	 jk121QC5K5iMSJf213MdfSrnV5XbmgyJPywauPYw=
+	b=NNuAvpp4L5p6XpFz7ChzpN0L3sX8x+oAk7qDJCCpEFZil3GQBlSUEQXausEVOZsxL
+	 53ulArEaGApB5TlgnzuahfMRjyt847aAuWjLMb/uwooTxht5iIzBjEGRbhEOYylEp0
+	 usP5gJMFPNDbnoBH3fv8Dnzn8jSJZ8AYea2yNtxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David.Kaplan@amd.com,
-	peterz@infradead.org,
-	pawan.kumar.gupta@linux.intel.com,
-	mingo@kernel.org,
-	brad.spengler@opensrcsec.com,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Breno Leitao <leitao@debian.org>
-Subject: [PATCH 5.4 186/222] Revert "x86/bugs: Make spectre user default depend on MITIGATION_SPECTRE_V2" on v6.6 and older
-Date: Mon, 23 Jun 2025 15:08:41 +0200
-Message-ID: <20250623130617.764643710@linuxfoundation.org>
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.12 044/414] media: nxp: imx8-isi: better handle the m2m usage_count
+Date: Mon, 23 Jun 2025 15:03:01 +0200
+Message-ID: <20250623130643.139718437@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,91 +47,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
 
-This reverts commit a8c22ec36cdd99c1002d7152f859798fef7c4d58 which is
-commit 98fdaeb296f51ef08e727a7cc72e5b5c864c4f4d upstream.
+commit 910efa649076be9c2e1326059830327cf4228cf6 upstream.
 
-commit 7adb96687ce8 ("x86/bugs: Make spectre user default depend on
-MITIGATION_SPECTRE_V2") depends on commit 72c70f480a70 ("x86/bugs: Add
-a separate config for Spectre V2"), which introduced
-MITIGATION_SPECTRE_V2.
+Currently, if streamon/streamoff calls are imbalanced we can either end up
+with a negative ISI m2m usage_count (if streamoff() is called more times
+than streamon()) in which case we'll not be able to restart the ISI pipe
+next time, or the usage_count never gets to 0 and the pipe is never
+switched off.
 
-commit 72c70f480a70 ("x86/bugs: Add a separate config for Spectre V2")
-never landed in stable tree, thus, stable tree doesn't have
-MITIGATION_SPECTRE_V2, that said, commit 7adb96687ce8 ("x86/bugs: Make
-spectre user default depend on MITIGATION_SPECTRE_V2") has no value if
-the dependecy was not applied.
+To avoid that, add a 'streaming' flag to mxc_isi_m2m_ctx_queue_data and use it
+in the streamon/streamoff to avoid incrementing/decrementing the usage_count
+uselessly, if called multiple times from the same context.
 
-Revert commit 7adb96687ce8 ("x86/bugs: Make spectre user default
-depend on MITIGATION_SPECTRE_V2")  in stable kernel which landed in in
-5.4.294, 5.10.238, 5.15.185, 6.1.141 and 6.6.93 stable versions.
-
-Cc: David.Kaplan@amd.com
-Cc: peterz@infradead.org
-Cc: pawan.kumar.gupta@linux.intel.com
-Cc: mingo@kernel.org
-Cc: brad.spengler@opensrcsec.com
-Cc: stable@vger.kernel.org # 6.6 6.1 5.15 5.10 5.4
-Reported-by: Brad Spengler <brad.spengler@opensrcsec.com>
-Reported-by: Salvatore Bonaccorso <carnil@debian.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
+Fixes: cf21f328fcafac ("media: nxp: Add i.MX8 ISI driver")
+Cc: stable@vger.kernel.org
+Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20241023085643.978729-1-laurentiu.palcu@oss.nxp.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |    2 --
- arch/x86/kernel/cpu/bugs.c                      |   10 +++-------
- 2 files changed, 3 insertions(+), 9 deletions(-)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-m2m.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4600,8 +4600,6 @@
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-m2m.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-m2m.c
+@@ -43,6 +43,7 @@ struct mxc_isi_m2m_ctx_queue_data {
+ 	struct v4l2_pix_format_mplane format;
+ 	const struct mxc_isi_format_info *info;
+ 	u32 sequence;
++	bool streaming;
+ };
  
- 			Selecting 'on' will also enable the mitigation
- 			against user space to user space task attacks.
--			Selecting specific mitigation does not force enable
--			user mitigations.
- 
- 			Selecting 'off' will disable both the kernel and
- 			the user space protections.
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1050,13 +1050,9 @@ static __ro_after_init enum spectre_v2_m
- static enum spectre_v2_user_cmd __init
- spectre_v2_parse_user_cmdline(void)
+ struct mxc_isi_m2m_ctx {
+@@ -486,15 +487,18 @@ static int mxc_isi_m2m_streamon(struct f
+ 				enum v4l2_buf_type type)
  {
--	enum spectre_v2_user_cmd mode;
- 	char arg[20];
- 	int ret, i;
- 
--	mode = IS_ENABLED(CONFIG_MITIGATION_SPECTRE_V2) ?
--		SPECTRE_V2_USER_CMD_AUTO : SPECTRE_V2_USER_CMD_NONE;
+ 	struct mxc_isi_m2m_ctx *ctx = to_isi_m2m_ctx(fh);
++	struct mxc_isi_m2m_ctx_queue_data *q = mxc_isi_m2m_ctx_qdata(ctx, type);
+ 	const struct v4l2_pix_format_mplane *out_pix = &ctx->queues.out.format;
+ 	const struct v4l2_pix_format_mplane *cap_pix = &ctx->queues.cap.format;
+ 	const struct mxc_isi_format_info *cap_info = ctx->queues.cap.info;
+ 	const struct mxc_isi_format_info *out_info = ctx->queues.out.info;
+ 	struct mxc_isi_m2m *m2m = ctx->m2m;
+ 	bool bypass;
 -
- 	switch (spectre_v2_cmd) {
- 	case SPECTRE_V2_CMD_NONE:
- 		return SPECTRE_V2_USER_CMD_NONE;
-@@ -1069,7 +1065,7 @@ spectre_v2_parse_user_cmdline(void)
- 	ret = cmdline_find_option(boot_command_line, "spectre_v2_user",
- 				  arg, sizeof(arg));
- 	if (ret < 0)
--		return mode;
-+		return SPECTRE_V2_USER_CMD_AUTO;
+ 	int ret;
  
- 	for (i = 0; i < ARRAY_SIZE(v2_user_options); i++) {
- 		if (match_option(arg, ret, v2_user_options[i].option)) {
-@@ -1079,8 +1075,8 @@ spectre_v2_parse_user_cmdline(void)
- 		}
++	if (q->streaming)
++		return 0;
++
+ 	mutex_lock(&m2m->lock);
+ 
+ 	if (m2m->usage_count == INT_MAX) {
+@@ -547,6 +551,8 @@ static int mxc_isi_m2m_streamon(struct f
+ 		goto unchain;
  	}
  
--	pr_err("Unknown user space protection option (%s). Switching to default\n", arg);
--	return mode;
-+	pr_err("Unknown user space protection option (%s). Switching to AUTO select\n", arg);
-+	return SPECTRE_V2_USER_CMD_AUTO;
++	q->streaming = true;
++
+ 	return 0;
+ 
+ unchain:
+@@ -569,10 +575,14 @@ static int mxc_isi_m2m_streamoff(struct
+ 				 enum v4l2_buf_type type)
+ {
+ 	struct mxc_isi_m2m_ctx *ctx = to_isi_m2m_ctx(fh);
++	struct mxc_isi_m2m_ctx_queue_data *q = mxc_isi_m2m_ctx_qdata(ctx, type);
+ 	struct mxc_isi_m2m *m2m = ctx->m2m;
+ 
+ 	v4l2_m2m_ioctl_streamoff(file, fh, type);
+ 
++	if (!q->streaming)
++		return 0;
++
+ 	mutex_lock(&m2m->lock);
+ 
+ 	/*
+@@ -598,6 +608,8 @@ static int mxc_isi_m2m_streamoff(struct
+ 
+ 	mutex_unlock(&m2m->lock);
+ 
++	q->streaming = false;
++
+ 	return 0;
  }
  
- static inline bool spectre_v2_in_eibrs_mode(enum spectre_v2_mitigation mode)
 
 
