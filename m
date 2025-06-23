@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC32122257E;
-	Mon, 23 Jun 2025 21:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303BA22173D;
+	Mon, 23 Jun 2025 21:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713511; cv=none; b=XdScZv+/OQkpVM2uT5tIwykM/Y6slKsy+3A0iSI+EHAkW58jPrnPGhXm5bDphrAByVgB9nCjrp4+MdZx9wIfef3SuceNC+vi0hiiFAy/g84h670vYndp6yq+Skh9zZXRVo44VRbt+zYKYSnLZlnM8fM/OMlnpMxMtwVCYKEflOE=
+	t=1750713514; cv=none; b=L7wTjABbmiNixdNFU80GBx4kMGQzwLl9fjRKIdO0rh3AHdVUgcuTk6R0yUKijCXkyGnGt+snLEFtj7+Jk3tqKbYy8WG0LTJJKkKO7NwipjxNgYkTBi86E4B+opkQuneZq3UxhFIbR+g4+KIw4g+Fjy5huuxrV6KjuFT9rx008Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713511; c=relaxed/simple;
-	bh=bGqxe9SFQBHbCXXc44uvdgIHc+0hjSdPKMTwuYL7EWI=;
+	s=arc-20240116; t=1750713514; c=relaxed/simple;
+	bh=uildalYhA6I8yMkn3phzxAkSzo53SvK1dxLta/RidfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=obw3kZLSpqlhDqBTMHMeZNyMpGWeaKCutZ/UzRINxj+HxrfqnjW7KcoUtVez5T4nPVJjo4d919lHZU5/mWQfcE1mQOknTWHAo/pLRJLgYZlf31CbRj8+9AQBemPymLd2FW6TLCcU/P3w1EFMROiuReqYczE3c6ez1Sn7ijsMSNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8ClJdXJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Cur2KfDqWYSZAphrlkheDC6ASCCBZH2HUqIQALYUdJl27WFlJSuJBFyZklnc2Xdxr+znkhcVeianSQEUJFoOXpNE5m8QMpidh9DxM4D73G942ObGj53c/JsZtZKi0dFpTcXgZeTRW6x0BXRstXeZMP4r6s1xs0DHqapweTtNIYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbK+apAS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8ClJdXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541E5C4CEEA;
-	Mon, 23 Jun 2025 21:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbK+apAS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA6FC4CEEA;
+	Mon, 23 Jun 2025 21:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713511;
-	bh=bGqxe9SFQBHbCXXc44uvdgIHc+0hjSdPKMTwuYL7EWI=;
+	s=korg; t=1750713514;
+	bh=uildalYhA6I8yMkn3phzxAkSzo53SvK1dxLta/RidfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g8ClJdXJIssPLXk494iZZK/kXpmjwqhoGQOElvx2CNyezCp79QIo68LfZdsdONpR0
-	 HR8QX93fCKpA1s/J2vnpddkdnzMUj7LYdCADdvSPi7EbTKXGt+scK7aoY2S38f/hcl
-	 S57m8YSU7PiTAT8WOd4k4quegcD+5mgLsOQXJRuQ=
+	b=gbK+apAS65FWdJRtX8BWWfSXJHTD7eRXLBMcFnLyKz9TsRXereFtvTUjA5R1XQ1ZW
+	 lMxgf+HUwqjugG5LXOpVnFupd/2W/oTPlrD5JCeIasJgyN3oD/kyO/r/sSNYSfo021
+	 8UrXGNVALaldEuhAbgqn58mcqT9j8uy+1ViBmcEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+3361c2d6f78a3e0892f9@syzkaller.appspotmail.com>,
-	Qasim Ijaz <qasdev00@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 094/290] net: ch9200: fix uninitialised access during mii_nway_restart
-Date: Mon, 23 Jun 2025 15:05:55 +0200
-Message-ID: <20250623130629.798138487@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 127/508] soc: aspeed: lpc: Fix impossible judgment condition
+Date: Mon, 23 Jun 2025 15:02:52 +0200
+Message-ID: <20250623130648.418463983@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,75 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qasim Ijaz <qasdev00@gmail.com>
+From: Su Hui <suhui@nfschina.com>
 
-commit 9ad0452c0277b816a435433cca601304cfac7c21 upstream.
+[ Upstream commit d9f0a97e859bdcef51f9c187b1eb712eb13fd3ff ]
 
-In mii_nway_restart() the code attempts to call
-mii->mdio_read which is ch9200_mdio_read(). ch9200_mdio_read()
-utilises a local buffer called "buff", which is initialised
-with control_read(). However "buff" is conditionally
-initialised inside control_read():
+smatch error：
+drivers/soc/aspeed/aspeed-lpc-snoop.c:169
+aspeed_lpc_snoop_config_irq() warn: platform_get_irq() does not return zero
 
-        if (err == size) {
-                memcpy(data, buf, size);
-        }
+platform_get_irq() return non-zero IRQ number or negative error code,
+change '!lpc_snoop->irq' to 'lpc_snoop->irq < 0' to fix this.
 
-If the condition of "err == size" is not met, then
-"buff" remains uninitialised. Once this happens the
-uninitialised "buff" is accessed and returned during
-ch9200_mdio_read():
-
-        return (buff[0] | buff[1] << 8);
-
-The problem stems from the fact that ch9200_mdio_read()
-ignores the return value of control_read(), leading to
-uinit-access of "buff".
-
-To fix this we should check the return value of
-control_read() and return early on error.
-
-Reported-by: syzbot <syzbot+3361c2d6f78a3e0892f9@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=3361c2d6f78a3e0892f9
-Tested-by: syzbot <syzbot+3361c2d6f78a3e0892f9@syzkaller.appspotmail.com>
-Fixes: 4a476bd6d1d9 ("usbnet: New driver for QinHeng CH9200 devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
-Link: https://patch.msgid.link/20250526183607.66527-1-qasdev00@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9f4f9ae81d0a ("drivers/misc: add Aspeed LPC snoop driver")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20231027020703.1231875-1-suhui@nfschina.com
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ch9200.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/soc/aspeed/aspeed-lpc-snoop.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/ch9200.c
-+++ b/drivers/net/usb/ch9200.c
-@@ -178,6 +178,7 @@ static int ch9200_mdio_read(struct net_d
- {
- 	struct usbnet *dev = netdev_priv(netdev);
- 	unsigned char buff[2];
-+	int ret;
+diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+index eceeaf8dfbeba..d9bdc2e084086 100644
+--- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
++++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+@@ -167,7 +167,7 @@ static int aspeed_lpc_snoop_config_irq(struct aspeed_lpc_snoop *lpc_snoop,
+ 	int rc;
  
- 	netdev_dbg(netdev, "%s phy_id:%02x loc:%02x\n",
- 		   __func__, phy_id, loc);
-@@ -185,8 +186,10 @@ static int ch9200_mdio_read(struct net_d
- 	if (phy_id != 0)
+ 	lpc_snoop->irq = platform_get_irq(pdev, 0);
+-	if (!lpc_snoop->irq)
++	if (lpc_snoop->irq < 0)
  		return -ENODEV;
  
--	control_read(dev, REQUEST_READ, 0, loc * 2, buff, 0x02,
--		     CONTROL_TIMEOUT_MS);
-+	ret = control_read(dev, REQUEST_READ, 0, loc * 2, buff, 0x02,
-+			   CONTROL_TIMEOUT_MS);
-+	if (ret < 0)
-+		return ret;
- 
- 	return (buff[0] | buff[1] << 8);
- }
+ 	rc = devm_request_irq(dev, lpc_snoop->irq,
+-- 
+2.39.5
+
 
 
