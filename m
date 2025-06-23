@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56951AD3FA;
-	Mon, 23 Jun 2025 21:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD65218AC1;
+	Mon, 23 Jun 2025 21:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715538; cv=none; b=sgQuWoNIxurLMOqjHpwnfMm6B6dwWFUPppetWE1CRb7k13bBao57QzKI/VEuZjNsAzVjqpzdH6nWQRBKYyGSgCkQWv+GsWmbH5kYibXV6kytbhYHsVwMJUN8lFSDGmNeR7ZZwYlMOEeULbF8aZX0B2av/Tl9mX/4ngrsDZyx7o4=
+	t=1750715540; cv=none; b=dRxwlEJVSL3PGgx4iNVz1hN/cL3suvxLVjM1AOs0uLL7VOpyEFsA6++bbrbTBiwu0NxLn/IKhbMHC32e7MoNwsFM7w7dvjn46Z7mUEvjUlXr7z0afxAP0Cnu7XCy1uJPIecb4VP+kT6L9vbJ3GU3pLk7FkAIXHERzIZhVSNUwcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715538; c=relaxed/simple;
-	bh=SHoKsJSbMsuSimz5qdkFS+LJ/Uj3xFOWtJjE8JYw9CI=;
+	s=arc-20240116; t=1750715540; c=relaxed/simple;
+	bh=PTGzc4xVybOMflKwOmdTmEv860MfwrD5x4NYwjNm5ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R5qaqPalIaKfICLa++Cmy2CxfuGvsP/xPyMo4KpSJIXc1LetvWa5V4ioX3Byj2AiYcNWvtU07h8bBeUw4XqlEcFv7/pGeqpKnURtauE4Ips5TlR/DBOzmwUmRfENgVpKcwcfKniUmUlYfkwyci6QC1G1qG1pjr/dIyssj7mw2TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFq7Qeo7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dkhwpN01JadKrp56EuiEtxQyDvQ7Ew8rOwod1smGH1AnJ907YQKmYETC6fWmf+hS8s9JsJFJkrr8EpsYl39nGMGrD6M8hn7tQ5VJCZReuoQ0j+0qrABMlsE1FZEWMr/sF0xAW/4kc1cEkweCo7DQnAp6lKO0v/iJGqsrZrJ1PBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfa4kLxa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFq7Qeo7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F388AC4CEEA;
-	Mon, 23 Jun 2025 21:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfa4kLxa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724F6C4CEEA;
+	Mon, 23 Jun 2025 21:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715538;
-	bh=SHoKsJSbMsuSimz5qdkFS+LJ/Uj3xFOWtJjE8JYw9CI=;
+	s=korg; t=1750715540;
+	bh=PTGzc4xVybOMflKwOmdTmEv860MfwrD5x4NYwjNm5ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFq7Qeo7iLA5JoV1ygyFg7xQzKKeby9rvHhoVZj1qqz1sYm41nJVn+eqciIO/XLPr
-	 CKBWGTcuL8xTa6aE9lCFiSSwl+nidpChy8oRNyXUMDDiE44wXteNsvbVbbfRb765By
-	 HDqkpasUApHhaIyQ06wpFRWkrs9RBMPIiMgT+U7E=
+	b=jfa4kLxaZ/fnrSUQvcM5H+RifNOzTNbyX9ucYDeyFJ8sGn91qwtOWYzbL78FJshLJ
+	 w/mSiW51EbI8XfyczINQW7yZVJlcNkS4wcdfa9DKK3t09yR973rrV1h0t72Xypn+nw
+	 CEG6NAbxdK0WvozwMmzKBFCHL+jsHfCJMArc65T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.6 226/290] selinux: fix selinux_xfrm_alloc_user() to set correct ctx_len
-Date: Mon, 23 Jun 2025 15:08:07 +0200
-Message-ID: <20250623130633.726959225@linuxfoundation.org>
+	David Heimann <d@dmeh.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 267/508] ALSA: usb-audio: Add implicit feedback quirk for RODE AI-1
+Date: Mon, 23 Jun 2025 15:05:12 +0200
+Message-ID: <20250623130651.814276871@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,45 +44,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: David Heimann <d@dmeh.net>
 
-commit 86c8db86af43f52f682e53a0f2f0828683be1e52 upstream.
+commit 6a3439a417b910e662c666993798e0691bc81147 upstream.
 
-We should count the terminating NUL byte as part of the ctx_len.
-Otherwise, UBSAN logs a warning:
-  UBSAN: array-index-out-of-bounds in security/selinux/xfrm.c:99:14
-  index 60 is out of range for type 'char [*]'
+The RODE AI-1 audio interface requires implicit feedback sync between
+playback endpoint 0x03 and feedback endpoint 0x84 on interface 3, but
+doesn't advertise this in its USB descriptors.
 
-The allocation itself is correct so there is no actual out of bounds
-indexing, just a warning.
+Without this quirk, the device receives audio data but produces no output.
 
-Cc: stable@vger.kernel.org
-Suggested-by: Christian Göttsche <cgzones@googlemail.com>
-Link: https://lore.kernel.org/selinux/CAEjxPJ6tA5+LxsGfOJokzdPeRomBHjKLBVR6zbrg+_w3ZZbM3A@mail.gmail.com/
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: David Heimann <d@dmeh.net>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/084dc88c-1193-4a94-a002-5599adff936c@app.fastmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/xfrm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/implicit.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/security/selinux/xfrm.c
-+++ b/security/selinux/xfrm.c
-@@ -95,7 +95,7 @@ static int selinux_xfrm_alloc_user(struc
- 
- 	ctx->ctx_doi = XFRM_SC_DOI_LSM;
- 	ctx->ctx_alg = XFRM_SC_ALG_SELINUX;
--	ctx->ctx_len = str_len;
-+	ctx->ctx_len = str_len + 1;
- 	memcpy(ctx->ctx_str, &uctx[1], str_len);
- 	ctx->ctx_str[str_len] = '\0';
- 	rc = security_context_to_sid(ctx->ctx_str, str_len,
+--- a/sound/usb/implicit.c
++++ b/sound/usb/implicit.c
+@@ -57,6 +57,7 @@ static const struct snd_usb_implicit_fb_
+ 	IMPLICIT_FB_FIXED_DEV(0x31e9, 0x0002, 0x81, 2), /* Solid State Logic SSL2+ */
+ 	IMPLICIT_FB_FIXED_DEV(0x0499, 0x172f, 0x81, 2), /* Steinberg UR22C */
+ 	IMPLICIT_FB_FIXED_DEV(0x0d9a, 0x00df, 0x81, 2), /* RTX6001 */
++	IMPLICIT_FB_FIXED_DEV(0x19f7, 0x000a, 0x84, 3), /* RODE AI-1 */
+ 	IMPLICIT_FB_FIXED_DEV(0x22f0, 0x0006, 0x81, 3), /* Allen&Heath Qu-16 */
+ 	IMPLICIT_FB_FIXED_DEV(0x1686, 0xf029, 0x82, 2), /* Zoom UAC-2 */
+ 	IMPLICIT_FB_FIXED_DEV(0x2466, 0x8003, 0x86, 2), /* Fractal Audio Axe-Fx II */
 
 
