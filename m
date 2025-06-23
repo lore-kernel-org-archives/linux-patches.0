@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0212C9D;
-	Mon, 23 Jun 2025 21:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E8C219E0;
+	Mon, 23 Jun 2025 21:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713587; cv=none; b=K19z8UwJV62Lo90GtGp1FJDZ0TDbNgcIJYkNEIxxvfrArxQ/TzYRjUyIjS1MwDbxo+XmXFpj1jqUvVlc1Y16+fClL9ljYbI0Tmmi/rKMM1CukM88DRI3RFWvzbZFBeOyHLQG6/iptmX9TzlogorRz1ZGA2tFazBigpm4FUOoiq0=
+	t=1750713590; cv=none; b=YOxgK13ZcRRqJYIUUlg4bSXzAzWlRNNcVv9V1mAAkxl66ocah3Jm9078+Or2sFNiCUpwrb/ejq40yVMmrL2YdVTgzzdI5cvfDJ/AP3hAzYcQWmcKmlJ6We7eUoX9298I4Wk2h6GlBpGfCfn3OxBzYJku2ojiKkWfFqTjfj7cNFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713587; c=relaxed/simple;
-	bh=ATNARInsXfOz5RB2i9y4prC4BCw4h08D0peQiKJwYis=;
+	s=arc-20240116; t=1750713590; c=relaxed/simple;
+	bh=v7MFVQIOOzbkyD1nQhUKQnnuKefqs1VMYrTEujIMX0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XocQvE5fTJfF/CQo5/jjbRJB8KSombpdrRN66kQ+J6GQJB/SGpYKWwY7EE8lwVNx7nN3jml0CAm/CTvu0WRnLjEeWDe9DrMTS4OxpWrkl/Sp9bR0sICOM1m9tje1RXzejjylfCsso6BG+QeDTcmblUreKDECAPFRCszLHVbQPGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbJX5SR/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JjY979PAgrMQhTGp/jYh50ZovVjrdA3Nfe/k/ygQ8NaGAAZzyAQuFxAa8Kc06gLC/hizF0L8nu8b71L2q4G6l3ujYwBudX/tUedsq9Fnw5uXPbKddj2Hqc6omUH09lbsm6/cBH1DBu+tAOhbW2H1itXTPt+f4TmBVJjGMMYLs4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rMOxEaU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbJX5SR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F44C4CEEA;
-	Mon, 23 Jun 2025 21:19:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rMOxEaU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A47EC4CEEA;
+	Mon, 23 Jun 2025 21:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713587;
-	bh=ATNARInsXfOz5RB2i9y4prC4BCw4h08D0peQiKJwYis=;
+	s=korg; t=1750713589;
+	bh=v7MFVQIOOzbkyD1nQhUKQnnuKefqs1VMYrTEujIMX0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AbJX5SR/LSG14wMQQhJsjJY3vNutrDy5M12iqVnXj6hSjNVHliaE6SGEBLvUjNhTp
-	 ZyIrRB5cZH5rb/eckjp5uQSdDXoQugbpkXlCoaIP/oNo/j0tCtmLB+cBBnteX2qBrg
-	 J7XIvMRVvwx2dhD81DLGd01siNULt96kN9Dt0PiE=
+	b=0rMOxEaU7c7Dm/4YEGwBDmvgeEm30k8B3pmg1tNSndhE7bWyuIZhjxfACSt2rDjaw
+	 pipT3jiGDnDuZnL72QdZ5GRtS6bOHHhMGaRiaYl07jOWKqGmKgccxlDCHgAvbAnYSs
+	 S5BQuYdDWQTEjwFnZE8ATgd6n/hktvFTReIw7L4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 154/355] calipso: unlock rcu before returning -EAFNOSUPPORT
-Date: Mon, 23 Jun 2025 15:05:55 +0200
-Message-ID: <20250623130631.334839005@linuxfoundation.org>
+	Dmitry Nikiforov <Dm1tryNk@yandex.ru>,
+	Johan Hovold <johan@kernel.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.12 052/414] media: davinci: vpif: Fix memory leak in probe error path
+Date: Mon, 23 Jun 2025 15:03:09 +0200
+Message-ID: <20250623130643.351121149@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dmitry Nikiforov <Dm1tryNk@yandex.ru>
 
-commit 3cae906e1a6184cdc9e4d260e4dbdf9a118d94ad upstream.
+commit 024bf40edf1155e7a587f0ec46294049777d9b02 upstream.
 
-syzbot reported that a recent patch forgot to unlock rcu
-in the error path.
+If an error occurs during the initialization of `pdev_display`,
+the allocated platform device `pdev_capture` is not released properly,
+leading to a memory leak.
 
-Adopt the convention that netlbl_conn_setattr() is already using.
+Adjust error path handling to fix the leak.
 
-Fixes: 6e9f2df1c550 ("calipso: Don't call calipso functions for AF_INET sk.")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20250604133826.1667664-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 43acb728bbc4 ("media: davinci: vpif: fix use-after-free on driver unbind")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Nikiforov <Dm1tryNk@yandex.ru>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netlabel/netlabel_kapi.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/platform/ti/davinci/vpif.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/netlabel/netlabel_kapi.c
-+++ b/net/netlabel/netlabel_kapi.c
-@@ -1140,8 +1140,10 @@ int netlbl_conn_setattr(struct sock *sk,
- 		break;
- #if IS_ENABLED(CONFIG_IPV6)
- 	case AF_INET6:
--		if (sk->sk_family != AF_INET6)
--			return -EAFNOSUPPORT;
-+		if (sk->sk_family != AF_INET6) {
-+			ret_val = -EAFNOSUPPORT;
-+			goto conn_setattr_return;
-+		}
+--- a/drivers/media/platform/ti/davinci/vpif.c
++++ b/drivers/media/platform/ti/davinci/vpif.c
+@@ -504,7 +504,7 @@ static int vpif_probe(struct platform_de
+ 	pdev_display = kzalloc(sizeof(*pdev_display), GFP_KERNEL);
+ 	if (!pdev_display) {
+ 		ret = -ENOMEM;
+-		goto err_put_pdev_capture;
++		goto err_del_pdev_capture;
+ 	}
  
- 		addr6 = (struct sockaddr_in6 *)addr;
- 		entry = netlbl_domhsh_getentry_af6(secattr->domain,
+ 	pdev_display->name = "vpif_display";
+@@ -527,6 +527,8 @@ static int vpif_probe(struct platform_de
+ 
+ err_put_pdev_display:
+ 	platform_device_put(pdev_display);
++err_del_pdev_capture:
++	platform_device_del(pdev_capture);
+ err_put_pdev_capture:
+ 	platform_device_put(pdev_capture);
+ err_put_rpm:
 
 
