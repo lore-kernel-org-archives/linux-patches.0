@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A100813A265;
-	Mon, 23 Jun 2025 13:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651BB13A265;
+	Mon, 23 Jun 2025 13:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684542; cv=none; b=hImG9EoURNGpuObDATOVDKJKjziynLlzAM8UX/ZHe6aMiIdNG71ozyxd2ZQCMcM5i/538/qsAWhMuClJ3iQRHMSvDX1O+TVlugUujxUgecMkhcVPZRwLPadP57uOaU8bVgt7X2CviRE6xHbBeTOVwNE4PWi0k+BsJTR8YyIs2HM=
+	t=1750684545; cv=none; b=mbJnF+RdT47gaCiDVuawedFtFTFvooaJCo+4+8LSCYJc1AMzblqExQVLEtfnjS3x/806hQx/7ZEUBYabr4hgfnxloQfcg+lt37g8KQ65A5oK/JEHkvdxkxPr7axR0Eq8XKJkfFzRjcQHalgNWzc0HH2L90uTtSHXx7hzRvZ4tj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684542; c=relaxed/simple;
-	bh=1/9V9Nmnb2jqb9b94BWZgXGgeJ3OhTAnJ54iWlY2eUE=;
+	s=arc-20240116; t=1750684545; c=relaxed/simple;
+	bh=+dj4ehNm7Yld4ezRQcXzEQYDvBNAk7MBwP9vxMfq9Vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=STGtJjZw3oPTMUqO6CmQ3T1xH/fFSOZeQq2pMH0E1nV9PoH6Oc8COyxAA/ukcWjGYivppcvlx6wOc/EC9WsKw6pFdAGqaTXGIeO++gDkRStbGAtGbfUWagmWnWDk1BCu4aAhsOPS1BBDuGE4I8OjgxpnPjZCa9JePXs5yz4tncg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbUr5P2C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VjaXHn3B643UC8Kq2WNYl4On7RbjcqalTnJ5+MRQAu5Kvryao33T8ADVEpiLzJaawoPmkyqVw3WVhPcGpW85Gcps7mmQIkSO6Mwl4RzIO/AEht+hYTYq9MjUYvBQ5g6VzN0OCz/8KiheQEb2KUHrsWYHI2G7ywxR1PWF6n5UBXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVI6g3iX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbUr5P2C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358A7C4CEEA;
-	Mon, 23 Jun 2025 13:15:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVI6g3iX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4878C4CEEA;
+	Mon, 23 Jun 2025 13:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684542;
-	bh=1/9V9Nmnb2jqb9b94BWZgXGgeJ3OhTAnJ54iWlY2eUE=;
+	s=korg; t=1750684545;
+	bh=+dj4ehNm7Yld4ezRQcXzEQYDvBNAk7MBwP9vxMfq9Vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vbUr5P2CJhF2Qr1HHBOcJKXRtIZxZQqGix5l3G/MS61Xdlxt91bSjWP6sVvD/FQG1
-	 57531YS7mvt0sYakucjnvmSbUxCCaIiyV0b/OprhiwHQF6TzGwnw5oMIXHVCpJYx0M
-	 aahQnggzK200HMITY3FnbquvaUJL3+k0azh/ZKQY=
+	b=bVI6g3iXcS2/paJ8eB+s6ciaG+PkcF/XD/tkKkWSuPD/Oc54TIhfbQHeQnW7TUqf9
+	 SzXL2RWZucH1fth0u/mk/8IqMas+5PQNmiWRr7Al3kI9zJCG0bWZKgBlkvZM8GtJW5
+	 Q9u03XyStuQ7m7AHY/cVr4as6J4IfwnCWRNWZGy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.15 106/592] bus: firewall: Fix missing static inline annotations for stubs
-Date: Mon, 23 Jun 2025 15:01:04 +0200
-Message-ID: <20250623130702.798758601@linuxfoundation.org>
+	Tasos Sahanidis <tasos@tasossah.com>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.15 107/592] ata: pata_via: Force PIO for ATAPI devices on VT6415/VT6330
+Date: Mon, 23 Jun 2025 15:01:05 +0200
+Message-ID: <20250623130702.823752780@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -50,62 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Tasos Sahanidis <tasos@tasossah.com>
 
-commit 66db876162155c1cec87359cd78c62aaafde9257 upstream.
+commit d29fc02caad7f94b62d56ee1b01c954f9c961ba7 upstream.
 
-Stubs in the header file for !CONFIG_STM32_FIREWALL case should be both
-static and inline, because they do not come with earlier declaration and
-should be inlined in every unit including the header.
+The controller has a hardware bug that can hard hang the system when
+doing ATAPI DMAs without any trace of what happened. Depending on the
+device attached, it can also prevent the system from booting.
 
-Cc: Patrice Chotard <patrice.chotard@foss.st.com>
+In this case, the system hangs when reading the ATIP from optical media
+with cdrecord -vvv -atip on an _NEC DVD_RW ND-4571A 1-01 and an
+Optiarc DVD RW AD-7200A 1.06 attached to an ASRock 990FX Extreme 4,
+running at UDMA/33.
+
+The issue can be reproduced by running the same command with a cygwin
+build of cdrecord on WinXP, although it requires more attempts to cause
+it. The hang in that case is also resolved by forcing PIO. It doesn't
+appear that VIA has produced any drivers for that OS, thus no known
+workaround exists.
+
+HDDs attached to the controller do not suffer from any DMA issues.
+
 Cc: stable@vger.kernel.org
-Fixes: 5c9668cfc6d7 ("firewall: introduce stm32_firewall framework")
-Link: https://lore.kernel.org/r/20250507092121.95121-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/916677
+Signed-off-by: Tasos Sahanidis <tasos@tasossah.com>
+Link: https://lore.kernel.org/r/20250519085508.1398701-1-tasos@tasossah.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bus/stm32_firewall_device.h |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/ata/pata_via.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/linux/bus/stm32_firewall_device.h
-+++ b/include/linux/bus/stm32_firewall_device.h
-@@ -114,27 +114,30 @@ void stm32_firewall_release_access_by_id
+--- a/drivers/ata/pata_via.c
++++ b/drivers/ata/pata_via.c
+@@ -368,7 +368,8 @@ static unsigned int via_mode_filter(stru
+ 	}
  
- #else /* CONFIG_STM32_FIREWALL */
- 
--int stm32_firewall_get_firewall(struct device_node *np, struct stm32_firewall *firewall,
--				unsigned int nb_firewall)
-+static inline int stm32_firewall_get_firewall(struct device_node *np,
-+					      struct stm32_firewall *firewall,
-+					      unsigned int nb_firewall)
- {
- 	return -ENODEV;
- }
- 
--int stm32_firewall_grant_access(struct stm32_firewall *firewall)
-+static inline int stm32_firewall_grant_access(struct stm32_firewall *firewall)
- {
- 	return -ENODEV;
- }
- 
--void stm32_firewall_release_access(struct stm32_firewall *firewall)
-+static inline void stm32_firewall_release_access(struct stm32_firewall *firewall)
- {
- }
- 
--int stm32_firewall_grant_access_by_id(struct stm32_firewall *firewall, u32 subsystem_id)
-+static inline int stm32_firewall_grant_access_by_id(struct stm32_firewall *firewall,
-+						    u32 subsystem_id)
- {
- 	return -ENODEV;
- }
- 
--void stm32_firewall_release_access_by_id(struct stm32_firewall *firewall, u32 subsystem_id)
-+static inline void stm32_firewall_release_access_by_id(struct stm32_firewall *firewall,
-+						       u32 subsystem_id)
- {
- }
- 
+ 	if (dev->class == ATA_DEV_ATAPI &&
+-	    dmi_check_system(no_atapi_dma_dmi_table)) {
++	    (dmi_check_system(no_atapi_dma_dmi_table) ||
++	     config->id == PCI_DEVICE_ID_VIA_6415)) {
+ 		ata_dev_warn(dev, "controller locks up on ATAPI DMA, forcing PIO\n");
+ 		mask &= ATA_MASK_PIO;
+ 	}
 
 
