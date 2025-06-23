@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AB7221543;
-	Mon, 23 Jun 2025 22:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3993F2222B2;
+	Mon, 23 Jun 2025 22:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717550; cv=none; b=kDqFROrmkcj0xEDmuDR0/naqUySnxvD2CUyVj+/guwx0JomhFr+eVtmW9a6OJP6wg3dHyvdD0QbiuwLWUvuLe/Ze4ytPqim8gpoLc+Yd6wN7iPlvBTpaWRLVrdtJeAuFY2rRI/nhcaJYKtHjQJk283Ubm0Yq/y21lZNEDBdbGCM=
+	t=1750717553; cv=none; b=WWLbFilqSfAerkc/tni1optyb38GucqzQQ8u8HYDPP6JxJIXK/09e2crqe3Ci0jXTEH6jrJmFyS8+6C3ao/UM61ElYPTFme8HWJDmZWy5oyHiMG928lrWamrIFb/Tbkgd+iLcxiy+BP0ZymHfKBdYX/ChKSZP/kflDy8L3tmPkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717550; c=relaxed/simple;
-	bh=+jrC7HgT2ssyfa6URUgi5mKzFW6DAATZlNvyKUPWhC4=;
+	s=arc-20240116; t=1750717553; c=relaxed/simple;
+	bh=EdLve4xF+QHhhK78KzdqlIiANbY4+DX53vCynhh6FHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NIXPkoZbBxQflYPcK9LPOsT9NjyBn6NJ8HZu4qXcLTaDcvUDoIwOfw+vd/2gsz0uTts+JiPJMn9VVL4JFfHHktZUBTx2oZPn3BiJLsXw1ce6zQBOkep17jR7oNY0isZi2sI9YPuijn8Ov48nTjq1KdMfdgAGZNehnOVfGjczROs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWsQjdeY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LlpS3yQsdjxqQ0HOKZY5Xj1SaXVIgK0fhxLLrXfP9v23SyiGZqbtkYmk/MdMJ3zO7Y8d2t/BOCECaTPpwf7KhpnIvWUc3lL9aI5QIyRYVnKYL/z7h6MuekXX/gwBGc4jfzLQJYkNIVL/TgUCg+oImo12kF99A1PNa1+SGnS7538=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRNQ6D74; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWsQjdeY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50059C4CEEA;
-	Mon, 23 Jun 2025 22:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRNQ6D74"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6259C4CEEA;
+	Mon, 23 Jun 2025 22:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717550;
-	bh=+jrC7HgT2ssyfa6URUgi5mKzFW6DAATZlNvyKUPWhC4=;
+	s=korg; t=1750717553;
+	bh=EdLve4xF+QHhhK78KzdqlIiANbY4+DX53vCynhh6FHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QWsQjdeY+baiv5I21I0bh6WB+wg2TT/VAWiZiM3N8mZof2aKiNXYmLNf2KksyB3oC
-	 A9/i/9vBHdYUqI5ZE/wiNKemYH7gX008OMpz9ydc05QLtIFWgdot0vFnBeJvrPNXPv
-	 px8t9IwGFNePPnyEG1lW8K2o9tgEkSTkNvjd0OWg=
+	b=aRNQ6D74QBHlqwvzuuikX+UfTe4lDJwqscm87EiZiDdQ5szLaMJBWNHxrCkbNBaVF
+	 e+Odr6ZCwEVCtH8AZrcNtEmCgCjyCx5+/jOw1LV5R5kfDlO/+v5KrLEIXYh0qJfzbu
+	 3DlYJ03Pn72gMzjEZJXEM6O/4TpesEcbRCWU1C/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: [PATCH 6.12 398/414] serial: sh-sci: Clean sci_ports[0] after at earlycon exit
-Date: Mon, 23 Jun 2025 15:08:55 +0200
-Message-ID: <20250623130651.888887229@linuxfoundation.org>
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 451/508] net_sched: sch_sfq: reject invalid perturb period
+Date: Mon, 23 Jun 2025 15:08:16 +0200
+Message-ID: <20250623130656.243753333@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,122 +47,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 5f1017069933489add0c08659673443c9905659e upstream.
+commit 7ca52541c05c832d32b112274f81a985101f9ba8 upstream.
 
-The early_console_setup() function initializes sci_ports[0].port with an
-object of type struct uart_port obtained from the struct earlycon_device
-passed as an argument to early_console_setup().
+Gerrard Tai reported that SFQ perturb_period has no range check yet,
+and this can be used to trigger a race condition fixed in a separate patch.
 
-Later, during serial port probing, the serial port used as earlycon
-(e.g., port A) might be remapped to a different position in the sci_ports[]
-array, and a different serial port (e.g., port B) might be assigned to slot
-0. For example:
+We want to make sure ctl->perturb_period * HZ will not overflow
+and is positive.
 
-sci_ports[0] = port B
-sci_ports[X] = port A
+Tested:
 
-In this scenario, the new port mapped at index zero (port B) retains the
-data associated with the earlycon configuration. Consequently, after the
-Linux boot process, any access to the serial port now mapped to
-sci_ports[0] (port B) will block the original earlycon port (port A).
+tc qd add dev lo root sfq perturb -10   # negative value : error
+Error: sch_sfq: invalid perturb period.
 
-To address this, introduce an early_console_exit() function to clean up
-sci_ports[0] when earlycon is exited.
+tc qd add dev lo root sfq perturb 1000000000 # too big : error
+Error: sch_sfq: invalid perturb period.
 
-To prevent the cleanup of sci_ports[0] while the serial device is still
-being used by earlycon, introduce the struct sci_port::probing flag and
-account for it in early_console_exit().
+tc qd add dev lo root sfq perturb 2000000 # acceptable value
+tc -s -d qd sh dev lo
+qdisc sfq 8005: root refcnt 2 limit 127p quantum 64Kb depth 127 flows 128 divisor 1024 perturb 2000000sec
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0)
+ backlog 0b 0p requeues 0
 
-Fixes: 0b0cced19ab1 ("serial: sh-sci: Add CONFIG_SERIAL_EARLYCON support")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250116182249.3828577-5-claudiu.beznea.uj@bp.renesas.com
+Link: https://patch.msgid.link/20250611083501.1810459-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sh-sci.c |   32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+ net/sched/sch_sfq.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -183,6 +183,7 @@ static struct sci_port sci_ports[SCI_NPO
- static unsigned long sci_ports_in_use;
- static struct uart_driver sci_uart_driver;
- static bool sci_uart_earlycon;
-+static bool sci_uart_earlycon_dev_probing;
- 
- static inline struct sci_port *
- to_sci_port(struct uart_port *uart)
-@@ -3404,7 +3405,8 @@ static struct plat_sci_port *sci_parse_d
- static int sci_probe_single(struct platform_device *dev,
- 				      unsigned int index,
- 				      struct plat_sci_port *p,
--				      struct sci_port *sciport)
-+				      struct sci_port *sciport,
-+				      struct resource *sci_res)
- {
- 	int ret;
- 
-@@ -3451,6 +3453,14 @@ static int sci_probe_single(struct platf
- 		sciport->port.flags |= UPF_HARD_FLOW;
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -656,6 +656,14 @@ static int sfq_change(struct Qdisc *sch,
+ 		NL_SET_ERR_MSG_MOD(extack, "invalid quantum");
+ 		return -EINVAL;
  	}
- 
-+	if (sci_uart_earlycon && sci_ports[0].port.mapbase == sci_res->start) {
-+		/*
-+		 * Skip cleanup the sci_port[0] in early_console_exit(), this
-+		 * port is the same as the earlycon one.
-+		 */
-+		sci_uart_earlycon_dev_probing = true;
++
++	if (ctl->perturb_period < 0 ||
++	    ctl->perturb_period > INT_MAX / HZ) {
++		NL_SET_ERR_MSG_MOD(extack, "invalid perturb period");
++		return -EINVAL;
 +	}
++	perturb_period = ctl->perturb_period * HZ;
 +
- 	return uart_add_one_port(&sci_uart_driver, &sciport->port);
- }
+ 	if (ctl_v1 && !red_check_params(ctl_v1->qth_min, ctl_v1->qth_max,
+ 					ctl_v1->Wlog, ctl_v1->Scell_log, NULL))
+ 		return -EINVAL;
+@@ -672,14 +680,12 @@ static int sfq_change(struct Qdisc *sch,
+ 	headdrop = q->headdrop;
+ 	maxdepth = q->maxdepth;
+ 	maxflows = q->maxflows;
+-	perturb_period = q->perturb_period;
+ 	quantum = q->quantum;
+ 	flags = q->flags;
  
-@@ -3509,7 +3519,7 @@ static int sci_probe(struct platform_dev
- 
- 	platform_set_drvdata(dev, sp);
- 
--	ret = sci_probe_single(dev, dev_id, p, sp);
-+	ret = sci_probe_single(dev, dev_id, p, sp, res);
- 	if (ret)
- 		return ret;
- 
-@@ -3666,6 +3676,22 @@ sh_early_platform_init_buffer("earlyprin
- #ifdef CONFIG_SERIAL_SH_SCI_EARLYCON
- static struct plat_sci_port port_cfg;
- 
-+static int early_console_exit(struct console *co)
-+{
-+	struct sci_port *sci_port = &sci_ports[0];
-+
-+	/*
-+	 * Clean the slot used by earlycon. A new SCI device might
-+	 * map to this slot.
-+	 */
-+	if (!sci_uart_earlycon_dev_probing) {
-+		memset(sci_port, 0, sizeof(*sci_port));
-+		sci_uart_earlycon = false;
-+	}
-+
-+	return 0;
-+}
-+
- static int __init early_console_setup(struct earlycon_device *device,
- 				      int type)
- {
-@@ -3683,6 +3709,8 @@ static int __init early_console_setup(st
- 		       SCSCR_RE | SCSCR_TE | port_cfg.scscr);
- 
- 	device->con->write = serial_console_write;
-+	device->con->exit = early_console_exit;
-+
- 	return 0;
- }
- static int __init sci_early_console_setup(struct earlycon_device *device,
+ 	/* update and validate configuration */
+ 	if (ctl->quantum)
+ 		quantum = ctl->quantum;
+-	perturb_period = ctl->perturb_period * HZ;
+ 	if (ctl->flows)
+ 		maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
+ 	if (ctl->divisor) {
 
 
