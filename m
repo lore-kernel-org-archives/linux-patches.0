@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4776F15ADB4;
-	Mon, 23 Jun 2025 22:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B589C2222B2;
+	Mon, 23 Jun 2025 22:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717348; cv=none; b=AW1rvVjlJ2ufmSt57EMfQnGgNgwfDV9CAU8V7pxqde5gGn41vaIbMm5nJ8yIeDJf4/AX/jg7nV7pPzlrYJBgHViAwWn8mytSoodi04EWnDesp2B7zitOy6XcWlVAT2Qrs3eiNM5OV2TaUn2kDSb3wga0dRUBZF1h2YgRlDGkwys=
+	t=1750717350; cv=none; b=QYGjorikhPHRj2oauu5lgwvs8osyGsgQp1wBuS/KEC1SK8OSurvaQ1LqR57T+sCwl/8uRhWolkXOpUrQ1ZqiV2IbwzryuVVUbe9gTO7uHkeDjm38+nYfvLJNAuZOg9pvQawrx7I0z/Xiw+Gdr5NQH9F0naue1oo/bJhb6MTZ72U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717348; c=relaxed/simple;
-	bh=BGM8aURFkMHCZt7djlhf91flxW+uhYhn058PTcuKXiY=;
+	s=arc-20240116; t=1750717350; c=relaxed/simple;
+	bh=m54C/IO5by1M4vBNOb0jLH1Ndact6q94lVfRKouMSXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FX1C4SOgvXfdMaapK9U7uyK5gE/iTrgjjd1cgOsC3Wz6RWbBcyvzaig1WHV5Rth9sjxqjqvi9LUZMV6FLRneXex014HqpjMAa9OSZY57E5+5LKTJK/JQ/HdS+kIY9+K35pgB0gXOuDEnClak4viaOOifNsfSQ0NriSq8eyUP994=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyLIRbMe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KG/pZBAKWAJzJpSc4qd6XC7lPVn8qW0BxgSp0TZGjJCRo0wkP5CBUSrqIcESnhcYTjcObzi+1xUeN8VrVdFQSOvKkuUxS17GrpI41c6YdS5U6sVEraW8kAhqsAQOSQvq2FWrM4wnwTD/rMWDpgx8q8xMqwiTTOgXPf9pM1u9POI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JT6PQSz5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyLIRbMe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5283C4CEEA;
-	Mon, 23 Jun 2025 22:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JT6PQSz5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDE4C4CEEA;
+	Mon, 23 Jun 2025 22:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717348;
-	bh=BGM8aURFkMHCZt7djlhf91flxW+uhYhn058PTcuKXiY=;
+	s=korg; t=1750717350;
+	bh=m54C/IO5by1M4vBNOb0jLH1Ndact6q94lVfRKouMSXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HyLIRbMe7ief68dityYVQsGuJw6p+EahXufq7AJ4uwjW1Yi7Jfnw+IgeVOIOAB5EL
-	 owBBDRSjTYNT8ruPN+bR/iH+Xz5cAJIeCLdKzCWHL0sko+qeGGqepmw6lz1+pR9VZ1
-	 ZTXePEGjk//EGAAxSQmKYnYlPZWo2/o1aVqaFjvA=
+	b=JT6PQSz5pG8a/Up9l7P0RF57q/wh+tw3OQ1gRyRhObRLWXG5MjXEiwhuzERvS/NVd
+	 aVkbZr/9Sx0wD1Fe/UtKe8o9a9qoUzPuhnAy4IR4J4YDwRKw5cvnQGUUUjOfKZX2Qn
+	 Gvm8374D9OrVOSQ4Gg991JZhnNksWCrjtzKeWWSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	John Keeping <jkeeping@inmusicbrands.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 409/508] pinctrl: armada-37xx: propagate error from armada_37xx_gpio_get()
-Date: Mon, 23 Jun 2025 15:07:34 +0200
-Message-ID: <20250623130655.289261929@linuxfoundation.org>
+Subject: [PATCH 6.12 357/414] drm/ssd130x: fix ssd132x_clear_screen() columns
+Date: Mon, 23 Jun 2025 15:08:14 +0200
+Message-ID: <20250623130650.892883331@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,47 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit 57273ff8bb16f3842c2597b5bbcd49e7fa12edf7 ]
+[ Upstream commit e479da4054875c4cc53a7fb956ebff03d2dac939 ]
 
-The regmap_read() function can fail, so propagate its error up to
-the stack instead of silently ignoring that.
+The number of columns relates to the width, not the height.  Use the
+correct variable.
 
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-4-07e9ac1ab737@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Fixes: fdd591e00a9c ("drm/ssd130x: Add support for the SSD132x OLED controller family")
+Link: https://lore.kernel.org/r/20250611111307.1814876-1-jkeeping@inmusicbrands.com
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/solomon/ssd130x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-index 3ada8dcaa806b..f68caea15b03d 100644
---- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-+++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -445,11 +445,14 @@ static int armada_37xx_gpio_get(struct gpio_chip *chip, unsigned int offset)
- 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
- 	unsigned int reg = INPUT_VAL;
- 	unsigned int val, mask;
-+	int ret;
+diff --git a/drivers/gpu/drm/solomon/ssd130x.c b/drivers/gpu/drm/solomon/ssd130x.c
+index 06f5057690bd8..e0fc12d514d76 100644
+--- a/drivers/gpu/drm/solomon/ssd130x.c
++++ b/drivers/gpu/drm/solomon/ssd130x.c
+@@ -974,7 +974,7 @@ static void ssd130x_clear_screen(struct ssd130x_device *ssd130x, u8 *data_array)
  
- 	armada_37xx_update_reg(&reg, &offset);
- 	mask = BIT(offset);
+ static void ssd132x_clear_screen(struct ssd130x_device *ssd130x, u8 *data_array)
+ {
+-	unsigned int columns = DIV_ROUND_UP(ssd130x->height, SSD132X_SEGMENT_WIDTH);
++	unsigned int columns = DIV_ROUND_UP(ssd130x->width, SSD132X_SEGMENT_WIDTH);
+ 	unsigned int height = ssd130x->height;
  
--	regmap_read(info->regmap, reg, &val);
-+	ret = regmap_read(info->regmap, reg, &val);
-+	if (ret)
-+		return ret;
- 
- 	return (val & mask) != 0;
- }
+ 	memset(data_array, 0, columns * height);
 -- 
 2.39.5
 
