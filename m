@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8157C2222B2;
-	Mon, 23 Jun 2025 22:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02599222581;
+	Mon, 23 Jun 2025 22:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717382; cv=none; b=rv7/GYfYAqEckfalb/1FYoZ8La8FiVx8aO/qqUpOY6B+YBeAP6AUKRMm0xp9aZ/8Rxo/b2wIWB1wpMTsjVpTg0UL2b1pmZR5Q5xWb/96xKHIjYiIS4LYcfov34KSz//KN+0Eqhe+fRbE6GundUqmkRkSyRxKiVnRWcvThSWwVOw=
+	t=1750717385; cv=none; b=d9vaUGnaCfe4iKpQJIJQXAUdSVICbVrmkDERNEbi6st3SRjFEOTjOQaX8UQ3e9drS3OZKteFESUcGAUkt7OpfdTjUeaztPynSYSKl8DQD7J8kKh57aIB9iNmBMa7oR8zY5KjxAwjS550fHKp3Z5SQhmJQYEyYCehWTsUGJOiYCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717382; c=relaxed/simple;
-	bh=Yr9LqxRSj9nHuwNvd80g5/mM94TYI1ugxFQwUeqJiuc=;
+	s=arc-20240116; t=1750717385; c=relaxed/simple;
+	bh=Trpe0cmuKXBGkrQ0/Z3Q3AK2rTmu0tdqXEvHROYg9n0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AoFckY7vEc5y0toY64AiB90fdCKZDjEdiUMByQMXrqKj4KOq40yaKbkPQBfcWEszBvdlvjDSja9AkEFNd1x+g+Z6x0CD/4M8nNIoVhUArttvT4IX+++6pJH0adTYmO+JMqUXhKjQ6pxE/MALv3XJ9WfJOEgD5cyI+UO7N2SvBjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJINi+J9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ezHs6RYjLlWZSOunlqply+RqfnTvKmDes6Zfbdsz2sE5Cg6v/Rj2Hg+jtHFYiQBJdGzio89/vMOuhw+mIGdwPjknOKh9jQF6qKcBvgcQzdeAFqAgMksK7H6AIMfX/tkHsLlkybBOJtJZNQjbdpYBuxmhQa2/BhGa+7BP7Iv5SV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFrbG13H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJINi+J9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16505C4CEEA;
-	Mon, 23 Jun 2025 22:23:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFrbG13H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8480DC4CEEA;
+	Mon, 23 Jun 2025 22:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717382;
-	bh=Yr9LqxRSj9nHuwNvd80g5/mM94TYI1ugxFQwUeqJiuc=;
+	s=korg; t=1750717384;
+	bh=Trpe0cmuKXBGkrQ0/Z3Q3AK2rTmu0tdqXEvHROYg9n0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJINi+J9LVy2PpxIA3Ecya1l0toxq2zAXWkiUmXbWxaOHVR8VNGDTm1sYqJfJOgRk
-	 W8S0m61vNBzWiMbpnGvmj9ZkJT1wyOol3EDHDtKm9QHSx/dZtMpH0NaYf9rZ2nt66V
-	 4jgX5akhzYnKVnj7qIIToWtoUJtw3Ozivg3Iil2g=
+	b=JFrbG13HkfWHh8U6u80mgZL/PLjS+l67Wu8eHSaulnwSyCXBk/LQmgaY/gVDQmaO3
+	 RWOZAW+IGfadQrxn3hgyzXyWFebiRbbX5WS0H2s70OkHy0V9/yLporhoti/ti4PYWx
+	 Ep+am3GpvvVd5jeSu6K7AihCMg6MZsULQItiwonw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 415/508] clk: rockchip: rk3036: mark ddrphy as critical
-Date: Mon, 23 Jun 2025 15:07:40 +0200
-Message-ID: <20250623130655.421272753@linuxfoundation.org>
+Subject: [PATCH 6.1 416/508] libbpf: Add identical pointer detection to btf_dedup_is_equiv()
+Date: Mon, 23 Jun 2025 15:07:41 +0200
+Message-ID: <20250623130655.442261440@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -50,35 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-[ Upstream commit 596a977b34a722c00245801a5774aa79cec4e81d ]
+[ Upstream commit 8e64c387c942229c551d0f23de4d9993d3a2acb6 ]
 
-The ddrphy is supplied by the dpll, but due to the limited number of PLLs
-on the rk3036, the dpll also is used for other periperhals, like the GPU.
+Recently as a side-effect of
 
-So it happened, when the Lima driver turned off the gpu clock, this in
-turn also disabled the dpll and thus the ram.
+commit ac053946f5c4 ("compiler.h: introduce TYPEOF_UNQUAL() macro")
 
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20250503202532.992033-4-heiko@sntech.de
+issues were observed in deduplication between modules and kernel BTF
+such that a large number of kernel types were not deduplicated so
+were found in module BTF (task_struct, bpf_prog etc).  The root cause
+appeared to be a failure to dedup struct types, specifically those
+with members that were pointers with __percpu annotations.
+
+The issue in dedup is at the point that we are deduplicating structures,
+we have not yet deduplicated reference types like pointers.  If multiple
+copies of a pointer point at the same (deduplicated) integer as in this
+case, we do not see them as identical.  Special handling already exists
+to deal with structures and arrays, so add pointer handling here too.
+
+Reported-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250429161042.2069678-1-alan.maguire@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/rockchip/clk-rk3036.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/lib/bpf/btf.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/clk/rockchip/clk-rk3036.c b/drivers/clk/rockchip/clk-rk3036.c
-index d644bc155ec6e..f5f27535087a3 100644
---- a/drivers/clk/rockchip/clk-rk3036.c
-+++ b/drivers/clk/rockchip/clk-rk3036.c
-@@ -431,6 +431,7 @@ static const char *const rk3036_critical_clocks[] __initconst = {
- 	"hclk_peri",
- 	"pclk_peri",
- 	"pclk_ddrupctl",
-+	"ddrphy",
- };
+diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
+index 8224a797c2da5..f7e3209d6c641 100644
+--- a/tools/lib/bpf/btf.c
++++ b/tools/lib/bpf/btf.c
+@@ -3939,6 +3939,19 @@ static bool btf_dedup_identical_structs(struct btf_dedup *d, __u32 id1, __u32 id
+ 	return true;
+ }
  
- static void __init rk3036_clk_init(struct device_node *np)
++static bool btf_dedup_identical_ptrs(struct btf_dedup *d, __u32 id1, __u32 id2)
++{
++	struct btf_type *t1, *t2;
++
++	t1 = btf_type_by_id(d->btf, id1);
++	t2 = btf_type_by_id(d->btf, id2);
++
++	if (!btf_is_ptr(t1) || !btf_is_ptr(t2))
++		return false;
++
++	return t1->type == t2->type;
++}
++
+ /*
+  * Check equivalence of BTF type graph formed by candidate struct/union (we'll
+  * call it "candidate graph" in this description for brevity) to a type graph
+@@ -4071,6 +4084,9 @@ static int btf_dedup_is_equiv(struct btf_dedup *d, __u32 cand_id,
+ 		 */
+ 		if (btf_dedup_identical_structs(d, hypot_type_id, cand_id))
+ 			return 1;
++		/* A similar case is again observed for PTRs. */
++		if (btf_dedup_identical_ptrs(d, hypot_type_id, cand_id))
++			return 1;
+ 		return 0;
+ 	}
+ 
 -- 
 2.39.5
 
