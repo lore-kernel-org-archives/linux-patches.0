@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0CF223DE5;
-	Mon, 23 Jun 2025 21:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DE7221FBE;
+	Mon, 23 Jun 2025 21:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715149; cv=none; b=svjSztVisGHQhq3o8W6fLb7buUF8xM+2ctIlKJF8Sgxgti6ht0hdhfmMEhWbXlUdm8lMR8xfpihwHAcDXdL7UpokcmDEykt6tAqvG/Imr2Pd648Jxzv5DPGwH1+WoDBEzUMAkR/GzGTipcqCDXsNVosuGfMBapqpAns++4EfgyU=
+	t=1750715152; cv=none; b=bZJeRj2e9DiWIF4eO+CwzHzuJYFyS3e/WKi2gV0wMEwlrmqul/fsB/lNhMskZJ4DwI1JI5L+fNtTJBSpStvxqsdoQsKnSnDLcJI4bzaYVzTW41OuZt56PyCeeqx/ZM5Bh74I0rms7/bhh8UHB/XbhPrhQXY0avTse0SAS/GRXfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715149; c=relaxed/simple;
-	bh=6ws1oohkuaUoUAzjkpaw1eryJxpgGeWQ1kAMD9fOyFA=;
+	s=arc-20240116; t=1750715152; c=relaxed/simple;
+	bh=VU5EBAqcrpRBVGS/iNd+rTUhbOxJSJiZn8nlVFy5tGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=icrXzrSVsugYVB790FeLXjfD4NlqQDC6fgodpPF+nqac0vjR0V37yDJ/K9j2L63GhAMxUnrFNOsjeL4Q2y8JJjrB6FM7RxvI63PtgKtIdt6qaPUIxu4bKEDMuvECsbAwIkGmiYAeb80kvRkOr7b3WgX2NGHt2u/s+8OXgKG5PMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBt1LAJn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EeWJYAKHN9gzKHo/nnVxmkouefvRQif2luc1zk06ABwBDbmRKhcanuuXKkyX9nv/VRe+heMt4PUY8aa2Wyjc7oSLOsMHFjbXt6gnZE8vfBg1JCtBWSQ9aNWwskK7AdcQ8sCR0WSfysIpN2TCFoqVRnx6fGG13FAbJgWXjfGA+qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wikFzdgP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBt1LAJn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A87C4CEEA;
-	Mon, 23 Jun 2025 21:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wikFzdgP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D8BC4CEEA;
+	Mon, 23 Jun 2025 21:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715149;
-	bh=6ws1oohkuaUoUAzjkpaw1eryJxpgGeWQ1kAMD9fOyFA=;
+	s=korg; t=1750715151;
+	bh=VU5EBAqcrpRBVGS/iNd+rTUhbOxJSJiZn8nlVFy5tGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBt1LAJnYtHVKJJP1mRo6alY4NvaVCrWCqCGnQSDfFlgIK/UAB+oGeUdUWepDtvZ/
-	 M92wGQYnDrfR30sYPfek+O7I0D2mq5kcee+lN8u29j/ASU6IVbMPxS3AKx5SJ1BKQT
-	 v6mKeTJj+RaoIYJwnXX07wkeR2qc61rZtHEUo0j8=
+	b=wikFzdgPUgPcN49P7UDtts7Z2Jmr/YbYcW6oCAcc2J3YrR6RYXu026BNW436JLdnk
+	 zWVfK3tPOHP3azl5G5RuQLnx7zeGreBlFmI6JRZWhWJMZD5p99O+8qciz2eb5eHTdb
+	 ui59oRZvrfnmKYXfrMvtWHYVueay0NOVqefGtN4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 238/508] net_sched: sch_sfq: fix a potential crash on gso_skb handling
-Date: Mon, 23 Jun 2025 15:04:43 +0200
-Message-ID: <20250623130651.111785109@linuxfoundation.org>
+	Da Xue <da@libre.computer>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>
+Subject: [PATCH 5.15 239/411] clk: meson-g12a: add missing fclk_div2 to spicc
+Date: Mon, 23 Jun 2025 15:06:23 +0200
+Message-ID: <20250623130639.672031691@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,74 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Da Xue <da@libre.computer>
 
-[ Upstream commit 82ffbe7776d0ac084031f114167712269bf3d832 ]
+commit daf004f87c3520c414992893e2eadd5db5f86a5a upstream.
 
-SFQ has an assumption of always being able to queue at least one packet.
+SPICC is missing fclk_div2, which means fclk_div5 and fclk_div7 indexes
+are wrong on this clock. This causes the spicc module to output sclk at
+2.5x the expected rate when clock index 3 is picked.
 
-However, after the blamed commit, sch->q.len can be inflated by packets
-in sch->gso_skb, and an enqueue() on an empty SFQ qdisc can be followed
-by an immediate drop.
+Adding the missing fclk_div2 resolves this.
 
-Fix sfq_drop() to properly clear q->tail in this situation.
-
-Tested:
-
-ip netns add lb
-ip link add dev to-lb type veth peer name in-lb netns lb
-ethtool -K to-lb tso off                 # force qdisc to requeue gso_skb
-ip netns exec lb ethtool -K in-lb gro on # enable NAPI
-ip link set dev to-lb up
-ip -netns lb link set dev in-lb up
-ip addr add dev to-lb 192.168.20.1/24
-ip -netns lb addr add dev in-lb 192.168.20.2/24
-tc qdisc replace dev to-lb root sfq limit 100
-
-ip netns exec lb netserver
-
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-
-Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
-Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
-Closes: https://lore.kernel.org/netdev/9da42688-bfaa-4364-8797-e9271f3bdaef@hetzner-cloud.de/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20250606165127.3629486-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[jbrunet: amended commit description]
+Fixes: a18c8e0b7697 ("clk: meson: g12a: add support for the SPICC SCLK Source clocks")
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Da Xue <da@libre.computer>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20250512142617.2175291-1-da@libre.computer
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_sfq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/clk/meson/g12a.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index 002941d35b643..d564675a8be4d 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -310,7 +310,10 @@ static unsigned int sfq_drop(struct Qdisc *sch, struct sk_buff **to_free)
- 		/* It is difficult to believe, but ALL THE SLOTS HAVE LENGTH 1. */
- 		x = q->tail->next;
- 		slot = &q->slots[x];
--		q->tail->next = slot->next;
-+		if (slot->next == x)
-+			q->tail = NULL; /* no more active slots */
-+		else
-+			q->tail->next = slot->next;
- 		q->ht[slot->hash] = SFQ_EMPTY_SLOT;
- 		goto drop;
- 	}
--- 
-2.39.5
-
+--- a/drivers/clk/meson/g12a.c
++++ b/drivers/clk/meson/g12a.c
+@@ -3969,6 +3969,7 @@ static const struct clk_parent_data spic
+ 	{ .hw = &g12a_clk81.hw },
+ 	{ .hw = &g12a_fclk_div4.hw },
+ 	{ .hw = &g12a_fclk_div3.hw },
++	{ .hw = &g12a_fclk_div2.hw },
+ 	{ .hw = &g12a_fclk_div5.hw },
+ 	{ .hw = &g12a_fclk_div7.hw },
+ };
 
 
