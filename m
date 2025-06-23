@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0482AC2E0;
-	Mon, 23 Jun 2025 21:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF8C2AD04;
+	Mon, 23 Jun 2025 21:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714363; cv=none; b=bC5dtM3MReyK9nOgpwMnWrzItRTh50gaQxfZlDDVcLf3boBfNpm0rgAhtcgXSIpwXmvvgn//liCdfFIIJaE7255UkPmq/xsTAi94Om/djVhnM9IZrLe9FecGuZo6bb+1V+OApM6Sy0HzPWr8IChs0+Y4r8LRtg2OucjUflFx/Vw=
+	t=1750714365; cv=none; b=WuCL6foGhveCNsurIxwCEgcule3KRECljZMRAvFtDuEFzAioSBSbdi4ZrghRRUaSX7KO4RqhMzs+zbQJCUdWLvXj2Dp+kf8wCApifwlmoe15R3XFY0cqXdRunBNdjxJ8mt0tci1k4peHCi0j4WpiKGeXLyRu+CWLsboeMmbWdNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714363; c=relaxed/simple;
-	bh=rKroy6KZWhpC0oE5cwELAGo5M/U3iTt446VNLK5BQsk=;
+	s=arc-20240116; t=1750714365; c=relaxed/simple;
+	bh=GNo6LJMB3dZiyFGgb4oJG8UmtQ8ePVrB2BRaXliglLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ryhHpf3b8kiLZcev4kcbPiXM/wOcndCeKjWjs0V7+2YXe6AvYpYH1+FQKkYWfLaEhESk3iEaKIZzmk8Ret09wtwHCUW7Vcn1uWkWcK/cq5gkJC4sG5XK6C5NGzlF7rWxIrAPES63IR92QrAbd6B+IW1LQNQf9Qpqp/auYTI+GIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMiKLc+v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dK9+i2NDb02j/zigyacXBT8izuduTpqeIyqfS08G1pR2iHTH4WZPQbLrPbrv6BYfgRR414+9ZbaukWipBV0P7uU9m/xNxt7n6XmeJky1/XMYxEfC8omlRB9J+NpUTH7XTFYkeCX+VzvWJq5G56QHozZxy9L2g2xtT4UJ0fw6AYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVJQ8fSP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMiKLc+v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86BC8C4CEEA;
-	Mon, 23 Jun 2025 21:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVJQ8fSP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073BAC4CEEA;
+	Mon, 23 Jun 2025 21:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714362;
-	bh=rKroy6KZWhpC0oE5cwELAGo5M/U3iTt446VNLK5BQsk=;
+	s=korg; t=1750714365;
+	bh=GNo6LJMB3dZiyFGgb4oJG8UmtQ8ePVrB2BRaXliglLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GMiKLc+vN+O/tGEnOmmp19w4WWYCNRRyFJj77yN3Kl/yEkLand8UvTsdEWz5yQWVa
-	 bNF9n86PlWsVWU156imtj5AtDBiUvJdRdOo4EfY5J9WydJ2PbPIgupRMKoJdQlyVxq
-	 VSJqu+pvNQodI33Z69S4TRW78zts75raqtlarWAA=
+	b=BVJQ8fSP5sqxw+233h65L7AFSa28Dq7FMKvGGinyDdU3hzbcPf/+DPe9jDX+3Xsje
+	 undja8FTK1b7toBUtNDPoTNeBX8SbcjirtJAaZqmxcEl8h9RwSkBcXz6FDzIxd68JD
+	 ktS0YlZbFV3lISrDkYQE1IQrh7mtKgmULyL2/O9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Kyle Tso <kyletso@google.com>,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.15 183/411] usb: typec: tcpm/tcpci_maxim: Fix bounds check in process_rx()
-Date: Mon, 23 Jun 2025 15:05:27 +0200
-Message-ID: <20250623130638.289674582@linuxfoundation.org>
+	Gatien Chevallier <gatien.chevallier@foss.st.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 098/414] Input: gpio-keys - fix possible concurrent access in gpio_keys_irq_timer()
+Date: Mon, 23 Jun 2025 15:03:55 +0200
+Message-ID: <20250623130644.544941434@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,48 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Gatien Chevallier <gatien.chevallier@foss.st.com>
 
-commit 0736299d090f5c6a1032678705c4bc0a9511a3db upstream.
+commit 8f38219fa139623c29db2cb0f17d0a197a86e344 upstream.
 
-Register read of TCPC_RX_BYTE_CNT returns the total size consisting of:
+gpio_keys_irq_isr() and gpio_keys_irq_timer() access the same resources.
+There could be a concurrent access if a GPIO interrupt occurs in parallel
+of a HR timer interrupt.
 
-  PD message (pending read) size + 1 Byte for Frame Type (SOP*)
+Guard back those resources with a spinlock.
 
-This is validated against the max PD message (`struct pd_message`) size
-without accounting for the extra byte for the frame type. Note that the
-struct pd_message does not contain a field for the frame_type. This
-results in false negatives when the "PD message (pending read)" is equal
-to the max PD message size.
-
-Fixes: 6f413b559f86 ("usb: typec: tcpci_maxim: Chip level TCPC driver")
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
-Reviewed-by: Kyle Tso <kyletso@google.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/stable/20250502-b4-new-fix-pd-rx-count-v1-1-e5711ed09b3d%40google.com
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250502-b4-new-fix-pd-rx-count-v1-1-e5711ed09b3d@google.com
+Fixes: 019002f20cb5 ("Input: gpio-keys - use hrtimer for release timer")
+Signed-off-by: Gatien Chevallier <gatien.chevallier@foss.st.com>
+Link: https://lore.kernel.org/r/20250528-gpio_keys_preempt_rt-v2-2-3fc55a9c3619@foss.st.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpci_maxim.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/input/keyboard/gpio_keys.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/typec/tcpm/tcpci_maxim.c
-+++ b/drivers/usb/typec/tcpm/tcpci_maxim.c
-@@ -171,7 +171,8 @@ static void process_rx(struct max_tcpci_
- 		return;
- 	}
+--- a/drivers/input/keyboard/gpio_keys.c
++++ b/drivers/input/keyboard/gpio_keys.c
+@@ -449,6 +449,8 @@ static enum hrtimer_restart gpio_keys_ir
+ 						      release_timer);
+ 	struct input_dev *input = bdata->input;
  
--	if (count > sizeof(struct pd_message) || count + 1 > TCPC_RECEIVE_BUFFER_LEN) {
-+	if (count > sizeof(struct pd_message) + 1 ||
-+	    count + 1 > TCPC_RECEIVE_BUFFER_LEN) {
- 		dev_err(chip->dev, "Invalid TCPC_RX_BYTE_CNT %d\n", count);
- 		return;
- 	}
++	guard(spinlock_irqsave)(&bdata->lock);
++
+ 	if (bdata->key_pressed) {
+ 		input_report_key(input, *bdata->code, 0);
+ 		input_sync(input);
 
 
