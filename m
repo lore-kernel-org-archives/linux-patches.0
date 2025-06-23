@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282F93FD4;
-	Mon, 23 Jun 2025 21:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60823FD4;
+	Mon, 23 Jun 2025 21:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715267; cv=none; b=LnUnrCDfW2HvY6IJyF6ZmQzVB3frfUewx48hcXM7CrMlP2FWq+JBkwqc/QNSJj+i5q9uHjF63/9ZLRetH6+3QDdM9D0boOAfxM6ezucdz4tRwLyZgCWWhVDNRRQLi2kM541jHQDW/+CC7z+JxGG7pVGK6IuewMEVMVpW9cyCnK4=
+	t=1750715269; cv=none; b=cJozPWuLYJgMO68hy8vANfKdJxyZoxA9BqyRlkLqj2l2RlT6VwNgPFAqtImPxTGrqU1Uq/+fxgF4RXUIKdDequQqL8FzjDChCgz2TACyEk/4sYxtgAJfHIe4LcvVer50wZkolRxHKE68ixUF7CeqO3yI8kN9KoLllqCNeHjBMdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715267; c=relaxed/simple;
-	bh=tsTxpbkua1dis2UO7r07S+wcJd91kJa7/huLbMiuVdM=;
+	s=arc-20240116; t=1750715269; c=relaxed/simple;
+	bh=RSGWcVYwbR7U01p+IeOdzgSoBV/xmm6BhEC047tUIzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FcVBOIp8S2VWcZbLfPLhrm4tB22jtUK9wdk1JuTzXZCnzAZ/bn+afhRcEuQjd25nfI9r/VwcUD/fSf3t9NLF2Zy4SFcDyH6VZFO9/tWIU7D5DQsElzx0KryZnktMPEqUiZ4LYqjb+bMQ9xPbiXaFaLZTQ6Ufw1ToI9LpNEir4pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CaRfKzEN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PtWV5tps1ow3ycUGVMEaMyMBL8AqRq7OUd4QBT0yITp4E3fEowQZnrAL49m3IZaGgAtfaeJnUx7GoxfcXeKrhdTKyNBLsMGXulX7tkbnWP+XU7jFvkXJgP8BLYCAtpHEMACdswY2aPHepeeKss8mbhiKQelUIaP+4zsPMnsMq+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9jkvdBy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaRfKzEN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B257AC4CEEA;
-	Mon, 23 Jun 2025 21:47:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9jkvdBy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE42C4CEEA;
+	Mon, 23 Jun 2025 21:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715267;
-	bh=tsTxpbkua1dis2UO7r07S+wcJd91kJa7/huLbMiuVdM=;
+	s=korg; t=1750715269;
+	bh=RSGWcVYwbR7U01p+IeOdzgSoBV/xmm6BhEC047tUIzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CaRfKzENt5TEIKdsL3KJFI/2vu9gM0q0RuB0osjNw8i0yK/vyhCM6L/SI8UT6srDC
-	 p46WiJzg2zObpzmneUKJRTLStyENCq4m1XYzCNWrR88ATrFU7rIuxRjMpembYJ/OvW
-	 rJZkH1QwVY7J/tdCx4FD819mml7cbrBRUVf19P3Y=
+	b=T9jkvdBylCgBI4QZXQFwZfiaDxa4R6CHXxcXAki0Lm/P3fHXa9Skw1Nx+hndFQJt6
+	 Q0ae7C6fGSvGtT73ui4HnqNdZI1wgsyTAJIJo/K0NryCd4CoVZE6tgn0xjLk4X5pra
+	 oye3ZnSxt5LZ7tWichiNhvebYNjOESTnBoUsk3yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinliang Zheng <alexjlzheng@tencent.com>,
-	MengEn Sun <mengensun@tencent.com>,
-	Andrea Righi <andrea@betterlinux.com>,
-	Fenggaung Wu <fengguang.wu@intel.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 242/411] mm: fix ratelimit_pages update error in dirty_ratio_handler()
-Date: Mon, 23 Jun 2025 15:06:26 +0200
-Message-ID: <20250623130639.745106004@linuxfoundation.org>
+	Ahmed Salem <x0rw3ll@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 172/414] ACPICA: Avoid sequence overread in call to strncmp()
+Date: Mon, 23 Jun 2025 15:05:09 +0200
+Message-ID: <20250623130646.327745523@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,79 +47,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinliang Zheng <alexjlzheng@tencent.com>
+From: Ahmed Salem <x0rw3ll@gmail.com>
 
-commit f83f362d40ccceb647f7d80eb92206733d76a36b upstream.
+[ Upstream commit 64b9dfd0776e9c38d733094859a09f13282ce6f8 ]
 
-In dirty_ratio_handler(), vm_dirty_bytes must be set to zero before
-calling writeback_set_ratelimit(), as global_dirty_limits() always
-prioritizes the value of vm_dirty_bytes.
+ACPICA commit 8b83a8d88dfec59ea147fad35fc6deea8859c58c
 
-It's domain_dirty_limits() that's relevant here, not node_dirty_ok:
+ap_get_table_length() checks if tables are valid by
+calling ap_is_valid_header(). The latter then calls
+ACPI_VALIDATE_RSDP_SIG(Table->Signature).
 
-  dirty_ratio_handler
-    writeback_set_ratelimit
-      global_dirty_limits(&dirty_thresh)           <- ratelimit_pages based on dirty_thresh
-        domain_dirty_limits
-          if (bytes)                               <- bytes = vm_dirty_bytes <--------+
-            thresh = f1(bytes)                     <- prioritizes vm_dirty_bytes      |
-          else                                                                        |
-            thresh = f2(ratio)                                                        |
-      ratelimit_pages = f3(dirty_thresh)                                              |
-    vm_dirty_bytes = 0                             <- it's late! ---------------------+
+ap_is_valid_header() accepts struct acpi_table_header as an argument, so
+the signature size is always fixed to 4 bytes.
 
-This causes ratelimit_pages to still use the value calculated based on
-vm_dirty_bytes, which is wrong now.
+The problem is when the string comparison is between ACPI-defined table
+signature and ACPI_SIG_RSDP. Common ACPI table header specifies the
+Signature field to be 4 bytes long[1], with the exception of the RSDP
+structure whose signature is 8 bytes long "RSD PTR " (including the
+trailing blank character)[2]. Calling strncmp(sig, rsdp_sig, 8) would
+then result in a sequence overread[3] as sig would be smaller (4 bytes)
+than the specified bound (8 bytes).
 
+As a workaround, pass the bound conditionally based on the size of the
+signature being passed.
 
-The impact visible to userspace is difficult to capture directly because
-there is no procfs/sysfs interface exported to user space.  However, it
-will have a real impact on the balance of dirty pages.
-
-For example:
-
-1. On default, we have vm_dirty_ratio=40, vm_dirty_bytes=0
-
-2. echo 8192 > dirty_bytes, then vm_dirty_bytes=8192,
-   vm_dirty_ratio=0, and ratelimit_pages is calculated based on
-   vm_dirty_bytes now.
-
-3. echo 20 > dirty_ratio, then since vm_dirty_bytes is not reset to
-   zero when writeback_set_ratelimit() -> global_dirty_limits() ->
-   domain_dirty_limits() is called, reallimit_pages is still calculated
-   based on vm_dirty_bytes instead of vm_dirty_ratio.  This does not
-   conform to the actual intent of the user.
-
-Link: https://lkml.kernel.org/r/20250415090232.7544-1-alexjlzheng@tencent.com
-Fixes: 9d823e8f6b1b ("writeback: per task dirty rate limit")
-Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
-Reviewed-by: MengEn Sun <mengensun@tencent.com>
-Cc: Andrea Righi <andrea@betterlinux.com>
-Cc: Fenggaung Wu <fengguang.wu@intel.com>
-Cc: Jinliang Zheng <alexjlzheng@tencent.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#system-description-table-header [1]
+Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#root-system-description-pointer-rsdp-structure [2]
+Link: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overread [3]
+Link: https://github.com/acpica/acpica/commit/8b83a8d8
+Signed-off-by: Ahmed Salem <x0rw3ll@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2248233.Mh6RI2rZIc@rjwysocki.net
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page-writeback.c |    2 +-
+ include/acpi/actypes.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/page-writeback.c
-+++ b/mm/page-writeback.c
-@@ -551,8 +551,8 @@ int dirty_ratio_handler(struct ctl_table
+diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h
+index 80767e8bf3ad4..d323dfffa4bfc 100644
+--- a/include/acpi/actypes.h
++++ b/include/acpi/actypes.h
+@@ -527,7 +527,7 @@ typedef u64 acpi_integer;
  
- 	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
- 	if (ret == 0 && write && vm_dirty_ratio != old_ratio) {
--		writeback_set_ratelimit();
- 		vm_dirty_bytes = 0;
-+		writeback_set_ratelimit();
- 	}
- 	return ret;
- }
+ /* Support for the special RSDP signature (8 characters) */
+ 
+-#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, 8))
++#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ? ACPI_NAMESEG_SIZE : 8))
+ #define ACPI_MAKE_RSDP_SIG(dest)        (memcpy (ACPI_CAST_PTR (char, (dest)), ACPI_SIG_RSDP, 8))
+ 
+ /* Support for OEMx signature (x can be any character) */
+-- 
+2.39.5
+
 
 
