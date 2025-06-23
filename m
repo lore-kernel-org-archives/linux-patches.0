@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0A3221FBE;
-	Mon, 23 Jun 2025 21:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6CC7221FBE;
+	Mon, 23 Jun 2025 21:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713957; cv=none; b=Remd0NwDLDKYtnbbBQoNJy3vNsDngB/IeAxuFJgzTF5BBnTgVF9V584Sq7RKfywBTnuQpIA0GLtqWgw61YNlj2fy9+ldW37gZBy4pGBq7JtixFQ7o3x918TKcay+Pnl14Uj5ShiQsrmtD4US82SmDjgysDnXMHN+7InSzxqoNt4=
+	t=1750713959; cv=none; b=psT9LUF5EMFogUrfa+FsgloI56ZcWfeEeFLFIIinh/a2KtOh4v+LQqSgk4hmTS0qh2VpZSCw+wUZM/MgVJzTGDyjaxA0/dBnsj9rwgt3sCrYFWEMqTQJeCBkskOhvPOnngbxTKc6o3cSjlafFMTYGbt84z5caX+k6uabBnM6tOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713957; c=relaxed/simple;
-	bh=5tKfD6x+UiCOAFfso5Amm5/oS2bcDsALp2njnij2gzQ=;
+	s=arc-20240116; t=1750713959; c=relaxed/simple;
+	bh=+f9zpa2XhzY2B5kE8By4emJaCijBs88WspJUQlSQP4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6gVzywwrCWOwaa8uvst45IiItIYzyPeo0sWPjr3ods0XWCXtkh5EW1Tdsqu8u+TJWOX+2D3ox7INRlIq61FQUC/hCT76jIQbo0iQnZcvE+JqsA8uYVg/jMl7QbXRx49lWlauX5RfLYL0Q5leu0eBxI+6MGC+ddy1eQb1jZ1460=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzdeJU5o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oa8gdkpsTC0Bwk9NU6DeuOaLgenyA3fNANaGJMnhsAc2Fa+xd2z0k0TBrIDDUX4XdJBO9mmTWh2K6AqGb3wTFU1pLH1EakfUjOgg6n4Nyv6mExxJpp7JsAfGxPyj1/suO8KguMHxKXgC/QbKkzUp3rbSpHMFrFmmQbL6rF5sEnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1VXz2+K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzdeJU5o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A82C4CEEA;
-	Mon, 23 Jun 2025 21:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1VXz2+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBB1C4CEEA;
+	Mon, 23 Jun 2025 21:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713957;
-	bh=5tKfD6x+UiCOAFfso5Amm5/oS2bcDsALp2njnij2gzQ=;
+	s=korg; t=1750713959;
+	bh=+f9zpa2XhzY2B5kE8By4emJaCijBs88WspJUQlSQP4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vzdeJU5oGq3Vr6OSanp0PubDBjJmne3Bcc5hZhRPqI8IZ/0mc742ydjHT9smcru+l
-	 KbgXpEFuyifrgAuwk7xN1R5g6Q03DB6QZjLrLCG0apPBtyCO86/Q5sHTM/3/6L2rtn
-	 S3rCh12BKKs2nmKoL/yKR/0euAdVLOcUMRkQCKAQ=
+	b=j1VXz2+K14T7/+475xYQ5iXtL876nnLbALjaqXbbKiHOvVxVr/4lOMdFWvF2DiKAE
+	 7t0iGAt0k+s1CoBj5Ma1DfqtEiW/dpYdf6/67OGv+Q1yLCzBzsVqoXtFZ1OWhi7nVV
+	 yWA1gycJgLcvfmFA0R3U4Sp+bAsKun4eO7hUa2oA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruben Devos <devosruben6@gmail.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 105/290] smb: client: add NULL check in automount_fullpath
-Date: Mon, 23 Jun 2025 15:06:06 +0200
-Message-ID: <20250623130630.114342626@linuxfoundation.org>
+	Gavi Teitz <gavi@nvidia.com>,
+	Roi Dayan <roid@nvidia.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 157/411] net/mlx5: Fix return value when searching for existing flow group
+Date: Mon, 23 Jun 2025 15:05:01 +0200
+Message-ID: <20250623130637.594864164@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +51,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ruben Devos <devosruben6@gmail.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-commit f1e7a277a1736e12cc4bd6d93b8a5c439b8ca20c upstream.
+[ Upstream commit 8ec40e3f1f72bf8f8accf18020d487caa99f46a4 ]
 
-page is checked for null in __build_path_from_dentry_optional_prefix
-when tcon->origin_fullpath is not set. However, the check is missing when
-it is set.
-Add a check to prevent a potential NULL pointer dereference.
+When attempting to add a rule to an existing flow group, if a matching
+flow group exists but is not active, the error code returned should be
+EAGAIN, so that the rule can be added to the matching flow group once
+it is active, rather than ENOENT, which indicates that no matching
+flow group was found.
 
-Signed-off-by: Ruben Devos <devosruben6@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bd71b08ec2ee ("net/mlx5: Support multiple updates of steering rules in parallel")
+Signed-off-by: Gavi Teitz <gavi@nvidia.com>
+Signed-off-by: Roi Dayan <roid@nvidia.com>
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250610151514.1094735-4-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/namespace.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/namespace.c
-+++ b/fs/smb/client/namespace.c
-@@ -146,6 +146,9 @@ static char *automount_fullpath(struct d
- 	}
- 	spin_unlock(&tcon->tc_lock);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+index 8ff2b81960de7..ef56a71e43d70 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+@@ -1876,6 +1876,7 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
+ 	struct mlx5_flow_handle *rule;
+ 	struct match_list *iter;
+ 	bool take_write = false;
++	bool try_again = false;
+ 	struct fs_fte *fte;
+ 	u64  version = 0;
+ 	int err;
+@@ -1935,6 +1936,7 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
+ 		nested_down_write_ref_node(&g->node, FS_LOCK_PARENT);
  
-+	if (unlikely(!page))
-+		return ERR_PTR(-ENOMEM);
-+
- 	s = dentry_path_raw(dentry, page, PATH_MAX);
- 	if (IS_ERR(s))
- 		return s;
+ 		if (!g->node.active) {
++			try_again = true;
+ 			up_write_ref_node(&g->node, false);
+ 			continue;
+ 		}
+@@ -1956,7 +1958,8 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
+ 			tree_put_node(&fte->node, false);
+ 		return rule;
+ 	}
+-	rule = ERR_PTR(-ENOENT);
++	err = try_again ? -EAGAIN : -ENOENT;
++	rule = ERR_PTR(err);
+ out:
+ 	kmem_cache_free(steering->ftes_cache, fte);
+ 	return rule;
+-- 
+2.39.5
+
 
 
