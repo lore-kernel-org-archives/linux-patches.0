@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F2C136988;
-	Mon, 23 Jun 2025 13:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3960D2417C3;
+	Mon, 23 Jun 2025 13:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684376; cv=none; b=bd41bcHrIQLhrvFi+y/KNKRZ1krp4bm7NT5bWt/dQjknyKeJdUMEX1/1BdTbLOI+SmeJ1Kcv926ub8f42UvuRCmj0SjuZvQnC49uyagRE46PTl7EpcC7ctVVWQvtxYQXByQjPi82zQwgFIzN5kSfIeJ3vGntwyWzgFlbA9VXpjc=
+	t=1750684379; cv=none; b=VZ8o2scnB7yP7B5U/4AG/NCi2T8Q0pnYKgZcBfGtmBYTYL3RL+SOV9oKFDv5CpbfF+9R/CL1aY16UKwnyA0AGEDZtUNTxqGgGlv8TMtDF0D6cnWQ8d0NgmoEx3FS2u7YU8ow0ViFKV6bZ5KGKXwvM/l6oUy0SUflnFXQZKfoDLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684376; c=relaxed/simple;
-	bh=BQj8YnhAroe8X9wRhVJr7//9N8rI1nRFAc8KKGFO12M=;
+	s=arc-20240116; t=1750684379; c=relaxed/simple;
+	bh=shZIPhNd1OD6DZPBRpaIzNuiwjmLzoSKjQoy9IaSRCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IK1efjnQTc7y1sKZXfoGKj9hB93HxJDd/1vunwOQ1+XJ9EoNKGkjvO1liCv+ciTOBZhOtGqC6xrqaHHFfysNOUuqHZEC9qSlrgJbET+RsPI9jrF+jlI3CYJJsTEZnMDEwAbGDppHq/9U5uB3Wl/WUa7xa3RWq2xwAopaSgrE8uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVAe/5sR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gj977HQFQwVl4kRCOh3voAPEg5oLZel/VQqsF4QGqxK3hsUKzyzHWzZnSHHOw6C+yVbArTbx1nwQ1qi1CzRwM0htswUVAgG+foVLDT2xKvz2oSQu7aF6i9dhJnlJiJeovO4zs03R9HG++f3QzRl0ogTUGOiDowOoqnV5RrByvYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FECj383h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVAe/5sR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38307C4CEEA;
-	Mon, 23 Jun 2025 13:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FECj383h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C310CC4CEEA;
+	Mon, 23 Jun 2025 13:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684376;
-	bh=BQj8YnhAroe8X9wRhVJr7//9N8rI1nRFAc8KKGFO12M=;
+	s=korg; t=1750684379;
+	bh=shZIPhNd1OD6DZPBRpaIzNuiwjmLzoSKjQoy9IaSRCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fVAe/5sRYMr0RFEka0Um/Fe40mud25kDahex2dOPbiosL8lyHfbANz/qoyEih4YzD
-	 OcgCxqEyXgUnTt03sRBxhq8Ij8Cx56Kfzo3yLcf7WvIQzhv9CHtzjcfXi9fOCwkukj
-	 p8sZ4SRtoP9gaVaP0L3rPeWVAlmJqWy/ppKC131s=
+	b=FECj383h4AEhKR5sng6+Aa8aZG48K1NKVq2690ODoILgqr2l/eeig+OiO/VKvuCaS
+	 nwltNFRQDaHDVlpg83qYp/XVHpqdIugUTbyF39UefRpYrQ15zVu1WWHlL7z2quCr5r
+	 NwBbTFbSkB9/ryFYOxXcinmTlOeETSwLH9w+jnCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Sears <sjs@hammerspace.com>,
-	Jakub Kacinski <kuba@kernel.org>,
 	Mike Snitzer <snitzer@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Anna Schumaker <anna.schumaker@oracle.com>
-Subject: [PATCH 6.15 045/592] SUNRPC: Prevent hang on NFS mount with xprtsec=[m]tls
-Date: Mon, 23 Jun 2025 15:00:03 +0200
-Message-ID: <20250623130701.316904207@linuxfoundation.org>
+Subject: [PATCH 6.15 046/592] NFS: always probe for LOCALIO support asynchronously
+Date: Mon, 23 Jun 2025 15:00:04 +0200
+Message-ID: <20250623130701.340340225@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -53,58 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit 0bd2f6b8996d4f1ca4573652454987826730a04a upstream.
+commit 1ff4716f420b5a6e6ef095b23bb5db76f46be7fc upstream.
 
-Engineers at Hammerspace noticed that sometimes mounting with
-"xprtsec=tls" hangs for a minute or so, and then times out, even
-when the NFS server is reachable and responsive.
+It was reported that NFS client mounts of AWS Elastic File System
+(EFS) volumes is slow, this is because the AWS firewall disallows
+LOCALIO (because it doesn't consider the use of NFS_LOCALIO_PROGRAM
+valid), see: https://bugzilla.redhat.com/show_bug.cgi?id=2335129
 
-kTLS shuts off data_ready callbacks if strp->msg_ready is set to
-mitigate data_ready callbacks when a full TLS record is not yet
-ready to be read from the socket.
+Switch to performing the LOCALIO probe asynchronously to address the
+potential for the NFS LOCALIO protocol being disallowed and/or slowed
+by the remote server's response.
 
-Normally msg_ready is clear when the first TLS record arrives on
-a socket. However, I observed that sometimes tls_setsockopt() sets
-strp->msg_ready, and that prevents forward progress because
-tls_data_ready() becomes a no-op.
+While at it, fix nfs_local_probe_async() to always take/put a
+reference on the nfs_client that is using the LOCALIO protocol.
+Also, unexport the nfs_local_probe() symbol and make it private to
+fs/nfs/localio.c
 
-Moreover, Jakub says: "If there's a full record queued at the time
-when [tlshd] passes the socket back to the kernel, it's up to the
-reader to read the already queued data out." So SunRPC cannot
-expect a data_ready call when ingress data is already waiting.
+This change has the side-effect of initially issuing reads, writes and
+commits over the wire via SUNRPC until the LOCALIO probe completes.
 
-Add an explicit poll after SunRPC's upper transport is set up to
-pick up any data that arrived after the TLS handshake but before
-transport set-up is complete.
-
-Reported-by: Steve Sears <sjs@hammerspace.com>
-Suggested-by: Jakub Kacinski <kuba@kernel.org>
-Fixes: 75eb6af7acdf ("SUNRPC: Add a TCP-with-TLS RPC transport class")
-Tested-by: Mike Snitzer <snitzer@kernel.org>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Suggested-by: Jeff Layton <jlayton@kernel.org> # to always probe async
+Fixes: 76d4cb6345da ("nfs: probe for LOCALIO when v4 client reconnects to server")
+Cc: stable@vger.kernel.org # 6.14+
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtsock.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nfs/client.c                           |    2 +-
+ fs/nfs/flexfilelayout/flexfilelayoutdev.c |    2 +-
+ fs/nfs/internal.h                         |    1 -
+ fs/nfs/localio.c                          |    6 ++++--
+ 4 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2740,6 +2740,11 @@ static void xs_tcp_tls_setup_socket(stru
- 	}
- 	rpc_shutdown_client(lower_clnt);
+--- a/fs/nfs/client.c
++++ b/fs/nfs/client.c
+@@ -439,7 +439,7 @@ struct nfs_client *nfs_get_client(const
+ 			spin_unlock(&nn->nfs_client_lock);
+ 			new = rpc_ops->init_client(new, cl_init);
+ 			if (!IS_ERR(new))
+-				 nfs_local_probe(new);
++				 nfs_local_probe_async(new);
+ 			return new;
+ 		}
  
-+	/* Check for ingress data that arrived before the socket's
-+	 * ->data_ready callback was set up.
-+	 */
-+	xs_poll_check_readable(upper_transport);
-+
- out_unlock:
- 	current_restore_flags(pflags, PF_MEMALLOC);
- 	upper_transport->clnt = NULL;
+--- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
++++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+@@ -400,7 +400,7 @@ nfs4_ff_layout_prepare_ds(struct pnfs_la
+ 		 * keep ds_clp even if DS is local, so that if local IO cannot
+ 		 * proceed somehow, we can fall back to NFS whenever we want.
+ 		 */
+-		nfs_local_probe(ds->ds_clp);
++		nfs_local_probe_async(ds->ds_clp);
+ 		max_payload =
+ 			nfs_block_size(rpc_max_payload(ds->ds_clp->cl_rpcclient),
+ 				       NULL);
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -455,7 +455,6 @@ extern int nfs_wait_bit_killable(struct
+ 
+ #if IS_ENABLED(CONFIG_NFS_LOCALIO)
+ /* localio.c */
+-extern void nfs_local_probe(struct nfs_client *);
+ extern void nfs_local_probe_async(struct nfs_client *);
+ extern void nfs_local_probe_async_work(struct work_struct *);
+ extern struct nfsd_file *nfs_local_open_fh(struct nfs_client *,
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -171,7 +171,7 @@ static bool nfs_server_uuid_is_local(str
+  * - called after alloc_client and init_client (so cl_rpcclient exists)
+  * - this function is idempotent, it can be called for old or new clients
+  */
+-void nfs_local_probe(struct nfs_client *clp)
++static void nfs_local_probe(struct nfs_client *clp)
+ {
+ 	/* Disallow localio if disabled via sysfs or AUTH_SYS isn't used */
+ 	if (!localio_enabled ||
+@@ -191,14 +191,16 @@ void nfs_local_probe(struct nfs_client *
+ 		nfs_localio_enable_client(clp);
+ 	nfs_uuid_end(&clp->cl_uuid);
+ }
+-EXPORT_SYMBOL_GPL(nfs_local_probe);
+ 
+ void nfs_local_probe_async_work(struct work_struct *work)
+ {
+ 	struct nfs_client *clp =
+ 		container_of(work, struct nfs_client, cl_local_probe_work);
+ 
++	if (!refcount_inc_not_zero(&clp->cl_count))
++		return;
+ 	nfs_local_probe(clp);
++	nfs_put_client(clp);
+ }
+ 
+ void nfs_local_probe_async(struct nfs_client *clp)
 
 
