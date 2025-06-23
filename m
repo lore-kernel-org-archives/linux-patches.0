@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026954C74;
-	Mon, 23 Jun 2025 22:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A63A4C74;
+	Mon, 23 Jun 2025 22:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716130; cv=none; b=eOsllXcrTJzHVmJ1BL43mY1xd4O8UnzUYs96RigSUwevkb8Kx0o50Lxgq5km+m5H/PeV+XVWztQgvYGQgeUgaPQAX7gFd6E3UYgI3/Iq5UAOEWoIBD0UiqyTkavSi8+1yV3socgR/0NGf+i04uuqXImNXlMduHbMLZlcNEpr+NM=
+	t=1750716132; cv=none; b=YAkWdqhFQYPuhUzdX0F1tmgwPROLlapWVO/kArKJGqIrTQyakzb+YTHQ95MSDdS0cl/cE+DjaK8FDbcM1XHBa5ovmBEQcE92q+GDmeJOoQmaHWw8wWgailrc11up5Hp6e7IyDLIp2KqeHFTcgtsfakunXHnh0G/2t0YfEZc2Ko8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716130; c=relaxed/simple;
-	bh=7I6aBsWliRGGTjGq92XHTexLctLxeMyKcMR0SdihF3E=;
+	s=arc-20240116; t=1750716132; c=relaxed/simple;
+	bh=rKASpjpWT1ZOG6NMp74XgnhBq1oFNy9jo8sq5ZpX0ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EoGp+CBAVJOlkoNgBQkkOkyu8iZuQ4svJ/FZ/CUXGLAaUIQW/5GrgaAW4MBNxyVDNcB7cjAtR3bTP1UVP2TUGH5l80/FDhpwc1J9IqpqI2fmIemXjj9R97H8UBqw4k9wtGNH8OM0GRS9H4tTBkYsGyXT+6Fs6Z88C5KCSf2at0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGGBg4Vx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PMn0fbxPsCi8aTrM5SRy2fquKHjm+LVUW6LoOH35gPF+LRSwQ8c1EuWcgqFfTmybb/cxVZlkU1LMEs+SWaoPspflmOWWxrM+mm16+kDoYfuC+m0qhj0OxQOa3BRS6VkH+WiEP+YCQ4cEfVjk2zuDaCPJVRx3szHgf+aKsyUbQ58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEpVJwKi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGGBg4Vx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F368C4CEEA;
-	Mon, 23 Jun 2025 22:02:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEpVJwKi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0122BC4CEEA;
+	Mon, 23 Jun 2025 22:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716129;
-	bh=7I6aBsWliRGGTjGq92XHTexLctLxeMyKcMR0SdihF3E=;
+	s=korg; t=1750716132;
+	bh=rKASpjpWT1ZOG6NMp74XgnhBq1oFNy9jo8sq5ZpX0ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGGBg4Vx3quzmAZIuEY+jR/5JRQ97qgUGY5f8lnzzQREcppU5FVNCwfyh+UHsbWLJ
-	 AtzbqJfTcVTlc6lWEyvcdpY8zSdi4MkSi9uVFGt3ImpvfMCnWXSG7xa5ZMiL/EG/cW
-	 wGFP0oyI1Zeu5XMBm7RNvBIq9tk3cXkjV5xXciGw=
+	b=fEpVJwKijjCMwRoRenZezIQKa2ciUzkifoS9lKzcpaEkoo3bGmM2/YXAKftRMB7yk
+	 3idNyyYYvCNZw/DuYsVBe6tR67Hb0+nRCTB6/3EfETXmo5Y/AAGtG/FGLcawNCFUGf
+	 /51vuKHVfnWKshlFuLx49fUvEsRXt7eLqpo4wzQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 229/414] net: stmmac: generate software timestamp just before the doorbell
-Date: Mon, 23 Jun 2025 15:06:06 +0200
-Message-ID: <20250623130647.761954801@linuxfoundation.org>
+	stable@kernel.org,
+	tianshuo han <hantianshuo233@gmail.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>
+Subject: [PATCH 6.6 242/290] sunrpc: handle SVC_GARBAGE during svc auth processing as auth error
+Date: Mon, 23 Jun 2025 15:08:23 +0200
+Message-ID: <20250623130634.209034136@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +48,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 33d4cc81fcd930fdbcca7ac9e8959225cbec0a5e ]
+commit 94d10a4dba0bc482f2b01e39f06d5513d0f75742 upstream.
 
-Make sure the call of skb_tx_timestamp is as close as possbile to the
-doorbell.
+tianshuo han reported a remotely-triggerable crash if the client sends a
+kernel RPC server a specially crafted packet. If decoding the RPC reply
+fails in such a way that SVC_GARBAGE is returned without setting the
+rq_accept_statp pointer, then that pointer can be dereferenced and a
+value stored there.
 
-The patch also adjusts the order of setting SKBTX_IN_PROGRESS and
-generate software timestamp so that without SOF_TIMESTAMPING_OPT_TX_SWHW
-being set the software and hardware timestamps will not appear in the
-error queue of socket nearly at the same time (Please see __skb_tstamp_tx()).
+If it's the first time the thread has processed an RPC, then that
+pointer will be set to NULL and the kernel will crash. In other cases,
+it could create a memory scribble.
 
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Link: https://patch.msgid.link/20250510134812.48199-4-kerneljasonxing@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The server sunrpc code treats a SVC_GARBAGE return from svc_authenticate
+or pg_authenticate as if it should send a GARBAGE_ARGS reply. RFC 5531
+says that if authentication fails that the RPC should be rejected
+instead with a status of AUTH_ERR.
+
+Handle a SVC_GARBAGE return as an AUTH_ERROR, with a reason of
+AUTH_BADCRED instead of returning GARBAGE_ARGS in that case. This
+sidesteps the whole problem of touching the rpc_accept_statp pointer in
+this situation and avoids the crash.
+
+Cc: stable@kernel.org
+Fixes: 29cd2927fb91 ("SUNRPC: Fix encoding of accepted but unsuccessful RPC replies")
+Reported-by: tianshuo han <hantianshuo233@gmail.com>
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ net/sunrpc/svc.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index f68e3ece919cc..0250c5cb28ff2 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4424,8 +4424,6 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 	if (priv->sarc_type)
- 		stmmac_set_desc_sarc(priv, first, priv->sarc_type);
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -1344,7 +1344,8 @@ svc_process_common(struct svc_rqst *rqst
+ 	case SVC_OK:
+ 		break;
+ 	case SVC_GARBAGE:
+-		goto err_garbage_args;
++		rqstp->rq_auth_stat = rpc_autherr_badcred;
++		goto err_bad_auth;
+ 	case SVC_SYSERR:
+ 		goto err_system_err;
+ 	case SVC_DENIED:
+@@ -1485,14 +1486,6 @@ err_bad_proc:
+ 	*rqstp->rq_accept_statp = rpc_proc_unavail;
+ 	goto sendit;
  
--	skb_tx_timestamp(skb);
+-err_garbage_args:
+-	svc_printk(rqstp, "failed to decode RPC header\n");
 -
- 	if (unlikely((skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) &&
- 		     priv->hwts_tx_en)) {
- 		/* declare that device is doing timestamping */
-@@ -4460,6 +4458,7 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 	}
- 
- 	netdev_tx_sent_queue(netdev_get_tx_queue(dev, queue), skb->len);
-+	skb_tx_timestamp(skb);
- 
- 	stmmac_flush_tx_descriptors(priv, queue);
- 	stmmac_tx_timer_arm(priv, queue);
-@@ -4703,8 +4702,6 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
- 	if (priv->sarc_type)
- 		stmmac_set_desc_sarc(priv, first, priv->sarc_type);
- 
--	skb_tx_timestamp(skb);
+-	if (serv->sv_stats)
+-		serv->sv_stats->rpcbadfmt++;
+-	*rqstp->rq_accept_statp = rpc_garbage_args;
+-	goto sendit;
 -
- 	/* Ready to fill the first descriptor and set the OWN bit w/o any
- 	 * problems because all the descriptors are actually ready to be
- 	 * passed to the DMA engine.
-@@ -4751,7 +4748,7 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
- 	netdev_tx_sent_queue(netdev_get_tx_queue(dev, queue), skb->len);
- 
- 	stmmac_enable_dma_transmission(priv, priv->ioaddr, queue);
--
-+	skb_tx_timestamp(skb);
- 	stmmac_flush_tx_descriptors(priv, queue);
- 	stmmac_tx_timer_arm(priv, queue);
- 
--- 
-2.39.5
-
+ err_system_err:
+ 	if (serv->sv_stats)
+ 		serv->sv_stats->rpcbadfmt++;
 
 
