@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3472221543;
-	Mon, 23 Jun 2025 22:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181EE221543;
+	Mon, 23 Jun 2025 22:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717561; cv=none; b=pF7coyOrCR96rc7yvn3ayvmdcGZdnbpguxwplvUyymkMfcnTsaYCuMBj8cOPc53vfNaqt4kn1jlLmA7l1mtAdm8MPYnlUe7ZUJhxUWNhVbgW8fK+s80WJCOUW30+vqh/ArJUme3Sk9z4VWsagA60jffHSTzZ1pI8ocLrr8w11iU=
+	t=1750717563; cv=none; b=TdJH+7UH0CVIvz0NS75S5HsrXiIypE753K69IETn0osJoG+fXsgcE7v5+LVVKrqojJ6NNDSN3mEqvxyg6lVK+deZurcr0diRaGQEz7GlNWDAL0o+T/x7JCblrM9xWLDm5CsMiQ+qoOC4CIgvfkgMZv8/WTHnW3KMlO3nkQ3Rv68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717561; c=relaxed/simple;
-	bh=gIl1VuyhxCb2W+WX2JrFWsYDuGfl/MPsDRSCBXvMnyU=;
+	s=arc-20240116; t=1750717563; c=relaxed/simple;
+	bh=JKUNB9HDZhRhJKbiXYmFI9sNV9oNd3VQpKbnCYal/FQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wf2mR/yrjdij+vCbMoY3SC4jHSBJ1NODliXVofhizHUzV/DaJ22qz+wvDdieIIsOQRvz0i6FTWIWcPl8J94tZ72NWt6HzOkS5ZzLwjjp53VO7+vUMKRo1z2f5lQrE23pSkGqOzFJ0qp21Gyhpp8HqfQHq7TwZCL+BtIkd1NscHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxaTO1Oh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dVctjv4OszwJ52A8UvN00ioWqF3M1M9irDkxoH8SUocelmq9Yx2Q8OUPLUm2tvDY02W7eq7TslMjQSTCcEEqraX++bwGqv0MRjVXX+aOykuTm8fSFjPYuCJERgsIsM6b1XDOZ7weyPtfCYlSJrLnUmbco1m5uxezPjfNPsYAZyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15j7K4FB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxaTO1Oh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341E2C4CEEA;
-	Mon, 23 Jun 2025 22:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15j7K4FB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B95C4CEEA;
+	Mon, 23 Jun 2025 22:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717560;
-	bh=gIl1VuyhxCb2W+WX2JrFWsYDuGfl/MPsDRSCBXvMnyU=;
+	s=korg; t=1750717563;
+	bh=JKUNB9HDZhRhJKbiXYmFI9sNV9oNd3VQpKbnCYal/FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxaTO1OhRUIMPgnvGBxQ4YikkT2y8WarVx3mromeSXJVELvU2saaUlzkMY+251e7k
-	 yGpNxXrgzru/oo2+Z7L2qT65eXUZnovcbzKx962Eg1gydnTKx36YUWfo7Vz0FK00j3
-	 meUs+ekSDSsNUwHz3i693R9Kw6ZIwN2PbBtxN7pA=
+	b=15j7K4FB03eQQs7yQMO6rUn8oLX9Y8AGFmOGdl3LGPM6K3YLx+pc01qWlx7XOik4I
+	 18tMC+GLglkP21UiCmgZdVI/sdZaJFeLqewI1wiVrNnr2OAgBk1gQzc60+Stpn/bNN
+	 Gy9jdthA8zInSR3DT7s3HQGTsYyv1bZ1LxtjAAjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Thompson <davthompson@nvidia.com>,
-	Shravan Kumar Ramani <shravankr@nvidia.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 413/414] gpio: mlxbf3: only get IRQ for device instance 0
-Date: Mon, 23 Jun 2025 15:09:10 +0200
-Message-ID: <20250623130652.278700061@linuxfoundation.org>
+	"Xin Li (Intel)" <xin@zytor.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Sohil Mehta <sohil.mehta@intel.com>
+Subject: [PATCH 6.1 453/508] selftests/x86: Add a test to detect infinite SIGTRAP handler loop
+Date: Mon, 23 Jun 2025 15:08:18 +0200
+Message-ID: <20250623130656.287018409@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,109 +45,156 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Thompson <davthompson@nvidia.com>
+From: Xin Li (Intel) <xin@zytor.com>
 
-[ Upstream commit 10af0273a35ab4513ca1546644b8c853044da134 ]
+commit f287822688eeb44ae1cf6ac45701d965efc33218 upstream.
 
-The gpio-mlxbf3 driver interfaces with two GPIO controllers,
-device instance 0 and 1. There is a single IRQ resource shared
-between the two controllers, and it is found in the ACPI table for
-device instance 0.  The driver should not attempt to get an IRQ
-resource when probing device instance 1, otherwise the following
-error is logged:
-  mlxbf3_gpio MLNXBF33:01: error -ENXIO: IRQ index 0 not found
+When FRED is enabled, if the Trap Flag (TF) is set without an external
+debugger attached, it can lead to an infinite loop in the SIGTRAP
+handler.  To avoid this, the software event flag in the augmented SS
+must be cleared, ensuring that no single-step trap remains pending when
+ERETU completes.
 
-Signed-off-by: David Thompson <davthompson@nvidia.com>
-Reviewed-by: Shravan Kumar Ramani <shravankr@nvidia.com>
-Fixes: cd33f216d241 ("gpio: mlxbf3: Add gpio driver support")
-Link: https://lore.kernel.org/r/20250613163443.1065217-1-davthompson@nvidia.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This test checks for that specific scenario—verifying whether the kernel
+correctly prevents an infinite SIGTRAP loop in this edge case when FRED
+is enabled.
+
+The test should _always_ pass with IDT event delivery, thus no need to
+disable the test even when FRED is not enabled.
+
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Sohil Mehta <sohil.mehta@intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250609084054.2083189-3-xin%40zytor.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mlxbf3.c | 54 ++++++++++++++++++++++++--------------
- 1 file changed, 35 insertions(+), 19 deletions(-)
+ tools/testing/selftests/x86/Makefile       |    2 
+ tools/testing/selftests/x86/sigtrap_loop.c |  101 +++++++++++++++++++++++++++++
+ 2 files changed, 102 insertions(+), 1 deletion(-)
+ create mode 100644 tools/testing/selftests/x86/sigtrap_loop.c
 
-diff --git a/drivers/gpio/gpio-mlxbf3.c b/drivers/gpio/gpio-mlxbf3.c
-index 10ea71273c891..9875e34bde72a 100644
---- a/drivers/gpio/gpio-mlxbf3.c
-+++ b/drivers/gpio/gpio-mlxbf3.c
-@@ -190,7 +190,9 @@ static int mlxbf3_gpio_probe(struct platform_device *pdev)
- 	struct mlxbf3_gpio_context *gs;
- 	struct gpio_irq_chip *girq;
- 	struct gpio_chip *gc;
-+	char *colon_ptr;
- 	int ret, irq;
-+	long num;
+--- a/tools/testing/selftests/x86/Makefile
++++ b/tools/testing/selftests/x86/Makefile
+@@ -12,7 +12,7 @@ CAN_BUILD_WITH_NOPIE := $(shell ./check_
  
- 	gs = devm_kzalloc(dev, sizeof(*gs), GFP_KERNEL);
- 	if (!gs)
-@@ -227,25 +229,39 @@ static int mlxbf3_gpio_probe(struct platform_device *pdev)
- 	gc->owner = THIS_MODULE;
- 	gc->add_pin_ranges = mlxbf3_gpio_add_pin_ranges;
- 
--	irq = platform_get_irq(pdev, 0);
--	if (irq >= 0) {
--		girq = &gs->gc.irq;
--		gpio_irq_chip_set_chip(girq, &gpio_mlxbf3_irqchip);
--		girq->default_type = IRQ_TYPE_NONE;
--		/* This will let us handle the parent IRQ in the driver */
--		girq->num_parents = 0;
--		girq->parents = NULL;
--		girq->parent_handler = NULL;
--		girq->handler = handle_bad_irq;
--
--		/*
--		 * Directly request the irq here instead of passing
--		 * a flow-handler because the irq is shared.
--		 */
--		ret = devm_request_irq(dev, irq, mlxbf3_gpio_irq_handler,
--				       IRQF_SHARED, dev_name(dev), gs);
--		if (ret)
--			return dev_err_probe(dev, ret, "failed to request IRQ");
-+	colon_ptr = strchr(dev_name(dev), ':');
-+	if (!colon_ptr) {
-+		dev_err(dev, "invalid device name format\n");
-+		return -EINVAL;
-+	}
+ TARGETS_C_BOTHBITS := single_step_syscall sysret_ss_attrs syscall_nt test_mremap_vdso \
+ 			check_initial_reg_state sigreturn iopl ioperm \
+-			test_vsyscall mov_ss_trap \
++			test_vsyscall mov_ss_trap sigtrap_loop \
+ 			syscall_arg_fault fsgsbase_restore sigaltstack
+ TARGETS_C_32BIT_ONLY := entry_from_vm86 test_syscall_vdso unwind_vdso \
+ 			test_FCMOV test_FCOMI test_FISTTP \
+--- /dev/null
++++ b/tools/testing/selftests/x86/sigtrap_loop.c
+@@ -0,0 +1,101 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (C) 2025 Intel Corporation
++ */
++#define _GNU_SOURCE
 +
-+	ret = kstrtol(++colon_ptr, 16, &num);
-+	if (ret) {
-+		dev_err(dev, "invalid device instance\n");
-+		return ret;
-+	}
++#include <err.h>
++#include <signal.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <sys/ucontext.h>
 +
-+	if (!num) {
-+		irq = platform_get_irq(pdev, 0);
-+		if (irq >= 0) {
-+			girq = &gs->gc.irq;
-+			gpio_irq_chip_set_chip(girq, &gpio_mlxbf3_irqchip);
-+			girq->default_type = IRQ_TYPE_NONE;
-+			/* This will let us handle the parent IRQ in the driver */
-+			girq->num_parents = 0;
-+			girq->parents = NULL;
-+			girq->parent_handler = NULL;
-+			girq->handler = handle_bad_irq;
++#ifdef __x86_64__
++# define REG_IP REG_RIP
++#else
++# define REG_IP REG_EIP
++#endif
 +
-+			/*
-+			 * Directly request the irq here instead of passing
-+			 * a flow-handler because the irq is shared.
-+			 */
-+			ret = devm_request_irq(dev, irq, mlxbf3_gpio_irq_handler,
-+					       IRQF_SHARED, dev_name(dev), gs);
-+			if (ret)
-+				return dev_err_probe(dev, ret, "failed to request IRQ");
++static void sethandler(int sig, void (*handler)(int, siginfo_t *, void *), int flags)
++{
++	struct sigaction sa;
++
++	memset(&sa, 0, sizeof(sa));
++	sa.sa_sigaction = handler;
++	sa.sa_flags = SA_SIGINFO | flags;
++	sigemptyset(&sa.sa_mask);
++
++	if (sigaction(sig, &sa, 0))
++		err(1, "sigaction");
++
++	return;
++}
++
++static void sigtrap(int sig, siginfo_t *info, void *ctx_void)
++{
++	ucontext_t *ctx = (ucontext_t *)ctx_void;
++	static unsigned int loop_count_on_same_ip;
++	static unsigned long last_trap_ip;
++
++	if (last_trap_ip == ctx->uc_mcontext.gregs[REG_IP]) {
++		printf("\tTrapped at %016lx\n", last_trap_ip);
++
++		/*
++		 * If the same IP is hit more than 10 times in a row, it is
++		 * _considered_ an infinite loop.
++		 */
++		if (++loop_count_on_same_ip > 10) {
++			printf("[FAIL]\tDetected SIGTRAP infinite loop\n");
++			exit(1);
 +		}
- 	}
- 
- 	platform_set_drvdata(pdev, gs);
--- 
-2.39.5
-
++
++		return;
++	}
++
++	loop_count_on_same_ip = 0;
++	last_trap_ip = ctx->uc_mcontext.gregs[REG_IP];
++	printf("\tTrapped at %016lx\n", last_trap_ip);
++}
++
++int main(int argc, char *argv[])
++{
++	sethandler(SIGTRAP, sigtrap, 0);
++
++	/*
++	 * Set the Trap Flag (TF) to single-step the test code, therefore to
++	 * trigger a SIGTRAP signal after each instruction until the TF is
++	 * cleared.
++	 *
++	 * Because the arithmetic flags are not significant here, the TF is
++	 * set by pushing 0x302 onto the stack and then popping it into the
++	 * flags register.
++	 *
++	 * Four instructions in the following asm code are executed with the
++	 * TF set, thus the SIGTRAP handler is expected to run four times.
++	 */
++	printf("[RUN]\tSIGTRAP infinite loop detection\n");
++	asm volatile(
++#ifdef __x86_64__
++		/*
++		 * Avoid clobbering the redzone
++		 *
++		 * Equivalent to "sub $128, %rsp", however -128 can be encoded
++		 * in a single byte immediate while 128 uses 4 bytes.
++		 */
++		"add $-128, %rsp\n\t"
++#endif
++		"push $0x302\n\t"
++		"popf\n\t"
++		"nop\n\t"
++		"nop\n\t"
++		"push $0x202\n\t"
++		"popf\n\t"
++#ifdef __x86_64__
++		"sub $-128, %rsp\n\t"
++#endif
++	);
++
++	printf("[OK]\tNo SIGTRAP infinite loop detected\n");
++	return 0;
++}
 
 
