@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81D0225413;
-	Mon, 23 Jun 2025 22:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BF4224B1F;
+	Mon, 23 Jun 2025 22:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717543; cv=none; b=GkO17Z5aGTVE/3t3rTGfnzN6KifWEcF/uj1Z1ZXwbqOrjW8lobu9rlZe7pq+4aiHVLbtFF9W3KvF+DYOYlHok21zo3gxGqhuCjaEOrwkKHvin/xM0oardUaUqBmzzNEdvVTRpiL2sc+RKY7oDTJ3Z+1twjf+M990sHcJPQo06DQ=
+	t=1750717546; cv=none; b=ny91E7/Y14eSaCrXRIJRX0xm6IC8mw99+wXDn04PGfONNJPFEB37NNQmRCU/PyZsk6wM2S2wVsFUzynQvB89Q4t6/EOLG7udIDPSTJHg2QgLhbZ0FntqJRyWY9eoktHE8qybg3b/5T/T+EEpPiU5XuWfxPR5dM21g/DK4Qm44WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717543; c=relaxed/simple;
-	bh=Fuip1V9n033WdY+s9DecuMl7u7nkalfglGtQAitBjVQ=;
+	s=arc-20240116; t=1750717546; c=relaxed/simple;
+	bh=G6eFs3bscI3n55CppDBs1sWBW3Wo69ZKtdtlNwI7TFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FvyWY7LjQRxISwISMhkxj4+ExUdwPP5ZbJmJeXY3yh+V2ailcxWu1jhxnn6o0NqpRzj9WQYzdHlJf3h88xj4GXn8ZSzML9vz8kMOiekh6NwLq3I4UJEQqcnFhnPR6nWPavfwizUxvR/5emH+PpSJxOPH8cRL2EV8F5HL/1L87+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KBpg/swe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j6P8OYWQKuwPLb4H1hrEujvf7qS3u5T8ugVet8hTUadJGBYra/PmEIpu/G0+4NJ9T4JsdjUhi1f5YDkWbRjLNx7+pFtKSTqgAcz1aoy+tRYcgdR33SXU9+soC9AkLAQi4Smea4/N1wqHfmEpNQX2FAiS3RVtl4gJ/ZxPhGFkHFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAUjUkS/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBpg/swe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBF9C4CEEA;
-	Mon, 23 Jun 2025 22:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAUjUkS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636A0C4CEEA;
+	Mon, 23 Jun 2025 22:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717543;
-	bh=Fuip1V9n033WdY+s9DecuMl7u7nkalfglGtQAitBjVQ=;
+	s=korg; t=1750717545;
+	bh=G6eFs3bscI3n55CppDBs1sWBW3Wo69ZKtdtlNwI7TFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBpg/swedxY6GqgLRadv5L29vlhqcAUUXgMDdaunF0EM9Y5kGweUbkjiuqPIuYanr
-	 T4qP1c9QAQO2JsHg8sPtRSpXWye4pLimv3H6jPInsHgph+oe3YCfIEeqGh5TaFd/BG
-	 ST0qiau/7nmR4ppcyiuNqQgHOPBZlRnlcx/h8Vw8=
+	b=ZAUjUkS/A/0xCKkMsFUtx7QE+eE4Ds/KjusZCKW4RxP6z2lmAoDfNLYX5a4EodsTE
+	 nmjIsfi6QVDcJQRnWKmfSEBm5MqbRIgPFgyjkueBNtsXgPMrCtwFSNLBeiOPKS6+J2
+	 4rFmhPuDrRA6Ep+hGz7RWmOcGUekWR3RiQl9oHpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 410/414] gpio: pca953x: fix wrong error probe return value
-Date: Mon, 23 Jun 2025 15:09:07 +0200
-Message-ID: <20250623130652.199180451@linuxfoundation.org>
+	M Nikhil <nikh1092@linux.ibm.com>,
+	Nihar Panda <niharp@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 450/508] scsi: s390: zfcp: Ensure synchronous unit_add
+Date: Mon, 23 Jun 2025 15:08:15 +0200
+Message-ID: <20250623130656.222510808@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-[ Upstream commit 0a1db19f66c0960eb00e1f2ccd40708b6747f5b1 ]
+commit 9697ca0d53e3db357be26d2414276143c4a2cd49 upstream.
 
-The second argument to dev_err_probe() is the error value. Pass the
-return value of devm_request_threaded_irq() there instead of the irq
-number.
+Improve the usability of the unit_add sysfs attribute by ensuring that
+the associated FCP LUN scan processing is completed synchronously.  This
+enables configuration tooling to consistently determine the end of the
+scan process to allow for serialization of follow-on actions.
 
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Fixes: c47f7ff0fe61 ("gpio: pca953x: Utilise dev_err_probe() where it makes sense")
-Link: https://lore.kernel.org/r/20250616134503.1201138-1-s.hauer@pengutronix.de
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+While the scan process associated with unit_add typically completes
+synchronously, it is deferred to an asynchronous background process if
+unit_add is used before initial remote port scanning has completed.  This
+occurs when unit_add is used immediately after setting the associated FCP
+device online.
+
+To ensure synchronous unit_add processing, wait for remote port scanning
+to complete before initiating the FCP LUN scan.
+
+Cc: stable@vger.kernel.org
+Reviewed-by: M Nikhil <nikh1092@linux.ibm.com>
+Reviewed-by: Nihar Panda <niharp@linux.ibm.com>
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Nihar Panda <niharp@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250603182252.2287285-2-niharp@linux.ibm.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-pca953x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/scsi/zfcp_sysfs.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index ef3aee1cabcfd..bb7c1bf5f856e 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -951,7 +951,7 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
- 					IRQF_ONESHOT | IRQF_SHARED, dev_name(dev),
- 					chip);
- 	if (ret)
--		return dev_err_probe(dev, client->irq, "failed to request irq\n");
-+		return dev_err_probe(dev, ret, "failed to request irq\n");
+--- a/drivers/s390/scsi/zfcp_sysfs.c
++++ b/drivers/s390/scsi/zfcp_sysfs.c
+@@ -450,6 +450,8 @@ static ssize_t zfcp_sysfs_unit_add_store
+ 	if (kstrtoull(buf, 0, (unsigned long long *) &fcp_lun))
+ 		return -EINVAL;
  
- 	return 0;
- }
--- 
-2.39.5
-
++	flush_work(&port->rport_work);
++
+ 	retval = zfcp_unit_add(port, fcp_lun);
+ 	if (retval)
+ 		return retval;
 
 
