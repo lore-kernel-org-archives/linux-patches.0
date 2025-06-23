@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5282223339;
-	Mon, 23 Jun 2025 21:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B41C22424C;
+	Mon, 23 Jun 2025 21:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714752; cv=none; b=qQbu/SjT+NTl53bSu/J76N7iZgustghBg1Bxe8dgsYisce1X1AEAtTR2Gt8PJN0WymScA9O8OYjLvB9kIGUq1qLc3ujteaR3YDltsh+kUlSZmoR0hbGaRMOBYxZKxPHDrI1cQdwDDUoewKQ59Snlb+myCKO3rKMQedR+jlrV6j4=
+	t=1750714755; cv=none; b=ZVNgly9Rg8GnloskNU6yGuLaQc0Onk6gr+KZY8KvmdFX7R/tK8QVFkWjvtealRbhZt3A5sbTJoLXVmsFs8HlcR/Ln0DfftsI1n9zevlBDWdeck6o85gN8FzBKjvqktRnwfSS/aDFy7hPomol8cBxtdALTIuKzHEfjJ4tRMjrmNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714752; c=relaxed/simple;
-	bh=NbcncAI/3XDoklTQCCPeTgK0FLZwds0U+rMslPKBje4=;
+	s=arc-20240116; t=1750714755; c=relaxed/simple;
+	bh=8XKKYL05VyEOCCsifiHh5pu+laKcCfe2qXKHa/UzYTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJ+AXzzLOIi9sE8C3dqyKR5yns3Yxqsi+Fx5SbuU0mBcMglNtjO0FMY0sPg2vy8Mg3BWt+2kzIReCTWEER7x2MjaUGKoHxOQlkx4aF/dDwfdXzaCzy46DSkq/i4mLlp13nV+wJ5c/kbU+VqRY0hTpIsMTr4jDCIMm9i8J72A8D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1V5QuPOf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jq7T20+S7803K9VH+WFIfYpBT9PlzIzPTT8LZv/frdk+CW19lPfvwFMu9vIYfucVdQEaKQvuSXWpYt5WrJ/NnnyFnTlb3g6l/yhgFHn58dPXWZnpamrjRg+3iSMYFHZ/r0V/BiHQbAQNdT33SSJiL7vz97ozuAzxhHokLlH6L0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEHordyY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1V5QuPOf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0B4C4CEEA;
-	Mon, 23 Jun 2025 21:39:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEHordyY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D0DC4CEF0;
+	Mon, 23 Jun 2025 21:39:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714752;
-	bh=NbcncAI/3XDoklTQCCPeTgK0FLZwds0U+rMslPKBje4=;
+	s=korg; t=1750714755;
+	bh=8XKKYL05VyEOCCsifiHh5pu+laKcCfe2qXKHa/UzYTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1V5QuPOfuIkgU6zhEdoPVHpG6k41izWIxWXHthJQzGT+SIB8p8rFvsEQvWM5Y0Tsu
-	 xigNPZRx7qe6amRA8caTX7Km6gxI/2MmzT0Ly4z2ySmT5ejQU1rOWi+jltKNmO1i1B
-	 OhaZyglIiti6VSVyb3bSzwVP6K8KrW+K31+LUcYQ=
+	b=WEHordyYEL5U8BbnkxkwkjLQNdOW5hBbP0knyKoZNdWNJ6NZ+v2NCitTbLBpCy+cf
+	 8SHzfgq1Gb0ZBRJSrFzwdgCKgPu5qWghkwWaHoNxbV72LdMgrFuQQFGU1SKmnKwbDO
+	 1J1BwI2yYxmap1mv8fbwP7bQUek7bOnS2/xPw0rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.15 207/411] media: ccs-pll: Start OP pre-PLL multiplier search from correct value
-Date: Mon, 23 Jun 2025 15:05:51 +0200
-Message-ID: <20250623130638.883386175@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 213/355] clocksource: Fix the CPUs choice in the watchdog per CPU verification
+Date: Mon, 23 Jun 2025 15:06:54 +0200
+Message-ID: <20250623130633.147164212@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-commit 660e613d05e449766784c549faf5927ffaf281f1 upstream.
+[ Upstream commit 08d7becc1a6b8c936e25d827becabfe3bff72a36 ]
 
-The ccs_pll_calculate() function does a search over possible PLL
-configurations to find the "best" one. If the sensor does not support odd
-pre-PLL divisors and the minimum value (with constraints) isn't 1, other
-odd values could be errorneously searched (and selected) for the pre-PLL
-divisor. Fix this.
+Right now, if the clocksource watchdog detects a clocksource skew, it might
+perform a per CPU check, for example in the TSC case on x86.  In other
+words: supposing TSC is detected as unstable by the clocksource watchdog
+running at CPU1, as part of marking TSC unstable the kernel will also run a
+check of TSC readings on some CPUs to be sure it is synced between them
+all.
 
-Fixes: 415ddd993978 ("media: ccs-pll: Split limits and PLL configuration into front and back parts")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+But that check happens only on some CPUs, not all of them; this choice is
+based on the parameter "verify_n_cpus" and in some random cpumask
+calculation. So, the watchdog runs such per CPU checks on up to
+"verify_n_cpus" random CPUs among all online CPUs, with the risk of
+repeating CPUs (that aren't double checked) in the cpumask random
+calculation.
+
+But if "verify_n_cpus" > num_online_cpus(), it should skip the random
+calculation and just go ahead and check the clocksource sync between
+all online CPUs, without the risk of skipping some CPUs due to
+duplicity in the random cpumask calculation.
+
+Tests in a 4 CPU laptop with TSC skew detected led to some cases of the per
+CPU verification skipping some CPU even with verify_n_cpus=8, due to the
+duplicity on random cpumask generation. Skipping the randomization when the
+number of online CPUs is smaller than verify_n_cpus, solves that.
+
+Suggested-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/all/20250323173857.372390-1-gpiccoli@igalia.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ccs-pll.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/time/clocksource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/i2c/ccs-pll.c
-+++ b/drivers/media/i2c/ccs-pll.c
-@@ -817,6 +817,8 @@ int ccs_pll_calculate(struct device *dev
- 			      one_or_more(
- 				      DIV_ROUND_UP(op_lim_fr->max_pll_op_clk_freq_hz,
- 						   pll->ext_clk_freq_hz))));
-+	if (!(pll->flags & CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER))
-+		min_op_pre_pll_clk_div = clk_div_even(min_op_pre_pll_clk_div);
- 	dev_dbg(dev, "pll_op check: min / max op_pre_pll_clk_div: %u / %u\n",
- 		min_op_pre_pll_clk_div, max_op_pre_pll_clk_div);
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index b22508c5d2d96..bd49fec0f624b 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -273,7 +273,7 @@ static void clocksource_verify_choose_cpus(void)
+ {
+ 	int cpu, i, n = verify_n_cpus;
  
+-	if (n < 0) {
++	if (n < 0 || n >= num_online_cpus()) {
+ 		/* Check all of the CPUs. */
+ 		cpumask_copy(&cpus_chosen, cpu_online_mask);
+ 		cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
+-- 
+2.39.5
+
 
 
