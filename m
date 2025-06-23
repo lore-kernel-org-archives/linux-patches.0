@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1461DF98B;
-	Mon, 23 Jun 2025 21:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459C71E8324;
+	Mon, 23 Jun 2025 21:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713287; cv=none; b=H7Hj/7YnseahQ3d06YmkBMmm5KEm37+0NrWJmT7ebQ+jjzyx9y4mtS+VdiefbLKyaGxWMuwU+TIv3Ub/BmvER2/V2oZDeKceBUdXtXFp4OGK4InkI1EQT6Ef0QAEUIigFqbk42FcJkp7LnPPin3xQTiirteOw/RpHmU4XoVSeyE=
+	t=1750713290; cv=none; b=PY0ickU8HMdiqy0FHU30sdWeEqtyBHwp6ZjXszX+lWvvcq8OOFbgKjS9nvlA1Twliow5MoFkhBndXDq5rDZLBREZ6cJNjGtkD/oImRdZGMKhbS9aVlSysFLHTQxnmkak72T/DmYBK+5cWSnGm314H1hWcu02cyDQGItB6g7CWkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713287; c=relaxed/simple;
-	bh=i6Mi3VGG2110GuPRZtd1AUGedilNtko8Y+rM69Mqrtg=;
+	s=arc-20240116; t=1750713290; c=relaxed/simple;
+	bh=CZGXeYohmtUgvHDZ2SzIopEVph9/ggb36+hUUrGpXkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CzJGn35wzY0bS/kfAuEeOUnnPgq5iD/3IQdhx3kDBsGa2Lb/92eTs62wVyNL8lJYR7WpSestYXWhncUcyu3SaBa/9NZCZL2BAL672QnLNpWPUr/vANHusH3pfcTT8q1FNEi5mJl2/hMitEvhbZr+izaKjJ1ioEZXDW/bGtVmBIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtiahedY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ReHGpRw6A6du0f9JFdxaLms5hm1b1PpiUUaQ1cZlbNo8qxCEQQ1T9lRDIyNsdYcUztqB5xz2SfQ5dJDB5xDXHam0i+VKLPTp2z1EimmJNjw0YV4XMimeRTZVFiJw4p5/cLhuQryASvhrDu3QzvmXSuwu5aOcvdmY0qG7V9gGGYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWnFeoAR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtiahedY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BECC4CEEA;
-	Mon, 23 Jun 2025 21:14:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWnFeoAR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16C4C4CEEA;
+	Mon, 23 Jun 2025 21:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713287;
-	bh=i6Mi3VGG2110GuPRZtd1AUGedilNtko8Y+rM69Mqrtg=;
+	s=korg; t=1750713290;
+	bh=CZGXeYohmtUgvHDZ2SzIopEVph9/ggb36+hUUrGpXkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PtiahedYfxpfJy1diwQzclpvCoaAIBKu5vtBYHwpCfUXoshsCW5Xpun0OFhcJxaoM
-	 5reHABFgwB3trG2gZSui2DXn++S7IRlZA9gid3LhIrw+SHe25GVcQZE5sThC6pnwmX
-	 IkUuWn7b5Z+mKSnY7cKGsgim9chJujbK/nAa53ho=
+	b=MWnFeoAR11iIhX3ZnBB8bND+3k6qK3Sup2uEKr/1DazcheLBSHbGTNrZuoXQv+SNu
+	 H7vDmysRNLbRraCIrkCQ3bkJ/P5HOwrNxA/Z5G7gNQ7rHTPHKPXHGAv3ejmo5oHk42
+	 +ch/yODDGffq54h8h0gJ7/XMd1HIWd/ry+lnl0AY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longfang Liu <liulongfang@huawei.com>,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/508] hisi_acc_vfio_pci: add eq and aeq interruption restore
-Date: Mon, 23 Jun 2025 15:02:13 +0200
-Message-ID: <20250623130647.414427829@linuxfoundation.org>
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 6.6 058/290] bus: fsl-mc: do not add a device-link for the UAPI used DPMCP device
+Date: Mon, 23 Jun 2025 15:05:19 +0200
+Message-ID: <20250623130628.753632902@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,69 +46,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Longfang Liu <liulongfang@huawei.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 3495cec0787721ba7a9d5c19d0bbb66d182de584 ]
+commit dd7d8e012b23de158ca0188239c7a1f2a83b4484 upstream.
 
-In order to ensure that the task packets of the accelerator
-device are not lost during the migration process, it is necessary
-to send an EQ and AEQ command to the device after the live migration
-is completed and to update the completion position of the task queue.
+The fsl-mc bus associated to the root DPRC in a DPAA2 system exports a
+device file for userspace access to the MC firmware. In case the DPRC's
+local MC portal (DPMCP) is currently in use, a new DPMCP device is
+allocated through the fsl_mc_portal_allocate() function.
 
-Let the device recheck the completed tasks data and if there are
-uncollected packets, device resend a task completion interrupt
-to the software.
+In this case, the call to fsl_mc_portal_allocate() will fail with -EINVAL
+when trying to add a device link between the root DPRC (consumer) and
+the newly allocated DPMCP device (supplier). This is because the DPMCP
+is a dependent of the DPRC device (the bus).
 
-Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
-Signed-off-by: Longfang Liu <liulongfang@huawei.com>
-Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Link: https://lore.kernel.org/r/20250510081155.55840-3-liulongfang@huawei.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by not adding a device link in case the DPMCP is allocated for
+the root DPRC's usage.
+
+Fixes: afb77422819f ("bus: fsl-mc: automatically add a device_link on fsl_mc_[portal,object]_allocate")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250408105814.2837951-3-ioana.ciornei@nxp.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/bus/fsl-mc/mc-io.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-index b5efb37712d5e..de3e1a148ddab 100644
---- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-+++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-@@ -469,6 +469,19 @@ static int vf_qm_get_match_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
- 	return 0;
- }
+--- a/drivers/bus/fsl-mc/mc-io.c
++++ b/drivers/bus/fsl-mc/mc-io.c
+@@ -214,12 +214,19 @@ int __must_check fsl_mc_portal_allocate(
+ 	if (error < 0)
+ 		goto error_cleanup_resource;
  
-+static void vf_qm_xeqc_save(struct hisi_qm *qm,
-+			    struct hisi_acc_vf_migration_file *migf)
-+{
-+	struct acc_vf_data *vf_data = &migf->vf_data;
-+	u16 eq_head, aeq_head;
-+
-+	eq_head = vf_data->qm_eqc_dw[0] & 0xFFFF;
-+	qm_db(qm, 0, QM_DOORBELL_CMD_EQ, eq_head, 0);
-+
-+	aeq_head = vf_data->qm_aeqc_dw[0] & 0xFFFF;
-+	qm_db(qm, 0, QM_DOORBELL_CMD_AEQ, aeq_head, 0);
-+}
-+
- static int vf_qm_load_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
- 			   struct hisi_acc_vf_migration_file *migf)
- {
-@@ -569,6 +582,9 @@ static int vf_qm_state_save(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+-	dpmcp_dev->consumer_link = device_link_add(&mc_dev->dev,
+-						   &dpmcp_dev->dev,
+-						   DL_FLAG_AUTOREMOVE_CONSUMER);
+-	if (!dpmcp_dev->consumer_link) {
+-		error = -EINVAL;
+-		goto error_cleanup_mc_io;
++	/* If the DPRC device itself tries to allocate a portal (usually for
++	 * UAPI interaction), don't add a device link between them since the
++	 * DPMCP device is an actual child device of the DPRC and a reverse
++	 * dependency is not allowed.
++	 */
++	if (mc_dev != mc_bus_dev) {
++		dpmcp_dev->consumer_link = device_link_add(&mc_dev->dev,
++							   &dpmcp_dev->dev,
++							   DL_FLAG_AUTOREMOVE_CONSUMER);
++		if (!dpmcp_dev->consumer_link) {
++			error = -EINVAL;
++			goto error_cleanup_mc_io;
++		}
  	}
  
- 	migf->total_length = sizeof(struct acc_vf_data);
-+	/* Save eqc and aeqc interrupt information */
-+	vf_qm_xeqc_save(vf_qm, migf);
-+
- 	return 0;
- }
- 
--- 
-2.39.5
-
+ 	*new_mc_io = mc_io;
 
 
