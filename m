@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE6D72624;
-	Mon, 23 Jun 2025 21:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CE71C84A0;
+	Mon, 23 Jun 2025 21:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715626; cv=none; b=N2NUV0UMiJDXIfAdqk6N6TKy2UifUc5jAr1x0P4pQJ7SVYlBus+t7GU9+W2R+yIn69lGcYTVlWzwSyLhBmf0H9cHWjpY7TxHiBkKHrIUBIQKZ4YUSW4KBTMPGBGvgjWQfKMUQi/EM8CRBfg7DQOuBoO6fjJ5/8YVgJkl1XwbMW4=
+	t=1750715629; cv=none; b=FGQ6J5Aq+0jMsIvyvpst0+xt6hobwAGQJQCvi5JeNuHq06YsynI0jYShhBkhqCTyMv2ZIP7PZ2mcS6HQJBdq+LrNzn0SCyc0gTSPwOGC8B5Bq817bI5YVzWAywGTsJl/0s66AhUGqqiWb27Ym1HZJDA3S6UdSoLffNUsrfwi8JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715626; c=relaxed/simple;
-	bh=pjokfFGTJFkE5tsC4M9qpVjPM7E7cyyGuWSVgnOfUYs=;
+	s=arc-20240116; t=1750715629; c=relaxed/simple;
+	bh=tmxXQcM1JjskrXYEL6IvCO2QAa4TLfFDn+/sW77sMkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MsxrWUJ/xtdIEBz7gnVVDx5xcPcXLchgECCLXGemCdZj2AUVzP70O269hZkax6djjHp9jhYjoOWtmmL5PiToz2Jc8Mq+oeb1BySn87m8CkUxb+sQcGxjpmzaM39nteNRbeFSbFscqQB3CmJ98ZmC4uCHaSt5ZRj+DeuSiiZbSEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0R8794r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MORLO/OvifBEr4CpRJXPx7mg9ldSJjvOzYDoYtGkQn2wjvpMrYGRZoMDAB8f9AhaZe7yiZLWPI9Jg8TUPDNw3hUVRv/ox5guRxTa/Ye4LvLyVPPLjXkYEQESM8FM+POenoCLwyOJN3Ltn+HS01qosCxzscH8UlyUqcqhIi/VTg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIgfTA4R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0R8794r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA51AC4CEEA;
-	Mon, 23 Jun 2025 21:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIgfTA4R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8037EC4CEEA;
+	Mon, 23 Jun 2025 21:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715626;
-	bh=pjokfFGTJFkE5tsC4M9qpVjPM7E7cyyGuWSVgnOfUYs=;
+	s=korg; t=1750715628;
+	bh=tmxXQcM1JjskrXYEL6IvCO2QAa4TLfFDn+/sW77sMkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0R8794rYypE8iMF67epXUOVlhj/2Cw3MvMruuJKwYsNL4mOHCiZ+ZJz0VEWKE1RC
-	 EpPLJC8DShUsaocfThTdOrSyUi6YX05Vy237xUsvlJOPx5BjLL1bNAKwuP/5WNp+KA
-	 RZ2ai1WiVq8phq2xjxPOEcj4lN/2aVAi5gsGFsmI=
+	b=MIgfTA4RHvG1rrog3T52QdO7CWfqPIxSVB96jA9YOQW6Dsig5lIx9F2x26jO2BgBt
+	 LwimQNg5i++Ig2r4OEboeNSul96q5Y8PQ9Mznq0OaTWoloIry1isvxIiNcLGaKYfml
+	 EvD9pipXJ6SwzoAf+bWsGbUuCfhcvkFUsQpJVjLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tan En De <ende.tan@starfivetech.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 197/414] i2c: designware: Invoke runtime suspend on quick slave re-registration
-Date: Mon, 23 Jun 2025 15:05:34 +0200
-Message-ID: <20250623130646.937347010@linuxfoundation.org>
+	Yanteng Si <si.yanteng@linux.dev>,
+	WANG Rui <wangrui@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 211/290] LoongArch: Avoid using $r0/$r1 as "mask" for csrxchg
+Date: Mon, 23 Jun 2025 15:07:52 +0200
+Message-ID: <20250623130633.276735659@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,82 +47,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tan En De <ende.tan@starfivetech.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 2fe2b969d911a09abcd6a47401a3c66c38a310e6 ]
+commit 52c22661c79a7b6af7fad9f77200738fc6c51878 upstream.
 
-Replaced pm_runtime_put() with pm_runtime_put_sync_suspend() to ensure
-the runtime suspend is invoked immediately when unregistering a slave.
-This prevents a race condition where suspend was skipped when
-unregistering and registering slave in quick succession.
+When building kernel with LLVM there are occasionally such errors:
 
-For example, consider the rapid sequence of
-`delete_device -> new_device -> delete_device -> new_device`.
-In this sequence, it is observed that the dw_i2c_plat_runtime_suspend()
-might not be invoked after `delete_device` operation.
+In file included from ./include/linux/spinlock.h:59:
+In file included from ./include/linux/irqflags.h:17:
+arch/loongarch/include/asm/irqflags.h:38:3: error: must not be $r0 or $r1
+   38 |                 "csrxchg %[val], %[mask], %[reg]\n\t"
+      |                 ^
+<inline asm>:1:16: note: instantiated into assembly here
+    1 |         csrxchg $a1, $ra, 0
+      |                       ^
 
-This is because after `delete_device` operation, when the
-pm_runtime_put() is about to trigger suspend, the following `new_device`
-operation might race and cancel the suspend.
+To prevent the compiler from allocating $r0 or $r1 for the "mask" of the
+csrxchg instruction, the 'q' constraint must be used but Clang < 21 does
+not support it. So force to use $t0 in the inline asm, in order to avoid
+using $r0/$r1 while keeping the backward compatibility.
 
-If that happens, during the `new_device` operation,
-dw_i2c_plat_runtime_resume() is skipped (since there was no suspend), which
-means `i_dev->init()`, i.e. i2c_dw_init_slave(), is skipped.
-Since i2c_dw_init_slave() is skipped, i2c_dw_configure_fifo_slave() is
-skipped too, which leaves `DW_IC_INTR_MASK` unconfigured. If we inspect
-the interrupt mask register using devmem, it will show as zero.
-
-Example shell script to reproduce the issue:
-```
-  #!/bin/sh
-
-  SLAVE_LADDR=0x1010
-  SLAVE_BUS=13
-  NEW_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/new_device
-  DELETE_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/delete_device
-
-  # Create initial device
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-  sleep 2
-
-  # Rapid sequence of
-  # delete_device -> new_device -> delete_device -> new_device
-  echo $SLAVE_LADDR > $DELETE_DEVICE
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-  echo $SLAVE_LADDR > $DELETE_DEVICE
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-
-  # Using devmem to inspect IC_INTR_MASK will show as zero
-```
-
-Signed-off-by: Tan En De <ende.tan@starfivetech.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20250412023303.378600-1-ende.tan@starfivetech.com
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://github.com/llvm/llvm-project/pull/141037
+Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
+Suggested-by: WANG Rui <wangrui@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-designware-slave.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/include/asm/irqflags.h |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-designware-slave.c b/drivers/i2c/busses/i2c-designware-slave.c
-index f0f0f1f2131d0..602e98e61cc01 100644
---- a/drivers/i2c/busses/i2c-designware-slave.c
-+++ b/drivers/i2c/busses/i2c-designware-slave.c
-@@ -94,7 +94,7 @@ static int i2c_dw_unreg_slave(struct i2c_client *slave)
- 	i2c_dw_disable(dev);
- 	synchronize_irq(dev->irq);
- 	dev->slave = NULL;
--	pm_runtime_put(dev->dev);
-+	pm_runtime_put_sync_suspend(dev->dev);
- 
- 	return 0;
+--- a/arch/loongarch/include/asm/irqflags.h
++++ b/arch/loongarch/include/asm/irqflags.h
+@@ -14,40 +14,48 @@
+ static inline void arch_local_irq_enable(void)
+ {
+ 	u32 flags = CSR_CRMD_IE;
++	register u32 mask asm("t0") = CSR_CRMD_IE;
++
+ 	__asm__ __volatile__(
+ 		"csrxchg %[val], %[mask], %[reg]\n\t"
+ 		: [val] "+r" (flags)
+-		: [mask] "r" (CSR_CRMD_IE), [reg] "i" (LOONGARCH_CSR_CRMD)
++		: [mask] "r" (mask), [reg] "i" (LOONGARCH_CSR_CRMD)
+ 		: "memory");
  }
--- 
-2.39.5
-
+ 
+ static inline void arch_local_irq_disable(void)
+ {
+ 	u32 flags = 0;
++	register u32 mask asm("t0") = CSR_CRMD_IE;
++
+ 	__asm__ __volatile__(
+ 		"csrxchg %[val], %[mask], %[reg]\n\t"
+ 		: [val] "+r" (flags)
+-		: [mask] "r" (CSR_CRMD_IE), [reg] "i" (LOONGARCH_CSR_CRMD)
++		: [mask] "r" (mask), [reg] "i" (LOONGARCH_CSR_CRMD)
+ 		: "memory");
+ }
+ 
+ static inline unsigned long arch_local_irq_save(void)
+ {
+ 	u32 flags = 0;
++	register u32 mask asm("t0") = CSR_CRMD_IE;
++
+ 	__asm__ __volatile__(
+ 		"csrxchg %[val], %[mask], %[reg]\n\t"
+ 		: [val] "+r" (flags)
+-		: [mask] "r" (CSR_CRMD_IE), [reg] "i" (LOONGARCH_CSR_CRMD)
++		: [mask] "r" (mask), [reg] "i" (LOONGARCH_CSR_CRMD)
+ 		: "memory");
+ 	return flags;
+ }
+ 
+ static inline void arch_local_irq_restore(unsigned long flags)
+ {
++	register u32 mask asm("t0") = CSR_CRMD_IE;
++
+ 	__asm__ __volatile__(
+ 		"csrxchg %[val], %[mask], %[reg]\n\t"
+ 		: [val] "+r" (flags)
+-		: [mask] "r" (CSR_CRMD_IE), [reg] "i" (LOONGARCH_CSR_CRMD)
++		: [mask] "r" (mask), [reg] "i" (LOONGARCH_CSR_CRMD)
+ 		: "memory");
+ }
+ 
 
 
