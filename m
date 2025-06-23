@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAA2248869;
-	Mon, 23 Jun 2025 13:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C047D4C7F;
+	Mon, 23 Jun 2025 13:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685121; cv=none; b=UAyproY50jK2ckqlmc/UFVA2TouIhVGodpfmHQrm3gmb/EHM9nG7HNaTHX3sw4aTJVwyNudk0CheCSifEcjSLj7d355LZeA8eWni7Qy5mNKK0R8C4rIeNEVsdLRvjTgEvR59o31InGjsdxtQ9XlxTGZ8w/vXxhENoAQBQk6HOHc=
+	t=1750685123; cv=none; b=a8RRjg7zmqayfSxAWxnAFlmJZpP+neK1OqgLh131m5eElPx+hqDJ9HzUYIj9k8bXebH3KvkZbqmXEM2pINy3Lm4oVEBz0F1xDJA7po/4lu+K011zeKFecrltj8eVc4aMQfKr2P7OY+QnFxuzCsdnJ5u8by2loBkAtgPuRqoN/7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685121; c=relaxed/simple;
-	bh=ivKTjt+KVE4SZ2PT7Tcb2BHh9H9Qdn8VBh3fixHt7Qg=;
+	s=arc-20240116; t=1750685123; c=relaxed/simple;
+	bh=KW8I/pQSGBvaifvhHgx4vYFlIxFgxBv9BsUw5kParSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GLgvVYX0sl2oAWCM68yLt2PFyAgjT3DOhJiTVcc0NOoV+vIUzUkG0ZCKZymdPBQKSADh95iR6yj6m06Ej/XTH9qvAl5M+Gexc5ZMgEJleWl+44yCo06lGGriZG7FEUGHPkeRCsuz9co9w06WyApaQuiElcINA1RAMrg/6xeIpdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNsSsNYh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S5q4w21urmRw4Bcp9nnKV/3k+jq/wBr+KEClR/uEvIyaTF4fPhenaO/FMxLX3de3SKS81aJ3qtZl8f0ohJGTYkLsX81SaBMGTr45XzQGC/+fR79Li3oUmBVYJXGL9pRfqAksaJ7fcinphio4HMhPYOg8pw8HpdftvFXlEfmwKiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETeJrPeZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNsSsNYh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2555C4CEEA;
-	Mon, 23 Jun 2025 13:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETeJrPeZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47EB8C4CEEA;
+	Mon, 23 Jun 2025 13:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685121;
-	bh=ivKTjt+KVE4SZ2PT7Tcb2BHh9H9Qdn8VBh3fixHt7Qg=;
+	s=korg; t=1750685123;
+	bh=KW8I/pQSGBvaifvhHgx4vYFlIxFgxBv9BsUw5kParSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LNsSsNYh/+26Fyc1TVoqSMd+awJRrX2QQfPJ5OYygl+mOWkiu+Q5XWCzcCFiM9p/R
-	 52UDg7Uer/hRUZ5kIuKgu2KRhr/oxyXP2IortRa93gN7a0YW0U4Xubu/boXK6IfaAr
-	 TTbQ/r/81YOVT/ngrKOd3geEkdSqJNBN1wMzAGE4=
+	b=ETeJrPeZggbXnBZreK14aYCJkiaExg0+wZU/Y/aY2RvgyvOROdYcnYGepg55Lq1+u
+	 HdNrLn1A8KYomdDgyMnYZZD2xOFywhFIYyUFkm2sd+HkZaaqSaTjIvjpGW1PbpNBfp
+	 gAc+J9+jrrcmRqpji4iSIyTd0RhWN22zJ69vrEp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Talhah Peerbhai <talhah.peerbhai@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 207/592] ASoC: amd: yc: Add quirk for Lenovo Yoga Pro 7 14ASP9
-Date: Mon, 23 Jun 2025 15:02:45 +0200
-Message-ID: <20250623130705.211870699@linuxfoundation.org>
+Subject: [PATCH 5.10 028/355] firmware: psci: Fix refcount leak in psci_dt_init
+Date: Mon, 23 Jun 2025 15:03:49 +0200
+Message-ID: <20250623130627.657033290@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +49,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Talhah Peerbhai <talhah.peerbhai@gmail.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit a28206060dc5848a1a2a15b7f6ac6223d869084d ]
+[ Upstream commit 7ff37d29fd5c27617b9767e1b8946d115cf93a1e ]
 
-Similar to many other Lenovo models with AMD chips, the Lenovo
-Yoga Pro 7 14ASP9 (product name 83HN) requires a specific quirk
-to ensure internal mic detection. This patch adds a quirk fixing this.
+Fix a reference counter leak in psci_dt_init() where of_node_put(np) was
+missing after of_find_matching_node_and_match() when np is unavailable.
 
-Signed-off-by: Talhah Peerbhai <talhah.peerbhai@gmail.com>
-Link: https://patch.msgid.link/20250515222741.144616-1-talhah.peerbhai@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d09a0011ec0d ("drivers: psci: Allow PSCI node to be disabled")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20250318151712.28763-1-linmq006@gmail.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/firmware/psci/psci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index e632f16c91025..3d9da93d22ee8 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -311,6 +311,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "83AS"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83HN"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
-@@ -360,7 +367,7 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "M5402RA"),
- 		}
- 	},
--        {
-+	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
+diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+index 00af99b6f97c1..2c435a8d35487 100644
+--- a/drivers/firmware/psci/psci.c
++++ b/drivers/firmware/psci/psci.c
+@@ -571,8 +571,10 @@ int __init psci_dt_init(void)
+ 
+ 	np = of_find_matching_node_and_match(NULL, psci_of_match, &matched_np);
+ 
+-	if (!np || !of_device_is_available(np))
++	if (!np || !of_device_is_available(np)) {
++		of_node_put(np);
+ 		return -ENODEV;
++	}
+ 
+ 	init_fn = (psci_initcall_t)matched_np->data;
+ 	ret = init_fn(np);
 -- 
 2.39.5
 
