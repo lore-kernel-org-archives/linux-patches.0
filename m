@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655612550D7;
-	Mon, 23 Jun 2025 13:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061472472AF;
+	Mon, 23 Jun 2025 13:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685849; cv=none; b=eOrE0+8vJgn6aLG+PtafKFAbQmPkkf2SsTXK/UXi6FDxg7VNzZZRS2pr+TRILUo31KGoSZctfyLesfot30RB7Mal3e1zW8RgtRRo31DwPwyy0JL9LHtywxE6PzkXt/9ciwdXMfcxnJ2INne0/RrQPUFsO+kYPw0VNXHclPAKNl4=
+	t=1750685852; cv=none; b=uFac8iY5T53zwy+9G6bCL0wY+hpza5V0/6Ad5G2+JemH+byx6VEPxuR+jpFPustFWpaMdI7ONqLg/l+/sf67t75wZlsnK2Hex/Tra10P8eMVRGBUpnwD+7CDuZzNmhM6G1fSL+aLTRQ1+rVymMi83Igygk+LPFqT71Y1wRG7wZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685849; c=relaxed/simple;
-	bh=Whim5WcmjeUinMqtTsm9t9A9YrrqJBXDa8LZ7uK6y1o=;
+	s=arc-20240116; t=1750685852; c=relaxed/simple;
+	bh=7r44JUFSkghFsH67xeVCuwdcba5xNYd/QI/xxW9kBzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDMR480fnsNJm9fFBVUwdo1lYtUjbq8/5sxf3/yXRwhLLKwFimpfFDWYFFRvrTJChaUQ3aPqLNfpN80tqVUpc6F3nQku7PcCkX6idLVf6IYf/y2NUTVBd1xCkQY+TymcLk3h0EThtO3d3SLqU0Ff03MVC7NUN+OGvDDPVnmF6Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6ABrRM+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LbKf9kvWK/zS0AVdkSejsRnU5MP9SxFYy+tKJJa07wVfZ6OJ09M610XutdDzTPaebtTWrYvWnRMSVKsq/Xo20BTJr+FDz+6W0LdISkZyEERQLXdUNy9PohrOd7FTvF3vvcczZWONxmylbdT+DFK62enGhFfmvZC3wffr3wsDDzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NK/TelK/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6ABrRM+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF05BC4CEEA;
-	Mon, 23 Jun 2025 13:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NK/TelK/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C28AC4CEEA;
+	Mon, 23 Jun 2025 13:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685849;
-	bh=Whim5WcmjeUinMqtTsm9t9A9YrrqJBXDa8LZ7uK6y1o=;
+	s=korg; t=1750685851;
+	bh=7r44JUFSkghFsH67xeVCuwdcba5xNYd/QI/xxW9kBzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z6ABrRM+bExIhc2NWLaHzwdLGSrnclp2qnpsFT5KD9Z7SGs/Hdet9icRxqykSq5dX
-	 znMWduwS+jmsdAm3d0RMvEVmgaZZpbtpn7tL+acvsRZ0Ux+AbFqUgujZf46CLq7yk6
-	 OZR0u56EmZKA8xyHDFxGEGzP3Wg9JYuzGfYPOzhM=
+	b=NK/TelK/H4oFdKF4w+UTAvu2vw1NC3+0MB6VUIPyEtf9WaW9WOdNOm+IGJNH0AH9b
+	 UVURpYDUJXOLFyQAfO4lA7njxEwrP9ip7kmLWiZ71UZp7WEfK8mGdAvTgj8DKqtYsM
+	 Ozkw0MD9IHXkwHQmsN5ZCZ+HDBSNU6L90HHT59T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 010/414] ASoC: meson: meson-card-utils: use of_property_present() for DT parsing
-Date: Mon, 23 Jun 2025 15:02:27 +0200
-Message-ID: <20250623130642.284595471@linuxfoundation.org>
+	syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com,
+	Charalampos Mitrodimas <charmitro@posteo.net>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 097/355] net: tipc: fix refcount warning in tipc_aead_encrypt
+Date: Mon, 23 Jun 2025 15:04:58 +0200
+Message-ID: <20250623130629.705706690@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Charalampos Mitrodimas <charmitro@posteo.net>
 
-commit 171eb6f71e9e3ba6a7410a1d93f3ac213f39dae2 upstream.
+[ Upstream commit f29ccaa07cf3d35990f4d25028cc55470d29372b ]
 
-Commit c141ecc3cecd ("of: Warn when of_property_read_bool() is used on
-non-boolean properties") added a warning when trying to parse a property
-with a value (boolean properties are defined as: absent = false, present
-without any value = true). This causes a warning from meson-card-utils.
+syzbot reported a refcount warning [1] caused by calling get_net() on
+a network namespace that is being destroyed (refcount=0). This happens
+when a TIPC discovery timer fires during network namespace cleanup.
 
-meson-card-utils needs to know about the existence of the
-"audio-routing" and/or "audio-widgets" properties in order to properly
-parse them. Switch to of_property_present() in order to silence the
-following warning messages during boot:
-  OF: /sound: Read of boolean property 'audio-routing' with a value.
-  OF: /sound: Read of boolean property 'audio-widgets' with a value.
+The recently added get_net() call in commit e279024617134 ("net/tipc:
+fix slab-use-after-free Read in tipc_aead_encrypt_done") attempts to
+hold a reference to the network namespace. However, if the namespace
+is already being destroyed, its refcount might be zero, leading to the
+use-after-free warning.
 
-Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
-Tested-by: Christian Hewitt <christianshewitt@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://patch.msgid.link/20250419213448.59647-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Replace get_net() with maybe_get_net(), which safely checks if the
+refcount is non-zero before incrementing it. If the namespace is being
+destroyed, return -ENODEV early, after releasing the bearer reference.
+
+[1]: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
+
+Reported-by: syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
+Fixes: e27902461713 ("net/tipc: fix slab-use-after-free Read in tipc_aead_encrypt_done")
+Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250527-net-tipc-warning-v2-1-df3dc398a047@posteo.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/meson-card-utils.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tipc/crypto.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/sound/soc/meson/meson-card-utils.c
-+++ b/sound/soc/meson/meson-card-utils.c
-@@ -231,7 +231,7 @@ static int meson_card_parse_of_optional(
- 						    const char *p))
- {
- 	/* If property is not provided, don't fail ... */
--	if (!of_property_read_bool(card->dev->of_node, propname))
-+	if (!of_property_present(card->dev->of_node, propname))
- 		return 0;
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index 159d891b81c59..3b26c5a6aaaeb 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -822,7 +822,11 @@ static int tipc_aead_encrypt(struct tipc_aead *aead, struct sk_buff *skb,
+ 	}
  
- 	/* ... but do fail if it is provided and the parsing fails */
+ 	/* Get net to avoid freed tipc_crypto when delete namespace */
+-	get_net(aead->crypto->net);
++	if (!maybe_get_net(aead->crypto->net)) {
++		tipc_bearer_put(b);
++		rc = -ENODEV;
++		goto exit;
++	}
+ 
+ 	/* Now, do encrypt */
+ 	rc = crypto_aead_encrypt(req);
+-- 
+2.39.5
+
 
 
