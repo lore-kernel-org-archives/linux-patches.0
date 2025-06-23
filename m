@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAB7221F17;
-	Mon, 23 Jun 2025 21:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F241EE7C6;
+	Mon, 23 Jun 2025 21:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714548; cv=none; b=E3bbP3R2YQy3opa/RFx5OASyVxNOla7ZdW5EmbtCZMhVXVHbwFFZ269bEqdtWC1PaEOhxSQ+RIa9MRD/TeGgnp14y9XdoUtSaug0tbyhO4SUSz6et+LdksD0f/wpU0/tvLMLGBmCPQAMp1xr+8HNFa6JoTiErdH8D8LJJTR5AVw=
+	t=1750714551; cv=none; b=VDOCoG1X1aG1R3eCf0t1JuR5kUBi28IfUo6YT2XeZgyIYZiNZ1jkkK9qU+Ow18sFOqIOqRlERZMO1j4X49gX0DLqWTei4wfAwZekBDD5utlsKRjtUZTMHoklIqD8YpAMMoGZaI72uFvkPb4rtXPvOcHeJ4dQIZ5bGipnb/0CiDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714548; c=relaxed/simple;
-	bh=JSG8Tk6O6w+neYjd9JMfV7cziZMFY50YjYpXj2wFDO4=;
+	s=arc-20240116; t=1750714551; c=relaxed/simple;
+	bh=AkU3CEg7MInLEfmmMdXPnI4odK4YlYE2gJowJJZiyeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ggqvzr3ddtSA/KxXuHNMlYsdM9GK5IlXB6OqcFhhWkrWs5PNFJjQbDYDxdhoAelm/FquSJfgkgbP6iruLSztw5QAQ8Bk5UkGk9hah3dBvVt6wAMLZUekHz8vF+7PPaZ8p3pNhFSSGMvVZcxKc9gVVTVzRjhflRsH6Nav52MHxQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkx5bJ7P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l5E3ciab1EnVyszT256KFjNepYmEX2ck/V1EtE/3RidmpJgEyii2IV01rNPoj0YT4Z5otHr9UvgTaHpCMoYVdvpWNFQhU0vOZfGlYbY2KePKhqRyDrlEZ77zmmSZsDGhBvcJmoH+9gD1xJJOxOzXfOfQuKKA6K0xchGntyBui6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVsJ3TEI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkx5bJ7P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511A1C4CEEA;
-	Mon, 23 Jun 2025 21:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVsJ3TEI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1552C4CEEA;
+	Mon, 23 Jun 2025 21:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714548;
-	bh=JSG8Tk6O6w+neYjd9JMfV7cziZMFY50YjYpXj2wFDO4=;
+	s=korg; t=1750714551;
+	bh=AkU3CEg7MInLEfmmMdXPnI4odK4YlYE2gJowJJZiyeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zkx5bJ7PHzUYCDMThySbuzeklYvPKB5lvdNzWLdUv1AJZ5brGwtWknBWyvPbwY+JZ
-	 VuJoJ0SeAP/iGuwvPVSNYAgSatkSMGss+8nuWagrDI/4AyG//sORLnw0Z24VmKYoFS
-	 zCiA88B3IOLO/wOHC3CGyDts7FB6rCU2ZQCILEdE=
+	b=pVsJ3TEI/+/l9lUPVhGbqy7pgjJaGEPrbampUm96NHbmEJ31/4ehZydaiBCroH+5l
+	 GfFfyEbQoKuEvv0ku+CKx8Irq1QQhAHJEyCz/vPWv5zDcaVnA+CKihcM1qIF7tn3hz
+	 JMUQ1rHQp/lXWSnxNOvne9Kv9JZFr6n3gK6Frigg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 401/592] wifi: ath12k: make assoc link associate first
-Date: Mon, 23 Jun 2025 15:05:59 +0200
-Message-ID: <20250623130709.980130769@linuxfoundation.org>
+Subject: [PATCH 6.6 144/290] cpufreq: scmi: Skip SCMI devices that arent used by the CPUs
+Date: Mon, 23 Jun 2025 15:06:45 +0200
+Message-ID: <20250623130631.228471422@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,83 +50,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Mike Tipton <quic_mdtipton@quicinc.com>
 
-[ Upstream commit ead6d41116b81098061c878d9bfc0b1a6c629090 ]
+[ Upstream commit 6c9bb86922728c7a4cceb99f131e00dd87514f20 ]
 
-In MLO scenario WCN7850 firmware requests the assoc link to associate
-before any other links. However currently in
-ath12k_mac_op_vif_cfg_changed() we are doing association in an ascending
-order of link id. If the assoc link does not get assigned the smallest
-id, a non-assoc link gets associated first and firmware crashes.
+Currently, all SCMI devices with performance domains attempt to register
+a cpufreq driver, even if their performance domains aren't used to
+control the CPUs. The cpufreq framework only supports registering a
+single driver, so only the first device will succeed. And if that device
+isn't used for the CPUs, then cpufreq will scale the wrong domains.
 
-Change to do association for the assoc link first.
+To avoid this, return early from scmi_cpufreq_probe() if the probing
+SCMI device isn't referenced by the CPU device phandles.
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00284-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00209-QCAHKSWPL_SILICONZ-1
+This keeps the existing assumption that all CPUs are controlled by a
+single SCMI device.
 
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20250409-ath12k-wcn7850-mlo-support-v2-5-3801132ca2c3@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Cristian Marussi <cristian.marussi@arm.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 31 +++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ drivers/cpufreq/scmi-cpufreq.c | 36 +++++++++++++++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 331bcf5e6c4cc..eac4214c48c39 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -3703,6 +3703,8 @@ static void ath12k_mac_op_vif_cfg_changed(struct ieee80211_hw *hw,
- 	unsigned long links = ahvif->links_map;
- 	struct ieee80211_bss_conf *info;
- 	struct ath12k_link_vif *arvif;
-+	struct ieee80211_sta *sta;
-+	struct ath12k_sta *ahsta;
- 	struct ath12k *ar;
- 	u8 link_id;
+diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+index e4989764efe2a..6ff77003a96ea 100644
+--- a/drivers/cpufreq/scmi-cpufreq.c
++++ b/drivers/cpufreq/scmi-cpufreq.c
+@@ -299,6 +299,40 @@ static struct cpufreq_driver scmi_cpufreq_driver = {
+ 	.register_em	= scmi_cpufreq_register_em,
+ };
  
-@@ -3715,6 +3717,35 @@ static void ath12k_mac_op_vif_cfg_changed(struct ieee80211_hw *hw,
- 	}
++static bool scmi_dev_used_by_cpus(struct device *scmi_dev)
++{
++	struct device_node *scmi_np = dev_of_node(scmi_dev);
++	struct device_node *cpu_np, *np;
++	struct device *cpu_dev;
++	int cpu, idx;
++
++	if (!scmi_np)
++		return false;
++
++	for_each_possible_cpu(cpu) {
++		cpu_dev = get_cpu_device(cpu);
++		if (!cpu_dev)
++			continue;
++
++		cpu_np = dev_of_node(cpu_dev);
++
++		np = of_parse_phandle(cpu_np, "clocks", 0);
++		of_node_put(np);
++
++		if (np == scmi_np)
++			return true;
++
++		idx = of_property_match_string(cpu_np, "power-domain-names", "perf");
++		np = of_parse_phandle(cpu_np, "power-domains", idx);
++		of_node_put(np);
++
++		if (np == scmi_np)
++			return true;
++	}
++
++	return false;
++}
++
+ static int scmi_cpufreq_probe(struct scmi_device *sdev)
+ {
+ 	int ret;
+@@ -307,7 +341,7 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
  
- 	if (changed & BSS_CHANGED_ASSOC) {
-+		if (vif->cfg.assoc) {
-+			/* only in station mode we can get here, so it's safe
-+			 * to use ap_addr
-+			 */
-+			rcu_read_lock();
-+			sta = ieee80211_find_sta(vif, vif->cfg.ap_addr);
-+			if (!sta) {
-+				rcu_read_unlock();
-+				WARN_ONCE(1, "failed to find sta with addr %pM\n",
-+					  vif->cfg.ap_addr);
-+				return;
-+			}
-+
-+			ahsta = ath12k_sta_to_ahsta(sta);
-+			arvif = wiphy_dereference(hw->wiphy,
-+						  ahvif->link[ahsta->assoc_link_id]);
-+			rcu_read_unlock();
-+
-+			ar = arvif->ar;
-+			/* there is no reason for which an assoc link's
-+			 * bss info does not exist
-+			 */
-+			info = ath12k_mac_get_link_bss_conf(arvif);
-+			ath12k_bss_assoc(ar, arvif, info);
-+
-+			/* exclude assoc link as it is done above */
-+			links &= ~BIT(ahsta->assoc_link_id);
-+		}
-+
- 		for_each_set_bit(link_id, &links, IEEE80211_MLD_MAX_NUM_LINKS) {
- 			arvif = wiphy_dereference(hw->wiphy, ahvif->link[link_id]);
- 			if (!arvif || !arvif->ar)
+ 	handle = sdev->handle;
+ 
+-	if (!handle)
++	if (!handle || !scmi_dev_used_by_cpus(dev))
+ 		return -ENODEV;
+ 
+ 	perf_ops = handle->devm_protocol_get(sdev, SCMI_PROTOCOL_PERF, &ph);
 -- 
 2.39.5
 
