@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB4619049B;
-	Mon, 23 Jun 2025 21:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E6619049B;
+	Mon, 23 Jun 2025 21:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715568; cv=none; b=gcClmzZHhB6cG97rAo9d+x9oS7W5TLD3vzgPGKn/+/iqirIBgx8duaF4UsZFshILJkQlc2uLZbBbNP1sUT98uFxtz6NVYjro1lSOuRQgmWcOflTktmHoUcmcpDBs2u1UjS/A9+jNkW0jVfn7xXrNrX8oKX/T6F5F/ZKl6oAThwE=
+	t=1750715570; cv=none; b=WtJkCciiOgS3H/HwWRHKZa/DHziU7ghglV4/hqTcwk1PM1SZLXUVNpMP1kKE5jUe948hfFroi73HWPDemdxXFyypBtTAU+BIaIYUH36Oz1qlc3w9Rg5lYutHVOQyyFV4jKvRfUU+4GwfLiopW05TUA/0/2Af2SoDEgjdgxxpld8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715568; c=relaxed/simple;
-	bh=jdAPuwwbBkFcoE90aHc3ANe364yKtQBtyYJgmjzssxc=;
+	s=arc-20240116; t=1750715570; c=relaxed/simple;
+	bh=uzZhOOazN6youXg/acwxWY9FRaGDl+1G1a7HlYVvXqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4OmGnu7gGT9IJeqFzjiUHbKCFiOX5zcJg8gkd9ahCEGKcZoMhbkxfSu4/zEvgCpoXbjWCVO/rzSf1Bo9/lwRXtF8xoIwPGX/b/T/JW7OFUlQZ5INI1LmUFVFHIU48iUMJc5FH9dZ2DMejL3GDs8awn603sEm/RrPKfqmVqNtK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mH8nCaUj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GlAp+ZvYtGoXeFT7y94Usa0V2+AjAlsyJmDxqFz3lfWnld32+khzvApXo7dBRz1AxDG4cGwGSy1R5vjvpviPLO4zVVw9IOqiA/mxOv8rz4A90WmPqLxIXfFLtJkUKZj+0cANePh0oppiMIg3ueTRTMLJme5bmGrszTUI2yboGIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mcRdn0kL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mH8nCaUj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43386C4CEEA;
-	Mon, 23 Jun 2025 21:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mcRdn0kL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13D4C4CEEA;
+	Mon, 23 Jun 2025 21:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715567;
-	bh=jdAPuwwbBkFcoE90aHc3ANe364yKtQBtyYJgmjzssxc=;
+	s=korg; t=1750715570;
+	bh=uzZhOOazN6youXg/acwxWY9FRaGDl+1G1a7HlYVvXqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mH8nCaUj7KTdsmAFTZBkEUlFwO98LftMGGJ8DOBlKQnDz99mZOyxYTo3LLcBdnSYh
-	 hVSBxYfPGx6eZx3ZbpzGO8Ggu0mn66V5ugsrktI8BmrNcQThYaVY0oFB3uwWZlPixF
-	 niGNfXVMooQlwDDBZqwFh2zC4JbqQuZR3eaHz2js=
+	b=mcRdn0kLEMrqsQeCZJSt9SmzAdZyGooeoLOAWmWy8PYkZp3KN8S7+B+qs0hCmOIz3
+	 3oRcAQ6bzcPYqMdhUj3qqb28p83TcGKfifvZ8nisI6+UkFhqA8uu8X9YCx84H4FuGR
+	 BmG19mzSpGs/Jmv5Xqvzz2gKRhHS/x1wwqKiwbmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 214/414] wifi: ath11k: Fix QMI memory reuse logic
-Date: Mon, 23 Jun 2025 15:05:51 +0200
-Message-ID: <20250623130647.359834019@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 228/290] atm: Revert atm_account_tx() if copy_from_iter_full() fails.
+Date: Mon, 23 Jun 2025 15:08:09 +0200
+Message-ID: <20250623130633.787898841@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,74 +47,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit cd2e7bae92bd7e65063ab8d04721d2b711ba4cbe ]
+commit 7851263998d4269125fd6cb3fdbfc7c6db853859 upstream.
 
-Firmware requests 2 segments at first. The first segment is of 6799360
-whose allocation fails due to dma remapping not available. The success
-is returned to firmware. Then firmware asks for 22 smaller segments
-instead of 2 big ones. Those get allocated successfully. At suspend/
-hibernation time, these segments aren't freed as they will be reused
-by firmware after resuming.
+In vcc_sendmsg(), we account skb->truesize to sk->sk_wmem_alloc by
+atm_account_tx().
 
-After resuming, the firmware asks for the 2 segments again with the
-first segment of 6799360 size. Since chunk->vaddr is not NULL, the
-type and size are compared with the previous type and size to know if
-it can be reused or not. Unfortunately, it is detected that it cannot
-be reused and this first smaller segment is freed. Then we continue to
-allocate 6799360 size memory which fails and ath11k_qmi_free_target_mem_chunk()
-is called which frees the second smaller segment as well. Later success
-is returned to firmware which asks for 22 smaller segments again. But
-as we had freed 2 segments already, we'll allocate the first 2 new
-smaller segments again and reuse the remaining 20. Hence 20 small
-segments are being reused instead of 22.
+It is expected to be reverted by atm_pop_raw() later called by
+vcc->dev->ops->send(vcc, skb).
 
-Add skip logic when vaddr is set, but size/type don't match. Use the
-same skip and success logic as used when dma_alloc_coherent() fails.
-By skipping, the possibility of resume failure due to kernel failing to
-allocate memory for QMI can be avoided.
+However, vcc_sendmsg() misses the same revert when copy_from_iter_full()
+fails, and then we will leak a socket.
 
-	kernel: ath11k_pci 0000:03:00.0: failed to allocate dma memory for qmi (524288 B type 1)
-	ath11k_pci 0000:03:00.0: failed to allocate qmi target memory: -22
+Let's factorise the revert part as atm_return_tx() and call it in
+the failure path.
 
-Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+Note that the corresponding sk_wmem_alloc operation can be found in
+alloc_tx() as of the blamed commit.
 
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20250428080242.466901-1-usama.anjum@collabora.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  $ git blame -L:alloc_tx net/atm/common.c c55fa3cccbc2c~
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Simon Horman <horms@kernel.org>
+Closes: https://lore.kernel.org/netdev/20250614161959.GR414686@horms.kernel.org/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250616182147.963333-3-kuni1840@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/qmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ include/linux/atmdev.h |    6 ++++++
+ net/atm/common.c       |    1 +
+ net/atm/raw.c          |    2 +-
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
-index 7a22483b35cd9..a5555c959dec9 100644
---- a/drivers/net/wireless/ath/ath11k/qmi.c
-+++ b/drivers/net/wireless/ath/ath11k/qmi.c
-@@ -1989,6 +1989,15 @@ static int ath11k_qmi_alloc_target_mem_chunk(struct ath11k_base *ab)
- 			    chunk->prev_size == chunk->size)
- 				continue;
+--- a/include/linux/atmdev.h
++++ b/include/linux/atmdev.h
+@@ -249,6 +249,12 @@ static inline void atm_account_tx(struct
+ 	ATM_SKB(skb)->atm_options = vcc->atm_options;
+ }
  
-+			if (ab->qmi.mem_seg_count <= ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT) {
-+				ath11k_dbg(ab, ATH11K_DBG_QMI,
-+					   "size/type mismatch (current %d %u) (prev %d %u), try later with small size\n",
-+					    chunk->size, chunk->type,
-+					    chunk->prev_size, chunk->prev_type);
-+				ab->qmi.target_mem_delayed = true;
-+				return 0;
-+			}
++static inline void atm_return_tx(struct atm_vcc *vcc, struct sk_buff *skb)
++{
++	WARN_ON_ONCE(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize,
++					   &sk_atm(vcc)->sk_wmem_alloc));
++}
 +
- 			/* cannot reuse the existing chunk */
- 			dma_free_coherent(ab->dev, chunk->prev_size,
- 					  chunk->vaddr, chunk->paddr);
--- 
-2.39.5
-
+ static inline void atm_force_charge(struct atm_vcc *vcc,int truesize)
+ {
+ 	atomic_add(truesize, &sk_atm(vcc)->sk_rmem_alloc);
+--- a/net/atm/common.c
++++ b/net/atm/common.c
+@@ -635,6 +635,7 @@ int vcc_sendmsg(struct socket *sock, str
+ 
+ 	skb->dev = NULL; /* for paths shared with net_device interfaces */
+ 	if (!copy_from_iter_full(skb_put(skb, size), size, &m->msg_iter)) {
++		atm_return_tx(vcc, skb);
+ 		kfree_skb(skb);
+ 		error = -EFAULT;
+ 		goto out;
+--- a/net/atm/raw.c
++++ b/net/atm/raw.c
+@@ -36,7 +36,7 @@ static void atm_pop_raw(struct atm_vcc *
+ 
+ 	pr_debug("(%d) %d -= %d\n",
+ 		 vcc->vci, sk_wmem_alloc_get(sk), ATM_SKB(skb)->acct_truesize);
+-	WARN_ON(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize, &sk->sk_wmem_alloc));
++	atm_return_tx(vcc, skb);
+ 	dev_kfree_skb_any(skb);
+ 	sk->sk_write_space(sk);
+ }
 
 
