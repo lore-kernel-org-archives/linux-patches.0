@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BBC3FB1B;
-	Mon, 23 Jun 2025 21:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25633FB1B;
+	Mon, 23 Jun 2025 21:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713106; cv=none; b=I1Av3VfjBHSTbiDcW5gyeAIfCzDvmnMEMoOrQKl9gW+urdyXhAjkoP7zTeESkvnNMGuaFtwaTJPI5ghWSrqsSSZ3Vg2xSBO8WzQj5vDboRxILMvxhajhnbzFyEpdIQk/S21OGdVxoaLHLhIyin/Onvbih2JTzUfCFNX60TAbuBs=
+	t=1750713109; cv=none; b=dsAhJeBbLi1rhu02WORfLnJS4gaZs0LeHad1OEsrT0zCtlxq96x0bTsHuvtwrPRJqiE0aTRebt9W3KcpmVwgMYmD/cJ/buPkXl3UVUQhzfTyp026bjYfuVl3zSuZo2xy1TgraHQzI3uOAAxbO74KGDC+Qqk7V+l/CFMbLm0tWd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713106; c=relaxed/simple;
-	bh=3WlHP742llEs5h+kU+HBwg3Aft2WRKNsQCRiMqekei4=;
+	s=arc-20240116; t=1750713109; c=relaxed/simple;
+	bh=qQZNQ/+ikXMf2l+8U34P7RhIN2D5I3EL/y9ogB6+AQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s97GvpRnKA7cJJpz7qmbvPrc7abXFeoTWYifxs6gIbOp/aZw/LdNjZ01sCbmCyBR3qlrFmfa4KykujxM8qP/QVpUn50Si6PUkGbC+Y2CF99mUbAJjHi0eFZN/u5PGIyRFfGn0n+Gh1v0I/R4BL6ubQbNahS9/66+TVI+z2hYIk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hw5RRedn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VAhnkqGz02k16fgP4unLAKaiq8rKa83J0eIXbvjFzNembcOEf/rAVHHxRStIC1bEdkBSP1fh/gg13DLqTFMT+uF71bKghrHgu+o4uf/h7Qgar4zhjehuSjvmMDAEzYekeevvVu7DZurqJ0sUvMtT5EaRT1aNIEbYf9ktNOwnCEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eq55m00w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hw5RRedn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E3CC4CEEA;
-	Mon, 23 Jun 2025 21:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eq55m00w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32035C4CEEA;
+	Mon, 23 Jun 2025 21:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713106;
-	bh=3WlHP742llEs5h+kU+HBwg3Aft2WRKNsQCRiMqekei4=;
+	s=korg; t=1750713108;
+	bh=qQZNQ/+ikXMf2l+8U34P7RhIN2D5I3EL/y9ogB6+AQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hw5RRedn1ZYm5eBFyIzeSry5QIWpGUgo7XqFiekDqdyEppseUHoSxRnI4TI98fjGd
-	 7S8TeoEie1mPGTAr6qktSIMnvSNZ1QIKlv1duAOxs2YF14roo3YTHBNiFBZg7+yl+e
-	 CfiG+H3sHLkbA/8KrqD2REhsd/TnCyZfUg6ad5ms=
+	b=Eq55m00wMGf1Iz3HUh/mktOwhtwhmUdKjS5AL4dCC3+pvgWN6kz25FyG20L1G4zvP
+	 RzoM+NLwKtP6n/LDASRNy0JfdlAeW9432xtF2eaFDfUem0Y/ExJ5t8nA/grm9pkiub
+	 4qzOuKvPtJQzsa9EHzBZbsFB544OOjmoQggs/ZQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 046/414] media: ccs-pll: Start VT pre-PLL multiplier search from correct value
-Date: Mon, 23 Jun 2025 15:03:03 +0200
-Message-ID: <20250623130643.191320412@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 081/508] pinctrl: at91: Fix possible out-of-boundary access
+Date: Mon, 23 Jun 2025 15:02:06 +0200
+Message-ID: <20250623130647.233121635@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 06d2d478b09e6764fb6161d1621fc10d9f0f2860 upstream.
+[ Upstream commit 762ef7d1e6eefad9896560bfcb9bcf7f1b6df9c1 ]
 
-The ccs_pll_calculate_vt_tree() function does a search over possible VT
-PLL configurations to find the "best" one. If the sensor does not support
-odd pre-PLL divisors and the minimum value (with constraints) isn't 1,
-other odd values could be errorneously searched (and selected) for the
-pre-PLL divisor. Fix this.
+at91_gpio_probe() doesn't check that given OF alias is not available or
+something went wrong when trying to get it. This might have consequences
+when accessing gpio_chips array with that value as an index. Note, that
+BUG() can be compiled out and hence won't actually perform the required
+checks.
 
-Fixes: 415ddd993978 ("media: ccs-pll: Split limits and PLL configuration into front and back parts")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6732ae5cb47c ("ARM: at91: add pinctrl support")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Closes: https://lore.kernel.org/r/202505052343.UHF1Zo93-lkp@intel.com/
+Link: https://lore.kernel.org/20250508200807.1384558-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ccs-pll.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pinctrl/pinctrl-at91.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/media/i2c/ccs-pll.c
-+++ b/drivers/media/i2c/ccs-pll.c
-@@ -397,6 +397,8 @@ static int ccs_pll_calculate_vt_tree(str
- 	min_pre_pll_clk_div = max_t(u16, min_pre_pll_clk_div,
- 				    pll->ext_clk_freq_hz /
- 				    lim_fr->max_pll_ip_clk_freq_hz);
-+	if (!(pll->flags & CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER))
-+		min_pre_pll_clk_div = clk_div_even(min_pre_pll_clk_div);
+diff --git a/drivers/pinctrl/pinctrl-at91.c b/drivers/pinctrl/pinctrl-at91.c
+index 333f9d70c7f48..b82368ec59f4c 100644
+--- a/drivers/pinctrl/pinctrl-at91.c
++++ b/drivers/pinctrl/pinctrl-at91.c
+@@ -1812,12 +1812,16 @@ static int at91_gpio_probe(struct platform_device *pdev)
+ 	struct at91_gpio_chip *at91_chip = NULL;
+ 	struct gpio_chip *chip;
+ 	struct pinctrl_gpio_range *range;
++	int alias_idx;
+ 	int ret = 0;
+ 	int irq, i;
+-	int alias_idx = of_alias_get_id(np, "gpio");
+ 	uint32_t ngpio;
+ 	char **names;
  
- 	dev_dbg(dev, "vt min/max_pre_pll_clk_div: %u,%u\n",
- 		min_pre_pll_clk_div, max_pre_pll_clk_div);
++	alias_idx = of_alias_get_id(np, "gpio");
++	if (alias_idx < 0)
++		return alias_idx;
++
+ 	BUG_ON(alias_idx >= ARRAY_SIZE(gpio_chips));
+ 	if (gpio_chips[alias_idx]) {
+ 		ret = -EBUSY;
+-- 
+2.39.5
+
 
 
