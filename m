@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1CF4C6E;
-	Mon, 23 Jun 2025 13:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399664C6E;
+	Mon, 23 Jun 2025 13:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685641; cv=none; b=lyDljd/qi3u1fODgXfkQKoo6/bR/NrL40zAmeqg2WhBExY21Ey7OInC0GZgS/BBGaWRAUU2R2dljo2kMFOuMh8hfIi1bo/2biUIfNCoO+E2/Kq+JV6063+iYTfMr8xsO0csmnrWmVJ4zwanto/zs/LOg0XFA/Uy3xMZX1zdjdZs=
+	t=1750685644; cv=none; b=JdhXZFQPS2MBtjr2O/WCI9Gdcn0/9lMNinhJEQVg0vTnuvxLrz41F7R7NHrXlkQygfBo+WpTXlTNQTiRWevxoNrVXXlPovWJ8XAmhctgSOTKJXe6uhaAYCEintW9R6ewdX7+v1C5ECU1OyLCikfC3vgIbNVzpafY/XuIBQzJfsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685641; c=relaxed/simple;
-	bh=FQ6TIVdnJzKxThFi6WdyYOSfh23/tSGGL71k0i65op4=;
+	s=arc-20240116; t=1750685644; c=relaxed/simple;
+	bh=e+vFM7mvgdCkvdPkEYcF7qSuLkAayb8japHDBUUVVko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+eRhzmrivDjxSzHHPcBc8W9rO6rVU+HmRBzJMkCZrLNdLycnXKze/kIVPTnreDahJ91VV0llDMl17Qst7U6GWLQX4GZ8NKyW0MpwtTZHysFVzEQ0ogVtz2/21pOyTKIzIR6fzPah7XcvBHhDw0Ibk6wm2AEzxL5s22F9XF1JIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z50EqDdg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bPU1f1+RuPdT5NJar7EFDuPXYaPO9MoWidlXGEtpp3eDa+hSA8CvWfBbpqSxwybQ5PvpYa5a/M1D06bCrloAH2/suqiWAL4QbiFqSzgFcK0V3N+8HOF0nYp9XgbWmQv/woNbjvYeZpyThqDGplEAjKwxxnkURdxjW5Z9GghWLq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1UcqllA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z50EqDdg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F00AC4CEEA;
-	Mon, 23 Jun 2025 13:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1UcqllA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01DEC4CEEA;
+	Mon, 23 Jun 2025 13:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685641;
-	bh=FQ6TIVdnJzKxThFi6WdyYOSfh23/tSGGL71k0i65op4=;
+	s=korg; t=1750685644;
+	bh=e+vFM7mvgdCkvdPkEYcF7qSuLkAayb8japHDBUUVVko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z50EqDdg0/mlxSER7SAgZn2LxE3DRvc2YiwpXjEUDDGxENvaJtMluDVaWOI6Ladmw
-	 oJYAF+XXRolIhGuqTZLCf+FdzvqCkN/nVrlz/NlbW3peMvXRM4IJ0b9i8UhSyYggTB
-	 SfmDgSGkeI/+5UusW0MwFIdFLax01Bt5G1p8awTI=
+	b=O1UcqllAiY46L/RjBb1jP/c3N8NHAAAvqRJ3R44oNxOUcFq/fT6eb3SLa4rMXlit6
+	 HizoHg3TYe5HZ0mG/7Mn+1IxUGu4ZS4aIBmmL1FBg1rztszHQYyZJEENYAQ6z6uhBz
+	 qGgMskc28vYOhUzLVwoMQrmuk5eV4cOjWAoh17h8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/508] crypto: marvell/cesa - Avoid empty transfer descriptor
-Date: Mon, 23 Jun 2025 15:01:06 +0200
-Message-ID: <20250623130645.773269414@linuxfoundation.org>
+Subject: [PATCH 5.10 065/355] nilfs2: do not propagate ENOENT error from nilfs_btree_propagate()
+Date: Mon, 23 Jun 2025 15:04:26 +0200
+Message-ID: <20250623130628.782265225@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 1bafd82d9a40cf09c6c40f1c09cc35b7050b1a9f ]
+[ Upstream commit 8e39fbb1edbb4ec9d7c1124f403877fc167fcecd ]
 
-The user may set req->src even if req->nbytes == 0.  If there
-is no data to hash from req->src, do not generate an empty TDMA
-descriptor.
+In preparation for writing logs, in nilfs_btree_propagate(), which makes
+parent and ancestor node blocks dirty starting from a modified data block
+or b-tree node block, if the starting block does not belong to the b-tree,
+i.e.  is isolated, nilfs_btree_do_lookup() called within the function
+fails with -ENOENT.
 
-Fixes: db509a45339f ("crypto: marvell/cesa - add TDMA support")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+In this case, even though -ENOENT is an internal code, it is propagated to
+the log writer via nilfs_bmap_propagate() and may be erroneously returned
+to system calls such as fsync().
+
+Fix this issue by changing the error code to -EINVAL in this case, and
+having the bmap layer detect metadata corruption and convert the error
+code appropriately.
+
+Link: https://lkml.kernel.org/r/20250428173808.6452-3-konishi.ryusuke@gmail.com
+Fixes: 1f5abe7e7dbc ("nilfs2: replace BUG_ON and BUG calls triggerable from ioctl")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/cesa/hash.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/btree.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/marvell/cesa/hash.c b/drivers/crypto/marvell/cesa/hash.c
-index 84c1065092796..72b0f863dee07 100644
---- a/drivers/crypto/marvell/cesa/hash.c
-+++ b/drivers/crypto/marvell/cesa/hash.c
-@@ -663,7 +663,7 @@ static int mv_cesa_ahash_dma_req_init(struct ahash_request *req)
- 	if (ret)
- 		goto err_free_tdma;
+diff --git a/fs/nilfs2/btree.c b/fs/nilfs2/btree.c
+index 7c9f4d79bdbc5..4a5e8495fa674 100644
+--- a/fs/nilfs2/btree.c
++++ b/fs/nilfs2/btree.c
+@@ -2097,11 +2097,13 @@ static int nilfs_btree_propagate(struct nilfs_bmap *btree,
  
--	if (iter.src.sg) {
-+	if (iter.base.len > iter.src.op_offset) {
- 		/*
- 		 * Add all the new data, inserting an operation block and
- 		 * launch command between each full SRAM block-worth of
+ 	ret = nilfs_btree_do_lookup(btree, path, key, NULL, level + 1, 0);
+ 	if (ret < 0) {
+-		if (unlikely(ret == -ENOENT))
++		if (unlikely(ret == -ENOENT)) {
+ 			nilfs_crit(btree->b_inode->i_sb,
+ 				   "writing node/leaf block does not appear in b-tree (ino=%lu) at key=%llu, level=%d",
+ 				   btree->b_inode->i_ino,
+ 				   (unsigned long long)key, level);
++			ret = -EINVAL;
++		}
+ 		goto out;
+ 	}
+ 
 -- 
 2.39.5
 
