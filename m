@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA744315A;
-	Mon, 23 Jun 2025 21:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD4C4315A;
+	Mon, 23 Jun 2025 21:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714943; cv=none; b=Oz6Wuj5UV/paMP7a3rkYkqV716Z2TPZF0UGG1Ibn4ApjSLAVu3nhUNP2ZoHnNGXJ3BNmdb9rtac9g1NeeuPiLY6EF3OVbKvPvo/MEqRiDr/HrI8oSZ2BCvdZoi8aivzzFN8PgtyM6heO3xKiVZZaWqI69XgHrTJCCVQ1107sQwY=
+	t=1750714946; cv=none; b=kKu/5s99wzm3TLFlwJtM/DVOecAe38+wlIh+qRXXf8ZBWZ3GePz6tBrOKk36V9nL298B+XKTA75O+BdYnymxbRqJ4n1EPVggEcSh3kTCCpOnhz9vbjKxxZd53Uxr/HqcEoStGnH05/tZH9YPxm1KT10ec5LnTajvMlBIIaBIs2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714943; c=relaxed/simple;
-	bh=O3bWtmSlz1g0nkQtng8NZBrjMfP4UyXcBt+eG9/s/l8=;
+	s=arc-20240116; t=1750714946; c=relaxed/simple;
+	bh=svCL+OTkgEEzgFO1anx3htOtiNuXJNnIIKtYtFJHFCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JkXKZIZnH5vcNdQJiUcrPaad4ubQ/q6uKQGxZqPZvjRPxXihKDNBY5nrnL6pvE40fWmiD50gAHKfphGqekFuhvkIr2He4qpTuWr0wf4InhbpoYObDjcbOdCzFDCIu3UgIzed7Y72nJwi0ELamYpCInTjh7WnMJNl1z1Yn2f1Mk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxH3lBy+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FrXDZRMmIhUNZmIlncBFunv2BpmMRVvxKJqLIKmL2YJvt7cgplI+Wz8s0nDPGKFtsm3MbfPmFTWvXRJkkGxGuC5OVeCWWZLR7tCElnRkx7/tLl7w7ofiivQ580IjlHSXBwEcFQjNC2ZuUzl1cwwpWjyQmtX3ThhgmZSmjC5cjJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a86uD0Q5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxH3lBy+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D15EC4CEEA;
-	Mon, 23 Jun 2025 21:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a86uD0Q5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8501C4CEEA;
+	Mon, 23 Jun 2025 21:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714943;
-	bh=O3bWtmSlz1g0nkQtng8NZBrjMfP4UyXcBt+eG9/s/l8=;
+	s=korg; t=1750714946;
+	bh=svCL+OTkgEEzgFO1anx3htOtiNuXJNnIIKtYtFJHFCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxH3lBy+09xdXJO54tvzeMf/xQWdZokvEkfsc4IiFux6WbyT3POLpO1wflDd7tcG5
-	 Iz9yu3UOI4rnKkcX1kiB/YTf13aR0eskQLh7KRWst7jVcLtBgLWqheURLez7q57tgO
-	 PAzJxOnKMAhplDl9W2zkkNOzfym7NTYI+gVtGZPA=
+	b=a86uD0Q59iu4yRmEi8HSdx4hWzB5QQmPW4nGbz1NGhQkz2hr8zUQpzXbksSpJ86OS
+	 WOWJ67X7gWcH0/UrR6cg1TQEzvKcjTzicCC+F//egskWfICwwRG9AgQVx9D4cDqzQc
+	 TR119rOI+s/NfuGcrVtTqL+gKkI45ASgbbPSN+uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 205/508] xfs: Fix xfs_prepare_shift() range for RT
-Date: Mon, 23 Jun 2025 15:04:10 +0200
-Message-ID: <20250623130650.311867123@linuxfoundation.org>
+Subject: [PATCH 6.6 170/290] wifi: iwlwifi: pcie: make sure to lock rxq->read
+Date: Mon, 23 Jun 2025 15:07:11 +0200
+Message-ID: <20250623130632.006060708@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,60 +48,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit f23660f059470ec7043748da7641e84183c23bc8 ]
+[ Upstream commit 1cc2c48c4af81bed5ddbe9f2c9d6e20fa163acf9 ]
 
-The RT extent range must be considered in the xfs_flush_unmap_range() call
-to stabilize the boundary.
+rxq->read is accessed without the rxq->lock in a few places,
+Make sure to have the lock there.
 
-This code change is originally from Dave Chinner.
-
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Tested-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20250424153620.73725f207aaa.I1a3e4b6c5fd370e029fdacfcdc9ee335788afa98@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_bmap_util.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/trans.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/xfs/xfs_bmap_util.c b/fs/xfs/xfs_bmap_util.c
-index dabae6323c503..bab8ba224e10d 100644
---- a/fs/xfs/xfs_bmap_util.c
-+++ b/fs/xfs/xfs_bmap_util.c
-@@ -1059,7 +1059,7 @@ xfs_prepare_shift(
- 	struct xfs_inode	*ip,
- 	loff_t			offset)
- {
--	struct xfs_mount	*mp = ip->i_mount;
-+	unsigned int		rounding;
- 	int			error;
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+index e9807fcca6ad1..5c2e8d2883976 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+@@ -2701,6 +2701,8 @@ static ssize_t iwl_dbgfs_rx_queue_read(struct file *file,
+ 	for (i = 0; i < trans->num_rx_queues && pos < bufsz; i++) {
+ 		struct iwl_rxq *rxq = &trans_pcie->rxq[i];
  
- 	/*
-@@ -1077,11 +1077,13 @@ xfs_prepare_shift(
- 	 * with the full range of the operation. If we don't, a COW writeback
- 	 * completion could race with an insert, front merge with the start
- 	 * extent (after split) during the shift and corrupt the file. Start
--	 * with the block just prior to the start to stabilize the boundary.
-+	 * with the allocation unit just prior to the start to stabilize the
-+	 * boundary.
- 	 */
--	offset = round_down(offset, mp->m_sb.sb_blocksize);
-+	rounding = xfs_inode_alloc_unitsize(ip);
-+	offset = rounddown_64(offset, rounding);
- 	if (offset)
--		offset -= mp->m_sb.sb_blocksize;
-+		offset -= rounding;
- 
- 	/*
- 	 * Writeback and invalidate cache for the remainder of the file as we're
++		spin_lock_bh(&rxq->lock);
++
+ 		pos += scnprintf(buf + pos, bufsz - pos, "queue#: %2d\n",
+ 				 i);
+ 		pos += scnprintf(buf + pos, bufsz - pos, "\tread: %u\n",
+@@ -2721,6 +2723,7 @@ static ssize_t iwl_dbgfs_rx_queue_read(struct file *file,
+ 			pos += scnprintf(buf + pos, bufsz - pos,
+ 					 "\tclosed_rb_num: Not Allocated\n");
+ 		}
++		spin_unlock_bh(&rxq->lock);
+ 	}
+ 	ret = simple_read_from_buffer(user_buf, count, ppos, buf, pos);
+ 	kfree(buf);
+@@ -3385,8 +3388,11 @@ iwl_trans_pcie_dump_data(struct iwl_trans *trans,
+ 		/* Dump RBs is supported only for pre-9000 devices (1 queue) */
+ 		struct iwl_rxq *rxq = &trans_pcie->rxq[0];
+ 		/* RBs */
++		spin_lock_bh(&rxq->lock);
+ 		num_rbs = iwl_get_closed_rb_stts(trans, rxq);
+ 		num_rbs = (num_rbs - rxq->read) & RX_QUEUE_MASK;
++		spin_unlock_bh(&rxq->lock);
++
+ 		len += num_rbs * (sizeof(*data) +
+ 				  sizeof(struct iwl_fw_error_dump_rb) +
+ 				  (PAGE_SIZE << trans_pcie->rx_page_order));
 -- 
 2.39.5
 
