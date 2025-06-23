@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F35124A067;
-	Mon, 23 Jun 2025 13:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DCD4253F03;
+	Mon, 23 Jun 2025 13:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686175; cv=none; b=AcjC6YNGYDso9wFCeExBB0hOMHfyoMwIOA1y9hle7h3rLZIZn/GtgYgYkjEK+VqM5SukKze1r3e8GQa2Hb3s/hDpN7acwDVMt3COi6l+ARg1G2xlMGtkBUB4HUdCAT+T/aLXFzP9MTAvy8BUer5owGxO3vtTrXfW5dMy4/pd3kg=
+	t=1750686177; cv=none; b=nEYbqlA0YaReGSQlKzaPKABuB/JufQtxW8K/EvkcIE2Nroc1r77yLgCNJYMDvvpaCmv1YK3PGuleZQaZUXhGQND0mutVahyNhQWfZT091GMNog0v1sS6DDgWy7m8elb7TdxoMv5TWxmNSUgdmPzNZ7hJK6ssEcQ/4vuhEh4agLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686175; c=relaxed/simple;
-	bh=3zqEMFV8EY3Ular/z+xctuv9Vh2qwyT+d0DyeEHLyto=;
+	s=arc-20240116; t=1750686177; c=relaxed/simple;
+	bh=ZvIgf4ZfU7eFFp0UVFc75qCJH8vI6xvvQYrbaYIFwQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lohLmz3pVOE7EmScSEwp8w2J03pNM7/YtiMCBakSQfjAsMTTD/ovJ8ECk9JxiTxO/LOIDi3+ptyFJpGh8nay5yrRxLrMUZrqSmH1cIGm0mV+EI9YfaXO/V9ZVvxsq9smku13dKXGy77svaUSyOKwbVopNEWDDgpdZGMdplxkhbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMuUVvsh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nPjNI59n70S++iDqvcKDxn2G0/o8imdiaoAi26u6wF05gu5wR3ede3ySKbpEvINP4AXLT91Py5+/xqm5+DpkXDvDbKAM47GMKDMiOicT1gtX9N2Bxb7uPU1D6x8+SCDnPQ4JC6jS6jEttuT8MvaztYiYcpUuBOSPDcqL4v3pCX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNBC7bPg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMuUVvsh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DB1C4CEF1;
-	Mon, 23 Jun 2025 13:42:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNBC7bPg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3203EC4CEEA;
+	Mon, 23 Jun 2025 13:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686175;
-	bh=3zqEMFV8EY3Ular/z+xctuv9Vh2qwyT+d0DyeEHLyto=;
+	s=korg; t=1750686177;
+	bh=ZvIgf4ZfU7eFFp0UVFc75qCJH8vI6xvvQYrbaYIFwQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMuUVvshvm/aj51IC8V1W2u51OsY3QapdMGlBommnkkLGhhWc4cIuIZI2TKKGDrAG
-	 4BMw4kkSPhwWW9MIZ4c7fpc0z5XQXtCIcN/UyMyFa1LM15NzQC8Hwn/V9W7xR7Fu54
-	 YTOpRoIY3zQA65nW54GIN/cP5Oy7mSuuvbYlTCeM=
+	b=HNBC7bPg2ufUfvrYSrQPN+p6pfyHMaAorithVp9uhPoGGC16I/b3AOZecIFfAWctq
+	 LjlB7F9owKygYe+c14/6er0Z7ZfCwRNHAEzTQ7txZVCPRjUzG8sgDrcBnk396xOGu/
+	 eWUcoyaq2e6icskZPZlkhLqcEOjLaDLNy9b96+Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Malat <oss@malat.biz>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 162/222] sctp: Do not wake readers in __sctp_write_space()
-Date: Mon, 23 Jun 2025 15:08:17 +0200
-Message-ID: <20250623130616.954128491@linuxfoundation.org>
+Subject: [PATCH 6.1 074/508] clk: qcom: gpucc-sm6350: Add *_wait_val values for GDSCs
+Date: Mon, 23 Jun 2025 15:01:59 +0200
+Message-ID: <20250623130647.058792530@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Malat <oss@malat.biz>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit af295892a7abbf05a3c2ba7abc4d81bb448623d6 ]
+[ Upstream commit d988b0b866c2aeb23aa74022b5bbd463165a7a33 ]
 
-Function __sctp_write_space() doesn't set poll key, which leads to
-ep_poll_callback() waking up all waiters, not only these waiting
-for the socket being writable. Set the key properly using
-wake_up_interruptible_poll(), which is preferred over the sync
-variant, as writers are not woken up before at least half of the
-queue is available. Also, TCP does the same.
+Compared to the msm-4.19 driver the mainline GDSC driver always sets the
+bits for en_rest, en_few & clk_dis, and if those values are not set
+per-GDSC in the respective driver then the default value from the GDSC
+driver is used. The downstream driver only conditionally sets
+clk_dis_wait_val if qcom,clk-dis-wait-val is given in devicetree.
 
-Signed-off-by: Petr Malat <oss@malat.biz>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250516081727.1361451-1-oss@malat.biz
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Correct this situation by explicitly setting those values. For all GDSCs
+the reset value of those bits are used, with the exception of
+gpu_cx_gdsc which has an explicit value (qcom,clk-dis-wait-val = <8>).
+
+Fixes: 013804a727a0 ("clk: qcom: Add GPU clock controller driver for SM6350")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
+Link: https://lore.kernel.org/r/20250425-sm6350-gdsc-val-v1-4-1f252d9c5e4e@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gpucc-sm6350.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index d7257eec66b1c..1ac05147dc304 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -8946,7 +8946,8 @@ static void __sctp_write_space(struct sctp_association *asoc)
- 		wq = rcu_dereference(sk->sk_wq);
- 		if (wq) {
- 			if (waitqueue_active(&wq->wait))
--				wake_up_interruptible(&wq->wait);
-+				wake_up_interruptible_poll(&wq->wait, EPOLLOUT |
-+						EPOLLWRNORM | EPOLLWRBAND);
- 
- 			/* Note that we try to include the Async I/O support
- 			 * here by modeling from the current TCP/UDP code.
+diff --git a/drivers/clk/qcom/gpucc-sm6350.c b/drivers/clk/qcom/gpucc-sm6350.c
+index 0bcbba2a29436..86c8ad5b55bac 100644
+--- a/drivers/clk/qcom/gpucc-sm6350.c
++++ b/drivers/clk/qcom/gpucc-sm6350.c
+@@ -412,6 +412,9 @@ static struct clk_branch gpu_cc_gx_vsense_clk = {
+ static struct gdsc gpu_cx_gdsc = {
+ 	.gdscr = 0x106c,
+ 	.gds_hw_ctrl = 0x1540,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0x8,
+ 	.pd = {
+ 		.name = "gpu_cx_gdsc",
+ 	},
+@@ -422,6 +425,9 @@ static struct gdsc gpu_cx_gdsc = {
+ static struct gdsc gpu_gx_gdsc = {
+ 	.gdscr = 0x100c,
+ 	.clamp_io_ctrl = 0x1508,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0x2,
+ 	.pd = {
+ 		.name = "gpu_gx_gdsc",
+ 		.power_on = gdsc_gx_do_nothing_enable,
 -- 
 2.39.5
 
