@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1A31AD3FA;
-	Mon, 23 Jun 2025 21:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87003223DEA;
+	Mon, 23 Jun 2025 21:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715349; cv=none; b=qQEFFjiMBny3+4lA/ql3/XBaWTdUcPtZgm1e3uaVsyjHNFtiivorHmQGr45dfVBsLPRLPduLG/OKWkIIgpDzljrzNS8WBJPvd877nNNE9boNiJ7rUh6+l7uwF/no0JPlAceExLoKxD5NQUS95A27xjFDuI4s+2jChcmx4ZM6w9g=
+	t=1750715351; cv=none; b=U2NM3/PuZBM1bF5ISdnTd2NsPdxZMOEWxsiBh8PN887rfwwBSIc/6FpcoiV4NjuN4+R/rl9VfJV16H36ezqoy4XmZ9PQKkGr3FY0LJR1yESfaGMQcLHhB9aZox/8sK9NDjyU8uvJHINdUPe587ZNEJoH9P5wmUe4HKINhsfeDPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715349; c=relaxed/simple;
-	bh=ns2+RKVBGXQeGj0Fu1oaupE40/yLYzWtfy4Jpkxzxzo=;
+	s=arc-20240116; t=1750715351; c=relaxed/simple;
+	bh=QvRe9hKACi8vSh8n8pqDJRFafkxsn0i0qg5xpdEEZ0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T6Xe/QJbH+UmbXFbhOEnKrETHjUL8RHPFU6iILefow3YMMH6JoSqEUrJw9GMg8K2VEQf+99Gb+I+hDT4RmfXkRwZpYHD1jVarQJofVsVHQIz8zCpM/gslG+HNl+OllzwBhH/w3w0WfUbXmmrybnImV564dMTly+3niVigTAwucM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YIv/pEB+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kzz+sxFsK6sJnIDaZ8ZaOUROyRZnWLD9LWGZZFGXBwkFa0xZMeeeg7u0/OMfQhnPWqTkHNX5CMH25IgJuL8GKnQd/YMYcCGCqlKgJiBvTtrW9zs7CG8w4mfW3r7Xohjb5D/2v/7dXkWinLBvtt+VJmFDi2ch1R5/3pW1mQjhyPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEMUOGwB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YIv/pEB+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45C5C4CEEA;
-	Mon, 23 Jun 2025 21:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEMUOGwB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A2DC4CEEA;
+	Mon, 23 Jun 2025 21:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715349;
-	bh=ns2+RKVBGXQeGj0Fu1oaupE40/yLYzWtfy4Jpkxzxzo=;
+	s=korg; t=1750715351;
+	bh=QvRe9hKACi8vSh8n8pqDJRFafkxsn0i0qg5xpdEEZ0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YIv/pEB+vvHMF7wXeVufMqheuGjTM2VUhcHsDUCbbzghTNgVgbJRHkirgXK76CyUV
-	 O3nRR0hm38wXXFSLN/bQRRMqY+BPmgyNoan7wshpmOibocsXbhZOHl1eOnDsj0tCIw
-	 tKV5iYCDHDzVS4YuAumRhYMpUQcAqY1OXz1KHqpU=
+	b=LEMUOGwBhBzL+P8vbtOTztnzsW9WRhLAor4BSzKLrq78fhFjZD8b4e9srT2/YcUjW
+	 PCJVCt2CuEQTTJFBjvl8681WHxG0dWQbcA/fFXAbKeULH64KussHfOoxeZYC2YW56s
+	 GsEqKP7k0AxkM65L8/gu9M0GChxVlyjmb8ntJUMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+3361c2d6f78a3e0892f9@syzkaller.appspotmail.com>,
-	Qasim Ijaz <qasdev00@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 247/411] net: ch9200: fix uninitialised access during mii_nway_restart
-Date: Mon, 23 Jun 2025 15:06:31 +0200
-Message-ID: <20250623130639.870070565@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 177/414] ACPI: Add missing prototype for non CONFIG_SUSPEND/CONFIG_X86 case
+Date: Mon, 23 Jun 2025 15:05:14 +0200
+Message-ID: <20250623130646.453586268@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +48,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qasim Ijaz <qasdev00@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 9ad0452c0277b816a435433cca601304cfac7c21 upstream.
+[ Upstream commit e1bdbbc98279164d910d2de82a745f090a8b249f ]
 
-In mii_nway_restart() the code attempts to call
-mii->mdio_read which is ch9200_mdio_read(). ch9200_mdio_read()
-utilises a local buffer called "buff", which is initialised
-with control_read(). However "buff" is conditionally
-initialised inside control_read():
+acpi_register_lps0_dev() and acpi_unregister_lps0_dev() may be used
+in drivers that don't require CONFIG_SUSPEND or compile on !X86.
 
-        if (err == size) {
-                memcpy(data, buf, size);
-        }
+Add prototypes for those cases.
 
-If the condition of "err == size" is not met, then
-"buff" remains uninitialised. Once this happens the
-uninitialised "buff" is accessed and returned during
-ch9200_mdio_read():
-
-        return (buff[0] | buff[1] << 8);
-
-The problem stems from the fact that ch9200_mdio_read()
-ignores the return value of control_read(), leading to
-uinit-access of "buff".
-
-To fix this we should check the return value of
-control_read() and return early on error.
-
-Reported-by: syzbot <syzbot+3361c2d6f78a3e0892f9@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=3361c2d6f78a3e0892f9
-Tested-by: syzbot <syzbot+3361c2d6f78a3e0892f9@syzkaller.appspotmail.com>
-Fixes: 4a476bd6d1d9 ("usbnet: New driver for QinHeng CH9200 devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
-Link: https://patch.msgid.link/20250526183607.66527-1-qasdev00@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202502191627.fRgoBwcZ-lkp@intel.com/
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20250407183656.1503446-1-superm1@kernel.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ch9200.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/linux/acpi.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/ch9200.c
-+++ b/drivers/net/usb/ch9200.c
-@@ -178,6 +178,7 @@ static int ch9200_mdio_read(struct net_d
+diff --git a/include/linux/acpi.h b/include/linux/acpi.h
+index 4d5ee84c468ba..f826bb59556af 100644
+--- a/include/linux/acpi.h
++++ b/include/linux/acpi.h
+@@ -1110,13 +1110,13 @@ void acpi_os_set_prepare_extended_sleep(int (*func)(u8 sleep_state,
+ 
+ acpi_status acpi_os_prepare_extended_sleep(u8 sleep_state,
+ 					   u32 val_a, u32 val_b);
+-#if defined(CONFIG_SUSPEND) && defined(CONFIG_X86)
+ struct acpi_s2idle_dev_ops {
+ 	struct list_head list_node;
+ 	void (*prepare)(void);
+ 	void (*check)(void);
+ 	void (*restore)(void);
+ };
++#if defined(CONFIG_SUSPEND) && defined(CONFIG_X86)
+ int acpi_register_lps0_dev(struct acpi_s2idle_dev_ops *arg);
+ void acpi_unregister_lps0_dev(struct acpi_s2idle_dev_ops *arg);
+ int acpi_get_lps0_constraint(struct acpi_device *adev);
+@@ -1125,6 +1125,13 @@ static inline int acpi_get_lps0_constraint(struct device *dev)
  {
- 	struct usbnet *dev = netdev_priv(netdev);
- 	unsigned char buff[2];
-+	int ret;
- 
- 	netdev_dbg(netdev, "%s phy_id:%02x loc:%02x\n",
- 		   __func__, phy_id, loc);
-@@ -185,8 +186,10 @@ static int ch9200_mdio_read(struct net_d
- 	if (phy_id != 0)
- 		return -ENODEV;
- 
--	control_read(dev, REQUEST_READ, 0, loc * 2, buff, 0x02,
--		     CONTROL_TIMEOUT_MS);
-+	ret = control_read(dev, REQUEST_READ, 0, loc * 2, buff, 0x02,
-+			   CONTROL_TIMEOUT_MS);
-+	if (ret < 0)
-+		return ret;
- 
- 	return (buff[0] | buff[1] << 8);
+ 	return ACPI_STATE_UNKNOWN;
  }
++static inline int acpi_register_lps0_dev(struct acpi_s2idle_dev_ops *arg)
++{
++	return -ENODEV;
++}
++static inline void acpi_unregister_lps0_dev(struct acpi_s2idle_dev_ops *arg)
++{
++}
+ #endif /* CONFIG_SUSPEND && CONFIG_X86 */
+ void arch_reserve_mem_area(acpi_physical_address addr, size_t size);
+ #else
+-- 
+2.39.5
+
 
 
