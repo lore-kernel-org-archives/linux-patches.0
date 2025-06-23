@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A920219E0;
-	Mon, 23 Jun 2025 13:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86AC253B52;
+	Mon, 23 Jun 2025 13:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684787; cv=none; b=pELBM4fc9VeTFWQ//wwBVZbr0ZbLzJzzJ3CwaTtMIAC8qTd/6An0vrc4i+0bbsXYbdqwFDQVANEdEVSlr0fdk2aMZTSjeGOjSqWRe4sKddnuYwf+bcBPJQU8Q4NAevKkgv8p1185DgrJ6BYJneOLu7Ui7XFobLhlycpfDDgmqLc=
+	t=1750684789; cv=none; b=Y3bpmqoleBIzjGiiljuFx3r6lZFyR9Y6smejAhfYPk3t8Tk+CiqDB9nnBOpRzyjFkiShAqLA8/T7MlCd8vIXjF38xkjSV0UVr/g8ZLKU66eaO8mQBI9YQIRGTU2+wAbCtL7k0PNEpyApzp0P/6kxe+akDKpE/eUZGt7KXwEfyxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684787; c=relaxed/simple;
-	bh=XOfP00PdTQYjFqeNsF1SwhhNjLKsiU4Fj7f4fbh4+k0=;
+	s=arc-20240116; t=1750684789; c=relaxed/simple;
+	bh=82yQVSshHw97MmAC6ToF7YR8mufkoknd92jlmZMznVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hOSaWesTuU+i3437qk15fH4LqlwwvDT+xKZYkLjhB2Y4cWttgKXcH2uNHjz2QL3W2dUsfzLdt9tGRM0hKP4o/7IvoGpvnGcB4TYHwpMIgSX2qhFizdwsWGi16pA4rC7UvJmj6MxPb5kiYr8eobbw6ND+t6UNFdRrQNvw58FqBXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcrCIeYB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uC9Cx5ed2ooSwk/EEPmnHcagj4+OL/REhbJPIt8SBEjoXmBkkDbCEgQgRpP6zMv4YwEyJxfPmszaHq8M69DHIrpTmHLvOlulxu0PsZqxH+N+9p9AKn0evtigYUOR+WZoL5sEKbF2n11clH4hsZJXecL+lqO1ZKMU2WMPkG8Oe8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkI2qK+2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcrCIeYB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36E6C4CEEA;
-	Mon, 23 Jun 2025 13:19:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkI2qK+2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6D0C4CEF0;
+	Mon, 23 Jun 2025 13:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684787;
-	bh=XOfP00PdTQYjFqeNsF1SwhhNjLKsiU4Fj7f4fbh4+k0=;
+	s=korg; t=1750684789;
+	bh=82yQVSshHw97MmAC6ToF7YR8mufkoknd92jlmZMznVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lcrCIeYBtypWrOV6eIVtwIh8TtiP0EcO5rrU+umnNIxzUjaCcy/YxNVkmq8UM1tD2
-	 ukqw+rg8WpEG2vG56xwwYShsLYz+BoF+l3WHbqdS7mQPzXHPnyWIK2BqOoKAoOmgqC
-	 We/mKUAIigXPKWi8HLOipOkL9HJXqFalkomIDRgo=
+	b=VkI2qK+2UPvVAkRVC2Q/iKolqaZSwCAjcMJMUnEa2w1RhXQXp+NmcJsyy3Y2fsBR7
+	 UakHHmseIm9BRkyk1MVcKb2ryuaFc/RAeJrsRv8CeUIuw4kXHyARx3VwXjZe3/A0+k
+	 2GKzgdk1OzUyprJn0LPB/K7t/sryxHl9BDBLu2kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 029/222] RDMA/hns: Include hnae3.h in hns_roce_hw_v2.h
-Date: Mon, 23 Jun 2025 15:06:04 +0200
-Message-ID: <20250623130612.772793773@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.15 173/592] cifs: reset connections for all channels when reconnect requested
+Date: Mon, 23 Jun 2025 15:02:11 +0200
+Message-ID: <20250623130704.393071093@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +46,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 2b11d33de23262cb20d1dcb24b586dbb8f54d463 ]
+commit 1f396b9bfe39aaf55ea74a7005806164b236653d upstream.
 
-hns_roce_hw_v2.h has a direct dependency on hnae3.h due to the
-inline function hns_roce_write64(), but it doesn't include this
-header currently. This leads to that files including
-hns_roce_hw_v2.h must also include hnae3.h to avoid compilation
-errors, even if they themselves don't really rely on hnae3.h.
-This doesn't make sense, hns_roce_hw_v2.h should include hnae3.h
-directly.
+cifs_reconnect can be called with a flag to mark the session as needing
+reconnect too. When this is done, we expect the connections of all
+channels to be reconnected too, which is not happening today.
 
-Fixes: d3743fa94ccd ("RDMA/hns: Fix the chip hanging caused by sending doorbell during reset")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250421132750.1363348-6-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Without doing this, we have seen bad things happen when primary and
+secondary channels are connected to different servers (in case of cloud
+services like Azure Files SMB).
+
+This change would force all connections to reconnect as well, not just
+the sessions and tcons.
+
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c    | 1 -
- drivers/infiniband/hw/hns/hns_roce_hw_v2.h    | 1 +
- drivers/infiniband/hw/hns/hns_roce_restrack.c | 1 -
- 3 files changed, 1 insertion(+), 2 deletions(-)
+ fs/smb/client/connect.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 28bbc4708fd48..f494a571c7a54 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -41,7 +41,6 @@
- #include <rdma/ib_umem.h>
- #include <rdma/uverbs_ioctl.h>
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -377,6 +377,13 @@ static int __cifs_reconnect(struct TCP_S
+ 	if (!cifs_tcp_ses_needs_reconnect(server, 1))
+ 		return 0;
  
--#include "hnae3.h"
- #include "hns_roce_common.h"
- #include "hns_roce_device.h"
- #include "hns_roce_cmd.h"
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-index b9ab3ca3079c7..45eac5db33145 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-@@ -34,6 +34,7 @@
- #define _HNS_ROCE_HW_V2_H
++	/*
++	 * if smb session has been marked for reconnect, also reconnect all
++	 * connections. This way, the other connections do not end up bad.
++	 */
++	if (mark_smb_session)
++		cifs_signal_cifsd_for_reconnect(server, mark_smb_session);
++
+ 	cifs_mark_tcp_ses_conns_for_reconnect(server, mark_smb_session);
  
- #include <linux/bitops.h>
-+#include "hnae3.h"
- 
- #define HNS_ROCE_VF_QPC_BT_NUM			256
- #define HNS_ROCE_VF_SCCC_BT_NUM			64
-diff --git a/drivers/infiniband/hw/hns/hns_roce_restrack.c b/drivers/infiniband/hw/hns/hns_roce_restrack.c
-index 39c08217e861a..2ac0359a647b1 100644
---- a/drivers/infiniband/hw/hns/hns_roce_restrack.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_restrack.c
-@@ -4,7 +4,6 @@
- #include <rdma/rdma_cm.h>
- #include <rdma/restrack.h>
- #include <uapi/rdma/rdma_netlink.h>
--#include "hnae3.h"
- #include "hns_roce_common.h"
- #include "hns_roce_device.h"
- #include "hns_roce_hw_v2.h"
--- 
-2.39.5
-
+ 	cifs_abort_connection(server);
 
 
