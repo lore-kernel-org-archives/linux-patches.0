@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF9B225761;
-	Mon, 23 Jun 2025 22:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394691E87B;
+	Mon, 23 Jun 2025 22:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716399; cv=none; b=ivmHKCGkvH5HsvswnV6M1pEi3ZynuyuJ1FZp6FskVL4TvJSGkqI/EYMnBTp1tm49p5tp44i1hb5TfT+C5S6gqrIaEj35ddkjXbIiD4JxZo68bel8EWni8k4xUdYm5wbaeF+pPCE+X2vabYHvhs9oVXxhprMWHgieAiMESZyXdJA=
+	t=1750716402; cv=none; b=C9L15rbZ3rHpnBOOfwO7njE36KiGATYSSUCBA763QViYB2Utd7GtSPjU9ab45jmSWWBdrQ7G7CKMK+LtnXruuFNHYhgjubq1S+eYqFJt1V2iqXhB7A9IZUBIMUjd8DHoN3mmqmYqFM+/2ZUtVql670XqCNP4a7QnTQdQNbF7PY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716399; c=relaxed/simple;
-	bh=OtSEsnQXK+WXjB2y2gaBxoilzBYvX10eCMXZbelGsh0=;
+	s=arc-20240116; t=1750716402; c=relaxed/simple;
+	bh=9Vb9xjfiFPyFveMo7/Kv9ODAqA2fYhMwjWg3T/+HPA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0IRnQfINADhaZOdEZ1UcrWU0b/ZwWZHYCHswhvgGQebrd+VQDOWxyn5JtIntBTk7t3PMPAZO0cT8OwZGROPUubp82GeQ6G94XlP+mZRXc+43nHMcinK3Oy2usz/J5R/oh/UcXK4MXRKfBAZMILlnJ8sQlUvCFB4aOhKty2bObM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2c/kuOF9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lckSBnxEkMuu+UzU+MZ6lFGwYOQxjP6CRZwv7z+nMY3GdkoVB3+8OSAGM8op7vIYEKbLmeH/wQCvHg6XLqFr007skLZDROQUIKeAxkE4+Ow9ADq/+8PonS+47Eo73HW8nXEsx9UFcboL4LCJy1dut2mPlete1IlinVqZGhApNzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFHeqFZs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2c/kuOF9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35930C4CEED;
-	Mon, 23 Jun 2025 22:06:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFHeqFZs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C565AC4CEEA;
+	Mon, 23 Jun 2025 22:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716399;
-	bh=OtSEsnQXK+WXjB2y2gaBxoilzBYvX10eCMXZbelGsh0=;
+	s=korg; t=1750716402;
+	bh=9Vb9xjfiFPyFveMo7/Kv9ODAqA2fYhMwjWg3T/+HPA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2c/kuOF9QkYh1ezht4BEYMVGkXIxyqRwOw1zcRhL+qKNP6N7K8uc2XFuZCqUyxq81
-	 z9XFdMcFYr9Dmksj+4iHXNaLyPaZfB9bHVxweDfG5gaBQKpM/faYBjuwYVbVyQDWhy
-	 WOg9f7yujfsuLe8O6nuX5QspLdEdC0biyXUCLxDY=
+	b=jFHeqFZs5mL3/CS1W/VZNKju5OCHNee47NDrT+ZMObFTPESsvhoM7xkA2HfxZNVKZ
+	 /UtzhMXwAgvajG0Yp5QL9pIjoQQMvX5THRRqQR0v4bhD/NzvPtMxPGtrXJrmBbddxs
+	 4CnVRZDciv4hkiiyNB8EXrWbGUiZxesY+dm97dj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Monnet <qmo@kernel.org>,
-	Takshak Chahande <ctakshak@meta.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Haixia Qu <hxqu@hillstonenet.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 237/414] bpftool: Fix cgroup command to only show cgroup bpf programs
-Date: Mon, 23 Jun 2025 15:06:14 +0200
-Message-ID: <20250623130647.964200982@linuxfoundation.org>
+Subject: [PATCH 6.6 261/290] tipc: fix null-ptr-deref when acquiring remote ip of ethernet bearer
+Date: Mon, 23 Jun 2025 15:08:42 +0200
+Message-ID: <20250623130634.762651370@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,114 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Haixia Qu <hxqu@hillstonenet.com>
 
-[ Upstream commit b69d4413aa1961930fbf9ffad8376d577378daf9 ]
+[ Upstream commit f82727adcf2992822e12198792af450a76ebd5ef ]
 
-The netkit program is not a cgroup bpf program and should not be shown
-in the output of the "bpftool cgroup show" command.
+The reproduction steps:
+1. create a tun interface
+2. enable l2 bearer
+3. TIPC_NL_UDP_GET_REMOTEIP with media name set to tun
 
-However, if the netkit device happens to have ifindex 3,
-the "bpftool cgroup show" command will output the netkit
-bpf program as well:
+tipc: Started in network mode
+tipc: Node identity 8af312d38a21, cluster identity 4711
+tipc: Enabled bearer <eth:syz_tun>, priority 1
+Oops: general protection fault
+KASAN: null-ptr-deref in range
+CPU: 1 UID: 1000 PID: 559 Comm: poc Not tainted 6.16.0-rc1+ #117 PREEMPT
+Hardware name: QEMU Ubuntu 24.04 PC
+RIP: 0010:tipc_udp_nl_dump_remoteip+0x4a4/0x8f0
 
-> ip -d link show dev nk1
-3: nk1@if2: ...
-    link/ether ...
-    netkit mode ...
+the ub was in fact a struct dev.
 
-> bpftool net show
-tc:
-nk1(3) netkit/peer tw_ns_nk2phy prog_id 469447
+when bid != 0 && skip_cnt != 0, bearer_list[bid] may be NULL or
+other media when other thread changes it.
 
-> bpftool cgroup show /sys/fs/cgroup/...
-ID       AttachType      AttachFlags     Name
-...      ...                             ...
-469447   netkit_peer                     tw_ns_nk2phy
+fix this by checking media_id.
 
-The reason is that the target_fd (which is the cgroup_fd here) and
-the target_ifindex are in a union in the uapi/linux/bpf.h. The bpftool
-iterates all values in "enum bpf_attach_type" which includes
-non cgroup attach types like netkit. The cgroup_fd is usually 3 here,
-so the bug is triggered when the netkit ifindex just happens
-to be 3 as well.
-
-The bpftool's cgroup.c already has a list of cgroup-only attach type
-defined in "cgroup_attach_types[]". This patch fixes it by iterating
-over "cgroup_attach_types[]" instead of "__MAX_BPF_ATTACH_TYPE".
-
-Cc: Quentin Monnet <qmo@kernel.org>
-Reported-by: Takshak Chahande <ctakshak@meta.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/r/20250507203232.1420762-1-martin.lau@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 832629ca5c313 ("tipc: add UDP remoteip dump to netlink API")
+Signed-off-by: Haixia Qu <hxqu@hillstonenet.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250617055624.2680-1-hxqu@hillstonenet.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/cgroup.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/tipc/udp_media.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/bpf/bpftool/cgroup.c b/tools/bpf/bpftool/cgroup.c
-index afab728468bf6..4189c9d74fb06 100644
---- a/tools/bpf/bpftool/cgroup.c
-+++ b/tools/bpf/bpftool/cgroup.c
-@@ -318,11 +318,11 @@ static int show_bpf_progs(int cgroup_fd, enum bpf_attach_type type,
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index b16ca400ff559..e993bd6ed7c26 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -489,7 +489,7 @@ int tipc_udp_nl_dump_remoteip(struct sk_buff *skb, struct netlink_callback *cb)
  
- static int do_show(int argc, char **argv)
- {
--	enum bpf_attach_type type;
- 	int has_attached_progs;
- 	const char *path;
- 	int cgroup_fd;
- 	int ret = -1;
-+	unsigned int i;
+ 		rtnl_lock();
+ 		b = tipc_bearer_find(net, bname);
+-		if (!b) {
++		if (!b || b->bcast_addr.media_id != TIPC_MEDIA_TYPE_UDP) {
+ 			rtnl_unlock();
+ 			return -EINVAL;
+ 		}
+@@ -500,7 +500,7 @@ int tipc_udp_nl_dump_remoteip(struct sk_buff *skb, struct netlink_callback *cb)
  
- 	query_flags = 0;
- 
-@@ -370,14 +370,14 @@ static int do_show(int argc, char **argv)
- 		       "AttachFlags", "Name");
- 
- 	btf_vmlinux = libbpf_find_kernel_btf();
--	for (type = 0; type < __MAX_BPF_ATTACH_TYPE; type++) {
-+	for (i = 0; i < ARRAY_SIZE(cgroup_attach_types); i++) {
- 		/*
- 		 * Not all attach types may be supported, so it's expected,
- 		 * that some requests will fail.
- 		 * If we were able to get the show for at least one
- 		 * attach type, let's return 0.
- 		 */
--		if (show_bpf_progs(cgroup_fd, type, 0) == 0)
-+		if (show_bpf_progs(cgroup_fd, cgroup_attach_types[i], 0) == 0)
- 			ret = 0;
- 	}
- 
-@@ -400,9 +400,9 @@ static int do_show(int argc, char **argv)
- static int do_show_tree_fn(const char *fpath, const struct stat *sb,
- 			   int typeflag, struct FTW *ftw)
- {
--	enum bpf_attach_type type;
- 	int has_attached_progs;
- 	int cgroup_fd;
-+	unsigned int i;
- 
- 	if (typeflag != FTW_D)
- 		return 0;
-@@ -434,8 +434,8 @@ static int do_show_tree_fn(const char *fpath, const struct stat *sb,
- 	}
- 
- 	btf_vmlinux = libbpf_find_kernel_btf();
--	for (type = 0; type < __MAX_BPF_ATTACH_TYPE; type++)
--		show_bpf_progs(cgroup_fd, type, ftw->level);
-+	for (i = 0; i < ARRAY_SIZE(cgroup_attach_types); i++)
-+		show_bpf_progs(cgroup_fd, cgroup_attach_types[i], ftw->level);
- 
- 	if (errno == EINVAL)
- 		/* Last attach type does not support query.
+ 		rtnl_lock();
+ 		b = rtnl_dereference(tn->bearer_list[bid]);
+-		if (!b) {
++		if (!b || b->bcast_addr.media_id != TIPC_MEDIA_TYPE_UDP) {
+ 			rtnl_unlock();
+ 			return -EINVAL;
+ 		}
 -- 
 2.39.5
 
