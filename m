@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2652015ADB4;
-	Mon, 23 Jun 2025 22:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813D315ADB4;
+	Mon, 23 Jun 2025 22:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717397; cv=none; b=C1SQE2P7rykCXFyQOGzrqNcbEKIGtVuETko0aovhu5N6Aq2Un6R6P+KEyCmgNnH5SBXEuIjd2UQdw8fK/7QJWfdQMdc8nAAolz2e1FeYNWw2DPOE6lBZUPthKNZ7def7Q5WWcbFoTmDZMYB9rPCFGLuAHI9CqLKHB2Mw0KTkYyg=
+	t=1750717399; cv=none; b=JEE2Ft912BcpTZpTGPM3smbdQ8CvIYxBmrrKmCrFTH/o7gmE7hTnLQUaxiTn+fTKtju0sscRqTNToau+7sNYi9sjsWvTPzMZCZn+Mv/+a8H7PsihDKSh3Fl++AUWJ+qWVytjGPL09XclqQ2xK9eCPjMWt+TNTbltydFiPl7bi3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717397; c=relaxed/simple;
-	bh=CSK0nW4g2jm8evcgl3Z9LY5w8IgutJLnyIfDGb3/JTg=;
+	s=arc-20240116; t=1750717399; c=relaxed/simple;
+	bh=/F9okT/xZB+xz8/dtg6i0ndw6PYyXNjbMACf/einwxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YIDTY8qXu6zLW3carUo0BAD4qvzOurxqPHZ/zhLFLX1w1KiCKwm5eC1Nowmcd6IGUT25jahCDkPWMZAKNP3R4tGTNVJyaz8+29BbYXfN4T85IMOV9zFgW6eq8EfQLCmukACWfiVDqug1HgnUeetENdHMjWunxJMaDBWFqY2IlzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGLstTIT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oBGwBZAqDueXvgQDCW5uCFtqdIcvkiyxBOanQzZFlafwBxIUJ6N1LfF46+dVjEO4Y9qMaOBNxRrDSeQMeZ58amZgf+W9j5b8Am4SrByjtAUkuJmEJsay89upga7kZzGqbEOjegAhnrnk7BkCIPsXUCShDnAm5KAwJarR9NvnKiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQ8zCxzT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGLstTIT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC58C4CEEA;
-	Mon, 23 Jun 2025 22:23:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQ8zCxzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1778AC4CEEA;
+	Mon, 23 Jun 2025 22:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717397;
-	bh=CSK0nW4g2jm8evcgl3Z9LY5w8IgutJLnyIfDGb3/JTg=;
+	s=korg; t=1750717399;
+	bh=/F9okT/xZB+xz8/dtg6i0ndw6PYyXNjbMACf/einwxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZGLstTIT4KJiBLPbfV523yoH1xxuu8BsdsQ2XbOoyCviiGrweGNwvexS+t/9IUAx1
-	 Gh8x31A+wS+F4WQD3GddJ59LfwY0/zN0QKX0K6ACRpSOnbwlgHwcthYVA9dLWxf2vR
-	 uyFb03xlVwKgn5PD/983mxZTBKUeBLR0EochZ6lU=
+	b=aQ8zCxzTgA9CFvO0MIB1dsftN8MLAN11zElcwjQAt6I76Zd2NgPet4XgIAvDBgBD5
+	 2GGCiZ4GNMrwDKvAivS+VwOjJX9KHHeov5QUp0SxwPT3bWcaDzovrmAiVpfEt241SP
+	 bmrMXtZEXrZN1urH6Zovzi8r0xH4okzGD2iTGFtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 379/414] wifi: carl9170: do not ping device which has failed to load firmware
-Date: Mon, 23 Jun 2025 15:08:36 +0200
-Message-ID: <20250623130651.426641232@linuxfoundation.org>
+Subject: [PATCH 6.1 419/508] wifi: mac80211_hwsim: Prevent tsf from setting if beacon is disabled
+Date: Mon, 23 Jun 2025 15:07:44 +0200
+Message-ID: <20250623130655.508871705@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 15d25307692312cec4b57052da73387f91a2e870 ]
+[ Upstream commit c575f5374be7a5c4be4acb9fe6be3a4669d94674 ]
 
-Syzkaller reports [1, 2] crashes caused by an attempts to ping
-the device which has failed to load firmware. Since such a device
-doesn't pass 'ieee80211_register_hw()', an internal workqueue
-managed by 'ieee80211_queue_work()' is not yet created and an
-attempt to queue work on it causes null-ptr-deref.
+Setting tsf is meaningless if beacon is disabled, so check that beacon
+is enabled before setting tsf.
 
-[1] https://syzkaller.appspot.com/bug?extid=9a4aec827829942045ff
-[2] https://syzkaller.appspot.com/bug?extid=0d8afba53e8fb2633217
-
-Fixes: e4a668c59080 ("carl9170: fix spurious restart due to high latency")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Christian Lamparter <chunkeey@gmail.com>
-Link: https://patch.msgid.link/20250616181205.38883-1-dmantipov@yandex.ru
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reported-by: syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=064815c6cd721082a52a
+Tested-by: syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://patch.msgid.link/tencent_3609AC2EFAAED68CA5A7E3C6D212D1C67806@qq.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/carl9170/usb.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mac80211_hwsim.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/carl9170/usb.c b/drivers/net/wireless/ath/carl9170/usb.c
-index a3e03580cd9ff..564ca6a619856 100644
---- a/drivers/net/wireless/ath/carl9170/usb.c
-+++ b/drivers/net/wireless/ath/carl9170/usb.c
-@@ -438,14 +438,21 @@ static void carl9170_usb_rx_complete(struct urb *urb)
+diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
+index abcd165a62cfe..80a2a668cfb9e 100644
+--- a/drivers/net/wireless/mac80211_hwsim.c
++++ b/drivers/net/wireless/mac80211_hwsim.c
+@@ -1091,6 +1091,11 @@ static void mac80211_hwsim_set_tsf(struct ieee80211_hw *hw,
+ 	/* MLD not supported here */
+ 	u32 bcn_int = data->link_data[0].beacon_int;
+ 	u64 delta = abs(tsf - now);
++	struct ieee80211_bss_conf *conf;
++
++	conf = link_conf_dereference_protected(vif, data->link_data[0].link_id);
++	if (conf && !conf->enable_beacon)
++		return;
  
- 		if (atomic_read(&ar->rx_anch_urbs) == 0) {
- 			/*
--			 * The system is too slow to cope with
--			 * the enormous workload. We have simply
--			 * run out of active rx urbs and this
--			 * unfortunately leads to an unpredictable
--			 * device.
-+			 * At this point, either the system is too slow to
-+			 * cope with the enormous workload (so we have simply
-+			 * run out of active rx urbs and this unfortunately
-+			 * leads to an unpredictable device), or the device
-+			 * is not fully functional after an unsuccessful
-+			 * firmware loading attempts (so it doesn't pass
-+			 * ieee80211_register_hw() and there is no internal
-+			 * workqueue at all).
- 			 */
- 
--			ieee80211_queue_work(ar->hw, &ar->ping_work);
-+			if (ar->registered)
-+				ieee80211_queue_work(ar->hw, &ar->ping_work);
-+			else
-+				pr_warn_once("device %s is not registered\n",
-+					     dev_name(&ar->udev->dev));
- 		}
- 	} else {
- 		/*
+ 	/* adjust after beaconing with new timestamp at old TBTT */
+ 	if (tsf > now) {
 -- 
 2.39.5
 
