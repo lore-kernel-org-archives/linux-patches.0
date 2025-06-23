@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9254C6E;
-	Mon, 23 Jun 2025 13:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB71E16419;
+	Mon, 23 Jun 2025 13:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686112; cv=none; b=BufpuGfHvRIH4fgOgOVdKdSzZicnlIO+Uo8Zmiym10NDP/rOl8R1vC6CgJplEN7clu63atMTtzfW9OpdcytHOHDrFWRdUeKV7vNUMcHKaB3xZvRZZIsdSkXzr4bz1WJ/LLZh/RD993lghQWHfkGfPfe4jl8wdtCrF+U0OKzZfLU=
+	t=1750686114; cv=none; b=IWDtR9dyDOnm76+N94tQ0IK9y5lnAxO6fK4h/zueBrwT7BRqzEnsUrRauBDGvl09IT3GhIhyEDl29fTEjFyGlSq4uxdEeATyewUFaNBuRb7IW+Dr8f5EFI8y6/V6OJd7UHDOf0lGCmDKA7zkksXpWzvQ0q8qoW6v9wbItjR5Z8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686112; c=relaxed/simple;
-	bh=+JktwlX+WWPV+S/ySg6HJ6cOljpJKFHMFdZ0nW00siE=;
+	s=arc-20240116; t=1750686114; c=relaxed/simple;
+	bh=Tz8ElIo7HmIZkMv+l+81S39tfSKvLZicDjWpG1Ev+wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PbBbT8Cz+aTbEBBey/G9aBfZbCe2SjRvHHUFu+dABIOU/fT0iyEkfp7UQU67X3e5m3PORV7o3P/yG93V1Pfj39sBWi9ZqpKnosWZLIoPgQd4HOLG365EobvyHRRYh3BkVxc0JVJpRF84F32UyzThCyBo8Hysz4fEb7vl8C5cGfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNxy5HPB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cfkbpSQLwZ/By9nNVjVq1wNZ5MsAYX9CX5d7vgm88EXgItOS4ewOxtF1yvCnnp6InM3bswd5fufdrzsCQUyUTrMlPzWJVxyyu6x+7OmmwWf/IznnVib4MVWOgcfszw7+YqET5kqVwWwiACYoT2jwNleIHyUNJ2Zm7wwcGrRD1hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNL8Vz+O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNxy5HPB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DD3C4CEEA;
-	Mon, 23 Jun 2025 13:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNL8Vz+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CDBC4CEEA;
+	Mon, 23 Jun 2025 13:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686112;
-	bh=+JktwlX+WWPV+S/ySg6HJ6cOljpJKFHMFdZ0nW00siE=;
+	s=korg; t=1750686114;
+	bh=Tz8ElIo7HmIZkMv+l+81S39tfSKvLZicDjWpG1Ev+wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dNxy5HPBmFqnRsIkUQDPM1T6nOV8QwYSUqIb829709hofIaO5pGhnYl51vDiZ1aPq
-	 u/RIOpt60ZPMk1WDiUoSs+KI9Szd1rsv1N0y4mCZEy6Q9PIddJ5HbppF9cLGffh/X3
-	 DVUPTkOf9/4SL6DEMGCzYQ9dUsN73gpurLFmJ6Mw=
+	b=gNL8Vz+OSfQ4UL3S1+eg+pNkbDz64ja5T/kDdJjeCYU1Api6yiTYla2M4LPk0DCIC
+	 t7RKSzrfJRXi/dC9egzGR9hGzZqZjVR5HfwW9Wvbd4swl+YPObcLSfp0u4btNiSaIH
+	 r0NR2LFXZaX0btjwV1uD7pjkcjHTlPEc5Aj9Z82Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Jerry Lv <Jerry.Lv@axis.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 048/508] drm: rcar-du: Fix memory leak in rcar_du_vsps_init()
-Date: Mon, 23 Jun 2025 15:01:33 +0200
-Message-ID: <20250623130646.429646020@linuxfoundation.org>
+Subject: [PATCH 5.4 138/222] power: supply: bq27xxx: Retrieve again when busy
+Date: Mon, 23 Jun 2025 15:07:53 +0200
+Message-ID: <20250623130616.241958661@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,64 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Jerry Lv <Jerry.Lv@axis.com>
 
-[ Upstream commit 91e3bf09a90bb4340c0c3c51396e7531555efda4 ]
+[ Upstream commit f16d9fb6cf03fdbdefa41a8b32ba1e57afb7ae3d ]
 
-The rcar_du_vsps_init() doesn't free the np allocated by
-of_parse_phandle_with_fixed_args() for the non-error case.
+Multiple applications may access the battery gauge at the same time, so
+the gauge may be busy and EBUSY will be returned. The driver will set a
+flag to record the EBUSY state, and this flag will be kept until the next
+periodic update. When this flag is set, bq27xxx_battery_get_property()
+will just return ENODEV until the flag is updated.
 
-Fix memory leak for the non-error case.
+Even if the gauge was busy during the last accessing attempt, returning
+ENODEV is not ideal, and can cause confusion in the applications layer.
 
-While at it, replace the label 'error'->'done' as it applies to non-error
-case as well and update the error check condition for rcar_du_vsp_init()
-to avoid breakage in future, if it returns positive value.
+Instead, retry accessing the I2C to update the flag is as expected, for
+the gauge typically recovers from busy state within a few milliseconds.
+If still failed to access the gauge, the real error code would be returned
+instead of ENODEV (as suggested by Pali Rohár).
 
-Fixes: 3e81374e2014 ("drm: rcar-du: Support multiple sources from the same VSP")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20231116122424.80136-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+Reviewed-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Jerry Lv <Jerry.Lv@axis.com>
+Link: https://lore.kernel.org/r/20250415-foo-fix-v2-1-5b45a395e4cc@axis.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rcar-du/rcar_du_kms.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c     |  2 +-
+ drivers/power/supply/bq27xxx_battery_i2c.c | 13 ++++++++++++-
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/rcar-du/rcar_du_kms.c b/drivers/gpu/drm/rcar-du/rcar_du_kms.c
-index 8c2719efda2a2..b64f62ad8dbd7 100644
---- a/drivers/gpu/drm/rcar-du/rcar_du_kms.c
-+++ b/drivers/gpu/drm/rcar-du/rcar_du_kms.c
-@@ -673,7 +673,7 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
- 		ret = of_parse_phandle_with_fixed_args(np, vsps_prop_name,
- 						       cells, i, &args);
- 		if (ret < 0)
--			goto error;
-+			goto done;
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index e6c4dfdc58c47..1cfec675f82f3 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1780,7 +1780,7 @@ static int bq27xxx_battery_get_property(struct power_supply *psy,
+ 	mutex_unlock(&di->lock);
  
- 		/*
- 		 * Add the VSP to the list or update the corresponding existing
-@@ -711,13 +711,11 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
- 		vsp->dev = rcdu;
+ 	if (psp != POWER_SUPPLY_PROP_PRESENT && di->cache.flags < 0)
+-		return -ENODEV;
++		return di->cache.flags;
  
- 		ret = rcar_du_vsp_init(vsp, vsps[i].np, vsps[i].crtcs_mask);
--		if (ret < 0)
--			goto error;
-+		if (ret)
-+			goto done;
- 	}
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_STATUS:
+diff --git a/drivers/power/supply/bq27xxx_battery_i2c.c b/drivers/power/supply/bq27xxx_battery_i2c.c
+index 08c7e2b4155ad..bf235d0a96033 100644
+--- a/drivers/power/supply/bq27xxx_battery_i2c.c
++++ b/drivers/power/supply/bq27xxx_battery_i2c.c
+@@ -14,6 +14,7 @@
+  * GNU General Public License for more details.
+  */
  
--	return 0;
--
--error:
-+done:
- 	for (i = 0; i < ARRAY_SIZE(vsps); ++i)
- 		of_node_put(vsps[i].np);
++#include <linux/delay.h>
+ #include <linux/i2c.h>
+ #include <linux/interrupt.h>
+ #include <linux/module.h>
+@@ -40,6 +41,7 @@ static int bq27xxx_battery_i2c_read(struct bq27xxx_device_info *di, u8 reg,
+ 	struct i2c_msg msg[2];
+ 	u8 data[2];
+ 	int ret;
++	int retry = 0;
+ 
+ 	if (!client->adapter)
+ 		return -ENODEV;
+@@ -56,7 +58,16 @@ static int bq27xxx_battery_i2c_read(struct bq27xxx_device_info *di, u8 reg,
+ 	else
+ 		msg[1].len = 2;
+ 
+-	ret = i2c_transfer(client->adapter, msg, ARRAY_SIZE(msg));
++	do {
++		ret = i2c_transfer(client->adapter, msg, ARRAY_SIZE(msg));
++		if (ret == -EBUSY && ++retry < 3) {
++			/* sleep 10 milliseconds when busy */
++			usleep_range(10000, 11000);
++			continue;
++		}
++		break;
++	} while (1);
++
+ 	if (ret < 0)
+ 		return ret;
  
 -- 
 2.39.5
