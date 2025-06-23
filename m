@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F10D1DDC04;
-	Mon, 23 Jun 2025 21:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD3D2AEE4;
+	Mon, 23 Jun 2025 21:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715059; cv=none; b=s+1JwOBkuYwKs7uKWfMGDygyv+Lt10w/p8sJ7Xs2NUNUE7YCq1hryJtaLVfQ2P0hL3tzmElGlu87g9NsA4hj6oUZmtPQNONFkAGYo6TyJFwfM/ypio+BrgwBZo44OD0bx68b/ZTvoncSfYnbmu2BpzWhtVNRIzY63OhPKMRh4Lc=
+	t=1750715060; cv=none; b=mElPiPxJgJsR70bFEQce/nI6ZJqFa+G1bs82FgsmLuTRDad0eNp3ptlyRxXsLypKfuaYWSJMLDaUiQm1/74eMcTvXJsNWCy4yEIrJFBVjKqgI0dhwf/bVolaErqjw2VQ90sL6LbKcau/Jw3DtJncI4Os/RBnhZ8mTC8uZ+rNRiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715059; c=relaxed/simple;
-	bh=Gs9Vfmzvce1MQQS1poJq+DMqPOHTrir2rzMLcHLQt3w=;
+	s=arc-20240116; t=1750715060; c=relaxed/simple;
+	bh=tGquDvr+w0QixDsgWD7pv1cDNyiauElJi5aG5Zf/UG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vky5OQM+V/OR5/mhjXKBwfNY7c/2xkp+KgMXSg0M8PimMCgnWRJF7qj+JzpJf2Xx3HWtf98ci2Lx+4tnJIbSoUxH6xB3k2Gt13JGg1WQzRqeIadhB3ABBtNDPENxQcYbha5bHgVaUoMe19pEjGDExq7Y01Ur6GnpY7efBHzr/U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fB03Un5k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lvhHSVXIDjWzV6bOetTsTo4cd5oqNz6IS74/4XMcNB3Tzc4vHChey9enpWtG2UrPT8SvzZGbln2vhyegeAIxFxpIy5eMjkOfdR7wmWO7pzWcp4fKZ5FIfl9zS6NvNSGYlfZZkcuKRfztlGirUe4ByqJKzXjm9Kf26DL1gq8rpLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/aU1rsH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fB03Un5k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3535C4CEED;
-	Mon, 23 Jun 2025 21:44:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/aU1rsH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3905AC4CEF2;
+	Mon, 23 Jun 2025 21:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715058;
-	bh=Gs9Vfmzvce1MQQS1poJq+DMqPOHTrir2rzMLcHLQt3w=;
+	s=korg; t=1750715060;
+	bh=tGquDvr+w0QixDsgWD7pv1cDNyiauElJi5aG5Zf/UG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fB03Un5kEQ6gT7rBVFuBzLvHX/o2EfX17yLXdIdYkVeq2Qm3XAcPkBMTI80f8ydeL
-	 OXbECkpCusxasaP/jiVA2uHB8t+oONbQtEIEnAdKYhL8jEFep+zqbWfYdetalRjKZw
-	 sJ1Bl1HbgxH3fXyif3W43AKbUklMJxfJijZZznPY=
+	b=S/aU1rsHSndYTJteHcQT1zUyDm9m514+52yh5iKWe4GZkVQGrRiEwd3qnNZMgTm0R
+	 RfJ+fqwkpgnRT1E7z4qW6CyVSe4YDG5DzU/5wsK25XeGBUduHBHr14YRYdh9RdyRKW
+	 v42v0u5qqWczvjhw9BKnseZWGTN7e/3QPz5wn7sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 177/290] net: ethernet: ti: am65-cpsw: handle -EPROBE_DEFER
-Date: Mon, 23 Jun 2025 15:07:18 +0200
-Message-ID: <20250623130632.204197430@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 6.12 153/414] PCI: Fix lock symmetry in pci_slot_unlock()
+Date: Mon, 23 Jun 2025 15:04:50 +0200
+Message-ID: <20250623130645.868891125@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,87 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Walle <mwalle@kernel.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 09737cb80b8686ffca4ed1805fee745d5c85604d ]
+commit f3efb9569b4a21354ef2caf7ab0608a3e14cc6e4 upstream.
 
-of_get_mac_address() might fetch the MAC address from NVMEM and that
-driver might not have been loaded. In that case, -EPROBE_DEFER is
-returned. Right now, this will trigger an immediate fallback to
-am65_cpsw_am654_get_efuse_macid() possibly resulting in a random MAC
-address although the MAC address is stored in the referenced NVMEM.
+The commit a4e772898f8b ("PCI: Add missing bridge lock to pci_bus_lock()")
+made the lock function to call depend on dev->subordinate but left
+pci_slot_unlock() unmodified creating locking asymmetry compared with
+pci_slot_lock().
 
-Fix it by handling the -EPROBE_DEFER return code correctly. This also
-means that the creation of the MDIO device has to be moved to a later
-stage as -EPROBE_DEFER must not be returned after child devices are
-created.
+Because of the asymmetric lock handling, the same bridge device is unlocked
+twice. First pci_bus_unlock() unlocks bus->self and then pci_slot_unlock()
+will unconditionally unlock the same bridge device.
 
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250414084336.4017237-3-mwalle@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Move pci_dev_unlock() inside an else branch to match the logic in
+pci_slot_lock().
+
+Fixes: a4e772898f8b ("PCI: Add missing bridge lock to pci_bus_lock()")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250505115412.37628-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/pci/pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index c379a958380ce..28cc23736a69b 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -2089,7 +2089,9 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 			goto of_node_put;
- 
- 		ret = of_get_mac_address(port_np, port->slave.mac_addr);
--		if (ret) {
-+		if (ret == -EPROBE_DEFER) {
-+			goto of_node_put;
-+		} else if (ret) {
- 			am65_cpsw_am654_get_efuse_macid(port_np,
- 							port->port_id,
- 							port->slave.mac_addr);
-@@ -2949,6 +2951,16 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
- 		return ret;
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5643,7 +5643,8 @@ static void pci_slot_unlock(struct pci_s
+ 			continue;
+ 		if (dev->subordinate)
+ 			pci_bus_unlock(dev->subordinate);
+-		pci_dev_unlock(dev);
++		else
++			pci_dev_unlock(dev);
  	}
+ }
  
-+	am65_cpsw_nuss_get_ver(common);
-+
-+	ret = am65_cpsw_nuss_init_host_p(common);
-+	if (ret)
-+		goto err_pm_clear;
-+
-+	ret = am65_cpsw_nuss_init_slave_ports(common);
-+	if (ret)
-+		goto err_pm_clear;
-+
- 	node = of_get_child_by_name(dev->of_node, "mdio");
- 	if (!node) {
- 		dev_warn(dev, "MDIO node not found\n");
-@@ -2965,16 +2977,6 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
- 	}
- 	of_node_put(node);
- 
--	am65_cpsw_nuss_get_ver(common);
--
--	ret = am65_cpsw_nuss_init_host_p(common);
--	if (ret)
--		goto err_of_clear;
--
--	ret = am65_cpsw_nuss_init_slave_ports(common);
--	if (ret)
--		goto err_of_clear;
--
- 	/* init common data */
- 	ale_params.dev = dev;
- 	ale_params.ale_ageout = AM65_CPSW_ALE_AGEOUT_DEFAULT;
--- 
-2.39.5
-
 
 
