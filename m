@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E97254AFF;
-	Mon, 23 Jun 2025 13:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DE725524C;
+	Mon, 23 Jun 2025 13:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685839; cv=none; b=a210d37UqEjVaaBihSGNVdQ1eKZpWq/4yyI01XZefptTr1n9p/E+6HNymuG2QBesf8qrMhpUZo723hyrhpN8OLQp4wtpL7HAO5hLD8w0Et5RAmTkVMaDKlw7AwTjTm7icUNjBAANhzesFaaTGaEBcrzyVGMWbqAK9i890MIH6wI=
+	t=1750685841; cv=none; b=SgDa8Llq5kvxAM1HK+mObG4W6P+YgzorrQi9xpC+d/bGqBwMsA1g2gI1a4g0MyNA1nrDdSZ4/ufqKxHnA32EFibiw01aT38s0CRdP+HpySh0UPQ49V35Wo96J38uqCr8w0+kLKfXgww9o0eKIszagtF6mLIu0BJkqYfy4dB3m4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685839; c=relaxed/simple;
-	bh=SDZPsabRaW9jIlauavQQoQAPW19GGcmWyzSxo0Dj4Mo=;
+	s=arc-20240116; t=1750685841; c=relaxed/simple;
+	bh=Nqum986AksRmpxbMDQe6hIHgBF7cRd61f9RVJEiNoRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KxOFTDucGhGwjYfc37+0tCUhOyLbYitI4hnyfh8tqf0+kBRtRI/CDXIUERmtDJFUXgkKavViLYUQI/oA/XSoZpE2u/BUNK8ALt9L25Lidete1y9YcHPpbhNNu694nL3cB/Ax07QxbGabVLoxqt3wbMSHVkEEcWV1A6LEJ9OR8aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUTZDtfp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DRBv+JrBoOV0m24yErPixaDjfQ7M1+5fP3ZvduvtJDosPYRCqDsEkHErDEgAW+EC99xeLnhg3fGLFgRxez/p5tMkt2/T/AwqURO4CObIDimGQb3YjDcu9dYklMZ2ESXeCjazCNkNAzYfWUGZrzUSm2S2R0zJsQeVkHU1GQubF7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQD9gikq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUTZDtfp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C739C4CEEA;
-	Mon, 23 Jun 2025 13:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQD9gikq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A8DC4CEEA;
+	Mon, 23 Jun 2025 13:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685839;
-	bh=SDZPsabRaW9jIlauavQQoQAPW19GGcmWyzSxo0Dj4Mo=;
+	s=korg; t=1750685841;
+	bh=Nqum986AksRmpxbMDQe6hIHgBF7cRd61f9RVJEiNoRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aUTZDtfpYivgsxr8aHX2NpRWQfDkJ0qTy3fRNa+FtUSu+6losL1bXnNVJvwAPpgHb
-	 xDb1ZkeZOWlD0QSFUtdnGQWkT1vK9/SxNE5nBnDoX5e7X9vgBj/Hzh6ER9TMgCKpwG
-	 Qxuuy6v1NEkgiYJWqlFRakvwmiJ60wo0kNsgcCUs=
+	b=WQD9gikqzjzbqmj/hswC4mSGZNiQDxYh1wGpmk3L60pPpMwQC8x1tet5KzQebkkE5
+	 FfemEJYMct8SmwLJCGWGVbsOUu1RJcKGcZdK2kZ1p6PJ4VXnUHw/vB8aJCUZ/34Lw8
+	 NnUuxJVdc1UEIhlY+AxZtnrP9bnLHSGbDDJVcC1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Su Hui <suhui@nfschina.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 144/222] drm/msm/hdmi: add runtime PM calls to DDC transfer function
-Date: Mon, 23 Jun 2025 15:07:59 +0200
-Message-ID: <20250623130616.418088108@linuxfoundation.org>
+Subject: [PATCH 5.15 086/411] soc: aspeed: lpc: Fix impossible judgment condition
+Date: Mon, 23 Jun 2025 15:03:50 +0200
+Message-ID: <20250623130635.589070740@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,74 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 531b4e2c206e5f7dead04d9da84dfa693ac57481 ]
+[ Upstream commit d9f0a97e859bdcef51f9c187b1eb712eb13fd3ff ]
 
-We must be sure that the HDMI controller is powered on, while performing
-the DDC transfer. Add corresponding runtime PM calls to
-msm_hdmi_i2c_xfer().
+smatch error：
+drivers/soc/aspeed/aspeed-lpc-snoop.c:169
+aspeed_lpc_snoop_config_irq() warn: platform_get_irq() does not return zero
 
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/651727/
-Link: https://lore.kernel.org/r/20250505-fd-hdmi-hpd-v5-8-48541f76318c@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+platform_get_irq() return non-zero IRQ number or negative error code,
+change '!lpc_snoop->irq' to 'lpc_snoop->irq < 0' to fix this.
+
+Fixes: 9f4f9ae81d0a ("drivers/misc: add Aspeed LPC snoop driver")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20231027020703.1231875-1-suhui@nfschina.com
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_i2c.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/soc/aspeed/aspeed-lpc-snoop.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
-index de182c0048434..9c78c6c528bea 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
-@@ -107,11 +107,15 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
- 	if (num == 0)
- 		return num;
+diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+index eceeaf8dfbeba..d9bdc2e084086 100644
+--- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
++++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+@@ -167,7 +167,7 @@ static int aspeed_lpc_snoop_config_irq(struct aspeed_lpc_snoop *lpc_snoop,
+ 	int rc;
  
-+	ret = pm_runtime_resume_and_get(&hdmi->pdev->dev);
-+	if (ret)
-+		return ret;
-+
- 	init_ddc(hdmi_i2c);
+ 	lpc_snoop->irq = platform_get_irq(pdev, 0);
+-	if (!lpc_snoop->irq)
++	if (lpc_snoop->irq < 0)
+ 		return -ENODEV;
  
- 	ret = ddc_clear_irq(hdmi_i2c);
- 	if (ret)
--		return ret;
-+		goto fail;
- 
- 	for (i = 0; i < num; i++) {
- 		struct i2c_msg *p = &msgs[i];
-@@ -169,7 +173,7 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
- 				hdmi_read(hdmi, REG_HDMI_DDC_SW_STATUS),
- 				hdmi_read(hdmi, REG_HDMI_DDC_HW_STATUS),
- 				hdmi_read(hdmi, REG_HDMI_DDC_INT_CTRL));
--		return ret;
-+		goto fail;
- 	}
- 
- 	ddc_status = hdmi_read(hdmi, REG_HDMI_DDC_SW_STATUS);
-@@ -202,7 +206,13 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
- 		}
- 	}
- 
-+	pm_runtime_put(&hdmi->pdev->dev);
-+
- 	return i;
-+
-+fail:
-+	pm_runtime_put(&hdmi->pdev->dev);
-+	return ret;
- }
- 
- static u32 msm_hdmi_i2c_func(struct i2c_adapter *adapter)
+ 	rc = devm_request_irq(dev, lpc_snoop->irq,
 -- 
 2.39.5
 
