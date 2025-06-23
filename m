@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DCB4226CF1;
-	Mon, 23 Jun 2025 22:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C92223DEE;
+	Mon, 23 Jun 2025 22:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716275; cv=none; b=pgxTJHQk3zg5ROBeESJF/tel7XS1oSU+IsfQmT81cEd5WsXrRGbQowG+waOGYm9ktWeb+RFLA/RycZvOhLEFS2y7f8DqQiQWQF55G1JuuaSB3RtjLdggD6Lh45oC953J+kKaUraoMZCfaH+8fh+zPqM9Lzq2ZbNLHf3unRHz4MQ=
+	t=1750716277; cv=none; b=rLwK40BYaanb/B3freoqDZwhRxZJlan2rbSC1yfBOo3nnky+eMrvnXNROZ4/BWthng/uMP4PVJ4mfC/ziXh9ciXv58cHF1cgV6StANeMJxRlPRG2rq+mnvQBGKwAZWUZqa/zNf2FfkPkDE+GEW0qV3Hy1IFFti78AvKX4Q8M7fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716275; c=relaxed/simple;
-	bh=6It1Y4ZbOrWxTxDt4DpgNssZc5SzAydhRI9wMmH2k18=;
+	s=arc-20240116; t=1750716277; c=relaxed/simple;
+	bh=PYr7oCvZztxqbpzrwRw6TB0Bf1E2dzoPqjOSG8aatLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kqmDz+kdIkLtnR0DP3+4raUPicCfg8uW7SnwVwJiz3KwkE8rDZbAcRE/XbrzIpb1mZruMCFcq32Ms+FFE10KzN+qPlHrP5eKKUv8coU733NNCU3kg2NkzJMtXHWXGNAzGYpIZ+Qy/RArxwd85bvg9ZqbY1wD/oiyVsTNY9lVBSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ngONWlf5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EAQJ5c4z+1xZLp4aI6THfPB7ffqQ47gwKfmrixwwSkLI3CiOwZSaHEMHfywQJwlLemQA7umg0ICYsLahwVb08iK6VoZDig0lOtWyh8ohUSR/DCbRu+LnUOPysPLmbYs8fkIRZQXb1pCOKFXNna9AXVwaBMmSYXIPWvwvD1S5aGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqeoqsXn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngONWlf5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9DFC4CEEA;
-	Mon, 23 Jun 2025 22:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqeoqsXn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3434C4CEEA;
+	Mon, 23 Jun 2025 22:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716274;
-	bh=6It1Y4ZbOrWxTxDt4DpgNssZc5SzAydhRI9wMmH2k18=;
+	s=korg; t=1750716277;
+	bh=PYr7oCvZztxqbpzrwRw6TB0Bf1E2dzoPqjOSG8aatLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ngONWlf526LyX1tcYf+uTQHkGVqhWpdKsCML51pm5YWGg9TphWr0/4nsE4OXLDQ0x
-	 4D1M5SnfwWDulVZnt6IoeYQkKfkonuX1RJQGZRb8HhfkUaiPiC/WyajX7ep5dPMfIi
-	 IMBXo1XdExU+Pv8+MLut23LKPXWd+IUHL0wEbaUo=
+	b=aqeoqsXnEJ/egKi4TROsYA5f8qeZnnNAoCNhMBwNLCKgm94iB/27me1ceUPCy6CTd
+	 D1mQeRevSSgRyfn0KZSvJo8NjDjb1GIZV2NbRWWnyNz5DzSjjhjkuQ4/Fzr6+KGs9a
+	 enlZtg8ALWSUM5w1LgF6IiguD2/MUIDKkXYYXuXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 318/411] pinctrl: armada-37xx: propagate error from armada_37xx_pmx_set_by_name()
-Date: Mon, 23 Jun 2025 15:07:42 +0200
-Message-ID: <20250623130641.641211127@linuxfoundation.org>
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 338/355] bpf: Fix L4 csum update on IPv6 in CHECKSUM_COMPLETE
+Date: Mon, 23 Jun 2025 15:08:59 +0200
+Message-ID: <20250623130636.895703065@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,44 +47,134 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit 4229c28323db141eda69cb99427be75d3edba071 ]
+commit ead7f9b8de65632ef8060b84b0c55049a33cfea1 upstream.
 
-The regmap_update_bits() function can fail, so propagate its error
-up to the stack instead of silently ignoring that.
+In Cilium, we use bpf_csum_diff + bpf_l4_csum_replace to, among other
+things, update the L4 checksum after reverse SNATing IPv6 packets. That
+use case is however not currently supported and leads to invalid
+skb->csum values in some cases. This patch adds support for IPv6 address
+changes in bpf_l4_csum_update via a new flag.
 
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-7-07e9ac1ab737@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When calling bpf_l4_csum_replace in Cilium, it ends up calling
+inet_proto_csum_replace_by_diff:
+
+    1:  void inet_proto_csum_replace_by_diff(__sum16 *sum, struct sk_buff *skb,
+    2:                                       __wsum diff, bool pseudohdr)
+    3:  {
+    4:      if (skb->ip_summed != CHECKSUM_PARTIAL) {
+    5:          csum_replace_by_diff(sum, diff);
+    6:          if (skb->ip_summed == CHECKSUM_COMPLETE && pseudohdr)
+    7:              skb->csum = ~csum_sub(diff, skb->csum);
+    8:      } else if (pseudohdr) {
+    9:          *sum = ~csum_fold(csum_add(diff, csum_unfold(*sum)));
+    10:     }
+    11: }
+
+The bug happens when we're in the CHECKSUM_COMPLETE state. We've just
+updated one of the IPv6 addresses. The helper now updates the L4 header
+checksum on line 5. Next, it updates skb->csum on line 7. It shouldn't.
+
+For an IPv6 packet, the updates of the IPv6 address and of the L4
+checksum will cancel each other. The checksums are set such that
+computing a checksum over the packet including its checksum will result
+in a sum of 0. So the same is true here when we update the L4 checksum
+on line 5. We'll update it as to cancel the previous IPv6 address
+update. Hence skb->csum should remain untouched in this case.
+
+The same bug doesn't affect IPv4 packets because, in that case, three
+fields are updated: the IPv4 address, the IP checksum, and the L4
+checksum. The change to the IPv4 address and one of the checksums still
+cancel each other in skb->csum, but we're left with one checksum update
+and should therefore update skb->csum accordingly. That's exactly what
+inet_proto_csum_replace_by_diff does.
+
+This special case for IPv6 L4 checksums is also described atop
+inet_proto_csum_replace16, the function we should be using in this case.
+
+This patch introduces a new bpf_l4_csum_replace flag, BPF_F_IPV6,
+to indicate that we're updating the L4 checksum of an IPv6 packet. When
+the flag is set, inet_proto_csum_replace_by_diff will skip the
+skb->csum update.
+
+Fixes: 7d672345ed295 ("bpf: add generic bpf_csum_diff helper")
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/96a6bc3a443e6f0b21ff7b7834000e17fb549e05.1748509484.git.paul.chaignon@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Note: Fixed conflict due to unrelated comment change. ]
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ include/uapi/linux/bpf.h       |    2 ++
+ net/core/filter.c              |    5 +++--
+ tools/include/uapi/linux/bpf.h |    2 ++
+ 3 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-index 7ed7b6484d704..e95d30ef5711b 100644
---- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-+++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -354,9 +354,7 @@ static int armada_37xx_pmx_set_by_name(struct pinctrl_dev *pctldev,
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -909,6 +909,7 @@ union bpf_attr {
+  * 		for updates resulting in a null checksum the value is set to
+  * 		**CSUM_MANGLED_0** instead. Flag **BPF_F_PSEUDO_HDR** indicates
+  * 		the checksum is to be computed against a pseudo-header.
++ * 		Flag **BPF_F_IPV6** should be set for IPv6 packets.
+  *
+  * 		This helper works in combination with **bpf_csum_diff**\ (),
+  * 		which does not update the checksum in-place, but offers more
+@@ -3937,6 +3938,7 @@ enum {
+ 	BPF_F_PSEUDO_HDR		= (1ULL << 4),
+ 	BPF_F_MARK_MANGLED_0		= (1ULL << 5),
+ 	BPF_F_MARK_ENFORCE		= (1ULL << 6),
++	BPF_F_IPV6			= (1ULL << 7),
+ };
  
- 	val = grp->val[func];
+ /* BPF_FUNC_clone_redirect and BPF_FUNC_redirect flags. */
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -1953,10 +1953,11 @@ BPF_CALL_5(bpf_l4_csum_replace, struct s
+ 	bool is_pseudo = flags & BPF_F_PSEUDO_HDR;
+ 	bool is_mmzero = flags & BPF_F_MARK_MANGLED_0;
+ 	bool do_mforce = flags & BPF_F_MARK_ENFORCE;
++	bool is_ipv6   = flags & BPF_F_IPV6;
+ 	__sum16 *ptr;
  
--	regmap_update_bits(info->regmap, reg, mask, val);
--
--	return 0;
-+	return regmap_update_bits(info->regmap, reg, mask, val);
- }
+ 	if (unlikely(flags & ~(BPF_F_MARK_MANGLED_0 | BPF_F_MARK_ENFORCE |
+-			       BPF_F_PSEUDO_HDR | BPF_F_HDR_FIELD_MASK)))
++			       BPF_F_PSEUDO_HDR | BPF_F_HDR_FIELD_MASK | BPF_F_IPV6)))
+ 		return -EINVAL;
+ 	if (unlikely(offset > 0xffff || offset & 1))
+ 		return -EFAULT;
+@@ -1972,7 +1973,7 @@ BPF_CALL_5(bpf_l4_csum_replace, struct s
+ 		if (unlikely(from != 0))
+ 			return -EINVAL;
  
- static int armada_37xx_pmx_set(struct pinctrl_dev *pctldev,
--- 
-2.39.5
-
+-		inet_proto_csum_replace_by_diff(ptr, skb, to, is_pseudo, false);
++		inet_proto_csum_replace_by_diff(ptr, skb, to, is_pseudo, is_ipv6);
+ 		break;
+ 	case 2:
+ 		inet_proto_csum_replace2(ptr, skb, from, to, is_pseudo);
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -909,6 +909,7 @@ union bpf_attr {
+  * 		for updates resulting in a null checksum the value is set to
+  * 		**CSUM_MANGLED_0** instead. Flag **BPF_F_PSEUDO_HDR** indicates
+  * 		the checksum is to be computed against a pseudo-header.
++ * 		Flag **BPF_F_IPV6** should be set for IPv6 packets.
+  *
+  * 		This helper works in combination with **bpf_csum_diff**\ (),
+  * 		which does not update the checksum in-place, but offers more
+@@ -3937,6 +3938,7 @@ enum {
+ 	BPF_F_PSEUDO_HDR		= (1ULL << 4),
+ 	BPF_F_MARK_MANGLED_0		= (1ULL << 5),
+ 	BPF_F_MARK_ENFORCE		= (1ULL << 6),
++	BPF_F_IPV6			= (1ULL << 7),
+ };
+ 
+ /* BPF_FUNC_clone_redirect and BPF_FUNC_redirect flags. */
 
 
