@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8567A4409;
-	Mon, 23 Jun 2025 22:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9164409;
+	Mon, 23 Jun 2025 22:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716110; cv=none; b=gqyEmhhBQfbTioGk3OJxHXo9opXbtKiTyqyjm45dUYX8q1yeoInHc1bNSuyM8iOAOg/3JCEUgYaIw0gnzp6nHz55vHhfbWGLG3kbOeaBsDAAhM07NAwZoO30T1ZctPhNRH5z+6nP0EN6BngV56SkmIiSA/enKLexKchmupthd+Y=
+	t=1750716113; cv=none; b=mqYllC56FzNhw0xHqQRCFlpe/DEnzkTU6MfWyqX9HOl9PA7eXN1fC7KHIPdtHQ7w2bW5+tDBf9pa3mvUzZh9VGktNk0tUpttYDwzUc28g7dhpxJxl6nUaEub9APtYXGFlSdbIAGvwayLnXIwR57lSEWWIZN8mpiOy/qmlr5fZtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716110; c=relaxed/simple;
-	bh=7VE0Zeklh5c3lYi2c0X8grIREMOqapSBKf/ADdH1vAw=;
+	s=arc-20240116; t=1750716113; c=relaxed/simple;
+	bh=q4SBgfVd4OkeyEdz/X6ngqGif8jI7iZePECB329eMTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YckE01T3CBwEi9+15zvbedBeVWAMQxOTnp8w2momUbUsDfUPkX30uAztiDPGRX4vCE5csDnNidYCiAAodzK20uOtw9T1i4vYru4+VYYtGiMhW2jqGCJiZHIVL4k/9ACNHdxKoVDV6ApoDq1p2zbR1RxH6z9e4uBwEoWcC2ktRXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2z6z6np; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NYRcynYgKGqwgEuMKQs9TM3idJwB94TUIzhNou47Hm4RJUxR10Uu5fnxvZaa7UV4yJY/7dQLDD8GLFoeRDEyH2p0k7eBh+arOvt2RTza7zXJDgREVxKVvrFrdgOAjmqGT2ENRyCI4KsGCWhQS+XgciE4FyvX3y/VzSGLLgO2EV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvbZbJFk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2z6z6np"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A878C4CEEA;
-	Mon, 23 Jun 2025 22:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvbZbJFk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870AFC4CEEA;
+	Mon, 23 Jun 2025 22:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716110;
-	bh=7VE0Zeklh5c3lYi2c0X8grIREMOqapSBKf/ADdH1vAw=;
+	s=korg; t=1750716112;
+	bh=q4SBgfVd4OkeyEdz/X6ngqGif8jI7iZePECB329eMTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z2z6z6npyHO3+NatlDrGO+Avnb8xmsahu75vB+4Mn3aveUEY7Tz2dIGfmzSzMxA3N
-	 Og5w/zJ0GJXRAwdQ4tfPCpJ3MzsTRcpka6bKiXtkALdqboi+XzRFS4KfnNtum+Gu2n
-	 maIipEaF3YOzhf1ZfqJOyvp6EUpM5a+dV6r9q7ps=
+	b=JvbZbJFktFC2LGlS1wySqSFF4EV2X13rBMgAs8AwDerGn6C4iOSXG4c3BlmJGk3XP
+	 2s0tWGheJI4i1uFmGDbd7g4F5W3IEuWqNz0YkgtVKXDCJfObqow8DCNMRwaORZFORo
+	 vIm7HRpARWl4ehXES4kfLQ4aRq0CAkYCTWHwAsck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Moussalem <george.moussalem@outlook.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Amit Kucheria <amitk@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 303/411] thermal/drivers/qcom/tsens: Update conditions to strictly evaluate for IP v2+
-Date: Mon, 23 Jun 2025 15:07:27 +0200
-Message-ID: <20250623130641.274223555@linuxfoundation.org>
+Subject: [PATCH 6.12 228/414] bpf: Pass the same orig_call value to trampoline functions
+Date: Mon, 23 Jun 2025 15:06:05 +0200
+Message-ID: <20250623130647.735825447@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,80 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: George Moussalem <george.moussalem@outlook.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit e3f90f167a49902cda2408f7e91cca0dcfd5040a ]
+[ Upstream commit 94bde253d3ae5d8a01cb958663b12daef1d06574 ]
 
-TSENS v2.0+ leverage features not available to prior versions such as
-updated interrupts init routine, masked interrupts, and watchdog.
-Currently, the checks in place evaluate whether the IP version is greater
-than v1 which invalidates when updates to v1 or v1 minor versions are
-implemented. As such, update the conditional statements to strictly
-evaluate whether the version is greater than or equal to v2 (inclusive).
+There is currently some confusion in the s390x JIT regarding whether
+orig_call can be NULL and what that means. Originally the NULL value
+was used to distinguish the struct_ops case, but this was superseded by
+BPF_TRAMP_F_INDIRECT (see commit 0c970ed2f87c ("s390/bpf: Fix indirect
+trampoline generation").
 
-Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Amit Kucheria <amitk@kernel.org>
-Link: https://lore.kernel.org/r/DS7PR19MB8883434CAA053648E22AA8AC9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+The remaining reason to have this check is that NULL can actually be
+passed to the arch_bpf_trampoline_size() call - but not to the
+respective arch_prepare_bpf_trampoline()! call - by
+bpf_struct_ops_prepare_trampoline().
+
+Remove this asymmetry by passing stub_func to both functions, so that
+JITs may rely on orig_call never being NULL.
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/r/20250512221911.61314-2-iii@linux.ibm.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/tsens.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ kernel/bpf/bpf_struct_ops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 2f31129cd5471..21f980464e71b 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -266,7 +266,7 @@ static void tsens_set_interrupt(struct tsens_priv *priv, u32 hw_id,
- 	dev_dbg(priv->dev, "[%u] %s: %s -> %s\n", hw_id, __func__,
- 		irq_type ? ((irq_type == 1) ? "UP" : "CRITICAL") : "LOW",
- 		enable ? "en" : "dis");
--	if (tsens_version(priv) > VER_1_X)
-+	if (tsens_version(priv) >= VER_2_X)
- 		tsens_set_interrupt_v2(priv, hw_id, irq_type, enable);
- 	else
- 		tsens_set_interrupt_v1(priv, hw_id, irq_type, enable);
-@@ -318,7 +318,7 @@ static int tsens_read_irq_state(struct tsens_priv *priv, u32 hw_id,
- 	ret = regmap_field_read(priv->rf[LOW_INT_CLEAR_0 + hw_id], &d->low_irq_clear);
- 	if (ret)
- 		return ret;
--	if (tsens_version(priv) > VER_1_X) {
-+	if (tsens_version(priv) >= VER_2_X) {
- 		ret = regmap_field_read(priv->rf[UP_INT_MASK_0 + hw_id], &d->up_irq_mask);
- 		if (ret)
- 			return ret;
-@@ -362,7 +362,7 @@ static int tsens_read_irq_state(struct tsens_priv *priv, u32 hw_id,
+diff --git a/kernel/bpf/bpf_struct_ops.c b/kernel/bpf/bpf_struct_ops.c
+index 477947456371a..2285b27ce68c7 100644
+--- a/kernel/bpf/bpf_struct_ops.c
++++ b/kernel/bpf/bpf_struct_ops.c
+@@ -577,7 +577,7 @@ int bpf_struct_ops_prepare_trampoline(struct bpf_tramp_links *tlinks,
+ 	if (model->ret_size > 0)
+ 		flags |= BPF_TRAMP_F_RET_FENTRY_RET;
  
- static inline u32 masked_irq(u32 hw_id, u32 mask, enum tsens_ver ver)
- {
--	if (ver > VER_1_X)
-+	if (ver >= VER_2_X)
- 		return mask & (1 << hw_id);
+-	size = arch_bpf_trampoline_size(model, flags, tlinks, NULL);
++	size = arch_bpf_trampoline_size(model, flags, tlinks, stub_func);
+ 	if (size <= 0)
+ 		return size ? : -EFAULT;
  
- 	/* v1, v0.1 don't have a irq mask register */
-@@ -578,7 +578,7 @@ static int tsens_set_trips(void *_sensor, int low, int high)
- static int tsens_enable_irq(struct tsens_priv *priv)
- {
- 	int ret;
--	int val = tsens_version(priv) > VER_1_X ? 7 : 1;
-+	int val = tsens_version(priv) >= VER_2_X ? 7 : 1;
- 
- 	ret = regmap_field_write(priv->rf[INT_EN], val);
- 	if (ret < 0)
-@@ -892,7 +892,7 @@ int __init init_common(struct tsens_priv *priv)
- 		}
- 	}
- 
--	if (tsens_version(priv) > VER_1_X &&  ver_minor > 2) {
-+	if (tsens_version(priv) >= VER_2_X &&  ver_minor > 2) {
- 		/* Watchdog is present only on v2.3+ */
- 		priv->feat->has_watchdog = 1;
- 		for (i = WDOG_BARK_STATUS; i <= CC_MON_MASK; i++) {
 -- 
 2.39.5
 
