@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51E71ACEDA;
-	Mon, 23 Jun 2025 21:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B74E70838;
+	Mon, 23 Jun 2025 21:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712874; cv=none; b=UZraIcf3pxE/I8fYMoZl0tUsyjcxdJLz2Jz65nv0HTDfmfS37dndHIPK1ym7h1QSdov3ZdTJEtmglRcGkoUgMsmhHnMnXAhbqJStkYCd/hIbPQ9mxVS/TfDt81RnYdoPOEMnSdiyOfRQHhlLO7eU7QO4MrZx1tluQmiJEB8SU9g=
+	t=1750712876; cv=none; b=Ugv1vOGSIOT3fcWghn/dIy9iSPo0ipz/8tx6WpWfKLyo0UzeNCmSEfLjPAgqjAu+HfuDL9f/w/fkHlUC7aKLuLJUlRmucrV7Tsp4/unhewG1+e/yWsriDHTd8Lw0oUVcSOzvgyDjvSe7y7KqaFQqxjPh2nujLl4x6pXRKDpf1bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712874; c=relaxed/simple;
-	bh=xDtnv/gZqkWAmSXqIxfvmEZE0yqmbaVLW8rOpJ+9cKQ=;
+	s=arc-20240116; t=1750712876; c=relaxed/simple;
+	bh=/GfKXri61+go0QAyXUmUAtqi9gRr2ATPGROl/zJO1Pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A8HNm6k6ftQg4vxy04Lk+jZJhLJz54a3whYmC1/7b9vZLQcimuELCgIxkHhjnEs7jbT769EyMXC73GbAsgleQQLG1Xa1ZOoQeh+/HCDBXqqt2jbJqaQdNuJuKxPDwoJJ1V1vF+q8z9u76cPZQ8xqT7tLc8xyfAjg8/PcQgFxZao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouWUSgqW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uB+iVxMn28x00eBZRpjx2XW8fgX8U5aWJSHCMhrOCKssOenzj6DWodF7Y19l6cdUA7SyBVllyBmkPxYnq283tJzggZHGzZ5rOdIxEmW8G+p+3rNneC8Ave6gPLTVmb7h3TQZA7XOtfTkPSRC5I6viqRwQQ7Ygbj4rDFUzJZrNQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1YHHo1F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouWUSgqW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0BFC4CEEA;
-	Mon, 23 Jun 2025 21:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1YHHo1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E996FC4CEF0;
+	Mon, 23 Jun 2025 21:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712873;
-	bh=xDtnv/gZqkWAmSXqIxfvmEZE0yqmbaVLW8rOpJ+9cKQ=;
+	s=korg; t=1750712876;
+	bh=/GfKXri61+go0QAyXUmUAtqi9gRr2ATPGROl/zJO1Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ouWUSgqW914Cwq4Qjkgdll3mgLV8V2tBdP4MfQpA/KGQ5ggKALtXEyvqHiHRJbDJ+
-	 9PPtGGyyG1QV+zwqy6sVkDpF45hYUGH0urWjvAP/IBzU/OqAbSwUbVXllJjYVQo8eA
-	 qJ2V+ZqHfz5rJmCt3g05GAUdCOjFOYGThTztD9iA=
+	b=r1YHHo1Fx6B0DVV8lopGhXgBeyLfT3oae5TweHkkJ23NVzrctd8jlq1gCB5UmZiVn
+	 frNx98qF45uOf7UB5up3/AYIXBp/i8qule75zUzcJEsmD65/TMbuRCQQxSwr5NHaC/
+	 j5mTiaPfwlQ+A4B+m7AfeoLp03H2tjcMOG9zTJ7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.12 016/414] s390/pci: Prevent self deletion in disable_slot()
-Date: Mon, 23 Jun 2025 15:02:33 +0200
-Message-ID: <20250623130642.433721986@linuxfoundation.org>
+	Nishanth Menon <nm@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 110/355] arm64: dts: ti: k3-am65-main: Drop deprecated ti,otap-del-sel property
+Date: Mon, 23 Jun 2025 15:05:11 +0200
+Message-ID: <20250623130630.074464506@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Nishanth Menon <nm@ti.com>
 
-commit 47c397844869ad0e6738afb5879c7492f4691122 upstream.
+[ Upstream commit 2b9bb988742d1794e78d4297a99658f38477eedd ]
 
-As disable_slot() takes a struct zpci_dev from the Configured to the
-Standby state. In Standby there is still a hotplug slot so this is not
-usually a case of sysfs self deletion. This is important because self
-deletion gets very hairy in terms of locking (see for example
-recover_store() in arch/s390/pci/pci_sysfs.c).
+ti,otap-del-sel has been deprecated in favor of ti,otap-del-sel-legacy.
 
-Because the pci_dev_put() is not within the critical section of the
-zdev->state_lock however, disable_slot() can turn into a case of self
-deletion if zPCI device event handling slips between the mutex_unlock()
-and the pci_dev_put(). If the latter is the last put and
-zpci_release_device() is called this then tries to remove the hotplug
-slot via zpci_exit_slot() which will try to remove the hotplug slot
-directory the disable_slot() is part of i.e. self deletion.
+Drop the duplicate and misleading ti,otap-del-sel property.
 
-Prevent this by widening the zdev->state_lock critical section to
-include the pci_dev_put() which is then guaranteed to happen with the
-struct zpci_dev still in Standby state ensuring it will not lead to
-a zpci_release_device() call as at least the zPCI event handling code
-still holds a reference.
-
-Cc: stable@vger.kernel.org
-Fixes: a46044a92add ("s390/pci: fix zpci_zdev_put() on reserve")
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
-Tested-by: Gerd Bayer <gbayer@linux.ibm.com>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Link: https://lore.kernel.org/r/20230607132043.3932726-3-nm@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Stable-dep-of: f55c9f087cc2 ("arm64: dts: ti: k3-am65-main: Add missing taps to sdhci0")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/s390_pci_hpc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am65-main.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/pci/hotplug/s390_pci_hpc.c
-+++ b/drivers/pci/hotplug/s390_pci_hpc.c
-@@ -65,9 +65,9 @@ static int disable_slot(struct hotplug_s
- 
- 	rc = zpci_deconfigure_device(zdev);
- out:
--	mutex_unlock(&zdev->state_lock);
- 	if (pdev)
- 		pci_dev_put(pdev);
-+	mutex_unlock(&zdev->state_lock);
- 	return rc;
- }
- 
+diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+index a3538279d7106..a4d35bc66f0b7 100644
+--- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+@@ -301,7 +301,6 @@ sdhci1: sdhci@4fa0000 {
+ 		ti,otap-del-sel-ddr52 = <0x4>;
+ 		ti,otap-del-sel-hs200 = <0x7>;
+ 		ti,clkbuf-sel = <0x7>;
+-		ti,otap-del-sel = <0x2>;
+ 		ti,trm-icp = <0x8>;
+ 		dma-coherent;
+ 		no-1-8-v;
+-- 
+2.39.5
+
 
 
