@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243B41EDA0F;
-	Mon, 23 Jun 2025 21:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC302222581;
+	Mon, 23 Jun 2025 21:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713967; cv=none; b=NUim0lEICBvdGhLTpNPuStKTe4vSoITwqW+HIkKIuwAv5cjuCslX4VGttIVKovD24mvoEK2rVOw/ripyKopWA22S7tfe9oIn7zEhxgg9fO6s9sEjGdgOEIxeb5Ma15l7PxDl3J44G8Gg8vlTs6Zog1j1AZjTSlKjOQmHI5Au2vw=
+	t=1750713969; cv=none; b=Dyk8VcJhIJoF9Ya3lcNFYUUWRp3jlqpA/PIuLMV5K95cQkax5aLhOkTOUfwB1N+i5+eYan79Lm5qBiHLoEHlqQtSxEufypr5/u06csbrUJjI+iq3KvJA8EGh+Y4u9CNkPZozXtCXNPtM76QZH87+CFA3bR120RwjKQq3KTXXTn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713967; c=relaxed/simple;
-	bh=fUI+JvsBevozwK5FPiWLuZu29IFjyRaWqxOvt7ebNEw=;
+	s=arc-20240116; t=1750713969; c=relaxed/simple;
+	bh=/feKkd7WSEO5RMo2HxXnIYCN1lBNuSaIvVI3UHKC058=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R1AYkCea5Io0mHmH7E4zTb9xQzh+oQzyIeHFLCZuZSSqctzeruoTJeQvvTVBb+Sena1kSlwIp1d2zTFd733wyZN0IG41rMjbt8g8P6KXs4kr5AXMo6+0TAsmNEmoRuTRxLpGQfHbzMv9Dp2cVqOqM6fjBcf5A/9JDNNFI8BgYxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrwbNdAF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sTXQWkGGidsd8BK1Oe5kpZ22jrAp9XbLCfQyRgq1S3I19NwhAHMZGWUHbNkXH7UAwfJfyfesKmF6/gOU6Dgsm4AFDbCFgWWbwv+/tkL+56i4USZZ0uRDubezJzKJh0PE3HUn5o08h3Fz3q3NIx/JHYBPqEAv38ImSp7ezogOJwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHkiJsSF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrwbNdAF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CA0C4CEED;
-	Mon, 23 Jun 2025 21:26:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHkiJsSF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A97C4CEEA;
+	Mon, 23 Jun 2025 21:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713967;
-	bh=fUI+JvsBevozwK5FPiWLuZu29IFjyRaWqxOvt7ebNEw=;
+	s=korg; t=1750713969;
+	bh=/feKkd7WSEO5RMo2HxXnIYCN1lBNuSaIvVI3UHKC058=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrwbNdAF3lOVr1UxokiTXx+MDzPZJOGh4icuPsRo82YoZlAfIN24e+xinnti854R5
-	 SQl3TWFtRCMxwMlfpNySifPUi5d+Q4A6d7Pl2aor21+HltiHdk0mdwSASlRoz6bOZC
-	 8s64AYSm0+MOqt1nyDekTvAo0NWMr4xinLc1WL5Y=
+	b=bHkiJsSFzZVqBt2Mgc+7YBIyY1cSelTG4lHYMAU6dmarnp0h4AFeB7wmTdEOeZ+jN
+	 5eVRTXey9o0wnGJAa0vybQy/SFqpSamCNlbr01OMemycfqKdvpEKR3PsGBhvDVD/bM
+	 Mc7h/4lqir0HyesEzubd0m/gc564LQXJ3GWVuskU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Arkhipov <m.arhipov@rosa.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 137/508] mtd: nand: ecc-mxic: Fix use of uninitialized variable ret
-Date: Mon, 23 Jun 2025 15:03:02 +0200
-Message-ID: <20250623130648.659081708@linuxfoundation.org>
+Subject: [PATCH 6.15 356/592] bpf: Pass the same orig_call value to trampoline functions
+Date: Mon, 23 Jun 2025 15:05:14 +0200
+Message-ID: <20250623130708.910794493@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Arkhipov <m.arhipov@rosa.ru>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit d95846350aac72303036a70c4cdc69ae314aa26d ]
+[ Upstream commit 94bde253d3ae5d8a01cb958663b12daef1d06574 ]
 
-If ctx->steps is zero, the loop processing ECC steps is skipped,
-and the variable ret remains uninitialized. It is later checked
-and returned, which leads to undefined behavior and may cause
-unpredictable results in user space or kernel crashes.
+There is currently some confusion in the s390x JIT regarding whether
+orig_call can be NULL and what that means. Originally the NULL value
+was used to distinguish the struct_ops case, but this was superseded by
+BPF_TRAMP_F_INDIRECT (see commit 0c970ed2f87c ("s390/bpf: Fix indirect
+trampoline generation").
 
-This scenario can be triggered in edge cases such as misconfigured
-geometry, ECC engine misuse, or if ctx->steps is not validated
-after initialization.
+The remaining reason to have this check is that NULL can actually be
+passed to the arch_bpf_trampoline_size() call - but not to the
+respective arch_prepare_bpf_trampoline()! call - by
+bpf_struct_ops_prepare_trampoline().
 
-Initialize ret to zero before the loop to ensure correct and safe
-behavior regardless of the ctx->steps value.
+Remove this asymmetry by passing stub_func to both functions, so that
+JITs may rely on orig_call never being NULL.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 48e6633a9fa2 ("mtd: nand: mxic-ecc: Add Macronix external ECC engine support")
-Signed-off-by: Mikhail Arkhipov <m.arhipov@rosa.ru>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/r/20250512221911.61314-2-iii@linux.ibm.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/ecc-mxic.c | 2 +-
+ kernel/bpf/bpf_struct_ops.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/ecc-mxic.c b/drivers/mtd/nand/ecc-mxic.c
-index 6b487ffe2f2dc..e8bbe009c04e8 100644
---- a/drivers/mtd/nand/ecc-mxic.c
-+++ b/drivers/mtd/nand/ecc-mxic.c
-@@ -614,7 +614,7 @@ static int mxic_ecc_finish_io_req_external(struct nand_device *nand,
- {
- 	struct mxic_ecc_engine *mxic = nand_to_mxic(nand);
- 	struct mxic_ecc_ctx *ctx = nand_to_ecc_ctx(nand);
--	int nents, step, ret;
-+	int nents, step, ret = 0;
+diff --git a/kernel/bpf/bpf_struct_ops.c b/kernel/bpf/bpf_struct_ops.c
+index db13ee70d94d5..96113633e391a 100644
+--- a/kernel/bpf/bpf_struct_ops.c
++++ b/kernel/bpf/bpf_struct_ops.c
+@@ -601,7 +601,7 @@ int bpf_struct_ops_prepare_trampoline(struct bpf_tramp_links *tlinks,
+ 	if (model->ret_size > 0)
+ 		flags |= BPF_TRAMP_F_RET_FENTRY_RET;
  
- 	if (req->mode == MTD_OPS_RAW)
- 		return 0;
+-	size = arch_bpf_trampoline_size(model, flags, tlinks, NULL);
++	size = arch_bpf_trampoline_size(model, flags, tlinks, stub_func);
+ 	if (size <= 0)
+ 		return size ? : -EFAULT;
+ 
 -- 
 2.39.5
 
