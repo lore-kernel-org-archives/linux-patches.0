@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2378C7482;
-	Mon, 23 Jun 2025 21:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE7B221299;
+	Mon, 23 Jun 2025 21:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713434; cv=none; b=I7iyM5DJ7Kcd4wrkpKGCEQjsYc42xFATUzMnSnuI8XHxpVcWrpRaqKOsfIB1hTI8HeVWnl4aJdqFvxR/MD683C/Ok2MRAR5hA9FPNxn0ITtAXXG4CzXrzKO7OGrQJgleGVXRJzw9Vnw4tZfs7/w5JnFok5ST7FH9XW88fATmxWY=
+	t=1750713436; cv=none; b=j0zQ5CGx3m8BnISo/gD3O/HNlkx89hn/ghXb/+p8TT4sruCScXRek2yPeQZCZs5iz/k+aE3BnnfJ7QIMg4c53iFz78FtyDSD/yo70fP2k6LwV+pH7DemqRTxJCQ2oHSxU+dWYiUvxXEGsFnCZH8YB0jrGMHE5SYJsSdTMI/oHw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713434; c=relaxed/simple;
-	bh=75O6i1Ge4GR9dJM1rc/sQKGC4hxSMpclL+AOv2L4mz4=;
+	s=arc-20240116; t=1750713436; c=relaxed/simple;
+	bh=cYrYNQyKH3RiPcV4Q6Pi8sk2oLgKiCX8CmOXWeWNAkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dJMvMV9ibLdAaFr/3k7r/7DH9tgHklgMVYxPV1MR5nNXHBL4aQtLGECDcNdLqVCryLKnIhL2KfBu5R1LYNDdArMsoOY+lJ2+X+QCu8IDyomdOCu8raZKjXoW/MD5AhfklZTXkv1rffvjOv371RtrvpvQm4P9qgAUVn/j/uYI0yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olFj91ty; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nFd4yldKpGjbCj8DlI6guSy0SfMHQDzzS0BmNmuw6oiWYIKSbbr/54/YvWRkf/63hMDGdKQtsoHbdeecxXnqyyEhaWYFZi/zO8ahWJQIk0RsXBS0Bz2i8gHU7FdkZLtot67ZSlSSh2042ppUfPymDDIEHXHeDOI5NLq5YDMUncU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVxbBho6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olFj91ty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04A6C4CEEA;
-	Mon, 23 Jun 2025 21:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVxbBho6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2518FC4CEED;
+	Mon, 23 Jun 2025 21:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713434;
-	bh=75O6i1Ge4GR9dJM1rc/sQKGC4hxSMpclL+AOv2L4mz4=;
+	s=korg; t=1750713436;
+	bh=cYrYNQyKH3RiPcV4Q6Pi8sk2oLgKiCX8CmOXWeWNAkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=olFj91tyJNMvpBeCLVwb14ezYtrfMn5vhMBia6GKouorNkAxFUUl5ic9Aj5LxQNgC
-	 uVm0lFnaNQUGvOOzV5UvE+JoBIkzFDe/A1AU8EQmkEytDiqL2LOrBLEb3iyitTvX4e
-	 6xRVmtwI5H45zbmlUBvrtcggelGMYlBMBMmyC2ag=
+	b=PVxbBho651FG0GcKpoISXm0pBUlZIj8C8JGYrhPZ1Bnfh4HyDchw6Rt3XfdFH4VD6
+	 lyeiL/nYhrswsj2dwcc5G1SePNyl3zVP7BrFxGrVP72TKcImBnhnewZP1Jmuiaz1MY
+	 ypTV2qrCL2p6r4GPhmYJ3EiNQMGqLNdfICN8x4s0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Wei Wang <weiwan@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 347/592] tcp: add receive queue awareness in tcp_rcv_space_adjust()
-Date: Mon, 23 Jun 2025 15:05:05 +0200
-Message-ID: <20250623130708.701975706@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.6 090/290] dm-verity: fix a memory leak if some arguments are specified multiple times
+Date: Mon, 23 Jun 2025 15:05:51 +0200
+Message-ID: <20250623130629.682478970@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +45,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit ea33537d82921e71f852ea2ed985acc562125efe ]
+commit 66be40a14e496689e1f0add50118408e22c96169 upstream.
 
-If the application can not drain fast enough a TCP socket queue,
-tcp_rcv_space_adjust() can overestimate tp->rcvq_space.space.
+If some of the arguments "check_at_most_once", "ignore_zero_blocks",
+"use_fec_from_device", "root_hash_sig_key_desc" were specified more than
+once on the target line, a memory leak would happen.
 
-Then sk->sk_rcvbuf can grow and hit tcp_rmem[2] for no good reason.
+This commit fixes the memory leak. It also fixes error handling in
+verity_verify_sig_parse_opt_args.
 
-Fix this by taking into acount the number of available bytes.
-
-Keeping sk->sk_rcvbuf at the right size allows better cache efficiency.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Wei Wang <weiwan@google.com>
-Link: https://patch.msgid.link/20250513193919.1089692-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/tcp.h  | 2 +-
- net/ipv4/tcp_input.c | 6 ++++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ drivers/md/dm-verity-fec.c        |    4 ++++
+ drivers/md/dm-verity-target.c     |    8 +++++++-
+ drivers/md/dm-verity-verify-sig.c |   17 +++++++++++++----
+ 3 files changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/tcp.h b/include/linux/tcp.h
-index 1669d95bb0f9a..5c7c5038d47b5 100644
---- a/include/linux/tcp.h
-+++ b/include/linux/tcp.h
-@@ -340,7 +340,7 @@ struct tcp_sock {
- 	} rcv_rtt_est;
- /* Receiver queue space */
- 	struct {
--		u32	space;
-+		int	space;
- 		u32	seq;
- 		u64	time;
- 	} rcvq_space;
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index ed5f0ffab60dc..49adcbd73074d 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -748,8 +748,7 @@ static inline void tcp_rcv_rtt_measure_ts(struct sock *sk,
- void tcp_rcv_space_adjust(struct sock *sk)
+--- a/drivers/md/dm-verity-fec.c
++++ b/drivers/md/dm-verity-fec.c
+@@ -624,6 +624,10 @@ int verity_fec_parse_opt_args(struct dm_
+ 	(*argc)--;
+ 
+ 	if (!strcasecmp(arg_name, DM_VERITY_OPT_FEC_DEV)) {
++		if (v->fec->dev) {
++			ti->error = "FEC device already specified";
++			return -EINVAL;
++		}
+ 		r = dm_get_device(ti, arg_value, BLK_OPEN_READ, &v->fec->dev);
+ 		if (r) {
+ 			ti->error = "FEC device lookup failed";
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -1043,6 +1043,9 @@ static int verity_alloc_most_once(struct
  {
- 	struct tcp_sock *tp = tcp_sk(sk);
--	u32 copied;
--	int time;
-+	int time, inq, copied;
+ 	struct dm_target *ti = v->ti;
  
- 	trace_tcp_rcv_space_adjust(sk);
++	if (v->validated_blocks)
++		return 0;
++
+ 	/* the bitset can only handle INT_MAX blocks */
+ 	if (v->data_blocks > INT_MAX) {
+ 		ti->error = "device too large to use check_at_most_once";
+@@ -1066,6 +1069,9 @@ static int verity_alloc_zero_digest(stru
+ 	struct ahash_request *req;
+ 	u8 *zero_data;
  
-@@ -760,6 +759,9 @@ void tcp_rcv_space_adjust(struct sock *sk)
++	if (v->zero_digest)
++		return 0;
++
+ 	v->zero_digest = kmalloc(v->digest_size, GFP_KERNEL);
  
- 	/* Number of bytes copied to user in last RTT */
- 	copied = tp->copied_seq - tp->rcvq_space.seq;
-+	/* Number of bytes in receive queue. */
-+	inq = tp->rcv_nxt - tp->copied_seq;
-+	copied -= inq;
- 	if (copied <= tp->rcvq_space.space)
- 		goto new_measure;
+ 	if (!v->zero_digest)
+@@ -1405,7 +1411,7 @@ static int verity_ctr(struct dm_target *
+ 			goto bad;
+ 	}
  
--- 
-2.39.5
-
+-	/* Root hash signature is  a optional parameter*/
++	/* Root hash signature is an optional parameter */
+ 	r = verity_verify_root_hash(root_hash_digest_to_validate,
+ 				    strlen(root_hash_digest_to_validate),
+ 				    verify_args.sig,
+--- a/drivers/md/dm-verity-verify-sig.c
++++ b/drivers/md/dm-verity-verify-sig.c
+@@ -71,9 +71,14 @@ int verity_verify_sig_parse_opt_args(str
+ 				     const char *arg_name)
+ {
+ 	struct dm_target *ti = v->ti;
+-	int ret = 0;
++	int ret;
+ 	const char *sig_key = NULL;
+ 
++	if (v->signature_key_desc) {
++		ti->error = DM_VERITY_VERIFY_ERR("root_hash_sig_key_desc already specified");
++		return -EINVAL;
++	}
++
+ 	if (!*argc) {
+ 		ti->error = DM_VERITY_VERIFY_ERR("Signature key not specified");
+ 		return -EINVAL;
+@@ -83,14 +88,18 @@ int verity_verify_sig_parse_opt_args(str
+ 	(*argc)--;
+ 
+ 	ret = verity_verify_get_sig_from_key(sig_key, sig_opts);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		ti->error = DM_VERITY_VERIFY_ERR("Invalid key specified");
++		return ret;
++	}
+ 
+ 	v->signature_key_desc = kstrdup(sig_key, GFP_KERNEL);
+-	if (!v->signature_key_desc)
++	if (!v->signature_key_desc) {
++		ti->error = DM_VERITY_VERIFY_ERR("Could not allocate memory for signature key");
+ 		return -ENOMEM;
++	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ /*
 
 
