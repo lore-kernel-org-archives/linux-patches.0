@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD0619049B;
-	Mon, 23 Jun 2025 22:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969DB19049B;
+	Mon, 23 Jun 2025 22:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716297; cv=none; b=Fjpg948UyweEgyhJLRtYi/+rAXqSVpDNl3+V7Q7u/1at44oQAr1D/3DAKiMwjSPAjMIBKZeye4FxAKM83zT70ch9Blita9Daz1llZT0ZoSnAqQe6MZLMoHywmve4hp8+BqxtvvFQ6zZ/TDWWDXnbk8z2QfOPmLC4fEWbhqzs7eM=
+	t=1750716299; cv=none; b=LoKbbLPXjy8knU72ECW7xQB9v++ULc184E8O9KUXo0pZ4/gzPSUNezpxHx0FWKt8Thc7Nms21KnxiwpMd3cSeKOg+WCbgFKGuXQ+A6y2GQhiu6I/QSEReycuZHwrDazQmf78wIHmyTml96VZOX+FUnrjxRm5twDj4spU6LSYW68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716297; c=relaxed/simple;
-	bh=2PVV+jyeqPSxqEBNhXozarcpaz4Kuin24TJ6u7vRToo=;
+	s=arc-20240116; t=1750716299; c=relaxed/simple;
+	bh=IWm8dFZh58WSDLe/qjzxlSLgAgO//575LLbptiDaDv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KVzJJHPNJjL9bP4kfWCnONxAgv7z7JB6jXKcJLvITUmT4PN76h7OgcwFZGQ9c46+c/2M0L5hmgQZufQuCFMYigjRLrtUzdRMR4ssbS2WSmRtuAEplxpSdaBbdoM8C3jqseTO0RsuNNkBuuobzJR/FCA25w5wzVK5LgmhiawZKW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbRfPAa0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j9Ju0ozDd8UBMXtEkTi6g6jw1Qpwi+qLBjDksY+zmWmSEoL2HjJ4FNWT3gEnvx+F5gJ92qP4dH+8aBYbhcazCtxUsCjJMyccdtkwTQdcFEQUUsF5k6ZK9G53pJ8uDEqN7czeGVcMYtqYMVVaG1ij4+iMHYMqqVXUqlvNKNMEVCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0Lkw1NI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbRfPAa0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C50C4CEEA;
-	Mon, 23 Jun 2025 22:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0Lkw1NI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B29C4CEEA;
+	Mon, 23 Jun 2025 22:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716296;
-	bh=2PVV+jyeqPSxqEBNhXozarcpaz4Kuin24TJ6u7vRToo=;
+	s=korg; t=1750716299;
+	bh=IWm8dFZh58WSDLe/qjzxlSLgAgO//575LLbptiDaDv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbRfPAa0rNU3mU8YAZfaU7pwtcpynYdaDH5Ptan7XW9r3eAFElay5b0QuB3hqbEDn
-	 I2VaQN0m1+hrqqDtQKiAGwuS8VsDnBTvouSVKq09LyiJn6xHnS8iPEqOn6Z+o2f/u5
-	 FhjiwLHtwpY2Ja7wE7rauiSXAi7FZBP+NGcKONRQ=
+	b=S0Lkw1NIvS9qx5oQOrH5lRawktkHRITqRUAE4hk70DSEUh2NRJIufA0KV9l/c3jKM
+	 h21mx+nG0YSPu3utM8rVgbUnDkjcm7JPW8W8uQa+w4pKa+L/Fnht9uTtoIWpvCCclJ
+	 I9gGO4gIJNHwAr0wVCbMufKN78/xB/amTSmNb5k8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Timur Tabi <ttabi@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 514/592] drm/nouveau/bl: increase buffer size to avoid truncate warning
-Date: Mon, 23 Jun 2025 15:07:52 +0200
-Message-ID: <20250623130712.662159995@linuxfoundation.org>
+Subject: [PATCH 6.12 242/414] netfilter: nft_set_pipapo: clamp maximum map bucket size to INT_MAX
+Date: Mon, 23 Jun 2025 15:06:19 +0200
+Message-ID: <20250623130648.098389214@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,83 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 61b2b3737499f1fb361a54a16828db24a8345e85 ]
+[ Upstream commit b85e3367a5716ed3662a4fe266525190d2af76df ]
 
-The nouveau_get_backlight_name() function generates a unique name for the
-backlight interface, appending an id from 1 to 99 for all backlight devices
-after the first.
+Otherwise, it is possible to hit WARN_ON_ONCE in __kvmalloc_node_noprof()
+when resizing hashtable because __GFP_NOWARN is unset.
 
-GCC 15 (and likely other compilers) produce the following
--Wformat-truncation warning:
+Similar to:
 
-nouveau_backlight.c: In function ‘nouveau_backlight_init’:
-nouveau_backlight.c:56:69: error: ‘%d’ directive output may be truncated writing between 1 and 10 bytes into a region of size 3 [-Werror=format-truncation=]
-   56 |                 snprintf(backlight_name, BL_NAME_SIZE, "nv_backlight%d", nb);
-      |                                                                     ^~
-In function ‘nouveau_get_backlight_name’,
-    inlined from ‘nouveau_backlight_init’ at nouveau_backlight.c:351:7:
-nouveau_backlight.c:56:56: note: directive argument in the range [1, 2147483647]
-   56 |                 snprintf(backlight_name, BL_NAME_SIZE, "nv_backlight%d", nb);
-      |                                                        ^~~~~~~~~~~~~~~~
-nouveau_backlight.c:56:17: note: ‘snprintf’ output between 14 and 23 bytes into a destination of size 15
-   56 |                 snprintf(backlight_name, BL_NAME_SIZE, "nv_backlight%d", nb);
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  b541ba7d1f5a ("netfilter: conntrack: clamp maximum hashtable size to INT_MAX")
 
-The warning started appearing after commit ab244be47a8f ("drm/nouveau:
-Fix a potential theorical leak in nouveau_get_backlight_name()") This fix
-for the ida usage removed the explicit value check for ids larger than 99.
-The compiler is unable to intuit that the ida_alloc_max() limits the
-returned value range between 0 and 99.
-
-Because the compiler can no longer infer that the number ranges from 0 to
-99, it thinks that it could use as many as 11 digits (10 + the potential -
-sign for negative numbers).
-
-The warning has gone unfixed for some time, with at least one kernel test
-robot report. The code breaks W=1 builds, which is especially frustrating
-with the introduction of CONFIG_WERROR.
-
-The string is stored temporarily on the stack and then copied into the
-device name. Its not a big deal to use 11 more bytes of stack rounding out
-to an even 24 bytes. Increase BL_NAME_SIZE to 24 to avoid the truncation
-warning. This fixes the W=1 builds that include this driver.
-
-Compile tested only.
-
-Fixes: ab244be47a8f ("drm/nouveau: Fix a potential theorical leak in nouveau_get_backlight_name()")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202312050324.0kv4PnfZ-lkp@intel.com/
-Suggested-by: Timur Tabi <ttabi@nvidia.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20250610-jk-nouveua-drm-bl-snprintf-fix-v2-1-7fdd4b84b48e@intel.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_backlight.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_set_pipapo.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_backlight.c b/drivers/gpu/drm/nouveau/nouveau_backlight.c
-index d47442125fa18..9aae26eb7d8fb 100644
---- a/drivers/gpu/drm/nouveau/nouveau_backlight.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_backlight.c
-@@ -42,7 +42,7 @@
- #include "nouveau_acpi.h"
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 0529e4ef75207..c5855069bdaba 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -663,6 +663,9 @@ static int pipapo_realloc_mt(struct nft_pipapo_field *f,
+ 	    check_add_overflow(rules, extra, &rules_alloc))
+ 		return -EOVERFLOW;
  
- static struct ida bl_ida;
--#define BL_NAME_SIZE 15 // 12 for name + 2 for digits + 1 for '\0'
-+#define BL_NAME_SIZE 24 // 12 for name + 11 for digits + 1 for '\0'
++	if (rules_alloc > (INT_MAX / sizeof(*new_mt)))
++		return -ENOMEM;
++
+ 	new_mt = kvmalloc_array(rules_alloc, sizeof(*new_mt), GFP_KERNEL_ACCOUNT);
+ 	if (!new_mt)
+ 		return -ENOMEM;
+@@ -1499,6 +1502,9 @@ static struct nft_pipapo_match *pipapo_clone(struct nft_pipapo_match *old)
+ 		       src->groups * NFT_PIPAPO_BUCKETS(src->bb));
  
- static bool
- nouveau_get_backlight_name(char backlight_name[BL_NAME_SIZE],
+ 		if (src->rules > 0) {
++			if (src->rules_alloc > (INT_MAX / sizeof(*src->mt)))
++				goto out_mt;
++
+ 			dst->mt = kvmalloc_array(src->rules_alloc,
+ 						 sizeof(*src->mt),
+ 						 GFP_KERNEL_ACCOUNT);
 -- 
 2.39.5
 
