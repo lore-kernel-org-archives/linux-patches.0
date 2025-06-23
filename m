@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1C61E5B71;
-	Mon, 23 Jun 2025 21:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A942248B5;
+	Mon, 23 Jun 2025 21:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713994; cv=none; b=BlDfgP1wQgHLFAnBFgvQ+Y+VGZ2hYr1ugFAVI4N11k96TrjXMnK2AB/s2SOY5cg36Jy7eKrWnbSyQslPFz3KpBRZB2lPn/fWQW72BaXTNskqb14G/iP4/Naf43292mHnagjPdqgDKSff4OD5qZaa6D6ofDEjfKBB+aYzymvvXtM=
+	t=1750713999; cv=none; b=B5zUNod92XHVsV+yIbTI8sIBakzPCwxRKEedULhcy2EPnP1ciCyS+cpkHjYHej3aTIY14SHS9r1Hzlp9+0aF6WDZgePIsh/gmxmt3mN6UrdKDnoYnbPk0zJdLPNLdlhi8Pe1Fut8O2pcW+IOj5/Sas2b0BkywH4zeIH4ASgPhMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713994; c=relaxed/simple;
-	bh=IX5b/56yxLxgfqIDSOpx5toxc7XYwUBxvfGz+ziNfxU=;
+	s=arc-20240116; t=1750713999; c=relaxed/simple;
+	bh=srEeAfRmOEL0kMaFzOggX8jDMuaYhnAGZmp6T5qQ8cE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oiuLrI0N54u6m5gYQFIIF6sBvpKCW47m+KK6XPxt4jNfxvACfWuKPad+yQ5SaM8KsN1vPWCPUiAgjmUsTFXoibgN07nazHJm0sVYmIi6Z9Pg+ih21BQt5dA0PUbMG+eV+ewI3TE2AbhtpBabWMrxFSJzdUc+J+18GRvWgZYYOiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhj2BxGk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FZ1nOm/qv2wWbYv70J+PHxOWOdWQC3pLf0bf/fsYeVQQb8O5qeSf/orRTqETD+v3mJS1evF2LW6wjfkX8L37ZMiyx+QbwU9sQ9NlfZ2MWBIM8MBR+h4GgjwXGzxQYPoSGk+NrE+Y9wtcAkFn0enJPxIIkOL5mF3TbjCsXWHLKdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQgdNi6H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhj2BxGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86EAC4CEEA;
-	Mon, 23 Jun 2025 21:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQgdNi6H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBB5C4CEEA;
+	Mon, 23 Jun 2025 21:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713994;
-	bh=IX5b/56yxLxgfqIDSOpx5toxc7XYwUBxvfGz+ziNfxU=;
+	s=korg; t=1750713996;
+	bh=srEeAfRmOEL0kMaFzOggX8jDMuaYhnAGZmp6T5qQ8cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jhj2BxGk0SRWeNDFo+gI80FoqLWzG8vLetvnfth03wt1FiR2oT4ofgHFFk1/ujlVD
-	 ht1KnHCGKspbEX7pIjQ7oW4hOYOk8JXGixfX6Enc9I+K2QLr3tumxnUIWHqzung7SE
-	 nd98CDBWje4vcPSG3kJcmLILvroIbnXk8EAwa4Xg=
+	b=DQgdNi6HSa/0E8uZjjuNz/tzslQ34Oyh6URbzy+0NnD7SjSNGSUG1tBXMeDNAs2wo
+	 x1xlqs/bxt0bc2cdsstREz8BMa96NeVOE4/yKo9a2SATA2BP/d6SRm0/B9e4ZanA5H
+	 Ek90PMaSWIxg6QGEwY6oiXUaoDuQAo86hIN/AlFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.6 107/290] uio_hv_generic: Use correct size for interrupt and monitor pages
-Date: Mon, 23 Jun 2025 15:06:08 +0200
-Message-ID: <20250623130630.170043531@linuxfoundation.org>
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 159/411] net_sched: red: fix a race in __red_change()
+Date: Mon, 23 Jun 2025 15:05:03 +0200
+Message-ID: <20250623130637.650051592@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit c951ab8fd3589cf6991ed4111d2130816f2e3ac2 upstream.
+[ Upstream commit 85a3e0ede38450ea3053b8c45d28cf55208409b8 ]
 
-Interrupt and monitor pages should be in Hyper-V page size (4k bytes).
-This can be different from the system page size.
+Gerrard Tai reported a race condition in RED, whenever SFQ perturb timer
+fires at the wrong time.
 
-This size is read and used by the user-mode program to determine the
-mapped data region. An example of such user-mode program is the VMBus
-driver in DPDK.
+The race is as follows:
 
-Cc: stable@vger.kernel.org
-Fixes: 95096f2fbd10 ("uio-hv-generic: new userspace i/o driver for VMBus")
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/1746492997-4599-3-git-send-email-longli@linuxonhyperv.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <1746492997-4599-3-git-send-email-longli@linuxonhyperv.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CPU 0                                 CPU 1
+[1]: lock root
+[2]: qdisc_tree_flush_backlog()
+[3]: unlock root
+ |
+ |                                    [5]: lock root
+ |                                    [6]: rehash
+ |                                    [7]: qdisc_tree_reduce_backlog()
+ |
+[4]: qdisc_put()
+
+This can be abused to underflow a parent's qlen.
+
+Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
+should fix the race, because all packets will be purged from the qdisc
+before releasing the lock.
+
+Fixes: 0c8d13ac9607 ("net: sched: red: delay destroying child qdisc on replace")
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250611111515.1983366-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/uio/uio_hv_generic.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/sch_red.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/uio/uio_hv_generic.c
-+++ b/drivers/uio/uio_hv_generic.c
-@@ -288,13 +288,13 @@ hv_uio_probe(struct hv_device *dev,
- 	pdata->info.mem[INT_PAGE_MAP].name = "int_page";
- 	pdata->info.mem[INT_PAGE_MAP].addr
- 		= (uintptr_t)vmbus_connection.int_page;
--	pdata->info.mem[INT_PAGE_MAP].size = PAGE_SIZE;
-+	pdata->info.mem[INT_PAGE_MAP].size = HV_HYP_PAGE_SIZE;
- 	pdata->info.mem[INT_PAGE_MAP].memtype = UIO_MEM_LOGICAL;
- 
- 	pdata->info.mem[MON_PAGE_MAP].name = "monitor_page";
- 	pdata->info.mem[MON_PAGE_MAP].addr
- 		= (uintptr_t)vmbus_connection.monitor_pages[1];
--	pdata->info.mem[MON_PAGE_MAP].size = PAGE_SIZE;
-+	pdata->info.mem[MON_PAGE_MAP].size = HV_HYP_PAGE_SIZE;
- 	pdata->info.mem[MON_PAGE_MAP].memtype = UIO_MEM_LOGICAL;
- 
- 	pdata->recv_buf = vzalloc(RECV_BUFFER_SIZE);
+diff --git a/net/sched/sch_red.c b/net/sched/sch_red.c
+index 935d90874b1b7..1b69b7b90d858 100644
+--- a/net/sched/sch_red.c
++++ b/net/sched/sch_red.c
+@@ -283,7 +283,7 @@ static int __red_change(struct Qdisc *sch, struct nlattr **tb,
+ 	q->userbits = userbits;
+ 	q->limit = ctl->limit;
+ 	if (child) {
+-		qdisc_tree_flush_backlog(q->qdisc);
++		qdisc_purge_queue(q->qdisc);
+ 		old_child = q->qdisc;
+ 		q->qdisc = child;
+ 	}
+-- 
+2.39.5
+
 
 
