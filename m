@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44674315A;
-	Mon, 23 Jun 2025 21:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7DF4315A;
+	Mon, 23 Jun 2025 21:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714938; cv=none; b=h2WzW8ryWEGHDEKY7rLhZTx3OIVJcPBPDhR7p1qeUSnsQ5TFt3ECHXcDFPdI+MckWwW1+FU614OG5dTtGM8FMS5CwCggitWQylEFOOCGmu0vXzhuviFZ2k5wPxG/cyj3DW7lGMlBp5dsei+zrQMEUB8F3oKiImH9Tt1NEHCUcRU=
+	t=1750714941; cv=none; b=rqDFBDrSDEXwGt9STdAYpedu654LYktgpvuL6Hcpn7arI/ernmDwJJu52PSy4KZRok82yT3R/nrzmm4jKExOYehMAHM2DsElvTJ5xQhTCHjbQiUlWfueqGzgZCS0LFL0ScXwrkXDcm5ZPYcD/lblYQGA6bX97qUBcmhulsgah9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714938; c=relaxed/simple;
-	bh=piSKYISZLy3LkDHnAjsSKejnS55llDyPE5ExYFawhyI=;
+	s=arc-20240116; t=1750714941; c=relaxed/simple;
+	bh=Sbln8nBupkPqY+EONBP/rkGDpRWUgqRwVQ/KPp0agO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I8LOCeAbW5CB7X4YXZjsUitndiahpqhuGbYlM2x+LnW/WFfOs5Xzjw5nSTJEni0c6sUPkKTLRYgAmGCUVMuMOo1eIeRypLpJGriq/lu+KGCqJsfSXMTxUWYThWs2HyYKOiJDdQU+8w2hOF+2VuvTSBCPOZdlTJklspGHAX+ZW6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFOQBQyo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SktpQeKSnQW8ceThqWARnTCfIoaDr0gGB1mzauOdcMT0toHnhYbBQR0BZCE/T12vaAHH7VvE4Drc6LNvscQgn2nWYXi2Q+S37qzd5FahvLYhliUXeFyEArULGVVE87DeioRRyweT4zPuV2Q/xJ1XH1aihmo2WfovKeSi4ObU9sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d82nib42; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFOQBQyo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69DDAC4CEEA;
-	Mon, 23 Jun 2025 21:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d82nib42"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03FCC4CEEA;
+	Mon, 23 Jun 2025 21:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714938;
-	bh=piSKYISZLy3LkDHnAjsSKejnS55llDyPE5ExYFawhyI=;
+	s=korg; t=1750714941;
+	bh=Sbln8nBupkPqY+EONBP/rkGDpRWUgqRwVQ/KPp0agO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MFOQBQyoiN9PjhLzdal2ayy9BfHXzPabfWmRz4MQVa7+WECj/NNRMMOSoQAXdSjTW
-	 A42Rwvvt4CaTyPxzrChlrWo2B+zf7ZlGr/gbYNF2L2RkRZ6uiWJB+qs66QbFYU/rQl
-	 6XGBKncuIurSNs39pBrIxXhPFSXEpVPsUpTSDtVk=
+	b=d82nib42RL5UkGW1JSnEtEMplabbNomIXv9fsW5x/HYsmnCXSX4GwqGwfhGYOyOPz
+	 yuyU7bucL5FjA2Mbl6yJUSTBQUvaFXpyXq+f4QwEtjFQVqNUUQVkBNHj8TNNRST/OA
+	 HGeBMQ7KUQOz86w7I8kUkzrQnIcxArSIgC2TW+tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amber Lin <Amber.Lin@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Marcus Folkesson <marcus.folkesson@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 242/355] drm/amdkfd: Set SDMA_RLCx_IB_CNTL/SWITCH_INSIDE_IB
-Date: Mon, 23 Jun 2025 15:07:23 +0200
-Message-ID: <20250623130634.024258721@linuxfoundation.org>
+Subject: [PATCH 6.15 427/592] watchdog: da9052_wdt: respect TWDMIN
+Date: Mon, 23 Jun 2025 15:06:25 +0200
+Message-ID: <20250623130710.592166580@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amber Lin <Amber.Lin@amd.com>
+From: Marcus Folkesson <marcus.folkesson@gmail.com>
 
-[ Upstream commit ab9fcc6362e0699fc1150aa1d8503c40fce2c1e1 ]
+[ Upstream commit 325f510fcd9cda5a44bcb662b74ba4e3dabaca10 ]
 
-When submitting MQD to CP, set SDMA_RLCx_IB_CNTL/SWITCH_INSIDE_IB bit so
-it'll allow SDMA preemption if there is a massive command buffer of
-long-running SDMA commands.
+We have to wait at least the minimium time for the watchdog window
+(TWDMIN) before writings to the wdt register after the
+watchdog is activated.
+Otherwise the chip will assert TWD_ERROR and power down to reset mode.
 
-Signed-off-by: Amber Lin <Amber.Lin@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20250326-da9052-fixes-v3-4-a38a560fef0e@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/watchdog/da9052_wdt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-index dadeb2013fd9a..dc468dfce391e 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -396,6 +396,10 @@ static void update_mqd_sdma(struct mqd_manager *mm, void *mqd,
- 	m->sdma_engine_id = q->sdma_engine_id;
- 	m->sdma_queue_id = q->sdma_queue_id;
- 	m->sdmax_rlcx_dummy_reg = SDMA_RLC_DUMMY_DEFAULT;
-+	/* Allow context switch so we don't cross-process starve with a massive
-+	 * command buffer of long-running SDMA commands
-+	 */
-+	m->sdmax_rlcx_ib_cntl |= SDMA0_GFX_IB_CNTL__SWITCH_INSIDE_IB_MASK;
+diff --git a/drivers/watchdog/da9052_wdt.c b/drivers/watchdog/da9052_wdt.c
+index 77039f2f0be54..bc0946233ced0 100644
+--- a/drivers/watchdog/da9052_wdt.c
++++ b/drivers/watchdog/da9052_wdt.c
+@@ -168,6 +168,7 @@ static int da9052_wdt_probe(struct platform_device *pdev)
+ 	da9052_wdt = &driver_data->wdt;
  
- 	q->is_active = QUEUE_IS_ACTIVE(*q);
- }
+ 	da9052_wdt->timeout = DA9052_DEF_TIMEOUT;
++	da9052_wdt->min_hw_heartbeat_ms = DA9052_TWDMIN;
+ 	da9052_wdt->info = &da9052_wdt_info;
+ 	da9052_wdt->ops = &da9052_wdt_ops;
+ 	da9052_wdt->parent = dev;
 -- 
 2.39.5
 
