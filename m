@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACA4C2E0;
-	Mon, 23 Jun 2025 21:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37304C2E0;
+	Mon, 23 Jun 2025 21:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714345; cv=none; b=ZLG62W0TBQwQCxyt8JJ4fWCxCjuk9xMpYX2++Tb1WJVwag+5Xp5m58iLtPqiua7VFOdGgV2pwO1XdmlJAFLnR0ZV68Q2Sdsz/2S5K1TPXR7wVmCsRt6Hwj9j9mNBv4g/X1QGu5gfeOzRYhTTQQMHQxig7bNmft32lLzi3Zrajf8=
+	t=1750714348; cv=none; b=HhVS47uLVRUMsahzWM6FxamG2bnuz2IxPudIdcg8HpVPB2DRRYYzaB180vhbmqtBeIVx9KCkCdz1xZR+fZAKOoafP4OK97IU6S0BgFMiHQW1GW3gBggjzi25kq27/CvLNSIEflNvy4+AlfoN/uOcmRbV++KYQZYNV2EcCeU+Las=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714345; c=relaxed/simple;
-	bh=4lDldMA6EB+42rLwEo6jqLwiu8gjZVyQ1iiVUcL8Ex4=;
+	s=arc-20240116; t=1750714348; c=relaxed/simple;
+	bh=u/oJxI9hh9j68IcFIqUKSIkudg+v+zuuiOcTDBSthxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6D20x+6FpFvImoQDbycb2+WXayMuOBMcM/TCmbKhjlwi9gtz2PqnuHwJBGOHlpTBU87kcs2AqycQkPM2R+Dym0TCNjz2aiHGIly99O8yz6pmrtZ4krSmgjAAkPFje4HRVEy9iEMNMkDBloFpBSzImr+pltjRuKbbVcZw5g8KG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMzah6m+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OPTPKFKr28rwaisDKBXQmofnvkfZFVDzI6yC4XVhyNpuQAZA828Xlvp99832sJOUKcclb+1ukP62cIa1XdndWOCR6zHZ9RtZk01Cn0OLG2Z0z/KnJM/6ISoZs3I5nqIOKelo9xfbMLKX6IxQP4AiT5/rkWY/ac0COU6Fixageic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lV5oS2iA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMzah6m+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC8DC4CEEA;
-	Mon, 23 Jun 2025 21:32:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lV5oS2iA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E7FC4CEEA;
+	Mon, 23 Jun 2025 21:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714345;
-	bh=4lDldMA6EB+42rLwEo6jqLwiu8gjZVyQ1iiVUcL8Ex4=;
+	s=korg; t=1750714348;
+	bh=u/oJxI9hh9j68IcFIqUKSIkudg+v+zuuiOcTDBSthxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hMzah6m+P9gN1XzrxR2JGGOyMgOdU/5jy82cynyOrDveXxK9Qde3RrjhRSYbiud7q
-	 TKulOVa79rTwCIjZVt3X/B/BaU8SsTvlDWoFJOzXLLZeDOFHswIJFr09dWt/3TwcAn
-	 LP6m5ukpvsrSjgnKngkk54Prew+YhRv5cySgci9E=
+	b=lV5oS2iAZDg1OL+WsOYf8r9gjOl3y1Zlzb/+0l+8yQSEin+37jFE9KExnr0bhqddA
+	 xds99oE+UoNEV/9Tl2+SIVI84gvKOfxjay019/wlyNF/wC+/f+nMHFHXybnP5jAIcx
+	 ONBHbd8L7i67BVgXViUw3haThSBzRnY2UBBkANKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.15 182/411] usb: Flush altsetting 0 endpoints before reinitializating them after reset.
-Date: Mon, 23 Jun 2025 15:05:26 +0200
-Message-ID: <20250623130638.265199417@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 097/414] Input: ims-pcu - check record size in ims_pcu_flash_firmware()
+Date: Mon, 23 Jun 2025 15:03:54 +0200
+Message-ID: <20250623130644.519679460@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,79 +46,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 89bb3dc13ac29a563f4e4c555e422882f64742bd upstream.
+commit a95ef0199e80f3384eb992889322957d26c00102 upstream.
 
-usb core avoids sending a Set-Interface altsetting 0 request after device
-reset, and instead relies on calling usb_disable_interface() and
-usb_enable_interface() to flush and reset host-side of those endpoints.
+The "len" variable comes from the firmware and we generally do
+trust firmware, but it's always better to double check.  If the "len"
+is too large it could result in memory corruption when we do
+"memcpy(fragment->data, rec->data, len);"
 
-xHCI hosts allocate and set up endpoint ring buffers and host_ep->hcpriv
-during usb_hcd_alloc_bandwidth() callback, which in this case is called
-before flushing the endpoint in usb_disable_interface().
-
-Call usb_disable_interface() before usb_hcd_alloc_bandwidth() to ensure
-URBs are flushed before new ring buffers for the endpoints are allocated.
-
-Otherwise host driver will attempt to find and remove old stale URBs
-from a freshly allocated new ringbuffer.
-
-Cc: stable <stable@kernel.org>
-Fixes: 4fe0387afa89 ("USB: don't send Set-Interface after reset")
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250514132520.225345-1-mathias.nyman@linux.intel.com
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/131fd1ae92c828ee9f4fa2de03d8c210ae1f3524.1748463049.git.dan.carpenter@linaro.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/input/misc/ims-pcu.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -6040,6 +6040,7 @@ static int usb_reset_and_verify_device(s
- 	struct usb_hub			*parent_hub;
- 	struct usb_hcd			*hcd = bus_to_hcd(udev->bus);
- 	struct usb_device_descriptor	descriptor;
-+	struct usb_interface		*intf;
- 	struct usb_host_bos		*bos;
- 	int				i, j, ret = 0;
- 	int				port1 = udev->portnum;
-@@ -6103,6 +6104,18 @@ static int usb_reset_and_verify_device(s
- 	if (!udev->actconfig)
- 		goto done;
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -844,6 +844,12 @@ static int ims_pcu_flash_firmware(struct
+ 		addr = be32_to_cpu(rec->addr) / 2;
+ 		len = be16_to_cpu(rec->len);
  
-+	/*
-+	 * Some devices can't handle setting default altsetting 0 with a
-+	 * Set-Interface request. Disable host-side endpoints of those
-+	 * interfaces here. Enable and reset them back after host has set
-+	 * its internal endpoint structures during usb_hcd_alloc_bandwith()
-+	 */
-+	for (i = 0; i < udev->actconfig->desc.bNumInterfaces; i++) {
-+		intf = udev->actconfig->interface[i];
-+		if (intf->cur_altsetting->desc.bAlternateSetting == 0)
-+			usb_disable_interface(udev, intf, true);
-+	}
++		if (len > sizeof(pcu->cmd_buf) - 1 - sizeof(*fragment)) {
++			dev_err(pcu->dev,
++				"Invalid record length in firmware: %d\n", len);
++			return -EINVAL;
++		}
 +
- 	mutex_lock(hcd->bandwidth_mutex);
- 	ret = usb_hcd_alloc_bandwidth(udev, udev->actconfig, NULL, NULL);
- 	if (ret < 0) {
-@@ -6134,12 +6147,11 @@ static int usb_reset_and_verify_device(s
- 	 */
- 	for (i = 0; i < udev->actconfig->desc.bNumInterfaces; i++) {
- 		struct usb_host_config *config = udev->actconfig;
--		struct usb_interface *intf = config->interface[i];
- 		struct usb_interface_descriptor *desc;
- 
-+		intf = config->interface[i];
- 		desc = &intf->cur_altsetting->desc;
- 		if (desc->bAlternateSetting == 0) {
--			usb_disable_interface(udev, intf, true);
- 			usb_enable_interface(udev, intf, true);
- 			ret = 0;
- 		} else {
+ 		fragment = (void *)&pcu->cmd_buf[1];
+ 		put_unaligned_le32(addr, &fragment->addr);
+ 		fragment->len = len;
 
 
