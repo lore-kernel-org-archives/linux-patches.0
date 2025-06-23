@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE8F1798F;
-	Mon, 23 Jun 2025 13:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1024F220687;
+	Mon, 23 Jun 2025 13:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684637; cv=none; b=sAMN7rK/nHs03Es6ai1kUB7NF0Q0cUXX9GnAR5Rv9B/TILGYGzPz4DIy2TvnmjmIH9aedshg9YWiqbcs8JkOFwKlEPbBzRcovtN/a0xDVtAf+upEP9mDRaDsab+8rCfLP/5XwBwXHv7BXbiIV7gIRmGUatrvYPMo4VW4vPQuJKs=
+	t=1750684640; cv=none; b=E/WggC596azJkFLVrCxm3tPhpdB2M0d43sj8bUVYfSRxy2qUup8Ua/k1eb5uRe2HFYLjUcnwyA6JoPS+8apVXThYuA7VnY+602yXxityUZsTqrep/bRyfZsIVylfp8f6hkw/AdOeW0rrAmiSFyTNwsePF4TNir6bh6rI2I5JOmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684637; c=relaxed/simple;
-	bh=nQbTnln+nsAv9jovMwXcuXzhh6TS7UkAMNb9VBFGzEA=;
+	s=arc-20240116; t=1750684640; c=relaxed/simple;
+	bh=ux+7a5KHQNBGttvBUolboEQf1KAsEMYxbwQpLaiXRs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tNGR3mmWnAKenr4acAoFGdywsNrbOZ3MV3D4O2nMtftY+eamG25RTSn2IgTaCZhyD0R2JCZie75h/Oo/8qOQPPSpCs9JVg3/68cPpLqMfI35zBhkP9MhPY2Ipk5sKNXyDM49EJckB0UAokW4zNFNlbN11BfbA4um98zGaQuOErQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rj6FfjMN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=emX27AHDUEcRqRgLpWWOPsZf85yrs85CDFkzHWBgru6UbDbWugBYuSsla+atolWiCL+L7aoBweLP0WfimgZsuNLH5D9NC70BI9O+qWAH1NHSHfiDc17BIuiKZ9Jc3PCPMOMEB6ZXnWJK0tT9MvPQn+i6PugX7P78VIYXP9lM4kA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1a5izYO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rj6FfjMN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0289C4CEEA;
-	Mon, 23 Jun 2025 13:17:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1a5izYO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCD9C4CEEA;
+	Mon, 23 Jun 2025 13:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684637;
-	bh=nQbTnln+nsAv9jovMwXcuXzhh6TS7UkAMNb9VBFGzEA=;
+	s=korg; t=1750684639;
+	bh=ux+7a5KHQNBGttvBUolboEQf1KAsEMYxbwQpLaiXRs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rj6FfjMNKS1+OZFCcSq/Ytr/lC0rR0j9v2AUqx2eq6YWCKcl++flH+FlqM0Fgl+bx
-	 aarCbWokUj4TxP38TUqo/oS12cOfZ+duDBDo2l8DE9gf71OrTBHVO9OihvL3oAmn7B
-	 OJQR3dE/N8ID0csaL0pfb+WnwAoNtszBJURWPaFE=
+	b=u1a5izYOgPVzDYwICyJxZdADogitGHOpQsNtxGasKkWEPk1QFdn58S5G2a+V/iNsc
+	 9zSU2fubvi6ssTcnFsZ6vdccgS6jts0lutngwMzL3qPjpFKZ5C05U97DsIMszdfux7
+	 9xKmYS3rX8OymRaSjsM/Eb95bx5RaagQT4xaTY3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Sami Mujawar <sami.mujawar@arm.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Cedric Xing <cedric.xing@intel.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.15 143/592] configfs-tsm-report: Fix NULL dereference of tsm_ops
-Date: Mon, 23 Jun 2025 15:01:41 +0200
-Message-ID: <20250623130703.680496349@linuxfoundation.org>
+	Kendall Willis <k-willis@ti.com>,
+	Nishanth Menon <nm@ti.com>
+Subject: [PATCH 6.15 144/592] firmware: ti_sci: Convert CPU latency constraint from us to ms
+Date: Mon, 23 Jun 2025 15:01:42 +0200
+Message-ID: <20250623130703.703393985@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -57,150 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Kendall Willis <k-willis@ti.com>
 
-commit fba4ceaa242d2bdf4c04b77bda41d32d02d3925d upstream.
+commit 9b808f7f395ae375a26e32046b680cf898dacc21 upstream.
 
-Unlike sysfs, the lifetime of configfs objects is controlled by
-userspace. There is no mechanism for the kernel to find and delete all
-created config-items. Instead, the configfs-tsm-report mechanism has an
-expectation that tsm_unregister() can happen at any time and cause
-established config-item access to start failing.
+Fix CPU resume latency constraint units sent to device manager through the
+TI SCI API. The device manager expects CPU resume latency to be in msecs
+which is passed in with the TI SCI API [1]. CPU latency constraints are
+set in userspace using the PM QoS framework which uses usecs as the unit.
+Since PM QoS uses usecs for units and the device manager expects msecs as
+the unit, TI SCI needs to convert from usecs to msecs before passing to
+device manager.
 
-That expectation is not fully satisfied. While tsm_report_read(),
-tsm_report_{is,is_bin}_visible(), and tsm_report_make_item() safely fail
-if tsm_ops have been unregistered, tsm_report_privlevel_store()
-tsm_report_provider_show() fail to check for ops registration. Add the
-missing checks for tsm_ops having been removed.
+[1] https://software-dl.ti.com/tisci/esd/latest/2_tisci_msgs/pm/lpm.html#tisci-msg-lpm-set-latency-constraint
 
-Now, in supporting the ability for tsm_unregister() to always succeed,
-it leaves the problem of what to do with lingering config-items. The
-expectation is that the admin that arranges for the ->remove() (unbind)
-of the ${tsm_arch}-guest driver is also responsible for deletion of all
-open config-items. Until that deletion happens, ->probe() (reload /
-bind) of the ${tsm_arch}-guest driver fails.
-
-This allows for emergency shutdown / revocation of attestation
-interfaces, and requires coordinated restart.
-
-Fixes: 70e6f7e2b985 ("configfs-tsm: Introduce a shared ABI for attestation reports")
 Cc: stable@vger.kernel.org
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: Steven Price <steven.price@arm.com>
-Cc: Sami Mujawar <sami.mujawar@arm.com>
-Cc: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reported-by: Cedric Xing <cedric.xing@intel.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://patch.msgid.link/20250430203331.1177062-1-dan.j.williams@intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Fixes: a7a15754c7f7 ("firmware: ti_sci: add CPU latency constraint management")
+Signed-off-by: Kendall Willis <k-willis@ti.com>
+Link: https://lore.kernel.org/r/20250428205336.2947118-1-k-willis@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virt/coco/tsm.c |   31 +++++++++++++++++++++++++++++--
- 1 file changed, 29 insertions(+), 2 deletions(-)
+ drivers/firmware/ti_sci.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/virt/coco/tsm.c
-+++ b/drivers/virt/coco/tsm.c
-@@ -15,6 +15,7 @@
- static struct tsm_provider {
- 	const struct tsm_ops *ops;
- 	void *data;
-+	atomic_t count;
- } provider;
- static DECLARE_RWSEM(tsm_rwsem);
+--- a/drivers/firmware/ti_sci.c
++++ b/drivers/firmware/ti_sci.c
+@@ -2,7 +2,7 @@
+ /*
+  * Texas Instruments System Control Interface Protocol Driver
+  *
+- * Copyright (C) 2015-2024 Texas Instruments Incorporated - https://www.ti.com/
++ * Copyright (C) 2015-2025 Texas Instruments Incorporated - https://www.ti.com/
+  *	Nishanth Menon
+  */
  
-@@ -92,6 +93,10 @@ static ssize_t tsm_report_privlevel_stor
- 	if (rc)
- 		return rc;
+@@ -3670,6 +3670,7 @@ static int __maybe_unused ti_sci_suspend
+ 	struct ti_sci_info *info = dev_get_drvdata(dev);
+ 	struct device *cpu_dev, *cpu_dev_max = NULL;
+ 	s32 val, cpu_lat = 0;
++	u16 cpu_lat_ms;
+ 	int i, ret;
  
-+	guard(rwsem_write)(&tsm_rwsem);
-+	if (!provider.ops)
-+		return -ENXIO;
-+
- 	/*
- 	 * The valid privilege levels that a TSM might accept, if it accepts a
- 	 * privilege level setting at all, are a max of TSM_PRIVLEVEL_MAX (see
-@@ -101,7 +106,6 @@ static ssize_t tsm_report_privlevel_stor
- 	if (provider.ops->privlevel_floor > val || val > TSM_PRIVLEVEL_MAX)
- 		return -EINVAL;
- 
--	guard(rwsem_write)(&tsm_rwsem);
- 	rc = try_advance_write_generation(report);
- 	if (rc)
- 		return rc;
-@@ -115,6 +119,10 @@ static ssize_t tsm_report_privlevel_floo
- 					       char *buf)
- {
- 	guard(rwsem_read)(&tsm_rwsem);
-+
-+	if (!provider.ops)
-+		return -ENXIO;
-+
- 	return sysfs_emit(buf, "%u\n", provider.ops->privlevel_floor);
- }
- CONFIGFS_ATTR_RO(tsm_report_, privlevel_floor);
-@@ -217,6 +225,9 @@ CONFIGFS_ATTR_RO(tsm_report_, generation
- static ssize_t tsm_report_provider_show(struct config_item *cfg, char *buf)
- {
- 	guard(rwsem_read)(&tsm_rwsem);
-+	if (!provider.ops)
-+		return -ENXIO;
-+
- 	return sysfs_emit(buf, "%s\n", provider.ops->name);
- }
- CONFIGFS_ATTR_RO(tsm_report_, provider);
-@@ -284,7 +295,7 @@ static ssize_t tsm_report_read(struct ts
- 	guard(rwsem_write)(&tsm_rwsem);
- 	ops = provider.ops;
- 	if (!ops)
--		return -ENOTTY;
-+		return -ENXIO;
- 	if (!report->desc.inblob_len)
- 		return -EINVAL;
- 
-@@ -421,12 +432,20 @@ static struct config_item *tsm_report_ma
- 	if (!state)
- 		return ERR_PTR(-ENOMEM);
- 
-+	atomic_inc(&provider.count);
- 	config_item_init_type_name(&state->cfg, name, &tsm_report_type);
- 	return &state->cfg;
- }
- 
-+static void tsm_report_drop_item(struct config_group *group, struct config_item *item)
-+{
-+	config_item_put(item);
-+	atomic_dec(&provider.count);
-+}
-+
- static struct configfs_group_operations tsm_report_group_ops = {
- 	.make_item = tsm_report_make_item,
-+	.drop_item = tsm_report_drop_item,
- };
- 
- static const struct config_item_type tsm_reports_type = {
-@@ -459,6 +478,11 @@ int tsm_register(const struct tsm_ops *o
- 		return -EBUSY;
- 	}
- 
-+	if (atomic_read(&provider.count)) {
-+		pr_err("configfs/tsm/report not empty\n");
-+		return -EBUSY;
-+	}
-+
- 	provider.ops = ops;
- 	provider.data = priv;
- 	return 0;
-@@ -470,6 +494,9 @@ int tsm_unregister(const struct tsm_ops
- 	guard(rwsem_write)(&tsm_rwsem);
- 	if (ops != provider.ops)
- 		return -EBUSY;
-+	if (atomic_read(&provider.count))
-+		pr_warn("\"%s\" unregistered with items present in configfs/tsm/report\n",
-+			provider.ops->name);
- 	provider.ops = NULL;
- 	provider.data = NULL;
- 	return 0;
+ 	if (info->fw_caps & MSG_FLAG_CAPS_LPM_DM_MANAGED) {
+@@ -3682,9 +3683,16 @@ static int __maybe_unused ti_sci_suspend
+ 			}
+ 		}
+ 		if (cpu_dev_max) {
+-			dev_dbg(cpu_dev_max, "%s: sending max CPU latency=%u\n", __func__, cpu_lat);
++			/*
++			 * PM QoS latency unit is usecs, device manager uses msecs.
++			 * Convert to msecs and round down for device manager.
++			 */
++			cpu_lat_ms = cpu_lat / USEC_PER_MSEC;
++			dev_dbg(cpu_dev_max, "%s: sending max CPU latency=%u ms\n", __func__,
++				cpu_lat_ms);
+ 			ret = ti_sci_cmd_set_latency_constraint(&info->handle,
+-								cpu_lat, TISCI_MSG_CONSTRAINT_SET);
++								cpu_lat_ms,
++								TISCI_MSG_CONSTRAINT_SET);
+ 			if (ret)
+ 				return ret;
+ 		}
 
 
