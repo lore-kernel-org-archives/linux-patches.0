@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B1F22A7F9;
-	Mon, 23 Jun 2025 22:13:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA6FB676;
+	Mon, 23 Jun 2025 22:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716835; cv=none; b=mUgr5kfLejMDPDe3/2Ps6HXnJut7aaMaOTId/LlIUYNBpg23/UqZ+ZjaMLY48GjScUR9xzXaVBadVd5DbXS1iYLg4FTJzlXxNQFYmcLppVK6Z1vZNMZoJl6X3XEq47Pf4ObW11FYenvItayzFNowkn0/EuPl87SVr5hJG9x0o9U=
+	t=1750716838; cv=none; b=opXHl7PSK0Bq2dnYz8Px8xKypSjFltxgtIiGgAIndlXlgoOREU7c6wedWsZWe8RsoWyOAdRiPHBZZNMUjoCKE5lygONaK5KjXH2IEGH/7cPiFn4YGqeMCtd5yMKnMYVrh0Gjq+XC84MF2QM/VCxE1K5GxO79lO8r/KiC/1kS33w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716835; c=relaxed/simple;
-	bh=eiVLdPcU8capN+bCrpOPg7+/1FM0JQ6rQoZWK0l7Ex0=;
+	s=arc-20240116; t=1750716838; c=relaxed/simple;
+	bh=IOGfq2LA4wZwFPzRXCvo2Og5awG/v4URlQmv8+jeL84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nT2K87VHvKBX9ew4KV/mfQ+4XcU0J1EQKMelnVlb6BnsZTQUeCp6R4N2ogXnn174YiYm6kGu78vQRnPsuIn2pU2t9jEYVYxfUmYC+CxYDhHIjdFw0vWyBRm4Fj2qjW8gbLezNF1o0C2YB+aMgQOCHLhZBIlENVosfTfNddVZTOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vtCNTcMS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j5A8a/DsCqI5iaRbOndGJUNvSdIE2lrrWtkcu6E5zIpPiox2TfZYp3PRXyqd64/+Waq+Im9L44KJ5zOSPKMNmoY7Eu4LjfW3hdM8XCPaoTDAtkhrsXwU155CmfmiM2OzlBsnDqtD49agNYyUW/6Sxg7113prpLtgW/+LbGNq5WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/DKSrHp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vtCNTcMS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF676C4CEEA;
-	Mon, 23 Jun 2025 22:13:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/DKSrHp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E35C4CEF1;
+	Mon, 23 Jun 2025 22:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716835;
-	bh=eiVLdPcU8capN+bCrpOPg7+/1FM0JQ6rQoZWK0l7Ex0=;
+	s=korg; t=1750716837;
+	bh=IOGfq2LA4wZwFPzRXCvo2Og5awG/v4URlQmv8+jeL84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vtCNTcMSPKf74CiMbzJ/Wm3mLGdDe4RspzCn95TuAcOazNHmpYbeisap/Jop1POuI
-	 xHjrdHuiQztPwJMwj8Gtu/I29ST0yc5zLkXMOSBfcx6CjFLnOnB2UhHDU9zzQaI+CA
-	 kFyTml8hp6VPTxtj2FRkw+Pv9GGlWs+q55S9l42U=
+	b=r/DKSrHpkecrK3dSJOhAv2rED/jlGw57NpUmSmVFXJ7GffIN+V+6mbhrluveAZXzv
+	 AWWgxJotCO9f3m0JOVbvZoil4LAkj4FH1B1lAoSawePdiOosks/wQgKNzLwPrtYMVx
+	 dXYwQ9stgTbpyVveRWLW18lDbl4AZ5PRnIaf38E8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 587/592] mtd: spinand: winbond: Prevent unsupported frequencies on dual/quad I/O variants
-Date: Mon, 23 Jun 2025 15:09:05 +0200
-Message-ID: <20250623130714.397427565@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 397/411] net_sched: sch_sfq: annotate data-races around q->perturb_period
+Date: Mon, 23 Jun 2025 15:09:01 +0200
+Message-ID: <20250623130643.672026695@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,86 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit dba90f5a79c13936de4273a19e67908a0c296afe ]
+commit a17ef9e6c2c1cf0fc6cd6ca6a9ce525c67d1da7f upstream.
 
-Dual and quad capable chips natively support dual and quad I/O variants
-at up to 104MHz (1-2-2 and 1-4-4 operations). Reaching the maximum speed
-of 166MHz is theoretically possible (while still unsupported in the
-field) by adding a few more dummy cycles. Let's be accurate and clearly
-state this limit.
+sfq_perturbation() reads q->perturb_period locklessly.
+Add annotations to fix potential issues.
 
-Setting a maximum frequency implies adding the frequency parameter to
-the macro, which is done using a variadic argument to avoid impacting
-all the other drivers which already make use of this macro.
-
-Fixes: 1ea808b4d15b ("mtd: spinand: winbond: Update the *JW chip definitions")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240430180015.3111398-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/winbond.c |  4 ++--
- include/linux/mtd/spinand.h    | 10 ++++++----
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ net/sched/sch_sfq.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mtd/nand/spi/winbond.c b/drivers/mtd/nand/spi/winbond.c
-index b2297699ff4fa..397c90b745e3a 100644
---- a/drivers/mtd/nand/spi/winbond.c
-+++ b/drivers/mtd/nand/spi/winbond.c
-@@ -26,11 +26,11 @@
- static SPINAND_OP_VARIANTS(read_cache_dtr_variants,
- 		SPINAND_PAGE_READ_FROM_CACHE_1S_4D_4D_OP(0, 8, NULL, 0, 80 * HZ_PER_MHZ),
- 		SPINAND_PAGE_READ_FROM_CACHE_1S_1D_4D_OP(0, 2, NULL, 0, 80 * HZ_PER_MHZ),
--		SPINAND_PAGE_READ_FROM_CACHE_1S_4S_4S_OP(0, 2, NULL, 0),
-+		SPINAND_PAGE_READ_FROM_CACHE_1S_4S_4S_OP(0, 2, NULL, 0, 104 * HZ_PER_MHZ),
- 		SPINAND_PAGE_READ_FROM_CACHE_1S_1S_4S_OP(0, 1, NULL, 0),
- 		SPINAND_PAGE_READ_FROM_CACHE_1S_2D_2D_OP(0, 4, NULL, 0, 80 * HZ_PER_MHZ),
- 		SPINAND_PAGE_READ_FROM_CACHE_1S_1D_2D_OP(0, 2, NULL, 0, 80 * HZ_PER_MHZ),
--		SPINAND_PAGE_READ_FROM_CACHE_1S_2S_2S_OP(0, 1, NULL, 0),
-+		SPINAND_PAGE_READ_FROM_CACHE_1S_2S_2S_OP(0, 1, NULL, 0, 104 * HZ_PER_MHZ),
- 		SPINAND_PAGE_READ_FROM_CACHE_1S_1S_2S_OP(0, 1, NULL, 0),
- 		SPINAND_PAGE_READ_FROM_CACHE_1S_1D_1D_OP(0, 2, NULL, 0, 80 * HZ_PER_MHZ),
- 		SPINAND_PAGE_READ_FROM_CACHE_FAST_1S_1S_1S_OP(0, 1, NULL, 0),
-diff --git a/include/linux/mtd/spinand.h b/include/linux/mtd/spinand.h
-index 392ea3ef73605..aba653207c0f7 100644
---- a/include/linux/mtd/spinand.h
-+++ b/include/linux/mtd/spinand.h
-@@ -113,11 +113,12 @@
- 		   SPI_MEM_DTR_OP_DATA_IN(len, buf, 2),			\
- 		   SPI_MEM_OP_MAX_FREQ(freq))
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -611,6 +611,7 @@ static void sfq_perturbation(struct time
+ 	struct Qdisc *sch = q->sch;
+ 	spinlock_t *root_lock = qdisc_lock(qdisc_root_sleeping(sch));
+ 	siphash_key_t nkey;
++	int period;
  
--#define SPINAND_PAGE_READ_FROM_CACHE_1S_2S_2S_OP(addr, ndummy, buf, len) \
-+#define SPINAND_PAGE_READ_FROM_CACHE_1S_2S_2S_OP(addr, ndummy, buf, len, ...) \
- 	SPI_MEM_OP(SPI_MEM_OP_CMD(0xbb, 1),				\
- 		   SPI_MEM_OP_ADDR(2, addr, 2),				\
- 		   SPI_MEM_OP_DUMMY(ndummy, 2),				\
--		   SPI_MEM_OP_DATA_IN(len, buf, 2))
-+		   SPI_MEM_OP_DATA_IN(len, buf, 2),			\
-+		   SPI_MEM_OP_MAX_FREQ(__VA_ARGS__ + 0))
+ 	get_random_bytes(&nkey, sizeof(nkey));
+ 	spin_lock(root_lock);
+@@ -619,8 +620,12 @@ static void sfq_perturbation(struct time
+ 		sfq_rehash(sch);
+ 	spin_unlock(root_lock);
  
- #define SPINAND_PAGE_READ_FROM_CACHE_3A_1S_2S_2S_OP(addr, ndummy, buf, len) \
- 	SPI_MEM_OP(SPI_MEM_OP_CMD(0xbb, 1),				\
-@@ -151,11 +152,12 @@
- 		   SPI_MEM_DTR_OP_DATA_IN(len, buf, 4),			\
- 		   SPI_MEM_OP_MAX_FREQ(freq))
+-	if (q->perturb_period)
+-		mod_timer(&q->perturb_timer, jiffies + q->perturb_period);
++	/* q->perturb_period can change under us from
++	 * sfq_change() and sfq_destroy().
++	 */
++	period = READ_ONCE(q->perturb_period);
++	if (period)
++		mod_timer(&q->perturb_timer, jiffies + period);
+ }
  
--#define SPINAND_PAGE_READ_FROM_CACHE_1S_4S_4S_OP(addr, ndummy, buf, len) \
-+#define SPINAND_PAGE_READ_FROM_CACHE_1S_4S_4S_OP(addr, ndummy, buf, len, ...) \
- 	SPI_MEM_OP(SPI_MEM_OP_CMD(0xeb, 1),				\
- 		   SPI_MEM_OP_ADDR(2, addr, 4),				\
- 		   SPI_MEM_OP_DUMMY(ndummy, 4),				\
--		   SPI_MEM_OP_DATA_IN(len, buf, 4))
-+		   SPI_MEM_OP_DATA_IN(len, buf, 4),			\
-+		   SPI_MEM_OP_MAX_FREQ(__VA_ARGS__ + 0))
+ static int sfq_change(struct Qdisc *sch, struct nlattr *opt)
+@@ -662,7 +667,7 @@ static int sfq_change(struct Qdisc *sch,
+ 		q->quantum = ctl->quantum;
+ 		q->scaled_quantum = SFQ_ALLOT_SIZE(q->quantum);
+ 	}
+-	q->perturb_period = ctl->perturb_period * HZ;
++	WRITE_ONCE(q->perturb_period, ctl->perturb_period * HZ);
+ 	if (ctl->flows)
+ 		q->maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
+ 	if (ctl->divisor) {
+@@ -724,7 +729,7 @@ static void sfq_destroy(struct Qdisc *sc
+ 	struct sfq_sched_data *q = qdisc_priv(sch);
  
- #define SPINAND_PAGE_READ_FROM_CACHE_3A_1S_4S_4S_OP(addr, ndummy, buf, len) \
- 	SPI_MEM_OP(SPI_MEM_OP_CMD(0xeb, 1),				\
--- 
-2.39.5
-
+ 	tcf_block_put(q->block);
+-	q->perturb_period = 0;
++	WRITE_ONCE(q->perturb_period, 0);
+ 	del_timer_sync(&q->perturb_timer);
+ 	sfq_free(q->ht);
+ 	sfq_free(q->slots);
 
 
