@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B313254AF0;
-	Mon, 23 Jun 2025 13:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E9D2517AF;
+	Mon, 23 Jun 2025 13:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684996; cv=none; b=mRm3aRP5MfV+lxz3RHtdUEIsr+uz3PbWPT4Wr0ph//8yy8bS0X0rLs0x3icwWyqxgxS3SmM2UqE9xAvpwWtv9PMHgC9WMh4n5rg61zT12P/jHaFnMaDyC6afMBtcaXe5oE+LsK/OQJ7G1NXeFWo0PsYPDHWiZYaWsT/FIAI9vFI=
+	t=1750684998; cv=none; b=mzIE1UhMVJAOcNgnVNwDOZMCFp/P//QCOVxrAy3Habkb/uBpAyFb/FasgG8yWMCryZbWgjQXE/17/jwY/VWe/cmL3i+FrCGJgIlm9iOZS2oGyvUPnIPeIUPJZqvo3UvHUi/NWFlXFlJC5cNx+MgYKLkkNz8VsyYElJnIYzVlunE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684996; c=relaxed/simple;
-	bh=kfY55+D22fQv2HYzrlhfk1AU6w+fN3OXhOS06xFVzT8=;
+	s=arc-20240116; t=1750684998; c=relaxed/simple;
+	bh=OPu/ykZTQR4MGjQUzBd0nFjLWPgJ2CPxYxhhX91tceg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o5f8oMsLmwRflJR2mZNTU/l/tNKEj3TLAQ4U/q1ksiQAUSMwBlhUfi1y4xQozWlFb2xF6rxOdwjyrpR1pBV3HV4wxaxqqgWHnEJQojAZhrcO6FyxmGA99VFK/qVbxUAfeY1F0q48DM55Yva4BnXMKvQ2Lg8oVzz6tArmJ5ICHR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cs6gH9Y1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=palpuJpT9oATB7VEkuMUf8GFPMhQZk4qe5URglycrSd/wIbDB8vm0PcSmHfgr9ay9KotkSH8O8YxKUtaCjHf1d5dkjrJWzddEGUPzKdUBsGo7Pqbr5lV3Ae8z4nm4zxgbKcHEx6FjdOy/RSGha8pqt7dpas2JjprjBP+Q2vQ+T0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rA/WSsni; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cs6gH9Y1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D3AC4CEF2;
-	Mon, 23 Jun 2025 13:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rA/WSsni"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EB4C4CEEA;
+	Mon, 23 Jun 2025 13:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684995;
-	bh=kfY55+D22fQv2HYzrlhfk1AU6w+fN3OXhOS06xFVzT8=;
+	s=korg; t=1750684998;
+	bh=OPu/ykZTQR4MGjQUzBd0nFjLWPgJ2CPxYxhhX91tceg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cs6gH9Y1ceQ3cSGxIJXpv+Bjc6RxPtRzN8IwuUiswbzvpuLW/iT7/pZoajRBBWdzi
-	 p39M5DzCUKW5q5E4yGFEfwh7ioYiDBee1CD1yOBmnFJJNLKjqe30aPSm5lzTF5n0pO
-	 Vua8HgIXa9wPSYSZ0pLUiCiFuvrPjqNoNBnVtrjI=
+	b=rA/WSsnilQuGM113rte1sk9TM8YP4GxTKFhBvUuXwfG1kxRSeHlKXeOHuVDep0oAY
+	 dtJdAF56OBUw8YmlesZes9+JJ3O/GHmgkMx30WfiWDFFk/MQNuKMiqojBX6I3SXM41
+	 xh7Zn+mtQTn2cRWf3loQuCjj50+aeBiEZLIzxOrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shiyan <eagle.alexander923@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Tony Jones <tonyj@suse.de>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 020/355] power: reset: at91-reset: Optimize at91_reset()
-Date: Mon, 23 Jun 2025 15:03:41 +0200
-Message-ID: <20250623130627.405807811@linuxfoundation.org>
+Subject: [PATCH 5.4 056/222] perf scripts python: exported-sql-viewer.py: Fix pattern matching with Python 3
+Date: Mon, 23 Jun 2025 15:06:31 +0200
+Message-ID: <20250623130613.794403586@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +53,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Shiyan <eagle.alexander923@gmail.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 62d48983f215bf1dd48665913318101fa3414dcf ]
+[ Upstream commit 17e548405a81665fd14cee960db7d093d1396400 ]
 
-This patch adds a small optimization to the low-level at91_reset()
-function, which includes:
-- Removes the extra branch, since the following store operations
-  already have proper condition checks.
-- Removes the definition of the clobber register r4, since it is
-  no longer used in the code.
+The script allows the user to enter patterns to find symbols.
 
-Fixes: fcd0532fac2a ("power: reset: at91-reset: make at91sam9g45_restart() generic")
-Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/20250307053809.20245-1-eagle.alexander923@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+The pattern matching characters are converted for use in SQL.
+
+For PostgreSQL the conversion involves using the Python maketrans()
+method which is slightly different in Python 3 compared with Python 2.
+
+Fix to work in Python 3.
+
+Fixes: beda0e725e5f06ac ("perf script python: Add Python3 support to exported-sql-viewer.py")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Tony Jones <tonyj@suse.de>
+Link: https://lore.kernel.org/r/20250512093932.79854-4-adrian.hunter@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/reset/at91-reset.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ tools/perf/scripts/python/exported-sql-viewer.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/reset/at91-reset.c b/drivers/power/reset/at91-reset.c
-index 3ff9d93a52267..6659001291f41 100644
---- a/drivers/power/reset/at91-reset.c
-+++ b/drivers/power/reset/at91-reset.c
-@@ -81,12 +81,11 @@ static int at91_reset(struct notifier_block *this, unsigned long mode,
- 		"	str	%4, [%0, %6]\n\t"
- 		/* Disable SDRAM1 accesses */
- 		"1:	tst	%1, #0\n\t"
--		"	beq	2f\n\t"
- 		"	strne	%3, [%1, #" __stringify(AT91_DDRSDRC_RTR) "]\n\t"
- 		/* Power down SDRAM1 */
- 		"	strne	%4, [%1, %6]\n\t"
- 		/* Reset CPU */
--		"2:	str	%5, [%2, #" __stringify(AT91_RSTC_CR) "]\n\t"
-+		"	str	%5, [%2, #" __stringify(AT91_RSTC_CR) "]\n\t"
- 
- 		"	b	.\n\t"
- 		:
-@@ -97,7 +96,7 @@ static int at91_reset(struct notifier_block *this, unsigned long mode,
- 		  "r" cpu_to_le32(AT91_DDRSDRC_LPCB_POWER_DOWN),
- 		  "r" (reset->args),
- 		  "r" (reset->ramc_lpr)
--		: "r4");
-+	);
- 
- 	return NOTIFY_DONE;
- }
+diff --git a/tools/perf/scripts/python/exported-sql-viewer.py b/tools/perf/scripts/python/exported-sql-viewer.py
+index 01acf3ea7619d..21473d6df5b9a 100755
+--- a/tools/perf/scripts/python/exported-sql-viewer.py
++++ b/tools/perf/scripts/python/exported-sql-viewer.py
+@@ -667,7 +667,10 @@ class CallGraphModelBase(TreeModel):
+ 				s = value.replace("%", "\%")
+ 				s = s.replace("_", "\_")
+ 				# Translate * and ? into SQL LIKE pattern characters % and _
+-				trans = string.maketrans("*?", "%_")
++				if sys.version_info[0] == 3:
++					trans = str.maketrans("*?", "%_")
++				else:
++					trans = string.maketrans("*?", "%_")
+ 				match = " LIKE '" + str(s).translate(trans) + "'"
+ 			else:
+ 				match = " GLOB '" + str(value) + "'"
 -- 
 2.39.5
 
