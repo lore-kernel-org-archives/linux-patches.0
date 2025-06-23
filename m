@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9844D1A4F12;
-	Mon, 23 Jun 2025 22:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1551E87B;
+	Mon, 23 Jun 2025 22:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716377; cv=none; b=a6Nz9xWNxaP0pvA+6fn4io/a4KEGi1DPkEd4TlxzFR64+Cp+0yY20+7WuP1clg9OpInuCJ9mY8n2fogjAM6il5Bmnk3IDNkVDwqtOgU4jhVsxPFUk+WTATGropemTuktC67BusA+bchFb1qOMNPxpdAOKu9xJg/UwunN6uFQi2g=
+	t=1750716380; cv=none; b=X9DBAdbsYDfaZKcxh/drIVrGdqVM2tX05DthffliSct1HSdgFx4aDLZw8Q5a3N40lWmy8lFdDJNWCoN7Xdme+IQd6CCQ4GQ50CGQx2N6JkuWoIqNDWiUVeyFAulRbr7ye8ns1IiwAKAoyPSaa6BZKu6vk77BAl+uw7VBkp8eHVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716377; c=relaxed/simple;
-	bh=YvoQdmMseHzxpH6mxK53Smjc8cjHj7tmVEDRLtqRves=;
+	s=arc-20240116; t=1750716380; c=relaxed/simple;
+	bh=EGb01o2/QGJiqg4i2wn6l5XAN+G6zJ92tRLxztTeeI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ngU9t+rUTTYjsudJ/dA7YhdzFP3imSpzUpUnl2OHDrAs5EG5TeaKHhicZeVyvPvrw8hbW9ZphteC1aiMNEBmFgwIEzi9MKRLfIk8Mv07F63DZ2eqHZOlVgESQ2snlTEZjQCOLsUquwSNSckPjWR1Znhjp2Q5RZWTtewvlOYfiqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJCEhjF6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tIoWW7GWKkmyuI639dcqp9ZHNJJxopd1PM+8fzy0BZ4/4jKN5YvgxPmHWIugsoQBzPqkXsiqTK19tI2Ot2JJpwpiE3khA4fazEgR5+CpZTN1l2UQvxYtITZEQmDpY7wx0kwIsYFCDyJrRHtGZi+stJZlkxz+7wmkUHFQmrdJnSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0/DBqTI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJCEhjF6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DFCC4CEEA;
-	Mon, 23 Jun 2025 22:06:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0/DBqTI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972B7C4CEEA;
+	Mon, 23 Jun 2025 22:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716377;
-	bh=YvoQdmMseHzxpH6mxK53Smjc8cjHj7tmVEDRLtqRves=;
+	s=korg; t=1750716379;
+	bh=EGb01o2/QGJiqg4i2wn6l5XAN+G6zJ92tRLxztTeeI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QJCEhjF6dxGdVeSnk0b/lTKBMLwA5/70SoQIV7qWvn6WdM/VU3Kv5X8QE9XFmcxJn
-	 FbIkbNDyhyV8UxxOzldt6EOgT69UqJDG8jvrE5zELqwgDppf+Q684m787hnPyzBB1V
-	 zqyLkq0D7wqBx7ogYqPX/x979xLzZ59MYG3cjXfY=
+	b=p0/DBqTI5bIu3cz0DtKMcm25cn6x4DByaVUPgbs1prvgwmKU/HTrNfMEeGKCj0bjY
+	 1rAXEltABmEtr32+I3j73URM5GczyYypmTictpQ9tD0M/Vd8hS7+7VpeCj5nXB2Tha
+	 c3UXtrZi54E7uQvbqciWqdrVXDm61DUbI4OyAfCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 247/414] wifi: iwlwifi: pcie: make sure to lock rxq->read
-Date: Mon, 23 Jun 2025 15:06:24 +0200
-Message-ID: <20250623130648.223284772@linuxfoundation.org>
+Subject: [PATCH 5.15 325/411] libbpf: Add identical pointer detection to btf_dedup_is_equiv()
+Date: Mon, 23 Jun 2025 15:07:49 +0200
+Message-ID: <20250623130641.821208154@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +48,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-[ Upstream commit 1cc2c48c4af81bed5ddbe9f2c9d6e20fa163acf9 ]
+[ Upstream commit 8e64c387c942229c551d0f23de4d9993d3a2acb6 ]
 
-rxq->read is accessed without the rxq->lock in a few places,
-Make sure to have the lock there.
+Recently as a side-effect of
 
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Tested-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20250424153620.73725f207aaa.I1a3e4b6c5fd370e029fdacfcdc9ee335788afa98@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+commit ac053946f5c4 ("compiler.h: introduce TYPEOF_UNQUAL() macro")
+
+issues were observed in deduplication between modules and kernel BTF
+such that a large number of kernel types were not deduplicated so
+were found in module BTF (task_struct, bpf_prog etc).  The root cause
+appeared to be a failure to dedup struct types, specifically those
+with members that were pointers with __percpu annotations.
+
+The issue in dedup is at the point that we are deduplicating structures,
+we have not yet deduplicated reference types like pointers.  If multiple
+copies of a pointer point at the same (deduplicated) integer as in this
+case, we do not see them as identical.  Special handling already exists
+to deal with structures and arrays, so add pointer handling here too.
+
+Reported-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250429161042.2069678-1-alan.maguire@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/trans.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/lib/bpf/btf.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-index 18d7d59ae5814..462ebe088b3c1 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-@@ -2726,6 +2726,8 @@ static ssize_t iwl_dbgfs_rx_queue_read(struct file *file,
- 	for (i = 0; i < trans->num_rx_queues && pos < bufsz; i++) {
- 		struct iwl_rxq *rxq = &trans_pcie->rxq[i];
+diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
+index fd23095129782..4d29bd28520ae 100644
+--- a/tools/lib/bpf/btf.c
++++ b/tools/lib/bpf/btf.c
+@@ -3770,6 +3770,19 @@ static bool btf_dedup_identical_structs(struct btf_dedup *d, __u32 id1, __u32 id
+ 	return true;
+ }
  
-+		spin_lock_bh(&rxq->lock);
++static bool btf_dedup_identical_ptrs(struct btf_dedup *d, __u32 id1, __u32 id2)
++{
++	struct btf_type *t1, *t2;
 +
- 		pos += scnprintf(buf + pos, bufsz - pos, "queue#: %2d\n",
- 				 i);
- 		pos += scnprintf(buf + pos, bufsz - pos, "\tread: %u\n",
-@@ -2746,6 +2748,7 @@ static ssize_t iwl_dbgfs_rx_queue_read(struct file *file,
- 			pos += scnprintf(buf + pos, bufsz - pos,
- 					 "\tclosed_rb_num: Not Allocated\n");
- 		}
-+		spin_unlock_bh(&rxq->lock);
++	t1 = btf_type_by_id(d->btf, id1);
++	t2 = btf_type_by_id(d->btf, id2);
++
++	if (!btf_is_ptr(t1) || !btf_is_ptr(t2))
++		return false;
++
++	return t1->type == t2->type;
++}
++
+ /*
+  * Check equivalence of BTF type graph formed by candidate struct/union (we'll
+  * call it "candidate graph" in this description for brevity) to a type graph
+@@ -3902,6 +3915,9 @@ static int btf_dedup_is_equiv(struct btf_dedup *d, __u32 cand_id,
+ 		 */
+ 		if (btf_dedup_identical_structs(d, hypot_type_id, cand_id))
+ 			return 1;
++		/* A similar case is again observed for PTRs. */
++		if (btf_dedup_identical_ptrs(d, hypot_type_id, cand_id))
++			return 1;
+ 		return 0;
  	}
- 	ret = simple_read_from_buffer(user_buf, count, ppos, buf, pos);
- 	kfree(buf);
-@@ -3410,8 +3413,11 @@ iwl_trans_pcie_dump_data(struct iwl_trans *trans, u32 dump_mask,
- 		/* Dump RBs is supported only for pre-9000 devices (1 queue) */
- 		struct iwl_rxq *rxq = &trans_pcie->rxq[0];
- 		/* RBs */
-+		spin_lock_bh(&rxq->lock);
- 		num_rbs = iwl_get_closed_rb_stts(trans, rxq);
- 		num_rbs = (num_rbs - rxq->read) & RX_QUEUE_MASK;
-+		spin_unlock_bh(&rxq->lock);
-+
- 		len += num_rbs * (sizeof(*data) +
- 				  sizeof(struct iwl_fw_error_dump_rb) +
- 				  (PAGE_SIZE << trans_pcie->rx_page_order));
+ 
 -- 
 2.39.5
 
