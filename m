@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37304C2E0;
-	Mon, 23 Jun 2025 21:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AD3C2E0;
+	Mon, 23 Jun 2025 21:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714348; cv=none; b=HhVS47uLVRUMsahzWM6FxamG2bnuz2IxPudIdcg8HpVPB2DRRYYzaB180vhbmqtBeIVx9KCkCdz1xZR+fZAKOoafP4OK97IU6S0BgFMiHQW1GW3gBggjzi25kq27/CvLNSIEflNvy4+AlfoN/uOcmRbV++KYQZYNV2EcCeU+Las=
+	t=1750714350; cv=none; b=AmbYo+NK8qmCnZwrcxJUf4Uf4KcSL0Qd+IFMeaikHbSBDYkLyQvgtFdI1jwvBmdqyFv8iVkFVbQBlbVm5ro+PO3IXU7X2BznstVWZ+SVOO5aL3DTwNX/gk0SkdrSCN02OClqmPbM/7uR8VHJUnqczXjbG59IPWRJCQl+SxKdpcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714348; c=relaxed/simple;
-	bh=u/oJxI9hh9j68IcFIqUKSIkudg+v+zuuiOcTDBSthxk=;
+	s=arc-20240116; t=1750714350; c=relaxed/simple;
+	bh=klkUarTT3Wd3W4AIl7AWtKC6SWraMO/dLLKsCkhhyDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPTPKFKr28rwaisDKBXQmofnvkfZFVDzI6yC4XVhyNpuQAZA828Xlvp99832sJOUKcclb+1ukP62cIa1XdndWOCR6zHZ9RtZk01Cn0OLG2Z0z/KnJM/6ISoZs3I5nqIOKelo9xfbMLKX6IxQP4AiT5/rkWY/ac0COU6Fixageic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lV5oS2iA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n6HFRtba1Mvh9cHT+tfuL86DQ55Be/WR7jwHTIuzdAvHuTR4eYQCOnV38wt+dEOXiteDhbAUOf/xnhlvaSUDh7TOMUbCuBvuPeZisTBRmZWuqdfgXnQ2NdCv5YryOSgfHVQBGCm2Ubfi39uyqpZQENwIeT+67l/d9aHkZEACC+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxPdDMqx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lV5oS2iA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E7FC4CEEA;
-	Mon, 23 Jun 2025 21:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxPdDMqx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4975FC4CEEA;
+	Mon, 23 Jun 2025 21:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714348;
-	bh=u/oJxI9hh9j68IcFIqUKSIkudg+v+zuuiOcTDBSthxk=;
+	s=korg; t=1750714350;
+	bh=klkUarTT3Wd3W4AIl7AWtKC6SWraMO/dLLKsCkhhyDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lV5oS2iAZDg1OL+WsOYf8r9gjOl3y1Zlzb/+0l+8yQSEin+37jFE9KExnr0bhqddA
-	 xds99oE+UoNEV/9Tl2+SIVI84gvKOfxjay019/wlyNF/wC+/f+nMHFHXybnP5jAIcx
-	 ONBHbd8L7i67BVgXViUw3haThSBzRnY2UBBkANKQ=
+	b=FxPdDMqxCLg+w4i9qr7u0up1EQI3Z5qNuVpGIvviK0t4hKJp9oQ0GqKtWlqppyCGh
+	 i4g8QniSh6WOicJt0lx9HfMGyDswCXj0UkaFD2dntdQSC3fe0CVjducZ2HdjkO8wEA
+	 TTDthoP5v+igTUxrW3tLPjkLwH6KXLPksCMazu9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 097/414] Input: ims-pcu - check record size in ims_pcu_flash_firmware()
-Date: Mon, 23 Jun 2025 15:03:54 +0200
-Message-ID: <20250623130644.519679460@linuxfoundation.org>
+	syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 385/592] wifi: mac80211_hwsim: Prevent tsf from setting if beacon is disabled
+Date: Mon, 23 Jun 2025 15:05:43 +0200
+Message-ID: <20250623130709.600393053@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,43 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit a95ef0199e80f3384eb992889322957d26c00102 upstream.
+[ Upstream commit c575f5374be7a5c4be4acb9fe6be3a4669d94674 ]
 
-The "len" variable comes from the firmware and we generally do
-trust firmware, but it's always better to double check.  If the "len"
-is too large it could result in memory corruption when we do
-"memcpy(fragment->data, rec->data, len);"
+Setting tsf is meaningless if beacon is disabled, so check that beacon
+is enabled before setting tsf.
 
-Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/131fd1ae92c828ee9f4fa2de03d8c210ae1f3524.1748463049.git.dan.carpenter@linaro.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=064815c6cd721082a52a
+Tested-by: syzbot+064815c6cd721082a52a@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://patch.msgid.link/tencent_3609AC2EFAAED68CA5A7E3C6D212D1C67806@qq.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/ims-pcu.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/virtual/mac80211_hwsim.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -844,6 +844,12 @@ static int ims_pcu_flash_firmware(struct
- 		addr = be32_to_cpu(rec->addr) / 2;
- 		len = be16_to_cpu(rec->len);
- 
-+		if (len > sizeof(pcu->cmd_buf) - 1 - sizeof(*fragment)) {
-+			dev_err(pcu->dev,
-+				"Invalid record length in firmware: %d\n", len);
-+			return -EINVAL;
-+		}
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
+index cf3e976471c61..6ca5d9d0fe532 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
+@@ -1229,6 +1229,11 @@ static void mac80211_hwsim_set_tsf(struct ieee80211_hw *hw,
+ 	/* MLD not supported here */
+ 	u32 bcn_int = data->link_data[0].beacon_int;
+ 	u64 delta = abs(tsf - now);
++	struct ieee80211_bss_conf *conf;
 +
- 		fragment = (void *)&pcu->cmd_buf[1];
- 		put_unaligned_le32(addr, &fragment->addr);
- 		fragment->len = len;
++	conf = link_conf_dereference_protected(vif, data->link_data[0].link_id);
++	if (conf && !conf->enable_beacon)
++		return;
+ 
+ 	/* adjust after beaconing with new timestamp at old TBTT */
+ 	if (tsf > now) {
+-- 
+2.39.5
+
 
 
