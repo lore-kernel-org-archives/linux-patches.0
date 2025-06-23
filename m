@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F39E1DF98B;
-	Mon, 23 Jun 2025 21:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED28B1DF98B;
+	Mon, 23 Jun 2025 21:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713177; cv=none; b=r+EqRJlvUcqib1AoNZd99bfgY+OGWjQtm1GCG9AVt0wJaLo9Whi88iyNloMGdE8KXrQnuAuluQWqZV92336j/k6+CWQREzZcNmQUeO+ucCul4MEGHqG66OH+eZAqk4ebOl4NA6B7pbkuqLk/41lKVDaMvzXenaUcyM7PIEhSBIc=
+	t=1750713180; cv=none; b=H4lYQZjOQysOOkhkikvYjdxIYroQyFsv3PRpV/CVBsB8URagCiD1aRZHLt5AkoTVaoIb9/JmgeOmIgfzEbK6rK04MirPCrHszxX5/WJyuYe1P8mcBiWK5y12yS/aNUkoz8sffWkMjkfud2KdsjCIK6vDfRvHFqRdMyWALwhueAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713177; c=relaxed/simple;
-	bh=4m/SnLSAZX86Tk2WVNEw2CdLstplH1U8cot/FMHT/Kw=;
+	s=arc-20240116; t=1750713180; c=relaxed/simple;
+	bh=WrYFip44DvSEzzFWsN0c5Zo9h+C1RlQbW6WhPB1aA2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DmYVOeLtjblah52C30M3A0xPtVgUEXRFt/t6D53H9K6XLBaB2u4l3sqecJNdpDRvbZu+aPZpoQVBdxYdZqjl6wkXzQd2fU/COV8JuuvXdj2a8L/qjwqq4+fpx+L7+rKsjw8tpytgDNehVfRctOLtwJqVFWG+QsVE79fFEP5bZPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1b/rEYD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UTG6+HGuvxatlvwWFw4d2jiPxn8JsQgFCZch+v0PGs9uqpL8GcA1Ay8tLGRylzMwebqpby/A2riH/j6KJi0q8XFad5EOE5KA9pnIVzhrK62Q5XbDlY+BoDT+sT8spTDIujpGrfQV0jqiPtR9o9bQAiZVXBRfn/FTMrljBBn/MuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rThK1twZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1b/rEYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B72C4CEEA;
-	Mon, 23 Jun 2025 21:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rThK1twZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85CD8C4CEEA;
+	Mon, 23 Jun 2025 21:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713177;
-	bh=4m/SnLSAZX86Tk2WVNEw2CdLstplH1U8cot/FMHT/Kw=;
+	s=korg; t=1750713179;
+	bh=WrYFip44DvSEzzFWsN0c5Zo9h+C1RlQbW6WhPB1aA2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1b/rEYDtafRv1wK4kBSKPgJOzyVgoiRP2+czgwekVHlgSbho3cemZ4oC8Tiy84fM
-	 XhMV1GTR4uokUzyd0aBwgjledk5dwxBdRu9K16qK8ACrLm+3uCf0a7jnZf2dHNalZo
-	 zVh90HppcFZW5su0Sv5i7wTqDCkVa6VCB3xqHcIs=
+	b=rThK1twZoWhGZFfjuZdvpjkcVXkdE1kXncyoVvOxTEVzxbkOusMEN7QDKcEQ41d37
+	 xhS7StfPss/QT1+HWtIIEGmZmeSBpiUjoqt7IFeMBCcBfq7YWONths70hRweSyMOmU
+	 dWPTpL2Pk0lbpWbeNHxoi8LkpbKGwQVrZHwMyuvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Arjun Roy <arjunroy@google.com>,
-	Wei Wang <weiwan@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Marcelo Schmitt <marcelo.schmitt@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 125/355] tcp: factorize logic into tcp_epollin_ready()
-Date: Mon, 23 Jun 2025 15:05:26 +0200
-Message-ID: <20250623130630.505328050@linuxfoundation.org>
+Subject: [PATCH 5.15 109/411] iio: adc: ad7124: Fix 3dB filter frequency reading
+Date: Mon, 23 Jun 2025 15:04:13 +0200
+Message-ID: <20250623130636.265246540@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,114 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 05dc72aba364d374a27de567fac58c199ff5ee97 ]
+[ Upstream commit 8712e4986e7ce42a14c762c4c350f290989986a5 ]
 
-Both tcp_data_ready() and tcp_stream_is_readable() share the same logic.
+The sinc4 filter has a factor 0.23 between Output Data Rate and f_{3dB}
+and for sinc3 the factor is 0.272 according to the data sheets for
+ad7124-4 (Rev. E.) and ad7124-8 (Rev. F).
 
-Add tcp_epollin_ready() helper to avoid duplication.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Arjun Roy <arjunroy@google.com>
-Cc: Wei Wang <weiwan@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 2660a544fdc0 ("net: Fix TOCTOU issue in sk_is_readable()")
+Fixes: cef2760954cf ("iio: adc: ad7124: add 3db filter")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
+Link: https://patch.msgid.link/20250317115247.3735016-6-u.kleine-koenig@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h    | 12 ++++++++++++
- net/ipv4/tcp.c       | 18 +++++-------------
- net/ipv4/tcp_input.c | 11 ++---------
- 3 files changed, 19 insertions(+), 22 deletions(-)
+ drivers/iio/adc/ad7124.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 2aad2e79ac6ad..41f535dcaa3f9 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1445,6 +1445,18 @@ static inline bool tcp_rmem_pressure(const struct sock *sk)
- 	return atomic_read(&sk->sk_rmem_alloc) > threshold;
- }
+diff --git a/drivers/iio/adc/ad7124.c b/drivers/iio/adc/ad7124.c
+index 31c8cb3bf811b..c018437177ba6 100644
+--- a/drivers/iio/adc/ad7124.c
++++ b/drivers/iio/adc/ad7124.c
+@@ -297,9 +297,9 @@ static int ad7124_get_3db_filter_freq(struct ad7124_state *st,
  
-+static inline bool tcp_epollin_ready(const struct sock *sk, int target)
-+{
-+	const struct tcp_sock *tp = tcp_sk(sk);
-+	int avail = READ_ONCE(tp->rcv_nxt) - READ_ONCE(tp->copied_seq);
-+
-+	if (avail <= 0)
-+		return false;
-+
-+	return (avail >= target) || tcp_rmem_pressure(sk) ||
-+	       (tcp_receive_window(tp) <= inet_csk(sk)->icsk_ack.rcv_mss);
-+}
-+
- extern void tcp_openreq_init_rwin(struct request_sock *req,
- 				  const struct sock *sk_listener,
- 				  const struct dst_entry *dst);
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 24ebd51c5e0b8..0332fdab942db 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -476,19 +476,11 @@ static void tcp_tx_timestamp(struct sock *sk, u16 tsflags)
+ 	switch (st->channels[channel].cfg.filter_type) {
+ 	case AD7124_SINC3_FILTER:
+-		return DIV_ROUND_CLOSEST(fadc * 230, 1000);
++		return DIV_ROUND_CLOSEST(fadc * 272, 1000);
+ 	case AD7124_SINC4_FILTER:
+-		return DIV_ROUND_CLOSEST(fadc * 262, 1000);
++		return DIV_ROUND_CLOSEST(fadc * 230, 1000);
+ 	default:
+ 		return -EINVAL;
  	}
- }
- 
--static inline bool tcp_stream_is_readable(const struct tcp_sock *tp,
--					  int target, struct sock *sk)
-+static bool tcp_stream_is_readable(struct sock *sk, int target)
- {
--	int avail = READ_ONCE(tp->rcv_nxt) - READ_ONCE(tp->copied_seq);
--
--	if (avail > 0) {
--		if (avail >= target)
--			return true;
--		if (tcp_rmem_pressure(sk))
--			return true;
--		if (tcp_receive_window(tp) <= inet_csk(sk)->icsk_ack.rcv_mss)
--			return true;
--	}
-+	if (tcp_epollin_ready(sk, target))
-+		return true;
-+
- 	if (sk->sk_prot->stream_memory_read)
- 		return sk->sk_prot->stream_memory_read(sk);
- 	return false;
-@@ -565,7 +557,7 @@ __poll_t tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
- 		    tp->urg_data)
- 			target++;
- 
--		if (tcp_stream_is_readable(tp, target, sk))
-+		if (tcp_stream_is_readable(sk, target))
- 			mask |= EPOLLIN | EPOLLRDNORM;
- 
- 		if (!(shutdown & SEND_SHUTDOWN)) {
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 7c2e714527f68..318fdeb1deef3 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -5028,15 +5028,8 @@ int tcp_send_rcvq(struct sock *sk, struct msghdr *msg, size_t size)
- 
- void tcp_data_ready(struct sock *sk)
- {
--	const struct tcp_sock *tp = tcp_sk(sk);
--	int avail = tp->rcv_nxt - tp->copied_seq;
--
--	if (avail < sk->sk_rcvlowat && !tcp_rmem_pressure(sk) &&
--	    !sock_flag(sk, SOCK_DONE) &&
--	    tcp_receive_window(tp) > inet_csk(sk)->icsk_ack.rcv_mss)
--		return;
--
--	sk->sk_data_ready(sk);
-+	if (tcp_epollin_ready(sk, sk->sk_rcvlowat))
-+		sk->sk_data_ready(sk);
- }
- 
- static void tcp_data_queue(struct sock *sk, struct sk_buff *skb)
 -- 
 2.39.5
 
