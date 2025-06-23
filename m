@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E8470838;
-	Mon, 23 Jun 2025 21:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DE570838;
+	Mon, 23 Jun 2025 21:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713032; cv=none; b=D1ONsUK+YlKX5IdxQMelugKh1cKYHBCq3wNsq3pWszxQw+rY6y/u4VR/8ewz3QSpa0geneEp9DsSAkrSghZXz2AVzolts6uXqVlHIm0GwzweLjkLo8H//2UQpS/XbTs9HBQU9ej9+Bm8EktviSzB6YlbtGNm5e1jEZ52+NUYhgo=
+	t=1750713034; cv=none; b=TkvIvGU9nWDrPzzSWbzuiu+CI8vYAy0TwsjdZYRRB/Ho6M8CNGLnt8fI90pndGhmxU9aIcqngPc3YMwM1zy8Rrf3lcLH/XQDWHZV5doGGW/g16tJV5ocOrumGcsvM1Uv3AFSPrfq8qDx/vXk7hYf7K1pmoQHKeodW9u0Xbq7OsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713032; c=relaxed/simple;
-	bh=MtKtPTvuUWwmE248WXtRsK/3OsNsCO3wUDfvcvtz2E4=;
+	s=arc-20240116; t=1750713034; c=relaxed/simple;
+	bh=7MJYK6nR+STF7NhJhFBiImhH/xH+dtYFiLwfvklo6BM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q4vO5O6upiTE5fh1eZR05T8IY8jDPgQZLGwrBOCBaLETf+0l62paccO+9A5LP+hhMVby33Qn2X1LRMDHIBQ3LgHZMLNqmy23xJJ41PNcxIdcQYpaVil5ebBpWVsmCyRi8HP2BcdDzgC/mcn69LWPWvftpToTEdH626fnRQ1y3js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvfgJPoS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u0qVgoh/ZUej+B2zOwLylsVx7o1zVAsZQ0xN10w/SdBq4cYbCzMZy4LpK1EJFrMc/PNMgQMTyjoKT7x3Xg09FXXftT15jShvLTOk7yaNiMQzV+yU007FVZXYjH2HR/KFahsCrMHEkEy4wqJEYk51J/c43YYbbg1R4N27SedcJl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLe8Saio; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvfgJPoS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34A2C4CEEA;
-	Mon, 23 Jun 2025 21:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLe8Saio"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39FC4C4CEEA;
+	Mon, 23 Jun 2025 21:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713032;
-	bh=MtKtPTvuUWwmE248WXtRsK/3OsNsCO3wUDfvcvtz2E4=;
+	s=korg; t=1750713034;
+	bh=7MJYK6nR+STF7NhJhFBiImhH/xH+dtYFiLwfvklo6BM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VvfgJPoSoXdns18EZsDPehR0Lc1yBC6PgrLPJ2CV0/5QSyV3hEzcGqEG3x+31Fn20
-	 lq+D3qFF7uNSeYP+yBv3+ImMMTzm3grbIIFhAt4d3ctdHS/8cVHCPYAOZzcWsHMcZM
-	 +iNsb1PXpC4YqnXlJhPdJFIqcJwahLIVrr5qm6UI=
+	b=gLe8SaiorGnf83AgzN2/ZAJV7jtpbndzzdgZkxxrQeFVFDFpuK3TAgPx6ujFr6O64
+	 d6EnOEI9eStprL3rhYut0kGkW7M1WQoMh0GMSk1ZL36FPUxevWU6orEtbVn2s3192r
+	 B3/QkrPTBrsiCLipJOVDB5DgQYtytFVnTDlj6cFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 042/414] media: ov5675: suppress probe deferral errors
-Date: Mon, 23 Jun 2025 15:02:59 +0200
-Message-ID: <20250623130643.087681845@linuxfoundation.org>
+	Michal Luczaj <mhal@rbox.co>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 094/508] bpf, sockmap: Avoid using sk_socket after free when sending
+Date: Mon, 23 Jun 2025 15:02:19 +0200
+Message-ID: <20250623130647.571005433@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +49,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit 8268da3c474a43a79a6540fb06c5d3b730a0d5a5 upstream.
+[ Upstream commit 8259eb0e06d8f64c700f5fbdb28a5c18e10de291 ]
 
-Probe deferral should not be logged as an error:
+The sk->sk_socket is not locked or referenced in backlog thread, and
+during the call to skb_send_sock(), there is a race condition with
+the release of sk_socket. All types of sockets(tcp/udp/unix/vsock)
+will be affected.
 
-	ov5675 24-0010: failed to get HW configuration: -517
+Race conditions:
+'''
+CPU0                               CPU1
 
-Drop the (mostly) redundant dev_err() from sensor probe() to suppress
-it.
+backlog::skb_send_sock
+  sendmsg_unlocked
+    sock_sendmsg
+      sock_sendmsg_nosec
+                                   close(fd):
+                                     ...
+                                     ops->release() -> sock_map_close()
+                                     sk_socket->ops = NULL
+                                     free(socket)
+      sock->ops->sendmsg
+            ^
+            panic here
+'''
 
-Note that errors during clock and regulator lookup are already correctly
-logged using dev_err_probe().
+The ref of psock become 0 after sock_map_close() executed.
+'''
+void sock_map_close()
+{
+    ...
+    if (likely(psock)) {
+    ...
+    // !! here we remove psock and the ref of psock become 0
+    sock_map_remove_links(sk, psock)
+    psock = sk_psock_get(sk);
+    if (unlikely(!psock))
+        goto no_psock; <=== Control jumps here via goto
+        ...
+        cancel_delayed_work_sync(&psock->work); <=== not executed
+        sk_psock_put(sk, psock);
+        ...
+}
+'''
 
-Fixes: 49d9ad719e89 ("media: ov5675: add device-tree support and support runtime PM")
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Based on the fact that we already wait for the workqueue to finish in
+sock_map_close() if psock is held, we simply increase the psock
+reference count to avoid race conditions.
+
+With this patch, if the backlog thread is running, sock_map_close() will
+wait for the backlog thread to complete and cancel all pending work.
+
+If no backlog running, any pending work that hasn't started by then will
+fail when invoked by sk_psock_get(), as the psock reference count have
+been zeroed, and sk_psock_drop() will cancel all jobs via
+cancel_delayed_work_sync().
+
+In summary, we require synchronization to coordinate the backlog thread
+and close() thread.
+
+The panic I catched:
+'''
+Workqueue: events sk_psock_backlog
+RIP: 0010:sock_sendmsg+0x21d/0x440
+RAX: 0000000000000000 RBX: ffffc9000521fad8 RCX: 0000000000000001
+...
+Call Trace:
+ <TASK>
+ ? die_addr+0x40/0xa0
+ ? exc_general_protection+0x14c/0x230
+ ? asm_exc_general_protection+0x26/0x30
+ ? sock_sendmsg+0x21d/0x440
+ ? sock_sendmsg+0x3e0/0x440
+ ? __pfx_sock_sendmsg+0x10/0x10
+ __skb_send_sock+0x543/0xb70
+ sk_psock_backlog+0x247/0xb80
+...
+'''
+
+Fixes: 4b4647add7d3 ("sock_map: avoid race between sock_map_close and sk_psock_put")
+Reported-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20250516141713.291150-1-jiayuan.chen@linux.dev
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5675.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/core/skmsg.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/media/i2c/ov5675.c
-+++ b/drivers/media/i2c/ov5675.c
-@@ -1295,11 +1295,8 @@ static int ov5675_probe(struct i2c_clien
- 		return -ENOMEM;
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 0613f9a2543bb..e5ba57a5db126 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -654,6 +654,13 @@ static void sk_psock_backlog(struct work_struct *work)
+ 	bool ingress;
+ 	int ret;
  
- 	ret = ov5675_get_hwcfg(ov5675, &client->dev);
--	if (ret) {
--		dev_err(&client->dev, "failed to get HW configuration: %d",
--			ret);
-+	if (ret)
- 		return ret;
--	}
++	/* Increment the psock refcnt to synchronize with close(fd) path in
++	 * sock_map_close(), ensuring we wait for backlog thread completion
++	 * before sk_socket freed. If refcnt increment fails, it indicates
++	 * sock_map_close() completed with sk_socket potentially already freed.
++	 */
++	if (!sk_psock_get(psock->sk))
++		return;
+ 	mutex_lock(&psock->work_mutex);
+ 	while ((skb = skb_peek(&psock->ingress_skb))) {
+ 		len = skb->len;
+@@ -705,6 +712,7 @@ static void sk_psock_backlog(struct work_struct *work)
+ 	}
+ end:
+ 	mutex_unlock(&psock->work_mutex);
++	sk_psock_put(psock->sk, psock);
+ }
  
- 	v4l2_i2c_subdev_init(&ov5675->sd, client, &ov5675_subdev_ops);
- 
+ struct sk_psock *sk_psock_init(struct sock *sk, int node)
+-- 
+2.39.5
+
 
 
