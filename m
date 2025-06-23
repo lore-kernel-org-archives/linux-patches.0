@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3C71AD3FA;
-	Mon, 23 Jun 2025 21:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995D2221FCC;
+	Mon, 23 Jun 2025 21:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715526; cv=none; b=NHYogV9szMVF6lS7/x+ovfji7t5XtusEIyCw4zutmHjJCHyZyeTC84GG6OLgFOu6FfnRK1FbIWuDl9BEm+/bvucbW07CWv9MmLFI5YyXoMN12uspwKExKl9HrZsw0Db13GPLQyUe0CI64qWGimJ29I+G01+dHsgpH2NiKZZGfRE=
+	t=1750715528; cv=none; b=YuV7sUi8zo3pO6cwugOds1e7XPkp59SWAo9dIDINT88NDYTBaiO0YNq6mxBc+oxvXvR4d44FTKLBEfQ7tk1qNX+WWhvGfQ8KTCITGwhLLAuY8h3eIZv+/X9JobNpfQg8raRKk/N2pMtSzCBqpN1/CU/ha29K64EMMHwkoyyR0D8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715526; c=relaxed/simple;
-	bh=4nhZkk9lnppgTJO5dEDAifbm35WPA0c6AXshAv5pjXA=;
+	s=arc-20240116; t=1750715528; c=relaxed/simple;
+	bh=JkR8AQcR7j+v5sHAJpst+RBrLKA6hWddJ+oFioL83wA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DMt/LMcmGUL3D5XipUgZ+qdB0o6Bd4IFvSCuDSjwXMPuCyaOG+ZAd8qM8EmogxGCjx2zlZUpzA//yEO2Y9R3+XNt2pJqPROv5dhORmI5qa9dwVQQA6t2R2zrabeEsgRWDOEOwDpeDq9+68L5ud7j7VKq52yWOMSQ84fGoFLxDUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+JXHZtc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KeREWdtv2dcG2JGS+B0veqz7YTK5zhsTXK8Yj1pBBsG/fiIbbBP7XX2fCphY2bCur3JZA/RUEdhtaFj9BbuuNewIFOYrxSnPrgSW1DW+irSpFntqyiNjN4gmcJyadk5HsPliDvGO1WMOWZDrStJSuUkJf6au8XbRPJcBCGh0ZsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYJKfepB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+JXHZtc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7B0C4CEEA;
-	Mon, 23 Jun 2025 21:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYJKfepB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304A2C4CEEA;
+	Mon, 23 Jun 2025 21:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715526;
-	bh=4nhZkk9lnppgTJO5dEDAifbm35WPA0c6AXshAv5pjXA=;
+	s=korg; t=1750715528;
+	bh=JkR8AQcR7j+v5sHAJpst+RBrLKA6hWddJ+oFioL83wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+JXHZtc6u3sQxlqc37VP+jKrzvxC6F1v0PMBvh7FU/EekfZ7vFLffQLRcHkXqilR
-	 DAtI8ihQD4jHbBvLL/pGtxXECssc8u5h5QiPi5DQj++HeYFyGAvNjrfM07J5Nb4f6V
-	 Pq6nbQXkCDWDoFUKiW2orUXFkv+7RSi0qf4lOmiI=
+	b=TYJKfepB8JkKCcMTJSPIh3Zqnz5e8qyhgkHOgm+rtxkySmjF36g9OLwo94k5n29vs
+	 seTEyVY1pJQRe7OeFcsz/56cPlhYWfdReNmv/YHWxxeprvgcPRmyDqX1Y91nvFguZG
+	 4/ItuOAJWwisgL0/NiCbzym1P5ekKRDYYJiyuyvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 248/508] net: Fix TOCTOU issue in sk_is_readable()
-Date: Mon, 23 Jun 2025 15:04:53 +0200
-Message-ID: <20250623130651.353220219@linuxfoundation.org>
+	Steven Rostedt <rostedt@goodmis.org>,
+	Hongbo Li <lihongbo22@huawei.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 5.10 301/355] erofs: remove unused trace event erofs_destroy_inode
+Date: Mon, 23 Jun 2025 15:08:22 +0200
+Message-ID: <20250623130635.828092454@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,56 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 2660a544fdc0940bba15f70508a46cf9a6491230 ]
+commit 30b58444807c93bffeaba7d776110f2a909d2f9a upstream.
 
-sk->sk_prot->sock_is_readable is a valid function pointer when sk resides
-in a sockmap. After the last sk_psock_put() (which usually happens when
-socket is removed from sockmap), sk->sk_prot gets restored and
-sk->sk_prot->sock_is_readable becomes NULL.
+The trace event `erofs_destroy_inode` was added but remains unused. This
+unused event contributes approximately 5KB to the kernel module size.
 
-This makes sk_is_readable() racy, if the value of sk->sk_prot is reloaded
-after the initial check. Which in turn may lead to a null pointer
-dereference.
-
-Ensure the function pointer does not turn NULL after the check.
-
-Fixes: 8934ce2fd081 ("bpf: sockmap redirect ingress support")
-Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250609-skisreadable-toctou-v1-1-d0dfb2d62c37@rbox.co
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Steven Rostedt <rostedt@goodmis.org>
+Closes: https://lore.kernel.org/r/20250612224906.15000244@batman.local.home
+Fixes: 13f06f48f7bf ("staging: erofs: support tracepoint")
+Cc: stable@vger.kernel.org
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250617054056.3232365-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sock.h | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/trace/events/erofs.h |   18 ------------------
+ 1 file changed, 18 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index e716b2ba00bba..e00cd9d0bec8e 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -3061,8 +3061,11 @@ int sock_copy_user_timeval(struct __kernel_sock_timeval *tv,
+--- a/include/trace/events/erofs.h
++++ b/include/trace/events/erofs.h
+@@ -235,24 +235,6 @@ DEFINE_EVENT(erofs__map_blocks_exit, z_e
+ 	TP_ARGS(inode, map, flags, ret)
+ );
  
- static inline bool sk_is_readable(struct sock *sk)
- {
--	if (sk->sk_prot->sock_is_readable)
--		return sk->sk_prot->sock_is_readable(sk);
-+	const struct proto *prot = READ_ONCE(sk->sk_prot);
-+
-+	if (prot->sock_is_readable)
-+		return prot->sock_is_readable(sk);
-+
- 	return false;
- }
- #endif	/* _SOCK_H */
--- 
-2.39.5
-
+-TRACE_EVENT(erofs_destroy_inode,
+-	TP_PROTO(struct inode *inode),
+-
+-	TP_ARGS(inode),
+-
+-	TP_STRUCT__entry(
+-		__field(	dev_t,		dev		)
+-		__field(	erofs_nid_t,	nid		)
+-	),
+-
+-	TP_fast_assign(
+-		__entry->dev	= inode->i_sb->s_dev;
+-		__entry->nid	= EROFS_I(inode)->nid;
+-	),
+-
+-	TP_printk("dev = (%d,%d), nid = %llu", show_dev_nid(__entry))
+-);
+-
+ #endif /* _TRACE_EROFS_H */
+ 
+  /* This part must be outside protection */
 
 
