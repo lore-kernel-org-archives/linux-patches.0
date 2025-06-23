@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7C52C9D;
-	Mon, 23 Jun 2025 21:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B0E2C9D;
+	Mon, 23 Jun 2025 21:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713612; cv=none; b=Tp+JhCfxN1csbuoDnyNVviGfREzYf8BK4iMW7YXwD+cUPq/iYWGummdTkEnj8IU2jbd5u/uAeQvcX1BjkjlQWLs8U7lTCay68Qb6929p6H0d7Et4plTYYpQ96iCQZz8gmuqRwnbynSOY1Z5T74/rB2yy5Rr3oUFqUZkB8kWVaUo=
+	t=1750713614; cv=none; b=sL+4zY3CKRiQwu+4vG2+NL5Hm567omv1Ey6EbvRxjhNY+aSzmqc/2yH9X4LNzoIRlWX2bY1dhGaMgRpeB5s2PJ+zC4PxMwQXPc71YUxYJXk+BesZ21v6lamXQOmNIK3F4baMlwCdspE03R6jMLDvfRCKG//L/d1np97MAE+vmIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713612; c=relaxed/simple;
-	bh=pfkHc/bMy1um2h8nWy7aYiuhrKmeke8IbLuhXti0bU8=;
+	s=arc-20240116; t=1750713614; c=relaxed/simple;
+	bh=KnaFQf4nE/8Zkg4qb/s6+/2LEfugjPor9AKIKJuy9Pg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fgjt3uTHQtEpaEFuBBRL6/2fRkDuDV4+aTHW9cnMcyEzp5RZEYKYuCRODP7kxcNE9d2m6YqOhAof3CzJC9W86OSypMp7MiRuiZ5E6qryeZgWvxSbiynzxj3ejFyOpMaYVgMSEP9Q6Gw7zIxOTRxSkl2tQA1kMKA3QPY4e6GPfi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inhVrqvV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tq59EbBrCsdvl79psd6AsU2VKn7B7pKrWHwx/p9feflDa7UphLe7it1gwQR10h5oLzJL3W0F/fH/VSTpLt5TaoT9AE8AAmO1OHFC5ZZj+5Ob3KImJNgowlKFsFUJfX9h11j1idTaNrcZ8cWnZnLXxAErASgW9GOf22LzXpWQsxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndWtwsuU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inhVrqvV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CCBC4CEEA;
-	Mon, 23 Jun 2025 21:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndWtwsuU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E487DC4CEEA;
+	Mon, 23 Jun 2025 21:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713611;
-	bh=pfkHc/bMy1um2h8nWy7aYiuhrKmeke8IbLuhXti0bU8=;
+	s=korg; t=1750713614;
+	bh=KnaFQf4nE/8Zkg4qb/s6+/2LEfugjPor9AKIKJuy9Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=inhVrqvVIWgqwY+xArxyTdOqnPjKBc9PX9WASdu+Uc5tgtZ5yYUREs3RW+H4JgG2n
-	 coZPHLUlC/B916QnsO9VOyVvLfQAaK4l+kMCZfrWkpkcHTDLWLoY59y9QXq/kLjyfg
-	 7IypQ7fbwDD3iF2us7Yfkq6cHL2cgVPEujM3iwvw=
+	b=ndWtwsuUZAOXUri8HoAPc2a3sozTB3SN2lOTCMn+3cvIQGAaahFJkQdgsihLbftsp
+	 Dyc2PJrxZKuRyFreNOlCOsI8ryE8Hu/W7TIrFXbtG2Qlz+jDbDdAAZUS5pvZWbSoML
+	 b+HKbBWnylDuYr+M/xiSCRZ4Ur65H2ih7AYgjCEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Da Xue <da@libre.computer>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>
-Subject: [PATCH 6.6 080/290] clk: meson-g12a: add missing fclk_div2 to spicc
-Date: Mon, 23 Jun 2025 15:05:41 +0200
-Message-ID: <20250623130629.391592541@linuxfoundation.org>
+	Julien Massot <julien.massot@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 113/508] arm64: dts: mt6359: Add missing compatible property to regulators node
+Date: Mon, 23 Jun 2025 15:02:38 +0200
+Message-ID: <20250623130648.076746636@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Da Xue <da@libre.computer>
+From: Julien Massot <julien.massot@collabora.com>
 
-commit daf004f87c3520c414992893e2eadd5db5f86a5a upstream.
+[ Upstream commit 1fe38d2a19950fa6dbc384ee8967c057aef9faf4 ]
 
-SPICC is missing fclk_div2, which means fclk_div5 and fclk_div7 indexes
-are wrong on this clock. This causes the spicc module to output sclk at
-2.5x the expected rate when clock index 3 is picked.
+The 'compatible' property is required by the
+'mfd/mediatek,mt6397.yaml' binding. Add it to fix the following
+dtb-check error:
+mediatek/mt8395-radxa-nio-12l.dtb: pmic: regulators:
+'compatible' is a required property
 
-Adding the missing fclk_div2 resolves this.
-
-[jbrunet: amended commit description]
-Fixes: a18c8e0b7697 ("clk: meson: g12a: add support for the SPICC SCLK Source clocks")
-Cc: stable@vger.kernel.org # 6.1
-Signed-off-by: Da Xue <da@libre.computer>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20250512142617.2175291-1-da@libre.computer
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3b7d143be4b7 ("arm64: dts: mt6359: add PMIC MT6359 related nodes")
+Signed-off-by: Julien Massot <julien.massot@collabora.com>
+Link: https://lore.kernel.org/r/20250505-mt8395-dtb-errors-v1-3-9c4714dcdcdb@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/meson/g12a.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/mediatek/mt6359.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/clk/meson/g12a.c
-+++ b/drivers/clk/meson/g12a.c
-@@ -3971,6 +3971,7 @@ static const struct clk_parent_data spic
- 	{ .hw = &g12a_clk81.hw },
- 	{ .hw = &g12a_fclk_div4.hw },
- 	{ .hw = &g12a_fclk_div3.hw },
-+	{ .hw = &g12a_fclk_div2.hw },
- 	{ .hw = &g12a_fclk_div5.hw },
- 	{ .hw = &g12a_fclk_div7.hw },
- };
+diff --git a/arch/arm64/boot/dts/mediatek/mt6359.dtsi b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
+index df3e822232d34..ef6ab90b99f93 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6359.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
+@@ -13,6 +13,8 @@
+ 		};
+ 
+ 		regulators {
++			compatible = "mediatek,mt6359-regulator";
++
+ 			mt6359_vs1_buck_reg: buck_vs1 {
+ 				regulator-name = "vs1";
+ 				regulator-min-microvolt = <800000>;
+-- 
+2.39.5
+
 
 
