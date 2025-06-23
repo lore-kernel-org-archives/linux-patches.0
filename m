@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2A16136;
-	Mon, 23 Jun 2025 21:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88397221FC7;
+	Mon, 23 Jun 2025 21:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714613; cv=none; b=YPSoDSJVSFCTQFg80ZvsDTFnRg0ZaOTwJR+eR5Z+GjPYw8+sy+eJ+UbTTdzSqsHFhw3YT4DkWpDOvjLWfhGc8U7jK3Lj8WuWBYObsGEBQqCvx3ubevFS8gioKUqsH0e/RQvFckLs4E45vUqjtCJw+T1AOQF+7aXwbaf86R9SOJw=
+	t=1750714615; cv=none; b=a+JMhuKM1+KWvSJWuQb0RnWNi9y3THLIkmXIMFEs/8bGj2Pv6OejPQAGCoG4nPO9GXKYuG0qvhId0QaYAKO1qBWMiBRcHBR+yeBfD40bEzcVsO+rkwO6jbolW2T4Gdoe7H2Bi9M+xzXjIqsFecOmekXOZVyxwSSoOZhj6kvi6rI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714613; c=relaxed/simple;
-	bh=x5tNAGD2OvBWzT8LDXTUd0GJsP50TtHL8vOLXRbY+OM=;
+	s=arc-20240116; t=1750714615; c=relaxed/simple;
+	bh=oE8jDLd5un7DkKjKI6MqaFDfMdS4q64UvA4VRQNqK6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRtHZ7dqu51HJBZpfLDAaB7Ds2QybqQ90Zpax6SbprsNcd5X4KHofffQ0/NOez1mC4FnrKIOwZxAxrkWeWoU5HHqI0aJxo2c1Wqs+4zkDYTcxdRa0scilAAbCTRw6eqgZp5n97FmJsTnpGd44WbY71Ou7ctlKSFdpQUgck+/K1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynGkyq7d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jjgGNyC08vL1c14yGsSnqdwX4qW6i8unqJd3dUK6tmPVdOsnXMbsd6DSAR8tGGFmdXy3UmDZn9ZT3skNDRtdw561KbIAzVhclk0URmDb4cbkKhJF069EUOOYRvJ2GkL9UXrgj4XZgUlUBSPSVWEDiklGlnmxY/d2cB3HoxL8sDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=So7FtDrL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynGkyq7d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86170C4CEEA;
-	Mon, 23 Jun 2025 21:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="So7FtDrL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE66C4CEED;
+	Mon, 23 Jun 2025 21:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714612;
-	bh=x5tNAGD2OvBWzT8LDXTUd0GJsP50TtHL8vOLXRbY+OM=;
+	s=korg; t=1750714615;
+	bh=oE8jDLd5un7DkKjKI6MqaFDfMdS4q64UvA4VRQNqK6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ynGkyq7dOOq8EriuESs08tvwcGxNqMV9vR6y9iFyOMJDCKGyTWEmCxIkN5afKbKc5
-	 ANJTieg9z46yaQ8/Tpl7cyYvkEXdbz6QgLefRF8TaZ5GteFl/25pLR+Hh1uUptA8cl
-	 70A7wohCP9Hp/SPSuVyb6D+qC+4T3W2eQFsUn1j0=
+	b=So7FtDrLPCb5XjqswTh4DariJ8+b5MeZaRhSr6HMKdzG5tyhAUrvrc/4ex9FEqMXp
+	 S9Pl9Qd7DkIfi+4izOIOHBNW9+EvaxEC/GwxbquFozjmrpExP2824U6y13R/bpBAjF
+	 nfrlZ64N+WxAVSbGhlqxtLd4vmcf/TffneCFjiz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	gldrk <me@rarity.fan>,
+	Daniel Wagner <wagi@kernel.org>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 218/355] ACPICA: utilities: Fix overflow check in vsnprintf()
-Date: Mon, 23 Jun 2025 15:06:59 +0200
-Message-ID: <20250623130633.296526745@linuxfoundation.org>
+Subject: [PATCH 6.15 405/592] scsi: lpfc: Use memcpy() for BIOS version
+Date: Mon, 23 Jun 2025 15:06:03 +0200
+Message-ID: <20250623130710.072178012@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: gldrk <me@rarity.fan>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 12b660251007e00a3e4d47ec62dbe3a7ace7023e ]
+[ Upstream commit ae82eaf4aeea060bb736c3e20c0568b67c701d7d ]
 
-ACPICA commit d9d59b7918514ae55063b93f3ec041b1a569bf49
+The strlcat() with FORTIFY support is triggering a panic because it
+thinks the target buffer will overflow although the correct target
+buffer size is passed in.
 
-The old version breaks sprintf on 64-bit systems for buffers
-outside [0..UINT32_MAX].
+Anyway, instead of memset() with 0 followed by a strlcat(), just use
+memcpy() and ensure that the resulting buffer is NULL terminated.
 
-Link: https://github.com/acpica/acpica/commit/d9d59b79
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/4994935.GXAFRqVoOG@rjwysocki.net
-Signed-off-by: gldrk <me@rarity.fan>
-[ rjw: Added the tag from gldrk ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+BIOSVersion is only used for the lpfc_printf_log() which expects a
+properly terminated string.
+
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Link: https://lore.kernel.org/r/20250409-fix-lpfc-bios-str-v1-1-05dac9e51e13@kernel.org
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/utprint.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/scsi/lpfc/lpfc_sli.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/acpica/utprint.c b/drivers/acpi/acpica/utprint.c
-index 681c11f4af4e8..a288643e8acd3 100644
---- a/drivers/acpi/acpica/utprint.c
-+++ b/drivers/acpi/acpica/utprint.c
-@@ -333,11 +333,8 @@ int vsnprintf(char *string, acpi_size size, const char *format, va_list args)
+diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
+index 6574f9e744766..a335d34070d3c 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.c
++++ b/drivers/scsi/lpfc/lpfc_sli.c
+@@ -6003,9 +6003,9 @@ lpfc_sli4_get_ctl_attr(struct lpfc_hba *phba)
+ 	phba->sli4_hba.flash_id = bf_get(lpfc_cntl_attr_flash_id, cntl_attr);
+ 	phba->sli4_hba.asic_rev = bf_get(lpfc_cntl_attr_asic_rev, cntl_attr);
  
- 	pos = string;
+-	memset(phba->BIOSVersion, 0, sizeof(phba->BIOSVersion));
+-	strlcat(phba->BIOSVersion, (char *)cntl_attr->bios_ver_str,
++	memcpy(phba->BIOSVersion, cntl_attr->bios_ver_str,
+ 		sizeof(phba->BIOSVersion));
++	phba->BIOSVersion[sizeof(phba->BIOSVersion) - 1] = '\0';
  
--	if (size != ACPI_UINT32_MAX) {
--		end = string + size;
--	} else {
--		end = ACPI_CAST_PTR(char, ACPI_UINT32_MAX);
--	}
-+	size = ACPI_MIN(size, ACPI_PTR_DIFF(ACPI_MAX_PTR, string));
-+	end = string + size;
- 
- 	for (; *format; ++format) {
- 		if (*format != '%') {
+ 	lpfc_printf_log(phba, KERN_INFO, LOG_SLI,
+ 			"3086 lnk_type:%d, lnk_numb:%d, bios_ver:%s, "
 -- 
 2.39.5
 
