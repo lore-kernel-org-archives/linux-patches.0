@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30E721D3DD;
-	Mon, 23 Jun 2025 21:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8049119D084;
+	Mon, 23 Jun 2025 21:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714921; cv=none; b=EPv6Dvn/SCmggX09RHShIu8H+DSAaKJhLgeNpCHDkWSKXetW2I3Hly5kSlZL9uma4QK07vYR84karKWbzjfOIR9ka3IDGLDQigLHJmnGerFuRdUjxfeomUpOocZS3bkpx8CiNIeiERyVE5HxpgELurK+8pBQiAm5oXl3MmvUJRY=
+	t=1750714924; cv=none; b=XgX4rEECXxHBJccJoTlcH4dJ69tvnLjVRzusvPPftb+B0AyC4fnFQth9mzJIpP6jpBSALWS6QFGeWRUI7Owns9IQ8okTGSUOODUO5boPh7pleArcR+lsP0wtglviQjA2YBzQcrL6XFo1hKa8l9oKJuBDV+o/JCgaD3NOunN8emA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714921; c=relaxed/simple;
-	bh=y3O3UKfi80nI9BAt01HZV6U1DZauYU+hMpkCgLgpbq8=;
+	s=arc-20240116; t=1750714924; c=relaxed/simple;
+	bh=kZf3SKoKzEgRUkfdKXxL48LWIK2vL/c1OVI2zE++OpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=foIbRmcQqrmMBcKbeX8TAv72ssgeLEJEwIBNZmVzR2Qywdp+xtW4+w1MUTgsJWN8j2h8Z2qjKwJZzLB6LPs7dbKctTE8FblqwR4ynpU10E6UWLydvQtDCgpu7rGIgobgDSQ+rBYJFAfuJe1a9BTIl3cWGP+seyMJdwrpEseFAQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXdUZ1qw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mYD/OxTRFXicy7SC3rs92F6sYw1V2ilfGaTMhuN3xsFAFX9GaA9Kt66lqYei+2OfnRDuV+Qmb8pY6AEVZcIhUVCRvLNJtJzte4Y+v6j981hUVDb+5ai2WAFVQbJtsDrwAN+apYiRoyfSYeM+8qLDG2gPGo5UU94X2v7TCpGkxkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALXlSD1b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXdUZ1qw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4194AC4CEEA;
-	Mon, 23 Jun 2025 21:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALXlSD1b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB597C4CEEA;
+	Mon, 23 Jun 2025 21:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714921;
-	bh=y3O3UKfi80nI9BAt01HZV6U1DZauYU+hMpkCgLgpbq8=;
+	s=korg; t=1750714924;
+	bh=kZf3SKoKzEgRUkfdKXxL48LWIK2vL/c1OVI2zE++OpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lXdUZ1qw1hG3YEQgNfkDkf/cHRfmSWiqYo39X1SaB6Z61+KbczY4oOxlFNRzA7oxD
-	 O2QIGiKriBHsvPzkrlXsACPAeYfpFE87BDtgi4auAGE0TMhc7eH2UHSt9TcJ8sT+7V
-	 i9Ykl1w+O0L8Ii4fbp3c5r70XOkDLB47gNaOUDeo=
+	b=ALXlSD1bSlfEe8MWiRHhwKMQI7ilWukq9tPRVD3mYmri4hYn2QgGcZYbjyJRiwblr
+	 TupeCiNoXCxL1Irnr6mPffwVA/zIT39WlW81WeMSTQ4VPcDKoqjp1+ZCOogvj3UzIr
+	 aYFVfHzy5koJhc771PZELVGZyHE771G3jL9KDJRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.10 241/355] drm/msm/dpu: dont select single flush for active CTL blocks
-Date: Mon, 23 Jun 2025 15:07:22 +0200
-Message-ID: <20250623130633.995432934@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 426/592] wifi: iwlwifi: mld: Work around Clang loop unrolling bug
+Date: Mon, 23 Jun 2025 15:06:24 +0200
+Message-ID: <20250623130710.567963820@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit e93eee524bb78f3ee4b78654d0083382f98b3d23 ]
+[ Upstream commit 368556dd234dc4a506a35a0c99c0eee2ab475c77 ]
 
-In case of ACTIVE CTLs, a single CTL is being used for flushing all INTF
-blocks. Don't skip programming the CTL on those targets.
+The nested loop in iwl_mld_send_proto_offload() confuses Clang into
+thinking there could be a final loop iteration past the end of the
+"nsc" array (which is only 4 entries). The FORTIFY checking in memcmp()
+(via ipv6_addr_cmp()) notices this (due to the available bytes in the
+out-of-bounds position of &nsc[4] being 0), and errors out, failing
+the build. For some reason (likely due to architectural loop unrolling
+configurations), this is only exposed on ARM builds currently. Due to
+Clang's lack of inline tracking[1], the warning is not very helpful:
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/641585/
-Link: https://lore.kernel.org/r/20250307-dpu-active-ctl-v3-5-5d20655f10ca@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+include/linux/fortify-string.h:719:4: error: call to '__read_overflow' declared with 'error' attribute: detected read beyond size of object (1st parameter)
+  719 |                         __read_overflow();
+      |                         ^
+1 error generated.
+
+But this was tracked down to iwl_mld_send_proto_offload()'s
+ipv6_addr_cmp() call.
+
+An upstream Clang bug has been filed[2] to track this. For now fix the
+build by explicitly bounding the inner loop by "n_nsc", which is what
+"c" is already limited to.
+
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2076
+Link: https://github.com/llvm/llvm-project/pull/73552 [1]
+Link: https://github.com/llvm/llvm-project/issues/136603 [2]
+Link: https://lore.kernel.org/r/20250421204153.work.935-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mld/d3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index 33880f66625e6..f9da379999467 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -353,7 +353,8 @@ static void dpu_encoder_phys_vid_underrun_irq(void *arg, int irq_idx)
- static bool dpu_encoder_phys_vid_needs_single_flush(
- 		struct dpu_encoder_phys *phys_enc)
- {
--	return phys_enc->split_role != ENC_ROLE_SOLO;
-+	return !(phys_enc->hw_ctl->caps->features & BIT(DPU_CTL_ACTIVE_CFG)) &&
-+		phys_enc->split_role != ENC_ROLE_SOLO;
- }
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/d3.c b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
+index ee99298eebf59..7ce01ad3608e1 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
+@@ -1757,7 +1757,7 @@ iwl_mld_send_proto_offload(struct iwl_mld *mld,
  
- static void _dpu_encoder_phys_vid_setup_irq_hw_idx(
+ 		addrconf_addr_solict_mult(&wowlan_data->target_ipv6_addrs[i],
+ 					  &solicited_addr);
+-		for (j = 0; j < c; j++)
++		for (j = 0; j < n_nsc && j < c; j++)
+ 			if (ipv6_addr_cmp(&nsc[j].dest_ipv6_addr,
+ 					  &solicited_addr) == 0)
+ 				break;
 -- 
 2.39.5
 
