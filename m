@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAE516D9BF;
-	Mon, 23 Jun 2025 22:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA89B19E7F9;
+	Mon, 23 Jun 2025 22:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717109; cv=none; b=qJu5+5JUBrItXO2CcZA0QCfG+im/+uEu5Z7F+dEsxJYjh5WFvIWNinCrJBFnbNTPxxTUW2rx5pXJquX3oos5f0C9DQVYJoe+VnaDMxzS50JNNwV91GNxwCrdzFbB7mY6i5aZtEG0zJISTLsq6Xusbfu6Zk70gSS6rEIZEqqZyMA=
+	t=1750717112; cv=none; b=GT/mu1TgHw8Joz1HX8wkiBp8Jb99gqwnfibEOAUUcjMf7HdDO8PvUiOCoBtkDlPUPvB2J2YVhkaRzjUJVdEt8/p5cIzzbNshcx96Pai96Cfh0D+PYM+7QckuysJHxN4qfGV+lqF+hhEtbADu2Ahk8tsjmGBjddfenIcXNZmQecM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717109; c=relaxed/simple;
-	bh=U8FplPlMzD6l61erJluzmBnZV88GlH41D4EqABhfSGA=;
+	s=arc-20240116; t=1750717112; c=relaxed/simple;
+	bh=Ar4phHCW1MhhMno7fVSCJnsREEJr+E/lRH7Xd5ag2ck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZL59wx2dCbwRISfLw/XyAOTABhorbdbKoTbTfs6R1VSmwL6fIjYLe4shLJocL71a5YBS1buoZwTViCvA9TOGcbfNZH50YEh09ps/+6zQnM98gO/kT65cV3qaC6WkFA1QnEvgXSyxGAWZYioq8soiyKcq+1zssKmOnUL7DtQ/sns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFt0JFnL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dZmePGlqBeqwrvQQLFIwvOp4Qv07C0s7JYCvHLonfQxgPC42cuScyOgBsoWgitWy/aKpaCcuSjTWyGI3l0E3fJEoCddxygOsWUgotUXkKFzzEMQo2BpBzdB9zk15znZ9rEKYMWxMwWCUNLwhRXnTWKdxln671LQvskuQMeJLKig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jm422E0A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFt0JFnL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2C3C4CEEA;
-	Mon, 23 Jun 2025 22:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jm422E0A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77ADDC4CEEA;
+	Mon, 23 Jun 2025 22:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717109;
-	bh=U8FplPlMzD6l61erJluzmBnZV88GlH41D4EqABhfSGA=;
+	s=korg; t=1750717111;
+	bh=Ar4phHCW1MhhMno7fVSCJnsREEJr+E/lRH7Xd5ag2ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFt0JFnL2Sq0s15z8WEclOaN0ESW2QaD5tQoj92urIdDKR4YiE11TaXWNVSXI8Gdk
-	 HmZtPHQ+hA21+O4+TzxyiaWPSUDQft5klHu7Ub3xuomPxE38uAN/8eA0ltDYlU2yfm
-	 x+eSLuAWlceNFeHXcl1df0tCwZXtNBf7+jn4tamU=
+	b=Jm422E0AR66DYTBVCkZirKNkrVjrf8CO/ZdP6Xr2OMrbCwJCc19YMh3AEkzfVKMjc
+	 ksVsKTq4naZQ9QdfDZSGr67A9I2O0oFBxDIH3e56cGVOxo6w4CDIh7xNaXD8iPHWs0
+	 Bn7qxPuxG7UJYxWNnTTlvrUq6DjIPgukw/BlzbWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.1 367/508] PCI: cadence-ep: Correct PBA offset in .set_msix() callback
-Date: Mon, 23 Jun 2025 15:06:52 +0200
-Message-ID: <20250623130654.383703385@linuxfoundation.org>
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Zenm Chen <zenmchen@gmail.com>
+Subject: [PATCH 6.12 325/414] wifi: rtw89: phy: add dummy C2H event handler for report of TAS power
+Date: Mon, 23 Jun 2025 15:07:42 +0200
+Message-ID: <20250623130650.119403520@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,66 +46,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-commit c8bcb01352a86bc5592403904109c22b66bd916e upstream.
+commit 09489812013f9ff3850c3af9900c88012b8c1e5d upstream.
 
-While cdns_pcie_ep_set_msix() writes the Table Size field correctly (N-1),
-the calculation of the PBA offset is wrong because it calculates space for
-(N-1) entries instead of N.
+The newer firmware, lik RTL8852C version 0.27.111.0, will notify driver
+report of TAS (Time Averaged SAR) power by new C2H events. This is to
+assist in higher accurate calculation of TAS.
 
-This results in the following QEMU error when using PCI passthrough on a
-device which relies on the PCI endpoint subsystem:
+For now, driver doesn't use the report yet, so add a dummy handler to
+avoid it throws info like:
+   rtw89_8852ce 0000:03:00.0: c2h class 9 func 6 not support
 
-  failed to add PCI capability 0x11[0x50]@0xb0: table & pba overlap, or they don't fit in BARs, or don't align
+Also add "MAC" and "PHY" to the message to disambiguate the source of
+C2H event.
 
-Fix the calculation of PBA offset in the MSI-X capability.
-
-[bhelgaas: more specific subject and commit log]
-
-Fixes: 3ef5d16f50f8 ("PCI: cadence: Add MSI-X support to Endpoint driver")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250514074313.283156-10-cassel@kernel.org
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241209042127.21424-1-pkshih@realtek.com
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/cadence/pcie-cadence-ep.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/mac.c |    4 ++--
+ drivers/net/wireless/realtek/rtw89/phy.c |   10 ++++++++--
+ drivers/net/wireless/realtek/rtw89/phy.h |    1 +
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
-@@ -294,13 +294,14 @@ static int cdns_pcie_ep_set_msix(struct
- 	struct cdns_pcie *pcie = &ep->pcie;
- 	u32 cap = CDNS_PCIE_EP_FUNC_MSIX_CAP_OFFSET;
- 	u32 val, reg;
-+	u16 actual_interrupts = interrupts + 1;
+--- a/drivers/net/wireless/realtek/rtw89/mac.c
++++ b/drivers/net/wireless/realtek/rtw89/mac.c
+@@ -5513,11 +5513,11 @@ void rtw89_mac_c2h_handle(struct rtw89_d
+ 	case RTW89_MAC_C2H_CLASS_FWDBG:
+ 		return;
+ 	default:
+-		rtw89_info(rtwdev, "c2h class %d not support\n", class);
++		rtw89_info(rtwdev, "MAC c2h class %d not support\n", class);
+ 		return;
+ 	}
+ 	if (!handler) {
+-		rtw89_info(rtwdev, "c2h class %d func %d not support\n", class,
++		rtw89_info(rtwdev, "MAC c2h class %d func %d not support\n", class,
+ 			   func);
+ 		return;
+ 	}
+--- a/drivers/net/wireless/realtek/rtw89/phy.c
++++ b/drivers/net/wireless/realtek/rtw89/phy.c
+@@ -3062,10 +3062,16 @@ rtw89_phy_c2h_rfk_report_state(struct rt
+ 		    (int)(len - sizeof(report->hdr)), &report->state);
+ }
  
- 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
++static void
++rtw89_phy_c2h_rfk_log_tas_pwr(struct rtw89_dev *rtwdev, struct sk_buff *c2h, u32 len)
++{
++}
++
+ static
+ void (* const rtw89_phy_c2h_rfk_report_handler[])(struct rtw89_dev *rtwdev,
+ 						  struct sk_buff *c2h, u32 len) = {
+ 	[RTW89_PHY_C2H_RFK_REPORT_FUNC_STATE] = rtw89_phy_c2h_rfk_report_state,
++	[RTW89_PHY_C2H_RFK_LOG_TAS_PWR] = rtw89_phy_c2h_rfk_log_tas_pwr,
+ };
  
- 	reg = cap + PCI_MSIX_FLAGS;
- 	val = cdns_pcie_ep_fn_readw(pcie, fn, reg);
- 	val &= ~PCI_MSIX_FLAGS_QSIZE;
--	val |= interrupts;
-+	val |= interrupts; /* 0's based value */
- 	cdns_pcie_ep_fn_writew(pcie, fn, reg, val);
+ bool rtw89_phy_c2h_chk_atomic(struct rtw89_dev *rtwdev, u8 class, u8 func)
+@@ -3119,11 +3125,11 @@ void rtw89_phy_c2h_handle(struct rtw89_d
+ 			return;
+ 		fallthrough;
+ 	default:
+-		rtw89_info(rtwdev, "c2h class %d not support\n", class);
++		rtw89_info(rtwdev, "PHY c2h class %d not support\n", class);
+ 		return;
+ 	}
+ 	if (!handler) {
+-		rtw89_info(rtwdev, "c2h class %d func %d not support\n", class,
++		rtw89_info(rtwdev, "PHY c2h class %d func %d not support\n", class,
+ 			   func);
+ 		return;
+ 	}
+--- a/drivers/net/wireless/realtek/rtw89/phy.h
++++ b/drivers/net/wireless/realtek/rtw89/phy.h
+@@ -151,6 +151,7 @@ enum rtw89_phy_c2h_rfk_log_func {
  
- 	/* Set MSIX BAR and offset */
-@@ -310,7 +311,7 @@ static int cdns_pcie_ep_set_msix(struct
+ enum rtw89_phy_c2h_rfk_report_func {
+ 	RTW89_PHY_C2H_RFK_REPORT_FUNC_STATE = 0,
++	RTW89_PHY_C2H_RFK_LOG_TAS_PWR = 6,
+ };
  
- 	/* Set PBA BAR and offset.  BAR must match MSIX BAR */
- 	reg = cap + PCI_MSIX_PBA;
--	val = (offset + (interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
-+	val = (offset + (actual_interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
- 	cdns_pcie_ep_fn_writel(pcie, fn, reg, val);
- 
- 	return 0;
+ enum rtw89_phy_c2h_dm_func {
 
 
