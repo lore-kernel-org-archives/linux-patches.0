@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E9942056;
-	Mon, 23 Jun 2025 21:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C213FD4;
+	Mon, 23 Jun 2025 21:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715282; cv=none; b=GgG65MpXzrhGXH/1HmDNy6UwwcAdVPreX8BP5o04Ov3HQgtNsMK0L6hL9wyYBGw9fema2YDedQdfHiOFxrn1eO6M74dGD7LSpdmlwKj1oijWZtNGOZnWspp0nLnZfW2SFaSMmQj3slhnO1iRaE1Q6RgrR24iRpaPPRCzNs4PiBY=
+	t=1750715284; cv=none; b=LMz6zp5fUqfkdc3AHjJXrBNFA9N93IJqDyfhPK+DtuLM8rrxhBDKKXkWY3AKhQafBHr4SD4kY5RnxaFDHKr31LUDft2dzX3MnBn54ChcKBvhPpAcp4lnGiypwXSISmjB057/R5ha0O6ar4Deb97zHavEvGyIzS4LE+5+tk2wAsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715282; c=relaxed/simple;
-	bh=TH2gjuRo/kO0c0ngg+s96gwf14rHrP3JSSMHrJUyabE=;
+	s=arc-20240116; t=1750715284; c=relaxed/simple;
+	bh=u3eKzRRqEjmiLbqOzGsFDmKoQ058RwK3dfRhrMswoHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OsK6yFarTeyVwz+UPq4hdNZoWw+x+uBIxJtQVPjiZ5B8LEopxmWSUbV+mpdl+BzSvGK9zM7QU+XQKP1n9ZHEdjNvQWlTZuV2JhPXDIh+kDuZF/UzD0PoKupY2w7FaeC2By5Zzn65XItfuwRhfcu70ceA/+KrLrhR6VsbX+fEJ9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKTdcV0R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cU+NsyS56aBj8A1G8e+lpiivKczDoSaxEI1PYxU/JRBGv+2A4ijZ1JgpmEggnTmL/5nR/2KjMVjG8n2nLpw9nnybHJTF1Z1GTjfFt0gEEEEyiKS1a9juSywnuNVXUZ2TynWoaBggkA6yOVCfs7Ai06CBHS7eChvcugwA1FX2ZEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r79HXxzb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKTdcV0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC904C4CEEA;
-	Mon, 23 Jun 2025 21:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r79HXxzb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3863EC4CEEA;
+	Mon, 23 Jun 2025 21:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715282;
-	bh=TH2gjuRo/kO0c0ngg+s96gwf14rHrP3JSSMHrJUyabE=;
+	s=korg; t=1750715284;
+	bh=u3eKzRRqEjmiLbqOzGsFDmKoQ058RwK3dfRhrMswoHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hKTdcV0RpFMc9Bf7/xMEUZdFfUzXANbuZuFbQvLiQJbN6H76x9M9ZfirdzYjekQU6
-	 0yWc2ts+wYUajJvuewIKDCOFIksHYlf8p+K9eH2RoNHtZZShcdw2C8/d7Z3wV/8N4B
-	 +/3jsyPkpBN3QEtKwgy0RpcSunZUi3sa4x12F60E=
+	b=r79HXxzbcEMD03zTXyIRjWSsArlFy96Prtv9ieiolZUAyow9jYoCZ2RLEgMDDcgtQ
+	 7BpI+otal0CPMKTNA+2me50tZzdoiUgX116rhWBnPGOWxkVweQ+N/MV2/x7XaN4Ig7
+	 FeAZoWFjIzmiMEYdUMXXknEzVniT0ZEJnpUTg3ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin@sipsolutions.net>,
-	Rouven Czerwinski <rouven@czerwinskis.de>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 265/355] wifi: mac80211: do not offer a mesh path if forwarding is disabled
-Date: Mon, 23 Jun 2025 15:07:46 +0200
-Message-ID: <20250623130634.721673773@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.15 243/411] mtd: rawnand: sunxi: Add randomizer configuration in sunxi_nfc_hw_ecc_write_chunk
+Date: Mon, 23 Jun 2025 15:06:27 +0200
+Message-ID: <20250623130639.769076971@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,71 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Berg <benjamin@sipsolutions.net>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit cf1b684a06170d253b47d6a5287821de976435bd ]
+commit 44ed1f5ff73e9e115b6f5411744d5a22ea1c855b upstream.
 
-When processing a PREQ the code would always check whether we have a
-mesh path locally and reply accordingly. However, when forwarding is
-disabled then we should not reply with this information as we will not
-forward data packets down that path.
+The function sunxi_nfc_hw_ecc_write_chunk() calls the
+sunxi_nfc_hw_ecc_write_chunk(), but does not call the configuration
+function sunxi_nfc_randomizer_config(). Consequently, the randomization
+might not conduct correctly, which will affect the lifespan of NAND flash.
+A proper implementation can be found in sunxi_nfc_hw_ecc_write_page_dma().
 
-Move the check for dot11MeshForwarding up in the function and skip the
-mesh path lookup in that case. In the else block, set forward to false
-so that the rest of the function becomes a no-op and the
-dot11MeshForwarding check does not need to be duplicated.
+Add the sunxi_nfc_randomizer_config() to config randomizer.
 
-This explains an effect observed in the Freifunk community where mesh
-forwarding is disabled. In that case a mesh with three STAs and only bad
-links in between them, individual STAs would occionally have indirect
-mpath entries. This should not have happened.
-
-Signed-off-by: Benjamin Berg <benjamin@sipsolutions.net>
-Reviewed-by: Rouven Czerwinski <rouven@czerwinskis.de>
-Link: https://patch.msgid.link/20250430191042.3287004-1-benjamin@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4be4e03efc7f ("mtd: nand: sunxi: add randomizer support")
+Cc: stable@vger.kernel.org # v4.6
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mesh_hwmp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/sunxi_nand.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mac80211/mesh_hwmp.c b/net/mac80211/mesh_hwmp.c
-index 4848e3c2f0af9..a8e80cb6a5cec 100644
---- a/net/mac80211/mesh_hwmp.c
-+++ b/net/mac80211/mesh_hwmp.c
-@@ -620,7 +620,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 				mesh_path_add_gate(mpath);
- 		}
- 		rcu_read_unlock();
--	} else {
-+	} else if (ifmsh->mshcfg.dot11MeshForwarding) {
- 		rcu_read_lock();
- 		mpath = mesh_path_lookup(sdata, target_addr);
- 		if (mpath) {
-@@ -638,6 +638,8 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 			}
- 		}
- 		rcu_read_unlock();
-+	} else {
-+		forward = false;
- 	}
+--- a/drivers/mtd/nand/raw/sunxi_nand.c
++++ b/drivers/mtd/nand/raw/sunxi_nand.c
+@@ -1061,6 +1061,7 @@ static int sunxi_nfc_hw_ecc_write_chunk(
+ 	if (ret)
+ 		return ret;
  
- 	if (reply) {
-@@ -655,7 +657,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 		}
- 	}
++	sunxi_nfc_randomizer_config(nand, page, false);
+ 	sunxi_nfc_randomizer_enable(nand);
+ 	sunxi_nfc_hw_ecc_set_prot_oob_bytes(nand, oob, 0, bbm, page);
  
--	if (forward && ifmsh->mshcfg.dot11MeshForwarding) {
-+	if (forward) {
- 		u32 preq_id;
- 		u8 hopcount;
- 
--- 
-2.39.5
-
 
 
