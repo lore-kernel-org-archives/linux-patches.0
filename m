@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74574221543;
-	Mon, 23 Jun 2025 22:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4090E221543;
+	Mon, 23 Jun 2025 22:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717570; cv=none; b=eRe5YDVpZg+tUHTs9WxQMlL1d7U/vksYxMhiXftXkWB5TIrqCOJHLqfry4p/T4h4NXx+IQ5ZerRBf7CqBEx+PKV7DnMzIhLoek/0MNmoRH0N8rdSpXyWO3NAs/ECeO3+YYHzTxF4CMbzVSgC2Ye5DfY0kcmjpO7LCvepxI/D3EE=
+	t=1750717573; cv=none; b=LbIXATQev533kwviOeJZkaWtcu76FURoo0ZVYrCeJpCwEpdYVHHBIexpXRzF9FfgbaPdTgiCjU6B0Hc1jo7x3DX/EbibUoqJ2EQnTG+529yAb6bimG8FedGdGLANvjqCA+Hrw9C3F0LIKgh+l9RVWWYBHrZ7lTc98FzrFtCye0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717570; c=relaxed/simple;
-	bh=t48LviNPo9C1Ha1s3xGEoqRDdyEO8acQFhwRx5KIX1g=;
+	s=arc-20240116; t=1750717573; c=relaxed/simple;
+	bh=pbGzdYOdyLaH36n6PgGd4iXrd1LMYSKWmO7M+57cByY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JeMID8PBLoC+5BijDpZYgQQ3CMX37rQ1P4df1WyQdXybUpZPMQ6lX2EL6wLL5gYBwINJhwThI0DhZOgrew4+qhi2ym8wNuQRFwhInzVNU94tATbunoFK4zXOTzz58Dyi1PNidFuIiWoPBDmfrMtHfqPX9xsQM7nzVqEef2jl4RY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7MDzJFG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tfiry9v6TUw1N6M+M1SNIw2949IYWfHFOIrup79sLWrO34anwS220MMNVc6AMpTzWrflCwyKhq5sttLEyMqsP6jWqLU8nIgh0MaXXcvXxrEIPahyJtTApDTPK/Cj8Gd/CttdIwa0MP5p7UmdPetoH22LYaDugIWdUNyHdizZwOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzGbuKM7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7MDzJFG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD8AC4CEEA;
-	Mon, 23 Jun 2025 22:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzGbuKM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78642C4CEEA;
+	Mon, 23 Jun 2025 22:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717570;
-	bh=t48LviNPo9C1Ha1s3xGEoqRDdyEO8acQFhwRx5KIX1g=;
+	s=korg; t=1750717572;
+	bh=pbGzdYOdyLaH36n6PgGd4iXrd1LMYSKWmO7M+57cByY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y7MDzJFGQyIMSxrVKw5CAu/ZMmYYrwAafOj+eIKk+AWVgeJQlSy5psxuMjhpPx9Gp
-	 fBgiHqUoDM5t8NXvdwfvQFw4U2RyoFY/wjqMsMVwzuMugQgRKDPiBXjxRP927jnBzW
-	 lZu0RcX7iKHEQy2qoiIIz/ixHjfZd8+OxJCpLHFo=
+	b=EzGbuKM7mRh8+Ztb+M/Wd74ooR6xYjl7zvb2VzZ0IWE6+ScluURx03jmpUQJ+gfN0
+	 VTjE3Iqwi0jAzo4Fk7X3DrkipYRBMh7jFa9M+/4s06cfbCkXPi1K8lm/SDBG88wlJs
+	 ZqRM7UholEudGp/8wqjs+4d/jzA3gJ1wbheZoxI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.1 455/508] selinux: fix selinux_xfrm_alloc_user() to set correct ctx_len
-Date: Mon, 23 Jun 2025 15:08:20 +0200
-Message-ID: <20250623130656.331811168@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 456/508] atm: Revert atm_account_tx() if copy_from_iter_full() fails.
+Date: Mon, 23 Jun 2025 15:08:21 +0200
+Message-ID: <20250623130656.355810306@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -45,45 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 86c8db86af43f52f682e53a0f2f0828683be1e52 upstream.
+commit 7851263998d4269125fd6cb3fdbfc7c6db853859 upstream.
 
-We should count the terminating NUL byte as part of the ctx_len.
-Otherwise, UBSAN logs a warning:
-  UBSAN: array-index-out-of-bounds in security/selinux/xfrm.c:99:14
-  index 60 is out of range for type 'char [*]'
+In vcc_sendmsg(), we account skb->truesize to sk->sk_wmem_alloc by
+atm_account_tx().
 
-The allocation itself is correct so there is no actual out of bounds
-indexing, just a warning.
+It is expected to be reverted by atm_pop_raw() later called by
+vcc->dev->ops->send(vcc, skb).
 
-Cc: stable@vger.kernel.org
-Suggested-by: Christian Göttsche <cgzones@googlemail.com>
-Link: https://lore.kernel.org/selinux/CAEjxPJ6tA5+LxsGfOJokzdPeRomBHjKLBVR6zbrg+_w3ZZbM3A@mail.gmail.com/
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+However, vcc_sendmsg() misses the same revert when copy_from_iter_full()
+fails, and then we will leak a socket.
+
+Let's factorise the revert part as atm_return_tx() and call it in
+the failure path.
+
+Note that the corresponding sk_wmem_alloc operation can be found in
+alloc_tx() as of the blamed commit.
+
+  $ git blame -L:alloc_tx net/atm/common.c c55fa3cccbc2c~
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Simon Horman <horms@kernel.org>
+Closes: https://lore.kernel.org/netdev/20250614161959.GR414686@horms.kernel.org/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250616182147.963333-3-kuni1840@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/xfrm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/atmdev.h |    6 ++++++
+ net/atm/common.c       |    1 +
+ net/atm/raw.c          |    2 +-
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/security/selinux/xfrm.c
-+++ b/security/selinux/xfrm.c
-@@ -95,7 +95,7 @@ static int selinux_xfrm_alloc_user(struc
+--- a/include/linux/atmdev.h
++++ b/include/linux/atmdev.h
+@@ -249,6 +249,12 @@ static inline void atm_account_tx(struct
+ 	ATM_SKB(skb)->atm_options = vcc->atm_options;
+ }
  
- 	ctx->ctx_doi = XFRM_SC_DOI_LSM;
- 	ctx->ctx_alg = XFRM_SC_ALG_SELINUX;
--	ctx->ctx_len = str_len;
-+	ctx->ctx_len = str_len + 1;
- 	memcpy(ctx->ctx_str, &uctx[1], str_len);
- 	ctx->ctx_str[str_len] = '\0';
- 	rc = security_context_to_sid(&selinux_state, ctx->ctx_str, str_len,
++static inline void atm_return_tx(struct atm_vcc *vcc, struct sk_buff *skb)
++{
++	WARN_ON_ONCE(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize,
++					   &sk_atm(vcc)->sk_wmem_alloc));
++}
++
+ static inline void atm_force_charge(struct atm_vcc *vcc,int truesize)
+ {
+ 	atomic_add(truesize, &sk_atm(vcc)->sk_rmem_alloc);
+--- a/net/atm/common.c
++++ b/net/atm/common.c
+@@ -635,6 +635,7 @@ int vcc_sendmsg(struct socket *sock, str
+ 
+ 	skb->dev = NULL; /* for paths shared with net_device interfaces */
+ 	if (!copy_from_iter_full(skb_put(skb, size), size, &m->msg_iter)) {
++		atm_return_tx(vcc, skb);
+ 		kfree_skb(skb);
+ 		error = -EFAULT;
+ 		goto out;
+--- a/net/atm/raw.c
++++ b/net/atm/raw.c
+@@ -36,7 +36,7 @@ static void atm_pop_raw(struct atm_vcc *
+ 
+ 	pr_debug("(%d) %d -= %d\n",
+ 		 vcc->vci, sk_wmem_alloc_get(sk), ATM_SKB(skb)->acct_truesize);
+-	WARN_ON(refcount_sub_and_test(ATM_SKB(skb)->acct_truesize, &sk->sk_wmem_alloc));
++	atm_return_tx(vcc, skb);
+ 	dev_kfree_skb_any(skb);
+ 	sk->sk_write_space(sk);
+ }
 
 
