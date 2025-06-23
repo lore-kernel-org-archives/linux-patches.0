@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652A33597E;
-	Mon, 23 Jun 2025 22:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21123597E;
+	Mon, 23 Jun 2025 22:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716456; cv=none; b=YtuC3pXZve8iMWm+ZE9RmGjsYp8le4KcgpPgnDaSapPJAVK0UGnvehI41O/pLYZ1WH7nWxPbG3W1WQ/dsxh7A6mYayk9JhDJY+SBsFNGXHG9gVIYU8n0K5OndMcS+CcxabtS0jWi30TZMugDIRuZ9f0lYoc7yXxeHm6TPXUrqPk=
+	t=1750716458; cv=none; b=HOLw+j3DTnOfapB3j3EJfza0cj7/k7guHy+HV/YB5ID7QH/pTbBfB5wFFvhW5rmIlhOy5ANZiLDtKb9jrtjwu3JuZCsvvvn8Pj3DZc5xBbrBghTWo8/HT8jxIDDBO623haPMYqQZJhLUUYW+QAH6/fo7F0OTBTth5ja/cs51lQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716456; c=relaxed/simple;
-	bh=s5WuLT907lH4PvpM/Ip/DULVHQafPJoiDahFO1MBKFE=;
+	s=arc-20240116; t=1750716458; c=relaxed/simple;
+	bh=P0UKYy1OvxLb8/zMsoUUjeJktRa/BGfgebAHpVAGLx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sw10kaTcLP3I7yjAA9zJsO29gvo/XxadaREMWTmSotQz3NoeBGbSb+YWa1pp3DmefyBUTpJNUTGVXQJ0QEL6tFVgbzujNNJhRn+cK4mVRxjOmcLgPOlvMm9cCNWHg/aeUYZ2O19JuOlgRzgWYzzl9ZWt3mJTt34XB3KLEYmjlIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTN/wv1d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u7Pvs5+DSSX4yUMH1vkzAf/jQcvh+v+mldNRv4a+tU75TRK9L+23GSSvPfyBl8MEq+Ls6wZkZNdD+QX7qlpnelvKtOY4tqWb3bYREpVurq6eif5vFhmgDrGg1BXvSnwKBna1EzDcsibOEhr0WxX9eHxBVDcela8+bl+Ef+0JhYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMc2Nvyl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTN/wv1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D48C4CEEA;
-	Mon, 23 Jun 2025 22:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMc2Nvyl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D5CC4CEEA;
+	Mon, 23 Jun 2025 22:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716456;
-	bh=s5WuLT907lH4PvpM/Ip/DULVHQafPJoiDahFO1MBKFE=;
+	s=korg; t=1750716458;
+	bh=P0UKYy1OvxLb8/zMsoUUjeJktRa/BGfgebAHpVAGLx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTN/wv1d8renrPvD1fbz9CrY/QtRctL7I32dvIEmwtbkll7jo6MerU3MVS8EQZK0S
-	 2DeaL5D41qJb+9mv+TYRqeNlXMLRBpT7xwXBEs+FS74kGpeSSr1B6chJvUUJlXIzVv
-	 gKsK6mC2WuxL8pqAQjMqXThP95hVC+BwK7UojlKg=
+	b=zMc2Nvyl1BwkL8D3vQ6TP8A1k2J6SInBKjQ9SqEIKF8hI5eyd0ybnnHKvnXq1B8Nf
+	 Ia/CNlnJy/MAkm5LzXTh1l0hdfFzzx/4Ch4jMdyyJrCvuFpEzTDcttb/JALxRqQ04c
+	 erHFs8Lzz7u8y3bXPqbeUbrAUGMnWD0HR1pnnEhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+763e12bbf004fb1062e4@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 524/592] io_uring/sqpoll: dont put task_struct on tctx setup failure
-Date: Mon, 23 Jun 2025 15:08:02 +0200
-Message-ID: <20250623130712.899472658@linuxfoundation.org>
+Subject: [PATCH 6.12 252/414] bpf: Use proper type to calculate bpf_raw_tp_null_args.mask index
+Date: Mon, 23 Jun 2025 15:06:29 +0200
+Message-ID: <20250623130648.345660390@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,62 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 
-[ Upstream commit f2320f1dd6f6f82cb2c7aff23a12bab537bdea89 ]
+[ Upstream commit 53ebef53a657d7957d35dc2b953db64f1bb28065 ]
 
-A recent commit moved the error handling of sqpoll thread and tctx
-failures into the thread itself, as part of fixing an issue. However, it
-missed that tctx allocation may also fail, and that
-io_sq_offload_create() does its own error handling for the task_struct
-in that case.
+The calculation of the index used to access the mask field in 'struct
+bpf_raw_tp_null_args' is done with 'int' type, which could overflow when
+the tracepoint being attached has more than 8 arguments.
 
-Remove the manual task putting in io_sq_offload_create(), as
-io_sq_thread() will notice that the tctx did not get setup and hence it
-should put itself and exit.
+While none of the tracepoints mentioned in raw_tp_null_args[] currently
+have more than 8 arguments, there do exist tracepoints that had more
+than 8 arguments (e.g. iocost_iocg_forgive_debt), so use the correct
+type for calculation and avoid Smatch static checker warning.
 
-Reported-by: syzbot+763e12bbf004fb1062e4@syzkaller.appspotmail.com
-Fixes: ac0b8b327a56 ("io_uring: fix use-after-free of sq->thread in __io_uring_show_fdinfo()")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/bpf/20250418074946.35569-1-shung-hsi.yu@suse.com
+
+Closes: https://lore.kernel.org/r/843a3b94-d53d-42db-93d4-be10a4090146@stanley.mountain/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/sqpoll.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ kernel/bpf/btf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
-index 268d2fbe6160c..d3a94cd0f5e65 100644
---- a/io_uring/sqpoll.c
-+++ b/io_uring/sqpoll.c
-@@ -419,7 +419,6 @@ void io_sqpoll_wait_sq(struct io_ring_ctx *ctx)
- __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
- 				struct io_uring_params *p)
- {
--	struct task_struct *task_to_put = NULL;
- 	int ret;
- 
- 	/* Retain compatibility with failing for an invalid attach attempt */
-@@ -498,7 +497,7 @@ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
- 		rcu_assign_pointer(sqd->thread, tsk);
- 		mutex_unlock(&sqd->lock);
- 
--		task_to_put = get_task_struct(tsk);
-+		get_task_struct(tsk);
- 		ret = io_uring_alloc_task_context(tsk, ctx);
- 		wake_up_new_task(tsk);
- 		if (ret)
-@@ -513,8 +512,6 @@ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
- 	complete(&ctx->sq_data->exited);
- err:
- 	io_sq_thread_finish(ctx);
--	if (task_to_put)
--		put_task_struct(task_to_put);
- 	return ret;
- }
- 
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 2c54c148a94f3..f83bd019db141 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -6684,10 +6684,10 @@ bool btf_ctx_access(int off, int size, enum bpf_access_type type,
+ 			/* Is this a func with potential NULL args? */
+ 			if (strcmp(tname, raw_tp_null_args[i].func))
+ 				continue;
+-			if (raw_tp_null_args[i].mask & (0x1 << (arg * 4)))
++			if (raw_tp_null_args[i].mask & (0x1ULL << (arg * 4)))
+ 				info->reg_type |= PTR_MAYBE_NULL;
+ 			/* Is the current arg IS_ERR? */
+-			if (raw_tp_null_args[i].mask & (0x2 << (arg * 4)))
++			if (raw_tp_null_args[i].mask & (0x2ULL << (arg * 4)))
+ 				ptr_err_raw_tp = true;
+ 			break;
+ 		}
 -- 
 2.39.5
 
