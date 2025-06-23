@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D4F13A265;
-	Mon, 23 Jun 2025 13:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C572913A265;
+	Mon, 23 Jun 2025 13:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684577; cv=none; b=mMq872UznZDt7mlp9iBVRU/dtYk45KvXqD4Eydr13Kkh/+ydWixGf9BZq/xEJQjI9kTJoiSyWGeM81JJQwLN6skUGbErNr8TV8YanyyLUZMExN5piQA5rvnYBCNQFty9SuImWXVAHdsuV3cAe8qqDLC2C2tkYuC+14op9FdUfDY=
+	t=1750684578; cv=none; b=P5gBwzuBcIWWwva0OeQzFGVNdfV3h/l4ThvH1ouYB9dC3y919xeit3mEb+gYuI1YJfS7hkyXMQF1trfwjIq9nej5WWaIef8HLG2sCuurM7PZrX7IQlGrrWzdNKRDqTpbcwFsvReS9qXgMRyLhanDBtQJOfmtIBC5p1BOAGpYLRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684577; c=relaxed/simple;
-	bh=OHiN75iAe2nZp0KpGGVTnWyCQiTFRgRPoKXJz9SX3ow=;
+	s=arc-20240116; t=1750684578; c=relaxed/simple;
+	bh=/JTYK5UJxj31p2tY2q5Rjpqcf1C7ObzH81rmANDAGPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o0kbxk0rWDU2U0LfY+jaR0WhkeWl+a1r4rajn1hhTwpLC4VLS1pDr/CnQ1kM4Kuejtd5EdGC5BZ+pLjUVtp+z4UC1U+PFEcGTFAGh9e18xO7csR9r4yaisxxX0gDNL5NqI7l/cXS8W9PkA211rkPytalPwky6V9almVlnsw5IQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2poRDBPq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b0eDTrLGmoIlm4qGuZh4TzdR1Y0yrN17CHLvlYs4DpdklcMqxw3bE+zgeaTHe/4Gffy8g+kPhe1zTHEEQmsclHmy9WesZR+V1MrUdWIWupiCC8oPUaIbWRHGO1hwhV0vGeUnMUE+JDE+RsgZXD1wzBfd3SWRVVF1v6q3JlTPrT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRqiwQmT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2poRDBPq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F8AC4CEEA;
-	Mon, 23 Jun 2025 13:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRqiwQmT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD495C4CEEA;
+	Mon, 23 Jun 2025 13:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684575;
-	bh=OHiN75iAe2nZp0KpGGVTnWyCQiTFRgRPoKXJz9SX3ow=;
+	s=korg; t=1750684578;
+	bh=/JTYK5UJxj31p2tY2q5Rjpqcf1C7ObzH81rmANDAGPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2poRDBPq9pu/93uIc2vQYG+2uPqsBX7B6K2r9bUqObUV4+anos6hBkUIdhmEMwO21
-	 TdFNKSlUcGz0XujsZYmbnlESgXSKIrA8fiVAhraiD6r0s8fMMkmK0jX0AJcDjNtnho
-	 Ep8J/lfS8Te7ufXEDOmBASbf6nTHduZjqlgmacEQ=
+	b=jRqiwQmTBEYC9MKkBhBLzCgS9blFrZeyYQfsQtqyryy9pQZUnOuDtXWwM70k1eSYE
+	 bH/qUtSM+ODa8ihH2tF0pQ/JicIW1LRCcu3CYQc59mvx6BW3/XUvUBg/A/ggsrDGyS
+	 iJJ5Yg4GZShJl3C4x0ul1OT4zzuv7pNF6PznGb8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Depeng Shao <quic_depengs@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.15 077/592] media: qcom: camss: csid: suppress CSID log spam
-Date: Mon, 23 Jun 2025 15:00:35 +0200
-Message-ID: <20250623130702.102859400@linuxfoundation.org>
+Subject: [PATCH 6.15 078/592] media: qcom: camss: vfe: suppress VFE version log spam
+Date: Mon, 23 Jun 2025 15:00:36 +0200
+Message-ID: <20250623130702.127721360@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -55,47 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit aef1d545989bc9e7f555af6b9f1be4963772192b upstream.
+commit b6fafb3941fa0f065def304d44d6c3c6d6ac0f64 upstream.
 
-A recent commit refactored the printing of the CSID hardware version, but
+A recent commit refactored the printing of the VFE hardware version, but
 (without it being mentioned) also changed the log level from debug to
 info.
 
-This results in repeated log spam during use, for example, on the Lenovo
-ThinkPad X13s:
+This results in several hundred lines of repeated log spam during boot
+and use, for example, on the Lenovo ThinkPad X13s:
 
-	qcom-camss ac5a000.camss: CSID:0 HW Version = 1.0.0
-	qcom-camss ac5a000.camss: CSID:0 HW Version = 1.0.0
-	qcom-camss ac5a000.camss: CSID:0 HW Version = 1.0.0
-	qcom-camss ac5a000.camss: CSID:0 HW Version = 1.0.0
-	qcom-camss ac5a000.camss: CSID:0 HW Version = 1.0.0
+	qcom-camss ac5a000.camss: VFE:1 HW Version = 1.2.2
+	qcom-camss ac5a000.camss: VFE:0 HW Version = 1.2.2
+	qcom-camss ac5a000.camss: VFE:2 HW Version = 1.2.2
+	qcom-camss ac5a000.camss: VFE:2 HW Version = 1.2.2
+	qcom-camss ac5a000.camss: VFE:3 HW Version = 1.2.2
+	qcom-camss ac5a000.camss: VFE:5 HW Version = 1.3.0
+	qcom-camss ac5a000.camss: VFE:6 HW Version = 1.3.0
+	qcom-camss ac5a000.camss: VFE:4 HW Version = 1.3.0
+	qcom-camss ac5a000.camss: VFE:5 HW Version = 1.3.0
+	qcom-camss ac5a000.camss: VFE:6 HW Version = 1.3.0
+	qcom-camss ac5a000.camss: VFE:7 HW Version = 1.3.0
+	qcom-camss ac5a000.camss: VFE:7 HW Version = 1.3.0
+	qcom-camss ac5a000.camss: VFE:7 HW Version = 1.3.0
+	...
 
 Suppress the version logging by demoting to debug level again.
 
-Fixes: f759b8fd3086 ("media: qcom: camss: csid: Move common code into csid core")
+Fixes: 10693fed125d ("media: qcom: camss: vfe: Move common code into vfe core")
 Cc: stable@vger.kernel.org
 Cc: Depeng Shao <quic_depengs@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/camss/camss-csid.c | 4 ++--
+ drivers/media/platform/qcom/camss/camss-vfe.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index d08117f46f3b..5284b5857368 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -613,8 +613,8 @@ u32 csid_hw_version(struct csid_device *csid)
- 	hw_gen = (hw_version >> HW_VERSION_GENERATION) & 0xF;
- 	hw_rev = (hw_version >> HW_VERSION_REVISION) & 0xFFF;
- 	hw_step = (hw_version >> HW_VERSION_STEPPING) & 0xFFFF;
--	dev_info(csid->camss->dev, "CSID:%d HW Version = %u.%u.%u\n",
--		 csid->id, hw_gen, hw_rev, hw_step);
-+	dev_dbg(csid->camss->dev, "CSID:%d HW Version = %u.%u.%u\n",
-+		csid->id, hw_gen, hw_rev, hw_step);
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index cf0e8f5c004a..91bc0cb7781e 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -428,8 +428,8 @@ u32 vfe_hw_version(struct vfe_device *vfe)
+ 	u32 rev = (hw_version >> HW_VERSION_REVISION) & 0xFFF;
+ 	u32 step = (hw_version >> HW_VERSION_STEPPING) & 0xFFFF;
+ 
+-	dev_info(vfe->camss->dev, "VFE:%d HW Version = %u.%u.%u\n",
+-		 vfe->id, gen, rev, step);
++	dev_dbg(vfe->camss->dev, "VFE:%d HW Version = %u.%u.%u\n",
++		vfe->id, gen, rev, step);
  
  	return hw_version;
  }
