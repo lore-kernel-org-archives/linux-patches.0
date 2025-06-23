@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1D722258C;
-	Mon, 23 Jun 2025 21:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B6D221FCC;
+	Mon, 23 Jun 2025 21:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715344; cv=none; b=EIhUASNuwkCtoTgWzc5qkJfkM/G5K9/m1LKrn7Jw46KMHzXx5GNGTs5617eK9qNMzeY2Eeng04O/ZzG2OlJvuFOP8JRIAmb4r5bLs5ZtqTeGf9XB9tAsxo9sEb+OU3TNSB6KUdwRJ1RDHTerNOH/omGFHCAn7HsJZsW2JGkG2Ng=
+	t=1750715346; cv=none; b=IVGPPbvNsqmQgwwil8GpbkKcMRaB7T2IzVhJVooHjYrOL6j6kXzuEnEARnNcUnIxLNeeXHUJtOJG4G6Azdb8OH8cuPaHGI5jvp5g/J6H4B1w2qcAwIqejH7xfkFp3meVy8UxZwUAwK2R0f9v+1BfaStr+Yl0QrYF5F3DRnNm1+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715344; c=relaxed/simple;
-	bh=302dYZfIy/oPMRO99HHmYqHuhGLXtqPJDtnXdc7IDuA=;
+	s=arc-20240116; t=1750715346; c=relaxed/simple;
+	bh=ZL5AFCgdyXwIGk4Yb8rB65FH30OnjhI+MW6uy84ZkTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NDWwlwds5LhApxji4vpnCP0IsPixfxVLVydTKiD2ok7zZ3X6Ffadb+tmmcWCmywVRCkshW+VG62ymL33SvZJvsB76clTvDpGSKpl4C3AvDDbT2umDyTP6i8i/Nu2p3ddXffdxKZE7dB1IpjByEWtjARqPd2cBqZa7MGydNDozGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RYUMxFvL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sm9MT5JKUIh4/MO6eT3ZL8IhV7Xs1VfOQ6x15vX6Lt72hPsE6ylOia8rd10CPmYI9fta6en4/WSSNmMIa1ehrz4fk5m5uEmppdk4660VsTVv5yPAHd/Bq+8hXuHL26p9GTEGiPstCHVsj4/1S2HH1tPwkI0lvA06uw+TS2u1vi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKRj03yq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RYUMxFvL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BAAC4CEEA;
-	Mon, 23 Jun 2025 21:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKRj03yq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30813C4CEEA;
+	Mon, 23 Jun 2025 21:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715344;
-	bh=302dYZfIy/oPMRO99HHmYqHuhGLXtqPJDtnXdc7IDuA=;
+	s=korg; t=1750715346;
+	bh=ZL5AFCgdyXwIGk4Yb8rB65FH30OnjhI+MW6uy84ZkTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RYUMxFvLouKCE23nppqy+pwlCaRXfOO627hiyM3NVspxV2ThR7oQ53+qOT7DSfWxG
-	 JrrzvH6wqPNwNCpIKS1sBKNY+FWX668dPghKX7U1HliCA7Nx6mzdmo+HtUMKfHhmuc
-	 p9XB+V6n6hZ61ghLq5l93CdV6Z0gMfcksHOP8PqM=
+	b=RKRj03yqBrgCHK1KC/M8ibJ63juktpuZRhAvNjheTEV639rPv8qE945CU0lpyUtgQ
+	 HYl8HyfIgIzbxaFp2gqLVGXCPEu+CUCfvB9TXlJ6t4t3lEnO51WRbz1/hqe1+/6MlO
+	 BFHXnDXLKOt94FJvV9Z5NzzB0eV32yj7OcYdkiwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 269/355] vxlan: Do not treat dst cache initialization errors as fatal
-Date: Mon, 23 Jun 2025 15:07:50 +0200
-Message-ID: <20250623130634.841155515@linuxfoundation.org>
+Subject: [PATCH 6.1 229/508] wifi: ath11k: fix soc_dp_stats debugfs file permission
+Date: Mon, 23 Jun 2025 15:04:34 +0200
+Message-ID: <20250623130650.893592925@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,77 +47,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
 
-[ Upstream commit 20c76dadc783759fd3819d289c72be590660cc8b ]
+[ Upstream commit fa645e663165d69f05f95a0c3aa3b3d08f4fdeda ]
 
-FDB entries are allocated in an atomic context as they can be added from
-the data path when learning is enabled.
+Currently the soc_dp_stats debugfs file has the following permissions:
 
-After converting the FDB hash table to rhashtable, the insertion rate
-will be much higher (*) which will entail a much higher rate of per-CPU
-allocations via dst_cache_init().
+-rw------- 1 root root 0 Mar  4 15:04 /sys/kernel/debug/ath11k/pci-0000:03:00.0/soc_dp_stats
 
-When adding a large number of entries (e.g., 256k) in a batch, a small
-percentage (< 0.02%) of these per-CPU allocations will fail [1]. This
-does not happen with the current code since the insertion rate is low
-enough to give the per-CPU allocator a chance to asynchronously create
-new chunks of per-CPU memory.
+However this file does not actually support write operations -- no .write()
+method is registered. Therefore use the correct permissions when creating
+the file.
 
-Given that:
+After the change:
 
-a. Only a small percentage of these per-CPU allocations fail.
+-r-------- 1 root root 0 Mar  4 15:15 /sys/kernel/debug/ath11k/pci-0000:03:00.0/soc_dp_stats
 
-b. The scenario where this happens might not be the most realistic one.
+Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
 
-c. The driver can work correctly without dst caches. The dst_cache_*()
-APIs first check that the dst cache was properly initialized.
-
-d. The dst caches are not always used (e.g., 'tos inherit').
-
-It seems reasonable to not treat these allocation failures as fatal.
-
-Therefore, do not bail when dst_cache_init() fails and suppress warnings
-by specifying '__GFP_NOWARN'.
-
-[1] percpu: allocation failed, size=40 align=8 atomic=1, atomic alloc failed, no space left
-
-(*) 97% reduction in average latency of vxlan_fdb_update() when adding
-256k entries in a batch.
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250415121143.345227-14-idosch@nvidia.com
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240305-fix-soc_dp_stats-permission-v1-1-2ec10b42f755@quicinc.com
+Stable-dep-of: 9f6e82d11bb9 ("wifi: ath11k: avoid burning CPU in ath11k_debugfs_fw_stats_request()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath11k/debugfs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 7d7aa7d768804..7973d4070ee3b 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -712,10 +712,10 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
- 	if (rd == NULL)
- 		return -ENOMEM;
+diff --git a/drivers/net/wireless/ath/ath11k/debugfs.c b/drivers/net/wireless/ath/ath11k/debugfs.c
+index 5bb6fd17fdf6f..34aa04d27a1d7 100644
+--- a/drivers/net/wireless/ath/ath11k/debugfs.c
++++ b/drivers/net/wireless/ath/ath11k/debugfs.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2020 The Linux Foundation. All rights reserved.
++ * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
  
--	if (dst_cache_init(&rd->dst_cache, GFP_ATOMIC)) {
--		kfree(rd);
--		return -ENOMEM;
--	}
-+	/* The driver can work correctly without a dst cache, so do not treat
-+	 * dst cache initialization errors as fatal.
-+	 */
-+	dst_cache_init(&rd->dst_cache, GFP_ATOMIC | __GFP_NOWARN);
+ #include <linux/vmalloc.h>
+@@ -979,7 +980,7 @@ int ath11k_debugfs_pdev_create(struct ath11k_base *ab)
+ 	debugfs_create_file("simulate_fw_crash", 0600, ab->debugfs_soc, ab,
+ 			    &fops_simulate_fw_crash);
  
- 	rd->remote_ip = *ip;
- 	rd->remote_port = port;
+-	debugfs_create_file("soc_dp_stats", 0600, ab->debugfs_soc, ab,
++	debugfs_create_file("soc_dp_stats", 0400, ab->debugfs_soc, ab,
+ 			    &fops_soc_dp_stats);
+ 
+ 	if (ab->hw_params.sram_dump.start != 0)
 -- 
 2.39.5
 
