@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DDF24EA9D;
-	Mon, 23 Jun 2025 13:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8A4254873;
+	Mon, 23 Jun 2025 13:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685270; cv=none; b=jWFvhm/lWbvKSX2RLX1kYummnwM4D82Ksb4DBAcdMNOVlsjZMJ7E/S6fYUPrw+EmDbIXrAVHpBqs9Z1wHxVOOPufzVV5KXBflnx063DYIM23Tybsf8R16g8CAVSzwBt5/ms51RapLBTAsugnBQMyoC8aGSB4gzGyFW0eF4KCb2s=
+	t=1750685274; cv=none; b=Z7XKwCMlWLCWsOJ3Aev5UWJzaeGdzOjB2MzKU7yWUJ+hV8PP3Jvcqkcp9hF/CilOXXmYJKDkrjwfVDDduNWVyskBsMSVUzPZM30kvp5OWiaCPbDdMheVGuEInv99f/jqqdazey9qWMg2k3jsYISUeqnmPUK/WPJuWO/9zSm2Jp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685270; c=relaxed/simple;
-	bh=OFtFlDKkVKUho9ZH6Qr/0R+jIqI/QQSnhUhksqOm1qI=;
+	s=arc-20240116; t=1750685274; c=relaxed/simple;
+	bh=lhg60KX9pfrlol44a2EP8NsW8SrR+r+nDxrYdTwcIQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHm5v+zq/itgmyVZX52UBhJmorRfl7Oq6oJiTEz5KbZHWMANuP1f7hr9SXFYmBz2l2dqI3GtbZPtQ0R5LUoPQot0jxmCNpph2ayBLjkC7g1oea84RO6Ccc9iH0J2UdetCtgMhOGBGfvhtI8UESSHXyrjLvv24FqlFL0qGu2awGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4bR9w64; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+y6VDjpWdRpsrCKxuuAL1kD6zrzds3ANazw0xSzfZfRjlN2CODeSqbu2JvraBmFa5/TzPJx//T/BNWqWvICFJDPaP8ZnpDdMSEirWswrNqBo1KEhq1KVA70634zxkAvPyw+8G2vRX2aabpF+ke/FZvpWyhxtIh+Ln/VLdaj4+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYKQERka; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4bR9w64"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8777C4CEF0;
-	Mon, 23 Jun 2025 13:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYKQERka"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F90CC4CEEA;
+	Mon, 23 Jun 2025 13:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685270;
-	bh=OFtFlDKkVKUho9ZH6Qr/0R+jIqI/QQSnhUhksqOm1qI=;
+	s=korg; t=1750685272;
+	bh=lhg60KX9pfrlol44a2EP8NsW8SrR+r+nDxrYdTwcIQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i4bR9w64oFtYPiHK+nvXlM8Nphh16zxapQF4dzFCYKyDkF+5o6DmtcvMvO7HOUT9V
-	 nkbeIzYcwzNc0CNIIiGeHaQlTTLroXqKv4ecKRm2NszCHnzjJPBATdCS0pqgujHPEZ
-	 B0fO73P8wDYmmxhDYqTs81wQPqdic0j7fbsstDbk=
+	b=xYKQERkaE3wKxYAB8Tg0zbDY9G4EfwLvepqV5gHo7vzOUvgsFmD+e8pilyY6A9MvS
+	 +bcduKDsh+jxEM+O9CcVgLX7i4MMx3gPgFs7R6VDtnYfc6TFRLZMVJe3qMpX0QmmXd
+	 ysbNJ+hQdjjdSVkbFpUT2P5z8uaMqh7T8eL9NFw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Malz <robert.malz@canonical.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Alexander Shiyan <eagle.alexander923@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 080/222] i40e: retry VFLR handling if there is ongoing VF reset
-Date: Mon, 23 Jun 2025 15:06:55 +0200
-Message-ID: <20250623130614.502740464@linuxfoundation.org>
+Subject: [PATCH 5.15 022/411] power: reset: at91-reset: Optimize at91_reset()
+Date: Mon, 23 Jun 2025 15:02:46 +0200
+Message-ID: <20250623130633.668578952@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robert Malz <robert.malz@canonical.com>
+From: Alexander Shiyan <eagle.alexander923@gmail.com>
 
-[ Upstream commit fb4e9239e029954a37a00818b21e837cebf2aa10 ]
+[ Upstream commit 62d48983f215bf1dd48665913318101fa3414dcf ]
 
-When a VFLR interrupt is received during a VF reset initiated from a
-different source, the VFLR may be not fully handled. This can
-leave the VF in an undefined state.
-To address this, set the I40E_VFLR_EVENT_PENDING bit again during VFLR
-handling if the reset is not yet complete. This ensures the driver
-will properly complete the VF reset in such scenarios.
+This patch adds a small optimization to the low-level at91_reset()
+function, which includes:
+- Removes the extra branch, since the following store operations
+  already have proper condition checks.
+- Removes the definition of the clobber register r4, since it is
+  no longer used in the code.
 
-Fixes: 52424f974bc5 ("i40e: Fix VF hang when reset is triggered on another VF")
-Signed-off-by: Robert Malz <robert.malz@canonical.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: fcd0532fac2a ("power: reset: at91-reset: make at91sam9g45_restart() generic")
+Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
+Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20250307053809.20245-1-eagle.alexander923@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/power/reset/at91-reset.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 783581739417f..d8ba409122032 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -4125,7 +4125,10 @@ int i40e_vc_process_vflr_event(struct i40e_pf *pf)
- 		reg = rd32(hw, I40E_GLGEN_VFLRSTAT(reg_idx));
- 		if (reg & BIT(bit_idx))
- 			/* i40e_reset_vf will clear the bit in GLGEN_VFLRSTAT */
--			i40e_reset_vf(vf, true);
-+			if (!i40e_reset_vf(vf, true)) {
-+				/* At least one VF did not finish resetting, retry next time */
-+				set_bit(__I40E_VFLR_EVENT_PENDING, pf->state);
-+			}
- 	}
+diff --git a/drivers/power/reset/at91-reset.c b/drivers/power/reset/at91-reset.c
+index 64def79d557a8..e6743a3d7877a 100644
+--- a/drivers/power/reset/at91-reset.c
++++ b/drivers/power/reset/at91-reset.c
+@@ -81,12 +81,11 @@ static int at91_reset(struct notifier_block *this, unsigned long mode,
+ 		"	str	%4, [%0, %6]\n\t"
+ 		/* Disable SDRAM1 accesses */
+ 		"1:	tst	%1, #0\n\t"
+-		"	beq	2f\n\t"
+ 		"	strne	%3, [%1, #" __stringify(AT91_DDRSDRC_RTR) "]\n\t"
+ 		/* Power down SDRAM1 */
+ 		"	strne	%4, [%1, %6]\n\t"
+ 		/* Reset CPU */
+-		"2:	str	%5, [%2, #" __stringify(AT91_RSTC_CR) "]\n\t"
++		"	str	%5, [%2, #" __stringify(AT91_RSTC_CR) "]\n\t"
  
- 	return 0;
+ 		"	b	.\n\t"
+ 		:
+@@ -97,7 +96,7 @@ static int at91_reset(struct notifier_block *this, unsigned long mode,
+ 		  "r" cpu_to_le32(AT91_DDRSDRC_LPCB_POWER_DOWN),
+ 		  "r" (reset->args),
+ 		  "r" (reset->ramc_lpr)
+-		: "r4");
++	);
+ 
+ 	return NOTIFY_DONE;
+ }
 -- 
 2.39.5
 
