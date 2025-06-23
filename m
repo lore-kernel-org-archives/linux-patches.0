@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AEB24EA9D;
-	Mon, 23 Jun 2025 13:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DDF24EA9D;
+	Mon, 23 Jun 2025 13:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685267; cv=none; b=cN/lDbuyuHnGN/qlA0ygVJ8LpsQ9uTrxBnWw32KYcVEY+gp8epv442RlOwPr2u+r2VMS76Yxj2N8rbP5sPU7EVfLRDm/jusJQMJPw/F43uAmMs6LvkL+RlLKpCaVYak/b0kXhjiogH50TXZJhmINIK3FNeWJpdqVxF/wEp5UIs0=
+	t=1750685270; cv=none; b=jWFvhm/lWbvKSX2RLX1kYummnwM4D82Ksb4DBAcdMNOVlsjZMJ7E/S6fYUPrw+EmDbIXrAVHpBqs9Z1wHxVOOPufzVV5KXBflnx063DYIM23Tybsf8R16g8CAVSzwBt5/ms51RapLBTAsugnBQMyoC8aGSB4gzGyFW0eF4KCb2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685267; c=relaxed/simple;
-	bh=S/R4XxciMPnhYON2yoi+umCSbz5jKyiPeVAcvhNRTo0=;
+	s=arc-20240116; t=1750685270; c=relaxed/simple;
+	bh=OFtFlDKkVKUho9ZH6Qr/0R+jIqI/QQSnhUhksqOm1qI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=np8B0uYyEbzbm70ieWVpXvxePBnkHOd0ov8fskQUrSEkg4HyJjOjVijLpn+AyJ8Ar/dgjax0mMffUJYfTcB29kVFIw5IttNQHLNsPRHyivNn0JS+XNtw7Ox8mSvn2ZpkVIlQvvyyTN6VoTLH84sUVV75Emh3NgcZ/5RiOqZ1U6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIXkFGwH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AHm5v+zq/itgmyVZX52UBhJmorRfl7Oq6oJiTEz5KbZHWMANuP1f7hr9SXFYmBz2l2dqI3GtbZPtQ0R5LUoPQot0jxmCNpph2ayBLjkC7g1oea84RO6Ccc9iH0J2UdetCtgMhOGBGfvhtI8UESSHXyrjLvv24FqlFL0qGu2awGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4bR9w64; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIXkFGwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EED5C4CEEA;
-	Mon, 23 Jun 2025 13:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4bR9w64"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8777C4CEF0;
+	Mon, 23 Jun 2025 13:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685267;
-	bh=S/R4XxciMPnhYON2yoi+umCSbz5jKyiPeVAcvhNRTo0=;
+	s=korg; t=1750685270;
+	bh=OFtFlDKkVKUho9ZH6Qr/0R+jIqI/QQSnhUhksqOm1qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lIXkFGwHQjNXTUceF7FsiJUAIFkTQEc/ofRmHFn8ctIaCsLOq8Op1zM6GNereryPK
-	 /qZtRmPAIfFORgHKlsME4vKt7ctI9Gb/LKzYW4qE52WvdH1UgS1CjQIek/MBQdaL9H
-	 7y9Nuud1aC2Z3oNJzzd67tScye3qLNvY/r/zXuRc=
+	b=i4bR9w64oFtYPiHK+nvXlM8Nphh16zxapQF4dzFCYKyDkF+5o6DmtcvMvO7HOUT9V
+	 nkbeIzYcwzNc0CNIIiGeHaQlTTLroXqKv4ecKRm2NszCHnzjJPBATdCS0pqgujHPEZ
+	 B0fO73P8wDYmmxhDYqTs81wQPqdic0j7fbsstDbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huajian Yang <huajianyang@asrmicro.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Robert Malz <robert.malz@canonical.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 040/355] netfilter: bridge: Move specific fragmented packet to slow_path instead of dropping it
-Date: Mon, 23 Jun 2025 15:04:01 +0200
-Message-ID: <20250623130628.029734394@linuxfoundation.org>
+Subject: [PATCH 5.4 080/222] i40e: retry VFLR handling if there is ongoing VF reset
+Date: Mon, 23 Jun 2025 15:06:55 +0200
+Message-ID: <20250623130614.502740464@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,97 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huajian Yang <huajianyang@asrmicro.com>
+From: Robert Malz <robert.malz@canonical.com>
 
-[ Upstream commit aa04c6f45b9224b949aa35d4fa5f8d0ba07b23d4 ]
+[ Upstream commit fb4e9239e029954a37a00818b21e837cebf2aa10 ]
 
-The config NF_CONNTRACK_BRIDGE will change the bridge forwarding for
-fragmented packets.
+When a VFLR interrupt is received during a VF reset initiated from a
+different source, the VFLR may be not fully handled. This can
+leave the VF in an undefined state.
+To address this, set the I40E_VFLR_EVENT_PENDING bit again during VFLR
+handling if the reset is not yet complete. This ensures the driver
+will properly complete the VF reset in such scenarios.
 
-The original bridge does not know that it is a fragmented packet and
-forwards it directly, after NF_CONNTRACK_BRIDGE is enabled, function
-nf_br_ip_fragment and br_ip6_fragment will check the headroom.
-
-In original br_forward, insufficient headroom of skb may indeed exist,
-but there's still a way to save the skb in the device driver after
-dev_queue_xmit.So droping the skb will change the original bridge
-forwarding in some cases.
-
-Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
-Signed-off-by: Huajian Yang <huajianyang@asrmicro.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 52424f974bc5 ("i40e: Fix VF hang when reset is triggered on another VF")
+Signed-off-by: Robert Malz <robert.malz@canonical.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/nf_conntrack_bridge.c | 12 ++++++------
- net/ipv6/netfilter.c                       | 12 ++++++------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
-index d14b2dbbd1dfb..abf0c9460ddf3 100644
---- a/net/bridge/netfilter/nf_conntrack_bridge.c
-+++ b/net/bridge/netfilter/nf_conntrack_bridge.c
-@@ -59,19 +59,19 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
- 		struct ip_fraglist_iter iter;
- 		struct sk_buff *frag;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index 783581739417f..d8ba409122032 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -4125,7 +4125,10 @@ int i40e_vc_process_vflr_event(struct i40e_pf *pf)
+ 		reg = rd32(hw, I40E_GLGEN_VFLRSTAT(reg_idx));
+ 		if (reg & BIT(bit_idx))
+ 			/* i40e_reset_vf will clear the bit in GLGEN_VFLRSTAT */
+-			i40e_reset_vf(vf, true);
++			if (!i40e_reset_vf(vf, true)) {
++				/* At least one VF did not finish resetting, retry next time */
++				set_bit(__I40E_VFLR_EVENT_PENDING, pf->state);
++			}
+ 	}
  
--		if (first_len - hlen > mtu ||
--		    skb_headroom(skb) < ll_rs)
-+		if (first_len - hlen > mtu)
- 			goto blackhole;
- 
--		if (skb_cloned(skb))
-+		if (skb_cloned(skb) ||
-+		    skb_headroom(skb) < ll_rs)
- 			goto slow_path;
- 
- 		skb_walk_frags(skb, frag) {
--			if (frag->len > mtu ||
--			    skb_headroom(frag) < hlen + ll_rs)
-+			if (frag->len > mtu)
- 				goto blackhole;
- 
--			if (skb_shared(frag))
-+			if (skb_shared(frag) ||
-+			    skb_headroom(frag) < hlen + ll_rs)
- 				goto slow_path;
- 		}
- 
-diff --git a/net/ipv6/netfilter.c b/net/ipv6/netfilter.c
-index ab9a279dd6d47..93e1af6c2dfb2 100644
---- a/net/ipv6/netfilter.c
-+++ b/net/ipv6/netfilter.c
-@@ -155,20 +155,20 @@ int br_ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
- 		struct ip6_fraglist_iter iter;
- 		struct sk_buff *frag2;
- 
--		if (first_len - hlen > mtu ||
--		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
-+		if (first_len - hlen > mtu)
- 			goto blackhole;
- 
--		if (skb_cloned(skb))
-+		if (skb_cloned(skb) ||
-+		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
- 			goto slow_path;
- 
- 		skb_walk_frags(skb, frag2) {
--			if (frag2->len > mtu ||
--			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
-+			if (frag2->len > mtu)
- 				goto blackhole;
- 
- 			/* Partially cloned skb? */
--			if (skb_shared(frag2))
-+			if (skb_shared(frag2) ||
-+			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
- 				goto slow_path;
- 		}
- 
+ 	return 0;
 -- 
 2.39.5
 
