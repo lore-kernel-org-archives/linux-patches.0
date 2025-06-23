@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A340570838;
-	Mon, 23 Jun 2025 21:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F2B70838;
+	Mon, 23 Jun 2025 21:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713086; cv=none; b=r3WXQsYhQEIYXJJKtSvOzFGJgG7y6oQSRHwEFnv233EeNe4UGfIJSSS4+OWMbjqcUCzj4kZCcTLcqzDthHGzk9kIBdWoZnz5K8v5GXiNsGEFCFCOnMBTzZ9svpbFgWYWnhq8RUSlH68283JrFa6Yjov4SMBrQVbqc3hsuYNfjoE=
+	t=1750713089; cv=none; b=ujX6bx5YpSh5F7yhtRltvmkCg+vQcrPhbizSjbSv3iMgzWQG2IJO1kFVDJAVGfeEjbwIT+DZNJOvmaaVOCF78KzQTVvPpScvwNWr/kHkKsC1aGpgy1RigG+3T/EG309c8wFn1wd2Xwq16x1hNBC1jeoA5uZNNKAUwB/9zkk5vfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713086; c=relaxed/simple;
-	bh=nQaptao/yuM/HtDNcHSg7+fWB8stsz+HrErnrjb6E7o=;
+	s=arc-20240116; t=1750713089; c=relaxed/simple;
+	bh=qI+T6HAE3rQUQswgEb+dZVGTncuC/qyNUoIt4cSOYUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cmg/y+wffeAARUrqWAPztPjv3+84Q/P4lVTStLpCI/pur9k1cCabcofrbknkwXyrrvIkQpXCA/Gc68cDNLKfccCQS6XCQAVCJfit3Di1u4VclZKsmzdqlW7Ycz0vqJlwo2EvOBWQ3+RZTvC0l+wX5eS2fh12R0olGH5Y/1NbzNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXYquqbK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZYMiprPdfr6sDFwD2FM1M7fERn7Hq5x1hE01BvXJnDtkG5ope+HXiVzHq88ZZ1iIHYJDdESiNOm+u4441bUcE3Gd2Xm1wLhFj1+gXUuU85rANoXtC70jupswIWjkMWRRuAmARxycEY/qa9KrK/QZLrB5w1wX4VqzKmXM3v+gr8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxVxonSw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXYquqbK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE35C4CEEA;
-	Mon, 23 Jun 2025 21:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxVxonSw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D7FC4CEEA;
+	Mon, 23 Jun 2025 21:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713086;
-	bh=nQaptao/yuM/HtDNcHSg7+fWB8stsz+HrErnrjb6E7o=;
+	s=korg; t=1750713089;
+	bh=qI+T6HAE3rQUQswgEb+dZVGTncuC/qyNUoIt4cSOYUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gXYquqbKD+f21LXgv9wmE/2Vvl46XenmTtDtEA0lWYhc3NHzgFKvzzf6KjPx0CkhG
-	 pkStFwEg9hvqFQmxIDgNHn6Ol/PJP4S/bM0PkAdt9vMIerjg7eOD7HMqsaIcbJzoUp
-	 WROnxbVTzh6tDbMIpRJPmBlAN25T/XV9/GY9O2A8=
+	b=KxVxonSwdjLZHwWEXst8wQ+c7eteDxqADSDWBDIxbVg1ui2/tfw9TvuFXJ6satF2p
+	 FEkHS0nDpmsqkxIDnDrn/JJE9FuRZatjFh0mfQwDsVHLoUSmhKf0TbdyrigPLH5TD6
+	 PhGsxoKR5Ab/JzQCnJcIvwGq2DzAN2RcWtK7568k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	maher azz <maherazz04@gmail.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 187/222] drivers/rapidio/rio_cm.c: prevent possible heap overwrite
-Date: Mon, 23 Jun 2025 15:08:42 +0200
-Message-ID: <20250623130617.858752164@linuxfoundation.org>
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Jai Luthra <jai.luthra@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.12 045/414] media: i2c: ds90ub913: Fix returned fmt from .set_fmt()
+Date: Mon, 23 Jun 2025 15:03:02 +0200
+Message-ID: <20250623130643.165718409@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,51 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Morton <akpm@linux-foundation.org>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit 50695153d7ddde3b1696dbf0085be0033bf3ddb3 upstream.
+commit ef205273132bdc9bcfa1540eef8105475a453300 upstream.
 
-In
+When setting the sink pad's stream format, set_fmt accidentally changes
+the returned format's code to 'outcode', while the purpose is to only
+use the 'outcode' for the propagated source stream format.
 
-riocm_cdev_ioctl(RIO_CM_CHAN_SEND)
-   -> cm_chan_msg_send()
-      -> riocm_ch_send()
-
-cm_chan_msg_send() checks that userspace didn't send too much data but
-riocm_ch_send() failed to check that userspace sent sufficient data.  The
-result is that riocm_ch_send() can write to fields in the rio_ch_chan_hdr
-which were outside the bounds of the space which cm_chan_msg_send()
-allocated.
-
-Address this by teaching riocm_ch_send() to check that the entire
-rio_ch_chan_hdr was copied in from userspace.
-
-Reported-by: maher azz <maherazz04@gmail.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Linus Torvalds <torvalds@linuxfoundation.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: c158d0d4ff15 ("media: i2c: add DS90UB913 driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Jai Luthra <jai.luthra@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rapidio/rio_cm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/i2c/ds90ub913.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/rapidio/rio_cm.c
-+++ b/drivers/rapidio/rio_cm.c
-@@ -787,6 +787,9 @@ static int riocm_ch_send(u16 ch_id, void
- 	if (buf == NULL || ch_id == 0 || len == 0 || len > RIO_MAX_MSG_SIZE)
+--- a/drivers/media/i2c/ds90ub913.c
++++ b/drivers/media/i2c/ds90ub913.c
+@@ -450,10 +450,10 @@ static int ub913_set_fmt(struct v4l2_sub
+ 	if (!fmt)
  		return -EINVAL;
  
-+	if (len < sizeof(struct rio_ch_chan_hdr))
-+		return -EINVAL;		/* insufficient data from user */
+-	format->format.code = finfo->outcode;
+-
+ 	*fmt = format->format;
+ 
++	fmt->code = finfo->outcode;
 +
- 	ch = riocm_get_channel(ch_id);
- 	if (!ch) {
- 		riocm_error("%s(%d) ch_%d not found", current->comm,
+ 	return 0;
+ }
+ 
 
 
