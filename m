@@ -1,53 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB80221543;
-	Mon, 23 Jun 2025 22:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22354221543;
+	Mon, 23 Jun 2025 22:25:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717555; cv=none; b=k3doLxEoKh4dalGvl71PgS8XL0AYrjzWYmQPs6ioyoIVdKljEk0l+JNauoAIZwD84Zm4bm84/rex9B5nCC+FdNkkdk0rJ36KeRsSq8bmDlN+uumKfXGO0cI88khLXSC/Klnfu2xYCGdYn7nJt++Px9efK2yFTcSuBi7IB8BMaKo=
+	t=1750717558; cv=none; b=Rqy6YmPsskspMv/TtRj3fZva2m3D1S8yXSYrbcuAxn1PKbPFlLJDElMYJUgCDPYb7imbffxTUYsXeipu1DHgT8trYvPX6fGz5V9yNI1uI95lppz4olIh/xOjFzHcQ1c3qL0sHd/oBhxlTAhinDfDo/PtdtEnYKlxPJlSqobQP18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717555; c=relaxed/simple;
-	bh=O+0b+KHuu/oR3Ucc2A/h20xGhjQco6tgn74ZBqheV0s=;
+	s=arc-20240116; t=1750717558; c=relaxed/simple;
+	bh=ISbmJcSghzz4lvq3UU7KrOFMrINjlNMMlAxSuBdGZMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UnzML8JAA6pzWlaN5Jc4g35N2A40blB5laWdEmJzFFTCYXYCmf6BB4G47VsswCBk7DTFAaQIkquwQylKaxgK1+aOQJX6Uce7Vgqn/FgCEJoa9CXjvnzm4/PDoyDjqD1x7+aX2HP48O2VE/MElNpsH93cUegAE38P8kFMAMd3oHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBEuPMtV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KdXk1k4IA1yoyeSGfxWHQh+DD1rCgdcEIdwNFp51EVguhxuhFLG+iSlDKhdf0xJMprzgRfd+ksKHlijxLJYhWLN9sVocx58cCnzaeTPLbVNo1Za2XeEtZHUda+ETwjeukvWIICccH0FfYx2QK72iHUyt33NEE/GASrstBFOiTEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1bw6Ipq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBEuPMtV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A4DC4CEEA;
-	Mon, 23 Jun 2025 22:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1bw6Ipq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6BDC4CEEA;
+	Mon, 23 Jun 2025 22:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717555;
-	bh=O+0b+KHuu/oR3Ucc2A/h20xGhjQco6tgn74ZBqheV0s=;
+	s=korg; t=1750717558;
+	bh=ISbmJcSghzz4lvq3UU7KrOFMrINjlNMMlAxSuBdGZMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBEuPMtVCeiAmkwCyM5syNfbAteP6yy4Zp4mfdnGPUknU7e6TpZkak7euQaLdW72J
-	 8kPJPnNfatiAxO64MENMMbIOw3PPh3QgDBayH6OvGNbhe74su2MWJkmBVv3Zo/Eg8R
-	 Vpw9RMBy3aAPtgzZj8EZpC4NyNz6EQJnC9InDvoM=
+	b=t1bw6Ipqp3Y65Y0wUcweUjjj+JmxhTB13SOKSlKG32hTixj93s+vtAIBBp7zSJEDM
+	 3DF2TgZaS+77baCxQTLmy0fMRckqvyj6WNouiNCAZBMMe8s7Wkwv/l4Apz069qjiWJ
+	 5a5XDBMPZKliQlLLyGec6wjqS2SUf+MbzmU7cETs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Michael Petlan <mpetlan@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 412/414] perf test: Directory file descriptor leak
-Date: Mon, 23 Jun 2025 15:09:09 +0200
-Message-ID: <20250623130652.251135478@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 6.1 452/508] udmabuf: use sgtable-based scatterlist wrappers
+Date: Mon, 23 Jun 2025 15:08:17 +0200
+Message-ID: <20250623130656.265667921@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -57,53 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 19f4422d485b2d0a935117a1a16015328f99be25 ]
+commit afe382843717d44b24ef5014d57dcbaab75a4052 upstream.
 
-Add missed close when iterating over the script directories.
+Use common wrappers operating directly on the struct sg_table objects to
+fix incorrect use of scatterlists sync calls. dma_sync_sg_for_*()
+functions have to be called with the number of elements originally passed
+to dma_map_sg_*() function, not the one returned in sgtable's nents.
 
-Fixes: f3295f5b067d3c26 ("perf tests: Use scandirat for shell script finding")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Michael Petlan <mpetlan@redhat.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
-Link: https://lore.kernel.org/r/20250614004108.1650988-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1ffe09590121 ("udmabuf: fix dma-buf cpu access")
+CC: stable@vger.kernel.org
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20250507160913.2084079-3-m.szyprowski@samsung.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/tests/tests-scripts.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma-buf/udmabuf.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/tests/tests-scripts.c b/tools/perf/tests/tests-scripts.c
-index ed114b0442936..b6986d50dde6c 100644
---- a/tools/perf/tests/tests-scripts.c
-+++ b/tools/perf/tests/tests-scripts.c
-@@ -255,6 +255,7 @@ static void append_scripts_in_dir(int dir_fd,
- 			continue; /* Skip scripts that have a separate driver. */
- 		fd = openat(dir_fd, ent->d_name, O_PATH);
- 		append_scripts_in_dir(fd, result, result_sz);
-+		close(fd);
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -133,8 +133,7 @@ static int begin_cpu_udmabuf(struct dma_
+ 			ubuf->sg = NULL;
+ 		}
+ 	} else {
+-		dma_sync_sg_for_cpu(dev, ubuf->sg->sgl, ubuf->sg->nents,
+-				    direction);
++		dma_sync_sgtable_for_cpu(dev, ubuf->sg, direction);
  	}
- 	for (i = 0; i < n_dirs; i++) /* Clean up */
- 		zfree(&entlist[i]);
--- 
-2.39.5
-
+ 
+ 	return ret;
+@@ -149,7 +148,7 @@ static int end_cpu_udmabuf(struct dma_bu
+ 	if (!ubuf->sg)
+ 		return -EINVAL;
+ 
+-	dma_sync_sg_for_device(dev, ubuf->sg->sgl, ubuf->sg->nents, direction);
++	dma_sync_sgtable_for_device(dev, ubuf->sg, direction);
+ 	return 0;
+ }
+ 
 
 
