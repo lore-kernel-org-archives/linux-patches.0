@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682A9227EA7;
-	Mon, 23 Jun 2025 22:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C463B223DD0;
+	Mon, 23 Jun 2025 22:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716791; cv=none; b=JM1Xzw+ZjH1OaPus6ulDI+kDl/PZoRCh34CS6tkH6AfVdCNWss23I7dmgfftQuMGgd7nSki21iF4mYabkPkpQno3U21U4Sgccp9rZ0U6ZO0XPwCceN9r2dQBV17uZOXACWVhQjC2Jox9xNEoMCb10M6m3juJ0utl8xTWIaqsmQc=
+	t=1750716793; cv=none; b=ZJi/bjX1TjdjtTQ5F9vJvQGhRaxuYALDhBeV0w0Kv1r0G+rNJJSz9bffH6/bvp16D/xHGlHRTb6Cl2/LOK9FUtJJfjqOFNFGaYPxDKOP3wFGgRk8sIldwCAW0yKgl6WvCQF/Vp6gitxifYQ89YEFCw0FWUwPca9YU85R+VMRIP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716791; c=relaxed/simple;
-	bh=Qdq4jAIWezKD5Y/xDZIMkFNAzinWSsS0/0TJ3dp5F2I=;
+	s=arc-20240116; t=1750716793; c=relaxed/simple;
+	bh=RjrSo28YDP9qwvrzZO2G1KAzm2VtaJcxaL97Yyvruic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gXIlYPLFO+y+ZUp5pU2+xmi+ltcOR3Jv/htgsnK1rjJIlguxgujUVX1OgL8CY7JlQJDI2lCa+X3I1FiOdInFgqbozfJshvlRoRpP+3CStXTghNfF/wtznBMcV5QX+MTYGrrNH/u38UKu3jW8O/sVbzKAEZ3OniRXOElFs3KDO2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yig/zOHc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HNPOwzcypF7K57xgoO7jgjJcbBtYmAipIaAN0my1MvevF9F6nkk5P4vtFH1rw1GzG1AXRPiJ4iDXjzVQ5xFJgVVVKLplAycZzc31GoNUf7ZNDEJ1E9yJsKiZPa7xkxjWAsVcp2aMw5tLwLDk8XSieesy9McVRYHCgPGyXFIhE8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Snvc0ET4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yig/zOHc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AC1C4CEEA;
-	Mon, 23 Jun 2025 22:13:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Snvc0ET4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AEB3C4CEED;
+	Mon, 23 Jun 2025 22:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716791;
-	bh=Qdq4jAIWezKD5Y/xDZIMkFNAzinWSsS0/0TJ3dp5F2I=;
+	s=korg; t=1750716793;
+	bh=RjrSo28YDP9qwvrzZO2G1KAzm2VtaJcxaL97Yyvruic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yig/zOHcME+l4HrqUaw98+ExjJWhDQFoghO0fEBWUaB2GT9bIv5DOd1FnLEDOProL
-	 8gUeO0VJSZkmjQqtuy0x+IP1R2HC9q1CmmGeQm7vBzHDfhjB1SRmKT4b1o0cy5bWP/
-	 Dalt8E8eisAXPi0sXpri+/8Z/FhdiSqPI3dN5PD4=
+	b=Snvc0ET4emm/V3ilT/1qDhQH9hff0ujO4Sot7UTUXrZZUM2Q1xSY2q0I72gAH/p6y
+	 aHJHVGzYEVSvBmE/VfCBcVTLlMzjDg0M0kolq55jIuXEH1j17RMQmZUsiIZ4ZmSNmT
+	 1d1vmW3wS9Xm9zPF0j8b/JQL27iSsLbwoyiqw+r0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Hongbo Li <lihongbo22@huawei.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 5.15 365/411] erofs: remove unused trace event erofs_destroy_inode
-Date: Mon, 23 Jun 2025 15:08:29 +0200
-Message-ID: <20250623130642.830335899@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 337/508] ext4: ensure i_size is smaller than maxbytes
+Date: Mon, 23 Jun 2025 15:06:22 +0200
+Message-ID: <20250623130653.624616797@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +49,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 30b58444807c93bffeaba7d776110f2a909d2f9a upstream.
+commit 1a77a028a392fab66dd637cdfac3f888450d00af upstream.
 
-The trace event `erofs_destroy_inode` was added but remains unused. This
-unused event contributes approximately 5KB to the kernel module size.
+The inode i_size cannot be larger than maxbytes, check it while loading
+inode from the disk.
 
-Reported-by: Steven Rostedt <rostedt@goodmis.org>
-Closes: https://lore.kernel.org/r/20250612224906.15000244@batman.local.home
-Fixes: 13f06f48f7bf ("staging: erofs: support tracepoint")
-Cc: stable@vger.kernel.org
-Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250617054056.3232365-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Link: https://patch.msgid.link/20250506012009.3896990-4-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/erofs.h |   18 ------------------
- 1 file changed, 18 deletions(-)
+ fs/ext4/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/trace/events/erofs.h
-+++ b/include/trace/events/erofs.h
-@@ -235,24 +235,6 @@ DEFINE_EVENT(erofs__map_blocks_exit, z_e
- 	TP_ARGS(inode, map, flags, ret)
- );
- 
--TRACE_EVENT(erofs_destroy_inode,
--	TP_PROTO(struct inode *inode),
--
--	TP_ARGS(inode),
--
--	TP_STRUCT__entry(
--		__field(	dev_t,		dev		)
--		__field(	erofs_nid_t,	nid		)
--	),
--
--	TP_fast_assign(
--		__entry->dev	= inode->i_sb->s_dev;
--		__entry->nid	= EROFS_I(inode)->nid;
--	),
--
--	TP_printk("dev = (%d,%d), nid = %llu", show_dev_nid(__entry))
--);
--
- #endif /* _TRACE_EROFS_H */
- 
-  /* This part must be outside protection */
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4968,7 +4968,8 @@ struct inode *__ext4_iget(struct super_b
+ 		ei->i_file_acl |=
+ 			((__u64)le16_to_cpu(raw_inode->i_file_acl_high)) << 32;
+ 	inode->i_size = ext4_isize(sb, raw_inode);
+-	if ((size = i_size_read(inode)) < 0) {
++	size = i_size_read(inode);
++	if (size < 0 || size > ext4_get_maxbytes(inode)) {
+ 		ext4_error_inode(inode, function, line, 0,
+ 				 "iget: bad i_size value: %lld", size);
+ 		ret = -EFSCORRUPTED;
 
 
