@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7EB4315A;
-	Mon, 23 Jun 2025 21:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659694315A;
+	Mon, 23 Jun 2025 21:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715317; cv=none; b=G8Ap2lQ9bcWRcEzCCEu1WN7fVnGCcpUBh4OoRPG9NUOv9rfPMSxPPV06c7LkVorWGwdbHTB9IRllfSGYlKqXEAL3N0xGCPtenHN/iMcvIfLum/p6m8ytRPPXC7ozbNLgdO9h/G21N2emY2I3kvTyU350rB9xWDGspbzT2JF5Oqc=
+	t=1750715319; cv=none; b=aa7HfvnXmVP0EK5BLFoexn3E/uQGY0ZALVUciSyKDen25aqK1U+JnUBLbAO0nUTrbuUHU5dF88utj45MdrK4uTejQSQRlDzPeqr/V8Kebz+xFy8TKdP8JRPJiZ+n1Rs2Qnw+zPvwqx2XTT6QcLgicDs6IlzwVbwSdAxlQv6ZadA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715317; c=relaxed/simple;
-	bh=mDjbuPyaVCd5awQDBMesFhcZEg8r8C9R9GCm0lXTo5U=;
+	s=arc-20240116; t=1750715319; c=relaxed/simple;
+	bh=MEG2EPT2P/tBAr2OqcOnEBYe7LS1RiD24yH3oOSbY0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFhYJwhRrPQsxI9YdgM4Va+CP0o/GG+nRZxrF+ftB5nvS3DOoYFDVM0VQo8BsuST5lwGour96JFkuLvm96Rf+H4oXDYBVlN2UQxaWFSD7IG9YlAneYj9QU1OcvfoBrjIUU3Gq5tS4xlVFIMJ4gPesQLQbhURmEITbniq3TCIDAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSvCN9Lf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HfobFumux6Koy702OVrk+VzDEyz8ihXwPPC7avE2G+GVyQOL0C9IzOmGje3hbOhYlqs2+3ThQN/LWiiIrCh/cbMBKB+W3sqjNTIs7FBLW+W++0ip4i/2EFT5F7S8eYJpF1Q2NT7B8aSYG7PZeMF4lb42Y8nplXKj2CPKAfybScg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsywkT3x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSvCN9Lf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7339FC4CEEA;
-	Mon, 23 Jun 2025 21:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsywkT3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DBEC4CEEA;
+	Mon, 23 Jun 2025 21:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715316;
-	bh=mDjbuPyaVCd5awQDBMesFhcZEg8r8C9R9GCm0lXTo5U=;
+	s=korg; t=1750715319;
+	bh=MEG2EPT2P/tBAr2OqcOnEBYe7LS1RiD24yH3oOSbY0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSvCN9Lflf+hy/MXUvLaF7wfqCyf9cBoYtq2YyNLw3gPkS2J5JjBO/ssjL8dW6h6Z
-	 PTP3R0EbRVxNHT7MV64xawiThKJZ1ZLAegWIg169seWWvcT4PrZSbA7rLDtJYo78tD
-	 H8YSLXLxybgIUBKyAXmkCp4ZiW32V8vNtRduy1b8=
+	b=gsywkT3x/IxsUWj3lm2g24XtfHPMG4YhOj+FhSt5fgeXc9IG+czwJ2J1lJ3ptaQb9
+	 N4+Zj8mOnyqE71/KfL8Vqu8UX2a2o6TAzE5BGfY2H6sXoHFgU+jT0TCyy9+5a+P/bQ
+	 HFkOHsp2SIjvVAw6UHfS/UwQADqOddDVL56WG8FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 245/411] dm-mirror: fix a tiny race condition
-Date: Mon, 23 Jun 2025 15:06:29 +0200
-Message-ID: <20250623130639.820900172@linuxfoundation.org>
+	I Hsin Cheng <richard120310@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 175/414] ASoC: intel/sdw_utils: Assign initial value in asoc_sdw_rt_amp_spk_rtd_init()
+Date: Mon, 23 Jun 2025 15:05:12 +0200
+Message-ID: <20250623130646.402787524@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,57 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: I Hsin Cheng <richard120310@gmail.com>
 
-commit 829451beaed6165eb11d7a9fb4e28eb17f489980 upstream.
+[ Upstream commit 5fb3878216aece471af030b33a9fbef3babd8617 ]
 
-There's a tiny race condition in dm-mirror. The functions queue_bio and
-write_callback grab a spinlock, add a bio to the list, drop the spinlock
-and wake up the mirrord thread that processes bios in the list.
+Initialize "ret" with "-EINVAL" to handle cases where "strstr()" for
+"codec_dai->component->name_prefix" doesn't find "-1" nor "-2". In that
+case "name_prefix" is invalid because for current implementation it's
+expected to have either "-1" or "-2" in it. (Maybe "-3", "-4" and so on
+in the future.)
 
-It may be possible that the mirrord thread processes the bio just after
-spin_unlock_irqrestore is called, before wakeup_mirrord. This spurious
-wake-up is normally harmless, however if the device mapper device is
-unloaded just after the bio was processed, it may be possible that
-wakeup_mirrord(ms) uses invalid "ms" pointer.
-
-Fix this bug by moving wakeup_mirrord inside the spinlock.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://scan5.scan.coverity.com/#/project-view/36179/10063?selectedIssue=1627120
+Signed-off-by: I Hsin Cheng <richard120310@gmail.com>
+Link: https://patch.msgid.link/20250505185423.680608-1-richard120310@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-raid1.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sound/soc/sdw_utils/soc_sdw_rt_amp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-raid1.c
-+++ b/drivers/md/dm-raid1.c
-@@ -128,10 +128,9 @@ static void queue_bio(struct mirror_set
- 	spin_lock_irqsave(&ms->lock, flags);
- 	should_wake = !(bl->head);
- 	bio_list_add(bl, bio);
--	spin_unlock_irqrestore(&ms->lock, flags);
--
- 	if (should_wake)
- 		wakeup_mirrord(ms);
-+	spin_unlock_irqrestore(&ms->lock, flags);
- }
+diff --git a/sound/soc/sdw_utils/soc_sdw_rt_amp.c b/sound/soc/sdw_utils/soc_sdw_rt_amp.c
+index 6951dfb565263..b3d6ca2499734 100644
+--- a/sound/soc/sdw_utils/soc_sdw_rt_amp.c
++++ b/sound/soc/sdw_utils/soc_sdw_rt_amp.c
+@@ -190,7 +190,7 @@ int asoc_sdw_rt_amp_spk_rtd_init(struct snd_soc_pcm_runtime *rtd, struct snd_soc
+ 	const struct snd_soc_dapm_route *rt_amp_map;
+ 	char codec_name[CODEC_NAME_SIZE];
+ 	struct snd_soc_dai *codec_dai;
+-	int ret;
++	int ret = -EINVAL;
+ 	int i;
  
- static void dispatch_bios(void *context, struct bio_list *bio_list)
-@@ -638,9 +637,9 @@ static void write_callback(unsigned long
- 	if (!ms->failures.head)
- 		should_wake = 1;
- 	bio_list_add(&ms->failures, bio);
--	spin_unlock_irqrestore(&ms->lock, flags);
- 	if (should_wake)
- 		wakeup_mirrord(ms);
-+	spin_unlock_irqrestore(&ms->lock, flags);
- }
- 
- static void do_write(struct mirror_set *ms, struct bio *bio)
+ 	rt_amp_map = get_codec_name_and_route(dai, codec_name);
+-- 
+2.39.5
+
 
 
