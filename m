@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048DA2222B2;
-	Mon, 23 Jun 2025 22:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBB62222B2;
+	Mon, 23 Jun 2025 22:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717649; cv=none; b=QiC3TJmv9dTjiRjA/bV5yXp1WNdKFZop73SIzH+p0NG1+K/lDYJFbZGBnPB8zyk5Zu0/E483MoDbSeKFVQJXr2bDeAvujyDLvG546+ze43Od4nCmKNZf2E7aVsD5yTzSspi2yYXVOxAufc1B60RH6fYNH1ZdpLG+YrrWzd97hoA=
+	t=1750717651; cv=none; b=uzyBYAi2gE2SJXKWlkRGNlRBOBT6jVizajXAg610O0vJ4sbeQpY9YXqa3YS0k9Smw22UV7kAahxzCOQwNdufrbEI/RULoKwU+vSZXbuTUEUPqzoYsDvRARAPk9BQtNZ5oWAN8jBXpgdr06W0MJb8tiBZeQ5GONxDsTB8zQPKA4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717649; c=relaxed/simple;
-	bh=f+z0WOeHBUtbxo187+ZCkrZD4O/dm6hKZcTNCS/yIy8=;
+	s=arc-20240116; t=1750717651; c=relaxed/simple;
+	bh=IeGw3zV00NFDfHOJsf/YzjNUDmkYUzC+cDF52se3qRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKGFxIfx0+cG1OsM6M8sxL8igxQMJXZFSJ8xemEsWiOv2e4B4/rTsWmoj5Gg2eAIN1II/ScwrTKq2lmgFPLznGWOco7Gvk+g0V1kCZvPxxsY044g+LZg6qKTo2AdbP7K9zlDFtwsBDH5SSx/7Zk6q/ZKJmG7qsu+ZkaTGeGEQ1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTtJR8L+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IlfLJdy9ZrFKWZSOz1qjkDlZt3oTb2YCpBUCZB/3QHoWsa06c7axlQ/DTID2cKdb1rynstccL6xFdJ/0Lbw5wfdzl6y7Zg3VPrHlizSC8u4eYr1XMEFelxynRhvUxSUbkTEFgUeJ8cAvDMpZl0FxPcHbFKiOrfQVAY0nd2iG/5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ne/n5Tl0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTtJR8L+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A6EC4CEEA;
-	Mon, 23 Jun 2025 22:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ne/n5Tl0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12416C4CEEA;
+	Mon, 23 Jun 2025 22:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717648;
-	bh=f+z0WOeHBUtbxo187+ZCkrZD4O/dm6hKZcTNCS/yIy8=;
+	s=korg; t=1750717651;
+	bh=IeGw3zV00NFDfHOJsf/YzjNUDmkYUzC+cDF52se3qRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GTtJR8L+YvRTDbbOgGamBBzNj5A5OiwHjIET4mKpcPE3kEPamU20RgUMaHB5/eQKl
-	 OB0eWkSMsFrlmcszYHJp2tb4CE68f2W4qDr+IhbGGCY5IymwRkOqEdt8dnsS8QqrkY
-	 v0pMa1avDOA9RXoG0F9z/qjUDgE54TFW7qYU+FDc=
+	b=Ne/n5Tl0qc45YNA2ZoUsoJe1LJWlI4AGkqNZN7f3EiYGFCg5Ea/Fa++CdwCbacsfo
+	 PFs7aUo/oRJYEprnW2qZbjp5aWY+CSQbvkN0npS5RWTBrw91SPjv7gqlN+oOqHm22P
+	 RpvgyOvq8sB4bHuGkYhRVhnIju3xR2y9fITKh+vM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	John Cheung <john.cs.hey@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paul Moore <paul@paul-moore.com>,
+	syzbot+8b64dec3affaed7b3af5@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 489/508] calipso: Fix null-ptr-deref in calipso_req_{set,del}attr().
-Date: Mon, 23 Jun 2025 15:08:54 +0200
-Message-ID: <20250623130657.075795160@linuxfoundation.org>
+Subject: [PATCH 6.1 490/508] net: atm: add lec_mutex
+Date: Mon, 23 Jun 2025 15:08:55 +0200
+Message-ID: <20250623130657.097190072@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
 References: <20250623130645.255320792@linuxfoundation.org>
@@ -54,193 +52,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 10876da918fa1aec0227fb4c67647513447f53a9 ]
+[ Upstream commit d13a3824bfd2b4774b671a75cf766a16637a0e67 ]
 
-syzkaller reported a null-ptr-deref in sock_omalloc() while allocating
-a CALIPSO option.  [0]
+syzbot found its way in net/atm/lec.c, and found an error path
+in lecd_attach() could leave a dangling pointer in dev_lec[].
 
-The NULL is of struct sock, which was fetched by sk_to_full_sk() in
-calipso_req_setattr().
+Add a mutex to protect dev_lecp[] uses from lecd_attach(),
+lec_vcc_attach() and lec_mcast_attach().
 
-Since commit a1a5344ddbe8 ("tcp: avoid two atomic ops for syncookies"),
-reqsk->rsk_listener could be NULL when SYN Cookie is returned to its
-client, as hinted by the leading SYN Cookie log.
+Following patch will use this mutex for /proc/net/atm/lec.
 
-Here are 3 options to fix the bug:
+BUG: KASAN: slab-use-after-free in lecd_attach net/atm/lec.c:751 [inline]
+BUG: KASAN: slab-use-after-free in lane_ioctl+0x2224/0x23e0 net/atm/lec.c:1008
+Read of size 8 at addr ffff88807c7b8e68 by task syz.1.17/6142
 
-  1) Return 0 in calipso_req_setattr()
-  2) Return an error in calipso_req_setattr()
-  3) Alaways set rsk_listener
-
-1) is no go as it bypasses LSM, but 2) effectively disables SYN Cookie
-for CALIPSO.  3) is also no go as there have been many efforts to reduce
-atomic ops and make TCP robust against DDoS.  See also commit 3b24d854cb35
-("tcp/dccp: do not touch listener sk_refcnt under synflood").
-
-As of the blamed commit, SYN Cookie already did not need refcounting,
-and no one has stumbled on the bug for 9 years, so no CALIPSO user will
-care about SYN Cookie.
-
-Let's return an error in calipso_req_setattr() and calipso_req_delattr()
-in the SYN Cookie case.
-
-This can be reproduced by [1] on Fedora and now connect() of nc times out.
-
-[0]:
-TCP: request_sock_TCPv6: Possible SYN flooding on port [::]:20002. Sending cookies.
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
-CPU: 3 UID: 0 PID: 12262 Comm: syz.1.2611 Not tainted 6.14.0 #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-RIP: 0010:read_pnet include/net/net_namespace.h:406 [inline]
-RIP: 0010:sock_net include/net/sock.h:655 [inline]
-RIP: 0010:sock_kmalloc+0x35/0x170 net/core/sock.c:2806
-Code: 89 d5 41 54 55 89 f5 53 48 89 fb e8 25 e3 c6 fd e8 f0 91 e3 00 48 8d 7b 30 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 26 01 00 00 48 b8 00 00 00 00 00 fc ff df 4c 8b
-RSP: 0018:ffff88811af89038 EFLAGS: 00010216
-RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffff888105266400
-RDX: 0000000000000006 RSI: ffff88800c890000 RDI: 0000000000000030
-RBP: 0000000000000050 R08: 0000000000000000 R09: ffff88810526640e
-R10: ffffed1020a4cc81 R11: ffff88810526640f R12: 0000000000000000
-R13: 0000000000000820 R14: ffff888105266400 R15: 0000000000000050
-FS:  00007f0653a07640(0000) GS:ffff88811af80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f863ba096f4 CR3: 00000000163c0005 CR4: 0000000000770ef0
-PKRU: 80000000
+CPU: 1 UID: 0 PID: 6142 Comm: syz.1.17 Not tainted 6.16.0-rc1-syzkaller-00239-g08215f5486ec #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
 Call Trace:
- <IRQ>
- ipv6_renew_options+0x279/0x950 net/ipv6/exthdrs.c:1288
- calipso_req_setattr+0x181/0x340 net/ipv6/calipso.c:1204
- calipso_req_setattr+0x56/0x80 net/netlabel/netlabel_calipso.c:597
- netlbl_req_setattr+0x18a/0x440 net/netlabel/netlabel_kapi.c:1249
- selinux_netlbl_inet_conn_request+0x1fb/0x320 security/selinux/netlabel.c:342
- selinux_inet_conn_request+0x1eb/0x2c0 security/selinux/hooks.c:5551
- security_inet_conn_request+0x50/0xa0 security/security.c:4945
- tcp_v6_route_req+0x22c/0x550 net/ipv6/tcp_ipv6.c:825
- tcp_conn_request+0xec8/0x2b70 net/ipv4/tcp_input.c:7275
- tcp_v6_conn_request+0x1e3/0x440 net/ipv6/tcp_ipv6.c:1328
- tcp_rcv_state_process+0xafa/0x52b0 net/ipv4/tcp_input.c:6781
- tcp_v6_do_rcv+0x8a6/0x1a40 net/ipv6/tcp_ipv6.c:1667
- tcp_v6_rcv+0x505e/0x5b50 net/ipv6/tcp_ipv6.c:1904
- ip6_protocol_deliver_rcu+0x17c/0x1da0 net/ipv6/ip6_input.c:436
- ip6_input_finish+0x103/0x180 net/ipv6/ip6_input.c:480
- NF_HOOK include/linux/netfilter.h:314 [inline]
- NF_HOOK include/linux/netfilter.h:308 [inline]
- ip6_input+0x13c/0x6b0 net/ipv6/ip6_input.c:491
- dst_input include/net/dst.h:469 [inline]
- ip6_rcv_finish net/ipv6/ip6_input.c:79 [inline]
- ip6_rcv_finish+0xb6/0x490 net/ipv6/ip6_input.c:69
- NF_HOOK include/linux/netfilter.h:314 [inline]
- NF_HOOK include/linux/netfilter.h:308 [inline]
- ipv6_rcv+0xf9/0x490 net/ipv6/ip6_input.c:309
- __netif_receive_skb_one_core+0x12e/0x1f0 net/core/dev.c:5896
- __netif_receive_skb+0x1d/0x170 net/core/dev.c:6009
- process_backlog+0x41e/0x13b0 net/core/dev.c:6357
- __napi_poll+0xbd/0x710 net/core/dev.c:7191
- napi_poll net/core/dev.c:7260 [inline]
- net_rx_action+0x9de/0xde0 net/core/dev.c:7382
- handle_softirqs+0x19a/0x770 kernel/softirq.c:561
- do_softirq.part.0+0x36/0x70 kernel/softirq.c:462
- </IRQ>
  <TASK>
- do_softirq arch/x86/include/asm/preempt.h:26 [inline]
- __local_bh_enable_ip+0xf1/0x110 kernel/softirq.c:389
- local_bh_enable include/linux/bottom_half.h:33 [inline]
- rcu_read_unlock_bh include/linux/rcupdate.h:919 [inline]
- __dev_queue_xmit+0xc2a/0x3c40 net/core/dev.c:4679
- dev_queue_xmit include/linux/netdevice.h:3313 [inline]
- neigh_hh_output include/net/neighbour.h:523 [inline]
- neigh_output include/net/neighbour.h:537 [inline]
- ip6_finish_output2+0xd69/0x1f80 net/ipv6/ip6_output.c:141
- __ip6_finish_output net/ipv6/ip6_output.c:215 [inline]
- ip6_finish_output+0x5dc/0xd60 net/ipv6/ip6_output.c:226
- NF_HOOK_COND include/linux/netfilter.h:303 [inline]
- ip6_output+0x24b/0x8d0 net/ipv6/ip6_output.c:247
- dst_output include/net/dst.h:459 [inline]
- NF_HOOK include/linux/netfilter.h:314 [inline]
- NF_HOOK include/linux/netfilter.h:308 [inline]
- ip6_xmit+0xbbc/0x20d0 net/ipv6/ip6_output.c:366
- inet6_csk_xmit+0x39a/0x720 net/ipv6/inet6_connection_sock.c:135
- __tcp_transmit_skb+0x1a7b/0x3b40 net/ipv4/tcp_output.c:1471
- tcp_transmit_skb net/ipv4/tcp_output.c:1489 [inline]
- tcp_send_syn_data net/ipv4/tcp_output.c:4059 [inline]
- tcp_connect+0x1c0c/0x4510 net/ipv4/tcp_output.c:4148
- tcp_v6_connect+0x156c/0x2080 net/ipv6/tcp_ipv6.c:333
- __inet_stream_connect+0x3a7/0xed0 net/ipv4/af_inet.c:677
- tcp_sendmsg_fastopen+0x3e2/0x710 net/ipv4/tcp.c:1039
- tcp_sendmsg_locked+0x1e82/0x3570 net/ipv4/tcp.c:1091
- tcp_sendmsg+0x2f/0x50 net/ipv4/tcp.c:1358
- inet6_sendmsg+0xb9/0x150 net/ipv6/af_inet6.c:659
- sock_sendmsg_nosec net/socket.c:718 [inline]
- __sock_sendmsg+0xf4/0x2a0 net/socket.c:733
- __sys_sendto+0x29a/0x390 net/socket.c:2187
- __do_sys_sendto net/socket.c:2194 [inline]
- __se_sys_sendto net/socket.c:2190 [inline]
- __x64_sys_sendto+0xe1/0x1c0 net/socket.c:2190
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xc3/0x1d0 arch/x86/entry/common.c:83
+  __dump_stack lib/dump_stack.c:94 [inline]
+  dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+  print_address_description mm/kasan/report.c:408 [inline]
+  print_report+0xcd/0x680 mm/kasan/report.c:521
+  kasan_report+0xe0/0x110 mm/kasan/report.c:634
+  lecd_attach net/atm/lec.c:751 [inline]
+  lane_ioctl+0x2224/0x23e0 net/atm/lec.c:1008
+  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
+  sock_do_ioctl+0x118/0x280 net/socket.c:1190
+  sock_ioctl+0x227/0x6b0 net/socket.c:1311
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:907 [inline]
+  __se_sys_ioctl fs/ioctl.c:893 [inline]
+  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
+  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+  do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f06553c47ed
-Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f0653a06fc8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 00007f0655605fa0 RCX: 00007f06553c47ed
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 000000000000000b
-RBP: 00007f065545db38 R08: 0000200000000140 R09: 000000000000001c
-R10: f7384d4ea84b01bd R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f0655605fac R14: 00007f0655606038 R15: 00007f06539e7000
  </TASK>
-Modules linked in:
 
-[1]:
-dnf install -y selinux-policy-targeted policycoreutils netlabel_tools procps-ng nmap-ncat
-mount -t selinuxfs none /sys/fs/selinux
-load_policy
-netlabelctl calipso add pass doi:1
-netlabelctl map del default
-netlabelctl map add default address:::1 protocol:calipso,1
-sysctl net.ipv4.tcp_syncookies=2
-nc -l ::1 80 &
-nc ::1 80
+Allocated by task 6132:
+  kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
+  kasan_save_track+0x14/0x30 mm/kasan/common.c:68
+  poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+  __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:394
+  kasan_kmalloc include/linux/kasan.h:260 [inline]
+  __do_kmalloc_node mm/slub.c:4328 [inline]
+  __kvmalloc_node_noprof+0x27b/0x620 mm/slub.c:5015
+  alloc_netdev_mqs+0xd2/0x1570 net/core/dev.c:11711
+  lecd_attach net/atm/lec.c:737 [inline]
+  lane_ioctl+0x17db/0x23e0 net/atm/lec.c:1008
+  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
+  sock_do_ioctl+0x118/0x280 net/socket.c:1190
+  sock_ioctl+0x227/0x6b0 net/socket.c:1311
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:907 [inline]
+  __se_sys_ioctl fs/ioctl.c:893 [inline]
+  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
+  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+  do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fixes: e1adea927080 ("calipso: Allow request sockets to be relabelled by the lsm.")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Reported-by: John Cheung <john.cs.hey@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAP=Rh=MvfhrGADy+-WJiftV2_WzMH4VEhEFmeT28qY+4yxNu4w@mail.gmail.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20250617224125.17299-1-kuni1840@gmail.com
+Freed by task 6132:
+  kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
+  kasan_save_track+0x14/0x30 mm/kasan/common.c:68
+  kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:576
+  poison_slab_object mm/kasan/common.c:247 [inline]
+  __kasan_slab_free+0x51/0x70 mm/kasan/common.c:264
+  kasan_slab_free include/linux/kasan.h:233 [inline]
+  slab_free_hook mm/slub.c:2381 [inline]
+  slab_free mm/slub.c:4643 [inline]
+  kfree+0x2b4/0x4d0 mm/slub.c:4842
+  free_netdev+0x6c5/0x910 net/core/dev.c:11892
+  lecd_attach net/atm/lec.c:744 [inline]
+  lane_ioctl+0x1ce8/0x23e0 net/atm/lec.c:1008
+  do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
+  sock_do_ioctl+0x118/0x280 net/socket.c:1190
+  sock_ioctl+0x227/0x6b0 net/socket.c:1311
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:907 [inline]
+  __se_sys_ioctl fs/ioctl.c:893 [inline]
+  __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:893
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+8b64dec3affaed7b3af5@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6852c6f6.050a0220.216029.0018.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250618140844.1686882-2-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/calipso.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/atm/lec.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
-index c07e3da08d2a8..24666291c54a8 100644
---- a/net/ipv6/calipso.c
-+++ b/net/ipv6/calipso.c
-@@ -1210,6 +1210,10 @@ static int calipso_req_setattr(struct request_sock *req,
- 	struct ipv6_opt_hdr *old, *new;
- 	struct sock *sk = sk_to_full_sk(req_to_sk(req));
+diff --git a/net/atm/lec.c b/net/atm/lec.c
+index ac3cfc1ae5102..d4ac1488eca6f 100644
+--- a/net/atm/lec.c
++++ b/net/atm/lec.c
+@@ -124,6 +124,7 @@ static unsigned char bus_mac[ETH_ALEN] = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
  
-+	/* sk is NULL for SYN+ACK w/ SYN Cookie */
-+	if (!sk)
-+		return -ENOMEM;
-+
- 	if (req_inet->ipv6_opt && req_inet->ipv6_opt->hopopt)
- 		old = req_inet->ipv6_opt->hopopt;
- 	else
-@@ -1250,6 +1254,10 @@ static void calipso_req_delattr(struct request_sock *req)
- 	struct ipv6_txoptions *txopts;
- 	struct sock *sk = sk_to_full_sk(req_to_sk(req));
+ /* Device structures */
+ static struct net_device *dev_lec[MAX_LEC_ITF];
++static DEFINE_MUTEX(lec_mutex);
  
-+	/* sk is NULL for SYN+ACK w/ SYN Cookie */
-+	if (!sk)
-+		return;
-+
- 	if (!req_inet->ipv6_opt || !req_inet->ipv6_opt->hopopt)
- 		return;
+ #if IS_ENABLED(CONFIG_BRIDGE)
+ static void lec_handle_bridge(struct sk_buff *skb, struct net_device *dev)
+@@ -685,6 +686,7 @@ static int lec_vcc_attach(struct atm_vcc *vcc, void __user *arg)
+ 	int bytes_left;
+ 	struct atmlec_ioc ioc_data;
+ 
++	lockdep_assert_held(&lec_mutex);
+ 	/* Lecd must be up in this case */
+ 	bytes_left = copy_from_user(&ioc_data, arg, sizeof(struct atmlec_ioc));
+ 	if (bytes_left != 0)
+@@ -710,6 +712,7 @@ static int lec_vcc_attach(struct atm_vcc *vcc, void __user *arg)
+ 
+ static int lec_mcast_attach(struct atm_vcc *vcc, int arg)
+ {
++	lockdep_assert_held(&lec_mutex);
+ 	if (arg < 0 || arg >= MAX_LEC_ITF)
+ 		return -EINVAL;
+ 	arg = array_index_nospec(arg, MAX_LEC_ITF);
+@@ -725,6 +728,7 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
+ 	int i;
+ 	struct lec_priv *priv;
+ 
++	lockdep_assert_held(&lec_mutex);
+ 	if (arg < 0)
+ 		arg = 0;
+ 	if (arg >= MAX_LEC_ITF)
+@@ -742,6 +746,7 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
+ 		snprintf(dev_lec[i]->name, IFNAMSIZ, "lec%d", i);
+ 		if (register_netdev(dev_lec[i])) {
+ 			free_netdev(dev_lec[i]);
++			dev_lec[i] = NULL;
+ 			return -EINVAL;
+ 		}
+ 
+@@ -1003,6 +1008,7 @@ static int lane_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 		return -ENOIOCTLCMD;
+ 	}
+ 
++	mutex_lock(&lec_mutex);
+ 	switch (cmd) {
+ 	case ATMLEC_CTRL:
+ 		err = lecd_attach(vcc, (int)arg);
+@@ -1017,6 +1023,7 @@ static int lane_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 		break;
+ 	}
+ 
++	mutex_unlock(&lec_mutex);
+ 	return err;
+ }
  
 -- 
 2.39.5
