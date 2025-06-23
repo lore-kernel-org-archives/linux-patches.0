@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4230199FBA;
-	Mon, 23 Jun 2025 22:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6245A2192EC;
+	Mon, 23 Jun 2025 22:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717302; cv=none; b=RcvP3M7o9d1QW2xCqcMqNnQfdyWhcEn/HzjRE9FRKhQDFVNuQ/7fozIsNWq4fXl46MPyvtppH+lkC81w0AktPxwoReJkgwAoRwTIiAv/ES9eYMtStCbxqDoTcfJfQJUpozI3CN8FuuRcb80THQezkbFekKyICZfBHfHzNbcI3/I=
+	t=1750717304; cv=none; b=vBMxjluonuD8I6PVUfQ0TtxdObjLbEzW3wIL2qFSldxsZgwm1zBuT0wijny2ar+BvqcTCZJoBHEWYlK0YhpFZiq3j5Nk/omL/VH6eSzIjucV/6DDEt06FwyCkazMAjo5qXPL0Fh2yo2AyruUYXVVarfJHk3m0URjrFtRNAvIxhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717302; c=relaxed/simple;
-	bh=6KrVgjVfhUJ6m5hCZFwfvOQYJvBqIT7q3njsOKs+3NE=;
+	s=arc-20240116; t=1750717304; c=relaxed/simple;
+	bh=y2w6YAwagjSdx3Ex9I/hqCcLqschHAjKa/vYGyDTNXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEPjQysbTiyh9l1TxqJgsC/whiWowJXg94kYErd8JCyPyibJ1lksHFXZCkYgaWS9ZgDX9Uyyg3joSFXM9DWQ/avvQWQL5Dos47c4o0d5CVI48s7wUzN7ij9sPOTO4gN0JMPZ6S0tDXdDr+Tqo9DvfvdaTyTzkTCPsrLyKnMI2h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiDOonDi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CUCA+fwT+5NROXIatasXMWM1vEu7ayhbgGdC3tQtBYsvqrpPfXmrWVlLQz3q0vIFZHVqbBGFIahrKGYpFoUliR4DkGV7iBhXLTuEgfsefGInn56xqiPzRpIFTRl2Ks78RG8cLV2UlJDn+7HWVrVWhEPhAowL7ZzHd3an4Ne1jP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhDc8dpJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiDOonDi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF44C4CEEA;
-	Mon, 23 Jun 2025 22:21:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhDc8dpJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED59BC4CEEA;
+	Mon, 23 Jun 2025 22:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717301;
-	bh=6KrVgjVfhUJ6m5hCZFwfvOQYJvBqIT7q3njsOKs+3NE=;
+	s=korg; t=1750717304;
+	bh=y2w6YAwagjSdx3Ex9I/hqCcLqschHAjKa/vYGyDTNXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yiDOonDieG9TdUVxkXA6LXs80lAgpsA3Z3rK+RP7DrPmEQgEUOKzoFGOcjVuuaky6
-	 fIAw166boZjcv16gPlKuZ8cH/VPUs3Du0BiM0d74ld1kYMCZiXhqTHNmVnJS2gigq5
-	 k1EAHGu7P1fUhLG5W5m9ecUmTQ9RJv/vtpK+/WOQ=
+	b=KhDc8dpJHU/I+SIFLpHukuSGpw01PA2Fc1/funzIVDHhHszHDaauOsSZjZK2ATHVk
+	 d7okBzQHva5oVZibeTtFFUS5b8wzQGE4aYsgquwSNcXum6zdIQPqW3zjjmZ50Ce4ik
+	 GId6CCyZxPeb5MuTpryZ3y13u4zNyUmYQ9buphts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 400/508] wifi: ath11k: Fix QMI memory reuse logic
-Date: Mon, 23 Jun 2025 15:07:25 +0200
-Message-ID: <20250623130655.092248162@linuxfoundation.org>
+Subject: [PATCH 6.12 362/414] hwmon: (occ) fix unaligned accesses
+Date: Mon, 23 Jun 2025 15:08:19 +0200
+Message-ID: <20250623130651.016984324@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +47,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit cd2e7bae92bd7e65063ab8d04721d2b711ba4cbe ]
+[ Upstream commit 2c021b45c154958566aad0cae9f74ab26a2d5732 ]
 
-Firmware requests 2 segments at first. The first segment is of 6799360
-whose allocation fails due to dma remapping not available. The success
-is returned to firmware. Then firmware asks for 22 smaller segments
-instead of 2 big ones. Those get allocated successfully. At suspend/
-hibernation time, these segments aren't freed as they will be reused
-by firmware after resuming.
+Passing a pointer to an unaligned integer as a function argument is
+undefined behavior:
 
-After resuming, the firmware asks for the 2 segments again with the
-first segment of 6799360 size. Since chunk->vaddr is not NULL, the
-type and size are compared with the previous type and size to know if
-it can be reused or not. Unfortunately, it is detected that it cannot
-be reused and this first smaller segment is freed. Then we continue to
-allocate 6799360 size memory which fails and ath11k_qmi_free_target_mem_chunk()
-is called which frees the second smaller segment as well. Later success
-is returned to firmware which asks for 22 smaller segments again. But
-as we had freed 2 segments already, we'll allocate the first 2 new
-smaller segments again and reuse the remaining 20. Hence 20 small
-segments are being reused instead of 22.
+drivers/hwmon/occ/common.c:492:27: warning: taking address of packed member 'accumulator' of class or structure 'power_sensor_2' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  492 |   val = occ_get_powr_avg(&power->accumulator,
+      |                           ^~~~~~~~~~~~~~~~~~
+drivers/hwmon/occ/common.c:493:13: warning: taking address of packed member 'update_tag' of class or structure 'power_sensor_2' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  493 |            &power->update_tag);
+      |             ^~~~~~~~~~~~~~~~~
 
-Add skip logic when vaddr is set, but size/type don't match. Use the
-same skip and success logic as used when dma_alloc_coherent() fails.
-By skipping, the possibility of resume failure due to kernel failing to
-allocate memory for QMI can be avoided.
+Move the get_unaligned() calls out of the function and pass these
+through argument registers instead.
 
-	kernel: ath11k_pci 0000:03:00.0: failed to allocate dma memory for qmi (524288 B type 1)
-	ath11k_pci 0000:03:00.0: failed to allocate qmi target memory: -22
-
-Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
-
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20250428080242.466901-1-usama.anjum@collabora.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: c10e753d43eb ("hwmon (occ): Add sensor types and versions")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20250610092553.2641094-1-arnd@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/qmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hwmon/occ/common.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
-index 764cd320c6c18..f790759c86115 100644
---- a/drivers/net/wireless/ath/ath11k/qmi.c
-+++ b/drivers/net/wireless/ath/ath11k/qmi.c
-@@ -1989,6 +1989,15 @@ static int ath11k_qmi_alloc_target_mem_chunk(struct ath11k_base *ab)
- 			    chunk->prev_size == chunk->size)
- 				continue;
+diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
+index 9029ad53790b1..b3694a4209b97 100644
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -459,12 +459,10 @@ static ssize_t occ_show_power_1(struct device *dev,
+ 	return sysfs_emit(buf, "%llu\n", val);
+ }
  
-+			if (ab->qmi.mem_seg_count <= ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT) {
-+				ath11k_dbg(ab, ATH11K_DBG_QMI,
-+					   "size/type mismatch (current %d %u) (prev %d %u), try later with small size\n",
-+					    chunk->size, chunk->type,
-+					    chunk->prev_size, chunk->prev_type);
-+				ab->qmi.target_mem_delayed = true;
-+				return 0;
-+			}
-+
- 			/* cannot reuse the existing chunk */
- 			dma_free_coherent(ab->dev, chunk->prev_size,
- 					  chunk->vaddr, chunk->paddr);
+-static u64 occ_get_powr_avg(u64 *accum, u32 *samples)
++static u64 occ_get_powr_avg(u64 accum, u32 samples)
+ {
+-	u64 divisor = get_unaligned_be32(samples);
+-
+-	return (divisor == 0) ? 0 :
+-		div64_u64(get_unaligned_be64(accum) * 1000000ULL, divisor);
++	return (samples == 0) ? 0 :
++		mul_u64_u32_div(accum, 1000000UL, samples);
+ }
+ 
+ static ssize_t occ_show_power_2(struct device *dev,
+@@ -489,8 +487,8 @@ static ssize_t occ_show_power_2(struct device *dev,
+ 				  get_unaligned_be32(&power->sensor_id),
+ 				  power->function_id, power->apss_channel);
+ 	case 1:
+-		val = occ_get_powr_avg(&power->accumulator,
+-				       &power->update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->accumulator),
++				       get_unaligned_be32(&power->update_tag));
+ 		break;
+ 	case 2:
+ 		val = (u64)get_unaligned_be32(&power->update_tag) *
+@@ -527,8 +525,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
+ 		return sysfs_emit(buf, "%u_system\n",
+ 				  get_unaligned_be32(&power->sensor_id));
+ 	case 1:
+-		val = occ_get_powr_avg(&power->system.accumulator,
+-				       &power->system.update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->system.accumulator),
++				       get_unaligned_be32(&power->system.update_tag));
+ 		break;
+ 	case 2:
+ 		val = (u64)get_unaligned_be32(&power->system.update_tag) *
+@@ -541,8 +539,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
+ 		return sysfs_emit(buf, "%u_proc\n",
+ 				  get_unaligned_be32(&power->sensor_id));
+ 	case 5:
+-		val = occ_get_powr_avg(&power->proc.accumulator,
+-				       &power->proc.update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->proc.accumulator),
++				       get_unaligned_be32(&power->proc.update_tag));
+ 		break;
+ 	case 6:
+ 		val = (u64)get_unaligned_be32(&power->proc.update_tag) *
+@@ -555,8 +553,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
+ 		return sysfs_emit(buf, "%u_vdd\n",
+ 				  get_unaligned_be32(&power->sensor_id));
+ 	case 9:
+-		val = occ_get_powr_avg(&power->vdd.accumulator,
+-				       &power->vdd.update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->vdd.accumulator),
++				       get_unaligned_be32(&power->vdd.update_tag));
+ 		break;
+ 	case 10:
+ 		val = (u64)get_unaligned_be32(&power->vdd.update_tag) *
+@@ -569,8 +567,8 @@ static ssize_t occ_show_power_a0(struct device *dev,
+ 		return sysfs_emit(buf, "%u_vdn\n",
+ 				  get_unaligned_be32(&power->sensor_id));
+ 	case 13:
+-		val = occ_get_powr_avg(&power->vdn.accumulator,
+-				       &power->vdn.update_tag);
++		val = occ_get_powr_avg(get_unaligned_be64(&power->vdn.accumulator),
++				       get_unaligned_be32(&power->vdn.update_tag));
+ 		break;
+ 	case 14:
+ 		val = (u64)get_unaligned_be32(&power->vdn.update_tag) *
 -- 
 2.39.5
 
