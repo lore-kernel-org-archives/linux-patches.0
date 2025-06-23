@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC6919CC11;
-	Mon, 23 Jun 2025 21:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7498A21D3DD;
+	Mon, 23 Jun 2025 21:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714655; cv=none; b=OmNLJYRHtHnP3Ko5QsMYgm1+HPXyaO8iwVRufuCK5N6iEnVuCTYDXAmk7BdTyJNqoLwjF1wkDReB2qIuED7JA5b4wCpw75KL5RwvNVtvD1QXG8fHnBRrAa1aOcE0ZpfqCB+rZJMIxPuQhMnlWWWz+R0mBvUy+txLVrw5HRVa438=
+	t=1750714657; cv=none; b=fQ/qOmIQdAtcm6Aef9eSbkNXS/bd5b+IS4ihy1xavuhNtZT9Y6iGn5x1ZyU+5+z8ZOshFEXqSfwfu5oVFpo/X8VbFhfh0oLkEJdBsFAEy5gyaRpWOqKhDbNLHI6yfyACxUGY28mUKSBQAC9gV41qhLuAwUMQD9ymjDKvhqIKK8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714655; c=relaxed/simple;
-	bh=PZU7SfMJrI3CvP2QfOmMN2CAWpaR22fF4tlB2ZPLUQw=;
+	s=arc-20240116; t=1750714657; c=relaxed/simple;
+	bh=U0G4W0YM15Vm4cVQ7+OrMJM5hhRsAokizpuNpRwmBK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oGWpjYQUzigEx9HlvU/hTSiTeGPIUICwkUmsUtyEWUf4nsVCyfCSXOK3AfFMdrL4zi2gME7GMC0xufqTr/jHjsgT5xq/KIX7gDIs9nwJw5s2OLb1BZlc35o6iPPeYbNg5jnvPnLxfG+HNuA7+oNprC6kSUOIFN/cQvc2VNSjV1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ka6bBJaY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=es14JJwzWU0hbHzJ4wnAvJZQCJlnfLJ9C4aTALpcq/dqUNRJcOOeUIvOlikg/fjRZheT6d+WVKmUR2bUzYVZhGjNoH7mWuYM9MTG3LQwEbPXAc10UiJndpcIS7LuxmLWmQJE3rw3tg3GXaYgpXztir/MVBOXwLhDf96G9RFobEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GfqVsIoJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ka6bBJaY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2B0C4CEEA;
-	Mon, 23 Jun 2025 21:37:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GfqVsIoJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DBFCC4CEEA;
+	Mon, 23 Jun 2025 21:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714654;
-	bh=PZU7SfMJrI3CvP2QfOmMN2CAWpaR22fF4tlB2ZPLUQw=;
+	s=korg; t=1750714657;
+	bh=U0G4W0YM15Vm4cVQ7+OrMJM5hhRsAokizpuNpRwmBK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ka6bBJaYYgJSeVwCY4Ur+mjwjeb51BUlbyGbfT6agEa0MCFe86T2Aw7YivPexBMzm
-	 4ZcdXg1CLgzGzhDGdZjE3njM33Q0u/NmGDYUP1xAuRAweu2kw4GUWA2j4a5ip5uwgU
-	 b8QZ1Mwi1CC4lb3QRYWiNjsPgWzaFCNw/NnwCdyw=
+	b=GfqVsIoJzzfIZJA26f95dVqogCInzADTZQDcg2wGVniPPrnHkvFGtH+UbcuiVSJXv
+	 AELmXQcCrcRNB/FNPSljYJvi9Z+yv3f/t9QQo1PA0leu2tIs8pOJdRL+yYMk+hCD12
+	 q7DrXdUeBN/7Ecd21u27o7UYTmEl3RO7lsMt89WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 187/508] ASoC: codecs: hda: Fix RPM usage count underflow
-Date: Mon, 23 Jun 2025 15:03:52 +0200
-Message-ID: <20250623130649.874361566@linuxfoundation.org>
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 201/411] nfsd: nfsd4_spo_must_allow() must check this is a v4 compound request
+Date: Mon, 23 Jun 2025 15:05:45 +0200
+Message-ID: <20250623130638.733705686@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,64 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit ff0045de4ee0288dec683690f66f2f369b7d3466 ]
+commit 1244f0b2c3cecd3f349a877006e67c9492b41807 upstream.
 
-RPM manipulation in hda_codec_probe_complete()'s error path is
-superfluous and leads to RPM usage count underflow if the
-build-controls operation fails.
+If the request being processed is not a v4 compound request, then
+examining the cstate can have undefined results.
 
-hda_codec_probe_complete() is called in:
+This patch adds a check that the rpc procedure being executed
+(rq_procinfo) is the NFSPROC4_COMPOUND procedure.
 
-1) hda_codec_probe() for all non-HDMI codecs
-2) in card->late_probe() for HDMI codecs
-
-Error path for hda_codec_probe() takes care of bus' RPM already.
-For 2) if late_probe() fails, ASoC performs card cleanup what
-triggers hda_codec_remote() - same treatment is in 1).
-
-Fixes: b5df2a7dca1c ("ASoC: codecs: Add HD-Audio codec driver")
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20250530141025.2942936-2-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Olga Kornievskaia <okorniev@redhat.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: NeilBrown <neil@brown.name>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/hda.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4proc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/hda.c b/sound/soc/codecs/hda.c
-index 61e8e9be6b8d7..bd81572a6775b 100644
---- a/sound/soc/codecs/hda.c
-+++ b/sound/soc/codecs/hda.c
-@@ -149,7 +149,7 @@ int hda_codec_probe_complete(struct hda_codec *codec)
- 	ret = snd_hda_codec_build_controls(codec);
- 	if (ret < 0) {
- 		dev_err(&hdev->dev, "unable to create controls %d\n", ret);
--		goto out;
-+		return ret;
- 	}
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -3537,7 +3537,8 @@ bool nfsd4_spo_must_allow(struct svc_rqs
+ 	struct nfs4_op_map *allow = &cstate->clp->cl_spo_must_allow;
+ 	u32 opiter;
  
- 	/* Bus suspended codecs as it does not manage their pm */
-@@ -157,7 +157,7 @@ int hda_codec_probe_complete(struct hda_codec *codec)
- 	/* rpm was forbidden in snd_hda_codec_device_new() */
- 	snd_hda_codec_set_power_save(codec, 2000);
- 	snd_hda_codec_register(codec);
--out:
-+
- 	/* Complement pm_runtime_get_sync(bus) in probe */
- 	pm_runtime_mark_last_busy(bus->dev);
- 	pm_runtime_put_autosuspend(bus->dev);
--- 
-2.39.5
-
+-	if (!cstate->minorversion)
++	if (rqstp->rq_procinfo != &nfsd_version4.vs_proc[NFSPROC4_COMPOUND] ||
++	    cstate->minorversion == 0)
+ 		return false;
+ 
+ 	if (cstate->spo_must_allowed)
 
 
