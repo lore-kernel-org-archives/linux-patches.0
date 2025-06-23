@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EC9254869;
-	Mon, 23 Jun 2025 13:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E2C13A265;
+	Mon, 23 Jun 2025 13:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685244; cv=none; b=AZeXWy2wBs07q4MzT+M1TOpkOc/IxkyP2rm/QgrbBCjPc382q7vmmp+/QnywaojaQpiPU0OxgxVGnpttMM1smzuept2Vi9CmD1UIjbQlwGmQQnao9KboVhDjLVC+QX1b6zvoCiFOfx6/9vhEmWgGfHd1qb/1fmSpmyrWz467+hk=
+	t=1750685247; cv=none; b=l8HdYE9Qwj9Bo6pfZH78/jjd/y2WHO9uWjXwC/joGf8D6vO94akFgGiavX3H/KIVCBJQV7HfMJiUDqB8/i6TRRKvbE9ESp2BqZECvYgHLUulJ6tuPYZCcnvEA02dQoUoGetBFr7BhOF+Rs8u+Q+1KwZkS9o+6+/QAiC7HT/MEp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685244; c=relaxed/simple;
-	bh=HBXEaJKB7AiYNRAieSXYGwti5OHU0rGeuFqteoZ/Rr4=;
+	s=arc-20240116; t=1750685247; c=relaxed/simple;
+	bh=SmUiulBthQXZXE5g7JILYv8a/Jq6ecN6am0+M/2gZP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cQKaqcpA6HgpqrkPbgozJeG8mFks5x3Rq4hdOz8AwlsWKKjAy/v75c4tBd7FQxac+bd7jiSTNVydd/UgUz7UkL6LOxLvUjFFknvDkI3vS7wLe9p/Fnzh/K0EMDk9RaXK3V6atwq+32fbXYuiwEGdD3ycnNK7ptVDBoeyAVhAY2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvfCJmdS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sfV+31Ihze94zrNMRrReNNtwhHfKb4uVe+77DGs0K23xw1ZtVvZn5fBZ0lVRz9G0GC6V1hQDPYhReA/skx1WerXWZcFNdWP931nV2xtxF764yiFVrpTVp4ynxziX+514UcRm6ZPukKDnNSR7wtweHEMl3jb4JI4uQrTZJv7djP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yskefUUF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvfCJmdS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A396C4CEF0;
-	Mon, 23 Jun 2025 13:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yskefUUF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24C0C4CEF0;
+	Mon, 23 Jun 2025 13:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685244;
-	bh=HBXEaJKB7AiYNRAieSXYGwti5OHU0rGeuFqteoZ/Rr4=;
+	s=korg; t=1750685247;
+	bh=SmUiulBthQXZXE5g7JILYv8a/Jq6ecN6am0+M/2gZP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cvfCJmdSrlp5YxK0MlvUuf4bawrOnwNQBTXa6d8eTcCVQ2kJTkbP4MFqAx9C/oufE
-	 O6T2IpAFW0Qnm2BIahWHyROVsOv7zyQdrHC5+sr9/YMlQxv30CocWC9/Vb4o/BQNCD
-	 s9he+O+FrxvckZarloBPkR4RoPcrZtaKGpQT/Ts4=
+	b=yskefUUFk72V51dBwokg6fG6qlqCOCE7+CdC/iTQsKYtXXK0TlCV35IeN4CJy+4fv
+	 diaoxuNrIYu9dZXgj0hvZtN446rupLRqLLv/g91L2aldosKerKdiTOnDaGo/ufgvsI
+	 ofOnaQyGsMrvwaKcLCLTlzAhUhRkvBVnF6vXeBEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
+	Eric Dumazet <edumazet@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 038/355] RDMA/hns: Include hnae3.h in hns_roce_hw_v2.h
-Date: Mon, 23 Jun 2025 15:03:59 +0200
-Message-ID: <20250623130627.970447775@linuxfoundation.org>
+Subject: [PATCH 5.4 078/222] net_sched: sch_sfq: fix a potential crash on gso_skb handling
+Date: Mon, 23 Jun 2025 15:06:53 +0200
+Message-ID: <20250623130614.445417846@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
+References: <20250623130611.896514667@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,84 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2b11d33de23262cb20d1dcb24b586dbb8f54d463 ]
+[ Upstream commit 82ffbe7776d0ac084031f114167712269bf3d832 ]
 
-hns_roce_hw_v2.h has a direct dependency on hnae3.h due to the
-inline function hns_roce_write64(), but it doesn't include this
-header currently. This leads to that files including
-hns_roce_hw_v2.h must also include hnae3.h to avoid compilation
-errors, even if they themselves don't really rely on hnae3.h.
-This doesn't make sense, hns_roce_hw_v2.h should include hnae3.h
-directly.
+SFQ has an assumption of always being able to queue at least one packet.
 
-Fixes: d3743fa94ccd ("RDMA/hns: Fix the chip hanging caused by sending doorbell during reset")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250421132750.1363348-6-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+However, after the blamed commit, sch->q.len can be inflated by packets
+in sch->gso_skb, and an enqueue() on an empty SFQ qdisc can be followed
+by an immediate drop.
+
+Fix sfq_drop() to properly clear q->tail in this situation.
+
+Tested:
+
+ip netns add lb
+ip link add dev to-lb type veth peer name in-lb netns lb
+ethtool -K to-lb tso off                 # force qdisc to requeue gso_skb
+ip netns exec lb ethtool -K in-lb gro on # enable NAPI
+ip link set dev to-lb up
+ip -netns lb link set dev in-lb up
+ip addr add dev to-lb 192.168.20.1/24
+ip -netns lb addr add dev in-lb 192.168.20.2/24
+tc qdisc replace dev to-lb root sfq limit 100
+
+ip netns exec lb netserver
+
+netperf -H 192.168.20.2 -l 100 &
+netperf -H 192.168.20.2 -l 100 &
+netperf -H 192.168.20.2 -l 100 &
+netperf -H 192.168.20.2 -l 100 &
+
+Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
+Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
+Closes: https://lore.kernel.org/netdev/9da42688-bfaa-4364-8797-e9271f3bdaef@hetzner-cloud.de/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://patch.msgid.link/20250606165127.3629486-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c    | 1 -
- drivers/infiniband/hw/hns/hns_roce_hw_v2.h    | 1 +
- drivers/infiniband/hw/hns/hns_roce_main.c     | 1 -
- drivers/infiniband/hw/hns/hns_roce_restrack.c | 1 -
- 4 files changed, 1 insertion(+), 3 deletions(-)
+ net/sched/sch_sfq.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 13aa8dd42f7d6..bb744ba155e2b 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -42,7 +42,6 @@
- #include <rdma/ib_umem.h>
- #include <rdma/uverbs_ioctl.h>
- 
--#include "hnae3.h"
- #include "hns_roce_common.h"
- #include "hns_roce_device.h"
- #include "hns_roce_cmd.h"
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-index 8948d2b5577d5..80d14261cc4e1 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-@@ -34,6 +34,7 @@
- #define _HNS_ROCE_HW_V2_H
- 
- #include <linux/bitops.h>
-+#include "hnae3.h"
- 
- #define HNS_ROCE_VF_QPC_BT_NUM			256
- #define HNS_ROCE_VF_SCCC_BT_NUM			64
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index 3c79668c6b3b5..9078855aad184 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -37,7 +37,6 @@
- #include <rdma/ib_smi.h>
- #include <rdma/ib_user_verbs.h>
- #include <rdma/ib_cache.h>
--#include "hnae3.h"
- #include "hns_roce_common.h"
- #include "hns_roce_device.h"
- #include <rdma/hns-abi.h>
-diff --git a/drivers/infiniband/hw/hns/hns_roce_restrack.c b/drivers/infiniband/hw/hns/hns_roce_restrack.c
-index 259444c0a6301..8acab99f7ea6a 100644
---- a/drivers/infiniband/hw/hns/hns_roce_restrack.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_restrack.c
-@@ -4,7 +4,6 @@
- #include <rdma/rdma_cm.h>
- #include <rdma/restrack.h>
- #include <uapi/rdma/rdma_netlink.h>
--#include "hnae3.h"
- #include "hns_roce_common.h"
- #include "hns_roce_device.h"
- #include "hns_roce_hw_v2.h"
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index d7f910610de97..acda653710288 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -317,7 +317,10 @@ static unsigned int sfq_drop(struct Qdisc *sch, struct sk_buff **to_free)
+ 		/* It is difficult to believe, but ALL THE SLOTS HAVE LENGTH 1. */
+ 		x = q->tail->next;
+ 		slot = &q->slots[x];
+-		q->tail->next = slot->next;
++		if (slot->next == x)
++			q->tail = NULL; /* no more active slots */
++		else
++			q->tail->next = slot->next;
+ 		q->ht[slot->hash] = SFQ_EMPTY_SLOT;
+ 		goto drop;
+ 	}
 -- 
 2.39.5
 
