@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848161E87B;
-	Mon, 23 Jun 2025 22:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE20A1A4F12;
+	Mon, 23 Jun 2025 22:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716345; cv=none; b=XuHZZZTKsUdJbmOE+jpfYkUgzBAwbIK4ULXJq4lCiIm4QzwZOwgdYpGA46pHvrXedLZ7HNzp2yW6l8wgedZh9g5R8A8Am08rGF3ggFp/TxlDg8RtXiACdQdpiY4ayD1AZKu1ajXm46w04vwg9E7c6klkStiImSGx6T14f9vRkfc=
+	t=1750716348; cv=none; b=NafX1TYgPI3+LBnOCF0lVoh41n1M6rtwMCSxiFVVOOq/UAP7BPXB4eYLPxATr615NsGwwsThhd1WzLWJkEwLY8Q/HII3rZ5VKW9dX3WP1bFaZ/riZMf58IrD1mE7gCprH83y4WUX95e85vU+cLZhVl6qKqI1lKf/yIM9e2uxnFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716345; c=relaxed/simple;
-	bh=pYAkAbY2p6AsIoSksAXZ/HZHu2sbbd7pqzXfsFFNoWg=;
+	s=arc-20240116; t=1750716348; c=relaxed/simple;
+	bh=pJ8WgIbtX2f4lbVy7oMOYFg8SdC8ra6BnnzQD3Hg+zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFxQSTENKmmKGfryV+bwGt9Gjq9pCKb4Vz6VugqYoBrI3d6uaOJMBmMzQ5o7j2BAag51ATBM0Hc/Y0m3juKkEovGrG0w68VskYza0OYbF5uNe7UM8cjOpUTp/XXKd6eutc1Q7GZOcmw0to9YAX49tk+crVku1d+SHtdHvPF4NHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udOQyuRP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QU7is/1pV2fmDRK4Hl3VJlgogWAGBHoUKZAnABkgJt6r51DJbSjl/98KESS+UPx0wNvUBWhDzJYn3PryWTsntFqy2MKihkINBNj4XWCZq4lDaEmhK1CFH33BwtWwWERi/mnt4f2qcPOKdDy5fm7QYlsNV2Vw60IJAHgUO2FZoZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcPKaQKt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udOQyuRP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF0BC4CEEA;
-	Mon, 23 Jun 2025 22:05:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcPKaQKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88119C4CEEA;
+	Mon, 23 Jun 2025 22:05:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716345;
-	bh=pYAkAbY2p6AsIoSksAXZ/HZHu2sbbd7pqzXfsFFNoWg=;
+	s=korg; t=1750716347;
+	bh=pJ8WgIbtX2f4lbVy7oMOYFg8SdC8ra6BnnzQD3Hg+zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=udOQyuRP1aSCaWjLORM/v/KA2qPj5xwi5Q3pD8yh0SC8aJ2Cm3DreOVvuQY9t7vG7
-	 C4BuEX/t1PuywQMWgJ/Q39wbhhelsbp+97fOearLVEmhSoHNZJRXqYGau3cHFe48i/
-	 i5g2irgfyECkof0+VyREb6oRLpXmvxpGAMN+ztXg=
+	b=hcPKaQKt1Nyd2+lIJcv48PGbkmRLlQ12MZStejNbmdtwfTU7i0HUjPKaAOGseTM1f
+	 /eo7tHnibG3hGERKVgrZIj/wLuvSbEry4OIPi2PZdU1qQdKMmt5O8m5viSMbMhQUGM
+	 6VuN17yjJ0GPVNmMSSmYAkPsrQqkv5QdpOL1ram0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Benjamin Berg <benjamin@sipsolutions.net>,
+	Rouven Czerwinski <rouven@czerwinskis.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 314/411] tcp: always seek for minimal rtt in tcp_rcv_rtt_update()
-Date: Mon, 23 Jun 2025 15:07:38 +0200
-Message-ID: <20250623130641.544852370@linuxfoundation.org>
+Subject: [PATCH 5.15 323/411] wifi: mac80211: do not offer a mesh path if forwarding is disabled
+Date: Mon, 23 Jun 2025 15:07:47 +0200
+Message-ID: <20250623130641.768873661@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
 References: <20250623130632.993849527@linuxfoundation.org>
@@ -51,69 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Benjamin Berg <benjamin@sipsolutions.net>
 
-[ Upstream commit b879dcb1aeeca278eacaac0b1e2425b1c7599f9f ]
+[ Upstream commit cf1b684a06170d253b47d6a5287821de976435bd ]
 
-tcp_rcv_rtt_update() goal is to maintain an estimation of the RTT
-in tp->rcv_rtt_est.rtt_us, used by tcp_rcv_space_adjust()
+When processing a PREQ the code would always check whether we have a
+mesh path locally and reply accordingly. However, when forwarding is
+disabled then we should not reply with this information as we will not
+forward data packets down that path.
 
-When TCP TS are enabled, tcp_rcv_rtt_update() is using
-EWMA to smooth the samples.
+Move the check for dot11MeshForwarding up in the function and skip the
+mesh path lookup in that case. In the else block, set forward to false
+so that the rest of the function becomes a no-op and the
+dot11MeshForwarding check does not need to be duplicated.
 
-Change this to immediately latch the incoming value if it
-is lower than tp->rcv_rtt_est.rtt_us, so that tcp_rcv_space_adjust()
-does not overshoot tp->rcvq_space.space and sk->sk_rcvbuf.
+This explains an effect observed in the Freifunk community where mesh
+forwarding is disabled. In that case a mesh with three STAs and only bad
+links in between them, individual STAs would occionally have indirect
+mpath entries. This should not have happened.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250513193919.1089692-8-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Benjamin Berg <benjamin@sipsolutions.net>
+Reviewed-by: Rouven Czerwinski <rouven@czerwinskis.de>
+Link: https://patch.msgid.link/20250430191042.3287004-1-benjamin@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ net/mac80211/mesh_hwmp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 8859a38b45d5e..000557f5c54bc 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -641,10 +641,12 @@ EXPORT_SYMBOL(tcp_initialize_rcv_mss);
-  */
- static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
- {
--	u32 new_sample = tp->rcv_rtt_est.rtt_us;
--	long m = sample;
-+	u32 new_sample, old_sample = tp->rcv_rtt_est.rtt_us;
-+	long m = sample << 3;
- 
--	if (new_sample != 0) {
-+	if (old_sample == 0 || m < old_sample) {
-+		new_sample = m;
-+	} else {
- 		/* If we sample in larger samples in the non-timestamp
- 		 * case, we could grossly overestimate the RTT especially
- 		 * with chatty applications or bulk transfer apps which
-@@ -655,17 +657,9 @@ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
- 		 * else with timestamps disabled convergence takes too
- 		 * long.
- 		 */
--		if (!win_dep) {
--			m -= (new_sample >> 3);
--			new_sample += m;
--		} else {
--			m <<= 3;
--			if (m < new_sample)
--				new_sample = m;
--		}
+diff --git a/net/mac80211/mesh_hwmp.c b/net/mac80211/mesh_hwmp.c
+index e6b6a7508ff1b..8bf238afb5442 100644
+--- a/net/mac80211/mesh_hwmp.c
++++ b/net/mac80211/mesh_hwmp.c
+@@ -620,7 +620,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 				mesh_path_add_gate(mpath);
+ 		}
+ 		rcu_read_unlock();
 -	} else {
--		/* No previous measure. */
--		new_sample = m << 3;
-+		if (win_dep)
-+			return;
-+		new_sample = old_sample - (old_sample >> 3) + sample;
++	} else if (ifmsh->mshcfg.dot11MeshForwarding) {
+ 		rcu_read_lock();
+ 		mpath = mesh_path_lookup(sdata, target_addr);
+ 		if (mpath) {
+@@ -638,6 +638,8 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 			}
+ 		}
+ 		rcu_read_unlock();
++	} else {
++		forward = false;
  	}
  
- 	tp->rcv_rtt_est.rtt_us = new_sample;
+ 	if (reply) {
+@@ -655,7 +657,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 		}
+ 	}
+ 
+-	if (forward && ifmsh->mshcfg.dot11MeshForwarding) {
++	if (forward) {
+ 		u32 preq_id;
+ 		u8 hopcount;
+ 
 -- 
 2.39.5
 
