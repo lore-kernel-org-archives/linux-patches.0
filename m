@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401CC19D084;
-	Mon, 23 Jun 2025 21:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B420119D084;
+	Mon, 23 Jun 2025 21:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714819; cv=none; b=FSv0yXYLjfFM8hG3PSy84gf5isQwd3IaNV9tI+FqwXQp+DS2Nj+goB54VFMgsdAy+JdUgk8vmPh0/0CB8nHL9i63AtwS6Us8Z/PVHARqCnH9S5RuDHygpEbLaSUgUjakwVw2Mhw3MG//diR7He8yZrl/+/Y29KxSsU0YgXWS9Lc=
+	t=1750714821; cv=none; b=WYvWPzpwHmCeccsSyOjCo1zQjoybTqsYIP4Hl9Wk4Xr7iuVLnV/XdD+sTfiSbMlIlGV4LsxeZ7h7KH0JjU3PflVbZLxex9u7PXH4zf9tbmXUd95wAYc1skbhWEapD1R2K7nipQVevXHblmyWZHQnOdGXL7/c0RlnxHCZCwIC8/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714819; c=relaxed/simple;
-	bh=/8GWeppzmrf6rOlIRUiAbMjRJnpXocrN0bYwqLkgxsM=;
+	s=arc-20240116; t=1750714821; c=relaxed/simple;
+	bh=fk4MNMz6+SwfTI+wFoI25W3CFnwtkha7LIA0JRQLORQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sS5Gv2V3bzh7iGTbjvEQBJ62SjEXJfkFhp+8Ls6lrs7dfMZ/2IgMZ6F72vH6jI/vBUy6+dWWLFXgKGOqAlDBzi392rCRUUy6CjuPGBJP2uo4qtLcHP92fScNr1jtFP26IsqFhClK6isDb5KtZJS5p+ZSJ7RPdsymnWKniRxOuGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOv6ZR3e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=chbTIcmLo2pVA4VYWK+A+0hBGFnYQnDZCpR2MKurG+7RD/UXIl8DiAhobJW2FETC7kcpwaGNvPKBfJj5Sikktp6pNo5NWOuFUUp4prsNFwZY3UYt1ICeXN8q7feDrQHDg8yMvXoo7APLBNwvNc3/+sUjKG7/sVQt8jfkiAgOirE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jc3xw9IH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOv6ZR3e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B18C4CEEA;
-	Mon, 23 Jun 2025 21:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jc3xw9IH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492BBC4CEEA;
+	Mon, 23 Jun 2025 21:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714819;
-	bh=/8GWeppzmrf6rOlIRUiAbMjRJnpXocrN0bYwqLkgxsM=;
+	s=korg; t=1750714821;
+	bh=fk4MNMz6+SwfTI+wFoI25W3CFnwtkha7LIA0JRQLORQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jOv6ZR3eeyLu3LsECyWDLairpquaYR5UbaMmLpzcrVkDZfH0IgeCyVjnOVvIBLpeD
-	 A7qT+25yp/4mp+BcqjGyz/kOlNlpJEPPP6YWdjkf9/0+va0jI3xVYTji+OxSXVGaq1
-	 Co8f1x7WolKxqrdq6/xdK3HcPlvB/s81ooopfpNo=
+	b=jc3xw9IHDVr6Cl3+v744CJ5JgwzIwHTzPyG5nGFJaZ8dXRFQBFPPHzhNeSItNN4GH
+	 gESmVLFNeblUV+luUokvS2LWwxvtoh+/gOoagCJDSg3zFB5JU0A+CmESqDlBRVpEZe
+	 HlMyQuMvA3gRdfz933bcsS0griz7DRGChfJHZV5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Judith Mendez <jm@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 440/592] ovl: fix debug print in case of mkdir error
-Date: Mon, 23 Jun 2025 15:06:38 +0200
-Message-ID: <20250623130710.898976083@linuxfoundation.org>
+Subject: [PATCH 6.1 218/508] arm64: dts: ti: k3-am65-main: Fix sdhci node properties
+Date: Mon, 23 Jun 2025 15:04:23 +0200
+Message-ID: <20250623130650.626231772@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit 527c88d8390d6c0358dea4d71696795c05328925 ]
+[ Upstream commit 8ffe9cb889f2b831a9d5bbb1f7ad42d30e31170f ]
 
-We want to print the name in case of mkdir failure and now we will
-get a cryptic (efault) as name.
+Update otap-del-sel properties as per datasheet [0].
 
-Fixes: c54b386969a5 ("VFS: Change vfs_mkdir() to return the dentry.")
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://lore.kernel.org/20250612072245.2825938-1-amir73il@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Add missing clkbuf-sel and itap-del-sel values also as per
+datasheet [0].
+
+Move clkbuf-sel and ti,trm-icp above the otap-del-sel properties
+so the sdhci nodes could be more uniform across platforms.
+
+[0] https://www.ti.com/lit/ds/symlink/am6548.pdf
+
+Fixes: eac99d38f861 ("arm64: dts: ti: k3-am654-main: Update otap-del-sel values")
+Fixes: d7600d070fb0 ("arm64: dts: ti: k3-am65-main: Add support for sdhci1")
+Signed-off-by: Judith Mendez <jm@ti.com>
+Link: https://lore.kernel.org/r/20240423151732.3541894-2-jm@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Stable-dep-of: f55c9f087cc2 ("arm64: dts: ti: k3-am65-main: Add missing taps to sdhci0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/overlayfs.h | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am65-main.dtsi | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
-index aef942a758cea..c69c34e11c74d 100644
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -246,9 +246,11 @@ static inline struct dentry *ovl_do_mkdir(struct ovl_fs *ofs,
- 					  struct dentry *dentry,
- 					  umode_t mode)
- {
--	dentry = vfs_mkdir(ovl_upper_mnt_idmap(ofs), dir, dentry, mode);
--	pr_debug("mkdir(%pd2, 0%o) = %i\n", dentry, mode, PTR_ERR_OR_ZERO(dentry));
--	return dentry;
-+	struct dentry *ret;
-+
-+	ret = vfs_mkdir(ovl_upper_mnt_idmap(ofs), dir, dentry, mode);
-+	pr_debug("mkdir(%pd2, 0%o) = %i\n", dentry, mode, PTR_ERR_OR_ZERO(ret));
-+	return ret;
- }
+diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+index 9854cf0e7f7b4..c09457fef2db0 100644
+--- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+@@ -262,6 +262,8 @@ sdhci0: mmc@4f80000 {
+ 		interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>;
+ 		mmc-ddr-1_8v;
+ 		mmc-hs200-1_8v;
++		ti,clkbuf-sel = <0x7>;
++		ti,trm-icp = <0x8>;
+ 		ti,otap-del-sel-legacy = <0x0>;
+ 		ti,otap-del-sel-mmc-hs = <0x0>;
+ 		ti,otap-del-sel-sd-hs = <0x0>;
+@@ -272,8 +274,7 @@ sdhci0: mmc@4f80000 {
+ 		ti,otap-del-sel-ddr50 = <0x5>;
+ 		ti,otap-del-sel-ddr52 = <0x5>;
+ 		ti,otap-del-sel-hs200 = <0x5>;
+-		ti,otap-del-sel-hs400 = <0x0>;
+-		ti,trm-icp = <0x8>;
++		ti,itap-del-sel-ddr52 = <0x0>;
+ 		dma-coherent;
+ 	};
  
- static inline int ovl_do_mknod(struct ovl_fs *ofs,
+@@ -284,18 +285,22 @@ sdhci1: mmc@4fa0000 {
+ 		clocks = <&k3_clks 48 0>, <&k3_clks 48 1>;
+ 		clock-names = "clk_ahb", "clk_xin";
+ 		interrupts = <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>;
++		ti,clkbuf-sel = <0x7>;
++		ti,trm-icp = <0x8>;
+ 		ti,otap-del-sel-legacy = <0x0>;
+ 		ti,otap-del-sel-mmc-hs = <0x0>;
+ 		ti,otap-del-sel-sd-hs = <0x0>;
+-		ti,otap-del-sel-sdr12 = <0x0>;
+-		ti,otap-del-sel-sdr25 = <0x0>;
++		ti,otap-del-sel-sdr12 = <0xf>;
++		ti,otap-del-sel-sdr25 = <0xf>;
+ 		ti,otap-del-sel-sdr50 = <0x8>;
+ 		ti,otap-del-sel-sdr104 = <0x7>;
+ 		ti,otap-del-sel-ddr50 = <0x4>;
+ 		ti,otap-del-sel-ddr52 = <0x4>;
+ 		ti,otap-del-sel-hs200 = <0x7>;
+-		ti,clkbuf-sel = <0x7>;
+-		ti,trm-icp = <0x8>;
++		ti,itap-del-sel-legacy = <0xa>;
++		ti,itap-del-sel-sd-hs = <0x1>;
++		ti,itap-del-sel-sdr12 = <0xa>;
++		ti,itap-del-sel-sdr25 = <0x1>;
+ 		dma-coherent;
+ 	};
+ 
 -- 
 2.39.5
 
