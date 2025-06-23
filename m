@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09EDF225413;
-	Mon, 23 Jun 2025 21:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8768226CF8;
+	Mon, 23 Jun 2025 21:45:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715130; cv=none; b=ICZjoBc2nvqjz+F81CGAed1EauF4dlOykc7Mgpc0RH62d8Cp1B1Jm8hlT3N5AEVBPMr8V5GmW9HlGuTPA8Grvuo7JnNKpIkUyWynjU7m/M6ZUn92hsLfGKWjXk2x9LvGuBryfly+M285Y0eXBNdvT3oaTFEwDRVKrxgxPvLb8as=
+	t=1750715132; cv=none; b=XiDJYypIY8UAgbcGBD30xEBmy4Wwspz0AGxhJ4fh2cAhrXighlf/BbUsuvFPwbQ8pXU4X7Ae/wrWQItrdKQ+m3TmhXXAOgIiwAXMDvOkk9MYCI3RnOYU/yYndGiDq5zTrOX/aO4qlEMlx0EWE3VVVeFy9QsZBCaHk+27JfYc02o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715130; c=relaxed/simple;
-	bh=X84Pgj3Pwt/WXmui1+yB6oiB+j05Hl6w/UdYtbtdyV8=;
+	s=arc-20240116; t=1750715132; c=relaxed/simple;
+	bh=/DY4sYPvdMCE94NM93uGY38tmoPmZpStEeXuw92qS9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lovU0sok8mTt1sfhASQST/rdFKv71x3h6uacEd2Z59Gnj2Afjb8iLxZw1vyOeVUaY+O8vqdMBtdpe9VQ0YCFtbj55gFTnhfRfftJ7AFqRfmpA4g2JJIi5Lzwo54oiJ8o1l15kgArUkgYOUImiGgD3XUMGAfh18cKqAu3/Y+Mg3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnTfm19W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VTsteZaLzNxsT28BW0jp8czslCGhs0syS11KMKyQSycsg5uY+egTiIKagt/R1uReCileeBCco+WLwXJ/yyfunnDLmtTEI2e/yyuVvqAmBM17W6k2x71lcN7LyzbyzRiap67zRhbhB+hAFlBgnYz/3kO1ZpeBqwNDqH/fF3rLk6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AdOxqGV7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnTfm19W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BC4C4CEF0;
-	Mon, 23 Jun 2025 21:45:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AdOxqGV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12390C4CEEA;
+	Mon, 23 Jun 2025 21:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715129;
-	bh=X84Pgj3Pwt/WXmui1+yB6oiB+j05Hl6w/UdYtbtdyV8=;
+	s=korg; t=1750715132;
+	bh=/DY4sYPvdMCE94NM93uGY38tmoPmZpStEeXuw92qS9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tnTfm19W+0GgMe8E8w6jmgZfNkKD2BVtpc/5tnaXr4s4dgTH+1me0f/muK6Evx9CO
-	 HjqYs03apJ2ycj3OZvtvvOiXeyJrFJIuolLJYsT1pOkXWqv2ZVV16923HeRTbsC+hr
-	 Cti3qm8dmMK/qnI2u6rE4qb3cQHVS+4ymyZ1DyDc=
+	b=AdOxqGV7w9NOHgkvxeNO0tt7SucI+WypGjzcV207E5tCWnR7MaRInydsgwLgKVmTB
+	 NXIT7YtfHS/41p3+ucctV0cDtYiDVQGXoirIbb+MSF+s2/WQBLbCS11MiLNQHSe/ua
+	 wk6IZotA73DZrOifGW0H2SNHCFFJpr7i6Qfv8Iww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jann Horn <jannh@google.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	Rouven Czerwinski <rouven.czerwinski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 201/290] platform/x86/amd: pmc: Clear metrics table at start of cycle
-Date: Mon, 23 Jun 2025 15:07:42 +0200
-Message-ID: <20250623130632.980392672@linuxfoundation.org>
+Subject: [PATCH 5.10 277/355] tee: Prevent size calculation wraparound on 32-bit kernels
+Date: Mon, 23 Jun 2025 15:07:58 +0200
+Message-ID: <20250623130635.101910078@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,51 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 4dbd11796f3a8eb95647507befc41995458a4023 ]
+[ Upstream commit 39bb67edcc582b3b386a9ec983da67fa8a10ec03 ]
 
-The area of memory that contains the metrics table may contain garbage
-when the cycle starts.  This normally doesn't matter because the cycle
-itself will populate it with valid data, however commit 9f5595d5f03fd
-("platform/x86/amd: pmc: Require at least 2.5 seconds between HW sleep
-cycles") started to use it during the check() phase.  Depending upon
-what garbage is in the table it's possible that the system will wait
-2.5 seconds for even the first cycle, which will be visible to a user.
+The current code around TEE_IOCTL_PARAM_SIZE() is a bit wrong on
+32-bit kernels: Multiplying a user-provided 32-bit value with the
+size of a structure can wrap around on such platforms.
 
-To prevent this from happening explicitly clear the table when logging
-is started.
+Fix it by using saturating arithmetic for the size calculation.
 
-Fixes: 9f5595d5f03fd ("platform/x86/amd: pmc: Require at least 2.5 seconds between HW sleep cycles")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20250603132412.3555302-1-superm1@kernel.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+This has no security consequences because, in all users of
+TEE_IOCTL_PARAM_SIZE(), the subsequent kcalloc() implicitly checks
+for wrapping.
+
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Tested-by: Rouven Czerwinski <rouven.czerwinski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc/pmc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tee/tee_core.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc.c b/drivers/platform/x86/amd/pmc/pmc.c
-index 946a546cd9dd0..af5cc8aa7988c 100644
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -332,6 +332,8 @@ static int amd_pmc_setup_smu_logging(struct amd_pmc_dev *dev)
- 			return -ENOMEM;
- 	}
+diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
+index 9cc4a7b63b0d6..e6de0e80b793e 100644
+--- a/drivers/tee/tee_core.c
++++ b/drivers/tee/tee_core.c
+@@ -10,6 +10,7 @@
+ #include <linux/fs.h>
+ #include <linux/idr.h>
+ #include <linux/module.h>
++#include <linux/overflow.h>
+ #include <linux/slab.h>
+ #include <linux/tee_drv.h>
+ #include <linux/uaccess.h>
+@@ -19,7 +20,7 @@
  
-+	memset_io(dev->smu_virt_addr, 0, sizeof(struct smu_metrics));
-+
- 	/* Start the logging */
- 	amd_pmc_send_cmd(dev, 0, NULL, SMU_MSG_LOG_RESET, false);
- 	amd_pmc_send_cmd(dev, 0, NULL, SMU_MSG_LOG_START, false);
+ #define TEE_NUM_DEVICES	32
+ 
+-#define TEE_IOCTL_PARAM_SIZE(x) (sizeof(struct tee_param) * (x))
++#define TEE_IOCTL_PARAM_SIZE(x) (size_mul(sizeof(struct tee_param), (x)))
+ 
+ #define TEE_UUID_NS_NAME_SIZE	128
+ 
+@@ -492,7 +493,7 @@ static int tee_ioctl_open_session(struct tee_context *ctx,
+ 	if (copy_from_user(&arg, uarg, sizeof(arg)))
+ 		return -EFAULT;
+ 
+-	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
++	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	if (arg.num_params) {
+@@ -570,7 +571,7 @@ static int tee_ioctl_invoke(struct tee_context *ctx,
+ 	if (copy_from_user(&arg, uarg, sizeof(arg)))
+ 		return -EFAULT;
+ 
+-	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
++	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	if (arg.num_params) {
+@@ -704,7 +705,7 @@ static int tee_ioctl_supp_recv(struct tee_context *ctx,
+ 	if (get_user(num_params, &uarg->num_params))
+ 		return -EFAULT;
+ 
+-	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) != buf.buf_len)
++	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) != buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
+@@ -803,7 +804,7 @@ static int tee_ioctl_supp_send(struct tee_context *ctx,
+ 	    get_user(num_params, &uarg->num_params))
+ 		return -EFAULT;
+ 
+-	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) > buf.buf_len)
++	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) > buf.buf_len)
+ 		return -EINVAL;
+ 
+ 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
 -- 
 2.39.5
 
