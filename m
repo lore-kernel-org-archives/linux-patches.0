@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB7E221734;
-	Mon, 23 Jun 2025 21:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE90A21D3DD;
+	Mon, 23 Jun 2025 21:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714731; cv=none; b=DL5IcgBlMTrY7Eu1KZBpbao1P0RZpAsYlOivkNux7cekR90rhzYou2/sb0uxM3NSXJH8J5r2dYC7gTi/5bFJzDTEP4B18x/tGhk1ylJuYwzik1GsVmZL8Wzwcp5+QQ75O2neKsewW4tq5s6VFNFNg8zUZIq04/Ss/iM3f0t8SaM=
+	t=1750714733; cv=none; b=oVtBP/1555adNIZ1XgsPJdGnDllvrNSJHan77dc2KaiFYcTU3nMw8hb68R7jOk6MWKiodv/RlIGdqjjrpT/m6BHXZkPTAHmkdMd17HNjZ7ZnJDjBjVX6AZRm9m85CImU7mLbBMxi8ri7XY//LkxYW5ldPcTD+O0o0hzCfD2g46Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714731; c=relaxed/simple;
-	bh=YHwyWGE6AYUwEwpIE5mM6RU05a6hUWmLC1dBFqIDopw=;
+	s=arc-20240116; t=1750714733; c=relaxed/simple;
+	bh=rhLXm+WWBbOSlKUHJTnTh7O0nX0rqe2BsdhbciaT5kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cDBO0O/OwZ9uHqVWyuumL2/alSK9mcx6ZJxaFX1It0Z5fb6LWjhTAVdx2yHeXVMrJoyxnOGvnLB/qNuROsfpnXwcMf77TpczacnG1hx8mORFABN1cEXVokabp1nI5V4ebWa3p+ZIFrXHYKuQTXHo5qNFKqGN4ja5OMpZYpFil9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOZBl0Mm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IxTZlmsdT5lmW0Ij9OER4vC2QML+t8G1nvekD7FiM8RBkN6wWixyFLdIfKgwjvtqj7kTnTBGNZYbZlWaDzpda8vn1Vxp18z2v46OfR52JpnQmYe+1i6TgsYvsXJYrLNhaygzob9o3QLor5LM1t2Qn+bvdwyxxhfmhJzfTnmGGx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ediI2v8d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOZBl0Mm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CE8C4CEEA;
-	Mon, 23 Jun 2025 21:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ediI2v8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3170C4CEEA;
+	Mon, 23 Jun 2025 21:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714730;
-	bh=YHwyWGE6AYUwEwpIE5mM6RU05a6hUWmLC1dBFqIDopw=;
+	s=korg; t=1750714733;
+	bh=rhLXm+WWBbOSlKUHJTnTh7O0nX0rqe2BsdhbciaT5kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jOZBl0Mmmu/VFvYYaki0nfI62BVxhjhKAeqzzMkD20tw42gGbZHNwKm6UmYriiOYS
-	 QuXqVwTUGX1jdqsBg2ne3Rti1DuQjZWuTIDmqaHnVAWiKXv/7NkmV8edqNzHGY9aDM
-	 9P0a7gSgBPYbIbPcZdfTA07tS9A1bXNFxYaNtDuw=
+	b=ediI2v8dS3+x4kwxeAepcImE5M4awxrdEWp+DvfvMcOl9gW7JrGZoxz3v3fOkG4tJ
+	 v/9SkXYzTmE7ImMM4lIAlX06ZX3rgRcv10tWNgYNwEt0Kg3mdTGTANSYg28OqafgnN
+	 Ji5V+rg8M2XV37unH/OFf2z+ul0UqqXbN1/CRb4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 412/592] f2fs: fix to set atomic write status more clear
-Date: Mon, 23 Jun 2025 15:06:10 +0200
-Message-ID: <20250623130710.235647453@linuxfoundation.org>
+Subject: [PATCH 6.6 155/290] ipv4/route: Use this_cpu_inc() for stats on PREEMPT_RT
+Date: Mon, 23 Jun 2025 15:06:56 +0200
+Message-ID: <20250623130631.554617445@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,83 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit db03c20c0850dc8d2bcabfa54b9438f7d666c863 ]
+[ Upstream commit 1c0829788a6e6e165846b9bedd0b908ef16260b6 ]
 
-1. After we start atomic write in a database file, before committing
-all data, we'd better not set inode w/ vfs dirty status to avoid
-redundant updates, instead, we only set inode w/ atomic dirty status.
+The statistics are incremented with raw_cpu_inc() assuming it always
+happens with bottom half disabled. Without per-CPU locking in
+local_bh_disable() on PREEMPT_RT this is no longer true.
 
-2. After we commit all data, before committing metadata, we need to
-clear atomic dirty status, and set vfs dirty status to allow vfs flush
-dirty inode.
+Use this_cpu_inc() on PREEMPT_RT for the increment to not worry about
+preemption.
 
-Cc: Daeho Jeong <daehojeong@google.com>
-Reported-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: David Ahern <dsahern@kernel.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20250512092736.229935-4-bigeasy@linutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/inode.c   | 4 +++-
- fs/f2fs/segment.c | 6 ++++++
- fs/f2fs/super.c   | 4 +++-
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ net/ipv4/route.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index 5c8634eaef7be..f5991e8751b9b 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -34,7 +34,9 @@ void f2fs_mark_inode_dirty_sync(struct inode *inode, bool sync)
- 	if (f2fs_inode_dirtied(inode, sync))
- 		return;
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 97dc30a03dbf2..8ee1ad2d8c13f 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -192,7 +192,11 @@ const __u8 ip_tos2prio[16] = {
+ EXPORT_SYMBOL(ip_tos2prio);
  
--	if (f2fs_is_atomic_file(inode))
-+	/* only atomic file w/ FI_ATOMIC_COMMITTED can be set vfs dirty */
-+	if (f2fs_is_atomic_file(inode) &&
-+			!is_inode_flag_set(inode, FI_ATOMIC_COMMITTED))
- 		return;
+ static DEFINE_PER_CPU(struct rt_cache_stat, rt_cache_stat);
++#ifndef CONFIG_PREEMPT_RT
+ #define RT_CACHE_STAT_INC(field) raw_cpu_inc(rt_cache_stat.field)
++#else
++#define RT_CACHE_STAT_INC(field) this_cpu_inc(rt_cache_stat.field)
++#endif
  
- 	mark_inode_dirty_sync(inode);
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index c5d29c58f3d3e..876e97ec5f570 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -376,7 +376,13 @@ static int __f2fs_commit_atomic_write(struct inode *inode)
- 	} else {
- 		sbi->committed_atomic_block += fi->atomic_write_cnt;
- 		set_inode_flag(inode, FI_ATOMIC_COMMITTED);
-+
-+		/*
-+		 * inode may has no FI_ATOMIC_DIRTIED flag due to no write
-+		 * before commit.
-+		 */
- 		if (is_inode_flag_set(inode, FI_ATOMIC_DIRTIED)) {
-+			/* clear atomic dirty status and set vfs dirty status */
- 			clear_inode_flag(inode, FI_ATOMIC_DIRTIED);
- 			f2fs_mark_inode_dirty_sync(inode, true);
- 		}
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index ee039bf02c148..bc510c91f3eba 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1531,7 +1531,9 @@ int f2fs_inode_dirtied(struct inode *inode, bool sync)
- 	}
- 	spin_unlock(&sbi->inode_lock[DIRTY_META]);
- 
--	if (!ret && f2fs_is_atomic_file(inode))
-+	/* if atomic write is not committed, set inode w/ atomic dirty */
-+	if (!ret && f2fs_is_atomic_file(inode) &&
-+			!is_inode_flag_set(inode, FI_ATOMIC_COMMITTED))
- 		set_inode_flag(inode, FI_ATOMIC_DIRTIED);
- 
- 	return ret;
+ #ifdef CONFIG_PROC_FS
+ static void *rt_cache_seq_start(struct seq_file *seq, loff_t *pos)
 -- 
 2.39.5
 
