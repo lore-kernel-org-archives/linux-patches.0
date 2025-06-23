@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C00F221DA8;
-	Mon, 23 Jun 2025 21:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5DE1F4628;
+	Mon, 23 Jun 2025 21:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715885; cv=none; b=g6tx/du1N3PYnceqYcHImF7LzEUz+hLsMW4XzeQOUHyQM1+qgub1qtn9UUJEwEFO0CTgnrmJ36D77UIhh8zt6ovQv/mRauQTCvN5FSuN7IgiCArbvysboUqIDoRoSz8zf3uZWqWvLD9100GWWzGuC0iSCmpwtP6siPfiw8Hhv44=
+	t=1750715888; cv=none; b=ZnzUGvuyyQNnZHp4CFNmVC28OreUtgzlY0O1pnbIY353y1+9dvFgE8ePcCeIRjznS9XkjmfXhWYa3pT2pMGyExpYk/GzIeVCsWE9qzwabVhLv1B0gjPp+R2Lh0PZYqW6y+f6pQzOsc6V35Socu1Z5ef5VJLc7nX8IieO/vaLT4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715885; c=relaxed/simple;
-	bh=trYDsY2WqqIOW2xxPqg5XGq2uShNWjzmi3JikBgI6/c=;
+	s=arc-20240116; t=1750715888; c=relaxed/simple;
+	bh=x+JLJZZp5SfCELYYAwWug3f+F9Xi2DIXmXTwPQ/3dTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bZIBA+atWluFYif7FtNFPuTgOWHa4xWDioaLf9rShwPDuHWwpA6kjlZlUYlDiA0M1mBBcDPjN/KtHkLHBm87GJa18QDkKz9bDnlm0ijwkf9sPHY42/6ldTj6P2im7vay5sIdxwgbgHiYTglkAohiDc9IjdsqiiQRj+aYR7HUynA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7hmwqP6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CofU0UXhzd/7uHDZBrV7fBjZaAc70OATkRK9G3diSZu+60zIYI66UG4MtY+YHzaMO9Ks7uegafIjXC0GiJJTa0O14IJ71QdciX0qDH5Mz/wJ0+kASGHN8HwJzBL4Dn5KoBUglzyI1O0ZQTEJLmVyy3RiHjEHXs4muq+5jnOkQ/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpZB089b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7hmwqP6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130F7C4CEEA;
-	Mon, 23 Jun 2025 21:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpZB089b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86FD5C4CEEA;
+	Mon, 23 Jun 2025 21:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715885;
-	bh=trYDsY2WqqIOW2xxPqg5XGq2uShNWjzmi3JikBgI6/c=;
+	s=korg; t=1750715887;
+	bh=x+JLJZZp5SfCELYYAwWug3f+F9Xi2DIXmXTwPQ/3dTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E7hmwqP6dLUze9XX8a7bTfAhvQG5LxWRZ/zs5bNBc8MYaGOIinb3MhJM6RJUfIeqd
-	 urqW9441boEUlR0NjV1t7BeiTDooJ0t4F0t7nI3yShYhThSZJAyZRumLVkJ9Ac5qoS
-	 BrvW1ccwkI3VGGcmH9lYZv7A4vBScAzhgOTexATA=
+	b=JpZB089bLMJVHHEGYqFm/BV0tzNzQsmXx6xqs0RTHM4/wo0J465KZrllJy/5ZMkSy
+	 SNo9m2a+1WXJDlTyoj6MXYjS58clEIYlMm5VwgkoftPS7+j7hue1c20osC6J/viCF2
+	 MALwlVCc47mWMyH5uD7OdqOMGF6Vdr9R0vkRfvZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Malat <oss@malat.biz>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Salah Triki <salah.triki@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 310/411] sctp: Do not wake readers in __sctp_write_space()
-Date: Mon, 23 Jun 2025 15:07:34 +0200
-Message-ID: <20250623130641.446279418@linuxfoundation.org>
+Subject: [PATCH 6.12 235/414] wireless: purelifi: plfxlc: fix memory leak in plfxlc_usb_wreq_asyn()
+Date: Mon, 23 Jun 2025 15:06:12 +0200
+Message-ID: <20250623130647.913591654@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Malat <oss@malat.biz>
+From: Salah Triki <salah.triki@gmail.com>
 
-[ Upstream commit af295892a7abbf05a3c2ba7abc4d81bb448623d6 ]
+[ Upstream commit 63a9a727d373fa5b8ce509eef50dbc45e0f745b9 ]
 
-Function __sctp_write_space() doesn't set poll key, which leads to
-ep_poll_callback() waking up all waiters, not only these waiting
-for the socket being writable. Set the key properly using
-wake_up_interruptible_poll(), which is preferred over the sync
-variant, as writers are not woken up before at least half of the
-queue is available. Also, TCP does the same.
+Add usb_free_urb() in the error path to prevent memory leak.
 
-Signed-off-by: Petr Malat <oss@malat.biz>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250516081727.1361451-1-oss@malat.biz
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Link: https://patch.msgid.link/aA3_maPlEJzO7wrL@pc
+[fix subject]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/purelifi/plfxlc/usb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 5e84083e50d7a..0aaea911b21ef 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -9092,7 +9092,8 @@ static void __sctp_write_space(struct sctp_association *asoc)
- 		wq = rcu_dereference(sk->sk_wq);
- 		if (wq) {
- 			if (waitqueue_active(&wq->wait))
--				wake_up_interruptible(&wq->wait);
-+				wake_up_interruptible_poll(&wq->wait, EPOLLOUT |
-+						EPOLLWRNORM | EPOLLWRBAND);
+diff --git a/drivers/net/wireless/purelifi/plfxlc/usb.c b/drivers/net/wireless/purelifi/plfxlc/usb.c
+index 56d1139ba8bcc..7e7bfa532ed25 100644
+--- a/drivers/net/wireless/purelifi/plfxlc/usb.c
++++ b/drivers/net/wireless/purelifi/plfxlc/usb.c
+@@ -503,8 +503,10 @@ int plfxlc_usb_wreq_async(struct plfxlc_usb *usb, const u8 *buffer,
+ 			  (void *)buffer, buffer_len, complete_fn, context);
  
- 			/* Note that we try to include the Async I/O support
- 			 * here by modeling from the current TCP/UDP code.
+ 	r = usb_submit_urb(urb, GFP_ATOMIC);
+-	if (r)
++	if (r) {
++		usb_free_urb(urb);
+ 		dev_err(&udev->dev, "Async write submit failed (%d)\n", r);
++	}
+ 
+ 	return r;
+ }
 -- 
 2.39.5
 
