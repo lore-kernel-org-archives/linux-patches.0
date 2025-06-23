@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD322AEE4;
-	Mon, 23 Jun 2025 21:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA664315A;
+	Mon, 23 Jun 2025 21:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715053; cv=none; b=LBRS+GUcT9lZ1BokByX8B//tDBQVFYOCRixBOfPgNqZGDUDHc5ZAw5Rl3FLYBp0ANMbc3oRL1LsFA3YqmjW8kSzJLIsNZiqVn1U2c0kpP8T1JxOjB5q5md0o2fxR6Eic2aGZ4wPQG3GRPjHwbROpEsXJ1qOcbaxD3/XW0LBf8/I=
+	t=1750715055; cv=none; b=n6TAvBVJeRMmPhfGfHPA8a0kA6DyGbPZ7xlFGuYKSEYteqhqA6QMTU9c9dOPymJT6GaujQMPcGFYoaSmq+TMI3QnYhgxOJ26VDIr42E0FG+L6SN9BT9IcPlgx2cDO6Q+ndEFLGGfJbd1AkS8T/1YiNPpeR9sEY7mrK4dM0QPdak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715053; c=relaxed/simple;
-	bh=khPw7qlwfoC0lZSp8m+MGaMEiEvNSqll0TPuivmuu04=;
+	s=arc-20240116; t=1750715055; c=relaxed/simple;
+	bh=DbEFIL4uTrOUZMsOL9a8bzLV3DVpmWMNB6zzJLg69oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPYp2zO7ffEfkOPhhbra0oGNAO1FanpE2u9t5v27wrdR3DVq2TSPSm2Xwu5/d1oHZPQYRt1cZLMlaMvK5Uowy7tavUOZbXOJmytfl7BivqUk9BdiM81f9RV1KpPnBPx3nN6ZJbZv8gxTqkqnrBvMha/ExtGciGMD72QkO/2u6s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0gUKg/r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ndhfTb1mVdFnayxbkbjHoupLBls2M55ARcL1EumN/PSHH+TVLWnyy7HvsQmdmeYH/uX4Em993CqS+eZ78LU2eC2LhJRAzNumOJlfttqViqK5CsliOVcm/4GXT+bsTwIjUrtOl9I3klXZxOVx/sSPeq4+21O4TsaQb4li1NsHU5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q27A927N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0gUKg/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89A2C4CEEA;
-	Mon, 23 Jun 2025 21:44:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q27A927N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459ABC4CEEA;
+	Mon, 23 Jun 2025 21:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715053;
-	bh=khPw7qlwfoC0lZSp8m+MGaMEiEvNSqll0TPuivmuu04=;
+	s=korg; t=1750715055;
+	bh=DbEFIL4uTrOUZMsOL9a8bzLV3DVpmWMNB6zzJLg69oc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u0gUKg/rd87re0IDtp3yPl9Sdqvuha2bYt0TOXdAbFD3s40P6+qCC/GJMFVEG2tW7
-	 GCS2TKKbY7q4dbKGKexwJgHodLr6c1ah0viDF5X3ZdXTju73M17Lnaoh1nJIGpGIju
-	 wL2Mh4ovFvXF2nQz5c5x2fAqW0Ionabh4gFnJ9hQ=
+	b=Q27A927N2QuwPPW7rpVpwzVoQ+Z6eMshXXW+GjKkBeKzTfhFDh2S7Pq1wiFkdlPVz
+	 PMyirC5otVTQcIwNbx6TI9AbQBn5V17dhZwPJ51zrgPZZy3Wgh7980HhBw6HrV9xt2
+	 XJNaSJFtkZ5gmJtv4ZQoMkteGu/FnmDi0k1hBMV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Collin Funk <collin.funk1@gmail.com>,
-	Paul Eggert <eggert@cs.ucla.edu>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandanbabu@kernel.org>,
+	Leah Rumancik <leah.rumancik@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 434/592] fs/xattr.c: fix simple_xattr_list()
-Date: Mon, 23 Jun 2025 15:06:32 +0200
-Message-ID: <20250623130710.759939744@linuxfoundation.org>
+Subject: [PATCH 6.1 212/508] xfs: take m_growlock when running growfsrt
+Date: Mon, 23 Jun 2025 15:04:17 +0200
+Message-ID: <20250623130650.480634658@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +49,135 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 800d0b9b6a8b1b354637b4194cc167ad1ce2bdd3 ]
+[ Upstream commit 16e1fbdce9c8d084863fd63cdaff8fb2a54e2f88 ]
 
-commit 8b0ba61df5a1 ("fs/xattr.c: fix simple_xattr_list to always
-include security.* xattrs") failed to reset err after the call to
-security_inode_listsecurity(), which returns the length of the
-returned xattr name. This results in simple_xattr_list() incorrectly
-returning this length even if a POSIX acl is also set on the inode.
+Take the grow lock when we're expanding the realtime volume, like we do
+for the other growfs calls.
 
-Reported-by: Collin Funk <collin.funk1@gmail.com>
-Closes: https://lore.kernel.org/selinux/8734ceal7q.fsf@gmail.com/
-Reported-by: Paul Eggert <eggert@cs.ucla.edu>
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2369561
-Fixes: 8b0ba61df5a1 ("fs/xattr.c: fix simple_xattr_list to always include security.* xattrs")
-
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Link: https://lore.kernel.org/20250605165116.2063-1-stephen.smalley.work@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xattr.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/xfs/xfs_rtalloc.c | 38 +++++++++++++++++++++++++-------------
+ 1 file changed, 25 insertions(+), 13 deletions(-)
 
-diff --git a/fs/xattr.c b/fs/xattr.c
-index 8ec5b0204bfdc..600ae97969cf2 100644
---- a/fs/xattr.c
-+++ b/fs/xattr.c
-@@ -1479,6 +1479,7 @@ ssize_t simple_xattr_list(struct inode *inode, struct simple_xattrs *xattrs,
- 		buffer += err;
- 	}
- 	remaining_size -= err;
-+	err = 0;
+diff --git a/fs/xfs/xfs_rtalloc.c b/fs/xfs/xfs_rtalloc.c
+index 5cf1e91f4c205..149fcfc485d89 100644
+--- a/fs/xfs/xfs_rtalloc.c
++++ b/fs/xfs/xfs_rtalloc.c
+@@ -953,34 +953,39 @@ xfs_growfs_rt(
+ 	/* Needs to have been mounted with an rt device. */
+ 	if (!XFS_IS_REALTIME_MOUNT(mp))
+ 		return -EINVAL;
++
++	if (!mutex_trylock(&mp->m_growlock))
++		return -EWOULDBLOCK;
+ 	/*
+ 	 * Mount should fail if the rt bitmap/summary files don't load, but
+ 	 * we'll check anyway.
+ 	 */
++	error = -EINVAL;
+ 	if (!mp->m_rbmip || !mp->m_rsumip)
+-		return -EINVAL;
++		goto out_unlock;
  
- 	read_lock(&xattrs->lock);
- 	for (rbp = rb_first(&xattrs->rb_root); rbp; rbp = rb_next(rbp)) {
+ 	/* Shrink not supported. */
+ 	if (in->newblocks <= sbp->sb_rblocks)
+-		return -EINVAL;
++		goto out_unlock;
+ 
+ 	/* Can only change rt extent size when adding rt volume. */
+ 	if (sbp->sb_rblocks > 0 && in->extsize != sbp->sb_rextsize)
+-		return -EINVAL;
++		goto out_unlock;
+ 
+ 	/* Range check the extent size. */
+ 	if (XFS_FSB_TO_B(mp, in->extsize) > XFS_MAX_RTEXTSIZE ||
+ 	    XFS_FSB_TO_B(mp, in->extsize) < XFS_MIN_RTEXTSIZE)
+-		return -EINVAL;
++		goto out_unlock;
+ 
+ 	/* Unsupported realtime features. */
++	error = -EOPNOTSUPP;
+ 	if (xfs_has_rmapbt(mp) || xfs_has_reflink(mp) || xfs_has_quota(mp))
+-		return -EOPNOTSUPP;
++		goto out_unlock;
+ 
+ 	nrblocks = in->newblocks;
+ 	error = xfs_sb_validate_fsb_count(sbp, nrblocks);
+ 	if (error)
+-		return error;
++		goto out_unlock;
+ 	/*
+ 	 * Read in the last block of the device, make sure it exists.
+ 	 */
+@@ -988,7 +993,7 @@ xfs_growfs_rt(
+ 				XFS_FSB_TO_BB(mp, nrblocks - 1),
+ 				XFS_FSB_TO_BB(mp, 1), 0, &bp, NULL);
+ 	if (error)
+-		return error;
++		goto out_unlock;
+ 	xfs_buf_relse(bp);
+ 
+ 	/*
+@@ -996,8 +1001,10 @@ xfs_growfs_rt(
+ 	 */
+ 	nrextents = nrblocks;
+ 	do_div(nrextents, in->extsize);
+-	if (!xfs_validate_rtextents(nrextents))
+-		return -EINVAL;
++	if (!xfs_validate_rtextents(nrextents)) {
++		error = -EINVAL;
++		goto out_unlock;
++	}
+ 	nrbmblocks = howmany_64(nrextents, NBBY * sbp->sb_blocksize);
+ 	nrextslog = xfs_compute_rextslog(nrextents);
+ 	nrsumlevels = nrextslog + 1;
+@@ -1009,8 +1016,11 @@ xfs_growfs_rt(
+ 	 * the log.  This prevents us from getting a log overflow,
+ 	 * since we'll log basically the whole summary file at once.
+ 	 */
+-	if (nrsumblocks > (mp->m_sb.sb_logblocks >> 1))
+-		return -EINVAL;
++	if (nrsumblocks > (mp->m_sb.sb_logblocks >> 1)) {
++		error = -EINVAL;
++		goto out_unlock;
++	}
++
+ 	/*
+ 	 * Get the old block counts for bitmap and summary inodes.
+ 	 * These can't change since other growfs callers are locked out.
+@@ -1022,10 +1032,10 @@ xfs_growfs_rt(
+ 	 */
+ 	error = xfs_growfs_rt_alloc(mp, rbmblocks, nrbmblocks, mp->m_rbmip);
+ 	if (error)
+-		return error;
++		goto out_unlock;
+ 	error = xfs_growfs_rt_alloc(mp, rsumblocks, nrsumblocks, mp->m_rsumip);
+ 	if (error)
+-		return error;
++		goto out_unlock;
+ 
+ 	rsum_cache = mp->m_rsum_cache;
+ 	if (nrbmblocks != sbp->sb_rbmblocks)
+@@ -1190,6 +1200,8 @@ xfs_growfs_rt(
+ 		}
+ 	}
+ 
++out_unlock:
++	mutex_unlock(&mp->m_growlock);
+ 	return error;
+ }
+ 
 -- 
 2.39.5
 
