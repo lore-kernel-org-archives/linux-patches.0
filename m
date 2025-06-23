@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D2F2628C;
-	Mon, 23 Jun 2025 21:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E782628C;
+	Mon, 23 Jun 2025 21:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713813; cv=none; b=ZVjGMbJBgFS09gCzdnxVeyLywyVc51YjrxvkubFVBxJkv32SBUFVpEkezNNpBqzJ5a0r5vg+M9wOcr/NVSIc6/3qMDl+d/0H9ez6ijma7a3eiQf68+lwDJBQe9hrBAka0DHtqBoiCacrXnQg7YlgVidgu3D7pmatjT6bm7hXhJ8=
+	t=1750713815; cv=none; b=jIdx6W0MP96FRDp3btsXzXA6w/bR7BwDfZnasI0WlTLJ2OfqSODj0w6vuoBGPa8t9uL1worYiTX9NGEeSqXt1yxSTr6Kkn+20MQu25lBPslG5trV09d2Q7HnXaAlJBVX1jM2APtU0ZDRQSz8M7eWmO1jiiMgAZFfZKUgBMQstFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713813; c=relaxed/simple;
-	bh=ti4YRt0WBJ9O+vKsxAz5Z3pUtmTcVwEsPNLmECx0zZ4=;
+	s=arc-20240116; t=1750713815; c=relaxed/simple;
+	bh=RvrFSFtz5VVSquKtPgeuCuJfuJcqI9AowsXmut6BiWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=porszjrOkA4foE6W963j7NHIyna9zkC2OI/w82Zvs3vwX29eJIDdBLLT7fxmtbXC9oAKMVfiiAMUf2Gwk+5lYoJgd0Yzoy2ZUanVriEGmtSKlBCX0GYPQS1Q9Axw6UAU9c3uvzEHTOdww5uDV5wvQjaomwkrzR4+wU3GYM9/Q08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rK84WIWK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nRC5euVR7I4foIPv1WXfXLCXMgTYg3fpoPaGS4J9L0NfiZoh1KyPL9epeifzt5fBPSFWMrxl/XA/Tq9dAFucDHPP/91BIjzB50WnEWi1C73xmDxza6S0p7Ouxi1TSrBKI8iN/DfGB2S+gyIDdjpzkUG1zxt0Zlh8pZXDOScjWd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwCSyIKp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rK84WIWK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04D9C4CEEA;
-	Mon, 23 Jun 2025 21:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwCSyIKp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BF62C4CEEA;
+	Mon, 23 Jun 2025 21:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713813;
-	bh=ti4YRt0WBJ9O+vKsxAz5Z3pUtmTcVwEsPNLmECx0zZ4=;
+	s=korg; t=1750713815;
+	bh=RvrFSFtz5VVSquKtPgeuCuJfuJcqI9AowsXmut6BiWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rK84WIWKl10xSW5U8SIvU/4fKXlspA+Rwd6O9//3Y2je7JbDfUUhHYf87FUzrnHV+
-	 Pdk3mT5Q8Ly+pvYHobgnT8BjIrAGY3HoFVxzO6lyNNCoILAYuIoxZjuQbYFZ8n6vPa
-	 O1alcQrhQF3KPqrWZgvBN9Ouy5p7iMrt2EfFdQiU=
+	b=KwCSyIKpYwDpRcK10KsIYyQgkqslqe9EXQOExD5ANmI+70JVZGkXOKRn1PIL5Whg+
+	 Ks46o6kDT4MTn/EtJUhUXvmQWZueJYWi1OL5BvyP71UCbUd2OJ0imjkpjtYovlg7vo
+	 jhUcHfHy2qSGlTUeV/3qS36VoYpAYIbnaWTTghcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin@sipsolutions.net>,
-	Rouven Czerwinski <rouven@czerwinskis.de>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 367/592] wifi: mac80211: do not offer a mesh path if forwarding is disabled
-Date: Mon, 23 Jun 2025 15:05:25 +0200
-Message-ID: <20250623130709.172099914@linuxfoundation.org>
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Peng Fan <peng.fan@nxp.com>
+Subject: [PATCH 6.6 100/290] remoteproc: core: Cleanup acquired resources when rproc_handle_resources() fails in rproc_attach()
+Date: Mon, 23 Jun 2025 15:06:01 +0200
+Message-ID: <20250623130629.974202624@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,71 +47,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Berg <benjamin@sipsolutions.net>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit cf1b684a06170d253b47d6a5287821de976435bd ]
+commit 7692c9fbedd9087dc9050903f58095915458d9b1 upstream.
 
-When processing a PREQ the code would always check whether we have a
-mesh path locally and reply accordingly. However, when forwarding is
-disabled then we should not reply with this information as we will not
-forward data packets down that path.
+When rproc->state = RPROC_DETACHED and rproc_attach() is used
+to attach to the remote processor, if rproc_handle_resources()
+returns a failure, the resources allocated by imx_rproc_prepare()
+should be released, otherwise the following memory leak will occur.
 
-Move the check for dot11MeshForwarding up in the function and skip the
-mesh path lookup in that case. In the else block, set forward to false
-so that the rest of the function becomes a no-op and the
-dot11MeshForwarding check does not need to be duplicated.
+Since almost the same thing is done in imx_rproc_prepare() and
+rproc_resource_cleanup(), Function rproc_resource_cleanup() is able
+to deal with empty lists so it is better to fix the "goto" statements
+in rproc_attach(). replace the "unprepare_device" goto statement with
+"clean_up_resources" and get rid of the "unprepare_device" label.
 
-This explains an effect observed in the Freifunk community where mesh
-forwarding is disabled. In that case a mesh with three STAs and only bad
-links in between them, individual STAs would occionally have indirect
-mpath entries. This should not have happened.
+unreferenced object 0xffff0000861c5d00 (size 128):
+comm "kworker/u12:3", pid 59, jiffies 4294893509 (age 149.220s)
+hex dump (first 32 bytes):
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00 00 02 88 00 00 00 00 00 00 10 00 00 00 00 00 ............
+backtrace:
+ [<00000000f949fe18>] slab_post_alloc_hook+0x98/0x37c
+ [<00000000adbfb3e7>] __kmem_cache_alloc_node+0x138/0x2e0
+ [<00000000521c0345>] kmalloc_trace+0x40/0x158
+ [<000000004e330a49>] rproc_mem_entry_init+0x60/0xf8
+ [<000000002815755e>] imx_rproc_prepare+0xe0/0x180
+ [<0000000003f61b4e>] rproc_boot+0x2ec/0x528
+ [<00000000e7e994ac>] rproc_add+0x124/0x17c
+ [<0000000048594076>] imx_rproc_probe+0x4ec/0x5d4
+ [<00000000efc298a1>] platform_probe+0x68/0xd8
+ [<00000000110be6fe>] really_probe+0x110/0x27c
+ [<00000000e245c0ae>] __driver_probe_device+0x78/0x12c
+ [<00000000f61f6f5e>] driver_probe_device+0x3c/0x118
+ [<00000000a7874938>] __device_attach_driver+0xb8/0xf8
+ [<0000000065319e69>] bus_for_each_drv+0x84/0xe4
+ [<00000000db3eb243>] __device_attach+0xfc/0x18c
+ [<0000000072e4e1a4>] device_initial_probe+0x14/0x20
 
-Signed-off-by: Benjamin Berg <benjamin@sipsolutions.net>
-Reviewed-by: Rouven Czerwinski <rouven@czerwinskis.de>
-Link: https://patch.msgid.link/20250430191042.3287004-1-benjamin@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 10a3d4079eae ("remoteproc: imx_rproc: move memory parsing to rproc_ops")
+Suggested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250430092043.1819308-2-xiaolei.wang@windriver.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mesh_hwmp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/remoteproc/remoteproc_core.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/mesh_hwmp.c b/net/mac80211/mesh_hwmp.c
-index c94a9c7ca960e..91444301a84a4 100644
---- a/net/mac80211/mesh_hwmp.c
-+++ b/net/mac80211/mesh_hwmp.c
-@@ -636,7 +636,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 				mesh_path_add_gate(mpath);
- 		}
- 		rcu_read_unlock();
--	} else {
-+	} else if (ifmsh->mshcfg.dot11MeshForwarding) {
- 		rcu_read_lock();
- 		mpath = mesh_path_lookup(sdata, target_addr);
- 		if (mpath) {
-@@ -654,6 +654,8 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 			}
- 		}
- 		rcu_read_unlock();
-+	} else {
-+		forward = false;
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -1616,7 +1616,7 @@ static int rproc_attach(struct rproc *rp
+ 	ret = rproc_set_rsc_table(rproc);
+ 	if (ret) {
+ 		dev_err(dev, "can't load resource table: %d\n", ret);
+-		goto unprepare_device;
++		goto clean_up_resources;
  	}
  
- 	if (reply) {
-@@ -671,7 +673,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 		}
+ 	/* reset max_notifyid */
+@@ -1633,7 +1633,7 @@ static int rproc_attach(struct rproc *rp
+ 	ret = rproc_handle_resources(rproc, rproc_loading_handlers);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to process resources: %d\n", ret);
+-		goto unprepare_device;
++		goto clean_up_resources;
  	}
  
--	if (forward && ifmsh->mshcfg.dot11MeshForwarding) {
-+	if (forward) {
- 		u32 preq_id;
- 		u8 hopcount;
+ 	/* Allocate carveout resources associated to rproc */
+@@ -1652,7 +1652,6 @@ static int rproc_attach(struct rproc *rp
  
--- 
-2.39.5
-
+ clean_up_resources:
+ 	rproc_resource_cleanup(rproc);
+-unprepare_device:
+ 	/* release HW resources if needed */
+ 	rproc_unprepare_device(rproc);
+ disable_iommu:
 
 
