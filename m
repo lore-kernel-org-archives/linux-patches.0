@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052B11DF98B;
-	Mon, 23 Jun 2025 21:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F211DF98B;
+	Mon, 23 Jun 2025 21:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713246; cv=none; b=Zpch5xc0P2obD71xLg3SrBcOp4lPpEYX+TqyPcYSS/1nhDfM+i/Zyuxene0odJkjojXgba9vMjL3anK9Mo0ORYSTytRdkdF7v9RzwxreSnKf1ZY6pa3lY9RoxdWUmr+NWAJHkGBr3gEpUuE6+b9zKACAaacQZP6SE4W/Yx14NT8=
+	t=1750713248; cv=none; b=tH3zWAPelGQDKRFyH9+L/6k+dVwY4XxDfG94L+gYZRueyIpCHMJRmabJWRthHUf+lYu8Hou8Ix9rW5b15Rb0eju6T74QD5Se6RpkejZUtEqG1Dc5VfxZDnCOTvQpMxTAI12YLnnSCsuS3t6A2y/QWKRfWDvgCNAUo0u6lvLndI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713246; c=relaxed/simple;
-	bh=EGAoIC4cxviFCTBlzjOJIUGMbYJGcH7fCfTln7x3crw=;
+	s=arc-20240116; t=1750713248; c=relaxed/simple;
+	bh=Lu8axZud9lzZ8uBPyGIfqtrROcCDAujI86qdnp+jCI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYOxF6XoN82zZf+b9p+IKPuo0ZYsfWGDX+EOIvP0qjw5y58bn7lp0PbA9uMXLNxOz+G+3myxoNCOoqU35waf3589LTOov3KvqfKIHIhuXA71+vi9/LH11uSpUJ8kLOoCyOoBlNGk7teE4MHC9dLnmSttNNcjiO0kMKtX5hjM0oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/T2CXc7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a+HlBKr/i+2rErx2G+9cw70F0obwr1BN9b5E2NW9stKNsyAJcZq2kvBhQEohJC2PWQab7z1BYxeyhgzXc3z+OUfe7gXK9vKKJk0vBhH+fkLPwRW+JPvUbImGaOAxcRTD6QOUN91pUssDz0PO8r6x1bUPPhizgh8PRNAMct4Md2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptOpLcNd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/T2CXc7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9155AC4CEEA;
-	Mon, 23 Jun 2025 21:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptOpLcNd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08ECFC4CEEA;
+	Mon, 23 Jun 2025 21:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713245;
-	bh=EGAoIC4cxviFCTBlzjOJIUGMbYJGcH7fCfTln7x3crw=;
+	s=korg; t=1750713248;
+	bh=Lu8axZud9lzZ8uBPyGIfqtrROcCDAujI86qdnp+jCI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/T2CXc74yScZvyPcCo55OsApHd7bGjJ44172hvMuYz2JpeYK0D6xlvCDFheHx/1c
-	 BBJhmb7W/w05m52N3WrrQUaJoR2RVwX6IifhcPNdZYcFkCXdTqcMn+X4S8l8js7Nnu
-	 Mxq2yR4asWLYB93TiZBEw7EvGwp6K2Y4GuecAoO0=
+	b=ptOpLcNdTKtZdv8X+VzXvgk/b6Q80m6Cj80zuMIyAN5+FgG5bYE5PjTfMd7u0CTB8
+	 pkJckX2LE6Qr8WHHyIoA4zIj+4UQHOX6IkUb3t06xlzjzlAUs5tjDn3vuCVOBdiU9y
+	 FOrg7WiYwyPXY2ttcEz+5nUSgI1+/wTtL5BuZNoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Mayhew <smayhew@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>
-Subject: [PATCH 6.12 034/414] NFSv4: Dont check for OPEN feature support in v4.1
-Date: Mon, 23 Jun 2025 15:02:51 +0200
-Message-ID: <20250623130642.880185018@linuxfoundation.org>
+	Rolf Eike Beer <eb@emlix.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 086/508] iommu: remove duplicate selection of DMAR_TABLE
+Date: Mon, 23 Jun 2025 15:02:11 +0200
+Message-ID: <20250623130647.359980625@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Rolf Eike Beer <eb@emlix.com>
 
-commit 4d4832ed13ff505fe0371544b4773e79be2bb964 upstream.
+[ Upstream commit 9548feff840a05d61783e6316d08ed37e115f3b1 ]
 
-fattr4_open_arguments is a v4.2 recommended attribute, so we shouldn't
-be sending it to v4.1 servers.
+This is already done in intel/Kconfig.
 
-Fixes: cb78f9b7d0c0 ("nfs: fix the fetch of FATTR4_OPEN_ARGUMENTS")
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Cc: stable@vger.kernel.org # 6.11+
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 70bad345e622 ("iommu: Fix compilation without CONFIG_IOMMU_INTEL")
+Signed-off-by: Rolf Eike Beer <eb@emlix.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/2232605.Mh6RI2rZIc@devpool92.emlix.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iommu/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -3957,8 +3957,9 @@ static int _nfs4_server_capabilities(str
- 		     FATTR4_WORD0_CASE_INSENSITIVE |
- 		     FATTR4_WORD0_CASE_PRESERVING;
- 	if (minorversion)
--		bitmask[2] = FATTR4_WORD2_SUPPATTR_EXCLCREAT |
--			     FATTR4_WORD2_OPEN_ARGUMENTS;
-+		bitmask[2] = FATTR4_WORD2_SUPPATTR_EXCLCREAT;
-+	if (minorversion > 1)
-+		bitmask[2] |= FATTR4_WORD2_OPEN_ARGUMENTS;
- 
- 	status = nfs4_call_sync(server->client, server, &msg, &args.seq_args, &res.seq_res, 0);
- 	if (status == 0) {
+diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+index dc19e7fb07cfe..fad36f0a4d14b 100644
+--- a/drivers/iommu/Kconfig
++++ b/drivers/iommu/Kconfig
+@@ -192,7 +192,6 @@ source "drivers/iommu/intel/Kconfig"
+ config IRQ_REMAP
+ 	bool "Support for Interrupt Remapping"
+ 	depends on X86_64 && X86_IO_APIC && PCI_MSI && ACPI
+-	select DMAR_TABLE if INTEL_IOMMU
+ 	help
+ 	  Supports Interrupt remapping for IO-APIC and MSI devices.
+ 	  To use x2apic mode in the CPU's which support x2APIC enhancements or
+-- 
+2.39.5
+
 
 
