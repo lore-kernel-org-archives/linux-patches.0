@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E121E51FA;
-	Mon, 23 Jun 2025 21:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107AB1E51FA;
+	Mon, 23 Jun 2025 21:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713886; cv=none; b=TQtz6PsoybRkTIOxIGXsVaW1O+lKwMjA7xkRQfrFWtR6LkEV0fD4TZvBByKgpTiOS1p21SuyT6RqhgOM+Zo6aJeQ+ihBN61+j5l+/Zsgg/nDSG7i2BQyqoVFXOv8J3OD49gLaB3HQu4ZzhXpzEQf8wORTLI8TX9KoUsCeUfre7k=
+	t=1750713889; cv=none; b=DbPYHe7Wk5O/MmmlrH4ORSpOtAA/NcfxKIw7OqHwW4M0Yp6kup2NktKxRRzVORfu8UOxD8UvSRprHwbeC8cowqtiIHjn7vKVWvGVSsZKG3emDAEjY5yMtwp+pLf8ARD8VTNoVkm5SJnmLmoj9yf3BamRGUvuwxem3oFexeBdKhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713886; c=relaxed/simple;
-	bh=S6oyi/kV7syRO9Js7uzzeuIfXNKNB+9KfUGTh456Icc=;
+	s=arc-20240116; t=1750713889; c=relaxed/simple;
+	bh=8R93PAgZ2d//YaFyvpJf+1wCmCuBURr/hAIFswuyGbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UhuoQ6NoE5QcmxZbOYexbOhRiudtyMg3cevOScuUJy+bw2ThioeFrPcv7XbeRyoTwpMkEgV+7mWK88GK76NIM8ttWyhpIh1spOeuq7Hc3LAds82Goh+LXdRQTBoC3lmeWtBdAfdVY9JOqQ4fQ2rveWJVff5y5jmLWyPcJTInF2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFqt/bwq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OK6TWYBgsIBghQDDLkCCV6ge4aWeBd0sxuxyLcSRW5LylhSqee60WkuvLmuIHeRCIko7Y5hcfvn500HNF/6YUWsFfSuXcn5FfO1mE13TbBcllHqkIdQdRnYDUJs1dHBwSEV8Zun2itRSoYgXjqEbru0szYBq4q3YikLpVrn9orU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wF0U8EgT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFqt/bwq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE4DC4CEEA;
-	Mon, 23 Jun 2025 21:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wF0U8EgT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCE7C4CEEA;
+	Mon, 23 Jun 2025 21:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713886;
-	bh=S6oyi/kV7syRO9Js7uzzeuIfXNKNB+9KfUGTh456Icc=;
+	s=korg; t=1750713888;
+	bh=8R93PAgZ2d//YaFyvpJf+1wCmCuBURr/hAIFswuyGbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RFqt/bwqHLGO1qg8JyaPWCOtC1qbHoI0rMyVNrQ0+lspRxuM5JUYUbKyqGIzH4QAf
-	 aOb2Wkbf7w09pXnsxDjxll/0ofAvwuQCNfaiHlHKg8SBCrxbHvwHQ0Me4e+Hrbogul
-	 1zBhUzNj1qAd/T2M9ZArUq+OVTO1RsAoTnHbbJxM=
+	b=wF0U8EgTxoXYQBM/VU/LEutVPSuXLy5iBw6pLoMqaIFw/MbfwLdXM58XE5y/ZwxVc
+	 OOih/+FcmBZZhBnwfheTaex+uKrJfM+kzeao0yyGGpLUoOj3osN/dm60/87xs21tOy
+	 S+z9aP1c/56r4XnyrxjPcJZEBiNQ/HZstuuzTh3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+526bd95c0ec629993bf3@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.10 172/355] media: cxusb: no longer judge rbuf when the write fails
-Date: Mon, 23 Jun 2025 15:06:13 +0200
-Message-ID: <20250623130631.880838860@linuxfoundation.org>
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 128/508] soc: aspeed: Add NULL check in aspeed_lpc_enable_snoop()
+Date: Mon, 23 Jun 2025 15:02:53 +0200
+Message-ID: <20250623130648.441592665@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +48,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-commit 73fb3b92da84637e3817580fa205d48065924e15 upstream.
+[ Upstream commit f1706e0e1a74b095cbc60375b9b1e6205f5f4c98 ]
 
-syzbot reported a uninit-value in cxusb_i2c_xfer. [1]
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+aspeed_lpc_enable_snoop() does not check for this case, which results in a
+NULL pointer dereference.
 
-Only when the write operation of usb_bulk_msg() in dvb_usb_generic_rw()
-succeeds and rlen is greater than 0, the read operation of usb_bulk_msg()
-will be executed to read rlen bytes of data from the dvb device into the
-rbuf.
+Add NULL check after devm_kasprintf() to prevent this issue.
 
-In this case, although rlen is 1, the write operation failed which resulted
-in the dvb read operation not being executed, and ultimately variable i was
-not initialized.
-
-[1]
-BUG: KMSAN: uninit-value in cxusb_gpio_tuner drivers/media/usb/dvb-usb/cxusb.c:124 [inline]
-BUG: KMSAN: uninit-value in cxusb_i2c_xfer+0x153a/0x1a60 drivers/media/usb/dvb-usb/cxusb.c:196
- cxusb_gpio_tuner drivers/media/usb/dvb-usb/cxusb.c:124 [inline]
- cxusb_i2c_xfer+0x153a/0x1a60 drivers/media/usb/dvb-usb/cxusb.c:196
- __i2c_transfer+0xe25/0x3150 drivers/i2c/i2c-core-base.c:-1
- i2c_transfer+0x317/0x4a0 drivers/i2c/i2c-core-base.c:2315
- i2c_transfer_buffer_flags+0x125/0x1e0 drivers/i2c/i2c-core-base.c:2343
- i2c_master_send include/linux/i2c.h:109 [inline]
- i2cdev_write+0x210/0x280 drivers/i2c/i2c-dev.c:183
- do_loop_readv_writev fs/read_write.c:848 [inline]
- vfs_writev+0x963/0x14e0 fs/read_write.c:1057
- do_writev+0x247/0x5c0 fs/read_write.c:1101
- __do_sys_writev fs/read_write.c:1169 [inline]
- __se_sys_writev fs/read_write.c:1166 [inline]
- __x64_sys_writev+0x98/0xe0 fs/read_write.c:1166
- x64_sys_call+0x2229/0x3c80 arch/x86/include/generated/asm/syscalls_64.h:21
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x1e0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Reported-by: syzbot+526bd95c0ec629993bf3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=526bd95c0ec629993bf3
-Tested-by: syzbot+526bd95c0ec629993bf3@syzkaller.appspotmail.com
-Fixes: 22c6d93a7310 ("[PATCH] dvb: usb: support Medion hybrid USB2.0 DVB-T/analogue box")
-Cc: stable@vger.kernel.org
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3772e5da4454 ("drivers/misc: Aspeed LPC snoop output using misc chardev")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://patch.msgid.link/20250401074647.21300-1-bsdhenrymartin@gmail.com
+[arj: Fix Fixes: tag to use subject from 3772e5da4454]
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/cxusb.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/soc/aspeed/aspeed-lpc-snoop.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/media/usb/dvb-usb/cxusb.c
-+++ b/drivers/media/usb/dvb-usb/cxusb.c
-@@ -119,9 +119,8 @@ static void cxusb_gpio_tuner(struct dvb_
+diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+index d9bdc2e084086..22619b853f449 100644
+--- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
++++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+@@ -201,11 +201,15 @@ static int aspeed_lpc_enable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
+ 	lpc_snoop->chan[channel].miscdev.minor = MISC_DYNAMIC_MINOR;
+ 	lpc_snoop->chan[channel].miscdev.name =
+ 		devm_kasprintf(dev, GFP_KERNEL, "%s%d", DEVICE_NAME, channel);
++	if (!lpc_snoop->chan[channel].miscdev.name) {
++		rc = -ENOMEM;
++		goto err_free_fifo;
++	}
+ 	lpc_snoop->chan[channel].miscdev.fops = &snoop_fops;
+ 	lpc_snoop->chan[channel].miscdev.parent = dev;
+ 	rc = misc_register(&lpc_snoop->chan[channel].miscdev);
+ 	if (rc)
+-		return rc;
++		goto err_free_fifo;
  
- 	o[0] = GPIO_TUNER;
- 	o[1] = onoff;
--	cxusb_ctrl_msg(d, CMD_GPIO_WRITE, o, 2, &i, 1);
+ 	/* Enable LPC snoop channel at requested port */
+ 	switch (channel) {
+@@ -222,7 +226,8 @@ static int aspeed_lpc_enable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
+ 		hicrb_en = HICRB_ENSNP1D;
+ 		break;
+ 	default:
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto err_misc_deregister;
+ 	}
  
--	if (i != 0x01)
-+	if (!cxusb_ctrl_msg(d, CMD_GPIO_WRITE, o, 2, &i, 1) && i != 0x01)
- 		dev_info(&d->udev->dev, "gpio_write failed.\n");
+ 	regmap_update_bits(lpc_snoop->regmap, HICR5, hicr5_en, hicr5_en);
+@@ -232,6 +237,12 @@ static int aspeed_lpc_enable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
+ 		regmap_update_bits(lpc_snoop->regmap, HICRB,
+ 				hicrb_en, hicrb_en);
  
- 	st->gpio_write_state[GPIO_TUNER] = onoff;
++	return 0;
++
++err_misc_deregister:
++	misc_deregister(&lpc_snoop->chan[channel].miscdev);
++err_free_fifo:
++	kfifo_free(&lpc_snoop->chan[channel].fifo);
+ 	return rc;
+ }
+ 
+-- 
+2.39.5
+
 
 
