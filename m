@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763F221FF2B;
-	Mon, 23 Jun 2025 22:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E783F1E22E6;
+	Mon, 23 Jun 2025 22:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716434; cv=none; b=Mvc54VTGgUNxZXZyRvsM9hlNxPjgAAZUB4HxrlLx38rdBn/R65UluPsCipK6yoT3/QLpoBmJX3fhYsdzAbRhBexx6cMN5c57EFzHtXd/31L3qigeXbSEtccy1kzM8Jojenb7W3PARcElbRjrrqefPevffU0byK9lGcSMmqaGYM8=
+	t=1750716437; cv=none; b=Obxi0RBb44Jwj/XiaX/e84EqZM5CJ9dpKgBorgCliSJNAwBLBfSzxjUL4GG7r4BBiXNWN8g0egYtpzNvfxGD1gACLycCHXpfze8WIBtVXTftUrdJ2Sjqjwazxyhs3eTyMBVN91rvb8k4AfgtQ+7ll7tKlSSuQP2k+4mYDHe9JxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716434; c=relaxed/simple;
-	bh=W7E45Z4kxTjJcRYpjRCIDBM5C6owAPNPq4JxUTklBX0=;
+	s=arc-20240116; t=1750716437; c=relaxed/simple;
+	bh=BAJLHlwU0JVwpPjdWYkYw21IpNIZRB5TUib7DDNI1NM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RNqfcF7QrKTguKbNCWxeIayFCTtuClNMdePGKdNV9fQoIRtsLFoqHXHpXcq/V50fhCcqklEvUesKJmaF6z2RQyUsrB8wJjyfSU+G5FxbEk9CEsd6d01WVEu7wPMqlOwsDSFCqeL8VyDlWJ8rmhmrXLx40z7axmnmc1xRfu/MXuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3h/Rvch; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0YwY2xOaSYSoIo/7M6G9MU2ltc/o6TmZc/X09d/GkyQhu04f0fnrxHfhsD48/pGS+h2WiLApihSV2ZSeNeOmR8uBt5xi2GzAHZ3+8s3dUTw5LJpGyaaro24OGbufaKE5CTyAu+uC7Mrs+/+sLPVgJF7Lw70lWCWxU0a2ENIwcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+jRMHSu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3h/Rvch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0048EC4CEEA;
-	Mon, 23 Jun 2025 22:07:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+jRMHSu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72596C4CEEA;
+	Mon, 23 Jun 2025 22:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716434;
-	bh=W7E45Z4kxTjJcRYpjRCIDBM5C6owAPNPq4JxUTklBX0=;
+	s=korg; t=1750716436;
+	bh=BAJLHlwU0JVwpPjdWYkYw21IpNIZRB5TUib7DDNI1NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3h/Rvchxf7bT2eUYBO+UzC6QsJeIWewQ9NObuFd8ArDGWnFaSir//2zdYHqo1wgV
-	 lT3n7YXeSRs5rRiN26KmImInOO9x1bGkt/rTGRBt8ddC/BAhVgg7rU+0RumKCzmzyU
-	 ndCeOjnHPrqxplcBVBNP6TvFHjaHYUGmi60ljB7Y=
+	b=u+jRMHSuAiw+DHi/+Yi8EZb/XCS7ePFsz/ZIm5HOqm4QmeBQkGUHxRcg9KhJtY4wA
+	 P1G8vYhnf6PWdjB5xgyTSCUWTxKwmpJ2Q5YHhrpWaXbKPlBtoj8sTV0rcEWTHrfmr6
+	 bBHXP40/h7lkfHJX/dHo8WMWKxiRwYGPmeeO3ndk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rengarajan S <rengarajan.s@microchip.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 263/290] net: microchip: lan743x: Reduce PTP timeout on HW failure
-Date: Mon, 23 Jun 2025 15:08:44 +0200
-Message-ID: <20250623130634.820519450@linuxfoundation.org>
+	Miaoqing Pan <quic_miaoqing@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Steev Klimaszewski <steev@kali.org>,
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+	Clayton Craft <clayton@craftyguy.net>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.1 302/508] wifi: ath11k: fix ring-buffer corruption
+Date: Mon, 23 Jun 2025 15:05:47 +0200
+Message-ID: <20250623130652.733009233@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +50,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rengarajan S <rengarajan.s@microchip.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit b1de3c0df7abc41dc41862c0b08386411f2799d7 ]
+commit 6d037a372f817e9fcb56482f37917545596bd776 upstream.
 
-The PTP_CMD_CTL is a self clearing register which controls the PTP clock
-values. In the current implementation driver waits for a duration of 20
-sec in case of HW failure to clear the PTP_CMD_CTL register bit. This
-timeout of 20 sec is very long to recognize a HW failure, as it is
-typically cleared in one clock(<16ns). Hence reducing the timeout to 1 sec
-would be sufficient to conclude if there is any HW failure observed. The
-usleep_range will sleep somewhere between 1 msec to 20 msec for each
-iteration. By setting the PTP_CMD_CTL_TIMEOUT_CNT to 50 the max timeout
-is extended to 1 sec.
+Users of the Lenovo ThinkPad X13s have reported that Wi-Fi sometimes
+breaks and the log fills up with errors like:
 
-Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240502050300.38689-1-rengarajan.s@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: e353b0854d3a ("net: lan743x: fix potential out-of-bounds write in lan743x_ptp_io_event_clock_get()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    ath11k_pci 0006:01:00.0: HTC Rx: insufficient length, got 1484, expected 1492
+    ath11k_pci 0006:01:00.0: HTC Rx: insufficient length, got 1460, expected 1484
+
+which based on a quick look at the driver seemed to indicate some kind
+of ring-buffer corruption.
+
+Miaoqing Pan tracked it down to the host seeing the updated destination
+ring head pointer before the updated descriptor, and the error handling
+for that in turn leaves the ring buffer in an inconsistent state.
+
+Add the missing memory barrier to make sure that the descriptor is read
+after the head pointer to address the root cause of the corruption while
+fixing up the error handling in case there are ever any (ordering) bugs
+on the device side.
+
+Note that the READ_ONCE() are only needed to avoid compiler mischief in
+case the ring-buffer helpers are ever inlined.
+
+Tested-on: WCN6855 hw2.1 WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218623
+Link: https://lore.kernel.org/20250310010217.3845141-3-quic_miaoqing@quicinc.com
+Cc: Miaoqing Pan <quic_miaoqing@quicinc.com>
+Cc: stable@vger.kernel.org	# 5.6
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Tested-by: Clayton Craft <clayton@craftyguy.net>
+Link: https://patch.msgid.link/20250321094916.19098-1-johan+linaro@kernel.org
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/lan743x_ptp.c | 2 +-
- drivers/net/ethernet/microchip/lan743x_ptp.h | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/ce.c  |   11 +++++------
+ drivers/net/wireless/ath/ath11k/hal.c |    4 ++--
+ 2 files changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_ptp.c b/drivers/net/ethernet/microchip/lan743x_ptp.c
-index 39e1066ecd5ff..47f2531198f62 100644
---- a/drivers/net/ethernet/microchip/lan743x_ptp.c
-+++ b/drivers/net/ethernet/microchip/lan743x_ptp.c
-@@ -58,7 +58,7 @@ int lan743x_gpio_init(struct lan743x_adapter *adapter)
- static void lan743x_ptp_wait_till_cmd_done(struct lan743x_adapter *adapter,
- 					   u32 bit_mask)
- {
--	int timeout = 1000;
-+	int timeout = PTP_CMD_CTL_TIMEOUT_CNT;
- 	u32 data = 0;
+--- a/drivers/net/wireless/ath/ath11k/ce.c
++++ b/drivers/net/wireless/ath/ath11k/ce.c
+@@ -393,11 +393,10 @@ static int ath11k_ce_completed_recv_next
+ 		goto err;
+ 	}
  
- 	while (timeout &&
-diff --git a/drivers/net/ethernet/microchip/lan743x_ptp.h b/drivers/net/ethernet/microchip/lan743x_ptp.h
-index e26d4eff71336..0d29914cd4606 100644
---- a/drivers/net/ethernet/microchip/lan743x_ptp.h
-+++ b/drivers/net/ethernet/microchip/lan743x_ptp.h
-@@ -21,6 +21,7 @@
- #define LAN743X_PTP_N_EXTTS		4
- #define LAN743X_PTP_N_PPS		0
- #define PCI11X1X_PTP_IO_MAX_CHANNELS	8
-+#define PTP_CMD_CTL_TIMEOUT_CNT		50
++	/* Make sure descriptor is read after the head pointer. */
++	dma_rmb();
++
+ 	*nbytes = ath11k_hal_ce_dst_status_get_length(desc);
+-	if (*nbytes == 0) {
+-		ret = -EIO;
+-		goto err;
+-	}
  
- struct lan743x_adapter;
+ 	*skb = pipe->dest_ring->skb[sw_index];
+ 	pipe->dest_ring->skb[sw_index] = NULL;
+@@ -430,8 +429,8 @@ static void ath11k_ce_recv_process_cb(st
+ 		dma_unmap_single(ab->dev, ATH11K_SKB_RXCB(skb)->paddr,
+ 				 max_nbytes, DMA_FROM_DEVICE);
  
--- 
-2.39.5
-
+-		if (unlikely(max_nbytes < nbytes)) {
+-			ath11k_warn(ab, "rxed more than expected (nbytes %d, max %d)",
++		if (unlikely(max_nbytes < nbytes || nbytes == 0)) {
++			ath11k_warn(ab, "unexpected rx length (nbytes %d, max %d)",
+ 				    nbytes, max_nbytes);
+ 			dev_kfree_skb_any(skb);
+ 			continue;
+--- a/drivers/net/wireless/ath/ath11k/hal.c
++++ b/drivers/net/wireless/ath/ath11k/hal.c
+@@ -601,7 +601,7 @@ u32 ath11k_hal_ce_dst_status_get_length(
+ 		(struct hal_ce_srng_dst_status_desc *)buf;
+ 	u32 len;
+ 
+-	len = FIELD_GET(HAL_CE_DST_STATUS_DESC_FLAGS_LEN, desc->flags);
++	len = FIELD_GET(HAL_CE_DST_STATUS_DESC_FLAGS_LEN, READ_ONCE(desc->flags));
+ 	desc->flags &= ~HAL_CE_DST_STATUS_DESC_FLAGS_LEN;
+ 
+ 	return len;
+@@ -802,7 +802,7 @@ void ath11k_hal_srng_access_begin(struct
+ 		srng->u.src_ring.cached_tp =
+ 			*(volatile u32 *)srng->u.src_ring.tp_addr;
+ 	} else {
+-		srng->u.dst_ring.cached_hp = *srng->u.dst_ring.hp_addr;
++		srng->u.dst_ring.cached_hp = READ_ONCE(*srng->u.dst_ring.hp_addr);
+ 
+ 		/* Try to prefetch the next descriptor in the ring */
+ 		if (srng->flags & HAL_SRNG_FLAGS_CACHED)
 
 
