@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1B813B58B;
-	Mon, 23 Jun 2025 13:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A100813A265;
+	Mon, 23 Jun 2025 13:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684540; cv=none; b=KB1z/cq9TohAwkBL0Q7V5suMLLMVI2GvKdhbL+Sf/aeEtSf7sm7KXwgnedA70uA0lNc8d/wjCjMS47zK1RqIKR1miWsFi5b7UhUfaMrfgex5ZkmzP7UtTyACk2G9OyQZlkrJHqfP2XrCUBX6oKPol1W1UVT4W172SD0n0KJZuJ0=
+	t=1750684542; cv=none; b=hImG9EoURNGpuObDATOVDKJKjziynLlzAM8UX/ZHe6aMiIdNG71ozyxd2ZQCMcM5i/538/qsAWhMuClJ3iQRHMSvDX1O+TVlugUujxUgecMkhcVPZRwLPadP57uOaU8bVgt7X2CviRE6xHbBeTOVwNE4PWi0k+BsJTR8YyIs2HM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684540; c=relaxed/simple;
-	bh=DAHTnrpzw2XHh5Wryws3WXm9gTGwjNPuqw0/mbsmvj4=;
+	s=arc-20240116; t=1750684542; c=relaxed/simple;
+	bh=1/9V9Nmnb2jqb9b94BWZgXGgeJ3OhTAnJ54iWlY2eUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ro8huvU2o8ylhgJugEnBCFHiKpI8VVcNLTvkQjfb5cn0HG30I2tS/WawHzu2fM/GhDseo6XvGQvuIEzR27fwlRgX+FpcjfzUzR5g6yyl9C7PUJJT6JU+yBK8b1BC/EAaJod3uQDlhhIxWTJut0Zu/gvkoqjGVGpvIAmbONwmUOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HW2CTRJk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=STGtJjZw3oPTMUqO6CmQ3T1xH/fFSOZeQq2pMH0E1nV9PoH6Oc8COyxAA/ukcWjGYivppcvlx6wOc/EC9WsKw6pFdAGqaTXGIeO++gDkRStbGAtGbfUWagmWnWDk1BCu4aAhsOPS1BBDuGE4I8OjgxpnPjZCa9JePXs5yz4tncg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbUr5P2C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HW2CTRJk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C16C4CEEA;
-	Mon, 23 Jun 2025 13:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbUr5P2C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358A7C4CEEA;
+	Mon, 23 Jun 2025 13:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684540;
-	bh=DAHTnrpzw2XHh5Wryws3WXm9gTGwjNPuqw0/mbsmvj4=;
+	s=korg; t=1750684542;
+	bh=1/9V9Nmnb2jqb9b94BWZgXGgeJ3OhTAnJ54iWlY2eUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HW2CTRJkFOWqe8I6JY7frjpApSNjFpTzA5BxN9JhqSiFcjU+FqmyqsJpviG2CmueY
-	 7co78FyoeUUtrMVhxihAFmI3riicklrjuBFvx0wPVYLTz+AEhaxNlppVt3dY2aKfCp
-	 g4xj3soTJMBB0JtDcfKytStg/8KyiCng/c5OUTgk=
+	b=vbUr5P2CJhF2Qr1HHBOcJKXRtIZxZQqGix5l3G/MS61Xdlxt91bSjWP6sVvD/FQG1
+	 57531YS7mvt0sYakucjnvmSbUxCCaIiyV0b/OprhiwHQF6TzGwnw5oMIXHVCpJYx0M
+	 aahQnggzK200HMITY3FnbquvaUJL3+k0azh/ZKQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhong Jiawei <zhongjiawei1@huawei.com>,
-	Chen Ridong <chenridong@huawei.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.15 105/592] cgroup,freezer: fix incomplete freezing when attaching tasks
-Date: Mon, 23 Jun 2025 15:01:03 +0200
-Message-ID: <20250623130702.774926558@linuxfoundation.org>
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.15 106/592] bus: firewall: Fix missing static inline annotations for stubs
+Date: Mon, 23 Jun 2025 15:01:04 +0200
+Message-ID: <20250623130702.798758601@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -46,68 +44,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 37fb58a7273726e59f9429c89ade5116083a213d upstream.
+commit 66db876162155c1cec87359cd78c62aaafde9257 upstream.
 
-An issue was found:
+Stubs in the header file for !CONFIG_STM32_FIREWALL case should be both
+static and inline, because they do not come with earlier declaration and
+should be inlined in every unit including the header.
 
-	# cd /sys/fs/cgroup/freezer/
-	# mkdir test
-	# echo FROZEN > test/freezer.state
-	# cat test/freezer.state
-	FROZEN
-	# sleep 1000 &
-	[1] 863
-	# echo 863 > test/cgroup.procs
-	# cat test/freezer.state
-	FREEZING
-
-When tasks are migrated to a frozen cgroup, the freezer fails to
-immediately freeze the tasks, causing the cgroup to remain in the
-"FREEZING".
-
-The freeze_task() function is called before clearing the CGROUP_FROZEN
-flag. This causes the freezing() check to incorrectly return false,
-preventing __freeze_task() from being invoked for the migrated task.
-
-To fix this issue, clear the CGROUP_FROZEN state before calling
-freeze_task().
-
-Fixes: f5d39b020809 ("freezer,sched: Rewrite core freezer logic")
-Cc: stable@vger.kernel.org # v6.1+
-Reported-by: Zhong Jiawei <zhongjiawei1@huawei.com>
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Acked-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: Patrice Chotard <patrice.chotard@foss.st.com>
+Cc: stable@vger.kernel.org
+Fixes: 5c9668cfc6d7 ("firewall: introduce stm32_firewall framework")
+Link: https://lore.kernel.org/r/20250507092121.95121-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/legacy_freezer.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/linux/bus/stm32_firewall_device.h |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/kernel/cgroup/legacy_freezer.c
-+++ b/kernel/cgroup/legacy_freezer.c
-@@ -188,13 +188,12 @@ static void freezer_attach(struct cgroup
- 		if (!(freezer->state & CGROUP_FREEZING)) {
- 			__thaw_task(task);
- 		} else {
--			freeze_task(task);
--
- 			/* clear FROZEN and propagate upwards */
- 			while (freezer && (freezer->state & CGROUP_FROZEN)) {
- 				freezer->state &= ~CGROUP_FROZEN;
- 				freezer = parent_freezer(freezer);
- 			}
-+			freeze_task(task);
- 		}
- 	}
+--- a/include/linux/bus/stm32_firewall_device.h
++++ b/include/linux/bus/stm32_firewall_device.h
+@@ -114,27 +114,30 @@ void stm32_firewall_release_access_by_id
+ 
+ #else /* CONFIG_STM32_FIREWALL */
+ 
+-int stm32_firewall_get_firewall(struct device_node *np, struct stm32_firewall *firewall,
+-				unsigned int nb_firewall)
++static inline int stm32_firewall_get_firewall(struct device_node *np,
++					      struct stm32_firewall *firewall,
++					      unsigned int nb_firewall)
+ {
+ 	return -ENODEV;
+ }
+ 
+-int stm32_firewall_grant_access(struct stm32_firewall *firewall)
++static inline int stm32_firewall_grant_access(struct stm32_firewall *firewall)
+ {
+ 	return -ENODEV;
+ }
+ 
+-void stm32_firewall_release_access(struct stm32_firewall *firewall)
++static inline void stm32_firewall_release_access(struct stm32_firewall *firewall)
+ {
+ }
+ 
+-int stm32_firewall_grant_access_by_id(struct stm32_firewall *firewall, u32 subsystem_id)
++static inline int stm32_firewall_grant_access_by_id(struct stm32_firewall *firewall,
++						    u32 subsystem_id)
+ {
+ 	return -ENODEV;
+ }
+ 
+-void stm32_firewall_release_access_by_id(struct stm32_firewall *firewall, u32 subsystem_id)
++static inline void stm32_firewall_release_access_by_id(struct stm32_firewall *firewall,
++						       u32 subsystem_id)
+ {
+ }
  
 
 
