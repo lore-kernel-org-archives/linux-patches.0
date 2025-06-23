@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95EDD248895;
-	Mon, 23 Jun 2025 13:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA3725394A;
+	Mon, 23 Jun 2025 13:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685905; cv=none; b=gKaWBKbK301YsK7806LXSr5nb5XbWpGZ77wRBHrJQJ5OKWhahGgSbvizwQgy9ug/ebTemSsdXaG/W307q/5DFcXskpqgBvMcU/t2DyEo2W1xHWlkeNJannSMJk+r0+ZvJD+Q0dE01qM4YIopq1aAwS3zoohw1r55iT2noIW5ZqY=
+	t=1750685908; cv=none; b=MDtoFyCIRQWi8lwl03Q3GI9JIANDM82tp7p4+PRyCZpp0sSUpTvBpK2AnA6FNbaOeo/dFC45bP6GIA2O5PyW3JzZj4CEdWoTeAcAR5xKoxVS7IO9XpkCBPf86KCWViRKUhzxtOrmkRFxdn+Kj6EsZYr/CjAQnRyZ9g2orbztbSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685905; c=relaxed/simple;
-	bh=jjbwyvG8qE/8IlxOD0N8un9CXn4FvHRQDe4cSjO/dF0=;
+	s=arc-20240116; t=1750685908; c=relaxed/simple;
+	bh=D4qqEygardfpY6CCO34sKz6tRbWIEC1lh21H8u2INAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=icCK078BWb1qbfL99Fq4DRIjd0doKwgfd/D/PGj+8wgElVZkG88bd+C806bh8NooGdrAQ7ZeT/cmeQDUuEEJzRXtSG0xBR77/eZql9rLn7Yo+nNLscB5SYcCr+8x8iFxPcJ4h11eS9/3sOqgvDlxsfV7+J0XZAR3m2thwJW1bV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8LM7kTS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p8ZyUjLg1W0DuSJfXA3fxbdWaxO/kJIAhrb19xAuTMwbYhMuJkuT9ehGHPcSsf4dxs3thgu9D4zOMYLkfoKQ2umGOxu+zQaWxF953VfQ9fQ/7pzXhnc3nrzJTqATBfsRDCsBWAHJvKzHsuz2/OOpB2gayQH1q+YQvAIgP+GS3K0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymzNhyR+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8LM7kTS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB1CC4CEEA;
-	Mon, 23 Jun 2025 13:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymzNhyR+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA809C4CEEA;
+	Mon, 23 Jun 2025 13:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685905;
-	bh=jjbwyvG8qE/8IlxOD0N8un9CXn4FvHRQDe4cSjO/dF0=;
+	s=korg; t=1750685908;
+	bh=D4qqEygardfpY6CCO34sKz6tRbWIEC1lh21H8u2INAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8LM7kTSinb3eue5TxbSvJNGIUOEKInN6pM4DuIa5X/Eh2i/1ZPWozzhJFBzIRD/U
-	 HvRHtGUyvwPPuX2ju9XMwxP3aFMpStTfn+ALSVS8Nqg2aPTLRaXy+Ik2q6i1vvh/+N
-	 mR8BsHQl/8PXSMDtiX/6cuvEM2IPyS9Zg4a2o8Yo=
+	b=ymzNhyR+XWAecxPc4uNddO9fgpQvX5a/wW7ttGRSZOaA/xJOswRxQ8kUCv5lEWtVT
+	 SFHnrobaIGuDifIei5ea0Fykm081EAFPmQKNqJQ3EjJ7iYhZmuKAmA47veE7DJdpYG
+	 GhyViYHnoIuK1g7tA4r1An7Nv2g+luVNSQxDTwFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 011/290] net/mlx5_core: Add error handling inmlx5_query_nic_vport_qkey_viol_cntr()
-Date: Mon, 23 Jun 2025 15:04:32 +0200
-Message-ID: <20250623130627.308787715@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 079/355] mfd: exynos-lpass: Avoid calling exynos_lpass_disable() twice in exynos_lpass_remove()
+Date: Mon, 23 Jun 2025 15:04:40 +0200
+Message-ID: <20250623130629.193677283@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit f0b50730bdd8f2734e548de541e845c0d40dceb6 upstream.
+[ Upstream commit b70b84556eeca5262d290e8619fe0af5b7664a52 ]
 
-The function mlx5_query_nic_vport_qkey_viol_cntr() calls the function
-mlx5_query_nic_vport_context() but does not check its return value. This
-could lead to undefined behavior if the query fails. A proper
-implementation can be found in mlx5_nic_vport_query_local_lb().
+exynos_lpass_disable() is called twice in the remove function. Remove
+one of these calls.
 
-Add error handling for mlx5_query_nic_vport_context(). If it fails, free
-the out buffer via kvfree() and return error code.
-
-Fixes: 9efa75254593 ("net/mlx5_core: Introduce access functions to query vport RoCE fields")
-Cc: stable@vger.kernel.org # v4.5
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250521133620.912-1-vulab@iscas.ac.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 90f447170c6f ("mfd: exynos-lpass: Add runtime PM support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/74d69e8de10308c9855db6d54155a3de4b11abfd.1745247209.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/vport.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/mfd/exynos-lpass.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-@@ -498,19 +498,22 @@ int mlx5_query_nic_vport_qkey_viol_cntr(
+diff --git a/drivers/mfd/exynos-lpass.c b/drivers/mfd/exynos-lpass.c
+index 99bd0e73c19c3..ffda3445d1c0f 100644
+--- a/drivers/mfd/exynos-lpass.c
++++ b/drivers/mfd/exynos-lpass.c
+@@ -144,7 +144,6 @@ static int exynos_lpass_remove(struct platform_device *pdev)
  {
- 	u32 *out;
- 	int outlen = MLX5_ST_SZ_BYTES(query_nic_vport_context_out);
-+	int err;
+ 	struct exynos_lpass *lpass = platform_get_drvdata(pdev);
  
- 	out = kvzalloc(outlen, GFP_KERNEL);
- 	if (!out)
- 		return -ENOMEM;
- 
--	mlx5_query_nic_vport_context(mdev, 0, out);
-+	err = mlx5_query_nic_vport_context(mdev, 0, out);
-+	if (err)
-+		goto out;
- 
- 	*qkey_viol_cntr = MLX5_GET(query_nic_vport_context_out, out,
- 				   nic_vport_context.qkey_violation_counter);
--
-+out:
- 	kvfree(out);
- 
--	return 0;
-+	return err;
- }
- EXPORT_SYMBOL_GPL(mlx5_query_nic_vport_qkey_viol_cntr);
- 
+-	exynos_lpass_disable(lpass);
+ 	pm_runtime_disable(&pdev->dev);
+ 	if (!pm_runtime_status_suspended(&pdev->dev))
+ 		exynos_lpass_disable(lpass);
+-- 
+2.39.5
+
 
 
