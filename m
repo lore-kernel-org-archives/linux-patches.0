@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094531F582A;
-	Mon, 23 Jun 2025 21:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3B0217668;
+	Mon, 23 Jun 2025 21:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712869; cv=none; b=dBiITCoZwGHDagzXJOlQ9WIXXyHl9OOiSAXrnJNuEJnLHrMRxk++qSyam04iFumxJ+9q7GdcPGsTFDkzi/r+M/vAFSjgb089oE5OU6rSMsKAAodnQNfPsmLtZFsu1tP386puMc3qWOs4eS4uR5cn1gmKPoTmYhsAdPOmRQY1LPQ=
+	t=1750712871; cv=none; b=JFhsXAWITKTr2ia34qVpxrrxiiz3IKdV+xaXYKqfQk2agIVp7Fx8aFlTJe4SqVCotFbuhv00aTio0t/0YT31/WKMtziHgb9TGBziX+3R8Xbm/3JEA2vqFNk71c0669w0GroAHEh/kOW9y9oi01Nbn/Q6MY92Z7yQ7wIlyzDEfoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712869; c=relaxed/simple;
-	bh=rV+m/MQ9EPTFIzgTWf9oNd1N1djQxNRb7QHeA4T+lQ8=;
+	s=arc-20240116; t=1750712871; c=relaxed/simple;
+	bh=kBdey57rEhVp52xGpd5W+8O6SQt12Lsk1FznCGvj8Aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qhE0NO6iOB0s/Ppg+SFFXEiEJF4pr63ALrqVnaj9LcmssFN4q8GQ2fcp6AMh6+y5HCl02C1V/4zRxuygyyFhi1IQYTO29MgoOzAPaKD5oEZ19THb5F090JUT0mNsqReubLDqvgahytxudz0d4oHP8sH/gNBwTRJRUCkFTXGBXuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppo+WBEj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RIfW8wi1XPvbgYyxTwCcXOFHBlgOHcLIVgf52UObLW9j6nOAiARDP4UVJeJK14UhQHzKPfRmB65iKf2a0nhoEiLiBHH1v7VxnuKuFYL6uYR4zWrym2C7Fs8F2MQbZfFZfQAcPoEoizLy3+n74gGa62nM8JKP6Rd2o/Z9V0O/AD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYScOpyb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppo+WBEj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B86C4CEEA;
-	Mon, 23 Jun 2025 21:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYScOpyb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CECBC4CEEA;
+	Mon, 23 Jun 2025 21:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712868;
-	bh=rV+m/MQ9EPTFIzgTWf9oNd1N1djQxNRb7QHeA4T+lQ8=;
+	s=korg; t=1750712871;
+	bh=kBdey57rEhVp52xGpd5W+8O6SQt12Lsk1FznCGvj8Aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ppo+WBEj2tJnyCxE0/Qu0i+mJvIrvDlmJDkvFtUoGm7498rcZfD6pwFQ3ZEEYHbrv
-	 Pdc40hLd0gnS9ULgMqwq2QRvwETLv/UZRY906PQMlcEP1ozw4rUI5N5xRFyPb2AX97
-	 KLdFBLkn5FEkJgDEqdo508ae5hVwECUvKAx7UuNQ=
+	b=cYScOpybVsleLTHgrl4gKKGYXv0SDZNormdrdaUHxTm4uXEzPw3lCeo/1SR/oWvSG
+	 amDcVZdTE6C5ban39xKMR7fQ6MQfdUj6pm8JYyRR7/es1uo1pbagcMFlv3rxnhMpub
+	 8NsRJOwf2kQnsXAPRpf0o5851rR2EUure01GAjq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 093/411] backlight: pm8941: Add NULL check in wled_configure()
-Date: Mon, 23 Jun 2025 15:03:57 +0200
-Message-ID: <20250623130635.804525727@linuxfoundation.org>
+Subject: [PATCH 6.15 298/592] media: renesas: vsp1: Fix media bus code setup on RWPF source pad
+Date: Mon, 23 Jun 2025 15:04:16 +0200
+Message-ID: <20250623130707.474751478@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,49 +49,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-[ Upstream commit e12d3e1624a02706cdd3628bbf5668827214fa33 ]
+[ Upstream commit b6e57605eff6224df4debf188eb7a02dedb7686f ]
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-wled_configure() does not check for this case, which results in a NULL
-pointer dereference.
+The RWPF source pad media bus code can only be different from the sink
+pad code when enabling color space conversion, which can only convert
+between RGB and YUV. If the sink pad code is HSV, no conversion is
+possible. Fix the pad set format handler to reflect this hardware
+limitation.
 
-Add NULL check after devm_kasprintf() to prevent this issue.
-
-Fixes: f86b77583d88 ("backlight: pm8941: Convert to using %pOFn instead of device_node.name")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: "Daniel Thompson (RISCstar)" <danielt@kernel.org>
-Link: https://lore.kernel.org/r/20250401091647.22784-1-bsdhenrymartin@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+Link: https://lore.kernel.org/r/20250429232904.26413-5-laurent.pinchart+renesas@ideasonboard.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/qcom-wled.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/platform/renesas/vsp1/vsp1_rwpf.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index f12c76d6e61de..21c1fba64ad5d 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -1404,9 +1404,11 @@ static int wled_configure(struct wled *wled)
- 	wled->ctrl_addr = be32_to_cpu(*prop_addr);
+diff --git a/drivers/media/platform/renesas/vsp1/vsp1_rwpf.c b/drivers/media/platform/renesas/vsp1/vsp1_rwpf.c
+index 9d38203e73d00..1b4bac7b7cfa1 100644
+--- a/drivers/media/platform/renesas/vsp1/vsp1_rwpf.c
++++ b/drivers/media/platform/renesas/vsp1/vsp1_rwpf.c
+@@ -76,11 +76,20 @@ static int vsp1_rwpf_set_format(struct v4l2_subdev *subdev,
+ 	format = v4l2_subdev_state_get_format(state, fmt->pad);
  
- 	rc = of_property_read_string(dev->of_node, "label", &wled->name);
--	if (rc)
-+	if (rc) {
- 		wled->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFn", dev->of_node);
--
-+		if (!wled->name)
-+			return -ENOMEM;
-+	}
- 	switch (wled->version) {
- 	case 3:
- 		u32_opts = wled3_opts;
+ 	if (fmt->pad == RWPF_PAD_SOURCE) {
++		const struct v4l2_mbus_framefmt *sink_format =
++			v4l2_subdev_state_get_format(state, RWPF_PAD_SINK);
++
+ 		/*
+ 		 * The RWPF performs format conversion but can't scale, only the
+-		 * format code can be changed on the source pad.
++		 * format code can be changed on the source pad when converting
++		 * between RGB and YUV.
+ 		 */
+-		format->code = fmt->format.code;
++		if (sink_format->code != MEDIA_BUS_FMT_AHSV8888_1X32 &&
++		    fmt->format.code != MEDIA_BUS_FMT_AHSV8888_1X32)
++			format->code = fmt->format.code;
++		else
++			format->code = sink_format->code;
++
+ 		fmt->format = *format;
+ 		goto done;
+ 	}
 -- 
 2.39.5
 
