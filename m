@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963CA4C7F;
-	Mon, 23 Jun 2025 13:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323744C7F;
+	Mon, 23 Jun 2025 13:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685198; cv=none; b=MwPjZM3uRpNP4MSHKx7fDKNMa9dREtTnIGaACUGdXlgnPUhUA5zm9eNla9ly3wnWaGgfzgkbiqll+nsgyvYEkkeJEFYYj/o5ASFyzzv0gnX1eNG+l/MCoEfU4A0qzE2V5jPopFOKVM3naVbZkwDfrA1Vxrth4S44QulITyCfmxc=
+	t=1750685201; cv=none; b=Qqd/sf71wvckLOpQ7col4c977/QQ5tqetaSVHNrRv9EBiqOzigqzaAovh5alIfD9Z2WRRX3TSDFZK7sQ6A6n7Xnw69+BXZEb+e7sW8O0FofsfJh/hrjC4Q/lRh9jP38W7T44b38fyhOBBZ2HSrUpVccfId604KhCKZ3PHZSM+vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685198; c=relaxed/simple;
-	bh=JjSGPjay9fb+jNngz2aXzmavli0nqU07W6Qf8vGRm+Q=;
+	s=arc-20240116; t=1750685201; c=relaxed/simple;
+	bh=P1PO7fJ/mwsG4JS/45rxqQh9LEum5HgobqOR2RZWqjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ksNjUNbWrQT1rt6iSuBmvJmRZMCNv8QiXn74NukI69WAxx2USLyVyE0/bsVH73tD5+Zo5K3pO4J9BWBFCZJ0dvFiBn3imGjFAYiKS0zTBJE4ydoKM2z4PuyBgTKG/nzPidcvxyKPneECRqmE6RX9q8ip446SXDhAhr6akIFlrtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=quAtc6Be; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J2ogB8SNCjNGKHkYTzaBU2vbhwAPB51/3RL4aTW+exRQflNVbhKofZurx4mWIx+sMRLNRdrOXbpyNgiIlXsBqWgyQSQsvVVLqdzaHHzb0jY/QSZMLYbffl1/HfAiJL3sex6sMJMrw6PyhirO90M7jKdrfi7w/ICKKOHeyiGFoJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXHY+LN7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="quAtc6Be"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A393C4CEF0;
-	Mon, 23 Jun 2025 13:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXHY+LN7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACDFC4CEEA;
+	Mon, 23 Jun 2025 13:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685198;
-	bh=JjSGPjay9fb+jNngz2aXzmavli0nqU07W6Qf8vGRm+Q=;
+	s=korg; t=1750685201;
+	bh=P1PO7fJ/mwsG4JS/45rxqQh9LEum5HgobqOR2RZWqjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=quAtc6BeoFrHtznR0PDRxY+NFaLMpyIlekP0uny3Jo1pLBQ8JfdMavm01zT5kl2A2
-	 zkAvD16m4iR0WmIPaX7wwSM7YCQcd5N0VI4wbRvh+Ls+91YQJ4RQJGtx6mZdyeSnYQ
-	 L4n99gHSOH/EtlB9eW9O8EuEfwN2qToKyhw95ueY=
+	b=OXHY+LN7dnSSqpyWJ+20LS31FZ4oEPolbj68HtjDUFxDIF+sWQUMB8RLNdqSqRC6N
+	 VHhQ9DLPxVVbH2OG9D1qvdKG6exW+Xe5j02P+3zGA6A/P8wfL+UXi8YhZhnTJiJB13
+	 pzxOtrH3qmIHyvfUopc/ePZeHNWnOiQmGVGOWFyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luke Wang <ziniu.wang_1@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Stone Zhang <quic_stonez@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 213/592] mmc: sdhci-esdhc-imx: Save tuning value when card stays powered in suspend
-Date: Mon, 23 Jun 2025 15:02:51 +0200
-Message-ID: <20250623130705.351365622@linuxfoundation.org>
+Subject: [PATCH 5.10 034/355] wifi: ath11k: fix node corruption in ar->arvifs list
+Date: Mon, 23 Jun 2025 15:03:55 +0200
+Message-ID: <20250623130627.835188651@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,191 +47,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luke Wang <ziniu.wang_1@nxp.com>
+From: Stone Zhang <quic_stonez@quicinc.com>
 
-[ Upstream commit c63d25cdc59ae2891b39ba2da950910291d9bcbf ]
+[ Upstream commit 31e98e277ae47f56632e4d663b1d4fd12ba33ea8 ]
 
-For SoCs like i.MX6UL(L/Z) and i.MX7D, USDHC powers off completely during
-system power management (PM), causing the internal tuning status to be
-lost. To address this, save the tuning value when system suspend and
-restore it for any command issued after system resume when re-tuning is
-held.
+In current WLAN recovery code flow, ath11k_core_halt() only
+reinitializes the "arvifs" list head. This will cause the
+list node immediately following the list head to become an
+invalid list node. Because the prev of that node still points
+to the list head "arvifs", but the next of the list head "arvifs"
+no longer points to that list node.
 
-A typical case involves SDIO WiFi devices with the MMC_PM_KEEP_POWER and
-MMC_PM_WAKE_SDIO_IRQ flag, which retain power during system PM. To
-conserve power, WiFi switches to 1-bit mode and restores 4-bit mode upon
-resume. As per the specification, tuning commands are not supported in
-1-bit mode. When sending CMD52 to restore 4-bit mode, re-tuning must be
-held. However, CMD52 still requires a correct sample point to avoid CRC
-errors, necessitating preservation of the previous tuning value.
+When a WLAN recovery occurs during the execution of a vif
+removal, and it happens before the spin_lock_bh(&ar->data_lock)
+in ath11k_mac_op_remove_interface(), list_del() will detect the
+previously mentioned situation, thereby triggering a kernel panic.
 
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250328112517.2624806-1-ziniu.wang_1@nxp.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+The fix is to remove and reinitialize all vif list nodes from the
+list head "arvifs" during WLAN halt. The reinitialization is to make
+the list nodes valid, ensuring that the list_del() in
+ath11k_mac_op_remove_interface() can execute normally.
+
+Call trace:
+__list_del_entry_valid_or_report+0xb8/0xd0
+ath11k_mac_op_remove_interface+0xb0/0x27c [ath11k]
+drv_remove_interface+0x48/0x194 [mac80211]
+ieee80211_do_stop+0x6e0/0x844 [mac80211]
+ieee80211_stop+0x44/0x17c [mac80211]
+__dev_close_many+0xac/0x150
+__dev_change_flags+0x194/0x234
+dev_change_flags+0x24/0x6c
+devinet_ioctl+0x3a0/0x670
+inet_ioctl+0x200/0x248
+sock_do_ioctl+0x60/0x118
+sock_ioctl+0x274/0x35c
+__arm64_sys_ioctl+0xac/0xf0
+invoke_syscall+0x48/0x114
+...
+
+Tested-on: QCA6698AQ hw2.1 PCI WLAN.HSP.1.1-04591-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Stone Zhang <quic_stonez@quicinc.com>
+Link: https://patch.msgid.link/20250320053145.3445187-1-quic_stonez@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c | 88 +++++++++++++++++++++++++++++-
- 1 file changed, 86 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
-index ff78a7c6a04c9..7e8addaed697e 100644
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -81,6 +81,8 @@
- #define  ESDHC_TUNE_CTRL_STEP		1
- #define  ESDHC_TUNE_CTRL_MIN		0
- #define  ESDHC_TUNE_CTRL_MAX		((1 << 7) - 1)
-+#define  ESDHC_TUNE_CTRL_STATUS_TAP_SEL_PRE_MASK	GENMASK(30, 24)
-+#define  ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK	GENMASK(14, 8)
- 
- /* strobe dll register */
- #define ESDHC_STROBE_DLL_CTRL		0x70
-@@ -235,6 +237,7 @@ struct esdhc_platform_data {
- 	unsigned int tuning_step;       /* The delay cell steps in tuning procedure */
- 	unsigned int tuning_start_tap;	/* The start delay cell point in tuning procedure */
- 	unsigned int strobe_dll_delay_target;	/* The delay cell for strobe pad (read clock) */
-+	unsigned int saved_tuning_delay_cell;	/* save the value of tuning delay cell */
- };
- 
- struct esdhc_soc_data {
-@@ -1057,7 +1060,7 @@ static void esdhc_reset_tuning(struct sdhci_host *host)
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index 473d92240a829..6282ccad79d5e 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -736,6 +736,7 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
+ void ath11k_core_halt(struct ath11k *ar)
  {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
--	u32 ctrl;
-+	u32 ctrl, tuning_ctrl;
- 	int ret;
+ 	struct ath11k_base *ab = ar->ab;
++	struct list_head *pos, *n;
  
- 	/* Reset the tuning circuit */
-@@ -1071,6 +1074,16 @@ static void esdhc_reset_tuning(struct sdhci_host *host)
- 			writel(0, host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
- 		} else if (imx_data->socdata->flags & ESDHC_FLAG_STD_TUNING) {
- 			writel(ctrl, host->ioaddr + ESDHC_MIX_CTRL);
-+			/*
-+			 * enable the std tuning just in case it cleared in
-+			 * sdhc_esdhc_tuning_restore.
-+			 */
-+			tuning_ctrl = readl(host->ioaddr + ESDHC_TUNING_CTRL);
-+			if (!(tuning_ctrl & ESDHC_STD_TUNING_EN)) {
-+				tuning_ctrl |= ESDHC_STD_TUNING_EN;
-+				writel(tuning_ctrl, host->ioaddr + ESDHC_TUNING_CTRL);
-+			}
+ 	lockdep_assert_held(&ar->conf_mutex);
+ 
+@@ -749,7 +750,12 @@ void ath11k_core_halt(struct ath11k *ar)
+ 
+ 	rcu_assign_pointer(ab->pdevs_active[ar->pdev_idx], NULL);
+ 	synchronize_rcu();
+-	INIT_LIST_HEAD(&ar->arvifs);
 +
- 			ctrl = readl(host->ioaddr + SDHCI_AUTO_CMD_STATUS);
- 			ctrl &= ~ESDHC_MIX_CTRL_SMPCLK_SEL;
- 			ctrl &= ~ESDHC_MIX_CTRL_EXE_TUNE;
-@@ -1149,7 +1162,8 @@ static void esdhc_prepare_tuning(struct sdhci_host *host, u32 val)
- 	reg |= ESDHC_MIX_CTRL_EXE_TUNE | ESDHC_MIX_CTRL_SMPCLK_SEL |
- 			ESDHC_MIX_CTRL_FBCLK_SEL;
- 	writel(reg, host->ioaddr + ESDHC_MIX_CTRL);
--	writel(val << 8, host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
-+	writel(FIELD_PREP(ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK, val),
-+	       host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
- 	dev_dbg(mmc_dev(host->mmc),
- 		"tuning with delay 0x%x ESDHC_TUNE_CTRL_STATUS 0x%x\n",
- 			val, readl(host->ioaddr + ESDHC_TUNE_CTRL_STATUS));
-@@ -1569,6 +1583,57 @@ static void sdhci_esdhc_imx_hwinit(struct sdhci_host *host)
- 	}
++	spin_lock_bh(&ar->data_lock);
++	list_for_each_safe(pos, n, &ar->arvifs)
++		list_del_init(pos);
++	spin_unlock_bh(&ar->data_lock);
++
+ 	idr_init(&ar->txmgmt_idr);
  }
- 
-+static void sdhc_esdhc_tuning_save(struct sdhci_host *host)
-+{
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
-+	u32 reg;
-+
-+	/*
-+	 * SD/eMMC do not need this tuning save because it will re-init
-+	 * after system resume back.
-+	 * Here save the tuning delay value for SDIO device since it may
-+	 * keep power during system PM. And for usdhc, only SDR50 and
-+	 * SDR104 mode for SDIO device need to do tuning, and need to
-+	 * save/restore.
-+	 */
-+	if (host->timing == MMC_TIMING_UHS_SDR50 ||
-+	    host->timing == MMC_TIMING_UHS_SDR104) {
-+		reg = readl(host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
-+		reg = FIELD_GET(ESDHC_TUNE_CTRL_STATUS_TAP_SEL_PRE_MASK, reg);
-+		imx_data->boarddata.saved_tuning_delay_cell = reg;
-+	}
-+}
-+
-+static void sdhc_esdhc_tuning_restore(struct sdhci_host *host)
-+{
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
-+	u32 reg;
-+
-+	if (host->timing == MMC_TIMING_UHS_SDR50 ||
-+	    host->timing == MMC_TIMING_UHS_SDR104) {
-+		/*
-+		 * restore the tuning delay value actually is a
-+		 * manual tuning method, so clear the standard
-+		 * tuning enable bit here. Will set back this
-+		 * ESDHC_STD_TUNING_EN in esdhc_reset_tuning()
-+		 * when trigger re-tuning.
-+		 */
-+		reg = readl(host->ioaddr + ESDHC_TUNING_CTRL);
-+		reg &= ~ESDHC_STD_TUNING_EN;
-+		writel(reg, host->ioaddr + ESDHC_TUNING_CTRL);
-+
-+		reg = readl(host->ioaddr + ESDHC_MIX_CTRL);
-+		reg |= ESDHC_MIX_CTRL_SMPCLK_SEL | ESDHC_MIX_CTRL_FBCLK_SEL;
-+		writel(reg, host->ioaddr + ESDHC_MIX_CTRL);
-+
-+		writel(FIELD_PREP(ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK,
-+				  imx_data->boarddata.saved_tuning_delay_cell),
-+		       host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
-+	}
-+}
-+
- static void esdhc_cqe_enable(struct mmc_host *mmc)
- {
- 	struct sdhci_host *host = mmc_priv(mmc);
-@@ -1900,6 +1965,15 @@ static int sdhci_esdhc_suspend(struct device *dev)
- 	if (host->tuning_mode != SDHCI_TUNING_MODE_3)
- 		mmc_retune_needed(host->mmc);
- 
-+	/*
-+	 * For the device need to keep power during system PM, need
-+	 * to save the tuning delay value just in case the usdhc
-+	 * lost power during system PM.
-+	 */
-+	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
-+	    esdhc_is_usdhc(imx_data))
-+		sdhc_esdhc_tuning_save(host);
-+
- 	ret = sdhci_suspend_host(host);
- 	if (ret)
- 		return ret;
-@@ -1916,6 +1990,8 @@ static int sdhci_esdhc_suspend(struct device *dev)
- static int sdhci_esdhc_resume(struct device *dev)
- {
- 	struct sdhci_host *host = dev_get_drvdata(dev);
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
- 	int ret;
- 
- 	ret = pinctrl_pm_select_default_state(dev);
-@@ -1929,6 +2005,14 @@ static int sdhci_esdhc_resume(struct device *dev)
- 	if (ret)
- 		return ret;
- 
-+	/*
-+	 * restore the saved tuning delay value for the device which keep
-+	 * power during system PM.
-+	 */
-+	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
-+	    esdhc_is_usdhc(imx_data))
-+		sdhc_esdhc_tuning_restore(host);
-+
- 	if (host->mmc->caps2 & MMC_CAP2_CQE)
- 		ret = cqhci_resume(host->mmc);
  
 -- 
 2.39.5
