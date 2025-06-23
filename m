@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F058F4C74;
-	Mon, 23 Jun 2025 22:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A344409;
+	Mon, 23 Jun 2025 22:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716015; cv=none; b=YJMPHWDaujYhV0t7RTI2qq+/UZ1335HVMRB2NCTdSxdB5vEuLiJ+P0FLUS/GxNxO5leF32AavXYDYKele0alHEg1Ny8WA42/corkoTbl6sViI3g1Mlm1uZeX914rcMqlZXURu4A67WjtmwhcqnFyDJj7zhdLpk9vhHIGsbGhFno=
+	t=1750716017; cv=none; b=Mpxsx25tVryzkgziJvj5QUKXNExj27slzAKGvN/epgifBiF234/OuGRNXJjV4lfTFLCLlX89aNO0bMaPfo+ZZB5sBtlSSdvU/6BNDCNqTmkNsFdTSmW/bo4aJPjVp4xqg6QUWJgeKd1BKa4SsvvwUdBFO9Of+DMTHBZ7OzZ/96s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716015; c=relaxed/simple;
-	bh=RYaDL+Yjgv0epGTuPPz7pCPlhz5M3nnXHbK2n9X2ULQ=;
+	s=arc-20240116; t=1750716017; c=relaxed/simple;
+	bh=WO2J9Q5W5Sz6as3RsFqoLmWApkiG7p9mrEc4PCtdVgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZcWw0OMnCD4WKQ8o5JeFxpPi+gY7xtnx3tRyF1hUM8FmYJYrMP2RU0oFshfEPE0V3kaG59uPykGpqqul8YQOHAZHKj+GUXcLdUVJffFos8cbE4L+q4yckZFPdDROhdsHb+pm63gsQTg/RDYTCPJ6vNt79FZjbjLdh3YjybMI6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXYGBYzj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n35XhN8FPnTydEGSFyUQUHnIZUSovGLKQQNYel12+MoRQFDUm9U/I0WJjvmmE6kK1FCXkCScqCozSLD7meJ+GYWqA8ZalAjykq0RSg8dkQ88C3OMuYuDhWovbLj3vDYoAZsR3t1jFBm+9oGthIoNZ8KMhZVmKjxJD2ZB0U+WRz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NzMnn06M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXYGBYzj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F762C4CEEA;
-	Mon, 23 Jun 2025 22:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NzMnn06M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B267FC4CEEA;
+	Mon, 23 Jun 2025 22:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716014;
-	bh=RYaDL+Yjgv0epGTuPPz7pCPlhz5M3nnXHbK2n9X2ULQ=;
+	s=korg; t=1750716017;
+	bh=WO2J9Q5W5Sz6as3RsFqoLmWApkiG7p9mrEc4PCtdVgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uXYGBYzjD6Dv9V5uGBWA+io65RydzW39hwv4ZAZROdiOhT2HqVZfaEzrCczPixIIb
-	 PcBWHQr+AB+LIzMzOzm65hqon7qjgBwoT+dLzywDoTIw2yJcWt43t9XyMdv32z/Ifc
-	 4BLLlaO6E8nDUXodGq/BTGpmREMCKaBR12GILt/0=
+	b=NzMnn06MYOAi+ADMPzLJTv7LTWh3pmvJmze5dHLkEwwzy2rTYCnVdQjv8QMzBdoD6
+	 YuVXQE4bsYLHJS8a3lq3fo/zA7wEbEcvbU5AWkcGuE7A0r1CCHJfYNElJdGZz1tCmS
+	 AiYURKqJ1PimW7UKhJM3eI/XvyQIdO+Qf3Gorbng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amber Lin <Amber.Lin@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 297/411] drm/amdkfd: Set SDMA_RLCx_IB_CNTL/SWITCH_INSIDE_IB
-Date: Mon, 23 Jun 2025 15:07:21 +0200
-Message-ID: <20250623130641.125146802@linuxfoundation.org>
+	Jonathan Lane <jon@borg.moe>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 235/290] ALSA: hda/realtek: enable headset mic on Latitude 5420 Rugged
+Date: Mon, 23 Jun 2025 15:08:16 +0200
+Message-ID: <20250623130633.996435910@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +46,36 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amber Lin <Amber.Lin@amd.com>
+From: Jonathan Lane <jon@borg.moe>
 
-[ Upstream commit ab9fcc6362e0699fc1150aa1d8503c40fce2c1e1 ]
+commit efa6bdf1bc75e26cafaa5f1d775e8bb7c5b0c431 upstream.
 
-When submitting MQD to CP, set SDMA_RLCx_IB_CNTL/SWITCH_INSIDE_IB bit so
-it'll allow SDMA preemption if there is a massive command buffer of
-long-running SDMA commands.
+Like many Dell laptops, the 3.5mm port by default can not detect a
+combined headphones+mic headset or even a pure microphone.  This
+change enables the port's functionality.
 
-Signed-off-by: Amber Lin <Amber.Lin@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jonathan Lane <jon@borg.moe>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250611193124.26141-2-jon@borg.moe
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-index ddaafcd7b8256..d3503072654f3 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -403,6 +403,10 @@ static void update_mqd_sdma(struct mqd_manager *mm, void *mqd,
- 	m->sdma_engine_id = q->sdma_engine_id;
- 	m->sdma_queue_id = q->sdma_queue_id;
- 	m->sdmax_rlcx_dummy_reg = SDMA_RLC_DUMMY_DEFAULT;
-+	/* Allow context switch so we don't cross-process starve with a massive
-+	 * command buffer of long-running SDMA commands
-+	 */
-+	m->sdmax_rlcx_ib_cntl |= SDMA0_GFX_IB_CNTL__SWITCH_INSIDE_IB_MASK;
- 
- 	q->is_active = QUEUE_IS_ACTIVE(*q);
- }
--- 
-2.39.5
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9952,6 +9952,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1028, 0x0871, "Dell Precision 3630", ALC255_FIXUP_DELL_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1028, 0x0872, "Dell Precision 3630", ALC255_FIXUP_DELL_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1028, 0x0873, "Dell Precision 3930", ALC255_FIXUP_DUMMY_LINEOUT_VERB),
++	SND_PCI_QUIRK(0x1028, 0x0879, "Dell Latitude 5420 Rugged", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1028, 0x08ad, "Dell WYSE AIO", ALC225_FIXUP_DELL_WYSE_AIO_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1028, 0x08ae, "Dell WYSE NB", ALC225_FIXUP_DELL1_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1028, 0x0935, "Dell", ALC274_FIXUP_DELL_AIO_LINEOUT_VERB),
 
 
