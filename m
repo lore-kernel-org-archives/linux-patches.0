@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8134B248191;
-	Mon, 23 Jun 2025 13:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643EE248191;
+	Mon, 23 Jun 2025 13:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685193; cv=none; b=myGH1ZN523PyoxWVkUPqmHbIAKgyP0Idooikg5TNaMt1z6wQ9TeFvnl/rZZU82R2vexyfYHCGJoH098Ie7t6jGha2k2Rdh9tk/faYXQi+xgCJQP8Z9NWmuQSsJsmzeb7nBXjazHke2YgCoKFOS0nwlPILPLl56a+zDsZ11cPjPo=
+	t=1750685196; cv=none; b=jH0bP+m6wsIb5L9Xnf8YOKpcIR19ylzzs+aoR8wBcw/+oF91/9gSykq+qb8KUE4iFqlc3zUYWQQUf1KD6e5MHE+KSIXJc/G/sWFxQaNs/4JX1nYE2/9z+oCjEWeJ9l15mn1MIZ7M19+qw/8BH9JuBIlfY3HCT4gP9YJzBElgtcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685193; c=relaxed/simple;
-	bh=VPiYl4LlpNNfO6sBILxslKfFKwYofJtged8FE0Myy/E=;
+	s=arc-20240116; t=1750685196; c=relaxed/simple;
+	bh=4P35LHm/toWONjJ4v4eGslgipe/CHQAgskgsedjdRCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IHWKST7XokP2LqEtQsDnxSTGQmuTQq5cMpGXRkS60kIBjYJDbEZ6YC1AIyaNVoj6ayIfvsa2iLP0o4Buu7PB7k2wwT4nRM8jrXwE1iLyc7vUGxeLi1dFlYLRGazprrfsb6lm1eDvB1jNwS79r1OpiD0ihhst6CXKbEMXLecJF/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MO9kizh7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n7idNueZcSkVKak+KKJ68mSmkCSdH+arsC39LIgZQGWBxnWx89XCvMurGjVh5OOgthF/Jk7NqQyPvpVK1OMRdtvyTQWDlY5fpH8kxH9DDOl8X9H0+3uroGXt9db0YtlJf+nYkL3p5bRTWNjVFwcAgujVGpIYTt1L4iUsXywcwNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEvNHlxC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MO9kizh7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168D7C4CEEA;
-	Mon, 23 Jun 2025 13:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEvNHlxC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3107C4CEEA;
+	Mon, 23 Jun 2025 13:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685193;
-	bh=VPiYl4LlpNNfO6sBILxslKfFKwYofJtged8FE0Myy/E=;
+	s=korg; t=1750685196;
+	bh=4P35LHm/toWONjJ4v4eGslgipe/CHQAgskgsedjdRCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MO9kizh7lDFi//nWYirKH+5Xne5cq4Bplo6vUAgA5JJ7SLpBhcPWhDK+5wApWaHtP
-	 kGp/LGvT/sYpMYwr4QbJlen5D0SO6saHIhwTXPx5WHQapRLUw4LiRwi73lbIq5tJ2m
-	 l3uzjneXdNSxSo0iD8+OX7yoFFcPf61xcrdmeflk=
+	b=iEvNHlxCMHRPp1jmxrOzQDKoVaY3oULARBbJ8UR8ygSWyHgGX4SNAjB/D6oSsUp/Y
+	 Pf6SrDwCtChX09v04J9ik5yrBBevTZ93OgsSANwWLhX34xljpdYHdg0MvL8KVE6E8p
+	 zdZw7iz1HR1HgAGjo/8VUwI61g1XhBrxKtp8Sk6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 5.15 005/411] rtc: Make rtc_time64_to_tm() support dates before 1970
-Date: Mon, 23 Jun 2025 15:02:29 +0200
-Message-ID: <20250623130633.154795253@linuxfoundation.org>
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	x86-cpuid@lists.linux.dev,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 015/411] x86/cpu: Sanitize CPUID(0x80000000) output
+Date: Mon, 23 Jun 2025 15:02:39 +0200
+Message-ID: <20250623130633.448996011@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
 References: <20250623130632.993849527@linuxfoundation.org>
@@ -45,89 +49,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Mergnat <amergnat@baylibre.com>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-commit 7df4cfef8b351fec3156160bedfc7d6d29de4cce upstream.
+[ Upstream commit cc663ba3fe383a628a812f893cc98aafff39ab04 ]
 
-Conversion of dates before 1970 is still relevant today because these
-dates are reused on some hardwares to store dates bigger than the
-maximal date that is representable in the device's native format.
-This prominently and very soon affects the hardware covered by the
-rtc-mt6397 driver that can only natively store dates in the interval
-1900-01-01 up to 2027-12-31. So to store the date 2028-01-01 00:00:00
-to such a device, rtc_time64_to_tm() must do the right thing for
-time=-2208988800.
+CPUID(0x80000000).EAX returns the max extended CPUID leaf available.  On
+x86-32 machines without an extended CPUID range, a CPUID(0x80000000)
+query will just repeat the output of the last valid standard CPUID leaf
+on the CPU; i.e., a garbage values.  Current tip:x86/cpu code protects against
+this by doing:
 
-Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20250428-enable-rtc-v4-1-2b2f7e3f9349@baylibre.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	eax = cpuid_eax(0x80000000);
+	c->extended_cpuid_level = eax;
+
+	if ((eax & 0xffff0000) == 0x80000000) {
+		// CPU has an extended CPUID range. Check for 0x80000001
+		if (eax >= 0x80000001) {
+			cpuid(0x80000001, ...);
+		}
+	}
+
+This is correct so far.  Afterwards though, the same possibly broken EAX
+value is used to check the availability of other extended CPUID leaves:
+
+	if (c->extended_cpuid_level >= 0x80000007)
+		...
+	if (c->extended_cpuid_level >= 0x80000008)
+		...
+	if (c->extended_cpuid_level >= 0x8000000a)
+		...
+	if (c->extended_cpuid_level >= 0x8000001f)
+		...
+
+which is invalid.  Fix this by immediately setting the CPU's max extended
+CPUID leaf to zero if CPUID(0x80000000).EAX doesn't indicate a valid
+CPUID extended range.
+
+While at it, add a comment, similar to kernel/head_32.S, clarifying the
+CPUID(0x80000000) sanity check.
+
+References: 8a50e5135af0 ("x86-32: Use symbolic constants, safer CPUID when enabling EFER.NX")
+Fixes: 3da99c977637 ("x86: make (early)_identify_cpu more the same between 32bit and 64 bit")
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: x86-cpuid@lists.linux.dev
+Link: https://lore.kernel.org/r/20250506050437.10264-3-darwi@linutronix.de
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/lib.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ arch/x86/kernel/cpu/common.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/rtc/lib.c
-+++ b/drivers/rtc/lib.c
-@@ -46,24 +46,38 @@ EXPORT_SYMBOL(rtc_year_days);
-  * rtc_time64_to_tm - converts time64_t to rtc_time.
-  *
-  * @time:	The number of seconds since 01-01-1970 00:00:00.
-- *		(Must be positive.)
-+ *		Works for values since at least 1900
-  * @tm:		Pointer to the struct rtc_time.
-  */
- void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
- {
--	unsigned int secs;
--	int days;
-+	int days, secs;
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index dc15568e14d93..8db11483e1e15 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -937,17 +937,18 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
+ 		c->x86_capability[CPUID_D_1_EAX] = eax;
+ 	}
  
- 	u64 u64tmp;
- 	u32 u32tmp, udays, century, day_of_century, year_of_century, year,
- 		day_of_year, month, day;
- 	bool is_Jan_or_Feb, is_leap_year;
- 
--	/* time must be positive */
+-	/* AMD-defined flags: level 0x80000001 */
 +	/*
-+	 * Get days and seconds while preserving the sign to
-+	 * handle negative time values (dates before 1970-01-01)
++	 * Check if extended CPUID leaves are implemented: Max extended
++	 * CPUID leaf must be in the 0x80000001-0x8000ffff range.
 +	 */
- 	days = div_s64_rem(time, 86400, &secs);
+ 	eax = cpuid_eax(0x80000000);
+-	c->extended_cpuid_level = eax;
++	c->extended_cpuid_level = ((eax & 0xffff0000) == 0x80000000) ? eax : 0;
  
-+	/*
-+	 * We need 0 <= secs < 86400 which isn't given for negative
-+	 * values of time. Fixup accordingly.
-+	 */
-+	if (secs < 0) {
-+		days -= 1;
-+		secs += 86400;
-+	}
-+
- 	/* day of the week, 1970-01-01 was a Thursday */
- 	tm->tm_wday = (days + 4) % 7;
-+	/* Ensure tm_wday is always positive */
-+	if (tm->tm_wday < 0)
-+		tm->tm_wday += 7;
+-	if ((eax & 0xffff0000) == 0x80000000) {
+-		if (eax >= 0x80000001) {
+-			cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
++	if (c->extended_cpuid_level >= 0x80000001) {
++		cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
  
- 	/*
- 	 * The following algorithm is, basically, Proposition 6.3 of Neri
-@@ -93,7 +107,7 @@ void rtc_time64_to_tm(time64_t time, str
- 	 * thus, is slightly different from [1].
- 	 */
+-			c->x86_capability[CPUID_8000_0001_ECX] = ecx;
+-			c->x86_capability[CPUID_8000_0001_EDX] = edx;
+-		}
++		c->x86_capability[CPUID_8000_0001_ECX] = ecx;
++		c->x86_capability[CPUID_8000_0001_EDX] = edx;
+ 	}
  
--	udays		= ((u32) days) + 719468;
-+	udays		= days + 719468;
- 
- 	u32tmp		= 4 * udays + 3;
- 	century		= u32tmp / 146097;
+ 	if (c->extended_cpuid_level >= 0x80000007) {
+-- 
+2.39.5
+
 
 
