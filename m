@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9F61EE7C6;
-	Mon, 23 Jun 2025 21:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF9F224F6;
+	Mon, 23 Jun 2025 21:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714211; cv=none; b=b20MuAF1uybNXv4laYzx4v3QAfKZoNNwwLeRGou909EWPHyRIiJzus4P5cjgXgD7e1vF5jbZ+vKKaNzGrIbjrArj7Lu1bJsApbb8Eezfn6ecd29heQ7RAl3M5T8bWUNutuLFYvu8XjJWS0WwHjl2YhFdl/NGMqRwr80p6OgslRQ=
+	t=1750714214; cv=none; b=a945p9WyByk+VhXC8+CLxuaWLkMvFDQUSR9AtNkhOXUSjc/3JdSSo5A2C+R5V1wmtLR5Jr2f9sb6Vi5F2UTmfpz0fu0le/nHP8O4VUhamyXiv2MxQNICnqVvMPAV3B/3+dLnt4cMiCR+pmNOwcxaJjAiREQ5aWhjmzDM+mC9b+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714211; c=relaxed/simple;
-	bh=R1gdINfvX4q0xlwtjdE0suaY9cJK/Hqb+lxAM59zk1k=;
+	s=arc-20240116; t=1750714214; c=relaxed/simple;
+	bh=1HcPeYZJDVouU69ODzfJYlezdEZo4Dhlyw9doazfQhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HkaPIk6UYQVfKOc1Ys4cNuMePH1C0WCREffM73ZDC2BvMo+jLwXst8QV1ISEuu8usL/OXfJiu+hJ84XJH2WBG5eF57hvXyFCTq2XBVVpyrMc5jeAabLoiauSkNn32WdQh67XRp9/k3BLZvUe+06cZpBRrAWho7u0o/qoMRzzFyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrwsQ25w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZYY95RIZq8IRkA5HeEdC9daoAyXKlko1D6t/JtXudYDHy71U0dGWwrsAMdOkoQHNAUZKf7cIWsCPEEBY8U6hBQcqryjK/i6Z3kE/+5RZtW5lGgJAVkDJG4SitlNVtWTctTUuUn09m2uDu7wYCGXKK6NHTMFuMAkZValvBWhdCO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Csg22rsf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrwsQ25w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5152C4CEEA;
-	Mon, 23 Jun 2025 21:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Csg22rsf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A75FC4CEEA;
+	Mon, 23 Jun 2025 21:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714211;
-	bh=R1gdINfvX4q0xlwtjdE0suaY9cJK/Hqb+lxAM59zk1k=;
+	s=korg; t=1750714213;
+	bh=1HcPeYZJDVouU69ODzfJYlezdEZo4Dhlyw9doazfQhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xrwsQ25wfDJ9hFVLj5ns3usBMltdkXTJ25pMopVXK1sgYioi8wW6J/qlImZU64fm8
-	 xHn20Q1k3EoytYZ42UbyNBKzNYE6bFWNzlvEaxjSzDl7IG7sVSNc7hVxp/q6M0CCXo
-	 DJH0f6asAKDjtYlIzdHHodHnb/dRcsZhWOAaya4o=
+	b=Csg22rsfbe1VAJcm1tL6oPDTQMkWBvtu4FamFiNqUGgmfeFZfXuAWyvvh53Y6H9yz
+	 2USr3rzZ2oiGGKR8+p9mll4SDghrrq/qyN7XTj55YQUdf8/13d1LVbijIOa0WGa3ui
+	 wtWZGWeIyqEScc11KrIk9AM1B1de1N5j+GfykmSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sam Winchenbach <swinchenbach@arka.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 376/592] f2fs: fix to bail out in get_new_segment()
-Date: Mon, 23 Jun 2025 15:05:34 +0200
-Message-ID: <20250623130709.383509522@linuxfoundation.org>
+Subject: [PATCH 6.1 158/508] iio: filter: admv8818: fix band 4, state 15
+Date: Mon, 23 Jun 2025 15:03:23 +0200
+Message-ID: <20250623130649.165514129@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Sam Winchenbach <swinchenbach@arka.org>
 
-[ Upstream commit bb5eb8a5b222fa5092f60d5555867a05ebc3bdf2 ]
+[ Upstream commit ef0ce24f590ac075d5eda11f2d6434b303333ed6 ]
 
-------------[ cut here ]------------
-WARNING: CPU: 3 PID: 579 at fs/f2fs/segment.c:2832 new_curseg+0x5e8/0x6dc
-pc : new_curseg+0x5e8/0x6dc
-Call trace:
- new_curseg+0x5e8/0x6dc
- f2fs_allocate_data_block+0xa54/0xe28
- do_write_page+0x6c/0x194
- f2fs_do_write_node_page+0x38/0x78
- __write_node_page+0x248/0x6d4
- f2fs_sync_node_pages+0x524/0x72c
- f2fs_write_checkpoint+0x4bc/0x9b0
- __checkpoint_and_complete_reqs+0x80/0x244
- issue_checkpoint_thread+0x8c/0xec
- kthread+0x114/0x1bc
- ret_from_fork+0x10/0x20
+Corrects the upper range of LPF Band 4 from 18.5 GHz to 18.85 GHz per
+the ADMV8818 datasheet
 
-get_new_segment() detects inconsistent status in between free_segmap
-and free_secmap, let's record such error into super block, and bail
-out get_new_segment() instead of continue using the segment.
-
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: f34fe888ad05 ("iio:filter:admv8818: add support for ADMV8818")
+Signed-off-by: Sam Winchenbach <swinchenbach@arka.org>
+Link: https://patch.msgid.link/20250328174831.227202-3-sam.winchenbach@framepointer.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c       | 6 +++++-
- include/linux/f2fs_fs.h | 1 +
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/filter/admv8818.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 41ca73622c8d4..c5d29c58f3d3e 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2836,7 +2836,11 @@ static int get_new_segment(struct f2fs_sb_info *sbi,
- 	}
- got_it:
- 	/* set it as dirty segment in free segmap */
--	f2fs_bug_on(sbi, test_bit(segno, free_i->free_segmap));
-+	if (test_bit(segno, free_i->free_segmap)) {
-+		ret = -EFSCORRUPTED;
-+		f2fs_stop_checkpoint(sbi, false, STOP_CP_REASON_CORRUPTED_FREE_BITMAP);
-+		goto out_unlock;
-+	}
- 
- 	/* no free section in conventional device or conventional zone */
- 	if (new_sec && pinning &&
-diff --git a/include/linux/f2fs_fs.h b/include/linux/f2fs_fs.h
-index c24f8bc01045d..5206d63b33860 100644
---- a/include/linux/f2fs_fs.h
-+++ b/include/linux/f2fs_fs.h
-@@ -78,6 +78,7 @@ enum stop_cp_reason {
- 	STOP_CP_REASON_UPDATE_INODE,
- 	STOP_CP_REASON_FLUSH_FAIL,
- 	STOP_CP_REASON_NO_SEGMENT,
-+	STOP_CP_REASON_CORRUPTED_FREE_BITMAP,
- 	STOP_CP_REASON_MAX,
+diff --git a/drivers/iio/filter/admv8818.c b/drivers/iio/filter/admv8818.c
+index c7f5911f9040d..a50a8ea2f8dda 100644
+--- a/drivers/iio/filter/admv8818.c
++++ b/drivers/iio/filter/admv8818.c
+@@ -102,7 +102,7 @@ static const unsigned long long freq_range_lpf[4][2] = {
+ 	{2050000000ULL, 3850000000ULL},
+ 	{3350000000ULL, 7250000000ULL},
+ 	{7000000000, 13000000000},
+-	{12550000000, 18500000000}
++	{12550000000, 18850000000}
  };
  
+ static const struct regmap_config admv8818_regmap_config = {
 -- 
 2.39.5
 
