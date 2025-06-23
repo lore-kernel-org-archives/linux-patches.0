@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E7A238C19;
-	Mon, 23 Jun 2025 13:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F6916419;
+	Mon, 23 Jun 2025 13:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685918; cv=none; b=ONp9h7ohRZedVFjw1lIJCABKUVM5tmTLcAqJwAqdiwXuRZf67yVmstEYc4h7ZU8hoG8UrblaEiNlK18hrj2s4+oDla2o6Vn8jZkX69oS4qYtGzN3sFGQVinWWt/oxD47wlOuzhjXKzeOv31tQoKRZxfRHTu6yzAMJJX1aPQXUmk=
+	t=1750685921; cv=none; b=ps9SA7hWUgHdSR5tNJ6XcDNTLTht7O9AIHx4xLrCQKtwxnK0DMZRAaWh4B0kHvSYa1505p2pPsg42s+qYOKiS2milSF8O3XZWkzNIyfOy4zI00trgzp2RnP9m5NOgg3b72YV8YBG46wzZotnoMIoVhXJO2JhONNTDwCyw+XFuwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685918; c=relaxed/simple;
-	bh=h4WsBxgo5ydhSw3mt78JvODGfULnEd5HB3Q4vjF3i5c=;
+	s=arc-20240116; t=1750685921; c=relaxed/simple;
+	bh=ckEtMiAk/Az2DAKAX+QzZGyW26KRIbIKRbwMF9xuQWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYQMu2NpdCRl7CrB6tRv71GDen9PWGKx+eKrJspwP0VYAGehsgMjbHxoAfYfKnB36fg4BywHIsomgusVwVGCEB54UlZPSwjxGcfOgA4QtOdCRDQXjaHggBaJ0ETiQcoMIl7AomGy1xpgUQgQtlyscKkroZj0+bsT/5aezKdNqfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsAXzLD5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DBUJHSZKxI0uD0k4SQ8KYcUNfB9uVFXnPWpfkP0F5tACt1SwhRwhHev8qGQQFxa489mS2fi4R71TCIi60rHkLbOoM8Q+CuAbiFd08t4ry4DSHKQBYpbiNP2TWVlxZ2YWgeu6v4aFZvsQvgUWwtJWv2l/Ky3tYUOut+f1KeMzhAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYV/1YjL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsAXzLD5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08781C4CEEA;
-	Mon, 23 Jun 2025 13:38:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYV/1YjL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84AF8C4CEEA;
+	Mon, 23 Jun 2025 13:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685918;
-	bh=h4WsBxgo5ydhSw3mt78JvODGfULnEd5HB3Q4vjF3i5c=;
+	s=korg; t=1750685920;
+	bh=ckEtMiAk/Az2DAKAX+QzZGyW26KRIbIKRbwMF9xuQWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hsAXzLD5qM99EhUodfe9hmKnA4gRYIUT1qHpohRclnI5/YcA+L3No2WW0nZCqX95J
-	 WvjDfGTHsRMc8MQAfqbqYV7RezdK9S8W4ggS9Bxh9Ne6Y6ayW1yMyNQ0EWBHc0Bf8A
-	 KKLTh0wx7Ltdynm20E1lbAPodDD4R9mmdz2uGJAo=
+	b=KYV/1YjLvLaBK8KjHwV5TghLx7TDtyOPMk+Hw8/8k3Fk1zu0WQxN9Bkm7vsr8ehIJ
+	 lLClXJyxgFq1Yac6MaRtMlEzAGhpjlKiSHBPj+uvv7sR+Gdj2dz5EtS+UCQfLsakKo
+	 pbqbrABA6MHd6/GXIb1zAhkinx/UHFkVNsx4eIGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thangaraj Samynathan <thangaraj.s@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 069/411] net: lan743x: rename lan743x_reset_phy to lan743x_hw_reset_phy
-Date: Mon, 23 Jun 2025 15:03:33 +0200
-Message-ID: <20250623130635.069630256@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 012/290] net/mlx5: Add error handling in mlx5_query_nic_vport_node_guid()
+Date: Mon, 23 Jun 2025 15:04:33 +0200
+Message-ID: <20250623130627.344935100@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thangaraj Samynathan <thangaraj.s@microchip.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 68927eb52d0af04863584930db06075d2610e194 ]
+commit c6bb8a21cdad8c975a3a646b9e5c8df01ad29783 upstream.
 
-rename the function to lan743x_hw_reset_phy to better describe it
-operation.
+The function mlx5_query_nic_vport_node_guid() calls the function
+mlx5_query_nic_vport_context() but does not check its return value.
+A proper implementation can be found in mlx5_nic_vport_query_local_lb().
 
-Fixes: 23f0703c125be ("lan743x: Add main source files for new lan743x driver")
-Signed-off-by: Thangaraj Samynathan <thangaraj.s@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250526053048.287095-2-thangaraj.s@microchip.com
+Add error handling for mlx5_query_nic_vport_context(). If it fails, free
+the out buffer via kvfree() and return error code.
+
+Fixes: 9efa75254593 ("net/mlx5_core: Introduce access functions to query vport RoCE fields")
+Cc: stable@vger.kernel.org # v4.5
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250524163425.1695-1-vulab@iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/vport.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index fe919c1974505..49d40685136d4 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -910,7 +910,7 @@ static int lan743x_mac_set_mtu(struct lan743x_adapter *adapter, int new_mtu)
- }
- 
- /* PHY */
--static int lan743x_phy_reset(struct lan743x_adapter *adapter)
-+static int lan743x_hw_reset_phy(struct lan743x_adapter *adapter)
+--- a/drivers/net/ethernet/mellanox/mlx5/core/vport.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
+@@ -444,19 +444,22 @@ int mlx5_query_nic_vport_node_guid(struc
  {
- 	u32 data;
+ 	u32 *out;
+ 	int outlen = MLX5_ST_SZ_BYTES(query_nic_vport_context_out);
++	int err;
  
-@@ -944,7 +944,7 @@ static void lan743x_phy_update_flowcontrol(struct lan743x_adapter *adapter,
+ 	out = kvzalloc(outlen, GFP_KERNEL);
+ 	if (!out)
+ 		return -ENOMEM;
  
- static int lan743x_phy_init(struct lan743x_adapter *adapter)
- {
--	return lan743x_phy_reset(adapter);
-+	return lan743x_hw_reset_phy(adapter);
+-	mlx5_query_nic_vport_context(mdev, 0, out);
++	err = mlx5_query_nic_vport_context(mdev, 0, out);
++	if (err)
++		goto out;
+ 
+ 	*node_guid = MLX5_GET64(query_nic_vport_context_out, out,
+ 				nic_vport_context.node_guid);
+-
++out:
+ 	kvfree(out);
+ 
+-	return 0;
++	return err;
  }
+ EXPORT_SYMBOL_GPL(mlx5_query_nic_vport_node_guid);
  
- static void lan743x_phy_link_status_change(struct net_device *netdev)
--- 
-2.39.5
-
 
 
