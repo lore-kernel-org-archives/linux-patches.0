@@ -1,155 +1,218 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8501F3B96
-	for <patches@lists.linux.dev>; Mon, 23 Jun 2025 21:05:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904E9221F10;
+	Mon, 23 Jun 2025 21:06:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712759; cv=none; b=pFBqeGznkiOzLQuDH+eXW9b9Y+uv1TmlLaU1nBcwylyXp+fGors+yJwaU81GZ5rh2Ci5rKHAmd8tKuTKmhVhjtagVyKDUhByzmu9TpnSSDkjcbUnOGv5RUawEFl9S8DVigKvMAWbvPr1B777eRAmlvrkp0qiY+kyiD1dzJlYeeI=
+	t=1750712761; cv=none; b=VTIeeOPD5160DOsXk2y7pNbrd5KDsmC7jRL3P4h60K+xq7/6TiJ+1HfxOezQjRqyT9gd0XFWO9wYQVt23bzEb0v0+xl39iAF80/D9+aIzV7SJnpqfxvyiN4ZLuou2qQKRTGpOzbpUhmB2Db50ug8CNRJpHrfneTd6GVJPhcnCxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712759; c=relaxed/simple;
-	bh=QJJddcvfb4kRHAKMSa/fFV0iFteug7n2v+ZY6h+PamU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=INOen7rOYUJrJnn8elFjy9zRD5GBH1rhMNERWAdxVZsO/2o90JwLiKacN/FVAqcfa9Ebw05JZfto3o5gb0j6sp0K+27+v7PVoBvvpjTbHkIwgHqE2dG0OHYXTNDqdDn6Dy32bx21dptLfI8UUPQJ5yKF8nehSQ4JrVSw61HjZFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=P0GK7XBA; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1750712761; c=relaxed/simple;
+	bh=mV+C3O76wCFEVhJ5A6a+lgv8oL3r3SASSOIkw14QFoE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=WrOOTmshobyiKezO3l9lbb85to6F4mxhMbOVnvPjbhtsQexmn/C50JpK2hj7AR1oGe/A78D7cJnH3inx2KkHGYVU+/9OoRCOJQeQygsWc0orUgzfmuiSQfsScycHaPxaj+ECoYA/PAmP7YPysnGZE2TTLJYTQziqFQwV4EllVDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8q4i1tn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="P0GK7XBA"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-313b6625cf1so3292979a91.0
-        for <patches@lists.linux.dev>; Mon, 23 Jun 2025 14:05:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750712757; x=1751317557; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pHX9CXX2jp+sc88nWffGW5R0z0vn6Lx1vW0giPA6MfM=;
-        b=P0GK7XBABI8sWF5WY8obC7w0r2hJCb+yIiZsw/CnENxG7vNPooJ5NDa/JH1RtG66CS
-         SF0F0UpuBF63rfz7bY0iHU2upvzoK/pCEeQkMmwY6ms/vMf74OT83dInLnlz9m6NyQoi
-         /uayarypfU89FQbZwUYz0Mgp21DpYCFOlZW/2O+mK/jFh3F+86blhFpp4SUBvLVBSi8h
-         9JJnGwTFWSRVu2SYWe5UaV+fj4cnooQxgXVcHD/oLzNTKTA97pvNbz08nfA/Rs20hx6R
-         wnt/tSlEbJU3oCfaofw/Xp9RKxCx4vTgN2ic+GUNB3PUhFS6Shu2T0MafQCP27k/yaXy
-         TT7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750712757; x=1751317557;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pHX9CXX2jp+sc88nWffGW5R0z0vn6Lx1vW0giPA6MfM=;
-        b=LLexT9KhnDnYn/Zj1VrZR8dpd2hNlUX1D6Mxb6/bE7/rHAap3KPR4MXSqrnpkHnTMe
-         R3A/A0pjNkpM2auAX42PcjXCXNiAxAbIBXQ007linUxq3zwzpDa1cGZnRVPTrA2zarhM
-         x+t9GxbesizuZxScmSD1Ub9QaPBu+F3xkyMV7tqpxosQ7B3JyNW8u9xV50jOvLRXdRYp
-         LnoJbFHE5Ga2yWoVK3elaULQiGoZ8WD/t+l+MELyqy3I8dgJDRCHy8ZRxflnJjHXEvQC
-         tcLiX6kSMmb/4PwKO/Ag4XA1/8kLsbJGSokf+cs47Dep1DtvdRJJMMyf3OrW8WHEwj5X
-         BXfQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVoPkS7+KL7V2zyI4uVKUrcHQlmhFUOk4oUIumkZFou94Q+HvekwTbQ33trBLSLDdozmb7SLrGp@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy6jPwWfegW+8nUBTVYt73MSyjGWA1eVSldHwVSZvlxJ0C2gulM
-	p7zH/dgx/nqsjEO3rALHZPqjT+8KB71W0CVPWeaQhxbGqaBepaMkZ7H7ANArykKdLTAQ2IbO3ME
-	Hcx0wtOxZwPoJjiol7wCELID9vLGlENDS1f/GMoW39w==
-X-Gm-Gg: ASbGnct3PZCp8THt4wRkhG7fOrY0MBg7oAibxAl4MtyOdM5alGBR1uf2GRlaJvUXh23
-	212LgBBTjFocTfAsPz2OEfsqC8Admli5MjwZokp6dJljjr5lhz7rzD4jESMToN9Bhp7bozKFlgK
-	GscKFqrsGEQzEX4k2RuuomewXzFrU7JYV5AvQ4BbAoZsj7ln0vftnEwy6Gd5KGvRjrH7BPEmvPF
-	lms
-X-Google-Smtp-Source: AGHT+IGluWyWYchA0SWpbfOmsSY/NlAvWI3AwaiTmC73117pQczqsC1IpuBOq5vhAW9oC3+ZWrshJwcLG3IOLcWQkbE=
-X-Received: by 2002:a17:90b:5586:b0:312:e73e:cded with SMTP id
- 98e67ed59e1d1-315ccd7261emr1387255a91.16.1750712757357; Mon, 23 Jun 2025
- 14:05:57 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8q4i1tn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B84C4CEF0;
+	Mon, 23 Jun 2025 21:06:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1750712761;
+	bh=mV+C3O76wCFEVhJ5A6a+lgv8oL3r3SASSOIkw14QFoE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=v8q4i1tnBbTQABWH4VcIFTKxQNKth9iF+x3Tdcv8aL9LGrcxWZzJTMiiXaXZbMRYZ
+	 +5/cPkKHpKoOrA3SDy2p7YacRGl0ycaJxmMPnscJhuHTslJyganiLTX8fW4qna1mLl
+	 gkaDOK7b3bYusZvKYoVQ1mCTWUiN2M4ahQq0pV2Y=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Shubham Rana <s9.rana@samsung.com>,
+	Maninder Singh <maninder1.s@samsung.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 029/414] NFSD: fix race between nfsd registration and exports_proc
+Date: Mon, 23 Jun 2025 15:02:46 +0200
+Message-ID: <20250623130642.753823602@linuxfoundation.org>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250617152451.485330293@linuxfoundation.org>
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 24 Jun 2025 02:35:45 +0530
-X-Gm-Features: Ac12FXwPGqqVTvOIk9rFpxKVJdoOnBMvXrD0aOMgF5kEpGyYgKGtnJCwPlmxBRU
-Message-ID: <CA+G9fYtUjjrzghRQVUJ5ct9zNK2ROcRVOizpT-ZyjzZGRSUz1Q@mail.gmail.com>
-Subject: Re: [PATCH 6.15 000/780] 6.15.3-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Tue, 17 Jun 2025 at 20:58, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.15.3 release.
-> There are 780 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 19 Jun 2025 15:22:30 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.3-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-Regressions on s390 allmodconfig builds with gcc-13 and clang-20 failed on
-the Linux stable-rc 6.15.4-rc1.
+------------------
 
-Regressions found on s390
-* s390, build
-  - clang-20-allmodconfig
-  - gcc-13-allmodconfig
+From: Maninder Singh <maninder1.s@samsung.com>
 
-Regression Analysis:
- - New regression? Yes
- - Reproducibility? Yes
+commit f7fb730cac9aafda8b9813b55d04e28a9664d17c upstream.
 
-Build regression: stable-rc 6.15.4-rc1 s390 allmodconfig
-sdhci-esdhc-imx.c 'sdhc_esdhc_tuning_restore' defined but not used
+As of now nfsd calls create_proc_exports_entry() at start of init_nfsd
+and cleanup by remove_proc_entry() at last of exit_nfsd.
 
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Which causes kernel OOPs if there is race between below 2 operations:
+(i) exportfs -r
+(ii) mount -t nfsd none /proc/fs/nfsd
 
-## Build errors
-drivers/mmc/host/sdhci-esdhc-imx.c:1608:13: error:
-'sdhc_esdhc_tuning_restore' defined but not used
-[-Werror=unused-function]
- 1608 | static void sdhc_esdhc_tuning_restore(struct sdhci_host *host)
-      |             ^~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/mmc/host/sdhci-esdhc-imx.c:1586:13: error:
-'sdhc_esdhc_tuning_save' defined but not used
-[-Werror=unused-function]
- 1586 | static void sdhc_esdhc_tuning_save(struct sdhci_host *host)
-      |             ^~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
+for 5.4 kernel ARM64:
 
-## Source
-* Kernel version: 6.15.4-rc1
-* Git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* Git sha: de19bfa00d6f93fdcd38a5c088466e093af981f2
-* Git describe: v6.15.3-593-gde19bfa00d6f
-* Project details:
-https://regressions.linaro.org/lkft/linux-stable-rc-linux-6.15.y/v6.15.3-593-gde19bfa00d6f/
-* Architectures: s390
-* Toolchains: gcc-13, clang-20
-* Kconfigs: allmodconfig
+CPU 1:
+el1_irq+0xbc/0x180
+arch_counter_get_cntvct+0x14/0x18
+running_clock+0xc/0x18
+preempt_count_add+0x88/0x110
+prep_new_page+0xb0/0x220
+get_page_from_freelist+0x2d8/0x1778
+__alloc_pages_nodemask+0x15c/0xef0
+__vmalloc_node_range+0x28c/0x478
+__vmalloc_node_flags_caller+0x8c/0xb0
+kvmalloc_node+0x88/0xe0
+nfsd_init_net+0x6c/0x108 [nfsd]
+ops_init+0x44/0x170
+register_pernet_operations+0x114/0x270
+register_pernet_subsys+0x34/0x50
+init_nfsd+0xa8/0x718 [nfsd]
+do_one_initcall+0x54/0x2e0
 
-## Build s390
-* Build log: https://qa-reports.linaro.org/api/testruns/28840725/log_file/
-* Build details:
-https://regressions.linaro.org/lkft/linux-stable-rc-linux-6.15.y/v6.15.3-593-gde19bfa00d6f/build/gcc-13-allmodconfig/
-* Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/2yuYQdocMC494e6F9GTIAK16EAg/
-* Kernel config:
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2yuYQdocMC494e6F9GTIAK16EAg/config
+CPU 2 :
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
 
-## Steps to reproduce
-  - tuxmake --runtime podman --target-arch s390 --toolchain gcc-13
---kconfig allmodconfig
+PC is at : exports_net_open+0x50/0x68 [nfsd]
 
---
-Linaro LKFT
-https://lkft.linaro.org
+Call trace:
+exports_net_open+0x50/0x68 [nfsd]
+exports_proc_open+0x2c/0x38 [nfsd]
+proc_reg_open+0xb8/0x198
+do_dentry_open+0x1c4/0x418
+vfs_open+0x38/0x48
+path_openat+0x28c/0xf18
+do_filp_open+0x70/0xe8
+do_sys_open+0x154/0x248
+
+Sometimes it crashes at exports_net_open() and sometimes cache_seq_next_rcu().
+
+and same is happening on latest 6.14 kernel as well:
+
+[    0.000000] Linux version 6.14.0-rc5-next-20250304-dirty
+...
+[  285.455918] Unable to handle kernel paging request at virtual address 00001f4800001f48
+...
+[  285.464902] pc : cache_seq_next_rcu+0x78/0xa4
+...
+[  285.469695] Call trace:
+[  285.470083]  cache_seq_next_rcu+0x78/0xa4 (P)
+[  285.470488]  seq_read+0xe0/0x11c
+[  285.470675]  proc_reg_read+0x9c/0xf0
+[  285.470874]  vfs_read+0xc4/0x2fc
+[  285.471057]  ksys_read+0x6c/0xf4
+[  285.471231]  __arm64_sys_read+0x1c/0x28
+[  285.471428]  invoke_syscall+0x44/0x100
+[  285.471633]  el0_svc_common.constprop.0+0x40/0xe0
+[  285.471870]  do_el0_svc_compat+0x1c/0x34
+[  285.472073]  el0_svc_compat+0x2c/0x80
+[  285.472265]  el0t_32_sync_handler+0x90/0x140
+[  285.472473]  el0t_32_sync+0x19c/0x1a0
+[  285.472887] Code: f9400885 93407c23 937d7c27 11000421 (f86378a3)
+[  285.473422] ---[ end trace 0000000000000000 ]---
+
+It reproduced simply with below script:
+while [ 1 ]
+do
+/exportfs -r
+done &
+
+while [ 1 ]
+do
+insmod /nfsd.ko
+mount -t nfsd none /proc/fs/nfsd
+umount /proc/fs/nfsd
+rmmod nfsd
+done &
+
+So exporting interfaces to user space shall be done at last and
+cleanup at first place.
+
+With change there is no Kernel OOPs.
+
+Co-developed-by: Shubham Rana <s9.rana@samsung.com>
+Signed-off-by: Shubham Rana <s9.rana@samsung.com>
+Signed-off-by: Maninder Singh <maninder1.s@samsung.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/nfsd/nfsctl.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
+
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2331,12 +2331,9 @@ static int __init init_nfsd(void)
+ 	if (retval)
+ 		goto out_free_pnfs;
+ 	nfsd_lockd_init();	/* lockd->nfsd callbacks */
+-	retval = create_proc_exports_entry();
+-	if (retval)
+-		goto out_free_lockd;
+ 	retval = register_pernet_subsys(&nfsd_net_ops);
+ 	if (retval < 0)
+-		goto out_free_exports;
++		goto out_free_lockd;
+ 	retval = register_cld_notifier();
+ 	if (retval)
+ 		goto out_free_subsys;
+@@ -2348,11 +2345,16 @@ static int __init init_nfsd(void)
+ 		goto out_free_nfsd4;
+ 	retval = genl_register_family(&nfsd_nl_family);
+ 	if (retval)
++		goto out_free_filesystem;
++	retval = create_proc_exports_entry();
++	if (retval)
+ 		goto out_free_all;
+ 	nfsd_localio_ops_init();
+ 
+ 	return 0;
+ out_free_all:
++	genl_unregister_family(&nfsd_nl_family);
++out_free_filesystem:
+ 	unregister_filesystem(&nfsd_fs_type);
+ out_free_nfsd4:
+ 	nfsd4_destroy_laundry_wq();
+@@ -2360,9 +2362,6 @@ out_free_cld:
+ 	unregister_cld_notifier();
+ out_free_subsys:
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+-out_free_exports:
+-	remove_proc_entry("fs/nfs/exports", NULL);
+-	remove_proc_entry("fs/nfs", NULL);
+ out_free_lockd:
+ 	nfsd_lockd_shutdown();
+ 	nfsd_drc_slab_free();
+@@ -2375,14 +2374,14 @@ out_free_slabs:
+ 
+ static void __exit exit_nfsd(void)
+ {
++	remove_proc_entry("fs/nfs/exports", NULL);
++	remove_proc_entry("fs/nfs", NULL);
+ 	genl_unregister_family(&nfsd_nl_family);
+ 	unregister_filesystem(&nfsd_fs_type);
+ 	nfsd4_destroy_laundry_wq();
+ 	unregister_cld_notifier();
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+ 	nfsd_drc_slab_free();
+-	remove_proc_entry("fs/nfs/exports", NULL);
+-	remove_proc_entry("fs/nfs", NULL);
+ 	nfsd_lockd_shutdown();
+ 	nfsd4_free_slabs();
+ 	nfsd4_exit_pnfs();
+
+
