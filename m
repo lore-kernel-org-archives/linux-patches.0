@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89C624BC07;
-	Mon, 23 Jun 2025 13:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4832624169B;
+	Mon, 23 Jun 2025 13:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684340; cv=none; b=jpfEpfr/z+EYoGIMVNru80MwQHIRbFjtLiwpwAbIPmHM5ZCuhYyiBxU8DXHgaMi2HJBDe94n5QJuwMDSWeMk2o1kyzCPHj7JGr4B7tFVN1ZMxIve+4BziVHH2tbCNyjhldnpAdI6kOvs2OKLCB8KT3C+rs5uGd+t3X0BqQVxE+Q=
+	t=1750684343; cv=none; b=h/tWpzYkhMK0crvUMduQY4eJchx17L7YoBrCPOfiu02KTlhBYg/h8Gu3Mg/u+D6dP4FRtY3LSdYlWepYBiuIQysafzM8kYWXBW7kiygGvieReiqoBlrisDrww+lgctUwKfa//F8oNyBaR9BPGoV8NyTMW70/SISF1u6UZIfME0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684340; c=relaxed/simple;
-	bh=/PXYyMiLpQH4zfNpFmtt+guagGLMqB5BxQNZUmKjjJA=;
+	s=arc-20240116; t=1750684343; c=relaxed/simple;
+	bh=jD7HNrUZ7KII2aeTIjkPzPKukbe2yr5baLg+8ebvLQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B6FuuaFWcTYc5J4Fg98/LuMPuEF+hBaTC7C5A/DlmQxl2PpT8EbsX3aBaTHXee/hGNbCwi/gcSbrhBeshy7X9lnHhgMpb94ISy2FnAhV17D86enx64LZL+ZpHR7ggwn1DT7xQuEGdbxk8lT1X0GqDYcoxkJw84kuqkO+T4zqzPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdtK8NFz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=czVk8wWtFWQWmiAj7AncBlhYtzfQgFUBWb+MNCQ3PM9xt0lRc5MlbTlP/8/GLK3GbXffrNXW9My+10o2t7UMCKj2oSEAEFSorqhbsOAUd0xYxdfY5vQBpXeJ01MjdUf69QbO2Ay8QiYTGZ/sLWF9sJoDQmhO4dFdzsMyp2p0uOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgLLQpRl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdtK8NFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8BEC4CEEA;
-	Mon, 23 Jun 2025 13:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgLLQpRl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D145AC4CEEA;
+	Mon, 23 Jun 2025 13:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684340;
-	bh=/PXYyMiLpQH4zfNpFmtt+guagGLMqB5BxQNZUmKjjJA=;
+	s=korg; t=1750684343;
+	bh=jD7HNrUZ7KII2aeTIjkPzPKukbe2yr5baLg+8ebvLQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zdtK8NFzLSZZJRob1mV7LuhrCVBKWNjE4qsdLfUsy+SZsInTtqvCHaRKXZ8VRBN+d
-	 ozLht4tiWJbvhujo8DbimUltGMy6+EkLGMOriYcJIaBkHTqBeBa+ZyV+YW2hzbXXeS
-	 xXlR+qbTrxJ1RBqqNQi62MTWb6WOy1Ic2eYvnrqM=
+	b=WgLLQpRlL9dn/c/6mxw24+b0ae7RAtq84q1EDwtdQtdgojhAfvngj4xnRbVl4m5Hb
+	 TiIONI6arcpAxJNVwRwe2Vxe9WKb2L6wniFsou7ZLnqMno57Iftb7QwdDrZjdVjNKj
+	 RW/PtgxctArtqwup6YSLDXb5buEKzXVW+SM7iNz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaus Kudielka <klaus.kudielka@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.15 003/592] crypto: marvell/cesa - Do not chain submitted requests
-Date: Mon, 23 Jun 2025 14:59:21 +0200
-Message-ID: <20250623130700.299292065@linuxfoundation.org>
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.15 025/592] s390/pci: Allow re-add of a reserved but not yet removed device
+Date: Mon, 23 Jun 2025 14:59:43 +0200
+Message-ID: <20250623130700.831802034@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -50,156 +51,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit 0413bcf0fc460a68a2a7a8354aee833293d7d693 upstream.
+commit 4b1815a52d7eb03b3e0e6742c6728bc16a4b2d1d upstream.
 
-This driver tries to chain requests together before submitting them
-to hardware in order to reduce completion interrupts.
+The architecture assumes that PCI functions can be removed synchronously
+as PCI events are processed. This however clashes with the reference
+counting of struct pci_dev which allows device drivers to hold on to a
+struct pci_dev reference even as the underlying device is removed. To
+bridge this gap commit 2a671f77ee49 ("s390/pci: fix use after free of
+zpci_dev") keeps the struct zpci_dev in ZPCI_FN_STATE_RESERVED state
+until common code releases the struct pci_dev. Only when all references
+are dropped, the struct zpci_dev can be removed and freed.
 
-However, it even extends chains that have already been submitted
-to hardware.  This is dangerous because there is no way of knowing
-whether the hardware has already read the DMA memory in question
-or not.
+Later commit a46044a92add ("s390/pci: fix zpci_zdev_put() on reserve")
+moved the deletion of the struct zpci_dev from the zpci_list in
+zpci_release_device() to the point where the device is reserved. This
+was done to prevent handling events for a device that is already being
+removed, e.g. when the platform generates both PCI event codes 0x304
+and 0x308. In retrospect, deletion from the zpci_list in the release
+function without holding the zpci_list_lock was also racy.
 
-Fix this by splitting the chain list into two.  One for submitted
-requests and one for requests that have not yet been submitted.
-Only extend the latter.
+A side effect of this handling is that if the underlying device
+re-appears while the struct zpci_dev is in the ZPCI_FN_STATE_RESERVED
+state, the new and old instances of the struct zpci_dev and/or struct
+pci_dev may clash. For example when trying to create the IOMMU sysfs
+files for the new instance. In this case, re-adding the new instance is
+aborted. The old instance is removed, and the device will remain absent
+until the platform issues another event.
 
-Reported-by: Klaus Kudielka <klaus.kudielka@gmail.com>
-Fixes: 85030c5168f1 ("crypto: marvell - Add support for chaining crypto requests in TDMA mode")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fix this by allowing the struct zpci_dev to be brought back up right
+until it is finally removed. To this end also keep the struct zpci_dev
+in the zpci_list until it is finally released when all references have
+been dropped.
+
+Deletion from the zpci_list from within the release function is made
+safe by using kref_put_lock() with the zpci_list_lock. This ensures that
+the releasing code holds the last reference.
+
+Cc: stable@vger.kernel.org
+Fixes: a46044a92add ("s390/pci: fix zpci_zdev_put() on reserve")
+Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+Tested-by: Gerd Bayer <gbayer@linux.ibm.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/marvell/cesa/cesa.c |    2 -
- drivers/crypto/marvell/cesa/cesa.h |    9 ++++--
- drivers/crypto/marvell/cesa/tdma.c |   53 ++++++++++++++++++++++---------------
- 3 files changed, 39 insertions(+), 25 deletions(-)
+ arch/s390/pci/pci.c       |   32 ++++++++++++++++++++++----------
+ arch/s390/pci/pci_bus.h   |    7 ++-----
+ arch/s390/pci/pci_event.c |   22 +++++++++++++++++++++-
+ 3 files changed, 45 insertions(+), 16 deletions(-)
 
---- a/drivers/crypto/marvell/cesa/cesa.c
-+++ b/drivers/crypto/marvell/cesa/cesa.c
-@@ -94,7 +94,7 @@ static int mv_cesa_std_process(struct mv
+--- a/arch/s390/pci/pci.c
++++ b/arch/s390/pci/pci.c
+@@ -70,6 +70,13 @@ EXPORT_SYMBOL_GPL(zpci_aipb);
+ struct airq_iv *zpci_aif_sbv;
+ EXPORT_SYMBOL_GPL(zpci_aif_sbv);
  
- static int mv_cesa_int_process(struct mv_cesa_engine *engine, u32 status)
- {
--	if (engine->chain.first && engine->chain.last)
-+	if (engine->chain_hw.first && engine->chain_hw.last)
- 		return mv_cesa_tdma_process(engine, status);
- 
- 	return mv_cesa_std_process(engine, status);
---- a/drivers/crypto/marvell/cesa/cesa.h
-+++ b/drivers/crypto/marvell/cesa/cesa.h
-@@ -440,8 +440,10 @@ struct mv_cesa_dev {
-  *			SRAM
-  * @queue:		fifo of the pending crypto requests
-  * @load:		engine load counter, useful for load balancing
-- * @chain:		list of the current tdma descriptors being processed
-- *			by this engine.
-+ * @chain_hw:		list of the current tdma descriptors being processed
-+ *			by the hardware.
-+ * @chain_sw:		list of the current tdma descriptors that will be
-+ *			submitted to the hardware.
-  * @complete_queue:	fifo of the processed requests by the engine
-  *
-  * Structure storing CESA engine information.
-@@ -463,7 +465,8 @@ struct mv_cesa_engine {
- 	struct gen_pool *pool;
- 	struct crypto_queue queue;
- 	atomic_t load;
--	struct mv_cesa_tdma_chain chain;
-+	struct mv_cesa_tdma_chain chain_hw;
-+	struct mv_cesa_tdma_chain chain_sw;
- 	struct list_head complete_queue;
- 	int irq;
- };
---- a/drivers/crypto/marvell/cesa/tdma.c
-+++ b/drivers/crypto/marvell/cesa/tdma.c
-@@ -38,6 +38,15 @@ void mv_cesa_dma_step(struct mv_cesa_req
- {
- 	struct mv_cesa_engine *engine = dreq->engine;
- 
-+	spin_lock_bh(&engine->lock);
-+	if (engine->chain_sw.first == dreq->chain.first) {
-+		engine->chain_sw.first = NULL;
-+		engine->chain_sw.last = NULL;
-+	}
-+	engine->chain_hw.first = dreq->chain.first;
-+	engine->chain_hw.last = dreq->chain.last;
-+	spin_unlock_bh(&engine->lock);
++void zpci_zdev_put(struct zpci_dev *zdev)
++{
++	if (!zdev)
++		return;
++	kref_put_lock(&zdev->kref, zpci_release_device, &zpci_list_lock);
++}
 +
- 	writel_relaxed(0, engine->regs + CESA_SA_CFG);
- 
- 	mv_cesa_set_int_mask(engine, CESA_SA_INT_ACC0_IDMA_DONE);
-@@ -96,25 +105,27 @@ void mv_cesa_dma_prepare(struct mv_cesa_
- void mv_cesa_tdma_chain(struct mv_cesa_engine *engine,
- 			struct mv_cesa_req *dreq)
+ struct zpci_dev *get_zdev_by_fid(u32 fid)
  {
--	if (engine->chain.first == NULL && engine->chain.last == NULL) {
--		engine->chain.first = dreq->chain.first;
--		engine->chain.last  = dreq->chain.last;
--	} else {
--		struct mv_cesa_tdma_desc *last;
-+	struct mv_cesa_tdma_desc *last = engine->chain_sw.last;
- 
--		last = engine->chain.last;
+ 	struct zpci_dev *tmp, *zdev = NULL;
+@@ -925,21 +932,20 @@ int zpci_deconfigure_device(struct zpci_
+  * @zdev: the zpci_dev that was reserved
+  *
+  * Handle the case that a given zPCI function was reserved by another system.
+- * After a call to this function the zpci_dev can not be found via
+- * get_zdev_by_fid() anymore but may still be accessible via existing
+- * references though it will not be functional anymore.
+  */
+ void zpci_device_reserved(struct zpci_dev *zdev)
+ {
+-	/*
+-	 * Remove device from zpci_list as it is going away. This also
+-	 * makes sure we ignore subsequent zPCI events for this device.
+-	 */
+-	spin_lock(&zpci_list_lock);
+-	list_del(&zdev->entry);
+-	spin_unlock(&zpci_list_lock);
++	lockdep_assert_held(&zdev->state_lock);
++	/* We may declare the device reserved multiple times */
++	if (zdev->state == ZPCI_FN_STATE_RESERVED)
++		return;
+ 	zdev->state = ZPCI_FN_STATE_RESERVED;
+ 	zpci_dbg(3, "rsv fid:%x\n", zdev->fid);
 +	/*
-+	 * Break the DMA chain if the request being queued needs the IV
-+	 * regs to be set before lauching the request.
++	 * The underlying device is gone. Allow the zdev to be freed
++	 * as soon as all other references are gone by accounting for
++	 * the removal as a dropped reference.
 +	 */
-+	if (!last || dreq->chain.first->flags & CESA_TDMA_SET_STATE)
-+		engine->chain_sw.first = dreq->chain.first;
-+	else {
- 		last->next = dreq->chain.first;
--		engine->chain.last = dreq->chain.last;
--
--		/*
--		 * Break the DMA chain if the CESA_TDMA_BREAK_CHAIN is set on
--		 * the last element of the current chain, or if the request
--		 * being queued needs the IV regs to be set before lauching
--		 * the request.
--		 */
--		if (!(last->flags & CESA_TDMA_BREAK_CHAIN) &&
--		    !(dreq->chain.first->flags & CESA_TDMA_SET_STATE))
--			last->next_dma = cpu_to_le32(dreq->chain.first->cur_dma);
-+		last->next_dma = cpu_to_le32(dreq->chain.first->cur_dma);
-+	}
-+	last = dreq->chain.last;
-+	engine->chain_sw.last = last;
-+	/*
-+	 * Break the DMA chain if the CESA_TDMA_BREAK_CHAIN is set on
-+	 * the last element of the current chain.
-+	 */
-+	if (last->flags & CESA_TDMA_BREAK_CHAIN) {
-+		engine->chain_sw.first = NULL;
-+		engine->chain_sw.last = NULL;
- 	}
+ 	zpci_zdev_put(zdev);
  }
  
-@@ -127,7 +138,7 @@ int mv_cesa_tdma_process(struct mv_cesa_
+@@ -948,6 +954,12 @@ void zpci_release_device(struct kref *kr
+ 	struct zpci_dev *zdev = container_of(kref, struct zpci_dev, kref);
  
- 	tdma_cur = readl(engine->regs + CESA_TDMA_CUR);
+ 	WARN_ON(zdev->state != ZPCI_FN_STATE_RESERVED);
++	/*
++	 * We already hold zpci_list_lock thanks to kref_put_lock().
++	 * This makes sure no new reference can be taken from the list.
++	 */
++	list_del(&zdev->entry);
++	spin_unlock(&zpci_list_lock);
  
--	for (tdma = engine->chain.first; tdma; tdma = next) {
-+	for (tdma = engine->chain_hw.first; tdma; tdma = next) {
- 		spin_lock_bh(&engine->lock);
- 		next = tdma->next;
- 		spin_unlock_bh(&engine->lock);
-@@ -149,12 +160,12 @@ int mv_cesa_tdma_process(struct mv_cesa_
- 								 &backlog);
+ 	if (zdev->has_hp_slot)
+ 		zpci_exit_slot(zdev);
+--- a/arch/s390/pci/pci_bus.h
++++ b/arch/s390/pci/pci_bus.h
+@@ -21,11 +21,8 @@ int zpci_bus_scan_device(struct zpci_dev
+ void zpci_bus_remove_device(struct zpci_dev *zdev, bool set_error);
  
- 			/* Re-chaining to the next request */
--			engine->chain.first = tdma->next;
-+			engine->chain_hw.first = tdma->next;
- 			tdma->next = NULL;
+ void zpci_release_device(struct kref *kref);
+-static inline void zpci_zdev_put(struct zpci_dev *zdev)
+-{
+-	if (zdev)
+-		kref_put(&zdev->kref, zpci_release_device);
+-}
++
++void zpci_zdev_put(struct zpci_dev *zdev);
  
- 			/* If this is the last request, clear the chain */
--			if (engine->chain.first == NULL)
--				engine->chain.last  = NULL;
-+			if (engine->chain_hw.first == NULL)
-+				engine->chain_hw.last  = NULL;
- 			spin_unlock_bh(&engine->lock);
+ static inline void zpci_zdev_get(struct zpci_dev *zdev)
+ {
+--- a/arch/s390/pci/pci_event.c
++++ b/arch/s390/pci/pci_event.c
+@@ -335,6 +335,22 @@ static void zpci_event_hard_deconfigured
+ 	zdev->state = ZPCI_FN_STATE_STANDBY;
+ }
  
- 			ctx = crypto_tfm_ctx(req->tfm);
++static void zpci_event_reappear(struct zpci_dev *zdev)
++{
++	lockdep_assert_held(&zdev->state_lock);
++	/*
++	 * The zdev is in the reserved state. This means that it was presumed to
++	 * go away but there are still undropped references. Now, the platform
++	 * announced its availability again. Bring back the lingering zdev
++	 * to standby. This is safe because we hold a temporary reference
++	 * now so that it won't go away. Account for the re-appearance of the
++	 * underlying device by incrementing the reference count.
++	 */
++	zdev->state = ZPCI_FN_STATE_STANDBY;
++	zpci_zdev_get(zdev);
++	zpci_dbg(1, "rea fid:%x, fh:%x\n", zdev->fid, zdev->fh);
++}
++
+ static void __zpci_event_availability(struct zpci_ccdf_avail *ccdf)
+ {
+ 	struct zpci_dev *zdev = get_zdev_by_fid(ccdf->fid);
+@@ -358,8 +374,10 @@ static void __zpci_event_availability(st
+ 				break;
+ 			}
+ 		} else {
++			if (zdev->state == ZPCI_FN_STATE_RESERVED)
++				zpci_event_reappear(zdev);
+ 			/* the configuration request may be stale */
+-			if (zdev->state != ZPCI_FN_STATE_STANDBY)
++			else if (zdev->state != ZPCI_FN_STATE_STANDBY)
+ 				break;
+ 			zdev->state = ZPCI_FN_STATE_CONFIGURED;
+ 		}
+@@ -375,6 +393,8 @@ static void __zpci_event_availability(st
+ 				break;
+ 			}
+ 		} else {
++			if (zdev->state == ZPCI_FN_STATE_RESERVED)
++				zpci_event_reappear(zdev);
+ 			zpci_update_fh(zdev, ccdf->fh);
+ 		}
+ 		break;
 
 
