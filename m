@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD307482;
-	Mon, 23 Jun 2025 21:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE927482;
+	Mon, 23 Jun 2025 21:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713368; cv=none; b=eVbqkZWMMrCE67282xHaCJ9Q6VR6osQPb596QgZ+SP+iFT2q4pi560EIXLrHZpAbAe40Mzwiqd+R8WnAYfiG5iGwJ/9RR5Ti4CEEDx5/JGE61OyOp8T6I3G0ZzQIAFQph0sRrSPR32ykfe4Bj98VXsLaDA8tLNk+cRBicpZ8yPc=
+	t=1750713370; cv=none; b=sqwPddlzA3w0NPVU3AfQXAuchdabI2dX+axMY7pM+JUXVBRS5MoI1LezvhXLxaDuLCUZxsxY1hGS49wcP4O8+bs1soukcYCRIsIkSZUEJ6HsGKfwv4hmarqkPSvCqzKu/2QdqWq69T7tysNYXDoOG8ZUcjXctmdHRj1rYRD0HcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713368; c=relaxed/simple;
-	bh=ghr7hRWRO76EnU3eccUabx6rV6EnIFmQ4VSgQHu9c80=;
+	s=arc-20240116; t=1750713370; c=relaxed/simple;
+	bh=UaIUNznorEkse28JALflmvsFp2JJFkHHrfgWpVpeIds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gubeJZgOsp8BWeeGisagxg8oPPJWqs9WOyS7TEwGjp+ZscpXx8Q0lsrUihZiy7qWtBVBOYuRBV5DF1fbkX8mJx5xN+RD+ykip1IsRi7D9kQ1X++Cxg3w/ICIuiBZrJE5SVpWI31PBlbUnD+QCz//fp9oc6znbhof3KSqV6lnY20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xg/hnxqX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bl1hVAAJ+WRBMAf9OS2S4HFIrxNesfinUDvYBuVLJrUWKRu/MV4qyDl+cUfWcw4mj44z7KSBxhrtQlWliZtNk/LuKVK5DHYtQ7CY8ytEAkPHlhIRQG859nLRhMDQwwZIUnOsRl4trUACF0dAs98jlfN6zRvJaHur74SRbhnkTS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRGxz5eK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xg/hnxqX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64A5C4CEEA;
-	Mon, 23 Jun 2025 21:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRGxz5eK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425A2C4CEEA;
+	Mon, 23 Jun 2025 21:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713368;
-	bh=ghr7hRWRO76EnU3eccUabx6rV6EnIFmQ4VSgQHu9c80=;
+	s=korg; t=1750713370;
+	bh=UaIUNznorEkse28JALflmvsFp2JJFkHHrfgWpVpeIds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xg/hnxqXriT77bMR53aOuwcXZMuJ0k73LaJtQUs5LjOcEmot8g+i/jj5PC6lgH3Cg
-	 ornJQDnP1AMYl9oXpzQTprkhFNx1mQpXQhS3w78z4Q314MHN6TUvSUQX4+rG4B7nJR
-	 hFll1s/3o3JEVy1MU0T3o0Rw/Fmj5ahMP+H/fr6o=
+	b=PRGxz5eK2MxMkU/rtrVb7g4VF6LLTPJRZoSqty3aNFQQKaP7YNhMfdqL5/lexd7Ce
+	 QMBy6f13EA66semjfqrD8tRPVFH2t7iq4g3i1ZasE7onpxzhwgnEsu7AaBMasINcGi
+	 HVLYKTGcJFooC4jOW3Dld0ejaesHMZkNFmnexcNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/411] Bluetooth: L2CAP: Fix not responding with L2CAP_CR_LE_ENCRYPTION
-Date: Mon, 23 Jun 2025 15:04:23 +0200
-Message-ID: <20250623130636.543023582@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.10 140/355] posix-cpu-timers: fix race between handle_posix_cpu_timers() and posix_cpu_timer_del()
+Date: Mon, 23 Jun 2025 15:05:41 +0200
+Message-ID: <20250623130630.928893871@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,46 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 03dba9cea72f977e873e4e60e220fa596959dd8f ]
+commit f90fff1e152dedf52b932240ebbd670d83330eca upstream.
 
-Depending on the security set the response to L2CAP_LE_CONN_REQ shall be
-just L2CAP_CR_LE_ENCRYPTION if only encryption when BT_SECURITY_MEDIUM
-is selected since that means security mode 2 which doesn't require
-authentication which is something that is covered in the qualification
-test L2CAP/LE/CFC/BV-25-C.
+If an exiting non-autoreaping task has already passed exit_notify() and
+calls handle_posix_cpu_timers() from IRQ, it can be reaped by its parent
+or debugger right after unlock_task_sighand().
 
-Link: https://github.com/bluez/bluez/issues/1270
-Fixes: 27e2d4c8d28b ("Bluetooth: Add basic LE L2CAP connect request receiving support")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If a concurrent posix_cpu_timer_del() runs at that moment, it won't be
+able to detect timer->it.cpu.firing != 0: cpu_timer_task_rcu() and/or
+lock_task_sighand() will fail.
+
+Add the tsk->exit_state check into run_posix_cpu_timers() to fix this.
+
+This fix is not needed if CONFIG_POSIX_CPU_TIMERS_TASK_WORK=y, because
+exit_task_work() is called before exit_notify(). But the check still
+makes sense, task_work_add(&tsk->posix_cputimers_work.work) will fail
+anyway in this case.
+
+Cc: stable@vger.kernel.org
+Reported-by: Benoît Sevens <bsevens@google.com>
+Fixes: 0bdd2ed4138e ("sched: run_posix_cpu_timers: Don't check ->exit_state, use lock_task_sighand()")
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/time/posix-cpu-timers.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 872a0249f53c8..89021b3b8f443 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5859,7 +5859,8 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
+--- a/kernel/time/posix-cpu-timers.c
++++ b/kernel/time/posix-cpu-timers.c
+@@ -1374,6 +1374,15 @@ void run_posix_cpu_timers(void)
+ 	lockdep_assert_irqs_disabled();
  
- 	if (!smp_sufficient_security(conn->hcon, pchan->sec_level,
- 				     SMP_ALLOW_STK)) {
--		result = L2CAP_CR_LE_AUTHENTICATION;
-+		result = pchan->sec_level == BT_SECURITY_MEDIUM ?
-+			L2CAP_CR_LE_ENCRYPTION : L2CAP_CR_LE_AUTHENTICATION;
- 		chan = NULL;
- 		goto response_unlock;
- 	}
--- 
-2.39.5
-
+ 	/*
++	 * Ensure that release_task(tsk) can't happen while
++	 * handle_posix_cpu_timers() is running. Otherwise, a concurrent
++	 * posix_cpu_timer_del() may fail to lock_task_sighand(tsk) and
++	 * miss timer->it.cpu.firing != 0.
++	 */
++	if (tsk->exit_state)
++		return;
++
++	/*
+ 	 * If the actual expiry is deferred to task work context and the
+ 	 * work is already scheduled there is no point to do anything here.
+ 	 */
 
 
