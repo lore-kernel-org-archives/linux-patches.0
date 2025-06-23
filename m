@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F23A242D90;
-	Mon, 23 Jun 2025 13:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7E3242D90;
+	Mon, 23 Jun 2025 13:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684849; cv=none; b=tU4kGj7s2hE/j5WkPiGwpWz+6/s4JccuAf9I5zzZVBylzgv2MKI9Ef+ci48s6wOnaFDHqFQDDCGcVT/TTiLsIesnNptrdb8ADbEk4hAyyQuS5k9H1LnrnIq8Mo5qf0odUUeYILaW2qtLYWVOr6KiU8CkSNIjALEVfqx10U0an1c=
+	t=1750684851; cv=none; b=Gk9e0ITZrv3YuvKnEQY6f+vLeiFTN2/cvYzn+ngD/vRUCzmuBtjr7jqJI0fbC3nKy0/2MjhZ7rCfjcDarAORxd0QJ3VU3PULuMMQTIvnO14Ps0xtdyE+cq9G0iLSeHFTHs8YHBQx001hpvck9dOZCprVgzg3cCYaCO2w+EKtoU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684849; c=relaxed/simple;
-	bh=4Ot9r9fih76jgoQoh2NBJ3I26n9PJiq4lhev3JQk+RQ=;
+	s=arc-20240116; t=1750684851; c=relaxed/simple;
+	bh=lMwWZW4Hpmo7Cw6RYxXgJDAcoeyfaeVIhX/tEidJ9sE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hb/TsNGhD+je4dNZSa5ob8AnNmQ2vQob/zOKtSpltGTv+oT6oSzHSyRxhRMGSnJymyKCmqfL0rmtT3+bLuVE5lvyVBDgoKPAolGQ0wzvpTnDLXX7cPdxVmqN2xJP7qO8dsPArCf+Tr2ZRcz9qtYVFOI+K2+Fa3OZwxWYM2Xy/9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WHrUY1G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=T7VAIagcjU5DfAD2iBaXALdZ2UgYVjB8pGbpTJhWS5bxYSLMbHAhWvAewW4MsyVLBEZuF9xsAo7paYLT4TLTCj/3cr2LFtvRKgL830gw/MV8QYL8iZ43B1aM2A53y0hn0fW9/Jz9UwaVsb3+XW42FZrk2aG8VZwCAIKTHzlQHs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6aYcRE2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WHrUY1G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EA4C4CEEA;
-	Mon, 23 Jun 2025 13:20:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6aYcRE2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F88BC4CEEA;
+	Mon, 23 Jun 2025 13:20:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684849;
-	bh=4Ot9r9fih76jgoQoh2NBJ3I26n9PJiq4lhev3JQk+RQ=;
+	s=korg; t=1750684851;
+	bh=lMwWZW4Hpmo7Cw6RYxXgJDAcoeyfaeVIhX/tEidJ9sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1WHrUY1GiaO9gGKLLim2tdUBFS3NGFL4VIS58FCFKiGiZQ6Wxu8Xh9jz8mYmoVw0v
-	 bCroGcEMfXPav+2vzH2pwUrb2r5TwOUOMsQS7SV6gW3HurqJQT4LUA2IwcK9XhfmQk
-	 ci5The9eRFm8oGBHLnvRb731Ww2699kkxjnBUYSs=
+	b=R6aYcRE2Nb8i4H52YoU8BIn7+eYEz9jToEIntH7g+2XipiZXT5OAP4gawcwHOuHeg
+	 n5e7EGjwUvZDDO5FZcwhB96v/EBd62ki7krpgBD1PoRZpnqi+3fVxV7ox5zMmM2Ga0
+	 dMmr5VM2aHjVu7YGsmJy20xrqep1BxtxDeSKQ7f8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.10 003/355] pinctrl: armada-37xx: set GPIO output value before setting direction
-Date: Mon, 23 Jun 2025 15:03:24 +0200
-Message-ID: <20250623130626.824818631@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 6.15 183/592] PCI: Fix lock symmetry in pci_slot_unlock()
+Date: Mon, 23 Jun 2025 15:02:21 +0200
+Message-ID: <20250623130704.636237018@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,68 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit e6ebd4942981f8ad37189bbb36a3c8495e21ef4c upstream.
+commit f3efb9569b4a21354ef2caf7ab0608a3e14cc6e4 upstream.
 
-Changing the direction before updating the output value in the
-OUTPUT_VAL register may result in a glitch on the output line
-if the previous value in the OUTPUT_VAL register is different
-from the one we want to set.
+The commit a4e772898f8b ("PCI: Add missing bridge lock to pci_bus_lock()")
+made the lock function to call depend on dev->subordinate but left
+pci_slot_unlock() unmodified creating locking asymmetry compared with
+pci_slot_lock().
 
-In order to avoid that, update the output value before changing
-the direction.
+Because of the asymmetric lock handling, the same bridge device is unlocked
+twice. First pci_bus_unlock() unlocks bus->self and then pci_slot_unlock()
+will unconditionally unlock the same bridge device.
 
+Move pci_dev_unlock() inside an else branch to match the logic in
+pci_slot_lock().
+
+Fixes: a4e772898f8b ("PCI: Add missing bridge lock to pci_bus_lock()")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Cc: stable@vger.kernel.org
-Fixes: 6702abb3bf23 ("pinctrl: armada-37xx: Fix direction_output() callback behavior")
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-2-07e9ac1ab737@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://patch.msgid.link/20250505115412.37628-1-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/pci/pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-+++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -413,23 +413,22 @@ static int armada_37xx_gpio_direction_ou
- 					     unsigned int offset, int value)
- {
- 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
--	unsigned int val_offset = offset;
--	unsigned int reg = OUTPUT_EN;
-+	unsigned int en_offset = offset;
-+	unsigned int reg = OUTPUT_VAL;
- 	unsigned int mask, val, ret;
- 
- 	armada_37xx_update_reg(&reg, &offset);
- 	mask = BIT(offset);
-+	val = value ? mask : 0;
- 
--	ret = regmap_update_bits(info->regmap, reg, mask, mask);
--
-+	ret = regmap_update_bits(info->regmap, reg, mask, val);
- 	if (ret)
- 		return ret;
- 
--	reg = OUTPUT_VAL;
--	armada_37xx_update_reg(&reg, &val_offset);
-+	reg = OUTPUT_EN;
-+	armada_37xx_update_reg(&reg, &en_offset);
- 
--	val = value ? mask : 0;
--	regmap_update_bits(info->regmap, reg, mask, val);
-+	regmap_update_bits(info->regmap, reg, mask, mask);
- 
- 	return 0;
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5538,7 +5538,8 @@ static void pci_slot_unlock(struct pci_s
+ 			continue;
+ 		if (dev->subordinate)
+ 			pci_bus_unlock(dev->subordinate);
+-		pci_dev_unlock(dev);
++		else
++			pci_dev_unlock(dev);
+ 	}
  }
+ 
 
 
