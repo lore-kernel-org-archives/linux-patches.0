@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168623FB1B;
-	Mon, 23 Jun 2025 22:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE3A19DF4A;
+	Mon, 23 Jun 2025 22:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716147; cv=none; b=neMXVq/xBf24MdW8ICo1rsgvofKsElE1ATmTeKIY2Jw2mBm/xr3tRleVG91o5uMaVS7hWq9uU76rJBsBzXHZdJ1kFBV9l5nFEMRv9JrjdyQA52Jabnjhz6SO+1/SVXhY3VCYn4u0QGqR2tofp/Pcc10/FWK5UPBnU22/BZ8mMLA=
+	t=1750716149; cv=none; b=lwiqTDBGjGfQ8KURk6BrK+uYgBHNEmm1MzndO0c2WweJesU84kwJgLzv5eMhyiLo+OESgrjmqd8ETONXZXvCpv3zD7zc1W0m/6KE3jDFEInDwypxRR0fDB2zTR/byrHkEV5X48lX4fy/X7F4UE/FTLQoHNkk4z3kI7rDD/R+lDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716147; c=relaxed/simple;
-	bh=D6PRV+QxArvZo+UkfE8WRXn1tsZ4PJk5aQe3lVwVJx4=;
+	s=arc-20240116; t=1750716149; c=relaxed/simple;
+	bh=rXZQ1XC7CMf3DATdOMA/fWkPUBTCLQm53tC0yXCCIwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=thia1gd0EK3H17uKVRML6118/h7GXqD4gZ1R1oKsWZbfg/4RDWlU4ye7rvAlTn7wVLn7R3LsLCODRe/xyKFj5nT3sIigSUGMaHtqfUTasjT4at7GbuRgrWJ/6bGvp5YkNSkOKEHBZG2nWHo704IqOyjW2XlsLdESplt9v8+D9sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9DbdRn2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UrrrIc2+zUjc7KSnFcTDwHyApHca6k2770ZuWi+ba14lhirr+cH4GuiQwoCWcRtadBFEWQBGc8D9VwQKZ64ipgOrS7LPcuwcSMy1pb9ogUnLwZBG3455nBlmFZHfN55Vc7NyWWHooW0j2/s+aMQCPvU+vjjjxceNsTTxYJJiyBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yg0QSgse; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9DbdRn2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97312C4CEEA;
-	Mon, 23 Jun 2025 22:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yg0QSgse"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11828C4CEEA;
+	Mon, 23 Jun 2025 22:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716146;
-	bh=D6PRV+QxArvZo+UkfE8WRXn1tsZ4PJk5aQe3lVwVJx4=;
+	s=korg; t=1750716149;
+	bh=rXZQ1XC7CMf3DATdOMA/fWkPUBTCLQm53tC0yXCCIwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9DbdRn27oqSvxW0YbUUvNnfvsUTRAoVIBJoVeC7QXWJsFlsAdvSMPfNnsvKSgBvq
-	 WgD+PGEJ26Ptp9y/1L5tr7swLyeDWA4MwWR0378RK6DNxoVxSzHfCRAVlDFcX9pCNq
-	 QTA+GdD5RAJ2wWpCdwnVlrxPkp1pVea/+Ng1ivRE=
+	b=yg0QSgse4UvyTwIvxQ5oC7z2Um7y3YVdNf0Y86fCu9/VCQiMqxa5NGDjpF0uNrV9e
+	 j71g4Es5Q8RxtcahEfzwi6gSOH0RUS8FzfyG0JyIgx6hPgVgIFVKlWISGmEcWqS7vo
+	 HBltvO7klcHrGtiHj71E5hmXDfOSa3QszJQBXhNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie James <eajames@linux.ibm.com>,
-	Joel Stanley <joel@jms.id.au>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 304/355] hwmon: (occ) Add soft minimum power cap attribute
-Date: Mon, 23 Jun 2025 15:08:25 +0200
-Message-ID: <20250623130635.918691563@linuxfoundation.org>
+	James Morse <james.morse@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Pu Lehui <pulehui@huawei.com>
+Subject: [PATCH 5.10 331/355] arm64: proton-pack: Expose whether the branchy loop k value
+Date: Mon, 23 Jun 2025 15:08:52 +0200
+Message-ID: <20250623130636.695592183@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
 References: <20250623130626.716971725@linuxfoundation.org>
@@ -52,71 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eddie James <eajames@linux.ibm.com>
+From: James Morse <james.morse@arm.com>
 
-[ Upstream commit 84dc9e8a7eec2cdff00728baedf0fb35fc7c11e8 ]
+[ Upstream commit a1152be30a043d2d4dcb1683415f328bf3c51978 ]
 
-Export the power caps data for the soft minimum power cap through hwmon.
+Add a helper to expose the k value of the branchy loop. This is needed
+by the BPF JIT to generate the mitigation sequence in BPF programs.
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-Link: https://lore.kernel.org/r/20220215151022.7498-5-eajames@linux.ibm.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 744c2fe950e9 ("hwmon: (occ) Rework attribute registration for stack usage")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: James Morse <james.morse@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/occ/common.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/spectre.h |    1 +
+ arch/arm64/kernel/proton-pack.c  |    5 +++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
-index 580e63d7daa00..ce4a16b475fd1 100644
---- a/drivers/hwmon/occ/common.c
-+++ b/drivers/hwmon/occ/common.c
-@@ -685,6 +685,9 @@ static ssize_t occ_show_caps_3(struct device *dev,
- 	case 7:
- 		val = caps->user_source;
- 		break;
-+	case 8:
-+		val = get_unaligned_be16(&caps->soft_min) * 1000000ULL;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -845,12 +848,13 @@ static int occ_setup_sensor_attrs(struct occ *occ)
- 	case 1:
- 		num_attrs += (sensors->caps.num_sensors * 7);
- 		break;
--	case 3:
--		show_caps = occ_show_caps_3;
--		fallthrough;
- 	case 2:
- 		num_attrs += (sensors->caps.num_sensors * 8);
- 		break;
-+	case 3:
-+		show_caps = occ_show_caps_3;
-+		num_attrs += (sensors->caps.num_sensors * 9);
-+		break;
- 	default:
- 		sensors->caps.num_sensors = 0;
- 	}
-@@ -1057,6 +1061,15 @@ static int occ_setup_sensor_attrs(struct occ *occ)
- 			attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
- 						     show_caps, NULL, 7, 0);
- 			attr++;
-+
-+			if (sensors->caps.version > 2) {
-+				snprintf(attr->name, sizeof(attr->name),
-+					 "power%d_cap_min_soft", s);
-+				attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
-+							     show_caps, NULL,
-+							     8, 0);
-+				attr++;
-+			}
- 		}
- 	}
+--- a/arch/arm64/include/asm/spectre.h
++++ b/arch/arm64/include/asm/spectre.h
+@@ -32,6 +32,7 @@ void spectre_v4_enable_task_mitigation(s
  
--- 
-2.39.5
-
+ enum mitigation_state arm64_get_spectre_bhb_state(void);
+ bool is_spectre_bhb_affected(const struct arm64_cpu_capabilities *entry, int scope);
++u8 get_spectre_bhb_loop_value(void);
+ bool is_spectre_bhb_fw_mitigated(void);
+ void spectre_bhb_enable_mitigation(const struct arm64_cpu_capabilities *__unused);
+ bool try_emulate_el1_ssbs(struct pt_regs *regs, u32 instr);
+--- a/arch/arm64/kernel/proton-pack.c
++++ b/arch/arm64/kernel/proton-pack.c
+@@ -1006,6 +1006,11 @@ bool is_spectre_bhb_affected(const struc
+ 	return true;
+ }
+ 
++u8 get_spectre_bhb_loop_value(void)
++{
++	return max_bhb_k;
++}
++
+ static void this_cpu_set_vectors(enum arm64_bp_harden_el1_vectors slot)
+ {
+ 	const char *v = arm64_get_bp_hardening_vector(slot);
 
 
