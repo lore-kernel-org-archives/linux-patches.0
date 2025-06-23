@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67352472AF;
-	Mon, 23 Jun 2025 13:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF5C1E480;
+	Mon, 23 Jun 2025 13:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685872; cv=none; b=Sly3FqDtcQ6I4etaCWV9nPjWDtKGyCkEvZjGVBOSEFYe+VZXh4e/nJSjd7zi1cyHxjdyiClM+muFVBKs6I2szoUzCbV0LsJD6kqs1anGdoNm6xceiv8S7FXybAJEii38YDNiUFNjhVLe86opHF0aR23NbddyAXjtHVXXMeLz21U=
+	t=1750685875; cv=none; b=fSgk+5BkVGvEvuyLXYJi+QMA5wBRXhpSrI+2ZeNKYS0KUkLA/78+7/5n/NRrzXqKa26pVBVX7UBw58QCaa7cLdeIAouwXeyiGQal4LdDf2F6TTl6DDbIuO98j1rwM0RbljkT5jK+M6LGHNlGXoLz1IuEu7Z8fqlvKZ4xL5QkhDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685872; c=relaxed/simple;
-	bh=BX/Z2C5+KZz71ECZcgeMzUxTdyQ27r0KYBXYhWAOsNE=;
+	s=arc-20240116; t=1750685875; c=relaxed/simple;
+	bh=YFsNjT9+V7GxltH33hhY+ivgFLhPd8po6Eow8raFKSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X8tk20n9DoGWKqUr+e8aubNFzdkG/0H9Cr510f4MBh7zbI97Z/mtAtlGUjY0ln1+A5B/RguTjzJ6hnfOLOp521qS25iYMm72LM7CtR4wZK7+nXi+nfchgv1bcE/mVC3NWIoJIlF/TBphzSbId9GjPYOldzWxgWGoCvbgYMntWjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxZ4PDRA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FHOP7bg+xOGSbd2RntO3k9Mu1hHFCiMgDpL1MykmJeykNvsYPef7cHsI97V93OO07NnnQtDhcoVliysmGxd1xd4EmYVBi8fZMM88lF9SFJ20iXxuLrpRFj68tkG6cg7qQdNT27LwRb26J9KK9WZ+FYJZnYsY2v/wg960PeEBIMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvcTPm2E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxZ4PDRA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6D9C4CEEA;
-	Mon, 23 Jun 2025 13:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvcTPm2E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52AEC4CEEA;
+	Mon, 23 Jun 2025 13:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685872;
-	bh=BX/Z2C5+KZz71ECZcgeMzUxTdyQ27r0KYBXYhWAOsNE=;
+	s=korg; t=1750685875;
+	bh=YFsNjT9+V7GxltH33hhY+ivgFLhPd8po6Eow8raFKSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NxZ4PDRAmu6xTMKj0eBejpgMrLzM13iKZprSrrO3FWSzh2pLDtphIUU3GeWVCv5la
-	 p93g/oMLwK/6bE5rFCXUVFm1EWMjF+rbxTiGDCgvmY0UvtQ8CPAIN0B88kpTDKQEG0
-	 oxkW1wmqCqJKBqLU5QCWkHnhqmZ8kzMPSVMpUdgI=
+	b=nvcTPm2Eamz03xk/LLt6LwIsgZSrk2b+ZgL6Vma+h03/GDf08l1uCio41afmydywh
+	 QT/iUh7GQ+hlcPKDtjsQ8BpZ5mWiZI8Vl2OsC8CGiy8MLV/SRkF8aaVd+N6dr+ZO6R
+	 MO/hLUInw/tU1J487EvitvYpp/VJ1Cmb+Agbx/UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanqing Wang <ot_yanqing.wang@mediatek.com>,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	Biao Huang <biao.huang@mediatek.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 098/355] driver: net: ethernet: mtk_star_emac: fix suspend/resume issue
-Date: Mon, 23 Jun 2025 15:04:59 +0200
-Message-ID: <20250623130629.734695693@linuxfoundation.org>
+Subject: [PATCH 6.15 289/592] ext4: prevent stale extent cache entries caused by concurrent get es_cache
+Date: Mon, 23 Jun 2025 15:04:07 +0200
+Message-ID: <20250623130707.236717155@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,55 +47,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yanqing Wang <ot_yanqing.wang@mediatek.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit ba99c627aac85bc746fb4a6e2d79edb3ad100326 ]
+[ Upstream commit f22a0ef2231a7d8374bb021eb86404d0e9de5a02 ]
 
-Identify the cause of the suspend/resume hang: netif_carrier_off()
-is called during link state changes and becomes stuck while
-executing linkwatch_work().
+The EXT4_IOC_GET_ES_CACHE and EXT4_IOC_PRECACHE_EXTENTS currently
+invokes ext4_ext_precache() to preload the extent cache without holding
+the inode's i_rwsem. This can result in stale extent cache entries when
+competing with operations such as ext4_collapse_range() which calls
+ext4_ext_remove_space() or ext4_ext_shift_extents().
 
-To resolve this issue, call netif_device_detach() during the Ethernet
-suspend process to temporarily detach the network device from the
-kernel and prevent the suspend/resume hang.
+The problem arises when ext4_ext_remove_space() temporarily releases
+i_data_sem due to insufficient journal credits. During this interval, a
+concurrent EXT4_IOC_GET_ES_CACHE or EXT4_IOC_PRECACHE_EXTENTS may cache
+extent entries that are about to be deleted. As a result, these cached
+entries become stale and inconsistent with the actual extents.
 
-Fixes: 8c7bd5a454ff ("net: ethernet: mtk-star-emac: new driver")
-Signed-off-by: Yanqing Wang <ot_yanqing.wang@mediatek.com>
-Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Signed-off-by: Biao Huang <biao.huang@mediatek.com>
-Link: https://patch.msgid.link/20250528075351.593068-1-macpaul.lin@mediatek.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Loading the extents cache without holding the inode's i_rwsem or the
+mapping's invalidate_lock is not permitted besides during the writeback.
+Fix this by holding the i_rwsem during EXT4_IOC_GET_ES_CACHE and
+EXT4_IOC_PRECACHE_EXTENTS.
+
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250423085257.122685-6-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_star_emac.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ext4/extents.c | 2 ++
+ fs/ext4/ioctl.c   | 8 +++++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
-index 96d2891f1675a..9d884699ed9cc 100644
---- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
-+++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
-@@ -1409,6 +1409,8 @@ static __maybe_unused int mtk_star_suspend(struct device *dev)
- 	if (netif_running(ndev))
- 		mtk_star_disable(ndev);
- 
-+	netif_device_detach(ndev);
-+
- 	clk_bulk_disable_unprepare(MTK_STAR_NCLKS, priv->clks);
- 
- 	return 0;
-@@ -1433,6 +1435,8 @@ static __maybe_unused int mtk_star_resume(struct device *dev)
- 			clk_bulk_disable_unprepare(MTK_STAR_NCLKS, priv->clks);
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 81e010a6c797c..828a78a9600a8 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -4996,7 +4996,9 @@ int ext4_get_es_cache(struct inode *inode, struct fiemap_extent_info *fieinfo,
  	}
  
-+	netif_device_attach(ndev);
-+
- 	return ret;
- }
+ 	if (fieinfo->fi_flags & FIEMAP_FLAG_CACHE) {
++		inode_lock_shared(inode);
+ 		error = ext4_ext_precache(inode);
++		inode_unlock_shared(inode);
+ 		if (error)
+ 			return error;
+ 		fieinfo->fi_flags &= ~FIEMAP_FLAG_CACHE;
+diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
+index d17207386ead1..0e240013c84d2 100644
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -1505,8 +1505,14 @@ static long __ext4_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+ 		return 0;
+ 	}
+ 	case EXT4_IOC_PRECACHE_EXTENTS:
+-		return ext4_ext_precache(inode);
++	{
++		int ret;
  
++		inode_lock_shared(inode);
++		ret = ext4_ext_precache(inode);
++		inode_unlock_shared(inode);
++		return ret;
++	}
+ 	case FS_IOC_SET_ENCRYPTION_POLICY:
+ 		if (!ext4_has_feature_encrypt(sb))
+ 			return -EOPNOTSUPP;
 -- 
 2.39.5
 
