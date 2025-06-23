@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A0416419;
-	Mon, 23 Jun 2025 13:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB8916419;
+	Mon, 23 Jun 2025 13:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685986; cv=none; b=Bno3EeiClmJGjcIj0xQmzBLjYjbuQvAzMl90mdYXCoY6TnwdrFrIyhBjnoNWPLaokdqKyzCIjKxKLmbE9UXAeu7CFGGIzRMoF7JjOezqhwQt6NuKd8lrDvugoce7BgS+kLI7f4pO4yhQ4fPdGE/LFdEpljcrE+5dv0ZTv2Av+vY=
+	t=1750685989; cv=none; b=N5tyNWI6MlkhbrdQUq08e4xSktZkQqIvFtznTRN61S7TpSNSBMSEEj+zuIWXDVVy6yLxvraHMqceHuzOi3R8ZKjOrRjmQce8xd6K1Z0ojMCIzbbdeRLLrGAOp/0zf2yxYD2sz9kCziMsuqspLijrLY78eJJDmf9VPwZZN9TTamM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685986; c=relaxed/simple;
-	bh=Lj7QYC67anznBAgT7PNaChcPOtF+N0pCEtuYE3qLt9I=;
+	s=arc-20240116; t=1750685989; c=relaxed/simple;
+	bh=rcq9ebGQ+6JE+iwX5+esHIGnMNdF6d/rVSb9QaCfQBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8y9ekyZqz1ci48w9NBtsLym1WwVScDeaoAyG7MDzh3suFKn1WIrY5fh7VwSnsdS6x327HUbnD8P1EYwhltw3Aeh5Ip3wVY5kFRQwQlG6XsQRhDvY9ZJDkPBTdvqXjavg4Y7tYEAtD8d0ZkUW/B5u06oGnyzyGCvLU31hms1DLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oysd/dcW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oyRMJtQKcGNjCBzKVP/yYTON0hSruYJMvqifd57LHFsP4lBAWV7wOxmmZX50qQjQ+/kzcByxe4rQQm3whVuv+zfyLHY/5lX2ZO9zRx+uxF4TsF01Iwp9+KpzAOB+fkbVk9HtOPbhQApGNjqD8d1vlBpiiYKXxV9zleNtTQENyoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6NO0gAP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oysd/dcW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B5AC4CEEA;
-	Mon, 23 Jun 2025 13:39:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6NO0gAP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0DBC4CEEA;
+	Mon, 23 Jun 2025 13:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685986;
-	bh=Lj7QYC67anznBAgT7PNaChcPOtF+N0pCEtuYE3qLt9I=;
+	s=korg; t=1750685989;
+	bh=rcq9ebGQ+6JE+iwX5+esHIGnMNdF6d/rVSb9QaCfQBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oysd/dcWA+KoJ38b8uO0MUqczSF9DMyu5SucxrDmUzdiH8XbBDmB2CiK3HxEQun39
-	 424Sw9xrbVfU6Il5riXt9J4WDg4IkxBw657DsM20xoqyQr+lNk1VvNdzy7l04kRNRo
-	 muG13NhcM3i8iMLDuOI7wiehlaomj7dzB+qJzOkg=
+	b=x6NO0gAPke7Yl72sQySKfeYjjFNrJ4pc6pduYCeLyqWfNz14r1W8BvtcMr4OYv5ux
+	 4uh/pM/++4d/6rG2GVpm499l46Olo5o5SurZ5hUokeDFyR8hUg7WJ8QSHY7eLtz2u4
+	 K5KCOWYGm2ceLR+HoXUNQhIkBAqyXKhyyDzRiWwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 064/411] vfio/type1: Fix error unwind in migration dirty bitmap allocation
-Date: Mon, 23 Jun 2025 15:03:28 +0200
-Message-ID: <20250623130634.922621630@linuxfoundation.org>
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.6 016/290] nfsd: nfsd4_spo_must_allow() must check this is a v4 compound request
+Date: Mon, 23 Jun 2025 15:04:37 +0200
+Message-ID: <20250623130627.473590907@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit 4518e5a60c7fbf0cdff393c2681db39d77b4f87e ]
+commit 1244f0b2c3cecd3f349a877006e67c9492b41807 upstream.
 
-When setting up dirty page tracking at the vfio IOMMU backend for
-device migration, if an error is encountered allocating a tracking
-bitmap, the unwind loop fails to free previously allocated tracking
-bitmaps.  This occurs because the wrong loop index is used to
-generate the tracking object.  This results in unintended memory
-usage for the life of the current DMA mappings where bitmaps were
-successfully allocated.
+If the request being processed is not a v4 compound request, then
+examining the cstate can have undefined results.
 
-Use the correct loop index to derive the tracking object for
-freeing during unwind.
+This patch adds a check that the rpc procedure being executed
+(rq_procinfo) is the NFSPROC4_COMPOUND procedure.
 
-Fixes: d6a4c185660c ("vfio iommu: Implementation of ioctl for dirty pages tracking")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://lore.kernel.org/r/20250521034647.2877-1-lirongqing@baidu.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Olga Kornievskaia <okorniev@redhat.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: NeilBrown <neil@brown.name>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/vfio_iommu_type1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4proc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-index 66bbb125d7615..6a89bbec738f6 100644
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -303,7 +303,7 @@ static int vfio_dma_bitmap_alloc_all(struct vfio_iommu *iommu, size_t pgsize)
- 			struct rb_node *p;
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -3580,7 +3580,8 @@ bool nfsd4_spo_must_allow(struct svc_rqs
+ 	struct nfs4_op_map *allow = &cstate->clp->cl_spo_must_allow;
+ 	u32 opiter;
  
- 			for (p = rb_prev(n); p; p = rb_prev(p)) {
--				struct vfio_dma *dma = rb_entry(n,
-+				struct vfio_dma *dma = rb_entry(p,
- 							struct vfio_dma, node);
+-	if (!cstate->minorversion)
++	if (rqstp->rq_procinfo != &nfsd_version4.vs_proc[NFSPROC4_COMPOUND] ||
++	    cstate->minorversion == 0)
+ 		return false;
  
- 				vfio_dma_bitmap_free(dma);
--- 
-2.39.5
-
+ 	if (cstate->spo_must_allowed)
 
 
