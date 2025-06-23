@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E661A19D084;
-	Mon, 23 Jun 2025 21:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606EE19D084;
+	Mon, 23 Jun 2025 21:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714856; cv=none; b=Rz3jFnUBbPJxGNMUiWBwpyKSAbbwJ/4GB3U/EnPz41YJqn1rPdKTIRVpQG1sKnh9q4rzkE3nwhcYFTkgHkp4O9hj+QrPqN3DBDlks33YFNfrZ8E+vYYGzVz0lIez8zNyTydRJlcD8PmCX0Ptkz3qqA0Fiqq+YjKx1LSMBNh1PwQ=
+	t=1750714858; cv=none; b=UVYNT3hAaC2po1VzdVrhAv0v0Fnf/gb5Cz/kFzrdEgWxPAKknZz+NswVIcDByQY3m22baQQiPEV+YWCaBvn52XUhktKFPTUmGR1F0DQ+v/IPQJjA/zZ0r6v7dYWW84TRIhS5XXfadEQVUSD3bM5nnZmI/hNz37ZtNyowAoOC8Rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714856; c=relaxed/simple;
-	bh=QYOt5t+haK5FiPTa7IA+5jRHjnN5mxZUaFERbJZMfiI=;
+	s=arc-20240116; t=1750714858; c=relaxed/simple;
+	bh=Dq24zDfWLohZ6hgIspsgeDMoMs+glEKu3dq1e/7JGbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b4YUqdHzMnLsXU8c7jdPuxuepFiJZPEbafoq7iYMiu/hphbf0CMn4AEbJoqLmEnlIVj49TF+82EiHDGKZlmbB+cHXHiF+vTTAJk9JuaOdXHLSgLOT0yzbNIMwowT/DHcbfkuADgRIFZS+niLe1hCUH5M4KT/4Ee6iYwdhmILz8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZfCF3uRX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=toe/wgWvuIVzm4lO9MX3I7fmytOId5kngZ123WEpExE35qYOIb3cTi63eSgjk1AQ0Lvwx5DqF0ytrRjMW71xJXAOqirJ5lDPsLKNrwbLvAwnvlwFme9Wxrn2jdFmAfQZ+sxcowpnY2bV9IN0EalQrfgaLXHstEglyGBW1AuWhwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fI+V90Zv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfCF3uRX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6F5C4CEEA;
-	Mon, 23 Jun 2025 21:40:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fI+V90Zv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAEA2C4CEEA;
+	Mon, 23 Jun 2025 21:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714855;
-	bh=QYOt5t+haK5FiPTa7IA+5jRHjnN5mxZUaFERbJZMfiI=;
+	s=korg; t=1750714858;
+	bh=Dq24zDfWLohZ6hgIspsgeDMoMs+glEKu3dq1e/7JGbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZfCF3uRXt2y2qdgBzhwFBj2VgI7VbSJwRHAgcZa+HxrdDpocJL5fYgv92W+zuZ3ir
-	 FoDzrdhnrtMVLrbBdJ5SlJs0QgO5jwhpwbXj9ZCuTIb85UGJ231N+zT/zTB8V7HHUn
-	 O+3o2gpaVbIcS31paEr7XH2K0sLU8MQKwg2HIgGE=
+	b=fI+V90Zv84wEawc9geSS10xq7poccAgMfwfMxY0AdNKpMKJx2HeIE1OWkJBBqJREz
+	 1NIjtHxEdlQWf3TxdIRxf6Ze+vSnqsEk7W1s9o+tb6rI6nYk94gZ0IgTuu5eLnAUJj
+	 ZaDRvrdRfQS1LhZiZDo/HwmTcuRyNJfyMAO5Yf24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 185/290] usbnet: asix AX88772: leave the carrier control to phylink
-Date: Mon, 23 Jun 2025 15:07:26 +0200
-Message-ID: <20250623130632.437171464@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Andrei Borzenkov <arvidjaar@gmail.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	linux-fbdev@vger.kernel.org,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH 6.12 161/414] dummycon: Trigger redraw when switching consoles with deferred takeover
+Date: Mon, 23 Jun 2025 15:04:58 +0200
+Message-ID: <20250623130646.061636841@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,160 +48,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Hałasa <khalasa@piap.pl>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 4145f00227ee80f21ab274e9cd9c09758e9bcf3d ]
+commit 03bcbbb3995ba5df43af9aba45334e35f2dfe27b upstream.
 
-ASIX AX88772B based USB 10/100 Ethernet adapter doesn't come
-up ("carrier off"), despite the built-in 100BASE-FX PHY positive link
-indication. The internal PHY is configured (using EEPROM) in fixed
-100 Mbps full duplex mode.
+Signal vt subsystem to redraw console when switching to dummycon
+with deferred takeover enabled. Makes the console switch to fbcon
+and displays the available output.
 
-The primary problem appears to be using carrier_netif_{on,off}() while,
-at the same time, delegating carrier management to phylink. Use only the
-latter and remove "manual control" in the asix driver.
+With deferred takeover enabled, dummycon acts as the placeholder
+until the first output to the console happens. At that point, fbcon
+takes over. If the output happens while dummycon is not active, it
+cannot inform fbcon. This is the case if the vt subsystem runs in
+graphics mode.
 
-I don't have any other AX88772 board here, but the problem doesn't seem
-specific to a particular board or settings - it's probably
-timing-dependent.
+A typical graphical boot starts plymouth, a display manager and a
+compositor; all while leaving out dummycon. Switching to a text-mode
+console leaves the console with dummycon even if a getty terminal
+has been started.
 
-Remove unused asix_adjust_link() as well.
+Returning true from dummycon's con_switch helper signals the vt
+subsystem to redraw the screen. If there's output available dummycon's
+con_putc{s} helpers trigger deferred takeover of fbcon, which sets a
+display mode and displays the output. If no output is available,
+dummycon remains active.
 
-Signed-off-by: Krzysztof Hałasa <khalasa@piap.pl>
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/m3plhmdfte.fsf_-_@t19.piap.pl
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+v2:
+- make the comment slightly more verbose (Javier)
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reported-by: Andrei Borzenkov <arvidjaar@gmail.com>
+Closes: https://bugzilla.suse.com/show_bug.cgi?id=1242191
+Tested-by: Andrei Borzenkov <arvidjaar@gmail.com>
+Acked-by: Javier Martinez Canillas <javierm@redhat.com>
+Fixes: 83d83bebf401 ("console/fbcon: Add support for deferred console takeover")
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: linux-fbdev@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v4.19+
+Link: https://lore.kernel.org/r/20250520071418.8462-1-tzimmermann@suse.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/asix.h         |  1 -
- drivers/net/usb/asix_common.c  | 22 ----------------------
- drivers/net/usb/asix_devices.c | 17 ++++-------------
- 3 files changed, 4 insertions(+), 36 deletions(-)
+ drivers/video/console/dummycon.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/usb/asix.h b/drivers/net/usb/asix.h
-index 74162190bccc1..8531b804021aa 100644
---- a/drivers/net/usb/asix.h
-+++ b/drivers/net/usb/asix.h
-@@ -224,7 +224,6 @@ int asix_write_rx_ctl(struct usbnet *dev, u16 mode, int in_pm);
- 
- u16 asix_read_medium_status(struct usbnet *dev, int in_pm);
- int asix_write_medium_mode(struct usbnet *dev, u16 mode, int in_pm);
--void asix_adjust_link(struct net_device *netdev);
- 
- int asix_write_gpio(struct usbnet *dev, u16 value, int sleep, int in_pm);
- 
-diff --git a/drivers/net/usb/asix_common.c b/drivers/net/usb/asix_common.c
-index 72ffc89b477ad..7fd763917ae2c 100644
---- a/drivers/net/usb/asix_common.c
-+++ b/drivers/net/usb/asix_common.c
-@@ -414,28 +414,6 @@ int asix_write_medium_mode(struct usbnet *dev, u16 mode, int in_pm)
- 	return ret;
+--- a/drivers/video/console/dummycon.c
++++ b/drivers/video/console/dummycon.c
+@@ -85,6 +85,15 @@ static bool dummycon_blank(struct vc_dat
+ 	/* Redraw, so that we get putc(s) for output done while blanked */
+ 	return true;
  }
- 
--/* set MAC link settings according to information from phylib */
--void asix_adjust_link(struct net_device *netdev)
--{
--	struct phy_device *phydev = netdev->phydev;
--	struct usbnet *dev = netdev_priv(netdev);
--	u16 mode = 0;
--
--	if (phydev->link) {
--		mode = AX88772_MEDIUM_DEFAULT;
--
--		if (phydev->duplex == DUPLEX_HALF)
--			mode &= ~AX_MEDIUM_FD;
--
--		if (phydev->speed != SPEED_100)
--			mode &= ~AX_MEDIUM_PS;
--	}
--
--	asix_write_medium_mode(dev, mode, 0);
--	phy_print_status(phydev);
--	usbnet_link_change(dev, phydev->link, 0);
--}
--
- int asix_write_gpio(struct usbnet *dev, u16 value, int sleep, int in_pm)
++
++static bool dummycon_switch(struct vc_data *vc)
++{
++	/*
++	 * Redraw, so that we get putc(s) for output done while switched
++	 * away. Informs deferred consoles to take over the display.
++	 */
++	return true;
++}
+ #else
+ static void dummycon_putc(struct vc_data *vc, u16 c, unsigned int y,
+ 			  unsigned int x) { }
+@@ -95,6 +104,10 @@ static bool dummycon_blank(struct vc_dat
  {
- 	int ret;
-diff --git a/drivers/net/usb/asix_devices.c b/drivers/net/usb/asix_devices.c
-index ec4dcf89cbedd..119295f5f3b35 100644
---- a/drivers/net/usb/asix_devices.c
-+++ b/drivers/net/usb/asix_devices.c
-@@ -752,7 +752,6 @@ static void ax88772_mac_link_down(struct phylink_config *config,
- 	struct usbnet *dev = netdev_priv(to_net_dev(config->dev));
- 
- 	asix_write_medium_mode(dev, 0, 0);
--	usbnet_link_change(dev, false, false);
+ 	return false;
  }
++static bool dummycon_switch(struct vc_data *vc)
++{
++	return false;
++}
+ #endif
  
- static void ax88772_mac_link_up(struct phylink_config *config,
-@@ -783,7 +782,6 @@ static void ax88772_mac_link_up(struct phylink_config *config,
- 		m |= AX_MEDIUM_RFC;
- 
- 	asix_write_medium_mode(dev, m, 0);
--	usbnet_link_change(dev, true, false);
+ static const char *dummycon_startup(void)
+@@ -123,11 +136,6 @@ static bool dummycon_scroll(struct vc_da
+ {
+ 	return false;
  }
+-
+-static bool dummycon_switch(struct vc_data *vc)
+-{
+-	return false;
+-}
  
- static const struct phylink_mac_ops ax88772_phylink_mac_ops = {
-@@ -1350,10 +1348,9 @@ static const struct driver_info ax88772_info = {
- 	.description = "ASIX AX88772 USB 2.0 Ethernet",
- 	.bind = ax88772_bind,
- 	.unbind = ax88772_unbind,
--	.status = asix_status,
- 	.reset = ax88772_reset,
- 	.stop = ax88772_stop,
--	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR | FLAG_MULTI_PACKET,
-+	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
- 	.rx_fixup = asix_rx_fixup_common,
- 	.tx_fixup = asix_tx_fixup,
- };
-@@ -1362,11 +1359,9 @@ static const struct driver_info ax88772b_info = {
- 	.description = "ASIX AX88772B USB 2.0 Ethernet",
- 	.bind = ax88772_bind,
- 	.unbind = ax88772_unbind,
--	.status = asix_status,
- 	.reset = ax88772_reset,
- 	.stop = ax88772_stop,
--	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
--	         FLAG_MULTI_PACKET,
-+	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
- 	.rx_fixup = asix_rx_fixup_common,
- 	.tx_fixup = asix_tx_fixup,
- 	.data = FLAG_EEPROM_MAC,
-@@ -1376,11 +1371,9 @@ static const struct driver_info lxausb_t1l_info = {
- 	.description = "Linux Automation GmbH USB 10Base-T1L",
- 	.bind = ax88772_bind,
- 	.unbind = ax88772_unbind,
--	.status = asix_status,
- 	.reset = ax88772_reset,
- 	.stop = ax88772_stop,
--	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
--		 FLAG_MULTI_PACKET,
-+	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
- 	.rx_fixup = asix_rx_fixup_common,
- 	.tx_fixup = asix_tx_fixup,
- 	.data = FLAG_EEPROM_MAC,
-@@ -1412,10 +1405,8 @@ static const struct driver_info hg20f9_info = {
- 	.description = "HG20F9 USB 2.0 Ethernet",
- 	.bind = ax88772_bind,
- 	.unbind = ax88772_unbind,
--	.status = asix_status,
- 	.reset = ax88772_reset,
--	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
--	         FLAG_MULTI_PACKET,
-+	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
- 	.rx_fixup = asix_rx_fixup_common,
- 	.tx_fixup = asix_tx_fixup,
- 	.data = FLAG_EEPROM_MAC,
--- 
-2.39.5
-
+ /*
+  *  The console `switch' structure for the dummy console
 
 
