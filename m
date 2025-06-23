@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E46199FBA;
-	Mon, 23 Jun 2025 22:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4776F15ADB4;
+	Mon, 23 Jun 2025 22:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717346; cv=none; b=Uqmou0wGpoeFujplwgVjrjQeXEzxdyHXYaBZpmkeM1Q80Bn0E0VGpA59duN3wrmgAWPDJqgQSI2hu0Y0YRNXTAp5SQyXbnvUPH/F/bbQMlvrzcCfUn4yTBIJCbMRJmyJ++OU2sNpCtxDYpziDYjuf18d+AK6JDX1soozGVQENrw=
+	t=1750717348; cv=none; b=AW1rvVjlJ2ufmSt57EMfQnGgNgwfDV9CAU8V7pxqde5gGn41vaIbMm5nJ8yIeDJf4/AX/jg7nV7pPzlrYJBgHViAwWn8mytSoodi04EWnDesp2B7zitOy6XcWlVAT2Qrs3eiNM5OV2TaUn2kDSb3wga0dRUBZF1h2YgRlDGkwys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717346; c=relaxed/simple;
-	bh=BX3kON+vbeUcKrYY3hLLwVFbItpoHULu3cqwFNAxv5M=;
+	s=arc-20240116; t=1750717348; c=relaxed/simple;
+	bh=BGM8aURFkMHCZt7djlhf91flxW+uhYhn058PTcuKXiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eb36afGNilywM30CjkVboG21PmCu1Eo3HHPXji/+Ppg48AzXOCidctV7LtsuXmO9ZJ5ymNsafHruFP6vyR2T28bdHQhKitL/oiGpMIR72SebtMRzxeHnP88xxpJZAoaaB3b2pkCuc2/muR/gruarFyvkhzFdMWtf8xutPNerHls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eq2BShHn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FX1C4SOgvXfdMaapK9U7uyK5gE/iTrgjjd1cgOsC3Wz6RWbBcyvzaig1WHV5Rth9sjxqjqvi9LUZMV6FLRneXex014HqpjMAa9OSZY57E5+5LKTJK/JQ/HdS+kIY9+K35pgB0gXOuDEnClak4viaOOifNsfSQ0NriSq8eyUP994=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyLIRbMe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eq2BShHn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C888C4CEEA;
-	Mon, 23 Jun 2025 22:22:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyLIRbMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5283C4CEEA;
+	Mon, 23 Jun 2025 22:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717345;
-	bh=BX3kON+vbeUcKrYY3hLLwVFbItpoHULu3cqwFNAxv5M=;
+	s=korg; t=1750717348;
+	bh=BGM8aURFkMHCZt7djlhf91flxW+uhYhn058PTcuKXiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eq2BShHn7AWZrNPQ4mRwWKyMAoFgrE8qFrAUjmnyTA73uzxBsnXZLpcs7Gt8/e0m9
-	 /FLTyhWag3uYnjPL3QoeEPQe5NYk7iZhyMdk1PtnAmtebbp3vlYjaXtyaaAVpLooQ8
-	 N3lpy7Su5zBYYyqfpbzY8EUmjyyfhhMLElGnvYJU=
+	b=HyLIRbMe7ief68dityYVQsGuJw6p+EahXufq7AJ4uwjW1Yi7Jfnw+IgeVOIOAB5EL
+	 owBBDRSjTYNT8ruPN+bR/iH+Xz5cAJIeCLdKzCWHL0sko+qeGGqepmw6lz1+pR9VZ1
+	 ZTXePEGjk//EGAAxSQmKYnYlPZWo2/o1aVqaFjvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuyi Zhou <zhouchuyi@bytedance.com>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 370/414] workqueue: Initialize wq_isolated_cpumask in workqueue_init_early()
-Date: Mon, 23 Jun 2025 15:08:27 +0200
-Message-ID: <20250623130651.207534318@linuxfoundation.org>
+Subject: [PATCH 6.1 409/508] pinctrl: armada-37xx: propagate error from armada_37xx_gpio_get()
+Date: Mon, 23 Jun 2025 15:07:34 +0200
+Message-ID: <20250623130655.289261929@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuyi Zhou <zhouchuyi@bytedance.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 261dce3d64021e7ec828a17b4975ce9182e54ceb ]
+[ Upstream commit 57273ff8bb16f3842c2597b5bbcd49e7fa12edf7 ]
 
-Now when isolcpus is enabled via the cmdline, wq_isolated_cpumask does
-not include these isolated CPUs, even wq_unbound_cpumask has already
-excluded them. It is only when we successfully configure an isolate cpuset
-partition that wq_isolated_cpumask gets overwritten by
-workqueue_unbound_exclude_cpumask(), including both the cmdline-specified
-isolated CPUs and the isolated CPUs within the cpuset partitions.
+The regmap_read() function can fail, so propagate its error up to
+the stack instead of silently ignoring that.
 
-Fix this issue by initializing wq_isolated_cpumask properly in
-workqueue_init_early().
-
-Fixes: fe28f631fa94 ("workqueue: Add workqueue_unbound_exclude_cpumask() to exclude CPUs from wq_unbound_cpumask")
-Signed-off-by: Chuyi Zhou <zhouchuyi@bytedance.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-4-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index a9d64e08dffc7..3c87eb98609c0 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -7731,7 +7731,8 @@ void __init workqueue_init_early(void)
- 		restrict_unbound_cpumask("workqueue.unbound_cpus", &wq_cmdline_cpumask);
+diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+index 3ada8dcaa806b..f68caea15b03d 100644
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -445,11 +445,14 @@ static int armada_37xx_gpio_get(struct gpio_chip *chip, unsigned int offset)
+ 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
+ 	unsigned int reg = INPUT_VAL;
+ 	unsigned int val, mask;
++	int ret;
  
- 	cpumask_copy(wq_requested_unbound_cpumask, wq_unbound_cpumask);
--
-+	cpumask_andnot(wq_isolated_cpumask, cpu_possible_mask,
-+						housekeeping_cpumask(HK_TYPE_DOMAIN));
- 	pwq_cache = KMEM_CACHE(pool_workqueue, SLAB_PANIC);
+ 	armada_37xx_update_reg(&reg, &offset);
+ 	mask = BIT(offset);
  
- 	unbound_wq_update_pwq_attrs_buf = alloc_workqueue_attrs();
+-	regmap_read(info->regmap, reg, &val);
++	ret = regmap_read(info->regmap, reg, &val);
++	if (ret)
++		return ret;
+ 
+ 	return (val & mask) != 0;
+ }
 -- 
 2.39.5
 
