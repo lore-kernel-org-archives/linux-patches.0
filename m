@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670752153C1;
-	Mon, 23 Jun 2025 21:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DCF70838;
+	Mon, 23 Jun 2025 21:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750712844; cv=none; b=VmvulArbOeZKfcwg4vdSQqTovOQxqeV25fR01gx94pNc/676M7/ly9s4M7H0V2vsQ9AZO6yEJOXFrpR2USF268IXfonpMC7IaU/lnVUlr2uQ3BERdHnZcKfsrWI13cAHuxF1lmnUPQBP2rzflqmXpnMHibMb/JoHlBChQAbR500=
+	t=1750712846; cv=none; b=rEsDqC+2wRpZV4qwyasgBfyDZVTugE3CIv3Bg3rsIifvE5/lQshLCj+K8c3WnPQ/05M5styb/ePHuiHKS7olPgPga/3k0hLekUTUlbT61G1jwQNVlORUDqjcmHaSztQpzNHdVZuW3lFzHs7hcj254MnQaiqQVGxST7Folpeldfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750712844; c=relaxed/simple;
-	bh=SuJ87xGSGAEPCoPesJ3rMMZm7KvxGH9laeOtKW5lF1I=;
+	s=arc-20240116; t=1750712846; c=relaxed/simple;
+	bh=EqjGMtmbx1Bb8XxdZXkBj4hdSEr2l8AbKHTGLTp9Ics=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EoDTVbtLpQsN0C8ZxsfCJrsEIjjtczaE/LiTtBjcpm7fBLjL0yX1wT8NNDAK/II4Vik5OwKS7YX7T0Jh2L+HI/ALa96dAGcW3zyM1S+Lo9z8JXloz45qEWxqK3Brk2WL/mvB7A/Sw96kZfEgGVCE4KkYoHJWcm/hOMYRnM8wxlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQYMukpk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OZ0zf7RtIDfopWM8EF11TdnBuFcTZQLk10s2YHIZr/wt5lhmjjsDMNmoPp3Rh/vVcXShW/3r7pyShlAhft/sR0cZPZUYDfQ+5bXr/xt1bZelHQkydfzTcZVLNCKyajHdJxlh2Fd/xYGWCQfOZwfWp3XQhSm7n7tVlAppOpUOx9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JARMZwja; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQYMukpk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006A2C4CEEA;
-	Mon, 23 Jun 2025 21:07:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JARMZwja"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E118C4CEEA;
+	Mon, 23 Jun 2025 21:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750712844;
-	bh=SuJ87xGSGAEPCoPesJ3rMMZm7KvxGH9laeOtKW5lF1I=;
+	s=korg; t=1750712846;
+	bh=EqjGMtmbx1Bb8XxdZXkBj4hdSEr2l8AbKHTGLTp9Ics=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQYMukpkyombOAbvRqGwgeNFQw2Bpd9wPdZd2TkLFflFYlRWGdLsDo6+qliT5O9+7
-	 ArdpNwMu5aN9eSDFBbqhtFedlWgL94+09PWcA2OoF25RokSg7A47STzspF2o05NADZ
-	 FbJW4kUp05Pvy8WUwAFvjGh+trsGokl2ofKNdf8Q=
+	b=JARMZwjatEtkX7WVLRjaj1ROd1Auj6LXWVWnr7wq/608U8TMck8s3ixqrZVymsWYG
+	 f61LJvzWCr1+b1A6NDe34ezkB5/bTwxOLIPeYPPvlqZGeFy4YNyp70Yj2Esb4VAD25
+	 wcfJFVmd7P6YiOYgRnpTY/vwHPpqevhtEKbin6Ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/508] scsi: hisi_sas: Call I_T_nexus after soft reset for SATA disk
-Date: Mon, 23 Jun 2025 15:01:48 +0200
-Message-ID: <20250623130646.794152392@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.6 034/290] media: gspca: Add error handling for stv06xx_read_sensor()
+Date: Mon, 23 Jun 2025 15:04:55 +0200
+Message-ID: <20250623130628.024615929@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,83 +46,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yihang Li <liyihang9@huawei.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit e4d953ca557e02edd3aed7390043e1b8ad1c9723 ]
+commit 398a1b33f1479af35ca915c5efc9b00d6204f8fa upstream.
 
-In commit 21c7e972475e ("scsi: hisi_sas: Disable SATA disk phy for severe
-I_T nexus reset failure"), if the softreset fails upon certain
-conditions, the PHY connected to the disk is disabled directly. Manual
-recovery is required, which is inconvenient for users in actual use.
+In hdcs_init(), the return value of stv06xx_read_sensor() needs to be
+checked. A proper implementation can be found in vv6410_dump(). Add a
+check in loop condition and propergate error code to fix this issue.
 
-In addition, SATA disks do not support simultaneous connection of multiple
-hosts. Therefore, when multiple controllers are connected to a SATA disk
-at the same time, the controller which is connected later failed to issue
-an ATA softreset to the SATA disk. As a result, the PHY associated with
-the disk is disabled and cannot be automatically recovered.
-
-Now that, we will not focus on the execution result of softreset. No
-matter whether the execution is successful or not, we will directly carry
-out I_T_nexus_reset.
-
-Fixes: 21c7e972475e ("scsi: hisi_sas: Disable SATA disk phy for severe I_T nexus reset failure")
-Signed-off-by: Yihang Li <liyihang9@huawei.com>
-Link: https://lore.kernel.org/r/20250414080845.1220997-4-liyihang9@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4c98834addfe ("V4L/DVB (10048): gspca - stv06xx: New subdriver.")
+Cc: stable@vger.kernel.org # v2.6+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_main.c | 29 +++++----------------------
- 1 file changed, 5 insertions(+), 24 deletions(-)
+ drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index 02855164bf28d..360f2799f2a13 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -1758,33 +1758,14 @@ static int hisi_sas_I_T_nexus_reset(struct domain_device *device)
+--- a/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
++++ b/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
+@@ -520,12 +520,13 @@ static int hdcs_init(struct sd *sd)
+ static int hdcs_dump(struct sd *sd)
+ {
+ 	u16 reg, val;
++	int err = 0;
+ 
+ 	pr_info("Dumping sensor registers:\n");
+ 
+-	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH; reg++) {
+-		stv06xx_read_sensor(sd, reg, &val);
++	for (reg = HDCS_IDENT; reg <= HDCS_ROWEXPH && !err; reg++) {
++		err = stv06xx_read_sensor(sd, reg, &val);
+ 		pr_info("reg 0x%02x = 0x%02x\n", reg, val);
  	}
- 	hisi_sas_dereg_device(hisi_hba, device);
- 
--	rc = hisi_sas_debug_I_T_nexus_reset(device);
--	if (rc == TMF_RESP_FUNC_COMPLETE && dev_is_sata(device)) {
--		struct sas_phy *local_phy;
--
-+	if (dev_is_sata(device)) {
- 		rc = hisi_sas_softreset_ata_disk(device);
--		switch (rc) {
--		case -ECOMM:
--			rc = -ENODEV;
--			break;
--		case TMF_RESP_FUNC_FAILED:
--		case -EMSGSIZE:
--		case -EIO:
--			local_phy = sas_get_local_phy(device);
--			rc = sas_phy_enable(local_phy, 0);
--			if (!rc) {
--				local_phy->enabled = 0;
--				dev_err(dev, "Disabled local phy of ATA disk %016llx due to softreset fail (%d)\n",
--					SAS_ADDR(device->sas_addr), rc);
--				rc = -ENODEV;
--			}
--			sas_put_local_phy(local_phy);
--			break;
--		default:
--			break;
--		}
-+		if (rc == TMF_RESP_FUNC_FAILED)
-+			dev_err(dev, "ata disk %016llx reset (%d)\n",
-+				SAS_ADDR(device->sas_addr), rc);
- 	}
- 
-+	rc = hisi_sas_debug_I_T_nexus_reset(device);
- 	if ((rc == TMF_RESP_FUNC_COMPLETE) || (rc == -ENODEV))
- 		hisi_sas_release_task(hisi_hba, device);
- 
--- 
-2.39.5
-
+-	return 0;
++	return (err < 0) ? err : 0;
+ }
 
 
