@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0E7C2E0;
-	Mon, 23 Jun 2025 21:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772E6C2E0;
+	Mon, 23 Jun 2025 21:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714287; cv=none; b=NzSGUDWxuRZSDUII6pTGL4BHE/whq2rU7F6QIgNpMdHg8j3UAjGTUn5eub7yaf+9p0U54mbGNJM+HumyuuQ29iIiOHKpJWpFFzCABe4Aq3eELgRgWeMvkfFN94yYX5mdNKMNYLoBP2fHxFpK7IuWW8t3abmsJ02qBBiVzWf3Ln8=
+	t=1750714289; cv=none; b=dkYwNZHuXZNtUOKyoScFei11yiLnpZdhKNhpnkL4PGfFnnT4AmhIVcqwbekNTH0e2cjZuuws4gRHK+bb6gmLqw0i18roActKIv7mr5JguqCR8LOuWz/Bhv4pPMgyEG2d4xqHcXca1WqMedYcIjffDz2w1MEvzDpau6Ef5HBT0/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714287; c=relaxed/simple;
-	bh=vxJ14pN7Rrtkp2WI0VIwPGqIwNQyEI7zAwExcPUOcfk=;
+	s=arc-20240116; t=1750714289; c=relaxed/simple;
+	bh=7jNopkZbxCuyWk92S4h1UIaowHIjYqwzuuA/2Tm9yY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dJJov9c7ntJEgyK6nlQ2VeeKVmj6E2wQI1NDLoFGfsTp+JEcBQPJ2wgyI020jfJ+CFUXKBlaIe/+NjbWYFxDoiKhFjROBNbkIJNSuY7rt4N4LfNFWSwVj/Lr+rs08O3TR1PwHmtaEjt2ytb42TrT+v0gRc+6C9hR7cvXDgJVd0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rtm+JFy1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=R4edjWGNf1/OLd96bgEbb+OjSQ+EusSf4KXRCllpUxK5TPI1m4h0TzMywbQjFVtdZuxAalcM9xrAvJgW2D9rpnUYF0n/45xiklBKn4uJv3h0sN9mllr5l6tz6uQ9SG6HZvY7BwWfYq6ZIDv7s8FDXYrKD3aQ+VmlRNHdWIxAzC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0uZjj4M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rtm+JFy1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A21EC4CEEA;
-	Mon, 23 Jun 2025 21:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0uZjj4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4B0C4CEEA;
+	Mon, 23 Jun 2025 21:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714286;
-	bh=vxJ14pN7Rrtkp2WI0VIwPGqIwNQyEI7zAwExcPUOcfk=;
+	s=korg; t=1750714289;
+	bh=7jNopkZbxCuyWk92S4h1UIaowHIjYqwzuuA/2Tm9yY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rtm+JFy1QTleMn1HUbYExqCihRw7M8gO6RRpaFE3wV9wKMnYKbjZYfY+cvEhpjza0
-	 4TIVtwToyak3G3tRym8Nik98cjk9d8L7HxDHlkl8pjZmbzhg+NyL2u6FyZW2lCNFFn
-	 fNGgMT1LPNzSZA7xaV3M4cgPX6MowjxGOkHolfJM=
+	b=R0uZjj4Mh1/EU9rKTdhwFpYxeLv7bRCCpfxeKxxTAbKBQsI42LqN6Jd8FYqPyU0uU
+	 1Gt9Uc7RAGy+Ob1V9fiAbJ27yxrV9FJ+7qOsQZBiygMkKhxy5dQHnDGyZSpF4W0ouC
+	 I9CdqLXSwKOs7Yt/FKdtZbocgepgsZp8yXOD36JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Benesh <scott.benesh@microchip.com>,
-	Scott Teel <scott.teel@microchip.com>,
-	Mike McGowen <mike.mcgowen@microchip.com>,
-	David Strahan <david.strahan@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	WangYuli <wangyuli@uniontech.com>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 381/592] scsi: smartpqi: Add new PCI IDs
-Date: Mon, 23 Jun 2025 15:05:39 +0200
-Message-ID: <20250623130709.501941968@linuxfoundation.org>
+Subject: [PATCH 6.1 163/508] MIPS: Loongson64: Add missing #interrupt-cells for loongson64c_ls7a
+Date: Mon, 23 Jun 2025 15:03:28 +0200
+Message-ID: <20250623130649.287665085@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,227 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Strahan <david.strahan@microchip.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit 01b8bdddcfab035cf70fd9981cb20593564cd15d ]
+[ Upstream commit 6d223b8ffcd1593d032b71875def2daa71c53111 ]
 
-Add in support for more PCI devices.
+Similar to commit 98a9e2ac3755 ("MIPS: Loongson64: DTS: Fix msi node for ls7a").
 
-All PCI ID entries in Hex.
+Fix follow warnings:
+  arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts:28.31-36.4: Warning (interrupt_provider): /bus@10000000/msi-controller@2ff00000: Missing '#interrupt-cells' in interrupt provider
+  arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dtb: Warning (interrupt_map): Failed prerequisite 'interrupt_provider'
 
-Add PCI IDs for Ramaxel controllers:
-                                                  VID  / DID  / SVID / SDID
-                                                  ----   ----   ----   ----
-                      Ramaxel SmartHBA RX8238-16i 9005   028f   1018   8238
-                      Ramaxel SSSRAID card        9005   028f   1f3f   0610
-
-Add PCI ID for Alibaba controller:
-                                                  VID  / DID  / SVID / SDID
-                                                  ----   ----   ----   ----
-                      HBA AS1340                  9005   028f   1ded   3301
-
-Add PCI IDs for Inspur controller:
-                                                  VID  / DID  / SVID / SDID
-                                                  ----   ----   ----   ----
-                      RT0800M6E2i                 9005   028f   1bd4   00a3
-
-Add PCI IDs for Delta controllers:
-                                                  VID  / DID  / SVID / SDID
-                                                  ----   ----   ----   ----
-ThinkSystem 4450-8i SAS/SATA/NVMe PCIe Gen4       9005   028f   1d49   0222
-24Gb HBA
-ThinkSystem 4450-16i SAS/SATA/NVMe PCIe Gen4      9005   028f   1d49   0223
-24Gb HBA
-ThinkSystem 4450-8e SAS/SATA PCIe Gen4            9005   028f   1d49   0224
-24Gb HBA
-ThinkSystem RAID 4450-16e PCIe Gen4 24Gb          9005   028f   1d49   0225
-Adapter HBA
-ThinkSystem RAID 5450-16i PCIe Gen4 24Gb Adapter  9005   028f   1d49   0521
-ThinkSystem RAID 9450-8i 4GB Flash PCIe Gen4      9005   028f   1d49   0624
-24Gb Adapter
-ThinkSystem RAID 9450-16i 4GB Flash PCIe Gen4     9005   028f   1d49   0625
-24Gb Adapter
-ThinkSystem RAID 9450-16i 4GB Flash PCIe Gen4     9005   028f   1d49   0626
-24Gb Adapter
-ThinkSystem RAID 9450-32i 8GB Flash PCIe Gen4     9005   028f   1d49   0627
-24Gb Adapter
-ThinkSystem RAID 9450-16e 4GB Flash PCIe Gen4     9005   028f   1d49   0628
-24Gb Adapter
-
-Add PCI ID for Cloudnine Controller:
-                                                  VID  / DID  / SVID / SDID
-                                                  ----   ----   ----   ----
-                      SmartHBA P6600-24i          9005   028f   1f51   100b
-
-Add PCI IDs for Hurraydata Controllers:
-                                                  VID  / DID  / SVID / SDID
-                                                  ----   ----   ----   ----
-                      HRDT TrustHBA H4100-8i      9005   028f   207d   4044
-                      HRDT TrustHBA H4100-8e      9005   028f   207d   4054
-                      HRDT TrustHBA H4100-16i     9005   028f   207d   4084
-                      HRDT TrustHBA H4100-16e     9005   028f   207d   4094
-                      HRDT TrustRAID D3152s-8i    9005   028f   207d   4140
-                      HRDT TrustRAID D3154s-8i    9005   028f   207d   4240
-
-Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Reviewed-by: Scott Teel <scott.teel@microchip.com>
-Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
-Signed-off-by: David Strahan <david.strahan@microchip.com>
-Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/r/20250423183229.538572-3-don.brace@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 24af105962c8 ("MIPS: Loongson64: DeviceTree for LS7A PCH")
+Tested-by: WangYuli <wangyuli@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 84 +++++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
+ arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 6c9dec7e3128f..66c9d1a2c94de 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -9709,6 +9709,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1bd4, 0x0089)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+				0x1bd4, 0x00a3)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1ff9, 0x00a1)
-@@ -10045,6 +10049,30 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_VENDOR_ID_ADAPTEC2, 0x14f0)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4044)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4054)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4084)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4094)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4140)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4240)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_VENDOR_ID_ADVANTECH, 0x8312)
-@@ -10261,6 +10289,14 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1cc4, 0x0201)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1018, 0x8238)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1f3f, 0x0610)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_VENDOR_ID_LENOVO, 0x0220)
-@@ -10269,10 +10305,30 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_VENDOR_ID_LENOVO, 0x0221)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       PCI_VENDOR_ID_LENOVO, 0x0222)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       PCI_VENDOR_ID_LENOVO, 0x0223)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       PCI_VENDOR_ID_LENOVO, 0x0224)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       PCI_VENDOR_ID_LENOVO, 0x0225)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_VENDOR_ID_LENOVO, 0x0520)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       PCI_VENDOR_ID_LENOVO, 0x0521)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_VENDOR_ID_LENOVO, 0x0522)
-@@ -10293,6 +10349,26 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_VENDOR_ID_LENOVO, 0x0623)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       PCI_VENDOR_ID_LENOVO, 0x0624)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       PCI_VENDOR_ID_LENOVO, 0x0625)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       PCI_VENDOR_ID_LENOVO, 0x0626)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       PCI_VENDOR_ID_LENOVO, 0x0627)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       PCI_VENDOR_ID_LENOVO, 0x0628)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 				0x1014, 0x0718)
-@@ -10321,6 +10397,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1137, 0x0300)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+				0x1ded, 0x3301)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1ff9, 0x0045)
-@@ -10469,6 +10549,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 				0x1f51, 0x100a)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+				0x1f51, 0x100b)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1f51, 0x100e)
+diff --git a/arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts b/arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts
+index c7ea4f1c0bb21..6c277ab83d4b9 100644
+--- a/arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts
++++ b/arch/mips/boot/dts/loongson/loongson64c_4core_ls7a.dts
+@@ -29,6 +29,7 @@
+ 		compatible = "loongson,pch-msi-1.0";
+ 		reg = <0 0x2ff00000 0 0x8>;
+ 		interrupt-controller;
++		#interrupt-cells = <1>;
+ 		msi-controller;
+ 		loongson,msi-base-vec = <64>;
+ 		loongson,msi-num-vecs = <64>;
 -- 
 2.39.5
 
