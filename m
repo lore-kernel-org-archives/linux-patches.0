@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7E3242D90;
-	Mon, 23 Jun 2025 13:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF89024BD00;
+	Mon, 23 Jun 2025 13:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684851; cv=none; b=Gk9e0ITZrv3YuvKnEQY6f+vLeiFTN2/cvYzn+ngD/vRUCzmuBtjr7jqJI0fbC3nKy0/2MjhZ7rCfjcDarAORxd0QJ3VU3PULuMMQTIvnO14Ps0xtdyE+cq9G0iLSeHFTHs8YHBQx001hpvck9dOZCprVgzg3cCYaCO2w+EKtoU4=
+	t=1750684854; cv=none; b=g5l47CNxhFIHDFFozyH8nA6UJGhJiS7U2nkZ5RGIT3a6nQo/yo2pXO+fRhotBPQlJPL4d8v1dPYFKOptlUrcKjLxGDnYoj5EFSKCe3oS1dZexk56C+Yf1n/OyK/7+t9I38f3Dr63BXxiitt8ZHl6moal+GhK/EaaseMa+aD0MnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684851; c=relaxed/simple;
-	bh=lMwWZW4Hpmo7Cw6RYxXgJDAcoeyfaeVIhX/tEidJ9sE=;
+	s=arc-20240116; t=1750684854; c=relaxed/simple;
+	bh=wvTnu+Lz2a/rNAgYCazSz5QsSDpQeJ0WJTAdQ0InwO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T7VAIagcjU5DfAD2iBaXALdZ2UgYVjB8pGbpTJhWS5bxYSLMbHAhWvAewW4MsyVLBEZuF9xsAo7paYLT4TLTCj/3cr2LFtvRKgL830gw/MV8QYL8iZ43B1aM2A53y0hn0fW9/Jz9UwaVsb3+XW42FZrk2aG8VZwCAIKTHzlQHs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6aYcRE2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pCOzx+HMw+I3W/twRF7OG9ouDcPIYU2wkktA23cQ+Xc3MG/PIEsTi0IvUXxprfHDFV/dgdroK3FxByPUIId/Fa8J/JELWDAEA9/LpKh5g4RHhmX5280V9BZLVU3Apt4+noWIZK8AuFFoTToZyItMuinDZMZxfD+jCWNw0zsy4Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxJ15Wma; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6aYcRE2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F88BC4CEEA;
-	Mon, 23 Jun 2025 13:20:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxJ15Wma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3ED8C4CEEA;
+	Mon, 23 Jun 2025 13:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684851;
-	bh=lMwWZW4Hpmo7Cw6RYxXgJDAcoeyfaeVIhX/tEidJ9sE=;
+	s=korg; t=1750684854;
+	bh=wvTnu+Lz2a/rNAgYCazSz5QsSDpQeJ0WJTAdQ0InwO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R6aYcRE2Nb8i4H52YoU8BIn7+eYEz9jToEIntH7g+2XipiZXT5OAP4gawcwHOuHeg
-	 n5e7EGjwUvZDDO5FZcwhB96v/EBd62ki7krpgBD1PoRZpnqi+3fVxV7ox5zMmM2Ga0
-	 dMmr5VM2aHjVu7YGsmJy20xrqep1BxtxDeSKQ7f8=
+	b=GxJ15WmaDGHynfXh8Wd4ITxxZB9XKlPfFHPKrzBklkQN8Y9pdVHPkIrEywBXBYVTs
+	 qxuekuerLGMy+owdue+05VSJPtuilc0FKHoXt+Mv8NjsYo0hdF3M8LUPBxz79ROqft
+	 X/D+m14+61PPb0HiPvWNLvgwiObBiBXCIoa5o39I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.15 183/592] PCI: Fix lock symmetry in pci_slot_unlock()
-Date: Mon, 23 Jun 2025 15:02:21 +0200
-Message-ID: <20250623130704.636237018@linuxfoundation.org>
+	Manu Bretelle <chantr4@gmail.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 004/355] acpi-cpufreq: Fix nominal_freq units to KHz in get_max_boost_ratio()
+Date: Mon, 23 Jun 2025 15:03:25 +0200
+Message-ID: <20250623130626.857452749@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-commit f3efb9569b4a21354ef2caf7ab0608a3e14cc6e4 upstream.
+commit cb6a85f38f456b086c366e346ebb67ffa70c7243 upstream.
 
-The commit a4e772898f8b ("PCI: Add missing bridge lock to pci_bus_lock()")
-made the lock function to call depend on dev->subordinate but left
-pci_slot_unlock() unmodified creating locking asymmetry compared with
-pci_slot_lock().
+commit 083466754596 ("cpufreq: ACPI: Fix max-frequency computation")
+modified get_max_boost_ratio() to return the nominal_freq advertised
+in the _CPC object. This was for the purposes of computing the maximum
+frequency. The frequencies advertised in _CPC objects are in
+MHz. However, cpufreq expects the frequency to be in KHz. Since the
+nominal_freq returned by get_max_boost_ratio() was not in KHz but
+instead in MHz,the cpuinfo_max_frequency that was computed using this
+nominal_freq was incorrect and an invalid value which resulted in
+cpufreq reporting the P0 frequency as the cpuinfo_max_freq.
 
-Because of the asymmetric lock handling, the same bridge device is unlocked
-twice. First pci_bus_unlock() unlocks bus->self and then pci_slot_unlock()
-will unconditionally unlock the same bridge device.
+Fix this by converting the nominal_freq to KHz before returning the
+same from get_max_boost_ratio().
 
-Move pci_dev_unlock() inside an else branch to match the logic in
-pci_slot_lock().
-
-Fixes: a4e772898f8b ("PCI: Add missing bridge lock to pci_bus_lock()")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250505115412.37628-1-ilpo.jarvinen@linux.intel.com
+Reported-by: Manu Bretelle <chantr4@gmail.com>
+Closes: https://lore.kernel.org/lkml/aDaB63tDvbdcV0cg@HQ-GR2X1W2P57/
+Fixes: 083466754596 ("cpufreq: ACPI: Fix max-frequency computation")
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Cc: 6.14+ <stable@vger.kernel.org> # 6.14+
+Link: https://patch.msgid.link/20250529085143.709-1-gautham.shenoy@amd.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cpufreq/acpi-cpufreq.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5538,7 +5538,8 @@ static void pci_slot_unlock(struct pci_s
- 			continue;
- 		if (dev->subordinate)
- 			pci_bus_unlock(dev->subordinate);
--		pci_dev_unlock(dev);
-+		else
-+			pci_dev_unlock(dev);
- 	}
- }
+--- a/drivers/cpufreq/acpi-cpufreq.c
++++ b/drivers/cpufreq/acpi-cpufreq.c
+@@ -657,7 +657,7 @@ static u64 get_max_boost_ratio(unsigned
+ 	nominal_perf = perf_caps.nominal_perf;
  
+ 	if (nominal_freq)
+-		*nominal_freq = perf_caps.nominal_freq;
++		*nominal_freq = perf_caps.nominal_freq * 1000;
+ 
+ 	if (!highest_perf || !nominal_perf) {
+ 		pr_debug("CPU%d: highest or nominal performance missing\n", cpu);
 
 
