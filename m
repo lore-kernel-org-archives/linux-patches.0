@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657FB1E51FA;
-	Mon, 23 Jun 2025 21:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D109F1E521E;
+	Mon, 23 Jun 2025 21:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713920; cv=none; b=Nt4wib4DyomI2YEX3VBDPKZhrVaUCLUs9fv3bQ6dhHK7QgPDRgPimbPMdUoHZP7sOg1j/VSZ2nUYAZSPeWA0PQ9QoiLOP8MhRZyqdP4sPLp1gBQHtu0dhCp0dXyPk/eUrMBdhEgV3qGm3gBScSh96/wbjr8RC8OSKOfUoKlANAU=
+	t=1750713922; cv=none; b=l6F1+JoUCAoP64b+sqmuSxTfP4w3DzX76aIUuAChIU7o1pTeAx5j+LoQpofMaAXtqHnAZx5oyXZZuIBKMqmW3M/up909g/zZ9P+5aagaEH3wXzvORhbmiqpPf3vYhbK/tRJuQ3uzxfskAsEW62xzOD/P527I8YU54QRYSvREZMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713920; c=relaxed/simple;
-	bh=3CSfZOx3ZlZwjEHyjFeBdevzNHXBJ1A86K2D9LdPgR8=;
+	s=arc-20240116; t=1750713922; c=relaxed/simple;
+	bh=rt3uwgRLPigtYy1IvclkbQvl6hM9vRO88ZH1/5LcWNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nvFC/zp6omFy2Z27jjxGe/nwBFIQe+iMWS3eUP/orgCWSdMNne7wrQoTmD67OrFrEzaohAQWkDjrMTuIDKPAMRX3QyYQ+U0tXl755FQfsCBk//2eNE30rcRicLkMzrkGXgIoF5KGgbB92+Z6oiwcKcg3TICSvXhFABhf/o2JgnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyC0sk8i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ficY65fajaB6Lg/NF/W9CB1vUHV+tjETayw9wFkXWvPBf911lTWioUN0DUerqS1DL5I0A3XBWEaHtAhIrUlJ6t8REGXCAdi3M9tKEXMrN2jGq4mGixspYBlB52PsXQ0Te018iX5viQTapxxoOxVMRoWPzXcjnae/EZsVhDexeMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wfarZNQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyC0sk8i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF468C4CEEA;
-	Mon, 23 Jun 2025 21:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wfarZNQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A688C4CEEA;
+	Mon, 23 Jun 2025 21:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713920;
-	bh=3CSfZOx3ZlZwjEHyjFeBdevzNHXBJ1A86K2D9LdPgR8=;
+	s=korg; t=1750713922;
+	bh=rt3uwgRLPigtYy1IvclkbQvl6hM9vRO88ZH1/5LcWNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nyC0sk8ikBR8uBxGn2a0e1T54w2fJ64gh7mm/OMKKElTD5z+y4pt/R2loP5Ay7ZE0
-	 qnOh36iMoOfZHnfFUW6NrD/KB4sQsNSdAYNmzE7kMNq2JK9QJgMH6iy3H6k5T6Nyh1
-	 D/mIDwO4fkUTDa2DZc1BbiQGt01ookNHyJgMUCvw=
+	b=0wfarZNQuRGdHaZP3kaxvMqD2G0eha9XODL9i+YnY7SM0aUzvydWuT6wfx/kqp3KZ
+	 G/eechuYmfAKeEHaptSW8VeoRQk2Lq++j9kbL0vHaeXnvJHQaJM9CJqMqaBwI2r6/I
+	 QsvneE/Ur+EkGdO4hIrP6a+GLJZ6duZsk166aNTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 103/290] cifs: update dstaddr whenever channel iface is updated
-Date: Mon, 23 Jun 2025 15:06:04 +0200
-Message-ID: <20250623130630.058312482@linuxfoundation.org>
+	Jakub Raczynski <j.raczynski@samsung.com>,
+	Wenjing Shan <wenjing.shan@samsung.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 155/411] net/mdiobus: Fix potential out-of-bounds read/write access
+Date: Mon, 23 Jun 2025 15:04:59 +0200
+Message-ID: <20250623130637.542199420@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
-References: <20250623130626.910356556@linuxfoundation.org>
+In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
+References: <20250623130632.993849527@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,40 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Jakub Raczynski <j.raczynski@samsung.com>
 
-commit c1846893991f3b4ec8a0cc12219ada153f0814d6 upstream.
+[ Upstream commit 0e629694126ca388916f059453a1c36adde219c4 ]
 
-When the server interface info changes (more common in clustered
-servers like Azure Files), the per-channel iface gets updated.
-However, this did not update the corresponding dstaddr. As a result
-these channels will still connect (or try connecting) to older addresses.
+When using publicly available tools like 'mdio-tools' to read/write data
+from/to network interface and its PHY via mdiobus, there is no verification of
+parameters passed to the ioctl and it accepts any mdio address.
+Currently there is support for 32 addresses in kernel via PHY_MAX_ADDR define,
+but it is possible to pass higher value than that via ioctl.
+While read/write operation should generally fail in this case,
+mdiobus provides stats array, where wrong address may allow out-of-bounds
+read/write.
 
-Fixes: b54034a73baf ("cifs: during reconnect, update interface if necessary")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix that by adding address verification before read/write operation.
+While this excludes this access from any statistics, it improves security of
+read/write operation.
+
+Fixes: 080bb352fad00 ("net: phy: Maintain MDIO device and bus statistics")
+Signed-off-by: Jakub Raczynski <j.raczynski@samsung.com>
+Reported-by: Wenjing Shan <wenjing.shan@samsung.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/sess.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/phy/mdio_bus.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -485,6 +485,10 @@ cifs_chan_update_iface(struct cifs_ses *
+diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
+index c26f46c06a1b2..95536c5e541da 100644
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -757,6 +757,9 @@ int __mdiobus_read(struct mii_bus *bus, int addr, u32 regnum)
  
- 	ses->chans[chan_index].iface = iface;
- 	spin_unlock(&ses->chan_lock);
+ 	lockdep_assert_held_once(&bus->mdio_lock);
+ 
++	if (addr >= PHY_MAX_ADDR)
++		return -ENXIO;
 +
-+	spin_lock(&server->srv_lock);
-+	memcpy(&server->dstaddr, &iface->sockaddr, sizeof(server->dstaddr));
-+	spin_unlock(&server->srv_lock);
- }
+ 	if (bus->read)
+ 		retval = bus->read(bus, addr, regnum);
+ 	else
+@@ -786,6 +789,9 @@ int __mdiobus_write(struct mii_bus *bus, int addr, u32 regnum, u16 val)
  
- /*
+ 	lockdep_assert_held_once(&bus->mdio_lock);
+ 
++	if (addr >= PHY_MAX_ADDR)
++		return -ENXIO;
++
+ 	if (bus->write)
+ 		err = bus->write(bus, addr, regnum, val);
+ 	else
+-- 
+2.39.5
+
 
 
