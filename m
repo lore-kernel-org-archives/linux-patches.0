@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E9019D084;
-	Mon, 23 Jun 2025 21:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5640119D084;
+	Mon, 23 Jun 2025 21:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714834; cv=none; b=ZfwEcfPOfEdpW3Z/JwA4pE+pcacOoa0LBoFmr2uAESt7EtXYco11bl8BGr57LrJLhkf3OIYXcfZplZJzFwTztvAliSMNhrKfTxrlySSdBYjbVvzJ1cs9QoEY1qZ4lk/8m9IzxRWnRoLFgDi4iySJP80NqIrqfPb7ncHgGYClhWA=
+	t=1750714836; cv=none; b=R6mWbxSuv39MAFSKAeM0wsuu9UEnkpnC6tjzdOd8m+bGy6DJZY4UV2OIf1t+/eNTjconQY9KIxsBJv+sfM/TnAA7QXajUJ+tgem4GgUjrbeYeF4JV9trJ70X+sYWj6lBOeFoL2PMxg03G1iwYWgBdmYzxk9rFgZpgGGG4YMk50M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714834; c=relaxed/simple;
-	bh=MQcY3de9OhbTzJ/aIhAxEs2ezpaQZEQj9qy6IAIabUE=;
+	s=arc-20240116; t=1750714836; c=relaxed/simple;
+	bh=qzMO5E9TVye+2JU70wnoTbSXMRP/B4Fqtf7IlxUbJhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTgdOMD3kFU/HvHaa7Uy3pt0CGrPjHg/CVhr+lO3Rc1lsNwlnYjJyLI4epR8M4y5apzJ0oRjiDtJvUHjQ6dYQ17QExs+axTRreuRr6QTzFhgCj/Z9LlrowFfFvPhliZ+HBH4k4muV/lJp+wcSWjQ+SfXi5ya4YTx3N5PadyUtpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUSRtOWw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QEjvxU5J8mXM88WoMTvxPtUb2Q1G84s3pJMGMNz1JowONTHx/bwu3RZKJen8g2vYTpOj3U5FHkUzB/dePxo9wHa+yg6pRjq0lI4QZvnFfLtOqvm3znCyrGHAmCvFkOVH0k53ePRzvE1vOlEhPiMAmMZBZ91RDDLA2RjyG2rGkqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fWZNc36g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUSRtOWw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D8BC4CEF0;
-	Mon, 23 Jun 2025 21:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWZNc36g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E17C4CEEA;
+	Mon, 23 Jun 2025 21:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714833;
-	bh=MQcY3de9OhbTzJ/aIhAxEs2ezpaQZEQj9qy6IAIabUE=;
+	s=korg; t=1750714836;
+	bh=qzMO5E9TVye+2JU70wnoTbSXMRP/B4Fqtf7IlxUbJhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PUSRtOWwNMbRYb791kB6wEfX4moiQjZR8STfw2iK3fQ19ecuMqAETqdPYbQ3ZIp+w
-	 km6guEbIJNJQ+QLXOwFbBxu3Tym9IE9uWTvh3SQoN7rBGjYOf1m8UQdYr9FT/0kz9t
-	 2YdML3TLGgIiB0Up0jd2OHNRqYzPKsTxHtcD9AV0=
+	b=fWZNc36gaoOHDttRrKdZgw5S58gFg0VJqMYjITrB1Dy8aj3dp0+Y0uMrIIgmSFGWo
+	 CBLb4tpYXDT8LxlAXrSKj8ulQUAacMfAoDNvUfvPDRO4ghcUsmdMoMZemVNZ+S9A6T
+	 QvLH7EyQxmqI0DXQrnJn31nsRy7fXkRrRPAZZz68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Judith Mendez <jm@ti.com>,
+	Moteen Shah <m-shah@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 441/592] powerpc/vdso: Fix build of VDSO32 with pcrel
-Date: Mon, 23 Jun 2025 15:06:39 +0200
-Message-ID: <20250623130710.922864372@linuxfoundation.org>
+Subject: [PATCH 6.1 219/508] arm64: dts: ti: k3-am65-main: Add missing taps to sdhci0
+Date: Mon, 23 Jun 2025 15:04:24 +0200
+Message-ID: <20250623130650.650868350@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
+References: <20250623130645.255320792@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit b93755f408325170edb2156c6a894ed1cae5f4f6 ]
+[ Upstream commit f55c9f087cc2e2252d44ffd9d58def2066fc176e ]
 
-Building vdso32 on power10 with pcrel leads to following errors:
+For am65x, add missing ITAPDLYSEL values for Default Speed and High
+Speed SDR modes to sdhci0 node according to the device datasheet [0].
 
-	  VDSO32A arch/powerpc/kernel/vdso/gettimeofday-32.o
-	arch/powerpc/kernel/vdso/gettimeofday.S: Assembler messages:
-	arch/powerpc/kernel/vdso/gettimeofday.S:40: Error: syntax error; found `@', expected `,'
-	arch/powerpc/kernel/vdso/gettimeofday.S:71:  Info: macro invoked from here
-	arch/powerpc/kernel/vdso/gettimeofday.S:40: Error: junk at end of line: `@notoc'
-	arch/powerpc/kernel/vdso/gettimeofday.S:71:  Info: macro invoked from here
-	 ...
-	make[2]: *** [arch/powerpc/kernel/vdso/Makefile:85: arch/powerpc/kernel/vdso/gettimeofday-32.o] Error 1
-	make[1]: *** [arch/powerpc/Makefile:388: vdso_prepare] Error 2
+[0] https://www.ti.com/lit/gpn/am6548
 
-Once the above is fixed, the following happens:
-
-	  VDSO32C arch/powerpc/kernel/vdso/vgettimeofday-32.o
-	cc1: error: '-mpcrel' requires '-mcmodel=medium'
-	make[2]: *** [arch/powerpc/kernel/vdso/Makefile:89: arch/powerpc/kernel/vdso/vgettimeofday-32.o] Error 1
-	make[1]: *** [arch/powerpc/Makefile:388: vdso_prepare] Error 2
-	make: *** [Makefile:251: __sub-make] Error 2
-
-Make sure pcrel version of CFUNC() macro is used only for powerpc64
-builds and remove -mpcrel for powerpc32 builds.
-
-Fixes: 7e3a68be42e1 ("powerpc/64: vmlinux support building with PCREL addresing")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/1fa3453f07d42a50a70114da9905bf7b73304fca.1747073669.git.christophe.leroy@csgroup.eu
+Fixes: eac99d38f861 ("arm64: dts: ti: k3-am654-main: Update otap-del-sel values")
+Cc: stable@vger.kernel.org
+Signed-off-by: Judith Mendez <jm@ti.com>
+Reviewed-by: Moteen Shah <m-shah@ti.com>
+Link: https://lore.kernel.org/r/20250429173009.33994-1-jm@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/ppc_asm.h | 2 +-
- arch/powerpc/kernel/vdso/Makefile  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am65-main.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/include/asm/ppc_asm.h b/arch/powerpc/include/asm/ppc_asm.h
-index 02897f4b0dbf8..b891910fce8a6 100644
---- a/arch/powerpc/include/asm/ppc_asm.h
-+++ b/arch/powerpc/include/asm/ppc_asm.h
-@@ -183,7 +183,7 @@
- /*
-  * Used to name C functions called from asm
-  */
--#ifdef CONFIG_PPC_KERNEL_PCREL
-+#if defined(__powerpc64__) && defined(CONFIG_PPC_KERNEL_PCREL)
- #define CFUNC(name) name@notoc
- #else
- #define CFUNC(name) name
-diff --git a/arch/powerpc/kernel/vdso/Makefile b/arch/powerpc/kernel/vdso/Makefile
-index e8824f9333261..8834dfe9d7279 100644
---- a/arch/powerpc/kernel/vdso/Makefile
-+++ b/arch/powerpc/kernel/vdso/Makefile
-@@ -53,7 +53,7 @@ ldflags-$(CONFIG_LD_ORPHAN_WARN) += -Wl,--orphan-handling=$(CONFIG_LD_ORPHAN_WAR
- ldflags-y += $(filter-out $(CC_AUTO_VAR_INIT_ZERO_ENABLER) $(CC_FLAGS_FTRACE) -Wa$(comma)%, $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS))
- 
- CC32FLAGS := -m32
--CC32FLAGSREMOVE := -mcmodel=medium -mabi=elfv1 -mabi=elfv2 -mcall-aixdesc
-+CC32FLAGSREMOVE := -mcmodel=medium -mabi=elfv1 -mabi=elfv2 -mcall-aixdesc -mpcrel
- ifdef CONFIG_CC_IS_CLANG
- # This flag is supported by clang for 64-bit but not 32-bit so it will cause
- # an unused command line flag warning for this file.
+diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+index c09457fef2db0..ebd8434c6b60b 100644
+--- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+@@ -274,6 +274,8 @@ sdhci0: mmc@4f80000 {
+ 		ti,otap-del-sel-ddr50 = <0x5>;
+ 		ti,otap-del-sel-ddr52 = <0x5>;
+ 		ti,otap-del-sel-hs200 = <0x5>;
++		ti,itap-del-sel-legacy = <0xa>;
++		ti,itap-del-sel-mmc-hs = <0x1>;
+ 		ti,itap-del-sel-ddr52 = <0x0>;
+ 		dma-coherent;
+ 	};
 -- 
 2.39.5
 
