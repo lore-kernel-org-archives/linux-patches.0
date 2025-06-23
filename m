@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA0D251792;
-	Mon, 23 Jun 2025 13:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42ADC24EAB1;
+	Mon, 23 Jun 2025 13:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750686182; cv=none; b=XILQ068wjGK3WHiy0K4ri14Ye0VCVPd6amU/CtFGItc5DkcNQx5XUEoG6qq4CiU9uLDRhBe4YjhJx8PQGxFkQ8qict4vN2GpydsEEMRTdh6dpyIsMGq19QTkUBdDw6ce079J4MbQzAO7C+qIczfs/ySZSbO7Q2D1w5eNGQdv+AQ=
+	t=1750686185; cv=none; b=hyFv0u9mrPuSRgExJdKuS9L1sM8FHvIzNZZPChIlCrOvzzxCtJAtgaEACLMydX3xFwqCU5s+dDAll6K/h8sC9+dVtKdEHxxWOD6Qnl7oTAYKI0FPQS80dRQnt6aj6tHXhIwKK6LzrdKsCM62syXI3KIvngCp5K1voPvv5O//9tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750686182; c=relaxed/simple;
-	bh=jgh+MwYB0skc2RtDwH8e0+HrLWhP+Vy+WoaleUHYgvk=;
+	s=arc-20240116; t=1750686185; c=relaxed/simple;
+	bh=IDOvj8U1r8cSMawFdYrP2zl0wuiNvCJHAkeDpLVvIvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPm8KYTE8Petn5lhElub7CUnR3TKz9eJPDHmR1wfpH4OZiANfspoGTmD+dGnXojCE7+ayOL+8oCaiA5Iy8xCWQwyrEBawuonB7ozY/5BWlnj7p9Vp6RpD2h0Dpw2WQcJQu2XePRryWtwRfolSGlZvIyrgnT0riJNA1Gior3msWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrioLI+c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GKuHTz+hkjgvmRHG/3eXK5Yild3LZz/yH78IuJZxl1OF8dUaC2K//WlHTO51mW0TAFoR2QF2s/xTH9wrai3IXzGyWWO7KJjsBpI5UGXPxYCSZfWi4IlZA+kyMBt7ZOtknMunB3fRGa86v9FEhrQpW9jGjrIYbUQqER0vLdkGtdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+GCMMHp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrioLI+c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A42C4CEEA;
-	Mon, 23 Jun 2025 13:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+GCMMHp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE4CC4CEEA;
+	Mon, 23 Jun 2025 13:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750686182;
-	bh=jgh+MwYB0skc2RtDwH8e0+HrLWhP+Vy+WoaleUHYgvk=;
+	s=korg; t=1750686185;
+	bh=IDOvj8U1r8cSMawFdYrP2zl0wuiNvCJHAkeDpLVvIvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qrioLI+cMV7eYsBf+ww6Kd5jmX8FcVlfw/owydbR2cGO/BtvImnIYyXDvaZSlOeZw
-	 Ye4Pq/zEE1+4fHr+LYTPLmemJDd8+dziE5euv8ze+jUaxVuU+AvCk5LcVRTjEYxDO4
-	 4Pm388hRblyswZMFcWSX55BMzjLETiOr33WuJYbg=
+	b=0+GCMMHpL4ZHbXTTPqqYTX4nnkMu7/Xt9j4oB8wwPRoe2AONnwvjbIoF1B1uzzhrO
+	 w5XkSzzV7Nb9d2jM2juwQYGY7zioDUl0zu1Li4ZxjA5lLvXoYoX2HKSCi4gKcSdMe1
+	 Rvth4ZOy2Rdn/st2ZIhp2DHwtO9ej/ZhRChALZ8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/411] rtc: sh: assign correct interrupts with DT
-Date: Mon, 23 Jun 2025 15:04:07 +0200
-Message-ID: <20250623130636.101046757@linuxfoundation.org>
+Subject: [PATCH 6.15 308/592] drm/xe/uc: Remove static from loop variable
+Date: Mon, 23 Jun 2025 15:04:26 +0200
+Message-ID: <20250623130707.732415694@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-[ Upstream commit 8f2efdbc303fe7baa83843d3290dd6ea5ba3276c ]
+[ Upstream commit 75584c8213d341ddd5b7c72abf822e62f4b3ab27 ]
 
-The DT bindings for this driver define the interrupts in the order as
-they are numbered in the interrupt controller. The old platform_data,
-however, listed them in a different order. So, for DT based platforms,
-they are mixed up. Assign them specifically for DT, so we can keep the
-bindings stable. After the fix, 'rtctest' passes again on the Renesas
-Genmai board (RZ-A1 / R7S72100).
+The `entries` variable is used to loop through the array - it's supposed
+to be const, but not static.
 
-Fixes: dab5aec64bf5 ("rtc: sh: add support for rza series")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/20250227134256.9167-11-wsa+renesas@sang-engineering.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reviewed-by: John Harrison <John.C.Harrison@Intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250307-xe-per-gt-fw-v1-1-459574d76400@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-sh.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/xe_uc_fw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-sh.c b/drivers/rtc/rtc-sh.c
-index cd146b5741431..341b1b776e1a3 100644
---- a/drivers/rtc/rtc-sh.c
-+++ b/drivers/rtc/rtc-sh.c
-@@ -485,9 +485,15 @@ static int __init sh_rtc_probe(struct platform_device *pdev)
- 		return -ENOENT;
- 	}
+diff --git a/drivers/gpu/drm/xe/xe_uc_fw.c b/drivers/gpu/drm/xe/xe_uc_fw.c
+index fb0eda3d56829..b553079ae3d64 100644
+--- a/drivers/gpu/drm/xe/xe_uc_fw.c
++++ b/drivers/gpu/drm/xe/xe_uc_fw.c
+@@ -222,8 +222,8 @@ uc_fw_auto_select(struct xe_device *xe, struct xe_uc_fw *uc_fw)
+ 		[XE_UC_FW_TYPE_HUC] = { entries_huc, ARRAY_SIZE(entries_huc) },
+ 		[XE_UC_FW_TYPE_GSC] = { entries_gsc, ARRAY_SIZE(entries_gsc) },
+ 	};
+-	static const struct uc_fw_entry *entries;
+ 	enum xe_platform p = xe->info.platform;
++	const struct uc_fw_entry *entries;
+ 	u32 count;
+ 	int i;
  
--	rtc->periodic_irq = ret;
--	rtc->carry_irq = platform_get_irq(pdev, 1);
--	rtc->alarm_irq = platform_get_irq(pdev, 2);
-+	if (!pdev->dev.of_node) {
-+		rtc->periodic_irq = ret;
-+		rtc->carry_irq = platform_get_irq(pdev, 1);
-+		rtc->alarm_irq = platform_get_irq(pdev, 2);
-+	} else {
-+		rtc->alarm_irq = ret;
-+		rtc->periodic_irq = platform_get_irq(pdev, 1);
-+		rtc->carry_irq = platform_get_irq(pdev, 2);
-+	}
- 
- 	res = platform_get_resource(pdev, IORESOURCE_IO, 0);
- 	if (!res)
 -- 
 2.39.5
 
