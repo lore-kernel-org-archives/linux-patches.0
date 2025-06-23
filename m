@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B8419C554;
-	Mon, 23 Jun 2025 21:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C9022173D;
+	Mon, 23 Jun 2025 21:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714079; cv=none; b=JzRvLiZXsEOo2WJ5NP1utGUJOlEWRDKBnEQpLW4CU+DK5n6kG1QQ0xPMpmPn3qAFOAohaLiG1XA65jD989AkbU1LG7AY1hB10YuIasu7V59a1FJO+U34uMsW7w4huxVmyGBqCLHSHWGWAwnhqlaDNmXoEPKVpn9ZyNIPdcuAo6g=
+	t=1750714081; cv=none; b=dReKU8ivxUQ0LRQdttOC5JluDAWQJZhX8UiVF+WHTIMUchjoiqC5b+OYyZgdkCrGyem4ErIuAO0F3WNrEpG0ASvxKnpangFEjGrnwdCCAONpHTcbOwM4X+nfF+FRUYNOwDrnaE264ZIN/fk6zJlqekAis8chJD3oyp8P2q9DlzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714079; c=relaxed/simple;
-	bh=1wzJasK7Nc1nd1kblmjJXC6F0IcVS8ap+RvKoiRR7oM=;
+	s=arc-20240116; t=1750714081; c=relaxed/simple;
+	bh=/9rZbjx7wgAZefd/W4fKwDDchEjdNXOYtUciA4zNMUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g7gqCP48P5wUkicbCbH9OQepGJwKTgvnH66gRsfsr5epa5n3PPGbm+6Jg8UathEycF6f3bpBr6WF0uuvRkng+Azx3eabppmBPsYVICFKa7Kc6HdlrjZ9BWTuceO8qi6QBMjsVhWIxHoR7k4YFTj+eEMTwzvLDxIJ9QBq3Q3eYEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+jSWTO8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cJYo5ikcdVwTsAfW+HG3bxIoH3HKnAm+0rYomlzrn3yTL//n0Y5J9zrvziwflYt8S8sJpS3SbRDNdxcXxnoo52BiNYL+mFIbwx/FOEpQk4Y5ee+9xGAPCuRj9YETL8KWoKPm7OQ0EQTiimWeRVbnvsWDceDb/r0jGg3xf8A7uUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2Yqw0Cv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+jSWTO8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7ECC4CEEA;
-	Mon, 23 Jun 2025 21:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2Yqw0Cv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74858C4CEEA;
+	Mon, 23 Jun 2025 21:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714079;
-	bh=1wzJasK7Nc1nd1kblmjJXC6F0IcVS8ap+RvKoiRR7oM=;
+	s=korg; t=1750714081;
+	bh=/9rZbjx7wgAZefd/W4fKwDDchEjdNXOYtUciA4zNMUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J+jSWTO8U1Qi/C8NqNJP7fQVZ5Y4mExVql2E42nVYBcILHx6bKb9b+lzLG3jLT5gm
-	 GLFZxv7KHu81FIS6EP+rrkFg3mTrMHIpyHShQzoH1S5eSCs9MBNI1SkZ8FBRKRSTVT
-	 qBrLfuYIXn54IyJW0eJpEEdlSZjWTI9OsLwtWIZc=
+	b=O2Yqw0CvvoYEqAqe99fa/KML01ERfCX437rW/4W0Uri9kZlxMDpURaQ0IUjye4+7t
+	 iSVs7X7BR8zxx+uLiN7azDhMWdJreZOinP6Z4uolendPfdW/GDoaP4WLvA0Mwz04qv
+	 gnZa+cSL8e9xRJzlN0Qzm8R9zN794JyvIuwFJMOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 099/290] regulator: max14577: Add error check for max14577_read_reg()
-Date: Mon, 23 Jun 2025 15:06:00 +0200
-Message-ID: <20250623130629.945782090@linuxfoundation.org>
+	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
+	Sean Nyekjaer <sean@geanix.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 112/290] iio: accel: fxls8962af: Fix temperature scan element sign
+Date: Mon, 23 Jun 2025 15:06:13 +0200
+Message-ID: <20250623130630.322962524@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
 References: <20250623130626.910356556@linuxfoundation.org>
@@ -50,44 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Sean Nyekjaer <sean@geanix.com>
 
-commit 65271f868cb1dca709ff69e45939bbef8d6d0b70 upstream.
+commit 9c78317b42e7c32523c91099859bc4721e9f75dd upstream.
 
-The function max14577_reg_get_current_limit() calls the function
-max14577_read_reg(), but does not check its return value. A proper
-implementation can be found in max14577_get_online().
+Mark the temperature element signed, data read from the TEMP_OUT register
+is in two's complement format.
+This will avoid the temperature being mishandled and miss displayed.
 
-Add a error check for the max14577_read_reg() and return error code
-if the function fails.
-
-Fixes: b0902bbeb768 ("regulator: max14577: Add regulator driver for Maxim 14577")
-Cc: stable@vger.kernel.org # v3.14
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20250526025627.407-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a3e0b51884ee ("iio: accel: add support for FXLS8962AF/FXLS8964AF accelerometers")
+Suggested-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
+Signed-off-by: Sean Nyekjaer <sean@geanix.com>
+Link: https://patch.msgid.link/20250505-fxls-v4-2-a38652e21738@geanix.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/max14577-regulator.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/iio/accel/fxls8962af-core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/regulator/max14577-regulator.c
-+++ b/drivers/regulator/max14577-regulator.c
-@@ -40,11 +40,14 @@ static int max14577_reg_get_current_limi
- 	struct max14577 *max14577 = rdev_get_drvdata(rdev);
- 	const struct maxim_charger_current *limits =
- 		&maxim_charger_currents[max14577->dev_type];
-+	int ret;
- 
- 	if (rdev_get_id(rdev) != MAX14577_CHARGER)
- 		return -EINVAL;
- 
--	max14577_read_reg(rmap, MAX14577_CHG_REG_CHG_CTRL4, &reg_data);
-+	ret = max14577_read_reg(rmap, MAX14577_CHG_REG_CHG_CTRL4, &reg_data);
-+	if (ret < 0)
-+		return ret;
- 
- 	if ((reg_data & CHGCTRL4_MBCICHWRCL_MASK) == 0)
- 		return limits->min;
+--- a/drivers/iio/accel/fxls8962af-core.c
++++ b/drivers/iio/accel/fxls8962af-core.c
+@@ -737,6 +737,7 @@ static const struct iio_event_spec fxls8
+ 			      BIT(IIO_CHAN_INFO_OFFSET),\
+ 	.scan_index = -1, \
+ 	.scan_type = { \
++		.sign = 's', \
+ 		.realbits = 8, \
+ 		.storagebits = 8, \
+ 	}, \
 
 
