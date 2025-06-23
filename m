@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82192222581;
-	Mon, 23 Jun 2025 21:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCB01EDA0F;
+	Mon, 23 Jun 2025 21:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713974; cv=none; b=fuxJyJCAV86WQYnpXBdk7V3bXRWWIxy3HJM70MBxdedGwpj2h9YA1HgoBkWL0Y28/UXSKAnwxqI7D/mExscsN9p7wUTjq6aIwqySmpnurHLRDD+Jp1KpFllLKkI+Si8YnQQxsy2WBnT/dO5cY+IidZQoQ77ceDLkBoPCqB17hoU=
+	t=1750713977; cv=none; b=KY7hEbUOJTfIWpOiL/hpSyn2BawjHu3Z0GKWVvN+wRacauISOt2MRq3LnqU1bMDA0m7hhXvqB3gtRFGb9/n50RotBXsA2JUzrp5peAGwJf0ysJGwbO9bnASyAzUUVO1W37Adq2Z3qeVEVp2+KB9jWtrnckxSbPwIB+b4SRXbpP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713974; c=relaxed/simple;
-	bh=pG3HCB/1tcCzUhFlUkDN9XKomjFm5vRN4ViOZIMphzY=;
+	s=arc-20240116; t=1750713977; c=relaxed/simple;
+	bh=PcDUpuD4Jj6oUug3jz61saeaRPcNecGYU4Ui1L79q/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSjCiU6ADTSkO/usfPqDgblB2uk+UJekXgXrPxIhCv24xmIP7O3p5Jchorh7BrX4h+aBBf801U+xKlP+L+j/p0g20gCBmYJvTYbzuYCOBnrMVVSfRcuQGHtSxv2bCEYvzS+xp8WRgnMV3o5Bt2XBlOzKdSQSPSk03IPDRnOVSeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VN2xhjg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qYZ3+x8chb9qgg4J9Nd3+c1kEva7aVIUbJrJwcENYglTN3WiMkGDw8PBiRVTAHxgOf8M09eTusJ1Q5PmRvv0KxRp8v4rgd548oMWNhmy8owKqIiQw1GX1kui1ZIVtAFUAMre2wDP05QS6Yg6S8zdOnAN0NaP4x02z2ecw6N9LUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKPrJe+W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VN2xhjg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B9BC4CEEA;
-	Mon, 23 Jun 2025 21:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKPrJe+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87EDCC4CEEA;
+	Mon, 23 Jun 2025 21:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713974;
-	bh=pG3HCB/1tcCzUhFlUkDN9XKomjFm5vRN4ViOZIMphzY=;
+	s=korg; t=1750713976;
+	bh=PcDUpuD4Jj6oUug3jz61saeaRPcNecGYU4Ui1L79q/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1VN2xhjgY2JIuWgkRdrojzuaZkQS/8CfEw44fQbKZp4M3Ht7tsQPqOKZlg+ChubJI
-	 XNOHBeLlAKNaNbq8lvN25+/lrA7hWcsi/OgOxYOIg2W5xs+lggCX0IERh+NnT592Gl
-	 rasCsjSJBqQDZhup0sVww3IGq0PwoMzeZsNtRYjc=
+	b=HKPrJe+W1Tysi8OeLQpE8trFYEZKI8L/0WUuXCm4Hiv4tsCs3R2v0kLtuZVhXdB6j
+	 k8uAX5B2EXQzOBPFkZgXfwOgUuC3YBQKVat88fe2iTdqp2X/TJK/3zPtlQyPkl64W+
+	 MOdvpqP8U8rf8QZPveZIWTFM7toJB6zo1UqJxUTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Justin Stitt <justinstitt@google.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 5.4 219/222] rtc: test: Fix invalid format specifier.
-Date: Mon, 23 Jun 2025 15:09:14 +0200
-Message-ID: <20250623130618.883340111@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.6 106/290] Drivers: hv: Allocate interrupt and monitor pages aligned to system page boundary
+Date: Mon, 23 Jun 2025 15:06:07 +0200
+Message-ID: <20250623130630.142114300@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,40 +47,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Gow <davidgow@google.com>
+From: Long Li <longli@microsoft.com>
 
-commit 8a904a3caa88118744062e872ae90f37748a8fd8 upstream.
+commit 09eea7ad0b8e973dcf5ed49902838e5d68177f8e upstream.
 
-'days' is a s64 (from div_s64), and so should use a %lld specifier.
+There are use cases that interrupt and monitor pages are mapped to
+user-mode through UIO, so they need to be system page aligned. Some
+Hyper-V allocation APIs introduced earlier broke those requirements.
 
-This was found by extending KUnit's assertion macros to use gcc's
-__printf attribute.
+Fix this by using page allocation functions directly for interrupt
+and monitor pages.
 
-Fixes: 1d1bb12a8b18 ("rtc: Improve performance of rtc_time64_to_tm(). Add tests.")
-Signed-off-by: David Gow <davidgow@google.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Justin Stitt <justinstitt@google.com>
-Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Fixes: ca48739e59df ("Drivers: hv: vmbus: Move Hyper-V page allocator to arch neutral code")
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/1746492997-4599-2-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <1746492997-4599-2-git-send-email-longli@linuxonhyperv.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/lib_test.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hv/connection.c |   23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
---- a/drivers/rtc/lib_test.c
-+++ b/drivers/rtc/lib_test.c
-@@ -54,7 +54,7 @@ static void rtc_time64_to_tm_test_date_r
+--- a/drivers/hv/connection.c
++++ b/drivers/hv/connection.c
+@@ -207,10 +207,19 @@ int vmbus_connect(void)
+ 	mutex_init(&vmbus_connection.channel_mutex);
  
- 		days = div_s64(secs, 86400);
+ 	/*
++	 * The following Hyper-V interrupt and monitor pages can be used by
++	 * UIO for mapping to user-space, so they should always be allocated on
++	 * system page boundaries. The system page size must be >= the Hyper-V
++	 * page size.
++	 */
++	BUILD_BUG_ON(PAGE_SIZE < HV_HYP_PAGE_SIZE);
++
++	/*
+ 	 * Setup the vmbus event connection for channel interrupt
+ 	 * abstraction stuff
+ 	 */
+-	vmbus_connection.int_page = hv_alloc_hyperv_zeroed_page();
++	vmbus_connection.int_page =
++		(void *)__get_free_page(GFP_KERNEL | __GFP_ZERO);
+ 	if (vmbus_connection.int_page == NULL) {
+ 		ret = -ENOMEM;
+ 		goto cleanup;
+@@ -225,8 +234,8 @@ int vmbus_connect(void)
+ 	 * Setup the monitor notification facility. The 1st page for
+ 	 * parent->child and the 2nd page for child->parent
+ 	 */
+-	vmbus_connection.monitor_pages[0] = hv_alloc_hyperv_page();
+-	vmbus_connection.monitor_pages[1] = hv_alloc_hyperv_page();
++	vmbus_connection.monitor_pages[0] = (void *)__get_free_page(GFP_KERNEL);
++	vmbus_connection.monitor_pages[1] = (void *)__get_free_page(GFP_KERNEL);
+ 	if ((vmbus_connection.monitor_pages[0] == NULL) ||
+ 	    (vmbus_connection.monitor_pages[1] == NULL)) {
+ 		ret = -ENOMEM;
+@@ -342,21 +351,23 @@ void vmbus_disconnect(void)
+ 		destroy_workqueue(vmbus_connection.work_queue);
  
--		#define FAIL_MSG "%d/%02d/%02d (%2d) : %ld", \
-+		#define FAIL_MSG "%d/%02d/%02d (%2d) : %lld", \
- 			year, month, mday, yday, days
+ 	if (vmbus_connection.int_page) {
+-		hv_free_hyperv_page(vmbus_connection.int_page);
++		free_page((unsigned long)vmbus_connection.int_page);
+ 		vmbus_connection.int_page = NULL;
+ 	}
  
- 		KUNIT_ASSERT_EQ_MSG(test, year - 1900, result.tm_year, FAIL_MSG);
+ 	if (vmbus_connection.monitor_pages[0]) {
+ 		if (!set_memory_encrypted(
+ 			(unsigned long)vmbus_connection.monitor_pages[0], 1))
+-			hv_free_hyperv_page(vmbus_connection.monitor_pages[0]);
++			free_page((unsigned long)
++				vmbus_connection.monitor_pages[0]);
+ 		vmbus_connection.monitor_pages[0] = NULL;
+ 	}
+ 
+ 	if (vmbus_connection.monitor_pages[1]) {
+ 		if (!set_memory_encrypted(
+ 			(unsigned long)vmbus_connection.monitor_pages[1], 1))
+-			hv_free_hyperv_page(vmbus_connection.monitor_pages[1]);
++			free_page((unsigned long)
++				vmbus_connection.monitor_pages[1]);
+ 		vmbus_connection.monitor_pages[1] = NULL;
+ 	}
+ }
 
 
