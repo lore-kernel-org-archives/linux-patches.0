@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13BE1FECBA;
-	Mon, 23 Jun 2025 21:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6B73FB1B;
+	Mon, 23 Jun 2025 21:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750715753; cv=none; b=tbvzKqZTrWK1h/D9aR7zKG1jkT5Q5nKjTGNI2/PXGBOEDZ4GkB+W1a2iEFO82Zqlyr6qLVY2l8P16KNilEqAqXbiPRr4rVCvXeqcfnfRuuYQkUP1A2ZC2F8eoLR8dq238PKKi5YKSBUcV0GG88IciiXVIq42a9QSR//E2NLAKQs=
+	t=1750715756; cv=none; b=spO2X0m1An+TWqKm/5uKwSiYTQyZ0TxoYqAh/cHNU4v87+g3f3/JWA03ysjymW+A5TVTmNSTTK8dV55h4EIEjIiy07XwX5KlylAU86S8yRraI0gH6iVF4pmJjtbB+BrbAdzwSU/9qnMs/dhS9rpY/I0vwEzu/YUU2QWY1C0Zj64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750715753; c=relaxed/simple;
-	bh=i66EsRU/Z9ms5fDypiQlkHQoSgnPo5CxlFLHM4Qdn24=;
+	s=arc-20240116; t=1750715756; c=relaxed/simple;
+	bh=qtbesaYpnjHqh1An9KtbgwI6h8dKoS4DyGuP/upngXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XLqZXwxzNMaZuh1aznE+N50tRO8YbEfRO0cnL7EPl/Cye+AKmYM/gcNeKDhaAHqvL5cwsIUeDqv45fNPz7yJaeoGWS8AzjzPeQI0R6fIO4d8ADNpokPO/6UBOT/GeX5JvjVQZYAtQW/Wk9HV5dwWDcbns1XEZhiKOWHBbvEqvWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7OjMLyy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QN6yZ8Lejnf0QuQKcyTjiXMIh7At0qrUja87t5U114kyVRE8wZ3L8//3gzaba1iddlO6q10A4kykBL75QnN6jQlplmoIJ/UR5RbQXV+OIedRYPjOlOyM9R3zoqGOIyYo4xHtJ53HHWBis7etrhiNlO5jnqg9sb5Ub5CXv6QSMzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONUMpYJR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7OjMLyy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F6DC4CEEA;
-	Mon, 23 Jun 2025 21:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONUMpYJR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C6AC4CEEA;
+	Mon, 23 Jun 2025 21:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750715753;
-	bh=i66EsRU/Z9ms5fDypiQlkHQoSgnPo5CxlFLHM4Qdn24=;
+	s=korg; t=1750715756;
+	bh=qtbesaYpnjHqh1An9KtbgwI6h8dKoS4DyGuP/upngXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k7OjMLyyyyZ7KzVKl7b3UzBUHkRPqgQrwep7tJIVm3mjuB8iq8iLQM7XQz26vNR89
-	 elt/i/n1YKVOMXuGmwCH09Qn+p/eOCUhfwbGhf0J82GDtbUxLGDqPBqCHqi/KRqyeS
-	 FjBrjDsNofD9OrLRmeTSsKUIa8rZ7ERu4i3/3+ow=
+	b=ONUMpYJRnU7ygmPGtlgSY3DQe/PMDDYnP3UPkD+HmEdGO6c7vnO0astEndwUC/z4u
+	 tTOed/ZeIePURwHbDv+LGwooo4vYDGIB544u9Lrh7foYK6ay/Ybo3V5jf/gNvdDTwh
+	 Lho2az5cluE6eh1EfOLF0k6Tf1zv0pyCw8MRbkaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.15 478/592] ksmbd: fix null pointer dereference in destroy_previous_session
-Date: Mon, 23 Jun 2025 15:07:16 +0200
-Message-ID: <20250623130711.802888025@linuxfoundation.org>
+	Petr Malat <oss@malat.biz>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 205/414] sctp: Do not wake readers in __sctp_write_space()
+Date: Mon, 23 Jun 2025 15:05:42 +0200
+Message-ID: <20250623130647.131360971@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Petr Malat <oss@malat.biz>
 
-commit 7ac5b66acafcc9292fb935d7e03790f2b8b2dc0e upstream.
+[ Upstream commit af295892a7abbf05a3c2ba7abc4d81bb448623d6 ]
 
-If client set ->PreviousSessionId on kerberos session setup stage,
-NULL pointer dereference error will happen. Since sess->user is not
-set yet, It can pass the user argument as NULL to destroy_previous_session.
-sess->user will be set in ksmbd_krb5_authenticate(). So this patch move
-calling destroy_previous_session() after ksmbd_krb5_authenticate().
+Function __sctp_write_space() doesn't set poll key, which leads to
+ep_poll_callback() waking up all waiters, not only these waiting
+for the socket being writable. Set the key properly using
+wake_up_interruptible_poll(), which is preferred over the sync
+variant, as writers are not woken up before at least half of the
+queue is available. Also, TCP does the same.
 
-Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-27391
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Petr Malat <oss@malat.biz>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250516081727.1361451-1-oss@malat.biz
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/sctp/socket.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1607,17 +1607,18 @@ static int krb5_authenticate(struct ksmb
- 	out_len = work->response_sz -
- 		(le16_to_cpu(rsp->SecurityBufferOffset) + 4);
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 53725ee7ba06d..b301d64d9d80f 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -9100,7 +9100,8 @@ static void __sctp_write_space(struct sctp_association *asoc)
+ 		wq = rcu_dereference(sk->sk_wq);
+ 		if (wq) {
+ 			if (waitqueue_active(&wq->wait))
+-				wake_up_interruptible(&wq->wait);
++				wake_up_interruptible_poll(&wq->wait, EPOLLOUT |
++						EPOLLWRNORM | EPOLLWRBAND);
  
--	/* Check previous session */
--	prev_sess_id = le64_to_cpu(req->PreviousSessionId);
--	if (prev_sess_id && prev_sess_id != sess->id)
--		destroy_previous_session(conn, sess->user, prev_sess_id);
--
- 	retval = ksmbd_krb5_authenticate(sess, in_blob, in_len,
- 					 out_blob, &out_len);
- 	if (retval) {
- 		ksmbd_debug(SMB, "krb5 authentication failed\n");
- 		return -EINVAL;
- 	}
-+
-+	/* Check previous session */
-+	prev_sess_id = le64_to_cpu(req->PreviousSessionId);
-+	if (prev_sess_id && prev_sess_id != sess->id)
-+		destroy_previous_session(conn, sess->user, prev_sess_id);
-+
- 	rsp->SecurityBufferLength = cpu_to_le16(out_len);
- 
- 	if ((conn->sign || server_conf.enforced_signing) ||
+ 			/* Note that we try to include the Async I/O support
+ 			 * here by modeling from the current TCP/UDP code.
+-- 
+2.39.5
+
 
 
