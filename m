@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B9F7482;
-	Mon, 23 Jun 2025 21:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BCB22257E;
+	Mon, 23 Jun 2025 21:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713502; cv=none; b=W4Qi+zSFNxwepdhRZuR2OY8ZkU/sEb1Cil/s0NJYyPvjFE8jx+JE4NTVhCCE6mkGw5gx3WKtPI4+Y+j/6ppNcDLC3zyY42/EDQE5MsnPyaZieAcJG7Vc08flYR6pKBUzj3051xJGagQAkb+Ecp9FdA2xz/7CrgXX/eFkQifXlO8=
+	t=1750713504; cv=none; b=P7x4kde4SAgNizZWP1dWWIq1G6uGCwhHolYl/NJTOdB/tpJiT67wOFVnNqXGaz3gV/fjEtftclDjGpzt19iLMgxzRfsdnASudU5Tii2YYemVnsXvUoSv48Z2i9QaBZcZGxdYzKihL5RLUJ3O9+kpqYNo+BxOrUhDFuBfQ4XqDgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713502; c=relaxed/simple;
-	bh=ZP+JbBusfCKZ1VFFfJjZoTytByYze+us+fiyaOmPhpU=;
+	s=arc-20240116; t=1750713504; c=relaxed/simple;
+	bh=zs0f2cevaVHNV0z9+hvP0+BrXBt7EerfeBZc9MUVYW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJdfGvpypGp+68SUSPCjcbDGAEkRBxz6T4IQ+X3QAaLNSGANwD2huD29Vg5PK6fnDS2Xet7/aMYJUXQBrtBO6c2M5A/gvT1Qt/XsF/tc90HScrKKrZt0VZumYd6C91TsyKrvIme4zQdmVvhYiZRwPh2rOrRj/Wq2oYdUgrYNR0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kz/5p0Ev; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oc1PO1Hxlot8qgu1d+DHhsj33FAnv2KsyE4IayAHSOrGCIz1kjifo6TOVwKHH8mqyZ6h8BOvEP5CmAd+rFwbwnzpFJjjt7CoYqmM1IDWRfqVP1ZEEKButdYj8fApu7u/OnfFYewJ4byIQJDDr2aPRxO9bchR3YaApgYl+yfGao0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBW/BK3Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kz/5p0Ev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8385DC4CEF0;
-	Mon, 23 Jun 2025 21:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBW/BK3Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25F4C4CEED;
+	Mon, 23 Jun 2025 21:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713501;
-	bh=ZP+JbBusfCKZ1VFFfJjZoTytByYze+us+fiyaOmPhpU=;
+	s=korg; t=1750713504;
+	bh=zs0f2cevaVHNV0z9+hvP0+BrXBt7EerfeBZc9MUVYW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kz/5p0Ev9OBmwmkToO/gZmBJjBUbPwdXKKJA1tcOs0ObiyAfym4fhZ5dVSvpHFdHQ
-	 gJWYklMUpBy/SS/DCt7IZ0E4dzUsBfwQh77ePJfnhdmVSZr0dyKQvTYaz1mNKr3m4J
-	 igawrusGPz6KuIv2LGh7AmW4Op+r5pQmFoijxBD0=
+	b=SBW/BK3ZELJ/qHFcWQvcxzeQelpy9/0sKVPTctoH1fpMPbNi44A9enan7cgPfKtEN
+	 NtyFgJ1NyriqSgwVty8LxQRykeV4x1/IXF+GTCYmJqB+vJmiTSZ5ypguSwggqwT3K8
+	 B2nGklbUwjzXZgskgicLiTPnWXJ2Sdt2Hl14cCYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+de24c3fe3c4091051710@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.10 169/355] jbd2: fix data-race and null-ptr-deref in jbd2_journal_dirty_metadata()
-Date: Mon, 23 Jun 2025 15:06:10 +0200
-Message-ID: <20250623130631.787516428@linuxfoundation.org>
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.12 067/414] media: imx-jpeg: Reset slot data pointers when freed
+Date: Mon, 23 Jun 2025 15:03:24 +0200
+Message-ID: <20250623130643.746926380@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
-References: <20250623130626.716971725@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,86 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-commit af98b0157adf6504fade79b3e6cb260c4ff68e37 upstream.
+commit faa8051b128f4b34277ea8a026d02d83826f8122 upstream.
 
-Since handle->h_transaction may be a NULL pointer, so we should change it
-to call is_handle_aborted(handle) first before dereferencing it.
+Ensure that the slot data pointers are reset to NULL and handles are
+set to 0 after freeing the coherent memory. This makes he function
+mxc_jpeg_alloc_slot_data() and mxc_jpeg_free_slot_data() safe to be
+called multiple times.
 
-And the following data-race was reported in my fuzzer:
-
-==================================================================
-BUG: KCSAN: data-race in jbd2_journal_dirty_metadata / jbd2_journal_dirty_metadata
-
-write to 0xffff888011024104 of 4 bytes by task 10881 on cpu 1:
- jbd2_journal_dirty_metadata+0x2a5/0x770 fs/jbd2/transaction.c:1556
- __ext4_handle_dirty_metadata+0xe7/0x4b0 fs/ext4/ext4_jbd2.c:358
- ext4_do_update_inode fs/ext4/inode.c:5220 [inline]
- ext4_mark_iloc_dirty+0x32c/0xd50 fs/ext4/inode.c:5869
- __ext4_mark_inode_dirty+0xe1/0x450 fs/ext4/inode.c:6074
- ext4_dirty_inode+0x98/0xc0 fs/ext4/inode.c:6103
-....
-
-read to 0xffff888011024104 of 4 bytes by task 10880 on cpu 0:
- jbd2_journal_dirty_metadata+0xf2/0x770 fs/jbd2/transaction.c:1512
- __ext4_handle_dirty_metadata+0xe7/0x4b0 fs/ext4/ext4_jbd2.c:358
- ext4_do_update_inode fs/ext4/inode.c:5220 [inline]
- ext4_mark_iloc_dirty+0x32c/0xd50 fs/ext4/inode.c:5869
- __ext4_mark_inode_dirty+0xe1/0x450 fs/ext4/inode.c:6074
- ext4_dirty_inode+0x98/0xc0 fs/ext4/inode.c:6103
-....
-
-value changed: 0x00000000 -> 0x00000001
-==================================================================
-
-This issue is caused by missing data-race annotation for jh->b_modified.
-Therefore, the missing annotation needs to be added.
-
-Reported-by: syzbot+de24c3fe3c4091051710@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=de24c3fe3c4091051710
-Fixes: 6e06ae88edae ("jbd2: speedup jbd2_journal_dirty_metadata()")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250514130855.99010-1-aha310510@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/transaction.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -1492,7 +1492,7 @@ int jbd2_journal_dirty_metadata(handle_t
- 				jh->b_next_transaction == transaction);
- 		spin_unlock(&jh->b_state_lock);
- 	}
--	if (jh->b_modified == 1) {
-+	if (data_race(jh->b_modified == 1)) {
- 		/* If it's in our transaction it must be in BJ_Metadata list. */
- 		if (data_race(jh->b_transaction == transaction &&
- 		    jh->b_jlist != BJ_Metadata)) {
-@@ -1511,7 +1511,6 @@ int jbd2_journal_dirty_metadata(handle_t
- 		goto out;
- 	}
+--- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
++++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
+@@ -758,16 +758,22 @@ static void mxc_jpeg_free_slot_data(stru
+ 	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
+ 			  jpeg->slot_data.desc,
+ 			  jpeg->slot_data.desc_handle);
++	jpeg->slot_data.desc = NULL;
++	jpeg->slot_data.desc_handle = 0;
  
--	journal = transaction->t_journal;
- 	spin_lock(&jh->b_state_lock);
+ 	/* free descriptor for encoder configuration phase / decoder DHT */
+ 	dma_free_coherent(jpeg->dev, sizeof(struct mxc_jpeg_desc),
+ 			  jpeg->slot_data.cfg_desc,
+ 			  jpeg->slot_data.cfg_desc_handle);
++	jpeg->slot_data.cfg_desc_handle = 0;
++	jpeg->slot_data.cfg_desc = NULL;
  
- 	if (is_handle_aborted(handle)) {
-@@ -1526,6 +1525,8 @@ int jbd2_journal_dirty_metadata(handle_t
- 		goto out_unlock_bh;
- 	}
+ 	/* free configuration stream */
+ 	dma_free_coherent(jpeg->dev, MXC_JPEG_MAX_CFG_STREAM,
+ 			  jpeg->slot_data.cfg_stream_vaddr,
+ 			  jpeg->slot_data.cfg_stream_handle);
++	jpeg->slot_data.cfg_stream_vaddr = NULL;
++	jpeg->slot_data.cfg_stream_handle = 0;
  
-+	journal = transaction->t_journal;
-+
- 	if (jh->b_modified == 0) {
- 		/*
- 		 * This buffer's got modified and becoming part
+ 	jpeg->slot_data.used = false;
+ }
 
 
