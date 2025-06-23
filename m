@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5496C1E22E6;
-	Mon, 23 Jun 2025 21:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2F21E22E6;
+	Mon, 23 Jun 2025 21:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714814; cv=none; b=Z91RgdZViiZVSj51kZdU7auEil+Stme5UcLYXxP7PyxuAWKqe8MPEiJ98jRmzsClie4kGwhTr/Q/ovgFSZurP3BqVK5yG3i+zfdcPPQ556A2eAulpxiMIKZso95nbO/HyF+7s+IB7PLws3b2u7gVsbDp5M2GVbFvBI6ZwesWwS8=
+	t=1750714816; cv=none; b=OekGzmUfAL0jujpVDppjWODRDCHNiC6nH0cN09ZrzRUzDAjMNv6/FiaLQmRXFZpIqr9eSWA/QWxr4PYCQ4BpQmAwYYrIia0qtkGb0v2XoDC7oS83PugvWyua2ujUsViDC0lDIPO1K2b/vGY7s8ABbYytLaqg/1hLRO/jHTGeyYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714814; c=relaxed/simple;
-	bh=34sVsHyxVRBxBUwpdtGBJke00JRC/1/LeYNcmzjnOv8=;
+	s=arc-20240116; t=1750714816; c=relaxed/simple;
+	bh=JAbzIA7wQNmmszRxiVM+VUV7fLYrje2MUTNHxbNgGc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kml54CXaEVdi1aR7ei32asjC7MdS93Gekp9Ne5QX1jCrc/4jJ8eZ5c0JeuJkYoegVAR0y2zmcEmXFYU/MlvLDuwNEAC6NtBmGsaOZ8ZozhE8z0T6KVjrVeyIc1FombjootiVGZp4+pUgYtXbUr9X7YVCMqXo2h1nD/nAmHfiq1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oeDJECFt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pgZURgAchsrhnzJwJxZZP6oulIScsOiSTg6spj1G4B0p1dHslpm2ciFMbGHNqOo4ZBXwVjCdSfFTZBxu9vxugwutSlAynmLzAM1XIT7Krhw0NXUrfAZhFPkBj4ei/Gp0wLMnkWj45EwWkop4S6EuuuZ22u8+jwsfuy4IVNG36tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiCWW3ny; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeDJECFt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01BFC4CEEA;
-	Mon, 23 Jun 2025 21:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiCWW3ny"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F106C4CEEA;
+	Mon, 23 Jun 2025 21:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714814;
-	bh=34sVsHyxVRBxBUwpdtGBJke00JRC/1/LeYNcmzjnOv8=;
+	s=korg; t=1750714816;
+	bh=JAbzIA7wQNmmszRxiVM+VUV7fLYrje2MUTNHxbNgGc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oeDJECFtBbA60nNWuL5MGatlDi5G7QouEiUck453f11D43FDUIQQdCYBwmUpmsJCN
-	 ZqNaRvFOFVxKQ0PE6QE6RUm6ciJ3uVg17PDzpjpNs6yHOc8Ezp3rgUwT7NC3ZAUYVt
-	 bzEAFeDdX1BSEa6EyLEBFWtU1nvXZDO2Yasjqd60=
+	b=qiCWW3ny2WV28SW2SAsDnIGP/hpuCO1JbQnhu9Fm595Y6ikNIlJMUqwJNqep3lafX
+	 wngW8EjyH2exIB1ANd6Y3LyBAXR7GHb72zTqD7Uf7whIJgm7kql4ETbjPk+DY6miDb
+	 4AHcYqH4LRMZNHjNcbqYUXW108XKiRpK+0o5LmRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj P Kizhakkethil <quic_surapk@quicinc.com>,
-	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Moon Yeounsu <yyyynoom@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 423/592] wifi: ath12k: Pass correct values of center freq1 and center freq2 for 160 MHz
-Date: Mon, 23 Jun 2025 15:06:21 +0200
-Message-ID: <20250623130710.497771653@linuxfoundation.org>
+Subject: [PATCH 5.10 255/355] net: dlink: add synchronization for stats update
+Date: Mon, 23 Jun 2025 15:07:36 +0200
+Message-ID: <20250623130634.421980527@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,64 +47,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suraj P Kizhakkethil <quic_surapk@quicinc.com>
+From: Moon Yeounsu <yyyynoom@gmail.com>
 
-[ Upstream commit b1b01e46a3db5ad44d1e4691ba37c1e0832cd5cf ]
+[ Upstream commit 12889ce926e9a9baf6b83d809ba316af539b89e2 ]
 
-Currently, for 160 MHz bandwidth, center frequency1 and
-center frequency2 are not passed correctly to the firmware.
-Set center frequency1 as the center frequency
-of the primary 80 MHz channel segment and center frequency2 as
-the center frequency of the 160 MHz channel and pass the values
-to the firmware.
+This patch synchronizes code that accesses from both user-space
+and IRQ contexts. The `get_stats()` function can be called from both
+context.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+`dev->stats.tx_errors` and `dev->stats.collisions` are also updated
+in the `tx_errors()` function. Therefore, these fields must also be
+protected by synchronized.
 
-Signed-off-by: Suraj P Kizhakkethil <quic_surapk@quicinc.com>
-Reviewed-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250304095315.3050325-2-quic_surapk@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+There is no code that accessses `dev->stats.tx_errors` between the
+previous and updated lines, so the updating point can be moved.
+
+Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
+Link: https://patch.msgid.link/20250515075333.48290-1-yyyynoom@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/dlink/dl2k.c | 14 +++++++++++++-
+ drivers/net/ethernet/dlink/dl2k.h |  2 ++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 56b2feb4ffe05..a44fc9106634b 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -1037,14 +1037,24 @@ int ath12k_wmi_vdev_down(struct ath12k *ar, u8 vdev_id)
- static void ath12k_wmi_put_wmi_channel(struct ath12k_wmi_channel_params *chan,
- 				       struct wmi_vdev_start_req_arg *arg)
- {
-+	u32 center_freq1 = arg->band_center_freq1;
+diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
+index 66e0fbdcef220..b7f992103da3c 100644
+--- a/drivers/net/ethernet/dlink/dl2k.c
++++ b/drivers/net/ethernet/dlink/dl2k.c
+@@ -146,6 +146,8 @@ rio_probe1 (struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	np->ioaddr = ioaddr;
+ 	np->chip_id = chip_idx;
+ 	np->pdev = pdev;
 +
- 	memset(chan, 0, sizeof(*chan));
++	spin_lock_init(&np->stats_lock);
+ 	spin_lock_init (&np->tx_lock);
+ 	spin_lock_init (&np->rx_lock);
  
- 	chan->mhz = cpu_to_le32(arg->freq);
--	chan->band_center_freq1 = cpu_to_le32(arg->band_center_freq1);
--	if (arg->mode == MODE_11AC_VHT80_80)
-+	chan->band_center_freq1 = cpu_to_le32(center_freq1);
-+	if (arg->mode == MODE_11BE_EHT160) {
-+		if (arg->freq > center_freq1)
-+			chan->band_center_freq1 = cpu_to_le32(center_freq1 + 40);
-+		else
-+			chan->band_center_freq1 = cpu_to_le32(center_freq1 - 40);
+@@ -869,7 +871,6 @@ tx_error (struct net_device *dev, int tx_status)
+ 	frame_id = (tx_status & 0xffff0000);
+ 	printk (KERN_ERR "%s: Transmit error, TxStatus %4.4x, FrameId %d.\n",
+ 		dev->name, tx_status, frame_id);
+-	dev->stats.tx_errors++;
+ 	/* Ttransmit Underrun */
+ 	if (tx_status & 0x10) {
+ 		dev->stats.tx_fifo_errors++;
+@@ -906,9 +907,15 @@ tx_error (struct net_device *dev, int tx_status)
+ 		rio_set_led_mode(dev);
+ 		/* Let TxStartThresh stay default value */
+ 	}
 +
-+		chan->band_center_freq2 = cpu_to_le32(center_freq1);
-+	} else if (arg->mode == MODE_11BE_EHT80_80) {
- 		chan->band_center_freq2 = cpu_to_le32(arg->band_center_freq2);
--	else
-+	} else {
- 		chan->band_center_freq2 = 0;
-+	}
++	spin_lock(&np->stats_lock);
+ 	/* Maximum Collisions */
+ 	if (tx_status & 0x08)
+ 		dev->stats.collisions++;
++
++	dev->stats.tx_errors++;
++	spin_unlock(&np->stats_lock);
++
+ 	/* Restart the Tx */
+ 	dw32(MACCtrl, dr16(MACCtrl) | TxEnable);
+ }
+@@ -1077,7 +1084,9 @@ get_stats (struct net_device *dev)
+ 	int i;
+ #endif
+ 	unsigned int stat_reg;
++	unsigned long flags;
  
- 	chan->info |= le32_encode_bits(arg->mode, WMI_CHAN_INFO_MODE);
- 	if (arg->passive)
++	spin_lock_irqsave(&np->stats_lock, flags);
+ 	/* All statistics registers need to be acknowledged,
+ 	   else statistic overflow could cause problems */
+ 
+@@ -1127,6 +1136,9 @@ get_stats (struct net_device *dev)
+ 	dr16(TCPCheckSumErrors);
+ 	dr16(UDPCheckSumErrors);
+ 	dr16(IPCheckSumErrors);
++
++	spin_unlock_irqrestore(&np->stats_lock, flags);
++
+ 	return &dev->stats;
+ }
+ 
+diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
+index 0e33e2eaae960..56aff2f0bdbfa 100644
+--- a/drivers/net/ethernet/dlink/dl2k.h
++++ b/drivers/net/ethernet/dlink/dl2k.h
+@@ -372,6 +372,8 @@ struct netdev_private {
+ 	struct pci_dev *pdev;
+ 	void __iomem *ioaddr;
+ 	void __iomem *eeprom_addr;
++	// To ensure synchronization when stats are updated.
++	spinlock_t stats_lock;
+ 	spinlock_t tx_lock;
+ 	spinlock_t rx_lock;
+ 	unsigned int rx_buf_sz;		/* Based on MTU+slack. */
 -- 
 2.39.5
 
