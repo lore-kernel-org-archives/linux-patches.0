@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CED24E019;
-	Mon, 23 Jun 2025 13:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADB324DCF8;
+	Mon, 23 Jun 2025 13:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684492; cv=none; b=SaLc6FXIDzaIYw025fV8KzK3jjellYbCgKWXPpKmPEY0Auw/whV8Rnc529LEqoUKjoBUEOwXbRtq5qBnoLFXvc3jnB47QBgntcpbI34CLgKLtZ8joGwlqkmRHc3WVmV468QeazK+6+2K3Xgu8lmEzqr9DSQ6m13ePmynM0np9cg=
+	t=1750684494; cv=none; b=V3WHDCrDgmfEzYwVKthSk4R4FFEk56ecJddtz5XoqU2bCT+KuGlJwpAna0+xhInejJHYcGA1/mQG4epM9JRwfXE6pRf5ia9igXPVjKYM2rVh8eUPls2Bn4+zEmWylBZbb81GbJ/TUDa8BKztOLt/0gg1nHeJVdkv0YwAxnGUY2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684492; c=relaxed/simple;
-	bh=uA0Rb6wLROCmO0/p0xhg1w9rQPTGkAODQEU5i2CqtfE=;
+	s=arc-20240116; t=1750684494; c=relaxed/simple;
+	bh=OkKFwvWqt1Ij3hsLJUu6gPSck9FC0H7ahNcMzoBUtJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IT3b8Reup2t8qXu3AwHhk4RJKb9FbMwPiYsvAevwDc5N22ppIqmsFJEHIUn2dCLbr+E8/lt5zO9sCVwiGY+x1OaPgi1Cx++GgdovUVqAr2LccNc937cyjUCQIPO4zci29cZ1MCpmfCSYDoW6vzA/h2jBKqyFkfagptn36ZZHEmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WH+8ILsp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O3GpYntqptpFA/Lf4izGMj/WMfHmkKnoN10ji5VvR4V07MG44g3K+g5wCvr/5EB9/cSxO20nKNMmGmgCQqI/UTD0J9LBky6aZzTE6ITfZCiCm9j38gRJX2KOxa3IVAroFNMSEmJ7Ku9UldDpVfekw05uH+T43XRo8ds3djfRp+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVdGLbx6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WH+8ILsp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2A4C4CEF1;
-	Mon, 23 Jun 2025 13:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVdGLbx6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D118C4CEEA;
+	Mon, 23 Jun 2025 13:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684492;
-	bh=uA0Rb6wLROCmO0/p0xhg1w9rQPTGkAODQEU5i2CqtfE=;
+	s=korg; t=1750684494;
+	bh=OkKFwvWqt1Ij3hsLJUu6gPSck9FC0H7ahNcMzoBUtJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WH+8ILsplhq7519esVvN0zBeOSzMFuUJKloYV3/UiA/Y24VZM81Df6l5bSsw77nYq
-	 yngvmAgsKn6h/i8habTuh5N1QCChrHUt02chfyTQ2NI9Rj84AdzU7Vp4YwuYCajCrG
-	 oCmBfkjNNi/vXPnKnplsv+weilq5/8KbsYRKEEOc=
+	b=KVdGLbx6pcMYTje/6FlInojvgpz0axBFN5GPqlQQXENm0EXsSLNrKMRyORhwhOHRc
+	 zr6ICgTS++O4k3+j26QSVbjPxvqNlZtWt2IohPrs/HBtAKSIStlxTObe56AuVHbQ/e
+	 JAx1ove65E82jtsyNDf2puZZKTiH9PsAHzIPSSio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
 	Ricardo Ribalda <ribalda@chromium.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.15 090/592] media: uvcvideo: Send control events for partial succeeds
-Date: Mon, 23 Jun 2025 15:00:48 +0200
-Message-ID: <20250623130702.421572324@linuxfoundation.org>
+Subject: [PATCH 6.15 091/592] media: uvcvideo: Fix deferred probing error
+Date: Mon, 23 Jun 2025 15:00:49 +0200
+Message-ID: <20250623130702.445710754@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -54,62 +54,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 5c791467aea6277430da5f089b9b6c2a9d8a4af7 upstream.
+commit 387e8939307192d5a852a2afeeb83427fa477151 upstream.
 
-Today, when we are applying a change to entities A, B. If A succeeds and B
-fails the events for A are not sent.
+uvc_gpio_parse() can return -EPROBE_DEFER when the GPIOs it depends on
+have not yet been probed. This return code should be propagated to the
+caller of uvc_probe() to ensure that probing is retried when the required
+GPIOs become available.
 
-This change changes the code so the events for A are send right after
-they happen.
+Currently, this error code is incorrectly converted to -ENODEV,
+causing some internal cameras to be ignored.
 
-Cc: stable@kernel.org
-Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
+This commit fixes this issue by propagating the -EPROBE_DEFER error.
+
+Cc: stable@vger.kernel.org
+Fixes: 2886477ff987 ("media: uvcvideo: Implement UVC_EXT_GPIO_UNIT")
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Message-ID: <20250224-uvc-data-backup-v2-2-de993ed9823b@chromium.org>
+Message-ID: <20250313-uvc-eprobedefer-v3-1-a1d312708eef@chromium.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c |   27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1943,7 +1943,9 @@ static bool uvc_ctrl_xctrls_has_control(
- }
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -2232,13 +2232,16 @@ static int uvc_probe(struct usb_interfac
+ #endif
  
- static void uvc_ctrl_send_events(struct uvc_fh *handle,
--	const struct v4l2_ext_control *xctrls, unsigned int xctrls_count)
-+				 struct uvc_entity *entity,
-+				 const struct v4l2_ext_control *xctrls,
-+				 unsigned int xctrls_count)
- {
- 	struct uvc_control_mapping *mapping;
- 	struct uvc_control *ctrl;
-@@ -1955,6 +1957,9 @@ static void uvc_ctrl_send_events(struct
- 		s32 value;
- 
- 		ctrl = uvc_find_control(handle->chain, xctrls[i].id, &mapping);
-+		if (ctrl->entity != entity)
-+			continue;
-+
- 		if (ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
- 			/* Notification will be sent from an Interrupt event. */
- 			continue;
-@@ -2198,11 +2203,12 @@ int __uvc_ctrl_commit(struct uvc_fh *han
- 					uvc_ctrl_find_ctrl_idx(entity, ctrls,
- 							       err_ctrl);
- 			goto done;
-+		} else if (ret > 0 && !rollback) {
-+			uvc_ctrl_send_events(handle, entity,
-+					     ctrls->controls, ctrls->count);
- 		}
+ 	/* Parse the Video Class control descriptor. */
+-	if (uvc_parse_control(dev) < 0) {
++	ret = uvc_parse_control(dev);
++	if (ret < 0) {
++		ret = -ENODEV;
+ 		uvc_dbg(dev, PROBE, "Unable to parse UVC descriptors\n");
+ 		goto error;
  	}
  
--	if (!rollback)
--		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
- 	ret = 0;
- done:
- 	mutex_unlock(&chain->ctrl_mutex);
+ 	/* Parse the associated GPIOs. */
+-	if (uvc_gpio_parse(dev) < 0) {
++	ret = uvc_gpio_parse(dev);
++	if (ret < 0) {
+ 		uvc_dbg(dev, PROBE, "Unable to parse UVC GPIOs\n");
+ 		goto error;
+ 	}
+@@ -2264,24 +2267,32 @@ static int uvc_probe(struct usb_interfac
+ 	}
+ 
+ 	/* Register the V4L2 device. */
+-	if (v4l2_device_register(&intf->dev, &dev->vdev) < 0)
++	ret = v4l2_device_register(&intf->dev, &dev->vdev);
++	if (ret < 0)
+ 		goto error;
+ 
+ 	/* Scan the device for video chains. */
+-	if (uvc_scan_device(dev) < 0)
++	if (uvc_scan_device(dev) < 0) {
++		ret = -ENODEV;
+ 		goto error;
++	}
+ 
+ 	/* Initialize controls. */
+-	if (uvc_ctrl_init_device(dev) < 0)
++	if (uvc_ctrl_init_device(dev) < 0) {
++		ret = -ENODEV;
+ 		goto error;
++	}
+ 
+ 	/* Register video device nodes. */
+-	if (uvc_register_chains(dev) < 0)
++	if (uvc_register_chains(dev) < 0) {
++		ret = -ENODEV;
+ 		goto error;
++	}
+ 
+ #ifdef CONFIG_MEDIA_CONTROLLER
+ 	/* Register the media device node */
+-	if (media_device_register(&dev->mdev) < 0)
++	ret = media_device_register(&dev->mdev);
++	if (ret < 0)
+ 		goto error;
+ #endif
+ 	/* Save our data pointer in the interface data. */
+@@ -2315,7 +2326,7 @@ static int uvc_probe(struct usb_interfac
+ error:
+ 	uvc_unregister_video(dev);
+ 	kref_put(&dev->ref, uvc_delete);
+-	return -ENODEV;
++	return ret;
+ }
+ 
+ static void uvc_disconnect(struct usb_interface *intf)
 
 
