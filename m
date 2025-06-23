@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E532F24;
-	Mon, 23 Jun 2025 13:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E821F30E84D;
+	Mon, 23 Jun 2025 13:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750685698; cv=none; b=lAi+MJzafWEjQtkWYD6qXvqWuGvoE50kgBznZXwc4div2JZ4XZQ++EvdD1WDSWOCwj44KUvGSdmxU0TlsshhHZEnV318c4ar/hW/Bb8i9pN4C9yOJvEy0bALO4u8AAgikW5D+icLvetwsS3uCjvjE/ZYo24rNaydY8tXcrSmti8=
+	t=1750685701; cv=none; b=gGwkw+guuo2sjdF/y7J+dOZMt4aIRdMFU/upZiSCVBmVk4pUdNe32WAtl8Ac0Nc25Z7IkGe0TshhabDlMFdHfBhFbu75ugVPl+4g3TsgXKyd+4AQTWj36uwVDgSFjxx1NBZ8VgxO4b0LPeFyKSFVsyUK/1WXevkYmxHVteUPlVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750685698; c=relaxed/simple;
-	bh=5h3CFyCvXG7LbFjznuHQ875IQOwr91rqZ5IBuyZaowY=;
+	s=arc-20240116; t=1750685701; c=relaxed/simple;
+	bh=8iIUhNqAAmb+WEZJ8VoG4R9R6U3JT3Yjozyk2UVBqek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dh5STkA0eIpIkULDor5awfR436IKeceq3DzpO3aL6SiBFQje7QsHfr9h0kseVv9F3dXu+sISuiXJ9IGMTfZpAOvciFHp9fZKpjeZvb6+/vfwp6y0L5Oesca51gezjTWVJCpFAF+ZW/1JLS/COKfN5ZuQuR8nnQ3WMnp6rqqpDMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVc4cIxA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s6EYYNfqk0CgpLiSZUd5f6rKWD2NYHjV0TxRi1o93d+vqjMAhTfsGxSdz7OGHIXVCgWKcqGNiLXZGNfSh5ziwijLnK0zFkUVa7Cgr0RabnD13MVK1/7Ae3nxwnXR6JcfqnU40ST/kJ3aoS9wpXgctUEcrZ7qM68nadH7BRZPjfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwc2Eh6k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVc4cIxA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA666C4CEEA;
-	Mon, 23 Jun 2025 13:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwc2Eh6k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC5BC4CEEA;
+	Mon, 23 Jun 2025 13:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750685698;
-	bh=5h3CFyCvXG7LbFjznuHQ875IQOwr91rqZ5IBuyZaowY=;
+	s=korg; t=1750685700;
+	bh=8iIUhNqAAmb+WEZJ8VoG4R9R6U3JT3Yjozyk2UVBqek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KVc4cIxAdk2kXOQVLvV6MNAP5b31b3lTpwjaeW1VRhR/sTl5lyiozRhWOcj/3nn+L
-	 mQw5jd4Ns5zZoUjPep8X4WHGnGUO/8wGf6k1qmVeK33tesBUkXDPgJg9QKuhp+fkia
-	 55F40g7ch7keV/siWbHgqLap8qSXx1d9XqZkb7F4=
+	b=xwc2Eh6klOJyfMq1OomCDIs3blmUp8G2KbNXiD/HIJ/w2CEodKuDKXHTNDKVA7zjz
+	 VK0yZ42x2/lMz/LGtEP5JnAfXBptIcz6gpUVzt8fqvzV8QzUzkH6QaT9tIrinYFQJ6
+	 VXoAwNeqjjOPjLFIIzXSqKiDj6xTF2rBu/Ehz3mU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Gompa <neal@gompa.dev>,
-	Hector Martin <marcan@marcan.st>,
-	James Calligeros <jcalligeros99@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Su Hui <suhui@nfschina.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/508] ASoC: tas2764: Enable main IRQs
-Date: Mon, 23 Jun 2025 15:01:10 +0200
-Message-ID: <20250623130645.868916583@linuxfoundation.org>
+Subject: [PATCH 5.10 069/355] soc: aspeed: lpc: Fix impossible judgment condition
+Date: Mon, 23 Jun 2025 15:04:30 +0200
+Message-ID: <20250623130628.906178453@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit dd50f0e38563f15819059c923bf142200453e003 ]
+[ Upstream commit d9f0a97e859bdcef51f9c187b1eb712eb13fd3ff ]
 
-IRQ handling was added in commit dae191fb957f ("ASoC: tas2764: Add IRQ
-handling") however that same commit masks all interrupts coming from
-the chip. Unmask the "main" interrupts so that we can see and
-deal with a number of errors including clock, voltage, and current.
+smatch error：
+drivers/soc/aspeed/aspeed-lpc-snoop.c:169
+aspeed_lpc_snoop_config_irq() warn: platform_get_irq() does not return zero
 
-Fixes: dae191fb957f ("ASoC: tas2764: Add IRQ handling")
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20250406-apple-codec-changes-v5-4-50a00ec850a3@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+platform_get_irq() return non-zero IRQ number or negative error code,
+change '!lpc_snoop->irq' to 'lpc_snoop->irq < 0' to fix this.
+
+Fixes: 9f4f9ae81d0a ("drivers/misc: add Aspeed LPC snoop driver")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20231027020703.1231875-1-suhui@nfschina.com
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2764.c | 2 +-
+ drivers/soc/aspeed/aspeed-lpc-snoop.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/tas2764.c b/sound/soc/codecs/tas2764.c
-index 10f0f07b90ff2..8baf92abcf000 100644
---- a/sound/soc/codecs/tas2764.c
-+++ b/sound/soc/codecs/tas2764.c
-@@ -542,7 +542,7 @@ static int tas2764_codec_probe(struct snd_soc_component *component)
- 	tas2764_reset(tas2764);
+diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+index 538d7aab8db5c..8a2a22c40ef53 100644
+--- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
++++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+@@ -168,7 +168,7 @@ static int aspeed_lpc_snoop_config_irq(struct aspeed_lpc_snoop *lpc_snoop,
+ 	int rc;
  
- 	if (tas2764->irq) {
--		ret = snd_soc_component_write(tas2764->component, TAS2764_INT_MASK0, 0xff);
-+		ret = snd_soc_component_write(tas2764->component, TAS2764_INT_MASK0, 0x00);
- 		if (ret < 0)
- 			return ret;
+ 	lpc_snoop->irq = platform_get_irq(pdev, 0);
+-	if (!lpc_snoop->irq)
++	if (lpc_snoop->irq < 0)
+ 		return -ENODEV;
  
+ 	rc = devm_request_irq(dev, lpc_snoop->irq,
 -- 
 2.39.5
 
