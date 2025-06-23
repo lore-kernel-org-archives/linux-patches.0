@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C0E4C62;
-	Mon, 23 Jun 2025 21:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49F84C62;
+	Mon, 23 Jun 2025 21:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713575; cv=none; b=osmpynN3rtKD/wPAN2qHVKcthxyFUbA77zPHzuZlfw+7L8Yo6k3Uu0jeXZWB0Iq4eA/NVf3QToYaJ6mwmQMfBcUCvxwhEISH4ANHuPMOr6bd1foluGcWS+BiPwJyZKQT9Sq7vl3OvsY2UXkrPeNwbnbpQmxzmZGZVl5s6IO+Kj0=
+	t=1750713577; cv=none; b=OB0VAbroVt7no/02TZtsasly59mduQTGW1endz3y4pnqoNMc5nY8kmG/CzwEeWJSL6UyRtR5NqiC1uY5QL/ph/2qlloGHYj5xsuLw7mibMaF0TrLkkzfJq/6Rinrb1VL3EFM0VfeTNEK4jswgWaHGXgQkSEbKBuXDIyfka4+qQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713575; c=relaxed/simple;
-	bh=E5ynI7/YTcVqjnsGpkvZwFumYYd3vW02uiAUs9pebyI=;
+	s=arc-20240116; t=1750713577; c=relaxed/simple;
+	bh=jr+CZHssUmiT50RUO5CzMgKAKbt8ioJzy26eMlibNBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNqmmJnJkuHPpvjsKWzloR382lHPFJzAIHYpfQP3AS7Rpqt7RCxRwh9q+ZUpOuoJFNMyyEVcAxLIA42WV3H94VK0OkX6+MVGccb6pTYiyRfLkjDxka6T+HU2ikx0+m4JA8D94A9OApjcLsaGAs+hRVFf+yehY209ZU+igSqTt/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYeLWlLx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pwKF+FWlFUVprJl3Yx1jnvyyuGPhO4MDQChpWvnyECVH+LmMP/aqtzPqcDFLpY08aCUYFmfa57oM+iuomZY2AJq91KpObMZ1P56nNnHY2yiRYeuix03Flp4BBTaFVmzI8ozDqiukiRRUaqulyHKvdu8iBL83BXvTxQV4gLPSgVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ng3INJji; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYeLWlLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9D1C4CEEA;
-	Mon, 23 Jun 2025 21:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ng3INJji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B569C4CEEA;
+	Mon, 23 Jun 2025 21:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713575;
-	bh=E5ynI7/YTcVqjnsGpkvZwFumYYd3vW02uiAUs9pebyI=;
+	s=korg; t=1750713577;
+	bh=jr+CZHssUmiT50RUO5CzMgKAKbt8ioJzy26eMlibNBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYeLWlLx6tAJ1kXeoJOg0R9uz3IAXwp2p3X6qny76qejvofq5RKqvhikyssKo7AMo
-	 7TfgEysOJrQUt1RDmlm0PUbJ+FtXSuOLdpvdlILxt6CqETVSxeYjsz/9qPZxIbtYL6
-	 ih2scXcjHoF0kVntvszjVSQRwClWDz9wd22XhkzI=
+	b=ng3INJji8qfVBCuv6c/Ssj83DInLBTi9WrkbNyxStJRGV6aGVKR7dJwU+zKppHcer
+	 KMC4HK7BJGGzkbjM0xkG4rG91/XT1TrQgsWZjkisdzhPoXi8a7GrWkAzCVyooC+q30
+	 XLerIqvWlveLBhlGp+jotattTe5m0s4zZRjn51fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 335/592] clk: qcom: gcc-x1e80100: Set FORCE MEM CORE for UFS clocks
-Date: Mon, 23 Jun 2025 15:04:53 +0200
-Message-ID: <20250623130708.422102902@linuxfoundation.org>
+	syzbot+9c09fda97a1a65ea859b@syzkaller.appspotmail.com,
+	Yi Yang <yiyang13@huawei.com>,
+	GONG Ruiqi <gongruiqi1@huawei.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.6 078/290] vgacon: Add check for vc_origin address range in vgacon_scroll()
+Date: Mon, 23 Jun 2025 15:05:39 +0200
+Message-ID: <20250623130629.332225361@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-References: <20250623130700.210182694@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +48,188 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: GONG Ruiqi <gongruiqi1@huawei.com>
 
-[ Upstream commit 201bf08ba9e26eeb0a96ba3fd5c026f531b31aed ]
+commit 864f9963ec6b4b76d104d595ba28110b87158003 upstream.
 
-Update the force mem core bit for UFS ICE clock and UFS PHY AXI clock to
-force the core on signal to remain active during halt state of the clk.
-If force mem core bit of the clock is not set, the memories of the
-subsystem will not retain the logic across power states. This is
-required for the MCQ feature of UFS.
+Our in-house Syzkaller reported the following BUG (twice), which we
+believed was the same issue with [1]:
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Reviewed-by: Imran Shaik <quic_imrashai@quicinc.com>
-Link: https://lore.kernel.org/r/20250414-gcc_ufs_mem_core-v1-2-67b5529b9b5d@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+==================================================================
+BUG: KASAN: slab-out-of-bounds in vcs_scr_readw+0xc2/0xd0 drivers/tty/vt/vt.c:4740
+Read of size 2 at addr ffff88800f5bef60 by task syz.7.2620/12393
+...
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x72/0xa0 lib/dump_stack.c:106
+ print_address_description.constprop.0+0x6b/0x3d0 mm/kasan/report.c:364
+ print_report+0xba/0x280 mm/kasan/report.c:475
+ kasan_report+0xa9/0xe0 mm/kasan/report.c:588
+ vcs_scr_readw+0xc2/0xd0 drivers/tty/vt/vt.c:4740
+ vcs_write_buf_noattr drivers/tty/vt/vc_screen.c:493 [inline]
+ vcs_write+0x586/0x840 drivers/tty/vt/vc_screen.c:690
+ vfs_write+0x219/0x960 fs/read_write.c:584
+ ksys_write+0x12e/0x260 fs/read_write.c:639
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x59/0x110 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+ ...
+ </TASK>
+
+Allocated by task 5614:
+ kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ ____kasan_kmalloc mm/kasan/common.c:374 [inline]
+ __kasan_kmalloc+0x8f/0xa0 mm/kasan/common.c:383
+ kasan_kmalloc include/linux/kasan.h:201 [inline]
+ __do_kmalloc_node mm/slab_common.c:1007 [inline]
+ __kmalloc+0x62/0x140 mm/slab_common.c:1020
+ kmalloc include/linux/slab.h:604 [inline]
+ kzalloc include/linux/slab.h:721 [inline]
+ vc_do_resize+0x235/0xf40 drivers/tty/vt/vt.c:1193
+ vgacon_adjust_height+0x2d4/0x350 drivers/video/console/vgacon.c:1007
+ vgacon_font_set+0x1f7/0x240 drivers/video/console/vgacon.c:1031
+ con_font_set drivers/tty/vt/vt.c:4628 [inline]
+ con_font_op+0x4da/0xa20 drivers/tty/vt/vt.c:4675
+ vt_k_ioctl+0xa10/0xb30 drivers/tty/vt/vt_ioctl.c:474
+ vt_ioctl+0x14c/0x1870 drivers/tty/vt/vt_ioctl.c:752
+ tty_ioctl+0x655/0x1510 drivers/tty/tty_io.c:2779
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:871 [inline]
+ __se_sys_ioctl+0x12d/0x190 fs/ioctl.c:857
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x59/0x110 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+
+Last potentially related work creation:
+ kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
+ __kasan_record_aux_stack+0x94/0xa0 mm/kasan/generic.c:492
+ __call_rcu_common.constprop.0+0xc3/0xa10 kernel/rcu/tree.c:2713
+ netlink_release+0x620/0xc20 net/netlink/af_netlink.c:802
+ __sock_release+0xb5/0x270 net/socket.c:663
+ sock_close+0x1e/0x30 net/socket.c:1425
+ __fput+0x408/0xab0 fs/file_table.c:384
+ __fput_sync+0x4c/0x60 fs/file_table.c:465
+ __do_sys_close fs/open.c:1580 [inline]
+ __se_sys_close+0x68/0xd0 fs/open.c:1565
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x59/0x110 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+
+Second to last potentially related work creation:
+ kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
+ __kasan_record_aux_stack+0x94/0xa0 mm/kasan/generic.c:492
+ __call_rcu_common.constprop.0+0xc3/0xa10 kernel/rcu/tree.c:2713
+ netlink_release+0x620/0xc20 net/netlink/af_netlink.c:802
+ __sock_release+0xb5/0x270 net/socket.c:663
+ sock_close+0x1e/0x30 net/socket.c:1425
+ __fput+0x408/0xab0 fs/file_table.c:384
+ task_work_run+0x154/0x240 kernel/task_work.c:239
+ exit_task_work include/linux/task_work.h:45 [inline]
+ do_exit+0x8e5/0x1320 kernel/exit.c:874
+ do_group_exit+0xcd/0x280 kernel/exit.c:1023
+ get_signal+0x1675/0x1850 kernel/signal.c:2905
+ arch_do_signal_or_restart+0x80/0x3b0 arch/x86/kernel/signal.c:310
+ exit_to_user_mode_loop kernel/entry/common.c:111 [inline]
+ exit_to_user_mode_prepare include/linux/entry-common.h:328 [inline]
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
+ syscall_exit_to_user_mode+0x1b3/0x1e0 kernel/entry/common.c:218
+ do_syscall_64+0x66/0x110 arch/x86/entry/common.c:87
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+
+The buggy address belongs to the object at ffff88800f5be000
+ which belongs to the cache kmalloc-2k of size 2048
+The buggy address is located 2656 bytes to the right of
+ allocated 1280-byte region [ffff88800f5be000, ffff88800f5be500)
+
+...
+
+Memory state around the buggy address:
+ ffff88800f5bee00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88800f5bee80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+>ffff88800f5bef00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+                                                       ^
+ ffff88800f5bef80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88800f5bf000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+==================================================================
+
+By analyzing the vmcore, we found that vc->vc_origin was somehow placed
+one line prior to vc->vc_screenbuf when vc was in KD_TEXT mode, and
+further writings to /dev/vcs caused out-of-bounds reads (and writes
+right after) in vcs_write_buf_noattr().
+
+Our further experiments show that in most cases, vc->vc_origin equals to
+vga_vram_base when the console is in KD_TEXT mode, and it's around
+vc->vc_screenbuf for the KD_GRAPHICS mode. But via triggerring a
+TIOCL_SETVESABLANK ioctl beforehand, we can make vc->vc_origin be around
+vc->vc_screenbuf while the console is in KD_TEXT mode, and then by
+writing the special 'ESC M' control sequence to the tty certain times
+(depends on the value of `vc->state.y - vc->vc_top`), we can eventually
+move vc->vc_origin prior to vc->vc_screenbuf. Here's the PoC, tested on
+QEMU:
+
+```
+int main() {
+	const int RI_NUM = 10; // should be greater than `vc->state.y - vc->vc_top`
+	int tty_fd, vcs_fd;
+	const char *tty_path = "/dev/tty0";
+	const char *vcs_path = "/dev/vcs";
+	const char escape_seq[] = "\x1bM";  // ESC + M
+	const char trigger_seq[] = "Let's trigger an OOB write.";
+	struct vt_sizes vt_size = { 70, 2 };
+	int blank = TIOCL_BLANKSCREEN;
+
+	tty_fd = open(tty_path, O_RDWR);
+
+	char vesa_mode[] = { TIOCL_SETVESABLANK, 1 };
+	ioctl(tty_fd, TIOCLINUX, vesa_mode);
+
+	ioctl(tty_fd, TIOCLINUX, &blank);
+	ioctl(tty_fd, VT_RESIZE, &vt_size);
+
+	for (int i = 0; i < RI_NUM; ++i)
+		write(tty_fd, escape_seq, sizeof(escape_seq) - 1);
+
+	vcs_fd = open(vcs_path, O_RDWR);
+	write(vcs_fd, trigger_seq, sizeof(trigger_seq));
+
+	close(vcs_fd);
+	close(tty_fd);
+	return 0;
+}
+```
+
+To solve this problem, add an address range validation check in
+vgacon_scroll(), ensuring vc->vc_origin never precedes vc_screenbuf.
+
+Reported-by: syzbot+9c09fda97a1a65ea859b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9c09fda97a1a65ea859b [1]
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Co-developed-by: Yi Yang <yiyang13@huawei.com>
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Signed-off-by: GONG Ruiqi <gongruiqi1@huawei.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-x1e80100.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/video/console/vgacon.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-x1e80100.c b/drivers/clk/qcom/gcc-x1e80100.c
-index 009f39139b644..3e44757e25d32 100644
---- a/drivers/clk/qcom/gcc-x1e80100.c
-+++ b/drivers/clk/qcom/gcc-x1e80100.c
-@@ -6753,6 +6753,10 @@ static int gcc_x1e80100_probe(struct platform_device *pdev)
- 	/* Clear GDSC_SLEEP_ENA_VOTE to stop votes being auto-removed in sleep. */
- 	regmap_write(regmap, 0x52224, 0x0);
- 
-+	/* FORCE_MEM_CORE_ON for ufs phy ice core and gcc ufs phy axi clocks  */
-+	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_ice_core_clk, true);
-+	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_axi_clk, true);
-+
- 	return qcom_cc_really_probe(&pdev->dev, &gcc_x1e80100_desc, regmap);
- }
- 
--- 
-2.39.5
-
+--- a/drivers/video/console/vgacon.c
++++ b/drivers/video/console/vgacon.c
+@@ -1139,7 +1139,7 @@ static bool vgacon_scroll(struct vc_data
+ 				     c->vc_screenbuf_size - delta);
+ 			c->vc_origin = vga_vram_end - c->vc_screenbuf_size;
+ 			vga_rolled_over = 0;
+-		} else
++		} else if (oldo - delta >= (unsigned long)c->vc_screenbuf)
+ 			c->vc_origin -= delta;
+ 		c->vc_scr_end = c->vc_origin + c->vc_screenbuf_size;
+ 		scr_memsetw((u16 *) (c->vc_origin), c->vc_video_erase_char,
 
 
