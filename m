@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804B025228F;
-	Mon, 23 Jun 2025 13:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE652528FC;
+	Mon, 23 Jun 2025 13:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684353; cv=none; b=kQZyY6R6b07g4GGCcRna3TDJFjHUxLiOBJehRqVgoBSgZMRRmoA38igLVzrtOtUWFR/FshhaW3S2bFy6mZvLAUNDbmtow4ETD+EfOMFmwbsd5FYHLt4lcwFM0Cg9V0llXW0h4W/QgMC/fCVe3EnQ91cV6VpPmlooCqaXehY9uYA=
+	t=1750684356; cv=none; b=bm4QmdYSlSTblTTzIO3NMIKBsleCnDbX975OHmkyLRsafjHEWpt4jpWkE7ZHAQ9KeC4anzFgnyh+YO5482mpqldY511V+bazI50ngoFgdFYEHVwb7MPYPAZuu6UopZ04jFkneI9JnIDyzGNFQzFqs2rl53evFyfW9LWpvpbQgPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684353; c=relaxed/simple;
-	bh=Zxv7U0YdTzqbCS7qCUcym+79sE7pgQO/Mfhf+KpRgqU=;
+	s=arc-20240116; t=1750684356; c=relaxed/simple;
+	bh=k5L1B9bl/FQ1lKv208MKi/qysjki2bwCfzaIsyQUF3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWcYoeCiKSmglK7FfDYE9dmjkdmfD8tF5883uwsD1ITCdIOxqOSNYYk/4MfhJOKyDatmR3u5uJ1BreyHdHL2N3XtmwJG+vEi6RZ2dfGoNEp3UIrahyQ68jTxQMAX0edVzDhLLiyc0KBF0RADvxep8bwGmq0XQ3hEc5tpzXo7hJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aakoMcS7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lnQ9xsmBV1vWZpSB5weaShHMrQ/vGJW6KYl1Dg0vl0RaTGxRjGQGZ5bE1RdjJsJSD9/vFYj8Ku4PqDrlbK1gQwY/hCnIdX0GAEUnWqagWuhSY9AGPOfpShwPkvUeEj0Ip1ajIv6sUm5qLTDOQ2iKRgd+2jpd/MuC2Qxm/zDzdpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2wh/gbp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aakoMcS7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F17C4CEF0;
-	Mon, 23 Jun 2025 13:12:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2wh/gbp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1588C4CEEA;
+	Mon, 23 Jun 2025 13:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684353;
-	bh=Zxv7U0YdTzqbCS7qCUcym+79sE7pgQO/Mfhf+KpRgqU=;
+	s=korg; t=1750684356;
+	bh=k5L1B9bl/FQ1lKv208MKi/qysjki2bwCfzaIsyQUF3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aakoMcS7piINqVvazEVl+maN+R89clZD4xkdk/sl0rvJSQWoO5ttnVOPb04JBp+fb
-	 VeooxHKKKUhgLBvZPE/SPzVgTQkKXBOyKBVlglxnYefVS8v5wOl51Q9o0nGOK1xZD/
-	 B0KRh6+ayddSZHRaYuoiHG33TT9kX313HGeaSR3g=
+	b=x2wh/gbpXCPsoYNDQGG+YJK2kvV/ezREftZs751WIA4iltfLUb4emeC6e5++vLZiY
+	 oOikSiikB450lvm8sakZ6iTcajmTvutD+mWdSBIniAFLkmZrg5Oddw9g8L6mTCzEeL
+	 j8Se0QPeMCR1o7AjRC7VX5dYRCemrcVBdTTKN3GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.15 037/592] wifi: rtw88: usb: Upload the firmware in bigger chunks
-Date: Mon, 23 Jun 2025 14:59:55 +0200
-Message-ID: <20250623130701.128769459@linuxfoundation.org>
+	Miaoqing Pan <quic_miaoqing@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Steev Klimaszewski <steev@kali.org>,
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+	Clayton Craft <clayton@craftyguy.net>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.15 038/592] wifi: ath11k: fix ring-buffer corruption
+Date: Mon, 23 Jun 2025 14:59:56 +0200
+Message-ID: <20250623130701.150282683@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -50,219 +54,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 80fe0bc1659c0ccc79d082e426fa376be5df9c04 upstream.
+commit 6d037a372f817e9fcb56482f37917545596bd776 upstream.
 
-RTL8811AU stops responding during the firmware download on some systems:
+Users of the Lenovo ThinkPad X13s have reported that Wi-Fi sometimes
+breaks and the log fills up with errors like:
 
-[  809.256440] rtw_8821au 5-2.1:1.0: Firmware version 42.4.0, H2C version 0
-[  812.759142] rtw_8821au 5-2.1:1.0 wlp48s0f4u2u1: renamed from wlan0
-[  837.315388] rtw_8821au 1-4:1.0: write register 0x1ef4 failed with -110
-[  867.524259] rtw_8821au 1-4:1.0: write register 0x1ef8 failed with -110
-[  868.930976] rtw_8821au 5-2.1:1.0 wlp48s0f4u2u1: entered promiscuous mode
-[  897.730952] rtw_8821au 1-4:1.0: write register 0x1efc failed with -110
+    ath11k_pci 0006:01:00.0: HTC Rx: insufficient length, got 1484, expected 1492
+    ath11k_pci 0006:01:00.0: HTC Rx: insufficient length, got 1460, expected 1484
 
-Maybe it takes too long when writing the firmware 4 bytes at a time.
+which based on a quick look at the driver seemed to indicate some kind
+of ring-buffer corruption.
 
-Write 196 bytes at a time for RTL8821AU, RTL8811AU, and RTL8812AU,
-and 254 bytes at a time for RTL8723DU. These are the sizes used in
-their official drivers. Tested with all these chips.
+Miaoqing Pan tracked it down to the host seeing the updated destination
+ring head pointer before the updated descriptor, and the error handling
+for that in turn leaves the ring buffer in an inconsistent state.
 
-Cc: stable@vger.kernel.org
-Link: https://github.com/lwfinger/rtw88/issues/344
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/43f1daad-3ec0-4a3b-a50c-9cd9eb2c2f52@gmail.com
+Add the missing memory barrier to make sure that the descriptor is read
+after the head pointer to address the root cause of the corruption while
+fixing up the error handling in case there are ever any (ordering) bugs
+on the device side.
+
+Note that the READ_ONCE() are only needed to avoid compiler mischief in
+case the ring-buffer helpers are ever inlined.
+
+Tested-on: WCN6855 hw2.1 WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218623
+Link: https://lore.kernel.org/20250310010217.3845141-3-quic_miaoqing@quicinc.com
+Cc: Miaoqing Pan <quic_miaoqing@quicinc.com>
+Cc: stable@vger.kernel.org	# 5.6
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Tested-by: Clayton Craft <clayton@craftyguy.net>
+Link: https://patch.msgid.link/20250321094916.19098-1-johan+linaro@kernel.org
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/hci.h  |    8 ++++
- drivers/net/wireless/realtek/rtw88/mac.c  |   11 +++---
- drivers/net/wireless/realtek/rtw88/mac.h  |    2 +
- drivers/net/wireless/realtek/rtw88/pci.c  |    2 +
- drivers/net/wireless/realtek/rtw88/sdio.c |    2 +
- drivers/net/wireless/realtek/rtw88/usb.c  |   55 ++++++++++++++++++++++++++++++
- 6 files changed, 76 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath11k/ce.c  |   11 +++++------
+ drivers/net/wireless/ath/ath11k/hal.c |    4 ++--
+ 2 files changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw88/hci.h
-+++ b/drivers/net/wireless/realtek/rtw88/hci.h
-@@ -19,6 +19,8 @@ struct rtw_hci_ops {
- 	void (*link_ps)(struct rtw_dev *rtwdev, bool enter);
- 	void (*interface_cfg)(struct rtw_dev *rtwdev);
- 	void (*dynamic_rx_agg)(struct rtw_dev *rtwdev, bool enable);
-+	void (*write_firmware_page)(struct rtw_dev *rtwdev, u32 page,
-+				    const u8 *data, u32 size);
- 
- 	int (*write_data_rsvd_page)(struct rtw_dev *rtwdev, u8 *buf, u32 size);
- 	int (*write_data_h2c)(struct rtw_dev *rtwdev, u8 *buf, u32 size);
-@@ -79,6 +81,12 @@ static inline void rtw_hci_dynamic_rx_ag
- 		rtwdev->hci.ops->dynamic_rx_agg(rtwdev, enable);
- }
- 
-+static inline void rtw_hci_write_firmware_page(struct rtw_dev *rtwdev, u32 page,
-+					       const u8 *data, u32 size)
-+{
-+	rtwdev->hci.ops->write_firmware_page(rtwdev, page, data, size);
-+}
-+
- static inline int
- rtw_hci_write_data_rsvd_page(struct rtw_dev *rtwdev, u8 *buf, u32 size)
- {
---- a/drivers/net/wireless/realtek/rtw88/mac.c
-+++ b/drivers/net/wireless/realtek/rtw88/mac.c
-@@ -856,8 +856,8 @@ fwdl_ready:
+--- a/drivers/net/wireless/ath/ath11k/ce.c
++++ b/drivers/net/wireless/ath/ath11k/ce.c
+@@ -393,11 +393,10 @@ static int ath11k_ce_completed_recv_next
+ 		goto err;
  	}
- }
  
--static void
--write_firmware_page(struct rtw_dev *rtwdev, u32 page, const u8 *data, u32 size)
-+void rtw_write_firmware_page(struct rtw_dev *rtwdev, u32 page,
-+			     const u8 *data, u32 size)
- {
- 	u32 val32;
- 	u32 block_nr;
-@@ -887,6 +887,7 @@ write_firmware_page(struct rtw_dev *rtwd
- 		rtw_write32(rtwdev, write_addr, le32_to_cpu(remain_data));
- 	}
- }
-+EXPORT_SYMBOL(rtw_write_firmware_page);
++	/* Make sure descriptor is read after the head pointer. */
++	dma_rmb();
++
+ 	*nbytes = ath11k_hal_ce_dst_status_get_length(desc);
+-	if (*nbytes == 0) {
+-		ret = -EIO;
+-		goto err;
+-	}
  
- static int
- download_firmware_legacy(struct rtw_dev *rtwdev, const u8 *data, u32 size)
-@@ -904,11 +905,13 @@ download_firmware_legacy(struct rtw_dev
- 	rtw_write8_set(rtwdev, REG_MCUFW_CTRL, BIT_FWDL_CHK_RPT);
+ 	*skb = pipe->dest_ring->skb[sw_index];
+ 	pipe->dest_ring->skb[sw_index] = NULL;
+@@ -430,8 +429,8 @@ static void ath11k_ce_recv_process_cb(st
+ 		dma_unmap_single(ab->dev, ATH11K_SKB_RXCB(skb)->paddr,
+ 				 max_nbytes, DMA_FROM_DEVICE);
  
- 	for (page = 0; page < total_page; page++) {
--		write_firmware_page(rtwdev, page, data, DLFW_PAGE_SIZE_LEGACY);
-+		rtw_hci_write_firmware_page(rtwdev, page, data,
-+					    DLFW_PAGE_SIZE_LEGACY);
- 		data += DLFW_PAGE_SIZE_LEGACY;
- 	}
- 	if (last_page_size)
--		write_firmware_page(rtwdev, page, data, last_page_size);
-+		rtw_hci_write_firmware_page(rtwdev, page, data,
-+					    last_page_size);
+-		if (unlikely(max_nbytes < nbytes)) {
+-			ath11k_warn(ab, "rxed more than expected (nbytes %d, max %d)",
++		if (unlikely(max_nbytes < nbytes || nbytes == 0)) {
++			ath11k_warn(ab, "unexpected rx length (nbytes %d, max %d)",
+ 				    nbytes, max_nbytes);
+ 			dev_kfree_skb_any(skb);
+ 			continue;
+--- a/drivers/net/wireless/ath/ath11k/hal.c
++++ b/drivers/net/wireless/ath/ath11k/hal.c
+@@ -599,7 +599,7 @@ u32 ath11k_hal_ce_dst_status_get_length(
+ 	struct hal_ce_srng_dst_status_desc *desc = buf;
+ 	u32 len;
  
- 	if (!check_hw_ready(rtwdev, REG_MCUFW_CTRL, BIT_FWDL_CHK_RPT, 1)) {
- 		rtw_err(rtwdev, "failed to check download firmware report\n");
---- a/drivers/net/wireless/realtek/rtw88/mac.h
-+++ b/drivers/net/wireless/realtek/rtw88/mac.h
-@@ -34,6 +34,8 @@ int rtw_pwr_seq_parser(struct rtw_dev *r
- 		       const struct rtw_pwr_seq_cmd * const *cmd_seq);
- int rtw_mac_power_on(struct rtw_dev *rtwdev);
- void rtw_mac_power_off(struct rtw_dev *rtwdev);
-+void rtw_write_firmware_page(struct rtw_dev *rtwdev, u32 page,
-+			     const u8 *data, u32 size);
- int rtw_download_firmware(struct rtw_dev *rtwdev, struct rtw_fw_state *fw);
- int rtw_mac_init(struct rtw_dev *rtwdev);
- void rtw_mac_flush_queues(struct rtw_dev *rtwdev, u32 queues, bool drop);
---- a/drivers/net/wireless/realtek/rtw88/pci.c
-+++ b/drivers/net/wireless/realtek/rtw88/pci.c
-@@ -12,6 +12,7 @@
- #include "fw.h"
- #include "ps.h"
- #include "debug.h"
-+#include "mac.h"
+-	len = FIELD_GET(HAL_CE_DST_STATUS_DESC_FLAGS_LEN, desc->flags);
++	len = FIELD_GET(HAL_CE_DST_STATUS_DESC_FLAGS_LEN, READ_ONCE(desc->flags));
+ 	desc->flags &= ~HAL_CE_DST_STATUS_DESC_FLAGS_LEN;
  
- static bool rtw_disable_msi;
- static bool rtw_pci_disable_aspm;
-@@ -1602,6 +1603,7 @@ static const struct rtw_hci_ops rtw_pci_
- 	.link_ps = rtw_pci_link_ps,
- 	.interface_cfg = rtw_pci_interface_cfg,
- 	.dynamic_rx_agg = NULL,
-+	.write_firmware_page = rtw_write_firmware_page,
+ 	return len;
+@@ -829,7 +829,7 @@ void ath11k_hal_srng_access_begin(struct
+ 		srng->u.src_ring.cached_tp =
+ 			*(volatile u32 *)srng->u.src_ring.tp_addr;
+ 	} else {
+-		srng->u.dst_ring.cached_hp = *srng->u.dst_ring.hp_addr;
++		srng->u.dst_ring.cached_hp = READ_ONCE(*srng->u.dst_ring.hp_addr);
  
- 	.read8 = rtw_pci_read8,
- 	.read16 = rtw_pci_read16,
---- a/drivers/net/wireless/realtek/rtw88/sdio.c
-+++ b/drivers/net/wireless/realtek/rtw88/sdio.c
-@@ -10,6 +10,7 @@
- #include <linux/mmc/host.h>
- #include <linux/mmc/sdio_func.h>
- #include "main.h"
-+#include "mac.h"
- #include "debug.h"
- #include "fw.h"
- #include "ps.h"
-@@ -1154,6 +1155,7 @@ static const struct rtw_hci_ops rtw_sdio
- 	.link_ps = rtw_sdio_link_ps,
- 	.interface_cfg = rtw_sdio_interface_cfg,
- 	.dynamic_rx_agg = NULL,
-+	.write_firmware_page = rtw_write_firmware_page,
- 
- 	.read8 = rtw_sdio_read8,
- 	.read16 = rtw_sdio_read16,
---- a/drivers/net/wireless/realtek/rtw88/usb.c
-+++ b/drivers/net/wireless/realtek/rtw88/usb.c
-@@ -165,6 +165,60 @@ static void rtw_usb_write32(struct rtw_d
- 	rtw_usb_write(rtwdev, addr, val, 4);
- }
- 
-+static void rtw_usb_write_firmware_page(struct rtw_dev *rtwdev, u32 page,
-+					const u8 *data, u32 size)
-+{
-+	struct rtw_usb *rtwusb = rtw_get_usb_priv(rtwdev);
-+	struct usb_device *udev = rtwusb->udev;
-+	u32 addr = FW_START_ADDR_LEGACY;
-+	u8 *data_dup, *buf;
-+	u32 n, block_size;
-+	int ret;
-+
-+	switch (rtwdev->chip->id) {
-+	case RTW_CHIP_TYPE_8723D:
-+		block_size = 254;
-+		break;
-+	default:
-+		block_size = 196;
-+		break;
-+	}
-+
-+	data_dup = kmemdup(data, size, GFP_KERNEL);
-+	if (!data_dup)
-+		return;
-+
-+	buf = data_dup;
-+
-+	rtw_write32_mask(rtwdev, REG_MCUFW_CTRL, BIT_ROM_PGE, page);
-+
-+	while (size > 0) {
-+		if (size >= block_size)
-+			n = block_size;
-+		else if (size >= 8)
-+			n = 8;
-+		else
-+			n = 1;
-+
-+		ret = usb_control_msg(udev, usb_sndctrlpipe(udev, 0),
-+				      RTW_USB_CMD_REQ, RTW_USB_CMD_WRITE,
-+				      addr, 0, buf, n, 500);
-+		if (ret != n) {
-+			if (ret != -ENODEV)
-+				rtw_err(rtwdev,
-+					"write 0x%x len %d failed: %d\n",
-+					addr, n, ret);
-+			break;
-+		}
-+
-+		addr += n;
-+		buf += n;
-+		size -= n;
-+	}
-+
-+	kfree(data_dup);
-+}
-+
- static int dma_mapping_to_ep(enum rtw_dma_mapping dma_mapping)
- {
- 	switch (dma_mapping) {
-@@ -891,6 +945,7 @@ static const struct rtw_hci_ops rtw_usb_
- 	.link_ps = rtw_usb_link_ps,
- 	.interface_cfg = rtw_usb_interface_cfg,
- 	.dynamic_rx_agg = rtw_usb_dynamic_rx_agg,
-+	.write_firmware_page = rtw_usb_write_firmware_page,
- 
- 	.write8  = rtw_usb_write8,
- 	.write16 = rtw_usb_write16,
+ 		/* Try to prefetch the next descriptor in the ring */
+ 		if (srng->flags & HAL_SRNG_FLAGS_CACHED)
 
 
