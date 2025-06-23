@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2364F1E51FA;
-	Mon, 23 Jun 2025 21:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F8D1E521E;
+	Mon, 23 Jun 2025 21:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750714011; cv=none; b=GZik8uV3wrMG/ivj4B1b+eP1obj9lQbBP5eJ0jYqYiuxNuvpGXpJpHewVXCujLcDkfiWmiA44z3DvlqJTL4o0cDp9gdT83wKhtVxDZJ/zES1IZOJrB5WPDQpqN304OkGixnQdcyeBKeAPXCcBrUFODyvdPvZ6woFXw1S4BRvYls=
+	t=1750714013; cv=none; b=GPG5ReB9KRs+siWpVSLA1FQd+/jFlzHtzt9IYgJqzuvOFnSqRGVndNMAUoat1Xh/tyhbt5NhPHvjswNJYp+mncMKUyB/Pt+YorIGoB9UwkuWf76TECTZq0xKgnef0jE90MLgBacVzJKswboNlxlxhFZAH575Du9xOg85joFX+Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750714011; c=relaxed/simple;
-	bh=ExKvlXsFYSNzImVJQwaBpTtiCVzbNJzZRMWf9OV2ylQ=;
+	s=arc-20240116; t=1750714013; c=relaxed/simple;
+	bh=xRHKnhPpmsiOP7FL1IP+XJSt8nf7MQIVR4Vlx25N6z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDUlG4KRQUsDBY7xw4MI3Wobjc6L4Qhgr+fdfWmC4QGH7mdajlIyfK4v1vXQKrsqtXZubFZaETVTvrt1qNRxeSL+LJccNeqHmP69aKYiFEA/C9TxRu2jT8d5inK+hs1fqeKEo/9oNkovgoNc/1wpBjh27P4179owjlvEN18VlQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhOrdwlR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hv54yIgk4f7X3Bwy0Q8V6HLw4zeaekfuNYxDhH3fq1gBs8haROnHUadgxbCUJfWJgqjkCodiUxx5wzAZ+A4YctgJN+DKqIA7ja4Alxdw0ohbBeXNQlgK8xyEizdlCp2n7OO9sMB+SqPq8eFtyyPVxKX00E75/IfRh+ed+aZCjCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAjr5YKU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhOrdwlR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16ECC4CEEA;
-	Mon, 23 Jun 2025 21:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAjr5YKU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC82C4CEEA;
+	Mon, 23 Jun 2025 21:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750714011;
-	bh=ExKvlXsFYSNzImVJQwaBpTtiCVzbNJzZRMWf9OV2ylQ=;
+	s=korg; t=1750714013;
+	bh=xRHKnhPpmsiOP7FL1IP+XJSt8nf7MQIVR4Vlx25N6z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LhOrdwlRF08HkUxN4Krnal8dmCJ07OGqgjbAhijlPB+FRkaVfRUqRPEeQN+ssDyOb
-	 koz9q9t+wMzAXPDFOI7takaNUT0Mq5Sk7zkA2PAmFm7MxzV9dvJnGadkvrMnljJtS9
-	 zbb/3YR4vHRT8jxjUN+l/oB8c/3GX8xgQUm2cljk=
+	b=PAjr5YKUSXnGsVwxB3JuWDWEfNj13Py4U8a7vjKKxPZUuRRy4thmvQeBmPzoGNqha
+	 s4zwJefkDRpX7tlfoUxVTqVHXJF7P9rEgTwpA9/d36Zr+FQLAQMjvW0/m/mYIRqsPF
+	 1QOn76eo3WznbOP2/Aunyv+GJfw365cApwj1GKWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baisheng Gao <baisheng.gao@unisoc.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 221/222] perf: Fix sample vs do_exit()
-Date: Mon, 23 Jun 2025 15:09:16 +0200
-Message-ID: <20250623130618.944346736@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.6 108/290] PCI: cadence-ep: Correct PBA offset in .set_msix() callback
+Date: Mon, 23 Jun 2025 15:06:09 +0200
+Message-ID: <20250623130630.202103870@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,106 +49,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 4f6fc782128355931527cefe3eb45338abd8ab39 ]
+commit c8bcb01352a86bc5592403904109c22b66bd916e upstream.
 
-Baisheng Gao reported an ARM64 crash, which Mark decoded as being a
-synchronous external abort -- most likely due to trying to access
-MMIO in bad ways.
+While cdns_pcie_ep_set_msix() writes the Table Size field correctly (N-1),
+the calculation of the PBA offset is wrong because it calculates space for
+(N-1) entries instead of N.
 
-The crash further shows perf trying to do a user stack sample while in
-exit_mmap()'s tlb_finish_mmu() -- i.e. while tearing down the address
-space it is trying to access.
+This results in the following QEMU error when using PCI passthrough on a
+device which relies on the PCI endpoint subsystem:
 
-It turns out that we stop perf after we tear down the userspace mm; a
-receipie for disaster, since perf likes to access userspace for
-various reasons.
+  failed to add PCI capability 0x11[0x50]@0xb0: table & pba overlap, or they don't fit in BARs, or don't align
 
-Flip this order by moving up where we stop perf in do_exit().
+Fix the calculation of PBA offset in the MSI-X capability.
 
-Additionally, harden PERF_SAMPLE_CALLCHAIN and PERF_SAMPLE_STACK_USER
-to abort when the current task does not have an mm (exit_mm() makes
-sure to set current->mm = NULL; before commencing with the actual
-teardown). Such that CPU wide events don't trip on this same problem.
+[bhelgaas: more specific subject and commit log]
 
-Fixes: c5ebcedb566e ("perf: Add ability to attach user stack dump to sample")
-Reported-by: Baisheng Gao <baisheng.gao@unisoc.com>
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250605110815.GQ39944@noisy.programming.kicks-ass.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3ef5d16f50f8 ("PCI: cadence: Add MSI-X support to Endpoint driver")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250514074313.283156-10-cassel@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |  7 +++++++
- kernel/exit.c        | 17 +++++++++--------
- 2 files changed, 16 insertions(+), 8 deletions(-)
+ drivers/pci/controller/cadence/pcie-cadence-ep.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 7b97be4ed9d00..ecae7c7f895b9 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6219,6 +6219,10 @@ perf_sample_ustack_size(u16 stack_size, u16 header_size,
- 	if (!regs)
- 		return 0;
+--- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+@@ -294,13 +294,14 @@ static int cdns_pcie_ep_set_msix(struct
+ 	struct cdns_pcie *pcie = &ep->pcie;
+ 	u32 cap = CDNS_PCIE_EP_FUNC_MSIX_CAP_OFFSET;
+ 	u32 val, reg;
++	u16 actual_interrupts = interrupts + 1;
  
-+	/* No mm, no stack, no dump. */
-+	if (!current->mm)
-+		return 0;
-+
- 	/*
- 	 * Check if we fit in with the requested stack size into the:
- 	 * - TASK_SIZE
-@@ -6687,6 +6691,9 @@ perf_callchain(struct perf_event *event, struct pt_regs *regs)
- 	const u32 max_stack = event->attr.sample_max_stack;
- 	struct perf_callchain_entry *callchain;
+ 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
  
-+	if (!current->mm)
-+		user = false;
-+
- 	if (!kernel && !user)
- 		return &__empty_callchain;
+ 	reg = cap + PCI_MSIX_FLAGS;
+ 	val = cdns_pcie_ep_fn_readw(pcie, fn, reg);
+ 	val &= ~PCI_MSIX_FLAGS_QSIZE;
+-	val |= interrupts;
++	val |= interrupts; /* 0's based value */
+ 	cdns_pcie_ep_fn_writew(pcie, fn, reg, val);
  
-diff --git a/kernel/exit.c b/kernel/exit.c
-index 56d3a099825fb..8cb4a82c4ed3a 100644
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -844,6 +844,15 @@ void __noreturn do_exit(long code)
- 	tsk->exit_code = code;
- 	taskstats_exit(tsk, group_dead);
+ 	/* Set MSIX BAR and offset */
+@@ -310,7 +311,7 @@ static int cdns_pcie_ep_set_msix(struct
  
-+	/*
-+	 * Since sampling can touch ->mm, make sure to stop everything before we
-+	 * tear it down.
-+	 *
-+	 * Also flushes inherited counters to the parent - before the parent
-+	 * gets woken up by child-exit notifications.
-+	 */
-+	perf_event_exit_task(tsk);
-+
- 	exit_mm();
+ 	/* Set PBA BAR and offset.  BAR must match MSIX BAR */
+ 	reg = cap + PCI_MSIX_PBA;
+-	val = (offset + (interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
++	val = (offset + (actual_interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
+ 	cdns_pcie_ep_fn_writel(pcie, fn, reg, val);
  
- 	if (group_dead)
-@@ -861,14 +870,6 @@ void __noreturn do_exit(long code)
- 	exit_thread(tsk);
- 	exit_umh(tsk);
- 
--	/*
--	 * Flush inherited counters to the parent - before the parent
--	 * gets woken up by child-exit notifications.
--	 *
--	 * because of cgroup mode, must be called before cgroup_exit()
--	 */
--	perf_event_exit_task(tsk);
--
- 	sched_autogroup_exit_task(tsk);
- 	cgroup_exit(tsk);
- 
--- 
-2.39.5
-
+ 	return 0;
 
 
