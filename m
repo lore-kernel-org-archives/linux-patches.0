@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFFB16D9BF;
-	Mon, 23 Jun 2025 22:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A02223DE5;
+	Mon, 23 Jun 2025 22:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717256; cv=none; b=XOZAubhy7AmztzlSyO83zDZs0R7F1tl8x2HVR0cIX/ixWqD6ubS/OAReKJyAnXhOlkCCb6lxVxf+IsC2KzkEIlDRN/G/lP8ghBqRRg/ADPD9XeHc+HbK/i/39rFpKE1HY1P0gmG1tLnokwM4NuTU0nmtEoQUeMAFgfquzXRCIW4=
+	t=1750717260; cv=none; b=EpbPGmyMDK3aR3Crj19bW6Ci02sfpZ0KNzrfmJjIjd6ycQPnZxrobzq6Z0qbfqCc6nUtrMyH5RfS6EdkuwjG+umlB9rPiAp7F/Qy4jwH9/o4PKKNK3pnOvIqED/d6Pt1gktyMr+6i5oQlEg5ZrKvUzHZxat0SeD86i7lcvnYg/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717256; c=relaxed/simple;
-	bh=pwUeHaqXp/WK1+7pBVT8ftbl9qGTKj8gcGJJCxBFlVU=;
+	s=arc-20240116; t=1750717260; c=relaxed/simple;
+	bh=n+cxmYOem1GpMVs9z6o4jZZifLHKojEG4jyjCp7wgE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ovb0UwGL//SkM9SAFZXu0NhSoat6HtkNoPDYPnvmdW+0BkV+aRgwtfhhLivOGDsx5qpN9KySUL67qvZLXeJyYvaA6MtAQZWM+8zql4knd8X3gB9xom+KLas+WS+e0kmxs0NRkFYO8sxLdRaLmFhxhg8mHi8ZPz8NPjCyFOLNvjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwioGi1/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qk2zFPf20alPThj3djhikGsNC/kQS6jae3ySD9GmMWJlhNinZ2FtHGxyeQ/Th4Vqsp453QMBQaFT61FWuJUDQZ/26GHFCiDd5AgYulmXBUgfZtgb0tJVSKrhuj+SeUDaax9gtYud8vIIEFCjAcGfKULURpV6Cagr/peFJyWWlSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHBoWzHP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwioGi1/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8C0C4CEED;
-	Mon, 23 Jun 2025 22:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHBoWzHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED12C4CEEF;
+	Mon, 23 Jun 2025 22:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750717255;
-	bh=pwUeHaqXp/WK1+7pBVT8ftbl9qGTKj8gcGJJCxBFlVU=;
+	s=korg; t=1750717260;
+	bh=n+cxmYOem1GpMVs9z6o4jZZifLHKojEG4jyjCp7wgE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PwioGi1/E0nqwT1E5T+IYhrZZigp1ZfpiCySqCrEKWn6TJ1Wg9E99XVquFVZ2SOtr
-	 JjyeF1VkrMd5NAuJKSkpXjrkc6R3blyys/RCcCAiO7drFoKqNNsdyWOby3DXyZ+zF0
-	 vJ83E7iO5r6GXQt1wdOi1KLZy9mSs8yjQ7Rt6Kxk=
+	b=xHBoWzHPENuD2W5Gm9YQB+JzYptfKtyc+HLaHqGyf4MvguxmWl29oSMMvQe2dYgzj
+	 RISiNs9A8pXwtCxqHyQsOJ3hCiUMLXGD/m3dUVx47g7FKNLz46dEE4SXBGIsVlJm/J
+	 l69b3uFCz0kDUcSNfq8YoN+oGBShJHm6Tg1dI8Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 390/508] bpf: Check rcu_read_lock_trace_held() in bpf_map_lookup_percpu_elem()
-Date: Mon, 23 Jun 2025 15:07:15 +0200
-Message-ID: <20250623130654.873705692@linuxfoundation.org>
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Rae Moar <rmoar@google.com>,
+	=?UTF-8?q?Sergio=20Gonz=C3=A1lez=20Collado?= <sergio.collado@gmail.com>,
+	David Gow <davidgow@google.com>,
+	Shuah Khan <shuah@kernel.org>
+Subject: [PATCH 6.12 348/414] Kunit to check the longest symbol length
+Date: Mon, 23 Jun 2025 15:08:05 +0200
+Message-ID: <20250623130650.675018372@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130645.255320792@linuxfoundation.org>
-References: <20250623130645.255320792@linuxfoundation.org>
+In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
+References: <20250623130642.015559452@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,49 +48,186 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Sergio González Collado <sergio.collado@gmail.com>
 
-[ Upstream commit d4965578267e2e81f67c86e2608481e77e9c8569 ]
+commit c104c16073b7fdb3e4eae18f66f4009f6b073d6f upstream.
 
-bpf_map_lookup_percpu_elem() helper is also available for sleepable bpf
-program. When BPF JIT is disabled or under 32-bit host,
-bpf_map_lookup_percpu_elem() will not be inlined. Using it in a
-sleepable bpf program will trigger the warning in
-bpf_map_lookup_percpu_elem(), because the bpf program only holds
-rcu_read_lock_trace lock. Therefore, add the missed check.
+The longest length of a symbol (KSYM_NAME_LEN) was increased to 512
+in the reference [1]. This patch adds kunit test suite to check the longest
+symbol length. These tests verify that the longest symbol length defined
+is supported.
 
-Reported-by: syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/000000000000176a130617420310@google.com/
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20250526062534.1105938-1-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This test can also help other efforts for longer symbol length,
+like [2].
+
+The test suite defines one symbol with the longest possible length.
+
+The first test verify that functions with names of the created
+symbol, can be called or not.
+
+The second test, verify that the symbols are created (or
+not) in the kernel symbol table.
+
+[1] https://lore.kernel.org/lkml/20220802015052.10452-6-ojeda@kernel.org/
+[2] https://lore.kernel.org/lkml/20240605032120.3179157-1-song@kernel.org/
+
+Link: https://lore.kernel.org/r/20250302221518.76874-1-sergio.collado@gmail.com
+Tested-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Reviewed-by: Rae Moar <rmoar@google.com>
+Signed-off-by: Sergio González Collado <sergio.collado@gmail.com>
+Link: https://github.com/Rust-for-Linux/linux/issues/504
+Reviewed-by: Rae Moar <rmoar@google.com>
+Acked-by: David Gow <davidgow@google.com>
+Signed-off-by: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/helpers.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/tools/insn_decoder_test.c |    3 -
+ lib/Kconfig.debug                  |    9 ++++
+ lib/Makefile                       |    2 
+ lib/longest_symbol_kunit.c         |   82 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 95 insertions(+), 1 deletion(-)
+ create mode 100644 lib/longest_symbol_kunit.c
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 4fef0a0155255..94e85d311641b 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -125,7 +125,8 @@ const struct bpf_func_proto bpf_map_peek_elem_proto = {
+--- a/arch/x86/tools/insn_decoder_test.c
++++ b/arch/x86/tools/insn_decoder_test.c
+@@ -10,6 +10,7 @@
+ #include <assert.h>
+ #include <unistd.h>
+ #include <stdarg.h>
++#include <linux/kallsyms.h>
  
- BPF_CALL_3(bpf_map_lookup_percpu_elem, struct bpf_map *, map, void *, key, u32, cpu)
- {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
-+		     !rcu_read_lock_bh_held());
- 	return (unsigned long) map->ops->map_lookup_percpu_elem(map, key, cpu);
+ #define unlikely(cond) (cond)
+ 
+@@ -106,7 +107,7 @@ static void parse_args(int argc, char **
+ 	}
  }
  
--- 
-2.39.5
-
+-#define BUFSIZE 256
++#define BUFSIZE (256 + KSYM_NAME_LEN)
+ 
+ int main(int argc, char **argv)
+ {
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -2807,6 +2807,15 @@ config FORTIFY_KUNIT_TEST
+ 	  by the str*() and mem*() family of functions. For testing runtime
+ 	  traps of FORTIFY_SOURCE, see LKDTM's "FORTIFY_*" tests.
+ 
++config LONGEST_SYM_KUNIT_TEST
++	tristate "Test the longest symbol possible" if !KUNIT_ALL_TESTS
++	depends on KUNIT && KPROBES
++	default KUNIT_ALL_TESTS
++	help
++	  Tests the longest symbol possible
++
++	  If unsure, say N.
++
+ config HW_BREAKPOINT_KUNIT_TEST
+ 	bool "Test hw_breakpoint constraints accounting" if !KUNIT_ALL_TESTS
+ 	depends on HAVE_HW_BREAKPOINT
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -389,6 +389,8 @@ CFLAGS_fortify_kunit.o += $(DISABLE_STRU
+ obj-$(CONFIG_FORTIFY_KUNIT_TEST) += fortify_kunit.o
+ obj-$(CONFIG_SIPHASH_KUNIT_TEST) += siphash_kunit.o
+ obj-$(CONFIG_USERCOPY_KUNIT_TEST) += usercopy_kunit.o
++obj-$(CONFIG_LONGEST_SYM_KUNIT_TEST) += longest_symbol_kunit.o
++CFLAGS_longest_symbol_kunit.o += $(call cc-disable-warning, missing-prototypes)
+ 
+ obj-$(CONFIG_GENERIC_LIB_DEVMEM_IS_ALLOWED) += devmem_is_allowed.o
+ 
+--- /dev/null
++++ b/lib/longest_symbol_kunit.c
+@@ -0,0 +1,82 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Test the longest symbol length. Execute with:
++ *  ./tools/testing/kunit/kunit.py run longest-symbol
++ *  --arch=x86_64 --kconfig_add CONFIG_KPROBES=y --kconfig_add CONFIG_MODULES=y
++ *  --kconfig_add CONFIG_RETPOLINE=n --kconfig_add CONFIG_CFI_CLANG=n
++ *  --kconfig_add CONFIG_MITIGATION_RETPOLINE=n
++ */
++
++#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
++
++#include <kunit/test.h>
++#include <linux/stringify.h>
++#include <linux/kprobes.h>
++#include <linux/kallsyms.h>
++
++#define DI(name) s##name##name
++#define DDI(name) DI(n##name##name)
++#define DDDI(name) DDI(n##name##name)
++#define DDDDI(name) DDDI(n##name##name)
++#define DDDDDI(name) DDDDI(n##name##name)
++
++/*Generate a symbol whose name length is 511 */
++#define LONGEST_SYM_NAME  DDDDDI(g1h2i3j4k5l6m7n)
++
++#define RETURN_LONGEST_SYM 0xAAAAA
++
++noinline int LONGEST_SYM_NAME(void);
++noinline int LONGEST_SYM_NAME(void)
++{
++	return RETURN_LONGEST_SYM;
++}
++
++_Static_assert(sizeof(__stringify(LONGEST_SYM_NAME)) == KSYM_NAME_LEN,
++"Incorrect symbol length found. Expected KSYM_NAME_LEN: "
++__stringify(KSYM_NAME_LEN) ", but found: "
++__stringify(sizeof(LONGEST_SYM_NAME)));
++
++static void test_longest_symbol(struct kunit *test)
++{
++	KUNIT_EXPECT_EQ(test, RETURN_LONGEST_SYM, LONGEST_SYM_NAME());
++};
++
++static void test_longest_symbol_kallsyms(struct kunit *test)
++{
++	unsigned long (*kallsyms_lookup_name)(const char *name);
++	static int (*longest_sym)(void);
++
++	struct kprobe kp = {
++		.symbol_name = "kallsyms_lookup_name",
++	};
++
++	if (register_kprobe(&kp) < 0) {
++		pr_info("%s: kprobe not registered", __func__);
++		KUNIT_FAIL(test, "test_longest_symbol kallsyms: kprobe not registered\n");
++		return;
++	}
++
++	kunit_warn(test, "test_longest_symbol kallsyms: kprobe registered\n");
++	kallsyms_lookup_name = (unsigned long (*)(const char *name))kp.addr;
++	unregister_kprobe(&kp);
++
++	longest_sym =
++		(void *) kallsyms_lookup_name(__stringify(LONGEST_SYM_NAME));
++	KUNIT_EXPECT_EQ(test, RETURN_LONGEST_SYM, longest_sym());
++};
++
++static struct kunit_case longest_symbol_test_cases[] = {
++	KUNIT_CASE(test_longest_symbol),
++	KUNIT_CASE(test_longest_symbol_kallsyms),
++	{}
++};
++
++static struct kunit_suite longest_symbol_test_suite = {
++	.name = "longest-symbol",
++	.test_cases = longest_symbol_test_cases,
++};
++kunit_test_suite(longest_symbol_test_suite);
++
++MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("Test the longest symbol length");
++MODULE_AUTHOR("Sergio González Collado");
 
 
