@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC73C1EDA14;
-	Mon, 23 Jun 2025 13:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C8B1EDA14;
+	Mon, 23 Jun 2025 13:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684777; cv=none; b=sXGzg5V5fzOws1JD/j539mg6LHKDdP+wCq4Yx1usQbSFVE6n1HS+F5P796Fiqp5Yl3ninevqEM+d4f19AsZxN+OxnsN1Ir6UoHpgIGOMRcXKmVdyYiWrtZ2DZtByOhXLIXbTbWX8Oh/ZGIWscdo3mr6Qsrme2xd2xUatxNJ03rg=
+	t=1750684779; cv=none; b=oe1WshO92GeFNCEoEmtlWc6F/D9ABEsj/9QgrtFJ7R7cEdbdtrcw+vY0O9jyxgVdwyLDzKDMHNp4meBz2Bfmag64ebhdcL3bQapADLQWWTFf4AUoSPWtXDLpB8CWZ0Qeo2LQueHhBAIAdEYtpZ680IJGlV1VGTpHfIsm/rX4IYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684777; c=relaxed/simple;
-	bh=FNF//D55NjXb26Tv5tt1EIbMijE3sanO4c0tahRKqWo=;
+	s=arc-20240116; t=1750684779; c=relaxed/simple;
+	bh=kmuiVOLJud19NBzojxgI/Wi4bKUmQwwAU9FyutzGiSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LDZexG3LaBRbBjI8KwMxzfTLgw8eF4OPv5L2gJixXt9/kg9rE1IvPkB/+OHd1VaSbhMThgyrE+vBFMelVh00HQBtZkBGvbF4jpBFTZmHnHmGIMsTUadICG379c9oWQnAeY1gNEmLI2DaRq6TA/fZT3/m6KB+Ul5IFKtzBeoFavY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oq5fcW04; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UuY6kaNQHMKi1sc32orS6+cZuKQZV3QcnND3HU2uQuNBfpaEfY0Hj9GC+D12F9tF8+EvlSTdZDpToZaRoKGkkhBybkd8v5LBubsR12FZGWz9ncLlCv4MuIZEjLrY/SAYYEUOiiCHENySivfhhBU3IdkpxwfhtVjhdt5CJo3vcq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kz1ZzFXB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oq5fcW04"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71FABC4CEEA;
-	Mon, 23 Jun 2025 13:19:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kz1ZzFXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06FC8C4CEEA;
+	Mon, 23 Jun 2025 13:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684776;
-	bh=FNF//D55NjXb26Tv5tt1EIbMijE3sanO4c0tahRKqWo=;
+	s=korg; t=1750684779;
+	bh=kmuiVOLJud19NBzojxgI/Wi4bKUmQwwAU9FyutzGiSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oq5fcW04BnvgvXOOihHs3W4SFbpIwvbQHWMcWA93pdsr5++Y5Ij7+73l70ZpWS1S2
-	 U1YEkJJH2H66rvLFQazZdCRyC/of91538n/QQWW10tVhXwzIY4x71PPCC+/UNaAbpk
-	 clhwuuFssCWST5WNBUyuDjwg7Zo/b4xX8+6qVvF8=
+	b=Kz1ZzFXBDxUnZZ/jkdXwqzd+tNAD6TH+E38xKwdrIZkvJj+0NvzGyABPNilUC9pzV
+	 SE1fXi6Mnp+5pXA5+st66kwcmTN3h+1Eijs8Y0Yr5LfApWvBng9lsTNQQPCIV6fSDr
+	 R8IyS9E25IMIm2ko/ga6uxKC746BVG00J2/qbUuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>,
-	Paul Fertser <fercerpav@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 027/222] net: ncsi: Fix GCPS 64-bit member variables
-Date: Mon, 23 Jun 2025 15:06:02 +0200
-Message-ID: <20250623130612.713590388@linuxfoundation.org>
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Peng Fan <peng.fan@nxp.com>
+Subject: [PATCH 6.15 170/592] remoteproc: core: Cleanup acquired resources when rproc_handle_resources() fails in rproc_attach()
+Date: Mon, 23 Jun 2025 15:02:08 +0200
+Message-ID: <20250623130704.322819874@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130611.896514667@linuxfoundation.org>
-References: <20250623130611.896514667@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,165 +47,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit e8a1bd8344054ce27bebf59f48e3f6bc10bc419b ]
+commit 7692c9fbedd9087dc9050903f58095915458d9b1 upstream.
 
-Correct Get Controller Packet Statistics (GCPS) 64-bit wide member
-variables, as per DSP0222 v1.0.0 and forward specs. The Driver currently
-collects these stats, but they are yet to be exposed to the user.
-Therefore, no user impact.
+When rproc->state = RPROC_DETACHED and rproc_attach() is used
+to attach to the remote processor, if rproc_handle_resources()
+returns a failure, the resources allocated by imx_rproc_prepare()
+should be released, otherwise the following memory leak will occur.
 
-Statistics fixes:
-Total Bytes Received (byte range 28..35)
-Total Bytes Transmitted (byte range 36..43)
-Total Unicast Packets Received (byte range 44..51)
-Total Multicast Packets Received (byte range 52..59)
-Total Broadcast Packets Received (byte range 60..67)
-Total Unicast Packets Transmitted (byte range 68..75)
-Total Multicast Packets Transmitted (byte range 76..83)
-Total Broadcast Packets Transmitted (byte range 84..91)
-Valid Bytes Received (byte range 204..11)
+Since almost the same thing is done in imx_rproc_prepare() and
+rproc_resource_cleanup(), Function rproc_resource_cleanup() is able
+to deal with empty lists so it is better to fix the "goto" statements
+in rproc_attach(). replace the "unprepare_device" goto statement with
+"clean_up_resources" and get rid of the "unprepare_device" label.
 
-Signed-off-by: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
-Reviewed-by: Paul Fertser <fercerpav@gmail.com>
-Link: https://patch.msgid.link/20250410012309.1343-1-kalavakunta.hari.prasad@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+unreferenced object 0xffff0000861c5d00 (size 128):
+comm "kworker/u12:3", pid 59, jiffies 4294893509 (age 149.220s)
+hex dump (first 32 bytes):
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................
+00 00 02 88 00 00 00 00 00 00 10 00 00 00 00 00 ............
+backtrace:
+ [<00000000f949fe18>] slab_post_alloc_hook+0x98/0x37c
+ [<00000000adbfb3e7>] __kmem_cache_alloc_node+0x138/0x2e0
+ [<00000000521c0345>] kmalloc_trace+0x40/0x158
+ [<000000004e330a49>] rproc_mem_entry_init+0x60/0xf8
+ [<000000002815755e>] imx_rproc_prepare+0xe0/0x180
+ [<0000000003f61b4e>] rproc_boot+0x2ec/0x528
+ [<00000000e7e994ac>] rproc_add+0x124/0x17c
+ [<0000000048594076>] imx_rproc_probe+0x4ec/0x5d4
+ [<00000000efc298a1>] platform_probe+0x68/0xd8
+ [<00000000110be6fe>] really_probe+0x110/0x27c
+ [<00000000e245c0ae>] __driver_probe_device+0x78/0x12c
+ [<00000000f61f6f5e>] driver_probe_device+0x3c/0x118
+ [<00000000a7874938>] __device_attach_driver+0xb8/0xf8
+ [<0000000065319e69>] bus_for_each_drv+0x84/0xe4
+ [<00000000db3eb243>] __device_attach+0xfc/0x18c
+ [<0000000072e4e1a4>] device_initial_probe+0x14/0x20
+
+Fixes: 10a3d4079eae ("remoteproc: imx_rproc: move memory parsing to rproc_ops")
+Suggested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250430092043.1819308-2-xiaolei.wang@windriver.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ncsi/internal.h | 21 ++++++++++-----------
- net/ncsi/ncsi-pkt.h | 23 +++++++++++------------
- net/ncsi/ncsi-rsp.c | 21 ++++++++++-----------
- 3 files changed, 31 insertions(+), 34 deletions(-)
+ drivers/remoteproc/remoteproc_core.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
-index 1dde6dc841b88..b723452768d48 100644
---- a/net/ncsi/internal.h
-+++ b/net/ncsi/internal.h
-@@ -119,16 +119,15 @@ struct ncsi_channel_vlan_filter {
- };
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -1617,7 +1617,7 @@ static int rproc_attach(struct rproc *rp
+ 	ret = rproc_set_rsc_table(rproc);
+ 	if (ret) {
+ 		dev_err(dev, "can't load resource table: %d\n", ret);
+-		goto unprepare_device;
++		goto clean_up_resources;
+ 	}
  
- struct ncsi_channel_stats {
--	u32 hnc_cnt_hi;		/* Counter cleared            */
--	u32 hnc_cnt_lo;		/* Counter cleared            */
--	u32 hnc_rx_bytes;	/* Rx bytes                   */
--	u32 hnc_tx_bytes;	/* Tx bytes                   */
--	u32 hnc_rx_uc_pkts;	/* Rx UC packets              */
--	u32 hnc_rx_mc_pkts;     /* Rx MC packets              */
--	u32 hnc_rx_bc_pkts;	/* Rx BC packets              */
--	u32 hnc_tx_uc_pkts;	/* Tx UC packets              */
--	u32 hnc_tx_mc_pkts;	/* Tx MC packets              */
--	u32 hnc_tx_bc_pkts;	/* Tx BC packets              */
-+	u64 hnc_cnt;		/* Counter cleared            */
-+	u64 hnc_rx_bytes;	/* Rx bytes                   */
-+	u64 hnc_tx_bytes;	/* Tx bytes                   */
-+	u64 hnc_rx_uc_pkts;	/* Rx UC packets              */
-+	u64 hnc_rx_mc_pkts;     /* Rx MC packets              */
-+	u64 hnc_rx_bc_pkts;	/* Rx BC packets              */
-+	u64 hnc_tx_uc_pkts;	/* Tx UC packets              */
-+	u64 hnc_tx_mc_pkts;	/* Tx MC packets              */
-+	u64 hnc_tx_bc_pkts;	/* Tx BC packets              */
- 	u32 hnc_fcs_err;	/* FCS errors                 */
- 	u32 hnc_align_err;	/* Alignment errors           */
- 	u32 hnc_false_carrier;	/* False carrier detection    */
-@@ -157,7 +156,7 @@ struct ncsi_channel_stats {
- 	u32 hnc_tx_1023_frames;	/* Tx 512-1023 bytes frames   */
- 	u32 hnc_tx_1522_frames;	/* Tx 1024-1522 bytes frames  */
- 	u32 hnc_tx_9022_frames;	/* Tx 1523-9022 bytes frames  */
--	u32 hnc_rx_valid_bytes;	/* Rx valid bytes             */
-+	u64 hnc_rx_valid_bytes;	/* Rx valid bytes             */
- 	u32 hnc_rx_runt_pkts;	/* Rx error runt packets      */
- 	u32 hnc_rx_jabber_pkts;	/* Rx error jabber packets    */
- 	u32 ncsi_rx_cmds;	/* Rx NCSI commands           */
-diff --git a/net/ncsi/ncsi-pkt.h b/net/ncsi/ncsi-pkt.h
-index 3fbea7e74fb1c..2729581360ec9 100644
---- a/net/ncsi/ncsi-pkt.h
-+++ b/net/ncsi/ncsi-pkt.h
-@@ -246,16 +246,15 @@ struct ncsi_rsp_gp_pkt {
- /* Get Controller Packet Statistics */
- struct ncsi_rsp_gcps_pkt {
- 	struct ncsi_rsp_pkt_hdr rsp;            /* Response header            */
--	__be32                  cnt_hi;         /* Counter cleared            */
--	__be32                  cnt_lo;         /* Counter cleared            */
--	__be32                  rx_bytes;       /* Rx bytes                   */
--	__be32                  tx_bytes;       /* Tx bytes                   */
--	__be32                  rx_uc_pkts;     /* Rx UC packets              */
--	__be32                  rx_mc_pkts;     /* Rx MC packets              */
--	__be32                  rx_bc_pkts;     /* Rx BC packets              */
--	__be32                  tx_uc_pkts;     /* Tx UC packets              */
--	__be32                  tx_mc_pkts;     /* Tx MC packets              */
--	__be32                  tx_bc_pkts;     /* Tx BC packets              */
-+	__be64                  cnt;            /* Counter cleared            */
-+	__be64                  rx_bytes;       /* Rx bytes                   */
-+	__be64                  tx_bytes;       /* Tx bytes                   */
-+	__be64                  rx_uc_pkts;     /* Rx UC packets              */
-+	__be64                  rx_mc_pkts;     /* Rx MC packets              */
-+	__be64                  rx_bc_pkts;     /* Rx BC packets              */
-+	__be64                  tx_uc_pkts;     /* Tx UC packets              */
-+	__be64                  tx_mc_pkts;     /* Tx MC packets              */
-+	__be64                  tx_bc_pkts;     /* Tx BC packets              */
- 	__be32                  fcs_err;        /* FCS errors                 */
- 	__be32                  align_err;      /* Alignment errors           */
- 	__be32                  false_carrier;  /* False carrier detection    */
-@@ -284,11 +283,11 @@ struct ncsi_rsp_gcps_pkt {
- 	__be32                  tx_1023_frames; /* Tx 512-1023 bytes frames   */
- 	__be32                  tx_1522_frames; /* Tx 1024-1522 bytes frames  */
- 	__be32                  tx_9022_frames; /* Tx 1523-9022 bytes frames  */
--	__be32                  rx_valid_bytes; /* Rx valid bytes             */
-+	__be64                  rx_valid_bytes; /* Rx valid bytes             */
- 	__be32                  rx_runt_pkts;   /* Rx error runt packets      */
- 	__be32                  rx_jabber_pkts; /* Rx error jabber packets    */
- 	__be32                  checksum;       /* Checksum                   */
--};
-+}  __packed __aligned(4);
+ 	/* reset max_notifyid */
+@@ -1634,7 +1634,7 @@ static int rproc_attach(struct rproc *rp
+ 	ret = rproc_handle_resources(rproc, rproc_loading_handlers);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to process resources: %d\n", ret);
+-		goto unprepare_device;
++		goto clean_up_resources;
+ 	}
  
- /* Get NCSI Statistics */
- struct ncsi_rsp_gns_pkt {
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index 876622e9a5b2b..b7d311f979051 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -931,16 +931,15 @@ static int ncsi_rsp_handler_gcps(struct ncsi_request *nr)
+ 	/* Allocate carveout resources associated to rproc */
+@@ -1653,7 +1653,6 @@ static int rproc_attach(struct rproc *rp
  
- 	/* Update HNC's statistics */
- 	ncs = &nc->stats;
--	ncs->hnc_cnt_hi         = ntohl(rsp->cnt_hi);
--	ncs->hnc_cnt_lo         = ntohl(rsp->cnt_lo);
--	ncs->hnc_rx_bytes       = ntohl(rsp->rx_bytes);
--	ncs->hnc_tx_bytes       = ntohl(rsp->tx_bytes);
--	ncs->hnc_rx_uc_pkts     = ntohl(rsp->rx_uc_pkts);
--	ncs->hnc_rx_mc_pkts     = ntohl(rsp->rx_mc_pkts);
--	ncs->hnc_rx_bc_pkts     = ntohl(rsp->rx_bc_pkts);
--	ncs->hnc_tx_uc_pkts     = ntohl(rsp->tx_uc_pkts);
--	ncs->hnc_tx_mc_pkts     = ntohl(rsp->tx_mc_pkts);
--	ncs->hnc_tx_bc_pkts     = ntohl(rsp->tx_bc_pkts);
-+	ncs->hnc_cnt            = be64_to_cpu(rsp->cnt);
-+	ncs->hnc_rx_bytes       = be64_to_cpu(rsp->rx_bytes);
-+	ncs->hnc_tx_bytes       = be64_to_cpu(rsp->tx_bytes);
-+	ncs->hnc_rx_uc_pkts     = be64_to_cpu(rsp->rx_uc_pkts);
-+	ncs->hnc_rx_mc_pkts     = be64_to_cpu(rsp->rx_mc_pkts);
-+	ncs->hnc_rx_bc_pkts     = be64_to_cpu(rsp->rx_bc_pkts);
-+	ncs->hnc_tx_uc_pkts     = be64_to_cpu(rsp->tx_uc_pkts);
-+	ncs->hnc_tx_mc_pkts     = be64_to_cpu(rsp->tx_mc_pkts);
-+	ncs->hnc_tx_bc_pkts     = be64_to_cpu(rsp->tx_bc_pkts);
- 	ncs->hnc_fcs_err        = ntohl(rsp->fcs_err);
- 	ncs->hnc_align_err      = ntohl(rsp->align_err);
- 	ncs->hnc_false_carrier  = ntohl(rsp->false_carrier);
-@@ -969,7 +968,7 @@ static int ncsi_rsp_handler_gcps(struct ncsi_request *nr)
- 	ncs->hnc_tx_1023_frames = ntohl(rsp->tx_1023_frames);
- 	ncs->hnc_tx_1522_frames = ntohl(rsp->tx_1522_frames);
- 	ncs->hnc_tx_9022_frames = ntohl(rsp->tx_9022_frames);
--	ncs->hnc_rx_valid_bytes = ntohl(rsp->rx_valid_bytes);
-+	ncs->hnc_rx_valid_bytes = be64_to_cpu(rsp->rx_valid_bytes);
- 	ncs->hnc_rx_runt_pkts   = ntohl(rsp->rx_runt_pkts);
- 	ncs->hnc_rx_jabber_pkts = ntohl(rsp->rx_jabber_pkts);
- 
--- 
-2.39.5
-
+ clean_up_resources:
+ 	rproc_resource_cleanup(rproc);
+-unprepare_device:
+ 	/* release HW resources if needed */
+ 	rproc_unprepare_device(rproc);
+ disable_iommu:
 
 
