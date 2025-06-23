@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18EF11FC0E3;
-	Mon, 23 Jun 2025 22:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00B821B8F6;
+	Mon, 23 Jun 2025 22:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716564; cv=none; b=eo/Ydw8vOUZDd2FRjfPxNfeRmy+lwnucpItAJJKeNId2CVMMFCTRBUnkA4vahsZhCNz06FgOFgsYDhu/HBXJ73hi76+K2z/hRgNfhmuAdn8HuHCPDH5Sys3diUb2vXGgw02pSRRR6QvS7a1JzyMDrzZ01lRAUCYdWm0B2ofvsHA=
+	t=1750716566; cv=none; b=tbRnfxsLpvVYJ/8qqIrWfe/yFy8+83MnyjSz48BsR+dc92DE2UpUruBh8+1p0zLUPofeBDZPfPYjWB9P+VG50H596cBk8wFZ3Pj6jc2csFjknh1uIDajwtU7G/ij8AqdpuR6mSLaGXg9ZgdkEV2WLpIUnBG6IUxqUqXZN29bd64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716564; c=relaxed/simple;
-	bh=8ciigWhWOj8bz3bpQBAicJ6slVOjzhHYE8Q+qMwO9R8=;
+	s=arc-20240116; t=1750716566; c=relaxed/simple;
+	bh=1SLjCeJm9UgddP4ZCj040xgarLnaiPrt6+JKl68EYuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmevC83+S+DCPIC0++Y6M7wwZN3UChLrh4FfdYv17W4pFCe2AsYhhGHI++Po7v+iSGsSjfLml6Haka5WHQnHH12dV9xZ1cnYi57j+Bbv6dS6++Mc+0I4NiQLtnmYhPPTb3ylSYrGPS9F0hR6dP7q4twkRQ0nIRbVd/3pOfq/SKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQ3681j5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=niQzA4e4ld5Pv0gjr8RZMOqCsCjtoD+Bp5iOUwxfODLWx2QIS0kpeLHdYOyqoqg3jIU585aSCnXD1bP4Qgm41y4ZrERaChMMxxn52X7r/mu3Tot0Vlk3BNGLsEBVZKsaFZHPzp6BSAREYB3PdD6NM1igsYhd7wUMbCk3qTgzrgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pngDM1bB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQ3681j5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7AA6C4CEF1;
-	Mon, 23 Jun 2025 22:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pngDM1bB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26867C4CEEA;
+	Mon, 23 Jun 2025 22:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716564;
-	bh=8ciigWhWOj8bz3bpQBAicJ6slVOjzhHYE8Q+qMwO9R8=;
+	s=korg; t=1750716566;
+	bh=1SLjCeJm9UgddP4ZCj040xgarLnaiPrt6+JKl68EYuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JQ3681j5uP5AKQIsj4oBed8TKDdc3vJO5zfQnL9hk7JuNAnj6Mf4uhu2fngXmvB2j
-	 GZKdmSYrKl9WLrPCTGf8OQGERpQ551H9Wh66GAESJREhT5LnyfY5Ng0pM5Y4neu+i0
-	 nhKH+Js6dPBgv6UWY5GPGDZFigphJrY3uJlZZyJ0=
+	b=pngDM1bB/zHP6gML+A78+O2mHTPdki/vGAzV9AC32N96rSzb4u4CGPCoeyAyfWzap
+	 CTS7Yt3oPPcaV7osK3dW5/Lx6D6Ebu1e7vk/nQvYhFqVzSUWEyJHQKw3tl7Z2GKwET
+	 uUdmtDXoX/jf9XCRSWu6LRfuNT7b0FsBKYJHUx5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Lindgren <tony@atomide.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Andreas Kemnade <andreas@kemnade.info>
-Subject: [PATCH 5.15 341/411] Revert "bus: ti-sysc: Probe for l4_wkup and l4_cfg interconnect devices first"
-Date: Mon, 23 Jun 2025 15:08:05 +0200
-Message-ID: <20250623130642.233966566@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH 6.6 273/290] serial: sh-sci: Increment the runtime usage counter for the earlycon device
+Date: Mon, 23 Jun 2025 15:08:54 +0200
+Message-ID: <20250623130635.132381519@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130632.993849527@linuxfoundation.org>
-References: <20250623130632.993849527@linuxfoundation.org>
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+References: <20250623130626.910356556@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,115 +45,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 36305857b1ead8f6ca033a913162ebc09bee0b43 ]
+commit 651dee03696e1dfde6d9a7e8664bbdcd9a10ea7f upstream.
 
-This reverts commit 4700a00755fb5a4bb5109128297d6fd2d1272ee6.
+In the sh-sci driver, serial ports are mapped to the sci_ports[] array,
+with earlycon mapped at index zero.
 
-It breaks target-module@2b300050 ("ti,sysc-omap2") probe on AM62x in a case
-when minimally-configured system tries to network-boot:
+The uart_add_one_port() function eventually calls __device_attach(),
+which, in turn, calls pm_request_idle(). The identified code path is as
+follows:
 
-[    6.888776] probe of 2b300050.target-module returned 517 after 258 usecs
-[   17.129637] probe of 2b300050.target-module returned 517 after 708 usecs
-[   17.137397] platform 2b300050.target-module: deferred probe pending: (reason unknown)
-[   26.878471] Waiting up to 100 more seconds for network.
+uart_add_one_port() ->
+  serial_ctrl_register_port() ->
+    serial_core_register_port() ->
+      serial_core_port_device_add() ->
+        serial_base_port_add() ->
+          device_add() ->
+            bus_probe_device() ->
+              device_initial_probe() ->
+                __device_attach() ->
+                  // ...
+                  if (dev->p->dead) {
+                    // ...
+                  } else if (dev->driver) {
+                    // ...
+                  } else {
+                    // ...
+                    pm_request_idle(dev);
+                    // ...
+                  }
 
-There are minimal configurations possible when the deferred device is not
-being probed any more (because everything else has been successfully
-probed) and deferral lists are not processed any more.
+The earlycon device clocks are enabled by the bootloader. However, the
+pm_request_idle() call in __device_attach() disables the SCI port clocks
+while earlycon is still active.
 
-Stable mmc enumeration can be achieved by filling /aliases node properly
-(4700a00755fb commit's rationale).
+The earlycon write function, serial_console_write(), calls
+sci_poll_put_char() via serial_console_putchar(). If the SCI port clocks
+are disabled, writing to earlycon may sometimes cause the SR.TDFE bit to
+remain unset indefinitely, causing the while loop in sci_poll_put_char()
+to never exit. On single-core SoCs, this can result in the system being
+blocked during boot when this issue occurs.
 
-After revert:
+To resolve this, increment the runtime PM usage counter for the earlycon
+SCI device before registering the UART port.
 
-[    9.006816] IP-Config: Complete:
-[    9.010058]      device=lan0, ...
-
-Tested-by: Andreas Kemnade <andreas@kemnade.info> # GTA04, Panda, BT200
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://lore.kernel.org/r/20250401090643.2776793-1-alexander.sverdlin@siemens.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0b0cced19ab1 ("serial: sh-sci: Add CONFIG_SERIAL_EARLYCON support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250116182249.3828577-6-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/ti-sysc.c | 49 -------------------------------------------
- 1 file changed, 49 deletions(-)
+ drivers/tty/serial/sh-sci.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
-index 05ae577758539..20e0907234855 100644
---- a/drivers/bus/ti-sysc.c
-+++ b/drivers/bus/ti-sysc.c
-@@ -687,51 +687,6 @@ static int sysc_parse_and_check_child_range(struct sysc *ddata)
- 	return 0;
- }
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -3425,6 +3425,22 @@ static int sci_probe_single(struct platf
  
--/* Interconnect instances to probe before l4_per instances */
--static struct resource early_bus_ranges[] = {
--	/* am3/4 l4_wkup */
--	{ .start = 0x44c00000, .end = 0x44c00000 + 0x300000, },
--	/* omap4/5 and dra7 l4_cfg */
--	{ .start = 0x4a000000, .end = 0x4a000000 + 0x300000, },
--	/* omap4 l4_wkup */
--	{ .start = 0x4a300000, .end = 0x4a300000 + 0x30000,  },
--	/* omap5 and dra7 l4_wkup without dra7 dcan segment */
--	{ .start = 0x4ae00000, .end = 0x4ae00000 + 0x30000,  },
--};
--
--static atomic_t sysc_defer = ATOMIC_INIT(10);
--
--/**
-- * sysc_defer_non_critical - defer non_critical interconnect probing
-- * @ddata: device driver data
-- *
-- * We want to probe l4_cfg and l4_wkup interconnect instances before any
-- * l4_per instances as l4_per instances depend on resources on l4_cfg and
-- * l4_wkup interconnects.
-- */
--static int sysc_defer_non_critical(struct sysc *ddata)
--{
--	struct resource *res;
--	int i;
--
--	if (!atomic_read(&sysc_defer))
--		return 0;
--
--	for (i = 0; i < ARRAY_SIZE(early_bus_ranges); i++) {
--		res = &early_bus_ranges[i];
--		if (ddata->module_pa >= res->start &&
--		    ddata->module_pa <= res->end) {
--			atomic_set(&sysc_defer, 0);
--
--			return 0;
--		}
--	}
--
--	atomic_dec_if_positive(&sysc_defer);
--
--	return -EPROBE_DEFER;
--}
--
- static struct device_node *stdout_path;
- 
- static void sysc_init_stdout_path(struct sysc *ddata)
-@@ -957,10 +912,6 @@ static int sysc_map_and_check_registers(struct sysc *ddata)
- 	if (error)
- 		return error;
- 
--	error = sysc_defer_non_critical(ddata);
--	if (error)
--		return error;
--
- 	sysc_check_children(ddata);
- 
- 	if (!of_get_property(np, "reg", NULL))
--- 
-2.39.5
-
+ 	if (sci_uart_earlycon && sci_ports[0].port.mapbase == sci_res->start) {
+ 		/*
++		 * In case:
++		 * - this is the earlycon port (mapped on index 0 in sci_ports[]) and
++		 * - it now maps to an alias other than zero and
++		 * - the earlycon is still alive (e.g., "earlycon keep_bootcon" is
++		 *   available in bootargs)
++		 *
++		 * we need to avoid disabling clocks and PM domains through the runtime
++		 * PM APIs called in __device_attach(). For this, increment the runtime
++		 * PM reference counter (the clocks and PM domains were already enabled
++		 * by the bootloader). Otherwise the earlycon may access the HW when it
++		 * has no clocks enabled leading to failures (infinite loop in
++		 * sci_poll_put_char()).
++		 */
++		pm_runtime_get_noresume(&dev->dev);
++
++		/*
+ 		 * Skip cleanup the sci_port[0] in early_console_exit(), this
+ 		 * port is the same as the earlycon one.
+ 		 */
 
 
