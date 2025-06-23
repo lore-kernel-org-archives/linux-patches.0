@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5E6220F50;
-	Mon, 23 Jun 2025 21:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13199220F50;
+	Mon, 23 Jun 2025 21:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750713165; cv=none; b=iaDxylXtfQJzl5Aw+NJBYzK8oV4N+PCsD5Y3HxO5ioaAlpV7Q6Ksw2inZooZFsat0XHKyeAJ49X8+gOG9/KyH+clhAAmt3rO9PyB/b50NMUN+SkoHqmncUYBvzGDIA/MxhZeSw/XPoeUSJ0y0t/j/HVSYy+coRAjEinffZFBSRo=
+	t=1750713168; cv=none; b=UPv/8B9sVvC5ttJN0IQf88i3+W+My48Kqr8i6DmtFcBnjcGRnHVzNSeypLNf8CIcbYuqfc9RfAY7AG0tmGmgS9vNAertGYCkS1+EcVJ1gqDhXSqhOwmTRyVS1+rcRNI9+BQBg7GssCWZJqdbvl0qntNu540XYLe6LBemlwrnZA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750713165; c=relaxed/simple;
-	bh=KL3u4gYgjDgApU6hM4NZEmL0QYwD8FIktsdCglww3ww=;
+	s=arc-20240116; t=1750713168; c=relaxed/simple;
+	bh=hNvaZ3BnQ768LUVARcu9uzp/x6Sdn0k0+aC3yPaw1jM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XfLyW0g6bQf/F0ZJrWY3tbH6FQZ2cr3RD01kdlj2BF6LU9NjxigMUShssjY7zdRYyH0+3sPgCWx5sQKwMWLJVRGyDSWRlq/89d4KR/NrEeURFv9L7JVxbyL/80dnDXCOFyVOOqCCUA1Z5Woo9kNGcF2p6opm/5LcnuD+urfM1uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oapgn7EJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G/T1rZ/J/+zQS32/8c9Y1oXdSGjKPApQWv0ghx2K118Ekqjqgel8nq6/lmTbVizcFQiTagTnO5JY+HBpm1CAU2h7CES8LrxFncYPHAMR1aXBtWmwLlQ+VoltXsbi6uaKaETriE3NK5fvN9+/GhJJjyriPi4pF/UAaqN6Z0pXYZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRi5yAqI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oapgn7EJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8114C4CEEA;
-	Mon, 23 Jun 2025 21:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRi5yAqI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57273C4CEEA;
+	Mon, 23 Jun 2025 21:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750713165;
-	bh=KL3u4gYgjDgApU6hM4NZEmL0QYwD8FIktsdCglww3ww=;
+	s=korg; t=1750713167;
+	bh=hNvaZ3BnQ768LUVARcu9uzp/x6Sdn0k0+aC3yPaw1jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oapgn7EJN0pfE/ukQh7dkveyFngivdsF2Z5a2/4ZXx6N5M+XBmiy6l+DSv1PmWDP5
-	 x+Y68cUabde24MYR7uco82JPOkfaj+l1xnEqVF0tq0/rCZVHvCsmEeFYHZ2SLPfl4A
-	 CgPpT+LiMhyKS/cll7bfWpsO1UhpWyki7chzd8Ts=
+	b=mRi5yAqIA8Bj3SDOLwx0NynKUqGiaO4lZGmLVKWCJB2Gbzn5tz1qJOSlpJkY9wMSr
+	 RqnIr5l1Ue8ZxtkUX3IU8DsI8fQlEKdTIn6GHwVaNBUE5/HgLhidFpIqbiv/WAY80t
+	 eCLxbcVu0G0r0QMPuWSI1hsGj9OsjK0j8t3vbvXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 049/414] media: ccs-pll: Correct the upper limit of maximum op_pre_pll_clk_div
-Date: Mon, 23 Jun 2025 15:03:06 +0200
-Message-ID: <20250623130643.270053736@linuxfoundation.org>
+	Andreu Montiel <Andreu.Montiel@technica-engineering.de>,
+	Carlos Fernandez <carlos.fernandez@technica-engineering.de>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 129/355] macsec: MACsec SCI assignment for ES = 0
+Date: Mon, 23 Jun 2025 15:05:30 +0200
+Message-ID: <20250623130630.619396334@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130626.716971725@linuxfoundation.org>
+References: <20250623130626.716971725@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +49,132 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Carlos Fernandez <carlos.fernandez@technica-engineering.de>
 
-commit f639494db450770fa30d6845d9c84b9cb009758f upstream.
+[ Upstream commit d9816ec74e6d6aa29219d010bba3f780ba1d9d75 ]
 
-The PLL calculator does a search of the PLL configuration space for all
-valid OP pre-PLL clock dividers. The maximum did not take into account the
-CCS PLL flag CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER in which case also odd PLL
-dividers (other than 1) are valid. Do that now.
+According to 802.1AE standard, when ES and SC flags in TCI are zero,
+used SCI should be the current active SC_RX. Current code uses the
+header MAC address. Without this patch, when ES flag is 0 (using a
+bridge or switch), header MAC will not fit the SCI and MACSec frames
+will be discarted.
 
-Fixes: 4e1e8d240dff ("media: ccs-pll: Add support for extended input PLL clock divider")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In order to test this issue, MACsec link should be stablished between
+two interfaces, setting SC and ES flags to zero and a port identifier
+different than one. For example, using ip macsec tools:
+
+ip link add link $ETH0 macsec0 type macsec port 11 send_sci off
+end_station off
+ip macsec add macsec0 tx sa 0 pn 2 on key 01 $ETH1_KEY
+ip macsec add macsec0 rx port 11 address $ETH1_MAC
+ip macsec add macsec0 rx port 11 address $ETH1_MAC sa 0 pn 2 on key 02
+ip link set dev macsec0 up
+
+ip link add link $ETH1 macsec1 type macsec port 11 send_sci off
+end_station off
+ip macsec add macsec1 tx sa 0 pn 2 on key 01 $ETH0_KEY
+ip macsec add macsec1 rx port 11 address $ETH0_MAC
+ip macsec add macsec1 rx port 11 address $ETH0_MAC sa 0 pn 2 on key 02
+ip link set dev macsec1 up
+
+Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Co-developed-by: Andreu Montiel <Andreu.Montiel@technica-engineering.de>
+Signed-off-by: Andreu Montiel <Andreu.Montiel@technica-engineering.de>
+Signed-off-by: Carlos Fernandez <carlos.fernandez@technica-engineering.de>
+Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ccs-pll.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/macsec.c | 40 ++++++++++++++++++++++++++++++++++------
+ 1 file changed, 34 insertions(+), 6 deletions(-)
 
---- a/drivers/media/i2c/ccs-pll.c
-+++ b/drivers/media/i2c/ccs-pll.c
-@@ -794,7 +794,7 @@ int ccs_pll_calculate(struct device *dev
- 		op_lim_fr->min_pre_pll_clk_div, op_lim_fr->max_pre_pll_clk_div);
- 	max_op_pre_pll_clk_div =
- 		min_t(u16, op_lim_fr->max_pre_pll_clk_div,
--		      clk_div_even(pll->ext_clk_freq_hz /
-+		      DIV_ROUND_UP(pll->ext_clk_freq_hz,
- 				   op_lim_fr->min_pll_ip_clk_freq_hz));
- 	min_op_pre_pll_clk_div =
- 		max_t(u16, op_lim_fr->min_pre_pll_clk_div,
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 5e30fd017b3ac..e6a013da6680c 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -260,15 +260,39 @@ static sci_t make_sci(u8 *addr, __be16 port)
+ 	return sci;
+ }
+ 
+-static sci_t macsec_frame_sci(struct macsec_eth_header *hdr, bool sci_present)
++static sci_t macsec_active_sci(struct macsec_secy *secy)
+ {
+-	sci_t sci;
++	struct macsec_rx_sc *rx_sc = rcu_dereference_bh(secy->rx_sc);
++
++	/* Case single RX SC */
++	if (rx_sc && !rcu_dereference_bh(rx_sc->next))
++		return (rx_sc->active) ? rx_sc->sci : 0;
++	/* Case no RX SC or multiple */
++	else
++		return 0;
++}
++
++static sci_t macsec_frame_sci(struct macsec_eth_header *hdr, bool sci_present,
++			      struct macsec_rxh_data *rxd)
++{
++	struct macsec_dev *macsec;
++	sci_t sci = 0;
+ 
+-	if (sci_present)
++	/* SC = 1 */
++	if (sci_present) {
+ 		memcpy(&sci, hdr->secure_channel_id,
+ 		       sizeof(hdr->secure_channel_id));
+-	else
++	/* SC = 0; ES = 0 */
++	} else if ((!(hdr->tci_an & (MACSEC_TCI_ES | MACSEC_TCI_SC))) &&
++		   (list_is_singular(&rxd->secys))) {
++		/* Only one SECY should exist on this scenario */
++		macsec = list_first_or_null_rcu(&rxd->secys, struct macsec_dev,
++						secys);
++		if (macsec)
++			return macsec_active_sci(&macsec->secy);
++	} else {
+ 		sci = make_sci(hdr->eth.h_source, MACSEC_PORT_ES);
++	}
+ 
+ 	return sci;
+ }
+@@ -1096,7 +1120,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 	struct macsec_rxh_data *rxd;
+ 	struct macsec_dev *macsec;
+ 	unsigned int len;
+-	sci_t sci;
++	sci_t sci = 0;
+ 	u32 hdr_pn;
+ 	bool cbit;
+ 	struct pcpu_rx_sc_stats *rxsc_stats;
+@@ -1143,11 +1167,14 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 
+ 	macsec_skb_cb(skb)->has_sci = !!(hdr->tci_an & MACSEC_TCI_SC);
+ 	macsec_skb_cb(skb)->assoc_num = hdr->tci_an & MACSEC_AN_MASK;
+-	sci = macsec_frame_sci(hdr, macsec_skb_cb(skb)->has_sci);
+ 
+ 	rcu_read_lock();
+ 	rxd = macsec_data_rcu(skb->dev);
+ 
++	sci = macsec_frame_sci(hdr, macsec_skb_cb(skb)->has_sci, rxd);
++	if (!sci)
++		goto drop_nosc;
++
+ 	list_for_each_entry_rcu(macsec, &rxd->secys, secys) {
+ 		struct macsec_rx_sc *sc = find_rx_sc(&macsec->secy, sci);
+ 
+@@ -1270,6 +1297,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 	macsec_rxsa_put(rx_sa);
+ drop_nosa:
+ 	macsec_rxsc_put(rx_sc);
++drop_nosc:
+ 	rcu_read_unlock();
+ drop_direct:
+ 	kfree_skb(skb);
+-- 
+2.39.5
+
 
 
