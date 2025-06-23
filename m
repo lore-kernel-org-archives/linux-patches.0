@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37EA21FF2B;
-	Mon, 23 Jun 2025 22:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23166225417;
+	Mon, 23 Jun 2025 22:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716627; cv=none; b=OT4/ErU8TzD1Y90g7h/L5e8HWEvRdcw0hzzEBJ4KLsX1tAaGq7JlLUvWu/RYRIJcBQgCQUhf101LKb6vbooI+aekOciiVwYEZLHa3zUbiI6cnF2ZJhgmG6D6CZMGEW2mrZOvsqyqJfgnd8tcYcuKClwPzgCBRYMgVnBR1owbrd8=
+	t=1750716630; cv=none; b=RcBISoaDnr71p2sc2ADGdFth69N3FH87Xjww8Gi05fJZPa+mRHKhVPtYUyewVNLRAk6CKm5tHNi33uIriCEvozuapFk1dabKmBY9Z3pxriSN8fbe44SocDND/UXxegTVuZL1xAmGy5T6/GKgGNQx2ZTr1ToTkI0sNITh1UDi488=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716627; c=relaxed/simple;
-	bh=ZGCT5OcLD2qtWxy++QUJTfxgXxvfz/6VUwKi9fRLWis=;
+	s=arc-20240116; t=1750716630; c=relaxed/simple;
+	bh=3WNK9dK4T+zjeZ9M55ASDhKwnUxM6Eru7EDJ6dENMdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ANWW9Wl5fES1JuE6jUjRf0rPekRhRa7W+OGK0sb87okXdFwdkLgdRq0PuHt2fYLCF6aW/HoyTTaLJuUWh3377g+nyFjPVqGBTO4kKFZltq5rtxqc4Akd+Q1r3Cd7tsiBFEm6EWtxchRpiPvqwMzK+7wqkPC5tFWwoIQCzKZEey4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIJxTpTE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=og7unYGgXoFQFvvhXVKePsfxZBKMvp21d1JaWZ1gm8OnuBpYpAIu6Z8funRtHQ7EmcF58YiUv3lcjKf14BQjyEdN7Wm67g5lMsXaRUKTcrPPotiNb9aQ2ow9j6f/r+xm8OsJpL8+eYY3gYl6OVCkWAo8Fie/Dj7iaFpYtPApZmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwNTa1L7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIJxTpTE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EAAC4CEEA;
-	Mon, 23 Jun 2025 22:10:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwNTa1L7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68FBC4CEF1;
+	Mon, 23 Jun 2025 22:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716627;
-	bh=ZGCT5OcLD2qtWxy++QUJTfxgXxvfz/6VUwKi9fRLWis=;
+	s=korg; t=1750716630;
+	bh=3WNK9dK4T+zjeZ9M55ASDhKwnUxM6Eru7EDJ6dENMdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIJxTpTEiiBGAVtvjGOIbK3BGCwQg1rh/vEAo6bIqRhEXz2C7mTTRbeEuDb9sQkjJ
-	 lYpgga2FD9O+XyvyYO+8PLX6RfzcMiU+qRrnKKUEr07jskHRznfc/OA+Cxuv4Bo7ig
-	 P9LPHia8FUFYQwCbC9osygusmCtCozsShsQ0Joqs=
+	b=PwNTa1L7otfJLKRrk4e7yLFV1MGkYPTdsE21V74488HXz+22VoLcwZfwidfgPnCLg
+	 a3qcnkJNVJIw6evnU+oN04HREFSwc8sQOw6/ORaGn+XTknENdYuVl9Il/iIu0fIPWl
+	 igHlHn0o16R7BC7Qo8Sy1saIVzhHNvZWTQAM0Mo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wei <dw@davidwei.uk>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 534/592] bnxt_en: Update MRU and RSS table of RSS contexts on queue reset
-Date: Mon, 23 Jun 2025 15:08:12 +0200
-Message-ID: <20250623130713.138033308@linuxfoundation.org>
+Subject: [PATCH 6.15 543/592] Octeontx2-pf: Fix Backpresure configuration
+Date: Mon, 23 Jun 2025 15:08:21 +0200
+Message-ID: <20250623130713.356619217@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -53,135 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavan Chebbi <pavan.chebbi@broadcom.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 5dacc94c6fe61cde6f700e95cf35af9944b022c4 ]
+[ Upstream commit 9ac8d0c640a161486eaf71d1999ee990fad62947 ]
 
-The commit under the Fixes tag below which updates the VNICs' RSS
-and MRU during .ndo_queue_start(), needs to be extended to cover any
-non-default RSS contexts which have their own VNICs.  Without this
-step, packets that are destined to a non-default RSS context may be
-dropped after .ndo_queue_start().
+NIX block can receive packets from multiple links such as
+MAC (RPM), LBK and CPT.
 
-We further optimize this scheme by updating the VNIC only if the
-RX ring being restarted is in the RSS table of the VNIC.  Updating
-the VNIC (in particular setting the MRU to 0) will momentarily stop
-all traffic to all rings in the RSS table.  Any VNIC that has the
-RX ring excluded from the RSS table can skip this step and avoid the
-traffic disruption.
+       -----------------
+ RPM --|     NIX       |
+       -----------------
+             |
+             |
+            LBK
 
-Note that this scheme is just an improvement.  A VNIC with multiple
-rings in the RSS table will still see traffic disruptions to all rings
-in the RSS table when one of the rings is being restarted.  We are
-working on a FW scheme that will improve upon this further.
+Each link supports multiple channels for example RPM link supports
+16 channels. In case of link oversubsribe, NIX will assert backpressure
+on receive channels.
 
-Fixes: 5ac066b7b062 ("bnxt_en: Fix queue start to update vnic RSS table")
-Reported-by: David Wei <dw@davidwei.uk>
-Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20250613231841.377988-4-michael.chan@broadcom.com
+The previous patch considered a single channel per link, resulting in
+backpressure not being enabled on the remaining channels
+
+Fixes: a7ef63dbd588 ("octeontx2-af: Disable backpressure between CPT and NIX")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250617063403.3582210-1-hkelam@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 56 +++++++++++++++++++++--
- 1 file changed, 51 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 3d975e50f9438..c365a9e64f728 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -10738,11 +10738,39 @@ void bnxt_del_one_rss_ctx(struct bnxt *bp, struct bnxt_rss_ctx *rss_ctx,
- 	bp->num_rss_ctx--;
- }
- 
-+static bool bnxt_vnic_has_rx_ring(struct bnxt *bp, struct bnxt_vnic_info *vnic,
-+				  int rxr_id)
-+{
-+	u16 tbl_size = bnxt_get_rxfh_indir_size(bp->dev);
-+	int i, vnic_rx;
-+
-+	/* Ntuple VNIC always has all the rx rings. Any change of ring id
-+	 * must be updated because a future filter may use it.
-+	 */
-+	if (vnic->flags & BNXT_VNIC_NTUPLE_FLAG)
-+		return true;
-+
-+	for (i = 0; i < tbl_size; i++) {
-+		if (vnic->flags & BNXT_VNIC_RSSCTX_FLAG)
-+			vnic_rx = ethtool_rxfh_context_indir(vnic->rss_ctx)[i];
-+		else
-+			vnic_rx = bp->rss_indir_tbl[i];
-+
-+		if (rxr_id == vnic_rx)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- static int bnxt_set_vnic_mru_p5(struct bnxt *bp, struct bnxt_vnic_info *vnic,
--				u16 mru)
-+				u16 mru, int rxr_id)
- {
- 	int rc;
- 
-+	if (!bnxt_vnic_has_rx_ring(bp, vnic, rxr_id))
-+		return 0;
-+
- 	if (mru) {
- 		rc = bnxt_hwrm_vnic_set_rss_p5(bp, vnic, true);
- 		if (rc) {
-@@ -10758,6 +10786,24 @@ static int bnxt_set_vnic_mru_p5(struct bnxt *bp, struct bnxt_vnic_info *vnic,
- 	return 0;
- }
- 
-+static int bnxt_set_rss_ctx_vnic_mru(struct bnxt *bp, u16 mru, int rxr_id)
-+{
-+	struct ethtool_rxfh_context *ctx;
-+	unsigned long context;
-+	int rc;
-+
-+	xa_for_each(&bp->dev->ethtool->rss_ctx, context, ctx) {
-+		struct bnxt_rss_ctx *rss_ctx = ethtool_rxfh_context_priv(ctx);
-+		struct bnxt_vnic_info *vnic = &rss_ctx->vnic;
-+
-+		rc = bnxt_set_vnic_mru_p5(bp, vnic, mru, rxr_id);
-+		if (rc)
-+			return rc;
-+	}
-+
-+	return 0;
-+}
-+
- static void bnxt_hwrm_realloc_rss_ctx_vnic(struct bnxt *bp)
- {
- 	bool set_tpa = !!(bp->flags & BNXT_FLAG_TPA);
-@@ -15958,12 +16004,11 @@ static int bnxt_queue_start(struct net_device *dev, void *qmem, int idx)
- 	for (i = 0; i < bp->nr_vnics; i++) {
- 		vnic = &bp->vnic_info[i];
- 
--		rc = bnxt_set_vnic_mru_p5(bp, vnic, mru);
-+		rc = bnxt_set_vnic_mru_p5(bp, vnic, mru, idx);
- 		if (rc)
- 			return rc;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+index 84cd029a85aab..1b3004ba4493e 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+@@ -1822,7 +1822,7 @@ int otx2_nix_config_bp(struct otx2_nic *pfvf, bool enable)
+ 		req->chan_cnt = IEEE_8021QAZ_MAX_TCS;
+ 		req->bpid_per_chan = 1;
+ 	} else {
+-		req->chan_cnt = 1;
++		req->chan_cnt = pfvf->hw.rx_chan_cnt;
+ 		req->bpid_per_chan = 0;
  	}
--
--	return 0;
-+	return bnxt_set_rss_ctx_vnic_mru(bp, mru, idx);
  
- err_reset:
- 	netdev_err(bp->dev, "Unexpected HWRM error during queue start rc: %d\n",
-@@ -15986,8 +16031,9 @@ static int bnxt_queue_stop(struct net_device *dev, void *qmem, int idx)
- 	for (i = 0; i < bp->nr_vnics; i++) {
- 		vnic = &bp->vnic_info[i];
- 
--		bnxt_set_vnic_mru_p5(bp, vnic, 0);
-+		bnxt_set_vnic_mru_p5(bp, vnic, 0, idx);
+@@ -1847,7 +1847,7 @@ int otx2_nix_cpt_config_bp(struct otx2_nic *pfvf, bool enable)
+ 		req->chan_cnt = IEEE_8021QAZ_MAX_TCS;
+ 		req->bpid_per_chan = 1;
+ 	} else {
+-		req->chan_cnt = 1;
++		req->chan_cnt = pfvf->hw.rx_chan_cnt;
+ 		req->bpid_per_chan = 0;
  	}
-+	bnxt_set_rss_ctx_vnic_mru(bp, 0, idx);
- 	/* Make sure NAPI sees that the VNIC is disabled */
- 	synchronize_net();
- 	rxr = &bp->rx_ring[idx];
+ 
 -- 
 2.39.5
 
