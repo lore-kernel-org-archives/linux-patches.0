@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA74F1F1522;
-	Mon, 23 Jun 2025 13:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EB3136988;
+	Mon, 23 Jun 2025 13:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750684445; cv=none; b=MRVy2Q9Dh71nqACmuZ9e/gy0g86qnq3t/ZPyGtAhqo2da4Tx+9XJuH1KxHnlWPK3pXT0CgUY66GNclIpezE+Ca7GsrLPCi++dKEVPIrtNMZgD4Z7i1flLCVI3Fltn41/++PIgreCCgjJ0STbNEi89e6zbJNiZ94Kqw66FSCCqjU=
+	t=1750684448; cv=none; b=re1uumHU/XcNisSsrrAL4J+vYJRowXM25Xh+XJVW5oubsIoRrOTKQRbkVeVqzXeJxm3yhSGA/36Ja/1qTdLrtVM9DwW3+OpISY4oZQfq34RgLgycDP7FFH3xR1EZPZorHENqxc+c1hoOF0RlqitCzYguGllO1He6xqle2BIjYlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750684445; c=relaxed/simple;
-	bh=Agv1rhOS86S3ZLQsHQvq7ELEF+zP/RtOCKLf37HbDgw=;
+	s=arc-20240116; t=1750684448; c=relaxed/simple;
+	bh=Xx+NL1YRsldX3VOgekdgfztRDHwTSQodVUu/ts3zKzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXvcFj+SttSWCW3bhJkXH5agpQJVluTArWzPO01I1iiItVJSDzZ54Jzumc6rWmcT1lFrUbcp4LArwbqmk+EHNl3OT4YGfcuMZC+zH2ZVwkgoxYxHDVFeYROCpSMSQW7vndeAupjhfihYH52b6E/mjrKkmqNJgAmKiCoek9Q7Nq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szTp9uYZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cdz6NIQhfZRfpLfBkwr5Tnrb7JgMLaSUKLGSs9cJQEi6cEHnlf58yAADzSNzXiKxHksHpSr78OEYbdS8Xkzsmp+2OASkmTaQBP4ltH2BdS2qflU1iuHpRooGh6aXAJnIZ9Xuqt72ijLAiwn7HIBqLbSDJ4Bhf5SzRdpk+1iqas4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jb4MXJTi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szTp9uYZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B94C4CEEA;
-	Mon, 23 Jun 2025 13:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jb4MXJTi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D691C4CEEA;
+	Mon, 23 Jun 2025 13:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750684445;
-	bh=Agv1rhOS86S3ZLQsHQvq7ELEF+zP/RtOCKLf37HbDgw=;
+	s=korg; t=1750684448;
+	bh=Xx+NL1YRsldX3VOgekdgfztRDHwTSQodVUu/ts3zKzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szTp9uYZtKATunhts973J0JMaYUXMzdP44wtbRmCiLSzTrXrH+8AGxw2NLgKSO3Nu
-	 +IeEoaasVnRgomHQ91y0FnIr7vRa5nyF6PW9S5RUbC+bjyY44SwX4QFWRfUKSuWyKL
-	 2jdVzIR+4Iz37hMcn/skHym7sI3/mU81HfYMXszw=
+	b=jb4MXJTiqEHI4dXMUjhv25EhqqLOCIfxa2/E/8oo8ITeZ3nbQvO0YUfc7Rs5srIn7
+	 7CjwLNtczWDCiSgxiBkytDAVCqsdQiGgVdniXCh0uC/r5jZxNAD/LK2Wpi7NWGvtOh
+	 wdZRSQy4Tu05uvVqVjxV53q2Cr9yOByue1r1fFoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.15 070/592] media: imagination: fix a potential memory leak in e5010_probe()
-Date: Mon, 23 Jun 2025 15:00:28 +0200
-Message-ID: <20250623130701.928209971@linuxfoundation.org>
+Subject: [PATCH 6.15 071/592] media: intel/ipu6: Fix dma mask for non-secure mode
+Date: Mon, 23 Jun 2025 15:00:29 +0200
+Message-ID: <20250623130701.953002541@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
 References: <20250623130700.210182694@linuxfoundation.org>
@@ -51,48 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
 
-commit 609ba05b9484856b08869f827a6edee51d51b5f3 upstream.
+commit 0209916ebe2475079ce6d8dc4114afbc0ccad1c2 upstream.
 
-Add video_device_release() to release the memory allocated by
-video_device_alloc() if something goes wrong.
+We use dma_get_mask() of auxdev device for calculate iova pfn limit.
+This is always 32 bit mask as we do not initialize the mask (and we can
+not do so, since dev->dev_mask is NULL anyways for auxdev).
 
-Fixes: a1e294045885 ("media: imagination: Add E5010 JPEG Encoder driver")
+Since we need 31 bit mask for non-secure mode use mmu_info->aperture_end
+which is properly initialized to correct mask for both modes.
+
+Fixes: daabc5c64703 ("media: ipu6: not override the dma_ops of device in driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/imagination/e5010-jpeg-enc.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/media/pci/intel/ipu6/ipu6-dma.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/imagination/e5010-jpeg-enc.c
-+++ b/drivers/media/platform/imagination/e5010-jpeg-enc.c
-@@ -1057,8 +1057,11 @@ static int e5010_probe(struct platform_d
- 	e5010->vdev->lock = &e5010->mutex;
+--- a/drivers/media/pci/intel/ipu6/ipu6-dma.c
++++ b/drivers/media/pci/intel/ipu6/ipu6-dma.c
+@@ -172,7 +172,7 @@ void *ipu6_dma_alloc(struct ipu6_bus_dev
+ 	count = PHYS_PFN(size);
  
- 	ret = v4l2_device_register(dev, &e5010->v4l2_dev);
--	if (ret)
--		return dev_err_probe(dev, ret, "failed to register v4l2 device\n");
-+	if (ret) {
-+		dev_err_probe(dev, ret, "failed to register v4l2 device\n");
-+		goto fail_after_video_device_alloc;
-+	}
-+
+ 	iova = alloc_iova(&mmu->dmap->iovad, count,
+-			  PHYS_PFN(dma_get_mask(dev)), 0);
++			  PHYS_PFN(mmu->dmap->mmu_info->aperture_end), 0);
+ 	if (!iova)
+ 		goto out_kfree;
  
- 	e5010->m2m_dev = v4l2_m2m_init(&e5010_m2m_ops);
- 	if (IS_ERR(e5010->m2m_dev)) {
-@@ -1118,6 +1121,8 @@ fail_after_video_register_device:
- 	v4l2_m2m_release(e5010->m2m_dev);
- fail_after_v4l2_register:
- 	v4l2_device_unregister(&e5010->v4l2_dev);
-+fail_after_video_device_alloc:
-+	video_device_release(e5010->vdev);
- 	return ret;
- }
+@@ -398,7 +398,7 @@ int ipu6_dma_map_sg(struct ipu6_bus_devi
+ 		nents, npages);
+ 
+ 	iova = alloc_iova(&mmu->dmap->iovad, npages,
+-			  PHYS_PFN(dma_get_mask(dev)), 0);
++			  PHYS_PFN(mmu->dmap->mmu_info->aperture_end), 0);
+ 	if (!iova)
+ 		return 0;
  
 
 
