@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C5C223708;
-	Mon, 23 Jun 2025 22:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93B3B676;
+	Mon, 23 Jun 2025 22:15:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750716945; cv=none; b=nVhA9cKh4pTFvyFddiQ6ZhP6LpVA+z0KU6Doi9q4MJcFAgfL5ONpT1bbpEaXMKDXt81KGdmvtR28TZxNWWsng4UPoH70nm+HBedqXBmieZQYgvwFXpJnP20zE0AcKdLcayoSobJ6Xdlbtw1vRrCYL5I25jYoMxojwdF8yBXOiE0=
+	t=1750716948; cv=none; b=h9UqNtDw4vJtZalnbG9hTezGklp0NkSdIV4m/pzM+zHH6E/KxFGgtU39IkCikGyjTnqHXd1cscEnYrQpYaW8L4YYjVf/AVm8cfZOX9H91XVq0kANBF3Hd2c8Bb8WB2Gy778AjH/yvGHfUV3XC+g4bqJnChpbmKcDGNVdfIWxj98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750716945; c=relaxed/simple;
-	bh=HuUfRxYG8UXuix0L7HYfA64LTW9pbhxlq8iRAvzZrUg=;
+	s=arc-20240116; t=1750716948; c=relaxed/simple;
+	bh=68TG0JlPYAzZQ9ZaIFw6vnIvNKgsqqm6zFOwlq0L+W0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dn8BCaC8CYzMIHbjdrnbyIWcN5HBIVhW2Q5Wys9qwLtVZF9HSPDMj3NxRA3/WyOH70AUurjOfq8kbPM8kR0mB/48Vr3jGhQozy6xcavHbT7eyK11YdNTdw6lYNtSKdCEXQll4Yp9jwTG8CWtoVjhKXtA+wPjeiV9cXO8SFh+GyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vc2RSTOZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jnfpl2AlmAS71pq+ej5RhbZirkV5Ej8inAZvx3s5mfe9gbna1rdor5dU7LtcRDgM2CYLPywQGNf2Xh1dC9BcSiu9lGxK2MU2W7METpOyuxgLFIxCxvZitjyvieCSF/U7+acVBHTjo46D2SY+PShV2Ge0O8idM14iSYr1Us6Z7KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5dIvLDp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vc2RSTOZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B15BC4CEEA;
-	Mon, 23 Jun 2025 22:15:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5dIvLDp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A48C4CEEA;
+	Mon, 23 Jun 2025 22:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750716945;
-	bh=HuUfRxYG8UXuix0L7HYfA64LTW9pbhxlq8iRAvzZrUg=;
+	s=korg; t=1750716947;
+	bh=68TG0JlPYAzZQ9ZaIFw6vnIvNKgsqqm6zFOwlq0L+W0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vc2RSTOZ6z6pRW1VIXnC/K3IAFKT9eJF/t+v/4BfRCubhS0WeW9iWPzr0SHZ3fkVK
-	 2pvRNke3l3SKtaf79eINByogMVpWoHpKxBa+Wv941a1vZJPBXYxAN/fy02qT2Z7lP9
-	 rocqjAITXX0lWNvIyVg125YidnjQ7U1kIPqqAbMo=
+	b=D5dIvLDpniqUONPtcHT5yeXwzvFs+9gxC60/q/bWD9mo7wdKDjs6x3mNvn6EnBiVh
+	 S3FevYGhAyfex+/dXFjJtUfpr/37Mqr20mlVHs1m4IhUpNiwyhv/Ns0Seea48+Bstl
+	 Nn3JuKGAH2mcJWnNt99zIWjzs4H9uUepPGTyIME0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <ziyao@disroot.org>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 300/414] platform/loongarch: laptop: Add backlight power control support
-Date: Mon, 23 Jun 2025 15:07:17 +0200
-Message-ID: <20250623130649.505761450@linuxfoundation.org>
+	Baisheng Gao <baisheng.gao@unisoc.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 571/592] perf: Fix sample vs do_exit()
+Date: Mon, 23 Jun 2025 15:08:49 +0200
+Message-ID: <20250623130714.022935989@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623130642.015559452@linuxfoundation.org>
-References: <20250623130642.015559452@linuxfoundation.org>
+In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
+References: <20250623130700.210182694@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,149 +48,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yao Zi <ziyao@disroot.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 53c762b47f726e4079a1f06f684bce2fc0d56fba upstream.
+[ Upstream commit 4f6fc782128355931527cefe3eb45338abd8ab39 ]
 
-loongson_laptop_turn_{on,off}_backlight() are designed for controlling
-the power of the backlight, but they aren't really used in the driver
-previously.
+Baisheng Gao reported an ARM64 crash, which Mark decoded as being a
+synchronous external abort -- most likely due to trying to access
+MMIO in bad ways.
 
-Unify these two functions since they only differ in arguments passed to
-ACPI method, and wire up loongson_laptop_backlight_update() to update
-the power state of the backlight as well. Tested on the TongFang L860-T2
-Loongson-3A5000 laptop.
+The crash further shows perf trying to do a user stack sample while in
+exit_mmap()'s tlb_finish_mmu() -- i.e. while tearing down the address
+space it is trying to access.
 
-Cc: stable@vger.kernel.org
-Fixes: 6246ed09111f ("LoongArch: Add ACPI-based generic laptop driver")
-Signed-off-by: Yao Zi <ziyao@disroot.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+It turns out that we stop perf after we tear down the userspace mm; a
+receipie for disaster, since perf likes to access userspace for
+various reasons.
+
+Flip this order by moving up where we stop perf in do_exit().
+
+Additionally, harden PERF_SAMPLE_CALLCHAIN and PERF_SAMPLE_STACK_USER
+to abort when the current task does not have an mm (exit_mm() makes
+sure to set current->mm = NULL; before commencing with the actual
+teardown). Such that CPU wide events don't trip on this same problem.
+
+Fixes: c5ebcedb566e ("perf: Add ability to attach user stack dump to sample")
+Reported-by: Baisheng Gao <baisheng.gao@unisoc.com>
+Suggested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20250605110815.GQ39944@noisy.programming.kicks-ass.net
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/loongarch/loongson-laptop.c |   73 +++++++++++++--------------
- 1 file changed, 37 insertions(+), 36 deletions(-)
+ kernel/events/core.c |  7 +++++++
+ kernel/exit.c        | 17 +++++++++--------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
---- a/drivers/platform/loongarch/loongson-laptop.c
-+++ b/drivers/platform/loongarch/loongson-laptop.c
-@@ -56,8 +56,7 @@ static struct input_dev *generic_inputde
- static acpi_handle hotkey_handle;
- static struct key_entry hotkey_keycode_map[GENERIC_HOTKEY_MAP_MAX];
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index e97bc9220fd1a..ec77f641089a2 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -7363,6 +7363,10 @@ perf_sample_ustack_size(u16 stack_size, u16 header_size,
+ 	if (!regs)
+ 		return 0;
  
--int loongson_laptop_turn_on_backlight(void);
--int loongson_laptop_turn_off_backlight(void);
-+static bool bl_powered;
- static int loongson_laptop_backlight_update(struct backlight_device *bd);
- 
- /* 2. ACPI Helpers and device model */
-@@ -354,16 +353,42 @@ static int ec_backlight_level(u8 level)
- 	return level;
- }
- 
-+static int ec_backlight_set_power(bool state)
-+{
-+	int status;
-+	union acpi_object arg0 = { ACPI_TYPE_INTEGER };
-+	struct acpi_object_list args = { 1, &arg0 };
++	/* No mm, no stack, no dump. */
++	if (!current->mm)
++		return 0;
 +
-+	arg0.integer.value = state;
-+	status = acpi_evaluate_object(NULL, "\\BLSW", &args, NULL);
-+	if (ACPI_FAILURE(status)) {
-+		pr_info("Loongson lvds error: 0x%x\n", status);
-+		return -EIO;
-+	}
+ 	/*
+ 	 * Check if we fit in with the requested stack size into the:
+ 	 * - TASK_SIZE
+@@ -8074,6 +8078,9 @@ perf_callchain(struct perf_event *event, struct pt_regs *regs)
+ 	const u32 max_stack = event->attr.sample_max_stack;
+ 	struct perf_callchain_entry *callchain;
+ 
++	if (!current->mm)
++		user = false;
 +
-+	return 0;
-+}
+ 	if (!kernel && !user)
+ 		return &__empty_callchain;
+ 
+diff --git a/kernel/exit.c b/kernel/exit.c
+index 1b51dc099f1e0..771dd7b226c18 100644
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -937,6 +937,15 @@ void __noreturn do_exit(long code)
+ 	tsk->exit_code = code;
+ 	taskstats_exit(tsk, group_dead);
+ 
++	/*
++	 * Since sampling can touch ->mm, make sure to stop everything before we
++	 * tear it down.
++	 *
++	 * Also flushes inherited counters to the parent - before the parent
++	 * gets woken up by child-exit notifications.
++	 */
++	perf_event_exit_task(tsk);
 +
- static int loongson_laptop_backlight_update(struct backlight_device *bd)
- {
--	int lvl = ec_backlight_level(bd->props.brightness);
-+	bool target_powered = !backlight_is_blank(bd);
-+	int ret = 0, lvl = ec_backlight_level(bd->props.brightness);
+ 	exit_mm();
  
- 	if (lvl < 0)
- 		return -EIO;
-+
- 	if (ec_set_brightness(lvl))
- 		return -EIO;
+ 	if (group_dead)
+@@ -953,14 +962,6 @@ void __noreturn do_exit(long code)
+ 	exit_task_work(tsk);
+ 	exit_thread(tsk);
  
--	return 0;
-+	if (target_powered != bl_powered) {
-+		ret = ec_backlight_set_power(target_powered);
-+		if (ret < 0)
-+			return ret;
-+
-+		bl_powered = target_powered;
-+	}
-+
-+	return ret;
- }
- 
- static int loongson_laptop_get_brightness(struct backlight_device *bd)
-@@ -384,7 +409,7 @@ static const struct backlight_ops backli
- 
- static int laptop_backlight_register(void)
- {
--	int status = 0;
-+	int status = 0, ret;
- 	struct backlight_properties props;
- 
- 	memset(&props, 0, sizeof(props));
-@@ -392,44 +417,20 @@ static int laptop_backlight_register(voi
- 	if (!acpi_evalf(hotkey_handle, &status, "ECLL", "d"))
- 		return -EIO;
- 
-+	ret = ec_backlight_set_power(true);
-+	if (ret)
-+		return ret;
-+
-+	bl_powered = true;
-+
- 	props.max_brightness = status;
- 	props.brightness = ec_get_brightness();
-+	props.power = BACKLIGHT_POWER_ON;
- 	props.type = BACKLIGHT_PLATFORM;
- 
- 	backlight_device_register("loongson_laptop",
- 				NULL, NULL, &backlight_laptop_ops, &props);
- 
--	return 0;
--}
+-	/*
+-	 * Flush inherited counters to the parent - before the parent
+-	 * gets woken up by child-exit notifications.
+-	 *
+-	 * because of cgroup mode, must be called before cgroup_exit()
+-	 */
+-	perf_event_exit_task(tsk);
 -
--int loongson_laptop_turn_on_backlight(void)
--{
--	int status;
--	union acpi_object arg0 = { ACPI_TYPE_INTEGER };
--	struct acpi_object_list args = { 1, &arg0 };
--
--	arg0.integer.value = 1;
--	status = acpi_evaluate_object(NULL, "\\BLSW", &args, NULL);
--	if (ACPI_FAILURE(status)) {
--		pr_info("Loongson lvds error: 0x%x\n", status);
--		return -ENODEV;
--	}
--
--	return 0;
--}
--
--int loongson_laptop_turn_off_backlight(void)
--{
--	int status;
--	union acpi_object arg0 = { ACPI_TYPE_INTEGER };
--	struct acpi_object_list args = { 1, &arg0 };
--
--	arg0.integer.value = 0;
--	status = acpi_evaluate_object(NULL, "\\BLSW", &args, NULL);
--	if (ACPI_FAILURE(status)) {
--		pr_info("Loongson lvds error: 0x%x\n", status);
--		return -ENODEV;
--	}
+ 	sched_autogroup_exit_task(tsk);
+ 	cgroup_exit(tsk);
  
- 	return 0;
- }
+-- 
+2.39.5
+
 
 
