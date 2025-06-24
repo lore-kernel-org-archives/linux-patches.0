@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9D4230BC8;
-	Tue, 24 Jun 2025 04:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152572222B2;
+	Tue, 24 Jun 2025 04:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738322; cv=none; b=tvRjwBNlIrtwU6rkS2qLz3oAbZ4XxQInjEPrEIe265PSF8VGz53r0kx8fpVl/gaH+TxIKNhVfl3Jk148oKfSdy8BbtID4povG2eySUUuTinQriH0MTUFPL6ZzvaC/sHMm4yP5hjztOGRSYovQQdOc+2qRVdkdIrvFt8uuZlK1TU=
+	t=1750738324; cv=none; b=GfzBFrrcPCV3DiEABnsJNoly8RusUvncCRe5x2OQKs62iqu8mBpIU+xXDJvgLpwjWGM3V5nSb77zCSR3GrxkRYOsgEUV8a7TcbwT5d++TGIWPI53PyzpkHhBuHeGefs9AURRhR/gPQ3c0EBrH8heMsOnoEXNSEqdIykqsMGx2ZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738322; c=relaxed/simple;
-	bh=+vmQseMJm0Csnk8ZH7N0eziFnpNk9CZVqw+zqztxKS8=;
+	s=arc-20240116; t=1750738324; c=relaxed/simple;
+	bh=ogJzCtbdZDyQ8mP1cKnPHiwakfVCOJh4f6N35C/rkvg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=AMQig2zvVgeWf6h4ptYzLfxJNbo1yrkwSVKYcRLp5uJDy08BLUAIxs0gRJGKWdTPsI96VoIQRZOzpkiA5HADnDWzyYtfpMv4+QUKpW6sYNt35nvkFgQlMTfMSKH+4IX9/uNfSHfQG+Lhm+dfRj+O3lhfXU4US3UXif6G+45VBGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vL1BS2Pc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=L0DQKXo77k6dxW1iBMS7X+7PuyizIdhTXNiJGXyq3aXMXuRGj+Za+t5DFLOFjFCQqKNDR0mqGnBQRVqHyQ1evOogUv8KVSyItJfKVJWwFf1VuUDuU6R7ufJq8YTqZzumRCQk6o6zucDkpBNS4/2tHg/fyPRWawqLq+PQp/OB5Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nY0Y29ga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vL1BS2Pc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8798BC4CEEF;
-	Tue, 24 Jun 2025 04:12:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nY0Y29ga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C72C4CEEF;
+	Tue, 24 Jun 2025 04:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738321;
-	bh=+vmQseMJm0Csnk8ZH7N0eziFnpNk9CZVqw+zqztxKS8=;
+	s=k20201202; t=1750738324;
+	bh=ogJzCtbdZDyQ8mP1cKnPHiwakfVCOJh4f6N35C/rkvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vL1BS2PcSEeOQAu88LiawroiBLxsYvCHGB/tLKDMofvcWCvmzzv7cG13QhnbdaHdG
-	 8K+aqgOqV7ILmo+ZurJQUFfcTiG7MNuRF32sS0yquVtXOBFx0fe+SBz7V2gxSXt+Gm
-	 E872clS530VDvsCkYOKfXsQrX/+//uTW4RWQDJxFG7l3K/sFIMnvYplrU9k6KOgyKp
-	 ZJ1g98LU+oX8Rf0XgRiN2Uy2QYb7cwYBowRf+w34716XX7wIT2F5TwPYkV752xf5s+
-	 HefByfAcoQkr1cJwZ1gyJlYldL3VBbR6ByzO5QPctvl7Xr5HVRLEC0z+0FueCCzytj
-	 48Kty2zgkpz3A==
+	b=nY0Y29gaSWaXdhaSOAwCu8v4ITIKe86b8fvjyQ+TsdTn+ettsFK8agRxYpbM/7XLH
+	 tOH1NJJnQ+MlXONzckM+0gpOcHjhQgYlnLRKHQzs8DxUzEyqUEHMxexo3eO3rxVZUT
+	 KtBXQc9qKXLLH2qfF7OaUXMySWg60Dl6tE4pQpx5rnExJJLi3R+sMXtRkQb3Pjt9lm
+	 s8SdH1pSehkLefEaoiWVIFIGVxgs0q4voFsdO1XZ7WIBhoh/1GyDpkTp6YzsONIdiL
+	 2cbR9WzEeVwuQTOcXdwW9qBXZ/zrH0suq+PI3Ke1QMa20GaaKWCNDL6eHRIy8Yv0jg
+	 qp67EXl3REx8w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Tulio Magno <tuliom@ascii.art.br>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Justin M . Forbes" <jforbes@fedoraproject.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.12 10/19] powerpc: Fix struct termio related ioctl macros
-Date: Tue, 24 Jun 2025 00:11:39 -0400
-Message-Id: <20250624041149.83674-10-sashal@kernel.org>
+Cc: Raven Black <ravenblack@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	mario.limonciello@amd.com,
+	venkataprasad.potturu@amd.com,
+	tiwai@suse.de,
+	talhah.peerbhai@gmail.com
+Subject: [PATCH AUTOSEL 6.12 11/19] ASoC: amd: yc: update quirk data for HP Victus
+Date: Tue, 24 Jun 2025 00:11:40 -0400
+Message-Id: <20250624041149.83674-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041149.83674-1-sashal@kernel.org>
 References: <20250624041149.83674-1-sashal@kernel.org>
@@ -50,100 +51,115 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.34
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: Raven Black <ravenblack@gmail.com>
 
-[ Upstream commit ab107276607af90b13a5994997e19b7b9731e251 ]
+[ Upstream commit 13b86ea92ebf0fa587fbadfb8a60ca2e9993203f ]
 
-Since termio interface is now obsolete, include/uapi/asm/ioctls.h
-has some constant macros referring to "struct termio", this caused
-build failure at userspace.
+Make the internal microphone work on HP Victus laptops.
 
-In file included from /usr/include/asm/ioctl.h:12,
-                 from /usr/include/asm/ioctls.h:5,
-                 from tst-ioctls.c:3:
-tst-ioctls.c: In function 'get_TCGETA':
-tst-ioctls.c:12:10: error: invalid application of 'sizeof' to incomplete type 'struct termio'
-   12 |   return TCGETA;
-      |          ^~~~~~
-
-Even though termios.h provides "struct termio", trying to juggle definitions around to
-make it compile could introduce regressions. So better to open code it.
-
-Reported-by: Tulio Magno <tuliom@ascii.art.br>
-Suggested-by: Nicholas Piggin <npiggin@gmail.com>
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
-Reviewed-by: Michael Ellerman <mpe@ellerman.id.au>
-Closes: https://lore.kernel.org/linuxppc-dev/8734dji5wl.fsf@ascii.art.br/
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250517142237.156665-1-maddy@linux.ibm.com
+Signed-off-by: Raven Black <ravenblack@gmail.com>
+Link: https://patch.msgid.link/20250613-support-hp-victus-microphone-v1-1-bebc4c3a2041@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Fixes a real build failure**: The commit message clearly documents
-   a userspace build failure when `asm/ioctls.h` is included without
-   `struct termio` being defined. This breaks userspace programs that
-   use these ioctl definitions.
+## Analysis of the Commit
 
-2. **Simple and contained fix**: The change is minimal and low-risk - it
-   merely replaces macro calls with their hardcoded equivalents. The
-   hardcoded values (0x40147417, 0x80147418, 0x80147419, 0x8014741c) are
-   the exact expansion of the original macros for a 20-byte `struct
-   termio` on PowerPC.
+### 1. **Nature of the Change**
+The commit adds a simple DMI (Desktop Management Interface) quirk entry
+to enable the internal microphone on HP Victus Gaming Laptop 15-fb2xxx.
+The change consists of adding just 7 lines to the `yc_acp_quirk_table[]`
+array:
 
-3. **Follows established patterns**: Other architectures (sh and xtensa)
-   already use this same approach of hardcoding the values with comments
-   showing the original macro. This indicates it's a known and accepted
-   solution.
+```c
++       {
++               .driver_data = &acp6x_card,
++               .matches = {
++                       DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++                       DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming
+Laptop 15-fb2xxx"),
++               }
++       },
+```
 
-4. **No functional changes**: The ioctl values remain exactly the same -
-   only the way they're defined changes. This ensures binary
-   compatibility is maintained.
+### 2. **Comparison with Similar Commits**
+All 5 historical similar commits provided were marked as "Backport
+Status: YES" and share identical characteristics:
+- Same file modified (sound/soc/amd/yc/acp6x-mach.c)
+- Same type of change (adding DMI quirk entries)
+- Same purpose (enabling internal microphone on specific laptop models)
+- Similar commit messages mentioning microphone support
+- All are HP laptop models (except one MECHREVO)
 
-5. **Prevents future issues**: As noted in the commit message, the
-   termio interface is obsolete, and trying to reorganize header files
-   to fix this properly could introduce regressions. The hardcoded
-   approach is safer.
+### 3. **Meets Stable Backport Criteria**
 
-6. **Clear user impact**: The commit includes a specific example of the
-   build failure with line numbers and error messages, demonstrating
-   this affects real users (reported by Tulio Magno).
+**✓ Fixes a real bug affecting users**: Without this quirk, the internal
+microphone on HP Victus Gaming Laptop 15-fb2xxx doesn't work, which is a
+functional regression for users of this hardware.
 
-7. **Tested**: The commit indicates it was tested by Justin M. Forbes,
-   providing confidence in the fix.
+**✓ Small and contained change**: The patch is minimal - only 7 lines
+adding a DMI match entry to an existing quirk table. No logic changes,
+no new features.
 
-The commit follows the stable tree rules by fixing an important bug
-(build failure) with minimal risk of regression, making it an ideal
-candidate for backporting.
+**✓ No architectural changes**: This is a simple hardware enablement
+quirk, not modifying any kernel architecture.
 
- arch/powerpc/include/uapi/asm/ioctls.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+**✓ Minimal risk of regression**:
+- The change only affects systems that match the specific DMI strings
+- Cannot affect other hardware configurations
+- Uses the same `acp6x_card` driver data as other entries
+- Pattern is well-established in the codebase
 
-diff --git a/arch/powerpc/include/uapi/asm/ioctls.h b/arch/powerpc/include/uapi/asm/ioctls.h
-index 2c145da3b774a..b5211e413829a 100644
---- a/arch/powerpc/include/uapi/asm/ioctls.h
-+++ b/arch/powerpc/include/uapi/asm/ioctls.h
-@@ -23,10 +23,10 @@
- #define TCSETSW		_IOW('t', 21, struct termios)
- #define TCSETSF		_IOW('t', 22, struct termios)
- 
--#define TCGETA		_IOR('t', 23, struct termio)
--#define TCSETA		_IOW('t', 24, struct termio)
--#define TCSETAW		_IOW('t', 25, struct termio)
--#define TCSETAF		_IOW('t', 28, struct termio)
-+#define TCGETA		0x40147417 /* _IOR('t', 23, struct termio) */
-+#define TCSETA		0x80147418 /* _IOW('t', 24, struct termio) */
-+#define TCSETAW		0x80147419 /* _IOW('t', 25, struct termio) */
-+#define TCSETAF		0x8014741c /* _IOW('t', 28, struct termio) */
- 
- #define TCSBRK		_IO('t', 29)
- #define TCXONC		_IO('t', 30)
+**✓ Hardware enablement**: This is pure hardware enablement for audio
+functionality, which is a common reason for stable backports.
+
+### 4. **Technical Safety**
+The code change:
+- Adds to an existing array without modifying existing entries
+- Uses standard DMI matching infrastructure
+- Follows the exact same pattern as dozens of other entries in the same
+  table
+- The `acp6x_card` structure is already defined and used by many other
+  entries
+
+### 5. **User Impact**
+Users of HP Victus Gaming Laptop 15-fb2xxx running stable kernels would
+benefit from having their internal microphone work correctly without
+waiting for the next major kernel release.
+
+This commit is an ideal candidate for stable backporting as it's a
+minimal, safe hardware enablement fix that follows well-established
+patterns in the codebase.
+
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 9ce4339680e35..dce17f0bfab9e 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -507,6 +507,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16z-n000"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming Laptop 15-fb2xxx"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.39.5
 
