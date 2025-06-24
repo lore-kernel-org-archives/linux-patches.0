@@ -1,39 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECFA19F480;
-	Tue, 24 Jun 2025 10:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E6327FD71;
+	Tue, 24 Jun 2025 10:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750759799; cv=none; b=GD4KA4JaBeXTQiWye89J3pUmqMoukrBDtf/bEC0S8C3ruRIdBoLejVhyK7sFSnmdyjexzJoynDXCrxr2v3Kj234chYNNOGu1gE0xaeqOBuPsWob2xLPcceQGjY8yFy5F90BldFeEtebGI1HzwOYc+j6YwMZJvOUnBbX1nZ2oeW8=
+	t=1750760077; cv=none; b=irhilUMK+3R0IQfnS+gvaexRC/pNG6JBwNlYIpTkgD9Dp2Shuhs/utDR4YJvg95q3ys22hPDeevFhnTfUBa+5vlOGLFSFa0nCBq5RD0e0E/jdxnBZk0gY60ubS+tSLX6Hko4RxVM/l77H+BWq/LgLTcRdIjke6V1UN1DsvQZPfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750759799; c=relaxed/simple;
-	bh=J9RJ3coPB46I++cggYob00efMH6HCcP8JaBmVfloOUE=;
+	s=arc-20240116; t=1750760077; c=relaxed/simple;
+	bh=nrP7ZtDg8PghhrvJl12FrPeewB/my8icK6QKy2cwsKI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FY/rbzuxKsE6L8wIpH+OsbCxUOvvQFEkp1KqMHsbY0WZ8v0Y+t+wHoHcj1KL+iGej3uz1oqwoZmNMfpYrHNZfT986wyCYJqirVvauAABcyeXVrxMYFWkHsdg+vwbATOafd89eLc6F4j/dAaL38Z69nNGsweHkG/4O547JZLvX+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hY1p/XLi; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=TdWU5PJpnxo9d6fyzslPuMDwjX8YvGtwFeCN0LtXDZhDfI+Cjuo40U4Mjy8FJjH2th7F6Vz8Xa62JiNQw0nU2xN+t7SQErkZuK4iTwSXEk7jmU0LvifN20FB5Rz11O4ARfW6OMhDTTo84DYqL0sE49xBIWOpnsg3N7WGginMxD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nesixPWF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hY1p/XLi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C92C4CEE3;
-	Tue, 24 Jun 2025 10:09:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750759799;
-	bh=J9RJ3coPB46I++cggYob00efMH6HCcP8JaBmVfloOUE=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nesixPWF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90B0C4CEEE;
+	Tue, 24 Jun 2025 10:14:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750760076;
+	bh=nrP7ZtDg8PghhrvJl12FrPeewB/my8icK6QKy2cwsKI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hY1p/XLiVvvKYKMVeJ9kjrjdO3KVafXqNfw3ofVh9n4ScQTRupVC6KU4DLsO5ir6O
-	 LVcW6W7M9uW1Yely0243bvMhFi7z3LVJlXbomGGylkOmzpoEZM904OzBvktvmuT8FY
-	 Ac3S4reg4WXUNOguhRMcfvjbR3qDCzw5aMsA6U2E=
-Date: Tue, 24 Jun 2025 11:09:56 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Anton Protopopov <a.s.protopopov@gmail.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 044/355] libbpf: Use proper errno value in nlattr
-Message-ID: <2025062435-hence-ultimate-a8ac@gregkh>
-References: <20250623130626.716971725@linuxfoundation.org>
- <20250623130628.151124578@linuxfoundation.org>
- <aFlcsaJuwG9HQf6S@mail.gmail.com>
+	b=nesixPWFd9q/ggOLi71qsoH+I6BbH8l2ORpuQof/QimdccCOXe6JsJwUCLnXc8IU/
+	 rMJTBNEV61YhY6V9csCkyWrw56rf7x4JIAvS+bh61D2lAU107XD+x8BgZpal+8PjHn
+	 tIhX9ja3h9rimLfkdrijxGK/45eQmoHrILB/Xit9CUUf1R/W+8ic34trdcK6GwMa/W
+	 u/P/JlOsuXtwcdbwjZ6+pXDhhz/zjiSTq8A/JHcGkPVGE6g/TPVh9hDHin9s99dQij
+	 wsBIbbUN3FlUdBLWqqd1XfdB2gL/p9Aapz0oW4iTpqe4Vgd76Omthh+Jh/4hJadA3X
+	 C+XxUZMTV7sPQ==
+Date: Tue, 24 Jun 2025 12:14:32 +0200
+From: Danilo Krummrich <dakr@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Thorsten Leemhuis <linux@leemhuis.info>,
+	Benno Lossin <lossin@kernel.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>,
+	Sasha Levin <sashal@kernel.org>, Miguel Ojeda <ojeda@kernel.org>,
+	Christian Heusel <christian@heusel.eu>
+Subject: Re: [PATCH 6.15 515/592] rust: devres: fix race in Devres::drop()
+Message-ID: <aFp6iA8zwL9XX6US@pollux>
+References: <20250623130700.210182694@linuxfoundation.org>
+ <20250623130712.686988131@linuxfoundation.org>
+ <DAUALX71J38F.2E1VBF0YH27KQ@kernel.org>
+ <eYjMg1ry65KlJgUKnqEjkoG6RkGBk1xtTYP1Af8fRBlrZyO8jOIrnAPs209lnvPqLwwwI0uQimzOx-EjmuhPEQ==@protonmail.internalid>
+ <025d9611-2a7f-40fd-9124-7b62fe6c5e84@leemhuis.info>
+ <DAULY9E26AKQ.3DCD5IW7CWUI7@kernel.org>
+ <ae03cf82-dfda-46fc-914d-2e329cd8d3da@leemhuis.info>
+ <2025062439-scheming-scale-7ab0@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,125 +52,25 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aFlcsaJuwG9HQf6S@mail.gmail.com>
+In-Reply-To: <2025062439-scheming-scale-7ab0@gregkh>
 
-On Mon, Jun 23, 2025 at 01:54:57PM +0000, Anton Protopopov wrote:
-> On 25/06/23 03:04PM, Greg Kroah-Hartman wrote:
-> > 5.10-stable review patch.  If anyone has any objections, please let me know.
+On Tue, Jun 24, 2025 at 10:03:42AM +0100, Greg Kroah-Hartman wrote:
+> On Tue, Jun 24, 2025 at 10:24:46AM +0200, Thorsten Leemhuis wrote:
+> > On 24.06.25 10:07, Benno Lossin wrote:
+> > > I tried applying it on top of v6.15.3 and that also results in a
+> > > conflict, but only in `bindgen_helpers.h` and `helpers.c`, so we can
+> > > simply provide a fixed patch.
 > > 
-> > ------------------
-> > 
-> > From: Anton Protopopov <a.s.protopopov@gmail.com>
-> > 
-> > [ Upstream commit fd5fd538a1f4b34cee6823ba0ddda2f7a55aca96 ]
-> > 
-> > Return value of the validate_nla() function can be propagated all the
-> > way up to users of libbpf API. In case of error this libbpf version
-> > of validate_nla returns -1 which will be seen as -EPERM from user's
-> > point of view. Instead, return a more reasonable -EINVAL.
-> > 
-> > Fixes: bbf48c18ee0c ("libbpf: add error reporting in XDP")
-> > Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-> > Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
-> > Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-> > Link: https://lore.kernel.org/bpf/20250510182011.2246631-1-a.s.protopopov@gmail.com
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> >  tools/lib/bpf/nlattr.c | 15 +++++++--------
-> >  1 file changed, 7 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/tools/lib/bpf/nlattr.c b/tools/lib/bpf/nlattr.c
-> > index 1a04299a2a604..35ad5a845a147 100644
-> > --- a/tools/lib/bpf/nlattr.c
-> > +++ b/tools/lib/bpf/nlattr.c
-> > @@ -63,16 +63,16 @@ static int validate_nla(struct nlattr *nla, int maxtype,
-> >  		minlen = nla_attr_minlen[pt->type];
-> >  
-> >  	if (libbpf_nla_len(nla) < minlen)
-> > -		return -1;
-> > +		return -EINVAL;
-> >  
-> >  	if (pt->maxlen && libbpf_nla_len(nla) > pt->maxlen)
-> > -		return -1;
-> > +		return -EINVAL;
-> >  
-> >  	if (pt->type == LIBBPF_NLA_STRING) {
-> >  		char *data = libbpf_nla_data(nla);
-> >  
-> >  		if (data[libbpf_nla_len(nla) - 1] != '\0')
-> > -			return -1;
-> > +			return -EINVAL;
-> >  	}
-> >  
-> >  	return 0;
-> > @@ -118,19 +118,18 @@ int libbpf_nla_parse(struct nlattr *tb[], int maxtype, struct nlattr *head,
-> >  		if (policy) {
-> >  			err = validate_nla(nla, maxtype, policy);
-> >  			if (err < 0)
-> > -				goto errout;
-> > +				return err;
-> >  		}
-> >  
-> > -		if (tb[type])
-> > +		if (tb[type]) {
-> >  			pr_warn("Attribute of type %#x found multiple times in message, "
-> >  				"previous attribute is being ignored.\n", type);
-> > +		}
-> >  
-> >  		tb[type] = nla;
-> >  	}
-> >  
-> > -	err = 0;
-> > -errout:
-> > -	return err;
-> > +	return 0;
-> >  }
-> >  
-> >  /**
-> > -- 
-> > 2.39.5
-> > 
+> > Yeah, that likely is needed to make Greg happy here.
 > 
-> The patch ^ is ok. But the rest of the letter below is unrelated:
-> 
-> > 
-> > wer/supply/bq27xxx_battery_i2c.c b/drivers/power/supply/bq27xxx_battery_i2c.c
-> > index ba0d22d904295..868e95f0887e1 100644
-> > --- a/drivers/power/supply/bq27xxx_battery_i2c.c
+> For now I'll just go drop this commit and wait for it to be submitted in
+> a series that actually builds.
 
-<snip>
+I'll send a series based on v6.15.3.
 
-Looks like the race condition in my local email scripts finally
-happened, I was sending all of these to my local instance at the same
-time and the temp file name overlapped.  Not bad for working well for
-20+ years, I guess it's finally time to fix it :)
+The dependencies you already dropped, i.e.
 
-The original patches here are fine, no need to worry, thanks for
-noticing it though, it's good to see people are reviewing this stuff.
+	queue-6.15/rust-devres-fix-doctest-build-under-config_pci.patch
+	queue-6.15/rust-devres-implement-devres-access.patch
 
-Here's the code if anyone wants to laugh at it:
-
-	# Create new unique filenames of the form
-	# MAILFILE:  ccyy-mm-dd-hh.mm.ss[-x].mail
-	# MSMTPFILE: ccyy-mm-dd-hh.mm.ss[-x].msmtp
-	# where x is a consecutive number only appended if you send more than one
-	# mail per second.
-	BASE="`date +%Y-%m-%d-%H.%M.%S`"
-	if [ -f "$BASE.mail" -o -f "$BASE.msmtp" ]; then
-		TMP="$BASE"
-		i=1
-		while [ -f "$TMP-$i.mail" -o -f "$TMP-$i.msmtp" ]; do
-			i=$(expr $i + 1)
-		done
-		BASE="$BASE-$i"
-	fi
-	MAILFILE="$BASE.mail"
-	MSMTPFILE="$BASE.msmtp"
-
-	# Write command line to $MSMTPFILE
-	echo "$@" > "$MSMTPFILE" || exit 1
-
-
-thanks,
-
-greg k-h
+won't be needed any more.
