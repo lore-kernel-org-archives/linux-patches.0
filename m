@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447B217A2E8;
-	Tue, 24 Jun 2025 10:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FCE25DB13;
+	Tue, 24 Jun 2025 10:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750760288; cv=none; b=FQURR/7QDT9wjvbv7kkKpZm9W7/QznR1jfJGniXSFb6a0d9YUhWYw/2RytBzLbrHuVsxpzJkchUaL4EHaddtVqqzADoydGIxTDZnAqm+aq+VpLDKoTshk6XECsZWAyvI8173FaReWWJ9WlQBeQmUzw1m7v8PqX4psSvQpLiWYbk=
+	t=1750760353; cv=none; b=W8PHYzNyEJbJQUU4yMOTIi9emd2zEcK1+hpT+A+fwPlVY2zLsX0VZw5nJCD1d9nk5m3a3rlEW8Sxkz9Rj4v5OmA2hoxgICQ7jrLctpZ6aM1pMHyNN2l6DBQtT935zDJZioOFWBnDYBqlHr7D5j2YJO+dNHSV5bialBvDsPi3+XY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750760288; c=relaxed/simple;
-	bh=H7Gk/NckKVvh/MfBLeEYzkGkI+wdO7PXVtA1Vt7lAyo=;
+	s=arc-20240116; t=1750760353; c=relaxed/simple;
+	bh=iWbqKwDTOe7uCugpjf2vh/zTmrUgw7bz0C7fMras7Vo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j4v0iHCc3nsYYkq9w/ebfRrMP0Uvqu6y7pC5fk+bsukPABP8BjQf73fGgWSk+ny0YoA2wptG8NiZH6CuTZ8MgrXBHtLPl1PTPAEsSHn082Tq8hKv4rBsaoACm9VVaqp+4aTfFLpj1mCKnGvDDAXezQGxIMf+D1zNsYrzCQr5fMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCmVGiDy; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=alPqSeCB6OBkRF1EBg2C3OPYddwa3I6b9+MgGQxJp6kdw8y0//wwn5LurIDApaPWLz58Gq80XNS2pKwQpzvbeLGxHLPhR7BjpfqmLNO5vcL0XC7x++aHuVNpBmswuhJLNr/8alEobvo/7jbsQP7Zp6Aj+ul0kiRhVNrDrpn/kYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2h7929y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCmVGiDy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927ADC4CEE3;
-	Tue, 24 Jun 2025 10:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2h7929y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85184C4CEE3;
+	Tue, 24 Jun 2025 10:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750760288;
-	bh=H7Gk/NckKVvh/MfBLeEYzkGkI+wdO7PXVtA1Vt7lAyo=;
+	s=korg; t=1750760352;
+	bh=iWbqKwDTOe7uCugpjf2vh/zTmrUgw7bz0C7fMras7Vo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bCmVGiDyagJ0zN1w6ebouItQ3WIH3bc/glJyADeuNJaV6GfYeq61ENJ30nvIH4Ikt
-	 zbBBlIwXDUJ9dqS6wmBPkmzkWDHw+3jG0DgzWZd9Beb0vROQUfOiMsQ/7QQJfj3tnH
-	 ChYD5N8u306aGPCvefK4Z5kKWbsIPW5DVq9vMJM4=
-Date: Tue, 24 Jun 2025 11:18:04 +0100
+	b=V2h7929yX2WSzxLh6fzqVrf6VuXl/6uHtVksDAcBR4c/p4qLr5b+5vu4Q+20ebqhf
+	 N8YRAUp+29aJD68V4jvOJveZMUKAYNfiTB/D9bM2oEBNVvZBmpFEhQJiCZyC/Qn/xY
+	 NG029Ar9Y30vFPYMVKKVPe1houz8da77H0VXUNL8=
+Date: Tue, 24 Jun 2025 11:19:08 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	Russell King - ARM Linux <linux@armlinux.org.uk>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: Re: [PATCH 5.15 000/411] 5.15.186-rc1 review
-Message-ID: <2025062439-tamer-diner-68e9@gregkh>
-References: <20250623130632.993849527@linuxfoundation.org>
- <CA+G9fYuU5uSG1MKdYPoaC6O=-w5z6BtLtwd=+QBzrtZ1uQ8VXg@mail.gmail.com>
+To: Danilo Krummrich <dakr@kernel.org>
+Cc: Thorsten Leemhuis <linux@leemhuis.info>,
+	Benno Lossin <lossin@kernel.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>,
+	Sasha Levin <sashal@kernel.org>, Miguel Ojeda <ojeda@kernel.org>,
+	Christian Heusel <christian@heusel.eu>
+Subject: Re: [PATCH 6.15 515/592] rust: devres: fix race in Devres::drop()
+Message-ID: <2025062455-rogue-flagship-54a4@gregkh>
+References: <20250623130700.210182694@linuxfoundation.org>
+ <20250623130712.686988131@linuxfoundation.org>
+ <DAUALX71J38F.2E1VBF0YH27KQ@kernel.org>
+ <eYjMg1ry65KlJgUKnqEjkoG6RkGBk1xtTYP1Af8fRBlrZyO8jOIrnAPs209lnvPqLwwwI0uQimzOx-EjmuhPEQ==@protonmail.internalid>
+ <025d9611-2a7f-40fd-9124-7b62fe6c5e84@leemhuis.info>
+ <DAULY9E26AKQ.3DCD5IW7CWUI7@kernel.org>
+ <ae03cf82-dfda-46fc-914d-2e329cd8d3da@leemhuis.info>
+ <2025062439-scheming-scale-7ab0@gregkh>
+ <aFp6iA8zwL9XX6US@pollux>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,65 +50,31 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CA+G9fYuU5uSG1MKdYPoaC6O=-w5z6BtLtwd=+QBzrtZ1uQ8VXg@mail.gmail.com>
+In-Reply-To: <aFp6iA8zwL9XX6US@pollux>
 
-On Tue, Jun 24, 2025 at 02:12:05AM +0530, Naresh Kamboju wrote:
-> On Mon, 23 Jun 2025 at 18:39, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 5.15.186 release.
-> > There are 411 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 25 Jun 2025 13:05:51 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.186-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
+On Tue, Jun 24, 2025 at 12:14:32PM +0200, Danilo Krummrich wrote:
+> On Tue, Jun 24, 2025 at 10:03:42AM +0100, Greg Kroah-Hartman wrote:
+> > On Tue, Jun 24, 2025 at 10:24:46AM +0200, Thorsten Leemhuis wrote:
+> > > On 24.06.25 10:07, Benno Lossin wrote:
+> > > > I tried applying it on top of v6.15.3 and that also results in a
+> > > > conflict, but only in `bindgen_helpers.h` and `helpers.c`, so we can
+> > > > simply provide a fixed patch.
+> > > 
+> > > Yeah, that likely is needed to make Greg happy here.
+> > 
+> > For now I'll just go drop this commit and wait for it to be submitted in
+> > a series that actually builds.
 > 
-> Regressions on arm64 allyesconfig builds with gcc-12 and clang failed on
-> the Linux stable-rc 5.15.186-rc1.
+> I'll send a series based on v6.15.3.
 > 
-> Regressions found on arm64
-> * arm64, build
->   - gcc-12-allyesconfig
+> The dependencies you already dropped, i.e.
 > 
-> Regression Analysis:
->  - New regression? Yes
->  - Reproducibility? Yes
+> 	queue-6.15/rust-devres-fix-doctest-build-under-config_pci.patch
+> 	queue-6.15/rust-devres-implement-devres-access.patch
 > 
-> Build regression: stable-rc 5.15.186-rc1 arm64
-> drivers/scsi/qedf/qedf_main.c:702:9: error: positional initialization
-> of field in 'struct' declared with 'designated_init' attribute
+> won't be needed any more.
 > 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> ## Build errors
-> drivers/scsi/qedf/qedf_main.c:702:9: error: positional initialization
-> of field in 'struct' declared with 'designated_init' attribute
-> [-Werror=designated-init]
->   702 |         {
->       |         ^
-> drivers/scsi/qedf/qedf_main.c:702:9: note: (near initialization for
-> 'qedf_cb_ops')
-> cc1: all warnings being treated as errors
 
-I saw this locally, at times, it's random, not always showing up.  Turn
-off the gcc randconfig build option and it goes away, which explains the
-randomness I guess.
-
-If you can bisect this to a real change that causes it, please let me
-know, I couldn't figure it out and so just gave up as I doubt anyone is
-really using that gcc plugin for that kernel version.
-
-thanks,
+Great, thanks for doing that.
 
 greg k-h
