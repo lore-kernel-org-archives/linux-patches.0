@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7642B22AE76;
-	Tue, 24 Jun 2025 04:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B032221DB9;
+	Tue, 24 Jun 2025 04:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738344; cv=none; b=LZH723D0McmILGrBJkA3HPC9cuJgjh6KehSv1o5c/mFqJtDsE0Aud8B487U51uQE+HRSIokmz5WhlsENveOCGW7yRdrzRvdX+4qrXhoprSnFekBYpBRMb7+SzthRNdCVYQpGTHPP8yutrdYdT/GR7fgtM1uoGzDCNBC1jR42ajY=
+	t=1750738346; cv=none; b=ShuMTI0rmh6SxzVeXHShGdh6aCTm98Dos6tpjt7jDvreB8kUc5ANiTbcPa0GX/hkhwfydCwWUmzszh5lo9LM2LCGLIRILD0TPcRTgC8BLPJgCiJ3ynJV3yk9exdjp0omRQ5hmXpW77s+gQ1icreuqxKfN5bk7R3Y9Ky2EXjmpok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738344; c=relaxed/simple;
-	bh=/iRNU+EkQaTv8q7sY8RusloUPQRZmgHJuNsbZTVYgmE=;
+	s=arc-20240116; t=1750738346; c=relaxed/simple;
+	bh=+vmQseMJm0Csnk8ZH7N0eziFnpNk9CZVqw+zqztxKS8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Be67bpzva19odYfCLmLBnn4ugFtcewBpPpUjnl22EFCTryOUkRf+x5vGNe7ASS5HqcAHwVpf0GNNFsNKhwz4mSYw8ItK9shYyUtAs7+zSaQy4dPA8k3s0gimopxXE3hsP0x0GS694ATSs1simyPKzoDXzC3eGC055p8TEZwdZUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gr2299es; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RYhHoVnha412G2+m88PJLD4GOL9UQN/Ytc1aSncQ/ZNjFONkMy2AVTbQKfD8gH0dubd4bxDBtp2iZutqZ37hB/D6rnX2wnUO+Ur4SlnwveI7gEuD9MCL6JmkHjPtzNdqOYFcd82G6HRYhdVAk+mrly3O53Jj8GAgs/jmVvZ3d40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sXWvgn8g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gr2299es"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E69AC4CEE3;
-	Tue, 24 Jun 2025 04:12:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sXWvgn8g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016EBC4CEE3;
+	Tue, 24 Jun 2025 04:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738344;
-	bh=/iRNU+EkQaTv8q7sY8RusloUPQRZmgHJuNsbZTVYgmE=;
+	s=k20201202; t=1750738346;
+	bh=+vmQseMJm0Csnk8ZH7N0eziFnpNk9CZVqw+zqztxKS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gr2299esk9wiXMj0hnl+LQQ4lT+B3jMnB4qaARs1qvndLzKTJ7qbP62Oy3E9irXfi
-	 PgHYS3omAAKlZ3ASVzlT0K9TGLQDyI7+IRj9qky2goY8bAhPVpx/7wzzyZhzGnAD+G
-	 BMpDhBTHMXZwtNB7RqJH2eCLIPYoLzUVcz1etwRBYwk5PbQgsVPOENBTkoXpzCwzr2
-	 a7RNp1dePTAydFsj9i3eEo2BP3Boe6EIgYUjMC3nU2BG6W8ZcPLO4nuTnZQJ7y6f8m
-	 OCj3IyR92IHPayds6yGojqPCSzV/s6iGjXX9BRuZSmxnrTp+/la5GiKu7Csf90IXx8
-	 Sa47bUfdL3yvQ==
+	b=sXWvgn8gkwAfUvwO3zpVmqI/bBpuUeXGFuEI0C8A3t+Otaa0RLA7769NfLNa0aZ4e
+	 ONS56mPZ7i7XcwNutw11MJ+DY8x8WG23gsErwnqHvw0NuGYCKIrZufEYiJJdFXHL3X
+	 Sed0kYWqUZK6BmhOA2mhG7dR7vTGNc3ZIcbGsZWjDwbCFbS1g/WbTeLBMmgcVap6yQ
+	 zn454Xj2I5ixkAzqQxXPiVft5p2W3jVUSKBQRGWs+MM3Q6jH62+n0d9eImdD1KIUBD
+	 +CCdVq0B3P1eSq3Zakvl5og+H6qNllfvKqa3z6wGYnGqHCO224kzmR53kPLFmrQXuD
+	 OYtQfD/IkC7CQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Raoul <ein4rth@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Shyam-sundar.S-k@amd.com,
-	platform-driver-x86@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 08/18] platform/x86/amd/pmc: Add PCSpecialist Lafite Pro V 14M to 8042 quirks list
-Date: Tue, 24 Jun 2025 00:12:04 -0400
-Message-Id: <20250624041214.84135-8-sashal@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Tulio Magno <tuliom@ascii.art.br>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Justin M . Forbes" <jforbes@fedoraproject.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 09/18] powerpc: Fix struct termio related ioctl macros
+Date: Tue, 24 Jun 2025 00:12:05 -0400
+Message-Id: <20250624041214.84135-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041214.84135-1-sashal@kernel.org>
 References: <20250624041214.84135-1-sashal@kernel.org>
@@ -47,134 +47,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.94
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
 
-[ Upstream commit 9ba75ccad85708c5a484637dccc1fc59295b0a83 ]
+[ Upstream commit ab107276607af90b13a5994997e19b7b9731e251 ]
 
-Every other s2idle cycle fails to reach hardware sleep when keyboard
-wakeup is enabled.  This appears to be an EC bug, but the vendor
-refuses to fix it.
+Since termio interface is now obsolete, include/uapi/asm/ioctls.h
+has some constant macros referring to "struct termio", this caused
+build failure at userspace.
 
-It was confirmed that turning off i8042 wakeup avoids ths issue
-(albeit keyboard wakeup is disabled).  Take the lesser of two evils
-and add it to the i8042 quirk list.
+In file included from /usr/include/asm/ioctl.h:12,
+                 from /usr/include/asm/ioctls.h:5,
+                 from tst-ioctls.c:3:
+tst-ioctls.c: In function 'get_TCGETA':
+tst-ioctls.c:12:10: error: invalid application of 'sizeof' to incomplete type 'struct termio'
+   12 |   return TCGETA;
+      |          ^~~~~~
 
-Reported-by: Raoul <ein4rth@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220116
-Tested-by: Raoul <ein4rth@gmail.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20250611203341.3733478-1-superm1@kernel.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Even though termios.h provides "struct termio", trying to juggle definitions around to
+make it compile could introduce regressions. So better to open code it.
+
+Reported-by: Tulio Magno <tuliom@ascii.art.br>
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Reviewed-by: Michael Ellerman <mpe@ellerman.id.au>
+Closes: https://lore.kernel.org/linuxppc-dev/8734dji5wl.fsf@ascii.art.br/
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250517142237.156665-1-maddy@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's the
-extensive explanation based on the code analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Key Reasons for Backporting:
+1. **Fixes a real build failure**: The commit message clearly documents
+   a userspace build failure when `asm/ioctls.h` is included without
+   `struct termio` being defined. This breaks userspace programs that
+   use these ioctl definitions.
 
-### 1. **Bug Fix for Real Hardware Issue**
-The commit fixes a legitimate suspend/resume bug on the PCSpecialist
-Lafite Pro V 14M laptop where:
-- Every other s2idle cycle fails to reach hardware sleep when keyboard
-  wakeup is enabled
-- This is confirmed to be an EC (Embedded Controller) firmware bug
-- The issue causes spurious wakeups, severely affecting power management
+2. **Simple and contained fix**: The change is minimal and low-risk - it
+   merely replaces macro calls with their hardcoded equivalents. The
+   hardcoded values (0x40147417, 0x80147418, 0x80147419, 0x8014741c) are
+   the exact expansion of the original macros for a 20-byte `struct
+   termio` on PowerPC.
 
-### 2. **Simple, Contained Fix**
-The change is minimal and low-risk:
-```diff
-+       {
-+               .ident = "PCSpecialist Lafite Pro V 14M",
-+               .driver_data = &quirk_spurious_8042,
-+               .matches = {
-+                       DMI_MATCH(DMI_SYS_VENDOR, "PCSpecialist"),
-+                       DMI_MATCH(DMI_PRODUCT_NAME, "Lafite Pro V 14M"),
-+               }
-+       },
-```
-It only adds a DMI match entry to an existing quirk list, using an
-already-established mechanism (`quirk_spurious_8042`).
+3. **Follows established patterns**: Other architectures (sh and xtensa)
+   already use this same approach of hardcoding the values with comments
+   showing the original macro. This indicates it's a known and accepted
+   solution.
 
-### 3. **Follows Established Pattern**
-This commit follows the exact same pattern as previous backported
-commits:
-- Commit `a55bdad5dfd1` (Framework 13) - BACKPORTED
-- Commit `0887817e4953` (MECHREVO Wujie 14XA) - BACKPORTED
-Both use the same `quirk_spurious_8042` mechanism and were deemed
-suitable for stable.
+4. **No functional changes**: The ioctl values remain exactly the same -
+   only the way they're defined changes. This ensures binary
+   compatibility is maintained.
 
-### 4. **Hardware-Specific Fix**
-The fix is:
-- Only activated for specific hardware (DMI matching)
-- Cannot affect other systems
-- Has zero risk of regression on non-affected hardware
+5. **Prevents future issues**: As noted in the commit message, the
+   termio interface is obsolete, and trying to reorganize header files
+   to fix this properly could introduce regressions. The hardcoded
+   approach is safer.
 
-### 5. **User Impact**
-From the commit message and bug report:
-- The vendor refuses to fix the EC firmware bug
-- Without this fix, users experience broken suspend/resume behavior
-- This is the "lesser of two evils" - disabling keyboard wakeup vs.
-  having unreliable suspend
+6. **Clear user impact**: The commit includes a specific example of the
+   build failure with line numbers and error messages, demonstrating
+   this affects real users (reported by Tulio Magno).
 
-### 6. **Implementation Details**
-The quirk works by setting `dev->disable_8042_wakeup = true` in
-`amd_pmc_quirks_init()`, which triggers `amd_pmc_wa_irq1()` during
-suspend to:
-```c
-disable_irq_wake(1);
-device_set_wakeup_enable(d, false);
-```
-This disables IRQ1 (keyboard) as a wakeup source, preventing the
-spurious wakeups.
+7. **Tested**: The commit indicates it was tested by Justin M. Forbes,
+   providing confidence in the fix.
 
-### 7. **Tested Solution**
-The commit includes:
-- Reported-by tag
-- Tested-by tag
-- Reference to bug report
-  (https://bugzilla.kernel.org/show_bug.cgi?id=220116)
+The commit follows the stable tree rules by fixing an important bug
+(build failure) with minimal risk of regression, making it an ideal
+candidate for backporting.
 
-This indicates the fix has been verified to resolve the issue on
-affected hardware.
+ arch/powerpc/include/uapi/asm/ioctls.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-The commit meets all criteria for stable backporting: it fixes a real
-bug affecting users, is minimal in scope, has no risk of regression, and
-follows the established pattern of similar fixes that have already been
-backported.
-
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index 2e3f6fc67c568..7ed12c1d3b34c 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -224,6 +224,15 @@ static const struct dmi_system_id fwbug_list[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "WUJIE14-GX4HRXL"),
- 		}
- 	},
-+	/* https://bugzilla.kernel.org/show_bug.cgi?id=220116 */
-+	{
-+		.ident = "PCSpecialist Lafite Pro V 14M",
-+		.driver_data = &quirk_spurious_8042,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "PCSpecialist"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Lafite Pro V 14M"),
-+		}
-+	},
- 	{}
- };
+diff --git a/arch/powerpc/include/uapi/asm/ioctls.h b/arch/powerpc/include/uapi/asm/ioctls.h
+index 2c145da3b774a..b5211e413829a 100644
+--- a/arch/powerpc/include/uapi/asm/ioctls.h
++++ b/arch/powerpc/include/uapi/asm/ioctls.h
+@@ -23,10 +23,10 @@
+ #define TCSETSW		_IOW('t', 21, struct termios)
+ #define TCSETSF		_IOW('t', 22, struct termios)
  
+-#define TCGETA		_IOR('t', 23, struct termio)
+-#define TCSETA		_IOW('t', 24, struct termio)
+-#define TCSETAW		_IOW('t', 25, struct termio)
+-#define TCSETAF		_IOW('t', 28, struct termio)
++#define TCGETA		0x40147417 /* _IOR('t', 23, struct termio) */
++#define TCSETA		0x80147418 /* _IOW('t', 24, struct termio) */
++#define TCSETAW		0x80147419 /* _IOW('t', 25, struct termio) */
++#define TCSETAF		0x8014741c /* _IOW('t', 28, struct termio) */
+ 
+ #define TCSBRK		_IO('t', 29)
+ #define TCXONC		_IO('t', 30)
 -- 
 2.39.5
 
