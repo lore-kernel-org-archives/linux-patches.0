@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B15222575;
-	Tue, 24 Jun 2025 04:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7642B22AE76;
+	Tue, 24 Jun 2025 04:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738344; cv=none; b=tG8/rkfVptT4Qd3rnuviCJpTC4uDwpmf3flmEwmjgZ9QuOiAkfAESrTpG+ajiT3nmS/6RcB/jgMyHlXyvv2y6FbcH1zk8aDPkydibq6DTSerIypVWO1101u0q118OZWuXHPuzflhP6zroP0VZpV/R2olwbM4uCVPPq03+r4uQ/8=
+	t=1750738344; cv=none; b=LZH723D0McmILGrBJkA3HPC9cuJgjh6KehSv1o5c/mFqJtDsE0Aud8B487U51uQE+HRSIokmz5WhlsENveOCGW7yRdrzRvdX+4qrXhoprSnFekBYpBRMb7+SzthRNdCVYQpGTHPP8yutrdYdT/GR7fgtM1uoGzDCNBC1jR42ajY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750738344; c=relaxed/simple;
-	bh=6beIUJdELNELXdKvTmB9tngyKpYNQKvJxKV4TrCwLXk=;
+	bh=/iRNU+EkQaTv8q7sY8RusloUPQRZmgHJuNsbZTVYgmE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jfKJWILYoLYu6lZyBE3+AIgCozq1RFrKr+gOrzEZVzecy2Yq5D5Xy2oUYQx0CvkvJ/IxlBBQxJfYNigfkwiqLPS5MuNUXK1r8UTTNpMqFREDQ7I/ZbskjgyNsUVmaCEJMRrpa5y6WmW7FK3YMEAPSNYGU7YmSGG0GSEnT4hZczc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qGhDxl+E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Be67bpzva19odYfCLmLBnn4ugFtcewBpPpUjnl22EFCTryOUkRf+x5vGNe7ASS5HqcAHwVpf0GNNFsNKhwz4mSYw8ItK9shYyUtAs7+zSaQy4dPA8k3s0gimopxXE3hsP0x0GS694ATSs1simyPKzoDXzC3eGC055p8TEZwdZUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gr2299es; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qGhDxl+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0ECC4CEF3;
-	Tue, 24 Jun 2025 04:12:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gr2299es"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E69AC4CEE3;
+	Tue, 24 Jun 2025 04:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738343;
-	bh=6beIUJdELNELXdKvTmB9tngyKpYNQKvJxKV4TrCwLXk=;
+	s=k20201202; t=1750738344;
+	bh=/iRNU+EkQaTv8q7sY8RusloUPQRZmgHJuNsbZTVYgmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qGhDxl+E035LAksLRQ75nouvrXHV5JPLqr9njJCUoF65knyHyLHkcDk9AZATq4o9+
-	 PALxc8hNab3tK6KmVlecVxBeOgZ+KWY45Kl4/fFT95qVoNqRCa5Qz5/tJcLwc3WoHk
-	 DGJ3j06DS/uqpPmhGmHoeXCkhyqiqkBQ/sq4wqTX4WF4hiLp4fwkUldO0J0jIp1MMd
-	 AaJXQO+odiJjIRjf3u5Z9MEESGEOmR3ZGbKfrX7K7laoEB6NtXDAh5slCD+r+wV67B
-	 k3BMdi/yWcE1Wkqf724fUo862s3IHYRdrfdZTJfFSPGZVjUaEB1+WVQKNjVvAiPCTR
-	 6LQDi3UMtUt/g==
+	b=gr2299esk9wiXMj0hnl+LQQ4lT+B3jMnB4qaARs1qvndLzKTJ7qbP62Oy3E9irXfi
+	 PgHYS3omAAKlZ3ASVzlT0K9TGLQDyI7+IRj9qky2goY8bAhPVpx/7wzzyZhzGnAD+G
+	 BMpDhBTHMXZwtNB7RqJH2eCLIPYoLzUVcz1etwRBYwk5PbQgsVPOENBTkoXpzCwzr2
+	 a7RNp1dePTAydFsj9i3eEo2BP3Boe6EIgYUjMC3nU2BG6W8ZcPLO4nuTnZQJ7y6f8m
+	 OCj3IyR92IHPayds6yGojqPCSzV/s6iGjXX9BRuZSmxnrTp+/la5GiKu7Csf90IXx8
+	 Sa47bUfdL3yvQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Gabriel Santese <santesegabriel@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Mario Limonciello <mario.limonciello@amd.com>,
+	Raoul <ein4rth@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mario.limonciello@amd.com,
-	tiwai@suse.de,
-	venkataprasad.potturu@amd.com,
-	talhah.peerbhai@gmail.com
-Subject: [PATCH AUTOSEL 6.6 07/18] ASoC: amd: yc: Add quirk for MSI Bravo 17 D7VF internal mic
-Date: Tue, 24 Jun 2025 00:12:03 -0400
-Message-Id: <20250624041214.84135-7-sashal@kernel.org>
+	Shyam-sundar.S-k@amd.com,
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 08/18] platform/x86/amd/pmc: Add PCSpecialist Lafite Pro V 14M to 8042 quirks list
+Date: Tue, 24 Jun 2025 00:12:04 -0400
+Message-Id: <20250624041214.84135-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041214.84135-1-sashal@kernel.org>
 References: <20250624041214.84135-1-sashal@kernel.org>
@@ -48,134 +47,134 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.94
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gabriel Santese <santesegabriel@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit ba06528ad5a31923efc24324706116ccd17e12d8 ]
+[ Upstream commit 9ba75ccad85708c5a484637dccc1fc59295b0a83 ]
 
-MSI Bravo 17 (D7VF), like other laptops from the family,
-has broken ACPI tables and needs a quirk for internal mic
-to work properly.
+Every other s2idle cycle fails to reach hardware sleep when keyboard
+wakeup is enabled.  This appears to be an EC bug, but the vendor
+refuses to fix it.
 
-Signed-off-by: Gabriel Santese <santesegabriel@gmail.com>
-Link: https://patch.msgid.link/20250530005444.23398-1-santesegabriel@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+It was confirmed that turning off i8042 wakeup avoids ths issue
+(albeit keyboard wakeup is disabled).  Take the lesser of two evils
+and add it to the i8042 quirk list.
+
+Reported-by: Raoul <ein4rth@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220116
+Tested-by: Raoul <ein4rth@gmail.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20250611203341.3733478-1-superm1@kernel.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees. Here's the
+extensive explanation based on the code analysis:
 
-## Analysis of the Commit
+## Key Reasons for Backporting:
 
-### 1. **Nature of the Fix**
-This commit adds a DMI quirk entry for the MSI Bravo 17 D7VF laptop to
-enable its internal microphone. The code change is minimal and follows
-an established pattern:
+### 1. **Bug Fix for Real Hardware Issue**
+The commit fixes a legitimate suspend/resume bug on the PCSpecialist
+Lafite Pro V 14M laptop where:
+- Every other s2idle cycle fails to reach hardware sleep when keyboard
+  wakeup is enabled
+- This is confirmed to be an EC (Embedded Controller) firmware bug
+- The issue causes spurious wakeups, severely affecting power management
 
-```c
+### 2. **Simple, Contained Fix**
+The change is minimal and low-risk:
+```diff
 +       {
-+               .driver_data = &acp6x_card,
++               .ident = "PCSpecialist Lafite Pro V 14M",
++               .driver_data = &quirk_spurious_8042,
 +               .matches = {
-+                       DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star
-International Co., Ltd."),
-+                       DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 17 D7VF"),
++                       DMI_MATCH(DMI_SYS_VENDOR, "PCSpecialist"),
++                       DMI_MATCH(DMI_PRODUCT_NAME, "Lafite Pro V 14M"),
 +               }
 +       },
 ```
+It only adds a DMI match entry to an existing quirk list, using an
+already-established mechanism (`quirk_spurious_8042`).
 
-### 2. **Bug Being Fixed**
-The commit message explicitly states "has broken ACPI tables and needs a
-quirk for internal mic to work properly." This is fixing a real hardware
-functionality issue where the internal microphone doesn't work without
-this quirk.
+### 3. **Follows Established Pattern**
+This commit follows the exact same pattern as previous backported
+commits:
+- Commit `a55bdad5dfd1` (Framework 13) - BACKPORTED
+- Commit `0887817e4953` (MECHREVO Wujie 14XA) - BACKPORTED
+Both use the same `quirk_spurious_8042` mechanism and were deemed
+suitable for stable.
 
-### 3. **User Impact**
-Without this fix, users of the MSI Bravo 17 D7VF laptop cannot use their
-internal microphone, which is a significant functionality loss for:
-- Video conferencing
-- Voice recording
-- Voice commands
-- Any application requiring microphone input
+### 4. **Hardware-Specific Fix**
+The fix is:
+- Only activated for specific hardware (DMI matching)
+- Cannot affect other systems
+- Has zero risk of regression on non-affected hardware
 
-### 4. **Code Analysis**
-Looking at the probe function in `acp6x_probe()`:
-- The driver first tries to detect DMIC support via ACPI methods
-  (`AcpDmicConnected` and `_WOV`)
-- If ACPI detection fails or returns incorrect values (as mentioned in
-  commit - "broken ACPI tables"), it falls back to DMI quirk table
-  matching
-- Without the quirk entry, `dmi_first_match(yc_acp_quirk_table)` returns
-  NULL, and the card won't be set up properly, resulting in no
-  microphone support
+### 5. **User Impact**
+From the commit message and bug report:
+- The vendor refuses to fix the EC firmware bug
+- Without this fix, users experience broken suspend/resume behavior
+- This is the "lesser of two evils" - disabling keyboard wakeup vs.
+  having unreliable suspend
 
-### 5. **Consistency with Similar Commits**
-All similar commits provided as reference were marked with "Backport
-Status: YES":
-- "ASoC: amd: yc: Add a quirk for MSI Bravo 17 (D7VEK)" - YES
-- "ASoC: amd: yc: Add DMI quirk for MSI Bravo 15 C7VF" - YES (includes
-  Cc: stable)
-- "ASoC: amd: yc: fix internal mic on Redmi G 2022" - YES
-- "ASoC: amd: yc: Add DMI quirk for Lenovo Ideapad Pro 5 16ARP8" - YES
-  (includes Cc: stable)
-- "ASoC: amd: yc: Fix non-functional mic on ASUS E1404FA" - YES
+### 6. **Implementation Details**
+The quirk works by setting `dev->disable_8042_wakeup = true` in
+`amd_pmc_quirks_init()`, which triggers `amd_pmc_wa_irq1()` during
+suspend to:
+```c
+disable_irq_wake(1);
+device_set_wakeup_enable(d, false);
+```
+This disables IRQ1 (keyboard) as a wakeup source, preventing the
+spurious wakeups.
 
-### 6. **Risk Assessment**
-- **Minimal risk**: The change only adds a new DMI match entry
-- **No architectural changes**: Pure data addition to existing quirk
-  table
-- **No behavioral changes**: Only affects the specific laptop model
-- **Well-tested pattern**: Follows exact same pattern as dozens of other
-  entries in the table
+### 7. **Tested Solution**
+The commit includes:
+- Reported-by tag
+- Tested-by tag
+- Reference to bug report
+  (https://bugzilla.kernel.org/show_bug.cgi?id=220116)
 
-### 7. **Stable Tree Criteria**
-This commit meets all stable tree criteria:
-- ✓ Fixes a real bug affecting users (non-functional microphone)
-- ✓ Small and contained change (7 lines addition)
-- ✓ No side effects beyond fixing the specific issue
-- ✓ No new features or architectural changes
-- ✓ Hardware enablement fix for specific model
+This indicates the fix has been verified to resolve the issue on
+affected hardware.
 
-### 8. **Pattern Recognition**
-This is part of the MSI Bravo laptop family fixes:
-- Bravo 15 B7ED already has quirk
-- Bravo 15 C7VF already has quirk (with Cc: stable)
-- Bravo 17 D7VEK already has quirk
-- This adds Bravo 17 D7VF to complete the family
+The commit meets all criteria for stable backporting: it fixes a real
+bug affecting users, is minimal in scope, has no risk of regression, and
+follows the established pattern of similar fixes that have already been
+backported.
 
-The commit follows the exact same pattern and reasoning as previous MSI
-Bravo laptop quirks that were successfully backported to stable trees,
-indicating this should also be backported for consistency and user
-benefit.
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 622df58a96942..d00e19d7b5c2f 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -437,6 +437,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 17 D7VEK"),
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index 2e3f6fc67c568..7ed12c1d3b34c 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -224,6 +224,15 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "WUJIE14-GX4HRXL"),
  		}
  	},
++	/* https://bugzilla.kernel.org/show_bug.cgi?id=220116 */
 +	{
-+		.driver_data = &acp6x_card,
++		.ident = "PCSpecialist Lafite Pro V 14M",
++		.driver_data = &quirk_spurious_8042,
 +		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 17 D7VF"),
++			DMI_MATCH(DMI_SYS_VENDOR, "PCSpecialist"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Lafite Pro V 14M"),
 +		}
 +	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+ 	{}
+ };
+ 
 -- 
 2.39.5
 
