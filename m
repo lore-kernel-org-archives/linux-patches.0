@@ -1,114 +1,118 @@
-Received: from omta40.uswest2.a.cloudfilter.net (omta40.uswest2.a.cloudfilter.net [35.89.44.39])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910AB257423
-	for <patches@lists.linux.dev>; Tue, 24 Jun 2025 08:07:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C937E258CD3;
+	Tue, 24 Jun 2025 08:07:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750752461; cv=none; b=bmGG47nwD1DEl4/cL3H2uVfqBzxZ02pYUAuTcohHd9B+X+VtaugqQHFYhrpedlLpGQdPainSV9GNogLk+clf+sFwUI7RmCPeUggOetSwEzQUOG4mxBkRSo4Kf2Qwa7o2W/NOcrcRPgaAKnG+42f86mqXqGUd2EZhOX2SHYJIisw=
+	t=1750752464; cv=none; b=fpVbLgvi0w1pd3w03zRB3DHCWNN7hsr9JBhNV9wvcCslLgl6hbMausRXszVU+PHtCmEg5/0obCukex/ev7SzChBn8h645JcMpb0ZQIdWtt2wEZbfskHhKZGttz4ZiDqCT79i6Q/NBnG1Yx5xLPfElClat99P4msVX1Z02Fu9NYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750752461; c=relaxed/simple;
-	bh=bcr7ZsoDIxCVOP86HeZSlurtef12X/747KFw9IGHX20=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PLBoZ1M9F9VDtdFJAQ1c8shZAKc4lRcnyaqriVyzsWZxQi3zgaIlxwsHSLXkwYWnUCeB4dofpqEFM65h2Q4MFxntWOgUI+Zaz155Dck15DBeD52m/kvnvOEc0W2M5Qi3QO2es7nPy1KJ+owBuHuskb6MGFs6DVqn6gbmKOk/7jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=Fao41GU0; arc=none smtp.client-ip=35.89.44.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	s=arc-20240116; t=1750752464; c=relaxed/simple;
+	bh=6pYHXVLAPGO4KYtYwQybK8pmthGSu74JcYRTxp+J5uI=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=Yjbic3yyeS4k5mhqrl755Ufw3HA/DY6iQreDtNMYsxyIIGZCB4alJ0tiBBjcjZA/mglfWdteS5rEF5lKj+YsLVvSJzjwVCJe0p5D9rGmE0VjB/WabGr3ntnVDUD8IVewPjU054PonDyFDAFr9auLGQ++AGyR8MPCm3psJys5q/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DfeIK8js; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="Fao41GU0"
-Received: from eig-obgw-6001a.ext.cloudfilter.net ([10.0.30.140])
-	by cmsmtp with ESMTPS
-	id Tr5euIv2Bf1UXTygmu61na; Tue, 24 Jun 2025 08:07:32 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id TygluOyvcgFaXTygluJ5UP; Tue, 24 Jun 2025 08:07:31 +0000
-X-Authority-Analysis: v=2.4 cv=DbzcqetW c=1 sm=1 tr=0 ts=685a5cc3
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=Wh1V8bzkS9CpCxOpQUxp:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=xFO6NK3ONdTJZbcH9gQ3lLvShx7ldiwcq/fdKK4epLE=; b=Fao41GU0zgS/RAeXpf/hDrCEgw
-	D3aFqiPqy7avOdaCzGQynxn0XaCohepOU2VLvWAbgA76NLv72RuKCRv+Rdj8unqQ3Zwj17aQiEuuE
-	CLOkLDgZW7L4hfzYY+6exAwNBxD0TM2f+s1kMGA59VRYqikzfcx2+gpSFA3auAZkIjoh8frdljpgO
-	Sk4LsUkSX0jyvEAFnT6hn/dgoBUtR4awqHN9m/KchvKSDMoUy1CNR56X0Lh4Pda0lgdCPz+YGZT5+
-	C7oovy8V8yW/0P5AVM3Onq1kAxYT5Osh2EY+7jmQIeoLnkKkps8CMNlQSVx2UK+7RIZiaYsw7isZX
-	x/vZBMTQ==;
-Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:47784 helo=[10.0.1.116])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.98.1)
-	(envelope-from <re@w6rz.net>)
-	id 1uTygi-00000002D2m-2Sr4;
-	Tue, 24 Jun 2025 02:07:28 -0600
-Message-ID: <e14cda6a-d50b-4b7a-81c0-4c2e5fb8b447@w6rz.net>
-Date: Tue, 24 Jun 2025 01:07:24 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DfeIK8js"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED230C4CEEF;
+	Tue, 24 Jun 2025 08:07:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750752464;
+	bh=6pYHXVLAPGO4KYtYwQybK8pmthGSu74JcYRTxp+J5uI=;
+	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+	b=DfeIK8jsKuHTHYRq3TsjaggHEyPQOMo/uLmMrlxUetUUr4MBG8K1WGVU8lAloldW3
+	 ez+a71RCEVyRTyBVbmG40eU9sdjDvME50u1mLKTTXhlxscFi5v63+AXbpdqaY4ho1+
+	 TTbILob38ZK/yP9B/2ELMyTXGWbdyC2ERLqyHKz9wx9H8l990xseAnA/JteJQeCapK
+	 Cdsr+ZdNuoLmMC3Bnzq/LviLtyKbbcD+3IggV7GfyxIvpOHcbtJBsyx3nHf2m5En6k
+	 j/2AE7iY3J4mBKoVBv3IwSBnKstqepKJkjSRLa+ZoB10bY1cFWRA4tQt0p4cY9GHdd
+	 79mV6m1MI2A4g==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.15 000/592] 6.15.4-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 24 Jun 2025 10:07:41 +0200
+Message-Id: <DAULY9E26AKQ.3DCD5IW7CWUI7@kernel.org>
+Cc: <patches@lists.linux.dev>, "Alice Ryhl" <aliceryhl@google.com>, "Danilo
+ Krummrich" <dakr@kernel.org>, "Sasha Levin" <sashal@kernel.org>, "Miguel
+ Ojeda" <ojeda@kernel.org>, "Christian Heusel" <christian@heusel.eu>
+Subject: Re: [PATCH 6.15 515/592] rust: devres: fix race in Devres::drop()
+From: "Benno Lossin" <lossin@kernel.org>
+To: "Thorsten Leemhuis" <linux@leemhuis.info>, "Greg Kroah-Hartman"
+ <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+X-Mailer: aerc 0.20.1
 References: <20250623130700.210182694@linuxfoundation.org>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20250623130700.210182694@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.223.253.157
-X-Source-L: No
-X-Exim-ID: 1uTygi-00000002D2m-2Sr4
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.116]) [73.223.253.157]:47784
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 17
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfBAh+QnRv1J5ju7kYiw9xAdC6BeGJpTq/5+gloX5sObCh8b6faDBb3ZzlL3rmK6X+Sp4590Ef8rEF4uQp1Iyie4X27sR+Bz0Vb8wRsNjjKh0Vj+P4qVV
- LLqqdzc/rDe02JpVX2p7DzXmW570w1ofvDHq61JwHWqUWuvm25vOeQCSlyzmZdOAm7ilw8TvQaGMYA==
+ <20250623130712.686988131@linuxfoundation.org>
+ <DAUALX71J38F.2E1VBF0YH27KQ@kernel.org>
+ <eYjMg1ry65KlJgUKnqEjkoG6RkGBk1xtTYP1Af8fRBlrZyO8jOIrnAPs209lnvPqLwwwI0uQimzOx-EjmuhPEQ==@protonmail.internalid> <025d9611-2a7f-40fd-9124-7b62fe6c5e84@leemhuis.info>
+In-Reply-To: <025d9611-2a7f-40fd-9124-7b62fe6c5e84@leemhuis.info>
 
-On 6/23/25 05:59, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.15.4 release.
-> There are 592 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 25 Jun 2025 13:05:55 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.4-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Tue Jun 24, 2025 at 9:24 AM CEST, Thorsten Leemhuis wrote:
+> [CCing Miguel (JFYI) as well as Christian, who reported the build
+> error[1] with 6.15.4-rc1 (which I'm seeing as well[2]) caused by the
+> patch this mail is about according to Benno.]
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Thanks!
 
-Tested-by: Ron Economos <re@w6rz.net>
+> [1]=C2=A0https://lore.kernel.org/all/a0ebb389-f088-417b-9fd4-ac8c100d206f=
+@heusel.eu/
+>
+> [2]=C2=A0https://download.copr.fedorainfracloud.org/results/@kernel-vanil=
+la/fedora-rc/fedora-42-x86_64/09200694-stablerc-fedorarc-releases/builder-l=
+ive.log.gz
+>
+> On 24.06.25 01:14, Benno Lossin wrote:
+>> On Mon Jun 23, 2025 at 3:07 PM CEST, Greg Kroah-Hartman wrote:
+>>> 6.15-stable review patch.  If anyone has any objections, please let me =
+know.
+>>>
+>>> ------------------
+>>>
+>>> From: Danilo Krummrich <dakr@kernel.org>
+>>>
+>>> [ Upstream commit f744201c6159fc7323c40936fd079525f7063598 ]
+>>>
+>>> In Devres::drop() we first remove the devres action and then drop the
+>>> wrapped device resource.
+>>>
+>>> The design goal is to give the owner of a Devres object control over wh=
+en
+>>> the device resource is dropped, but limit the overall scope to the
+>>> corresponding device being bound to a driver.
+>> [...]
+>> This is missing the prerequisite patch #1 from
+>>
+>>     https://lore.kernel.org/all/20250612121817.1621-1-dakr@kernel.org
+>
+> You afaics mean 1b56e765bf8990 ("rust: completion: implement initial
+> abstraction") [v6.16-rc3]=20
+
+Yes that is the prerequisite.
+
+> =E2=80=93 which did not cleanly apply to 6.15.4-rc1 in
+
+In which repository is that tag? I didn't find it in the stable tree.
+
+I tried applying it on top of v6.15.3 and that also results in a
+conflict, but only in `bindgen_helpers.h` and `helpers.c`, so we can
+simply provide a fixed patch.
+
+@Danilo, I think this should be backported, how do you want to proceed?
+
+---
+Cheers,
+Benno
+
+> a quick test; it was also not possible to revert this patch ("rust:
+> devres: fix race in Devres::drop()") cleanly; reverting worked after
+> reverting "rust: devres: do not dereference to the internal Revocable"
+> First, but that lead to another build error:
+> https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/fedora=
+-rc/fedora-42-x86_64/09202837-stablerc-fedorarc-releases/builder-live.log.g=
+z
+>
+> Ciao, Thorsten
 
