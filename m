@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE06D226D04;
-	Tue, 24 Jun 2025 04:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1377E23BCF0;
+	Tue, 24 Jun 2025 04:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738412; cv=none; b=VTa/rtnX6eswPQE3Ccvsh3Yk+sOJjl1uL8l2k6UjrBKy6WxHDJL0Cb1KVZGcKNYZAwar+8nnxoEI3fMkl7QwPQWQQ9qyYqTwrrVH0jfZBq6SIEiR10R7LE2UF+mr0LgUT1ye73BCp6BHB7ca42h9dAIJDGD1QAOG5cGlWu42shg=
+	t=1750738413; cv=none; b=VTFJU9qjG1fTpF4GvkhbzUXzH7XeCnkEYB19SIV5JSTmBR3UwritxP2ywZadAXwRMC67IbIS/e854vpJqekmh93saqe9FnyyZffsEg8bbbOuJNH9TlALWeqD+0znpUu3iUiE5PRPKkyzSV/4ssvefYWt68ZAfQHwb1LbCvIOUTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738412; c=relaxed/simple;
-	bh=+vmQseMJm0Csnk8ZH7N0eziFnpNk9CZVqw+zqztxKS8=;
+	s=arc-20240116; t=1750738413; c=relaxed/simple;
+	bh=X/cd3j804pF7FVCbf9nmTfBif0raDTsGJ2nFNL60Rsc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VglJWJ0BdpXhjuRIb5fqUOuZR9g7tMTfGUfZw2dq/mfKW8H4xeIKkbzXEcszB3d8oDQHOPoHFSkYTCxMgRpNYe46DbnEPd14XEEwqDrK9slsA8rWOSUxZ0IixpSNCM5ZOXjIq+jz4nArjXaoPFVfdwKAWt/h0Z5YRPsksJ16wFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ot5/SH91; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t1znb0URVzb3gJODpT8k+Eqk0sVoIxJlvR/1GZuMCkEEIKuW4HKPqxbsydvxnVH4qF8hIXSbaph0f4NnRcvTn4gf3/86GQEkrmTEaJ57MwamUko3+XxaeazAB/litEiiPR0lNmElE2c5dkkYnEWGiQqgvUHr/H2Qt7StjNbBwn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a/YnNH9r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ot5/SH91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B19C4CEE3;
-	Tue, 24 Jun 2025 04:13:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a/YnNH9r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9062C4CEF2;
+	Tue, 24 Jun 2025 04:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738412;
-	bh=+vmQseMJm0Csnk8ZH7N0eziFnpNk9CZVqw+zqztxKS8=;
+	s=k20201202; t=1750738413;
+	bh=X/cd3j804pF7FVCbf9nmTfBif0raDTsGJ2nFNL60Rsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ot5/SH911bknVTpgxli53ys3LRTFHfLNdbuUWkJNcCHRoU155f6iWmYNYswa4qrnW
-	 SLJumu/REaojtfg584IPROVMmCgJt5kFpUcImWJLWLpgKS/AtckdbDQasCDUGN1qW/
-	 SQJV6QAmUwd2HE18/7dlZfg5X2e9RKSTDhvyR5FODhuq6BZqls5mRzyrCXE4QspdU4
-	 9/rFy+iAYNXpoLqnoXaaCHm0Ook9VKDGTBXChQFdA6d8GYJPQ6L3pNbCPk5PkEISnY
-	 uM47FHyWnlY9aBARWqDmdg+PdwwjJNI39ADuy0W8ANumWlV6UlLoVcSVmKqaexcofN
-	 N3snPnpcBwRkA==
+	b=a/YnNH9rlOUUwytgGa2Hfg5qf7FgJL6MmTF43ktr4cWe+sr2hcu+pmdgsZk+xckjb
+	 sAdEjlU4tx2Q6+Oejaz3jXu9kL84BEdPZbP13TvkNM9tOhhSGr7yaY7LE34Riulg2I
+	 dG82q4uK/KkDa3JT28XmZaE4Th1Yyxn2DWnXTtQSmol7Zbh2mwARmU3v87EPO9E5K/
+	 UBxNmC3VBklBXFQtlKI/hLMsUbUOzFQ1quWhg1ezvKgyI/z/WMMgQ8aM+9yOPGOQT2
+	 yO/RdfnrIZpDZnc9gKNOSbK0VKI8acuWjLbQONdPucoCz1enCUuJLC9EIyjiBF6Anr
+	 ovzHpVyoYOsvA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Tulio Magno <tuliom@ascii.art.br>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Justin M . Forbes" <jforbes@fedoraproject.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.4 3/7] powerpc: Fix struct termio related ioctl macros
-Date: Tue, 24 Jun 2025 00:13:22 -0400
-Message-Id: <20250624041327.85407-3-sashal@kernel.org>
+Cc: Johannes Berg <johannes.berg@intel.com>,
+	syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com,
+	Sasha Levin <sashal@kernel.org>,
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 4/7] wifi: mac80211: drop invalid source address OCB frames
+Date: Tue, 24 Jun 2025 00:13:23 -0400
+Message-Id: <20250624041327.85407-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041327.85407-1-sashal@kernel.org>
 References: <20250624041327.85407-1-sashal@kernel.org>
@@ -52,98 +51,107 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.294
 Content-Transfer-Encoding: 8bit
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ab107276607af90b13a5994997e19b7b9731e251 ]
+[ Upstream commit d1b1a5eb27c4948e8811cf4dbb05aaf3eb10700c ]
 
-Since termio interface is now obsolete, include/uapi/asm/ioctls.h
-has some constant macros referring to "struct termio", this caused
-build failure at userspace.
+In OCB, don't accept frames from invalid source addresses
+(and in particular don't try to create stations for them),
+drop the frames instead.
 
-In file included from /usr/include/asm/ioctl.h:12,
-                 from /usr/include/asm/ioctls.h:5,
-                 from tst-ioctls.c:3:
-tst-ioctls.c: In function 'get_TCGETA':
-tst-ioctls.c:12:10: error: invalid application of 'sizeof' to incomplete type 'struct termio'
-   12 |   return TCGETA;
-      |          ^~~~~~
-
-Even though termios.h provides "struct termio", trying to juggle definitions around to
-make it compile could introduce regressions. So better to open code it.
-
-Reported-by: Tulio Magno <tuliom@ascii.art.br>
-Suggested-by: Nicholas Piggin <npiggin@gmail.com>
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
-Reviewed-by: Michael Ellerman <mpe@ellerman.id.au>
-Closes: https://lore.kernel.org/linuxppc-dev/8734dji5wl.fsf@ascii.art.br/
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250517142237.156665-1-maddy@linux.ibm.com
+Reported-by: syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/6788d2d9.050a0220.20d369.0028.GAE@google.com/
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Tested-by: syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20250616171838.7433379cab5d.I47444d63c72a0bd58d2e2b67bb99e1fea37eec6f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Fixes a real build failure**: The commit message clearly documents
-   a userspace build failure when `asm/ioctls.h` is included without
-   `struct termio` being defined. This breaks userspace programs that
-   use these ioctl definitions.
+## Security Vulnerability Fixed
 
-2. **Simple and contained fix**: The change is minimal and low-risk - it
-   merely replaces macro calls with their hardcoded equivalents. The
-   hardcoded values (0x40147417, 0x80147418, 0x80147419, 0x8014741c) are
-   the exact expansion of the original macros for a 20-byte `struct
-   termio` on PowerPC.
+The commit fixes a clear security vulnerability in OCB (Outside Context
+of a BSS) mode where frames with invalid source addresses are accepted
+and processed. Looking at the code change:
 
-3. **Follows established patterns**: Other architectures (sh and xtensa)
-   already use this same approach of hardcoding the values with comments
-   showing the original macro. This indicates it's a known and accepted
-   solution.
+```c
++               /* reject invalid/our STA address */
++               if (!is_valid_ether_addr(hdr->addr2) ||
++                   ether_addr_equal(sdata->dev->dev_addr, hdr->addr2))
++                       return false;
+```
 
-4. **No functional changes**: The ioctl values remain exactly the same -
-   only the way they're defined changes. This ensures binary
-   compatibility is maintained.
+This adds critical validation that was missing, preventing:
 
-5. **Prevents future issues**: As noted in the commit message, the
-   termio interface is obsolete, and trying to reorganize header files
-   to fix this properly could introduce regressions. The hardcoded
-   approach is safer.
+1. **Invalid MAC addresses** (all zeros, broadcast/multicast addresses)
+   from being accepted
+2. **Self-spoofing attacks** where frames appear to come from the
+   device's own address
 
-6. **Clear user impact**: The commit includes a specific example of the
-   build failure with line numbers and error messages, demonstrating
-   this affects real users (reported by Tulio Magno).
+## Comparison with Similar Historical Fixes
 
-7. **Tested**: The commit indicates it was tested by Justin M. Forbes,
-   providing confidence in the fix.
+This fix follows the exact pattern of Similar Commit #1 (Backport
+Status: YES):
+- That commit added `!is_valid_ether_addr(hdr->addr2)` check to ADHOC
+  mode
+- It fixed WARN_ON spam in `sta_info_insert_check()`
+- It was deemed suitable for stable backporting
 
-The commit follows the stable tree rules by fixing an important bug
-(build failure) with minimal risk of regression, making it an ideal
-candidate for backporting.
+The OCB fix addresses the same class of vulnerability in a different
+interface mode.
 
- arch/powerpc/include/uapi/asm/ioctls.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+## Impact Without the Fix
 
-diff --git a/arch/powerpc/include/uapi/asm/ioctls.h b/arch/powerpc/include/uapi/asm/ioctls.h
-index 2c145da3b774a..b5211e413829a 100644
---- a/arch/powerpc/include/uapi/asm/ioctls.h
-+++ b/arch/powerpc/include/uapi/asm/ioctls.h
-@@ -23,10 +23,10 @@
- #define TCSETSW		_IOW('t', 21, struct termios)
- #define TCSETSF		_IOW('t', 22, struct termios)
- 
--#define TCGETA		_IOR('t', 23, struct termio)
--#define TCSETA		_IOW('t', 24, struct termio)
--#define TCSETAW		_IOW('t', 25, struct termio)
--#define TCSETAF		_IOW('t', 28, struct termio)
-+#define TCGETA		0x40147417 /* _IOR('t', 23, struct termio) */
-+#define TCSETA		0x80147418 /* _IOW('t', 24, struct termio) */
-+#define TCSETAW		0x80147419 /* _IOW('t', 25, struct termio) */
-+#define TCSETAF		0x8014741c /* _IOW('t', 28, struct termio) */
- 
- #define TCSBRK		_IO('t', 29)
- #define TCXONC		_IO('t', 30)
+Without this validation, the `ieee80211_ocb_rx_no_sta()` function would:
+1. Create station entries for invalid addresses
+2. Potentially trigger WARN_ON messages causing log spam
+3. Allow resource exhaustion attacks by creating many invalid stations
+4. Risk crashes or undefined behavior from invalid station entries
+
+## Stable Backport Criteria Met
+
+1. **Fixes a real bug**: Yes - invalid frames are incorrectly accepted
+2. **Security impact**: Yes - potential DoS via resource exhaustion
+3. **Small and contained**: Yes - adds 4 lines of validation
+4. **Clear fix**: Yes - straightforward address validation
+5. **No new features**: Correct - only adds missing validation
+6. **Tested**: Yes - verified by syzbot
+
+## Not Like the "NO" Examples
+
+Unlike the commits marked for NO backporting:
+- This is not adding new functionality (like link-addressed frames
+  support)
+- This is not a code cleanup or optimization
+- This is fixing a concrete security issue reported by syzbot
+- This has minimal risk of regression
+
+The fix is essential for OCB mode security and should be backported to
+all stable kernels that support OCB mode (since 2014).
+
+ net/mac80211/rx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 99d5f8b58e92e..4c805530edfb6 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -3982,6 +3982,10 @@ static bool ieee80211_accept_frame(struct ieee80211_rx_data *rx)
+ 		if (!multicast &&
+ 		    !ether_addr_equal(sdata->dev->dev_addr, hdr->addr1))
+ 			return false;
++		/* reject invalid/our STA address */
++		if (!is_valid_ether_addr(hdr->addr2) ||
++		    ether_addr_equal(sdata->dev->dev_addr, hdr->addr2))
++			return false;
+ 		if (!rx->sta) {
+ 			int rate_idx;
+ 			if (status->encoding != RX_ENC_LEGACY)
 -- 
 2.39.5
 
