@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4222222FDEA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D1C225419;
 	Tue, 24 Jun 2025 04:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738319; cv=none; b=XDRh4F9VhnudHdHRVgJlj+YjjqpbRR+gh7PskF8zznCtMRfERolCiIWIzXOr7gPO/nw7tcYbuygeVx8saW/3gw4ZdHX0jgi1cpbAYeEKPHIDXPMM+sQ8NJWT/eOG9Ta3FGI5tjPR+Pw1WxHDfYtmMQXfC755kZWip0PUWryPOyc=
+	t=1750738320; cv=none; b=KDIYJH6YwpbfHSL4r7LStWg1OaC+ys1by5mgqsnSaEViOPEZiW6FZYx3+sbf4D2ODNnWsZIqvupDGW3FC9cLXwZvBHxvWIX1d6AHzMGjWORzVcBNNj/nk2b3KSEnOoEWVKUWiDjV+LquaOSiuEaeIcS3bQW26ZVflb8tAvX/l9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738319; c=relaxed/simple;
-	bh=/iRNU+EkQaTv8q7sY8RusloUPQRZmgHJuNsbZTVYgmE=;
+	s=arc-20240116; t=1750738320; c=relaxed/simple;
+	bh=EnoerV/xxx91jhOZdHJKKtLWyi7IcO86p6wzJFGUMZc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iCxPVYBEMJeCk0GpvXklv02G1JJZQBOev7/CAt/pZ1ygCAuK4PM4VNH8eYe7yr18XaKsJPGkeBhx54q4lDYjbWRVnC7wwid2ZfY76xUtVPTvom6YoAfhqt+l0NXIS/UBvlS1CVxBn+dhxmQaCBf/Jm9lKgr1J6nG3KKoN5v48Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DVfZXiQr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nWte8mt6WUv8MFpLn1fIL5VX0sNDLWgcAEz1G+jZtd3HTVGEGCDFeBhP/M8Cl5w/bSqWMbFM9fMpVw7QCwWIJUVaROVQAHicszXCEVYRbGrmgj6xqG7XCAB87FWokLhA4eq7YNZMt//s6xdiqBwG3mm8ULuFJ0jaaS/pAqPBACA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cB25tBrv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DVfZXiQr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7638C4CEEF;
-	Tue, 24 Jun 2025 04:11:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cB25tBrv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89740C4CEEF;
+	Tue, 24 Jun 2025 04:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1750738319;
-	bh=/iRNU+EkQaTv8q7sY8RusloUPQRZmgHJuNsbZTVYgmE=;
+	bh=EnoerV/xxx91jhOZdHJKKtLWyi7IcO86p6wzJFGUMZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DVfZXiQr/yqhYcrcKNRh6dNWeDY/9HjYAEp0iZFVODcP9Xnwe8ynwsZ1HK6nQ3aJo
-	 dz4w/C2RIc6uy+XDgD6FljN0B1esUAysuV3k0J4kmUwcCDKRI0NWGGzpxRTGKsW4f/
-	 Sak210olXH84BUQ8E2DCa1BdkaY6rNE5BCut6iVyUyy+2Y97efNpnHOHbn9TPxvYBD
-	 2CyA5QUjKV4f1+EDU4U1p9+4HTsejLBX9wOuoJnDq6OaUPVo0m8HSI2vkH7RkJzt7Y
-	 3xK8onpXgZw2+OjKteun9AjXalsOI4ZmTra8D1d421/UBFnEo1H71jhnc6sdqFEWRN
-	 uEGG3UKOw1J/w==
+	b=cB25tBrv1Si+IelkEdCK4z0nmM88k8Ll1SpDvRnDf7zDPRDSgiSfpN2QqWU2FqrcN
+	 oc7R88cJBm7oceMYw3yTdZG2pyWIQ9JMdwx+yrTvwFKcdKBM8Earci+AZ1UEcd3jDb
+	 j/0MWhATouI5oNga5PsYlkVknvT6O29UBU0EOIg8vvt54THlc3buIUz8BCrucAayRg
+	 Dh5ygLy4mHtlc5XxjNBnmnbWrQkGEJnqDbAxPE0DeHRhRNZOWs2BdKjBYVQ4hZ/HKj
+	 zyNdsqrWa90SrrfdcaBcJ/PuaKhT3kabtxLBYC+ypijSVH/Q5k0Cn+/DIEe/H5sdGz
+	 k/A7ScG/Ipxgw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Raoul <ein4rth@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Gyeyoung Baek <gye976@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>,
-	Shyam-sundar.S-k@amd.com,
-	platform-driver-x86@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 08/19] platform/x86/amd/pmc: Add PCSpecialist Lafite Pro V 14M to 8042 quirks list
-Date: Tue, 24 Jun 2025 00:11:37 -0400
-Message-Id: <20250624041149.83674-8-sashal@kernel.org>
+	linus.walleij@linaro.org,
+	bartosz.golaszewski@linaro.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 09/19] genirq/irq_sim: Initialize work context pointers properly
+Date: Tue, 24 Jun 2025 00:11:38 -0400
+Message-Id: <20250624041149.83674-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041149.83674-1-sashal@kernel.org>
 References: <20250624041149.83674-1-sashal@kernel.org>
@@ -47,134 +47,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.34
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Gyeyoung Baek <gye976@gmail.com>
 
-[ Upstream commit 9ba75ccad85708c5a484637dccc1fc59295b0a83 ]
+[ Upstream commit 8a2277a3c9e4cc5398f80821afe7ecbe9bdf2819 ]
 
-Every other s2idle cycle fails to reach hardware sleep when keyboard
-wakeup is enabled.  This appears to be an EC bug, but the vendor
-refuses to fix it.
+Initialize `ops` member's pointers properly by using kzalloc() instead of
+kmalloc() when allocating the simulation work context. Otherwise the
+pointers contain random content leading to invalid dereferencing.
 
-It was confirmed that turning off i8042 wakeup avoids ths issue
-(albeit keyboard wakeup is disabled).  Take the lesser of two evils
-and add it to the i8042 quirk list.
-
-Reported-by: Raoul <ein4rth@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220116
-Tested-by: Raoul <ein4rth@gmail.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20250611203341.3733478-1-superm1@kernel.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Gyeyoung Baek <gye976@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20250612124827.63259-1-gye976@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's the
-extensive explanation based on the code analysis:
+This commit should be backported to stable kernel trees, specifically to
+the v6.11 stable series and any newer stable branches.
 
-## Key Reasons for Backporting:
+## Detailed Explanation:
 
-### 1. **Bug Fix for Real Hardware Issue**
-The commit fixes a legitimate suspend/resume bug on the PCSpecialist
-Lafite Pro V 14M laptop where:
-- Every other s2idle cycle fails to reach hardware sleep when keyboard
-  wakeup is enabled
-- This is confirmed to be an EC (Embedded Controller) firmware bug
-- The issue causes spurious wakeups, severely affecting power management
+### 1. **Critical Bug Fix**
+The commit fixes a serious uninitialized memory bug. The code change
+from `kmalloc()` to `kzalloc()` is critical because:
 
-### 2. **Simple, Contained Fix**
-The change is minimal and low-risk:
-```diff
-+       {
-+               .ident = "PCSpecialist Lafite Pro V 14M",
-+               .driver_data = &quirk_spurious_8042,
-+               .matches = {
-+                       DMI_MATCH(DMI_SYS_VENDOR, "PCSpecialist"),
-+                       DMI_MATCH(DMI_PRODUCT_NAME, "Lafite Pro V 14M"),
-+               }
-+       },
-```
-It only adds a DMI match entry to an existing quirk list, using an
-already-established mechanism (`quirk_spurious_8042`).
-
-### 3. **Follows Established Pattern**
-This commit follows the exact same pattern as previous backported
-commits:
-- Commit `a55bdad5dfd1` (Framework 13) - BACKPORTED
-- Commit `0887817e4953` (MECHREVO Wujie 14XA) - BACKPORTED
-Both use the same `quirk_spurious_8042` mechanism and were deemed
-suitable for stable.
-
-### 4. **Hardware-Specific Fix**
-The fix is:
-- Only activated for specific hardware (DMI matching)
-- Cannot affect other systems
-- Has zero risk of regression on non-affected hardware
-
-### 5. **User Impact**
-From the commit message and bug report:
-- The vendor refuses to fix the EC firmware bug
-- Without this fix, users experience broken suspend/resume behavior
-- This is the "lesser of two evils" - disabling keyboard wakeup vs.
-  having unreliable suspend
-
-### 6. **Implementation Details**
-The quirk works by setting `dev->disable_8042_wakeup = true` in
-`amd_pmc_quirks_init()`, which triggers `amd_pmc_wa_irq1()` during
-suspend to:
 ```c
-disable_irq_wake(1);
-device_set_wakeup_enable(d, false);
+// Before (buggy):
+struct irq_sim_work_ctx *work_ctx __free(kfree) =
+    kmalloc(sizeof(*work_ctx), GFP_KERNEL);
+
+// After (fixed):
+struct irq_sim_work_ctx *work_ctx __free(kfree) =
+    kzalloc(sizeof(*work_ctx), GFP_KERNEL);
 ```
-This disables IRQ1 (keyboard) as a wakeup source, preventing the
-spurious wakeups.
 
-### 7. **Tested Solution**
-The commit includes:
-- Reported-by tag
-- Tested-by tag
-- Reference to bug report
-  (https://bugzilla.kernel.org/show_bug.cgi?id=220116)
+### 2. **The Bug Impact**
+The `irq_sim_work_ctx` structure contains an `ops` member with function
+pointers:
+- `ops.irq_sim_irq_requested`
+- `ops.irq_sim_irq_released`
 
-This indicates the fix has been verified to resolve the issue on
-affected hardware.
+When `irq_domain_create_sim_full()` is called with `ops=NULL` (which
+happens when using the older `irq_domain_create_sim()` API), these
+pointers are left uninitialized with random memory content.
 
-The commit meets all criteria for stable backporting: it fixes a real
-bug affecting users, is minimal in scope, has no risk of regression, and
-follows the established pattern of similar fixes that have already been
-backported.
+### 3. **Potential Consequences**
+The uninitialized pointers are checked in:
+- `irq_sim_request_resources()`: `if
+  (work_ctx->ops.irq_sim_irq_requested)`
+- `irq_sim_release_resources()`: `if
+  (work_ctx->ops.irq_sim_irq_released)`
 
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+If these random values are non-zero, the kernel will attempt to call
+garbage function pointers, leading to:
+- **Kernel crashes/panics**
+- **Security vulnerabilities** (jumping to arbitrary memory)
+- **Unpredictable behavior**
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index 2e3f6fc67c568..7ed12c1d3b34c 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -224,6 +224,15 @@ static const struct dmi_system_id fwbug_list[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "WUJIE14-GX4HRXL"),
- 		}
- 	},
-+	/* https://bugzilla.kernel.org/show_bug.cgi?id=220116 */
-+	{
-+		.ident = "PCSpecialist Lafite Pro V 14M",
-+		.driver_data = &quirk_spurious_8042,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "PCSpecialist"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Lafite Pro V 14M"),
-+		}
-+	},
- 	{}
- };
+### 4. **Simple and Safe Fix**
+The fix is minimal (changing one function call) with no side effects:
+- `kzalloc()` guarantees all fields are zero-initialized
+- This ensures function pointers are NULL when not explicitly set
+- No performance impact (negligible difference for a one-time
+  allocation)
+
+### 5. **Affected Versions**
+Based on my repository analysis:
+- The bug was introduced in v6.11-rc1 (commit 011f583781fa)
+- Only kernels v6.11 and newer are affected
+- The fix should be backported to v6.11.y stable series
+
+### 6. **Missing Fixes Tag**
+The commit should have included:
+```
+Fixes: 011f583781fa ("genirq/irq_sim: add an extended irq_sim
+initializer")
+```
+
+This is a textbook example of a commit that meets stable backport
+criteria:
+- Fixes a real bug that can cause crashes
+- Small, contained change
+- No new features or architectural changes
+- Clear bugfix with minimal regression risk
+
+ kernel/irq/irq_sim.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/irq/irq_sim.c b/kernel/irq/irq_sim.c
+index 1a3d483548e2f..ae4c9cbd1b4b9 100644
+--- a/kernel/irq/irq_sim.c
++++ b/kernel/irq/irq_sim.c
+@@ -202,7 +202,7 @@ struct irq_domain *irq_domain_create_sim_full(struct fwnode_handle *fwnode,
+ 					      void *data)
+ {
+ 	struct irq_sim_work_ctx *work_ctx __free(kfree) =
+-				kmalloc(sizeof(*work_ctx), GFP_KERNEL);
++				kzalloc(sizeof(*work_ctx), GFP_KERNEL);
  
+ 	if (!work_ctx)
+ 		return ERR_PTR(-ENOMEM);
 -- 
 2.39.5
 
