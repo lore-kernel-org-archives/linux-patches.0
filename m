@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5D523BCFF;
-	Tue, 24 Jun 2025 04:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1D2222580;
+	Tue, 24 Jun 2025 04:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738330; cv=none; b=SgnCwOhAY2P/Gfq4MHmoSaqwhV7lFRsJaBfui8Qz45m65Y2PF2sYmM0Xo0KQ2Yg5fRaKOcuSyV3l3Gp237tQrhCMpIeFWg2gU1cS/p0dWGOdHSRslrkGuLRPNEfLClD9ZZ4oq4USz1yf46g7sQ9deTP8GmZRzPa/lhzFRe5pXhY=
+	t=1750738332; cv=none; b=DxOhys2WvK0ipoUNFrcGYuynwyfBy72aKpHLAEwK0hcndTp2iLhCiO0pva6u2LeGfUEADLKblD+LBdogTuTv2Z1uA/GIIO7y3jRH6gFwoS3ph2KH8L1g7wR7iojOQMV8pLpyQ8f/Mp4kbTIqGfU1A9EL0jNL+UkLrglI7o3F1PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738330; c=relaxed/simple;
-	bh=Kf71vhcrmq8fE3Zkm3PfO/mFyGND7bBMzabvYo515e0=;
+	s=arc-20240116; t=1750738332; c=relaxed/simple;
+	bh=+cA9CULD16ZBgRCt7hWk+g7OnHi4i+dXVTJ4XyrH3qk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=p6Rl+29tZ7hk7wexPI75zryX/FfpuihZYr0BrIbuYmwK9JGXvfGLZyGnB73y5rTk0NvryvYfM+vVqdYcS+18ww9jd6xBe4YWiWxWB6Vjb/qE9FfbgQh174014LanclD0ixo/CK7Bi1kQfMcdB+e2DKgXJarOWuupDm4JjjMN8As=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bBs8E4qv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ncX61eGxsivdLYuov6vW77OriI4XcMTHZfO8gic2hSMftog65l7AgJKIWrqhBac7kq1cofMKJ8R0VneceN7/uvNxw7YRUuW/eqg/5m06ApqENs5Luv6fHHeBkySXFriY7W/HBYELeJxuovv3XaejIkeimI1vYje6YSD5Ca+RuWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lFkt5yn3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bBs8E4qv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC6DC4CEEF;
-	Tue, 24 Jun 2025 04:12:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lFkt5yn3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183E9C4CEE3;
+	Tue, 24 Jun 2025 04:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738330;
-	bh=Kf71vhcrmq8fE3Zkm3PfO/mFyGND7bBMzabvYo515e0=;
+	s=k20201202; t=1750738332;
+	bh=+cA9CULD16ZBgRCt7hWk+g7OnHi4i+dXVTJ4XyrH3qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bBs8E4qvkquNW6ptV66Cgms70xRQVH/DpB4ITGJgi/wkdmgKEXpCjMSRXQLMQD0nZ
-	 vMTP/Ymj3cFTE7M8WeXxnukLzQxxNG7OBIbteLMaseUKnzsIH0An2pUWuV6pV07yfT
-	 NDocNvyyY2JjtZeAc2QRMgcwD1IP2goR4gSwp53uY2IKmoc1S8SFMIsscP8kd8GFGg
-	 0M5f6Lnl6EWYzdxlFTLRuoymtoW0U513WEZGRgKXR2TPikmv7pA3DTxdltEErE8tZU
-	 i/V+W9xQ6YiFSFlmPfgJCA5w8gaRnpwskCQwng8ASeK1FB0Wn+yRW5ZCGfJZX+FeiL
-	 bs8ZhR22O+A+A==
+	b=lFkt5yn326gFRTYshOzC3Zgu/8Pnuke+ncStKIIU/Fu1r+vtICXTPRF9TzoXol8UT
+	 zdzGYXVFuatSqowSOZNfYP/2jWHU+zkXH9PwyI8MUkPsJVxW7SgaXPTnh+Ff7hKJE2
+	 tDdWnjUdtPT0W6sp9C+W/ICI+yQ6AT9Ax+i+3aMob9nQFMI3bMHg7ab6UufYkhJN6x
+	 OGqGtHkn2yBmpuDdS47iWREDrQw9pl9H7TwPM2I3KllT3SKkWM+0/St1sppYiwr1jB
+	 siC2njcdBpcBKnitsrVQUX4vFkxPMUoVgAmdb1T5v54+iFMe0JQHQp+3QdbVQg7Os8
+	 QyvXg33pjs17A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Peter Williams <peter@newton.cx>,
-	Hans de Goede <hansg@kernel.org>,
+Cc: Pablo Martin-Gomez <pmartin-gomez@freebox.fr>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>,
-	robert.moore@intel.com,
-	linux-acpi@vger.kernel.org,
-	acpica-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.12 17/19] ACPICA: Refuse to evaluate a method if arguments are missing
-Date: Tue, 24 Jun 2025 00:11:46 -0400
-Message-Id: <20250624041149.83674-17-sashal@kernel.org>
+	tudor.ambarus@linaro.org,
+	Takahiro.Kuwano@infineon.com,
+	mmkurbanov@salutedevices.com,
+	chengminglin@mxic.com.tw
+Subject: [PATCH AUTOSEL 6.12 18/19] mtd: spinand: fix memory leak of ECC engine conf
+Date: Tue, 24 Jun 2025 00:11:47 -0400
+Message-Id: <20250624041149.83674-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041149.83674-1-sashal@kernel.org>
 References: <20250624041149.83674-1-sashal@kernel.org>
@@ -53,131 +53,104 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.34
 Content-Transfer-Encoding: 8bit
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Pablo Martin-Gomez <pmartin-gomez@freebox.fr>
 
-[ Upstream commit 6fcab2791543924d438e7fa49276d0998b0a069f ]
+[ Upstream commit 6463cbe08b0cbf9bba8763306764f5fd643023e1 ]
 
-As reported in [1], a platform firmware update that increased the number
-of method parameters and forgot to update a least one of its callers,
-caused ACPICA to crash due to use-after-free.
+Memory allocated for the ECC engine conf is not released during spinand
+cleanup. Below kmemleak trace is seen for this memory leak:
 
-Since this a result of a clear AML issue that arguably cannot be fixed
-up by the interpreter (it cannot produce missing data out of thin air),
-address it by making ACPICA refuse to evaluate a method if the caller
-attempts to pass fewer arguments than expected to it.
+unreferenced object 0xffffff80064f00e0 (size 8):
+  comm "swapper/0", pid 1, jiffies 4294937458
+  hex dump (first 8 bytes):
+    00 00 00 00 00 00 00 00                          ........
+  backtrace (crc 0):
+    kmemleak_alloc+0x30/0x40
+    __kmalloc_cache_noprof+0x208/0x3c0
+    spinand_ondie_ecc_init_ctx+0x114/0x200
+    nand_ecc_init_ctx+0x70/0xa8
+    nanddev_ecc_engine_init+0xec/0x27c
+    spinand_probe+0xa2c/0x1620
+    spi_mem_probe+0x130/0x21c
+    spi_probe+0xf0/0x170
+    really_probe+0x17c/0x6e8
+    __driver_probe_device+0x17c/0x21c
+    driver_probe_device+0x58/0x180
+    __device_attach_driver+0x15c/0x1f8
+    bus_for_each_drv+0xec/0x150
+    __device_attach+0x188/0x24c
+    device_initial_probe+0x10/0x20
+    bus_probe_device+0x11c/0x160
 
-Closes: https://github.com/acpica/acpica/issues/1027 [1]
-Reported-by: Peter Williams <peter@newton.cx>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Hans de Goede <hansg@kernel.org>
-Tested-by: Hans de Goede <hansg@kernel.org> # Dell XPS 9640 with BIOS 1.12.0
-Link: https://patch.msgid.link/5909446.DvuYhMxLoT@rjwysocki.net
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fix the leak by calling nanddev_ecc_engine_cleanup() inside
+spinand_cleanup().
+
+Signed-off-by: Pablo Martin-Gomez <pmartin-gomez@freebox.fr>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Key Reasons for Backporting:
+1. **Clear Memory Leak Bug**: The commit fixes a concrete memory leak
+   where the ECC engine configuration memory (allocated in
+   `spinand_ondie_ecc_init_ctx()` at line 272 via `kzalloc()`) is never
+   freed. The kmemleak trace clearly shows this 8-byte allocation is
+   leaked on every spinand device initialization.
 
-### 1. **Critical Security Bug - Use-After-Free**
-The commit message explicitly states this fixes a use-after-free
-vulnerability that causes ACPICA to crash. Use-after-free bugs are
-severe security issues that can lead to:
-- System crashes and denial of service
-- Potential arbitrary code execution
-- Memory corruption
+2. **Small and Contained Fix**: The fix is minimal - it only adds a
+   single line `nanddev_ecc_engine_cleanup(nand);` to the existing
+   `spinand_cleanup()` function. This follows the established cleanup
+   pattern already used in the error path (`err_cleanup_ecc_engine:` at
+   line 1569).
 
-### 2. **Real-World Impact**
-The commit references an actual bug report with a specific
-hardware/firmware scenario:
-- Platform firmware update increased method parameters
-- Firmware forgot to update at least one caller
-- This caused a real crash on actual hardware (Dell XPS 9640 with BIOS
-  1.12.0)
-- The bug has been reported, tested, and verified by multiple people
+3. **No Architectural Changes**: The commit doesn't introduce any new
+   features or change any architecture. It simply ensures proper cleanup
+   of already-allocated resources by calling an existing cleanup
+   function.
 
-### 3. **Small, Focused Fix**
-The code change is minimal and surgical:
-```c
-+       if (this_walk_state->num_operands <
-obj_desc->method.param_count) {
-+               ACPI_ERROR((AE_INFO, "Missing argument for method
-[%4.4s]",
-+                           acpi_ut_get_node_name(method_node)));
-+
-+               return_ACPI_STATUS(AE_AML_UNINITIALIZED_ARG);
-+       }
-```
-This adds a simple bounds check before method execution, which is
-exactly the type of defensive programming that should be in stable
-kernels.
+4. **Follows Established Patterns**: The fix mirrors the cleanup already
+   performed in the error handling path during `spinand_init()`. If
+   initialization fails after `nanddev_ecc_engine_init()`, the code
+   already calls `nanddev_ecc_engine_cleanup()`. This commit ensures the
+   same cleanup happens during normal device removal.
 
-### 4. **Prevents Memory Corruption**
-Looking at the surrounding code (specifically line 542 in the original):
-```c
-for (i = 0; i < obj_desc->method.param_count; i++) {
-    acpi_ut_remove_reference(this_walk_state->operands[i]);
-    this_walk_state->operands[i] = NULL;
-}
-```
-Without the check, if `num_operands < param_count`, this loop would
-access beyond the valid operands, causing use-after-free.
+5. **Clear Impact on Users**: Memory leaks affect system stability over
+   time, especially in systems that frequently probe/remove SPI NAND
+   devices (e.g., during development, testing, or hot-plug scenarios).
+   Each leak is small (8 bytes) but cumulative.
 
-### 5. **Clear Error Handling**
-The fix properly returns `AE_AML_UNINITIALIZED_ARG`, which is an
-existing ACPICA error code specifically designed for this scenario
-("Method tried to use an uninitialized argument"). This maintains API
-compatibility.
+6. **Low Risk**: The cleanup function `nanddev_ecc_engine_cleanup()`
+   already checks if the engine exists before attempting cleanup (`if
+   (nand->ecc.engine)`), making it safe to call even in edge cases.
 
-### 6. **No Architectural Changes**
-The commit:
-- Doesn't introduce new features
-- Doesn't change existing behavior for valid code
-- Only adds validation to prevent crashes from invalid AML
-- Is confined to the ACPICA subsystem
+7. **Similar to Backported Commits**: Like the backported commit "atm:
+   idt77252: fix kmemleak when rmmod idt77252", this fixes a clear
+   resource leak found by kmemleak, with a simple addition of the
+   appropriate cleanup call in the removal path.
 
-### 7. **Firmware Bug Mitigation**
-This is a defensive fix against firmware bugs, which is exactly the type
-of robustness stable kernels need. The kernel should not crash due to
-firmware mistakes.
+The commit follows stable tree rules perfectly: it's a small, important
+bugfix with minimal regression risk that addresses a real memory leak
+issue affecting users.
 
-## Comparison with Similar Commits:
+ drivers/mtd/nand/spi/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Unlike the similar commits shown (which were mostly about improving
-error messages or cosmetic changes), this commit:
-- Fixes an actual crash/security issue
-- Has been reported and tested on real hardware
-- Prevents memory corruption
-- Is not just a theoretical improvement
-
-This aligns perfectly with stable kernel rules: important bug fixes with
-minimal risk that improve system stability and security.
-
- drivers/acpi/acpica/dsmethod.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
-index e809c2aed78ae..a232746d150a7 100644
---- a/drivers/acpi/acpica/dsmethod.c
-+++ b/drivers/acpi/acpica/dsmethod.c
-@@ -483,6 +483,13 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
- 		return_ACPI_STATUS(AE_NULL_OBJECT);
- 	}
+diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
+index 4d76f9f71a0e9..241f6a4df16c1 100644
+--- a/drivers/mtd/nand/spi/core.c
++++ b/drivers/mtd/nand/spi/core.c
+@@ -1496,6 +1496,7 @@ static void spinand_cleanup(struct spinand_device *spinand)
+ {
+ 	struct nand_device *nand = spinand_to_nand(spinand);
  
-+	if (this_walk_state->num_operands < obj_desc->method.param_count) {
-+		ACPI_ERROR((AE_INFO, "Missing argument for method [%4.4s]",
-+			    acpi_ut_get_node_name(method_node)));
-+
-+		return_ACPI_STATUS(AE_AML_UNINITIALIZED_ARG);
-+	}
-+
- 	/* Init for new method, possibly wait on method mutex */
- 
- 	status =
++	nanddev_ecc_engine_cleanup(nand);
+ 	nanddev_cleanup(nand);
+ 	spinand_manufacturer_cleanup(spinand);
+ 	kfree(spinand->databuf);
 -- 
 2.39.5
 
