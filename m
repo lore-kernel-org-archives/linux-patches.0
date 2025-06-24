@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F21E2222CE;
-	Tue, 24 Jun 2025 04:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE06D226D04;
+	Tue, 24 Jun 2025 04:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738410; cv=none; b=XjJXLP0dD3wTMnvdSiSoTDpKhgiRxhoqiYJFU5jSQxdabNQB2d2+nWAIhdeNtTkvZNVstKeCOoUP0OdfloFThfOv2IT15Fw/RlpMbapLcYMPHiPRtM8AM2uiB5MRcuhLXKSQECX6WGaZNvBhvbk+9cdnH+7f3G2fK+wNrrSD/IU=
+	t=1750738412; cv=none; b=VTa/rtnX6eswPQE3Ccvsh3Yk+sOJjl1uL8l2k6UjrBKy6WxHDJL0Cb1KVZGcKNYZAwar+8nnxoEI3fMkl7QwPQWQQ9qyYqTwrrVH0jfZBq6SIEiR10R7LE2UF+mr0LgUT1ye73BCp6BHB7ca42h9dAIJDGD1QAOG5cGlWu42shg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738410; c=relaxed/simple;
-	bh=wb5XG4zomizsRsNgGGeRBsyJVI/CidgXEKJUJAU705c=;
+	s=arc-20240116; t=1750738412; c=relaxed/simple;
+	bh=+vmQseMJm0Csnk8ZH7N0eziFnpNk9CZVqw+zqztxKS8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=CJ1BwuDCRtTSuh+spfkbktr7Tv/+NM5SJ1Kai2wtJyLgjyV+9K7vNx4PNwncWrGrWw4tvM1tz/xyDf9urwzr5bljOazzIAq/j5N8AA6f0FI2crPaqlJhKU/Co4JnEprpCCXudajruGtQG5BaVMcxKa8PEDjNHbpnlYBNFvQMa/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LPZw7CL6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VglJWJ0BdpXhjuRIb5fqUOuZR9g7tMTfGUfZw2dq/mfKW8H4xeIKkbzXEcszB3d8oDQHOPoHFSkYTCxMgRpNYe46DbnEPd14XEEwqDrK9slsA8rWOSUxZ0IixpSNCM5ZOXjIq+jz4nArjXaoPFVfdwKAWt/h0Z5YRPsksJ16wFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ot5/SH91; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LPZw7CL6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150AAC4CEEF;
-	Tue, 24 Jun 2025 04:13:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ot5/SH91"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B19C4CEE3;
+	Tue, 24 Jun 2025 04:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738410;
-	bh=wb5XG4zomizsRsNgGGeRBsyJVI/CidgXEKJUJAU705c=;
+	s=k20201202; t=1750738412;
+	bh=+vmQseMJm0Csnk8ZH7N0eziFnpNk9CZVqw+zqztxKS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LPZw7CL6zDO6P/YKCZgq+AGrCv5SKpBE2MSI2gLr6mU1yQo4NehGvyY/IZNBmxfZe
-	 p6zrS9YUXUB5k1cyf4KW0xURuwh3Svtzao52HrulrxaDTMj6a0B0yCosJ09KzWtJ69
-	 pLgdNU9OvYBB0jL/PbkDc/uqOiNpppTo0gRrJSlOkopArnUn8RgYzIm5T21aRl+EPs
-	 hplzpz//+66mKXgv29v+PrqfOz1VNr+NGynfzcXejGKMAaPDvNpEO9A4iA5kIx47P2
-	 z8uKpz6L6Zz4vmEQgPEhAcXyE9eU1v3dbq+xZ8KBWpsrw07hOKvto1GtqjoUbHcqDo
-	 7ODoSFUDmix6g==
+	b=Ot5/SH911bknVTpgxli53ys3LRTFHfLNdbuUWkJNcCHRoU155f6iWmYNYswa4qrnW
+	 SLJumu/REaojtfg584IPROVMmCgJt5kFpUcImWJLWLpgKS/AtckdbDQasCDUGN1qW/
+	 SQJV6QAmUwd2HE18/7dlZfg5X2e9RKSTDhvyR5FODhuq6BZqls5mRzyrCXE4QspdU4
+	 9/rFy+iAYNXpoLqnoXaaCHm0Ook9VKDGTBXChQFdA6d8GYJPQ6L3pNbCPk5PkEISnY
+	 uM47FHyWnlY9aBARWqDmdg+PdwwjJNI39ADuy0W8ANumWlV6UlLoVcSVmKqaexcofN
+	 N3snPnpcBwRkA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Berg <johannes.berg@intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Niklas Cassel <cassel@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	dlemoal@kernel.org,
-	linux-ide@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 2/7] ata: pata_cs5536: fix build on 32-bit UML
-Date: Tue, 24 Jun 2025 00:13:21 -0400
-Message-Id: <20250624041327.85407-2-sashal@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Tulio Magno <tuliom@ascii.art.br>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Justin M . Forbes" <jforbes@fedoraproject.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 3/7] powerpc: Fix struct termio related ioctl macros
+Date: Tue, 24 Jun 2025 00:13:22 -0400
+Message-Id: <20250624041327.85407-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041327.85407-1-sashal@kernel.org>
 References: <20250624041327.85407-1-sashal@kernel.org>
@@ -52,18 +52,32 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.294
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
 
-[ Upstream commit fe5b391fc56f77cf3c22a9dd4f0ce20db0e3533f ]
+[ Upstream commit ab107276607af90b13a5994997e19b7b9731e251 ]
 
-On 32-bit ARCH=um, CONFIG_X86_32 is still defined, so it
-doesn't indicate building on real X86 machines. There's
-no MSR on UML though, so add a check for CONFIG_X86.
+Since termio interface is now obsolete, include/uapi/asm/ioctls.h
+has some constant macros referring to "struct termio", this caused
+build failure at userspace.
 
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://lore.kernel.org/r/20250606090110.15784-2-johannes@sipsolutions.net
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+In file included from /usr/include/asm/ioctl.h:12,
+                 from /usr/include/asm/ioctls.h:5,
+                 from tst-ioctls.c:3:
+tst-ioctls.c: In function 'get_TCGETA':
+tst-ioctls.c:12:10: error: invalid application of 'sizeof' to incomplete type 'struct termio'
+   12 |   return TCGETA;
+      |          ^~~~~~
+
+Even though termios.h provides "struct termio", trying to juggle definitions around to
+make it compile could introduce regressions. So better to open code it.
+
+Reported-by: Tulio Magno <tuliom@ascii.art.br>
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Reviewed-by: Michael Ellerman <mpe@ellerman.id.au>
+Closes: https://lore.kernel.org/linuxppc-dev/8734dji5wl.fsf@ascii.art.br/
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250517142237.156665-1-maddy@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -72,68 +86,64 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **It fixes a build failure**: The commit addresses a build breakage
-   on 32-bit UML (User Mode Linux) where `CONFIG_X86_32` is defined but
-   MSR (Machine Specific Register) support is not available. This
-   prevents successful compilation when building for 32-bit UML.
+1. **Fixes a real build failure**: The commit message clearly documents
+   a userspace build failure when `asm/ioctls.h` is included without
+   `struct termio` being defined. This breaks userspace programs that
+   use these ioctl definitions.
 
-2. **The fix is minimal and contained**: The change is a simple one-line
-   modification that adds an additional check for `CONFIG_X86` alongside
-   the existing `CONFIG_X86_32` check. The change from:
-  ```c
-  #ifdef CONFIG_X86_32
-  ```
-  to:
-  ```c
-  #if defined(CONFIG_X86) && defined(CONFIG_X86_32)
-  ```
-  This ensures MSR usage is only enabled on real x86 hardware, not on
-  UML.
+2. **Simple and contained fix**: The change is minimal and low-risk - it
+   merely replaces macro calls with their hardcoded equivalents. The
+   hardcoded values (0x40147417, 0x80147418, 0x80147419, 0x8014741c) are
+   the exact expansion of the original macros for a 20-byte `struct
+   termio` on PowerPC.
 
-3. **Similar pattern to other backported fixes**: Looking at the similar
-   commits, we see that:
-   - Commit #1 (pata_cs5535 + UML) was backported (YES) - it added
-     `depends on !UML` to prevent build issues
-   - Commit #2 (dmaengine: idxd + UML) was backported (YES) - similar
-     UML build fix
+3. **Follows established patterns**: Other architectures (sh and xtensa)
+   already use this same approach of hardcoding the values with comments
+   showing the original macro. This indicates it's a known and accepted
+   solution.
 
-   These show a pattern where UML build fixes are considered important
-for stable backporting.
+4. **No functional changes**: The ioctl values remain exactly the same -
+   only the way they're defined changes. This ensures binary
+   compatibility is maintained.
 
-4. **No functional changes for normal users**: The fix only affects
-   build configurations and doesn't change any runtime behavior for
-   users running on actual x86 hardware. This minimizes regression risk.
+5. **Prevents future issues**: As noted in the commit message, the
+   termio interface is obsolete, and trying to reorganize header files
+   to fix this properly could introduce regressions. The hardcoded
+   approach is safer.
 
-5. **Prevents allyesconfig/allmodconfig breakage**: As seen in similar
-   commits, UML build failures can break comprehensive kernel build
-   tests (allyesconfig/allmodconfig), which are important for continuous
-   integration and testing.
+6. **Clear user impact**: The commit includes a specific example of the
+   build failure with line numbers and error messages, demonstrating
+   this affects real users (reported by Tulio Magno).
 
-6. **The issue affects a subsystem driver**: While pata_cs5536 is a
-   specific driver for older AMD CS5536 hardware, build failures in any
-   driver can impact kernel testing infrastructure and distributions
-   that build comprehensive kernel packages.
+7. **Tested**: The commit indicates it was tested by Justin M. Forbes,
+   providing confidence in the fix.
 
-The commit follows the stable tree rules by being a minimal, focused fix
-for an actual bug (build failure) with very low risk of introducing new
-issues.
+The commit follows the stable tree rules by fixing an important bug
+(build failure) with minimal risk of regression, making it an ideal
+candidate for backporting.
 
- drivers/ata/pata_cs5536.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/include/uapi/asm/ioctls.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ata/pata_cs5536.c b/drivers/ata/pata_cs5536.c
-index 760ac6e65216f..3737d1bf1539d 100644
---- a/drivers/ata/pata_cs5536.c
-+++ b/drivers/ata/pata_cs5536.c
-@@ -27,7 +27,7 @@
- #include <scsi/scsi_host.h>
- #include <linux/dmi.h>
+diff --git a/arch/powerpc/include/uapi/asm/ioctls.h b/arch/powerpc/include/uapi/asm/ioctls.h
+index 2c145da3b774a..b5211e413829a 100644
+--- a/arch/powerpc/include/uapi/asm/ioctls.h
++++ b/arch/powerpc/include/uapi/asm/ioctls.h
+@@ -23,10 +23,10 @@
+ #define TCSETSW		_IOW('t', 21, struct termios)
+ #define TCSETSF		_IOW('t', 22, struct termios)
  
--#ifdef CONFIG_X86_32
-+#if defined(CONFIG_X86) && defined(CONFIG_X86_32)
- #include <asm/msr.h>
- static int use_msr;
- module_param_named(msr, use_msr, int, 0644);
+-#define TCGETA		_IOR('t', 23, struct termio)
+-#define TCSETA		_IOW('t', 24, struct termio)
+-#define TCSETAW		_IOW('t', 25, struct termio)
+-#define TCSETAF		_IOW('t', 28, struct termio)
++#define TCGETA		0x40147417 /* _IOR('t', 23, struct termio) */
++#define TCSETA		0x80147418 /* _IOW('t', 24, struct termio) */
++#define TCSETAW		0x80147419 /* _IOW('t', 25, struct termio) */
++#define TCSETAF		0x8014741c /* _IOW('t', 28, struct termio) */
+ 
+ #define TCSBRK		_IO('t', 29)
+ #define TCXONC		_IO('t', 30)
 -- 
 2.39.5
 
