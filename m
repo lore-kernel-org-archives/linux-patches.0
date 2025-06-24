@@ -1,144 +1,82 @@
-Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34E322D793
-	for <patches@lists.linux.dev>; Tue, 24 Jun 2025 11:57:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C47252287;
+	Tue, 24 Jun 2025 11:58:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750766266; cv=none; b=b5KvA6bYiN+MH5CDhNNf8pNYvnk03ZVtJuqEfQyJHaNAmt/HCnLuKM3XDJSPvv+EObQwr5AOiaEZblN5jsCecTOH85xXPoRULCTkVcptwVlvQKEsL+nwDO8GVyijd7PkhbLfiIjDUj+fJe9fQrY0KzSueTHme65rJmTJhZ5cWgs=
+	t=1750766295; cv=none; b=tFPz0wr2+nvJKsz1MqqkrVIqJ1IJqj49YtnvaB6mq5VRcxmtxXn1zybALxf5rQGczPhbR6jD8rgfHai1uOsQYHWsyFAr7+MbV9wDaWjYPluRWLxMfPNJbB6HVY/mxnj/Fo7+4OszUr8Ybe2TbcS946MvcxrNUBAr5XTXDMIRueU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750766266; c=relaxed/simple;
-	bh=KeF3pLl8RdS+IGRnNVfO3PV/raHK0R3QKaVsnOyboxw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Is0Va0bntOzJiTE0OW1ASNYw3g3NEjfQoHa/oMT++UfYejTngnoImABv/JslFE1TZRL9vxhG6vnsdqybWz3zJZ7R0ltRc4Qb37IMufPgdR2PzzUsZwg8iA+4/QTayO5GNsNkaP+q6bkeFTPomoAHyUX1fIK/SMEQBKOlddTsuww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.17])
-	by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4bRNh31wQwz1QBgM;
-	Tue, 24 Jun 2025 19:56:03 +0800 (CST)
-Received: from kwepemf100007.china.huawei.com (unknown [7.202.181.221])
-	by mail.maildlp.com (Postfix) with ESMTPS id 122631A0188;
-	Tue, 24 Jun 2025 19:57:40 +0800 (CST)
-Received: from [10.67.109.184] (10.67.109.184) by
- kwepemf100007.china.huawei.com (7.202.181.221) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 24 Jun 2025 19:57:39 +0800
-Message-ID: <a82c4b91-9ff2-47db-821f-36d1e403f064@huawei.com>
-Date: Tue, 24 Jun 2025 19:57:38 +0800
+	s=arc-20240116; t=1750766295; c=relaxed/simple;
+	bh=FZMb9xIbMiJLfUoWqlucL2Qw7IWuVDdMTJotSraEXtw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aDtnBpb/8LNPr7FFVVCYLDJoYQTMLoQxdn4UjvjRVEJ1aSlgMTVOO82m6ldZ5O9cd8vpR0maZenkAxQ2CH/8yrieg/tc+8WUc0WxMJ1FYcybp1fsscpuM+bSo25zk/5g1T+4ZtkT8lD9whVfhr2wWnZFm7gNzTT6Ksl/nXJFnNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YmQ5Z8Wu; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YmQ5Z8Wu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997C2C4CEE3;
+	Tue, 24 Jun 2025 11:58:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750766295;
+	bh=FZMb9xIbMiJLfUoWqlucL2Qw7IWuVDdMTJotSraEXtw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YmQ5Z8WuQP7V1MX4w6Fmk3Ct37BB/Hoa4qSMNzoYPy/jHBRpxidvLKTDZ08/L5YOP
+	 3CeofL7Gazzz1OFZJO/lSf1E5Y59PVy6/MreJYprXA8aIojC9f3/R0xUOOULSMvnnS
+	 /fc2XeIwXe1UVHIqjgtwVX+4MiWitxS/f/OuNkkXuWA52KnW/McZ1Sxp/+BW9eEPA5
+	 FG2g6wankQOIZAcLP6eiL1Yp0V6GStwB/JmbhdqZ3RXzFS7v3Yx/Jvi6iC4CJmKhm8
+	 pzOldsVW8rAG7iHFOzL2j13TQaEQJNflXqbCanN5dgmtbFtScVmCO6d9M5rvfRXACm
+	 8YTQOwDYOIT3g==
+Date: Tue, 24 Jun 2025 12:58:08 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com
+Subject: Re: [PATCH 6.6 000/290] 6.6.95-rc1 review
+Message-ID: <d62d618b-7ea0-4b9f-a4a7-7aa7b5713def@sirena.org.uk>
+References: <20250623130626.910356556@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 323/355] arm64: move AARCH64_BREAK_FAULT into
- insn-def.h
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>, Hou Tao
-	<houtao1@huawei.com>, Will Deacon <will@kernel.org>
-References: <20250623130626.716971725@linuxfoundation.org>
- <20250623130636.471359981@linuxfoundation.org>
- <596e3d6b-a5ff-4914-9a5b-26603e8de8d0@huawei.com>
- <2025062453-proton-preheated-90a8@gregkh>
-From: Pu Lehui <pulehui@huawei.com>
-In-Reply-To: <2025062453-proton-preheated-90a8@gregkh>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
- kwepemf100007.china.huawei.com (7.202.181.221)
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="3JUlCpscSXiEgWsS"
+Content-Disposition: inline
+In-Reply-To: <20250623130626.910356556@linuxfoundation.org>
+X-Cookie: Do, or do not
 
 
+--3JUlCpscSXiEgWsS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 2025/6/24 18:24, Greg Kroah-Hartman wrote:
-> On Tue, Jun 24, 2025 at 11:34:02AM +0800, Pu Lehui wrote:
->>
->> On 2025/6/23 21:08, Greg Kroah-Hartman wrote:
->>> 5.10-stable review patch.  If anyone has any objections, please let me know.
->>>
->>> ------------------
->>>
->>> From: Hou Tao <houtao1@huawei.com>
->>>
->>> [ Upstream commit 97e58e395e9c074fd096dad13c54e9f4112cf71d ]
->>>
->>> If CONFIG_ARM64_LSE_ATOMICS is off, encoders for LSE-related instructions
->>> can return AARCH64_BREAK_FAULT directly in insn.h. In order to access
->>> AARCH64_BREAK_FAULT in insn.h, we can not include debug-monitors.h in
->>> insn.h, because debug-monitors.h has already depends on insn.h, so just
->>> move AARCH64_BREAK_FAULT into insn-def.h.
->>>
->>> It will be used by the following patch to eliminate unnecessary LSE-related
->>> encoders when CONFIG_ARM64_LSE_ATOMICS is off.
->>>
->>> Signed-off-by: Hou Tao <houtao1@huawei.com>
->>> Link: https://lore.kernel.org/r/20220217072232.1186625-2-houtao1@huawei.com
->>> Signed-off-by: Will Deacon <will@kernel.org>
->>> [not exist insn-def.h file, move to insn.h]
->>> Signed-off-by: Pu Lehui <pulehui@huawei.com>
->>> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->>> ---
->>>    arch/arm64/include/asm/debug-monitors.h |   12 ------------
->>>    arch/arm64/include/asm/insn.h           |   12 ++++++++++++
->>>    2 files changed, 12 insertions(+), 12 deletions(-)
->>>
->>> --- a/arch/arm64/include/asm/debug-monitors.h
->>> +++ b/arch/arm64/include/asm/debug-monitors.h
->>> @@ -34,18 +34,6 @@
->>>     */
->>>    #define BREAK_INSTR_SIZE		AARCH64_INSN_SIZE
->>> -/*
->>> - * BRK instruction encoding
->>> - * The #imm16 value should be placed at bits[20:5] within BRK ins
->>> - */
->>> -#define AARCH64_BREAK_MON	0xd4200000
->>> -
->>> -/*
->>> - * BRK instruction for provoking a fault on purpose
->>> - * Unlike kgdb, #imm16 value with unallocated handler is used for faulting.
->>> - */
->>> -#define AARCH64_BREAK_FAULT	(AARCH64_BREAK_MON | (FAULT_BRK_IMM << 5))
->>> -
->>>    #define AARCH64_BREAK_KGDB_DYN_DBG	\
->>>    	(AARCH64_BREAK_MON | (KGDB_DYN_DBG_BRK_IMM << 5))
->>> --- a/arch/arm64/include/asm/insn.h
->>> +++ b/arch/arm64/include/asm/insn.h
->>> @@ -13,6 +13,18 @@
->>>    /* A64 instructions are always 32 bits. */
->>>    #define	AARCH64_INSN_SIZE		4
->>> +/*
->>> + * BRK instruction encoding
->>> + * The #imm16 value should be placed at bits[20:5] within BRK ins
->>> + */
->>> +#define AARCH64_BREAK_MON      0xd4200000
->>> +
->>> +/*
->>> + * BRK instruction for provoking a fault on purpose
->>> + * Unlike kgdb, #imm16 value with unallocated handler is used for faulting.
->>> + */
->>> +#define AARCH64_BREAK_FAULT    (AARCH64_BREAK_MON | (FAULT_BRK_IMM << 5))
->>
->> Hi Greg,
->>
->> Dominique just discovered a compilation problem [0] caused by not having
->> `#include <asm/brk-imm.h>` in insn.h.
->>
->> I have fixed it as shown below, should I resend the formal patch?
->>
->> Link: https://lore.kernel.org/all/aFniFC7ywCoveOts@codewreck.org/ [0]
-> 
-> Let me see if I can just take this as-is...
-> 
-> Ok, it worked for 5.10.y, is this also needed in 5.15.y?
+On Mon, Jun 23, 2025 at 03:04:21PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.95 release.
+> There are 290 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-No need. 5.15.y has covered <asm/brk-imm.h> header file.
+Tested-by: Mark Brown <broonie@kernel.org>
 
-thanks
+--3JUlCpscSXiEgWsS
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> 
-> thanks,
-> 
-> greg k-h
-> 
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmhaktAACgkQJNaLcl1U
+h9AQjwf8CmXGFpDxqQw/zcckNXIbjJwX/tPeOGCLC74M3FboOIMMds83tXoLKhX7
+hrkAssWfSZ0C3l9jTpLB8TF8KNqYC4TkupNPWGZM9a53tvfClPQLyswm8KFrhr4y
+fKiI0WinoMGZodibiz47tg9dWb4WwYJJh9DNnmHeK5rd8hsCrntPPZYEtTUTYno9
+Nsoig9LcxEBOM5roYIlVPabsETpCG58TD7XI3ecNLNCIS6lNhjpmYfsY7r4ZLvDW
+gKw9SnV8PKMXUP0YghJxBsMPvwg+pR5X9cq9I9tX0palXD/LtwBfFXPcFsdwvmS9
+0QuMKlZqHVCOqP+wgc/00Oz+eNHt/Q==
+=dOvN
+-----END PGP SIGNATURE-----
+
+--3JUlCpscSXiEgWsS--
