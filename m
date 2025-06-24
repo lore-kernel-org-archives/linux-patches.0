@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F217D22D4DC;
-	Tue, 24 Jun 2025 04:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227102248B0;
+	Tue, 24 Jun 2025 04:11:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738311; cv=none; b=BpAA1Zdzl8fiL2lJJDqY2La2mZDsdGxOCf40+GIDuZg4sIhs2cS9t30rLn7tQEDKixSCvwJuYGE1TlxnMrab1LuZ3e2qRybtw2TiV0zz1qi0KhXRPWEXfGvPM+MXME/tTOP4UiL7n+z8gxsMPzQP71rABNG3gNAChfDwEP+r1iE=
+	t=1750738313; cv=none; b=jLFCEO5G+fSDVtLmgcARPzrII8eLHZ+b6/DSk/mDvZGgiser+4fgDN2YxvFjyH0pTf3pUkSxoB/wSoEmjN50fbKeJkdGzfqg0c+VlgIPGbJCs2Zk1Vu+O/MsdMXThrFuSNPGUxSb/k42rmDkCkPeNqmFXy1mR/90Lh20kuO/Dqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738311; c=relaxed/simple;
-	bh=mKZohincCOjGcHzf/7QeP8sbFDNocxHn+eB/iFy60ls=;
+	s=arc-20240116; t=1750738313; c=relaxed/simple;
+	bh=5wc6WxSmEFH9oULUCiFzSCfKbTl0q6N8kAB6yyfyVH4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=awe0ECzEiv0C9l4m1QO+mRQUlZaPWJHUsQgDKtmesGWR4YACEoCXppITxWW4Z1bbqr124KWkZyN0Rh6T+nkGZ6J51b3hkF9JvgpmB19NiF0GRu44h3mQpol72ny6FAZMti8o49L9LkmKEduI1keUfHfvEb4LcHpoYe4dnJ6IYAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MpC1Xkai; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EH+htk6jw5x7Kp6jJSDFcbj0lY561uT/OCztZg/8Tx1JvR8q2Pj3L6Y5pjFCd8JCHyDuyLlMjLiiLzBvxTybyw2UkpbGP8VQwXhUYPhe0UjtmbWWQLdjBWEVEphhAbTs8SRYToT9PICGhDNI32AbfnD9EtIIpwmDeTS4snNKgME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Db8NqbcA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MpC1Xkai"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8BFC4CEF0;
-	Tue, 24 Jun 2025 04:11:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Db8NqbcA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64817C4CEE3;
+	Tue, 24 Jun 2025 04:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738310;
-	bh=mKZohincCOjGcHzf/7QeP8sbFDNocxHn+eB/iFy60ls=;
+	s=k20201202; t=1750738312;
+	bh=5wc6WxSmEFH9oULUCiFzSCfKbTl0q6N8kAB6yyfyVH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MpC1XkaiiSWoS/+TAJXhZ7JJ6HOWmM93mxbZZiY3HGQfLW0ixml5jTwrnXJujkbyo
-	 Snhw/3vtar4Bp/HeG+xXOAMek2JJtgtWDgGVrf+HjHjUm3cWkC+zuvQjZNKsyYwDLO
-	 MFAAOcDtUkiZ63HF91TBibeXpsB8I1kMG+OepjqgnBAj+q6g/QzIGu8ryW3kVOXSZw
-	 BbSBg6jEw2xkU8qJDcYo5Xpzk/LEcde4YWAcEfTtSyqGFuWV4L1pH1pDYKSeZe0R8v
-	 WzoSBkBCBKZH1XltJsjjWbSVwlztILBjJTok93K4vvC/zhjHp/vozwd+JXAVqzIjTt
-	 B7W4VjA1AYi2A==
+	b=Db8NqbcA4h9/taEdXMD6KDlPyfM2ovp0OMTtfb52i8/j4pLxij2sl3RlnpgulBq/X
+	 pN/wQDY69hWbeq3MHbSyMY6vi2UjUxCWbEOh87vkfGzCEPfCk5IwA7NUaMQjG6ViT6
+	 +syCSyt4UgKd9yUkqjQe3lgvWKFeBKmgnayUnSlQ3/D3KsWkJ3Floqe0wVViS4a5yE
+	 h5/xxOSNn8IxLxaK8OczWaUuxgZr0Br5AAJ7v0T/PG8H6o7nGpgT460yGbgXoFJQjy
+	 YmU2ZLbpN3cPddnrgGmScL10WcsAs766KeRvhZC3ohyVPKVrYDIeorcaE1j4qxUmqD
+	 1axAS41byXtXw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+Cc: Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	lumag@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.12 02/19] drm/msm: Fix another leak in the submit error path
-Date: Tue, 24 Jun 2025 00:11:31 -0400
-Message-Id: <20250624041149.83674-2-sashal@kernel.org>
+	perex@perex.cz
+Subject: [PATCH AUTOSEL 6.12 03/19] ALSA: sb: Don't allow changing the DMA mode during operations
+Date: Tue, 24 Jun 2025 00:11:32 -0400
+Message-Id: <20250624041149.83674-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041149.83674-1-sashal@kernel.org>
 References: <20250624041149.83674-1-sashal@kernel.org>
@@ -53,128 +49,106 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.34
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f681c2aa8676a890eacc84044717ab0fd26e058f ]
+[ Upstream commit ed29e073ba93f2d52832804cabdd831d5d357d33 ]
 
-put_unused_fd() doesn't free the installed file, if we've already done
-fd_install().  So we need to also free the sync_file.
+When a PCM stream is already running, one shouldn't change the DMA
+mode via kcontrol, which may screw up the hardware.  Return -EBUSY
+instead.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Patchwork: https://patchwork.freedesktop.org/patch/653583/
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218185
+Link: https://patch.msgid.link/20250610064322.26787-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis, **YES**, this commit should be backported to
-stable kernel trees.
+**YES**
 
-## Extensive Explanation:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-This commit fixes a **resource leak** in the MSM DRM driver's submit
-error path, which is a clear bug that affects users and meets the stable
-tree criteria.
+## Key Reasons for Backporting:
 
-### The Bug:
+1. **Critical Bug Fix for Race Condition**: The commit fixes a race
+   condition where changing DMA mode via kcontrol while PCM streams are
+   running can corrupt hardware state. Looking at the code:
+   - The `chip->mode` field tracks active playback/capture operations
+     using `SB_MODE_PLAYBACK` and `SB_MODE_CAPTURE` flags
+   - The DMA mode control (`force_mode16`) affects how DMA transfers are
+     configured
+   - Changing this while streams are active can cause hardware
+     inconsistencies
 
-Looking at the code changes in `msm_gem_submit.c`:
+2. **Clear User-Visible Bug**: The commit references Bugzilla #218185,
+   indicating this is a real user-reported issue that affects system
+   stability and audio functionality.
 
-1. **Before the fix**: When an error occurs after `fd_install()` has
-   been called (line 865 in the context), the error path only calls
-   `put_unused_fd(out_fence_fd)` at line 895-896.
+3. **Minimal and Contained Fix**: The change is extremely small and
+   focused:
+  ```c
+  +       if (chip->mode & (SB_MODE_PLAYBACK | SB_MODE_CAPTURE))
+  +               return -EBUSY;
+  ```
+  It simply adds a check to prevent mode changes during active
+  operations, returning -EBUSY to userspace.
 
-2. **The problem**: As noted in the commit message, `put_unused_fd()`
-   doesn't free the installed file if `fd_install()` has already been
-   executed. The `sync_file` structure created by `sync_file_create()`
-   (line 861) contains a file reference that needs to be released with
-   `fput()`.
+4. **No Architectural Changes**: This is a straightforward defensive
+   check that doesn't alter any core functionality or introduce new
+   features. It only prevents an invalid operation.
 
-3. **The fix**: The patch adds proper cleanup by:
-   - Moving `sync_file` declaration to function scope (line 661)
-   - Adding proper cleanup in the error path (lines 895-898) that calls
-     both `put_unused_fd()` AND `fput(sync_file->file)` when needed
+5. **Low Risk of Regression**: The fix:
+   - Only affects the SB16 sound driver
+   - Only changes behavior when someone tries to modify DMA mode during
+     active streaming
+   - Returns a standard error code (-EBUSY) that applications should
+     already handle
+   - Doesn't affect normal audio operations
 
-### Why This Is a Good Backport Candidate:
+6. **Follows Stable Kernel Rules**: This perfectly matches stable kernel
+   criteria:
+   - Fixes a real bug that affects users
+   - Obviously correct with no subtleties
+   - Small change (2 lines of actual code)
+   - Already tested in mainline
+   - No new features added
 
-1. **Clear Bug Fix**: This fixes a resource leak that can accumulate
-   over time as applications hit error conditions during fence
-   submission.
+## Technical Analysis:
 
-2. **Small and Contained**: The fix is minimal - just 5 lines of actual
-   code changes that properly clean up resources.
+From examining the code flow:
+- During `snd_sb16_playback_open()` and `snd_sb16_capture_open()`, the
+  driver sets `chip->mode` flags
+- These flags remain set until `snd_sb16_playback_close()` and
+  `snd_sb16_capture_close()` clear them
+- The `force_mode16` setting affects DMA channel selection throughout
+  the driver
+- Without this fix, userspace can change `force_mode16` while DMA
+  operations are active, potentially causing:
+  - DMA channel mismatches
+  - Audio corruption
+  - System instability
 
-3. **No Architectural Changes**: This doesn't introduce new features or
-   change any APIs - it simply fixes error handling.
+This is similar to the first example commit that was backported, which
+also prevented operations during inappropriate states (DMA
+synchronization during PAUSE state).
 
-4. **Similar to Previous Backported Fixes**: Looking at similar commit
-   #3 ("drm/msm: Fix submit error-path leaks") which was marked for
-   backporting, this follows the same pattern of fixing resource leaks
-   in error paths.
+ sound/isa/sb/sb16_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-5. **Low Risk**: The change only affects error paths and adds proper
-   cleanup that was missing. It cannot break the normal success path.
-
-6. **Documentation Confirms**: The sync_file.c documentation (line
-   62-63) explicitly states that sync_files should be released with
-   `fput(sync_file->file)`, confirming this is the correct fix.
-
-### Pattern Analysis:
-
-Comparing with the similar commits provided:
-- Similar commits #1, #2, and #4 were NOT backported (they were general
-  code improvements or non-critical changes)
-- Similar commits #3 and #5 WERE backported (they fixed actual resource
-  leaks or initialization failures)
-
-This commit clearly falls into the same category as #3 and #5 - fixing
-an actual resource leak that can impact system stability over time.
-
-The leak occurs whenever:
-1. A sync_file is successfully created
-2. fd_install() succeeds
-3. But then a subsequent error occurs before the submit completes
-
-Without this fix, each occurrence leaks a file descriptor and associated
-kernel memory, which could eventually exhaust resources in systems with
-heavy GPU usage that encounter errors.
-
- drivers/gpu/drm/msm/msm_gem_submit.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 937c1f5d88cbb..4b3a8ee8e278f 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -667,6 +667,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	struct msm_ringbuffer *ring;
- 	struct msm_submit_post_dep *post_deps = NULL;
- 	struct drm_syncobj **syncobjs_to_reset = NULL;
-+	struct sync_file *sync_file = NULL;
- 	int out_fence_fd = -1;
- 	unsigned i;
- 	int ret;
-@@ -877,7 +878,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	}
- 
- 	if (ret == 0 && args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
--		struct sync_file *sync_file = sync_file_create(submit->user_fence);
-+		sync_file = sync_file_create(submit->user_fence);
- 		if (!sync_file) {
- 			ret = -ENOMEM;
- 		} else {
-@@ -911,8 +912,11 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- out_unlock:
- 	mutex_unlock(&queue->lock);
- out_post_unlock:
--	if (ret && (out_fence_fd >= 0))
-+	if (ret && (out_fence_fd >= 0)) {
- 		put_unused_fd(out_fence_fd);
-+		if (sync_file)
-+			fput(sync_file->file);
-+	}
- 
- 	if (!IS_ERR_OR_NULL(submit)) {
- 		msm_gem_submit_put(submit);
+diff --git a/sound/isa/sb/sb16_main.c b/sound/isa/sb/sb16_main.c
+index 74db115250030..c4930efd44e3a 100644
+--- a/sound/isa/sb/sb16_main.c
++++ b/sound/isa/sb/sb16_main.c
+@@ -703,6 +703,9 @@ static int snd_sb16_dma_control_put(struct snd_kcontrol *kcontrol, struct snd_ct
+ 	unsigned char nval, oval;
+ 	int change;
+ 	
++	if (chip->mode & (SB_MODE_PLAYBACK | SB_MODE_CAPTURE))
++		return -EBUSY;
++
+ 	nval = ucontrol->value.enumerated.item[0];
+ 	if (nval > 2)
+ 		return -EINVAL;
 -- 
 2.39.5
 
