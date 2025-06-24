@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E6327FD71;
-	Tue, 24 Jun 2025 10:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91534283FE8;
+	Tue, 24 Jun 2025 10:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750760077; cv=none; b=irhilUMK+3R0IQfnS+gvaexRC/pNG6JBwNlYIpTkgD9Dp2Shuhs/utDR4YJvg95q3ys22hPDeevFhnTfUBa+5vlOGLFSFa0nCBq5RD0e0E/jdxnBZk0gY60ubS+tSLX6Hko4RxVM/l77H+BWq/LgLTcRdIjke6V1UN1DsvQZPfI=
+	t=1750760157; cv=none; b=VbTkON2+81X6VsnnAQMY3gpHrKh8qLZ4KoxvakS+gTFJ0V1RoYSCb7DFDJpldisfXppZ2BFadZ0Zaq76BDrAeOvjWt8WgSTqJFRLc2RE5lQr1O+lep6kj7Ulmt2qHzsPhwHJ1OTUcUm5GkLXY4+Eu4GwZi1D4Y4+DbXWa3o7HLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750760077; c=relaxed/simple;
-	bh=nrP7ZtDg8PghhrvJl12FrPeewB/my8icK6QKy2cwsKI=;
+	s=arc-20240116; t=1750760157; c=relaxed/simple;
+	bh=jUQe1mPxBCuPa1ikbnp69FnCdQgJXf3j0k9yd7kqXcc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TdWU5PJpnxo9d6fyzslPuMDwjX8YvGtwFeCN0LtXDZhDfI+Cjuo40U4Mjy8FJjH2th7F6Vz8Xa62JiNQw0nU2xN+t7SQErkZuK4iTwSXEk7jmU0LvifN20FB5Rz11O4ARfW6OMhDTTo84DYqL0sE49xBIWOpnsg3N7WGginMxD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nesixPWF; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=B2jbeah2wo4CTOJ1jLyTPqxRVNtSX2D47lPcRd7V9ez0rAcuYJD+5WtuLGVT0sQujpVFkvKcodKWFQS8F/EPhW1lFIsQ8oSgZWIyJfYrEaF5GNiFJcZ3M7b+qSVoQLzcuiAVciSbzsAwu5+R/Y3bFJMega14/z91qRKAsACG3NM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hc3dYS6G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nesixPWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90B0C4CEEE;
-	Tue, 24 Jun 2025 10:14:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750760076;
-	bh=nrP7ZtDg8PghhrvJl12FrPeewB/my8icK6QKy2cwsKI=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hc3dYS6G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A87C4CEE3;
+	Tue, 24 Jun 2025 10:15:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1750760157;
+	bh=jUQe1mPxBCuPa1ikbnp69FnCdQgJXf3j0k9yd7kqXcc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nesixPWFd9q/ggOLi71qsoH+I6BbH8l2ORpuQof/QimdccCOXe6JsJwUCLnXc8IU/
-	 rMJTBNEV61YhY6V9csCkyWrw56rf7x4JIAvS+bh61D2lAU107XD+x8BgZpal+8PjHn
-	 tIhX9ja3h9rimLfkdrijxGK/45eQmoHrILB/Xit9CUUf1R/W+8ic34trdcK6GwMa/W
-	 u/P/JlOsuXtwcdbwjZ6+pXDhhz/zjiSTq8A/JHcGkPVGE6g/TPVh9hDHin9s99dQij
-	 wsBIbbUN3FlUdBLWqqd1XfdB2gL/p9Aapz0oW4iTpqe4Vgd76Omthh+Jh/4hJadA3X
-	 C+XxUZMTV7sPQ==
-Date: Tue, 24 Jun 2025 12:14:32 +0200
-From: Danilo Krummrich <dakr@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Thorsten Leemhuis <linux@leemhuis.info>,
-	Benno Lossin <lossin@kernel.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>,
-	Sasha Levin <sashal@kernel.org>, Miguel Ojeda <ojeda@kernel.org>,
-	Christian Heusel <christian@heusel.eu>
-Subject: Re: [PATCH 6.15 515/592] rust: devres: fix race in Devres::drop()
-Message-ID: <aFp6iA8zwL9XX6US@pollux>
-References: <20250623130700.210182694@linuxfoundation.org>
- <20250623130712.686988131@linuxfoundation.org>
- <DAUALX71J38F.2E1VBF0YH27KQ@kernel.org>
- <eYjMg1ry65KlJgUKnqEjkoG6RkGBk1xtTYP1Af8fRBlrZyO8jOIrnAPs209lnvPqLwwwI0uQimzOx-EjmuhPEQ==@protonmail.internalid>
- <025d9611-2a7f-40fd-9124-7b62fe6c5e84@leemhuis.info>
- <DAULY9E26AKQ.3DCD5IW7CWUI7@kernel.org>
- <ae03cf82-dfda-46fc-914d-2e329cd8d3da@leemhuis.info>
- <2025062439-scheming-scale-7ab0@gregkh>
+	b=hc3dYS6GSnNGauU2coiSaJH7KD4ub0xkkoA/lSwF/xTB3aUXt9iMBENj9Txe7mGDK
+	 wIL89Iy7HDamnQ4h38H6Gs/38Tj1HjfQc2GyqdjRkw+Zc9d+M/xb+0App5Rpoxul+3
+	 heuMi9jcdLe6o8jKeAyr7xlPJaa7uL3HergQRJNw=
+Date: Tue, 24 Jun 2025 11:15:54 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.15 000/780] 6.15.3-rc1 review
+Message-ID: <2025062431-unsorted-morphine-ffd7@gregkh>
+References: <20250617152451.485330293@linuxfoundation.org>
+ <CA+G9fYtUjjrzghRQVUJ5ct9zNK2ROcRVOizpT-ZyjzZGRSUz1Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,25 +45,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2025062439-scheming-scale-7ab0@gregkh>
+In-Reply-To: <CA+G9fYtUjjrzghRQVUJ5ct9zNK2ROcRVOizpT-ZyjzZGRSUz1Q@mail.gmail.com>
 
-On Tue, Jun 24, 2025 at 10:03:42AM +0100, Greg Kroah-Hartman wrote:
-> On Tue, Jun 24, 2025 at 10:24:46AM +0200, Thorsten Leemhuis wrote:
-> > On 24.06.25 10:07, Benno Lossin wrote:
-> > > I tried applying it on top of v6.15.3 and that also results in a
-> > > conflict, but only in `bindgen_helpers.h` and `helpers.c`, so we can
-> > > simply provide a fixed patch.
-> > 
-> > Yeah, that likely is needed to make Greg happy here.
+On Tue, Jun 24, 2025 at 02:35:45AM +0530, Naresh Kamboju wrote:
+> On Tue, 17 Jun 2025 at 20:58, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 6.15.3 release.
+> > There are 780 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Thu, 19 Jun 2025 15:22:30 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.3-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
 > 
-> For now I'll just go drop this commit and wait for it to be submitted in
-> a series that actually builds.
+> Regressions on s390 allmodconfig builds with gcc-13 and clang-20 failed on
+> the Linux stable-rc 6.15.4-rc1.
+> 
+> Regressions found on s390
+> * s390, build
+>   - clang-20-allmodconfig
+>   - gcc-13-allmodconfig
+> 
+> Regression Analysis:
+>  - New regression? Yes
+>  - Reproducibility? Yes
+> 
+> Build regression: stable-rc 6.15.4-rc1 s390 allmodconfig
+> sdhci-esdhc-imx.c 'sdhc_esdhc_tuning_restore' defined but not used
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> ## Build errors
+> drivers/mmc/host/sdhci-esdhc-imx.c:1608:13: error:
+> 'sdhc_esdhc_tuning_restore' defined but not used
+> [-Werror=unused-function]
+>  1608 | static void sdhc_esdhc_tuning_restore(struct sdhci_host *host)
+>       |             ^~~~~~~~~~~~~~~~~~~~~~~~~
+> drivers/mmc/host/sdhci-esdhc-imx.c:1586:13: error:
+> 'sdhc_esdhc_tuning_save' defined but not used
+> [-Werror=unused-function]
+>  1586 | static void sdhc_esdhc_tuning_save(struct sdhci_host *host)
+>       |             ^~~~~~~~~~~~~~~~~~~~~~
+> cc1: all warnings being treated as errors
 
-I'll send a series based on v6.15.3.
+Looks like this needs 5846efac138a ("mmc: sdhci-esdhc-imx: fix defined
+but not used warnings"), but that's not quite right either as it fixes a
+different change here, and only applying it still will result in a build
+error.  I'll just drop the offending commit here entirely and wait for a
+working set of patches to be submitted if the authors want them.
 
-The dependencies you already dropped, i.e.
+Same for the other branches where this showed up, thanks for the report.
 
-	queue-6.15/rust-devres-fix-doctest-build-under-config_pci.patch
-	queue-6.15/rust-devres-implement-devres-access.patch
+thanks,
 
-won't be needed any more.
+greg k-h
