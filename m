@@ -1,39 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAD01ADFFB;
-	Tue, 24 Jun 2025 10:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6FF17A2E8;
+	Tue, 24 Jun 2025 10:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750760657; cv=none; b=eXOXm6lsT4kKfYTpbKntp5YE1YWMVuxOH3M5MrpnP8/0GGXGDMhOa9GealiLXDEmvKOY9hmAxooZN7RNHhu0ZMvq3xAhV8W5nEKyRFikHzXRjohCRzlIzazdLb6plnOWNxxMNzMuIZzF6YEbQf/SBhx8iaOlImMEI8W/J9eXOVM=
+	t=1750760754; cv=none; b=dNGW1S1sdwofx13x3I5dMkD3HoQa8l7oacPYNgZWwh/7GLVcz7EyQAMdpj5Wms57gHBEWzlGWKJg1VUlvmbfP783UL/HVxXNRgbEi/B21yWLbdip3dKpjjpnPY/uynlo6bG2itJEpAqY+iMH6RkImugKZXeS9sQMNazQLci1M7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750760657; c=relaxed/simple;
-	bh=pL0QnO/VMfPXgKH+xt1uHyAyr63fVRvoOSU+p8/fhR4=;
+	s=arc-20240116; t=1750760754; c=relaxed/simple;
+	bh=vDay8J81ygLKIuI2jhCI+PZX+/fJvYJhHaZQbh7hB0Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WJ60jSLdlB0v6Z8gF69bbzqqDZubsUZB2vq58M6oWtZRrxdUyxf0yMU8+HXEADz0FWuvTfqZrnphgSA5ikCzZDIyghEP44Cq/dXQCbELvXPIu2W1TVfRS7YqdpFKNOHhr94lDXO8lG9h8i0rK/3a9CjKh5V+YLnROitlOi8I4h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VcnfsJfW; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=o8tn9wPxk7D7lp2OLpeBGabr6ZqYS95xZM+DmhMU4697mnFynEBQH1moFHG39u2P4l54J5JpcMhv5e5oC8am5NtsrzozFweltscZcWrVFst6fp3F06HgK6I0xUqb0XmHBMuGMITBpJjaLIQCPFNbCYBkSehEZLsZl1xg7lp012M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OY8yIRNr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcnfsJfW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D24C4CEEE;
-	Tue, 24 Jun 2025 10:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OY8yIRNr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD138C4CEE3;
+	Tue, 24 Jun 2025 10:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750760655;
-	bh=pL0QnO/VMfPXgKH+xt1uHyAyr63fVRvoOSU+p8/fhR4=;
+	s=korg; t=1750760753;
+	bh=vDay8J81ygLKIuI2jhCI+PZX+/fJvYJhHaZQbh7hB0Q=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VcnfsJfWpUpg4BBLhU/5jl8cYSzcznsQOeN2670SWH7bZpB2C8UO6L3zYstVtJCO3
-	 X7ZRS/PDckb1NzEEZXo0OqPkw4T73hKhTJ+a8OrtAuS8NMHq2aO2xBons5ZDbV0mHC
-	 ozdRlvco+r/mDoQdSDFMk5rVVtT5+a7NTlQlZY30=
-Date: Tue, 24 Jun 2025 11:24:11 +0100
+	b=OY8yIRNrKURFBHI24oxv/Y4MkVwLHUwknjWnTwnY+btkJL+9yAOKyPnB7xO8zTsA8
+	 lCyPMIfQWmwJO0qKXxMS14x4JsMNhRXbhy1hJnKd4OhfhhLr9+URrADU3M81OyunjA
+	 WOJV4QVGRSVgI0LWOFjiPciBBixnH6IIQGZSvRhI=
+Date: Tue, 24 Jun 2025 11:25:49 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Pu Lehui <pulehui@huawei.com>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>, Will Deacon <will@kernel.org>
-Subject: Re: [PATCH 5.10 323/355] arm64: move AARCH64_BREAK_FAULT into
- insn-def.h
-Message-ID: <2025062453-proton-preheated-90a8@gregkh>
-References: <20250623130626.716971725@linuxfoundation.org>
- <20250623130636.471359981@linuxfoundation.org>
- <596e3d6b-a5ff-4914-9a5b-26603e8de8d0@huawei.com>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	kvmarm@lists.cs.columbia.edu, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org,
+	Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>,
+	Julien Thierry <julien.thierry.kdev@gmail.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Linux ARM <linux-arm-kernel@lists.infradead.org>,
+	Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH 5.4 000/222] 5.4.295-rc1 review
+Message-ID: <2025062425-waggle-jaybird-ef83@gregkh>
+References: <20250623130611.896514667@linuxfoundation.org>
+ <CA+G9fYvpJjhNDS1Knh0YLeZSXawx-F4LPM-0fMrPiVkyE=yjFw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,87 +52,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <596e3d6b-a5ff-4914-9a5b-26603e8de8d0@huawei.com>
+In-Reply-To: <CA+G9fYvpJjhNDS1Knh0YLeZSXawx-F4LPM-0fMrPiVkyE=yjFw@mail.gmail.com>
 
-On Tue, Jun 24, 2025 at 11:34:02AM +0800, Pu Lehui wrote:
+On Tue, Jun 24, 2025 at 12:46:15AM +0530, Naresh Kamboju wrote:
+> On Mon, 23 Jun 2025 at 18:40, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 5.4.295 release.
+> > There are 222 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Wed, 25 Jun 2025 13:05:50 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.295-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
 > 
-> On 2025/6/23 21:08, Greg Kroah-Hartman wrote:
-> > 5.10-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Hou Tao <houtao1@huawei.com>
-> > 
-> > [ Upstream commit 97e58e395e9c074fd096dad13c54e9f4112cf71d ]
-> > 
-> > If CONFIG_ARM64_LSE_ATOMICS is off, encoders for LSE-related instructions
-> > can return AARCH64_BREAK_FAULT directly in insn.h. In order to access
-> > AARCH64_BREAK_FAULT in insn.h, we can not include debug-monitors.h in
-> > insn.h, because debug-monitors.h has already depends on insn.h, so just
-> > move AARCH64_BREAK_FAULT into insn-def.h.
-> > 
-> > It will be used by the following patch to eliminate unnecessary LSE-related
-> > encoders when CONFIG_ARM64_LSE_ATOMICS is off.
-> > 
-> > Signed-off-by: Hou Tao <houtao1@huawei.com>
-> > Link: https://lore.kernel.org/r/20220217072232.1186625-2-houtao1@huawei.com
-> > Signed-off-by: Will Deacon <will@kernel.org>
-> > [not exist insn-def.h file, move to insn.h]
-> > Signed-off-by: Pu Lehui <pulehui@huawei.com>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> >   arch/arm64/include/asm/debug-monitors.h |   12 ------------
-> >   arch/arm64/include/asm/insn.h           |   12 ++++++++++++
-> >   2 files changed, 12 insertions(+), 12 deletions(-)
-> > 
-> > --- a/arch/arm64/include/asm/debug-monitors.h
-> > +++ b/arch/arm64/include/asm/debug-monitors.h
-> > @@ -34,18 +34,6 @@
-> >    */
-> >   #define BREAK_INSTR_SIZE		AARCH64_INSN_SIZE
-> > -/*
-> > - * BRK instruction encoding
-> > - * The #imm16 value should be placed at bits[20:5] within BRK ins
-> > - */
-> > -#define AARCH64_BREAK_MON	0xd4200000
-> > -
-> > -/*
-> > - * BRK instruction for provoking a fault on purpose
-> > - * Unlike kgdb, #imm16 value with unallocated handler is used for faulting.
-> > - */
-> > -#define AARCH64_BREAK_FAULT	(AARCH64_BREAK_MON | (FAULT_BRK_IMM << 5))
-> > -
-> >   #define AARCH64_BREAK_KGDB_DYN_DBG	\
-> >   	(AARCH64_BREAK_MON | (KGDB_DYN_DBG_BRK_IMM << 5))
-> > --- a/arch/arm64/include/asm/insn.h
-> > +++ b/arch/arm64/include/asm/insn.h
-> > @@ -13,6 +13,18 @@
-> >   /* A64 instructions are always 32 bits. */
-> >   #define	AARCH64_INSN_SIZE		4
-> > +/*
-> > + * BRK instruction encoding
-> > + * The #imm16 value should be placed at bits[20:5] within BRK ins
-> > + */
-> > +#define AARCH64_BREAK_MON      0xd4200000
-> > +
-> > +/*
-> > + * BRK instruction for provoking a fault on purpose
-> > + * Unlike kgdb, #imm16 value with unallocated handler is used for faulting.
-> > + */
-> > +#define AARCH64_BREAK_FAULT    (AARCH64_BREAK_MON | (FAULT_BRK_IMM << 5))
+> Regressions on arm defconfig builds with gcc-12 and clang failed on
+> the Linux stable-rc 5.4.295-rc1.
 > 
-> Hi Greg,
+> Regressions found on arm
+> * arm, build
+>   - clang-20-axm55xx_defconfig
+>   - clang-20-defconfig
+>   - clang-20-lkftconfig
+>   - clang-20-lkftconfig-no-kselftest-frag
+>   - clang-nightly-axm55xx_defconfig
+>   - clang-nightly-defconfig
+>   - clang-nightly-lkftconfig
+>   - gcc-12-axm55xx_defconfig
+>   - gcc-12-defconfig
+>   - gcc-12-lkftconfig
+>   - gcc-12-lkftconfig-debug
+>   - gcc-12-lkftconfig-kasan
+>   - gcc-12-lkftconfig-kunit
+>   - gcc-12-lkftconfig-libgpiod
+>   - gcc-12-lkftconfig-no-kselftest-frag
+>   - gcc-12-lkftconfig-perf
+>   - gcc-12-lkftconfig-rcutorture
+>   - gcc-8-axm55xx_defconfig
+>   - gcc-8-defconfig
 > 
-> Dominique just discovered a compilation problem [0] caused by not having
-> `#include <asm/brk-imm.h>` in insn.h.
+> Regression Analysis:
+>  - New regression? Yes
+>  - Reproducibility? Yes
 > 
-> I have fixed it as shown below, should I resend the formal patch?
+> Build regression: stable-rc 5.4.295-rc1 arm kvm init.S Error selected
+> processor does not support `eret' in ARM mode
 > 
-> Link: https://lore.kernel.org/all/aFniFC7ywCoveOts@codewreck.org/ [0]
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> 
+> ## Build errors
+> arch/arm/kvm/init.S: Assembler messages:
+> arch/arm/kvm/init.S:109: Error: selected processor does not support
+> `eret' in ARM mode
+> arch/arm/kvm/init.S:116: Error: Banked registers are not available
+> with this architecture. -- `msr ELR_hyp,r1'
+> arch/arm/kvm/init.S:145: Error: selected processor does not support
+> `eret' in ARM mode
+> arch/arm/kvm/init.S:149: Error: selected processor does not support
+> `eret' in ARM mode
+> make[2]: *** [scripts/Makefile.build:345: arch/arm/kvm/init.o] Error 1
+> 
+> and
+> /tmp/cc0RDxs9.s: Assembler messages:
+> /tmp/cc0RDxs9.s:45: Error: selected processor does not support `smc
+> #0' in ARM mode
+> /tmp/cc0RDxs9.s:94: Error: selected processor does not support `smc
+> #0' in ARM mode
+> /tmp/cc0RDxs9.s:160: Error: selected processor does not support `smc
+> #0' in ARM mode
+> /tmp/cc0RDxs9.s:296: Error: selected processor does not support `smc
+> #0' in ARM mode
+> make[3]: *** [/builds/linux/scripts/Makefile.build:262:
+> drivers/firmware/qcom_scm-32.o] Error 1
 
-Let me see if I can just take this as-is...
-
-Ok, it worked for 5.10.y, is this also needed in 5.15.y?
+That's odd, both clang and gcc don't like this?  Any chance you can do
+'git bisect' to track down the offending commit?
 
 thanks,
 
