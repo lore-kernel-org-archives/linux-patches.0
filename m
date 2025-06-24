@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C8A224B09;
-	Tue, 24 Jun 2025 04:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820CE22FF22;
+	Tue, 24 Jun 2025 04:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738370; cv=none; b=uNZkkJ75dUEL6vIQmEj9S09oIobdK6YKI8pY86GzB9ogi8zbtmbtPO1BuHuDL1WHTq13HcuhfwkXOxKVfwwlJZ3JeIECKmQmegnBNa3yLivN5Cx4g7ujFyam+9dI2/Cs5GWJvAR0NDPq3n8uGNGy78UIPqTybOoEGZEq6VUktYo=
+	t=1750738370; cv=none; b=g1Z3gPATEq6e3hXizxJvmdZkXCbWKnWCRODSxyHEu6kGO7SgrwapOeW84HEzkwxvUFfS0yoJsww5qACFptfOFg6tGZZ6g/U8snoRd/OgG+UZ4ofWxAk7K6Y4T+V1IbK+QQN82oNvPO3TcF2ne7XBow3RVvT9Zj/tyxGn2/chdbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750738370; c=relaxed/simple;
-	bh=Zk+1k8tWblyNPs4wwksxOk4SSexusdktlUAT0dY5mW4=;
+	bh=96lESeON1DC32FEQir6QbIYFHPyxMDUPDXPozNYTmQw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d42lNmqO2tX6prjszYm9Czk1MPZ08lYIbniZxkjZ2wzzunJ1VKFb4icxGBHTa7HsZ8daZ+QGrzxoB9f/zLZw++8kma7Sme3zpaHt20NLvAoFCGHHs07K95Szx/dID1Tnled2lx7rfd3F5vkEicJYX3U50vlbcRFQieElYeE2q34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B9JKDqmI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pwCtweKHOYLbxB8tZq0Zro+ZaCg+Pu8ZG/vqiXb3v3fdOmKCqYblzdu2rQuL6mU59cQ0BszC8Fbb13sLZhTxskuXO5Y8ca74SOHyYhd2niAiZ7H8pPmwlUtBFEG4/yJqXOVVntjXS/2/XNT1JVOoAJY5JLFK/HuYSEiJm498Byo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hyFwUBav; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B9JKDqmI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DF8C4CEEF;
-	Tue, 24 Jun 2025 04:12:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hyFwUBav"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD72C4CEE3;
+	Tue, 24 Jun 2025 04:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738369;
-	bh=Zk+1k8tWblyNPs4wwksxOk4SSexusdktlUAT0dY5mW4=;
+	s=k20201202; t=1750738370;
+	bh=96lESeON1DC32FEQir6QbIYFHPyxMDUPDXPozNYTmQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B9JKDqmIBpGcv/vHGuLuI35QwJnbYjew7wRdCcS15ZYVZtPn049iLiA3RgBLby/io
-	 XDMCu0k5G1rQaoxk9ZuJmvXoRhkvhJMRNHUST1JyoPY6PfPg+XscWjpSzQKCvWkgDz
-	 A6vvsyJZ2ex8LrC74opKdtQ7TFErGhGQ8rSz6pbARra2PMiZNmGozFkt3IhDI+lRDw
-	 zVeEXrUYpEKxNOwNq8+BQ9v4RZzlHdaXH54VxbM1a3Sv+zzjBTeJlUsT1tTWmxMWXm
-	 4hTjzMgoydWuA0AXmDlBfGy/BYvpuhB/ixWFizQGPsXev9lQgAEkTh7Dj5tAknVUeo
-	 cI3cUDJZlFynQ==
+	b=hyFwUBavP4n3JppgWFbTw3N30J1s+93TLJ68VV2d3e4pLPJKVHSGLStiK1MDTNtBD
+	 c6FNXN4WvWqOaOe6BGJVgdk2XKSRumZRolmUNLJfPVwPTcG9i7Uv/VYcDd9r5oKDbH
+	 cEONVH2v0aaQoFd7VB0JnPkd8pyUXCLa5K1eA+GjVK8TwCqikD64HRxboOMBSWD5M0
+	 y27lMiZEdhNAM+o3Sb7LrK9hbE6fatbB1Ik0+3sAWjWp4SdjV87cmy6GfPZcR2Pzl6
+	 MizSQx02VjM6RtWnQ5Jop2NduPKkG4EuxZjED+xiyDc764m0oHRkiOvK26gWkhSYaN
+	 qCtJKCIc8R/1g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Raven Black <ravenblack@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Maurizio Lombardi <mlombard@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	John Meneghini <jmeneghi@redhat.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mario.limonciello@amd.com,
-	venkataprasad.potturu@amd.com,
-	tiwai@suse.de,
-	talhah.peerbhai@gmail.com
-Subject: [PATCH AUTOSEL 6.1 08/15] ASoC: amd: yc: update quirk data for HP Victus
-Date: Tue, 24 Jun 2025 00:12:31 -0400
-Message-Id: <20250624041238.84580-8-sashal@kernel.org>
+	linux-scsi@vger.kernel.org,
+	target-devel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 09/15] scsi: target: Fix NULL pointer dereference in core_scsi3_decode_spec_i_port()
+Date: Tue, 24 Jun 2025 00:12:32 -0400
+Message-Id: <20250624041238.84580-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041238.84580-1-sashal@kernel.org>
 References: <20250624041238.84580-1-sashal@kernel.org>
@@ -51,115 +51,116 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.141
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Raven Black <ravenblack@gmail.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 13b86ea92ebf0fa587fbadfb8a60ca2e9993203f ]
+[ Upstream commit d8ab68bdb294b09a761e967dad374f2965e1913f ]
 
-Make the internal microphone work on HP Victus laptops.
+The function core_scsi3_decode_spec_i_port(), in its error code path,
+unconditionally calls core_scsi3_lunacl_undepend_item() passing the
+dest_se_deve pointer, which may be NULL.
 
-Signed-off-by: Raven Black <ravenblack@gmail.com>
-Link: https://patch.msgid.link/20250613-support-hp-victus-microphone-v1-1-bebc4c3a2041@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This can lead to a NULL pointer dereference if dest_se_deve remains
+unset.
+
+SPC-3 PR SPEC_I_PT: Unable to locate dest_tpg
+Unable to handle kernel paging request at virtual address dfff800000000012
+Call trace:
+  core_scsi3_lunacl_undepend_item+0x2c/0xf0 [target_core_mod] (P)
+  core_scsi3_decode_spec_i_port+0x120c/0x1c30 [target_core_mod]
+  core_scsi3_emulate_pro_register+0x6b8/0xcd8 [target_core_mod]
+  target_scsi3_emulate_pr_out+0x56c/0x840 [target_core_mod]
+
+Fix this by adding a NULL check before calling
+core_scsi3_lunacl_undepend_item()
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Link: https://lore.kernel.org/r/20250612101556.24829-1-mlombard@redhat.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: John Meneghini <jmeneghi@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
+I see now! If we look at the error path, when
+`core_get_se_deve_from_rtpi()` returns NULL (line 1667), the code jumps
+to `out_unmap` at line 1675. However, there could be existing entries in
+the `tid_dest_list` that were already added before this failure.
+
+The commit shows the stack trace mentions "SPC-3 PR SPEC_I_PT: Unable to
+locate dest_tpg" which actually happens at line 1641, and then jumps to
+`out_unmap` (line 1644).
+
+In this case, any tidh entries in the list would have `dest_se_deve =
+NULL` because the failure happens before `dest_se_deve` is even
+assigned.
+
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Analysis of the Commit
+1. **It fixes a real NULL pointer dereference bug**: The commit
+   addresses a kernel crash that occurs when
+   `core_scsi3_lunacl_undepend_item()` is called with a NULL
+   `dest_se_deve` pointer. The function dereferences the pointer at line
+   1453 (`if (!se_deve->se_lun_acl)`) without checking for NULL, causing
+   a crash.
 
-### 1. **Nature of the Change**
-The commit adds a simple DMI (Desktop Management Interface) quirk entry
-to enable the internal microphone on HP Victus Gaming Laptop 15-fb2xxx.
-The change consists of adding just 7 lines to the `yc_acp_quirk_table[]`
-array:
+2. **The bug affects normal error handling paths**: This crash occurs
+   during error handling in the SCSI target subsystem when processing
+   PERSISTENT RESERVE OUT commands with SPEC_I_PT (Specify Initiator
+   Ports). When certain lookups fail (like "Unable to locate dest_tpg"),
+   the error cleanup path can have NULL `dest_se_deve` values in the
+   tid_dest_list.
 
-```c
-+       {
-+               .driver_data = &acp6x_card,
-+               .matches = {
-+                       DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+                       DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming
-Laptop 15-fb2xxx"),
-+               }
-+       },
-```
+3. **The fix is minimal and safe**: The fix simply adds a NULL check
+   before calling `core_scsi3_lunacl_undepend_item()`:
+  ```c
+  if (dest_se_deve)
+  core_scsi3_lunacl_undepend_item(dest_se_deve);
+  ```
+  This is a defensive programming practice that prevents the crash
+  without changing the logic flow.
 
-### 2. **Comparison with Similar Commits**
-All 5 historical similar commits provided were marked as "Backport
-Status: YES" and share identical characteristics:
-- Same file modified (sound/soc/amd/yc/acp6x-mach.c)
-- Same type of change (adding DMI quirk entries)
-- Same purpose (enabling internal microphone on specific laptop models)
-- Similar commit messages mentioning microphone support
-- All are HP laptop models (except one MECHREVO)
+4. **The fix is confined to error handling**: The change only affects
+   the error cleanup path and doesn't modify the normal operation flow,
+   minimizing the risk of regression.
 
-### 3. **Meets Stable Backport Criteria**
+5. **Similar to other backported fixes**: Looking at the similar
+   commits, commit #3 (qla2xxx NULL pointer fix) and commit #5
+   (rt5514-spi NULL pointer fix) were both backported and had similar
+   characteristics - they were simple NULL pointer checks that prevented
+   crashes.
 
-**✓ Fixes a real bug affecting users**: Without this quirk, the internal
-microphone on HP Victus Gaming Laptop 15-fb2xxx doesn't work, which is a
-functional regression for users of this hardware.
+6. **Production impact**: NULL pointer dereferences in kernel code lead
+   to kernel panics, which can cause system crashes and data loss. This
+   is particularly important for storage-related code where reliability
+   is critical.
 
-**✓ Small and contained change**: The patch is minimal - only 7 lines
-adding a DMI match entry to an existing quirk table. No logic changes,
-no new features.
+The commit follows the stable tree rules by fixing an important bug
+(kernel crash) with minimal risk and without introducing new features or
+architectural changes.
 
-**✓ No architectural changes**: This is a simple hardware enablement
-quirk, not modifying any kernel architecture.
+ drivers/target/target_core_pr.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-**✓ Minimal risk of regression**:
-- The change only affects systems that match the specific DMI strings
-- Cannot affect other hardware configurations
-- Uses the same `acp6x_card` driver data as other entries
-- Pattern is well-established in the codebase
-
-**✓ Hardware enablement**: This is pure hardware enablement for audio
-functionality, which is a common reason for stable backports.
-
-### 4. **Technical Safety**
-The code change:
-- Adds to an existing array without modifying existing entries
-- Uses standard DMI matching infrastructure
-- Follows the exact same pattern as dozens of other entries in the same
-  table
-- The `acp6x_card` structure is already defined and used by many other
-  entries
-
-### 5. **User Impact**
-Users of HP Victus Gaming Laptop 15-fb2xxx running stable kernels would
-benefit from having their internal microphone work correctly without
-waiting for the next major kernel release.
-
-This commit is an ideal candidate for stable backporting as it's a
-minimal, safe hardware enablement fix that follows well-established
-patterns in the codebase.
-
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 1f94269e121af..96fbc9d12f3ce 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -437,6 +437,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16z-n000"),
+diff --git a/drivers/target/target_core_pr.c b/drivers/target/target_core_pr.c
+index 1493b1d01194f..a355661e82027 100644
+--- a/drivers/target/target_core_pr.c
++++ b/drivers/target/target_core_pr.c
+@@ -1841,7 +1841,9 @@ core_scsi3_decode_spec_i_port(
  		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming Laptop 15-fb2xxx"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+ 
+ 		kmem_cache_free(t10_pr_reg_cache, dest_pr_reg);
+-		core_scsi3_lunacl_undepend_item(dest_se_deve);
++
++		if (dest_se_deve)
++			core_scsi3_lunacl_undepend_item(dest_se_deve);
+ 
+ 		if (is_local)
+ 			continue;
 -- 
 2.39.5
 
