@@ -1,33 +1,38 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BAD2522A2;
-	Tue, 24 Jun 2025 07:25:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7E3255F56;
+	Tue, 24 Jun 2025 08:03:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.237.130.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750749917; cv=none; b=dfBnSdBQhjXdpxGB1RS/hU4dSZ4VLQIVc3l9Pa0QdhAzq/uVUNEf5iYVdkVdNN3JB5eAVXha0t879+rzyGZL6MTAQ+0Klkeqd8Yssynas6RTs94EsVXGoOT8NkG1WESLnOtnVQOq9SZL37q0rRuXtslLR37BQ6ICnxtbxkh8fXE=
+	t=1750752240; cv=none; b=qWkc2SaKQBrmtwi1i8/bP9Jjw1PV66SNbmkRrNoNT4KUVlORNKZqftWTIm6T9T2Aof6WpzRpK2l7D97u1s3EW5IO5hdUli2LE0kMAVq+ICLXCzyFmZATGYcsHYB20Yftd1fYP6Ztw3UPAVNYdetu/kMyeJehxQuw/4I3d7RnVec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750749917; c=relaxed/simple;
-	bh=h5veZtTdMydRTYlOAPERwlZWHYK+Mc/RZ209F4gHPwE=;
+	s=arc-20240116; t=1750752240; c=relaxed/simple;
+	bh=jyg+J812OVmwxWsr9CT39jEIx3YIoKY+j9Sh+B80VJI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eRxj9Em8qC5ksTVO/y7oedK8rD6OQF4YFVR1iEdsvS7YZd8i7D6c/4SDKihg4SnPR0A7S3CGrlDhL8AY1yR+FcrPz7vxN+P4q8P5YoDXCYOzyuVq5HI57lycgu0mPJUiOTOGdvnM2R5Yp3SFleMMsXOzshniJhSIivitLm0UOq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P2Djj7F/; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=mMh3vkg+MZTz6DA63Bp1NoWEZNvjt6fYhyFtXlNUm7qFD5o5tFbfXPJ4+CZN0PcvhAXNJxZSuvas9NZYOjX85VBKbBBnL3hgyXmF0LyzOajCND0L3HdHLkmXfStw5451oRrhokrpZtpWRMqTMZQu//hcCGdz9GCtp1IvrKxmZ+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info; spf=pass smtp.mailfrom=leemhuis.info; dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b=D+d6mKnf; arc=none smtp.client-ip=80.237.130.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leemhuis.info
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P2Djj7F/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2679CC4CEE3;
-	Tue, 24 Jun 2025 07:25:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750749915;
-	bh=h5veZtTdMydRTYlOAPERwlZWHYK+Mc/RZ209F4gHPwE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=P2Djj7F/jCyWWy+5XZL4Zy75z4Y/TPbNtqRrQozYTYmoWCwWmwOiSXKu+DtZKy/ma
-	 UpQgWjz6Mp9yUMWI2tqa5H9ccwU2cWowvPe0KfG808fcxo7vr138o+W3bP24cvahob
-	 0Je6Ji/YQE+kxD0GjCAd9AO2R3AtTGWebqyobzxRT9UD76L2xlSMQS3K7Hs2AjlRv5
-	 1gZUtnEHrbmqcFjltzZJ/4J3/p6G706pyv0Daw5fexTiTslKr16PrLU8w5ZxPcaw3p
-	 ZQnhd54RWFiOReilETc53EoJA1BVGYxpk81hbsxq9bFMLZiyjGZ1DGVBxCgW4FDX3j
-	 6Piqvzndt+aqg==
-Message-ID: <391fce59-2eaf-42ad-80b1-05142ffa9684@kernel.org>
-Date: Tue, 24 Jun 2025 09:25:11 +0200
+	dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b="D+d6mKnf"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=leemhuis.info; s=he214686; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:
+	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
+	References; bh=tDVYWPNmh2zmkOG4aeyg7FLxnv6pvxsoz93ZF16Mfig=; t=1750752238;
+	x=1751184238; b=D+d6mKnf63usbMEUaamfkzFkzxelHu9UIxm/5ySvaGRGF6I7VdZ/Qoz0BpPb1
+	LTfk4ysylbA9E2roAueKXKssdrTi995QLVWzYjOpajtakRE477+tyFyz9a5fjkXBzDeDzCsl85zIv
+	IRp4HXtalWVDHMogfu+Va3y3Gq0jcBVddiTwARpf91HYIzOhuT0Xvuq+pY2hlwhS3oZdwRgPrwjEP
+	sCWGCWXLE0gc6lN4SOcKu8WZUBM1NRlAfhChtGPNT2znsJwOuRRuiH67+nsHB5tECxfJCzQmF15ZT
+	oAv6+CYoaGGu5d49ikFW6LjC5qygCnk5h6cqoI6na9n6ur2tGw==;
+Received: from [2a02:8108:8984:1d00:a0cf:1912:4be:477f]; authenticated
+	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
+	id 1uTy1K-008aN8-1z;
+	Tue, 24 Jun 2025 09:24:42 +0200
+Message-ID: <025d9611-2a7f-40fd-9124-7b62fe6c5e84@leemhuis.info>
+Date: Tue, 24 Jun 2025 09:24:41 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,91 +40,101 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.15 293/592] drm/amd/display: Fix VUpdate offset
- calculations for dcn401
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Aric Cyr <aric.cyr@amd.com>,
- Dillon Varone <dillon.varone@amd.com>, Fangzhi Zuo <jerry.zuo@amd.com>,
- Daniel Wheeler <daniel.wheeler@amd.com>,
- Alex Deucher <alexander.deucher@amd.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.15 515/592] rust: devres: fix race in Devres::drop()
+To: Benno Lossin <lossin@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>,
+ Danilo Krummrich <dakr@kernel.org>, Sasha Levin <sashal@kernel.org>,
+ Miguel Ojeda <ojeda@kernel.org>, Christian Heusel <christian@heusel.eu>
 References: <20250623130700.210182694@linuxfoundation.org>
- <20250623130707.344185926@linuxfoundation.org>
-Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
-Autocrypt: addr=jirislaby@kernel.org; keydata=
- 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
-In-Reply-To: <20250623130707.344185926@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <20250623130712.686988131@linuxfoundation.org>
+ <DAUALX71J38F.2E1VBF0YH27KQ@kernel.org>
+From: Thorsten Leemhuis <linux@leemhuis.info>
+Content-Language: de-DE, en-US
+Autocrypt: addr=linux@leemhuis.info; keydata=
+ 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 n7RI
+In-Reply-To: <DAUALX71J38F.2E1VBF0YH27KQ@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-bounce-key: webpack.hosteurope.de;linux@leemhuis.info;1750752238;c80e4504;
+X-HE-SMSGID: 1uTy1K-008aN8-1z
 
-On 23. 06. 25, 15:04, Greg Kroah-Hartman wrote:
-> 6.15-stable review patch.  If anyone has any objections, please let me know.
+[CCing Miguel (JFYI) as well as Christian, who reported the build
+error[1] with 6.15.4-rc1 (which I'm seeing as well[2]) caused by the
+patch this mail is about according to Benno.]
+
+[1] https://lore.kernel.org/all/a0ebb389-f088-417b-9fd4-ac8c100d206f@heusel.eu/
+
+[2] https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/fedora-rc/fedora-42-x86_64/09200694-stablerc-fedorarc-releases/builder-live.log.gz
+
+On 24.06.25 01:14, Benno Lossin wrote:
+> On Mon Jun 23, 2025 at 3:07 PM CEST, Greg Kroah-Hartman wrote:
+>> 6.15-stable review patch.  If anyone has any objections, please let me know.
+>>
+>> ------------------
+>>
+>> From: Danilo Krummrich <dakr@kernel.org>
+>>
+>> [ Upstream commit f744201c6159fc7323c40936fd079525f7063598 ]
+>>
+>> In Devres::drop() we first remove the devres action and then drop the
+>> wrapped device resource.
+>>
+>> The design goal is to give the owner of a Devres object control over when
+>> the device resource is dropped, but limit the overall scope to the
+>> corresponding device being bound to a driver.
+> [...] 
+> This is missing the prerequisite patch #1 from
 > 
-> ------------------
-> 
-> From: Dillon Varone <dillon.varone@amd.com>
-> 
-> [ Upstream commit fe45e2af4a22e569b35b7f45eb9f040f6fbef94f ]
-> 
-> [WHY&HOW]
-> DCN401 uses a different structure to store the VStartup offset used to
-> calculate the VUpdate position, so adjust the calculations to use this
-> value.
+>     https://lore.kernel.org/all/20250612121817.1621-1-dakr@kernel.org
 
-This one was reverted upstream by:
-commit 0fc9635a801f6ba3a03ad2de6d46f4f3e2fdfed6
-Author: Dillon Varone <Dillon.Varone@amd.com>
-Date:   Fri Mar 28 12:56:39 2025 -0400
+You afaics mean 1b56e765bf8990 ("rust: completion: implement initial
+abstraction") [v6.16-rc3] – which did not cleanly apply to 6.15.4-rc1 in
+a quick test; it was also not possible to revert this patch ("rust:
+devres: fix race in Devres::drop()") cleanly; reverting worked after
+reverting "rust: devres: do not dereference to the internal Revocable"
+First, but that lead to another build error:
+https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/fedora-rc/fedora-42-x86_64/09202837-stablerc-fedorarc-releases/builder-live.log.gz
 
-     Revert "drm/amd/display: Fix VUpdate offset calculations for dcn401"
-
-     This reverts commit fe45e2af4a22e569b35b7f45eb9f040f6fbef94f.
-
-     Reason for revert: it causes stuttering in some usecases.
-
-
-thanks,
--- 
-js
-suse labs
-
+Ciao, Thorsten
