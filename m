@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADC6226D00;
-	Tue, 24 Jun 2025 04:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77331256C8D;
+	Tue, 24 Jun 2025 04:13:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738415; cv=none; b=T8R6VL5Te1qd6oga9F5oFOEhiHL2oKVWbJZSwLnnnYRjFPcj131R/sxgssghnfG0mhFLpril3K7ip54zm8vfdVE30rS8KBc2o/8THkOvuN1PFrCSzMuCZQJR915rdIkiN+qz+4ZC+/aOA9Bf0VgscRbRRe8uC5Y45uw13QFYoGk=
+	t=1750738416; cv=none; b=lHM8RUZ6UlTSNvObCKZ9Aup/PJFZC+hl4ClxeFxGU4Kje7D3hihA1nDGslleLZ/e8O5/Z3YG/IxNidN5zYSBm/QFgkvmaiPDjkev5+qzSaomBLK0POqIyI5pC58j/akJ/uSgr6zMQ+j1zDv9SThy/Oa/5wdIc4R+5EWswQjr4/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738415; c=relaxed/simple;
-	bh=facy8F0nUNf3E9Ua+SPcJBCIrt1Ln1cNIBezrr34KXI=;
+	s=arc-20240116; t=1750738416; c=relaxed/simple;
+	bh=TwrQjdlP0OUorDN3yCXuFl/6CjqkzSp94aRpKa0YY2g=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=NIbbLKdZfASYTy9ryJLY6SAfLKjHTJFIGwlPYPqzSJgE0zAcoGzL/q3458hVKJkUOGwDrdxFoFlqbQWu7RE7auHErYV8XhtnNRqUhR2/vbqOxvotZHN4LQMfV7GpBrPQT6sbEYL4znV5w2FmjErY9po3xf3Ad3bi1KXBh0QOPRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pDmJL/oW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nj0zvfgeMrJteUuvVxy30jxAO6Fi0oGNH30AuzDx0nS4lU4RlLjIqwMljm1fRF85FIAnKp98xGt6lcGz0k76ZRAZ0UiUvpKJgX78et0WqpcsbSMt32vYydqx1uIM7TLiNB6qFgL1net1LLZ1Gdya57gT/IZr+AdU7mrxgUf8Bkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pH4iNBRF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pDmJL/oW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC64C4CEE3;
-	Tue, 24 Jun 2025 04:13:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pH4iNBRF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9691DC4CEF2;
+	Tue, 24 Jun 2025 04:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738415;
-	bh=facy8F0nUNf3E9Ua+SPcJBCIrt1Ln1cNIBezrr34KXI=;
+	s=k20201202; t=1750738416;
+	bh=TwrQjdlP0OUorDN3yCXuFl/6CjqkzSp94aRpKa0YY2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pDmJL/oW0MnwpzJOX6wGxz3fjjstEuYCSeU9hUiMXXAdowDc/wOQ6swkVdWtRue4C
-	 v+/v5TQ8epvfyED7M9RJQBNdI/m4w1waBmoJTjT1tGc77zz8eh3KhYlshzr868ORzR
-	 ApaCgt9Icp7+cYr4Gqp2QWqnuyULRecKZsObQfXB5nNbeyxJlY36+mXDorRr+GUjy/
-	 tb2wLNd4O2cCjFyESVRzOlflNrKVB3k9aVBYnX5hDeaSj+6HNDitpis7XJMhAZjhzx
-	 58NlAxcMzqeOdg+ogh9E8yvtaMgcufjzlCtL72xCmsVHnAxuCjZoiJ3Lvq3XO8t0cY
-	 7AESvM0dprIAA==
+	b=pH4iNBRFs+fWbm3xG/S3BjQ8Ys7X148w5yTLFWkfcwTzcJr7KkFrO0Y/2b3Psf4sw
+	 9RFFO3jS6Rxu2r+6AwOCdp/0jBXeME+z6pefjuIg05oXRhx7XOqq0oYhRRszK1jXG2
+	 7oZeIO3HuefhLbL9UaMl8Fy/gVzNGYghJgqK+Aa2sGPO+z0XUZ8znBUqbebLObpdzZ
+	 sGQAuMTE6SCjtCB0HqYhWLGTj4Z7Qh2E6/wxQ7RfzHY15NpflqrVsvBfrGjIRsk0dc
+	 DcK4Lyee7oWixkAql7rzHOmzf/AT8m6rZ0TNodFCTWG3RQxz2rv2skqsbdfJy+6koZ
+	 txbHSovKcLHsg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Berg <johannes.berg@intel.com>,
-	syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Peter Williams <peter@newton.cx>,
+	Hans de Goede <hansg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 5/7] wifi: ath6kl: remove WARN on bad firmware input
-Date: Tue, 24 Jun 2025 00:13:24 -0400
-Message-Id: <20250624041327.85407-5-sashal@kernel.org>
+	robert.moore@intel.com,
+	linux-acpi@vger.kernel.org,
+	acpica-devel@lists.linux.dev
+Subject: [PATCH AUTOSEL 5.4 6/7] ACPICA: Refuse to evaluate a method if arguments are missing
+Date: Tue, 24 Jun 2025 00:13:25 -0400
+Message-Id: <20250624041327.85407-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041327.85407-1-sashal@kernel.org>
 References: <20250624041327.85407-1-sashal@kernel.org>
@@ -51,107 +53,131 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.294
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit e7417421d89358da071fd2930f91e67c7128fbff ]
+[ Upstream commit 6fcab2791543924d438e7fa49276d0998b0a069f ]
 
-If the firmware gives bad input, that's nothing to do with
-the driver's stack at this point etc., so the WARN_ON()
-doesn't add any value. Additionally, this is one of the
-top syzbot reports now. Just print a message, and as an
-added bonus, print the sizes too.
+As reported in [1], a platform firmware update that increased the number
+of method parameters and forgot to update a least one of its callers,
+caused ACPICA to crash due to use-after-free.
 
-Reported-by: syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com
-Tested-by: syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com
-Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250617114529.031a677a348e.I58bf1eb4ac16a82c546725ff010f3f0d2b0cca49@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Since this a result of a clear AML issue that arguably cannot be fixed
+up by the interpreter (it cannot produce missing data out of thin air),
+address it by making ACPICA refuse to evaluate a method if the caller
+attempts to pass fewer arguments than expected to it.
+
+Closes: https://github.com/acpica/acpica/issues/1027 [1]
+Reported-by: Peter Williams <peter@newton.cx>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Tested-by: Hans de Goede <hansg@kernel.org> # Dell XPS 9640 with BIOS 1.12.0
+Link: https://patch.msgid.link/5909446.DvuYhMxLoT@rjwysocki.net
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-## Security and Stability Impact
+## Key Reasons for Backporting:
 
-1. **Syzbot Report**: The commit explicitly mentions this is "one of the
-   top syzbot reports now", indicating it's a frequently triggered issue
-   that impacts kernel stability testing. Syzbot is Google's continuous
-   fuzzing infrastructure that finds kernel bugs, and high-frequency
-   reports indicate significant impact.
+### 1. **Critical Security Bug - Use-After-Free**
+The commit message explicitly states this fixes a use-after-free
+vulnerability that causes ACPICA to crash. Use-after-free bugs are
+severe security issues that can lead to:
+- System crashes and denial of service
+- Potential arbitrary code execution
+- Memory corruption
 
-2. **WARN_ON Misuse**: The removed WARN_ON is checking for bad firmware
-   input, which violates kernel best practices. WARN_ON should only be
-   used for "impossible" conditions that indicate kernel bugs, not for
-   validating external input. As the commit message states: "If the
-   firmware gives bad input, that's nothing to do with the driver's
-   stack at this point."
+### 2. **Real-World Impact**
+The commit references an actual bug report with a specific
+hardware/firmware scenario:
+- Platform firmware update increased method parameters
+- Firmware forgot to update at least one caller
+- This caused a real crash on actual hardware (Dell XPS 9640 with BIOS
+  1.12.0)
+- The bug has been reported, tested, and verified by multiple people
 
-3. **DoS Potential**: A WARN_ON can be triggered by malicious or
-   corrupted firmware, potentially causing:
-   - Stack traces in kernel logs (log spam)
-   - Performance degradation
-   - In some configurations, system panic (if panic_on_warn is set)
-
-## Code Analysis
-
-The change is minimal and safe:
+### 3. **Small, Focused Fix**
+The code change is minimal and surgical:
 ```c
-- WARN_ON(1);
-+ ath6kl_err("mismatched byte count %d vs. expected %zd\n",
-+            le32_to_cpu(targ_info->byte_count),
-+            sizeof(*targ_info));
++       if (this_walk_state->num_operands <
+obj_desc->method.param_count) {
++               ACPI_ERROR((AE_INFO, "Missing argument for method
+[%4.4s]",
++                           acpi_ut_get_node_name(method_node)));
++
++               return_ACPI_STATUS(AE_AML_UNINITIALIZED_ARG);
++       }
 ```
+This adds a simple bounds check before method execution, which is
+exactly the type of defensive programming that should be in stable
+kernels.
 
-The fix:
-- Removes the inappropriate WARN_ON
-- Adds informative error logging with actual vs expected sizes
-- Maintains the same error handling path (return -EINVAL)
-- No functional changes beyond logging
+### 4. **Prevents Memory Corruption**
+Looking at the surrounding code (specifically line 542 in the original):
+```c
+for (i = 0; i < obj_desc->method.param_count; i++) {
+    acpi_ut_remove_reference(this_walk_state->operands[i]);
+    this_walk_state->operands[i] = NULL;
+}
+```
+Without the check, if `num_operands < param_count`, this loop would
+access beyond the valid operands, causing use-after-free.
 
-## Similar Precedent
+### 5. **Clear Error Handling**
+The fix properly returns `AE_AML_UNINITIALIZED_ARG`, which is an
+existing ACPICA error code specifically designed for this scenario
+("Method tried to use an uninitialized argument"). This maintains API
+compatibility.
 
-Looking at similar commits:
-- Commit #5 (ath6kl: reduce WARN to dev_dbg() in callback) -
-  **Backported: YES** - Similar removal of WARN for known race condition
-- Commit #3 (ath10k: Change the warning message string) - **Backported:
-  YES** - Modified warning to avoid syzbot confusion
+### 6. **No Architectural Changes**
+The commit:
+- Doesn't introduce new features
+- Doesn't change existing behavior for valid code
+- Only adds validation to prevent crashes from invalid AML
+- Is confined to the ACPICA subsystem
 
-## Stable Kernel Criteria
+### 7. **Firmware Bug Mitigation**
+This is a defensive fix against firmware bugs, which is exactly the type
+of robustness stable kernels need. The kernel should not crash due to
+firmware mistakes.
 
-This meets stable kernel criteria:
-- **Fixes a real bug**: Addresses inappropriate WARN_ON usage that can
-  be triggered by external input
-- **Minimal change**: Only removes WARN_ON and adds error message
-- **Low risk**: No functional changes, just logging improvement
-- **Tested**: Explicitly tested by syzbot
-- **Clear benefit**: Reduces false positive warnings and improves
-  debugging
+## Comparison with Similar Commits:
 
-The commit is a straightforward fix that improves kernel robustness
-without introducing new risks, making it an ideal candidate for stable
-backporting.
+Unlike the similar commits shown (which were mostly about improving
+error messages or cosmetic changes), this commit:
+- Fixes an actual crash/security issue
+- Has been reported and tested on real hardware
+- Prevents memory corruption
+- Is not just a theoretical improvement
 
- drivers/net/wireless/ath/ath6kl/bmi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+This aligns perfectly with stable kernel rules: important bug fixes with
+minimal risk that improve system stability and security.
 
-diff --git a/drivers/net/wireless/ath/ath6kl/bmi.c b/drivers/net/wireless/ath/ath6kl/bmi.c
-index af98e871199d3..5a9e93fd1ef42 100644
---- a/drivers/net/wireless/ath/ath6kl/bmi.c
-+++ b/drivers/net/wireless/ath/ath6kl/bmi.c
-@@ -87,7 +87,9 @@ int ath6kl_bmi_get_target_info(struct ath6kl *ar,
- 		 * We need to do some backwards compatibility to make this work.
- 		 */
- 		if (le32_to_cpu(targ_info->byte_count) != sizeof(*targ_info)) {
--			WARN_ON(1);
-+			ath6kl_err("mismatched byte count %d vs. expected %zd\n",
-+				   le32_to_cpu(targ_info->byte_count),
-+				   sizeof(*targ_info));
- 			return -EINVAL;
- 		}
+ drivers/acpi/acpica/dsmethod.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
+index 603483f8332b0..203e9ee47fdb8 100644
+--- a/drivers/acpi/acpica/dsmethod.c
++++ b/drivers/acpi/acpica/dsmethod.c
+@@ -483,6 +483,13 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
+ 		return_ACPI_STATUS(AE_NULL_OBJECT);
+ 	}
  
++	if (this_walk_state->num_operands < obj_desc->method.param_count) {
++		ACPI_ERROR((AE_INFO, "Missing argument for method [%4.4s]",
++			    acpi_ut_get_node_name(method_node)));
++
++		return_ACPI_STATUS(AE_AML_UNINITIALIZED_ARG);
++	}
++
+ 	/* Init for new method, possibly wait on method mutex */
+ 
+ 	status =
 -- 
 2.39.5
 
