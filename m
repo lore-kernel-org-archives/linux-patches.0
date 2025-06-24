@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0550222580;
-	Tue, 24 Jun 2025 04:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71499221DB9;
+	Tue, 24 Jun 2025 04:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738348; cv=none; b=S8M1D/5K2zhdfHd60K2aqtsrzjarl8ivk2stecUN+vqp+hQCAO2mtjjzbnNEcc2disPB+4GneYxJY6u2VIZMU3XSxpt2DADgDFNIeekrwsi+gdKj1C1zb17YVNKbY/NYRiIgob9MG8DFSO5tJx8AosngwNVjcwb5iYHHYK7FnoY=
+	t=1750738349; cv=none; b=odTNmZNLqayLnMY54vTwf5pT2KbUJUvWn2XmUxjRkkd63wAVmeVCsZYodjtwxANAjiU4eMZpsOC+O+SVifq5hy+OIkdgdWPvb6XeC3/y44MOS6pKPSNbiaxy0Dl9jeBN29EWW7+1iG2DZxZAaEN760rWAxkqwni5Os8Z1+VHhmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738348; c=relaxed/simple;
-	bh=tICgM9nBa3R6bpzThVj3ysfLgSMJVw3Y4NNnAjOKeG0=;
+	s=arc-20240116; t=1750738349; c=relaxed/simple;
+	bh=rLddNe/nnzDT9dMGrRUhyBQ3DXTEI3PuyQdZ/xRDGHo=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g5J1Iooy4Q4CMV96GeOhNcaH6kjVXcPQYyrwkqFj+B1Lz/LmxOjYnL6srTxVUTKUOGXqhUJZjSe6Hybcnc7zVx7hzBXYPxcV96jDAjUs9hZydSfOzJd9yQTKt/aUKz10AfHgD9TlB/8g1kvQBORCNlE+HxHKI2zhPKpOJMUOzew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hNMzWqzZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PHgNdrfgC6Yf/NI2/9guybolSHBEJJJvnu7XWDsl2UF3S/UQJfK5GDaxEWd8keXd2v29TL2BBsO022aLs4swFdeexuDCNBuWIVOvKbYOl6IXewsS8z3W3ED5oTj0i4wsXEY1ctyuU65Atv/GEZiJ05w5EDrVoyYEM52kYTJprV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k6rzopWU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hNMzWqzZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A4FC4CEEF;
-	Tue, 24 Jun 2025 04:12:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k6rzopWU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE341C4CEF2;
+	Tue, 24 Jun 2025 04:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738348;
-	bh=tICgM9nBa3R6bpzThVj3ysfLgSMJVw3Y4NNnAjOKeG0=;
+	s=k20201202; t=1750738349;
+	bh=rLddNe/nnzDT9dMGrRUhyBQ3DXTEI3PuyQdZ/xRDGHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hNMzWqzZFNN4zxbSgmbfy5iwCCAsDKX8hMk0LCvSla4xj7hWgnMpd9za0zsuWK4JX
-	 GFiOypFqXpxVvT0eKrsTpyi41+QzbMcTUrE4ob3kINqnc5/hWs9uytNqeEWZxgf27+
-	 GHtxtgQrxAzefib8h6BkDdcB0UOB/PDqmew3dbE2XhVU0do3trCbvUEys5T6YXCH0x
-	 ddWVy3i3+JVtH8qJs2kYD6HOvR7gSJ0Vcnsr7zcyEAl7pqUOGOY+2FcC25h57vH1fA
-	 7/9zzQkoI8sHF1yUfUMUQCp8T7jtnaZuXZ0GOx9LEIf5lldlIs90TS0hD39PMbqcNg
-	 xwV7DfyRshsoA==
+	b=k6rzopWUa6AFYpfzLD9jjfHdm4ezX41zr9BgEBPOS5NRm8u7Xp+ApcW+rjpNzWM2u
+	 +r3YoEaFNW+cIrre8h6TBW6JFDI1yLNvCaORvE8HBuUB5Y8ALD8RYTWm3rI3MAvmaJ
+	 Z7+5KcRm5KXGdTnR7GGLdpL+sTfS7BmybBeKSboXwTZC/XI8GJllT9cl7tQv8eYf8J
+	 69WveHOsqPQCmFglKdhRleaBL61E04Fznj6HLpAxekJxNc483QeCkfgZvzPGYuziuA
+	 fRHxlfr8oUlqAZrHNvL4e+d0K75Kf3UpVAhlsgDxAoftuhY7DFCUR2viQKr/7SB4ak
+	 kiZzQSKMwlQPA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Raven Black <ravenblack@gmail.com>,
+Cc: Heiko Stuebner <heiko@sntech.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mario.limonciello@amd.com,
-	venkataprasad.potturu@amd.com,
-	tiwai@suse.de,
-	talhah.peerbhai@gmail.com
-Subject: [PATCH AUTOSEL 6.6 10/18] ASoC: amd: yc: update quirk data for HP Victus
-Date: Tue, 24 Jun 2025 00:12:06 -0400
-Message-Id: <20250624041214.84135-10-sashal@kernel.org>
+	lgirdwood@gmail.com,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 11/18] regulator: fan53555: add enable_time support and soft-start times
+Date: Tue, 24 Jun 2025 00:12:07 -0400
+Message-Id: <20250624041214.84135-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041214.84135-1-sashal@kernel.org>
 References: <20250624041214.84135-1-sashal@kernel.org>
@@ -54,112 +52,245 @@ X-stable-base: Linux 6.6.94
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Raven Black <ravenblack@gmail.com>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 13b86ea92ebf0fa587fbadfb8a60ca2e9993203f ]
+[ Upstream commit 8acfb165a492251a08a22a4fa6497a131e8c2609 ]
 
-Make the internal microphone work on HP Victus laptops.
+The datasheets for all the fan53555 variants (and clones using the same
+interface) define so called soft start times, from enabling the regulator
+until at least some percentage of the output (i.e. 92% for the rk860x
+types) are available.
 
-Signed-off-by: Raven Black <ravenblack@gmail.com>
-Link: https://patch.msgid.link/20250613-support-hp-victus-microphone-v1-1-bebc4c3a2041@gmail.com
+The regulator framework supports this with the enable_time property
+but currently the fan53555 driver does not define enable_times for any
+variant.
+
+I ran into a problem with this while testing the new driver for the
+Rockchip NPUs (rocket), which does runtime-pm including disabling and
+enabling a rk8602 as needed. When reenabling the regulator while running
+a load, fatal hangs could be observed while enabling the associated
+power-domain, which the regulator supplies.
+
+Experimentally setting the regulator to always-on, made the issue
+disappear, leading to the missing delay to let power stabilize.
+And as expected, setting the enable-time to a non-zero value
+according to the datasheet also resolved the regulator-issue.
+
+The datasheets in nearly all cases only specify "typical" values,
+except for the fan53555 type 08. There both a typical and maximum
+value are listed - 40uS apart.
+
+For all typical values I've added 100uS to be on the safe side.
+Individual details for the relevant regulators below:
+
+- fan53526:
+  The datasheet for all variants lists a typical value of 150uS, so
+  make that 250uS with safety margin.
+- fan53555:
+  types 08 and 18 (unsupported) are given a typical enable time of 135uS
+  but also a maximum of 175uS so use that value. All the other types only
+  have a typical time in the datasheet of 300uS, so give a bit margin by
+  setting it to 400uS.
+- rk8600 + rk8602:
+  Datasheet reports a typical value of 260us, so use 360uS to be safe.
+- syr82x + syr83x:
+  All datasheets report typical soft-start values of 300uS for these
+  regulators, so use 400uS.
+- tcs452x:
+  Datasheet sadly does not report a soft-start time, so I've not set
+  an enable-time
+
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20250606190418.478633-1-heiko@sntech.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
+Based on my analysis of the commit message and code changes, here is my
+determination:
+
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees. Here is my
+extensive explanation:
 
-## Analysis of the Commit
+## Analysis Summary
 
-### 1. **Nature of the Change**
-The commit adds a simple DMI (Desktop Management Interface) quirk entry
-to enable the internal microphone on HP Victus Gaming Laptop 15-fb2xxx.
-The change consists of adding just 7 lines to the `yc_acp_quirk_table[]`
-array:
+### 1. **The commit fixes a critical bug affecting system stability**
 
-```c
-+       {
-+               .driver_data = &acp6x_card,
-+               .matches = {
-+                       DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+                       DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming
-Laptop 15-fb2xxx"),
-+               }
-+       },
-```
+The commit message clearly describes a real-world failure scenario:
+- The author encountered "fatal hangs" when enabling a power-domain
+  supplied by the rk8602 regulator
+- The hangs occurred specifically during runtime-pm operations when re-
+  enabling the regulator under load
+- The issue was resolved by implementing proper enable timing delays
 
-### 2. **Comparison with Similar Commits**
-All 5 historical similar commits provided were marked as "Backport
-Status: YES" and share identical characteristics:
-- Same file modified (sound/soc/amd/yc/acp6x-mach.c)
-- Same type of change (adding DMI quirk entries)
-- Same purpose (enabling internal microphone on specific laptop models)
-- Similar commit messages mentioning microphone support
-- All are HP laptop models (except one MECHREVO)
+This indicates a serious stability issue that can cause system crashes
+or hangs.
 
-### 3. **Meets Stable Backport Criteria**
+### 2. **The fix is minimal and well-contained**
 
-**✓ Fixes a real bug affecting users**: Without this quirk, the internal
-microphone on HP Victus Gaming Laptop 15-fb2xxx doesn't work, which is a
-functional regression for users of this hardware.
+The code changes are limited to:
+- Adding a single `enable_time` field to the `fan53555_device_info`
+  structure
+- Setting appropriate timing values for each regulator variant based on
+  their datasheets
+- Passing this value to the regulator framework via `rdesc->enable_time`
 
-**✓ Small and contained change**: The patch is minimal - only 7 lines
-adding a DMI match entry to an existing quirk table. No logic changes,
-no new features.
+The changes don't introduce new features or architectural modifications
+- they simply provide timing information that the regulator framework
+already supports.
 
-**✓ No architectural changes**: This is a simple hardware enablement
-quirk, not modifying any kernel architecture.
+### 3. **The issue affects multiple widely-used regulators**
 
-**✓ Minimal risk of regression**:
-- The change only affects systems that match the specific DMI strings
-- Cannot affect other hardware configurations
-- Uses the same `acp6x_card` driver data as other entries
-- Pattern is well-established in the codebase
+The fix applies to several regulator variants:
+- fan53526 (Fairchild)
+- fan53555 (Fairchild)
+- rk8600/rk8602 (Rockchip)
+- syr82x/syr83x (Silergy)
 
-**✓ Hardware enablement**: This is pure hardware enablement for audio
-functionality, which is a common reason for stable backports.
+These are commonly used voltage regulators, particularly in ARM-based
+systems and embedded devices.
 
-### 4. **Technical Safety**
-The code change:
-- Adds to an existing array without modifying existing entries
-- Uses standard DMI matching infrastructure
-- Follows the exact same pattern as dozens of other entries in the same
-  table
-- The `acp6x_card` structure is already defined and used by many other
-  entries
+### 4. **The fix follows established patterns**
 
-### 5. **User Impact**
-Users of HP Victus Gaming Laptop 15-fb2xxx running stable kernels would
-benefit from having their internal microphone work correctly without
-waiting for the next major kernel release.
+Looking at the git history, many other regulator drivers have had
+similar enable_time fixes added:
+- `regulator: rk808: Set the enable time for LDOs`
+- `regulator: max77686: Configure enable time to properly handle
+  regulator enable`
+- `regulator: bd718x7: Add enable times`
 
-This commit is an ideal candidate for stable backporting as it's a
-minimal, safe hardware enablement fix that follows well-established
-patterns in the codebase.
+This indicates that missing enable times is a known class of issues that
+causes real problems.
 
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+### 5. **The timing values are conservative and well-researched**
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index d00e19d7b5c2f..f4d115f17a838 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -507,6 +507,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16z-n000"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming Laptop 15-fb2xxx"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+The commit shows careful analysis:
+- Values are based on datasheet specifications
+- A safety margin of 100μS is added to typical values
+- For fan53555 type 08, the maximum value (175μS) is used instead of
+  typical (135μS)
+
+### 6. **Risk assessment shows low regression potential**
+
+The changes:
+- Only add delays where none existed before
+- Use conservative timing values with safety margins
+- Don't modify any existing behavior except to add necessary
+  stabilization delays
+- Are confined to specific regulator driver without affecting core
+  framework
+
+### 7. **The bug can cause data corruption or hardware damage**
+
+Power domain failures during runtime-pm operations can potentially lead
+to:
+- Data corruption if storage devices lose power unexpectedly
+- Hardware damage if voltage rails become unstable
+- System instability requiring hard resets
+
+## Conclusion
+
+This commit meets all the criteria for stable backporting:
+- Fixes an important bug (system hangs)
+- Minimal, contained changes
+- No new features or architectural changes
+- Low risk of regression
+- Affects commonly used hardware
+
+The missing enable times can cause real-world failures, particularly in
+systems using runtime power management. The fix is straightforward and
+follows established patterns in the regulator subsystem.
+
+ drivers/regulator/fan53555.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/drivers/regulator/fan53555.c b/drivers/regulator/fan53555.c
+index 48f312167e535..8912f5be72707 100644
+--- a/drivers/regulator/fan53555.c
++++ b/drivers/regulator/fan53555.c
+@@ -147,6 +147,7 @@ struct fan53555_device_info {
+ 	unsigned int slew_mask;
+ 	const unsigned int *ramp_delay_table;
+ 	unsigned int n_ramp_values;
++	unsigned int enable_time;
+ 	unsigned int slew_rate;
+ };
+ 
+@@ -282,6 +283,7 @@ static int fan53526_voltages_setup_fairchild(struct fan53555_device_info *di)
+ 	di->slew_mask = CTL_SLEW_MASK;
+ 	di->ramp_delay_table = slew_rates;
+ 	di->n_ramp_values = ARRAY_SIZE(slew_rates);
++	di->enable_time = 250;
+ 	di->vsel_count = FAN53526_NVOLTAGES;
+ 
+ 	return 0;
+@@ -296,10 +298,12 @@ static int fan53555_voltages_setup_fairchild(struct fan53555_device_info *di)
+ 		case FAN53555_CHIP_REV_00:
+ 			di->vsel_min = 600000;
+ 			di->vsel_step = 10000;
++			di->enable_time = 400;
+ 			break;
+ 		case FAN53555_CHIP_REV_13:
+ 			di->vsel_min = 800000;
+ 			di->vsel_step = 10000;
++			di->enable_time = 400;
+ 			break;
+ 		default:
+ 			dev_err(di->dev,
+@@ -311,13 +315,19 @@ static int fan53555_voltages_setup_fairchild(struct fan53555_device_info *di)
+ 	case FAN53555_CHIP_ID_01:
+ 	case FAN53555_CHIP_ID_03:
+ 	case FAN53555_CHIP_ID_05:
++		di->vsel_min = 600000;
++		di->vsel_step = 10000;
++		di->enable_time = 400;
++		break;
+ 	case FAN53555_CHIP_ID_08:
+ 		di->vsel_min = 600000;
+ 		di->vsel_step = 10000;
++		di->enable_time = 175;
+ 		break;
+ 	case FAN53555_CHIP_ID_04:
+ 		di->vsel_min = 603000;
+ 		di->vsel_step = 12826;
++		di->enable_time = 400;
+ 		break;
+ 	default:
+ 		dev_err(di->dev,
+@@ -350,6 +360,7 @@ static int fan53555_voltages_setup_rockchip(struct fan53555_device_info *di)
+ 	di->slew_mask = CTL_SLEW_MASK;
+ 	di->ramp_delay_table = slew_rates;
+ 	di->n_ramp_values = ARRAY_SIZE(slew_rates);
++	di->enable_time = 360;
+ 	di->vsel_count = FAN53555_NVOLTAGES;
+ 
+ 	return 0;
+@@ -372,6 +383,7 @@ static int rk8602_voltages_setup_rockchip(struct fan53555_device_info *di)
+ 	di->slew_mask = CTL_SLEW_MASK;
+ 	di->ramp_delay_table = slew_rates;
+ 	di->n_ramp_values = ARRAY_SIZE(slew_rates);
++	di->enable_time = 360;
+ 	di->vsel_count = RK8602_NVOLTAGES;
+ 
+ 	return 0;
+@@ -395,6 +407,7 @@ static int fan53555_voltages_setup_silergy(struct fan53555_device_info *di)
+ 	di->slew_mask = CTL_SLEW_MASK;
+ 	di->ramp_delay_table = slew_rates;
+ 	di->n_ramp_values = ARRAY_SIZE(slew_rates);
++	di->enable_time = 400;
+ 	di->vsel_count = FAN53555_NVOLTAGES;
+ 
+ 	return 0;
+@@ -594,6 +607,7 @@ static int fan53555_regulator_register(struct fan53555_device_info *di,
+ 	rdesc->ramp_mask = di->slew_mask;
+ 	rdesc->ramp_delay_table = di->ramp_delay_table;
+ 	rdesc->n_ramp_values = di->n_ramp_values;
++	rdesc->enable_time = di->enable_time;
+ 	rdesc->owner = THIS_MODULE;
+ 
+ 	rdev = devm_regulator_register(di->dev, &di->desc, config);
 -- 
 2.39.5
 
