@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90602223316;
-	Tue, 24 Jun 2025 04:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5854C2222A9;
+	Tue, 24 Jun 2025 04:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738362; cv=none; b=SB/VvbzN+no8Fn4vxnMMEK/J0weciBTs0N9+3kcHKLu8fwv1r+wG4ZToXOeOyxG6KyQ7UzgI4cOpONyv3mFVre+g+mUDQRl5G2Bue3SQ6cfR8kMJ1djti8LnZS9q9GKUeW7vKVwZoD46C8VZEspEsQslbv78kseDjcdBo01PeS4=
+	t=1750738364; cv=none; b=PNSXHKR8mgr4xA0eJXlisoqO4mNo1Z8BTUm7As0VY2QPOitM7nJWwIckahByhW07ZvPCKdAo8ewv36tbKhRhgW0igZrHqkdwYTBleXroIk6giy25vj2yxlIu+drRB1LE9pYZA4b+x5xeHtuvFUtQjE6l1gPdhEfAl7sA9bMLhOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738362; c=relaxed/simple;
-	bh=Sa1RNcVCjeFw1niI6sFM6ShZPoeKSMttqK24sFhyvQs=;
+	s=arc-20240116; t=1750738364; c=relaxed/simple;
+	bh=NY4w0ySqVXa7gGOIoo3AUDtVMnjiiW8QxUeTpQaevFw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=j+UQ6nqzE7w68YYv2oFshNkWuwLbtQd4/2Afy3lMjllNw4m9U86x1D8lURi2ztTmsWAGj2YAMFvVE4gZDdrz2xDbC0/M/IncxycMN9qjlWgJQ/0vAZCl+1R+cPaR/PJO5OEQTlWsPnxNuvIEA4CCUa70WrBZ2PXUllqVZNk0sbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jM5qU8QG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MYZeu0kFLYMgWINfTSw/v2XyMWvEkBXQCXXSvtHPsIxKZj+sSV1/brsL7bX+bRlbh9tPdvAQyIgdHLVjmAaDHoHJbfX2D8pBmBjulzWpvEdopF+hNhIdsW68Tzgv/aj6MtkXrFb+5OIhvADMbOYTtt0HMGKEtlkeEJoEjK3WOfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LY+a3Oo+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jM5qU8QG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5303C4CEE3;
-	Tue, 24 Jun 2025 04:12:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LY+a3Oo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB07EC4CEE3;
+	Tue, 24 Jun 2025 04:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738362;
-	bh=Sa1RNcVCjeFw1niI6sFM6ShZPoeKSMttqK24sFhyvQs=;
+	s=k20201202; t=1750738364;
+	bh=NY4w0ySqVXa7gGOIoo3AUDtVMnjiiW8QxUeTpQaevFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jM5qU8QGTBTSlPmcHGZrZPnZWpirUJhFPODUcQfhL0ZMOiUM4amhZEL0uNKgnFiXY
-	 8m2LFonoyqz6+gjfnBzdJWjPUpnIjv/MYh8Vx1ymSCOJF0S8zrS7F2TLAxtTkSfB6w
-	 3HO5DX/TlkE3FvvBMVC/VDFNhn7Oad1vVjvV3FCGmyM/q+L0r0ZQllDYnhdadcgXY6
-	 M2PtTrWH6A7d72B9ApUmtyXveqnCR3JKKV0mDmOmdFepLCwd01o5iWxZoQaLcQ6+v8
-	 LCz8Pb7nctIVSC0BJEFb533TIKS0NQ8BD9KVtFp0/J4MEZcI9YQda3pMCfbMr9a6l8
-	 i34O9LCy0BM8Q==
+	b=LY+a3Oo+xJwbgCNpDSO5FUDjELcFjMBqcEZZ+Mj0DAoB2hXvCQ/YQGtkmZRq+mF10
+	 ixWgWHOpXibN6D6iIwexfD9ebG3LcRWjGdSDTE6vc5baq08vWP/lmpOYQjQ0Vfhrej
+	 +ZmJ1bFsThxIl7+iYvudMzjrG0At289B0sY5qHFCj+bEFf4cx7r0WcsZVMCYLKIV+G
+	 vgsS8l6/xQK2S5CP6O+l/rqTDL8En4jE3VmyeK1sR+sHv4r8TsVg6kDKxYNXV2WIGa
+	 duGkKdNOc1MW1oysZel1ciVcQZSWt/ls3zzUw80PSIUca+g+1RpGeTDLmkTxCXN3pO
+	 rLHhw2tod4yWw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
 	perex@perex.cz
-Subject: [PATCH AUTOSEL 6.1 03/15] ALSA: sb: Don't allow changing the DMA mode during operations
-Date: Tue, 24 Jun 2025 00:12:26 -0400
-Message-Id: <20250624041238.84580-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 04/15] ALSA: sb: Force to disable DMAs once when DMA mode is changed
+Date: Tue, 24 Jun 2025 00:12:27 -0400
+Message-Id: <20250624041238.84580-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041238.84580-1-sashal@kernel.org>
 References: <20250624041238.84580-1-sashal@kernel.org>
@@ -51,104 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ed29e073ba93f2d52832804cabdd831d5d357d33 ]
+[ Upstream commit 4c267ae2ef349639b4d9ebf00dd28586a82fdbe6 ]
 
-When a PCM stream is already running, one shouldn't change the DMA
-mode via kcontrol, which may screw up the hardware.  Return -EBUSY
-instead.
+When the DMA mode is changed on the (still real!) SB AWE32 after
+playing a stream and closing, the previous DMA setup was still
+silently kept, and it can confuse the hardware, resulting in the
+unexpected noises.  As a workaround, enforce the disablement of DMA
+setups when the DMA setup is changed by the kcontrol.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218185
-Link: https://patch.msgid.link/20250610064322.26787-1-tiwai@suse.de
+https://bugzilla.kernel.org/show_bug.cgi?id=218185
+Link: https://patch.msgid.link/20250610064322.26787-2-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES**
+Based on my analysis of the commit message and code changes, here is my
+assessment:
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+**YES** - This commit should be backported to stable kernel trees.
 
-## Key Reasons for Backporting:
+## Extensive Explanation:
 
-1. **Critical Bug Fix for Race Condition**: The commit fixes a race
-   condition where changing DMA mode via kcontrol while PCM streams are
-   running can corrupt hardware state. Looking at the code:
-   - The `chip->mode` field tracks active playback/capture operations
-     using `SB_MODE_PLAYBACK` and `SB_MODE_CAPTURE` flags
-   - The DMA mode control (`force_mode16`) affects how DMA transfers are
-     configured
-   - Changing this while streams are active can cause hardware
-     inconsistencies
+### 1. **Bug Fix Nature**
+This commit fixes a real bug that causes "unexpected noises" on SB AWE32
+hardware when DMA mode is changed after playing a stream. The fix
+addresses a situation where "the previous DMA setup was still silently
+kept, and it can confuse the hardware."
 
-2. **Clear User-Visible Bug**: The commit references Bugzilla #218185,
-   indicating this is a real user-reported issue that affects system
-   stability and audio functionality.
+### 2. **Code Change Analysis**
+The fix is minimal and surgical:
+```c
+if (change) {
+    snd_dma_disable(chip->dma8);
+    snd_dma_disable(chip->dma16);
+}
+```
+This adds only 4 lines that disable both DMA channels when the DMA mode
+control changes. The fix is:
+- **Small and contained**: Only affects the `snd_sb16_dma_control_put()`
+  function
+- **Low risk**: Simply ensures DMA channels are disabled during mode
+  switches
+- **Clear purpose**: Prevents hardware confusion from stale DMA
+  configurations
 
-3. **Minimal and Contained Fix**: The change is extremely small and
-   focused:
-  ```c
-  +       if (chip->mode & (SB_MODE_PLAYBACK | SB_MODE_CAPTURE))
-  +               return -EBUSY;
-  ```
-  It simply adds a check to prevent mode changes during active
-  operations, returning -EBUSY to userspace.
+### 3. **Hardware Bug Context**
+The kernel repository analysis reveals this is addressing a known class
+of hardware issues with SB16 cards:
+- The driver documents hardware bugs with DMA mode switching (lines
+  14-18 in sb16_main.c)
+- The hardware has separate 8-bit and 16-bit DMA channels that cannot
+  mix
+- Certain chip revisions have bugs where DMA transfers can block when
+  switching modes
 
-4. **No Architectural Changes**: This is a straightforward defensive
-   check that doesn't alter any core functionality or introduce new
-   features. It only prevents an invalid operation.
+### 4. **Safety and Side Effects**
+The change has minimal side effects:
+- Only executes when user changes the DMA mode control
+- The driver already checks for active playback/capture before allowing
+  changes (`if (chip->mode & (SB_MODE_PLAYBACK | SB_MODE_CAPTURE))
+  return -EBUSY;`)
+- `snd_dma_disable()` is a standard ISA DMA function that safely
+  disables DMA transfers
+- The prepare functions already disable/enable DMAs during normal
+  operation
 
-5. **Low Risk of Regression**: The fix:
-   - Only affects the SB16 sound driver
-   - Only changes behavior when someone tries to modify DMA mode during
-     active streaming
-   - Returns a standard error code (-EBUSY) that applications should
-     already handle
-   - Doesn't affect normal audio operations
+### 5. **Stable Tree Criteria**
+This meets stable tree criteria:
+- **Fixes a real bug**: Users experience actual audio problems
+  (unexpected noises)
+- **No new features**: Pure bug fix, no feature additions
+- **Minimal change**: 4 lines of straightforward code
+- **Low regression risk**: Only affects legacy ISA hardware (SB16/AWE32)
+- **Clear bug report**: References kernel bugzilla #218185
 
-6. **Follows Stable Kernel Rules**: This perfectly matches stable kernel
-   criteria:
-   - Fixes a real bug that affects users
-   - Obviously correct with no subtleties
-   - Small change (2 lines of actual code)
-   - Already tested in mainline
-   - No new features added
+### 6. **Legacy Hardware Consideration**
+While SB16 is legacy hardware, it's still used:
+- The bug report is recent (bugzilla #218185)
+- The commit message states this affects "still real!" hardware
+- Linux maintains support for legacy hardware in stable trees
+- The fix prevents audio corruption which significantly impacts user
+  experience
 
-## Technical Analysis:
+The commit follows the pattern of similar audio driver fixes that were
+backported (like commit #1 in the examples which fixed DMA
+synchronization issues). It's a targeted fix for a specific hardware
+problem with no architectural changes.
 
-From examining the code flow:
-- During `snd_sb16_playback_open()` and `snd_sb16_capture_open()`, the
-  driver sets `chip->mode` flags
-- These flags remain set until `snd_sb16_playback_close()` and
-  `snd_sb16_capture_close()` clear them
-- The `force_mode16` setting affects DMA channel selection throughout
-  the driver
-- Without this fix, userspace can change `force_mode16` while DMA
-  operations are active, potentially causing:
-  - DMA channel mismatches
-  - Audio corruption
-  - System instability
-
-This is similar to the first example commit that was backported, which
-also prevented operations during inappropriate states (DMA
-synchronization during PAUSE state).
-
- sound/isa/sb/sb16_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/isa/sb/sb16_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/sound/isa/sb/sb16_main.c b/sound/isa/sb/sb16_main.c
-index a9b87e159b2d1..5efbd0a41312b 100644
+index 5efbd0a41312b..1497a7822eee6 100644
 --- a/sound/isa/sb/sb16_main.c
 +++ b/sound/isa/sb/sb16_main.c
-@@ -703,6 +703,9 @@ static int snd_sb16_dma_control_put(struct snd_kcontrol *kcontrol, struct snd_ct
- 	unsigned char nval, oval;
- 	int change;
- 	
-+	if (chip->mode & (SB_MODE_PLAYBACK | SB_MODE_CAPTURE))
-+		return -EBUSY;
-+
- 	nval = ucontrol->value.enumerated.item[0];
- 	if (nval > 2)
- 		return -EINVAL;
+@@ -714,6 +714,10 @@ static int snd_sb16_dma_control_put(struct snd_kcontrol *kcontrol, struct snd_ct
+ 	change = nval != oval;
+ 	snd_sb16_set_dma_mode(chip, nval);
+ 	spin_unlock_irqrestore(&chip->reg_lock, flags);
++	if (change) {
++		snd_dma_disable(chip->dma8);
++		snd_dma_disable(chip->dma16);
++	}
+ 	return change;
+ }
+ 
 -- 
 2.39.5
 
