@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FCE25DB13;
-	Tue, 24 Jun 2025 10:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAD01ADFFB;
+	Tue, 24 Jun 2025 10:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750760353; cv=none; b=W8PHYzNyEJbJQUU4yMOTIi9emd2zEcK1+hpT+A+fwPlVY2zLsX0VZw5nJCD1d9nk5m3a3rlEW8Sxkz9Rj4v5OmA2hoxgICQ7jrLctpZ6aM1pMHyNN2l6DBQtT935zDJZioOFWBnDYBqlHr7D5j2YJO+dNHSV5bialBvDsPi3+XY=
+	t=1750760657; cv=none; b=eXOXm6lsT4kKfYTpbKntp5YE1YWMVuxOH3M5MrpnP8/0GGXGDMhOa9GealiLXDEmvKOY9hmAxooZN7RNHhu0ZMvq3xAhV8W5nEKyRFikHzXRjohCRzlIzazdLb6plnOWNxxMNzMuIZzF6YEbQf/SBhx8iaOlImMEI8W/J9eXOVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750760353; c=relaxed/simple;
-	bh=iWbqKwDTOe7uCugpjf2vh/zTmrUgw7bz0C7fMras7Vo=;
+	s=arc-20240116; t=1750760657; c=relaxed/simple;
+	bh=pL0QnO/VMfPXgKH+xt1uHyAyr63fVRvoOSU+p8/fhR4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=alPqSeCB6OBkRF1EBg2C3OPYddwa3I6b9+MgGQxJp6kdw8y0//wwn5LurIDApaPWLz58Gq80XNS2pKwQpzvbeLGxHLPhR7BjpfqmLNO5vcL0XC7x++aHuVNpBmswuhJLNr/8alEobvo/7jbsQP7Zp6Aj+ul0kiRhVNrDrpn/kYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2h7929y; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=WJ60jSLdlB0v6Z8gF69bbzqqDZubsUZB2vq58M6oWtZRrxdUyxf0yMU8+HXEADz0FWuvTfqZrnphgSA5ikCzZDIyghEP44Cq/dXQCbELvXPIu2W1TVfRS7YqdpFKNOHhr94lDXO8lG9h8i0rK/3a9CjKh5V+YLnROitlOi8I4h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VcnfsJfW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2h7929y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85184C4CEE3;
-	Tue, 24 Jun 2025 10:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcnfsJfW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D24C4CEEE;
+	Tue, 24 Jun 2025 10:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750760352;
-	bh=iWbqKwDTOe7uCugpjf2vh/zTmrUgw7bz0C7fMras7Vo=;
+	s=korg; t=1750760655;
+	bh=pL0QnO/VMfPXgKH+xt1uHyAyr63fVRvoOSU+p8/fhR4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V2h7929yX2WSzxLh6fzqVrf6VuXl/6uHtVksDAcBR4c/p4qLr5b+5vu4Q+20ebqhf
-	 N8YRAUp+29aJD68V4jvOJveZMUKAYNfiTB/D9bM2oEBNVvZBmpFEhQJiCZyC/Qn/xY
-	 NG029Ar9Y30vFPYMVKKVPe1houz8da77H0VXUNL8=
-Date: Tue, 24 Jun 2025 11:19:08 +0100
+	b=VcnfsJfWpUpg4BBLhU/5jl8cYSzcznsQOeN2670SWH7bZpB2C8UO6L3zYstVtJCO3
+	 X7ZRS/PDckb1NzEEZXo0OqPkw4T73hKhTJ+a8OrtAuS8NMHq2aO2xBons5ZDbV0mHC
+	 ozdRlvco+r/mDoQdSDFMk5rVVtT5+a7NTlQlZY30=
+Date: Tue, 24 Jun 2025 11:24:11 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Danilo Krummrich <dakr@kernel.org>
-Cc: Thorsten Leemhuis <linux@leemhuis.info>,
-	Benno Lossin <lossin@kernel.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Alice Ryhl <aliceryhl@google.com>,
-	Sasha Levin <sashal@kernel.org>, Miguel Ojeda <ojeda@kernel.org>,
-	Christian Heusel <christian@heusel.eu>
-Subject: Re: [PATCH 6.15 515/592] rust: devres: fix race in Devres::drop()
-Message-ID: <2025062455-rogue-flagship-54a4@gregkh>
-References: <20250623130700.210182694@linuxfoundation.org>
- <20250623130712.686988131@linuxfoundation.org>
- <DAUALX71J38F.2E1VBF0YH27KQ@kernel.org>
- <eYjMg1ry65KlJgUKnqEjkoG6RkGBk1xtTYP1Af8fRBlrZyO8jOIrnAPs209lnvPqLwwwI0uQimzOx-EjmuhPEQ==@protonmail.internalid>
- <025d9611-2a7f-40fd-9124-7b62fe6c5e84@leemhuis.info>
- <DAULY9E26AKQ.3DCD5IW7CWUI7@kernel.org>
- <ae03cf82-dfda-46fc-914d-2e329cd8d3da@leemhuis.info>
- <2025062439-scheming-scale-7ab0@gregkh>
- <aFp6iA8zwL9XX6US@pollux>
+To: Pu Lehui <pulehui@huawei.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Hou Tao <houtao1@huawei.com>, Will Deacon <will@kernel.org>
+Subject: Re: [PATCH 5.10 323/355] arm64: move AARCH64_BREAK_FAULT into
+ insn-def.h
+Message-ID: <2025062453-proton-preheated-90a8@gregkh>
+References: <20250623130626.716971725@linuxfoundation.org>
+ <20250623130636.471359981@linuxfoundation.org>
+ <596e3d6b-a5ff-4914-9a5b-26603e8de8d0@huawei.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,31 +42,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aFp6iA8zwL9XX6US@pollux>
+In-Reply-To: <596e3d6b-a5ff-4914-9a5b-26603e8de8d0@huawei.com>
 
-On Tue, Jun 24, 2025 at 12:14:32PM +0200, Danilo Krummrich wrote:
-> On Tue, Jun 24, 2025 at 10:03:42AM +0100, Greg Kroah-Hartman wrote:
-> > On Tue, Jun 24, 2025 at 10:24:46AM +0200, Thorsten Leemhuis wrote:
-> > > On 24.06.25 10:07, Benno Lossin wrote:
-> > > > I tried applying it on top of v6.15.3 and that also results in a
-> > > > conflict, but only in `bindgen_helpers.h` and `helpers.c`, so we can
-> > > > simply provide a fixed patch.
-> > > 
-> > > Yeah, that likely is needed to make Greg happy here.
+On Tue, Jun 24, 2025 at 11:34:02AM +0800, Pu Lehui wrote:
+> 
+> On 2025/6/23 21:08, Greg Kroah-Hartman wrote:
+> > 5.10-stable review patch.  If anyone has any objections, please let me know.
 > > 
-> > For now I'll just go drop this commit and wait for it to be submitted in
-> > a series that actually builds.
+> > ------------------
+> > 
+> > From: Hou Tao <houtao1@huawei.com>
+> > 
+> > [ Upstream commit 97e58e395e9c074fd096dad13c54e9f4112cf71d ]
+> > 
+> > If CONFIG_ARM64_LSE_ATOMICS is off, encoders for LSE-related instructions
+> > can return AARCH64_BREAK_FAULT directly in insn.h. In order to access
+> > AARCH64_BREAK_FAULT in insn.h, we can not include debug-monitors.h in
+> > insn.h, because debug-monitors.h has already depends on insn.h, so just
+> > move AARCH64_BREAK_FAULT into insn-def.h.
+> > 
+> > It will be used by the following patch to eliminate unnecessary LSE-related
+> > encoders when CONFIG_ARM64_LSE_ATOMICS is off.
+> > 
+> > Signed-off-by: Hou Tao <houtao1@huawei.com>
+> > Link: https://lore.kernel.org/r/20220217072232.1186625-2-houtao1@huawei.com
+> > Signed-off-by: Will Deacon <will@kernel.org>
+> > [not exist insn-def.h file, move to insn.h]
+> > Signed-off-by: Pu Lehui <pulehui@huawei.com>
+> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > ---
+> >   arch/arm64/include/asm/debug-monitors.h |   12 ------------
+> >   arch/arm64/include/asm/insn.h           |   12 ++++++++++++
+> >   2 files changed, 12 insertions(+), 12 deletions(-)
+> > 
+> > --- a/arch/arm64/include/asm/debug-monitors.h
+> > +++ b/arch/arm64/include/asm/debug-monitors.h
+> > @@ -34,18 +34,6 @@
+> >    */
+> >   #define BREAK_INSTR_SIZE		AARCH64_INSN_SIZE
+> > -/*
+> > - * BRK instruction encoding
+> > - * The #imm16 value should be placed at bits[20:5] within BRK ins
+> > - */
+> > -#define AARCH64_BREAK_MON	0xd4200000
+> > -
+> > -/*
+> > - * BRK instruction for provoking a fault on purpose
+> > - * Unlike kgdb, #imm16 value with unallocated handler is used for faulting.
+> > - */
+> > -#define AARCH64_BREAK_FAULT	(AARCH64_BREAK_MON | (FAULT_BRK_IMM << 5))
+> > -
+> >   #define AARCH64_BREAK_KGDB_DYN_DBG	\
+> >   	(AARCH64_BREAK_MON | (KGDB_DYN_DBG_BRK_IMM << 5))
+> > --- a/arch/arm64/include/asm/insn.h
+> > +++ b/arch/arm64/include/asm/insn.h
+> > @@ -13,6 +13,18 @@
+> >   /* A64 instructions are always 32 bits. */
+> >   #define	AARCH64_INSN_SIZE		4
+> > +/*
+> > + * BRK instruction encoding
+> > + * The #imm16 value should be placed at bits[20:5] within BRK ins
+> > + */
+> > +#define AARCH64_BREAK_MON      0xd4200000
+> > +
+> > +/*
+> > + * BRK instruction for provoking a fault on purpose
+> > + * Unlike kgdb, #imm16 value with unallocated handler is used for faulting.
+> > + */
+> > +#define AARCH64_BREAK_FAULT    (AARCH64_BREAK_MON | (FAULT_BRK_IMM << 5))
 > 
-> I'll send a series based on v6.15.3.
+> Hi Greg,
 > 
-> The dependencies you already dropped, i.e.
+> Dominique just discovered a compilation problem [0] caused by not having
+> `#include <asm/brk-imm.h>` in insn.h.
 > 
-> 	queue-6.15/rust-devres-fix-doctest-build-under-config_pci.patch
-> 	queue-6.15/rust-devres-implement-devres-access.patch
+> I have fixed it as shown below, should I resend the formal patch?
 > 
-> won't be needed any more.
-> 
+> Link: https://lore.kernel.org/all/aFniFC7ywCoveOts@codewreck.org/ [0]
 
-Great, thanks for doing that.
+Let me see if I can just take this as-is...
+
+Ok, it worked for 5.10.y, is this also needed in 5.15.y?
+
+thanks,
 
 greg k-h
