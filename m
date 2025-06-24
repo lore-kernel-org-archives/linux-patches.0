@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A577A2222C2;
-	Tue, 24 Jun 2025 04:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9B2238D53;
+	Tue, 24 Jun 2025 04:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738326; cv=none; b=Y8EJVBZ8T0dtLy3fWmyBUaxxknDUpIebLjBO21DYGkLcEgIfXN8rZR1Cv7nimD/Kk+UYzpMJJh8otl0wr8PX1FStEWE8FczQi1zM2bKLKawi3R1p48JIBFhxa78SkT5raCP4YAnY2BgsvExzJtJIGQ96GZ0cZZCepMqJNtODaHc=
+	t=1750738327; cv=none; b=WhHHZ88FoblwnEDj2YNlAMnVTuJCBdKMhcfrblazt9TE52FqZofkLTzHXl3HM00O/MU3pr6kTBcwLjJ5CCzn9AY6x7m2FwFy8Bh9rTpr5g9UhMWyj7sHRsoDHqCIC3wQHKe2+Qee+EoZEJZBCWQ73vQ+ZiMidPkuUfmtXWqwjJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738326; c=relaxed/simple;
-	bh=pKDZz9u9jXA9iDgOtfoL+CJ5WotzLfD8SKGrisX4pjg=;
+	s=arc-20240116; t=1750738327; c=relaxed/simple;
+	bh=ffeeUxwsuymqPYPtz5B0th7puZxyJ/LVpNy5qwGpV8A=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Vv/7eVNVV8pJfY/HHf4VJHDKairhNx7A+zK6bYOn9FWzIiOcLAxzn0h4wQhzPcHGRyT7XxaCWma5wqsqM0E5vDTkefOZKVB/xC/7/5U3lY0Dc5QPC56os+ZmC6dUDmX7/diJS89RX35ZekmABIX8+KT0qGs+2z3YOngexXRSCMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J4E/5P7+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kBjW4wAQGDI1sYLssgc2fc5NEnkzuQ0PtrUscT/lGCz9lXOi4Wv4NJB3+EDdSd+mzmj46wfkoEvyTlQmkqeGfEXzw97kbDXb7f6wW43d1SvyGNDW4Gig9rw8ToAe31RXACYVXwDzvX1BO5Vuv6ZeEcqRzUNCqaLs/B7vsR2rTUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C/A/QiYP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J4E/5P7+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72C5C4CEE3;
-	Tue, 24 Jun 2025 04:12:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C/A/QiYP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95142C4CEF0;
+	Tue, 24 Jun 2025 04:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1750738326;
-	bh=pKDZz9u9jXA9iDgOtfoL+CJ5WotzLfD8SKGrisX4pjg=;
+	bh=ffeeUxwsuymqPYPtz5B0th7puZxyJ/LVpNy5qwGpV8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J4E/5P7+q48LRJ9gWTuZDoSxbJCBdUrPNONVG+wuu8h7SHLyNzWXMhVWHfrCRVj0Y
-	 O5zEswmfnYVxbLwTDB1eVZrLRYoggS2Ls1Hw7VYBzu2yhsjRcqN5mNPge31ZrSZYqx
-	 ZpE9jVPbDUbU5ii7B5B8AMvHdRyJdW7w1MdrNo0I1jKA+3WWyP394ipnkvkgQxVf2m
-	 M+gDcPJYHAk0eBa4gaYXSYJ7x2vWDzhivsjhnDZteP1FSkiCWntp21qTVNb6De8vqM
-	 b9aIYBJiOEpBpxhowHSjSX1HadHXMBfN6xx3KiXM4ovT2FgPzCm4Ep9I6eeMkZgEJA
-	 IZPzhQb2w1Qrw==
+	b=C/A/QiYP3C4BTnEcyVj9Zcrmnc4SQHYZRFFStuE32N8RMUBvhe7E4j0l7Y2IAwVj1
+	 V+JacYMfmLhflXdbTNhOykF37r5dPMDpB0iHUy9c0waSc276UrS8LYGPZT8n911EwM
+	 pL5+MM9eXlj2GNYSJJOeSai2AAuHQ+lS/9WkXV2syUCOt5BBpQNzR5kLOR+gjW+g9C
+	 u5VXKIwkHVctb2WLmnxuMOQa7M3x3Cnv5zh8fMI2nm36Dj104myJcoMQQWuHFHsBWD
+	 lFOxYlwUv7fCqrQT4pI9fgJU3fex1XQ0VTJbhCYe0P6RJrLpSrevHAbOSXgV/XMITv
+	 4HfQ3TDal8LfA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Justin Sanders <jsanders.devel@gmail.com>,
-	Valentin Kleibel <valentin@vrvis.at>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Johannes Berg <johannes.berg@intel.com>,
+	syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>,
-	justin@coraid.com
-Subject: [PATCH AUTOSEL 6.12 14/19] aoe: defer rexmit timer downdev work to workqueue
-Date: Tue, 24 Jun 2025 00:11:43 -0400
-Message-Id: <20250624041149.83674-14-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 15/19] wifi: mac80211: drop invalid source address OCB frames
+Date: Tue, 24 Jun 2025 00:11:44 -0400
+Message-Id: <20250624041149.83674-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041149.83674-1-sashal@kernel.org>
 References: <20250624041149.83674-1-sashal@kernel.org>
@@ -49,169 +49,109 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.34
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Sanders <jsanders.devel@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit cffc873d68ab09a0432b8212008c5613f8a70a2c ]
+[ Upstream commit d1b1a5eb27c4948e8811cf4dbb05aaf3eb10700c ]
 
-When aoe's rexmit_timer() notices that an aoe target fails to respond to
-commands for more than aoe_deadsecs, it calls aoedev_downdev() which
-cleans the outstanding aoe and block queues. This can involve sleeping,
-such as in blk_mq_freeze_queue(), which should not occur in irq context.
+In OCB, don't accept frames from invalid source addresses
+(and in particular don't try to create stations for them),
+drop the frames instead.
 
-This patch defers that aoedev_downdev() call to the aoe device's
-workqueue.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=212665
-Signed-off-by: Justin Sanders <jsanders.devel@gmail.com>
-Link: https://lore.kernel.org/r/20250610170600.869-2-jsanders.devel@gmail.com
-Tested-By: Valentin Kleibel <valentin@vrvis.at>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/6788d2d9.050a0220.20d369.0028.GAE@google.com/
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Tested-by: syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20250616171838.7433379cab5d.I47444d63c72a0bd58d2e2b67bb99e1fea37eec6f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-
-Based on my analysis of the commit and the kernel repository context,
-here is my determination:
 
 **YES**
 
 This commit should be backported to stable kernel trees. Here's my
-extensive explanation:
+extensive analysis:
 
-## 1. **Critical Bug Fix for Kernel Crash/Hang**
+## Security Vulnerability Fixed
 
-The commit fixes a serious "scheduling while atomic" bug that can cause
-kernel crashes. The issue occurs when:
-- The `rexmit_timer()` function (timer callback, runs in softirq
-  context) detects a device timeout
-- It directly calls `aoedev_downdev()` which contains
-  `blk_mq_freeze_queue()` - a sleeping operation
-- Calling a sleeping function from atomic context violates kernel rules
-  and causes crashes
+The commit fixes a clear security vulnerability in OCB (Outside Context
+of a BSS) mode where frames with invalid source addresses are accepted
+and processed. Looking at the code change:
 
-## 2. **Clear Root Cause and Minimal Fix**
+```c
++               /* reject invalid/our STA address */
++               if (!is_valid_ether_addr(hdr->addr2) ||
++                   ether_addr_equal(sdata->dev->dev_addr, hdr->addr2))
++                       return false;
+```
 
-The fix is minimal and targeted:
-- Adds a new flag `DEVFL_DEAD` to mark devices that need to be downed
-- Instead of calling `aoedev_downdev()` directly from timer context, it
-  sets the flag and queues work
-- The actual `aoedev_downdev()` call happens in workqueue context where
-  sleeping is allowed
+This adds critical validation that was missing, preventing:
 
-## 3. **Part of a Series Fixing Related Issues**
+1. **Invalid MAC addresses** (all zeros, broadcast/multicast addresses)
+   from being accepted
+2. **Self-spoofing attacks** where frames appear to come from the
+   device's own address
 
-This is part of a series addressing bugzilla #212665, including:
-- This commit: Fixes the timer context sleeping issue
-- Commit 7f90d45e57cb: Fixes the hang in `blk_mq_freeze_queue()` by
-  properly cleaning request lists
+## Comparison with Similar Historical Fixes
 
-Both commits are needed to fully resolve the reported issue.
+This fix follows the exact pattern of Similar Commit #1 (Backport
+Status: YES):
+- That commit added `!is_valid_ether_addr(hdr->addr2)` check to ADHOC
+  mode
+- It fixed WARN_ON spam in `sta_info_insert_check()`
+- It was deemed suitable for stable backporting
 
-## 4. **Regression from blk-mq Conversion**
+The OCB fix addresses the same class of vulnerability in a different
+interface mode.
 
-The issue was introduced by commit 3582dd291788 ("aoe: convert aoeblk to
-blk-mq"), making this a regression fix. The blk-mq conversion added
-sleeping operations that weren't safe to call from existing timer
-contexts.
+## Impact Without the Fix
 
-## 5. **Similar to Previously Backported Fixes**
+Without this validation, the `ieee80211_ocb_rx_no_sta()` function would:
+1. Create station entries for invalid addresses
+2. Potentially trigger WARN_ON messages causing log spam
+3. Allow resource exhaustion attacks by creating many invalid stations
+4. Risk crashes or undefined behavior from invalid station entries
 
-Looking at the similar commits:
-- Commit 430380b4637a (fixing atomic sleep in flush) was marked as
-  suitable for backporting
-- It addressed the same class of bug in a different code path
-- This establishes precedent for backporting such fixes
+## Stable Backport Criteria Met
 
-## 6. **Minimal Risk of Regression**
+1. **Fixes a real bug**: Yes - invalid frames are incorrectly accepted
+2. **Security impact**: Yes - potential DoS via resource exhaustion
+3. **Small and contained**: Yes - adds 4 lines of validation
+4. **Clear fix**: Yes - straightforward address validation
+5. **No new features**: Correct - only adds missing validation
+6. **Tested**: Yes - verified by syzbot
 
-The changes are:
-- Well-contained to the aoe driver
-- Follow established patterns (deferring to workqueue)
-- Don't change any user-visible behavior
-- Only change the execution context of an existing operation
+## Not Like the "NO" Examples
 
-## 7. **Meets Stable Criteria**
+Unlike the commits marked for NO backporting:
+- This is not adding new functionality (like link-addressed frames
+  support)
+- This is not a code cleanup or optimization
+- This is fixing a concrete security issue reported by syzbot
+- This has minimal risk of regression
 
-According to stable tree rules, this commit:
-- ✓ Fixes a real bug (kernel crash/scheduling while atomic)
-- ✓ Has been tested (per commit message)
-- ✓ Is minimal and targeted
-- ✓ Fixes a regression from previous changes
-- ✓ Has clear explanation and reproducer (bugzilla link)
+The fix is essential for OCB mode security and should be backported to
+all stable kernels that support OCB mode (since 2014).
 
-The only consideration is that it should be backported together with
-commit 7f90d45e57cb to ensure the complete fix for bugzilla #212665 is
-applied.
+ net/mac80211/rx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
- drivers/block/aoe/aoe.h    | 1 +
- drivers/block/aoe/aoecmd.c | 8 ++++++--
- drivers/block/aoe/aoedev.c | 5 ++++-
- 3 files changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/block/aoe/aoe.h b/drivers/block/aoe/aoe.h
-index 749ae1246f4cf..d35caa3c69e15 100644
---- a/drivers/block/aoe/aoe.h
-+++ b/drivers/block/aoe/aoe.h
-@@ -80,6 +80,7 @@ enum {
- 	DEVFL_NEWSIZE = (1<<6),	/* need to update dev size in block layer */
- 	DEVFL_FREEING = (1<<7),	/* set when device is being cleaned up */
- 	DEVFL_FREED = (1<<8),	/* device has been cleaned up */
-+	DEVFL_DEAD = (1<<9),	/* device has timed out of aoe_deadsecs */
- };
- 
- enum {
-diff --git a/drivers/block/aoe/aoecmd.c b/drivers/block/aoe/aoecmd.c
-index 92b06d1de4cc7..6c94cfd1c480e 100644
---- a/drivers/block/aoe/aoecmd.c
-+++ b/drivers/block/aoe/aoecmd.c
-@@ -754,7 +754,7 @@ rexmit_timer(struct timer_list *timer)
- 
- 	utgts = count_targets(d, NULL);
- 
--	if (d->flags & DEVFL_TKILL) {
-+	if (d->flags & (DEVFL_TKILL | DEVFL_DEAD)) {
- 		spin_unlock_irqrestore(&d->lock, flags);
- 		return;
- 	}
-@@ -786,7 +786,8 @@ rexmit_timer(struct timer_list *timer)
- 			 * to clean up.
- 			 */
- 			list_splice(&flist, &d->factive[0]);
--			aoedev_downdev(d);
-+			d->flags |= DEVFL_DEAD;
-+			queue_work(aoe_wq, &d->work);
- 			goto out;
- 		}
- 
-@@ -898,6 +899,9 @@ aoecmd_sleepwork(struct work_struct *work)
- {
- 	struct aoedev *d = container_of(work, struct aoedev, work);
- 
-+	if (d->flags & DEVFL_DEAD)
-+		aoedev_downdev(d);
-+
- 	if (d->flags & DEVFL_GDALLOC)
- 		aoeblk_gdalloc(d);
- 
-diff --git a/drivers/block/aoe/aoedev.c b/drivers/block/aoe/aoedev.c
-index 3523dd82d7a00..5f42c1a14b805 100644
---- a/drivers/block/aoe/aoedev.c
-+++ b/drivers/block/aoe/aoedev.c
-@@ -199,8 +199,11 @@ aoedev_downdev(struct aoedev *d)
- 	struct aoetgt *t, **tt, **te;
- 	struct list_head *head, *pos, *nx;
- 	int i;
-+	unsigned long flags;
- 
--	d->flags &= ~DEVFL_UP;
-+	spin_lock_irqsave(&d->lock, flags);
-+	d->flags &= ~(DEVFL_UP | DEVFL_DEAD);
-+	spin_unlock_irqrestore(&d->lock, flags);
- 
- 	/* clean out active and to-be-retransmitted buffers */
- 	for (i = 0; i < NFACTIVE; i++) {
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 8e1fbdd3bff10..8e1d00efa62e5 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -4481,6 +4481,10 @@ static bool ieee80211_accept_frame(struct ieee80211_rx_data *rx)
+ 		if (!multicast &&
+ 		    !ether_addr_equal(sdata->dev->dev_addr, hdr->addr1))
+ 			return false;
++		/* reject invalid/our STA address */
++		if (!is_valid_ether_addr(hdr->addr2) ||
++		    ether_addr_equal(sdata->dev->dev_addr, hdr->addr2))
++			return false;
+ 		if (!rx->sta) {
+ 			int rate_idx;
+ 			if (status->encoding != RX_ENC_LEGACY)
 -- 
 2.39.5
 
