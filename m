@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5B223F403;
-	Tue, 24 Jun 2025 04:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC106221F34;
+	Tue, 24 Jun 2025 04:12:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738350; cv=none; b=A7CRx+z5IK5vbHFnXBtvgt0qCGqUGh5+folYpRUNBok2G7KUnua5zKn9AXvXIC5OWP6Y+jNttXIoiqp1pIbcIBiUTFZVS7KyNrBdSA30tX3oW7RQdvS0BI7QExoVBTQsuCs6zdmMENiaD1denBa9nwZlkldYGyh2Phxj95hIYTM=
+	t=1750738350; cv=none; b=VddJ6KS00DZ/m6CRnq0jFGSIx8JE+vPu1uRsa7h9uQRHzPYiVSBkLNMJ2a96nXmdTN/Xhijy8gGHHATDnu0pcE8D8L4T25PpwaMAKphpP3+aLM6oudtCzXyuTOfu0TO26XUgaYA2t29kUDCMY3aVAbgo2vxbl0dLIp2MZfdNHPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750738350; c=relaxed/simple;
-	bh=sH3vRoaOSi6MTBstpeXTwEWv3dzl/srJe5I4I8EVJ3w=;
+	bh=n4rP5SHDSPoMWzPQ927lPKIYCEIu1fqSCSrktOkv3e8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=C2wzo0PxQil3/OASr/ODZpUBoR+BBzDvmdnVA3PCdM02pE3GFY0/RQS12E1J784x6FEyyrXIAE8EA0z/aKzH/nen/YN2n47jhcSoVnMIDJ0XQJU+mmP5HHSob0h2zHezrby40mNb35cZMK6IxIZoC9Wt1lP400sv4oITa9Orgpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RiaafrJJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=M/zAlaK0T85K/xVbC6jfTqUY4T505BBajVPXg+TPDaxSSlRfYgvtlKH/s9jU0Fljgsn2wjKu2ccqA/zcP/N1or2+403tr4W09eFKo+KMyHWw8B9Zt6lByr16fa4Ft6vEACU2oiK1aAeFB4RvHh+4UsdZSRCvTYGPz73Tnztvo1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lc+iYBCJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RiaafrJJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D128C4CEEF;
-	Tue, 24 Jun 2025 04:12:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lc+iYBCJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C176C4CEF2;
+	Tue, 24 Jun 2025 04:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738349;
-	bh=sH3vRoaOSi6MTBstpeXTwEWv3dzl/srJe5I4I8EVJ3w=;
+	s=k20201202; t=1750738350;
+	bh=n4rP5SHDSPoMWzPQ927lPKIYCEIu1fqSCSrktOkv3e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RiaafrJJeZYaQeZyHdjWibHBgEtdPG/walWGnwRomyMnGCn1DRGKkzvG+j/dtl151
-	 S7QIhxwt1yXkI9D7bjhxM2Zx0DNKSPKis5LY++lexkJ7AkpPffYnc6Qb5YteuvQa04
-	 QE7VCVi4744hxn17gUpmnyEU7PlHYHi8DDdnJD2EatOp8PlVcRe+q7lEeNgqDaS8eJ
-	 YhtShnC8669U4UY+k5SvWmgX2ySD4HcyfOfuPT/GGstKphzwYRB8ca8JtKIBK5AxSc
-	 xmjNCBD8dAFJOyg2U/+cN9QezgiWStz7ZF28gkbh8AhDxI+Z/cgqR2xiKiG323WOZQ
-	 2FDiDECbo2b9Q==
+	b=Lc+iYBCJHg7SwuFvnBPY4085k5lcKucDn6KKbW4g5I6CkZ9vLl6a0oY0HYOxTF7T0
+	 +aMwsznEQMJInRGEusy3Cp/X+WmXKCXPELJM/MJ9t5qRw53zLiNHDH2j1MCGO9QxNg
+	 u83RpoMuGfwa+JlGm2jrePKagkJcWiOj//fZ6lYjJbDcW9Y6Yol0rMGSqa5K47nrVr
+	 dW56Eq4dayhOi65gSsH5GkupQT1lWDGu+ylf4NY/G/CYATZ2dcvpczt12ruxKcWC5W
+	 7zGepnrdStLmIMqevIRQ+vvJPLq+LJpAeQlJo3ODpTZTtCPTTzJuHqxocwtYb5QDgZ
+	 mYrPVebTrc+5Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maurizio Lombardi <mlombard@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	John Meneghini <jmeneghi@redhat.com>,
-	"Martin K . Petersen" <martin.petersen@oracle.com>,
+Cc: Justin Sanders <jsanders.devel@gmail.com>,
+	Valentin Kleibel <valentin@vrvis.at>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-scsi@vger.kernel.org,
-	target-devel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 12/18] scsi: target: Fix NULL pointer dereference in core_scsi3_decode_spec_i_port()
-Date: Tue, 24 Jun 2025 00:12:08 -0400
-Message-Id: <20250624041214.84135-12-sashal@kernel.org>
+	justin@coraid.com
+Subject: [PATCH AUTOSEL 6.6 13/18] aoe: defer rexmit timer downdev work to workqueue
+Date: Tue, 24 Jun 2025 00:12:09 -0400
+Message-Id: <20250624041214.84135-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041214.84135-1-sashal@kernel.org>
 References: <20250624041214.84135-1-sashal@kernel.org>
@@ -51,116 +49,169 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.94
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Justin Sanders <jsanders.devel@gmail.com>
 
-[ Upstream commit d8ab68bdb294b09a761e967dad374f2965e1913f ]
+[ Upstream commit cffc873d68ab09a0432b8212008c5613f8a70a2c ]
 
-The function core_scsi3_decode_spec_i_port(), in its error code path,
-unconditionally calls core_scsi3_lunacl_undepend_item() passing the
-dest_se_deve pointer, which may be NULL.
+When aoe's rexmit_timer() notices that an aoe target fails to respond to
+commands for more than aoe_deadsecs, it calls aoedev_downdev() which
+cleans the outstanding aoe and block queues. This can involve sleeping,
+such as in blk_mq_freeze_queue(), which should not occur in irq context.
 
-This can lead to a NULL pointer dereference if dest_se_deve remains
-unset.
+This patch defers that aoedev_downdev() call to the aoe device's
+workqueue.
 
-SPC-3 PR SPEC_I_PT: Unable to locate dest_tpg
-Unable to handle kernel paging request at virtual address dfff800000000012
-Call trace:
-  core_scsi3_lunacl_undepend_item+0x2c/0xf0 [target_core_mod] (P)
-  core_scsi3_decode_spec_i_port+0x120c/0x1c30 [target_core_mod]
-  core_scsi3_emulate_pro_register+0x6b8/0xcd8 [target_core_mod]
-  target_scsi3_emulate_pr_out+0x56c/0x840 [target_core_mod]
-
-Fix this by adding a NULL check before calling
-core_scsi3_lunacl_undepend_item()
-
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Link: https://lore.kernel.org/r/20250612101556.24829-1-mlombard@redhat.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Reviewed-by: John Meneghini <jmeneghi@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=212665
+Signed-off-by: Justin Sanders <jsanders.devel@gmail.com>
+Link: https://lore.kernel.org/r/20250610170600.869-2-jsanders.devel@gmail.com
+Tested-By: Valentin Kleibel <valentin@vrvis.at>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-I see now! If we look at the error path, when
-`core_get_se_deve_from_rtpi()` returns NULL (line 1667), the code jumps
-to `out_unmap` at line 1675. However, there could be existing entries in
-the `tid_dest_list` that were already added before this failure.
-
-The commit shows the stack trace mentions "SPC-3 PR SPEC_I_PT: Unable to
-locate dest_tpg" which actually happens at line 1641, and then jumps to
-`out_unmap` (line 1644).
-
-In this case, any tidh entries in the list would have `dest_se_deve =
-NULL` because the failure happens before `dest_se_deve` is even
-assigned.
+Based on my analysis of the commit and the kernel repository context,
+here is my determination:
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive explanation:
 
-1. **It fixes a real NULL pointer dereference bug**: The commit
-   addresses a kernel crash that occurs when
-   `core_scsi3_lunacl_undepend_item()` is called with a NULL
-   `dest_se_deve` pointer. The function dereferences the pointer at line
-   1453 (`if (!se_deve->se_lun_acl)`) without checking for NULL, causing
-   a crash.
+## 1. **Critical Bug Fix for Kernel Crash/Hang**
 
-2. **The bug affects normal error handling paths**: This crash occurs
-   during error handling in the SCSI target subsystem when processing
-   PERSISTENT RESERVE OUT commands with SPEC_I_PT (Specify Initiator
-   Ports). When certain lookups fail (like "Unable to locate dest_tpg"),
-   the error cleanup path can have NULL `dest_se_deve` values in the
-   tid_dest_list.
+The commit fixes a serious "scheduling while atomic" bug that can cause
+kernel crashes. The issue occurs when:
+- The `rexmit_timer()` function (timer callback, runs in softirq
+  context) detects a device timeout
+- It directly calls `aoedev_downdev()` which contains
+  `blk_mq_freeze_queue()` - a sleeping operation
+- Calling a sleeping function from atomic context violates kernel rules
+  and causes crashes
 
-3. **The fix is minimal and safe**: The fix simply adds a NULL check
-   before calling `core_scsi3_lunacl_undepend_item()`:
-  ```c
-  if (dest_se_deve)
-  core_scsi3_lunacl_undepend_item(dest_se_deve);
-  ```
-  This is a defensive programming practice that prevents the crash
-  without changing the logic flow.
+## 2. **Clear Root Cause and Minimal Fix**
 
-4. **The fix is confined to error handling**: The change only affects
-   the error cleanup path and doesn't modify the normal operation flow,
-   minimizing the risk of regression.
+The fix is minimal and targeted:
+- Adds a new flag `DEVFL_DEAD` to mark devices that need to be downed
+- Instead of calling `aoedev_downdev()` directly from timer context, it
+  sets the flag and queues work
+- The actual `aoedev_downdev()` call happens in workqueue context where
+  sleeping is allowed
 
-5. **Similar to other backported fixes**: Looking at the similar
-   commits, commit #3 (qla2xxx NULL pointer fix) and commit #5
-   (rt5514-spi NULL pointer fix) were both backported and had similar
-   characteristics - they were simple NULL pointer checks that prevented
-   crashes.
+## 3. **Part of a Series Fixing Related Issues**
 
-6. **Production impact**: NULL pointer dereferences in kernel code lead
-   to kernel panics, which can cause system crashes and data loss. This
-   is particularly important for storage-related code where reliability
-   is critical.
+This is part of a series addressing bugzilla #212665, including:
+- This commit: Fixes the timer context sleeping issue
+- Commit 7f90d45e57cb: Fixes the hang in `blk_mq_freeze_queue()` by
+  properly cleaning request lists
 
-The commit follows the stable tree rules by fixing an important bug
-(kernel crash) with minimal risk and without introducing new features or
-architectural changes.
+Both commits are needed to fully resolve the reported issue.
 
- drivers/target/target_core_pr.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+## 4. **Regression from blk-mq Conversion**
 
-diff --git a/drivers/target/target_core_pr.c b/drivers/target/target_core_pr.c
-index 49d9167bb263b..a9eb6a3e83834 100644
---- a/drivers/target/target_core_pr.c
-+++ b/drivers/target/target_core_pr.c
-@@ -1841,7 +1841,9 @@ core_scsi3_decode_spec_i_port(
+The issue was introduced by commit 3582dd291788 ("aoe: convert aoeblk to
+blk-mq"), making this a regression fix. The blk-mq conversion added
+sleeping operations that weren't safe to call from existing timer
+contexts.
+
+## 5. **Similar to Previously Backported Fixes**
+
+Looking at the similar commits:
+- Commit 430380b4637a (fixing atomic sleep in flush) was marked as
+  suitable for backporting
+- It addressed the same class of bug in a different code path
+- This establishes precedent for backporting such fixes
+
+## 6. **Minimal Risk of Regression**
+
+The changes are:
+- Well-contained to the aoe driver
+- Follow established patterns (deferring to workqueue)
+- Don't change any user-visible behavior
+- Only change the execution context of an existing operation
+
+## 7. **Meets Stable Criteria**
+
+According to stable tree rules, this commit:
+- ✓ Fixes a real bug (kernel crash/scheduling while atomic)
+- ✓ Has been tested (per commit message)
+- ✓ Is minimal and targeted
+- ✓ Fixes a regression from previous changes
+- ✓ Has clear explanation and reproducer (bugzilla link)
+
+The only consideration is that it should be backported together with
+commit 7f90d45e57cb to ensure the complete fix for bugzilla #212665 is
+applied.
+
+ drivers/block/aoe/aoe.h    | 1 +
+ drivers/block/aoe/aoecmd.c | 8 ++++++--
+ drivers/block/aoe/aoedev.c | 5 ++++-
+ 3 files changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/block/aoe/aoe.h b/drivers/block/aoe/aoe.h
+index 749ae1246f4cf..d35caa3c69e15 100644
+--- a/drivers/block/aoe/aoe.h
++++ b/drivers/block/aoe/aoe.h
+@@ -80,6 +80,7 @@ enum {
+ 	DEVFL_NEWSIZE = (1<<6),	/* need to update dev size in block layer */
+ 	DEVFL_FREEING = (1<<7),	/* set when device is being cleaned up */
+ 	DEVFL_FREED = (1<<8),	/* device has been cleaned up */
++	DEVFL_DEAD = (1<<9),	/* device has timed out of aoe_deadsecs */
+ };
+ 
+ enum {
+diff --git a/drivers/block/aoe/aoecmd.c b/drivers/block/aoe/aoecmd.c
+index d1f4ddc576451..c4c5cf1ec71ba 100644
+--- a/drivers/block/aoe/aoecmd.c
++++ b/drivers/block/aoe/aoecmd.c
+@@ -754,7 +754,7 @@ rexmit_timer(struct timer_list *timer)
+ 
+ 	utgts = count_targets(d, NULL);
+ 
+-	if (d->flags & DEVFL_TKILL) {
++	if (d->flags & (DEVFL_TKILL | DEVFL_DEAD)) {
+ 		spin_unlock_irqrestore(&d->lock, flags);
+ 		return;
+ 	}
+@@ -786,7 +786,8 @@ rexmit_timer(struct timer_list *timer)
+ 			 * to clean up.
+ 			 */
+ 			list_splice(&flist, &d->factive[0]);
+-			aoedev_downdev(d);
++			d->flags |= DEVFL_DEAD;
++			queue_work(aoe_wq, &d->work);
+ 			goto out;
  		}
  
- 		kmem_cache_free(t10_pr_reg_cache, dest_pr_reg);
--		core_scsi3_lunacl_undepend_item(dest_se_deve);
-+
-+		if (dest_se_deve)
-+			core_scsi3_lunacl_undepend_item(dest_se_deve);
+@@ -898,6 +899,9 @@ aoecmd_sleepwork(struct work_struct *work)
+ {
+ 	struct aoedev *d = container_of(work, struct aoedev, work);
  
- 		if (is_local)
- 			continue;
++	if (d->flags & DEVFL_DEAD)
++		aoedev_downdev(d);
++
+ 	if (d->flags & DEVFL_GDALLOC)
+ 		aoeblk_gdalloc(d);
+ 
+diff --git a/drivers/block/aoe/aoedev.c b/drivers/block/aoe/aoedev.c
+index 3523dd82d7a00..5f42c1a14b805 100644
+--- a/drivers/block/aoe/aoedev.c
++++ b/drivers/block/aoe/aoedev.c
+@@ -199,8 +199,11 @@ aoedev_downdev(struct aoedev *d)
+ 	struct aoetgt *t, **tt, **te;
+ 	struct list_head *head, *pos, *nx;
+ 	int i;
++	unsigned long flags;
+ 
+-	d->flags &= ~DEVFL_UP;
++	spin_lock_irqsave(&d->lock, flags);
++	d->flags &= ~(DEVFL_UP | DEVFL_DEAD);
++	spin_unlock_irqrestore(&d->lock, flags);
+ 
+ 	/* clean out active and to-be-retransmitted buffers */
+ 	for (i = 0; i < NFACTIVE; i++) {
 -- 
 2.39.5
 
