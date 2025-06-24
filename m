@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19079221DB3;
-	Tue, 24 Jun 2025 04:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338C7221DB3;
+	Tue, 24 Jun 2025 04:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738294; cv=none; b=NDRplFCaIv0A/E43fzYoiFHdyiB5jJaH2tDdcUSfjZuqYTkqBCPYFQh2ykTYQ5XTnaqlrn6OE1pPY8eFST5aAE8iLlWhVdniAzkb0azOxX1baJN+H1JtSjmkShNpRn0i/5SRFmcxQEYwcolIBwY1R58+IAU2PIzRKyfgumneaFM=
+	t=1750738298; cv=none; b=Lc4O+q3eS2R25adYwQN4/rvs5VDyXFDxEB4Y/BMufxezL0Ocv3ogtRbUMm4WRV2vdc7BEZPYn/pK3/4Ra4SM+/d94ObIcZJBCb5MVovfk9u4/XAMYiKr7M286nGo1hwkXqmnyfKLuDfS5OOGdif1teg6Wk4/3I4vznaEtIAtEwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738294; c=relaxed/simple;
-	bh=EnoerV/xxx91jhOZdHJKKtLWyi7IcO86p6wzJFGUMZc=;
+	s=arc-20240116; t=1750738298; c=relaxed/simple;
+	bh=ogJzCtbdZDyQ8mP1cKnPHiwakfVCOJh4f6N35C/rkvg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=aBNNIUcXffFdlXkQ7l6TJX2q3wZP3yhBMe/mLefbmSjtdXOAStPzSU3Fe4oshO1KUIws25C/97VHhZ8BatGoj2jKzPS34eDDtLsuLtQK9JC2IAtP7dxu0tphaIBXM5tBUuAF/9EGFB5VUfJRebbchg4IrjHBWlVANpfXbL0F24g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=um3I8FlZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MgV3q0UXqvf1idNCIWEV/1f1UYrYJU/rY3IaWCoaKVAUGoKx0NQymHmIqdsIY6Fl6bRrtlgOx3SR3q+itpcSx1ujd4ehs3DdGnCVGOVUU8YNeaHpiNTdJZw2IIZn0Mu2mklPez7E28BThF9qhDLfBsx1Y7qw9iRXPES7d6WrHtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iy+Vr2LK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="um3I8FlZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F921C4CEEF;
-	Tue, 24 Jun 2025 04:11:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iy+Vr2LK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8C6C4CEF2;
+	Tue, 24 Jun 2025 04:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738293;
-	bh=EnoerV/xxx91jhOZdHJKKtLWyi7IcO86p6wzJFGUMZc=;
+	s=k20201202; t=1750738298;
+	bh=ogJzCtbdZDyQ8mP1cKnPHiwakfVCOJh4f6N35C/rkvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=um3I8FlZWLvpQ1qgMe0+2y9cM4f6x+6T+pn8fkv2GBQmfZKLtiQaIgYavui5rqLQW
-	 YqLqTZCwzEunS+YqZrMk1lWfFPARJNs0U8I3K4Dz9l7CT3vA2nr5BAXyWPy1w8/4bU
-	 YaXuy6Nwb3BGJ40RNQk5zsrSGEbvbCgXjcz5CrCWkORfPkG6E3DmY7lvmgiYcxRYWe
-	 TfvIiR4HILL9hBUGI2Ppy1LSXxErXV9d3H0TgcpAskAa+8+P+wRpZ3ebBUWnRev9DI
-	 lz+K7ty6WqfPmdFMPDU5FpO84ppu9fcGKqXIw/H3uw9EiG2i/BXzuAxXrP0v04BhRM
-	 oxRSLWKCQox/A==
+	b=Iy+Vr2LK+VBbYGFW/GxAfDOkIMA+GzXLjGEldXuk3rsNLBoZ4NM0ozx5zUn612NYC
+	 h7vYNdxXQlIBSIOoXGN6bvBzQP7grj9El+HRwuYdZJvpuqV75pGyWDfFq4VzMt2uVd
+	 DcgOYufOSzQUy727fZKripfSsa2JDB9bp3kKCLnJXrzRJdpnpvGsWcheuEUAOjOzrF
+	 J+5OpGtSA0yxKThdAjKZdMZibilMOb2NrBPBN4qBWBzE9vQl57avqLoC7gbHtlaf0Z
+	 o04mvpqcYEgLz6vxCgpEaEBZ+0RSX9ZfHZzM77NcahlNw/y5i40no3OmW/rV45o0Xe
+	 xnRAEwGmHAFjg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Gyeyoung Baek <gye976@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+Cc: Raven Black <ravenblack@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linus.walleij@linaro.org,
-	bartosz.golaszewski@linaro.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 10/20] genirq/irq_sim: Initialize work context pointers properly
-Date: Tue, 24 Jun 2025 00:11:09 -0400
-Message-Id: <20250624041120.83191-10-sashal@kernel.org>
+	mario.limonciello@amd.com,
+	venkataprasad.potturu@amd.com,
+	tiwai@suse.de,
+	talhah.peerbhai@gmail.com
+Subject: [PATCH AUTOSEL 6.15 12/20] ASoC: amd: yc: update quirk data for HP Victus
+Date: Tue, 24 Jun 2025 00:11:11 -0400
+Message-Id: <20250624041120.83191-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250624041120.83191-1-sashal@kernel.org>
 References: <20250624041120.83191-1-sashal@kernel.org>
@@ -50,109 +51,115 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.3
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gyeyoung Baek <gye976@gmail.com>
+From: Raven Black <ravenblack@gmail.com>
 
-[ Upstream commit 8a2277a3c9e4cc5398f80821afe7ecbe9bdf2819 ]
+[ Upstream commit 13b86ea92ebf0fa587fbadfb8a60ca2e9993203f ]
 
-Initialize `ops` member's pointers properly by using kzalloc() instead of
-kmalloc() when allocating the simulation work context. Otherwise the
-pointers contain random content leading to invalid dereferencing.
+Make the internal microphone work on HP Victus laptops.
 
-Signed-off-by: Gyeyoung Baek <gye976@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250612124827.63259-1-gye976@gmail.com
+Signed-off-by: Raven Black <ravenblack@gmail.com>
+Link: https://patch.msgid.link/20250613-support-hp-victus-microphone-v1-1-bebc4c3a2041@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees, specifically to
-the v6.11 stable series and any newer stable branches.
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-## Detailed Explanation:
+## Analysis of the Commit
 
-### 1. **Critical Bug Fix**
-The commit fixes a serious uninitialized memory bug. The code change
-from `kmalloc()` to `kzalloc()` is critical because:
+### 1. **Nature of the Change**
+The commit adds a simple DMI (Desktop Management Interface) quirk entry
+to enable the internal microphone on HP Victus Gaming Laptop 15-fb2xxx.
+The change consists of adding just 7 lines to the `yc_acp_quirk_table[]`
+array:
 
 ```c
-// Before (buggy):
-struct irq_sim_work_ctx *work_ctx __free(kfree) =
-    kmalloc(sizeof(*work_ctx), GFP_KERNEL);
-
-// After (fixed):
-struct irq_sim_work_ctx *work_ctx __free(kfree) =
-    kzalloc(sizeof(*work_ctx), GFP_KERNEL);
++       {
++               .driver_data = &acp6x_card,
++               .matches = {
++                       DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++                       DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming
+Laptop 15-fb2xxx"),
++               }
++       },
 ```
 
-### 2. **The Bug Impact**
-The `irq_sim_work_ctx` structure contains an `ops` member with function
-pointers:
-- `ops.irq_sim_irq_requested`
-- `ops.irq_sim_irq_released`
+### 2. **Comparison with Similar Commits**
+All 5 historical similar commits provided were marked as "Backport
+Status: YES" and share identical characteristics:
+- Same file modified (sound/soc/amd/yc/acp6x-mach.c)
+- Same type of change (adding DMI quirk entries)
+- Same purpose (enabling internal microphone on specific laptop models)
+- Similar commit messages mentioning microphone support
+- All are HP laptop models (except one MECHREVO)
 
-When `irq_domain_create_sim_full()` is called with `ops=NULL` (which
-happens when using the older `irq_domain_create_sim()` API), these
-pointers are left uninitialized with random memory content.
+### 3. **Meets Stable Backport Criteria**
 
-### 3. **Potential Consequences**
-The uninitialized pointers are checked in:
-- `irq_sim_request_resources()`: `if
-  (work_ctx->ops.irq_sim_irq_requested)`
-- `irq_sim_release_resources()`: `if
-  (work_ctx->ops.irq_sim_irq_released)`
+**✓ Fixes a real bug affecting users**: Without this quirk, the internal
+microphone on HP Victus Gaming Laptop 15-fb2xxx doesn't work, which is a
+functional regression for users of this hardware.
 
-If these random values are non-zero, the kernel will attempt to call
-garbage function pointers, leading to:
-- **Kernel crashes/panics**
-- **Security vulnerabilities** (jumping to arbitrary memory)
-- **Unpredictable behavior**
+**✓ Small and contained change**: The patch is minimal - only 7 lines
+adding a DMI match entry to an existing quirk table. No logic changes,
+no new features.
 
-### 4. **Simple and Safe Fix**
-The fix is minimal (changing one function call) with no side effects:
-- `kzalloc()` guarantees all fields are zero-initialized
-- This ensures function pointers are NULL when not explicitly set
-- No performance impact (negligible difference for a one-time
-  allocation)
+**✓ No architectural changes**: This is a simple hardware enablement
+quirk, not modifying any kernel architecture.
 
-### 5. **Affected Versions**
-Based on my repository analysis:
-- The bug was introduced in v6.11-rc1 (commit 011f583781fa)
-- Only kernels v6.11 and newer are affected
-- The fix should be backported to v6.11.y stable series
+**✓ Minimal risk of regression**:
+- The change only affects systems that match the specific DMI strings
+- Cannot affect other hardware configurations
+- Uses the same `acp6x_card` driver data as other entries
+- Pattern is well-established in the codebase
 
-### 6. **Missing Fixes Tag**
-The commit should have included:
-```
-Fixes: 011f583781fa ("genirq/irq_sim: add an extended irq_sim
-initializer")
-```
+**✓ Hardware enablement**: This is pure hardware enablement for audio
+functionality, which is a common reason for stable backports.
 
-This is a textbook example of a commit that meets stable backport
-criteria:
-- Fixes a real bug that can cause crashes
-- Small, contained change
-- No new features or architectural changes
-- Clear bugfix with minimal regression risk
+### 4. **Technical Safety**
+The code change:
+- Adds to an existing array without modifying existing entries
+- Uses standard DMI matching infrastructure
+- Follows the exact same pattern as dozens of other entries in the same
+  table
+- The `acp6x_card` structure is already defined and used by many other
+  entries
 
- kernel/irq/irq_sim.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+### 5. **User Impact**
+Users of HP Victus Gaming Laptop 15-fb2xxx running stable kernels would
+benefit from having their internal microphone work correctly without
+waiting for the next major kernel release.
 
-diff --git a/kernel/irq/irq_sim.c b/kernel/irq/irq_sim.c
-index 1a3d483548e2f..ae4c9cbd1b4b9 100644
---- a/kernel/irq/irq_sim.c
-+++ b/kernel/irq/irq_sim.c
-@@ -202,7 +202,7 @@ struct irq_domain *irq_domain_create_sim_full(struct fwnode_handle *fwnode,
- 					      void *data)
- {
- 	struct irq_sim_work_ctx *work_ctx __free(kfree) =
--				kmalloc(sizeof(*work_ctx), GFP_KERNEL);
-+				kzalloc(sizeof(*work_ctx), GFP_KERNEL);
- 
- 	if (!work_ctx)
- 		return ERR_PTR(-ENOMEM);
+This commit is an ideal candidate for stable backporting as it's a
+minimal, safe hardware enablement fix that follows well-established
+patterns in the codebase.
+
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 9ce4339680e35..dce17f0bfab9e 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -507,6 +507,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16z-n000"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming Laptop 15-fb2xxx"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.39.5
 
