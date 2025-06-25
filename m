@@ -1,599 +1,184 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2084.outbound.protection.outlook.com [40.107.94.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CD42BDC2E
-	for <patches@lists.linux.dev>; Wed, 25 Jun 2025 11:12:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750849931; cv=none; b=qo9xIIlQUjFlBNN6cBqiTJn8adCWm1nrhDVIPX30KP2POrkmMLT7f8gclZqP+KC7SB/bNUJ7WNPKxCYFuvk3s4Zlh7HzsHktKaJw3uv/NuL5RqZkb31uQpT1JA6tCLXIDnUr/dCYhC0BUR9aigGxWvH3m/mWWUNBGbmdEE9eM5Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750849931; c=relaxed/simple;
-	bh=MTlM6vMRwqv+uHu3nWGtqbZ3uMZfL48tTQ905Pa8zM0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=DDrU/EdCGC7pgaL0OUH/Klkoo/g0RVV8FjgDeuq1Zpkn2c9dutR9bPYAVOfvkyjGuHEjLYP/ibKsFOQ+3QXCqHLMDCyGFAwEdggYj03r5JwvMvNI4QXc5f4CHyou/9hJnxf0vm74XM7Z9m0pFA6Q5UansgpQbgcSyIEs6RNH6Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g61K9Bw5; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB479214209
+	for <patches@lists.linux.dev>; Wed, 25 Jun 2025 11:36:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.84
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1750851375; cv=fail; b=EZgmkoi59VNI0i9iKbI58vx4ZP2MkQ3BJtwOGRv1582Y4OxCpQqKQIN1ynTl23/oxPCfjzrASSeL6iRpxjPCbtt22UTmaR5hog1Ar+70UqgCHt57l7mkIMpR3TzSMLakRQPqzeEuG8tBU7+CiVcMadSctr3hwt2I8g0HsZT3A24=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1750851375; c=relaxed/simple;
+	bh=gR0IAnZRnUl3YE7yzAUTY40PeCA5UG1hy9mBbRo5U+o=;
+	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID:Date; b=nuqRmZ3QC9hCntPY+svpOiBvnMzQsWHKKL6DTTSzruTuOw3Jg/Jq4F0TmvOuUZkvROrSnOrvp3Xbv+C9SSl5VliUahF2UT93yB6O68zISHD6yqSv1gqe4G5pm7kQzBz8gSqathmEmT0P20wtpdZLzWjP1wIjBiVB0bhtAMz5UKc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=lxvMo0F4; arc=fail smtp.client-ip=40.107.94.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g61K9Bw5"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-7490cb9a892so695600b3a.0
-        for <patches@lists.linux.dev>; Wed, 25 Jun 2025 04:12:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750849929; x=1751454729; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lSEckj8RWfEPJ9gxxRoiQK/w0X9kSfI3L2wiTsQ12M0=;
-        b=g61K9Bw5qrmRO6y2eozNXbkVxGR9KV8IiGzOFgPjrt220I+0rqcZ41wDx1yvdBVYLK
-         69U4KVYbtnlrr1viwp7/Cu3iJofRxojdI/no/55AbvdYzAJSeIJULuwHWDkTcCaflhcR
-         /Vc5P1tVMYrLvuE7NxtOCu83281qFRmsiObx7AyhMqi+yrERG2LVNnlNveskq2pCAPRB
-         ZrFUjFLtxlDMu8I1pL4nV2V69Ea/ecpzJtSwWjfQ+letyisALfhuGY7EXQmOql6nYVS9
-         nYRJwwfmpKaOB3VY2gulnn51khr4iyrdvR/TDYrxg1iQOyOs9CHBTheu2KWANmCmrhV4
-         uRhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750849929; x=1751454729;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lSEckj8RWfEPJ9gxxRoiQK/w0X9kSfI3L2wiTsQ12M0=;
-        b=Q+hvwDNoQPETe+zgdfOFvVKMa/pChvKQc0k3Blt8uS3jT2wHIkxZo/RUCgNduFdKr1
-         uMni2CQPowF6ORt3AaNIdUvZ3+VGyYd+nRaEV264acZfcsx8XiNUsyPvNVmyTlI0ZXh3
-         qpYtYJO6+TRiN3DfoTEQSScpjRqWpDG1XOx9CTzwN0sr20fdX1eqBDzLrUULFEd0YhvL
-         8SUA3+8pUbuvLhYi9S5QPnGD8+QLnUJGvZHGvTiA038XRvc25igJaUKK3J6XsDDqHhS2
-         cci9V2ryxPzz5iNbeish7g1X0gAGRFMBGTr82cPum/J9KFDmt+LlQHbsBVqLvpYeUolb
-         UugQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXgpJu1upKvKUHy3DqLUU06UIbcZ6csfKcPAFI6z+JcJ9Pk8S6T2BFkTcrspZ604D5r7mv+8nGy@lists.linux.dev
-X-Gm-Message-State: AOJu0YznfUUn4u0NqLTLJjzRI9Nylar12zhEK2JHrFqUIBa2cPeYELkT
-	iA/dr/V1oKPJTW5nWsB2mzTVlsFTGh6KMyME3SMl/VLCohN9F4AaFVtKh0RdMeDm
-X-Gm-Gg: ASbGncu/SNpSNtKN6sB6XBLMg9qPpaTRIQzZRGLsXStf9xdXQt1rivpfA93M8GJ8pB1
-	f1IXQIGwbDii/4SZ4QN3brrJO0qWGRtOGy1eehfOGD/m2WfYdxe36Vq4ScU/BqB38dNdplLNMXY
-	kwHrBl6wU4Jm6BiQhKJV0bG7IfsjwY6n+Jv2ienxS3QLmuqrkG3JDwpYjhHyHGcSlk1B9pyzNXR
-	lsw7MlTBkNHZn7nY4DFc+stoHB/lsPd/d2iEGFDWzSv6LM4C2BQfU1E5iYTo3bgvaJ8YOrYeVCe
-	/Iz9MtFSSSgjD+Sg+fwGjz8OBf3DvXyrwhD3VOHU6UpyGEk6/2eanLG3bju+uajj6P2x7Bx0OnK
-	Yk94+
-X-Google-Smtp-Source: AGHT+IEuJpzcoZ26pcXha9u5QvfHSftxtVoQ3ay6tMjWt/cJfs+b3/Al20QIkANTOR9bB6ds5sBW/Q==
-X-Received: by 2002:a05:6a20:448f:b0:215:eac9:1ab3 with SMTP id adf61e73a8af0-2207f2a225fmr5499491637.29.1750849928596;
-        Wed, 25 Jun 2025 04:12:08 -0700 (PDT)
-Received: from shankari-IdeaPad.. ([2409:4080:10:4ef8:7bae:5763:c10a:8810])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b34aabc3842sm2561417a12.50.2025.06.25.04.12.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jun 2025 04:12:08 -0700 (PDT)
-From: Shankari Anand <shankari.ak0208@gmail.com>
-To: linux-kernel@vger.kernel.org,
-	rust-for-linux@vger.kernel.org,
-	patches@lists.linux.dev
-Cc: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Shankari Anand <shankari.ak0208@gmail.com>
-Subject: [PATCH v2 2/2] rust: update ARef and AlwaysRefCounted call sites to import from sync::aref
-Date: Wed, 25 Jun 2025 16:41:33 +0530
-Message-Id: <20250625111133.698481-2-shankari.ak0208@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250625111133.698481-1-shankari.ak0208@gmail.com>
-References: <20250625111133.698481-1-shankari.ak0208@gmail.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="lxvMo0F4"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cBjRDzMgY/qBqAfw1as/sppf/Pr0YlZ+bQghPfQqUoH8LoRed0/jfdcyg3DSzFHSnlXJ/hTmo+sKDcR4ErHTpCG6/SKLd35oqakjt8xeU3czdOXYMQvK2koHMCaKcYngZm7Hl3R5IxP+Ij6Kxl/0RFY4r6R88ux2E1nOB7UJciH3hF90s7Xjr+rnZq1BXfTnVrN/sdRgcV8W9jZE0D82l81sR20JeT6MiES7I85g49tXVvXux4wQR2uo6mjkgj/P6jU9unysQCPcG+uzB9JoCO/UP29YJE9A7y2QUOK70aOR7zdI/2aLrCKFghbCqzsH13p+suIBMbwnWaMSEf2ipQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fzw9yC9lfQLtjXfQuxchWlIzGXP0rsijf8nkMljRQU4=;
+ b=AFPfJLccSDFTsGqXEz8dE7f44lJRvViw55ngIbbvavbyhAv+eSNvaXO9E0X7iWTEbjuf/pti1ya/m6ilYoeGZfWR9DSeUi3rwhqs0thkf7CY+CWTgnFE6iCHKj8h7DuVymIkqv7yXso+sg0QesEMJmmjKjApZ3Y0UtJqS4p1SBX5rEajKMQyDo0VBiPdZcgHAqQztdD1Wwgay8OgW32UaBgmSu0vS3UWRPwiW8AbD/lNZ815/ymxW4+T7HfrNtQyn5zwzFUWMe5SA/Uuf3HgrLQJpy4jXi1E1g5nboGJj9t+uceffuTysIRtffWeeZ+yYeNMMKhupH2HOXXdyPpzUQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fzw9yC9lfQLtjXfQuxchWlIzGXP0rsijf8nkMljRQU4=;
+ b=lxvMo0F4lTNNCqEpAWThLqXPw2O3jLrhMU1RBd2uXG6mz4gG1ojzpWwAwy1Yo/7UoS1xnTv6L2VLaRzz9sq8HslAgb/khYnvmNa1nQQ38Y0+gYA92gvzYBaesdGCENVWmwTYs95FSfcNT9W7FoJLWR2FL5Ryxd93Qk39iWzC7TEfNZjA4+D6J48eol3qPfc4tN56jms9UmPWU3lZaNCHxc9Z3mcZhg2uwFBGy3yQ4dVGu0/UNOEb/FWy0m+elDrH4+DXifvbWBTngMyfKt2cHd8AWkTiUL6c7V2uETpjraXZd4JeFU+EVxTNii2C8ijwEUh7vxyCHEFDXsvPTgYQQA==
+Received: from MW4P222CA0015.NAMP222.PROD.OUTLOOK.COM (2603:10b6:303:114::20)
+ by SJ1PR12MB6049.namprd12.prod.outlook.com (2603:10b6:a03:48c::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.28; Wed, 25 Jun
+ 2025 11:36:10 +0000
+Received: from CO1PEPF000044EF.namprd05.prod.outlook.com
+ (2603:10b6:303:114:cafe::87) by MW4P222CA0015.outlook.office365.com
+ (2603:10b6:303:114::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8880.17 via Frontend Transport; Wed,
+ 25 Jun 2025 11:36:10 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ CO1PEPF000044EF.mail.protection.outlook.com (10.167.241.69) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8880.14 via Frontend Transport; Wed, 25 Jun 2025 11:36:09 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 25 Jun
+ 2025 04:35:58 -0700
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Wed, 25 Jun 2025 04:35:58 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Wed, 25 Jun 2025 04:35:58 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <hargar@microsoft.com>,
+	<broonie@kernel.org>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 5.4 000/215] 5.4.295-rc2 review
+In-Reply-To: <20250625085227.279764371@linuxfoundation.org>
+References: <20250625085227.279764371@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-ID: <b9b7fb8b-9489-4150-8ab0-5267a5be2321@drhqmail203.nvidia.com>
+Date: Wed, 25 Jun 2025 04:35:58 -0700
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000044EF:EE_|SJ1PR12MB6049:EE_
+X-MS-Office365-Filtering-Correlation-Id: b988344d-3b00-4255-56a0-08ddb3dc7b50
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|376014|7416014|36860700013|1800799024|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?czNFL3B0M3kvbnYyaldNdXFNWDBQSUpETUpUVE5POHppRFJ2T3NReHM5L1FX?=
+ =?utf-8?B?VXZXby9qU29BMi9nQ2ZlbTJ5S0Y2OHlNZndPTTF1TUplOThqUDRBaE14bG5r?=
+ =?utf-8?B?TmhnT016ZzBweDEwZ1BRUXpIek5sY1F2TnNEcjd5Qk5uWDBmNkJvTVVFUjhE?=
+ =?utf-8?B?WkVTQWRKN3dLVVpXc1RrSkpTcjBJN3dQeUI0QW5mdHZDemFsUVN1L1JPeFhu?=
+ =?utf-8?B?d2xxN1JlZXdkdDg4YXlDR05iY2R3ck9IOFZXOG5IaGdHdmRkRk5pTllIcFZn?=
+ =?utf-8?B?eEx5a3VIWHgvNDB4bHN5NjV5Y05sY3plRkgvbHgzOW1ObVI4RkNhMmszMmVI?=
+ =?utf-8?B?UzhlTHBzR0QyUEZiQnhLcjFBeUozY3BwZzdZUkRKZ29xbDRSS0szYnYwVXJo?=
+ =?utf-8?B?MHBxV2pIS2JRZEMwUE9QR2Rjbzg2R0xuekFDRjllSUNBYzNIV3VIcU4zZmdv?=
+ =?utf-8?B?VVVkSXEvMnJuTUZUeVl5bmdJUnloREwySlpMUmhEeklkSmZIM0tJek1CY1o3?=
+ =?utf-8?B?c3h1cUpmbXFDMXFsWXB3dXVmSzZ1bnZWVEg4b0w0eHFCN1c0NlhKSjV5Z3dP?=
+ =?utf-8?B?NWtZUmR0NVk3T0ROSTBjNGNJL0NwK2JRMzU1NW9WWEEycVp1SE10TERpSmJw?=
+ =?utf-8?B?Nld6K2hNYXFscWRPTVdzdFEwYm13QVRVZkxWSHJJb2tuaDNicDdDcHJsV2gv?=
+ =?utf-8?B?amwvbEhnTmdJSjhHMlRKU0RlQ0s2U0RZTGt0R3lueHB1UE1kZVY0K3NFRUpE?=
+ =?utf-8?B?RE4vM2E5NUhhM3AvcjE3Sm1QSFBTY0c4bEFFc3VPM3dYb0FEbVJCNSt2T3Ny?=
+ =?utf-8?B?VWNXUURXd24xMEd2NFhUaElZWmlra2pxeWNXayswOWRqa3BvaVVsWk5ubUo4?=
+ =?utf-8?B?aEN1ZlF6SzBETG43d2ZwYW9nbWRjUnZjZVY4RWswZkdvVDM5dG0rS0JIQ3g3?=
+ =?utf-8?B?WUo3dEpxVDFwdXZ4N08rNzdXNWJxMngzMUtNNVV3cDVkT0MreVFpK1BSWlBv?=
+ =?utf-8?B?YXc5enhIeW44VUpmV0hWZ3prckErdWtobHkvZE11U2l5T0M5SGdXdmdRbGhp?=
+ =?utf-8?B?YkpKOWdhNHExaDVLcU9Zc2haU0V6VTg3b0EwWjV2ZGJPWlNHSTZMS09kbmlV?=
+ =?utf-8?B?SHRDUTZhaGVia2xwWUJKYmtEdEM0bytSRlVidEZiVk9ZaklUbXIrZGdlN0Fw?=
+ =?utf-8?B?QmJZZDRRUkJoanY3bVFXSG52SllacUNRNEdOMG9BSVlJb1JVaHBuN213QzMw?=
+ =?utf-8?B?cUZ6UGlOTWRxR1BlTmJSaHVSbG1BVzJublg4Z0J0TFI3R1RqZGZBVytaaDdV?=
+ =?utf-8?B?a2lDQ0NHS3loVGpvckxZV3VhVkh1d1F4c1k0ZS9EZkQxOG9Oclp1RmtiaktJ?=
+ =?utf-8?B?ZWwyM3pnZzIwTFp2Q09uVmxOLzZFV3plMEY2M1RPOWN4YkNVN1B4Z3ZMN3Zq?=
+ =?utf-8?B?WlRhNU0vZU5vTlVUSzVmRTJCYXVvMFBiTU8xNnNMdlJrTnJDRy9DV2o2amZq?=
+ =?utf-8?B?aVRwQXNJczJPMUxvbmFFRjh1bUczelJqdFR0MUtUMDMvVVRkNGVvQ3R2MGo3?=
+ =?utf-8?B?YzY5V3htOWdkMXVkYzNrZ3N1UUhPa2pNYVRuTnFNdEYxa2g2eS96MTMrTzJ4?=
+ =?utf-8?B?RGlJVzduYWFENmRIU1hIb21QaEZlMVdvZUlNWVN6Zlc2WEM1Z0xmSkNxRTFl?=
+ =?utf-8?B?T3Q5SEo3NHZuNWxaZ0VzK2NUYk04NEYyMGcwR2Y2cjAvaFppME9DSHlrNUNk?=
+ =?utf-8?B?OGsra0M4VnNQZWJ1MXRwWVdkMHF2YlFDNVg1UnBxT3U5RUlpWGlqa1B0Um1C?=
+ =?utf-8?B?OEZCMk5OQlBDMkNZUjRtVTlLdithZ1kySGpFWEpoazhvSEZ3ZTlsU1RqSytK?=
+ =?utf-8?B?RU1RaXY0RmVNYkhRM2Z4VWVqZFNHQWFDSG5DdVFUMVZaL3BjdXFjTndTUTdK?=
+ =?utf-8?B?OWQwOGFrSnkxcnhYeFpjS0lQWGQwVUtFVEpmKy9idVcxSFZFcU90S2FyVnZi?=
+ =?utf-8?B?WUR4eVkvenNsRGY3MHhRMkxCMlkvUmQ0ZmUwUVQ2cEdka21EaWFhR2doaWNo?=
+ =?utf-8?B?aHA3TXJGcFJJYlR0Y2FuenRDcXYwYlZNbFRQdz09?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(376014)(7416014)(36860700013)(1800799024)(13003099007);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jun 2025 11:36:09.8814
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b988344d-3b00-4255-56a0-08ddb3dc7b50
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1PEPF000044EF.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6049
 
-Update call sites to import ARef and AlwaysRefCounted from sync::aref
-instead of indirectly via types.
-Remove the re-export of their definitions in types.rs.
+On Wed, 25 Jun 2025 09:53:55 +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.295 release.
+> There are 215 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 27 Jun 2025 08:52:04 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.295-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Suggested-by: Benno Lossin <lossin@kernel.org>
-Link: https://github.com/Rust-for-Linux/linux/issues/1173
-Signed-off-by: Shankari Anand <shankari.ak0208@gmail.com>
----
- drivers/block/rnull.rs               |  3 +--
- drivers/gpu/drm/nova/driver.rs       |  2 +-
- drivers/gpu/drm/nova/gem.rs          |  2 +-
- rust/kernel/auxiliary.rs             |  2 +-
- rust/kernel/block/mq.rs              |  6 +++---
- rust/kernel/block/mq/operations.rs   |  2 +-
- rust/kernel/block/mq/request.rs      |  3 ++-
- rust/kernel/cred.rs                  |  3 ++-
- rust/kernel/device.rs                |  7 ++++---
- rust/kernel/devres.rs                |  3 +--
- rust/kernel/dma.rs                   |  2 +-
- rust/kernel/drm/device.rs            |  3 ++-
- rust/kernel/drm/driver.rs            |  2 +-
- rust/kernel/drm/gem/mod.rs           |  3 ++-
- rust/kernel/fs/file.rs               |  3 ++-
- rust/kernel/mm.rs                    |  3 ++-
- rust/kernel/mm/mmput_async.rs        |  2 +-
- rust/kernel/opp.rs                   | 13 +++++++------
- rust/kernel/pci.rs                   |  5 +++--
- rust/kernel/pid_namespace.rs         |  3 ++-
- rust/kernel/platform.rs              |  2 +-
- rust/kernel/task.rs                  |  7 ++++---
- rust/kernel/types.rs                 |  2 --
- samples/rust/rust_dma.rs             |  2 +-
- samples/rust/rust_driver_pci.rs      |  2 +-
- samples/rust/rust_driver_platform.rs |  2 +-
- samples/rust/rust_misc_device.rs     |  3 +--
- 27 files changed, 49 insertions(+), 43 deletions(-)
+All tests passing for Tegra ...
 
-diff --git a/drivers/block/rnull.rs b/drivers/block/rnull.rs
-index d07e76ae2c13..80a0f7aa949e 100644
---- a/drivers/block/rnull.rs
-+++ b/drivers/block/rnull.rs
-@@ -20,8 +20,7 @@
-     error::Result,
-     new_mutex, pr_info,
-     prelude::*,
--    sync::{Arc, Mutex},
--    types::ARef,
-+    sync::{aref::ARef, Arc, Mutex},
- };
- 
- module! {
-diff --git a/drivers/gpu/drm/nova/driver.rs b/drivers/gpu/drm/nova/driver.rs
-index b28b2e05cc15..af2cbee80ec1 100644
---- a/drivers/gpu/drm/nova/driver.rs
-+++ b/drivers/gpu/drm/nova/driver.rs
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--use kernel::{auxiliary, c_str, device::Core, drm, drm::gem, drm::ioctl, prelude::*, types::ARef};
-+use kernel::{auxiliary, c_str, device::Core, drm, drm::gem, drm::ioctl, prelude::*, sync::aref::ARef};
- 
- use crate::file::File;
- use crate::gem::NovaObject;
-diff --git a/drivers/gpu/drm/nova/gem.rs b/drivers/gpu/drm/nova/gem.rs
-index 33b62d21400c..cd82773dab92 100644
---- a/drivers/gpu/drm/nova/gem.rs
-+++ b/drivers/gpu/drm/nova/gem.rs
-@@ -4,7 +4,7 @@
-     drm,
-     drm::{gem, gem::BaseObject},
-     prelude::*,
--    types::ARef,
-+    sync::aref::ARef,
- };
- 
- use crate::{
-diff --git a/rust/kernel/auxiliary.rs b/rust/kernel/auxiliary.rs
-index d2cfe1eeefb6..776c63387832 100644
---- a/rust/kernel/auxiliary.rs
-+++ b/rust/kernel/auxiliary.rs
-@@ -250,7 +250,7 @@ extern "C" fn release(dev: *mut bindings::device) {
- kernel::impl_device_context_into_aref!(Device);
- 
- // SAFETY: Instances of `Device` are always reference-counted.
--unsafe impl crate::types::AlwaysRefCounted for Device {
-+unsafe impl crate::sync::aref::AlwaysRefCounted for Device {
-     fn inc_ref(&self) {
-         // SAFETY: The existence of a shared reference guarantees that the refcount is non-zero.
-         unsafe { bindings::get_device(self.as_ref().as_raw()) };
-diff --git a/rust/kernel/block/mq.rs b/rust/kernel/block/mq.rs
-index 831445d37181..3e7e0de92604 100644
---- a/rust/kernel/block/mq.rs
-+++ b/rust/kernel/block/mq.rs
-@@ -20,7 +20,7 @@
- //! The kernel will interface with the block device driver by calling the method
- //! implementations of the `Operations` trait.
- //!
--//! IO requests are passed to the driver as [`kernel::types::ARef<Request>`]
-+//! IO requests are passed to the driver as [`kernel::sync::aref::ARef<Request>`]
- //! instances. The `Request` type is a wrapper around the C `struct request`.
- //! The driver must mark end of processing by calling one of the
- //! `Request::end`, methods. Failure to do so can lead to deadlock or timeout
-@@ -57,12 +57,12 @@
- //!
- //! ```rust
- //! use kernel::{
- //!     alloc::flags,
- //!     block::mq::*,
- //!     new_mutex,
- //!     prelude::*,
--//!     sync::{Arc, Mutex},
--//!     types::{ARef, ForeignOwnable},
-+//!     sync::{aref::ARef, Arc, Mutex},
-+//!     types::ForeignOwnable,
- //! };
- //!
- //! struct MyBlkDevice;
-diff --git a/rust/kernel/block/mq/operations.rs b/rust/kernel/block/mq/operations.rs
-index c2b98f507bcb..18d858763e08 100644
---- a/rust/kernel/block/mq/operations.rs
-+++ b/rust/kernel/block/mq/operations.rs
-@@ -10,7 +10,7 @@
-     block::mq::Request,
-     error::{from_result, Result},
-     prelude::*,
--    types::ARef,
-+    sync::aref::ARef,
- };
- use core::{marker::PhantomData, sync::atomic::AtomicU64, sync::atomic::Ordering};
- 
-diff --git a/rust/kernel/block/mq/request.rs b/rust/kernel/block/mq/request.rs
-index fefd394f064a..9cca7852b309 100644
---- a/rust/kernel/block/mq/request.rs
-+++ b/rust/kernel/block/mq/request.rs
-@@ -8,7 +8,8 @@
-     bindings,
-     block::mq::Operations,
-     error::Result,
--    types::{ARef, AlwaysRefCounted, Opaque},
-+    sync::aref::{ARef, AlwaysRefCounted},
-+    types::Opaque,
- };
- use core::{
-     marker::PhantomData,
-diff --git a/rust/kernel/cred.rs b/rust/kernel/cred.rs
-index 2599f01e8b28..2b6ac62f595f 100644
---- a/rust/kernel/cred.rs
-+++ b/rust/kernel/cred.rs
-@@ -11,7 +11,8 @@
- use crate::{
-     bindings,
-     task::Kuid,
--    types::{AlwaysRefCounted, Opaque},
-+    sync::aref::AlwaysRefCounted,
-+    types::Opaque,
- };
- 
- /// Wraps the kernel's `struct cred`.
-diff --git a/rust/kernel/device.rs b/rust/kernel/device.rs
-index 5c946af3a4d5..3631fa67b330 100644
---- a/rust/kernel/device.rs
-+++ b/rust/kernel/device.rs
-@@ -7,7 +7,8 @@
- use crate::{
-     bindings,
-     str::CStr,
--    types::{ARef, Opaque},
-+    sync::aref::ARef,
-+    types::Opaque,
- };
- use core::{fmt, marker::PhantomData, ptr};
- 
-@@ -216,7 +217,7 @@ pub fn property_present(&self, name: &CStr) -> bool {
- kernel::impl_device_context_into_aref!(Device);
- 
- // SAFETY: Instances of `Device` are always reference-counted.
--unsafe impl crate::types::AlwaysRefCounted for Device {
-+unsafe impl crate::sync::aref::AlwaysRefCounted for Device {
-     fn inc_ref(&self) {
-         // SAFETY: The existence of a shared reference guarantees that the refcount is non-zero.
-         unsafe { bindings::get_device(self.as_raw()) };
-@@ -322,7 +323,7 @@ macro_rules! impl_device_context_deref {
- #[macro_export]
- macro_rules! __impl_device_context_into_aref {
-     ($src:ty, $device:tt) => {
--        impl ::core::convert::From<&$device<$src>> for $crate::types::ARef<$device> {
-+        impl ::core::convert::From<&$device<$src>> for $crate::sync::aref::ARef<$device> {
-             fn from(dev: &$device<$src>) -> Self {
-                 (&**dev).into()
-             }
-diff --git a/rust/kernel/devres.rs b/rust/kernel/devres.rs
-index d0e6c6e162c2..7a1e2f2721b8 100644
---- a/rust/kernel/devres.rs
-+++ b/rust/kernel/devres.rs
-@@ -13,8 +13,7 @@
-     ffi::c_void,
-     prelude::*,
-     revocable::{Revocable, RevocableGuard},
--    sync::{rcu, Arc, Completion},
--    types::ARef,
-+    sync::{aref::ARef, rcu, Arc, Completion},
- };
- 
- #[pin_data]
-diff --git a/rust/kernel/dma.rs b/rust/kernel/dma.rs
-index 8e317005decd..7e6407655969 100644
---- a/rust/kernel/dma.rs
-+++ b/rust/kernel/dma.rs
-@@ -9,8 +9,8 @@
-     device::{Bound, Device},
-     error::code::*,
-     error::Result,
-+    sync::aref::ARef,
-     transmute::{AsBytes, FromBytes},
--    types::ARef,
- };
- 
- /// Possible attributes associated with a DMA mapping.
-diff --git a/rust/kernel/drm/device.rs b/rust/kernel/drm/device.rs
-index b7ee3c464a12..d8f0be5fdce7 100644
---- a/rust/kernel/drm/device.rs
-+++ b/rust/kernel/drm/device.rs
-@@ -10,7 +10,8 @@
-     error::from_err_ptr,
-     error::Result,
-     prelude::*,
--    types::{ARef, AlwaysRefCounted, Opaque},
-+    sync::aref::{ARef, AlwaysRefCounted},
-+    types::Opaque,
- };
- use core::{mem, ops::Deref, ptr, ptr::NonNull};
- 
-diff --git a/rust/kernel/drm/driver.rs b/rust/kernel/drm/driver.rs
-index acb638086131..9f3450f77ca0 100644
---- a/rust/kernel/drm/driver.rs
-+++ b/rust/kernel/drm/driver.rs
-@@ -11,7 +11,7 @@
-     error::{to_result, Result},
-     prelude::*,
-     str::CStr,
--    types::ARef,
-+    sync::aref::ARef,
- };
- use macros::vtable;
- 
-diff --git a/rust/kernel/drm/gem/mod.rs b/rust/kernel/drm/gem/mod.rs
-index 4cd69fa84318..d2c28397f810 100644
---- a/rust/kernel/drm/gem/mod.rs
-+++ b/rust/kernel/drm/gem/mod.rs
-@@ -10,7 +10,8 @@
-     drm::driver::{AllocImpl, AllocOps},
-     error::{to_result, Result},
-     prelude::*,
--    types::{ARef, AlwaysRefCounted, Opaque},
-+    sync::aref::{ARef, AlwaysRefCounted},
-+    types::Opaque,
- };
- use core::{mem, ops::Deref, ptr::NonNull};
- 
-diff --git a/rust/kernel/fs/file.rs b/rust/kernel/fs/file.rs
-index 35fd5db35c46..18cf579d3312 100644
---- a/rust/kernel/fs/file.rs
-+++ b/rust/kernel/fs/file.rs
-@@ -11,7 +11,8 @@
-     bindings,
-     cred::Credential,
-     error::{code::*, Error, Result},
--    types::{ARef, AlwaysRefCounted, NotThreadSafe, Opaque},
-+    sync::aref::{ARef, AlwaysRefCounted},
-+    types::{NotThreadSafe, Opaque},
- };
- use core::ptr;
- 
-diff --git a/rust/kernel/mm.rs b/rust/kernel/mm.rs
-index 43f525c0d16c..4764d7b68f2a 100644
---- a/rust/kernel/mm.rs
-+++ b/rust/kernel/mm.rs
-@@ -13,7 +13,8 @@
- 
- use crate::{
-     bindings,
--    types::{ARef, AlwaysRefCounted, NotThreadSafe, Opaque},
-+    sync::aref::{ARef, AlwaysRefCounted},
-+    types::{NotThreadSafe, Opaque},
- };
- use core::{ops::Deref, ptr::NonNull};
- 
-diff --git a/rust/kernel/mm/mmput_async.rs b/rust/kernel/mm/mmput_async.rs
-index 9289e05f7a67..b8d2f051225c 100644
---- a/rust/kernel/mm/mmput_async.rs
-+++ b/rust/kernel/mm/mmput_async.rs
-@@ -10,7 +10,7 @@
- use crate::{
-     bindings,
-     mm::MmWithUser,
--    types::{ARef, AlwaysRefCounted},
-+    sync::aref::{ARef, AlwaysRefCounted},
- };
- use core::{ops::Deref, ptr::NonNull};
- 
-diff --git a/rust/kernel/opp.rs b/rust/kernel/opp.rs
-index 0e94cb2703ec..16ec8dd7d1a3 100644
---- a/rust/kernel/opp.rs
-+++ b/rust/kernel/opp.rs
-@@ -16,7 +16,8 @@
-     ffi::c_ulong,
-     prelude::*,
-     str::CString,
--    types::{ARef, AlwaysRefCounted, Opaque},
-+    sync::aref::{ARef, AlwaysRefCounted},
-+    types::Opaque,
- };
- 
- #[cfg(CONFIG_CPU_FREQ)]
-@@ -162,7 +163,7 @@ fn from(power: MicroWatt) -> Self {
- /// use kernel::device::Device;
- /// use kernel::error::Result;
- /// use kernel::opp::{Data, MicroVolt, Token};
--/// use kernel::types::ARef;
-+/// use kernel::sync::aref::ARef;
- ///
- /// fn create_opp(dev: &ARef<Device>, freq: Hertz, volt: MicroVolt, level: u32) -> Result<Token> {
- ///     let data = Data::new(freq, volt, level, false);
-@@ -211,7 +212,7 @@ fn drop(&mut self) {
- /// use kernel::device::Device;
- /// use kernel::error::Result;
- /// use kernel::opp::{Data, MicroVolt, Token};
--/// use kernel::types::ARef;
-+/// use kernel::sync::aref::ARef;
- ///
- /// fn create_opp(dev: &ARef<Device>, freq: Hertz, volt: MicroVolt, level: u32) -> Result<Token> {
- ///     let data = Data::new(freq, volt, level, false);
-@@ -262,7 +263,7 @@ fn freq(&self) -> Hertz {
- /// use kernel::clk::Hertz;
- /// use kernel::error::Result;
- /// use kernel::opp::{OPP, SearchType, Table};
--/// use kernel::types::ARef;
-+/// use kernel::sync::aref::ARef;
- ///
- /// fn find_opp(table: &Table, freq: Hertz) -> Result<ARef<OPP>> {
- ///     let opp = table.opp_from_freq(freq, Some(true), None, SearchType::Exact)?;
-@@ -335,7 +336,7 @@ fn drop(&mut self) {
- /// use kernel::error::Result;
- /// use kernel::opp::{Config, ConfigOps, ConfigToken};
- /// use kernel::str::CString;
--/// use kernel::types::ARef;
-+/// use kernel::sync::aref::ARef;
- /// use kernel::macros::vtable;
- ///
- /// #[derive(Default)]
-@@ -581,7 +582,7 @@ extern "C" fn config_regulators(
- /// use kernel::device::Device;
- /// use kernel::error::Result;
- /// use kernel::opp::Table;
--/// use kernel::types::ARef;
-+/// use kernel::sync::aref::ARef;
- ///
- /// fn get_table(dev: &ARef<Device>, mask: &mut Cpumask, freq: Hertz) -> Result<Table> {
- ///     let mut opp_table = Table::from_of_cpumask(dev, mask)?;
-diff --git a/rust/kernel/pci.rs b/rust/kernel/pci.rs
-index 6b94fd7a3ce9..c7d95459e745 100644
---- a/rust/kernel/pci.rs
-+++ b/rust/kernel/pci.rs
-@@ -14,7 +14,8 @@
-     io::Io,
-     io::IoRaw,
-     str::CStr,
--    types::{ARef, ForeignOwnable, Opaque},
-+    sync::aref::ARef,
-+    types::{ForeignOwnable, Opaque},
-     ThisModule,
- };
- use core::{
-@@ -438,7 +439,7 @@ pub fn set_master(&self) {
- kernel::impl_device_context_into_aref!(Device);
- 
- // SAFETY: Instances of `Device` are always reference-counted.
--unsafe impl crate::types::AlwaysRefCounted for Device {
-+unsafe impl crate::sync::aref::AlwaysRefCounted for Device {
-     fn inc_ref(&self) {
-         // SAFETY: The existence of a shared reference guarantees that the refcount is non-zero.
-         unsafe { bindings::pci_dev_get(self.as_raw()) };
-diff --git a/rust/kernel/pid_namespace.rs b/rust/kernel/pid_namespace.rs
-index 0e93808e4639..4fbbf4430f90 100644
---- a/rust/kernel/pid_namespace.rs
-+++ b/rust/kernel/pid_namespace.rs
-@@ -9,7 +9,8 @@
- 
- use crate::{
-     bindings,
--    types::{AlwaysRefCounted, Opaque},
-+    sync::aref::AlwaysRefCounted,
-+    types::Opaque,
- };
- use core::ptr;
- 
-diff --git a/rust/kernel/platform.rs b/rust/kernel/platform.rs
-index 0a6a6be732b2..9c9807b7da54 100644
---- a/rust/kernel/platform.rs
-+++ b/rust/kernel/platform.rs
-@@ -198,7 +198,7 @@ fn as_raw(&self) -> *mut bindings::platform_device {
- kernel::impl_device_context_into_aref!(Device);
- 
- // SAFETY: Instances of `Device` are always reference-counted.
--unsafe impl crate::types::AlwaysRefCounted for Device {
-+unsafe impl crate::sync::aref::AlwaysRefCounted for Device {
-     fn inc_ref(&self) {
-         // SAFETY: The existence of a shared reference guarantees that the refcount is non-zero.
-         unsafe { bindings::get_device(self.as_ref().as_raw()) };
-diff --git a/rust/kernel/task.rs b/rust/kernel/task.rs
-index 927413d85484..b46488f6d1a8 100644
---- a/rust/kernel/task.rs
-+++ b/rust/kernel/task.rs
-@@ -9,7 +9,8 @@
-     ffi::{c_int, c_long, c_uint},
-     mm::MmWithUser,
-     pid_namespace::PidNamespace,
--    types::{ARef, NotThreadSafe, Opaque},
-+    sync::aref::ARef,
-+    types::{NotThreadSafe, Opaque},
- };
- use core::{
-     cmp::{Eq, PartialEq},
-@@ -76,7 +77,7 @@ macro_rules! current {
- /// incremented when creating `State` and decremented when it is dropped:
- ///
- /// ```
--/// use kernel::{task::Task, types::ARef};
-+/// use kernel::{task::Task, sync::aref::ARef};
- ///
- /// struct State {
- ///     creator: ARef<Task>,
-@@ -340,7 +341,7 @@ pub fn active_pid_ns(&self) -> Option<&PidNamespace> {
- }
- 
- // SAFETY: The type invariants guarantee that `Task` is always refcounted.
--unsafe impl crate::types::AlwaysRefCounted for Task {
-+unsafe impl crate::sync::aref::AlwaysRefCounted for Task {
-     fn inc_ref(&self) {
-         // SAFETY: The existence of a shared reference means that the refcount is nonzero.
-         unsafe { bindings::get_task_struct(self.as_ptr()) };
-diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
-index 60cb48285630..fccb3ee71345 100644
---- a/rust/kernel/types.rs
-+++ b/rust/kernel/types.rs
-@@ -10,8 +10,6 @@
- };
- use pin_init::{PinInit, Zeroable};
- 
--pub use crate::sync::aref::{ARef, AlwaysRefCounted};
--
- /// Used to transfer ownership to and from foreign (non-Rust) languages.
- ///
- /// Ownership is transferred from Rust to a foreign language by calling [`Self::into_foreign`] and
-diff --git a/samples/rust/rust_dma.rs b/samples/rust/rust_dma.rs
-index 874c2c964afa..4aa3ecb7e999 100644
---- a/samples/rust/rust_dma.rs
-+++ b/samples/rust/rust_dma.rs
-@@ -4,7 +4,7 @@
- //!
- //! To make this driver probe, QEMU must be run with `-device pci-testdev`.
- 
--use kernel::{bindings, device::Core, dma::CoherentAllocation, pci, prelude::*, types::ARef};
-+use kernel::{bindings, device::Core, dma::CoherentAllocation, pci, prelude::*, sync::aref::ARef};
- 
- struct DmaSampleDriver {
-     pdev: ARef<pci::Device>,
-diff --git a/samples/rust/rust_driver_pci.rs b/samples/rust/rust_driver_pci.rs
-index 15147e4401b2..adcdfbb57c6b 100644
---- a/samples/rust/rust_driver_pci.rs
-+++ b/samples/rust/rust_driver_pci.rs
-@@ -4,7 +4,7 @@
- //!
- //! To make this driver probe, QEMU must be run with `-device pci-testdev`.
- 
--use kernel::{bindings, c_str, device::Core, devres::Devres, pci, prelude::*, types::ARef};
-+use kernel::{bindings, c_str, device::Core, devres::Devres, pci, prelude::*, sync::aref::ARef};
- 
- struct Regs;
- 
-diff --git a/samples/rust/rust_driver_platform.rs b/samples/rust/rust_driver_platform.rs
-index 8b42b3cfb363..da7d0f3ae90d 100644
---- a/samples/rust/rust_driver_platform.rs
-+++ b/samples/rust/rust_driver_platform.rs
-@@ -2,7 +2,7 @@
- 
- //! Rust Platform driver sample.
- 
--use kernel::{c_str, device::Core, of, platform, prelude::*, types::ARef};
-+use kernel::{c_str, device::Core, of, platform, prelude::*, sync::aref::ARef};
- 
- struct SampleDriver {
-     pdev: ARef<platform::Device>,
-diff --git a/samples/rust/rust_misc_device.rs b/samples/rust/rust_misc_device.rs
-index c881fd6dbd08..3f4954e3eb9c 100644
---- a/samples/rust/rust_misc_device.rs
-+++ b/samples/rust/rust_misc_device.rs
-@@ -105,8 +105,7 @@
-     miscdevice::{MiscDevice, MiscDeviceOptions, MiscDeviceRegistration},
-     new_mutex,
-     prelude::*,
--    sync::Mutex,
--    types::ARef,
-+    sync::{aref::ARef, Mutex},
-     uaccess::{UserSlice, UserSliceReader, UserSliceWriter},
- };
- 
--- 
-2.34.1
+Test results for stable-v5.4:
+    10 builds:	10 pass, 0 fail
+    24 boots:	24 pass, 0 fail
+    54 tests:	54 pass, 0 fail
 
+Linux version:	5.4.295-rc2-g1de5ce8d465e
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra20-ventana,
+                tegra210-p2371-2180, tegra210-p3450-0000,
+                tegra30-cardhu-a04
+
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+
+Jon
