@@ -1,72 +1,72 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D4B29AAEC
-	for <patches@lists.linux.dev>; Wed, 25 Jun 2025 10:23:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D69B2BF009
+	for <patches@lists.linux.dev>; Wed, 25 Jun 2025 10:54:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750847001; cv=none; b=RKVaj/ddO2IlddT7SiyA+B7JWW5+n5VIeOJzVI32nppHWz8CvASS1Ho+HiVW5qd08toXFg5eRtsCdJ/RJg/0ct/XwYnEt7SLN12KIGVWTfIN7Y/nhND2B/Zn/6Cm2OQyWXK6EwBy2+kctwF9dqKGwQ4n0QMIcoXs7W4rporNizM=
+	t=1750848864; cv=none; b=FMprDU738f+w99hRPWi1HUKYT4atyjHrWTB6FmnvOv7Lq2ihki/Ga1uNxOVh1SsE6A6CRGEupd/UUuS3pjUKCTmlAotH02/1/OQxnntFAX+krcgi8D9NZXfRIJV3UgEhr1j8ctwuHRekPap5MZcHJCGhNngNZSq/KB8AAO/mQJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750847001; c=relaxed/simple;
-	bh=sLOlO6Ct98dqJEhk/xCShrWRV5yesUPYrAQDpxALhR8=;
+	s=arc-20240116; t=1750848864; c=relaxed/simple;
+	bh=oWw3YvvIIyZMO9LMr45beiGm0PsyuB9vcsoRXkosJKM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tDmDc2oCA3vCP3e/cQjDP2prfNKYmm/fjzYt5k3fQkzSeotstDU/dRbw9UDMbigw2jMuWPejEH8LfEVWg6WIqx2y/dcy3YCxLmHbEWbt0inyp0M+31UAl2k3wL98wmGr+yVAWt3LEkAqDvhX50NMnz/qU/mu26R7IA8AIr6EuTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IY9vWzvF; arc=none smtp.client-ip=209.85.215.173
+	 To:Cc:Content-Type; b=CqaY/CdsN27LzhYjKmCvxlTcvFXuASfpDkBZpYXDLHwaISawmVnUG74Y0eUjHEtlF5/vrJ9jNtA5eBvlBJ6eIS6Ex/LqKdJvkst5PU+Gs+mycOZwYBY8x5VORX3DrYkNsx0pp12RbaJhI8h+H5Mcl0yz3C3ksSNcfb86IWLZqes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H/2rYjFi; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IY9vWzvF"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-b3182c6d03bso1862952a12.0
-        for <patches@lists.linux.dev>; Wed, 25 Jun 2025 03:23:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H/2rYjFi"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b3182c6d03bso1888973a12.0
+        for <patches@lists.linux.dev>; Wed, 25 Jun 2025 03:54:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750846998; x=1751451798; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1750848862; x=1751453662; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lov9+Zjt7YEZlzXRaxLC1dZ0shHTHM8AduhB9Li5azE=;
-        b=IY9vWzvFtRbF5peJNJkAewkLwJQ7Mt3fStKQf37Oo53A8JOKSZnIyf9CH/s+EtLxbl
-         4oGJRMRPqEU9WW8NrmWGiYOewRNgJkj78BL8Oh4Son8PVCJHoA0kXiyLdBYvEf93rzJs
-         IKZ6VpkRGPBWOO1f08cgEVY7fp0ZeNA3ogISTXwOEyKiLbW3rB8eFwY2hGAOIqkLUhGK
-         4V4Ew66p7175M95thx6iR2lulM2cfP/evkiw4kHCDkOj9VmFmGCFo+ZPGXSHIApZ1teW
-         ry7dMdAk7v/7boG925pjAIda60nUah5y/wFtDwex61tFsFku1hCzh1UVnqNgFAJR2vyM
-         v55w==
+        bh=fMQOsT+mdqoi8lnfK5N5XyAR9UzojfvCMCTObb86FVk=;
+        b=H/2rYjFimnUT2QUo1s9ScdybU6ucFNDLtkotBJ3qlNqxNVjsWXac6lj6lLadqGqAVH
+         Yd/JlJU/Dpge0UoCPXyRx//H+sqjE7cuqZPrFE59/yWPY0dXMsJwp3kTSkJHzoe33tI4
+         1Z6ccahEsRxaTCdfdIYGQ2Cs9SuhXTH/XGJeldmkxkyNVBKN27rDLvrF5p+AIpgw+Qr9
+         xEgIvXBMhwtTa0D7O0repyv1hXMHv4tuw9OEdzCH1HM25BJoyPAbBTljyJwJ1DNehF7C
+         lu+8mQKjgagRxJstklfXo3zNBPLMwqn8Ix79H4FOY6n7esrX9PHU0Q1cY9DH62t8jok8
+         S/iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750846998; x=1751451798;
+        d=1e100.net; s=20230601; t=1750848862; x=1751453662;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lov9+Zjt7YEZlzXRaxLC1dZ0shHTHM8AduhB9Li5azE=;
-        b=GGD1/DwaULPe6Pp58z30qX/dQazYMHpEXuscI604nn7saBdVkivxvNumm/Q1XV9cM5
-         pazZlRCi0DuknnotzZMnZRuIf+6mJRe0KEoTV/0a795dQdgZvUPRP/1W7qGwbYhsw3rt
-         auJdcmwvqACXnVJtCnuYv3L6a+u7ZwA8H/omztY8LPjPj8BSZvaahppAqzTdGLhogKuo
-         jmkeud6RrmMlrNEaPi9W+3vbyM2gB8jQ3Cpzc2JXSe47M7MTxSOM3H6q/7PjucqSvTVk
-         erCjTytge7Z2JsnL4lCug3bG7tGf8EdV1ETyGspZY3RvXh1hMsPl0WjfhZGwGVtdvH5T
-         UxEA==
-X-Forwarded-Encrypted: i=1; AJvYcCWJr1svME33j5KQTOgmeNr4CYoSoK8J7NRyWH0VxK0tTxQgzHd1+6FAaRL+hC+YP97agcQGV6fb@lists.linux.dev
-X-Gm-Message-State: AOJu0YywcWjGEqFHIIZt/ErM1Cc+oSAe4SH06syeiKYoY/bbEOf2Ecjk
-	iCSKOT5qDHf1YYyhVCpEj31vC1cUR3vHmKq8xZbghWh9A3jKuPXx/Rk2Qg0cT9twViIA1484GT2
-	baIga0dzuTIIZ7yN/eF+ENf7HeMiOIbaJVMoxp1tOLA==
-X-Gm-Gg: ASbGncvpLXVp+HwSUtWeg7J+PnUg3E5RRWsER7getl76wWatlCpYyLpaXRzTGXMPTRa
-	naPLbT82QWqDuM2swbfAJWy7c2SiPy41cqynaaFIgf6G8pMM8ljW9rXGDTD1dm9LB8in1W1KPQg
-	H1j1mDNpTKAIECYx7S2f4kIKDHe9O8kX7GrLAuwBWyhcqJRXcA9zRvMIUyGIGy2hLwh9enMIN1A
-	AhG
-X-Google-Smtp-Source: AGHT+IH8cFi7RC794dO0rUm/Wn+Xr5iwFFDk6akyxaGbFcCJoypTD1oROTeezbQ4/XAXXAvVlHuTWvMZwirdDT+JzDc=
-X-Received: by 2002:a17:90b:2c85:b0:30e:8c5d:8ed with SMTP id
- 98e67ed59e1d1-315f2671f79mr3611427a91.19.1750846998623; Wed, 25 Jun 2025
- 03:23:18 -0700 (PDT)
+        bh=fMQOsT+mdqoi8lnfK5N5XyAR9UzojfvCMCTObb86FVk=;
+        b=PMo4gSiq4VXGInb3kKE+lTJSeu1OOtpArMyR2I49wiAPo4qWlrl6QAhpol2i0Qpuzt
+         ROAjXl6XBqc/crMk9L5Y4nXwrbLvDsUuVwA9/SqQ3k7MYHfvbaIrQS4l7XQSv25RmzH4
+         ig140tx2tGOjhFvyYGN/EC0QEDTk8ll3sCge8YXwnQN10yOy/hnWvwo7vCwHMFbacltp
+         MKAjIt7jA9YXyHsycqCOQZJ3LeXE8VGOwwgBPd2PIP/uz26cNqruQAUVPFtZDexZfCge
+         Y/kjWcUhhpzswQv/HuCT4rH5E8owVbbGWMSvakWF6Ic3k/uXkAasNI9LoZXTA70Q83KA
+         Oo8A==
+X-Forwarded-Encrypted: i=1; AJvYcCXqq7N46lawGrj8oOLF4dPWZZvlJaA7n3gQmHNNqFf5DlS2bHcSczdbKLS7SJSA4uvlbvQiNI2Y@lists.linux.dev
+X-Gm-Message-State: AOJu0YxWCZuQrcHKy9cIAp9vCfIviD2HbMDksIuaMq/Ar+7ysK6mkkc4
+	Rx8L8Bfps6sDC57I9Ux6rthaFCYn8gD6Uu2+zpBauN6nA/LzPGmcxqNW2GSyQ63jbYuUfh5XWMY
+	TF4NszKPGL1EmEVCgukW/4McWFoisy70zpW24NXJEgQ==
+X-Gm-Gg: ASbGncu5AdxzyMbeG4ZJhFTaYJtp3tW9X2M21SKiDKVllgrQme/bDCNHDxl/krRGX3C
+	33a6ing2QZSEeqXY5p0mscNNTDbX4m+j+NK0iDHZ0UTylB2eTa1wzN86IXSvLpvBxjJxEcFE4lF
+	ovr3SbqBZ3kZHWMaVGH/JadoQUichT9v72W95Z671M3moY1PgPnwjCQKpDt5nW/ewmahhRBiq8/
+	6iy
+X-Google-Smtp-Source: AGHT+IHiEEGI2cB5HHq+2rW2I162fZGpGjKdx9vFcpygnRYRBtx9ITlyUhy0ssBTVpCEGfR518CwQjoRlvHR7iSKwUs=
+X-Received: by 2002:a17:90b:1d05:b0:311:9c1f:8516 with SMTP id
+ 98e67ed59e1d1-315f26192efmr4507300a91.15.1750848861645; Wed, 25 Jun 2025
+ 03:54:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250624121426.466976226@linuxfoundation.org>
-In-Reply-To: <20250624121426.466976226@linuxfoundation.org>
+References: <20250624121409.093630364@linuxfoundation.org>
+In-Reply-To: <20250624121409.093630364@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 25 Jun 2025 15:53:07 +0530
-X-Gm-Features: Ac12FXzbsG8H9f0gjBaNzcKx6GHqgVhEAS62P31OdpnQXr-HJ4E-WlndR7XAnXE
-Message-ID: <CA+G9fYuQBPF6C1oJLWrrcjvn6FNqjh0oxcJqJNxe85XtrDNSjA@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/413] 6.12.35-rc2 review
+Date: Wed, 25 Jun 2025 16:24:10 +0530
+X-Gm-Features: Ac12FXz97GBM2balbdrYLnqrqpEMD_cJZ26q0A3b3jEWkftx66qzM1sifzdDU30
+Message-ID: <CA+G9fYt_Z-Vtoan2z-OEoArWuNy=A9wwAoTyRF=G8zobZBaDvA@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/288] 6.6.95-rc2 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -78,11 +78,11 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, 24 Jun 2025 at 18:00, Greg Kroah-Hartman
+On Tue, 24 Jun 2025 at 17:59, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.12.35 release.
-> There are 413 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.6.95 release.
+> There are 288 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -91,10 +91,10 @@ On Tue, 24 Jun 2025 at 18:00, Greg Kroah-Hartman
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.12.35-rc2.gz
+6.6.95-rc2.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.12.y
+-rc.git linux-6.6.y
 > and the diffstat can be found below.
 >
 > thanks,
@@ -107,39 +107,39 @@ No regressions on arm64, arm, x86_64, and i386.
 Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
 ## Build
-* kernel: 6.12.35-rc2
+* kernel: 6.6.95-rc2
 * git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
 rc.git
-* git commit: 7ea56ae300ce5b67804c356ef4c7dbac6b00241b
-* git describe: v6.12.34-414-g7ea56ae300ce
+* git commit: 33e06c71265b793ab2b3f3358952f6995d09e793
+* git describe: v6.6.94-289-g33e06c71265b
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.12.y/build/v6.12=
-.34-414-g7ea56ae300ce
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.9=
+4-289-g33e06c71265b
 
-## Test Regressions (compared to v6.12.32-538-g519e0647630e)
+## Test Regressions (compared to v6.6.93-357-g7ef12da06319)
 
-## Metric Regressions (compared to v6.12.32-538-g519e0647630e)
+## Metric Regressions (compared to v6.6.93-357-g7ef12da06319)
 
-## Test Fixes (compared to v6.12.32-538-g519e0647630e)
+## Test Fixes (compared to v6.6.93-357-g7ef12da06319)
 
-## Metric Fixes (compared to v6.12.32-538-g519e0647630e)
+## Metric Fixes (compared to v6.6.93-357-g7ef12da06319)
 
 ## Test result summary
-total: 218983, pass: 198252, fail: 5262, skip: 15116, xfail: 353
+total: 233901, pass: 212419, fail: 5723, skip: 15315, xfail: 444
 
 ## Build Summary
 * arc: 5 total, 5 passed, 0 failed
-* arm: 139 total, 134 passed, 2 failed, 3 skipped
-* arm64: 57 total, 46 passed, 0 failed, 11 skipped
-* i386: 18 total, 18 passed, 0 failed
-* mips: 34 total, 33 passed, 1 failed
+* arm: 129 total, 128 passed, 0 failed, 1 skipped
+* arm64: 44 total, 41 passed, 0 failed, 3 skipped
+* i386: 23 total, 23 passed, 0 failed
+* mips: 26 total, 25 passed, 1 failed
 * parisc: 4 total, 4 passed, 0 failed
-* powerpc: 40 total, 40 passed, 0 failed
-* riscv: 25 total, 21 passed, 2 failed, 2 skipped
-* s390: 22 total, 21 passed, 1 failed
-* sh: 5 total, 5 passed, 0 failed
-* sparc: 4 total, 3 passed, 1 failed
-* x86_64: 49 total, 49 passed, 0 failed
+* powerpc: 32 total, 30 passed, 1 failed, 1 skipped
+* riscv: 15 total, 14 passed, 0 failed, 1 skipped
+* s390: 14 total, 12 passed, 1 failed, 1 skipped
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 7 total, 7 passed, 0 failed
+* x86_64: 37 total, 37 passed, 0 failed
 
 ## Test suites summary
 * boot
@@ -155,6 +155,7 @@ total: 218983, pass: 198252, fail: 5262, skip: 15116, xfail: 353
 * kselftest-efivarfs
 * kselftest-exec
 * kselftest-fpu
+* kselftest-ftrace
 * kselftest-futex
 * kselftest-gpio
 * kselftest-intel_pstate
@@ -216,11 +217,6 @@ total: 218983, pass: 198252, fail: 5262, skip: 15116, xfail: 353
 * modules
 * perf
 * rcutorture
-* rt-tests-cyclicdeadline
-* rt-tests-pi-stress
-* rt-tests-pmqtest
-* rt-tests-rt-migrate-test
-* rt-tests-signaltest
 
 --
 Linaro LKFT
