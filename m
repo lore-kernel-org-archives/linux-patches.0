@@ -1,73 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DD621B1B9;
-	Wed, 25 Jun 2025 08:25:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 873E0263C90
+	for <patches@lists.linux.dev>; Wed, 25 Jun 2025 08:27:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750839932; cv=none; b=Zf7E/9ggbvneTdB57MZ3NfBxBA+LjB8MLCPB432EXnOLr2fe3oIZRhk2cwuJV00BrDf5KlUUio7k99OMVl30/g8pjNuWsPXH0u9zvydlvTI50tMl3fy8TV0Q10NoHSZgf7s/E3uqQq2nWwQCmcL1Xzxhdms/RH1MBQKIrDWfoyY=
+	t=1750840079; cv=none; b=NZn5PdjUE6X2uPx7y/mDyYa7Qwb/ZHsAXYuj2f/TpWqkWcn0uJC1/8XBDmq9/zb9FPDpHa027BJ7kdJGqZjJnK64LzTEOFiSbvn9/gXxwILzmvLV/wEmuqbh4CRA7+PCfCmgnhMPMN76Cd7bdId1kUKrFRD2yLtiiOK0Bmn/GF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750839932; c=relaxed/simple;
-	bh=76JayBgTFIMor183bdEqxVCpqwxcIxrDDM2N1ad5G38=;
+	s=arc-20240116; t=1750840079; c=relaxed/simple;
+	bh=tFRL6sdurF5C0oF05Wkk5ZCUtUZzrnnHgrfd/+IUM3E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JZoHCv4VJzjFWiesuwb7tg+10MFvOGcLlBkNYNMPcVjdRtzcK/jJCk6tCyyKTmFMHML18Q1vprEbt0nTOsjejEcaOLxYMFCpBOeT4NDfZ1fAS4KlTcTFJBy3damD0ETacKJILvpLj0CGw1xvOsnkenvRa2qcfnjKbnq3FOTRbas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nv7GTPsW; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=KzYNhIAxsKvgb3coeWVyaZC7H66xWDi9fKGF/0y12pDLtqH4RyuoAH+B/jMtokgwsqJkqbIgrU2D4ZPR5W/Yb2Yriv2/OmFJi68wye85pAfY+56OUBuZlhWxEs0ltjwEWfjLlhgoArDPfas6DjL1plUTZ9KbMYSRgfqdAZ2FrFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=Bn1zpG0d; arc=none smtp.client-ip=62.210.214.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nv7GTPsW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA782C4CEEA;
-	Wed, 25 Jun 2025 08:25:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750839932;
-	bh=76JayBgTFIMor183bdEqxVCpqwxcIxrDDM2N1ad5G38=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nv7GTPsWdGsg7qLtxhsPf5INIySeXcAPMqUiWVpuElGQ2f3iX+ayL+qmMdIG5Df0l
-	 U8KQb3x0zG2t+LB5i6+mEXd0cdCqyVqmp+HJt/wUUN97omZg1lLwD74cKHOYLjam6h
-	 UN1HoueYZlM89qk+sMbtgRm1KZuWxESm5FomFBDU=
-Date: Wed, 25 Jun 2025 09:25:29 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Holger =?iso-8859-1?Q?Hoffst=E4tte?= <holger@applied-asynchrony.com>
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="Bn1zpG0d"
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by submarine.notk.org (Postfix) with ESMTPS id 13E5A14C2D3;
+	Wed, 25 Jun 2025 10:27:42 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1750840068;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=M7MBda3ifyG4jp7mOkjP/Pm966Gi86mycz9M1yI2mNc=;
+	b=Bn1zpG0d0TEoLqEscnCtADjX6ukY5s8GVqwl1HB4lH7+XwbHkwitjyZxBR1+2MVTIgGkI5
+	a3EpquCcp8HsEEAfVmtGlEOoSfP6WQDMprf8YxNO3+aON98bMEnLTXDctDULMO4PvheqBk
+	RcGP0ZrFMWNt0ll1R7x3GZbYFjaoiX7JuuEVMifoVJzdJsBcgokzNKJNGdrUKe5OMn+60c
+	BIJ1rj728L+9ClIXX1wWAfujx1ydzEEhKcoaWNuUfmf6EbxKB1AEYNAoFj5Wfdol5+cJr8
+	AAPzP+TWiZVLyjKJvUy2REorrm+I/fpI487Hg+ko1bogTRHQ5zVw6vcrkCOQXQ==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 38d76608;
+	Wed, 25 Jun 2025 08:27:41 +0000 (UTC)
+Date: Wed, 25 Jun 2025 17:27:26 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: Re: [PATCH 6.15 000/588] 6.15.4-rc2 review
-Message-ID: <2025062511-tutor-judiciary-e3f9@gregkh>
-References: <20250624121449.136416081@linuxfoundation.org>
- <e9249afe-f039-4180-d50d-b199c26dea26@applied-asynchrony.com>
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 5.10 000/352] 5.10.239-rc2 review
+Message-ID: <aFuy7qm1rv3tAUka@codewreck.org>
+References: <20250624121412.352317604@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e9249afe-f039-4180-d50d-b199c26dea26@applied-asynchrony.com>
+In-Reply-To: <20250624121412.352317604@linuxfoundation.org>
 
-On Wed, Jun 25, 2025 at 10:00:56AM +0200, Holger Hoffstätte wrote:
-> (cc: Christian Brauner>
+Greg Kroah-Hartman wrote on Tue, Jun 24, 2025 at 01:28:53PM +0100:
+> This is the start of the stable review cycle for the 5.10.239 release.
+> There are 352 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Since 6.15.4-rc1 I noticed that some KDE apps (kded6, kate (the text editor))
-> started going into a tailspin with 100% per-process CPU.
+> Responses should be made by Thu, 26 Jun 2025 12:13:28 +0000.
+> Anything received after that time might be too late.
 > 
-> The symptom is 100% reproducible: open a new file with kate, save empty file,
-> make changes, save, watch CPU go 100%. perf top shows copy_to_user running wild.
-> 
-> First I tried to reproduce on 6.15.3 - no problem, everything works fine.
-> 
-> After checking the list of patches for 6.15.4 I reverted the anon_inode series
-> (all 3 for the first attempt) and the problem is gone.
-> 
-> Will try to reduce further & can gladly try additional fixes, but for now
-> I'd say these patches are not yet suitable for stable.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.239-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
 
-Does this same issue also happen for you on 6.16-rc3?
+Tested 9dc843c66f6f ("Linux 5.10.239-rc2") on:
+- arm i.MX6ULL (Armadillo 640)
+- arm64 i.MX8MP (Armadillo G4)
 
-thanks,
-
-greg k-h
+No obvious regression in dmesg or basic tests:
+Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+-- 
+Dominique Martinet
