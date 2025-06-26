@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB092F0E37
-	for <patches@lists.linux.dev>; Thu, 26 Jun 2025 16:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F632F0E5E
+	for <patches@lists.linux.dev>; Thu, 26 Jun 2025 16:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750956609; cv=none; b=H54RA4TaehKwRVrSyYRokO+TdDYGlPJP4GO0NNT36tedHxrowVFJ5Xpevo40t/Wa6qd9lkLy0f4vcO3xRBzvCuJ30uCiipEkEfKVVGLlalmUldDCdplfGjHAtvWhC3RycbLC1/OJyAcTTlKuQZtTZBuGYc7saz/mmBo+tC6wtAY=
+	t=1750956611; cv=none; b=thCUx5YyFAPQz0F5gRYZQ4TV6/mAwinmWXA1oMG8R+DPVclXNDwRdW/6ucecUCfWyMVqg7gdY+i+o1yJCTluWr4FvBGmtDm9HlI106Ql+7fCU9rC+jrYTD98UeHZS/HC68cByN40wf9hUXlhxzLPuGRyj6oDOdZIRyicvPvo1/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750956609; c=relaxed/simple;
-	bh=ayovP20mi/znsK/boH38Se+1pDhyqJNehHC/uWhLjhk=;
+	s=arc-20240116; t=1750956611; c=relaxed/simple;
+	bh=eHqRIwvz9yrJBxiTor1hivziZIApiB48bbpm0qp3sr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pc3byhBYCfr5GhcFJrXA/Supqb7KOYeKRhOfDu2XmX90AQgTZwxC0DRVwxPf7iRPL81fXtygnFMoB/8/P4h3hvMNiSlEw5qUaqQJNj92fjvO3Qq06tslgYiTHtbMyJguJifJTFyUDCYMw6teaHo3hGcXIqW9zOXXW01MOHCyUfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DH5G2OSC; arc=none smtp.client-ip=198.175.65.19
+	 MIME-Version; b=j+LF9+keX5EBM+qyGxiCn64/RGuXU8Nfu88dsEG9uP/3lyP4L8bAoR7sAoHRwfljxOCGBWMAbhz3DMlz3uWNA8WEfWIROCReDpk6Zos/eDTNu5RGGoxfvbqgYnHQ+CJOgtr21fidTzYvZqLzvgPNmxJuSRIuXwjzq087c53wChE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EEAlozBj; arc=none smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DH5G2OSC"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EEAlozBj"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750956608; x=1782492608;
+  t=1750956609; x=1782492609;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=ayovP20mi/znsK/boH38Se+1pDhyqJNehHC/uWhLjhk=;
-  b=DH5G2OSC0EUwAn/pt2wi1HsY+lLoAI89gx0awuX57EGxoYlz6qaJd59b
-   d1yk2/ED1jDW6+GcZQ6imfnNz0g+Z33TpBX3YHNyq7XSEexJ/nSsKSL02
-   GvWgc4Xd1RrGRGqxW1s84jKqdDNpnWqM0RIshJlDSr71fn7bjhEJ9ih4d
-   k99OJ+rSsS1JFyuo7GD7dpPtmUxsioWdU3X84ru9xwXsYiPz7EB/bysKe
-   BQTBEjyp2MjShBdfoWkhKS3UtLu4MEGuJxQ83Bvjf+Zy9TlfBYRNngv11
-   eEp3l/ekwGWeghsdgFF8AcPOOtR1hDlBrZ4FId7oAtESHd0+fh0dWXGjP
-   Q==;
-X-CSE-ConnectionGUID: sdm5ly0ZTLKzbYMwfdSY/g==
-X-CSE-MsgGUID: ZL83Qyl2SUeWSEGFoaab3A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11476"; a="53136503"
+  bh=eHqRIwvz9yrJBxiTor1hivziZIApiB48bbpm0qp3sr4=;
+  b=EEAlozBjYEOLTguee6L1UYtdnvA2ZAxeHKlxA7ZYW5//LtdfKZOSxOr/
+   q1ylxwVxe8z7lqLvQAchHm3P+vQ00Yrdes2GaoEF1JSuhDEct2khNHDj5
+   jCLdlKTCeTRNBDCOCzrqOMJXYwK307zKTrFDwcE7wMbkqM12DyUzn2ULk
+   87SriO4LKmW5FU/g5+3CJcq3RzMVFqbKP/TRJFOXysvOQXyP13dnPrLh2
+   c2SPrXU0sxE4wLf35tuLExBGx03tzmcHxY/3LgCleOZU7JQpZUVcbD45h
+   lJlduKXgV1frWuVnoucxTZgWDB9R2sqJqZGI4AMkMlwjjDsZcC6lBBRHA
+   A==;
+X-CSE-ConnectionGUID: 6H7Wsx5MS26Rup7+wzaxig==
+X-CSE-MsgGUID: 8OcXttM0QGyNExtqWid0uQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11476"; a="53136511"
 X-IronPort-AV: E=Sophos;i="6.16,268,1744095600"; 
-   d="scan'208";a="53136503"
+   d="scan'208";a="53136511"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
   by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jun 2025 09:50:02 -0700
-X-CSE-ConnectionGUID: cYCKgVy6RruREJKtSvIZsQ==
-X-CSE-MsgGUID: RueXSY+iQme+eFvROiv0pA==
+X-CSE-ConnectionGUID: 7x4uhwhbTyCWepyoy4Zkng==
+X-CSE-MsgGUID: L6aNukbNRoSDXyhUeKIaSQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,268,1744095600"; 
-   d="scan'208";a="153069290"
+   d="scan'208";a="153069306"
 Received: from agluck-desk3.sc.intel.com ([172.25.103.51])
   by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jun 2025 09:50:01 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -58,9 +58,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v6 23/30] x86/resctrl: Handle domain creation/deletion for RDT_RESOURCE_PERF_PKG
-Date: Thu, 26 Jun 2025 09:49:32 -0700
-Message-ID: <20250626164941.106341-24-tony.luck@intel.com>
+Subject: [PATCH v6 24/30] x86/resctrl: Add energy/perf choices to rdt boot option
+Date: Thu, 26 Jun 2025 09:49:33 -0700
+Message-ID: <20250626164941.106341-25-tony.luck@intel.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250626164941.106341-1-tony.luck@intel.com>
 References: <20250626164941.106341-1-tony.luck@intel.com>
@@ -72,92 +72,156 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The L3 resource has several requirements for domains. There are structures
-that hold the 64-bit values of counters, and elements to keep track of
-the overflow and limbo threads.
+Hardware backed resctrl features are enumerated by X86_FEATURE_*
+flags. These may be overridden by quirks to disable features in the case
+of errata.
 
-None of these are needed for the PERF_PKG resource. The hardware counters
-are wide enough that they do not wrap around for decades.
+Users can use kernel command line options to either disable a feature,
+or to force enable a feature that was disabled by a quirk.
 
-Define a new rdt_perf_pkg_mon_domain structure which just consists of
-the standard rdt_domain_hdr to keep track of domain id and CPU mask.
+Provide similar functionality for software defined features that do not
+have an X86_FEATURE_* flag.
 
-Change domain_add_cpu_mon(), domain_remove_cpu_mon(),
-resctrl_offline_mon_domain(), and resctrl_online_mon_domain() to check
-resource type and perform only the operations needed for domains in the
-PERF_PKG resource.
+Unlike other options that are tied to X86_FEATURE_* flags, these must be
+queried by name. Add rdt_is_software_feature_enabled() to check whether
+quirks or kernel command line have disabled a feature. Just like the
+hardware feature options the command line enable overrides quirk disable.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/core.c | 41 ++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ .../admin-guide/kernel-parameters.txt         |  2 +-
+ arch/x86/kernel/cpu/resctrl/internal.h        |  2 ++
+ arch/x86/kernel/cpu/resctrl/core.c            | 30 +++++++++++++++++++
+ arch/x86/kernel/cpu/resctrl/intel_aet.c       |  7 +++++
+ 4 files changed, 40 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index f1f2c0874da9..4c12159f3ea0 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -6066,7 +6066,7 @@
+ 	rdt=		[HW,X86,RDT]
+ 			Turn on/off individual RDT features. List is:
+ 			cmt, mbmtotal, mbmlocal, l3cat, l3cdp, l2cat, l2cdp,
+-			mba, smba, bmec.
++			mba, smba, bmec, energy, perf.
+ 			E.g. to turn on cmt and turn off mba use:
+ 				rdt=cmt,!mba
+ 
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index e8d2a754bc0c..ee1c6204722e 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -169,6 +169,8 @@ void __init intel_rdt_mbm_apply_quirk(void);
+ 
+ void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
+ 
++bool rdt_is_software_feature_enabled(char *option);
++
+ bool intel_aet_get_events(void);
+ void __exit intel_aet_exit(void);
+ int intel_aet_read_event(int domid, int rmid, enum resctrl_event_id evtid,
 diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index f3144fe918dd..f857f92e7b8b 100644
+index f857f92e7b8b..f9f3bc58290e 100644
 --- a/arch/x86/kernel/cpu/resctrl/core.c
 +++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -547,6 +547,38 @@ static void l3_mon_domain_setup(int cpu, int id, struct rdt_resource *r, struct
- 	}
+@@ -791,6 +791,8 @@ enum {
+ 	RDT_FLAG_MBA,
+ 	RDT_FLAG_SMBA,
+ 	RDT_FLAG_BMEC,
++	RDT_FLAG_ENERGY,
++	RDT_FLAG_PERF,
+ };
+ 
+ #define RDT_OPT(idx, n, f)	\
+@@ -816,6 +818,8 @@ static struct rdt_options rdt_options[]  __ro_after_init = {
+ 	RDT_OPT(RDT_FLAG_MBA,	    "mba",	X86_FEATURE_MBA),
+ 	RDT_OPT(RDT_FLAG_SMBA,	    "smba",	X86_FEATURE_SMBA),
+ 	RDT_OPT(RDT_FLAG_BMEC,	    "bmec",	X86_FEATURE_BMEC),
++	RDT_OPT(RDT_FLAG_ENERGY,    "energy",	0),
++	RDT_OPT(RDT_FLAG_PERF,	    "perf",	0),
+ };
+ #define NUM_RDT_OPTIONS ARRAY_SIZE(rdt_options)
+ 
+@@ -865,6 +869,32 @@ bool rdt_cpu_has(int flag)
+ 	return ret;
  }
  
-+/**
-+ * struct rdt_perf_pkg_mon_domain - CPUs sharing an Intel-PMT-scoped resctrl monitor resource
-+ * @hdr:	common header for different domain types
++/*
++ * Software options that are not based on X86_FEATURE_* bits.
++ * There is no "h/w does not support this at all" case.
++ * Assume that the caller has already determined that s/w
++ * support is present and just needs to check if the option has been
++ * disabled by a quirk that has not been overridden * by a command
++ * line option.
 + */
-+struct rdt_perf_pkg_mon_domain {
-+	struct rdt_domain_hdr   hdr;
-+};
-+
-+static void setup_intel_aet_mon_domain(int cpu, int id, struct rdt_resource *r,
-+				       struct list_head *add_pos)
++bool rdt_is_software_feature_enabled(char *name)
 +{
-+	struct rdt_perf_pkg_mon_domain *d;
-+	int err;
++	struct rdt_options *o;
++	bool ret = true;
 +
-+	d = kzalloc_node(sizeof(*d), GFP_KERNEL, cpu_to_node(cpu));
-+	if (!d)
-+		return;
-+
-+	d->hdr.id = id;
-+	d->hdr.type = RESCTRL_MON_DOMAIN;
-+	d->hdr.rid = r->rid;
-+	cpumask_set_cpu(cpu, &d->hdr.cpu_mask);
-+	list_add_tail_rcu(&d->hdr.list, add_pos);
-+
-+	err = resctrl_online_mon_domain(r, &d->hdr);
-+	if (err) {
-+		list_del_rcu(&d->hdr.list);
-+		synchronize_rcu();
-+		kfree(d);
++	for (o = rdt_options; o < &rdt_options[NUM_RDT_OPTIONS]; o++) {
++		if (!strcmp(name, o->name)) {
++			if (o->force_off)
++				ret = false;
++			if (o->force_on)
++				ret = true;
++			break;
++		}
 +	}
++
++	return ret;
 +}
 +
- static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
+ bool resctrl_arch_is_evt_configurable(enum resctrl_event_id evt)
  {
- 	int id = get_domain_id_from_scope(cpu, r->mon_scope);
-@@ -574,6 +606,9 @@ static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
- 	case RDT_RESOURCE_L3:
- 		l3_mon_domain_setup(cpu, id, r, add_pos);
- 		break;
-+	case RDT_RESOURCE_PERF_PKG:
-+		setup_intel_aet_mon_domain(cpu, id, r, add_pos);
-+		break;
- 	default:
- 		WARN_ON_ONCE(1);
- 	}
-@@ -670,6 +705,12 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
- 		synchronize_rcu();
- 		l3_mon_domain_free(hw_dom);
- 		break;
-+	case RDT_RESOURCE_PERF_PKG:
-+		resctrl_offline_mon_domain(r, hdr);
-+		list_del_rcu(&hdr->list);
-+		synchronize_rcu();
-+		kfree(container_of(hdr, struct rdt_perf_pkg_mon_domain, hdr));
-+		break;
- 	default:
- 		pr_warn_once("Unknown resource rid=%d\n", r->rid);
- 		break;
+ 	if (!rdt_cpu_has(X86_FEATURE_BMEC))
+diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+index 10fd8b04105e..1d2511984156 100644
+--- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
++++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+@@ -49,6 +49,7 @@ struct pmt_event {
+ 
+ /**
+  * struct event_group - All information about a group of telemetry events.
++ * @name:		Name for this group (used by boot rdt= option)
+  * @pfg:		Points to the aggregated telemetry space information
+  *			within the OOBMSM driver that contains data for all
+  *			telemetry regions.
+@@ -60,6 +61,7 @@ struct pmt_event {
+  */
+ struct event_group {
+ 	/* Data fields for additional structures to manage this group. */
++	char				*name;
+ 	struct pmt_feature_group	*pfg;
+ 	struct mmio_info		**pkginfo;
+ 
+@@ -78,6 +80,7 @@ struct event_group {
+  * File: xml/CWF/OOBMSM/RMID-ENERGY/cwf_aggregator.xml
+  */
+ static struct event_group energy_0x26696143 = {
++	.name		= "energy",
+ 	.guid		= 0x26696143,
+ 	.mmio_size	= XML_MMIO_SIZE(576, 2, 3),
+ 	.num_events	= 2,
+@@ -92,6 +95,7 @@ static struct event_group energy_0x26696143 = {
+  * File: xml/CWF/OOBMSM/RMID-PERF/cwf_aggregator.xml
+  */
+ static struct event_group perf_0x26557651 = {
++	.name		= "perf",
+ 	.guid		= 0x26557651,
+ 	.mmio_size	= XML_MMIO_SIZE(576, 7, 3),
+ 	.num_events	= 7,
+@@ -157,6 +161,9 @@ static int configure_events(struct event_group *e, struct pmt_feature_group *p)
+ 	struct mmio_info *mmi;
+ 	int num_pkgs;
+ 
++	if (!rdt_is_software_feature_enabled(e->name))
++		return -EINVAL;
++
+ 	num_pkgs = topology_max_packages();
+ 
+ 	/* Get per-package counts of telemetry_regions for this event group */
 -- 
 2.49.0
 
