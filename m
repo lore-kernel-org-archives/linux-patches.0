@@ -1,107 +1,107 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E32B2F1FC9
-	for <patches@lists.linux.dev>; Thu, 26 Jun 2025 22:34:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8F8F510
+	for <patches@lists.linux.dev>; Fri, 27 Jun 2025 00:26:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750977245; cv=none; b=VkB3tm+hvDhrrg/4oNrBvpjCjAtFIT1gGG5+6ctU01Ciqzk+ejY/P3pxxGVjO6bcEh4nWMBWUWPLpbsuTp0/qCSvIenu8ljLstz9TbVnG76X8ojMh20pLW26Wk9DO3D3SpY5+puFkI42P59dpbKVjt/WAvbhcgdmwWAHd5f7uyI=
+	t=1750984008; cv=none; b=ZZhrrafmLM5J1JNa7IdYa/TFS3KHzBZ1xsKbSwIlIQ5AmvVjoZ0aEyBmNgpnWzOMyIFkUhyR8JwNjOq7hMbLllAlh4d5il2KO1D44nMnbd3NZVuRjjSUt9rdqVo0H/dwLflAiSE8G2rDhgdrSYSeMb9vVvWun/ueBkbd4Hi+sag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750977245; c=relaxed/simple;
-	bh=Ml11YTIUf72xieq1cUkCUHiMB6pPlDArwfbYfvU7a1w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UI1OY9SGCuNO9tl4k0I989eXq4moVDs8L4h3OjdiWbbrasKWh8fI38Adyw7MulvMmsZ4cQ6fwBPbSqt+0HWWcF8u3Q64zC0tnaxSMHWx7jim3OfK2KzNPs69NveAb/Z1yg7153QqO2BMvE/Aq1Hb3iC7YgMPcNaYsvk3xAAgtOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=kljsoG+k; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1750984008; c=relaxed/simple;
+	bh=2jlhl1pT0vOK+0eJYYLHSdYMDOjk44bGVrpxsdU43YA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GlwEFFqYqfJFfeiFnQttAy+jEeY4ZR9HRhlBMdaJa1ClVibwlXW7iQux4/tv/+E/ODmqtYaG1iqzQYd8fZrrXx6D02zN4jb5o1TUF3TTmJLHxzWmc+Aqe3rh82c26B+D+YuVaGza9s129QppDi7PykVcj0/AmKKnO7iKebGV2v8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fPeK/WbX; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="kljsoG+k"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a575a988f9so865109f8f.0
-        for <patches@lists.linux.dev>; Thu, 26 Jun 2025 15:34:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1750977242; x=1751582042; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WRr9Ckwsw7SMw3MOv9t/vxBNGytl36tGaFii8n1LWHA=;
-        b=kljsoG+kntIQFtwdP1Smuqc+6nkR4m0yS8D4jvPNS+SyR/ER5AWBa8Le8Os32qpW/a
-         PNc5gUuhFGUbQdVbHhn5EI2p1At1dk3WgQXRdvMpfKpHsmFlb+xVmIl24025iWllv7nw
-         5zF76boG2JZlQ6/iFSkqWqu7VqSW8LthIBYzF1gw1L74DODaqJRcDBZH9/B7L9UcOa+u
-         7n7Ssky4FCWeGr7fRHTi/6wYa6pXc8CjsP4peCcXyxZLj/+ylCU3E1Cz+8l0j1WCxEgG
-         /8pntp1p09P/nJHKLC5aOVXNhUWHOaUsIf9GGf5Q137byZZB09Euq/YyDPkm+tzLeyjd
-         VUCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750977242; x=1751582042;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WRr9Ckwsw7SMw3MOv9t/vxBNGytl36tGaFii8n1LWHA=;
-        b=oCdeiy53sDQPsfxRaGI8rbCtovtTLdLtm8eM3Ox8gFQsva7xB4J4Zgk3VmhIf8tTR/
-         4g8+/KamSU7MAn5A6rtseUibKHcTw5UM0W3iKu2L2dq205f0/kfIF521IZbIJOLHjtHo
-         uTrA9alawjqO54TIN8WKfvsm6f5YasQLgXN3LtFAud5dayAumFee4i4abE3f/Ayt8iHO
-         BKRcBzZogYmr8p4B28saiDt2a7LrgDUftAgMD60L7TKJvKkjME81gibTqkeQDUALQbKe
-         UEbsPOl2SNVLjpJTFFaYfTj0rn5IGF5oc+XCCalKU8RV/YUFmEWmJ5taRG4ItkDXkoWM
-         XGIw==
-X-Gm-Message-State: AOJu0YyzzsV1P5HSo7m6Cb4eCs7vTcGFSSBfCcpvBqb6FQcfuAPSryUY
-	oWL5jg1MbhMTGRhcazlATZKu2IrByo9GlU9Mr1g/HzjZRaTEmr3x7Pc=
-X-Gm-Gg: ASbGncvun+WdrT2DPDDmCY6wgm16SdDg1SoBSUnf53ojc6RH79FhPO12l4gVtrmoP2W
-	BKSYy0yukGtSimzOPJvbulRJtQKHZmPQH9XeKJGRRR3R0PmMiP/nZ9fckYt74BBU4TuUsGlKDa1
-	9qD1ZWL8AInSsp+JvW+PsM5jAwjW3mqZqhw89aP2KiAb1EAowJTasgFApQWnnTSOZmon1IuNUyt
-	YjIQsuyn7V9ZTTRRnF2cglFKF+meFO6OWugw2BgpfIt6iIm8w1hKZO1/P2Y7rFgXDGM9JxeZ4bm
-	UR0NJqY9F/x7QO3rBRHw/skVEFjUbk4vV/NMDHf3AQrCLtCLorK/g/x5ZVqz0u/jO6IDljRgBBC
-	ZLg7D4MbnBBdJBV3NtvgqwkqFBejtnGSk1FEDztgj
-X-Google-Smtp-Source: AGHT+IHE3mEWCOk2D7NMvKDWFa3ExDj855vpBsW8qfc7kytidjqXCeSA1XBf8xHQ9zw2M4DUiOWsUg==
-X-Received: by 2002:a5d:64e3:0:b0:3a8:6260:142c with SMTP id ffacd0b85a97d-3a90bba866cmr1146249f8f.59.1750977241795;
-        Thu, 26 Jun 2025 15:34:01 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2ac2b0.dip0.t-ipconnect.de. [91.42.194.176])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a88c7fb20esm1026644f8f.36.2025.06.26.15.34.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jun 2025 15:34:01 -0700 (PDT)
-Message-ID: <0614617f-be49-4771-8bd1-1b227e6d11df@googlemail.com>
-Date: Fri, 27 Jun 2025 00:33:59 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fPeK/WbX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1750984007; x=1782520007;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=2jlhl1pT0vOK+0eJYYLHSdYMDOjk44bGVrpxsdU43YA=;
+  b=fPeK/WbX/iPwPVa80AxaYDiVD3Fo1QtneTLTPzUAjejyYFPrXQXRBJOh
+   MoEkxfTUAK+/lgArYm5tkIYCcJer7NiU6u1U50Vro3nFkaLLrHG6j4zt2
+   JxCO5visTjFaHMIEYH5ixEBnbMKqfIWqZWfpBY6PHEL/YRsVx98mXlJ/B
+   EziyVSfIyGX6QSdCypuETnj/zYtfQfiQO10/BjVB0D4fpSFwIBIRVKcbs
+   P2vrlcRBZQQLdr2ASJXuCfCxNdRSc2IgKbwcPaankQpMvtLStKo3hj6XQ
+   8jsql3wUVjk9W46b1owF8ZQXiEDvZ4yo/S23LhUSQQ4i6JfT+v2G0kXss
+   Q==;
+X-CSE-ConnectionGUID: 7PHAlW78SQ2rrr13QQdhmg==
+X-CSE-MsgGUID: yDENT+0cQI2787+CwDfLwg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11476"; a="75842879"
+X-IronPort-AV: E=Sophos;i="6.16,268,1744095600"; 
+   d="scan'208";a="75842879"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jun 2025 17:26:47 -0700
+X-CSE-ConnectionGUID: o4gK8dzQTaKbZnIK+5LjZg==
+X-CSE-MsgGUID: 3j2suu7bTYe+PJ9hcPFwMg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,268,1744095600"; 
+   d="scan'208";a="189855296"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jun 2025 17:26:47 -0700
+Date: Thu, 26 Jun 2025 17:26:44 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>
+Cc: x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v6 00/30] x86,fs/resctrl telemetry monitoring
+Message-ID: <aF3lRKURweT4mhAj@agluck-desk3>
+References: <20250626164941.106341-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.15 000/589] 6.15.4-rc3 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250626105243.160967269@linuxfoundation.org>
-Content-Language: de-DE
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250626105243.160967269@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250626164941.106341-1-tony.luck@intel.com>
 
-Am 26.06.2025 um 12:55 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.15.4 release.
-> There are 589 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Bother. Just got e-mail after posting v6 from lkp. Apparently
+I applied the fixes to avoid "'d' used before set" in
+domain_remove_cpu_ctrl() and domain_remove_cpu_mon() to some
+other branch than the one that made it to my final version.
 
-rc3 builds, boots and works fine on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No 
-dmesg oddities or regressions found.
+Please imagine the hunks below merged into patches 7 & 8.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+-Tony
 
+---
 
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 3ec8fbd2f778..39cee572a121 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -651,8 +651,8 @@ static void domain_remove_cpu_ctrl(int cpu, struct rdt_resource *r)
+ 	if (!domain_header_is_valid(hdr, RESCTRL_CTRL_DOMAIN, r->rid))
+ 		return;
+ 
+-	cpumask_clear_cpu(cpu, &d->hdr.cpu_mask);
+-	if (!cpumask_empty(&d->hdr.cpu_mask))
++	cpumask_clear_cpu(cpu, &hdr->cpu_mask);
++	if (!cpumask_empty(&hdr->cpu_mask))
+ 		return;
+ 
+ 	d = container_of(hdr, struct rdt_ctrl_domain, hdr);
+@@ -696,8 +696,8 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
+ 	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
+ 		return;
+ 
+-	cpumask_clear_cpu(cpu, &d->hdr.cpu_mask);
+-	if (!cpumask_empty(&d->hdr.cpu_mask))
++	cpumask_clear_cpu(cpu, &hdr->cpu_mask);
++	if (!cpumask_empty(&hdr->cpu_mask))
+ 		return;
+ 
+ 	switch (r->rid) {
