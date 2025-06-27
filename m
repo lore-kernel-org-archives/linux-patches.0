@@ -1,83 +1,121 @@
-Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73B312A8D0;
-	Fri, 27 Jun 2025 08:28:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751012913; cv=none; b=jvJcpJEUMSu4Bta0txEUuYKCETGtrA1b6D/AvZNYEbakFMOhRewlrzn78MEdaO/zNy+6vGp7kjlMo3BJYi1PDgWZXO/6n5yyg848J05DVtswCD22OvtI9kCB+0DdGtclSF2GmirOg0kTyo7LRo29qYhvFDQ18JqP7rriX7FtmtU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751012913; c=relaxed/simple;
-	bh=spP82C2j5HjhFI0G1+bra4EcZ2gIWe3Xap3JvO6Y+tY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ugvhp0FkpKRopHS8nBH1OvaoeHUn2om7q/7taQTFpNBSkRZr3qTQdcCI1HuBNI/n4c7uDpqixOoPdwl/bq7B0ZVnoWZhgJ7WnpxOBApgxmYvb1/xyMSqoSFbGTO/+2CSOly0Os6h0bcE+zSXg6jUjGxryfKddMaSbOpwB7ZOyL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=ruBmO6pE; arc=none smtp.client-ip=85.214.250.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="ruBmO6pE"
-Received: from 8bytes.org (p4ffe03ae.dip0.t-ipconnect.de [79.254.3.174])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by mail.8bytes.org (Postfix) with ESMTPSA id AFEEC4CD24;
-	Fri, 27 Jun 2025 10:28:29 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
-	s=default; t=1751012910;
-	bh=spP82C2j5HjhFI0G1+bra4EcZ2gIWe3Xap3JvO6Y+tY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ruBmO6pEKxHw+iozycJ13LII2JRcnlvNJbdkcSPtOvF+7GcYHHzQ8rIwQsDyGYdm4
-	 WJoGBf2xPamc7hgsjAF1E+f1v20tTwnCyok8JG8vLlQJJLSj4ROIDyejWb6Q5Gu157
-	 blQjCKlEmYkU5eFyu3Zr/8IYwouNWYpdl74bpyomnipeY0J6lDTGjOrT9p1pBhlPec
-	 eKZkDo2TECJdKfSKqfRMI8vxpVjNmEzyMlfWU2TLjQ/XuPehgEnYJHJNJtMEbqyKdH
-	 tQmL3gD1g1KD8+Sfs25b06SXqogj0/2g+e263Fp0JteVfDPr+VYn/CLyNUsnc+j+we
-	 MqcTPrBaNcFRg==
-Date: Fri, 27 Jun 2025 10:28:28 +0200
-From: Joerg Roedel <joro@8bytes.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Albert Ou <aou@eecs.berkeley.edu>, asahi@lists.linux.dev, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, David Woodhouse <dwmw2@infradead.org>, 
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>, Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev, 
-	Janne Grunau <j@jannau.net>, Jean-Philippe Brucker <jean-philippe@linaro.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org, 
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	Matthew Rosato <mjrosato@linux.ibm.com>, Neal Gompa <neal@gompa.dev>, Orson Zhai <orsonzhai@gmail.com>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Robin Murphy <robin.murphy@arm.com>, 
-	Samuel Holland <samuel@sholland.org>, Sven Peter <sven@kernel.org>, 
-	Thierry Reding <thierry.reding@gmail.com>, Krishna Reddy <vdumpa@nvidia.com>, 
-	virtualization@lists.linux.dev, Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>, 
-	Yong Wu <yong.wu@mediatek.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
-	Lu Baolu <baolu.lu@linux.intel.com>, Kevin Tian <kevin.tian@intel.com>, patches@lists.linux.dev, 
-	Niklas Schnelle <schnelle@linux.ibm.com>, Sven Peter <sven@svenpeter.dev>, 
-	Tomasz Jeznach <tjeznach@rivosinc.com>
-Subject: Re: [PATCH v2 7/7] iommu: Remove ops->pgsize_bitmap
-Message-ID: <r55jzziwjtb37qufil4zgj22zqbmu7gpjs7gciib66ix564baz@juuhk6bqoj2j>
-References: <0-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
- <7-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B19B271464
+	for <patches@lists.linux.dev>; Fri, 27 Jun 2025 09:39:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751017171; cv=none; b=mDanOdmWYlABKMK6oSE0Y7S+5OAMJC7r+7xYu2ouP2RUA6QSdCGXn6cmCFPrm8h6k5+2UOAZU5IKZet7YjpJR/8czjHKL0mMLrk+hG7u+nSLD13rZIdmYvP9R4uG+b2vO7H9BLJprcdVC4MoK1UPJbQGZDW1R1CB2XIxy8udp6A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751017171; c=relaxed/simple;
+	bh=sqHLSnoPdND2n2YqIlO9rU36LPxSklJW5fcjecRMfIU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PN2+Q96QUxnzVztEpdEtMrEpsOWeDMPYS5CcuFBh2Escfwj2seOUCrq5swV+0YsFjEuvfeiDQNWC2ok/RNJDHlqZAWHQCk/0WqW0PxxrgklzregWXgOiWg6oqHbXsBLsZLXoZsSU73X39v20M2DWuy5LpNfRhutryJUr7mx/S7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=n/Ha0JW6; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="n/Ha0JW6"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-3122368d7c4so1706318a91.1
+        for <patches@lists.linux.dev>; Fri, 27 Jun 2025 02:39:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl.com; s=google; t=1751017169; x=1751621969; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7EoXolbAXfPP7jncmJ+OthdgINgb5uiOwXnkRnnjQZQ=;
+        b=n/Ha0JW64elLDyoUPm1zwe8mIXSwQJp+ECwBmJzWtPb/ushrSg12WY5SDc2p7LT5fy
+         Q7YPsSsZfug6qy64y2hLmczrLKQJGgpNPtrHvx5+o+rkI5dWa5crGtj6QNGkoyA04mO7
+         dl1HcI55CkD4a05Barf6SWCYAj437DVCSxil8i1MxW54rd+9V4VeqVPJg7X0jWX4kBI1
+         JUXvzGOKC784O1G4QlCchORGfUuqPncAUnz95CC0bzv9gyBzE3yd3Tb3sFDDszluH3KT
+         KbcGwqFkzMhND0D8mj8qTkQ+ap2t8t6z0PElD6PGZSXikDXyYGPXbSbF2hKM9ESgvvHW
+         t7PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751017169; x=1751621969;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7EoXolbAXfPP7jncmJ+OthdgINgb5uiOwXnkRnnjQZQ=;
+        b=hZ18v3mZjK/zfio8dRXQX6B1v43KysIxB7ioeyua7053P6JE6vJTqLfktP421xSk7/
+         x8jQilSv13ZMNZTyhzlSS/pzxyv8xyz9krPVL+B8ro2pFxoURCSGeCkpPgT/Qprym5Cm
+         3AfMcPJ9iD5drc3pdkm77suq0yuuo+BJyb2W8xv/N8JSLKAUMMc/Br4mGEsBh2zXebk7
+         PUrCyJkE90Zn7mDm9KyvUq2c3jh8an0a+iRxpUrkDQs+HPAnJH8yNE8wvQP4lwjo+/vO
+         g5pQyufFn9KW6rztAUOuGBSMg0nwzv8CZXUm4W3Bd5EkoG8Hn2wEud82lvTRHk/t9NY7
+         12kQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXkHrA+zqBYSDofmfXNw1yI5U4t+/VuHc5xh5yJN20WTky6Mj3dUgQgHaSAADs8aEry643H3Ia0@lists.linux.dev
+X-Gm-Message-State: AOJu0YzX+8BxoK+7XZmTZofkFchkceOEhc5vrxS8VRc1yu2OAk5Lu1fh
+	Cv5Jb4AtTa5rCfGlxZFBjgFq96WwKENHQuSEkWuiSYA7Cg8WW8IhSjeaeDxaULqTTguhHuXJFXm
+	bVcpdvR7jf5twbmHDkd6VDRptgMqQlf+hq3AxMl43ng==
+X-Gm-Gg: ASbGncsoiv+sHC0ntzJCENfUmKmVdBkUGoSOEkGtiVl8yuXEGc57oYNPQ1zes191/lW
+	/aqZ3e+37CysIyR6eljhm9+V293JD5bC0CjlOK9l7zlDp/3tQdmlrkP+SIbR4hUU0QYh0IbCWPJ
+	aoa1OzkaYuvbcCQmZr9Wk2q5lFXazIGL+kYiduoBE52A0=
+X-Google-Smtp-Source: AGHT+IGP36mzrkCAQx/61O1uVwnGrnhnEFQFaqi7Au+tCZKEUAsLtA9E3QNCQ4g5Lbjr9hqyOV0ruBng7xb3pRA7xMQ=
+X-Received: by 2002:a17:90a:f94d:b0:311:c5d9:2c7c with SMTP id
+ 98e67ed59e1d1-318c9250375mr2738869a91.23.1751017169338; Fri, 27 Jun 2025
+ 02:39:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
+References: <20250626105243.160967269@linuxfoundation.org>
+In-Reply-To: <20250626105243.160967269@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Fri, 27 Jun 2025 18:39:13 +0900
+X-Gm-Features: Ac12FXzLbc93PcgOHbJI6EISu6a8l58rrpz2xfCSW65gNinqzCCU2fndTSOrQ-Q
+Message-ID: <CAKL4bV5mKKAAE2AXWDVLRhzUNiG51Q7jsx0FhKx_GsDJMRGpjQ@mail.gmail.com>
+Subject: Re: [PATCH 6.15 000/589] 6.15.4-rc3 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Jason,
+Hi Greg
 
-On Mon, Jun 09, 2025 at 05:41:31PM -0300, Jason Gunthorpe wrote:
-> No driver uses it now, remove the core code.
+On Thu, Jun 26, 2025 at 7:56=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.15.4 release.
+> There are 589 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 28 Jun 2025 10:51:38 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.15.4-rc3.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-That is actually not true, the MSM driver still uses it, and this patch breaks
-my arm32 compile tests. Please send a fix for this driver so that I can put it
-on-top.
+6.15.4-rc3 tested.
 
-Regards,
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-	Joerg
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+[    0.000000] Linux version 6.15.4-rc3rv-gd93bc5feded1
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 15.1.1 20250425, GNU ld (GNU
+Binutils) 2.44.0) #2 SMP PREEMPT_DYNAMIC Fri Jun 27 11:57:58 JST 2025
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
