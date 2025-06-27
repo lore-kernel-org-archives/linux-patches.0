@@ -1,63 +1,78 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8F8F510
-	for <patches@lists.linux.dev>; Fri, 27 Jun 2025 00:26:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CAC1218ABA;
+	Fri, 27 Jun 2025 06:56:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750984008; cv=none; b=ZZhrrafmLM5J1JNa7IdYa/TFS3KHzBZ1xsKbSwIlIQ5AmvVjoZ0aEyBmNgpnWzOMyIFkUhyR8JwNjOq7hMbLllAlh4d5il2KO1D44nMnbd3NZVuRjjSUt9rdqVo0H/dwLflAiSE8G2rDhgdrSYSeMb9vVvWun/ueBkbd4Hi+sag=
+	t=1751007400; cv=none; b=KR75RSduUkpNsUJxobrImWMeJSxAeXsHXMnLRYu1QbNscjhRkSjDah2zeODrZINspJ1vSHMaAwqxnNtlRdV8uIcCfQGgYHD0JTbUGXrdOrRjt6lKcKXTQf1q0YFgDXuB/bC7kLWt+Oe+8XTW/iye2wpGVR0pl0zabvPllQRKz7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750984008; c=relaxed/simple;
-	bh=2jlhl1pT0vOK+0eJYYLHSdYMDOjk44bGVrpxsdU43YA=;
+	s=arc-20240116; t=1751007400; c=relaxed/simple;
+	bh=8cyCUVLrNKS6tVu4VEKnS5rU8EEbVvMM4YBN4njzgJc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GlwEFFqYqfJFfeiFnQttAy+jEeY4ZR9HRhlBMdaJa1ClVibwlXW7iQux4/tv/+E/ODmqtYaG1iqzQYd8fZrrXx6D02zN4jb5o1TUF3TTmJLHxzWmc+Aqe3rh82c26B+D+YuVaGza9s129QppDi7PykVcj0/AmKKnO7iKebGV2v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fPeK/WbX; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=OcZRh5mJwlr6jXbEsMoKvyjZTpZJEFLpuIa+HYUTnctvxw0zcuIHvyQ9nqL6LT2y2AxlHlwWSt6nxrQ1/Mr2o5rhBksNLT+vkk4XCsGmdeK2Hbw8dWtZ5tn6s4hSbrAcd+UwAonWAko3YttadjhH6Si8muhheksMvpLSJx2eiJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=XU+Ec1H6; arc=none smtp.client-ip=85.214.250.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fPeK/WbX"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750984007; x=1782520007;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=2jlhl1pT0vOK+0eJYYLHSdYMDOjk44bGVrpxsdU43YA=;
-  b=fPeK/WbX/iPwPVa80AxaYDiVD3Fo1QtneTLTPzUAjejyYFPrXQXRBJOh
-   MoEkxfTUAK+/lgArYm5tkIYCcJer7NiU6u1U50Vro3nFkaLLrHG6j4zt2
-   JxCO5visTjFaHMIEYH5ixEBnbMKqfIWqZWfpBY6PHEL/YRsVx98mXlJ/B
-   EziyVSfIyGX6QSdCypuETnj/zYtfQfiQO10/BjVB0D4fpSFwIBIRVKcbs
-   P2vrlcRBZQQLdr2ASJXuCfCxNdRSc2IgKbwcPaankQpMvtLStKo3hj6XQ
-   8jsql3wUVjk9W46b1owF8ZQXiEDvZ4yo/S23LhUSQQ4i6JfT+v2G0kXss
-   Q==;
-X-CSE-ConnectionGUID: 7PHAlW78SQ2rrr13QQdhmg==
-X-CSE-MsgGUID: yDENT+0cQI2787+CwDfLwg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11476"; a="75842879"
-X-IronPort-AV: E=Sophos;i="6.16,268,1744095600"; 
-   d="scan'208";a="75842879"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jun 2025 17:26:47 -0700
-X-CSE-ConnectionGUID: o4gK8dzQTaKbZnIK+5LjZg==
-X-CSE-MsgGUID: 3j2suu7bTYe+PJ9hcPFwMg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,268,1744095600"; 
-   d="scan'208";a="189855296"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jun 2025 17:26:47 -0700
-Date: Thu, 26 Jun 2025 17:26:44 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Fenghua Yu <fenghuay@nvidia.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
-	Chen Yu <yu.c.chen@intel.com>
-Cc: x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v6 00/30] x86,fs/resctrl telemetry monitoring
-Message-ID: <aF3lRKURweT4mhAj@agluck-desk3>
-References: <20250626164941.106341-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="XU+Ec1H6"
+Received: from 8bytes.org (p4ffe03ae.dip0.t-ipconnect.de [79.254.3.174])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.8bytes.org (Postfix) with ESMTPSA id B2DBE4D686;
+	Fri, 27 Jun 2025 08:56:36 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+	s=default; t=1751007397;
+	bh=8cyCUVLrNKS6tVu4VEKnS5rU8EEbVvMM4YBN4njzgJc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XU+Ec1H6zYbpoJnBguJ7GDr9FEN9rGsre0pu8KqaKGy81Z4kSMmAWmsLnuh8C6DXX
+	 NNDbZaaw/8hi+SEmWsp5x3pevvQorZ/gnxPIioOfE8HvHGxwz1755SXHcf4LYAXtZ2
+	 4mCpj7FQzDFz6VXNwUJwKVqKYmzDv8PJ9OZQsqYZo+D5KCzC+3KXRAYaDgs30cvzbf
+	 b9rnpd2DjGQE4e7TFeqIpB49EWs2qUxIo370ZNhi4u0ii2sX+By78Bt9A5CzII9ZQu
+	 qAYA7JvY8BJ+VxyGicYP9L2BwXzRfRdSbcDYET1GuYoeHH7ug+hgwd2x2yUSyjfWiH
+	 g0r0oGD4DIalg==
+Date: Fri, 27 Jun 2025 08:56:35 +0200
+From: Joerg Roedel <joro@8bytes.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>, Alim Akhtar <alim.akhtar@samsung.com>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, asahi@lists.linux.dev,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+	Janne Grunau <j@jannau.net>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-mediatek@lists.infradead.org, linux-riscv@lists.infradead.org,
+	linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Neal Gompa <neal@gompa.dev>, Orson Zhai <orsonzhai@gmail.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Samuel Holland <samuel@sholland.org>, Sven Peter <sven@kernel.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Krishna Reddy <vdumpa@nvidia.com>, virtualization@lists.linux.dev,
+	Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+	Yong Wu <yong.wu@mediatek.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>, patches@lists.linux.dev,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Sven Peter <sven@svenpeter.dev>,
+	Tomasz Jeznach <tjeznach@rivosinc.com>
+Subject: Re: [PATCH v2 0/7] Remove ops.pgsize_bitmap
+Message-ID: <aF5Ao_yAbTGCPh3u@8bytes.org>
+References: <0-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -66,42 +81,15 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250626164941.106341-1-tony.luck@intel.com>
+In-Reply-To: <0-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
 
-Bother. Just got e-mail after posting v6 from lkp. Apparently
-I applied the fixes to avoid "'d' used before set" in
-domain_remove_cpu_ctrl() and domain_remove_cpu_mon() to some
-other branch than the one that made it to my final version.
+> Jason Gunthorpe (7):
+>   qiommu/arm-smmu-v3: Remove iommu_ops pgsize_bitmap
+>   iommu/arm-smmu: Remove iommu_ops pgsize_bitmap
+>   iommu: Remove ops.pgsize_bitmap from drivers that don't use it
+>   iommu: Remove iommu_ops pgsize_bitmap from simple drivers
+>   iommu/mtk: Remove iommu_ops pgsize_bitmap
+>   iommu/qcom: Remove iommu_ops pgsize_bitmap
+>   iommu: Remove ops->pgsize_bitmap
 
-Please imagine the hunks below merged into patches 7 & 8.
-
--Tony
-
----
-
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 3ec8fbd2f778..39cee572a121 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -651,8 +651,8 @@ static void domain_remove_cpu_ctrl(int cpu, struct rdt_resource *r)
- 	if (!domain_header_is_valid(hdr, RESCTRL_CTRL_DOMAIN, r->rid))
- 		return;
- 
--	cpumask_clear_cpu(cpu, &d->hdr.cpu_mask);
--	if (!cpumask_empty(&d->hdr.cpu_mask))
-+	cpumask_clear_cpu(cpu, &hdr->cpu_mask);
-+	if (!cpumask_empty(&hdr->cpu_mask))
- 		return;
- 
- 	d = container_of(hdr, struct rdt_ctrl_domain, hdr);
-@@ -696,8 +696,8 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
- 	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
- 		return;
- 
--	cpumask_clear_cpu(cpu, &d->hdr.cpu_mask);
--	if (!cpumask_empty(&d->hdr.cpu_mask))
-+	cpumask_clear_cpu(cpu, &hdr->cpu_mask);
-+	if (!cpumask_empty(&hdr->cpu_mask))
- 		return;
- 
- 	switch (r->rid) {
+Applied, thanks Jason.
