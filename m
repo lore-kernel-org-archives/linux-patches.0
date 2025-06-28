@@ -1,139 +1,202 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2084.outbound.protection.outlook.com [40.107.223.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAD428C862
-	for <patches@lists.linux.dev>; Fri, 27 Jun 2025 22:28:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751063293; cv=none; b=fQrHrqV6mUoqMe4UpMkqwvwDGnDsPP40ZaK0iMg5qtolia/ambv11zKTTb4wiBBvaeNZHyegKA66UjPMGIy3KO9s6BQHq/VtqHv3I134ZSquYPwGue4hvJC+3wFGzd9KZnD7zQUFHg7/y1uL9koTpNMVckzMzmIskCimJi2NiTw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751063293; c=relaxed/simple;
-	bh=mvyzCImA9C9zhndmyufLSspMX/CTzojFGEHMAVwofdc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mA1FdR6ROITS13lDdgHxRMowUEIQPh6whzPhHpKY8B/yR68xNdo3W3qmXPAVnjX9jZRXgXtvhtqJYGjTRUs0BQDBsIlMPIgRmfhxDaoQVYvU8eEbPXvmjSrZ3GDayklUlT0kkCp0BHYNAbxqRUPdFl8+9FLdVcVODnBndOoolzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=oFrLFPDF; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B863FC2;
+	Sat, 28 Jun 2025 07:43:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.84
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751096587; cv=fail; b=hCyJiyHqqLvLiERHZcyn0knQ96GqTDAJV8ZnvJzW0VE637hGw83tIjLQTaeUzthsjddiWalt1hRsbCO2PttguK7y7K0Ka3Tbm5I4nK+5TCPfrp550VyLGUHNK8wVMuu7g1IPkGM8XpqM/h31kuInrcJyFkxGtgnY3x95LbSF/jU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751096587; c=relaxed/simple;
+	bh=/xTnbqaUw46VygF4vXMLrYkMZzqEISELVVriNCwKgug=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=YJrnMwkf1fvDRZJHc+vu+AYzmvyRhrYB3fLTf/MwLfG2aNW7CQbd+iY5qwJsTkLECVpFMrQAFXGzZNMNdeV6rrPjs3X34uYT5oe9+l0VR2tQ2/Z1wnX7fn/wEz8zHrm+1F27+f7N9wvb9Zn8AYZsRcmAiw5ZjoyoUZlR+Cp2oGU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=UhDZefan; arc=fail smtp.client-ip=40.107.223.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="oFrLFPDF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751063291; x=1782599291;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=mvyzCImA9C9zhndmyufLSspMX/CTzojFGEHMAVwofdc=;
-  b=oFrLFPDFC9xXUeW+J/AUwmpQoSIqQUD2vO/FRIwN2z6/pRg7px3DfAcB
-   7haHyVN5mNK4V3pBvkrNJ0Nb1f9nkOtZUevmwpFKkq6WnNyKyzl9MyisG
-   UwGeYX5JS79KEJztbtZKHCatIh1WQqFns01nsHcOfzdOeMZ3mFo6mMcf0
-   nDX0sy+aNAyL++mXcPBkFnVgulV5rTuxlDVb9JqwlF2+AimmGmbig09z1
-   Pzm+Li/DlkRKQ4yCdYeeDW55rLZpMEqcQWGYjBfq2+Gbt19mJht6E0XN3
-   FUSWQzTfwrYuxUVu4bMcrbrFBVAYbGHj7cDiDJXCuen19OB3dgUjsVW1y
-   A==;
-X-CSE-ConnectionGUID: 50mLB3XVQsSU4Ry+8nZ8ng==
-X-CSE-MsgGUID: gYdCKPyIQ8aa1Lp/f0wV1Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11477"; a="64074397"
-X-IronPort-AV: E=Sophos;i="6.16,271,1744095600"; 
-   d="scan'208";a="64074397"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2025 15:28:10 -0700
-X-CSE-ConnectionGUID: eUDheSWeQDugdt2kld5bYQ==
-X-CSE-MsgGUID: VYGaKQjMRM+ErcoFLQB7xw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,271,1744095600"; 
-   d="scan'208";a="156959491"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2025 15:28:10 -0700
-Date: Fri, 27 Jun 2025 15:28:09 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Fenghua Yu <fenghuay@nvidia.com>
-Cc: Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
-	Chen Yu <yu.c.chen@intel.com>, x86@kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v6 14/30] x86,fs/resctrl: Support binary fixed point
- event counters
-Message-ID: <aF8a-bbfn2xhnKXz@agluck-desk3>
-References: <20250626164941.106341-1-tony.luck@intel.com>
- <20250626164941.106341-15-tony.luck@intel.com>
- <a14b2ed0-c319-43df-85f1-f97ecd6b688b@nvidia.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="UhDZefan"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=T2Ezvu1uHaBJewAClZikSBFjiU55YHSrdqBthTZJkB02Q4DLdQsjaOZIFbHekpzzy9YDZB8xC1l6QjVUHK33mNmleY/EiM4pJT/ecYiR254zaXRzgpIGBcdcfrWbfjeUEP/pRB3L+ZkylslTHEd59k8TvcPMAFqRS1/YVqPvgKRApg20b8jcDjzl46yEnJeR8o+G8iOztu+XsGljLlT1aJ6Lc1SIMXuE2b31ETX0ElP//r3qQH6V2NR1XGXKSs67WDq0OdiAPTm+aMab/z8ump823mJQjXhYBiUaOV+3AuI1tYGugncwSx+r8Zxj8SCLNdAyAOX1Q0Ii0ZRce8ShtA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DvttU3IH2zMTh/oVRO9vhdifVWmqUaPXXbK/9IZtB6c=;
+ b=E5ArKMrRJAHLAW1XxGZsovz/PO1iLDpoK9k33UWgYwIc4wQtID2tMuIl52+ac9F2wC66cKrjalN/MWPT2L23f6CrJAsKBH5Y8Ud+YcPoEqyAZmvoIY2n+tdmgxf474/lkAP68dDebcAMr8ug0Ux+xSSO5r54o/2cLgzDatI+J4PrglB187RpxIlgezGG1xjAWijeOPWHgvUHRKGRcbB+ZBcspywPXQ20LxGpN0wj3o87naxU46Jj2VzV6jZ+yGyXdGsIIAP3WfDR7biwBbjC3e0PlB56t2auWLA/1WfYTTHsiF6IDEuZ3AeX7Sx25LLg2pI6TBgln0WjN/rxodZTPw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=8bytes.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DvttU3IH2zMTh/oVRO9vhdifVWmqUaPXXbK/9IZtB6c=;
+ b=UhDZefanmC658f7T1qcdO7sAiHuRwBIqxXJqKruKW3sMdRExzwhLCkvSJRB0TC61b1r+BPtnVYY/pQcGBa3Q2kLQWJhgGtwQ28Mtx1WtcXpMz7aHUg+Kk1JU09aGhImvRuMAYpxzCbt55GJFrcsmyiBfrbt5TRfvH8FfLPuTcQYpBEkNIeQWJ9cQgON34MaaSZi4LK+Z4Zg9sc+GF8Qr/AkoQbmyJOVBFMjyA/lcRCHmabFX6gKC4KBx2hVDtvx6ETkDJ9VJX0Waef8uWjid4sFMgtsI8lWIURj+A5f/HzvQA9aJ6rSbSJcJba5BfWphhwJEnJJPqwIxnHzjiNXEhg==
+Received: from DS7PR06CA0032.namprd06.prod.outlook.com (2603:10b6:8:54::17) by
+ DM4PR12MB6399.namprd12.prod.outlook.com (2603:10b6:8:b7::15) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8835.28; Sat, 28 Jun 2025 07:43:01 +0000
+Received: from DS3PEPF000099D5.namprd04.prod.outlook.com
+ (2603:10b6:8:54:cafe::5) by DS7PR06CA0032.outlook.office365.com
+ (2603:10b6:8:54::17) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8880.21 via Frontend Transport; Sat,
+ 28 Jun 2025 07:43:01 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ DS3PEPF000099D5.mail.protection.outlook.com (10.167.17.6) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8880.14 via Frontend Transport; Sat, 28 Jun 2025 07:43:01 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Sat, 28 Jun
+ 2025 00:42:50 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Sat, 28 Jun
+ 2025 00:42:49 -0700
+Received: from Asurada-Nvidia.nvidia.com (10.127.8.13) by mail.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
+ Transport; Sat, 28 Jun 2025 00:42:48 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: <jgg@nvidia.com>, <joro@8bytes.org>, <will@kernel.org>,
+	<robin.murphy@arm.com>, <rafael@kernel.org>, <lenb@kernel.org>,
+	<bhelgaas@google.com>
+CC: <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<linux-acpi@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+	<patches@lists.linux.dev>, <pjaroszynski@nvidia.com>, <vsethi@nvidia.com>,
+	<helgaas@kernel.org>, <baolu.lu@linux.intel.com>
+Subject: [PATCH RFC v2 2/4] iommu: Pass in gdev to __iommu_device_set_domain
+Date: Sat, 28 Jun 2025 00:42:40 -0700
+Message-ID: <46a1c0e7d07722c542084be9611f2fdf770c3a1d.1751096303.git.nicolinc@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1751096303.git.nicolinc@nvidia.com>
+References: <cover.1751096303.git.nicolinc@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a14b2ed0-c319-43df-85f1-f97ecd6b688b@nvidia.com>
+Content-Type: text/plain
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099D5:EE_|DM4PR12MB6399:EE_
+X-MS-Office365-Filtering-Correlation-Id: 111e2dc0-5c3c-4115-07c2-08ddb61768ef
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|82310400026|7416014|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?DH/aq1Ag14s7rRoos+kjWRQWPtxd0DoQ46J92Ot+vQUlUW8qCJ/oIl3cFUYP?=
+ =?us-ascii?Q?1RJdVg9zrBadpQVj3GNHVKwbMreIpZ4kFRRhESk8zfejgjcGnJtQFAQyUlmo?=
+ =?us-ascii?Q?ZlzTlsESQF0MJNEbIl40bbg0BrVRHxyrODeVo/qJUyH34hEiAuM1Uzt7R4ot?=
+ =?us-ascii?Q?AV8FtR4QmfX5F1ts3jUB90FzExFDNUnbAGpbCBRyrgBjZ5T7Ug6u5wsY5RlD?=
+ =?us-ascii?Q?2fbP3twzA7VJjnHEH5HoakRNGcTxh3K7QqE6BC8N3Xww7SjME1lhrTYlwbd6?=
+ =?us-ascii?Q?jcK6G29XfT0j43rfXwSf5lCk2OSXL6q+OSgAxNOjOjsvgOWvdFZUh6Y3QdvE?=
+ =?us-ascii?Q?u7R93HjnBRK8O0aiJBdGCtRGgUuQl9YIbmZH+d/OSzxx0TsOSrzrLNwS9GwR?=
+ =?us-ascii?Q?Z7alvQGVP0yVofNdScGrs4xQN8f/HTjVNNNUDs3FelMv0YxgrFOPuDu2KkNK?=
+ =?us-ascii?Q?MlUOjN8wnlPdV+GSqf0lJdnjUIGf0MKX6CGTYsGAPdU/kPwE5f0lcg0MaKIk?=
+ =?us-ascii?Q?nQDT+KytM93/qZ985rhZ54c159Zadg5yYjneW2y5pwodN73+zthyS0C7PRQK?=
+ =?us-ascii?Q?UUTfgBrDVW9fupuxc8BCjRE10ZQYdL0rjvStm+i27OY5cfxZdZp2yGE6jUpR?=
+ =?us-ascii?Q?V8dAMjy4eTzYhoW0g7d5Gbv7Ghms0wIPtXD/XZFpsVU8smQWpDt/jjn/rYSx?=
+ =?us-ascii?Q?89Avuw17qAvoeV5nUNkjcrHoHuvtTiIjOPiMmJYPOcBS7EMXsAmVZU+fwDMZ?=
+ =?us-ascii?Q?/yoRnCrsJ2tdXoCL7tKNDO+o8qLsq6eR9ZgxNL3kJBWZ2nGBI2XQ+oRMo18f?=
+ =?us-ascii?Q?XRKgXa9hiQqkPbO9BAPWzIp1L+7SX3ek6aHOYbWRGXROuakTgyEDDYjgmy//?=
+ =?us-ascii?Q?2hQX3YkM5GYED8pMfb9N5PY1UV6s50IsxZyoTcs5DfV5/0Ksy44qqfiWsrJa?=
+ =?us-ascii?Q?iDttFtQXJ4nz/ClZgHfBA3SoARPPvC6eXCAN4gCMGpku+AUukSEfmQQFAKQq?=
+ =?us-ascii?Q?kOGqKJ7qa44kU/pNR2O1z+7EUJeaRql1vRy+tlxq4E+DWjCvCSL1NN8Qjhqt?=
+ =?us-ascii?Q?LzjOxq9v5KCxJDkUAWZaFd+aAbWUXJ8Vj8gitBR/nw1RE9Oo4f7s5K2pbLqa?=
+ =?us-ascii?Q?XKA6s6Y43yHMilOUqGgu20+FGX4XJHkPla1bkTEl4BT2U54LpGrOki0HgoLe?=
+ =?us-ascii?Q?U0CA4ZhuSQVMc8HGWZAut9AgehT8I7pEeicMzgFp656V9KeRT8NkaIyP2gta?=
+ =?us-ascii?Q?hUbBdBIikXyjclXg70stZdaMU7LA49Zt9DUGcue4k/gx4/GeiFULXQDAwgIR?=
+ =?us-ascii?Q?G9fRMoHVnVtj7Rd5GuxAx2ADll+KhVn+9abQLagdssVYdt4gdJ8JhOPOjVBH?=
+ =?us-ascii?Q?yV1vGc5zAn+Xj9Jyxw//lqsoJNQwFMeeSzLLdmZz5e/iQ4jpOFG6spax+VO3?=
+ =?us-ascii?Q?+0/qaeusaL9cFlLhKsFlgKot4Ktb9imnE6zH0v1BoOViEF2KnZizXmnX5YZE?=
+ =?us-ascii?Q?lUKSsruTKSuxEwraEHOFa0MqUfy6IUDtf9QW?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(376014)(1800799024)(82310400026)(7416014)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jun 2025 07:43:01.6031
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 111e2dc0-5c3c-4115-07c2-08ddb61768ef
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DS3PEPF000099D5.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6399
 
-On Fri, Jun 27, 2025 at 02:22:18PM -0700, Fenghua Yu wrote:
-> Hi, Tony,
-> 
-> On 6/26/25 09:49, Tony Luck wrote:
-> > Resctrl was written with the assumption that all monitor events can be
-> > displayed as unsigned decimal integers.
-> > 
-> > Hardware architecture counters may provide some telemetry events with
-> > greater precision where the event is not a simple count, but is a
-> > measurement of some sort (e.g. Joules for energy consumed).
-> > 
-> > Add a new argument to resctrl_enable_mon_event() for architecture code
-> > to inform the file system that the value for a counter is a fixed-point
-> > value with a specific number of binary places.  The file system will
-> > only allow architecture to use floating point format on events that it
-> > marked with mon_evt::is_floating_point.
-> 
-> User app needs to know if a number is a floating pointer value or an integer
-> value. I see you document the energy and activity events as floating point
-> values and all others are integer values.
-> 
-> Is it better to show the value types in info directory?
-> 
-> e.g. create an info file "events_floating" which shows all events with
-> floating point values. Events not in this info are integer by default.
-> 
-> This may have two benefits:
-> 
-> 1. An app can query the type info to parse the values accordingly without
-> hard coding event types.
-> 
-> 2. Any future floating point events can be added here without changing the
-> document.
+This will need to check a per gdev property, since the dev pointer cannot
+store any private iommu flag for the iommu code to use. Thus, pass in the
+gdev pointer instead.
 
-Maybe. It's obvious which are floating point because the values
-have a "." in them.  Some apps may not care about the difference
-and just read everything as if they are floating point. Maybe
-likely since the next step is to compute the rate with:
-	(current_value - previous_value) / delta_t
-which will be done as a floating point calculation with
-microsecond timestamps.
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+---
+ drivers/iommu/iommu.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-But it wouldn't be hard to add an info file that lists which are
-in floating point (maybe also to provide the precision as
-suggested by Dave Martin).
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index 08ff7efa8925..bd3deedcd2de 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -112,7 +112,7 @@ enum {
+ };
+ 
+ static int __iommu_device_set_domain(struct iommu_group *group,
+-				     struct device *dev,
++				     struct group_device *gdev,
+ 				     struct iommu_domain *new_domain,
+ 				     unsigned int flags);
+ static int __iommu_group_set_domain_internal(struct iommu_group *group,
+@@ -602,7 +602,7 @@ static int __iommu_probe_device(struct device *dev, struct list_head *group_list
+ 	if (group->default_domain)
+ 		iommu_create_device_direct_mappings(group->default_domain, dev);
+ 	if (group->domain) {
+-		ret = __iommu_device_set_domain(group, dev, group->domain, 0);
++		ret = __iommu_device_set_domain(group, gdev, group->domain, 0);
+ 		if (ret)
+ 			goto err_remove_gdev;
+ 	} else if (!group->default_domain && !group_list) {
+@@ -2267,10 +2267,11 @@ int iommu_attach_group(struct iommu_domain *domain, struct iommu_group *group)
+ EXPORT_SYMBOL_GPL(iommu_attach_group);
+ 
+ static int __iommu_device_set_domain(struct iommu_group *group,
+-				     struct device *dev,
++				     struct group_device *gdev,
+ 				     struct iommu_domain *new_domain,
+ 				     unsigned int flags)
+ {
++	struct device *dev = gdev->dev;
+ 	int ret;
+ 
+ 	/*
+@@ -2350,8 +2351,7 @@ static int __iommu_group_set_domain_internal(struct iommu_group *group,
+ 	 */
+ 	result = 0;
+ 	for_each_group_device(group, gdev) {
+-		ret = __iommu_device_set_domain(group, gdev->dev, new_domain,
+-						flags);
++		ret = __iommu_device_set_domain(group, gdev, new_domain, flags);
+ 		if (ret) {
+ 			result = ret;
+ 			/*
+@@ -2383,7 +2383,7 @@ static int __iommu_group_set_domain_internal(struct iommu_group *group,
+ 		 */
+ 		if (group->domain)
+ 			WARN_ON(__iommu_device_set_domain(
+-				group, gdev->dev, group->domain,
++				group, gdev, group->domain,
+ 				IOMMU_SET_DOMAIN_MUST_SUCCEED));
+ 		if (gdev == last_gdev)
+ 			break;
+-- 
+2.43.0
 
-[snip]
-
-> > +static void print_event_value(struct seq_file *m, int binary_bits, u64 val)
-> > +{
-> > +	struct fixed_params *fp = &fixed_params[binary_bits];
-> 
-> Is it worth to have a boundary check here like? I'm afraid without the
-> hardening check, a future caller may give a wrong value and cause hard
-> debugged failure.
-> 
-> if (WARN_ON_ONCE(binary_bits >=MAX_BINARY_BITS))
-> 
->     return;
-
-Seems like belt and braces overkill. resctrl_enable_mon_event()
-already has a check for MAX_BINARY_BITS and will not enable
-an event if architecture provides a too-large value.
-
--Tony
