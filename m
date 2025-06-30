@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8651FBCB0;
-	Mon, 30 Jun 2025 21:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B86E5227;
+	Mon, 30 Jun 2025 21:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317303; cv=none; b=KqC4Ed17dADCe5lBxF6qz7jp+6DgLiCxDlWqz/cJVODtceLhzZ1C7AvXs/AJiKrv4T4ivDlC4Kf+9GInov8jFZA2EqVqTdeMMfYlCENMGsJzIjhoiK6D/Ucw5HV+EeELXabFb39PJ3Fch35FKrk180mMrAns6eZXYgtIAwjzsHc=
+	t=1751317307; cv=none; b=h1gv72HsiLbZxTqkRXV5m/h0yXdrtPNp248nB/F/aqgfjL373xLmE9XyoIWtlgahCUNQqYzqVDXbvUYh36ML1jVipYIMfGvYUpgSsh0R0aWgBHpGS8MJiuZTN9UXii/6jnEu7fZ7Rz7DFC7AZoW9uzLT1Yjludz5hqNVZ1QEpuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317303; c=relaxed/simple;
-	bh=LxfqtAe43d6MoxXZs0NoMYWj7x8lEN+XLmrnqUSNOrM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=c1ptfe3tR21S5T/y6YhHXa9RwxO8fJ/yRIeJZq5ew9lOa4F06kHOuyOOzSSZTxMTGml3+JNjgqfTCxt59YZOM3U5VPmgUwyntdebbUxFAHpwGxStu6aTQcET9ZNdR645Tg2Ti9rZz9ln+oRAinAjyACS0iVAhMOdbjTPWeTKBZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qhARBZQG; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751317307; c=relaxed/simple;
+	bh=SamdNGppUiINvuhSrfUmG2vy1KDD8uY/v/DqHqQec9E=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=GUBFBfO/j4ZGo9sGUYwNa3Cmi5+vs8UmAC0yWisjYz7ufIZpafDAsIGuQfl4y6LM3gnuINnGxGoUwD1xcvRHmdd0nHTH9Y+f+PiM6kRTnmOBvgG0kV+mt099cppGkERlIPZZeEupBfWhteIQaSWso+BwW5Vd7DBFNAtm3fxiP+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=patlZlJt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qhARBZQG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F28C4CEE3;
-	Mon, 30 Jun 2025 21:01:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="patlZlJt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B03C4CEE3;
+	Mon, 30 Jun 2025 21:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317303;
-	bh=LxfqtAe43d6MoxXZs0NoMYWj7x8lEN+XLmrnqUSNOrM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qhARBZQGlj7Eq4HJaPorb5pfKGbc8qhHOPyfGZPtFp4zFZYkaz+5DDocPoumvEH4E
-	 F4inkVXb6Wvjfsj82GikuPWmVHuznVxzEdbB+9dpH0JX3D612gxsA3/6FZrkde3lDg
-	 iYY8heE7+TDQPy70FcTzqRzY4aqqSwppvMLiYQIwQpn6m9eqwW84I/fDLJ6oOavibQ
-	 t6Igza+5CvRp17eVPkMSvvRxSgRimwkkGdk5N7s5RkqXwiMy4iU93LjJ+PfxdDdTPp
-	 aSfa7GsvR/nWmrM92VRuklh2XZz/XJLMtO18xdeYMX+osS9fodGSSCEgUR6wDUhIc3
-	 jWWYVXUFx6azA==
+	s=k20201202; t=1751317307;
+	bh=SamdNGppUiINvuhSrfUmG2vy1KDD8uY/v/DqHqQec9E=;
+	h=From:To:Cc:Subject:Date:From;
+	b=patlZlJt4Scd1PLMBxJSv2VMfIpQ7L65da7dtDsNcp9MyvIsc4M1EOtC1vIfS0huW
+	 nfa36j/tnxxjXitlAZzFcVOBHfnExGvqE4XSI3EY9dWvvSzeXEgax+nZMJLOq3KHPw
+	 /rOzUBFeLD12hQkUF/4LlmUuPCsKbosQbMMCAcRzAcIisroWRlkYCOkKKeow3s98LO
+	 ZHccNeXF+iSxK+CsIKlBBTkXzm2CPPvoYxXzfcnKlrWUo9xemKxGyofqfGBuFtq/Vp
+	 utMt7doCuUyJmjkh4dtAgg4waZOa4DA1LaU8PwIDXZNHyA43GU+F8cHFBkYHnUqGut
+	 pBNF+XZJeFmSA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Thomas Fourier <fourier.thomas@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 10/10] HID: quirks: Add quirk for 2 Chicony Electronics HP 5MP Cameras
-Date: Mon, 30 Jun 2025 16:47:17 -0400
-Message-Id: <20250630204718.1359222-10-sashal@kernel.org>
+	3chas3@gmail.com,
+	linux-atm-general@lists.sourceforge.net,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 1/7] atm: idt77252: Add missing `dma_map_error()`
+Date: Mon, 30 Jun 2025 17:01:38 -0400
+Message-Id: <20250630210144.1359448-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250630204718.1359222-1-sashal@kernel.org>
-References: <20250630204718.1359222-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,112 +47,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.1.142
+X-stable-base: Linux 5.15.186
 Content-Transfer-Encoding: 8bit
 
-From: "Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 54bae4c17c11688339eb73a04fd24203bb6e7494 ]
+[ Upstream commit c4890963350dcf4e9a909bae23665921fba4ad27 ]
 
-The Chicony Electronics HP 5MP Cameras (USB ID 04F2:B824 & 04F2:B82C)
-report a HID sensor interface that is not actually implemented.
-Attempting to access this non-functional sensor via iio_info causes
-system hangs as runtime PM tries to wake up an unresponsive sensor.
+The DMA map functions can fail and should be tested for errors.
 
-Add these 2 devices to the HID ignore list since the sensor interface is
-non-functional by design and should not be exposed to userspace.
-
-Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250624064148.12815-3-fourier.thomas@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees.
 
-## Key Characteristics of This Commit:
+## Detailed Analysis:
 
-1. **Fixes a Critical User-Facing Bug**: The commit addresses system
-   hangs that occur when userspace attempts to access non-functional HID
-   sensor interfaces through iio_info. This is a serious usability issue
-   that can make the system unresponsive.
+**Nature of the fix:**
+The commit adds missing error checking for `dma_map_single()` calls in
+two locations within the idt77252 ATM driver:
 
-2. **Minimal and Contained Changes**: The patch only adds two device IDs
-   to existing infrastructure:
-   - In `drivers/hid/hid-ids.h`: Added
-     `USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA` (0xb824) and
-     `USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2` (0xb82c)
-   - In `drivers/hid/hid-quirks.c`: Added these two devices to the
-     `hid_ignore_list[]` array
+1. **In `queue_skb()` function (line 853-854):**
+  ```c
+  IDT77252_PRV_PADDR(skb) = dma_map_single(&card->pcidev->dev,
+  skb->data,
+  skb->len, DMA_TO_DEVICE);
+  +if (dma_mapping_error(&card->pcidev->dev, IDT77252_PRV_PADDR(skb)))
+  +    return -ENOMEM;
+  ```
+  This correctly returns -ENOMEM before reaching the errout label,
+  avoiding any cleanup issues since the DMA mapping never succeeded.
 
-3. **Zero Risk of Regression**: The changes only affect the specific USB
-   devices (04F2:B824 and 04F2:B82C). No existing functionality is
-   modified, and no code logic is changed.
+2. **In `add_rx_skb()` function (line 1857-1860):**
+  ```c
+  paddr = dma_map_single(&card->pcidev->dev, skb->data,
+  skb_end_pointer(skb) - skb->data,
+  DMA_FROM_DEVICE);
+  +if (dma_mapping_error(&card->pcidev->dev, paddr))
+  +    goto outpoolrm;
+  ```
+  This properly jumps to the new `outpoolrm` label which removes the SKB
+  from the pool before freeing it, maintaining correct cleanup order.
 
-## Comparison with Similar Commits:
+**Why this qualifies for stable backporting:**
 
-This commit is nearly identical to **Similar Commit #1** (which was
-backported), where a QUANTA HP 5MP Camera (0408:5473) was added to the
-ignore list for the exact same reason - non-functional sensor causing
-system hangs. Both commits:
-- Target HP 5MP cameras with non-functional sensors
-- Use the same fix approach (adding to HID ignore list)
-- Prevent system hangs when accessing the sensor
+1. **Fixes a real bug**: Missing DMA mapping error checks can cause
+   system crashes or data corruption, especially on systems with IOMMU
+   or SWIOTLB where DMA mapping failures are more likely.
 
-## Alignment with Stable Kernel Rules:
+2. **Simple and contained**: The fix adds only 5 lines of error checking
+   code with no architectural changes.
 
-The commit perfectly aligns with stable tree criteria:
-- **Fixes a real bug**: System hangs are critical issues
-- **Already in Linus' tree**: Signed-off by Jiri Kosina (HID maintainer)
-- **Small change**: Only 4 lines of actual code changes
-- **Obviously correct**: Simply adding device IDs to an ignore list
-- **No new features**: Pure bugfix
-- **Hardware-specific**: Only affects users with these specific cameras
+3. **Similar to approved backports**: This follows the exact same
+   pattern as Similar Commits #1 (eni driver) and #2 (aic94xx driver)
+   which were both marked "YES" for backporting.
 
-## Historical Precedent:
+4. **Long-standing issue**: The driver has existed since at least 2005
+   (Linux 2.6.12-rc2), meaning this bug has been present for nearly 20
+   years.
 
-Looking at the provided similar commits:
-- 4 out of 5 hardware quirk commits were backported (80% backport rate)
-- All commits fixing system hangs or device disconnections were
-  backported
-- The only non-backported commit (#4) involved architectural changes to
-  enum handling
+5. **Minimal regression risk**: The changes only add error checking;
+   they don't modify any existing logic paths.
 
-This commit follows the exact pattern of successfully backported
-hardware quirks, making it an excellent candidate for stable inclusion.
+6. **Proper error handling**: Both error paths are correctly implemented
+   with appropriate cleanup sequences.
 
- drivers/hid/hid-ids.h    | 2 ++
- drivers/hid/hid-quirks.c | 2 ++
- 2 files changed, 4 insertions(+)
+The commit clearly meets all stable tree criteria as an important bug
+fix with minimal risk and should be backported to protect users from
+potential DMA-related crashes.
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 21e0660179ee9..0bbba80d6c51c 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -297,6 +297,8 @@
- #define USB_DEVICE_ID_ASUS_AK1D		0x1125
- #define USB_DEVICE_ID_CHICONY_TOSHIBA_WT10A	0x1408
- #define USB_DEVICE_ID_CHICONY_ACER_SWITCH12	0x1421
-+#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA	0xb824
-+#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2	0xb82c
+ drivers/atm/idt77252.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
+index 7810f974b2ca9..d9ee20f0048fe 100644
+--- a/drivers/atm/idt77252.c
++++ b/drivers/atm/idt77252.c
+@@ -852,6 +852,8 @@ queue_skb(struct idt77252_dev *card, struct vc_map *vc,
  
- #define USB_VENDOR_ID_CHUNGHWAT		0x2247
- #define USB_DEVICE_ID_CHUNGHWAT_MULTITOUCH	0x0001
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 7fca632ceea79..b37927f909412 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -738,6 +738,8 @@ static const struct hid_device_id hid_ignore_list[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AVERMEDIA, USB_DEVICE_ID_AVER_FM_MR800) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AXENTIA, USB_DEVICE_ID_AXENTIA_FM_RADIO) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_BERKSHIRE, USB_DEVICE_ID_BERKSHIRE_PCWD) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CIDC, 0x0103) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI470X) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI4713) },
+ 	IDT77252_PRV_PADDR(skb) = dma_map_single(&card->pcidev->dev, skb->data,
+ 						 skb->len, DMA_TO_DEVICE);
++	if (dma_mapping_error(&card->pcidev->dev, IDT77252_PRV_PADDR(skb)))
++		return -ENOMEM;
+ 
+ 	error = -EINVAL;
+ 
+@@ -1857,6 +1859,8 @@ add_rx_skb(struct idt77252_dev *card, int queue,
+ 		paddr = dma_map_single(&card->pcidev->dev, skb->data,
+ 				       skb_end_pointer(skb) - skb->data,
+ 				       DMA_FROM_DEVICE);
++		if (dma_mapping_error(&card->pcidev->dev, paddr))
++			goto outpoolrm;
+ 		IDT77252_PRV_PADDR(skb) = paddr;
+ 
+ 		if (push_rx_skb(card, skb, queue)) {
+@@ -1871,6 +1875,7 @@ add_rx_skb(struct idt77252_dev *card, int queue,
+ 	dma_unmap_single(&card->pcidev->dev, IDT77252_PRV_PADDR(skb),
+ 			 skb_end_pointer(skb) - skb->data, DMA_FROM_DEVICE);
+ 
++outpoolrm:
+ 	handle = IDT77252_PRV_POOL(skb);
+ 	card->sbpool[POOL_QUEUE(handle)].skb[POOL_INDEX(handle)] = NULL;
+ 
 -- 
 2.39.5
 
