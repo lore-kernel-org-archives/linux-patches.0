@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E5428D837;
-	Mon, 30 Jun 2025 20:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7390525FA0A;
+	Mon, 30 Jun 2025 20:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317144; cv=none; b=T6oHybpi6kRxbGdvvxNy5dJTftY0+NklxM4xARDQDEu/s1Ju4c6h6kYmr5KUpRqWw5wsWPH+MdcpEBJ/tMpov3pSp4lZzGxKdBu75/PdfZWf2mZYc26l75WQ3Q+gY/hhc5eUNU8NrQuGbeYts5nlmMVgnloC/mAZ4p3Q3maExhk=
+	t=1751317145; cv=none; b=HJS9CqeV2+njVoSOsGejSowi+v70dAL6HqDXFqFPWbnRaOSJ1rwxU4Xkgj3b/G//PcN+DzQ22jRNE5Wcz6O0EThyPRv5K1sU7/MZGd2DlwpJmlzQbdgX9GcyhziyEfJ33Z3qYvY8cK0qp2E27YFbrLEWKvH0V5lKgNxX/31HxTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317144; c=relaxed/simple;
-	bh=WwzRA+BXJ8irX5on3wR4nM437eNEN7JZLI8LWvJRJ4M=;
+	s=arc-20240116; t=1751317145; c=relaxed/simple;
+	bh=pCcZMaUHNWjzCW4wgN7WI/iWRmy+EhqyXPtrhaPDveA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Eo5keaelpP81Q9Sro/HeYsNzbSw19jkyXfzf8r/bMWJ9sDPrnVCsx0cAvTLqoUBdQFuhgEIlYlVFbI0dRD+Xf/g8+QWQWzSKfXfee2Y0EcEQvOko+XRmLvfEK1SI3wjkfNnqt3eA+1CI/5nixFjhxfmA4WD2V2A5ZYG7KLaCSIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LJZrBNYA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=scEO6RKfny/3q1NcRq+SfODTN3Dd0PZqrXUgoa0H4mbQVrDKvlhxl73KP9gji+Zx9LZDW6BVgYVK9lEOCcOBapmzKwJlJnTVB3PYRVo8Y5MGx6Ek1su87X2tFYGzO8iQpKlr7NtPz8s1bXbZEUqM4f0e7q3QzUPma0drcp3Njcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gOkyhapM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LJZrBNYA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7D9C4CEEB;
-	Mon, 30 Jun 2025 20:59:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gOkyhapM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35123C4CEEB;
+	Mon, 30 Jun 2025 20:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317143;
-	bh=WwzRA+BXJ8irX5on3wR4nM437eNEN7JZLI8LWvJRJ4M=;
+	s=k20201202; t=1751317145;
+	bh=pCcZMaUHNWjzCW4wgN7WI/iWRmy+EhqyXPtrhaPDveA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LJZrBNYAHIPMTfgpbFAqsLZtOXgJQg4lyNiDpXAXGj8lXjjWO+COSMrqPX+HAN7ci
-	 dILtSvKRBJ6wfwwKd2/qls/B8rx2YzsznfDoxVhB9bCo7OusKtnmbbdv5+yK5ijAaO
-	 qTr3n7De/dLdJMLEUweFxn6LS1wZAlIilW7/3zQCrgB2veFqy80z2YFbkmx9htcOFC
-	 s2Q2tldlocjIlD9T69VCjbg+b4egPPuHqxhpdaWL0sfMu8ICXsKau3GR2HWW/t3OC4
-	 D4AvRLPGklIiVv8RihnauEWG6CJEeH6Tlosd1qlN6wIhZJ1dp2Z37dYzEH+YhNbCb9
-	 fCX0ulDxGEfvA==
+	b=gOkyhapMv6YC0GQnOAgosilSo4vKIUnMvQQmcgWXFQslKxrX2EpNRanv7kXiSLTor
+	 UV9kcQFoa4YxmX5TtpQGw5o8UUFkwn1GbjbCQlX1EN65ReT6HWsXlEdk1RuBy8RNho
+	 f6CLfHJENvVfM8r6Mhq0nNf45rhvh2L1s7m4jlTgPRK2OPLqMaK4riE+pMPdNdWWSl
+	 aP6AP8Nq9HV0GQdi+2WhQ6qZTEOGYLwe0BLCnk/oFNyhZjLoroYVwN0FG7/wk5N57y
+	 aUCGeQJGQOg9AM4eQ/VBOykWi9ZrmWD7is3yhFL3pJp0K5QlpAFXMVssMHzvcTl5qW
+	 Kf6k7SAcgfY0A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tim Crawford <tcrawford@system76.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Xiaowei Li <xiaowei.li@simcom.com>,
+	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kailang@realtek.com,
-	sbinding@opensource.cirrus.com,
-	chris.chiu@canonical.com,
-	simont@opensource.cirrus.com,
-	josh@joshuagrisham.com
-Subject: [PATCH AUTOSEL 6.15 12/23] ALSA: hda/realtek: Add quirks for some Clevo laptops
-Date: Mon, 30 Jun 2025 16:44:17 -0400
-Message-Id: <20250630204429.1357695-12-sashal@kernel.org>
+	netdev@vger.kernel.org,
+	linux-usb@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 13/23] net: usb: qmi_wwan: add SIMCom 8230C composition
+Date: Mon, 30 Jun 2025 16:44:18 -0400
+Message-Id: <20250630204429.1357695-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250630204429.1357695-1-sashal@kernel.org>
 References: <20250630204429.1357695-1-sashal@kernel.org>
@@ -49,143 +47,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.4
 Content-Transfer-Encoding: 8bit
 
-From: Tim Crawford <tcrawford@system76.com>
+From: Xiaowei Li <xiaowei.li@simcom.com>
 
-[ Upstream commit e41687b511d5e5437db5d2151e23c115dba30411 ]
+[ Upstream commit 0b39b055b5b48cbbdf5746a1ca6e3f6b0221e537 ]
 
-Add audio quirks to fix speaker output and headset detection on the
-following Clevo models:
+Add support for SIMCom 8230C which is based on Qualcomm SDX35 chip.
+0x9071: tty (DM) + tty (NMEA) + tty (AT) + rmnet
+T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#=  8 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1e0e ProdID=9071 Rev= 5.15
+S:  Manufacturer=SIMCOM
+S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=86(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=none
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-- V350ENC
-- V350WNPQ
-- V540TU
-- X560WNR
-- X580WNS
-
-Signed-off-by: Tim Crawford <tcrawford@system76.com>
-Link: https://patch.msgid.link/20250620204329.35878-1-tcrawford@system76.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Xiaowei Li <xiaowei.li@simcom.com>
+Acked-by: Bjørn Mork <bjorn@mork.no>
+Link: https://patch.msgid.link/tencent_21D781FAA4969FEACA6ABB460362B52C9409@qq.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
 This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+detailed analysis:
 
-## Commit Analysis
+## Rationale for Backporting:
 
-This commit adds audio quirks for five Clevo laptop models to fix
-speaker output and headset detection issues. The changes are:
+1. **Stable kernel rules explicitly allow device ID additions**:
+   According to Documentation/process/stable-kernel-rules.rst line 15,
+   patches must "either fix a real bug that bothers people or just add a
+   device ID." This commit clearly falls into the "add a device ID"
+   category.
 
-1. **For ALC1220 codec** (in `alc882_fixup_tbl[]`):
-   - `SND_PCI_QUIRK(0x1558, 0x5802, "Clevo X58[05]WN[RST]",
-     ALC1220_FIXUP_CLEVO_PB51ED_PINS)`
-   - This covers models X580WNR and X580WNS
+2. **Simple, low-risk change**: The commit adds exactly one line:
+  ```c
+  {QMI_QUIRK_SET_DTR(0x1e0e, 0x9071, 3)}, /* SIMCom 8230C ++ */
+  ```
+  This is a minimal change that only affects users with this specific
+  hardware (vendor ID 0x1e0e, product ID 0x9071).
 
-2. **For ALC256/ALC245 codecs** (in `alc269_fixup_tbl[]`):
-   - `SND_PCI_QUIRK(0x1558, 0x35a1, "Clevo V3[56]0EN[CDE]",
-     ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE)`
-   - `SND_PCI_QUIRK(0x1558, 0x35b1, "Clevo V3[57]0WN[MNP]Q",
-     ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE)`
-   - `SND_PCI_QUIRK(0x1558, 0x5700, "Clevo X560WN[RST]",
-     ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE)`
-   - `SND_PCI_QUIRK(0x1558, 0xa743, "Clevo V54x_6x_TU",
-     ALC245_FIXUP_CLEVO_NOISY_MIC)`
-   - These cover models V350ENC, V350WNPQ, V540TU, and X560WNR
+3. **Enables hardware that would otherwise not work**: Without this
+   device ID entry, users with the SIMCom 8230C modem cannot use their
+   hardware with the qmi_wwan driver. This directly impacts
+   functionality for those users.
 
-## Reasons for Backporting
+4. **Follows established patterns**: The commit uses `QMI_QUIRK_SET_DTR`
+   macro, consistent with the existing SIMCom entry at line 1428:
+  ```c
+  {QMI_QUIRK_SET_DTR(0x1e0e, 0x9001, 5)}, /* SIMCom 7100E, 7230E, 7600E
+  ++ */
+  ```
+  This shows the vendor has a history of requiring the DTR quirk for
+  their devices.
 
-1. **Essential Hardware Enablement**: Without these quirks, audio
-   functionality (speakers and headset) won't work properly on these
-   laptop models. This severely impacts user experience.
+5. **Historical precedent supports backporting**: Of the 5 similar
+   commits analyzed, 4 were backported to stable:
+   - Fibocom FG132 (YES)
+   - MeiG Smart SRM825L (YES)
+   - Telit FN912 compositions (YES)
+   - Telit FN920C04 compositions (YES)
+   - Quectel RG255C (NO)
 
-2. **Minimal Risk**: The changes only add new PCI ID entries to existing
-   quirk tables. They don't modify any core logic or affect other
-   hardware models. Each quirk only activates when the specific PCI ID
-   is detected.
+   The 80% backport rate for similar device ID additions suggests this
+type of change is generally considered appropriate for stable.
 
-3. **Follows Established Pattern**: All five similar historical commits
-   for Clevo audio quirks were backported to stable, including:
-   - Commits for L240TU, PE60SNE-G, V350SNEQ (Similar Commit #1)
-   - Commits for L140PU, L140AU (Similar Commits #2, #3)
-   - Commits for PC70HS, PD70PNT (Similar Commits #4, #5)
+6. **No risk to existing functionality**: The change only adds support
+   for a new device ID (0x9071) and doesn't modify any existing device
+   support or core driver functionality.
 
-4. **Small, Contained Changes**: The patch adds only 5 lines of code,
-   all following the standard `SND_PCI_QUIRK` macro pattern already used
-   extensively in the file.
+The commit meets all criteria for stable backporting: it's obviously
+correct, tested (as evidenced by the detailed USB descriptor output in
+the commit message), small (1 line), and enables hardware support that
+users need.
 
-5. **Meets Stable Criteria**: According to stable kernel rules, this
-   qualifies as:
-   - A real bug fix (broken audio)
-   - Obviously correct and tested
-   - Small change (< 100 lines)
-   - Fixes a problem that bothers people
+ drivers/net/usb/qmi_wwan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-6. **No Architecture Changes**: The commit uses existing fixup
-   mechanisms (`ALC1220_FIXUP_CLEVO_PB51ED_PINS`,
-   `ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE`,
-   `ALC245_FIXUP_CLEVO_NOISY_MIC`) without introducing new
-   functionality.
-
-## Technical Details
-
-The quirks apply model-specific fixes:
-- `ALC1220_FIXUP_CLEVO_PB51ED_PINS`: Configures pin settings for proper
-  speaker output on ALC1220-based models
-- `ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE`: Fixes headset detection on
-  ALC256-based models
-- `ALC245_FIXUP_CLEVO_NOISY_MIC`: Addresses microphone noise issues on
-  ALC245-based models
-
-These are well-tested fixups already used by other Clevo models,
-reducing the risk of unexpected behavior.
-
- sound/pci/hda/patch_realtek.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 68ef085ffc919..ab93ad5fbbc22 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -2656,6 +2656,7 @@ static const struct hda_quirk alc882_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x147b, 0x107a, "Abit AW9D-MAX", ALC882_FIXUP_ABIT_AW9D_MAX),
- 	SND_PCI_QUIRK(0x1558, 0x3702, "Clevo X370SN[VW]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x50d3, "Clevo PC50[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
-+	SND_PCI_QUIRK(0x1558, 0x5802, "Clevo X58[05]WN[RST]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x65d1, "Clevo PB51[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x65d2, "Clevo PB51R[CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x65e1, "Clevo PB51[ED][DF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
-@@ -11115,6 +11116,8 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1558, 0x14a1, "Clevo L141MU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x2624, "Clevo L240TU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x28c1, "Clevo V370VND", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1558, 0x35a1, "Clevo V3[56]0EN[CDE]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1558, 0x35b1, "Clevo V3[57]0WN[MNP]Q", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x4018, "Clevo NV40M[BE]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x4019, "Clevo NV40MZ", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x4020, "Clevo NV40MB", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
-@@ -11142,6 +11145,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1558, 0x51b1, "Clevo NS50AU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x51b3, "Clevo NS70AU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x5630, "Clevo NP50RNJS", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1558, 0x5700, "Clevo X560WN[RST]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x70a1, "Clevo NB70T[HJK]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x70b3, "Clevo NK70SB", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x70f2, "Clevo NH79EPY", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
-@@ -11181,6 +11185,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1558, 0xa650, "Clevo NP[567]0SN[CD]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0xa671, "Clevo NP70SN[CDE]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0xa741, "Clevo V54x_6x_TNE", ALC245_FIXUP_CLEVO_NOISY_MIC),
-+	SND_PCI_QUIRK(0x1558, 0xa743, "Clevo V54x_6x_TU", ALC245_FIXUP_CLEVO_NOISY_MIC),
- 	SND_PCI_QUIRK(0x1558, 0xa763, "Clevo V54x_6x_TU", ALC245_FIXUP_CLEVO_NOISY_MIC),
- 	SND_PCI_QUIRK(0x1558, 0xb018, "Clevo NP50D[BE]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0xb019, "Clevo NH77D[BE]Q", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index b586b1c13a47f..f5647ee0addec 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1426,6 +1426,7 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x22de, 0x9051, 2)}, /* Hucom Wireless HM-211S/K */
+ 	{QMI_FIXED_INTF(0x22de, 0x9061, 3)},	/* WeTelecom WPD-600N */
+ 	{QMI_QUIRK_SET_DTR(0x1e0e, 0x9001, 5)},	/* SIMCom 7100E, 7230E, 7600E ++ */
++	{QMI_QUIRK_SET_DTR(0x1e0e, 0x9071, 3)},	/* SIMCom 8230C ++ */
+ 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0121, 4)},	/* Quectel EC21 Mini PCIe */
+ 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0191, 4)},	/* Quectel EG91 */
+ 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0195, 4)},	/* Quectel EG95 */
 -- 
 2.39.5
 
