@@ -1,49 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF74245033;
-	Mon, 30 Jun 2025 21:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FFA17BD3;
+	Mon, 30 Jun 2025 21:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317262; cv=none; b=DbWNQddlAe8bEO5/H6g9jNHATRz6NmnCHEn9emwE3/0ZtwGRaKXn5C/mcSRR/h8Nemz1n5JLHY98J9w3js3dH6CQysDf0lE5qDb3wvl22Vdq0qyxwgreALE9RknDBBG8zEFjp6tPEEFtEXaCNP2yQQUd31Mt4Lj6PzPsyfbjJCA=
+	t=1751317264; cv=none; b=OatyFNLdGJj+BaHAw3JDUk7AKiWfxq6NzKtM7bxxi8qTvuXAuZAzsXz+rcOxNctpznqchOimpHsSjbiFGuU4YgtnOwfIHz22Kh8bYQpsEBB8Xt2poQImZ+O9SljhacInjZpjIIt7ijAiOAaSVfWmLURetD5ccFyAvz2UjipgFfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317262; c=relaxed/simple;
-	bh=a+r6daiSNKy80Kyt3rwgyl0O5+OZkNFlUuxHXphhwVg=;
+	s=arc-20240116; t=1751317264; c=relaxed/simple;
+	bh=x1etpjVixqfw78hOmdf1pFb4iRXwIACDcng6fzFAdZQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=oI+I9qLsQJ88+paaU+wcJPfLUUBygdOU8xBxpGkmrvGJzy2yjbpjN3m3sDEou8MDiBiN6T9o+axoa34f66o3lDKRfJUf2zCRUvkFk0zMXvkmHlryEXASqLo2iOrcrhKu8eVLx0j9ayL+bmOKvV+S5oMY2FgCVx7PYQsh5fyYT7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BQ4t8n6y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=C0AzLju9lQ9pW+6c3I9W98n0T14wZ9MgOyM8XqTqByCaB+cUiFoC8pjEAv/ui/bDnuT9uqU+OIHNt9GQkqkh0PrW+o3kzcwtAmyF+sOo/BRPJIe3+xRg1Vo/VQex3JyMLAKxfwvZukPMn59FyjbKL9etOHbVWDxSsbOIaWZdnds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rx3fTizi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BQ4t8n6y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC8CC4CEE3;
-	Mon, 30 Jun 2025 21:01:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rx3fTizi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01517C4CEEB;
+	Mon, 30 Jun 2025 21:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317262;
-	bh=a+r6daiSNKy80Kyt3rwgyl0O5+OZkNFlUuxHXphhwVg=;
+	s=k20201202; t=1751317264;
+	bh=x1etpjVixqfw78hOmdf1pFb4iRXwIACDcng6fzFAdZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQ4t8n6yek+2XVhnUbhvrEqa2hmQwju5KgffJdZNSxZWgbWLYiC5PklPu5iRp+ExI
-	 CCamNJBg8IPPZxns69ql1w2yTTmHjM7H/v5EWJNQhZHn970aPuytS8vVBvRNLA9+sf
-	 3NNH/z4WZITFSM0orpEo5R8XUP+weIK8/L5KwNyJgMiPTVpixENQqS5UVdomBnDfi8
-	 UfJKPvdWwfpJVnbkoyGUNjYHonUpm72G1Yu3c+KAcsLNG4S5mGtjXrjFHbJ+i8zU63
-	 bN0copCsFDFEybvPt5g2ECFsFdnFHDvgMkRcF3zXU5Kn4BQBDeqUpnWZjsVyv8gkqP
-	 McZei6cg8rtsg==
+	b=rx3fTiziLOToirPRvvDRd/WU7oIPCh1clv5GgipNsDfhHRytoulbC5Bu9r3foVkD+
+	 6qQ3+g9o4ur2Ldh/5q0l+myv/tNuzMG8V726P5LuTRMYHaT6YEwZyoPTJktMDto/D7
+	 sANDfN41KziZGk5Ap9hMRnuJ00X6tD5HKt5CCEiqrT1UccCODxlT/7Laq9+U6gBTzd
+	 ZNFpoQqJV37Y9zeoCKvDtHFR0N/JH1i7iyeZ8X756F96lildVhkUpcJYi+q0VK4E7c
+	 AJJj/ie6V3LXwC+uJ3/ehnTqT6gi3UqNFLsd18RCd1fhtxqcUHFPKT0cx0QY16waiL
+	 hV4EYnEAGcnWA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Long Li <longli@microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Filipe Manana <fdmanana@suse.com>,
+	syzbot+36fae25c35159a763a2a@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kotaranov@microsoft.com,
-	shirazsaleem@microsoft.com,
-	leon@kernel.org,
-	shradhagupta@linux.microsoft.com,
-	mlevitsk@redhat.com,
-	ernis@linux.microsoft.com,
-	haiyangz@microsoft.com,
-	peterz@infradead.org
-Subject: [PATCH AUTOSEL 6.6 09/14] net: mana: Record doorbell physical address in PF mode
-Date: Mon, 30 Jun 2025 16:46:34 -0400
-Message-Id: <20250630204639.1358777-9-sashal@kernel.org>
+	clm@fb.com,
+	josef@toxicpanda.com,
+	linux-btrfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 10/14] btrfs: fix assertion when building free space tree
+Date: Mon, 30 Jun 2025 16:46:35 -0400
+Message-Id: <20250630204639.1358777-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250630204639.1358777-1-sashal@kernel.org>
 References: <20250630204639.1358777-1-sashal@kernel.org>
@@ -56,97 +52,206 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.95
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Long Li <longli@microsoft.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit e0fca6f2cebff539e9317a15a37dcf432e3b851a ]
+[ Upstream commit 1961d20f6fa8903266ed9bd77c691924c22c8f02 ]
 
-MANA supports RDMA in PF mode. The driver should record the doorbell
-physical address when in PF mode.
+When building the free space tree with the block group tree feature
+enabled, we can hit an assertion failure like this:
 
-The doorbell physical address is used by the RDMA driver to map
-doorbell pages of the device to user-mode applications through RDMA
-verbs interface. In the past, they have been mapped to user-mode while
-the device is in VF mode. With the support for PF mode implemented,
-also expose those pages in PF mode.
+  BTRFS info (device loop0 state M): rebuilding free space tree
+  assertion failed: ret == 0, in fs/btrfs/free-space-tree.c:1102
+  ------------[ cut here ]------------
+  kernel BUG at fs/btrfs/free-space-tree.c:1102!
+  Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
+  Modules linked in:
+  CPU: 1 UID: 0 PID: 6592 Comm: syz-executor322 Not tainted 6.15.0-rc7-syzkaller-gd7fa1af5b33e #0 PREEMPT
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+  pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : populate_free_space_tree+0x514/0x518 fs/btrfs/free-space-tree.c:1102
+  lr : populate_free_space_tree+0x514/0x518 fs/btrfs/free-space-tree.c:1102
+  sp : ffff8000a4ce7600
+  x29: ffff8000a4ce76e0 x28: ffff0000c9bc6000 x27: ffff0000ddfff3d8
+  x26: ffff0000ddfff378 x25: dfff800000000000 x24: 0000000000000001
+  x23: ffff8000a4ce7660 x22: ffff70001499cecc x21: ffff0000e1d8c160
+  x20: ffff0000e1cb7800 x19: ffff0000e1d8c0b0 x18: 00000000ffffffff
+  x17: ffff800092f39000 x16: ffff80008ad27e48 x15: ffff700011e740c0
+  x14: 1ffff00011e740c0 x13: 0000000000000004 x12: ffffffffffffffff
+  x11: ffff700011e740c0 x10: 0000000000ff0100 x9 : 94ef24f55d2dbc00
+  x8 : 94ef24f55d2dbc00 x7 : 0000000000000001 x6 : 0000000000000001
+  x5 : ffff8000a4ce6f98 x4 : ffff80008f415ba0 x3 : ffff800080548ef0
+  x2 : 0000000000000000 x1 : 0000000100000000 x0 : 000000000000003e
+  Call trace:
+   populate_free_space_tree+0x514/0x518 fs/btrfs/free-space-tree.c:1102 (P)
+   btrfs_rebuild_free_space_tree+0x14c/0x54c fs/btrfs/free-space-tree.c:1337
+   btrfs_start_pre_rw_mount+0xa78/0xe10 fs/btrfs/disk-io.c:3074
+   btrfs_remount_rw fs/btrfs/super.c:1319 [inline]
+   btrfs_reconfigure+0x828/0x2418 fs/btrfs/super.c:1543
+   reconfigure_super+0x1d4/0x6f0 fs/super.c:1083
+   do_remount fs/namespace.c:3365 [inline]
+   path_mount+0xb34/0xde0 fs/namespace.c:4200
+   do_mount fs/namespace.c:4221 [inline]
+   __do_sys_mount fs/namespace.c:4432 [inline]
+   __se_sys_mount fs/namespace.c:4409 [inline]
+   __arm64_sys_mount+0x3e8/0x468 fs/namespace.c:4409
+   __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+   invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+   el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+   do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+   el0_svc+0x58/0x17c arch/arm64/kernel/entry-common.c:767
+   el0t_64_sync_handler+0x78/0x108 arch/arm64/kernel/entry-common.c:786
+   el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
+  Code: f0047182 91178042 528089c3 9771d47b (d4210000)
+  ---[ end trace 0000000000000000 ]---
 
-Support for PF mode is implemented in
-290e5d3c49f6 ("net: mana: Add support for Multi Vports on Bare metal")
+This happens because we are processing an empty block group, which has
+no extents allocated from it, there are no items for this block group,
+including the block group item since block group items are stored in a
+dedicated tree when using the block group tree feature. It also means
+this is the block group with the highest start offset, so there are no
+higher keys in the extent root, hence btrfs_search_slot_for_read()
+returns 1 (no higher key found).
 
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/1750210606-12167-1-git-send-email-longli@linuxonhyperv.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by asserting 'ret' is 0 only if the block group tree feature
+is not enabled, in which case we should find a block group item for
+the block group since it's stored in the extent root and block group
+item keys are greater than extent item keys (the value for
+BTRFS_BLOCK_GROUP_ITEM_KEY is 192 and for BTRFS_EXTENT_ITEM_KEY and
+BTRFS_METADATA_ITEM_KEY the values are 168 and 169 respectively).
+In case 'ret' is 1, we just need to add a record to the free space
+tree which spans the whole block group, and we can achieve this by
+making 'ret == 0' as the while loop's condition.
+
+Reported-by: syzbot+36fae25c35159a763a2a@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/6841dca8.a00a0220.d4325.0020.GAE@google.com/
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-detailed analysis:
+This commit should be backported to stable kernel trees, specifically to
+the 6.1.x and 6.6.x stable series. Here's my extensive analysis:
 
-## Critical Functionality Fix
+## Bug Severity and Impact
 
-The commit fixes a missing functionality that prevents RDMA from working
-properly in PF (Physical Function) mode. Looking at the code changes:
+The commit fixes a **kernel BUG/assertion failure** that causes a system
+crash when rebuilding the free space tree. The stack trace shows:
 
-1. **The Problem**: In `mana_gd_init_pf_regs()`, the driver was not
-   recording `gc->phys_db_page_base`, while the VF initialization
-   function `mana_gd_init_vf_regs()` does record it (lines 50-51 in the
-   existing code).
+```
+assertion failed: ret == 0, in fs/btrfs/free-space-tree.c:1102
+kernel BUG at fs/btrfs/free-space-tree.c:1102!
+```
 
-2. **The Impact**: The RDMA driver critically depends on
-   `phys_db_page_base` in its `mana_ib_mmap()` function
-   (drivers/infiniband/hw/mana/main.c:535-537):
-  ```c
-  pfn = (gc->phys_db_page_base +
-  gc->db_page_size * mana_ucontext->doorbell) >>
-  PAGE_SHIFT;
-  ```
-  This physical address is used to map doorbell pages to user-space
-  applications through `rdma_user_mmap_io()`, which is essential for
-  RDMA functionality.
+This is a serious issue that results in system instability and affects
+users who:
+1. Use BTRFS with the block group tree feature enabled
+2. Trigger a free space tree rebuild (e.g., during remount operations)
+3. Have empty block groups in their filesystem
 
-3. **User Impact**: Without this fix, RDMA operations would fail in PF
-   mode (bare metal deployments), making the RDMA feature completely
-   unusable for those users.
+## Technical Analysis of the Fix
 
-## Meets Stable Criteria
+The fix is minimal and targeted:
 
-- **Small and contained**: The fix adds only 3 lines of code
-- **Fixes a real bug**: RDMA functionality is broken in PF mode without
-  this
-- **No architectural changes**: Simply records an address that's already
-  being recorded in VF mode
-- **Low regression risk**: The change is isolated to PF initialization
-  path
-- **Similar to previous stable fixes**: Commits #3 and #4 in the
-  historical examples were both doorbell-related RDMA fixes that were
-  backported
+```diff
+- ASSERT(ret == 0);
++       if (!btrfs_fs_compat_ro(trans->fs_info, BLOCK_GROUP_TREE))
++               ASSERT(ret == 0);
+```
 
-The commit essentially brings parity between VF and PF modes for
-doorbell physical address recording, which is necessary for proper RDMA
-operation. This is a clear functional bug that affects users running
-MANA in PF mode with RDMA requirements.
+and
 
- drivers/net/ethernet/microsoft/mana/gdma_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+```diff
+- while (1) {
++       while (ret == 0) {
+```
 
-diff --git a/drivers/net/ethernet/microsoft/mana/gdma_main.c b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-index 9ed965d61e355..d3c9a3020fbf6 100644
---- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
-+++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-@@ -28,6 +28,9 @@ static void mana_gd_init_pf_regs(struct pci_dev *pdev)
- 	gc->db_page_base = gc->bar0_va +
- 				mana_gd_r64(gc, GDMA_PF_REG_DB_PAGE_OFF);
+The root cause is well-understood: when the block group tree feature is
+enabled, block group items are stored in a dedicated tree rather than
+the extent tree. For empty block groups, `btrfs_search_slot_for_read()`
+correctly returns 1 (no key found), but the old code incorrectly
+asserted this must be 0.
+
+## Stable Backport Criteria
+
+1. **Fixes a real bug affecting users**: ✓ (kernel crash)
+2. **Small and contained fix**: ✓ (2 line logic changes + comments)
+3. **No major side effects**: ✓ (only affects the specific error case)
+4. **No architectural changes**: ✓ (simple logic adjustment)
+5. **Critical subsystem but minimal risk**: ✓ (BTRFS, but very targeted
+   fix)
+
+## Version Considerations
+
+Based on my repository analysis:
+- The block group tree feature was introduced in kernel 6.1-rc1
+- Only 6.1.x and 6.6.x LTS kernels have this feature
+- Earlier kernels (5.10, 5.15) don't need this fix as they lack the
+  feature
+
+## Similar Commit Patterns
+
+Looking at the provided similar commits:
+- Commits fixing free space tree corruption/crashes were marked YES for
+  backporting
+- Only cosmetic or debug-related changes were marked NO
+- This commit follows the pattern of commits #1 and #2 which fixed
+  actual bugs
+
+## Conclusion
+
+Despite lacking an explicit `Cc: stable@vger.kernel.org` tag, this
+commit meets all criteria for stable backporting. It fixes a kernel
+crash with a minimal, well-understood change that only affects systems
+using a specific BTRFS feature. The fix should be backported to 6.1.x
+and 6.6.x stable series where the block group tree feature exists.
+
+ fs/btrfs/free-space-tree.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/fs/btrfs/free-space-tree.c b/fs/btrfs/free-space-tree.c
+index a0d8160b53757..300ee0b68b498 100644
+--- a/fs/btrfs/free-space-tree.c
++++ b/fs/btrfs/free-space-tree.c
+@@ -1104,11 +1104,21 @@ static int populate_free_space_tree(struct btrfs_trans_handle *trans,
+ 	ret = btrfs_search_slot_for_read(extent_root, &key, path, 1, 0);
+ 	if (ret < 0)
+ 		goto out_locked;
+-	ASSERT(ret == 0);
++	/*
++	 * If ret is 1 (no key found), it means this is an empty block group,
++	 * without any extents allocated from it and there's no block group
++	 * item (key BTRFS_BLOCK_GROUP_ITEM_KEY) located in the extent tree
++	 * because we are using the block group tree feature, so block group
++	 * items are stored in the block group tree. It also means there are no
++	 * extents allocated for block groups with a start offset beyond this
++	 * block group's end offset (this is the last, highest, block group).
++	 */
++	if (!btrfs_fs_compat_ro(trans->fs_info, BLOCK_GROUP_TREE))
++		ASSERT(ret == 0);
  
-+	gc->phys_db_page_base = gc->bar0_pa +
-+				mana_gd_r64(gc, GDMA_PF_REG_DB_PAGE_OFF);
-+
- 	sriov_base_off = mana_gd_r64(gc, GDMA_SRIOV_REG_CFG_BASE_OFF);
+ 	start = block_group->start;
+ 	end = block_group->start + block_group->length;
+-	while (1) {
++	while (ret == 0) {
+ 		btrfs_item_key_to_cpu(path->nodes[0], &key, path->slots[0]);
  
- 	sriov_base_va = gc->bar0_va + sriov_base_off;
+ 		if (key.type == BTRFS_EXTENT_ITEM_KEY ||
+@@ -1138,8 +1148,6 @@ static int populate_free_space_tree(struct btrfs_trans_handle *trans,
+ 		ret = btrfs_next_item(extent_root, path);
+ 		if (ret < 0)
+ 			goto out_locked;
+-		if (ret)
+-			break;
+ 	}
+ 	if (start < end) {
+ 		ret = __add_to_free_space_tree(trans, block_group, path2,
 -- 
 2.39.5
 
