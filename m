@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156E21865FA;
-	Mon, 30 Jun 2025 21:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CAE1865FA;
+	Mon, 30 Jun 2025 21:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317256; cv=none; b=ICYNKtP+zVL4+5kxY+BuMuNXRe/fjwKnDMsHe13N3Ewwos7HBSwLlvXXVeWXCQOBzZVnXAXuDFZy5l5iCWJCmEQ2Qbd2uN56Ec4hwFzPngn357lw0X86cpqryKAEyfJfGXtOPO3wz5ZMb4ih8stYA3KqRBP0NePTK0T/IuVLLOc=
+	t=1751317258; cv=none; b=mRPXUqQ7bcPFqGMLnUFVLTiLNtrVPQVdxsuOtH2hmbDFyhCYn4DN7gF+1tZQvTKA+pdayk5Afsxpm3bT9tXNg7q1k++d9sNMCjv9VeXAzhIIYfaRj5BLRkn60JFMaijqfJCr3MGHWDFtsSLY6V0/JHtiLubBNKcZ0Bmho5tfQxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317256; c=relaxed/simple;
-	bh=bgJMQE4amCsw0R8LqhB2mlYyLenEe+lgnpfI+NB2hLc=;
+	s=arc-20240116; t=1751317258; c=relaxed/simple;
+	bh=kUSqcunTM3pJyFXdwWVtBL9m6UTpomPlAwIkQg4B3Ok=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kfsWDHUHnT9GpfEYa68e67DVjR3LJIhFuHg8Umev5Zl/tEIrqW4qgCpSmQdQ5MBouQCEbK05lkAzZyFl9YjyOdqqexIjq6DCpnWY/8Ql4Q90UWG+JRy3TFVvXZBDrHP1YX4C7BKNNrSshEAapLeRBm4qEgCkPwv6Dzb/j7ZrlcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=glMyIbnz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IBNE2+bhvs1IbPgTUv5pRvVcqZiHoFPlqbnwTGV7Tah+k5c9EvmRZozd8fx6nD+qFBcFgWhBSpfP4THq4rUyPgZwa/oSXM2LTkwugzwwI/4skRfXvSGrSTeUlQ3ar62NHD2VUUBHOFpBIuUG+To26t55JDZEGBh2LRZNxmHSyfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hb1fRzLv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="glMyIbnz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF230C4CEE3;
-	Mon, 30 Jun 2025 21:00:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hb1fRzLv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA711C4CEEB;
+	Mon, 30 Jun 2025 21:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317256;
-	bh=bgJMQE4amCsw0R8LqhB2mlYyLenEe+lgnpfI+NB2hLc=;
+	s=k20201202; t=1751317257;
+	bh=kUSqcunTM3pJyFXdwWVtBL9m6UTpomPlAwIkQg4B3Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glMyIbnzKoQqYUS/Q2JPAaALgaROeHCEQjUvy58x44ISO0v+CKcI7NIynBplhlK6s
-	 eXWuKJpV2SBGD1h5A4+rLFJoX9WQUbk+D4XyeSjAu8uy5YPXTwEeqNaY5JTrFt/4MR
-	 7FZENH51OrHHkUlrOSCXBXuoTLpbQ1vd10o2E2LAAADsNdFqhOUXTEbKNZsA6/JW+P
-	 6qtzLDWKjdrqxd5fItfFI+bD4ON1EPUBDVzetZF1P1dlFxz7ZwepCw7tx3iCab2SOd
-	 nyGgq5D+S6CxWUIRh+PTiLQC5GyLiQbyIpEYzguHWNDFB9nukDLNcH7PGglECrnaxI
-	 eSP1GP3HxslAg==
+	b=Hb1fRzLvloq8GLmX4NRYXLIlVApKufQaX4nc1ejqTCQklHO1+mugC2begwJ+JfNGB
+	 b6xXuGNDSVVHJyJBgFG82QTL+G90LwJU7G0/l0ZToRmY0sTfGXE8Cya8ASKUhVg68W
+	 EUe9+bgiN3jnzRmZEbJVmp2GqkO02uGeeafe/tbe3lYuiHhK0RfeE6AN8TanFydt4E
+	 9ywx6tQj6ljqJjc9fxSArR778X8fvvINf4wlZq0M8s3ST96kc4iLgg4Wnyw/MJeSI/
+	 t89Fw9MXystoLxE1JOhH0ttcPIvH2Xb3KskBe6ak+zgnrQmZFIvSvihll+nhg5a0KF
+	 uFTXkA1Y+2RbA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xiaowei Li <xiaowei.li@simcom.com>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Akira Inoue <niyarium@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	netdev@vger.kernel.org,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 07/14] net: usb: qmi_wwan: add SIMCom 8230C composition
-Date: Mon, 30 Jun 2025 16:46:32 -0400
-Message-Id: <20250630204639.1358777-7-sashal@kernel.org>
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 08/14] HID: lenovo: Add support for ThinkPad X1 Tablet Thin Keyboard Gen2
+Date: Mon, 30 Jun 2025 16:46:33 -0400
+Message-Id: <20250630204639.1358777-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250630204639.1358777-1-sashal@kernel.org>
 References: <20250630204639.1358777-1-sashal@kernel.org>
@@ -47,119 +47,195 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.95
 Content-Transfer-Encoding: 8bit
 
-From: Xiaowei Li <xiaowei.li@simcom.com>
+From: Akira Inoue <niyarium@gmail.com>
 
-[ Upstream commit 0b39b055b5b48cbbdf5746a1ca6e3f6b0221e537 ]
+[ Upstream commit a8905238c3bbe13db90065ed74682418f23830c3 ]
 
-Add support for SIMCom 8230C which is based on Qualcomm SDX35 chip.
-0x9071: tty (DM) + tty (NMEA) + tty (AT) + rmnet
-T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#=  8 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1e0e ProdID=9071 Rev= 5.15
-S:  Manufacturer=SIMCOM
-S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
-S:  SerialNumber=0123456789ABCDEF
-C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=86(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=none
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Add "Thinkpad X1 Tablet Gen 2 Keyboard" PID to hid-lenovo driver to fix trackpoint not working issue.
 
-Signed-off-by: Xiaowei Li <xiaowei.li@simcom.com>
-Acked-by: Bjørn Mork <bjorn@mork.no>
-Link: https://patch.msgid.link/tencent_21D781FAA4969FEACA6ABB460362B52C9409@qq.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Akira Inoue <niyarium@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
 This commit should be backported to stable kernel trees. Here's my
-detailed analysis:
+extensive analysis:
 
-## Rationale for Backporting:
+## Commit Analysis
 
-1. **Stable kernel rules explicitly allow device ID additions**:
-   According to Documentation/process/stable-kernel-rules.rst line 15,
-   patches must "either fix a real bug that bothers people or just add a
-   device ID." This commit clearly falls into the "add a device ID"
-   category.
+This commit adds support for the ThinkPad X1 Tablet Thin Keyboard Gen2
+by adding its USB device ID (0x60a4) to the hid-lenovo driver. The
+primary issue being fixed is that the trackpoint (pointing stick) is
+non-functional without this patch.
 
-2. **Simple, low-risk change**: The commit adds exactly one line:
-  ```c
-  {QMI_QUIRK_SET_DTR(0x1e0e, 0x9071, 3)}, /* SIMCom 8230C ++ */
-  ```
-  This is a minimal change that only affects users with this specific
-  hardware (vendor ID 0x1e0e, product ID 0x9071).
+## Code Changes Examination
 
-3. **Enables hardware that would otherwise not work**: Without this
-   device ID entry, users with the SIMCom 8230C modem cannot use their
-   hardware with the qmi_wwan driver. This directly impacts
-   functionality for those users.
+1. **drivers/hid/hid-ids.h**: Adds `USB_DEVICE_ID_LENOVO_X1_TAB2` with
+   value 0x60a4. This follows the existing pattern where X1_TAB is
+   0x60a3 and X1_TAB3 is 0x60b5.
 
-4. **Follows established patterns**: The commit uses `QMI_QUIRK_SET_DTR`
-   macro, consistent with the existing SIMCom entry at line 1428:
-  ```c
-  {QMI_QUIRK_SET_DTR(0x1e0e, 0x9001, 5)}, /* SIMCom 7100E, 7230E, 7600E
-  ++ */
-  ```
-  This shows the vendor has a history of requiring the DTR quirk for
-  their devices.
+2. **drivers/hid/hid-lenovo.c**: The device ID is added to 7 locations:
+   - `lenovo_input_mapping()`: Enables X1 tablet keyboard-specific input
+     mappings
+   - `attr_fn_lock_store()`: Enables FnLock LED control functionality
+   - `lenovo_event()`: Handles special key events
+   - `lenovo_led_brightness_set()`: Controls mute/micmute LED indicators
+   - `lenovo_probe()`: Initializes device with tp10ubkbd infrastructure
+   - `lenovo_remove()`: Cleanup handling
+   - `lenovo_devices[]`: Device table entry with HID_GROUP_GENERIC
 
-5. **Historical precedent supports backporting**: Of the 5 similar
-   commits analyzed, 4 were backported to stable:
-   - Fibocom FG132 (YES)
-   - MeiG Smart SRM825L (YES)
-   - Telit FN912 compositions (YES)
-   - Telit FN920C04 compositions (YES)
-   - Quectel RG255C (NO)
+3. **drivers/hid/hid-multitouch.c**: Adds multitouch support with
+   `MT_CLS_WIN_8_FORCE_MULTI_INPUT` class, consistent with other X1
+   Tablet devices.
 
-   The 80% backport rate for similar device ID additions suggests this
-type of change is generally considered appropriate for stable.
+## Stable Backport Criteria
 
-6. **No risk to existing functionality**: The change only adds support
-   for a new device ID (0x9071) and doesn't modify any existing device
-   support or core driver functionality.
+This commit meets all the stable kernel backporting criteria:
 
-The commit meets all criteria for stable backporting: it's obviously
-correct, tested (as evidenced by the detailed USB descriptor output in
-the commit message), small (1 line), and enables hardware support that
-users need.
+1. **Fixes a real bug**: The trackpoint is completely non-functional
+   without this patch, affecting users who own this hardware.
 
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+2. **Small and contained**: The changes are minimal - just adding a
+   device ID to existing code paths. No new functionality or
+   architectural changes.
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index dc84d9029c2c7..3976bc4295dd1 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1432,6 +1432,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_QUIRK_SET_DTR(0x22de, 0x9051, 2)}, /* Hucom Wireless HM-211S/K */
- 	{QMI_FIXED_INTF(0x22de, 0x9061, 3)},	/* WeTelecom WPD-600N */
- 	{QMI_QUIRK_SET_DTR(0x1e0e, 0x9001, 5)},	/* SIMCom 7100E, 7230E, 7600E ++ */
-+	{QMI_QUIRK_SET_DTR(0x1e0e, 0x9071, 3)},	/* SIMCom 8230C ++ */
- 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0121, 4)},	/* Quectel EC21 Mini PCIe */
- 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0191, 4)},	/* Quectel EG91 */
- 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0195, 4)},	/* Quectel EG95 */
+3. **Obviously correct**: The pattern is identical to existing X1 Tablet
+   support (Gen1 and Gen3). The commit follows established conventions.
+
+4. **Low risk**: Cannot affect any other hardware since it's guarded by
+   specific device ID checks.
+
+5. **Hardware enablement**: This is pure hardware enablement for a
+   specific device that doesn't work at all without this patch.
+
+## Comparison with Similar Commits
+
+Looking at the provided similar commits:
+- Commits adding X1 Tablet Gen3 support (Similar #2) and X12 Tab Gen2
+  support (Similar #4) were marked YES for backporting
+- Both fixed similar issues (non-working buttons, trackpoint, FnLock)
+- This commit follows the exact same pattern
+
+The commit marked NO (Similar #1) only added partial multitouch support
+without the full hid-lenovo driver integration, which is why it wasn't
+suitable for stable.
+
+## Conclusion
+
+This is a textbook example of a commit that should be backported to
+stable kernels. It enables basic functionality (trackpoint) for specific
+hardware that is completely broken without it, using minimal, well-
+tested code patterns that cannot regress other devices.
+
+ drivers/hid/hid-ids.h        | 1 +
+ drivers/hid/hid-lenovo.c     | 8 ++++++++
+ drivers/hid/hid-multitouch.c | 8 +++++++-
+ 3 files changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index a8665d57094b2..c0ce11393f0fb 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -807,6 +807,7 @@
+ #define USB_DEVICE_ID_LENOVO_TPPRODOCK	0x6067
+ #define USB_DEVICE_ID_LENOVO_X1_COVER	0x6085
+ #define USB_DEVICE_ID_LENOVO_X1_TAB	0x60a3
++#define USB_DEVICE_ID_LENOVO_X1_TAB2	0x60a4
+ #define USB_DEVICE_ID_LENOVO_X1_TAB3	0x60b5
+ #define USB_DEVICE_ID_LENOVO_X12_TAB	0x60fe
+ #define USB_DEVICE_ID_LENOVO_X12_TAB2	0x61ae
+diff --git a/drivers/hid/hid-lenovo.c b/drivers/hid/hid-lenovo.c
+index a4062f617ba20..90e8b6a0a873d 100644
+--- a/drivers/hid/hid-lenovo.c
++++ b/drivers/hid/hid-lenovo.c
+@@ -473,6 +473,7 @@ static int lenovo_input_mapping(struct hid_device *hdev,
+ 		return lenovo_input_mapping_tp10_ultrabook_kbd(hdev, hi, field,
+ 							       usage, bit, max);
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB2:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		return lenovo_input_mapping_x1_tab_kbd(hdev, hi, field, usage, bit, max);
+ 	default:
+@@ -584,6 +585,7 @@ static ssize_t attr_fn_lock_store(struct device *dev,
+ 		break;
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB2:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		ret = lenovo_led_set_tp10ubkbd(hdev, TP10UBKBD_FN_LOCK_LED, value);
+ 		if (ret)
+@@ -779,6 +781,7 @@ static int lenovo_event(struct hid_device *hdev, struct hid_field *field,
+ 		return lenovo_event_cptkbd(hdev, field, usage, value);
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB2:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		return lenovo_event_tp10ubkbd(hdev, field, usage, value);
+ 	default:
+@@ -1062,6 +1065,7 @@ static int lenovo_led_brightness_set(struct led_classdev *led_cdev,
+ 		break;
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB2:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		ret = lenovo_led_set_tp10ubkbd(hdev, tp10ubkbd_led[led_nr], value);
+ 		break;
+@@ -1293,6 +1297,7 @@ static int lenovo_probe(struct hid_device *hdev,
+ 		break;
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB2:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		ret = lenovo_probe_tp10ubkbd(hdev);
+ 		break;
+@@ -1380,6 +1385,7 @@ static void lenovo_remove(struct hid_device *hdev)
+ 		break;
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB2:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		lenovo_remove_tp10ubkbd(hdev);
+ 		break;
+@@ -1430,6 +1436,8 @@ static const struct hid_device_id lenovo_devices[] = {
+ 	 */
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB) },
++	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
++		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB2) },
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB3) },
+ 	{ }
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 6386043aab0bb..becd4c1ccf93c 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -2110,12 +2110,18 @@ static const struct hid_device_id mt_devices[] = {
+ 		HID_DEVICE(BUS_I2C, HID_GROUP_GENERIC,
+ 			USB_VENDOR_ID_LG, I2C_DEVICE_ID_LG_7010) },
+ 
+-	/* Lenovo X1 TAB Gen 2 */
++	/* Lenovo X1 TAB Gen 1 */
+ 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
+ 		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
+ 			   USB_VENDOR_ID_LENOVO,
+ 			   USB_DEVICE_ID_LENOVO_X1_TAB) },
+ 
++	/* Lenovo X1 TAB Gen 2 */
++	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
++		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
++			   USB_VENDOR_ID_LENOVO,
++			   USB_DEVICE_ID_LENOVO_X1_TAB2) },
++
+ 	/* Lenovo X1 TAB Gen 3 */
+ 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
+ 		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
 -- 
 2.39.5
 
