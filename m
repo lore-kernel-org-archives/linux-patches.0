@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3B61E1DE5;
-	Mon, 30 Jun 2025 21:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC916242D76;
+	Mon, 30 Jun 2025 21:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317281; cv=none; b=dru96Tp1plli1jDrXKxbmAyd04yZN8AsY4h5BktBegMc05cZC+S5Hh9GUFykfYgWKG/sLlLfQwei2gojGzg0aC8xjOG6V1sNxx7TrQN9SrABm+giVVOWjfEFkSA8sMxFdETl2C+Q+y4ZU4BeojQphPqt9kboUlLiHmYMIN5gHbs=
+	t=1751317285; cv=none; b=Ou3lUGu+3Kj2ETIzSCdzKFLWMOkCHtd1Std9u5bwToBHoOR4g+K3WjKvg4nEe/IlW8zLMj3LT+mEGy3Q1MsytvpPDdT2O8Bflf1xntd5YTlRKTNebZZUGvUJPvGymnj8y907yCq3dzWYoTpz0J5A75Q3KJKAM4rf5E+mR0Jwff4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317281; c=relaxed/simple;
-	bh=fd5TTcR4xrv7LlfCWv7RjAxXvv5McMMYbPwkZziGVRc=;
+	s=arc-20240116; t=1751317285; c=relaxed/simple;
+	bh=/kqnLAksja1ck+EqcOAHF5gIeaUjEIKoLyCsblAZAGM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=c3PW6tqnXZ9QFLmqBdlsVqxxGnTZIdm5U5q8afBzRjtyAAj0PhStWj3LRhMyWegMqnU+7ZMwn7QyGgOrI87dIrJu/ZEciuxmw9a9tZMmUHDDMnp9PELydvDmr8ZEHpLInlv2NuoWo9qcBBuUCZaW0+BDyZLzYDvUgWUWXOZQ8tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N2ZpTKdc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5fpwcCw4apYSAXSnmDbUcTOejvhfLK6AR87XYLopREYCSk3GOCzcsnTUKRkDg/8nnsr6r+tRg3K3Bp2wFJmMQsYiB0uXslue4QpJxGFbmQwcVnvteGGxhQ6FrU8WRtHh21wrWzg8zXnx9FPUnMJbYKSeF8CibdRFolF48mJ/Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LU9oVOLK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N2ZpTKdc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA8EC4CEEB;
-	Mon, 30 Jun 2025 21:01:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LU9oVOLK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9BBC4CEE3;
+	Mon, 30 Jun 2025 21:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317281;
-	bh=fd5TTcR4xrv7LlfCWv7RjAxXvv5McMMYbPwkZziGVRc=;
+	s=k20201202; t=1751317285;
+	bh=/kqnLAksja1ck+EqcOAHF5gIeaUjEIKoLyCsblAZAGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N2ZpTKdcoY5ukIh+2cgGb3iQbapMMCovM7wC0Pt8F+kyUpVPz6e+hZE5XRl5/6O12
-	 OFgLYyLafvtPmYcoccvNnfdv9dcqTA6qNzcQxw7XAtwUCPnw5j8i/QDtXMb1YTy/Lb
-	 b/I1kXhwGGRDo1wecwOo70iOi/OPYbgogrydpdOhTt+dptB9+i2Q0ejD5bjJl+4de3
-	 D8Mc7993FWGD26oTkCtTWAttuie+lvxtqwGtmemAngdcbqpinKmaL1NQg7krC4uvZt
-	 LSGWp/2pli+ZNkP0uXdG4VPF8EsQ3xkbMfksvnO/2k4hHiwM6P5fl2k1w7vhxuOQUS
-	 TPnlUlTagUZ9w==
+	b=LU9oVOLK2qg71JcpkiILtEqzKU4nk7zLt1GYg53drYUaA/ftaPgIdhjbSCO+ni7fR
+	 O4ff+PyvKQjGje0fkdYTKpWPi+hBCNx4PUiAKjwvy9w4Rwjg6FTFl4PWy0RO3XeKnB
+	 QKsdULELTlKp0Ziqt9Jb2hiXLyLI+G8arLNwDvFCnByoKIcPDm1JOwhGy1b1kVGvDJ
+	 L9y+6DEWnSVgbyAORW349yTzrA1wnBNo+/MMm6y+dJXTaGgBDAsSDbJU2c6x8OBaZa
+	 EpAffeaeY8KFGY9k0ZK63f9LkAAWSK7lhbY7VIkM+W9Age5kiuYh6a73I6YcUOwUh6
+	 QQXbNIK3QiHug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tiwei Bie <tiwei.btw@antgroup.com>,
-	kernel test robot <lkp@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Yuzuru10 <yuzuru_10@proton.me>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	nathan@kernel.org,
-	anton.ivanov@cambridgegreys.com,
-	richard@nod.at,
-	tglx@linutronix.de,
-	guoweikang.kernel@gmail.com,
-	bpf@vger.kernel.org,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.1 02/10] um: vector: Reduce stack usage in vector_eth_configure()
-Date: Mon, 30 Jun 2025 16:47:09 -0400
-Message-Id: <20250630204718.1359222-2-sashal@kernel.org>
+	mario.limonciello@amd.com,
+	venkataprasad.potturu@amd.com,
+	tiwai@suse.de,
+	talhah.peerbhai@gmail.com
+Subject: [PATCH AUTOSEL 6.1 03/10] ASoC: amd: yc: add quirk for Acer Nitro ANV15-41 internal mic
+Date: Mon, 30 Jun 2025 16:47:10 -0400
+Message-Id: <20250630204718.1359222-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250630204718.1359222-1-sashal@kernel.org>
 References: <20250630204718.1359222-1-sashal@kernel.org>
@@ -57,140 +53,109 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.142
 Content-Transfer-Encoding: 8bit
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Yuzuru10 <yuzuru_10@proton.me>
 
-[ Upstream commit 2d65fc13be85c336c56af7077f08ccd3a3a15a4a ]
+[ Upstream commit 7186b81807b4a08f8bf834b6bdc72d6ed8ba1587 ]
 
-When compiling with clang (19.1.7), initializing *vp using a compound
-literal may result in excessive stack usage. Fix it by initializing the
-required fields of *vp individually.
+This patch adds DMI-based quirk for the Acer Nitro ANV15-41,
+allowing the internal microphone to be detected correctly on
+machines with "RB" as board vendor.
 
-Without this patch:
-
-$ objdump -d arch/um/drivers/vector_kern.o | ./scripts/checkstack.pl x86_64 0
-...
-0x0000000000000540 vector_eth_configure [vector_kern.o]:1472
-...
-
-With this patch:
-
-$ objdump -d arch/um/drivers/vector_kern.o | ./scripts/checkstack.pl x86_64 0
-...
-0x0000000000000540 vector_eth_configure [vector_kern.o]:208
-...
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506221017.WtB7Usua-lkp@intel.com/
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Link: https://patch.msgid.link/20250623110829.314864-1-tiwei.btw@antgroup.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Yuzuru <yuzuru_10@proton.me>
+Link: https://patch.msgid.link/20250622225754.20856-1-yuzuru_10@proton.me
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Fixes a real bug**: The commit addresses excessive stack usage
-   (1472 bytes) that can lead to stack overflow, especially problematic
-   on systems with limited kernel stack space. This is a legitimate bug
-   that affects system stability.
+## Key Points Supporting Backporting:
 
-2. **Compiler-specific issue with real impact**: While triggered by
-   clang 19.1.7's handling of compound literals, the resulting stack
-   usage of 1472 bytes is genuinely excessive and dangerous regardless
-   of the compiler quirk that exposed it.
+1. **Device ID Addition**: According to the stable kernel rules in
+   Documentation/process/stable-kernel-rules.rst:15, patches that "add a
+   device ID" are explicitly acceptable for stable backporting. This
+   commit adds a DMI quirk entry which is functionally equivalent to
+   adding a device ID.
 
-3. **Simple and safe fix**: The change is purely mechanical - converting
-   from compound literal initialization to field-by-field
-   initialization:
+2. **Hardware Enablement Fix**: The commit fixes a real hardware issue -
+   the internal microphone on the Acer Nitro ANV15-41 laptop doesn't
+   work without this quirk. This is a concrete bug that affects real
+   users.
+
+3. **Minimal and Safe Change**: The patch adds only 7 lines to the
+   `yc_acp_quirk_table[]` array:
   ```c
-  // From:
-  *vp = ((struct vector_private) { .field = value, ... });
-  // To:
-  vp->field = value;
+  +       {
+  +               .driver_data = &acp6x_card,
+  +               .matches = {
+  +                       DMI_MATCH(DMI_BOARD_VENDOR, "RB"),
+  +                       DMI_MATCH(DMI_PRODUCT_NAME, "Nitro ANV15-41"),
+  +               }
+  +       },
   ```
 
-4. **Minimal risk**: The fix doesn't change any logic or functionality.
-   It only changes how the structure is initialized, making it extremely
-   unlikely to introduce regressions.
+4. **Follows Established Pattern**: The change follows the exact same
+   pattern as numerous other entries in the DMI quirk table. It's a
+   simple addition to an existing table with no algorithmic changes or
+   risk of regression.
 
-5. **Precedent from similar commits**: Looking at the historical commits
-   marked "YES" for backporting:
-   - Similar Commit #1: Reduced stack frame in qed driver using
-     `noinline_for_stack`
-   - Similar Commit #4: Reduced stack usage in ethtool with clang using
-     `noinline_for_stack`
+5. **Precedent from Similar Commits**: Looking at the historical commits
+   with similar characteristics:
+   - commit 610010737f74 ("ASoC: amd: yc: Add DMI quirk for Lenovo
+     Ideapad Pro 5 16ARP8") - Backported with Cc: stable
+   - commit c6dce23ec993 ("ASoC: amd: yc: Add DMI quirk for MSI Bravo 15
+     C7VF") - Backported with Cc: stable
+   - Multiple other similar commits were backported to stable
 
-   Both addressed the same class of problem (excessive stack usage with
-clang) and were considered suitable for stable.
+6. **No Risk of Regression**: The DMI matching is specific to the exact
+   board vendor "RB" and product name "Nitro ANV15-41". This cannot
+   affect any other hardware models.
 
-6. **Measurable improvement**: The stack usage reduction from 1472 to
-   208 bytes is dramatic and well-documented by the kernel test robot,
-   providing clear evidence of the fix's effectiveness.
+## Analysis of the Code:
 
-The commit meets the stable kernel criteria of fixing an important bug
-with minimal risk and a contained change. While it doesn't explicitly
-include a "Cc: stable" tag, the nature of the fix (preventing potential
-stack overflow) makes it a good candidate for stable backporting.
+The change is in `sound/soc/amd/yc/acp6x-mach.c`, which is the machine
+driver for AMD Yellow Carp platform using DMIC (Digital Microphone). The
+`yc_acp_quirk_table[]` is a DMI (Desktop Management Interface) matching
+table that identifies specific laptop models that need special handling
+to enable their internal microphones.
 
- arch/um/drivers/vector_kern.c | 42 +++++++++++------------------------
- 1 file changed, 13 insertions(+), 29 deletions(-)
+Without this quirk, the AMD audio driver doesn't properly detect or
+initialize the internal microphone on the affected laptop model, leaving
+users without functioning audio input.
 
-diff --git a/arch/um/drivers/vector_kern.c b/arch/um/drivers/vector_kern.c
-index 2baa8d4a33ed3..1a068859a4185 100644
---- a/arch/um/drivers/vector_kern.c
-+++ b/arch/um/drivers/vector_kern.c
-@@ -1600,35 +1600,19 @@ static void vector_eth_configure(
- 
- 	device->dev = dev;
- 
--	*vp = ((struct vector_private)
--		{
--		.list			= LIST_HEAD_INIT(vp->list),
--		.dev			= dev,
--		.unit			= n,
--		.options		= get_transport_options(def),
--		.rx_irq			= 0,
--		.tx_irq			= 0,
--		.parsed			= def,
--		.max_packet		= get_mtu(def) + ETH_HEADER_OTHER,
--		/* TODO - we need to calculate headroom so that ip header
--		 * is 16 byte aligned all the time
--		 */
--		.headroom		= get_headroom(def),
--		.form_header		= NULL,
--		.verify_header		= NULL,
--		.header_rxbuffer	= NULL,
--		.header_txbuffer	= NULL,
--		.header_size		= 0,
--		.rx_header_size		= 0,
--		.rexmit_scheduled	= false,
--		.opened			= false,
--		.transport_data		= NULL,
--		.in_write_poll		= false,
--		.coalesce		= 2,
--		.req_size		= get_req_size(def),
--		.in_error		= false,
--		.bpf			= NULL
--	});
-+	INIT_LIST_HEAD(&vp->list);
-+	vp->dev		= dev;
-+	vp->unit	= n;
-+	vp->options	= get_transport_options(def);
-+	vp->parsed	= def;
-+	vp->max_packet	= get_mtu(def) + ETH_HEADER_OTHER;
-+	/*
-+	 * TODO - we need to calculate headroom so that ip header
-+	 * is 16 byte aligned all the time
-+	 */
-+	vp->headroom	= get_headroom(def);
-+	vp->coalesce	= 2;
-+	vp->req_size	= get_req_size(def);
- 
- 	dev->features = dev->hw_features = (NETIF_F_SG | NETIF_F_FRAGLIST);
- 	INIT_WORK(&vp->reset_tx, vector_reset_tx);
+## Conclusion:
+
+This is a textbook example of a commit suitable for stable backporting -
+it's a hardware enablement fix that adds a device-specific quirk with
+zero risk to other systems. The absence of an explicit "Cc:
+stable@vger.kernel.org" tag in the commit message doesn't disqualify it
+from backporting; it simply means the author didn't explicitly request
+it at submission time.
+
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index d5dc1d48fca94..5be4e620eeba1 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -339,6 +339,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "83Q3"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "RB"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Nitro ANV15-41"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.39.5
 
