@@ -1,49 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDC5290DB2;
-	Mon, 30 Jun 2025 21:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7382728F514;
+	Mon, 30 Jun 2025 21:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317311; cv=none; b=WA1q4+jkGLSlHKNj+DnPaDC9s2nTHyp3zlKQaCTRLRfcAyVn+rw1r64mSSLKcDdUZbGk+PLovlZkggDZ0A9IL0yc8NEWgwk1Fz9jkEtMplyA8/xJBrvSKuwMj1kv5z1WBvdHpO+EixUbjjHP2jLUd9PiqvLdvJ1DolIE7ydtDVs=
+	t=1751317313; cv=none; b=InqpLiakCXvJbtUTz/TgYRoN5T0l/PG5NmEy6kbn/jMuzbDKjnWX2/N3KUhkmQ+VwcDCiv9QOagvA6iwv16HW/zBqLTik6rfDnhwvLOSht0vpJgImhSlkaKQyMbIGzCKuUyCVjErXHAEYXq3Y8b/oJMn5ykLY35CCK9UrownWbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317311; c=relaxed/simple;
-	bh=gbO8Q9MsevLLF5VsQv4jcp6XgaI8hqa4nce5a0JHavc=;
+	s=arc-20240116; t=1751317313; c=relaxed/simple;
+	bh=F9iqrvW1kAnaiNVQAyqPay16hSnDeSIiMjfz+n115+s=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=l0ux1EoZAVy/efu+5NbWWHyB0rqj1siCQFhQbd1sQcxYauHdBgXCWhmkD3LarzfXRaSA/OyBCkkKy/TOHKxYIuinCy0AUpjCMStKhC9sBmNNcL2qk5/bcHPE7PXXgAXDdff2KOQSzk269ps03y+mWcmEM5vrtSE6b5kmQW+y3aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q+glu4KO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s3dFsv9hL+7He5AsjvbAPcXygdFlS2AcZ/omepUUwmZ4GPPClEX/Wm5EOarnEI29HLrfyAuYaGWpGT+0MxjUKz4Gk7NlWmixm6d4LVfdrHSp9zl/+I5fwGVHUxaN+fCQJGB7HUA4fLpBpOfBy3pzSuw5XNKAikxXbOFoZZBB3Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DuGfzitu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q+glu4KO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6C1C4CEEB;
-	Mon, 30 Jun 2025 21:01:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DuGfzitu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC0CC4CEE3;
+	Mon, 30 Jun 2025 21:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317311;
-	bh=gbO8Q9MsevLLF5VsQv4jcp6XgaI8hqa4nce5a0JHavc=;
+	s=k20201202; t=1751317313;
+	bh=F9iqrvW1kAnaiNVQAyqPay16hSnDeSIiMjfz+n115+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q+glu4KOGHUaZC+QLCAEDHMtBVJIFzqnIkaWFwc4m9MeTP3XeFZ54JUS9okDMB/St
-	 rrzKg6QlcXxVUByBqXQRXHxmqadobJTXTWSw1fnUDTg/NDjX2KBbn8T/lqQPK46DtM
-	 g9qLfS1w2NT1qfgA6I2fI1Avj6RfLD1Gi29AauxP3JIykS7nM4GS/xdazOwMtLop5W
-	 u2zsnyzn3xEoWsJ8QhnpSpq24VIEfBMaVwOZD+r9J3m7F4TPzikedznP01TND8C8C2
-	 Te3rKwHGD4C2gXqIxAf0EdylcJLtM06yhIv7HHxcHmsT5UGG2OVGoQrJez8+IN45nE
-	 FkZt5LcWNp8Ew==
+	b=DuGfzituTXUje5IjNLi0tSOg7/7YNNTCsB4wxgBawPrAXADvJg4zSSxI51huHhLDg
+	 XlPeUj1xfAT6uOCY6GhdlwbpUP8TpVNVQPGGj/wKGSh+8PxHPFHNfLWSBH/KOyQ3Ud
+	 VIuhJ6ZsAPz7cPSyIi2L/zp0I7DIOR0NiKo75a0E9HVi4Jkw2comHyShaRJN+tkJVD
+	 kokl819InFqlOxOoZldu5AQuPhaz9zQcitDZGSZHNnTthp77eG692kkNJV7TK8qZhl
+	 0IVnePLknkRrQY6kiFunYgfKuqXAZa/t2N4JMBA87gRLVvt323kkRGNxeLShtR2Ws7
+	 8CyA+ShmYhJiA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tiwei Bie <tiwei.btw@antgroup.com>,
-	kernel test robot <lkp@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Xiaowei Li <xiaowei.li@simcom.com>,
+	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	nathan@kernel.org,
-	anton.ivanov@cambridgegreys.com,
-	richard@nod.at,
-	agordeev@linux.ibm.com,
-	guoweikang.kernel@gmail.com,
-	tglx@linutronix.de,
-	bpf@vger.kernel.org,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 5.15 2/7] um: vector: Reduce stack usage in vector_eth_configure()
-Date: Mon, 30 Jun 2025 17:01:39 -0400
-Message-Id: <20250630210144.1359448-2-sashal@kernel.org>
+	netdev@vger.kernel.org,
+	linux-usb@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 3/7] net: usb: qmi_wwan: add SIMCom 8230C composition
+Date: Mon, 30 Jun 2025 17:01:40 -0400
+Message-Id: <20250630210144.1359448-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250630210144.1359448-1-sashal@kernel.org>
 References: <20250630210144.1359448-1-sashal@kernel.org>
@@ -53,145 +47,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.186
 Content-Transfer-Encoding: 8bit
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Xiaowei Li <xiaowei.li@simcom.com>
 
-[ Upstream commit 2d65fc13be85c336c56af7077f08ccd3a3a15a4a ]
+[ Upstream commit 0b39b055b5b48cbbdf5746a1ca6e3f6b0221e537 ]
 
-When compiling with clang (19.1.7), initializing *vp using a compound
-literal may result in excessive stack usage. Fix it by initializing the
-required fields of *vp individually.
+Add support for SIMCom 8230C which is based on Qualcomm SDX35 chip.
+0x9071: tty (DM) + tty (NMEA) + tty (AT) + rmnet
+T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#=  8 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1e0e ProdID=9071 Rev= 5.15
+S:  Manufacturer=SIMCOM
+S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=86(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=none
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Without this patch:
-
-$ objdump -d arch/um/drivers/vector_kern.o | ./scripts/checkstack.pl x86_64 0
-...
-0x0000000000000540 vector_eth_configure [vector_kern.o]:1472
-...
-
-With this patch:
-
-$ objdump -d arch/um/drivers/vector_kern.o | ./scripts/checkstack.pl x86_64 0
-...
-0x0000000000000540 vector_eth_configure [vector_kern.o]:208
-...
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506221017.WtB7Usua-lkp@intel.com/
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Link: https://patch.msgid.link/20250623110829.314864-1-tiwei.btw@antgroup.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Xiaowei Li <xiaowei.li@simcom.com>
+Acked-by: Bjørn Mork <bjorn@mork.no>
+Link: https://patch.msgid.link/tencent_21D781FAA4969FEACA6ABB460362B52C9409@qq.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis:
 
-1. **Fixes a real bug**: The commit addresses excessive stack usage
-   (1472 bytes) that can lead to stack overflow, especially problematic
-   on systems with limited kernel stack space. This is a legitimate bug
-   that affects system stability.
+## Rationale for Backporting:
 
-2. **Compiler-specific issue with real impact**: While triggered by
-   clang 19.1.7's handling of compound literals, the resulting stack
-   usage of 1472 bytes is genuinely excessive and dangerous regardless
-   of the compiler quirk that exposed it.
+1. **Stable kernel rules explicitly allow device ID additions**:
+   According to Documentation/process/stable-kernel-rules.rst line 15,
+   patches must "either fix a real bug that bothers people or just add a
+   device ID." This commit clearly falls into the "add a device ID"
+   category.
 
-3. **Simple and safe fix**: The change is purely mechanical - converting
-   from compound literal initialization to field-by-field
-   initialization:
+2. **Simple, low-risk change**: The commit adds exactly one line:
   ```c
-  // From:
-  *vp = ((struct vector_private) { .field = value, ... });
-  // To:
-  vp->field = value;
+  {QMI_QUIRK_SET_DTR(0x1e0e, 0x9071, 3)}, /* SIMCom 8230C ++ */
   ```
+  This is a minimal change that only affects users with this specific
+  hardware (vendor ID 0x1e0e, product ID 0x9071).
 
-4. **Minimal risk**: The fix doesn't change any logic or functionality.
-   It only changes how the structure is initialized, making it extremely
-   unlikely to introduce regressions.
+3. **Enables hardware that would otherwise not work**: Without this
+   device ID entry, users with the SIMCom 8230C modem cannot use their
+   hardware with the qmi_wwan driver. This directly impacts
+   functionality for those users.
 
-5. **Precedent from similar commits**: Looking at the historical commits
-   marked "YES" for backporting:
-   - Similar Commit #1: Reduced stack frame in qed driver using
-     `noinline_for_stack`
-   - Similar Commit #4: Reduced stack usage in ethtool with clang using
-     `noinline_for_stack`
+4. **Follows established patterns**: The commit uses `QMI_QUIRK_SET_DTR`
+   macro, consistent with the existing SIMCom entry at line 1428:
+  ```c
+  {QMI_QUIRK_SET_DTR(0x1e0e, 0x9001, 5)}, /* SIMCom 7100E, 7230E, 7600E
+  ++ */
+  ```
+  This shows the vendor has a history of requiring the DTR quirk for
+  their devices.
 
-   Both addressed the same class of problem (excessive stack usage with
-clang) and were considered suitable for stable.
+5. **Historical precedent supports backporting**: Of the 5 similar
+   commits analyzed, 4 were backported to stable:
+   - Fibocom FG132 (YES)
+   - MeiG Smart SRM825L (YES)
+   - Telit FN912 compositions (YES)
+   - Telit FN920C04 compositions (YES)
+   - Quectel RG255C (NO)
 
-6. **Measurable improvement**: The stack usage reduction from 1472 to
-   208 bytes is dramatic and well-documented by the kernel test robot,
-   providing clear evidence of the fix's effectiveness.
+   The 80% backport rate for similar device ID additions suggests this
+type of change is generally considered appropriate for stable.
 
-The commit meets the stable kernel criteria of fixing an important bug
-with minimal risk and a contained change. While it doesn't explicitly
-include a "Cc: stable" tag, the nature of the fix (preventing potential
-stack overflow) makes it a good candidate for stable backporting.
+6. **No risk to existing functionality**: The change only adds support
+   for a new device ID (0x9071) and doesn't modify any existing device
+   support or core driver functionality.
 
- arch/um/drivers/vector_kern.c | 42 +++++++++++------------------------
- 1 file changed, 13 insertions(+), 29 deletions(-)
+The commit meets all criteria for stable backporting: it's obviously
+correct, tested (as evidenced by the detailed USB descriptor output in
+the commit message), small (1 line), and enables hardware support that
+users need.
 
-diff --git a/arch/um/drivers/vector_kern.c b/arch/um/drivers/vector_kern.c
-index c63ccf1ab4a20..41fc93ce4d372 100644
---- a/arch/um/drivers/vector_kern.c
-+++ b/arch/um/drivers/vector_kern.c
-@@ -1603,35 +1603,19 @@ static void vector_eth_configure(
- 
- 	device->dev = dev;
- 
--	*vp = ((struct vector_private)
--		{
--		.list			= LIST_HEAD_INIT(vp->list),
--		.dev			= dev,
--		.unit			= n,
--		.options		= get_transport_options(def),
--		.rx_irq			= 0,
--		.tx_irq			= 0,
--		.parsed			= def,
--		.max_packet		= get_mtu(def) + ETH_HEADER_OTHER,
--		/* TODO - we need to calculate headroom so that ip header
--		 * is 16 byte aligned all the time
--		 */
--		.headroom		= get_headroom(def),
--		.form_header		= NULL,
--		.verify_header		= NULL,
--		.header_rxbuffer	= NULL,
--		.header_txbuffer	= NULL,
--		.header_size		= 0,
--		.rx_header_size		= 0,
--		.rexmit_scheduled	= false,
--		.opened			= false,
--		.transport_data		= NULL,
--		.in_write_poll		= false,
--		.coalesce		= 2,
--		.req_size		= get_req_size(def),
--		.in_error		= false,
--		.bpf			= NULL
--	});
-+	INIT_LIST_HEAD(&vp->list);
-+	vp->dev		= dev;
-+	vp->unit	= n;
-+	vp->options	= get_transport_options(def);
-+	vp->parsed	= def;
-+	vp->max_packet	= get_mtu(def) + ETH_HEADER_OTHER;
-+	/*
-+	 * TODO - we need to calculate headroom so that ip header
-+	 * is 16 byte aligned all the time
-+	 */
-+	vp->headroom	= get_headroom(def);
-+	vp->coalesce	= 2;
-+	vp->req_size	= get_req_size(def);
- 
- 	dev->features = dev->hw_features = (NETIF_F_SG | NETIF_F_FRAGLIST);
- 	tasklet_setup(&vp->tx_poll, vector_tx_poll);
+ drivers/net/usb/qmi_wwan.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 600a190f22128..d21d23f10d422 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1421,6 +1421,7 @@ static const struct usb_device_id products[] = {
+ 	{QMI_FIXED_INTF(0x03f0, 0x9d1d, 1)},	/* HP lt4120 Snapdragon X5 LTE */
+ 	{QMI_FIXED_INTF(0x22de, 0x9061, 3)},	/* WeTelecom WPD-600N */
+ 	{QMI_QUIRK_SET_DTR(0x1e0e, 0x9001, 5)},	/* SIMCom 7100E, 7230E, 7600E ++ */
++	{QMI_QUIRK_SET_DTR(0x1e0e, 0x9071, 3)},	/* SIMCom 8230C ++ */
+ 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0121, 4)},	/* Quectel EC21 Mini PCIe */
+ 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0191, 4)},	/* Quectel EG91 */
+ 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0195, 4)},	/* Quectel EG95 */
 -- 
 2.39.5
 
