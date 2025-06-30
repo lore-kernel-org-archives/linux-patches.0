@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEBA1885A5;
-	Mon, 30 Jun 2025 20:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890B522F76F;
+	Mon, 30 Jun 2025 21:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317197; cv=none; b=KXhJB4AYt/JsUi3qnTGBJzxx2+dXGnQINRpIGK6WwVkGkSwcypxYTZYZFkGRgHsVhK5IBu/0BFvIuoBUG+FSSYZrhPhWXsLZoF1hh9kAo1M2i+ILJdwLLv/dffuNnMIEEF8r8lJ/0PACzWakCkIxZ/fTN5xD7nSyMUVjJrkSX1I=
+	t=1751317201; cv=none; b=QixYUUquq0dkKieiAXjqyIMTxChEowZCKHQrxfuK96IWX2oNvlQ5sTMDxnPigJ0R+TkzICalVyNW60kVz93kNj9UILB8NDcMMPEiCxnMob0xWbk/LWJ9SBA027piw2hyZjG7LJcXAc0qRzs60uWQ9CeBZLzxUP+oZ6HIu7jUY2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317197; c=relaxed/simple;
-	bh=WNedFTpYxr+flj+wo5kucjwaGj00QBtIhfPRC4D2XsA=;
+	s=arc-20240116; t=1751317201; c=relaxed/simple;
+	bh=8R6XG+oNBt3gGrLVQokWFfKNEpbdmjtTp9PjDWJbkHc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hMCB4t2Qr0jwbGzMmlic2oJVIjAmpi1BRDggfPFVb5NIPzmnH9q+EQIWMAYk5awlwiSMyKQFr7qs/Fb2wuoIhHNE1cLITdK6lCkhMITwEHZ/ZaIwFIMgjcCOZ0ZHEo/5jVU+x73SxfW/KxQ3zVXoyJ5lcUMgWxb969OP/VTJ20w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Imre0iTF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P/K/xuoGhVy4vbGHxmQzLfPFs362wIeQurZabaqGbDlFvkzPDrIFuIFKIIDf1OMf68/tWcdqbuVatno9NzTc0AoxYzpGcDsbkFU3tq6yXPpGLZAYpAvXmpyqNEMj7ZvNl4qzzOA+/kYgxK+M4vZ8Yr73kGObTuABLqW8ZPEJDWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zoy/HUhC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Imre0iTF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC23C4CEE3;
-	Mon, 30 Jun 2025 20:59:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zoy/HUhC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D95C4CEE3;
+	Mon, 30 Jun 2025 21:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317197;
-	bh=WNedFTpYxr+flj+wo5kucjwaGj00QBtIhfPRC4D2XsA=;
+	s=k20201202; t=1751317201;
+	bh=8R6XG+oNBt3gGrLVQokWFfKNEpbdmjtTp9PjDWJbkHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Imre0iTFmes9jrexKEY8uippmQNpS8D7gGytSWsRoz8w2pcranXuAo6dPtdnmkAQ1
-	 Fs/JpHPzAKBNVCK2Vpb2p31iB6iXpANTa2nyPrGWxb8f2/IrWs/WdXkRhnhVdRWLnF
-	 zbNJKqqtcFmJnsE/tKVy1W7Q6qvzPxHoJNdHYenSdnBlsOKZax6ndMV41uLjc0iwqw
-	 cJo2r5eDl5YzASKwrLsEQUM2CYTFc0isFVZhhHYJb0cKAVLQdTw1tM3doow3iQYZ5a
-	 nDDf8IDrYGiB0N69Zo1IQJ9bLV0MCqGMu+3MxX5+S0YuC5jancgRpdMiMvf+L3A98R
-	 xSe/qsTc5bErw==
+	b=Zoy/HUhCy0SO6I6x8BfFuBuUTEgLWOVYjIbm7lYbeCJh9Z4ndzOc6lwDDq3iqkzWg
+	 JlUBOWdtOJEBYIi4g8JbExrRmKnREevqXszbeMpQAiEbwMAeyN8KC/n2L8DDkeBp2W
+	 weNdR0UMyUtIOWe7q7MzvY92CouxnRzkDRnjb5NsaEea7m7GqfWFKtcCErWfyfU1Wf
+	 cK22TO+u2H4h80S9MCwwytTfexkdNSI4p5lpUDRc8IYIMteFo3BmLdcYpFTlT97RYQ
+	 zyfIDaJJ+Tf6kpFxNmm8iojy4fIf7/vzsW7ckBb+cvTp3D+BOmpRXvII4HgCZEoLPz
+	 o8+fC+JBMQFUg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yuzuru10 <yuzuru_10@proton.me>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Yasmin Fitzgerald <sunoflife1.git@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	venkataprasad.potturu@amd.com,
-	tiwai@suse.de,
-	mario.limonciello@amd.com,
-	talhah.peerbhai@gmail.com
-Subject: [PATCH AUTOSEL 6.12 08/21] ASoC: amd: yc: add quirk for Acer Nitro ANV15-41 internal mic
-Date: Mon, 30 Jun 2025 16:45:23 -0400
-Message-Id: <20250630204536.1358327-8-sashal@kernel.org>
+	kailang@realtek.com,
+	sbinding@opensource.cirrus.com,
+	chris.chiu@canonical.com,
+	simont@opensource.cirrus.com,
+	josh@joshuagrisham.com
+Subject: [PATCH AUTOSEL 6.12 09/21] ALSA: hda/realtek - Enable mute LED on HP Pavilion Laptop 15-eg100
+Date: Mon, 30 Jun 2025 16:45:24 -0400
+Message-Id: <20250630204536.1358327-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250630204536.1358327-1-sashal@kernel.org>
 References: <20250630204536.1358327-1-sashal@kernel.org>
@@ -53,109 +54,82 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.35
 Content-Transfer-Encoding: 8bit
 
-From: Yuzuru10 <yuzuru_10@proton.me>
+From: Yasmin Fitzgerald <sunoflife1.git@gmail.com>
 
-[ Upstream commit 7186b81807b4a08f8bf834b6bdc72d6ed8ba1587 ]
+[ Upstream commit 68cc9d3c8e44afe90e43cbbd2960da15c2f31e23 ]
 
-This patch adds DMI-based quirk for the Acer Nitro ANV15-41,
-allowing the internal microphone to be detected correctly on
-machines with "RB" as board vendor.
+The HP Pavilion Laptop 15-eg100 has Realtek HDA codec ALC287.
+It needs the ALC287_FIXUP_HP_GPIO_LED quirk to enable the mute LED.
 
-Signed-off-by: Yuzuru <yuzuru_10@proton.me>
-Link: https://patch.msgid.link/20250622225754.20856-1-yuzuru_10@proton.me
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Yasmin Fitzgerald <sunoflife1.git@gmail.com>
+Link: https://patch.msgid.link/20250621053832.52950-1-sunoflife1.git@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Key Points Supporting Backporting:
-
-1. **Device ID Addition**: According to the stable kernel rules in
-   Documentation/process/stable-kernel-rules.rst:15, patches that "add a
-   device ID" are explicitly acceptable for stable backporting. This
-   commit adds a DMI quirk entry which is functionally equivalent to
-   adding a device ID.
-
-2. **Hardware Enablement Fix**: The commit fixes a real hardware issue -
-   the internal microphone on the Acer Nitro ANV15-41 laptop doesn't
-   work without this quirk. This is a concrete bug that affects real
-   users.
-
-3. **Minimal and Safe Change**: The patch adds only 7 lines to the
-   `yc_acp_quirk_table[]` array:
+1. **Hardware enablement fix**: The commit adds a single line to the
+   `alc269_fixup_tbl[]` quirk table to enable mute LED functionality on
+   the HP Pavilion Laptop 15-eg100:
   ```c
-  +       {
-  +               .driver_data = &acp6x_card,
-  +               .matches = {
-  +                       DMI_MATCH(DMI_BOARD_VENDOR, "RB"),
-  +                       DMI_MATCH(DMI_PRODUCT_NAME, "Nitro ANV15-41"),
-  +               }
-  +       },
+  SND_PCI_QUIRK(0x103c, 0x898a, "HP Pavilion 15-eg100",
+  ALC287_FIXUP_HP_GPIO_LED),
   ```
 
-4. **Follows Established Pattern**: The change follows the exact same
-   pattern as numerous other entries in the DMI quirk table. It's a
-   simple addition to an existing table with no algorithmic changes or
-   risk of regression.
+2. **Minimal and contained change**: This is a one-line addition that
+   only affects the specific hardware identified by PCI subsystem ID
+   (0x103c, 0x898a). There are no side effects on other systems.
 
-5. **Precedent from Similar Commits**: Looking at the historical commits
-   with similar characteristics:
-   - commit 610010737f74 ("ASoC: amd: yc: Add DMI quirk for Lenovo
-     Ideapad Pro 5 16ARP8") - Backported with Cc: stable
-   - commit c6dce23ec993 ("ASoC: amd: yc: Add DMI quirk for MSI Bravo 15
-     C7VF") - Backported with Cc: stable
-   - Multiple other similar commits were backported to stable
+3. **Uses established fixup**: The `ALC287_FIXUP_HP_GPIO_LED` fixup is
+   already well-established in the kernel and used by other HP Pavilion
+   models including:
+   - HP Pavilion 15-eh1xxx (0x103c, 0x88d0)
+   - HP Pavilion Aero Laptop 13-be0xxx (0x103c, 0x8919)
+   - HP Pavilion 14-ec1xxx (0x103c, 0x8a0f)
 
-6. **No Risk of Regression**: The DMI matching is specific to the exact
-   board vendor "RB" and product name "Nitro ANV15-41". This cannot
-   affect any other hardware models.
+4. **Fixes user-visible functionality**: Without this quirk, users of
+   the HP Pavilion Laptop 15-eg100 would have a non-functional mute LED,
+   which is an important visual feedback mechanism for audio state.
 
-## Analysis of the Code:
+5. **Consistent with stable backport precedent**: All five similar
+   historical commits that enabled mute LED functionality for HP laptops
+   were backported to stable:
+   - "Enable Mute LED on HP Laptop 14s-fq1xxx" (YES)
+   - "Enable Mute LED on HP Laptop 14-fq0xxx" (YES)
+   - "fix mute led of the HP Pavilion 15-eh1xxx series" (YES) - notably
+     uses the same ALC287_FIXUP_HP_GPIO_LED
+   - "Enable Mute LED on HP Laptop 15s-eq2xxx" (YES)
+   - "Enable Mute LED on HP 255 G8" (YES)
 
-The change is in `sound/soc/amd/yc/acp6x-mach.c`, which is the machine
-driver for AMD Yellow Carp platform using DMIC (Digital Microphone). The
-`yc_acp_quirk_table[]` is a DMI (Desktop Management Interface) matching
-table that identifies specific laptop models that need special handling
-to enable their internal microphones.
+6. **No risk of regression**: The change only applies to a specific
+   hardware configuration and cannot affect other systems. The fixup
+   mechanism is mature and the specific fixup being applied is already
+   proven on other HP models.
 
-Without this quirk, the AMD audio driver doesn't properly detect or
-initialize the internal microphone on the affected laptop model, leaving
-users without functioning audio input.
+This is a textbook example of a hardware enablement quirk that should be
+backported to stable kernels to ensure users of the HP Pavilion Laptop
+15-eg100 have properly functioning hardware across all supported kernel
+versions.
 
-## Conclusion:
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-This is a textbook example of a commit suitable for stable backporting -
-it's a hardware enablement fix that adds a device-specific quirk with
-zero risk to other systems. The absence of an explicit "Cc:
-stable@vger.kernel.org" tag in the commit message doesn't disqualify it
-from backporting; it simply means the author didn't explicitly request
-it at submission time.
-
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 3d9da93d22ee8..88f1d72f95b2b 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -346,6 +346,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "83Q3"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "RB"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Nitro ANV15-41"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 3dd7b822f8155..e6eb01d8e35a8 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10655,6 +10655,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8975, "HP EliteBook x360 840 Aero G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x897d, "HP mt440 Mobile Thin Client U74", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8981, "HP Elite Dragonfly G3", ALC245_FIXUP_CS35L41_SPI_4),
++	SND_PCI_QUIRK(0x103c, 0x898a, "HP Pavilion 15-eg100", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x898e, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x898f, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8991, "HP EliteBook 845 G9", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
 -- 
 2.39.5
 
