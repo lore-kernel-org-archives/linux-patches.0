@@ -1,44 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FC71E1DE5;
-	Mon, 30 Jun 2025 21:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3B61E1DE5;
+	Mon, 30 Jun 2025 21:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317279; cv=none; b=SH00N7tgstpMNGusykA49Vnpatd0pyKoYZCRL3xl3u2YJcfqD/LMznQErloN8PgYIzn5Yjeh1qN2g6CfE0oDTJXP/qoYejAdEQefuBqEzL6exbKZDj+SbnlgFi1Dw51oHqYsRm0ttnhiYriJnXd12JyY8A2OVS5VtGCT28sHkvo=
+	t=1751317281; cv=none; b=dru96Tp1plli1jDrXKxbmAyd04yZN8AsY4h5BktBegMc05cZC+S5Hh9GUFykfYgWKG/sLlLfQwei2gojGzg0aC8xjOG6V1sNxx7TrQN9SrABm+giVVOWjfEFkSA8sMxFdETl2C+Q+y4ZU4BeojQphPqt9kboUlLiHmYMIN5gHbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317279; c=relaxed/simple;
-	bh=SamdNGppUiINvuhSrfUmG2vy1KDD8uY/v/DqHqQec9E=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=C8j7/OVVLYlLai5/KFAtdwKldazx4EAGqxDSyvBtGCBsFBYSedX6OSlWgs2rnZFbYeXfpxcmoxtoHzrt585LvOmiQBkzNZnEbMziGA8V9oHWPzq1qqaU9ufjcE6H4Vwoe6iz1IMJ2iis6Tn5Idg/jbcxLgX2mMdBT3TGxrPvPn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=buZ2/pfe; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751317281; c=relaxed/simple;
+	bh=fd5TTcR4xrv7LlfCWv7RjAxXvv5McMMYbPwkZziGVRc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=c3PW6tqnXZ9QFLmqBdlsVqxxGnTZIdm5U5q8afBzRjtyAAj0PhStWj3LRhMyWegMqnU+7ZMwn7QyGgOrI87dIrJu/ZEciuxmw9a9tZMmUHDDMnp9PELydvDmr8ZEHpLInlv2NuoWo9qcBBuUCZaW0+BDyZLzYDvUgWUWXOZQ8tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N2ZpTKdc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="buZ2/pfe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59992C4CEE3;
-	Mon, 30 Jun 2025 21:01:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N2ZpTKdc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA8EC4CEEB;
+	Mon, 30 Jun 2025 21:01:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317277;
-	bh=SamdNGppUiINvuhSrfUmG2vy1KDD8uY/v/DqHqQec9E=;
-	h=From:To:Cc:Subject:Date:From;
-	b=buZ2/pfePIITCkb38SmUs0GJjQq+G51lWgywDZscK/T3B5zAZgEw8s61THQyKnw4b
-	 H8jdx+vpq83Wv3O5aZjwnqK3N5t/wXTXf9QfVt6Ut3fZU676246ySlWe0EDsO+y9rP
-	 Fbffw4Svjz4dsjdw1CRmF9TOoO96dhr5r3NDTzRaW7P57UbIqpCbdmxYMwwpXrRh/i
-	 wB7KrkJO1fZJHMpM4v5uNpaAnK8Dti8ZWB2VL6MYy8CpuINT1X1pAx/wfn5d8v+Ree
-	 tOvllbN+dm7bYiAyJhdcRUJw/3c4hN+ZM2EguJsZzHOlrJhN7xLceAB1DQOh7hFtxJ
-	 YfQ50FR7f9OMQ==
+	s=k20201202; t=1751317281;
+	bh=fd5TTcR4xrv7LlfCWv7RjAxXvv5McMMYbPwkZziGVRc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=N2ZpTKdcoY5ukIh+2cgGb3iQbapMMCovM7wC0Pt8F+kyUpVPz6e+hZE5XRl5/6O12
+	 OFgLYyLafvtPmYcoccvNnfdv9dcqTA6qNzcQxw7XAtwUCPnw5j8i/QDtXMb1YTy/Lb
+	 b/I1kXhwGGRDo1wecwOo70iOi/OPYbgogrydpdOhTt+dptB9+i2Q0ejD5bjJl+4de3
+	 D8Mc7993FWGD26oTkCtTWAttuie+lvxtqwGtmemAngdcbqpinKmaL1NQg7krC4uvZt
+	 LSGWp/2pli+ZNkP0uXdG4VPF8EsQ3xkbMfksvnO/2k4hHiwM6P5fl2k1w7vhxuOQUS
+	 TPnlUlTagUZ9w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Thomas Fourier <fourier.thomas@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Tiwei Bie <tiwei.btw@antgroup.com>,
+	kernel test robot <lkp@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	3chas3@gmail.com,
-	linux-atm-general@lists.sourceforge.net,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 01/10] atm: idt77252: Add missing `dma_map_error()`
-Date: Mon, 30 Jun 2025 16:47:08 -0400
-Message-Id: <20250630204718.1359222-1-sashal@kernel.org>
+	nathan@kernel.org,
+	anton.ivanov@cambridgegreys.com,
+	richard@nod.at,
+	tglx@linutronix.de,
+	guoweikang.kernel@gmail.com,
+	bpf@vger.kernel.org,
+	llvm@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.1 02/10] um: vector: Reduce stack usage in vector_eth_configure()
+Date: Mon, 30 Jun 2025 16:47:09 -0400
+Message-Id: <20250630204718.1359222-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250630204718.1359222-1-sashal@kernel.org>
+References: <20250630204718.1359222-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,111 +57,140 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.142
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit c4890963350dcf4e9a909bae23665921fba4ad27 ]
+[ Upstream commit 2d65fc13be85c336c56af7077f08ccd3a3a15a4a ]
 
-The DMA map functions can fail and should be tested for errors.
+When compiling with clang (19.1.7), initializing *vp using a compound
+literal may result in excessive stack usage. Fix it by initializing the
+required fields of *vp individually.
 
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250624064148.12815-3-fourier.thomas@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Without this patch:
+
+$ objdump -d arch/um/drivers/vector_kern.o | ./scripts/checkstack.pl x86_64 0
+...
+0x0000000000000540 vector_eth_configure [vector_kern.o]:1472
+...
+
+With this patch:
+
+$ objdump -d arch/um/drivers/vector_kern.o | ./scripts/checkstack.pl x86_64 0
+...
+0x0000000000000540 vector_eth_configure [vector_kern.o]:208
+...
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506221017.WtB7Usua-lkp@intel.com/
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Link: https://patch.msgid.link/20250623110829.314864-1-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees.
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Detailed Analysis:
+1. **Fixes a real bug**: The commit addresses excessive stack usage
+   (1472 bytes) that can lead to stack overflow, especially problematic
+   on systems with limited kernel stack space. This is a legitimate bug
+   that affects system stability.
 
-**Nature of the fix:**
-The commit adds missing error checking for `dma_map_single()` calls in
-two locations within the idt77252 ATM driver:
+2. **Compiler-specific issue with real impact**: While triggered by
+   clang 19.1.7's handling of compound literals, the resulting stack
+   usage of 1472 bytes is genuinely excessive and dangerous regardless
+   of the compiler quirk that exposed it.
 
-1. **In `queue_skb()` function (line 853-854):**
+3. **Simple and safe fix**: The change is purely mechanical - converting
+   from compound literal initialization to field-by-field
+   initialization:
   ```c
-  IDT77252_PRV_PADDR(skb) = dma_map_single(&card->pcidev->dev,
-  skb->data,
-  skb->len, DMA_TO_DEVICE);
-  +if (dma_mapping_error(&card->pcidev->dev, IDT77252_PRV_PADDR(skb)))
-  +    return -ENOMEM;
+  // From:
+  *vp = ((struct vector_private) { .field = value, ... });
+  // To:
+  vp->field = value;
   ```
-  This correctly returns -ENOMEM before reaching the errout label,
-  avoiding any cleanup issues since the DMA mapping never succeeded.
 
-2. **In `add_rx_skb()` function (line 1857-1860):**
-  ```c
-  paddr = dma_map_single(&card->pcidev->dev, skb->data,
-  skb_end_pointer(skb) - skb->data,
-  DMA_FROM_DEVICE);
-  +if (dma_mapping_error(&card->pcidev->dev, paddr))
-  +    goto outpoolrm;
-  ```
-  This properly jumps to the new `outpoolrm` label which removes the SKB
-  from the pool before freeing it, maintaining correct cleanup order.
+4. **Minimal risk**: The fix doesn't change any logic or functionality.
+   It only changes how the structure is initialized, making it extremely
+   unlikely to introduce regressions.
 
-**Why this qualifies for stable backporting:**
+5. **Precedent from similar commits**: Looking at the historical commits
+   marked "YES" for backporting:
+   - Similar Commit #1: Reduced stack frame in qed driver using
+     `noinline_for_stack`
+   - Similar Commit #4: Reduced stack usage in ethtool with clang using
+     `noinline_for_stack`
 
-1. **Fixes a real bug**: Missing DMA mapping error checks can cause
-   system crashes or data corruption, especially on systems with IOMMU
-   or SWIOTLB where DMA mapping failures are more likely.
+   Both addressed the same class of problem (excessive stack usage with
+clang) and were considered suitable for stable.
 
-2. **Simple and contained**: The fix adds only 5 lines of error checking
-   code with no architectural changes.
+6. **Measurable improvement**: The stack usage reduction from 1472 to
+   208 bytes is dramatic and well-documented by the kernel test robot,
+   providing clear evidence of the fix's effectiveness.
 
-3. **Similar to approved backports**: This follows the exact same
-   pattern as Similar Commits #1 (eni driver) and #2 (aic94xx driver)
-   which were both marked "YES" for backporting.
+The commit meets the stable kernel criteria of fixing an important bug
+with minimal risk and a contained change. While it doesn't explicitly
+include a "Cc: stable" tag, the nature of the fix (preventing potential
+stack overflow) makes it a good candidate for stable backporting.
 
-4. **Long-standing issue**: The driver has existed since at least 2005
-   (Linux 2.6.12-rc2), meaning this bug has been present for nearly 20
-   years.
+ arch/um/drivers/vector_kern.c | 42 +++++++++++------------------------
+ 1 file changed, 13 insertions(+), 29 deletions(-)
 
-5. **Minimal regression risk**: The changes only add error checking;
-   they don't modify any existing logic paths.
-
-6. **Proper error handling**: Both error paths are correctly implemented
-   with appropriate cleanup sequences.
-
-The commit clearly meets all stable tree criteria as an important bug
-fix with minimal risk and should be backported to protect users from
-potential DMA-related crashes.
-
- drivers/atm/idt77252.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
-index 7810f974b2ca9..d9ee20f0048fe 100644
---- a/drivers/atm/idt77252.c
-+++ b/drivers/atm/idt77252.c
-@@ -852,6 +852,8 @@ queue_skb(struct idt77252_dev *card, struct vc_map *vc,
+diff --git a/arch/um/drivers/vector_kern.c b/arch/um/drivers/vector_kern.c
+index 2baa8d4a33ed3..1a068859a4185 100644
+--- a/arch/um/drivers/vector_kern.c
++++ b/arch/um/drivers/vector_kern.c
+@@ -1600,35 +1600,19 @@ static void vector_eth_configure(
  
- 	IDT77252_PRV_PADDR(skb) = dma_map_single(&card->pcidev->dev, skb->data,
- 						 skb->len, DMA_TO_DEVICE);
-+	if (dma_mapping_error(&card->pcidev->dev, IDT77252_PRV_PADDR(skb)))
-+		return -ENOMEM;
+ 	device->dev = dev;
  
- 	error = -EINVAL;
+-	*vp = ((struct vector_private)
+-		{
+-		.list			= LIST_HEAD_INIT(vp->list),
+-		.dev			= dev,
+-		.unit			= n,
+-		.options		= get_transport_options(def),
+-		.rx_irq			= 0,
+-		.tx_irq			= 0,
+-		.parsed			= def,
+-		.max_packet		= get_mtu(def) + ETH_HEADER_OTHER,
+-		/* TODO - we need to calculate headroom so that ip header
+-		 * is 16 byte aligned all the time
+-		 */
+-		.headroom		= get_headroom(def),
+-		.form_header		= NULL,
+-		.verify_header		= NULL,
+-		.header_rxbuffer	= NULL,
+-		.header_txbuffer	= NULL,
+-		.header_size		= 0,
+-		.rx_header_size		= 0,
+-		.rexmit_scheduled	= false,
+-		.opened			= false,
+-		.transport_data		= NULL,
+-		.in_write_poll		= false,
+-		.coalesce		= 2,
+-		.req_size		= get_req_size(def),
+-		.in_error		= false,
+-		.bpf			= NULL
+-	});
++	INIT_LIST_HEAD(&vp->list);
++	vp->dev		= dev;
++	vp->unit	= n;
++	vp->options	= get_transport_options(def);
++	vp->parsed	= def;
++	vp->max_packet	= get_mtu(def) + ETH_HEADER_OTHER;
++	/*
++	 * TODO - we need to calculate headroom so that ip header
++	 * is 16 byte aligned all the time
++	 */
++	vp->headroom	= get_headroom(def);
++	vp->coalesce	= 2;
++	vp->req_size	= get_req_size(def);
  
-@@ -1857,6 +1859,8 @@ add_rx_skb(struct idt77252_dev *card, int queue,
- 		paddr = dma_map_single(&card->pcidev->dev, skb->data,
- 				       skb_end_pointer(skb) - skb->data,
- 				       DMA_FROM_DEVICE);
-+		if (dma_mapping_error(&card->pcidev->dev, paddr))
-+			goto outpoolrm;
- 		IDT77252_PRV_PADDR(skb) = paddr;
- 
- 		if (push_rx_skb(card, skb, queue)) {
-@@ -1871,6 +1875,7 @@ add_rx_skb(struct idt77252_dev *card, int queue,
- 	dma_unmap_single(&card->pcidev->dev, IDT77252_PRV_PADDR(skb),
- 			 skb_end_pointer(skb) - skb->data, DMA_FROM_DEVICE);
- 
-+outpoolrm:
- 	handle = IDT77252_PRV_POOL(skb);
- 	card->sbpool[POOL_QUEUE(handle)].skb[POOL_INDEX(handle)] = NULL;
- 
+ 	dev->features = dev->hw_features = (NETIF_F_SG | NETIF_F_FRAGLIST);
+ 	INIT_WORK(&vp->reset_tx, vector_reset_tx);
 -- 
 2.39.5
 
