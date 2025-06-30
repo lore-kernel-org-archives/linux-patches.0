@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4313721FF54;
-	Mon, 30 Jun 2025 20:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7621A1885A5;
+	Mon, 30 Jun 2025 20:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317188; cv=none; b=lZ4W85osCM3hjHeHBpiF90noJjJWuwTgcp+HeOsg1mWymT3YFVjJfpjr8l84Vt8/wsZzC+TBjMzstn5mYJPTdIYli5wwgPRn/y4NAKiqLAg9qYApc/YrUlDYmGb3NfZznU9vjqQ2PydmG3te85inaheHt7AnMv7YySzEItu76r8=
+	t=1751317192; cv=none; b=ECWmnRiQc7yDx/htypothKGj0U3xj0vGcf81oGtJRyfhol/nCmCytC1SICefiWi8W6bf3B44dEHODRYz1DFe21+1xp9nqLzkMbrOd2P1fP/hC3qacbJLY2eYqYwm33lGaHWfbjzDOinvuyIAX67qdXGPtu7vasvRj3gb2NV/prQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317188; c=relaxed/simple;
-	bh=ketVR18fpnW4xkFERzMsiFpAF9jtuIK0RiDKnTgJDp8=;
+	s=arc-20240116; t=1751317192; c=relaxed/simple;
+	bh=VCZl6FZwo24qgB5sCecpiPZQl7fEO570Ut9NMPg36EU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=L94ru+I5lN8AS6YAZU7mLv2E2sTNMBZ7MC5dMnz3EYghOwuDyTN2hDczIlfhIXHFEXe1oRfnYkdPyWIsUlj1SOivadcdS5CAuG8s5+Dw+EW3bShNSE78LzRLkNo2/s3r4T2nBpYnTzAJbClHMf1X5Wv4rvpGeK6hRZScZePXvN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qsrT9QP4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uq0ydhJkLy9HGwtkvA7Ul8C2Sw608BKAoU81uYXp/Ty17AOVcdLZBEqlMCQtQkeagB57FRwNBYiUAzGsilY6EXIXztICD3MzbS/AVxGV+rtOWqWtlCHxCxO4p4b/iOGZ3W/DK5h40WpceDyOMhjjua9lHuHaGqCzfo7b+Tscjdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dfBGbW2S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qsrT9QP4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A8EC4CEE3;
-	Mon, 30 Jun 2025 20:59:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dfBGbW2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D049C4CEEB;
+	Mon, 30 Jun 2025 20:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317187;
-	bh=ketVR18fpnW4xkFERzMsiFpAF9jtuIK0RiDKnTgJDp8=;
+	s=k20201202; t=1751317192;
+	bh=VCZl6FZwo24qgB5sCecpiPZQl7fEO570Ut9NMPg36EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qsrT9QP4hpSZ7+iQwvQyzaAvp1GqENjmzjxVMW5CHElpIZsdveY7ZfISw4/MalZ9A
-	 PqUoJ8gH9qZzLjLKSyPVA3YqogUJo6yhFJgU59TEfxOPN+5lcvAVvfwux14jbKFKkg
-	 /ucNlT5O1LOvmNEdkYTk9kzUoVjE5F3Gp9Bl/uDHNe3Rq34ceTbi81B3gLyJ1wI+Yo
-	 lx0mpYFm+frK9fu90qugSwLtCducq1khGFWxcgWKLVNdsPA0Jn7iUiNM13c4CZkl4E
-	 SlRsJiKJwbqX+cPyapCm+Du8rVMHHzC2RU7AJ/i5h/ATOzS0p0G2F/pma5pdXdgwjX
-	 WUmgCGNEWVDeA==
+	b=dfBGbW2S5lJ9WiBKusk40CEkMbjWvILNOPcti0c+oPEUQ0gF/4bySSVHn1FdkOYxa
+	 rNnKu2Axs7WRWUNeaSqQTnyR40RDE9I1DmlLvrmYyqnqKhkxWCgs86+nFppRllXbPU
+	 9tBQ5zV7v7InGvz4MuC0P2qGhaQb+ys+baJC04jHagP68oQ3UYAnYmLPpsnuQiMaUI
+	 3Yz2PBzcEyjoXo/kqmPifgE+nr9tqwbn6A0pDOtkM8vqC8f84dX6Bl2fSfT6YHz9qY
+	 27A37nMrfSMsB+UsiD4rXlhjgr4YV1JujBJ6bON8TAcnk8uJ7S3s7vnLQfes1cZFn8
+	 l0KQAf+5DQj+A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhe Qiao <qiaozhe@iscas.ac.cn>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	bhelgaas@google.com,
-	linux-acpi@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 05/21] Revert "PCI/ACPI: Fix allocated memory release on error in pci_acpi_scan_root()"
-Date: Mon, 30 Jun 2025 16:45:20 -0400
-Message-Id: <20250630204536.1358327-5-sashal@kernel.org>
+	kailang@realtek.com,
+	sbinding@opensource.cirrus.com,
+	chris.chiu@canonical.com,
+	simont@opensource.cirrus.com,
+	josh@joshuagrisham.com
+Subject: [PATCH AUTOSEL 6.12 06/21] ALSA: hda/realtek: Add mic-mute LED setup for ASUS UM5606
+Date: Mon, 30 Jun 2025 16:45:21 -0400
+Message-Id: <20250630204536.1358327-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250630204536.1358327-1-sashal@kernel.org>
 References: <20250630204536.1358327-1-sashal@kernel.org>
@@ -54,152 +53,108 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.35
 Content-Transfer-Encoding: 8bit
 
-From: Zhe Qiao <qiaozhe@iscas.ac.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 2b8be57fa0c88ac824a906f29c04d728f9f6047a ]
+[ Upstream commit 41c66461cb2e8d3934a5395f27e572ebe63696b4 ]
 
-This reverts commit 631b2af2f357 ("PCI/ACPI: Fix allocated memory release
-on error in pci_acpi_scan_root()").
+ASUS UM5606* models use the quirk to set up the bass speakers, but it
+missed the mic-mute LED configuration.  Other similar models have the
+AMD ACP dmic, and the mic-mute is set up for that, but those models
+don't have AMD ACP but rather built-in mics of Realtek codec, hence
+the Realtek driver should set it up, instead.
 
-The reverted patch causes the 'ri->cfg' and 'root_ops' resources to be
-released multiple times.
-
-When acpi_pci_root_create() fails, these resources have already been
-released internally by the __acpi_pci_root_release_info() function.
-
-Releasing them again in pci_acpi_scan_root() leads to incorrect behavior
-and potential memory issues.
-
-We plan to resolve the issue using a more appropriate fix.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/aEmdnuw715btq7Q5@stanley.mountain/
-Signed-off-by: Zhe Qiao <qiaozhe@iscas.ac.cn>
-Acked-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20250619072608.2075475-1-qiaozhe@iscas.ac.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220125
+Link: https://patch.msgid.link/20250623151841.28810-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and examination of the kernel code, I
-need to determine if this revert should be backported.
+**YES**
 
-**YES**, this commit should be backported to stable kernel trees.
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-## Extensive Explanation:
+## Code Change Analysis
 
-### 1. **Critical Double-Free Bug Fix**
-This revert fixes a serious double-free bug introduced by commit
-631b2af2f357. The code analysis reveals that when
-`acpi_pci_root_create()` fails, it internally calls
-`__acpi_pci_root_release_info()`, which then invokes the `release_info`
-callback (`pci_acpi_generic_release_info()`). This callback already
-frees:
-- `ri->cfg` via `pci_ecam_free(ri->cfg)`
-- `ci->ops` (which is `root_ops`) via `kfree(ci->ops)`
-- `ri` via `kfree(ri)`
-
-The explicit cleanup added by the reverted commit causes these resources
-to be freed a second time, leading to memory corruption.
-
-### 2. **Error Path Issue - High Impact**
-The double-free occurs in the error handling path when
-`acpi_pci_root_create()` fails. While this is not the common case,
-PCI/ACPI initialization failures can occur due to:
-- Hardware issues
-- Firmware bugs
-- Resource allocation failures
-- Configuration problems
-
-When such failures occur, the double-free can cause kernel crashes, data
-corruption, or security vulnerabilities.
-
-### 3. **Simple and Safe Fix**
-The revert is straightforward - it removes the problematic error
-handling code that was incorrectly added. The code changes show:
-```diff
-- if (!root_ops)
-- goto free_ri;
-+       if (!root_ops) {
-+               kfree(ri);
-+               return NULL;
-+       }
+The commit adds a single line to the `alc294_fixup_bass_speaker_15`
+function:
+```c
+snd_hda_gen_add_micmute_led_cdev(codec, NULL);
 ```
-This returns to the original, simpler error handling that only frees
-what hasn't been passed to `acpi_pci_root_create()` yet.
 
-### 4. **Matches Stable Backport Criteria**
-This fix meets the stable kernel criteria:
-- **Fixes a real bug**: Double-free causing potential crashes/corruption
-- **Small and contained**: Only modifies error paths in one function
-- **Already in Linus' tree**: This is a merged commit
-- **No new features**: Pure bug fix
-- **Low risk**: Reverts to previously known-working code
+This is a minimal, targeted fix that adds mic-mute LED support to an
+existing quirk used by ASUS UM5606 models.
 
-### 5. **Similar to Successful Backports**
-Looking at the reference commits, this is similar to:
-- "ARM64: PCI: Fix struct acpi_pci_root_ops allocation failure path"
-  (Backported: YES) - Also fixed memory management in error paths
-- "Revert 'PCI: acpiphp: Reassign resources on bridge if necessary'"
-  (Backported: YES) - Also a revert fixing problematic behavior
+## Reasons for Backporting
 
-The commit message explicitly states "We plan to resolve the issue using
-a more appropriate fix," indicating the maintainers recognize there may
-be an underlying issue to address, but the immediate concern is fixing
-the double-free bug, making this suitable for stable backporting.
+1. **Fixes Missing Hardware Functionality**: The commit addresses a
+   genuine bug where the mic-mute LED hardware exists on ASUS UM5606*
+   models but wasn't being initialized by the driver. Users expect this
+   LED to work as it does on other laptops.
 
- drivers/pci/pci-acpi.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+2. **User-Reported Issue**: The commit references bug reports
+   (bugzilla.kernel.org #220125), indicating real users are affected by
+   this missing functionality.
 
-diff --git a/drivers/pci/pci-acpi.c b/drivers/pci/pci-acpi.c
-index b78e0e4173244..af370628e5839 100644
---- a/drivers/pci/pci-acpi.c
-+++ b/drivers/pci/pci-acpi.c
-@@ -1676,19 +1676,24 @@ struct pci_bus *pci_acpi_scan_root(struct acpi_pci_root *root)
- 		return NULL;
- 
- 	root_ops = kzalloc(sizeof(*root_ops), GFP_KERNEL);
--	if (!root_ops)
--		goto free_ri;
-+	if (!root_ops) {
-+		kfree(ri);
-+		return NULL;
-+	}
- 
- 	ri->cfg = pci_acpi_setup_ecam_mapping(root);
--	if (!ri->cfg)
--		goto free_root_ops;
-+	if (!ri->cfg) {
-+		kfree(ri);
-+		kfree(root_ops);
-+		return NULL;
-+	}
- 
- 	root_ops->release_info = pci_acpi_generic_release_info;
- 	root_ops->prepare_resources = pci_acpi_root_prepare_resources;
- 	root_ops->pci_ops = (struct pci_ops *)&ri->cfg->ops->pci_ops;
- 	bus = acpi_pci_root_create(root, root_ops, &ri->common, ri->cfg);
- 	if (!bus)
--		goto free_cfg;
-+		return NULL;
- 
- 	/* If we must preserve the resource configuration, claim now */
- 	host = pci_find_host_bridge(bus);
-@@ -1705,14 +1710,6 @@ struct pci_bus *pci_acpi_scan_root(struct acpi_pci_root *root)
- 		pcie_bus_configure_settings(child);
- 
- 	return bus;
--
--free_cfg:
--	pci_ecam_free(ri->cfg);
--free_root_ops:
--	kfree(root_ops);
--free_ri:
--	kfree(ri);
--	return NULL;
+3. **Small and Contained Fix**: The change is a single line addition
+   that only affects the specific quirk for ASUS UM5606 models. It has
+   zero impact on other hardware.
+
+4. **Follows Established Patterns**: All five similar commits provided
+   as reference (which were backported) fix similar hardware-specific
+   audio/LED issues:
+   - They add or fix quirks for specific laptop models
+   - They address missing LED functionality
+   - They are minimal, targeted fixes
+
+5. **No Architectural Changes**: The fix uses existing infrastructure
+   (`snd_hda_gen_add_micmute_led_cdev`) and doesn't introduce any new
+   APIs or change existing behavior.
+
+6. **Low Risk of Regression**: Since this only affects the
+   `ALC294_FIXUP_BASS_SPEAKER_15` fixup (used exclusively by ASUS
+   UM5606WA and UM5606KA models), there's virtually no risk of breaking
+   other systems.
+
+## Comparison to Similar Backported Commits
+
+Looking at the reference commits marked "YES" for backporting:
+- "ALSA: hda/realtek - Enable Speaker for ASUS UX563" - adds missing
+  speaker functionality
+- "ALSA: hda/realtek - add supported Mic Mute LED for Lenovo platform" -
+  adds mic-mute LED support
+- "ALSA: hda/realtek: Enable mute/micmute LEDs and speaker support for
+  HP Laptops" - adds LED support
+
+This commit follows the exact same pattern: fixing missing hardware
+functionality (mic-mute LED) for specific laptop models.
+
+## Note on Missing Cc: stable
+
+While this commit doesn't include "Cc: <stable@vger.kernel.org>" in its
+message (unlike the reference commits), this doesn't disqualify it from
+backporting. The commit clearly meets the stable tree criteria as an
+important bugfix with minimal risk.
+
+The investigation confirms this is filling a genuine gap - ASUS UM5606
+models currently have no LED support despite having the hardware, and
+this one-line fix enables the mic-mute LED functionality users expect.
+
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index cb41cd2ba0ef1..3dd7b822f8155 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -6611,6 +6611,7 @@ static void alc294_fixup_bass_speaker_15(struct hda_codec *codec,
+ 	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
+ 		static const hda_nid_t conn[] = { 0x02, 0x03 };
+ 		snd_hda_override_conn_list(codec, 0x15, ARRAY_SIZE(conn), conn);
++		snd_hda_gen_add_micmute_led_cdev(codec, NULL);
+ 	}
  }
  
- void pcibios_add_bus(struct pci_bus *bus)
 -- 
 2.39.5
 
