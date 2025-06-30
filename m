@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2451C1E1DE5;
-	Mon, 30 Jun 2025 21:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9AE2629D;
+	Mon, 30 Jun 2025 21:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317290; cv=none; b=dj+T5xgP9vE4sDCQICzgGZ+JfFdk8AbtRilN0MGiZbbzLc+Os0n84Og0O/wu7LuPZlflGUOs4ahVJQxyeFptGST4XCQxKgLBbJ/ElppvV213+obCAt0/ov+ch9g6/+UEnbwbqjytNf9i3NcIFw9mpVJsvMYUpiVZjtXlSky9V1k=
+	t=1751317291; cv=none; b=AxjPGcBwdL9UrsnBur2wZ0Zz3zkCfs2ccH52Mi+aM3IrgWA72/7vtEXiIKgo4aj2LRtEszhZgNIrmI1gUnK9Rt4MvS0MhQOZhU8gT8ogxpkxOeJMd4BOfhEmA7V6Ryie4vD5wR0nyJUgu+Og+BJ2ncbNHqz+eWJQoMhjGzfd9mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317290; c=relaxed/simple;
-	bh=8zDI5eg1xCj4UNvSVi3WGsd8SiJ229IvQ1So/hTgjGs=;
+	s=arc-20240116; t=1751317291; c=relaxed/simple;
+	bh=VXSv/KS7ixKFffjIMR2L2/rajLtP1PiJqm1cCs8hZSA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Cr6LzQsA0foB5M+RqH/dm6RuAe+mCs2SIGUl2E9/QCZjvS+ZAy8QYr0vE9DuFBFU59giTAuJSljvNuJ0tEQTsi5pvioD9PKlQk/rjEl+bh2sju7GmmXRdbSI37tafljyXaSBIAjnTYUqnkHU8z7zOYB48cPPE1t8NzIgF6wuZfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R9vJKWvj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gc7rvbIAQAXCH13hPQrOuHi1oojCELMj7nvsXtR2jJLX4YMuoTVxAVaBpvT/UpsZg2gl65Ty3snN/cEyiQhmcIRJKXNMB6wP4c2lHDArdN+OJLUaeoVibVKdXche9nR6T5JpjtOgwTT86nkiR9b0wqyN4p7fkHVUF3EKPsK70to=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PdLvdKeT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R9vJKWvj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6E9C4CEE3;
-	Mon, 30 Jun 2025 21:01:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PdLvdKeT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A112AC4CEE3;
+	Mon, 30 Jun 2025 21:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317290;
-	bh=8zDI5eg1xCj4UNvSVi3WGsd8SiJ229IvQ1So/hTgjGs=;
+	s=k20201202; t=1751317291;
+	bh=VXSv/KS7ixKFffjIMR2L2/rajLtP1PiJqm1cCs8hZSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9vJKWvjqvFnErhh8dqZCXmGBwjh+iSH4NquVyO+5ttskB2OshNiTVuEZxkIuy//3
-	 LylXmtZIxde3ORE2hmqYnLT9rXyLHflXTHCh+MTzve26vV7K3dXzbiI0/9UJk9WJAj
-	 v/5MYgpdnI8WhAecpg8P3TnF5KT+y3T2Z2C5s5NkhrG/mk0MEPoUnDAUGiifJbb1aj
-	 j2Tmi97NItpIbbgoXBfdUtZqoReH+NEdcAlAlGIrJi+H8p21ZOlkMwue5jdsRywPtT
-	 dwzHKMvs3PhzrpuygDTlW7dkyqgaPWo2aTT6627D7m2HNWYW8EHwZfooKA14bpRz5R
-	 0JB2H+m2jsKwA==
+	b=PdLvdKeTPBilWrvQjOcvouClZNg2ASSc1XbkAJUHej1E1GVUee5RvvcrpvU06sY77
+	 OvuW6ecuTp1jzMPlNGTY7S6jZwJuuMr3CC8lH4r7+tOcFjNYUxYJP6ykfcUEQixOCK
+	 kWGSjk/p+bjLZNsKMC0zdAwzYR2LB5TzwJp1Pf3bKIdruvhZIt880oU0BT3UpsV5Ub
+	 kInY9dGboihQ7gY6vH91mRswsgh/u568GN5fkVobMRs54lml0mOzkV7o+a79UewbVB
+	 dm1vUTV5EWD8C/v9wtM+0TEvF2MZ/YQ7xfwXZ8D79C+Y3bZIjPkX853o7+yFC1qeOA
+	 sETPlKWZbH4wA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yasmin Fitzgerald <sunoflife1.git@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Xiaowei Li <xiaowei.li@simcom.com>,
+	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kailang@realtek.com,
-	sbinding@opensource.cirrus.com,
-	chris.chiu@canonical.com,
-	simont@opensource.cirrus.com,
-	josh@joshuagrisham.com
-Subject: [PATCH AUTOSEL 6.1 04/10] ALSA: hda/realtek - Enable mute LED on HP Pavilion Laptop 15-eg100
-Date: Mon, 30 Jun 2025 16:47:11 -0400
-Message-Id: <20250630204718.1359222-4-sashal@kernel.org>
+	netdev@vger.kernel.org,
+	linux-usb@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 05/10] net: usb: qmi_wwan: add SIMCom 8230C composition
+Date: Mon, 30 Jun 2025 16:47:12 -0400
+Message-Id: <20250630204718.1359222-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250630204718.1359222-1-sashal@kernel.org>
 References: <20250630204718.1359222-1-sashal@kernel.org>
@@ -49,87 +47,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.142
 Content-Transfer-Encoding: 8bit
 
-From: Yasmin Fitzgerald <sunoflife1.git@gmail.com>
+From: Xiaowei Li <xiaowei.li@simcom.com>
 
-[ Upstream commit 68cc9d3c8e44afe90e43cbbd2960da15c2f31e23 ]
+[ Upstream commit 0b39b055b5b48cbbdf5746a1ca6e3f6b0221e537 ]
 
-The HP Pavilion Laptop 15-eg100 has Realtek HDA codec ALC287.
-It needs the ALC287_FIXUP_HP_GPIO_LED quirk to enable the mute LED.
+Add support for SIMCom 8230C which is based on Qualcomm SDX35 chip.
+0x9071: tty (DM) + tty (NMEA) + tty (AT) + rmnet
+T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#=  8 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1e0e ProdID=9071 Rev= 5.15
+S:  Manufacturer=SIMCOM
+S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=86(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=none
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Signed-off-by: Yasmin Fitzgerald <sunoflife1.git@gmail.com>
-Link: https://patch.msgid.link/20250621053832.52950-1-sunoflife1.git@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Xiaowei Li <xiaowei.li@simcom.com>
+Acked-by: Bjørn Mork <bjorn@mork.no>
+Link: https://patch.msgid.link/tencent_21D781FAA4969FEACA6ABB460362B52C9409@qq.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis:
 
-1. **Hardware enablement fix**: The commit adds a single line to the
-   `alc269_fixup_tbl[]` quirk table to enable mute LED functionality on
-   the HP Pavilion Laptop 15-eg100:
+## Rationale for Backporting:
+
+1. **Stable kernel rules explicitly allow device ID additions**:
+   According to Documentation/process/stable-kernel-rules.rst line 15,
+   patches must "either fix a real bug that bothers people or just add a
+   device ID." This commit clearly falls into the "add a device ID"
+   category.
+
+2. **Simple, low-risk change**: The commit adds exactly one line:
   ```c
-  SND_PCI_QUIRK(0x103c, 0x898a, "HP Pavilion 15-eg100",
-  ALC287_FIXUP_HP_GPIO_LED),
+  {QMI_QUIRK_SET_DTR(0x1e0e, 0x9071, 3)}, /* SIMCom 8230C ++ */
   ```
+  This is a minimal change that only affects users with this specific
+  hardware (vendor ID 0x1e0e, product ID 0x9071).
 
-2. **Minimal and contained change**: This is a one-line addition that
-   only affects the specific hardware identified by PCI subsystem ID
-   (0x103c, 0x898a). There are no side effects on other systems.
+3. **Enables hardware that would otherwise not work**: Without this
+   device ID entry, users with the SIMCom 8230C modem cannot use their
+   hardware with the qmi_wwan driver. This directly impacts
+   functionality for those users.
 
-3. **Uses established fixup**: The `ALC287_FIXUP_HP_GPIO_LED` fixup is
-   already well-established in the kernel and used by other HP Pavilion
-   models including:
-   - HP Pavilion 15-eh1xxx (0x103c, 0x88d0)
-   - HP Pavilion Aero Laptop 13-be0xxx (0x103c, 0x8919)
-   - HP Pavilion 14-ec1xxx (0x103c, 0x8a0f)
+4. **Follows established patterns**: The commit uses `QMI_QUIRK_SET_DTR`
+   macro, consistent with the existing SIMCom entry at line 1428:
+  ```c
+  {QMI_QUIRK_SET_DTR(0x1e0e, 0x9001, 5)}, /* SIMCom 7100E, 7230E, 7600E
+  ++ */
+  ```
+  This shows the vendor has a history of requiring the DTR quirk for
+  their devices.
 
-4. **Fixes user-visible functionality**: Without this quirk, users of
-   the HP Pavilion Laptop 15-eg100 would have a non-functional mute LED,
-   which is an important visual feedback mechanism for audio state.
+5. **Historical precedent supports backporting**: Of the 5 similar
+   commits analyzed, 4 were backported to stable:
+   - Fibocom FG132 (YES)
+   - MeiG Smart SRM825L (YES)
+   - Telit FN912 compositions (YES)
+   - Telit FN920C04 compositions (YES)
+   - Quectel RG255C (NO)
 
-5. **Consistent with stable backport precedent**: All five similar
-   historical commits that enabled mute LED functionality for HP laptops
-   were backported to stable:
-   - "Enable Mute LED on HP Laptop 14s-fq1xxx" (YES)
-   - "Enable Mute LED on HP Laptop 14-fq0xxx" (YES)
-   - "fix mute led of the HP Pavilion 15-eh1xxx series" (YES) - notably
-     uses the same ALC287_FIXUP_HP_GPIO_LED
-   - "Enable Mute LED on HP Laptop 15s-eq2xxx" (YES)
-   - "Enable Mute LED on HP 255 G8" (YES)
+   The 80% backport rate for similar device ID additions suggests this
+type of change is generally considered appropriate for stable.
 
-6. **No risk of regression**: The change only applies to a specific
-   hardware configuration and cannot affect other systems. The fixup
-   mechanism is mature and the specific fixup being applied is already
-   proven on other HP models.
+6. **No risk to existing functionality**: The change only adds support
+   for a new device ID (0x9071) and doesn't modify any existing device
+   support or core driver functionality.
 
-This is a textbook example of a hardware enablement quirk that should be
-backported to stable kernels to ensure users of the HP Pavilion Laptop
-15-eg100 have properly functioning hardware across all supported kernel
-versions.
+The commit meets all criteria for stable backporting: it's obviously
+correct, tested (as evidenced by the detailed USB descriptor output in
+the commit message), small (1 line), and enables hardware support that
+users need.
 
- sound/pci/hda/patch_realtek.c | 1 +
+ drivers/net/usb/qmi_wwan.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 3cacdbcb0d3ea..3f3a89ea2c2ee 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9995,6 +9995,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8975, "HP EliteBook x360 840 Aero G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x897d, "HP mt440 Mobile Thin Client U74", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8981, "HP Elite Dragonfly G3", ALC245_FIXUP_CS35L41_SPI_4),
-+	SND_PCI_QUIRK(0x103c, 0x898a, "HP Pavilion 15-eg100", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x898e, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x898f, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8991, "HP EliteBook 845 G9", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index b4c0413c6522a..96656e56e809f 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1431,6 +1431,7 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x22de, 0x9051, 2)}, /* Hucom Wireless HM-211S/K */
+ 	{QMI_FIXED_INTF(0x22de, 0x9061, 3)},	/* WeTelecom WPD-600N */
+ 	{QMI_QUIRK_SET_DTR(0x1e0e, 0x9001, 5)},	/* SIMCom 7100E, 7230E, 7600E ++ */
++	{QMI_QUIRK_SET_DTR(0x1e0e, 0x9071, 3)},	/* SIMCom 8230C ++ */
+ 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0121, 4)},	/* Quectel EC21 Mini PCIe */
+ 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0191, 4)},	/* Quectel EG91 */
+ 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x0195, 4)},	/* Quectel EG95 */
 -- 
 2.39.5
 
