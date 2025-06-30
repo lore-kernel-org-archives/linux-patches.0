@@ -1,47 +1,47 @@
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2073.outbound.protection.outlook.com [40.107.244.73])
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2060.outbound.protection.outlook.com [40.107.236.60])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1E42EAB8D;
-	Mon, 30 Jun 2025 22:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DDA12EAB98;
+	Mon, 30 Jun 2025 22:28:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.60
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751322531; cv=fail; b=Bo+pmFAvun6q8qFJA4cukxC/ibBGU7liaMo/ixR380lftvIqyf1//ZjNxMfA5G7+aHR5bg9F4Ac4YpT8tSRXtYOaYzcUuEy1E8/a65dlCHwg1vO0VaiDXvIq3CHwSFhOCcgKfJv3WxnpDDY2L0uTG5VR7SW91qcEzzIIKfJ4j3c=
+	t=1751322532; cv=fail; b=nnmLGp5VG2wzLgoXPFRZNujopUNAyAu+ubtiN7wbI3CwYnU07+VpzOj9BisYFkmX/O8qLqLDfYnSpcBvNWO6BrseRWd3EhTcLJ4jkyWKdfvTFtt9OKzbKUAL34lMmc3MMUpVslmNhrrq3zWkhrZ+BmncXfHwga74iJhTI0k8Zu8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751322531; c=relaxed/simple;
-	bh=9t2oOSnuV6a4X4ASEtsXZwK1yLRY95wyvZeOEy3StQQ=;
+	s=arc-20240116; t=1751322532; c=relaxed/simple;
+	bh=T5leVHv3UYvAn5b22jKN952LhaSxawp6tjblVniQ4sM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ald+zwovXxd6yXtp0nTwXMY8fCUWr7jwqnGftD4s6Mnojvo2GA0IVLjb3J0quZM21iTa0c8TQ3feRHfkHVAWPz5K7Dr78fEFgxLAGdnlI/lez6PnIlUpYMSJkhnIs7TVSWEri/hQA0Dm4sA8keqtseaeTZ/JQye9M9lCeLer+RI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=fIp7Eae7; arc=fail smtp.client-ip=40.107.244.73
+	 Content-Type:MIME-Version; b=duSopZ9RYEObBeLwiLSuEV5MydVa8QUMu1zLgwVvHQV/AP6AM1sNsazmb8AJpOXGZ5yQrzVX5SIPQqn7I/Hm0h0YT9N9q4w9yo8Lr9Nm5nWSnbcZAbZILRIK54mc5wiix/4Kpy+FBdrhOEU9EfmV/bRfkG3tmj/bF7akJAqhNP4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=NtSn0saT; arc=fail smtp.client-ip=40.107.236.60
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="fIp7Eae7"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="NtSn0saT"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VcYvxqk3FEqD0QR/IlR0uqUId9rNW+Psplrl6jK5Rz1Udi2xUavJDDDND2TjvYQ2gFP3Xqhx+IGydeQtvbS8Wn/FBp86pv4JZ66X0AYK8PLVxQzRWq2GJkHXncFGLkgVG9U7z0g01Os6pSR6M9dUMWaR1BiJ3/Jk8qNhle41BsUx9+HG18UaJfz6VpCK2XFje2n+TUeWjCE//C2WJOqCkN9I9Nq6uYCJsWINcsV/44/IvkHL5sEGEh+zII6cThKttOYUmaq+U2zkiu5wJ1AZtXB/iE8QYYJaz9fMsbIWUDuNPJxiWsF50iKEzc7WkzB0kQycihR1+js+Tm4iIv9Jtg==
+ b=p7m+4X+HRuGQXk0YKNtAoGo0erpWttY/GhpXDsi52N9/QugMnLX1273QMTYRcDdR23QP0d/rjTJhghJy8f96UEIiqR8c6EZupUlVmCWZYKgLaJsxV24NIC3MfojW5+TQ0Po7pKSaEW/PV7wGFH72hU727Qu0ZvecQjtaXyYG+CBVBnzAbCLxG8aE7J9Gnf9jQe+CjSJ3I32ce3gCUVLxZWOFYMlwK7uJlgjrun0v7ujqWmlMlGz0lmCUB7XopyT0aZlktR/TTDJUSEebCbpMXFuLjQ3AJ0jEDkSDhX1NpIerJqsiP5IUR4dFjQxHdVM/jS/N5dSTvR5vuvLMgCv90A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GrPIQjskBK9bk+GAipPeiDUaWMs09cPMKX01pa0UbHs=;
- b=k1kmpRntC1sRBpn5kk0xUGxJCb+O6SnoDeSxNybXHBpCAmzTx7a32IWsmkmd/Xm+uSwrr63UqxAiO3ON+tQcYatMWdcno2Cs7JjllC41oQ2O1wvytQjVb2TYgusyDKMQ8TzcrdLIQKtxCjyRQLi5X0QZf/p2U0u9QNTWlOBov90RRojTHGubGbl5c+Z8CczGAMVRCbmwf1lXUGf+kdRJZMLepXG/jpPJggWAdzXfEVjXROTVFC2JzOsafJxwWHXx0ggDIrB0/F1sHOywYKvn3/48RHk4Z7vdX9t/e8Nh8UWdcHl2xPll2fVmG4bbry/mbtCaZPM95a35Zgeav2NotA==
+ bh=jzUyEWLo8P817DEm9VtyDgKJwu1xXBN6eCu0q/Qz2eY=;
+ b=C+v6EnIEJyVg9nvsOPNfiQ+ZmrjolyFvyzv4qOI+Z1zmmHaVJooqzpNt2TQlU+kt1BfESshUBdz7EQDAmAUU7KWyYPyOlBTWDhhwlfVXhhkGWEVexVOVFDKoSmf03UZpq3ozzvoDIcGRhaKRAVUykYglJ8bvP9tdvdy8ecmcxoMbg2bMmwr9AxRuitDp7Xk6oQUNFFlEx2W+iVAdpFBJNufQutB1AtfUAmjeulgdEsf6SWj+noXSvYHM9WQpniVnAZB5taUx2lMJHhoHNQA6jb3uVpoTS2Fu/3zR2lh08jnyvfrW/W0bYCjYOQVGj6znFwsG/DI0owDUiA+fQvco5A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GrPIQjskBK9bk+GAipPeiDUaWMs09cPMKX01pa0UbHs=;
- b=fIp7Eae7f+GHahpqoI6SbYGacstgmwn41tIPvppDNgWhIen3nW6fWutGbOtB5cVy5802opHx+aNg8MRKhYsoO0aZaHG6H4a4mdHPskQGU2iA2CGulzrmL8JZCOIQ/W1NyrytTwICtBJtyBqdJguwXUcKYteMQlgC5oo6vnKYdGm6i06HpMaUmtEeRBXrHAMKHbqeXVimVRPjISKHOxRLOQ+rsmiHj1R1G5knPyK/Ybpn7/jUDjQJACJZIQAVFE2qZ81OCXGM9PNExozOwArAwe+ZDndXINhLT3fqZJSznZgNY1mYPyrPN8yVxDJVWiMuLJJ/cpO/edyZLQfcKg/xqg==
+ bh=jzUyEWLo8P817DEm9VtyDgKJwu1xXBN6eCu0q/Qz2eY=;
+ b=NtSn0saTxEBDFqQZycSIptIxmipgMN/0vHDuFxqQsUsOGN2EiRRIdF3Sg1JTLhtDNhjPwhESIVbF/PFNf6/0fV3UZRJTetu7t7m1hqm4+dBLIkPyqL1Cr+3Y+QTRaTNZA2oM/1LWTYgDGb3Pf6UB/g8mAwxRCQtZ0gYxFMsCfFR07nEe/PD7ipwf9MQZvnTjZQBR1faIzXgdcKcLa/73A4AVia6J4JGkifn+zJifueoiATjzh/IHmyPGEAHWIJ/CvVaGJCTJDtwZxYXsTPh6YGzhoFWSiW9gAUOFUO9EHuz3aRVyFCNNOenDVFWAIQN99eh7PCmf6kXMThBhUUyY1A==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by MN6PR12MB8566.namprd12.prod.outlook.com (2603:10b6:208:47c::18) with
+ by BN7PPF48E601ED5.namprd12.prod.outlook.com (2603:10b6:40f:fc02::6ce) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8880.25; Mon, 30 Jun
- 2025 22:28:46 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.29; Mon, 30 Jun
+ 2025 22:28:45 +0000
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com
  ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
  ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8880.030; Mon, 30 Jun 2025
- 22:28:46 +0000
+ 22:28:45 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Bjorn Helgaas <bhelgaas@google.com>,
 	iommu@lists.linux.dev,
@@ -59,15 +59,15 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
 	patches@lists.linux.dev,
 	tdave@nvidia.com,
 	Tony Zhu <tony.zhu@intel.com>
-Subject: [PATCH 08/11] PCI: Add the ACS Enhanced Capability definitions
-Date: Mon, 30 Jun 2025 19:28:38 -0300
-Message-ID: <8-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
+Subject: [PATCH 02/11] PCI: Add pci_bus_isolation()
+Date: Mon, 30 Jun 2025 19:28:32 -0300
+Message-ID: <2-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
 In-Reply-To: <0-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BYAPR05CA0028.namprd05.prod.outlook.com
- (2603:10b6:a03:c0::41) To CH3PR12MB8659.namprd12.prod.outlook.com
+X-ClientProxiedBy: BY5PR20CA0018.namprd20.prod.outlook.com
+ (2603:10b6:a03:1f4::31) To CH3PR12MB8659.namprd12.prod.outlook.com
  (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -76,116 +76,370 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|MN6PR12MB8566:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9b31bda6-793e-477e-d7ea-08ddb825794f
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|BN7PPF48E601ED5:EE_
+X-MS-Office365-Filtering-Correlation-Id: 17bcabd6-1de2-436e-3fd5-08ddb82578d2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?bSJ0+I+BshIjJ9UBCL3Rq7W2A4pH6M4He6ikX22AhYiuN9OYdf4ZtCIMP1M9?=
- =?us-ascii?Q?GtnncypsBiQGHXyJuVaPKwzEQ3zbMYSeid5kLuilBr26cN9djaf522qHzx+i?=
- =?us-ascii?Q?QckeMLjuhZURBiAJecqKkHj4SbAIIGnZkZ04Mt1xd+oCYRDyoB17pQcXUwrW?=
- =?us-ascii?Q?16KJcGzh8R4tlqcYc1T3vxWxportneERwlJhahWgnGoUKfS54xzGCqjIVhC6?=
- =?us-ascii?Q?cqQKTmi+/x7d3KP0VCTXz8kLv+CZffMGkp4cyCgbeJEW0LlZV7UX4WoGyky9?=
- =?us-ascii?Q?AynplsKzVBjYUxlL5LYKyZguyrvK9sLWbF2Urv7wbEVgtOXSB+Oo05er/J79?=
- =?us-ascii?Q?v0NfwYWEjsRNJ8ftXBVZMH9Q5YLC18fO0e6+yS4ZY9rJLXKVQlem3PSpIWqh?=
- =?us-ascii?Q?vJrhnIoLsdPAYMzbvxdJRyYA9/FrUW/Sz4CaK2WHz3BdEqHuO8fBoNHR9fvC?=
- =?us-ascii?Q?qgqjp9kDWrWmgQQTgQ+RfshiLCJ1BQbsMu6EvUpxp09p7ZmgZan+i5Ow17wI?=
- =?us-ascii?Q?DjfzXDfLA2Ci4nUGlN2tXjDsp/wh0Dpn6mpe0BneYcWoqz/Y3joYD+G8y6n0?=
- =?us-ascii?Q?1HXKbqwIwidOwFRUYbNwN+wRDkaVmEL4AEloWvwafylEkiSboN+tVZhvnNd6?=
- =?us-ascii?Q?lU1Fze+n60EaGqIgvgLChwT+e6W0nd19TIvRMYk3Q2DUvdNfFrD0kguNRVKT?=
- =?us-ascii?Q?tfi+wqNGN4oRlJeJkrMFJlsoT+xdDIXwe+ne2r6F2F7DjeCF2TI1A3sOTIVJ?=
- =?us-ascii?Q?mvF6p+YQb5zyv8ao6lSyqJ2zcHw4ljKXM31xcSh6B3+X0xlV3K2/lgsvrvJy?=
- =?us-ascii?Q?o98ef+KMm2qORevNXiFtNpA0DMTrZhkP9DTV433+F8wnnmG9ILOmPvOrcjqU?=
- =?us-ascii?Q?66UCXak0Tvyj/IcKk9SMTtJfrzCeER4dQS3puVd8jPBZ1XKWi7gVIEg+bon6?=
- =?us-ascii?Q?ZYYiPFYJbXzB060pFm8toPotxaLvVCKafHwJxYebkTGQ7XJ4tWzZcJhqIx+u?=
- =?us-ascii?Q?VmL6dhMep6Un9ITTCcmduwQtkLXk4iDbg/umbSir5D87XPEVqTQby99W8hQN?=
- =?us-ascii?Q?hJO9eb9Iw4dTlCFLq95pKxoOQby2xcYCQsmKtvlh8r31gEj4i7Z+qIcJYLb0?=
- =?us-ascii?Q?BsqYEX23vbxiUuUFrsRxvAfJVrIJsrmem1OrOuq1IPb1eD3VY8I6ZVDRNxgt?=
- =?us-ascii?Q?iqxReMn7N6TJ4XrwLxRUjxwxEE8HXppDm8PMr5tNHsNcn/wOz1cNwZvddXkM?=
- =?us-ascii?Q?RYB14MOkX43ZuXToE9OVCvGTdjoJFavuI/rvchwQmFGNXsLeYJtcXlU+tVr1?=
- =?us-ascii?Q?Cb+W3QfA2oRWZgVOO8aTyG5tECTa1R/CKYU5NRZiZ+6TsykPBTsRrFPEtggx?=
- =?us-ascii?Q?N3AKUtk8FZIFyzUEqBnxBefZOox0h7G7KhDRjVLaF3cDLZMC2PzFc8yabh44?=
- =?us-ascii?Q?qPGU4ZeEBMM=3D?=
+	=?us-ascii?Q?e593TLpbO6l1jVq3oFDCRXh4gt5xoemJ5gaj1MCwkyV4o9HmOCGgFHJ5UrKB?=
+ =?us-ascii?Q?qn5WsgfixAmavsYUsbNkdPYDnE8KbWCJXkF5qWZG+KPs+Fw59u92uztRvD3e?=
+ =?us-ascii?Q?kXLrFiqN+4LQXc5GDsQekD9/QUmSN7xP8gbXPanefAfZ8GECb1Plb04TGn2g?=
+ =?us-ascii?Q?OSWmPTBxalMFnBiqzReqXkOIyQ/CzdGAMJDLlkNiB4lbl7RjFX6yAxVvmCv/?=
+ =?us-ascii?Q?ZEw2d5VeK9djYenziaz127Dmjpk5eiScsz7/Dhg6myosABUKW/igPsTXPNV9?=
+ =?us-ascii?Q?kozspXHrIvepuyoB2QkxNIJfPmUbiQjxEc2l6Gr3uyeL1zs0ZMyRH0WVllfk?=
+ =?us-ascii?Q?N95y+kvXT9u5XHzEVGUSxjST31rHskv0N/8eCOva5ilMvzywhiI9LrYInzaJ?=
+ =?us-ascii?Q?6Tm6rlJKQP3neOjhZgls1Sj/zWZuqu6U5WeYWyJPNpu3L0yVGpusuu++Y3NS?=
+ =?us-ascii?Q?VSy+qX4rhPm3cjHCja4ivEs93hhI/Q3iR318iHKQAP711lfRtcH4n5u4DAhW?=
+ =?us-ascii?Q?0r71GnwXfs+syTexsT6ufC0mKA5aRqtXXcFQF2008cDiS9C0cocpX/nxfnaB?=
+ =?us-ascii?Q?o4444vZkCZdZNKRDRNX3JYEyv0Eb/oS3d1/shn+WgwrJz++eh8SBNyL1YLEH?=
+ =?us-ascii?Q?GgILT8rQ5jR/ZBf1L9U/wPLNCzh+fppXx5SfDlC7yYlKhOyfRzDW0kbgpCIr?=
+ =?us-ascii?Q?cSwGqMsLBsCXqUet89xdw6aTvaFAV6dhOA7h7uoiJ3ISYFNWrz7lr9YfK4Pp?=
+ =?us-ascii?Q?GhsyDBSFCeF4+Z4bWuVuRGEKmuhUzt8yoGPFjsZRJtOiGeIqa1McF16xmyma?=
+ =?us-ascii?Q?9nTfkbMkH7rx42CrTU4HafSvQ9s3vx75S9mbGEBBtVHBQyFNGh/53grU4rak?=
+ =?us-ascii?Q?SnV4GkePBXK/Go8z8P0wX/CuJnXn7vfzjelj4fkGFP2ScWDX35rmvyLhz/HW?=
+ =?us-ascii?Q?ZEPAk6PnTqqs8KSIUkI7Hdp3GqEiYEUuklJOuJ10W0I5XB0u3mQLeqiXrHBP?=
+ =?us-ascii?Q?wBq6ZoLg/UBRG4G9epnYHrTS+x5Hc0C5FKmejQaM9F8F8no1BmDX9ZtpiLym?=
+ =?us-ascii?Q?ZDX0COatArQ9bWoFNJGinAxFitgtR+Ajd4dYE06RB2gOXWUNnuWMXyDhOKbN?=
+ =?us-ascii?Q?yAYU4Ht2P5muatM4RGzeFU810/0HeANJaslstJjJHOPX/bK7eY6eP/oa71aN?=
+ =?us-ascii?Q?ZymZemb8Q7LtyDhvpG5I8USWO/qeilEMrDV3yPIH2+4ojJsGZSTlOWDvtOnS?=
+ =?us-ascii?Q?WjfasQf+H8cxTv3aPu8Ol2EgyEWd0eS7svq5jAUu9AORO6/lipKO7H6UeVz1?=
+ =?us-ascii?Q?DdCLDmQ0AaA/qoZ4XJMEktmqbiGb02OxOpF3tUc2FX2hc+VcRplVItQwd2FX?=
+ =?us-ascii?Q?lof20Ev/rUojx+DecNNAGBsyaRIajwXv/HD4cIlGAp0lTLXHWtoALHAIIrgE?=
+ =?us-ascii?Q?tr5lx5jU/4U=3D?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?0Ytimx3cN7R67JZjSViDY9lvMEZQkpVd9sWxWr5L3TbRCHwsZUzOv8FfHqQX?=
- =?us-ascii?Q?oabmhYBVrMn6jusxily2HO/eoSHoxp7pmcNFSFPRz5K67389c2jwl5ukZ7Qd?=
- =?us-ascii?Q?Q9aca78o62yL7Sr9ApFZwaJ1CXyNPh2U9PtV9KhZvooO10oejrvoMgDod8GX?=
- =?us-ascii?Q?UygTEy3HEkNf47zmycUxP9QUfxu7kMsxRxs+WbfSc6OX0h6KWSlccHe7Iuw+?=
- =?us-ascii?Q?tO1b+rSXcv4a2jU2lQ2HDDAQ2LsVsPtMRehQOLNxmkSvATuZrjXZJS3m/26I?=
- =?us-ascii?Q?qmuM4X5QJd3Nqw+Wr9bIBacjHD1JrWsz75DAc6vZppDECRVUKhMusYYt8ONa?=
- =?us-ascii?Q?+v93jQYx6Ad1dqPrsfc9lrO+zrwjQrk8W9uxnqORpqq0FsWqlq08xf9GB7Hs?=
- =?us-ascii?Q?YlsDoyczzRzpJkGjRZ3s9vncQXFZ8Nf/cTqsJQNaGNkxtj+FejBH6jlv+oFh?=
- =?us-ascii?Q?bLWils0p20yug9f01guYZHuYjDQeul71zaCDNFkLaZEOGL/gwkAazvBY5pX6?=
- =?us-ascii?Q?yJETk/0BAu8LnuZO2yejvZo1NUCKNqss7MLm9Ba2qry5BLBf6KmR/hZsr2bA?=
- =?us-ascii?Q?AbMpr8tfdWiRIwwm0WWH0Squ9LIE+WUR3Fu+u+LnB0Vfapxifzuuc58J39oa?=
- =?us-ascii?Q?uO8K4TuHcWkV13x4zF2wPilC4SnLoQqB9nvxfg7mogVoOzdJLzAJkoWx2V4g?=
- =?us-ascii?Q?bogQimImiJe6DgCEWD4UptRf/vG2vS/J0LVWX5r27XmGMXZJClBAUOsWybwL?=
- =?us-ascii?Q?JzzrFPh1W6msHsyFQbTUAZcHp/Pt7xmaA6+oQ+mMFFyUvVPc9TT3lM28+IC6?=
- =?us-ascii?Q?0EeVw7Smbrch3dbs7UF8BX3p0tONvosUpdMmDQ3j2Pdeq7B+Wh1FHoPpWiZJ?=
- =?us-ascii?Q?5+Imldc86QI3lSit8cwCHHhNhOCUabVJnhjw6jTuJkg+mDVx1XlS9w9kZxkd?=
- =?us-ascii?Q?1XV0Cy0pL0rO9j57GkWEvyXg5yn4o2VSvGduvBG7nit+nh90XTL16upA/KWs?=
- =?us-ascii?Q?yHCAtQUfCMbr3mSQxN79aYjm77bEj42u8Wbvx8bZ5pB5lozOeN51U1ELAdsE?=
- =?us-ascii?Q?5FVkkGKtrnu1SdgbFNQ3+aPoB5HQ/BIx2NWTgnyFN4yQsPmO7KcmfDv590tf?=
- =?us-ascii?Q?b5Qd1tXEPFziRbwh1mBkXYdx75u9nzqRgjNYanFDITKg/BAPy68pMFu0qWXV?=
- =?us-ascii?Q?IVJ3Nf6ZIT4PtQ+sahiRo6Cp6vmlnVuhTHWBkwjUZ3nD+ZO410RwTFAeWRCy?=
- =?us-ascii?Q?LqGw+/515WC7JQx89BspN5kfoyszyVlrMY12GVf6wKfSnrQFjFYIUtuK3v5P?=
- =?us-ascii?Q?nEtDAuZOb1YQgDcsrNAtHsGqQmmmc/dVkgxS4DozpPtGWggiAu/oplWS7h+J?=
- =?us-ascii?Q?69IJbZMrHLZHHpo4bAnP/uqM6JEsAaifMDqXNQrTBLVgU1mxOcRry0fRNm5k?=
- =?us-ascii?Q?PoJp5EEG4ofGnkrPp4ObY1xgynFXehIFG9N/D45X5wZYhHiEeQlU6/h3Yg1f?=
- =?us-ascii?Q?T8LhwU9xWRDr4mA+KrJ3fCd5gLX8LFcVce5EHSfTl90R58B5XV9Nq0pqdAGu?=
- =?us-ascii?Q?ISZTIvFRv3sXnl4JTrww6aIRTKiFfHlv43R66DMx?=
+	=?us-ascii?Q?9BJAzK1CAz0UQJJ562Idi/2i51ATYjh29UyI5r1pXd4aHi0edr394RinBhce?=
+ =?us-ascii?Q?yaPeZFjax/PthmvFZ7bQ7nIQ8B709Tz5JDlBN2KJNuXX8UY1qKM53vLezcFV?=
+ =?us-ascii?Q?EZuavnG2PlF43XNYVkhWaksTdz2D0ZawqczX0MBWX8AlIgUwUlchG6MKT6H5?=
+ =?us-ascii?Q?KPlGnkOvdnGtcrOSmZOB1b5M0Idq5PBP1R3YYzTmv5UWNktHoyZ7x8sUe9pt?=
+ =?us-ascii?Q?651ZtOx7jkWgBgFpJ0F4W0AiOwuc3hv12mvVcm7FhTAly4Zg6a4zNHcSnSTc?=
+ =?us-ascii?Q?YWpnjD92uXADKFmrAXxXjgQNKr59ZwGaP3jamh5+EUYgKr0rwg6Vie7ewbIA?=
+ =?us-ascii?Q?TJaomnrT9UkGPn2uJfuV6ywPNyaVDGZu5wrERAw2a/4EoYHEApGkG/RqeJAF?=
+ =?us-ascii?Q?grnPP9KVC5t3weXTLGCUrS19aAN6UBp0WlaZLgalB50nItHm2XQBdSTD3bze?=
+ =?us-ascii?Q?fHWU3hHywsKBzFTU4Ut4KJ6tZj3YEuyESgmELSDo0SH05SskX20BIz6NUhqJ?=
+ =?us-ascii?Q?GL90KETU5akBAynDP+KJTp9nGZbQ1cVRtc5DICK1aWkry9sA/98NmdEX6tXM?=
+ =?us-ascii?Q?XfPuM5a+gLDtXsZGIFgWUoB47eR7BN+scx/we2Q6WsgL6IMTpB9gr5cKFhg6?=
+ =?us-ascii?Q?BI4OllBayDMGCXEPZW0AX6/HoyhTRjOWxG9+OqfywN2lyz7la7YGrwXHJA7p?=
+ =?us-ascii?Q?5PFbLgJK7hQQDvmIzWXIxbQ1sjNeIF6/QBzXwdC17iGcNzJ1wyt1KLVJIaho?=
+ =?us-ascii?Q?DwT8Q7YnIDZQlp6U/s9SLJ31b0vWairNqRDlyGPzQAC9vIcDM0T7yCRkalI2?=
+ =?us-ascii?Q?ya2N9XzxXEeXjVWBqnUS/6y9ukAH5XptG25yYDxkMS9U2aVexhsxyEGzqp3t?=
+ =?us-ascii?Q?ePrngKt99wgdErNkHPUoAJAEEN78rsZuxcrHVn/5VgFFH3k0W84RI8oMWG82?=
+ =?us-ascii?Q?B1gdviTBjznZA/7LNGktXiAbX/YE94U2XXeK5e/WzIWiA24cU4JUxjscARlA?=
+ =?us-ascii?Q?qqB0OXj869wpR9fGxxz5/1mezCB3xZ8byuwS6k0ZioNu8KkO284whydhgI9D?=
+ =?us-ascii?Q?GRJYjSGCGeUQMilAg9MGlN8m0BTlWnVNvm/QZzxM35qYAEigqJcCNnBK//pY?=
+ =?us-ascii?Q?BCZln8rrWrJGHQSNOEZWoWgMQfMw5hioVE9o8mtL9eIXVfwzl5DGoy7JxXzG?=
+ =?us-ascii?Q?pkWwYs8fLVOyLMSe0941+j2q9On9VfKn7EUEDY/4yRUBNAkZr6zdA42c6K7c?=
+ =?us-ascii?Q?9TMYb02wtJ2tYeM9jrcT8vAZ31IuYtLTTz7XIRNIzR54XQguc7GgxxlJKbSX?=
+ =?us-ascii?Q?CDbjygfjat4H2kdvlc8oPjcLi23ElO0aaspzMH5TV0ZKdd5dRuX+WeRhdAcI?=
+ =?us-ascii?Q?NGhisriftBmBGpR51qcn2c9jM7k9aitj330YP9YPf4GGDPjyPPO6pv3v1C/h?=
+ =?us-ascii?Q?t7KinSIuQdxL3+uYZNmd3lKUmR4iy9qr3zXlq1BbHdk83CGgPRNVHfJ7AbqA?=
+ =?us-ascii?Q?ULRwHNqX4CmhaNZDFJ+f0/xl3ctQVQbshIdMwEz9XcTvxZDqVqSAjLiz16AS?=
+ =?us-ascii?Q?JIkJFNYhQsYQ5XZcigQVKXuBoRNQ0pqtnib9/EU6?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9b31bda6-793e-477e-d7ea-08ddb825794f
+X-MS-Exchange-CrossTenant-Network-Message-Id: 17bcabd6-1de2-436e-3fd5-08ddb82578d2
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2025 22:28:44.8063
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2025 22:28:44.2910
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: P1PkUcY4V28btbaMJ6CW8S1VpWPBrhUyVOmVUX8e9qEKz85Y52Xlv553e4mdR8Xe
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8566
+X-MS-Exchange-CrossTenant-UserPrincipalName: YfDox7SIj//oMUApF5+Lb1xs/zWq4WbrCJt09SadcxFTuXrpwaL3uREvA1v74rml
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPF48E601ED5
 
-This brings the definitions up to PCI Express revision 5.0:
+Prepare to move the calculation of the bus P2P isolation out of the iommu
+code and into the PCI core. This allows using the faster list iteration
+under the pci_bus_sem, and the code has a kinship with the logic in
+pci_for_each_dma_alias().
 
- * ACS I/O Request Blocking Enable
- * ACS DSP Memory Target Access Control
- * ACS USP Memory Target Access Control
- * ACS Unclaimed Request Redirect
+Bus isolation is the concept that drives the iommu_groups for the purposes
+of VFIO. Stated simply, if device A can send traffic to device B then they
+must be in the same group.
 
-Support for this entire grouping is advertised by the ACS Enhanced
-Capability bit.
+Only PCIe provides isolation. The multi-drop electrical topology in
+classical PCI allows any bus member to claim the transaction.
+
+In PCIe isolation comes out of ACS. If a PCIe Switch and Root Complex has
+ACS flags that prevent peer to peer traffic and funnel all operations to
+the IOMMU then devices can be isolated.
+
+If a multi-function devices has ACS flags preventing self loop back then
+that device is isolated, though pci_bus_isolation() does not deal with
+devices.
+
+As a property of a bus, there are several positive cases:
+
+ - The point to point "bus" on a physical PCIe link is isolated if the
+   bridge/root device has something preventing self-access to its own
+   MMIO.
+
+ - A Root Port is usually isolated
+
+ - A PCIe switch can be isolated if all it's Down Stream Ports have good
+   ACS flags
+
+pci_bus_isolation() implements these rules and returns an enum indicating
+the level of isolation the bus has, with five possibilies:
+
+ PCIE_ISOLATED: Traffic on this PCIE bus can not do any P2P.
+
+ PCIE_SWITCH_DSP_NON_ISOLATED: The bus is the internal bus of a PCIE
+     switch and the USP is isolated but the DSPs are not.
+
+ PCIE_NON_ISOLATED: The PCIe bus has no isolation between the bridge or
+     any downstream devices.
+
+ PCI_BUS_NON_ISOLATED: It is a PCI/PCI-X but the bridge is PCIe, has no
+     aliases and is isolated.
+
+ PCI_BRIDGE_NON_ISOLATED: It is a PCI/PCI-X bus and has no isolation, the
+     bridge is part of the group.
+
+The calculation is done per-bus, so it is possible for a transactions from
+a PCI device to travel through different bus isolation types on its way
+upstream. PCIE_SWITCH_DSP_NON_ISOLATED/PCI_BUS_NON_ISOLATED and
+PCIE_NON_ISOLATED/PCI_BRIDGE_NON_ISOLATED are the same for the purposes of
+creating iommu groups. The distinction between PCIe and PCI allows for
+easier understanding and debugging as to why the groups are choosen.
+
+For the iommu groups if all busses on the upstream path are PCIE_ISOLATED
+then the end device has a chance to have a single-device iommu_group. Once
+any non-isolated bus segment is found that bus segment will have an
+iommu_group that captures all downstream devices, and sometimes the
+upstream bridge.
+
+pci_bus_isolation() is principally about isolation, but there is an
+overlap with grouping requirements for legacy PCI aliasing. For purely
+legacy PCI environments pci_bus_isolation() returns
+PCI_BRIDGE_NON_ISOLATED for everything and all devices within a hierarchy
+are in one group. No need to worry about bridge aliasing.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- include/uapi/linux/pci_regs.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/pci/search.c | 150 +++++++++++++++++++++++++++++++++++++++++++
+ include/linux/pci.h  |  31 +++++++++
+ 2 files changed, 181 insertions(+)
 
-diff --git a/include/uapi/linux/pci_regs.h b/include/uapi/linux/pci_regs.h
-index 6edffd31cd8e2c..79d8d317b3c17e 100644
---- a/include/uapi/linux/pci_regs.h
-+++ b/include/uapi/linux/pci_regs.h
-@@ -1004,8 +1004,16 @@
- #define  PCI_ACS_UF		0x0010	/* Upstream Forwarding */
- #define  PCI_ACS_EC		0x0020	/* P2P Egress Control */
- #define  PCI_ACS_DT		0x0040	/* Direct Translated P2P */
-+#define  PCI_ACS_ENHANCED	0x0080  /* IORB, DSP_MT_xx, USP_MT_XX. Capability only */
-+#define  PCI_ACS_EGRESS_CTL_SZ	GENMASK(15, 8) /* Egress Control Vector Size */
- #define PCI_ACS_EGRESS_BITS	0x05	/* ACS Egress Control Vector Size */
- #define PCI_ACS_CTRL		0x06	/* ACS Control Register */
-+#define  PCI_ACS_IORB		0x0080  /* I/O Request Blocking */
-+#define  PCI_ACS_DSP_MT_RB	0x0100  /* DSP Memory Target Access Control Request Blocking */
-+#define  PCI_ACS_DSP_MT_RR	0x0200  /* DSP Memory Target Access Control Request Redirect */
-+#define  PCI_ACS_USP_MT_RB	0x0400  /* USP Memory Target Access Control Request Blocking */
-+#define  PCI_ACS_USP_MT_RR	0x0800  /* USP Memory Target Access Control Request Redirect */
-+#define  PCI_ACS_UNCLAIMED_RR	0x1000  /* Unclaimed Request Redirect Control */
- #define PCI_ACS_EGRESS_CTL_V	0x08	/* ACS Egress Control Vector */
+diff --git a/drivers/pci/search.c b/drivers/pci/search.c
+index 53840634fbfc2b..540a503b499e3f 100644
+--- a/drivers/pci/search.c
++++ b/drivers/pci/search.c
+@@ -113,6 +113,156 @@ int pci_for_each_dma_alias(struct pci_dev *pdev,
+ 	return ret;
+ }
+ 
++static enum pci_bus_isolation pcie_switch_isolated(struct pci_bus *bus)
++{
++	struct pci_dev *pdev;
++
++	/*
++	 * Within a PCIe switch we have an interior bus that has the Upstream
++	 * port as the bridge and a set of Downstream port bridging to the
++	 * egress ports.
++	 *
++	 * Each DSP has an ACS setting which controls where its traffic is
++	 * permitted to go. Any DSP with a permissive ACS setting can send
++	 * traffic flowing upstream back downstream through another DSP.
++	 *
++	 * Thus any non-permissive DSP spoils the whole bus.
++	 */
++	guard(rwsem_read)(&pci_bus_sem);
++	list_for_each_entry(pdev, &bus->devices, bus_list) {
++		/* Don't understand what this is, be conservative */
++		if (!pci_is_pcie(pdev) ||
++		    pci_pcie_type(pdev) != PCI_EXP_TYPE_DOWNSTREAM ||
++		    pdev->dma_alias_mask)
++			return PCIE_NON_ISOLATED;
++
++		if (!pci_acs_enabled(pdev, PCI_ACS_ISOLATED))
++			return PCIE_SWITCH_DSP_NON_ISOLATED;
++	}
++	return PCIE_ISOLATED;
++}
++
++static bool pci_has_mmio(struct pci_dev *pdev)
++{
++	unsigned int i;
++
++	for (i = 0; i <= PCI_ROM_RESOURCE; i++) {
++		struct resource *res = pci_resource_n(pdev, i);
++
++		if (resource_size(res) && resource_type(res) == IORESOURCE_MEM)
++			return true;
++	}
++	return false;
++}
++
++/**
++ * pci_bus_isolated - Determine how isolated connected devices are
++ * @bus: The bus to check
++ *
++ * Isolation is the ability of devices to talk to each other. Full isolation
++ * means that a device can only communicate with the IOMMU and can not do peer
++ * to peer within the fabric.
++ *
++ * We consider isolation on a bus by bus basis. If the bus will permit a
++ * transaction originated downstream to complete on anything other than the
++ * IOMMU then the bus is not isolated.
++ *
++ * Non-isolation includes all the downstream devices on this bus, and it may
++ * include the upstream bridge or port that is creating this bus.
++ *
++ * The various cases are returned in an enum.
++ *
++ * Broadly speaking this function evaluates the ACS settings in a PCI switch to
++ * determine if a PCI switch is configured to have full isolation.
++ *
++ * Old PCI/PCI-X busses cannot have isolation due to their physical properties,
++ * but they do have some aliasing properties that effect group creation.
++ *
++ * pci_bus_isolated() does not consider loopback internal to devices, like
++ * multi-function devices performing a self-loopback. The caller must check
++ * this separately. It does not considering alasing within the bus.
++ *
++ * It does not currently support the ACS P2P Egress Control Vector, Linux does
++ * not yet have any way to enable this feature. EC will create subsets of the
++ * bus that are isolated from other subsets.
++ */
++enum pci_bus_isolation pci_bus_isolated(struct pci_bus *bus)
++{
++	struct pci_dev *bridge = bus->self;
++	int type;
++
++	/* Consider virtual busses isolated */
++	if (!bridge)
++		return PCIE_ISOLATED;
++	if (pci_is_root_bus(bus))
++		return PCIE_ISOLATED;
++
++	/*
++	 * The bridge is not a PCIe bridge therefore this bus is PCI/PCI-X.
++	 *
++	 * PCI does not have anything like ACS. Any down stream device can bus
++	 * master an address that any other downstream device can claim. No
++	 * isolation is possible.
++	 */
++	if (!pci_is_pcie(bridge)) {
++		if (bridge->dev_flags & PCI_DEV_FLAG_PCIE_BRIDGE_ALIAS)
++			type = PCI_EXP_TYPE_PCI_BRIDGE;
++		else
++			return PCI_BRIDGE_NON_ISOLATED;
++	} else {
++		type = pci_pcie_type(bridge);
++	}
++
++	switch (type) {
++	/*
++	 * Since PCIe links are point to point root and downstream ports are
++	 * isolated if their own MMIO cannot be reached.
++	 */
++	case PCI_EXP_TYPE_ROOT_PORT:
++	case PCI_EXP_TYPE_DOWNSTREAM:
++		if (!pci_acs_enabled(bridge, PCI_ACS_ISOLATED))
++			return PCIE_NON_ISOLATED;
++		return PCIE_ISOLATED;
++
++	/*
++	 * bus is the interior bus of a PCI-E switch where ACS rules apply.
++	 */
++	case PCI_EXP_TYPE_UPSTREAM:
++		return pcie_switch_isolated(bus);
++
++	/*
++	 * PCIe to PCI/PCI-X - this bus is PCI.
++	 */
++	case PCI_EXP_TYPE_PCI_BRIDGE:
++		/*
++		 * A PCIe express bridge will use the subordinate bus number
++		 * with a 0 devfn as the RID in some cases. This causes all
++		 * subordinate devfns to alias with 0, which is the same
++		 * grouping as PCI_BUS_NON_ISOLATED. The RID of the bridge
++		 * itself is only used by the bridge.
++		 *
++		 * However, if the bridge has MMIO then we will assume the MMIO
++		 * is not isolated due to no ACS controls on this bridge type.
++		 */
++		if (pci_has_mmio(bridge))
++			return PCI_BRIDGE_NON_ISOLATED;
++		return PCI_BUS_NON_ISOLATED;
++
++	/*
++	 * PCI/PCI-X to PCIe - this bus is PCIe. We already know there must be a
++	 * PCI bus upstream of this bus, so just return non-isolated. If
++	 * upstream is PCI-X the PCIe RID should be preserved, but for PCI the
++	 * RID will be lost.
++	 */
++	case PCI_EXP_TYPE_PCIE_BRIDGE:
++		return PCI_BRIDGE_NON_ISOLATED;
++
++	default:
++		return PCI_BRIDGE_NON_ISOLATED;
++	}
++}
++EXPORT_SYMBOL_GPL(pci_bus_isolated);
++
+ static struct pci_bus *pci_do_find_bus(struct pci_bus *bus, unsigned char busnr)
+ {
+ 	struct pci_bus *child;
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 05e68f35f39238..deeb85467f4f38 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -834,6 +834,32 @@ struct pci_dynids {
+ 	struct list_head	list;	/* For IDs added at runtime */
+ };
+ 
++enum pci_bus_isolation {
++	/*
++	 * The bus is off a root port and the root port has isolated ACS flags
++	 * or the bus is part of a PCIe switch and the switch has isolated ACS
++	 * flags.
++	 */
++	PCIE_ISOLATED,
++	/*
++	 * The switch's DSP's are not isolated from each other but are isolated
++	 * from the USP.
++	 */
++	PCIE_SWITCH_DSP_NON_ISOLATED,
++	/* The above and the USP's MMIO is not isolated. */
++	PCIE_NON_ISOLATED,
++	/*
++	 * A PCI/PCI-X bus, no isolation. This is like
++	 * PCIE_SWITCH_DSP_NON_ISOLATED in that the upstream bridge is isolated
++	 * from the bus. The bus itself may also have a shared alias of devfn=0.
++	 */
++	PCI_BUS_NON_ISOLATED,
++	/*
++	 * The above and the bridge's MMIO is not isolated and the bridge's RID
++	 * may be an alias.
++	 */
++	PCI_BRIDGE_NON_ISOLATED,
++};
  
  /*
+  * PCI Error Recovery System (PCI-ERS).  If a PCI device driver provides
+@@ -1222,6 +1248,8 @@ struct pci_dev *pci_get_domain_bus_and_slot(int domain, unsigned int bus,
+ struct pci_dev *pci_get_class(unsigned int class, struct pci_dev *from);
+ struct pci_dev *pci_get_base_class(unsigned int class, struct pci_dev *from);
+ 
++enum pci_bus_isolation pci_bus_isolated(struct pci_bus *bus);
++
+ int pci_dev_present(const struct pci_device_id *ids);
+ 
+ int pci_bus_read_config_byte(struct pci_bus *bus, unsigned int devfn,
+@@ -2035,6 +2063,9 @@ static inline struct pci_dev *pci_get_base_class(unsigned int class,
+ 						 struct pci_dev *from)
+ { return NULL; }
+ 
++enum pci_bus_isolation pci_bus_isolated(struct pci_bus *bus)
++{ return PCI_NON_ISOLATED; }
++
+ static inline int pci_dev_present(const struct pci_device_id *ids)
+ { return 0; }
+ 
 -- 
 2.43.0
 
