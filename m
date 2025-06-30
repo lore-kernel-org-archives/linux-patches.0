@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FEF156678;
-	Mon, 30 Jun 2025 20:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB6C156678;
+	Mon, 30 Jun 2025 20:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317108; cv=none; b=bkp0+OkoyfL0LWS4BcXAP6rid/t6AcwtdVSDaphlteUCwz2Cpg96utfVw+RwftqaCKk2Q+HP7TVQD7tWnxnO47HwKRwngV8Xe0o6oKJ+R8vODnkM59AmYClqSDTIjHBTI0LUNPft35PWgWGFn3e3AECVxKdZzzcU3l7vDNJfiHk=
+	t=1751317110; cv=none; b=RfpJdB7L1MM9SZFdP4y4/z92IccVOzoTCkCa7Rzcr3r6n27bry5z091LYrDyovmmIEBx2/DBeRG9I+Wmq7qiSIYzjiQDOddz/kwF3UU7D3j3fcikFd5hAMiq2rWrCJD9YCaUgtmghyIK6+2uGTkeXSepyMvaxhMWRF8RSRyNblE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317108; c=relaxed/simple;
-	bh=RPA3lRTTTzfMKowNsLUdPzNocMZmusWArGMhJzbJccU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Qcnn4OkXbV0ZSTFq67viu8Epz40G0tfw52jamzRM8y0vy1J2lwr+LfL2Ak6zsann6zSvBvjrfjuUksrLX7op41fJISEb19MoopntFg7rv/rP7PRixByJ8uG3ntpXyjCMIGWUNxR5l9UcqTY1kO1pKO5Dcpu355jplI7tSD3dyU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EJ46re3n; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751317110; c=relaxed/simple;
+	bh=0qprEGj29hPGczkpEiGBUq79+GLeNUl8SGPoZBPJ1+s=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=rg9D5MZcDx32TguWX2YH5KWJ5n2CDTok/JmZEYa9s7p452DKkklialgTK6Lu0d1W4Ddmr8tl4h+v9ZvOhFfTL0Hl32VX4Sicp/Tv2XrDyzSkWOvVDjibp1vDIFQNDYM8LwEkrhPeL72smRDpHL8i3y09acti3hdwvRo438kTFJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BR1Sd+Wd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EJ46re3n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E972C4CEE3;
-	Mon, 30 Jun 2025 20:58:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BR1Sd+Wd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA28C4CEEB;
+	Mon, 30 Jun 2025 20:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317108;
-	bh=RPA3lRTTTzfMKowNsLUdPzNocMZmusWArGMhJzbJccU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=EJ46re3nkkzm/4uyk7S8qmR82pMVFSx/zIpgTkpd6j/3mSHbECIV+U7en5G8Uwfxa
-	 AUj6/yJXmIbYLmOS67PIT/ByvwbovKZfeRDifMSd1cdY8LXdfZV1jgkHaBl/KmQMTU
-	 CuR4A+4RPaeTW5QjKCIwN36ogBUBiaO0OKgqe+8WtjREw3mXOsE1TzC6YqA+aRle3h
-	 hRC1xRc25SEZaEEr1mtCiUftWZ/uQWdSaee39LRpiiVeDMJhGUhcWithqcwlTMOURM
-	 Ar5QEnRhvkIA/M6jYz1y29/4DCxwy8estt0MoorWOcYK16o4lDWf7TgyyjDUkTBkqw
-	 Q/qv7ItE/4wQw==
+	s=k20201202; t=1751317110;
+	bh=0qprEGj29hPGczkpEiGBUq79+GLeNUl8SGPoZBPJ1+s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=BR1Sd+WdpScQi+EEpWsz1ldOQXOu3kJ9Vlupz1wJhcTQRraa1SPttZxLzDmWBiaIc
+	 P8YhmhIawQ6TpVahvehHScmyENUPgJlqWKy6ZqhMrO9LQnl31ugKlxtbzG9PVNl6C3
+	 3yLZwplj5o7HzkBu2Gr5Bp6zttpoVyfWeItWT+uTjpgITmZt02JMwM8jzjXMrcjbAD
+	 KM94nEHcM1r9LJeQXUSYg+sqD2njYdUeN0w+iuYgun9oONRXlFwm1jls1mGZz9+X7B
+	 tQyQu50KJi7QxCY56wHsqI5fcwT9YKhpD9y0tRCSYXddT16b/dnK51D8t+n1HmUBPq
+	 PilG3nSb8BTZw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ronnie Sahlberg <rsahlberg@whamcloud.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Thomas Fourier <fourier.thomas@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-block@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 01/23] ublk: sanity check add_dev input for underflow
-Date: Mon, 30 Jun 2025 16:44:06 -0400
-Message-Id: <20250630204429.1357695-1-sashal@kernel.org>
+	3chas3@gmail.com,
+	linux-atm-general@lists.sourceforge.net,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 02/23] atm: idt77252: Add missing `dma_map_error()`
+Date: Mon, 30 Jun 2025 16:44:07 -0400
+Message-Id: <20250630204429.1357695-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250630204429.1357695-1-sashal@kernel.org>
+References: <20250630204429.1357695-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,86 +53,111 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.4
 Content-Transfer-Encoding: 8bit
 
-From: Ronnie Sahlberg <rsahlberg@whamcloud.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 969127bf0783a4ac0c8a27e633a9e8ea1738583f ]
+[ Upstream commit c4890963350dcf4e9a909bae23665921fba4ad27 ]
 
-Add additional checks that queue depth and number of queues are
-non-zero.
+The DMA map functions can fail and should be tested for errors.
 
-Signed-off-by: Ronnie Sahlberg <rsahlberg@whamcloud.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250626022046.235018-1-ronniesahlberg@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250624064148.12815-3-fourier.thomas@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees.
 
-**1. Fixes a Critical Input Validation Bug**
-The commit addresses a serious bug where userspace could pass zero
-values for `queue_depth` or `nr_hw_queues`, leading to:
-- Memory allocation failures (`kcalloc(0, ubq_size, GFP_KERNEL)` in
-  `ublk_init_queues()`)
-- Non-functional block devices with zero queues
-- Potential kernel crashes or undefined behavior
+## Detailed Analysis:
 
-**2. Minimal and Contained Fix**
-The change is extremely minimal - just adding two checks to an existing
-validation:
-```diff
-- if (info.queue_depth > UBLK_MAX_QUEUE_DEPTH || info.nr_hw_queues >
-  UBLK_MAX_NR_QUEUES)
-+       if (info.queue_depth > UBLK_MAX_QUEUE_DEPTH || !info.queue_depth
-||
-+           info.nr_hw_queues > UBLK_MAX_NR_QUEUES ||
-!info.nr_hw_queues)
-```
+**Nature of the fix:**
+The commit adds missing error checking for `dma_map_single()` calls in
+two locations within the idt77252 ATM driver:
 
-**3. Prevents Security/Stability Issues**
-Based on the kernel source analysis:
-- `ublk_init_queues()` uses these values directly for memory allocation
-- Multiple loops iterate based on `nr_hw_queues` - zero would skip all
-  initialization
-- The block layer's `blk_mq_alloc_tag_set()` expects non-zero values
+1. **In `queue_skb()` function (line 853-854):**
+  ```c
+  IDT77252_PRV_PADDR(skb) = dma_map_single(&card->pcidev->dev,
+  skb->data,
+  skb->len, DMA_TO_DEVICE);
+  +if (dma_mapping_error(&card->pcidev->dev, IDT77252_PRV_PADDR(skb)))
+  +    return -ENOMEM;
+  ```
+  This correctly returns -ENOMEM before reaching the errout label,
+  avoiding any cleanup issues since the DMA mapping never succeeded.
 
-**4. Similar to Previously Backported Commits**
-This is very similar to "block: ublk: extending queue_size to fix
-overflow" (Similar Commit #2), which was marked YES for backporting.
-Both fix input validation issues that could cause memory/stability
-problems.
+2. **In `add_rx_skb()` function (line 1857-1860):**
+  ```c
+  paddr = dma_map_single(&card->pcidev->dev, skb->data,
+  skb_end_pointer(skb) - skb->data,
+  DMA_FROM_DEVICE);
+  +if (dma_mapping_error(&card->pcidev->dev, paddr))
+  +    goto outpoolrm;
+  ```
+  This properly jumps to the new `outpoolrm` label which removes the SKB
+  from the pool before freeing it, maintaining correct cleanup order.
 
-**5. Clear Bug Fix Following Stable Rules**
-- Fixes a real bug (not theoretical)
-- No new features or architectural changes
-- Minimal risk - simply rejects invalid input
-- Confined to the ublk subsystem
-- Prevents userspace from creating broken/dangerous kernel state
+**Why this qualifies for stable backporting:**
 
-The commit prevents userspace from triggering undefined behavior in the
-kernel by passing invalid parameters, which is exactly the type of bug
-fix that belongs in stable kernels.
+1. **Fixes a real bug**: Missing DMA mapping error checks can cause
+   system crashes or data corruption, especially on systems with IOMMU
+   or SWIOTLB where DMA mapping failures are more likely.
 
- drivers/block/ublk_drv.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+2. **Simple and contained**: The fix adds only 5 lines of error checking
+   code with no architectural changes.
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 8a482853a75ed..0e017eae97fb1 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -2710,7 +2710,8 @@ static int ublk_ctrl_add_dev(const struct ublksrv_ctrl_cmd *header)
- 	if (copy_from_user(&info, argp, sizeof(info)))
- 		return -EFAULT;
+3. **Similar to approved backports**: This follows the exact same
+   pattern as Similar Commits #1 (eni driver) and #2 (aic94xx driver)
+   which were both marked "YES" for backporting.
+
+4. **Long-standing issue**: The driver has existed since at least 2005
+   (Linux 2.6.12-rc2), meaning this bug has been present for nearly 20
+   years.
+
+5. **Minimal regression risk**: The changes only add error checking;
+   they don't modify any existing logic paths.
+
+6. **Proper error handling**: Both error paths are correctly implemented
+   with appropriate cleanup sequences.
+
+The commit clearly meets all stable tree criteria as an important bug
+fix with minimal risk and should be backported to protect users from
+potential DMA-related crashes.
+
+ drivers/atm/idt77252.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
+index a876024d8a05f..63d41320cd5cf 100644
+--- a/drivers/atm/idt77252.c
++++ b/drivers/atm/idt77252.c
+@@ -852,6 +852,8 @@ queue_skb(struct idt77252_dev *card, struct vc_map *vc,
  
--	if (info.queue_depth > UBLK_MAX_QUEUE_DEPTH || info.nr_hw_queues > UBLK_MAX_NR_QUEUES)
-+	if (info.queue_depth > UBLK_MAX_QUEUE_DEPTH || !info.queue_depth ||
-+	    info.nr_hw_queues > UBLK_MAX_NR_QUEUES || !info.nr_hw_queues)
- 		return -EINVAL;
+ 	IDT77252_PRV_PADDR(skb) = dma_map_single(&card->pcidev->dev, skb->data,
+ 						 skb->len, DMA_TO_DEVICE);
++	if (dma_mapping_error(&card->pcidev->dev, IDT77252_PRV_PADDR(skb)))
++		return -ENOMEM;
  
- 	if (capable(CAP_SYS_ADMIN))
+ 	error = -EINVAL;
+ 
+@@ -1857,6 +1859,8 @@ add_rx_skb(struct idt77252_dev *card, int queue,
+ 		paddr = dma_map_single(&card->pcidev->dev, skb->data,
+ 				       skb_end_pointer(skb) - skb->data,
+ 				       DMA_FROM_DEVICE);
++		if (dma_mapping_error(&card->pcidev->dev, paddr))
++			goto outpoolrm;
+ 		IDT77252_PRV_PADDR(skb) = paddr;
+ 
+ 		if (push_rx_skb(card, skb, queue)) {
+@@ -1871,6 +1875,7 @@ add_rx_skb(struct idt77252_dev *card, int queue,
+ 	dma_unmap_single(&card->pcidev->dev, IDT77252_PRV_PADDR(skb),
+ 			 skb_end_pointer(skb) - skb->data, DMA_FROM_DEVICE);
+ 
++outpoolrm:
+ 	handle = IDT77252_PRV_POOL(skb);
+ 	card->sbpool[POOL_QUEUE(handle)].skb[POOL_INDEX(handle)] = NULL;
+ 
 -- 
 2.39.5
 
