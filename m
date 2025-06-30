@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EF62629D;
-	Mon, 30 Jun 2025 21:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5602629D;
+	Mon, 30 Jun 2025 21:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317235; cv=none; b=srTNPmvIYw87xLADHiae2Ec39/W+JpbiJ4vCeD9C6vKtBZSbrdhn4ADLoIue5d5y/Ur8FGnsiEwU4ZuDjaMM1wps8Jcczul24vhqm6Gw41rWREirFcV27V4ySqe96TsUHp/BcyZFpkN+RQOtB4sQ00vUe9XjsnRH6q+aIpKMsn4=
+	t=1751317239; cv=none; b=F5zBWDuGT493HOvhZmlq8GZsko3wm1ScI/luAQUohFsFTqujNrgbgdLxcyhoMK2tnJdwWl3EcVjnmEYpT3rw28YArpT1Q1M4ZYFGTHTlHkrcVbbjdE3MJzCpWT0kNOurcmvNE3Yh9tE9RAcp0kMb1lxt2RJUgpq4PpnGr9/lx7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317235; c=relaxed/simple;
-	bh=wyD8P7xMc7095spzoAzXQ7jxntIfPO0iq6t9zlAU2l4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=d3PJIi6Kydmr6j8U7LTVJBEMAE4gQ3iJCyJwaPZw5HDZ2uAjMN92GVuQmjwJMISOPRXbeXWbNWyq6whuiv2BYk/N6caPP8Y60UrZGuYYdZdM4IcNkdYVGA04AkWL2Or0u2DRrolGGXYYX4LwQDJttHhbeKIHE/VMQN/85qfcY0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N7PzF03i; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751317239; c=relaxed/simple;
+	bh=awAXtSOyE739HVxs+BWTIvQJM8agJwCSO5/mhGJViAY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=LOptbXjiQwNUACKoZUxg233F25D/4Vx36vRx0Cuiqdt9QLjW6uxRa1JIfETvtWVMHaNeLgQPBRQRSnf46XWzvsJszxoNhsclXse1CmOQMXmX+FpJMAWa5iURGO+OrJfbeRO1UH8mLZpR96evR847rVsqpJy4UWdmL8cmjmhEvtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nXIGfnY/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N7PzF03i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E754DC4CEE3;
-	Mon, 30 Jun 2025 21:00:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nXIGfnY/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368F1C4CEE3;
+	Mon, 30 Jun 2025 21:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317235;
-	bh=wyD8P7xMc7095spzoAzXQ7jxntIfPO0iq6t9zlAU2l4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N7PzF03iVNFg8ipLIzN7onSaMYOVdpAMmp+39iP+mDnUd6X83pCYkYV8D+ODbwqHA
-	 wEENKk/yvLrHwzCXfOqg5Pg+Z0bt9TZH+XEmHXHUA/5LA674+APglUib6iIhKaWxUP
-	 oFO93LzMd/3CXKg5LXTK+M0cK7U2su7B13iFbzK7SVDWB2nqn0Fz1kawQEffDhW/55
-	 KG4m0Se8n4q40FbkFqcOWDmeOKnFGxcxno9NNmQQVAEM2b/pT6J5mQqKX87Czbdou1
-	 xsoy14xnK+VENSROT6yJdpIEVdNoiFUSffat/0kiMVtzyI0rcF8znKrIwD6jvZ6U9S
-	 t2wbpQMhEZv5A==
+	s=k20201202; t=1751317239;
+	bh=awAXtSOyE739HVxs+BWTIvQJM8agJwCSO5/mhGJViAY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=nXIGfnY/EnGL7d8tHmOmmzEhzVKcR4cMbPUDHdrHnREjSewYbxGYKy8VGOHBMj5lz
+	 DKr2xrnvwzKXSrzJwf7kKZKnYlceuI59SZyTw70wq8klzUH66dle6stBpV2346ANKl
+	 5gzeZLfWpLwZ17YljDzdshNTUOy5FJevRXcb5EWL+CUNimfx3lb9IfsaNeJjmZcSUN
+	 DK0MN9LAmAmK6ExdM9R7noTpTZCVR6Y3LNtuc+3hwCfq9lGQyvUwkWzKn+3TvSPfls
+	 kSq+nqdjBzqgKrmN4RZcZgkTDY6ws/u6r6iKVCedsJoYXEFOuEXPbaWY2k/379gIqt
+	 GsZr5RgUBOgWg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Daniel J. Ogorchock" <djogorchock@gmail.com>,
-	Silvan Jegen <s.jegen@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Ronnie Sahlberg <rsahlberg@whamcloud.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 21/21] HID: nintendo: avoid bluetooth suspend/resume stalls
-Date: Mon, 30 Jun 2025 16:45:36 -0400
-Message-Id: <20250630204536.1358327-21-sashal@kernel.org>
+	linux-block@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 01/14] ublk: sanity check add_dev input for underflow
+Date: Mon, 30 Jun 2025 16:46:26 -0400
+Message-Id: <20250630204639.1358777-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250630204536.1358327-1-sashal@kernel.org>
-References: <20250630204536.1358327-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,180 +45,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.35
+X-stable-base: Linux 6.6.95
 Content-Transfer-Encoding: 8bit
 
-From: "Daniel J. Ogorchock" <djogorchock@gmail.com>
+From: Ronnie Sahlberg <rsahlberg@whamcloud.com>
 
-[ Upstream commit 4a0381080397e77792a5168069f174d3e56175ff ]
+[ Upstream commit 969127bf0783a4ac0c8a27e633a9e8ea1738583f ]
 
-Ensure we don't stall or panic the kernel when using bluetooth-connected
-controllers. This was reported as an issue on android devices using
-kernel 6.6 due to the resume hook which had been added for usb joycons.
+Add additional checks that queue depth and number of queues are
+non-zero.
 
-First, set a new state value to JOYCON_CTLR_STATE_SUSPENDED in a
-newly-added nintendo_hid_suspend. This makes sure we will not stall out
-the kernel waiting for input reports during led classdev suspend. The
-stalls could happen if connectivity is unreliable or lost to the
-controller prior to suspend.
-
-Second, since we lose connectivity during suspend, do not try
-joycon_init() for bluetooth controllers in the nintendo_hid_resume path.
-
-Tested via multiple suspend/resume flows when using the controller both
-in USB and bluetooth modes.
-
-Signed-off-by: Daniel J. Ogorchock <djogorchock@gmail.com>
-Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Ronnie Sahlberg <rsahlberg@whamcloud.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250626022046.235018-1-ronniesahlberg@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's the
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Bug Severity and Impact
+**1. Fixes a Critical Input Validation Bug**
+The commit addresses a serious bug where userspace could pass zero
+values for `queue_depth` or `nr_hw_queues`, leading to:
+- Memory allocation failures (`kcalloc(0, ubq_size, GFP_KERNEL)` in
+  `ublk_init_queues()`)
+- Non-functional block devices with zero queues
+- Potential kernel crashes or undefined behavior
 
-The commit fixes a serious bug that causes **kernel stalls or panics
-during suspend/resume** when using Bluetooth-connected Nintendo
-controllers. This was specifically reported on Android devices running
-kernel 6.6, indicating real-world user impact. Kernel stalls/panics
-during suspend/resume are critical issues that can lead to data loss and
-poor user experience.
-
-## Root Cause Analysis
-
-Looking at the code changes and the `joycon_enforce_subcmd_rate()`
-function at lines 825-854:
-
-```c
-do {
-    joycon_wait_for_input_report(ctlr);
-    // ... other code ...
-} while ((consecutive_valid_deltas < JC_SUBCMD_VALID_DELTA_REQ ||
-          subcmd_delta < JC_SUBCMD_RATE_LIMITER_MS(ctlr)) &&
-         ctlr->ctlr_state == JOYCON_CTLR_STATE_READ &&
-         attempts < JC_SUBCMD_RATE_MAX_ATTEMPTS);
+**2. Minimal and Contained Fix**
+The change is extremely minimal - just adding two checks to an existing
+validation:
+```diff
+- if (info.queue_depth > UBLK_MAX_QUEUE_DEPTH || info.nr_hw_queues >
+  UBLK_MAX_NR_QUEUES)
++       if (info.queue_depth > UBLK_MAX_QUEUE_DEPTH || !info.queue_depth
+||
++           info.nr_hw_queues > UBLK_MAX_NR_QUEUES ||
+!info.nr_hw_queues)
 ```
 
-This function contains a blocking loop that waits for input reports. If
-a Bluetooth controller loses connectivity before suspend, this loop
-could continue indefinitely (up to max attempts), causing the suspend
-process to stall.
+**3. Prevents Security/Stability Issues**
+Based on the kernel source analysis:
+- `ublk_init_queues()` uses these values directly for memory allocation
+- Multiple loops iterate based on `nr_hw_queues` - zero would skip all
+  initialization
+- The block layer's `blk_mq_alloc_tag_set()` expects non-zero values
 
-## Fix Analysis
+**4. Similar to Previously Backported Commits**
+This is very similar to "block: ublk: extending queue_size to fix
+overflow" (Similar Commit #2), which was marked YES for backporting.
+Both fix input validation issues that could cause memory/stability
+problems.
 
-The fix is elegant and minimal:
+**5. Clear Bug Fix Following Stable Rules**
+- Fixes a real bug (not theoretical)
+- No new features or architectural changes
+- Minimal risk - simply rejects invalid input
+- Confined to the ublk subsystem
+- Prevents userspace from creating broken/dangerous kernel state
 
-1. **New SUSPENDED state**: Adds `JOYCON_CTLR_STATE_SUSPENDED` to
-   prevent blocking operations during suspend
-2. **Suspend handler**: Sets the controller state to SUSPENDED, which
-   breaks the blocking loop in `joycon_enforce_subcmd_rate()` since it
-   checks for `ctlr_state == JOYCON_CTLR_STATE_READ`
-3. **Resume handler modification**:
-   - For Bluetooth controllers: Simply resets state to READ without
-     reinitializing (since BT connection is lost anyway)
-   - For USB controllers: Maintains existing behavior with
-     `joycon_init()`
+The commit prevents userspace from triggering undefined behavior in the
+kernel by passing invalid parameters, which is exactly the type of bug
+fix that belongs in stable kernels.
 
-## Backport Suitability
+ drivers/block/ublk_drv.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-1. **Small and contained**: The changes are minimal - adding one enum
-   value, one suspend function, and modifying the resume logic
-2. **No architectural changes**: Pure bug fix with no feature additions
-3. **Low regression risk**: Changes only affect suspend/resume paths for
-   this specific driver
-4. **Similar to accepted backports**:
-   - Similar Commit #2 (backported) fixed USB controller resume issues
-   - Similar Commit #4 (backported) fixed a null pointer dereference
-
-## Stable Tree Compliance
-
-The fix meets all stable kernel criteria:
-- Fixes a real bug affecting users (kernel stalls/panics)
-- Minimal change scope
-- No new features or APIs
-- Confined to a single driver subsystem
-- Clear problem and solution
-
-The fact that this was reported on production Android devices using
-kernel 6.6 further emphasizes the need for backporting to ensure stable
-kernel users don't experience these suspend/resume failures.
-
- drivers/hid/hid-nintendo.c | 38 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 36 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
-index 55153a2f79886..2a3ae1068739d 100644
---- a/drivers/hid/hid-nintendo.c
-+++ b/drivers/hid/hid-nintendo.c
-@@ -308,6 +308,7 @@ enum joycon_ctlr_state {
- 	JOYCON_CTLR_STATE_INIT,
- 	JOYCON_CTLR_STATE_READ,
- 	JOYCON_CTLR_STATE_REMOVED,
-+	JOYCON_CTLR_STATE_SUSPENDED,
- };
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index df3e5aab4b5ac..8c873a8e39cd9 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -2323,7 +2323,8 @@ static int ublk_ctrl_add_dev(struct io_uring_cmd *cmd)
+ 	if (copy_from_user(&info, argp, sizeof(info)))
+ 		return -EFAULT;
  
- /* Controller type received as part of device info */
-@@ -2754,14 +2755,46 @@ static void nintendo_hid_remove(struct hid_device *hdev)
+-	if (info.queue_depth > UBLK_MAX_QUEUE_DEPTH || info.nr_hw_queues > UBLK_MAX_NR_QUEUES)
++	if (info.queue_depth > UBLK_MAX_QUEUE_DEPTH || !info.queue_depth ||
++	    info.nr_hw_queues > UBLK_MAX_NR_QUEUES || !info.nr_hw_queues)
+ 		return -EINVAL;
  
- static int nintendo_hid_resume(struct hid_device *hdev)
- {
--	int ret = joycon_init(hdev);
-+	struct joycon_ctlr *ctlr = hid_get_drvdata(hdev);
-+	int ret;
-+
-+	hid_dbg(hdev, "resume\n");
-+	if (!joycon_using_usb(ctlr)) {
-+		hid_dbg(hdev, "no-op resume for bt ctlr\n");
-+		ctlr->ctlr_state = JOYCON_CTLR_STATE_READ;
-+		return 0;
-+	}
- 
-+	ret = joycon_init(hdev);
- 	if (ret)
--		hid_err(hdev, "Failed to restore controller after resume");
-+		hid_err(hdev,
-+			"Failed to restore controller after resume: %d\n",
-+			ret);
-+	else
-+		ctlr->ctlr_state = JOYCON_CTLR_STATE_READ;
- 
- 	return ret;
- }
- 
-+static int nintendo_hid_suspend(struct hid_device *hdev, pm_message_t message)
-+{
-+	struct joycon_ctlr *ctlr = hid_get_drvdata(hdev);
-+
-+	hid_dbg(hdev, "suspend: %d\n", message.event);
-+	/*
-+	 * Avoid any blocking loops in suspend/resume transitions.
-+	 *
-+	 * joycon_enforce_subcmd_rate() can result in repeated retries if for
-+	 * whatever reason the controller stops providing input reports.
-+	 *
-+	 * This has been observed with bluetooth controllers which lose
-+	 * connectivity prior to suspend (but not long enough to result in
-+	 * complete disconnection).
-+	 */
-+	ctlr->ctlr_state = JOYCON_CTLR_STATE_SUSPENDED;
-+	return 0;
-+}
-+
- #endif
- 
- static const struct hid_device_id nintendo_hid_devices[] = {
-@@ -2800,6 +2833,7 @@ static struct hid_driver nintendo_hid_driver = {
- 
- #ifdef CONFIG_PM
- 	.resume		= nintendo_hid_resume,
-+	.suspend	= nintendo_hid_suspend,
- #endif
- };
- static int __init nintendo_init(void)
+ 	if (capable(CAP_SYS_ADMIN))
 -- 
 2.39.5
 
