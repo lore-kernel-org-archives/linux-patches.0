@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68F625B2E1;
-	Mon, 30 Jun 2025 20:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC65425B2E1;
+	Mon, 30 Jun 2025 20:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317125; cv=none; b=XngeKGCl5kfeqiGqtyYbbNNGPjIdl/fA/azMy+uvWeF2Hl30zh0ugHl6GR87y0uAZcuJvDcG1JEdBRPm1D8HTlfPF818H+nw3ZWrGTFHmdwhTWmnsFQCJFRsAPuqb06O7mvGhGVnh/EMByxqgPZfmeWBn0ZyKdMcgCTYGkqM+N8=
+	t=1751317130; cv=none; b=MQB9Stjg3KR1TGjwIapzuLj0OLGUyUMxlamMDlp1KkJv/X/N9k+Wec9t55M0pyVXidXA4a8rXimGAnr9692zoL9XBcxoYJ9lLy6JVsAzcuIDyBRkk2i8YTx9H1NKhbex2x149hehV6Fmc1sKoiMugOSqUiJaNy7vbrz/a1cpyE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317125; c=relaxed/simple;
-	bh=AvSoE114FlYGApNfu+jAnRmSYa8O/+8QFftL6IIdZ1M=;
+	s=arc-20240116; t=1751317130; c=relaxed/simple;
+	bh=yqAACpINiW/Qdhp2nT2YiGZJFqGIay8wIKXjktB0UdY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=DV+//TJHDrC2/wIkEr+KvNBUvQu0vbiaAb0wVYROHBqJG0rkplN3094790TJpyivwdjxS49V/5Lqu1zOQwDXstv3gC1Fl9uwvwcR0lNb1fiAZ4rGpKU93Sf8WPMr8N/Msi0kqroWE2fuPCQdCFFQUjYPcWUo2C0alMvX0tH8+JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ys0joSII; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LLrevLYEB45BCzB61Oqv1YvmGbLSACCrrlPOVaISE7inKFIzWU18orXZgmiFXgHdj2CLKL+9HKxJ9RwjZ2ZtMmb5WJu4x0l/IkDunm+DcXKCEDFfRxR/XppR4b/paHM7v9KoH8XSsvtoEA084mHspYhFuhHXWwORAzEKMo5OnFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tQyYgt0D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ys0joSII"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831A2C4CEEB;
-	Mon, 30 Jun 2025 20:58:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tQyYgt0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A601C4CEEB;
+	Mon, 30 Jun 2025 20:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317125;
-	bh=AvSoE114FlYGApNfu+jAnRmSYa8O/+8QFftL6IIdZ1M=;
+	s=k20201202; t=1751317129;
+	bh=yqAACpINiW/Qdhp2nT2YiGZJFqGIay8wIKXjktB0UdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ys0joSIIyZcWIzwp56gyHH+iuCjmpY6MgqYTKRUKTnlyO1X8f9nZ4Kf+xz7TFpU68
-	 C1lR9FV9OAdgudHYaf6QHBUacpNF2zWYBGOnsM/6L0rz0o/iX4dmCm0Nl6aPl4xUfY
-	 VApHgPKIg4hrIGQe5/t8/6SZwdJHVY88YAfLgMpvAUyfwwfiVCgutd33zkV0SXf1vw
-	 XbD7x41NsPPx+B/+mpBT6cLqjqtw0HSAbp1PLVScOtp/yKSnCKhaVYWjBgIu0JQ87K
-	 kXEvzfkiFsT6E3i3oDdCMVCvBfrrGgUyrLzF8DoqG8l1QVso3ks9l4ahQdmf1ZfUye
-	 2zK6KzNgfmpBw==
+	b=tQyYgt0DWViUJjkAynPVY8uCRb2XMwPUUz+rg4dpg/wPaFj4AalPahGhVGXOX0Fl6
+	 sV6eNWNROPcpjTWJBoQV6fg9y6tIAFnUR5C7YRZ4eGVp+S9+WsCviaQy9h0j9fanz+
+	 G0FyieDZR3N1Sw3/h9RHMRp3k16hn1iwR7TTpEUWTt+r0iuHS73Yw20SNE4xoo+gaF
+	 7XdEzvWy0YHQ54ht7jlnvpYD5RBLCR9ragThU6Jm2kM9G7gWPlRQBJ6twF1cYn7+Ln
+	 182q+fEKyYyTE8ADZ0tIo37BKm3ExGi4sHgkvyxt99tE89TDVCF4O6cERXuc2mUCA3
+	 6iCwT+w8uCRJA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Takashi Iwai <tiwai@suse.de>,
+Cc: Chris Chiu <chris.chiu@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
 	kailang@realtek.com,
 	sbinding@opensource.cirrus.com,
-	chris.chiu@canonical.com,
 	simont@opensource.cirrus.com,
 	josh@joshuagrisham.com
-Subject: [PATCH AUTOSEL 6.15 07/23] ALSA: hda/realtek: Add mic-mute LED setup for ASUS UM5606
-Date: Mon, 30 Jun 2025 16:44:12 -0400
-Message-Id: <20250630204429.1357695-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 08/23] ALSA: hda/realtek: fix mute/micmute LEDs for HP EliteBook 6 G1a
+Date: Mon, 30 Jun 2025 16:44:13 -0400
+Message-Id: <20250630204429.1357695-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250630204429.1357695-1-sashal@kernel.org>
 References: <20250630204429.1357695-1-sashal@kernel.org>
@@ -53,108 +53,100 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.4
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Chris Chiu <chris.chiu@canonical.com>
 
-[ Upstream commit 41c66461cb2e8d3934a5395f27e572ebe63696b4 ]
+[ Upstream commit 9a07ca9a4015f8f71e2b594ee76ac55483babd89 ]
 
-ASUS UM5606* models use the quirk to set up the bass speakers, but it
-missed the mic-mute LED configuration.  Other similar models have the
-AMD ACP dmic, and the mic-mute is set up for that, but those models
-don't have AMD ACP but rather built-in mics of Realtek codec, hence
-the Realtek driver should set it up, instead.
+HP EliteBook 6 G1a laptops use ALC236 codec and need the fixup
+ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF to make the mic/micmute LEDs
+work.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220125
-Link: https://patch.msgid.link/20250623151841.28810-1-tiwai@suse.de
+Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
+Link: https://patch.msgid.link/20250623063023.374920-1-chris.chiu@canonical.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES**
+YES
 
 This commit should be backported to stable kernel trees. Here's my
 extensive analysis:
 
-## Code Change Analysis
+## Code Changes Analysis
 
-The commit adds a single line to the `alc294_fixup_bass_speaker_15`
-function:
+The commit adds two simple PCI quirk entries to the existing quirk
+table:
 ```c
-snd_hda_gen_add_micmute_led_cdev(codec, NULL);
++       SND_PCI_QUIRK(0x103c, 0x8dfb, "HP EliteBook 6 G1a 14",
+ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++       SND_PCI_QUIRK(0x103c, 0x8dfd, "HP EliteBook 6 G1a 16",
+ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
 ```
-
-This is a minimal, targeted fix that adds mic-mute LED support to an
-existing quirk used by ASUS UM5606 models.
 
 ## Reasons for Backporting
 
-1. **Fixes Missing Hardware Functionality**: The commit addresses a
-   genuine bug where the mic-mute LED hardware exists on ASUS UM5606*
-   models but wasn't being initialized by the driver. Users expect this
-   LED to work as it does on other laptops.
+1. **Bug Fix**: This fixes broken functionality (mute/micmute LEDs) on
+   specific HP EliteBook 6 G1a models, which is a real user-facing issue
+   that affects hardware functionality.
 
-2. **User-Reported Issue**: The commit references bug reports
-   (bugzilla.kernel.org #220125), indicating real users are affected by
-   this missing functionality.
+2. **Minimal Risk**: The change is extremely confined - it only adds PCI
+   ID mappings (0x8dfb and 0x8dfd) that will only affect these specific
+   HP laptop models. There's no risk of regression for other hardware.
 
-3. **Small and Contained Fix**: The change is a single line addition
-   that only affects the specific quirk for ASUS UM5606 models. It has
-   zero impact on other hardware.
+3. **Small and Contained**: The patch adds just 2 lines to an existing
+   quirk table. It doesn't modify any logic, algorithms, or introduce
+   new features.
 
-4. **Follows Established Patterns**: All five similar commits provided
-   as reference (which were backported) fix similar hardware-specific
-   audio/LED issues:
-   - They add or fix quirks for specific laptop models
-   - They address missing LED functionality
-   - They are minimal, targeted fixes
+4. **Follows Established Pattern**: Examining the repository history
+   shows numerous similar commits with stable tags:
+   - commit 96409eeab8cd: "fix mute/micmute LEDs for a HP EliteBook 645
+     G10" (Cc: stable)
+   - commit 7ba81e4c3aa0: "fix mute/micmute LEDs don't work for
+     EliteBook X G1i" (Cc: stable)
+   - commit 3cd59d8ef8df: "fix mute/micmute LEDs don't work for
+     EliteBook 645/665 G11" (Cc: stable)
 
-5. **No Architectural Changes**: The fix uses existing infrastructure
-   (`snd_hda_gen_add_micmute_led_cdev`) and doesn't introduce any new
-   APIs or change existing behavior.
+5. **Uses Existing Fixup**: The commit uses
+   `ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF`, which is an established
+   fixup function already present in the kernel. This fixup combines two
+   existing functions:
+   - `alc236_fixup_hp_mute_led_coefbit()` - for mute LED control
+   - `alc236_fixup_hp_micmute_led_vref()` - for micmute LED control
 
-6. **Low Risk of Regression**: Since this only affects the
-   `ALC294_FIXUP_BASS_SPEAKER_15` fixup (used exclusively by ASUS
-   UM5606WA and UM5606KA models), there's virtually no risk of breaking
-   other systems.
+6. **Hardware Enablement**: This enables proper functionality for users
+   who have already purchased these HP EliteBook models, improving their
+   Linux experience on stable kernels.
 
-## Comparison to Similar Backported Commits
+## Similar Commits Analysis
 
-Looking at the reference commits marked "YES" for backporting:
-- "ALSA: hda/realtek - Enable Speaker for ASUS UX563" - adds missing
-  speaker functionality
-- "ALSA: hda/realtek - add supported Mic Mute LED for Lenovo platform" -
-  adds mic-mute LED support
-- "ALSA: hda/realtek: Enable mute/micmute LEDs and speaker support for
-  HP Laptops" - adds LED support
+All 5 provided similar commits were marked as suitable for backporting
+(YES), and they follow the exact same pattern:
+- Adding PCI quirk entries for HP laptops
+- Fixing LED functionality issues
+- Using established ALC codec fixups
+- Minimal, hardware-specific changes
 
-This commit follows the exact same pattern: fixing missing hardware
-functionality (mic-mute LED) for specific laptop models.
+This commit is a textbook example of a stable-appropriate fix: it
+restores expected hardware functionality with minimal code changes and
+zero risk to other systems.
 
-## Note on Missing Cc: stable
-
-While this commit doesn't include "Cc: <stable@vger.kernel.org>" in its
-message (unlike the reference commits), this doesn't disqualify it from
-backporting. The commit clearly meets the stable tree criteria as an
-important bugfix with minimal risk.
-
-The investigation confirms this is filling a genuine gap - ASUS UM5606
-models currently have no LED support despite having the hardware, and
-this one-line fix enables the mic-mute LED functionality users expect.
-
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_realtek.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 02a424b7a9920..16f361b2877a7 100644
+index 16f361b2877a7..2ffdbe5e6a25d 100644
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -6609,6 +6609,7 @@ static void alc294_fixup_bass_speaker_15(struct hda_codec *codec,
- 	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
- 		static const hda_nid_t conn[] = { 0x02, 0x03 };
- 		snd_hda_override_conn_list(codec, 0x15, ARRAY_SIZE(conn), conn);
-+		snd_hda_gen_add_micmute_led_cdev(codec, NULL);
- 	}
- }
- 
+@@ -10885,7 +10885,9 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8def, "HP EliteBook 660 G12", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8df0, "HP EliteBook 630 G12", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8df1, "HP EliteBook 630 G12", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8dfb, "HP EliteBook 6 G1a 14", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8dfc, "HP EliteBook 645 G12", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8dfd, "HP EliteBook 6 G1a 16", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8dfe, "HP EliteBook 665 G12", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8e11, "HP Trekker", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e12, "HP Trekker", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.39.5
 
