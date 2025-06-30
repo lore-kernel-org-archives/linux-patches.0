@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA7022D9E3;
-	Mon, 30 Jun 2025 21:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C6E2629D;
+	Mon, 30 Jun 2025 21:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317229; cv=none; b=fkRp2esAbxrMFzCBVykYBGzHI9/e1ajTIYQAc0EgSu9aHe1SIrKjTQXBWbo8qYfar45pTMncbseICY77Fh2ORkD9u45ILoIIOuhXze/reu3U99BkNv+WQrtcZ5M2d/R5uAJ+lMVxlouZQtg71ennT/+PFSt9+mvtV0mzwI8XwNA=
+	t=1751317231; cv=none; b=K6EAx5Z8vDR8xhJsEG18f8aUzvYjEzV0mttqOgwtZk3yDkcTfodvyEGjk5PXb+XK9iS/EGmNpJvhqOlQOx1k/aPSa3PO/M+LNTyI4oFwx0boPoeTl1moCblyULYSE5+cNplfBkv7SPc5kVt80AGVysR3MnDy1uUOLTAZ4VNFs6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317229; c=relaxed/simple;
-	bh=VpkFFoZxR8VVeaY5vlWpftgNiTxHj8o19hcfht9EpB8=;
+	s=arc-20240116; t=1751317231; c=relaxed/simple;
+	bh=F1mC+B53tO7flIglnUj16ZArDRPmSeD1zlMuf6vfxjY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=czKrGo11QCqtlKeZqFEscFyglHMXdVLgDPz+qJkmkYeQT87Y7jpl2sXiWALEZT9n7VHqCCT2peFve6Ifsdj1qlc55yd+PVnOVFmpsiVfRGUqTgOFyG+OGtrk6GJ4c14aZEbqymMyWuV0A0rNIpaBodWvZ7fvMrCuhW154nGP+r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kaJ8PtpD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJOuCkH6WiDrwgHUqNoNFpDeSH7se9Kq8NZNAit7piDiBnTKz2hHp058bPZdQ9TyTpVufD1Vle5W3X4W4vl93CNmeJi09DJLLBsatbFzXryfHTUqUj5kx+BA7X2O1xjuoIMjqdmkp+R22nn1D4A/QDdHFpUlM5eZzh1A8q8m9Vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AebJjbYH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kaJ8PtpD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0009C4CEE3;
-	Mon, 30 Jun 2025 21:00:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AebJjbYH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C73C4CEE3;
+	Mon, 30 Jun 2025 21:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317229;
-	bh=VpkFFoZxR8VVeaY5vlWpftgNiTxHj8o19hcfht9EpB8=;
+	s=k20201202; t=1751317231;
+	bh=F1mC+B53tO7flIglnUj16ZArDRPmSeD1zlMuf6vfxjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kaJ8PtpDNIjAXJQQeZWP7U5cBM2VUyLyNAzDjaLoaK83HrSLD4B7IttLvzzBOlNPR
-	 Kc8pgSaSoZKdi+d8WzQfTBfPcxke7La0HDglj+NI+DajL8G5y+ZdYatsHs+s/w6RIP
-	 b5n0quAiKOkAsYouW+XhdZAvPYb9+kwnUdLZxQVLn4wmiZEFkWjZ5e+OOApUj1G/Od
-	 NjZsfBN4mOn3CpSHPhQfKUnsA5Rq5CJ02j8MWhjLlDW/FRhwZHZsj66Gcimpiw1WKy
-	 zNXekiCzFMdkviMK1gB7s1Ax9TxK5AWViBGbP1KjANI+kPD1T+jKGrvzsE3EwdHoTi
-	 reiDoW8gjjSGw==
+	b=AebJjbYHMrPv5abGvxlVYJbgFucIHg8m8uRNzvoy7HA2s17vsBQefGWhPCvR+7Vbm
+	 ougj4RyRLsryoks7KhrLExHoJKtlWm1VnjRHHgLcZywIhNvLD13ukn9fmwTbzYUk78
+	 g8spgBIER9HijNJ37J0wr7XYWo8nPywekdimtCBmR7LYvYyLfAV6huZs8eGjZZJ/p0
+	 8kP0Fo54tEJe14FHRu3LitSY/DL9fQdIwlAndQ0VhN132NKSpzp7Ah9lLRT4uIFkdK
+	 ns/yH/kceUN7ZicZ3bXgsDz7L4fc4qyOjsAIkQpGPSJG4yP4hX5FgTUySelv83N42S
+	 Kr/XkQarM2lcw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Fangrui Song <i@maskray.me>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
+Cc: Zhang Heng <zhangheng@kylinos.cn>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	paul.walmsley@sifive.com,
-	aou@eecs.berkeley.edu,
-	tglx@linutronix.de,
-	namcao@linutronix.de,
-	thomas.weissschuh@linutronix.de,
-	linux-riscv@lists.infradead.org,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.12 18/21] riscv: vdso: Exclude .rodata from the PT_DYNAMIC segment
-Date: Mon, 30 Jun 2025 16:45:33 -0400
-Message-Id: <20250630204536.1358327-18-sashal@kernel.org>
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 19/21] HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY
+Date: Mon, 30 Jun 2025 16:45:34 -0400
+Message-Id: <20250630204536.1358327-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250630204536.1358327-1-sashal@kernel.org>
 References: <20250630204536.1358327-1-sashal@kernel.org>
@@ -57,102 +52,109 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.35
 Content-Transfer-Encoding: 8bit
 
-From: Fangrui Song <i@maskray.me>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit e0eb1b6b0cd29ca7793c501d5960fd36ba11f110 ]
+[ Upstream commit 1a8953f4f7746c6a515989774fe03047c522c613 ]
 
-.rodata is implicitly included in the PT_DYNAMIC segment due to
-inheriting the segment of the preceding .dynamic section (in both GNU ld
-and LLD).  When the .rodata section's size is not a multiple of 16
-bytes on riscv64, llvm-readelf will report a "PT_DYNAMIC dynamic table
-is invalid" warning.  Note: in the presence of the .dynamic section, GNU
-readelf and llvm-readelf's -d option decodes the dynamic section using
-the section.
+MARTLINKTECHNOLOGY is a microphone device, when the HID interface in an
+audio device is requested to get specific report id, the following error
+may occur.
 
-This issue arose after commit 8f8c1ff879fab60f80f3a7aec3000f47e5b03ba9
-("riscv: vdso.lds.S: remove hardcoded 0x800 .text start addr"), which
-placed .rodata directly after .dynamic by removing .eh_frame.
+[  562.939373] usb 1-1.4.1.2: new full-speed USB device number 21 using xhci_hcd
+[  563.104908] usb 1-1.4.1.2: New USB device found, idVendor=4c4a, idProduct=4155, bcdDevice= 1.00
+[  563.104910] usb 1-1.4.1.2: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[  563.104911] usb 1-1.4.1.2: Product: USB Composite Device
+[  563.104912] usb 1-1.4.1.2: Manufacturer: SmartlinkTechnology
+[  563.104913] usb 1-1.4.1.2: SerialNumber: 20201111000001
+[  563.229499] input: SmartlinkTechnology USB Composite Device as /devices/pci0000:00/0000:00:07.1/0000:04:00.3/usb1/1-1/1-1.4/1-1.4.1/1-1.4.1.2/1-1.4.1.2:1.2/0003:4C4A:4155.000F/input/input35
+[  563.291505] hid-generic 0003:4C4A:4155.000F: input,hidraw2: USB HID v2.01 Keyboard [SmartlinkTechnology USB Composite Device] on usb-0000:04:00.3-1.4.1.2/input2
+[  563.291557] usbhid 1-1.4.1.2:1.3: couldn't find an input interrupt endpoint
+[  568.506654] usb 1-1.4.1.2: 1:1: usb_set_interface failed (-110)
+[  573.626656] usb 1-1.4.1.2: 1:1: usb_set_interface failed (-110)
+[  578.746657] usb 1-1.4.1.2: 1:1: usb_set_interface failed (-110)
+[  583.866655] usb 1-1.4.1.2: 1:1: usb_set_interface failed (-110)
+[  588.986657] usb 1-1.4.1.2: 1:1: usb_set_interface failed (-110)
 
-This patch resolves the implicit inclusion into PT_DYNAMIC by explicitly
-specifying the :text output section phdr.
+Ignore HID interface. The device is working properly.
 
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2093
-Signed-off-by: Fangrui Song <i@maskray.me>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20250602-riscv-vdso-v1-1-0620cf63cff0@maskray.me
-Signed-off-by: Palmer Dabbelt <palmer@dabbelt.com>
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Regression Fix**: The commit explicitly fixes a regression
-   introduced by commit 8f8c1ff879fab60f80f3a7aec3000f47e5b03ba9
-   ("riscv: vdso.lds.S: remove hardcoded 0x800 .text start addr").
-   Regression fixes are high-priority candidates for stable backporting.
+1. **The commit fixes a real user-visible bug**: The device causes
+   repeated USB interface timeout errors (`usb_set_interface failed
+   (-110)`) that spam the kernel log and potentially interfere with
+   device operation. The error log shows five consecutive timeout
+   failures over 25 seconds, which would significantly impact user
+   experience.
 
-2. **Fixes Invalid ELF Structure**: The issue is not merely cosmetic.
-   The PT_DYNAMIC segment is reported as "invalid" by llvm-readelf,
-   indicating the ELF structure is technically incorrect. From the
-   linker script:
-  ```
-  .dynamic        : { *(.dynamic) }               :text   :dynamic
-  .rodata         : {
-  ...
-  }  // implicitly inherits :dynamic from previous section
-  ```
-  Without the explicit `:text` specification, `.rodata` inherits the
-  segment attributes from the preceding `.dynamic` section, incorrectly
-  including it in the PT_DYNAMIC segment.
+2. **The fix is minimal and contained**: The code changes are extremely
+   simple - just adding two lines to define the vendor/device ID in
+   `hid-ids.h` and one line to add it to the `hid_ignore_list[]` array
+   in `hid-quirks.c`. This is the standard pattern for HID quirks.
 
-3. **Minimal and Safe Change**: The fix is a single-line change that
-   adds `:text` to the `.rodata` section definition:
-  ```diff
-   - }
-   +    }                                               :text
-   ```
-   This explicitly places `.rodata` in the text segment only, excluding
-it from PT_DYNAMIC. The change has no functional impact beyond
-correcting the ELF structure.
+3. **Similar commits were backported**: This is very similar to "Similar
+   Commit #1" (Logitech GROUP) which also dealt with HID interfaces on
+   audio devices causing problems. That commit added `HID_QUIRK_NOGET`
+   and was backported. The pattern is identical - an audio device with a
+   problematic HID interface that needs to be handled via quirks.
 
-4. **Similar to Previous Backported Commits**: This is similar to commit
-   #2 in the reference list ("riscv: vdso: fix section overlapping under
-   some conditions") which was marked YES for backporting. Both commits
-   fix structural issues in the vDSO linker script that cause
-   build/tooling errors.
+4. **No risk of regression**: The change only affects devices with
+   vendor ID 0x4c4a and product ID 0x4155. When a device matches this
+   ID, the HID subsystem will simply skip it via the `hid_ignore()`
+   function check in `hid_add_device()`. This cannot affect any other
+   devices.
 
-5. **Potential for Broader Impact**: While the immediate symptom is a
-   warning from llvm-readelf, an invalid PT_DYNAMIC segment could
-   potentially cause issues with:
-   - Build systems that validate ELF structures
-   - Runtime loaders with strict ELF validation
-   - Debugging and analysis tools
-   - Future toolchain versions that may be less tolerant of invalid
-     structures
+5. **The device functions properly with the fix**: The commit message
+   explicitly states "The device is working properly" - meaning the
+   audio functionality works fine once the HID interface is ignored.
+   This is not breaking functionality but rather preventing the HID
+   subsystem from interfering with a working audio device.
 
-The commit meets the stable tree criteria: it fixes an important bug
-(invalid ELF structure), the fix is small and contained, and there's
-minimal risk of regression.
+6. **The error pattern indicates a hardware quirk**: The continuous
+   timeout errors (-110) when trying to set the USB interface suggests
+   the device's HID implementation doesn't properly respond to standard
+   HID commands. This is exactly the type of hardware-specific issue
+   that the HID quirks system was designed to handle.
 
- arch/riscv/kernel/vdso/vdso.lds.S | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This meets all the criteria for stable backporting: it fixes a bug
+affecting users, is small and self-contained, has minimal risk, and
+follows established patterns for similar fixes that were previously
+backported.
 
-diff --git a/arch/riscv/kernel/vdso/vdso.lds.S b/arch/riscv/kernel/vdso/vdso.lds.S
-index cbe2a179331d2..99e51f7755393 100644
---- a/arch/riscv/kernel/vdso/vdso.lds.S
-+++ b/arch/riscv/kernel/vdso/vdso.lds.S
-@@ -31,7 +31,7 @@ SECTIONS
- 		*(.data .data.* .gnu.linkonce.d.*)
- 		*(.dynbss)
- 		*(.bss .bss.* .gnu.linkonce.b.*)
--	}
-+	}						:text
+ drivers/hid/hid-ids.h    | 3 +++
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 4 insertions(+)
+
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 49dc86981287a..de6bab6a7394b 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1519,4 +1519,7 @@
+ #define USB_VENDOR_ID_SIGNOTEC			0x2133
+ #define USB_DEVICE_ID_SIGNOTEC_VIEWSONIC_PD1011	0x0018
  
- 	.note		: { *(.note.*) }		:text	:note
++#define USB_VENDOR_ID_SMARTLINKTECHNOLOGY              0x4c4a
++#define USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155         0x4155
++
+ #endif
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 73979643315bf..e4d80307b898c 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -894,6 +894,7 @@ static const struct hid_device_id hid_ignore_list[] = {
+ #endif
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_YEALINK, USB_DEVICE_ID_YEALINK_P1K_P4K_B2K) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_QUANTA, USB_DEVICE_ID_QUANTA_HP_5MP_CAMERA_5473) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_SMARTLINKTECHNOLOGY, USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155) },
+ 	{ }
+ };
  
 -- 
 2.39.5
