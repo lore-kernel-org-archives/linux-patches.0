@@ -1,50 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE76323497B;
-	Mon, 30 Jun 2025 20:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B4923497B;
+	Mon, 30 Jun 2025 20:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317182; cv=none; b=oRws6/bq0tUJLSTQyTwxvDyWfTCqouUrRpdhMsPSVCGJm5BLx8rXYCoBPy2SnTCVSw/TcXNmbjaF39OuPC2SfK9Yq0sIKf8z7J55apf+0Sz5JMcWANQueWI+OoDH9IOcBxinB9rx+oJQXbpEgWqhwDVfU+U8hUMOREfMdOWNwLE=
+	t=1751317186; cv=none; b=dFqkKzC/zpfWu9kKHjVHveJy39+UHOiMu/z7gknWDG12NdJGKH34Or4sNVHJjFTd//KpQRTS+UeGZ+cAytL1a517EKgJG0eoIPdj48HZ3LJWPqZNla1zpGtA1LPiJHV2KIBHN6vZSsTQxVobguoTnt4u21RmwbYUXxteHXOcMvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317182; c=relaxed/simple;
-	bh=l0jJzT6z2oJIpMQkpEb7GhJRoc5xgqv3OPQRXqyvSwU=;
+	s=arc-20240116; t=1751317186; c=relaxed/simple;
+	bh=ZjzP4j3N7iz8jFUdMxH04cFCIP0woR9kFfV8KsCYXRI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=UMQG94dtPQqoY7rA7DI4lhiWCTX2ZiSMvf26/EZwRQyyHd4xYc4byBIr5dvrm2i17kuy6bRdN7sn5smb7TZzeW05EnU0qWYrfgQs1uhBwO3meHMS4mdXwIMT6z9gJrQ5Q/a/4nVCtLAywXW0v6/2FnEwVSx4gTtvvMCDNfylXIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eoo6iH4j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=umtkAJ4C/NEeE5G0ZTZP+fxwUqSsMQnONvjf9W2GsKVYqLwFmDNuLkVoRd8RZhxFp0aNoXnz5c3UUWQEOIHQIIszlIdS4bNy7OR+N/IspI71HRPur6UyrlNdULCb2cHq+cYPQgfSlW/YR9QvNjO69xj6Ni6+VK8UiUG2sutx5A0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tsKJbJfP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eoo6iH4j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DF6C4CEEB;
-	Mon, 30 Jun 2025 20:59:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tsKJbJfP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D612C4CEE3;
+	Mon, 30 Jun 2025 20:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751317181;
-	bh=l0jJzT6z2oJIpMQkpEb7GhJRoc5xgqv3OPQRXqyvSwU=;
+	s=k20201202; t=1751317185;
+	bh=ZjzP4j3N7iz8jFUdMxH04cFCIP0woR9kFfV8KsCYXRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eoo6iH4jBVayj0zk5LqBDaIpXJLVTm7XX5VTQZ7+JBEDFznarQK8dp+b8Kqz2bqYL
-	 NCG48oeL+RNJRnVRafvfSOqA/nAqYWtfe+5CUsjuj8c2UHez9begMn1srnXpLAufn5
-	 mTvV6lIE7yVxwWopizMNRmTTlafx0v5yKcZywNsFB/haKONxYJ2sgGfucCqCM8Qi/O
-	 +7WQ+0eXmv9eBAeZcVwLejR3tz3/f0BuvcxOIORLtUB6e2+ppqxWgMxOyb5Gfg7laE
-	 QH2c3EaQuoag6f6NXLe/XHROI5Yi8WISSy3+RZXQ9d01u/NbtiEkZrhCGbWUFy1NJk
-	 kj2FjowgF4SHA==
+	b=tsKJbJfPBnkEAPDLNficyztFNqC7CfrqR/TDqIdOCdfsvp84TedEz//sr4mPwP6xi
+	 kfJw7q8LVOvenATeYMeJ4FnKG/jAZUOgUNWe0W5Gw9HRJ2bX11wj+7gC/NPUcwBp0M
+	 gJTI3f0RMTFTVcjU6rTmbYqvv0MfCZDNSbop52sERdiL3Z6cm/kJYuXpcZV+y9h/U9
+	 6JsY0XxkHjJNt2HiwG/xpKP4SxhAm2TosiwYBsOoZZK27lJpSoy1vt4NBfBcsqLJeo
+	 oQ/Ap06JfXA8EvXAQgjaDlPFLtF3nJVRZmonpxCsG/G0APvGywolg75BhSmpwWVZap
+	 OL3vKHcsbSqqA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tiwei Bie <tiwei.btw@antgroup.com>,
-	kernel test robot <lkp@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Tamura Dai <kirinode0@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	nathan@kernel.org,
-	richard@nod.at,
-	anton.ivanov@cambridgegreys.com,
-	geert@linux-m68k.org,
-	agordeev@linux.ibm.com,
-	guoweikang.kernel@gmail.com,
-	tglx@linutronix.de,
-	bpf@vger.kernel.org,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.12 03/21] um: vector: Reduce stack usage in vector_eth_configure()
-Date: Mon, 30 Jun 2025 16:45:18 -0400
-Message-Id: <20250630204536.1358327-3-sashal@kernel.org>
+	yung-chuan.liao@linux.intel.com,
+	peter.ujfalusi@linux.intel.com,
+	pierre-louis.bossart@linux.dev,
+	liam.r.girdwood@intel.com,
+	brent.lu@intel.com,
+	peterz@infradead.org,
+	tavianator@tavianator.com
+Subject: [PATCH AUTOSEL 6.12 04/21] ASoC: SOF: Intel: hda: Use devm_kstrdup() to avoid memleak.
+Date: Mon, 30 Jun 2025 16:45:19 -0400
+Message-Id: <20250630204536.1358327-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250630204536.1358327-1-sashal@kernel.org>
 References: <20250630204536.1358327-1-sashal@kernel.org>
@@ -59,140 +56,156 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.35
 Content-Transfer-Encoding: 8bit
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Tamura Dai <kirinode0@gmail.com>
 
-[ Upstream commit 2d65fc13be85c336c56af7077f08ccd3a3a15a4a ]
+[ Upstream commit 6c038b58a2dc5a008c7e7a1297f5aaa4deaaaa7e ]
 
-When compiling with clang (19.1.7), initializing *vp using a compound
-literal may result in excessive stack usage. Fix it by initializing the
-required fields of *vp individually.
+sof_pdata->tplg_filename can have address allocated by kstrdup()
+and can be overwritten. Memory leak was detected with kmemleak:
 
-Without this patch:
+unreferenced object 0xffff88812391ff60 (size 16):
+  comm "kworker/4:1", pid 161, jiffies 4294802931
+  hex dump (first 16 bytes):
+    73 6f 66 2d 68 64 61 2d 67 65 6e 65 72 69 63 00  sof-hda-generic.
+  backtrace (crc 4bf1675c):
+    __kmalloc_node_track_caller_noprof+0x49c/0x6b0
+    kstrdup+0x46/0xc0
+    hda_machine_select.cold+0x1de/0x12cf [snd_sof_intel_hda_generic]
+    sof_init_environment+0x16f/0xb50 [snd_sof]
+    sof_probe_continue+0x45/0x7c0 [snd_sof]
+    sof_probe_work+0x1e/0x40 [snd_sof]
+    process_one_work+0x894/0x14b0
+    worker_thread+0x5e5/0xfb0
+    kthread+0x39d/0x760
+    ret_from_fork+0x31/0x70
+    ret_from_fork_asm+0x1a/0x30
 
-$ objdump -d arch/um/drivers/vector_kern.o | ./scripts/checkstack.pl x86_64 0
-...
-0x0000000000000540 vector_eth_configure [vector_kern.o]:1472
-...
-
-With this patch:
-
-$ objdump -d arch/um/drivers/vector_kern.o | ./scripts/checkstack.pl x86_64 0
-...
-0x0000000000000540 vector_eth_configure [vector_kern.o]:208
-...
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506221017.WtB7Usua-lkp@intel.com/
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Link: https://patch.msgid.link/20250623110829.314864-1-tiwei.btw@antgroup.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Tamura Dai <kirinode0@gmail.com>
+Link: https://patch.msgid.link/20250615235548.8591-1-kirinode0@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Fixes a real bug**: The commit addresses excessive stack usage
-   (1472 bytes) that can lead to stack overflow, especially problematic
-   on systems with limited kernel stack space. This is a legitimate bug
-   that affects system stability.
+## 1. **This fixes a real memory leak bug**
 
-2. **Compiler-specific issue with real impact**: While triggered by
-   clang 19.1.7's handling of compound literals, the resulting stack
-   usage of 1472 bytes is genuinely excessive and dangerous regardless
-   of the compiler quirk that exposed it.
+The kmemleak trace in the commit message shows concrete evidence of a
+memory leak:
+```
+unreferenced object 0xffff88812391ff60 (size 16):
+  comm "kworker/4:1", pid 161, jiffies 4294802931
+  hex dump (first 16 bytes):
+    73 6f 66 2d 68 64 61 2d 67 65 6e 65 72 69 63 00  sof-hda-generic.
+```
 
-3. **Simple and safe fix**: The change is purely mechanical - converting
-   from compound literal initialization to field-by-field
-   initialization:
-  ```c
-  // From:
-  *vp = ((struct vector_private) { .field = value, ... });
-  // To:
-  vp->field = value;
-  ```
+## 2. **The bug mechanism is clear**
 
-4. **Minimal risk**: The fix doesn't change any logic or functionality.
-   It only changes how the structure is initialized, making it extremely
-   unlikely to introduce regressions.
+Looking at the code changes, the leak occurs because:
+- `remove_file_ext()` allocates memory with `kstrdup()`
+- This allocated pointer is assigned to `sof_pdata->tplg_filename`
+- Later in `hda_machine_select()`, this pointer can be overwritten
+  multiple times (lines 1373, 1413, 1452, 1473, 1484 all show
+  `devm_kasprintf()` calls that reassign `sof_pdata->tplg_filename`)
+- Each overwrite leaks the previously allocated memory
 
-5. **Precedent from similar commits**: Looking at the historical commits
-   marked "YES" for backporting:
-   - Similar Commit #1: Reduced stack frame in qed driver using
-     `noinline_for_stack`
-   - Similar Commit #4: Reduced stack usage in ethtool with clang using
-     `noinline_for_stack`
+## 3. **The fix is minimal and contained**
 
-   Both addressed the same class of problem (excessive stack usage with
-clang) and were considered suitable for stable.
+The change is extremely focused:
+```diff
+-static char *remove_file_ext(const char *tplg_filename)
++static char *remove_file_ext(struct device *dev, const char
+*tplg_filename)
+ {
+     char *filename, *tmp;
 
-6. **Measurable improvement**: The stack usage reduction from 1472 to
-   208 bytes is dramatic and well-documented by the kernel test robot,
-   providing clear evidence of the fix's effectiveness.
+- filename = kstrdup(tplg_filename, GFP_KERNEL);
++    filename = devm_kstrdup(dev, tplg_filename, GFP_KERNEL);
+```
 
-The commit meets the stable kernel criteria of fixing an important bug
-with minimal risk and a contained change. While it doesn't explicitly
-include a "Cc: stable" tag, the nature of the fix (preventing potential
-stack overflow) makes it a good candidate for stable backporting.
+Only two lines change: the function signature and the allocation call.
+The caller already has access to the device pointer, so the integration
+is trivial.
 
- arch/um/drivers/vector_kern.c | 42 +++++++++++------------------------
- 1 file changed, 13 insertions(+), 29 deletions(-)
+## 4. **Low risk of regression**
 
-diff --git a/arch/um/drivers/vector_kern.c b/arch/um/drivers/vector_kern.c
-index 64c09db392c16..7a88b13d289f1 100644
---- a/arch/um/drivers/vector_kern.c
-+++ b/arch/um/drivers/vector_kern.c
-@@ -1592,35 +1592,19 @@ static void vector_eth_configure(
+- `devm_kstrdup()` is a well-established kernel API
+- The same function (`hda_machine_select()`) already uses multiple
+  `devm_*` allocations, showing this is the established pattern
+- Device-managed memory is automatically freed on device removal,
+  eliminating the leak
+
+## 5. **This differs from the similar commits shown**
+
+The historical commits provided were all marked "NO" for backporting,
+but they were:
+- Code cleanups (removing macros, using newer APIs)
+- Refactoring (renaming files)
+- Defensive programming (NULL checks)
+
+This commit is fundamentally different - it fixes an actual bug that
+affects users.
+
+## 6. **User impact is real**
+
+- Systems with SOF audio that reload drivers (suspend/resume cycles,
+  module reload) will leak memory
+- Long-running systems could accumulate significant memory waste
+- The leak happens in the probe path, a common operation
+
+## 7. **The bug was recently introduced**
+
+According to the kernel repository analysis, this bug was introduced in
+August 2024, making it relatively recent and likely present in current
+stable kernels that need the fix.
+
+## Conclusion
+
+This commit meets all the criteria for stable backporting:
+- Fixes a real bug (not a theoretical issue)
+- Minimal, contained change
+- Clear root cause and solution
+- Low regression risk
+- Follows established patterns in the codebase
+- Has actual user impact
+
+The absence of a "Cc: stable" tag in the original commit appears to be
+an oversight rather than an intentional decision to exclude it from
+stable trees.
+
+ sound/soc/sof/intel/hda.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
+index 9c8f79e55ec5d..624598c9e2df8 100644
+--- a/sound/soc/sof/intel/hda.c
++++ b/sound/soc/sof/intel/hda.c
+@@ -1209,11 +1209,11 @@ static int check_tplg_quirk_mask(struct snd_soc_acpi_mach *mach)
+ 	return 0;
+ }
  
- 	device->dev = dev;
+-static char *remove_file_ext(const char *tplg_filename)
++static char *remove_file_ext(struct device *dev, const char *tplg_filename)
+ {
+ 	char *filename, *tmp;
  
--	*vp = ((struct vector_private)
--		{
--		.list			= LIST_HEAD_INIT(vp->list),
--		.dev			= dev,
--		.unit			= n,
--		.options		= get_transport_options(def),
--		.rx_irq			= 0,
--		.tx_irq			= 0,
--		.parsed			= def,
--		.max_packet		= get_mtu(def) + ETH_HEADER_OTHER,
--		/* TODO - we need to calculate headroom so that ip header
--		 * is 16 byte aligned all the time
--		 */
--		.headroom		= get_headroom(def),
--		.form_header		= NULL,
--		.verify_header		= NULL,
--		.header_rxbuffer	= NULL,
--		.header_txbuffer	= NULL,
--		.header_size		= 0,
--		.rx_header_size		= 0,
--		.rexmit_scheduled	= false,
--		.opened			= false,
--		.transport_data		= NULL,
--		.in_write_poll		= false,
--		.coalesce		= 2,
--		.req_size		= get_req_size(def),
--		.in_error		= false,
--		.bpf			= NULL
--	});
-+	INIT_LIST_HEAD(&vp->list);
-+	vp->dev		= dev;
-+	vp->unit	= n;
-+	vp->options	= get_transport_options(def);
-+	vp->parsed	= def;
-+	vp->max_packet	= get_mtu(def) + ETH_HEADER_OTHER;
-+	/*
-+	 * TODO - we need to calculate headroom so that ip header
-+	 * is 16 byte aligned all the time
-+	 */
-+	vp->headroom	= get_headroom(def);
-+	vp->coalesce	= 2;
-+	vp->req_size	= get_req_size(def);
+-	filename = kstrdup(tplg_filename, GFP_KERNEL);
++	filename = devm_kstrdup(dev, tplg_filename, GFP_KERNEL);
+ 	if (!filename)
+ 		return NULL;
  
- 	dev->features = dev->hw_features = (NETIF_F_SG | NETIF_F_FRAGLIST);
- 	INIT_WORK(&vp->reset_tx, vector_reset_tx);
+@@ -1297,7 +1297,7 @@ struct snd_soc_acpi_mach *hda_machine_select(struct snd_sof_dev *sdev)
+ 		 */
+ 		if (!sof_pdata->tplg_filename) {
+ 			/* remove file extension if it exists */
+-			tplg_filename = remove_file_ext(mach->sof_tplg_filename);
++			tplg_filename = remove_file_ext(sdev->dev, mach->sof_tplg_filename);
+ 			if (!tplg_filename)
+ 				return NULL;
+ 
 -- 
 2.39.5
 
