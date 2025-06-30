@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE3517A2E1;
-	Sat, 28 Jun 2025 13:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38EE6BFC0;
+	Mon, 30 Jun 2025 06:12:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751117302; cv=none; b=SpqcuGCSvNknyjqDricas7kF7LqUPvN0yoppIIziA2JPPnntUBr+q6AW7qar2X2DSXdcQUBz7IijJ3uHYrGMT7kSsSghatjiIYA4Fifbo/KXYmQ7pK6nV7q09Jz7vC11xXARtGcPFjZlNwRjzcLhALBUwPLUftOH/tnkXvH0TYU=
+	t=1751263957; cv=none; b=dmmhLQe7ctVFZ1CTHqJlrnYuaKlIz4ccVU/DqZKKtTvb/NU4KhvOEK16CVlYRdsuKOo/BJslXsapbh0eX45PaPWSihgP2awsklR8hxBXhVE/CuJ+Me32gEB/usruS0FsyZs/DBkZmbIZo6M5xttfX5E+UPGdrgpolG9DXi30LkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751117302; c=relaxed/simple;
-	bh=ji99GoMmZ+BmHWew9GGKVVTMG5BQGwO4X4vVoTM8jUo=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=BT5Q6EV1k7MsKvz1wLmnTQV1swNBlKF9CuFldWVBJ9ji2ghZO8BVtdxruq5GIyQdoTg8SgB6A3oOGWo0IamajvbTB4OQ+2tu3PwsrT8o1gUXRQuUvclCFDYhIbKpxGqGiE6n7lGtU3VpdZs2l7423pTS3vcMOkY+ZfT2UZT8zzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EMcL2y48; arc=none smtp.client-ip=192.198.163.11
+	s=arc-20240116; t=1751263957; c=relaxed/simple;
+	bh=McN2deu/0pGB55PloWO5vfr7rpgpFCsXgzpOPVUQSic=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=P6puq3TNvr/YHW7XJ2KX6NjrdW57ETF52w4DPJi3MUdw1vW2uOkzsAF58ANevIG9hdvnr8mLwSGQvNkrZxKIpeJs8NIhWdHZaFZv3hWiuwj741eOOqLO7FMlUPtMle3529PCZ7NXh+nWA6QdcN7M0+YRSp3rwy3UHuMNDsCApYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XYwp9Z+c; arc=none smtp.client-ip=198.175.65.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EMcL2y48"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XYwp9Z+c"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751117299; x=1782653299;
-  h=message-id:date:mime-version:cc:subject:to:references:
+  t=1751263956; x=1782799956;
+  h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=ji99GoMmZ+BmHWew9GGKVVTMG5BQGwO4X4vVoTM8jUo=;
-  b=EMcL2y48MMB373FJqh6fkImgU0EqrUKbUmGUPMCONEUqM8NLdATJ3lPx
-   G/+jeI1w1pxzk/NrpEYpZYdoDWnp8CfvsUgTCmPkFkBVKDFXMOJyuzMTY
-   unMsceGKxbLKT4YbgLcQaxh/NxDtF77sugqzWZjG1kWssTwTfF+tOjx8X
-   qHZSfO1g7xRXClXtNEmGNFqRk8eRvAhmQSHxhcm2P/3ZJU2SyhxGrVJNg
-   VlGH0BA+XPyHcOXbvAYOWrRkkUx0QUGEmSWv6svusS9YzU4HxNgxb7LP3
-   1e/ALFBMPeJ9srjq1hGvHWtm+rMKWyptENI86SCVz3POX7MLzygKA0S/g
-   Q==;
-X-CSE-ConnectionGUID: VgMcdY2GRnKuCgUYunicjA==
-X-CSE-MsgGUID: GUO0Nnx6R0iaspag2qZDxQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11478"; a="64007912"
-X-IronPort-AV: E=Sophos;i="6.16,273,1744095600"; 
-   d="scan'208";a="64007912"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2025 06:28:18 -0700
-X-CSE-ConnectionGUID: cBHHD+OYSt65z/yA9QfR9A==
-X-CSE-MsgGUID: I3WJoKQDT661nA0lRsItyw==
+  bh=McN2deu/0pGB55PloWO5vfr7rpgpFCsXgzpOPVUQSic=;
+  b=XYwp9Z+cfUHi6NZz4hVFuxCXIMDOF/YQttsK0fUm+g9OXv+Prbg1LXKP
+   jqO2ZQTlpHrJt6ZZXnCMtSpmHbnfmnXjXhD4/2ZbzbG1LBBNt7/oETFPK
+   JbLKdJRPBHO1DkWC7bGsja/PyG9BmtoM3zDPhvab2xne5b+QzNt7Q3Su1
+   UL3bAhp4AJ9KJMTW6Ik4P4H7Z4lRPsb24LqvDtROmwGcWvsgjojOrWCkG
+   HSgH0gVBxV7DKn4qunhS6ijCw8toUDT80Re2MHQHHxImg98DDmHVPkq58
+   tTnK2EMyWrQM3f/TSj0ISmK31UUW18LvqfrZKiSLtDXCdXGmFLSs05PG5
+   g==;
+X-CSE-ConnectionGUID: Qhi6W2pTSNK8Cv/ghOXUxg==
+X-CSE-MsgGUID: Q6jssHTUT/6lb1dqN5ZtfQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11479"; a="70911810"
+X-IronPort-AV: E=Sophos;i="6.16,277,1744095600"; 
+   d="scan'208";a="70911810"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2025 23:12:35 -0700
+X-CSE-ConnectionGUID: oRo7BY5pRD2ivAJyrq3SBg==
+X-CSE-MsgGUID: pDCvSic+QquWyYCEOFjRiw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,273,1744095600"; 
-   d="scan'208";a="158533135"
-Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.124.243.252]) ([10.124.243.252])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2025 06:28:15 -0700
-Message-ID: <e505c970-e519-44c6-a316-e5d186f216ca@linux.intel.com>
-Date: Sat, 28 Jun 2025 21:28:12 +0800
+X-IronPort-AV: E=Sophos;i="6.16,277,1744095600"; 
+   d="scan'208";a="153546707"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2025 23:12:33 -0700
+Message-ID: <46253700-8b98-47e1-bde5-1bd2fd9f528b@linux.intel.com>
+Date: Mon, 30 Jun 2025 14:11:09 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,331 +52,37 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: baolu.lu@linux.intel.com, iommu@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org,
- linux-pci@vger.kernel.org, patches@lists.linux.dev, pjaroszynski@nvidia.com,
- vsethi@nvidia.com, helgaas@kernel.org
-Subject: Re: [PATCH RFC v2 3/4] iommu: Introduce iommu_dev_reset_prepare() and
- iommu_dev_reset_done()
-To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, joro@8bytes.org,
- will@kernel.org, robin.murphy@arm.com, rafael@kernel.org, lenb@kernel.org,
- bhelgaas@google.com
-References: <cover.1751096303.git.nicolinc@nvidia.com>
- <9042270b6c2d15a53e66d22d29b87c1c59e60669.1751096303.git.nicolinc@nvidia.com>
+Subject: Re: [PATCH v2 6/7] iommu/vt-d: Split
+ intel_iommu_enforce_cache_coherency()
+To: Jason Gunthorpe <jgg@nvidia.com>, "Tian, Kevin" <kevin.tian@intel.com>
+Cc: David Woodhouse <dwmw2@infradead.org>,
+ "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+ Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
+ Will Deacon <will@kernel.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>,
+ "Wang, Wei W" <wei.w.wang@intel.com>
+References: <0-v2-e5c01fc5ce82+26216-vtd_prep_jgg@nvidia.com>
+ <6-v2-e5c01fc5ce82+26216-vtd_prep_jgg@nvidia.com>
+ <BN9PR11MB52763C1B4AED06073FAF79EE8C77A@BN9PR11MB5276.namprd11.prod.outlook.com>
+ <20250613131253.GA1163305@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <9042270b6c2d15a53e66d22d29b87c1c59e60669.1751096303.git.nicolinc@nvidia.com>
+In-Reply-To: <20250613131253.GA1163305@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 6/28/2025 3:42 PM, Nicolin Chen wrote:
-> PCIe permits a device to ignore ATS invalidation TLPs, while processing a
-> reset. This creates a problem visible to the OS where an ATS invalidation
-> command will time out: e.g. an SVA domain will have no coordination with a
-> reset event and can racily issue ATS invalidations to a resetting device.
-> 
-> The OS should do something to mitigate this as we do not want production
-> systems to be reporting critical ATS failures, especially in a hypervisor
-> environment. Broadly, OS could arrange to ignore the timeouts, block page
-> table mutations to prevent invalidations, or disable and block ATS.
-> 
-> The PCIe spec in sec 10.3.1 IMPLEMENTATION NOTE recommends to disable and
-> block ATS before initiating a Function Level Reset. It also mentions that
-> other reset methods could have the same vulnerability as well.
-> 
-> Provide a callback from the PCI subsystem that will enclose the reset and
-> have the iommu core temporarily change all the attached domain to BLOCKED.
-> After attaching a BLOCKED domain, IOMMU drivers should fence any incoming
-> ATS queries, synchronously stop issuing new ATS invalidations, and wait
-> for all ATS invalidations to complete. This can avoid any ATS invaliation
-> timeouts.
-> 
-> However, if there is a domain attachment/replacement happening during an
-> ongoing reset, the ATS might be re-enabled between the two function calls.
-> Introduce a new pending_reset flag in group_device to defer an attachment
-> during a reset, allowing iommu core to cache the target domains in the SW
-> level but bypassing the driver. The iommu_dev_reset_done() will re-attach
-> these soft-attached domains via __iommu_attach_device/set_group_pasid().
-> 
-> Notes:
->   - This only works for IOMMU drivers that implemented ops->blocked_domain
->     correctly with pci_disable_ats().
+On 6/13/25 21:12, Jason Gunthorpe wrote:
+> On Fri, Jun 13, 2025 at 09:56:44AM +0000, Tian, Kevin wrote:
+>> pasid_pte_config_nestd():
+>> 	if (s2_domain->force_snooping)
+>> 		pasid_set_pgsnp(pte);	
+>>
+>> we either need set it for second level or also check set_pte_snp
+>> here.
+> Okay, I'm deleting set_pte_snp, so lets set force_snooping
 
-Does this mean the IOMMU driver should disable ATS when ops-
- >blocked_domain is used? This might not be feasible because ops-
- >blocked_domain might possibly be attached to a PASID of a device, while
-other PASIDs still use ATS for functionality.
-
->   - This only works for IOMMU drivers that will not issue ATS invalidation
->     requests to the device, after it's docked at ops->blocked_domain.
-> Driver should fix itself to align with the aforementioned notes.
-
-My understanding of the requirements for the iommu drivers is: when all
-PASIDs are docked in the blocking DMA state, the IOMMU driver should:
-
-- Flush all outstanding ATS invalidation requests;
-- Stop issuing any further ATS invalidations;
-- Configure the hardware to reject further ATS translation requests.
-
-> 
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> ---
->   include/linux/iommu.h |  12 ++++
->   drivers/iommu/iommu.c | 158 ++++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 170 insertions(+)
-> 
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index 156732807994..a17161b8625a 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -1123,6 +1123,9 @@ void dev_iommu_priv_set(struct device *dev, void *priv);
->   extern struct mutex iommu_probe_device_lock;
->   int iommu_probe_device(struct device *dev);
->   
-> +int iommu_dev_reset_prepare(struct device *dev);
-> +void iommu_dev_reset_done(struct device *dev);
-> +
->   int iommu_device_use_default_domain(struct device *dev);
->   void iommu_device_unuse_default_domain(struct device *dev);
->   
-> @@ -1407,6 +1410,15 @@ static inline int iommu_fwspec_add_ids(struct device *dev, u32 *ids,
->   	return -ENODEV;
->   }
->   
-> +static inline int iommu_dev_reset_prepare(struct device *dev)
-> +{
-> +	return 0;
-> +}
-> +
-> +static inline void iommu_dev_reset_done(struct device *dev)
-> +{
-> +}
-> +
->   static inline struct iommu_fwspec *dev_iommu_fwspec_get(struct device *dev)
->   {
->   	return NULL;
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index bd3deedcd2de..14bfeaa9ac29 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -71,12 +71,29 @@ struct group_device {
->   	struct list_head list;
->   	struct device *dev;
->   	char *name;
-> +	bool pending_reset : 1;
->   };
->   
->   /* Iterate over each struct group_device in a struct iommu_group */
->   #define for_each_group_device(group, pos) \
->   	list_for_each_entry(pos, &(group)->devices, list)
->   
-> +/* Callers must hold the dev->iommu_group->mutex */
-> +static struct group_device *device_to_group_device(struct device *dev)
-> +{
-> +	struct iommu_group *group = dev->iommu_group;
-> +	struct group_device *gdev;
-> +
-> +	lockdep_assert_held(&group->mutex);
-> +
-> +	/* gdev must be in the list */
-> +	for_each_group_device(group, gdev) {
-> +		if (gdev->dev == dev)
-> +			break;
-> +	}
-> +	return gdev;
-> +}
-> +
->   struct iommu_group_attribute {
->   	struct attribute attr;
->   	ssize_t (*show)(struct iommu_group *group, char *buf);
-> @@ -2155,8 +2172,17 @@ int iommu_deferred_attach(struct device *dev, struct iommu_domain *domain)
->   	int ret = 0;
->   
->   	mutex_lock(&group->mutex);
-> +
-> +	/*
-> +	 * There is a racy attach while the device is resetting. Defer it until
-> +	 * the iommu_dev_reset_done() that attaches the device to group->domain.
-> +	 */
-> +	if (device_to_group_device(dev)->pending_reset)
-> +		goto unlock;
-> +
->   	if (dev->iommu && dev->iommu->attach_deferred)
->   		ret = __iommu_attach_device(domain, dev);
-> +unlock:
->   	mutex_unlock(&group->mutex);
->   	return ret;
->   }
-> @@ -2295,6 +2321,13 @@ static int __iommu_device_set_domain(struct iommu_group *group,
->   		dev->iommu->attach_deferred = 0;
->   	}
->   
-> +	/*
-> +	 * There is a racy attach while the device is resetting. Defer it until
-> +	 * the iommu_dev_reset_done() that attaches the device to group->domain.
-> +	 */
-> +	if (gdev->pending_reset)
-> +		return 0;
-> +
->   	ret = __iommu_attach_device(new_domain, dev);
->   	if (ret) {
->   		/*
-> @@ -3378,6 +3411,13 @@ static int __iommu_set_group_pasid(struct iommu_domain *domain,
->   	int ret;
->   
->   	for_each_group_device(group, device) {
-> +		/*
-> +		 * There is a racy attach while the device is resetting. Defer
-> +		 * it until the iommu_dev_reset_done() that attaches the device
-> +		 * to group->domain.
-> +		 */
-> +		if (device->pending_reset)
-> +			continue;
->   		if (device->dev->iommu->max_pasids > 0) {
->   			ret = domain->ops->set_dev_pasid(domain, device->dev,
->   							 pasid, old);
-> @@ -3799,6 +3839,124 @@ int iommu_replace_group_handle(struct iommu_group *group,
->   }
->   EXPORT_SYMBOL_NS_GPL(iommu_replace_group_handle, "IOMMUFD_INTERNAL");
->   
-> +/*
-> + * Caller must use iommu_dev_reset_prepare() and iommu_dev_reset_done() together
-> + * before/after the core-level reset routine, to unclear the pending_reset flag
-> + * and to put the iommu_group reference.
-> + *
-> + * These two functions are designed to be used by PCI reset functions that would
-> + * not invoke any racy iommu_release_device() since PCI sysfs node gets removed
-> + * before it notifies with a BUS_NOTIFY_REMOVED_DEVICE. When using them in other
-> + * case, callers must ensure there will be no racy iommu_release_device() call,
-> + * which otherwise would UAF the dev->iommu_group pointer.
-> + */
-
-Use kdoc style comments.
-
-> +int iommu_dev_reset_prepare(struct device *dev)
-> +{
-> +	const struct iommu_ops *ops;
-> +	struct iommu_group *group;
-> +	unsigned long pasid;
-> +	void *entry;
-> +	int ret = 0;
-> +
-> +	if (!dev_has_iommu(dev))
-> +		return 0;
-> +
-> +	if (dev->iommu->require_direct) {
-> +		dev_warn(
-> +			dev,
-> +			"Firmware has requested this device have a 1:1 IOMMU mapping, rejecting configuring the device without a 1:1 mapping. Contact your platform vendor.\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	/* group will be put in iommu_dev_reset_done() */
-> +	group = iommu_group_get(dev);
-> +
-> +	/* Caller ensures no racy iommu_release_device(), so this won't UAF */
-> +	mutex_lock(&group->mutex);
-> +
-> +	ops = dev_iommu_ops(dev);
-> +	if (!ops->blocked_domain) {
-> +		dev_warn(dev,
-> +			 "IOMMU driver doesn't support IOMMU_DOMAIN_BLOCKED\n");
-> +		ret = -EOPNOTSUPP;
-> +		goto unlock;
-> +	}
-> +
-> +	device_to_group_device(dev)->pending_reset = true;
-> +
-> +	/* Device is already attached to the blocked_domain. Nothing to do */
-> +	if (group->domain->type == IOMMU_DOMAIN_BLOCKED)
-> +		goto unlock;
-
-"group->domain->type == IOMMU_DOMAIN_BLOCKED" means that IOMMU_NO_PASID
-is docked in the blocking DMA state, but it doesn't imply that other
-PASIDs are also in the blocking DMA state. Therefore, we might still
-need the following lines to handle other PASIDs.
-
-On the other hand, perhaps we should use "group->domain == ops-
- >blocked_domain" instead of "group->domain->type ==
-IOMMU_DOMAIN_BLOCKED" to make the code consistent with the commit
-message.
-
-> +
-> +	/* Dock RID domain to blocked_domain while retaining group->domain */
-> +	ret = __iommu_attach_device(ops->blocked_domain, dev);
-> +	if (ret)
-> +		goto unlock;
-> +
-> +	/* Dock PASID domains to blocked_domain while retaining pasid_array */
-> +	xa_lock(&group->pasid_array);
-> +	xa_for_each_start(&group->pasid_array, pasid, entry, 1)
-> +		iommu_remove_dev_pasid(dev, pasid,
-> +				       pasid_array_entry_to_domain(entry));
-> +	xa_unlock(&group->pasid_array);
-> +
-> +unlock:
-> +	mutex_unlock(&group->mutex);
-> +	if (ret)
-> +		iommu_group_put(group);
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(iommu_dev_reset_prepare);
-> +
-> +/*
-> + * Pair with a previous iommu_dev_reset_prepare() that was successfully returned
-> + *
-> + * Note that, although unlikely, there is a risk that re-attaching domains might
-> + * fail due to some unexpected happening like OOM.
-> + */
-> +void iommu_dev_reset_done(struct device *dev)
-> +{
-> +	struct iommu_group *group = dev->iommu_group;
-> +	const struct iommu_ops *ops;
-> +	struct group_device *gdev;
-> +	unsigned long pasid;
-> +	void *entry;
-> +
-> +	if (!dev_has_iommu(dev))
-> +		return;
-> +
-> +	mutex_lock(&group->mutex);
-> +
-> +	gdev = device_to_group_device(dev);
-> +
-> +	ops = dev_iommu_ops(dev);
-> +	/* iommu_dev_reset_prepare() was not successfully called */
-> +	if (WARN_ON(!ops->blocked_domain || !gdev->pending_reset)) {
-> +		mutex_unlock(&group->mutex);
-> +		return;
-> +	}
-> +
-> +	if (group->domain->type == IOMMU_DOMAIN_BLOCKED)
-> +		goto done;
-
-The same here?
-
-> +
-> +	/* Shift RID domain back to group->domain */
-> +	WARN_ON(__iommu_attach_device(group->domain, dev));
-> +
-> +	/* Shift PASID domains back to domains retained in pasid_array */
-> +	xa_lock(&group->pasid_array);
-> +	xa_for_each_start(&group->pasid_array, pasid, entry, 1)
-> +		WARN_ON(__iommu_set_group_pasid(
-> +			pasid_array_entry_to_domain(entry), group, pasid,
-> +			ops->blocked_domain));
-> +	xa_unlock(&group->pasid_array);
-> +
-> +done:
-> +	gdev->pending_reset = false;
-> +	mutex_unlock(&group->mutex);
-> +	iommu_group_put(group);
-> +}
-> +EXPORT_SYMBOL_GPL(iommu_dev_reset_done);
-> +
->   #if IS_ENABLED(CONFIG_IRQ_MSI_IOMMU)
->   /**
->    * iommu_dma_prepare_msi() - Map the MSI page in the IOMMU domain
+Hi Jason, do you have a new version of this series? I'm planning to
+queue this for the next merge cycle.
 
 Thanks,
 baolu
