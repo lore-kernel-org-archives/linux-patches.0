@@ -1,212 +1,163 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2065.outbound.protection.outlook.com [40.107.101.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04E626C39F
-	for <patches@lists.linux.dev>; Tue,  1 Jul 2025 21:48:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751406515; cv=none; b=tb7W56+PtZAsybVzTYtjSsXaM50yyqeIxYvWTQnAw+HfVu/zH3ZPaskXRBkf0FR4QCNrWQ18MRL783eXOf6vE7iAnjPt8n3GJdhgBhnWMOVb+V8p9WF+8iTRzudXjkMpuKLVKLZpYATW9T8v/QX2oix3nW9X09QZkzDdZAV6R78=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751406515; c=relaxed/simple;
-	bh=OSRDk5TdQFt3lomuSKxjTcjaQzZeDdR93yopsXKx6cM=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EXGIJ8uhNghZaUxksC346PC+HIgsGroA3ybw4jrG8Rsp4tEcrzR4D50+0aFcuN2tGYotaRdhLur/NjQ44kgRZ4JcCCKveA9WwFzze98ziJcVj74382A+EYJ/H5NaWMX7rTtO0oScjAT6hPnCHbfuaSfkng9529ES3VGu81oJPS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=eaCrrVFB; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF2B2FEE2C;
+	Tue,  1 Jul 2025 22:08:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.101.65
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751407695; cv=fail; b=fZyjzDpcPr2dMNQgnMWZ1dVt4C5v8ZtPBOMYyG32+PnGNR/n7Bbsw9Y8qDHO0FoheVY+jlfuzHVPEnWPdPnuDXTZFg5sjjtinr27Gv6qYpb4fs4fA0rCwjaNaSwBr9KjD0qjK6pdOX7DfEh+3bp2i/dKxSCMDL/sQfu6MseC60s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751407695; c=relaxed/simple;
+	bh=HsEsqmBhzKJ/aVBWUw1d7VhY0dIDEu1kA3Dsnp9Tjk0=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P9STrsd7Y9bvxnHPklfhA75XSNRKHidPZmV1jYBHl20kU9Vn+W8PHpYf0ZvKXwlJkbV2r/2cwt07R2ox/6F12kGv1NQ+ECELu1tFg/6DsDTKt3qzEAPe9HYJOIAMIVheapNWgGOon1g29qdLAwAvUxm0wYiwNYIZbRbk+98VYO0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=CRg9lAyx; arc=fail smtp.client-ip=40.107.101.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="eaCrrVFB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1751406512;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=m3bhp6Ha5yTO+37DaP3ZCEydHITdONPpySvqaXLBtLM=;
-	b=eaCrrVFBNMzhprTlVGPaz/d8Gyx771lZiR8AuLQ2WLMHiERkFQ35shXUOHzE9qTMLIWQD5
-	CgsVFAxc+Rv6HG+Rea77nDs1zn0KxpM0LU+WhEO53BqJp0kU1UVqiEfvqs+SeGkfPNRmaX
-	DZWwIhKaxiHiHAnro8TJq4CUMMVkrGw=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-n-MEsagiOlykGND2sLbvng-1; Tue, 01 Jul 2025 17:48:31 -0400
-X-MC-Unique: n-MEsagiOlykGND2sLbvng-1
-X-Mimecast-MFC-AGG-ID: n-MEsagiOlykGND2sLbvng_1751406511
-Received: by mail-io1-f69.google.com with SMTP id ca18e2360f4ac-875fff4d6afso127084239f.1
-        for <patches@lists.linux.dev>; Tue, 01 Jul 2025 14:48:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751406511; x=1752011311;
-        h=content-transfer-encoding:mime-version:organization:references
-         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=m3bhp6Ha5yTO+37DaP3ZCEydHITdONPpySvqaXLBtLM=;
-        b=QxRQ3PTbr1IgHZyvtiA6KW9XNdDElb7RPj9NZ6c41tJPIjNmrjZCzsFGsXjb0DuCRn
-         uPq1fucIa+c1Zl89dtZgge1xvm/b23YqKIRnq6cWr+fPTYx90ht4cgyHbjy0X2/m8672
-         2Sms95ii/aaveb13JbRWqYWNBuAOF6r4A1o5b4cngl7oNvb+8+XQ15xCz7rXdxRJ9r9b
-         waMXIRFYW4RDnARdlxaeG5CZ708kuXEVUxowi4om3rgxd/e3VysnNNUcfYe1efpM5b7b
-         SAPStvjUPjP6MRju4+zGtH0388S3hojZkkZEyLmO4xi0jEYzIPOV2gNmFXo4E3it50SW
-         g8wQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWArF+jnPyw51ilJ6FV01jcKnCc4QYEU3VRBmDEAgJjV0W5GwC5Np6l0gG3K9ArHWYBikm/NEVj@lists.linux.dev
-X-Gm-Message-State: AOJu0YzssfehYRb4vHJZO7KzZFsNt8ffm0y+rzyqQaXdjYoe935yMUK6
-	bpugOdaJdLuSWEYZwcCcSi45r3LVPF1fLkdxqF/kyUK3gSB/QKmahc0KZnqK/ZplhJODSctZuyt
-	rdyzjolE1A8Wm/xiFtLvP3X++sGf4lHPHqgozjQQQ14ywFN6d1J1qNk5F6CM=
-X-Gm-Gg: ASbGnctKX9KnBeogZ9jkjqrNzzt7aw7IqI6kr/Xx0Jd2H1nAf5NKpKAtq4l+OIIYkfW
-	adEmOkDjLW5YgNArjA7V5rF1SFIdMFiKx0RhBmkjpoLRdwvlhccHRWqZdVIc5WEt9WRiQ1fU2h9
-	i6ykaaivCXABGKObgXqAkvNgkxug6f2R4yetP8m0SEEDCrF+ta2I5o0ua2AsgTqa4sgL15ujwWi
-	Sf4rPGTS0GlhQRoID4jpiV4fyOrrBxM2EQMad1+Qaz6dAhvxCJA/tSqYMFXt0fUSy8eM14jRL3f
-	H6ru5Zn9Ra9KV+ilB6KL3oU17w==
-X-Received: by 2002:a05:6602:6c09:b0:873:13c6:f365 with SMTP id ca18e2360f4ac-876c6ac4208mr28277239f.5.1751406510604;
-        Tue, 01 Jul 2025 14:48:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHmrWyfpBmHZi2y801SAhlkWgQate/8F0oECz8JtWF6uLas5x68iNoKkuktF30C0qldXS88Pg==
-X-Received: by 2002:a05:6602:6c09:b0:873:13c6:f365 with SMTP id ca18e2360f4ac-876c6ac4208mr28276339f.5.1751406510099;
-        Tue, 01 Jul 2025 14:48:30 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-87687a18102sm252006639f.14.2025.07.01.14.48.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 14:48:29 -0700 (PDT)
-Date: Tue, 1 Jul 2025 15:48:26 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev, Joerg Roedel
- <joro@8bytes.org>, linux-pci@vger.kernel.org, Robin Murphy
- <robin.murphy@arm.com>, Will Deacon <will@kernel.org>, Lu Baolu
- <baolu.lu@linux.intel.com>, galshalom@nvidia.com, Joerg Roedel
- <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
- maorg@nvidia.com, patches@lists.linux.dev, tdave@nvidia.com, Tony Zhu
- <tony.zhu@intel.com>
-Subject: Re: [PATCH 00/11] Fix incorrect iommu_groups with PCIe switches
-Message-ID: <20250701154826.75a7aba6.alex.williamson@redhat.com>
-In-Reply-To: <0-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
-References: <0-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
-Organization: Red Hat
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="CRg9lAyx"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jXg1NtooA3KL/l1kTGtL1ZqRD5ugNCKMz6foya6bQQG2xomlJpZFjzYVnUe+dC0PdAhQRpc070F7rdj5/1gIu8kaoiQyGtCcg9wos1geQrs2zg8NdKMg6Lz/noOeYCTUn47ExlQh76vlDMCCVD8NTfega0So9f5YErMUxDqDdxuDuYA4Y4xgxvyYTDDrYKCQkrg8w9jLmacCewGX6Cr8NCIr3VA+EusCS8sIyn+isVh/jdieGBqDkJQg4yIu+KGktZdR7dE0O3LbAry6AfGUcRg9Weo4i1O9uc8mvzYFGJeGsCuhjC83q8FsRgSxBnZrU5WKIeUiT0bppLF/YcC43A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ImdEhMqAVASqHzX+cCrdWNx7bD4yHRFRL4FUliyuIY0=;
+ b=H/Hrjms6REV4y9QMzbvkp3wegE22qeJByrFPE3LrQp32PzcNbRXbJnO+eNWpQdH37LSLX6TR67W2qbnaUuyB1JG0UzRkAV9YnVTlIfAJzlzmqgz8e4l6Z2rtedZCNveOXtoPESxb1boA3wtFcVpsWd/eiAz1/mLjT6iR89dECfuDfA3Ik7qsvjr9LmDStrzg7ylEXjuB3249Mz1saeii/NsnnKkvZDtdQFt1A9i5Y+BDf6lj4OX/QtFD7rLSRG9uzPH4PB1sKyNkOBJrpn0Uz3YnhY+Cnsu848/G5GyDPuJ6zlRS/jeYiDgHAYIt/tPqo+Nmlx48PyNYfD7DKM4gJQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=google.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ImdEhMqAVASqHzX+cCrdWNx7bD4yHRFRL4FUliyuIY0=;
+ b=CRg9lAyxnpUwOpJY3IbyXRQslQtMCbH8+0MYnmq5REC6sBpvXac6YWBlYNR92ekWPluQrmqFQulb0q2GsuYTEw++GqifKODFgzGnTOdB0JbaO8+/NfjQ1tEqMtBWwdbfW+iZJI97NSf/JQmD0GVmZFI33RuIDj+a1HoI6LPK2twAj6s1suzuPUqc6VnxxrksTyQaWxJrr1hjNJh/8IhYVDQ6NGM37voY7J0BUxbvKKuOm9UGlfwVvCVMC2r/u4aONst7K38Tm5MYjWR92Kfzn3MfVJScfaRFC+nkyDofrBrOAwFrKY1Dnz5RasMbb5OEhXqzqevZtp4XMfpTustbDg==
+Received: from CH5PR03CA0007.namprd03.prod.outlook.com (2603:10b6:610:1f1::25)
+ by LV3PR12MB9409.namprd12.prod.outlook.com (2603:10b6:408:21d::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8880.25; Tue, 1 Jul
+ 2025 22:08:08 +0000
+Received: from CH2PEPF00000142.namprd02.prod.outlook.com
+ (2603:10b6:610:1f1:cafe::76) by CH5PR03CA0007.outlook.office365.com
+ (2603:10b6:610:1f1::25) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8901.19 via Frontend Transport; Tue,
+ 1 Jul 2025 22:08:07 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ CH2PEPF00000142.mail.protection.outlook.com (10.167.244.75) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8901.15 via Frontend Transport; Tue, 1 Jul 2025 22:08:07 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 1 Jul 2025
+ 15:07:59 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Tue, 1 Jul 2025 15:07:59 -0700
+Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com
+ (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Tue, 1 Jul 2025 15:07:58 -0700
+Date: Tue, 1 Jul 2025 15:07:57 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Pranjal Shrivastava <praan@google.com>
+CC: <jgg@nvidia.com>, <kevin.tian@intel.com>, <corbet@lwn.net>,
+	<will@kernel.org>, <bagasdotme@gmail.com>, <robin.murphy@arm.com>,
+	<joro@8bytes.org>, <thierry.reding@gmail.com>, <vdumpa@nvidia.com>,
+	<jonathanh@nvidia.com>, <shuah@kernel.org>, <jsnitsel@redhat.com>,
+	<nathan@kernel.org>, <peterz@infradead.org>, <yi.l.liu@intel.com>,
+	<mshavit@google.com>, <zhangzekun11@huawei.com>, <iommu@lists.linux.dev>,
+	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
+	<linux-kselftest@vger.kernel.org>, <patches@lists.linux.dev>,
+	<mochs@nvidia.com>, <alok.a.tiwari@oracle.com>, <vasant.hegde@amd.com>,
+	<dwmw2@infradead.org>, <baolu.lu@linux.intel.com>
+Subject: Re: [PATCH v7 27/28] iommu/tegra241-cmdqv: Add user-space use support
+Message-ID: <aGRcPSwaJkTeUrMx@Asurada-Nvidia>
+References: <cover.1750966133.git.nicolinc@nvidia.com>
+ <539ee2ec112162abdba511574e2205a77b425059.1750966133.git.nicolinc@nvidia.com>
+ <aGQGm1-i4M75b9Qp@google.com>
+ <aGQ6KCI9OZEwHdxS@Asurada-Nvidia>
+ <aGQ_F7Qx3scbbA-J@google.com>
+ <aGRDtYRXFLoT+PrI@Asurada-Nvidia>
+ <aGRIctg4T6cQECx4@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: g6ogc9ia2AoHBnDQFJal4sxEL0L1ZhbW8GEj3fa9fzE_1751406511
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <aGRIctg4T6cQECx4@google.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF00000142:EE_|LV3PR12MB9409:EE_
+X-MS-Office365-Filtering-Correlation-Id: 712baad7-1c79-4388-a217-08ddb8ebc2ab
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|36860700013|1800799024|7416014|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?6ocs7rckttIK6PmTEfsnhxwdOQoNdKm9HIV7g2ip2vaKdGt9JQCj1OghE2qN?=
+ =?us-ascii?Q?wS0k1goXWDCXKMz59UJpSddV4DJNMDSeQ+rrCilCJyZhFs9pSmsfy01LadYM?=
+ =?us-ascii?Q?ZMGx76Wja/x3RGU/a1hArZbK9qvvA5S2LZMuqWPRj4Ma0Q3fw84SszvMzb9O?=
+ =?us-ascii?Q?GAkn0CXQHuXBjgz8IGzN36Y8vMscmY3bRDgH7v1aD5uN/GEsI/Gt4PFX8pHV?=
+ =?us-ascii?Q?+/ejFxJtm6/Aj3pK3kLlodex5NgoM8Qw/l8e3oEggqFjS7fyQZ0p9lFj3ku4?=
+ =?us-ascii?Q?nR3UdkUblgYd0IN8poZ2HQzMYhLDbq8soEgsr8ef94cLfhVYYkR1eePx1n+3?=
+ =?us-ascii?Q?NYI7ieQmhI4Z1JN5xmryysOrl5UI/xm5SqsUoAWJZ32sStK5l1+J1m8HqTlS?=
+ =?us-ascii?Q?VvP7Qua+p364gcUT7SSX+MkpXuzcfnH/YXQarl1NieimoJo/vL2KmuuErhZ9?=
+ =?us-ascii?Q?YHndcHceb5/LFUlQUOhXv+3G8UASnrYR3N7pKfk0t3HNtrrOx8n1ah9XSdKE?=
+ =?us-ascii?Q?3QtHYu0Z8clc/r3HONpp0V8Md/YZtU48jyEM9StCgvH2RTpkk/O6eu8vrkaj?=
+ =?us-ascii?Q?jpRRBRIKZsZ8vPoLEGjjJ/bzuhniKhxbzSy/U9BR3h1/brsn8mlqoVF0E9+M?=
+ =?us-ascii?Q?Ctpa1d0LU3D+AZSY/tk1sWJqHRCC/PFvs1BMK0hn3sY60/j81xDKRps6dsTl?=
+ =?us-ascii?Q?c9GkyfSc8wlJ0L3fxzH3HQeUgcDcSFogoqhBJzlda/oJpGmhKx0YbBRCI5AS?=
+ =?us-ascii?Q?X+SsgltSFcQzlorBYxWLd6C33dJNvvWmdGFO/EBjYzdPvKVvS5zXE4ehU9GY?=
+ =?us-ascii?Q?GCVA3VlpxJhUCwvlLWzIhYiNp5hqxAJJ/ysWdPKa18d3JvMAueeTPs3Xdi36?=
+ =?us-ascii?Q?VhAOY5JWgH6Wndpt0Fxup2YuaBMsGO/iqIKNZ0ibA2nabU85UsTSrOW+1a6E?=
+ =?us-ascii?Q?E0aAt+yoTblnranHZlSOp6R/+qiRhRSZoA5ODqBoYSG4AMPpBpXXvnaH+dj1?=
+ =?us-ascii?Q?ZjXmqEnZV/mzUI0tnvgUu2mLeeWA3bc0lfQR2x16CH/HGSAv4SjDsOZ8PXYn?=
+ =?us-ascii?Q?dZVOkATZiuJ8IGFYgvfOmJbdMzoul7ahgqt9CUHm8c/wEwXpPPgQmk1z3ADP?=
+ =?us-ascii?Q?rfAZ721o3WGzzWph1JA+JpGHWPyeOosBifjvpH/Qna6LEgyWLhTH688y3iPC?=
+ =?us-ascii?Q?U4hbCiyEac+qNhK36/QOOoBjjrGWQNzuyuCdVUfLa9oriqSLiYYeksgDddl2?=
+ =?us-ascii?Q?cERTMlRdvUVY5rLwmcxakj8gEcJWTtoDE0hdq7n0pgoZmgFinff8hNZz0y/P?=
+ =?us-ascii?Q?uSQM3rYajytiaezvn7cuR6jhixDTu2xm9eYUfop6DXkorczzs4cjGl4MJvKR?=
+ =?us-ascii?Q?q1l6wAec6VAtpkZOX9XA5ZQZ4d6xCmaa3tDgoR4O3Bna3PdZIBKaVbhivd5N?=
+ =?us-ascii?Q?xMKfJinzW/F771TJbT7P2Tkygen6LoxBBwU+Oqc8YDNP6MvyvpYBl7WkMkh7?=
+ =?us-ascii?Q?Bep1PqreX4SHN3Wibo1HLBNxOzo4LuJiqO32?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(36860700013)(1800799024)(7416014)(376014);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jul 2025 22:08:07.8188
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 712baad7-1c79-4388-a217-08ddb8ebc2ab
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CH2PEPF00000142.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9409
 
-Testing on some systems here...
+On Tue, Jul 01, 2025 at 08:43:30PM +0000, Pranjal Shrivastava wrote:
+> On Tue, Jul 01, 2025 at 01:23:17PM -0700, Nicolin Chen wrote:
+> > Or perhaps calling them "non-accelerated commands" would be nicer.
+> 
+> Uhh okay, so there'll be a separate driver in the VM issuing invalidation
+> commands directly to the CMDQV thus we don't see any of it's part here?
 
-I have an AMD system:
+That's how it works. VM must run a guest-level VCMDQ driver that
+separates accelerated and non-accelerated commands as it already
+does:
 
-# lspci -tv
--[0000:00]-+-00.0  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Root Complex
-           +-00.2  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge IOMMU
-           +-01.0  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Dummy Host Bridge
-           +-01.1-[01-03]----00.0-[02-03]----00.0-[03]--+-00.0  Advanced Micro Devices, Inc. [AMD/ATI] Navi 10 [Radeon Pro W5700]
-           |                                            +-00.1  Advanced Micro Devices, Inc. [AMD/ATI] Navi 10 HDMI Audio
-           |                                            +-00.2  Advanced Micro Devices, Inc. [AMD/ATI] Device 7316
-           |                                            \-00.3  Advanced Micro Devices, Inc. [AMD/ATI] Navi 10 USB
-           +-01.2-[04]----00.0  Samsung Electronics Co Ltd NVMe SSD Controller SM981/PM981/PM983
-           +-02.0  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Dummy Host Bridge
-           +-02.1-[05]----00.0  Samsung Electronics Co Ltd NVMe SSD Controller PM9C1a (DRAM-less)
-           +-02.2-[06-0b]----00.0-[07-0b]--+-01.0-[08]--+-00.0  MosChip Semiconductor Technology Ltd. MCS9922 PCIe Multi-I/O Controller
-           |                               |            \-00.1  MosChip Semiconductor Technology Ltd. MCS9922 PCIe Multi-I/O Controller
-           |                               +-02.0-[09-0a]--+-00.0  Intel Corporation 82576 Gigabit Network Connection
-           |                               |               \-00.1  Intel Corporation 82576 Gigabit Network Connection
-           |                               \-03.0-[0b]----00.0  Fresco Logic FL1100 USB 3.0 Host Controller
-           +-03.0  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Dummy Host Bridge
-           +-03.1-[0c]----00.0  JMicron Technology Corp. JMB58x AHCI SATA controller
-           +-03.2-[0d]----00.0  Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller
-           +-04.0  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Dummy Host Bridge
-           +-08.0  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Dummy Host Bridge
-           +-08.1-[0e]--+-00.0  Advanced Micro Devices, Inc. [AMD/ATI] Raphael
-           |            +-00.1  Advanced Micro Devices, Inc. [AMD/ATI] Radeon High Definition Audio Controller [Rembrandt/Strix]
-           |            +-00.2  Advanced Micro Devices, Inc. [AMD] Family 19h PSP/CCP
-           |            +-00.3  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge USB 3.1 xHCI
-           |            +-00.4  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge USB 3.1 xHCI
-           |            \-00.6  Advanced Micro Devices, Inc. [AMD] Family 17h/19h/1ah HD Audio Controller
-           +-08.3-[0f]----00.0  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge USB 2.0 xHCI
-           +-14.0  Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller
-           +-14.3  Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge
-           +-18.0  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 0
-           +-18.1  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 1
-           +-18.2  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 2
-           +-18.3  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 3
-           +-18.4  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 4
-           +-18.5  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 5
-           +-18.6  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 6
-           \-18.7  Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Data Fabric; Function 7
+    accelerated commands => VCMDQ (HW)
+non-accelerated commands => SMMU CMDQ (SW) =iommufd=> SMMU CMDQ (HW)
 
-Notably, each case where there's a dummy host bridge followed by some
-number of additional functions (ie. 01.0, 02.0, 03.0, 08.0), that dummy
-host bridge is tainting the function isolation and merging the group.
-For instance each of these were previously a separate group and are now
-combined into one group.
-
-# lspci -vvvs 00:01. [manually edited]
-00:01.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge Dummy Host Bridge
-
-00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge GPP Bridge (prog-if 00 [Normal decode])
-	Capabilities: [58] Express (v2) Root Port (Slot+), IntMsgNum 0
-	Capabilities: [2a0 v1] Access Control Services
-		ACSCap:	SrcValid+ TransBlk+ ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans+
-		ACSCtl:	SrcValid+ TransBlk- ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans-
-
-00:01.2 PCI bridge: Advanced Micro Devices, Inc. [AMD] Raphael/Granite Ridge GPP Bridge (prog-if 00 [Normal decode])
-	Capabilities: [58] Express (v2) Root Port (Slot+), IntMsgNum 0
-	Capabilities: [2a0 v1] Access Control Services
-		ACSCap:	SrcValid+ TransBlk+ ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans+
-		ACSCtl:	SrcValid+ TransBlk- ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans-
-
-The endpoints result in equivalent grouping, but this is a case where I
-don't understand how we have non-isolated functions yet isolated
-subordinate buses.
-
-An Alder Lake system shows something similar:
-
-# lspci -tv
--[0000:00]-+-00.0  Intel Corporation 12th Gen Core Processor Host Bridge
-           +-01.0-[01-02]----00.0-[02]--
-           +-02.0  Intel Corporation Alder Lake-S GT1 [UHD Graphics 770]
-           +-04.0  Intel Corporation Alder Lake Innovation Platform Framework Processor Participant
-           +-06.0-[03]----00.0  Sandisk Corp SanDisk Ultra 3D / WD PC SN530, IX SN530, Blue SN550 NVMe SSD (DRAM-less)
-           +-08.0  Intel Corporation 12th Gen Core Processor Gaussian & Neural Accelerator
-           +-14.0  Intel Corporation Raptor Lake USB 3.2 Gen 2x2 (20 Gb/s) XHCI Host Controller
-           +-14.2  Intel Corporation Raptor Lake-S PCH Shared SRAM
-           +-15.0  Intel Corporation Raptor Lake Serial IO I2C Host Controller #0
-           +-15.1  Intel Corporation Raptor Lake Serial IO I2C Host Controller #1
-           +-15.2  Intel Corporation Raptor Lake Serial IO I2C Host Controller #2
-           +-15.3  Intel Corporation Device 7a4f
-           +-16.0  Intel Corporation Raptor Lake CSME HECI #1
-           +-17.0  Intel Corporation Raptor Lake SATA AHCI Controller
-           +-19.0  Intel Corporation Device 7a7c
-           +-19.1  Intel Corporation Device 7a7d
-           +-1a.0-[04]----00.0  Sandisk Corp SanDisk Ultra 3D / WD PC SN530, IX SN530, Blue SN550 NVMe SSD (DRAM-less)
-           +-1c.0-[05]--
-           +-1c.1-[06]----00.0  Fresco Logic FL1100 USB 3.0 Host Controller
-           +-1c.2-[07]----00.0  Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller
-           +-1c.3-[08-0c]----00.0-[09-0c]--+-01.0-[0a]----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller
-           |                               +-02.0-[0b]--
-           |                               \-03.0-[0c]----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller
-           +-1f.0  Intel Corporation Device 7a06
-           +-1f.3  Intel Corporation Raptor Lake High Definition Audio Controller
-           +-1f.4  Intel Corporation Raptor Lake-S PCH SMBus Controller
-           \-1f.5  Intel Corporation Raptor Lake SPI (flash) Controller
-
-00:1c. are all grouped together.  Here 1c.0 does not report ACS, but
-the other root ports do:
-
-# lspci -vvvs 1c. | grep -e ^0 -e "Access Control Services"
-00:1c.0 PCI bridge: Intel Corporation Raptor Lake PCI Express Root Port #1 (rev 11) (prog-if 00 [Normal decode])
-00:1c.1 PCI bridge: Intel Corporation Device 7a39 (rev 11) (prog-if 00 [Normal decode])
-	Capabilities: [220 v1] Access Control Services
-00:1c.2 PCI bridge: Intel Corporation Raptor Point-S PCH - PCI Express Root Port 3 (rev 11) (prog-if 00 [Normal decode])
-	Capabilities: [220 v1] Access Control Services
-00:1c.3 PCI bridge: Intel Corporation Raptor Lake PCI Express Root Port #4 (rev 11) (prog-if 00 [Normal decode])
-	Capabilities: [220 v1] Access Control Services
-
-So again the group is tainted by a device that cannot generate DMA, the
-endpoint grouping remains equivalent, but isolated buses downstream of
-this non-isolated group doesn't seem to make sense.
-
-I'll try to generate further interesting configs.  Thanks,
-
-Alex
-
+Nicolin
