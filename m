@@ -1,63 +1,63 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FC4274FD4
-	for <patches@lists.linux.dev>; Tue,  1 Jul 2025 12:24:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25EF7FBA1
+	for <patches@lists.linux.dev>; Tue,  1 Jul 2025 12:30:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751372666; cv=none; b=PcjeEyK5r6wpYBw8aU99r/vccMaWTW7Zuu5uxPilnezXuogUQqNNxlYZh4+BAjdHsL3E+vUNAqKrnOvEIbRQVrZjjBKqVfIn0/CqADVJfnIPRClwvH2Z3qIVvhlnb0oEsY3udozg3h6EmmVbN3xCswVheS/Ptjkd3tKCoQGuAQo=
+	t=1751373054; cv=none; b=cg2LhCyDiHVHb9NN74dcRaXqj8AXANq10z9e6Wo3zQzH2tdNfi7Jx0mksXlLomQtMgxr8d5Qkhk46b7s6+AdToOl2zG22v2sRLZ7KsZApfjIqjyQwFn55T8pA1TmoMS/SY5opgGnZFQTTIfPQGqpakTWHR2dKINAxUKMA6kRxhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751372666; c=relaxed/simple;
-	bh=n8ZZkcIMTZ4oqwXL8cuzmbKEBEW4c7SvXxR443L664I=;
+	s=arc-20240116; t=1751373054; c=relaxed/simple;
+	bh=oNWtBTfARcQCwaHYGLs5aIj0PBvFVGGFyKJg1UjJTYM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VLOJSkEIEzL/8fIfvnmXvLC+sD4dNe/OnNcQui0LWKoVy/170fGsI6oGh1oOdnzLWbV3957cf1KMZ3GUPdegkJiIlN72LuDwfGdo8eLfZpZRDyKQNvNeUfPHVYHpvNV60v/k+i96AsirQSOdjmqMJSCMk8TKNqhLzv8VdjKJpHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZD9F6Pk8; arc=none smtp.client-ip=209.85.214.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=KOAYgDIY0gFopnQXTLboc9lt+vg/PBH05ysrcBeepBD9G473x92/fR+oE76m1ykLQy+03OEhIHcwrWgikZhJUYcjuPC8QjHo6v8Fb2UHzRLzbKcw0oPc8KunV/p63YTyvyGH+ITiIgnf2GqUNJHRSm+JIgmT3HMe4FAjjX0ixKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ut2DGaZT; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZD9F6Pk8"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-235e389599fso205305ad.0
-        for <patches@lists.linux.dev>; Tue, 01 Jul 2025 05:24:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ut2DGaZT"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-237f270513bso137265ad.1
+        for <patches@lists.linux.dev>; Tue, 01 Jul 2025 05:30:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1751372663; x=1751977463; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1751373052; x=1751977852; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=K7vYU5IpUGkedTKGsOw7fqDjAvdD4uWcycZwbigztzQ=;
-        b=ZD9F6Pk8QFCZXI2gmxf2+i9cmbFnzJdhx8azZw0r5D7EPFQHkDX0NZwFDAN0+i//Ns
-         TJPEQhBheE71scUAbcMjvpF6DdSN9YiQkcH9/ej+n01HXP9mP9vXhYSVWX0Me4CRCSX4
-         LzYoQt89RM/hW2TAhxKyFYJfoynN3URcAEpvqWgPT3dH/5A+gFYOOgnyznW/kE4/79DH
-         Yd3Q5UD2SPevojz+DOC5XlKlkQgd/RysR+DJ70HzwQvQKV2l3I2MQITvkqYFjbu6sivh
-         h6F+RVihsrGweeTtXRMe5aCFXW+EUtTefsZyU4yAVus5tgiXQycWzqMy/ibNSk+QpG30
-         QScw==
+        bh=5G5J3LAQCME/FJ/aVZc/0ZWGlfQeuCDS4lOhsOKRFGs=;
+        b=ut2DGaZT3spqNmLBJVr67zr8eCE3rifsBlubb4gznfvl+6mvkEI1kJzioCvjHdcswJ
+         OMXWJJfOlRr0iKekfMuV/c1NyBE1KKyniY8NUtH/Cf9CU9Wo5r/d4Bf4ePSUMj0vb1Dh
+         XaCC/tLQI9weDbkuZs9+5KnGEEB+VmAW3qe72mZfwpazRtVan8CJFBkhkI/O8UvW2Y4h
+         sP/m3ijIdT9ObbKoDE/e982d+ULjET6B4m/5DvVm04MbcrE6W255Xhn1H/oVADua7AK+
+         Nl+uvsnzOUftHdR4H3uK3cILni8diWZfytiP9iyZmJOo3DesrNxT2pI2q8dNNQmM4iUH
+         mZKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751372663; x=1751977463;
+        d=1e100.net; s=20230601; t=1751373052; x=1751977852;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=K7vYU5IpUGkedTKGsOw7fqDjAvdD4uWcycZwbigztzQ=;
-        b=QNIirRnaw0IlIyOt4fG4vavKXL6gBna2H7MQ5Db/IbLygOK1N3UN4zArADMg508Zg6
-         4lQlZO86Giw4NV8DpoSHKDKIClWI2NRolhqR/cUYkusfl49Sx+CiHq6LyWH/TjXnRD3X
-         j7PBBkhjMEluGznSdEuKnttGr1S81nyIYdYyMqat+n5jF4H7AuxqkJT4IKEUYAlxvdxJ
-         dNcM8MdS7NZ5RLj0IFFlydRcfKJQT6SHRqiKyYEV7jXAuqM9nHXq+Lsm10Spr+FNJQB2
-         78Lvqyl6YoTJSMMTYhpQ58gfBJaD/81MfiZwDYSGJ63i5jQqy+MLG6rEMEmMPuLTPSDn
-         zlSw==
-X-Forwarded-Encrypted: i=1; AJvYcCVIlUB/N3G4d0tllidTh7t3rQQx94umozPuw9Y9onX+SYzuvQUHrdJLZNpAkVtdl/9uV7wXP/sb@lists.linux.dev
-X-Gm-Message-State: AOJu0YytEfW6WOspU/pSK77KXIrjBAuHZnoIT/Adzy2BURMF1kZUi9I+
-	r2DH22LVnR23IRSNc2RbtVelQ/H+boEaPyfOq+utkv9Zqhk8mYXsL4jztrNG0AzGjQ==
-X-Gm-Gg: ASbGncvzLZULf+GjkpUIxsgTQjnUTNXBstBjWI5oRoxXR9bRRdkYlZaO1UlWYV0mkT7
-	6bTS/seiyk+e7awJOLceapUA+OTS6fBW84e797B2JyP4Cigbq/DZGk1q5BzcSgtz/cFUOkEx2uT
-	w2erS4WbdKFKiYkMau0l9xQ7C5vG39uYrbdqd6StnFHAR7FntoOxway+Puhjn3I1MxeEH4QlIf6
-	WbiN2dtm91V3CmCg4EJ2XLb36o6tbWNXy4nxHNYTrG+FeA/TQ8ko5TdqwELA0HmFMtL13aKwWkl
-	wfEeq+Ch8Hc/ZVQEYMdiGhULk0osFAfagsFQjzoBpeENsw25MA0+Q+AniBseHSBL1aKD5H9+3sL
-	F4/ClKkntddK6oWy2ABRx
-X-Google-Smtp-Source: AGHT+IH4JQ2MdaL4TQHuSEKzEVU+2Jy2z1P1pCYvzTGLNdSVTsldrYDv/hBtBO4QCMRhsGfAvLyPYg==
-X-Received: by 2002:a17:902:e54e:b0:235:e1e4:efc4 with SMTP id d9443c01a7336-23c60105131mr2451315ad.14.1751372662789;
-        Tue, 01 Jul 2025 05:24:22 -0700 (PDT)
+        bh=5G5J3LAQCME/FJ/aVZc/0ZWGlfQeuCDS4lOhsOKRFGs=;
+        b=pc/KEtAVkMPCyIWQTLeLRL3e83VxzSWd26oKgaHLEalndj5oGoAYMshRFzvv8O/JIK
+         ftjP/cri1p+dym+xTXU8B8siOE07Qkb7zf0KH8BFqXBrVH0kiN+OVc163M5C8hZXCRs/
+         4QXdo5me8Z9+nstjeA7/KEscq/CJhlDlv9smEjiFWLC/RZnBQOenUWY3RrMm7C9lrmGg
+         GTKX2fR1hNY+Z6S6IC4WpGjPZsibKSbPcX1gJVUq43ldz2m0NalpwxnggTOafllsuz+5
+         cz7ZHbwFe6Ht4qdAsHAaQUPKG/rljaTqJ9VBuDntxnZetBY3I6VbbQeIFFYxlg6hp7wj
+         3beA==
+X-Forwarded-Encrypted: i=1; AJvYcCUBMEsMBuc90rCwxsKPPSN+vwCxU2SsWzxbdT+O5kM8dVq+ndz97BH3r4L37O+vp1Zp7R4RHZgn@lists.linux.dev
+X-Gm-Message-State: AOJu0YxWo5333G3EeXA4mtPP8iJSVfzYBudIrYd+88deW6mbY8UFpJQ6
+	SN1Hc81NE8OW2jWLfpr+jsahnqLRR0WHhlqyEjUjw2lF97ZnLO8/WvkkaPzEgJxpag==
+X-Gm-Gg: ASbGncuZoMkrB9+B73caodTisQTv8GXheft/OzL9lsw9NdRifTVbHpMfS4Ab3I6CYA8
+	/iFoFoqT8oD9GGU4HXF09z7tZNMIa2RkWdGRFxdwtL4aLRY6LVNH9/Q38ZTfvP6B8rkzW48kz8Z
+	BdZ/oaGv92Q1RjNWP4Ys5KLPbQV3Rmv63n8VNGJ3RoLHI+BR2wmnvhEVza1GZcll9I5j1XBtYjH
+	02zffkbHPjlA3/WG7skbgQseQwq/pnGLlsFNYDiQGX4nWhMnX9GK1Xgy3leSfbMBno6ailAAXnt
+	BlCGBjWsmg7c2JqSmHSAwL8x3Du54PWRFnW2wywmOYKB8XdoakIFfjmTgHQWNDXWEJ6bkWM671V
+	XfPJU+tA8B1qGMOLoqhT8
+X-Google-Smtp-Source: AGHT+IGYS+ky70yGGbfgecWTu3WMn+4HvkqtKADO91HI0LqScQKuEGTHZn38lZjYqivfuwsxMW7HzQ==
+X-Received: by 2002:a17:902:ce89:b0:235:f10a:ad0 with SMTP id d9443c01a7336-23c601a7645mr2227915ad.28.1751373051941;
+        Tue, 01 Jul 2025 05:30:51 -0700 (PDT)
 Received: from google.com (232.98.126.34.bc.googleusercontent.com. [34.126.98.232])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-315f5437b40sm15776317a91.37.2025.07.01.05.24.16
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b34e31da818sm9319671a12.61.2025.07.01.05.30.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 05:24:21 -0700 (PDT)
-Date: Tue, 1 Jul 2025 12:24:07 +0000
+        Tue, 01 Jul 2025 05:30:51 -0700 (PDT)
+Date: Tue, 1 Jul 2025 12:30:42 +0000
 From: Pranjal Shrivastava <praan@google.com>
 To: Nicolin Chen <nicolinc@nvidia.com>
 Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
@@ -71,11 +71,10 @@ Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
 	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
 	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com,
 	dwmw2@infradead.org, baolu.lu@linux.intel.com
-Subject: Re: [PATCH v7 23/28] iommu/arm-smmu-v3-iommufd: Add hw_info to
- impl_ops
-Message-ID: <aGPTZ3uHRIIRMF4c@google.com>
+Subject: Re: [PATCH v7 02/28] iommufd/viommu: Explicitly define vdev->virt_id
+Message-ID: <aGPU8qgfsa816eQ1@google.com>
 References: <cover.1750966133.git.nicolinc@nvidia.com>
- <205f234c05d6b09de52124a72a6978b74d832cfb.1750966133.git.nicolinc@nvidia.com>
+ <cc7a558bfcdce5c2ea0d53b0c9c382f944df33ce.1750966133.git.nicolinc@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -84,64 +83,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <205f234c05d6b09de52124a72a6978b74d832cfb.1750966133.git.nicolinc@nvidia.com>
+In-Reply-To: <cc7a558bfcdce5c2ea0d53b0c9c382f944df33ce.1750966133.git.nicolinc@nvidia.com>
 
-On Thu, Jun 26, 2025 at 12:34:54PM -0700, Nicolin Chen wrote:
-> This will be used by Tegra241 CMDQV implementation to report a non-default
-> HW info data.
+On Thu, Jun 26, 2025 at 12:34:33PM -0700, Nicolin Chen wrote:
+> The "id" is too genernal to get its meaning easily. Rename it explicitly to
+> "virt_id" and update the kdocs for readability. No functional changes.
 > 
-> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 > Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 > ---
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h         | 7 +++++++
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c | 8 ++++++--
->  2 files changed, 13 insertions(+), 2 deletions(-)
+>  drivers/iommu/iommufd/iommufd_private.h | 7 ++++++-
+>  drivers/iommu/iommufd/driver.c          | 2 +-
+>  drivers/iommu/iommufd/viommu.c          | 4 ++--
+>  3 files changed, 9 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> index 07589350b2a1..836d5556008e 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> @@ -721,6 +721,13 @@ struct arm_smmu_impl_ops {
->  	int (*init_structures)(struct arm_smmu_device *smmu);
->  	struct arm_smmu_cmdq *(*get_secondary_cmdq)(
->  		struct arm_smmu_device *smmu, struct arm_smmu_cmdq_ent *ent);
+> diff --git a/drivers/iommu/iommufd/iommufd_private.h b/drivers/iommu/iommufd/iommufd_private.h
+> index 4f5e8cd99c96..09f895638f68 100644
+> --- a/drivers/iommu/iommufd/iommufd_private.h
+> +++ b/drivers/iommu/iommufd/iommufd_private.h
+> @@ -634,7 +634,12 @@ struct iommufd_vdevice {
+>  	struct iommufd_object obj;
+>  	struct iommufd_viommu *viommu;
+>  	struct device *dev;
+> -	u64 id; /* per-vIOMMU virtual ID */
+> +
 > +	/*
-> +	 * An implementation should define its own type other than the default
-> +	 * IOMMU_HW_INFO_TYPE_ARM_SMMUV3. And it must validate the input @type
-> +	 * to return its own structure.
+> +	 * Virtual device ID per vIOMMU, e.g. vSID of ARM SMMUv3, vDeviceID of
+> +	 * AMD IOMMU, and vRID of a nested Intel VT-d to a Context Table
 > +	 */
-> +	void *(*hw_info)(struct arm_smmu_device *smmu, u32 *length,
-> +			 enum iommu_hw_info_type *type);
-
-Thanks for adding the comment, this looks good.
-
->  	const size_t vsmmu_size;
->  	const enum iommu_viommu_type vsmmu_type;
->  	int (*vsmmu_init)(struct arm_vsmmu *vsmmu,
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-> index 2ab1c6cf4aac..1cf9646e776f 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-> @@ -11,13 +11,17 @@ void *arm_smmu_hw_info(struct device *dev, u32 *length,
->  		       enum iommu_hw_info_type *type)
->  {
->  	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
-> +	const struct arm_smmu_impl_ops *impl_ops = master->smmu->impl_ops;
->  	struct iommu_hw_info_arm_smmuv3 *info;
->  	u32 __iomem *base_idr;
->  	unsigned int i;
+> +	u64 virt_id;
+>  };
 >  
->  	if (*type != IOMMU_HW_INFO_TYPE_DEFAULT &&
-> -	    *type != IOMMU_HW_INFO_TYPE_ARM_SMMUV3)
-> -		return ERR_PTR(-EOPNOTSUPP);
-> +	    *type != IOMMU_HW_INFO_TYPE_ARM_SMMUV3) {
-> +		if (!impl_ops || !impl_ops->hw_info)
-> +			return ERR_PTR(-EOPNOTSUPP);
-> +		return impl_ops->hw_info(master->smmu, length, type);
-> +	}
+>  #ifdef CONFIG_IOMMUFD_TEST
+> diff --git a/drivers/iommu/iommufd/driver.c b/drivers/iommu/iommufd/driver.c
+> index 2fee399a148e..887719016804 100644
+> --- a/drivers/iommu/iommufd/driver.c
+> +++ b/drivers/iommu/iommufd/driver.c
+> @@ -30,7 +30,7 @@ int iommufd_viommu_get_vdev_id(struct iommufd_viommu *viommu,
+>  	xa_lock(&viommu->vdevs);
+>  	xa_for_each(&viommu->vdevs, index, vdev) {
+>  		if (vdev->dev == dev) {
+> -			*vdev_id = vdev->id;
+> +			*vdev_id = vdev->virt_id;
+>  			rc = 0;
+>  			break;
+>  		}
+> diff --git a/drivers/iommu/iommufd/viommu.c b/drivers/iommu/iommufd/viommu.c
+> index 25ac08fbb52a..bc8796e6684e 100644
+> --- a/drivers/iommu/iommufd/viommu.c
+> +++ b/drivers/iommu/iommufd/viommu.c
+> @@ -111,7 +111,7 @@ void iommufd_vdevice_destroy(struct iommufd_object *obj)
+>  	struct iommufd_viommu *viommu = vdev->viommu;
 >  
->  	info = kzalloc(sizeof(*info), GFP_KERNEL);
->  	if (!info)
+>  	/* xa_cmpxchg is okay to fail if alloc failed xa_cmpxchg previously */
+> -	xa_cmpxchg(&viommu->vdevs, vdev->id, vdev, NULL, GFP_KERNEL);
+> +	xa_cmpxchg(&viommu->vdevs, vdev->virt_id, vdev, NULL, GFP_KERNEL);
+>  	refcount_dec(&viommu->obj.users);
+>  	put_device(vdev->dev);
+>  }
+> @@ -150,7 +150,7 @@ int iommufd_vdevice_alloc_ioctl(struct iommufd_ucmd *ucmd)
+>  		goto out_put_idev;
+>  	}
+>  
+> -	vdev->id = virt_id;
+> +	vdev->virt_id = virt_id;
+>  	vdev->dev = idev->dev;
+>  	get_device(idev->dev);
+>  	vdev->viommu = viommu;
 
 Reviewed-by: Pranjal Shrivastava <praan@google.com>
 
