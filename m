@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CF82EE96B;
-	Thu,  3 Jul 2025 14:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BF92E7F1A;
+	Thu,  3 Jul 2025 14:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554790; cv=none; b=PDNSQPWDRlC5yFyBdw99pbfcLNzrUgr8c/NTYKoX4E/dF7sS2sRRdiQmH3/WVYYUr6/S5iZ1FsQ/lMPcjoBaiC/iDnmXXg9wx1hFnf/ZrapJKu6g0s/LrJGqvc5OSo03FN47GhReo2W/71bsMribHfSAntdYAoKSIoENdTr0x/M=
+	t=1751554793; cv=none; b=JUcaIC531JuhwIHTy+T/OitFTxpDVQNEZq64oTwewlrU3U8DNMaH5ZvgBUGXiQH3qo+LUUnkpZACADCAFfT100WZ9ZO0J4uE0vCAPGnoMX0HJhCsu86IIM43MOdFhOTFARvmBPnsO8KmqZYnUdCsbJG8OSZa1jEBY+n6Lco1uM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554790; c=relaxed/simple;
-	bh=UaChHF/UcbesRsdNxf22DRLEEhaqQxN8mtKtJrb/6ro=;
+	s=arc-20240116; t=1751554793; c=relaxed/simple;
+	bh=F9+VP7ENzMkxnUGuDZ1MQEg98U+HovtH6sMdaHSk/uM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rw+VcwPmEjrgco52DcUAO+SHXcVkiA3eXHtDSjWI/jwS7rMliY7tBTgY0B3LcmCBdtict0m7gyRtTHJfBjSmcJteLTXM7u5X02a+aWn3vciOmzk25ZeiYXfmDA4Cd6HmznHa7j0wkwCNeVkPKTRQClZppcD/vncEQvl3PLNceL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9ELKPRW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rCSrloWiY4nNhUb7Aeq68EvHumZPqKn0AL3fB6zn5J0N2Oe9WFY+/Jdy4vhPVDVba5rdEYcKcQrpgbvilM/XzuJaI5YJHjFhmOcG0xc8tmr1JO5VXn1S1wFZMfXCbJ4sWmMZAdoF8P9hQpf/K9AoVFDjMEE5hsHRK7GLYAYXZ/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FyJYq9eh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9ELKPRW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D92C4CEE3;
-	Thu,  3 Jul 2025 14:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FyJYq9eh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FFFC4CEE3;
+	Thu,  3 Jul 2025 14:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554789;
-	bh=UaChHF/UcbesRsdNxf22DRLEEhaqQxN8mtKtJrb/6ro=;
+	s=korg; t=1751554792;
+	bh=F9+VP7ENzMkxnUGuDZ1MQEg98U+HovtH6sMdaHSk/uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F9ELKPRWVFLLUCCSWwwsj+sKcEVBl4kCEC9XBqG1Ufa3jbj0yMEysAz9Q2guv5zDk
-	 vhF/Fh7/PWesSPW9QGqUn+3gGrObKg35crlqjqIBbDSbTSVdXJmgFAiF+qEp2otoTn
-	 zKaY/S6QA07eq22pHNPCCfFTbLUKweAog4B30KIg=
+	b=FyJYq9ehlThaJmaBQ48lLO4ND7arhTzwA5OVdMRqNXfKdgdgr9AklJEvD316v0G6R
+	 5ZKv9LHTnbs24artWpDlQyMbYEqz2ootJlNUJNwWtx0e1YZlw1NdNnsJHoIx0Z92wV
+	 y8/CaxGCARn4vCNkzqyiB5qJtkP+5eZ9O0BK+n6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiyu Zhang <zhiyuzhang999@gmail.com>,
-	Longxing Li <coregee2000@gmail.com>,
-	David Sterba <dsterba@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 079/263] btrfs: handle csum tree error with rescue=ibadroots correctly
-Date: Thu,  3 Jul 2025 16:39:59 +0200
-Message-ID: <20250703144007.466691943@linuxfoundation.org>
+Subject: [PATCH 6.15 080/263] drm/i915/gem: Allow EXEC_CAPTURE on recoverable contexts on DG1
+Date: Thu,  3 Jul 2025 16:40:00 +0200
+Message-ID: <20250703144007.506696063@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -47,121 +49,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 547e836661554dcfa15c212a3821664e85b4191a ]
+[ Upstream commit 25eeba495b2fc16037647c1a51bcdf6fc157af5c ]
 
-[BUG]
-There is syzbot based reproducer that can crash the kernel, with the
-following call trace: (With some debug output added)
+The intel-media-driver is currently broken on DG1 because
+it uses EXEC_CAPTURE with recovarable contexts. Relax the
+check to allow that.
 
- DEBUG: rescue=ibadroots parsed
- BTRFS: device fsid 14d642db-7b15-43e4-81e6-4b8fac6a25f8 devid 1 transid 8 /dev/loop0 (7:0) scanned by repro (1010)
- BTRFS info (device loop0): first mount of filesystem 14d642db-7b15-43e4-81e6-4b8fac6a25f8
- BTRFS info (device loop0): using blake2b (blake2b-256-generic) checksum algorithm
- BTRFS info (device loop0): using free-space-tree
- BTRFS warning (device loop0): checksum verify failed on logical 5312512 mirror 1 wanted 0xb043382657aede36608fd3386d6b001692ff406164733d94e2d9a180412c6003 found 0x810ceb2bacb7f0f9eb2bf3b2b15c02af867cb35ad450898169f3b1f0bd818651 level 0
- DEBUG: read tree root path failed for tree csum, ret=-5
- BTRFS warning (device loop0): checksum verify failed on logical 5328896 mirror 1 wanted 0x51be4e8b303da58e6340226815b70e3a93592dac3f30dd510c7517454de8567a found 0x51be4e8b303da58e634022a315b70e3a93592dac3f30dd510c7517454de8567a level 0
- BTRFS warning (device loop0): checksum verify failed on logical 5292032 mirror 1 wanted 0x1924ccd683be9efc2fa98582ef58760e3848e9043db8649ee382681e220cdee4 found 0x0cb6184f6e8799d9f8cb335dccd1d1832da1071d12290dab3b85b587ecacca6e level 0
- process 'repro' launched './file2' with NULL argv: empty string added
- DEBUG: no csum root, idatacsums=0 ibadroots=134217728
- Oops: general protection fault, probably for non-canonical address 0xdffffc0000000041: 0000 [#1] SMP KASAN NOPTI
- KASAN: null-ptr-deref in range [0x0000000000000208-0x000000000000020f]
- CPU: 5 UID: 0 PID: 1010 Comm: repro Tainted: G           OE       6.15.0-custom+ #249 PREEMPT(full)
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
- RIP: 0010:btrfs_lookup_csum+0x93/0x3d0 [btrfs]
- Call Trace:
-  <TASK>
-  btrfs_lookup_bio_sums+0x47a/0xdf0 [btrfs]
-  btrfs_submit_bbio+0x43e/0x1a80 [btrfs]
-  submit_one_bio+0xde/0x160 [btrfs]
-  btrfs_readahead+0x498/0x6a0 [btrfs]
-  read_pages+0x1c3/0xb20
-  page_cache_ra_order+0x4b5/0xc20
-  filemap_get_pages+0x2d3/0x19e0
-  filemap_read+0x314/0xde0
-  __kernel_read+0x35b/0x900
-  bprm_execve+0x62e/0x1140
-  do_execveat_common.isra.0+0x3fc/0x520
-  __x64_sys_execveat+0xdc/0x130
-  do_syscall_64+0x54/0x1d0
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
- ---[ end trace 0000000000000000 ]---
+I've also submitted a fix for the intel-media-driver:
+https://github.com/intel/media-driver/pull/1920
 
-[CAUSE]
-Firstly the fs has a corrupted csum tree root, thus to mount the fs we
-have to go "ro,rescue=ibadroots" mount option.
-
-Normally with that mount option, a bad csum tree root should set
-BTRFS_FS_STATE_NO_DATA_CSUMS flag, so that any future data read will
-ignore csum search.
-
-But in this particular case, we have the following call trace that
-caused NULL csum root, but not setting BTRFS_FS_STATE_NO_DATA_CSUMS:
-
-load_global_roots_objectid():
-
-		ret = btrfs_search_slot();
-		/* Succeeded */
-		btrfs_item_key_to_cpu()
-		found = true;
-		/* We found the root item for csum tree. */
-		root = read_tree_root_path();
-		if (IS_ERR(root)) {
-			if (!btrfs_test_opt(fs_info, IGNOREBADROOTS))
-			/*
-			 * Since we have rescue=ibadroots mount option,
-			 * @ret is still 0.
-			 */
-			break;
-	if (!found || ret) {
-		/* @found is true, @ret is 0, error handling for csum
-		 * tree is skipped.
-		 */
-	}
-
-This means we completely skipped to set BTRFS_FS_STATE_NO_DATA_CSUMS if
-the csum tree is corrupted, which results unexpected later csum lookup.
-
-[FIX]
-If read_tree_root_path() failed, always populate @ret to the error
-number.
-
-As at the end of the function, we need @ret to determine if we need to
-do the extra error handling for csum tree.
-
-Fixes: abed4aaae4f7 ("btrfs: track the csum, extent, and free space trees in a rb tree")
-Reported-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
-Reported-by: Longxing Li <coregee2000@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org # v6.0+
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Testcase: igt/gem_exec_capture/capture-invisible
+Fixes: 71b1669ea9bd ("drm/i915/uapi: tweak error capture on recoverable contexts")
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250411144313.11660-2-ville.syrjala@linux.intel.com
+(cherry picked from commit d6e020819612a4a06207af858e0978be4d3e3140)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Stable-dep-of: ed5915cfce2a ("Revert "drm/i915/gem: Allow EXEC_CAPTURE on recoverable contexts on DG1"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 87501762d81fb..321feb99c1797 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2164,8 +2164,7 @@ static int load_global_roots_objectid(struct btrfs_root *tree_root,
- 		found = true;
- 		root = read_tree_root_path(tree_root, path, &key);
- 		if (IS_ERR(root)) {
--			if (!btrfs_test_opt(fs_info, IGNOREBADROOTS))
--				ret = PTR_ERR(root);
-+			ret = PTR_ERR(root);
- 			break;
- 		}
- 		set_bit(BTRFS_ROOT_TRACK_DIRTY, &root->state);
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+index 7796c4119ef5e..1974a300b24a1 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+@@ -2014,7 +2014,7 @@ static int eb_capture_stage(struct i915_execbuffer *eb)
+ 			continue;
+ 
+ 		if (i915_gem_context_is_recoverable(eb->gem_context) &&
+-		    (IS_DGFX(eb->i915) || GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 0)))
++		    GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 10))
+ 			return -EINVAL;
+ 
+ 		for_each_batch_create_order(eb, j) {
 -- 
 2.39.5
 
