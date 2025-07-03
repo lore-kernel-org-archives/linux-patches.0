@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE0D15442C;
-	Thu,  3 Jul 2025 15:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3232D6622;
+	Thu,  3 Jul 2025 15:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555677; cv=none; b=kXksMLHSuFnJlEKggrJxPx+3B987qP1f+jGs+YshJNxWAZT/m2+tISUde9akT5IBvjqErMd/ECnKdDt7c9d9euZ2HY47mNVLpFtb5r0748dzeJr+nYOVw7ecC4l9VoA7t9Yn4AaWfocI/KgS5empD5zzbbG3CMEOzUGWXzBswuY=
+	t=1751555679; cv=none; b=rreiNwVdPB6pvncDTYP94n1b37Q/7rggcfjVjymMG0zyzIGRvzhfyvArO4tptQi6DYNQFs1v/TCCogR3F96id2AUSn19CHr12X5QsEuN6FSsPODXKpScsxV3uHYa3m/e/t3rpLLdVwzuJX6bGamKvb8IJA2WqhzmlDMI9mP1ikg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555677; c=relaxed/simple;
-	bh=6szEVfnwAaOaLRxgp8Ty4Vk8t75dyK8o3lkeyKQL7Z0=;
+	s=arc-20240116; t=1751555679; c=relaxed/simple;
+	bh=kAOwhzWgcb2zH08QDws2u6PaE5ShFqSbp/aZwgZMCz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OooM/pbuKh+PVC77k05P/03OVdBmK7j6bQt6enK2zzaZcBP3jTogiTYaYFK+BO+xCRrPOZUUfn37S4K8IJcO99GvR05RfZJjB6opKFN6NtmJiZOSN15v032xHMpOsMV8/tqGb+JFZ/lWIKWltDPktmGR/aix3HkZbhE4yhe2Tm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDFVONUd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OlvOllcPukKyWWz240SbWHhM0AyWsiy8xbZOEqJUT+wdLX/7fpwFJXM3SbGnMzHYOeuVSukDyPcSnxseukyzGSmgmJ5vZbCSs+I2AY+H4I+diPEfWEVvNMeCTRXqjPvX453hELi7R2OvXIJ1m4Iay3+OpoLX2BaC5pv//YVl8KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjEAPlrc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDFVONUd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB87C4CEE3;
-	Thu,  3 Jul 2025 15:14:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjEAPlrc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB582C4CEE3;
+	Thu,  3 Jul 2025 15:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555676;
-	bh=6szEVfnwAaOaLRxgp8Ty4Vk8t75dyK8o3lkeyKQL7Z0=;
+	s=korg; t=1751555679;
+	bh=kAOwhzWgcb2zH08QDws2u6PaE5ShFqSbp/aZwgZMCz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nDFVONUdlssg6kvqf4V3AQGR0lxDpV8YYE+tU01GxDFGavS0RrmfIwLHpmvq1JwDg
-	 5QW7Z9sOB/0/95ln9JB9kG3+o+3+eazro/OE3Ifo4q6v9+HtgJwitZucIjRIpc7BO1
-	 rIYG0zKe8LBcxcLDb7K/Bl9qpwcdqwEg95ynATHs=
+	b=DjEAPlrc65V+uLyBMVlhLGC4RmaRONVHC5V93nEqZyubLUVfwWOdYf3NwaiwEEzt1
+	 Ls4evPLmpTnOtaA2wtPXql/0P45KP8zT4ORNGjXOlxn7N0K1FqT36wkzkOeYgrCcIE
+	 tVCMi+X/g/eM7GYEm/9zSm/i5bPkGXwPfWyHf5Rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adin Scannell <amscanne@meta.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/139] libbpf: Fix possible use-after-free for externs
-Date: Thu,  3 Jul 2025 16:42:29 +0200
-Message-ID: <20250703143944.520343578@linuxfoundation.org>
+Subject: [PATCH 6.6 087/139] net: enetc: Correct endianness handling in _enetc_rd_reg64
+Date: Thu,  3 Jul 2025 16:42:30 +0200
+Message-ID: <20250703143944.563607898@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -51,110 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adin Scannell <amscanne@meta.com>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit fa6f092cc0a02d0fcee37e9e8172eda372a03d33 ]
+[ Upstream commit 7b515f35a911fdc31fbde6531828dcd6ae9803d3 ]
 
-The `name` field in `obj->externs` points into the BTF data at initial
-open time. However, some functions may invalidate this after opening and
-before loading (e.g. `bpf_map__set_value_size`), which results in
-pointers into freed memory and undefined behavior.
+enetc_hw.h provides two versions of _enetc_rd_reg64.
+One which simply calls ioread64() when available.
+And another that composes the 64-bit result from ioread32() calls.
 
-The simplest solution is to simply `strdup` these strings, similar to
-the `essent_name`, and free them at the same time.
+In the second case the code appears to assume that each ioread32() call
+returns a little-endian value. However both the shift and logical or
+used to compose the return value would not work correctly on big endian
+systems if this were the case. Moreover, this is inconsistent with the
+first case where the return value of ioread64() is assumed to be in host
+byte order.
 
-In order to test this path, the `global_map_resize` BPF selftest is
-modified slightly to ensure the presence of an extern, which causes this
-test to fail prior to the fix. Given there isn't an obvious API or error
-to test against, I opted to add this to the existing test as an aspect
-of the resizing feature rather than duplicate the test.
+It appears that the correct approach is for both versions to treat the
+return value of ioread*() functions as being in host byte order. And
+this patch corrects the ioread32()-based version to do so.
 
-Fixes: 9d0a23313b1a ("libbpf: Add capability for resizing datasec maps")
-Signed-off-by: Adin Scannell <amscanne@meta.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250625050215.2777374-1-amscanne@meta.com
+This is a bug but would only manifest on big endian systems
+that make use of the ioread32-based implementation of _enetc_rd_reg64.
+While all in-tree users of this driver are little endian and
+make use of the ioread64-based implementation of _enetc_rd_reg64.
+Thus, no in-tree user of this driver is affected by this bug.
+
+Flagged by Sparse.
+Compile tested only.
+
+Fixes: 16eb4c85c964 ("enetc: Add ethtool statistics")
+Closes: https://lore.kernel.org/all/AM9PR04MB850500D3FC24FE23DEFCEA158879A@AM9PR04MB8505.eurprd04.prod.outlook.com/
+Signed-off-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20250624-etnetc-le-v1-1-a73a95d96e4e@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c                           | 10 +++++++---
- .../selftests/bpf/progs/test_global_map_resize.c | 16 ++++++++++++++++
- 2 files changed, 23 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc_hw.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 5dc2e55553358..aefbfa2df6207 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -554,7 +554,7 @@ struct extern_desc {
- 	int sym_idx;
- 	int btf_id;
- 	int sec_btf_id;
--	const char *name;
-+	char *name;
- 	char *essent_name;
- 	bool is_set;
- 	bool is_weak;
-@@ -3822,7 +3822,9 @@ static int bpf_object__collect_externs(struct bpf_object *obj)
- 			return ext->btf_id;
- 		}
- 		t = btf__type_by_id(obj->btf, ext->btf_id);
--		ext->name = btf__name_by_offset(obj->btf, t->name_off);
-+		ext->name = strdup(btf__name_by_offset(obj->btf, t->name_off));
-+		if (!ext->name)
-+			return -ENOMEM;
- 		ext->sym_idx = i;
- 		ext->is_weak = ELF64_ST_BIND(sym->st_info) == STB_WEAK;
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_hw.h b/drivers/net/ethernet/freescale/enetc/enetc_hw.h
+index 1619943fb2637..4e8881b479e48 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_hw.h
++++ b/drivers/net/ethernet/freescale/enetc/enetc_hw.h
+@@ -485,7 +485,7 @@ static inline u64 _enetc_rd_reg64(void __iomem *reg)
+ 		tmp = ioread32(reg + 4);
+ 	} while (high != tmp);
  
-@@ -8457,8 +8459,10 @@ void bpf_object__close(struct bpf_object *obj)
- 	zfree(&obj->btf_custom_path);
- 	zfree(&obj->kconfig);
- 
--	for (i = 0; i < obj->nr_extern; i++)
-+	for (i = 0; i < obj->nr_extern; i++) {
-+		zfree(&obj->externs[i].name);
- 		zfree(&obj->externs[i].essent_name);
-+	}
- 
- 	zfree(&obj->externs);
- 	obj->nr_extern = 0;
-diff --git a/tools/testing/selftests/bpf/progs/test_global_map_resize.c b/tools/testing/selftests/bpf/progs/test_global_map_resize.c
-index 1fbb73d3e5d5a..9be0e32cfeeea 100644
---- a/tools/testing/selftests/bpf/progs/test_global_map_resize.c
-+++ b/tools/testing/selftests/bpf/progs/test_global_map_resize.c
-@@ -31,6 +31,16 @@ int my_int_last SEC(".data.array_not_last");
- 
- int percpu_arr[1] SEC(".data.percpu_arr");
- 
-+/* at least one extern is included, to ensure that a specific
-+ * regression is tested whereby resizing resulted in a free-after-use
-+ * bug after type information is invalidated by the resize operation.
-+ *
-+ * There isn't a particularly good API to test for this specific condition,
-+ * but by having externs for the resizing tests it will cover this path.
-+ */
-+extern int LINUX_KERNEL_VERSION __kconfig;
-+long version_sink;
-+
- SEC("tp/syscalls/sys_enter_getpid")
- int bss_array_sum(void *ctx)
- {
-@@ -43,6 +53,9 @@ int bss_array_sum(void *ctx)
- 	for (size_t i = 0; i < bss_array_len; ++i)
- 		sum += array[i];
- 
-+	/* see above; ensure this is not optimized out */
-+	version_sink = LINUX_KERNEL_VERSION;
-+
- 	return 0;
+-	return le64_to_cpu((__le64)high << 32 | low);
++	return (u64)high << 32 | low;
  }
+ #endif
  
-@@ -58,5 +71,8 @@ int data_array_sum(void *ctx)
- 	for (size_t i = 0; i < data_array_len; ++i)
- 		sum += my_array[i];
- 
-+	/* see above; ensure this is not optimized out */
-+	version_sink = LINUX_KERNEL_VERSION;
-+
- 	return 0;
- }
 -- 
 2.39.5
 
