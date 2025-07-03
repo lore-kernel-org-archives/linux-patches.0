@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A1C19F43A;
-	Thu,  3 Jul 2025 14:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D83519F43A;
+	Thu,  3 Jul 2025 14:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554202; cv=none; b=KOBccs3xOHFU7vJEBLg54o6kv8i+ObWpAzlHXNNG7RNNo3U7CIJwUbbJdp1vr6VISGlt3+dbODQhfee4+y2K/tyhroSBpNnJ8onYGYTDnoSdhmJm7eMjIoc6PNKgSfiPJ7DB0Lc2+wmErSgV3B/IdlxQo3ujeH+5UdNg90nVEWg=
+	t=1751554205; cv=none; b=Aw0CfsnxQmbtNeKb8FgEQIT+IdePI+RJseF4iZUOIpQXM/KQvY4xcfr3lf3+EnryRpV63mgFeusBZ+OGM2ZZ85FijY0AZSHCumebKyvb3Tv6cLhlSGNETuEbrH6yoz6qsmuJN6MR6z155pI0zoqg/WacvAOH5AVp33a25NRryTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554202; c=relaxed/simple;
-	bh=OCsOAVy6TpF9mlGGLdIkh/QyQs0yW1znZkLPBfWUyZ4=;
+	s=arc-20240116; t=1751554205; c=relaxed/simple;
+	bh=U1GDE8bY40T2tT9b7uC+tAHtjqbDJK+CIe9SYGUmvN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WwEAAer6afAtm9J+tGCFJ2FClYsL4vh0VK/4ffVkH3rP5XTDD4Vyc9vARvX0AVfxfbmd0h5NVjOGA/B3214iiZW8c8LqwNnTirH2ArM4Wd4g7RZ1PkmCQbYte0+RPg1AmeXMYx1laR9aN9JLUaGZeKJISINYWqU5jcrZlWNk/Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GeolWIDh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UzGCZu/aenAggKGoC6GceIflRCMGPar7+vooltckW6rwLx4L9+J9+iuJVHVGVp3DcJc9477p/3wignfgfVUqh7E3S36pkHyikaplQLSe1s1uEissQg6b0oXRsjS9FkzELPBKV6sSkuFs3K73+jGMa8E4OWd7CizUcb+KHqRLYoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKPInmIa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GeolWIDh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C36CC4CEE3;
-	Thu,  3 Jul 2025 14:50:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKPInmIa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB53C4CEE3;
+	Thu,  3 Jul 2025 14:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554201;
-	bh=OCsOAVy6TpF9mlGGLdIkh/QyQs0yW1znZkLPBfWUyZ4=;
+	s=korg; t=1751554205;
+	bh=U1GDE8bY40T2tT9b7uC+tAHtjqbDJK+CIe9SYGUmvN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GeolWIDhNtpY4J1vNr1qKMZmGUdsukZOYgKUKuQ7tHpSvkSwF+wnlpL91jr2kHxTB
-	 5z9Z/F++ioQOir2E0ypkFoxPQBRSiCg2dBq5UQcwkZUfYBEWPx/M8JeWZOZduQ5PcP
-	 znkgwkqcR+e7r5TJ9d656TVDgtaGITFtCis+keFM=
+	b=qKPInmIazoXxRCjEkKThOLTcvZ+bSLQKmHTnRvTzDxgRpFTFDH0cVP7Y3mR0+yU3R
+	 0nwGUqXejBSBCpdUfJIfbpMbbKv+Oy3F/CL05dty6TfiAfjZx8ftwE5NuP/tLghfWR
+	 NRZxfqWKEFBUFJMY2HqVR/s32CpDaeVKg9l+9viE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Marcus Seyfarth <m.seyfarth@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/218] drm/amd: Adjust output for discovery error handling
-Date: Thu,  3 Jul 2025 16:41:00 +0200
-Message-ID: <20250703144000.418183441@linuxfoundation.org>
+Subject: [PATCH 6.12 113/218] drm/i915: fix build error some more
+Date: Thu,  3 Jul 2025 16:41:01 +0200
+Message-ID: <20250703144000.457496089@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -53,99 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 73eab78721f7b85216f1ca8c7b732f13213b5b32 ]
+[ Upstream commit d02b2103a08b6d6908f1d3d8e8783d3f342555ac ]
 
-commit 017fbb6690c2 ("drm/amdgpu/discovery: check ip_discovery fw file
-available") added support for reading an amdgpu IP discovery bin file
-for some specific products. If it's not found then it will fallback to
-hardcoded values. However if it's not found there is also a lot of noise
-about missing files and errors.
+An earlier patch fixed a build failure with clang, but I still see the
+same problem with some configurations using gcc:
 
-Adjust the error handling to decrease most messages to DEBUG and to show
-users less about missing files.
+drivers/gpu/drm/i915/i915_pmu.c: In function 'config_mask':
+include/linux/compiler_types.h:568:38: error: call to '__compiletime_assert_462' declared with attribute error: BUILD_BUG_ON failed: bit > BITS_PER_TYPE(typeof_member(struct i915_pmu, enable)) - 1
+drivers/gpu/drm/i915/i915_pmu.c:116:3: note: in expansion of macro 'BUILD_BUG_ON'
+  116 |   BUILD_BUG_ON(bit >
 
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reported-by: Marcus Seyfarth <m.seyfarth@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4312
-Tested-by: Marcus Seyfarth <m.seyfarth@gmail.com>
-Fixes: 017fbb6690c2 ("drm/amdgpu/discovery: check ip_discovery fw file available")
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://lore.kernel.org/r/20250617183052.1692059-1-superm1@kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 49f1f9f6c3c9febf8ba93f94a8d9c8d03e1ea0a1)
+As I understand it, the problem is that the function is not always fully
+inlined, but the __builtin_constant_p() can still evaluate the argument
+as being constant.
+
+Marking it as __always_inline so far works for me in all configurations.
+
+Fixes: a7137b1825b5 ("drm/i915/pmu: Fix build error with GCOV and AutoFDO enabled")
+Fixes: a644fde77ff7 ("drm/i915/pmu: Change bitmask of enabled events to u32")
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20250620111824.3395007-1-arnd@kernel.org
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit ef69f9dd1cd7301cdf04ba326ed28152a3affcf6)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 28 +++++++++----------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/i915/i915_pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-index 8929478a8f45c..34d41e3ce3474 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-@@ -301,10 +301,12 @@ static int amdgpu_discovery_read_binary_from_file(struct amdgpu_device *adev,
- 	const struct firmware *fw;
- 	int r;
+diff --git a/drivers/gpu/drm/i915/i915_pmu.c b/drivers/gpu/drm/i915/i915_pmu.c
+index c43223916a1b1..5cc302ad13e16 100644
+--- a/drivers/gpu/drm/i915/i915_pmu.c
++++ b/drivers/gpu/drm/i915/i915_pmu.c
+@@ -111,7 +111,7 @@ static unsigned int config_bit(const u64 config)
+ 		return other_bit(config);
+ }
  
--	r = request_firmware(&fw, fw_name, adev->dev);
-+	r = firmware_request_nowarn(&fw, fw_name, adev->dev);
- 	if (r) {
--		dev_err(adev->dev, "can't load firmware \"%s\"\n",
--			fw_name);
-+		if (amdgpu_discovery == 2)
-+			dev_err(adev->dev, "can't load firmware \"%s\"\n", fw_name);
-+		else
-+			drm_info(&adev->ddev, "Optional firmware \"%s\" was not found\n", fw_name);
- 		return r;
- 	}
+-static u32 config_mask(const u64 config)
++static __always_inline u32 config_mask(const u64 config)
+ {
+ 	unsigned int bit = config_bit(config);
  
-@@ -419,16 +421,12 @@ static int amdgpu_discovery_init(struct amdgpu_device *adev)
- 	/* Read from file if it is the preferred option */
- 	fw_name = amdgpu_discovery_get_fw_name(adev);
- 	if (fw_name != NULL) {
--		dev_info(adev->dev, "use ip discovery information from file");
-+		drm_dbg(&adev->ddev, "use ip discovery information from file");
- 		r = amdgpu_discovery_read_binary_from_file(adev, adev->mman.discovery_bin, fw_name);
--
--		if (r) {
--			dev_err(adev->dev, "failed to read ip discovery binary from file\n");
--			r = -EINVAL;
-+		if (r)
- 			goto out;
--		}
--
- 	} else {
-+		drm_dbg(&adev->ddev, "use ip discovery information from memory");
- 		r = amdgpu_discovery_read_binary_from_mem(
- 			adev, adev->mman.discovery_bin);
- 		if (r)
-@@ -1286,10 +1284,8 @@ static int amdgpu_discovery_reg_base_init(struct amdgpu_device *adev)
- 	int r;
- 
- 	r = amdgpu_discovery_init(adev);
--	if (r) {
--		DRM_ERROR("amdgpu_discovery_init failed\n");
-+	if (r)
- 		return r;
--	}
- 
- 	adev->gfx.xcc_mask = 0;
- 	adev->sdma.sdma_mask = 0;
-@@ -2451,8 +2447,10 @@ int amdgpu_discovery_set_ip_blocks(struct amdgpu_device *adev)
- 		break;
- 	default:
- 		r = amdgpu_discovery_reg_base_init(adev);
--		if (r)
--			return -EINVAL;
-+		if (r) {
-+			drm_err(&adev->ddev, "discovery failed: %d\n", r);
-+			return r;
-+		}
- 
- 		amdgpu_discovery_harvest_ip(adev);
- 		amdgpu_discovery_get_gfx_info(adev);
 -- 
 2.39.5
 
