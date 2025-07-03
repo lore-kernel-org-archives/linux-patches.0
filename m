@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D502EFD8B;
-	Thu,  3 Jul 2025 14:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEB42E7BB6;
+	Thu,  3 Jul 2025 14:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554377; cv=none; b=q2Gzv+BnCpvKAFq78pDQHXkiWV5U8PmJrtw2LF8owrZvwitV0QSBwzU478pbCOxEwqJq8DH9fjKThW/wQW5qHzkHZgt3JlHq3wHUydIYJXKm0mW5HA+jHzx/YyOlfPeOLy2YoFn6BsS/JTdVDHH1EqqjP9m20NeDxfzj0qOJSGw=
+	t=1751554381; cv=none; b=KnoaLW5MzPM8CqBC01NyPNtQuAGfZGGJAIUTdqHLDK6RDvZ1Ok62UVr6gkPkwER7DLMhlFfGMiTR5cDjhYw0FPBtCWnvIphVv3iinaigAjWC93BkiiJdUKyUhD6UNXra8dqqNxeFN4WDIvueAw6LG6x+A3rWRGTLE2fe9SExFpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554377; c=relaxed/simple;
-	bh=0722p8CYsgoKBA7ung+bJdvksBWRoFSOSa17msQOkyE=;
+	s=arc-20240116; t=1751554381; c=relaxed/simple;
+	bh=iub757Lc+QtSzu1sli2uj0eGteGpsUNJizkCXnlzUJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAYsFBqiZaB+TVfs0/w6SBwwR05NH6SEeLh2ocIhn8XrZiLIpBIhFYeYf6atVl4X/5IMTWT8PIlEf2SWGyQmxI0Tw2ps0355sWFfM400NvxmN+rt/fIGOxcXfoqctae9W1lV9TNNwCAD/m4x8kA2BIeTvmgmVQUuQF+koQA4qvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmZvnUi+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pE6AqBfwbgDHpGFGifiRv9TqpIrhIGD4bHvC+yXZP44p0PdXnLF1JsKaO9YqYZRTS929PYU6SeJ1GBGEt3D4FNjOCXdAzL5jAo4oCvrnh4E+wE6FcL8pAq8zWEkQ1DPM3ysY0BMClYUVQ+119zo/tqLKZSfNTi9hEIvNsHessBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WThqofSx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmZvnUi+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DE5C4CEE3;
-	Thu,  3 Jul 2025 14:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WThqofSx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4233FC4CEE3;
+	Thu,  3 Jul 2025 14:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554377;
-	bh=0722p8CYsgoKBA7ung+bJdvksBWRoFSOSa17msQOkyE=;
+	s=korg; t=1751554380;
+	bh=iub757Lc+QtSzu1sli2uj0eGteGpsUNJizkCXnlzUJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kmZvnUi+PR0rwwS45Ax6e5MmlM2VajF6zZPOADeCv/ghdi4E7/xSKmo+JRUpPwb+l
-	 99OPt/nLRHEijHyK5HGXKarZjoegnq4fgigP33zGXZChFHU0/+wQEb6JcfIozgxkcB
-	 wqHiMlmTovZd2pZPVZV9kFlDuQuOVQmCZM0PiKNs=
+	b=WThqofSx/epybD8rcezx44ErEPd0msdxDcNdbFBuAQCe91/WqgL1SX76yWqwzbrRa
+	 6F6N7/jsQT8C5OU8NS/wNntkMpuuQuNpqXgxyDKw7lt4i3Ltj0Hqp6HYL5giO6lfGY
+	 9FWWp8tQ1iBZPKfsPbtYyMzfoVoplWUSmPBIxFPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Min <Frank.Min@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 168/218] drm/amdgpu: Add kicker device detection
-Date: Thu,  3 Jul 2025 16:41:56 +0200
-Message-ID: <20250703144002.875838393@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Alex Hung <alex.hung@amd.com>
+Subject: [PATCH 6.12 169/218] drm/amd/display: Check dce_hwseq before dereferencing it
+Date: Thu,  3 Jul 2025 16:41:57 +0200
+Message-ID: <20250703144002.925508974@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -51,77 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Min <Frank.Min@amd.com>
+From: Alex Hung <alex.hung@amd.com>
 
-commit 0bbf5fd86c585d437b75003f11365b324360a5d6 upstream.
+commit b669507b637eb6b1aaecf347f193efccc65d756e upstream.
 
-1. add kicker device list
-2. add kicker device checking helper function
+[WHAT]
 
-Signed-off-by: Frank Min <Frank.Min@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+hws was checked for null earlier in dce110_blank_stream, indicating hws
+can be null, and should be checked whenever it is used.
+
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 09aa2b408f4ab689c3541d22b0968de0392ee406)
+(cherry picked from commit 79db43611ff61280b6de58ce1305e0b2ecf675ad)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c |   17 +++++++++++++++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.h |    6 ++++++
- 2 files changed, 23 insertions(+)
+ drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c
-@@ -30,6 +30,10 @@
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -1217,7 +1217,7 @@ void dce110_blank_stream(struct pipe_ctx
+ 	struct dce_hwseq *hws = link->dc->hwseq;
  
- #define AMDGPU_UCODE_NAME_MAX		(128)
- 
-+static const struct kicker_device kicker_device_list[] = {
-+	{0x744B, 0x00},
-+};
-+
- static void amdgpu_ucode_print_common_hdr(const struct common_firmware_header *hdr)
- {
- 	DRM_DEBUG("size_bytes: %u\n", le32_to_cpu(hdr->size_bytes));
-@@ -1383,6 +1387,19 @@ static const char *amdgpu_ucode_legacy_n
- 	return NULL;
- }
- 
-+bool amdgpu_is_kicker_fw(struct amdgpu_device *adev)
-+{
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(kicker_device_list); i++) {
-+		if (adev->pdev->device == kicker_device_list[i].device &&
-+			adev->pdev->revision == kicker_device_list[i].revision)
-+		return true;
-+	}
-+
-+	return false;
-+}
-+
- void amdgpu_ucode_ip_version_decode(struct amdgpu_device *adev, int block_type, char *ucode_prefix, int len)
- {
- 	int maj, min, rev;
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.h
-@@ -595,6 +595,11 @@ struct amdgpu_firmware {
- 	uint64_t fw_buf_mc;
- };
- 
-+struct kicker_device{
-+	unsigned short device;
-+	u8 revision;
-+};
-+
- void amdgpu_ucode_print_mc_hdr(const struct common_firmware_header *hdr);
- void amdgpu_ucode_print_smc_hdr(const struct common_firmware_header *hdr);
- void amdgpu_ucode_print_imu_hdr(const struct common_firmware_header *hdr);
-@@ -622,5 +627,6 @@ amdgpu_ucode_get_load_type(struct amdgpu
- const char *amdgpu_ucode_name(enum AMDGPU_UCODE_ID ucode_id);
- 
- void amdgpu_ucode_ip_version_decode(struct amdgpu_device *adev, int block_type, char *ucode_prefix, int len);
-+bool amdgpu_is_kicker_fw(struct amdgpu_device *adev);
- 
- #endif
+ 	if (link->local_sink && link->local_sink->sink_signal == SIGNAL_TYPE_EDP) {
+-		if (!link->skip_implict_edp_power_control)
++		if (!link->skip_implict_edp_power_control && hws)
+ 			hws->funcs.edp_backlight_control(link, false);
+ 		link->dc->hwss.set_abm_immediate_disable(pipe_ctx);
+ 	}
 
 
