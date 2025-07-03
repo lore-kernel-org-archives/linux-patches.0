@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E162ED143;
-	Thu,  3 Jul 2025 15:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00AF2ED17E;
+	Thu,  3 Jul 2025 15:11:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555509; cv=none; b=SPcfdsKmIJzDKRJ2pzBIDLwp+Ys665jANCyd28CzX65RgCI8SE2/AnNnw49SdNEkggvpHiuiBqYV79AWcrxLF6TsHMXpAHtNTo2dmfikY9yjqA2WC1BrfrnpQUsc75XXZs0GTis7+nd66Xvp3HYOBDUkVuUjLQ+cJqHSy0vVkuI=
+	t=1751555512; cv=none; b=qov1hIeRzBw2nuaOqhQ0y/XQ/1zPsN0BcxhCKdREyGSvzm8AAkr46/AhCws5f4RsAjgP0cvTvkw3scbxQwFSeG083KM/b0H6/iiQnNJtgRM9WAh5/UnYCfPQy3BL0z8ZMJWU6tHK6CbIRegPDX6m8bKnG1m1HqfTH6nqge0BBt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555509; c=relaxed/simple;
-	bh=Rco2mw0jU5iwLsv6N/BocmTnW1DOQbM4HunamHDOVQg=;
+	s=arc-20240116; t=1751555512; c=relaxed/simple;
+	bh=gqdzqfU5XuZI7pbEYzOt/cebTNXRCNT6IkqIHYi1M2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PrGww1r/dVqWc1/MV9jiPyytOWoc4A+OicKxc4as9nV6QVLeD/LiKvJWv+trZ+l1R6jYokC29Nyc/YUHv0qfMIOt+p0D1HrJBN/yYYFqMG3L1CYvBurYPUIjNwBG9hts85RCwleipXrmpsPkPWkY/aiTEgdPd5b5lqz4RiN1lS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwqWqrWM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shhthAYoqaC7ZnCuPEAf0rCV5K9iX0fXSIz+Lx6knRg9/kAwySu6z9Ao6qkWrRgXAUzIGjE/DTl1KKBZOfdkdZgS4xidtp4VqPCfoXneuO+yng8RK4hNsWruXpzdN0mN17Rrg643zU6bjLXk1iKkfDeAU/NRl5SpehbCRujDfrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idRWf99J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwqWqrWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE169C4CEE3;
-	Thu,  3 Jul 2025 15:11:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idRWf99J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB66C4CEF2;
+	Thu,  3 Jul 2025 15:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555509;
-	bh=Rco2mw0jU5iwLsv6N/BocmTnW1DOQbM4HunamHDOVQg=;
+	s=korg; t=1751555512;
+	bh=gqdzqfU5XuZI7pbEYzOt/cebTNXRCNT6IkqIHYi1M2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JwqWqrWMoi3/goD/i2+r/MbOSwnF2Xh7RsX7cCiW0RdAr3LKoogcjmKX/bMXu7zTK
-	 Z4oQAv4Zk0aElb+TsdJdwoR/YuTjWEbMuesEisiTuUcrLBk1dI/Sngg8I1S9U2yPiP
-	 EvoXZHLxFYH06JbWVkb0lgDWO3rUQI1T19Rejcy4=
+	b=idRWf99JWoySbgCw20FKWpZ1g2Q9tI23kS5gy9/iF8FK0/snxHDW1j8cx8NjdPnEK
+	 InntKD+aMzZYpdz2e5bxHsDHDOf9A/vqTx90w2RMGNdhkolPazU2HIeaeN8WA6ehyl
+	 v2riFiMDx0Kppx0gXseNwWs88yAbQi8SfzVyUMdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/139] mailbox: Not protect module_put with spin_lock_irqsave
-Date: Thu,  3 Jul 2025 16:41:09 +0200
-Message-ID: <20250703143941.429695460@linuxfoundation.org>
+Subject: [PATCH 6.6 007/139] mfd: max14577: Fix wakeup source leaks on device unbind
+Date: Thu,  3 Jul 2025 16:41:10 +0200
+Message-ID: <20250703143941.466615907@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -51,36 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit dddbd233e67e792bb0a3f9694a4707e6be29b2c6 ]
+[ Upstream commit d905d06e64b0eb3da43af6186c132f5282197998 ]
 
-&chan->lock is not supposed to protect 'chan->mbox'.
-And in __mbox_bind_client, try_module_get is also not protected
-by &chan->lock. So move module_put out of the lock protected
-region.
+Device can be unbound, so driver must also release memory for the wakeup
+source.
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250406-mfd-device-wakekup-leak-v1-3-318e14bdba0a@linaro.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/max14577.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
-index f13d705f7861a..cb59b4dbad626 100644
---- a/drivers/mailbox/mailbox.c
-+++ b/drivers/mailbox/mailbox.c
-@@ -500,8 +500,8 @@ void mbox_free_channel(struct mbox_chan *chan)
- 	if (chan->txdone_method == TXDONE_BY_ACK)
- 		chan->txdone_method = TXDONE_BY_POLL;
+diff --git a/drivers/mfd/max14577.c b/drivers/mfd/max14577.c
+index 1f4f5002595c0..17672eeb1732a 100644
+--- a/drivers/mfd/max14577.c
++++ b/drivers/mfd/max14577.c
+@@ -463,6 +463,7 @@ static void max14577_i2c_remove(struct i2c_client *i2c)
+ {
+ 	struct max14577 *max14577 = i2c_get_clientdata(i2c);
  
--	module_put(chan->mbox->dev->driver->owner);
- 	spin_unlock_irqrestore(&chan->lock, flags);
-+	module_put(chan->mbox->dev->driver->owner);
- }
- EXPORT_SYMBOL_GPL(mbox_free_channel);
- 
++	device_init_wakeup(max14577->dev, false);
+ 	mfd_remove_devices(max14577->dev);
+ 	regmap_del_irq_chip(max14577->irq, max14577->irq_data);
+ 	if (max14577->dev_type == MAXIM_DEVICE_TYPE_MAX77836)
 -- 
 2.39.5
 
