@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1174522069F;
-	Thu,  3 Jul 2025 15:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934BD2EACE1;
+	Thu,  3 Jul 2025 15:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555825; cv=none; b=OLoyACMvtv4XTiaMDq6d6XjUReEBSc9H7eAE5P6ffyWWYSqA1Nh2YjP6PezfetmxWU46ejv8gMaPuY0Iq9XTPQSHiCZ2dEaFIz/0Ebrgfpdy2A7zspRu77g5xF2L90D3eQb0NuMB0Q9ZhpqeYmIrg8tq33Ojs78lmyYVGjzVWH0=
+	t=1751555828; cv=none; b=X3WxRgafvjFjmI13DsStHr/45vjY0vBwz6vSZ0K4umYlfT1OrPUW5QBLxiiSToUKcYZgNTVVFKm00/e+2NSEM7LBT7YRf86AFghYgXiNv+VXKTTeoCwropYcRP4Ylphrw4sWyT5YEiqy/3JhQtNuC48ayHrtQSiB7uvP+AMinZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555825; c=relaxed/simple;
-	bh=qCRLFREFGQEaoYo+qoRoyAoOc/SKKLUk9gzDMaLWbgE=;
+	s=arc-20240116; t=1751555828; c=relaxed/simple;
+	bh=kBOBw0ntQlwgVgDQ81CZv1woxoyVYnBPllw/60Af4j8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHWZ7FZ8WHk/2R6KZRjNbruBerxpnvcimGpQcU7QUsCv2xvMyASFLVGpFclgcc2QYs6v1kST+OqSs3EXPC0NrXr79v/iwzxmRc3B5qwRWBGtoq/y/7A45UOq8eRXZHh1FgG1PECSmoAEbT40+qskBNkNiry8EAoLg5P9D9kQbkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HW1LFQ3y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AGnQCJi2C4nMnsOZGqQ38yw8dsrZ5HiCEzskzoGJ1tLVNaAUbQjfotHaupvAVQIHkMAJZIUQ6HeGb0xr8oRKRf2KzIJN/2AmOXzUX57Sn2Zt0Qiewe7Q0tyV8h8YHT7YyGNpAeH+aXp04Xwt9l/7NBNe4ooFlIBgCGnvxfDJ4QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzTr2RLY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HW1LFQ3y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871A5C4CEE3;
-	Thu,  3 Jul 2025 15:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzTr2RLY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB5EC4CEE3;
+	Thu,  3 Jul 2025 15:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555824;
-	bh=qCRLFREFGQEaoYo+qoRoyAoOc/SKKLUk9gzDMaLWbgE=;
+	s=korg; t=1751555828;
+	bh=kBOBw0ntQlwgVgDQ81CZv1woxoyVYnBPllw/60Af4j8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HW1LFQ3yZlxYV7Of+37DSN5/AIGg/K4ZgEhYDnaKyjEYwF+OPRCgfAXHtMYRUV3Aq
-	 v8GFatJN0NBnZVvYjz4SMSIeXY0ICHTXq1gDdbJ7Fp5mLHkSHwlUdk2AftkFl4x2s4
-	 oQrIRo3UbwmkDkpD2e0V8S7MIzs2veprY7x8mEbM=
+	b=YzTr2RLYghYqgwQL8tBp4iJ8FuPBnR9Czkd4L3vTcDTo+fbqh/EjHt9DmXTpt5OZO
+	 jMHxMGleEl/BNMlHA1EmD//OaLeRe6JgAEnRj7WM2p8ZfRVwpPSeJj7S6ztZAaf7gT
+	 yqZE4QS2s/L8SP53vz5XyUN4X3bGzgbIDQLino5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <maharmstone@fb.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 102/139] btrfs: update superblocks device bytes_used when dropping chunk
-Date: Thu,  3 Jul 2025 16:42:45 +0200
-Message-ID: <20250703143945.157991474@linuxfoundation.org>
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Simon Horman <horms@kernel.org>,
+	Mina Almasry <almasrymina@google.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 103/139] net: libwx: fix the creation of page_pool
+Date: Thu,  3 Jul 2025 16:42:46 +0200
+Message-ID: <20250703143945.197228511@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -51,66 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <maharmstone@fb.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-commit ae4477f937569d097ca5dbce92a89ba384b49bc6 upstream.
+commit 85720e04d9af0b77f8092b12a06661a8d459d4a0 upstream.
 
-Each superblock contains a copy of the device item for that device. In a
-transaction which drops a chunk but doesn't create any new ones, we were
-correctly updating the device item in the chunk tree but not copying
-over the new bytes_used value to the superblock.
+'rx_ring->size' means the count of ring descriptors multiplied by the
+size of one descriptor. When increasing the count of ring descriptors,
+it may exceed the limit of pool size.
 
-This can be seen by doing the following:
+[ 864.209610] page_pool_create_percpu() gave up with errno -7
+[ 864.209613] txgbe 0000:11:00.0: Page pool creation failed: -7
 
-  # dd if=/dev/zero of=test bs=4096 count=2621440
-  # mkfs.btrfs test
-  # mount test /root/temp
+Fix to set the pool_size to the count of ring descriptors.
 
-  # cd /root/temp
-  # for i in {00..10}; do dd if=/dev/zero of=$i bs=4096 count=32768; done
-  # sync
-  # rm *
-  # sync
-  # btrfs balance start -dusage=0 .
-  # sync
-
-  # cd
-  # umount /root/temp
-  # btrfs check test
-
-For btrfs-check to detect this, you will also need my patch at
-https://github.com/kdave/btrfs-progs/pull/991.
-
-Change btrfs_remove_dev_extents() so that it adds the devices to the
-fs_info->post_commit_list if they're not there already. This causes
-btrfs_commit_device_sizes() to be called, which updates the bytes_used
-value in the superblock.
-
-Fixes: bbbf7243d62d ("btrfs: combine device update operations during transaction commit")
-CC: stable@vger.kernel.org # 5.10+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <maharmstone@fb.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 850b971110b2 ("net: libwx: Allocate Rx and Tx resources")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/434C72BFB40E350A+20250625023924.21821-1-jiawenwu@trustnetic.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/wangxun/libwx/wx_lib.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -3174,6 +3174,12 @@ int btrfs_remove_chunk(struct btrfs_tran
- 					device->bytes_used - dev_extent_len);
- 			atomic64_add(dev_extent_len, &fs_info->free_chunk_space);
- 			btrfs_clear_space_info_full(fs_info);
-+
-+			if (list_empty(&device->post_commit_list)) {
-+				list_add_tail(&device->post_commit_list,
-+					      &trans->transaction->dev_update_list);
-+			}
-+
- 			mutex_unlock(&fs_info->chunk_mutex);
- 		}
- 	}
+--- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+@@ -2368,7 +2368,7 @@ static int wx_alloc_page_pool(struct wx_
+ 	struct page_pool_params pp_params = {
+ 		.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV,
+ 		.order = 0,
+-		.pool_size = rx_ring->size,
++		.pool_size = rx_ring->count,
+ 		.nid = dev_to_node(rx_ring->dev),
+ 		.dev = rx_ring->dev,
+ 		.dma_dir = DMA_FROM_DEVICE,
 
 
