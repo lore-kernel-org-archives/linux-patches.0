@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C145114B092;
-	Thu,  3 Jul 2025 15:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1000619D8AC;
+	Thu,  3 Jul 2025 15:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556138; cv=none; b=aJYn9bsTzcoNHLka6gJJtqNhA647QZESRPpRGKvcdsvbQ3j+Iiy/R57eS3oMB3xEcqBT8Ysqi+vrNSQLjOWjlvi4oIXsima7lvrpQxvAe5CahRPJ4flfom4lLRggj6b89Ww7MNUuteN6QLpHo05zfviNeai5TFmkl9qrdCmKBP4=
+	t=1751556142; cv=none; b=aROAojebf8cWmt/mRkkHwRJ2sKlBKcso9Cruv+at1zJq/e6UKs+0jxar7N7xt4YvoIjLTg7dTscr308fVkhokF7ihUbxPgmVnCGmMVkBege4tfJTy6KvZaa9vbCJlvEoNC87QQ4gz4REF97WQYlFnt5bX3GkxYvmRPopop0DO7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556138; c=relaxed/simple;
-	bh=w1Wlkk2xp6pfYNJl4AyXLpudE6gEcK5MuJ3245PkaME=;
+	s=arc-20240116; t=1751556142; c=relaxed/simple;
+	bh=KA/ppR5XLxKkfyFu84O94xglI0plwbHbzh584Tg92lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I5LeFuFkQ/RkkwDijFd9xXjS3Enbh1UiC/c/Rac1Zf0C0emBCgYG0HXASmFKpaQ6z5rARiQsMjrA0qbbYTLxna87b7ktWKTHzefC3v1sXeTCIca7paHp3jLr4BeHYiQfnx9rcMaml9aI5KzzLIkuaJL58obww5Fz3Wp8Ke4K8a0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S88lR40Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kLuOyvVtl4cveJxsYTc3doL3Kfg6iv4mWoI5n5jeUkVtHdvSChjeWr8/wAgUn23hgQm3DR7oT4GJSwOHAgng4WZ3ccxxrN948lUI97t1SEqUdH5LMsK1IWoF/slki8LPwIjCnM6oUaadHrMapJNZ3bXQdstklu3cVPAfKuUWIh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UM/HVZ57; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S88lR40Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E76C4CEE3;
-	Thu,  3 Jul 2025 15:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UM/HVZ57"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747EAC4CEE3;
+	Thu,  3 Jul 2025 15:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556138;
-	bh=w1Wlkk2xp6pfYNJl4AyXLpudE6gEcK5MuJ3245PkaME=;
+	s=korg; t=1751556141;
+	bh=KA/ppR5XLxKkfyFu84O94xglI0plwbHbzh584Tg92lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S88lR40Yh9wGFQ6q1Ebi+oTqbmNn1E0FMUM0FeWwAnDfvnlj19SLymxeIrJfnOyMM
-	 XuvvmzqWbEH4f7BfIhEEWuS2sv94alT2tZ+ipXxOuLTRCqpCmrzL56worCi2tEWcTx
-	 uULbbaWaOHkGOL+kxg631SDjpLStsfVzmZE/dk/w=
+	b=UM/HVZ57XpAL7HTugOBFZbRSsUngL7DWX5zU0fDR3OjQpHwcZlQqPV7q21v2/H5Xz
+	 BwQaoi6FUxG9IWXuM9MbupfGN0pqi99yO5lKzzmrz+xXoQ0Bz2YhNIbNw4Uib0hwNF
+	 Hr9FJLfKjXnqhHem59xx/kzSU9rM5WEhX3I5ogoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Tamara <igor.tamara@gmail.com>,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 086/132] ALSA: hda/realtek: Fix built-in mic on ASUS VivoBook X507UAR
-Date: Thu,  3 Jul 2025 16:42:55 +0200
-Message-ID: <20250703143942.780721109@linuxfoundation.org>
+Subject: [PATCH 6.1 087/132] net: selftests: fix TCP packet checksum
+Date: Thu,  3 Jul 2025 16:42:56 +0200
+Message-ID: <20250703143942.818568833@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -52,37 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salvatore Bonaccorso <carnil@debian.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 7ab6847a03229e73bb7c58ca397630f699e79b53 ]
+[ Upstream commit 8d89661a36dd3bb8c9902cff36dc0c144dce3faf ]
 
-The built-in mic of ASUS VivoBook X507UAR is broken recently by the fix
-of the pin sort. The fixup ALC256_FIXUP_ASUS_MIC_NO_PRESENCE is working
-for addressing the regression, too.
+The length in the pseudo header should be the length of the L3 payload
+AKA the L4 header+payload. The selftest code builds the packet from
+the lower layers up, so all the headers are pushed already when it
+constructs L4. We need to subtract the lower layer headers from skb->len.
 
-Fixes: 3b4309546b48 ("ALSA: hda: Fix headset detection failure due to unstable sort")
-Reported-by: Igor Tamara <igor.tamara@gmail.com>
-Closes: https://bugs.debian.org/1108069
-Signed-off-by: Salvatore Bonaccorso <carnil@debian.org>
-Link: https://lore.kernel.org/CADdHDco7_o=4h_epjEAb92Dj-vUz_PoTC2-W9g5ncT2E0NzfeQ@mail.gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 3e1e58d64c3d ("net: add generic selftest support")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Reported-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20250624183258.3377740-1-kuba@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/selftests.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 3cacdbcb0d3ea..13b3ec78010a0 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10154,6 +10154,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1d4e, "ASUS TM420", ALC256_FIXUP_ASUS_HPE),
- 	SND_PCI_QUIRK(0x1043, 0x1da2, "ASUS UP6502ZA/ZD", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1e02, "ASUS UX3402ZA", ALC245_FIXUP_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x1e10, "ASUS VivoBook X507UAR", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1e11, "ASUS Zephyrus G15", ALC289_FIXUP_ASUS_GA502),
- 	SND_PCI_QUIRK(0x1043, 0x1e12, "ASUS UM3402", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1e51, "ASUS Zephyrus M15", ALC294_FIXUP_ASUS_GU502_PINS),
+diff --git a/net/core/selftests.c b/net/core/selftests.c
+index 7af99d07762ea..946e92cca2111 100644
+--- a/net/core/selftests.c
++++ b/net/core/selftests.c
+@@ -160,8 +160,9 @@ static struct sk_buff *net_test_get_skb(struct net_device *ndev,
+ 	skb->csum = 0;
+ 	skb->ip_summed = CHECKSUM_PARTIAL;
+ 	if (attr->tcp) {
+-		thdr->check = ~tcp_v4_check(skb->len, ihdr->saddr,
+-					    ihdr->daddr, 0);
++		int l4len = skb->len - skb_transport_offset(skb);
++
++		thdr->check = ~tcp_v4_check(l4len, ihdr->saddr, ihdr->daddr, 0);
+ 		skb->csum_start = skb_transport_header(skb) - skb->head;
+ 		skb->csum_offset = offsetof(struct tcphdr, check);
+ 	} else {
 -- 
 2.39.5
 
