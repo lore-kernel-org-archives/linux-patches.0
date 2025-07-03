@@ -1,92 +1,63 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bmailout1.hostsharing.net (bmailout1.hostsharing.net [83.223.95.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1632EF29C;
-	Thu,  3 Jul 2025 14:51:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5A92E7BD6
+	for <patches@lists.linux.dev>; Thu,  3 Jul 2025 14:51:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.95.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554283; cv=none; b=Cpui7sTnBkI5BalE7W3zy0seCG9UszzTklpC3PHKRIxzjAajSjhoZzS6oeWASchZsUVLX2Fh4H2J7UzPKXXkriQ82LlJh8WfgM4ps7PiZoTtYXTSyflPv+u5Q/ZT3MDTGbNeaBDYNobTVt49zVUmMmccXuynhXP+njJEO3XpLh0=
+	t=1751554284; cv=none; b=tvTmGV+afqh0v4fwfq0jTiv/oM8CgLlhNC58N37FcI3j62FoP9wZI7tdjxARtWxxAFHM72bAWn7+SNExw65jO9et5CXyQ7wg9fu7f5wMUyqJ7EPEp+5FxjFp0xiHmx3QjyXMNslmdHiDp5es3X1tEfYrVbXido3GROUm4yxf9j4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554283; c=relaxed/simple;
-	bh=ZL5YP6zVy7mjdEZaD0++D44nhG1pQjqbDcFqKAb0JfA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MiBhR/oSx+zfROjNhIY/D1F02WgZ3bpadSpq1Y4zR+kKjWkzu7Sy/pyOIXsN/QEiiIZ/RKjI7NOpETBMJjjDwhshEiy966UyBWoO9pAZSra0L63R43tivO8/gL+TMWpf1mM56JHz45mlEuCAMoxr8wvpw4EFho9VqHnmVhocbaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKBAGNhb; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKBAGNhb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D538C4CEED;
-	Thu,  3 Jul 2025 14:51:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554283;
-	bh=ZL5YP6zVy7mjdEZaD0++D44nhG1pQjqbDcFqKAb0JfA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WKBAGNhbBG2e03AgqsPxiwm42ASAVXNBt39MLvQ6o7swockUyJlmd1pqq9Di3i6ba
-	 Vm71KGGpOLU9VEEtzOfHW5IbEBrhx4GVI1FRbHojfEHqnkTCoWIeDE0and25+9DTep
-	 bZkD5Yr/qE5K9YWEpk9schkUQfV9jjE5dJ050LE8=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Simon Horman <horms@kernel.org>,
-	Mina Almasry <almasrymina@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 138/218] net: libwx: fix the creation of page_pool
-Date: Thu,  3 Jul 2025 16:41:26 +0200
-Message-ID: <20250703144001.648362582@linuxfoundation.org>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
+	s=arc-20240116; t=1751554284; c=relaxed/simple;
+	bh=kye+yW/PGf4a1wyFawF/Y4gnEDEx7bXSNkEIwJYshNM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uwDeIsZ+Lop8ZGamUAoUhrjVP3+4oGO5ttjNjEf9Wb2x0w7DRxzmNDk9US9adpYSbUeIfDCU76xJYJoN5EpMJZvcCi5GdOoCbjh2JKy1jFdqPX28pVuQuMgJmiz0XqthlQRUxgDL7EbfiABi29onmZsozgsQCByx1L5rjZL2WfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=83.223.95.100
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
+Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
+	by bmailout1.hostsharing.net (Postfix) with ESMTPS id 8EFB42C0665E;
+	Thu,  3 Jul 2025 16:51:13 +0200 (CEST)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id 8824C404CCF; Thu,  3 Jul 2025 16:51:13 +0200 (CEST)
+Date: Thu, 3 Jul 2025 16:51:13 +0200
+From: Lukas Wunner <lukas@wunner.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Wilczy??ski <kwilczynski@kernel.org>,
+	Joerg Roedel <jroedel@suse.de>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 020/218] Revert "iommu/amd: Prevent binding other
+ PCI drivers to IOMMU PCI devices"
+Message-ID: <aGaY4Y9trrnMlxO-@wunner.de>
 References: <20250703143955.956569535@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+ <20250703143956.766086832@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250703143956.766086832@linuxfoundation.org>
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+On Thu, Jul 03, 2025 at 04:39:28PM +0200, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> [ Upstream commit 3be5fa236649da6404f1bca1491bf02d4b0d5cce ]
 
-------------------
+This should not be backported to stable kernels.  It does not fix
+any known issues, but conversely it is known to cause an error
+message on boot, for which there's a fix pending here:
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+https://lore.kernel.org/r/b29e7fbfc6d146f947603d0ebaef44cbd2f0d754.1751468802.git.lukas@wunner.de/
 
-commit 85720e04d9af0b77f8092b12a06661a8d459d4a0 upstream.
+Long story short, please unqueue this one. :)
 
-'rx_ring->size' means the count of ring descriptors multiplied by the
-size of one descriptor. When increasing the count of ring descriptors,
-it may exceed the limit of pool size.
+Thanks!
 
-[ 864.209610] page_pool_create_percpu() gave up with errno -7
-[ 864.209613] txgbe 0000:11:00.0: Page pool creation failed: -7
-
-Fix to set the pool_size to the count of ring descriptors.
-
-Fixes: 850b971110b2 ("net: libwx: Allocate Rx and Tx resources")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/434C72BFB40E350A+20250625023924.21821-1-jiawenwu@trustnetic.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/ethernet/wangxun/libwx/wx_lib.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -2425,7 +2425,7 @@ static int wx_alloc_page_pool(struct wx_
- 	struct page_pool_params pp_params = {
- 		.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV,
- 		.order = 0,
--		.pool_size = rx_ring->size,
-+		.pool_size = rx_ring->count,
- 		.nid = dev_to_node(rx_ring->dev),
- 		.dev = rx_ring->dev,
- 		.dma_dir = DMA_FROM_DEVICE,
-
-
+Lukas
