@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF962101DE;
-	Thu,  3 Jul 2025 14:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2090A1C5D46;
+	Thu,  3 Jul 2025 14:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554042; cv=none; b=jIRAT7c5z3fvho3xGUV2cFyzj2A88UUapzMFiPRR4lzqLrXVZbQiCmQEZDhyZY77RXS8YUGBu8JDrxGdeGhfqa+5N/wzs4xAyRNypXSATct/FKA6IKz9ww10U2AbHsaXmQm43LSrVKjA2fQwBJpKi30HcXhGZUIDIQ9U+9KIkDI=
+	t=1751554045; cv=none; b=PtVekElOK0mvOBzUdDLb7zOjuglB/pPZBsRt/LxxPIYA4GTRTHnDimbAumNsfTxyrDE9vDHw5iXly4iCGP9nWl3//nlC4O2Abv/Kle9XMPqL6F1ZUkdxh2oVexG4q8PUYTr/zLBlrtxHilj1ftSQ8MxnZIuzkwAbL1mDfq6+QhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554042; c=relaxed/simple;
-	bh=AhpqKxojo+Tq1JKoCNOScdKBi0zX6RibN8tjlnHV3DY=;
+	s=arc-20240116; t=1751554045; c=relaxed/simple;
+	bh=aI5TN+yeF5Hw0oue197arOiTq/D/GvleE0qTHUqUHYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qNckUVZVZj4LnGqBy/adcz6cT6+P0Ee8RhSAPFAxupuuOKN8m4jLu/mpNW/zbeRSlIoV+IjE1JJxADDx+1VRWUao72lKaaRtcb4L5aJPGVKak/R+fBYV4w9fxGigpzrFqktERHJCua3Akcf8ISdOc2YYgUpn/94Sk9G9KwAEbAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2MPrb7u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pyfZIvPXNsdXqcC2zE1JS724rtkPRznaE7+UW2KdQ2EUcMfbHLPcpot4D/c1CtHuISryp+d2e6Oz9C9rvay9Vv17en4L1atXl2/KgyIDj0J45mCdyqLMb4h0aTkDvj1EGNA9VDGJXbHhuKvA04epHSIRqqoncpffT+MM6jBR7+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZQOERlM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2MPrb7u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A29BC4CEF3;
-	Thu,  3 Jul 2025 14:47:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZQOERlM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B981C4CEE3;
+	Thu,  3 Jul 2025 14:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554041;
-	bh=AhpqKxojo+Tq1JKoCNOScdKBi0zX6RibN8tjlnHV3DY=;
+	s=korg; t=1751554045;
+	bh=aI5TN+yeF5Hw0oue197arOiTq/D/GvleE0qTHUqUHYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2MPrb7uq+618qDNXHJJB0Y+q4la8d719XxR+qErDjiRoO+VrGZmUQ/8CLkLbxFzh
-	 czBeBxH7kEFzcbh0rBhZwhjhTePTOg3iT/NpdVG2t5hj/K2FFDddPjj3YKk/NrgFZS
-	 LjDuyj9vrxYaSTT328cGsbD7dP6B2srMQ43igFNA=
+	b=fZQOERlMaKVzSCrYO7gAwyLOd1c2mqOdR4/3xhlBpJjrTdI9L5MJ25kZUfDhuBdSB
+	 80C8auwIRTcZH2xY4fmnXVNw+JLfqmkrvKTAzBRil/EuDKZ4R6wijgy1mCmTBH9exi
+	 w1SwPNjza4YWQc51dYVoIelNzzYSxkpTAoqhIX4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
+	"Lin.Cao" <lincao12@amd.com>,
+	Philipp Stanner <phasta@kernel.org>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/218] drm/amdgpu: seq64 memory unmap uses uninterruptible lock
-Date: Thu,  3 Jul 2025 16:39:39 +0200
-Message-ID: <20250703143957.200088421@linuxfoundation.org>
+Subject: [PATCH 6.12 032/218] drm/scheduler: signal scheduled fence when kill job
+Date: Thu,  3 Jul 2025 16:39:40 +0200
+Message-ID: <20250703143957.239556130@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -53,38 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Lin.Cao <lincao12@amd.com>
 
-[ Upstream commit a359288ccb4dd8edb086e7de8fdf6e36f544c922 ]
+[ Upstream commit 471db2c2d4f80ee94225a1ef246e4f5011733e50 ]
 
-To unmap and free seq64 memory when drm node close to free vm, if there
-is signal accepted, then taking vm lock failed and leaking seq64 va
-mapping, and then dmesg has error log "still active bo inside vm".
+When an entity from application B is killed, drm_sched_entity_kill()
+removes all jobs belonging to that entity through
+drm_sched_entity_kill_jobs_work(). If application A's job depends on a
+scheduled fence from application B's job, and that fence is not properly
+signaled during the killing process, application A's dependency cannot be
+cleared.
 
-Change to use uninterruptible lock fix the mapping leaking and no dmesg
-error log.
+This leads to application A hanging indefinitely while waiting for a
+dependency that will never be resolved. Fix this issue by ensuring that
+scheduled fences are properly signaled when an entity is killed, allowing
+dependent applications to continue execution.
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Lin.Cao <lincao12@amd.com>
+Reviewed-by: Philipp Stanner <phasta@kernel.org>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20250515020713.1110476-1-lincao12@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_seq64.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/scheduler/sched_entity.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_seq64.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_seq64.c
-index e22cb2b5cd926..dba8051b8c14b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_seq64.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_seq64.c
-@@ -133,7 +133,7 @@ void amdgpu_seq64_unmap(struct amdgpu_device *adev, struct amdgpu_fpriv *fpriv)
+diff --git a/drivers/gpu/drm/scheduler/sched_entity.c b/drivers/gpu/drm/scheduler/sched_entity.c
+index 002057be0d84a..c9c50e3b18a23 100644
+--- a/drivers/gpu/drm/scheduler/sched_entity.c
++++ b/drivers/gpu/drm/scheduler/sched_entity.c
+@@ -189,6 +189,7 @@ static void drm_sched_entity_kill_jobs_work(struct work_struct *wrk)
+ {
+ 	struct drm_sched_job *job = container_of(wrk, typeof(*job), work);
  
- 	vm = &fpriv->vm;
- 
--	drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
-+	drm_exec_init(&exec, 0, 0);
- 	drm_exec_until_all_locked(&exec) {
- 		r = amdgpu_vm_lock_pd(vm, &exec, 0);
- 		if (likely(!r))
++	drm_sched_fence_scheduled(job->s_fence, NULL);
+ 	drm_sched_fence_finished(job->s_fence, -ESRCH);
+ 	WARN_ON(job->s_fence->parent);
+ 	job->sched->ops->free_job(job);
 -- 
 2.39.5
 
