@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9777B1E9B3D;
-	Thu,  3 Jul 2025 15:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5151C2F0027;
+	Thu,  3 Jul 2025 15:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555453; cv=none; b=Y6t6WBREyv12LWBqILoQophMQO+Pun16T1HKTayP6N2pJCPUGBqANpN2eIsASwzEBU7UeCgS49StZ8VV5jPjTBIlkWeRipp6WkJGRcN3pFgeBmn0Btm0KdBSbAXEMk+NTKaiE/YmkHhCsmDu2wbzWLYgHo4TiBRTz7b6AVvKDS8=
+	t=1751555457; cv=none; b=l2Hi2h6AnogG+eCvPxAU3U2LJKoXgLgUF/zxehSbR/IHm2nJgihDEMKLPk2gmh92YvsXru/owoJibpFLhvCdjVrnphAhq7lJrce0Mgqw3CO0zKMYUFV67jayzCkkAZ9KuY1FJ4uRDldilQQEqHoObRstPPFPJMZSUE2vBS+7eKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555453; c=relaxed/simple;
-	bh=Po9+SBe4tpf2HBnmrIRZwSGLUFSJ7JGeBlpM2uRlUzw=;
+	s=arc-20240116; t=1751555457; c=relaxed/simple;
+	bh=S14XEFq2T83V/sqrWH65uJtFDfVfS25vchRJn0YUVb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PjJkB+wYz8427QT+gbySXcIOs4o8OnJYUuQB9SoIgLc3e0inYu+MRhYayArlHoMkBgWBH6YY9NA9TUDt3IPFg1gcM04FUxRC+XbZsEjza3P1BrWNnKLo7aXIgprhZz/UwxgwxSx0KL+e/H99id0lxwxj70xcevORbHgEOHNyUdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kis3PMcJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ut84AO1G71F1hhgyHL+WmAxtzVKJ2DQqu/Sw/665P15NYEHGA1wkqbYlr1e8rCRphWsSwtYS4ULhKt8ZzTOKgk/DQ+WjKTSWIjgdWP46hWcCAxpW6QhqlOliDvDVvgtlyGr66ZcwJALrNc4txzDWDH6hLnsHfVtaodyOxttNyY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIIhm74C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kis3PMcJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07908C4CEE3;
-	Thu,  3 Jul 2025 15:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIIhm74C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C8AC4CEE3;
+	Thu,  3 Jul 2025 15:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555453;
-	bh=Po9+SBe4tpf2HBnmrIRZwSGLUFSJ7JGeBlpM2uRlUzw=;
+	s=korg; t=1751555456;
+	bh=S14XEFq2T83V/sqrWH65uJtFDfVfS25vchRJn0YUVb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kis3PMcJM0pnVNE2ri9LV8ZcpMVxhZNBaJ/wdk+JHf5gYBq5rm/Q8jHLAAQgW2P6V
-	 z1kfhPoUFMJV+xAbtWEFAbzE5dzE16Lk8gNSIlH1ylQEEj7yBsRt9MY+lcPOt1ITom
-	 ppm9Vw/oG10tGF/iZm6L04n4qLayNxC3hX/mxo44=
+	b=MIIhm74C47uU2WGpZLmXQuBZXYbhznwGPQFN8JjWXNeNAgpyCstlgrw2SKffVsD+a
+	 k+UDtwYMf1mu+j9CJAVKd/qY3sCgc5ziAGQ1Zz5ueAdNDKz6J0M63R/Jk/7ov46pHa
+	 O2jJJ16sibWmbnqcv/vfgPGa239Qd2PW6PNUTHnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Folker Schwesinger <dev@folker-schwesinger.de>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/139] dmaengine: xilinx_dma: Set dma_device directions
-Date: Thu,  3 Jul 2025 16:41:22 +0200
-Message-ID: <20250703143941.925518041@linuxfoundation.org>
+Subject: [PATCH 6.6 002/139] cifs: Fix cifs_query_path_info() for Windows NT servers
+Date: Thu,  3 Jul 2025 16:41:05 +0200
+Message-ID: <20250703143941.278484252@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -47,44 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 7e01511443c30a55a5ae78d3debd46d4d872517e ]
+[ Upstream commit a3e771afbb3bce91c8296828304903e7348003fe ]
 
-Coalesce the direction bits from the enabled TX and/or RX channels into
-the directions bit mask of dma_device. Without this mask set,
-dma_get_slave_caps() in the DMAEngine fails, which prevents the driver
-from being used with an IIO DMAEngine buffer.
+For TRANS2 QUERY_PATH_INFO request when the path does not exist, the
+Windows NT SMB server returns error response STATUS_OBJECT_NAME_NOT_FOUND
+or ERRDOS/ERRbadfile without the SMBFLG_RESPONSE flag set. Similarly it
+returns STATUS_DELETE_PENDING when the file is being deleted. And looks
+like that any error response from TRANS2 QUERY_PATH_INFO does not have
+SMBFLG_RESPONSE flag set.
 
-Signed-off-by: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>
-Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
-Tested-by: Folker Schwesinger <dev@folker-schwesinger.de>
-Link: https://lore.kernel.org/r/20250507182101.909010-1-thomas.gessler@brueckmann-gmbh.de
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+So relax check in check_smb_hdr() for detecting if the packet is response
+for this special case.
+
+This change fixes stat() operation against Windows NT SMB servers and also
+all operations which depends on -ENOENT result from stat like creat() or
+mkdir().
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/misc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 0a3b2e22f23db..14c4c5031b556 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2900,6 +2900,8 @@ static int xilinx_dma_chan_probe(struct xilinx_dma_device *xdev,
- 		return -EINVAL;
- 	}
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index 65d4b72b4d51a..9e8e0a01ae8eb 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -320,6 +320,14 @@ check_smb_hdr(struct smb_hdr *smb)
+ 	if (smb->Command == SMB_COM_LOCKING_ANDX)
+ 		return 0;
  
-+	xdev->common.directions |= chan->direction;
++	/*
++	 * Windows NT server returns error resposne (e.g. STATUS_DELETE_PENDING
++	 * or STATUS_OBJECT_NAME_NOT_FOUND or ERRDOS/ERRbadfile or any other)
++	 * for some TRANS2 requests without the RESPONSE flag set in header.
++	 */
++	if (smb->Command == SMB_COM_TRANSACTION2 && smb->Status.CifsError != 0)
++		return 0;
 +
- 	/* Request the interrupt */
- 	chan->irq = of_irq_get(node, chan->tdest);
- 	if (chan->irq < 0)
+ 	cifs_dbg(VFS, "Server sent request, not response. mid=%u\n",
+ 		 get_mid(smb));
+ 	return 1;
 -- 
 2.39.5
 
