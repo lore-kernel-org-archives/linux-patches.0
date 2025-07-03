@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A8E2EF672;
-	Thu,  3 Jul 2025 14:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7762EF9BF;
+	Thu,  3 Jul 2025 14:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554412; cv=none; b=guFQy3gZqHwNWpCYLZNPCT5v4NUtF4HAuwas61nktpcTYm2wdQ94MKkm6fOAGU6YvkVw4/8VO9pZy7lIct1JG7ilcyQq2CTiIoIrkkeHN7Ew7rPC1tP52OQx0Vy091I4/1FPWL/S13CqZ9xFW1tJq7pjvF0/0bhts3Yk3lkuJKE=
+	t=1751554415; cv=none; b=u8DwoC+5LF3ol3A5TOfKORBU9G6yVqz7wsd0GwbpBOVNmo1bX9v9vibX6/FzyxFkgx/E1HshbG//rjV0zy6MgmoyH6StjOEm4VQUo6pouuhWxMzXHvmUGo/SCW2MdcsRkU4XCse+QTyVBLGKuF1jfL5Qwo+PtAR/g6+S7YY9VMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554412; c=relaxed/simple;
-	bh=qM5SEuJqLgRzw5uI1Lq2hnBeRryy70oRgSETfad44Jw=;
+	s=arc-20240116; t=1751554415; c=relaxed/simple;
+	bh=jKaZFqlooAiKlO9oK3Fd/D/x1ntfQvhGkybi8yeUtls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jloxu1RRg33JtB9H7GKJs3RCLqGMFIL61akv4owDGakgiX13vp8OphhmTMbwgM4YTzK3LqH6Yu/ZQLUz9majW9teOX2guxMEJnqni8zarjrSqAIpXCviwGex+ouVe5grDUDcyIhQ79ZnjZ/xFqjtV22HKNx3NnRSbIdy/1BIm34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dcryNDaA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LLy9oI/dWjFB9qkqyhlNH1RYPs6DCF0XmGdtQsQarvFJ5xLejbIulMXn8QH05GTHApfgofuvh18NFcqjPQRYFsd7EY0GgxSyNv6f554uoDkkBAs3KUMfKcwZGGaNk54PQbxRJN3aE8w2F5a5ER78iEbh03f6ZIIbuH6oTrBmRiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SDeEhnYJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dcryNDaA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2D7C4CEE3;
-	Thu,  3 Jul 2025 14:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SDeEhnYJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F6BC4CEE3;
+	Thu,  3 Jul 2025 14:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554412;
-	bh=qM5SEuJqLgRzw5uI1Lq2hnBeRryy70oRgSETfad44Jw=;
+	s=korg; t=1751554415;
+	bh=jKaZFqlooAiKlO9oK3Fd/D/x1ntfQvhGkybi8yeUtls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcryNDaA4vGNPmPvVOlHDYoTz3lcbXP45VxMlpQx9bXH25An/4cn9i/f0/NBISXNY
-	 JOkO6HTsj2GkWFSBIhCvgSaitlC2hZnqSYqSYrUjdivM+1aiSURDeXPG91ryaOXJOE
-	 eTUhdIlKnqUCXaDNsA6jWB1izwVy/6qZCUlNd7Gw=
+	b=SDeEhnYJiO8GWuRW9AUHIfzYvXJxbBrqowrgTSfYUQvxHfl3V7F0LxnQECVFYwLSw
+	 YAT5cWwqUAAu7RVJ+NsMRF/pvUDS6Mo74Yd2R+cduJ5ppNH4gVy526lksCsEJcPRuO
+	 Zzo6Ynw+zK1YicH72EECnLhS+eU5cWPLwuz1h4zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chang S. Bae" <chang.seok.bae@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	Aruna Ramakrishna <aruna.ramakrishna@oracle.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ben Hutchings <ben@decadent.org.uk>
-Subject: [PATCH 6.12 179/218] x86/pkeys: Simplify PKRU update in signal frame
-Date: Thu,  3 Jul 2025 16:42:07 +0200
-Message-ID: <20250703144003.331961227@linuxfoundation.org>
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Wenshan Lan <jetlan9@163.com>
+Subject: [PATCH 6.12 180/218] net: libwx: fix Tx L4 checksum
+Date: Thu,  3 Jul 2025 16:42:08 +0200
+Message-ID: <20250703144003.371017154@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -58,69 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chang S. Bae <chang.seok.bae@intel.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-commit d1e420772cd1eb0afe5858619c73ce36f3e781a1 upstream.
+commit c7d82913d5f9e97860772ee4051eaa66b56a6273 upstream.
 
-The signal delivery logic was modified to always set the PKRU bit in
-xregs_state->header->xfeatures by this commit:
+The hardware only supports L4 checksum offload for TCP/UDP/SCTP protocol.
+There was a bug to set Tx checksum flag for the other protocol that results
+in Tx ring hang. Fix to compute software checksum for these packets.
 
-    ae6012d72fa6 ("x86/pkeys: Ensure updated PKRU value is XRSTOR'd")
-
-However, the change derives the bitmask value using XGETBV(1), rather
-than simply updating the buffer that already holds the value. Thus, this
-approach induces an unnecessary dependency on XGETBV1 for PKRU handling.
-
-Eliminate the dependency by using the established helper function.
-Subsequently, remove the now-unused 'mask' argument.
-
-Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/r/20250416021720.12305-9-chang.seok.bae@intel.com
-Cc: Ben Hutchings <ben@decadent.org.uk>
+Fixes: 3403960cdf86 ("net: wangxun: libwx add tx offload functions")
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Link: https://patch.msgid.link/20250324103235.823096-2-jiawenwu@trustnetic.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/xstate.h |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/wangxun/libwx/wx_lib.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/fpu/xstate.h
-+++ b/arch/x86/kernel/fpu/xstate.h
-@@ -85,18 +85,15 @@ static inline int set_xfeature_in_sigfra
- /*
-  * Update the value of PKRU register that was already pushed onto the signal frame.
-  */
--static inline int update_pkru_in_sigframe(struct xregs_state __user *buf, u64 mask, u32 pkru)
-+static inline int update_pkru_in_sigframe(struct xregs_state __user *buf, u32 pkru)
- {
--	u64 xstate_bv;
- 	int err;
+--- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+@@ -1336,6 +1336,7 @@ static void wx_tx_csum(struct wx_ring *t
+ 	u8 tun_prot = 0;
  
- 	if (unlikely(!cpu_feature_enabled(X86_FEATURE_OSPKE)))
- 		return 0;
+ 	if (skb->ip_summed != CHECKSUM_PARTIAL) {
++csum_failed:
+ 		if (!(first->tx_flags & WX_TX_FLAGS_HW_VLAN) &&
+ 		    !(first->tx_flags & WX_TX_FLAGS_CC))
+ 			return;
+@@ -1429,7 +1430,8 @@ static void wx_tx_csum(struct wx_ring *t
+ 					WX_TXD_L4LEN_SHIFT;
+ 			break;
+ 		default:
+-			break;
++			skb_checksum_help(skb);
++			goto csum_failed;
+ 		}
  
- 	/* Mark PKRU as in-use so that it is restored correctly. */
--	xstate_bv = (mask & xfeatures_in_use()) | XFEATURE_MASK_PKRU;
--
--	err =  __put_user(xstate_bv, &buf->header.xfeatures);
-+	err = set_xfeature_in_sigframe(buf, XFEATURE_MASK_PKRU);
- 	if (err)
- 		return err;
- 
-@@ -317,7 +314,7 @@ static inline int xsave_to_user_sigframe
- 	clac();
- 
- 	if (!err)
--		err = update_pkru_in_sigframe(buf, mask, pkru);
-+		err = update_pkru_in_sigframe(buf, pkru);
- 
- 	return err;
- }
+ 		/* update TX checksum flag */
 
 
