@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B3F2EAB95;
-	Thu,  3 Jul 2025 14:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4387F2ED857;
+	Thu,  3 Jul 2025 14:59:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554768; cv=none; b=dKXlxo5kIDst2UENSP0Z+mKDpicOZv65TIqh7ZbPLIKuMjVBcExwN0h7HdLdggvIRrOVLqNVaII77NPjITQ123x4dHV3snnddpuJqc0enD+EEGeo1hWGpNxUJ4DFGrMJf6swypidTCwLYL5LTTm0hrLWpuNACUA72VAAUw9FZYg=
+	t=1751554771; cv=none; b=TwL2Oqc3KQl2mKGsb/WY6ar/5wUYX5qK5vmiexTrDvNHpTBIEbfqXv+gG1yyiWC+QV0nhLfOC0cjOZxosRFEjvQAVYWJzrbuiDBeuPcrBgH5WSLhgomgX4KPX9svwx2H+K2ukn7Z7nRSqxEm/UQb8oNCdXdPsX+B3HLH4PFq7Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554768; c=relaxed/simple;
-	bh=pbkQtkfrkuvu2QvsOcNP+HqzHUa9/8qaYj3VCISfozI=;
+	s=arc-20240116; t=1751554771; c=relaxed/simple;
+	bh=iBP0omoQKHOoiIXDv2nL0riXmuxU5DttCNXqiIJpSmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9dMotfkKeEcYIyBsb0P5zsLrzdohwGSZs0kqaF7nixK/nOPc+h8f5MF1Vr6P3GghUGxzDgM+/lsKyEFbJeIEDZ0TuaNbLSRFPcfybzFYVUc69ziLlmD63r9ne5vzYgl1+guYWES9La9Q7i9TfIdBaP3zI9sBkG9Wjfz2E3bfXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMkbRPxM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r7Hxcnt4NxB5aPvuapQ6+8annnpzFshM/TfMdvf95NyNgCdjoRzO5nV6GVuLBhdFitoOzsJoXMNlCGSfMn4EhE4Orcx3FyiS3WTWfEswjEBFskh9MTK7lDeQXldaIZXqcd5/lYRR4Nh57TOe0a1fO3hScX227yssJP9jA2IMKBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3B3XemA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMkbRPxM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8787C4CEE3;
-	Thu,  3 Jul 2025 14:59:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3B3XemA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB6E2C4CEE3;
+	Thu,  3 Jul 2025 14:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554768;
-	bh=pbkQtkfrkuvu2QvsOcNP+HqzHUa9/8qaYj3VCISfozI=;
+	s=korg; t=1751554771;
+	bh=iBP0omoQKHOoiIXDv2nL0riXmuxU5DttCNXqiIJpSmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zMkbRPxMd/TH+py09Z4JV5y5qQst0X1uozwduZYgqvjxBorzIz2GWkU81ddAQuuoZ
-	 7GBpPF5t+QcSUCQf5tZy0hSO8fG1ZQuyUmdSTSArp2fXZ5ySIREy3g7vYFG4O8RQfb
-	 DumJXEJWc68Q1tGr88YFQFjJXLVNpl26uhF8/KJM=
+	b=a3B3XemAzPtZLgJ7le3e2KAVU4NiIvrHrQiK5yf/oRn3nSepOxvSAmGSKwOyKYkeX
+	 1+RydPJYYgb4JuPFpmlLPYySh4y6gb57ZaVUbtIr0N0r1DJbtgtKcVgM9FZMayOeoD
+	 +OaLoZHIWAtitBetC9jRMoRQYt+7EHjZo0+4uKgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dmitry Kandybka <d.kandybka@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 073/263] ASoC: rt1320: fix speaker noise when volume bar is 100%
-Date: Thu,  3 Jul 2025 16:39:53 +0200
-Message-ID: <20250703144007.234409013@linuxfoundation.org>
+Subject: [PATCH 6.15 074/263] ceph: fix possible integer overflow in ceph_zero_objects()
+Date: Thu,  3 Jul 2025 16:39:54 +0200
+Message-ID: <20250703144007.274500662@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,55 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Dmitry Kandybka <d.kandybka@gmail.com>
 
-[ Upstream commit 9adf2de86611ac108d07e769a699556d87f052e2 ]
+[ Upstream commit 0abd87942e0c93964e93224836944712feba1d91 ]
 
-This patch updates the settings to fix the speaker noise.
+In 'ceph_zero_objects', promote 'object_size' to 'u64' to avoid possible
+integer overflow.
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Link: https://patch.msgid.link/20250602085851.4081886-1-shumingf@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Compile tested only.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt1320-sdw.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ fs/ceph/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt1320-sdw.c b/sound/soc/codecs/rt1320-sdw.c
-index f51ba345a16e6..015cc710e6dc0 100644
---- a/sound/soc/codecs/rt1320-sdw.c
-+++ b/sound/soc/codecs/rt1320-sdw.c
-@@ -204,7 +204,7 @@ static const struct reg_sequence rt1320_vc_blind_write[] = {
- 	{ 0x3fc2bfc0, 0x03 },
- 	{ 0x0000d486, 0x43 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT1320_SDCA_ENT_PDE23, RT1320_SDCA_CTL_REQ_POWER_STATE, 0), 0x00 },
--	{ 0x1000db00, 0x04 },
-+	{ 0x1000db00, 0x07 },
- 	{ 0x1000db01, 0x00 },
- 	{ 0x1000db02, 0x11 },
- 	{ 0x1000db03, 0x00 },
-@@ -225,6 +225,21 @@ static const struct reg_sequence rt1320_vc_blind_write[] = {
- 	{ 0x1000db12, 0x00 },
- 	{ 0x1000db13, 0x00 },
- 	{ 0x1000db14, 0x45 },
-+	{ 0x1000db15, 0x0d },
-+	{ 0x1000db16, 0x01 },
-+	{ 0x1000db17, 0x00 },
-+	{ 0x1000db18, 0x00 },
-+	{ 0x1000db19, 0xbf },
-+	{ 0x1000db1a, 0x13 },
-+	{ 0x1000db1b, 0x09 },
-+	{ 0x1000db1c, 0x00 },
-+	{ 0x1000db1d, 0x00 },
-+	{ 0x1000db1e, 0x00 },
-+	{ 0x1000db1f, 0x12 },
-+	{ 0x1000db20, 0x09 },
-+	{ 0x1000db21, 0x00 },
-+	{ 0x1000db22, 0x00 },
-+	{ 0x1000db23, 0x00 },
- 	{ 0x0000d540, 0x01 },
- 	{ 0x0000c081, 0xfc },
- 	{ 0x0000f01e, 0x80 },
+diff --git a/fs/ceph/file.c b/fs/ceph/file.c
+index 851d70200c6b8..a7254cab44cc2 100644
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -2616,7 +2616,7 @@ static int ceph_zero_objects(struct inode *inode, loff_t offset, loff_t length)
+ 	s32 stripe_unit = ci->i_layout.stripe_unit;
+ 	s32 stripe_count = ci->i_layout.stripe_count;
+ 	s32 object_size = ci->i_layout.object_size;
+-	u64 object_set_size = object_size * stripe_count;
++	u64 object_set_size = (u64) object_size * stripe_count;
+ 	u64 nearly, t;
+ 
+ 	/* round offset up to next period boundary */
 -- 
 2.39.5
 
