@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393362D23A8;
-	Thu,  3 Jul 2025 15:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BFD2D23A8;
+	Thu,  3 Jul 2025 15:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554870; cv=none; b=QJEcszqybztMbe8t02GHWHW3omP9F8Msp7GdeLZpd+PyS6wF+mmKJzbjOfj1UC9RdcVh4Sq8SK6PBQ+kn7l1L+c+awvpSKD3MCSxjBQHfKKUYfGJCP9eN36AY8CqsFwg9YRV46V947zNl4FlKeK7Lvae/Z+/9CZlfJedXE9tbdo=
+	t=1751554873; cv=none; b=d5rHA3eaxJJS+AQADWSzR8EeUQIzsFBv2COwlbsa7GkdtSDLjWIUfGcsI2TstXUE4pJFr8e6ZSFiw/O+FZAt5yBZruS8s1Vczwpg4RAuKsNNaZHb5/zboEJHiZT+BG3sKCl3iDtIsgE6R6KmRytD5jefSGVFlBHsLP0loCHlm24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554870; c=relaxed/simple;
-	bh=XQkK+5wVVywTw5gBLdp87ubGOZQ6mHI6w8ELsgD+UmI=;
+	s=arc-20240116; t=1751554873; c=relaxed/simple;
+	bh=Raj6O8X0p8J1MqbqC1vuMSIeT8vl9euOPk/64QA5hXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhhEE9P9bg3gfp5hLgmFocxRtN6ebxxxd7lSqBjw4G7Ozk3uLvC3bpHwYCkE6I8VcWPNxLpwkzJDQ9/8PSnsw+M01ocO1gE0kE2hB/bDDDXndujrF7Bogu2G0y193DtXMpgjoo883wEtiOWAwMtpaMuMhq7RRxG1zhPCNPRNIqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q95q6s7W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EnhGNvKOubi1AS8Suk8SpxZ8APPpulDxWnYFpLvZjNHIlnhy4rCcA+eADRK+mh3GQF2VL9Ry8MOZH5rCqLmNTrKDD8hyrWveG1a2o1hk7xPrCes0XI1JCoX4HpLgResM3dojUl3Br4g84Q2D/Hjk5nEO7gFYFWe2D14QGOaAzqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZnIqvvF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q95q6s7W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FC9C4CEED;
-	Thu,  3 Jul 2025 15:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZnIqvvF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4635C4CEE3;
+	Thu,  3 Jul 2025 15:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554870;
-	bh=XQkK+5wVVywTw5gBLdp87ubGOZQ6mHI6w8ELsgD+UmI=;
+	s=korg; t=1751554873;
+	bh=Raj6O8X0p8J1MqbqC1vuMSIeT8vl9euOPk/64QA5hXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q95q6s7WVmPkzg8T7Al6tCI8nSOGK83zvrL08Zju0MAX10aBKyLqf381KaBFUhAkN
-	 3C/3QD6oKQUNsfdxwdZ5pvKtBwAwBbqOyPW2C6+vhWDnwcu2fzl3P8HwEEKkoyzeQj
-	 ZEe1EbPjlJ71W//bPR1u00N03tnlTcPiEV/GxNEg=
+	b=QZnIqvvFp8RrDE45ftLoEmchpia0EGh+p3Dza3imscG2+pIT/zYx6OkUsr89Rhgom
+	 N/Yo6DR6jN7sGG4qyhAt/tomR4hDT0zLa1SLiWX2vl+2eyixMW4LEf/wdT5clyELmF
+	 fx10dMAzB2MOguH5RLzVoQGty6K5J2YM13tZa/Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bibo Mao <maobibo@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.15 105/263] LoongArch: KVM: Fix interrupt route update with EIOINTC
-Date: Thu,  3 Jul 2025 16:40:25 +0200
-Message-ID: <20250703144008.524469050@linuxfoundation.org>
+Subject: [PATCH 6.15 106/263] LoongArch: KVM: Check interrupt route from physical CPU
+Date: Thu,  3 Jul 2025 16:40:26 +0200
+Message-ID: <20250703144008.574768083@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -52,13 +52,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-commit c34bbc2c990700ba07b271fc7c8113b0bc3e4093 upstream.
+commit 45515c643d0abb75c2cc760a6bc6b235eadafd66 upstream.
 
-With function eiointc_update_sw_coremap(), there is forced assignment
-like val = *(u64 *)pvalue. Parameter pvalue may be pointer to char type
-or others, there is problem with forced assignment with u64 type.
+With EIOINTC interrupt controller, physical CPU ID is set for irq route.
+However the function kvm_get_vcpu() is used to get destination vCPU when
+delivering irq. With API kvm_get_vcpu(), the logical CPU ID is used.
 
-Here the detailed value is passed rather address pointer.
+With API kvm_get_vcpu_by_cpuid(), vCPU ID can be searched from physical
+CPU ID.
 
 Cc: stable@vger.kernel.org
 Fixes: 3956a52bc05b ("LoongArch: KVM: Add EIOINTC read and write functions")
@@ -66,67 +67,67 @@ Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/eiointc.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ arch/loongarch/kvm/intc/eiointc.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
+diff --git a/arch/loongarch/kvm/intc/eiointc.c b/arch/loongarch/kvm/intc/eiointc.c
+index 8d3f48e2a7f0..644fb7785c07 100644
 --- a/arch/loongarch/kvm/intc/eiointc.c
 +++ b/arch/loongarch/kvm/intc/eiointc.c
-@@ -66,10 +66,9 @@ static void eiointc_update_irq(struct lo
- }
+@@ -9,7 +9,8 @@
  
- static inline void eiointc_update_sw_coremap(struct loongarch_eiointc *s,
--					int irq, void *pvalue, u32 len, bool notify)
-+					int irq, u64 val, u32 len, bool notify)
+ static void eiointc_set_sw_coreisr(struct loongarch_eiointc *s)
  {
- 	int i, cpu;
--	u64 val = *(u64 *)pvalue;
+-	int ipnum, cpu, irq_index, irq_mask, irq;
++	int ipnum, cpu, cpuid, irq_index, irq_mask, irq;
++	struct kvm_vcpu *vcpu;
+ 
+ 	for (irq = 0; irq < EIOINTC_IRQS; irq++) {
+ 		ipnum = s->ipmap.reg_u8[irq / 32];
+@@ -20,7 +21,12 @@ static void eiointc_set_sw_coreisr(struct loongarch_eiointc *s)
+ 		irq_index = irq / 32;
+ 		irq_mask = BIT(irq & 0x1f);
+ 
+-		cpu = s->coremap.reg_u8[irq];
++		cpuid = s->coremap.reg_u8[irq];
++		vcpu = kvm_get_vcpu_by_cpuid(s->kvm, cpuid);
++		if (!vcpu)
++			continue;
++
++		cpu = vcpu->vcpu_id;
+ 		if (!!(s->coreisr.reg_u32[cpu][irq_index] & irq_mask))
+ 			set_bit(irq, s->sw_coreisr[cpu][ipnum]);
+ 		else
+@@ -68,17 +74,23 @@ static void eiointc_update_irq(struct loongarch_eiointc *s, int irq, int level)
+ static inline void eiointc_update_sw_coremap(struct loongarch_eiointc *s,
+ 					int irq, u64 val, u32 len, bool notify)
+ {
+-	int i, cpu;
++	int i, cpu, cpuid;
++	struct kvm_vcpu *vcpu;
  
  	for (i = 0; i < len; i++) {
- 		cpu = val & 0xff;
-@@ -403,7 +402,7 @@ static int loongarch_eiointc_writeb(stru
- 		irq = offset - EIOINTC_COREMAP_START;
- 		index = irq;
- 		s->coremap.reg_u8[index] = data;
--		eiointc_update_sw_coremap(s, irq, (void *)&data, sizeof(data), true);
-+		eiointc_update_sw_coremap(s, irq, data, sizeof(data), true);
- 		break;
- 	default:
- 		ret = -EINVAL;
-@@ -488,7 +487,7 @@ static int loongarch_eiointc_writew(stru
- 		irq = offset - EIOINTC_COREMAP_START;
- 		index = irq >> 1;
- 		s->coremap.reg_u16[index] = data;
--		eiointc_update_sw_coremap(s, irq, (void *)&data, sizeof(data), true);
-+		eiointc_update_sw_coremap(s, irq, data, sizeof(data), true);
- 		break;
- 	default:
- 		ret = -EINVAL;
-@@ -573,7 +572,7 @@ static int loongarch_eiointc_writel(stru
- 		irq = offset - EIOINTC_COREMAP_START;
- 		index = irq >> 2;
- 		s->coremap.reg_u32[index] = data;
--		eiointc_update_sw_coremap(s, irq, (void *)&data, sizeof(data), true);
-+		eiointc_update_sw_coremap(s, irq, data, sizeof(data), true);
- 		break;
- 	default:
- 		ret = -EINVAL;
-@@ -658,7 +657,7 @@ static int loongarch_eiointc_writeq(stru
- 		irq = offset - EIOINTC_COREMAP_START;
- 		index = irq >> 3;
- 		s->coremap.reg_u64[index] = data;
--		eiointc_update_sw_coremap(s, irq, (void *)&data, sizeof(data), true);
-+		eiointc_update_sw_coremap(s, irq, data, sizeof(data), true);
- 		break;
- 	default:
- 		ret = -EINVAL;
-@@ -822,7 +821,7 @@ static int kvm_eiointc_ctrl_access(struc
- 		for (i = 0; i < (EIOINTC_IRQS / 4); i++) {
- 			start_irq = i * 4;
- 			eiointc_update_sw_coremap(s, start_irq,
--					(void *)&s->coremap.reg_u32[i], sizeof(u32), false);
-+					s->coremap.reg_u32[i], sizeof(u32), false);
+-		cpu = val & 0xff;
++		cpuid = val & 0xff;
+ 		val = val >> 8;
+ 
+ 		if (!(s->status & BIT(EIOINTC_ENABLE_CPU_ENCODE))) {
+-			cpu = ffs(cpu) - 1;
+-			cpu = (cpu >= 4) ? 0 : cpu;
++			cpuid = ffs(cpuid) - 1;
++			cpuid = (cpuid >= 4) ? 0 : cpuid;
  		}
- 		break;
- 	default:
+ 
++		vcpu = kvm_get_vcpu_by_cpuid(s->kvm, cpuid);
++		if (!vcpu)
++			continue;
++
++		cpu = vcpu->vcpu_id;
+ 		if (s->sw_coremap[irq + i] == cpu)
+ 			continue;
+ 
+-- 
+2.50.0
+
 
 
