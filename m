@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8232F2F0C6A;
-	Thu,  3 Jul 2025 15:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F7E2F432B;
+	Thu,  3 Jul 2025 15:15:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555699; cv=none; b=Tkci10UuZPd6UVtVPRvDzsKTlI01cpkH9zh1v7dTxcq+KAO7K0UOVZ0xFPoeUFCtD/3Og0D7yNchLvB1aIM9ATlscfLgazaC84vADJ+CskEFvx2s4naJZeZvZbknyQfdM/M/jAEQ9eT0QZqW2aBWau+d2xnFP2lCBE4wN9VJizI=
+	t=1751555703; cv=none; b=df2DEZIMQP+/26AaWvCmbJZAMgF/FobhzkCsx4LRy9xV7WzT8pDKgtrcVpOidxIRpJrAciaPXlGTJR7aQK0+wZoe2l4Ug+SEPoLXQ9Iob2eidIG7UwWKlG19xTBjxype5yJy0ntZ1wDBAO4Cr42R03PzRlvD4mB2rmFazb5Wkpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555699; c=relaxed/simple;
-	bh=X6Ba+HiI70GXUuWd3PWnqWxKyRA8mpmejyxzEw+6ZnI=;
+	s=arc-20240116; t=1751555703; c=relaxed/simple;
+	bh=l0o0KcFHuNRsMzdc1/LOX65Rag424vkqTc3PlE0dJtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X3T0ZbeDqGRjeGJrnj5f8lWgHLwL6Kfx/V5q7VXH+8Qi0nqSVDPmlKKz8x4zUoWHtYqspcVrIB9Sduc21QrmMarft20P8hoMYFnxMLczqr02aoDinCgwKHr3G07lxvGIDbybetSS8CKUoj0ULY63sZSBp74/xjwsYWoNvHbLn5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OiDc1OJ3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FARF/ZoBzN77dYe9lQ0wfHUAkHLk5XYvrHrsvW3tOs5cdcBo/1m+OA3YV2v+AmPHH47skFMTCUVZuWpNrF1YUpvcIi8UI5N+TDCEig2ivzoELeeKZu2K1IE6yq+mFt6xZM1tLE2yBiaJsMVczbPT+AryHyloMz2Rls2I+3uaWmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=empksDap; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OiDc1OJ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19711C4CEED;
-	Thu,  3 Jul 2025 15:14:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="empksDap"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1ECDC4CEE3;
+	Thu,  3 Jul 2025 15:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555699;
-	bh=X6Ba+HiI70GXUuWd3PWnqWxKyRA8mpmejyxzEw+6ZnI=;
+	s=korg; t=1751555703;
+	bh=l0o0KcFHuNRsMzdc1/LOX65Rag424vkqTc3PlE0dJtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OiDc1OJ3KU/E5yxTKzbDtYFzJBrBrclawlvYaLkwdl4xbkL1zarM4VWusyJvK4x8q
-	 8xZiUJiMr1atKjqp2bwvujDcc/78AqmZ5D5yfMcNZH2eCiNOg+/paZyGCdS60Oobb0
-	 Fro7dE1yR8s+LGz6Daoy8SmyUV6zYzjJQ/cFPA/4=
+	b=empksDapWp/34B3bgujjVRfhKEf0PR2zPx5VdpwYzr3QdcHUNSvgKz3Szc37ej5Xw
+	 urcp4sxNF++ylVl4VAOywUjgREISL5hu8+fHakSu+HAb2m7d+tidwaKlM86+YlaI8F
+	 P2aPrTGo+M6k5nuk9E4bF3/w1dYc6KGd2fKV0lbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Krummenacher <max.krummenacher@toradex.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Ernest Van Hoecke <ernest.vanhoecke@toradex.com>,
-	Jayesh Choudhary <j-choudhary@ti.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/139] drm/bridge: ti-sn65dsi86: Add HPD for DisplayPort connector type
-Date: Thu,  3 Jul 2025 16:42:36 +0200
-Message-ID: <20250703143944.794524588@linuxfoundation.org>
+Subject: [PATCH 6.6 067/139] af_unix: Define locking order for U_LOCK_SECOND in unix_state_double_lock().
+Date: Thu,  3 Jul 2025 16:42:10 +0200
+Message-ID: <20250703143943.787222643@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -53,148 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jayesh Choudhary <j-choudhary@ti.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 55e8ff842051b1150461d7595d8f1d033c69d66b ]
+[ Upstream commit ed99822817cb728eee8786c1c921c69c6be206fe ]
 
-By default, HPD was disabled on SN65DSI86 bridge. When the driver was
-added (commit "a095f15c00e27"), the HPD_DISABLE bit was set in pre-enable
-call which was moved to other function calls subsequently.
-Later on, commit "c312b0df3b13" added detect utility for DP mode. But with
-HPD_DISABLE bit set, all the HPD events are disabled[0] and the debounced
-state always return 1 (always connected state).
+unix_dgram_connect() and unix_dgram_{send,recv}msg() lock the socket
+and peer in ascending order of the socket address.
 
-Set HPD_DISABLE bit conditionally based on display sink's connector type.
-Since the HPD_STATE is reflected correctly only after waiting for debounce
-time (~100-400ms) and adding this delay in detect() is not feasible
-owing to the performace impact (glitches and frame drop), remove runtime
-calls in detect() and add hpd_enable()/disable() bridge hooks with runtime
-calls, to detect hpd properly without any delay.
+Let's define the order as unix_state_lock_cmp_fn() instead of using
+unix_state_lock_nested().
 
-[0]: <https://www.ti.com/lit/gpn/SN65DSI86> (Pg. 32)
-
-Fixes: c312b0df3b13 ("drm/bridge: ti-sn65dsi86: Implement bridge connector operations for DP")
-Cc: Max Krummenacher <max.krummenacher@toradex.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Tested-by: Ernest Van Hoecke <ernest.vanhoecke@toradex.com>
-Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20250624044835.165708-1-j-choudhary@ti.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Kent Overstreet <kent.overstreet@linux.dev>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 32ca245464e1 ("af_unix: Don't leave consecutive consumed OOB skbs.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 69 +++++++++++++++++++++++----
- 1 file changed, 60 insertions(+), 9 deletions(-)
+ net/unix/af_unix.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 3e31a0c5a6d25..002f8aaa509bc 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -331,12 +331,18 @@ static void ti_sn65dsi86_enable_comms(struct ti_sn65dsi86 *pdata)
- 	 * 200 ms.  We'll assume that the panel driver will have the hardcoded
- 	 * delay in its prepare and always disable HPD.
- 	 *
--	 * If HPD somehow makes sense on some future panel we'll have to
--	 * change this to be conditional on someone specifying that HPD should
--	 * be used.
-+	 * For DisplayPort bridge type, we need HPD. So we use the bridge type
-+	 * to conditionally disable HPD.
-+	 * NOTE: The bridge type is set in ti_sn_bridge_probe() but enable_comms()
-+	 * can be called before. So for DisplayPort, HPD will be enabled once
-+	 * bridge type is set. We are using bridge type instead of "no-hpd"
-+	 * property because it is not used properly in devicetree description
-+	 * and hence is unreliable.
- 	 */
--	regmap_update_bits(pdata->regmap, SN_HPD_DISABLE_REG, HPD_DISABLE,
--			   HPD_DISABLE);
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 4f839d687c1e4..a6f0cc635f4dd 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -133,6 +133,18 @@ static int unix_table_lock_cmp_fn(const struct lockdep_map *a,
+ {
+ 	return cmp_ptr(a, b);
+ }
 +
-+	if (pdata->bridge.type != DRM_MODE_CONNECTOR_DisplayPort)
-+		regmap_update_bits(pdata->regmap, SN_HPD_DISABLE_REG, HPD_DISABLE,
-+				   HPD_DISABLE);
- 
- 	pdata->comms_enabled = true;
- 
-@@ -1173,9 +1179,14 @@ static enum drm_connector_status ti_sn_bridge_detect(struct drm_bridge *bridge)
- 	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
- 	int val = 0;
- 
--	pm_runtime_get_sync(pdata->dev);
-+	/*
-+	 * Runtime reference is grabbed in ti_sn_bridge_hpd_enable()
-+	 * as the chip won't report HPD just after being powered on.
-+	 * HPD_DEBOUNCED_STATE reflects correct state only after the
-+	 * debounce time (~100-400 ms).
-+	 */
++static int unix_state_lock_cmp_fn(const struct lockdep_map *_a,
++				  const struct lockdep_map *_b)
++{
++	const struct unix_sock *a, *b;
 +
- 	regmap_read(pdata->regmap, SN_HPD_DISABLE_REG, &val);
--	pm_runtime_put_autosuspend(pdata->dev);
++	a = container_of(_a, struct unix_sock, lock.dep_map);
++	b = container_of(_b, struct unix_sock, lock.dep_map);
++
++	/* unix_state_double_lock(): ascending address order. */
++	return cmp_ptr(a, b);
++}
+ #endif
  
- 	return val & HPD_DEBOUNCED_STATE ? connector_status_connected
- 					 : connector_status_disconnected;
-@@ -1198,6 +1209,26 @@ static void ti_sn65dsi86_debugfs_init(struct drm_bridge *bridge, struct dentry *
- 	debugfs_create_file("status", 0600, debugfs, pdata, &status_fops);
+ static unsigned int unix_unbound_hash(struct sock *sk)
+@@ -992,6 +1004,7 @@ static struct sock *unix_create1(struct net *net, struct socket *sock, int kern,
+ 	u->path.dentry = NULL;
+ 	u->path.mnt = NULL;
+ 	spin_lock_init(&u->lock);
++	lock_set_cmp_fn(&u->lock, unix_state_lock_cmp_fn, NULL);
+ 	mutex_init(&u->iolock); /* single task reading lock */
+ 	mutex_init(&u->bindlock); /* single task binding lock */
+ 	init_waitqueue_head(&u->peer_wait);
+@@ -1340,11 +1353,12 @@ static void unix_state_double_lock(struct sock *sk1, struct sock *sk2)
+ 		unix_state_lock(sk1);
+ 		return;
+ 	}
++
+ 	if (sk1 > sk2)
+ 		swap(sk1, sk2);
+ 
+ 	unix_state_lock(sk1);
+-	unix_state_lock_nested(sk2, U_LOCK_SECOND);
++	unix_state_lock(sk2);
  }
  
-+static void ti_sn_bridge_hpd_enable(struct drm_bridge *bridge)
-+{
-+	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
-+
-+	/*
-+	 * Device needs to be powered on before reading the HPD state
-+	 * for reliable hpd detection in ti_sn_bridge_detect() due to
-+	 * the high debounce time.
-+	 */
-+
-+	pm_runtime_get_sync(pdata->dev);
-+}
-+
-+static void ti_sn_bridge_hpd_disable(struct drm_bridge *bridge)
-+{
-+	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
-+
-+	pm_runtime_put_autosuspend(pdata->dev);
-+}
-+
- static const struct drm_bridge_funcs ti_sn_bridge_funcs = {
- 	.attach = ti_sn_bridge_attach,
- 	.detach = ti_sn_bridge_detach,
-@@ -1212,6 +1243,8 @@ static const struct drm_bridge_funcs ti_sn_bridge_funcs = {
- 	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
- 	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
- 	.debugfs_init = ti_sn65dsi86_debugfs_init,
-+	.hpd_enable = ti_sn_bridge_hpd_enable,
-+	.hpd_disable = ti_sn_bridge_hpd_disable,
- };
- 
- static void ti_sn_bridge_parse_lanes(struct ti_sn65dsi86 *pdata,
-@@ -1300,8 +1333,26 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
- 	pdata->bridge.type = pdata->next_bridge->type == DRM_MODE_CONNECTOR_DisplayPort
- 			   ? DRM_MODE_CONNECTOR_DisplayPort : DRM_MODE_CONNECTOR_eDP;
- 
--	if (pdata->bridge.type == DRM_MODE_CONNECTOR_DisplayPort)
--		pdata->bridge.ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT;
-+	if (pdata->bridge.type == DRM_MODE_CONNECTOR_DisplayPort) {
-+		pdata->bridge.ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT |
-+				    DRM_BRIDGE_OP_HPD;
-+		/*
-+		 * If comms were already enabled they would have been enabled
-+		 * with the wrong value of HPD_DISABLE. Update it now. Comms
-+		 * could be enabled if anyone is holding a pm_runtime reference
-+		 * (like if a GPIO is in use). Note that in most cases nobody
-+		 * is doing AUX channel xfers before the bridge is added so
-+		 * HPD doesn't _really_ matter then. The only exception is in
-+		 * the eDP case where the panel wants to read the EDID before
-+		 * the bridge is added. We always consistently have HPD disabled
-+		 * for eDP.
-+		 */
-+		mutex_lock(&pdata->comms_mutex);
-+		if (pdata->comms_enabled)
-+			regmap_update_bits(pdata->regmap, SN_HPD_DISABLE_REG,
-+					   HPD_DISABLE, 0);
-+		mutex_unlock(&pdata->comms_mutex);
-+	};
- 
- 	drm_bridge_add(&pdata->bridge);
- 
+ static void unix_state_double_unlock(struct sock *sk1, struct sock *sk2)
 -- 
 2.39.5
 
