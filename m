@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16DC2F003B;
-	Thu,  3 Jul 2025 14:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104062EF9C0;
+	Thu,  3 Jul 2025 14:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554393; cv=none; b=P3PjYkyCc0bdJu9lbvxhnHIm9FmsMTAJtNxlPEG7COa5QT1Udv0y6M3BsQFJVOuvrLFErM77DKl9ns9yEqslcj7bpgxEix9vdadL6dg1NCDVBWG/P1fekKZsSDIP6GSK5BGtM3CGS8xG5PNAeikYw8l6VhTWg6FA1U9L6+a2EZ0=
+	t=1751554398; cv=none; b=FEXnvr/QHt1vj5S1funYn8rQnX+2idpjbeD3MDUMzUbsA0a8y/GZkpCeE4HDFtnP2pjoOul2wy1kLkH3Q9MSBxtlL3QZUr3Bb7CF8L8fzD75vxJNooUf2pZaVOgKC5DsAqrIRLnOpmzU8b+QVJMUZMHqHi1TNwhjEaO0VjumUUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554393; c=relaxed/simple;
-	bh=3epZ6B9Os9N3vOOfFL7pIlx61OfmhwKYU1XZbxut8Rk=;
+	s=arc-20240116; t=1751554398; c=relaxed/simple;
+	bh=5buA2Fgy9hMh49JUZSIwYpn/6T60xu+xCR/FrUdnjIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mmq1yf8BGXExgwlw2L4zLfJSwzX1//Eiu+MxmjqrQVHsJaIjkdNnWCDn7F4/Pod4uOgK4LiwA3ItiRer7PNtkfWMKXvEkLhc/yVWVA5lhkFnIgyeAiSYZLSBXJEVrInh3CpqkqnsMhTCpNVLjrhL1bU8GZCXI4XiD9Mf7L9GVz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIdLMFy2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gL1GXhxUdwa2M1HjWY+Z77NW7KBqwSemiGSFN0g8g0FIsohx/HfHyFvN376dfs7PeGFzVCUm5lrU9xp1l1FWSXBiSUGbH1oN1Op+CjTbj/VAtpjYoeRe0vxKOtTwfUPFhrR4CIJkteA/P9mnF/5q+s73G4rEiF+rnXVvs5YHNBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jD2V+uVk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIdLMFy2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E31CC4CEE3;
-	Thu,  3 Jul 2025 14:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jD2V+uVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D45C4CEF1;
+	Thu,  3 Jul 2025 14:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554392;
-	bh=3epZ6B9Os9N3vOOfFL7pIlx61OfmhwKYU1XZbxut8Rk=;
+	s=korg; t=1751554395;
+	bh=5buA2Fgy9hMh49JUZSIwYpn/6T60xu+xCR/FrUdnjIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kIdLMFy2cBOdPoY6x19kKqOzCR2jduaWcStdjsdE8QuyKAeMDewxi6T8ZpGP2Upd4
-	 QK5wk5cm/QOtNXIuijnzMKP6P444kiou2bPY1z7GUBcBbLAvlParAmdTkWQM3gJQin
-	 AhfBNW7MmExwKj5k4vAJF9T5UsC3EBmFuPdm7UoM=
+	b=jD2V+uVkxWK1hoY70IE3cxVg2cle/g4OH96wOUoEESdXCp+mTnW50X5YeJH8iLtkl
+	 KLm8a92POP5XfQBm1TO127x25tmL9EU1fK8oaP+3Xr+cQiUXa+VbBTh7vFMQbo4pf5
+	 1GernNIHekY6fwfLobxoFLsF+f0kh9DcsEtEm/aU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.12 173/218] drm/i915/dsi: Fix off by one in BXT_MIPI_TRANS_VTOTAL
-Date: Thu,  3 Jul 2025 16:42:01 +0200
-Message-ID: <20250703144003.088755733@linuxfoundation.org>
+	Jonathan Kim <jonathan.kim@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 174/218] drm/amdgpu: Fix SDMA UTC_L1 handling during start/stop sequences
+Date: Thu,  3 Jul 2025 16:42:02 +0200
+Message-ID: <20250703144003.127972210@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -45,50 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Jesse Zhang <jesse.zhang@amd.com>
 
-commit c464ce6af332e7c802c36cd337cacf81db05400c upstream.
+commit 7f3b16f3f229e37cc3e02e9e4e7106c523b119e9 upstream.
 
-BXT_MIPI_TRANS_VTOTAL must be programmed with vtotal-1
-instead of vtotal. Make it so.
+This commit makes two key fixes to SDMA v4.4.2 handling:
 
+1. disable UTC_L1 in sdma_cntl register when stopping SDMA engines
+   by reading the current value before modifying UTC_L1_ENABLE bit.
+
+2. Ensure UTC_L1_ENABLE is consistently managed by:
+   - Adding the missing register write when enabling UTC_L1 during start
+   - Keeping UTC_L1 enabled by default as per hardware requirements
+
+v2: Correct SDMA_CNTL setting (Philip)
+
+Suggested-by: Jonathan Kim <jonathan.kim@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 375bf564654e85a7b1b0657b191645b3edca1bda)
 Cc: stable@vger.kernel.org
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250314150136.22564-1-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 7b3685c9b38c3097f465efec8b24dbed63258cf6)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/vlv_dsi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/vlv_dsi.c
-+++ b/drivers/gpu/drm/i915/display/vlv_dsi.c
-@@ -1059,7 +1059,7 @@ static void bxt_dsi_get_pipe_config(stru
- 				              BXT_MIPI_TRANS_VACTIVE(port));
- 	adjusted_mode->crtc_vtotal =
- 				intel_de_read(display,
--				              BXT_MIPI_TRANS_VTOTAL(port));
-+				              BXT_MIPI_TRANS_VTOTAL(port)) + 1;
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
+@@ -485,7 +485,7 @@ static void sdma_v4_4_2_inst_gfx_stop(st
+ {
+ 	struct amdgpu_ring *sdma[AMDGPU_MAX_SDMA_INSTANCES];
+ 	u32 doorbell_offset, doorbell;
+-	u32 rb_cntl, ib_cntl;
++	u32 rb_cntl, ib_cntl, sdma_cntl;
+ 	int i;
  
- 	hactive = adjusted_mode->crtc_hdisplay;
- 	hfp = intel_de_read(display, MIPI_HFP_COUNT(display, port));
-@@ -1264,7 +1264,7 @@ static void set_dsi_timings(struct intel
- 			intel_de_write(display, BXT_MIPI_TRANS_VACTIVE(port),
- 				       adjusted_mode->crtc_vdisplay);
- 			intel_de_write(display, BXT_MIPI_TRANS_VTOTAL(port),
--				       adjusted_mode->crtc_vtotal);
-+				       adjusted_mode->crtc_vtotal - 1);
- 		}
+ 	for_each_inst(i, inst_mask) {
+@@ -497,6 +497,9 @@ static void sdma_v4_4_2_inst_gfx_stop(st
+ 		ib_cntl = RREG32_SDMA(i, regSDMA_GFX_IB_CNTL);
+ 		ib_cntl = REG_SET_FIELD(ib_cntl, SDMA_GFX_IB_CNTL, IB_ENABLE, 0);
+ 		WREG32_SDMA(i, regSDMA_GFX_IB_CNTL, ib_cntl);
++		sdma_cntl = RREG32_SDMA(i, regSDMA_CNTL);
++		sdma_cntl = REG_SET_FIELD(sdma_cntl, SDMA_CNTL, UTC_L1_ENABLE, 0);
++		WREG32_SDMA(i, regSDMA_CNTL, sdma_cntl);
  
- 		intel_de_write(display, MIPI_HACTIVE_AREA_COUNT(display, port),
+ 		if (sdma[i]->use_doorbell) {
+ 			doorbell = RREG32_SDMA(i, regSDMA_GFX_DOORBELL);
+@@ -953,6 +956,7 @@ static int sdma_v4_4_2_inst_start(struct
+ 		/* set utc l1 enable flag always to 1 */
+ 		temp = RREG32_SDMA(i, regSDMA_CNTL);
+ 		temp = REG_SET_FIELD(temp, SDMA_CNTL, UTC_L1_ENABLE, 1);
++		WREG32_SDMA(i, regSDMA_CNTL, temp);
+ 
+ 		if (amdgpu_ip_version(adev, SDMA0_HWIP, 0) < IP_VERSION(4, 4, 5)) {
+ 			/* enable context empty interrupt during initialization */
 
 
