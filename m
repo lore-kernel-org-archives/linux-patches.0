@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E5017FAC2;
-	Thu,  3 Jul 2025 15:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E711D22069F;
+	Thu,  3 Jul 2025 15:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555980; cv=none; b=SuxJnmql0uFy4j465qsK1ztcIkkFczZQx2EHND9nIBz3RycZPs0nvAJNI0dSa5wJwEl29G/hB1r6r0Co1jVG8nhuJV+FqasfQ4fBP9oIZcUgPQXY60II4we+9tH3f7J39fOl62O3MYfGrxoJyPHWh6zIMlyvBpAitWLHSO/MVGY=
+	t=1751555984; cv=none; b=SSdc2a2P1mRpNcjntk3JXzU0z+oJTmG3LGJeOiSyGjnMq6HPF4qLci4+IuSTH7huL0/K5hJ1QZOCSYee4yzykf4sf+EAO0d8ehAqqXQwU9EFgLU1obGLIcShdTqNWPN/23a9AXCHaI4cu76mZ6E+hhS35ukqYz22DU0ihhyFnnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555980; c=relaxed/simple;
-	bh=iiOGRGYatcqoxJMlo1lzksMm6rY9ccIWdQfz9Ml9xBA=;
+	s=arc-20240116; t=1751555984; c=relaxed/simple;
+	bh=A+fpRMKbp8mQ8gyUnPS+Zir3OyJWlSSR7iT2AFtesIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dcCcRfLveyxkQslr5P9anka+7ioG+zwsuKoAr2fZioWksEebku49Abeu/qv8zXsgtrbzKJFGC8yF4DEssnK/6Cce1cAJnGNr036qL8/q4Uya7I5B7EWEG01zW2v3MaT3jjaSKhuHUDMJajbwGgkO8O2Mjtbsq8ieKNwvx5R6faY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSQQ4qVY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J6Rs8uPFkolJ1e6QU8sXI4xCZXfsrSmP7E15FAf4pnE07el2OwSyCE61UV3KHafNlFc+wQZAPzdvhrnI7jX2l3t/JPkgsMQK8lgx1OYwHZvruF7AUIRUkHHafp88BsiOoI58gwr4CLnWULphqvQyPNMCuamXMcbxVRCSTvnEIqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fq7UXCSh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSQQ4qVY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BCFDC4CEEE;
-	Thu,  3 Jul 2025 15:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fq7UXCSh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725F8C4CEE3;
+	Thu,  3 Jul 2025 15:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555980;
-	bh=iiOGRGYatcqoxJMlo1lzksMm6rY9ccIWdQfz9Ml9xBA=;
+	s=korg; t=1751555983;
+	bh=A+fpRMKbp8mQ8gyUnPS+Zir3OyJWlSSR7iT2AFtesIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WSQQ4qVY/i3JnjzvxKbW1J93Mq0RqMyG1QwnxjYsULAjRUq8GQXodaQv7tFUmCouW
-	 hvxlhhg4zZ7lZ30njQ6oZjYhtL+l3Z5uRsNNrZ7oo9XHbFTbvG4dmk22/CoEiusDz5
-	 jfs97NbmaTAWwnQG3uB8G1jnZvmfQ/w0Vmsacm8Y=
+	b=fq7UXCShcVJ6VegLzb6WmTPqfUgCmvCNwYjJXTKnKmbM5iTETF4HsKWHP/d13wUfx
+	 fcTH/LpsaeesoSHQdweARH8kn+6YGVdh7XUGKXBU1spVynEwrcOszjKEKUzcHfGRRR
+	 0gqJ/yDWGfSdIi4galm1tjcbVfl2TWIVaOb8Krxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/132] Revert "drm/i915/gem: Allow EXEC_CAPTURE on recoverable contexts on DG1"
-Date: Thu,  3 Jul 2025 16:42:07 +0200
-Message-ID: <20250703143940.920964291@linuxfoundation.org>
+Subject: [PATCH 6.1 039/132] fs/jfs: consolidate sanity checking in dbMount
+Date: Thu,  3 Jul 2025 16:42:08 +0200
+Message-ID: <20250703143940.960724428@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -50,59 +44,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+From: Dave Kleikamp <dave.kleikamp@oracle.com>
 
-[ Upstream commit ed5915cfce2abb9a553c3737badebd4a11d6c9c7 ]
+[ Upstream commit 0d250b1c52484d489e31df2cf9118b7c4bd49d31 ]
 
-This reverts commit d6e020819612a4a06207af858e0978be4d3e3140.
+Sanity checks have been added to dbMount as individual if clauses with
+identical error handling. Move these all into one clause.
 
-The IS_DGFX check was put in place because error capture of buffer
-objects is expected to be broken on devices with VRAM.
-
-Userspace fix[1] to the impacted media driver has been submitted, merged
-and a new driver release is out as 25.2.3 where the capture flag is
-dropped on DG1 thus unblocking the usage of media driver on DG1.
-
-[1] https://github.com/intel/media-driver/commit/93c07d9b4b96a78bab21f6acd4eb863f4313ea4a
-
-Cc: stable@vger.kernel.org # v6.0+
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Tvrtko Ursulin <tursulin@ursulin.net>
-Acked-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://lore.kernel.org/r/20250522064127.24293-1-joonas.lahtinen@linux.intel.com
-[Joonas: Update message to point out the merged userspace fix]
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-(cherry picked from commit d2dc30e0aa252830f908c8e793d3139d51321370)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Stable-dep-of: 37bfb464ddca ("jfs: validate AG parameters in dbMount() to prevent crashes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_dmap.c | 37 +++++++++----------------------------
+ 1 file changed, 9 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index 9424606710a10..0a123bb44c9fb 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -2001,7 +2001,7 @@ static int eb_capture_stage(struct i915_execbuffer *eb)
- 			continue;
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 5e32526174e88..621f0d871af67 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -178,45 +178,26 @@ int dbMount(struct inode *ipbmap)
+ 	dbmp_le = (struct dbmap_disk *) mp->data;
+ 	bmp->db_mapsize = le64_to_cpu(dbmp_le->dn_mapsize);
+ 	bmp->db_nfree = le64_to_cpu(dbmp_le->dn_nfree);
+-
+ 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
+-	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE ||
+-		bmp->db_l2nbperpage < 0) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+-
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+-	if (!bmp->db_numag || bmp->db_numag > MAXAG) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+-
+ 	bmp->db_maxlevel = le32_to_cpu(dbmp_le->dn_maxlevel);
+ 	bmp->db_maxag = le32_to_cpu(dbmp_le->dn_maxag);
+ 	bmp->db_agpref = le32_to_cpu(dbmp_le->dn_agpref);
+-	if (bmp->db_maxag >= MAXAG || bmp->db_maxag < 0 ||
+-		bmp->db_agpref >= MAXAG || bmp->db_agpref < 0) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+-
+ 	bmp->db_aglevel = le32_to_cpu(dbmp_le->dn_aglevel);
+ 	bmp->db_agheight = le32_to_cpu(dbmp_le->dn_agheight);
+ 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
+-	if (!bmp->db_agwidth) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+ 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
+ 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
+-	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG ||
+-	    bmp->db_agl2size < 0) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
  
- 		if (i915_gem_context_is_recoverable(eb->gem_context) &&
--		    GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 10))
-+		    (IS_DGFX(eb->i915) || GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 0)))
- 			return -EINVAL;
- 
- 		for_each_batch_create_order(eb, j) {
+-	if (((bmp->db_mapsize - 1) >> bmp->db_agl2size) > MAXAG) {
++	if ((bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE) ||
++	    (bmp->db_l2nbperpage < 0) ||
++	    !bmp->db_numag || (bmp->db_numag > MAXAG) ||
++	    (bmp->db_maxag >= MAXAG) || (bmp->db_maxag < 0) ||
++	    (bmp->db_agpref >= MAXAG) || (bmp->db_agpref < 0) ||
++	    !bmp->db_agwidth ||
++	    (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) ||
++	    (bmp->db_agl2size < 0) ||
++	    ((bmp->db_mapsize - 1) >> bmp->db_agl2size) > MAXAG) {
+ 		err = -EINVAL;
+ 		goto err_release_metapage;
+ 	}
 -- 
 2.39.5
 
