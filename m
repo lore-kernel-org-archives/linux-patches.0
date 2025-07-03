@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA492EE272;
-	Thu,  3 Jul 2025 14:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0772EE29E;
+	Thu,  3 Jul 2025 14:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553917; cv=none; b=mjjqdsrFj0IF0Qa3Dgo/c9CubXhE8RxOVNc2W6YOnfkbzouUAU028ngSFPKFdp92R6yySCQRy83mOsfGNYtE4FWp3PHkqqg6NRBXi5j0CEGDMi6ZlA3vQB2pqraGjQZQUGWsKwoa4CIAiW1fWTR2uVpDVcp0X7FJdyQk0gK9IJc=
+	t=1751553920; cv=none; b=YUwHk6YioBcXxjL/hVKnetxkRnR0lL6uwBQQwyVen5TP8GEtjl6EF3HcPpYGGohjb+g2JrvOZDspZT2asOgsBzGsr24uv9pmJqJdUn01we2dKNjmGRGPDN39JDpaj1JipWaRHupjPcER9DyCZpztU4fOIHARjeyprBhTh98pnB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553917; c=relaxed/simple;
-	bh=YT+UqOiIQXM0Z/CYkVquMTKWNbzIyOMfUz9G8miuhx4=;
+	s=arc-20240116; t=1751553920; c=relaxed/simple;
+	bh=nFStz9c8ztYQNVijCtf9Y53vwH+vCbzsrAUOSkwojj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U2Jj7w27pUw1zIrKt13BLAymjCA7Qa9mtb1/xxuOREuFc88+NaZd5SOWigBBu6XtKFrMkZGlBoeIwPIW1CXqI6sjR1kbTr53oC+gAZGG2PwQHe/MWgpJnKYlkvse+taZWAVxe6558JW+av6ix/SI0WqV13Ze/6O9u2uTQeKdS+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNohjOXC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EJhxiRrOGqzpCjtwH0WW0ahYBShqHfPLMYfQdYfkXugHjsSQ5P3nZ6jFAz9wVGhR1jZMvnX9HXpPoU/u5ocFwqsRLRDURwVyFH/DRcL4i6jMcJZV5xjdNDRRBQvoJ4jIrCAC5xPwLQhSv2eKXyH1Ee1ZsDcPM5UO90ChL1oGvNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlFIHjLY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNohjOXC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6139EC4CEE3;
-	Thu,  3 Jul 2025 14:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlFIHjLY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A346AC4CEE3;
+	Thu,  3 Jul 2025 14:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751553916;
-	bh=YT+UqOiIQXM0Z/CYkVquMTKWNbzIyOMfUz9G8miuhx4=;
+	s=korg; t=1751553920;
+	bh=nFStz9c8ztYQNVijCtf9Y53vwH+vCbzsrAUOSkwojj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TNohjOXCrGis0tcAY17XPBCy5nDQaRQ4RcOmjddXbOo69diHtNI/ODnAI4CoZsPQg
-	 jMfZc/B0c+2POZjV5bX71meCSQd91q2W5NmVKnrg0goISu20cWR4+GR/958X5382uX
-	 zkBgLZGYDksyAx0UCTmbzm5Ry7nlmS7DaiwV4428=
+	b=rlFIHjLYWXSN41G5khGQvSA/or29CVoJSls6Cz859MqXgoVgDnpw4qbLtLLjcqLS+
+	 PcBu9hqB0nSYYG7ujoey7OiZNEr9tow683qhbTA9sa7lt3JlHQRdtCFujaabOp+GNK
+	 nLzVp44nAt9WxxT46t0AIZtp8R1trx1A1FxZC2sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Folker Schwesinger <dev@folker-schwesinger.de>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/218] dmaengine: xilinx_dma: Set dma_device directions
-Date: Thu,  3 Jul 2025 16:39:30 +0200
-Message-ID: <20250703143956.849195792@linuxfoundation.org>
+Subject: [PATCH 6.12 003/218] cifs: Fix encoding of SMB1 Session Setup NTLMSSP Request in non-UNICODE mode
+Date: Thu,  3 Jul 2025 16:39:11 +0200
+Message-ID: <20250703143956.097771325@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -47,44 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 7e01511443c30a55a5ae78d3debd46d4d872517e ]
+[ Upstream commit 6510ef4230b68c960309e0c1d6eb3e32eb785142 ]
 
-Coalesce the direction bits from the enabled TX and/or RX channels into
-the directions bit mask of dma_device. Without this mask set,
-dma_get_slave_caps() in the DMAEngine fails, which prevents the driver
-from being used with an IIO DMAEngine buffer.
+SMB1 Session Setup NTLMSSP Request in non-UNICODE mode is similar to
+UNICODE mode, just strings are encoded in ASCII and not in UTF-16.
 
-Signed-off-by: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>
-Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
-Tested-by: Folker Schwesinger <dev@folker-schwesinger.de>
-Link: https://lore.kernel.org/r/20250507182101.909010-1-thomas.gessler@brueckmann-gmbh.de
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+With this change it is possible to setup SMB1 session with NTLM
+authentication in non-UNICODE mode with Windows SMB server.
+
+This change fixes mounting SMB1 servers with -o nounicode mount option
+together with -o sec=ntlmssp mount option (which is the default sec=).
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/sess.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 5eb51ae93e89d..aa59b62cd83fb 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2906,6 +2906,8 @@ static int xilinx_dma_chan_probe(struct xilinx_dma_device *xdev,
- 		return -EINVAL;
- 	}
+diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
+index 830516a9e03b0..8be7c4d2d9d62 100644
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -1715,22 +1715,22 @@ _sess_auth_rawntlmssp_assemble_req(struct sess_data *sess_data)
+ 	pSMB = (SESSION_SETUP_ANDX *)sess_data->iov[0].iov_base;
  
-+	xdev->common.directions |= chan->direction;
+ 	capabilities = cifs_ssetup_hdr(ses, server, pSMB);
+-	if ((pSMB->req.hdr.Flags2 & SMBFLG2_UNICODE) == 0) {
+-		cifs_dbg(VFS, "NTLMSSP requires Unicode support\n");
+-		return -ENOSYS;
+-	}
+-
+ 	pSMB->req.hdr.Flags2 |= SMBFLG2_EXT_SEC;
+ 	capabilities |= CAP_EXTENDED_SECURITY;
+ 	pSMB->req.Capabilities |= cpu_to_le32(capabilities);
+ 
+ 	bcc_ptr = sess_data->iov[2].iov_base;
+-	/* unicode strings must be word aligned */
+-	if (!IS_ALIGNED(sess_data->iov[0].iov_len + sess_data->iov[1].iov_len, 2)) {
+-		*bcc_ptr = 0;
+-		bcc_ptr++;
 +
- 	/* Request the interrupt */
- 	chan->irq = of_irq_get(node, chan->tdest);
- 	if (chan->irq < 0)
++	if (pSMB->req.hdr.Flags2 & SMBFLG2_UNICODE) {
++		/* unicode strings must be word aligned */
++		if (!IS_ALIGNED(sess_data->iov[0].iov_len + sess_data->iov[1].iov_len, 2)) {
++			*bcc_ptr = 0;
++			bcc_ptr++;
++		}
++		unicode_oslm_strings(&bcc_ptr, sess_data->nls_cp);
++	} else {
++		ascii_oslm_strings(&bcc_ptr, sess_data->nls_cp);
+ 	}
+-	unicode_oslm_strings(&bcc_ptr, sess_data->nls_cp);
+ 
+ 	sess_data->iov[2].iov_len = (long) bcc_ptr -
+ 					(long) sess_data->iov[2].iov_base;
 -- 
 2.39.5
 
