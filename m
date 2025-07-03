@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAA22EF9BD;
-	Thu,  3 Jul 2025 14:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1340C126BFF;
+	Thu,  3 Jul 2025 14:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554523; cv=none; b=NGvlVeJnP4JpcRUYORPJIYU+2Jcb/quNJRNd5w5V0Ju5a5FdXXjv7Ptaa0Wn5VHe0Ox2ZfVq/cykEsFPshdNuWBluesyVXvN8ZsLqLQdPmv+J7Izev2h0KEpYtohvVI4piQcokA2IRCNV75Y1HOSZ6P1XGsdnoZOT3HSSUVmsJ8=
+	t=1751554526; cv=none; b=L97NqL7t8zYDhZqzYtW5OwEWlwCdEkgwV1n1dRNUfv2BqmN9RFfP/YaLShTYDXeOn6oZX3Sf9EQQyatpJAz+XuCYxpxYPkkPbupkk3YeA0qCsjsNJOZXfPPyXzI4nVam2GkiZzdM3atRVODP1j1/lKHxOe7XnL5XvukMWKUh2Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554523; c=relaxed/simple;
-	bh=feHzV9NyIThka6vQt7pvM6uryLWZT/F/cp3ldug5ANw=;
+	s=arc-20240116; t=1751554526; c=relaxed/simple;
+	bh=afVwmdCmkWrXWpkavnunVRlvNGEf5EjK7G72MaiWVjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+JrTxtbIXznYhsrwZodctkOAkmUt6jf2RKGAfjBtjTKmi9Bdjoh0KUzY/kwKnLVAVymXZvtbc1BuyQZ+5uKhQ3r2m9vIaPF71/MnJFD/bmjmHUp4bI1RpHS0aodlBS5R2ktmuyeh6NwECD/ssKPBRiOJFy7i++XaCQB8etw9Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=djhD5jz+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BSaKR9lToN2X1fClEVeHcEslNGSufZMYbjnrko4xuLdBMpomoaeK09gxWBFFQDXowkmzPEaOr2jjnGzkthlyvH2AFQhiMAbkOJE478Z4VZstBIJOgIo7Cyhx4CwEgbQonm55OWV+zijrs/1BpuWVfzbGWiLrZyDngOfH65JwEIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEqzUNMI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djhD5jz+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8DEC4CEE3;
-	Thu,  3 Jul 2025 14:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEqzUNMI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D006C4CEF4;
+	Thu,  3 Jul 2025 14:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554523;
-	bh=feHzV9NyIThka6vQt7pvM6uryLWZT/F/cp3ldug5ANw=;
+	s=korg; t=1751554525;
+	bh=afVwmdCmkWrXWpkavnunVRlvNGEf5EjK7G72MaiWVjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=djhD5jz+L5xkHL1hHCENM1T/x3IVMmPgM2ASKjCsAt++i4mBVO4KIyQ+r+rF9RZP7
-	 QgdaeuUSFfmBgulO+5zIbRZ0la49Jquxusi57MH/ov4AT1dR5szLWVN88WBVBW0y2X
-	 5XyFNQHwFuIr9gCcxROig7HVxHuOEPgCCoUNef/Q=
+	b=uEqzUNMImNggoHlBe7P/zsq+jV2Cc4OB7kepWyRlfI0yBN0Z7YOihqhyq4dcy+IYl
+	 7FOw05bQOv1Ycie+Hf4OvvCmBhlCga0N3sb7zd7n2zFoT92ckRniwm8ra7rmtOraxQ
+	 FuDEkwVIOiqYCMr0SSnA71wnJ2xiXkZ9hw02HUak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kevin Hao <haokexin@gmail.com>,
 	Han Xu <han.xu@nxp.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 214/218] spi: fsl-qspi: Support per spi-mem operation frequency switches
-Date: Thu,  3 Jul 2025 16:42:42 +0200
-Message-ID: <20250703144004.770632423@linuxfoundation.org>
+Subject: [PATCH 6.12 215/218] spi: fsl-qspi: use devm function instead of driver remove
+Date: Thu,  3 Jul 2025 16:42:43 +0200
+Message-ID: <20250703144004.808517525@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -52,73 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Han Xu <han.xu@nxp.com>
 
-[ Upstream commit 2438db5253eb17a7c0ccb15aea4252a150dda057 ]
+[ Upstream commit 40369bfe717e96e26650eeecfa5a6363563df6e4 ]
 
-Every ->exec_op() call correctly configures the spi bus speed to the
-maximum allowed frequency for the memory using the constant spi default
-parameter. Since we can now have per-operation constraints, let's use
-the value that comes from the spi-mem operation structure instead. In
-case there is no specific limitation for this operation, the default spi
-device value will be given anyway.
+Driver use devm APIs to manage clk/irq/resources and register the spi
+controller, but the legacy remove function will be called first during
+device detach and trigger kernel panic. Drop the remove function and use
+devm_add_action_or_reset() for driver cleanup to ensure the release
+sequence.
 
-The per-operation frequency capability is thus advertised to the spi-mem
-core.
+Trigger kernel panic on i.MX8MQ by
+echo 30bb0000.spi >/sys/bus/platform/drivers/fsl-quadspi/unbind
 
-Cc: Han Xu <han.xu@nxp.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20241224-winbond-6-11-rc1-quad-support-v2-8-ad218dbc406f@bootlin.com
+Cc: stable@vger.kernel.org
+Fixes: 8fcb830a00f0 ("spi: spi-fsl-qspi: use devm_spi_register_controller")
+Reported-by: Kevin Hao <haokexin@gmail.com>
+Signed-off-by: Han Xu <han.xu@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20250326224152.2147099-1-han.xu@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-qspi.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/spi/spi-fsl-qspi.c | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/spi/spi-fsl-qspi.c b/drivers/spi/spi-fsl-qspi.c
-index 79bac30e79af6..ce86f44b0e93f 100644
+index ce86f44b0e93f..5c59fddb32c1b 100644
 --- a/drivers/spi/spi-fsl-qspi.c
 +++ b/drivers/spi/spi-fsl-qspi.c
-@@ -522,9 +522,10 @@ static void fsl_qspi_invalidate(struct fsl_qspi *q)
- 	qspi_writel(q, reg, q->iobase + QUADSPI_MCR);
- }
- 
--static void fsl_qspi_select_mem(struct fsl_qspi *q, struct spi_device *spi)
-+static void fsl_qspi_select_mem(struct fsl_qspi *q, struct spi_device *spi,
-+				const struct spi_mem_op *op)
- {
--	unsigned long rate = spi->max_speed_hz;
-+	unsigned long rate = op->max_freq;
- 	int ret;
- 
- 	if (q->selected == spi_get_chipselect(spi, 0))
-@@ -652,7 +653,7 @@ static int fsl_qspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
- 	fsl_qspi_readl_poll_tout(q, base + QUADSPI_SR, (QUADSPI_SR_IP_ACC_MASK |
- 				 QUADSPI_SR_AHB_ACC_MASK), 10, 1000);
- 
--	fsl_qspi_select_mem(q, mem->spi);
-+	fsl_qspi_select_mem(q, mem->spi, op);
- 
- 	if (needs_amba_base_offset(q))
- 		addr_offset = q->memmap_phy;
-@@ -839,6 +840,10 @@ static const struct spi_controller_mem_ops fsl_qspi_mem_ops = {
- 	.get_name = fsl_qspi_get_name,
+@@ -844,6 +844,19 @@ static const struct spi_controller_mem_caps fsl_qspi_mem_caps = {
+ 	.per_op_freq = true,
  };
  
-+static const struct spi_controller_mem_caps fsl_qspi_mem_caps = {
-+	.per_op_freq = true,
-+};
++static void fsl_qspi_cleanup(void *data)
++{
++	struct fsl_qspi *q = data;
++
++	/* disable the hardware */
++	qspi_writel(q, QUADSPI_MCR_MDIS_MASK, q->iobase + QUADSPI_MCR);
++	qspi_writel(q, 0x0, q->iobase + QUADSPI_RSER);
++
++	fsl_qspi_clk_disable_unprep(q);
++
++	mutex_destroy(&q->lock);
++}
 +
  static int fsl_qspi_probe(struct platform_device *pdev)
  {
  	struct spi_controller *ctlr;
-@@ -923,6 +928,7 @@ static int fsl_qspi_probe(struct platform_device *pdev)
- 	ctlr->bus_num = -1;
- 	ctlr->num_chipselect = 4;
- 	ctlr->mem_ops = &fsl_qspi_mem_ops;
-+	ctlr->mem_caps = &fsl_qspi_mem_caps;
+@@ -934,6 +947,10 @@ static int fsl_qspi_probe(struct platform_device *pdev)
  
- 	fsl_qspi_default_setup(q);
+ 	ctlr->dev.of_node = np;
+ 
++	ret = devm_add_action_or_reset(dev, fsl_qspi_cleanup, q);
++	if (ret)
++		goto err_destroy_mutex;
++
+ 	ret = devm_spi_register_controller(dev, ctlr);
+ 	if (ret)
+ 		goto err_destroy_mutex;
+@@ -953,19 +970,6 @@ static int fsl_qspi_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-static void fsl_qspi_remove(struct platform_device *pdev)
+-{
+-	struct fsl_qspi *q = platform_get_drvdata(pdev);
+-
+-	/* disable the hardware */
+-	qspi_writel(q, QUADSPI_MCR_MDIS_MASK, q->iobase + QUADSPI_MCR);
+-	qspi_writel(q, 0x0, q->iobase + QUADSPI_RSER);
+-
+-	fsl_qspi_clk_disable_unprep(q);
+-
+-	mutex_destroy(&q->lock);
+-}
+-
+ static int fsl_qspi_suspend(struct device *dev)
+ {
+ 	return 0;
+@@ -1003,7 +1007,6 @@ static struct platform_driver fsl_qspi_driver = {
+ 		.pm =   &fsl_qspi_pm_ops,
+ 	},
+ 	.probe          = fsl_qspi_probe,
+-	.remove_new	= fsl_qspi_remove,
+ };
+ module_platform_driver(fsl_qspi_driver);
  
 -- 
 2.39.5
