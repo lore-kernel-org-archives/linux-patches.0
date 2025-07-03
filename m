@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0962D6622;
-	Thu,  3 Jul 2025 15:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A525F1E9B3D;
+	Thu,  3 Jul 2025 15:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555385; cv=none; b=Xdm8QTrqgidE4gSirmnClZ9/lyMP6jqpdLM7xz3l+jeyy/fYNfDhm21aH93ekAzAC1mfzwpn72lJAvxUzkif0Ai1VTwHm3Lu0++VAui5skUlUG5UNkD+VqrsbdkrMF8PqhjzLCMwLw4xrpnvm6/FVyXYBQpQnnWpq4aqqy16PbM=
+	t=1751555387; cv=none; b=tkRD1PHGZRWgjt8BGjWFRHnCn6kaWKONwEhHdnrUPQGLHP/SXO2r2T7vFJfRXoyb0oAJUmDjFTevnl0i9oiWabB9p64XreuixuTsupyAN+xyQ3n15DlkEEPxtk95zcEzQvg7oyojxFUhJMr+ilQcUQsJNYdahozQeR1KrCz7YUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555385; c=relaxed/simple;
-	bh=JL1p0OughA70vS6gOavd5/ngFA5/QuFmaH7IL16+h4o=;
+	s=arc-20240116; t=1751555387; c=relaxed/simple;
+	bh=cX6UzEiUD4oBLRkoH7DZt4nbz816TKQTKcuxiOOMA9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WImiudLrPDGYlwG4wsXC61vrd4Dtg4AbsOfoFczAkIyTBhqPVIalmOkgvUJTdboZR8zJXh2B6ZOlwURWg/uNPElcyYgkKpiyZLlBQLgTUTJ6FrGvVyfCIYBlVOPQvngtt4tx2dOCkoFMWYViJrWXNRVbmeGRZjOl5/O/Jn521jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lc5tY9Ff; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cMgl1f+6SrG2GsWz/XPppOGHSqhjn0WQx4rAL5K/Cy2C3MRXpp1d9kZYZSh8hWtBAANvpzv8I6hq9Hfbf2aQVINSPqFsSK0FAkRf+PzfU1MuVsajvKZ6FSgVyECx/7Pvpr2Jz/XDQG6BBEs5sk5Ott83fGhfJjaspU0k9gMGdA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=of8Ajnvs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lc5tY9Ff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D4EC4CEE3;
-	Thu,  3 Jul 2025 15:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="of8Ajnvs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D16C4CEE3;
+	Thu,  3 Jul 2025 15:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555384;
-	bh=JL1p0OughA70vS6gOavd5/ngFA5/QuFmaH7IL16+h4o=;
+	s=korg; t=1751555387;
+	bh=cX6UzEiUD4oBLRkoH7DZt4nbz816TKQTKcuxiOOMA9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lc5tY9Ff0zEoxGhADXavhgVedOJ29D3h0TjwkzNbXVbW3jSSXGcn2oT9NPZiob0xY
-	 f1k3/SdutazPyDVH2esEdX+MaMZV7xKzpV2JEV7gcoTWx4beuL5arpD1dqxPpbVMZM
-	 DDV9JSDL2Rl2hVRpkHMYA3DyPWhM1YNWuOmFokpM=
+	b=of8AjnvsXLA2NXcL3/D117ePbZj7D5vljOWoDcn+bS3+Symhj/Ect2LOJ6ybiCp33
+	 3+xB05ypmNuM/9ySqb3KfFgO/TJopi05SscN13L5KLQ3L0oXStAkrWY8qzXT1RdzO0
+	 aPxksMf/8O511fhpoasiPFB1TmAka5oFbx8teiOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.15 231/263] drm/xe: Fix taking invalid lock on wedge
-Date: Thu,  3 Jul 2025 16:42:31 +0200
-Message-ID: <20250703144013.659956886@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Zhongwei Zhang <Zhongwei.Zhang@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.15 222/263] drm/amd/display: Correct non-OLED pre_T11_delay.
+Date: Thu,  3 Jul 2025 16:42:22 +0200
+Message-ID: <20250703144013.282783333@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -50,70 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Zhongwei Zhang <Zhongwei.Zhang@amd.com>
 
-commit 1e1981b16bb1bbe2fafa57ed439b45cb5b34e32d upstream.
+commit 893f07452bca56ff146a6be02b3294a9ea23d18a upstream.
 
-If device wedges on e.g. GuC upload, the submission is not yet enabled
-and the state is not even initialized. Protect the wedge call so it does
-nothing in this case. It fixes the following splat:
+[Why]
+Only OLED panels require non-zero pre_T11_delay defaultly.
+Others should be controlled by power sequence.
 
-	[] xe 0000:bf:00.0: [drm] device wedged, needs recovery
-	[] ------------[ cut here ]------------
-	[] DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-	[] WARNING: CPU: 48 PID: 312 at kernel/locking/mutex.c:564 __mutex_lock+0x8a1/0xe60
-	...
-	[] RIP: 0010:__mutex_lock+0x8a1/0xe60
-	[]  mutex_lock_nested+0x1b/0x30
-	[]  xe_guc_submit_wedge+0x80/0x2b0 [xe]
+[How]
+For non OLED, pre_T11_delay delay in code should be zero.
+Also post_T7_delay.
 
-Reviewed-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Link: https://lore.kernel.org/r/20250402-warn-after-wedge-v1-1-93e971511fa5@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Signed-off-by: Zhongwei Zhang <Zhongwei.Zhang@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_guc_submit.c |    9 +++++++++
- drivers/gpu/drm/xe/xe_guc_types.h  |    5 +++++
- 2 files changed, 14 insertions(+)
+ drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -311,6 +311,8 @@ int xe_guc_submit_init(struct xe_guc *gu
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -952,8 +952,8 @@ void dce110_edp_backlight_control(
+ 	struct dc_context *ctx = link->ctx;
+ 	struct bp_transmitter_control cntl = { 0 };
+ 	uint8_t pwrseq_instance = 0;
+-	unsigned int pre_T11_delay = OLED_PRE_T11_DELAY;
+-	unsigned int post_T7_delay = OLED_POST_T7_DELAY;
++	unsigned int pre_T11_delay = (link->dpcd_sink_ext_caps.bits.oled ? OLED_PRE_T11_DELAY : 0);
++	unsigned int post_T7_delay = (link->dpcd_sink_ext_caps.bits.oled ? OLED_POST_T7_DELAY : 0);
  
- 	primelockdep(guc);
- 
-+	guc->submission_state.initialized = true;
-+
- 	return drmm_add_action_or_reset(&xe->drm, guc_submit_fini, guc);
+ 	if (dal_graphics_object_id_get_connector_id(link->link_enc->connector)
+ 		!= CONNECTOR_ID_EDP) {
+@@ -1069,7 +1069,8 @@ void dce110_edp_backlight_control(
+ 	if (!enable) {
+ 		/*follow oem panel config's requirement*/
+ 		pre_T11_delay += link->panel_config.pps.extra_pre_t11_ms;
+-		msleep(pre_T11_delay);
++		if (pre_T11_delay)
++			msleep(pre_T11_delay);
+ 	}
  }
  
-@@ -845,6 +847,13 @@ void xe_guc_submit_wedge(struct xe_guc *
- 
- 	xe_gt_assert(guc_to_gt(guc), guc_to_xe(guc)->wedged.mode);
- 
-+	/*
-+	 * If device is being wedged even before submission_state is
-+	 * initialized, there's nothing to do here.
-+	 */
-+	if (!guc->submission_state.initialized)
-+		return;
-+
- 	err = devm_add_action_or_reset(guc_to_xe(guc)->drm.dev,
- 				       guc_submit_wedged_fini, guc);
- 	if (err) {
---- a/drivers/gpu/drm/xe/xe_guc_types.h
-+++ b/drivers/gpu/drm/xe/xe_guc_types.h
-@@ -89,6 +89,11 @@ struct xe_guc {
- 		struct mutex lock;
- 		/** @submission_state.enabled: submission is enabled */
- 		bool enabled;
-+		/**
-+		 * @submission_state.initialized: mark when submission state is
-+		 * even initialized - before that not even the lock is valid
-+		 */
-+		bool initialized;
- 		/** @submission_state.fini_wq: submit fini wait queue */
- 		wait_queue_head_t fini_wq;
- 	} submission_state;
 
 
