@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9A42F2341;
-	Thu,  3 Jul 2025 15:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5442F2F2370;
+	Thu,  3 Jul 2025 15:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556052; cv=none; b=ARV3+aw8Mp85uBRreeRYSIvIddznjfpHJOoB/kJunobpvqeo4QJNrQshX1FdhpdZw1BkP3/S5EKbQdYU1BRyAtB4MiFuAv7ujNJK8sIpbudn7hyknn4TLG79H+QVqahAI3RsBxZ37jHVs8GdeD7zQN9cLJvMHB8s/0Q6lh2AbfM=
+	t=1751556055; cv=none; b=b/d4pfdKW9DDxaKQxwRUXZIxZ1UBBZGvrFLtR3PU4KwyfkN+lrBfoRY7trZZ7koSeI895f/yESGgYI2KqLd1V7uDSRhFV60pbdgt77sWAswGxXvdE/qaISjU3a8kH93HWroKjTSwSrGMf5PMdZn2LOmwkBsw2QkOnu8pvUr/NNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556052; c=relaxed/simple;
-	bh=WLo4my6rQIfmzg+eaIsVjMY/hL//WUQOj/CaqvkIZIg=;
+	s=arc-20240116; t=1751556055; c=relaxed/simple;
+	bh=9Vjnu34MEhf81t8P7A88O7sUCbhfkKPYWXBCaGdpmj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WOnHKERZO+1OE0E8JL5a4Z8ACI5dVoC3hMxO/w5CgH80/jvm6A1/nCRE6VjvFaI0d/FBNfdgnDbNIlHA8IV1VFyhu2Mz0iAhxm0KKNJW0j4lsWS/LrtmTOIU/3VYKRV6YmmK4eYrgyoTnKbEhWAg1v5tYeQwVPkg4kYVnbaGyBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZdNOF+D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WcJdPUvpycpnxtj0/15N8j5uXt/xpQ2jPJdCUxApYkHimm8ANz4ew/qAOZ2jdYelR2/BLqh5/Ps0vjB16D9MT0xoUqWN0Z4Mqh9/B7c8Nrdf0QfmrkpvaU5SCvo+rYCrpl83wvrPWshRO9GVfNESED6VlG2CNvBXfen4aNlArpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJzhz1vW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZdNOF+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B03C4CEF4;
-	Thu,  3 Jul 2025 15:20:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJzhz1vW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FB1C4CEED;
+	Thu,  3 Jul 2025 15:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556051;
-	bh=WLo4my6rQIfmzg+eaIsVjMY/hL//WUQOj/CaqvkIZIg=;
+	s=korg; t=1751556055;
+	bh=9Vjnu34MEhf81t8P7A88O7sUCbhfkKPYWXBCaGdpmj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FZdNOF+D2+fsc0MJe4bGHWVcqwR5YEs+T4tthnN6VwsLu/mzcYap/DIv2+tK0h8mI
-	 qF5MQXPTHU98vT6XXnLM/sgSYVFLCGeS0x2QehuIEwp9KRaelCzGCtjE8rx+mz9PPY
-	 X51rkQfJKRwhDXAkVjUkpapUmpXfCskrwYt3hd3Y=
+	b=fJzhz1vWixcE8y+gq8BcFYBjqMyWyH66PoyElnfIYMlgBRovsb6KwIXF5vAwQBYXr
+	 1FYMTBKN9h0iVevx7Dx0lsqmEr626JM8qZ8ttJfIfpLskXOCknX16iVVCZPZe91kfH
+	 ki+U0IXU1qmpJ3ma/5t5Gc0G2CiKGS7HwKVJZ2TU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Long Li <longli@microsoft.com>,
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/132] Drivers: hv: vmbus: Add utility function for querying ring size
-Date: Thu,  3 Jul 2025 16:42:27 +0200
-Message-ID: <20250703143941.698791703@linuxfoundation.org>
+Subject: [PATCH 6.1 030/132] usb: typec: mux: do not return on EOPNOTSUPP in {mux, switch}_set
+Date: Thu,  3 Jul 2025 16:41:59 +0200
+Message-ID: <20250703143940.591629362@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -51,92 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurabh Sengar <ssengar@linux.microsoft.com>
+From: Michael Grzeschik <m.grzeschik@pengutronix.de>
 
-[ Upstream commit e8c4bd6c6e6b7e7b416c42806981c2a81370001e ]
+[ Upstream commit 0f7bbef1794dc87141897f804e5871a293aa174b ]
 
-Add a function to query for the preferred ring buffer size of VMBus
-device. This will allow the drivers (eg. UIO) to allocate the most
-optimized ring buffer size for devices.
+Since the typec connectors can have many muxes or switches for different
+lanes (sbu, usb2, usb3) going into different modal states (usb2, usb3,
+audio, debug) all of them will be called on typec_switch_set and
+typec_mux_set. But not all of them will be handling the expected mode.
 
-Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Reviewed-by: Long Li <longli@microsoft.com>
-Link: https://lore.kernel.org/r/1711788723-8593-2-git-send-email-ssengar@linux.microsoft.com
+If one of the mux or switch will come back with EOPTNOSUPP this is no
+reason to stop running through the next ones. Therefor we skip this
+particular error value and continue calling the next.
+
+Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250404-ml-topic-typec-mux-v1-1-22c0526381ba@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 0315fef2aff9 ("uio_hv_generic: Align ring size to system page")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/channel_mgmt.c | 15 ++++++++++++---
- drivers/hv/hyperv_vmbus.h |  5 +++++
- include/linux/hyperv.h    |  2 ++
- 3 files changed, 19 insertions(+), 3 deletions(-)
+ drivers/usb/typec/mux.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
-index d95e567a190d2..25e2958923af9 100644
---- a/drivers/hv/channel_mgmt.c
-+++ b/drivers/hv/channel_mgmt.c
-@@ -120,7 +120,9 @@ const struct vmbus_device vmbus_devs[] = {
- 	},
+diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
+index 941735c731619..a74f8e1a28c21 100644
+--- a/drivers/usb/typec/mux.c
++++ b/drivers/usb/typec/mux.c
+@@ -214,7 +214,7 @@ int typec_switch_set(struct typec_switch *sw,
+ 		sw_dev = sw->sw_devs[i];
  
- 	/* File copy */
--	{ .dev_type = HV_FCOPY,
-+	/* fcopy always uses 16KB ring buffer size and is working well for last many years */
-+	{ .pref_ring_size = 0x4000,
-+	  .dev_type = HV_FCOPY,
- 	  HV_FCOPY_GUID,
- 	  .perf_device = false,
- 	  .allowed_in_isolated = false,
-@@ -140,12 +142,19 @@ const struct vmbus_device vmbus_devs[] = {
- 	  .allowed_in_isolated = false,
- 	},
+ 		ret = sw_dev->set(sw_dev, orientation);
+-		if (ret)
++		if (ret && ret != -EOPNOTSUPP)
+ 			return ret;
+ 	}
  
--	/* Unknown GUID */
--	{ .dev_type = HV_UNKNOWN,
-+	/*
-+	 * Unknown GUID
-+	 * 64 KB ring buffer + 4 KB header should be sufficient size for any Hyper-V device apart
-+	 * from HV_NIC and HV_SCSI. This case avoid the fallback for unknown devices to allocate
-+	 * much bigger (2 MB) of ring size.
-+	 */
-+	{ .pref_ring_size = 0x11000,
-+	  .dev_type = HV_UNKNOWN,
- 	  .perf_device = false,
- 	  .allowed_in_isolated = false,
- 	},
- };
-+EXPORT_SYMBOL_GPL(vmbus_devs);
+@@ -421,7 +421,7 @@ int typec_mux_set(struct typec_mux *mux, struct typec_mux_state *state)
+ 		mux_dev = mux->mux_devs[i];
  
- static const struct {
- 	guid_t guid;
-diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
-index 4cff3997c3ccd..f039b110e98ce 100644
---- a/drivers/hv/hyperv_vmbus.h
-+++ b/drivers/hv/hyperv_vmbus.h
-@@ -412,6 +412,11 @@ static inline bool hv_is_perf_channel(struct vmbus_channel *channel)
- 	return vmbus_devs[channel->device_id].perf_device;
- }
+ 		ret = mux_dev->set(mux_dev, state);
+-		if (ret)
++		if (ret && ret != -EOPNOTSUPP)
+ 			return ret;
+ 	}
  
-+static inline size_t hv_dev_ring_size(struct vmbus_channel *channel)
-+{
-+	return vmbus_devs[channel->device_id].pref_ring_size;
-+}
-+
- static inline bool hv_is_allocated_cpu(unsigned int cpu)
- {
- 	struct vmbus_channel *channel, *sc;
-diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-index 80d876593caa9..43f778b6b9cda 100644
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -820,6 +820,8 @@ struct vmbus_requestor {
- #define VMBUS_RQST_RESET (U64_MAX - 3)
- 
- struct vmbus_device {
-+	/* preferred ring buffer size in KB, 0 means no preferred size for this device */
-+	size_t pref_ring_size;
- 	u16  dev_type;
- 	guid_t guid;
- 	bool perf_device;
 -- 
 2.39.5
 
