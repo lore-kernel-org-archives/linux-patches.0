@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC1A2D4B63;
-	Thu,  3 Jul 2025 15:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E982EE97A;
+	Thu,  3 Jul 2025 15:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554803; cv=none; b=ZieH0uGNeZDIoeL96pykQ80rhjxtj1P+w8hbFD4cV2PzB73g7uZdYr2YTBQ/36zcDwA2Y4zz4Ygx190qJrwKM19WdqyX4XmLQiwQM0MjlOuxNAUciGqoYedh4GgrHBzrE+2JBLmEM8eJboWNbFzuQt6P9uozPsDwpC2qaAFdkEo=
+	t=1751554806; cv=none; b=ZMPUy1pUWl7OtxMXD5h7Qf+mCgW6wdLIzU1wOc58e6Kpl/aHALBJoyV8BWbzlh39m8vycxdjlmGXLeHcW/VmuCCKvj/BKtH2eR9pra8QI8RK9hQtw3oTlbLuf+iiPFvqbhz/0PeadnSQnSiEBNhedDbEfoq4KYwt0Yp1RbkJ6ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554803; c=relaxed/simple;
-	bh=v5Fq4TJMeZZVoYsCBNlouL1uqdsgUkNBbwc9bVQATLI=;
+	s=arc-20240116; t=1751554806; c=relaxed/simple;
+	bh=vhZc/w+90Dj3AW4lWaPnaOMKWEI1jIU4WjpUyu00iUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CcaPnAOZfyYLf69N3wfow8tyHGoiN8S+/9AAnb8/cBLoX8HWIKAg+gD4DzwuU/75Tx1Aq2NQopGepBysXvbOs2Zvht4P7g4/3rB2H4m0UjpraQg0YQh3I0TeUzll1v/GYxKt9GEDHJ0jXqMrj3OA1ZezLxtqlwODDnftZnz5ck0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1p2fzBPB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ebRsdHN6uNQGEZTmI8gI3Q5Lmg+lneyTZjFa7E/UX4nQM3EaXjk0dyNaG+d5PkSOSAejWmNcZV0Zf7ZNs27TWf7uogeh3pHfGhCIT0aIwh+d5zNLv/9ivjy1VhYMi7FQa4TzlTBqFXFq/Ne606v0PQz2nBqwRpjMUGxZJ2BEFP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFA6CYdj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1p2fzBPB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A656C4CEE3;
-	Thu,  3 Jul 2025 15:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFA6CYdj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CEA7C4CEE3;
+	Thu,  3 Jul 2025 15:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554802;
-	bh=v5Fq4TJMeZZVoYsCBNlouL1uqdsgUkNBbwc9bVQATLI=;
+	s=korg; t=1751554805;
+	bh=vhZc/w+90Dj3AW4lWaPnaOMKWEI1jIU4WjpUyu00iUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1p2fzBPB7cTfNhXs0AM7kGmo3BlrBkwlr02FljjSxWwgvyDYvgVqVUbSUOgA/NC0W
-	 BfjX9YwzlYOd4OqEXkpiZSyUbpFiAmfHePG0IK3S4osq7zT/FNWAKSXSl9yVp1FD8Q
-	 ppPdo8V8IvozmNVYFmpZoL1CUG0OrkWczyHP6In0=
+	b=uFA6CYdjCWPDDyH1rx22Q83iF64FWXSzV9c8Tg6oKKQMFVSlp6xb9MZ5MIz1nuPRP
+	 U3/tkUxCOaWfPXvDm2Ubf62NImMyBKuzN+uG+ha2WpwSn31vhOb3ryzlyim9G+PpqE
+	 4ph8yqBITEkYt+rRlND36je8y6MF/fCIrWq79SK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 083/263] btrfs: fix qgroup reservation leak on failure to allocate ordered extent
-Date: Thu,  3 Jul 2025 16:40:03 +0200
-Message-ID: <20250703144007.631919963@linuxfoundation.org>
+Subject: [PATCH 6.15 084/263] media: uvcvideo: Keep streaming state in the file handle
+Date: Thu,  3 Jul 2025 16:40:04 +0200
+Message-ID: <20250703144007.673120248@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -53,62 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 1f2889f5594a2bc4c6a52634c4a51b93e785def5 ]
+[ Upstream commit 14f6e205e5599c2217b68c05b903ce162e7c1e27 ]
 
-If we fail to allocate an ordered extent for a COW write we end up leaking
-a qgroup data reservation since we called btrfs_qgroup_release_data() but
-we didn't call btrfs_qgroup_free_refroot() (which would happen when
-running the respective data delayed ref created by ordered extent
-completion or when finishing the ordered extent in case an error happened).
+Add a variable in the file handle state to figure out if a camera is in
+the streaming state or not. This variable will be used in the future for
+power management policies.
 
-So make sure we call btrfs_qgroup_free_refroot() if we fail to allocate an
-ordered extent for a COW write.
+Now that we are at it, make use of guards to simplify the code.
 
-Fixes: 7dbeaad0af7d ("btrfs: change timing for qgroup reserved space for ordered extents to fix reserved space leak")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Message-ID: <20250327-uvc-granpower-ng-v6-1-35a2357ff348@chromium.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Stable-dep-of: a70705d3c020 ("media: uvcvideo: Rollback non processed entities on error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ordered-data.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/media/usb/uvc/uvc_v4l2.c | 18 +++++++++++++-----
+ drivers/media/usb/uvc/uvcvideo.h |  1 +
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/ordered-data.c b/fs/btrfs/ordered-data.c
-index f61b0bb1faccf..1d7ddd664c0d3 100644
---- a/fs/btrfs/ordered-data.c
-+++ b/fs/btrfs/ordered-data.c
-@@ -153,9 +153,10 @@ static struct btrfs_ordered_extent *alloc_ordered_extent(
- 	struct btrfs_ordered_extent *entry;
- 	int ret;
- 	u64 qgroup_rsv = 0;
-+	const bool is_nocow = (flags &
-+	       ((1U << BTRFS_ORDERED_NOCOW) | (1U << BTRFS_ORDERED_PREALLOC)));
+diff --git a/drivers/media/usb/uvc/uvc_v4l2.c b/drivers/media/usb/uvc/uvc_v4l2.c
+index 39065db44e864..22886b47d81c2 100644
+--- a/drivers/media/usb/uvc/uvc_v4l2.c
++++ b/drivers/media/usb/uvc/uvc_v4l2.c
+@@ -841,11 +841,18 @@ static int uvc_ioctl_streamon(struct file *file, void *fh,
+ 	if (!uvc_has_privileges(handle))
+ 		return -EBUSY;
  
--	if (flags &
--	    ((1U << BTRFS_ORDERED_NOCOW) | (1U << BTRFS_ORDERED_PREALLOC))) {
-+	if (is_nocow) {
- 		/* For nocow write, we can release the qgroup rsv right now */
- 		ret = btrfs_qgroup_free_data(inode, NULL, file_offset, num_bytes, &qgroup_rsv);
- 		if (ret < 0)
-@@ -170,8 +171,13 @@ static struct btrfs_ordered_extent *alloc_ordered_extent(
- 			return ERR_PTR(ret);
- 	}
- 	entry = kmem_cache_zalloc(btrfs_ordered_extent_cache, GFP_NOFS);
--	if (!entry)
-+	if (!entry) {
-+		if (!is_nocow)
-+			btrfs_qgroup_free_refroot(inode->root->fs_info,
-+						  btrfs_root_id(inode->root),
-+						  qgroup_rsv, BTRFS_QGROUP_RSV_DATA);
- 		return ERR_PTR(-ENOMEM);
-+	}
+-	mutex_lock(&stream->mutex);
++	guard(mutex)(&stream->mutex);
++
++	if (handle->is_streaming)
++		return 0;
++
+ 	ret = uvc_queue_streamon(&stream->queue, type);
+-	mutex_unlock(&stream->mutex);
++	if (ret)
++		return ret;
  
- 	entry->file_offset = file_offset;
- 	entry->num_bytes = num_bytes;
+-	return ret;
++	handle->is_streaming = true;
++
++	return 0;
+ }
+ 
+ static int uvc_ioctl_streamoff(struct file *file, void *fh,
+@@ -857,9 +864,10 @@ static int uvc_ioctl_streamoff(struct file *file, void *fh,
+ 	if (!uvc_has_privileges(handle))
+ 		return -EBUSY;
+ 
+-	mutex_lock(&stream->mutex);
++	guard(mutex)(&stream->mutex);
++
+ 	uvc_queue_streamoff(&stream->queue, type);
+-	mutex_unlock(&stream->mutex);
++	handle->is_streaming = false;
+ 
+ 	return 0;
+ }
+diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
+index b4ee701835fc0..5ceb01e7831a8 100644
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -630,6 +630,7 @@ struct uvc_fh {
+ 	struct uvc_streaming *stream;
+ 	enum uvc_handle_state state;
+ 	unsigned int pending_async_ctrls;
++	bool is_streaming;
+ };
+ 
+ /* ------------------------------------------------------------------------
 -- 
 2.39.5
 
