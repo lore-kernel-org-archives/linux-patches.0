@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CA21AAA1C;
-	Thu,  3 Jul 2025 14:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF4F2E62CD;
+	Thu,  3 Jul 2025 14:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554419; cv=none; b=NCB+vi02yZxJj32VM911wDcNX0vSUKfAdaAaWjXhy2Q0D4vKq1el4GuCBzLZfDno6ko++oyYAyeCuE5DXA7eLEzN3Ikm13BKutMjjqP65eoMcxGQN6JIdXNU7TfwXQOQJ1WN/jrYEArx/FpW+OPykI66U0/b6wG/PO6OQlJW0Fw=
+	t=1751554421; cv=none; b=UgTFcGCrrBHj4ITDoBrEJJzK9AnHb6ijoYVSpDB48DfUF7vxnjB8vC0m1NQ7+JGwHpP9gxEhLH+gGS/yXmWr15MBmsumLaToH3uwmkjXvD4s1BxKNQgRjrm/99JLcna6pVcqgpIFwBU8Y3D5uKTCWgSEuJfP6WPXAWCCgbg47vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554419; c=relaxed/simple;
-	bh=uu2VlWvUkrbRgBXrvFMfCoAFqClTZ3H0HboRy7h5fwE=;
+	s=arc-20240116; t=1751554421; c=relaxed/simple;
+	bh=GVp8gRB+iV9NW7RTRdFIvuyIdmu7Go4AmO0jGJU3qps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E0xqM/hap63ScE0zrIW6LN2Wbu16G7INCAaYJ/t+4PiNijkixHG8KM5xpua/sNq6ike04reQBC4+r8Gs4A/leGkiAtM07FOlFSIIcOzcGFvWYSfFX4Pkse6WbUvHfwGig+U7ZAG8N6UysOlFDbu4CVaK/1Mj8WUIMSxdmIgcEQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8Yg7v0o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CoLHnbSCbZEgO6goOrmBkDChU9x9z282vMmOn4y0HTQ/7gK2KNeMcGpNLe4XLL37WIr9di5rTCx91K1EBzY3DaJkGsjYx/HNwZ+aYdB7kCE4G3wzyyTjm08KKmoakGs+BmJtOluGc7eXdFYZtATJvjejpo2+ZqsiPfTnQ5+qO98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaI/QaPU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8Yg7v0o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32375C4CEE3;
-	Thu,  3 Jul 2025 14:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaI/QaPU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05CA9C4CEE3;
+	Thu,  3 Jul 2025 14:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554418;
-	bh=uu2VlWvUkrbRgBXrvFMfCoAFqClTZ3H0HboRy7h5fwE=;
+	s=korg; t=1751554421;
+	bh=GVp8gRB+iV9NW7RTRdFIvuyIdmu7Go4AmO0jGJU3qps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K8Yg7v0oKP2D5LrAtPFpiSYMs1PWzupXdUxLMahEMZ+qgQrHInJaljVRtM3yzge6l
-	 EVyrOQ/HycNDvKsgUhJFCE1pLRx3dWx1PtPlHzXjutKKkvyBUSiNyeGrSgQhCxu82X
-	 NSZadipRQp2YkNygng1nYfn05JQCpJDIM/pr80Zo=
+	b=AaI/QaPUiZTBCM+Xub1ke5PC+bY1+tZOZAr2HopSRUMRV4kaPyUWxARWBscEp2RIs
+	 /57mtzeMVqI7GxyY61WohgmuKZ2gTOtCiAVXpFCY9yGKYuEBnUmoBr3pMxLr9cgPjB
+	 KRn2ukRYxRsVKvyANEjk2hAGT5rWoa0pZgBivOT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Penglei Jiang <superman.xpt@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 181/218] io_uring: fix potential page leak in io_sqe_buffer_register()
-Date: Thu,  3 Jul 2025 16:42:09 +0200
-Message-ID: <20250703144003.411401986@linuxfoundation.org>
+	syzbot+1d335893772467199ab6@syzkaller.appspotmail.com,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	David Hildenbrand <david@redhat.com>
+Subject: [PATCH 6.12 182/218] io_uring/rsrc: fix folio unpinning
+Date: Thu,  3 Jul 2025 16:42:10 +0200
+Message-ID: <20250703144003.457619541@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -50,52 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Penglei Jiang <superman.xpt@gmail.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-Commit e1c75831f682eef0f68b35723437146ed86070b1 upstream.
+Commit 5afb4bf9fc62d828647647ec31745083637132e4 upstream.
 
-If allocation of the 'imu' fails, then the existing pages aren't
-unpinned in the error path. This is mostly a theoretical issue,
-requiring fault injection to hit.
+syzbot complains about an unmapping failure:
 
-Move unpin_user_pages() to unified error handling to fix the page leak
-issue.
+[  108.070381][   T14] kernel BUG at mm/gup.c:71!
+[  108.070502][   T14] Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
+[  108.123672][   T14] Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20250221-8.fc42 02/21/2025
+[  108.127458][   T14] Workqueue: iou_exit io_ring_exit_work
+[  108.174205][   T14] Call trace:
+[  108.175649][   T14]  sanity_check_pinned_pages+0x7cc/0x7d0 (P)
+[  108.178138][   T14]  unpin_user_page+0x80/0x10c
+[  108.180189][   T14]  io_release_ubuf+0x84/0xf8
+[  108.182196][   T14]  io_free_rsrc_node+0x250/0x57c
+[  108.184345][   T14]  io_rsrc_data_free+0x148/0x298
+[  108.186493][   T14]  io_sqe_buffers_unregister+0x84/0xa0
+[  108.188991][   T14]  io_ring_ctx_free+0x48/0x480
+[  108.191057][   T14]  io_ring_exit_work+0x764/0x7d8
+[  108.193207][   T14]  process_one_work+0x7e8/0x155c
+[  108.195431][   T14]  worker_thread+0x958/0xed8
+[  108.197561][   T14]  kthread+0x5fc/0x75c
+[  108.199362][   T14]  ret_from_fork+0x10/0x20
 
-Fixes: d8c2237d0aa9 ("io_uring: add io_pin_pages() helper")
-Signed-off-by: Penglei Jiang <superman.xpt@gmail.com>
-Link: https://lore.kernel.org/r/20250617165644.79165-1-superman.xpt@gmail.com
+We can pin a tail page of a folio, but then io_uring will try to unpin
+the head page of the folio. While it should be fine in terms of keeping
+the page actually alive, mm folks say it's wrong and triggers a debug
+warning. Use unpin_user_folio() instead of unpin_user_page*.
+
+Cc: stable@vger.kernel.org
+Debugged-by: David Hildenbrand <david@redhat.com>
+Reported-by: syzbot+1d335893772467199ab6@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/683f1551.050a0220.55ceb.0017.GAE@google.com
+Fixes: a8edbb424b139 ("io_uring/rsrc: enable multi-hugepage buffer coalescing")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/io-uring/a28b0f87339ac2acf14a645dad1e95bbcbf18acd.1750771718.git.asml.silence@gmail.com/
+[axboe: adapt to current tree, massage commit message]
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rsrc.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ io_uring/rsrc.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 --- a/io_uring/rsrc.c
 +++ b/io_uring/rsrc.c
-@@ -983,10 +983,8 @@ static int io_sqe_buffer_register(struct
- 		goto done;
- 
- 	ret = io_buffer_account_pin(ctx, pages, nr_pages, imu, last_hpage);
--	if (ret) {
--		unpin_user_pages(pages, nr_pages);
-+	if (ret)
- 		goto done;
--	}
- 
- 	size = iov->iov_len;
- 	/* store original address for later verification */
-@@ -1010,8 +1008,11 @@ static int io_sqe_buffer_register(struct
- 		size -= vec_len;
- 	}
- done:
--	if (ret)
-+	if (ret) {
+@@ -119,8 +119,11 @@ static void io_buffer_unmap(struct io_ri
+ 	if (imu != &dummy_ubuf) {
+ 		if (!refcount_dec_and_test(&imu->refs))
+ 			return;
+-		for (i = 0; i < imu->nr_bvecs; i++)
+-			unpin_user_page(imu->bvec[i].bv_page);
++		for (i = 0; i < imu->nr_bvecs; i++) {
++			struct folio *folio = page_folio(imu->bvec[i].bv_page);
++
++			unpin_user_folio(folio, 1);
++		}
+ 		if (imu->acct_pages)
+ 			io_unaccount_mem(ctx, imu->acct_pages);
  		kvfree(imu);
-+		if (pages)
-+			unpin_user_pages(pages, nr_pages);
-+	}
+@@ -1010,8 +1013,10 @@ static int io_sqe_buffer_register(struct
+ done:
+ 	if (ret) {
+ 		kvfree(imu);
+-		if (pages)
+-			unpin_user_pages(pages, nr_pages);
++		if (pages) {
++			for (i = 0; i < nr_pages; i++)
++				unpin_user_folio(page_folio(pages[i]), 1);
++		}
+ 	}
  	kvfree(pages);
  	return ret;
- }
 
 
