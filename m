@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC272E7BD6;
-	Thu,  3 Jul 2025 15:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07602EA149;
+	Thu,  3 Jul 2025 15:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555093; cv=none; b=ao+trequImaSL51pLBHYNZcABQLSW8tsypFkEIe4m8SkxrLjOJ2XXcGx+Sc753E/cylRoe+YMRe3CSEbIQZz5FtjUXZ24+T/jcW90WkXmNh7EcC8QX0MKngsQeiwGwX78avotft6MCx//k5k3l3k9Zvw0BuvIfjJiHFHcnNDL7c=
+	t=1751555096; cv=none; b=rQM3u1lkmU/H3wWVhSqUx9f1BLaUuRp+XRX4zVsCerxZSAbrkR8Sl5FW1IBYqlLmMbOBa3nKVqZb8bTSwF5vqTbz+a4vRFdWFCU4UKtsLBI0zOpcMkgOQyjezc0GWthvbwi43I8Nl2Rq95Y2KvYLBo4OigglEp4v/77C8GrWejc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555093; c=relaxed/simple;
-	bh=x27GByyevSoXJ9NGiBEoUhihJxA70X3rU/t4n4ch6xk=;
+	s=arc-20240116; t=1751555096; c=relaxed/simple;
+	bh=7sm6wYlrVYK9rRnz0pyC0lKeCqwc19xFwmFde8GN8G4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mgl4eMZurzEumMn13mInefB27vVvL6M1VTOAbJgaGmo8eGXY7cMWs9+0EiDVcjxQgU0LjWCc1ji5mn4fc35Mrrgy2YX+lCsmRgMV4qTHUVeWvYfThpwFHI2QcI42xE3DS1WE7Uz1qU4ZzqBLLIc3+KHcZg+ufdpvyGUX+kp+TqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JT0X1Hc3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OAcBR++kqhOkd+/Ly2uEGUdBDXHFCmXi5JUQYljD3IThmKcWXLzDvkJ17siLFkyLrJpy/PWAHiQkyc7QXoyKe+3fgr+H+ddvmKAWJe/jaGnqZuKsFoor7Zy4+3Hsz51k0KMUQTiMoZiLV8Z3kG0gANyfv4low3fPGuJCY8TAJaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4RQ0E/+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JT0X1Hc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6DB5C4CEE3;
-	Thu,  3 Jul 2025 15:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4RQ0E/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC78C4CEE3;
+	Thu,  3 Jul 2025 15:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555093;
-	bh=x27GByyevSoXJ9NGiBEoUhihJxA70X3rU/t4n4ch6xk=;
+	s=korg; t=1751555096;
+	bh=7sm6wYlrVYK9rRnz0pyC0lKeCqwc19xFwmFde8GN8G4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JT0X1Hc3ioZawkYA1zSUPz3F1tMCSM+kjFasR77SGHvAlCeTID9gjmohWGlt8wpNa
-	 Dqx0oxhxyBm4TBr62D3Mebv57Eww4O9jwv5gNBDprV9VWvM0biR2bZOmBKzVd7H4+w
-	 U7W2e8D1NwHtmNJ4U18pVCUZ0p/kXG1aqBbSQfec=
+	b=g4RQ0E/+CEyHL6v8fUk5l2HWR3L1sdwPnXoa+Mqb0ta9yWRTGWsctpxAcPVH6wu/N
+	 jTreeX+KVXAG22SqpXRfZaJ5HOYCHQCiiBmnW6r83OqWxVGcjRS648va9Kn5T1MAFE
+	 209WK2mznL9vSUUS0hWWUKYiDeD3SGWQ6CPObxiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Yao Zi <ziyao@disroot.org>,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH 6.15 174/263] dt-bindings: serial: 8250: Make clocks and clock-frequency exclusive
-Date: Thu,  3 Jul 2025 16:41:34 +0200
-Message-ID: <20250703144011.326209267@linuxfoundation.org>
+	Aidan Stewart <astewart@tektelic.com>
+Subject: [PATCH 6.15 175/263] serial: core: restore of_node information in sysfs
+Date: Thu,  3 Jul 2025 16:41:35 +0200
+Message-ID: <20250703144011.364566973@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,51 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Zi <ziyao@disroot.org>
+From: Aidan Stewart <astewart@tektelic.com>
 
-commit 09812134071b3941fb81def30b61ed36d3a5dfb5 upstream.
+commit d36f0e9a0002f04f4d6dd9be908d58fe5bd3a279 upstream.
 
-The 8250 binding before converting to json-schema states,
+Since in v6.8-rc1, the of_node symlink under tty devices is
+missing. This breaks any udev rules relying on this information.
 
-  - clock-frequency : the input clock frequency for the UART
-  	or
-  - clocks phandle to refer to the clk used as per Documentation/devicetree
+Link the of_node information in the serial controller device with the
+parent defined in the device tree. This will also apply to the serial
+device which takes the serial controller as a parent device.
 
-for clock-related properties, where "or" indicates these properties
-shouldn't exist at the same time.
-
-Additionally, the behavior of Linux's driver is strange when both clocks
-and clock-frequency are specified: it ignores clocks and obtains the
-frequency from clock-frequency, left the specified clocks unclaimed. It
-may even be disabled, which is undesired most of the time.
-
-But "anyOf" doesn't prevent these two properties from coexisting, as it
-considers the object valid as long as there's at LEAST one match.
-
-Let's switch to "oneOf" and disallows the other property if one exists,
-precisely matching the original binding and avoiding future confusion on
-the driver's behavior.
-
-Fixes: e69f5dc623f9 ("dt-bindings: serial: Convert 8250 to json-schema")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Yao Zi <ziyao@disroot.org>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20250623093445.62327-1-ziyao@disroot.org
+Fixes: b286f4e87e32 ("serial: core: Move tty and serdev to be children of serial core port device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Aidan Stewart <astewart@tektelic.com>
+Link: https://lore.kernel.org/r/20250617164819.13912-1-astewart@tektelic.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/serial/8250.yaml |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/serial_base_bus.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Documentation/devicetree/bindings/serial/8250.yaml
-+++ b/Documentation/devicetree/bindings/serial/8250.yaml
-@@ -45,7 +45,7 @@ allOf:
-                   - ns16550
-                   - ns16550a
-     then:
--      anyOf:
-+      oneOf:
-         - required: [ clock-frequency ]
-         - required: [ clocks ]
+--- a/drivers/tty/serial/serial_base_bus.c
++++ b/drivers/tty/serial/serial_base_bus.c
+@@ -72,6 +72,7 @@ static int serial_base_device_init(struc
+ 	dev->parent = parent_dev;
+ 	dev->bus = &serial_base_bus_type;
+ 	dev->release = release;
++	device_set_of_node_from_dev(dev, parent_dev);
  
+ 	if (!serial_base_initialized) {
+ 		dev_dbg(port->dev, "uart_add_one_port() called before arch_initcall()?\n");
 
 
