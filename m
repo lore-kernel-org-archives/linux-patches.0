@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FA92EF299;
-	Thu,  3 Jul 2025 14:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885D519F43A;
+	Thu,  3 Jul 2025 14:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554249; cv=none; b=lVbmJH519LSYMmOyLIiyffkwlYSku7b6hkgSepBQdktG5UKpiQLU/uwTsRKx0RdRcP1iKAZd25a/ab0tEBndJpcpiBonr6/ng95Q8N8P5XWhKxg0qUNf4zQlkwyUEIPDzE1JEkrj4OdNynyg43PqIx2a/LpToMfKkVG65M4ihqs=
+	t=1751554252; cv=none; b=uoxr6MXVXvKhNGlBmvRyG6SLmQ/FwNq67Lbc/NXqWb6Yy6BE3VCSQJ4kr3j1bZ28Y3YlTaqRfWfbizEkFMbvD1XNv2WZJON0BUhq9lciDrNltKdMFLilVeSB6iTUOiGjCS758G2n2h9m60crDfpeSSpXHROdhgmgAlIJZIfhakw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554249; c=relaxed/simple;
-	bh=mDQZKwHq9ePQ2ttvA5BqtNHNbqPPHvAza63WtkTr+/E=;
+	s=arc-20240116; t=1751554252; c=relaxed/simple;
+	bh=6BIweqKezPx4x7XgeEqJfwbWt0x2XFtYFBX17rl09QU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lvRg2qp/vuQ1FzTZHDvbjT48vc5DV2jqlRPYz72npV7Y/Yzft5dmgQBxaC0TEmXT9CuF+cWJEjhLGc2kgrhwrGYPsPNlerUv5kDOkebktAXSqvMvqKD+lhnWqaHgdkjDJ/Fht2FOWBUs2TF3+AA+MmLvxyGPGrwpVcB7Xh7LRgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTxW9Zca; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tqbIvGqxlbMvGIkeFkNpDDrqIv+1WQyKE6vIB1TXLlDUmq48s3/PxY/Rq0JolcQYKk94Wh8tuHbIk5llG8OQ2BtLud77QOCbGlzfHscjTr4+QQyYgV7BstAWGS9qIVx7qKLLoFOd40Eb8jWmOgM0acP7P3erxwLEaR2vNNEpLoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZzClF3K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTxW9Zca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD62C4CEE3;
-	Thu,  3 Jul 2025 14:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZzClF3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAAEFC4CEE3;
+	Thu,  3 Jul 2025 14:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554249;
-	bh=mDQZKwHq9ePQ2ttvA5BqtNHNbqPPHvAza63WtkTr+/E=;
+	s=korg; t=1751554252;
+	bh=6BIweqKezPx4x7XgeEqJfwbWt0x2XFtYFBX17rl09QU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTxW9ZcaqCMUmK/A8VekLHPe9AOviFbhpDPM3ihKRL9IsaCcIba7b2UPDzwtHd8Vn
-	 ko3prVcZSd8zl0wUGUCUCQleqExbDJlyqf1rfcAOFnapFqKK/eDUPuc6fRerc9mQGD
-	 QqGTeoa1q+jC6yznZ9t/+RkwSo2YGLPg+E9PAWvE=
+	b=PZzClF3Ku5mgnF9SqrUvGvUtryzptfDOuWtj++Ex2gwVTYptB80wQv6fHzvdbmPmA
+	 rz4I3LD2wBTtx0Lk9M2C3XPREIpH3p4wAZ9gKjNbPsPejSQZqj0e1BtzWAa5jr2yNm
+	 mfqaUIi9Ak1TK/OWFjAsGrl1AfEzCWCheNAuiEEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Muna Sinada <muna.sinada@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/218] af_unix: Dont set -ECONNRESET for consumed OOB skb.
-Date: Thu,  3 Jul 2025 16:40:46 +0200
-Message-ID: <20250703143959.851294514@linuxfoundation.org>
+Subject: [PATCH 6.12 099/218] wifi: mac80211: Add link iteration macro for link data
+Date: Thu,  3 Jul 2025 16:40:47 +0200
+Message-ID: <20250703143959.895753859@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -52,97 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Muna Sinada <muna.sinada@oss.qualcomm.com>
 
-[ Upstream commit 2a5a4841846b079b5fca5752fe94e59346fbda40 ]
+[ Upstream commit f61c7b3d442bef91dd432d468d08f72eadcc3209 ]
 
-Christian Brauner reported that even after MSG_OOB data is consumed,
-calling close() on the receiver socket causes the peer's recv() to
-return -ECONNRESET:
+Currently before iterating through valid links we are utilizing
+open-coding when checking if vif valid_links is a non-zero value.
 
-  1. send() and recv() an OOB data.
+Add new macro, for_each_link_data(), which iterates through link_id
+and checks if it is set on vif valid_links. If it is a valid link then
+access link data for that link id.
 
-    >>> from socket import *
-    >>> s1, s2 = socketpair(AF_UNIX, SOCK_STREAM)
-    >>> s1.send(b'x', MSG_OOB)
-    1
-    >>> s2.recv(1, MSG_OOB)
-    b'x'
-
-  2. close() for s2 sets ECONNRESET to s1->sk_err even though
-     s2 consumed the OOB data
-
-    >>> s2.close()
-    >>> s1.recv(10, MSG_DONTWAIT)
-    ...
-    ConnectionResetError: [Errno 104] Connection reset by peer
-
-Even after being consumed, the skb holding the OOB 1-byte data stays in
-the recv queue to mark the OOB boundary and break recv() at that point.
-
-This must be considered while close()ing a socket.
-
-Let's skip the leading consumed OOB skb while checking the -ECONNRESET
-condition in unix_release_sock().
-
-Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-Reported-by: Christian Brauner <brauner@kernel.org>
-Closes: https://lore.kernel.org/netdev/20250529-sinkt-abfeuern-e7b08200c6b0@brauner/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Christian Brauner <brauner@kernel.org>
-Link: https://patch.msgid.link/20250619041457.1132791-4-kuni1840@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Muna Sinada <muna.sinada@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250325213125.1509362-2-muna.sinada@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: d87c3ca0f8f1 ("wifi: mac80211: finish link init before RCU publish")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ net/mac80211/ieee80211_i.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 2dfd3b70a7178..45f8e21829ecd 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -666,6 +666,11 @@ static void unix_sock_destructor(struct sock *sk)
- #endif
- }
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index bfe0514efca37..41e69e066b386 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -1209,6 +1209,15 @@ struct ieee80211_sub_if_data *vif_to_sdata(struct ieee80211_vif *p)
+ 	if ((_link = wiphy_dereference((local)->hw.wiphy,		\
+ 				       ___sdata->link[___link_id])))
  
-+static unsigned int unix_skb_len(const struct sk_buff *skb)
-+{
-+	return skb->len - UNIXCB(skb).consumed;
-+}
++#define for_each_link_data(sdata, __link)					\
++	struct ieee80211_sub_if_data *__sdata = sdata;				\
++	for (int __link_id = 0;							\
++	     __link_id < ARRAY_SIZE((__sdata)->link); __link_id++)		\
++		if ((!(__sdata)->vif.valid_links ||				\
++		     (__sdata)->vif.valid_links & BIT(__link_id)) &&		\
++		    ((__link) = sdata_dereference((__sdata)->link[__link_id],	\
++						  (__sdata))))
 +
- static void unix_release_sock(struct sock *sk, int embrion)
- {
- 	struct unix_sock *u = unix_sk(sk);
-@@ -700,10 +705,16 @@ static void unix_release_sock(struct sock *sk, int embrion)
- 
- 	if (skpair != NULL) {
- 		if (sk->sk_type == SOCK_STREAM || sk->sk_type == SOCK_SEQPACKET) {
-+			struct sk_buff *skb = skb_peek(&sk->sk_receive_queue);
-+
-+#if IS_ENABLED(CONFIG_AF_UNIX_OOB)
-+			if (skb && !unix_skb_len(skb))
-+				skb = skb_peek_next(skb, &sk->sk_receive_queue);
-+#endif
- 			unix_state_lock(skpair);
- 			/* No more writes */
- 			WRITE_ONCE(skpair->sk_shutdown, SHUTDOWN_MASK);
--			if (!skb_queue_empty_lockless(&sk->sk_receive_queue) || embrion)
-+			if (skb || embrion)
- 				WRITE_ONCE(skpair->sk_err, ECONNRESET);
- 			unix_state_unlock(skpair);
- 			skpair->sk_state_change(skpair);
-@@ -2594,11 +2605,6 @@ static long unix_stream_data_wait(struct sock *sk, long timeo,
- 	return timeo;
- }
- 
--static unsigned int unix_skb_len(const struct sk_buff *skb)
--{
--	return skb->len - UNIXCB(skb).consumed;
--}
--
- struct unix_stream_read_state {
- 	int (*recv_actor)(struct sk_buff *, int, int,
- 			  struct unix_stream_read_state *);
+ static inline int
+ ieee80211_get_mbssid_beacon_len(struct cfg80211_mbssid_elems *elems,
+ 				struct cfg80211_rnr_elems *rnr_elems,
 -- 
 2.39.5
 
