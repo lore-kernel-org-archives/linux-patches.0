@@ -1,75 +1,126 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 078071E5B7A
-	for <patches@lists.linux.dev>; Thu,  3 Jul 2025 20:12:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD7819CC3D
+	for <patches@lists.linux.dev>; Thu,  3 Jul 2025 20:17:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751573552; cv=none; b=tCiHtqU4ABzUjAoiUeXsfshNMxuUeePPebY5gTxQoehAGiHu1s7/S14x/JB9+5pixfE/HGHj1SB565WUGOOgeag8rO5CZ9P8HhEd46Fy09EhIB84E9O3M9KG/hnuCjul+10IS/TCZ4l7aqVgLtrBp3dP68EuHTyBEJQSSvvpMMQ=
+	t=1751573879; cv=none; b=snl1D4jwbz8BcqM8qn6OElLNf8mEQ/0QIHif0Vn2aFYqlCrKYkujYHYFy2VFGvaS8VDrcC+XlIqJaDtgsjdV4LDdYuW100sKsOCGKH9FYBNvbdrMNXJp4g42iBA6/LEINv0IGvh/ZjbiIOonnX8CZfQwIfWhrW/n32umpPec/hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751573552; c=relaxed/simple;
-	bh=gmh5ZoAgGsJKG8haTIpWu74Cwifbp8iS4hmC9GfBIAI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=IJ4+HcgjstZ7qp8rwdIjGk80YboCemk6X2jPOibPsnPuVDvlheEVzfT5r2pN2cBiT/bAs8W3q5osn6YHK3tzgkj07OB56z1SgHNfjA1O6YYHEnvqw5pb8Hl7kTrfdEs3pfYjGlasKCtTZ2v5Qu1U/fzlewVkyesrxohVOHX7ecg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=ls7eTFKZ; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1751573879; c=relaxed/simple;
+	bh=5Zc5AYO/w4IUy0DP1VkVLeKbvMqQ25BFVpD7sEhMVrc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SaJvCvxF5J4wAL3hfxv2lppvxmjWHdpGLbvE3JMS/kZQN5+MzjpBY+TgNomsx+r3mtvaoxYesKvtPvNHG5axYfGyXdl0Fhqr64aZ+C7xyVHWgZ/OG9IWQcaxCsrHRuuvHeoFt9UxNdPPpdsp83HUFe8oL4brzJagQxzcNfnTa5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QG7y0/9e; arc=none smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="ls7eTFKZ"
-Received: by linux.microsoft.com (Postfix, from userid 1158)
-	id 8D6F3201B1B1; Thu,  3 Jul 2025 13:12:30 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8D6F3201B1B1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1751573550;
-	bh=fXBcnpF5wIVxCrRcCZEh0GIQXdpGV1Dnj7t4XrnX4c4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ls7eTFKZsvKQoWNUQapIL/zkupcDpzjxGfr7c1sN7smhoClWtQu99/wGy7wBisfWu
-	 rozp01tvzgZmxExhvPH5k532LdMzj8zUf7+pC0KrohrXMBy+gHbU5aB1GKuhxJi+Od
-	 6QepbLaA+tnxDTYTSLGBBj84EBkFbnTaNH1KvgXU=
-From: Hardik Garg <hargar@linux.microsoft.com>
-To: gregkh@linuxfoundation.org
-Cc: akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	srw@sladewatkins.net,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org
-Subject: Re: [PATCH 6.15 000/263] 6.15.5-rc1 review
-Date: Thu,  3 Jul 2025 13:12:30 -0700
-Message-Id: <1751573550-30344-1-git-send-email-hargar@linux.microsoft.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
-References: <20250703144004.276210867@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QG7y0/9e"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1751573878; x=1783109878;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=5Zc5AYO/w4IUy0DP1VkVLeKbvMqQ25BFVpD7sEhMVrc=;
+  b=QG7y0/9eU5lOF/d9QD3aC87Yh9bJiCDRBPOXYDHof5OI0YF25gUpEHEd
+   idoYpuiar64FDkkY77no60zWNEr/Le52HCLg+n1GdC4g0xhBjwuTgIpXz
+   x46dxR5E1mplKzt4dNjVwBq6HAf+KbHYlInH6yt74UQgun2a4ae02y8rk
+   NetW47TcLfbYCggegbrB35T4mSdopFno6qwuGbzxacXxseYaoY2u0VFWM
+   +KyDkBR4+OAJ56iEv5nUOKpxI7UMsq5T+S6js1rW5FdKprQKft5aFRG35
+   E7dI/Q8QfGf5JzMMOpRW2yr5zmUWGptEk5p/fu93ZCSlEndXj+c59nYMF
+   w==;
+X-CSE-ConnectionGUID: /JamlvDuRB6Ccx+FvHhisg==
+X-CSE-MsgGUID: kUV58oqqR92L4uLUxksSKw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="71482988"
+X-IronPort-AV: E=Sophos;i="6.16,285,1744095600"; 
+   d="scan'208";a="71482988"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jul 2025 13:17:57 -0700
+X-CSE-ConnectionGUID: ah1uz+S5RxiXgleAzZFvkA==
+X-CSE-MsgGUID: 1ugZKt8JRj+M8STKY0E6Eg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,285,1744095600"; 
+   d="scan'208";a="158813004"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
+  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jul 2025 13:17:57 -0700
+Date: Thu, 3 Jul 2025 13:17:55 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghuay@nvidia.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v6 17/30] x86/resctrl: Discover hardware telemetry events
+Message-ID: <aGblc2VimjIiy_bY@agluck-desk3>
+References: <20250626164941.106341-1-tony.luck@intel.com>
+ <20250626164941.106341-18-tony.luck@intel.com>
+ <aF7dt2iQpvuahZil@agluck-desk3>
+ <eb6f7bc0-23ae-4100-9a34-fade6c650460@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <eb6f7bc0-23ae-4100-9a34-fade6c650460@intel.com>
 
-The kernel, bpf tool, and perf tool builds fine for v6.15.5-rc1 on x86 and arm64 Azure VM.
+On Thu, Jul 03, 2025 at 11:27:19AM -0700, Reinette Chatre wrote:
+> Hi Tony,
+> 
+> On 6/27/25 11:06 AM, Luck, Tony wrote:
+> > On Thu, Jun 26, 2025 at 09:49:26AM -0700, Tony Luck wrote:
+> >> diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+> >> index 71019b3b54ea..8eb68d2230be 100644
+> >> --- a/arch/x86/Kconfig
+> >> +++ b/arch/x86/Kconfig
+> >> @@ -512,6 +512,9 @@ config X86_CPU_RESCTRL
+> >>  	select ARCH_HAS_CPU_RESCTRL
+> >>  	select RESCTRL_FS
+> >>  	select RESCTRL_FS_PSEUDO_LOCK
+> >> +	select X86_PLATFORM_DEVICES
+> >> +	select INTEL_VSEC
+> >> +	select INTEL_PMT_TELEMETRY
+> >>  	help
+> >>  	  Enable x86 CPU resource control support.
+> >>  
+> > 
+> > The list of dependencies to "select" keeps growing. "lkp"
+> > just told me that "INTEL_VSEC" depends on "PCI".
+> > 
+> > An alternative approach is to just add:
+> > 
+> > 	depends on INTEL_PMT_DISCOVERY=y
+> > 
+> > instead of all the extra "select" lines.
+> > 
+> > Pro: This describes exactly what is needed. The INTEL_PMT_DISCOVERY
+> > driver must be built-in to the kernel so that resctrl can enumerate the
+> > telemetry features.
+> 
+> How will this behave on AMD systems?
 
-Kernel binary size for x86 build:
-text      data      bss      dec       hex      filename
-31999332  14279706  6250496  52529534  321897e  vmlinux
+The call to intel_pmt_get_regions_by_feature() in the INTEL_PMT_DISCOVERY
+driver will return that there are no telemetry events.
 
-Kernel binary size for arm64 build:
-text      data      bss      dec       hex      filename
-37335764  15435073  1038480  53809317  33510a5  vmlinux
+If it is a problem to force resctrl users building AMD only kernels
+to load the INTEL_PMT_DISCOVERY in order to use resctrl, then I can
+look at providing stubs for the entry points in intel_aet.c and
+create a new CONFIG option to allow resctrl to be built without
+Intel telemetry support.
 
+> > 
+> > Con: "make olddefconfig" will now drop X86_CPU_RESCTRL until the user
+> > hunts down and enables the chain of dependencies to get RESCTRL turned
+> > back on again.
+> 
+> Reinette
+> 
 
-Tested-by: Hardik Garg <hargar@linux.microsoft.com>
-
-
-
-
-Thanks,
-Hardik
+-Tony
