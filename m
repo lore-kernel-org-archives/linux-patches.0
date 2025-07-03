@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E81015442C;
-	Thu,  3 Jul 2025 15:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5DE15442C;
+	Thu,  3 Jul 2025 15:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555222; cv=none; b=LvL28bdvgIEnOlM54OR0Q2jT724qhfX6zTafOzGxKxKfSHpxTEm5dXsnzQy4YXdprTWPcMTlZX9FwW5lqbPRcnyTXm8DrjsDfMj5ngLp+uXGkkMUXpFYIWe/yOQ1ooie9+R1ZVXlXbMzQfXQS9zHYJy4fdSt7G1A/LXEC0Nh52w=
+	t=1751555225; cv=none; b=LfmfS4Rx3tQ20BUQMDojojtkUJiGXlM3p//KLmYd1S84eIT9Un3dV5bK7BOzjEkAnrWRMcwFmcRBcmgT4hHdfGIRes9YnrsJN67P6RcCLQyXAI0zCY/W/d7T8Z/wQs4YQHintJCnWgKovIvVZjMvOs1Kj/Be744wwLCTDMAcF4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555222; c=relaxed/simple;
-	bh=P30JtPHa2m6AHU8StY/RsZ1ss/lzHwdMTOS2qKVDYZg=;
+	s=arc-20240116; t=1751555225; c=relaxed/simple;
+	bh=OU9u9emYTArwJaJonid0RixZwwF8pJ+iyaI45jCcrZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XdmpoLD+lvZQSGxZP2l7ZIrpezO5UQyIAzC57Wt8qwNQiGBUK+l32HIpELRRYtJ0/MTzdtXrqky+4o2HNyhGDst945TKlj8izMtATTlZD7bYw3YaB5plyFL96i28n6VLTP7cscJ9CcE+Tx26kYFnSqDeJVAx/eP5sQUbZhDiyvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuR2vGQE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OVFBMpFCu6sF3QD0+l05jvLVD3eIdkN+qGUUOFOKGUqHChKYIXJ4YjuJfea1JNHKuuc6b9MoqW6ikm+F1mzzjbt5ttM3vPIPl5yvCLmcapriNV5GCfh/LanxfCQR5T0CuqrRyaJn4gF+UwP1sAJRcPbN6R5zhmwSN2DomStmS8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPeAtKUp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuR2vGQE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C70C4CEE3;
-	Thu,  3 Jul 2025 15:07:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPeAtKUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE94C4CEE3;
+	Thu,  3 Jul 2025 15:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555222;
-	bh=P30JtPHa2m6AHU8StY/RsZ1ss/lzHwdMTOS2qKVDYZg=;
+	s=korg; t=1751555224;
+	bh=OU9u9emYTArwJaJonid0RixZwwF8pJ+iyaI45jCcrZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kuR2vGQEWd0hD+gfDKQus0cB4GhsOkXaC1majA5ejlCgP+RhWhYjGQ/DkvFicPgLi
-	 2BDfhA1EOEMsg2XMa5OkhHufKqUoacJ7ZNibZsrBqYldic680N+xX1onIB5HS7BH9Z
-	 LR0ZEQ4iHEQ7UskxcXRPo//30YCBpGkzyNJ8oEFI=
+	b=NPeAtKUpMKWHuB6Y6Awdt3Z/ohWJ3KfynBpJ74uzFXDYDm9sPHIhMxTqQeRPjfihQ
+	 QWHl/YUldkeAFdfxa6mXAKDEsNK7L22CNopQjFnjSva/xltzHwVp7Islg1Vwt+PJxN
+	 h2Sza7XZhvtmI4REhCa1soygohNarM3IKePWOy0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.15 213/263] drm/i915/dp_mst: Work around Thunderbolt sink disconnect after SINK_COUNT_ESI read
-Date: Thu,  3 Jul 2025 16:42:13 +0200
-Message-ID: <20250703144012.931381973@linuxfoundation.org>
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH 6.15 214/263] drm/bridge: cdns-dsi: Fix the clock variable for mode_valid()
+Date: Thu,  3 Jul 2025 16:42:14 +0200
+Message-ID: <20250703144012.969476171@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,64 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Aradhya Bhatia <a-bhatia1@ti.com>
 
-commit 9cb15478916e849d62a6ec44b10c593b9663328c upstream.
+commit 132bdcec399be6ae947582249a134b38cf56731c upstream.
 
-Due to a problem in the iTBT DP-in adapter's firmware the sink on a TBT
-link may get disconnected inadvertently if the SINK_COUNT_ESI and the
-DP_LINK_SERVICE_IRQ_VECTOR_ESI0 registers are read in a single AUX
-transaction. Work around the issue by reading these registers in
-separate transactions.
+The crtc_* mode parameters do not get generated (duplicated in this
+case) from the regular parameters before the mode validation phase
+begins.
 
-The issue affects MTL+ platforms and will be fixed in the DP-in adapter
-firmware, however releasing that firmware fix may take some time and is
-not guaranteed to be available for all systems. Based on this apply the
-workaround on affected platforms.
+The rest of the code conditionally uses the crtc_* parameters only
+during the bridge enable phase, but sticks to the regular parameters
+for mode validation. In this singular instance, however, the driver
+tries to use the crtc_clock parameter even during the mode validation,
+causing the validation to fail.
 
-See HSD #13013007775.
+Allow the D-Phy config checks to use mode->clock instead of
+mode->crtc_clock during mode_valid checks, like everywhere else in the
+driver.
 
-v2: Cc'ing Mika Westerberg.
-
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13760
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14147
-Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: fced5a364dee ("drm/bridge: cdns: Convert to phy framework")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://lore.kernel.org/r/20250519133417.1469181-1-imre.deak@intel.com
-(cherry picked from commit c3a48363cf1f76147088b1adb518136ac5df86a0)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Signed-off-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
+Link: https://lore.kernel.org/r/20250329113925.68204-4-aradhya.bhatia@linux.dev
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -4457,6 +4457,23 @@ intel_dp_mst_disconnect(struct intel_dp
- static bool
- intel_dp_get_sink_irq_esi(struct intel_dp *intel_dp, u8 *esi)
- {
-+	struct intel_display *display = to_intel_display(intel_dp);
-+
-+	/*
-+	 * Display WA for HSD #13013007775: mtl/arl/lnl
-+	 * Read the sink count and link service IRQ registers in separate
-+	 * transactions to prevent disconnecting the sink on a TBT link
-+	 * inadvertently.
-+	 */
-+	if (IS_DISPLAY_VER(display, 14, 20) && !display->platform.battlemage) {
-+		if (drm_dp_dpcd_read(&intel_dp->aux, DP_SINK_COUNT_ESI, esi, 3) != 3)
-+			return false;
-+
-+		/* DP_SINK_COUNT_ESI + 3 == DP_LINK_SERVICE_IRQ_VECTOR_ESI0 */
-+		return drm_dp_dpcd_readb(&intel_dp->aux, DP_LINK_SERVICE_IRQ_VECTOR_ESI0,
-+					 &esi[3]) == 1;
-+	}
-+
- 	return drm_dp_dpcd_read(&intel_dp->aux, DP_SINK_COUNT_ESI, esi, 4) == 4;
- }
+--- a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
++++ b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
+@@ -568,13 +568,14 @@ static int cdns_dsi_check_conf(struct cd
+ 	struct phy_configure_opts_mipi_dphy *phy_cfg = &output->phy_opts.mipi_dphy;
+ 	unsigned long dsi_hss_hsa_hse_hbp;
+ 	unsigned int nlanes = output->dev->lanes;
++	int mode_clock = (mode_valid_check ? mode->clock : mode->crtc_clock);
+ 	int ret;
+ 
+ 	ret = cdns_dsi_mode2cfg(dsi, mode, dsi_cfg, mode_valid_check);
+ 	if (ret)
+ 		return ret;
+ 
+-	phy_mipi_dphy_get_default_config(mode->crtc_clock * 1000,
++	phy_mipi_dphy_get_default_config(mode_clock * 1000,
+ 					 mipi_dsi_pixel_format_to_bpp(output->dev->format),
+ 					 nlanes, phy_cfg);
  
 
 
