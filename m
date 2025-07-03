@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526DC2B9A6;
-	Thu,  3 Jul 2025 15:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E454414;
+	Thu,  3 Jul 2025 15:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555017; cv=none; b=fSWawmg1Cjnr3Xl8Wkkgf2OpNj6GwuVag8re3Sl6ynRHaNuf/vEZpM+Rq8Iv5p5d1ZxHg8uYwvavMYJ+ETY8daKW6DsLS7QtKPdoNNV1ffYCGHZK702ANcK1fA+jkzXBJY7uPnSxdBYtHhNG2vO8h+sy8z2CjUzEROcUODk16aA=
+	t=1751555018; cv=none; b=EFZ84Yc61v03V8/hmjlqqPHKS8O31MSGYgtil7Tl9b8GqOkbB3hwPaYfts6zeUJnIldT76m7iOk0EFXB6ixWmjDjYZbFtviLqx/91HjUiWfjjFrHji4HuVlsP7iMlrmuTtKRmOUVohiQcBZth/qvq8yafPBi/koYyRAWINfEjfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555017; c=relaxed/simple;
-	bh=Cp+NOPeDSJgIxfx1R8w+/gFo3/qCuMRVigegpwmdapo=;
+	s=arc-20240116; t=1751555018; c=relaxed/simple;
+	bh=mNFTQ8Hsziohfi6dkTY1yfE9/MgHIFvRUM2MWyX8tKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rkVsGwIUS5zX8NtnC1bXr6wseqCjhgQ9pBLBK/1qUKJn782aHUJW5qkOpxFZpfjJ+hb06vySkXk6gx+kyeYSDncg9g3GEFy0noIIMrWPwfRJMViy5hTurr6mfHgZKOQEOj+MJjCZxN2lX1RwLI8zYhcba+H3x4QOMsYpMd0h93w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvq+TzLS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oAN9olsDFFBBpe3us5q5TONuBeyTluP1G1deEylJh6ngxgckk6EATMfshhsO9abSlhFvQnGdnVtEuZHg7/x7ztIi1roKPF/5YZsbNeygBvnNOb7CX2mqzjceIpZX6dxgF0vwE5SVJqB7FRSMKfev3GsQBsv8FBmO58VMkF7j5As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0doR1Hn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvq+TzLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EFFC4CEE3;
-	Thu,  3 Jul 2025 15:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0doR1Hn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EBDBC4CEE3;
+	Thu,  3 Jul 2025 15:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555014;
-	bh=Cp+NOPeDSJgIxfx1R8w+/gFo3/qCuMRVigegpwmdapo=;
+	s=korg; t=1751555018;
+	bh=mNFTQ8Hsziohfi6dkTY1yfE9/MgHIFvRUM2MWyX8tKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rvq+TzLSxeKKcb2pgC7P2UMRpzTM6TxF8qhjzj+Ewft+5j+DJcdCwsruVHJNw8eS2
-	 E1GMzb+MjlO7H7Hm0gPqTF1Hx+5RgaA4+wSXZohdQ3S9QiXdOQMCZ6f5WKbE8eVYZM
-	 nC7Q0meUqptniGOf/YvQhUmGsO7l19bT+Lb9lvBg=
+	b=b0doR1Hni0Hc4mltI5PQK2tmqdurZ8Zk3H3A/ODnNdBLBpXjE2k/XfAzw31U1qM52
+	 sjgWPX5w8vH9vpl7GjgNnbzVXRRwROGIT7BLay8hgnqBtEpTSTmZqOcikZ3vpG/KBl
+	 oMWmjReG1kNeh3KhxlhuMkGDHyc0vO6pGqYs2d2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Daan De Meyer <daan.j.demeyer@gmail.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 149/263] userns and mnt_idmap leak in open_tree_attr(2)
-Date: Thu,  3 Jul 2025 16:41:09 +0200
-Message-ID: <20250703144010.329083535@linuxfoundation.org>
+Subject: [PATCH 6.15 150/263] vsock/uapi: fix linux/vm_sockets.h userspace compilation errors
+Date: Thu,  3 Jul 2025 16:41:10 +0200
+Message-ID: <20250703144010.369002044@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -45,55 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit 0748e553df0225754c316a92af3a77fdc057b358 ]
+[ Upstream commit 22bbc1dcd0d6785fb390c41f0dd5b5e218d23bdd ]
 
-Once want_mount_setattr() has returned a positive, it does require
-finish_mount_kattr() to release ->mnt_userns.  Failing do_mount_setattr()
-does not change that.
+If a userspace application just include <linux/vm_sockets.h> will fail
+to build with the following errors:
 
-As the result, we can end up leaking userns and possibly mnt_idmap as
-well.
+    /usr/include/linux/vm_sockets.h:182:39: error: invalid application of ‘sizeof’ to incomplete type ‘struct sockaddr’
+      182 |         unsigned char svm_zero[sizeof(struct sockaddr) -
+          |                                       ^~~~~~
+    /usr/include/linux/vm_sockets.h:183:39: error: ‘sa_family_t’ undeclared here (not in a function)
+      183 |                                sizeof(sa_family_t) -
+          |
 
-Fixes: c4a16820d901 ("fs: add open_tree_attr()")
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Include <sys/socket.h> for userspace (guarded by ifndef __KERNEL__)
+where `struct sockaddr` and `sa_family_t` are defined.
+We already do something similar in <linux/mptcp.h> and <linux/if.h>.
+
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Reported-by: Daan De Meyer <daan.j.demeyer@gmail.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20250623100053.40979-1-sgarzare@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ include/uapi/linux/vm_sockets.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 24b087ba88159..dfb72f827d4a7 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -5307,16 +5307,12 @@ SYSCALL_DEFINE5(open_tree_attr, int, dfd, const char __user *, filename,
- 			kattr.kflags |= MOUNT_KATTR_RECURSE;
+diff --git a/include/uapi/linux/vm_sockets.h b/include/uapi/linux/vm_sockets.h
+index ed07181d4eff9..e05280e415228 100644
+--- a/include/uapi/linux/vm_sockets.h
++++ b/include/uapi/linux/vm_sockets.h
+@@ -17,6 +17,10 @@
+ #ifndef _UAPI_VM_SOCKETS_H
+ #define _UAPI_VM_SOCKETS_H
  
- 		ret = wants_mount_setattr(uattr, usize, &kattr);
--		if (ret < 0)
--			return ret;
--
--		if (ret) {
-+		if (ret > 0) {
- 			ret = do_mount_setattr(&file->f_path, &kattr);
--			if (ret)
--				return ret;
--
- 			finish_mount_kattr(&kattr);
- 		}
-+		if (ret)
-+			return ret;
- 	}
++#ifndef __KERNEL__
++#include <sys/socket.h>        /* for struct sockaddr and sa_family_t */
++#endif
++
+ #include <linux/socket.h>
+ #include <linux/types.h>
  
- 	fd = get_unused_fd_flags(flags & O_CLOEXEC);
 -- 
 2.39.5
 
