@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28F32E7BBF;
-	Thu,  3 Jul 2025 15:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0472E7BD6;
+	Thu,  3 Jul 2025 15:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554950; cv=none; b=Kmu4MYSpcxQRYfGOQlwjskBZgJCu/EUtkxaq0Kcp0giDjaHWzhhBHtADicq1oj6R3l7Hthc2KEvw8ITdjx9kNhAWitA3wxCPi0hwDYkB3UZgPZocZfPl2fHp5rzc2NvC5WFlIJ8dnYGNREdFDa2KbFfrOK1ze4kA+NMNSvAAsCg=
+	t=1751554954; cv=none; b=Zo8XbLcpJrZKt033BNflPsly+otzFDSwcj1l2TnLliIPlTQbvAJs4oK+7vITL3CdiiG3Vqw8wvCBAOOTBGldSMmtDZ6CVIXpY2mSVFI6DPORXEGbkb9pRfWc7gesC8T8w2S7omo0lVjuxZ8rNuDdA9WPBniVuoe18O8wS/5HtWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554950; c=relaxed/simple;
-	bh=1HVOWS5vMzCEXhMq7KAQ9uyA1mMPb5t/ny4n0SaWxag=;
+	s=arc-20240116; t=1751554954; c=relaxed/simple;
+	bh=xiTqJ2ni8x9mSci9dp9aYIvfFSBDWWoLeW7naNDAKzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PudY3niT/VpLvUJEwpQDl8xyK2yJY0XP+qrQLZxZISm6ZaApnT4fzqWcKp8N5Dvjs922lfpisfiOktrK2xPv2/PLcWogSs//Iv0rwZ0YMaAapvgfafI1falkP5bkkZm6HyNSFCi3pYUIzBD30doUhpZCX3wrGiWTeH8SOOtXRzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2ddk5HC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YzUUpKTTnKc+RVI/VmOShkIquWFAlRUiK4FY9dr2uhYatw+NfbAUuCBNzmHxhXhkRIywhV4smYti2K86MB1Sy6nko4X8uxiHXeu1nPezIKA95EL9Vozb8ozYJDqJXeagrNIYuKh2Jf5L789WtH9CVPSqPurHRH3hCv9i8HYZ80c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqlzvYW2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2ddk5HC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1AFC4CEE3;
-	Thu,  3 Jul 2025 15:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqlzvYW2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E41DC4CEE3;
+	Thu,  3 Jul 2025 15:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554950;
-	bh=1HVOWS5vMzCEXhMq7KAQ9uyA1mMPb5t/ny4n0SaWxag=;
+	s=korg; t=1751554954;
+	bh=xiTqJ2ni8x9mSci9dp9aYIvfFSBDWWoLeW7naNDAKzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z2ddk5HCD0MpIGOPHc9YPRQKNgcJF2KnnrvA9cQiyqt7LPN2MRNXpkdO9sh2bs3dX
-	 XRJ7poJcWLlRvBFRlASPe8WnSpbpd/dixKuUGmoF8xCuR8PbVaBCqZcdjja+ffcGiS
-	 Lr0rs2Mj7PDBzMy4MrsKubhNQNi+XkcDsxIeOozk=
+	b=DqlzvYW26T8faUao0Je2DQ+MMPHF+M9Z61Xjg1GV+LPlR3wENEULOaMT/Uo+UyMSb
+	 KggE4QFmGUSGp2JYzxrFG1e1npIrfpG0fmCrVKq1PCgWAjOmVV8j9tvXdW8i3kqtOR
+	 ZeRWJuYIVuUsGyn3cJ7HEs/sGdiANh0o+5blXyqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.15 099/263] i2c: tiny-usb: disable zero-length read messages
-Date: Thu,  3 Jul 2025 16:40:19 +0200
-Message-ID: <20250703144008.270893198@linuxfoundation.org>
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 090/263] f2fs: dont over-report free space or inodes in statvfs
+Date: Thu,  3 Jul 2025 16:40:10 +0200
+Message-ID: <20250703144007.909684268@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -50,47 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Chao Yu <chao@kernel.org>
 
-commit cbdb25ccf7566eee0c2b945e35cb98baf9ed0aa6 upstream.
+[ Upstream commit a9201960623287927bf5776de3f70fb2fbde7e02 ]
 
-This driver passes the length of an i2c_msg directly to
-usb_control_msg(). If the message is now a read and of length 0, it
-violates the USB protocol and a warning will be printed. Enable the
-I2C_AQ_NO_ZERO_LEN_READ quirk for this adapter thus forbidding 0-length
-read messages altogether.
+This fixes an analogus bug that was fixed in modern filesystems:
+a) xfs in commit 4b8d867ca6e2 ("xfs: don't over-report free space or
+inodes in statvfs")
+b) ext4 in commit f87d3af74193 ("ext4: don't over-report free space
+or inodes in statvfs")
+where statfs can report misleading / incorrect information where
+project quota is enabled, and the free space is less than the
+remaining quota.
 
-Fixes: e8c76eed2ecd ("i2c: New i2c-tiny-usb bus driver")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: <stable@vger.kernel.org> # v2.6.22+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250522064349.3823-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This commit will resolve a test failure in generic/762 which tests
+for this bug.
+
+generic/762       - output mismatch (see /share/git/fstests/results//generic/762.out.bad)
+#    --- tests/generic/762.out   2025-04-15 10:21:53.371067071 +0800
+#    +++ /share/git/fstests/results//generic/762.out.bad 2025-05-13 16:13:37.000000000 +0800
+#    @@ -6,8 +6,10 @@
+#     root blocks2 is in range
+#     dir blocks2 is in range
+#     root bavail2 is in range
+#    -dir bavail2 is in range
+#    +dir bavail2 has value of 1539066
+#    +dir bavail2 is NOT in range 304734.87 .. 310891.13
+#     root blocks3 is in range
+#    ...
+#    (Run 'diff -u /share/git/fstests/tests/generic/762.out /share/git/fstests/results//generic/762.out.bad'  to see the entire diff)
+
+HINT: You _MAY_ be missing kernel fix:
+      XXXXXXXXXXXXXX xfs: don't over-report free space or inodes in statvfs
+
+Cc: stable@kernel.org
+Fixes: ddc34e328d06 ("f2fs: introduce f2fs_statfs_project")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-tiny-usb.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/f2fs/super.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
---- a/drivers/i2c/busses/i2c-tiny-usb.c
-+++ b/drivers/i2c/busses/i2c-tiny-usb.c
-@@ -138,6 +138,11 @@ out:
- 	return ret;
- }
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index bc510c91f3eba..86dd30eb50b1d 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1806,26 +1806,32 @@ static int f2fs_statfs_project(struct super_block *sb,
  
-+/* prevent invalid 0-length usb_control_msg */
-+static const struct i2c_adapter_quirks usb_quirks = {
-+	.flags = I2C_AQ_NO_ZERO_LEN_READ,
-+};
+ 	limit = min_not_zero(dquot->dq_dqb.dqb_bsoftlimit,
+ 					dquot->dq_dqb.dqb_bhardlimit);
+-	if (limit)
+-		limit >>= sb->s_blocksize_bits;
++	limit >>= sb->s_blocksize_bits;
 +
- /* This is the actual algorithm we define */
- static const struct i2c_algorithm usb_algorithm = {
- 	.xfer = usb_xfer,
-@@ -246,6 +251,7 @@ static int i2c_tiny_usb_probe(struct usb
- 	/* setup i2c adapter description */
- 	dev->adapter.owner = THIS_MODULE;
- 	dev->adapter.class = I2C_CLASS_HWMON;
-+	dev->adapter.quirks = &usb_quirks;
- 	dev->adapter.algo = &usb_algorithm;
- 	dev->adapter.algo_data = dev;
- 	snprintf(dev->adapter.name, sizeof(dev->adapter.name),
++	if (limit) {
++		uint64_t remaining = 0;
+ 
+-	if (limit && buf->f_blocks > limit) {
+ 		curblock = (dquot->dq_dqb.dqb_curspace +
+ 			    dquot->dq_dqb.dqb_rsvspace) >> sb->s_blocksize_bits;
+-		buf->f_blocks = limit;
+-		buf->f_bfree = buf->f_bavail =
+-			(buf->f_blocks > curblock) ?
+-			 (buf->f_blocks - curblock) : 0;
++		if (limit > curblock)
++			remaining = limit - curblock;
++
++		buf->f_blocks = min(buf->f_blocks, limit);
++		buf->f_bfree = min(buf->f_bfree, remaining);
++		buf->f_bavail = min(buf->f_bavail, remaining);
+ 	}
+ 
+ 	limit = min_not_zero(dquot->dq_dqb.dqb_isoftlimit,
+ 					dquot->dq_dqb.dqb_ihardlimit);
+ 
+-	if (limit && buf->f_files > limit) {
+-		buf->f_files = limit;
+-		buf->f_ffree =
+-			(buf->f_files > dquot->dq_dqb.dqb_curinodes) ?
+-			 (buf->f_files - dquot->dq_dqb.dqb_curinodes) : 0;
++	if (limit) {
++		uint64_t remaining = 0;
++
++		if (limit > dquot->dq_dqb.dqb_curinodes)
++			remaining = limit - dquot->dq_dqb.dqb_curinodes;
++
++		buf->f_files = min(buf->f_files, limit);
++		buf->f_ffree = min(buf->f_ffree, remaining);
+ 	}
+ 
+ 	spin_unlock(&dquot->dq_dqb_lock);
+-- 
+2.39.5
+
 
 
