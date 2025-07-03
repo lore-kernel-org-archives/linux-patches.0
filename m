@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E152DE6F1;
-	Thu,  3 Jul 2025 15:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E681C1E51EB;
+	Thu,  3 Jul 2025 15:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556090; cv=none; b=gqL3UKuVScVw8LtO8ycDWhh4pfcJUDyfLwuOk6lvApRiqDEOYsn1vMXEKlV26Pm0ovBAVtE4rQ/7CUCyzravEXiMohSbhskyvlxU2D1ul7ZxbBUZhxCGy+xrERGAV0StDfpS8FQoOGzBK7DTBJ83k+oq1hBOFQjiFU8mr84l64E=
+	t=1751556094; cv=none; b=Rt4iVN9b+YiP0qf8yHmR+M3vNDH8NJlYLPWDJ/cV58yKEdUbe8s3Hxe2xmaWk35gOQ3o/lz2XyHIbxM6rJPLf7Vi69vlNOlJJkBpYSjtKjdjtTSMAqeGnfl0LqRVb7m2ATfj7xMRyAMi55COWBdQkqJ0N6GqL8+DzWbmF8aPCfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556090; c=relaxed/simple;
-	bh=IrP+r+A25sVOqcCFMgWJD6/ETb1Az5mH2pebFkDVJGs=;
+	s=arc-20240116; t=1751556094; c=relaxed/simple;
+	bh=gYGg1WXG78plSRjSQ2+uuwBOkF+7XV8lsmdoUixXTeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=It3u0Ta6ePtTMn7HDPX3pl1zio7ysrLAMEFnFx5tv7/8PkdJcVZ8t8F+urEnCAUE0UB06v/NBs/SkdEjV2wFLUj3jykE1EMmnqzFFmzuBmsiKwEFoCQFj+rFsmxCevq5PwcL/fdfnwBHIBYEZmdLcmBtGklWxAK9NCMXew8NIL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yas3A1Yp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=STw7pLXTqd41RhmPNizzhBja5K/dwUPgp9+xXswjXGNAjptO/dcUp9bXw7Zem9gucHDg8yzCAIrZjffAmW2Fd/1b0kp6pbCHBb8BULYeMUL4VtSPhhfZ4IFwcWxwQGnSs0vizBl/2lDu8mmI0Yq0cfnsjq57lAZaNVHNLtTGjLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwV3RHo4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yas3A1Yp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B28CC4CEE3;
-	Thu,  3 Jul 2025 15:21:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwV3RHo4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCF9C4CEEE;
+	Thu,  3 Jul 2025 15:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556090;
-	bh=IrP+r+A25sVOqcCFMgWJD6/ETb1Az5mH2pebFkDVJGs=;
+	s=korg; t=1751556093;
+	bh=gYGg1WXG78plSRjSQ2+uuwBOkF+7XV8lsmdoUixXTeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yas3A1YpVmoZcGlvz1qW5wi0VvcTIVB+kVCMydkNUsn3gG2/TccesLGcS41lqMUjO
-	 5WhlItDTdJAxWnApgw5NMGxO3ESZIe1gKea3SZiUYJRhV0tDrfu769bxk8cZpxZKS6
-	 fMC1xH6EI/gMhSr9xyk8x95of7K0RxDGDBq5g4Ig=
+	b=OwV3RHo4pT2E28+5PLuLuYW5ezWPrt4al6/d0HZ3eg+vhaaEqQsNg3bh6eLx151s0
+	 vZ3asRIMqcRL60O/0AZh6Elf4yWLjPnofTJ3KXYP5Egw2BqGA57QFjvxEzNk1v1kS9
+	 D77f9B/exy1T/NW/XvxfmqjRKaKOmKYc4mI9pVRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.1 072/132] i2c: robotfuzz-osif: disable zero-length read messages
-Date: Thu,  3 Jul 2025 16:42:41 +0200
-Message-ID: <20250703143942.244891432@linuxfoundation.org>
+	Oliver Schramm <oliver.schramm97@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 073/132] ASoC: amd: yc: Add DMI quirk for Lenovo IdeaPad Slim 5 15
+Date: Thu,  3 Jul 2025 16:42:42 +0200
+Message-ID: <20250703143942.285465044@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -50,47 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Oliver Schramm <oliver.schramm97@gmail.com>
 
-commit 56ad91c1aa9c18064348edf69308080b03c9dc48 upstream.
+commit bf39286adc5e10ce3e32eb86ad316ae56f3b52a0 upstream.
 
-This driver passes the length of an i2c_msg directly to
-usb_control_msg(). If the message is now a read and of length 0, it
-violates the USB protocol and a warning will be printed. Enable the
-I2C_AQ_NO_ZERO_LEN_READ quirk for this adapter thus forbidding 0-length
-read messages altogether.
+It's smaller brother has already received the patch to enable the microphone,
+now add it too to the DMI quirk table.
 
-Fixes: 83e53a8f120f ("i2c: Add bus driver for for OSIF USB i2c device.")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: <stable@vger.kernel.org> # v3.14+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250522064234.3721-2-wsa+renesas@sang-engineering.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Oliver Schramm <oliver.schramm97@gmail.com>
+Link: https://patch.msgid.link/20250621223000.11817-2-oliver.schramm97@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-robotfuzz-osif.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/i2c/busses/i2c-robotfuzz-osif.c
-+++ b/drivers/i2c/busses/i2c-robotfuzz-osif.c
-@@ -111,6 +111,11 @@ static u32 osif_func(struct i2c_adapter
- 	return I2C_FUNC_I2C | I2C_FUNC_SMBUS_EMUL;
- }
- 
-+/* prevent invalid 0-length usb_control_msg */
-+static const struct i2c_adapter_quirks osif_quirks = {
-+	.flags = I2C_AQ_NO_ZERO_LEN_READ,
-+};
-+
- static const struct i2c_algorithm osif_algorithm = {
- 	.master_xfer	= osif_xfer,
- 	.functionality	= osif_func,
-@@ -143,6 +148,7 @@ static int osif_probe(struct usb_interfa
- 
- 	priv->adapter.owner = THIS_MODULE;
- 	priv->adapter.class = I2C_CLASS_HWMON;
-+	priv->adapter.quirks = &osif_quirks;
- 	priv->adapter.algo = &osif_algorithm;
- 	priv->adapter.algo_data = priv;
- 	snprintf(priv->adapter.name, sizeof(priv->adapter.name),
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -370,6 +370,13 @@ static const struct dmi_system_id yc_acp
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83J3"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "Alienware"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m17 R5 AMD"),
+ 		}
 
 
