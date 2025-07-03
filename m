@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304012EF286;
-	Thu,  3 Jul 2025 14:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390D22D948F;
+	Thu,  3 Jul 2025 14:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553982; cv=none; b=QsPW74OqP9akDpAXRHNpVdP2MmPe7zQTEKzaGlASHdP84WuQytO2vIYcxr8ZRGKFCTGxn4Ef07OSAHU2qPbn/k6d2E3w4HcpDQqUYrjX4JLIa/SBrtBUgSyWbdQ5/tX8XRp99FCF0DXIhJahq78eonBVXPYCEbuBGPM5EOzClKQ=
+	t=1751553985; cv=none; b=XvHVNqJTB1N4nJeEQndOkb14ufME1p3/l7v9V2kDYWKiy6pQ/iyO6ql3fUeVYO9RoFSdu2a68sW8AbrSBXoQuJzhd5caNxEJrX5AS0qeVkqxDUdZFdj5UxH1ocJzR53DSoByWn1yD0ZfLRubgnZZhHjVHAk6a9dYcoUj+ShOZ3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553982; c=relaxed/simple;
-	bh=qGemPYTLD2cTik79GCVNX3M2qfnidHOODRfr2zo1338=;
+	s=arc-20240116; t=1751553985; c=relaxed/simple;
+	bh=ghPnBjRNYXBOqh2q5G88OmnJ4FHFuIShugMDN+dDveM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LaeLcFQXNLLfMhCGQSunYLhFAC8dFeeMFJt/6lXyjJc8+3yqotwu1g6HWmKyJKUyf/IfAeox5DuwHndWLYOVRi14BNhz6Rg5Yc+1RMsTpzSTA7qtQcsFaO+U3maKoSnRK1kmGu5WMCQ00feMQnEkTyCjzIFmOTEJVJPPxbZsCk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MozjHWiT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qVWFTMRntpKGNv7g0nbveYo3UVMOsp0sQzTela+00rqI7Iy84R1rOmGuKQVaQeJ7scVY4E+yg3CZ2Z/norp58LwZZRIfewdDdueshdjWAsbqSs8SpoHaZUDzjkFZapkeMj1ETYyYNDjfMBp04PP/ExJpcrUmHNfuz7MW32RLhGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YROynCCt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MozjHWiT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6FDC4CEE3;
-	Thu,  3 Jul 2025 14:46:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YROynCCt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CD5C4CEE3;
+	Thu,  3 Jul 2025 14:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751553981;
-	bh=qGemPYTLD2cTik79GCVNX3M2qfnidHOODRfr2zo1338=;
+	s=korg; t=1751553984;
+	bh=ghPnBjRNYXBOqh2q5G88OmnJ4FHFuIShugMDN+dDveM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MozjHWiTtNK0gZJTKorMNiDcF+QLSks6inKbSpKGzZ/IspYGDWlK8QrZVeoa2fF2c
-	 HLtQJRTCQjwZSc6iMH419Fm1QD38iFrOWZrezWXF32teiPn3Frzj0WPzMHS772B1Z4
-	 N9XPIZx70JkGmRCUWhb5M+ZQWG9/Ubeba+H1FKeE=
+	b=YROynCCtQ9ni+r4vYD3Dh2CJSBnWh9T+KZ+NAA7o5KUl5B39vnieCCjZ6k20bDCbG
+	 hcO/JmDJCAjGqcLcfK5lxkIyXgwGSchBjCIdxy/sTu7CUNiAi0MyCBrZ3++YBEPpV0
+	 uhumpvFdIHg1/6YCpUJvZYJQ8K5U0ZS2A5HMDmaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chance Yang <chance.yang@kneron.us>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/218] usb: common: usb-conn-gpio: use a unique name for usb connector device
-Date: Thu,  3 Jul 2025 16:39:51 +0200
-Message-ID: <20250703143957.663636549@linuxfoundation.org>
+Subject: [PATCH 6.12 044/218] usb: Add checks for snprintf() calls in usb_alloc_dev()
+Date: Thu,  3 Jul 2025 16:39:52 +0200
+Message-ID: <20250703143957.704360322@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -44,96 +44,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chance Yang <chance.yang@kneron.us>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit d4e5b10c55627e2f3fc9e5b337a28b4e2f02a55e ]
+[ Upstream commit 82fe5107fa3d21d6c3fba091c9dbc50495588630 ]
 
-The current implementation of the usb-conn-gpio driver uses a fixed
-"usb-charger" name for all USB connector devices. This causes conflicts
-in the power supply subsystem when multiple USB connectors are present,
-as duplicate names are not allowed.
+When creating a device path in the driver the snprintf() takes
+up to 16 characters long argument along with the additional up to
+12 characters for the signed integer (as it can't see the actual limits)
+and tries to pack this into 16 bytes array. GCC complains about that
+when build with `make W=1`:
 
-Use IDA to manage unique IDs for naming usb connectors (e.g.,
-usb-charger-0, usb-charger-1).
+  drivers/usb/core/usb.c:705:25: note: ‘snprintf’ output between 3 and 28 bytes into a destination of size 16
 
-Signed-off-by: Chance Yang <chance.yang@kneron.us>
-Link: https://lore.kernel.org/r/20250411-work-next-v3-1-7cd9aa80190c@kneron.us
+Since everything works until now, let's just check for the potential
+buffer overflow and bail out. It is most likely a never happen situation,
+but at least it makes GCC happy.
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250321164949.423957-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/common/usb-conn-gpio.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ drivers/usb/core/usb.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/common/usb-conn-gpio.c b/drivers/usb/common/usb-conn-gpio.c
-index 501e8bc9738eb..1096a884c8d70 100644
---- a/drivers/usb/common/usb-conn-gpio.c
-+++ b/drivers/usb/common/usb-conn-gpio.c
-@@ -20,6 +20,9 @@
- #include <linux/power_supply.h>
- #include <linux/regulator/consumer.h>
- #include <linux/usb/role.h>
-+#include <linux/idr.h>
+diff --git a/drivers/usb/core/usb.c b/drivers/usb/core/usb.c
+index 0b4685aad2d50..118fa4c93a795 100644
+--- a/drivers/usb/core/usb.c
++++ b/drivers/usb/core/usb.c
+@@ -695,15 +695,16 @@ struct usb_device *usb_alloc_dev(struct usb_device *parent,
+ 		device_set_of_node_from_dev(&dev->dev, bus->sysdev);
+ 		dev_set_name(&dev->dev, "usb%d", bus->busnum);
+ 	} else {
++		int n;
 +
-+static DEFINE_IDA(usb_conn_ida);
+ 		/* match any labeling on the hubs; it's one-based */
+ 		if (parent->devpath[0] == '0') {
+-			snprintf(dev->devpath, sizeof dev->devpath,
+-				"%d", port1);
++			n = snprintf(dev->devpath, sizeof(dev->devpath), "%d", port1);
+ 			/* Root ports are not counted in route string */
+ 			dev->route = 0;
+ 		} else {
+-			snprintf(dev->devpath, sizeof dev->devpath,
+-				"%s.%d", parent->devpath, port1);
++			n = snprintf(dev->devpath, sizeof(dev->devpath), "%s.%d",
++				     parent->devpath, port1);
+ 			/* Route string assumes hubs have less than 16 ports */
+ 			if (port1 < 15)
+ 				dev->route = parent->route +
+@@ -712,6 +713,11 @@ struct usb_device *usb_alloc_dev(struct usb_device *parent,
+ 				dev->route = parent->route +
+ 					(15 << ((parent->level - 1)*4));
+ 		}
++		if (n >= sizeof(dev->devpath)) {
++			usb_put_hcd(bus_to_hcd(bus));
++			usb_put_dev(dev);
++			return NULL;
++		}
  
- #define USB_GPIO_DEB_MS		20	/* ms */
- #define USB_GPIO_DEB_US		((USB_GPIO_DEB_MS) * 1000)	/* us */
-@@ -29,6 +32,7 @@
- 
- struct usb_conn_info {
- 	struct device *dev;
-+	int conn_id; /* store the IDA-allocated ID */
- 	struct usb_role_switch *role_sw;
- 	enum usb_role last_role;
- 	struct regulator *vbus;
-@@ -160,7 +164,17 @@ static int usb_conn_psy_register(struct usb_conn_info *info)
- 		.of_node = dev->of_node,
- 	};
- 
--	desc->name = "usb-charger";
-+	info->conn_id = ida_alloc(&usb_conn_ida, GFP_KERNEL);
-+	if (info->conn_id < 0)
-+		return info->conn_id;
-+
-+	desc->name = devm_kasprintf(dev, GFP_KERNEL, "usb-charger-%d",
-+				    info->conn_id);
-+	if (!desc->name) {
-+		ida_free(&usb_conn_ida, info->conn_id);
-+		return -ENOMEM;
-+	}
-+
- 	desc->properties = usb_charger_properties;
- 	desc->num_properties = ARRAY_SIZE(usb_charger_properties);
- 	desc->get_property = usb_charger_get_property;
-@@ -168,8 +182,10 @@ static int usb_conn_psy_register(struct usb_conn_info *info)
- 	cfg.drv_data = info;
- 
- 	info->charger = devm_power_supply_register(dev, desc, &cfg);
--	if (IS_ERR(info->charger))
--		dev_err(dev, "Unable to register charger\n");
-+	if (IS_ERR(info->charger)) {
-+		dev_err(dev, "Unable to register charger %d\n", info->conn_id);
-+		ida_free(&usb_conn_ida, info->conn_id);
-+	}
- 
- 	return PTR_ERR_OR_ZERO(info->charger);
- }
-@@ -277,6 +293,9 @@ static void usb_conn_remove(struct platform_device *pdev)
- 
- 	cancel_delayed_work_sync(&info->dw_det);
- 
-+	if (info->charger)
-+		ida_free(&usb_conn_ida, info->conn_id);
-+
- 	if (info->last_role == USB_ROLE_HOST && info->vbus)
- 		regulator_disable(info->vbus);
- 
+ 		dev->dev.parent = &parent->dev;
+ 		dev_set_name(&dev->dev, "%d-%s", bus->busnum, dev->devpath);
 -- 
 2.39.5
 
