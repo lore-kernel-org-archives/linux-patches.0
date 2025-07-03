@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B58A2F0035;
-	Thu,  3 Jul 2025 15:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D98A2F003A;
+	Thu,  3 Jul 2025 15:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555878; cv=none; b=TAXQ1zY1zH++REGbEzt6MzYYwAufzxIrioFv5ztYmUxhwoBOgV5DZW/fab3yOmfngteRYdw7OU0i4Bzytw9j18fe7W9FvrX0HxlFOSNfDQRWRlwiqbbKH/ZA6FgSGMnhXiaKAm7W4BE87i/qXRKWNxklyPD+Trg3uxv89zRW26s=
+	t=1751555881; cv=none; b=uXoO5J6ca9SloN6HgLvvgATCRzniHMnHZldjmL0S4QFT+mpjsiNV4v1h0fxbosuVuH/tCk50UrM+RAsjWrgnBjZWAB1HEW1vWfujZpIhbTIrif718DmnMJupzGYb3xdQKQGurBDCv7aMWOb5l2aQqJawvneabCNik0vt+bp0lOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555878; c=relaxed/simple;
-	bh=aPPhuRp9qLU2zp0HullSm1VvzIRUn2d7rtzM8x5BRmk=;
+	s=arc-20240116; t=1751555881; c=relaxed/simple;
+	bh=3I25Dy4gEiNii7cbFNaUgdDCRePs4G6PufoK2MCFZzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VS8R0G71Rk4QO5i20BNZRjQtC6FPPjTG0QQtmGHSpZggcA7jiz8k7uJNugcBseGnZuE7PBC56iCs6J6/tOMdVfZjMkq+GAdbcHja8YT60QMqOobF4fOcQ4+fV/eYnaGEQMZteTYKPXJH/YoBWauAPKo/22cNedxsh8EwCIDX26k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usLCEkGP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T+mOQg2P6VFUm0kgNypmdhrWKXoz+gRM2vCXbIIV6J2nRLTSJuEDD+DKgB8s/v3Lwc2qFXt9Vif2DxedNwlDxlR49ZyQH7IHR1Ky4qYWJ0EhRfRwRE2EglBSnQZVVfbKs8rUHU2eJ6AYSWg+XvCZIeyR512XhnXk1IkrCoZfbSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i05ggkb1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usLCEkGP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EC3C4CEE3;
-	Thu,  3 Jul 2025 15:17:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i05ggkb1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1476C4CEE3;
+	Thu,  3 Jul 2025 15:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555878;
-	bh=aPPhuRp9qLU2zp0HullSm1VvzIRUn2d7rtzM8x5BRmk=;
+	s=korg; t=1751555881;
+	bh=3I25Dy4gEiNii7cbFNaUgdDCRePs4G6PufoK2MCFZzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=usLCEkGPAXTiVsjRPFxoemRfnByE+uzKbTIYYVZk/c06hteJb+83cqKQsaO4DvXcN
-	 NpSjGOszIedik/Q6S7ISN/6dAa0gwh1NOpEG/hWWPtZmyADB2CzJmX5alQ0X2ZXEN5
-	 sM2srs1p3hHhwaDP8xpYSgrUBAs53kg1t8wrDI0w=
+	b=i05ggkb1xK1U7ko1HJQgZ/KkhDtkQIZDbal9yn1dSfTHL0BVpnV8USy7D0gPw+cqK
+	 iXRRzOtJORTcj3OWu7GtIIazqfPpSoFpfewHxt4vUjV8+KFmbQBfNF1SPgRMWf8qE6
+	 /uikOw011W/+RV19EeBgusS500qzoNxXklD7iIEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 137/139] nvme: always punt polled uring_cmd end_io work to task_work
-Date: Thu,  3 Jul 2025 16:43:20 +0200
-Message-ID: <20250703143946.536560966@linuxfoundation.org>
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>
+Subject: [PATCH 6.6 138/139] firmware: arm_scmi: Add a common helper to check if a message is supported
+Date: Thu,  3 Jul 2025 16:43:21 +0200
+Message-ID: <20250703143946.574282468@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -49,54 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-Commit 9ce6c9875f3e995be5fd720b65835291f8a609b1 upstream.
+commit 637b6d6cae9c42db5a9525da67c991294924d2cd upstream.
 
-Currently NVMe uring_cmd completions will complete locally, if they are
-polled. This is done because those completions are always invoked from
-task context. And while that is true, there's no guarantee that it's
-invoked under the right ring context, or even task. If someone does
-NVMe passthrough via multiple threads and with a limited number of
-poll queues, then ringA may find completions from ringB. For that case,
-completing the request may not be sound.
+A common helper is provided to check if a specific protocol message is
+supported or not.
 
-Always just punt the passthrough completions via task_work, which will
-redirect the completion, if needed.
-
-Cc: stable@vger.kernel.org
-Fixes: 585079b6e425 ("nvme: wire up async polling for io passthrough commands")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20240212123233.1230090-3-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/ioctl.c |   16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/firmware/arm_scmi/driver.c    |   34 ++++++++++++++++++++++++++++++++++
+ drivers/firmware/arm_scmi/protocols.h |    4 ++++
+ 2 files changed, 38 insertions(+)
 
---- a/drivers/nvme/host/ioctl.c
-+++ b/drivers/nvme/host/ioctl.c
-@@ -526,16 +526,14 @@ static enum rq_end_io_ret nvme_uring_cmd
- 	pdu->u.result = le64_to_cpu(nvme_req(req)->result.u64);
- 
- 	/*
--	 * For iopoll, complete it directly.
--	 * Otherwise, move the completion to task work.
-+	 * IOPOLL could potentially complete this request directly, but
-+	 * if multiple rings are polling on the same queue, then it's possible
-+	 * for one ring to find completions for another ring. Punting the
-+	 * completion via task_work will always direct it to the right
-+	 * location, rather than potentially complete requests for ringA
-+	 * under iopoll invocations from ringB.
- 	 */
--	if (blk_rq_is_poll(req)) {
--		WRITE_ONCE(ioucmd->cookie, NULL);
--		nvme_uring_task_cb(ioucmd, IO_URING_F_UNLOCKED);
--	} else {
--		io_uring_cmd_do_in_task_lazy(ioucmd, nvme_uring_task_cb);
--	}
--
-+	io_uring_cmd_do_in_task_lazy(ioucmd, nvme_uring_task_cb);
- 	return RQ_END_IO_FREE;
+--- a/drivers/firmware/arm_scmi/driver.c
++++ b/drivers/firmware/arm_scmi/driver.c
+@@ -1820,10 +1820,44 @@ static void scmi_common_fastchannel_db_r
+ #endif
  }
  
++/**
++ * scmi_protocol_msg_check  - Check protocol message attributes
++ *
++ * @ph: A reference to the protocol handle.
++ * @message_id: The ID of the message to check.
++ * @attributes: A parameter to optionally return the retrieved message
++ *		attributes, in case of Success.
++ *
++ * An helper to check protocol message attributes for a specific protocol
++ * and message pair.
++ *
++ * Return: 0 on SUCCESS
++ */
++static int scmi_protocol_msg_check(const struct scmi_protocol_handle *ph,
++				   u32 message_id, u32 *attributes)
++{
++	int ret;
++	struct scmi_xfer *t;
++
++	ret = xfer_get_init(ph, PROTOCOL_MESSAGE_ATTRIBUTES,
++			    sizeof(__le32), 0, &t);
++	if (ret)
++		return ret;
++
++	put_unaligned_le32(message_id, t->tx.buf);
++	ret = do_xfer(ph, t);
++	if (!ret && attributes)
++		*attributes = get_unaligned_le32(t->rx.buf);
++	xfer_put(ph, t);
++
++	return ret;
++}
++
+ static const struct scmi_proto_helpers_ops helpers_ops = {
+ 	.extended_name_get = scmi_common_extended_name_get,
+ 	.iter_response_init = scmi_iterator_init,
+ 	.iter_response_run = scmi_iterator_run,
++	.protocol_msg_check = scmi_protocol_msg_check,
+ 	.fastchannel_init = scmi_common_fastchannel_init,
+ 	.fastchannel_db_ring = scmi_common_fastchannel_db_ring,
+ };
+--- a/drivers/firmware/arm_scmi/protocols.h
++++ b/drivers/firmware/arm_scmi/protocols.h
+@@ -250,6 +250,8 @@ struct scmi_fc_info {
+  *			provided in @ops.
+  * @iter_response_run: A common helper to trigger the run of a previously
+  *		       initialized iterator.
++ * @protocol_msg_check: A common helper to check is a specific protocol message
++ *			is supported.
+  * @fastchannel_init: A common helper used to initialize FC descriptors by
+  *		      gathering FC descriptions from the SCMI platform server.
+  * @fastchannel_db_ring: A common helper to ring a FC doorbell.
+@@ -262,6 +264,8 @@ struct scmi_proto_helpers_ops {
+ 				    unsigned int max_resources, u8 msg_id,
+ 				    size_t tx_size, void *priv);
+ 	int (*iter_response_run)(void *iter);
++	int (*protocol_msg_check)(const struct scmi_protocol_handle *ph,
++				  u32 message_id, u32 *attributes);
+ 	void (*fastchannel_init)(const struct scmi_protocol_handle *ph,
+ 				 u8 describe_id, u32 message_id,
+ 				 u32 valid_size, u32 domain,
 
 
