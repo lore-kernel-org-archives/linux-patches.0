@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0772EE29E;
-	Thu,  3 Jul 2025 14:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427B82EE272;
+	Thu,  3 Jul 2025 14:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553920; cv=none; b=YUwHk6YioBcXxjL/hVKnetxkRnR0lL6uwBQQwyVen5TP8GEtjl6EF3HcPpYGGohjb+g2JrvOZDspZT2asOgsBzGsr24uv9pmJqJdUn01we2dKNjmGRGPDN39JDpaj1JipWaRHupjPcER9DyCZpztU4fOIHARjeyprBhTh98pnB4=
+	t=1751553923; cv=none; b=dGDBw59bfLteMnkctJdmTXva37ui+OlqQTmGbQd3L1WsP1TXUFOuTOgGsI6U5VqMnjN7KYYG2la4HNOPcSJeqqlxf9deEfVt2+gse+1xPjLz6cAhDRgrTtLylfDVW9Ui+8bMZn/0Cx2j3S0niTMP/hy8cL/zBvlToICYfEPT6Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553920; c=relaxed/simple;
-	bh=nFStz9c8ztYQNVijCtf9Y53vwH+vCbzsrAUOSkwojj8=;
+	s=arc-20240116; t=1751553923; c=relaxed/simple;
+	bh=BudDPDJgOtHR8mYpLD+J4M2vdEyHMWdnExtzzwOd6lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EJhxiRrOGqzpCjtwH0WW0ahYBShqHfPLMYfQdYfkXugHjsSQ5P3nZ6jFAz9wVGhR1jZMvnX9HXpPoU/u5ocFwqsRLRDURwVyFH/DRcL4i6jMcJZV5xjdNDRRBQvoJ4jIrCAC5xPwLQhSv2eKXyH1Ee1ZsDcPM5UO90ChL1oGvNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlFIHjLY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bMsO+3EDJYzDdLx2gsPxUaL2Ti4x4rMianGgRRcfLbyQFv79m0800MvHu83t63YV3wR0SvW5g2EPrdFwQyZ2nCV1gO5RofWzqLU340RidZR5jo3IZ7skdKj/eQHYAytHuauTicUsTSFhIFl0NexbpyXVD0xQ5rY1FxyX+yzzEmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCZoCLli; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlFIHjLY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A346AC4CEE3;
-	Thu,  3 Jul 2025 14:45:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCZoCLli"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4130C4CEF6;
+	Thu,  3 Jul 2025 14:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751553920;
-	bh=nFStz9c8ztYQNVijCtf9Y53vwH+vCbzsrAUOSkwojj8=;
+	s=korg; t=1751553923;
+	bh=BudDPDJgOtHR8mYpLD+J4M2vdEyHMWdnExtzzwOd6lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rlFIHjLYWXSN41G5khGQvSA/or29CVoJSls6Cz859MqXgoVgDnpw4qbLtLLjcqLS+
-	 PcBu9hqB0nSYYG7ujoey7OiZNEr9tow683qhbTA9sa7lt3JlHQRdtCFujaabOp+GNK
-	 nLzVp44nAt9WxxT46t0AIZtp8R1trx1A1FxZC2sQ=
+	b=gCZoCLlixeQ7jix6O7Loid4RTTbrO3qrirrjHZUTwEqTFQnXoSETBRbV4Rw92N4C8
+	 mkNWPYejbxZsuURMbufnykJVrB/LwDRzjSA8Ig8xyB1eSMvOnxYWdAKiG+mw+9DQF+
+	 5Z1hCLOK39BHmS+SMImcAWD+CEpLOm1I/bhb1SW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Han Young <hanyang.tony@bytedance.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 003/218] cifs: Fix encoding of SMB1 Session Setup NTLMSSP Request in non-UNICODE mode
-Date: Thu,  3 Jul 2025 16:39:11 +0200
-Message-ID: <20250703143956.097771325@linuxfoundation.org>
+Subject: [PATCH 6.12 004/218] NFSv4: Always set NLINK even if the server doesnt support it
+Date: Thu,  3 Jul 2025 16:39:12 +0200
+Message-ID: <20250703143956.135581301@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -45,70 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Han Young <hanyang.tony@bytedance.com>
 
-[ Upstream commit 6510ef4230b68c960309e0c1d6eb3e32eb785142 ]
+[ Upstream commit 3a3065352f73381d3a1aa0ccab44aec3a5a9b365 ]
 
-SMB1 Session Setup NTLMSSP Request in non-UNICODE mode is similar to
-UNICODE mode, just strings are encoded in ASCII and not in UTF-16.
+fattr4_numlinks is a recommended attribute, so the client should emulate
+it even if the server doesn't support it. In decode_attr_nlink function
+in nfs4xdr.c, nlink is initialized to 1. However, this default value
+isn't set to the inode due to the check in nfs_fhget.
 
-With this change it is possible to setup SMB1 session with NTLM
-authentication in non-UNICODE mode with Windows SMB server.
+So if the server doesn't support numlinks, inode's nlink will be zero,
+the mount will fail with error "Stale file handle". Set the nlink to 1
+if the server doesn't support it.
 
-This change fixes mounting SMB1 servers with -o nounicode mount option
-together with -o sec=ntlmssp mount option (which is the default sec=).
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Han Young <hanyang.tony@bytedance.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/sess.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ fs/nfs/inode.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
-index 830516a9e03b0..8be7c4d2d9d62 100644
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -1715,22 +1715,22 @@ _sess_auth_rawntlmssp_assemble_req(struct sess_data *sess_data)
- 	pSMB = (SESSION_SETUP_ANDX *)sess_data->iov[0].iov_base;
- 
- 	capabilities = cifs_ssetup_hdr(ses, server, pSMB);
--	if ((pSMB->req.hdr.Flags2 & SMBFLG2_UNICODE) == 0) {
--		cifs_dbg(VFS, "NTLMSSP requires Unicode support\n");
--		return -ENOSYS;
--	}
--
- 	pSMB->req.hdr.Flags2 |= SMBFLG2_EXT_SEC;
- 	capabilities |= CAP_EXTENDED_SECURITY;
- 	pSMB->req.Capabilities |= cpu_to_le32(capabilities);
- 
- 	bcc_ptr = sess_data->iov[2].iov_base;
--	/* unicode strings must be word aligned */
--	if (!IS_ALIGNED(sess_data->iov[0].iov_len + sess_data->iov[1].iov_len, 2)) {
--		*bcc_ptr = 0;
--		bcc_ptr++;
-+
-+	if (pSMB->req.hdr.Flags2 & SMBFLG2_UNICODE) {
-+		/* unicode strings must be word aligned */
-+		if (!IS_ALIGNED(sess_data->iov[0].iov_len + sess_data->iov[1].iov_len, 2)) {
-+			*bcc_ptr = 0;
-+			bcc_ptr++;
-+		}
-+		unicode_oslm_strings(&bcc_ptr, sess_data->nls_cp);
-+	} else {
-+		ascii_oslm_strings(&bcc_ptr, sess_data->nls_cp);
- 	}
--	unicode_oslm_strings(&bcc_ptr, sess_data->nls_cp);
- 
- 	sess_data->iov[2].iov_len = (long) bcc_ptr -
- 					(long) sess_data->iov[2].iov_base;
+diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
+index 330273cf94531..9f10771331007 100644
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -557,6 +557,8 @@ nfs_fhget(struct super_block *sb, struct nfs_fh *fh, struct nfs_fattr *fattr)
+ 			set_nlink(inode, fattr->nlink);
+ 		else if (fattr_supported & NFS_ATTR_FATTR_NLINK)
+ 			nfs_set_cache_invalid(inode, NFS_INO_INVALID_NLINK);
++		else
++			set_nlink(inode, 1);
+ 		if (fattr->valid & NFS_ATTR_FATTR_OWNER)
+ 			inode->i_uid = fattr->uid;
+ 		else if (fattr_supported & NFS_ATTR_FATTR_OWNER)
 -- 
 2.39.5
 
