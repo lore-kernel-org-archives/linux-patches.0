@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC3C2EA49E;
-	Thu,  3 Jul 2025 14:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2C12EA49E;
+	Thu,  3 Jul 2025 14:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554727; cv=none; b=CVvnv4ANhV2qpFIh9SKRTxNtUDFZcNZhw9JM1TCo48oJj1GoSmP45lTSuUueD5ZSp/2pRO0pKdyueii6vQMGRM8rvoQZv8/RZ3VG850w25zFNXgAtu8TuDcG0Azh0GsUMwI+k52sn+8cfv/3vPsMTlyId1JlYuwsQnNAMvCAsao=
+	t=1751554730; cv=none; b=fivZMNELym/rcJ/cBER2Qr96sEJdZXnHV4AZOqnubzml+uhdW+08pNI8cGWC8T5UYRJYB1lHPHNCjNPpHHumw0cFVkPqQB7NZi4S+NtM+XEiq5v8qvYAFyJ3lDQ97BVmWSZiP4teS2V1v+KDxfViX4AtfpWgW0RCUS/lqxc7eBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554727; c=relaxed/simple;
-	bh=I2dWn+JAQWgMLWXSaulivVGxGJwZrP+4rtTSxga0Q3A=;
+	s=arc-20240116; t=1751554730; c=relaxed/simple;
+	bh=CxnY0dmZaIwRaRQZ/EYl3OFkasYW1GNG60sBBgvVX10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8OJkNHnNDmh8XGC6t7Zjki6Gf1g7YyWM/s1PAglFjlNyUlMH60l6jdEiD/OFQp9VWmvC8r5aN9sSxB8u47BgUpEzWaHOVw910Jqq57qZ6a6+72YP4OI9hWfLubV5lT7mDULxhaCnnARG/rxbmR2VGx5woEwgxCbHxPW+SLbygQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twZWD5Ia; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ShAXVGDVa+HofmwQolB5RsdWX7iyHMtU+CXVZzKHQDgD8pp1HIAKLwhejm/MYaKyNG1EmByjdO+P3c1zqCUkmSEVh8rZw5WkjM/x8MDNSHdwg7NHbPznmtcW5WeMJmqUyu/+SeSwKCvyVJbw0U1yzCM02pfPbXbGyrOBmTWw6hU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PsFTj5z5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twZWD5Ia"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB7FC4CEE3;
-	Thu,  3 Jul 2025 14:58:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PsFTj5z5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB09C4CEE3;
+	Thu,  3 Jul 2025 14:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554727;
-	bh=I2dWn+JAQWgMLWXSaulivVGxGJwZrP+4rtTSxga0Q3A=;
+	s=korg; t=1751554730;
+	bh=CxnY0dmZaIwRaRQZ/EYl3OFkasYW1GNG60sBBgvVX10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=twZWD5Ia4wxS2YY/pEkMz8rwXVP2g6VKBiA/UgsDjY+xnKaN9EPmTi9nzxJatNvZW
-	 LmdI29nkSa3UaJanDYPf+orPGGo2BAVK1vgCToLjcyfeIZKisa9tZvhyJyteNlAhz5
-	 5/UcsYfMgAVOCSobqOj92wnyFA04k0H0+U+8H+Bc=
+	b=PsFTj5z5riPvU6A6za2vGbqmTXZNpQT8+Z76D4EJUNN9krYrH6KpXEabGoCV/gmom
+	 2Up3a6ASiTUv8op0oIbWBnAxPVbeavDb4Yg89T04G2eBMBHfBcaPFMSv9KGmljdgMt
+	 JBG4PT9D0r921kVprhLv99Z+KS9nokMJAgAtnKAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Yu <quic_qianyu@quicinc.com>,
-	Wenbin Yao <quic_wenbyao@quicinc.com>,
+	Hector Martin <marcan@marcan.st>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Marc Zyngier <maz@kernel.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Janne Grunau <j@jannau.net>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 029/263] PCI: dwc: Make link training more robust by setting PORT_LOGIC_LINK_WIDTH to one lane
-Date: Thu,  3 Jul 2025 16:39:09 +0200
-Message-ID: <20250703144005.467184496@linuxfoundation.org>
+Subject: [PATCH 6.15 030/263] PCI: apple: Fix missing OF node reference in apple_pcie_setup_port
+Date: Thu,  3 Jul 2025 16:39:10 +0200
+Message-ID: <20250703144005.506411511@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -54,96 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenbin Yao <quic_wenbyao@quicinc.com>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit af3c6eacce0c464f28fe0e3d365b3860aba07931 ]
+[ Upstream commit 7fa9fbf39116b061f8a41cd84f1884c545f322c4 ]
 
-As per DWC PCIe registers description 4.30a, section 1.13.43, NUM_OF_LANES
-named as PORT_LOGIC_LINK_WIDTH in PCIe DWC driver, is referred to as the
-"Predetermined Number of Lanes" in PCIe r6.0, sec 4.2.7.2.1, which explains
-the conditions required to enter Polling.Configuration:
+In the success path, we hang onto a reference to the node, so make sure
+to grab one. The caller iterator puts our borrowed reference when we
+return.
 
-  Next state is Polling.Configuration after at least 1024 TS1 Ordered Sets
-  were transmitted, and all Lanes that detected a Receiver during Detect
-  receive eight consecutive training sequences ...
-
-  Otherwise, after a 24 ms timeout the next state is:
-
-    Polling.Configuration if,
-
-      (i) Any Lane, which detected a Receiver during Detect, received eight
-      consecutive training sequences ... and a minimum of 1024 TS1 Ordered
-      Sets are transmitted after receiving one TS1 or TS2 Ordered Set.
-
-      And
-
-      (ii) At least a predetermined set of Lanes that detected a Receiver
-      during Detect have detected an exit from Electrical Idle at least
-      once since entering Polling.Active.
-
-	Note: This may prevent one or more bad Receivers or Transmitters
-	from holding up a valid Link from being configured, and allow for
-	additional training in Polling.Configuration. The exact set of
-	predetermined Lanes is implementation specific.
-
-	Note: Any Lane that receives eight consecutive TS1 or TS2 Ordered
-	Sets should have detected an exit from Electrical Idle at least
-	once since entering Polling.Active.
-
-In a PCIe link supporting multiple lanes, if PORT_LOGIC_LINK_WIDTH is set
-to lane width the hardware supports, all lanes that detect a receiver
-during the Detect phase must receive eight consecutive training sequences.
-Otherwise, LTSSM will not enter Polling.Configuration and link training
-will fail.
-
-Therefore, always set PORT_LOGIC_LINK_WIDTH to 1, regardless of the number
-of lanes the port actually supports, to make link up more robust. This
-setting will not affect the intended link width if all lanes are
-functional. Additionally, the link can still be established with at least
-one lane if other lanes are faulty.
-
-Co-developed-by: Qiang Yu <quic_qianyu@quicinc.com>
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
-[mani: subject change]
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-[bhelgaas: update PCIe spec citation, format quote]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20250422103623.462277-1-quic_wenbyao@quicinc.com
+Tested-by: Janne Grunau <j@jannau.net>
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Acked-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+Link: https://patch.msgid.link/20250401091713.2765724-9-maz@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/pci/controller/pcie-apple.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index 97d76d3dc066e..be348b341e3cf 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -797,22 +797,19 @@ static void dw_pcie_link_set_max_link_width(struct dw_pcie *pci, u32 num_lanes)
- 	/* Set link width speed control register */
- 	lwsc = dw_pcie_readl_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL);
- 	lwsc &= ~PORT_LOGIC_LINK_WIDTH_MASK;
-+	lwsc |= PORT_LOGIC_LINK_WIDTH_1_LANES;
- 	switch (num_lanes) {
- 	case 1:
- 		plc |= PORT_LINK_MODE_1_LANES;
--		lwsc |= PORT_LOGIC_LINK_WIDTH_1_LANES;
- 		break;
- 	case 2:
- 		plc |= PORT_LINK_MODE_2_LANES;
--		lwsc |= PORT_LOGIC_LINK_WIDTH_2_LANES;
- 		break;
- 	case 4:
- 		plc |= PORT_LINK_MODE_4_LANES;
--		lwsc |= PORT_LOGIC_LINK_WIDTH_4_LANES;
- 		break;
- 	case 8:
- 		plc |= PORT_LINK_MODE_8_LANES;
--		lwsc |= PORT_LOGIC_LINK_WIDTH_8_LANES;
- 		break;
- 	default:
- 		dev_err(pci->dev, "num-lanes %u: invalid value\n", num_lanes);
+diff --git a/drivers/pci/controller/pcie-apple.c b/drivers/pci/controller/pcie-apple.c
+index 32f57b8a6ecbd..8f7fc9161760c 100644
+--- a/drivers/pci/controller/pcie-apple.c
++++ b/drivers/pci/controller/pcie-apple.c
+@@ -584,6 +584,9 @@ static int apple_pcie_setup_port(struct apple_pcie *pcie,
+ 	list_add_tail(&port->entry, &pcie->ports);
+ 	init_completion(&pcie->event);
+ 
++	/* In the success path, we keep a reference to np around */
++	of_node_get(np);
++
+ 	ret = apple_pcie_port_register_irqs(port);
+ 	WARN_ON(ret);
+ 
 -- 
 2.39.5
 
