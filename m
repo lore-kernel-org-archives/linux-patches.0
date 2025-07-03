@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803A5101DE;
-	Thu,  3 Jul 2025 14:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C457E101DE;
+	Thu,  3 Jul 2025 14:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554144; cv=none; b=ruUglRA49Q71B6HEYqqJotM199NNF0sMdRZe6p/3Eae2yEtOS0hn+kZemOf2yfkv6HHLZGrboxOl6GOaBif//NzFhjkAiOYCwBWwhUMVuSLxfDBp5KsoJxGhwoD1SppIj6CqS8UyX0jcljJ5lP8MBMn8SM/Spe3kSblBi1DDkNg=
+	t=1751554147; cv=none; b=DOZG4JDcx9a6j1N6ceOTDqlIpgRrZgZudvNX2gq83WZExIzdyT1/aQtyu4PGKU5G1XiKSK1K/I1PsIrNwX4fV/g9eGlq+chEswRtQ1S+jqQTAdKjQxwL4zlRS2kaFv4BWoN0b5zokSLhTRJoAsaB97oroaqMC9DvSUZ3lXR/4+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554144; c=relaxed/simple;
-	bh=Mk281EFW5Hg+THQa4eqg8xr7ofSDhnGhC2i1eyO4S30=;
+	s=arc-20240116; t=1751554147; c=relaxed/simple;
+	bh=3y5c/q2cmYQ4wPpPW6mcQsJNJh/WoA9bUCT/baiQzjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6RbgKfdBp3x32s13J2W15pR3tq9kl0B1W+KsFEjr/LRfGhQEL/eYR/5suBLodpDSM5x1FOesC149paU2rl29Tjlf7jlQvS24EaRuR/wfBu4W+t6N5LRb956e37tHpk5U4TA7NuvJKJEtQXKlW5M89VWIG7VTtj/P6cGJi6oSsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMjDfPRi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KKRZLT+rAwCje+g4ZymvnlSDj5RpGqJWjPUOes0J6zii23bScIy+70u8yFvVtbcbYAhRYV/5NKuVbeM1GMTf0yPXXrsjRoe/f2kwRuSKKbpNDyNPPtjOdWFrC1SjaT59uOcq8otgTlVzOw6256lfSzHbzp+4Gb4aS56lP0DGJd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IXVNFlAz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMjDfPRi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61A9C4CEE3;
-	Thu,  3 Jul 2025 14:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXVNFlAz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F27C4CEE3;
+	Thu,  3 Jul 2025 14:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554144;
-	bh=Mk281EFW5Hg+THQa4eqg8xr7ofSDhnGhC2i1eyO4S30=;
+	s=korg; t=1751554147;
+	bh=3y5c/q2cmYQ4wPpPW6mcQsJNJh/WoA9bUCT/baiQzjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMjDfPRid/1DRtmTevDHyBTJTiK2/YByOfCEG0bRVfzwyWaSyBBg01B2Spux4A3mF
-	 GorJLLPPOBa8rG4Q/jcHTYgvXKLl+ZPDqA+x8MqE/JwRtcBIMtWdHlwM9KZt1Y12bK
-	 vnUBrqowXeCfgrEyM0tZTYeWzJ4Ado596RdQ2Vng=
+	b=IXVNFlAzLFv+AR9b6poRW2wF+NmVMJBv8F9XnpLLCuDFfr7aE8NTSohpJ3eRx9Fp7
+	 m/6EulShKVrQbC73A60tHHzbgCxVF3B9sd0dQ3+b+MGen61CUl+P+5jr19apXhi1in
+	 qdwLwpqq+Q8qw5Y7clDByeXtO22ZCQFaedbznmCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fe8264911355151c487f@syzkaller.appspotmail.com,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/218] jfs: validate AG parameters in dbMount() to prevent crashes
-Date: Thu,  3 Jul 2025 16:40:12 +0200
-Message-ID: <20250703143958.501488764@linuxfoundation.org>
+Subject: [PATCH 6.12 065/218] ASoC: codec: wcd9335: Convert to GPIO descriptors
+Date: Thu,  3 Jul 2025 16:40:13 +0200
+Message-ID: <20250703143958.542299657@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -52,76 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 37bfb464ddca87f203071b5bd562cd91ddc0b40a ]
+[ Upstream commit d5099bc1b56417733f4cccf10c61ee74dadd5562 ]
 
-Validate db_agheight, db_agwidth, and db_agstart in dbMount to catch
-corrupted metadata early and avoid undefined behavior in dbAllocAG.
-Limits are derived from L2LPERCTL, LPERCTL/MAXAG, and CTLTREESIZE:
+of_gpio.h is deprecated, update the driver to use GPIO descriptors.
+- Use dev_gpiod_get to get GPIO descriptor.
+- Use gpiod_set_value to configure output value.
 
-- agheight: 0 to L2LPERCTL/2 (0 to 5) ensures shift
-  (L2LPERCTL - 2*agheight) >= 0.
-- agwidth: 1 to min(LPERCTL/MAXAG, 2^(L2LPERCTL - 2*agheight))
-  ensures agperlev >= 1.
-  - Ranges: 1-8 (agheight 0-3), 1-4 (agheight 4), 1 (agheight 5).
-  - LPERCTL/MAXAG = 1024/128 = 8 limits leaves per AG;
-    2^(10 - 2*agheight) prevents division to 0.
-- agstart: 0 to CTLTREESIZE-1 - agwidth*(MAXAG-1) keeps ti within
-  stree (size 1365).
-  - Ranges: 0-1237 (agwidth 1), 0-348 (agwidth 8).
+With legacy of_gpio API, the driver set gpio value 0 to assert reset,
+and 1 to deassert reset. And the reset-gpios use GPIO_ACTIVE_LOW flag in
+DTS, so set GPIOD_OUT_LOW when get GPIO descriptors, and set value 1 means
+output low, set value 0 means output high with gpiod API.
 
-UBSAN: shift-out-of-bounds in fs/jfs/jfs_dmap.c:1400:9
-shift exponent -335544310 is negative
-CPU: 0 UID: 0 PID: 5822 Comm: syz-executor130 Not tainted 6.14.0-rc5-syzkaller #0
-Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- ubsan_epilogue lib/ubsan.c:231 [inline]
- __ubsan_handle_shift_out_of_bounds+0x3c8/0x420 lib/ubsan.c:468
- dbAllocAG+0x1087/0x10b0 fs/jfs/jfs_dmap.c:1400
- dbDiscardAG+0x352/0xa20 fs/jfs/jfs_dmap.c:1613
- jfs_ioc_trim+0x45a/0x6b0 fs/jfs/jfs_discard.c:105
- jfs_ioctl+0x2cd/0x3e0 fs/jfs/ioctl.c:131
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:906 [inline]
- __se_sys_ioctl+0xf5/0x170 fs/ioctl.c:892
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The in-tree DTS files have the right polarity set up already so we can
+expect this to "just work"
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Cc: stable@vger.kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+fe8264911355151c487f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fe8264911355151c487f
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Link: https://patch.msgid.link/20250324-wcd-gpiod-v2-3-773f67ce3b56@nxp.com
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 9079db287fc3 ("ASoC: codecs: wcd9335: Fix missing free of regulator supplies")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/codecs/wcd9335.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 26e89d0c69b61..35e063c9f3a42 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -194,7 +194,11 @@ int dbMount(struct inode *ipbmap)
- 	    !bmp->db_numag || (bmp->db_numag > MAXAG) ||
- 	    (bmp->db_maxag >= MAXAG) || (bmp->db_maxag < 0) ||
- 	    (bmp->db_agpref >= MAXAG) || (bmp->db_agpref < 0) ||
--	    !bmp->db_agwidth ||
-+	    (bmp->db_agheight < 0) || (bmp->db_agheight > (L2LPERCTL >> 1)) ||
-+	    (bmp->db_agwidth < 1) || (bmp->db_agwidth > (LPERCTL / MAXAG)) ||
-+	    (bmp->db_agwidth > (1 << (L2LPERCTL - (bmp->db_agheight << 1)))) ||
-+	    (bmp->db_agstart < 0) ||
-+	    (bmp->db_agstart > (CTLTREESIZE - 1 - bmp->db_agwidth * (MAXAG - 1))) ||
- 	    (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) ||
- 	    (bmp->db_agl2size < 0) ||
- 	    ((bmp->db_mapsize - 1) >> bmp->db_agl2size) > MAXAG) {
+diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
+index 373a31ddccb2d..db6a1facf8a92 100644
+--- a/sound/soc/codecs/wcd9335.c
++++ b/sound/soc/codecs/wcd9335.c
+@@ -17,7 +17,7 @@
+ #include <sound/soc.h>
+ #include <sound/pcm_params.h>
+ #include <sound/soc-dapm.h>
+-#include <linux/of_gpio.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/of.h>
+ #include <linux/of_irq.h>
+ #include <sound/tlv.h>
+@@ -329,7 +329,7 @@ struct wcd9335_codec {
+ 	int comp_enabled[COMPANDER_MAX];
+ 
+ 	int intr1;
+-	int reset_gpio;
++	struct gpio_desc *reset_gpio;
+ 	struct regulator_bulk_data supplies[WCD9335_MAX_SUPPLY];
+ 
+ 	unsigned int rx_port_value[WCD9335_RX_MAX];
+@@ -4973,12 +4973,11 @@ static const struct regmap_irq_chip wcd9335_regmap_irq1_chip = {
+ static int wcd9335_parse_dt(struct wcd9335_codec *wcd)
+ {
+ 	struct device *dev = wcd->dev;
+-	struct device_node *np = dev->of_node;
+ 	int ret;
+ 
+-	wcd->reset_gpio = of_get_named_gpio(np,	"reset-gpios", 0);
+-	if (wcd->reset_gpio < 0)
+-		return dev_err_probe(dev, wcd->reset_gpio, "Reset GPIO missing from DT\n");
++	wcd->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
++	if (IS_ERR(wcd->reset_gpio))
++		return dev_err_probe(dev, PTR_ERR(wcd->reset_gpio), "Reset GPIO missing from DT\n");
+ 
+ 	wcd->mclk = devm_clk_get(dev, "mclk");
+ 	if (IS_ERR(wcd->mclk))
+@@ -5021,9 +5020,9 @@ static int wcd9335_power_on_reset(struct wcd9335_codec *wcd)
+ 	 */
+ 	usleep_range(600, 650);
+ 
+-	gpio_direction_output(wcd->reset_gpio, 0);
++	gpiod_set_value(wcd->reset_gpio, 1);
+ 	msleep(20);
+-	gpio_set_value(wcd->reset_gpio, 1);
++	gpiod_set_value(wcd->reset_gpio, 0);
+ 	msleep(20);
+ 
+ 	return 0;
 -- 
 2.39.5
 
