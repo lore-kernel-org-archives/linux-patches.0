@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB92224B1F;
-	Thu,  3 Jul 2025 15:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25661DA23;
+	Thu,  3 Jul 2025 15:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556148; cv=none; b=at7Mwg+w2ezEem2KTdo593lnpDFvUJg90UqXgQyXfRSaIO3cHah71ykasasYKqiL75B9CU86d5n3o6shWIYfEakQtu0dIEMlBKvf6BSNIc35tudOkOtpbygq612mPKFBeyJjY0/ttFYMVphRQhqGEePKW/0SYQrHs0/EbELHddc=
+	t=1751556152; cv=none; b=MlDCvPl6DxScnygLz0YsLgzMqJbXN/zhF8PFFADNuz9dM0Rsv1u1ZW/cqNHiEHtGM1v7awsjylbc/C00hwkSBN9uWyWX82cmPpWI9km1wybvbYm2Vkr6UatgNS+RiWTJpDqB4NK7KUS+f/dVMd/5BHL9rkCELVte9Kh8EB7VfKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556148; c=relaxed/simple;
-	bh=/bKVHjQAIcEMWZo2aPmi/YSEmUrq4Yo6qwb0iTlH++g=;
+	s=arc-20240116; t=1751556152; c=relaxed/simple;
+	bh=s34rha6I4QtpM/RDGiu++LhzI151ZgjvT5m81p2ecp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AR25ZWCq383moV07YCLLGHnJeE4IZHLcllu2Ji3e4R1mtXRO1zgCs/Jt3FvwqsBiAwU6SaWMsNmcpycGW9wOAN78ZDyE8oof16W47uX+bK3EUzR4BSwwk0fy9cMUAhaPe2uCXk8p1S4DomjBYMEcbYYC3ya+ehz7sTPoOXcWTvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rt013EO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5po5DgVURrD3NSIF8wfrSLJ9ObMOfXq+0Jw53f1X3eIGtuirCPVr952FueNEcmvTI/w4eCTIDdffj3ynB7Xl1tucN/FxXLfyYAaw3amGiVOKtADVFI1odYe2X2uYpchX16HK9D1gOVehZcTMVWxgfLThYzpB+kCK52xrDMOUGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+IDWuHA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rt013EO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F69C4CEE3;
-	Thu,  3 Jul 2025 15:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+IDWuHA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C1DC4CEE3;
+	Thu,  3 Jul 2025 15:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556148;
-	bh=/bKVHjQAIcEMWZo2aPmi/YSEmUrq4Yo6qwb0iTlH++g=;
+	s=korg; t=1751556151;
+	bh=s34rha6I4QtpM/RDGiu++LhzI151ZgjvT5m81p2ecp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1rt013EOs+53j1qeQJrHTmJIlbu1Zj4g9Jb8erKq5wJKO0eYuAoA+hvpYujmJlVZd
-	 0Pkj09oAovvKOpALLlVq8nc+Uc9c/jTq9P9wn+bMnfg+9HhwRu5WhM7qc+3Un/OJn7
-	 tJ8T5a+lAxDHr2bnMzG7fq4/H20D9bm2HcVfJqdw=
+	b=A+IDWuHAmDVdSzUkWyUvqLYv2UjOFL/4lsRleFszFKRGPRtYz593AHJYn0LYTAlTZ
+	 N/Ik4Wh7/UxeB2V8PEyikzQn942v3csvWujT77H8+5i9D7jKIe2YOMdkHFktRXFY2S
+	 VA5cieSgLz1N7NblBy8jIKgvg7mvaUA0nNgg4ytg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Marc Zyngier <maz@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Max Krummenacher <max.krummenacher@toradex.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Ernest Van Hoecke <ernest.vanhoecke@toradex.com>,
+	Jayesh Choudhary <j-choudhary@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/132] PCI: apple: Set only available ports up
-Date: Thu,  3 Jul 2025 16:42:31 +0200
-Message-ID: <20250703143941.850191260@linuxfoundation.org>
+Subject: [PATCH 6.1 089/132] drm/bridge: ti-sn65dsi86: Add HPD for DisplayPort connector type
+Date: Thu,  3 Jul 2025 16:42:58 +0200
+Message-ID: <20250703143942.895538495@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -54,52 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Jayesh Choudhary <j-choudhary@ti.com>
 
-[ Upstream commit 751bec089c4eed486578994abd2c5395f08d0302 ]
+[ Upstream commit 55e8ff842051b1150461d7595d8f1d033c69d66b ]
 
-Iterating over disabled ports results in of_irq_parse_raw() parsing
-the wrong "interrupt-map" entries, as it takes the status of the node
-into account.
+By default, HPD was disabled on SN65DSI86 bridge. When the driver was
+added (commit "a095f15c00e27"), the HPD_DISABLE bit was set in pre-enable
+call which was moved to other function calls subsequently.
+Later on, commit "c312b0df3b13" added detect utility for DP mode. But with
+HPD_DISABLE bit set, all the HPD events are disabled[0] and the debounced
+state always return 1 (always connected state).
 
-This became apparent after disabling unused PCIe ports in the Apple
-Silicon device trees instead of deleting them.
+Set HPD_DISABLE bit conditionally based on display sink's connector type.
+Since the HPD_STATE is reflected correctly only after waiting for debounce
+time (~100-400ms) and adding this delay in detect() is not feasible
+owing to the performace impact (glitches and frame drop), remove runtime
+calls in detect() and add hpd_enable()/disable() bridge hooks with runtime
+calls, to detect hpd properly without any delay.
 
-Switching from for_each_child_of_node_scoped() to
-for_each_available_child_of_node_scoped() solves this issue.
+[0]: <https://www.ti.com/lit/gpn/SN65DSI86> (Pg. 32)
 
-Fixes: 1e33888fbe44 ("PCI: apple: Add initial hardware bring-up")
-Fixes: a0189fdfb73d ("arm64: dts: apple: t8103: Disable unused PCIe ports")
-Signed-off-by: Janne Grunau <j@jannau.net>
-Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Janne Grunau <j@jannau.net>
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Acked-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/asahi/20230214-apple_dts_pcie_disable_unused-v1-0-5ea0d3ddcde3@jannau.net/
-Link: https://lore.kernel.org/asahi/1ea2107a-bb86-8c22-0bbc-82c453ab08ce@linaro.org/
-Link: https://patch.msgid.link/20250401091713.2765724-2-maz@kernel.org
+Fixes: c312b0df3b13 ("drm/bridge: ti-sn65dsi86: Implement bridge connector operations for DP")
+Cc: Max Krummenacher <max.krummenacher@toradex.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Ernest Van Hoecke <ernest.vanhoecke@toradex.com>
+Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20250624044835.165708-1-j-choudhary@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-apple.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 69 +++++++++++++++++++++++----
+ 1 file changed, 60 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-apple.c b/drivers/pci/controller/pcie-apple.c
-index b1f32e4c65989..1113e21ee386c 100644
---- a/drivers/pci/controller/pcie-apple.c
-+++ b/drivers/pci/controller/pcie-apple.c
-@@ -789,7 +789,7 @@ static int apple_pcie_init(struct pci_config_window *cfg)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 2848aabe8f5b6..26a064624d976 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -331,12 +331,18 @@ static void ti_sn65dsi86_enable_comms(struct ti_sn65dsi86 *pdata)
+ 	 * 200 ms.  We'll assume that the panel driver will have the hardcoded
+ 	 * delay in its prepare and always disable HPD.
+ 	 *
+-	 * If HPD somehow makes sense on some future panel we'll have to
+-	 * change this to be conditional on someone specifying that HPD should
+-	 * be used.
++	 * For DisplayPort bridge type, we need HPD. So we use the bridge type
++	 * to conditionally disable HPD.
++	 * NOTE: The bridge type is set in ti_sn_bridge_probe() but enable_comms()
++	 * can be called before. So for DisplayPort, HPD will be enabled once
++	 * bridge type is set. We are using bridge type instead of "no-hpd"
++	 * property because it is not used properly in devicetree description
++	 * and hence is unreliable.
+ 	 */
+-	regmap_update_bits(pdata->regmap, SN_HPD_DISABLE_REG, HPD_DISABLE,
+-			   HPD_DISABLE);
++
++	if (pdata->bridge.type != DRM_MODE_CONNECTOR_DisplayPort)
++		regmap_update_bits(pdata->regmap, SN_HPD_DISABLE_REG, HPD_DISABLE,
++				   HPD_DISABLE);
  
--	for_each_child_of_node_scoped(dev->of_node, of_port) {
-+	for_each_available_child_of_node_scoped(dev->of_node, of_port) {
- 		ret = apple_pcie_setup_port(pcie, of_port);
- 		if (ret) {
- 			dev_err(pcie->dev, "Port %pOF setup fail: %d\n", of_port, ret);
+ 	pdata->comms_enabled = true;
+ 
+@@ -1154,9 +1160,14 @@ static enum drm_connector_status ti_sn_bridge_detect(struct drm_bridge *bridge)
+ 	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
+ 	int val = 0;
+ 
+-	pm_runtime_get_sync(pdata->dev);
++	/*
++	 * Runtime reference is grabbed in ti_sn_bridge_hpd_enable()
++	 * as the chip won't report HPD just after being powered on.
++	 * HPD_DEBOUNCED_STATE reflects correct state only after the
++	 * debounce time (~100-400 ms).
++	 */
++
+ 	regmap_read(pdata->regmap, SN_HPD_DISABLE_REG, &val);
+-	pm_runtime_put_autosuspend(pdata->dev);
+ 
+ 	return val & HPD_DEBOUNCED_STATE ? connector_status_connected
+ 					 : connector_status_disconnected;
+@@ -1179,6 +1190,26 @@ static void ti_sn65dsi86_debugfs_init(struct drm_bridge *bridge, struct dentry *
+ 	debugfs_create_file("status", 0600, debugfs, pdata, &status_fops);
+ }
+ 
++static void ti_sn_bridge_hpd_enable(struct drm_bridge *bridge)
++{
++	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
++
++	/*
++	 * Device needs to be powered on before reading the HPD state
++	 * for reliable hpd detection in ti_sn_bridge_detect() due to
++	 * the high debounce time.
++	 */
++
++	pm_runtime_get_sync(pdata->dev);
++}
++
++static void ti_sn_bridge_hpd_disable(struct drm_bridge *bridge)
++{
++	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
++
++	pm_runtime_put_autosuspend(pdata->dev);
++}
++
+ static const struct drm_bridge_funcs ti_sn_bridge_funcs = {
+ 	.attach = ti_sn_bridge_attach,
+ 	.detach = ti_sn_bridge_detach,
+@@ -1193,6 +1224,8 @@ static const struct drm_bridge_funcs ti_sn_bridge_funcs = {
+ 	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
+ 	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
+ 	.debugfs_init = ti_sn65dsi86_debugfs_init,
++	.hpd_enable = ti_sn_bridge_hpd_enable,
++	.hpd_disable = ti_sn_bridge_hpd_disable,
+ };
+ 
+ static void ti_sn_bridge_parse_lanes(struct ti_sn65dsi86 *pdata,
+@@ -1281,8 +1314,26 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
+ 	pdata->bridge.type = pdata->next_bridge->type == DRM_MODE_CONNECTOR_DisplayPort
+ 			   ? DRM_MODE_CONNECTOR_DisplayPort : DRM_MODE_CONNECTOR_eDP;
+ 
+-	if (pdata->bridge.type == DRM_MODE_CONNECTOR_DisplayPort)
+-		pdata->bridge.ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT;
++	if (pdata->bridge.type == DRM_MODE_CONNECTOR_DisplayPort) {
++		pdata->bridge.ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT |
++				    DRM_BRIDGE_OP_HPD;
++		/*
++		 * If comms were already enabled they would have been enabled
++		 * with the wrong value of HPD_DISABLE. Update it now. Comms
++		 * could be enabled if anyone is holding a pm_runtime reference
++		 * (like if a GPIO is in use). Note that in most cases nobody
++		 * is doing AUX channel xfers before the bridge is added so
++		 * HPD doesn't _really_ matter then. The only exception is in
++		 * the eDP case where the panel wants to read the EDID before
++		 * the bridge is added. We always consistently have HPD disabled
++		 * for eDP.
++		 */
++		mutex_lock(&pdata->comms_mutex);
++		if (pdata->comms_enabled)
++			regmap_update_bits(pdata->regmap, SN_HPD_DISABLE_REG,
++					   HPD_DISABLE, 0);
++		mutex_unlock(&pdata->comms_mutex);
++	};
+ 
+ 	drm_bridge_add(&pdata->bridge);
+ 
 -- 
 2.39.5
 
