@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7F315442C;
-	Thu,  3 Jul 2025 15:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E81015442C;
+	Thu,  3 Jul 2025 15:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555219; cv=none; b=dc8J10r7IPpMBTNAd5RJLLczjRtIWC7/d6ovlUNWuq9tygZwvWpF7aB5+9W8nHF68aLAZizpsqxilsv1YWWFoMjlfusruG0DGemj6X5E2FLph1ugtBPEyN2/sKtsUcVfW88QlJH2XVc+/wtPXkeIcyQH7Wh136rtNnftrXJSfeg=
+	t=1751555222; cv=none; b=LvL28bdvgIEnOlM54OR0Q2jT724qhfX6zTafOzGxKxKfSHpxTEm5dXsnzQy4YXdprTWPcMTlZX9FwW5lqbPRcnyTXm8DrjsDfMj5ngLp+uXGkkMUXpFYIWe/yOQ1ooie9+R1ZVXlXbMzQfXQS9zHYJy4fdSt7G1A/LXEC0Nh52w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555219; c=relaxed/simple;
-	bh=VLRdgpLacrprFmVlrM0/VeEI94SBPYVGLgS5lv0WPf0=;
+	s=arc-20240116; t=1751555222; c=relaxed/simple;
+	bh=P30JtPHa2m6AHU8StY/RsZ1ss/lzHwdMTOS2qKVDYZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4Xm0mOemQMaIIKy42UbW4WFNP0sdWgrSDw0r7X3kulq2YVEqcx7NWU7hzzgfMQp30M5Wftql0EFBWPp0HOHDHIpRbeE756JK2NOJUrXi7Nr0Y4JVJ69KHJ8PtWNbzExXhP+LTmriBg3+a55yJND+5ywNb/RtqN+Yy+xd0+KRc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Etg7/Ggk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XdmpoLD+lvZQSGxZP2l7ZIrpezO5UQyIAzC57Wt8qwNQiGBUK+l32HIpELRRYtJ0/MTzdtXrqky+4o2HNyhGDst945TKlj8izMtATTlZD7bYw3YaB5plyFL96i28n6VLTP7cscJ9CcE+Tx26kYFnSqDeJVAx/eP5sQUbZhDiyvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuR2vGQE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Etg7/Ggk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126BAC4CEE3;
-	Thu,  3 Jul 2025 15:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuR2vGQE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C70C4CEE3;
+	Thu,  3 Jul 2025 15:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555219;
-	bh=VLRdgpLacrprFmVlrM0/VeEI94SBPYVGLgS5lv0WPf0=;
+	s=korg; t=1751555222;
+	bh=P30JtPHa2m6AHU8StY/RsZ1ss/lzHwdMTOS2qKVDYZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Etg7/GgkMBYgJm7N6qBiXKSLZvznGOiDRDHSO752tzk4Cm0qzQOb5YPAkpuNJ0mL0
-	 lz6NDDBHDZyVEx+btHo5Ah2ktFlq31+V58y0N0EP3ZlclJKscJjGnGUrrW4a1Flzhu
-	 BPq6wF/nyP6W4nRasSlnl5k+S0Kvsp8O3vvlhfno=
+	b=kuR2vGQEWd0hD+gfDKQus0cB4GhsOkXaC1majA5ejlCgP+RhWhYjGQ/DkvFicPgLi
+	 2BDfhA1EOEMsg2XMa5OkhHufKqUoacJ7ZNibZsrBqYldic680N+xX1onIB5HS7BH9Z
+	 LR0ZEQ4iHEQ7UskxcXRPo//30YCBpGkzyNJ8oEFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Kahola <mika.kahola@intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Imre Deak <imre.deak@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.15 212/263] drm/i915/ptl: Use everywhere the correct DDI port clock select mask
-Date: Thu,  3 Jul 2025 16:42:12 +0200
-Message-ID: <20250703144012.891141557@linuxfoundation.org>
+Subject: [PATCH 6.15 213/263] drm/i915/dp_mst: Work around Thunderbolt sink disconnect after SINK_COUNT_ESI read
+Date: Thu,  3 Jul 2025 16:42:13 +0200
+Message-ID: <20250703144012.931381973@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -53,129 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Imre Deak <imre.deak@intel.com>
 
-commit a38b3232d618653155032a51208e974511c151e4 upstream.
+commit 9cb15478916e849d62a6ec44b10c593b9663328c upstream.
 
-The PTL XELPDP_PORT_CLOCK_CTL register XELPDP_DDI_CLOCK_SELECT field's
-size is 5 bits vs. the earlier platforms where its size is 4 bits. Make
-sure the field is read-out/programmed everywhere correctly, according to
-the above.
+Due to a problem in the iTBT DP-in adapter's firmware the sink on a TBT
+link may get disconnected inadvertently if the SINK_COUNT_ESI and the
+DP_LINK_SERVICE_IRQ_VECTOR_ESI0 registers are read in a single AUX
+transaction. Work around the issue by reading these registers in
+separate transactions.
 
-Cc: Mika Kahola <mika.kahola@intel.com>
-Cc: stable@vger.kernel.org # v6.13+
-Tested-by: Mika Kahola <mika.kahola@intel.com>
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
+The issue affects MTL+ platforms and will be fixed in the DP-in adapter
+firmware, however releasing that firmware fix may take some time and is
+not guaranteed to be available for all systems. Based on this apply the
+workaround on affected platforms.
+
+See HSD #13013007775.
+
+v2: Cc'ing Mika Westerberg.
+
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13760
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14147
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://lore.kernel.org/r/20250512142600.824347-1-imre.deak@intel.com
-(cherry picked from commit d0bf684bd42db22e7d131a038f8f78927fa6a72a)
+Link: https://lore.kernel.org/r/20250519133417.1469181-1-imre.deak@intel.com
+(cherry picked from commit c3a48363cf1f76147088b1adb518136ac5df86a0)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_cx0_phy.c      |   27 ++++++++--------------
- drivers/gpu/drm/i915/display/intel_cx0_phy_regs.h |   15 ++++++++----
- 2 files changed, 21 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-+++ b/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-@@ -2761,9 +2761,9 @@ static void intel_program_port_clock_ctl
- 	val |= XELPDP_FORWARD_CLOCK_UNGATE;
- 
- 	if (!is_dp && is_hdmi_frl(port_clock))
--		val |= XELPDP_DDI_CLOCK_SELECT(XELPDP_DDI_CLOCK_SELECT_DIV18CLK);
-+		val |= XELPDP_DDI_CLOCK_SELECT_PREP(display, XELPDP_DDI_CLOCK_SELECT_DIV18CLK);
- 	else
--		val |= XELPDP_DDI_CLOCK_SELECT(XELPDP_DDI_CLOCK_SELECT_MAXPCLK);
-+		val |= XELPDP_DDI_CLOCK_SELECT_PREP(display, XELPDP_DDI_CLOCK_SELECT_MAXPCLK);
- 
- 	/* TODO: HDMI FRL */
- 	/* DP2.0 10G and 20G rates enable MPLLA*/
-@@ -2774,7 +2774,7 @@ static void intel_program_port_clock_ctl
- 
- 	intel_de_rmw(display, XELPDP_PORT_CLOCK_CTL(display, encoder->port),
- 		     XELPDP_LANE1_PHY_CLOCK_SELECT | XELPDP_FORWARD_CLOCK_UNGATE |
--		     XELPDP_DDI_CLOCK_SELECT_MASK | XELPDP_SSC_ENABLE_PLLA |
-+		     XELPDP_DDI_CLOCK_SELECT_MASK(display) | XELPDP_SSC_ENABLE_PLLA |
- 		     XELPDP_SSC_ENABLE_PLLB, val);
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -4457,6 +4457,23 @@ intel_dp_mst_disconnect(struct intel_dp
+ static bool
+ intel_dp_get_sink_irq_esi(struct intel_dp *intel_dp, u8 *esi)
+ {
++	struct intel_display *display = to_intel_display(intel_dp);
++
++	/*
++	 * Display WA for HSD #13013007775: mtl/arl/lnl
++	 * Read the sink count and link service IRQ registers in separate
++	 * transactions to prevent disconnecting the sink on a TBT link
++	 * inadvertently.
++	 */
++	if (IS_DISPLAY_VER(display, 14, 20) && !display->platform.battlemage) {
++		if (drm_dp_dpcd_read(&intel_dp->aux, DP_SINK_COUNT_ESI, esi, 3) != 3)
++			return false;
++
++		/* DP_SINK_COUNT_ESI + 3 == DP_LINK_SERVICE_IRQ_VECTOR_ESI0 */
++		return drm_dp_dpcd_readb(&intel_dp->aux, DP_LINK_SERVICE_IRQ_VECTOR_ESI0,
++					 &esi[3]) == 1;
++	}
++
+ 	return drm_dp_dpcd_read(&intel_dp->aux, DP_SINK_COUNT_ESI, esi, 4) == 4;
  }
  
-@@ -3097,10 +3097,7 @@ int intel_mtl_tbt_calc_port_clock(struct
- 
- 	val = intel_de_read(display, XELPDP_PORT_CLOCK_CTL(display, encoder->port));
- 
--	if (DISPLAY_VER(display) >= 30)
--		clock = REG_FIELD_GET(XE3_DDI_CLOCK_SELECT_MASK, val);
--	else
--		clock = REG_FIELD_GET(XELPDP_DDI_CLOCK_SELECT_MASK, val);
-+	clock = XELPDP_DDI_CLOCK_SELECT_GET(display, val);
- 
- 	drm_WARN_ON(display->drm, !(val & XELPDP_FORWARD_CLOCK_UNGATE));
- 	drm_WARN_ON(display->drm, !(val & XELPDP_TBT_CLOCK_REQUEST));
-@@ -3168,13 +3165,9 @@ static void intel_mtl_tbt_pll_enable(str
- 	 * clock muxes, gating and SSC
- 	 */
- 
--	if (DISPLAY_VER(display) >= 30) {
--		mask = XE3_DDI_CLOCK_SELECT_MASK;
--		val |= XE3_DDI_CLOCK_SELECT(intel_mtl_tbt_clock_select(display, crtc_state->port_clock));
--	} else {
--		mask = XELPDP_DDI_CLOCK_SELECT_MASK;
--		val |= XELPDP_DDI_CLOCK_SELECT(intel_mtl_tbt_clock_select(display, crtc_state->port_clock));
--	}
-+	mask = XELPDP_DDI_CLOCK_SELECT_MASK(display);
-+	val |= XELPDP_DDI_CLOCK_SELECT_PREP(display,
-+					    intel_mtl_tbt_clock_select(display, crtc_state->port_clock));
- 
- 	mask |= XELPDP_FORWARD_CLOCK_UNGATE;
- 	val |= XELPDP_FORWARD_CLOCK_UNGATE;
-@@ -3287,7 +3280,7 @@ static void intel_cx0pll_disable(struct
- 
- 	/* 7. Program PORT_CLOCK_CTL register to disable and gate clocks. */
- 	intel_de_rmw(display, XELPDP_PORT_CLOCK_CTL(display, encoder->port),
--		     XELPDP_DDI_CLOCK_SELECT_MASK, 0);
-+		     XELPDP_DDI_CLOCK_SELECT_MASK(display), 0);
- 	intel_de_rmw(display, XELPDP_PORT_CLOCK_CTL(display, encoder->port),
- 		     XELPDP_FORWARD_CLOCK_UNGATE, 0);
- 
-@@ -3336,7 +3329,7 @@ static void intel_mtl_tbt_pll_disable(st
- 	 * 5. Program PORT CLOCK CTRL register to disable and gate clocks
- 	 */
- 	intel_de_rmw(display, XELPDP_PORT_CLOCK_CTL(display, encoder->port),
--		     XELPDP_DDI_CLOCK_SELECT_MASK |
-+		     XELPDP_DDI_CLOCK_SELECT_MASK(display) |
- 		     XELPDP_FORWARD_CLOCK_UNGATE, 0);
- 
- 	/* 6. Program DDI_CLK_VALFREQ to 0. */
-@@ -3365,7 +3358,7 @@ intel_mtl_port_pll_type(struct intel_enc
- 	 * handling is done via the standard shared DPLL framework.
- 	 */
- 	val = intel_de_read(display, XELPDP_PORT_CLOCK_CTL(display, encoder->port));
--	clock = REG_FIELD_GET(XELPDP_DDI_CLOCK_SELECT_MASK, val);
-+	clock = XELPDP_DDI_CLOCK_SELECT_GET(display, val);
- 
- 	if (clock == XELPDP_DDI_CLOCK_SELECT_MAXPCLK ||
- 	    clock == XELPDP_DDI_CLOCK_SELECT_DIV18CLK)
---- a/drivers/gpu/drm/i915/display/intel_cx0_phy_regs.h
-+++ b/drivers/gpu/drm/i915/display/intel_cx0_phy_regs.h
-@@ -192,10 +192,17 @@
- 
- #define   XELPDP_TBT_CLOCK_REQUEST			REG_BIT(19)
- #define   XELPDP_TBT_CLOCK_ACK				REG_BIT(18)
--#define   XELPDP_DDI_CLOCK_SELECT_MASK			REG_GENMASK(15, 12)
--#define   XE3_DDI_CLOCK_SELECT_MASK			REG_GENMASK(16, 12)
--#define   XELPDP_DDI_CLOCK_SELECT(val)			REG_FIELD_PREP(XELPDP_DDI_CLOCK_SELECT_MASK, val)
--#define   XE3_DDI_CLOCK_SELECT(val)			REG_FIELD_PREP(XE3_DDI_CLOCK_SELECT_MASK, val)
-+#define   _XELPDP_DDI_CLOCK_SELECT_MASK			REG_GENMASK(15, 12)
-+#define   _XE3_DDI_CLOCK_SELECT_MASK			REG_GENMASK(16, 12)
-+#define   XELPDP_DDI_CLOCK_SELECT_MASK(display)		(DISPLAY_VER(display) >= 30 ? \
-+							 _XE3_DDI_CLOCK_SELECT_MASK : _XELPDP_DDI_CLOCK_SELECT_MASK)
-+#define   XELPDP_DDI_CLOCK_SELECT_PREP(display, val)	(DISPLAY_VER(display) >= 30 ? \
-+							 REG_FIELD_PREP(_XE3_DDI_CLOCK_SELECT_MASK, (val)) : \
-+							 REG_FIELD_PREP(_XELPDP_DDI_CLOCK_SELECT_MASK, (val)))
-+#define   XELPDP_DDI_CLOCK_SELECT_GET(display, val)	(DISPLAY_VER(display) >= 30 ? \
-+							 REG_FIELD_GET(_XE3_DDI_CLOCK_SELECT_MASK, (val)) : \
-+							 REG_FIELD_GET(_XELPDP_DDI_CLOCK_SELECT_MASK, (val)))
-+
- #define   XELPDP_DDI_CLOCK_SELECT_NONE			0x0
- #define   XELPDP_DDI_CLOCK_SELECT_MAXPCLK		0x8
- #define   XELPDP_DDI_CLOCK_SELECT_DIV18CLK		0x9
 
 
