@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8F62EE978;
-	Thu,  3 Jul 2025 14:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510A62EAD1B;
+	Thu,  3 Jul 2025 14:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554504; cv=none; b=UND0gK7B270gXeN061lLDp5yFvbUc38kjHLF3MU3WiJ4BP5/d6qiFN4RPitRvSU9DxWta7eXnpe+BvW0VKDwPVfm2H0mNzCNYlkNca7H7yV8SoEdEuYHlarWyl7i738ZLjVewC0tsHybV5CxJKcq/J1VtBnL3plloCLL9B2QgMU=
+	t=1751554507; cv=none; b=s4M0G6/S65U7O4H6f1429JZ6SBBkzfu8ln5p0f9/HZSIXefmzuceGTcmIyoSCu9j4eJxkqRpO1yDHag/8BSzYtvasgADzyu0K2p0IMzj4yJULcQclmTkG6fslNFq1rkFwQtQLguv9To/BTOub/ISijGByRKTLR6goWAYi3HFMYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554504; c=relaxed/simple;
-	bh=TBxzDXQRpKPYuFGwlo72tsaDeKy9NUG26r/xDxS19HE=;
+	s=arc-20240116; t=1751554507; c=relaxed/simple;
+	bh=XiE8k8lAtwbyMT1yzasldmDtm8bRjqUBDmH6+RFLiHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6ZKzxc5+LekpN+mUeRAkfhev5s6imYfb+KVYLwMtC6k/Hj2nxQBQFwzHtFvne3XvCtRc4VtsR54KI59aJ6qUdNsnWJN3oYFRX0O9nyN900LwEdZI2OS6KElGX3GwfeRZb/ltpIFrxxBjZpwDMQk6lbErTKxz+yZq/2391U4hvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U92sV2eE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dwYOH4yZJO2SNREbX9bew9CbPjnBOOVIqgbV34cPM7phat3QDlx8fNSkE4oDDKT8YK4mLmyMb7FBYAKurVU2pevjG6Pa6djmwZEC9OoZxd/SxbncBWsJCMRBwndQ1Hga0+rUZlqEh1PP9iJ6cZ6LpgSrzlK1DIR6UbXu32ze6cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzkhA37Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U92sV2eE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709EDC4CEE3;
-	Thu,  3 Jul 2025 14:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzkhA37Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B8FC4CEE3;
+	Thu,  3 Jul 2025 14:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554503;
-	bh=TBxzDXQRpKPYuFGwlo72tsaDeKy9NUG26r/xDxS19HE=;
+	s=korg; t=1751554507;
+	bh=XiE8k8lAtwbyMT1yzasldmDtm8bRjqUBDmH6+RFLiHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U92sV2eEVrprf2xBtKmS6fOQxAM+0A7gEGiSpMrtPHuxllknGo+p9KStGrsGkXjw5
-	 RSykqD1CxJg37ED6sSwQ5e5UcDm0euYjQ1NIK2vyOiapU4bCbcddW+JLvvbqvOLUfF
-	 0GFN5mwHTwb6UVvyUu7Z13hdHm/jEFGvgFpwOdhE=
+	b=BzkhA37ZAsQYxGuFPAVMmadAOHJ8Qj2lAwOTRgt79OTajfXo8KqkrizJgkN+ocPDo
+	 KGtzQTUWTtg1lr0JF5Dxbe0rhSklEa4MzYaS6G/iR81wayOt5U2JP0vadFT6vYEONP
+	 a5YN17haP+XUy+kOBF0pztpli/vcwROP8GZRzXUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Mathieu Tortuyaux <mtortuyaux@microsoft.com>
-Subject: [PATCH 6.12 191/218] r8169: add support for RTL8125D
-Date: Thu,  3 Jul 2025 16:42:19 +0200
-Message-ID: <20250703144003.843116537@linuxfoundation.org>
+	Jonathan Kim <jonathan.kim@amd.com>,
+	David Belanger <david.belanger@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 209/218] drm/amdkfd: remove gfx 12 trap handler page size cap
+Date: Thu,  3 Jul 2025 16:42:37 +0200
+Message-ID: <20250703144004.573344938@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -52,149 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Jonathan Kim <jonathan.kim@amd.com>
 
-commit f75d1fbe7809bc5ed134204b920fd9e2fc5db1df upstream.
+[ Upstream commit cd82f29ec51b2e616289db7b258a936127c16efa ]
 
-This adds support for new chip version RTL8125D, which can be found on
-boards like Gigabyte X870E AORUS ELITE WIFI7. Firmware rtl8125d-1.fw
-for this chip version is available in linux-firmware already.
+GFX 12 does not require a page size cap for the trap handler because
+it does not require a CWSR work around like GFX 11 did.
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/d0306912-e88e-4c25-8b5d-545ae8834c0c@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Mathieu Tortuyaux <mtortuyaux@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jonathan Kim <jonathan.kim@amd.com>
+Reviewed-by: David Belanger <david.belanger@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169.h            |    1 +
- drivers/net/ethernet/realtek/r8169_main.c       |   23 ++++++++++++++++-------
- drivers/net/ethernet/realtek/r8169_phy_config.c |   10 ++++++++++
- 3 files changed, 27 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/realtek/r8169.h
-+++ b/drivers/net/ethernet/realtek/r8169.h
-@@ -68,6 +68,7 @@ enum mac_version {
- 	/* support for RTL_GIGA_MAC_VER_60 has been removed */
- 	RTL_GIGA_MAC_VER_61,
- 	RTL_GIGA_MAC_VER_63,
-+	RTL_GIGA_MAC_VER_64,
- 	RTL_GIGA_MAC_VER_65,
- 	RTL_GIGA_MAC_VER_66,
- 	RTL_GIGA_MAC_NONE
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -55,6 +55,7 @@
- #define FIRMWARE_8107E_2	"rtl_nic/rtl8107e-2.fw"
- #define FIRMWARE_8125A_3	"rtl_nic/rtl8125a-3.fw"
- #define FIRMWARE_8125B_2	"rtl_nic/rtl8125b-2.fw"
-+#define FIRMWARE_8125D_1	"rtl_nic/rtl8125d-1.fw"
- #define FIRMWARE_8126A_2	"rtl_nic/rtl8126a-2.fw"
- #define FIRMWARE_8126A_3	"rtl_nic/rtl8126a-3.fw"
- 
-@@ -138,6 +139,7 @@ static const struct {
- 	[RTL_GIGA_MAC_VER_61] = {"RTL8125A",		FIRMWARE_8125A_3},
- 	/* reserve 62 for CFG_METHOD_4 in the vendor driver */
- 	[RTL_GIGA_MAC_VER_63] = {"RTL8125B",		FIRMWARE_8125B_2},
-+	[RTL_GIGA_MAC_VER_64] = {"RTL8125D",		FIRMWARE_8125D_1},
- 	[RTL_GIGA_MAC_VER_65] = {"RTL8126A",		FIRMWARE_8126A_2},
- 	[RTL_GIGA_MAC_VER_66] = {"RTL8126A",		FIRMWARE_8126A_3},
- };
-@@ -707,6 +709,7 @@ MODULE_FIRMWARE(FIRMWARE_8168FP_3);
- MODULE_FIRMWARE(FIRMWARE_8107E_2);
- MODULE_FIRMWARE(FIRMWARE_8125A_3);
- MODULE_FIRMWARE(FIRMWARE_8125B_2);
-+MODULE_FIRMWARE(FIRMWARE_8125D_1);
- MODULE_FIRMWARE(FIRMWARE_8126A_2);
- MODULE_FIRMWARE(FIRMWARE_8126A_3);
- 
-@@ -2098,10 +2101,7 @@ static void rtl_set_eee_txidle_timer(str
- 		tp->tx_lpi_timer = timer_val;
- 		r8168_mac_ocp_write(tp, 0xe048, timer_val);
- 		break;
--	case RTL_GIGA_MAC_VER_61:
--	case RTL_GIGA_MAC_VER_63:
--	case RTL_GIGA_MAC_VER_65:
--	case RTL_GIGA_MAC_VER_66:
-+	case RTL_GIGA_MAC_VER_61 ... RTL_GIGA_MAC_VER_66:
- 		tp->tx_lpi_timer = timer_val;
- 		RTL_W16(tp, EEE_TXIDLE_TIMER_8125, timer_val);
- 		break;
-@@ -2233,6 +2233,9 @@ static enum mac_version rtl8169_get_mac_
- 		{ 0x7cf, 0x64a,	RTL_GIGA_MAC_VER_66 },
- 		{ 0x7cf, 0x649,	RTL_GIGA_MAC_VER_65 },
- 
-+		/* 8125D family. */
-+		{ 0x7cf, 0x688,	RTL_GIGA_MAC_VER_64 },
-+
- 		/* 8125B family. */
- 		{ 0x7cf, 0x641,	RTL_GIGA_MAC_VER_63 },
- 
-@@ -2500,9 +2503,7 @@ static void rtl_init_rxcfg(struct rtl816
- 	case RTL_GIGA_MAC_VER_61:
- 		RTL_W32(tp, RxConfig, RX_FETCH_DFLT_8125 | RX_DMA_BURST);
- 		break;
--	case RTL_GIGA_MAC_VER_63:
--	case RTL_GIGA_MAC_VER_65:
--	case RTL_GIGA_MAC_VER_66:
-+	case RTL_GIGA_MAC_VER_63 ... RTL_GIGA_MAC_VER_66:
- 		RTL_W32(tp, RxConfig, RX_FETCH_DFLT_8125 | RX_DMA_BURST |
- 			RX_PAUSE_SLOT_ON);
- 		break;
-@@ -3840,6 +3841,12 @@ static void rtl_hw_start_8125b(struct rt
- 	rtl_hw_start_8125_common(tp);
- }
- 
-+static void rtl_hw_start_8125d(struct rtl8169_private *tp)
-+{
-+	rtl_set_def_aspm_entry_latency(tp);
-+	rtl_hw_start_8125_common(tp);
-+}
-+
- static void rtl_hw_start_8126a(struct rtl8169_private *tp)
- {
- 	rtl_disable_zrxdc_timeout(tp);
-@@ -3889,6 +3896,7 @@ static void rtl_hw_config(struct rtl8169
- 		[RTL_GIGA_MAC_VER_53] = rtl_hw_start_8117,
- 		[RTL_GIGA_MAC_VER_61] = rtl_hw_start_8125a_2,
- 		[RTL_GIGA_MAC_VER_63] = rtl_hw_start_8125b,
-+		[RTL_GIGA_MAC_VER_64] = rtl_hw_start_8125d,
- 		[RTL_GIGA_MAC_VER_65] = rtl_hw_start_8126a,
- 		[RTL_GIGA_MAC_VER_66] = rtl_hw_start_8126a,
- 	};
-@@ -3906,6 +3914,7 @@ static void rtl_hw_start_8125(struct rtl
- 	/* disable interrupt coalescing */
- 	switch (tp->mac_version) {
- 	case RTL_GIGA_MAC_VER_61:
-+	case RTL_GIGA_MAC_VER_64:
- 		for (i = 0xa00; i < 0xb00; i += 4)
- 			RTL_W32(tp, i, 0);
- 		break;
---- a/drivers/net/ethernet/realtek/r8169_phy_config.c
-+++ b/drivers/net/ethernet/realtek/r8169_phy_config.c
-@@ -1104,6 +1104,15 @@ static void rtl8125b_hw_phy_config(struc
- 	rtl8125b_config_eee_phy(phydev);
- }
- 
-+static void rtl8125d_hw_phy_config(struct rtl8169_private *tp,
-+				   struct phy_device *phydev)
-+{
-+	r8169_apply_firmware(tp);
-+	rtl8125_legacy_force_mode(phydev);
-+	rtl8168g_disable_aldps(phydev);
-+	rtl8125b_config_eee_phy(phydev);
-+}
-+
- static void rtl8126a_hw_phy_config(struct rtl8169_private *tp,
- 				   struct phy_device *phydev)
- {
-@@ -1160,6 +1169,7 @@ void r8169_hw_phy_config(struct rtl8169_
- 		[RTL_GIGA_MAC_VER_53] = rtl8117_hw_phy_config,
- 		[RTL_GIGA_MAC_VER_61] = rtl8125a_2_hw_phy_config,
- 		[RTL_GIGA_MAC_VER_63] = rtl8125b_hw_phy_config,
-+		[RTL_GIGA_MAC_VER_64] = rtl8125d_hw_phy_config,
- 		[RTL_GIGA_MAC_VER_65] = rtl8126a_hw_phy_config,
- 		[RTL_GIGA_MAC_VER_66] = rtl8126a_hw_phy_config,
- 	};
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+index 9186ef0bd2a32..07eadab4c1c4d 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -537,7 +537,8 @@ static void kfd_cwsr_init(struct kfd_dev *kfd)
+ 			kfd->cwsr_isa = cwsr_trap_gfx11_hex;
+ 			kfd->cwsr_isa_size = sizeof(cwsr_trap_gfx11_hex);
+ 		} else {
+-			BUILD_BUG_ON(sizeof(cwsr_trap_gfx12_hex) > PAGE_SIZE);
++			BUILD_BUG_ON(sizeof(cwsr_trap_gfx12_hex)
++					     > KFD_CWSR_TMA_OFFSET);
+ 			kfd->cwsr_isa = cwsr_trap_gfx12_hex;
+ 			kfd->cwsr_isa_size = sizeof(cwsr_trap_gfx12_hex);
+ 		}
+-- 
+2.39.5
+
 
 
