@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8AA2E7BD6;
-	Thu,  3 Jul 2025 15:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28F32E7BBF;
+	Thu,  3 Jul 2025 15:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554947; cv=none; b=YjXDBWBdGMYCdXfUqHo8PBkWluxuHuzDIT82hUJfWEbYjxAwuu1+JKlpdHWpOJmJVOR/isYhG2QkIexj2KqS3qzM4QEoLIGpE7uAa5LcGKkYxCn8MxZQkKR+6Hbb+qp5oTBNkUdfIIxfQACrC3ktOIPLnHNDo9tgXpji2xgua7U=
+	t=1751554950; cv=none; b=Kmu4MYSpcxQRYfGOQlwjskBZgJCu/EUtkxaq0Kcp0giDjaHWzhhBHtADicq1oj6R3l7Hthc2KEvw8ITdjx9kNhAWitA3wxCPi0hwDYkB3UZgPZocZfPl2fHp5rzc2NvC5WFlIJ8dnYGNREdFDa2KbFfrOK1ze4kA+NMNSvAAsCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554947; c=relaxed/simple;
-	bh=gEcTyzmUHPViI1Q+7ZtA0iDwgaBX1O2x37Y/ad+KCDU=;
+	s=arc-20240116; t=1751554950; c=relaxed/simple;
+	bh=1HVOWS5vMzCEXhMq7KAQ9uyA1mMPb5t/ny4n0SaWxag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cn0NqiE521anp9KPhHB/G6llU3cfQk6U940DtSa5LiziOrRKkyb+0LnDr+RajQJG0J2Tq8DCF0to4J0xO+bfUjptfIMxrpBVD9nFphbfMYmD4lRnZtUSPFreI5hJZJZMZKf8Vbif23vAvXOlx3DMM5HhtW6gz8o/3+mUuXelRJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzwVCtgW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PudY3niT/VpLvUJEwpQDl8xyK2yJY0XP+qrQLZxZISm6ZaApnT4fzqWcKp8N5Dvjs922lfpisfiOktrK2xPv2/PLcWogSs//Iv0rwZ0YMaAapvgfafI1falkP5bkkZm6HyNSFCi3pYUIzBD30doUhpZCX3wrGiWTeH8SOOtXRzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2ddk5HC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzwVCtgW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC26C4CEE3;
-	Thu,  3 Jul 2025 15:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2ddk5HC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1AFC4CEE3;
+	Thu,  3 Jul 2025 15:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554947;
-	bh=gEcTyzmUHPViI1Q+7ZtA0iDwgaBX1O2x37Y/ad+KCDU=;
+	s=korg; t=1751554950;
+	bh=1HVOWS5vMzCEXhMq7KAQ9uyA1mMPb5t/ny4n0SaWxag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzwVCtgWVqhbULlH5FCnGNBgurDDWG30ff23rZJWOmjwxEA32UTGulGp33F+5hTJx
-	 rbAqy9FWInbb2Msi4QTwUBkV/yzwB54Yk0VzXbmkd/PWxpzdcWBmzYpoyiUhTg/zs+
-	 JKH1YRcYV8TL+/7OPke/PMiVgAYqn3XB7pUiOd3o=
+	b=Z2ddk5HCD0MpIGOPHc9YPRQKNgcJF2KnnrvA9cQiyqt7LPN2MRNXpkdO9sh2bs3dX
+	 XRJ7poJcWLlRvBFRlASPe8WnSpbpd/dixKuUGmoF8xCuR8PbVaBCqZcdjja+ffcGiS
+	 Lr0rs2Mj7PDBzMy4MrsKubhNQNi+XkcDsxIeOozk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Kucharczyk <lukasz.kucharczyk@leica-geosystems.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Stefan Eichenberger <eichest@gmail.com>,
-	Carlos Song <carlos.song@nxp.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.15 098/263] i2c: imx: fix emulated smbus block read
-Date: Thu,  3 Jul 2025 16:40:18 +0200
-Message-ID: <20250703144008.230719449@linuxfoundation.org>
+Subject: [PATCH 6.15 099/263] i2c: tiny-usb: disable zero-length read messages
+Date: Thu,  3 Jul 2025 16:40:19 +0200
+Message-ID: <20250703144008.270893198@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -53,64 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Kucharczyk <lukasz.kucharczyk@leica-geosystems.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-commit a5d0b9e32745277644cda8d7d334e7080bd339bf upstream.
+commit cbdb25ccf7566eee0c2b945e35cb98baf9ed0aa6 upstream.
 
-Acknowledge the byte count submitted by the target.
-When I2C_SMBUS_BLOCK_DATA read operation is executed by
-i2c_smbus_xfer_emulated(), the length of the second (read) message is set
-to 1. Length of the block is supposed to be obtained from the target by the
-underlying bus driver.
-The i2c_imx_isr_read() function should emit the acknowledge on i2c bus
-after reading the first byte (i.e., byte count) while processing such
-message (as defined in Section 6.5.7 of System Management Bus
-Specification [1]). Without this acknowledge, the target does not submit
-subsequent bytes and the controller only reads 0xff's.
+This driver passes the length of an i2c_msg directly to
+usb_control_msg(). If the message is now a read and of length 0, it
+violates the USB protocol and a warning will be printed. Enable the
+I2C_AQ_NO_ZERO_LEN_READ quirk for this adapter thus forbidding 0-length
+read messages altogether.
 
-In addition, store the length of block data obtained from the target in
-the buffer provided by i2c_smbus_xfer_emulated() - otherwise the first
-byte of actual data is erroneously interpreted as length of the data
-block.
-
-[1] https://smbus.org/specs/SMBus_3_3_20240512.pdf
-
-Fixes: 5f5c2d4579ca ("i2c: imx: prevent rescheduling in non dma mode")
-Signed-off-by: Lukasz Kucharczyk <lukasz.kucharczyk@leica-geosystems.com>
-Cc: <stable@vger.kernel.org> # v6.13+
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Stefan Eichenberger <eichest@gmail.com>
-Reviewed-by: Carlos Song <carlos.song@nxp.com>
+Fixes: e8c76eed2ecd ("i2c: New i2c-tiny-usb bus driver")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: <stable@vger.kernel.org> # v2.6.22+
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250520122252.1475403-1-lukasz.kucharczyk@leica-geosystems.com
+Link: https://lore.kernel.org/r/20250522064349.3823-2-wsa+renesas@sang-engineering.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-tiny-usb.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-imx.c b/drivers/i2c/busses/i2c-imx.c
-index e5732b0557fb..205cc132fdec 100644
---- a/drivers/i2c/busses/i2c-imx.c
-+++ b/drivers/i2c/busses/i2c-imx.c
-@@ -1008,7 +1008,7 @@ static inline int i2c_imx_isr_read(struct imx_i2c_struct *i2c_imx)
- 	/* setup bus to read data */
- 	temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
- 	temp &= ~I2CR_MTX;
--	if (i2c_imx->msg->len - 1)
-+	if ((i2c_imx->msg->len - 1) || (i2c_imx->msg->flags & I2C_M_RECV_LEN))
- 		temp &= ~I2CR_TXAK;
- 
- 	imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
-@@ -1063,6 +1063,7 @@ static inline void i2c_imx_isr_read_block_data_len(struct imx_i2c_struct *i2c_im
- 		wake_up(&i2c_imx->queue);
- 	}
- 	i2c_imx->msg->len += len;
-+	i2c_imx->msg->buf[i2c_imx->msg_buf_idx++] = len;
+--- a/drivers/i2c/busses/i2c-tiny-usb.c
++++ b/drivers/i2c/busses/i2c-tiny-usb.c
+@@ -138,6 +138,11 @@ out:
+ 	return ret;
  }
  
- static irqreturn_t i2c_imx_master_isr(struct imx_i2c_struct *i2c_imx, unsigned int status)
--- 
-2.50.0
-
++/* prevent invalid 0-length usb_control_msg */
++static const struct i2c_adapter_quirks usb_quirks = {
++	.flags = I2C_AQ_NO_ZERO_LEN_READ,
++};
++
+ /* This is the actual algorithm we define */
+ static const struct i2c_algorithm usb_algorithm = {
+ 	.xfer = usb_xfer,
+@@ -246,6 +251,7 @@ static int i2c_tiny_usb_probe(struct usb
+ 	/* setup i2c adapter description */
+ 	dev->adapter.owner = THIS_MODULE;
+ 	dev->adapter.class = I2C_CLASS_HWMON;
++	dev->adapter.quirks = &usb_quirks;
+ 	dev->adapter.algo = &usb_algorithm;
+ 	dev->adapter.algo_data = dev;
+ 	snprintf(dev->adapter.name, sizeof(dev->adapter.name),
 
 
