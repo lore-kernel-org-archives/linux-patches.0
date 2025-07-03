@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432B123AB86;
-	Thu,  3 Jul 2025 14:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C07B72610;
+	Thu,  3 Jul 2025 14:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554125; cv=none; b=bXXcd6pi0srra768flrTkaXT8oNhMWtEyK3JszqlSSzRErnrGIOVWle1NOHyqgM0d093APfcQt2Fq4MQgc3ksvhirOiOkQKtws8T3w8HxL7nt/KxJTMknS/gcNCBZj8qXRU0xoYnZJJLkP3gTGVblbZU/C7MmPieCzV448wQY2k=
+	t=1751554128; cv=none; b=AuPtxV050ajdpK4UJn7ZYj6f1FXogjoZPaZbsQ5u1RETTedzNkybBIl/YKihE7GbUO9rJhTQi9ORfK2tSfWGsomsp9Lej0p6DitskcPvodX2i89djKQLTUQKDh/ak03l4xOayooN8Cd+dEznpXD0F5jhYf6wCAqySPdOPb3Wv18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554125; c=relaxed/simple;
-	bh=T/jUc8ugZxQVd63Ek6YpknsXMWvbybaInTh6spL9AgU=;
+	s=arc-20240116; t=1751554128; c=relaxed/simple;
+	bh=z06qb7GynI2NJ2phsTAimxPvHZYhZRVGDFzfi3vtvOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k5FLPHguc2EE9Nbt6TNrzSfzwXlj9RgABU+UzFn/ZhomXxs3ZjZQmJlWWmrJoY1nX44hnAqfwLQZ5PkRFl+RAMfON1upqCLoPNf1m8QD7EpPg90sdaZzs8/D8nPfikHyG2ofwB7T3f9z8oKktCQXoti64cy6tSrX+kZgtwGgyyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVCvwpBO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eoFRoo3cYPKUs5RQdOA+f19CmTMJKLw5y59DYwByEDilo6a5N+uakyPoM6ZtsrTTBEjpGQo2VSw7RMxIGp8zHavDjtKd8VFhe5ljwes1vPn99mo2rx4gs14u8bQBpbsLyi1XCgO8bhUdMGj43w+Hb4KPql9gpXpRRHxZwMr0/L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTM6ZlAj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVCvwpBO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A0BC4CEE3;
-	Thu,  3 Jul 2025 14:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTM6ZlAj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D038DC4CEE3;
+	Thu,  3 Jul 2025 14:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554125;
-	bh=T/jUc8ugZxQVd63Ek6YpknsXMWvbybaInTh6spL9AgU=;
+	s=korg; t=1751554128;
+	bh=z06qb7GynI2NJ2phsTAimxPvHZYhZRVGDFzfi3vtvOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LVCvwpBOpSe+S41c/sjomDkxOleQA9VD0sxGA9rKh8wE0eL70Y/bBpGYU+kkzUgvh
-	 ztYK3fer0WN6bLEc01DCACA3ATkx3jcF1KkdBk1QnbvZ1LfMUWKSFdy6HLfw+vxAHO
-	 m2b8bQ22j2fBLs8x7WjEqelEAW0Y8/BtBuIwq6/w=
+	b=gTM6ZlAjmtx6ZuR1FpHj33rkf16MH1waj/sB08jGmGFJc9gByhDFXig/W1RD7K7jX
+	 fWV4Q0j0KtCax90gUnhcZe42lqZ4HMsNMv1RoB3skQaNJmdcCZBQbdt1SD0t/VafAi
+	 97xpYCzjKNzuwDrFSv0aZ8rzxPm23nQapWf31QHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH 6.12 087/218] Revert "riscv: misaligned: fix sleeping function called during misaligned access handling"
-Date: Thu,  3 Jul 2025 16:40:35 +0200
-Message-ID: <20250703143959.419550251@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.12 088/218] drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS
+Date: Thu,  3 Jul 2025 16:40:36 +0200
+Message-ID: <20250703143959.464767193@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -53,56 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Imre Deak <imre.deak@intel.com>
 
-commit 2f73c62d4e13df67380ff6faca39eec2bf08dd93 upstream.
+commit a3ef3c2da675a8a564c8bea1a511cdd0a2a9aa49 upstream.
 
-This reverts commit 61a74ad25462 ("riscv: misaligned: fix sleeping function
-called during misaligned access handling"). The commit addresses a sleeping
-in atomic context problem, but it is not the correct fix as explained by
-Clément:
+Reading DPCD registers has side-effects in general. In particular
+accessing registers outside of the link training register range
+(0x102-0x106, 0x202-0x207, 0x200c-0x200f, 0x2216) is explicitly
+forbidden by the DP v2.1 Standard, see
 
-"Using nofault would lead to failure to read from user memory that is paged
-out for instance. This is not really acceptable, we should handle user
-misaligned access even at an address that would generate a page fault."
+3.6.5.1 DPTX AUX Transaction Handling Mandates
+3.6.7.4 128b/132b DP Link Layer LTTPR Link Training Mandates
 
-This bug has been properly fixed by commit 453805f0a28f ("riscv:
-misaligned: enable IRQs while handling misaligned accesses").
+Based on my tests, accessing the DPCD_REV register during the link
+training of an UHBR TBT DP tunnel sink leads to link training failures.
 
-Revert this improper fix.
+Solve the above by using the DP_LANE0_1_STATUS (0x202) register for the
+DPCD register access quirk.
 
-Link: https://lore.kernel.org/linux-riscv/b779beed-e44e-4a5e-9551-4647682b0d21@rivosinc.com/
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Cc: stable@vger.kernel.org
-Reviewed-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Fixes: 61a74ad25462 ("riscv: misaligned: fix sleeping function called during misaligned access handling")
-Link: https://lore.kernel.org/r/20250620110939.1642735-1-namcao@linutronix.de
-Signed-off-by: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: <stable@vger.kernel.org>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://lore.kernel.org/r/20250605082850.65136-2-imre.deak@intel.com
+(cherry picked from commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/traps_misaligned.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/display/drm_dp_helper.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/traps_misaligned.c
-+++ b/arch/riscv/kernel/traps_misaligned.c
-@@ -429,7 +429,7 @@ int handle_misaligned_load(struct pt_reg
- 
- 	val.data_u64 = 0;
- 	if (user_mode(regs)) {
--		if (copy_from_user_nofault(&val, (u8 __user *)addr, len))
-+		if (copy_from_user(&val, (u8 __user *)addr, len))
- 			return -1;
- 	} else {
- 		memcpy(&val, (u8 *)addr, len);
-@@ -530,7 +530,7 @@ int handle_misaligned_store(struct pt_re
- 		return -EOPNOTSUPP;
- 
- 	if (user_mode(regs)) {
--		if (copy_to_user_nofault((u8 __user *)addr, &val, len))
-+		if (copy_to_user((u8 __user *)addr, &val, len))
- 			return -1;
- 	} else {
- 		memcpy((u8 *)addr, &val, len);
+--- a/drivers/gpu/drm/display/drm_dp_helper.c
++++ b/drivers/gpu/drm/display/drm_dp_helper.c
+@@ -664,7 +664,7 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_a
+ 	 * monitor doesn't power down exactly after the throw away read.
+ 	 */
+ 	if (!aux->is_remote) {
+-		ret = drm_dp_dpcd_probe(aux, DP_DPCD_REV);
++		ret = drm_dp_dpcd_probe(aux, DP_LANE0_1_STATUS);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
 
 
