@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1EA2ED143;
-	Thu,  3 Jul 2025 15:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D462EA149;
+	Thu,  3 Jul 2025 15:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555073; cv=none; b=k/uAlHFJR7aYnx7/hDXLIk4ETZINNiY+KL6CSFaMNvf6qqZbvlXQKEKBZOVCoSgEAo0Yk2bxN4PA0lvfoI8X4euMuAgHv3L+OCmcREfIZZ52ynV7RnHm0GtdhZHynb5LGkCojBXSBo9I9MIZ0MUL+mZDNdsWEhFf1GoFvnWEDCw=
+	t=1751555077; cv=none; b=fi40MVEfzlyNtCkopD8dY19IWkZvAFPIu7YfXvqvYqJPxowKFu7VY8eee6UtEQDwxkub4WZpjIxOL9p6yx7s1arPXekk92qktwARGFUKHeI0KQfCt7Dv7BsJNo4p9H7+mdEecUC8vx3SxOCDrF/nzqTBWvDo6wm0o202eQD0qJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555073; c=relaxed/simple;
-	bh=Pl04QGGXh8Bqreg5ZQ/FOtHl7MK1qouMXlAMjtHHYLM=;
+	s=arc-20240116; t=1751555077; c=relaxed/simple;
+	bh=31HfznZZiBY6L3XY2/G6mMsaXjAt9DPDBgW7ECyZwag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c9xX3MEAwTJ9P4dCy6AM2WjoT5sQ/UD/SuKM24QXLP/xM2E8m6cvX848wUzfHUtcDvYIrGxmpIBSSb0kz03L9vvy+7AIn/9MRzXOiPgyzjouw2MTbmurR+kFyu7MDjhj1kZUugAhPKjjnwUYTIrqr1GFgkJ+zGeT0Zqw0HMgutc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCQ2s5oF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SgzwtabipojQK68KlpSN+J5g6f+2+YrGvydPt3xMqpsH0l85+KHq1ofErvCwV5STnfZ21elOq6OMN2w5g+iLBRJm2aYkOSHtZa5YwZIOW9CbFolL1L1hfHsGjw0XL7PJr4v9eHEXf0jHCYJF/2uCftbrLQc5fwE9PQeKjxj7OM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+/46zpf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCQ2s5oF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F25BC4CEEE;
-	Thu,  3 Jul 2025 15:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+/46zpf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623E3C4CEE3;
+	Thu,  3 Jul 2025 15:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555073;
-	bh=Pl04QGGXh8Bqreg5ZQ/FOtHl7MK1qouMXlAMjtHHYLM=;
+	s=korg; t=1751555076;
+	bh=31HfznZZiBY6L3XY2/G6mMsaXjAt9DPDBgW7ECyZwag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCQ2s5oFCkKU0KKMwvI6rLsneLiwEI8LCZ2Srw8/sMMZipBUTB5Ppbe9NiJjdmxXY
-	 dCZmSZVbMVEmgoWfoOH3Rd7qKjg904bFFbNUBwuUuXj00nqOx+xpdWEilZJ1g6bwuF
-	 qhoY3DCkg68iEnS/pLy2fdj7bgrrN9wpdhTqS30I=
+	b=G+/46zpfrnnsNu8rXh5QNAYO/eedoHJJSGEU5cIOl0QJEqE2iyNbYjNbUAyLcIOjh
+	 +DFVwSgNtLsQIsjODSHFDtJDET3BWt6gTdSPO5zxP2+ljLkPa8zu8O6LS/e1oD3wg/
+	 RsUvH2dQMaOY5BRQ+n2I+KTqXkCTSewaP2NFvkVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	linux-cifs@vger.kernel.org,
+	David Howells <dhowells@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 169/263] drm/xe: Process deferred GGTT node removals on device unwind
-Date: Thu,  3 Jul 2025 16:41:29 +0200
-Message-ID: <20250703144011.132633083@linuxfoundation.org>
+Subject: [PATCH 6.15 170/263] smb: client: fix potential deadlock when reconnecting channels
+Date: Thu,  3 Jul 2025 16:41:30 +0200
+Message-ID: <20250703144011.170170013@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -47,101 +47,218 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit af2b588abe006bd55ddd358c4c3b87523349c475 ]
+[ Upstream commit 711741f94ac3cf9f4e3aa73aa171e76d188c0819 ]
 
-While we are indirectly draining our dedicated workqueue ggtt->wq
-that we use to complete asynchronous removal of some GGTT nodes,
-this happends as part of the managed-drm unwinding (ggtt_fini_early),
-which could be later then manage-device unwinding, where we could
-already unmap our MMIO/GMS mapping (mmio_fini).
+Fix cifs_signal_cifsd_for_reconnect() to take the correct lock order
+and prevent the following deadlock from happening
 
-This was recently observed during unsuccessful VF initialization:
+======================================================
+WARNING: possible circular locking dependency detected
+6.16.0-rc3-build2+ #1301 Tainted: G S      W
+------------------------------------------------------
+cifsd/6055 is trying to acquire lock:
+ffff88810ad56038 (&tcp_ses->srv_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0x134/0x200
 
- [ ] xe 0000:00:02.1: probe with driver xe failed with error -62
- [ ] xe 0000:00:02.1: DEVRES REL ffff88811e747340 __xe_bo_unpin_map_no_vm (16 bytes)
- [ ] xe 0000:00:02.1: DEVRES REL ffff88811e747540 __xe_bo_unpin_map_no_vm (16 bytes)
- [ ] xe 0000:00:02.1: DEVRES REL ffff88811e747240 __xe_bo_unpin_map_no_vm (16 bytes)
- [ ] xe 0000:00:02.1: DEVRES REL ffff88811e747040 tiles_fini (16 bytes)
- [ ] xe 0000:00:02.1: DEVRES REL ffff88811e746840 mmio_fini (16 bytes)
- [ ] xe 0000:00:02.1: DEVRES REL ffff88811e747f40 xe_bo_pinned_fini (16 bytes)
- [ ] xe 0000:00:02.1: DEVRES REL ffff88811e746b40 devm_drm_dev_init_release (16 bytes)
- [ ] xe 0000:00:02.1: [drm:drm_managed_release] drmres release begin
- [ ] xe 0000:00:02.1: [drm:drm_managed_release] REL ffff88810ef81640 __fini_relay (8 bytes)
- [ ] xe 0000:00:02.1: [drm:drm_managed_release] REL ffff88810ef80d40 guc_ct_fini (8 bytes)
- [ ] xe 0000:00:02.1: [drm:drm_managed_release] REL ffff88810ef80040 __drmm_mutex_release (8 bytes)
- [ ] xe 0000:00:02.1: [drm:drm_managed_release] REL ffff88810ef80140 ggtt_fini_early (8 bytes)
+but task is already holding lock:
+ffff888119c64330 (&ret_buf->chan_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0xcf/0x200
 
-and this was leading to:
+which lock already depends on the new lock.
 
- [ ] BUG: unable to handle page fault for address: ffffc900058162a0
- [ ] #PF: supervisor write access in kernel mode
- [ ] #PF: error_code(0x0002) - not-present page
- [ ] Oops: Oops: 0002 [#1] SMP NOPTI
- [ ] Tainted: [W]=WARN
- [ ] Workqueue: xe-ggtt-wq ggtt_node_remove_work_func [xe]
- [ ] RIP: 0010:xe_ggtt_set_pte+0x6d/0x350 [xe]
- [ ] Call Trace:
- [ ]  <TASK>
- [ ]  xe_ggtt_clear+0xb0/0x270 [xe]
- [ ]  ggtt_node_remove+0xbb/0x120 [xe]
- [ ]  ggtt_node_remove_work_func+0x30/0x50 [xe]
- [ ]  process_one_work+0x22b/0x6f0
- [ ]  worker_thread+0x1e8/0x3d
+the existing dependency chain (in reverse order) is:
 
-Add managed-device action that will explicitly drain the workqueue
-with all pending node removals prior to releasing MMIO/GSM mapping.
+-> #2 (&ret_buf->chan_lock){+.+.}-{3:3}:
+       validate_chain+0x1cf/0x270
+       __lock_acquire+0x60e/0x780
+       lock_acquire.part.0+0xb4/0x1f0
+       _raw_spin_lock+0x2f/0x40
+       cifs_setup_session+0x81/0x4b0
+       cifs_get_smb_ses+0x771/0x900
+       cifs_mount_get_session+0x7e/0x170
+       cifs_mount+0x92/0x2d0
+       cifs_smb3_do_mount+0x161/0x460
+       smb3_get_tree+0x55/0x90
+       vfs_get_tree+0x46/0x180
+       do_new_mount+0x1b0/0x2e0
+       path_mount+0x6ee/0x740
+       do_mount+0x98/0xe0
+       __do_sys_mount+0x148/0x180
+       do_syscall_64+0xa4/0x260
+       entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: 919bb54e989c ("drm/xe: Fix missing runtime outer protection for ggtt_remove_node")
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://lore.kernel.org/r/20250612220937.857-2-michal.wajdeczko@intel.com
-(cherry picked from commit 89d2835c3680ab1938e22ad81b1c9f8c686bd391)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+-> #1 (&ret_buf->ses_lock){+.+.}-{3:3}:
+       validate_chain+0x1cf/0x270
+       __lock_acquire+0x60e/0x780
+       lock_acquire.part.0+0xb4/0x1f0
+       _raw_spin_lock+0x2f/0x40
+       cifs_match_super+0x101/0x320
+       sget+0xab/0x270
+       cifs_smb3_do_mount+0x1e0/0x460
+       smb3_get_tree+0x55/0x90
+       vfs_get_tree+0x46/0x180
+       do_new_mount+0x1b0/0x2e0
+       path_mount+0x6ee/0x740
+       do_mount+0x98/0xe0
+       __do_sys_mount+0x148/0x180
+       do_syscall_64+0xa4/0x260
+       entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+-> #0 (&tcp_ses->srv_lock){+.+.}-{3:3}:
+       check_noncircular+0x95/0xc0
+       check_prev_add+0x115/0x2f0
+       validate_chain+0x1cf/0x270
+       __lock_acquire+0x60e/0x780
+       lock_acquire.part.0+0xb4/0x1f0
+       _raw_spin_lock+0x2f/0x40
+       cifs_signal_cifsd_for_reconnect+0x134/0x200
+       __cifs_reconnect+0x8f/0x500
+       cifs_handle_standard+0x112/0x280
+       cifs_demultiplex_thread+0x64d/0xbc0
+       kthread+0x2f7/0x310
+       ret_from_fork+0x2a/0x230
+       ret_from_fork_asm+0x1a/0x30
+
+other info that might help us debug this:
+
+Chain exists of:
+  &tcp_ses->srv_lock --> &ret_buf->ses_lock --> &ret_buf->chan_lock
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(&ret_buf->chan_lock);
+                               lock(&ret_buf->ses_lock);
+                               lock(&ret_buf->chan_lock);
+  lock(&tcp_ses->srv_lock);
+
+ *** DEADLOCK ***
+
+3 locks held by cifsd/6055:
+ #0: ffffffff857de398 (&cifs_tcp_ses_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0x7b/0x200
+ #1: ffff888119c64060 (&ret_buf->ses_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0x9c/0x200
+ #2: ffff888119c64330 (&ret_buf->chan_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0xcf/0x200
+
+Cc: linux-cifs@vger.kernel.org
+Reported-by: David Howells <dhowells@redhat.com>
+Fixes: d7d7a66aacd6 ("cifs: avoid use of global locks for high contention data")
+Reviewed-by: David Howells <dhowells@redhat.com>
+Tested-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_ggtt.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/smb/client/cifsglob.h |  1 +
+ fs/smb/client/connect.c  | 58 +++++++++++++++++++++++++---------------
+ 2 files changed, 37 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_ggtt.c b/drivers/gpu/drm/xe/xe_ggtt.c
-index 5fcb2b4c2c139..60bce5de52725 100644
---- a/drivers/gpu/drm/xe/xe_ggtt.c
-+++ b/drivers/gpu/drm/xe/xe_ggtt.c
-@@ -201,6 +201,13 @@ static const struct xe_ggtt_pt_ops xelpg_pt_wa_ops = {
- 	.ggtt_set_pte = xe_ggtt_set_pte_and_flush,
- };
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index 214e53acf72a8..56381cbb63990 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -709,6 +709,7 @@ inc_rfc1001_len(void *buf, int count)
+ struct TCP_Server_Info {
+ 	struct list_head tcp_ses_list;
+ 	struct list_head smb_ses_list;
++	struct list_head rlist; /* reconnect list */
+ 	spinlock_t srv_lock;  /* protect anything here that is not protected */
+ 	__u64 conn_id; /* connection identifier (useful for debugging) */
+ 	int srv_count; /* reference counter */
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index f9aef60f1901a..e92c7b71626fd 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -124,6 +124,14 @@ static void smb2_query_server_interfaces(struct work_struct *work)
+ 			   (SMB_INTERFACE_POLL_INTERVAL * HZ));
+ }
  
-+static void dev_fini_ggtt(void *arg)
-+{
-+	struct xe_ggtt *ggtt = arg;
++#define set_need_reco(server) \
++do { \
++	spin_lock(&server->srv_lock); \
++	if (server->tcpStatus != CifsExiting) \
++		server->tcpStatus = CifsNeedReconnect; \
++	spin_unlock(&server->srv_lock); \
++} while (0)
 +
-+	drain_workqueue(ggtt->wq);
-+}
-+
- /**
-  * xe_ggtt_init_early - Early GGTT initialization
-  * @ggtt: the &xe_ggtt to be initialized
-@@ -257,6 +264,10 @@ int xe_ggtt_init_early(struct xe_ggtt *ggtt)
- 	if (err)
- 		return err;
+ /*
+  * Update the tcpStatus for the server.
+  * This is used to signal the cifsd thread to call cifs_reconnect
+@@ -137,39 +145,45 @@ void
+ cifs_signal_cifsd_for_reconnect(struct TCP_Server_Info *server,
+ 				bool all_channels)
+ {
+-	struct TCP_Server_Info *pserver;
++	struct TCP_Server_Info *nserver;
+ 	struct cifs_ses *ses;
++	LIST_HEAD(reco);
+ 	int i;
  
-+	err = devm_add_action_or_reset(xe->drm.dev, dev_fini_ggtt, ggtt);
-+	if (err)
-+		return err;
+-	/* If server is a channel, select the primary channel */
+-	pserver = SERVER_IS_CHAN(server) ? server->primary_server : server;
+-
+ 	/* if we need to signal just this channel */
+ 	if (!all_channels) {
+-		spin_lock(&server->srv_lock);
+-		if (server->tcpStatus != CifsExiting)
+-			server->tcpStatus = CifsNeedReconnect;
+-		spin_unlock(&server->srv_lock);
++		set_need_reco(server);
+ 		return;
+ 	}
+ 
+-	spin_lock(&cifs_tcp_ses_lock);
+-	list_for_each_entry(ses, &pserver->smb_ses_list, smb_ses_list) {
+-		if (cifs_ses_exiting(ses))
+-			continue;
+-		spin_lock(&ses->chan_lock);
+-		for (i = 0; i < ses->chan_count; i++) {
+-			if (!ses->chans[i].server)
++	if (SERVER_IS_CHAN(server))
++		server = server->primary_server;
++	scoped_guard(spinlock, &cifs_tcp_ses_lock) {
++		set_need_reco(server);
++		list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
++			spin_lock(&ses->ses_lock);
++			if (ses->ses_status == SES_EXITING) {
++				spin_unlock(&ses->ses_lock);
+ 				continue;
+-
+-			spin_lock(&ses->chans[i].server->srv_lock);
+-			if (ses->chans[i].server->tcpStatus != CifsExiting)
+-				ses->chans[i].server->tcpStatus = CifsNeedReconnect;
+-			spin_unlock(&ses->chans[i].server->srv_lock);
++			}
++			spin_lock(&ses->chan_lock);
++			for (i = 1; i < ses->chan_count; i++) {
++				nserver = ses->chans[i].server;
++				if (!nserver)
++					continue;
++				nserver->srv_count++;
++				list_add(&nserver->rlist, &reco);
++			}
++			spin_unlock(&ses->chan_lock);
++			spin_unlock(&ses->ses_lock);
+ 		}
+-		spin_unlock(&ses->chan_lock);
+ 	}
+-	spin_unlock(&cifs_tcp_ses_lock);
 +
- 	if (IS_SRIOV_VF(xe)) {
- 		err = xe_gt_sriov_vf_prepare_ggtt(xe_tile_get_gt(ggtt->tile, 0));
- 		if (err)
++	list_for_each_entry_safe(server, nserver, &reco, rlist) {
++		list_del_init(&server->rlist);
++		set_need_reco(server);
++		cifs_put_tcp_session(server, 0);
++	}
+ }
+ 
+ /*
 -- 
 2.39.5
 
