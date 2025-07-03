@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5842EE993;
-	Thu,  3 Jul 2025 15:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6431C2EA46B;
+	Thu,  3 Jul 2025 15:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556068; cv=none; b=dinBS0enrzgoPJuVFYd9J9Hi+qT4/5RXrKMMAb/ivPZh7Sjo1jnITNGgXlvP/KrxeYyoFxQ9C2mbYCq65AZYDrk6EIJsf9V/yKdFo0Hh0r6zX0ZUWWvbBCQIS2JtPKDq1kQ3jMuoIoQna43JxcouFbweNejS73OTu8f7lnC6uNA=
+	t=1751556071; cv=none; b=UibGsuCaLOcdnaTSjKWSDHgFvOnD64sRZKcpYuJigtnj8KGjXikvBJQNs65ndLVy8+QzCBV7qZ4ftL9Za0LkZdhBCtsvqlyr+4EyoDBduc2HmZ0RPJUa1YtIDaPCrwqJ28g45WLU9bD3hd5m7Aq50YuBqfWJcbnoNO53XZUUNLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556068; c=relaxed/simple;
-	bh=9ecowzH6C3eTACbA6R63ss677ZpwI683BFnv+UXo1bI=;
+	s=arc-20240116; t=1751556071; c=relaxed/simple;
+	bh=KePHB/0gPb5PUU95KgurriBAG/VSSMPV2Kn98tyG+vM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHyYqg9/nSs+ItWYA7p9okOR2SCbDNf/nsxjL7Vj+ngh8l/9tEgW+mUNgu+dM1AWTAt5zbsi6+hBPEHWEVn5TTmansLmFD4guQcLHJ20tQld28Na3dzb6u6g1lLfVmTzMqOD9CyTSo0uBIGz5nBiwXkcKOm0L6MX7Wa6NWx6Rc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nu/R3cTr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bgXwxceCjAfb4/hh9Imhpx6/7qZ2JsIWq7KoGgT0mzry9xG7LrR/otrTUjeH0Gv0XCOcBmZVOwAOihDx1Ebzr2mG4Vujfuitjc3FMGUuspK/v8kdNlsLVv+E9IrMDxs82ArnhcS/pV4d8q7g2terkEl7FZep8UB3e19oy5vNCeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbFXhIyA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nu/R3cTr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF388C4CEE3;
-	Thu,  3 Jul 2025 15:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbFXhIyA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E002DC4CEE3;
+	Thu,  3 Jul 2025 15:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556068;
-	bh=9ecowzH6C3eTACbA6R63ss677ZpwI683BFnv+UXo1bI=;
+	s=korg; t=1751556071;
+	bh=KePHB/0gPb5PUU95KgurriBAG/VSSMPV2Kn98tyG+vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nu/R3cTri7v2nntDOR/D0yFOhATZhwxdP2n51CMXMfwVjRU815DS7Yk4N356dp/ae
-	 7h1xqiSvqkeXTnPIeliEphnnAwmzHWAcNl0emI84j1eS/8VBgRIIM2lbHZiflspfJR
-	 YRR/3SejbAaTqlKPSl/pw+t1ELWC730ELago9FE8=
+	b=qbFXhIyA4yVYgkwUk2QR8oVRD+rB6VbksOYJ/M89iUgPx5oKRbzwJqnCAb/P0az08
+	 0k/x3La4DXbFFw4JRNwWydYyzzS3gfRHdmMA7/90onQGUf365jXLaEdaeVb03wy2J8
+	 3jIOEv0KKwfo8fRHOs8V0xfy+Jbv87ko7JdXzQgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Kandybka <d.kandybka@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/132] ceph: fix possible integer overflow in ceph_zero_objects()
-Date: Thu,  3 Jul 2025 16:42:03 +0200
-Message-ID: <20250703143940.755397701@linuxfoundation.org>
+Subject: [PATCH 6.1 035/132] ovl: Check for NULL d_inode() in ovl_dentry_upper()
+Date: Thu,  3 Jul 2025 16:42:04 +0200
+Message-ID: <20250703143940.801500631@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -52,38 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Kandybka <d.kandybka@gmail.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 0abd87942e0c93964e93224836944712feba1d91 ]
+[ Upstream commit 8a39f1c870e9d6fbac5638f3a42a6a6363829c49 ]
 
-In 'ceph_zero_objects', promote 'object_size' to 'u64' to avoid possible
-integer overflow.
+In ovl_path_type() and ovl_is_metacopy_dentry() GCC notices that it is
+possible for OVL_E() to return NULL (which implies that d_inode(dentry)
+may be NULL). This would result in out of bounds reads via container_of(),
+seen with GCC 15's -Warray-bounds -fdiagnostics-details. For example:
 
-Compile tested only.
+In file included from arch/x86/include/generated/asm/rwonce.h:1,
+                 from include/linux/compiler.h:339,
+                 from include/linux/export.h:5,
+                 from include/linux/linkage.h:7,
+                 from include/linux/fs.h:5,
+                 from fs/overlayfs/util.c:7:
+In function 'ovl_upperdentry_dereference',
+    inlined from 'ovl_dentry_upper' at ../fs/overlayfs/util.c:305:9,
+    inlined from 'ovl_path_type' at ../fs/overlayfs/util.c:216:6:
+include/asm-generic/rwonce.h:44:26: error: array subscript 0 is outside array bounds of 'struct inode[7486503276667837]' [-Werror=array-bounds=]
+   44 | #define __READ_ONCE(x)  (*(const volatile __unqual_scalar_typeof(x) *)&(x))
+      |                         ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+include/asm-generic/rwonce.h:50:9: note: in expansion of macro '__READ_ONCE'
+   50 |         __READ_ONCE(x);                                                 \
+      |         ^~~~~~~~~~~
+fs/overlayfs/ovl_entry.h:195:16: note: in expansion of macro 'READ_ONCE'
+  195 |         return READ_ONCE(oi->__upperdentry);
+      |                ^~~~~~~~~
+  'ovl_path_type': event 1
+  185 |         return inode ? OVL_I(inode)->oe : NULL;
+  'ovl_path_type': event 2
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Avoid this by allowing ovl_dentry_upper() to return NULL if d_inode() is
+NULL, as that means the problematic dereferencing can never be reached.
+Note that this fixes the over-eager compiler warning in an effort to
+being able to enable -Warray-bounds globally. There is no known
+behavioral bug here.
 
-Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Suggested-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/overlayfs/util.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ceph/file.c b/fs/ceph/file.c
-index 882eccfd67e84..3336647e64df3 100644
---- a/fs/ceph/file.c
-+++ b/fs/ceph/file.c
-@@ -2043,7 +2043,7 @@ static int ceph_zero_objects(struct inode *inode, loff_t offset, loff_t length)
- 	s32 stripe_unit = ci->i_layout.stripe_unit;
- 	s32 stripe_count = ci->i_layout.stripe_count;
- 	s32 object_size = ci->i_layout.object_size;
--	u64 object_set_size = object_size * stripe_count;
-+	u64 object_set_size = (u64) object_size * stripe_count;
- 	u64 nearly, t;
+diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
+index 83cd20f79c5c2..6922d8d705cb3 100644
+--- a/fs/overlayfs/util.c
++++ b/fs/overlayfs/util.c
+@@ -229,7 +229,9 @@ enum ovl_path_type ovl_path_realdata(struct dentry *dentry, struct path *path)
  
- 	/* round offset up to next period boundary */
+ struct dentry *ovl_dentry_upper(struct dentry *dentry)
+ {
+-	return ovl_upperdentry_dereference(OVL_I(d_inode(dentry)));
++	struct inode *inode = d_inode(dentry);
++
++	return inode ? ovl_upperdentry_dereference(OVL_I(inode)) : NULL;
+ }
+ 
+ struct dentry *ovl_dentry_lower(struct dentry *dentry)
 -- 
 2.39.5
 
