@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C07B72610;
-	Thu,  3 Jul 2025 14:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D1F126BFF;
+	Thu,  3 Jul 2025 14:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554128; cv=none; b=AuPtxV050ajdpK4UJn7ZYj6f1FXogjoZPaZbsQ5u1RETTedzNkybBIl/YKihE7GbUO9rJhTQi9ORfK2tSfWGsomsp9Lej0p6DitskcPvodX2i89djKQLTUQKDh/ak03l4xOayooN8Cd+dEznpXD0F5jhYf6wCAqySPdOPb3Wv18=
+	t=1751554131; cv=none; b=VuwsGIVxrlc7vFhU6BZtibsvG2YOTMLROxN0lZyYzgfcCkvnFsqBxM1NP2xrETXNiEHC2uhwmNgwDMThtBfePEvrr4SQlYZ2+eoIC3h+KI5R8SKbQZGHfGKHOhUfVYcPuY55sX9zi2A7HynRXXBw+ejR/zY5Xba0bysBtfnkWsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554128; c=relaxed/simple;
-	bh=z06qb7GynI2NJ2phsTAimxPvHZYhZRVGDFzfi3vtvOM=;
+	s=arc-20240116; t=1751554131; c=relaxed/simple;
+	bh=aq8yRtfIwZL0g4D2JSb1y2q+dVn9pdIr6DDraTHJUqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eoFRoo3cYPKUs5RQdOA+f19CmTMJKLw5y59DYwByEDilo6a5N+uakyPoM6ZtsrTTBEjpGQo2VSw7RMxIGp8zHavDjtKd8VFhe5ljwes1vPn99mo2rx4gs14u8bQBpbsLyi1XCgO8bhUdMGj43w+Hb4KPql9gpXpRRHxZwMr0/L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTM6ZlAj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oOB8cBXBp0jfXvUNTXB4LMdmG7eTiO2CG3QXAQfFS6dSfl9sMoK+dXt4YGx7Qx0JRytgAhDzkMASTj0OOMw48Rj5xLxJ0El2tIWUyjAkco5TIeGzLEsvl6uxIv5sJoO+VCfMEzrVIjfpNR918JIDjdrR+1RPxiMBSmi4YhBatKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s7TMYy8r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTM6ZlAj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D038DC4CEE3;
-	Thu,  3 Jul 2025 14:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s7TMYy8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26D5C4CEE3;
+	Thu,  3 Jul 2025 14:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554128;
-	bh=z06qb7GynI2NJ2phsTAimxPvHZYhZRVGDFzfi3vtvOM=;
+	s=korg; t=1751554131;
+	bh=aq8yRtfIwZL0g4D2JSb1y2q+dVn9pdIr6DDraTHJUqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTM6ZlAjmtx6ZuR1FpHj33rkf16MH1waj/sB08jGmGFJc9gByhDFXig/W1RD7K7jX
-	 fWV4Q0j0KtCax90gUnhcZe42lqZ4HMsNMv1RoB3skQaNJmdcCZBQbdt1SD0t/VafAi
-	 97xpYCzjKNzuwDrFSv0aZ8rzxPm23nQapWf31QHc=
+	b=s7TMYy8rJPWG/k34WPyKxgT5XYJFNypnwhIyXvz4xoO7k2VQM7zt7vGpO/0k4wdA1
+	 RjU2PItZD/qcCsnqPdNvcP/4/UUquub1m/ZVX/34JmI00sEEEUHbD652THHW8DRzGD
+	 IG93azFa5+0QbopNDtg8ReMpzUIRkrdM7D+BzodE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Matthew Auld <matthew.auld@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.12 088/218] drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS
-Date: Thu,  3 Jul 2025 16:40:36 +0200
-Message-ID: <20250703143959.464767193@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.12 089/218] drm/xe/display: Add check for alloc_ordered_workqueue()
+Date: Thu,  3 Jul 2025 16:40:37 +0200
+Message-ID: <20250703143959.503844912@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -54,47 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit a3ef3c2da675a8a564c8bea1a511cdd0a2a9aa49 upstream.
+commit 62207293479e6c03ef498a70f2914c51f4d31d2c upstream.
 
-Reading DPCD registers has side-effects in general. In particular
-accessing registers outside of the link training register range
-(0x102-0x106, 0x202-0x207, 0x200c-0x200f, 0x2216) is explicitly
-forbidden by the DP v2.1 Standard, see
+Add check for the return value of alloc_ordered_workqueue()
+in xe_display_create() to catch potential exception.
 
-3.6.5.1 DPTX AUX Transaction Handling Mandates
-3.6.7.4 128b/132b DP Link Layer LTTPR Link Training Mandates
-
-Based on my tests, accessing the DPCD_REV register during the link
-training of an UHBR TBT DP tunnel sink leads to link training failures.
-
-Solve the above by using the DP_LANE0_1_STATUS (0x202) register for the
-DPCD register access quirk.
-
-Cc: <stable@vger.kernel.org>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://lore.kernel.org/r/20250605082850.65136-2-imre.deak@intel.com
-(cherry picked from commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 44e694958b95 ("drm/xe/display: Implement display support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://lore.kernel.org/r/4ee1b0e5d1626ce1dde2e82af05c2edaed50c3aa.1747397638.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 5b62d63395d5b7d4094e7cd380bccae4b25415cb)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/display/drm_dp_helper.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/display/xe_display.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/display/drm_dp_helper.c
-+++ b/drivers/gpu/drm/display/drm_dp_helper.c
-@@ -664,7 +664,7 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_a
- 	 * monitor doesn't power down exactly after the throw away read.
- 	 */
- 	if (!aux->is_remote) {
--		ret = drm_dp_dpcd_probe(aux, DP_DPCD_REV);
-+		ret = drm_dp_dpcd_probe(aux, DP_LANE0_1_STATUS);
- 		if (ret < 0)
- 			return ret;
- 	}
+--- a/drivers/gpu/drm/xe/display/xe_display.c
++++ b/drivers/gpu/drm/xe/display/xe_display.c
+@@ -96,6 +96,8 @@ int xe_display_create(struct xe_device *
+ 	spin_lock_init(&xe->display.fb_tracking.lock);
+ 
+ 	xe->display.hotplug.dp_wq = alloc_ordered_workqueue("xe-dp", 0);
++	if (!xe->display.hotplug.dp_wq)
++		return -ENOMEM;
+ 
+ 	return drmm_add_action_or_reset(&xe->drm, display_destroy, NULL);
+ }
 
 
