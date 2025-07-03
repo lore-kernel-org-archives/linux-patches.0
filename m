@@ -1,215 +1,154 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2087.outbound.protection.outlook.com [40.107.92.87])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA3C2D3226;
-	Thu,  3 Jul 2025 13:41:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.87
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751550074; cv=fail; b=u3gByr+oNV5JnUKijpDON6yKo7JmPnof+ab++penf/MN4EwjdsFbclUrmUdf0m1TK+pPE7hJ/Qu/xmpJp/70EvoadRb6N4NpZYmsbx+h7ID+tCn79Owr/NH1lP71SRL8S8iRgVU0ErpOODNu/mggoZe2sAEU6cb6FZXYlo2X9zk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751550074; c=relaxed/simple;
-	bh=0Tl2VDqS2PK7O76f1UstEcHxHPwEfJ6B0xc+6WV/tqY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=KCHB8AfmjJpG4XN6teyDy8hbnGvg5VR2a/9IqXcZ3aSPGm6F+qRHGwK/kBtaLs3ety8CgNsEVMR9XhdOsaAmtAhohipetL/5LDSJy/cA3qRzk6+qwpkz3Ndapj6+D9p29Bm2jLwjbI5IokqZdsL5Lcxk1xFfKALhHaoS3jt4kQk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Pv2TvrJ/; arc=fail smtp.client-ip=40.107.92.87
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D7A2DE6E5;
+	Thu,  3 Jul 2025 14:44:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751553870; cv=none; b=Qa6T51paHHgx6Tf/CY/GlR6ODEkN/3qRn0DaOdKjtPN77BKHtL1mX99zZKf7+BPWnUyt/SKXx9R1zh1GVZg1RIaGOJK1OPBNXitCVhlXUaXXN42BGQX0aaQmoPZ1clCWHEXJVrARZO0P9X4Ti9xRq9L4Q2KUX2Kx6NIcJSzuwxk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751553870; c=relaxed/simple;
+	bh=avnW5eeQnhKtX8y2yaP4t9oTI0+vTy5AgIn7msjuAUA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=OUHxCAlN4QDQvPH0gMcuVY8jksp63lj1fzJqE7OOx2xIRB5JbvpLa/4aOkZ+ygVApBb7okD3dtMLXoWgQZR4XOP1xQV/g/4l4dPqzl/G6fZPcbUZSTiK0lDSz3Iv1ZVOBGOBvZfSiAZt0zJPka+lXP4OOX3acxTmuQhMFuCpw9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsSkhXRR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Pv2TvrJ/"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RgBWFhku2lwcStMDQTITiUsecGGC4r3mW8Z/T1A3I/ddSYJ1N7mQffKJmAbpih9xnkCX1rdbUCpcG2B9BM6hfS0SmhhYITmVsAQ2vZH72TFTB7NaiYfIAmCTTRzn0r7LgoaF1edTmZcf+WmVVy852b1Vl6I4gsM6ZjyS3TtXvYjYcldhDhB3agb4ioKHGq/EpmdZjp5HO1BYmReMKZfGfPd9gm33tsl335JikpdPXkYLyWpa9DJk4FBRke7UkW0Db273qIT1DsMJNkxbBeDGk1peu2ip5fJJCyRwTInkyn38bjN8Qhk8CyIuHUjFnf/xv7hs43QMP1bKfB8y/aeDXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5enDP/biIb+QolT5EteFCwG4OVh1SOQScvyXKNO01yg=;
- b=kaFlYhurMd3+3oTFqGYnIpaz7r2WJ4ptMf7LnH3dtKxcOX9eNt+qwRe9Rtsw5/jOHsRJDuFOwsvaQy+o6/5K+JHug6vjmw5qzuAyiet2a3BrqJYuDpVjzJITVt4oeqq+35hMZDalhbXr2eKuF8dCSk6qWG7BUaXll6Ozjb0InbDxKNo60IRYnueUmIVR2CVqdCTk2yS+JbDmWWOtS0apQtHkgsGSAWDUGsaFKWZ2vq05aeeDS+zjp67wBH+Alm9XQwvMxy1vkcRolitB/xBD9aQz+1Sd2ApJNAHi+3ADPItbwqqvLg+POkSF/nCeAiGwREPftCcVV2/2WToGujw5Pw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5enDP/biIb+QolT5EteFCwG4OVh1SOQScvyXKNO01yg=;
- b=Pv2TvrJ/T3hMBA1gUKKdTWeLLFHrKsFXt12tVHn3TUrXktAPEEgPbGO7p3vhOJ9gWZd6idwIBCCtWvURKmCwUaxmUSIMLLm9TWncXbTskpSTtbCukdHpu93rrhO1VB/ShH9XDyKPG1ZGYFaRTzAhM2P9543ruHJXCYxMJq0v9VXHYGEBX55BTMjOu2WnTtrRndWi6TjoV5db9oM6iJ4HggvB4Otv7iOjShCPl6sq5T7nNk7cMrCIlj8LZ8Lrq6IBURzPBjbFC2xgxTIYj7QCxVKGeC14sKe6d0h7w1bprf2924AbfHYIcHBC+pdt+UKT5ekuzSWUeH6fftqokumMSg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by CY1PR12MB9649.namprd12.prod.outlook.com (2603:10b6:930:106::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.20; Thu, 3 Jul
- 2025 13:41:09 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8880.030; Thu, 3 Jul 2025
- 13:41:06 +0000
-Date: Thu, 3 Jul 2025 10:41:02 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: "Tian, Kevin" <kevin.tian@intel.com>
-Cc: Ankit Agrawal <ankita@nvidia.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	"Cabiddu, Giovanni" <giovanni.cabiddu@intel.com>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>,
-	Longfang Liu <liulongfang@huawei.com>,
-	qat-linux <qat-linux@intel.com>,
-	"virtualization@lists.linux.dev" <virtualization@lists.linux.dev>,
-	"Zeng, Xin" <xin.zeng@intel.com>, Yishai Hadas <yishaih@nvidia.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	"Xu, Terrence" <terrence.xu@intel.com>,
-	"Jiang, Yanting" <yanting.jiang@intel.com>,
-	"Liu, Yi L" <yi.l.liu@intel.com>,
-	"Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-Subject: Re: [PATCH] vfio/pci: Do vf_token checks for VFIO_DEVICE_BIND_IOMMUFD
-Message-ID: <20250703134102.GD1209783@nvidia.com>
-References: <0-v1-8639f9aed215+853-vfio_token_jgg@nvidia.com>
- <BN9PR11MB5276CD6181F932C70CBC800E8C43A@BN9PR11MB5276.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <BN9PR11MB5276CD6181F932C70CBC800E8C43A@BN9PR11MB5276.namprd11.prod.outlook.com>
-X-ClientProxiedBy: PH7P220CA0054.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:32b::11) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsSkhXRR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E3FC4CEE3;
+	Thu,  3 Jul 2025 14:44:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1751553870;
+	bh=avnW5eeQnhKtX8y2yaP4t9oTI0+vTy5AgIn7msjuAUA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=lsSkhXRRteOT9Yo+6+U3TJdI5AmUcwWVeNosEB5EanuXXP+7ZPj1MJeKTJicnw32D
+	 8962tgpi6aXDnYzMMOi5cTjqiWjHwgz0zw6OwGUHEaIWAxGn/0ni/1ZkPKJXmupC4x
+	 f2wqutdNIqZ0EBSzj7X9m0/McyJokZsm6uy6vZbA=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/218] cifs: Correctly set SMB1 SessionKey field in Session Setup Request
+Date: Thu,  3 Jul 2025 16:39:09 +0200
+Message-ID: <20250703143956.019443284@linuxfoundation.org>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
+References: <20250703143955.956569535@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CY1PR12MB9649:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5b2bce12-bcfb-47e5-b959-08ddba37425e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?mCWlb5A4F3K5KtNwODHMtQ8xdW4NSzS2Nnn8zpe1ZX3Xtyp8aRFLdFDOSSJx?=
- =?us-ascii?Q?om/jDtjjOht5rdVgUAYJ8LSPDB10yMjeYzgZ2VKVjqZlKS4MRLukv/ISLvL4?=
- =?us-ascii?Q?nVPUowixeqHR3yINelOXr1Cf9O4coZWJW8+Fs/aS/St/QeHkNd3PlwnKcMGd?=
- =?us-ascii?Q?5GHHue4SUVmj3d7D857WLxxhhZgal2FR0nqJAuEP8PAR/PvfRGnJP101J2US?=
- =?us-ascii?Q?rXpCD5xxPtlXJUyHeXKsZb9735LUB7+tCRUdIt8cBWWeio1zhmC82bykUB1w?=
- =?us-ascii?Q?8bnXtvRLjoCls1U1zBca4HjeBd/lDLxmSx1AaK4x6qicAxLyjcT4zQPrRvqp?=
- =?us-ascii?Q?1i6wZduOmSl4O4tw/eK56k/PQduKPZ8Vef1CEYumBuwtFz//Q2NheaJcdHcW?=
- =?us-ascii?Q?5Zgsm4/EpfptrNQcYtrTGMyyDKxX7v78kjKuhnqTOZRJ0beZe6u8HnvuFYKN?=
- =?us-ascii?Q?7Yks/8oKfrOgbm014WIFXkYamlgNnJkb+V7qpT6CQYkvSdB4aD6U0k7CVvcw?=
- =?us-ascii?Q?rsnyBmNkieK1WznkzFe7qP4SSngPdhPLd3vn75yqAQiac0cy8W4+ZYZURKhP?=
- =?us-ascii?Q?04H4QIrN7VZpvaepHVQcyeu/MGwVVBiRQePeOa3r6/ZIU6P4A6D6P5R7Wfdf?=
- =?us-ascii?Q?wmm9khWO6sPae13KPuHGP9i+o0/+7Mf6OelSxI+G6SY5HrcnFngG+eC8dB+l?=
- =?us-ascii?Q?GCMRafuTZvJvNI1Qut7Ph7x8YKdmSFdnEERNTxOArc5wCDDeFrMk5naSYsfC?=
- =?us-ascii?Q?Opcaq2SFENe3rOOoRNtmefA4k1XDBDzA5PpTFR2/iLRGOiE3+ykAISOyOJb7?=
- =?us-ascii?Q?jD17P22Z8OMotA1/wcq/bzQ0Nt6rPeXTHNT4kPHU3YyvbygD8IMHKHUgcaGX?=
- =?us-ascii?Q?8s/PFVJPTWKHWwH27FSq95VfGTOmXGI6zAVPmaWmWjTRXOq51rm+pOWFjm5i?=
- =?us-ascii?Q?WiTH2NQy/HG8t8BAsD/Nod2IsOUr57IqOnfSguIlJbFjM/T1Rhbzmjdv5jpq?=
- =?us-ascii?Q?PKZ6ugg4PogkXCFx6lfiAPT035tR4OkybYreDG2SWSM0JSfCxojHVkbDb++e?=
- =?us-ascii?Q?osdoqUMJEq6slIsHz2P68RyeyYMArbosa7ym2I0uII7cOheU3YQCuFr0kT0A?=
- =?us-ascii?Q?0MCO6BVZyEV1UzpZJbBor94UA2bCFMl3Nbi9Wy/hu8nduSa6YX2qot+RBwtp?=
- =?us-ascii?Q?a6dx8N69U0R+gytFW5jze3w2l2pgq7Mqtr0dRbuPHR65kZBvn97npX1JPOdj?=
- =?us-ascii?Q?v+NDLZuJ9iGLgHMSCNvYPCE4jZExwxfqsmbIVVD4JKoS7KcHb/lL/IFnyEnk?=
- =?us-ascii?Q?vAYeE5fnj6GLzZ8lwH4Ni6Jr3pYoszJ9MAsv5WwfxVn2rNohHiGotGD7ZoiR?=
- =?us-ascii?Q?BC5Bf5xbBTFvGNvvNc0kZnUv21dEjX5qflaNZH5Ao7rvtNxMSwMlyFUBEIxX?=
- =?us-ascii?Q?USyLMv14v5w=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?oT6R92tF/xqvro9WkcJUcCC0ZboeLaF8uHfy85n5YxP187Syd6TKmbmJs+JO?=
- =?us-ascii?Q?DhO1+9wUpD3n728xqg2n/UGrTTs8d3FjFFqsMg9GVQAFF0QAvpm90bFapeU7?=
- =?us-ascii?Q?btK57Eg87vctD2kTdW+2ZbqFTag4iCqmcQymoh3Cuu2aOWBj1NMVQGI9s/Jd?=
- =?us-ascii?Q?j0DOPSqfYFtUT/R/iCfvYRSeXSV6tjA2eS5BVHFCSL8C/+tdGQU9gp3kqfRu?=
- =?us-ascii?Q?cC+YqImRODPf2vC7yuBnYf9BkLX/G0HwYDwyTkYD8+OcV6liKtK6/qn4EmpC?=
- =?us-ascii?Q?b0I+XZseRiiyQ00vZcjIt9/m5ngUilFA0OWt7W3L7OXwoDXm3J3Qe69iHsDj?=
- =?us-ascii?Q?GNCnDIMnL6RMEHrjxtG5GZ4D8Nyye9N7PtI4n40GnNwRGa9YidtmDeq4hJy+?=
- =?us-ascii?Q?Doiv2d1ivxZpPhBmRWsPXdJNeSFOcO5RnAQvzsZiIEScFeQC3wWYsDgrIElV?=
- =?us-ascii?Q?DG+oYFbBgCKmhBP88O/wVX1FJOYjtrCkyIwDslF5XJJHOmGugkkMH/nKufp3?=
- =?us-ascii?Q?DR95PnG60U8/g5Hnlgqyq/SK04ssCEKw/eLDScrWzm2ISautxMtBq2gg6hZ3?=
- =?us-ascii?Q?8Pt9fDJb6aSE2i5j40EAQfpSzafdwgkj2Ll/nXK395BfJ7Pm10UxQ1lZjQcg?=
- =?us-ascii?Q?RyTL5MUeGXSciQ1dxsHQrQZI89iKgE3wJr3GuG8MFvCB341LOjBMpuEpJCfa?=
- =?us-ascii?Q?aIMaLWR3JDxZwxL/2LXyD8bA8X0cexl5K7SH56yWz2oBMXDc8AynAwoLwZ54?=
- =?us-ascii?Q?vVcOAMBnvyx1e3xIiTGHtQ0xN/+3WbFuJh/XC12YLc2+6tPvMCQYxOuV6+Gg?=
- =?us-ascii?Q?aLQiP+7zt5kK1mUJ+mrkICwebn9U6SmbrfADFQ3EkA6ldor6PORTu9HSU1Ka?=
- =?us-ascii?Q?NGJnFZKaSCWgTiUh3GmxM5l96yTRbBbteOIbXPfHWV8fv6YiQsX7bYPMMj2i?=
- =?us-ascii?Q?sujYvNds1VS+mUW3unKJamm7m4U+jBgCzMDa0GYr7Np8mAAiESHz44IIZdQv?=
- =?us-ascii?Q?wj6o6Z13fqDZFidqzs4xOEiU/ipjVFf9T3wrAvvonz8BLnd0GemtQXthNOgf?=
- =?us-ascii?Q?SdoTZWPZUgWP+QShn1LsRK2REohEs5cPpUfEO8RywRrdJyjEpIjiHZuXrRhK?=
- =?us-ascii?Q?FBeNsxP05/MYMuIa/v/Dha+oKhHpxX3ug3xW6Cf5MbPGC6KeKuVF6P0OjiC0?=
- =?us-ascii?Q?NVJBI4HlOppxbACoJfycM+NNo9mmH418Mqf9WUM9j2pvyxEkuv0sPuK6Zoqa?=
- =?us-ascii?Q?7LxuD7aBEbh3bsw9yi2MCY7hAYzqo20B5wsazMcsDCsoU/ZpCRP9ydyJVF1f?=
- =?us-ascii?Q?RDcW0c08KD92pgPSFjJ4sTBBJ5pAE9a1VAbYlf+8d1T4EyIKYxlKF8BKUa/v?=
- =?us-ascii?Q?tWVvSE79uUHd2cq0NOJAHjvQcvXHU1WtrXO9k/9qjBKPBNWSFnRqRDSwbSb2?=
- =?us-ascii?Q?GcI2zyALqRPfh6TQn1/CNUnG+L4ZmsYcbOjcnaqChhHH/SWPq8c2/HlsQaTw?=
- =?us-ascii?Q?kYh908O68pTx5ZC2iWHIA9O6l/M+O2wyD03s4uofKJpCxqRa6JbwS7Ug/ULy?=
- =?us-ascii?Q?yr8sd+q95vM/FWZhuJu8kq1qTg8DfnEnq0ZJJayy?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5b2bce12-bcfb-47e5-b959-08ddba37425e
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2025 13:41:06.0445
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: laruOSexSz+JPdAnJ9wh8WCxcTKHCJr0lbjjp8+nyCjF/XFn5fYg1lI7k8KX6IMX
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR12MB9649
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jul 03, 2025 at 06:40:48AM +0000, Tian, Kevin wrote:
-> > From: Jason Gunthorpe <jgg@nvidia.com>
-> > Sent: Wednesday, June 25, 2025 2:35 AM
-> > 
-> > This was missed during the initial implementation. The VFIO PCI encodes
-> > the vf_token inside the device name when opening the device from the
-> > group
-> > FD, something like:
-> > 
-> >   "0000:04:10.0 vf_token=bd8d9d2b-5a5f-4f5a-a211-f591514ba1f3"
-> > 
-> > This is used to control access to a VF unless there is co-ordination with
-> > the owner of the PF.
-> > 
-> > Since we no longer have a device name pass the token directly though
-> > VFIO_DEVICE_BIND_IOMMUFD with an optional field indicated by
-> > VFIO_DEVICE_BIND_TOKEN.
-> 
-> not a complete sentence?
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
- Since we no longer have a device name, pass the token directly through
- VFIO_DEVICE_BIND_IOMMUFD using an optional field indicated by
- VFIO_DEVICE_BIND_TOKEN.
+------------------
+
+From: Pali Rohár <pali@kernel.org>
+
+[ Upstream commit 89381c72d52094988e11d23ef24a00066a0fa458 ]
+
+[MS-CIFS] specification in section 2.2.4.53.1 where is described
+SMB_COM_SESSION_SETUP_ANDX Request, for SessionKey field says:
+
+    The client MUST set this field to be equal to the SessionKey field in
+    the SMB_COM_NEGOTIATE Response for this SMB connection.
+
+Linux SMB client currently set this field to zero. This is working fine
+against Windows NT SMB servers thanks to [MS-CIFS] product behavior <94>:
+
+    Windows NT Server ignores the client's SessionKey.
+
+For compatibility with [MS-CIFS], set this SessionKey field in Session
+Setup Request to value retrieved from Negotiate response.
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/smb/client/cifsglob.h | 1 +
+ fs/smb/client/cifspdu.h  | 6 +++---
+ fs/smb/client/cifssmb.c  | 1 +
+ fs/smb/client/sess.c     | 1 +
+ 4 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index e0faee22be07e..d573740e54a1a 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -739,6 +739,7 @@ struct TCP_Server_Info {
+ 	char workstation_RFC1001_name[RFC1001_NAME_LEN_WITH_NULL];
+ 	__u32 sequence_number; /* for signing, protected by srv_mutex */
+ 	__u32 reconnect_instance; /* incremented on each reconnect */
++	__le32 session_key_id; /* retrieved from negotiate response and send in session setup request */
+ 	struct session_key session_key;
+ 	unsigned long lstrp; /* when we got last response from this server */
+ 	struct cifs_secmech secmech; /* crypto sec mech functs, descriptors */
+diff --git a/fs/smb/client/cifspdu.h b/fs/smb/client/cifspdu.h
+index 28f8ca470770d..688a26aeef3b4 100644
+--- a/fs/smb/client/cifspdu.h
++++ b/fs/smb/client/cifspdu.h
+@@ -557,7 +557,7 @@ typedef union smb_com_session_setup_andx {
+ 		__le16 MaxBufferSize;
+ 		__le16 MaxMpxCount;
+ 		__le16 VcNumber;
+-		__u32 SessionKey;
++		__le32 SessionKey;
+ 		__le16 SecurityBlobLength;
+ 		__u32 Reserved;
+ 		__le32 Capabilities;	/* see below */
+@@ -576,7 +576,7 @@ typedef union smb_com_session_setup_andx {
+ 		__le16 MaxBufferSize;
+ 		__le16 MaxMpxCount;
+ 		__le16 VcNumber;
+-		__u32 SessionKey;
++		__le32 SessionKey;
+ 		__le16 CaseInsensitivePasswordLength; /* ASCII password len */
+ 		__le16 CaseSensitivePasswordLength; /* Unicode password length*/
+ 		__u32 Reserved;	/* see below */
+@@ -614,7 +614,7 @@ typedef union smb_com_session_setup_andx {
+ 		__le16 MaxBufferSize;
+ 		__le16 MaxMpxCount;
+ 		__le16 VcNumber;
+-		__u32 SessionKey;
++		__le32 SessionKey;
+ 		__le16 PasswordLength;
+ 		__u32 Reserved; /* encrypt key len and offset */
+ 		__le16 ByteCount;
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index cf8d9de2298fc..d6ba55d4720d2 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -481,6 +481,7 @@ CIFSSMBNegotiate(const unsigned int xid,
+ 	server->max_rw = le32_to_cpu(pSMBr->MaxRawSize);
+ 	cifs_dbg(NOISY, "Max buf = %d\n", ses->server->maxBuf);
+ 	server->capabilities = le32_to_cpu(pSMBr->Capabilities);
++	server->session_key_id = pSMBr->SessionKey;
+ 	server->timeAdj = (int)(__s16)le16_to_cpu(pSMBr->ServerTimeZone);
+ 	server->timeAdj *= 60;
+ 
+diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
+index 10d82d0dc6a9e..830516a9e03b0 100644
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -658,6 +658,7 @@ static __u32 cifs_ssetup_hdr(struct cifs_ses *ses,
+ 					USHRT_MAX));
+ 	pSMB->req.MaxMpxCount = cpu_to_le16(server->maxReq);
+ 	pSMB->req.VcNumber = cpu_to_le16(1);
++	pSMB->req.SessionKey = server->session_key_id;
+ 
+ 	/* Now no need to set SMBFLG_CASELESS or obsolete CANONICAL PATH */
+ 
+-- 
+2.39.5
 
 
-> > Only users using a PCI SRIOV VF will need to
-> > provide this. This is done in the usual backwards compatible way.
-> 
-> and PF also needs to provide it when there are in-use VFs:
-> 
-> vfio_pci_validate_vf_token():
->          * When presented with a PF which has VFs in use, the user must also
->          * provide the current VF token to prove collaboration with existing
->          * VF users.  If VFs are not in use, the VF token provided for the PF
->          * device will act to set the VF token.
 
-Too complicated, I'll just drop that sentence.
-
-> > @@ -1583,6 +1583,7 @@ static const struct vfio_device_ops
-> > hisi_acc_vfio_pci_ops = {
-> >  	.mmap = vfio_pci_core_mmap,
-> >  	.request = vfio_pci_core_request,
-> >  	.match = vfio_pci_core_match,
-> > +	.match_token_uuid = vfio_pci_core_match_token_uuid,
-> 
-> this matters only when the driver supports SR-IOV. currently only
-> vfio-pci does.
-
-Hmm, sriov_pf_core_dev requires sriov_config, but the normal vf_token
-happens for all vfs and there is a little debugging related to it:
-
-			pci_info_ratelimited(vdev->pdev,
-				"VF token incorrectly provided, PF not bound to vfio-pci\n");
-
-So maybe we want to keep it. Otherwise it sounds like you are
-proposing to remove match from most of the drivers since they don't
-support sriov_configure? Which ever direction I think match and
-match_token_uuid should be together.
-
-Jason
