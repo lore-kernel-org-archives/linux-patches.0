@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F4C2D9EEA;
-	Thu,  3 Jul 2025 14:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EF7101DE;
+	Thu,  3 Jul 2025 14:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553988; cv=none; b=dBbW9YcipY5bBLa6Mi+9CT/QHMPuqcCUVWLLUH8IIhqgPo2EQaPz+48BA5ZrvMG8F7FPSX+QYKwDg/f11m1jjItaAoYsANYfywijEB2ZWthqTvbJE54p7P2ikZqpMekw73jV57zKkK5l4dmebmgP2SIopZALMs1vwFc2Tyrlzno=
+	t=1751553991; cv=none; b=reMa/yqMMAj0qXxqq8h40EkUrlEfuiPbsBIhbpwQ7dAa7sxSEbNRbzBykMcPB9KjKIc+gtTY51SPgXUUWBYzybRJ1lZQiUBd3M3lGs1l46qeKnmJ1TigQH9ZaL5cGLntd1tR/uT68c40xgC0f/kLOEIZ9zuVTt426Cj8uoyq1uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553988; c=relaxed/simple;
-	bh=77sCLZwOJ712VUJL8AnRWlny4lV7AE5V46gxu+5gJvo=;
+	s=arc-20240116; t=1751553991; c=relaxed/simple;
+	bh=f2bqxqVmIGDd4ae9dbsdTdxje9Zr0evZaQlhQL/VG3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RvdBym9c7MpOrqcdWtxZIJ59uC8wB+bbHsrMDrThRuWbOKerLbJzG/ZQ7sp7w5fLs6IeUPbKRo2wZVLz58h5X5oHbZQJbetgl5XHidei//Bdyd4DYb6cfOJ53XvuBC/kuJ4jDnWRIrdKe6WyY570YrSlUY7MKe+ucJGsPABDVpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtCw1XYH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OIF9ejLi7ODI6eLkmMGgMFx9wuMfibPOwBA9jnU6pbP9lZjKnbM3xxbcTAJwn713W5cgalJY/7XYkoZnwzpiC1rhb4mC+KgU/QC88UXEbSCHKdq7K8c6g712kDb3BWL9VVnJlkI2T8yDp0izXjlu2B4Lg/fp55+OZdjpwKw6fBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VritSUpQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtCw1XYH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70172C4CEE3;
-	Thu,  3 Jul 2025 14:46:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VritSUpQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C05DC4CEE3;
+	Thu,  3 Jul 2025 14:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751553987;
-	bh=77sCLZwOJ712VUJL8AnRWlny4lV7AE5V46gxu+5gJvo=;
+	s=korg; t=1751553991;
+	bh=f2bqxqVmIGDd4ae9dbsdTdxje9Zr0evZaQlhQL/VG3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YtCw1XYHk4utHrUxu/IhAC6eoCxFwPk8KLi1tGfL5wEPI4gVMtnSvEv2vm8Bi7M2Z
-	 MeIq5l9kGJ9tAn0s6ukVUfvG2QNtrQYhVYNllccerf8umVGQo80momNBFBm9geyVuH
-	 Ri7x9SyZT6Sy3wHtUqGa5PtUzti3iPBkvn4Il8AI=
+	b=VritSUpQ5j0MObfb2shcUjCGvJtRcMpC1/MnFE5b0TmhUu3FGnwRGx2bjy6KIVAdo
+	 Y5+n+Z7ICViwYr9fjGze7TsDzZOFrwC/5vPL+woUoi1gk13jJNWOQM9vyBCaB0YNJ5
+	 usC1vTtoIrZyzDauqkg8Ag67Y89ISKPESeGB3TXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Hodaszi <robert.hodaszi@digi.com>,
-	Oliver Neukum <oneukum@suse.com>,
+	Peter Korsgaard <peter@korsgaard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/218] usb: cdc-wdm: avoid setting WDM_READ for ZLP-s
-Date: Thu,  3 Jul 2025 16:39:53 +0200
-Message-ID: <20250703143957.742527846@linuxfoundation.org>
+Subject: [PATCH 6.12 046/218] usb: gadget: f_hid: wake up readers on disable/unbind
+Date: Thu,  3 Jul 2025 16:39:54 +0200
+Message-ID: <20250703143957.780841110@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -51,112 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Hodaszi <robert.hodaszi@digi.com>
+From: Peter Korsgaard <peter@korsgaard.com>
 
-[ Upstream commit 387602d8a75574fafb451b7a8215e78dfd67ee63 ]
+[ Upstream commit 937a8a3a8d46a3377b4195cd8f2aa656666ebc8b ]
 
-Don't set WDM_READ flag in wdm_in_callback() for ZLP-s, otherwise when
-userspace tries to poll for available data, it might - incorrectly -
-believe there is something available, and when it tries to non-blocking
-read it, it might get stuck in the read loop.
+Similar to how it is done in the write path.
 
-For example this is what glib does for non-blocking read (briefly):
+Add a disabled flag to track the function state and use it to exit the read
+loops to ensure no readers get stuck when the function is disabled/unbound,
+protecting against corruption when the waitq and spinlocks are reinitialized
+in hidg_bind().
 
-  1. poll()
-  2. if poll returns with non-zero, starts a read data loop:
-    a. loop on poll() (EINTR disabled)
-    b. if revents was set, reads data
-      I. if read returns with EINTR or EAGAIN, goto 2.a.
-      II. otherwise return with data
-
-So if ZLP sets WDM_READ (#1), we expect data, and try to read it (#2).
-But as that was a ZLP, and we are doing non-blocking read, wdm_read()
-returns with EAGAIN (#2.b.I), so loop again, and try to read again
-(#2.a.).
-
-With glib, we might stuck in this loop forever, as EINTR is disabled
-(#2.a).
-
-Signed-off-by: Robert Hodaszi <robert.hodaszi@digi.com>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20250403144004.3889125-1-robert.hodaszi@digi.com
+Signed-off-by: Peter Korsgaard <peter@korsgaard.com>
+Link: https://lore.kernel.org/r/20250318152207.330997-1-peter@korsgaard.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/cdc-wdm.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ drivers/usb/gadget/function/f_hid.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/class/cdc-wdm.c b/drivers/usb/class/cdc-wdm.c
-index 16e7fa4d488d3..ecd6d1f39e498 100644
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -92,7 +92,6 @@ struct wdm_device {
- 	u16			wMaxCommand;
- 	u16			wMaxPacketSize;
- 	__le16			inum;
--	int			reslength;
- 	int			length;
- 	int			read;
- 	int			count;
-@@ -214,6 +213,11 @@ static void wdm_in_callback(struct urb *urb)
- 	if (desc->rerr == 0 && status != -EPIPE)
- 		desc->rerr = status;
+diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
+index c7a05f842745b..d8bd2d82e9ec6 100644
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -75,6 +75,7 @@ struct f_hidg {
+ 	/* recv report */
+ 	spinlock_t			read_spinlock;
+ 	wait_queue_head_t		read_queue;
++	bool				disabled;
+ 	/* recv report - interrupt out only (use_out_ep == 1) */
+ 	struct list_head		completed_out_req;
+ 	unsigned int			qlen;
+@@ -329,7 +330,7 @@ static ssize_t f_hidg_intout_read(struct file *file, char __user *buffer,
  
-+	if (length == 0) {
-+		dev_dbg(&desc->intf->dev, "received ZLP\n");
-+		goto skip_zlp;
+ 	spin_lock_irqsave(&hidg->read_spinlock, flags);
+ 
+-#define READ_COND_INTOUT (!list_empty(&hidg->completed_out_req))
++#define READ_COND_INTOUT (!list_empty(&hidg->completed_out_req) || hidg->disabled)
+ 
+ 	/* wait for at least one buffer to complete */
+ 	while (!READ_COND_INTOUT) {
+@@ -343,6 +344,11 @@ static ssize_t f_hidg_intout_read(struct file *file, char __user *buffer,
+ 		spin_lock_irqsave(&hidg->read_spinlock, flags);
+ 	}
+ 
++	if (hidg->disabled) {
++		spin_unlock_irqrestore(&hidg->read_spinlock, flags);
++		return -ESHUTDOWN;
 +	}
 +
- 	if (length + desc->length > desc->wMaxCommand) {
- 		/* The buffer would overflow */
- 		set_bit(WDM_OVERFLOW, &desc->flags);
-@@ -222,18 +226,18 @@ static void wdm_in_callback(struct urb *urb)
- 		if (!test_bit(WDM_OVERFLOW, &desc->flags)) {
- 			memmove(desc->ubuf + desc->length, desc->inbuf, length);
- 			desc->length += length;
--			desc->reslength = length;
+ 	/* pick the first one */
+ 	list = list_first_entry(&hidg->completed_out_req,
+ 				struct f_hidg_req_list, list);
+@@ -387,7 +393,7 @@ static ssize_t f_hidg_intout_read(struct file *file, char __user *buffer,
+ 	return count;
+ }
+ 
+-#define READ_COND_SSREPORT (hidg->set_report_buf != NULL)
++#define READ_COND_SSREPORT (hidg->set_report_buf != NULL || hidg->disabled)
+ 
+ static ssize_t f_hidg_ssreport_read(struct file *file, char __user *buffer,
+ 				    size_t count, loff_t *ptr)
+@@ -1012,6 +1018,11 @@ static void hidg_disable(struct usb_function *f)
+ 	}
+ 	spin_unlock_irqrestore(&hidg->get_report_spinlock, flags);
+ 
++	spin_lock_irqsave(&hidg->read_spinlock, flags);
++	hidg->disabled = true;
++	spin_unlock_irqrestore(&hidg->read_spinlock, flags);
++	wake_up(&hidg->read_queue);
++
+ 	spin_lock_irqsave(&hidg->write_spinlock, flags);
+ 	if (!hidg->write_pending) {
+ 		free_ep_req(hidg->in_ep, hidg->req);
+@@ -1097,6 +1108,10 @@ static int hidg_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
  		}
  	}
- skip_error:
  
- 	if (desc->rerr) {
- 		/*
--		 * Since there was an error, userspace may decide to not read
--		 * any data after poll'ing.
-+		 * If there was a ZLP or an error, userspace may decide to not
-+		 * read any data after poll'ing.
- 		 * We should respond to further attempts from the device to send
- 		 * data, so that we can get unstuck.
- 		 */
-+skip_zlp:
- 		schedule_work(&desc->service_outs_intr);
- 	} else {
- 		set_bit(WDM_READ, &desc->flags);
-@@ -585,15 +589,6 @@ static ssize_t wdm_read
- 			goto retry;
- 		}
- 
--		if (!desc->reslength) { /* zero length read */
--			dev_dbg(&desc->intf->dev, "zero length - clearing WDM_READ\n");
--			clear_bit(WDM_READ, &desc->flags);
--			rv = service_outstanding_interrupt(desc);
--			spin_unlock_irq(&desc->iuspin);
--			if (rv < 0)
--				goto err;
--			goto retry;
--		}
- 		cntr = desc->length;
- 		spin_unlock_irq(&desc->iuspin);
- 	}
-@@ -1016,7 +1011,7 @@ static void service_interrupt_work(struct work_struct *work)
- 
- 	spin_lock_irq(&desc->iuspin);
- 	service_outstanding_interrupt(desc);
--	if (!desc->resp_count) {
-+	if (!desc->resp_count && (desc->length || desc->rerr)) {
- 		set_bit(WDM_READ, &desc->flags);
- 		wake_up(&desc->wait);
- 	}
++	spin_lock_irqsave(&hidg->read_spinlock, flags);
++	hidg->disabled = false;
++	spin_unlock_irqrestore(&hidg->read_spinlock, flags);
++
+ 	if (hidg->in_ep != NULL) {
+ 		spin_lock_irqsave(&hidg->write_spinlock, flags);
+ 		hidg->req = req_in;
 -- 
 2.39.5
 
