@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5442F2F2370;
-	Thu,  3 Jul 2025 15:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59702F0C45;
+	Thu,  3 Jul 2025 15:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556055; cv=none; b=b/d4pfdKW9DDxaKQxwRUXZIxZ1UBBZGvrFLtR3PU4KwyfkN+lrBfoRY7trZZ7koSeI895f/yESGgYI2KqLd1V7uDSRhFV60pbdgt77sWAswGxXvdE/qaISjU3a8kH93HWroKjTSwSrGMf5PMdZn2LOmwkBsw2QkOnu8pvUr/NNY=
+	t=1751556059; cv=none; b=JsBpHbxzYh8tcGInOXey3fuEyToIQFo9B11wE78m5U+Ce4VXJ+jXTJpLrm1HWMVCo3NpDmxXqb2xvXh76p/yN0N0kbRSiqJbAMzB0jf/98yNJADdQAr/SM7eZYwVhIYCfQlatnqCQ3m7swO7EVckXL75cABmd4H81xXwuudACZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556055; c=relaxed/simple;
-	bh=9Vjnu34MEhf81t8P7A88O7sUCbhfkKPYWXBCaGdpmj0=;
+	s=arc-20240116; t=1751556059; c=relaxed/simple;
+	bh=UgfzTPa9/62oLlxV57tcz3euklnU5i2sRoarUfAsza4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcJdPUvpycpnxtj0/15N8j5uXt/xpQ2jPJdCUxApYkHimm8ANz4ew/qAOZ2jdYelR2/BLqh5/Ps0vjB16D9MT0xoUqWN0Z4Mqh9/B7c8Nrdf0QfmrkpvaU5SCvo+rYCrpl83wvrPWshRO9GVfNESED6VlG2CNvBXfen4aNlArpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJzhz1vW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UwUD9/x6jRsFM5NU1L7O2lBOTJvvsJ81aNAdv7u19XpknAMN3vANvYJDdwU0CyOowug3JJpTFV0O5LZ+jWyEAi0oS0vTVlZztkL+/8XCJcXh4vTwA6zxuXfzR/S+U33t8BSBEhqpMImElxyO24QnaOpUN9kS66976lOyvInK0zE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qn58ykE6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJzhz1vW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FB1C4CEED;
-	Thu,  3 Jul 2025 15:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qn58ykE6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065C2C4CEE3;
+	Thu,  3 Jul 2025 15:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556055;
-	bh=9Vjnu34MEhf81t8P7A88O7sUCbhfkKPYWXBCaGdpmj0=;
+	s=korg; t=1751556058;
+	bh=UgfzTPa9/62oLlxV57tcz3euklnU5i2sRoarUfAsza4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJzhz1vWixcE8y+gq8BcFYBjqMyWyH66PoyElnfIYMlgBRovsb6KwIXF5vAwQBYXr
-	 1FYMTBKN9h0iVevx7Dx0lsqmEr626JM8qZ8ttJfIfpLskXOCknX16iVVCZPZe91kfH
-	 ki+U0IXU1qmpJ3ma/5t5Gc0G2CiKGS7HwKVJZ2TU=
+	b=Qn58ykE64FKwYBj46tHVQN7TU5XLB4z8SX3ROzxaVPO90zQ8dP0FZYxijnklTufUu
+	 GKNqHoIKE2+77xmEaXYTptX6p3GPS7Q/sQHLXq26m8ThlkMNbs1gdwsMbn8zkJWplD
+	 eRmEc0KsZbN+BeZklRT3TQC3ivDXBnnQSCmgX+Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/132] usb: typec: mux: do not return on EOPNOTSUPP in {mux, switch}_set
-Date: Thu,  3 Jul 2025 16:41:59 +0200
-Message-ID: <20250703143940.591629362@linuxfoundation.org>
+Subject: [PATCH 6.1 031/132] ALSA: hda: Ignore unsol events for cards being shut down
+Date: Thu,  3 Jul 2025 16:42:00 +0200
+Message-ID: <20250703143940.632940161@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -45,56 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 0f7bbef1794dc87141897f804e5871a293aa174b ]
+[ Upstream commit 3f100f524e75586537e337b34d18c8d604b398e7 ]
 
-Since the typec connectors can have many muxes or switches for different
-lanes (sbu, usb2, usb3) going into different modal states (usb2, usb3,
-audio, debug) all of them will be called on typec_switch_set and
-typec_mux_set. But not all of them will be handling the expected mode.
+For the classic snd_hda_intel driver, codec->card and bus->card point to
+the exact same thing. When snd_card_diconnect() fires, bus->shutdown is
+set thanks to azx_dev_disconnect(). card->shutdown is already set when
+that happens but both provide basically the same functionality.
 
-If one of the mux or switch will come back with EOPTNOSUPP this is no
-reason to stop running through the next ones. Therefor we skip this
-particular error value and continue calling the next.
+For the DSP snd_soc_avs driver where multiple codecs are located on
+multiple cards, bus->shutdown 'shortcut' is not sufficient. One codec
+card may be unregistered while other codecs are still operational.
+Proper check in form of card->shutdown must be used to verify whether
+the codec's card is being shut down.
 
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250404-ml-topic-typec-mux-v1-1-22c0526381ba@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250530141309.2943404-1-cezary.rojewski@intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/mux.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/hda_bind.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
-index 941735c731619..a74f8e1a28c21 100644
---- a/drivers/usb/typec/mux.c
-+++ b/drivers/usb/typec/mux.c
-@@ -214,7 +214,7 @@ int typec_switch_set(struct typec_switch *sw,
- 		sw_dev = sw->sw_devs[i];
+diff --git a/sound/pci/hda/hda_bind.c b/sound/pci/hda/hda_bind.c
+index 890c2f7c33fc2..4c7355a0814d1 100644
+--- a/sound/pci/hda/hda_bind.c
++++ b/sound/pci/hda/hda_bind.c
+@@ -45,7 +45,7 @@ static void hda_codec_unsol_event(struct hdac_device *dev, unsigned int ev)
+ 	struct hda_codec *codec = container_of(dev, struct hda_codec, core);
  
- 		ret = sw_dev->set(sw_dev, orientation);
--		if (ret)
-+		if (ret && ret != -EOPNOTSUPP)
- 			return ret;
- 	}
+ 	/* ignore unsol events during shutdown */
+-	if (codec->bus->shutdown)
++	if (codec->card->shutdown || codec->bus->shutdown)
+ 		return;
  
-@@ -421,7 +421,7 @@ int typec_mux_set(struct typec_mux *mux, struct typec_mux_state *state)
- 		mux_dev = mux->mux_devs[i];
- 
- 		ret = mux_dev->set(mux_dev, state);
--		if (ret)
-+		if (ret && ret != -EOPNOTSUPP)
- 			return ret;
- 	}
- 
+ 	/* ignore unsol events during system suspend/resume */
 -- 
 2.39.5
 
