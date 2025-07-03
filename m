@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8312E7F1A;
-	Thu,  3 Jul 2025 14:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959742E7F1A;
+	Thu,  3 Jul 2025 14:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554352; cv=none; b=PabpFSudepioqvtND4JFbJYzsK6RwuUdEUsaoRKL5kHPxTCrel9BnAdIzk3s3Yw7BE0CMgnpUCpWkum3IOLZTJL9CCAIxJpT+KwOCCh90H4JZKhyHFd8avVVRptQjCmffE0Bb0vU+R4gN+VFi+F5ryVNsm/ktHPrv2JVpGLxdwc=
+	t=1751554355; cv=none; b=ub0jrzTcBaGdKgG47J3jUqSt2oU4kmchY66tTyVPCDWQWfIbeqYGfecSJ1+VoUImhzlFsmbfsbMGsPe6X9UgkGGW7A+AnRoTBt2BnX7Wvu0PIKrZEFBtQWlef85pC55LfZgwzRMslpmyMUJ/TaGgnswFXE249bYlhoKw6e7AWLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554352; c=relaxed/simple;
-	bh=uAtOaOf/XPFVzMSqsA9NYRkzfa/qdM/etcrNcYR101g=;
+	s=arc-20240116; t=1751554355; c=relaxed/simple;
+	bh=uAlzPqsqO4aUcw8nA9GkhsnGSQnEmPoFVQq3waX5cwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDGnOfQjDjPDtXXp/TONwXsscBhPv3FGDgig0p8EPMvMhUR/Elq0vRO/naNhjtEQiJsz4fODrViJnu0ZH+HjrCGXrfJGDMck6tKPWxfDrRmSYusmGMHhG8JIHPyZjFgwCzFU1C31dZMrHTIJeFyPKxZuD3dtrJ/zbRm2GXbz56Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohk15rj9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GcaIkDY1W64j0bB8EG0xGXia0kE+WicfP0FQXx0fDo2sQYywfJG9V4gk/IkYxQBvDaYvG7l2WDl45rSCchVwX3J7l7dc+L5NYdAmdUf4Q60dO8FrftBoIwcwk5s7YbVmlIUC6qarme7lq8kpJ7Bx8gRrYBxXO6JKKaq/3dZDo88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bc/jDr8X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohk15rj9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8197C4CEE3;
-	Thu,  3 Jul 2025 14:52:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bc/jDr8X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F184AC4CEE3;
+	Thu,  3 Jul 2025 14:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554352;
-	bh=uAtOaOf/XPFVzMSqsA9NYRkzfa/qdM/etcrNcYR101g=;
+	s=korg; t=1751554355;
+	bh=uAlzPqsqO4aUcw8nA9GkhsnGSQnEmPoFVQq3waX5cwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohk15rj908FaW9dRICX/ypVV/De+Acn+Z2xANB9Xr1LXAD42kvCbWBprPu3W7zmxS
-	 cpEZXfh1ScBk1e5SKrG9NQ0mbDnoCuj697IZM4FErtb+wD+J7aClnefoCcKjo4rL6e
-	 kCHEQQAMz6pul4kjy4OD5qmNh9zb7Kxwfk1mN97w=
+	b=Bc/jDr8XwmD8+2gPhoIjzoP0BVWv8scmfasBnVGCGxSxegnkFhVnFWJDrciQ0p6vl
+	 9C52Ko+Vb9Wt7jaBN62/KBtbtxIZtDe4nONXyd/qCQYudbv8k6isW2/zLVr4TZ/HF3
+	 V25jV5xYRDyJdrW8ibAR0ahcEXQDycp4l7cVQu08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
-	"Xin Li (Intel)" <xin@zytor.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 128/218] x86/traps: Initialize DR6 by writing its architectural reset value
-Date: Thu,  3 Jul 2025 16:41:16 +0200
-Message-ID: <20250703144001.230809937@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 6.12 129/218] staging: rtl8723bs: Avoid memset() in aes_cipher() and aes_decipher()
+Date: Thu,  3 Jul 2025 16:41:17 +0200
+Message-ID: <20250703144001.269953785@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -53,206 +50,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Li (Intel) <xin@zytor.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 5f465c148c61e876b6d6eacd8e8e365f2d47758f upstream.
+commit a55bc4ffc06d8c965a7d6f0a01ed0ed41380df28 upstream.
 
-Initialize DR6 by writing its architectural reset value to avoid
-incorrectly zeroing DR6 to clear DR6.BLD at boot time, which leads
-to a false bus lock detected warning.
+After commit 6f110a5e4f99 ("Disable SLUB_TINY for build testing"), which
+causes CONFIG_KASAN to be enabled in allmodconfig again, arm64
+allmodconfig builds with older versions of clang (15 through 17) show an
+instance of -Wframe-larger-than (which breaks the build with
+CONFIG_WERROR=y):
 
-The Intel SDM says:
+  drivers/staging/rtl8723bs/core/rtw_security.c:1287:5: error: stack frame size (2208) exceeds limit (2048) in 'rtw_aes_decrypt' [-Werror,-Wframe-larger-than]
+   1287 | u32 rtw_aes_decrypt(struct adapter *padapter, u8 *precvframe)
+        |     ^
 
-  1) Certain debug exceptions may clear bits 0-3 of DR6.
+This comes from aes_decipher() being inlined in rtw_aes_decrypt().
+Running the same build with CONFIG_FRAME_WARN=128 shows aes_cipher()
+also uses a decent amount of stack, just under the limit of 2048:
 
-  2) BLD induced #DB clears DR6.BLD and any other debug exception
-     doesn't modify DR6.BLD.
+  drivers/staging/rtl8723bs/core/rtw_security.c:864:19: warning: stack frame size (1952) exceeds limit (128) in 'aes_cipher' [-Wframe-larger-than]
+    864 | static signed int aes_cipher(u8 *key, uint      hdrlen,
+        |                   ^
 
-  3) RTM induced #DB clears DR6.RTM and any other debug exception
-     sets DR6.RTM.
+-Rpass-analysis=stack-frame-layout only shows one large structure on the
+stack, which is the ctx variable inlined from aes128k128d(). A good
+number of the other variables come from the additional checks of
+fortified string routines, which are present in memset(), which both
+aes_cipher() and aes_decipher() use to initialize some temporary
+buffers. In this case, since the size is known at compile time, these
+additional checks should not result in any code generation changes but
+allmodconfig has several sanitizers enabled, which may make it harder
+for the compiler to eliminate the compile time checks and the variables
+that come about from them.
 
-  To avoid confusion in identifying debug exceptions, debug handlers
-  should set DR6.BLD and DR6.RTM, and clear other DR6 bits before
-  returning.
+The memset() calls are just initializing these buffers to zero, so use
+'= {}' instead, which is used all over the kernel and does the exact
+same thing as memset() without the fortify checks, which drops the stack
+usage of these functions by a few hundred kilobytes.
 
-The DR6 architectural reset value 0xFFFF0FF0, already defined as
-macro DR6_RESERVED, satisfies these requirements, so just use it to
-reinitialize DR6 whenever needed.
+  drivers/staging/rtl8723bs/core/rtw_security.c:864:19: warning: stack frame size (1584) exceeds limit (128) in 'aes_cipher' [-Wframe-larger-than]
+    864 | static signed int aes_cipher(u8 *key, uint      hdrlen,
+        |                   ^
+  drivers/staging/rtl8723bs/core/rtw_security.c:1271:5: warning: stack frame size (1456) exceeds limit (128) in 'rtw_aes_decrypt' [-Wframe-larger-than]
+   1271 | u32 rtw_aes_decrypt(struct adapter *padapter, u8 *precvframe)
+        |     ^
 
-Since clear_all_debug_regs() no longer zeros all debug registers,
-rename it to initialize_debug_regs() to better reflect its current
-behavior.
-
-Since debug_read_clear_dr6() no longer clears DR6, rename it to
-debug_read_reset_dr6() to better reflect its current behavior.
-
-Fixes: ebb1064e7c2e9 ("x86/traps: Handle #DB for bus lock")
-Reported-by: Sohil Mehta <sohil.mehta@intel.com>
-Suggested-by: H. Peter Anvin (Intel) <hpa@zytor.com>
-Signed-off-by: Xin Li (Intel) <xin@zytor.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: H. Peter Anvin (Intel) <hpa@zytor.com>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Sohil Mehta <sohil.mehta@intel.com>
-Link: https://lore.kernel.org/lkml/06e68373-a92b-472e-8fd9-ba548119770c@intel.com/
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250620231504.2676902-2-xin%40zytor.com
+Cc: stable@vger.kernel.org
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20250609-rtl8723bs-fix-clang-arm64-wflt-v1-1-e2accba43def@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/uapi/asm/debugreg.h |   21 ++++++++++++++++++++-
- arch/x86/kernel/cpu/common.c         |   24 ++++++++++--------------
- arch/x86/kernel/traps.c              |   34 +++++++++++++++++++++-------------
- 3 files changed, 51 insertions(+), 28 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_security.c |   44 ++++++++------------------
+ 1 file changed, 14 insertions(+), 30 deletions(-)
 
---- a/arch/x86/include/uapi/asm/debugreg.h
-+++ b/arch/x86/include/uapi/asm/debugreg.h
-@@ -15,7 +15,26 @@
-    which debugging register was responsible for the trap.  The other bits
-    are either reserved or not of interest to us. */
+--- a/drivers/staging/rtl8723bs/core/rtw_security.c
++++ b/drivers/staging/rtl8723bs/core/rtw_security.c
+@@ -868,29 +868,21 @@ static signed int aes_cipher(u8 *key, ui
+ 		num_blocks, payload_index;
  
--/* Define reserved bits in DR6 which are always set to 1 */
-+/*
-+ * Define bits in DR6 which are set to 1 by default.
-+ *
-+ * This is also the DR6 architectural value following Power-up, Reset or INIT.
-+ *
-+ * Note, with the introduction of Bus Lock Detection (BLD) and Restricted
-+ * Transactional Memory (RTM), the DR6 register has been modified:
-+ *
-+ * 1) BLD flag (bit 11) is no longer reserved to 1 if the CPU supports
-+ *    Bus Lock Detection.  The assertion of a bus lock could clear it.
-+ *
-+ * 2) RTM flag (bit 16) is no longer reserved to 1 if the CPU supports
-+ *    restricted transactional memory.  #DB occurred inside an RTM region
-+ *    could clear it.
-+ *
-+ * Apparently, DR6.BLD and DR6.RTM are active low bits.
-+ *
-+ * As a result, DR6_RESERVED is an incorrect name now, but it is kept for
-+ * compatibility.
-+ */
- #define DR6_RESERVED	(0xFFFF0FF0)
+ 	u8 pn_vector[6];
+-	u8 mic_iv[16];
+-	u8 mic_header1[16];
+-	u8 mic_header2[16];
+-	u8 ctr_preload[16];
++	u8 mic_iv[16] = {};
++	u8 mic_header1[16] = {};
++	u8 mic_header2[16] = {};
++	u8 ctr_preload[16] = {};
  
- #define DR_TRAP0	(0x1)		/* db0 */
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -2145,20 +2145,16 @@ EXPORT_PER_CPU_SYMBOL(__stack_chk_guard)
+ 	/* Intermediate Buffers */
+-	u8 chain_buffer[16];
+-	u8 aes_out[16];
+-	u8 padded_buffer[16];
++	u8 chain_buffer[16] = {};
++	u8 aes_out[16] = {};
++	u8 padded_buffer[16] = {};
+ 	u8 mic[8];
+ 	uint	frtype  = GetFrameType(pframe);
+ 	uint	frsubtype  = GetFrameSubType(pframe);
  
- #endif	/* CONFIG_X86_64 */
+ 	frsubtype = frsubtype>>4;
  
--/*
-- * Clear all 6 debug registers:
-- */
--static void clear_all_debug_regs(void)
-+static void initialize_debug_regs(void)
- {
--	int i;
+-	memset((void *)mic_iv, 0, 16);
+-	memset((void *)mic_header1, 0, 16);
+-	memset((void *)mic_header2, 0, 16);
+-	memset((void *)ctr_preload, 0, 16);
+-	memset((void *)chain_buffer, 0, 16);
+-	memset((void *)aes_out, 0, 16);
+-	memset((void *)padded_buffer, 0, 16);
 -
--	for (i = 0; i < 8; i++) {
--		/* Ignore db4, db5 */
--		if ((i == 4) || (i == 5))
--			continue;
+ 	if ((hdrlen == WLAN_HDR_A3_LEN) || (hdrlen ==  WLAN_HDR_A3_QOS_LEN))
+ 		a4_exists = 0;
+ 	else
+@@ -1080,15 +1072,15 @@ static signed int aes_decipher(u8 *key,
+ 			num_blocks, payload_index;
+ 	signed int res = _SUCCESS;
+ 	u8 pn_vector[6];
+-	u8 mic_iv[16];
+-	u8 mic_header1[16];
+-	u8 mic_header2[16];
+-	u8 ctr_preload[16];
++	u8 mic_iv[16] = {};
++	u8 mic_header1[16] = {};
++	u8 mic_header2[16] = {};
++	u8 ctr_preload[16] = {};
+ 
+ 		/* Intermediate Buffers */
+-	u8 chain_buffer[16];
+-	u8 aes_out[16];
+-	u8 padded_buffer[16];
++	u8 chain_buffer[16] = {};
++	u8 aes_out[16] = {};
++	u8 padded_buffer[16] = {};
+ 	u8 mic[8];
+ 
+ 	uint frtype  = GetFrameType(pframe);
+@@ -1096,14 +1088,6 @@ static signed int aes_decipher(u8 *key,
+ 
+ 	frsubtype = frsubtype>>4;
+ 
+-	memset((void *)mic_iv, 0, 16);
+-	memset((void *)mic_header1, 0, 16);
+-	memset((void *)mic_header2, 0, 16);
+-	memset((void *)ctr_preload, 0, 16);
+-	memset((void *)chain_buffer, 0, 16);
+-	memset((void *)aes_out, 0, 16);
+-	memset((void *)padded_buffer, 0, 16);
 -
--		set_debugreg(0, i);
--	}
-+	/* Control register first -- to make sure everything is disabled. */
-+	set_debugreg(0, 7);
-+	set_debugreg(DR6_RESERVED, 6);
-+	/* dr5 and dr4 don't exist */
-+	set_debugreg(0, 3);
-+	set_debugreg(0, 2);
-+	set_debugreg(0, 1);
-+	set_debugreg(0, 0);
- }
+ 	/* start to decrypt the payload */
  
- #ifdef CONFIG_KGDB
-@@ -2319,7 +2315,7 @@ void cpu_init(void)
- 
- 	load_mm_ldt(&init_mm);
- 
--	clear_all_debug_regs();
-+	initialize_debug_regs();
- 	dbg_restore_debug_regs();
- 
- 	doublefault_init_cpu_tss();
---- a/arch/x86/kernel/traps.c
-+++ b/arch/x86/kernel/traps.c
-@@ -977,24 +977,32 @@ static bool is_sysenter_singlestep(struc
- #endif
- }
- 
--static __always_inline unsigned long debug_read_clear_dr6(void)
-+static __always_inline unsigned long debug_read_reset_dr6(void)
- {
- 	unsigned long dr6;
- 
-+	get_debugreg(dr6, 6);
-+	dr6 ^= DR6_RESERVED; /* Flip to positive polarity */
-+
- 	/*
- 	 * The Intel SDM says:
- 	 *
--	 *   Certain debug exceptions may clear bits 0-3. The remaining
--	 *   contents of the DR6 register are never cleared by the
--	 *   processor. To avoid confusion in identifying debug
--	 *   exceptions, debug handlers should clear the register before
--	 *   returning to the interrupted task.
-+	 *   Certain debug exceptions may clear bits 0-3 of DR6.
-+	 *
-+	 *   BLD induced #DB clears DR6.BLD and any other debug
-+	 *   exception doesn't modify DR6.BLD.
- 	 *
--	 * Keep it simple: clear DR6 immediately.
-+	 *   RTM induced #DB clears DR6.RTM and any other debug
-+	 *   exception sets DR6.RTM.
-+	 *
-+	 *   To avoid confusion in identifying debug exceptions,
-+	 *   debug handlers should set DR6.BLD and DR6.RTM, and
-+	 *   clear other DR6 bits before returning.
-+	 *
-+	 * Keep it simple: write DR6 with its architectural reset
-+	 * value 0xFFFF0FF0, defined as DR6_RESERVED, immediately.
- 	 */
--	get_debugreg(dr6, 6);
- 	set_debugreg(DR6_RESERVED, 6);
--	dr6 ^= DR6_RESERVED; /* Flip to positive polarity */
- 
- 	return dr6;
- }
-@@ -1194,13 +1202,13 @@ out:
- /* IST stack entry */
- DEFINE_IDTENTRY_DEBUG(exc_debug)
- {
--	exc_debug_kernel(regs, debug_read_clear_dr6());
-+	exc_debug_kernel(regs, debug_read_reset_dr6());
- }
- 
- /* User entry, runs on regular task stack */
- DEFINE_IDTENTRY_DEBUG_USER(exc_debug)
- {
--	exc_debug_user(regs, debug_read_clear_dr6());
-+	exc_debug_user(regs, debug_read_reset_dr6());
- }
- 
- #ifdef CONFIG_X86_FRED
-@@ -1219,7 +1227,7 @@ DEFINE_FREDENTRY_DEBUG(exc_debug)
- {
- 	/*
- 	 * FRED #DB stores DR6 on the stack in the format which
--	 * debug_read_clear_dr6() returns for the IDT entry points.
-+	 * debug_read_reset_dr6() returns for the IDT entry points.
- 	 */
- 	unsigned long dr6 = fred_event_data(regs);
- 
-@@ -1234,7 +1242,7 @@ DEFINE_FREDENTRY_DEBUG(exc_debug)
- /* 32 bit does not have separate entry points. */
- DEFINE_IDTENTRY_RAW(exc_debug)
- {
--	unsigned long dr6 = debug_read_clear_dr6();
-+	unsigned long dr6 = debug_read_reset_dr6();
- 
- 	if (user_mode(regs))
- 		exc_debug_user(regs, dr6);
+ 	num_blocks = (plen-8) / 16; /* plen including LLC, payload_length and mic) */
 
 
