@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786EE2EE97A;
-	Thu,  3 Jul 2025 15:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D6A2F199C;
+	Thu,  3 Jul 2025 15:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555496; cv=none; b=g1TXWle567aL5tFaQxI8Wo2SaGvIIo8XOEWURsh3OS2Sx8gKA0cM83pq694cgopB/298geXy7aR7Mk7R1IJ5OWpleHVcFCqLfRa7hdSb/7TlIAQFGZhEyij3mVSheIiBPj+IpUEZg7uL4cC6XeIum5DMLowBWCg4aX6Ul+8HVUs=
+	t=1751555500; cv=none; b=tKRpdQ+YOHLzWFIZgNuZoIDtVFyN0Frh9Bwe4WR+dmedsD8JnN96HKQetqTYX3w3PwHt1FQf1zqOa2pIZxNNMDuUPKoyK9Yodg/dUKqguZ0cKmRVkMz0KHusSBLFHiABvFB1qgDmDWqZigPyYvTqrhFbdvvl0BPbKHeZGCkVLMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555496; c=relaxed/simple;
-	bh=AtEKIzYUt5j5gJfkxXJ06dSTm30EaQkkKZxndW6kTGY=;
+	s=arc-20240116; t=1751555500; c=relaxed/simple;
+	bh=6485hifaYaet7WeyrprFwBeuWYnf3JjYJoK/ZarxNGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hTdP11hS05nQNS3t2UT6ORv5ue7HTEfEI/Uc8DdsjXZ6v0lufo1jMIpaaGDYB/zJrV9BzTWpb1Qr99BfjFky25g0ACevOQbYtwGyB+YQRpmz9FtCuKkvH7iefV3+1tSNKyGYpQj28DiRkXJ2WKz+2QvqK+vCKCajeskyeeoHA1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KBjcb32l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HPC7gEsTQ1wgHPDkk0M1G877lWwjbrhceKjycTlltc+fDDac/m/iJiC0UrhaTjdXSNZxC3KR2IVTyVEl7wrc5GOxRMeRtHKN7TPKcQCarQ092J76kWhkI7i6nzlddEumn5VCNQo94A9sh3I9VO7IDJZx9I2qeHFKdYoODdedBmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSugO5GI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBjcb32l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E538CC4CEE3;
-	Thu,  3 Jul 2025 15:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSugO5GI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7C8C4CEF1;
+	Thu,  3 Jul 2025 15:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555496;
-	bh=AtEKIzYUt5j5gJfkxXJ06dSTm30EaQkkKZxndW6kTGY=;
+	s=korg; t=1751555499;
+	bh=6485hifaYaet7WeyrprFwBeuWYnf3JjYJoK/ZarxNGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBjcb32lIsvzZK0gkwNjkap/aT1lWO/bdcK83Hw6bLtHBn5wbeQpsgsEXcMeEkIjf
-	 /A5jdUdqwsnhGvuVgVXcSiXomjhOAlLHudGJE3cvcQ+2lI2ENvJSiVVTSDOtoQv9e5
-	 w0I2B8kRQhHM6unwjBUT6ABq8b9igF7U+Zu/qpYU=
+	b=HSugO5GIikB5rxchw2Lu7+UuKP5YDcwPbu5O/TDe9fPGLfjHjbOHyzxd9Rh1AP1FJ
+	 57REYrzT8uqqC7WPS3nnBNo1lRnHHflO+gLjTOgvWnmjafL+LLvScg0aH+BGpnZhLv
+	 SWEH5oQUsg8Nn3D9LX0tiCLx5/obfhuBTV8Z9B8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Minas Harutyunyan <hminas@synopsys.com>,
+	Purva Yeshi <purvayeshi550@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/139] usb: dwc2: also exit clock_gating when stopping udc while suspended
-Date: Thu,  3 Jul 2025 16:41:33 +0200
-Message-ID: <20250703143942.363766910@linuxfoundation.org>
+Subject: [PATCH 6.6 031/139] iio: adc: ad_sigma_delta: Fix use of uninitialized status_pos
+Date: Thu,  3 Jul 2025 16:41:34 +0200
+Message-ID: <20250703143942.402631800@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -51,45 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Purva Yeshi <purvayeshi550@gmail.com>
 
-[ Upstream commit af076a41f8a28faf9ceb9dd2d88aef2c202ef39a ]
+[ Upstream commit e5cdb098a3cb165d52282ffc3a6448642953ea13 ]
 
-It is possible that the gadget will be disabled, while the udc is
-suspended. When enabling the udc in that case, the clock gating
-will not be enabled again. Leaving the phy unclocked. Even when the
-udc is not enabled, connecting this powered but not clocked phy leads
-to enumeration errors on the host side.
+Fix Smatch-detected issue:
+drivers/iio/adc/ad_sigma_delta.c:604 ad_sd_trigger_handler() error:
+uninitialized symbol 'status_pos'.
 
-To ensure that the clock gating will be in an valid state, we ensure
-that the clock gating will be enabled before stopping the udc.
+The variable `status_pos` was only initialized in specific switch cases
+(1, 2, 3, 4), which could leave it uninitialized if `reg_size` had an
+unexpected value.
 
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Acked-by: Minas Harutyunyan <hminas@synopsys.com>
-Link: https://lore.kernel.org/r/20250417-dwc2_clock_gating-v1-1-8ea7c4d53d73@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix by adding a default case to the switch block to catch unexpected
+values of `reg_size`. Use `dev_err_ratelimited()` for error logging and
+`goto irq_handled` instead of returning early.
+
+Signed-off-by: Purva Yeshi <purvayeshi550@gmail.com>
+Link: https://patch.msgid.link/20250410170408.8585-1-purvayeshi550@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/gadget.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iio/adc/ad_sigma_delta.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/dwc2/gadget.c b/drivers/usb/dwc2/gadget.c
-index ce20c06a90253..c0db3c52831a2 100644
---- a/drivers/usb/dwc2/gadget.c
-+++ b/drivers/usb/dwc2/gadget.c
-@@ -4601,6 +4601,12 @@ static int dwc2_hsotg_udc_stop(struct usb_gadget *gadget)
- 	if (!hsotg)
- 		return -ENODEV;
- 
-+	/* Exit clock gating when driver is stopped. */
-+	if (hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
-+	    hsotg->bus_suspended && !hsotg->params.no_clock_gating) {
-+		dwc2_gadget_exit_clock_gating(hsotg, 0);
-+	}
+diff --git a/drivers/iio/adc/ad_sigma_delta.c b/drivers/iio/adc/ad_sigma_delta.c
+index 7e21928707437..533667eefe419 100644
+--- a/drivers/iio/adc/ad_sigma_delta.c
++++ b/drivers/iio/adc/ad_sigma_delta.c
+@@ -476,6 +476,10 @@ static irqreturn_t ad_sd_trigger_handler(int irq, void *p)
+ 		 * byte set to zero. */
+ 		ad_sd_read_reg_raw(sigma_delta, data_reg, transfer_size, &data[1]);
+ 		break;
 +
- 	/* all endpoints should be shutdown */
- 	for (ep = 1; ep < hsotg->num_of_eps; ep++) {
- 		if (hsotg->eps_in[ep])
++	default:
++		dev_err_ratelimited(&indio_dev->dev, "Unsupported reg_size: %u\n", reg_size);
++		goto irq_handled;
+ 	}
+ 
+ 	/*
 -- 
 2.39.5
 
