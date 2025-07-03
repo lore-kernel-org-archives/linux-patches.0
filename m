@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782722EF9C3;
-	Thu,  3 Jul 2025 15:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B262E339E;
+	Thu,  3 Jul 2025 15:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554892; cv=none; b=A/fj8y0GX7quUi2EqlgRaEMxGv7IgNX6nPNLFmPYhMAe+/oYTuo+yDL7DS/k/DNfUNtTXulAiIifT8O/jrjFm95Y4vyNNz3l5wtvFlVWajFeXhLfWpVG8Pt3y1X9a47HI1NycVJaPSReIcFDw6oXEt2+wTmvz2/yJsyzVG4wJZ4=
+	t=1751554895; cv=none; b=TkjD/OBZ+zL4CDZumkjMHXBZ2YvKgcYlYbl1RM9s+LddeaQlDQKwjtKsSV/a4cYEaxcaM/OaAQt4MGME5MKJfInk0qV6CI3BTj0MYM73M30DU7tzXpk539gIfXm48rOdbFQfzjAwgkRJ1Ec98SUUurtB/D7aTjAkPClQGNBeXvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554892; c=relaxed/simple;
-	bh=2bRsIEZSBCYiLPJZv1ZVojiSec5M+GR+g84Vd+pcpQY=;
+	s=arc-20240116; t=1751554895; c=relaxed/simple;
+	bh=Vb+jwLJrq5X3PNSKIOR03+ZO5TZWuEElYUdvjrgaKxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmmmALK/fvo0CTNRT9d75xfda0YvpvLRttfnVRr1cjiwUqEvQBgWfFrphQLJsqfS5PcoyiYrdUO9tQM1CoisX6LXyH7y/N96TyN6izBkiRfyjrYvfV+2LxmjuhwYcFuhkHXtZ1T3TMKczP0+sfFVVopab7kJsKGT3qdceDDfWhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBKsiDQ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qw0LlyYzOxELyoun7lZsdCnDunnvNxO6Eh+59Hx8G7iG1l35QaYOkN3KsfIdr3nODsnmwPtFQ+ITJV/k52Wa0YFV9PQGYxhEpTpoT+Cl/HwsJbURSqxRKmWwE/LIPv3Z3aZNFo+y/EJUtMR+puaM0j/BrhsEnqpyjfx2kkgcM/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjC+KHKb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBKsiDQ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6D3C4CEED;
-	Thu,  3 Jul 2025 15:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjC+KHKb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E38C4CEE3;
+	Thu,  3 Jul 2025 15:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554892;
-	bh=2bRsIEZSBCYiLPJZv1ZVojiSec5M+GR+g84Vd+pcpQY=;
+	s=korg; t=1751554895;
+	bh=Vb+jwLJrq5X3PNSKIOR03+ZO5TZWuEElYUdvjrgaKxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBKsiDQ4h5fgY/wULDLhR3RQ+dJju8GSSFkyFx9xRWLMFlgsUVY+oPRZ7GnGg6SzT
-	 uw1KK/wyUEe6yxDAyvl2PtSzbYZ0qJo6YV43iZNUZST37JHmNRVAPCuxPCfvfxIc+i
-	 vdclNVuG6IhXht6ADeRuI1bzClXOlH9NqtGXFW1U=
+	b=OjC+KHKbCATZuopUAkUdDjx8+gc4/YuaPyk1fmHvyL8ujI2lImgrXy3kmoVORHy4U
+	 NDz164OY8HAfr/gj6DPVINnSWNzWvbvj7nWPxy8a/X7wpQ4xmW9Ufd5gIJUPLBFrFU
+	 xOslMQ/nEHPKa9OVeFzpxTFeJuiKttFybnVmhcfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 111/263] mm/damon/sysfs-schemes: free old damon_sysfs_scheme_filter->memcg_path on write
-Date: Thu,  3 Jul 2025 16:40:31 +0200
-Message-ID: <20250703144008.792675096@linuxfoundation.org>
+	linux-cifs@vger.kernel.org,
+	Remy Monsen <monsen@monsen.cc>,
+	Pierguido Lambri <plambri@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.15 112/263] smb: client: fix regression with native SMB symlinks
+Date: Thu,  3 Jul 2025 16:40:32 +0200
+Message-ID: <20250703144008.833120214@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,36 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit 4f489fe6afb395dbc79840efa3c05440b760d883 upstream.
+commit ff8abbd248c1f52df0c321690b88454b13ff54b2 upstream.
 
-memcg_path_store() assigns a newly allocated memory buffer to
-filter->memcg_path, without deallocating the previously allocated and
-assigned memory buffer.  As a result, users can leak kernel memory by
-continuously writing a data to memcg_path DAMOS sysfs file.  Fix the leak
-by deallocating the previously set memory buffer.
+Some users and customers reported that their backup/copy tools started
+to fail when the directory being copied contained symlink targets that
+the client couldn't parse - even when those symlinks weren't followed.
 
-Link: https://lkml.kernel.org/r/20250619183608.6647-2-sj@kernel.org
-Fixes: 7ee161f18b5d ("mm/damon/sysfs-schemes: implement filter directory")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>		[6.3.x]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fix this by allowing lstat(2) and readlink(2) to succeed even when the
+client can't resolve the symlink target, restoring old behavior.
+
+Cc: linux-cifs@vger.kernel.org
+Cc: stable@vger.kernel.org
+Reported-by: Remy Monsen <monsen@monsen.cc>
+Closes: https://lore.kernel.org/r/CAN+tdP7y=jqw3pBndZAGjQv0ObFq8Q=+PUDHgB36HdEz9QA6FQ@mail.gmail.com
+Reported-by: Pierguido Lambri <plambri@redhat.com>
+Fixes: 12b466eb52d9 ("cifs: Fix creating and resolving absolute NT-style symlinks")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs-schemes.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/reparse.c | 20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -471,6 +471,7 @@ static ssize_t memcg_path_store(struct k
- 		return -ENOMEM;
+diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
+index 511611206dab..1c40e42e4d89 100644
+--- a/fs/smb/client/reparse.c
++++ b/fs/smb/client/reparse.c
+@@ -875,15 +875,8 @@ int smb2_parse_native_symlink(char **target, const char *buf, unsigned int len,
+ 			abs_path += sizeof("\\DosDevices\\")-1;
+ 		else if (strstarts(abs_path, "\\GLOBAL??\\"))
+ 			abs_path += sizeof("\\GLOBAL??\\")-1;
+-		else {
+-			/* Unhandled absolute symlink, points outside of DOS/Win32 */
+-			cifs_dbg(VFS,
+-				 "absolute symlink '%s' cannot be converted from NT format "
+-				 "because points to unknown target\n",
+-				 smb_target);
+-			rc = -EIO;
+-			goto out;
+-		}
++		else
++			goto out_unhandled_target;
  
- 	strscpy(path, buf, count + 1);
-+	kfree(filter->memcg_path);
- 	filter->memcg_path = path;
- 	return count;
- }
+ 		/* Sometimes path separator after \?? is double backslash */
+ 		if (abs_path[0] == '\\')
+@@ -910,13 +903,7 @@ int smb2_parse_native_symlink(char **target, const char *buf, unsigned int len,
+ 			abs_path++;
+ 			abs_path[0] = drive_letter;
+ 		} else {
+-			/* Unhandled absolute symlink. Report an error. */
+-			cifs_dbg(VFS,
+-				 "absolute symlink '%s' cannot be converted from NT format "
+-				 "because points to unknown target\n",
+-				 smb_target);
+-			rc = -EIO;
+-			goto out;
++			goto out_unhandled_target;
+ 		}
+ 
+ 		abs_path_len = strlen(abs_path)+1;
+@@ -966,6 +953,7 @@ int smb2_parse_native_symlink(char **target, const char *buf, unsigned int len,
+ 		 * These paths have same format as Linux symlinks, so no
+ 		 * conversion is needed.
+ 		 */
++out_unhandled_target:
+ 		linux_target = smb_target;
+ 		smb_target = NULL;
+ 	}
+-- 
+2.50.0
+
 
 
