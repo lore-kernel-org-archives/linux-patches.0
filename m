@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52FD2EF656;
-	Thu,  3 Jul 2025 15:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F10B6F53E;
+	Thu,  3 Jul 2025 15:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554816; cv=none; b=TFe1O5RSgjB2HUchgcx6x1u+vb0J7hBb3xw9QuGJfDnqeKrdSUIcFmTzXgnnF4R1hqB/RZntUrbVav9MfnWlEMGq0ZDHB/fXIg6U9nmrUYKyS8XEQ0ASHA19g2BdN3Dw8xsYOCkZahm0fG54/rN94n9AnEx/bq33ocVgsi0JvVc=
+	t=1751554820; cv=none; b=C8kJ9XA/2CGS7z3LjGz8FXQpSGhsVM3MSh4l3tcPMs4lfHVpaMb06vW1rrR/dxGNy0YU92KZYiTyXAiV00UD7dw93n8200cHb0MQbqPIzaLQFrUJHfQ3g0dGJv+WYeQg06yUDuERYMn69E9A/hkaXP7zTi/1YhhxZo4jhrFZ5iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554816; c=relaxed/simple;
-	bh=/jXbf7ktmgseNv2asmwhTVnumBXxtl5dDLx5k2DHbI8=;
+	s=arc-20240116; t=1751554820; c=relaxed/simple;
+	bh=WSZxIENh+rpNYtpyFMqektCrYwZaNcH7NgFjQHhJgOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gd1/puWF8eFnrbpUVTM2omzlfT65ZXpuHKULsMQfL4L9PiXhyQ7GkWZEuYwaE7LI0jUaVBeY97U1KdkdoeCGsZy8fdHHcU7gQu0ozNvJsqBMSGlvF6lE57QNJ+yLp1kzLsoSQiHz0Xo04EcGq16Ls6Pe7iy9vQZo7Zw8VNA5pkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQS6SLOP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VPclOynskoLPmSSzOGIfvW0RWeYqXauNV6VeCHTpZmJQiBLAgnURCIe9O2LEOLkezqWxiykfwimC/A/nHKEv+On6kamMxyXFN4uwADugEKbV832KggP0fsA9/zT1zhRz7zbw/xvX+30OzeGmLnGBxhscFyjzn7aXpgJOYOan9AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdxTfK96; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQS6SLOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46DAC4CEED;
-	Thu,  3 Jul 2025 15:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdxTfK96"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D7EC4CEE3;
+	Thu,  3 Jul 2025 15:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554815;
-	bh=/jXbf7ktmgseNv2asmwhTVnumBXxtl5dDLx5k2DHbI8=;
+	s=korg; t=1751554818;
+	bh=WSZxIENh+rpNYtpyFMqektCrYwZaNcH7NgFjQHhJgOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pQS6SLOPJhRrkbfGWiMDzCCXArZheYGkfLy7RRotxNogGmWYz6WP8mZ/lXMMPaRIN
-	 N6E1Maa9UJuR5I9+FNKa3oNk7d3unQ17asWO9RViQX7t/PU+DTSMBTSyvqj/b7oeac
-	 KK6D8t16R75+2NGqYlUCTnwZe99HpElPhbQvCXiI=
+	b=sdxTfK967CitQsup/ZUzD6f81xZVthQS+1aQHvGNq6smDDD0tH630ScH9XLQizuVu
+	 H3E/4LnVpg8kQ0Ai7ExDOHjw+UPCyIBXEKfg7lMdn2zh4gbZIp5Cuz7l140YnmmyLm
+	 +/Jv/PrMmlb/HvYPFsILANcFVVoPy+urJ5r8J+5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	stable@kernel.org,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 060/263] usb: Add checks for snprintf() calls in usb_alloc_dev()
-Date: Thu,  3 Jul 2025 16:39:40 +0200
-Message-ID: <20250703144006.714068357@linuxfoundation.org>
+Subject: [PATCH 6.15 087/263] media: uvcvideo: Rollback non processed entities on error
+Date: Thu,  3 Jul 2025 16:40:07 +0200
+Message-ID: <20250703144007.792391733@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -44,74 +47,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 82fe5107fa3d21d6c3fba091c9dbc50495588630 ]
+[ Upstream commit a70705d3c020d0d5c3ab6a5cc93e011ac35e7d48 ]
 
-When creating a device path in the driver the snprintf() takes
-up to 16 characters long argument along with the additional up to
-12 characters for the signed integer (as it can't see the actual limits)
-and tries to pack this into 16 bytes array. GCC complains about that
-when build with `make W=1`:
+If we fail to commit an entity, we need to restore the
+UVC_CTRL_DATA_BACKUP for the other uncommitted entities. Otherwise the
+control cache and the device would be out of sync.
 
-  drivers/usb/core/usb.c:705:25: note: ‘snprintf’ output between 3 and 28 bytes into a destination of size 16
-
-Since everything works until now, let's just check for the potential
-buffer overflow and bail out. It is most likely a never happen situation,
-but at least it makes GCC happy.
-
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20250321164949.423957-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@kernel.org
+Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
+Reported-by: Hans de Goede <hdegoede@redhat.com>
+Closes: https://lore.kernel.org/linux-media/fe845e04-9fde-46ee-9763-a6f00867929a@redhat.com/
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Message-ID: <20250224-uvc-data-backup-v2-3-de993ed9823b@chromium.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/usb.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c | 32 ++++++++++++++++++++++----------
+ 1 file changed, 22 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/usb/core/usb.c b/drivers/usb/core/usb.c
-index 0b4685aad2d50..118fa4c93a795 100644
---- a/drivers/usb/core/usb.c
-+++ b/drivers/usb/core/usb.c
-@@ -695,15 +695,16 @@ struct usb_device *usb_alloc_dev(struct usb_device *parent,
- 		device_set_of_node_from_dev(&dev->dev, bus->sysdev);
- 		dev_set_name(&dev->dev, "usb%d", bus->busnum);
- 	} else {
-+		int n;
-+
- 		/* match any labeling on the hubs; it's one-based */
- 		if (parent->devpath[0] == '0') {
--			snprintf(dev->devpath, sizeof dev->devpath,
--				"%d", port1);
-+			n = snprintf(dev->devpath, sizeof(dev->devpath), "%d", port1);
- 			/* Root ports are not counted in route string */
- 			dev->route = 0;
- 		} else {
--			snprintf(dev->devpath, sizeof dev->devpath,
--				"%s.%d", parent->devpath, port1);
-+			n = snprintf(dev->devpath, sizeof(dev->devpath), "%s.%d",
-+				     parent->devpath, port1);
- 			/* Route string assumes hubs have less than 16 ports */
- 			if (port1 < 15)
- 				dev->route = parent->route +
-@@ -712,6 +713,11 @@ struct usb_device *usb_alloc_dev(struct usb_device *parent,
- 				dev->route = parent->route +
- 					(15 << ((parent->level - 1)*4));
- 		}
-+		if (n >= sizeof(dev->devpath)) {
-+			usb_put_hcd(bus_to_hcd(bus));
-+			usb_put_dev(dev);
-+			return NULL;
-+		}
+diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
+index 636ce1eb2a6bf..44b6513c52642 100644
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -2119,7 +2119,7 @@ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
+ 	unsigned int processed_ctrls = 0;
+ 	struct uvc_control *ctrl;
+ 	unsigned int i;
+-	int ret;
++	int ret = 0;
  
- 		dev->dev.parent = &parent->dev;
- 		dev_set_name(&dev->dev, "%d-%s", bus->busnum, dev->devpath);
+ 	if (entity == NULL)
+ 		return 0;
+@@ -2148,8 +2148,6 @@ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
+ 				dev->intfnum, ctrl->info.selector,
+ 				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
+ 				ctrl->info.size);
+-		else
+-			ret = 0;
+ 
+ 		if (!ret)
+ 			processed_ctrls++;
+@@ -2165,13 +2163,20 @@ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
+ 		    ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
+ 			ret = uvc_ctrl_set_handle(handle, ctrl, handle);
+ 
+-		if (ret < 0) {
++		if (ret < 0 && !rollback) {
+ 			if (err_ctrl)
+ 				*err_ctrl = ctrl;
+-			return ret;
++			/*
++			 * If we fail to set a control, we need to rollback
++			 * the next ones.
++			 */
++			rollback = 1;
+ 		}
+ 	}
+ 
++	if (ret)
++		return ret;
++
+ 	return processed_ctrls;
+ }
+ 
+@@ -2202,7 +2207,8 @@ int __uvc_ctrl_commit(struct uvc_fh *handle, int rollback,
+ 	struct uvc_video_chain *chain = handle->chain;
+ 	struct uvc_control *err_ctrl;
+ 	struct uvc_entity *entity;
+-	int ret = 0;
++	int ret_out = 0;
++	int ret;
+ 
+ 	/* Find the control. */
+ 	list_for_each_entry(entity, &chain->entities, chain) {
+@@ -2213,17 +2219,23 @@ int __uvc_ctrl_commit(struct uvc_fh *handle, int rollback,
+ 				ctrls->error_idx =
+ 					uvc_ctrl_find_ctrl_idx(entity, ctrls,
+ 							       err_ctrl);
+-			goto done;
++			/*
++			 * When we fail to commit an entity, we need to
++			 * restore the UVC_CTRL_DATA_BACKUP for all the
++			 * controls in the other entities, otherwise our cache
++			 * and the hardware will be out of sync.
++			 */
++			rollback = 1;
++
++			ret_out = ret;
+ 		} else if (ret > 0 && !rollback) {
+ 			uvc_ctrl_send_events(handle, entity,
+ 					     ctrls->controls, ctrls->count);
+ 		}
+ 	}
+ 
+-	ret = 0;
+-done:
+ 	mutex_unlock(&chain->ctrl_mutex);
+-	return ret;
++	return ret_out;
+ }
+ 
+ static int uvc_mapping_get_xctrl_compound(struct uvc_video_chain *chain,
 -- 
 2.39.5
 
