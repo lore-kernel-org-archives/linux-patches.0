@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC07224B1F;
-	Thu,  3 Jul 2025 15:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B602E7BBD;
+	Thu,  3 Jul 2025 15:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556280; cv=none; b=FucITASZrPG8kCZAqUEO5MbumoXrnRZWvLBRzWG4gUrDbhRP8iI6ZQqSNc05G+KePe8NQ881AISHyyDEPQFgfUGVhSq2TSmI8j6aOVNEqQrI6+J1wvPb/lnByY9vbruiYqIul7FnTGRdbyAm7QEObyesG73+et9c1tTsQxAVBkI=
+	t=1751556283; cv=none; b=CcK7NmlMveCLzSkTiuJ6wzg8fTd8xYRmj4yRNAOwUDQEBJ6I3PEyhxV8AhpaSaYcetS8LW8xOqDgMbuXcZaw/3usM/o2ZzroZ8HKjJvHiUPfERNSSJkGCs4cADoy9t49ILFzGWnpGllXTevVQJPcdNSWcfMC1sU/kJs7WTeOcL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556280; c=relaxed/simple;
-	bh=7m92Zb7Ml09aI5JnSzne1gOS7/BajGdtOzQO8yuQhB8=;
+	s=arc-20240116; t=1751556283; c=relaxed/simple;
+	bh=Uhn7efm4mJy47JNW0pCAJr2neJ7cORNs3/YADvJ8GqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alDKco6VlzmQ+BgKfGxQnjHGYewfs9HY1/cbxidJj4NsnZhHvAV/cheOWAVnuw+8e0fPJhwNO3d+sd12Kw/Vj8uCgeYEp10rLsKw8xewrltL76nOj3oZYR5upmIQ1n9gRFFbNbbSdEvh+IVxs4/9GyyyK3AF+RzdqrFal97EM+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSaIFdCK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1zb1q37VqsSOT111qvFoykq2IlYPsH41lQ29LWKZEyy9G6B2o4rVHG7Dqpy12N2UkC6yad2BrL2cunSxzSJ63zIMQ7dlDSEJywIAjIGPmn7bOih+15iPLXDYOwHozMeUTo2VC8iHEUMdOsLGWiW/jYqZ+Hp59EoGcVKmd7wPoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J0+cr7vF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSaIFdCK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E419C4CEED;
-	Thu,  3 Jul 2025 15:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0+cr7vF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7609C4CEEE;
+	Thu,  3 Jul 2025 15:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556280;
-	bh=7m92Zb7Ml09aI5JnSzne1gOS7/BajGdtOzQO8yuQhB8=;
+	s=korg; t=1751556283;
+	bh=Uhn7efm4mJy47JNW0pCAJr2neJ7cORNs3/YADvJ8GqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tSaIFdCKdbvAkwJ9uRkgmBjpWZfdQLZp4x2SyRDXmO0hbSk8vltZa7jZPXFpj+9ky
-	 HbLfDzh8O9s+cd7dPKayjG3BwG0XkzRlqTibqhmWWXPyGX7jPnPCmLP7UBNTxnaQKm
-	 wadyuazWsneqgU/HlZDXTXwgUwkGjq2uMeSB1yN4=
+	b=J0+cr7vFtTiYwA9WmryIRoMDnh9gDmwzzibcC0FLOKY+cwb2BY2SVoBILg0YOd9h1
+	 uPYnA6H3z4ssQDnsUzHNn0nQ01V+nh00BVgDfNdZ8SQWK7xs/x2gPnlGZ2Ui3rjZnO
+	 jBoSmwGO7zFA81YbNTqHhwVxy4jddzBtZpSFo3xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Yao Zi <ziyao@disroot.org>,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH 6.1 091/132] dt-bindings: serial: 8250: Make clocks and clock-frequency exclusive
-Date: Thu,  3 Jul 2025 16:43:00 +0200
-Message-ID: <20250703143942.974352320@linuxfoundation.org>
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.1 124/132] s390/entry: Fix last breaking event handling in case of stack corruption
+Date: Thu,  3 Jul 2025 16:43:33 +0200
+Message-ID: <20250703143944.265074000@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -51,51 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Zi <ziyao@disroot.org>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 09812134071b3941fb81def30b61ed36d3a5dfb5 upstream.
+commit ae952eea6f4a7e2193f8721a5366049946e012e7 upstream.
 
-The 8250 binding before converting to json-schema states,
+In case of stack corruption stack_invalid() is called and the expectation
+is that register r10 contains the last breaking event address. This
+dependency is quite subtle and broke a couple of years ago without that
+anybody noticed.
 
-  - clock-frequency : the input clock frequency for the UART
-  	or
-  - clocks phandle to refer to the clk used as per Documentation/devicetree
+Fix this by getting rid of the dependency and read the last breaking event
+address from lowcore.
 
-for clock-related properties, where "or" indicates these properties
-shouldn't exist at the same time.
-
-Additionally, the behavior of Linux's driver is strange when both clocks
-and clock-frequency are specified: it ignores clocks and obtains the
-frequency from clock-frequency, left the specified clocks unclaimed. It
-may even be disabled, which is undesired most of the time.
-
-But "anyOf" doesn't prevent these two properties from coexisting, as it
-considers the object valid as long as there's at LEAST one match.
-
-Let's switch to "oneOf" and disallows the other property if one exists,
-precisely matching the original binding and avoiding future confusion on
-the driver's behavior.
-
-Fixes: e69f5dc623f9 ("dt-bindings: serial: Convert 8250 to json-schema")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Yao Zi <ziyao@disroot.org>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20250623093445.62327-1-ziyao@disroot.org
+Fixes: 56e62a737028 ("s390: convert to generic entry")
+Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/serial/8250.yaml |    2 +-
+ arch/s390/kernel/entry.S |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/devicetree/bindings/serial/8250.yaml
-+++ b/Documentation/devicetree/bindings/serial/8250.yaml
-@@ -44,7 +44,7 @@ allOf:
-                   - ns16550
-                   - ns16550a
-     then:
--      anyOf:
-+      oneOf:
-         - required: [ clock-frequency ]
-         - required: [ clocks ]
- 
+--- a/arch/s390/kernel/entry.S
++++ b/arch/s390/kernel/entry.S
+@@ -690,7 +690,7 @@ ENTRY(stack_overflow)
+ 	stmg	%r0,%r7,__PT_R0(%r11)
+ 	stmg	%r8,%r9,__PT_PSW(%r11)
+ 	mvc	__PT_R8(64,%r11),0(%r14)
+-	stg	%r10,__PT_ORIG_GPR2(%r11) # store last break to orig_gpr2
++	mvc	__PT_ORIG_GPR2(8,%r11),__LC_PGM_LAST_BREAK
+ 	xc	__SF_BACKCHAIN(8,%r15),__SF_BACKCHAIN(%r15)
+ 	lgr	%r2,%r11		# pass pointer to pt_regs
+ 	jg	kernel_stack_overflow
 
 
