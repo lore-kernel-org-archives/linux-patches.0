@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8202EAB95;
-	Thu,  3 Jul 2025 14:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD982ECEBA;
+	Thu,  3 Jul 2025 14:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554695; cv=none; b=T4MlFF/W1SVX9m1opmiJc5iroRSlgnNsEpIzDW2M+GCaxiAJIYamyRrVIiui/iF6D3wIlbJEmR6jFXLUh68H+/oydWSHzC9RuMQcX76n6Tro5NKKSGCe0dGkEvvJkv6/anGriAUTVH6t/5iSNdseMwHmJYU7o7IR6r1j8VrEDF8=
+	t=1751554698; cv=none; b=OY5Ea+dcnINCF2+TxhCkdfEwwmoZ2nGeGmDnG8ggRtcMnHR+VNc8dq6p7E7QpGsTxf60pEeHLdaKLARMXLLGdC/HwlYSU/U0Lk5bJeik17Zp9jZ+o0lc4bNUE4jtDIiMDAjKsYHoGT0e4IQM8MSZ/4ZVupk8XZi50nGx/Hd1qCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554695; c=relaxed/simple;
-	bh=hVetxFNP/Iz4tzDRudbYJwmH4XBbls6pKRdlLzVRO5w=;
+	s=arc-20240116; t=1751554698; c=relaxed/simple;
+	bh=16A6WxFZmxKySp9SEXStGIfGREpq+s3O3HgrYIfDdpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CO6a5d3Epo7bbklYeFUxGJWjAJLBUhV1kPT7xI9l2ysKI/oO8BSXfzDDHi4tnI/8vI+gZ7XZzBNkKzw9H4EnpVUjJQu4RZxioELAyojTrPhZPLHuhK3/rfZT7+yFxuQsVnrO812kiCDhGf7k7J/xumu8/qT76m3UuZCpOk70Juw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07dsLncW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U9TsxnTiu8egl21SXpH+D/1TaMtKd86MJM5Tt7EKCo/DsTwltKaJTpIzZCtZNGAodgC4w5QuXLi19m8WyCY/eQREFBYiXjYSUXY/8oFuQhRfDJizlIOO4zL4CPUAjxTr2dSYrcy4ONNs0H3ct/lzViRCveCewUBaCGOuZT5hVOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGQmmgkU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07dsLncW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D54BC4CEED;
-	Thu,  3 Jul 2025 14:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGQmmgkU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E138AC4CEED;
+	Thu,  3 Jul 2025 14:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554695;
-	bh=hVetxFNP/Iz4tzDRudbYJwmH4XBbls6pKRdlLzVRO5w=;
+	s=korg; t=1751554698;
+	bh=16A6WxFZmxKySp9SEXStGIfGREpq+s3O3HgrYIfDdpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=07dsLncWXUGKWV6OV+3nFCP9/qbFeloobB9+5dvBHSDxpsD7/kZXc+iVP7jKkqSpX
-	 s0mFSFbvlLsWgETY9sGFjQ3lC/0TtW9+HL5blIDNHK5HgEO0aVVS7mnxL/9viQKIRJ
-	 F/ZLfm2FLtnUzB20gEvayB3atO0HHypGtREP6Df8=
+	b=HGQmmgkUiqq15RkCDUsgQYlJ7F5uvGstJi2BgeaaOnJ+g8cLt/rxwexJRj0uU9mnj
+	 6PplrS27rrhPUf4tpi6aL+PxZR9h/74NrQHIgHNDJ5cvQxIz+19IecMWfQLC8JH3AJ
+	 /1402jiclP2nwpHHrsm0ATD2MWB1hizYyZoCyWBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
+	Minas Harutyunyan <hminas@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 049/263] coresight: Only check bottom two claim bits
-Date: Thu,  3 Jul 2025 16:39:29 +0200
-Message-ID: <20250703144006.271992001@linuxfoundation.org>
+Subject: [PATCH 6.15 050/263] usb: dwc2: also exit clock_gating when stopping udc while suspended
+Date: Thu,  3 Jul 2025 16:39:30 +0200
+Message-ID: <20250703144006.309059875@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -53,53 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Michael Grzeschik <m.grzeschik@pengutronix.de>
 
-[ Upstream commit a4e65842e1142aa18ef36113fbd81d614eaefe5a ]
+[ Upstream commit af076a41f8a28faf9ceb9dd2d88aef2c202ef39a ]
 
-The use of the whole register and == could break the claim mechanism if
-any of the other bits are used in the future. The referenced doc "PSCI -
-ARM DEN 0022D" also says to only read and clear the bottom two bits.
+It is possible that the gadget will be disabled, while the udc is
+suspended. When enabling the udc in that case, the clock gating
+will not be enabled again. Leaving the phy unclocked. Even when the
+udc is not enabled, connecting this powered but not clocked phy leads
+to enumeration errors on the host side.
 
-Use FIELD_GET() to extract only the relevant part.
+To ensure that the clock gating will be in an valid state, we ensure
+that the clock gating will be enabled before stopping the udc.
 
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250325-james-coresight-claim-tags-v4-2-dfbd3822b2e5@linaro.org
+Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
+Acked-by: Minas Harutyunyan <hminas@synopsys.com>
+Link: https://lore.kernel.org/r/20250417-dwc2_clock_gating-v1-1-8ea7c4d53d73@pengutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-core.c | 3 ++-
- drivers/hwtracing/coresight/coresight-priv.h | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/dwc2/gadget.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-index d3523f0262af8..dfcb30da2e20b 100644
---- a/drivers/hwtracing/coresight/coresight-core.c
-+++ b/drivers/hwtracing/coresight/coresight-core.c
-@@ -131,7 +131,8 @@ coresight_find_out_connection(struct coresight_device *csdev,
+diff --git a/drivers/usb/dwc2/gadget.c b/drivers/usb/dwc2/gadget.c
+index 300ea4969f0cf..f323fb5597b32 100644
+--- a/drivers/usb/dwc2/gadget.c
++++ b/drivers/usb/dwc2/gadget.c
+@@ -4604,6 +4604,12 @@ static int dwc2_hsotg_udc_stop(struct usb_gadget *gadget)
+ 	if (!hsotg)
+ 		return -ENODEV;
  
- static inline u32 coresight_read_claim_tags(struct coresight_device *csdev)
- {
--	return csdev_access_relaxed_read32(&csdev->access, CORESIGHT_CLAIMCLR);
-+	return FIELD_GET(CORESIGHT_CLAIM_MASK,
-+			 csdev_access_relaxed_read32(&csdev->access, CORESIGHT_CLAIMCLR));
- }
- 
- static inline bool coresight_is_claimed_self_hosted(struct coresight_device *csdev)
-diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
-index 82644aff8d2b7..38bb4e8b50ef6 100644
---- a/drivers/hwtracing/coresight/coresight-priv.h
-+++ b/drivers/hwtracing/coresight/coresight-priv.h
-@@ -35,6 +35,7 @@ extern const struct device_type coresight_dev_type[];
-  * Coresight device CLAIM protocol.
-  * See PSCI - ARM DEN 0022D, Section: 6.8.1 Debug and Trace save and restore.
-  */
-+#define CORESIGHT_CLAIM_MASK		GENMASK(1, 0)
- #define CORESIGHT_CLAIM_SELF_HOSTED	BIT(1)
- 
- #define TIMEOUT_US		100
++	/* Exit clock gating when driver is stopped. */
++	if (hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
++	    hsotg->bus_suspended && !hsotg->params.no_clock_gating) {
++		dwc2_gadget_exit_clock_gating(hsotg, 0);
++	}
++
+ 	/* all endpoints should be shutdown */
+ 	for (ep = 1; ep < hsotg->num_of_eps; ep++) {
+ 		if (hsotg->eps_in[ep])
 -- 
 2.39.5
 
