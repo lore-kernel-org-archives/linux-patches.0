@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959742E7F1A;
-	Thu,  3 Jul 2025 14:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACFA2E7F0B;
+	Thu,  3 Jul 2025 14:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554355; cv=none; b=ub0jrzTcBaGdKgG47J3jUqSt2oU4kmchY66tTyVPCDWQWfIbeqYGfecSJ1+VoUImhzlFsmbfsbMGsPe6X9UgkGGW7A+AnRoTBt2BnX7Wvu0PIKrZEFBtQWlef85pC55LfZgwzRMslpmyMUJ/TaGgnswFXE249bYlhoKw6e7AWLc=
+	t=1751554359; cv=none; b=s5z/+ghdAu0eVnJ5j/eVgJDsbEOIYlhsI5RESQoxir4EZRXf5dQG2/xN6vI8OUDwLfPtwZTMEz0/Wf3KgUtAuBAangpJhThW2vtN5e6vhQVBOz5sEnQHBQWeIxuYEa8oAcKigXaZj/7z0qH8oJpcK244YyZJp7eFGZ4m+TpOVWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554355; c=relaxed/simple;
-	bh=uAlzPqsqO4aUcw8nA9GkhsnGSQnEmPoFVQq3waX5cwY=;
+	s=arc-20240116; t=1751554359; c=relaxed/simple;
+	bh=a6LejNzVC0cqQQEoQguF2Rmz+IXkvBc6UoHZGD3XBQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GcaIkDY1W64j0bB8EG0xGXia0kE+WicfP0FQXx0fDo2sQYywfJG9V4gk/IkYxQBvDaYvG7l2WDl45rSCchVwX3J7l7dc+L5NYdAmdUf4Q60dO8FrftBoIwcwk5s7YbVmlIUC6qarme7lq8kpJ7Bx8gRrYBxXO6JKKaq/3dZDo88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bc/jDr8X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lHuEufxhk7d6520UEVBp1s7cTLOPiUGSi0nIDXBk7Y02/42QQklINe1WPw7tJw+qSPi6djta6ASsR5BmlBfRQjKAi5lYeLMO3UOWndZ0m2TlAwLskilgdfaZGgcvz/EUWEPP8ApwbuF/YqBTXSE2UpbTuBd0r5//unwMsdt0PuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gb6W/crm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bc/jDr8X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F184AC4CEE3;
-	Thu,  3 Jul 2025 14:52:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gb6W/crm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B100C4CEED;
+	Thu,  3 Jul 2025 14:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554355;
-	bh=uAlzPqsqO4aUcw8nA9GkhsnGSQnEmPoFVQq3waX5cwY=;
+	s=korg; t=1751554358;
+	bh=a6LejNzVC0cqQQEoQguF2Rmz+IXkvBc6UoHZGD3XBQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bc/jDr8XwmD8+2gPhoIjzoP0BVWv8scmfasBnVGCGxSxegnkFhVnFWJDrciQ0p6vl
-	 9C52Ko+Vb9Wt7jaBN62/KBtbtxIZtDe4nONXyd/qCQYudbv8k6isW2/zLVr4TZ/HF3
-	 V25jV5xYRDyJdrW8ibAR0ahcEXQDycp4l7cVQu08=
+	b=Gb6W/crmM1euYHBa2jp3ccKqgVBaR5sD8raBAaParAHJ0rY1TjaY45/n+OzX44InK
+	 QsrVSXTEbRmEJfl9nxcPrMR0HjKqYrSihoNOqUFVEwYNlYqa2ZP8ndz5iNkqUxwCwE
+	 uWu8XHFFFyv9PdZvNBYPYtUngUHIhjZGZqUiKEzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH 6.12 129/218] staging: rtl8723bs: Avoid memset() in aes_cipher() and aes_decipher()
-Date: Thu,  3 Jul 2025 16:41:17 +0200
-Message-ID: <20250703144001.269953785@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Yao Zi <ziyao@disroot.org>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH 6.12 130/218] dt-bindings: serial: 8250: Make clocks and clock-frequency exclusive
+Date: Thu,  3 Jul 2025 16:41:18 +0200
+Message-ID: <20250703144001.308153817@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -50,137 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Yao Zi <ziyao@disroot.org>
 
-commit a55bc4ffc06d8c965a7d6f0a01ed0ed41380df28 upstream.
+commit 09812134071b3941fb81def30b61ed36d3a5dfb5 upstream.
 
-After commit 6f110a5e4f99 ("Disable SLUB_TINY for build testing"), which
-causes CONFIG_KASAN to be enabled in allmodconfig again, arm64
-allmodconfig builds with older versions of clang (15 through 17) show an
-instance of -Wframe-larger-than (which breaks the build with
-CONFIG_WERROR=y):
+The 8250 binding before converting to json-schema states,
 
-  drivers/staging/rtl8723bs/core/rtw_security.c:1287:5: error: stack frame size (2208) exceeds limit (2048) in 'rtw_aes_decrypt' [-Werror,-Wframe-larger-than]
-   1287 | u32 rtw_aes_decrypt(struct adapter *padapter, u8 *precvframe)
-        |     ^
+  - clock-frequency : the input clock frequency for the UART
+  	or
+  - clocks phandle to refer to the clk used as per Documentation/devicetree
 
-This comes from aes_decipher() being inlined in rtw_aes_decrypt().
-Running the same build with CONFIG_FRAME_WARN=128 shows aes_cipher()
-also uses a decent amount of stack, just under the limit of 2048:
+for clock-related properties, where "or" indicates these properties
+shouldn't exist at the same time.
 
-  drivers/staging/rtl8723bs/core/rtw_security.c:864:19: warning: stack frame size (1952) exceeds limit (128) in 'aes_cipher' [-Wframe-larger-than]
-    864 | static signed int aes_cipher(u8 *key, uint      hdrlen,
-        |                   ^
+Additionally, the behavior of Linux's driver is strange when both clocks
+and clock-frequency are specified: it ignores clocks and obtains the
+frequency from clock-frequency, left the specified clocks unclaimed. It
+may even be disabled, which is undesired most of the time.
 
--Rpass-analysis=stack-frame-layout only shows one large structure on the
-stack, which is the ctx variable inlined from aes128k128d(). A good
-number of the other variables come from the additional checks of
-fortified string routines, which are present in memset(), which both
-aes_cipher() and aes_decipher() use to initialize some temporary
-buffers. In this case, since the size is known at compile time, these
-additional checks should not result in any code generation changes but
-allmodconfig has several sanitizers enabled, which may make it harder
-for the compiler to eliminate the compile time checks and the variables
-that come about from them.
+But "anyOf" doesn't prevent these two properties from coexisting, as it
+considers the object valid as long as there's at LEAST one match.
 
-The memset() calls are just initializing these buffers to zero, so use
-'= {}' instead, which is used all over the kernel and does the exact
-same thing as memset() without the fortify checks, which drops the stack
-usage of these functions by a few hundred kilobytes.
+Let's switch to "oneOf" and disallows the other property if one exists,
+precisely matching the original binding and avoiding future confusion on
+the driver's behavior.
 
-  drivers/staging/rtl8723bs/core/rtw_security.c:864:19: warning: stack frame size (1584) exceeds limit (128) in 'aes_cipher' [-Wframe-larger-than]
-    864 | static signed int aes_cipher(u8 *key, uint      hdrlen,
-        |                   ^
-  drivers/staging/rtl8723bs/core/rtw_security.c:1271:5: warning: stack frame size (1456) exceeds limit (128) in 'rtw_aes_decrypt' [-Wframe-larger-than]
-   1271 | u32 rtw_aes_decrypt(struct adapter *padapter, u8 *precvframe)
-        |     ^
-
-Cc: stable@vger.kernel.org
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20250609-rtl8723bs-fix-clang-arm64-wflt-v1-1-e2accba43def@kernel.org
+Fixes: e69f5dc623f9 ("dt-bindings: serial: Convert 8250 to json-schema")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Yao Zi <ziyao@disroot.org>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20250623093445.62327-1-ziyao@disroot.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_security.c |   44 ++++++++------------------
- 1 file changed, 14 insertions(+), 30 deletions(-)
+ Documentation/devicetree/bindings/serial/8250.yaml |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_security.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_security.c
-@@ -868,29 +868,21 @@ static signed int aes_cipher(u8 *key, ui
- 		num_blocks, payload_index;
+--- a/Documentation/devicetree/bindings/serial/8250.yaml
++++ b/Documentation/devicetree/bindings/serial/8250.yaml
+@@ -45,7 +45,7 @@ allOf:
+                   - ns16550
+                   - ns16550a
+     then:
+-      anyOf:
++      oneOf:
+         - required: [ clock-frequency ]
+         - required: [ clocks ]
  
- 	u8 pn_vector[6];
--	u8 mic_iv[16];
--	u8 mic_header1[16];
--	u8 mic_header2[16];
--	u8 ctr_preload[16];
-+	u8 mic_iv[16] = {};
-+	u8 mic_header1[16] = {};
-+	u8 mic_header2[16] = {};
-+	u8 ctr_preload[16] = {};
- 
- 	/* Intermediate Buffers */
--	u8 chain_buffer[16];
--	u8 aes_out[16];
--	u8 padded_buffer[16];
-+	u8 chain_buffer[16] = {};
-+	u8 aes_out[16] = {};
-+	u8 padded_buffer[16] = {};
- 	u8 mic[8];
- 	uint	frtype  = GetFrameType(pframe);
- 	uint	frsubtype  = GetFrameSubType(pframe);
- 
- 	frsubtype = frsubtype>>4;
- 
--	memset((void *)mic_iv, 0, 16);
--	memset((void *)mic_header1, 0, 16);
--	memset((void *)mic_header2, 0, 16);
--	memset((void *)ctr_preload, 0, 16);
--	memset((void *)chain_buffer, 0, 16);
--	memset((void *)aes_out, 0, 16);
--	memset((void *)padded_buffer, 0, 16);
--
- 	if ((hdrlen == WLAN_HDR_A3_LEN) || (hdrlen ==  WLAN_HDR_A3_QOS_LEN))
- 		a4_exists = 0;
- 	else
-@@ -1080,15 +1072,15 @@ static signed int aes_decipher(u8 *key,
- 			num_blocks, payload_index;
- 	signed int res = _SUCCESS;
- 	u8 pn_vector[6];
--	u8 mic_iv[16];
--	u8 mic_header1[16];
--	u8 mic_header2[16];
--	u8 ctr_preload[16];
-+	u8 mic_iv[16] = {};
-+	u8 mic_header1[16] = {};
-+	u8 mic_header2[16] = {};
-+	u8 ctr_preload[16] = {};
- 
- 		/* Intermediate Buffers */
--	u8 chain_buffer[16];
--	u8 aes_out[16];
--	u8 padded_buffer[16];
-+	u8 chain_buffer[16] = {};
-+	u8 aes_out[16] = {};
-+	u8 padded_buffer[16] = {};
- 	u8 mic[8];
- 
- 	uint frtype  = GetFrameType(pframe);
-@@ -1096,14 +1088,6 @@ static signed int aes_decipher(u8 *key,
- 
- 	frsubtype = frsubtype>>4;
- 
--	memset((void *)mic_iv, 0, 16);
--	memset((void *)mic_header1, 0, 16);
--	memset((void *)mic_header2, 0, 16);
--	memset((void *)ctr_preload, 0, 16);
--	memset((void *)chain_buffer, 0, 16);
--	memset((void *)aes_out, 0, 16);
--	memset((void *)padded_buffer, 0, 16);
--
- 	/* start to decrypt the payload */
- 
- 	num_blocks = (plen-8) / 16; /* plen including LLC, payload_length and mic) */
 
 
