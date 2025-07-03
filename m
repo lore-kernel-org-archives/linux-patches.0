@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E7822578A;
-	Thu,  3 Jul 2025 14:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C032ED157;
+	Thu,  3 Jul 2025 14:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554569; cv=none; b=n8zl6C09i6cPJdBtHSBkxLTdMtgKIp+/JLgGZ6O0FtLF+X9UE1pDh25TWqxeX8BcDnkCdpbsWvxJOjMBSOQ3yse53vNAjYM4EM+2Dj3naFYvyTsfXs74W2seRB3YDbl3VUMhpnWof56GJAyhgOKymP6cbdzA4ZJWbNk1lmONsBE=
+	t=1751554572; cv=none; b=ohKfl/6KPoAGRUnJIKVUcP9QNcdnMO7kQzxm0GQ0INX/vMNOzh5y8UQZPBwUs8M2oOh1xGuD+CNvWUnt6tmsKibF3HIuwyyeY+7x/MLBJqO74ehVhtz2Gmu3uKz2XyP0mUYbA71I3yO47EBmozmzV0O770d9UCPGcY9xQlUbTiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554569; c=relaxed/simple;
-	bh=K4Z9CQJBlDwZM2B6Qs7zIPpjcWbQKr+S9WkvFxxC2Ws=;
+	s=arc-20240116; t=1751554572; c=relaxed/simple;
+	bh=kpqbUfhf+q+WKT4PMExBkGQMcd+mruJw0o1QBspImdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bxmt75wSdIj0D45pJmqMFg3waZ2ioWTVyIjUxzx5BuxGuIDVLmfYQzxBFU/kGitdeZWWo7HJ3UaKQz5stmwNSHP11Sgu7S0sa5uKfrimT8LpxG9KbFHB/VamARTaZ+Yrtt1BYe9BkAhx7QTGhrZ2WkjF39/iCg9mGnaeqTRsjrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGNSd5AC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hieq1VNspdv8UvwEVLTZg7NhYuphJwdMC5ztgjtLkX05Vh82ipvvMsyKXq/D5DAjyZ3IgHMFmAK31YJWIRCQNg59Fh+ydg3CWRYqU2QPe3AncIlN5os36Ddcc09VJmbeRFWz1ceVg9BxYVLEn+UvHkMqhrLDknPhmSoWTrx3tN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnZHtGQu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGNSd5AC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC26AC4CEE3;
-	Thu,  3 Jul 2025 14:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnZHtGQu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00B2C4CEE3;
+	Thu,  3 Jul 2025 14:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554569;
-	bh=K4Z9CQJBlDwZM2B6Qs7zIPpjcWbQKr+S9WkvFxxC2Ws=;
+	s=korg; t=1751554572;
+	bh=kpqbUfhf+q+WKT4PMExBkGQMcd+mruJw0o1QBspImdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BGNSd5AC5J3jUsb6bwR9U4vWB7mj+ch53bithfha1YGDb6YBnJxcNjg/TjJl2/uGA
-	 iry2VlHceNuHxa6Gx8Bb95aoi55f3+P4jAod4JKDvufVaSXPTWzXH0PHEwBUtIck23
-	 fK1gVW/IqruPiBbbaTx4a4gbtHfRsvhnh3/D03ro=
+	b=rnZHtGQuYFWabQOXdRS7qqbcmuHEPvejUy+AtDgUuTmHotg/srtlWtW/Urq7+c1pm
+	 fTumqog3XoNsJm8q3PWKIiJqZHz9M3OgVc7RGdoTHnf4+5q9ukRsK1HWWX8L03dhIC
+	 BNZ/15larHP7k7RKUqZdFNNuehzQZpH9UWjNyrNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Karel Balej <balejk@matfyz.cz>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 011/263] mfd: 88pm886: Fix wakeup source leaks on device unbind
-Date: Thu,  3 Jul 2025 16:38:51 +0200
-Message-ID: <20250703144004.744977177@linuxfoundation.org>
+Subject: [PATCH 6.15 012/263] mfd: sprd-sc27xx: Fix wakeup source leaks on device unbind
+Date: Thu,  3 Jul 2025 16:38:52 +0200
+Message-ID: <20250703144004.782664429@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -54,37 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 6d0b2398b2638208d68ba06601f776cd5d983b75 ]
+[ Upstream commit 37ef4aa4039c42f4b15dc7e40d3e437b7f031522 ]
 
 Device can be unbound, so driver must also release memory for the wakeup
 source.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Karel Balej <balejk@matfyz.cz>
-Link: https://lore.kernel.org/r/20250406-mfd-device-wakekup-leak-v1-1-318e14bdba0a@linaro.org
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250406-mfd-device-wakekup-leak-v1-8-318e14bdba0a@linaro.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/88pm886.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/mfd/sprd-sc27xx-spi.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/88pm886.c b/drivers/mfd/88pm886.c
-index 891fdce5d8c12..177878aa32f86 100644
---- a/drivers/mfd/88pm886.c
-+++ b/drivers/mfd/88pm886.c
-@@ -124,7 +124,11 @@ static int pm886_probe(struct i2c_client *client)
- 	if (err)
- 		return dev_err_probe(dev, err, "Failed to register power off handler\n");
+diff --git a/drivers/mfd/sprd-sc27xx-spi.c b/drivers/mfd/sprd-sc27xx-spi.c
+index 7186e2108108f..d6b4350779e6a 100644
+--- a/drivers/mfd/sprd-sc27xx-spi.c
++++ b/drivers/mfd/sprd-sc27xx-spi.c
+@@ -210,7 +210,10 @@ static int sprd_pmic_probe(struct spi_device *spi)
+ 		return ret;
+ 	}
  
--	device_init_wakeup(dev, device_property_read_bool(dev, "wakeup-source"));
-+	if (device_property_read_bool(dev, "wakeup-source")) {
-+		err = devm_device_init_wakeup(dev);
-+		if (err)
-+			return dev_err_probe(dev, err, "Failed to init wakeup\n");
-+	}
- 
+-	device_init_wakeup(&spi->dev, true);
++	ret = devm_device_init_wakeup(&spi->dev);
++	if (ret)
++		return dev_err_probe(&spi->dev, ret, "Failed to init wakeup\n");
++
  	return 0;
  }
+ 
 -- 
 2.39.5
 
