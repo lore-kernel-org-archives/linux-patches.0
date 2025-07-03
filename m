@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137FD2F0C55;
-	Thu,  3 Jul 2025 15:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5A52ED168;
+	Thu,  3 Jul 2025 15:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555576; cv=none; b=fGmAgMO9ESFjwOKTp/EjCGO1MKbxW0TGKKnkg+KELrsQYTSjCcOzfDKOlb+335qciAPi6dc0fcZkd1MpXTpAPKObsJu4oLIrxO3AOrDiZMcLyFv2s2TvidCt+P4ZObu9QJy6goY2goESkiu4jGJYcF41qj5DrcI8WYOCcuv6NLo=
+	t=1751555579; cv=none; b=a8/6zsMqZFIU3Y6WW00SQsQ/4bLwK195QvymlV7WC7BZvgRy+KZKCDD8Z9z9l0947/Hgjn0YyG6oSdXFponw82ijviEnqEiFku/eokg8zg19mdwnCU/hyaGa70Oy/yp7MzMpYF6okXbJzKnluZszRb8Yf8OonViVs/zUDxZ5wHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555576; c=relaxed/simple;
-	bh=71GHc9DFBFDbuTKhIH/AFf4nu9esJx1if0qjou4VIZA=;
+	s=arc-20240116; t=1751555579; c=relaxed/simple;
+	bh=Z2czFTC1zCEFMuIbB0rP/X+p6o0XcVE98zhJItU4MyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jCyJMjq9DQtryHOarFxzC9e+ZEay5Gf0N3EbslC0lUBs+21uLw1kUjj20HoejV2iO+1/66lWlk6D/FD1IEXrVmndJMmhcbVlmpmS5+Y6sdmu4conYzaBCvHo0sUct5crmHPih7DFggtvEh8JnuJc/+zRXq5VO9NjML8zECXVU7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=morTexrv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p4NOBTjafJNSrbaSbxBsyHLxZUXVSrbeeJlfmrLAjeToQUnohUEBa8sMe/WfmhV8PPdwEBrQE/ia3K6jzrwhSDXZO49Yeh9GHDuUDFC+R8yWzSSCnNDCKm4QdGgVDv1nI9a8nvCUq1AC1DQzs0LRlZtf2MzGrdKmwK5g7d3e8Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYXbI+F8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="morTexrv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1880AC4CEE3;
-	Thu,  3 Jul 2025 15:12:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYXbI+F8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76539C4CEE3;
+	Thu,  3 Jul 2025 15:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555575;
-	bh=71GHc9DFBFDbuTKhIH/AFf4nu9esJx1if0qjou4VIZA=;
+	s=korg; t=1751555578;
+	bh=Z2czFTC1zCEFMuIbB0rP/X+p6o0XcVE98zhJItU4MyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=morTexrvG4VMepFV+FNFEWzZM8bO1T+THapQqMoMcsnRIe+95P+KTHTAa3Ckk2V3P
-	 QpFUtRNAkCk30wX2WubUuElPLJKY+EuxI8ao/axMJoRlgv36tmieFC8ap8UqVWqGli
-	 rzDSWBQjRpX6aH/xCs3Y4r944fTWhnmiBSvp6N/s=
+	b=yYXbI+F877fOQyr7oW34KFg+oqhKy1C5DYxg/afUSEfpNvTVjp+8TVXD220v40g1V
+	 K+MZoKIFiuqMohpRoqWRS1UM/CXqbY3Uz/2SSOqKbsjIJr2h9gbIrI7+y5dqempOid
+	 PxnJlxb9RVsaW7rY4hX2iTwgyVbQb1W+aWHP1Wk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zekun <zhangzekun11@huawei.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Janne Grunau <j@jannau.net>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Marc Zyngier <maz@kernel.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/139] PCI: apple: Use helper function for_each_child_of_node_scoped()
-Date: Thu,  3 Jul 2025 16:41:59 +0200
-Message-ID: <20250703143943.353107862@linuxfoundation.org>
+Subject: [PATCH 6.6 057/139] PCI: apple: Set only available ports up
+Date: Thu,  3 Jul 2025 16:42:00 +0200
+Message-ID: <20250703143943.397092849@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -47,61 +48,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Zekun <zhangzekun11@huawei.com>
+From: Janne Grunau <j@jannau.net>
 
-[ Upstream commit f60b4e06a945f25d463ae065c6e41c6e24faee0a ]
+[ Upstream commit 751bec089c4eed486578994abd2c5395f08d0302 ]
 
-The for_each_available_child_of_node_scoped() helper provides
-a scope-based clean-up functionality to put the device_node
-automatically, and as such, there is no need to call of_node_put()
-directly.
+Iterating over disabled ports results in of_irq_parse_raw() parsing
+the wrong "interrupt-map" entries, as it takes the status of the node
+into account.
 
-Thus, use this helper to simplify the code.
+This became apparent after disabling unused PCIe ports in the Apple
+Silicon device trees instead of deleting them.
 
-Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Switching from for_each_child_of_node_scoped() to
+for_each_available_child_of_node_scoped() solves this issue.
+
+Fixes: 1e33888fbe44 ("PCI: apple: Add initial hardware bring-up")
+Fixes: a0189fdfb73d ("arm64: dts: apple: t8103: Disable unused PCIe ports")
+Signed-off-by: Janne Grunau <j@jannau.net>
+Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Tested-by: Janne Grunau <j@jannau.net>
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240831040413.126417-6-zhangzekun11@huawei.com
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Stable-dep-of: 751bec089c4e ("PCI: apple: Set only available ports up")
+Acked-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/asahi/20230214-apple_dts_pcie_disable_unused-v1-0-5ea0d3ddcde3@jannau.net/
+Link: https://lore.kernel.org/asahi/1ea2107a-bb86-8c22-0bbc-82c453ab08ce@linaro.org/
+Link: https://patch.msgid.link/20250401091713.2765724-2-maz@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-apple.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/pci/controller/pcie-apple.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pci/controller/pcie-apple.c b/drivers/pci/controller/pcie-apple.c
-index 08b7070f05d82..66f8854fc3410 100644
+index 66f8854fc3410..8dfea64a51e0f 100644
 --- a/drivers/pci/controller/pcie-apple.c
 +++ b/drivers/pci/controller/pcie-apple.c
-@@ -767,7 +767,6 @@ static int apple_pcie_init(struct pci_config_window *cfg)
- {
- 	struct device *dev = cfg->parent;
- 	struct platform_device *platform = to_platform_device(dev);
--	struct device_node *of_port;
- 	struct apple_pcie *pcie;
- 	int ret;
- 
-@@ -790,11 +789,10 @@ static int apple_pcie_init(struct pci_config_window *cfg)
+@@ -789,7 +789,7 @@ static int apple_pcie_init(struct pci_config_window *cfg)
  	if (ret)
  		return ret;
  
--	for_each_child_of_node(dev->of_node, of_port) {
-+	for_each_child_of_node_scoped(dev->of_node, of_port) {
+-	for_each_child_of_node_scoped(dev->of_node, of_port) {
++	for_each_available_child_of_node_scoped(dev->of_node, of_port) {
  		ret = apple_pcie_setup_port(pcie, of_port);
  		if (ret) {
  			dev_err(pcie->dev, "Port %pOF setup fail: %d\n", of_port, ret);
--			of_node_put(of_port);
- 			return ret;
- 		}
- 	}
 -- 
 2.39.5
 
