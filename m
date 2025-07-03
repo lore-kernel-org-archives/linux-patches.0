@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C33A15442C;
-	Thu,  3 Jul 2025 15:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A581E9B3D;
+	Thu,  3 Jul 2025 15:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555248; cv=none; b=YYvKgiyG7MupoWfVUM3k0jZUruSOibTJje+/iLasphQpm7e0e6NFUmAi/23F107Knb0eM3fwhfXtCle638D/zKvTJPntbwOyPfka75K/dvJZZm38TSzJQO8yowhOLdqU8JNFu3VtHG4iWnfbQusNa5Jg6fNkYVjLDU9ZIRmomco=
+	t=1751555254; cv=none; b=uMLj3cx07eQk5WUoJvhyZLrlRZo1lLcvJV/QTczmDSZ3I8PAa/nTkGzXQc6WIEwlxM1LUlbCxykT4MXukbiTLy82qOGBM/2k+4BK4d8gW0+smHFSn4ap+iDz90k3GXiJiF0tImSltjE0SjryggIfzcact+W4F6mcEKv6aSgxMyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555248; c=relaxed/simple;
-	bh=ItRMOX/l/tbuo8nvKCWZBowG9Rlb4ozv2zsOokGmdjs=;
+	s=arc-20240116; t=1751555254; c=relaxed/simple;
+	bh=jeMqdrtJA2RULzCFYzEv8G72RM9/F0ZgmT5tofxT8ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+lTVJEPPePh+nc9jAxPG9wYjjMUGgOS8Fag4JrymJdK5La4gdjvE1coOB1AAtwV7WbTDPJQDAVIviNH9hizxyp9m1AwYugmKQzzoG3S9RIvy7n/C2tutnzKjPHCmYZqP52bGMjqJL6869zd2Zuy4PDUgLOv8ahCW48BMxRevWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0Le9aAy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=khb3mQtOmmRsSEOuN70uoW5Rq1P+s26jhTJkMu1D4d5U+SqM45WHN4tK7cRxPmG8vkZMsoQKevkYaJUN69DlsxoMs8kPEVSzs8US50qM6Mcmqz3Isn0VOdMgp6W+mmSXgHAr5HRDiG3n4AXMNqubAEuwA2tSwGwg/wBTI2Irp0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ub0Qu/B2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0Le9aAy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77987C4CEE3;
-	Thu,  3 Jul 2025 15:07:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ub0Qu/B2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2464BC4CEE3;
+	Thu,  3 Jul 2025 15:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555247;
-	bh=ItRMOX/l/tbuo8nvKCWZBowG9Rlb4ozv2zsOokGmdjs=;
+	s=korg; t=1751555254;
+	bh=jeMqdrtJA2RULzCFYzEv8G72RM9/F0ZgmT5tofxT8ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0Le9aAyI7K2QnuKvzaybTI/kksXiGQ6maZwfrXkAJlnR95MRC8Irj7QOL/WWY3pM
-	 Fitdz/bONrpFesk0kR/iHJSk6co/o+AAZ42GCv6asdlrS0SELpBWMQuYWjZ3OXQiSt
-	 OOYOgDSQIb7bTpSReNJ+71Y9qFXFrp1Ygiq9dPtk=
+	b=ub0Qu/B2+l7vMJrocHmhHB5Ahrbj3HJMRp8mDa1LDA6EPiw1lB7SD/OWAvUvm85JX
+	 zA7PQ/hKpMIOIii/Sj4qTMWV/dXyW4Wh7o7IXPmMqt5dGHr+GYgUZ0HgjQK5ATzxYU
+	 uP2csMwiud8ceUzQ7ew7PfBkB4X/OPf1ym2Jfki8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Olender <john.olender@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Subject: [PATCH 6.15 220/263] drm/amdgpu: amdgpu_vram_mgr_new(): Clamp lpfn to total vram
-Date: Thu,  3 Jul 2025 16:42:20 +0200
-Message-ID: <20250703144013.204382951@linuxfoundation.org>
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.15 221/263] drm/amdgpu: disable workload profile switching when OD is enabled
+Date: Thu,  3 Jul 2025 16:42:21 +0200
+Message-ID: <20250703144013.243580562@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,36 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Olender <john.olender@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 4d2f6b4e4c7ed32e7fa39fcea37344a9eab99094 upstream.
+commit 5cccf10f652122a17b40df9d672ccf2ed69cd82f upstream.
 
-The drm_mm allocator tolerated being passed end > mm->size, but the
-drm_buddy allocator does not.
+Users have reported that they have to reduce the level of undervolting
+to acheive stability when dynamic workload profiles are enabled on
+GC 10.3.x. Disable dynamic workload profiles if the user has enabled
+OD.
 
-Restore the pre-buddy-allocator behavior of allowing such placements.
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3448
-Signed-off-by: John Olender <john.olender@gmail.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Fixes: b9467983b774 ("drm/amdgpu: add dynamic workload profile switching for gfx10")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4262
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # 6.15.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c |    8 ++++++++
+ drivers/gpu/drm/amd/pm/amdgpu_dpm.c     |   22 ++++++++++++++++++++++
+ drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h |    1 +
+ 3 files changed, 31 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-@@ -463,7 +463,7 @@ static int amdgpu_vram_mgr_new(struct tt
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -2192,6 +2192,9 @@ void amdgpu_gfx_profile_ring_begin_use(s
+ 	enum PP_SMC_POWER_PROFILE profile;
  	int r;
  
- 	lpfn = (u64)place->lpfn << PAGE_SHIFT;
--	if (!lpfn)
-+	if (!lpfn || lpfn > man->size)
- 		lpfn = man->size;
++	if (amdgpu_dpm_is_overdrive_enabled(adev))
++		return;
++
+ 	if (adev->gfx.num_gfx_rings)
+ 		profile = PP_SMC_POWER_PROFILE_FULLSCREEN3D;
+ 	else
+@@ -2222,6 +2225,11 @@ void amdgpu_gfx_profile_ring_begin_use(s
  
- 	fpfn = (u64)place->fpfn << PAGE_SHIFT;
+ void amdgpu_gfx_profile_ring_end_use(struct amdgpu_ring *ring)
+ {
++	struct amdgpu_device *adev = ring->adev;
++
++	if (amdgpu_dpm_is_overdrive_enabled(adev))
++		return;
++
+ 	atomic_dec(&ring->adev->gfx.total_submission_cnt);
+ 
+ 	schedule_delayed_work(&ring->adev->gfx.idle_work, GFX_PROFILE_IDLE_TIMEOUT);
+--- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+@@ -1654,6 +1654,28 @@ int amdgpu_dpm_is_overdrive_supported(st
+ 	}
+ }
+ 
++int amdgpu_dpm_is_overdrive_enabled(struct amdgpu_device *adev)
++{
++	if (is_support_sw_smu(adev)) {
++		struct smu_context *smu = adev->powerplay.pp_handle;
++
++		return smu->od_enabled;
++	} else {
++		struct pp_hwmgr *hwmgr;
++
++		/*
++		 * dpm on some legacy asics don't carry od_enabled member
++		 * as its pp_handle is casted directly from adev.
++		 */
++		if (amdgpu_dpm_is_legacy_dpm(adev))
++			return false;
++
++		hwmgr = (struct pp_hwmgr *)adev->powerplay.pp_handle;
++
++		return hwmgr->od_enabled;
++	}
++}
++
+ int amdgpu_dpm_set_pp_table(struct amdgpu_device *adev,
+ 			    const char *buf,
+ 			    size_t size)
+--- a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
++++ b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
+@@ -559,6 +559,7 @@ int amdgpu_dpm_get_smu_prv_buf_details(s
+ 				       void **addr,
+ 				       size_t *size);
+ int amdgpu_dpm_is_overdrive_supported(struct amdgpu_device *adev);
++int amdgpu_dpm_is_overdrive_enabled(struct amdgpu_device *adev);
+ int amdgpu_dpm_set_pp_table(struct amdgpu_device *adev,
+ 			    const char *buf,
+ 			    size_t size);
 
 
