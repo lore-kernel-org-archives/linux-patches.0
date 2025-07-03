@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A44F2EF669;
-	Thu,  3 Jul 2025 14:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F2C2EF661;
+	Thu,  3 Jul 2025 14:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554330; cv=none; b=c70NpIH7qRGsg4RJ50N6AilBH3GvgSs3tvUXj7591eWdcsUSIC/fQPljU++kYgHG7zdk6ZThGyPvkkPdrIQyINgmzWCbalIBOwvU5oInGJlJVLOeH2OVB1EGn3fKC5JrwHxWkn2HZ4eZjlyxE1mxHVbtHjelbSNyflYaoIyKrFQ=
+	t=1751554333; cv=none; b=TpIj1qv5Om6KNxVI2PSSfuRKR7wiumdjbk8qDVgp0R1pL/v8AtBcmNSWE1yPXkRAKkqA8V7q09V5YrUiBZr5QRYtdk5WIbCZ+u5TJ8tyvRqvCd8VdUj/S98fPIxgsCgXCsoT7YcZcqMyw3VzQgeOfeuB3jeH+wzsfX9hP6/vUpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554330; c=relaxed/simple;
-	bh=LIUyBTlrf3lGa3rz2x62J3hDLj2o6rK0+wuPyx4xY44=;
+	s=arc-20240116; t=1751554333; c=relaxed/simple;
+	bh=KhwNaxlplhqYkMAluHMMQa5PI3cdOwZ+HpH/zJ3IVT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4sKkG0XL1s5ZFsQrktQquSAtaQAl7cvBlGwi97oMdh8l2r1PjkT7S2i3y+tLN6dWerfztzJ8r2ZFX4XvjA5fOz+2+ucfxUTvmHBKieiPJoVetbZzP5o581qVUqGDPFykULvCcMh4rRJm3CaHv6F+Wcjwy9Qx3tZo6FIMzn8ta0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQgiUa/m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RroFYMD84FFldW50JR4aSDu3M3HrmAn5KKS1ta1mZ2u2tvpt3J6U+tPVs8OdoSvkkDbDrkMmckw5w37aXtQx1/QUGdkWfpXv4X8UXkvaw5ZZ6PnhC7f/RpH+RttYSnRWLjkEx/gaBvrR0+WShtOoBzgGTCiS6/Gr+8p3BiFNOUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1IiS0zL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQgiUa/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9B0C4CEE3;
-	Thu,  3 Jul 2025 14:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1IiS0zL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C004BC4CEE3;
+	Thu,  3 Jul 2025 14:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554330;
-	bh=LIUyBTlrf3lGa3rz2x62J3hDLj2o6rK0+wuPyx4xY44=;
+	s=korg; t=1751554333;
+	bh=KhwNaxlplhqYkMAluHMMQa5PI3cdOwZ+HpH/zJ3IVT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQgiUa/mZQm6KT4iY3dzcmyj4Ss7khw+XIEEqGNbmdITaI0nbqJApoTZWkhF/4+yM
-	 HXpc2BExObCKzSSw0ktJ3nmnosruiySWmiZkRmLlLI9mDu2nsznIpoCSlRgEX9MPoN
-	 dn9abe2grSdJI+u+rSivMSFqj9jpV6lheP5taUPA=
+	b=S1IiS0zL4CEE43m5XUTL4P+8/snR+n2QgPU+QxsU1YURXSoKdxuBzWehQNlUEzllG
+	 MrgF49FyumE2XItAKFcdO9xln9U1GIrWirtxPQWV9r79Mfq4zTcdiVcZSDh7DIHMmE
+	 mpyE9Mlg1h1EtLrX4JgL9UqB5zqG2Jg1R/dpPxBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Metzmacher <metze@samba.org>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.com>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 125/218] cifs: Fix the smbd_response slab to allow usercopy
-Date: Thu,  3 Jul 2025 16:41:13 +0200
-Message-ID: <20250703144001.109811899@linuxfoundation.org>
+	Qiu-ji Chen <chenqiuji666@gmail.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 6.12 152/218] drm/tegra: Fix a possible null pointer dereference
+Date: Thu,  3 Jul 2025 16:41:40 +0200
+Message-ID: <20250703144002.231877923@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -56,100 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Qiu-ji Chen <chenqiuji666@gmail.com>
 
-[ Upstream commit 43e7e284fc77b710d899569360ea46fa3374ae22 ]
+commit 780351a5f61416ed2ba1199cc57e4a076fca644d upstream.
 
-The handling of received data in the smbdirect client code involves using
-copy_to_iter() to copy data from the smbd_reponse struct's packet trailer
-to a folioq buffer provided by netfslib that encapsulates a chunk of
-pagecache.
+In tegra_crtc_reset(), new memory is allocated with kzalloc(), but
+no check is performed. Before calling __drm_atomic_helper_crtc_reset,
+state should be checked to prevent possible null pointer dereference.
 
-If, however, CONFIG_HARDENED_USERCOPY=y, this will result in the checks
-then performed in copy_to_iter() oopsing with something like the following:
-
- CIFS: Attempting to mount //172.31.9.1/test
- CIFS: VFS: RDMA transport established
- usercopy: Kernel memory exposure attempt detected from SLUB object 'smbd_response_0000000091e24ea1' (offset 81, size 63)!
- ------------[ cut here ]------------
- kernel BUG at mm/usercopy.c:102!
- ...
- RIP: 0010:usercopy_abort+0x6c/0x80
- ...
- Call Trace:
-  <TASK>
-  __check_heap_object+0xe3/0x120
-  __check_object_size+0x4dc/0x6d0
-  smbd_recv+0x77f/0xfe0 [cifs]
-  cifs_readv_from_socket+0x276/0x8f0 [cifs]
-  cifs_read_from_socket+0xcd/0x120 [cifs]
-  cifs_demultiplex_thread+0x7e9/0x2d50 [cifs]
-  kthread+0x396/0x830
-  ret_from_fork+0x2b8/0x3b0
-  ret_from_fork_asm+0x1a/0x30
-
-The problem is that the smbd_response slab's packet field isn't marked as
-being permitted for usercopy.
-
-Fix this by passing parameters to kmem_slab_create() to indicate that
-copy_to_iter() is permitted from the packet region of the smbd_response
-slab objects, less the header space.
-
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Reported-by: Stefan Metzmacher <metze@samba.org>
-Link: https://lore.kernel.org/r/acb7f612-df26-4e2a-a35d-7cd040f513e1@samba.org/
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Stefan Metzmacher <metze@samba.org>
-Tested-by: Stefan Metzmacher <metze@samba.org>
-cc: Paulo Alcantara <pc@manguebit.com>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b7e0b04ae450 ("drm/tegra: Convert to using __drm_atomic_helper_crtc_reset() for reset.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20241106095906.15247-1-chenqiuji666@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smbdirect.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/tegra/dc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index cbc85bca006f7..b7932f63b4650 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -1452,6 +1452,9 @@ static int allocate_caches_and_workqueue(struct smbd_connection *info)
- 	char name[MAX_NAME_LEN];
- 	int rc;
+--- a/drivers/gpu/drm/tegra/dc.c
++++ b/drivers/gpu/drm/tegra/dc.c
+@@ -1392,7 +1392,10 @@ static void tegra_crtc_reset(struct drm_
+ 	if (crtc->state)
+ 		tegra_crtc_atomic_destroy_state(crtc, crtc->state);
  
-+	if (WARN_ON_ONCE(sp->max_recv_size < sizeof(struct smbdirect_data_transfer)))
-+		return -ENOMEM;
-+
- 	scnprintf(name, MAX_NAME_LEN, "smbd_request_%p", info);
- 	info->request_cache =
- 		kmem_cache_create(
-@@ -1469,12 +1472,17 @@ static int allocate_caches_and_workqueue(struct smbd_connection *info)
- 		goto out1;
+-	__drm_atomic_helper_crtc_reset(crtc, &state->base);
++	if (state)
++		__drm_atomic_helper_crtc_reset(crtc, &state->base);
++	else
++		__drm_atomic_helper_crtc_reset(crtc, NULL);
+ }
  
- 	scnprintf(name, MAX_NAME_LEN, "smbd_response_%p", info);
-+
-+	struct kmem_cache_args response_args = {
-+		.align		= __alignof__(struct smbd_response),
-+		.useroffset	= (offsetof(struct smbd_response, packet) +
-+				   sizeof(struct smbdirect_data_transfer)),
-+		.usersize	= sp->max_recv_size - sizeof(struct smbdirect_data_transfer),
-+	};
- 	info->response_cache =
--		kmem_cache_create(
--			name,
--			sizeof(struct smbd_response) +
--				sp->max_recv_size,
--			0, SLAB_HWCACHE_ALIGN, NULL);
-+		kmem_cache_create(name,
-+				  sizeof(struct smbd_response) + sp->max_recv_size,
-+				  &response_args, SLAB_HWCACHE_ALIGN);
- 	if (!info->response_cache)
- 		goto out2;
- 
--- 
-2.39.5
-
+ static struct drm_crtc_state *
 
 
