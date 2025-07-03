@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D9019F43A;
-	Thu,  3 Jul 2025 14:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09660190498;
+	Thu,  3 Jul 2025 14:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553968; cv=none; b=ay2qzZYb6A3Z1bGqtoJWKpZhQDUeM1R1PYav9pa6VHfH5dUprHl5ouLxyxkutb7PQq1Wl7YtB11wuqqvUblWI4lgmXUFDFp7RLxxcO/z79QF5re2TysXBsCZHgF0OkT46ES0F34OCsYRKZyGcFVFxi3bO++99dZ5S7w6H+Sxxk4=
+	t=1751553970; cv=none; b=PjdpxiYYH0PPlXMd935TioqPOznLdG0U4visbK31BZUh3p3EhX1dE1cn6HDwmiDYnfsAS+Hk8RGs4D+GfqYRjf4WreCjG1qFCvb3/6zuHg1bKfln6/SY2j0+d/qOxPUQTTbHs+CF0SpCp7qLEB4HQhxQxCbVu3UELgS83dJ8rSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553968; c=relaxed/simple;
-	bh=2m1z/Ef9hyV9m0Ssll6Dkrv3x9R6ejjVyWrrGOUoSow=;
+	s=arc-20240116; t=1751553970; c=relaxed/simple;
+	bh=yiqT8a8cUMB1jn+jKINq1CddapWB4hAf1pjG7EmP0AM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5IPVLz3RDdTCDrlUuOdySDwEEQkPamQAh0IYhQkhtRqAETQDSoEE5rzIEWChm5RFQtlGOdWphEWNLhi1IuHPm6s/L/W4uoPDOf+2vEqIc5tvj4Eq5Kn3KKbB3sgEVVDD/b1tX3v4GdnKKAi7TC6zOLqjikqHggUSbNVZGI7VQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQjL7DYH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cWFtBHMEqQ0mtJRiWQEUhYwlVlOh1eVL6gRWDC8tWoGCYTJlW32nzI2eJOc5A3pj+s1RCmIB6dYyWxJ4sCaNssC6vnoSyJQdJSSJd/3GTDwELp0GhdHelkO70u+lgvdc40T6hP+DnDtm6ntWD3VpMUFEsW5tH9uAX82/nUoKTlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jz2FNptH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQjL7DYH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2F9C4CEE3;
-	Thu,  3 Jul 2025 14:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jz2FNptH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D740C4CEE3;
+	Thu,  3 Jul 2025 14:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751553966;
-	bh=2m1z/Ef9hyV9m0Ssll6Dkrv3x9R6ejjVyWrrGOUoSow=;
+	s=korg; t=1751553969;
+	bh=yiqT8a8cUMB1jn+jKINq1CddapWB4hAf1pjG7EmP0AM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eQjL7DYH2z6vBnD63ge2VtHlso4y4agrwwnIpw3pRnrR3wrEoCSTwaT7/6bxavKSL
-	 tbG2ZQnTvzk2S6Qplbdv8Io+2vWAkfFFD3DYxrH7zV91Iak51kEdo7D6obuFr6O+1S
-	 LcLbJz9WT7Uhbr4i3LqEHSK7mrZOLE9QVI6lpe/k=
+	b=Jz2FNptH60yLIS58DNY6jU1ovGSdRlX250jku/VPKGUS+gUbrpsfeRD3/OEp3taKk
+	 ya0H5PUK7xcVUHnQIJVepaNdFss1/L7lvQhI0glFt0Zk+AIIYSZyYrleEfp8tEa44m
+	 u1k/rH6W5CO3Suot+/TR0lYBJdW1jnbB7lrTfRdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Purva Yeshi <purvayeshi550@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/218] iio: adc: ad_sigma_delta: Fix use of uninitialized status_pos
-Date: Thu,  3 Jul 2025 16:39:47 +0200
-Message-ID: <20250703143957.510075706@linuxfoundation.org>
+Subject: [PATCH 6.12 040/218] misc: tps6594-pfsm: Add NULL pointer check in tps6594_pfsm_probe()
+Date: Thu,  3 Jul 2025 16:39:48 +0200
+Message-ID: <20250703143957.547708072@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -51,45 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Purva Yeshi <purvayeshi550@gmail.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit e5cdb098a3cb165d52282ffc3a6448642953ea13 ]
+[ Upstream commit a99b598d836c9c6411110c70a2da134c78d96e67 ]
 
-Fix Smatch-detected issue:
-drivers/iio/adc/ad_sigma_delta.c:604 ad_sd_trigger_handler() error:
-uninitialized symbol 'status_pos'.
+The returned value, pfsm->miscdev.name, from devm_kasprintf()
+could be NULL.
+A pointer check is added to prevent potential NULL pointer dereference.
+This is similar to the fix in commit 3027e7b15b02
+("ice: Fix some null pointer dereference issues in ice_ptp.c").
 
-The variable `status_pos` was only initialized in specific switch cases
-(1, 2, 3, 4), which could leave it uninitialized if `reg_size` had an
-unexpected value.
+This issue is found by our static analysis tool.
 
-Fix by adding a default case to the switch block to catch unexpected
-values of `reg_size`. Use `dev_err_ratelimited()` for error logging and
-`goto irq_handled` instead of returning early.
-
-Signed-off-by: Purva Yeshi <purvayeshi550@gmail.com>
-Link: https://patch.msgid.link/20250410170408.8585-1-purvayeshi550@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Link: https://lore.kernel.org/r/20250311010511.1028269-1-chenyuan0y@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad_sigma_delta.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/misc/tps6594-pfsm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iio/adc/ad_sigma_delta.c b/drivers/iio/adc/ad_sigma_delta.c
-index ea4aabd3960a0..3df1d4f6bc959 100644
---- a/drivers/iio/adc/ad_sigma_delta.c
-+++ b/drivers/iio/adc/ad_sigma_delta.c
-@@ -477,6 +477,10 @@ static irqreturn_t ad_sd_trigger_handler(int irq, void *p)
- 		 * byte set to zero. */
- 		ad_sd_read_reg_raw(sigma_delta, data_reg, transfer_size, &data[1]);
- 		break;
+diff --git a/drivers/misc/tps6594-pfsm.c b/drivers/misc/tps6594-pfsm.c
+index 9bcca1856bfee..db3d6a21a2122 100644
+--- a/drivers/misc/tps6594-pfsm.c
++++ b/drivers/misc/tps6594-pfsm.c
+@@ -281,6 +281,9 @@ static int tps6594_pfsm_probe(struct platform_device *pdev)
+ 	pfsm->miscdev.minor = MISC_DYNAMIC_MINOR;
+ 	pfsm->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "pfsm-%ld-0x%02x",
+ 					    tps->chip_id, tps->reg);
++	if (!pfsm->miscdev.name)
++		return -ENOMEM;
 +
-+	default:
-+		dev_err_ratelimited(&indio_dev->dev, "Unsupported reg_size: %u\n", reg_size);
-+		goto irq_handled;
- 	}
- 
- 	/*
+ 	pfsm->miscdev.fops = &tps6594_pfsm_fops;
+ 	pfsm->miscdev.parent = dev->parent;
+ 	pfsm->chip_id = tps->chip_id;
 -- 
 2.39.5
 
