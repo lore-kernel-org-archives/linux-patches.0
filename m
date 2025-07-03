@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E352EE299;
-	Thu,  3 Jul 2025 14:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BB72E7F0B;
+	Thu,  3 Jul 2025 14:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554535; cv=none; b=CEf5dJZnlV8Q6igZ03LpMJePFJYv4dpUKJfeEQ3Wym3graWDcMzYIYwUnnNiBF82I4z2zOx1CUBxMOV1UQcggkDDAYMQ+nbPTjNnSjG3K4nYTJRAiUsOi0IOUnEM/WDdm0qr54p/gbwq+zc/ptEqoK+R/N4OaWiSO/wVieMlzlg=
+	t=1751554539; cv=none; b=YjUH73n1jdNwYuT4TImDZj8hJGBSxHAqdTsCwu/z+9PMO8SZ6GYcr0YPb6Eu0n4+j1Rx+nyD9FrjftMLLMFpXn8TLlnOFnmdREoITlkagEcHWm98UVPOAPuxAHgw5bjOZAAUFUHsHeJKVGrmHykOrmNNGMHbpDHhBVhIPSiJAQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554535; c=relaxed/simple;
-	bh=xEa2onxehLLm1lSEbpCWYj+cCqA015sF32T99m1ex+A=;
+	s=arc-20240116; t=1751554539; c=relaxed/simple;
+	bh=Z5ZRNcbB+bOeaIK5qhr+sPv4b2Kt5lhFYKergde2/LQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBfcl5gAIIVEnGNVblo5IX4/C+EwFj+jL1r/ELMPVaJvV90EGgoM1lW6WcH+7Td1FooklrqnPzz2oKgWdlSoy2z32SCdO8CUNzT0ywdnf0mWUpj/P7mXCNNY1eXfhpcVUB7C0ENnYIJD1HhpW+E28p06XvimCXQKw25LTwiIMfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLVXdPxW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ngsgkji2odvdhGQoNjKWe3tuaGimvrzd8+6Ejtl2vbtCL0nwvI3XPKxOFCPLjCz3xK1xTBJI3iQatDOwIdmrlsK5SR6VAKS+wNQj8M0+35/+1Q9Z+qs/UbLgX7XceUMntM4SjHh0Hjs54SeF0bYk07LeXKtZpPRHzaBG9gCnEGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mp1Hgcc/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLVXdPxW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B441C4CEE3;
-	Thu,  3 Jul 2025 14:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mp1Hgcc/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E010C4CEE3;
+	Thu,  3 Jul 2025 14:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554535;
-	bh=xEa2onxehLLm1lSEbpCWYj+cCqA015sF32T99m1ex+A=;
+	s=korg; t=1751554538;
+	bh=Z5ZRNcbB+bOeaIK5qhr+sPv4b2Kt5lhFYKergde2/LQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLVXdPxW9vQZ+2Sd2ZZfCAJj8VHy6RAeZLoeZxIKRFjBE4CQvNasQTIxyw9kAp9+n
-	 pgopEfR0vkUQhIIMbJ9xlD/q36TBq+F5EL+HjszH6LbIL2LGdtH0EFmYBzJ9z7U2n5
-	 RRyB2txvESt3udCg2bjljAZVfqkomFGx2n6KTT0U=
+	b=Mp1Hgcc/DThT+ef+/gQlSZ9luBYdhy4P909VvNB5RPUmJMdgQ7BZG1e89Zynoy11N
+	 ZTKlR3BbtRY+HY6wfNxfQT3XC1ZbA6tF/nE9YtKOd2kX0wSOMaBu0RAkLta+Sc7ySS
+	 nrm+qsDAaxie2xpL9nM0pS6RsrqF8Vt3PGNYtP0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 218/218] spi: fsl-qspi: Fix double cleanup in probe error path
-Date: Thu,  3 Jul 2025 16:42:46 +0200
-Message-ID: <20250703144004.932689395@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mathieu Tortuyaux <mtortuyaux@microsoft.com>
+Subject: [PATCH 6.12 192/218] net: phy: realtek: merge the drivers for internal NBase-T PHYs
+Date: Thu,  3 Jul 2025 16:42:20 +0200
+Message-ID: <20250703144003.882708500@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -51,61 +51,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Hao <haokexin@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 5d07ab2a7fa1305e429d9221716582f290b58078 ]
+commit f87a17ed3b51fba4dfdd8f8b643b5423a85fc551 upstream.
 
-Commit 40369bfe717e ("spi: fsl-qspi: use devm function instead of driver
-remove") introduced managed cleanup via fsl_qspi_cleanup(), but
-incorrectly retain manual cleanup in two scenarios:
+The Realtek RTL8125/RTL8126 NBase-T MAC/PHY chips have internal PHY's
+which are register-compatible, at least for the registers we use here.
+So let's use just one PHY driver to support all of them.
+These internal PHY's exist also as external C45 PHY's, but on the
+internal PHY's no access to MMD registers is possible. This can be
+used to differentiate between the internal and external version.
 
-- On devm_add_action_or_reset() failure, the function automatically call
-  fsl_qspi_cleanup(). However, the current code still jumps to
-  err_destroy_mutex, repeating cleanup.
+As a side effect the drivers for two now external-only drivers don't
+require read_mmd/write_mmd hooks any longer.
 
-- After the fsl_qspi_cleanup() action is added successfully, there is no
-  need to manually perform the cleanup in the subsequent error path.
-  However, the current code still jumps to err_destroy_mutex on spi
-  controller failure, repeating cleanup.
-
-Skip redundant manual cleanup calls to fix these issues.
-
-Cc: stable@vger.kernel.org
-Fixes: 40369bfe717e ("spi: fsl-qspi: use devm function instead of driver remove")
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Link: https://patch.msgid.link/20250410-spi-v1-1-56e867cc19cf@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/c57081a6-811f-4571-ab35-34f4ca6de9af@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mathieu Tortuyaux <mtortuyaux@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-qspi.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/phy/realtek.c |   53 +++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 43 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-qspi.c b/drivers/spi/spi-fsl-qspi.c
-index 5c59fddb32c1b..2f54dc09d11b1 100644
---- a/drivers/spi/spi-fsl-qspi.c
-+++ b/drivers/spi/spi-fsl-qspi.c
-@@ -949,17 +949,14 @@ static int fsl_qspi_probe(struct platform_device *pdev)
+--- a/drivers/net/phy/realtek.c
++++ b/drivers/net/phy/realtek.c
+@@ -92,6 +92,7 @@
  
- 	ret = devm_add_action_or_reset(dev, fsl_qspi_cleanup, q);
- 	if (ret)
--		goto err_destroy_mutex;
-+		goto err_put_ctrl;
+ #define RTL_GENERIC_PHYID			0x001cc800
+ #define RTL_8211FVD_PHYID			0x001cc878
++#define RTL_8221B				0x001cc840
+ #define RTL_8221B_VB_CG				0x001cc849
+ #define RTL_8221B_VN_CG				0x001cc84a
+ #define RTL_8251B				0x001cc862
+@@ -1040,6 +1041,23 @@ static bool rtlgen_supports_2_5gbps(stru
+ 	return val >= 0 && val & MDIO_PMA_SPEED_2_5G;
+ }
  
- 	ret = devm_spi_register_controller(dev, ctlr);
- 	if (ret)
--		goto err_destroy_mutex;
-+		goto err_put_ctrl;
++/* On internal PHY's MMD reads over C22 always return 0.
++ * Check a MMD register which is known to be non-zero.
++ */
++static bool rtlgen_supports_mmd(struct phy_device *phydev)
++{
++	int val;
++
++	phy_lock_mdio_bus(phydev);
++	__phy_write(phydev, MII_MMD_CTRL, MDIO_MMD_PCS);
++	__phy_write(phydev, MII_MMD_DATA, MDIO_PCS_EEE_ABLE);
++	__phy_write(phydev, MII_MMD_CTRL, MDIO_MMD_PCS | MII_MMD_CTRL_NOINCR);
++	val = __phy_read(phydev, MII_MMD_DATA);
++	phy_unlock_mdio_bus(phydev);
++
++	return val > 0;
++}
++
+ static int rtlgen_match_phy_device(struct phy_device *phydev)
+ {
+ 	return phydev->phy_id == RTL_GENERIC_PHYID &&
+@@ -1049,7 +1067,8 @@ static int rtlgen_match_phy_device(struc
+ static int rtl8226_match_phy_device(struct phy_device *phydev)
+ {
+ 	return phydev->phy_id == RTL_GENERIC_PHYID &&
+-	       rtlgen_supports_2_5gbps(phydev);
++	       rtlgen_supports_2_5gbps(phydev) &&
++	       rtlgen_supports_mmd(phydev);
+ }
  
- 	return 0;
+ static int rtlgen_is_c45_match(struct phy_device *phydev, unsigned int id,
+@@ -1061,6 +1080,11 @@ static int rtlgen_is_c45_match(struct ph
+ 		return !is_c45 && (id == phydev->phy_id);
+ }
  
--err_destroy_mutex:
--	mutex_destroy(&q->lock);
--
- err_disable_clk:
- 	fsl_qspi_clk_disable_unprep(q);
++static int rtl8221b_match_phy_device(struct phy_device *phydev)
++{
++	return phydev->phy_id == RTL_8221B && rtlgen_supports_mmd(phydev);
++}
++
+ static int rtl8221b_vb_cg_c22_match_phy_device(struct phy_device *phydev)
+ {
+ 	return rtlgen_is_c45_match(phydev, RTL_8221B_VB_CG, false);
+@@ -1081,9 +1105,21 @@ static int rtl8221b_vn_cg_c45_match_phy_
+ 	return rtlgen_is_c45_match(phydev, RTL_8221B_VN_CG, true);
+ }
  
--- 
-2.39.5
-
+-static int rtl8251b_c22_match_phy_device(struct phy_device *phydev)
++static int rtl_internal_nbaset_match_phy_device(struct phy_device *phydev)
+ {
+-	return rtlgen_is_c45_match(phydev, RTL_8251B, false);
++	if (phydev->is_c45)
++		return false;
++
++	switch (phydev->phy_id) {
++	case RTL_GENERIC_PHYID:
++	case RTL_8221B:
++	case RTL_8251B:
++		break;
++	default:
++		return false;
++	}
++
++	return rtlgen_supports_2_5gbps(phydev) && !rtlgen_supports_mmd(phydev);
+ }
+ 
+ static int rtl8251b_c45_match_phy_device(struct phy_device *phydev)
+@@ -1345,10 +1381,8 @@ static struct phy_driver realtek_drvs[]
+ 		.resume		= rtlgen_resume,
+ 		.read_page	= rtl821x_read_page,
+ 		.write_page	= rtl821x_write_page,
+-		.read_mmd	= rtl822x_read_mmd,
+-		.write_mmd	= rtl822x_write_mmd,
+ 	}, {
+-		PHY_ID_MATCH_EXACT(0x001cc840),
++		.match_phy_device = rtl8221b_match_phy_device,
+ 		.name		= "RTL8226B_RTL8221B 2.5Gbps PHY",
+ 		.get_features	= rtl822x_get_features,
+ 		.config_aneg	= rtl822x_config_aneg,
+@@ -1359,8 +1393,6 @@ static struct phy_driver realtek_drvs[]
+ 		.resume		= rtlgen_resume,
+ 		.read_page	= rtl821x_read_page,
+ 		.write_page	= rtl821x_write_page,
+-		.read_mmd	= rtl822x_read_mmd,
+-		.write_mmd	= rtl822x_write_mmd,
+ 	}, {
+ 		PHY_ID_MATCH_EXACT(0x001cc838),
+ 		.name           = "RTL8226-CG 2.5Gbps PHY",
+@@ -1438,8 +1470,9 @@ static struct phy_driver realtek_drvs[]
+ 		.read_page      = rtl821x_read_page,
+ 		.write_page     = rtl821x_write_page,
+ 	}, {
+-		.match_phy_device = rtl8251b_c22_match_phy_device,
+-		.name           = "RTL8126A-internal 5Gbps PHY",
++		.match_phy_device = rtl_internal_nbaset_match_phy_device,
++		.name           = "Realtek Internal NBASE-T PHY",
++		.flags		= PHY_IS_INTERNAL,
+ 		.get_features   = rtl822x_get_features,
+ 		.config_aneg    = rtl822x_config_aneg,
+ 		.read_status    = rtl822x_read_status,
 
 
