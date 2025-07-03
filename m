@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7692EE29F;
-	Thu,  3 Jul 2025 14:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1D42EE29E;
+	Thu,  3 Jul 2025 14:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553910; cv=none; b=u3nfIrmHK9BL58asXHk7CLo+7Gheiq6EKJOCvhBsOebi74ICHAwo64MDHvMVmuAqHQpTNjnpmqVYzIYHD6sZ+h/pqjkKP7rrpfthGXPuV2FkoJv/QNwq5wNLS+Fn+eqi/MSnc8ZozcwdrDTDmCYYot3nC3rsN5eNhLE5Ki5nL+k=
+	t=1751553914; cv=none; b=HRc0L7dqh/ONqRh9FfuE6Xtr4KmsDWEMrk3cXp0Qgm4bFIQAvx/tfwnl87B/UDHZD8lvTqRAWa/wvg+3rVXEqbTtT4CsgcKAZy1oBxQLaGMdE4896FPcNjwYtAAR6OGA8mOeXBPcboSF5PQJhHH45n62sFfjTB6q8zM0Dh1t230=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553910; c=relaxed/simple;
-	bh=IOfyN11FxBvRUTkiziqYajUsVPa8xXVHrVIiQuJi8l8=;
+	s=arc-20240116; t=1751553914; c=relaxed/simple;
+	bh=BMcue9IOaRd/boDmKhVUzCAQEaRUT3DpLfgGiRcZjGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OBOEc/CITmnsCrvwcDreWG9rE6lG3NMbZEuMAK4YPdyAn94KIrYh6P1Ml3fOJoaTy3TWJ5VDzXAGzmByt8nLmWf9+ZAjReDMwhje13gUCvhsTvcRM7YFosLGbvNCVxYwwpbKX6i4I66vqvXRDCkglRvA9fII9f2F66rDX0tbaWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYfOvDz4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dagPC4lRr0ehL4ApJ2qmP08Vq2m5wzUD4zjqyS3JLytABMPhna31hJs9q9hvElivjxD+xMq7ASBseVv41bImsJ85WA++smhwmY3fqPSCvJ+BH2tk5kSR/yHQxIBJiCCdGB+v1kJuqszg+p9wwQ4eS2Jz1TaBwRnzf1l/Ts3Pr8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaQrezaX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYfOvDz4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5586C4CEED;
-	Thu,  3 Jul 2025 14:45:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaQrezaX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA57C4CEE3;
+	Thu,  3 Jul 2025 14:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751553910;
-	bh=IOfyN11FxBvRUTkiziqYajUsVPa8xXVHrVIiQuJi8l8=;
+	s=korg; t=1751553913;
+	bh=BMcue9IOaRd/boDmKhVUzCAQEaRUT3DpLfgGiRcZjGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dYfOvDz4DM7c3JX18mSsvNeCDL/jwIxXMqDjBe5GlHDCTNOv35+abGpkZ2QTJ0g2V
-	 jz27dU6eFY2iNoc/Awuz/2MwnwjidhqR1N9lYVuDDb6jAXhih3OF08+AV4EH0/LKKM
-	 FkgyOUnyxsbwfuzzbVCsv9aXErosTh9mfVimLFl8=
+	b=kaQrezaXAZInyMgC5W9qIqGBWP2LFcV2PQ0M6djfxcXoNAHjjH/Q7uPzYj0j6aCbR
+	 Eu56FVzJDsl8IjRU44LiLdNg/+i/NpUunZO/BcbsbzFL5rMXcpdQHWZlV0R3rdIZX7
+	 Dacp+SP14n8JrrUsT/uhooKmkeYi0ZX2utRqZfFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Joerg Roedel <jroedel@suse.de>,
+	Yi Sun <yi.sun@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/218] Revert "iommu/amd: Prevent binding other PCI drivers to IOMMU PCI devices"
-Date: Thu,  3 Jul 2025 16:39:28 +0200
-Message-ID: <20250703143956.766086832@linuxfoundation.org>
+Subject: [PATCH 6.12 021/218] dmaengine: idxd: Check availability of workqueue allocated by idxd wq driver before using
+Date: Thu,  3 Jul 2025 16:39:29 +0200
+Message-ID: <20250703143956.810827529@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -47,60 +47,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Yi Sun <yi.sun@intel.com>
 
-[ Upstream commit 3be5fa236649da6404f1bca1491bf02d4b0d5cce ]
+[ Upstream commit 17502e7d7b7113346296f6758324798d536c31fd ]
 
-Commit 991de2e59090 ("PCI, x86: Implement pcibios_alloc_irq() and
-pcibios_free_irq()") changed IRQ handling on PCI driver probing.
-It inadvertently broke resume from system sleep on AMD platforms:
+Running IDXD workloads in a container with the /dev directory mounted can
+trigger a call trace or even a kernel panic when the parent process of the
+container is terminated.
 
-  https://lore.kernel.org/r/20150926164651.GA3640@pd.tnic/
+This issue occurs because, under certain configurations, Docker does not
+properly propagate the mount replica back to the original mount point.
 
-This was fixed by two independent commits:
+In this case, when the user driver detaches, the WQ is destroyed but it
+still calls destroy_workqueue() attempting to completes all pending work.
+It's necessary to check wq->wq and skip the drain if it no longer exists.
 
-* 8affb487d4a4 ("x86/PCI: Don't alloc pcibios-irq when MSI is enabled")
-* cbbc00be2ce3 ("iommu/amd: Prevent binding other PCI drivers to IOMMU PCI devices")
+Signed-off-by: Yi Sun <yi.sun@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>
 
-The breaking change and one of these two fixes were subsequently reverted:
-
-* fe25d078874f ("Revert "x86/PCI: Don't alloc pcibios-irq when MSI is enabled"")
-* 6c777e8799a9 ("Revert "PCI, x86: Implement pcibios_alloc_irq() and pcibios_free_irq()"")
-
-This rendered the second fix unnecessary, so revert it as well.  It used
-the match_driver flag in struct pci_dev, which is internal to the PCI core
-and not supposed to be touched by arbitrary drivers.
-
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Acked-by: Joerg Roedel <jroedel@suse.de>
-Link: https://patch.msgid.link/9a3ddff5cc49512044f963ba0904347bd404094d.1745572340.git.lukas@wunner.de
+Link: https://lore.kernel.org/r/20250509000304.1402863-1-yi.sun@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/dma/idxd/cdev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index ff11cd7e5c068..b8b10140d41b2 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -2026,9 +2026,6 @@ static int __init iommu_init_pci(struct amd_iommu *iommu)
- 	if (!iommu->dev)
- 		return -ENODEV;
- 
--	/* Prevent binding other PCI device drivers to IOMMU devices */
--	iommu->dev->match_driver = false;
--
- 	/* ACPI _PRT won't have an IRQ for IOMMU */
- 	iommu->dev->irq_managed = 1;
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index 19a58c4ecef3f..8b27bd545685a 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -354,7 +354,9 @@ static void idxd_cdev_evl_drain_pasid(struct idxd_wq *wq, u32 pasid)
+ 			set_bit(h, evl->bmap);
+ 		h = (h + 1) % size;
+ 	}
+-	drain_workqueue(wq->wq);
++	if (wq->wq)
++		drain_workqueue(wq->wq);
++
+ 	mutex_unlock(&evl->lock);
+ }
  
 -- 
 2.39.5
