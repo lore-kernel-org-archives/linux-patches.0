@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9102EF9C2;
-	Thu,  3 Jul 2025 14:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5422EAD1B;
+	Thu,  3 Jul 2025 14:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554299; cv=none; b=Keah/MO/Y/42Kz0zD+OM3rmqb1TKonjIHkfc3o1x9fKc5HJe0SzL0Yxc/shgR2t7pSZ71PBxkmlAAu+gxY/YcR38yQ3E+49CBosry9ieetbcOEDuLPWNfRIstUtsB8UiaJhfY6LqRhStkxDEa51cyEdN4MQMoYzP7NyODc1nfJk=
+	t=1751554302; cv=none; b=eF4wI9gID130SiZWlme2aQcgQCB7VM9BtioEltsFCs24S2merkxc/laCCcEuiC89PYu56u/eq352oMQpgK/U1AV5PHs9n+2J7CVFYGlUxPjJKVoARMalKXEGySEsVpEzE4ohv56Lipclv+/95KRxf9nBH8M9jZIICOabVLJm4As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554299; c=relaxed/simple;
-	bh=KruklGAiXj+4euSnLrVY5r3Il7NKUU9sqPq9SxJvEuY=;
+	s=arc-20240116; t=1751554302; c=relaxed/simple;
+	bh=6+xSFem/qFCuWboc7AFJ5pEIuT6n2H9PlJXFQtNDvs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MapgP6FNrsfCfrUXydF7wQH/jcPLBYKoAyiupm7lKMOMECbG7xrBEzLKu6Breu33Lh4m8WdsyLtnVeUmjjMND5IJM2Mr3cbczmCZd115CTCwsJftSYocGQ+Uj3jngvCv0gW4fg9PybUlTV29rcSrSkLkPvaOD7DTee009b1ZQzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwFjKUnc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uAPRA0ooTPsrJzSG3KblBm3wZ0mYPtetfqUweRYTgDAwg1gB1jiossMZsyT6gfed/C8iBBzcLac8mNCyJhgit14ch+s9Eds7+E32ZYjwKWQS7s0e5uaBfoWcVMVUubWCFDwHO41u1oGZ9picGozmBsFs2Xi13dXV8cL9zBVkUak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vdm29UjI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwFjKUnc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E304C4CEE3;
-	Thu,  3 Jul 2025 14:51:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vdm29UjI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9214C4CEE3;
+	Thu,  3 Jul 2025 14:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554298;
-	bh=KruklGAiXj+4euSnLrVY5r3Il7NKUU9sqPq9SxJvEuY=;
+	s=korg; t=1751554302;
+	bh=6+xSFem/qFCuWboc7AFJ5pEIuT6n2H9PlJXFQtNDvs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MwFjKUncgoqCiiKX/IBnlgQ8tZElJAn/x5PWkXmDf6ZoXn6k5C7Ak1QKqlTalA5s0
-	 nUMo9YUuvVFtMjpaQXVALavhbeMYDKL2NvDgI78Z+ceR7LwX36bQe1BpVu3NQ2IrMy
-	 mKZOTh7qXo3txBbI/M6OcpvlkJIceQjzlqRkW1Yo=
+	b=vdm29UjIGtuUihfF7HCDP9I3iwBS3HjJGDAiST+wV2HeJAkHEtr+XLAfWaFCTIX8P
+	 wGb2Aj65UnR3jREHUvD5lX2NHhACVgIN80VwqjzkmmBcu38M1uoTFdeOqGPiZTJHak
+	 BnN6c2vBH7CEgacrFA4j5SOPhMFof4ErC1Azp0+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iusico Maxim <iusico.maxim@libero.it>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 142/218] HID: lenovo: Restrict F7/9/11 mode to compact keyboards only
-Date: Thu,  3 Jul 2025 16:41:30 +0200
-Message-ID: <20250703144001.801812016@linuxfoundation.org>
+Subject: [PATCH 6.12 143/218] HID: wacom: fix memory leak on kobject creation failure
+Date: Thu,  3 Jul 2025 16:41:31 +0200
+Message-ID: <20250703144001.843109755@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -50,49 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Iusico Maxim <iusico.maxim@libero.it>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit 9327e3ee5b077c4ab4495a09b67624f670ed88b6 upstream.
+commit 5ae416c5b1e2e816aee7b3fc8347adf70afabb4c upstream.
 
-Commit 2f2bd7cbd1d1 ("hid: lenovo: Resend all settings on reset_resume
-for compact keyboards") introduced a regression for ThinkPad TrackPoint
-Keyboard II by removing the conditional check for enabling F7/9/11 mode
-needed for compact keyboards only. As a result, the non-compact
-keyboards can no longer toggle Fn-lock via Fn+Esc, although it can be
-controlled via sysfs knob that directly sends raw commands.
+During wacom_initialize_remotes() a fifo buffer is allocated
+with kfifo_alloc() and later a cleanup action is registered
+during devm_add_action_or_reset() to clean it up.
 
-This patch restores the previous conditional check without any
-additions.
+However if the code fails to create a kobject and register it
+with sysfs the code simply returns -ENOMEM before the cleanup
+action is registered leading to a memory leak.
 
+Fix this by ensuring the fifo is freed when the kobject creation
+and registration process fails.
+
+Fixes: 83e6b40e2de6 ("HID: wacom: EKR: have the wacom resources dynamically allocated")
+Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
 Cc: stable@vger.kernel.org
-Fixes: 2f2bd7cbd1d1 ("hid: lenovo: Resend all settings on reset_resume for compact keyboards")
-Signed-off-by: Iusico Maxim <iusico.maxim@libero.it>
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-lenovo.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/hid/wacom_sys.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-lenovo.c
-+++ b/drivers/hid/hid-lenovo.c
-@@ -529,11 +529,14 @@ static void lenovo_features_set_cptkbd(s
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2021,8 +2021,10 @@ static int wacom_initialize_remotes(stru
  
- 	/*
- 	 * Tell the keyboard a driver understands it, and turn F7, F9, F11 into
--	 * regular keys
-+	 * regular keys (Compact only)
- 	 */
--	ret = lenovo_send_cmd_cptkbd(hdev, 0x01, 0x03);
--	if (ret)
--		hid_warn(hdev, "Failed to switch F7/9/11 mode: %d\n", ret);
-+	if (hdev->product == USB_DEVICE_ID_LENOVO_CUSBKBD ||
-+	    hdev->product == USB_DEVICE_ID_LENOVO_CBTKBD) {
-+		ret = lenovo_send_cmd_cptkbd(hdev, 0x01, 0x03);
-+		if (ret)
-+			hid_warn(hdev, "Failed to switch F7/9/11 mode: %d\n", ret);
+ 	remote->remote_dir = kobject_create_and_add("wacom_remote",
+ 						    &wacom->hdev->dev.kobj);
+-	if (!remote->remote_dir)
++	if (!remote->remote_dir) {
++		kfifo_free(&remote->remote_fifo);
+ 		return -ENOMEM;
 +	}
  
- 	/* Switch middle button to native mode */
- 	ret = lenovo_send_cmd_cptkbd(hdev, 0x09, 0x01);
+ 	error = sysfs_create_files(remote->remote_dir, remote_unpair_attrs);
+ 
 
 
