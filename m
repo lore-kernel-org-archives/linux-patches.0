@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83892E3B1A;
-	Thu,  3 Jul 2025 15:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7952EF9B3;
+	Thu,  3 Jul 2025 15:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556045; cv=none; b=Xbnvq7rtRtOz6rTherEdPewDJsAByxuZUpSt5BUQLvEHJUkVTDR0xEA/atlFJ+MyIhXtctqsCrFQ0/YKLHj3yCme+Po6/BQef3ZtNSBPhkMOeqxbkbW3scEGyNwPfKQHOg3Tl0SSEx0Lp8CQh+Hje4O0TVWjOlF9AnbwH5dO+68=
+	t=1751556048; cv=none; b=VBtaqRQSZPeiYp7jxzPBbffF7jGJINuxsH6Zr/CGeqT+g8Q0hu78NFpGP4tQJZojIlHLK0Vt0icKVctvXKzgPMreIAaD+PeMjc1hWBXlhqnPI/UFqbqM7agsXUAYRSW1rT94ZlnHN6v+C1pC19HprkgKF/h09fRsss0iZw6Xlw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556045; c=relaxed/simple;
-	bh=rTc4g/wkR7LGHBfwH8Dg0T05O+HFBvsY1px8C98jDyk=;
+	s=arc-20240116; t=1751556048; c=relaxed/simple;
+	bh=SMH+ySaCPWqSHai0mvNRqUHNmMCwLEwGVeIzDrCBm8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+Q1q5SEoQHyBoDyVy0fiz/msqwbQTiBziCCqqvDGzcLFR8hMAs0WN4/LHX22n8agui3Nx4MPaprSfapM3nEcT5c+XXmaFFvcOeyOBZvgZ+Vmcm/IhXWkae/mM/130iRoL+aUErI2N2A9Nwd9yxElgZCfXnshBJ1bch8L+LRYhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TWkqiocv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iEmfWRqGhm/C2MLegHWCi0pWXd4KNV7DCk63q8yQ9ALWYZxxTShEagsxZAtc+CaSywZv8kwSXqRSg6mXP7bA++0aWI1xps7s1p+YLXhLQVGGX9Fakw5WqBpcHy77rZpH+6hu8FuMlzTdlZgT8Ct4Ffxc4kVBGZ299v6gAfD0Zi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvjO6W1J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TWkqiocv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D871C4CEED;
-	Thu,  3 Jul 2025 15:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvjO6W1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2A5C4CEE3;
+	Thu,  3 Jul 2025 15:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556045;
-	bh=rTc4g/wkR7LGHBfwH8Dg0T05O+HFBvsY1px8C98jDyk=;
+	s=korg; t=1751556048;
+	bh=SMH+ySaCPWqSHai0mvNRqUHNmMCwLEwGVeIzDrCBm8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TWkqiocv07JY0hn3G6PVYF9nBG+JyBBFZE+989LCH/U4JoZW69diSEL7Km6RlODA8
-	 Ykv6VLIggPNKFC8BgvlyOgYULi6NKjI05uWKhCcEsh5AdpGw55rZq3mHnJ1F+9IQz+
-	 g6y+Ahl7IMexJZfiBiwVo5RCMoQCD+A1CJ5D3gC4=
+	b=fvjO6W1JO+1U/LfTyNHS1rhOpPml6vMQVURyjAS8F51gPFX1KgRSnVfVJhz4HOYAh
+	 ZKHCpbKj/JH4+YjVDqZZj7FzksgvMGiuD1GbytLydWAfJbhP/bsBQ4ebrpuSSRuH+B
+	 RSlzIKk1z/0fPgFTH74/R8kMEUXpvl1bMYCllbD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Long Li <longli@microsoft.com>,
 	Michael Kelley <mhklinux@outlook.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/132] Drivers: hv: vmbus: Leak pages if set_memory_encrypted() fails
-Date: Thu,  3 Jul 2025 16:42:25 +0200
-Message-ID: <20250703143941.622681705@linuxfoundation.org>
+Subject: [PATCH 6.1 057/132] Drivers: hv: Allocate interrupt and monitor pages aligned to system page boundary
+Date: Thu,  3 Jul 2025 16:42:26 +0200
+Message-ID: <20250703143941.660628850@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -54,82 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rick Edgecombe <rick.p.edgecombe@intel.com>
+From: Long Li <longli@microsoft.com>
 
-[ Upstream commit 03f5a999adba062456c8c818a683beb1b498983a ]
+[ Upstream commit 09eea7ad0b8e973dcf5ed49902838e5d68177f8e ]
 
-In CoCo VMs it is possible for the untrusted host to cause
-set_memory_encrypted() or set_memory_decrypted() to fail such that an
-error is returned and the resulting memory is shared. Callers need to
-take care to handle these errors to avoid returning decrypted (shared)
-memory to the page allocator, which could lead to functional or security
-issues.
+There are use cases that interrupt and monitor pages are mapped to
+user-mode through UIO, so they need to be system page aligned. Some
+Hyper-V allocation APIs introduced earlier broke those requirements.
 
-VMBus code could free decrypted pages if set_memory_encrypted()/decrypted()
-fails. Leak the pages if this happens.
+Fix this by using page allocation functions directly for interrupt
+and monitor pages.
 
-Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Link: https://lore.kernel.org/r/20240311161558.1310-2-mhklinux@outlook.com
+Cc: stable@vger.kernel.org
+Fixes: ca48739e59df ("Drivers: hv: vmbus: Move Hyper-V page allocator to arch neutral code")
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/1746492997-4599-2-git-send-email-longli@linuxonhyperv.com
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20240311161558.1310-2-mhklinux@outlook.com>
-Stable-dep-of: 09eea7ad0b8e ("Drivers: hv: Allocate interrupt and monitor pages aligned to system page boundary")
+Message-ID: <1746492997-4599-2-git-send-email-longli@linuxonhyperv.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/connection.c | 29 ++++++++++++++++++++++-------
- 1 file changed, 22 insertions(+), 7 deletions(-)
+ drivers/hv/connection.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
-index ebf15f31d97e3..744d2809acc3f 100644
+index 744d2809acc3f..7bb94e0dd0f66 100644
 --- a/drivers/hv/connection.c
 +++ b/drivers/hv/connection.c
-@@ -236,8 +236,17 @@ int vmbus_connect(void)
- 				vmbus_connection.monitor_pages[0], 1);
- 	ret |= set_memory_decrypted((unsigned long)
- 				vmbus_connection.monitor_pages[1], 1);
--	if (ret)
-+	if (ret) {
-+		/*
-+		 * If set_memory_decrypted() fails, the encryption state
-+		 * of the memory is unknown. So leak the memory instead
-+		 * of risking returning decrypted memory to the free list.
-+		 * For simplicity, always handle both pages the same.
-+		 */
-+		vmbus_connection.monitor_pages[0] = NULL;
-+		vmbus_connection.monitor_pages[1] = NULL;
- 		goto cleanup;
-+	}
+@@ -205,11 +205,20 @@ int vmbus_connect(void)
+ 	INIT_LIST_HEAD(&vmbus_connection.chn_list);
+ 	mutex_init(&vmbus_connection.channel_mutex);
  
++	/*
++	 * The following Hyper-V interrupt and monitor pages can be used by
++	 * UIO for mapping to user-space, so they should always be allocated on
++	 * system page boundaries. The system page size must be >= the Hyper-V
++	 * page size.
++	 */
++	BUILD_BUG_ON(PAGE_SIZE < HV_HYP_PAGE_SIZE);
++
  	/*
- 	 * Set_memory_decrypted() will change the memory contents if
-@@ -336,13 +345,19 @@ void vmbus_disconnect(void)
+ 	 * Setup the vmbus event connection for channel interrupt
+ 	 * abstraction stuff
+ 	 */
+-	vmbus_connection.int_page = hv_alloc_hyperv_zeroed_page();
++	vmbus_connection.int_page =
++		(void *)__get_free_page(GFP_KERNEL | __GFP_ZERO);
+ 	if (vmbus_connection.int_page == NULL) {
+ 		ret = -ENOMEM;
+ 		goto cleanup;
+@@ -224,8 +233,8 @@ int vmbus_connect(void)
+ 	 * Setup the monitor notification facility. The 1st page for
+ 	 * parent->child and the 2nd page for child->parent
+ 	 */
+-	vmbus_connection.monitor_pages[0] = hv_alloc_hyperv_page();
+-	vmbus_connection.monitor_pages[1] = hv_alloc_hyperv_page();
++	vmbus_connection.monitor_pages[0] = (void *)__get_free_page(GFP_KERNEL);
++	vmbus_connection.monitor_pages[1] = (void *)__get_free_page(GFP_KERNEL);
+ 	if ((vmbus_connection.monitor_pages[0] == NULL) ||
+ 	    (vmbus_connection.monitor_pages[1] == NULL)) {
+ 		ret = -ENOMEM;
+@@ -341,21 +350,23 @@ void vmbus_disconnect(void)
+ 		destroy_workqueue(vmbus_connection.work_queue);
+ 
+ 	if (vmbus_connection.int_page) {
+-		hv_free_hyperv_page(vmbus_connection.int_page);
++		free_page((unsigned long)vmbus_connection.int_page);
  		vmbus_connection.int_page = NULL;
  	}
  
--	set_memory_encrypted((unsigned long)vmbus_connection.monitor_pages[0], 1);
--	set_memory_encrypted((unsigned long)vmbus_connection.monitor_pages[1], 1);
-+	if (vmbus_connection.monitor_pages[0]) {
-+		if (!set_memory_encrypted(
-+			(unsigned long)vmbus_connection.monitor_pages[0], 1))
-+			hv_free_hyperv_page(vmbus_connection.monitor_pages[0]);
-+		vmbus_connection.monitor_pages[0] = NULL;
-+	}
+ 	if (vmbus_connection.monitor_pages[0]) {
+ 		if (!set_memory_encrypted(
+ 			(unsigned long)vmbus_connection.monitor_pages[0], 1))
+-			hv_free_hyperv_page(vmbus_connection.monitor_pages[0]);
++			free_page((unsigned long)
++				vmbus_connection.monitor_pages[0]);
+ 		vmbus_connection.monitor_pages[0] = NULL;
+ 	}
  
--	hv_free_hyperv_page(vmbus_connection.monitor_pages[0]);
--	hv_free_hyperv_page(vmbus_connection.monitor_pages[1]);
--	vmbus_connection.monitor_pages[0] = NULL;
--	vmbus_connection.monitor_pages[1] = NULL;
-+	if (vmbus_connection.monitor_pages[1]) {
-+		if (!set_memory_encrypted(
-+			(unsigned long)vmbus_connection.monitor_pages[1], 1))
-+			hv_free_hyperv_page(vmbus_connection.monitor_pages[1]);
-+		vmbus_connection.monitor_pages[1] = NULL;
-+	}
+ 	if (vmbus_connection.monitor_pages[1]) {
+ 		if (!set_memory_encrypted(
+ 			(unsigned long)vmbus_connection.monitor_pages[1], 1))
+-			hv_free_hyperv_page(vmbus_connection.monitor_pages[1]);
++			free_page((unsigned long)
++				vmbus_connection.monitor_pages[1]);
+ 		vmbus_connection.monitor_pages[1] = NULL;
+ 	}
  }
- 
- /*
 -- 
 2.39.5
 
