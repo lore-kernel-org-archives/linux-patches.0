@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B114414;
-	Thu,  3 Jul 2025 15:03:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1394414;
+	Thu,  3 Jul 2025 15:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555021; cv=none; b=TKLJU5bORY0fLmJl86wU9O81DcZ0VncG6YlFAjq23lVvw2+e0zq4YUiNIjgbuUEGXsFi4BL2N7uSLsv0BFBDusxhHJ8q71AUa9r5o/UFz7OnS+CUKMetVVamD614tK0Oijl8xAc9PXdRi924tXGb2SiroA7FVKNyo2Gtc2C2E8M=
+	t=1751555024; cv=none; b=ZcnqKnoaTRXlsN2b1Nwk8RTdpKuI2CZxkdcg934hZYKv+V4uvbnw6k1kvP+G2NOaOCGmBEec3ctelFo37dMdCcs2jL7ALwbOWNEU3a0ll5zGDGTqgzD8E+B5Zeq1zwKuQHch3QmMiqIigky7im8vZB8/ZuYIXVlcW34DOS2yttg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555021; c=relaxed/simple;
-	bh=dWQkPFTAAxS4p4VLwGurLMwlKq8791vqf9wNF0of4qI=;
+	s=arc-20240116; t=1751555024; c=relaxed/simple;
+	bh=4uxrc+POXLDZv6te9l0xL4gXwcAiTugPfOdRU+wBm2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XLLjJmvxO2x6i882YXxGr6ef7llltQtsXrXM5t2HW0n8pRfw935VrhcpN5czSVuUH58Ule3vKOuV3fRoS3sjK2bKEtC0ruJwqnwE2ENCBgYh9n/XUWC1M6bzNQkjL5QTtioiIfXaZVQ5PMCJp5yMZrRj8PNStBcrDfPprQ4nwjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFHKQqcU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=akHlrCn0HNMs4jDTAtLH8BfhX/yfO09ZqsieeQw3VhO9MabEw81PZCIG9O7oWEyA20y9KwHk/hUGmMVRPfMvi4VU7JCdclI3eiOdvm6cxjMPdv1jev4A2nemtgabQF1HIPhf5NVZilhO3qsu//HdcusVJWeY5LSwb7kYpKe4t9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVqzVYF2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFHKQqcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C70C4CEE3;
-	Thu,  3 Jul 2025 15:03:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVqzVYF2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6B7C4CEEE;
+	Thu,  3 Jul 2025 15:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555021;
-	bh=dWQkPFTAAxS4p4VLwGurLMwlKq8791vqf9wNF0of4qI=;
+	s=korg; t=1751555024;
+	bh=4uxrc+POXLDZv6te9l0xL4gXwcAiTugPfOdRU+wBm2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mFHKQqcUrhgGDLZKzw+XB7VAV8IpnmkMBQzViKMV/vmCHmZMX7RuXEKAwpWC8LnUW
-	 +xj4Z0pb7FyoAROuSenfxZbH7aSMclfwItzdJz6pNagC9Ze9GVqM11baMbKiw1AmER
-	 evX/nE6PCOLE6BdZIuwKCjQNniPHxWlNCtgAQOjM=
+	b=PVqzVYF2f7rCx/xWGRVA7G7sV4wid9c71OgU+MuZ7ni6dGZvfNgx8evs+FO3X6XXp
+	 xzJ+/nyMQJZE/zidTK4kl5AlPUZY6hABCTuxN4f2q9Nr+uCHO2IGMi+4yEJTwRUS4z
+	 83DqJ2smwtsHZrDOQ/m8GaKOMFKdSQdeK/+kUH0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Rzeznik <arzeznik@cloudflare.com>,
-	Yan Zhai <yan@cloudflare.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Andy Gospodarek <gospo@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 151/263] bnxt: properly flush XDP redirect lists
-Date: Thu,  3 Jul 2025 16:41:11 +0200
-Message-ID: <20250703144010.409039843@linuxfoundation.org>
+Subject: [PATCH 6.15 152/263] um: ubd: Add missing error check in start_io_thread()
+Date: Thu,  3 Jul 2025 16:41:12 +0200
+Message-ID: <20250703144010.450337947@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -55,137 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit 9caca6ac0e26cd20efd490d8b3b2ffb1c7c00f6f ]
+[ Upstream commit c55c7a85e02a7bfee20a3ffebdff7cbeb41613ef ]
 
-We encountered following crash when testing a XDP_REDIRECT feature
-in production:
+The subsequent call to os_set_fd_block() overwrites the previous
+return value. OR the two return values together to fix it.
 
-[56251.579676] list_add corruption. next->prev should be prev (ffff93120dd40f30), but was ffffb301ef3a6740. (next=ffff93120dd
-40f30).
-[56251.601413] ------------[ cut here ]------------
-[56251.611357] kernel BUG at lib/list_debug.c:29!
-[56251.621082] Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-[56251.632073] CPU: 111 UID: 0 PID: 0 Comm: swapper/111 Kdump: loaded Tainted: P           O       6.12.33-cloudflare-2025.6.
-3 #1
-[56251.653155] Tainted: [P]=PROPRIETARY_MODULE, [O]=OOT_MODULE
-[56251.663877] Hardware name: MiTAC GC68B-B8032-G11P6-GPU/S8032GM-HE-CFR, BIOS V7.020.B10-sig 01/22/2025
-[56251.682626] RIP: 0010:__list_add_valid_or_report+0x4b/0xa0
-[56251.693203] Code: 0e 48 c7 c7 68 e7 d9 97 e8 42 16 fe ff 0f 0b 48 8b 52 08 48 39 c2 74 14 48 89 f1 48 c7 c7 90 e7 d9 97 48
- 89 c6 e8 25 16 fe ff <0f> 0b 4c 8b 02 49 39 f0 74 14 48 89 d1 48 c7 c7 e8 e7 d9 97 4c 89
-[56251.725811] RSP: 0018:ffff93120dd40b80 EFLAGS: 00010246
-[56251.736094] RAX: 0000000000000075 RBX: ffffb301e6bba9d8 RCX: 0000000000000000
-[56251.748260] RDX: 0000000000000000 RSI: ffff9149afda0b80 RDI: ffff9149afda0b80
-[56251.760349] RBP: ffff9131e49c8000 R08: 0000000000000000 R09: ffff93120dd40a18
-[56251.772382] R10: ffff9159cf2ce1a8 R11: 0000000000000003 R12: ffff911a80850000
-[56251.784364] R13: ffff93120fbc7000 R14: 0000000000000010 R15: ffff9139e7510e40
-[56251.796278] FS:  0000000000000000(0000) GS:ffff9149afd80000(0000) knlGS:0000000000000000
-[56251.809133] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[56251.819561] CR2: 00007f5e85e6f300 CR3: 00000038b85e2006 CR4: 0000000000770ef0
-[56251.831365] PKRU: 55555554
-[56251.838653] Call Trace:
-[56251.845560]  <IRQ>
-[56251.851943]  cpu_map_enqueue.cold+0x5/0xa
-[56251.860243]  xdp_do_redirect+0x2d9/0x480
-[56251.868388]  bnxt_rx_xdp+0x1d8/0x4c0 [bnxt_en]
-[56251.877028]  bnxt_rx_pkt+0x5f7/0x19b0 [bnxt_en]
-[56251.885665]  ? cpu_max_write+0x1e/0x100
-[56251.893510]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56251.902276]  __bnxt_poll_work+0x190/0x340 [bnxt_en]
-[56251.911058]  bnxt_poll+0xab/0x1b0 [bnxt_en]
-[56251.919041]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56251.927568]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56251.935958]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56251.944250]  __napi_poll+0x2b/0x160
-[56251.951155]  bpf_trampoline_6442548651+0x79/0x123
-[56251.959262]  __napi_poll+0x5/0x160
-[56251.966037]  net_rx_action+0x3d2/0x880
-[56251.973133]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56251.981265]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56251.989262]  ? __hrtimer_run_queues+0x162/0x2a0
-[56251.996967]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56252.004875]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56252.012673]  ? bnxt_msix+0x62/0x70 [bnxt_en]
-[56252.019903]  handle_softirqs+0xcf/0x270
-[56252.026650]  irq_exit_rcu+0x67/0x90
-[56252.032933]  common_interrupt+0x85/0xa0
-[56252.039498]  </IRQ>
-[56252.044246]  <TASK>
-[56252.048935]  asm_common_interrupt+0x26/0x40
-[56252.055727] RIP: 0010:cpuidle_enter_state+0xb8/0x420
-[56252.063305] Code: dc 01 00 00 e8 f9 79 3b ff e8 64 f7 ff ff 49 89 c5 0f 1f 44 00 00 31 ff e8 a5 32 3a ff 45 84 ff 0f 85 ae
- 01 00 00 fb 45 85 f6 <0f> 88 88 01 00 00 48 8b 04 24 49 63 ce 4c 89 ea 48 6b f1 68 48 29
-[56252.088911] RSP: 0018:ffff93120c97fe98 EFLAGS: 00000202
-[56252.096912] RAX: ffff9149afd80000 RBX: ffff9141d3a72800 RCX: 0000000000000000
-[56252.106844] RDX: 00003329176c6b98 RSI: ffffffe36db3fdc7 RDI: 0000000000000000
-[56252.116733] RBP: 0000000000000002 R08: 0000000000000002 R09: 000000000000004e
-[56252.126652] R10: ffff9149afdb30c4 R11: 071c71c71c71c71c R12: ffffffff985ff860
-[56252.136637] R13: 00003329176c6b98 R14: 0000000000000002 R15: 0000000000000000
-[56252.146667]  ? cpuidle_enter_state+0xab/0x420
-[56252.153909]  cpuidle_enter+0x2d/0x40
-[56252.160360]  do_idle+0x176/0x1c0
-[56252.166456]  cpu_startup_entry+0x29/0x30
-[56252.173248]  start_secondary+0xf7/0x100
-[56252.179941]  common_startup_64+0x13e/0x141
-[56252.186886]  </TASK>
-
->From the crash dump, we found that the cpu_map_flush_list inside
-redirect info is partially corrupted: its list_head->next points to
-itself, but list_head->prev points to a valid list of unflushed bq
-entries.
-
-This turned out to be a result of missed XDP flush on redirect lists. By
-digging in the actual source code, we found that
-commit 7f0a168b0441 ("bnxt_en: Add completion ring pointer in TX and RX
-ring structures") incorrectly overwrites the event mask for XDP_REDIRECT
-in bnxt_rx_xdp. We can stably reproduce this crash by returning XDP_TX
-and XDP_REDIRECT randomly for incoming packets in a naive XDP program.
-Properly propagate the XDP_REDIRECT events back fixes the crash.
-
-Fixes: a7559bc8c17c ("bnxt: support transmit and free of aggregation buffers")
-Tested-by: Andrew Rzeznik <arzeznik@cloudflare.com>
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Andy Gospodarek <gospo@broadcom.com>
-Link: https://patch.msgid.link/aFl7jpCNzscumuN2@debian.debian
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f88f0bdfc32f ("um: UBD Improvements")
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Link: https://patch.msgid.link/20250606124428.148164-2-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/um/drivers/ubd_user.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index c365a9e64f728..9de6eefad9791 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -2958,6 +2958,7 @@ static int __bnxt_poll_work(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- {
- 	struct bnxt_napi *bnapi = cpr->bnapi;
- 	u32 raw_cons = cpr->cp_raw_cons;
-+	bool flush_xdp = false;
- 	u32 cons;
- 	int rx_pkts = 0;
- 	u8 event = 0;
-@@ -3011,6 +3012,8 @@ static int __bnxt_poll_work(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 			else
- 				rc = bnxt_force_rx_discard(bp, cpr, &raw_cons,
- 							   &event);
-+			if (event & BNXT_REDIRECT_EVENT)
-+				flush_xdp = true;
- 			if (likely(rc >= 0))
- 				rx_pkts += rc;
- 			/* Increment rx_pkts when rc is -ENOMEM to count towards
-@@ -3035,7 +3038,7 @@ static int __bnxt_poll_work(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 		}
- 	}
+diff --git a/arch/um/drivers/ubd_user.c b/arch/um/drivers/ubd_user.c
+index c5e6545f6fcf6..8e8a8bf518b63 100644
+--- a/arch/um/drivers/ubd_user.c
++++ b/arch/um/drivers/ubd_user.c
+@@ -41,7 +41,7 @@ int start_io_thread(struct os_helper_thread **td_out, int *fd_out)
+ 	*fd_out = fds[1];
  
--	if (event & BNXT_REDIRECT_EVENT) {
-+	if (flush_xdp) {
- 		xdp_do_flush();
- 		event &= ~BNXT_REDIRECT_EVENT;
- 	}
+ 	err = os_set_fd_block(*fd_out, 0);
+-	err = os_set_fd_block(kernel_fd, 0);
++	err |= os_set_fd_block(kernel_fd, 0);
+ 	if (err) {
+ 		printk("start_io_thread - failed to set nonblocking I/O.\n");
+ 		goto out_close;
 -- 
 2.39.5
 
