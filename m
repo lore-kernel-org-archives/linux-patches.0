@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B0957C9F;
-	Thu,  3 Jul 2025 15:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F122EE27B;
+	Thu,  3 Jul 2025 15:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554844; cv=none; b=bY+M3mq4n5FK73kpsXqh+IeA9BoY97xT52qMOpXF8YiG5OOn8FezVcwBGJEjWaAUI6pUHDa/B/lGlUjku05Ngf53Fj7SfzFPwo+INAVGnMe6TNMYpuAsGLhnHvuZ3M4BURftgJzulegOG61DdjAs6K5GE0hhLar+nVqNYR3N11Y=
+	t=1751554847; cv=none; b=lOC32yiqamjv7fWlVTlTEndxAVVUNLh3JGOGHWmL2OxgrWg9+OsItCk2KZeNFjnJQ0ptsMdf5Izsm/nhBhdIYWknK+rjnADaHgV/clGSj7k3ps9LzxnmbvcN0HBNImnJS3EZE2CEXWEjSGAgnEGiLGP0qzedgAZTTTrwRfL2PyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554844; c=relaxed/simple;
-	bh=aU3ifmTY+R2wuwQKFrS44KF3nqRTu6uaMnAR3TOFmig=;
+	s=arc-20240116; t=1751554847; c=relaxed/simple;
+	bh=VOSJYV+LH5IN751X9wKhIcoB3XF1/vdDTzdQosBJmeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=brmr7OihZG10lDLS+0Y/PKRP1X9xyMtYwPEjgmFBeL3BLg4sp17HlfPh8ylBMa24LHuPu4QYcWqjma+tpMvhfyw+Ike6fyQQYcJSYsbpyxUgb9IqGWLEo6IGhEfxv+QNnYa972zWbgMobZn+regGgum3N6DiRJiaizV5Qh89I1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZQo87+c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=boT/fjwoi7ACCS/X5HY68+tMGgxqIJwP5+/gIsw1MqPpWmKVWZk5nP1j5pEdI2Knz1vIG2xkRZ/jCcYMkBNK/BTDEsilRzEzdTiV31cWvR9DryohMibWx/n2qHekA8rsh7QPFSQmmoBaVUt0S0WEfAUvkor+R3U4hrqb0vNfecw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zR3x6e7Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZQo87+c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E620EC4CEE3;
-	Thu,  3 Jul 2025 15:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zR3x6e7Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD65C4CEE3;
+	Thu,  3 Jul 2025 15:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554844;
-	bh=aU3ifmTY+R2wuwQKFrS44KF3nqRTu6uaMnAR3TOFmig=;
+	s=korg; t=1751554847;
+	bh=VOSJYV+LH5IN751X9wKhIcoB3XF1/vdDTzdQosBJmeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pZQo87+cCY/7SAtSFOveoFqzjRgCSnejgaAfUzs3yv4shtBHRb6H9Y0dg/sxvAcj4
-	 lxxuvehSsHp3jhvb4Yz9XZ2w2Lb8T7FS+mtAE/g55HWAC2lSBJ6UbBTuZgQ3AqTqz3
-	 zDIFEo1nxHqT7qferDz4UZmMzynEvLfcQA24Fg3E=
+	b=zR3x6e7ZmpAd12XD7b1EQVNL3GMB928DeDfbUB5moy0M+zyLJVP92MsS6/ZiZSx0M
+	 o799k8w7/GROx3fP2S3bFy9rFsdnbqE16j3PK68fuCFesCq36szSzLvjed72jNzF53
+	 RGrP5PCoYMekOZR8Etrtjvy4vT/Nfnb2E9y7YgrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Chen Yufeng <chenyufeng@iie.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 066/263] usb: typec: mux: do not return on EOPNOTSUPP in {mux, switch}_set
-Date: Thu,  3 Jul 2025 16:39:46 +0200
-Message-ID: <20250703144006.953220000@linuxfoundation.org>
+Subject: [PATCH 6.15 057/263] usb: potential integer overflow in usbg_make_tpg()
+Date: Thu,  3 Jul 2025 16:39:37 +0200
+Message-ID: <20250703144006.598639443@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,50 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Chen Yufeng <chenyufeng@iie.ac.cn>
 
-[ Upstream commit 0f7bbef1794dc87141897f804e5871a293aa174b ]
+[ Upstream commit 153874010354d050f62f8ae25cbb960c17633dc5 ]
 
-Since the typec connectors can have many muxes or switches for different
-lanes (sbu, usb2, usb3) going into different modal states (usb2, usb3,
-audio, debug) all of them will be called on typec_switch_set and
-typec_mux_set. But not all of them will be handling the expected mode.
+The variable tpgt in usbg_make_tpg() is defined as unsigned long and is
+assigned to tpgt->tport_tpgt, which is defined as u16. This may cause an
+integer overflow when tpgt is greater than USHRT_MAX (65535). I
+haven't tried to trigger it myself, but it is possible to trigger it
+by calling usbg_make_tpg() with a large value for tpgt.
 
-If one of the mux or switch will come back with EOPTNOSUPP this is no
-reason to stop running through the next ones. Therefor we skip this
-particular error value and continue calling the next.
+I modified the type of tpgt to match tpgt->tport_tpgt and adjusted the
+relevant code accordingly.
 
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250404-ml-topic-typec-mux-v1-1-22c0526381ba@pengutronix.de
+This patch is similar to commit 59c816c1f24d ("vhost/scsi: potential
+memory corruption").
+
+Signed-off-by: Chen Yufeng <chenyufeng@iie.ac.cn>
+Link: https://lore.kernel.org/r/20250415065857.1619-1-chenyufeng@iie.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/mux.c | 4 ++--
+ drivers/usb/gadget/function/f_tcm.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
-index 49926d6e72c71..182c902c42f61 100644
---- a/drivers/usb/typec/mux.c
-+++ b/drivers/usb/typec/mux.c
-@@ -214,7 +214,7 @@ int typec_switch_set(struct typec_switch *sw,
- 		sw_dev = sw->sw_devs[i];
+diff --git a/drivers/usb/gadget/function/f_tcm.c b/drivers/usb/gadget/function/f_tcm.c
+index 5a2e1237f85c3..6e8804f04baa7 100644
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -1641,14 +1641,14 @@ static struct se_portal_group *usbg_make_tpg(struct se_wwn *wwn,
+ 	struct usbg_tport *tport = container_of(wwn, struct usbg_tport,
+ 			tport_wwn);
+ 	struct usbg_tpg *tpg;
+-	unsigned long tpgt;
++	u16 tpgt;
+ 	int ret;
+ 	struct f_tcm_opts *opts;
+ 	unsigned i;
  
- 		ret = sw_dev->set(sw_dev, orientation);
--		if (ret)
-+		if (ret && ret != -EOPNOTSUPP)
- 			return ret;
- 	}
- 
-@@ -378,7 +378,7 @@ int typec_mux_set(struct typec_mux *mux, struct typec_mux_state *state)
- 		mux_dev = mux->mux_devs[i];
- 
- 		ret = mux_dev->set(mux_dev, state);
--		if (ret)
-+		if (ret && ret != -EOPNOTSUPP)
- 			return ret;
- 	}
- 
+ 	if (strstr(name, "tpgt_") != name)
+ 		return ERR_PTR(-EINVAL);
+-	if (kstrtoul(name + 5, 0, &tpgt) || tpgt > UINT_MAX)
++	if (kstrtou16(name + 5, 0, &tpgt))
+ 		return ERR_PTR(-EINVAL);
+ 	ret = -ENODEV;
+ 	mutex_lock(&tpg_instances_lock);
 -- 
 2.39.5
 
