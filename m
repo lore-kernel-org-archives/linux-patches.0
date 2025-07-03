@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991EF2ED168;
-	Thu,  3 Jul 2025 14:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E352EE299;
+	Thu,  3 Jul 2025 14:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554532; cv=none; b=egAA3Lybr4kP4tEj9imNyA1ylG32XLkFX2NLHvjIr97tMuBubrPjcKe1zVhvQytpLACnK8o4GHeLd5ob2pm3myb2AWP5RGxTLCO57zWdOI0TLz78yBbviDseIVk3A7+zd8ik3fRnHnkayMxF6kqTL4/AC/wH9SyzqleDcH3IeDc=
+	t=1751554535; cv=none; b=CEf5dJZnlV8Q6igZ03LpMJePFJYv4dpUKJfeEQ3Wym3graWDcMzYIYwUnnNiBF82I4z2zOx1CUBxMOV1UQcggkDDAYMQ+nbPTjNnSjG3K4nYTJRAiUsOi0IOUnEM/WDdm0qr54p/gbwq+zc/ptEqoK+R/N4OaWiSO/wVieMlzlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554532; c=relaxed/simple;
-	bh=uVx3mBtFP5rgR6t+A3y9zQjhRk1ULeogXFsWzRjfgis=;
+	s=arc-20240116; t=1751554535; c=relaxed/simple;
+	bh=xEa2onxehLLm1lSEbpCWYj+cCqA015sF32T99m1ex+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dlAFQwvBOuDbqDdAQbw+JYF6CHOKCx6A95X0Vhq+s+KIZCx+p1HjSfANHYg1yy09uCYO0gYfS+utc7ru6Mli0QrhlGWXBchNHqVfV3p42dC8ujnUz+taK5Ju62Y/TraxHQxWILKI7fcW+hxe+RTCZ6sWQW1w3ZDTvEfntUDuquU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZvyhniR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBfcl5gAIIVEnGNVblo5IX4/C+EwFj+jL1r/ELMPVaJvV90EGgoM1lW6WcH+7Td1FooklrqnPzz2oKgWdlSoy2z32SCdO8CUNzT0ywdnf0mWUpj/P7mXCNNY1eXfhpcVUB7C0ENnYIJD1HhpW+E28p06XvimCXQKw25LTwiIMfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLVXdPxW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZvyhniR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1C7C4CEE3;
-	Thu,  3 Jul 2025 14:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLVXdPxW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B441C4CEE3;
+	Thu,  3 Jul 2025 14:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554532;
-	bh=uVx3mBtFP5rgR6t+A3y9zQjhRk1ULeogXFsWzRjfgis=;
+	s=korg; t=1751554535;
+	bh=xEa2onxehLLm1lSEbpCWYj+cCqA015sF32T99m1ex+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZvyhniRntMmeEwV6QS5YloTS3ABrpXAvpLnAJmFtSOu342wBTKLfA/y95wr6CFC0
-	 DbbVpUrg5cqxJVbL79K9DVbQ9/2mAVukc6aX0TQxGuVEz5POOGO68oZq11iRYaALYo
-	 wcnpchnMNORcrgeUNmrU0FZeeDh0KtN89pBnXm8c=
+	b=iLVXdPxW9vQZ+2Sd2ZZfCAJj8VHy6RAeZLoeZxIKRFjBE4CQvNasQTIxyw9kAp9+n
+	 pgopEfR0vkUQhIIMbJ9xlD/q36TBq+F5EL+HjszH6LbIL2LGdtH0EFmYBzJ9z7U2n5
+	 RRyB2txvESt3udCg2bjljAZVfqkomFGx2n6KTT0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Shapovalov <intelfx@intelfx.name>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Kevin Hao <haokexin@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 217/218] btrfs: fix use-after-free on inode when scanning root during em shrinking
-Date: Thu,  3 Jul 2025 16:42:45 +0200
-Message-ID: <20250703144004.887662954@linuxfoundation.org>
+Subject: [PATCH 6.12 218/218] spi: fsl-qspi: Fix double cleanup in probe error path
+Date: Thu,  3 Jul 2025 16:42:46 +0200
+Message-ID: <20250703144004.932689395@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -54,51 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit 59f37036bb7ab3d554c24abc856aabca01126414 ]
+From: Kevin Hao <haokexin@gmail.com>
 
-At btrfs_scan_root() we are accessing the inode's root (and fs_info) in a
-call to btrfs_fs_closing() after we have scheduled the inode for a delayed
-iput, and that can result in a use-after-free on the inode in case the
-cleaner kthread does the iput before we dereference the inode in the call
-to btrfs_fs_closing().
+[ Upstream commit 5d07ab2a7fa1305e429d9221716582f290b58078 ]
 
-Fix this by using the fs_info stored already in a local variable instead
-of doing inode->root->fs_info.
+Commit 40369bfe717e ("spi: fsl-qspi: use devm function instead of driver
+remove") introduced managed cleanup via fsl_qspi_cleanup(), but
+incorrectly retain manual cleanup in two scenarios:
 
-Fixes: 102044384056 ("btrfs: make the extent map shrinker run asynchronously as a work queue job")
-CC: stable@vger.kernel.org # 6.13+
-Tested-by: Ivan Shapovalov <intelfx@intelfx.name>
-Link: https://lore.kernel.org/linux-btrfs/0414d690ac5680d0d77dfc930606cdc36e42e12f.camel@intelfx.name/
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+- On devm_add_action_or_reset() failure, the function automatically call
+  fsl_qspi_cleanup(). However, the current code still jumps to
+  err_destroy_mutex, repeating cleanup.
+
+- After the fsl_qspi_cleanup() action is added successfully, there is no
+  need to manually perform the cleanup in the subsequent error path.
+  However, the current code still jumps to err_destroy_mutex on spi
+  controller failure, repeating cleanup.
+
+Skip redundant manual cleanup calls to fix these issues.
+
+Cc: stable@vger.kernel.org
+Fixes: 40369bfe717e ("spi: fsl-qspi: use devm function instead of driver remove")
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Link: https://patch.msgid.link/20250410-spi-v1-1-56e867cc19cf@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_map.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-fsl-qspi.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/extent_map.c b/fs/btrfs/extent_map.c
-index 93043edc8ff93..36af9aa9aab13 100644
---- a/fs/btrfs/extent_map.c
-+++ b/fs/btrfs/extent_map.c
-@@ -1250,6 +1250,7 @@ static struct btrfs_inode *find_first_inode_to_shrink(struct btrfs_root *root,
+diff --git a/drivers/spi/spi-fsl-qspi.c b/drivers/spi/spi-fsl-qspi.c
+index 5c59fddb32c1b..2f54dc09d11b1 100644
+--- a/drivers/spi/spi-fsl-qspi.c
++++ b/drivers/spi/spi-fsl-qspi.c
+@@ -949,17 +949,14 @@ static int fsl_qspi_probe(struct platform_device *pdev)
  
- static long btrfs_scan_root(struct btrfs_root *root, struct btrfs_em_shrink_ctx *ctx)
- {
-+	struct btrfs_fs_info *fs_info = root->fs_info;
- 	struct btrfs_inode *inode;
- 	long nr_dropped = 0;
- 	u64 min_ino = ctx->last_ino + 1;
-@@ -1264,7 +1265,7 @@ static long btrfs_scan_root(struct btrfs_root *root, struct btrfs_em_shrink_ctx
- 		iput(&inode->vfs_inode);
+ 	ret = devm_add_action_or_reset(dev, fsl_qspi_cleanup, q);
+ 	if (ret)
+-		goto err_destroy_mutex;
++		goto err_put_ctrl;
  
- 		if (ctx->scanned >= ctx->nr_to_scan ||
--		    btrfs_fs_closing(inode->root->fs_info))
-+		    btrfs_fs_closing(fs_info))
- 			break;
+ 	ret = devm_spi_register_controller(dev, ctlr);
+ 	if (ret)
+-		goto err_destroy_mutex;
++		goto err_put_ctrl;
  
- 		cond_resched();
+ 	return 0;
+ 
+-err_destroy_mutex:
+-	mutex_destroy(&q->lock);
+-
+ err_disable_clk:
+ 	fsl_qspi_clk_disable_unprep(q);
+ 
 -- 
 2.39.5
 
