@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132532EE287;
-	Thu,  3 Jul 2025 14:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDC113A258;
+	Thu,  3 Jul 2025 14:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554074; cv=none; b=qI3DJMqVbjGTMWId76b25qIqoDma2xC1KPbm7fvzUhZyJk714yeNLoFhU05EUFftmedvrP7ZsxEoClpsmgM+UvEad4TONBSJsmMd6GIhjt3CdQmdjiuczEBqhJfdOeJjCpxbCrf3zfe+dkexvdYdR6Y2EAptjC7iU/nSWQ8Ovjk=
+	t=1751554077; cv=none; b=eG59SkZEiuVisnW1NHDyk6Er2lu3TcxChh7KMstn8QVY5ekP5i8LVRXE5jp31Y+WypDQV0ZHEkg4naN1HuQV0oi3q487q0JQPo0fI1YvfxWTix5vRLVa/B/oNkhoPeyBF1vJ4Bb2lYSrGHwI3p8fkwfrCREXXvWA+dgxZjBCE8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554074; c=relaxed/simple;
-	bh=OxXYITxY9snVyE/jxDxKzGEhv40Uq05R/Mjnbu9M6yI=;
+	s=arc-20240116; t=1751554077; c=relaxed/simple;
+	bh=Jd4fbu9rnGzv4aPiTmdl7ygmqs5a2R3PM4/JZsQjyds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SI9UV15d8hxUXHzO7KeiLeUy9nUIE3LtZsKVKNxxtLUWFIYdyA+Z0IXwkvL94+GqSTUym82H6qh+FvMKOdlQH6LD9vIIul/yJwYvcPAJNAJJAtKhqw9XzrLlKmRDMp+g8losRuTKpLdgnzWH5B9O03gmUnYiW7Hx3ULBbMLtUUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdhV1D96; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YdbtUmJVHTgHSI4LnS5uGkvDM3igYCK0OZGPcFlJ0Z/y1+N/46hg85EB4KCQPl8mH8OplAdrz4sDxDgnJINAISulcezgVqzRKQKF+sVAtEGPo3Jho0Zg/ahb6rblwXyHDCoK7SLsA1y4ZwAomnvkUiEKeUetid0YBXY2cFSnw1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSV/3xHi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdhV1D96"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756DFC4CEE3;
-	Thu,  3 Jul 2025 14:47:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSV/3xHi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D31C4CEE3;
+	Thu,  3 Jul 2025 14:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554073;
-	bh=OxXYITxY9snVyE/jxDxKzGEhv40Uq05R/Mjnbu9M6yI=;
+	s=korg; t=1751554077;
+	bh=Jd4fbu9rnGzv4aPiTmdl7ygmqs5a2R3PM4/JZsQjyds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HdhV1D965ioqimxF7qHfJzou6zyEF7RBrcZJdF8QZ+UlSS9Xa6dpTG5RFMk7Nin3s
-	 e20omDaBcaDydyJFATHXeyUcE2m1THwsdA3p8EDnQZYjSy+ftGb6KrD5db1O9MFX5j
-	 iVLlRuKx/i10YEQwtqftIvgRudda1Qjzq9SESf7o=
+	b=ZSV/3xHivLrRnTIn7zx43n6QX2Eh5OIMyX7bTv3nfksK9KpblaW1jI63IuC6N7A07
+	 nbjBP90Cx4vVigJ5GTbFy+XIXrREk7QS0NIvt+pNpjFGhSeWW7XSgL1kwmkIZwt1Gf
+	 VhIIHlEElTZUN6xjsy6O6omL3dfSEzABIpv1fZPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Wachowski <karol.wachowski@intel.com>,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
 	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Karol Wachowski <karol.wachowski@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/218] accel/ivpu: Separate DB ID and CMDQ ID allocations from CMDQ allocation
-Date: Thu,  3 Jul 2025 16:40:21 +0200
-Message-ID: <20250703143958.859404005@linuxfoundation.org>
+Subject: [PATCH 6.12 074/218] accel/ivpu: Add debugfs interface for setting HWS priority bands
+Date: Thu,  3 Jul 2025 16:40:22 +0200
+Message-ID: <20250703143958.898455216@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -54,157 +53,235 @@ Content-Transfer-Encoding: 8bit
 
 From: Karol Wachowski <karol.wachowski@intel.com>
 
-[ Upstream commit 950942b4813f8c44dbec683fdb140cf4a238516b ]
+[ Upstream commit 320323d2e5456df9d6236ac1ce9c030b1a74aa5b ]
 
-Move doorbell ID and command queue ID XArray allocations from command
-queue memory allocation function. This will allow ID allocations to be
-done without the need for actual memory allocation.
+Add debugfs interface to modify following priority bands properties:
+ * grace period
+ * process grace period
+ * process quantum
 
-Signed-off-by: Karol Wachowski <karol.wachowski@intel.com>
-Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
+This allows for the adjustment of hardware scheduling algorithm parameters
+for each existing priority band, facilitating validation and fine-tuning.
+
 Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Signed-off-by: Karol Wachowski <karol.wachowski@intel.com>
 Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250107173238.381120-2-maciej.falkowski@linux.intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20250204084622.2422544-4-jacek.lawrynowicz@linux.intel.com
 Stable-dep-of: a47e36dc5d90 ("accel/ivpu: Trigger device recovery on engine reset/resume failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_job.c | 88 +++++++++++++++++++++++++----------
- 1 file changed, 64 insertions(+), 24 deletions(-)
+ drivers/accel/ivpu/ivpu_debugfs.c | 84 +++++++++++++++++++++++++++++++
+ drivers/accel/ivpu/ivpu_hw.c      | 21 ++++++++
+ drivers/accel/ivpu/ivpu_hw.h      |  5 ++
+ drivers/accel/ivpu/ivpu_jsm_msg.c | 29 ++++-------
+ 4 files changed, 121 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_job.c b/drivers/accel/ivpu/ivpu_job.c
-index 5eaf219170eee..e57acae3b42ef 100644
---- a/drivers/accel/ivpu/ivpu_job.c
-+++ b/drivers/accel/ivpu/ivpu_job.c
-@@ -86,23 +86,9 @@ static struct ivpu_cmdq *ivpu_cmdq_alloc(struct ivpu_file_priv *file_priv)
- 	if (!cmdq)
- 		return NULL;
+diff --git a/drivers/accel/ivpu/ivpu_debugfs.c b/drivers/accel/ivpu/ivpu_debugfs.c
+index 05a0d99ce95c4..1edf6e5644026 100644
+--- a/drivers/accel/ivpu/ivpu_debugfs.c
++++ b/drivers/accel/ivpu/ivpu_debugfs.c
+@@ -423,6 +423,88 @@ static int dct_active_set(void *data, u64 active_percent)
  
--	ret = xa_alloc_cyclic(&vdev->db_xa, &cmdq->db_id, NULL, vdev->db_limit, &vdev->db_next,
--			      GFP_KERNEL);
--	if (ret < 0) {
--		ivpu_err(vdev, "Failed to allocate doorbell id: %d\n", ret);
--		goto err_free_cmdq;
--	}
--
--	ret = xa_alloc_cyclic(&file_priv->cmdq_xa, &cmdq->id, cmdq, file_priv->cmdq_limit,
--			      &file_priv->cmdq_id_next, GFP_KERNEL);
--	if (ret < 0) {
--		ivpu_err(vdev, "Failed to allocate command queue id: %d\n", ret);
--		goto err_erase_db_xa;
--	}
--
- 	cmdq->mem = ivpu_bo_create_global(vdev, SZ_4K, DRM_IVPU_BO_WC | DRM_IVPU_BO_MAPPABLE);
- 	if (!cmdq->mem)
--		goto err_erase_cmdq_xa;
-+		goto err_free_cmdq;
+ DEFINE_DEBUGFS_ATTRIBUTE(ivpu_dct_fops, dct_active_get, dct_active_set, "%llu\n");
  
- 	ret = ivpu_preemption_buffers_create(vdev, file_priv, cmdq);
- 	if (ret)
-@@ -110,10 +96,6 @@ static struct ivpu_cmdq *ivpu_cmdq_alloc(struct ivpu_file_priv *file_priv)
++static int priority_bands_show(struct seq_file *s, void *v)
++{
++	struct ivpu_device *vdev = s->private;
++	struct ivpu_hw_info *hw = vdev->hw;
++
++	for (int band = VPU_JOB_SCHEDULING_PRIORITY_BAND_IDLE;
++	     band < VPU_JOB_SCHEDULING_PRIORITY_BAND_COUNT; band++) {
++		switch (band) {
++		case VPU_JOB_SCHEDULING_PRIORITY_BAND_IDLE:
++			seq_puts(s, "Idle:     ");
++			break;
++
++		case VPU_JOB_SCHEDULING_PRIORITY_BAND_NORMAL:
++			seq_puts(s, "Normal:   ");
++			break;
++
++		case VPU_JOB_SCHEDULING_PRIORITY_BAND_FOCUS:
++			seq_puts(s, "Focus:    ");
++			break;
++
++		case VPU_JOB_SCHEDULING_PRIORITY_BAND_REALTIME:
++			seq_puts(s, "Realtime: ");
++			break;
++		}
++
++		seq_printf(s, "grace_period %9u process_grace_period %9u process_quantum %9u\n",
++			   hw->hws.grace_period[band], hw->hws.process_grace_period[band],
++			   hw->hws.process_quantum[band]);
++	}
++
++	return 0;
++}
++
++static int priority_bands_fops_open(struct inode *inode, struct file *file)
++{
++	return single_open(file, priority_bands_show, inode->i_private);
++}
++
++static ssize_t
++priority_bands_fops_write(struct file *file, const char __user *user_buf, size_t size, loff_t *pos)
++{
++	struct seq_file *s = file->private_data;
++	struct ivpu_device *vdev = s->private;
++	char buf[64];
++	u32 grace_period;
++	u32 process_grace_period;
++	u32 process_quantum;
++	u32 band;
++	int ret;
++
++	if (size >= sizeof(buf))
++		return -EINVAL;
++
++	ret = simple_write_to_buffer(buf, sizeof(buf) - 1, pos, user_buf, size);
++	if (ret < 0)
++		return ret;
++
++	buf[size] = '\0';
++	ret = sscanf(buf, "%u %u %u %u", &band, &grace_period, &process_grace_period,
++		     &process_quantum);
++	if (ret != 4)
++		return -EINVAL;
++
++	if (band >= VPU_JOB_SCHEDULING_PRIORITY_BAND_COUNT)
++		return -EINVAL;
++
++	vdev->hw->hws.grace_period[band] = grace_period;
++	vdev->hw->hws.process_grace_period[band] = process_grace_period;
++	vdev->hw->hws.process_quantum[band] = process_quantum;
++
++	return size;
++}
++
++static const struct file_operations ivpu_hws_priority_bands_fops = {
++	.owner = THIS_MODULE,
++	.open = priority_bands_fops_open,
++	.write = priority_bands_fops_write,
++	.read = seq_read,
++	.llseek = seq_lseek,
++	.release = single_release,
++};
++
+ void ivpu_debugfs_init(struct ivpu_device *vdev)
+ {
+ 	struct dentry *debugfs_root = vdev->drm.debugfs_root;
+@@ -445,6 +527,8 @@ void ivpu_debugfs_init(struct ivpu_device *vdev)
+ 			    &fw_trace_hw_comp_mask_fops);
+ 	debugfs_create_file("fw_trace_level", 0200, debugfs_root, vdev,
+ 			    &fw_trace_level_fops);
++	debugfs_create_file("hws_priority_bands", 0200, debugfs_root, vdev,
++			    &ivpu_hws_priority_bands_fops);
  
- 	return cmdq;
- 
--err_erase_cmdq_xa:
--	xa_erase(&file_priv->cmdq_xa, cmdq->id);
--err_erase_db_xa:
--	xa_erase(&vdev->db_xa, cmdq->db_id);
- err_free_cmdq:
- 	kfree(cmdq);
- 	return NULL;
-@@ -231,30 +213,88 @@ static int ivpu_cmdq_fini(struct ivpu_file_priv *file_priv, struct ivpu_cmdq *cm
- 	return 0;
+ 	debugfs_create_file("reset_engine", 0200, debugfs_root, vdev,
+ 			    &ivpu_reset_engine_fops);
+diff --git a/drivers/accel/ivpu/ivpu_hw.c b/drivers/accel/ivpu/ivpu_hw.c
+index 1214f155afa11..37ef8ce642109 100644
+--- a/drivers/accel/ivpu/ivpu_hw.c
++++ b/drivers/accel/ivpu/ivpu_hw.c
+@@ -110,6 +110,26 @@ static void timeouts_init(struct ivpu_device *vdev)
+ 	}
  }
  
-+static int ivpu_db_id_alloc(struct ivpu_device *vdev, u32 *db_id)
++static void priority_bands_init(struct ivpu_device *vdev)
 +{
-+	int ret;
-+	u32 id;
-+
-+	ret = xa_alloc_cyclic(&vdev->db_xa, &id, NULL, vdev->db_limit, &vdev->db_next, GFP_KERNEL);
-+	if (ret < 0)
-+		return ret;
-+
-+	*db_id = id;
-+	return 0;
++	/* Idle */
++	vdev->hw->hws.grace_period[VPU_JOB_SCHEDULING_PRIORITY_BAND_IDLE] = 0;
++	vdev->hw->hws.process_grace_period[VPU_JOB_SCHEDULING_PRIORITY_BAND_IDLE] = 50000;
++	vdev->hw->hws.process_quantum[VPU_JOB_SCHEDULING_PRIORITY_BAND_IDLE] = 160000;
++	/* Normal */
++	vdev->hw->hws.grace_period[VPU_JOB_SCHEDULING_PRIORITY_BAND_NORMAL] = 50000;
++	vdev->hw->hws.process_grace_period[VPU_JOB_SCHEDULING_PRIORITY_BAND_NORMAL] = 50000;
++	vdev->hw->hws.process_quantum[VPU_JOB_SCHEDULING_PRIORITY_BAND_NORMAL] = 300000;
++	/* Focus */
++	vdev->hw->hws.grace_period[VPU_JOB_SCHEDULING_PRIORITY_BAND_FOCUS] = 50000;
++	vdev->hw->hws.process_grace_period[VPU_JOB_SCHEDULING_PRIORITY_BAND_FOCUS] = 50000;
++	vdev->hw->hws.process_quantum[VPU_JOB_SCHEDULING_PRIORITY_BAND_FOCUS] = 200000;
++	/* Realtime */
++	vdev->hw->hws.grace_period[VPU_JOB_SCHEDULING_PRIORITY_BAND_REALTIME] = 0;
++	vdev->hw->hws.process_grace_period[VPU_JOB_SCHEDULING_PRIORITY_BAND_REALTIME] = 50000;
++	vdev->hw->hws.process_quantum[VPU_JOB_SCHEDULING_PRIORITY_BAND_REALTIME] = 200000;
 +}
 +
-+static int ivpu_cmdq_id_alloc(struct ivpu_file_priv *file_priv, u32 *cmdq_id)
-+{
-+	int ret;
-+	u32 id;
-+
-+	ret = xa_alloc_cyclic(&file_priv->cmdq_xa, &id, NULL, file_priv->cmdq_limit,
-+			      &file_priv->cmdq_id_next, GFP_KERNEL);
-+	if (ret < 0)
-+		return ret;
-+
-+	*cmdq_id = id;
-+	return 0;
-+}
-+
- static struct ivpu_cmdq *ivpu_cmdq_acquire(struct ivpu_file_priv *file_priv, u8 priority)
+ static void memory_ranges_init(struct ivpu_device *vdev)
  {
-+	struct ivpu_device *vdev = file_priv->vdev;
- 	struct ivpu_cmdq *cmdq;
--	unsigned long cmdq_id;
-+	unsigned long id;
+ 	if (ivpu_hw_ip_gen(vdev) == IVPU_HW_IP_37XX) {
+@@ -248,6 +268,7 @@ int ivpu_hw_init(struct ivpu_device *vdev)
+ {
+ 	ivpu_hw_btrs_info_init(vdev);
+ 	ivpu_hw_btrs_freq_ratios_init(vdev);
++	priority_bands_init(vdev);
+ 	memory_ranges_init(vdev);
+ 	platform_init(vdev);
+ 	wa_init(vdev);
+diff --git a/drivers/accel/ivpu/ivpu_hw.h b/drivers/accel/ivpu/ivpu_hw.h
+index 1e85306bcd065..1c016b99a0fdd 100644
+--- a/drivers/accel/ivpu/ivpu_hw.h
++++ b/drivers/accel/ivpu/ivpu_hw.h
+@@ -45,6 +45,11 @@ struct ivpu_hw_info {
+ 		u8 pn_ratio;
+ 		u32 profiling_freq;
+ 	} pll;
++	struct {
++		u32 grace_period[VPU_HWS_NUM_PRIORITY_BANDS];
++		u32 process_quantum[VPU_HWS_NUM_PRIORITY_BANDS];
++		u32 process_grace_period[VPU_HWS_NUM_PRIORITY_BANDS];
++	} hws;
+ 	u32 tile_fuse;
+ 	u32 sku;
+ 	u16 config;
+diff --git a/drivers/accel/ivpu/ivpu_jsm_msg.c b/drivers/accel/ivpu/ivpu_jsm_msg.c
+index 33d597b2a7f53..21018feb45978 100644
+--- a/drivers/accel/ivpu/ivpu_jsm_msg.c
++++ b/drivers/accel/ivpu/ivpu_jsm_msg.c
+@@ -7,6 +7,7 @@
+ #include "ivpu_hw.h"
+ #include "ivpu_ipc.h"
+ #include "ivpu_jsm_msg.h"
++#include "vpu_jsm_api.h"
+ 
+ const char *ivpu_jsm_msg_type_to_str(enum vpu_ipc_msg_type type)
+ {
+@@ -409,26 +410,18 @@ int ivpu_jsm_hws_setup_priority_bands(struct ivpu_device *vdev)
+ {
+ 	struct vpu_jsm_msg req = { .type = VPU_JSM_MSG_SET_PRIORITY_BAND_SETUP };
+ 	struct vpu_jsm_msg resp;
++	struct ivpu_hw_info *hw = vdev->hw;
++	struct vpu_ipc_msg_payload_hws_priority_band_setup *setup =
++		&req.payload.hws_priority_band_setup;
  	int ret;
  
- 	lockdep_assert_held(&file_priv->lock);
- 
--	xa_for_each(&file_priv->cmdq_xa, cmdq_id, cmdq)
-+	xa_for_each(&file_priv->cmdq_xa, id, cmdq)
- 		if (cmdq->priority == priority)
- 			break;
- 
- 	if (!cmdq) {
- 		cmdq = ivpu_cmdq_alloc(file_priv);
--		if (!cmdq)
-+		if (!cmdq) {
-+			ivpu_err(vdev, "Failed to allocate command queue\n");
- 			return NULL;
-+		}
-+
-+		ret = ivpu_db_id_alloc(vdev, &cmdq->db_id);
-+		if (ret) {
-+			ivpu_err(file_priv->vdev, "Failed to allocate doorbell ID: %d\n", ret);
-+			goto err_free_cmdq;
-+		}
-+
-+		ret = ivpu_cmdq_id_alloc(file_priv, &cmdq->id);
-+		if (ret) {
-+			ivpu_err(vdev, "Failed to allocate command queue ID: %d\n", ret);
-+			goto err_erase_db_id;
-+		}
-+
- 		cmdq->priority = priority;
-+		ret = xa_err(xa_store(&file_priv->cmdq_xa, cmdq->id, cmdq, GFP_KERNEL));
-+		if (ret) {
-+			ivpu_err(vdev, "Failed to store command queue in cmdq_xa: %d\n", ret);
-+			goto err_erase_cmdq_id;
-+		}
- 	}
- 
- 	ret = ivpu_cmdq_init(file_priv, cmdq, priority);
--	if (ret)
--		return NULL;
-+	if (ret) {
-+		ivpu_err(vdev, "Failed to initialize command queue: %d\n", ret);
-+		goto err_free_cmdq;
+-	/* Idle */
+-	req.payload.hws_priority_band_setup.grace_period[0] = 0;
+-	req.payload.hws_priority_band_setup.process_grace_period[0] = 50000;
+-	req.payload.hws_priority_band_setup.process_quantum[0] = 160000;
+-	/* Normal */
+-	req.payload.hws_priority_band_setup.grace_period[1] = 50000;
+-	req.payload.hws_priority_band_setup.process_grace_period[1] = 50000;
+-	req.payload.hws_priority_band_setup.process_quantum[1] = 300000;
+-	/* Focus */
+-	req.payload.hws_priority_band_setup.grace_period[2] = 50000;
+-	req.payload.hws_priority_band_setup.process_grace_period[2] = 50000;
+-	req.payload.hws_priority_band_setup.process_quantum[2] = 200000;
+-	/* Realtime */
+-	req.payload.hws_priority_band_setup.grace_period[3] = 0;
+-	req.payload.hws_priority_band_setup.process_grace_period[3] = 50000;
+-	req.payload.hws_priority_band_setup.process_quantum[3] = 200000;
+-
+-	req.payload.hws_priority_band_setup.normal_band_percentage = 10;
++	for (int band = VPU_JOB_SCHEDULING_PRIORITY_BAND_IDLE;
++	     band < VPU_JOB_SCHEDULING_PRIORITY_BAND_COUNT; band++) {
++		setup->grace_period[band] = hw->hws.grace_period[band];
++		setup->process_grace_period[band] = hw->hws.process_grace_period[band];
++		setup->process_quantum[band] = hw->hws.process_quantum[band];
 +	}
++	setup->normal_band_percentage = 10;
  
- 	return cmdq;
-+
-+err_erase_cmdq_id:
-+	xa_erase(&file_priv->cmdq_xa, cmdq->id);
-+err_erase_db_id:
-+	xa_erase(&vdev->db_xa, cmdq->db_id);
-+err_free_cmdq:
-+	ivpu_cmdq_free(file_priv, cmdq);
-+	return NULL;
- }
- 
- void ivpu_cmdq_release_all_locked(struct ivpu_file_priv *file_priv)
+ 	ret = ivpu_ipc_send_receive_internal(vdev, &req, VPU_JSM_MSG_SET_PRIORITY_BAND_SETUP_RSP,
+ 					     &resp, VPU_IPC_CHAN_ASYNC_CMD, vdev->timeout.jsm);
 -- 
 2.39.5
 
