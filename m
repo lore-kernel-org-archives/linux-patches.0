@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA1472610;
-	Thu,  3 Jul 2025 14:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBD672610;
+	Thu,  3 Jul 2025 14:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554087; cv=none; b=NorZRo8vHAI6+k1LlFbmcOhw6PVzeduvlWo73wPL/6mEN5waRutEkeipqJNaC6z+W0W//i/T/vpvsiaPY3pQh/mhH66ppMqEI5EptkjkvP/nKMZXOIOnCTKsUFGfigHMiEl3dqQ8tuxod6Fmp5kCn2QtLk3+62JbhX+bD4jQHPM=
+	t=1751554090; cv=none; b=W6Tf2ibhVCs0MHp64gAGwrskuyl3V/MT7UwEmGZb6ES1HPIR0zx4agHjvuYErAAKxJ15YqonSYjrWd6Efg8dqZT/oHyK6AStifV4G1ACEg8k3L7QQrMvKVqsRvxgeUgb3tkCXgcIL122/ZtgNpNiN44nXP+Mvq1GBBB88YdcwJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554087; c=relaxed/simple;
-	bh=eDHxOLUn6KWcpKw5VJbTS0+dj42du5Pmam/1uX89iis=;
+	s=arc-20240116; t=1751554090; c=relaxed/simple;
+	bh=Aju9xFu+B9x86U8FAKUMtpToXeP6D6Lv2jw17+4+7eU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YCGSjXwDJjeOS9cj6Ns7rKd9+hKlCk8p0+mT9DcToRgcDm1fIltKnvXxo0G3L/9N/iVfQlAo4BPzttIoqnivrMY/Z1LXO7xLnZzwtIRxRfKd0DYficA5rr6Dzf/lqSGr4Fa4GW7c2WuwujU1dFI+CS66BkwkoqN5jYI7eKH8Pyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJDu61Ze; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mEbQE37gWd6aRVbOXmcBFLwpm70Eoc0RSc4eiCUfYfImf/WUyVBT5WsmJt9ztdLB3XYZ0UraLQKQrqv/kmX/y0ltWcnwPii3Qug1HjhRUHcc/WrJm1DsYCU4SFi7lno1MjInAsR5jfHsH+gGiMonOqbc3d9yWPPEqKvY8yjUwWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUYfJrZT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJDu61Ze"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10F8C4CEE3;
-	Thu,  3 Jul 2025 14:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUYfJrZT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D507EC4CEE3;
+	Thu,  3 Jul 2025 14:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554087;
-	bh=eDHxOLUn6KWcpKw5VJbTS0+dj42du5Pmam/1uX89iis=;
+	s=korg; t=1751554090;
+	bh=Aju9xFu+B9x86U8FAKUMtpToXeP6D6Lv2jw17+4+7eU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJDu61Zevw67ayOkAaVGsv96vsG+h4GQ4jJjJKJnHrkpFGnOjkjnv2PCO3+vYQang
-	 dEzAEKVVjDmDDdNJli5yEZP3roZt13+JpGMVuSgFuzBfxBcWyqAs3bGr7nbya51t+h
-	 GIRHGw3j84K25XLff5bbkXng6tKPzLJlfwTSetZ0=
+	b=rUYfJrZT4MMWK/S3TVE5uDnpuSEDi19OcsuBBdzFlXuOXhqnQWUmdZ2S6jebvtBzQ
+	 3cn8JEEZBTsO0V8pM5TgthAKBZTMav0jmHlJf9AuB/7BDEJJIXKw1x1YCTto/P5VKn
+	 vkokKpMb+y4TGLeagiHegj5RrCDd6GttflEbkJ7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/218] Revert "drm/i915/gem: Allow EXEC_CAPTURE on recoverable contexts on DG1"
-Date: Thu,  3 Jul 2025 16:40:07 +0200
-Message-ID: <20250703143958.304605702@linuxfoundation.org>
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.12 077/218] i2c: tiny-usb: disable zero-length read messages
+Date: Thu,  3 Jul 2025 16:40:25 +0200
+Message-ID: <20250703143959.021323511@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -50,61 +44,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit ed5915cfce2abb9a553c3737badebd4a11d6c9c7 ]
+commit cbdb25ccf7566eee0c2b945e35cb98baf9ed0aa6 upstream.
 
-This reverts commit d6e020819612a4a06207af858e0978be4d3e3140.
+This driver passes the length of an i2c_msg directly to
+usb_control_msg(). If the message is now a read and of length 0, it
+violates the USB protocol and a warning will be printed. Enable the
+I2C_AQ_NO_ZERO_LEN_READ quirk for this adapter thus forbidding 0-length
+read messages altogether.
 
-The IS_DGFX check was put in place because error capture of buffer
-objects is expected to be broken on devices with VRAM.
-
-Userspace fix[1] to the impacted media driver has been submitted, merged
-and a new driver release is out as 25.2.3 where the capture flag is
-dropped on DG1 thus unblocking the usage of media driver on DG1.
-
-[1] https://github.com/intel/media-driver/commit/93c07d9b4b96a78bab21f6acd4eb863f4313ea4a
-
-Cc: stable@vger.kernel.org # v6.0+
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Tvrtko Ursulin <tursulin@ursulin.net>
-Acked-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://lore.kernel.org/r/20250522064127.24293-1-joonas.lahtinen@linux.intel.com
-[Joonas: Update message to point out the merged userspace fix]
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-(cherry picked from commit d2dc30e0aa252830f908c8e793d3139d51321370)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e8c76eed2ecd ("i2c: New i2c-tiny-usb bus driver")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: <stable@vger.kernel.org> # v2.6.22+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250522064349.3823-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-tiny-usb.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index 841438301d802..a3b83cfe17267 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -2014,7 +2014,7 @@ static int eb_capture_stage(struct i915_execbuffer *eb)
- 			continue;
+--- a/drivers/i2c/busses/i2c-tiny-usb.c
++++ b/drivers/i2c/busses/i2c-tiny-usb.c
+@@ -138,6 +138,11 @@ out:
+ 	return ret;
+ }
  
- 		if (i915_gem_context_is_recoverable(eb->gem_context) &&
--		    GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 10))
-+		    (IS_DGFX(eb->i915) || GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 0)))
- 			return -EINVAL;
- 
- 		for_each_batch_create_order(eb, j) {
--- 
-2.39.5
-
++/* prevent invalid 0-length usb_control_msg */
++static const struct i2c_adapter_quirks usb_quirks = {
++	.flags = I2C_AQ_NO_ZERO_LEN_READ,
++};
++
+ /* This is the actual algorithm we define */
+ static const struct i2c_algorithm usb_algorithm = {
+ 	.xfer = usb_xfer,
+@@ -246,6 +251,7 @@ static int i2c_tiny_usb_probe(struct usb
+ 	/* setup i2c adapter description */
+ 	dev->adapter.owner = THIS_MODULE;
+ 	dev->adapter.class = I2C_CLASS_HWMON;
++	dev->adapter.quirks = &usb_quirks;
+ 	dev->adapter.algo = &usb_algorithm;
+ 	dev->adapter.algo_data = dev;
+ 	snprintf(dev->adapter.name, sizeof(dev->adapter.name),
 
 
