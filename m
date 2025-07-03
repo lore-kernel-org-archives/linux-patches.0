@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6A215442C;
-	Thu,  3 Jul 2025 15:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6B52F237B;
+	Thu,  3 Jul 2025 15:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555667; cv=none; b=pHXa1Xrx8j+/zcCaMdIwd6VqazeuRjRQvMthhvdFJx7lrxi+Auf75DTzRHTv4Roijt4/a2z2ATs7rZfW2xPZBXkAhtHWQNhTvg6mc25BpsM9z2Tgte6PjzjErZJ3Pk0RVR9GVNiCAOK+3z3TYdd0w2k89qpWDykh2UrSBcPOlLc=
+	t=1751555670; cv=none; b=Ccmrb9Tunow44eReFr2e4rlqQDH+3I5uqnjSAnHFJ2T1EvRLByZ4FcqitiV86DKCJkxybp5F4t3ELpj2zjksn4mohynSZU5+pKc8zXvTSG/Kf+aPfd59ciXiy26qDZugyPxMT2lltJFo3HJM3rGAGu+cWylE7zYiCL+j7KpE+is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555667; c=relaxed/simple;
-	bh=y2EglgTEmPgKPUh2kQAt22WrZH+fE383Qn1bPLH9bwk=;
+	s=arc-20240116; t=1751555670; c=relaxed/simple;
+	bh=K8T0L81kcUFoAYM7zsFsTfYTefi0slOFj9dZLdN5kyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PexvBOYJUhaRQ7L5D/N0hlXZ7Zd3oltumjZil3t8OP9kA3aNH73OMUao+nNiWfK2uK6gGwv1C5n/FbcrTJt/csxqDXm5H7p6/2ixvOoHkrW5nzW9/YBEf3wlO4uuuIHWDei6nnmypyaIQVTl/rnHRW/Z5Acswu53sYKWx/iLQvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPm3eFuV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=V5EOgy6sXKYXGWijX82KPa0bUrIzxlC7J61ykZQSQj4jZ6ooxEB1l7ZBWfWKclAdgNJ/GGbx2EJmF5lz9L06muVdzeI9q/tgDF8btTP8WSovrcG1hd0sKm/XHWwpFWHDKSyMmnEt2/IZsVF8u69/V8ftbdLhgANHWwASt50EDro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vL+as7uJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPm3eFuV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FCBC4CEE3;
-	Thu,  3 Jul 2025 15:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vL+as7uJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7796C4CEE3;
+	Thu,  3 Jul 2025 15:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555667;
-	bh=y2EglgTEmPgKPUh2kQAt22WrZH+fE383Qn1bPLH9bwk=;
+	s=korg; t=1751555670;
+	bh=K8T0L81kcUFoAYM7zsFsTfYTefi0slOFj9dZLdN5kyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZPm3eFuVszsbbQqbOV9gFaLnql3vvYTPuUmpGS8vuYAzF5hZUNSDskjoom7Xouj3D
-	 65lQvYXUm0+kGwsHaR7Fh71V+CHYp9fJ1eCovfJB4T+5jFYOOm+C+1pHEI9Ozow5Em
-	 WPtWK9d29NeRUAcw49YvwW0EIqx7vDdhjaSOf9hA=
+	b=vL+as7uJcdk0L1NQhvS8T04Jtaf4OZuailIKXNodi/Nnzmg5QDU/KOLxTyoZ/O9MZ
+	 +xkZjEXSnYmll2NO2pJi/md8T1bjQohid7ssKZzVK7kA38K5Y6BPr3dHSk2TTLY/9F
+	 DsTxagQy6gj5H8GVfZ66C4JMl6TN3UzxRNQ5mbjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Daan De Meyer <daan.j.demeyer@gmail.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 066/139] af_unix: Define locking order for unix_table_double_lock().
-Date: Thu,  3 Jul 2025 16:42:09 +0200
-Message-ID: <20250703143943.748803452@linuxfoundation.org>
+Subject: [PATCH 6.6 084/139] vsock/uapi: fix linux/vm_sockets.h userspace compilation errors
+Date: Thu,  3 Jul 2025 16:42:27 +0200
+Message-ID: <20250703143944.443226179@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -46,86 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit 3955802f160b5c61ac00d7e54da8d746f2e4a2d5 ]
+[ Upstream commit 22bbc1dcd0d6785fb390c41f0dd5b5e218d23bdd ]
 
-When created, AF_UNIX socket is put into net->unx.table.buckets[],
-and the hash is stored in sk->sk_hash.
+If a userspace application just include <linux/vm_sockets.h> will fail
+to build with the following errors:
 
-  * unbound socket  : 0 <= sk_hash <= UNIX_HASH_MOD
+    /usr/include/linux/vm_sockets.h:182:39: error: invalid application of ‘sizeof’ to incomplete type ‘struct sockaddr’
+      182 |         unsigned char svm_zero[sizeof(struct sockaddr) -
+          |                                       ^~~~~~
+    /usr/include/linux/vm_sockets.h:183:39: error: ‘sa_family_t’ undeclared here (not in a function)
+      183 |                                sizeof(sa_family_t) -
+          |
 
-When bind() is called, the socket could be moved to another bucket.
+Include <sys/socket.h> for userspace (guarded by ifndef __KERNEL__)
+where `struct sockaddr` and `sa_family_t` are defined.
+We already do something similar in <linux/mptcp.h> and <linux/if.h>.
 
-  * pathname socket : 0 <= sk_hash <= UNIX_HASH_MOD
-  * abstract socket : UNIX_HASH_MOD + 1 <= sk_hash <= UNIX_HASH_MOD * 2 + 1
-
-Then, we call unix_table_double_lock() which locks a single bucket
-or two.
-
-Let's define the order as unix_table_lock_cmp_fn() instead of using
-spin_lock_nested().
-
-The locking is always done in ascending order of sk->sk_hash, which
-is the index of buckets/locks array allocated by kvmalloc_array().
-
-  sk_hash_A < sk_hash_B
-  <=> &locks[sk_hash_A].dep_map < &locks[sk_hash_B].dep_map
-
-So, the relation of two sk->sk_hash can be derived from the addresses
-of dep_map in the array of locks.
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Kent Overstreet <kent.overstreet@linux.dev>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 32ca245464e1 ("af_unix: Don't leave consecutive consumed OOB skbs.")
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Reported-by: Daan De Meyer <daan.j.demeyer@gmail.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20250623100053.40979-1-sgarzare@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ include/uapi/linux/vm_sockets.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 236a2cd2bc93d..4f839d687c1e4 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -125,6 +125,15 @@ static spinlock_t bsd_socket_locks[UNIX_HASH_SIZE / 2];
-  *    hash table is protected with spinlock.
-  *    each socket state is protected by separate spinlock.
-  */
-+#ifdef CONFIG_PROVE_LOCKING
-+#define cmp_ptr(l, r)	(((l) > (r)) - ((l) < (r)))
-+
-+static int unix_table_lock_cmp_fn(const struct lockdep_map *a,
-+				  const struct lockdep_map *b)
-+{
-+	return cmp_ptr(a, b);
-+}
+diff --git a/include/uapi/linux/vm_sockets.h b/include/uapi/linux/vm_sockets.h
+index ed07181d4eff9..e05280e415228 100644
+--- a/include/uapi/linux/vm_sockets.h
++++ b/include/uapi/linux/vm_sockets.h
+@@ -17,6 +17,10 @@
+ #ifndef _UAPI_VM_SOCKETS_H
+ #define _UAPI_VM_SOCKETS_H
+ 
++#ifndef __KERNEL__
++#include <sys/socket.h>        /* for struct sockaddr and sa_family_t */
 +#endif
- 
- static unsigned int unix_unbound_hash(struct sock *sk)
- {
-@@ -167,7 +176,7 @@ static void unix_table_double_lock(struct net *net,
- 		swap(hash1, hash2);
- 
- 	spin_lock(&net->unx.table.locks[hash1]);
--	spin_lock_nested(&net->unx.table.locks[hash2], SINGLE_DEPTH_NESTING);
-+	spin_lock(&net->unx.table.locks[hash2]);
- }
- 
- static void unix_table_double_unlock(struct net *net,
-@@ -3598,6 +3607,7 @@ static int __net_init unix_net_init(struct net *net)
- 
- 	for (i = 0; i < UNIX_HASH_SIZE; i++) {
- 		spin_lock_init(&net->unx.table.locks[i]);
-+		lock_set_cmp_fn(&net->unx.table.locks[i], unix_table_lock_cmp_fn, NULL);
- 		INIT_HLIST_HEAD(&net->unx.table.buckets[i]);
- 	}
++
+ #include <linux/socket.h>
+ #include <linux/types.h>
  
 -- 
 2.39.5
