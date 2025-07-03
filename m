@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E4C15442C;
-	Thu,  3 Jul 2025 15:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61EC2EF299;
+	Thu,  3 Jul 2025 15:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555331; cv=none; b=BXA+8yDFo62DePkcPeOmK1J3i33rRRhc4tSK5h+84QCx8RIB+YjPv175Cr2+LuTKnHr/D4V4khp0uUaeTyZsab4gFa1s96c+ztbNbZOyERu9fUgOSeOlpbMnb/VvsyGnshV9HZCy+h3FuIG7Pp1XU8EDc3vHjg1zc3LNSdfxY8I=
+	t=1751555335; cv=none; b=l6+oTAbrbN9nShzOgb/TapDDQnX6L0nxgCuuBw3OyC0r6tRchGRZMXseI8LG7Mh7k36/eISvDuwCwOYkdRP/H1qDl+cyZcZeU0kyhUZoMDnJwfEQYo1h6+gq8+Rvb3JReRp9CNdCH0Lk4ANYApoDmTiWtaDvTh0SHqcWnXhvOIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555331; c=relaxed/simple;
-	bh=cDgRVlLfsfqrJ6fsVofbc6v8CC4k0MyZvHDOLJ+3eaY=;
+	s=arc-20240116; t=1751555335; c=relaxed/simple;
+	bh=TLLjnFaWosKEU430HZ3ID1o3OUYVpu0C9d+m3Mzymgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NrZs9hvw7xB2ovVM4777swF7KmXzf6poj3xSVsJUBzZP8ycYKQYbh4p9LNjOLGFu9szCgtuCmeY+Z/41Ql2Sh6hrAoHxmOkbRcayPHL9cbe4g8hzNNCKqW2d91LygSO0vpUxVKAvFXkrcgxARoWpaJZJmvTNiquZ/diJVuyRMIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiSmU7qR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WQn1Ki0f8106aC5bfx+oNiW3Vnq1exEnm1Nu7/ppVcEe9WVwHCEDIuDsT4/8xXbXyk/LpMgP9KakWkFh10/DsuvTF5Ytr25ZVWku1sQD6dfHOAdiU90o8VXekm7Y6IFM16tMWmscHFNXJPhmkWfeqBvnyKDz4I+HKDvUkQ4QzWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCdSSjNt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiSmU7qR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C03C4CEE3;
-	Thu,  3 Jul 2025 15:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCdSSjNt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22DB7C4CEE3;
+	Thu,  3 Jul 2025 15:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555331;
-	bh=cDgRVlLfsfqrJ6fsVofbc6v8CC4k0MyZvHDOLJ+3eaY=;
+	s=korg; t=1751555334;
+	bh=TLLjnFaWosKEU430HZ3ID1o3OUYVpu0C9d+m3Mzymgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qiSmU7qR6kVAjOcV2gGRN4TpBDdrVYE6IQMjGz1GKKisBhiXnxAEL9gHlw10lwksf
-	 9eIUDrljRUOb/nrMl62dsdrpgK9gFZLhZn/aWtAHCDkuYuTsnVP8SjKx+QwZSguxjs
-	 hfUazwtEd2cPAQB5Ntr11WXTVETbaKBdAarFXQs4=
+	b=fCdSSjNtR+IYN14ebBnwfDwAt39ZOXAEU5FqzvjOnBFgo8ZgP9EHsaybhZaQpjxkz
+	 ESqI86veQK4x8D9Tt37VH+zd/pWa5wDQr8vuzgWdZAY8mpLwx9+IEdtlNeync/UXUO
+	 iYCIso2g5xWFG24AAVDg0eJWj6NwFkQ+CkG+Te9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chen <michael.chen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 245/263] drm/amdgpu/mes: add missing locking in helper functions
-Date: Thu,  3 Jul 2025 16:42:45 +0200
-Message-ID: <20250703144014.238185357@linuxfoundation.org>
+Subject: [PATCH 6.15 246/263] arm64: dts: qcom: x1e78100-t14s: fix missing HID supplies
+Date: Thu,  3 Jul 2025 16:42:46 +0200
+Message-ID: <20250703144014.277905066@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,104 +52,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+[ Upstream commit 55e52d055393f11ba0193975d3db87af36f4b273 ]
 
-[ Upstream commit 40f970ba7a4ab77be2ffe6d50a70416c8876496a ]
+Add the missing HID supplies to avoid relying on other consumers to keep
+them on.
 
-We need to take the MES lock.
+This also avoids the following warnings on boot:
 
-Reviewed-by: Michael Chen <michael.chen@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+	i2c_hid_of 0-0010: supply vdd not found, using dummy regulator
+	i2c_hid_of 0-0010: supply vddl not found, using dummy regulator
+	i2c_hid_of 1-0015: supply vdd not found, using dummy regulator
+	i2c_hid_of 1-002c: supply vdd not found, using dummy regulator
+	i2c_hid_of 1-0015: supply vddl not found, using dummy regulator
+	i2c_hid_of 1-002c: supply vddl not found, using dummy regulator
+	i2c_hid_of 1-003a: supply vdd not found, using dummy regulator
+	i2c_hid_of 1-003a: supply vddl not found, using dummy regulator
+
+Note that VCC3B is also used for things like the modem which are not yet
+described so mark the regulator as always-on for now.
+
+Fixes: 7d1cbe2f4985 ("arm64: dts: qcom: Add X1E78100 ThinkPad T14s Gen 6")
+Cc: stable@vger.kernel.org	# 6.12
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20250314145440.11371-9-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ .../qcom/x1e78100-lenovo-thinkpad-t14s.dts    | 43 +++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-index 5590ad5e8cd76..7164948001e9d 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-@@ -836,7 +836,9 @@ int amdgpu_mes_map_legacy_queue(struct amdgpu_device *adev,
- 	queue_input.mqd_addr = amdgpu_bo_gpu_offset(ring->mqd_obj);
- 	queue_input.wptr_addr = ring->wptr_gpu_addr;
+diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+index 7f756ce48d2f6..999d966b44869 100644
+--- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
++++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+@@ -9,6 +9,7 @@
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/input/gpio-keys.h>
+ #include <dt-bindings/input/input.h>
++#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
  
-+	amdgpu_mes_lock(&adev->mes);
- 	r = adev->mes.funcs->map_legacy_queue(&adev->mes, &queue_input);
-+	amdgpu_mes_unlock(&adev->mes);
- 	if (r)
- 		DRM_ERROR("failed to map legacy queue\n");
+ #include "x1e80100.dtsi"
+@@ -153,6 +154,23 @@ vreg_edp_3p3: regulator-edp-3p3 {
+ 		regulator-boot-on;
+ 	};
  
-@@ -859,7 +861,9 @@ int amdgpu_mes_unmap_legacy_queue(struct amdgpu_device *adev,
- 	queue_input.trail_fence_addr = gpu_addr;
- 	queue_input.trail_fence_data = seq;
++	vreg_misc_3p3: regulator-misc-3p3 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VCC3B";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&pm8550ve_8_gpios 6 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&misc_3p3_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++		regulator-always-on;
++	};
++
+ 	vreg_nvme: regulator-nvme {
+ 		compatible = "regulator-fixed";
  
-+	amdgpu_mes_lock(&adev->mes);
- 	r = adev->mes.funcs->unmap_legacy_queue(&adev->mes, &queue_input);
-+	amdgpu_mes_unlock(&adev->mes);
- 	if (r)
- 		DRM_ERROR("failed to unmap legacy queue\n");
+@@ -580,6 +598,9 @@ touchpad@15 {
+ 		hid-descr-addr = <0x1>;
+ 		interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
  
-@@ -886,7 +890,9 @@ int amdgpu_mes_reset_legacy_queue(struct amdgpu_device *adev,
- 	queue_input.vmid = vmid;
- 	queue_input.use_mmio = use_mmio;
++		vdd-supply = <&vreg_misc_3p3>;
++		vddl-supply = <&vreg_l12b_1p2>;
++
+ 		wakeup-source;
+ 	};
  
-+	amdgpu_mes_lock(&adev->mes);
- 	r = adev->mes.funcs->reset_legacy_queue(&adev->mes, &queue_input);
-+	amdgpu_mes_unlock(&adev->mes);
- 	if (r)
- 		DRM_ERROR("failed to reset legacy queue\n");
+@@ -591,6 +612,9 @@ touchpad@2c {
+ 		hid-descr-addr = <0x20>;
+ 		interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
  
-@@ -916,7 +922,9 @@ uint32_t amdgpu_mes_rreg(struct amdgpu_device *adev, uint32_t reg)
- 		goto error;
- 	}
++		vdd-supply = <&vreg_misc_3p3>;
++		vddl-supply = <&vreg_l12b_1p2>;
++
+ 		wakeup-source;
+ 	};
  
-+	amdgpu_mes_lock(&adev->mes);
- 	r = adev->mes.funcs->misc_op(&adev->mes, &op_input);
-+	amdgpu_mes_unlock(&adev->mes);
- 	if (r)
- 		DRM_ERROR("failed to read reg (0x%x)\n", reg);
- 	else
-@@ -944,7 +952,9 @@ int amdgpu_mes_wreg(struct amdgpu_device *adev,
- 		goto error;
- 	}
+@@ -602,6 +626,9 @@ keyboard@3a {
+ 		hid-descr-addr = <0x1>;
+ 		interrupts-extended = <&tlmm 67 IRQ_TYPE_LEVEL_LOW>;
  
-+	amdgpu_mes_lock(&adev->mes);
- 	r = adev->mes.funcs->misc_op(&adev->mes, &op_input);
-+	amdgpu_mes_unlock(&adev->mes);
- 	if (r)
- 		DRM_ERROR("failed to write reg (0x%x)\n", reg);
++		vdd-supply = <&vreg_misc_3p3>;
++		vddl-supply = <&vreg_l15b_1p8>;
++
+ 		pinctrl-0 = <&kybd_default>;
+ 		pinctrl-names = "default";
  
-@@ -971,7 +981,9 @@ int amdgpu_mes_reg_write_reg_wait(struct amdgpu_device *adev,
- 		goto error;
- 	}
+@@ -670,6 +697,9 @@ touchscreen@10 {
+ 		hid-descr-addr = <0x1>;
+ 		interrupts-extended = <&tlmm 51 IRQ_TYPE_LEVEL_LOW>;
  
-+	amdgpu_mes_lock(&adev->mes);
- 	r = adev->mes.funcs->misc_op(&adev->mes, &op_input);
-+	amdgpu_mes_unlock(&adev->mes);
- 	if (r)
- 		DRM_ERROR("failed to reg_write_reg_wait\n");
++		vdd-supply = <&vreg_misc_3p3>;
++		vddl-supply = <&vreg_l15b_1p8>;
++
+ 		pinctrl-0 = <&ts0_default>;
+ 		pinctrl-names = "default";
+ 	};
+@@ -789,6 +819,19 @@ edp_bl_en: edp-bl-en-state {
+ 	};
+ };
  
-@@ -996,7 +1008,9 @@ int amdgpu_mes_reg_wait(struct amdgpu_device *adev, uint32_t reg,
- 		goto error;
- 	}
- 
-+	amdgpu_mes_lock(&adev->mes);
- 	r = adev->mes.funcs->misc_op(&adev->mes, &op_input);
-+	amdgpu_mes_unlock(&adev->mes);
- 	if (r)
- 		DRM_ERROR("failed to reg_write_reg_wait\n");
- 
-@@ -1687,7 +1701,9 @@ static int amdgpu_mes_set_enforce_isolation(struct amdgpu_device *adev,
- 		goto error;
- 	}
- 
-+	amdgpu_mes_lock(&adev->mes);
- 	r = adev->mes.funcs->misc_op(&adev->mes, &op_input);
-+	amdgpu_mes_unlock(&adev->mes);
- 	if (r)
- 		dev_err(adev->dev, "failed to change_config.\n");
- 
++&pm8550ve_8_gpios {
++	misc_3p3_reg_en: misc-3p3-reg-en-state {
++		pins = "gpio6";
++		function = "normal";
++		bias-disable;
++		drive-push-pull;
++		input-disable;
++		output-enable;
++		power-source = <1>; /* 1.8 V */
++		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
++	};
++};
++
+ &qupv3_0 {
+ 	status = "okay";
+ };
 -- 
 2.39.5
 
