@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D02F2ED16D;
-	Thu,  3 Jul 2025 15:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1EF02ED143;
+	Thu,  3 Jul 2025 15:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555341; cv=none; b=uXN+qZdsHV5H8GzwfEKSnstiAXxc6/FcoChRFPZOQC4acJOb/u1I72EPxpl2EfArqKPqrDVMfiwurWYgALpDf0d521ymNjngbfUhTcZ5FPfsUsThF9b/ALA7b3uxzbfDd+wSn2w0ejbAm4qIEAz+L73mj7r5ekdSwON2Hpd54Vk=
+	t=1751555344; cv=none; b=upZwLz9fV6L/ZjwTXgWFuFjnYvVvKYAQ9bQRu/lPEJWFswOqtiGDfr9403413R7pZizsDuDtmRRhBdKY1DrTxyT/qa6yYmQ2LCnplxRq9TEiG/kZ5MWiZsZVi037z6tyGBaSvBGwCyp1CDk7JXYJuVZjkiVcQWmF9yafFN0aWJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555341; c=relaxed/simple;
-	bh=hET5iyqQD+IMK3pqsXhpYtluNQS/ZVqZKLsi4X4EupY=;
+	s=arc-20240116; t=1751555344; c=relaxed/simple;
+	bh=Ar0PhaGwXr9/CCVpR0FcWlNfs/D0z9BtySD5iOEyikI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EEZ5sib+KIiRXdz7UQwfnGlDCUmhR2WBz5Rloqha3rfcjF4yoYUmFj4NIz/7R4k9+EEShWa+TwX9ozhyPvzxiGgxG+dpQsnXapGXxp0E1ZED+d5EJLj4xjlcbgFaQIQ0Xvh7ctWOZUrSdNZokcah0Zr6ysdR6N0jGR6a8KcYsIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MhDJSb3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bTF2Rq6crZA+0jCUcStpFF8s7xp2UOS/wb0pwRs5cEVTtFYCaVqQfvUL99Bys/mKGEGibv2tmktFkxBXna/eMUoiO2LU+v89s59eCrxATuBCWUpDOw8AsFhCx1AZWWzTSI5cnhUiO2qwdQDARMDK1Apb/8/eD1vDqIb5GB8E2+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wom4K+js; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MhDJSb3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31E4C4CEE3;
-	Thu,  3 Jul 2025 15:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wom4K+js"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1411AC4CEE3;
+	Thu,  3 Jul 2025 15:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555341;
-	bh=hET5iyqQD+IMK3pqsXhpYtluNQS/ZVqZKLsi4X4EupY=;
+	s=korg; t=1751555344;
+	bh=Ar0PhaGwXr9/CCVpR0FcWlNfs/D0z9BtySD5iOEyikI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0MhDJSb38ivEdHPY26HZejyo1QHWo4qYZTZ9ZDKph10PEuCAvqt2K4e5JuufLEegi
-	 y9sLxjbd7NJXDwbx4ZL+BEzv2QDNzs/TBkf5Yv5h9OnKaR/2qQejgOIU5tUNX7cOoG
-	 zmzAamRXKG83N3AwYiPujYCdtwdan2N8nVxgIi/0=
+	b=Wom4K+js8fQ241JYbNaXS2y8Mw5900p5DYFsFqCigPrChutczpaeN8UzRAKxXtcI0
+	 SCQ7rogiHLOP9WMZMss+W1BHrz+O1L0lVGCp1farKJwXl9vw0za0SYI7AmZh4B0Gnb
+	 h4zQCoXz5nr2hKr0P7DBQB+JG4hmw+OWE6s4pVco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Wenjing Liu <wenjing.liu@amd.com>,
 	Michael Strauss <michael.strauss@amd.com>,
-	TungYu Lu <tungyu.lu@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 248/263] drm/amd/display: Add early 8b/10b channel equalization test pattern sequence
-Date: Thu,  3 Jul 2025 16:42:48 +0200
-Message-ID: <20250703144014.361568624@linuxfoundation.org>
+Subject: [PATCH 6.15 249/263] drm/amd/display: Get LTTPR IEEE OUI/Device ID From Closest LTTPR To Host
+Date: Thu,  3 Jul 2025 16:42:49 +0200
+Message-ID: <20250703144014.398818462@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -57,182 +57,137 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Strauss <michael.strauss@amd.com>
 
-[ Upstream commit 8989cb919b27cd0d2aadb7f1d144cedbb12e6fca ]
+[ Upstream commit d358a51444c88bcc995e471dc8cc840f19e4b374 ]
 
 [WHY]
-Early EQ pattern sequence is required for some LTTPR + old dongle
-combinations.
+These fields are read for the explicit purpose of detecting embedded LTTPRs
+(i.e. between host ASIC and the user-facing port), and thus need to
+calculate the correct DPCD address offset based on LTTPR count to target
+the appropriate LTTPR's DPCD register space with these queries.
 
 [HOW]
-If DP_EARLY_8B10B_TPS2 chip cap is set, this new sequence programs phy
-to output TPS2 before initiating link training and writes TPS1 to
-LTTPR training pattern register as instructed by vendor.
+Cascaded LTTPRs in a link each snoop and increment LTTPR count when queried
+via DPCD read, so an LTTPR embedded in a source device (e.g. USB4 port on a
+laptop) will always be addressible using the max LTTPR count seen by the
+host. Therefore we simply need to use a recently added helper function to
+calculate the correct DPCD address to target potentially embedded LTTPRs
+based on the received LTTPR count.
 
-Add function to get embedded LTTPR target address offset.
-
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
 Signed-off-by: Michael Strauss <michael.strauss@amd.com>
-Signed-off-by: TungYu Lu <tungyu.lu@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 791897f5c77a2a65d0e500be4743af2ddf6eb061)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dc/link/protocols/link_dp_capability.c    |  8 +++
- .../dc/link/protocols/link_dp_capability.h    |  3 ++
- .../dc/link/protocols/link_dp_training.c      |  1 -
- .../link/protocols/link_dp_training_8b_10b.c  | 52 +++++++++++++++++--
- .../amd/display/include/link_service_types.h  |  2 +
- 5 files changed, 62 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dc_dp_types.h  |  4 +-
+ .../dc/link/protocols/link_dp_capability.c    | 38 +++++++++++++++----
+ 2 files changed, 33 insertions(+), 9 deletions(-)
 
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
+index 77c87ad572207..bbd6701096ca9 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
+@@ -1157,8 +1157,8 @@ struct dc_lttpr_caps {
+ 	union dp_128b_132b_supported_lttpr_link_rates supported_128b_132b_rates;
+ 	union dp_alpm_lttpr_cap alpm;
+ 	uint8_t aux_rd_interval[MAX_REPEATER_CNT - 1];
+-	uint8_t lttpr_ieee_oui[3];
+-	uint8_t lttpr_device_id[6];
++	uint8_t lttpr_ieee_oui[3]; // Always read from closest LTTPR to host
++	uint8_t lttpr_device_id[6]; // Always read from closest LTTPR to host
+ };
+ 
+ struct dc_dongle_dfp_cap_ext {
 diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-index 21ee0d96c9d48..9d49e77a24a1f 100644
+index 9d49e77a24a1f..ed9d396e3d0ea 100644
 --- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
 +++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-@@ -158,6 +158,14 @@ uint8_t dp_parse_lttpr_repeater_count(uint8_t lttpr_repeater_count)
- 	return 0; // invalid value
- }
- 
-+uint32_t dp_get_closest_lttpr_offset(uint8_t lttpr_count)
-+{
-+	/* Calculate offset for LTTPR closest to DPTX which is highest in the chain
-+	 * Offset is 0 for single LTTPR cases as base LTTPR DPCD addresses target LTTPR 1
-+	 */
-+	return DP_REPEATER_CONFIGURATION_AND_STATUS_SIZE * (lttpr_count - 1);
-+}
-+
- uint32_t link_bw_kbps_from_raw_frl_link_rate_data(uint8_t bw)
+@@ -385,9 +385,15 @@ bool dp_is_128b_132b_signal(struct pipe_ctx *pipe_ctx)
+ bool dp_is_lttpr_present(struct dc_link *link)
  {
- 	switch (bw) {
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.h b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.h
-index 0ce0af3ddbebe..940b147cc5d42 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.h
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.h
-@@ -48,6 +48,9 @@ enum dc_status dp_retrieve_lttpr_cap(struct dc_link *link);
- /* Convert PHY repeater count read from DPCD uint8_t. */
- uint8_t dp_parse_lttpr_repeater_count(uint8_t lttpr_repeater_count);
- 
-+/* Calculate embedded LTTPR address offset for vendor-specific behaviour */
-+uint32_t dp_get_closest_lttpr_offset(uint8_t lttpr_count);
+ 	/* Some sink devices report invalid LTTPR revision, so don't validate against that cap */
+-	return (dp_parse_lttpr_repeater_count(link->dpcd_caps.lttpr_caps.phy_repeater_cnt) != 0 &&
++	uint32_t lttpr_count = dp_parse_lttpr_repeater_count(link->dpcd_caps.lttpr_caps.phy_repeater_cnt);
++	bool is_lttpr_present = (lttpr_count > 0 &&
+ 			link->dpcd_caps.lttpr_caps.max_lane_count > 0 &&
+ 			link->dpcd_caps.lttpr_caps.max_lane_count <= 4);
 +
- bool dp_is_sink_present(struct dc_link *link);
- 
- bool dp_is_lttpr_present(struct dc_link *link);
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
-index ef358afdfb65b..2dc1a660e5045 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
-@@ -785,7 +785,6 @@ void override_training_settings(
- 		lt_settings->lttpr_mode = LTTPR_MODE_NON_LTTPR;
- 
- 	dp_get_lttpr_mode_override(link, &lt_settings->lttpr_mode);
--
++	if (lttpr_count > 0 && !is_lttpr_present)
++		DC_LOG_ERROR("LTTPR count is nonzero but invalid lane count reported. Assuming no LTTPR present.\n");
++
++	return is_lttpr_present;
  }
  
- enum dc_dp_training_pattern decide_cr_training_pattern(
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c
-index 5a5d48fadbf27..66d0fb1b9b9d2 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c
-@@ -142,6 +142,14 @@ void decide_8b_10b_training_settings(
- 	lt_settings->lttpr_mode = dp_decide_8b_10b_lttpr_mode(link);
- 	lt_settings->cr_pattern_time = get_cr_training_aux_rd_interval(link, link_setting, lt_settings->lttpr_mode);
- 	dp_hw_to_dpcd_lane_settings(lt_settings, lt_settings->hw_lane_settings, lt_settings->dpcd_lane_settings);
-+
-+	/* Some embedded LTTPRs rely on receiving TPS2 before LT to interop reliably with sensitive VGA dongles
-+	 * This allows these LTTPRs to minimize freq/phase and skew variation during lock and deskew sequences
-+	 */
-+	if ((link->chip_caps & AMD_EXT_DISPLAY_PATH_CAPS__EXT_CHIP_MASK) ==
-+			AMD_EXT_DISPLAY_PATH_CAPS__DP_EARLY_8B10B_TPS2) {
-+		lt_settings->lttpr_early_tps2 = true;
-+	}
- }
+ /* in DP compliance test, DPR-120 may have
+@@ -1551,6 +1557,8 @@ enum dc_status dp_retrieve_lttpr_cap(struct dc_link *link)
+ 	uint8_t lttpr_dpcd_data[10] = {0};
+ 	enum dc_status status;
+ 	bool is_lttpr_present;
++	uint32_t lttpr_count;
++	uint32_t closest_lttpr_offset;
  
- enum lttpr_mode dp_decide_8b_10b_lttpr_mode(struct dc_link *link)
-@@ -173,6 +181,42 @@ enum lttpr_mode dp_decide_8b_10b_lttpr_mode(struct dc_link *link)
- 	return LTTPR_MODE_NON_LTTPR;
- }
+ 	/* Logic to determine LTTPR support*/
+ 	bool vbios_lttpr_interop = link->dc->caps.vbios_lttpr_aware;
+@@ -1602,20 +1610,22 @@ enum dc_status dp_retrieve_lttpr_cap(struct dc_link *link)
+ 			lttpr_dpcd_data[DP_LTTPR_ALPM_CAPABILITIES -
+ 							DP_LT_TUNABLE_PHY_REPEATER_FIELD_DATA_STRUCTURE_REV];
  
-+static void set_link_settings_and_perform_early_tps2_retimer_pre_lt_sequence(struct dc_link *link,
-+	const struct link_resource *link_res,
-+	struct link_training_settings *lt_settings,
-+	uint32_t lttpr_count)
-+{
-+	/* Vendor-specific LTTPR early TPS2 sequence:
-+	* 1. Output TPS2
-+	* 2. Wait 400us
-+	* 3. Set link settings as usual
-+	* 4. Write TPS1 to DP_TRAINING_PATTERN_SET_PHY_REPEATERx targeting LTTPR closest to host
-+	* 5. Wait 1ms
-+	* 6. Begin link training as usual
-+	* */
++	lttpr_count = dp_parse_lttpr_repeater_count(link->dpcd_caps.lttpr_caps.phy_repeater_cnt);
 +
-+	uint32_t closest_lttpr_address_offset = dp_get_closest_lttpr_offset(lttpr_count);
-+
-+	union dpcd_training_pattern dpcd_pattern = {0};
-+
-+	dpcd_pattern.v1_4.TRAINING_PATTERN_SET = 1;
-+	dpcd_pattern.v1_4.SCRAMBLING_DISABLE = 1;
-+
-+	DC_LOG_HW_LINK_TRAINING("%s\n GPU sends TPS2. Wait 400us.\n", __func__);
-+
-+	dp_set_hw_training_pattern(link, link_res, DP_TRAINING_PATTERN_SEQUENCE_2, DPRX);
-+
-+	dp_set_hw_lane_settings(link, link_res, lt_settings, DPRX);
-+
-+	udelay(400);
-+
-+	dpcd_set_link_settings(link, lt_settings);
-+
-+	core_link_write_dpcd(link, DP_TRAINING_PATTERN_SET_PHY_REPEATER1 + closest_lttpr_address_offset, &dpcd_pattern.raw, 1);
-+
-+	udelay(1000);
-+	}
-+
- enum link_training_result perform_8b_10b_clock_recovery_sequence(
- 	struct dc_link *link,
- 	const struct link_resource *link_res,
-@@ -383,7 +427,7 @@ enum link_training_result dp_perform_8b_10b_link_training(
- {
- 	enum link_training_result status = LINK_TRAINING_SUCCESS;
- 
--	uint8_t repeater_cnt;
-+	uint8_t repeater_cnt = dp_parse_lttpr_repeater_count(link->dpcd_caps.lttpr_caps.phy_repeater_cnt);
- 	uint8_t repeater_id;
- 	uint8_t lane = 0;
- 
-@@ -391,14 +435,16 @@ enum link_training_result dp_perform_8b_10b_link_training(
- 		start_clock_recovery_pattern_early(link, link_res, lt_settings, DPRX);
- 
- 	/* 1. set link rate, lane count and spread. */
--	dpcd_set_link_settings(link, lt_settings);
-+	if (lt_settings->lttpr_early_tps2)
-+		set_link_settings_and_perform_early_tps2_retimer_pre_lt_sequence(link, link_res, lt_settings, repeater_cnt);
-+	else
-+		dpcd_set_link_settings(link, lt_settings);
- 
- 	if (lt_settings->lttpr_mode == LTTPR_MODE_NON_TRANSPARENT) {
- 
- 		/* 2. perform link training (set link training done
- 		 *  to false is done as well)
+ 	/* If this chip cap is set, at least one retimer must exist in the chain
+ 	 * Override count to 1 if we receive a known bad count (0 or an invalid value) */
+ 	if (((link->chip_caps & AMD_EXT_DISPLAY_PATH_CAPS__EXT_CHIP_MASK) == AMD_EXT_DISPLAY_PATH_CAPS__DP_FIXED_VS_EN) &&
+-			(dp_parse_lttpr_repeater_count(link->dpcd_caps.lttpr_caps.phy_repeater_cnt) == 0)) {
++			lttpr_count == 0) {
+ 		/* If you see this message consistently, either the host platform has FIXED_VS flag
+ 		 * incorrectly configured or the sink device is returning an invalid count.
  		 */
--		repeater_cnt = dp_parse_lttpr_repeater_count(link->dpcd_caps.lttpr_caps.phy_repeater_cnt);
+ 		DC_LOG_ERROR("lttpr_caps phy_repeater_cnt is 0x%x, forcing it to 0x80.",
+ 			     link->dpcd_caps.lttpr_caps.phy_repeater_cnt);
+ 		link->dpcd_caps.lttpr_caps.phy_repeater_cnt = 0x80;
++		lttpr_count = 1;
+ 		DC_LOG_DC("lttpr_caps forced phy_repeater_cnt = %d\n", link->dpcd_caps.lttpr_caps.phy_repeater_cnt);
+ 	}
  
- 		for (repeater_id = repeater_cnt; (repeater_id > 0 && status == LINK_TRAINING_SUCCESS);
- 				repeater_id--) {
-diff --git a/drivers/gpu/drm/amd/display/include/link_service_types.h b/drivers/gpu/drm/amd/display/include/link_service_types.h
-index 1867aac57cf2c..da74ed66c8f9d 100644
---- a/drivers/gpu/drm/amd/display/include/link_service_types.h
-+++ b/drivers/gpu/drm/amd/display/include/link_service_types.h
-@@ -89,6 +89,8 @@ struct link_training_settings {
- 	bool enhanced_framing;
- 	enum lttpr_mode lttpr_mode;
+-	/* Attempt to train in LTTPR transparent mode if repeater count exceeds 8. */
+ 	is_lttpr_present = dp_is_lttpr_present(link);
  
-+	bool lttpr_early_tps2;
+ 	DC_LOG_DC("is_lttpr_present = %d\n", is_lttpr_present);
+@@ -1623,11 +1633,25 @@ enum dc_status dp_retrieve_lttpr_cap(struct dc_link *link)
+ 	if (is_lttpr_present) {
+ 		CONN_DATA_DETECT(link, lttpr_dpcd_data, sizeof(lttpr_dpcd_data), "LTTPR Caps: ");
+ 
+-		core_link_read_dpcd(link, DP_LTTPR_IEEE_OUI, link->dpcd_caps.lttpr_caps.lttpr_ieee_oui, sizeof(link->dpcd_caps.lttpr_caps.lttpr_ieee_oui));
+-		CONN_DATA_DETECT(link, link->dpcd_caps.lttpr_caps.lttpr_ieee_oui, sizeof(link->dpcd_caps.lttpr_caps.lttpr_ieee_oui), "LTTPR IEEE OUI: ");
++		// Identify closest LTTPR to determine if workarounds required for known embedded LTTPR
++		closest_lttpr_offset = dp_get_closest_lttpr_offset(lttpr_count);
+ 
+-		core_link_read_dpcd(link, DP_LTTPR_DEVICE_ID, link->dpcd_caps.lttpr_caps.lttpr_device_id, sizeof(link->dpcd_caps.lttpr_caps.lttpr_device_id));
+-		CONN_DATA_DETECT(link, link->dpcd_caps.lttpr_caps.lttpr_device_id, sizeof(link->dpcd_caps.lttpr_caps.lttpr_device_id), "LTTPR Device ID: ");
++		core_link_read_dpcd(link, (DP_LTTPR_IEEE_OUI + closest_lttpr_offset),
++				link->dpcd_caps.lttpr_caps.lttpr_ieee_oui, sizeof(link->dpcd_caps.lttpr_caps.lttpr_ieee_oui));
++		core_link_read_dpcd(link, (DP_LTTPR_DEVICE_ID + closest_lttpr_offset),
++				link->dpcd_caps.lttpr_caps.lttpr_device_id, sizeof(link->dpcd_caps.lttpr_caps.lttpr_device_id));
 +
- 	/* disallow different lanes to have different lane settings */
- 	bool disallow_per_lane_settings;
- 	/* dpcd lane settings will always use the same hw lane settings
++		if (lttpr_count > 1) {
++			CONN_DATA_DETECT(link, link->dpcd_caps.lttpr_caps.lttpr_ieee_oui, sizeof(link->dpcd_caps.lttpr_caps.lttpr_ieee_oui),
++					"Closest LTTPR To Host's IEEE OUI: ");
++			CONN_DATA_DETECT(link, link->dpcd_caps.lttpr_caps.lttpr_device_id, sizeof(link->dpcd_caps.lttpr_caps.lttpr_device_id),
++					"Closest LTTPR To Host's LTTPR Device ID: ");
++		} else {
++			CONN_DATA_DETECT(link, link->dpcd_caps.lttpr_caps.lttpr_ieee_oui, sizeof(link->dpcd_caps.lttpr_caps.lttpr_ieee_oui),
++					"LTTPR IEEE OUI: ");
++			CONN_DATA_DETECT(link, link->dpcd_caps.lttpr_caps.lttpr_device_id, sizeof(link->dpcd_caps.lttpr_caps.lttpr_device_id),
++					"LTTPR Device ID: ");
++		}
+ 	}
+ 
+ 	return status;
 -- 
 2.39.5
 
