@@ -1,176 +1,107 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DA923ABB6
-	for <patches@lists.linux.dev>; Thu,  3 Jul 2025 22:17:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE1F2DE6EE
+	for <patches@lists.linux.dev>; Thu,  3 Jul 2025 22:19:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751581059; cv=none; b=AGrhAtk+y3wSbDPA7VXe/soZadWxgYGw2sLvCZACi7bX0GQcCa/2equ8lCiFIzqvMA4KiJwRcbtzMh+cYivdj+RIAbTY9VA7NhJdUI6oeGccHZUW0JP5nStRKEgqat5CF9GxgpaqvcV8MAPQlwP7GTSpyqeFpVMoLrTQwo3tvpA=
+	t=1751581147; cv=none; b=cn/lkgA4IXm6iPQ+kP0dr4ahGWHoVQBPWAqykn5FrC4dfIbkC0ugYsXQTky9zIYS5G32VSZ8uZIcT0onNVSBLhhbZ6+JPlE/KCr4MceBumMj8WDvqkK8VKlukztDZKPDKKQ+cqDzFZn+yTeF/uFUptKv6f8FAsjlkJ1MFaGSohU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751581059; c=relaxed/simple;
-	bh=4ypezCMzqx2m8rAZovbE9cWrKwtdXpCPRYKVPomZyMo=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fYZl9F5VEPKsWVs3XvdTqKT94YmTm6PqsjvbkbwXfMHuTLxaKG0v3XTXysv2QLRQuPT0CYPApzogO7fLIADtwn3L0Hk0OHbi98ks2FyKIuU1+FoGyM/Dmn4s6Fw4zlKiYIfzs5leyeOztKg3UoxiKbNdGXHIbQjakrioMyqkP90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=JMm777n2; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1751581147; c=relaxed/simple;
+	bh=bsQzXNp8DClq+bAKZa3sdGA9BUSFmOPEFWdTtJqquII=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pVRwUatGhg3aVM0h+g+Tdd+04f+m0FqHLF58r0u6w2h/BFS3LAOJ3xifn2FHYE04a7bLcEzJ/bj9w3o8vWJbKLkgDhxeN16vOrEJ0Titd3No46+3JUOwbkMrGzdNY7jNg55d9saiIUFzEUyoyIgWFZ8uP3i+c+CB5Cq3sZuLAWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NXTUmc9k; arc=none smtp.client-ip=209.85.166.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JMm777n2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1751581055;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4dsjcnePffsNnJ3iYlPAnCmr2JiGAFkwGmeExoquH+U=;
-	b=JMm777n2C4DRY6n4IcybNH0M902Y3PPE39VX7XpSCYgWYI2Bfx4mJoL0EqATC6Yl+fE+p1
-	Cmzln35bao8gfZyHLSxoWU7JPFChm9EtYbOSGiEZhoKeGjmT6hxZIG9n6jYPuMh8kc1mdP
-	GACvx7YlZB9sjtfkOKMzRZe30efToG4=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-231-yOc5osExP6yy21LDjZL8ag-1; Thu, 03 Jul 2025 18:17:32 -0400
-X-MC-Unique: yOc5osExP6yy21LDjZL8ag-1
-X-Mimecast-MFC-AGG-ID: yOc5osExP6yy21LDjZL8ag_1751581051
-Received: by mail-io1-f71.google.com with SMTP id ca18e2360f4ac-87373f99cd5so6305439f.3
-        for <patches@lists.linux.dev>; Thu, 03 Jul 2025 15:17:32 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXTUmc9k"
+Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-3df30d542caso1969705ab.1
+        for <patches@lists.linux.dev>; Thu, 03 Jul 2025 15:19:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1751581145; x=1752185945; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=K/ohUAJwNxFFjxA7YgIpc1NqK4PGnlTrw2zPL9RW/ps=;
+        b=NXTUmc9kh2SOLFo+zhZkRE0JNiaJ85MaJBNZhLWuN+HFYWePc1UwfS0qTPBfEWLE6I
+         fE8gZWrF3tDoyVdXlvdlOCnqpVX6CIyoWG2Fd0nP0zni+ir0zMEgRssIT+5vERv5nUIP
+         yvz4RIWx2l4w/jPdTd2QdM0k5DMdUN+oQh4kg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751581051; x=1752185851;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4dsjcnePffsNnJ3iYlPAnCmr2JiGAFkwGmeExoquH+U=;
-        b=YKMpKGPkWSOg1xX+UGzwH9fJ1bb2Pw+9nyHdCmhmGHVDr4eRy86vBfqpqDsY7U+HeZ
-         4JPMQMC1AFk9HIoBT/1FovrToI31v3i9tlD2e8OwXnUMHZwnrYOFUqsbg56ljWWrCjLj
-         t0I4lSP+9IecRR9+MKzBAk7FEDob0Vy+OZCghdzumsLOw6GWB9jMtXC8eFB0IpOeTSja
-         zwB5gOa/CX9giR4UWx8Xt2e6sYxrJGWnZIVjab5miT3X9uVor81r5TgDsZZWh2RCkUqD
-         aPdDjcUKoaYGvhuOx8Hd6nEfcZApoP1A6G995UrG/axCV8i+gEjjFc6n1ptyWOqqx9/F
-         2nFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWoayZFiAya066833wNDA4EYDgKzRjkiONqyEc4/eYSGrMIyz1DbPeNMdERCn1lQC3+x/a61/4j@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz60tii5DjvCyIIBidZ4j/AVgpfngQHceuwHdPMgK1gRmvyrY+l
-	XCYPXVNDYQW4bbz+Fmp2kncNmcDZas43T0nueq6iyRqhg5lrSKgYxP+sfQBH0VQqRFvxiy3XkLf
-	57WxSd6nY4jrymaKYZuZhfjzPDgQEkjhl8tgWCRJ4Lc/TTZ7ldoc4llN7iEA=
-X-Gm-Gg: ASbGncvd7MQIIuGQ73zSFi5rRpXu9+3ee6Hnz0A5Xtld7WRHjCkb/ZiSCDxUTi2mcaR
-	MQXYSqLo2O/eHsdLNqQ/NOCQyr7+6oeYpkpC4BSRNUhpjM1Au4TdjqBGIzoZrp4n1AICHcuJ+Xx
-	V2Uf2Q5MWCqcSmrIEJ1AuF51vT0LFQ7fLyNM8bPo4glyS103XgbaH77yAUwD9NC8V0LbHmP9CSx
-	n/ZM1h67mjL0giDyp8cszlCshGb8wE6fPp0rgnbHDMzp35U/h/dJYDZC2xHD/GZW3MyKaYaPVEE
-	AE/Ca8yzuNBzv7onKE7mzL/w+A==
-X-Received: by 2002:a05:6602:1607:b0:864:9c2b:f842 with SMTP id ca18e2360f4ac-876e13a009dmr22655139f.0.1751581051204;
-        Thu, 03 Jul 2025 15:17:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHK1hmIX7xtD4BcGg0tZpgeCzpZcsDTIoTx2ZGihjZIL7CUA+/RzY0cwRoZX1T3Wpx/+Vp+hg==
-X-Received: by 2002:a05:6602:1607:b0:864:9c2b:f842 with SMTP id ca18e2360f4ac-876e13a009dmr22652739f.0.1751581050636;
-        Thu, 03 Jul 2025 15:17:30 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-503b599c53csm153978173.24.2025.07.03.15.17.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Jul 2025 15:17:29 -0700 (PDT)
-Date: Thu, 3 Jul 2025 16:17:27 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev, Joerg Roedel
- <joro@8bytes.org>, linux-pci@vger.kernel.org, Robin Murphy
- <robin.murphy@arm.com>, Will Deacon <will@kernel.org>, Lu Baolu
- <baolu.lu@linux.intel.com>, galshalom@nvidia.com, Joerg Roedel
- <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
- maorg@nvidia.com, patches@lists.linux.dev, tdave@nvidia.com, Tony Zhu
- <tony.zhu@intel.com>
-Subject: Re: [PATCH 02/11] PCI: Add pci_bus_isolation()
-Message-ID: <20250703161727.09316904.alex.williamson@redhat.com>
-In-Reply-To: <20250703153030.GA1322329@nvidia.com>
-References: <0-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
-	<2-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
-	<20250701132859.2a6661a7.alex.williamson@redhat.com>
-	<20250703153030.GA1322329@nvidia.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+        d=1e100.net; s=20230601; t=1751581145; x=1752185945;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=K/ohUAJwNxFFjxA7YgIpc1NqK4PGnlTrw2zPL9RW/ps=;
+        b=iNPPG+CQB6KV3xv+d83RXxmf0uCXJDSq7RSMNAYyPgmNGUGnTT7tG3rgECoK+29C8l
+         YqxtJLUPTqlbZZTu2/ROGyejyNv1dnZEvf/G53YH/rIleWJx3Q7pZKzY7zWasQlOjXE9
+         qcCcFEIlQp/19tF0iCzWHr9GwO0PXZZIOm1TZDZlnMqXw04lq4aN9M9zq4og4q6GA7pP
+         VamhIED5/r528nhJ/eVvrEqnd5uIj3b5q/h05kHnskkEc2p7Gl5gGNXSEWdqndP53oAo
+         8Rh/J0xrrl9mlSq+KqIDoPZTliOGnWJ/SMqVEUgJqpxWwpE2ZNTRjEIXLdAJZuYZtlb8
+         pjmA==
+X-Gm-Message-State: AOJu0YxekIfmVqcajNnYRZVQOvZa3sulKYvpdPTCZE1zm4Ya0EcVHinw
+	Es5sbV75zjLzALILpstC2zc4sLSDv5MibKMl3nyQgjuWAxi5kenj9jzo5Bb+4VuCHOE=
+X-Gm-Gg: ASbGnctNV/lWpMXKOiWonxdr5WWjZ1FZGhE+T7AAOmDMCrTeCPQJKp1GOVa/ADsL4/i
+	Vj5UnD+KloEQuXKniPFyFSB2xFNVu3xa92vAgVYJGUQvLrY6AThTsrc2gs0bZpclIxM+LQVO5FR
+	udO24rNs1yMalnX2WkslX4TNhjzMzhEHig9i8nDlu8PW1Yvl9QJDcHkmkxTFU4wIQ21aYOD2wJT
+	qU/dwlTmZ/gFCL8a/KYMGwpkWgYPZuFwMRhTfELiRTIZFI81iNz6Df3k+Bq1TcpedHo/+iYg58R
+	0uKjNAYpk152+DIS/4GigqWdZLz6urMGnHsWjzQDEsLUJCVMG/q/UFNYElQ8lKW6eKnq0BxC0A=
+	=
+X-Google-Smtp-Source: AGHT+IFkjsoDOoPrzIbbcNU8K6UylrmjRvuaaN9lDoZeoFFVq77lPnUcgvPUJ5086KzCi0xghesVaA==
+X-Received: by 2002:a05:6e02:2189:b0:3dd:cbbb:b731 with SMTP id e9e14a558f8ab-3e1354bfa00mr2010855ab.9.1751581144798;
+        Thu, 03 Jul 2025 15:19:04 -0700 (PDT)
+Received: from [192.168.1.14] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-503b599a3f9sm160059173.12.2025.07.03.15.19.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Jul 2025 15:19:04 -0700 (PDT)
+Message-ID: <70155955-936f-4280-a0ae-c1e48af3ef28@linuxfoundation.org>
+Date: Thu, 3 Jul 2025 16:19:03 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: QZUK6sAbGaH2Zj2RLn01pHAwqA7NyIgYnuk19VuBYcc_1751581051
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/132] 6.1.143-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20250703143939.370927276@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On Thu, 3 Jul 2025 12:30:30 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
-
-> On Tue, Jul 01, 2025 at 01:28:59PM -0600, Alex Williamson wrote:
-> > > +enum pci_bus_isolation pci_bus_isolated(struct pci_bus *bus)
-> > > +{
-> > > +	struct pci_dev *bridge = bus->self;
-> > > +	int type;
-> > > +
-> > > +	/* Consider virtual busses isolated */
-> > > +	if (!bridge)
-> > > +		return PCIE_ISOLATED;
-> > > +	if (pci_is_root_bus(bus))
-> > > +		return PCIE_ISOLATED;  
-> > 
-> > How do we know the root bus isn't conventional?  
+On 7/3/25 08:41, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.143 release.
+> There are 132 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> If I read this right this is dead code..
+> Responses should be made by Sat, 05 Jul 2025 14:39:10 +0000.
+> Anything received after that time might be too late.
 > 
-> /*
->  * Returns true if the PCI bus is root (behind host-PCI bridge),
->  * false otherwise
->  *
->  * Some code assumes that "bus->self == NULL" means that bus is a root bus.
->  * This is incorrect because "virtual" buses added for SR-IOV (via
->  * virtfn_add_bus()) have "bus->self == NULL" but are not root buses.
->  */
-> static inline bool pci_is_root_bus(struct pci_bus *pbus)
-> {
-> 	return !(pbus->parent);
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.143-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 > 
-> Looking at the call chain of pci_alloc_bus():
->  pci_alloc_child_bus() - Parent bus may not be NULL
->  pci_add_new_bus() - All callers pass !NULL bus
->  pci_register_host_bridge() - Sets self and parent to NULL
+> thanks,
 > 
-> Thus if pci_is_root() == true implies bus->self == NULL so we can't
-> get here.
-
-Yep, seems correct.
-
-> So I will change it to be like:
+> greg k-h
 > 
-> 	/*
-> 	 * This bus was created by pci_register_host_bridge(). There is nothing
-> 	 * upstream of this, assume it contains the TA and that the root complex
-> 	 * does not allow P2P without going through the IOMMU.
-> 	 */
-> 	if (pci_is_root_bus(bus))
-> 		return PCIE_ISOLATED;
 
-Ok, but did we sidestep the question of whether the root bus can be
-conventional?
+Compiled and booted on my test system. No dmesg regressions.
 
-> 
-> 	/*
-> 	 * Sometimes SRIOV VFs can have a "virtual" bus if the SRIOV RID's
-> 	 * extend past the bus numbers of the parent. The spec says that SRIOV
-> 	 * VFs and PFs should act the same as functions in a MFD. MFD isolation
-> 	 * is handled outside this function.
-> 	 */
-> 	if (!bridge)
-> 		return PCIE_ISOLATED;
-> 
-> And now it seems we never took care with SRIOV, along with the PF
-> every SRIOV VF needs to have its ACS checked as though it was a MFD..
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-There's actually evidence that we did take care to make sure VFs never
-flag themselves as multifunction in order to avoid the multifunction
-ACS tests.  I think we'd see lots of devices suddenly unusable for one
-of their intended use cases if we grouped VFs that don't expose an ACS
-capability.  Also VFs from multiple PFs exist on the same virtual bus,
-so I imagine if the PF supports ACS but the VF doesn't, you'd end up
-with multiple isolation domains on the same bus.  Thus, we've so far
-take the approach that "surely the hw vendor intended these to be used
-independently", and only considered the isolation upstream from the VFs.
-Thanks,
-
-Alex
-
+thanks,
+-- Shuah
