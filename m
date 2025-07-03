@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A8B231853;
-	Thu,  3 Jul 2025 14:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376822E7F1A;
+	Thu,  3 Jul 2025 14:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554236; cv=none; b=fQeZJmcwvNC5V1MTX1jucf+ONJ0mrOznq4oXFd7eDmJgw88qFxwZ/X9INnPfnAuWpIBQPQCLSU5z7VkcJJUFb2JUBtXMJ0RIhpxaZlNMzSDzvUg5/sudtcE2G+lkuIkctP5m3CZHJ/oYDeP1ppWs8ReGi0lPctDXacRR4fD+ONk=
+	t=1751554239; cv=none; b=l2cC9UPxAra0l5QRleJ3I3dx0pE+ZYnV6cRM2DNY4xEOSGb9g5Iy7gs2dyFZZAtWDL2k52IEw1xCHLwdD0sbgTuKa1LckExUF9CWsvvAA5SMFusVDLRXkR4RxszbAKCWs6VbwxLpY3ZuGeTxlY4ZEQZp7ttW8fLLsmvYIT4qx3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554236; c=relaxed/simple;
-	bh=Pk95um50r8I2ZTUi5J33nUKRRPkqlIHG471hm0Iibzw=;
+	s=arc-20240116; t=1751554239; c=relaxed/simple;
+	bh=EVljRyWrTiaVZQRNt7nT2eMllNxc75Gfdp/3pxgIwW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dGHloyG8u+v6WfHTMAGc3cteTb/tE4KmS6SQad6E22Nd75ckJFS2WM6b6+vEoE71wEsNG1J68MivlTK4ZlOfDnRaOpErz8M8EVtGuaNEdfKWlm4ZXTclMUT5w7jNvxJlXiGnP4TakIyK9UcCsjPqGB4PYsQTvszmE5OI7HqjNKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apIFiwse; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PexAy3/jtPLzVYI0dtX3g88cyNYVV2McQFim4KEHYJ2jzPqqIeZB8kR28dklDoLaV7qYwjJT591exc9g4pvVp2wIhnMP9PmZi/sbrzEVCoMA4QQKabYLLny0zXPYVpYGBNeHkrC5MdyndIh46WYPWEONKAet6PMP+bDymUlVWew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtiP/9HO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apIFiwse"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8EB6C4AF09;
-	Thu,  3 Jul 2025 14:50:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtiP/9HO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41D7C4CEE3;
+	Thu,  3 Jul 2025 14:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554236;
-	bh=Pk95um50r8I2ZTUi5J33nUKRRPkqlIHG471hm0Iibzw=;
+	s=korg; t=1751554239;
+	bh=EVljRyWrTiaVZQRNt7nT2eMllNxc75Gfdp/3pxgIwW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=apIFiwseB01qymc36fnvVPVFUWyngI72r+kdZCatOxRs4CfohECMYf3AQbEUrIATI
-	 KnLuB4K1JUv02IMA+xwGz+3fBnAQwxOWUOh1rfp6lN4ESa4uhc/KDNjdPq/4iPwl0A
-	 IiqfcJiOPH9Z5ynqe2322Iz497Q8uvBnOfOSUcKo=
+	b=dtiP/9HO8mNq9A83QYqegIH9jvJBh62KmmnsVFQIhUttIs3pi0vlYWgBDHjjs19gQ
+	 YIH1/7Va0f8+X3s6WaTpi+44dYzIF0FHVCDpMflayFIxL1J59yadI2T+PlT2J8tTql
+	 7Nc5J7i28g3tJchUpza7RRaF/pN/fr7oPqbCtdQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/218] attach_recursive_mnt(): do not lock the covering tree when sliding something under it
-Date: Thu,  3 Jul 2025 16:40:42 +0200
-Message-ID: <20250703143959.693912302@linuxfoundation.org>
+Subject: [PATCH 6.12 095/218] libbpf: Fix null pointer dereference in btf_dump__free on allocation failure
+Date: Thu,  3 Jul 2025 16:40:43 +0200
+Message-ID: <20250703143959.736430006@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -50,48 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit ce7df19686530920f2f6b636e71ce5eb1d9303ef ]
+[ Upstream commit aa485e8789d56a4573f7c8d000a182b749eaa64d ]
 
-If we are propagating across the userns boundary, we need to lock the
-mounts added there.  However, in case when something has already
-been mounted there and we end up sliding a new tree under that,
-the stuff that had been there before should not get locked.
+When btf_dump__new() fails to allocate memory for the internal hashmap
+(btf_dump->type_names), it returns an error code. However, the cleanup
+function btf_dump__free() does not check if btf_dump->type_names is NULL
+before attempting to free it. This leads to a null pointer dereference
+when btf_dump__free() is called on a btf_dump object.
 
-IOW, lock_mnt_tree() should be called before we reparent the
-preexisting tree on top of what we are adding.
-
-Fixes: 3bd045cc9c4b ("separate copying and locking mount tree on cross-userns copies")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: 351131b51c7a ("libbpf: add btf_dump API for BTF-to-C conversion")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250618011933.11423-1-chenyuan_fl@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/lib/bpf/btf_dump.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 843bc6191f30b..b5c5cf01d0c40 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2521,14 +2521,14 @@ static int attach_recursive_mnt(struct mount *source_mnt,
- 	hlist_for_each_entry_safe(child, n, &tree_list, mnt_hash) {
- 		struct mount *q;
- 		hlist_del_init(&child->mnt_hash);
--		q = __lookup_mnt(&child->mnt_parent->mnt,
--				 child->mnt_mountpoint);
--		if (q)
--			mnt_change_mountpoint(child, smp, q);
- 		/* Notice when we are propagating across user namespaces */
- 		if (child->mnt_parent->mnt_ns->user_ns != user_ns)
- 			lock_mnt_tree(child);
- 		child->mnt.mnt_flags &= ~MNT_LOCKED;
-+		q = __lookup_mnt(&child->mnt_parent->mnt,
-+				 child->mnt_mountpoint);
-+		if (q)
-+			mnt_change_mountpoint(child, smp, q);
- 		commit_tree(child);
- 	}
- 	put_mountpoint(smp);
+diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
+index 46cce18c83086..12306b5de3efb 100644
+--- a/tools/lib/bpf/btf_dump.c
++++ b/tools/lib/bpf/btf_dump.c
+@@ -225,6 +225,9 @@ static void btf_dump_free_names(struct hashmap *map)
+ 	size_t bkt;
+ 	struct hashmap_entry *cur;
+ 
++	if (!map)
++		return;
++
+ 	hashmap__for_each_entry(map, cur, bkt)
+ 		free((void *)cur->pkey);
+ 
 -- 
 2.39.5
 
