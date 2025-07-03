@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39232E4242;
-	Thu,  3 Jul 2025 14:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90BF2DE6E5;
+	Thu,  3 Jul 2025 14:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553885; cv=none; b=XcschSCCyF2jUjZOr5hAYcvJ9Nh0cKF+pki16GSoTxK2SjhdXaVvx+8SLFeSI6O/pna2BKd3M5/pieKlsufkQ09A/wuQ6ZRkA1sh3grbHSkbOuMyNHIpmJo7UhTIjpwRjUVdrWKr1+NbX4v6Jkc2kuETwsEbc4jrQtwYVvzZqIk=
+	t=1751553887; cv=none; b=q9num0o6v2YgQzBqgBKZy/il0UsDNuBF+nO9Sof3WYfmVDmWHxKvKLOolFspoVPzlw9ahEWFyMtzmZckhfHW4vJAZCsgHX9Ac1YfW93mgB0KLZj4LbDXSaXwrTM1s3OXU26lnROzYB9azKyceV+2s/Rchfjg/BZZe5bcznte2k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553885; c=relaxed/simple;
-	bh=XPEtNTVMCHdb4TNUMTFLcgrTFSjgJp+Y3kckMU7/x2A=;
+	s=arc-20240116; t=1751553887; c=relaxed/simple;
+	bh=7stMMUUA+vFWT45nsiWPVEd2TVr7jHqOlec0Xk4Fcys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShqqzR0Gm09s7KAYQxZ1W54wc8vJprC8jRLe/D35wGb23qWNPAOGBR4d+emYXMMGbOLD7RyaEOL/5Qc00wLKlxz1Ff+om+uutc+4CAY6Y8ZQfdp9aQ4KvrUbIrZtOLxmSm1XuuGSCYnBKzjISvsgVAhxBTHc4EuNM4LBn+ty3YU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AdKx+qu6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IQQiS7vh0VcFoduSVfMeB2OG56FAc6DD+j/7G5+GeRe0e5IbXioiG2jbPhQUGyRuYZLEj5GZSVWdJtAn+fbikCYt/rz5sf2asF0tQOpoWJATY1KTylI/JtUFFtDIn9GS6vOYWGBWV+LhrNpA3ax4tnp4VFYHPNcJ8HcnH0mCO/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WV2w+aX8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AdKx+qu6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99476C4CEE3;
-	Thu,  3 Jul 2025 14:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WV2w+aX8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A3BC4CEF1;
+	Thu,  3 Jul 2025 14:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751553884;
-	bh=XPEtNTVMCHdb4TNUMTFLcgrTFSjgJp+Y3kckMU7/x2A=;
+	s=korg; t=1751553887;
+	bh=7stMMUUA+vFWT45nsiWPVEd2TVr7jHqOlec0Xk4Fcys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AdKx+qu6+PRJqqKdCb4EcwGsXpdxkX8FMCFPEjkMcSuM5LrVJvk3hyybz5kLcwYCf
-	 BQakxNzkgqB4mHo9JuEQ5HufONfP32yAtp0Lm+/8ykyppzu+CDy15dJiFZcgAXdSM3
-	 NQjVvNGgpC9OvyjmjCODHM1zm0PIy39qryke9s/4=
+	b=WV2w+aX89SUio0OhHO6nt9d8Us/zBRg9bkl3+FD2siIA6ykYDfzxJsdjhxHZjSRgv
+	 FvdWApOkHjDC52R63koHEjzka2hSjiuPSBXP5UswlQz4L5uulGESV9emr9eS88LO14
+	 iC9thdTDpiXtszjIpW+L8J6FUs6/6Qj83EzPXVHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Richter <rrichter@amd.com>,
-	Gregory Price <gourry@gourry.net>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	"Fabio M. De Francesco" <fabio.m.de.francesco@linux.intel.com>,
+	Scott Mayhew <smayhew@redhat.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/218] cxl/region: Add a dev_err() on missing target list entries
-Date: Thu,  3 Jul 2025 16:39:21 +0200
-Message-ID: <20250703143956.489548039@linuxfoundation.org>
+Subject: [PATCH 6.12 014/218] NFSv4: xattr handlers should check for absent nfs filehandles
+Date: Thu,  3 Jul 2025 16:39:22 +0200
+Message-ID: <20250703143956.529058209@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -56,53 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Richter <rrichter@amd.com>
+From: Scott Mayhew <smayhew@redhat.com>
 
-[ Upstream commit d90acdf49e18029cfe4194475c45ef143657737a ]
+[ Upstream commit 6e9a2f8dbe93c8004c2af2c0158888628b7ca034 ]
 
-Broken target lists are hard to discover as the driver fails at a
-later initialization stage. Add an error message for this.
+The nfs inodes for referral anchors that have not yet been followed have
+their filehandles zeroed out.
 
-Example log messages:
+Attempting to call getxattr() on one of these will cause the nfs client
+to send a GETATTR to the nfs server with the preceding PUTFH sans
+filehandle.  The server will reply NFS4ERR_NOFILEHANDLE, leading to -EIO
+being returned to the application.
 
-  cxl_mem mem1: failed to find endpoint6:0000:e0:01.3 in target list of decoder1.1
-  cxl_port endpoint6: failed to register decoder6.0: -6
-  cxl_port endpoint6: probe: 0
+For example:
 
-Signed-off-by: Robert Richter <rrichter@amd.com>
-Reviewed-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: "Fabio M. De Francesco" <fabio.m.de.francesco@linux.intel.com>
-Tested-by: Gregory Price <gourry@gourry.net>
-Acked-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/20250509150700.2817697-14-rrichter@amd.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+$ strace -e trace=getxattr getfattr -n system.nfs4_acl /mnt/t/ref
+getxattr("/mnt/t/ref", "system.nfs4_acl", NULL, 0) = -1 EIO (Input/output error)
+/mnt/t/ref: system.nfs4_acl: Input/output error
++++ exited with 1 +++
+
+Have the xattr handlers return -ENODATA instead.
+
+Signed-off-by: Scott Mayhew <smayhew@redhat.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/nfs/nfs4proc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index a0d6e8d7f42c8..f5429666822f0 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1781,6 +1781,13 @@ static int find_pos_and_ways(struct cxl_port *port, struct range *range,
- 	}
- 	put_device(dev);
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 413f8be7106cc..77b239b10d418 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -6174,6 +6174,8 @@ static ssize_t nfs4_proc_get_acl(struct inode *inode, void *buf, size_t buflen,
+ 	struct nfs_server *server = NFS_SERVER(inode);
+ 	int ret;
  
-+	if (rc)
-+		dev_err(port->uport_dev,
-+			"failed to find %s:%s in target list of %s\n",
-+			dev_name(&port->dev),
-+			dev_name(port->parent_dport->dport_dev),
-+			dev_name(&cxlsd->cxld.dev));
++	if (unlikely(NFS_FH(inode)->size == 0))
++		return -ENODATA;
+ 	if (!nfs4_server_supports_acls(server, type))
+ 		return -EOPNOTSUPP;
+ 	ret = nfs_revalidate_inode(inode, NFS_INO_INVALID_CHANGE);
+@@ -6248,6 +6250,9 @@ static int nfs4_proc_set_acl(struct inode *inode, const void *buf,
+ {
+ 	struct nfs4_exception exception = { };
+ 	int err;
 +
- 	return rc;
- }
- 
++	if (unlikely(NFS_FH(inode)->size == 0))
++		return -ENODATA;
+ 	do {
+ 		err = __nfs4_proc_set_acl(inode, buf, buflen, type);
+ 		trace_nfs4_set_acl(inode, err);
 -- 
 2.39.5
 
