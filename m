@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303E12EB5BF;
-	Thu,  3 Jul 2025 15:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5842EE993;
+	Thu,  3 Jul 2025 15:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556065; cv=none; b=Ks2914jJG9ulNlPK+egQskABzLP3ra++z+86tfH80qy8LluLk7I1cHlrrb4OACxfBnHxNFqgFbOYpY5dFRLxUu9CqA6I4X1WcQ2cmpjjM+KsEyRsYuN5dM85CZpdIHizx9RYKaIs+FWPuIYM37jRH1o1QpoZmL1VjqWgAUVKcf8=
+	t=1751556068; cv=none; b=dinBS0enrzgoPJuVFYd9J9Hi+qT4/5RXrKMMAb/ivPZh7Sjo1jnITNGgXlvP/KrxeYyoFxQ9C2mbYCq65AZYDrk6EIJsf9V/yKdFo0Hh0r6zX0ZUWWvbBCQIS2JtPKDq1kQ3jMuoIoQna43JxcouFbweNejS73OTu8f7lnC6uNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556065; c=relaxed/simple;
-	bh=0gxkLTKuoaIfa2E1rr7Ygv16G4Af/ki18z1FP1P+xpc=;
+	s=arc-20240116; t=1751556068; c=relaxed/simple;
+	bh=9ecowzH6C3eTACbA6R63ss677ZpwI683BFnv+UXo1bI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nxaD1PQyhQd8+5wQw5rjZDkFy8+yVImTBzGt4sBv1tQHV3wtiY2MwlJ0EsxbKOR7E87Q4BMihI9l45hlyRfIuuNPaFqDNfLc9OkOYnNBnJqHBDnTbJ9NRWMym0OWZF3U1mMieHS773pWaGIhy6Jk70gSldxGdlk+/SjbIWSgIOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4AqcVF8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gHyYqg9/nSs+ItWYA7p9okOR2SCbDNf/nsxjL7Vj+ngh8l/9tEgW+mUNgu+dM1AWTAt5zbsi6+hBPEHWEVn5TTmansLmFD4guQcLHJ20tQld28Na3dzb6u6g1lLfVmTzMqOD9CyTSo0uBIGz5nBiwXkcKOm0L6MX7Wa6NWx6Rc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nu/R3cTr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4AqcVF8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF90C4CEE3;
-	Thu,  3 Jul 2025 15:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nu/R3cTr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF388C4CEE3;
+	Thu,  3 Jul 2025 15:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556065;
-	bh=0gxkLTKuoaIfa2E1rr7Ygv16G4Af/ki18z1FP1P+xpc=;
+	s=korg; t=1751556068;
+	bh=9ecowzH6C3eTACbA6R63ss677ZpwI683BFnv+UXo1bI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W4AqcVF867PucH2efpRnglpXTmJd7ybhWKRikSY4WJE/qBXH56SbGJZ7Qmt3qLDO/
-	 om0gaHgcR4YyeSRILqn/jBvv23ypz3T/hz9COGOFxl1o1+moTYR100IP+VMdXEYC2S
-	 EdulJk4Gf44T1PN5iObkYq651VHFpZISBHig0ETg=
+	b=Nu/R3cTri7v2nntDOR/D0yFOhATZhwxdP2n51CMXMfwVjRU815DS7Yk4N356dp/ae
+	 7h1xqiSvqkeXTnPIeliEphnnAwmzHWAcNl0emI84j1eS/8VBgRIIM2lbHZiflspfJR
+	 YRR/3SejbAaTqlKPSl/pw+t1ELWC730ELago9FE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Dmitry Kandybka <d.kandybka@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/132] ALSA: usb-audio: Add a quirk for Lenovo Thinkpad Thunderbolt 3 dock
-Date: Thu,  3 Jul 2025 16:42:02 +0200
-Message-ID: <20250703143940.717330386@linuxfoundation.org>
+Subject: [PATCH 6.1 034/132] ceph: fix possible integer overflow in ceph_zero_objects()
+Date: Thu,  3 Jul 2025 16:42:03 +0200
+Message-ID: <20250703143940.755397701@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -51,37 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Dmitry Kandybka <d.kandybka@gmail.com>
 
-[ Upstream commit 4919353c7789b8047e06a9b2b943f775a8f72883 ]
+[ Upstream commit 0abd87942e0c93964e93224836944712feba1d91 ]
 
-The audio controller in the Lenovo Thinkpad Thunderbolt 3 dock doesn't
-support reading the sampling rate.
+In 'ceph_zero_objects', promote 'object_size' to 'u64' to avoid possible
+integer overflow.
 
-Add a quirk for it.
+Compile tested only.
 
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20250527172657.1972565-1-superm1@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ceph/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index b2a612c5b299a..ac43bdf6e9ca6 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2180,6 +2180,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
- 	DEVICE_FLG(0x17aa, 0x104d, /* Lenovo ThinkStation P620 Internal Speaker + Front Headset */
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
-+	DEVICE_FLG(0x17ef, 0x3083, /* Lenovo TBT3 dock */
-+		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x1852, 0x5062, /* Luxman D-08u */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x1852, 0x5065, /* Luxman DA-06 */
+diff --git a/fs/ceph/file.c b/fs/ceph/file.c
+index 882eccfd67e84..3336647e64df3 100644
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -2043,7 +2043,7 @@ static int ceph_zero_objects(struct inode *inode, loff_t offset, loff_t length)
+ 	s32 stripe_unit = ci->i_layout.stripe_unit;
+ 	s32 stripe_count = ci->i_layout.stripe_count;
+ 	s32 object_size = ci->i_layout.object_size;
+-	u64 object_set_size = object_size * stripe_count;
++	u64 object_set_size = (u64) object_size * stripe_count;
+ 	u64 nearly, t;
+ 
+ 	/* round offset up to next period boundary */
 -- 
 2.39.5
 
