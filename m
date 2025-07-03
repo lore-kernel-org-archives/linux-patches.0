@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244EB2ED86F;
-	Thu,  3 Jul 2025 14:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF652EF66B;
+	Thu,  3 Jul 2025 14:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553948; cv=none; b=rx1hgh64O0wgoXJAFN3I+LSvNB97pypc+tR5pc4lADTZ2xXS6IzXPAZS05gl6D7BqTG+nC3bUGF8I67bH6qKyTd4RwUmaDOGFWV6YBSyIVFUv44YmxTC9teb9xkz051F1FYdiRMj623Z+gp4J/PdyLCwBeRkztUK7ZGRw2QubZI=
+	t=1751553950; cv=none; b=bGnlswDqs0e/xQL3AmbwzZ1IIuPvgmLGKxGBYIJVjil1dPOE4Fl/9HPiUnQ9YxDosreV0+onwy4KKJMFegbNHQbc+d9oCMkATfRkRRKa+FFFgBmPCFUNCW2/kTuhhbCJ7sbDwqwyA3BH51MWb4haTnuMuzH2bYLSBzG6TnFYfKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553948; c=relaxed/simple;
-	bh=dfpj9sXZSvV7VkEKVPXjW2TxPLcicNTpZ+dfwaIcg2I=;
+	s=arc-20240116; t=1751553950; c=relaxed/simple;
+	bh=MRtf3uDGOGdLpYcXSP9b2yY4wR9OeEDvByg1KGugFNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eivHWvqOdDlDR67wajeC6xgCvnDjv3V0WULGL1lal6PZgce6b+o/B2lZTr0KuMVCCe2Tp3bac6L55Cp7mGevuj9ZgM2/xh6+Qn5TeS+2yX7+2oswmHdwYbUOieGjHptyM1mg9MkHBWf+dnnRkrv1D1RtvutTUHIwDoRKV0vZ9uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJ+ORxNa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pu2O6a5Pbl95gLk0l1UNtdgrXFHDWKm2yYVfUTQ9o/17jnjKXNlMvgvOmkRBt9HC4M8CXiRf1D6nXPBiq5q9xDmdNkbQExISsWOlNOGfliR8QgvDPXF619wKWQwWUvBHQdlw9AVe3y9oKeOdXKQ+o/3rfYvikXm6KUMJaYGaV78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xz7IcvzO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJ+ORxNa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE97C4CEE3;
-	Thu,  3 Jul 2025 14:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xz7IcvzO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECDCC4CEE3;
+	Thu,  3 Jul 2025 14:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751553947;
-	bh=dfpj9sXZSvV7VkEKVPXjW2TxPLcicNTpZ+dfwaIcg2I=;
+	s=korg; t=1751553950;
+	bh=MRtf3uDGOGdLpYcXSP9b2yY4wR9OeEDvByg1KGugFNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJ+ORxNam1f1rxQPqwTU9bcRLkhBbDziwYT2NDlsXYdkbzRkxHL4KI9KWPjiXYWQ4
-	 nw2+xzQqwux9n6gf7A2RKarx03c5vPEq91KDUdxeyLO3YNeYt9F33W33GGmkYZ81dk
-	 LY5JMmxCeNvknETYPfed1DVI1QbtiV3duhoTX37w=
+	b=Xz7IcvzOg5jd6yFmKMr/0dNDszlEYjxNHOVIkMPvFJ+djPt8URSC4JnV6L2MGQp7Q
+	 hyf7pgOCsQAzU0KQeTkoJDTt4p03rrvrsJE+i3WoG4423OgH/i62tpNCVssBCoPimg
+	 pDazetxZ4dTW5nIHMvcCGtBY97yo6HxZWA5Dc1PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	linux-kbuild@vger.kernel.org,
+	kernel test robot <lkp@intel.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 033/218] iio: pressure: zpa2326: Use aligned_s64 for the timestamp
-Date: Thu,  3 Jul 2025 16:39:41 +0200
-Message-ID: <20250703143957.278625070@linuxfoundation.org>
+Subject: [PATCH 6.12 034/218] um: Add cmpxchg8b_emu and checksum functions to asm-prototypes.h
+Date: Thu,  3 Jul 2025 16:39:42 +0200
+Message-ID: <20250703143957.315818719@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -51,34 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Sami Tolvanen <samitolvanen@google.com>
 
-[ Upstream commit 886a446b76afddfad307488e95e87f23a08ffd51 ]
+[ Upstream commit 674d03f6bd6b0f8327f1a4920ff5893557facfbd ]
 
-On x86_32 s64 fields are only 32-bit aligned.  Hence force the alignment of
-the field and padding in the structure by using aligned_s64 instead.
+With CONFIG_GENDWARFKSYMS, um builds fail due to missing prototypes
+in asm/asm-prototypes.h. Add declarations for cmpxchg8b_emu and the
+exported checksum functions, including csum_partial_copy_generic as
+it's also exported.
 
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250413103443.2420727-19-jic23@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: linux-kbuild@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202503251216.lE4t9Ikj-lkp@intel.com/
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Link: https://patch.msgid.link/20250326190500.847236-2-samitolvanen@google.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/zpa2326.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/um/include/asm/asm-prototypes.h | 5 +++++
+ arch/x86/um/asm/checksum.h           | 3 +++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/iio/pressure/zpa2326.c b/drivers/iio/pressure/zpa2326.c
-index b4c6c7c472569..8fae58db1d639 100644
---- a/drivers/iio/pressure/zpa2326.c
-+++ b/drivers/iio/pressure/zpa2326.c
-@@ -582,7 +582,7 @@ static int zpa2326_fill_sample_buffer(struct iio_dev               *indio_dev,
- 	struct {
- 		u32 pressure;
- 		u16 temperature;
--		u64 timestamp;
-+		aligned_s64 timestamp;
- 	}   sample;
- 	int err;
+diff --git a/arch/um/include/asm/asm-prototypes.h b/arch/um/include/asm/asm-prototypes.h
+index 5898a26daa0dd..408b31d591279 100644
+--- a/arch/um/include/asm/asm-prototypes.h
++++ b/arch/um/include/asm/asm-prototypes.h
+@@ -1 +1,6 @@
+ #include <asm-generic/asm-prototypes.h>
++#include <asm/checksum.h>
++
++#ifdef CONFIG_UML_X86
++extern void cmpxchg8b_emu(void);
++#endif
+diff --git a/arch/x86/um/asm/checksum.h b/arch/x86/um/asm/checksum.h
+index b07824500363f..ddc144657efad 100644
+--- a/arch/x86/um/asm/checksum.h
++++ b/arch/x86/um/asm/checksum.h
+@@ -20,6 +20,9 @@
+  */
+ extern __wsum csum_partial(const void *buff, int len, __wsum sum);
  
++/* Do not call this directly. Declared for export type visibility. */
++extern __visible __wsum csum_partial_copy_generic(const void *src, void *dst, int len);
++
+ /**
+  * csum_fold - Fold and invert a 32bit checksum.
+  * sum: 32bit unfolded sum
 -- 
 2.39.5
 
