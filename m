@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B32222580;
-	Thu,  3 Jul 2025 15:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB5D86348;
+	Thu,  3 Jul 2025 15:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556019; cv=none; b=Y8FUF98inkwG0lN/59YGA28jaec0Ro9L3UhjwtCQQvCkLvNIerTDdfNeT5Fbl43ItwdP255pgu0DUr3TWf9Zv8sHY8EgE2+K+lV1j8PA/WPxlkp804CFDjMUW8peTMhcXQ2SqmKoXpiEWCVjStlmOErqj24x0uo7qc3o7D7ScG4=
+	t=1751556023; cv=none; b=BwxR6ZSP4ppmJI1P31k0oukqoLezudjwngMLMyLnGgKr5JdW1TLewe2O9YbpGPlnC13v6ECmCO84VWL/j+jz8AeyP3RQrG8wLFkO2aMXCWh9GDm5MRUj5J0HZv/K11Wlduxko8CuWp8wpxS0mkmtJY+arUJw1JtFvTFD6CNQTRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556019; c=relaxed/simple;
-	bh=3g2mdte+6YPZHDQcmxiJcx0BNpLpequ6+Qeu9a8efkc=;
+	s=arc-20240116; t=1751556023; c=relaxed/simple;
+	bh=DXW1Y9VBT7Hpr9mpHQoFgIjGpXQttkpuCSHQcS0FSyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tN8LCMxOvMAyPzKc5OYeWLfRwNi9KQluitPSewfdIRY02v9DG5oY06NagsK+5onzFkfonenqAm14rJmsLNSD9UXGxrNPUFXGcRWvnyVRC/FAN6mKT7FbyG/qN/S0/J62YKqPcIah1430EPLXOeWhyOoMD6gmfk06vNxrfH3MAyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2rlAg8q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GmjBzz8J1qxwGQb2YovTi/sXuouGnMurqab0u49Ra9YAcR6/ce7wsAANVsXexaGwQoDBBK+vLdxlI4gFZdt2tisqSmlzoBrPMqByE+2bhdnWrzcn5sHk2itzUSWbFHeoQLY1DOXHfm1KmKbDKqifg4Z6BEuCCS/zoiL7mKukzoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2yT6agb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2rlAg8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334E8C4CEE3;
-	Thu,  3 Jul 2025 15:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2yT6agb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7018FC4CEE3;
+	Thu,  3 Jul 2025 15:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556019;
-	bh=3g2mdte+6YPZHDQcmxiJcx0BNpLpequ6+Qeu9a8efkc=;
+	s=korg; t=1751556022;
+	bh=DXW1Y9VBT7Hpr9mpHQoFgIjGpXQttkpuCSHQcS0FSyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s2rlAg8q7a8OLd5cdIH+8Lv+RdI/AiB8RdVSEOilPTG/jX4xwZeDw3mHAV8rdt+WG
-	 dYPneyOA1D6/ryj8h22GPzdhtgeD4ZjVw5VsxK3kCfb3BWA/+othznAv2jVU5Jjlrd
-	 yR+fxCZf1XDWKVFnkoRGyWM2VpZ/lBguJERQMYzI=
+	b=m2yT6agbsAhWoZFWRsqMQjxeyWdMQ7lAMc7RqIbGTzD467izG2I1d4aB5yfBWzRKb
+	 8nu5KIGmn0Q6NMqfmiwJ/yTZn4IhO045f1XLBxB80+zlVLVd8m/2VvtS86KlUcmp59
+	 w6PZ9KP+Kc6LJlb2bBWPUTCa9fjwKVex5BnseAcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/132] ASoC: codecs: wcd9335: Fix missing free of regulator supplies
-Date: Thu,  3 Jul 2025 16:42:18 +0200
-Message-ID: <20250703143941.348685852@linuxfoundation.org>
+Subject: [PATCH 6.1 050/132] f2fs: dont over-report free space or inodes in statvfs
+Date: Thu,  3 Jul 2025 16:42:19 +0200
+Message-ID: <20250703143941.386125759@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -51,86 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 9079db287fc3e38e040b0edeb0a25770bb679c8e ]
+[ Upstream commit a9201960623287927bf5776de3f70fb2fbde7e02 ]
 
-Driver gets and enables all regulator supplies in probe path
-(wcd9335_parse_dt() and wcd9335_power_on_reset()), but does not cleanup
-in final error paths and in unbind (missing remove() callback).  This
-leads to leaked memory and unbalanced regulator enable count during
-probe errors or unbind.
+This fixes an analogus bug that was fixed in modern filesystems:
+a) xfs in commit 4b8d867ca6e2 ("xfs: don't over-report free space or
+inodes in statvfs")
+b) ext4 in commit f87d3af74193 ("ext4: don't over-report free space
+or inodes in statvfs")
+where statfs can report misleading / incorrect information where
+project quota is enabled, and the free space is less than the
+remaining quota.
 
-Fix this by converting entire code into devm_regulator_bulk_get_enable()
-which also greatly simplifies the code.
+This commit will resolve a test failure in generic/762 which tests
+for this bug.
 
-Fixes: 20aedafdf492 ("ASoC: wcd9335: add support to wcd9335 codec")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20250526-b4-b4-asoc-wcd9395-vdd-px-fixes-v1-1-0b8a2993b7d3@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+generic/762       - output mismatch (see /share/git/fstests/results//generic/762.out.bad)
+#    --- tests/generic/762.out   2025-04-15 10:21:53.371067071 +0800
+#    +++ /share/git/fstests/results//generic/762.out.bad 2025-05-13 16:13:37.000000000 +0800
+#    @@ -6,8 +6,10 @@
+#     root blocks2 is in range
+#     dir blocks2 is in range
+#     root bavail2 is in range
+#    -dir bavail2 is in range
+#    +dir bavail2 has value of 1539066
+#    +dir bavail2 is NOT in range 304734.87 .. 310891.13
+#     root blocks3 is in range
+#    ...
+#    (Run 'diff -u /share/git/fstests/tests/generic/762.out /share/git/fstests/results//generic/762.out.bad'  to see the entire diff)
+
+HINT: You _MAY_ be missing kernel fix:
+      XXXXXXXXXXXXXX xfs: don't over-report free space or inodes in statvfs
+
+Cc: stable@kernel.org
+Fixes: ddc34e328d06 ("f2fs: introduce f2fs_statfs_project")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wcd9335.c | 25 +++++++------------------
- 1 file changed, 7 insertions(+), 18 deletions(-)
+ fs/f2fs/super.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
-index 7817dff99b6c6..99de81c489681 100644
---- a/sound/soc/codecs/wcd9335.c
-+++ b/sound/soc/codecs/wcd9335.c
-@@ -330,7 +330,6 @@ struct wcd9335_codec {
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index f415bc073bb52..84fc6591e3f98 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1753,26 +1753,32 @@ static int f2fs_statfs_project(struct super_block *sb,
  
- 	int intr1;
- 	struct gpio_desc *reset_gpio;
--	struct regulator_bulk_data supplies[WCD9335_MAX_SUPPLY];
- 
- 	unsigned int rx_port_value[WCD9335_RX_MAX];
- 	unsigned int tx_port_value[WCD9335_TX_MAX];
-@@ -357,6 +356,10 @@ struct wcd9335_irq {
- 	char *name;
- };
- 
-+static const char * const wcd9335_supplies[] = {
-+	"vdd-buck", "vdd-buck-sido", "vdd-tx", "vdd-rx", "vdd-io",
-+};
+ 	limit = min_not_zero(dquot->dq_dqb.dqb_bsoftlimit,
+ 					dquot->dq_dqb.dqb_bhardlimit);
+-	if (limit)
+-		limit >>= sb->s_blocksize_bits;
++	limit >>= sb->s_blocksize_bits;
 +
- static const struct wcd9335_slim_ch wcd9335_tx_chs[WCD9335_TX_MAX] = {
- 	WCD9335_SLIM_TX_CH(0),
- 	WCD9335_SLIM_TX_CH(1),
-@@ -5046,30 +5049,16 @@ static int wcd9335_parse_dt(struct wcd9335_codec *wcd)
- 	if (IS_ERR(wcd->native_clk))
- 		return dev_err_probe(dev, PTR_ERR(wcd->native_clk), "slimbus clock not found\n");
++	if (limit) {
++		uint64_t remaining = 0;
  
--	wcd->supplies[0].supply = "vdd-buck";
--	wcd->supplies[1].supply = "vdd-buck-sido";
--	wcd->supplies[2].supply = "vdd-tx";
--	wcd->supplies[3].supply = "vdd-rx";
--	wcd->supplies[4].supply = "vdd-io";
--
--	ret = regulator_bulk_get(dev, WCD9335_MAX_SUPPLY, wcd->supplies);
-+	ret = devm_regulator_bulk_get_enable(dev, ARRAY_SIZE(wcd9335_supplies),
-+					     wcd9335_supplies);
- 	if (ret)
--		return dev_err_probe(dev, ret, "Failed to get supplies\n");
-+		return dev_err_probe(dev, ret, "Failed to get and enable supplies\n");
+-	if (limit && buf->f_blocks > limit) {
+ 		curblock = (dquot->dq_dqb.dqb_curspace +
+ 			    dquot->dq_dqb.dqb_rsvspace) >> sb->s_blocksize_bits;
+-		buf->f_blocks = limit;
+-		buf->f_bfree = buf->f_bavail =
+-			(buf->f_blocks > curblock) ?
+-			 (buf->f_blocks - curblock) : 0;
++		if (limit > curblock)
++			remaining = limit - curblock;
++
++		buf->f_blocks = min(buf->f_blocks, limit);
++		buf->f_bfree = min(buf->f_bfree, remaining);
++		buf->f_bavail = min(buf->f_bavail, remaining);
+ 	}
  
- 	return 0;
- }
+ 	limit = min_not_zero(dquot->dq_dqb.dqb_isoftlimit,
+ 					dquot->dq_dqb.dqb_ihardlimit);
  
- static int wcd9335_power_on_reset(struct wcd9335_codec *wcd)
- {
--	struct device *dev = wcd->dev;
--	int ret;
--
--	ret = regulator_bulk_enable(WCD9335_MAX_SUPPLY, wcd->supplies);
--	if (ret) {
--		dev_err(dev, "Failed to get supplies: err = %d\n", ret);
--		return ret;
--	}
--
- 	/*
- 	 * For WCD9335, it takes about 600us for the Vout_A and
- 	 * Vout_D to be ready after BUCK_SIDO is powered up.
+-	if (limit && buf->f_files > limit) {
+-		buf->f_files = limit;
+-		buf->f_ffree =
+-			(buf->f_files > dquot->dq_dqb.dqb_curinodes) ?
+-			 (buf->f_files - dquot->dq_dqb.dqb_curinodes) : 0;
++	if (limit) {
++		uint64_t remaining = 0;
++
++		if (limit > dquot->dq_dqb.dqb_curinodes)
++			remaining = limit - dquot->dq_dqb.dqb_curinodes;
++
++		buf->f_files = min(buf->f_files, limit);
++		buf->f_ffree = min(buf->f_ffree, remaining);
+ 	}
+ 
+ 	spin_unlock(&dquot->dq_dqb_lock);
 -- 
 2.39.5
 
