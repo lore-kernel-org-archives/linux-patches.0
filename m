@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDB813A258;
-	Thu,  3 Jul 2025 14:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB343101DE;
+	Thu,  3 Jul 2025 14:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553997; cv=none; b=JGiPNXwEI2yvEHDIfLvsceCl2gbnvn91Vu+FYitVFxoYqJRDeoC5ok4w26v6hInbMxPzKZHaaVW/uULhNQ5lgEM+QgNet0qZkbRXhLk4U4fAIPWbQt4RdkSqMiLI5Wg7tD94CTIoIxaQ6qZ7ainfB1jZdJMuFQoyZHQUDuTSChY=
+	t=1751554001; cv=none; b=oyNHqABlMFhXBrun7loWBMa3KRuw4GkHXMSga+jsilKeG13rptMZrXTVCmtwx78VYXhVXUoB2RU5s3FFaA5Ru3GrK5oN1V0rJpdY9rrVkx1SFS8JQa3asGfT9ZDd4QD3aNtPTa3KBb03yg67tyC/VewesZEBj8sP3hCXbQKf4ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553997; c=relaxed/simple;
-	bh=ts+9CWCrUjWX81Tla20EROrJ5TVaU0LoHd+FDeqSucc=;
+	s=arc-20240116; t=1751554001; c=relaxed/simple;
+	bh=geAYmXh4GPQJedRYoGB9CEtYR28VjKUcdFU0H2hFYjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TpJbRkBhJG6OzGYE+9J785Ii+tY4yf0Pt0WRXhNHYH8Rbi0fQ9fpWtlw+v5+57mjV+itIm4mH8oQvrWgiyBQ75CO7GjD9fbn4aXeOXaDiHNYOZSeatzuH+sZ6cdkmE6YUB/6kko32WoBBm7oFImjGQhtpEuX2/gG4LmdDB9t3Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KezE13jr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AI/euhJQ1N5gNjTehRhPgPE7XVEkQ14KdtzRxFh7IDFQywaDXNU+cHWqjg0uHPWDX6HwuJ9UYyqb10vUZGM5EOYzhxG+U9+jg9UhiNTEzsvQO84ShWDSQ+SRtU97Jz/s2QYE+Z+c0O1PeUUDlFJUoPL+gjyn+6D6t+DVxt+OxVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qw3T6pyw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KezE13jr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15130C4CEE3;
-	Thu,  3 Jul 2025 14:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qw3T6pyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B21C4CEE3;
+	Thu,  3 Jul 2025 14:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751553997;
-	bh=ts+9CWCrUjWX81Tla20EROrJ5TVaU0LoHd+FDeqSucc=;
+	s=korg; t=1751554000;
+	bh=geAYmXh4GPQJedRYoGB9CEtYR28VjKUcdFU0H2hFYjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KezE13jrHNhbvS5zPvXgOMxhAeukAEb5x6UeX1ohYilra9RBJf9HQWh+6ZPRpeEkf
-	 ee0rDhY8q0XgSQrg+pG7Qrpp6lUfxNZ4tfE7meybOQHpQwnNikFCuQFFWeT6M8aHQd
-	 ekKqNhjiZDm6+/fljdhRb6yCrbwtfpTEAEX9si1w=
+	b=Qw3T6pyw4uEOml2sofzrhMDmHC1PAY2HU0GG4xyvtuYBCJuNg0s63sFTdj5lt4YfD
+	 SMbn/9z4H1BDZ//fJT7+GteKwhULAz1o2CWuoPCstNGGqYfrsYBOo8ik7Vug4OyoX3
+	 M8Nh8k5dixNwwkm+XU9zh+rhBljWbm27nFYNoOlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Andy Chiu <andybnac@gmail.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/218] usb: typec: mux: do not return on EOPNOTSUPP in {mux, switch}_set
-Date: Thu,  3 Jul 2025 16:39:56 +0200
-Message-ID: <20250703143957.858508623@linuxfoundation.org>
+Subject: [PATCH 6.12 049/218] riscv: add a data fence for CMODX in the kernel mode
+Date: Thu,  3 Jul 2025 16:39:57 +0200
+Message-ID: <20250703143957.896860886@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -45,56 +47,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Andy Chiu <andybnac@gmail.com>
 
-[ Upstream commit 0f7bbef1794dc87141897f804e5871a293aa174b ]
+[ Upstream commit ca358692de41b273468e625f96926fa53e13bd8c ]
 
-Since the typec connectors can have many muxes or switches for different
-lanes (sbu, usb2, usb3) going into different modal states (usb2, usb3,
-audio, debug) all of them will be called on typec_switch_set and
-typec_mux_set. But not all of them will be handling the expected mode.
+RISC-V spec explicitly calls out that a local fence.i is not enough for
+the code modification to be visble from a remote hart. In fact, it
+states:
 
-If one of the mux or switch will come back with EOPTNOSUPP this is no
-reason to stop running through the next ones. Therefor we skip this
-particular error value and continue calling the next.
+To make a store to instruction memory visible to all RISC-V harts, the
+writing hart also has to execute a data FENCE before requesting that all
+remote RISC-V harts execute a FENCE.I.
 
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250404-ml-topic-typec-mux-v1-1-22c0526381ba@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Although current riscv drivers for IPI use ordered MMIO when sending IPIs
+in order to synchronize the action between previous csd writes, riscv
+does not restrict itself to any particular flavor of IPI. Any driver or
+firmware implementation that does not order data writes before the IPI
+may pose a risk for code-modifying race.
+
+Thus, add a fence here to order data writes before making the IPI.
+
+Signed-off-by: Andy Chiu <andybnac@gmail.com>
+Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
+Link: https://lore.kernel.org/r/20250407180838.42877-8-andybnac@gmail.com
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Palmer Dabbelt <palmer@dabbelt.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/mux.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/riscv/mm/cacheflush.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
-index 49926d6e72c71..182c902c42f61 100644
---- a/drivers/usb/typec/mux.c
-+++ b/drivers/usb/typec/mux.c
-@@ -214,7 +214,7 @@ int typec_switch_set(struct typec_switch *sw,
- 		sw_dev = sw->sw_devs[i];
+diff --git a/arch/riscv/mm/cacheflush.c b/arch/riscv/mm/cacheflush.c
+index b816727298872..b2e4b81763f88 100644
+--- a/arch/riscv/mm/cacheflush.c
++++ b/arch/riscv/mm/cacheflush.c
+@@ -24,7 +24,20 @@ void flush_icache_all(void)
  
- 		ret = sw_dev->set(sw_dev, orientation);
--		if (ret)
-+		if (ret && ret != -EOPNOTSUPP)
- 			return ret;
- 	}
- 
-@@ -378,7 +378,7 @@ int typec_mux_set(struct typec_mux *mux, struct typec_mux_state *state)
- 		mux_dev = mux->mux_devs[i];
- 
- 		ret = mux_dev->set(mux_dev, state);
--		if (ret)
-+		if (ret && ret != -EOPNOTSUPP)
- 			return ret;
- 	}
- 
+ 	if (num_online_cpus() < 2)
+ 		return;
+-	else if (riscv_use_sbi_for_rfence())
++
++	/*
++	 * Make sure all previous writes to the D$ are ordered before making
++	 * the IPI. The RISC-V spec states that a hart must execute a data fence
++	 * before triggering a remote fence.i in order to make the modification
++	 * visable for remote harts.
++	 *
++	 * IPIs on RISC-V are triggered by MMIO writes to either CLINT or
++	 * S-IMSIC, so the fence ensures previous data writes "happen before"
++	 * the MMIO.
++	 */
++	RISCV_FENCE(w, o);
++
++	if (riscv_use_sbi_for_rfence())
+ 		sbi_remote_fence_i(NULL);
+ 	else
+ 		on_each_cpu(ipi_remote_fence_i, NULL, 1);
 -- 
 2.39.5
 
